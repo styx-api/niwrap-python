@@ -14,48 +14,22 @@ COLUMN_CAT_METADATA = Metadata(
 
 
 ColumnCatParameters = typing.TypedDict('ColumnCatParameters', {
-    "@type": typing.Literal["afni.column_cat"],
+    "@type": typing.NotRequired[typing.Literal["afni/column_cat"]],
+    "line_number": typing.NotRequired[float | None],
+    "separator_string": typing.NotRequired[str | None],
+    "input_files": list[InputPathType],
+})
+ColumnCatParametersTagged = typing.TypedDict('ColumnCatParametersTagged', {
+    "@type": typing.Literal["afni/column_cat"],
     "line_number": typing.NotRequired[float | None],
     "separator_string": typing.NotRequired[str | None],
     "input_files": list[InputPathType],
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "afni.column_cat": column_cat_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "afni.column_cat": column_cat_outputs,
-    }.get(t)
-
-
 class ColumnCatOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `column_cat(...)`.
+    Output object returned when calling `ColumnCatParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -67,7 +41,7 @@ def column_cat_params(
     input_files: list[InputPathType],
     line_number: float | None = None,
     separator_string: str | None = None,
-) -> ColumnCatParameters:
+) -> ColumnCatParametersTagged:
     """
     Build parameters.
     
@@ -80,7 +54,7 @@ def column_cat_params(
         Parameter dictionary
     """
     params = {
-        "@type": "afni.column_cat",
+        "@type": "afni/column_cat",
         "input_files": input_files,
     }
     if line_number is not None:
@@ -105,17 +79,17 @@ def column_cat_cargs(
     """
     cargs = []
     cargs.append("column_cat")
-    if params.get("line_number") is not None:
+    if params.get("line_number", None) is not None:
         cargs.extend([
             "-line",
-            str(params.get("line_number"))
+            str(params.get("line_number", None))
         ])
-    if params.get("separator_string") is not None:
+    if params.get("separator_string", None) is not None:
         cargs.extend([
             "-sep",
-            params.get("separator_string")
+            params.get("separator_string", None)
         ])
-    cargs.extend([execution.input_file(f) for f in params.get("input_files")])
+    cargs.extend([execution.input_file(f) for f in params.get("input_files", None)])
     return cargs
 
 
@@ -206,7 +180,6 @@ def column_cat(
 __all__ = [
     "COLUMN_CAT_METADATA",
     "ColumnCatOutputs",
-    "ColumnCatParameters",
     "column_cat",
     "column_cat_execute",
     "column_cat_params",

@@ -14,7 +14,23 @@ SURF_TO_SURF_METADATA = Metadata(
 
 
 SurfToSurfParameters = typing.TypedDict('SurfToSurfParameters', {
-    "@type": typing.Literal["afni.SurfToSurf"],
+    "@type": typing.NotRequired[typing.Literal["afni/SurfToSurf"]],
+    "input_surface_1": InputPathType,
+    "input_surface_2": InputPathType,
+    "surface_volume": typing.NotRequired[InputPathType | None],
+    "prefix": typing.NotRequired[str | None],
+    "output_params": typing.NotRequired[str | None],
+    "node_indices": typing.NotRequired[InputPathType | None],
+    "proj_dir": typing.NotRequired[InputPathType | None],
+    "data": typing.NotRequired[InputPathType | None],
+    "node_debug": typing.NotRequired[float | None],
+    "debug_level": typing.NotRequired[float | None],
+    "make_consistent": bool,
+    "dset": typing.NotRequired[InputPathType | None],
+    "mapfile": typing.NotRequired[InputPathType | None],
+})
+SurfToSurfParametersTagged = typing.TypedDict('SurfToSurfParametersTagged', {
+    "@type": typing.Literal["afni/SurfToSurf"],
     "input_surface_1": InputPathType,
     "input_surface_2": InputPathType,
     "surface_volume": typing.NotRequired[InputPathType | None],
@@ -31,41 +47,9 @@ SurfToSurfParameters = typing.TypedDict('SurfToSurfParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "afni.SurfToSurf": surf_to_surf_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "afni.SurfToSurf": surf_to_surf_outputs,
-    }.get(t)
-
-
 class SurfToSurfOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `surf_to_surf(...)`.
+    Output object returned when calling `SurfToSurfParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -87,7 +71,7 @@ def surf_to_surf_params(
     make_consistent: bool = False,
     dset: InputPathType | None = None,
     mapfile: InputPathType | None = None,
-) -> SurfToSurfParameters:
+) -> SurfToSurfParametersTagged:
     """
     Build parameters.
     
@@ -111,7 +95,7 @@ def surf_to_surf_params(
         Parameter dictionary
     """
     params = {
-        "@type": "afni.SurfToSurf",
+        "@type": "afni/SurfToSurf",
         "input_surface_1": input_surface_1,
         "input_surface_2": input_surface_2,
         "make_consistent": make_consistent,
@@ -154,59 +138,59 @@ def surf_to_surf_cargs(
     """
     cargs = []
     cargs.append("SurfToSurf")
-    cargs.append(execution.input_file(params.get("input_surface_1")))
-    cargs.append(execution.input_file(params.get("input_surface_2")))
-    if params.get("surface_volume") is not None:
+    cargs.append(execution.input_file(params.get("input_surface_1", None)))
+    cargs.append(execution.input_file(params.get("input_surface_2", None)))
+    if params.get("surface_volume", None) is not None:
         cargs.extend([
             "-sv",
-            execution.input_file(params.get("surface_volume"))
+            execution.input_file(params.get("surface_volume", None))
         ])
-    if params.get("prefix") is not None:
+    if params.get("prefix", None) is not None:
         cargs.extend([
             "-prefix",
-            params.get("prefix")
+            params.get("prefix", None)
         ])
-    if params.get("output_params") is not None:
+    if params.get("output_params", None) is not None:
         cargs.extend([
             "-output_params",
-            params.get("output_params")
+            params.get("output_params", None)
         ])
-    if params.get("node_indices") is not None:
+    if params.get("node_indices", None) is not None:
         cargs.extend([
             "-node_indices",
-            execution.input_file(params.get("node_indices"))
+            execution.input_file(params.get("node_indices", None))
         ])
-    if params.get("proj_dir") is not None:
+    if params.get("proj_dir", None) is not None:
         cargs.extend([
             "-proj_dir",
-            execution.input_file(params.get("proj_dir"))
+            execution.input_file(params.get("proj_dir", None))
         ])
-    if params.get("data") is not None:
+    if params.get("data", None) is not None:
         cargs.extend([
             "-data",
-            execution.input_file(params.get("data"))
+            execution.input_file(params.get("data", None))
         ])
-    if params.get("node_debug") is not None:
+    if params.get("node_debug", None) is not None:
         cargs.extend([
             "-node_debug",
-            str(params.get("node_debug"))
+            str(params.get("node_debug", None))
         ])
-    if params.get("debug_level") is not None:
+    if params.get("debug_level", None) is not None:
         cargs.extend([
             "-debug",
-            str(params.get("debug_level"))
+            str(params.get("debug_level", None))
         ])
-    if params.get("make_consistent"):
+    if params.get("make_consistent", False):
         cargs.append("-make_consistent")
-    if params.get("dset") is not None:
+    if params.get("dset", None) is not None:
         cargs.extend([
             "-dset",
-            execution.input_file(params.get("dset"))
+            execution.input_file(params.get("dset", None))
         ])
-    if params.get("mapfile") is not None:
+    if params.get("mapfile", None) is not None:
         cargs.extend([
             "-mapfile",
-            execution.input_file(params.get("mapfile"))
+            execution.input_file(params.get("mapfile", None))
         ])
     return cargs
 
@@ -226,7 +210,7 @@ def surf_to_surf_outputs(
     """
     ret = SurfToSurfOutputs(
         root=execution.output_file("."),
-        output_file=execution.output_file(params.get("prefix") + ".1D") if (params.get("prefix") is not None) else None,
+        output_file=execution.output_file(params.get("prefix", None) + ".1D") if (params.get("prefix") is not None) else None,
     )
     return ret
 
@@ -325,7 +309,6 @@ def surf_to_surf(
 __all__ = [
     "SURF_TO_SURF_METADATA",
     "SurfToSurfOutputs",
-    "SurfToSurfParameters",
     "surf_to_surf",
     "surf_to_surf_execute",
     "surf_to_surf_params",

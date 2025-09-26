@@ -14,46 +14,20 @@ BACKEND_AVERAGE_DENSE_ROI_METADATA = Metadata(
 
 
 BackendAverageDenseRoiParameters = typing.TypedDict('BackendAverageDenseRoiParameters', {
-    "@type": typing.Literal["workbench.backend-average-dense-roi"],
+    "@type": typing.NotRequired[typing.Literal["workbench/backend-average-dense-roi"]],
+    "index_list": str,
+    "out_file": str,
+})
+BackendAverageDenseRoiParametersTagged = typing.TypedDict('BackendAverageDenseRoiParametersTagged', {
+    "@type": typing.Literal["workbench/backend-average-dense-roi"],
     "index_list": str,
     "out_file": str,
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "workbench.backend-average-dense-roi": backend_average_dense_roi_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-    }.get(t)
-
-
 class BackendAverageDenseRoiOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `backend_average_dense_roi(...)`.
+    Output object returned when calling `BackendAverageDenseRoiParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -62,7 +36,7 @@ class BackendAverageDenseRoiOutputs(typing.NamedTuple):
 def backend_average_dense_roi_params(
     index_list: str,
     out_file: str,
-) -> BackendAverageDenseRoiParameters:
+) -> BackendAverageDenseRoiParametersTagged:
     """
     Build parameters.
     
@@ -73,7 +47,7 @@ def backend_average_dense_roi_params(
         Parameter dictionary
     """
     params = {
-        "@type": "workbench.backend-average-dense-roi",
+        "@type": "workbench/backend-average-dense-roi",
         "index_list": index_list,
         "out_file": out_file,
     }
@@ -96,8 +70,8 @@ def backend_average_dense_roi_cargs(
     cargs = []
     cargs.append("wb_command")
     cargs.append("-backend-average-dense-roi")
-    cargs.append(params.get("index_list"))
-    cargs.append(params.get("out_file"))
+    cargs.append(params.get("index_list", None))
+    cargs.append(params.get("out_file", None))
     return cargs
 
 
@@ -189,7 +163,6 @@ def backend_average_dense_roi(
 __all__ = [
     "BACKEND_AVERAGE_DENSE_ROI_METADATA",
     "BackendAverageDenseRoiOutputs",
-    "BackendAverageDenseRoiParameters",
     "backend_average_dense_roi",
     "backend_average_dense_roi_execute",
     "backend_average_dense_roi_params",

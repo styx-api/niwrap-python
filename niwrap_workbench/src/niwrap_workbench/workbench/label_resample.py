@@ -14,21 +14,45 @@ LABEL_RESAMPLE_METADATA = Metadata(
 
 
 LabelResampleAreaSurfsParameters = typing.TypedDict('LabelResampleAreaSurfsParameters', {
-    "@type": typing.Literal["workbench.label-resample.area_surfs"],
+    "@type": typing.NotRequired[typing.Literal["area_surfs"]],
+    "current_area": InputPathType,
+    "new_area": InputPathType,
+})
+LabelResampleAreaSurfsParametersTagged = typing.TypedDict('LabelResampleAreaSurfsParametersTagged', {
+    "@type": typing.Literal["area_surfs"],
     "current_area": InputPathType,
     "new_area": InputPathType,
 })
 
 
 LabelResampleAreaMetricsParameters = typing.TypedDict('LabelResampleAreaMetricsParameters', {
-    "@type": typing.Literal["workbench.label-resample.area_metrics"],
+    "@type": typing.NotRequired[typing.Literal["area_metrics"]],
+    "current_area": InputPathType,
+    "new_area": InputPathType,
+})
+LabelResampleAreaMetricsParametersTagged = typing.TypedDict('LabelResampleAreaMetricsParametersTagged', {
+    "@type": typing.Literal["area_metrics"],
     "current_area": InputPathType,
     "new_area": InputPathType,
 })
 
 
 LabelResampleParameters = typing.TypedDict('LabelResampleParameters', {
-    "@type": typing.Literal["workbench.label-resample"],
+    "@type": typing.NotRequired[typing.Literal["workbench/label-resample"]],
+    "label_in": InputPathType,
+    "current_sphere": InputPathType,
+    "new_sphere": InputPathType,
+    "method": str,
+    "label_out": str,
+    "area_surfs": typing.NotRequired[LabelResampleAreaSurfsParameters | None],
+    "area_metrics": typing.NotRequired[LabelResampleAreaMetricsParameters | None],
+    "opt_current_roi_roi_metric": typing.NotRequired[InputPathType | None],
+    "opt_valid_roi_out_roi_out": typing.NotRequired[str | None],
+    "opt_largest": bool,
+    "opt_bypass_sphere_check": bool,
+})
+LabelResampleParametersTagged = typing.TypedDict('LabelResampleParametersTagged', {
+    "@type": typing.Literal["workbench/label-resample"],
     "label_in": InputPathType,
     "current_sphere": InputPathType,
     "new_sphere": InputPathType,
@@ -43,44 +67,10 @@ LabelResampleParameters = typing.TypedDict('LabelResampleParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "workbench.label-resample": label_resample_cargs,
-        "workbench.label-resample.area_surfs": label_resample_area_surfs_cargs,
-        "workbench.label-resample.area_metrics": label_resample_area_metrics_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "workbench.label-resample": label_resample_outputs,
-    }.get(t)
-
-
 def label_resample_area_surfs_params(
     current_area: InputPathType,
     new_area: InputPathType,
-) -> LabelResampleAreaSurfsParameters:
+) -> LabelResampleAreaSurfsParametersTagged:
     """
     Build parameters.
     
@@ -91,7 +81,7 @@ def label_resample_area_surfs_params(
         Parameter dictionary
     """
     params = {
-        "@type": "workbench.label-resample.area_surfs",
+        "@type": "area_surfs",
         "current_area": current_area,
         "new_area": new_area,
     }
@@ -113,15 +103,15 @@ def label_resample_area_surfs_cargs(
     """
     cargs = []
     cargs.append("-area-surfs")
-    cargs.append(execution.input_file(params.get("current_area")))
-    cargs.append(execution.input_file(params.get("new_area")))
+    cargs.append(execution.input_file(params.get("current_area", None)))
+    cargs.append(execution.input_file(params.get("new_area", None)))
     return cargs
 
 
 def label_resample_area_metrics_params(
     current_area: InputPathType,
     new_area: InputPathType,
-) -> LabelResampleAreaMetricsParameters:
+) -> LabelResampleAreaMetricsParametersTagged:
     """
     Build parameters.
     
@@ -132,7 +122,7 @@ def label_resample_area_metrics_params(
         Parameter dictionary
     """
     params = {
-        "@type": "workbench.label-resample.area_metrics",
+        "@type": "area_metrics",
         "current_area": current_area,
         "new_area": new_area,
     }
@@ -154,14 +144,14 @@ def label_resample_area_metrics_cargs(
     """
     cargs = []
     cargs.append("-area-metrics")
-    cargs.append(execution.input_file(params.get("current_area")))
-    cargs.append(execution.input_file(params.get("new_area")))
+    cargs.append(execution.input_file(params.get("current_area", None)))
+    cargs.append(execution.input_file(params.get("new_area", None)))
     return cargs
 
 
 class LabelResampleOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `label_resample(...)`.
+    Output object returned when calling `LabelResampleParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -184,7 +174,7 @@ def label_resample_params(
     opt_valid_roi_out_roi_out: str | None = None,
     opt_largest: bool = False,
     opt_bypass_sphere_check: bool = False,
-) -> LabelResampleParameters:
+) -> LabelResampleParametersTagged:
     """
     Build parameters.
     
@@ -210,7 +200,7 @@ def label_resample_params(
         Parameter dictionary
     """
     params = {
-        "@type": "workbench.label-resample",
+        "@type": "workbench/label-resample",
         "label_in": label_in,
         "current_sphere": current_sphere,
         "new_sphere": new_sphere,
@@ -246,28 +236,28 @@ def label_resample_cargs(
     cargs = []
     cargs.append("wb_command")
     cargs.append("-label-resample")
-    cargs.append(execution.input_file(params.get("label_in")))
-    cargs.append(execution.input_file(params.get("current_sphere")))
-    cargs.append(execution.input_file(params.get("new_sphere")))
-    cargs.append(params.get("method"))
-    cargs.append(params.get("label_out"))
-    if params.get("area_surfs") is not None:
-        cargs.extend(dyn_cargs(params.get("area_surfs")["@type"])(params.get("area_surfs"), execution))
-    if params.get("area_metrics") is not None:
-        cargs.extend(dyn_cargs(params.get("area_metrics")["@type"])(params.get("area_metrics"), execution))
-    if params.get("opt_current_roi_roi_metric") is not None:
+    cargs.append(execution.input_file(params.get("label_in", None)))
+    cargs.append(execution.input_file(params.get("current_sphere", None)))
+    cargs.append(execution.input_file(params.get("new_sphere", None)))
+    cargs.append(params.get("method", None))
+    cargs.append(params.get("label_out", None))
+    if params.get("area_surfs", None) is not None:
+        cargs.extend(label_resample_area_surfs_cargs(params.get("area_surfs", None), execution))
+    if params.get("area_metrics", None) is not None:
+        cargs.extend(label_resample_area_metrics_cargs(params.get("area_metrics", None), execution))
+    if params.get("opt_current_roi_roi_metric", None) is not None:
         cargs.extend([
             "-current-roi",
-            execution.input_file(params.get("opt_current_roi_roi_metric"))
+            execution.input_file(params.get("opt_current_roi_roi_metric", None))
         ])
-    if params.get("opt_valid_roi_out_roi_out") is not None:
+    if params.get("opt_valid_roi_out_roi_out", None) is not None:
         cargs.extend([
             "-valid-roi-out",
-            params.get("opt_valid_roi_out_roi_out")
+            params.get("opt_valid_roi_out_roi_out", None)
         ])
-    if params.get("opt_largest"):
+    if params.get("opt_largest", False):
         cargs.append("-largest")
-    if params.get("opt_bypass_sphere_check"):
+    if params.get("opt_bypass_sphere_check", False):
         cargs.append("-bypass-sphere-check")
     return cargs
 
@@ -287,8 +277,8 @@ def label_resample_outputs(
     """
     ret = LabelResampleOutputs(
         root=execution.output_file("."),
-        label_out=execution.output_file(params.get("label_out")),
-        opt_valid_roi_out_roi_out=execution.output_file(params.get("opt_valid_roi_out_roi_out")) if (params.get("opt_valid_roi_out_roi_out") is not None) else None,
+        label_out=execution.output_file(params.get("label_out", None)),
+        opt_valid_roi_out_roi_out=execution.output_file(params.get("opt_valid_roi_out_roi_out", None)) if (params.get("opt_valid_roi_out_roi_out") is not None) else None,
     )
     return ret
 
@@ -428,10 +418,7 @@ def label_resample(
 
 __all__ = [
     "LABEL_RESAMPLE_METADATA",
-    "LabelResampleAreaMetricsParameters",
-    "LabelResampleAreaSurfsParameters",
     "LabelResampleOutputs",
-    "LabelResampleParameters",
     "label_resample",
     "label_resample_area_metrics_params",
     "label_resample_area_surfs_params",

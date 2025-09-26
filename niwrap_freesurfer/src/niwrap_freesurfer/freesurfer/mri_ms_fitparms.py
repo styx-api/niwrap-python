@@ -14,7 +14,46 @@ MRI_MS_FITPARMS_METADATA = Metadata(
 
 
 MriMsFitparmsParameters = typing.TypedDict('MriMsFitparmsParameters', {
-    "@type": typing.Literal["freesurfer.mri_ms_fitparms"],
+    "@type": typing.NotRequired[typing.Literal["freesurfer/mri_ms_fitparms"]],
+    "volumes": list[InputPathType],
+    "output_dir": str,
+    "afi_flag": bool,
+    "ait_flag": bool,
+    "at": typing.NotRequired[str | None],
+    "conform_flag": bool,
+    "correct_flag": bool,
+    "cubic_flag": bool,
+    "debug_slice_flag": bool,
+    "debug_voxel_flag": bool,
+    "dt": typing.NotRequired[str | None],
+    "fa": typing.NotRequired[str | None],
+    "fa_scale": typing.NotRequired[float | None],
+    "faf": typing.NotRequired[str | None],
+    "fsmooth": typing.NotRequired[float | None],
+    "invert_flag": bool,
+    "momentum": typing.NotRequired[str | None],
+    "max_t2": typing.NotRequired[str | None],
+    "n_iter": typing.NotRequired[float | None],
+    "nearest_flag": bool,
+    "nocompress_flag": bool,
+    "nosynth_flag": bool,
+    "residuals": typing.NotRequired[str | None],
+    "smooth_sigma": typing.NotRequired[float | None],
+    "scale_factor": typing.NotRequired[float | None],
+    "sinc_flag": bool,
+    "transform_flag": bool,
+    "echo_time": typing.NotRequired[float | None],
+    "repetition_time": typing.NotRequired[float | None],
+    "trilinear_flag": bool,
+    "tukey_flag": bool,
+    "help_flag": bool,
+    "use_brain_mask_flag": bool,
+    "write_intermediate": typing.NotRequired[float | None],
+    "extract_subimage": typing.NotRequired[list[float] | None],
+    "window_flag": bool,
+})
+MriMsFitparmsParametersTagged = typing.TypedDict('MriMsFitparmsParametersTagged', {
+    "@type": typing.Literal["freesurfer/mri_ms_fitparms"],
     "volumes": list[InputPathType],
     "output_dir": str,
     "afi_flag": bool,
@@ -54,41 +93,9 @@ MriMsFitparmsParameters = typing.TypedDict('MriMsFitparmsParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "freesurfer.mri_ms_fitparms": mri_ms_fitparms_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "freesurfer.mri_ms_fitparms": mri_ms_fitparms_outputs,
-    }.get(t)
-
-
 class MriMsFitparmsOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `mri_ms_fitparms(...)`.
+    Output object returned when calling `MriMsFitparmsParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -143,7 +150,7 @@ def mri_ms_fitparms_params(
     write_intermediate: float | None = None,
     extract_subimage: list[float] | None = None,
     window_flag: bool = False,
-) -> MriMsFitparmsParameters:
+) -> MriMsFitparmsParametersTagged:
     """
     Build parameters.
     
@@ -191,7 +198,7 @@ def mri_ms_fitparms_params(
         Parameter dictionary
     """
     params = {
-        "@type": "freesurfer.mri_ms_fitparms",
+        "@type": "freesurfer/mri_ms_fitparms",
         "volumes": volumes,
         "output_dir": output_dir,
         "afi_flag": afi_flag,
@@ -263,123 +270,123 @@ def mri_ms_fitparms_cargs(
     """
     cargs = []
     cargs.append("mri_ms_fitparms")
-    cargs.extend([execution.input_file(f) for f in params.get("volumes")])
-    cargs.append(params.get("output_dir"))
-    if params.get("afi_flag"):
+    cargs.extend([execution.input_file(f) for f in params.get("volumes", None)])
+    cargs.append(params.get("output_dir", None))
+    if params.get("afi_flag", False):
         cargs.append("-afi")
-    if params.get("ait_flag"):
+    if params.get("ait_flag", False):
         cargs.append("-ait")
-    if params.get("at") is not None:
+    if params.get("at", None) is not None:
         cargs.extend([
             "-at",
-            params.get("at")
+            params.get("at", None)
         ])
-    if params.get("conform_flag"):
+    if params.get("conform_flag", False):
         cargs.append("-conform")
-    if params.get("correct_flag"):
+    if params.get("correct_flag", False):
         cargs.append("-correct")
-    if params.get("cubic_flag"):
+    if params.get("cubic_flag", False):
         cargs.append("-cubic")
-    if params.get("debug_slice_flag"):
+    if params.get("debug_slice_flag", False):
         cargs.append("-debug_slice")
-    if params.get("debug_voxel_flag"):
+    if params.get("debug_voxel_flag", False):
         cargs.append("-debug_voxel")
-    if params.get("dt") is not None:
+    if params.get("dt", None) is not None:
         cargs.extend([
             "-dt",
-            params.get("dt")
+            params.get("dt", None)
         ])
-    if params.get("fa") is not None:
+    if params.get("fa", None) is not None:
         cargs.extend([
             "-fa",
-            params.get("fa")
+            params.get("fa", None)
         ])
-    if params.get("fa_scale") is not None:
+    if params.get("fa_scale", None) is not None:
         cargs.extend([
             "-fa_scale",
-            str(params.get("fa_scale"))
+            str(params.get("fa_scale", None))
         ])
-    if params.get("faf") is not None:
+    if params.get("faf", None) is not None:
         cargs.extend([
             "-faf",
-            params.get("faf")
+            params.get("faf", None)
         ])
-    if params.get("fsmooth") is not None:
+    if params.get("fsmooth", None) is not None:
         cargs.extend([
             "-fsmooth",
-            str(params.get("fsmooth"))
+            str(params.get("fsmooth", None))
         ])
-    if params.get("invert_flag"):
+    if params.get("invert_flag", False):
         cargs.append("-i")
-    if params.get("momentum") is not None:
+    if params.get("momentum", None) is not None:
         cargs.extend([
             "-m",
-            params.get("momentum")
+            params.get("momentum", None)
         ])
-    if params.get("max_t2") is not None:
+    if params.get("max_t2", None) is not None:
         cargs.extend([
             "-max",
-            params.get("max_t2")
+            params.get("max_t2", None)
         ])
-    if params.get("n_iter") is not None:
+    if params.get("n_iter", None) is not None:
         cargs.extend([
             "-n",
-            str(params.get("n_iter"))
+            str(params.get("n_iter", None))
         ])
-    if params.get("nearest_flag"):
+    if params.get("nearest_flag", False):
         cargs.append("-nearest")
-    if params.get("nocompress_flag"):
+    if params.get("nocompress_flag", False):
         cargs.append("-nocompress")
-    if params.get("nosynth_flag"):
+    if params.get("nosynth_flag", False):
         cargs.append("-nosynth")
-    if params.get("residuals") is not None:
+    if params.get("residuals", None) is not None:
         cargs.extend([
             "-r",
-            params.get("residuals")
+            params.get("residuals", None)
         ])
-    if params.get("smooth_sigma") is not None:
+    if params.get("smooth_sigma", None) is not None:
         cargs.extend([
             "-s",
-            str(params.get("smooth_sigma"))
+            str(params.get("smooth_sigma", None))
         ])
-    if params.get("scale_factor") is not None:
+    if params.get("scale_factor", None) is not None:
         cargs.extend([
             "-scale",
-            str(params.get("scale_factor"))
+            str(params.get("scale_factor", None))
         ])
-    if params.get("sinc_flag"):
+    if params.get("sinc_flag", False):
         cargs.append("-sinc")
-    if params.get("transform_flag"):
+    if params.get("transform_flag", False):
         cargs.append("-t")
-    if params.get("echo_time") is not None:
+    if params.get("echo_time", None) is not None:
         cargs.extend([
             "-te",
-            str(params.get("echo_time"))
+            str(params.get("echo_time", None))
         ])
-    if params.get("repetition_time") is not None:
+    if params.get("repetition_time", None) is not None:
         cargs.extend([
             "-tr",
-            str(params.get("repetition_time"))
+            str(params.get("repetition_time", None))
         ])
-    if params.get("trilinear_flag"):
+    if params.get("trilinear_flag", False):
         cargs.append("-trilinear")
-    if params.get("tukey_flag"):
+    if params.get("tukey_flag", False):
         cargs.append("-tukey")
-    if params.get("help_flag"):
+    if params.get("help_flag", False):
         cargs.append("-u")
-    if params.get("use_brain_mask_flag"):
+    if params.get("use_brain_mask_flag", False):
         cargs.append("-use_brain_mask")
-    if params.get("write_intermediate") is not None:
+    if params.get("write_intermediate", None) is not None:
         cargs.extend([
             "-w",
-            str(params.get("write_intermediate"))
+            str(params.get("write_intermediate", None))
         ])
-    if params.get("extract_subimage") is not None:
+    if params.get("extract_subimage", None) is not None:
         cargs.extend([
             "-extract",
-            *map(str, params.get("extract_subimage"))
+            *map(str, params.get("extract_subimage", None))
         ])
-    if params.get("window_flag"):
+    if params.get("window_flag", False):
         cargs.append("-window")
     return cargs
 
@@ -575,7 +582,6 @@ def mri_ms_fitparms(
 __all__ = [
     "MRI_MS_FITPARMS_METADATA",
     "MriMsFitparmsOutputs",
-    "MriMsFitparmsParameters",
     "mri_ms_fitparms",
     "mri_ms_fitparms_execute",
     "mri_ms_fitparms_params",

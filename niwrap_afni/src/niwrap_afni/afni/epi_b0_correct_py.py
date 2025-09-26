@@ -14,7 +14,34 @@ EPI_B0_CORRECT_PY_METADATA = Metadata(
 
 
 EpiB0CorrectPyParameters = typing.TypedDict('EpiB0CorrectPyParameters', {
-    "@type": typing.Literal["afni.epi_b0_correct.py"],
+    "@type": typing.NotRequired[typing.Literal["afni/epi_b0_correct.py"]],
+    "prefix": str,
+    "input_freq": InputPathType,
+    "input_epi": InputPathType,
+    "input_mask": typing.NotRequired[InputPathType | None],
+    "input_magn": typing.NotRequired[InputPathType | None],
+    "input_anat": typing.NotRequired[InputPathType | None],
+    "input_json": typing.NotRequired[InputPathType | None],
+    "epi_pe_dir": str,
+    "epi_pe_bwpp": typing.NotRequired[float | None],
+    "epi_pe_echo_sp": typing.NotRequired[float | None],
+    "epi_pe_vox_dim": typing.NotRequired[float | None],
+    "scale_freq": typing.NotRequired[float | None],
+    "out_cmds": typing.NotRequired[str | None],
+    "out_pars": typing.NotRequired[str | None],
+    "wdir_name": typing.NotRequired[str | None],
+    "blur_sigma": typing.NotRequired[float | None],
+    "do_recenter_freq": typing.NotRequired[str | None],
+    "mask_dilate": typing.NotRequired[list[float] | None],
+    "no_clean": bool,
+    "qc_box_focus_ulay": bool,
+    "no_qc_image": bool,
+    "help": bool,
+    "ver": bool,
+    "date": bool,
+})
+EpiB0CorrectPyParametersTagged = typing.TypedDict('EpiB0CorrectPyParametersTagged', {
+    "@type": typing.Literal["afni/epi_b0_correct.py"],
     "prefix": str,
     "input_freq": InputPathType,
     "input_epi": InputPathType,
@@ -42,41 +69,9 @@ EpiB0CorrectPyParameters = typing.TypedDict('EpiB0CorrectPyParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "afni.epi_b0_correct.py": epi_b0_correct_py_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "afni.epi_b0_correct.py": epi_b0_correct_py_outputs,
-    }.get(t)
-
-
 class EpiB0CorrectPyOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `epi_b0_correct_py(...)`.
+    Output object returned when calling `EpiB0CorrectPyParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -117,7 +112,7 @@ def epi_b0_correct_py_params(
     help_: bool = False,
     ver: bool = False,
     date: bool = False,
-) -> EpiB0CorrectPyParameters:
+) -> EpiB0CorrectPyParametersTagged:
     """
     Build parameters.
     
@@ -164,7 +159,7 @@ def epi_b0_correct_py_params(
         Parameter dictionary
     """
     params = {
-        "@type": "afni.epi_b0_correct.py",
+        "@type": "afni/epi_b0_correct.py",
         "prefix": prefix,
         "input_freq": input_freq,
         "input_epi": input_epi,
@@ -222,100 +217,100 @@ def epi_b0_correct_py_cargs(
     """
     cargs = []
     cargs.append("epi_b0_correct.py")
-    cargs.append(params.get("prefix"))
+    cargs.append(params.get("prefix", None))
     cargs.extend([
         "-in_freq",
-        execution.input_file(params.get("input_freq"))
+        execution.input_file(params.get("input_freq", None))
     ])
     cargs.extend([
         "-in_epi",
-        execution.input_file(params.get("input_epi"))
+        execution.input_file(params.get("input_epi", None))
     ])
-    if params.get("input_mask") is not None:
+    if params.get("input_mask", None) is not None:
         cargs.extend([
             "-in_mask",
-            execution.input_file(params.get("input_mask"))
+            execution.input_file(params.get("input_mask", None))
         ])
-    if params.get("input_magn") is not None:
+    if params.get("input_magn", None) is not None:
         cargs.extend([
             "-in_magn",
-            execution.input_file(params.get("input_magn"))
+            execution.input_file(params.get("input_magn", None))
         ])
-    if params.get("input_anat") is not None:
+    if params.get("input_anat", None) is not None:
         cargs.extend([
             "-in_anat",
-            execution.input_file(params.get("input_anat"))
+            execution.input_file(params.get("input_anat", None))
         ])
-    if params.get("input_json") is not None:
+    if params.get("input_json", None) is not None:
         cargs.extend([
             "-in_epi_json",
-            execution.input_file(params.get("input_json"))
+            execution.input_file(params.get("input_json", None))
         ])
     cargs.extend([
         "-epi_pe_dir",
-        params.get("epi_pe_dir")
+        params.get("epi_pe_dir", None)
     ])
-    if params.get("epi_pe_bwpp") is not None:
+    if params.get("epi_pe_bwpp", None) is not None:
         cargs.extend([
             "-epi_pe_bwpp",
-            str(params.get("epi_pe_bwpp"))
+            str(params.get("epi_pe_bwpp", None))
         ])
-    if params.get("epi_pe_echo_sp") is not None:
+    if params.get("epi_pe_echo_sp", None) is not None:
         cargs.extend([
             "-epi_pe_echo_sp",
-            str(params.get("epi_pe_echo_sp"))
+            str(params.get("epi_pe_echo_sp", None))
         ])
-    if params.get("epi_pe_vox_dim") is not None:
+    if params.get("epi_pe_vox_dim", None) is not None:
         cargs.extend([
             "-epi_pe_voxdim",
-            str(params.get("epi_pe_vox_dim"))
+            str(params.get("epi_pe_vox_dim", None))
         ])
-    if params.get("scale_freq") is not None:
+    if params.get("scale_freq", None) is not None:
         cargs.extend([
             "-scale_freq",
-            str(params.get("scale_freq"))
+            str(params.get("scale_freq", None))
         ])
-    if params.get("out_cmds") is not None:
+    if params.get("out_cmds", None) is not None:
         cargs.extend([
             "-out_cmds",
-            params.get("out_cmds")
+            params.get("out_cmds", None)
         ])
-    if params.get("out_pars") is not None:
+    if params.get("out_pars", None) is not None:
         cargs.extend([
             "-out_pars",
-            params.get("out_pars")
+            params.get("out_pars", None)
         ])
-    if params.get("wdir_name") is not None:
+    if params.get("wdir_name", None) is not None:
         cargs.extend([
             "-wdir_name",
-            params.get("wdir_name")
+            params.get("wdir_name", None)
         ])
-    if params.get("blur_sigma") is not None:
+    if params.get("blur_sigma", None) is not None:
         cargs.extend([
             "-blur_sigma",
-            str(params.get("blur_sigma"))
+            str(params.get("blur_sigma", None))
         ])
-    if params.get("do_recenter_freq") is not None:
+    if params.get("do_recenter_freq", None) is not None:
         cargs.extend([
             "-do_recenter_freq",
-            params.get("do_recenter_freq")
+            params.get("do_recenter_freq", None)
         ])
-    if params.get("mask_dilate") is not None:
+    if params.get("mask_dilate", None) is not None:
         cargs.extend([
             "-mask_dilate",
-            *map(str, params.get("mask_dilate"))
+            *map(str, params.get("mask_dilate", None))
         ])
-    if params.get("no_clean"):
+    if params.get("no_clean", False):
         cargs.append("-no_clean")
-    if params.get("qc_box_focus_ulay"):
+    if params.get("qc_box_focus_ulay", False):
         cargs.append("-qc_box_focus_ulay")
-    if params.get("no_qc_image"):
+    if params.get("no_qc_image", False):
         cargs.append("-no_qc_image")
-    if params.get("help"):
+    if params.get("help", False):
         cargs.append("-help")
-    if params.get("ver"):
+    if params.get("ver", False):
         cargs.append("-ver")
-    if params.get("date"):
+    if params.get("date", False):
         cargs.append("-date")
     return cargs
 
@@ -335,11 +330,11 @@ def epi_b0_correct_py_outputs(
     """
     ret = EpiB0CorrectPyOutputs(
         root=execution.output_file("."),
-        warp_dset=execution.output_file(params.get("prefix") + "_WARP.nii.gz"),
-        cmds_script=execution.output_file(params.get("prefix") + "_cmds.tcsh"),
-        params_txt=execution.output_file(params.get("prefix") + "_pars.txt"),
-        unwarped_epi=execution.output_file(params.get("prefix") + "_unwarped.nii.gz"),
-        qc_image_dir=execution.output_file(params.get("prefix") + "_QC/"),
+        warp_dset=execution.output_file(params.get("prefix", None) + "_WARP.nii.gz"),
+        cmds_script=execution.output_file(params.get("prefix", None) + "_cmds.tcsh"),
+        params_txt=execution.output_file(params.get("prefix", None) + "_pars.txt"),
+        unwarped_epi=execution.output_file(params.get("prefix", None) + "_unwarped.nii.gz"),
+        qc_image_dir=execution.output_file(params.get("prefix", None) + "_QC/"),
     )
     return ret
 
@@ -483,7 +478,6 @@ def epi_b0_correct_py(
 __all__ = [
     "EPI_B0_CORRECT_PY_METADATA",
     "EpiB0CorrectPyOutputs",
-    "EpiB0CorrectPyParameters",
     "epi_b0_correct_py",
     "epi_b0_correct_py_execute",
     "epi_b0_correct_py_params",

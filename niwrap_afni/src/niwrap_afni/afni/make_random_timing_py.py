@@ -14,7 +14,35 @@ MAKE_RANDOM_TIMING_PY_METADATA = Metadata(
 
 
 MakeRandomTimingPyParameters = typing.TypedDict('MakeRandomTimingPyParameters', {
-    "@type": typing.Literal["afni.make_random_timing.py"],
+    "@type": typing.NotRequired[typing.Literal["afni/make_random_timing.py"]],
+    "num_runs": float,
+    "run_time": list[float],
+    "num_stim": float,
+    "num_reps": list[float],
+    "prefix": str,
+    "stim_dur": typing.NotRequired[list[float] | None],
+    "across_runs": bool,
+    "max_consec": typing.NotRequired[list[float] | None],
+    "max_rest": typing.NotRequired[float | None],
+    "min_rest": typing.NotRequired[float | None],
+    "not_first": typing.NotRequired[list[str] | None],
+    "not_last": typing.NotRequired[list[str] | None],
+    "offset": typing.NotRequired[float | None],
+    "ordered_stimuli": typing.NotRequired[list[str] | None],
+    "pre_stim_rest": typing.NotRequired[float | None],
+    "post_stim_rest": typing.NotRequired[float | None],
+    "save_3dd_cmd": typing.NotRequired[str | None],
+    "seed": typing.NotRequired[float | None],
+    "stim_labels": typing.NotRequired[list[str] | None],
+    "t_digits": typing.NotRequired[float | None],
+    "t_gran": typing.NotRequired[float | None],
+    "tr": typing.NotRequired[float | None],
+    "tr_locked": bool,
+    "verb": typing.NotRequired[float | None],
+    "show_timing_stats": bool,
+})
+MakeRandomTimingPyParametersTagged = typing.TypedDict('MakeRandomTimingPyParametersTagged', {
+    "@type": typing.Literal["afni/make_random_timing.py"],
     "num_runs": float,
     "run_time": list[float],
     "num_stim": float,
@@ -43,40 +71,9 @@ MakeRandomTimingPyParameters = typing.TypedDict('MakeRandomTimingPyParameters', 
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "afni.make_random_timing.py": make_random_timing_py_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-    }.get(t)
-
-
 class MakeRandomTimingPyOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `make_random_timing_py(...)`.
+    Output object returned when calling `MakeRandomTimingPyParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -108,7 +105,7 @@ def make_random_timing_py_params(
     tr_locked: bool = False,
     verb: float | None = None,
     show_timing_stats: bool = False,
-) -> MakeRandomTimingPyParameters:
+) -> MakeRandomTimingPyParametersTagged:
     """
     Build parameters.
     
@@ -142,7 +139,7 @@ def make_random_timing_py_params(
         Parameter dictionary
     """
     params = {
-        "@type": "afni.make_random_timing.py",
+        "@type": "afni/make_random_timing.py",
         "num_runs": num_runs,
         "run_time": run_time,
         "num_stim": num_stim,
@@ -206,114 +203,114 @@ def make_random_timing_py_cargs(
     cargs.append("make_random_timing.py")
     cargs.extend([
         "-num_runs",
-        str(params.get("num_runs"))
+        str(params.get("num_runs", None))
     ])
     cargs.extend([
         "-run_time",
-        *map(str, params.get("run_time"))
+        *map(str, params.get("run_time", None))
     ])
     cargs.extend([
         "-num_stim",
-        str(params.get("num_stim"))
+        str(params.get("num_stim", None))
     ])
     cargs.extend([
         "-num_reps",
-        *map(str, params.get("num_reps"))
+        *map(str, params.get("num_reps", None))
     ])
     cargs.extend([
         "-prefix",
-        params.get("prefix")
+        params.get("prefix", None)
     ])
-    if params.get("stim_dur") is not None:
+    if params.get("stim_dur", None) is not None:
         cargs.extend([
             "-stim_dur",
-            *map(str, params.get("stim_dur"))
+            *map(str, params.get("stim_dur", None))
         ])
-    if params.get("across_runs"):
+    if params.get("across_runs", False):
         cargs.append("-across_runs")
-    if params.get("max_consec") is not None:
+    if params.get("max_consec", None) is not None:
         cargs.extend([
             "-max_consec",
-            *map(str, params.get("max_consec"))
+            *map(str, params.get("max_consec", None))
         ])
-    if params.get("max_rest") is not None:
+    if params.get("max_rest", None) is not None:
         cargs.extend([
             "-max_rest",
-            str(params.get("max_rest"))
+            str(params.get("max_rest", None))
         ])
-    if params.get("min_rest") is not None:
+    if params.get("min_rest", None) is not None:
         cargs.extend([
             "-min_rest",
-            str(params.get("min_rest"))
+            str(params.get("min_rest", None))
         ])
-    if params.get("not_first") is not None:
+    if params.get("not_first", None) is not None:
         cargs.extend([
             "-not_first",
-            *params.get("not_first")
+            *params.get("not_first", None)
         ])
-    if params.get("not_last") is not None:
+    if params.get("not_last", None) is not None:
         cargs.extend([
             "-not_last",
-            *params.get("not_last")
+            *params.get("not_last", None)
         ])
-    if params.get("offset") is not None:
+    if params.get("offset", None) is not None:
         cargs.extend([
             "-offset",
-            str(params.get("offset"))
+            str(params.get("offset", None))
         ])
-    if params.get("ordered_stimuli") is not None:
+    if params.get("ordered_stimuli", None) is not None:
         cargs.extend([
             "-ordered_stimuli",
-            *params.get("ordered_stimuli")
+            *params.get("ordered_stimuli", None)
         ])
-    if params.get("pre_stim_rest") is not None:
+    if params.get("pre_stim_rest", None) is not None:
         cargs.extend([
             "-pre_stim_rest",
-            str(params.get("pre_stim_rest"))
+            str(params.get("pre_stim_rest", None))
         ])
-    if params.get("post_stim_rest") is not None:
+    if params.get("post_stim_rest", None) is not None:
         cargs.extend([
             "-post_stim_rest",
-            str(params.get("post_stim_rest"))
+            str(params.get("post_stim_rest", None))
         ])
-    if params.get("save_3dd_cmd") is not None:
+    if params.get("save_3dd_cmd", None) is not None:
         cargs.extend([
             "-save_3dd_cmd",
-            params.get("save_3dd_cmd")
+            params.get("save_3dd_cmd", None)
         ])
-    if params.get("seed") is not None:
+    if params.get("seed", None) is not None:
         cargs.extend([
             "-seed",
-            str(params.get("seed"))
+            str(params.get("seed", None))
         ])
-    if params.get("stim_labels") is not None:
+    if params.get("stim_labels", None) is not None:
         cargs.extend([
             "-stim_labels",
-            *params.get("stim_labels")
+            *params.get("stim_labels", None)
         ])
-    if params.get("t_digits") is not None:
+    if params.get("t_digits", None) is not None:
         cargs.extend([
             "-t_digits",
-            str(params.get("t_digits"))
+            str(params.get("t_digits", None))
         ])
-    if params.get("t_gran") is not None:
+    if params.get("t_gran", None) is not None:
         cargs.extend([
             "-t_gran",
-            str(params.get("t_gran"))
+            str(params.get("t_gran", None))
         ])
-    if params.get("tr") is not None:
+    if params.get("tr", None) is not None:
         cargs.extend([
             "-tr",
-            str(params.get("tr"))
+            str(params.get("tr", None))
         ])
-    if params.get("tr_locked"):
+    if params.get("tr_locked", False):
         cargs.append("-tr_locked")
-    if params.get("verb") is not None:
+    if params.get("verb", None) is not None:
         cargs.extend([
             "-verb",
-            str(params.get("verb"))
+            str(params.get("verb", None))
         ])
-    if params.get("show_timing_stats"):
+    if params.get("show_timing_stats", False):
         cargs.append("-show_timing_stats")
     return cargs
 
@@ -465,7 +462,6 @@ def make_random_timing_py(
 __all__ = [
     "MAKE_RANDOM_TIMING_PY_METADATA",
     "MakeRandomTimingPyOutputs",
-    "MakeRandomTimingPyParameters",
     "make_random_timing_py",
     "make_random_timing_py_execute",
     "make_random_timing_py_params",

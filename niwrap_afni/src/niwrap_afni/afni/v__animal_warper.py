@@ -14,7 +14,44 @@ V__ANIMAL_WARPER_METADATA = Metadata(
 
 
 VAnimalWarperParameters = typing.TypedDict('VAnimalWarperParameters', {
-    "@type": typing.Literal["afni.@animal_warper"],
+    "@type": typing.NotRequired[typing.Literal["afni/@animal_warper"]],
+    "input_file": InputPathType,
+    "base_template": InputPathType,
+    "output_dir": str,
+    "brainmask": typing.NotRequired[InputPathType | None],
+    "atlases": typing.NotRequired[list[InputPathType] | None],
+    "atlas_followers": typing.NotRequired[list[InputPathType] | None],
+    "seg_followers": typing.NotRequired[list[InputPathType] | None],
+    "template_followers": typing.NotRequired[list[InputPathType] | None],
+    "dset_followers": typing.NotRequired[list[InputPathType] | None],
+    "roidset_followers": typing.NotRequired[list[InputPathType] | None],
+    "input_abbrev": typing.NotRequired[str | None],
+    "base_abbrev": typing.NotRequired[str | None],
+    "atlas_abbrevs": typing.NotRequired[list[str] | None],
+    "template_abbrevs": typing.NotRequired[list[str] | None],
+    "seg_abbrevs": typing.NotRequired[list[str] | None],
+    "dset_abbrevs": typing.NotRequired[list[str] | None],
+    "roidset_abbrevs": typing.NotRequired[list[str] | None],
+    "align_centers_meth": typing.NotRequired[str | None],
+    "aff_move_opt": typing.NotRequired[str | None],
+    "cost": typing.NotRequired[str | None],
+    "maxlev": typing.NotRequired[float | None],
+    "no_surfaces": bool,
+    "feature_size": typing.NotRequired[float | None],
+    "supersize": bool,
+    "init_scale": typing.NotRequired[float | None],
+    "mode_smooth_size": typing.NotRequired[float | None],
+    "mode_smooth_replacement_off": bool,
+    "center_out": typing.NotRequired[str | None],
+    "align_type": typing.NotRequired[str | None],
+    "extra_qw_opts": typing.NotRequired[str | None],
+    "keep_temp": bool,
+    "version": bool,
+    "ok_to_exist": bool,
+    "echo": bool,
+})
+VAnimalWarperParametersTagged = typing.TypedDict('VAnimalWarperParametersTagged', {
+    "@type": typing.Literal["afni/@animal_warper"],
     "input_file": InputPathType,
     "base_template": InputPathType,
     "output_dir": str,
@@ -52,41 +89,9 @@ VAnimalWarperParameters = typing.TypedDict('VAnimalWarperParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "afni.@animal_warper": v__animal_warper_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "afni.@animal_warper": v__animal_warper_outputs,
-    }.get(t)
-
-
 class VAnimalWarperOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `v__animal_warper(...)`.
+    Output object returned when calling `VAnimalWarperParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -140,7 +145,7 @@ def v__animal_warper_params(
     version: bool = False,
     ok_to_exist: bool = False,
     echo: bool = False,
-) -> VAnimalWarperParameters:
+) -> VAnimalWarperParametersTagged:
     """
     Build parameters.
     
@@ -193,7 +198,7 @@ def v__animal_warper_params(
         Parameter dictionary
     """
     params = {
-        "@type": "afni.@animal_warper",
+        "@type": "afni/@animal_warper",
         "input_file": input_file,
         "base_template": base_template,
         "output_dir": output_dir,
@@ -271,139 +276,139 @@ def v__animal_warper_cargs(
     """
     cargs = []
     cargs.append("@animal_warper")
-    cargs.append(execution.input_file(params.get("input_file")))
-    cargs.append(execution.input_file(params.get("base_template")))
-    cargs.append(params.get("output_dir"))
-    if params.get("brainmask") is not None:
-        cargs.append(execution.input_file(params.get("brainmask")))
-    if params.get("atlases") is not None:
+    cargs.append(execution.input_file(params.get("input_file", None)))
+    cargs.append(execution.input_file(params.get("base_template", None)))
+    cargs.append(params.get("output_dir", None))
+    if params.get("brainmask", None) is not None:
+        cargs.append(execution.input_file(params.get("brainmask", None)))
+    if params.get("atlases", None) is not None:
         cargs.extend([
             "-atlas",
-            *[execution.input_file(f) for f in params.get("atlases")]
+            *[execution.input_file(f) for f in params.get("atlases", None)]
         ])
-    if params.get("atlas_followers") is not None:
+    if params.get("atlas_followers", None) is not None:
         cargs.extend([
             "-atlas_followers",
-            *[execution.input_file(f) for f in params.get("atlas_followers")]
+            *[execution.input_file(f) for f in params.get("atlas_followers", None)]
         ])
-    if params.get("seg_followers") is not None:
+    if params.get("seg_followers", None) is not None:
         cargs.extend([
             "-seg_followers",
-            *[execution.input_file(f) for f in params.get("seg_followers")]
+            *[execution.input_file(f) for f in params.get("seg_followers", None)]
         ])
-    if params.get("template_followers") is not None:
+    if params.get("template_followers", None) is not None:
         cargs.extend([
             "-template_followers",
-            *[execution.input_file(f) for f in params.get("template_followers")]
+            *[execution.input_file(f) for f in params.get("template_followers", None)]
         ])
-    if params.get("dset_followers") is not None:
+    if params.get("dset_followers", None) is not None:
         cargs.extend([
             "-dset_followers",
-            *[execution.input_file(f) for f in params.get("dset_followers")]
+            *[execution.input_file(f) for f in params.get("dset_followers", None)]
         ])
-    if params.get("roidset_followers") is not None:
+    if params.get("roidset_followers", None) is not None:
         cargs.extend([
             "-roidset_followers",
-            *[execution.input_file(f) for f in params.get("roidset_followers")]
+            *[execution.input_file(f) for f in params.get("roidset_followers", None)]
         ])
-    if params.get("input_abbrev") is not None:
+    if params.get("input_abbrev", None) is not None:
         cargs.extend([
             "-input_abbrev",
-            params.get("input_abbrev")
+            params.get("input_abbrev", None)
         ])
-    if params.get("base_abbrev") is not None:
+    if params.get("base_abbrev", None) is not None:
         cargs.extend([
             "-base_abbrev",
-            params.get("base_abbrev")
+            params.get("base_abbrev", None)
         ])
-    if params.get("atlas_abbrevs") is not None:
+    if params.get("atlas_abbrevs", None) is not None:
         cargs.extend([
             "-atlas_abbrevs",
-            *params.get("atlas_abbrevs")
+            *params.get("atlas_abbrevs", None)
         ])
-    if params.get("template_abbrevs") is not None:
+    if params.get("template_abbrevs", None) is not None:
         cargs.extend([
             "-template_abbrevs",
-            *params.get("template_abbrevs")
+            *params.get("template_abbrevs", None)
         ])
-    if params.get("seg_abbrevs") is not None:
+    if params.get("seg_abbrevs", None) is not None:
         cargs.extend([
             "-seg_abbrevs",
-            *params.get("seg_abbrevs")
+            *params.get("seg_abbrevs", None)
         ])
-    if params.get("dset_abbrevs") is not None:
+    if params.get("dset_abbrevs", None) is not None:
         cargs.extend([
             "-dset_abbrevs",
-            *params.get("dset_abbrevs")
+            *params.get("dset_abbrevs", None)
         ])
-    if params.get("roidset_abbrevs") is not None:
+    if params.get("roidset_abbrevs", None) is not None:
         cargs.extend([
             "-roidset_abbrevs",
-            *params.get("roidset_abbrevs")
+            *params.get("roidset_abbrevs", None)
         ])
-    if params.get("align_centers_meth") is not None:
+    if params.get("align_centers_meth", None) is not None:
         cargs.extend([
             "-align_centers_meth",
-            params.get("align_centers_meth")
+            params.get("align_centers_meth", None)
         ])
-    if params.get("aff_move_opt") is not None:
+    if params.get("aff_move_opt", None) is not None:
         cargs.extend([
             "-aff_move_opt",
-            params.get("aff_move_opt")
+            params.get("aff_move_opt", None)
         ])
-    if params.get("cost") is not None:
+    if params.get("cost", None) is not None:
         cargs.extend([
             "-cost",
-            params.get("cost")
+            params.get("cost", None)
         ])
-    if params.get("maxlev") is not None:
+    if params.get("maxlev", None) is not None:
         cargs.extend([
             "-maxlev",
-            str(params.get("maxlev"))
+            str(params.get("maxlev", None))
         ])
-    if params.get("no_surfaces"):
+    if params.get("no_surfaces", False):
         cargs.append("-no_surfaces")
-    if params.get("feature_size") is not None:
+    if params.get("feature_size", None) is not None:
         cargs.extend([
             "-feature_size",
-            str(params.get("feature_size"))
+            str(params.get("feature_size", None))
         ])
-    if params.get("supersize"):
+    if params.get("supersize", False):
         cargs.append("-supersize")
-    if params.get("init_scale") is not None:
+    if params.get("init_scale", None) is not None:
         cargs.extend([
             "-init_scale",
-            str(params.get("init_scale"))
+            str(params.get("init_scale", None))
         ])
-    if params.get("mode_smooth_size") is not None:
+    if params.get("mode_smooth_size", None) is not None:
         cargs.extend([
             "-mode_smooth_size",
-            str(params.get("mode_smooth_size"))
+            str(params.get("mode_smooth_size", None))
         ])
-    if params.get("mode_smooth_replacement_off"):
+    if params.get("mode_smooth_replacement_off", False):
         cargs.append("-mode_smooth_replacement_off")
-    if params.get("center_out") is not None:
+    if params.get("center_out", None) is not None:
         cargs.extend([
             "-center_out",
-            params.get("center_out")
+            params.get("center_out", None)
         ])
-    if params.get("align_type") is not None:
+    if params.get("align_type", None) is not None:
         cargs.extend([
             "-align_type",
-            params.get("align_type")
+            params.get("align_type", None)
         ])
-    if params.get("extra_qw_opts") is not None:
+    if params.get("extra_qw_opts", None) is not None:
         cargs.extend([
             "-extra_qw_opts",
-            params.get("extra_qw_opts")
+            params.get("extra_qw_opts", None)
         ])
-    if params.get("keep_temp"):
+    if params.get("keep_temp", False):
         cargs.append("-keep_temp")
-    if params.get("version"):
+    if params.get("version", False):
         cargs.append("-ver")
-    if params.get("ok_to_exist"):
+    if params.get("ok_to_exist", False):
         cargs.append("-ok_to_exist")
-    if params.get("echo"):
+    if params.get("echo", False):
         cargs.append("-echo")
     return cargs
 
@@ -423,7 +428,7 @@ def v__animal_warper_outputs(
     """
     ret = VAnimalWarperOutputs(
         root=execution.output_file("."),
-        warp2std=execution.output_file("aw_results/" + pathlib.Path(params.get("input_file")).name + "_warp2std.nii.gz"),
+        warp2std=execution.output_file("aw_results/" + pathlib.Path(params.get("input_file", None)).name + "_warp2std.nii.gz"),
         qc_image_initial=execution.output_file("aw_results/init_qc_00.input+base.jpg"),
         qc_image_initial_sh=execution.output_file("aw_results/init_qc_01.input_sh+base.jpg"),
         dset_followers_out=execution.output_file("aw_results/DSET_FOLL.nii.gz"),
@@ -599,7 +604,6 @@ def v__animal_warper(
 
 __all__ = [
     "VAnimalWarperOutputs",
-    "VAnimalWarperParameters",
     "V__ANIMAL_WARPER_METADATA",
     "v__animal_warper",
     "v__animal_warper_execute",

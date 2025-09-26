@@ -14,7 +14,14 @@ FSL_LABEL2VOXEL_METADATA = Metadata(
 
 
 FslLabel2voxelParameters = typing.TypedDict('FslLabel2voxelParameters', {
-    "@type": typing.Literal["freesurfer.fsl_label2voxel"],
+    "@type": typing.NotRequired[typing.Literal["freesurfer/fsl_label2voxel"]],
+    "label_value": float,
+    "labeled_volume": InputPathType,
+    "src_volume": InputPathType,
+    "output_filename": str,
+})
+FslLabel2voxelParametersTagged = typing.TypedDict('FslLabel2voxelParametersTagged', {
+    "@type": typing.Literal["freesurfer/fsl_label2voxel"],
     "label_value": float,
     "labeled_volume": InputPathType,
     "src_volume": InputPathType,
@@ -22,41 +29,9 @@ FslLabel2voxelParameters = typing.TypedDict('FslLabel2voxelParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "freesurfer.fsl_label2voxel": fsl_label2voxel_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "freesurfer.fsl_label2voxel": fsl_label2voxel_outputs,
-    }.get(t)
-
-
 class FslLabel2voxelOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `fsl_label2voxel(...)`.
+    Output object returned when calling `FslLabel2voxelParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -69,7 +44,7 @@ def fsl_label2voxel_params(
     labeled_volume: InputPathType,
     src_volume: InputPathType,
     output_filename: str,
-) -> FslLabel2voxelParameters:
+) -> FslLabel2voxelParametersTagged:
     """
     Build parameters.
     
@@ -82,7 +57,7 @@ def fsl_label2voxel_params(
         Parameter dictionary
     """
     params = {
-        "@type": "freesurfer.fsl_label2voxel",
+        "@type": "freesurfer/fsl_label2voxel",
         "label_value": label_value,
         "labeled_volume": labeled_volume,
         "src_volume": src_volume,
@@ -106,10 +81,10 @@ def fsl_label2voxel_cargs(
     """
     cargs = []
     cargs.append("fsl_label2voxel")
-    cargs.append(str(params.get("label_value")))
-    cargs.append(execution.input_file(params.get("labeled_volume")))
-    cargs.append(execution.input_file(params.get("src_volume")))
-    cargs.append(params.get("output_filename"))
+    cargs.append(str(params.get("label_value", None)))
+    cargs.append(execution.input_file(params.get("labeled_volume", None)))
+    cargs.append(execution.input_file(params.get("src_volume", None)))
+    cargs.append(params.get("output_filename", None))
     return cargs
 
 
@@ -128,7 +103,7 @@ def fsl_label2voxel_outputs(
     """
     ret = FslLabel2voxelOutputs(
         root=execution.output_file("."),
-        output_voxel_data=execution.output_file(params.get("output_filename")),
+        output_voxel_data=execution.output_file(params.get("output_filename", None)),
     )
     return ret
 
@@ -198,7 +173,6 @@ def fsl_label2voxel(
 __all__ = [
     "FSL_LABEL2VOXEL_METADATA",
     "FslLabel2voxelOutputs",
-    "FslLabel2voxelParameters",
     "fsl_label2voxel",
     "fsl_label2voxel_execute",
     "fsl_label2voxel_params",

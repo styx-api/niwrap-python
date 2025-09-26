@@ -14,93 +14,153 @@ MRCONVERT_METADATA = Metadata(
 
 
 MrconvertCoordParameters = typing.TypedDict('MrconvertCoordParameters', {
-    "@type": typing.Literal["mrtrix.mrconvert.coord"],
+    "@type": typing.NotRequired[typing.Literal["coord"]],
+    "axis": int,
+    "selection": list[int],
+})
+MrconvertCoordParametersTagged = typing.TypedDict('MrconvertCoordParametersTagged', {
+    "@type": typing.Literal["coord"],
     "axis": int,
     "selection": list[int],
 })
 
 
 MrconvertClearPropertyParameters = typing.TypedDict('MrconvertClearPropertyParameters', {
-    "@type": typing.Literal["mrtrix.mrconvert.clear_property"],
+    "@type": typing.NotRequired[typing.Literal["clear_property"]],
+    "key": str,
+})
+MrconvertClearPropertyParametersTagged = typing.TypedDict('MrconvertClearPropertyParametersTagged', {
+    "@type": typing.Literal["clear_property"],
     "key": str,
 })
 
 
 MrconvertSetPropertyParameters = typing.TypedDict('MrconvertSetPropertyParameters', {
-    "@type": typing.Literal["mrtrix.mrconvert.set_property"],
+    "@type": typing.NotRequired[typing.Literal["set_property"]],
+    "key": str,
+    "value": str,
+})
+MrconvertSetPropertyParametersTagged = typing.TypedDict('MrconvertSetPropertyParametersTagged', {
+    "@type": typing.Literal["set_property"],
     "key": str,
     "value": str,
 })
 
 
 MrconvertAppendPropertyParameters = typing.TypedDict('MrconvertAppendPropertyParameters', {
-    "@type": typing.Literal["mrtrix.mrconvert.append_property"],
+    "@type": typing.NotRequired[typing.Literal["append_property"]],
+    "key": str,
+    "value": str,
+})
+MrconvertAppendPropertyParametersTagged = typing.TypedDict('MrconvertAppendPropertyParametersTagged', {
+    "@type": typing.Literal["append_property"],
     "key": str,
     "value": str,
 })
 
 
 MrconvertVariousStringParameters = typing.TypedDict('MrconvertVariousStringParameters', {
-    "@type": typing.Literal["mrtrix.mrconvert.VariousString"],
+    "@type": typing.NotRequired[typing.Literal["VariousString"]],
+    "obj": str,
+})
+MrconvertVariousStringParametersTagged = typing.TypedDict('MrconvertVariousStringParametersTagged', {
+    "@type": typing.Literal["VariousString"],
     "obj": str,
 })
 
 
 MrconvertVariousFileParameters = typing.TypedDict('MrconvertVariousFileParameters', {
-    "@type": typing.Literal["mrtrix.mrconvert.VariousFile"],
+    "@type": typing.NotRequired[typing.Literal["VariousFile"]],
+    "obj": InputPathType,
+})
+MrconvertVariousFileParametersTagged = typing.TypedDict('MrconvertVariousFileParametersTagged', {
+    "@type": typing.Literal["VariousFile"],
     "obj": InputPathType,
 })
 
 
 MrconvertVariousString1Parameters = typing.TypedDict('MrconvertVariousString1Parameters', {
-    "@type": typing.Literal["mrtrix.mrconvert.VariousString"],
+    "@type": typing.NotRequired[typing.Literal["VariousString_1"]],
+    "obj": str,
+})
+MrconvertVariousString1ParametersTagged = typing.TypedDict('MrconvertVariousString1ParametersTagged', {
+    "@type": typing.Literal["VariousString_1"],
     "obj": str,
 })
 
 
 MrconvertVariousFile1Parameters = typing.TypedDict('MrconvertVariousFile1Parameters', {
-    "@type": typing.Literal["mrtrix.mrconvert.VariousFile"],
+    "@type": typing.NotRequired[typing.Literal["VariousFile_1"]],
+    "obj": InputPathType,
+})
+MrconvertVariousFile1ParametersTagged = typing.TypedDict('MrconvertVariousFile1ParametersTagged', {
+    "@type": typing.Literal["VariousFile_1"],
     "obj": InputPathType,
 })
 
 
 MrconvertFslgradParameters = typing.TypedDict('MrconvertFslgradParameters', {
-    "@type": typing.Literal["mrtrix.mrconvert.fslgrad"],
+    "@type": typing.NotRequired[typing.Literal["fslgrad"]],
+    "bvecs": InputPathType,
+    "bvals": InputPathType,
+})
+MrconvertFslgradParametersTagged = typing.TypedDict('MrconvertFslgradParametersTagged', {
+    "@type": typing.Literal["fslgrad"],
     "bvecs": InputPathType,
     "bvals": InputPathType,
 })
 
 
 MrconvertExportGradFslParameters = typing.TypedDict('MrconvertExportGradFslParameters', {
-    "@type": typing.Literal["mrtrix.mrconvert.export_grad_fsl"],
+    "@type": typing.NotRequired[typing.Literal["export_grad_fsl"]],
+    "bvecs_path": str,
+    "bvals_path": str,
+})
+MrconvertExportGradFslParametersTagged = typing.TypedDict('MrconvertExportGradFslParametersTagged', {
+    "@type": typing.Literal["export_grad_fsl"],
     "bvecs_path": str,
     "bvals_path": str,
 })
 
 
 MrconvertImportPeEddyParameters = typing.TypedDict('MrconvertImportPeEddyParameters', {
-    "@type": typing.Literal["mrtrix.mrconvert.import_pe_eddy"],
+    "@type": typing.NotRequired[typing.Literal["import_pe_eddy"]],
+    "config": InputPathType,
+    "indices": InputPathType,
+})
+MrconvertImportPeEddyParametersTagged = typing.TypedDict('MrconvertImportPeEddyParametersTagged', {
+    "@type": typing.Literal["import_pe_eddy"],
     "config": InputPathType,
     "indices": InputPathType,
 })
 
 
 MrconvertExportPeEddyParameters = typing.TypedDict('MrconvertExportPeEddyParameters', {
-    "@type": typing.Literal["mrtrix.mrconvert.export_pe_eddy"],
+    "@type": typing.NotRequired[typing.Literal["export_pe_eddy"]],
+    "config": str,
+    "indices": str,
+})
+MrconvertExportPeEddyParametersTagged = typing.TypedDict('MrconvertExportPeEddyParametersTagged', {
+    "@type": typing.Literal["export_pe_eddy"],
     "config": str,
     "indices": str,
 })
 
 
 MrconvertConfigParameters = typing.TypedDict('MrconvertConfigParameters', {
-    "@type": typing.Literal["mrtrix.mrconvert.config"],
+    "@type": typing.NotRequired[typing.Literal["config"]],
+    "key": str,
+    "value": str,
+})
+MrconvertConfigParametersTagged = typing.TypedDict('MrconvertConfigParametersTagged', {
+    "@type": typing.Literal["config"],
     "key": str,
     "value": str,
 })
 
 
 MrconvertParameters = typing.TypedDict('MrconvertParameters', {
-    "@type": typing.Literal["mrtrix.mrconvert"],
+    "@type": typing.NotRequired[typing.Literal["mrtrix/mrconvert"]],
     "coord": typing.NotRequired[list[MrconvertCoordParameters] | None],
     "vox": typing.NotRequired[list[float] | None],
     "axes": typing.NotRequired[list[int] | None],
@@ -110,8 +170,42 @@ MrconvertParameters = typing.TypedDict('MrconvertParameters', {
     "clear_property": typing.NotRequired[list[MrconvertClearPropertyParameters] | None],
     "set_property": typing.NotRequired[list[MrconvertSetPropertyParameters] | None],
     "append_property": typing.NotRequired[list[MrconvertAppendPropertyParameters] | None],
-    "copy_properties": typing.NotRequired[typing.Union[MrconvertVariousStringParameters, MrconvertVariousFileParameters] | None],
-    "strides": typing.NotRequired[typing.Union[MrconvertVariousString1Parameters, MrconvertVariousFile1Parameters] | None],
+    "copy_properties": typing.NotRequired[typing.Union[MrconvertVariousStringParametersTagged, MrconvertVariousFileParametersTagged] | None],
+    "strides": typing.NotRequired[typing.Union[MrconvertVariousString1ParametersTagged, MrconvertVariousFile1ParametersTagged] | None],
+    "datatype": typing.NotRequired[str | None],
+    "grad": typing.NotRequired[InputPathType | None],
+    "fslgrad": typing.NotRequired[MrconvertFslgradParameters | None],
+    "bvalue_scaling": typing.NotRequired[str | None],
+    "export_grad_mrtrix": typing.NotRequired[str | None],
+    "export_grad_fsl": typing.NotRequired[MrconvertExportGradFslParameters | None],
+    "import_pe_table": typing.NotRequired[InputPathType | None],
+    "import_pe_eddy": typing.NotRequired[MrconvertImportPeEddyParameters | None],
+    "export_pe_table": typing.NotRequired[str | None],
+    "export_pe_eddy": typing.NotRequired[MrconvertExportPeEddyParameters | None],
+    "info": bool,
+    "quiet": bool,
+    "debug": bool,
+    "force": bool,
+    "nthreads": typing.NotRequired[int | None],
+    "config": typing.NotRequired[list[MrconvertConfigParameters] | None],
+    "help": bool,
+    "version": bool,
+    "input": InputPathType,
+    "output": str,
+})
+MrconvertParametersTagged = typing.TypedDict('MrconvertParametersTagged', {
+    "@type": typing.Literal["mrtrix/mrconvert"],
+    "coord": typing.NotRequired[list[MrconvertCoordParameters] | None],
+    "vox": typing.NotRequired[list[float] | None],
+    "axes": typing.NotRequired[list[int] | None],
+    "scaling": typing.NotRequired[list[float] | None],
+    "json_import": typing.NotRequired[InputPathType | None],
+    "json_export": typing.NotRequired[str | None],
+    "clear_property": typing.NotRequired[list[MrconvertClearPropertyParameters] | None],
+    "set_property": typing.NotRequired[list[MrconvertSetPropertyParameters] | None],
+    "append_property": typing.NotRequired[list[MrconvertAppendPropertyParameters] | None],
+    "copy_properties": typing.NotRequired[typing.Union[MrconvertVariousStringParametersTagged, MrconvertVariousFileParametersTagged] | None],
+    "strides": typing.NotRequired[typing.Union[MrconvertVariousString1ParametersTagged, MrconvertVariousFile1ParametersTagged] | None],
     "datatype": typing.NotRequired[str | None],
     "grad": typing.NotRequired[InputPathType | None],
     "fslgrad": typing.NotRequired[MrconvertFslgradParameters | None],
@@ -135,7 +229,7 @@ MrconvertParameters = typing.TypedDict('MrconvertParameters', {
 })
 
 
-def dyn_cargs(
+def mrconvert_copy_properties_cargs_dyn_fn(
     t: str,
 ) -> typing.Any:
     """
@@ -147,24 +241,12 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "mrtrix.mrconvert": mrconvert_cargs,
-        "mrtrix.mrconvert.coord": mrconvert_coord_cargs,
-        "mrtrix.mrconvert.clear_property": mrconvert_clear_property_cargs,
-        "mrtrix.mrconvert.set_property": mrconvert_set_property_cargs,
-        "mrtrix.mrconvert.append_property": mrconvert_append_property_cargs,
-        "mrtrix.mrconvert.VariousString": mrconvert_various_string_cargs,
-        "mrtrix.mrconvert.VariousFile": mrconvert_various_file_cargs,
-        "mrtrix.mrconvert.VariousString": mrconvert_various_string_1_cargs,
-        "mrtrix.mrconvert.VariousFile": mrconvert_various_file_1_cargs,
-        "mrtrix.mrconvert.fslgrad": mrconvert_fslgrad_cargs,
-        "mrtrix.mrconvert.export_grad_fsl": mrconvert_export_grad_fsl_cargs,
-        "mrtrix.mrconvert.import_pe_eddy": mrconvert_import_pe_eddy_cargs,
-        "mrtrix.mrconvert.export_pe_eddy": mrconvert_export_pe_eddy_cargs,
-        "mrtrix.mrconvert.config": mrconvert_config_cargs,
+        "VariousString": mrconvert_various_string_cargs,
+        "VariousFile": mrconvert_various_file_cargs,
     }.get(t)
 
 
-def dyn_outputs(
+def mrconvert_copy_properties_outputs_dyn_fn(
     t: str,
 ) -> typing.Any:
     """
@@ -176,16 +258,45 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "mrtrix.mrconvert": mrconvert_outputs,
-        "mrtrix.mrconvert.export_grad_fsl": mrconvert_export_grad_fsl_outputs,
-        "mrtrix.mrconvert.export_pe_eddy": mrconvert_export_pe_eddy_outputs,
+    }.get(t)
+
+
+def mrconvert_strides_cargs_dyn_fn(
+    t: str,
+) -> typing.Any:
+    """
+    Get build cargs function by command type.
+    
+    Args:
+        t: Command type.
+    Returns:
+        Build cargs function.
+    """
+    return {
+        "VariousString_1": mrconvert_various_string_1_cargs,
+        "VariousFile_1": mrconvert_various_file_1_cargs,
+    }.get(t)
+
+
+def mrconvert_strides_outputs_dyn_fn(
+    t: str,
+) -> typing.Any:
+    """
+    Get build outputs function by command type.
+    
+    Args:
+        t: Command type.
+    Returns:
+        Build outputs function.
+    """
+    return {
     }.get(t)
 
 
 def mrconvert_coord_params(
     axis: int,
     selection: list[int],
-) -> MrconvertCoordParameters:
+) -> MrconvertCoordParametersTagged:
     """
     Build parameters.
     
@@ -202,7 +313,7 @@ def mrconvert_coord_params(
         Parameter dictionary
     """
     params = {
-        "@type": "mrtrix.mrconvert.coord",
+        "@type": "coord",
         "axis": axis,
         "selection": selection,
     }
@@ -224,14 +335,14 @@ def mrconvert_coord_cargs(
     """
     cargs = []
     cargs.append("-coord")
-    cargs.append(str(params.get("axis")))
-    cargs.extend(map(str, params.get("selection")))
+    cargs.append(str(params.get("axis", None)))
+    cargs.extend(map(str, params.get("selection", None)))
     return cargs
 
 
 def mrconvert_clear_property_params(
     key: str,
-) -> MrconvertClearPropertyParameters:
+) -> MrconvertClearPropertyParametersTagged:
     """
     Build parameters.
     
@@ -241,7 +352,7 @@ def mrconvert_clear_property_params(
         Parameter dictionary
     """
     params = {
-        "@type": "mrtrix.mrconvert.clear_property",
+        "@type": "clear_property",
         "key": key,
     }
     return params
@@ -262,14 +373,14 @@ def mrconvert_clear_property_cargs(
     """
     cargs = []
     cargs.append("-clear_property")
-    cargs.append(params.get("key"))
+    cargs.append(params.get("key", None))
     return cargs
 
 
 def mrconvert_set_property_params(
     key: str,
     value: str,
-) -> MrconvertSetPropertyParameters:
+) -> MrconvertSetPropertyParametersTagged:
     """
     Build parameters.
     
@@ -280,7 +391,7 @@ def mrconvert_set_property_params(
         Parameter dictionary
     """
     params = {
-        "@type": "mrtrix.mrconvert.set_property",
+        "@type": "set_property",
         "key": key,
         "value": value,
     }
@@ -302,15 +413,15 @@ def mrconvert_set_property_cargs(
     """
     cargs = []
     cargs.append("-set_property")
-    cargs.append(params.get("key"))
-    cargs.append(params.get("value"))
+    cargs.append(params.get("key", None))
+    cargs.append(params.get("value", None))
     return cargs
 
 
 def mrconvert_append_property_params(
     key: str,
     value: str,
-) -> MrconvertAppendPropertyParameters:
+) -> MrconvertAppendPropertyParametersTagged:
     """
     Build parameters.
     
@@ -323,7 +434,7 @@ def mrconvert_append_property_params(
         Parameter dictionary
     """
     params = {
-        "@type": "mrtrix.mrconvert.append_property",
+        "@type": "append_property",
         "key": key,
         "value": value,
     }
@@ -345,14 +456,14 @@ def mrconvert_append_property_cargs(
     """
     cargs = []
     cargs.append("-append_property")
-    cargs.append(params.get("key"))
-    cargs.append(params.get("value"))
+    cargs.append(params.get("key", None))
+    cargs.append(params.get("value", None))
     return cargs
 
 
 def mrconvert_various_string_params(
     obj: str,
-) -> MrconvertVariousStringParameters:
+) -> MrconvertVariousStringParametersTagged:
     """
     Build parameters.
     
@@ -362,7 +473,7 @@ def mrconvert_various_string_params(
         Parameter dictionary
     """
     params = {
-        "@type": "mrtrix.mrconvert.VariousString",
+        "@type": "VariousString",
         "obj": obj,
     }
     return params
@@ -382,13 +493,13 @@ def mrconvert_various_string_cargs(
         Command-line arguments.
     """
     cargs = []
-    cargs.append(params.get("obj"))
+    cargs.append(params.get("obj", None))
     return cargs
 
 
 def mrconvert_various_file_params(
     obj: InputPathType,
-) -> MrconvertVariousFileParameters:
+) -> MrconvertVariousFileParametersTagged:
     """
     Build parameters.
     
@@ -398,7 +509,7 @@ def mrconvert_various_file_params(
         Parameter dictionary
     """
     params = {
-        "@type": "mrtrix.mrconvert.VariousFile",
+        "@type": "VariousFile",
         "obj": obj,
     }
     return params
@@ -418,13 +529,13 @@ def mrconvert_various_file_cargs(
         Command-line arguments.
     """
     cargs = []
-    cargs.append(execution.input_file(params.get("obj")))
+    cargs.append(execution.input_file(params.get("obj", None)))
     return cargs
 
 
 def mrconvert_various_string_1_params(
     obj: str,
-) -> MrconvertVariousString1Parameters:
+) -> MrconvertVariousString1ParametersTagged:
     """
     Build parameters.
     
@@ -434,7 +545,7 @@ def mrconvert_various_string_1_params(
         Parameter dictionary
     """
     params = {
-        "@type": "mrtrix.mrconvert.VariousString",
+        "@type": "VariousString_1",
         "obj": obj,
     }
     return params
@@ -454,13 +565,13 @@ def mrconvert_various_string_1_cargs(
         Command-line arguments.
     """
     cargs = []
-    cargs.append(params.get("obj"))
+    cargs.append(params.get("obj", None))
     return cargs
 
 
 def mrconvert_various_file_1_params(
     obj: InputPathType,
-) -> MrconvertVariousFile1Parameters:
+) -> MrconvertVariousFile1ParametersTagged:
     """
     Build parameters.
     
@@ -470,7 +581,7 @@ def mrconvert_various_file_1_params(
         Parameter dictionary
     """
     params = {
-        "@type": "mrtrix.mrconvert.VariousFile",
+        "@type": "VariousFile_1",
         "obj": obj,
     }
     return params
@@ -490,14 +601,14 @@ def mrconvert_various_file_1_cargs(
         Command-line arguments.
     """
     cargs = []
-    cargs.append(execution.input_file(params.get("obj")))
+    cargs.append(execution.input_file(params.get("obj", None)))
     return cargs
 
 
 def mrconvert_fslgrad_params(
     bvecs: InputPathType,
     bvals: InputPathType,
-) -> MrconvertFslgradParameters:
+) -> MrconvertFslgradParametersTagged:
     """
     Build parameters.
     
@@ -514,7 +625,7 @@ def mrconvert_fslgrad_params(
         Parameter dictionary
     """
     params = {
-        "@type": "mrtrix.mrconvert.fslgrad",
+        "@type": "fslgrad",
         "bvecs": bvecs,
         "bvals": bvals,
     }
@@ -536,8 +647,8 @@ def mrconvert_fslgrad_cargs(
     """
     cargs = []
     cargs.append("-fslgrad")
-    cargs.append(execution.input_file(params.get("bvecs")))
-    cargs.append(execution.input_file(params.get("bvals")))
+    cargs.append(execution.input_file(params.get("bvecs", None)))
+    cargs.append(execution.input_file(params.get("bvals", None)))
     return cargs
 
 
@@ -558,7 +669,7 @@ class MrconvertExportGradFslOutputs(typing.NamedTuple):
 def mrconvert_export_grad_fsl_params(
     bvecs_path: str,
     bvals_path: str,
-) -> MrconvertExportGradFslParameters:
+) -> MrconvertExportGradFslParametersTagged:
     """
     Build parameters.
     
@@ -571,7 +682,7 @@ def mrconvert_export_grad_fsl_params(
         Parameter dictionary
     """
     params = {
-        "@type": "mrtrix.mrconvert.export_grad_fsl",
+        "@type": "export_grad_fsl",
         "bvecs_path": bvecs_path,
         "bvals_path": bvals_path,
     }
@@ -593,8 +704,8 @@ def mrconvert_export_grad_fsl_cargs(
     """
     cargs = []
     cargs.append("-export_grad_fsl")
-    cargs.append(params.get("bvecs_path"))
-    cargs.append(params.get("bvals_path"))
+    cargs.append(params.get("bvecs_path", None))
+    cargs.append(params.get("bvals_path", None))
     return cargs
 
 
@@ -613,8 +724,8 @@ def mrconvert_export_grad_fsl_outputs(
     """
     ret = MrconvertExportGradFslOutputs(
         root=execution.output_file("."),
-        bvecs_path=execution.output_file(params.get("bvecs_path")),
-        bvals_path=execution.output_file(params.get("bvals_path")),
+        bvecs_path=execution.output_file(params.get("bvecs_path", None)),
+        bvals_path=execution.output_file(params.get("bvals_path", None)),
     )
     return ret
 
@@ -622,7 +733,7 @@ def mrconvert_export_grad_fsl_outputs(
 def mrconvert_import_pe_eddy_params(
     config: InputPathType,
     indices: InputPathType,
-) -> MrconvertImportPeEddyParameters:
+) -> MrconvertImportPeEddyParametersTagged:
     """
     Build parameters.
     
@@ -635,7 +746,7 @@ def mrconvert_import_pe_eddy_params(
         Parameter dictionary
     """
     params = {
-        "@type": "mrtrix.mrconvert.import_pe_eddy",
+        "@type": "import_pe_eddy",
         "config": config,
         "indices": indices,
     }
@@ -657,8 +768,8 @@ def mrconvert_import_pe_eddy_cargs(
     """
     cargs = []
     cargs.append("-import_pe_eddy")
-    cargs.append(execution.input_file(params.get("config")))
-    cargs.append(execution.input_file(params.get("indices")))
+    cargs.append(execution.input_file(params.get("config", None)))
+    cargs.append(execution.input_file(params.get("indices", None)))
     return cargs
 
 
@@ -679,7 +790,7 @@ class MrconvertExportPeEddyOutputs(typing.NamedTuple):
 def mrconvert_export_pe_eddy_params(
     config: str,
     indices: str,
-) -> MrconvertExportPeEddyParameters:
+) -> MrconvertExportPeEddyParametersTagged:
     """
     Build parameters.
     
@@ -692,7 +803,7 @@ def mrconvert_export_pe_eddy_params(
         Parameter dictionary
     """
     params = {
-        "@type": "mrtrix.mrconvert.export_pe_eddy",
+        "@type": "export_pe_eddy",
         "config": config,
         "indices": indices,
     }
@@ -714,8 +825,8 @@ def mrconvert_export_pe_eddy_cargs(
     """
     cargs = []
     cargs.append("-export_pe_eddy")
-    cargs.append(params.get("config"))
-    cargs.append(params.get("indices"))
+    cargs.append(params.get("config", None))
+    cargs.append(params.get("indices", None))
     return cargs
 
 
@@ -734,8 +845,8 @@ def mrconvert_export_pe_eddy_outputs(
     """
     ret = MrconvertExportPeEddyOutputs(
         root=execution.output_file("."),
-        config=execution.output_file(params.get("config")),
-        indices=execution.output_file(params.get("indices")),
+        config=execution.output_file(params.get("config", None)),
+        indices=execution.output_file(params.get("indices", None)),
     )
     return ret
 
@@ -743,7 +854,7 @@ def mrconvert_export_pe_eddy_outputs(
 def mrconvert_config_params(
     key: str,
     value: str,
-) -> MrconvertConfigParameters:
+) -> MrconvertConfigParametersTagged:
     """
     Build parameters.
     
@@ -754,7 +865,7 @@ def mrconvert_config_params(
         Parameter dictionary
     """
     params = {
-        "@type": "mrtrix.mrconvert.config",
+        "@type": "config",
         "key": key,
         "value": value,
     }
@@ -776,14 +887,14 @@ def mrconvert_config_cargs(
     """
     cargs = []
     cargs.append("-config")
-    cargs.append(params.get("key"))
-    cargs.append(params.get("value"))
+    cargs.append(params.get("key", None))
+    cargs.append(params.get("value", None))
     return cargs
 
 
 class MrconvertOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `mrconvert(...)`.
+    Output object returned when calling `MrconvertParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -813,8 +924,8 @@ def mrconvert_params(
     clear_property: list[MrconvertClearPropertyParameters] | None = None,
     set_property: list[MrconvertSetPropertyParameters] | None = None,
     append_property: list[MrconvertAppendPropertyParameters] | None = None,
-    copy_properties: typing.Union[MrconvertVariousStringParameters, MrconvertVariousFileParameters] | None = None,
-    strides: typing.Union[MrconvertVariousString1Parameters, MrconvertVariousFile1Parameters] | None = None,
+    copy_properties: typing.Union[MrconvertVariousStringParametersTagged, MrconvertVariousFileParametersTagged] | None = None,
+    strides: typing.Union[MrconvertVariousString1ParametersTagged, MrconvertVariousFile1ParametersTagged] | None = None,
     datatype: str | None = None,
     grad: InputPathType | None = None,
     fslgrad: MrconvertFslgradParameters | None = None,
@@ -833,7 +944,7 @@ def mrconvert_params(
     config: list[MrconvertConfigParameters] | None = None,
     help_: bool = False,
     version: bool = False,
-) -> MrconvertParameters:
+) -> MrconvertParametersTagged:
     """
     Build parameters.
     
@@ -909,7 +1020,7 @@ def mrconvert_params(
         Parameter dictionary
     """
     params = {
-        "@type": "mrtrix.mrconvert",
+        "@type": "mrtrix/mrconvert",
         "info": info,
         "quiet": quiet,
         "debug": debug,
@@ -983,108 +1094,108 @@ def mrconvert_cargs(
     """
     cargs = []
     cargs.append("mrconvert")
-    if params.get("coord") is not None:
-        cargs.extend([a for c in [dyn_cargs(s["@type"])(s, execution) for s in params.get("coord")] for a in c])
-    if params.get("vox") is not None:
+    if params.get("coord", None) is not None:
+        cargs.extend([a for c in [mrconvert_coord_cargs(s, execution) for s in params.get("coord", None)] for a in c])
+    if params.get("vox", None) is not None:
         cargs.extend([
             "-vox",
-            *map(str, params.get("vox"))
+            *map(str, params.get("vox", None))
         ])
-    if params.get("axes") is not None:
+    if params.get("axes", None) is not None:
         cargs.extend([
             "-axes",
-            ",".join(map(str, params.get("axes")))
+            ",".join(map(str, params.get("axes", None)))
         ])
-    if params.get("scaling") is not None:
+    if params.get("scaling", None) is not None:
         cargs.extend([
             "-scaling",
-            *map(str, params.get("scaling"))
+            *map(str, params.get("scaling", None))
         ])
-    if params.get("json_import") is not None:
+    if params.get("json_import", None) is not None:
         cargs.extend([
             "-json_import",
-            execution.input_file(params.get("json_import"))
+            execution.input_file(params.get("json_import", None))
         ])
-    if params.get("json_export") is not None:
+    if params.get("json_export", None) is not None:
         cargs.extend([
             "-json_export",
-            params.get("json_export")
+            params.get("json_export", None)
         ])
-    if params.get("clear_property") is not None:
-        cargs.extend([a for c in [dyn_cargs(s["@type"])(s, execution) for s in params.get("clear_property")] for a in c])
-    if params.get("set_property") is not None:
-        cargs.extend([a for c in [dyn_cargs(s["@type"])(s, execution) for s in params.get("set_property")] for a in c])
-    if params.get("append_property") is not None:
-        cargs.extend([a for c in [dyn_cargs(s["@type"])(s, execution) for s in params.get("append_property")] for a in c])
-    if params.get("copy_properties") is not None:
+    if params.get("clear_property", None) is not None:
+        cargs.extend([a for c in [mrconvert_clear_property_cargs(s, execution) for s in params.get("clear_property", None)] for a in c])
+    if params.get("set_property", None) is not None:
+        cargs.extend([a for c in [mrconvert_set_property_cargs(s, execution) for s in params.get("set_property", None)] for a in c])
+    if params.get("append_property", None) is not None:
+        cargs.extend([a for c in [mrconvert_append_property_cargs(s, execution) for s in params.get("append_property", None)] for a in c])
+    if params.get("copy_properties", None) is not None:
         cargs.extend([
             "-copy_properties",
-            *dyn_cargs(params.get("copy_properties")["@type"])(params.get("copy_properties"), execution)
+            *mrconvert_copy_properties_cargs_dyn_fn(params.get("copy_properties", None)["@type"])(params.get("copy_properties", None), execution)
         ])
-    if params.get("strides") is not None:
+    if params.get("strides", None) is not None:
         cargs.extend([
             "-strides",
-            *dyn_cargs(params.get("strides")["@type"])(params.get("strides"), execution)
+            *mrconvert_strides_cargs_dyn_fn(params.get("strides", None)["@type"])(params.get("strides", None), execution)
         ])
-    if params.get("datatype") is not None:
+    if params.get("datatype", None) is not None:
         cargs.extend([
             "-datatype",
-            params.get("datatype")
+            params.get("datatype", None)
         ])
-    if params.get("grad") is not None:
+    if params.get("grad", None) is not None:
         cargs.extend([
             "-grad",
-            execution.input_file(params.get("grad"))
+            execution.input_file(params.get("grad", None))
         ])
-    if params.get("fslgrad") is not None:
-        cargs.extend(dyn_cargs(params.get("fslgrad")["@type"])(params.get("fslgrad"), execution))
-    if params.get("bvalue_scaling") is not None:
+    if params.get("fslgrad", None) is not None:
+        cargs.extend(mrconvert_fslgrad_cargs(params.get("fslgrad", None), execution))
+    if params.get("bvalue_scaling", None) is not None:
         cargs.extend([
             "-bvalue_scaling",
-            params.get("bvalue_scaling")
+            params.get("bvalue_scaling", None)
         ])
-    if params.get("export_grad_mrtrix") is not None:
+    if params.get("export_grad_mrtrix", None) is not None:
         cargs.extend([
             "-export_grad_mrtrix",
-            params.get("export_grad_mrtrix")
+            params.get("export_grad_mrtrix", None)
         ])
-    if params.get("export_grad_fsl") is not None:
-        cargs.extend(dyn_cargs(params.get("export_grad_fsl")["@type"])(params.get("export_grad_fsl"), execution))
-    if params.get("import_pe_table") is not None:
+    if params.get("export_grad_fsl", None) is not None:
+        cargs.extend(mrconvert_export_grad_fsl_cargs(params.get("export_grad_fsl", None), execution))
+    if params.get("import_pe_table", None) is not None:
         cargs.extend([
             "-import_pe_table",
-            execution.input_file(params.get("import_pe_table"))
+            execution.input_file(params.get("import_pe_table", None))
         ])
-    if params.get("import_pe_eddy") is not None:
-        cargs.extend(dyn_cargs(params.get("import_pe_eddy")["@type"])(params.get("import_pe_eddy"), execution))
-    if params.get("export_pe_table") is not None:
+    if params.get("import_pe_eddy", None) is not None:
+        cargs.extend(mrconvert_import_pe_eddy_cargs(params.get("import_pe_eddy", None), execution))
+    if params.get("export_pe_table", None) is not None:
         cargs.extend([
             "-export_pe_table",
-            params.get("export_pe_table")
+            params.get("export_pe_table", None)
         ])
-    if params.get("export_pe_eddy") is not None:
-        cargs.extend(dyn_cargs(params.get("export_pe_eddy")["@type"])(params.get("export_pe_eddy"), execution))
-    if params.get("info"):
+    if params.get("export_pe_eddy", None) is not None:
+        cargs.extend(mrconvert_export_pe_eddy_cargs(params.get("export_pe_eddy", None), execution))
+    if params.get("info", False):
         cargs.append("-info")
-    if params.get("quiet"):
+    if params.get("quiet", False):
         cargs.append("-quiet")
-    if params.get("debug"):
+    if params.get("debug", False):
         cargs.append("-debug")
-    if params.get("force"):
+    if params.get("force", False):
         cargs.append("-force")
-    if params.get("nthreads") is not None:
+    if params.get("nthreads", None) is not None:
         cargs.extend([
             "-nthreads",
-            str(params.get("nthreads"))
+            str(params.get("nthreads", None))
         ])
-    if params.get("config") is not None:
-        cargs.extend([a for c in [dyn_cargs(s["@type"])(s, execution) for s in params.get("config")] for a in c])
-    if params.get("help"):
+    if params.get("config", None) is not None:
+        cargs.extend([a for c in [mrconvert_config_cargs(s, execution) for s in params.get("config", None)] for a in c])
+    if params.get("help", False):
         cargs.append("-help")
-    if params.get("version"):
+    if params.get("version", False):
         cargs.append("-version")
-    cargs.append(execution.input_file(params.get("input")))
-    cargs.append(params.get("output"))
+    cargs.append(execution.input_file(params.get("input", None)))
+    cargs.append(params.get("output", None))
     return cargs
 
 
@@ -1103,12 +1214,12 @@ def mrconvert_outputs(
     """
     ret = MrconvertOutputs(
         root=execution.output_file("."),
-        output=execution.output_file(params.get("output")),
-        json_export=execution.output_file(params.get("json_export")) if (params.get("json_export") is not None) else None,
-        export_grad_mrtrix=execution.output_file(params.get("export_grad_mrtrix")) if (params.get("export_grad_mrtrix") is not None) else None,
-        export_pe_table=execution.output_file(params.get("export_pe_table")) if (params.get("export_pe_table") is not None) else None,
-        export_grad_fsl=dyn_outputs(params.get("export_grad_fsl")["@type"])(params.get("export_grad_fsl"), execution) if params.get("export_grad_fsl") else None,
-        export_pe_eddy=dyn_outputs(params.get("export_pe_eddy")["@type"])(params.get("export_pe_eddy"), execution) if params.get("export_pe_eddy") else None,
+        output=execution.output_file(params.get("output", None)),
+        json_export=execution.output_file(params.get("json_export", None)) if (params.get("json_export") is not None) else None,
+        export_grad_mrtrix=execution.output_file(params.get("export_grad_mrtrix", None)) if (params.get("export_grad_mrtrix") is not None) else None,
+        export_pe_table=execution.output_file(params.get("export_pe_table", None)) if (params.get("export_pe_table") is not None) else None,
+        export_grad_fsl=mrconvert_export_grad_fsl_outputs(params.get("export_grad_fsl"), execution) if params.get("export_grad_fsl") else None,
+        export_pe_eddy=mrconvert_export_pe_eddy_outputs(params.get("export_pe_eddy"), execution) if params.get("export_pe_eddy") else None,
     )
     return ret
 
@@ -1202,8 +1313,8 @@ def mrconvert(
     clear_property: list[MrconvertClearPropertyParameters] | None = None,
     set_property: list[MrconvertSetPropertyParameters] | None = None,
     append_property: list[MrconvertAppendPropertyParameters] | None = None,
-    copy_properties: typing.Union[MrconvertVariousStringParameters, MrconvertVariousFileParameters] | None = None,
-    strides: typing.Union[MrconvertVariousString1Parameters, MrconvertVariousFile1Parameters] | None = None,
+    copy_properties: typing.Union[MrconvertVariousStringParametersTagged, MrconvertVariousFileParametersTagged] | None = None,
+    strides: typing.Union[MrconvertVariousString1ParametersTagged, MrconvertVariousFile1ParametersTagged] | None = None,
     datatype: str | None = None,
     grad: InputPathType | None = None,
     fslgrad: MrconvertFslgradParameters | None = None,
@@ -1392,23 +1503,9 @@ def mrconvert(
 
 __all__ = [
     "MRCONVERT_METADATA",
-    "MrconvertAppendPropertyParameters",
-    "MrconvertClearPropertyParameters",
-    "MrconvertConfigParameters",
-    "MrconvertCoordParameters",
     "MrconvertExportGradFslOutputs",
-    "MrconvertExportGradFslParameters",
     "MrconvertExportPeEddyOutputs",
-    "MrconvertExportPeEddyParameters",
-    "MrconvertFslgradParameters",
-    "MrconvertImportPeEddyParameters",
     "MrconvertOutputs",
-    "MrconvertParameters",
-    "MrconvertSetPropertyParameters",
-    "MrconvertVariousFile1Parameters",
-    "MrconvertVariousFileParameters",
-    "MrconvertVariousString1Parameters",
-    "MrconvertVariousStringParameters",
     "mrconvert",
     "mrconvert_append_property_params",
     "mrconvert_clear_property_params",

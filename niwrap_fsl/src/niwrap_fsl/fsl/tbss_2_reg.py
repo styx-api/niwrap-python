@@ -14,47 +14,22 @@ TBSS_2_REG_METADATA = Metadata(
 
 
 Tbss2RegParameters = typing.TypedDict('Tbss2RegParameters', {
-    "@type": typing.Literal["fsl.tbss_2_reg"],
+    "@type": typing.NotRequired[typing.Literal["fsl/tbss_2_reg"]],
+    "use_fmrib58_fa_1mm": bool,
+    "target_image": typing.NotRequired[InputPathType | None],
+    "find_best_target": bool,
+})
+Tbss2RegParametersTagged = typing.TypedDict('Tbss2RegParametersTagged', {
+    "@type": typing.Literal["fsl/tbss_2_reg"],
     "use_fmrib58_fa_1mm": bool,
     "target_image": typing.NotRequired[InputPathType | None],
     "find_best_target": bool,
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "fsl.tbss_2_reg": tbss_2_reg_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-    }.get(t)
-
-
 class Tbss2RegOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `tbss_2_reg(...)`.
+    Output object returned when calling `Tbss2RegParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -64,7 +39,7 @@ def tbss_2_reg_params(
     use_fmrib58_fa_1mm: bool = False,
     target_image: InputPathType | None = None,
     find_best_target: bool = False,
-) -> Tbss2RegParameters:
+) -> Tbss2RegParametersTagged:
     """
     Build parameters.
     
@@ -78,7 +53,7 @@ def tbss_2_reg_params(
         Parameter dictionary
     """
     params = {
-        "@type": "fsl.tbss_2_reg",
+        "@type": "fsl/tbss_2_reg",
         "use_fmrib58_fa_1mm": use_fmrib58_fa_1mm,
         "find_best_target": find_best_target,
     }
@@ -102,14 +77,14 @@ def tbss_2_reg_cargs(
     """
     cargs = []
     cargs.append("tbss_2_reg")
-    if params.get("use_fmrib58_fa_1mm"):
+    if params.get("use_fmrib58_fa_1mm", False):
         cargs.append("-T")
-    if params.get("target_image") is not None:
+    if params.get("target_image", None) is not None:
         cargs.extend([
             "-t",
-            execution.input_file(params.get("target_image"))
+            execution.input_file(params.get("target_image", None))
         ])
-    if params.get("find_best_target"):
+    if params.get("find_best_target", False):
         cargs.append("-n")
     return cargs
 
@@ -199,7 +174,6 @@ def tbss_2_reg(
 __all__ = [
     "TBSS_2_REG_METADATA",
     "Tbss2RegOutputs",
-    "Tbss2RegParameters",
     "tbss_2_reg",
     "tbss_2_reg_execute",
     "tbss_2_reg_params",

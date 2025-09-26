@@ -14,7 +14,14 @@ MRI_BRAIN_VOLUME_METADATA = Metadata(
 
 
 MriBrainVolumeParameters = typing.TypedDict('MriBrainVolumeParameters', {
-    "@type": typing.Literal["freesurfer.mri_brain_volume"],
+    "@type": typing.NotRequired[typing.Literal["freesurfer/mri_brain_volume"]],
+    "input_file": InputPathType,
+    "output_file": typing.NotRequired[str | None],
+    "force_param": typing.NotRequired[float | None],
+    "version": bool,
+})
+MriBrainVolumeParametersTagged = typing.TypedDict('MriBrainVolumeParametersTagged', {
+    "@type": typing.Literal["freesurfer/mri_brain_volume"],
     "input_file": InputPathType,
     "output_file": typing.NotRequired[str | None],
     "force_param": typing.NotRequired[float | None],
@@ -22,41 +29,9 @@ MriBrainVolumeParameters = typing.TypedDict('MriBrainVolumeParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "freesurfer.mri_brain_volume": mri_brain_volume_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "freesurfer.mri_brain_volume": mri_brain_volume_outputs,
-    }.get(t)
-
-
 class MriBrainVolumeOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `mri_brain_volume(...)`.
+    Output object returned when calling `MriBrainVolumeParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -69,7 +44,7 @@ def mri_brain_volume_params(
     output_file: str | None = None,
     force_param: float | None = None,
     version: bool = False,
-) -> MriBrainVolumeParameters:
+) -> MriBrainVolumeParametersTagged:
     """
     Build parameters.
     
@@ -82,7 +57,7 @@ def mri_brain_volume_params(
         Parameter dictionary
     """
     params = {
-        "@type": "freesurfer.mri_brain_volume",
+        "@type": "freesurfer/mri_brain_volume",
         "input_file": input_file,
         "version": version,
     }
@@ -108,15 +83,15 @@ def mri_brain_volume_cargs(
     """
     cargs = []
     cargs.append("mri_brain_volume")
-    cargs.append(execution.input_file(params.get("input_file")))
-    if params.get("output_file") is not None:
-        cargs.append(params.get("output_file"))
-    if params.get("force_param") is not None:
+    cargs.append(execution.input_file(params.get("input_file", None)))
+    if params.get("output_file", None) is not None:
+        cargs.append(params.get("output_file", None))
+    if params.get("force_param", None) is not None:
         cargs.extend([
             "-forceParam",
-            str(params.get("force_param"))
+            str(params.get("force_param", None))
         ])
-    if params.get("version"):
+    if params.get("version", False):
         cargs.append("--version")
     return cargs
 
@@ -136,7 +111,7 @@ def mri_brain_volume_outputs(
     """
     ret = MriBrainVolumeOutputs(
         root=execution.output_file("."),
-        output_volume_file=execution.output_file(params.get("output_file")) if (params.get("output_file") is not None) else None,
+        output_volume_file=execution.output_file(params.get("output_file", None)) if (params.get("output_file") is not None) else None,
     )
     return ret
 
@@ -206,7 +181,6 @@ def mri_brain_volume(
 __all__ = [
     "MRI_BRAIN_VOLUME_METADATA",
     "MriBrainVolumeOutputs",
-    "MriBrainVolumeParameters",
     "mri_brain_volume",
     "mri_brain_volume_execute",
     "mri_brain_volume_params",

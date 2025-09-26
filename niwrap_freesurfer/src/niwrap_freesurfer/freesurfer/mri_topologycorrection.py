@@ -14,47 +14,20 @@ MRI_TOPOLOGYCORRECTION_METADATA = Metadata(
 
 
 MriTopologycorrectionParameters = typing.TypedDict('MriTopologycorrectionParameters', {
-    "@type": typing.Literal["freesurfer.mri_topologycorrection"],
+    "@type": typing.NotRequired[typing.Literal["freesurfer/mri_topologycorrection"]],
+    "input_orig_file": InputPathType,
+    "input_segmented_file": InputPathType,
+})
+MriTopologycorrectionParametersTagged = typing.TypedDict('MriTopologycorrectionParametersTagged', {
+    "@type": typing.Literal["freesurfer/mri_topologycorrection"],
     "input_orig_file": InputPathType,
     "input_segmented_file": InputPathType,
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "freesurfer.mri_topologycorrection": mri_topologycorrection_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "freesurfer.mri_topologycorrection": mri_topologycorrection_outputs,
-    }.get(t)
-
-
 class MriTopologycorrectionOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `mri_topologycorrection(...)`.
+    Output object returned when calling `MriTopologycorrectionParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -65,7 +38,7 @@ class MriTopologycorrectionOutputs(typing.NamedTuple):
 def mri_topologycorrection_params(
     input_orig_file: InputPathType,
     input_segmented_file: InputPathType,
-) -> MriTopologycorrectionParameters:
+) -> MriTopologycorrectionParametersTagged:
     """
     Build parameters.
     
@@ -76,7 +49,7 @@ def mri_topologycorrection_params(
         Parameter dictionary
     """
     params = {
-        "@type": "freesurfer.mri_topologycorrection",
+        "@type": "freesurfer/mri_topologycorrection",
         "input_orig_file": input_orig_file,
         "input_segmented_file": input_segmented_file,
     }
@@ -98,8 +71,8 @@ def mri_topologycorrection_cargs(
     """
     cargs = []
     cargs.append("mri_topologycorrection")
-    cargs.append(execution.input_file(params.get("input_orig_file")))
-    cargs.append(execution.input_file(params.get("input_segmented_file")))
+    cargs.append(execution.input_file(params.get("input_orig_file", None)))
+    cargs.append(execution.input_file(params.get("input_segmented_file", None)))
     return cargs
 
 
@@ -182,7 +155,6 @@ def mri_topologycorrection(
 __all__ = [
     "MRI_TOPOLOGYCORRECTION_METADATA",
     "MriTopologycorrectionOutputs",
-    "MriTopologycorrectionParameters",
     "mri_topologycorrection",
     "mri_topologycorrection_execute",
     "mri_topologycorrection_params",

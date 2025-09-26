@@ -14,7 +14,14 @@ MRI_DEFACE_METADATA = Metadata(
 
 
 MriDefaceParameters = typing.TypedDict('MriDefaceParameters', {
-    "@type": typing.Literal["freesurfer.mri_deface"],
+    "@type": typing.NotRequired[typing.Literal["freesurfer/mri_deface"]],
+    "input_volume": InputPathType,
+    "brain_template": InputPathType,
+    "face_template": InputPathType,
+    "output_volume": str,
+})
+MriDefaceParametersTagged = typing.TypedDict('MriDefaceParametersTagged', {
+    "@type": typing.Literal["freesurfer/mri_deface"],
     "input_volume": InputPathType,
     "brain_template": InputPathType,
     "face_template": InputPathType,
@@ -22,41 +29,9 @@ MriDefaceParameters = typing.TypedDict('MriDefaceParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "freesurfer.mri_deface": mri_deface_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "freesurfer.mri_deface": mri_deface_outputs,
-    }.get(t)
-
-
 class MriDefaceOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `mri_deface(...)`.
+    Output object returned when calling `MriDefaceParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -69,7 +44,7 @@ def mri_deface_params(
     brain_template: InputPathType,
     face_template: InputPathType,
     output_volume: str,
-) -> MriDefaceParameters:
+) -> MriDefaceParametersTagged:
     """
     Build parameters.
     
@@ -83,7 +58,7 @@ def mri_deface_params(
         Parameter dictionary
     """
     params = {
-        "@type": "freesurfer.mri_deface",
+        "@type": "freesurfer/mri_deface",
         "input_volume": input_volume,
         "brain_template": brain_template,
         "face_template": face_template,
@@ -107,10 +82,10 @@ def mri_deface_cargs(
     """
     cargs = []
     cargs.append("mri_deface")
-    cargs.append(execution.input_file(params.get("input_volume")))
-    cargs.append(execution.input_file(params.get("brain_template")))
-    cargs.append(execution.input_file(params.get("face_template")))
-    cargs.append(params.get("output_volume"))
+    cargs.append(execution.input_file(params.get("input_volume", None)))
+    cargs.append(execution.input_file(params.get("brain_template", None)))
+    cargs.append(execution.input_file(params.get("face_template", None)))
+    cargs.append(params.get("output_volume", None))
     return cargs
 
 
@@ -129,7 +104,7 @@ def mri_deface_outputs(
     """
     ret = MriDefaceOutputs(
         root=execution.output_file("."),
-        defaced_output_file=execution.output_file(params.get("output_volume")),
+        defaced_output_file=execution.output_file(params.get("output_volume", None)),
     )
     return ret
 
@@ -200,7 +175,6 @@ def mri_deface(
 __all__ = [
     "MRI_DEFACE_METADATA",
     "MriDefaceOutputs",
-    "MriDefaceParameters",
     "mri_deface",
     "mri_deface_execute",
     "mri_deface_params",

@@ -14,28 +14,50 @@ CIFTI_MERGE_METADATA = Metadata(
 
 
 CiftiMergeUpToParameters = typing.TypedDict('CiftiMergeUpToParameters', {
-    "@type": typing.Literal["workbench.cifti-merge.cifti.index.up_to"],
+    "@type": typing.NotRequired[typing.Literal["up_to"]],
+    "last_index": str,
+    "opt_reverse": bool,
+})
+CiftiMergeUpToParametersTagged = typing.TypedDict('CiftiMergeUpToParametersTagged', {
+    "@type": typing.Literal["up_to"],
     "last_index": str,
     "opt_reverse": bool,
 })
 
 
 CiftiMergeIndexParameters = typing.TypedDict('CiftiMergeIndexParameters', {
-    "@type": typing.Literal["workbench.cifti-merge.cifti.index"],
+    "@type": typing.NotRequired[typing.Literal["index"]],
+    "index": str,
+    "up_to": typing.NotRequired[CiftiMergeUpToParameters | None],
+})
+CiftiMergeIndexParametersTagged = typing.TypedDict('CiftiMergeIndexParametersTagged', {
+    "@type": typing.Literal["index"],
     "index": str,
     "up_to": typing.NotRequired[CiftiMergeUpToParameters | None],
 })
 
 
 CiftiMergeCiftiParameters = typing.TypedDict('CiftiMergeCiftiParameters', {
-    "@type": typing.Literal["workbench.cifti-merge.cifti"],
+    "@type": typing.NotRequired[typing.Literal["cifti"]],
+    "cifti_in": InputPathType,
+    "index": typing.NotRequired[list[CiftiMergeIndexParameters] | None],
+})
+CiftiMergeCiftiParametersTagged = typing.TypedDict('CiftiMergeCiftiParametersTagged', {
+    "@type": typing.Literal["cifti"],
     "cifti_in": InputPathType,
     "index": typing.NotRequired[list[CiftiMergeIndexParameters] | None],
 })
 
 
 CiftiMergeParameters = typing.TypedDict('CiftiMergeParameters', {
-    "@type": typing.Literal["workbench.cifti-merge"],
+    "@type": typing.NotRequired[typing.Literal["workbench/cifti-merge"]],
+    "cifti_out": str,
+    "opt_direction_direction": typing.NotRequired[str | None],
+    "opt_mem_limit_limit_gb": typing.NotRequired[float | None],
+    "cifti": typing.NotRequired[list[CiftiMergeCiftiParameters] | None],
+})
+CiftiMergeParametersTagged = typing.TypedDict('CiftiMergeParametersTagged', {
+    "@type": typing.Literal["workbench/cifti-merge"],
     "cifti_out": str,
     "opt_direction_direction": typing.NotRequired[str | None],
     "opt_mem_limit_limit_gb": typing.NotRequired[float | None],
@@ -43,45 +65,10 @@ CiftiMergeParameters = typing.TypedDict('CiftiMergeParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "workbench.cifti-merge": cifti_merge_cargs,
-        "workbench.cifti-merge.cifti": cifti_merge_cifti_cargs,
-        "workbench.cifti-merge.cifti.index": cifti_merge_index_cargs,
-        "workbench.cifti-merge.cifti.index.up_to": cifti_merge_up_to_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "workbench.cifti-merge": cifti_merge_outputs,
-    }.get(t)
-
-
 def cifti_merge_up_to_params(
     last_index: str,
     opt_reverse: bool = False,
-) -> CiftiMergeUpToParameters:
+) -> CiftiMergeUpToParametersTagged:
     """
     Build parameters.
     
@@ -92,7 +79,7 @@ def cifti_merge_up_to_params(
         Parameter dictionary
     """
     params = {
-        "@type": "workbench.cifti-merge.cifti.index.up_to",
+        "@type": "up_to",
         "last_index": last_index,
         "opt_reverse": opt_reverse,
     }
@@ -114,8 +101,8 @@ def cifti_merge_up_to_cargs(
     """
     cargs = []
     cargs.append("-up-to")
-    cargs.append(params.get("last_index"))
-    if params.get("opt_reverse"):
+    cargs.append(params.get("last_index", None))
+    if params.get("opt_reverse", False):
         cargs.append("-reverse")
     return cargs
 
@@ -123,7 +110,7 @@ def cifti_merge_up_to_cargs(
 def cifti_merge_index_params(
     index: str,
     up_to: CiftiMergeUpToParameters | None = None,
-) -> CiftiMergeIndexParameters:
+) -> CiftiMergeIndexParametersTagged:
     """
     Build parameters.
     
@@ -134,7 +121,7 @@ def cifti_merge_index_params(
         Parameter dictionary
     """
     params = {
-        "@type": "workbench.cifti-merge.cifti.index",
+        "@type": "index",
         "index": index,
     }
     if up_to is not None:
@@ -157,16 +144,16 @@ def cifti_merge_index_cargs(
     """
     cargs = []
     cargs.append("-index")
-    cargs.append(params.get("index"))
-    if params.get("up_to") is not None:
-        cargs.extend(dyn_cargs(params.get("up_to")["@type"])(params.get("up_to"), execution))
+    cargs.append(params.get("index", None))
+    if params.get("up_to", None) is not None:
+        cargs.extend(cifti_merge_up_to_cargs(params.get("up_to", None), execution))
     return cargs
 
 
 def cifti_merge_cifti_params(
     cifti_in: InputPathType,
     index: list[CiftiMergeIndexParameters] | None = None,
-) -> CiftiMergeCiftiParameters:
+) -> CiftiMergeCiftiParametersTagged:
     """
     Build parameters.
     
@@ -177,7 +164,7 @@ def cifti_merge_cifti_params(
         Parameter dictionary
     """
     params = {
-        "@type": "workbench.cifti-merge.cifti",
+        "@type": "cifti",
         "cifti_in": cifti_in,
     }
     if index is not None:
@@ -200,15 +187,15 @@ def cifti_merge_cifti_cargs(
     """
     cargs = []
     cargs.append("-cifti")
-    cargs.append(execution.input_file(params.get("cifti_in")))
-    if params.get("index") is not None:
-        cargs.extend([a for c in [dyn_cargs(s["@type"])(s, execution) for s in params.get("index")] for a in c])
+    cargs.append(execution.input_file(params.get("cifti_in", None)))
+    if params.get("index", None) is not None:
+        cargs.extend([a for c in [cifti_merge_index_cargs(s, execution) for s in params.get("index", None)] for a in c])
     return cargs
 
 
 class CiftiMergeOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `cifti_merge(...)`.
+    Output object returned when calling `CiftiMergeParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -221,7 +208,7 @@ def cifti_merge_params(
     opt_direction_direction: str | None = None,
     opt_mem_limit_limit_gb: float | None = None,
     cifti: list[CiftiMergeCiftiParameters] | None = None,
-) -> CiftiMergeParameters:
+) -> CiftiMergeParametersTagged:
     """
     Build parameters.
     
@@ -236,7 +223,7 @@ def cifti_merge_params(
         Parameter dictionary
     """
     params = {
-        "@type": "workbench.cifti-merge",
+        "@type": "workbench/cifti-merge",
         "cifti_out": cifti_out,
     }
     if opt_direction_direction is not None:
@@ -264,19 +251,19 @@ def cifti_merge_cargs(
     cargs = []
     cargs.append("wb_command")
     cargs.append("-cifti-merge")
-    cargs.append(params.get("cifti_out"))
-    if params.get("opt_direction_direction") is not None:
+    cargs.append(params.get("cifti_out", None))
+    if params.get("opt_direction_direction", None) is not None:
         cargs.extend([
             "-direction",
-            params.get("opt_direction_direction")
+            params.get("opt_direction_direction", None)
         ])
-    if params.get("opt_mem_limit_limit_gb") is not None:
+    if params.get("opt_mem_limit_limit_gb", None) is not None:
         cargs.extend([
             "-mem-limit",
-            str(params.get("opt_mem_limit_limit_gb"))
+            str(params.get("opt_mem_limit_limit_gb", None))
         ])
-    if params.get("cifti") is not None:
-        cargs.extend([a for c in [dyn_cargs(s["@type"])(s, execution) for s in params.get("cifti")] for a in c])
+    if params.get("cifti", None) is not None:
+        cargs.extend([a for c in [cifti_merge_cifti_cargs(s, execution) for s in params.get("cifti", None)] for a in c])
     return cargs
 
 
@@ -295,7 +282,7 @@ def cifti_merge_outputs(
     """
     ret = CiftiMergeOutputs(
         root=execution.output_file("."),
-        cifti_out=execution.output_file(params.get("cifti_out")),
+        cifti_out=execution.output_file(params.get("cifti_out", None)),
     )
     return ret
 
@@ -396,11 +383,7 @@ def cifti_merge(
 
 __all__ = [
     "CIFTI_MERGE_METADATA",
-    "CiftiMergeCiftiParameters",
-    "CiftiMergeIndexParameters",
     "CiftiMergeOutputs",
-    "CiftiMergeParameters",
-    "CiftiMergeUpToParameters",
     "cifti_merge",
     "cifti_merge_cifti_params",
     "cifti_merge_execute",

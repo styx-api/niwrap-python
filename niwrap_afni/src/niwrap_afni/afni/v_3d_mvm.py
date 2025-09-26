@@ -14,7 +14,25 @@ V_3D_MVM_METADATA = Metadata(
 
 
 V3dMvmParameters = typing.TypedDict('V3dMvmParameters', {
-    "@type": typing.Literal["afni.3dMVM"],
+    "@type": typing.NotRequired[typing.Literal["afni/3dMVM"]],
+    "dbgArgs": typing.NotRequired[str | None],
+    "prefix": str,
+    "jobs": typing.NotRequired[int | None],
+    "mask": typing.NotRequired[InputPathType | None],
+    "bsVars": str,
+    "wsVars": typing.NotRequired[str | None],
+    "qVars": typing.NotRequired[str | None],
+    "qVarCenters": typing.NotRequired[str | None],
+    "num_glt": typing.NotRequired[int | None],
+    "gltLabel": typing.NotRequired[str | None],
+    "gltCode": typing.NotRequired[str | None],
+    "num_glf": typing.NotRequired[int | None],
+    "glfLabel": typing.NotRequired[str | None],
+    "glfCode": typing.NotRequired[str | None],
+    "dataTable": str,
+})
+V3dMvmParametersTagged = typing.TypedDict('V3dMvmParametersTagged', {
+    "@type": typing.Literal["afni/3dMVM"],
     "dbgArgs": typing.NotRequired[str | None],
     "prefix": str,
     "jobs": typing.NotRequired[int | None],
@@ -33,41 +51,9 @@ V3dMvmParameters = typing.TypedDict('V3dMvmParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "afni.3dMVM": v_3d_mvm_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "afni.3dMVM": v_3d_mvm_outputs,
-    }.get(t)
-
-
 class V3dMvmOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `v_3d_mvm(...)`.
+    Output object returned when calling `V3dMvmParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -93,7 +79,7 @@ def v_3d_mvm_params(
     num_glf: int | None = None,
     glf_label: str | None = None,
     glf_code: str | None = None,
-) -> V3dMvmParameters:
+) -> V3dMvmParametersTagged:
     """
     Build parameters.
     
@@ -118,7 +104,7 @@ def v_3d_mvm_params(
         Parameter dictionary
     """
     params = {
-        "@type": "afni.3dMVM",
+        "@type": "afni/3dMVM",
         "prefix": prefix,
         "bsVars": bs_vars,
         "dataTable": data_table,
@@ -165,74 +151,74 @@ def v_3d_mvm_cargs(
     """
     cargs = []
     cargs.append("3dMVM")
-    if params.get("dbgArgs") is not None:
-        cargs.append(params.get("dbgArgs"))
+    if params.get("dbgArgs", None) is not None:
+        cargs.append(params.get("dbgArgs", None))
     cargs.extend([
         "-prefix",
-        params.get("prefix")
+        params.get("prefix", None)
     ])
-    if params.get("jobs") is not None:
+    if params.get("jobs", None) is not None:
         cargs.extend([
             "-jobs",
-            str(params.get("jobs"))
+            str(params.get("jobs", None))
         ])
-    if params.get("mask") is not None:
+    if params.get("mask", None) is not None:
         cargs.extend([
             "-mask",
-            execution.input_file(params.get("mask"))
+            execution.input_file(params.get("mask", None))
         ])
     cargs.extend([
         "-bsVars",
-        params.get("bsVars")
+        params.get("bsVars", None)
     ])
-    if params.get("wsVars") is not None:
+    if params.get("wsVars", None) is not None:
         cargs.extend([
             "-wsVars",
-            params.get("wsVars")
+            params.get("wsVars", None)
         ])
-    if params.get("qVars") is not None:
+    if params.get("qVars", None) is not None:
         cargs.extend([
             "-qVars",
-            params.get("qVars")
+            params.get("qVars", None)
         ])
-    if params.get("qVarCenters") is not None:
+    if params.get("qVarCenters", None) is not None:
         cargs.extend([
             "-qVarCenters",
-            params.get("qVarCenters")
+            params.get("qVarCenters", None)
         ])
-    if params.get("num_glt") is not None:
+    if params.get("num_glt", None) is not None:
         cargs.extend([
             "-num_glt",
-            str(params.get("num_glt"))
+            str(params.get("num_glt", None))
         ])
-    if params.get("gltLabel") is not None:
+    if params.get("gltLabel", None) is not None:
         cargs.extend([
             "-gltLabel",
-            params.get("gltLabel")
+            params.get("gltLabel", None)
         ])
-    if params.get("gltCode") is not None:
+    if params.get("gltCode", None) is not None:
         cargs.extend([
             "-gltCode",
-            params.get("gltCode")
+            params.get("gltCode", None)
         ])
-    if params.get("num_glf") is not None:
+    if params.get("num_glf", None) is not None:
         cargs.extend([
             "-num_glf",
-            str(params.get("num_glf"))
+            str(params.get("num_glf", None))
         ])
-    if params.get("glfLabel") is not None:
+    if params.get("glfLabel", None) is not None:
         cargs.extend([
             "-glfLabel",
-            params.get("glfLabel")
+            params.get("glfLabel", None)
         ])
-    if params.get("glfCode") is not None:
+    if params.get("glfCode", None) is not None:
         cargs.extend([
             "-glfCode",
-            params.get("glfCode")
+            params.get("glfCode", None)
         ])
     cargs.extend([
         "-dataTable",
-        params.get("dataTable")
+        params.get("dataTable", None)
     ])
     return cargs
 
@@ -252,8 +238,8 @@ def v_3d_mvm_outputs(
     """
     ret = V3dMvmOutputs(
         root=execution.output_file("."),
-        outfile_head=execution.output_file(params.get("prefix") + "+tlrc.HEAD"),
-        outfile_brik=execution.output_file(params.get("prefix") + "+tlrc.BRIK"),
+        outfile_head=execution.output_file(params.get("prefix", None) + "+tlrc.HEAD"),
+        outfile_brik=execution.output_file(params.get("prefix", None) + "+tlrc.BRIK"),
     )
     return ret
 
@@ -356,7 +342,6 @@ def v_3d_mvm(
 
 __all__ = [
     "V3dMvmOutputs",
-    "V3dMvmParameters",
     "V_3D_MVM_METADATA",
     "v_3d_mvm",
     "v_3d_mvm_execute",

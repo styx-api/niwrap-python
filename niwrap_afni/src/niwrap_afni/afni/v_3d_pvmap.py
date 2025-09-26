@@ -14,7 +14,14 @@ V_3D_PVMAP_METADATA = Metadata(
 
 
 V3dPvmapParameters = typing.TypedDict('V3dPvmapParameters', {
-    "@type": typing.Literal["afni.3dPVmap"],
+    "@type": typing.NotRequired[typing.Literal["afni/3dPVmap"]],
+    "prefix": typing.NotRequired[str | None],
+    "mask": typing.NotRequired[InputPathType | None],
+    "automask": bool,
+    "inputdataset": InputPathType,
+})
+V3dPvmapParametersTagged = typing.TypedDict('V3dPvmapParametersTagged', {
+    "@type": typing.Literal["afni/3dPVmap"],
     "prefix": typing.NotRequired[str | None],
     "mask": typing.NotRequired[InputPathType | None],
     "automask": bool,
@@ -22,41 +29,9 @@ V3dPvmapParameters = typing.TypedDict('V3dPvmapParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "afni.3dPVmap": v_3d_pvmap_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "afni.3dPVmap": v_3d_pvmap_outputs,
-    }.get(t)
-
-
 class V3dPvmapOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `v_3d_pvmap(...)`.
+    Output object returned when calling `V3dPvmapParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -73,7 +48,7 @@ def v_3d_pvmap_params(
     prefix: str | None = None,
     mask: InputPathType | None = None,
     automask: bool = False,
-) -> V3dPvmapParameters:
+) -> V3dPvmapParametersTagged:
     """
     Build parameters.
     
@@ -86,7 +61,7 @@ def v_3d_pvmap_params(
         Parameter dictionary
     """
     params = {
-        "@type": "afni.3dPVmap",
+        "@type": "afni/3dPVmap",
         "automask": automask,
         "inputdataset": inputdataset,
     }
@@ -112,19 +87,19 @@ def v_3d_pvmap_cargs(
     """
     cargs = []
     cargs.append("3dPVmap")
-    if params.get("prefix") is not None:
+    if params.get("prefix", None) is not None:
         cargs.extend([
             "-prefix",
-            params.get("prefix")
+            params.get("prefix", None)
         ])
-    if params.get("mask") is not None:
+    if params.get("mask", None) is not None:
         cargs.extend([
             "-mask",
-            execution.input_file(params.get("mask"))
+            execution.input_file(params.get("mask", None))
         ])
-    if params.get("automask"):
+    if params.get("automask", False):
         cargs.append("-automask")
-    cargs.append(execution.input_file(params.get("inputdataset")))
+    cargs.append(execution.input_file(params.get("inputdataset", None)))
     return cargs
 
 
@@ -143,9 +118,9 @@ def v_3d_pvmap_outputs(
     """
     ret = V3dPvmapOutputs(
         root=execution.output_file("."),
-        outbrik=execution.output_file(params.get("prefix") + "+orig.BRIK") if (params.get("prefix") is not None) else None,
-        outhead=execution.output_file(params.get("prefix") + "+orig.HEAD") if (params.get("prefix") is not None) else None,
-        pc_vectors=execution.output_file(params.get("prefix") + ".1D") if (params.get("prefix") is not None) else None,
+        outbrik=execution.output_file(params.get("prefix", None) + "+orig.BRIK") if (params.get("prefix") is not None) else None,
+        outhead=execution.output_file(params.get("prefix", None) + "+orig.HEAD") if (params.get("prefix") is not None) else None,
+        pc_vectors=execution.output_file(params.get("prefix", None) + ".1D") if (params.get("prefix") is not None) else None,
     )
     return ret
 
@@ -218,7 +193,6 @@ def v_3d_pvmap(
 
 __all__ = [
     "V3dPvmapOutputs",
-    "V3dPvmapParameters",
     "V_3D_PVMAP_METADATA",
     "v_3d_pvmap",
     "v_3d_pvmap_execute",

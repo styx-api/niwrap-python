@@ -14,7 +14,15 @@ MRI_STATS2SEG_METADATA = Metadata(
 
 
 MriStats2segParameters = typing.TypedDict('MriStats2segParameters', {
-    "@type": typing.Literal["freesurfer.mri_stats2seg"],
+    "@type": typing.NotRequired[typing.Literal["freesurfer/mri_stats2seg"]],
+    "stat_file": InputPathType,
+    "segmentation_volume": InputPathType,
+    "output_file": str,
+    "debug": bool,
+    "check_opts": bool,
+})
+MriStats2segParametersTagged = typing.TypedDict('MriStats2segParametersTagged', {
+    "@type": typing.Literal["freesurfer/mri_stats2seg"],
     "stat_file": InputPathType,
     "segmentation_volume": InputPathType,
     "output_file": str,
@@ -23,41 +31,9 @@ MriStats2segParameters = typing.TypedDict('MriStats2segParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "freesurfer.mri_stats2seg": mri_stats2seg_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "freesurfer.mri_stats2seg": mri_stats2seg_outputs,
-    }.get(t)
-
-
 class MriStats2segOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `mri_stats2seg(...)`.
+    Output object returned when calling `MriStats2segParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -71,7 +47,7 @@ def mri_stats2seg_params(
     output_file: str,
     debug: bool = False,
     check_opts: bool = False,
-) -> MriStats2segParameters:
+) -> MriStats2segParametersTagged:
     """
     Build parameters.
     
@@ -85,7 +61,7 @@ def mri_stats2seg_params(
         Parameter dictionary
     """
     params = {
-        "@type": "freesurfer.mri_stats2seg",
+        "@type": "freesurfer/mri_stats2seg",
         "stat_file": stat_file,
         "segmentation_volume": segmentation_volume,
         "output_file": output_file,
@@ -112,19 +88,19 @@ def mri_stats2seg_cargs(
     cargs.append("mri_stats2seg")
     cargs.extend([
         "--stat",
-        execution.input_file(params.get("stat_file"))
+        execution.input_file(params.get("stat_file", None))
     ])
     cargs.extend([
         "--seg",
-        execution.input_file(params.get("segmentation_volume"))
+        execution.input_file(params.get("segmentation_volume", None))
     ])
     cargs.extend([
         "--o",
-        params.get("output_file")
+        params.get("output_file", None)
     ])
-    if params.get("debug"):
+    if params.get("debug", False):
         cargs.append("--debug")
-    if params.get("check_opts"):
+    if params.get("check_opts", False):
         cargs.append("--checkopts")
     return cargs
 
@@ -144,7 +120,7 @@ def mri_stats2seg_outputs(
     """
     ret = MriStats2segOutputs(
         root=execution.output_file("."),
-        segmented_output=execution.output_file(params.get("output_file")),
+        segmented_output=execution.output_file(params.get("output_file", None)),
     )
     return ret
 
@@ -217,7 +193,6 @@ def mri_stats2seg(
 __all__ = [
     "MRI_STATS2SEG_METADATA",
     "MriStats2segOutputs",
-    "MriStats2segParameters",
     "mri_stats2seg",
     "mri_stats2seg_execute",
     "mri_stats2seg_params",

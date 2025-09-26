@@ -14,7 +14,18 @@ METRIC_ROIS_FROM_EXTREMA_METADATA = Metadata(
 
 
 MetricRoisFromExtremaParameters = typing.TypedDict('MetricRoisFromExtremaParameters', {
-    "@type": typing.Literal["workbench.metric-rois-from-extrema"],
+    "@type": typing.NotRequired[typing.Literal["workbench/metric-rois-from-extrema"]],
+    "surface": InputPathType,
+    "metric": InputPathType,
+    "limit": float,
+    "metric_out": str,
+    "opt_gaussian_sigma": typing.NotRequired[float | None],
+    "opt_roi_roi_metric": typing.NotRequired[InputPathType | None],
+    "opt_overlap_logic_method": typing.NotRequired[str | None],
+    "opt_column_column": typing.NotRequired[str | None],
+})
+MetricRoisFromExtremaParametersTagged = typing.TypedDict('MetricRoisFromExtremaParametersTagged', {
+    "@type": typing.Literal["workbench/metric-rois-from-extrema"],
     "surface": InputPathType,
     "metric": InputPathType,
     "limit": float,
@@ -26,41 +37,9 @@ MetricRoisFromExtremaParameters = typing.TypedDict('MetricRoisFromExtremaParamet
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "workbench.metric-rois-from-extrema": metric_rois_from_extrema_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "workbench.metric-rois-from-extrema": metric_rois_from_extrema_outputs,
-    }.get(t)
-
-
 class MetricRoisFromExtremaOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `metric_rois_from_extrema(...)`.
+    Output object returned when calling `MetricRoisFromExtremaParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -77,7 +56,7 @@ def metric_rois_from_extrema_params(
     opt_roi_roi_metric: InputPathType | None = None,
     opt_overlap_logic_method: str | None = None,
     opt_column_column: str | None = None,
-) -> MetricRoisFromExtremaParameters:
+) -> MetricRoisFromExtremaParametersTagged:
     """
     Build parameters.
     
@@ -98,7 +77,7 @@ def metric_rois_from_extrema_params(
         Parameter dictionary
     """
     params = {
-        "@type": "workbench.metric-rois-from-extrema",
+        "@type": "workbench/metric-rois-from-extrema",
         "surface": surface,
         "metric": metric,
         "limit": limit,
@@ -131,29 +110,29 @@ def metric_rois_from_extrema_cargs(
     cargs = []
     cargs.append("wb_command")
     cargs.append("-metric-rois-from-extrema")
-    cargs.append(execution.input_file(params.get("surface")))
-    cargs.append(execution.input_file(params.get("metric")))
-    cargs.append(str(params.get("limit")))
-    cargs.append(params.get("metric_out"))
-    if params.get("opt_gaussian_sigma") is not None:
+    cargs.append(execution.input_file(params.get("surface", None)))
+    cargs.append(execution.input_file(params.get("metric", None)))
+    cargs.append(str(params.get("limit", None)))
+    cargs.append(params.get("metric_out", None))
+    if params.get("opt_gaussian_sigma", None) is not None:
         cargs.extend([
             "-gaussian",
-            str(params.get("opt_gaussian_sigma"))
+            str(params.get("opt_gaussian_sigma", None))
         ])
-    if params.get("opt_roi_roi_metric") is not None:
+    if params.get("opt_roi_roi_metric", None) is not None:
         cargs.extend([
             "-roi",
-            execution.input_file(params.get("opt_roi_roi_metric"))
+            execution.input_file(params.get("opt_roi_roi_metric", None))
         ])
-    if params.get("opt_overlap_logic_method") is not None:
+    if params.get("opt_overlap_logic_method", None) is not None:
         cargs.extend([
             "-overlap-logic",
-            params.get("opt_overlap_logic_method")
+            params.get("opt_overlap_logic_method", None)
         ])
-    if params.get("opt_column_column") is not None:
+    if params.get("opt_column_column", None) is not None:
         cargs.extend([
             "-column",
-            params.get("opt_column_column")
+            params.get("opt_column_column", None)
         ])
     return cargs
 
@@ -173,7 +152,7 @@ def metric_rois_from_extrema_outputs(
     """
     ret = MetricRoisFromExtremaOutputs(
         root=execution.output_file("."),
-        metric_out=execution.output_file(params.get("metric_out")),
+        metric_out=execution.output_file(params.get("metric_out", None)),
     )
     return ret
 
@@ -277,7 +256,6 @@ def metric_rois_from_extrema(
 __all__ = [
     "METRIC_ROIS_FROM_EXTREMA_METADATA",
     "MetricRoisFromExtremaOutputs",
-    "MetricRoisFromExtremaParameters",
     "metric_rois_from_extrema",
     "metric_rois_from_extrema_execute",
     "metric_rois_from_extrema_params",

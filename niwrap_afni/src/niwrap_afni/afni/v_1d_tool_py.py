@@ -14,7 +14,23 @@ V_1D_TOOL_PY_METADATA = Metadata(
 
 
 V1dToolPyParameters = typing.TypedDict('V1dToolPyParameters', {
-    "@type": typing.Literal["afni.1d_tool.py"],
+    "@type": typing.NotRequired[typing.Literal["afni/1d_tool.py"]],
+    "infile": InputPathType,
+    "write": typing.NotRequired[str | None],
+    "select_cols": typing.NotRequired[str | None],
+    "select_rows": typing.NotRequired[str | None],
+    "select_groups": typing.NotRequired[str | None],
+    "censor_motion": typing.NotRequired[float | None],
+    "pad_into_many_runs": typing.NotRequired[str | None],
+    "set_nruns": typing.NotRequired[float | None],
+    "set_run_lengths": typing.NotRequired[str | None],
+    "show_rows_cols": bool,
+    "transpose": bool,
+    "reverse": bool,
+    "show_max_displace": bool,
+})
+V1dToolPyParametersTagged = typing.TypedDict('V1dToolPyParametersTagged', {
+    "@type": typing.Literal["afni/1d_tool.py"],
     "infile": InputPathType,
     "write": typing.NotRequired[str | None],
     "select_cols": typing.NotRequired[str | None],
@@ -31,41 +47,9 @@ V1dToolPyParameters = typing.TypedDict('V1dToolPyParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "afni.1d_tool.py": v_1d_tool_py_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "afni.1d_tool.py": v_1d_tool_py_outputs,
-    }.get(t)
-
-
 class V1dToolPyOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `v_1d_tool_py(...)`.
+    Output object returned when calling `V1dToolPyParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -87,7 +71,7 @@ def v_1d_tool_py_params(
     transpose: bool = False,
     reverse: bool = False,
     show_max_displace: bool = False,
-) -> V1dToolPyParameters:
+) -> V1dToolPyParametersTagged:
     """
     Build parameters.
     
@@ -109,7 +93,7 @@ def v_1d_tool_py_params(
         Parameter dictionary
     """
     params = {
-        "@type": "afni.1d_tool.py",
+        "@type": "afni/1d_tool.py",
         "infile": infile,
         "show_rows_cols": show_rows_cols,
         "transpose": transpose,
@@ -152,55 +136,55 @@ def v_1d_tool_py_cargs(
     cargs.append("1d_tool.py")
     cargs.extend([
         "-infile",
-        execution.input_file(params.get("infile"))
+        execution.input_file(params.get("infile", None))
     ])
-    if params.get("write") is not None:
+    if params.get("write", None) is not None:
         cargs.extend([
             "-write",
-            params.get("write")
+            params.get("write", None)
         ])
-    if params.get("select_cols") is not None:
+    if params.get("select_cols", None) is not None:
         cargs.extend([
             "-select_cols",
-            params.get("select_cols")
+            params.get("select_cols", None)
         ])
-    if params.get("select_rows") is not None:
+    if params.get("select_rows", None) is not None:
         cargs.extend([
             "-select_rows",
-            params.get("select_rows")
+            params.get("select_rows", None)
         ])
-    if params.get("select_groups") is not None:
+    if params.get("select_groups", None) is not None:
         cargs.extend([
             "-select_groups",
-            params.get("select_groups")
+            params.get("select_groups", None)
         ])
-    if params.get("censor_motion") is not None:
+    if params.get("censor_motion", None) is not None:
         cargs.extend([
             "-censor_motion",
-            str(params.get("censor_motion"))
+            str(params.get("censor_motion", None))
         ])
-    if params.get("pad_into_many_runs") is not None:
+    if params.get("pad_into_many_runs", None) is not None:
         cargs.extend([
             "-pad_into_many_runs",
-            params.get("pad_into_many_runs")
+            params.get("pad_into_many_runs", None)
         ])
-    if params.get("set_nruns") is not None:
+    if params.get("set_nruns", None) is not None:
         cargs.extend([
             "-set_nruns",
-            str(params.get("set_nruns"))
+            str(params.get("set_nruns", None))
         ])
-    if params.get("set_run_lengths") is not None:
+    if params.get("set_run_lengths", None) is not None:
         cargs.extend([
             "-set_run_lengths",
-            params.get("set_run_lengths")
+            params.get("set_run_lengths", None)
         ])
-    if params.get("show_rows_cols"):
+    if params.get("show_rows_cols", False):
         cargs.append("-show_rows_cols")
-    if params.get("transpose"):
+    if params.get("transpose", False):
         cargs.append("-transpose")
-    if params.get("reverse"):
+    if params.get("reverse", False):
         cargs.append("-reverse")
-    if params.get("show_max_displace"):
+    if params.get("show_max_displace", False):
         cargs.append("-show_max_displace")
     return cargs
 
@@ -220,7 +204,7 @@ def v_1d_tool_py_outputs(
     """
     ret = V1dToolPyOutputs(
         root=execution.output_file("."),
-        outfile=execution.output_file(params.get("write")) if (params.get("write") is not None) else None,
+        outfile=execution.output_file(params.get("write", None)) if (params.get("write") is not None) else None,
     )
     return ret
 
@@ -316,7 +300,6 @@ def v_1d_tool_py(
 
 __all__ = [
     "V1dToolPyOutputs",
-    "V1dToolPyParameters",
     "V_1D_TOOL_PY_METADATA",
     "v_1d_tool_py",
     "v_1d_tool_py_execute",

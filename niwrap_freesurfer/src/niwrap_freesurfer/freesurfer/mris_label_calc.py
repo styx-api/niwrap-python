@@ -14,7 +14,15 @@ MRIS_LABEL_CALC_METADATA = Metadata(
 
 
 MrisLabelCalcParameters = typing.TypedDict('MrisLabelCalcParameters', {
-    "@type": typing.Literal["freesurfer.mris_label_calc"],
+    "@type": typing.NotRequired[typing.Literal["freesurfer/mris_label_calc"]],
+    "command": typing.Literal["union", "intersect", "invert", "erode", "dilate"],
+    "input1": InputPathType,
+    "input2": InputPathType,
+    "output": str,
+    "iterations": typing.NotRequired[int | None],
+})
+MrisLabelCalcParametersTagged = typing.TypedDict('MrisLabelCalcParametersTagged', {
+    "@type": typing.Literal["freesurfer/mris_label_calc"],
     "command": typing.Literal["union", "intersect", "invert", "erode", "dilate"],
     "input1": InputPathType,
     "input2": InputPathType,
@@ -23,41 +31,9 @@ MrisLabelCalcParameters = typing.TypedDict('MrisLabelCalcParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "freesurfer.mris_label_calc": mris_label_calc_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "freesurfer.mris_label_calc": mris_label_calc_outputs,
-    }.get(t)
-
-
 class MrisLabelCalcOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `mris_label_calc(...)`.
+    Output object returned when calling `MrisLabelCalcParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -71,7 +47,7 @@ def mris_label_calc_params(
     input2: InputPathType,
     output: str,
     iterations: int | None = None,
-) -> MrisLabelCalcParameters:
+) -> MrisLabelCalcParametersTagged:
     """
     Build parameters.
     
@@ -86,7 +62,7 @@ def mris_label_calc_params(
         Parameter dictionary
     """
     params = {
-        "@type": "freesurfer.mris_label_calc",
+        "@type": "freesurfer/mris_label_calc",
         "command": command,
         "input1": input1,
         "input2": input2,
@@ -112,14 +88,14 @@ def mris_label_calc_cargs(
     """
     cargs = []
     cargs.append("mris_label_calc")
-    cargs.append(params.get("command"))
-    cargs.append(execution.input_file(params.get("input1")))
-    cargs.append(execution.input_file(params.get("input2")))
-    cargs.append(params.get("output"))
-    if params.get("iterations") is not None:
+    cargs.append(params.get("command", None))
+    cargs.append(execution.input_file(params.get("input1", None)))
+    cargs.append(execution.input_file(params.get("input2", None)))
+    cargs.append(params.get("output", None))
+    if params.get("iterations", None) is not None:
         cargs.extend([
             "<n>",
-            str(params.get("iterations"))
+            str(params.get("iterations", None))
         ])
     return cargs
 
@@ -139,7 +115,7 @@ def mris_label_calc_outputs(
     """
     ret = MrisLabelCalcOutputs(
         root=execution.output_file("."),
-        output_label=execution.output_file(params.get("output") + ".label"),
+        output_label=execution.output_file(params.get("output", None) + ".label"),
     )
     return ret
 
@@ -213,7 +189,6 @@ def mris_label_calc(
 __all__ = [
     "MRIS_LABEL_CALC_METADATA",
     "MrisLabelCalcOutputs",
-    "MrisLabelCalcParameters",
     "mris_label_calc",
     "mris_label_calc_execute",
     "mris_label_calc_params",

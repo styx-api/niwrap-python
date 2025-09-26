@@ -14,7 +14,59 @@ MRI_ROBUST_REGISTER_METADATA = Metadata(
 
 
 MriRobustRegisterParameters = typing.TypedDict('MriRobustRegisterParameters', {
-    "@type": typing.Literal["freesurfer.mri_robust_register"],
+    "@type": typing.NotRequired[typing.Literal["freesurfer/mri_robust_register"]],
+    "movable_volume": InputPathType,
+    "target_volume": InputPathType,
+    "output_registration": str,
+    "outlier_sensitivity": typing.NotRequired[float | None],
+    "satit": bool,
+    "mapped_movable": typing.NotRequired[str | None],
+    "mapped_movable_hdr": typing.NotRequired[str | None],
+    "weights": typing.NotRequired[str | None],
+    "oneminus_w": bool,
+    "iscale": bool,
+    "iscale_only": bool,
+    "iscale_out": typing.NotRequired[str | None],
+    "iscale_in": typing.NotRequired[str | None],
+    "trans_only": bool,
+    "affine": bool,
+    "ixform": typing.NotRequired[str | None],
+    "init_orient": bool,
+    "no_init": bool,
+    "vox2vox": bool,
+    "cost": typing.NotRequired[str | None],
+    "ent_radius": typing.NotRequired[float | None],
+    "ent_correction": bool,
+    "ent_ball": bool,
+    "ent_mov": typing.NotRequired[str | None],
+    "powell_tolerance": typing.NotRequired[float | None],
+    "sobel": bool,
+    "no_sym": bool,
+    "maximum_iterations": typing.NotRequired[float | None],
+    "ent_dst": typing.NotRequired[str | None],
+    "high_iter": typing.NotRequired[float | None],
+    "eps_iteration": typing.NotRequired[float | None],
+    "no_multiscale": bool,
+    "max_size": typing.NotRequired[float | None],
+    "min_size": typing.NotRequired[float | None],
+    "w_limit": typing.NotRequired[float | None],
+    "sub_sample": typing.NotRequired[float | None],
+    "float_type": bool,
+    "white_bg_mov": bool,
+    "white_bg_dst": bool,
+    "uchar": bool,
+    "mask_mov": typing.NotRequired[InputPathType | None],
+    "mask_dst": typing.NotRequired[InputPathType | None],
+    "half_mov": typing.NotRequired[str | None],
+    "half_dst": typing.NotRequired[str | None],
+    "half_weights": typing.NotRequired[str | None],
+    "half_mov_lta": typing.NotRequired[str | None],
+    "half_dst_lta": typing.NotRequired[str | None],
+    "debug": bool,
+    "verbose": typing.NotRequired[float | None],
+})
+MriRobustRegisterParametersTagged = typing.TypedDict('MriRobustRegisterParametersTagged', {
+    "@type": typing.Literal["freesurfer/mri_robust_register"],
     "movable_volume": InputPathType,
     "target_volume": InputPathType,
     "output_registration": str,
@@ -67,41 +119,9 @@ MriRobustRegisterParameters = typing.TypedDict('MriRobustRegisterParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "freesurfer.mri_robust_register": mri_robust_register_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "freesurfer.mri_robust_register": mri_robust_register_outputs,
-    }.get(t)
-
-
 class MriRobustRegisterOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `mri_robust_register(...)`.
+    Output object returned when calling `MriRobustRegisterParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -182,7 +202,7 @@ def mri_robust_register_params(
     half_dst_lta: str | None = None,
     debug: bool = False,
     verbose: float | None = None,
-) -> MriRobustRegisterParameters:
+) -> MriRobustRegisterParametersTagged:
     """
     Build parameters.
     
@@ -248,7 +268,7 @@ def mri_robust_register_params(
         Parameter dictionary
     """
     params = {
-        "@type": "freesurfer.mri_robust_register",
+        "@type": "freesurfer/mri_robust_register",
         "movable_volume": movable_volume,
         "target_volume": target_volume,
         "output_registration": output_registration,
@@ -346,188 +366,188 @@ def mri_robust_register_cargs(
     cargs.append("mri_robust_register")
     cargs.extend([
         "-mov",
-        execution.input_file(params.get("movable_volume"))
+        execution.input_file(params.get("movable_volume", None))
     ])
     cargs.extend([
         "-dst",
-        execution.input_file(params.get("target_volume"))
+        execution.input_file(params.get("target_volume", None))
     ])
     cargs.extend([
         "-lta",
-        params.get("output_registration")
+        params.get("output_registration", None)
     ])
-    if params.get("outlier_sensitivity") is not None:
+    if params.get("outlier_sensitivity", None) is not None:
         cargs.extend([
             "--sat",
-            str(params.get("outlier_sensitivity"))
+            str(params.get("outlier_sensitivity", None))
         ])
-    if params.get("satit"):
+    if params.get("satit", False):
         cargs.append("--satit")
-    if params.get("mapped_movable") is not None:
+    if params.get("mapped_movable", None) is not None:
         cargs.extend([
             "--mapmov",
-            params.get("mapped_movable")
+            params.get("mapped_movable", None)
         ])
-    if params.get("mapped_movable_hdr") is not None:
+    if params.get("mapped_movable_hdr", None) is not None:
         cargs.extend([
             "--mapmovhdr",
-            params.get("mapped_movable_hdr")
+            params.get("mapped_movable_hdr", None)
         ])
-    if params.get("weights") is not None:
+    if params.get("weights", None) is not None:
         cargs.extend([
             "--weights",
-            params.get("weights")
+            params.get("weights", None)
         ])
-    if params.get("oneminus_w"):
+    if params.get("oneminus_w", False):
         cargs.append("--oneminusw")
-    if params.get("iscale"):
+    if params.get("iscale", False):
         cargs.append("--iscale")
-    if params.get("iscale_only"):
+    if params.get("iscale_only", False):
         cargs.append("--iscaleonly")
-    if params.get("iscale_out") is not None:
+    if params.get("iscale_out", None) is not None:
         cargs.extend([
             "--iscaleout",
-            params.get("iscale_out")
+            params.get("iscale_out", None)
         ])
-    if params.get("iscale_in") is not None:
+    if params.get("iscale_in", None) is not None:
         cargs.extend([
             "--iscalein",
-            params.get("iscale_in")
+            params.get("iscale_in", None)
         ])
-    if params.get("trans_only"):
+    if params.get("trans_only", False):
         cargs.append("--transonly")
-    if params.get("affine"):
+    if params.get("affine", False):
         cargs.append("--affine")
-    if params.get("ixform") is not None:
+    if params.get("ixform", None) is not None:
         cargs.extend([
             "--ixform",
-            params.get("ixform")
+            params.get("ixform", None)
         ])
-    if params.get("init_orient"):
+    if params.get("init_orient", False):
         cargs.append("--initorient")
-    if params.get("no_init"):
+    if params.get("no_init", False):
         cargs.append("--noinit")
-    if params.get("vox2vox"):
+    if params.get("vox2vox", False):
         cargs.append("--vox2vox")
-    if params.get("cost") is not None:
+    if params.get("cost", None) is not None:
         cargs.extend([
             "--cost",
-            params.get("cost")
+            params.get("cost", None)
         ])
-    if params.get("ent_radius") is not None:
+    if params.get("ent_radius", None) is not None:
         cargs.extend([
             "--entradius",
-            str(params.get("ent_radius"))
+            str(params.get("ent_radius", None))
         ])
-    if params.get("ent_correction"):
+    if params.get("ent_correction", False):
         cargs.append("--entcorrection")
-    if params.get("ent_ball"):
+    if params.get("ent_ball", False):
         cargs.append("--entball")
-    if params.get("ent_mov") is not None:
+    if params.get("ent_mov", None) is not None:
         cargs.extend([
             "--entmov",
-            params.get("ent_mov")
+            params.get("ent_mov", None)
         ])
-    if params.get("powell_tolerance") is not None:
+    if params.get("powell_tolerance", None) is not None:
         cargs.extend([
             "--powelltol",
-            str(params.get("powell_tolerance"))
+            str(params.get("powell_tolerance", None))
         ])
-    if params.get("sobel"):
+    if params.get("sobel", False):
         cargs.append("--sobel")
-    if params.get("no_sym"):
+    if params.get("no_sym", False):
         cargs.append("--nosym")
-    if params.get("maximum_iterations") is not None:
+    if params.get("maximum_iterations", None) is not None:
         cargs.extend([
             "--maxit",
-            str(params.get("maximum_iterations"))
+            str(params.get("maximum_iterations", None))
         ])
-    if params.get("ent_dst") is not None:
+    if params.get("ent_dst", None) is not None:
         cargs.extend([
             "--entdst",
-            params.get("ent_dst")
+            params.get("ent_dst", None)
         ])
-    if params.get("high_iter") is not None:
+    if params.get("high_iter", None) is not None:
         cargs.extend([
             "--highit",
-            str(params.get("high_iter"))
+            str(params.get("high_iter", None))
         ])
-    if params.get("eps_iteration") is not None:
+    if params.get("eps_iteration", None) is not None:
         cargs.extend([
             "--epsit",
-            str(params.get("eps_iteration"))
+            str(params.get("eps_iteration", None))
         ])
-    if params.get("no_multiscale"):
+    if params.get("no_multiscale", False):
         cargs.append("--nomulti")
-    if params.get("max_size") is not None:
+    if params.get("max_size", None) is not None:
         cargs.extend([
             "--maxsize",
-            str(params.get("max_size"))
+            str(params.get("max_size", None))
         ])
-    if params.get("min_size") is not None:
+    if params.get("min_size", None) is not None:
         cargs.extend([
             "--minsize",
-            str(params.get("min_size"))
+            str(params.get("min_size", None))
         ])
-    if params.get("w_limit") is not None:
+    if params.get("w_limit", None) is not None:
         cargs.extend([
             "--wlimit",
-            str(params.get("w_limit"))
+            str(params.get("w_limit", None))
         ])
-    if params.get("sub_sample") is not None:
+    if params.get("sub_sample", None) is not None:
         cargs.extend([
             "--subsample",
-            str(params.get("sub_sample"))
+            str(params.get("sub_sample", None))
         ])
-    if params.get("float_type"):
+    if params.get("float_type", False):
         cargs.append("--floattype")
-    if params.get("white_bg_mov"):
+    if params.get("white_bg_mov", False):
         cargs.append("--whitebgmov")
-    if params.get("white_bg_dst"):
+    if params.get("white_bg_dst", False):
         cargs.append("--whitebgdst")
-    if params.get("uchar"):
+    if params.get("uchar", False):
         cargs.append("--uchar")
-    if params.get("mask_mov") is not None:
+    if params.get("mask_mov", None) is not None:
         cargs.extend([
             "--maskmov",
-            execution.input_file(params.get("mask_mov"))
+            execution.input_file(params.get("mask_mov", None))
         ])
-    if params.get("mask_dst") is not None:
+    if params.get("mask_dst", None) is not None:
         cargs.extend([
             "--maskdst",
-            execution.input_file(params.get("mask_dst"))
+            execution.input_file(params.get("mask_dst", None))
         ])
-    if params.get("half_mov") is not None:
+    if params.get("half_mov", None) is not None:
         cargs.extend([
             "--halfmov",
-            params.get("half_mov")
+            params.get("half_mov", None)
         ])
-    if params.get("half_dst") is not None:
+    if params.get("half_dst", None) is not None:
         cargs.extend([
             "--halfdst",
-            params.get("half_dst")
+            params.get("half_dst", None)
         ])
-    if params.get("half_weights") is not None:
+    if params.get("half_weights", None) is not None:
         cargs.extend([
             "--halfweights",
-            params.get("half_weights")
+            params.get("half_weights", None)
         ])
-    if params.get("half_mov_lta") is not None:
+    if params.get("half_mov_lta", None) is not None:
         cargs.extend([
             "--halfmovlta",
-            params.get("half_mov_lta")
+            params.get("half_mov_lta", None)
         ])
-    if params.get("half_dst_lta") is not None:
+    if params.get("half_dst_lta", None) is not None:
         cargs.extend([
             "--halfdstlta",
-            params.get("half_dst_lta")
+            params.get("half_dst_lta", None)
         ])
-    if params.get("debug"):
+    if params.get("debug", False):
         cargs.append("--debug")
-    if params.get("verbose") is not None:
+    if params.get("verbose", None) is not None:
         cargs.extend([
             "--verbose",
-            str(params.get("verbose"))
+            str(params.get("verbose", None))
         ])
     return cargs
 
@@ -547,18 +567,18 @@ def mri_robust_register_outputs(
     """
     ret = MriRobustRegisterOutputs(
         root=execution.output_file("."),
-        reg_output=execution.output_file(params.get("output_registration")),
-        mapped_output=execution.output_file(params.get("mapped_movable")) if (params.get("mapped_movable") is not None) else None,
-        mapped_hdr_output=execution.output_file(params.get("mapped_movable_hdr")) if (params.get("mapped_movable_hdr") is not None) else None,
-        weights_output_file=execution.output_file(params.get("weights")) if (params.get("weights") is not None) else None,
-        iscale_out_file=execution.output_file(params.get("iscale_out")) if (params.get("iscale_out") is not None) else None,
-        half_mov_file=execution.output_file(params.get("half_mov")) if (params.get("half_mov") is not None) else None,
-        half_dst_file=execution.output_file(params.get("half_dst")) if (params.get("half_dst") is not None) else None,
-        half_weights_file=execution.output_file(params.get("half_weights")) if (params.get("half_weights") is not None) else None,
-        half_mov_lta_file=execution.output_file(params.get("half_mov_lta")) if (params.get("half_mov_lta") is not None) else None,
-        half_dst_lta_file=execution.output_file(params.get("half_dst_lta")) if (params.get("half_dst_lta") is not None) else None,
-        ent_mov_file=execution.output_file(params.get("ent_mov")) if (params.get("ent_mov") is not None) else None,
-        ent_dst_file=execution.output_file(params.get("ent_dst")) if (params.get("ent_dst") is not None) else None,
+        reg_output=execution.output_file(params.get("output_registration", None)),
+        mapped_output=execution.output_file(params.get("mapped_movable", None)) if (params.get("mapped_movable") is not None) else None,
+        mapped_hdr_output=execution.output_file(params.get("mapped_movable_hdr", None)) if (params.get("mapped_movable_hdr") is not None) else None,
+        weights_output_file=execution.output_file(params.get("weights", None)) if (params.get("weights") is not None) else None,
+        iscale_out_file=execution.output_file(params.get("iscale_out", None)) if (params.get("iscale_out") is not None) else None,
+        half_mov_file=execution.output_file(params.get("half_mov", None)) if (params.get("half_mov") is not None) else None,
+        half_dst_file=execution.output_file(params.get("half_dst", None)) if (params.get("half_dst") is not None) else None,
+        half_weights_file=execution.output_file(params.get("half_weights", None)) if (params.get("half_weights") is not None) else None,
+        half_mov_lta_file=execution.output_file(params.get("half_mov_lta", None)) if (params.get("half_mov_lta") is not None) else None,
+        half_dst_lta_file=execution.output_file(params.get("half_dst_lta", None)) if (params.get("half_dst_lta") is not None) else None,
+        ent_mov_file=execution.output_file(params.get("ent_mov", None)) if (params.get("ent_mov") is not None) else None,
+        ent_dst_file=execution.output_file(params.get("ent_dst", None)) if (params.get("ent_dst") is not None) else None,
     )
     return ret
 
@@ -773,7 +793,6 @@ def mri_robust_register(
 __all__ = [
     "MRI_ROBUST_REGISTER_METADATA",
     "MriRobustRegisterOutputs",
-    "MriRobustRegisterParameters",
     "mri_robust_register",
     "mri_robust_register_execute",
     "mri_robust_register_params",

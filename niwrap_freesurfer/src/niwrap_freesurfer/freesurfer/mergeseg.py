@@ -14,7 +14,17 @@ MERGESEG_METADATA = Metadata(
 
 
 MergesegParameters = typing.TypedDict('MergesegParameters', {
-    "@type": typing.Literal["freesurfer.mergeseg"],
+    "@type": typing.NotRequired[typing.Literal["freesurfer/mergeseg"]],
+    "src_seg": InputPathType,
+    "merge_seg": InputPathType,
+    "out_seg": str,
+    "segid": typing.NotRequired[float | None],
+    "segid_only": typing.NotRequired[float | None],
+    "segid_erode": typing.NotRequired[float | None],
+    "ctab": typing.NotRequired[InputPathType | None],
+})
+MergesegParametersTagged = typing.TypedDict('MergesegParametersTagged', {
+    "@type": typing.Literal["freesurfer/mergeseg"],
     "src_seg": InputPathType,
     "merge_seg": InputPathType,
     "out_seg": str,
@@ -25,41 +35,9 @@ MergesegParameters = typing.TypedDict('MergesegParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "freesurfer.mergeseg": mergeseg_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "freesurfer.mergeseg": mergeseg_outputs,
-    }.get(t)
-
-
 class MergesegOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `mergeseg(...)`.
+    Output object returned when calling `MergesegParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -75,7 +53,7 @@ def mergeseg_params(
     segid_only: float | None = None,
     segid_erode: float | None = None,
     ctab: InputPathType | None = None,
-) -> MergesegParameters:
+) -> MergesegParametersTagged:
     """
     Build parameters.
     
@@ -93,7 +71,7 @@ def mergeseg_params(
         Parameter dictionary
     """
     params = {
-        "@type": "freesurfer.mergeseg",
+        "@type": "freesurfer/mergeseg",
         "src_seg": src_seg,
         "merge_seg": merge_seg,
         "out_seg": out_seg,
@@ -124,31 +102,31 @@ def mergeseg_cargs(
     """
     cargs = []
     cargs.append("mergeseg")
-    cargs.append(execution.input_file(params.get("src_seg")))
-    cargs.append(execution.input_file(params.get("merge_seg")))
+    cargs.append(execution.input_file(params.get("src_seg", None)))
+    cargs.append(execution.input_file(params.get("merge_seg", None)))
     cargs.extend([
         "--o",
-        params.get("out_seg")
+        params.get("out_seg", None)
     ])
-    if params.get("segid") is not None:
+    if params.get("segid", None) is not None:
         cargs.extend([
             "--segid",
-            str(params.get("segid"))
+            str(params.get("segid", None))
         ])
-    if params.get("segid_only") is not None:
+    if params.get("segid_only", None) is not None:
         cargs.extend([
             "--segid-only",
-            str(params.get("segid_only"))
+            str(params.get("segid_only", None))
         ])
-    if params.get("segid_erode") is not None:
+    if params.get("segid_erode", None) is not None:
         cargs.extend([
             "--segid-erode",
-            str(params.get("segid_erode"))
+            str(params.get("segid_erode", None))
         ])
-    if params.get("ctab") is not None:
+    if params.get("ctab", None) is not None:
         cargs.extend([
             "--ctab",
-            execution.input_file(params.get("ctab"))
+            execution.input_file(params.get("ctab", None))
         ])
     return cargs
 
@@ -168,7 +146,7 @@ def mergeseg_outputs(
     """
     ret = MergesegOutputs(
         root=execution.output_file("."),
-        output_seg=execution.output_file(params.get("out_seg")),
+        output_seg=execution.output_file(params.get("out_seg", None)),
     )
     return ret
 
@@ -251,7 +229,6 @@ def mergeseg(
 __all__ = [
     "MERGESEG_METADATA",
     "MergesegOutputs",
-    "MergesegParameters",
     "mergeseg",
     "mergeseg_execute",
     "mergeseg_params",

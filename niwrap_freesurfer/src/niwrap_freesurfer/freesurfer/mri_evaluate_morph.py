@@ -14,48 +14,22 @@ MRI_EVALUATE_MORPH_METADATA = Metadata(
 
 
 MriEvaluateMorphParameters = typing.TypedDict('MriEvaluateMorphParameters', {
-    "@type": typing.Literal["freesurfer.mri_evaluate_morph"],
+    "@type": typing.NotRequired[typing.Literal["freesurfer/mri_evaluate_morph"]],
+    "xform_name": InputPathType,
+    "segmentation_files": list[InputPathType],
+    "output_file": str,
+})
+MriEvaluateMorphParametersTagged = typing.TypedDict('MriEvaluateMorphParametersTagged', {
+    "@type": typing.Literal["freesurfer/mri_evaluate_morph"],
     "xform_name": InputPathType,
     "segmentation_files": list[InputPathType],
     "output_file": str,
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "freesurfer.mri_evaluate_morph": mri_evaluate_morph_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "freesurfer.mri_evaluate_morph": mri_evaluate_morph_outputs,
-    }.get(t)
-
-
 class MriEvaluateMorphOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `mri_evaluate_morph(...)`.
+    Output object returned when calling `MriEvaluateMorphParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -67,7 +41,7 @@ def mri_evaluate_morph_params(
     xform_name: InputPathType,
     segmentation_files: list[InputPathType],
     output_file: str,
-) -> MriEvaluateMorphParameters:
+) -> MriEvaluateMorphParametersTagged:
     """
     Build parameters.
     
@@ -79,7 +53,7 @@ def mri_evaluate_morph_params(
         Parameter dictionary
     """
     params = {
-        "@type": "freesurfer.mri_evaluate_morph",
+        "@type": "freesurfer/mri_evaluate_morph",
         "xform_name": xform_name,
         "segmentation_files": segmentation_files,
         "output_file": output_file,
@@ -102,9 +76,9 @@ def mri_evaluate_morph_cargs(
     """
     cargs = []
     cargs.append("mri_evaluate_morph")
-    cargs.append(execution.input_file(params.get("xform_name")))
-    cargs.extend([execution.input_file(f) for f in params.get("segmentation_files")])
-    cargs.append(params.get("output_file"))
+    cargs.append(execution.input_file(params.get("xform_name", None)))
+    cargs.extend([execution.input_file(f) for f in params.get("segmentation_files", None)])
+    cargs.append(params.get("output_file", None))
     return cargs
 
 
@@ -123,7 +97,7 @@ def mri_evaluate_morph_outputs(
     """
     ret = MriEvaluateMorphOutputs(
         root=execution.output_file("."),
-        output_overlap_file=execution.output_file(params.get("output_file")),
+        output_overlap_file=execution.output_file(params.get("output_file", None)),
     )
     return ret
 
@@ -192,7 +166,6 @@ def mri_evaluate_morph(
 __all__ = [
     "MRI_EVALUATE_MORPH_METADATA",
     "MriEvaluateMorphOutputs",
-    "MriEvaluateMorphParameters",
     "mri_evaluate_morph",
     "mri_evaluate_morph_execute",
     "mri_evaluate_morph_params",

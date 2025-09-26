@@ -14,7 +14,17 @@ SAMSEG_LONG_METADATA = Metadata(
 
 
 SamsegLongParameters = typing.TypedDict('SamsegLongParameters', {
-    "@type": typing.Literal["freesurfer.samseg-long"],
+    "@type": typing.NotRequired[typing.Literal["freesurfer/samseg-long"]],
+    "output_dir": str,
+    "input_files": list[InputPathType],
+    "align_mc": bool,
+    "align_no_mc": bool,
+    "threads": typing.NotRequired[float | None],
+    "save_posteriors": bool,
+    "force_update": bool,
+})
+SamsegLongParametersTagged = typing.TypedDict('SamsegLongParametersTagged', {
+    "@type": typing.Literal["freesurfer/samseg-long"],
     "output_dir": str,
     "input_files": list[InputPathType],
     "align_mc": bool,
@@ -25,41 +35,9 @@ SamsegLongParameters = typing.TypedDict('SamsegLongParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "freesurfer.samseg-long": samseg_long_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "freesurfer.samseg-long": samseg_long_outputs,
-    }.get(t)
-
-
 class SamsegLongOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `samseg_long(...)`.
+    Output object returned when calling `SamsegLongParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -79,7 +57,7 @@ def samseg_long_params(
     threads: float | None = None,
     save_posteriors: bool = False,
     force_update: bool = False,
-) -> SamsegLongParameters:
+) -> SamsegLongParametersTagged:
     """
     Build parameters.
     
@@ -95,7 +73,7 @@ def samseg_long_params(
         Parameter dictionary
     """
     params = {
-        "@type": "freesurfer.samseg-long",
+        "@type": "freesurfer/samseg-long",
         "output_dir": output_dir,
         "input_files": input_files,
         "align_mc": align_mc,
@@ -125,24 +103,24 @@ def samseg_long_cargs(
     cargs.append("samseg-long")
     cargs.extend([
         "--o",
-        params.get("output_dir")
+        params.get("output_dir", None)
     ])
     cargs.extend([
         "--i",
-        *[execution.input_file(f) for f in params.get("input_files")]
+        *[execution.input_file(f) for f in params.get("input_files", None)]
     ])
-    if params.get("align_mc"):
+    if params.get("align_mc", False):
         cargs.append("--mc")
-    if params.get("align_no_mc"):
+    if params.get("align_no_mc", False):
         cargs.append("--no-mc")
-    if params.get("threads") is not None:
+    if params.get("threads", None) is not None:
         cargs.extend([
             "--threads",
-            str(params.get("threads"))
+            str(params.get("threads", None))
         ])
-    if params.get("save_posteriors"):
+    if params.get("save_posteriors", False):
         cargs.append("--save-posteriors")
-    if params.get("force_update"):
+    if params.get("force_update", False):
         cargs.append("--force-update")
     return cargs
 
@@ -162,9 +140,9 @@ def samseg_long_outputs(
     """
     ret = SamsegLongOutputs(
         root=execution.output_file("."),
-        tp001_output=execution.output_file(params.get("output_dir") + "/tp001"),
-        tp002_output=execution.output_file(params.get("output_dir") + "/tp002"),
-        base_output=execution.output_file(params.get("output_dir") + "/base"),
+        tp001_output=execution.output_file(params.get("output_dir", None) + "/tp001"),
+        tp002_output=execution.output_file(params.get("output_dir", None) + "/tp002"),
+        base_output=execution.output_file(params.get("output_dir", None) + "/base"),
     )
     return ret
 
@@ -243,7 +221,6 @@ def samseg_long(
 __all__ = [
     "SAMSEG_LONG_METADATA",
     "SamsegLongOutputs",
-    "SamsegLongParameters",
     "samseg_long",
     "samseg_long_execute",
     "samseg_long_params",

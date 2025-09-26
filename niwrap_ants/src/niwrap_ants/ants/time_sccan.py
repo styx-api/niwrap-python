@@ -14,28 +14,43 @@ TIME_SCCAN_METADATA = Metadata(
 
 
 TimeSccanTimeseriesimageToMatrixParameters = typing.TypedDict('TimeSccanTimeseriesimageToMatrixParameters', {
-    "@type": typing.Literal["ants.TimeSCCAN.timeseriesimage_to_matrix"],
+    "@type": typing.NotRequired[typing.Literal["timeseriesimage_to_matrix"]],
+    "timeseries_image": InputPathType,
+    "mask_image": InputPathType,
+})
+TimeSccanTimeseriesimageToMatrixParametersTagged = typing.TypedDict('TimeSccanTimeseriesimageToMatrixParametersTagged', {
+    "@type": typing.Literal["timeseriesimage_to_matrix"],
     "timeseries_image": InputPathType,
     "mask_image": InputPathType,
 })
 
 
 TimeSccanNetworkSccaParameters = typing.TypedDict('TimeSccanNetworkSccaParameters', {
-    "@type": typing.Literal["ants.TimeSCCAN.network_scca"],
+    "@type": typing.NotRequired[typing.Literal["network_scca"]],
+    "time_matrix": InputPathType,
+    "label_matrix": InputPathType,
+})
+TimeSccanNetworkSccaParametersTagged = typing.TypedDict('TimeSccanNetworkSccaParametersTagged', {
+    "@type": typing.Literal["network_scca"],
     "time_matrix": InputPathType,
     "label_matrix": InputPathType,
 })
 
 
 TimeSccanNetworkRegionAveragingParameters = typing.TypedDict('TimeSccanNetworkRegionAveragingParameters', {
-    "@type": typing.Literal["ants.TimeSCCAN.network_region_averaging"],
+    "@type": typing.NotRequired[typing.Literal["network_region_averaging"]],
+    "time_matrix": InputPathType,
+    "label_matrix": InputPathType,
+})
+TimeSccanNetworkRegionAveragingParametersTagged = typing.TypedDict('TimeSccanNetworkRegionAveragingParametersTagged', {
+    "@type": typing.Literal["network_region_averaging"],
     "time_matrix": InputPathType,
     "label_matrix": InputPathType,
 })
 
 
 TimeSccanParameters = typing.TypedDict('TimeSccanParameters', {
-    "@type": typing.Literal["ants.TimeSCCAN"],
+    "@type": typing.NotRequired[typing.Literal["ants/TimeSCCAN"]],
     "output": str,
     "number_consecutive_labels": typing.NotRequired[int | None],
     "minimum_region_size": typing.NotRequired[int | None],
@@ -49,11 +64,28 @@ TimeSccanParameters = typing.TypedDict('TimeSccanParameters', {
     "partial_scca_option": typing.NotRequired[typing.Literal["PQ", "PminusRQ", "PQminusR", "PminusRQminusR"] | None],
     "timeseriesimage_to_matrix": typing.NotRequired[TimeSccanTimeseriesimageToMatrixParameters | None],
     "labelsimage_to_matrix": typing.NotRequired[InputPathType | None],
-    "network": typing.NotRequired[typing.Union[TimeSccanNetworkSccaParameters, TimeSccanNetworkRegionAveragingParameters] | None],
+    "network": typing.NotRequired[typing.Union[TimeSccanNetworkSccaParametersTagged, TimeSccanNetworkRegionAveragingParametersTagged] | None],
+})
+TimeSccanParametersTagged = typing.TypedDict('TimeSccanParametersTagged', {
+    "@type": typing.Literal["ants/TimeSCCAN"],
+    "output": str,
+    "number_consecutive_labels": typing.NotRequired[int | None],
+    "minimum_region_size": typing.NotRequired[int | None],
+    "iterations": typing.NotRequired[int | None],
+    "sparsity": typing.NotRequired[float | None],
+    "n_eigenvectors": typing.NotRequired[int | None],
+    "robustify": typing.NotRequired[int | None],
+    "l1": typing.NotRequired[float | None],
+    "cluster_thresh": typing.NotRequired[int | None],
+    "ridge_cca": typing.NotRequired[int | None],
+    "partial_scca_option": typing.NotRequired[typing.Literal["PQ", "PminusRQ", "PQminusR", "PminusRQminusR"] | None],
+    "timeseriesimage_to_matrix": typing.NotRequired[TimeSccanTimeseriesimageToMatrixParameters | None],
+    "labelsimage_to_matrix": typing.NotRequired[InputPathType | None],
+    "network": typing.NotRequired[typing.Union[TimeSccanNetworkSccaParametersTagged, TimeSccanNetworkRegionAveragingParametersTagged] | None],
 })
 
 
-def dyn_cargs(
+def time_sccan_network_cargs_dyn_fn(
     t: str,
 ) -> typing.Any:
     """
@@ -65,14 +97,12 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "ants.TimeSCCAN": time_sccan_cargs,
-        "ants.TimeSCCAN.timeseriesimage_to_matrix": time_sccan_timeseriesimage_to_matrix_cargs,
-        "ants.TimeSCCAN.network_scca": time_sccan_network_scca_cargs,
-        "ants.TimeSCCAN.network_region_averaging": time_sccan_network_region_averaging_cargs,
+        "network_scca": time_sccan_network_scca_cargs,
+        "network_region_averaging": time_sccan_network_region_averaging_cargs,
     }.get(t)
 
 
-def dyn_outputs(
+def time_sccan_network_outputs_dyn_fn(
     t: str,
 ) -> typing.Any:
     """
@@ -84,14 +114,13 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "ants.TimeSCCAN": time_sccan_outputs,
     }.get(t)
 
 
 def time_sccan_timeseriesimage_to_matrix_params(
     timeseries_image: InputPathType,
     mask_image: InputPathType,
-) -> TimeSccanTimeseriesimageToMatrixParameters:
+) -> TimeSccanTimeseriesimageToMatrixParametersTagged:
     """
     Build parameters.
     
@@ -102,7 +131,7 @@ def time_sccan_timeseriesimage_to_matrix_params(
         Parameter dictionary
     """
     params = {
-        "@type": "ants.TimeSCCAN.timeseriesimage_to_matrix",
+        "@type": "timeseriesimage_to_matrix",
         "timeseries_image": timeseries_image,
         "mask_image": mask_image,
     }
@@ -123,14 +152,14 @@ def time_sccan_timeseriesimage_to_matrix_cargs(
         Command-line arguments.
     """
     cargs = []
-    cargs.append(execution.input_file(params.get("timeseries_image")) + execution.input_file(params.get("mask_image")))
+    cargs.append(execution.input_file(params.get("timeseries_image", None)) + execution.input_file(params.get("mask_image", None)))
     return cargs
 
 
 def time_sccan_network_scca_params(
     time_matrix: InputPathType,
     label_matrix: InputPathType,
-) -> TimeSccanNetworkSccaParameters:
+) -> TimeSccanNetworkSccaParametersTagged:
     """
     Build parameters.
     
@@ -141,7 +170,7 @@ def time_sccan_network_scca_params(
         Parameter dictionary
     """
     params = {
-        "@type": "ants.TimeSCCAN.network_scca",
+        "@type": "network_scca",
         "time_matrix": time_matrix,
         "label_matrix": label_matrix,
     }
@@ -162,14 +191,14 @@ def time_sccan_network_scca_cargs(
         Command-line arguments.
     """
     cargs = []
-    cargs.append("scca[" + execution.input_file(params.get("time_matrix")) + "," + execution.input_file(params.get("label_matrix")) + "]")
+    cargs.append("scca[" + execution.input_file(params.get("time_matrix", None)) + "," + execution.input_file(params.get("label_matrix", None)) + "]")
     return cargs
 
 
 def time_sccan_network_region_averaging_params(
     time_matrix: InputPathType,
     label_matrix: InputPathType,
-) -> TimeSccanNetworkRegionAveragingParameters:
+) -> TimeSccanNetworkRegionAveragingParametersTagged:
     """
     Build parameters.
     
@@ -180,7 +209,7 @@ def time_sccan_network_region_averaging_params(
         Parameter dictionary
     """
     params = {
-        "@type": "ants.TimeSCCAN.network_region_averaging",
+        "@type": "network_region_averaging",
         "time_matrix": time_matrix,
         "label_matrix": label_matrix,
     }
@@ -201,13 +230,13 @@ def time_sccan_network_region_averaging_cargs(
         Command-line arguments.
     """
     cargs = []
-    cargs.append("region-averaging[" + execution.input_file(params.get("time_matrix")) + "," + execution.input_file(params.get("label_matrix")) + "]")
+    cargs.append("region-averaging[" + execution.input_file(params.get("time_matrix", None)) + "," + execution.input_file(params.get("label_matrix", None)) + "]")
     return cargs
 
 
 class TimeSccanOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `time_sccan(...)`.
+    Output object returned when calling `TimeSccanParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -229,8 +258,8 @@ def time_sccan_params(
     partial_scca_option: typing.Literal["PQ", "PminusRQ", "PQminusR", "PminusRQminusR"] | None = None,
     timeseriesimage_to_matrix: TimeSccanTimeseriesimageToMatrixParameters | None = None,
     labelsimage_to_matrix: InputPathType | None = None,
-    network: typing.Union[TimeSccanNetworkSccaParameters, TimeSccanNetworkRegionAveragingParameters] | None = None,
-) -> TimeSccanParameters:
+    network: typing.Union[TimeSccanNetworkSccaParametersTagged, TimeSccanNetworkRegionAveragingParametersTagged] | None = None,
+) -> TimeSccanParametersTagged:
     """
     Build parameters.
     
@@ -262,7 +291,7 @@ def time_sccan_params(
         Parameter dictionary
     """
     params = {
-        "@type": "ants.TimeSCCAN",
+        "@type": "ants/TimeSCCAN",
         "output": output,
     }
     if number_consecutive_labels is not None:
@@ -311,72 +340,72 @@ def time_sccan_cargs(
     cargs.append("TimeSCCAN")
     cargs.extend([
         "--output",
-        params.get("output")
+        params.get("output", None)
     ])
-    if params.get("number_consecutive_labels") is not None:
+    if params.get("number_consecutive_labels", None) is not None:
         cargs.extend([
             "-l",
-            str(params.get("number_consecutive_labels"))
+            str(params.get("number_consecutive_labels", None))
         ])
-    if params.get("minimum_region_size") is not None:
+    if params.get("minimum_region_size", None) is not None:
         cargs.extend([
             "-R",
-            str(params.get("minimum_region_size"))
+            str(params.get("minimum_region_size", None))
         ])
-    if params.get("iterations") is not None:
+    if params.get("iterations", None) is not None:
         cargs.extend([
             "-i",
-            str(params.get("iterations"))
+            str(params.get("iterations", None))
         ])
-    if params.get("sparsity") is not None:
+    if params.get("sparsity", None) is not None:
         cargs.extend([
             "-s",
-            str(params.get("sparsity"))
+            str(params.get("sparsity", None))
         ])
-    if params.get("n_eigenvectors") is not None:
+    if params.get("n_eigenvectors", None) is not None:
         cargs.extend([
             "-n",
-            str(params.get("n_eigenvectors"))
+            str(params.get("n_eigenvectors", None))
         ])
-    if params.get("robustify") is not None:
+    if params.get("robustify", None) is not None:
         cargs.extend([
             "-r",
-            str(params.get("robustify"))
+            str(params.get("robustify", None))
         ])
-    if params.get("l1") is not None:
+    if params.get("l1", None) is not None:
         cargs.extend([
             "-l",
-            str(params.get("l1"))
+            str(params.get("l1", None))
         ])
-    if params.get("cluster_thresh") is not None:
+    if params.get("cluster_thresh", None) is not None:
         cargs.extend([
             "--ClusterThresh",
-            str(params.get("cluster_thresh"))
+            str(params.get("cluster_thresh", None))
         ])
-    if params.get("ridge_cca") is not None:
+    if params.get("ridge_cca", None) is not None:
         cargs.extend([
             "-e",
-            str(params.get("ridge_cca"))
+            str(params.get("ridge_cca", None))
         ])
-    if params.get("partial_scca_option") is not None:
+    if params.get("partial_scca_option", None) is not None:
         cargs.extend([
             "--partial-scca-option",
-            params.get("partial_scca_option")
+            params.get("partial_scca_option", None)
         ])
-    if params.get("timeseriesimage_to_matrix") is not None:
+    if params.get("timeseriesimage_to_matrix", None) is not None:
         cargs.extend([
             "--timeseriesimage-to-matrix",
-            *dyn_cargs(params.get("timeseriesimage_to_matrix")["@type"])(params.get("timeseriesimage_to_matrix"), execution)
+            *time_sccan_timeseriesimage_to_matrix_cargs(params.get("timeseriesimage_to_matrix", None), execution)
         ])
-    if params.get("labelsimage_to_matrix") is not None:
+    if params.get("labelsimage_to_matrix", None) is not None:
         cargs.extend([
             "--labelsimage-to-matrix",
-            execution.input_file(params.get("labelsimage_to_matrix"))
+            execution.input_file(params.get("labelsimage_to_matrix", None))
         ])
-    if params.get("network") is not None:
+    if params.get("network", None) is not None:
         cargs.extend([
             "--network",
-            *dyn_cargs(params.get("network")["@type"])(params.get("network"), execution)
+            *time_sccan_network_cargs_dyn_fn(params.get("network", None)["@type"])(params.get("network", None), execution)
         ])
     return cargs
 
@@ -396,7 +425,7 @@ def time_sccan_outputs(
     """
     ret = TimeSccanOutputs(
         root=execution.output_file("."),
-        correlation_matrix=execution.output_file(params.get("output")),
+        correlation_matrix=execution.output_file(params.get("output", None)),
     )
     return ret
 
@@ -443,7 +472,7 @@ def time_sccan(
     partial_scca_option: typing.Literal["PQ", "PminusRQ", "PQminusR", "PminusRQminusR"] | None = None,
     timeseriesimage_to_matrix: TimeSccanTimeseriesimageToMatrixParameters | None = None,
     labelsimage_to_matrix: InputPathType | None = None,
-    network: typing.Union[TimeSccanNetworkSccaParameters, TimeSccanNetworkRegionAveragingParameters] | None = None,
+    network: typing.Union[TimeSccanNetworkSccaParametersTagged, TimeSccanNetworkRegionAveragingParametersTagged] | None = None,
     runner: Runner | None = None,
 ) -> TimeSccanOutputs:
     """
@@ -504,11 +533,7 @@ def time_sccan(
 
 __all__ = [
     "TIME_SCCAN_METADATA",
-    "TimeSccanNetworkRegionAveragingParameters",
-    "TimeSccanNetworkSccaParameters",
     "TimeSccanOutputs",
-    "TimeSccanParameters",
-    "TimeSccanTimeseriesimageToMatrixParameters",
     "time_sccan",
     "time_sccan_execute",
     "time_sccan_network_region_averaging_params",

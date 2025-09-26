@@ -14,14 +14,38 @@ V_5TT2VIS_METADATA = Metadata(
 
 
 V5tt2visConfigParameters = typing.TypedDict('V5tt2visConfigParameters', {
-    "@type": typing.Literal["mrtrix.5tt2vis.config"],
+    "@type": typing.NotRequired[typing.Literal["config"]],
+    "key": str,
+    "value": str,
+})
+V5tt2visConfigParametersTagged = typing.TypedDict('V5tt2visConfigParametersTagged', {
+    "@type": typing.Literal["config"],
     "key": str,
     "value": str,
 })
 
 
 V5tt2visParameters = typing.TypedDict('V5tt2visParameters', {
-    "@type": typing.Literal["mrtrix.5tt2vis"],
+    "@type": typing.NotRequired[typing.Literal["mrtrix/5tt2vis"]],
+    "bg": typing.NotRequired[float | None],
+    "cgm": typing.NotRequired[float | None],
+    "sgm": typing.NotRequired[float | None],
+    "wm": typing.NotRequired[float | None],
+    "csf": typing.NotRequired[float | None],
+    "path": typing.NotRequired[float | None],
+    "info": bool,
+    "quiet": bool,
+    "debug": bool,
+    "force": bool,
+    "nthreads": typing.NotRequired[int | None],
+    "config": typing.NotRequired[list[V5tt2visConfigParameters] | None],
+    "help": bool,
+    "version": bool,
+    "input": InputPathType,
+    "output": str,
+})
+V5tt2visParametersTagged = typing.TypedDict('V5tt2visParametersTagged', {
+    "@type": typing.Literal["mrtrix/5tt2vis"],
     "bg": typing.NotRequired[float | None],
     "cgm": typing.NotRequired[float | None],
     "sgm": typing.NotRequired[float | None],
@@ -41,43 +65,10 @@ V5tt2visParameters = typing.TypedDict('V5tt2visParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "mrtrix.5tt2vis": v_5tt2vis_cargs,
-        "mrtrix.5tt2vis.config": v_5tt2vis_config_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "mrtrix.5tt2vis": v_5tt2vis_outputs,
-    }.get(t)
-
-
 def v_5tt2vis_config_params(
     key: str,
     value: str,
-) -> V5tt2visConfigParameters:
+) -> V5tt2visConfigParametersTagged:
     """
     Build parameters.
     
@@ -88,7 +79,7 @@ def v_5tt2vis_config_params(
         Parameter dictionary
     """
     params = {
-        "@type": "mrtrix.5tt2vis.config",
+        "@type": "config",
         "key": key,
         "value": value,
     }
@@ -110,14 +101,14 @@ def v_5tt2vis_config_cargs(
     """
     cargs = []
     cargs.append("-config")
-    cargs.append(params.get("key"))
-    cargs.append(params.get("value"))
+    cargs.append(params.get("key", None))
+    cargs.append(params.get("value", None))
     return cargs
 
 
 class V5tt2visOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `v_5tt2vis(...)`.
+    Output object returned when calling `V5tt2visParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -142,7 +133,7 @@ def v_5tt2vis_params(
     config: list[V5tt2visConfigParameters] | None = None,
     help_: bool = False,
     version: bool = False,
-) -> V5tt2visParameters:
+) -> V5tt2visParametersTagged:
     """
     Build parameters.
     
@@ -171,7 +162,7 @@ def v_5tt2vis_params(
         Parameter dictionary
     """
     params = {
-        "@type": "mrtrix.5tt2vis",
+        "@type": "mrtrix/5tt2vis",
         "info": info,
         "quiet": quiet,
         "debug": debug,
@@ -215,57 +206,57 @@ def v_5tt2vis_cargs(
     """
     cargs = []
     cargs.append("5tt2vis")
-    if params.get("bg") is not None:
+    if params.get("bg", None) is not None:
         cargs.extend([
             "-bg",
-            str(params.get("bg"))
+            str(params.get("bg", None))
         ])
-    if params.get("cgm") is not None:
+    if params.get("cgm", None) is not None:
         cargs.extend([
             "-cgm",
-            str(params.get("cgm"))
+            str(params.get("cgm", None))
         ])
-    if params.get("sgm") is not None:
+    if params.get("sgm", None) is not None:
         cargs.extend([
             "-sgm",
-            str(params.get("sgm"))
+            str(params.get("sgm", None))
         ])
-    if params.get("wm") is not None:
+    if params.get("wm", None) is not None:
         cargs.extend([
             "-wm",
-            str(params.get("wm"))
+            str(params.get("wm", None))
         ])
-    if params.get("csf") is not None:
+    if params.get("csf", None) is not None:
         cargs.extend([
             "-csf",
-            str(params.get("csf"))
+            str(params.get("csf", None))
         ])
-    if params.get("path") is not None:
+    if params.get("path", None) is not None:
         cargs.extend([
             "-path",
-            str(params.get("path"))
+            str(params.get("path", None))
         ])
-    if params.get("info"):
+    if params.get("info", False):
         cargs.append("-info")
-    if params.get("quiet"):
+    if params.get("quiet", False):
         cargs.append("-quiet")
-    if params.get("debug"):
+    if params.get("debug", False):
         cargs.append("-debug")
-    if params.get("force"):
+    if params.get("force", False):
         cargs.append("-force")
-    if params.get("nthreads") is not None:
+    if params.get("nthreads", None) is not None:
         cargs.extend([
             "-nthreads",
-            str(params.get("nthreads"))
+            str(params.get("nthreads", None))
         ])
-    if params.get("config") is not None:
-        cargs.extend([a for c in [dyn_cargs(s["@type"])(s, execution) for s in params.get("config")] for a in c])
-    if params.get("help"):
+    if params.get("config", None) is not None:
+        cargs.extend([a for c in [v_5tt2vis_config_cargs(s, execution) for s in params.get("config", None)] for a in c])
+    if params.get("help", False):
         cargs.append("-help")
-    if params.get("version"):
+    if params.get("version", False):
         cargs.append("-version")
-    cargs.append(execution.input_file(params.get("input")))
-    cargs.append(params.get("output"))
+    cargs.append(execution.input_file(params.get("input", None)))
+    cargs.append(params.get("output", None))
     return cargs
 
 
@@ -284,7 +275,7 @@ def v_5tt2vis_outputs(
     """
     ret = V5tt2visOutputs(
         root=execution.output_file("."),
-        output=execution.output_file(params.get("output")),
+        output=execution.output_file(params.get("output", None)),
     )
     return ret
 
@@ -406,9 +397,7 @@ def v_5tt2vis(
 
 
 __all__ = [
-    "V5tt2visConfigParameters",
     "V5tt2visOutputs",
-    "V5tt2visParameters",
     "V_5TT2VIS_METADATA",
     "v_5tt2vis",
     "v_5tt2vis_config_params",

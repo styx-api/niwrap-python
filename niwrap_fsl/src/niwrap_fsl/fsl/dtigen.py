@@ -14,7 +14,18 @@ DTIGEN_METADATA = Metadata(
 
 
 DtigenParameters = typing.TypedDict('DtigenParameters', {
-    "@type": typing.Literal["fsl.dtigen"],
+    "@type": typing.NotRequired[typing.Literal["fsl/dtigen"]],
+    "tensor": InputPathType,
+    "s0": InputPathType,
+    "output_data": str,
+    "bvecs": InputPathType,
+    "bvals": InputPathType,
+    "brainmask": InputPathType,
+    "kurtosis": typing.NotRequired[InputPathType | None],
+    "help": bool,
+})
+DtigenParametersTagged = typing.TypedDict('DtigenParametersTagged', {
+    "@type": typing.Literal["fsl/dtigen"],
     "tensor": InputPathType,
     "s0": InputPathType,
     "output_data": str,
@@ -26,41 +37,9 @@ DtigenParameters = typing.TypedDict('DtigenParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "fsl.dtigen": dtigen_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "fsl.dtigen": dtigen_outputs,
-    }.get(t)
-
-
 class DtigenOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `dtigen(...)`.
+    Output object returned when calling `DtigenParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -79,7 +58,7 @@ def dtigen_params(
     brainmask: InputPathType,
     kurtosis: InputPathType | None = None,
     help_: bool = False,
-) -> DtigenParameters:
+) -> DtigenParametersTagged:
     """
     Build parameters.
     
@@ -96,7 +75,7 @@ def dtigen_params(
         Parameter dictionary
     """
     params = {
-        "@type": "fsl.dtigen",
+        "@type": "fsl/dtigen",
         "tensor": tensor,
         "s0": s0,
         "output_data": output_data,
@@ -127,34 +106,34 @@ def dtigen_cargs(
     cargs.append("dtigen")
     cargs.extend([
         "-t",
-        execution.input_file(params.get("tensor"))
+        execution.input_file(params.get("tensor", None))
     ])
     cargs.extend([
         "--s0",
-        execution.input_file(params.get("s0"))
+        execution.input_file(params.get("s0", None))
     ])
     cargs.extend([
         "-o",
-        params.get("output_data")
+        params.get("output_data", None)
     ])
     cargs.extend([
         "-r",
-        execution.input_file(params.get("bvecs"))
+        execution.input_file(params.get("bvecs", None))
     ])
     cargs.extend([
         "-b",
-        execution.input_file(params.get("bvals"))
+        execution.input_file(params.get("bvals", None))
     ])
     cargs.extend([
         "-m",
-        execution.input_file(params.get("brainmask"))
+        execution.input_file(params.get("brainmask", None))
     ])
-    if params.get("kurtosis") is not None:
+    if params.get("kurtosis", None) is not None:
         cargs.extend([
             "--kurt",
-            execution.input_file(params.get("kurtosis"))
+            execution.input_file(params.get("kurtosis", None))
         ])
-    if params.get("help"):
+    if params.get("help", False):
         cargs.append("-h")
     return cargs
 
@@ -174,8 +153,8 @@ def dtigen_outputs(
     """
     ret = DtigenOutputs(
         root=execution.output_file("."),
-        output_diffusion_data=execution.output_file(params.get("output_data") + ".nii.gz"),
-        output_kurtosis_map=execution.output_file(pathlib.Path(params.get("kurtosis")).name) if (params.get("kurtosis") is not None) else None,
+        output_diffusion_data=execution.output_file(params.get("output_data", None) + ".nii.gz"),
+        output_kurtosis_map=execution.output_file(pathlib.Path(params.get("kurtosis", None)).name) if (params.get("kurtosis") is not None) else None,
     )
     return ret
 
@@ -257,7 +236,6 @@ def dtigen(
 __all__ = [
     "DTIGEN_METADATA",
     "DtigenOutputs",
-    "DtigenParameters",
     "dtigen",
     "dtigen_execute",
     "dtigen_params",

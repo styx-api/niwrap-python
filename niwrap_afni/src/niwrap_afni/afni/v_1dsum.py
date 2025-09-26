@@ -14,7 +14,16 @@ V_1DSUM_METADATA = Metadata(
 
 
 V1dsumParameters = typing.TypedDict('V1dsumParameters', {
-    "@type": typing.Literal["afni.1dsum"],
+    "@type": typing.NotRequired[typing.Literal["afni/1dsum"]],
+    "input_files": list[InputPathType],
+    "ignore_rows": typing.NotRequired[float | None],
+    "use_rows": typing.NotRequired[float | None],
+    "mean_flag": bool,
+    "nocomment_flag": bool,
+    "okempty_flag": bool,
+})
+V1dsumParametersTagged = typing.TypedDict('V1dsumParametersTagged', {
+    "@type": typing.Literal["afni/1dsum"],
     "input_files": list[InputPathType],
     "ignore_rows": typing.NotRequired[float | None],
     "use_rows": typing.NotRequired[float | None],
@@ -24,41 +33,9 @@ V1dsumParameters = typing.TypedDict('V1dsumParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "afni.1dsum": v_1dsum_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "afni.1dsum": v_1dsum_outputs,
-    }.get(t)
-
-
 class V1dsumOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `v_1dsum(...)`.
+    Output object returned when calling `V1dsumParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -73,7 +50,7 @@ def v_1dsum_params(
     mean_flag: bool = False,
     nocomment_flag: bool = False,
     okempty_flag: bool = False,
-) -> V1dsumParameters:
+) -> V1dsumParametersTagged:
     """
     Build parameters.
     
@@ -91,7 +68,7 @@ def v_1dsum_params(
         Parameter dictionary
     """
     params = {
-        "@type": "afni.1dsum",
+        "@type": "afni/1dsum",
         "input_files": input_files,
         "mean_flag": mean_flag,
         "nocomment_flag": nocomment_flag,
@@ -119,22 +96,22 @@ def v_1dsum_cargs(
     """
     cargs = []
     cargs.append("1dsum")
-    cargs.extend([execution.input_file(f) for f in params.get("input_files")])
-    if params.get("ignore_rows") is not None:
+    cargs.extend([execution.input_file(f) for f in params.get("input_files", None)])
+    if params.get("ignore_rows", None) is not None:
         cargs.extend([
             "-ignore",
-            str(params.get("ignore_rows"))
+            str(params.get("ignore_rows", None))
         ])
-    if params.get("use_rows") is not None:
+    if params.get("use_rows", None) is not None:
         cargs.extend([
             "-use",
-            str(params.get("use_rows"))
+            str(params.get("use_rows", None))
         ])
-    if params.get("mean_flag"):
+    if params.get("mean_flag", False):
         cargs.append("-mean")
-    if params.get("nocomment_flag"):
+    if params.get("nocomment_flag", False):
         cargs.append("-nocomment")
-    if params.get("okempty_flag"):
+    if params.get("okempty_flag", False):
         cargs.append("-OKempty")
     return cargs
 
@@ -234,7 +211,6 @@ def v_1dsum(
 
 __all__ = [
     "V1dsumOutputs",
-    "V1dsumParameters",
     "V_1DSUM_METADATA",
     "v_1dsum",
     "v_1dsum_execute",

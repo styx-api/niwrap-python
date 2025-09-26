@@ -14,7 +14,14 @@ V__COMMAND_GLOBB_METADATA = Metadata(
 
 
 VCommandGlobbParameters = typing.TypedDict('VCommandGlobbParameters', {
-    "@type": typing.Literal["afni.@CommandGlobb"],
+    "@type": typing.NotRequired[typing.Literal["afni/@CommandGlobb"]],
+    "program_command": str,
+    "output_dir": str,
+    "extension": typing.NotRequired[str | None],
+    "brick_list": list[str],
+})
+VCommandGlobbParametersTagged = typing.TypedDict('VCommandGlobbParametersTagged', {
+    "@type": typing.Literal["afni/@CommandGlobb"],
     "program_command": str,
     "output_dir": str,
     "extension": typing.NotRequired[str | None],
@@ -22,40 +29,9 @@ VCommandGlobbParameters = typing.TypedDict('VCommandGlobbParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "afni.@CommandGlobb": v__command_globb_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-    }.get(t)
-
-
 class VCommandGlobbOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `v__command_globb(...)`.
+    Output object returned when calling `VCommandGlobbParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -66,7 +42,7 @@ def v__command_globb_params(
     output_dir: str,
     brick_list: list[str],
     extension: str | None = None,
-) -> VCommandGlobbParameters:
+) -> VCommandGlobbParametersTagged:
     """
     Build parameters.
     
@@ -84,7 +60,7 @@ def v__command_globb_params(
         Parameter dictionary
     """
     params = {
-        "@type": "afni.@CommandGlobb",
+        "@type": "afni/@CommandGlobb",
         "program_command": program_command,
         "output_dir": output_dir,
         "brick_list": brick_list,
@@ -111,20 +87,20 @@ def v__command_globb_cargs(
     cargs.append("@CommandGlobb")
     cargs.extend([
         "-com",
-        params.get("program_command")
+        params.get("program_command", None)
     ])
     cargs.extend([
         "-session",
-        params.get("output_dir")
+        params.get("output_dir", None)
     ])
-    if params.get("extension") is not None:
+    if params.get("extension", None) is not None:
         cargs.extend([
             "-newext",
-            params.get("extension")
+            params.get("extension", None)
         ])
     cargs.extend([
         "-list",
-        *params.get("brick_list")
+        *params.get("brick_list", None)
     ])
     return cargs
 
@@ -219,7 +195,6 @@ def v__command_globb(
 
 __all__ = [
     "VCommandGlobbOutputs",
-    "VCommandGlobbParameters",
     "V__COMMAND_GLOBB_METADATA",
     "v__command_globb",
     "v__command_globb_execute",

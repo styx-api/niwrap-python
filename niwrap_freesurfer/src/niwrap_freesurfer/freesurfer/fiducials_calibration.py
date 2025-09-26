@@ -14,45 +14,18 @@ FIDUCIALS_CALIBRATION_METADATA = Metadata(
 
 
 FiducialsCalibrationParameters = typing.TypedDict('FiducialsCalibrationParameters', {
-    "@type": typing.Literal["freesurfer.fiducials_calibration"],
+    "@type": typing.NotRequired[typing.Literal["freesurfer/fiducials_calibration"]],
+    "qt_plugin_installation": typing.NotRequired[str | None],
+})
+FiducialsCalibrationParametersTagged = typing.TypedDict('FiducialsCalibrationParametersTagged', {
+    "@type": typing.Literal["freesurfer/fiducials_calibration"],
     "qt_plugin_installation": typing.NotRequired[str | None],
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "freesurfer.fiducials_calibration": fiducials_calibration_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-    }.get(t)
-
-
 class FiducialsCalibrationOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `fiducials_calibration(...)`.
+    Output object returned when calling `FiducialsCalibrationParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -60,7 +33,7 @@ class FiducialsCalibrationOutputs(typing.NamedTuple):
 
 def fiducials_calibration_params(
     qt_plugin_installation: str | None = None,
-) -> FiducialsCalibrationParameters:
+) -> FiducialsCalibrationParametersTagged:
     """
     Build parameters.
     
@@ -72,7 +45,7 @@ def fiducials_calibration_params(
         Parameter dictionary
     """
     params = {
-        "@type": "freesurfer.fiducials_calibration",
+        "@type": "freesurfer/fiducials_calibration",
     }
     if qt_plugin_installation is not None:
         params["qt_plugin_installation"] = qt_plugin_installation
@@ -94,8 +67,8 @@ def fiducials_calibration_cargs(
     """
     cargs = []
     cargs.append("fiducials_calibration")
-    if params.get("qt_plugin_installation") is not None:
-        cargs.append(params.get("qt_plugin_installation"))
+    if params.get("qt_plugin_installation", None) is not None:
+        cargs.append(params.get("qt_plugin_installation", None))
     return cargs
 
 
@@ -176,7 +149,6 @@ def fiducials_calibration(
 __all__ = [
     "FIDUCIALS_CALIBRATION_METADATA",
     "FiducialsCalibrationOutputs",
-    "FiducialsCalibrationParameters",
     "fiducials_calibration",
     "fiducials_calibration_execute",
     "fiducials_calibration_params",

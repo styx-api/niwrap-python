@@ -14,7 +14,20 @@ MRI_SEG_OVERLAP_METADATA = Metadata(
 
 
 MriSegOverlapParameters = typing.TypedDict('MriSegOverlapParameters', {
-    "@type": typing.Literal["freesurfer.mri_seg_overlap"],
+    "@type": typing.NotRequired[typing.Literal["freesurfer/mri_seg_overlap"]],
+    "vol1": InputPathType,
+    "vol2": InputPathType,
+    "out_file": typing.NotRequired[str | None],
+    "measures": typing.NotRequired[list[str] | None],
+    "labels": typing.NotRequired[list[str] | None],
+    "label_names": typing.NotRequired[list[str] | None],
+    "label_file": typing.NotRequired[InputPathType | None],
+    "no_names_flag": bool,
+    "seg_flag": bool,
+    "quiet_flag": bool,
+})
+MriSegOverlapParametersTagged = typing.TypedDict('MriSegOverlapParametersTagged', {
+    "@type": typing.Literal["freesurfer/mri_seg_overlap"],
     "vol1": InputPathType,
     "vol2": InputPathType,
     "out_file": typing.NotRequired[str | None],
@@ -28,41 +41,9 @@ MriSegOverlapParameters = typing.TypedDict('MriSegOverlapParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "freesurfer.mri_seg_overlap": mri_seg_overlap_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "freesurfer.mri_seg_overlap": mri_seg_overlap_outputs,
-    }.get(t)
-
-
 class MriSegOverlapOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `mri_seg_overlap(...)`.
+    Output object returned when calling `MriSegOverlapParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -81,7 +62,7 @@ def mri_seg_overlap_params(
     no_names_flag: bool = False,
     seg_flag: bool = False,
     quiet_flag: bool = False,
-) -> MriSegOverlapParameters:
+) -> MriSegOverlapParametersTagged:
     """
     Build parameters.
     
@@ -103,7 +84,7 @@ def mri_seg_overlap_params(
         Parameter dictionary
     """
     params = {
-        "@type": "freesurfer.mri_seg_overlap",
+        "@type": "freesurfer/mri_seg_overlap",
         "vol1": vol1,
         "vol2": vol2,
         "no_names_flag": no_names_flag,
@@ -138,38 +119,38 @@ def mri_seg_overlap_cargs(
     """
     cargs = []
     cargs.append("mri_seg_overlap")
-    cargs.append(execution.input_file(params.get("vol1")))
-    cargs.append(execution.input_file(params.get("vol2")))
-    if params.get("out_file") is not None:
+    cargs.append(execution.input_file(params.get("vol1", None)))
+    cargs.append(execution.input_file(params.get("vol2", None)))
+    if params.get("out_file", None) is not None:
         cargs.extend([
             "-o",
-            params.get("out_file")
+            params.get("out_file", None)
         ])
-    if params.get("measures") is not None:
+    if params.get("measures", None) is not None:
         cargs.extend([
             "-m",
-            *params.get("measures")
+            *params.get("measures", None)
         ])
-    if params.get("labels") is not None:
+    if params.get("labels", None) is not None:
         cargs.extend([
             "-l",
-            *params.get("labels")
+            *params.get("labels", None)
         ])
-    if params.get("label_names") is not None:
+    if params.get("label_names", None) is not None:
         cargs.extend([
             "-n",
-            *params.get("label_names")
+            *params.get("label_names", None)
         ])
-    if params.get("label_file") is not None:
+    if params.get("label_file", None) is not None:
         cargs.extend([
             "-f",
-            execution.input_file(params.get("label_file"))
+            execution.input_file(params.get("label_file", None))
         ])
-    if params.get("no_names_flag"):
+    if params.get("no_names_flag", False):
         cargs.append("-x")
-    if params.get("seg_flag"):
+    if params.get("seg_flag", False):
         cargs.append("-s")
-    if params.get("quiet_flag"):
+    if params.get("quiet_flag", False):
         cargs.append("-q")
     return cargs
 
@@ -189,7 +170,7 @@ def mri_seg_overlap_outputs(
     """
     ret = MriSegOverlapOutputs(
         root=execution.output_file("."),
-        overlap_report=execution.output_file(params.get("out_file")) if (params.get("out_file") is not None) else None,
+        overlap_report=execution.output_file(params.get("out_file", None)) if (params.get("out_file") is not None) else None,
     )
     return ret
 
@@ -280,7 +261,6 @@ def mri_seg_overlap(
 __all__ = [
     "MRI_SEG_OVERLAP_METADATA",
     "MriSegOverlapOutputs",
-    "MriSegOverlapParameters",
     "mri_seg_overlap",
     "mri_seg_overlap_execute",
     "mri_seg_overlap_params",

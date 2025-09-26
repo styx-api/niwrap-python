@@ -14,7 +14,19 @@ V_3D_ISC_METADATA = Metadata(
 
 
 V3dIscParameters = typing.TypedDict('V3dIscParameters', {
-    "@type": typing.Literal["afni.3dISC"],
+    "@type": typing.NotRequired[typing.Literal["afni/3dISC"]],
+    "outfile_prefix": str,
+    "num_jobs": typing.NotRequired[float | None],
+    "mask_file": typing.NotRequired[InputPathType | None],
+    "model_structure": str,
+    "qvar_centers": typing.NotRequired[str | None],
+    "quantitative_vars": typing.NotRequired[str | None],
+    "fisher_transform": bool,
+    "io_functions": typing.NotRequired[typing.Literal["AFNI", "R"] | None],
+    "data_table": str,
+})
+V3dIscParametersTagged = typing.TypedDict('V3dIscParametersTagged', {
+    "@type": typing.Literal["afni/3dISC"],
     "outfile_prefix": str,
     "num_jobs": typing.NotRequired[float | None],
     "mask_file": typing.NotRequired[InputPathType | None],
@@ -27,41 +39,9 @@ V3dIscParameters = typing.TypedDict('V3dIscParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "afni.3dISC": v_3d_isc_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "afni.3dISC": v_3d_isc_outputs,
-    }.get(t)
-
-
 class V3dIscOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `v_3d_isc(...)`.
+    Output object returned when calling `V3dIscParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -81,7 +61,7 @@ def v_3d_isc_params(
     quantitative_vars: str | None = None,
     fisher_transform: bool = False,
     io_functions: typing.Literal["AFNI", "R"] | None = None,
-) -> V3dIscParameters:
+) -> V3dIscParametersTagged:
     """
     Build parameters.
     
@@ -108,7 +88,7 @@ def v_3d_isc_params(
         Parameter dictionary
     """
     params = {
-        "@type": "afni.3dISC",
+        "@type": "afni/3dISC",
         "outfile_prefix": outfile_prefix,
         "model_structure": model_structure,
         "fisher_transform": fisher_transform,
@@ -144,42 +124,42 @@ def v_3d_isc_cargs(
     cargs.append("3dISC")
     cargs.extend([
         "-prefix",
-        params.get("outfile_prefix")
+        params.get("outfile_prefix", None)
     ])
-    if params.get("num_jobs") is not None:
+    if params.get("num_jobs", None) is not None:
         cargs.extend([
             "-jobs",
-            str(params.get("num_jobs"))
+            str(params.get("num_jobs", None))
         ])
-    if params.get("mask_file") is not None:
+    if params.get("mask_file", None) is not None:
         cargs.extend([
             "-mask",
-            execution.input_file(params.get("mask_file"))
+            execution.input_file(params.get("mask_file", None))
         ])
     cargs.extend([
         "-model",
-        params.get("model_structure")
+        params.get("model_structure", None)
     ])
-    if params.get("qvar_centers") is not None:
+    if params.get("qvar_centers", None) is not None:
         cargs.extend([
             "-qVarCenters",
-            params.get("qvar_centers")
+            params.get("qvar_centers", None)
         ])
-    if params.get("quantitative_vars") is not None:
+    if params.get("quantitative_vars", None) is not None:
         cargs.extend([
             "-qVars",
-            params.get("quantitative_vars")
+            params.get("quantitative_vars", None)
         ])
-    if params.get("fisher_transform"):
+    if params.get("fisher_transform", False):
         cargs.append("-r2z")
-    if params.get("io_functions") is not None:
+    if params.get("io_functions", None) is not None:
         cargs.extend([
             "-cio",
-            params.get("io_functions")
+            params.get("io_functions", None)
         ])
     cargs.extend([
         "-dataTable",
-        params.get("data_table")
+        params.get("data_table", None)
     ])
     return cargs
 
@@ -199,8 +179,8 @@ def v_3d_isc_outputs(
     """
     ret = V3dIscOutputs(
         root=execution.output_file("."),
-        isc_output=execution.output_file(params.get("outfile_prefix") + "_ISC.nii"),
-        tstat_output=execution.output_file(params.get("outfile_prefix") + "_tstat.nii"),
+        isc_output=execution.output_file(params.get("outfile_prefix", None) + "_ISC.nii"),
+        tstat_output=execution.output_file(params.get("outfile_prefix", None) + "_tstat.nii"),
     )
     return ret
 
@@ -295,7 +275,6 @@ def v_3d_isc(
 
 __all__ = [
     "V3dIscOutputs",
-    "V3dIscParameters",
     "V_3D_ISC_METADATA",
     "v_3d_isc",
     "v_3d_isc_execute",

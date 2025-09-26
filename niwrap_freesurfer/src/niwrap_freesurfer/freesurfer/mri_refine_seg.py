@@ -14,48 +14,22 @@ MRI_REFINE_SEG_METADATA = Metadata(
 
 
 MriRefineSegParameters = typing.TypedDict('MriRefineSegParameters', {
-    "@type": typing.Literal["freesurfer.mri_refine_seg"],
+    "@type": typing.NotRequired[typing.Literal["freesurfer/mri_refine_seg"]],
+    "input_segmentation": InputPathType,
+    "output_segmentation": str,
+    "debug": bool,
+})
+MriRefineSegParametersTagged = typing.TypedDict('MriRefineSegParametersTagged', {
+    "@type": typing.Literal["freesurfer/mri_refine_seg"],
     "input_segmentation": InputPathType,
     "output_segmentation": str,
     "debug": bool,
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "freesurfer.mri_refine_seg": mri_refine_seg_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "freesurfer.mri_refine_seg": mri_refine_seg_outputs,
-    }.get(t)
-
-
 class MriRefineSegOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `mri_refine_seg(...)`.
+    Output object returned when calling `MriRefineSegParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -67,7 +41,7 @@ def mri_refine_seg_params(
     input_segmentation: InputPathType,
     output_segmentation: str,
     debug: bool = False,
-) -> MriRefineSegParameters:
+) -> MriRefineSegParametersTagged:
     """
     Build parameters.
     
@@ -80,7 +54,7 @@ def mri_refine_seg_params(
         Parameter dictionary
     """
     params = {
-        "@type": "freesurfer.mri_refine_seg",
+        "@type": "freesurfer/mri_refine_seg",
         "input_segmentation": input_segmentation,
         "output_segmentation": output_segmentation,
         "debug": debug,
@@ -105,13 +79,13 @@ def mri_refine_seg_cargs(
     cargs.append("mri_refine_seg")
     cargs.extend([
         "-i",
-        execution.input_file(params.get("input_segmentation"))
+        execution.input_file(params.get("input_segmentation", None))
     ])
     cargs.extend([
         "-o",
-        params.get("output_segmentation")
+        params.get("output_segmentation", None)
     ])
-    if params.get("debug"):
+    if params.get("debug", False):
         cargs.append("--debug")
     return cargs
 
@@ -131,7 +105,7 @@ def mri_refine_seg_outputs(
     """
     ret = MriRefineSegOutputs(
         root=execution.output_file("."),
-        refined_output=execution.output_file(params.get("output_segmentation")),
+        refined_output=execution.output_file(params.get("output_segmentation", None)),
     )
     return ret
 
@@ -199,7 +173,6 @@ def mri_refine_seg(
 __all__ = [
     "MRI_REFINE_SEG_METADATA",
     "MriRefineSegOutputs",
-    "MriRefineSegParameters",
     "mri_refine_seg",
     "mri_refine_seg_execute",
     "mri_refine_seg_params",

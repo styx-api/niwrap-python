@@ -14,45 +14,18 @@ MORPH_SUBJECT_METADATA = Metadata(
 
 
 MorphSubjectParameters = typing.TypedDict('MorphSubjectParameters', {
-    "@type": typing.Literal["freesurfer.morph_subject"],
+    "@type": typing.NotRequired[typing.Literal["freesurfer/morph_subject"]],
+    "subjid": str,
+})
+MorphSubjectParametersTagged = typing.TypedDict('MorphSubjectParametersTagged', {
+    "@type": typing.Literal["freesurfer/morph_subject"],
     "subjid": str,
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "freesurfer.morph_subject": morph_subject_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-    }.get(t)
-
-
 class MorphSubjectOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `morph_subject(...)`.
+    Output object returned when calling `MorphSubjectParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -60,7 +33,7 @@ class MorphSubjectOutputs(typing.NamedTuple):
 
 def morph_subject_params(
     subjid: str,
-) -> MorphSubjectParameters:
+) -> MorphSubjectParametersTagged:
     """
     Build parameters.
     
@@ -70,7 +43,7 @@ def morph_subject_params(
         Parameter dictionary
     """
     params = {
-        "@type": "freesurfer.morph_subject",
+        "@type": "freesurfer/morph_subject",
         "subjid": subjid,
     }
     return params
@@ -91,7 +64,7 @@ def morph_subject_cargs(
     """
     cargs = []
     cargs.append("morph_subject")
-    cargs.append(params.get("subjid"))
+    cargs.append(params.get("subjid", None))
     return cargs
 
 
@@ -172,7 +145,6 @@ def morph_subject(
 __all__ = [
     "MORPH_SUBJECT_METADATA",
     "MorphSubjectOutputs",
-    "MorphSubjectParameters",
     "morph_subject",
     "morph_subject_execute",
     "morph_subject_params",

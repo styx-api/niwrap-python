@@ -14,7 +14,17 @@ STRBLAST_METADATA = Metadata(
 
 
 StrblastParameters = typing.TypedDict('StrblastParameters', {
-    "@type": typing.Literal["afni.strblast"],
+    "@type": typing.NotRequired[typing.Literal["afni/strblast"]],
+    "targetstring": str,
+    "input_files": list[InputPathType],
+    "new_char": typing.NotRequired[str | None],
+    "new_string": typing.NotRequired[str | None],
+    "unescape": bool,
+    "quiet": bool,
+    "help": bool,
+})
+StrblastParametersTagged = typing.TypedDict('StrblastParametersTagged', {
+    "@type": typing.Literal["afni/strblast"],
     "targetstring": str,
     "input_files": list[InputPathType],
     "new_char": typing.NotRequired[str | None],
@@ -25,40 +35,9 @@ StrblastParameters = typing.TypedDict('StrblastParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "afni.strblast": strblast_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-    }.get(t)
-
-
 class StrblastOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `strblast(...)`.
+    Output object returned when calling `StrblastParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -72,7 +51,7 @@ def strblast_params(
     unescape: bool = False,
     quiet: bool = False,
     help_: bool = False,
-) -> StrblastParameters:
+) -> StrblastParametersTagged:
     """
     Build parameters.
     
@@ -90,7 +69,7 @@ def strblast_params(
         Parameter dictionary
     """
     params = {
-        "@type": "afni.strblast",
+        "@type": "afni/strblast",
         "targetstring": targetstring,
         "input_files": input_files,
         "unescape": unescape,
@@ -119,23 +98,23 @@ def strblast_cargs(
     """
     cargs = []
     cargs.append("strblast")
-    cargs.append(params.get("targetstring"))
-    cargs.extend([execution.input_file(f) for f in params.get("input_files")])
-    if params.get("new_char") is not None:
+    cargs.append(params.get("targetstring", None))
+    cargs.extend([execution.input_file(f) for f in params.get("input_files", None)])
+    if params.get("new_char", None) is not None:
         cargs.extend([
             "-new_char",
-            params.get("new_char")
+            params.get("new_char", None)
         ])
-    if params.get("new_string") is not None:
+    if params.get("new_string", None) is not None:
         cargs.extend([
             "-new_string",
-            params.get("new_string")
+            params.get("new_string", None)
         ])
-    if params.get("unescape"):
+    if params.get("unescape", False):
         cargs.append("-unescape")
-    if params.get("quiet"):
+    if params.get("quiet", False):
         cargs.append("-quiet")
-    if params.get("help"):
+    if params.get("help", False):
         cargs.append("-help")
     return cargs
 
@@ -237,7 +216,6 @@ def strblast(
 __all__ = [
     "STRBLAST_METADATA",
     "StrblastOutputs",
-    "StrblastParameters",
     "strblast",
     "strblast_execute",
     "strblast_params",

@@ -14,7 +14,32 @@ MAKE_AVERAGE_SURFACE_METADATA = Metadata(
 
 
 MakeAverageSurfaceParameters = typing.TypedDict('MakeAverageSurfaceParameters', {
-    "@type": typing.Literal["freesurfer.make_average_surface"],
+    "@type": typing.NotRequired[typing.Literal["freesurfer/make_average_surface"]],
+    "subjects": list[str],
+    "fsgd_file": typing.NotRequired[InputPathType | None],
+    "average_subject_name": typing.NotRequired[str | None],
+    "subjects_dir": typing.NotRequired[str | None],
+    "sd_out_dir": typing.NotRequired[str | None],
+    "transform_file": typing.NotRequired[str | None],
+    "icosahedron_number": typing.NotRequired[float | None],
+    "surf_reg": typing.NotRequired[str | None],
+    "left_hemi": bool,
+    "right_hemi": bool,
+    "force": bool,
+    "annot_template": bool,
+    "template_only": bool,
+    "no_template_only": bool,
+    "no_annot": bool,
+    "no_cortex_label": bool,
+    "annot_list": typing.NotRequired[list[str] | None],
+    "meas_list": typing.NotRequired[list[str] | None],
+    "no_surf2surf": bool,
+    "no_symlink": bool,
+    "version": bool,
+    "echo": bool,
+})
+MakeAverageSurfaceParametersTagged = typing.TypedDict('MakeAverageSurfaceParametersTagged', {
+    "@type": typing.Literal["freesurfer/make_average_surface"],
     "subjects": list[str],
     "fsgd_file": typing.NotRequired[InputPathType | None],
     "average_subject_name": typing.NotRequired[str | None],
@@ -40,40 +65,9 @@ MakeAverageSurfaceParameters = typing.TypedDict('MakeAverageSurfaceParameters', 
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "freesurfer.make_average_surface": make_average_surface_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-    }.get(t)
-
-
 class MakeAverageSurfaceOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `make_average_surface(...)`.
+    Output object returned when calling `MakeAverageSurfaceParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -102,7 +96,7 @@ def make_average_surface_params(
     no_symlink: bool = False,
     version: bool = False,
     echo: bool = False,
-) -> MakeAverageSurfaceParameters:
+) -> MakeAverageSurfaceParametersTagged:
     """
     Build parameters.
     
@@ -134,7 +128,7 @@ def make_average_surface_params(
         Parameter dictionary
     """
     params = {
-        "@type": "freesurfer.make_average_surface",
+        "@type": "freesurfer/make_average_surface",
         "subjects": subjects,
         "left_hemi": left_hemi,
         "right_hemi": right_hemi,
@@ -185,75 +179,75 @@ def make_average_surface_cargs(
     """
     cargs = []
     cargs.append("make_average_surface")
-    cargs.extend(params.get("subjects"))
-    if params.get("fsgd_file") is not None:
+    cargs.extend(params.get("subjects", None))
+    if params.get("fsgd_file", None) is not None:
         cargs.extend([
             "--fsgd",
-            execution.input_file(params.get("fsgd_file"))
+            execution.input_file(params.get("fsgd_file", None))
         ])
-    if params.get("average_subject_name") is not None:
+    if params.get("average_subject_name", None) is not None:
         cargs.extend([
             "--out",
-            params.get("average_subject_name")
+            params.get("average_subject_name", None)
         ])
-    if params.get("subjects_dir") is not None:
+    if params.get("subjects_dir", None) is not None:
         cargs.extend([
             "--sdir",
-            params.get("subjects_dir")
+            params.get("subjects_dir", None)
         ])
-    if params.get("sd_out_dir") is not None:
+    if params.get("sd_out_dir", None) is not None:
         cargs.extend([
             "--sd-out",
-            params.get("sd_out_dir")
+            params.get("sd_out_dir", None)
         ])
-    if params.get("transform_file") is not None:
+    if params.get("transform_file", None) is not None:
         cargs.extend([
             "--xform",
-            params.get("transform_file")
+            params.get("transform_file", None)
         ])
-    if params.get("icosahedron_number") is not None:
+    if params.get("icosahedron_number", None) is not None:
         cargs.extend([
             "--ico",
-            str(params.get("icosahedron_number"))
+            str(params.get("icosahedron_number", None))
         ])
-    if params.get("surf_reg") is not None:
+    if params.get("surf_reg", None) is not None:
         cargs.extend([
             "--surf-reg",
-            params.get("surf_reg")
+            params.get("surf_reg", None)
         ])
-    if params.get("left_hemi"):
+    if params.get("left_hemi", False):
         cargs.append("--lh")
-    if params.get("right_hemi"):
+    if params.get("right_hemi", False):
         cargs.append("--rh")
-    if params.get("force"):
+    if params.get("force", False):
         cargs.append("--force")
-    if params.get("annot_template"):
+    if params.get("annot_template", False):
         cargs.append("--annot-template")
-    if params.get("template_only"):
+    if params.get("template_only", False):
         cargs.append("--template-only")
-    if params.get("no_template_only"):
+    if params.get("no_template_only", False):
         cargs.append("--no-template-only")
-    if params.get("no_annot"):
+    if params.get("no_annot", False):
         cargs.append("--no-annot")
-    if params.get("no_cortex_label"):
+    if params.get("no_cortex_label", False):
         cargs.append("--no-cortex-label")
-    if params.get("annot_list") is not None:
+    if params.get("annot_list", None) is not None:
         cargs.extend([
             "--annot",
-            *params.get("annot_list")
+            *params.get("annot_list", None)
         ])
-    if params.get("meas_list") is not None:
+    if params.get("meas_list", None) is not None:
         cargs.extend([
             "--meas",
-            *params.get("meas_list")
+            *params.get("meas_list", None)
         ])
-    if params.get("no_surf2surf"):
+    if params.get("no_surf2surf", False):
         cargs.append("--no-surf2surf")
-    if params.get("no_symlink"):
+    if params.get("no_symlink", False):
         cargs.append("--no-symlink")
-    if params.get("version"):
+    if params.get("version", False):
         cargs.append("--version")
-    if params.get("echo"):
+    if params.get("echo", False):
         cargs.append("--echo")
     return cargs
 
@@ -397,7 +391,6 @@ def make_average_surface(
 __all__ = [
     "MAKE_AVERAGE_SURFACE_METADATA",
     "MakeAverageSurfaceOutputs",
-    "MakeAverageSurfaceParameters",
     "make_average_surface",
     "make_average_surface_execute",
     "make_average_surface_params",

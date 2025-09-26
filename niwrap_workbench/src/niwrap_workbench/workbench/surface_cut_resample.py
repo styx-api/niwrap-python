@@ -14,7 +14,14 @@ SURFACE_CUT_RESAMPLE_METADATA = Metadata(
 
 
 SurfaceCutResampleParameters = typing.TypedDict('SurfaceCutResampleParameters', {
-    "@type": typing.Literal["workbench.surface-cut-resample"],
+    "@type": typing.NotRequired[typing.Literal["workbench/surface-cut-resample"]],
+    "surface_in": InputPathType,
+    "current_sphere": InputPathType,
+    "new_sphere": InputPathType,
+    "surface_out": str,
+})
+SurfaceCutResampleParametersTagged = typing.TypedDict('SurfaceCutResampleParametersTagged', {
+    "@type": typing.Literal["workbench/surface-cut-resample"],
     "surface_in": InputPathType,
     "current_sphere": InputPathType,
     "new_sphere": InputPathType,
@@ -22,41 +29,9 @@ SurfaceCutResampleParameters = typing.TypedDict('SurfaceCutResampleParameters', 
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "workbench.surface-cut-resample": surface_cut_resample_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "workbench.surface-cut-resample": surface_cut_resample_outputs,
-    }.get(t)
-
-
 class SurfaceCutResampleOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `surface_cut_resample(...)`.
+    Output object returned when calling `SurfaceCutResampleParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -69,7 +44,7 @@ def surface_cut_resample_params(
     current_sphere: InputPathType,
     new_sphere: InputPathType,
     surface_out: str,
-) -> SurfaceCutResampleParameters:
+) -> SurfaceCutResampleParametersTagged:
     """
     Build parameters.
     
@@ -84,7 +59,7 @@ def surface_cut_resample_params(
         Parameter dictionary
     """
     params = {
-        "@type": "workbench.surface-cut-resample",
+        "@type": "workbench/surface-cut-resample",
         "surface_in": surface_in,
         "current_sphere": current_sphere,
         "new_sphere": new_sphere,
@@ -109,10 +84,10 @@ def surface_cut_resample_cargs(
     cargs = []
     cargs.append("wb_command")
     cargs.append("-surface-cut-resample")
-    cargs.append(execution.input_file(params.get("surface_in")))
-    cargs.append(execution.input_file(params.get("current_sphere")))
-    cargs.append(execution.input_file(params.get("new_sphere")))
-    cargs.append(params.get("surface_out"))
+    cargs.append(execution.input_file(params.get("surface_in", None)))
+    cargs.append(execution.input_file(params.get("current_sphere", None)))
+    cargs.append(execution.input_file(params.get("new_sphere", None)))
+    cargs.append(params.get("surface_out", None))
     return cargs
 
 
@@ -131,7 +106,7 @@ def surface_cut_resample_outputs(
     """
     ret = SurfaceCutResampleOutputs(
         root=execution.output_file("."),
-        surface_out=execution.output_file(params.get("surface_out")),
+        surface_out=execution.output_file(params.get("surface_out", None)),
     )
     return ret
 
@@ -211,7 +186,6 @@ def surface_cut_resample(
 __all__ = [
     "SURFACE_CUT_RESAMPLE_METADATA",
     "SurfaceCutResampleOutputs",
-    "SurfaceCutResampleParameters",
     "surface_cut_resample",
     "surface_cut_resample_execute",
     "surface_cut_resample_params",

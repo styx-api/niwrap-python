@@ -14,45 +14,18 @@ SEGMENT_BS_SH_METADATA = Metadata(
 
 
 SegmentBsShParameters = typing.TypedDict('SegmentBsShParameters', {
-    "@type": typing.Literal["freesurfer.segmentBS.sh"],
+    "@type": typing.NotRequired[typing.Literal["freesurfer/segmentBS.sh"]],
+    "matlab_runtime": typing.NotRequired[str | None],
+})
+SegmentBsShParametersTagged = typing.TypedDict('SegmentBsShParametersTagged', {
+    "@type": typing.Literal["freesurfer/segmentBS.sh"],
     "matlab_runtime": typing.NotRequired[str | None],
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "freesurfer.segmentBS.sh": segment_bs_sh_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-    }.get(t)
-
-
 class SegmentBsShOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `segment_bs_sh(...)`.
+    Output object returned when calling `SegmentBsShParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -60,7 +33,7 @@ class SegmentBsShOutputs(typing.NamedTuple):
 
 def segment_bs_sh_params(
     matlab_runtime: str | None = None,
-) -> SegmentBsShParameters:
+) -> SegmentBsShParametersTagged:
     """
     Build parameters.
     
@@ -71,7 +44,7 @@ def segment_bs_sh_params(
         Parameter dictionary
     """
     params = {
-        "@type": "freesurfer.segmentBS.sh",
+        "@type": "freesurfer/segmentBS.sh",
     }
     if matlab_runtime is not None:
         params["matlab_runtime"] = matlab_runtime
@@ -93,8 +66,8 @@ def segment_bs_sh_cargs(
     """
     cargs = []
     cargs.append("segmentBS.sh")
-    if params.get("matlab_runtime") is not None:
-        cargs.append(params.get("matlab_runtime"))
+    if params.get("matlab_runtime", None) is not None:
+        cargs.append(params.get("matlab_runtime", None))
     return cargs
 
 
@@ -174,7 +147,6 @@ def segment_bs_sh(
 __all__ = [
     "SEGMENT_BS_SH_METADATA",
     "SegmentBsShOutputs",
-    "SegmentBsShParameters",
     "segment_bs_sh",
     "segment_bs_sh_execute",
     "segment_bs_sh_params",

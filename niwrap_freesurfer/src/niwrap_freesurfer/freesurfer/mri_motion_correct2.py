@@ -14,7 +14,20 @@ MRI_MOTION_CORRECT2_METADATA = Metadata(
 
 
 MriMotionCorrect2Parameters = typing.TypedDict('MriMotionCorrect2Parameters', {
-    "@type": typing.Literal["freesurfer.mri_motion_correct2"],
+    "@type": typing.NotRequired[typing.Literal["freesurfer/mri_motion_correct2"]],
+    "output_spec": str,
+    "input_files": list[InputPathType],
+    "target": typing.NotRequired[InputPathType | None],
+    "wild": bool,
+    "tmp_dir": typing.NotRequired[str | None],
+    "nocleanup": bool,
+    "umask": typing.NotRequired[str | None],
+    "cm": bool,
+    "version": bool,
+    "debug": bool,
+})
+MriMotionCorrect2ParametersTagged = typing.TypedDict('MriMotionCorrect2ParametersTagged', {
+    "@type": typing.Literal["freesurfer/mri_motion_correct2"],
     "output_spec": str,
     "input_files": list[InputPathType],
     "target": typing.NotRequired[InputPathType | None],
@@ -28,41 +41,9 @@ MriMotionCorrect2Parameters = typing.TypedDict('MriMotionCorrect2Parameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "freesurfer.mri_motion_correct2": mri_motion_correct2_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "freesurfer.mri_motion_correct2": mri_motion_correct2_outputs,
-    }.get(t)
-
-
 class MriMotionCorrect2Outputs(typing.NamedTuple):
     """
-    Output object returned when calling `mri_motion_correct2(...)`.
+    Output object returned when calling `MriMotionCorrect2Parameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -81,7 +62,7 @@ def mri_motion_correct2_params(
     cm: bool = False,
     version: bool = False,
     debug: bool = False,
-) -> MriMotionCorrect2Parameters:
+) -> MriMotionCorrect2ParametersTagged:
     """
     Build parameters.
     
@@ -101,7 +82,7 @@ def mri_motion_correct2_params(
         Parameter dictionary
     """
     params = {
-        "@type": "freesurfer.mri_motion_correct2",
+        "@type": "freesurfer/mri_motion_correct2",
         "output_spec": output_spec,
         "input_files": input_files,
         "wild": wild,
@@ -136,36 +117,36 @@ def mri_motion_correct2_cargs(
     cargs.append("mri_motion_correct2")
     cargs.extend([
         "-o",
-        params.get("output_spec")
+        params.get("output_spec", None)
     ])
     cargs.extend([
         "-i",
-        *[execution.input_file(f) for f in params.get("input_files")]
+        *[execution.input_file(f) for f in params.get("input_files", None)]
     ])
-    if params.get("target") is not None:
+    if params.get("target", None) is not None:
         cargs.extend([
             "-t",
-            execution.input_file(params.get("target"))
+            execution.input_file(params.get("target", None))
         ])
-    if params.get("wild"):
+    if params.get("wild", False):
         cargs.append("-wild")
-    if params.get("tmp_dir") is not None:
+    if params.get("tmp_dir", None) is not None:
         cargs.extend([
             "-tmpdir",
-            params.get("tmp_dir")
+            params.get("tmp_dir", None)
         ])
-    if params.get("nocleanup"):
+    if params.get("nocleanup", False):
         cargs.append("-nocleanup")
-    if params.get("umask") is not None:
+    if params.get("umask", None) is not None:
         cargs.extend([
             "-umask",
-            params.get("umask")
+            params.get("umask", None)
         ])
-    if params.get("cm"):
+    if params.get("cm", False):
         cargs.append("-cm")
-    if params.get("version"):
+    if params.get("version", False):
         cargs.append("-version")
-    if params.get("debug"):
+    if params.get("debug", False):
         cargs.append("-debug")
     return cargs
 
@@ -185,7 +166,7 @@ def mri_motion_correct2_outputs(
     """
     ret = MriMotionCorrect2Outputs(
         root=execution.output_file("."),
-        output_file=execution.output_file(params.get("output_spec")),
+        output_file=execution.output_file(params.get("output_spec", None)),
     )
     return ret
 
@@ -276,7 +257,6 @@ def mri_motion_correct2(
 __all__ = [
     "MRI_MOTION_CORRECT2_METADATA",
     "MriMotionCorrect2Outputs",
-    "MriMotionCorrect2Parameters",
     "mri_motion_correct2",
     "mri_motion_correct2_execute",
     "mri_motion_correct2_params",

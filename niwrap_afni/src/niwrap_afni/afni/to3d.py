@@ -14,7 +14,50 @@ TO3D_METADATA = Metadata(
 
 
 To3dParameters = typing.TypedDict('To3dParameters', {
-    "@type": typing.Literal["afni.to3d"],
+    "@type": typing.NotRequired[typing.Literal["afni/to3d"]],
+    "input_files": list[InputPathType],
+    "type": typing.NotRequired[typing.Literal["spgr", "fse", "epan", "anat", "ct", "spct", "pet", "mra", "bmap", "diff", "omri", "abuc", "fim", "fith", "fico", "fitt", "fift", "fizt", "fict", "fibt", "fibn", "figt", "fipt", "fbuc"] | None],
+    "statpar": typing.NotRequired[list[float] | None],
+    "prefix": typing.NotRequired[str | None],
+    "session": typing.NotRequired[str | None],
+    "geomparent": typing.NotRequired[InputPathType | None],
+    "anatparent": typing.NotRequired[InputPathType | None],
+    "nosave_flag": bool,
+    "nowritebrik_flag": bool,
+    "view": typing.NotRequired[typing.Literal["orig", "acpc", "tlrc"] | None],
+    "time_zt": typing.NotRequired[list[str] | None],
+    "time_tz": typing.NotRequired[list[str] | None],
+    "tr_units": typing.NotRequired[typing.Literal["ms", "msec", "s", "sec", "Hz", "Hertz"] | None],
+    "torg": typing.NotRequired[float | None],
+    "xFOV": typing.NotRequired[str | None],
+    "yFOV": typing.NotRequired[str | None],
+    "zFOV": typing.NotRequired[str | None],
+    "xSLAB": typing.NotRequired[str | None],
+    "ySLAB": typing.NotRequired[str | None],
+    "zSLAB": typing.NotRequired[str | None],
+    "zorigin": typing.NotRequired[float | None],
+    "data_type": typing.NotRequired[typing.Literal["short", "float", "byte", "complex"] | None],
+    "global_scaling_factor": typing.NotRequired[float | None],
+    "nofloatscan_flag": bool,
+    "in1_flag": bool,
+    "orient": typing.NotRequired[str | None],
+    "skip_outliers_flag": bool,
+    "text_outliers_flag": bool,
+    "save_outliers": typing.NotRequired[str | None],
+    "assume_dicom_mosaic_flag": bool,
+    "oblique_origin_flag": bool,
+    "reverse_list_flag": bool,
+    "use_last_elem_flag": bool,
+    "use_old_mosaic_code_flag": bool,
+    "ushort2float_flag": bool,
+    "verbose_flag": bool,
+    "gamma": typing.NotRequired[float | None],
+    "ncolors": typing.NotRequired[float | None],
+    "xtwarns_flag": bool,
+    "quit_on_err_flag": bool,
+})
+To3dParametersTagged = typing.TypedDict('To3dParametersTagged', {
+    "@type": typing.Literal["afni/to3d"],
     "input_files": list[InputPathType],
     "type": typing.NotRequired[typing.Literal["spgr", "fse", "epan", "anat", "ct", "spct", "pet", "mra", "bmap", "diff", "omri", "abuc", "fim", "fith", "fico", "fitt", "fift", "fizt", "fict", "fibt", "fibn", "figt", "fipt", "fbuc"] | None],
     "statpar": typing.NotRequired[list[float] | None],
@@ -58,41 +101,9 @@ To3dParameters = typing.TypedDict('To3dParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "afni.to3d": to3d_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "afni.to3d": to3d_outputs,
-    }.get(t)
-
-
 class To3dOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `to3d(...)`.
+    Output object returned when calling `To3dParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -145,7 +156,7 @@ def to3d_params(
     ncolors: float | None = None,
     xtwarns_flag: bool = False,
     quit_on_err_flag: bool = False,
-) -> To3dParameters:
+) -> To3dParametersTagged:
     """
     Build parameters.
     
@@ -201,7 +212,7 @@ def to3d_params(
         Parameter dictionary
     """
     params = {
-        "@type": "afni.to3d",
+        "@type": "afni/to3d",
         "input_files": input_files,
         "nosave_flag": nosave_flag,
         "nowritebrik_flag": nowritebrik_flag,
@@ -285,156 +296,156 @@ def to3d_cargs(
     """
     cargs = []
     cargs.append("to3d")
-    cargs.extend([execution.input_file(f) for f in params.get("input_files")])
-    if params.get("type") is not None:
+    cargs.extend([execution.input_file(f) for f in params.get("input_files", None)])
+    if params.get("type", None) is not None:
         cargs.extend([
             "-type",
-            params.get("type")
+            params.get("type", None)
         ])
-    if params.get("statpar") is not None:
+    if params.get("statpar", None) is not None:
         cargs.extend([
             "-statpar",
-            *map(str, params.get("statpar"))
+            *map(str, params.get("statpar", None))
         ])
-    if params.get("prefix") is not None:
+    if params.get("prefix", None) is not None:
         cargs.extend([
             "-prefix",
-            params.get("prefix")
+            params.get("prefix", None)
         ])
-    if params.get("session") is not None:
+    if params.get("session", None) is not None:
         cargs.extend([
             "-session",
-            params.get("session")
+            params.get("session", None)
         ])
-    if params.get("geomparent") is not None:
+    if params.get("geomparent", None) is not None:
         cargs.extend([
             "-geomparent",
-            execution.input_file(params.get("geomparent"))
+            execution.input_file(params.get("geomparent", None))
         ])
-    if params.get("anatparent") is not None:
+    if params.get("anatparent", None) is not None:
         cargs.extend([
             "-anatparent",
-            execution.input_file(params.get("anatparent"))
+            execution.input_file(params.get("anatparent", None))
         ])
-    if params.get("nosave_flag"):
+    if params.get("nosave_flag", False):
         cargs.append("-nosave")
-    if params.get("nowritebrik_flag"):
+    if params.get("nowritebrik_flag", False):
         cargs.append("-nowritebrik")
-    if params.get("view") is not None:
+    if params.get("view", None) is not None:
         cargs.extend([
             "-view",
-            params.get("view")
+            params.get("view", None)
         ])
-    if params.get("time_zt") is not None:
+    if params.get("time_zt", None) is not None:
         cargs.extend([
             "-time:zt",
-            *params.get("time_zt")
+            *params.get("time_zt", None)
         ])
-    if params.get("time_tz") is not None:
+    if params.get("time_tz", None) is not None:
         cargs.extend([
             "-time:tz",
-            *params.get("time_tz")
+            *params.get("time_tz", None)
         ])
-    if params.get("tr_units") is not None:
+    if params.get("tr_units", None) is not None:
         cargs.extend([
             "-t",
-            params.get("tr_units")
+            params.get("tr_units", None)
         ])
-    if params.get("torg") is not None:
+    if params.get("torg", None) is not None:
         cargs.extend([
             "-Torg",
-            str(params.get("torg"))
+            str(params.get("torg", None))
         ])
-    if params.get("xFOV") is not None:
+    if params.get("xFOV", None) is not None:
         cargs.extend([
             "-xFOV",
-            params.get("xFOV")
+            params.get("xFOV", None)
         ])
-    if params.get("yFOV") is not None:
+    if params.get("yFOV", None) is not None:
         cargs.extend([
             "-yFOV",
-            params.get("yFOV")
+            params.get("yFOV", None)
         ])
-    if params.get("zFOV") is not None:
+    if params.get("zFOV", None) is not None:
         cargs.extend([
             "-zFOV",
-            params.get("zFOV")
+            params.get("zFOV", None)
         ])
-    if params.get("xSLAB") is not None:
+    if params.get("xSLAB", None) is not None:
         cargs.extend([
             "-xSLAB",
-            params.get("xSLAB")
+            params.get("xSLAB", None)
         ])
-    if params.get("ySLAB") is not None:
+    if params.get("ySLAB", None) is not None:
         cargs.extend([
             "-ySLAB",
-            params.get("ySLAB")
+            params.get("ySLAB", None)
         ])
-    if params.get("zSLAB") is not None:
+    if params.get("zSLAB", None) is not None:
         cargs.extend([
             "-zSLAB",
-            params.get("zSLAB")
+            params.get("zSLAB", None)
         ])
-    if params.get("zorigin") is not None:
+    if params.get("zorigin", None) is not None:
         cargs.extend([
             "-zorigin",
-            str(params.get("zorigin"))
+            str(params.get("zorigin", None))
         ])
-    if params.get("data_type") is not None:
+    if params.get("data_type", None) is not None:
         cargs.extend([
             "-datum",
-            params.get("data_type")
+            params.get("data_type", None)
         ])
-    if params.get("global_scaling_factor") is not None:
+    if params.get("global_scaling_factor", None) is not None:
         cargs.extend([
             "-gsfac",
-            str(params.get("global_scaling_factor"))
+            str(params.get("global_scaling_factor", None))
         ])
-    if params.get("nofloatscan_flag"):
+    if params.get("nofloatscan_flag", False):
         cargs.append("-nofloatscan")
-    if params.get("in1_flag"):
+    if params.get("in1_flag", False):
         cargs.append("-in:1")
-    if params.get("orient") is not None:
+    if params.get("orient", None) is not None:
         cargs.extend([
             "-orient",
-            params.get("orient")
+            params.get("orient", None)
         ])
-    if params.get("skip_outliers_flag"):
+    if params.get("skip_outliers_flag", False):
         cargs.append("-skip_outliers")
-    if params.get("text_outliers_flag"):
+    if params.get("text_outliers_flag", False):
         cargs.append("-text_outliers")
-    if params.get("save_outliers") is not None:
+    if params.get("save_outliers", None) is not None:
         cargs.extend([
             "-save_outliers",
-            params.get("save_outliers")
+            params.get("save_outliers", None)
         ])
-    if params.get("assume_dicom_mosaic_flag"):
+    if params.get("assume_dicom_mosaic_flag", False):
         cargs.append("-assume_dicom_mosaic")
-    if params.get("oblique_origin_flag"):
+    if params.get("oblique_origin_flag", False):
         cargs.append("-oblique_origin")
-    if params.get("reverse_list_flag"):
+    if params.get("reverse_list_flag", False):
         cargs.append("-reverse_list")
-    if params.get("use_last_elem_flag"):
+    if params.get("use_last_elem_flag", False):
         cargs.append("-use_last_elem")
-    if params.get("use_old_mosaic_code_flag"):
+    if params.get("use_old_mosaic_code_flag", False):
         cargs.append("-use_old_mosaic_code")
-    if params.get("ushort2float_flag"):
+    if params.get("ushort2float_flag", False):
         cargs.append("-ushort2float")
-    if params.get("verbose_flag"):
+    if params.get("verbose_flag", False):
         cargs.append("-verb")
-    if params.get("gamma") is not None:
+    if params.get("gamma", None) is not None:
         cargs.extend([
             "-gamma",
-            str(params.get("gamma"))
+            str(params.get("gamma", None))
         ])
-    if params.get("ncolors") is not None:
+    if params.get("ncolors", None) is not None:
         cargs.extend([
             "-ncolors",
-            str(params.get("ncolors"))
+            str(params.get("ncolors", None))
         ])
-    if params.get("xtwarns_flag"):
+    if params.get("xtwarns_flag", False):
         cargs.append("-xtwarns")
-    if params.get("quit_on_err_flag"):
+    if params.get("quit_on_err_flag", False):
         cargs.append("-quit_on_err")
     return cargs
 
@@ -454,9 +465,9 @@ def to3d_outputs(
     """
     ret = To3dOutputs(
         root=execution.output_file("."),
-        headfile=execution.output_file(params.get("prefix") + ".HEAD") if (params.get("prefix") is not None) else None,
-        brikfile=execution.output_file(params.get("prefix") + ".BRIK") if (params.get("prefix") is not None) else None,
-        outfile_outliers=execution.output_file(params.get("save_outliers")) if (params.get("save_outliers") is not None) else None,
+        headfile=execution.output_file(params.get("prefix", None) + ".HEAD") if (params.get("prefix") is not None) else None,
+        brikfile=execution.output_file(params.get("prefix", None) + ".BRIK") if (params.get("prefix") is not None) else None,
+        outfile_outliers=execution.output_file(params.get("save_outliers", None)) if (params.get("save_outliers") is not None) else None,
     )
     return ret
 
@@ -641,7 +652,6 @@ def to3d(
 __all__ = [
     "TO3D_METADATA",
     "To3dOutputs",
-    "To3dParameters",
     "to3d",
     "to3d_execute",
     "to3d_params",

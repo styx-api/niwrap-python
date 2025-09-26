@@ -14,7 +14,16 @@ V_1D_TSORT_METADATA = Metadata(
 
 
 V1dTsortParameters = typing.TypedDict('V1dTsortParameters', {
-    "@type": typing.Literal["afni.1dTsort"],
+    "@type": typing.NotRequired[typing.Literal["afni/1dTsort"]],
+    "inc_order": bool,
+    "dec_order": bool,
+    "transpose": bool,
+    "column": typing.NotRequired[float | None],
+    "imode": bool,
+    "infile": InputPathType,
+})
+V1dTsortParametersTagged = typing.TypedDict('V1dTsortParametersTagged', {
+    "@type": typing.Literal["afni/1dTsort"],
     "inc_order": bool,
     "dec_order": bool,
     "transpose": bool,
@@ -24,40 +33,9 @@ V1dTsortParameters = typing.TypedDict('V1dTsortParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "afni.1dTsort": v_1d_tsort_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-    }.get(t)
-
-
 class V1dTsortOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `v_1d_tsort(...)`.
+    Output object returned when calling `V1dTsortParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -70,7 +48,7 @@ def v_1d_tsort_params(
     transpose: bool = False,
     column: float | None = None,
     imode: bool = False,
-) -> V1dTsortParameters:
+) -> V1dTsortParametersTagged:
     """
     Build parameters.
     
@@ -87,7 +65,7 @@ def v_1d_tsort_params(
         Parameter dictionary
     """
     params = {
-        "@type": "afni.1dTsort",
+        "@type": "afni/1dTsort",
         "inc_order": inc_order,
         "dec_order": dec_order,
         "transpose": transpose,
@@ -114,20 +92,20 @@ def v_1d_tsort_cargs(
     """
     cargs = []
     cargs.append("1dTsort")
-    if params.get("inc_order"):
+    if params.get("inc_order", False):
         cargs.append("-inc")
-    if params.get("dec_order"):
+    if params.get("dec_order", False):
         cargs.append("-dec")
-    if params.get("transpose"):
+    if params.get("transpose", False):
         cargs.append("-flip")
-    if params.get("column") is not None:
+    if params.get("column", None) is not None:
         cargs.extend([
             "-col",
-            str(params.get("column"))
+            str(params.get("column", None))
         ])
-    if params.get("imode"):
+    if params.get("imode", False):
         cargs.append("-imode")
-    cargs.append(execution.input_file(params.get("infile")))
+    cargs.append(execution.input_file(params.get("infile", None)))
     return cargs
 
 
@@ -222,7 +200,6 @@ def v_1d_tsort(
 
 __all__ = [
     "V1dTsortOutputs",
-    "V1dTsortParameters",
     "V_1D_TSORT_METADATA",
     "v_1d_tsort",
     "v_1d_tsort_execute",

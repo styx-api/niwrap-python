@@ -14,7 +14,14 @@ ZTOP_METADATA = Metadata(
 
 
 ZtopParameters = typing.TypedDict('ZtopParameters', {
-    "@type": typing.Literal["fsl.ztop"],
+    "@type": typing.NotRequired[typing.Literal["fsl/ztop"]],
+    "z_score": float,
+    "tail_flag": bool,
+    "grf_flag": bool,
+    "number_of_resels": typing.NotRequired[float | None],
+})
+ZtopParametersTagged = typing.TypedDict('ZtopParametersTagged', {
+    "@type": typing.Literal["fsl/ztop"],
     "z_score": float,
     "tail_flag": bool,
     "grf_flag": bool,
@@ -22,40 +29,9 @@ ZtopParameters = typing.TypedDict('ZtopParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "fsl.ztop": ztop_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-    }.get(t)
-
-
 class ZtopOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `ztop(...)`.
+    Output object returned when calling `ZtopParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -66,7 +42,7 @@ def ztop_params(
     tail_flag: bool = False,
     grf_flag: bool = False,
     number_of_resels: float | None = None,
-) -> ZtopParameters:
+) -> ZtopParametersTagged:
     """
     Build parameters.
     
@@ -80,7 +56,7 @@ def ztop_params(
         Parameter dictionary
     """
     params = {
-        "@type": "fsl.ztop",
+        "@type": "fsl/ztop",
         "z_score": z_score,
         "tail_flag": tail_flag,
         "grf_flag": grf_flag,
@@ -105,13 +81,13 @@ def ztop_cargs(
     """
     cargs = []
     cargs.append("ztop")
-    cargs.append(str(params.get("z_score")))
-    if params.get("tail_flag"):
+    cargs.append(str(params.get("z_score", None)))
+    if params.get("tail_flag", False):
         cargs.append("-2")
-    if params.get("grf_flag"):
+    if params.get("grf_flag", False):
         cargs.append("-g")
-    if params.get("number_of_resels") is not None:
-        cargs.append(str(params.get("number_of_resels")))
+    if params.get("number_of_resels", None) is not None:
+        cargs.append(str(params.get("number_of_resels", None)))
     return cargs
 
 
@@ -200,7 +176,6 @@ def ztop(
 __all__ = [
     "ZTOP_METADATA",
     "ZtopOutputs",
-    "ZtopParameters",
     "ztop",
     "ztop_execute",
     "ztop_params",

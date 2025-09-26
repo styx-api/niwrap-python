@@ -14,7 +14,15 @@ IMAGE_MATH_METADATA = Metadata(
 
 
 ImageMathParameters = typing.TypedDict('ImageMathParameters', {
-    "@type": typing.Literal["ants.ImageMath"],
+    "@type": typing.NotRequired[typing.Literal["ants/ImageMath"]],
+    "image_dimension": typing.Literal[2, 3, 4],
+    "output_image": str,
+    "operations_and_inputs": str,
+    "image1": InputPathType,
+    "image2": typing.NotRequired[InputPathType | None],
+})
+ImageMathParametersTagged = typing.TypedDict('ImageMathParametersTagged', {
+    "@type": typing.Literal["ants/ImageMath"],
     "image_dimension": typing.Literal[2, 3, 4],
     "output_image": str,
     "operations_and_inputs": str,
@@ -23,41 +31,9 @@ ImageMathParameters = typing.TypedDict('ImageMathParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "ants.ImageMath": image_math_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "ants.ImageMath": image_math_outputs,
-    }.get(t)
-
-
 class ImageMathOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `image_math(...)`.
+    Output object returned when calling `ImageMathParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -71,7 +47,7 @@ def image_math_params(
     operations_and_inputs: str,
     image1: InputPathType,
     image2: InputPathType | None = None,
-) -> ImageMathParameters:
+) -> ImageMathParametersTagged:
     """
     Build parameters.
     
@@ -87,7 +63,7 @@ def image_math_params(
         Parameter dictionary
     """
     params = {
-        "@type": "ants.ImageMath",
+        "@type": "ants/ImageMath",
         "image_dimension": image_dimension,
         "output_image": output_image,
         "operations_and_inputs": operations_and_inputs,
@@ -113,12 +89,12 @@ def image_math_cargs(
     """
     cargs = []
     cargs.append("ImageMath")
-    cargs.append(str(params.get("image_dimension")))
-    cargs.append(params.get("output_image"))
-    cargs.append(params.get("operations_and_inputs"))
-    cargs.append(execution.input_file(params.get("image1")))
-    if params.get("image2") is not None:
-        cargs.append(execution.input_file(params.get("image2")))
+    cargs.append(str(params.get("image_dimension", None)))
+    cargs.append(params.get("output_image", None))
+    cargs.append(params.get("operations_and_inputs", None))
+    cargs.append(execution.input_file(params.get("image1", None)))
+    if params.get("image2", None) is not None:
+        cargs.append(execution.input_file(params.get("image2", None)))
     return cargs
 
 
@@ -137,7 +113,7 @@ def image_math_outputs(
     """
     ret = ImageMathOutputs(
         root=execution.output_file("."),
-        output_image=execution.output_file(params.get("output_image")),
+        output_image=execution.output_file(params.get("output_image", None)),
     )
     return ret
 
@@ -214,7 +190,6 @@ def image_math(
 __all__ = [
     "IMAGE_MATH_METADATA",
     "ImageMathOutputs",
-    "ImageMathParameters",
     "image_math",
     "image_math_execute",
     "image_math_params",

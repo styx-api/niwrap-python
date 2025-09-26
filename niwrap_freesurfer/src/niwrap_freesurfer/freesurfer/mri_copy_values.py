@@ -14,48 +14,22 @@ MRI_COPY_VALUES_METADATA = Metadata(
 
 
 MriCopyValuesParameters = typing.TypedDict('MriCopyValuesParameters', {
-    "@type": typing.Literal["freesurfer.mri_copy_values"],
+    "@type": typing.NotRequired[typing.Literal["freesurfer/mri_copy_values"]],
+    "source_volume": InputPathType,
+    "target_volume": InputPathType,
+    "output_volume": str,
+})
+MriCopyValuesParametersTagged = typing.TypedDict('MriCopyValuesParametersTagged', {
+    "@type": typing.Literal["freesurfer/mri_copy_values"],
     "source_volume": InputPathType,
     "target_volume": InputPathType,
     "output_volume": str,
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "freesurfer.mri_copy_values": mri_copy_values_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "freesurfer.mri_copy_values": mri_copy_values_outputs,
-    }.get(t)
-
-
 class MriCopyValuesOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `mri_copy_values(...)`.
+    Output object returned when calling `MriCopyValuesParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -67,7 +41,7 @@ def mri_copy_values_params(
     source_volume: InputPathType,
     target_volume: InputPathType,
     output_volume: str,
-) -> MriCopyValuesParameters:
+) -> MriCopyValuesParametersTagged:
     """
     Build parameters.
     
@@ -79,7 +53,7 @@ def mri_copy_values_params(
         Parameter dictionary
     """
     params = {
-        "@type": "freesurfer.mri_copy_values",
+        "@type": "freesurfer/mri_copy_values",
         "source_volume": source_volume,
         "target_volume": target_volume,
         "output_volume": output_volume,
@@ -102,9 +76,9 @@ def mri_copy_values_cargs(
     """
     cargs = []
     cargs.append("mri_copy_values")
-    cargs.append(execution.input_file(params.get("source_volume")))
-    cargs.append(execution.input_file(params.get("target_volume")))
-    cargs.append(params.get("output_volume"))
+    cargs.append(execution.input_file(params.get("source_volume", None)))
+    cargs.append(execution.input_file(params.get("target_volume", None)))
+    cargs.append(params.get("output_volume", None))
     return cargs
 
 
@@ -123,7 +97,7 @@ def mri_copy_values_outputs(
     """
     ret = MriCopyValuesOutputs(
         root=execution.output_file("."),
-        output_file=execution.output_file(params.get("output_volume")),
+        output_file=execution.output_file(params.get("output_volume", None)),
     )
     return ret
 
@@ -190,7 +164,6 @@ def mri_copy_values(
 __all__ = [
     "MRI_COPY_VALUES_METADATA",
     "MriCopyValuesOutputs",
-    "MriCopyValuesParameters",
     "mri_copy_values",
     "mri_copy_values_execute",
     "mri_copy_values_params",

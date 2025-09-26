@@ -14,7 +14,15 @@ TALAIRACH_AVI_METADATA = Metadata(
 
 
 TalairachAviParameters = typing.TypedDict('TalairachAviParameters', {
-    "@type": typing.Literal["freesurfer.talairach_avi"],
+    "@type": typing.NotRequired[typing.Literal["freesurfer/talairach_avi"]],
+    "input_file": InputPathType,
+    "output_xfm": str,
+    "atlas": typing.NotRequired[str | None],
+    "log": typing.NotRequired[str | None],
+    "debug": bool,
+})
+TalairachAviParametersTagged = typing.TypedDict('TalairachAviParametersTagged', {
+    "@type": typing.Literal["freesurfer/talairach_avi"],
     "input_file": InputPathType,
     "output_xfm": str,
     "atlas": typing.NotRequired[str | None],
@@ -23,41 +31,9 @@ TalairachAviParameters = typing.TypedDict('TalairachAviParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "freesurfer.talairach_avi": talairach_avi_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "freesurfer.talairach_avi": talairach_avi_outputs,
-    }.get(t)
-
-
 class TalairachAviOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `talairach_avi(...)`.
+    Output object returned when calling `TalairachAviParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -71,7 +47,7 @@ def talairach_avi_params(
     atlas: str | None = None,
     log: str | None = None,
     debug: bool = False,
-) -> TalairachAviParameters:
+) -> TalairachAviParametersTagged:
     """
     Build parameters.
     
@@ -85,7 +61,7 @@ def talairach_avi_params(
         Parameter dictionary
     """
     params = {
-        "@type": "freesurfer.talairach_avi",
+        "@type": "freesurfer/talairach_avi",
         "input_file": input_file,
         "output_xfm": output_xfm,
         "debug": debug,
@@ -114,23 +90,23 @@ def talairach_avi_cargs(
     cargs.append("talairach_avi")
     cargs.extend([
         "--i",
-        execution.input_file(params.get("input_file"))
+        execution.input_file(params.get("input_file", None))
     ])
     cargs.extend([
         "--xfm",
-        params.get("output_xfm")
+        params.get("output_xfm", None)
     ])
-    if params.get("atlas") is not None:
+    if params.get("atlas", None) is not None:
         cargs.extend([
             "--atlas",
-            params.get("atlas")
+            params.get("atlas", None)
         ])
-    if params.get("log") is not None:
+    if params.get("log", None) is not None:
         cargs.extend([
             "--log",
-            params.get("log")
+            params.get("log", None)
         ])
-    if params.get("debug"):
+    if params.get("debug", False):
         cargs.append("--debug")
     return cargs
 
@@ -150,7 +126,7 @@ def talairach_avi_outputs(
     """
     ret = TalairachAviOutputs(
         root=execution.output_file("."),
-        output_xfm_file=execution.output_file(params.get("output_xfm")),
+        output_xfm_file=execution.output_file(params.get("output_xfm", None)),
     )
     return ret
 
@@ -225,7 +201,6 @@ def talairach_avi(
 __all__ = [
     "TALAIRACH_AVI_METADATA",
     "TalairachAviOutputs",
-    "TalairachAviParameters",
     "talairach_avi",
     "talairach_avi_execute",
     "talairach_avi_params",

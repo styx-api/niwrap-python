@@ -14,48 +14,22 @@ IMSTACK_METADATA = Metadata(
 
 
 ImstackParameters = typing.TypedDict('ImstackParameters', {
-    "@type": typing.Literal["afni.imstack"],
+    "@type": typing.NotRequired[typing.Literal["afni/imstack"]],
+    "image_files": list[InputPathType],
+    "data_type": typing.NotRequired[typing.Literal["short", "float"] | None],
+    "output_prefix": typing.NotRequired[str | None],
+})
+ImstackParametersTagged = typing.TypedDict('ImstackParametersTagged', {
+    "@type": typing.Literal["afni/imstack"],
     "image_files": list[InputPathType],
     "data_type": typing.NotRequired[typing.Literal["short", "float"] | None],
     "output_prefix": typing.NotRequired[str | None],
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "afni.imstack": imstack_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "afni.imstack": imstack_outputs,
-    }.get(t)
-
-
 class ImstackOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `imstack(...)`.
+    Output object returned when calling `ImstackParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -69,7 +43,7 @@ def imstack_params(
     image_files: list[InputPathType],
     data_type: typing.Literal["short", "float"] | None = None,
     output_prefix: str | None = None,
-) -> ImstackParameters:
+) -> ImstackParametersTagged:
     """
     Build parameters.
     
@@ -83,7 +57,7 @@ def imstack_params(
         Parameter dictionary
     """
     params = {
-        "@type": "afni.imstack",
+        "@type": "afni/imstack",
         "image_files": image_files,
     }
     if data_type is not None:
@@ -108,16 +82,16 @@ def imstack_cargs(
     """
     cargs = []
     cargs.append("imstack")
-    cargs.extend([execution.input_file(f) for f in params.get("image_files")])
-    if params.get("data_type") is not None:
+    cargs.extend([execution.input_file(f) for f in params.get("image_files", None)])
+    if params.get("data_type", None) is not None:
         cargs.extend([
             "-datum",
-            params.get("data_type")
+            params.get("data_type", None)
         ])
-    if params.get("output_prefix") is not None:
+    if params.get("output_prefix", None) is not None:
         cargs.extend([
             "-prefix",
-            params.get("output_prefix")
+            params.get("output_prefix", None)
         ])
     return cargs
 
@@ -137,8 +111,8 @@ def imstack_outputs(
     """
     ret = ImstackOutputs(
         root=execution.output_file("."),
-        output_data_file=execution.output_file(params.get("output_prefix") + ".b" + params.get("data_type")) if (params.get("output_prefix") is not None and params.get("data_type") is not None) else None,
-        output_header_file=execution.output_file(params.get("output_prefix") + ".hdr") if (params.get("output_prefix") is not None) else None,
+        output_data_file=execution.output_file(params.get("output_prefix", None) + ".b" + params.get("data_type", None)) if (params.get("output_prefix") is not None and params.get("data_type") is not None) else None,
+        output_header_file=execution.output_file(params.get("output_prefix", None) + ".hdr") if (params.get("output_prefix") is not None) else None,
     )
     return ret
 
@@ -207,7 +181,6 @@ def imstack(
 __all__ = [
     "IMSTACK_METADATA",
     "ImstackOutputs",
-    "ImstackParameters",
     "imstack",
     "imstack_execute",
     "imstack_params",

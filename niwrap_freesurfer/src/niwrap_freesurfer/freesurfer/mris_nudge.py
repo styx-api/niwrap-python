@@ -14,7 +14,15 @@ MRIS_NUDGE_METADATA = Metadata(
 
 
 MrisNudgeParameters = typing.TypedDict('MrisNudgeParameters', {
-    "@type": typing.Literal["freesurfer.mris_nudge"],
+    "@type": typing.NotRequired[typing.Literal["freesurfer/mris_nudge"]],
+    "input_surface": InputPathType,
+    "input_volume": InputPathType,
+    "vertex": int,
+    "target_val": float,
+    "nbhd": int,
+})
+MrisNudgeParametersTagged = typing.TypedDict('MrisNudgeParametersTagged', {
+    "@type": typing.Literal["freesurfer/mris_nudge"],
     "input_surface": InputPathType,
     "input_volume": InputPathType,
     "vertex": int,
@@ -23,41 +31,9 @@ MrisNudgeParameters = typing.TypedDict('MrisNudgeParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "freesurfer.mris_nudge": mris_nudge_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "freesurfer.mris_nudge": mris_nudge_outputs,
-    }.get(t)
-
-
 class MrisNudgeOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `mris_nudge(...)`.
+    Output object returned when calling `MrisNudgeParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -71,7 +47,7 @@ def mris_nudge_params(
     vertex: int,
     target_val: float,
     nbhd: int,
-) -> MrisNudgeParameters:
+) -> MrisNudgeParametersTagged:
     """
     Build parameters.
     
@@ -85,7 +61,7 @@ def mris_nudge_params(
         Parameter dictionary
     """
     params = {
-        "@type": "freesurfer.mris_nudge",
+        "@type": "freesurfer/mris_nudge",
         "input_surface": input_surface,
         "input_volume": input_volume,
         "vertex": vertex,
@@ -110,11 +86,11 @@ def mris_nudge_cargs(
     """
     cargs = []
     cargs.append("mris_nudge")
-    cargs.append(execution.input_file(params.get("input_surface")))
-    cargs.append(execution.input_file(params.get("input_volume")))
-    cargs.append(str(params.get("vertex")))
-    cargs.append(str(params.get("target_val")))
-    cargs.append(str(params.get("nbhd")))
+    cargs.append(execution.input_file(params.get("input_surface", None)))
+    cargs.append(execution.input_file(params.get("input_volume", None)))
+    cargs.append(str(params.get("vertex", None)))
+    cargs.append(str(params.get("target_val", None)))
+    cargs.append(str(params.get("nbhd", None)))
     return cargs
 
 
@@ -206,7 +182,6 @@ def mris_nudge(
 __all__ = [
     "MRIS_NUDGE_METADATA",
     "MrisNudgeOutputs",
-    "MrisNudgeParameters",
     "mris_nudge",
     "mris_nudge_execute",
     "mris_nudge_params",

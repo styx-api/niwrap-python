@@ -14,45 +14,18 @@ UNPACKIMADIR2_METADATA = Metadata(
 
 
 Unpackimadir2Parameters = typing.TypedDict('Unpackimadir2Parameters', {
-    "@type": typing.Literal["freesurfer.unpackimadir2"],
+    "@type": typing.NotRequired[typing.Literal["freesurfer/unpackimadir2"]],
+    "directory": InputPathType,
+})
+Unpackimadir2ParametersTagged = typing.TypedDict('Unpackimadir2ParametersTagged', {
+    "@type": typing.Literal["freesurfer/unpackimadir2"],
     "directory": InputPathType,
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "freesurfer.unpackimadir2": unpackimadir2_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-    }.get(t)
-
-
 class Unpackimadir2Outputs(typing.NamedTuple):
     """
-    Output object returned when calling `unpackimadir2(...)`.
+    Output object returned when calling `Unpackimadir2Parameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -60,7 +33,7 @@ class Unpackimadir2Outputs(typing.NamedTuple):
 
 def unpackimadir2_params(
     directory: InputPathType,
-) -> Unpackimadir2Parameters:
+) -> Unpackimadir2ParametersTagged:
     """
     Build parameters.
     
@@ -70,7 +43,7 @@ def unpackimadir2_params(
         Parameter dictionary
     """
     params = {
-        "@type": "freesurfer.unpackimadir2",
+        "@type": "freesurfer/unpackimadir2",
         "directory": directory,
     }
     return params
@@ -91,7 +64,7 @@ def unpackimadir2_cargs(
     """
     cargs = []
     cargs.append("unpackimadir2")
-    cargs.append(execution.input_file(params.get("directory")))
+    cargs.append(execution.input_file(params.get("directory", None)))
     return cargs
 
 
@@ -170,7 +143,6 @@ def unpackimadir2(
 __all__ = [
     "UNPACKIMADIR2_METADATA",
     "Unpackimadir2Outputs",
-    "Unpackimadir2Parameters",
     "unpackimadir2",
     "unpackimadir2_execute",
     "unpackimadir2_params",

@@ -14,7 +14,16 @@ MRI_MAP_CPDAT_METADATA = Metadata(
 
 
 MriMapCpdatParameters = typing.TypedDict('MriMapCpdatParameters', {
-    "@type": typing.Literal["freesurfer.mri_map_cpdat"],
+    "@type": typing.NotRequired[typing.Literal["freesurfer/mri_map_cpdat"]],
+    "input_file": InputPathType,
+    "output_file": str,
+    "lta_file": typing.NotRequired[InputPathType | None],
+    "to_mni305": typing.NotRequired[str | None],
+    "from_mni305": typing.NotRequired[str | None],
+    "subject_list_file": typing.NotRequired[InputPathType | None],
+})
+MriMapCpdatParametersTagged = typing.TypedDict('MriMapCpdatParametersTagged', {
+    "@type": typing.Literal["freesurfer/mri_map_cpdat"],
     "input_file": InputPathType,
     "output_file": str,
     "lta_file": typing.NotRequired[InputPathType | None],
@@ -24,41 +33,9 @@ MriMapCpdatParameters = typing.TypedDict('MriMapCpdatParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "freesurfer.mri_map_cpdat": mri_map_cpdat_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "freesurfer.mri_map_cpdat": mri_map_cpdat_outputs,
-    }.get(t)
-
-
 class MriMapCpdatOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `mri_map_cpdat(...)`.
+    Output object returned when calling `MriMapCpdatParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -73,7 +50,7 @@ def mri_map_cpdat_params(
     to_mni305: str | None = None,
     from_mni305: str | None = None,
     subject_list_file: InputPathType | None = None,
-) -> MriMapCpdatParameters:
+) -> MriMapCpdatParametersTagged:
     """
     Build parameters.
     
@@ -89,7 +66,7 @@ def mri_map_cpdat_params(
         Parameter dictionary
     """
     params = {
-        "@type": "freesurfer.mri_map_cpdat",
+        "@type": "freesurfer/mri_map_cpdat",
         "input_file": input_file,
         "output_file": output_file,
     }
@@ -121,31 +98,31 @@ def mri_map_cpdat_cargs(
     cargs.append("mri_map_cpdat")
     cargs.extend([
         "-in",
-        execution.input_file(params.get("input_file"))
+        execution.input_file(params.get("input_file", None))
     ])
     cargs.extend([
         "-out",
-        params.get("output_file")
+        params.get("output_file", None)
     ])
-    if params.get("lta_file") is not None:
+    if params.get("lta_file", None) is not None:
         cargs.extend([
             "-lta",
-            execution.input_file(params.get("lta_file"))
+            execution.input_file(params.get("lta_file", None))
         ])
-    if params.get("to_mni305") is not None:
+    if params.get("to_mni305", None) is not None:
         cargs.extend([
             "-tomni305",
-            params.get("to_mni305")
+            params.get("to_mni305", None)
         ])
-    if params.get("from_mni305") is not None:
+    if params.get("from_mni305", None) is not None:
         cargs.extend([
             "-frommni305",
-            params.get("from_mni305")
+            params.get("from_mni305", None)
         ])
-    if params.get("subject_list_file") is not None:
+    if params.get("subject_list_file", None) is not None:
         cargs.extend([
             "-slf",
-            execution.input_file(params.get("subject_list_file"))
+            execution.input_file(params.get("subject_list_file", None))
         ])
     return cargs
 
@@ -165,7 +142,7 @@ def mri_map_cpdat_outputs(
     """
     ret = MriMapCpdatOutputs(
         root=execution.output_file("."),
-        output_ctrl_file=execution.output_file(params.get("output_file")),
+        output_ctrl_file=execution.output_file(params.get("output_file", None)),
     )
     return ret
 
@@ -242,7 +219,6 @@ def mri_map_cpdat(
 __all__ = [
     "MRI_MAP_CPDAT_METADATA",
     "MriMapCpdatOutputs",
-    "MriMapCpdatParameters",
     "mri_map_cpdat",
     "mri_map_cpdat_execute",
     "mri_map_cpdat_params",

@@ -14,46 +14,20 @@ PROJ_THRESH_METADATA = Metadata(
 
 
 ProjThreshParameters = typing.TypedDict('ProjThreshParameters', {
-    "@type": typing.Literal["fsl.proj_thresh"],
+    "@type": typing.NotRequired[typing.Literal["fsl/proj_thresh"]],
+    "input_paths": list[InputPathType],
+    "threshold": float,
+})
+ProjThreshParametersTagged = typing.TypedDict('ProjThreshParametersTagged', {
+    "@type": typing.Literal["fsl/proj_thresh"],
     "input_paths": list[InputPathType],
     "threshold": float,
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "fsl.proj_thresh": proj_thresh_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-    }.get(t)
-
-
 class ProjThreshOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `proj_thresh(...)`.
+    Output object returned when calling `ProjThreshParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -62,7 +36,7 @@ class ProjThreshOutputs(typing.NamedTuple):
 def proj_thresh_params(
     input_paths: list[InputPathType],
     threshold: float,
-) -> ProjThreshParameters:
+) -> ProjThreshParametersTagged:
     """
     Build parameters.
     
@@ -74,7 +48,7 @@ def proj_thresh_params(
         Parameter dictionary
     """
     params = {
-        "@type": "fsl.proj_thresh",
+        "@type": "fsl/proj_thresh",
         "input_paths": input_paths,
         "threshold": threshold,
     }
@@ -96,8 +70,8 @@ def proj_thresh_cargs(
     """
     cargs = []
     cargs.append("proj_thresh")
-    cargs.extend([execution.input_file(f) for f in params.get("input_paths")])
-    cargs.append(str(params.get("threshold")))
+    cargs.extend([execution.input_file(f) for f in params.get("input_paths", None)])
+    cargs.append(str(params.get("threshold", None)))
     return cargs
 
 
@@ -180,7 +154,6 @@ def proj_thresh(
 __all__ = [
     "PROJ_THRESH_METADATA",
     "ProjThreshOutputs",
-    "ProjThreshParameters",
     "proj_thresh",
     "proj_thresh_execute",
     "proj_thresh_params",

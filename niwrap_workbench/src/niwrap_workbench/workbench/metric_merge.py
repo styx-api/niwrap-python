@@ -14,72 +14,57 @@ METRIC_MERGE_METADATA = Metadata(
 
 
 MetricMergeUpToParameters = typing.TypedDict('MetricMergeUpToParameters', {
-    "@type": typing.Literal["workbench.metric-merge.metric.column.up_to"],
+    "@type": typing.NotRequired[typing.Literal["up_to"]],
+    "last_column": str,
+    "opt_reverse": bool,
+})
+MetricMergeUpToParametersTagged = typing.TypedDict('MetricMergeUpToParametersTagged', {
+    "@type": typing.Literal["up_to"],
     "last_column": str,
     "opt_reverse": bool,
 })
 
 
 MetricMergeColumnParameters = typing.TypedDict('MetricMergeColumnParameters', {
-    "@type": typing.Literal["workbench.metric-merge.metric.column"],
+    "@type": typing.NotRequired[typing.Literal["column"]],
+    "column": str,
+    "up_to": typing.NotRequired[MetricMergeUpToParameters | None],
+})
+MetricMergeColumnParametersTagged = typing.TypedDict('MetricMergeColumnParametersTagged', {
+    "@type": typing.Literal["column"],
     "column": str,
     "up_to": typing.NotRequired[MetricMergeUpToParameters | None],
 })
 
 
 MetricMergeMetricParameters = typing.TypedDict('MetricMergeMetricParameters', {
-    "@type": typing.Literal["workbench.metric-merge.metric"],
+    "@type": typing.NotRequired[typing.Literal["metric"]],
+    "metric_in": InputPathType,
+    "column": typing.NotRequired[list[MetricMergeColumnParameters] | None],
+})
+MetricMergeMetricParametersTagged = typing.TypedDict('MetricMergeMetricParametersTagged', {
+    "@type": typing.Literal["metric"],
     "metric_in": InputPathType,
     "column": typing.NotRequired[list[MetricMergeColumnParameters] | None],
 })
 
 
 MetricMergeParameters = typing.TypedDict('MetricMergeParameters', {
-    "@type": typing.Literal["workbench.metric-merge"],
+    "@type": typing.NotRequired[typing.Literal["workbench/metric-merge"]],
+    "metric_out": str,
+    "metric": typing.NotRequired[list[MetricMergeMetricParameters] | None],
+})
+MetricMergeParametersTagged = typing.TypedDict('MetricMergeParametersTagged', {
+    "@type": typing.Literal["workbench/metric-merge"],
     "metric_out": str,
     "metric": typing.NotRequired[list[MetricMergeMetricParameters] | None],
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "workbench.metric-merge": metric_merge_cargs,
-        "workbench.metric-merge.metric": metric_merge_metric_cargs,
-        "workbench.metric-merge.metric.column": metric_merge_column_cargs,
-        "workbench.metric-merge.metric.column.up_to": metric_merge_up_to_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "workbench.metric-merge": metric_merge_outputs,
-    }.get(t)
-
-
 def metric_merge_up_to_params(
     last_column: str,
     opt_reverse: bool = False,
-) -> MetricMergeUpToParameters:
+) -> MetricMergeUpToParametersTagged:
     """
     Build parameters.
     
@@ -90,7 +75,7 @@ def metric_merge_up_to_params(
         Parameter dictionary
     """
     params = {
-        "@type": "workbench.metric-merge.metric.column.up_to",
+        "@type": "up_to",
         "last_column": last_column,
         "opt_reverse": opt_reverse,
     }
@@ -112,8 +97,8 @@ def metric_merge_up_to_cargs(
     """
     cargs = []
     cargs.append("-up-to")
-    cargs.append(params.get("last_column"))
-    if params.get("opt_reverse"):
+    cargs.append(params.get("last_column", None))
+    if params.get("opt_reverse", False):
         cargs.append("-reverse")
     return cargs
 
@@ -121,7 +106,7 @@ def metric_merge_up_to_cargs(
 def metric_merge_column_params(
     column: str,
     up_to: MetricMergeUpToParameters | None = None,
-) -> MetricMergeColumnParameters:
+) -> MetricMergeColumnParametersTagged:
     """
     Build parameters.
     
@@ -132,7 +117,7 @@ def metric_merge_column_params(
         Parameter dictionary
     """
     params = {
-        "@type": "workbench.metric-merge.metric.column",
+        "@type": "column",
         "column": column,
     }
     if up_to is not None:
@@ -155,16 +140,16 @@ def metric_merge_column_cargs(
     """
     cargs = []
     cargs.append("-column")
-    cargs.append(params.get("column"))
-    if params.get("up_to") is not None:
-        cargs.extend(dyn_cargs(params.get("up_to")["@type"])(params.get("up_to"), execution))
+    cargs.append(params.get("column", None))
+    if params.get("up_to", None) is not None:
+        cargs.extend(metric_merge_up_to_cargs(params.get("up_to", None), execution))
     return cargs
 
 
 def metric_merge_metric_params(
     metric_in: InputPathType,
     column: list[MetricMergeColumnParameters] | None = None,
-) -> MetricMergeMetricParameters:
+) -> MetricMergeMetricParametersTagged:
     """
     Build parameters.
     
@@ -175,7 +160,7 @@ def metric_merge_metric_params(
         Parameter dictionary
     """
     params = {
-        "@type": "workbench.metric-merge.metric",
+        "@type": "metric",
         "metric_in": metric_in,
     }
     if column is not None:
@@ -198,15 +183,15 @@ def metric_merge_metric_cargs(
     """
     cargs = []
     cargs.append("-metric")
-    cargs.append(execution.input_file(params.get("metric_in")))
-    if params.get("column") is not None:
-        cargs.extend([a for c in [dyn_cargs(s["@type"])(s, execution) for s in params.get("column")] for a in c])
+    cargs.append(execution.input_file(params.get("metric_in", None)))
+    if params.get("column", None) is not None:
+        cargs.extend([a for c in [metric_merge_column_cargs(s, execution) for s in params.get("column", None)] for a in c])
     return cargs
 
 
 class MetricMergeOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `metric_merge(...)`.
+    Output object returned when calling `MetricMergeParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -217,7 +202,7 @@ class MetricMergeOutputs(typing.NamedTuple):
 def metric_merge_params(
     metric_out: str,
     metric: list[MetricMergeMetricParameters] | None = None,
-) -> MetricMergeParameters:
+) -> MetricMergeParametersTagged:
     """
     Build parameters.
     
@@ -228,7 +213,7 @@ def metric_merge_params(
         Parameter dictionary
     """
     params = {
-        "@type": "workbench.metric-merge",
+        "@type": "workbench/metric-merge",
         "metric_out": metric_out,
     }
     if metric is not None:
@@ -252,9 +237,9 @@ def metric_merge_cargs(
     cargs = []
     cargs.append("wb_command")
     cargs.append("-metric-merge")
-    cargs.append(params.get("metric_out"))
-    if params.get("metric") is not None:
-        cargs.extend([a for c in [dyn_cargs(s["@type"])(s, execution) for s in params.get("metric")] for a in c])
+    cargs.append(params.get("metric_out", None))
+    if params.get("metric", None) is not None:
+        cargs.extend([a for c in [metric_merge_metric_cargs(s, execution) for s in params.get("metric", None)] for a in c])
     return cargs
 
 
@@ -273,7 +258,7 @@ def metric_merge_outputs(
     """
     ret = MetricMergeOutputs(
         root=execution.output_file("."),
-        metric_out=execution.output_file(params.get("metric_out")),
+        metric_out=execution.output_file(params.get("metric_out", None)),
     )
     return ret
 
@@ -356,11 +341,7 @@ def metric_merge(
 
 __all__ = [
     "METRIC_MERGE_METADATA",
-    "MetricMergeColumnParameters",
-    "MetricMergeMetricParameters",
     "MetricMergeOutputs",
-    "MetricMergeParameters",
-    "MetricMergeUpToParameters",
     "metric_merge",
     "metric_merge_column_params",
     "metric_merge_execute",

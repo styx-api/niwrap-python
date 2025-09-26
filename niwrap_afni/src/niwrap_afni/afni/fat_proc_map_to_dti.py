@@ -14,7 +14,22 @@ FAT_PROC_MAP_TO_DTI_METADATA = Metadata(
 
 
 FatProcMapToDtiParameters = typing.TypedDict('FatProcMapToDtiParameters', {
-    "@type": typing.Literal["afni.fat_proc_map_to_dti"],
+    "@type": typing.NotRequired[typing.Literal["afni/fat_proc_map_to_dti"]],
+    "source": InputPathType,
+    "base": InputPathType,
+    "prefix": str,
+    "followers_nn": typing.NotRequired[list[InputPathType] | None],
+    "followers_wsinc5": typing.NotRequired[list[InputPathType] | None],
+    "followers_surf": typing.NotRequired[list[InputPathType] | None],
+    "followers_ndset": typing.NotRequired[list[InputPathType] | None],
+    "followers_spec": typing.NotRequired[list[InputPathType] | None],
+    "matrix": typing.NotRequired[InputPathType | None],
+    "workdir": typing.NotRequired[str | None],
+    "no_cmd_out": bool,
+    "no_clean": bool,
+})
+FatProcMapToDtiParametersTagged = typing.TypedDict('FatProcMapToDtiParametersTagged', {
+    "@type": typing.Literal["afni/fat_proc_map_to_dti"],
     "source": InputPathType,
     "base": InputPathType,
     "prefix": str,
@@ -30,40 +45,9 @@ FatProcMapToDtiParameters = typing.TypedDict('FatProcMapToDtiParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "afni.fat_proc_map_to_dti": fat_proc_map_to_dti_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-    }.get(t)
-
-
 class FatProcMapToDtiOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `fat_proc_map_to_dti(...)`.
+    Output object returned when calling `FatProcMapToDtiParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -82,7 +66,7 @@ def fat_proc_map_to_dti_params(
     workdir: str | None = None,
     no_cmd_out: bool = False,
     no_clean: bool = False,
-) -> FatProcMapToDtiParameters:
+) -> FatProcMapToDtiParametersTagged:
     """
     Build parameters.
     
@@ -103,7 +87,7 @@ def fat_proc_map_to_dti_params(
         Parameter dictionary
     """
     params = {
-        "@type": "afni.fat_proc_map_to_dti",
+        "@type": "afni/fat_proc_map_to_dti",
         "source": source,
         "base": base,
         "prefix": prefix,
@@ -144,54 +128,54 @@ def fat_proc_map_to_dti_cargs(
     cargs.append("fat_proc_map_to_dti")
     cargs.extend([
         "-source",
-        execution.input_file(params.get("source"))
+        execution.input_file(params.get("source", None))
     ])
     cargs.extend([
         "-base",
-        execution.input_file(params.get("base"))
+        execution.input_file(params.get("base", None))
     ])
     cargs.extend([
         "-prefix",
-        params.get("prefix")
+        params.get("prefix", None)
     ])
-    if params.get("followers_nn") is not None:
+    if params.get("followers_nn", None) is not None:
         cargs.extend([
             "-followers_NN",
-            *[execution.input_file(f) for f in params.get("followers_nn")]
+            *[execution.input_file(f) for f in params.get("followers_nn", None)]
         ])
-    if params.get("followers_wsinc5") is not None:
+    if params.get("followers_wsinc5", None) is not None:
         cargs.extend([
             "-followers_wsinc5",
-            *[execution.input_file(f) for f in params.get("followers_wsinc5")]
+            *[execution.input_file(f) for f in params.get("followers_wsinc5", None)]
         ])
-    if params.get("followers_surf") is not None:
+    if params.get("followers_surf", None) is not None:
         cargs.extend([
             "-followers_surf",
-            *[execution.input_file(f) for f in params.get("followers_surf")]
+            *[execution.input_file(f) for f in params.get("followers_surf", None)]
         ])
-    if params.get("followers_ndset") is not None:
+    if params.get("followers_ndset", None) is not None:
         cargs.extend([
             "-followers_ndset",
-            *[execution.input_file(f) for f in params.get("followers_ndset")]
+            *[execution.input_file(f) for f in params.get("followers_ndset", None)]
         ])
-    if params.get("followers_spec") is not None:
+    if params.get("followers_spec", None) is not None:
         cargs.extend([
             "-followers_spec",
-            *[execution.input_file(f) for f in params.get("followers_spec")]
+            *[execution.input_file(f) for f in params.get("followers_spec", None)]
         ])
-    if params.get("matrix") is not None:
+    if params.get("matrix", None) is not None:
         cargs.extend([
             "-matrix",
-            execution.input_file(params.get("matrix"))
+            execution.input_file(params.get("matrix", None))
         ])
-    if params.get("workdir") is not None:
+    if params.get("workdir", None) is not None:
         cargs.extend([
             "-workdir",
-            params.get("workdir")
+            params.get("workdir", None)
         ])
-    if params.get("no_cmd_out"):
+    if params.get("no_cmd_out", False):
         cargs.append("-no_cmd_out")
-    if params.get("no_clean"):
+    if params.get("no_clean", False):
         cargs.append("-no_clean")
     return cargs
 
@@ -306,7 +290,6 @@ def fat_proc_map_to_dti(
 __all__ = [
     "FAT_PROC_MAP_TO_DTI_METADATA",
     "FatProcMapToDtiOutputs",
-    "FatProcMapToDtiParameters",
     "fat_proc_map_to_dti",
     "fat_proc_map_to_dti_execute",
     "fat_proc_map_to_dti_params",

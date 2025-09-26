@@ -14,7 +14,30 @@ GROUPSTATSDIFF_METADATA = Metadata(
 
 
 GroupstatsdiffParameters = typing.TypedDict('GroupstatsdiffParameters', {
-    "@type": typing.Literal["freesurfer.groupstatsdiff"],
+    "@type": typing.NotRequired[typing.Literal["freesurfer/groupstatsdiff"]],
+    "group1_dir": str,
+    "group2_dir": str,
+    "output_dir": str,
+    "no_maps": bool,
+    "osgm": bool,
+    "no_common": bool,
+    "allow_subj_diff": bool,
+    "no_area": bool,
+    "no_volume": bool,
+    "no_ba": bool,
+    "no_aparcstats": bool,
+    "no_asegstats": bool,
+    "no_wparcstats": bool,
+    "no_stats": bool,
+    "no_prune": bool,
+    "fwhm_value": typing.NotRequired[float | None],
+    "subjects_dir1": typing.NotRequired[str | None],
+    "subjects_dir2": typing.NotRequired[str | None],
+    "no_dice": bool,
+    "dice_ctab": typing.NotRequired[str | None],
+})
+GroupstatsdiffParametersTagged = typing.TypedDict('GroupstatsdiffParametersTagged', {
+    "@type": typing.Literal["freesurfer/groupstatsdiff"],
     "group1_dir": str,
     "group2_dir": str,
     "output_dir": str,
@@ -38,40 +61,9 @@ GroupstatsdiffParameters = typing.TypedDict('GroupstatsdiffParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "freesurfer.groupstatsdiff": groupstatsdiff_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-    }.get(t)
-
-
 class GroupstatsdiffOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `groupstatsdiff(...)`.
+    Output object returned when calling `GroupstatsdiffParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -98,7 +90,7 @@ def groupstatsdiff_params(
     subjects_dir2: str | None = None,
     no_dice: bool = False,
     dice_ctab: str | None = None,
-) -> GroupstatsdiffParameters:
+) -> GroupstatsdiffParametersTagged:
     """
     Build parameters.
     
@@ -131,7 +123,7 @@ def groupstatsdiff_params(
         Parameter dictionary
     """
     params = {
-        "@type": "freesurfer.groupstatsdiff",
+        "@type": "freesurfer/groupstatsdiff",
         "group1_dir": group1_dir,
         "group2_dir": group2_dir,
         "output_dir": output_dir,
@@ -177,61 +169,61 @@ def groupstatsdiff_cargs(
     cargs.append("groupstatsdiff")
     cargs.extend([
         "-g1",
-        params.get("group1_dir")
+        params.get("group1_dir", None)
     ])
     cargs.extend([
         "-g2",
-        params.get("group2_dir")
+        params.get("group2_dir", None)
     ])
     cargs.extend([
         "-o",
-        params.get("output_dir")
+        params.get("output_dir", None)
     ])
-    if params.get("no_maps"):
+    if params.get("no_maps", False):
         cargs.append("--no-maps")
-    if params.get("osgm"):
+    if params.get("osgm", False):
         cargs.append("--osgm")
-    if params.get("no_common"):
+    if params.get("no_common", False):
         cargs.append("--no-common")
-    if params.get("allow_subj_diff"):
+    if params.get("allow_subj_diff", False):
         cargs.append("--allow-subj-diff")
-    if params.get("no_area"):
+    if params.get("no_area", False):
         cargs.append("--no-area")
-    if params.get("no_volume"):
+    if params.get("no_volume", False):
         cargs.append("--no-volume")
-    if params.get("no_ba"):
+    if params.get("no_ba", False):
         cargs.append("--no-ba")
-    if params.get("no_aparcstats"):
+    if params.get("no_aparcstats", False):
         cargs.append("--no-aparcstats")
-    if params.get("no_asegstats"):
+    if params.get("no_asegstats", False):
         cargs.append("--no-asegstats")
-    if params.get("no_wparcstats"):
+    if params.get("no_wparcstats", False):
         cargs.append("--no-wparcstats")
-    if params.get("no_stats"):
+    if params.get("no_stats", False):
         cargs.append("--no-stats")
-    if params.get("no_prune"):
+    if params.get("no_prune", False):
         cargs.append("--no-prune")
-    if params.get("fwhm_value") is not None:
+    if params.get("fwhm_value", None) is not None:
         cargs.extend([
             "--fwhm",
-            str(params.get("fwhm_value"))
+            str(params.get("fwhm_value", None))
         ])
-    if params.get("subjects_dir1") is not None:
+    if params.get("subjects_dir1", None) is not None:
         cargs.extend([
             "--sd1",
-            params.get("subjects_dir1")
+            params.get("subjects_dir1", None)
         ])
-    if params.get("subjects_dir2") is not None:
+    if params.get("subjects_dir2", None) is not None:
         cargs.extend([
             "--sd2",
-            params.get("subjects_dir2")
+            params.get("subjects_dir2", None)
         ])
-    if params.get("no_dice"):
+    if params.get("no_dice", False):
         cargs.append("--no-dice")
-    if params.get("dice_ctab") is not None:
+    if params.get("dice_ctab", None) is not None:
         cargs.extend([
             "--dice-ctab",
-            params.get("dice_ctab")
+            params.get("dice_ctab", None)
         ])
     return cargs
 
@@ -374,7 +366,6 @@ def groupstatsdiff(
 __all__ = [
     "GROUPSTATSDIFF_METADATA",
     "GroupstatsdiffOutputs",
-    "GroupstatsdiffParameters",
     "groupstatsdiff",
     "groupstatsdiff_execute",
     "groupstatsdiff_params",

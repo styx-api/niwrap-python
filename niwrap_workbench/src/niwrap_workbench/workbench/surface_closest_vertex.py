@@ -14,47 +14,22 @@ SURFACE_CLOSEST_VERTEX_METADATA = Metadata(
 
 
 SurfaceClosestVertexParameters = typing.TypedDict('SurfaceClosestVertexParameters', {
-    "@type": typing.Literal["workbench.surface-closest-vertex"],
+    "@type": typing.NotRequired[typing.Literal["workbench/surface-closest-vertex"]],
+    "surface": InputPathType,
+    "coord_list_file": str,
+    "vertex_list_out": str,
+})
+SurfaceClosestVertexParametersTagged = typing.TypedDict('SurfaceClosestVertexParametersTagged', {
+    "@type": typing.Literal["workbench/surface-closest-vertex"],
     "surface": InputPathType,
     "coord_list_file": str,
     "vertex_list_out": str,
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "workbench.surface-closest-vertex": surface_closest_vertex_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-    }.get(t)
-
-
 class SurfaceClosestVertexOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `surface_closest_vertex(...)`.
+    Output object returned when calling `SurfaceClosestVertexParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -64,7 +39,7 @@ def surface_closest_vertex_params(
     surface: InputPathType,
     coord_list_file: str,
     vertex_list_out: str,
-) -> SurfaceClosestVertexParameters:
+) -> SurfaceClosestVertexParametersTagged:
     """
     Build parameters.
     
@@ -76,7 +51,7 @@ def surface_closest_vertex_params(
         Parameter dictionary
     """
     params = {
-        "@type": "workbench.surface-closest-vertex",
+        "@type": "workbench/surface-closest-vertex",
         "surface": surface,
         "coord_list_file": coord_list_file,
         "vertex_list_out": vertex_list_out,
@@ -100,9 +75,9 @@ def surface_closest_vertex_cargs(
     cargs = []
     cargs.append("wb_command")
     cargs.append("-surface-closest-vertex")
-    cargs.append(execution.input_file(params.get("surface")))
-    cargs.append(params.get("coord_list_file"))
-    cargs.append(params.get("vertex_list_out"))
+    cargs.append(execution.input_file(params.get("surface", None)))
+    cargs.append(params.get("coord_list_file", None))
+    cargs.append(params.get("vertex_list_out", None))
     return cargs
 
 
@@ -201,7 +176,6 @@ def surface_closest_vertex(
 __all__ = [
     "SURFACE_CLOSEST_VERTEX_METADATA",
     "SurfaceClosestVertexOutputs",
-    "SurfaceClosestVertexParameters",
     "surface_closest_vertex",
     "surface_closest_vertex_execute",
     "surface_closest_vertex_params",

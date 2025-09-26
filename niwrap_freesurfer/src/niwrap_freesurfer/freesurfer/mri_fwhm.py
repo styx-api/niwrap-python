@@ -14,7 +14,45 @@ MRI_FWHM_METADATA = Metadata(
 
 
 MriFwhmParameters = typing.TypedDict('MriFwhmParameters', {
-    "@type": typing.Literal["freesurfer.mri_fwhm"],
+    "@type": typing.NotRequired[typing.Literal["freesurfer/mri_fwhm"]],
+    "inputvol": InputPathType,
+    "outputvol": str,
+    "save_detrended": bool,
+    "save_unmasked": bool,
+    "smooth_only": bool,
+    "mask": typing.NotRequired[InputPathType | None],
+    "mask_thresh": typing.NotRequired[float | None],
+    "auto_mask": typing.NotRequired[float | None],
+    "nerode": typing.NotRequired[float | None],
+    "mask_inv": bool,
+    "out_mask": typing.NotRequired[str | None],
+    "detrend_matrix": typing.NotRequired[InputPathType | None],
+    "detrend_order": typing.NotRequired[float | None],
+    "square_input": bool,
+    "smooth_by_fwhm": typing.NotRequired[float | None],
+    "smooth_by_gstd": typing.NotRequired[float | None],
+    "median_filter": typing.NotRequired[float | None],
+    "smooth_to_fwhm": typing.NotRequired[float | None],
+    "to_fwhm_tol": typing.NotRequired[float | None],
+    "to_fwhm_nmax": typing.NotRequired[float | None],
+    "to_fwhm_file": typing.NotRequired[str | None],
+    "summary_file": typing.NotRequired[str | None],
+    "dat_file": typing.NotRequired[str | None],
+    "fwhm_dat_file": typing.NotRequired[str | None],
+    "fwhm_vol_mean_file": typing.NotRequired[str | None],
+    "fwhm_vol": typing.NotRequired[str | None],
+    "synth": bool,
+    "synth_frames": typing.NotRequired[float | None],
+    "nframes_min": typing.NotRequired[float | None],
+    "ispm": bool,
+    "nspm_zero_padding": typing.NotRequired[float | None],
+    "threads": typing.NotRequired[float | None],
+    "debug": bool,
+    "checkopts": bool,
+    "version": bool,
+})
+MriFwhmParametersTagged = typing.TypedDict('MriFwhmParametersTagged', {
+    "@type": typing.Literal["freesurfer/mri_fwhm"],
     "inputvol": InputPathType,
     "outputvol": str,
     "save_detrended": bool,
@@ -53,41 +91,9 @@ MriFwhmParameters = typing.TypedDict('MriFwhmParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "freesurfer.mri_fwhm": mri_fwhm_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "freesurfer.mri_fwhm": mri_fwhm_outputs,
-    }.get(t)
-
-
 class MriFwhmOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `mri_fwhm(...)`.
+    Output object returned when calling `MriFwhmParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -143,7 +149,7 @@ def mri_fwhm_params(
     debug: bool = False,
     checkopts: bool = False,
     version: bool = False,
-) -> MriFwhmParameters:
+) -> MriFwhmParametersTagged:
     """
     Build parameters.
     
@@ -189,7 +195,7 @@ def mri_fwhm_params(
         Parameter dictionary
     """
     params = {
-        "@type": "freesurfer.mri_fwhm",
+        "@type": "freesurfer/mri_fwhm",
         "inputvol": inputvol,
         "outputvol": outputvol,
         "save_detrended": save_detrended,
@@ -269,146 +275,146 @@ def mri_fwhm_cargs(
     cargs.append("mri_fwhm")
     cargs.extend([
         "--i",
-        execution.input_file(params.get("inputvol"))
+        execution.input_file(params.get("inputvol", None))
     ])
     cargs.extend([
         "--o",
-        params.get("outputvol")
+        params.get("outputvol", None)
     ])
-    if params.get("save_detrended"):
+    if params.get("save_detrended", False):
         cargs.append("--save-detrended")
-    if params.get("save_unmasked"):
+    if params.get("save_unmasked", False):
         cargs.append("--save-unmasked")
-    if params.get("smooth_only"):
+    if params.get("smooth_only", False):
         cargs.append("--smooth-only")
-    if params.get("mask") is not None:
+    if params.get("mask", None) is not None:
         cargs.extend([
             "--mask",
-            execution.input_file(params.get("mask"))
+            execution.input_file(params.get("mask", None))
         ])
-    if params.get("mask_thresh") is not None:
+    if params.get("mask_thresh", None) is not None:
         cargs.extend([
             "--mask-thresh",
-            str(params.get("mask_thresh"))
+            str(params.get("mask_thresh", None))
         ])
-    if params.get("auto_mask") is not None:
+    if params.get("auto_mask", None) is not None:
         cargs.extend([
             "--auto-mask",
-            str(params.get("auto_mask"))
+            str(params.get("auto_mask", None))
         ])
-    if params.get("nerode") is not None:
+    if params.get("nerode", None) is not None:
         cargs.extend([
             "--nerode",
-            str(params.get("nerode"))
+            str(params.get("nerode", None))
         ])
-    if params.get("mask_inv"):
+    if params.get("mask_inv", False):
         cargs.append("--mask-inv")
-    if params.get("out_mask") is not None:
+    if params.get("out_mask", None) is not None:
         cargs.extend([
             "--out-mask",
-            params.get("out_mask")
+            params.get("out_mask", None)
         ])
-    if params.get("detrend_matrix") is not None:
+    if params.get("detrend_matrix", None) is not None:
         cargs.extend([
             "--X",
-            execution.input_file(params.get("detrend_matrix"))
+            execution.input_file(params.get("detrend_matrix", None))
         ])
-    if params.get("detrend_order") is not None:
+    if params.get("detrend_order", None) is not None:
         cargs.extend([
             "--detrend",
-            str(params.get("detrend_order"))
+            str(params.get("detrend_order", None))
         ])
-    if params.get("square_input"):
+    if params.get("square_input", False):
         cargs.append("--sqr")
-    if params.get("smooth_by_fwhm") is not None:
+    if params.get("smooth_by_fwhm", None) is not None:
         cargs.extend([
             "--fwhm",
-            str(params.get("smooth_by_fwhm"))
+            str(params.get("smooth_by_fwhm", None))
         ])
-    if params.get("smooth_by_gstd") is not None:
+    if params.get("smooth_by_gstd", None) is not None:
         cargs.extend([
             "--gstd",
-            str(params.get("smooth_by_gstd"))
+            str(params.get("smooth_by_gstd", None))
         ])
-    if params.get("median_filter") is not None:
+    if params.get("median_filter", None) is not None:
         cargs.extend([
             "--median",
-            str(params.get("median_filter"))
+            str(params.get("median_filter", None))
         ])
-    if params.get("smooth_to_fwhm") is not None:
+    if params.get("smooth_to_fwhm", None) is not None:
         cargs.extend([
             "--to-fwhm",
-            str(params.get("smooth_to_fwhm"))
+            str(params.get("smooth_to_fwhm", None))
         ])
-    if params.get("to_fwhm_tol") is not None:
+    if params.get("to_fwhm_tol", None) is not None:
         cargs.extend([
             "--to-fwhm-tol",
-            str(params.get("to_fwhm_tol"))
+            str(params.get("to_fwhm_tol", None))
         ])
-    if params.get("to_fwhm_nmax") is not None:
+    if params.get("to_fwhm_nmax", None) is not None:
         cargs.extend([
             "--to-fwhm-nmax",
-            str(params.get("to_fwhm_nmax"))
+            str(params.get("to_fwhm_nmax", None))
         ])
-    if params.get("to_fwhm_file") is not None:
+    if params.get("to_fwhm_file", None) is not None:
         cargs.extend([
             "--to-fwhm-file",
-            params.get("to_fwhm_file")
+            params.get("to_fwhm_file", None)
         ])
-    if params.get("summary_file") is not None:
+    if params.get("summary_file", None) is not None:
         cargs.extend([
             "--sum",
-            params.get("summary_file")
+            params.get("summary_file", None)
         ])
-    if params.get("dat_file") is not None:
+    if params.get("dat_file", None) is not None:
         cargs.extend([
             "--dat",
-            params.get("dat_file")
+            params.get("dat_file", None)
         ])
-    if params.get("fwhm_dat_file") is not None:
+    if params.get("fwhm_dat_file", None) is not None:
         cargs.extend([
             "--fwhmdat",
-            params.get("fwhm_dat_file")
+            params.get("fwhm_dat_file", None)
         ])
-    if params.get("fwhm_vol_mean_file") is not None:
+    if params.get("fwhm_vol_mean_file", None) is not None:
         cargs.extend([
             "--fwhmvolmn",
-            params.get("fwhm_vol_mean_file")
+            params.get("fwhm_vol_mean_file", None)
         ])
-    if params.get("fwhm_vol") is not None:
+    if params.get("fwhm_vol", None) is not None:
         cargs.extend([
             "--fwhmvol",
-            params.get("fwhm_vol")
+            params.get("fwhm_vol", None)
         ])
-    if params.get("synth"):
+    if params.get("synth", False):
         cargs.append("--synth")
-    if params.get("synth_frames") is not None:
+    if params.get("synth_frames", None) is not None:
         cargs.extend([
             "--synth-frames",
-            str(params.get("synth_frames"))
+            str(params.get("synth_frames", None))
         ])
-    if params.get("nframes_min") is not None:
+    if params.get("nframes_min", None) is not None:
         cargs.extend([
             "--nframesmin",
-            str(params.get("nframes_min"))
+            str(params.get("nframes_min", None))
         ])
-    if params.get("ispm"):
+    if params.get("ispm", False):
         cargs.append("--ispm")
-    if params.get("nspm_zero_padding") is not None:
+    if params.get("nspm_zero_padding", None) is not None:
         cargs.extend([
             "--in_nspmzeropad",
-            str(params.get("nspm_zero_padding"))
+            str(params.get("nspm_zero_padding", None))
         ])
-    if params.get("threads") is not None:
+    if params.get("threads", None) is not None:
         cargs.extend([
             "--nthreads",
-            str(params.get("threads"))
+            str(params.get("threads", None))
         ])
-    if params.get("debug"):
+    if params.get("debug", False):
         cargs.append("--debug")
-    if params.get("checkopts"):
+    if params.get("checkopts", False):
         cargs.append("--checkopts")
-    if params.get("version"):
+    if params.get("version", False):
         cargs.append("--version")
     return cargs
 
@@ -428,13 +434,13 @@ def mri_fwhm_outputs(
     """
     ret = MriFwhmOutputs(
         root=execution.output_file("."),
-        output_volume_file=execution.output_file(params.get("outputvol")),
-        final_mask_output_file=execution.output_file(params.get("out_mask")) if (params.get("out_mask") is not None) else None,
-        summary_log_file=execution.output_file(params.get("summary_file")) if (params.get("summary_file") is not None) else None,
-        final_fwhm_estimate_file=execution.output_file(params.get("dat_file")) if (params.get("dat_file") is not None) else None,
-        fwhm_of_each_dimension_file=execution.output_file(params.get("fwhm_dat_file")) if (params.get("fwhm_dat_file") is not None) else None,
-        mean_fwhm_volume_file=execution.output_file(params.get("fwhm_vol_mean_file")) if (params.get("fwhm_vol_mean_file") is not None) else None,
-        fwhm_volume_file=execution.output_file(params.get("fwhm_vol")) if (params.get("fwhm_vol") is not None) else None,
+        output_volume_file=execution.output_file(params.get("outputvol", None)),
+        final_mask_output_file=execution.output_file(params.get("out_mask", None)) if (params.get("out_mask") is not None) else None,
+        summary_log_file=execution.output_file(params.get("summary_file", None)) if (params.get("summary_file") is not None) else None,
+        final_fwhm_estimate_file=execution.output_file(params.get("dat_file", None)) if (params.get("dat_file") is not None) else None,
+        fwhm_of_each_dimension_file=execution.output_file(params.get("fwhm_dat_file", None)) if (params.get("fwhm_dat_file") is not None) else None,
+        mean_fwhm_volume_file=execution.output_file(params.get("fwhm_vol_mean_file", None)) if (params.get("fwhm_vol_mean_file") is not None) else None,
+        fwhm_volume_file=execution.output_file(params.get("fwhm_vol", None)) if (params.get("fwhm_vol") is not None) else None,
     )
     return ret
 
@@ -601,7 +607,6 @@ def mri_fwhm(
 __all__ = [
     "MRI_FWHM_METADATA",
     "MriFwhmOutputs",
-    "MriFwhmParameters",
     "mri_fwhm",
     "mri_fwhm_execute",
     "mri_fwhm_params",

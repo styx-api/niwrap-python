@@ -14,45 +14,18 @@ CHECK_MCR_SH_METADATA = Metadata(
 
 
 CheckMcrShParameters = typing.TypedDict('CheckMcrShParameters', {
-    "@type": typing.Literal["freesurfer.checkMCR.sh"],
+    "@type": typing.NotRequired[typing.Literal["freesurfer/checkMCR.sh"]],
+    "help": bool,
+})
+CheckMcrShParametersTagged = typing.TypedDict('CheckMcrShParametersTagged', {
+    "@type": typing.Literal["freesurfer/checkMCR.sh"],
     "help": bool,
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "freesurfer.checkMCR.sh": check_mcr_sh_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-    }.get(t)
-
-
 class CheckMcrShOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `check_mcr_sh(...)`.
+    Output object returned when calling `CheckMcrShParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -60,7 +33,7 @@ class CheckMcrShOutputs(typing.NamedTuple):
 
 def check_mcr_sh_params(
     help_: bool = False,
-) -> CheckMcrShParameters:
+) -> CheckMcrShParametersTagged:
     """
     Build parameters.
     
@@ -70,7 +43,7 @@ def check_mcr_sh_params(
         Parameter dictionary
     """
     params = {
-        "@type": "freesurfer.checkMCR.sh",
+        "@type": "freesurfer/checkMCR.sh",
         "help": help_,
     }
     return params
@@ -91,7 +64,7 @@ def check_mcr_sh_cargs(
     """
     cargs = []
     cargs.append("checkMCR.sh")
-    if params.get("help"):
+    if params.get("help", False):
         cargs.append("--help")
     return cargs
 
@@ -173,7 +146,6 @@ def check_mcr_sh(
 __all__ = [
     "CHECK_MCR_SH_METADATA",
     "CheckMcrShOutputs",
-    "CheckMcrShParameters",
     "check_mcr_sh",
     "check_mcr_sh_execute",
     "check_mcr_sh_params",

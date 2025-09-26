@@ -14,7 +14,14 @@ MRI_COPY_PARAMS_METADATA = Metadata(
 
 
 MriCopyParamsParameters = typing.TypedDict('MriCopyParamsParameters', {
-    "@type": typing.Literal["freesurfer.mri_copy_params"],
+    "@type": typing.NotRequired[typing.Literal["freesurfer/mri_copy_params"]],
+    "in_vol": InputPathType,
+    "template_vol": InputPathType,
+    "out_vol": str,
+    "size_flag": bool,
+})
+MriCopyParamsParametersTagged = typing.TypedDict('MriCopyParamsParametersTagged', {
+    "@type": typing.Literal["freesurfer/mri_copy_params"],
     "in_vol": InputPathType,
     "template_vol": InputPathType,
     "out_vol": str,
@@ -22,41 +29,9 @@ MriCopyParamsParameters = typing.TypedDict('MriCopyParamsParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "freesurfer.mri_copy_params": mri_copy_params_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "freesurfer.mri_copy_params": mri_copy_params_outputs,
-    }.get(t)
-
-
 class MriCopyParamsOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `mri_copy_params(...)`.
+    Output object returned when calling `MriCopyParamsParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -69,7 +44,7 @@ def mri_copy_params_params(
     template_vol: InputPathType,
     out_vol: str,
     size_flag: bool = False,
-) -> MriCopyParamsParameters:
+) -> MriCopyParamsParametersTagged:
     """
     Build parameters.
     
@@ -82,7 +57,7 @@ def mri_copy_params_params(
         Parameter dictionary
     """
     params = {
-        "@type": "freesurfer.mri_copy_params",
+        "@type": "freesurfer/mri_copy_params",
         "in_vol": in_vol,
         "template_vol": template_vol,
         "out_vol": out_vol,
@@ -106,10 +81,10 @@ def mri_copy_params_cargs(
     """
     cargs = []
     cargs.append("mri_copy_params")
-    cargs.append(execution.input_file(params.get("in_vol")))
-    cargs.append(execution.input_file(params.get("template_vol")))
-    cargs.append(params.get("out_vol"))
-    if params.get("size_flag"):
+    cargs.append(execution.input_file(params.get("in_vol", None)))
+    cargs.append(execution.input_file(params.get("template_vol", None)))
+    cargs.append(params.get("out_vol", None))
+    if params.get("size_flag", False):
         cargs.append("--size")
     return cargs
 
@@ -129,7 +104,7 @@ def mri_copy_params_outputs(
     """
     ret = MriCopyParamsOutputs(
         root=execution.output_file("."),
-        output_volume=execution.output_file(params.get("out_vol")),
+        output_volume=execution.output_file(params.get("out_vol", None)),
     )
     return ret
 
@@ -201,7 +176,6 @@ def mri_copy_params(
 __all__ = [
     "MRI_COPY_PARAMS_METADATA",
     "MriCopyParamsOutputs",
-    "MriCopyParamsParameters",
     "mri_copy_params",
     "mri_copy_params_execute",
     "mri_copy_params_params",

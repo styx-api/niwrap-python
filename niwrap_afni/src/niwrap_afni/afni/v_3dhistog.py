@@ -14,7 +14,28 @@ V_3DHISTOG_METADATA = Metadata(
 
 
 V3dhistogParameters = typing.TypedDict('V3dhistogParameters', {
-    "@type": typing.Literal["afni.3dhistog"],
+    "@type": typing.NotRequired[typing.Literal["afni/3dhistog"]],
+    "dataset": InputPathType,
+    "nbin": typing.NotRequired[float | None],
+    "dind": typing.NotRequired[float | None],
+    "omit": typing.NotRequired[list[float] | None],
+    "mask": typing.NotRequired[InputPathType | None],
+    "roi_mask": typing.NotRequired[InputPathType | None],
+    "doall": bool,
+    "noempty": bool,
+    "notitle": bool,
+    "log10": bool,
+    "pdf": bool,
+    "min": typing.NotRequired[float | None],
+    "max": typing.NotRequired[float | None],
+    "igfac": bool,
+    "int": bool,
+    "float": bool,
+    "unq": typing.NotRequired[str | None],
+    "prefix": typing.NotRequired[str | None],
+})
+V3dhistogParametersTagged = typing.TypedDict('V3dhistogParametersTagged', {
+    "@type": typing.Literal["afni/3dhistog"],
     "dataset": InputPathType,
     "nbin": typing.NotRequired[float | None],
     "dind": typing.NotRequired[float | None],
@@ -36,41 +57,9 @@ V3dhistogParameters = typing.TypedDict('V3dhistogParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "afni.3dhistog": v_3dhistog_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "afni.3dhistog": v_3dhistog_outputs,
-    }.get(t)
-
-
 class V3dhistogOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `v_3dhistog(...)`.
+    Output object returned when calling `V3dhistogParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -97,7 +86,7 @@ def v_3dhistog_params(
     float_: bool = False,
     unq: str | None = None,
     prefix: str | None = None,
-) -> V3dhistogParameters:
+) -> V3dhistogParametersTagged:
     """
     Build parameters.
     
@@ -124,7 +113,7 @@ def v_3dhistog_params(
         Parameter dictionary
     """
     params = {
-        "@type": "afni.3dhistog",
+        "@type": "afni/3dhistog",
         "dataset": dataset,
         "doall": doall,
         "noempty": noempty,
@@ -171,67 +160,67 @@ def v_3dhistog_cargs(
     """
     cargs = []
     cargs.append("3dhistog")
-    cargs.append(execution.input_file(params.get("dataset")))
-    if params.get("nbin") is not None:
+    cargs.append(execution.input_file(params.get("dataset", None)))
+    if params.get("nbin", None) is not None:
         cargs.extend([
             "-nbin",
-            str(params.get("nbin"))
+            str(params.get("nbin", None))
         ])
-    if params.get("dind") is not None:
+    if params.get("dind", None) is not None:
         cargs.extend([
             "-dind",
-            str(params.get("dind"))
+            str(params.get("dind", None))
         ])
-    if params.get("omit") is not None:
+    if params.get("omit", None) is not None:
         cargs.extend([
             "-omit",
-            *map(str, params.get("omit"))
+            *map(str, params.get("omit", None))
         ])
-    if params.get("mask") is not None:
+    if params.get("mask", None) is not None:
         cargs.extend([
             "-mask",
-            execution.input_file(params.get("mask"))
+            execution.input_file(params.get("mask", None))
         ])
-    if params.get("roi_mask") is not None:
+    if params.get("roi_mask", None) is not None:
         cargs.extend([
             "-roi_mask",
-            execution.input_file(params.get("roi_mask"))
+            execution.input_file(params.get("roi_mask", None))
         ])
-    if params.get("doall"):
+    if params.get("doall", False):
         cargs.append("-doall")
-    if params.get("noempty"):
+    if params.get("noempty", False):
         cargs.append("-noempty")
-    if params.get("notitle"):
+    if params.get("notitle", False):
         cargs.append("-notitle")
-    if params.get("log10"):
+    if params.get("log10", False):
         cargs.append("-log10")
-    if params.get("pdf"):
+    if params.get("pdf", False):
         cargs.append("-pdf")
-    if params.get("min") is not None:
+    if params.get("min", None) is not None:
         cargs.extend([
             "-min",
-            str(params.get("min"))
+            str(params.get("min", None))
         ])
-    if params.get("max") is not None:
+    if params.get("max", None) is not None:
         cargs.extend([
             "-max",
-            str(params.get("max"))
+            str(params.get("max", None))
         ])
-    if params.get("igfac"):
+    if params.get("igfac", False):
         cargs.append("-igfac")
-    if params.get("int"):
+    if params.get("int", False):
         cargs.append("-int")
-    if params.get("float"):
+    if params.get("float", False):
         cargs.append("-float")
-    if params.get("unq") is not None:
+    if params.get("unq", None) is not None:
         cargs.extend([
             "-unq",
-            params.get("unq")
+            params.get("unq", None)
         ])
-    if params.get("prefix") is not None:
+    if params.get("prefix", None) is not None:
         cargs.extend([
             "-prefix",
-            params.get("prefix")
+            params.get("prefix", None)
         ])
     return cargs
 
@@ -362,7 +351,6 @@ def v_3dhistog(
 
 __all__ = [
     "V3dhistogOutputs",
-    "V3dhistogParameters",
     "V_3DHISTOG_METADATA",
     "v_3dhistog",
     "v_3dhistog_execute",

@@ -14,7 +14,29 @@ MRI_CONVERT_METADATA = Metadata(
 
 
 MriConvertParameters = typing.TypedDict('MriConvertParameters', {
-    "@type": typing.Literal["freesurfer.mri_convert"],
+    "@type": typing.NotRequired[typing.Literal["freesurfer/mri_convert"]],
+    "inp_volume": InputPathType,
+    "out_volume": str,
+    "read_only": bool,
+    "no_write": bool,
+    "in_info": bool,
+    "out_info": bool,
+    "in_stats": bool,
+    "out_stats": bool,
+    "upsample": typing.NotRequired[float | None],
+    "force_ras_good": bool,
+    "apply_transform": typing.NotRequired[InputPathType | None],
+    "apply_inverse_transform": typing.NotRequired[InputPathType | None],
+    "in_type": typing.NotRequired[str | None],
+    "out_type": typing.NotRequired[str | None],
+    "in_orientation": typing.NotRequired[str | None],
+    "out_orientation": typing.NotRequired[str | None],
+    "scale_factor": typing.NotRequired[float | None],
+    "bfile_little_endian": bool,
+    "sphinx": bool,
+})
+MriConvertParametersTagged = typing.TypedDict('MriConvertParametersTagged', {
+    "@type": typing.Literal["freesurfer/mri_convert"],
     "inp_volume": InputPathType,
     "out_volume": str,
     "read_only": bool,
@@ -37,41 +59,9 @@ MriConvertParameters = typing.TypedDict('MriConvertParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "freesurfer.mri_convert": mri_convert_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "freesurfer.mri_convert": mri_convert_outputs,
-    }.get(t)
-
-
 class MriConvertOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `mri_convert(...)`.
+    Output object returned when calling `MriConvertParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -99,7 +89,7 @@ def mri_convert_params(
     scale_factor: float | None = None,
     bfile_little_endian: bool = False,
     sphinx: bool = False,
-) -> MriConvertParameters:
+) -> MriConvertParametersTagged:
     """
     Build parameters.
     
@@ -128,7 +118,7 @@ def mri_convert_params(
         Parameter dictionary
     """
     params = {
-        "@type": "freesurfer.mri_convert",
+        "@type": "freesurfer/mri_convert",
         "inp_volume": inp_volume,
         "out_volume": out_volume,
         "read_only": read_only,
@@ -175,65 +165,65 @@ def mri_convert_cargs(
     """
     cargs = []
     cargs.append("mri_convert")
-    cargs.append(execution.input_file(params.get("inp_volume")))
-    cargs.append(params.get("out_volume"))
-    if params.get("read_only"):
+    cargs.append(execution.input_file(params.get("inp_volume", None)))
+    cargs.append(params.get("out_volume", None))
+    if params.get("read_only", False):
         cargs.append("-ro")
-    if params.get("no_write"):
+    if params.get("no_write", False):
         cargs.append("-nw")
-    if params.get("in_info"):
+    if params.get("in_info", False):
         cargs.append("-ii")
-    if params.get("out_info"):
+    if params.get("out_info", False):
         cargs.append("-oi")
-    if params.get("in_stats"):
+    if params.get("in_stats", False):
         cargs.append("-is")
-    if params.get("out_stats"):
+    if params.get("out_stats", False):
         cargs.append("-os")
-    if params.get("upsample") is not None:
+    if params.get("upsample", None) is not None:
         cargs.extend([
             "--upsample",
-            str(params.get("upsample"))
+            str(params.get("upsample", None))
         ])
-    if params.get("force_ras_good"):
+    if params.get("force_ras_good", False):
         cargs.append("--force_ras_good")
-    if params.get("apply_transform") is not None:
+    if params.get("apply_transform", None) is not None:
         cargs.extend([
             "--apply_transform",
-            execution.input_file(params.get("apply_transform"))
+            execution.input_file(params.get("apply_transform", None))
         ])
-    if params.get("apply_inverse_transform") is not None:
+    if params.get("apply_inverse_transform", None) is not None:
         cargs.extend([
             "--apply_inverse_transform",
-            execution.input_file(params.get("apply_inverse_transform"))
+            execution.input_file(params.get("apply_inverse_transform", None))
         ])
-    if params.get("in_type") is not None:
+    if params.get("in_type", None) is not None:
         cargs.extend([
             "--in_type",
-            params.get("in_type")
+            params.get("in_type", None)
         ])
-    if params.get("out_type") is not None:
+    if params.get("out_type", None) is not None:
         cargs.extend([
             "--out_type",
-            params.get("out_type")
+            params.get("out_type", None)
         ])
-    if params.get("in_orientation") is not None:
+    if params.get("in_orientation", None) is not None:
         cargs.extend([
             "--in_orientation",
-            params.get("in_orientation")
+            params.get("in_orientation", None)
         ])
-    if params.get("out_orientation") is not None:
+    if params.get("out_orientation", None) is not None:
         cargs.extend([
             "--out_orientation",
-            params.get("out_orientation")
+            params.get("out_orientation", None)
         ])
-    if params.get("scale_factor") is not None:
+    if params.get("scale_factor", None) is not None:
         cargs.extend([
             "--scale",
-            str(params.get("scale_factor"))
+            str(params.get("scale_factor", None))
         ])
-    if params.get("bfile_little_endian"):
+    if params.get("bfile_little_endian", False):
         cargs.append("--bfile-little-endian")
-    if params.get("sphinx"):
+    if params.get("sphinx", False):
         cargs.append("--sphinx")
     return cargs
 
@@ -253,7 +243,7 @@ def mri_convert_outputs(
     """
     ret = MriConvertOutputs(
         root=execution.output_file("."),
-        converted_volume=execution.output_file(params.get("out_volume")),
+        converted_volume=execution.output_file(params.get("out_volume", None)),
     )
     return ret
 
@@ -371,7 +361,6 @@ def mri_convert(
 __all__ = [
     "MRI_CONVERT_METADATA",
     "MriConvertOutputs",
-    "MriConvertParameters",
     "mri_convert",
     "mri_convert_execute",
     "mri_convert_params",

@@ -14,7 +14,16 @@ FLIP_4DFP_METADATA = Metadata(
 
 
 Flip4dfpParameters = typing.TypedDict('Flip4dfpParameters', {
-    "@type": typing.Literal["freesurfer.flip_4dfp"],
+    "@type": typing.NotRequired[typing.Literal["freesurfer/flip_4dfp"]],
+    "input_image": InputPathType,
+    "output_image": typing.NotRequired[str | None],
+    "flip_x": bool,
+    "flip_y": bool,
+    "flip_z": bool,
+    "endianness": typing.NotRequired[typing.Literal["b", "l"] | None],
+})
+Flip4dfpParametersTagged = typing.TypedDict('Flip4dfpParametersTagged', {
+    "@type": typing.Literal["freesurfer/flip_4dfp"],
     "input_image": InputPathType,
     "output_image": typing.NotRequired[str | None],
     "flip_x": bool,
@@ -24,41 +33,9 @@ Flip4dfpParameters = typing.TypedDict('Flip4dfpParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "freesurfer.flip_4dfp": flip_4dfp_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "freesurfer.flip_4dfp": flip_4dfp_outputs,
-    }.get(t)
-
-
 class Flip4dfpOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `flip_4dfp(...)`.
+    Output object returned when calling `Flip4dfpParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -73,7 +50,7 @@ def flip_4dfp_params(
     flip_y: bool = False,
     flip_z: bool = False,
     endianness: typing.Literal["b", "l"] | None = None,
-) -> Flip4dfpParameters:
+) -> Flip4dfpParametersTagged:
     """
     Build parameters.
     
@@ -90,7 +67,7 @@ def flip_4dfp_params(
         Parameter dictionary
     """
     params = {
-        "@type": "freesurfer.flip_4dfp",
+        "@type": "freesurfer/flip_4dfp",
         "input_image": input_image,
         "flip_x": flip_x,
         "flip_y": flip_y,
@@ -118,19 +95,19 @@ def flip_4dfp_cargs(
     """
     cargs = []
     cargs.append("flip_4dfp")
-    cargs.append(execution.input_file(params.get("input_image")))
-    if params.get("output_image") is not None:
-        cargs.append(params.get("output_image"))
-    if params.get("flip_x"):
+    cargs.append(execution.input_file(params.get("input_image", None)))
+    if params.get("output_image", None) is not None:
+        cargs.append(params.get("output_image", None))
+    if params.get("flip_x", False):
         cargs.append("-x")
-    if params.get("flip_y"):
+    if params.get("flip_y", False):
         cargs.append("-y")
-    if params.get("flip_z"):
+    if params.get("flip_z", False):
         cargs.append("-z")
-    if params.get("endianness") is not None:
+    if params.get("endianness", None) is not None:
         cargs.extend([
             "-@",
-            params.get("endianness")
+            params.get("endianness", None)
         ])
     return cargs
 
@@ -150,7 +127,7 @@ def flip_4dfp_outputs(
     """
     ret = Flip4dfpOutputs(
         root=execution.output_file("."),
-        flipped_image=execution.output_file(params.get("output_image") + ".4dfp.img") if (params.get("output_image") is not None) else None,
+        flipped_image=execution.output_file(params.get("output_image", None) + ".4dfp.img") if (params.get("output_image") is not None) else None,
     )
     return ret
 
@@ -228,7 +205,6 @@ def flip_4dfp(
 __all__ = [
     "FLIP_4DFP_METADATA",
     "Flip4dfpOutputs",
-    "Flip4dfpParameters",
     "flip_4dfp",
     "flip_4dfp_execute",
     "flip_4dfp_params",

@@ -14,14 +14,39 @@ MRMETRIC_METADATA = Metadata(
 
 
 MrmetricConfigParameters = typing.TypedDict('MrmetricConfigParameters', {
-    "@type": typing.Literal["mrtrix.mrmetric.config"],
+    "@type": typing.NotRequired[typing.Literal["config"]],
+    "key": str,
+    "value": str,
+})
+MrmetricConfigParametersTagged = typing.TypedDict('MrmetricConfigParametersTagged', {
+    "@type": typing.Literal["config"],
     "key": str,
     "value": str,
 })
 
 
 MrmetricParameters = typing.TypedDict('MrmetricParameters', {
-    "@type": typing.Literal["mrtrix.mrmetric"],
+    "@type": typing.NotRequired[typing.Literal["mrtrix/mrmetric"]],
+    "space": typing.NotRequired[str | None],
+    "interp": typing.NotRequired[str | None],
+    "metric": typing.NotRequired[str | None],
+    "mask1": typing.NotRequired[InputPathType | None],
+    "mask2": typing.NotRequired[InputPathType | None],
+    "nonormalisation": bool,
+    "overlap": bool,
+    "info": bool,
+    "quiet": bool,
+    "debug": bool,
+    "force": bool,
+    "nthreads": typing.NotRequired[int | None],
+    "config": typing.NotRequired[list[MrmetricConfigParameters] | None],
+    "help": bool,
+    "version": bool,
+    "image1": InputPathType,
+    "image2": InputPathType,
+})
+MrmetricParametersTagged = typing.TypedDict('MrmetricParametersTagged', {
+    "@type": typing.Literal["mrtrix/mrmetric"],
     "space": typing.NotRequired[str | None],
     "interp": typing.NotRequired[str | None],
     "metric": typing.NotRequired[str | None],
@@ -42,42 +67,10 @@ MrmetricParameters = typing.TypedDict('MrmetricParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "mrtrix.mrmetric": mrmetric_cargs,
-        "mrtrix.mrmetric.config": mrmetric_config_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-    }.get(t)
-
-
 def mrmetric_config_params(
     key: str,
     value: str,
-) -> MrmetricConfigParameters:
+) -> MrmetricConfigParametersTagged:
     """
     Build parameters.
     
@@ -88,7 +81,7 @@ def mrmetric_config_params(
         Parameter dictionary
     """
     params = {
-        "@type": "mrtrix.mrmetric.config",
+        "@type": "config",
         "key": key,
         "value": value,
     }
@@ -110,14 +103,14 @@ def mrmetric_config_cargs(
     """
     cargs = []
     cargs.append("-config")
-    cargs.append(params.get("key"))
-    cargs.append(params.get("value"))
+    cargs.append(params.get("key", None))
+    cargs.append(params.get("value", None))
     return cargs
 
 
 class MrmetricOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `mrmetric(...)`.
+    Output object returned when calling `MrmetricParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -141,7 +134,7 @@ def mrmetric_params(
     config: list[MrmetricConfigParameters] | None = None,
     help_: bool = False,
     version: bool = False,
-) -> MrmetricParameters:
+) -> MrmetricParametersTagged:
     """
     Build parameters.
     
@@ -178,7 +171,7 @@ def mrmetric_params(
         Parameter dictionary
     """
     params = {
-        "@type": "mrtrix.mrmetric",
+        "@type": "mrtrix/mrmetric",
         "nonormalisation": nonormalisation,
         "overlap": overlap,
         "info": info,
@@ -222,56 +215,56 @@ def mrmetric_cargs(
     """
     cargs = []
     cargs.append("mrmetric")
-    if params.get("space") is not None:
+    if params.get("space", None) is not None:
         cargs.extend([
             "-space",
-            params.get("space")
+            params.get("space", None)
         ])
-    if params.get("interp") is not None:
+    if params.get("interp", None) is not None:
         cargs.extend([
             "-interp",
-            params.get("interp")
+            params.get("interp", None)
         ])
-    if params.get("metric") is not None:
+    if params.get("metric", None) is not None:
         cargs.extend([
             "-metric",
-            params.get("metric")
+            params.get("metric", None)
         ])
-    if params.get("mask1") is not None:
+    if params.get("mask1", None) is not None:
         cargs.extend([
             "-mask1",
-            execution.input_file(params.get("mask1"))
+            execution.input_file(params.get("mask1", None))
         ])
-    if params.get("mask2") is not None:
+    if params.get("mask2", None) is not None:
         cargs.extend([
             "-mask2",
-            execution.input_file(params.get("mask2"))
+            execution.input_file(params.get("mask2", None))
         ])
-    if params.get("nonormalisation"):
+    if params.get("nonormalisation", False):
         cargs.append("-nonormalisation")
-    if params.get("overlap"):
+    if params.get("overlap", False):
         cargs.append("-overlap")
-    if params.get("info"):
+    if params.get("info", False):
         cargs.append("-info")
-    if params.get("quiet"):
+    if params.get("quiet", False):
         cargs.append("-quiet")
-    if params.get("debug"):
+    if params.get("debug", False):
         cargs.append("-debug")
-    if params.get("force"):
+    if params.get("force", False):
         cargs.append("-force")
-    if params.get("nthreads") is not None:
+    if params.get("nthreads", None) is not None:
         cargs.extend([
             "-nthreads",
-            str(params.get("nthreads"))
+            str(params.get("nthreads", None))
         ])
-    if params.get("config") is not None:
-        cargs.extend([a for c in [dyn_cargs(s["@type"])(s, execution) for s in params.get("config")] for a in c])
-    if params.get("help"):
+    if params.get("config", None) is not None:
+        cargs.extend([a for c in [mrmetric_config_cargs(s, execution) for s in params.get("config", None)] for a in c])
+    if params.get("help", False):
         cargs.append("-help")
-    if params.get("version"):
+    if params.get("version", False):
         cargs.append("-version")
-    cargs.append(execution.input_file(params.get("image1")))
-    cargs.append(execution.input_file(params.get("image2")))
+    cargs.append(execution.input_file(params.get("image1", None)))
+    cargs.append(execution.input_file(params.get("image2", None)))
     return cargs
 
 
@@ -420,9 +413,7 @@ def mrmetric(
 
 __all__ = [
     "MRMETRIC_METADATA",
-    "MrmetricConfigParameters",
     "MrmetricOutputs",
-    "MrmetricParameters",
     "mrmetric",
     "mrmetric_config_params",
     "mrmetric_execute",

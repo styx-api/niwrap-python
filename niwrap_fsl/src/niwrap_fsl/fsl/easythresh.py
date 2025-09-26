@@ -14,7 +14,17 @@ EASYTHRESH_METADATA = Metadata(
 
 
 EasythreshParameters = typing.TypedDict('EasythreshParameters', {
-    "@type": typing.Literal["fsl.easythresh"],
+    "@type": typing.NotRequired[typing.Literal["fsl/easythresh"]],
+    "raw_zstat_input": InputPathType,
+    "brain_mask_input": InputPathType,
+    "cluster_z_thresh_input": float,
+    "cluster_prob_thresh_input": float,
+    "background_image_input": InputPathType,
+    "output_root": str,
+    "mm_flag": bool,
+})
+EasythreshParametersTagged = typing.TypedDict('EasythreshParametersTagged', {
+    "@type": typing.Literal["fsl/easythresh"],
     "raw_zstat_input": InputPathType,
     "brain_mask_input": InputPathType,
     "cluster_z_thresh_input": float,
@@ -25,41 +35,9 @@ EasythreshParameters = typing.TypedDict('EasythreshParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "fsl.easythresh": easythresh_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "fsl.easythresh": easythresh_outputs,
-    }.get(t)
-
-
 class EasythreshOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `easythresh(...)`.
+    Output object returned when calling `EasythreshParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -75,7 +53,7 @@ def easythresh_params(
     background_image_input: InputPathType,
     output_root: str,
     mm_flag: bool = False,
-) -> EasythreshParameters:
+) -> EasythreshParametersTagged:
     """
     Build parameters.
     
@@ -91,7 +69,7 @@ def easythresh_params(
         Parameter dictionary
     """
     params = {
-        "@type": "fsl.easythresh",
+        "@type": "fsl/easythresh",
         "raw_zstat_input": raw_zstat_input,
         "brain_mask_input": brain_mask_input,
         "cluster_z_thresh_input": cluster_z_thresh_input,
@@ -118,13 +96,13 @@ def easythresh_cargs(
     """
     cargs = []
     cargs.append("easythresh")
-    cargs.append(execution.input_file(params.get("raw_zstat_input")))
-    cargs.append(execution.input_file(params.get("brain_mask_input")))
-    cargs.append(str(params.get("cluster_z_thresh_input")))
-    cargs.append(str(params.get("cluster_prob_thresh_input")))
-    cargs.append(execution.input_file(params.get("background_image_input")))
-    cargs.append(params.get("output_root"))
-    if params.get("mm_flag"):
+    cargs.append(execution.input_file(params.get("raw_zstat_input", None)))
+    cargs.append(execution.input_file(params.get("brain_mask_input", None)))
+    cargs.append(str(params.get("cluster_z_thresh_input", None)))
+    cargs.append(str(params.get("cluster_prob_thresh_input", None)))
+    cargs.append(execution.input_file(params.get("background_image_input", None)))
+    cargs.append(params.get("output_root", None))
+    if params.get("mm_flag", False):
         cargs.append("--mm")
     return cargs
 
@@ -144,7 +122,7 @@ def easythresh_outputs(
     """
     ret = EasythreshOutputs(
         root=execution.output_file("."),
-        output_thresh_image=execution.output_file(params.get("output_root") + "_thresh.nii.gz"),
+        output_thresh_image=execution.output_file(params.get("output_root", None) + "_thresh.nii.gz"),
     )
     return ret
 
@@ -223,7 +201,6 @@ def easythresh(
 __all__ = [
     "EASYTHRESH_METADATA",
     "EasythreshOutputs",
-    "EasythreshParameters",
     "easythresh",
     "easythresh_execute",
     "easythresh_params",

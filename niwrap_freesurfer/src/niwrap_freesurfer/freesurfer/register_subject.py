@@ -14,7 +14,16 @@ REGISTER_SUBJECT_METADATA = Metadata(
 
 
 RegisterSubjectParameters = typing.TypedDict('RegisterSubjectParameters', {
-    "@type": typing.Literal["freesurfer.register_subject"],
+    "@type": typing.NotRequired[typing.Literal["freesurfer/register_subject"]],
+    "input_volume": typing.NotRequired[InputPathType | None],
+    "mask_volume": typing.NotRequired[InputPathType | None],
+    "control_points": typing.NotRequired[str | None],
+    "output_directory": typing.NotRequired[str | None],
+    "log_file": typing.NotRequired[InputPathType | None],
+    "gca_file": typing.NotRequired[InputPathType | None],
+})
+RegisterSubjectParametersTagged = typing.TypedDict('RegisterSubjectParametersTagged', {
+    "@type": typing.Literal["freesurfer/register_subject"],
     "input_volume": typing.NotRequired[InputPathType | None],
     "mask_volume": typing.NotRequired[InputPathType | None],
     "control_points": typing.NotRequired[str | None],
@@ -24,41 +33,9 @@ RegisterSubjectParameters = typing.TypedDict('RegisterSubjectParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "freesurfer.register_subject": register_subject_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "freesurfer.register_subject": register_subject_outputs,
-    }.get(t)
-
-
 class RegisterSubjectOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `register_subject(...)`.
+    Output object returned when calling `RegisterSubjectParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -75,7 +52,7 @@ def register_subject_params(
     output_directory: str | None = None,
     log_file: InputPathType | None = None,
     gca_file: InputPathType | None = None,
-) -> RegisterSubjectParameters:
+) -> RegisterSubjectParametersTagged:
     """
     Build parameters.
     
@@ -91,7 +68,7 @@ def register_subject_params(
         Parameter dictionary
     """
     params = {
-        "@type": "freesurfer.register_subject",
+        "@type": "freesurfer/register_subject",
     }
     if input_volume is not None:
         params["input_volume"] = input_volume
@@ -123,18 +100,18 @@ def register_subject_cargs(
     """
     cargs = []
     cargs.append("register_subject")
-    if params.get("input_volume") is not None:
-        cargs.append(execution.input_file(params.get("input_volume")))
-    if params.get("mask_volume") is not None:
-        cargs.append(execution.input_file(params.get("mask_volume")))
-    if params.get("control_points") is not None:
-        cargs.append(params.get("control_points"))
-    if params.get("output_directory") is not None:
-        cargs.append(params.get("output_directory"))
-    if params.get("log_file") is not None:
-        cargs.append(execution.input_file(params.get("log_file")))
-    if params.get("gca_file") is not None:
-        cargs.append(execution.input_file(params.get("gca_file")))
+    if params.get("input_volume", None) is not None:
+        cargs.append(execution.input_file(params.get("input_volume", None)))
+    if params.get("mask_volume", None) is not None:
+        cargs.append(execution.input_file(params.get("mask_volume", None)))
+    if params.get("control_points", None) is not None:
+        cargs.append(params.get("control_points", None))
+    if params.get("output_directory", None) is not None:
+        cargs.append(params.get("output_directory", None))
+    if params.get("log_file", None) is not None:
+        cargs.append(execution.input_file(params.get("log_file", None)))
+    if params.get("gca_file", None) is not None:
+        cargs.append(execution.input_file(params.get("gca_file", None)))
     return cargs
 
 
@@ -153,8 +130,8 @@ def register_subject_outputs(
     """
     ret = RegisterSubjectOutputs(
         root=execution.output_file("."),
-        normalized_output=execution.output_file(params.get("output_directory") + "/norm.mgz") if (params.get("output_directory") is not None) else None,
-        transformed_fsamples=execution.output_file(params.get("output_directory") + "/fsamples") if (params.get("output_directory") is not None) else None,
+        normalized_output=execution.output_file(params.get("output_directory", None) + "/norm.mgz") if (params.get("output_directory") is not None) else None,
+        transformed_fsamples=execution.output_file(params.get("output_directory", None) + "/fsamples") if (params.get("output_directory") is not None) else None,
     )
     return ret
 
@@ -231,7 +208,6 @@ def register_subject(
 __all__ = [
     "REGISTER_SUBJECT_METADATA",
     "RegisterSubjectOutputs",
-    "RegisterSubjectParameters",
     "register_subject",
     "register_subject_execute",
     "register_subject_params",

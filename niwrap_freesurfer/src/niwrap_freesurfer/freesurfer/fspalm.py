@@ -14,7 +14,24 @@ FSPALM_METADATA = Metadata(
 
 
 FspalmParameters = typing.TypedDict('FspalmParameters', {
-    "@type": typing.Literal["freesurfer.fspalm"],
+    "@type": typing.NotRequired[typing.Literal["freesurfer/fspalm"]],
+    "glmdir": str,
+    "cft": float,
+    "cwp": float,
+    "onetail": bool,
+    "twotail": bool,
+    "name": typing.NotRequired[str | None],
+    "iters": typing.NotRequired[float | None],
+    "monly": bool,
+    "pponly": bool,
+    "octave": bool,
+    "centroid": bool,
+    "2spaces": bool,
+    "3spaces": bool,
+    "pargs": typing.NotRequired[str | None],
+})
+FspalmParametersTagged = typing.TypedDict('FspalmParametersTagged', {
+    "@type": typing.Literal["freesurfer/fspalm"],
     "glmdir": str,
     "cft": float,
     "cwp": float,
@@ -32,40 +49,9 @@ FspalmParameters = typing.TypedDict('FspalmParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "freesurfer.fspalm": fspalm_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-    }.get(t)
-
-
 class FspalmOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `fspalm(...)`.
+    Output object returned when calling `FspalmParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -86,7 +72,7 @@ def fspalm_params(
     v_2spaces: bool = False,
     v_3spaces: bool = False,
     pargs: str | None = None,
-) -> FspalmParameters:
+) -> FspalmParametersTagged:
     """
     Build parameters.
     
@@ -109,7 +95,7 @@ def fspalm_params(
         Parameter dictionary
     """
     params = {
-        "@type": "freesurfer.fspalm",
+        "@type": "freesurfer/fspalm",
         "glmdir": glmdir,
         "cft": cft,
         "cwp": cwp,
@@ -148,46 +134,46 @@ def fspalm_cargs(
     cargs.append("fspalm")
     cargs.extend([
         "--glmdir",
-        params.get("glmdir")
+        params.get("glmdir", None)
     ])
     cargs.extend([
         "--cft",
-        str(params.get("cft"))
+        str(params.get("cft", None))
     ])
     cargs.extend([
         "--cwp",
-        str(params.get("cwp"))
+        str(params.get("cwp", None))
     ])
-    if params.get("onetail"):
+    if params.get("onetail", False):
         cargs.append("--onetail")
-    if params.get("twotail"):
+    if params.get("twotail", False):
         cargs.append("--twotail")
-    if params.get("name") is not None:
+    if params.get("name", None) is not None:
         cargs.extend([
             "--name",
-            params.get("name")
+            params.get("name", None)
         ])
-    if params.get("iters") is not None:
+    if params.get("iters", None) is not None:
         cargs.extend([
             "--iters",
-            str(params.get("iters"))
+            str(params.get("iters", None))
         ])
-    if params.get("monly"):
+    if params.get("monly", False):
         cargs.append("--monly")
-    if params.get("pponly"):
+    if params.get("pponly", False):
         cargs.append("--pponly")
-    if params.get("octave"):
+    if params.get("octave", False):
         cargs.append("--octave")
-    if params.get("centroid"):
+    if params.get("centroid", False):
         cargs.append("--centroid")
-    if params.get("2spaces"):
+    if params.get("2spaces", False):
         cargs.append("--2spaces")
-    if params.get("3spaces"):
+    if params.get("3spaces", False):
         cargs.append("--3spaces")
-    if params.get("pargs") is not None:
+    if params.get("pargs", None) is not None:
         cargs.extend([
             "--pargs",
-            params.get("pargs")
+            params.get("pargs", None)
         ])
     return cargs
 
@@ -308,7 +294,6 @@ def fspalm(
 __all__ = [
     "FSPALM_METADATA",
     "FspalmOutputs",
-    "FspalmParameters",
     "fspalm",
     "fspalm_execute",
     "fspalm_params",

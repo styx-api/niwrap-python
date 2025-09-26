@@ -14,7 +14,18 @@ SPHARM_RECO_METADATA = Metadata(
 
 
 SpharmRecoParameters = typing.TypedDict('SpharmRecoParameters', {
-    "@type": typing.Literal["afni.SpharmReco"],
+    "@type": typing.NotRequired[typing.Literal["afni/SpharmReco"]],
+    "input_surface": str,
+    "decomposition_order": float,
+    "bases_prefix": str,
+    "coefficients": list[InputPathType],
+    "output_prefix": typing.NotRequired[str | None],
+    "output_surface": typing.NotRequired[list[str] | None],
+    "debug": typing.NotRequired[float | None],
+    "smoothing": typing.NotRequired[float | None],
+})
+SpharmRecoParametersTagged = typing.TypedDict('SpharmRecoParametersTagged', {
+    "@type": typing.Literal["afni/SpharmReco"],
     "input_surface": str,
     "decomposition_order": float,
     "bases_prefix": str,
@@ -26,40 +37,9 @@ SpharmRecoParameters = typing.TypedDict('SpharmRecoParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "afni.SpharmReco": spharm_reco_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-    }.get(t)
-
-
 class SpharmRecoOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `spharm_reco(...)`.
+    Output object returned when calling `SpharmRecoParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -74,7 +54,7 @@ def spharm_reco_params(
     output_surface: list[str] | None = None,
     debug: float | None = None,
     smoothing: float | None = None,
-) -> SpharmRecoParameters:
+) -> SpharmRecoParametersTagged:
     """
     Build parameters.
     
@@ -97,7 +77,7 @@ def spharm_reco_params(
         Parameter dictionary
     """
     params = {
-        "@type": "afni.SpharmReco",
+        "@type": "afni/SpharmReco",
         "input_surface": input_surface,
         "decomposition_order": decomposition_order,
         "bases_prefix": bases_prefix,
@@ -131,39 +111,39 @@ def spharm_reco_cargs(
     cargs.append("SpharmReco")
     cargs.extend([
         "-i_TYPE",
-        params.get("input_surface")
+        params.get("input_surface", None)
     ])
     cargs.extend([
         "-l",
-        str(params.get("decomposition_order"))
+        str(params.get("decomposition_order", None))
     ])
     cargs.extend([
         "-bases_prefix",
-        params.get("bases_prefix")
+        params.get("bases_prefix", None)
     ])
     cargs.extend([
         "-coef",
-        *[execution.input_file(f) for f in params.get("coefficients")]
+        *[execution.input_file(f) for f in params.get("coefficients", None)]
     ])
-    if params.get("output_prefix") is not None:
+    if params.get("output_prefix", None) is not None:
         cargs.extend([
             "-prefix",
-            params.get("output_prefix")
+            params.get("output_prefix", None)
         ])
-    if params.get("output_surface") is not None:
+    if params.get("output_surface", None) is not None:
         cargs.extend([
             "-o_TYPE",
-            *params.get("output_surface")
+            *params.get("output_surface", None)
         ])
-    if params.get("debug") is not None:
+    if params.get("debug", None) is not None:
         cargs.extend([
             "-debug",
-            str(params.get("debug"))
+            str(params.get("debug", None))
         ])
-    if params.get("smoothing") is not None:
+    if params.get("smoothing", None) is not None:
         cargs.extend([
             "-sigma",
-            str(params.get("smoothing"))
+            str(params.get("smoothing", None))
         ])
     return cargs
 
@@ -272,7 +252,6 @@ def spharm_reco(
 __all__ = [
     "SPHARM_RECO_METADATA",
     "SpharmRecoOutputs",
-    "SpharmRecoParameters",
     "spharm_reco",
     "spharm_reco_execute",
     "spharm_reco_params",

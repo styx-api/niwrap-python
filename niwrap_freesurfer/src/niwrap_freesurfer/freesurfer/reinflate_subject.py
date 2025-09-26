@@ -14,45 +14,18 @@ REINFLATE_SUBJECT_METADATA = Metadata(
 
 
 ReinflateSubjectParameters = typing.TypedDict('ReinflateSubjectParameters', {
-    "@type": typing.Literal["freesurfer.reinflate_subject"],
+    "@type": typing.NotRequired[typing.Literal["freesurfer/reinflate_subject"]],
+    "args": typing.NotRequired[str | None],
+})
+ReinflateSubjectParametersTagged = typing.TypedDict('ReinflateSubjectParametersTagged', {
+    "@type": typing.Literal["freesurfer/reinflate_subject"],
     "args": typing.NotRequired[str | None],
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "freesurfer.reinflate_subject": reinflate_subject_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-    }.get(t)
-
-
 class ReinflateSubjectOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `reinflate_subject(...)`.
+    Output object returned when calling `ReinflateSubjectParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -60,7 +33,7 @@ class ReinflateSubjectOutputs(typing.NamedTuple):
 
 def reinflate_subject_params(
     args: str | None = None,
-) -> ReinflateSubjectParameters:
+) -> ReinflateSubjectParametersTagged:
     """
     Build parameters.
     
@@ -70,7 +43,7 @@ def reinflate_subject_params(
         Parameter dictionary
     """
     params = {
-        "@type": "freesurfer.reinflate_subject",
+        "@type": "freesurfer/reinflate_subject",
     }
     if args is not None:
         params["args"] = args
@@ -92,8 +65,8 @@ def reinflate_subject_cargs(
     """
     cargs = []
     cargs.append("reinflate_subject")
-    if params.get("args") is not None:
-        cargs.append(params.get("args"))
+    if params.get("args", None) is not None:
+        cargs.append(params.get("args", None))
     return cargs
 
 
@@ -172,7 +145,6 @@ def reinflate_subject(
 __all__ = [
     "REINFLATE_SUBJECT_METADATA",
     "ReinflateSubjectOutputs",
-    "ReinflateSubjectParameters",
     "reinflate_subject",
     "reinflate_subject_execute",
     "reinflate_subject_params",

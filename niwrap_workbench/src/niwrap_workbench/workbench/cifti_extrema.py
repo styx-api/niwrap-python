@@ -14,14 +14,39 @@ CIFTI_EXTREMA_METADATA = Metadata(
 
 
 CiftiExtremaThresholdParameters = typing.TypedDict('CiftiExtremaThresholdParameters', {
-    "@type": typing.Literal["workbench.cifti-extrema.threshold"],
+    "@type": typing.NotRequired[typing.Literal["threshold"]],
+    "low": float,
+    "high": float,
+})
+CiftiExtremaThresholdParametersTagged = typing.TypedDict('CiftiExtremaThresholdParametersTagged', {
+    "@type": typing.Literal["threshold"],
     "low": float,
     "high": float,
 })
 
 
 CiftiExtremaParameters = typing.TypedDict('CiftiExtremaParameters', {
-    "@type": typing.Literal["workbench.cifti-extrema"],
+    "@type": typing.NotRequired[typing.Literal["workbench/cifti-extrema"]],
+    "cifti": InputPathType,
+    "surface_distance": float,
+    "volume_distance": float,
+    "direction": str,
+    "cifti_out": str,
+    "opt_left_surface_surface": typing.NotRequired[InputPathType | None],
+    "opt_right_surface_surface": typing.NotRequired[InputPathType | None],
+    "opt_cerebellum_surface_surface": typing.NotRequired[InputPathType | None],
+    "opt_surface_presmooth_surface_kernel": typing.NotRequired[float | None],
+    "opt_volume_presmooth_volume_kernel": typing.NotRequired[float | None],
+    "opt_presmooth_fwhm": bool,
+    "threshold": typing.NotRequired[CiftiExtremaThresholdParameters | None],
+    "opt_merged_volume": bool,
+    "opt_sum_maps": bool,
+    "opt_consolidate_mode": bool,
+    "opt_only_maxima": bool,
+    "opt_only_minima": bool,
+})
+CiftiExtremaParametersTagged = typing.TypedDict('CiftiExtremaParametersTagged', {
+    "@type": typing.Literal["workbench/cifti-extrema"],
     "cifti": InputPathType,
     "surface_distance": float,
     "volume_distance": float,
@@ -42,43 +67,10 @@ CiftiExtremaParameters = typing.TypedDict('CiftiExtremaParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "workbench.cifti-extrema": cifti_extrema_cargs,
-        "workbench.cifti-extrema.threshold": cifti_extrema_threshold_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "workbench.cifti-extrema": cifti_extrema_outputs,
-    }.get(t)
-
-
 def cifti_extrema_threshold_params(
     low: float,
     high: float,
-) -> CiftiExtremaThresholdParameters:
+) -> CiftiExtremaThresholdParametersTagged:
     """
     Build parameters.
     
@@ -89,7 +81,7 @@ def cifti_extrema_threshold_params(
         Parameter dictionary
     """
     params = {
-        "@type": "workbench.cifti-extrema.threshold",
+        "@type": "threshold",
         "low": low,
         "high": high,
     }
@@ -111,14 +103,14 @@ def cifti_extrema_threshold_cargs(
     """
     cargs = []
     cargs.append("-threshold")
-    cargs.append(str(params.get("low")))
-    cargs.append(str(params.get("high")))
+    cargs.append(str(params.get("low", None)))
+    cargs.append(str(params.get("high", None)))
     return cargs
 
 
 class CiftiExtremaOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `cifti_extrema(...)`.
+    Output object returned when calling `CiftiExtremaParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -144,7 +136,7 @@ def cifti_extrema_params(
     opt_consolidate_mode: bool = False,
     opt_only_maxima: bool = False,
     opt_only_minima: bool = False,
-) -> CiftiExtremaParameters:
+) -> CiftiExtremaParametersTagged:
     """
     Build parameters.
     
@@ -182,7 +174,7 @@ def cifti_extrema_params(
         Parameter dictionary
     """
     params = {
-        "@type": "workbench.cifti-extrema",
+        "@type": "workbench/cifti-extrema",
         "cifti": cifti,
         "surface_distance": surface_distance,
         "volume_distance": volume_distance,
@@ -226,49 +218,49 @@ def cifti_extrema_cargs(
     cargs = []
     cargs.append("wb_command")
     cargs.append("-cifti-extrema")
-    cargs.append(execution.input_file(params.get("cifti")))
-    cargs.append(str(params.get("surface_distance")))
-    cargs.append(str(params.get("volume_distance")))
-    cargs.append(params.get("direction"))
-    cargs.append(params.get("cifti_out"))
-    if params.get("opt_left_surface_surface") is not None:
+    cargs.append(execution.input_file(params.get("cifti", None)))
+    cargs.append(str(params.get("surface_distance", None)))
+    cargs.append(str(params.get("volume_distance", None)))
+    cargs.append(params.get("direction", None))
+    cargs.append(params.get("cifti_out", None))
+    if params.get("opt_left_surface_surface", None) is not None:
         cargs.extend([
             "-left-surface",
-            execution.input_file(params.get("opt_left_surface_surface"))
+            execution.input_file(params.get("opt_left_surface_surface", None))
         ])
-    if params.get("opt_right_surface_surface") is not None:
+    if params.get("opt_right_surface_surface", None) is not None:
         cargs.extend([
             "-right-surface",
-            execution.input_file(params.get("opt_right_surface_surface"))
+            execution.input_file(params.get("opt_right_surface_surface", None))
         ])
-    if params.get("opt_cerebellum_surface_surface") is not None:
+    if params.get("opt_cerebellum_surface_surface", None) is not None:
         cargs.extend([
             "-cerebellum-surface",
-            execution.input_file(params.get("opt_cerebellum_surface_surface"))
+            execution.input_file(params.get("opt_cerebellum_surface_surface", None))
         ])
-    if params.get("opt_surface_presmooth_surface_kernel") is not None:
+    if params.get("opt_surface_presmooth_surface_kernel", None) is not None:
         cargs.extend([
             "-surface-presmooth",
-            str(params.get("opt_surface_presmooth_surface_kernel"))
+            str(params.get("opt_surface_presmooth_surface_kernel", None))
         ])
-    if params.get("opt_volume_presmooth_volume_kernel") is not None:
+    if params.get("opt_volume_presmooth_volume_kernel", None) is not None:
         cargs.extend([
             "-volume-presmooth",
-            str(params.get("opt_volume_presmooth_volume_kernel"))
+            str(params.get("opt_volume_presmooth_volume_kernel", None))
         ])
-    if params.get("opt_presmooth_fwhm"):
+    if params.get("opt_presmooth_fwhm", False):
         cargs.append("-presmooth-fwhm")
-    if params.get("threshold") is not None:
-        cargs.extend(dyn_cargs(params.get("threshold")["@type"])(params.get("threshold"), execution))
-    if params.get("opt_merged_volume"):
+    if params.get("threshold", None) is not None:
+        cargs.extend(cifti_extrema_threshold_cargs(params.get("threshold", None), execution))
+    if params.get("opt_merged_volume", False):
         cargs.append("-merged-volume")
-    if params.get("opt_sum_maps"):
+    if params.get("opt_sum_maps", False):
         cargs.append("-sum-maps")
-    if params.get("opt_consolidate_mode"):
+    if params.get("opt_consolidate_mode", False):
         cargs.append("-consolidate-mode")
-    if params.get("opt_only_maxima"):
+    if params.get("opt_only_maxima", False):
         cargs.append("-only-maxima")
-    if params.get("opt_only_minima"):
+    if params.get("opt_only_minima", False):
         cargs.append("-only-minima")
     return cargs
 
@@ -288,7 +280,7 @@ def cifti_extrema_outputs(
     """
     ret = CiftiExtremaOutputs(
         root=execution.output_file("."),
-        cifti_out=execution.output_file(params.get("cifti_out")),
+        cifti_out=execution.output_file(params.get("cifti_out", None)),
     )
     return ret
 
@@ -421,8 +413,6 @@ def cifti_extrema(
 __all__ = [
     "CIFTI_EXTREMA_METADATA",
     "CiftiExtremaOutputs",
-    "CiftiExtremaParameters",
-    "CiftiExtremaThresholdParameters",
     "cifti_extrema",
     "cifti_extrema_execute",
     "cifti_extrema_params",

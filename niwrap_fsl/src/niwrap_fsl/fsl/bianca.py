@@ -14,7 +14,27 @@ BIANCA_METADATA = Metadata(
 
 
 BiancaParameters = typing.TypedDict('BiancaParameters', {
-    "@type": typing.Literal["fsl.bianca"],
+    "@type": typing.NotRequired[typing.Literal["fsl/bianca"]],
+    "master_file": InputPathType,
+    "label_feature_num": float,
+    "brain_mask_feature_num": float,
+    "query_subject_num": float,
+    "training_nums": typing.NotRequired[str | None],
+    "feature_subset": typing.NotRequired[str | None],
+    "mat_feature_num": typing.NotRequired[float | None],
+    "spatial_weight": typing.NotRequired[float | None],
+    "patch_sizes": typing.NotRequired[str | None],
+    "patch_3d": bool,
+    "select_pts": typing.NotRequired[str | None],
+    "training_pts": typing.NotRequired[str | None],
+    "non_les_pts": typing.NotRequired[str | None],
+    "load_classifier_data": typing.NotRequired[str | None],
+    "save_classifier_data": typing.NotRequired[str | None],
+    "verbose_flag": bool,
+    "out_name": typing.NotRequired[str | None],
+})
+BiancaParametersTagged = typing.TypedDict('BiancaParametersTagged', {
+    "@type": typing.Literal["fsl/bianca"],
     "master_file": InputPathType,
     "label_feature_num": float,
     "brain_mask_feature_num": float,
@@ -35,41 +55,9 @@ BiancaParameters = typing.TypedDict('BiancaParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "fsl.bianca": bianca_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "fsl.bianca": bianca_outputs,
-    }.get(t)
-
-
 class BiancaOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `bianca(...)`.
+    Output object returned when calling `BiancaParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -95,7 +83,7 @@ def bianca_params(
     save_classifier_data: str | None = None,
     verbose_flag: bool = False,
     out_name: str | None = None,
-) -> BiancaParameters:
+) -> BiancaParametersTagged:
     """
     Build parameters.
     
@@ -134,7 +122,7 @@ def bianca_params(
         Parameter dictionary
     """
     params = {
-        "@type": "fsl.bianca",
+        "@type": "fsl/bianca",
         "master_file": master_file,
         "label_feature_num": label_feature_num,
         "brain_mask_feature_num": brain_mask_feature_num,
@@ -182,38 +170,38 @@ def bianca_cargs(
     """
     cargs = []
     cargs.append("bianca")
-    cargs.append("--singlefile=" + execution.input_file(params.get("master_file")))
-    cargs.append("labelfeaturenum=" + str(params.get("label_feature_num")))
-    cargs.append("--brainmaskfeaturenum=" + str(params.get("brain_mask_feature_num")))
-    cargs.append("--querysubjectnum=" + str(params.get("query_subject_num")))
-    if params.get("training_nums") is not None:
-        cargs.append("--trainingnums=" + params.get("training_nums"))
-    if params.get("feature_subset") is not None:
-        cargs.append("--featuresubset=" + params.get("feature_subset"))
-    if params.get("mat_feature_num") is not None:
-        cargs.append("--matfeaturenum=" + str(params.get("mat_feature_num")))
-    if params.get("spatial_weight") is not None:
-        cargs.append("--spatialweight=" + str(params.get("spatial_weight")))
-    if params.get("patch_sizes") is not None:
-        cargs.append("--patchsizes=" + params.get("patch_sizes"))
-    if params.get("patch_3d"):
+    cargs.append("--singlefile=" + execution.input_file(params.get("master_file", None)))
+    cargs.append("labelfeaturenum=" + str(params.get("label_feature_num", None)))
+    cargs.append("--brainmaskfeaturenum=" + str(params.get("brain_mask_feature_num", None)))
+    cargs.append("--querysubjectnum=" + str(params.get("query_subject_num", None)))
+    if params.get("training_nums", None) is not None:
+        cargs.append("--trainingnums=" + params.get("training_nums", None))
+    if params.get("feature_subset", None) is not None:
+        cargs.append("--featuresubset=" + params.get("feature_subset", None))
+    if params.get("mat_feature_num", None) is not None:
+        cargs.append("--matfeaturenum=" + str(params.get("mat_feature_num", None)))
+    if params.get("spatial_weight", None) is not None:
+        cargs.append("--spatialweight=" + str(params.get("spatial_weight", None)))
+    if params.get("patch_sizes", None) is not None:
+        cargs.append("--patchsizes=" + params.get("patch_sizes", None))
+    if params.get("patch_3d", False):
         cargs.append("--patch3D")
-    if params.get("select_pts") is not None:
-        cargs.append("--selectpts=" + params.get("select_pts"))
-    if params.get("training_pts") is not None:
-        cargs.append("--trainingpts=" + params.get("training_pts"))
-    if params.get("non_les_pts") is not None:
-        cargs.append("--nonlespts=" + params.get("non_les_pts"))
-    if params.get("load_classifier_data") is not None:
-        cargs.append("--loadclassifierdata=" + params.get("load_classifier_data"))
-    if params.get("save_classifier_data") is not None:
-        cargs.append("--saveclassifierdata=" + params.get("save_classifier_data"))
-    if params.get("verbose_flag"):
+    if params.get("select_pts", None) is not None:
+        cargs.append("--selectpts=" + params.get("select_pts", None))
+    if params.get("training_pts", None) is not None:
+        cargs.append("--trainingpts=" + params.get("training_pts", None))
+    if params.get("non_les_pts", None) is not None:
+        cargs.append("--nonlespts=" + params.get("non_les_pts", None))
+    if params.get("load_classifier_data", None) is not None:
+        cargs.append("--loadclassifierdata=" + params.get("load_classifier_data", None))
+    if params.get("save_classifier_data", None) is not None:
+        cargs.append("--saveclassifierdata=" + params.get("save_classifier_data", None))
+    if params.get("verbose_flag", False):
         cargs.append("-v")
-    if params.get("out_name") is not None:
+    if params.get("out_name", None) is not None:
         cargs.extend([
             "-o",
-            params.get("out_name")
+            params.get("out_name", None)
         ])
     return cargs
 
@@ -233,7 +221,7 @@ def bianca_outputs(
     """
     ret = BiancaOutputs(
         root=execution.output_file("."),
-        base_output=execution.output_file(params.get("out_name") + "_bianca") if (params.get("out_name") is not None) else None,
+        base_output=execution.output_file(params.get("out_name", None) + "_bianca") if (params.get("out_name") is not None) else None,
     )
     return ret
 
@@ -355,7 +343,6 @@ def bianca(
 __all__ = [
     "BIANCA_METADATA",
     "BiancaOutputs",
-    "BiancaParameters",
     "bianca",
     "bianca_execute",
     "bianca_params",

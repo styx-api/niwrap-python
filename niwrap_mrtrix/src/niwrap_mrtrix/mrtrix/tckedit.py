@@ -14,74 +14,146 @@ TCKEDIT_METADATA = Metadata(
 
 
 TckeditVariousStringParameters = typing.TypedDict('TckeditVariousStringParameters', {
-    "@type": typing.Literal["mrtrix.tckedit.include.VariousString"],
+    "@type": typing.NotRequired[typing.Literal["VariousString"]],
+    "obj": str,
+})
+TckeditVariousStringParametersTagged = typing.TypedDict('TckeditVariousStringParametersTagged', {
+    "@type": typing.Literal["VariousString"],
     "obj": str,
 })
 
 
 TckeditVariousFileParameters = typing.TypedDict('TckeditVariousFileParameters', {
-    "@type": typing.Literal["mrtrix.tckedit.include.VariousFile"],
+    "@type": typing.NotRequired[typing.Literal["VariousFile"]],
+    "obj": InputPathType,
+})
+TckeditVariousFileParametersTagged = typing.TypedDict('TckeditVariousFileParametersTagged', {
+    "@type": typing.Literal["VariousFile"],
     "obj": InputPathType,
 })
 
 
 TckeditIncludeParameters = typing.TypedDict('TckeditIncludeParameters', {
-    "@type": typing.Literal["mrtrix.tckedit.include"],
-    "spec": typing.Union[TckeditVariousStringParameters, TckeditVariousFileParameters],
+    "@type": typing.NotRequired[typing.Literal["include"]],
+    "spec": typing.Union[TckeditVariousStringParametersTagged, TckeditVariousFileParametersTagged],
+})
+TckeditIncludeParametersTagged = typing.TypedDict('TckeditIncludeParametersTagged', {
+    "@type": typing.Literal["include"],
+    "spec": typing.Union[TckeditVariousStringParametersTagged, TckeditVariousFileParametersTagged],
 })
 
 
 TckeditIncludeOrderedParameters = typing.TypedDict('TckeditIncludeOrderedParameters', {
-    "@type": typing.Literal["mrtrix.tckedit.include_ordered"],
+    "@type": typing.NotRequired[typing.Literal["include_ordered"]],
+    "image": str,
+})
+TckeditIncludeOrderedParametersTagged = typing.TypedDict('TckeditIncludeOrderedParametersTagged', {
+    "@type": typing.Literal["include_ordered"],
     "image": str,
 })
 
 
 TckeditVariousString1Parameters = typing.TypedDict('TckeditVariousString1Parameters', {
-    "@type": typing.Literal["mrtrix.tckedit.exclude.VariousString"],
+    "@type": typing.NotRequired[typing.Literal["VariousString_1"]],
+    "obj": str,
+})
+TckeditVariousString1ParametersTagged = typing.TypedDict('TckeditVariousString1ParametersTagged', {
+    "@type": typing.Literal["VariousString_1"],
     "obj": str,
 })
 
 
 TckeditVariousFile1Parameters = typing.TypedDict('TckeditVariousFile1Parameters', {
-    "@type": typing.Literal["mrtrix.tckedit.exclude.VariousFile"],
+    "@type": typing.NotRequired[typing.Literal["VariousFile_1"]],
+    "obj": InputPathType,
+})
+TckeditVariousFile1ParametersTagged = typing.TypedDict('TckeditVariousFile1ParametersTagged', {
+    "@type": typing.Literal["VariousFile_1"],
     "obj": InputPathType,
 })
 
 
 TckeditExcludeParameters = typing.TypedDict('TckeditExcludeParameters', {
-    "@type": typing.Literal["mrtrix.tckedit.exclude"],
-    "spec": typing.Union[TckeditVariousString1Parameters, TckeditVariousFile1Parameters],
+    "@type": typing.NotRequired[typing.Literal["exclude"]],
+    "spec": typing.Union[TckeditVariousString1ParametersTagged, TckeditVariousFile1ParametersTagged],
+})
+TckeditExcludeParametersTagged = typing.TypedDict('TckeditExcludeParametersTagged', {
+    "@type": typing.Literal["exclude"],
+    "spec": typing.Union[TckeditVariousString1ParametersTagged, TckeditVariousFile1ParametersTagged],
 })
 
 
 TckeditVariousString2Parameters = typing.TypedDict('TckeditVariousString2Parameters', {
-    "@type": typing.Literal["mrtrix.tckedit.mask.VariousString"],
+    "@type": typing.NotRequired[typing.Literal["VariousString_2"]],
+    "obj": str,
+})
+TckeditVariousString2ParametersTagged = typing.TypedDict('TckeditVariousString2ParametersTagged', {
+    "@type": typing.Literal["VariousString_2"],
     "obj": str,
 })
 
 
 TckeditVariousFile2Parameters = typing.TypedDict('TckeditVariousFile2Parameters', {
-    "@type": typing.Literal["mrtrix.tckedit.mask.VariousFile"],
+    "@type": typing.NotRequired[typing.Literal["VariousFile_2"]],
+    "obj": InputPathType,
+})
+TckeditVariousFile2ParametersTagged = typing.TypedDict('TckeditVariousFile2ParametersTagged', {
+    "@type": typing.Literal["VariousFile_2"],
     "obj": InputPathType,
 })
 
 
 TckeditMaskParameters = typing.TypedDict('TckeditMaskParameters', {
-    "@type": typing.Literal["mrtrix.tckedit.mask"],
-    "spec": typing.Union[TckeditVariousString2Parameters, TckeditVariousFile2Parameters],
+    "@type": typing.NotRequired[typing.Literal["mask"]],
+    "spec": typing.Union[TckeditVariousString2ParametersTagged, TckeditVariousFile2ParametersTagged],
+})
+TckeditMaskParametersTagged = typing.TypedDict('TckeditMaskParametersTagged', {
+    "@type": typing.Literal["mask"],
+    "spec": typing.Union[TckeditVariousString2ParametersTagged, TckeditVariousFile2ParametersTagged],
 })
 
 
 TckeditConfigParameters = typing.TypedDict('TckeditConfigParameters', {
-    "@type": typing.Literal["mrtrix.tckedit.config"],
+    "@type": typing.NotRequired[typing.Literal["config"]],
+    "key": str,
+    "value": str,
+})
+TckeditConfigParametersTagged = typing.TypedDict('TckeditConfigParametersTagged', {
+    "@type": typing.Literal["config"],
     "key": str,
     "value": str,
 })
 
 
 TckeditParameters = typing.TypedDict('TckeditParameters', {
-    "@type": typing.Literal["mrtrix.tckedit"],
+    "@type": typing.NotRequired[typing.Literal["mrtrix/tckedit"]],
+    "include": typing.NotRequired[list[TckeditIncludeParameters] | None],
+    "include_ordered": typing.NotRequired[list[TckeditIncludeOrderedParameters] | None],
+    "exclude": typing.NotRequired[list[TckeditExcludeParameters] | None],
+    "mask": typing.NotRequired[list[TckeditMaskParameters] | None],
+    "maxlength": typing.NotRequired[float | None],
+    "minlength": typing.NotRequired[float | None],
+    "number": typing.NotRequired[int | None],
+    "skip": typing.NotRequired[int | None],
+    "maxweight": typing.NotRequired[float | None],
+    "minweight": typing.NotRequired[float | None],
+    "inverse": bool,
+    "ends_only": bool,
+    "tck_weights_in": typing.NotRequired[InputPathType | None],
+    "tck_weights_out": typing.NotRequired[str | None],
+    "info": bool,
+    "quiet": bool,
+    "debug": bool,
+    "force": bool,
+    "nthreads": typing.NotRequired[int | None],
+    "config": typing.NotRequired[list[TckeditConfigParameters] | None],
+    "help": bool,
+    "version": bool,
+    "tracks_in": list[InputPathType],
+    "tracks_out": str,
+})
+TckeditParametersTagged = typing.TypedDict('TckeditParametersTagged', {
+    "@type": typing.Literal["mrtrix/tckedit"],
     "include": typing.NotRequired[list[TckeditIncludeParameters] | None],
     "include_ordered": typing.NotRequired[list[TckeditIncludeOrderedParameters] | None],
     "exclude": typing.NotRequired[list[TckeditExcludeParameters] | None],
@@ -109,7 +181,7 @@ TckeditParameters = typing.TypedDict('TckeditParameters', {
 })
 
 
-def dyn_cargs(
+def tckedit_spec_cargs_dyn_fn(
     t: str,
 ) -> typing.Any:
     """
@@ -121,22 +193,12 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "mrtrix.tckedit": tckedit_cargs,
-        "mrtrix.tckedit.include": tckedit_include_cargs,
-        "mrtrix.tckedit.include.VariousString": tckedit_various_string_cargs,
-        "mrtrix.tckedit.include.VariousFile": tckedit_various_file_cargs,
-        "mrtrix.tckedit.include_ordered": tckedit_include_ordered_cargs,
-        "mrtrix.tckedit.exclude": tckedit_exclude_cargs,
-        "mrtrix.tckedit.exclude.VariousString": tckedit_various_string_1_cargs,
-        "mrtrix.tckedit.exclude.VariousFile": tckedit_various_file_1_cargs,
-        "mrtrix.tckedit.mask": tckedit_mask_cargs,
-        "mrtrix.tckedit.mask.VariousString": tckedit_various_string_2_cargs,
-        "mrtrix.tckedit.mask.VariousFile": tckedit_various_file_2_cargs,
-        "mrtrix.tckedit.config": tckedit_config_cargs,
+        "VariousString": tckedit_various_string_cargs,
+        "VariousFile": tckedit_various_file_cargs,
     }.get(t)
 
 
-def dyn_outputs(
+def tckedit_spec_outputs_dyn_fn(
     t: str,
 ) -> typing.Any:
     """
@@ -148,13 +210,76 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "mrtrix.tckedit": tckedit_outputs,
+    }.get(t)
+
+
+def tckedit_spec_cargs_dyn_fn_(
+    t: str,
+) -> typing.Any:
+    """
+    Get build cargs function by command type.
+    
+    Args:
+        t: Command type.
+    Returns:
+        Build cargs function.
+    """
+    return {
+        "VariousString_1": tckedit_various_string_1_cargs,
+        "VariousFile_1": tckedit_various_file_1_cargs,
+    }.get(t)
+
+
+def tckedit_spec_outputs_dyn_fn_(
+    t: str,
+) -> typing.Any:
+    """
+    Get build outputs function by command type.
+    
+    Args:
+        t: Command type.
+    Returns:
+        Build outputs function.
+    """
+    return {
+    }.get(t)
+
+
+def tckedit_spec_cargs_dyn_fn_2(
+    t: str,
+) -> typing.Any:
+    """
+    Get build cargs function by command type.
+    
+    Args:
+        t: Command type.
+    Returns:
+        Build cargs function.
+    """
+    return {
+        "VariousString_2": tckedit_various_string_2_cargs,
+        "VariousFile_2": tckedit_various_file_2_cargs,
+    }.get(t)
+
+
+def tckedit_spec_outputs_dyn_fn_2(
+    t: str,
+) -> typing.Any:
+    """
+    Get build outputs function by command type.
+    
+    Args:
+        t: Command type.
+    Returns:
+        Build outputs function.
+    """
+    return {
     }.get(t)
 
 
 def tckedit_various_string_params(
     obj: str,
-) -> TckeditVariousStringParameters:
+) -> TckeditVariousStringParametersTagged:
     """
     Build parameters.
     
@@ -164,7 +289,7 @@ def tckedit_various_string_params(
         Parameter dictionary
     """
     params = {
-        "@type": "mrtrix.tckedit.include.VariousString",
+        "@type": "VariousString",
         "obj": obj,
     }
     return params
@@ -184,13 +309,13 @@ def tckedit_various_string_cargs(
         Command-line arguments.
     """
     cargs = []
-    cargs.append(params.get("obj"))
+    cargs.append(params.get("obj", None))
     return cargs
 
 
 def tckedit_various_file_params(
     obj: InputPathType,
-) -> TckeditVariousFileParameters:
+) -> TckeditVariousFileParametersTagged:
     """
     Build parameters.
     
@@ -200,7 +325,7 @@ def tckedit_various_file_params(
         Parameter dictionary
     """
     params = {
-        "@type": "mrtrix.tckedit.include.VariousFile",
+        "@type": "VariousFile",
         "obj": obj,
     }
     return params
@@ -220,13 +345,13 @@ def tckedit_various_file_cargs(
         Command-line arguments.
     """
     cargs = []
-    cargs.append(execution.input_file(params.get("obj")))
+    cargs.append(execution.input_file(params.get("obj", None)))
     return cargs
 
 
 def tckedit_include_params(
-    spec: typing.Union[TckeditVariousStringParameters, TckeditVariousFileParameters],
-) -> TckeditIncludeParameters:
+    spec: typing.Union[TckeditVariousStringParametersTagged, TckeditVariousFileParametersTagged],
+) -> TckeditIncludeParametersTagged:
     """
     Build parameters.
     
@@ -238,7 +363,7 @@ def tckedit_include_params(
         Parameter dictionary
     """
     params = {
-        "@type": "mrtrix.tckedit.include",
+        "@type": "include",
         "spec": spec,
     }
     return params
@@ -259,13 +384,13 @@ def tckedit_include_cargs(
     """
     cargs = []
     cargs.append("-include")
-    cargs.extend(dyn_cargs(params.get("spec")["@type"])(params.get("spec"), execution))
+    cargs.extend(tckedit_spec_cargs_dyn_fn(params.get("spec", None)["@type"])(params.get("spec", None), execution))
     return cargs
 
 
 def tckedit_include_ordered_params(
     image: str,
-) -> TckeditIncludeOrderedParameters:
+) -> TckeditIncludeOrderedParametersTagged:
     """
     Build parameters.
     
@@ -278,7 +403,7 @@ def tckedit_include_ordered_params(
         Parameter dictionary
     """
     params = {
-        "@type": "mrtrix.tckedit.include_ordered",
+        "@type": "include_ordered",
         "image": image,
     }
     return params
@@ -299,13 +424,13 @@ def tckedit_include_ordered_cargs(
     """
     cargs = []
     cargs.append("-include_ordered")
-    cargs.append(params.get("image"))
+    cargs.append(params.get("image", None))
     return cargs
 
 
 def tckedit_various_string_1_params(
     obj: str,
-) -> TckeditVariousString1Parameters:
+) -> TckeditVariousString1ParametersTagged:
     """
     Build parameters.
     
@@ -315,7 +440,7 @@ def tckedit_various_string_1_params(
         Parameter dictionary
     """
     params = {
-        "@type": "mrtrix.tckedit.exclude.VariousString",
+        "@type": "VariousString_1",
         "obj": obj,
     }
     return params
@@ -335,13 +460,13 @@ def tckedit_various_string_1_cargs(
         Command-line arguments.
     """
     cargs = []
-    cargs.append(params.get("obj"))
+    cargs.append(params.get("obj", None))
     return cargs
 
 
 def tckedit_various_file_1_params(
     obj: InputPathType,
-) -> TckeditVariousFile1Parameters:
+) -> TckeditVariousFile1ParametersTagged:
     """
     Build parameters.
     
@@ -351,7 +476,7 @@ def tckedit_various_file_1_params(
         Parameter dictionary
     """
     params = {
-        "@type": "mrtrix.tckedit.exclude.VariousFile",
+        "@type": "VariousFile_1",
         "obj": obj,
     }
     return params
@@ -371,13 +496,13 @@ def tckedit_various_file_1_cargs(
         Command-line arguments.
     """
     cargs = []
-    cargs.append(execution.input_file(params.get("obj")))
+    cargs.append(execution.input_file(params.get("obj", None)))
     return cargs
 
 
 def tckedit_exclude_params(
-    spec: typing.Union[TckeditVariousString1Parameters, TckeditVariousFile1Parameters],
-) -> TckeditExcludeParameters:
+    spec: typing.Union[TckeditVariousString1ParametersTagged, TckeditVariousFile1ParametersTagged],
+) -> TckeditExcludeParametersTagged:
     """
     Build parameters.
     
@@ -389,7 +514,7 @@ def tckedit_exclude_params(
         Parameter dictionary
     """
     params = {
-        "@type": "mrtrix.tckedit.exclude",
+        "@type": "exclude",
         "spec": spec,
     }
     return params
@@ -410,13 +535,13 @@ def tckedit_exclude_cargs(
     """
     cargs = []
     cargs.append("-exclude")
-    cargs.extend(dyn_cargs(params.get("spec")["@type"])(params.get("spec"), execution))
+    cargs.extend(tckedit_spec_cargs_dyn_fn_(params.get("spec", None)["@type"])(params.get("spec", None), execution))
     return cargs
 
 
 def tckedit_various_string_2_params(
     obj: str,
-) -> TckeditVariousString2Parameters:
+) -> TckeditVariousString2ParametersTagged:
     """
     Build parameters.
     
@@ -426,7 +551,7 @@ def tckedit_various_string_2_params(
         Parameter dictionary
     """
     params = {
-        "@type": "mrtrix.tckedit.mask.VariousString",
+        "@type": "VariousString_2",
         "obj": obj,
     }
     return params
@@ -446,13 +571,13 @@ def tckedit_various_string_2_cargs(
         Command-line arguments.
     """
     cargs = []
-    cargs.append(params.get("obj"))
+    cargs.append(params.get("obj", None))
     return cargs
 
 
 def tckedit_various_file_2_params(
     obj: InputPathType,
-) -> TckeditVariousFile2Parameters:
+) -> TckeditVariousFile2ParametersTagged:
     """
     Build parameters.
     
@@ -462,7 +587,7 @@ def tckedit_various_file_2_params(
         Parameter dictionary
     """
     params = {
-        "@type": "mrtrix.tckedit.mask.VariousFile",
+        "@type": "VariousFile_2",
         "obj": obj,
     }
     return params
@@ -482,13 +607,13 @@ def tckedit_various_file_2_cargs(
         Command-line arguments.
     """
     cargs = []
-    cargs.append(execution.input_file(params.get("obj")))
+    cargs.append(execution.input_file(params.get("obj", None)))
     return cargs
 
 
 def tckedit_mask_params(
-    spec: typing.Union[TckeditVariousString2Parameters, TckeditVariousFile2Parameters],
-) -> TckeditMaskParameters:
+    spec: typing.Union[TckeditVariousString2ParametersTagged, TckeditVariousFile2ParametersTagged],
+) -> TckeditMaskParametersTagged:
     """
     Build parameters.
     
@@ -500,7 +625,7 @@ def tckedit_mask_params(
         Parameter dictionary
     """
     params = {
-        "@type": "mrtrix.tckedit.mask",
+        "@type": "mask",
         "spec": spec,
     }
     return params
@@ -521,14 +646,14 @@ def tckedit_mask_cargs(
     """
     cargs = []
     cargs.append("-mask")
-    cargs.extend(dyn_cargs(params.get("spec")["@type"])(params.get("spec"), execution))
+    cargs.extend(tckedit_spec_cargs_dyn_fn_2(params.get("spec", None)["@type"])(params.get("spec", None), execution))
     return cargs
 
 
 def tckedit_config_params(
     key: str,
     value: str,
-) -> TckeditConfigParameters:
+) -> TckeditConfigParametersTagged:
     """
     Build parameters.
     
@@ -539,7 +664,7 @@ def tckedit_config_params(
         Parameter dictionary
     """
     params = {
-        "@type": "mrtrix.tckedit.config",
+        "@type": "config",
         "key": key,
         "value": value,
     }
@@ -561,14 +686,14 @@ def tckedit_config_cargs(
     """
     cargs = []
     cargs.append("-config")
-    cargs.append(params.get("key"))
-    cargs.append(params.get("value"))
+    cargs.append(params.get("key", None))
+    cargs.append(params.get("value", None))
     return cargs
 
 
 class TckeditOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `tckedit(...)`.
+    Output object returned when calling `TckeditParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -604,7 +729,7 @@ def tckedit_params(
     config: list[TckeditConfigParameters] | None = None,
     help_: bool = False,
     version: bool = False,
-) -> TckeditParameters:
+) -> TckeditParametersTagged:
     """
     Build parameters.
     
@@ -660,7 +785,7 @@ def tckedit_params(
         Parameter dictionary
     """
     params = {
-        "@type": "mrtrix.tckedit",
+        "@type": "mrtrix/tckedit",
         "inverse": inverse,
         "ends_only": ends_only,
         "info": info,
@@ -718,79 +843,79 @@ def tckedit_cargs(
     """
     cargs = []
     cargs.append("tckedit")
-    if params.get("include") is not None:
-        cargs.extend([a for c in [dyn_cargs(s["@type"])(s, execution) for s in params.get("include")] for a in c])
-    if params.get("include_ordered") is not None:
-        cargs.extend([a for c in [dyn_cargs(s["@type"])(s, execution) for s in params.get("include_ordered")] for a in c])
-    if params.get("exclude") is not None:
-        cargs.extend([a for c in [dyn_cargs(s["@type"])(s, execution) for s in params.get("exclude")] for a in c])
-    if params.get("mask") is not None:
-        cargs.extend([a for c in [dyn_cargs(s["@type"])(s, execution) for s in params.get("mask")] for a in c])
-    if params.get("maxlength") is not None:
+    if params.get("include", None) is not None:
+        cargs.extend([a for c in [tckedit_include_cargs(s, execution) for s in params.get("include", None)] for a in c])
+    if params.get("include_ordered", None) is not None:
+        cargs.extend([a for c in [tckedit_include_ordered_cargs(s, execution) for s in params.get("include_ordered", None)] for a in c])
+    if params.get("exclude", None) is not None:
+        cargs.extend([a for c in [tckedit_exclude_cargs(s, execution) for s in params.get("exclude", None)] for a in c])
+    if params.get("mask", None) is not None:
+        cargs.extend([a for c in [tckedit_mask_cargs(s, execution) for s in params.get("mask", None)] for a in c])
+    if params.get("maxlength", None) is not None:
         cargs.extend([
             "-maxlength",
-            str(params.get("maxlength"))
+            str(params.get("maxlength", None))
         ])
-    if params.get("minlength") is not None:
+    if params.get("minlength", None) is not None:
         cargs.extend([
             "-minlength",
-            str(params.get("minlength"))
+            str(params.get("minlength", None))
         ])
-    if params.get("number") is not None:
+    if params.get("number", None) is not None:
         cargs.extend([
             "-number",
-            str(params.get("number"))
+            str(params.get("number", None))
         ])
-    if params.get("skip") is not None:
+    if params.get("skip", None) is not None:
         cargs.extend([
             "-skip",
-            str(params.get("skip"))
+            str(params.get("skip", None))
         ])
-    if params.get("maxweight") is not None:
+    if params.get("maxweight", None) is not None:
         cargs.extend([
             "-maxweight",
-            str(params.get("maxweight"))
+            str(params.get("maxweight", None))
         ])
-    if params.get("minweight") is not None:
+    if params.get("minweight", None) is not None:
         cargs.extend([
             "-minweight",
-            str(params.get("minweight"))
+            str(params.get("minweight", None))
         ])
-    if params.get("inverse"):
+    if params.get("inverse", False):
         cargs.append("-inverse")
-    if params.get("ends_only"):
+    if params.get("ends_only", False):
         cargs.append("-ends_only")
-    if params.get("tck_weights_in") is not None:
+    if params.get("tck_weights_in", None) is not None:
         cargs.extend([
             "-tck_weights_in",
-            execution.input_file(params.get("tck_weights_in"))
+            execution.input_file(params.get("tck_weights_in", None))
         ])
-    if params.get("tck_weights_out") is not None:
+    if params.get("tck_weights_out", None) is not None:
         cargs.extend([
             "-tck_weights_out",
-            params.get("tck_weights_out")
+            params.get("tck_weights_out", None)
         ])
-    if params.get("info"):
+    if params.get("info", False):
         cargs.append("-info")
-    if params.get("quiet"):
+    if params.get("quiet", False):
         cargs.append("-quiet")
-    if params.get("debug"):
+    if params.get("debug", False):
         cargs.append("-debug")
-    if params.get("force"):
+    if params.get("force", False):
         cargs.append("-force")
-    if params.get("nthreads") is not None:
+    if params.get("nthreads", None) is not None:
         cargs.extend([
             "-nthreads",
-            str(params.get("nthreads"))
+            str(params.get("nthreads", None))
         ])
-    if params.get("config") is not None:
-        cargs.extend([a for c in [dyn_cargs(s["@type"])(s, execution) for s in params.get("config")] for a in c])
-    if params.get("help"):
+    if params.get("config", None) is not None:
+        cargs.extend([a for c in [tckedit_config_cargs(s, execution) for s in params.get("config", None)] for a in c])
+    if params.get("help", False):
         cargs.append("-help")
-    if params.get("version"):
+    if params.get("version", False):
         cargs.append("-version")
-    cargs.extend([execution.input_file(f) for f in params.get("tracks_in")])
-    cargs.append(params.get("tracks_out"))
+    cargs.extend([execution.input_file(f) for f in params.get("tracks_in", None)])
+    cargs.append(params.get("tracks_out", None))
     return cargs
 
 
@@ -809,8 +934,8 @@ def tckedit_outputs(
     """
     ret = TckeditOutputs(
         root=execution.output_file("."),
-        tracks_out=execution.output_file(params.get("tracks_out")),
-        tck_weights_out=execution.output_file(params.get("tck_weights_out")) if (params.get("tck_weights_out") is not None) else None,
+        tracks_out=execution.output_file(params.get("tracks_out", None)),
+        tck_weights_out=execution.output_file(params.get("tck_weights_out", None)) if (params.get("tck_weights_out") is not None) else None,
     )
     return ret
 
@@ -978,19 +1103,7 @@ def tckedit(
 
 __all__ = [
     "TCKEDIT_METADATA",
-    "TckeditConfigParameters",
-    "TckeditExcludeParameters",
-    "TckeditIncludeOrderedParameters",
-    "TckeditIncludeParameters",
-    "TckeditMaskParameters",
     "TckeditOutputs",
-    "TckeditParameters",
-    "TckeditVariousFile1Parameters",
-    "TckeditVariousFile2Parameters",
-    "TckeditVariousFileParameters",
-    "TckeditVariousString1Parameters",
-    "TckeditVariousString2Parameters",
-    "TckeditVariousStringParameters",
     "tckedit",
     "tckedit_config_params",
     "tckedit_exclude_params",

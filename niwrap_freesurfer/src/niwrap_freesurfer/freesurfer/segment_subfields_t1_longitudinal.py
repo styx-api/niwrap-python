@@ -14,48 +14,22 @@ SEGMENT_SUBFIELDS_T1_LONGITUDINAL_METADATA = Metadata(
 
 
 SegmentSubfieldsT1LongitudinalParameters = typing.TypedDict('SegmentSubfieldsT1LongitudinalParameters', {
-    "@type": typing.Literal["freesurfer.SegmentSubfieldsT1Longitudinal"],
+    "@type": typing.NotRequired[typing.Literal["freesurfer/SegmentSubfieldsT1Longitudinal"]],
+    "subject_id": str,
+    "input_image": InputPathType,
+    "output_dir": str,
+})
+SegmentSubfieldsT1LongitudinalParametersTagged = typing.TypedDict('SegmentSubfieldsT1LongitudinalParametersTagged', {
+    "@type": typing.Literal["freesurfer/SegmentSubfieldsT1Longitudinal"],
     "subject_id": str,
     "input_image": InputPathType,
     "output_dir": str,
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "freesurfer.SegmentSubfieldsT1Longitudinal": segment_subfields_t1_longitudinal_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "freesurfer.SegmentSubfieldsT1Longitudinal": segment_subfields_t1_longitudinal_outputs,
-    }.get(t)
-
-
 class SegmentSubfieldsT1LongitudinalOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `segment_subfields_t1_longitudinal(...)`.
+    Output object returned when calling `SegmentSubfieldsT1LongitudinalParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -67,7 +41,7 @@ def segment_subfields_t1_longitudinal_params(
     subject_id: str,
     input_image: InputPathType,
     output_dir: str,
-) -> SegmentSubfieldsT1LongitudinalParameters:
+) -> SegmentSubfieldsT1LongitudinalParametersTagged:
     """
     Build parameters.
     
@@ -79,7 +53,7 @@ def segment_subfields_t1_longitudinal_params(
         Parameter dictionary
     """
     params = {
-        "@type": "freesurfer.SegmentSubfieldsT1Longitudinal",
+        "@type": "freesurfer/SegmentSubfieldsT1Longitudinal",
         "subject_id": subject_id,
         "input_image": input_image,
         "output_dir": output_dir,
@@ -102,9 +76,9 @@ def segment_subfields_t1_longitudinal_cargs(
     """
     cargs = []
     cargs.append("SegmentSubfieldsT1Longitudinal")
-    cargs.append(params.get("subject_id"))
-    cargs.append(execution.input_file(params.get("input_image")))
-    cargs.append(params.get("output_dir"))
+    cargs.append(params.get("subject_id", None))
+    cargs.append(execution.input_file(params.get("input_image", None)))
+    cargs.append(params.get("output_dir", None))
     return cargs
 
 
@@ -123,7 +97,7 @@ def segment_subfields_t1_longitudinal_outputs(
     """
     ret = SegmentSubfieldsT1LongitudinalOutputs(
         root=execution.output_file("."),
-        segmentation_output=execution.output_file(params.get("output_dir") + "/subfields_segmentation.nii.gz"),
+        segmentation_output=execution.output_file(params.get("output_dir", None) + "/subfields_segmentation.nii.gz"),
     )
     return ret
 
@@ -190,7 +164,6 @@ def segment_subfields_t1_longitudinal(
 __all__ = [
     "SEGMENT_SUBFIELDS_T1_LONGITUDINAL_METADATA",
     "SegmentSubfieldsT1LongitudinalOutputs",
-    "SegmentSubfieldsT1LongitudinalParameters",
     "segment_subfields_t1_longitudinal",
     "segment_subfields_t1_longitudinal_execute",
     "segment_subfields_t1_longitudinal_params",

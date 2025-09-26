@@ -14,7 +14,22 @@ NIFTI_TOOL_METADATA = Metadata(
 
 
 NiftiToolParameters = typing.TypedDict('NiftiToolParameters', {
-    "@type": typing.Literal["afni.nifti_tool"],
+    "@type": typing.NotRequired[typing.Literal["afni/nifti_tool"]],
+    "action": str,
+    "input_files": typing.NotRequired[list[InputPathType] | None],
+    "field": typing.NotRequired[str | None],
+    "mod_field": typing.NotRequired[str | None],
+    "prefix": typing.NotRequired[str | None],
+    "debug": typing.NotRequired[float | None],
+    "overwrite": bool,
+    "convert2dtype": typing.NotRequired[str | None],
+    "convert_fail_choice": typing.NotRequired[str | None],
+    "convert_verify": bool,
+    "add_comment_ext": typing.NotRequired[str | None],
+    "rm_ext": typing.NotRequired[str | None],
+})
+NiftiToolParametersTagged = typing.TypedDict('NiftiToolParametersTagged', {
+    "@type": typing.Literal["afni/nifti_tool"],
     "action": str,
     "input_files": typing.NotRequired[list[InputPathType] | None],
     "field": typing.NotRequired[str | None],
@@ -30,41 +45,9 @@ NiftiToolParameters = typing.TypedDict('NiftiToolParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "afni.nifti_tool": nifti_tool_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "afni.nifti_tool": nifti_tool_outputs,
-    }.get(t)
-
-
 class NiftiToolOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `nifti_tool(...)`.
+    Output object returned when calling `NiftiToolParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -85,7 +68,7 @@ def nifti_tool_params(
     convert_verify: bool = False,
     add_comment_ext: str | None = None,
     rm_ext: str | None = None,
-) -> NiftiToolParameters:
+) -> NiftiToolParametersTagged:
     """
     Build parameters.
     
@@ -106,7 +89,7 @@ def nifti_tool_params(
         Parameter dictionary
     """
     params = {
-        "@type": "afni.nifti_tool",
+        "@type": "afni/nifti_tool",
         "action": action,
         "overwrite": overwrite,
         "convert_verify": convert_verify,
@@ -147,55 +130,55 @@ def nifti_tool_cargs(
     """
     cargs = []
     cargs.append("nifti_tool")
-    cargs.append(params.get("action"))
-    if params.get("input_files") is not None:
+    cargs.append(params.get("action", None))
+    if params.get("input_files", None) is not None:
         cargs.extend([
             "-infiles",
-            *[execution.input_file(f) for f in params.get("input_files")]
+            *[execution.input_file(f) for f in params.get("input_files", None)]
         ])
-    if params.get("field") is not None:
+    if params.get("field", None) is not None:
         cargs.extend([
             "-field",
-            params.get("field")
+            params.get("field", None)
         ])
-    if params.get("mod_field") is not None:
+    if params.get("mod_field", None) is not None:
         cargs.extend([
             "-mod_field",
-            params.get("mod_field")
+            params.get("mod_field", None)
         ])
-    if params.get("prefix") is not None:
+    if params.get("prefix", None) is not None:
         cargs.extend([
             "-prefix",
-            params.get("prefix")
+            params.get("prefix", None)
         ])
-    if params.get("debug") is not None:
+    if params.get("debug", None) is not None:
         cargs.extend([
             "-debug",
-            str(params.get("debug"))
+            str(params.get("debug", None))
         ])
-    if params.get("overwrite"):
+    if params.get("overwrite", False):
         cargs.append("-overwrite")
-    if params.get("convert2dtype") is not None:
+    if params.get("convert2dtype", None) is not None:
         cargs.extend([
             "-convert2dtype",
-            params.get("convert2dtype")
+            params.get("convert2dtype", None)
         ])
-    if params.get("convert_fail_choice") is not None:
+    if params.get("convert_fail_choice", None) is not None:
         cargs.extend([
             "-convert_fail_choice",
-            params.get("convert_fail_choice")
+            params.get("convert_fail_choice", None)
         ])
-    if params.get("convert_verify"):
+    if params.get("convert_verify", False):
         cargs.append("-convert_verify")
-    if params.get("add_comment_ext") is not None:
+    if params.get("add_comment_ext", None) is not None:
         cargs.extend([
             "-add_comment_ext",
-            params.get("add_comment_ext")
+            params.get("add_comment_ext", None)
         ])
-    if params.get("rm_ext") is not None:
+    if params.get("rm_ext", None) is not None:
         cargs.extend([
             "-rm_ext",
-            params.get("rm_ext")
+            params.get("rm_ext", None)
         ])
     return cargs
 
@@ -215,7 +198,7 @@ def nifti_tool_outputs(
     """
     ret = NiftiToolOutputs(
         root=execution.output_file("."),
-        output_file=execution.output_file(params.get("prefix") + ".nii") if (params.get("prefix") is not None) else None,
+        output_file=execution.output_file(params.get("prefix", None) + ".nii") if (params.get("prefix") is not None) else None,
     )
     return ret
 
@@ -309,7 +292,6 @@ def nifti_tool(
 __all__ = [
     "NIFTI_TOOL_METADATA",
     "NiftiToolOutputs",
-    "NiftiToolParameters",
     "nifti_tool",
     "nifti_tool_execute",
     "nifti_tool_params",

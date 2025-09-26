@@ -14,7 +14,26 @@ FSL_TSPLOT_METADATA = Metadata(
 
 
 FslTsplotParameters = typing.TypedDict('FslTsplotParameters', {
-    "@type": typing.Literal["fsl.fsl_tsplot"],
+    "@type": typing.NotRequired[typing.Literal["fsl/fsl_tsplot"]],
+    "input_files": str,
+    "output_file": str,
+    "title": typing.NotRequired[str | None],
+    "legend_file": typing.NotRequired[str | None],
+    "labels": typing.NotRequired[str | None],
+    "ymin": typing.NotRequired[float | None],
+    "ymax": typing.NotRequired[float | None],
+    "xlabel": typing.NotRequired[str | None],
+    "ylabel": typing.NotRequired[str | None],
+    "height": typing.NotRequired[float | None],
+    "width": typing.NotRequired[float | None],
+    "unit": typing.NotRequired[float | None],
+    "precision": typing.NotRequired[float | None],
+    "sci_flag": bool,
+    "start_col": typing.NotRequired[float | None],
+    "end_col": typing.NotRequired[float | None],
+})
+FslTsplotParametersTagged = typing.TypedDict('FslTsplotParametersTagged', {
+    "@type": typing.Literal["fsl/fsl_tsplot"],
     "input_files": str,
     "output_file": str,
     "title": typing.NotRequired[str | None],
@@ -34,41 +53,9 @@ FslTsplotParameters = typing.TypedDict('FslTsplotParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "fsl.fsl_tsplot": fsl_tsplot_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "fsl.fsl_tsplot": fsl_tsplot_outputs,
-    }.get(t)
-
-
 class FslTsplotOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `fsl_tsplot(...)`.
+    Output object returned when calling `FslTsplotParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -93,7 +80,7 @@ def fsl_tsplot_params(
     sci_flag: bool = False,
     start_col: float | None = None,
     end_col: float | None = None,
-) -> FslTsplotParameters:
+) -> FslTsplotParametersTagged:
     """
     Build parameters.
     
@@ -119,7 +106,7 @@ def fsl_tsplot_params(
         Parameter dictionary
     """
     params = {
-        "@type": "fsl.fsl_tsplot",
+        "@type": "fsl/fsl_tsplot",
         "input_files": input_files,
         "output_file": output_file,
         "sci_flag": sci_flag,
@@ -170,78 +157,78 @@ def fsl_tsplot_cargs(
     cargs.append("fsl_tsplot")
     cargs.extend([
         "-i",
-        params.get("input_files")
+        params.get("input_files", None)
     ])
     cargs.extend([
         "-o",
-        params.get("output_file")
+        params.get("output_file", None)
     ])
-    if params.get("title") is not None:
+    if params.get("title", None) is not None:
         cargs.extend([
             "-t",
-            params.get("title")
+            params.get("title", None)
         ])
-    if params.get("legend_file") is not None:
+    if params.get("legend_file", None) is not None:
         cargs.extend([
             "-l",
-            params.get("legend_file")
+            params.get("legend_file", None)
         ])
-    if params.get("labels") is not None:
+    if params.get("labels", None) is not None:
         cargs.extend([
             "-a",
-            params.get("labels")
+            params.get("labels", None)
         ])
-    if params.get("ymin") is not None:
+    if params.get("ymin", None) is not None:
         cargs.extend([
             "--ymin",
-            str(params.get("ymin"))
+            str(params.get("ymin", None))
         ])
-    if params.get("ymax") is not None:
+    if params.get("ymax", None) is not None:
         cargs.extend([
             "--ymax",
-            str(params.get("ymax"))
+            str(params.get("ymax", None))
         ])
-    if params.get("xlabel") is not None:
+    if params.get("xlabel", None) is not None:
         cargs.extend([
             "-x",
-            params.get("xlabel")
+            params.get("xlabel", None)
         ])
-    if params.get("ylabel") is not None:
+    if params.get("ylabel", None) is not None:
         cargs.extend([
             "-y",
-            params.get("ylabel")
+            params.get("ylabel", None)
         ])
-    if params.get("height") is not None:
+    if params.get("height", None) is not None:
         cargs.extend([
             "-h",
-            str(params.get("height"))
+            str(params.get("height", None))
         ])
-    if params.get("width") is not None:
+    if params.get("width", None) is not None:
         cargs.extend([
             "-w",
-            str(params.get("width"))
+            str(params.get("width", None))
         ])
-    if params.get("unit") is not None:
+    if params.get("unit", None) is not None:
         cargs.extend([
             "-u",
-            str(params.get("unit"))
+            str(params.get("unit", None))
         ])
-    if params.get("precision") is not None:
+    if params.get("precision", None) is not None:
         cargs.extend([
             "--precision",
-            str(params.get("precision"))
+            str(params.get("precision", None))
         ])
-    if params.get("sci_flag"):
+    if params.get("sci_flag", False):
         cargs.append("--sci")
-    if params.get("start_col") is not None:
+    if params.get("start_col", None) is not None:
         cargs.extend([
             "--start",
-            str(params.get("start_col"))
+            str(params.get("start_col", None))
         ])
-    if params.get("end_col") is not None:
+    if params.get("end_col", None) is not None:
         cargs.extend([
             "--finish",
-            str(params.get("end_col"))
+            str(params.get("end_col", None))
         ])
     return cargs
 
@@ -261,7 +248,7 @@ def fsl_tsplot_outputs(
     """
     ret = FslTsplotOutputs(
         root=execution.output_file("."),
-        output_png=execution.output_file(params.get("output_file")),
+        output_png=execution.output_file(params.get("output_file", None)),
     )
     return ret
 
@@ -368,7 +355,6 @@ def fsl_tsplot(
 __all__ = [
     "FSL_TSPLOT_METADATA",
     "FslTsplotOutputs",
-    "FslTsplotParameters",
     "fsl_tsplot",
     "fsl_tsplot_execute",
     "fsl_tsplot_params",

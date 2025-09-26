@@ -14,47 +14,22 @@ FSLCPGEOM_METADATA = Metadata(
 
 
 FslcpgeomParameters = typing.TypedDict('FslcpgeomParameters', {
-    "@type": typing.Literal["fsl.fslcpgeom"],
+    "@type": typing.NotRequired[typing.Literal["fsl/fslcpgeom"]],
+    "source_file": InputPathType,
+    "destination_file": InputPathType,
+    "dimensions_flag": bool,
+})
+FslcpgeomParametersTagged = typing.TypedDict('FslcpgeomParametersTagged', {
+    "@type": typing.Literal["fsl/fslcpgeom"],
     "source_file": InputPathType,
     "destination_file": InputPathType,
     "dimensions_flag": bool,
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "fsl.fslcpgeom": fslcpgeom_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-    }.get(t)
-
-
 class FslcpgeomOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `fslcpgeom(...)`.
+    Output object returned when calling `FslcpgeomParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -64,7 +39,7 @@ def fslcpgeom_params(
     source_file: InputPathType,
     destination_file: InputPathType,
     dimensions_flag: bool = False,
-) -> FslcpgeomParameters:
+) -> FslcpgeomParametersTagged:
     """
     Build parameters.
     
@@ -76,7 +51,7 @@ def fslcpgeom_params(
         Parameter dictionary
     """
     params = {
-        "@type": "fsl.fslcpgeom",
+        "@type": "fsl/fslcpgeom",
         "source_file": source_file,
         "destination_file": destination_file,
         "dimensions_flag": dimensions_flag,
@@ -99,9 +74,9 @@ def fslcpgeom_cargs(
     """
     cargs = []
     cargs.append("fslcpgeom")
-    cargs.append(execution.input_file(params.get("source_file")))
-    cargs.append(execution.input_file(params.get("destination_file")))
-    if params.get("dimensions_flag"):
+    cargs.append(execution.input_file(params.get("source_file", None)))
+    cargs.append(execution.input_file(params.get("destination_file", None)))
+    if params.get("dimensions_flag", False):
         cargs.append("-d")
     return cargs
 
@@ -187,7 +162,6 @@ def fslcpgeom(
 __all__ = [
     "FSLCPGEOM_METADATA",
     "FslcpgeomOutputs",
-    "FslcpgeomParameters",
     "fslcpgeom",
     "fslcpgeom_execute",
     "fslcpgeom_params",

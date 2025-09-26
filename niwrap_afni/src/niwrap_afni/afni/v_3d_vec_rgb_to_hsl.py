@@ -14,7 +14,14 @@ V_3D_VEC_RGB_TO_HSL_METADATA = Metadata(
 
 
 V3dVecRgbToHslParameters = typing.TypedDict('V3dVecRgbToHslParameters', {
-    "@type": typing.Literal["afni.3dVecRGB_to_HSL"],
+    "@type": typing.NotRequired[typing.Literal["afni/3dVecRGB_to_HSL"]],
+    "prefix": str,
+    "in_vec": InputPathType,
+    "mask": typing.NotRequired[InputPathType | None],
+    "in_scal": typing.NotRequired[InputPathType | None],
+})
+V3dVecRgbToHslParametersTagged = typing.TypedDict('V3dVecRgbToHslParametersTagged', {
+    "@type": typing.Literal["afni/3dVecRGB_to_HSL"],
     "prefix": str,
     "in_vec": InputPathType,
     "mask": typing.NotRequired[InputPathType | None],
@@ -22,41 +29,9 @@ V3dVecRgbToHslParameters = typing.TypedDict('V3dVecRgbToHslParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "afni.3dVecRGB_to_HSL": v_3d_vec_rgb_to_hsl_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "afni.3dVecRGB_to_HSL": v_3d_vec_rgb_to_hsl_outputs,
-    }.get(t)
-
-
 class V3dVecRgbToHslOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `v_3d_vec_rgb_to_hsl(...)`.
+    Output object returned when calling `V3dVecRgbToHslParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -69,7 +44,7 @@ def v_3d_vec_rgb_to_hsl_params(
     in_vec: InputPathType,
     mask: InputPathType | None = None,
     in_scal: InputPathType | None = None,
-) -> V3dVecRgbToHslParameters:
+) -> V3dVecRgbToHslParametersTagged:
     """
     Build parameters.
     
@@ -86,7 +61,7 @@ def v_3d_vec_rgb_to_hsl_params(
         Parameter dictionary
     """
     params = {
-        "@type": "afni.3dVecRGB_to_HSL",
+        "@type": "afni/3dVecRGB_to_HSL",
         "prefix": prefix,
         "in_vec": in_vec,
     }
@@ -114,21 +89,21 @@ def v_3d_vec_rgb_to_hsl_cargs(
     cargs.append("3dVecRGB_to_HSL")
     cargs.extend([
         "-prefix",
-        params.get("prefix")
+        params.get("prefix", None)
     ])
     cargs.extend([
         "-in_vec",
-        execution.input_file(params.get("in_vec"))
+        execution.input_file(params.get("in_vec", None))
     ])
-    if params.get("mask") is not None:
+    if params.get("mask", None) is not None:
         cargs.extend([
             "-mask",
-            execution.input_file(params.get("mask"))
+            execution.input_file(params.get("mask", None))
         ])
-    if params.get("in_scal") is not None:
+    if params.get("in_scal", None) is not None:
         cargs.extend([
             "-in_scal",
-            execution.input_file(params.get("in_scal"))
+            execution.input_file(params.get("in_scal", None))
         ])
     return cargs
 
@@ -148,7 +123,7 @@ def v_3d_vec_rgb_to_hsl_outputs(
     """
     ret = V3dVecRgbToHslOutputs(
         root=execution.output_file("."),
-        output_hsl_dataset=execution.output_file(params.get("prefix") + "_HSL.HEAD"),
+        output_hsl_dataset=execution.output_file(params.get("prefix", None) + "_HSL.HEAD"),
     )
     return ret
 
@@ -223,7 +198,6 @@ def v_3d_vec_rgb_to_hsl(
 
 __all__ = [
     "V3dVecRgbToHslOutputs",
-    "V3dVecRgbToHslParameters",
     "V_3D_VEC_RGB_TO_HSL_METADATA",
     "v_3d_vec_rgb_to_hsl",
     "v_3d_vec_rgb_to_hsl_execute",

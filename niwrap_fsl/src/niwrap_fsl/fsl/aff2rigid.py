@@ -14,46 +14,20 @@ AFF2RIGID_METADATA = Metadata(
 
 
 Aff2rigidParameters = typing.TypedDict('Aff2rigidParameters', {
-    "@type": typing.Literal["fsl.aff2rigid"],
+    "@type": typing.NotRequired[typing.Literal["fsl/aff2rigid"]],
+    "input_transform": InputPathType,
+    "output_transform": str,
+})
+Aff2rigidParametersTagged = typing.TypedDict('Aff2rigidParametersTagged', {
+    "@type": typing.Literal["fsl/aff2rigid"],
     "input_transform": InputPathType,
     "output_transform": str,
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "fsl.aff2rigid": aff2rigid_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-    }.get(t)
-
-
 class Aff2rigidOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `aff2rigid(...)`.
+    Output object returned when calling `Aff2rigidParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -62,7 +36,7 @@ class Aff2rigidOutputs(typing.NamedTuple):
 def aff2rigid_params(
     input_transform: InputPathType,
     output_transform: str,
-) -> Aff2rigidParameters:
+) -> Aff2rigidParametersTagged:
     """
     Build parameters.
     
@@ -75,7 +49,7 @@ def aff2rigid_params(
         Parameter dictionary
     """
     params = {
-        "@type": "fsl.aff2rigid",
+        "@type": "fsl/aff2rigid",
         "input_transform": input_transform,
         "output_transform": output_transform,
     }
@@ -97,8 +71,8 @@ def aff2rigid_cargs(
     """
     cargs = []
     cargs.append("aff2rigid")
-    cargs.append(execution.input_file(params.get("input_transform")))
-    cargs.append(params.get("output_transform"))
+    cargs.append(execution.input_file(params.get("input_transform", None)))
+    cargs.append(params.get("output_transform", None))
     return cargs
 
 
@@ -182,7 +156,6 @@ def aff2rigid(
 __all__ = [
     "AFF2RIGID_METADATA",
     "Aff2rigidOutputs",
-    "Aff2rigidParameters",
     "aff2rigid",
     "aff2rigid_execute",
     "aff2rigid_params",

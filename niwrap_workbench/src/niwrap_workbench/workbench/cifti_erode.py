@@ -14,28 +14,55 @@ CIFTI_ERODE_METADATA = Metadata(
 
 
 CiftiErodeLeftSurfaceParameters = typing.TypedDict('CiftiErodeLeftSurfaceParameters', {
-    "@type": typing.Literal["workbench.cifti-erode.left_surface"],
+    "@type": typing.NotRequired[typing.Literal["left_surface"]],
+    "surface": InputPathType,
+    "opt_left_corrected_areas_area_metric": typing.NotRequired[InputPathType | None],
+})
+CiftiErodeLeftSurfaceParametersTagged = typing.TypedDict('CiftiErodeLeftSurfaceParametersTagged', {
+    "@type": typing.Literal["left_surface"],
     "surface": InputPathType,
     "opt_left_corrected_areas_area_metric": typing.NotRequired[InputPathType | None],
 })
 
 
 CiftiErodeRightSurfaceParameters = typing.TypedDict('CiftiErodeRightSurfaceParameters', {
-    "@type": typing.Literal["workbench.cifti-erode.right_surface"],
+    "@type": typing.NotRequired[typing.Literal["right_surface"]],
+    "surface": InputPathType,
+    "opt_right_corrected_areas_area_metric": typing.NotRequired[InputPathType | None],
+})
+CiftiErodeRightSurfaceParametersTagged = typing.TypedDict('CiftiErodeRightSurfaceParametersTagged', {
+    "@type": typing.Literal["right_surface"],
     "surface": InputPathType,
     "opt_right_corrected_areas_area_metric": typing.NotRequired[InputPathType | None],
 })
 
 
 CiftiErodeCerebellumSurfaceParameters = typing.TypedDict('CiftiErodeCerebellumSurfaceParameters', {
-    "@type": typing.Literal["workbench.cifti-erode.cerebellum_surface"],
+    "@type": typing.NotRequired[typing.Literal["cerebellum_surface"]],
+    "surface": InputPathType,
+    "opt_cerebellum_corrected_areas_area_metric": typing.NotRequired[InputPathType | None],
+})
+CiftiErodeCerebellumSurfaceParametersTagged = typing.TypedDict('CiftiErodeCerebellumSurfaceParametersTagged', {
+    "@type": typing.Literal["cerebellum_surface"],
     "surface": InputPathType,
     "opt_cerebellum_corrected_areas_area_metric": typing.NotRequired[InputPathType | None],
 })
 
 
 CiftiErodeParameters = typing.TypedDict('CiftiErodeParameters', {
-    "@type": typing.Literal["workbench.cifti-erode"],
+    "@type": typing.NotRequired[typing.Literal["workbench/cifti-erode"]],
+    "cifti_in": InputPathType,
+    "direction": str,
+    "surface_distance": float,
+    "volume_distance": float,
+    "cifti_out": str,
+    "left_surface": typing.NotRequired[CiftiErodeLeftSurfaceParameters | None],
+    "right_surface": typing.NotRequired[CiftiErodeRightSurfaceParameters | None],
+    "cerebellum_surface": typing.NotRequired[CiftiErodeCerebellumSurfaceParameters | None],
+    "opt_merged_volume": bool,
+})
+CiftiErodeParametersTagged = typing.TypedDict('CiftiErodeParametersTagged', {
+    "@type": typing.Literal["workbench/cifti-erode"],
     "cifti_in": InputPathType,
     "direction": str,
     "surface_distance": float,
@@ -48,45 +75,10 @@ CiftiErodeParameters = typing.TypedDict('CiftiErodeParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "workbench.cifti-erode": cifti_erode_cargs,
-        "workbench.cifti-erode.left_surface": cifti_erode_left_surface_cargs,
-        "workbench.cifti-erode.right_surface": cifti_erode_right_surface_cargs,
-        "workbench.cifti-erode.cerebellum_surface": cifti_erode_cerebellum_surface_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "workbench.cifti-erode": cifti_erode_outputs,
-    }.get(t)
-
-
 def cifti_erode_left_surface_params(
     surface: InputPathType,
     opt_left_corrected_areas_area_metric: InputPathType | None = None,
-) -> CiftiErodeLeftSurfaceParameters:
+) -> CiftiErodeLeftSurfaceParametersTagged:
     """
     Build parameters.
     
@@ -99,7 +91,7 @@ def cifti_erode_left_surface_params(
         Parameter dictionary
     """
     params = {
-        "@type": "workbench.cifti-erode.left_surface",
+        "@type": "left_surface",
         "surface": surface,
     }
     if opt_left_corrected_areas_area_metric is not None:
@@ -122,11 +114,11 @@ def cifti_erode_left_surface_cargs(
     """
     cargs = []
     cargs.append("-left-surface")
-    cargs.append(execution.input_file(params.get("surface")))
-    if params.get("opt_left_corrected_areas_area_metric") is not None:
+    cargs.append(execution.input_file(params.get("surface", None)))
+    if params.get("opt_left_corrected_areas_area_metric", None) is not None:
         cargs.extend([
             "-left-corrected-areas",
-            execution.input_file(params.get("opt_left_corrected_areas_area_metric"))
+            execution.input_file(params.get("opt_left_corrected_areas_area_metric", None))
         ])
     return cargs
 
@@ -134,7 +126,7 @@ def cifti_erode_left_surface_cargs(
 def cifti_erode_right_surface_params(
     surface: InputPathType,
     opt_right_corrected_areas_area_metric: InputPathType | None = None,
-) -> CiftiErodeRightSurfaceParameters:
+) -> CiftiErodeRightSurfaceParametersTagged:
     """
     Build parameters.
     
@@ -147,7 +139,7 @@ def cifti_erode_right_surface_params(
         Parameter dictionary
     """
     params = {
-        "@type": "workbench.cifti-erode.right_surface",
+        "@type": "right_surface",
         "surface": surface,
     }
     if opt_right_corrected_areas_area_metric is not None:
@@ -170,11 +162,11 @@ def cifti_erode_right_surface_cargs(
     """
     cargs = []
     cargs.append("-right-surface")
-    cargs.append(execution.input_file(params.get("surface")))
-    if params.get("opt_right_corrected_areas_area_metric") is not None:
+    cargs.append(execution.input_file(params.get("surface", None)))
+    if params.get("opt_right_corrected_areas_area_metric", None) is not None:
         cargs.extend([
             "-right-corrected-areas",
-            execution.input_file(params.get("opt_right_corrected_areas_area_metric"))
+            execution.input_file(params.get("opt_right_corrected_areas_area_metric", None))
         ])
     return cargs
 
@@ -182,7 +174,7 @@ def cifti_erode_right_surface_cargs(
 def cifti_erode_cerebellum_surface_params(
     surface: InputPathType,
     opt_cerebellum_corrected_areas_area_metric: InputPathType | None = None,
-) -> CiftiErodeCerebellumSurfaceParameters:
+) -> CiftiErodeCerebellumSurfaceParametersTagged:
     """
     Build parameters.
     
@@ -195,7 +187,7 @@ def cifti_erode_cerebellum_surface_params(
         Parameter dictionary
     """
     params = {
-        "@type": "workbench.cifti-erode.cerebellum_surface",
+        "@type": "cerebellum_surface",
         "surface": surface,
     }
     if opt_cerebellum_corrected_areas_area_metric is not None:
@@ -218,18 +210,18 @@ def cifti_erode_cerebellum_surface_cargs(
     """
     cargs = []
     cargs.append("-cerebellum-surface")
-    cargs.append(execution.input_file(params.get("surface")))
-    if params.get("opt_cerebellum_corrected_areas_area_metric") is not None:
+    cargs.append(execution.input_file(params.get("surface", None)))
+    if params.get("opt_cerebellum_corrected_areas_area_metric", None) is not None:
         cargs.extend([
             "-cerebellum-corrected-areas",
-            execution.input_file(params.get("opt_cerebellum_corrected_areas_area_metric"))
+            execution.input_file(params.get("opt_cerebellum_corrected_areas_area_metric", None))
         ])
     return cargs
 
 
 class CiftiErodeOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `cifti_erode(...)`.
+    Output object returned when calling `CiftiErodeParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -247,7 +239,7 @@ def cifti_erode_params(
     right_surface: CiftiErodeRightSurfaceParameters | None = None,
     cerebellum_surface: CiftiErodeCerebellumSurfaceParameters | None = None,
     opt_merged_volume: bool = False,
-) -> CiftiErodeParameters:
+) -> CiftiErodeParametersTagged:
     """
     Build parameters.
     
@@ -266,7 +258,7 @@ def cifti_erode_params(
         Parameter dictionary
     """
     params = {
-        "@type": "workbench.cifti-erode",
+        "@type": "workbench/cifti-erode",
         "cifti_in": cifti_in,
         "direction": direction,
         "surface_distance": surface_distance,
@@ -299,18 +291,18 @@ def cifti_erode_cargs(
     cargs = []
     cargs.append("wb_command")
     cargs.append("-cifti-erode")
-    cargs.append(execution.input_file(params.get("cifti_in")))
-    cargs.append(params.get("direction"))
-    cargs.append(str(params.get("surface_distance")))
-    cargs.append(str(params.get("volume_distance")))
-    cargs.append(params.get("cifti_out"))
-    if params.get("left_surface") is not None:
-        cargs.extend(dyn_cargs(params.get("left_surface")["@type"])(params.get("left_surface"), execution))
-    if params.get("right_surface") is not None:
-        cargs.extend(dyn_cargs(params.get("right_surface")["@type"])(params.get("right_surface"), execution))
-    if params.get("cerebellum_surface") is not None:
-        cargs.extend(dyn_cargs(params.get("cerebellum_surface")["@type"])(params.get("cerebellum_surface"), execution))
-    if params.get("opt_merged_volume"):
+    cargs.append(execution.input_file(params.get("cifti_in", None)))
+    cargs.append(params.get("direction", None))
+    cargs.append(str(params.get("surface_distance", None)))
+    cargs.append(str(params.get("volume_distance", None)))
+    cargs.append(params.get("cifti_out", None))
+    if params.get("left_surface", None) is not None:
+        cargs.extend(cifti_erode_left_surface_cargs(params.get("left_surface", None), execution))
+    if params.get("right_surface", None) is not None:
+        cargs.extend(cifti_erode_right_surface_cargs(params.get("right_surface", None), execution))
+    if params.get("cerebellum_surface", None) is not None:
+        cargs.extend(cifti_erode_cerebellum_surface_cargs(params.get("cerebellum_surface", None), execution))
+    if params.get("opt_merged_volume", False):
         cargs.append("-merged-volume")
     return cargs
 
@@ -330,7 +322,7 @@ def cifti_erode_outputs(
     """
     ret = CiftiErodeOutputs(
         root=execution.output_file("."),
-        cifti_out=execution.output_file(params.get("cifti_out")),
+        cifti_out=execution.output_file(params.get("cifti_out", None)),
     )
     return ret
 
@@ -433,11 +425,7 @@ def cifti_erode(
 
 __all__ = [
     "CIFTI_ERODE_METADATA",
-    "CiftiErodeCerebellumSurfaceParameters",
-    "CiftiErodeLeftSurfaceParameters",
     "CiftiErodeOutputs",
-    "CiftiErodeParameters",
-    "CiftiErodeRightSurfaceParameters",
     "cifti_erode",
     "cifti_erode_cerebellum_surface_params",
     "cifti_erode_execute",

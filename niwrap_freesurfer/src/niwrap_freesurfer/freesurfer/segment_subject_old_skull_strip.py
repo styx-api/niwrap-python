@@ -14,7 +14,16 @@ SEGMENT_SUBJECT_OLD_SKULL_STRIP_METADATA = Metadata(
 
 
 SegmentSubjectOldSkullStripParameters = typing.TypedDict('SegmentSubjectOldSkullStripParameters', {
-    "@type": typing.Literal["freesurfer.segment_subject_old_skull_strip"],
+    "@type": typing.NotRequired[typing.Literal["freesurfer/segment_subject_old_skull_strip"]],
+    "input_volume": InputPathType,
+    "output_xfm": str,
+    "log_file": typing.NotRequired[str | None],
+    "help_flag": bool,
+    "debug_flag": bool,
+    "version_flag": bool,
+})
+SegmentSubjectOldSkullStripParametersTagged = typing.TypedDict('SegmentSubjectOldSkullStripParametersTagged', {
+    "@type": typing.Literal["freesurfer/segment_subject_old_skull_strip"],
     "input_volume": InputPathType,
     "output_xfm": str,
     "log_file": typing.NotRequired[str | None],
@@ -24,41 +33,9 @@ SegmentSubjectOldSkullStripParameters = typing.TypedDict('SegmentSubjectOldSkull
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "freesurfer.segment_subject_old_skull_strip": segment_subject_old_skull_strip_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "freesurfer.segment_subject_old_skull_strip": segment_subject_old_skull_strip_outputs,
-    }.get(t)
-
-
 class SegmentSubjectOldSkullStripOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `segment_subject_old_skull_strip(...)`.
+    Output object returned when calling `SegmentSubjectOldSkullStripParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -75,7 +52,7 @@ def segment_subject_old_skull_strip_params(
     help_flag: bool = False,
     debug_flag: bool = False,
     version_flag: bool = False,
-) -> SegmentSubjectOldSkullStripParameters:
+) -> SegmentSubjectOldSkullStripParametersTagged:
     """
     Build parameters.
     
@@ -90,7 +67,7 @@ def segment_subject_old_skull_strip_params(
         Parameter dictionary
     """
     params = {
-        "@type": "freesurfer.segment_subject_old_skull_strip",
+        "@type": "freesurfer/segment_subject_old_skull_strip",
         "input_volume": input_volume,
         "output_xfm": output_xfm,
         "help_flag": help_flag,
@@ -119,22 +96,22 @@ def segment_subject_old_skull_strip_cargs(
     cargs.append("segment_subject_old_skull_strip")
     cargs.extend([
         "-i",
-        execution.input_file(params.get("input_volume"))
+        execution.input_file(params.get("input_volume", None))
     ])
     cargs.extend([
         "-xfm",
-        params.get("output_xfm")
+        params.get("output_xfm", None)
     ])
-    if params.get("log_file") is not None:
+    if params.get("log_file", None) is not None:
         cargs.extend([
             "--log",
-            params.get("log_file")
+            params.get("log_file", None)
         ])
-    if params.get("help_flag"):
+    if params.get("help_flag", False):
         cargs.append("--help")
-    if params.get("debug_flag"):
+    if params.get("debug_flag", False):
         cargs.append("--debug")
-    if params.get("version_flag"):
+    if params.get("version_flag", False):
         cargs.append("--version")
     return cargs
 
@@ -154,8 +131,8 @@ def segment_subject_old_skull_strip_outputs(
     """
     ret = SegmentSubjectOldSkullStripOutputs(
         root=execution.output_file("."),
-        output_xfm_file=execution.output_file(params.get("output_xfm")),
-        log_output_file=execution.output_file(params.get("log_file")) if (params.get("log_file") is not None) else None,
+        output_xfm_file=execution.output_file(params.get("output_xfm", None)),
+        log_output_file=execution.output_file(params.get("log_file", None)) if (params.get("log_file") is not None) else None,
     )
     return ret
 
@@ -233,7 +210,6 @@ def segment_subject_old_skull_strip(
 __all__ = [
     "SEGMENT_SUBJECT_OLD_SKULL_STRIP_METADATA",
     "SegmentSubjectOldSkullStripOutputs",
-    "SegmentSubjectOldSkullStripParameters",
     "segment_subject_old_skull_strip",
     "segment_subject_old_skull_strip_execute",
     "segment_subject_old_skull_strip_params",

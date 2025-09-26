@@ -14,7 +14,14 @@ CIFTI_REORDER_METADATA = Metadata(
 
 
 CiftiReorderParameters = typing.TypedDict('CiftiReorderParameters', {
-    "@type": typing.Literal["workbench.cifti-reorder"],
+    "@type": typing.NotRequired[typing.Literal["workbench/cifti-reorder"]],
+    "cifti_in": InputPathType,
+    "direction": str,
+    "reorder_list": str,
+    "cifti_out": str,
+})
+CiftiReorderParametersTagged = typing.TypedDict('CiftiReorderParametersTagged', {
+    "@type": typing.Literal["workbench/cifti-reorder"],
     "cifti_in": InputPathType,
     "direction": str,
     "reorder_list": str,
@@ -22,41 +29,9 @@ CiftiReorderParameters = typing.TypedDict('CiftiReorderParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "workbench.cifti-reorder": cifti_reorder_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "workbench.cifti-reorder": cifti_reorder_outputs,
-    }.get(t)
-
-
 class CiftiReorderOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `cifti_reorder(...)`.
+    Output object returned when calling `CiftiReorderParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -69,7 +44,7 @@ def cifti_reorder_params(
     direction: str,
     reorder_list: str,
     cifti_out: str,
-) -> CiftiReorderParameters:
+) -> CiftiReorderParametersTagged:
     """
     Build parameters.
     
@@ -82,7 +57,7 @@ def cifti_reorder_params(
         Parameter dictionary
     """
     params = {
-        "@type": "workbench.cifti-reorder",
+        "@type": "workbench/cifti-reorder",
         "cifti_in": cifti_in,
         "direction": direction,
         "reorder_list": reorder_list,
@@ -107,10 +82,10 @@ def cifti_reorder_cargs(
     cargs = []
     cargs.append("wb_command")
     cargs.append("-cifti-reorder")
-    cargs.append(execution.input_file(params.get("cifti_in")))
-    cargs.append(params.get("direction"))
-    cargs.append(params.get("reorder_list"))
-    cargs.append(params.get("cifti_out"))
+    cargs.append(execution.input_file(params.get("cifti_in", None)))
+    cargs.append(params.get("direction", None))
+    cargs.append(params.get("reorder_list", None))
+    cargs.append(params.get("cifti_out", None))
     return cargs
 
 
@@ -129,7 +104,7 @@ def cifti_reorder_outputs(
     """
     ret = CiftiReorderOutputs(
         root=execution.output_file("."),
-        cifti_out=execution.output_file(params.get("cifti_out")),
+        cifti_out=execution.output_file(params.get("cifti_out", None)),
     )
     return ret
 
@@ -217,7 +192,6 @@ def cifti_reorder(
 __all__ = [
     "CIFTI_REORDER_METADATA",
     "CiftiReorderOutputs",
-    "CiftiReorderParameters",
     "cifti_reorder",
     "cifti_reorder_execute",
     "cifti_reorder_params",

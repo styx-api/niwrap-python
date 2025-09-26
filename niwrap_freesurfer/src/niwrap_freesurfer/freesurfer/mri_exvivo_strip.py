@@ -14,7 +14,22 @@ MRI_EXVIVO_STRIP_METADATA = Metadata(
 
 
 MriExvivoStripParameters = typing.TypedDict('MriExvivoStripParameters', {
-    "@type": typing.Literal["freesurfer.mri_exvivo_strip"],
+    "@type": typing.NotRequired[typing.Literal["freesurfer/mri_exvivo_strip"]],
+    "invol": InputPathType,
+    "outvol": str,
+    "hemi": str,
+    "pred": typing.NotRequired[InputPathType | None],
+    "norm": typing.NotRequired[InputPathType | None],
+    "fv": bool,
+    "uthresh": typing.NotRequired[float | None],
+    "border": typing.NotRequired[float | None],
+    "multichannel": bool,
+    "model": typing.NotRequired[InputPathType | None],
+    "wts": typing.NotRequired[InputPathType | None],
+    "gpu": typing.NotRequired[float | None],
+})
+MriExvivoStripParametersTagged = typing.TypedDict('MriExvivoStripParametersTagged', {
+    "@type": typing.Literal["freesurfer/mri_exvivo_strip"],
     "invol": InputPathType,
     "outvol": str,
     "hemi": str,
@@ -30,41 +45,9 @@ MriExvivoStripParameters = typing.TypedDict('MriExvivoStripParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "freesurfer.mri_exvivo_strip": mri_exvivo_strip_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "freesurfer.mri_exvivo_strip": mri_exvivo_strip_outputs,
-    }.get(t)
-
-
 class MriExvivoStripOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `mri_exvivo_strip(...)`.
+    Output object returned when calling `MriExvivoStripParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -89,7 +72,7 @@ def mri_exvivo_strip_params(
     model: InputPathType | None = None,
     wts: InputPathType | None = None,
     gpu: float | None = None,
-) -> MriExvivoStripParameters:
+) -> MriExvivoStripParametersTagged:
     """
     Build parameters.
     
@@ -110,7 +93,7 @@ def mri_exvivo_strip_params(
         Parameter dictionary
     """
     params = {
-        "@type": "freesurfer.mri_exvivo_strip",
+        "@type": "freesurfer/mri_exvivo_strip",
         "invol": invol,
         "outvol": outvol,
         "hemi": hemi,
@@ -151,54 +134,54 @@ def mri_exvivo_strip_cargs(
     cargs.append("mri_exvivo_strip")
     cargs.extend([
         "-i",
-        execution.input_file(params.get("invol"))
+        execution.input_file(params.get("invol", None))
     ])
     cargs.extend([
         "-o",
-        params.get("outvol")
+        params.get("outvol", None)
     ])
     cargs.extend([
         "--hemi",
-        params.get("hemi")
+        params.get("hemi", None)
     ])
-    if params.get("pred") is not None:
+    if params.get("pred", None) is not None:
         cargs.extend([
             "--pred",
-            execution.input_file(params.get("pred"))
+            execution.input_file(params.get("pred", None))
         ])
-    if params.get("norm") is not None:
+    if params.get("norm", None) is not None:
         cargs.extend([
             "--norm",
-            execution.input_file(params.get("norm"))
+            execution.input_file(params.get("norm", None))
         ])
-    if params.get("fv"):
+    if params.get("fv", False):
         cargs.append("--fv")
-    if params.get("uthresh") is not None:
+    if params.get("uthresh", None) is not None:
         cargs.extend([
             "--uthresh",
-            str(params.get("uthresh"))
+            str(params.get("uthresh", None))
         ])
-    if params.get("border") is not None:
+    if params.get("border", None) is not None:
         cargs.extend([
             "--border",
-            str(params.get("border"))
+            str(params.get("border", None))
         ])
-    if params.get("multichannel"):
+    if params.get("multichannel", False):
         cargs.append("--multichannel")
-    if params.get("model") is not None:
+    if params.get("model", None) is not None:
         cargs.extend([
             "--model",
-            execution.input_file(params.get("model"))
+            execution.input_file(params.get("model", None))
         ])
-    if params.get("wts") is not None:
+    if params.get("wts", None) is not None:
         cargs.extend([
             "--wts",
-            execution.input_file(params.get("wts"))
+            execution.input_file(params.get("wts", None))
         ])
-    if params.get("gpu") is not None:
+    if params.get("gpu", None) is not None:
         cargs.extend([
             "--gpu",
-            str(params.get("gpu"))
+            str(params.get("gpu", None))
         ])
     return cargs
 
@@ -218,9 +201,9 @@ def mri_exvivo_strip_outputs(
     """
     ret = MriExvivoStripOutputs(
         root=execution.output_file("."),
-        output_file=execution.output_file(params.get("outvol")),
-        prediction_output=execution.output_file(pathlib.Path(params.get("pred")).name) if (params.get("pred") is not None) else None,
-        normalized_output=execution.output_file(pathlib.Path(params.get("norm")).name) if (params.get("norm") is not None) else None,
+        output_file=execution.output_file(params.get("outvol", None)),
+        prediction_output=execution.output_file(pathlib.Path(params.get("pred", None)).name) if (params.get("pred") is not None) else None,
+        normalized_output=execution.output_file(pathlib.Path(params.get("norm", None)).name) if (params.get("norm") is not None) else None,
     )
     return ret
 
@@ -314,7 +297,6 @@ def mri_exvivo_strip(
 __all__ = [
     "MRI_EXVIVO_STRIP_METADATA",
     "MriExvivoStripOutputs",
-    "MriExvivoStripParameters",
     "mri_exvivo_strip",
     "mri_exvivo_strip_execute",
     "mri_exvivo_strip_params",

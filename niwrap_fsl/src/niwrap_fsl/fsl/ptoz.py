@@ -14,47 +14,22 @@ PTOZ_METADATA = Metadata(
 
 
 PtozParameters = typing.TypedDict('PtozParameters', {
-    "@type": typing.Literal["fsl.ptoz"],
+    "@type": typing.NotRequired[typing.Literal["fsl/ptoz"]],
+    "p_value": float,
+    "tail_flag": bool,
+    "grf_flag": typing.NotRequired[float | None],
+})
+PtozParametersTagged = typing.TypedDict('PtozParametersTagged', {
+    "@type": typing.Literal["fsl/ptoz"],
     "p_value": float,
     "tail_flag": bool,
     "grf_flag": typing.NotRequired[float | None],
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "fsl.ptoz": ptoz_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-    }.get(t)
-
-
 class PtozOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `ptoz(...)`.
+    Output object returned when calling `PtozParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -64,7 +39,7 @@ def ptoz_params(
     p_value: float,
     tail_flag: bool = False,
     grf_flag: float | None = None,
-) -> PtozParameters:
+) -> PtozParametersTagged:
     """
     Build parameters.
     
@@ -76,7 +51,7 @@ def ptoz_params(
         Parameter dictionary
     """
     params = {
-        "@type": "fsl.ptoz",
+        "@type": "fsl/ptoz",
         "p_value": p_value,
         "tail_flag": tail_flag,
     }
@@ -100,13 +75,13 @@ def ptoz_cargs(
     """
     cargs = []
     cargs.append("ptoz")
-    cargs.append(str(params.get("p_value")))
-    if params.get("tail_flag"):
+    cargs.append(str(params.get("p_value", None)))
+    if params.get("tail_flag", False):
         cargs.append("-2")
-    if params.get("grf_flag") is not None:
+    if params.get("grf_flag", None) is not None:
         cargs.extend([
             "-g",
-            str(params.get("grf_flag"))
+            str(params.get("grf_flag", None))
         ])
     return cargs
 
@@ -192,7 +167,6 @@ def ptoz(
 __all__ = [
     "PTOZ_METADATA",
     "PtozOutputs",
-    "PtozParameters",
     "ptoz",
     "ptoz_execute",
     "ptoz_params",

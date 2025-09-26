@@ -14,48 +14,22 @@ REGISTER_CSH_METADATA = Metadata(
 
 
 RegisterCshParameters = typing.TypedDict('RegisterCshParameters', {
-    "@type": typing.Literal["freesurfer.register.csh"],
+    "@type": typing.NotRequired[typing.Literal["freesurfer/register.csh"]],
+    "base_image": InputPathType,
+    "new_image": InputPathType,
+    "options": typing.NotRequired[str | None],
+})
+RegisterCshParametersTagged = typing.TypedDict('RegisterCshParametersTagged', {
+    "@type": typing.Literal["freesurfer/register.csh"],
     "base_image": InputPathType,
     "new_image": InputPathType,
     "options": typing.NotRequired[str | None],
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "freesurfer.register.csh": register_csh_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "freesurfer.register.csh": register_csh_outputs,
-    }.get(t)
-
-
 class RegisterCshOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `register_csh(...)`.
+    Output object returned when calling `RegisterCshParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -67,7 +41,7 @@ def register_csh_params(
     base_image: InputPathType,
     new_image: InputPathType,
     options: str | None = None,
-) -> RegisterCshParameters:
+) -> RegisterCshParametersTagged:
     """
     Build parameters.
     
@@ -79,7 +53,7 @@ def register_csh_params(
         Parameter dictionary
     """
     params = {
-        "@type": "freesurfer.register.csh",
+        "@type": "freesurfer/register.csh",
         "base_image": base_image,
         "new_image": new_image,
     }
@@ -103,10 +77,10 @@ def register_csh_cargs(
     """
     cargs = []
     cargs.append("register.csh")
-    cargs.append(execution.input_file(params.get("base_image")))
-    cargs.append(execution.input_file(params.get("new_image")))
-    if params.get("options") is not None:
-        cargs.append(params.get("options"))
+    cargs.append(execution.input_file(params.get("base_image", None)))
+    cargs.append(execution.input_file(params.get("new_image", None)))
+    if params.get("options", None) is not None:
+        cargs.append(params.get("options", None))
     return cargs
 
 
@@ -125,7 +99,7 @@ def register_csh_outputs(
     """
     ret = RegisterCshOutputs(
         root=execution.output_file("."),
-        registered_image=execution.output_file(pathlib.Path(params.get("new_image")).name + "_registered"),
+        registered_image=execution.output_file(pathlib.Path(params.get("new_image", None)).name + "_registered"),
     )
     return ret
 
@@ -192,7 +166,6 @@ def register_csh(
 __all__ = [
     "REGISTER_CSH_METADATA",
     "RegisterCshOutputs",
-    "RegisterCshParameters",
     "register_csh",
     "register_csh_execute",
     "register_csh_params",

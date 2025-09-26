@@ -14,7 +14,18 @@ PTA_METADATA = Metadata(
 
 
 PtaParameters = typing.TypedDict('PtaParameters', {
-    "@type": typing.Literal["afni.PTA"],
+    "@type": typing.NotRequired[typing.Literal["afni/PTA"]],
+    "prefix": str,
+    "input_file": InputPathType,
+    "model_formula": str,
+    "vt_formulation": typing.NotRequired[str | None],
+    "prediction_table": typing.NotRequired[InputPathType | None],
+    "verbosity_level": typing.NotRequired[float | None],
+    "response_var": typing.NotRequired[str | None],
+    "dbg_args": bool,
+})
+PtaParametersTagged = typing.TypedDict('PtaParametersTagged', {
+    "@type": typing.Literal["afni/PTA"],
     "prefix": str,
     "input_file": InputPathType,
     "model_formula": str,
@@ -26,41 +37,9 @@ PtaParameters = typing.TypedDict('PtaParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "afni.PTA": pta_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "afni.PTA": pta_outputs,
-    }.get(t)
-
-
 class PtaOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `pta(...)`.
+    Output object returned when calling `PtaParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -79,7 +58,7 @@ def pta_params(
     verbosity_level: float | None = None,
     response_var: str | None = None,
     dbg_args: bool = False,
-) -> PtaParameters:
+) -> PtaParametersTagged:
     """
     Build parameters.
     
@@ -102,7 +81,7 @@ def pta_params(
         Parameter dictionary
     """
     params = {
-        "@type": "afni.PTA",
+        "@type": "afni/PTA",
         "prefix": prefix,
         "input_file": input_file,
         "model_formula": model_formula,
@@ -136,37 +115,37 @@ def pta_cargs(
     cargs.append("PTA")
     cargs.extend([
         "-prefix",
-        params.get("prefix")
+        params.get("prefix", None)
     ])
     cargs.extend([
         "-input",
-        execution.input_file(params.get("input_file"))
+        execution.input_file(params.get("input_file", None))
     ])
     cargs.extend([
         "-model",
-        params.get("model_formula")
+        params.get("model_formula", None)
     ])
-    if params.get("vt_formulation") is not None:
+    if params.get("vt_formulation", None) is not None:
         cargs.extend([
             "-vt",
-            params.get("vt_formulation")
+            params.get("vt_formulation", None)
         ])
-    if params.get("prediction_table") is not None:
+    if params.get("prediction_table", None) is not None:
         cargs.extend([
             "-prediction",
-            execution.input_file(params.get("prediction_table"))
+            execution.input_file(params.get("prediction_table", None))
         ])
-    if params.get("verbosity_level") is not None:
+    if params.get("verbosity_level", None) is not None:
         cargs.extend([
             "-verb",
-            str(params.get("verbosity_level"))
+            str(params.get("verbosity_level", None))
         ])
-    if params.get("response_var") is not None:
+    if params.get("response_var", None) is not None:
         cargs.extend([
             "-Y",
-            params.get("response_var")
+            params.get("response_var", None)
         ])
-    if params.get("dbg_args"):
+    if params.get("dbg_args", False):
         cargs.append("-dbgArgs")
     return cargs
 
@@ -186,8 +165,8 @@ def pta_outputs(
     """
     ret = PtaOutputs(
         root=execution.output_file("."),
-        stat_output=execution.output_file(params.get("prefix") + "-stat.txt"),
-        prediction_output=execution.output_file(params.get("prefix") + "-prediction.txt"),
+        stat_output=execution.output_file(params.get("prefix", None) + "-stat.txt"),
+        prediction_output=execution.output_file(params.get("prefix", None) + "-prediction.txt"),
     )
     return ret
 
@@ -277,7 +256,6 @@ def pta(
 __all__ = [
     "PTA_METADATA",
     "PtaOutputs",
-    "PtaParameters",
     "pta",
     "pta_execute",
     "pta_params",

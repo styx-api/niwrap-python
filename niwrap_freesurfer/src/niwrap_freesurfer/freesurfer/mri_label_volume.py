@@ -14,7 +14,26 @@ MRI_LABEL_VOLUME_METADATA = Metadata(
 
 
 MriLabelVolumeParameters = typing.TypedDict('MriLabelVolumeParameters', {
-    "@type": typing.Literal["freesurfer.mri_label_volume"],
+    "@type": typing.NotRequired[typing.Literal["freesurfer/mri_label_volume"]],
+    "volume": InputPathType,
+    "labels": list[str],
+    "partial_volume_effects": typing.NotRequired[InputPathType | None],
+    "intracranial_volume": typing.NotRequired[InputPathType | None],
+    "spreadsheet_subject": typing.NotRequired[str | None],
+    "non_zero_voxels": bool,
+    "replace_label_in": typing.NotRequired[str | None],
+    "replace_label_out": typing.NotRequired[str | None],
+    "brain_volume": typing.NotRequired[InputPathType | None],
+    "percentage": bool,
+    "log_results": typing.NotRequired[InputPathType | None],
+    "atlas_transform_file": typing.NotRequired[InputPathType | None],
+    "atlas_scalefactor": typing.NotRequired[float | None],
+    "etiv_transform_file": typing.NotRequired[InputPathType | None],
+    "etiv_scalefactor": typing.NotRequired[float | None],
+    "etiv_subject": typing.NotRequired[str | None],
+})
+MriLabelVolumeParametersTagged = typing.TypedDict('MriLabelVolumeParametersTagged', {
+    "@type": typing.Literal["freesurfer/mri_label_volume"],
     "volume": InputPathType,
     "labels": list[str],
     "partial_volume_effects": typing.NotRequired[InputPathType | None],
@@ -34,41 +53,9 @@ MriLabelVolumeParameters = typing.TypedDict('MriLabelVolumeParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "freesurfer.mri_label_volume": mri_label_volume_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "freesurfer.mri_label_volume": mri_label_volume_outputs,
-    }.get(t)
-
-
 class MriLabelVolumeOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `mri_label_volume(...)`.
+    Output object returned when calling `MriLabelVolumeParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -95,7 +82,7 @@ def mri_label_volume_params(
     etiv_transform_file: InputPathType | None = None,
     etiv_scalefactor: float | None = None,
     etiv_subject: str | None = None,
-) -> MriLabelVolumeParameters:
+) -> MriLabelVolumeParametersTagged:
     """
     Build parameters.
     
@@ -126,7 +113,7 @@ def mri_label_volume_params(
         Parameter dictionary
     """
     params = {
-        "@type": "freesurfer.mri_label_volume",
+        "@type": "freesurfer/mri_label_volume",
         "volume": volume,
         "labels": labels,
         "non_zero_voxels": non_zero_voxels,
@@ -174,62 +161,62 @@ def mri_label_volume_cargs(
     """
     cargs = []
     cargs.append("mri_label_volume")
-    cargs.append(execution.input_file(params.get("volume")))
-    cargs.extend(params.get("labels"))
-    if params.get("partial_volume_effects") is not None:
+    cargs.append(execution.input_file(params.get("volume", None)))
+    cargs.extend(params.get("labels", None))
+    if params.get("partial_volume_effects", None) is not None:
         cargs.extend([
             "-pv",
-            execution.input_file(params.get("partial_volume_effects"))
+            execution.input_file(params.get("partial_volume_effects", None))
         ])
-    if params.get("intracranial_volume") is not None:
+    if params.get("intracranial_volume", None) is not None:
         cargs.extend([
             "-icv",
-            execution.input_file(params.get("intracranial_volume"))
+            execution.input_file(params.get("intracranial_volume", None))
         ])
-    if params.get("spreadsheet_subject") is not None:
+    if params.get("spreadsheet_subject", None) is not None:
         cargs.extend([
             "-s",
-            params.get("spreadsheet_subject")
+            params.get("spreadsheet_subject", None)
         ])
-    if params.get("non_zero_voxels"):
+    if params.get("non_zero_voxels", False):
         cargs.append("-a")
-    if params.get("replace_label_in") is not None:
+    if params.get("replace_label_in", None) is not None:
         cargs.extend([
             "-t",
-            params.get("replace_label_in")
+            params.get("replace_label_in", None)
         ])
-    if params.get("replace_label_out") is not None:
-        cargs.append(params.get("replace_label_out"))
-    if params.get("brain_volume") is not None:
+    if params.get("replace_label_out", None) is not None:
+        cargs.append(params.get("replace_label_out", None))
+    if params.get("brain_volume", None) is not None:
         cargs.extend([
             "-b",
-            execution.input_file(params.get("brain_volume"))
+            execution.input_file(params.get("brain_volume", None))
         ])
-    if params.get("percentage"):
+    if params.get("percentage", False):
         cargs.append("-p")
-    if params.get("log_results") is not None:
+    if params.get("log_results", None) is not None:
         cargs.extend([
             "-l",
-            execution.input_file(params.get("log_results"))
+            execution.input_file(params.get("log_results", None))
         ])
-    if params.get("atlas_transform_file") is not None:
+    if params.get("atlas_transform_file", None) is not None:
         cargs.extend([
             "-atlas_icv",
-            execution.input_file(params.get("atlas_transform_file"))
+            execution.input_file(params.get("atlas_transform_file", None))
         ])
-    if params.get("atlas_scalefactor") is not None:
-        cargs.append(str(params.get("atlas_scalefactor")))
-    if params.get("etiv_transform_file") is not None:
+    if params.get("atlas_scalefactor", None) is not None:
+        cargs.append(str(params.get("atlas_scalefactor", None)))
+    if params.get("etiv_transform_file", None) is not None:
         cargs.extend([
             "-eTIV",
-            execution.input_file(params.get("etiv_transform_file"))
+            execution.input_file(params.get("etiv_transform_file", None))
         ])
-    if params.get("etiv_scalefactor") is not None:
-        cargs.append(str(params.get("etiv_scalefactor")))
-    if params.get("etiv_subject") is not None:
+    if params.get("etiv_scalefactor", None) is not None:
+        cargs.append(str(params.get("etiv_scalefactor", None)))
+    if params.get("etiv_subject", None) is not None:
         cargs.extend([
             "-eTIV_matdat",
-            params.get("etiv_subject")
+            params.get("etiv_subject", None)
         ])
     return cargs
 
@@ -364,7 +351,6 @@ def mri_label_volume(
 __all__ = [
     "MRI_LABEL_VOLUME_METADATA",
     "MriLabelVolumeOutputs",
-    "MriLabelVolumeParameters",
     "mri_label_volume",
     "mri_label_volume_execute",
     "mri_label_volume_params",

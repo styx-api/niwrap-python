@@ -14,26 +14,39 @@ TCKCONVERT_METADATA = Metadata(
 
 
 TckconvertConfigParameters = typing.TypedDict('TckconvertConfigParameters', {
-    "@type": typing.Literal["mrtrix.tckconvert.config"],
+    "@type": typing.NotRequired[typing.Literal["config"]],
+    "key": str,
+    "value": str,
+})
+TckconvertConfigParametersTagged = typing.TypedDict('TckconvertConfigParametersTagged', {
+    "@type": typing.Literal["config"],
     "key": str,
     "value": str,
 })
 
 
 TckconvertVariousStringParameters = typing.TypedDict('TckconvertVariousStringParameters', {
-    "@type": typing.Literal["mrtrix.tckconvert.VariousString"],
+    "@type": typing.NotRequired[typing.Literal["VariousString"]],
+    "obj": str,
+})
+TckconvertVariousStringParametersTagged = typing.TypedDict('TckconvertVariousStringParametersTagged', {
+    "@type": typing.Literal["VariousString"],
     "obj": str,
 })
 
 
 TckconvertVariousFileParameters = typing.TypedDict('TckconvertVariousFileParameters', {
-    "@type": typing.Literal["mrtrix.tckconvert.VariousFile"],
+    "@type": typing.NotRequired[typing.Literal["VariousFile"]],
+    "obj": InputPathType,
+})
+TckconvertVariousFileParametersTagged = typing.TypedDict('TckconvertVariousFileParametersTagged', {
+    "@type": typing.Literal["VariousFile"],
     "obj": InputPathType,
 })
 
 
 TckconvertParameters = typing.TypedDict('TckconvertParameters', {
-    "@type": typing.Literal["mrtrix.tckconvert"],
+    "@type": typing.NotRequired[typing.Literal["mrtrix/tckconvert"]],
     "scanner2voxel": typing.NotRequired[InputPathType | None],
     "scanner2image": typing.NotRequired[InputPathType | None],
     "voxel2scanner": typing.NotRequired[InputPathType | None],
@@ -52,12 +65,35 @@ TckconvertParameters = typing.TypedDict('TckconvertParameters', {
     "config": typing.NotRequired[list[TckconvertConfigParameters] | None],
     "help": bool,
     "version": bool,
-    "input": typing.Union[TckconvertVariousStringParameters, TckconvertVariousFileParameters],
+    "input": typing.Union[TckconvertVariousStringParametersTagged, TckconvertVariousFileParametersTagged],
+    "output": str,
+})
+TckconvertParametersTagged = typing.TypedDict('TckconvertParametersTagged', {
+    "@type": typing.Literal["mrtrix/tckconvert"],
+    "scanner2voxel": typing.NotRequired[InputPathType | None],
+    "scanner2image": typing.NotRequired[InputPathType | None],
+    "voxel2scanner": typing.NotRequired[InputPathType | None],
+    "image2scanner": typing.NotRequired[InputPathType | None],
+    "sides": typing.NotRequired[int | None],
+    "increment": typing.NotRequired[int | None],
+    "dec": bool,
+    "radius": typing.NotRequired[float | None],
+    "ascii": bool,
+    "binary": bool,
+    "info": bool,
+    "quiet": bool,
+    "debug": bool,
+    "force": bool,
+    "nthreads": typing.NotRequired[int | None],
+    "config": typing.NotRequired[list[TckconvertConfigParameters] | None],
+    "help": bool,
+    "version": bool,
+    "input": typing.Union[TckconvertVariousStringParametersTagged, TckconvertVariousFileParametersTagged],
     "output": str,
 })
 
 
-def dyn_cargs(
+def tckconvert_input_cargs_dyn_fn(
     t: str,
 ) -> typing.Any:
     """
@@ -69,14 +105,12 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "mrtrix.tckconvert": tckconvert_cargs,
-        "mrtrix.tckconvert.config": tckconvert_config_cargs,
-        "mrtrix.tckconvert.VariousString": tckconvert_various_string_cargs,
-        "mrtrix.tckconvert.VariousFile": tckconvert_various_file_cargs,
+        "VariousString": tckconvert_various_string_cargs,
+        "VariousFile": tckconvert_various_file_cargs,
     }.get(t)
 
 
-def dyn_outputs(
+def tckconvert_input_outputs_dyn_fn(
     t: str,
 ) -> typing.Any:
     """
@@ -88,14 +122,13 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "mrtrix.tckconvert": tckconvert_outputs,
     }.get(t)
 
 
 def tckconvert_config_params(
     key: str,
     value: str,
-) -> TckconvertConfigParameters:
+) -> TckconvertConfigParametersTagged:
     """
     Build parameters.
     
@@ -106,7 +139,7 @@ def tckconvert_config_params(
         Parameter dictionary
     """
     params = {
-        "@type": "mrtrix.tckconvert.config",
+        "@type": "config",
         "key": key,
         "value": value,
     }
@@ -128,14 +161,14 @@ def tckconvert_config_cargs(
     """
     cargs = []
     cargs.append("-config")
-    cargs.append(params.get("key"))
-    cargs.append(params.get("value"))
+    cargs.append(params.get("key", None))
+    cargs.append(params.get("value", None))
     return cargs
 
 
 def tckconvert_various_string_params(
     obj: str,
-) -> TckconvertVariousStringParameters:
+) -> TckconvertVariousStringParametersTagged:
     """
     Build parameters.
     
@@ -145,7 +178,7 @@ def tckconvert_various_string_params(
         Parameter dictionary
     """
     params = {
-        "@type": "mrtrix.tckconvert.VariousString",
+        "@type": "VariousString",
         "obj": obj,
     }
     return params
@@ -165,13 +198,13 @@ def tckconvert_various_string_cargs(
         Command-line arguments.
     """
     cargs = []
-    cargs.append(params.get("obj"))
+    cargs.append(params.get("obj", None))
     return cargs
 
 
 def tckconvert_various_file_params(
     obj: InputPathType,
-) -> TckconvertVariousFileParameters:
+) -> TckconvertVariousFileParametersTagged:
     """
     Build parameters.
     
@@ -181,7 +214,7 @@ def tckconvert_various_file_params(
         Parameter dictionary
     """
     params = {
-        "@type": "mrtrix.tckconvert.VariousFile",
+        "@type": "VariousFile",
         "obj": obj,
     }
     return params
@@ -201,13 +234,13 @@ def tckconvert_various_file_cargs(
         Command-line arguments.
     """
     cargs = []
-    cargs.append(execution.input_file(params.get("obj")))
+    cargs.append(execution.input_file(params.get("obj", None)))
     return cargs
 
 
 class TckconvertOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `tckconvert(...)`.
+    Output object returned when calling `TckconvertParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -216,7 +249,7 @@ class TckconvertOutputs(typing.NamedTuple):
 
 
 def tckconvert_params(
-    input_: typing.Union[TckconvertVariousStringParameters, TckconvertVariousFileParameters],
+    input_: typing.Union[TckconvertVariousStringParametersTagged, TckconvertVariousFileParametersTagged],
     output: str,
     scanner2voxel: InputPathType | None = None,
     scanner2image: InputPathType | None = None,
@@ -236,7 +269,7 @@ def tckconvert_params(
     config: list[TckconvertConfigParameters] | None = None,
     help_: bool = False,
     version: bool = False,
-) -> TckconvertParameters:
+) -> TckconvertParametersTagged:
     """
     Build parameters.
     
@@ -277,7 +310,7 @@ def tckconvert_params(
         Parameter dictionary
     """
     params = {
-        "@type": "mrtrix.tckconvert",
+        "@type": "mrtrix/tckconvert",
         "dec": dec,
         "ascii": ascii_,
         "binary": binary,
@@ -326,68 +359,68 @@ def tckconvert_cargs(
     """
     cargs = []
     cargs.append("tckconvert")
-    if params.get("scanner2voxel") is not None:
+    if params.get("scanner2voxel", None) is not None:
         cargs.extend([
             "-scanner2voxel",
-            execution.input_file(params.get("scanner2voxel"))
+            execution.input_file(params.get("scanner2voxel", None))
         ])
-    if params.get("scanner2image") is not None:
+    if params.get("scanner2image", None) is not None:
         cargs.extend([
             "-scanner2image",
-            execution.input_file(params.get("scanner2image"))
+            execution.input_file(params.get("scanner2image", None))
         ])
-    if params.get("voxel2scanner") is not None:
+    if params.get("voxel2scanner", None) is not None:
         cargs.extend([
             "-voxel2scanner",
-            execution.input_file(params.get("voxel2scanner"))
+            execution.input_file(params.get("voxel2scanner", None))
         ])
-    if params.get("image2scanner") is not None:
+    if params.get("image2scanner", None) is not None:
         cargs.extend([
             "-image2scanner",
-            execution.input_file(params.get("image2scanner"))
+            execution.input_file(params.get("image2scanner", None))
         ])
-    if params.get("sides") is not None:
+    if params.get("sides", None) is not None:
         cargs.extend([
             "-sides",
-            str(params.get("sides"))
+            str(params.get("sides", None))
         ])
-    if params.get("increment") is not None:
+    if params.get("increment", None) is not None:
         cargs.extend([
             "-increment",
-            str(params.get("increment"))
+            str(params.get("increment", None))
         ])
-    if params.get("dec"):
+    if params.get("dec", False):
         cargs.append("-dec")
-    if params.get("radius") is not None:
+    if params.get("radius", None) is not None:
         cargs.extend([
             "-radius",
-            str(params.get("radius"))
+            str(params.get("radius", None))
         ])
-    if params.get("ascii"):
+    if params.get("ascii", False):
         cargs.append("-ascii")
-    if params.get("binary"):
+    if params.get("binary", False):
         cargs.append("-binary")
-    if params.get("info"):
+    if params.get("info", False):
         cargs.append("-info")
-    if params.get("quiet"):
+    if params.get("quiet", False):
         cargs.append("-quiet")
-    if params.get("debug"):
+    if params.get("debug", False):
         cargs.append("-debug")
-    if params.get("force"):
+    if params.get("force", False):
         cargs.append("-force")
-    if params.get("nthreads") is not None:
+    if params.get("nthreads", None) is not None:
         cargs.extend([
             "-nthreads",
-            str(params.get("nthreads"))
+            str(params.get("nthreads", None))
         ])
-    if params.get("config") is not None:
-        cargs.extend([a for c in [dyn_cargs(s["@type"])(s, execution) for s in params.get("config")] for a in c])
-    if params.get("help"):
+    if params.get("config", None) is not None:
+        cargs.extend([a for c in [tckconvert_config_cargs(s, execution) for s in params.get("config", None)] for a in c])
+    if params.get("help", False):
         cargs.append("-help")
-    if params.get("version"):
+    if params.get("version", False):
         cargs.append("-version")
-    cargs.extend(dyn_cargs(params.get("input")["@type"])(params.get("input"), execution))
-    cargs.append(params.get("output"))
+    cargs.extend(tckconvert_input_cargs_dyn_fn(params.get("input", None)["@type"])(params.get("input", None), execution))
+    cargs.append(params.get("output", None))
     return cargs
 
 
@@ -406,7 +439,7 @@ def tckconvert_outputs(
     """
     ret = TckconvertOutputs(
         root=execution.output_file("."),
-        output=execution.output_file(params.get("output")),
+        output=execution.output_file(params.get("output", None)),
     )
     return ret
 
@@ -458,7 +491,7 @@ def tckconvert_execute(
 
 
 def tckconvert(
-    input_: typing.Union[TckconvertVariousStringParameters, TckconvertVariousFileParameters],
+    input_: typing.Union[TckconvertVariousStringParametersTagged, TckconvertVariousFileParametersTagged],
     output: str,
     scanner2voxel: InputPathType | None = None,
     scanner2image: InputPathType | None = None,
@@ -571,11 +604,7 @@ def tckconvert(
 
 __all__ = [
     "TCKCONVERT_METADATA",
-    "TckconvertConfigParameters",
     "TckconvertOutputs",
-    "TckconvertParameters",
-    "TckconvertVariousFileParameters",
-    "TckconvertVariousStringParameters",
     "tckconvert",
     "tckconvert_config_params",
     "tckconvert_execute",

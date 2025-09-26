@@ -14,47 +14,20 @@ COR_TO_MINC_METADATA = Metadata(
 
 
 CorToMincParameters = typing.TypedDict('CorToMincParameters', {
-    "@type": typing.Literal["freesurfer.cor_to_minc"],
+    "@type": typing.NotRequired[typing.Literal["freesurfer/cor_to_minc"]],
+    "cor_directory": str,
+    "minc_file": str,
+})
+CorToMincParametersTagged = typing.TypedDict('CorToMincParametersTagged', {
+    "@type": typing.Literal["freesurfer/cor_to_minc"],
     "cor_directory": str,
     "minc_file": str,
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "freesurfer.cor_to_minc": cor_to_minc_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "freesurfer.cor_to_minc": cor_to_minc_outputs,
-    }.get(t)
-
-
 class CorToMincOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `cor_to_minc(...)`.
+    Output object returned when calling `CorToMincParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -65,7 +38,7 @@ class CorToMincOutputs(typing.NamedTuple):
 def cor_to_minc_params(
     cor_directory: str,
     minc_file: str,
-) -> CorToMincParameters:
+) -> CorToMincParametersTagged:
     """
     Build parameters.
     
@@ -76,7 +49,7 @@ def cor_to_minc_params(
         Parameter dictionary
     """
     params = {
-        "@type": "freesurfer.cor_to_minc",
+        "@type": "freesurfer/cor_to_minc",
         "cor_directory": cor_directory,
         "minc_file": minc_file,
     }
@@ -98,8 +71,8 @@ def cor_to_minc_cargs(
     """
     cargs = []
     cargs.append("cor_to_minc")
-    cargs.append(params.get("cor_directory"))
-    cargs.append(params.get("minc_file"))
+    cargs.append(params.get("cor_directory", None))
+    cargs.append(params.get("minc_file", None))
     return cargs
 
 
@@ -118,7 +91,7 @@ def cor_to_minc_outputs(
     """
     ret = CorToMincOutputs(
         root=execution.output_file("."),
-        output_minc=execution.output_file(params.get("minc_file")),
+        output_minc=execution.output_file(params.get("minc_file", None)),
     )
     return ret
 
@@ -182,7 +155,6 @@ def cor_to_minc(
 __all__ = [
     "COR_TO_MINC_METADATA",
     "CorToMincOutputs",
-    "CorToMincParameters",
     "cor_to_minc",
     "cor_to_minc_execute",
     "cor_to_minc_params",

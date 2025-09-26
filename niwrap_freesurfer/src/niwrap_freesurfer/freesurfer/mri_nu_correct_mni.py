@@ -14,7 +14,23 @@ MRI_NU_CORRECT_MNI_METADATA = Metadata(
 
 
 MriNuCorrectMniParameters = typing.TypedDict('MriNuCorrectMniParameters', {
-    "@type": typing.Literal["freesurfer.mri_nu_correct.mni"],
+    "@type": typing.NotRequired[typing.Literal["freesurfer/mri_nu_correct.mni"]],
+    "input_volume": InputPathType,
+    "output_volume": str,
+    "iterations": float,
+    "proto_iterations": typing.NotRequired[float | None],
+    "mask_volume": typing.NotRequired[InputPathType | None],
+    "stop_threshold": typing.NotRequired[float | None],
+    "uchar_transform": typing.NotRequired[InputPathType | None],
+    "ants_n3": bool,
+    "ants_n4": bool,
+    "no_uchar": bool,
+    "ants_n4_replace_zeros": bool,
+    "cm_flag": bool,
+    "debug_flag": bool,
+})
+MriNuCorrectMniParametersTagged = typing.TypedDict('MriNuCorrectMniParametersTagged', {
+    "@type": typing.Literal["freesurfer/mri_nu_correct.mni"],
     "input_volume": InputPathType,
     "output_volume": str,
     "iterations": float,
@@ -31,41 +47,9 @@ MriNuCorrectMniParameters = typing.TypedDict('MriNuCorrectMniParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "freesurfer.mri_nu_correct.mni": mri_nu_correct_mni_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "freesurfer.mri_nu_correct.mni": mri_nu_correct_mni_outputs,
-    }.get(t)
-
-
 class MriNuCorrectMniOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `mri_nu_correct_mni(...)`.
+    Output object returned when calling `MriNuCorrectMniParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -87,7 +71,7 @@ def mri_nu_correct_mni_params(
     ants_n4_replace_zeros: bool = False,
     cm_flag: bool = False,
     debug_flag: bool = False,
-) -> MriNuCorrectMniParameters:
+) -> MriNuCorrectMniParametersTagged:
     """
     Build parameters.
     
@@ -114,7 +98,7 @@ def mri_nu_correct_mni_params(
         Parameter dictionary
     """
     params = {
-        "@type": "freesurfer.mri_nu_correct.mni",
+        "@type": "freesurfer/mri_nu_correct.mni",
         "input_volume": input_volume,
         "output_volume": output_volume,
         "iterations": iterations,
@@ -153,47 +137,47 @@ def mri_nu_correct_mni_cargs(
     cargs.append("mri_nu_correct.mni")
     cargs.extend([
         "--i",
-        execution.input_file(params.get("input_volume"))
+        execution.input_file(params.get("input_volume", None))
     ])
     cargs.extend([
         "--o",
-        params.get("output_volume")
+        params.get("output_volume", None)
     ])
     cargs.extend([
         "--n",
-        str(params.get("iterations"))
+        str(params.get("iterations", None))
     ])
-    if params.get("proto_iterations") is not None:
+    if params.get("proto_iterations", None) is not None:
         cargs.extend([
             "--proto-iters",
-            str(params.get("proto_iterations"))
+            str(params.get("proto_iterations", None))
         ])
-    if params.get("mask_volume") is not None:
+    if params.get("mask_volume", None) is not None:
         cargs.extend([
             "--mask",
-            execution.input_file(params.get("mask_volume"))
+            execution.input_file(params.get("mask_volume", None))
         ])
-    if params.get("stop_threshold") is not None:
+    if params.get("stop_threshold", None) is not None:
         cargs.extend([
             "--stop",
-            str(params.get("stop_threshold"))
+            str(params.get("stop_threshold", None))
         ])
-    if params.get("uchar_transform") is not None:
+    if params.get("uchar_transform", None) is not None:
         cargs.extend([
             "--uchar",
-            execution.input_file(params.get("uchar_transform"))
+            execution.input_file(params.get("uchar_transform", None))
         ])
-    if params.get("ants_n3"):
+    if params.get("ants_n3", False):
         cargs.append("--ants-n3")
-    if params.get("ants_n4"):
+    if params.get("ants_n4", False):
         cargs.append("--ants-n4")
-    if params.get("no_uchar"):
+    if params.get("no_uchar", False):
         cargs.append("--no-uchar")
-    if params.get("ants_n4_replace_zeros"):
+    if params.get("ants_n4_replace_zeros", False):
         cargs.append("--ants-n4-replace-zeros")
-    if params.get("cm_flag"):
+    if params.get("cm_flag", False):
         cargs.append("--cm")
-    if params.get("debug_flag"):
+    if params.get("debug_flag", False):
         cargs.append("--debug")
     return cargs
 
@@ -213,7 +197,7 @@ def mri_nu_correct_mni_outputs(
     """
     ret = MriNuCorrectMniOutputs(
         root=execution.output_file("."),
-        corrected_output=execution.output_file(params.get("output_volume")),
+        corrected_output=execution.output_file(params.get("output_volume", None)),
     )
     return ret
 
@@ -317,7 +301,6 @@ def mri_nu_correct_mni(
 __all__ = [
     "MRI_NU_CORRECT_MNI_METADATA",
     "MriNuCorrectMniOutputs",
-    "MriNuCorrectMniParameters",
     "mri_nu_correct_mni",
     "mri_nu_correct_mni_execute",
     "mri_nu_correct_mni_params",

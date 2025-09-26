@@ -14,7 +14,29 @@ MEAN_METADATA = Metadata(
 
 
 MeanParameters = typing.TypedDict('MeanParameters', {
-    "@type": typing.Literal["fsl.mean"],
+    "@type": typing.NotRequired[typing.Literal["fsl/mean"]],
+    "datafile": InputPathType,
+    "maskfile": InputPathType,
+    "verbose_flag": bool,
+    "debug_level": typing.NotRequired[float | None],
+    "timing_flag": bool,
+    "log_dir": typing.NotRequired[str | None],
+    "forcedir_flag": bool,
+    "inference_tech": typing.NotRequired[str | None],
+    "num_jumps": typing.NotRequired[float | None],
+    "num_burnin": typing.NotRequired[float | None],
+    "num_sample_every": typing.NotRequired[float | None],
+    "num_update_proposalevery": typing.NotRequired[float | None],
+    "acceptance_rate": typing.NotRequired[float | None],
+    "seed": typing.NotRequired[float | None],
+    "error_precision": typing.NotRequired[float | None],
+    "noamp_flag": bool,
+    "prior_mean": typing.NotRequired[float | None],
+    "prior_std": typing.NotRequired[float | None],
+    "help_flag": bool,
+})
+MeanParametersTagged = typing.TypedDict('MeanParametersTagged', {
+    "@type": typing.Literal["fsl/mean"],
     "datafile": InputPathType,
     "maskfile": InputPathType,
     "verbose_flag": bool,
@@ -37,41 +59,9 @@ MeanParameters = typing.TypedDict('MeanParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "fsl.mean": mean_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "fsl.mean": mean_outputs,
-    }.get(t)
-
-
 class MeanOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `mean(...)`.
+    Output object returned when calling `MeanParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -99,7 +89,7 @@ def mean_params(
     prior_mean: float | None = None,
     prior_std: float | None = None,
     help_flag: bool = False,
-) -> MeanParameters:
+) -> MeanParametersTagged:
     """
     Build parameters.
     
@@ -131,7 +121,7 @@ def mean_params(
         Parameter dictionary
     """
     params = {
-        "@type": "fsl.mean",
+        "@type": "fsl/mean",
         "datafile": datafile,
         "maskfile": maskfile,
         "verbose_flag": verbose_flag,
@@ -184,81 +174,81 @@ def mean_cargs(
     cargs.append("mean")
     cargs.extend([
         "--data",
-        execution.input_file(params.get("datafile"))
+        execution.input_file(params.get("datafile", None))
     ])
     cargs.extend([
         "--mask",
-        execution.input_file(params.get("maskfile"))
+        execution.input_file(params.get("maskfile", None))
     ])
-    if params.get("verbose_flag"):
+    if params.get("verbose_flag", False):
         cargs.append("--verbose")
-    if params.get("debug_level") is not None:
+    if params.get("debug_level", None) is not None:
         cargs.extend([
             "--debug",
-            str(params.get("debug_level"))
+            str(params.get("debug_level", None))
         ])
-    if params.get("timing_flag"):
+    if params.get("timing_flag", False):
         cargs.append("--to")
-    if params.get("log_dir") is not None:
+    if params.get("log_dir", None) is not None:
         cargs.extend([
             "--ld",
-            params.get("log_dir")
+            params.get("log_dir", None)
         ])
-    if params.get("forcedir_flag"):
+    if params.get("forcedir_flag", False):
         cargs.append("--forcedir")
-    if params.get("inference_tech") is not None:
+    if params.get("inference_tech", None) is not None:
         cargs.extend([
             "--inf",
-            params.get("inference_tech")
+            params.get("inference_tech", None)
         ])
-    if params.get("num_jumps") is not None:
+    if params.get("num_jumps", None) is not None:
         cargs.extend([
             "--nj",
-            str(params.get("num_jumps"))
+            str(params.get("num_jumps", None))
         ])
-    if params.get("num_burnin") is not None:
+    if params.get("num_burnin", None) is not None:
         cargs.extend([
             "--bi",
-            str(params.get("num_burnin"))
+            str(params.get("num_burnin", None))
         ])
-    if params.get("num_sample_every") is not None:
+    if params.get("num_sample_every", None) is not None:
         cargs.extend([
             "--se",
-            str(params.get("num_sample_every"))
+            str(params.get("num_sample_every", None))
         ])
-    if params.get("num_update_proposalevery") is not None:
+    if params.get("num_update_proposalevery", None) is not None:
         cargs.extend([
             "--upe",
-            str(params.get("num_update_proposalevery"))
+            str(params.get("num_update_proposalevery", None))
         ])
-    if params.get("acceptance_rate") is not None:
+    if params.get("acceptance_rate", None) is not None:
         cargs.extend([
             "--arate",
-            str(params.get("acceptance_rate"))
+            str(params.get("acceptance_rate", None))
         ])
-    if params.get("seed") is not None:
+    if params.get("seed", None) is not None:
         cargs.extend([
             "--seed",
-            str(params.get("seed"))
+            str(params.get("seed", None))
         ])
-    if params.get("error_precision") is not None:
+    if params.get("error_precision", None) is not None:
         cargs.extend([
             "--prec",
-            str(params.get("error_precision"))
+            str(params.get("error_precision", None))
         ])
-    if params.get("noamp_flag"):
+    if params.get("noamp_flag", False):
         cargs.append("--noamp")
-    if params.get("prior_mean") is not None:
+    if params.get("prior_mean", None) is not None:
         cargs.extend([
             "--pm",
-            str(params.get("prior_mean"))
+            str(params.get("prior_mean", None))
         ])
-    if params.get("prior_std") is not None:
+    if params.get("prior_std", None) is not None:
         cargs.extend([
             "--ps",
-            str(params.get("prior_std"))
+            str(params.get("prior_std", None))
         ])
-    if params.get("help_flag"):
+    if params.get("help_flag", False):
         cargs.append("-h")
     return cargs
 
@@ -397,7 +387,6 @@ def mean(
 __all__ = [
     "MEAN_METADATA",
     "MeanOutputs",
-    "MeanParameters",
     "mean",
     "mean_execute",
     "mean_params",

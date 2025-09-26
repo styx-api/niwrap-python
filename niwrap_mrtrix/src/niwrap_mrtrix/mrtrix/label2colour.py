@@ -14,14 +14,33 @@ LABEL2COLOUR_METADATA = Metadata(
 
 
 Label2colourConfigParameters = typing.TypedDict('Label2colourConfigParameters', {
-    "@type": typing.Literal["mrtrix.label2colour.config"],
+    "@type": typing.NotRequired[typing.Literal["config"]],
+    "key": str,
+    "value": str,
+})
+Label2colourConfigParametersTagged = typing.TypedDict('Label2colourConfigParametersTagged', {
+    "@type": typing.Literal["config"],
     "key": str,
     "value": str,
 })
 
 
 Label2colourParameters = typing.TypedDict('Label2colourParameters', {
-    "@type": typing.Literal["mrtrix.label2colour"],
+    "@type": typing.NotRequired[typing.Literal["mrtrix/label2colour"]],
+    "lut": typing.NotRequired[InputPathType | None],
+    "info": bool,
+    "quiet": bool,
+    "debug": bool,
+    "force": bool,
+    "nthreads": typing.NotRequired[int | None],
+    "config": typing.NotRequired[list[Label2colourConfigParameters] | None],
+    "help": bool,
+    "version": bool,
+    "nodes_in": InputPathType,
+    "colour_out": str,
+})
+Label2colourParametersTagged = typing.TypedDict('Label2colourParametersTagged', {
+    "@type": typing.Literal["mrtrix/label2colour"],
     "lut": typing.NotRequired[InputPathType | None],
     "info": bool,
     "quiet": bool,
@@ -36,43 +55,10 @@ Label2colourParameters = typing.TypedDict('Label2colourParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "mrtrix.label2colour": label2colour_cargs,
-        "mrtrix.label2colour.config": label2colour_config_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "mrtrix.label2colour": label2colour_outputs,
-    }.get(t)
-
-
 def label2colour_config_params(
     key: str,
     value: str,
-) -> Label2colourConfigParameters:
+) -> Label2colourConfigParametersTagged:
     """
     Build parameters.
     
@@ -83,7 +69,7 @@ def label2colour_config_params(
         Parameter dictionary
     """
     params = {
-        "@type": "mrtrix.label2colour.config",
+        "@type": "config",
         "key": key,
         "value": value,
     }
@@ -105,14 +91,14 @@ def label2colour_config_cargs(
     """
     cargs = []
     cargs.append("-config")
-    cargs.append(params.get("key"))
-    cargs.append(params.get("value"))
+    cargs.append(params.get("key", None))
+    cargs.append(params.get("value", None))
     return cargs
 
 
 class Label2colourOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `label2colour(...)`.
+    Output object returned when calling `Label2colourParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -132,7 +118,7 @@ def label2colour_params(
     config: list[Label2colourConfigParameters] | None = None,
     help_: bool = False,
     version: bool = False,
-) -> Label2colourParameters:
+) -> Label2colourParametersTagged:
     """
     Build parameters.
     
@@ -157,7 +143,7 @@ def label2colour_params(
         Parameter dictionary
     """
     params = {
-        "@type": "mrtrix.label2colour",
+        "@type": "mrtrix/label2colour",
         "info": info,
         "quiet": quiet,
         "debug": debug,
@@ -191,32 +177,32 @@ def label2colour_cargs(
     """
     cargs = []
     cargs.append("label2colour")
-    if params.get("lut") is not None:
+    if params.get("lut", None) is not None:
         cargs.extend([
             "-lut",
-            execution.input_file(params.get("lut"))
+            execution.input_file(params.get("lut", None))
         ])
-    if params.get("info"):
+    if params.get("info", False):
         cargs.append("-info")
-    if params.get("quiet"):
+    if params.get("quiet", False):
         cargs.append("-quiet")
-    if params.get("debug"):
+    if params.get("debug", False):
         cargs.append("-debug")
-    if params.get("force"):
+    if params.get("force", False):
         cargs.append("-force")
-    if params.get("nthreads") is not None:
+    if params.get("nthreads", None) is not None:
         cargs.extend([
             "-nthreads",
-            str(params.get("nthreads"))
+            str(params.get("nthreads", None))
         ])
-    if params.get("config") is not None:
-        cargs.extend([a for c in [dyn_cargs(s["@type"])(s, execution) for s in params.get("config")] for a in c])
-    if params.get("help"):
+    if params.get("config", None) is not None:
+        cargs.extend([a for c in [label2colour_config_cargs(s, execution) for s in params.get("config", None)] for a in c])
+    if params.get("help", False):
         cargs.append("-help")
-    if params.get("version"):
+    if params.get("version", False):
         cargs.append("-version")
-    cargs.append(execution.input_file(params.get("nodes_in")))
-    cargs.append(params.get("colour_out"))
+    cargs.append(execution.input_file(params.get("nodes_in", None)))
+    cargs.append(params.get("colour_out", None))
     return cargs
 
 
@@ -235,7 +221,7 @@ def label2colour_outputs(
     """
     ret = Label2colourOutputs(
         root=execution.output_file("."),
-        colour_out=execution.output_file(params.get("colour_out")),
+        colour_out=execution.output_file(params.get("colour_out", None)),
     )
     return ret
 
@@ -348,9 +334,7 @@ def label2colour(
 
 __all__ = [
     "LABEL2COLOUR_METADATA",
-    "Label2colourConfigParameters",
     "Label2colourOutputs",
-    "Label2colourParameters",
     "label2colour",
     "label2colour_config_params",
     "label2colour_execute",

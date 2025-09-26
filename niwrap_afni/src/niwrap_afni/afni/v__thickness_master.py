@@ -14,48 +14,22 @@ V__THICKNESS_MASTER_METADATA = Metadata(
 
 
 VThicknessMasterParameters = typing.TypedDict('VThicknessMasterParameters', {
-    "@type": typing.Literal["afni.@thickness_master"],
+    "@type": typing.NotRequired[typing.Literal["afni/@thickness_master"]],
+    "maskset": InputPathType,
+    "surfset": InputPathType,
+    "outdir": typing.NotRequired[str | None],
+})
+VThicknessMasterParametersTagged = typing.TypedDict('VThicknessMasterParametersTagged', {
+    "@type": typing.Literal["afni/@thickness_master"],
     "maskset": InputPathType,
     "surfset": InputPathType,
     "outdir": typing.NotRequired[str | None],
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "afni.@thickness_master": v__thickness_master_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "afni.@thickness_master": v__thickness_master_outputs,
-    }.get(t)
-
-
 class VThicknessMasterOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `v__thickness_master(...)`.
+    Output object returned when calling `VThicknessMasterParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -71,7 +45,7 @@ def v__thickness_master_params(
     maskset: InputPathType,
     surfset: InputPathType,
     outdir: str | None = None,
-) -> VThicknessMasterParameters:
+) -> VThicknessMasterParametersTagged:
     """
     Build parameters.
     
@@ -85,7 +59,7 @@ def v__thickness_master_params(
         Parameter dictionary
     """
     params = {
-        "@type": "afni.@thickness_master",
+        "@type": "afni/@thickness_master",
         "maskset": maskset,
         "surfset": surfset,
     }
@@ -111,16 +85,16 @@ def v__thickness_master_cargs(
     cargs.append("@thickness_master")
     cargs.extend([
         "-maskset",
-        execution.input_file(params.get("maskset"))
+        execution.input_file(params.get("maskset", None))
     ])
     cargs.extend([
         "-surfset",
-        execution.input_file(params.get("surfset"))
+        execution.input_file(params.get("surfset", None))
     ])
-    if params.get("outdir") is not None:
+    if params.get("outdir", None) is not None:
         cargs.extend([
             "-outdir",
-            params.get("outdir")
+            params.get("outdir", None)
         ])
     return cargs
 
@@ -140,9 +114,9 @@ def v__thickness_master_outputs(
     """
     ret = VThicknessMasterOutputs(
         root=execution.output_file("."),
-        output_bb_dir=execution.output_file(params.get("outdir") + "_bb/") if (params.get("outdir") is not None) else None,
-        output_erode_dir=execution.output_file(params.get("outdir") + "_erode/") if (params.get("outdir") is not None) else None,
-        output_in2out_dir=execution.output_file(params.get("outdir") + "_in2out/") if (params.get("outdir") is not None) else None,
+        output_bb_dir=execution.output_file(params.get("outdir", None) + "_bb/") if (params.get("outdir") is not None) else None,
+        output_erode_dir=execution.output_file(params.get("outdir", None) + "_erode/") if (params.get("outdir") is not None) else None,
+        output_in2out_dir=execution.output_file(params.get("outdir", None) + "_in2out/") if (params.get("outdir") is not None) else None,
     )
     return ret
 
@@ -210,7 +184,6 @@ def v__thickness_master(
 
 __all__ = [
     "VThicknessMasterOutputs",
-    "VThicknessMasterParameters",
     "V__THICKNESS_MASTER_METADATA",
     "v__thickness_master",
     "v__thickness_master_execute",

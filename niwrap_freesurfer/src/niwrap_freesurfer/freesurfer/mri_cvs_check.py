@@ -14,7 +14,15 @@ MRI_CVS_CHECK_METADATA = Metadata(
 
 
 MriCvsCheckParameters = typing.TypedDict('MriCvsCheckParameters', {
-    "@type": typing.Literal["freesurfer.mri_cvs_check"],
+    "@type": typing.NotRequired[typing.Literal["freesurfer/mri_cvs_check"]],
+    "mov_subjid": str,
+    "template_subjid": typing.NotRequired[str | None],
+    "hemi": typing.NotRequired[typing.Literal["lh", "rh"] | None],
+    "help": bool,
+    "version": bool,
+})
+MriCvsCheckParametersTagged = typing.TypedDict('MriCvsCheckParametersTagged', {
+    "@type": typing.Literal["freesurfer/mri_cvs_check"],
     "mov_subjid": str,
     "template_subjid": typing.NotRequired[str | None],
     "hemi": typing.NotRequired[typing.Literal["lh", "rh"] | None],
@@ -23,40 +31,9 @@ MriCvsCheckParameters = typing.TypedDict('MriCvsCheckParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "freesurfer.mri_cvs_check": mri_cvs_check_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-    }.get(t)
-
-
 class MriCvsCheckOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `mri_cvs_check(...)`.
+    Output object returned when calling `MriCvsCheckParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -68,7 +45,7 @@ def mri_cvs_check_params(
     hemi: typing.Literal["lh", "rh"] | None = None,
     help_: bool = False,
     version: bool = False,
-) -> MriCvsCheckParameters:
+) -> MriCvsCheckParametersTagged:
     """
     Build parameters.
     
@@ -85,7 +62,7 @@ def mri_cvs_check_params(
         Parameter dictionary
     """
     params = {
-        "@type": "freesurfer.mri_cvs_check",
+        "@type": "freesurfer/mri_cvs_check",
         "mov_subjid": mov_subjid,
         "help": help_,
         "version": version,
@@ -114,21 +91,21 @@ def mri_cvs_check_cargs(
     cargs.append("mri_cvs_check")
     cargs.extend([
         "--mov",
-        params.get("mov_subjid")
+        params.get("mov_subjid", None)
     ])
-    if params.get("template_subjid") is not None:
+    if params.get("template_subjid", None) is not None:
         cargs.extend([
             "--template",
-            params.get("template_subjid")
+            params.get("template_subjid", None)
         ])
-    if params.get("hemi") is not None:
+    if params.get("hemi", None) is not None:
         cargs.extend([
             "--hemi",
-            params.get("hemi")
+            params.get("hemi", None)
         ])
-    if params.get("help"):
+    if params.get("help", False):
         cargs.append("--help")
-    if params.get("version"):
+    if params.get("version", False):
         cargs.append("--version")
     return cargs
 
@@ -223,7 +200,6 @@ def mri_cvs_check(
 __all__ = [
     "MRI_CVS_CHECK_METADATA",
     "MriCvsCheckOutputs",
-    "MriCvsCheckParameters",
     "mri_cvs_check",
     "mri_cvs_check_execute",
     "mri_cvs_check_params",

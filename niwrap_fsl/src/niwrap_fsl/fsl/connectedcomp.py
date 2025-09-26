@@ -14,48 +14,22 @@ CONNECTEDCOMP_METADATA = Metadata(
 
 
 ConnectedcompParameters = typing.TypedDict('ConnectedcompParameters', {
-    "@type": typing.Literal["fsl.connectedcomp"],
+    "@type": typing.NotRequired[typing.Literal["fsl/connectedcomp"]],
+    "in_volume": InputPathType,
+    "output_volume": typing.NotRequired[str | None],
+    "num_connect": typing.NotRequired[int | None],
+})
+ConnectedcompParametersTagged = typing.TypedDict('ConnectedcompParametersTagged', {
+    "@type": typing.Literal["fsl/connectedcomp"],
     "in_volume": InputPathType,
     "output_volume": typing.NotRequired[str | None],
     "num_connect": typing.NotRequired[int | None],
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "fsl.connectedcomp": connectedcomp_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "fsl.connectedcomp": connectedcomp_outputs,
-    }.get(t)
-
-
 class ConnectedcompOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `connectedcomp(...)`.
+    Output object returned when calling `ConnectedcompParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -67,7 +41,7 @@ def connectedcomp_params(
     in_volume: InputPathType,
     output_volume: str | None = None,
     num_connect: int | None = None,
-) -> ConnectedcompParameters:
+) -> ConnectedcompParametersTagged:
     """
     Build parameters.
     
@@ -79,7 +53,7 @@ def connectedcomp_params(
         Parameter dictionary
     """
     params = {
-        "@type": "fsl.connectedcomp",
+        "@type": "fsl/connectedcomp",
         "in_volume": in_volume,
     }
     if output_volume is not None:
@@ -104,11 +78,11 @@ def connectedcomp_cargs(
     """
     cargs = []
     cargs.append("connectedcomp")
-    cargs.append(execution.input_file(params.get("in_volume")))
-    if params.get("output_volume") is not None:
-        cargs.append(params.get("output_volume"))
-    if params.get("num_connect") is not None:
-        cargs.append(str(params.get("num_connect")))
+    cargs.append(execution.input_file(params.get("in_volume", None)))
+    if params.get("output_volume", None) is not None:
+        cargs.append(params.get("output_volume", None))
+    if params.get("num_connect", None) is not None:
+        cargs.append(str(params.get("num_connect", None)))
     return cargs
 
 
@@ -127,7 +101,7 @@ def connectedcomp_outputs(
     """
     ret = ConnectedcompOutputs(
         root=execution.output_file("."),
-        outfile=execution.output_file(params.get("output_volume")) if (params.get("output_volume") is not None) else None,
+        outfile=execution.output_file(params.get("output_volume", None)) if (params.get("output_volume") is not None) else None,
     )
     return ret
 
@@ -194,7 +168,6 @@ def connectedcomp(
 __all__ = [
     "CONNECTEDCOMP_METADATA",
     "ConnectedcompOutputs",
-    "ConnectedcompParameters",
     "connectedcomp",
     "connectedcomp_execute",
     "connectedcomp_params",

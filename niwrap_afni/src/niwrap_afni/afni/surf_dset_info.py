@@ -14,7 +14,29 @@ SURF_DSET_INFO_METADATA = Metadata(
 
 
 SurfDsetInfoParameters = typing.TypedDict('SurfDsetInfoParameters', {
-    "@type": typing.Literal["afni.SurfDsetInfo"],
+    "@type": typing.NotRequired[typing.Literal["afni/SurfDsetInfo"]],
+    "input_dsets": list[InputPathType],
+    "debug_level": typing.NotRequired[int | None],
+    "novolreg": bool,
+    "noxform": bool,
+    "setenv": typing.NotRequired[str | None],
+    "trace": bool,
+    "extreme_trace": bool,
+    "nomall": bool,
+    "yesmall": bool,
+    "mini_help": bool,
+    "help": bool,
+    "extreme_help": bool,
+    "help_view": bool,
+    "help_web": bool,
+    "help_find": typing.NotRequired[str | None],
+    "help_raw": bool,
+    "help_spx": bool,
+    "help_aspx": bool,
+    "all_opts": bool,
+})
+SurfDsetInfoParametersTagged = typing.TypedDict('SurfDsetInfoParametersTagged', {
+    "@type": typing.Literal["afni/SurfDsetInfo"],
     "input_dsets": list[InputPathType],
     "debug_level": typing.NotRequired[int | None],
     "novolreg": bool,
@@ -37,40 +59,9 @@ SurfDsetInfoParameters = typing.TypedDict('SurfDsetInfoParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "afni.SurfDsetInfo": surf_dset_info_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-    }.get(t)
-
-
 class SurfDsetInfoOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `surf_dset_info(...)`.
+    Output object returned when calling `SurfDsetInfoParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -96,7 +87,7 @@ def surf_dset_info_params(
     help_spx: bool = False,
     help_aspx: bool = False,
     all_opts: bool = False,
-) -> SurfDsetInfoParameters:
+) -> SurfDsetInfoParametersTagged:
     """
     Build parameters.
     
@@ -127,7 +118,7 @@ def surf_dset_info_params(
         Parameter dictionary
     """
     params = {
-        "@type": "afni.SurfDsetInfo",
+        "@type": "afni/SurfDsetInfo",
         "input_dsets": input_dsets,
         "novolreg": novolreg,
         "noxform": noxform,
@@ -171,52 +162,52 @@ def surf_dset_info_cargs(
     cargs.append("SurfDsetInfo")
     cargs.extend([
         "-input",
-        *[execution.input_file(f) for f in params.get("input_dsets")]
+        *[execution.input_file(f) for f in params.get("input_dsets", None)]
     ])
-    if params.get("debug_level") is not None:
+    if params.get("debug_level", None) is not None:
         cargs.extend([
             "-debug",
-            str(params.get("debug_level"))
+            str(params.get("debug_level", None))
         ])
-    if params.get("novolreg"):
+    if params.get("novolreg", False):
         cargs.append("-novolreg")
-    if params.get("noxform"):
+    if params.get("noxform", False):
         cargs.append("-noxform")
-    if params.get("setenv") is not None:
+    if params.get("setenv", None) is not None:
         cargs.extend([
             "-setenv",
-            params.get("setenv")
+            params.get("setenv", None)
         ])
-    if params.get("trace"):
+    if params.get("trace", False):
         cargs.append("-trace")
-    if params.get("extreme_trace"):
+    if params.get("extreme_trace", False):
         cargs.append("-TRACE")
-    if params.get("nomall"):
+    if params.get("nomall", False):
         cargs.append("-nomall")
-    if params.get("yesmall"):
+    if params.get("yesmall", False):
         cargs.append("-yesmall")
-    if params.get("mini_help"):
+    if params.get("mini_help", False):
         cargs.append("-h")
-    if params.get("help"):
+    if params.get("help", False):
         cargs.append("-help")
-    if params.get("extreme_help"):
+    if params.get("extreme_help", False):
         cargs.append("-HELP")
-    if params.get("help_view"):
+    if params.get("help_view", False):
         cargs.append("-h_view")
-    if params.get("help_web"):
+    if params.get("help_web", False):
         cargs.append("-h_web")
-    if params.get("help_find") is not None:
+    if params.get("help_find", None) is not None:
         cargs.extend([
             "-h_find",
-            params.get("help_find")
+            params.get("help_find", None)
         ])
-    if params.get("help_raw"):
+    if params.get("help_raw", False):
         cargs.append("-h_raw")
-    if params.get("help_spx"):
+    if params.get("help_spx", False):
         cargs.append("-h_spx")
-    if params.get("help_aspx"):
+    if params.get("help_aspx", False):
         cargs.append("-h_aspx")
-    if params.get("all_opts"):
+    if params.get("all_opts", False):
         cargs.append("-all_opts")
     return cargs
 
@@ -353,7 +344,6 @@ def surf_dset_info(
 __all__ = [
     "SURF_DSET_INFO_METADATA",
     "SurfDsetInfoOutputs",
-    "SurfDsetInfoParameters",
     "surf_dset_info",
     "surf_dset_info_execute",
     "surf_dset_info_params",

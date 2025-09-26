@@ -14,7 +14,20 @@ FSLASCII2IMG_METADATA = Metadata(
 
 
 Fslascii2imgParameters = typing.TypedDict('Fslascii2imgParameters', {
-    "@type": typing.Literal["fsl.fslascii2img"],
+    "@type": typing.NotRequired[typing.Literal["fsl/fslascii2img"]],
+    "infile": InputPathType,
+    "xsize": int,
+    "ysize": int,
+    "zsize": int,
+    "tsize": int,
+    "xdim": float,
+    "ydim": float,
+    "zdim": float,
+    "tr": float,
+    "outfile": str,
+})
+Fslascii2imgParametersTagged = typing.TypedDict('Fslascii2imgParametersTagged', {
+    "@type": typing.Literal["fsl/fslascii2img"],
     "infile": InputPathType,
     "xsize": int,
     "ysize": int,
@@ -28,41 +41,9 @@ Fslascii2imgParameters = typing.TypedDict('Fslascii2imgParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "fsl.fslascii2img": fslascii2img_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "fsl.fslascii2img": fslascii2img_outputs,
-    }.get(t)
-
-
 class Fslascii2imgOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `fslascii2img(...)`.
+    Output object returned when calling `Fslascii2imgParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -81,7 +62,7 @@ def fslascii2img_params(
     zdim: float,
     tr: float,
     outfile: str = "output",
-) -> Fslascii2imgParameters:
+) -> Fslascii2imgParametersTagged:
     """
     Build parameters.
     
@@ -100,7 +81,7 @@ def fslascii2img_params(
         Parameter dictionary
     """
     params = {
-        "@type": "fsl.fslascii2img",
+        "@type": "fsl/fslascii2img",
         "infile": infile,
         "xsize": xsize,
         "ysize": ysize,
@@ -130,16 +111,16 @@ def fslascii2img_cargs(
     """
     cargs = []
     cargs.append("fslascii2img")
-    cargs.append(execution.input_file(params.get("infile")))
-    cargs.append(str(params.get("xsize")))
-    cargs.append(str(params.get("ysize")))
-    cargs.append(str(params.get("zsize")))
-    cargs.append(str(params.get("tsize")))
-    cargs.append(str(params.get("xdim")))
-    cargs.append(str(params.get("ydim")))
-    cargs.append(str(params.get("zdim")))
-    cargs.append(str(params.get("tr")))
-    cargs.append(params.get("outfile"))
+    cargs.append(execution.input_file(params.get("infile", None)))
+    cargs.append(str(params.get("xsize", None)))
+    cargs.append(str(params.get("ysize", None)))
+    cargs.append(str(params.get("zsize", None)))
+    cargs.append(str(params.get("tsize", None)))
+    cargs.append(str(params.get("xdim", None)))
+    cargs.append(str(params.get("ydim", None)))
+    cargs.append(str(params.get("zdim", None)))
+    cargs.append(str(params.get("tr", None)))
+    cargs.append(params.get("outfile", "output"))
     return cargs
 
 
@@ -158,7 +139,7 @@ def fslascii2img_outputs(
     """
     ret = Fslascii2imgOutputs(
         root=execution.output_file("."),
-        outfile=execution.output_file(params.get("outfile")),
+        outfile=execution.output_file(params.get("outfile", "output")),
     )
     return ret
 
@@ -246,7 +227,6 @@ def fslascii2img(
 __all__ = [
     "FSLASCII2IMG_METADATA",
     "Fslascii2imgOutputs",
-    "Fslascii2imgParameters",
     "fslascii2img",
     "fslascii2img_execute",
     "fslascii2img_params",

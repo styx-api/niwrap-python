@@ -14,7 +14,18 @@ CIFTI_RESTRICT_DENSE_MAP_METADATA = Metadata(
 
 
 CiftiRestrictDenseMapParameters = typing.TypedDict('CiftiRestrictDenseMapParameters', {
-    "@type": typing.Literal["workbench.cifti-restrict-dense-map"],
+    "@type": typing.NotRequired[typing.Literal["workbench/cifti-restrict-dense-map"]],
+    "cifti_in": InputPathType,
+    "direction": str,
+    "cifti_out": str,
+    "opt_cifti_roi_roi_cifti": typing.NotRequired[InputPathType | None],
+    "opt_left_roi_roi_metric": typing.NotRequired[InputPathType | None],
+    "opt_right_roi_roi_metric": typing.NotRequired[InputPathType | None],
+    "opt_cerebellum_roi_roi_metric": typing.NotRequired[InputPathType | None],
+    "opt_vol_roi_roi_vol": typing.NotRequired[InputPathType | None],
+})
+CiftiRestrictDenseMapParametersTagged = typing.TypedDict('CiftiRestrictDenseMapParametersTagged', {
+    "@type": typing.Literal["workbench/cifti-restrict-dense-map"],
     "cifti_in": InputPathType,
     "direction": str,
     "cifti_out": str,
@@ -26,41 +37,9 @@ CiftiRestrictDenseMapParameters = typing.TypedDict('CiftiRestrictDenseMapParamet
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "workbench.cifti-restrict-dense-map": cifti_restrict_dense_map_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "workbench.cifti-restrict-dense-map": cifti_restrict_dense_map_outputs,
-    }.get(t)
-
-
 class CiftiRestrictDenseMapOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `cifti_restrict_dense_map(...)`.
+    Output object returned when calling `CiftiRestrictDenseMapParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -77,7 +56,7 @@ def cifti_restrict_dense_map_params(
     opt_right_roi_roi_metric: InputPathType | None = None,
     opt_cerebellum_roi_roi_metric: InputPathType | None = None,
     opt_vol_roi_roi_vol: InputPathType | None = None,
-) -> CiftiRestrictDenseMapParameters:
+) -> CiftiRestrictDenseMapParametersTagged:
     """
     Build parameters.
     
@@ -99,7 +78,7 @@ def cifti_restrict_dense_map_params(
         Parameter dictionary
     """
     params = {
-        "@type": "workbench.cifti-restrict-dense-map",
+        "@type": "workbench/cifti-restrict-dense-map",
         "cifti_in": cifti_in,
         "direction": direction,
         "cifti_out": cifti_out,
@@ -133,33 +112,33 @@ def cifti_restrict_dense_map_cargs(
     cargs = []
     cargs.append("wb_command")
     cargs.append("-cifti-restrict-dense-map")
-    cargs.append(execution.input_file(params.get("cifti_in")))
-    cargs.append(params.get("direction"))
-    cargs.append(params.get("cifti_out"))
-    if params.get("opt_cifti_roi_roi_cifti") is not None:
+    cargs.append(execution.input_file(params.get("cifti_in", None)))
+    cargs.append(params.get("direction", None))
+    cargs.append(params.get("cifti_out", None))
+    if params.get("opt_cifti_roi_roi_cifti", None) is not None:
         cargs.extend([
             "-cifti-roi",
-            execution.input_file(params.get("opt_cifti_roi_roi_cifti"))
+            execution.input_file(params.get("opt_cifti_roi_roi_cifti", None))
         ])
-    if params.get("opt_left_roi_roi_metric") is not None:
+    if params.get("opt_left_roi_roi_metric", None) is not None:
         cargs.extend([
             "-left-roi",
-            execution.input_file(params.get("opt_left_roi_roi_metric"))
+            execution.input_file(params.get("opt_left_roi_roi_metric", None))
         ])
-    if params.get("opt_right_roi_roi_metric") is not None:
+    if params.get("opt_right_roi_roi_metric", None) is not None:
         cargs.extend([
             "-right-roi",
-            execution.input_file(params.get("opt_right_roi_roi_metric"))
+            execution.input_file(params.get("opt_right_roi_roi_metric", None))
         ])
-    if params.get("opt_cerebellum_roi_roi_metric") is not None:
+    if params.get("opt_cerebellum_roi_roi_metric", None) is not None:
         cargs.extend([
             "-cerebellum-roi",
-            execution.input_file(params.get("opt_cerebellum_roi_roi_metric"))
+            execution.input_file(params.get("opt_cerebellum_roi_roi_metric", None))
         ])
-    if params.get("opt_vol_roi_roi_vol") is not None:
+    if params.get("opt_vol_roi_roi_vol", None) is not None:
         cargs.extend([
             "-vol-roi",
-            execution.input_file(params.get("opt_vol_roi_roi_vol"))
+            execution.input_file(params.get("opt_vol_roi_roi_vol", None))
         ])
     return cargs
 
@@ -179,7 +158,7 @@ def cifti_restrict_dense_map_outputs(
     """
     ret = CiftiRestrictDenseMapOutputs(
         root=execution.output_file("."),
-        cifti_out=execution.output_file(params.get("cifti_out")),
+        cifti_out=execution.output_file(params.get("cifti_out", None)),
     )
     return ret
 
@@ -280,7 +259,6 @@ def cifti_restrict_dense_map(
 __all__ = [
     "CIFTI_RESTRICT_DENSE_MAP_METADATA",
     "CiftiRestrictDenseMapOutputs",
-    "CiftiRestrictDenseMapParameters",
     "cifti_restrict_dense_map",
     "cifti_restrict_dense_map_execute",
     "cifti_restrict_dense_map_params",

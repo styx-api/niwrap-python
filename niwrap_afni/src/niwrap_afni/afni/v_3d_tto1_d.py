@@ -14,7 +14,16 @@ V_3D_TTO1_D_METADATA = Metadata(
 
 
 V3dTto1DParameters = typing.TypedDict('V3dTto1DParameters', {
-    "@type": typing.Literal["afni.3dTto1D"],
+    "@type": typing.NotRequired[typing.Literal["afni/3dTto1D"]],
+    "input_dataset": InputPathType,
+    "method": str,
+    "automask": bool,
+    "mask": typing.NotRequired[InputPathType | None],
+    "prefix": typing.NotRequired[str | None],
+    "verbose": typing.NotRequired[float | None],
+})
+V3dTto1DParametersTagged = typing.TypedDict('V3dTto1DParametersTagged', {
+    "@type": typing.Literal["afni/3dTto1D"],
     "input_dataset": InputPathType,
     "method": str,
     "automask": bool,
@@ -24,41 +33,9 @@ V3dTto1DParameters = typing.TypedDict('V3dTto1DParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "afni.3dTto1D": v_3d_tto1_d_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "afni.3dTto1D": v_3d_tto1_d_outputs,
-    }.get(t)
-
-
 class V3dTto1DOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `v_3d_tto1_d(...)`.
+    Output object returned when calling `V3dTto1DParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -73,7 +50,7 @@ def v_3d_tto1_d_params(
     mask: InputPathType | None = None,
     prefix: str | None = None,
     verbose: float | None = None,
-) -> V3dTto1DParameters:
+) -> V3dTto1DParametersTagged:
     """
     Build parameters.
     
@@ -92,7 +69,7 @@ def v_3d_tto1_d_params(
         Parameter dictionary
     """
     params = {
-        "@type": "afni.3dTto1D",
+        "@type": "afni/3dTto1D",
         "input_dataset": input_dataset,
         "method": method,
         "automask": automask,
@@ -123,28 +100,28 @@ def v_3d_tto1_d_cargs(
     cargs.append("3dTto1D")
     cargs.extend([
         "-input",
-        execution.input_file(params.get("input_dataset"))
+        execution.input_file(params.get("input_dataset", None))
     ])
     cargs.extend([
         "-method",
-        params.get("method")
+        params.get("method", None)
     ])
-    if params.get("automask"):
+    if params.get("automask", False):
         cargs.append("-automask")
-    if params.get("mask") is not None:
+    if params.get("mask", None) is not None:
         cargs.extend([
             "-mask",
-            execution.input_file(params.get("mask"))
+            execution.input_file(params.get("mask", None))
         ])
-    if params.get("prefix") is not None:
+    if params.get("prefix", None) is not None:
         cargs.extend([
             "-prefix",
-            params.get("prefix")
+            params.get("prefix", None)
         ])
-    if params.get("verbose") is not None:
+    if params.get("verbose", None) is not None:
         cargs.extend([
             "-verb",
-            str(params.get("verbose"))
+            str(params.get("verbose", None))
         ])
     return cargs
 
@@ -164,7 +141,7 @@ def v_3d_tto1_d_outputs(
     """
     ret = V3dTto1DOutputs(
         root=execution.output_file("."),
-        output_file=execution.output_file(params.get("prefix")) if (params.get("prefix") is not None) else None,
+        output_file=execution.output_file(params.get("prefix", None)) if (params.get("prefix") is not None) else None,
     )
     return ret
 
@@ -243,7 +220,6 @@ def v_3d_tto1_d(
 
 __all__ = [
     "V3dTto1DOutputs",
-    "V3dTto1DParameters",
     "V_3D_TTO1_D_METADATA",
     "v_3d_tto1_d",
     "v_3d_tto1_d_execute",

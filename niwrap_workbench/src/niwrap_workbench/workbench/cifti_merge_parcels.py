@@ -14,55 +14,32 @@ CIFTI_MERGE_PARCELS_METADATA = Metadata(
 
 
 CiftiMergeParcelsCiftiParameters = typing.TypedDict('CiftiMergeParcelsCiftiParameters', {
-    "@type": typing.Literal["workbench.cifti-merge-parcels.cifti"],
+    "@type": typing.NotRequired[typing.Literal["cifti"]],
+    "cifti_in": InputPathType,
+})
+CiftiMergeParcelsCiftiParametersTagged = typing.TypedDict('CiftiMergeParcelsCiftiParametersTagged', {
+    "@type": typing.Literal["cifti"],
     "cifti_in": InputPathType,
 })
 
 
 CiftiMergeParcelsParameters = typing.TypedDict('CiftiMergeParcelsParameters', {
-    "@type": typing.Literal["workbench.cifti-merge-parcels"],
+    "@type": typing.NotRequired[typing.Literal["workbench/cifti-merge-parcels"]],
+    "direction": str,
+    "cifti_out": str,
+    "cifti": typing.NotRequired[list[CiftiMergeParcelsCiftiParameters] | None],
+})
+CiftiMergeParcelsParametersTagged = typing.TypedDict('CiftiMergeParcelsParametersTagged', {
+    "@type": typing.Literal["workbench/cifti-merge-parcels"],
     "direction": str,
     "cifti_out": str,
     "cifti": typing.NotRequired[list[CiftiMergeParcelsCiftiParameters] | None],
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "workbench.cifti-merge-parcels": cifti_merge_parcels_cargs,
-        "workbench.cifti-merge-parcels.cifti": cifti_merge_parcels_cifti_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "workbench.cifti-merge-parcels": cifti_merge_parcels_outputs,
-    }.get(t)
-
-
 def cifti_merge_parcels_cifti_params(
     cifti_in: InputPathType,
-) -> CiftiMergeParcelsCiftiParameters:
+) -> CiftiMergeParcelsCiftiParametersTagged:
     """
     Build parameters.
     
@@ -72,7 +49,7 @@ def cifti_merge_parcels_cifti_params(
         Parameter dictionary
     """
     params = {
-        "@type": "workbench.cifti-merge-parcels.cifti",
+        "@type": "cifti",
         "cifti_in": cifti_in,
     }
     return params
@@ -93,13 +70,13 @@ def cifti_merge_parcels_cifti_cargs(
     """
     cargs = []
     cargs.append("-cifti")
-    cargs.append(execution.input_file(params.get("cifti_in")))
+    cargs.append(execution.input_file(params.get("cifti_in", None)))
     return cargs
 
 
 class CiftiMergeParcelsOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `cifti_merge_parcels(...)`.
+    Output object returned when calling `CiftiMergeParcelsParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -111,7 +88,7 @@ def cifti_merge_parcels_params(
     direction: str,
     cifti_out: str,
     cifti: list[CiftiMergeParcelsCiftiParameters] | None = None,
-) -> CiftiMergeParcelsParameters:
+) -> CiftiMergeParcelsParametersTagged:
     """
     Build parameters.
     
@@ -123,7 +100,7 @@ def cifti_merge_parcels_params(
         Parameter dictionary
     """
     params = {
-        "@type": "workbench.cifti-merge-parcels",
+        "@type": "workbench/cifti-merge-parcels",
         "direction": direction,
         "cifti_out": cifti_out,
     }
@@ -148,10 +125,10 @@ def cifti_merge_parcels_cargs(
     cargs = []
     cargs.append("wb_command")
     cargs.append("-cifti-merge-parcels")
-    cargs.append(params.get("direction"))
-    cargs.append(params.get("cifti_out"))
-    if params.get("cifti") is not None:
-        cargs.extend([a for c in [dyn_cargs(s["@type"])(s, execution) for s in params.get("cifti")] for a in c])
+    cargs.append(params.get("direction", None))
+    cargs.append(params.get("cifti_out", None))
+    if params.get("cifti", None) is not None:
+        cargs.extend([a for c in [cifti_merge_parcels_cifti_cargs(s, execution) for s in params.get("cifti", None)] for a in c])
     return cargs
 
 
@@ -170,7 +147,7 @@ def cifti_merge_parcels_outputs(
     """
     ret = CiftiMergeParcelsOutputs(
         root=execution.output_file("."),
-        cifti_out=execution.output_file(params.get("cifti_out")),
+        cifti_out=execution.output_file(params.get("cifti_out", None)),
     )
     return ret
 
@@ -246,9 +223,7 @@ def cifti_merge_parcels(
 
 __all__ = [
     "CIFTI_MERGE_PARCELS_METADATA",
-    "CiftiMergeParcelsCiftiParameters",
     "CiftiMergeParcelsOutputs",
-    "CiftiMergeParcelsParameters",
     "cifti_merge_parcels",
     "cifti_merge_parcels_cifti_params",
     "cifti_merge_parcels_execute",

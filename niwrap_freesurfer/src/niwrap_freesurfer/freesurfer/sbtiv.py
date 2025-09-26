@@ -14,48 +14,22 @@ SBTIV_METADATA = Metadata(
 
 
 SbtivParameters = typing.TypedDict('SbtivParameters', {
-    "@type": typing.Literal["freesurfer.sbtiv"],
+    "@type": typing.NotRequired[typing.Literal["freesurfer/sbtiv"]],
+    "input_file": InputPathType,
+    "output_file": typing.NotRequired[str | None],
+    "labels_file": typing.NotRequired[InputPathType | None],
+})
+SbtivParametersTagged = typing.TypedDict('SbtivParametersTagged', {
+    "@type": typing.Literal["freesurfer/sbtiv"],
     "input_file": InputPathType,
     "output_file": typing.NotRequired[str | None],
     "labels_file": typing.NotRequired[InputPathType | None],
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "freesurfer.sbtiv": sbtiv_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "freesurfer.sbtiv": sbtiv_outputs,
-    }.get(t)
-
-
 class SbtivOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `sbtiv(...)`.
+    Output object returned when calling `SbtivParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -67,7 +41,7 @@ def sbtiv_params(
     input_file: InputPathType,
     output_file: str | None = None,
     labels_file: InputPathType | None = None,
-) -> SbtivParameters:
+) -> SbtivParametersTagged:
     """
     Build parameters.
     
@@ -80,7 +54,7 @@ def sbtiv_params(
         Parameter dictionary
     """
     params = {
-        "@type": "freesurfer.sbtiv",
+        "@type": "freesurfer/sbtiv",
         "input_file": input_file,
     }
     if output_file is not None:
@@ -105,16 +79,16 @@ def sbtiv_cargs(
     """
     cargs = []
     cargs.append("sbtiv")
-    cargs.append(execution.input_file(params.get("input_file")))
-    if params.get("output_file") is not None:
+    cargs.append(execution.input_file(params.get("input_file", None)))
+    if params.get("output_file", None) is not None:
         cargs.extend([
             "-o",
-            params.get("output_file")
+            params.get("output_file", None)
         ])
-    if params.get("labels_file") is not None:
+    if params.get("labels_file", None) is not None:
         cargs.extend([
             "-l",
-            execution.input_file(params.get("labels_file"))
+            execution.input_file(params.get("labels_file", None))
         ])
     return cargs
 
@@ -134,7 +108,7 @@ def sbtiv_outputs(
     """
     ret = SbtivOutputs(
         root=execution.output_file("."),
-        out_file=execution.output_file(params.get("output_file")) if (params.get("output_file") is not None) else None,
+        out_file=execution.output_file(params.get("output_file", None)) if (params.get("output_file") is not None) else None,
     )
     return ret
 
@@ -204,7 +178,6 @@ def sbtiv(
 __all__ = [
     "SBTIV_METADATA",
     "SbtivOutputs",
-    "SbtivParameters",
     "sbtiv",
     "sbtiv_execute",
     "sbtiv_params",

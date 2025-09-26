@@ -14,7 +14,14 @@ MATCH_SMOOTHING_METADATA = Metadata(
 
 
 MatchSmoothingParameters = typing.TypedDict('MatchSmoothingParameters', {
-    "@type": typing.Literal["fsl.match_smoothing"],
+    "@type": typing.NotRequired[typing.Literal["fsl/match_smoothing"]],
+    "example_func": InputPathType,
+    "func_smoothing_FWHM": float,
+    "example_structural": InputPathType,
+    "standard_space_resolution": float,
+})
+MatchSmoothingParametersTagged = typing.TypedDict('MatchSmoothingParametersTagged', {
+    "@type": typing.Literal["fsl/match_smoothing"],
     "example_func": InputPathType,
     "func_smoothing_FWHM": float,
     "example_structural": InputPathType,
@@ -22,40 +29,9 @@ MatchSmoothingParameters = typing.TypedDict('MatchSmoothingParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "fsl.match_smoothing": match_smoothing_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-    }.get(t)
-
-
 class MatchSmoothingOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `match_smoothing(...)`.
+    Output object returned when calling `MatchSmoothingParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -66,7 +42,7 @@ def match_smoothing_params(
     func_smoothing_fwhm: float,
     example_structural: InputPathType,
     standard_space_resolution: float,
-) -> MatchSmoothingParameters:
+) -> MatchSmoothingParametersTagged:
     """
     Build parameters.
     
@@ -81,7 +57,7 @@ def match_smoothing_params(
         Parameter dictionary
     """
     params = {
-        "@type": "fsl.match_smoothing",
+        "@type": "fsl/match_smoothing",
         "example_func": example_func,
         "func_smoothing_FWHM": func_smoothing_fwhm,
         "example_structural": example_structural,
@@ -105,10 +81,10 @@ def match_smoothing_cargs(
     """
     cargs = []
     cargs.append("match_smoothing")
-    cargs.append(execution.input_file(params.get("example_func")))
-    cargs.append(str(params.get("func_smoothing_FWHM")))
-    cargs.append(execution.input_file(params.get("example_structural")))
-    cargs.append(str(params.get("standard_space_resolution")))
+    cargs.append(execution.input_file(params.get("example_func", None)))
+    cargs.append(str(params.get("func_smoothing_FWHM", None)))
+    cargs.append(execution.input_file(params.get("example_structural", None)))
+    cargs.append(str(params.get("standard_space_resolution", None)))
     return cargs
 
 
@@ -200,7 +176,6 @@ def match_smoothing(
 __all__ = [
     "MATCH_SMOOTHING_METADATA",
     "MatchSmoothingOutputs",
-    "MatchSmoothingParameters",
     "match_smoothing",
     "match_smoothing_execute",
     "match_smoothing_params",

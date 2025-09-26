@@ -14,7 +14,33 @@ ADJUNCT_APQC_TSNR_GENERAL_METADATA = Metadata(
 
 
 AdjunctApqcTsnrGeneralParameters = typing.TypedDict('AdjunctApqcTsnrGeneralParameters', {
-    "@type": typing.Literal["afni.adjunct_apqc_tsnr_general"],
+    "@type": typing.NotRequired[typing.Literal["afni/adjunct_apqc_tsnr_general"]],
+    "montgap": typing.NotRequired[str | None],
+    "montcolor": typing.NotRequired[str | None],
+    "montx": typing.NotRequired[str | None],
+    "monty": typing.NotRequired[str | None],
+    "opacity": typing.NotRequired[str | None],
+    "blowup": typing.NotRequired[str | None],
+    "save_ftype": typing.NotRequired[str | None],
+    "set_dicom_xyz": typing.NotRequired[list[str] | None],
+    "set_ijk": typing.NotRequired[list[str] | None],
+    "set_subbricks": typing.NotRequired[list[str] | None],
+    "olay_alpha": typing.NotRequired[str | None],
+    "olay_boxed": typing.NotRequired[str | None],
+    "thr_olay": typing.NotRequired[str | None],
+    "ulay_range_nz": typing.NotRequired[list[str] | None],
+    "ulay_range": typing.NotRequired[list[str] | None],
+    "delta_slices": typing.NotRequired[list[str] | None],
+    "olay_disc_hot_range": typing.NotRequired[list[str] | None],
+    "olay_cont_max": typing.NotRequired[str | None],
+    "cbar_cont": typing.NotRequired[str | None],
+    "no_cor": bool,
+    "no_sag": bool,
+    "no_axi": bool,
+    "echo": bool,
+})
+AdjunctApqcTsnrGeneralParametersTagged = typing.TypedDict('AdjunctApqcTsnrGeneralParametersTagged', {
+    "@type": typing.Literal["afni/adjunct_apqc_tsnr_general"],
     "montgap": typing.NotRequired[str | None],
     "montcolor": typing.NotRequired[str | None],
     "montx": typing.NotRequired[str | None],
@@ -41,40 +67,9 @@ AdjunctApqcTsnrGeneralParameters = typing.TypedDict('AdjunctApqcTsnrGeneralParam
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "afni.adjunct_apqc_tsnr_general": adjunct_apqc_tsnr_general_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-    }.get(t)
-
-
 class AdjunctApqcTsnrGeneralOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `adjunct_apqc_tsnr_general(...)`.
+    Output object returned when calling `AdjunctApqcTsnrGeneralParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -104,7 +99,7 @@ def adjunct_apqc_tsnr_general_params(
     no_sag: bool = False,
     no_axi: bool = False,
     echo: bool = False,
-) -> AdjunctApqcTsnrGeneralParameters:
+) -> AdjunctApqcTsnrGeneralParametersTagged:
     """
     Build parameters.
     
@@ -136,7 +131,7 @@ def adjunct_apqc_tsnr_general_params(
         Parameter dictionary
     """
     params = {
-        "@type": "afni.adjunct_apqc_tsnr_general",
+        "@type": "afni/adjunct_apqc_tsnr_general",
         "no_cor": no_cor,
         "no_sag": no_sag,
         "no_axi": no_axi,
@@ -198,108 +193,108 @@ def adjunct_apqc_tsnr_general_cargs(
     """
     cargs = []
     cargs.append("adjunct_apqc_tsnr_general")
-    if params.get("montgap") is not None:
+    if params.get("montgap", None) is not None:
         cargs.extend([
             "-montgap",
-            params.get("montgap")
+            params.get("montgap", None)
         ])
-    if params.get("montcolor") is not None:
+    if params.get("montcolor", None) is not None:
         cargs.extend([
             "-montcolor",
-            params.get("montcolor")
+            params.get("montcolor", None)
         ])
-    if params.get("montx") is not None:
+    if params.get("montx", None) is not None:
         cargs.extend([
             "-montx",
-            params.get("montx")
+            params.get("montx", None)
         ])
-    if params.get("monty") is not None:
+    if params.get("monty", None) is not None:
         cargs.extend([
             "-monty",
-            params.get("monty")
+            params.get("monty", None)
         ])
-    if params.get("opacity") is not None:
+    if params.get("opacity", None) is not None:
         cargs.extend([
             "-opacity",
-            params.get("opacity")
+            params.get("opacity", None)
         ])
-    if params.get("blowup") is not None:
+    if params.get("blowup", None) is not None:
         cargs.extend([
             "-blowup",
-            params.get("blowup")
+            params.get("blowup", None)
         ])
-    if params.get("save_ftype") is not None:
+    if params.get("save_ftype", None) is not None:
         cargs.extend([
             "-save_ftype",
-            params.get("save_ftype")
+            params.get("save_ftype", None)
         ])
-    if params.get("set_dicom_xyz") is not None:
+    if params.get("set_dicom_xyz", None) is not None:
         cargs.extend([
             "-set_dicom_xyz",
-            *params.get("set_dicom_xyz")
+            *params.get("set_dicom_xyz", None)
         ])
-    if params.get("set_ijk") is not None:
+    if params.get("set_ijk", None) is not None:
         cargs.extend([
             "-set_ijk",
-            *params.get("set_ijk")
+            *params.get("set_ijk", None)
         ])
-    if params.get("set_subbricks") is not None:
+    if params.get("set_subbricks", None) is not None:
         cargs.extend([
             "-set_subbricks",
-            *params.get("set_subbricks")
+            *params.get("set_subbricks", None)
         ])
-    if params.get("olay_alpha") is not None:
+    if params.get("olay_alpha", None) is not None:
         cargs.extend([
             "-olay_alpha",
-            params.get("olay_alpha")
+            params.get("olay_alpha", None)
         ])
-    if params.get("olay_boxed") is not None:
+    if params.get("olay_boxed", None) is not None:
         cargs.extend([
             "-olay_boxed",
-            params.get("olay_boxed")
+            params.get("olay_boxed", None)
         ])
-    if params.get("thr_olay") is not None:
+    if params.get("thr_olay", None) is not None:
         cargs.extend([
             "-thr_olay",
-            params.get("thr_olay")
+            params.get("thr_olay", None)
         ])
-    if params.get("ulay_range_nz") is not None:
+    if params.get("ulay_range_nz", None) is not None:
         cargs.extend([
             "-ulay_range_nz",
-            *params.get("ulay_range_nz")
+            *params.get("ulay_range_nz", None)
         ])
-    if params.get("ulay_range") is not None:
+    if params.get("ulay_range", None) is not None:
         cargs.extend([
             "-ulay_range",
-            *params.get("ulay_range")
+            *params.get("ulay_range", None)
         ])
-    if params.get("delta_slices") is not None:
+    if params.get("delta_slices", None) is not None:
         cargs.extend([
             "-delta_slices",
-            *params.get("delta_slices")
+            *params.get("delta_slices", None)
         ])
-    if params.get("olay_disc_hot_range") is not None:
+    if params.get("olay_disc_hot_range", None) is not None:
         cargs.extend([
             "-olay_disc_hot_range",
-            *params.get("olay_disc_hot_range")
+            *params.get("olay_disc_hot_range", None)
         ])
-    if params.get("olay_cont_max") is not None:
+    if params.get("olay_cont_max", None) is not None:
         cargs.extend([
             "-olay_cont_max",
-            params.get("olay_cont_max")
+            params.get("olay_cont_max", None)
         ])
-    if params.get("cbar_cont") is not None:
+    if params.get("cbar_cont", None) is not None:
         cargs.extend([
             "-cbar_cont",
-            params.get("cbar_cont")
+            params.get("cbar_cont", None)
         ])
-    if params.get("no_cor"):
+    if params.get("no_cor", False):
         cargs.append("-no_cor")
-    if params.get("no_sag"):
+    if params.get("no_sag", False):
         cargs.append("-no_sag")
-    if params.get("no_axi"):
+    if params.get("no_axi", False):
         cargs.append("-no_axi")
-    if params.get("echo"):
+    if params.get("echo", False):
         cargs.append("-echo")
     return cargs
 
@@ -445,7 +440,6 @@ def adjunct_apqc_tsnr_general(
 __all__ = [
     "ADJUNCT_APQC_TSNR_GENERAL_METADATA",
     "AdjunctApqcTsnrGeneralOutputs",
-    "AdjunctApqcTsnrGeneralParameters",
     "adjunct_apqc_tsnr_general",
     "adjunct_apqc_tsnr_general_execute",
     "adjunct_apqc_tsnr_general_params",

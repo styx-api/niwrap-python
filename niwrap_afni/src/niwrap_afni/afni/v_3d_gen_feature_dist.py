@@ -14,7 +14,22 @@ V_3D_GEN_FEATURE_DIST_METADATA = Metadata(
 
 
 V3dGenFeatureDistParameters = typing.TypedDict('V3dGenFeatureDistParameters', {
-    "@type": typing.Literal["afni.3dGenFeatureDist"],
+    "@type": typing.NotRequired[typing.Literal["afni/3dGenFeatureDist"]],
+    "features_string": str,
+    "class_string": str,
+    "prefix": typing.NotRequired[str | None],
+    "overwrite": bool,
+    "debug_level": typing.NotRequired[float | None],
+    "other": bool,
+    "no_other": bool,
+    "samp": typing.NotRequired[list[str] | None],
+    "sig": typing.NotRequired[list[str] | None],
+    "hspec": typing.NotRequired[list[str] | None],
+    "labeltable": typing.NotRequired[InputPathType | None],
+    "show_histograms": typing.NotRequired[str | None],
+})
+V3dGenFeatureDistParametersTagged = typing.TypedDict('V3dGenFeatureDistParametersTagged', {
+    "@type": typing.Literal["afni/3dGenFeatureDist"],
     "features_string": str,
     "class_string": str,
     "prefix": typing.NotRequired[str | None],
@@ -30,41 +45,9 @@ V3dGenFeatureDistParameters = typing.TypedDict('V3dGenFeatureDistParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "afni.3dGenFeatureDist": v_3d_gen_feature_dist_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "afni.3dGenFeatureDist": v_3d_gen_feature_dist_outputs,
-    }.get(t)
-
-
 class V3dGenFeatureDistOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `v_3d_gen_feature_dist(...)`.
+    Output object returned when calling `V3dGenFeatureDistParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -85,7 +68,7 @@ def v_3d_gen_feature_dist_params(
     hspec: list[str] | None = None,
     labeltable: InputPathType | None = None,
     show_histograms: str | None = None,
-) -> V3dGenFeatureDistParameters:
+) -> V3dGenFeatureDistParametersTagged:
     """
     Build parameters.
     
@@ -109,7 +92,7 @@ def v_3d_gen_feature_dist_params(
         Parameter dictionary
     """
     params = {
-        "@type": "afni.3dGenFeatureDist",
+        "@type": "afni/3dGenFeatureDist",
         "features_string": features_string,
         "class_string": class_string,
         "overwrite": overwrite,
@@ -150,52 +133,52 @@ def v_3d_gen_feature_dist_cargs(
     cargs.append("3dGenFeatureDist")
     cargs.extend([
         "-features",
-        params.get("features_string")
+        params.get("features_string", None)
     ])
     cargs.extend([
         "-classes",
-        params.get("class_string")
+        params.get("class_string", None)
     ])
-    if params.get("prefix") is not None:
+    if params.get("prefix", None) is not None:
         cargs.extend([
             "-prefix",
-            params.get("prefix")
+            params.get("prefix", None)
         ])
-    if params.get("overwrite"):
+    if params.get("overwrite", False):
         cargs.append("-overwrite")
-    if params.get("debug_level") is not None:
+    if params.get("debug_level", None) is not None:
         cargs.extend([
             "-debug",
-            str(params.get("debug_level"))
+            str(params.get("debug_level", None))
         ])
-    if params.get("other"):
+    if params.get("other", False):
         cargs.append("-OTHER")
-    if params.get("no_other"):
+    if params.get("no_other", False):
         cargs.append("-no_OTHER")
-    if params.get("samp") is not None:
+    if params.get("samp", None) is not None:
         cargs.extend([
             "-samp",
-            *params.get("samp")
+            *params.get("samp", None)
         ])
-    if params.get("sig") is not None:
+    if params.get("sig", None) is not None:
         cargs.extend([
             "-sig",
-            *params.get("sig")
+            *params.get("sig", None)
         ])
-    if params.get("hspec") is not None:
+    if params.get("hspec", None) is not None:
         cargs.extend([
             "-hspec",
-            *params.get("hspec")
+            *params.get("hspec", None)
         ])
-    if params.get("labeltable") is not None:
+    if params.get("labeltable", None) is not None:
         cargs.extend([
             "-labeltable",
-            execution.input_file(params.get("labeltable"))
+            execution.input_file(params.get("labeltable", None))
         ])
-    if params.get("show_histograms") is not None:
+    if params.get("show_histograms", None) is not None:
         cargs.extend([
             "-ShowTheseHists",
-            params.get("show_histograms")
+            params.get("show_histograms", None)
         ])
     return cargs
 
@@ -215,7 +198,7 @@ def v_3d_gen_feature_dist_outputs(
     """
     ret = V3dGenFeatureDistOutputs(
         root=execution.output_file("."),
-        output_hive=execution.output_file(params.get("prefix") + "_hive.nii.gz") if (params.get("prefix") is not None) else None,
+        output_hive=execution.output_file(params.get("prefix", None) + "_hive.nii.gz") if (params.get("prefix") is not None) else None,
     )
     return ret
 
@@ -311,7 +294,6 @@ def v_3d_gen_feature_dist(
 
 __all__ = [
     "V3dGenFeatureDistOutputs",
-    "V3dGenFeatureDistParameters",
     "V_3D_GEN_FEATURE_DIST_METADATA",
     "v_3d_gen_feature_dist",
     "v_3d_gen_feature_dist_execute",

@@ -14,20 +14,42 @@ VOLUME_DILATE_METADATA = Metadata(
 
 
 VolumeDilatePresmoothParameters = typing.TypedDict('VolumeDilatePresmoothParameters', {
-    "@type": typing.Literal["workbench.volume-dilate.grad_extrapolate.presmooth"],
+    "@type": typing.NotRequired[typing.Literal["presmooth"]],
+    "kernel": float,
+    "opt_fwhm": bool,
+})
+VolumeDilatePresmoothParametersTagged = typing.TypedDict('VolumeDilatePresmoothParametersTagged', {
+    "@type": typing.Literal["presmooth"],
     "kernel": float,
     "opt_fwhm": bool,
 })
 
 
 VolumeDilateGradExtrapolateParameters = typing.TypedDict('VolumeDilateGradExtrapolateParameters', {
-    "@type": typing.Literal["workbench.volume-dilate.grad_extrapolate"],
+    "@type": typing.NotRequired[typing.Literal["grad_extrapolate"]],
+    "presmooth": typing.NotRequired[VolumeDilatePresmoothParameters | None],
+})
+VolumeDilateGradExtrapolateParametersTagged = typing.TypedDict('VolumeDilateGradExtrapolateParametersTagged', {
+    "@type": typing.Literal["grad_extrapolate"],
     "presmooth": typing.NotRequired[VolumeDilatePresmoothParameters | None],
 })
 
 
 VolumeDilateParameters = typing.TypedDict('VolumeDilateParameters', {
-    "@type": typing.Literal["workbench.volume-dilate"],
+    "@type": typing.NotRequired[typing.Literal["workbench/volume-dilate"]],
+    "volume": InputPathType,
+    "distance": float,
+    "method": str,
+    "volume_out": str,
+    "opt_exponent_exponent": typing.NotRequired[float | None],
+    "opt_bad_voxel_roi_roi_volume": typing.NotRequired[InputPathType | None],
+    "opt_data_roi_roi_volume": typing.NotRequired[InputPathType | None],
+    "opt_subvolume_subvol": typing.NotRequired[str | None],
+    "opt_legacy_cutoff": bool,
+    "grad_extrapolate": typing.NotRequired[VolumeDilateGradExtrapolateParameters | None],
+})
+VolumeDilateParametersTagged = typing.TypedDict('VolumeDilateParametersTagged', {
+    "@type": typing.Literal["workbench/volume-dilate"],
     "volume": InputPathType,
     "distance": float,
     "method": str,
@@ -41,44 +63,10 @@ VolumeDilateParameters = typing.TypedDict('VolumeDilateParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "workbench.volume-dilate": volume_dilate_cargs,
-        "workbench.volume-dilate.grad_extrapolate": volume_dilate_grad_extrapolate_cargs,
-        "workbench.volume-dilate.grad_extrapolate.presmooth": volume_dilate_presmooth_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "workbench.volume-dilate": volume_dilate_outputs,
-    }.get(t)
-
-
 def volume_dilate_presmooth_params(
     kernel: float,
     opt_fwhm: bool = False,
-) -> VolumeDilatePresmoothParameters:
+) -> VolumeDilatePresmoothParametersTagged:
     """
     Build parameters.
     
@@ -90,7 +78,7 @@ def volume_dilate_presmooth_params(
         Parameter dictionary
     """
     params = {
-        "@type": "workbench.volume-dilate.grad_extrapolate.presmooth",
+        "@type": "presmooth",
         "kernel": kernel,
         "opt_fwhm": opt_fwhm,
     }
@@ -112,15 +100,15 @@ def volume_dilate_presmooth_cargs(
     """
     cargs = []
     cargs.append("-presmooth")
-    cargs.append(str(params.get("kernel")))
-    if params.get("opt_fwhm"):
+    cargs.append(str(params.get("kernel", None)))
+    if params.get("opt_fwhm", False):
         cargs.append("-fwhm")
     return cargs
 
 
 def volume_dilate_grad_extrapolate_params(
     presmooth: VolumeDilatePresmoothParameters | None = None,
-) -> VolumeDilateGradExtrapolateParameters:
+) -> VolumeDilateGradExtrapolateParametersTagged:
     """
     Build parameters.
     
@@ -131,7 +119,7 @@ def volume_dilate_grad_extrapolate_params(
         Parameter dictionary
     """
     params = {
-        "@type": "workbench.volume-dilate.grad_extrapolate",
+        "@type": "grad_extrapolate",
     }
     if presmooth is not None:
         params["presmooth"] = presmooth
@@ -153,14 +141,14 @@ def volume_dilate_grad_extrapolate_cargs(
     """
     cargs = []
     cargs.append("-grad-extrapolate")
-    if params.get("presmooth") is not None:
-        cargs.extend(dyn_cargs(params.get("presmooth")["@type"])(params.get("presmooth"), execution))
+    if params.get("presmooth", None) is not None:
+        cargs.extend(volume_dilate_presmooth_cargs(params.get("presmooth", None), execution))
     return cargs
 
 
 class VolumeDilateOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `volume_dilate(...)`.
+    Output object returned when calling `VolumeDilateParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -179,7 +167,7 @@ def volume_dilate_params(
     opt_subvolume_subvol: str | None = None,
     opt_legacy_cutoff: bool = False,
     grad_extrapolate: VolumeDilateGradExtrapolateParameters | None = None,
-) -> VolumeDilateParameters:
+) -> VolumeDilateParametersTagged:
     """
     Build parameters.
     
@@ -206,7 +194,7 @@ def volume_dilate_params(
         Parameter dictionary
     """
     params = {
-        "@type": "workbench.volume-dilate",
+        "@type": "workbench/volume-dilate",
         "volume": volume,
         "distance": distance,
         "method": method,
@@ -242,34 +230,34 @@ def volume_dilate_cargs(
     cargs = []
     cargs.append("wb_command")
     cargs.append("-volume-dilate")
-    cargs.append(execution.input_file(params.get("volume")))
-    cargs.append(str(params.get("distance")))
-    cargs.append(params.get("method"))
-    cargs.append(params.get("volume_out"))
-    if params.get("opt_exponent_exponent") is not None:
+    cargs.append(execution.input_file(params.get("volume", None)))
+    cargs.append(str(params.get("distance", None)))
+    cargs.append(params.get("method", None))
+    cargs.append(params.get("volume_out", None))
+    if params.get("opt_exponent_exponent", None) is not None:
         cargs.extend([
             "-exponent",
-            str(params.get("opt_exponent_exponent"))
+            str(params.get("opt_exponent_exponent", None))
         ])
-    if params.get("opt_bad_voxel_roi_roi_volume") is not None:
+    if params.get("opt_bad_voxel_roi_roi_volume", None) is not None:
         cargs.extend([
             "-bad-voxel-roi",
-            execution.input_file(params.get("opt_bad_voxel_roi_roi_volume"))
+            execution.input_file(params.get("opt_bad_voxel_roi_roi_volume", None))
         ])
-    if params.get("opt_data_roi_roi_volume") is not None:
+    if params.get("opt_data_roi_roi_volume", None) is not None:
         cargs.extend([
             "-data-roi",
-            execution.input_file(params.get("opt_data_roi_roi_volume"))
+            execution.input_file(params.get("opt_data_roi_roi_volume", None))
         ])
-    if params.get("opt_subvolume_subvol") is not None:
+    if params.get("opt_subvolume_subvol", None) is not None:
         cargs.extend([
             "-subvolume",
-            params.get("opt_subvolume_subvol")
+            params.get("opt_subvolume_subvol", None)
         ])
-    if params.get("opt_legacy_cutoff"):
+    if params.get("opt_legacy_cutoff", False):
         cargs.append("-legacy-cutoff")
-    if params.get("grad_extrapolate") is not None:
-        cargs.extend(dyn_cargs(params.get("grad_extrapolate")["@type"])(params.get("grad_extrapolate"), execution))
+    if params.get("grad_extrapolate", None) is not None:
+        cargs.extend(volume_dilate_grad_extrapolate_cargs(params.get("grad_extrapolate", None), execution))
     return cargs
 
 
@@ -288,7 +276,7 @@ def volume_dilate_outputs(
     """
     ret = VolumeDilateOutputs(
         root=execution.output_file("."),
-        volume_out=execution.output_file(params.get("volume_out")),
+        volume_out=execution.output_file(params.get("volume_out", None)),
     )
     return ret
 
@@ -419,10 +407,7 @@ def volume_dilate(
 
 __all__ = [
     "VOLUME_DILATE_METADATA",
-    "VolumeDilateGradExtrapolateParameters",
     "VolumeDilateOutputs",
-    "VolumeDilateParameters",
-    "VolumeDilatePresmoothParameters",
     "volume_dilate",
     "volume_dilate_execute",
     "volume_dilate_grad_extrapolate_params",

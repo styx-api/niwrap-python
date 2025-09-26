@@ -14,7 +14,26 @@ MRISP_PAINT_METADATA = Metadata(
 
 
 MrispPaintParameters = typing.TypedDict('MrispPaintParameters', {
-    "@type": typing.Literal["freesurfer.mrisp_paint"],
+    "@type": typing.NotRequired[typing.Literal["freesurfer/mrisp_paint"]],
+    "template_file": InputPathType,
+    "input_surface": InputPathType,
+    "output_name": str,
+    "subjects_dir": typing.NotRequired[str | None],
+    "vertex_coords": typing.NotRequired[str | None],
+    "average_flag": typing.NotRequired[float | None],
+    "normalize_flag": bool,
+    "frame_number": typing.NotRequired[float | None],
+    "square_root_flag": bool,
+    "variance_params": typing.NotRequired[str | None],
+    "usage_flag": bool,
+    "birn_info_flag": bool,
+    "help_flag": bool,
+    "diag_vertex": typing.NotRequired[float | None],
+    "version_flag": bool,
+    "diag_write_flag": bool,
+})
+MrispPaintParametersTagged = typing.TypedDict('MrispPaintParametersTagged', {
+    "@type": typing.Literal["freesurfer/mrisp_paint"],
     "template_file": InputPathType,
     "input_surface": InputPathType,
     "output_name": str,
@@ -34,41 +53,9 @@ MrispPaintParameters = typing.TypedDict('MrispPaintParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "freesurfer.mrisp_paint": mrisp_paint_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "freesurfer.mrisp_paint": mrisp_paint_outputs,
-    }.get(t)
-
-
 class MrispPaintOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `mrisp_paint(...)`.
+    Output object returned when calling `MrispPaintParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -94,7 +81,7 @@ def mrisp_paint_params(
     diag_vertex: float | None = None,
     version_flag: bool = False,
     diag_write_flag: bool = False,
-) -> MrispPaintParameters:
+) -> MrispPaintParametersTagged:
     """
     Build parameters.
     
@@ -125,7 +112,7 @@ def mrisp_paint_params(
         Parameter dictionary
     """
     params = {
-        "@type": "freesurfer.mrisp_paint",
+        "@type": "freesurfer/mrisp_paint",
         "template_file": template_file,
         "input_surface": input_surface,
         "output_name": output_name,
@@ -167,52 +154,52 @@ def mrisp_paint_cargs(
     """
     cargs = []
     cargs.append("mrisp_paint")
-    cargs.append(execution.input_file(params.get("template_file")))
-    cargs.append(execution.input_file(params.get("input_surface")))
-    cargs.append(params.get("output_name"))
-    if params.get("subjects_dir") is not None:
+    cargs.append(execution.input_file(params.get("template_file", None)))
+    cargs.append(execution.input_file(params.get("input_surface", None)))
+    cargs.append(params.get("output_name", None))
+    if params.get("subjects_dir", None) is not None:
         cargs.extend([
             "-SDIR",
-            params.get("subjects_dir")
+            params.get("subjects_dir", None)
         ])
-    if params.get("vertex_coords") is not None:
+    if params.get("vertex_coords", None) is not None:
         cargs.extend([
             "-coords",
-            params.get("vertex_coords")
+            params.get("vertex_coords", None)
         ])
-    if params.get("average_flag") is not None:
+    if params.get("average_flag", None) is not None:
         cargs.extend([
             "-A",
-            str(params.get("average_flag"))
+            str(params.get("average_flag", None))
         ])
-    if params.get("normalize_flag"):
+    if params.get("normalize_flag", False):
         cargs.append("-N")
-    if params.get("frame_number") is not None:
+    if params.get("frame_number", None) is not None:
         cargs.extend([
             "-f",
-            str(params.get("frame_number"))
+            str(params.get("frame_number", None))
         ])
-    if params.get("square_root_flag"):
+    if params.get("square_root_flag", False):
         cargs.append("-S")
-    if params.get("variance_params") is not None:
+    if params.get("variance_params", None) is not None:
         cargs.extend([
             "-variance",
-            params.get("variance_params")
+            params.get("variance_params", None)
         ])
-    if params.get("usage_flag"):
+    if params.get("usage_flag", False):
         cargs.append("-?")
-    if params.get("birn_info_flag"):
+    if params.get("birn_info_flag", False):
         cargs.append("--all-info")
-    if params.get("help_flag"):
+    if params.get("help_flag", False):
         cargs.append("--help")
-    if params.get("diag_vertex") is not None:
+    if params.get("diag_vertex", None) is not None:
         cargs.extend([
             "-V",
-            str(params.get("diag_vertex"))
+            str(params.get("diag_vertex", None))
         ])
-    if params.get("version_flag"):
+    if params.get("version_flag", False):
         cargs.append("--version")
-    if params.get("diag_write_flag"):
+    if params.get("diag_write_flag", False):
         cargs.append("-W")
     return cargs
 
@@ -232,7 +219,7 @@ def mrisp_paint_outputs(
     """
     ret = MrispPaintOutputs(
         root=execution.output_file("."),
-        output_file=execution.output_file(params.get("output_name")),
+        output_file=execution.output_file(params.get("output_name", None)),
     )
     return ret
 
@@ -346,7 +333,6 @@ def mrisp_paint(
 __all__ = [
     "MRISP_PAINT_METADATA",
     "MrispPaintOutputs",
-    "MrispPaintParameters",
     "mrisp_paint",
     "mrisp_paint_execute",
     "mrisp_paint_params",

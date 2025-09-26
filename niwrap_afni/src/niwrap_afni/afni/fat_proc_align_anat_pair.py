@@ -14,7 +14,22 @@ FAT_PROC_ALIGN_ANAT_PAIR_METADATA = Metadata(
 
 
 FatProcAlignAnatPairParameters = typing.TypedDict('FatProcAlignAnatPairParameters', {
-    "@type": typing.Literal["afni.fat_proc_align_anat_pair"],
+    "@type": typing.NotRequired[typing.Literal["afni/fat_proc_align_anat_pair"]],
+    "input_t1w": InputPathType,
+    "input_t2w": InputPathType,
+    "output_prefix": str,
+    "output_grid": typing.NotRequired[float | None],
+    "out_t2w_grid": bool,
+    "input_t2w_mask": typing.NotRequired[InputPathType | None],
+    "do_ss_tmp_t1w": bool,
+    "warp": typing.NotRequired[str | None],
+    "matrix": typing.NotRequired[InputPathType | None],
+    "workdir": typing.NotRequired[str | None],
+    "no_cmd_out": bool,
+    "no_clean": bool,
+})
+FatProcAlignAnatPairParametersTagged = typing.TypedDict('FatProcAlignAnatPairParametersTagged', {
+    "@type": typing.Literal["afni/fat_proc_align_anat_pair"],
     "input_t1w": InputPathType,
     "input_t2w": InputPathType,
     "output_prefix": str,
@@ -30,41 +45,9 @@ FatProcAlignAnatPairParameters = typing.TypedDict('FatProcAlignAnatPairParameter
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "afni.fat_proc_align_anat_pair": fat_proc_align_anat_pair_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "afni.fat_proc_align_anat_pair": fat_proc_align_anat_pair_outputs,
-    }.get(t)
-
-
 class FatProcAlignAnatPairOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `fat_proc_align_anat_pair(...)`.
+    Output object returned when calling `FatProcAlignAnatPairParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -89,7 +72,7 @@ def fat_proc_align_anat_pair_params(
     workdir: str | None = None,
     no_cmd_out: bool = False,
     no_clean: bool = False,
-) -> FatProcAlignAnatPairParameters:
+) -> FatProcAlignAnatPairParametersTagged:
     """
     Build parameters.
     
@@ -113,7 +96,7 @@ def fat_proc_align_anat_pair_params(
         Parameter dictionary
     """
     params = {
-        "@type": "afni.fat_proc_align_anat_pair",
+        "@type": "afni/fat_proc_align_anat_pair",
         "input_t1w": input_t1w,
         "input_t2w": input_t2w,
         "output_prefix": output_prefix,
@@ -152,48 +135,48 @@ def fat_proc_align_anat_pair_cargs(
     cargs.append("fat_proc_align_anat_pair")
     cargs.extend([
         "-in_t1w",
-        execution.input_file(params.get("input_t1w"))
+        execution.input_file(params.get("input_t1w", None))
     ])
     cargs.extend([
         "-in_t2w",
-        execution.input_file(params.get("input_t2w"))
+        execution.input_file(params.get("input_t2w", None))
     ])
     cargs.extend([
         "-prefix",
-        params.get("output_prefix")
+        params.get("output_prefix", None)
     ])
-    if params.get("output_grid") is not None:
+    if params.get("output_grid", None) is not None:
         cargs.extend([
             "-newgrid",
-            str(params.get("output_grid"))
+            str(params.get("output_grid", None))
         ])
-    if params.get("out_t2w_grid"):
+    if params.get("out_t2w_grid", False):
         cargs.append("-out_t2w_grid")
-    if params.get("input_t2w_mask") is not None:
+    if params.get("input_t2w_mask", None) is not None:
         cargs.extend([
             "-in_t2w_mask",
-            execution.input_file(params.get("input_t2w_mask"))
+            execution.input_file(params.get("input_t2w_mask", None))
         ])
-    if params.get("do_ss_tmp_t1w"):
+    if params.get("do_ss_tmp_t1w", False):
         cargs.append("-do_ss_tmp_t1w")
-    if params.get("warp") is not None:
+    if params.get("warp", None) is not None:
         cargs.extend([
             "-warp",
-            params.get("warp")
+            params.get("warp", None)
         ])
-    if params.get("matrix") is not None:
+    if params.get("matrix", None) is not None:
         cargs.extend([
             "-matrix",
-            execution.input_file(params.get("matrix"))
+            execution.input_file(params.get("matrix", None))
         ])
-    if params.get("workdir") is not None:
+    if params.get("workdir", None) is not None:
         cargs.extend([
             "-workdir",
-            params.get("workdir")
+            params.get("workdir", None)
         ])
-    if params.get("no_cmd_out"):
+    if params.get("no_cmd_out", False):
         cargs.append("-no_cmd_out")
-    if params.get("no_clean"):
+    if params.get("no_clean", False):
         cargs.append("-no_clean")
     return cargs
 
@@ -213,9 +196,9 @@ def fat_proc_align_anat_pair_outputs(
     """
     ret = FatProcAlignAnatPairOutputs(
         root=execution.output_file("."),
-        aligned_t1w=execution.output_file(params.get("output_prefix") + "_t1w_aligned.nii.gz"),
-        qc_snapshot_t1w_on_t2w=execution.output_file(params.get("output_prefix") + "_QC_T1w_over_T2w.png"),
-        qc_snapshot_t1w_edges_on_t2w=execution.output_file(params.get("output_prefix") + "_QC_T1w_edges_over_T2w.png"),
+        aligned_t1w=execution.output_file(params.get("output_prefix", None) + "_t1w_aligned.nii.gz"),
+        qc_snapshot_t1w_on_t2w=execution.output_file(params.get("output_prefix", None) + "_QC_T1w_over_T2w.png"),
+        qc_snapshot_t1w_edges_on_t2w=execution.output_file(params.get("output_prefix", None) + "_QC_T1w_edges_over_T2w.png"),
     )
     return ret
 
@@ -314,7 +297,6 @@ def fat_proc_align_anat_pair(
 __all__ = [
     "FAT_PROC_ALIGN_ANAT_PAIR_METADATA",
     "FatProcAlignAnatPairOutputs",
-    "FatProcAlignAnatPairParameters",
     "fat_proc_align_anat_pair",
     "fat_proc_align_anat_pair_execute",
     "fat_proc_align_anat_pair_params",

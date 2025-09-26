@@ -14,47 +14,22 @@ VOLUME_REORIENT_METADATA = Metadata(
 
 
 VolumeReorientParameters = typing.TypedDict('VolumeReorientParameters', {
-    "@type": typing.Literal["workbench.volume-reorient"],
+    "@type": typing.NotRequired[typing.Literal["workbench/volume-reorient"]],
+    "volume": InputPathType,
+    "orient_string": str,
+    "volume_out": str,
+})
+VolumeReorientParametersTagged = typing.TypedDict('VolumeReorientParametersTagged', {
+    "@type": typing.Literal["workbench/volume-reorient"],
     "volume": InputPathType,
     "orient_string": str,
     "volume_out": str,
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "workbench.volume-reorient": volume_reorient_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-    }.get(t)
-
-
 class VolumeReorientOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `volume_reorient(...)`.
+    Output object returned when calling `VolumeReorientParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -64,7 +39,7 @@ def volume_reorient_params(
     volume: InputPathType,
     orient_string: str,
     volume_out: str,
-) -> VolumeReorientParameters:
+) -> VolumeReorientParametersTagged:
     """
     Build parameters.
     
@@ -76,7 +51,7 @@ def volume_reorient_params(
         Parameter dictionary
     """
     params = {
-        "@type": "workbench.volume-reorient",
+        "@type": "workbench/volume-reorient",
         "volume": volume,
         "orient_string": orient_string,
         "volume_out": volume_out,
@@ -100,9 +75,9 @@ def volume_reorient_cargs(
     cargs = []
     cargs.append("wb_command")
     cargs.append("-volume-reorient")
-    cargs.append(execution.input_file(params.get("volume")))
-    cargs.append(params.get("orient_string"))
-    cargs.append(params.get("volume_out"))
+    cargs.append(execution.input_file(params.get("volume", None)))
+    cargs.append(params.get("orient_string", None))
+    cargs.append(params.get("volume_out", None))
     return cargs
 
 
@@ -211,7 +186,6 @@ def volume_reorient(
 __all__ = [
     "VOLUME_REORIENT_METADATA",
     "VolumeReorientOutputs",
-    "VolumeReorientParameters",
     "volume_reorient",
     "volume_reorient_execute",
     "volume_reorient_params",

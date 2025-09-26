@@ -14,7 +14,24 @@ V__T1SCALE_METADATA = Metadata(
 
 
 VT1scaleParameters = typing.TypedDict('VT1scaleParameters', {
-    "@type": typing.Literal["afni.@T1scale"],
+    "@type": typing.NotRequired[typing.Literal["afni/@T1scale"]],
+    "t1_volume": InputPathType,
+    "pd_volume": typing.NotRequired[InputPathType | None],
+    "output_directory": typing.NotRequired[str | None],
+    "align": bool,
+    "mask": typing.NotRequired[InputPathType | None],
+    "head_mask": bool,
+    "unmasked_uni": bool,
+    "masked_uni": bool,
+    "echo": bool,
+    "help": bool,
+    "h_web": bool,
+    "h_view": bool,
+    "all_opts": bool,
+    "h_find_word": typing.NotRequired[str | None],
+})
+VT1scaleParametersTagged = typing.TypedDict('VT1scaleParametersTagged', {
+    "@type": typing.Literal["afni/@T1scale"],
     "t1_volume": InputPathType,
     "pd_volume": typing.NotRequired[InputPathType | None],
     "output_directory": typing.NotRequired[str | None],
@@ -32,41 +49,9 @@ VT1scaleParameters = typing.TypedDict('VT1scaleParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "afni.@T1scale": v__t1scale_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "afni.@T1scale": v__t1scale_outputs,
-    }.get(t)
-
-
 class VT1scaleOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `v__t1scale(...)`.
+    Output object returned when calling `VT1scaleParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -93,7 +78,7 @@ def v__t1scale_params(
     h_view: bool = False,
     all_opts: bool = False,
     h_find_word: str | None = None,
-) -> VT1scaleParameters:
+) -> VT1scaleParametersTagged:
     """
     Build parameters.
     
@@ -120,7 +105,7 @@ def v__t1scale_params(
         Parameter dictionary
     """
     params = {
-        "@type": "afni.@T1scale",
+        "@type": "afni/@T1scale",
         "t1_volume": t1_volume,
         "align": align,
         "head_mask": head_mask,
@@ -160,45 +145,45 @@ def v__t1scale_cargs(
     cargs.append("@T1scale")
     cargs.extend([
         "-T1",
-        execution.input_file(params.get("t1_volume"))
+        execution.input_file(params.get("t1_volume", None))
     ])
-    if params.get("pd_volume") is not None:
+    if params.get("pd_volume", None) is not None:
         cargs.extend([
             "-PD",
-            execution.input_file(params.get("pd_volume"))
+            execution.input_file(params.get("pd_volume", None))
         ])
-    if params.get("output_directory") is not None:
+    if params.get("output_directory", None) is not None:
         cargs.extend([
             "-odir",
-            params.get("output_directory")
+            params.get("output_directory", None)
         ])
-    if params.get("align"):
+    if params.get("align", False):
         cargs.append("-align")
-    if params.get("mask") is not None:
+    if params.get("mask", None) is not None:
         cargs.extend([
             "-mask",
-            execution.input_file(params.get("mask"))
+            execution.input_file(params.get("mask", None))
         ])
-    if params.get("head_mask"):
+    if params.get("head_mask", False):
         cargs.append("-head_mask")
-    if params.get("unmasked_uni"):
+    if params.get("unmasked_uni", False):
         cargs.append("-unmasked_uni")
-    if params.get("masked_uni"):
+    if params.get("masked_uni", False):
         cargs.append("-masked_uni")
-    if params.get("echo"):
+    if params.get("echo", False):
         cargs.append("-echo")
-    if params.get("help"):
+    if params.get("help", False):
         cargs.append("-help")
-    if params.get("h_web"):
+    if params.get("h_web", False):
         cargs.append("-h_web")
-    if params.get("h_view"):
+    if params.get("h_view", False):
         cargs.append("-hview")
-    if params.get("all_opts"):
+    if params.get("all_opts", False):
         cargs.append("-all_opts")
-    if params.get("h_find_word") is not None:
+    if params.get("h_find_word", None) is not None:
         cargs.extend([
             "-h_find",
-            params.get("h_find_word")
+            params.get("h_find_word", None)
         ])
     return cargs
 
@@ -325,7 +310,6 @@ def v__t1scale(
 
 __all__ = [
     "VT1scaleOutputs",
-    "VT1scaleParameters",
     "V__T1SCALE_METADATA",
     "v__t1scale",
     "v__t1scale_execute",

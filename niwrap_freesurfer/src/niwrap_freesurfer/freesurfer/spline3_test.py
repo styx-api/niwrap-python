@@ -14,48 +14,22 @@ SPLINE3_TEST_METADATA = Metadata(
 
 
 Spline3TestParameters = typing.TypedDict('Spline3TestParameters', {
-    "@type": typing.Literal["freesurfer.Spline3_test"],
+    "@type": typing.NotRequired[typing.Literal["freesurfer/Spline3_test"]],
+    "x_values": list[float],
+    "y_values": list[float],
+    "x_new_values": list[float],
+})
+Spline3TestParametersTagged = typing.TypedDict('Spline3TestParametersTagged', {
+    "@type": typing.Literal["freesurfer/Spline3_test"],
     "x_values": list[float],
     "y_values": list[float],
     "x_new_values": list[float],
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "freesurfer.Spline3_test": spline3_test_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "freesurfer.Spline3_test": spline3_test_outputs,
-    }.get(t)
-
-
 class Spline3TestOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `spline3_test(...)`.
+    Output object returned when calling `Spline3TestParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -69,7 +43,7 @@ def spline3_test_params(
     x_values: list[float],
     y_values: list[float],
     x_new_values: list[float],
-) -> Spline3TestParameters:
+) -> Spline3TestParametersTagged:
     """
     Build parameters.
     
@@ -81,7 +55,7 @@ def spline3_test_params(
         Parameter dictionary
     """
     params = {
-        "@type": "freesurfer.Spline3_test",
+        "@type": "freesurfer/Spline3_test",
         "x_values": x_values,
         "y_values": y_values,
         "x_new_values": x_new_values,
@@ -104,9 +78,9 @@ def spline3_test_cargs(
     """
     cargs = []
     cargs.append("Spline3_test")
-    cargs.extend(map(str, params.get("x_values")))
-    cargs.extend(map(str, params.get("y_values")))
-    cargs.extend(map(str, params.get("x_new_values")))
+    cargs.extend(map(str, params.get("x_values", None)))
+    cargs.extend(map(str, params.get("y_values", None)))
+    cargs.extend(map(str, params.get("x_new_values", None)))
     return cargs
 
 
@@ -193,7 +167,6 @@ def spline3_test(
 __all__ = [
     "SPLINE3_TEST_METADATA",
     "Spline3TestOutputs",
-    "Spline3TestParameters",
     "spline3_test",
     "spline3_test_execute",
     "spline3_test_params",

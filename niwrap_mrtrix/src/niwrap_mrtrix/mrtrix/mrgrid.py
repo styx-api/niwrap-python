@@ -14,33 +14,51 @@ MRGRID_METADATA = Metadata(
 
 
 MrgridAxisParameters = typing.TypedDict('MrgridAxisParameters', {
-    "@type": typing.Literal["mrtrix.mrgrid.axis"],
+    "@type": typing.NotRequired[typing.Literal["axis"]],
+    "index": int,
+    "spec": str,
+})
+MrgridAxisParametersTagged = typing.TypedDict('MrgridAxisParametersTagged', {
+    "@type": typing.Literal["axis"],
     "index": int,
     "spec": str,
 })
 
 
 MrgridVariousStringParameters = typing.TypedDict('MrgridVariousStringParameters', {
-    "@type": typing.Literal["mrtrix.mrgrid.VariousString"],
+    "@type": typing.NotRequired[typing.Literal["VariousString"]],
+    "obj": str,
+})
+MrgridVariousStringParametersTagged = typing.TypedDict('MrgridVariousStringParametersTagged', {
+    "@type": typing.Literal["VariousString"],
     "obj": str,
 })
 
 
 MrgridVariousFileParameters = typing.TypedDict('MrgridVariousFileParameters', {
-    "@type": typing.Literal["mrtrix.mrgrid.VariousFile"],
+    "@type": typing.NotRequired[typing.Literal["VariousFile"]],
+    "obj": InputPathType,
+})
+MrgridVariousFileParametersTagged = typing.TypedDict('MrgridVariousFileParametersTagged', {
+    "@type": typing.Literal["VariousFile"],
     "obj": InputPathType,
 })
 
 
 MrgridConfigParameters = typing.TypedDict('MrgridConfigParameters', {
-    "@type": typing.Literal["mrtrix.mrgrid.config"],
+    "@type": typing.NotRequired[typing.Literal["config"]],
+    "key": str,
+    "value": str,
+})
+MrgridConfigParametersTagged = typing.TypedDict('MrgridConfigParametersTagged', {
+    "@type": typing.Literal["config"],
     "key": str,
     "value": str,
 })
 
 
 MrgridParameters = typing.TypedDict('MrgridParameters', {
-    "@type": typing.Literal["mrtrix.mrgrid"],
+    "@type": typing.NotRequired[typing.Literal["mrtrix/mrgrid"]],
     "template": typing.NotRequired[InputPathType | None],
     "size": typing.NotRequired[list[int] | None],
     "voxel": typing.NotRequired[list[float] | None],
@@ -54,7 +72,36 @@ MrgridParameters = typing.TypedDict('MrgridParameters', {
     "axis": typing.NotRequired[list[MrgridAxisParameters] | None],
     "all_axes": bool,
     "fill": typing.NotRequired[float | None],
-    "strides": typing.NotRequired[typing.Union[MrgridVariousStringParameters, MrgridVariousFileParameters] | None],
+    "strides": typing.NotRequired[typing.Union[MrgridVariousStringParametersTagged, MrgridVariousFileParametersTagged] | None],
+    "datatype": typing.NotRequired[str | None],
+    "info": bool,
+    "quiet": bool,
+    "debug": bool,
+    "force": bool,
+    "nthreads": typing.NotRequired[int | None],
+    "config": typing.NotRequired[list[MrgridConfigParameters] | None],
+    "help": bool,
+    "version": bool,
+    "input": InputPathType,
+    "operation": str,
+    "output": str,
+})
+MrgridParametersTagged = typing.TypedDict('MrgridParametersTagged', {
+    "@type": typing.Literal["mrtrix/mrgrid"],
+    "template": typing.NotRequired[InputPathType | None],
+    "size": typing.NotRequired[list[int] | None],
+    "voxel": typing.NotRequired[list[float] | None],
+    "scale": typing.NotRequired[list[float] | None],
+    "interp": typing.NotRequired[str | None],
+    "oversample": typing.NotRequired[list[int] | None],
+    "as": typing.NotRequired[InputPathType | None],
+    "uniform": typing.NotRequired[int | None],
+    "mask": typing.NotRequired[InputPathType | None],
+    "crop_unbound": bool,
+    "axis": typing.NotRequired[list[MrgridAxisParameters] | None],
+    "all_axes": bool,
+    "fill": typing.NotRequired[float | None],
+    "strides": typing.NotRequired[typing.Union[MrgridVariousStringParametersTagged, MrgridVariousFileParametersTagged] | None],
     "datatype": typing.NotRequired[str | None],
     "info": bool,
     "quiet": bool,
@@ -70,7 +117,7 @@ MrgridParameters = typing.TypedDict('MrgridParameters', {
 })
 
 
-def dyn_cargs(
+def mrgrid_strides_cargs_dyn_fn(
     t: str,
 ) -> typing.Any:
     """
@@ -82,15 +129,12 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "mrtrix.mrgrid": mrgrid_cargs,
-        "mrtrix.mrgrid.axis": mrgrid_axis_cargs,
-        "mrtrix.mrgrid.VariousString": mrgrid_various_string_cargs,
-        "mrtrix.mrgrid.VariousFile": mrgrid_various_file_cargs,
-        "mrtrix.mrgrid.config": mrgrid_config_cargs,
+        "VariousString": mrgrid_various_string_cargs,
+        "VariousFile": mrgrid_various_file_cargs,
     }.get(t)
 
 
-def dyn_outputs(
+def mrgrid_strides_outputs_dyn_fn(
     t: str,
 ) -> typing.Any:
     """
@@ -102,14 +146,13 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "mrtrix.mrgrid": mrgrid_outputs,
     }.get(t)
 
 
 def mrgrid_axis_params(
     index: int,
     spec: str,
-) -> MrgridAxisParameters:
+) -> MrgridAxisParametersTagged:
     """
     Build parameters.
     
@@ -138,7 +181,7 @@ def mrgrid_axis_params(
         Parameter dictionary
     """
     params = {
-        "@type": "mrtrix.mrgrid.axis",
+        "@type": "axis",
         "index": index,
         "spec": spec,
     }
@@ -160,14 +203,14 @@ def mrgrid_axis_cargs(
     """
     cargs = []
     cargs.append("-axis")
-    cargs.append(str(params.get("index")))
-    cargs.append(params.get("spec"))
+    cargs.append(str(params.get("index", None)))
+    cargs.append(params.get("spec", None))
     return cargs
 
 
 def mrgrid_various_string_params(
     obj: str,
-) -> MrgridVariousStringParameters:
+) -> MrgridVariousStringParametersTagged:
     """
     Build parameters.
     
@@ -177,7 +220,7 @@ def mrgrid_various_string_params(
         Parameter dictionary
     """
     params = {
-        "@type": "mrtrix.mrgrid.VariousString",
+        "@type": "VariousString",
         "obj": obj,
     }
     return params
@@ -197,13 +240,13 @@ def mrgrid_various_string_cargs(
         Command-line arguments.
     """
     cargs = []
-    cargs.append(params.get("obj"))
+    cargs.append(params.get("obj", None))
     return cargs
 
 
 def mrgrid_various_file_params(
     obj: InputPathType,
-) -> MrgridVariousFileParameters:
+) -> MrgridVariousFileParametersTagged:
     """
     Build parameters.
     
@@ -213,7 +256,7 @@ def mrgrid_various_file_params(
         Parameter dictionary
     """
     params = {
-        "@type": "mrtrix.mrgrid.VariousFile",
+        "@type": "VariousFile",
         "obj": obj,
     }
     return params
@@ -233,14 +276,14 @@ def mrgrid_various_file_cargs(
         Command-line arguments.
     """
     cargs = []
-    cargs.append(execution.input_file(params.get("obj")))
+    cargs.append(execution.input_file(params.get("obj", None)))
     return cargs
 
 
 def mrgrid_config_params(
     key: str,
     value: str,
-) -> MrgridConfigParameters:
+) -> MrgridConfigParametersTagged:
     """
     Build parameters.
     
@@ -251,7 +294,7 @@ def mrgrid_config_params(
         Parameter dictionary
     """
     params = {
-        "@type": "mrtrix.mrgrid.config",
+        "@type": "config",
         "key": key,
         "value": value,
     }
@@ -273,14 +316,14 @@ def mrgrid_config_cargs(
     """
     cargs = []
     cargs.append("-config")
-    cargs.append(params.get("key"))
-    cargs.append(params.get("value"))
+    cargs.append(params.get("key", None))
+    cargs.append(params.get("value", None))
     return cargs
 
 
 class MrgridOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `mrgrid(...)`.
+    Output object returned when calling `MrgridParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -305,7 +348,7 @@ def mrgrid_params(
     axis: list[MrgridAxisParameters] | None = None,
     all_axes: bool = False,
     fill: float | None = None,
-    strides: typing.Union[MrgridVariousStringParameters, MrgridVariousFileParameters] | None = None,
+    strides: typing.Union[MrgridVariousStringParametersTagged, MrgridVariousFileParametersTagged] | None = None,
     datatype: str | None = None,
     info: bool = False,
     quiet: bool = False,
@@ -315,7 +358,7 @@ def mrgrid_params(
     config: list[MrgridConfigParameters] | None = None,
     help_: bool = False,
     version: bool = False,
-) -> MrgridParameters:
+) -> MrgridParametersTagged:
     """
     Build parameters.
     
@@ -399,7 +442,7 @@ def mrgrid_params(
         Parameter dictionary
     """
     params = {
-        "@type": "mrtrix.mrgrid",
+        "@type": "mrtrix/mrgrid",
         "crop_unbound": crop_unbound,
         "all_axes": all_axes,
         "info": info,
@@ -460,94 +503,94 @@ def mrgrid_cargs(
     """
     cargs = []
     cargs.append("mrgrid")
-    if params.get("template") is not None:
+    if params.get("template", None) is not None:
         cargs.extend([
             "-template",
-            execution.input_file(params.get("template"))
+            execution.input_file(params.get("template", None))
         ])
-    if params.get("size") is not None:
+    if params.get("size", None) is not None:
         cargs.extend([
             "-size",
-            ",".join(map(str, params.get("size")))
+            ",".join(map(str, params.get("size", None)))
         ])
-    if params.get("voxel") is not None:
+    if params.get("voxel", None) is not None:
         cargs.extend([
             "-voxel",
-            ",".join(map(str, params.get("voxel")))
+            ",".join(map(str, params.get("voxel", None)))
         ])
-    if params.get("scale") is not None:
+    if params.get("scale", None) is not None:
         cargs.extend([
             "-scale",
-            ",".join(map(str, params.get("scale")))
+            ",".join(map(str, params.get("scale", None)))
         ])
-    if params.get("interp") is not None:
+    if params.get("interp", None) is not None:
         cargs.extend([
             "-interp",
-            params.get("interp")
+            params.get("interp", None)
         ])
-    if params.get("oversample") is not None:
+    if params.get("oversample", None) is not None:
         cargs.extend([
             "-oversample",
-            ",".join(map(str, params.get("oversample")))
+            ",".join(map(str, params.get("oversample", None)))
         ])
-    if params.get("as") is not None:
+    if params.get("as", None) is not None:
         cargs.extend([
             "-as",
-            execution.input_file(params.get("as"))
+            execution.input_file(params.get("as", None))
         ])
-    if params.get("uniform") is not None:
+    if params.get("uniform", None) is not None:
         cargs.extend([
             "-uniform",
-            str(params.get("uniform"))
+            str(params.get("uniform", None))
         ])
-    if params.get("mask") is not None:
+    if params.get("mask", None) is not None:
         cargs.extend([
             "-mask",
-            execution.input_file(params.get("mask"))
+            execution.input_file(params.get("mask", None))
         ])
-    if params.get("crop_unbound"):
+    if params.get("crop_unbound", False):
         cargs.append("-crop_unbound")
-    if params.get("axis") is not None:
-        cargs.extend([a for c in [dyn_cargs(s["@type"])(s, execution) for s in params.get("axis")] for a in c])
-    if params.get("all_axes"):
+    if params.get("axis", None) is not None:
+        cargs.extend([a for c in [mrgrid_axis_cargs(s, execution) for s in params.get("axis", None)] for a in c])
+    if params.get("all_axes", False):
         cargs.append("-all_axes")
-    if params.get("fill") is not None:
+    if params.get("fill", None) is not None:
         cargs.extend([
             "-fill",
-            str(params.get("fill"))
+            str(params.get("fill", None))
         ])
-    if params.get("strides") is not None:
+    if params.get("strides", None) is not None:
         cargs.extend([
             "-strides",
-            *dyn_cargs(params.get("strides")["@type"])(params.get("strides"), execution)
+            *mrgrid_strides_cargs_dyn_fn(params.get("strides", None)["@type"])(params.get("strides", None), execution)
         ])
-    if params.get("datatype") is not None:
+    if params.get("datatype", None) is not None:
         cargs.extend([
             "-datatype",
-            params.get("datatype")
+            params.get("datatype", None)
         ])
-    if params.get("info"):
+    if params.get("info", False):
         cargs.append("-info")
-    if params.get("quiet"):
+    if params.get("quiet", False):
         cargs.append("-quiet")
-    if params.get("debug"):
+    if params.get("debug", False):
         cargs.append("-debug")
-    if params.get("force"):
+    if params.get("force", False):
         cargs.append("-force")
-    if params.get("nthreads") is not None:
+    if params.get("nthreads", None) is not None:
         cargs.extend([
             "-nthreads",
-            str(params.get("nthreads"))
+            str(params.get("nthreads", None))
         ])
-    if params.get("config") is not None:
-        cargs.extend([a for c in [dyn_cargs(s["@type"])(s, execution) for s in params.get("config")] for a in c])
-    if params.get("help"):
+    if params.get("config", None) is not None:
+        cargs.extend([a for c in [mrgrid_config_cargs(s, execution) for s in params.get("config", None)] for a in c])
+    if params.get("help", False):
         cargs.append("-help")
-    if params.get("version"):
+    if params.get("version", False):
         cargs.append("-version")
-    cargs.append(execution.input_file(params.get("input")))
-    cargs.append(params.get("operation"))
-    cargs.append(params.get("output"))
+    cargs.append(execution.input_file(params.get("input", None)))
+    cargs.append(params.get("operation", None))
+    cargs.append(params.get("output", None))
     return cargs
 
 
@@ -566,7 +609,7 @@ def mrgrid_outputs(
     """
     ret = MrgridOutputs(
         root=execution.output_file("."),
-        output=execution.output_file(params.get("output")),
+        output=execution.output_file(params.get("output", None)),
     )
     return ret
 
@@ -645,7 +688,7 @@ def mrgrid(
     axis: list[MrgridAxisParameters] | None = None,
     all_axes: bool = False,
     fill: float | None = None,
-    strides: typing.Union[MrgridVariousStringParameters, MrgridVariousFileParameters] | None = None,
+    strides: typing.Union[MrgridVariousStringParametersTagged, MrgridVariousFileParametersTagged] | None = None,
     datatype: str | None = None,
     info: bool = False,
     quiet: bool = False,
@@ -808,12 +851,7 @@ def mrgrid(
 
 __all__ = [
     "MRGRID_METADATA",
-    "MrgridAxisParameters",
-    "MrgridConfigParameters",
     "MrgridOutputs",
-    "MrgridParameters",
-    "MrgridVariousFileParameters",
-    "MrgridVariousStringParameters",
     "mrgrid",
     "mrgrid_axis_params",
     "mrgrid_config_params",

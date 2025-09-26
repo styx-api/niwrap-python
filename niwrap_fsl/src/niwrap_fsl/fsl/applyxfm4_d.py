@@ -14,7 +14,18 @@ APPLYXFM4_D_METADATA = Metadata(
 
 
 Applyxfm4DParameters = typing.TypedDict('Applyxfm4DParameters', {
-    "@type": typing.Literal["fsl.applyxfm4D"],
+    "@type": typing.NotRequired[typing.Literal["fsl/applyxfm4D"]],
+    "input_volume": InputPathType,
+    "ref_volume": InputPathType,
+    "output_volume": str,
+    "transformation_matrix": str,
+    "interpolation_method": typing.NotRequired[str | None],
+    "single_matrix_flag": bool,
+    "four_digit_flag": bool,
+    "user_prefix": typing.NotRequired[str | None],
+})
+Applyxfm4DParametersTagged = typing.TypedDict('Applyxfm4DParametersTagged', {
+    "@type": typing.Literal["fsl/applyxfm4D"],
     "input_volume": InputPathType,
     "ref_volume": InputPathType,
     "output_volume": str,
@@ -26,41 +37,9 @@ Applyxfm4DParameters = typing.TypedDict('Applyxfm4DParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "fsl.applyxfm4D": applyxfm4_d_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "fsl.applyxfm4D": applyxfm4_d_outputs,
-    }.get(t)
-
-
 class Applyxfm4DOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `applyxfm4_d(...)`.
+    Output object returned when calling `Applyxfm4DParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -77,7 +56,7 @@ def applyxfm4_d_params(
     single_matrix_flag: bool = False,
     four_digit_flag: bool = False,
     user_prefix: str | None = None,
-) -> Applyxfm4DParameters:
+) -> Applyxfm4DParametersTagged:
     """
     Build parameters.
     
@@ -96,7 +75,7 @@ def applyxfm4_d_params(
         Parameter dictionary
     """
     params = {
-        "@type": "fsl.applyxfm4D",
+        "@type": "fsl/applyxfm4D",
         "input_volume": input_volume,
         "ref_volume": ref_volume,
         "output_volume": output_volume,
@@ -126,23 +105,23 @@ def applyxfm4_d_cargs(
     """
     cargs = []
     cargs.append("applyxfm4D")
-    cargs.append(execution.input_file(params.get("input_volume")))
-    cargs.append(execution.input_file(params.get("ref_volume")))
-    cargs.append(params.get("output_volume"))
-    cargs.append(params.get("transformation_matrix"))
-    if params.get("interpolation_method") is not None:
+    cargs.append(execution.input_file(params.get("input_volume", None)))
+    cargs.append(execution.input_file(params.get("ref_volume", None)))
+    cargs.append(params.get("output_volume", None))
+    cargs.append(params.get("transformation_matrix", None))
+    if params.get("interpolation_method", None) is not None:
         cargs.extend([
             "--interp, -interp",
-            params.get("interpolation_method")
+            params.get("interpolation_method", None)
         ])
-    if params.get("single_matrix_flag"):
+    if params.get("single_matrix_flag", False):
         cargs.append("--singlematrix, -singlematrix")
-    if params.get("four_digit_flag"):
+    if params.get("four_digit_flag", False):
         cargs.append("--fourdigit, -fourdigit")
-    if params.get("user_prefix") is not None:
+    if params.get("user_prefix", None) is not None:
         cargs.extend([
             "--userprefix, -userprefix",
-            params.get("user_prefix")
+            params.get("user_prefix", None)
         ])
     return cargs
 
@@ -162,7 +141,7 @@ def applyxfm4_d_outputs(
     """
     ret = Applyxfm4DOutputs(
         root=execution.output_file("."),
-        output_file=execution.output_file(params.get("output_volume") + ".nii.gz"),
+        output_file=execution.output_file(params.get("output_volume", None) + ".nii.gz"),
     )
     return ret
 
@@ -246,7 +225,6 @@ def applyxfm4_d(
 __all__ = [
     "APPLYXFM4_D_METADATA",
     "Applyxfm4DOutputs",
-    "Applyxfm4DParameters",
     "applyxfm4_d",
     "applyxfm4_d_execute",
     "applyxfm4_d_params",

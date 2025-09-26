@@ -14,46 +14,20 @@ MRIS_MAP_CUTS_METADATA = Metadata(
 
 
 MrisMapCutsParameters = typing.TypedDict('MrisMapCutsParameters', {
-    "@type": typing.Literal["freesurfer.mris_map_cuts"],
+    "@type": typing.NotRequired[typing.Literal["freesurfer/mris_map_cuts"]],
+    "input_patch": InputPathType,
+    "output_patch": str,
+})
+MrisMapCutsParametersTagged = typing.TypedDict('MrisMapCutsParametersTagged', {
+    "@type": typing.Literal["freesurfer/mris_map_cuts"],
     "input_patch": InputPathType,
     "output_patch": str,
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "freesurfer.mris_map_cuts": mris_map_cuts_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-    }.get(t)
-
-
 class MrisMapCutsOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `mris_map_cuts(...)`.
+    Output object returned when calling `MrisMapCutsParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -62,7 +36,7 @@ class MrisMapCutsOutputs(typing.NamedTuple):
 def mris_map_cuts_params(
     input_patch: InputPathType,
     output_patch: str,
-) -> MrisMapCutsParameters:
+) -> MrisMapCutsParametersTagged:
     """
     Build parameters.
     
@@ -73,7 +47,7 @@ def mris_map_cuts_params(
         Parameter dictionary
     """
     params = {
-        "@type": "freesurfer.mris_map_cuts",
+        "@type": "freesurfer/mris_map_cuts",
         "input_patch": input_patch,
         "output_patch": output_patch,
     }
@@ -95,8 +69,8 @@ def mris_map_cuts_cargs(
     """
     cargs = []
     cargs.append("mris_map_cuts")
-    cargs.append(execution.input_file(params.get("input_patch")))
-    cargs.append(params.get("output_patch"))
+    cargs.append(execution.input_file(params.get("input_patch", None)))
+    cargs.append(params.get("output_patch", None))
     return cargs
 
 
@@ -178,7 +152,6 @@ def mris_map_cuts(
 __all__ = [
     "MRIS_MAP_CUTS_METADATA",
     "MrisMapCutsOutputs",
-    "MrisMapCutsParameters",
     "mris_map_cuts",
     "mris_map_cuts_execute",
     "mris_map_cuts_params",

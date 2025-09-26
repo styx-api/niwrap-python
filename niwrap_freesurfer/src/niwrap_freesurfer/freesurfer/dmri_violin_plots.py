@@ -14,47 +14,22 @@ DMRI_VIOLIN_PLOTS_METADATA = Metadata(
 
 
 DmriViolinPlotsParameters = typing.TypedDict('DmriViolinPlotsParameters', {
-    "@type": typing.Literal["freesurfer.dmri_violinPlots"],
+    "@type": typing.NotRequired[typing.Literal["freesurfer/dmri_violinPlots"]],
+    "input_directory": str,
+    "labels": InputPathType,
+    "structure": str,
+})
+DmriViolinPlotsParametersTagged = typing.TypedDict('DmriViolinPlotsParametersTagged', {
+    "@type": typing.Literal["freesurfer/dmri_violinPlots"],
     "input_directory": str,
     "labels": InputPathType,
     "structure": str,
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "freesurfer.dmri_violinPlots": dmri_violin_plots_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-    }.get(t)
-
-
 class DmriViolinPlotsOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `dmri_violin_plots(...)`.
+    Output object returned when calling `DmriViolinPlotsParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -64,7 +39,7 @@ def dmri_violin_plots_params(
     input_directory: str,
     labels: InputPathType,
     structure: str,
-) -> DmriViolinPlotsParameters:
+) -> DmriViolinPlotsParametersTagged:
     """
     Build parameters.
     
@@ -76,7 +51,7 @@ def dmri_violin_plots_params(
         Parameter dictionary
     """
     params = {
-        "@type": "freesurfer.dmri_violinPlots",
+        "@type": "freesurfer/dmri_violinPlots",
         "input_directory": input_directory,
         "labels": labels,
         "structure": structure,
@@ -101,15 +76,15 @@ def dmri_violin_plots_cargs(
     cargs.append("dmri_violinPlots")
     cargs.extend([
         "-i",
-        params.get("input_directory")
+        params.get("input_directory", None)
     ])
     cargs.extend([
         "-l",
-        execution.input_file(params.get("labels"))
+        execution.input_file(params.get("labels", None))
     ])
     cargs.extend([
         "-s",
-        params.get("structure")
+        params.get("structure", None)
     ])
     return cargs
 
@@ -195,7 +170,6 @@ def dmri_violin_plots(
 __all__ = [
     "DMRI_VIOLIN_PLOTS_METADATA",
     "DmriViolinPlotsOutputs",
-    "DmriViolinPlotsParameters",
     "dmri_violin_plots",
     "dmri_violin_plots_execute",
     "dmri_violin_plots_params",

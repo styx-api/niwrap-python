@@ -14,45 +14,18 @@ MRI_GCAB_TRAIN_METADATA = Metadata(
 
 
 MriGcabTrainParameters = typing.TypedDict('MriGcabTrainParameters', {
-    "@type": typing.Literal["freesurfer.mri_gcab_train"],
+    "@type": typing.NotRequired[typing.Literal["freesurfer/mri_gcab_train"]],
+    "removed_info": typing.NotRequired[str | None],
+})
+MriGcabTrainParametersTagged = typing.TypedDict('MriGcabTrainParametersTagged', {
+    "@type": typing.Literal["freesurfer/mri_gcab_train"],
     "removed_info": typing.NotRequired[str | None],
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "freesurfer.mri_gcab_train": mri_gcab_train_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-    }.get(t)
-
-
 class MriGcabTrainOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `mri_gcab_train(...)`.
+    Output object returned when calling `MriGcabTrainParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -60,7 +33,7 @@ class MriGcabTrainOutputs(typing.NamedTuple):
 
 def mri_gcab_train_params(
     removed_info: str | None = None,
-) -> MriGcabTrainParameters:
+) -> MriGcabTrainParametersTagged:
     """
     Build parameters.
     
@@ -72,7 +45,7 @@ def mri_gcab_train_params(
         Parameter dictionary
     """
     params = {
-        "@type": "freesurfer.mri_gcab_train",
+        "@type": "freesurfer/mri_gcab_train",
     }
     if removed_info is not None:
         params["removed_info"] = removed_info
@@ -94,8 +67,8 @@ def mri_gcab_train_cargs(
     """
     cargs = []
     cargs.append("mri_gcab_train")
-    if params.get("removed_info") is not None:
-        cargs.append(params.get("removed_info"))
+    if params.get("removed_info", None) is not None:
+        cargs.append(params.get("removed_info", None))
     return cargs
 
 
@@ -178,7 +151,6 @@ def mri_gcab_train(
 __all__ = [
     "MRI_GCAB_TRAIN_METADATA",
     "MriGcabTrainOutputs",
-    "MriGcabTrainParameters",
     "mri_gcab_train",
     "mri_gcab_train_execute",
     "mri_gcab_train_params",

@@ -14,7 +14,14 @@ OCT_REGISTER_MOSAIC_METADATA = Metadata(
 
 
 OctRegisterMosaicParameters = typing.TypedDict('OctRegisterMosaicParameters', {
-    "@type": typing.Literal["freesurfer.oct_register_mosaic"],
+    "@type": typing.NotRequired[typing.Literal["freesurfer/oct_register_mosaic"]],
+    "tiles_or_mosaic_list": list[str],
+    "output_volume": str,
+    "downsample": typing.NotRequired[float | None],
+    "weight_file": typing.NotRequired[InputPathType | None],
+})
+OctRegisterMosaicParametersTagged = typing.TypedDict('OctRegisterMosaicParametersTagged', {
+    "@type": typing.Literal["freesurfer/oct_register_mosaic"],
     "tiles_or_mosaic_list": list[str],
     "output_volume": str,
     "downsample": typing.NotRequired[float | None],
@@ -22,41 +29,9 @@ OctRegisterMosaicParameters = typing.TypedDict('OctRegisterMosaicParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "freesurfer.oct_register_mosaic": oct_register_mosaic_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "freesurfer.oct_register_mosaic": oct_register_mosaic_outputs,
-    }.get(t)
-
-
 class OctRegisterMosaicOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `oct_register_mosaic(...)`.
+    Output object returned when calling `OctRegisterMosaicParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -69,7 +44,7 @@ def oct_register_mosaic_params(
     output_volume: str,
     downsample: float | None = None,
     weight_file: InputPathType | None = None,
-) -> OctRegisterMosaicParameters:
+) -> OctRegisterMosaicParametersTagged:
     """
     Build parameters.
     
@@ -83,7 +58,7 @@ def oct_register_mosaic_params(
         Parameter dictionary
     """
     params = {
-        "@type": "freesurfer.oct_register_mosaic",
+        "@type": "freesurfer/oct_register_mosaic",
         "tiles_or_mosaic_list": tiles_or_mosaic_list,
         "output_volume": output_volume,
     }
@@ -109,17 +84,17 @@ def oct_register_mosaic_cargs(
     """
     cargs = []
     cargs.append("oct_register_mosaic")
-    cargs.extend(params.get("tiles_or_mosaic_list"))
-    cargs.append(params.get("output_volume"))
-    if params.get("downsample") is not None:
+    cargs.extend(params.get("tiles_or_mosaic_list", None))
+    cargs.append(params.get("output_volume", None))
+    if params.get("downsample", None) is not None:
         cargs.extend([
             "-D",
-            str(params.get("downsample"))
+            str(params.get("downsample", None))
         ])
-    if params.get("weight_file") is not None:
+    if params.get("weight_file", None) is not None:
         cargs.extend([
             "-W",
-            execution.input_file(params.get("weight_file"))
+            execution.input_file(params.get("weight_file", None))
         ])
     return cargs
 
@@ -139,7 +114,7 @@ def oct_register_mosaic_outputs(
     """
     ret = OctRegisterMosaicOutputs(
         root=execution.output_file("."),
-        registered_output=execution.output_file(params.get("output_volume")),
+        registered_output=execution.output_file(params.get("output_volume", None)),
     )
     return ret
 
@@ -212,7 +187,6 @@ def oct_register_mosaic(
 __all__ = [
     "OCT_REGISTER_MOSAIC_METADATA",
     "OctRegisterMosaicOutputs",
-    "OctRegisterMosaicParameters",
     "oct_register_mosaic",
     "oct_register_mosaic_execute",
     "oct_register_mosaic_params",

@@ -14,46 +14,20 @@ FIX_SUBJECT_RH_METADATA = Metadata(
 
 
 FixSubjectRhParameters = typing.TypedDict('FixSubjectRhParameters', {
-    "@type": typing.Literal["freesurfer.fix_subject-rh"],
+    "@type": typing.NotRequired[typing.Literal["freesurfer/fix_subject-rh"]],
+    "input_directory": str,
+    "help_flag": bool,
+})
+FixSubjectRhParametersTagged = typing.TypedDict('FixSubjectRhParametersTagged', {
+    "@type": typing.Literal["freesurfer/fix_subject-rh"],
     "input_directory": str,
     "help_flag": bool,
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "freesurfer.fix_subject-rh": fix_subject_rh_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-    }.get(t)
-
-
 class FixSubjectRhOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `fix_subject_rh(...)`.
+    Output object returned when calling `FixSubjectRhParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -62,7 +36,7 @@ class FixSubjectRhOutputs(typing.NamedTuple):
 def fix_subject_rh_params(
     input_directory: str,
     help_flag: bool = False,
-) -> FixSubjectRhParameters:
+) -> FixSubjectRhParametersTagged:
     """
     Build parameters.
     
@@ -74,7 +48,7 @@ def fix_subject_rh_params(
         Parameter dictionary
     """
     params = {
-        "@type": "freesurfer.fix_subject-rh",
+        "@type": "freesurfer/fix_subject-rh",
         "input_directory": input_directory,
         "help_flag": help_flag,
     }
@@ -98,9 +72,9 @@ def fix_subject_rh_cargs(
     cargs.append("fix_subject-rh")
     cargs.extend([
         "-rh",
-        params.get("input_directory")
+        params.get("input_directory", None)
     ])
-    if params.get("help_flag"):
+    if params.get("help_flag", False):
         cargs.append("--help")
     return cargs
 
@@ -186,7 +160,6 @@ def fix_subject_rh(
 __all__ = [
     "FIX_SUBJECT_RH_METADATA",
     "FixSubjectRhOutputs",
-    "FixSubjectRhParameters",
     "fix_subject_rh",
     "fix_subject_rh_execute",
     "fix_subject_rh_params",

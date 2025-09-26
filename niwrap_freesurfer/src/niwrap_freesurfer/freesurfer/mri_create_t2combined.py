@@ -14,7 +14,17 @@ MRI_CREATE_T2COMBINED_METADATA = Metadata(
 
 
 MriCreateT2combinedParameters = typing.TypedDict('MriCreateT2combinedParameters', {
-    "@type": typing.Literal["freesurfer.mri_create_t2combined"],
+    "@type": typing.NotRequired[typing.Literal["freesurfer/mri_create_t2combined"]],
+    "subjid": str,
+    "t1wb": InputPathType,
+    "t2upper": InputPathType,
+    "t2middle": typing.NotRequired[InputPathType | None],
+    "t2lower": InputPathType,
+    "t2combined": str,
+    "show": bool,
+})
+MriCreateT2combinedParametersTagged = typing.TypedDict('MriCreateT2combinedParametersTagged', {
+    "@type": typing.Literal["freesurfer/mri_create_t2combined"],
     "subjid": str,
     "t1wb": InputPathType,
     "t2upper": InputPathType,
@@ -25,41 +35,9 @@ MriCreateT2combinedParameters = typing.TypedDict('MriCreateT2combinedParameters'
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "freesurfer.mri_create_t2combined": mri_create_t2combined_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "freesurfer.mri_create_t2combined": mri_create_t2combined_outputs,
-    }.get(t)
-
-
 class MriCreateT2combinedOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `mri_create_t2combined(...)`.
+    Output object returned when calling `MriCreateT2combinedParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -77,7 +55,7 @@ def mri_create_t2combined_params(
     t2combined: str,
     t2middle: InputPathType | None = None,
     show: bool = False,
-) -> MriCreateT2combinedParameters:
+) -> MriCreateT2combinedParametersTagged:
     """
     Build parameters.
     
@@ -94,7 +72,7 @@ def mri_create_t2combined_params(
         Parameter dictionary
     """
     params = {
-        "@type": "freesurfer.mri_create_t2combined",
+        "@type": "freesurfer/mri_create_t2combined",
         "subjid": subjid,
         "t1wb": t1wb,
         "t2upper": t2upper,
@@ -122,14 +100,14 @@ def mri_create_t2combined_cargs(
     """
     cargs = []
     cargs.append("mri_create_t2combined")
-    cargs.append(params.get("subjid"))
-    cargs.append(execution.input_file(params.get("t1wb")))
-    cargs.append(execution.input_file(params.get("t2upper")))
-    if params.get("t2middle") is not None:
-        cargs.append(execution.input_file(params.get("t2middle")))
-    cargs.append(execution.input_file(params.get("t2lower")))
-    cargs.append(params.get("t2combined"))
-    if params.get("show"):
+    cargs.append(params.get("subjid", None))
+    cargs.append(execution.input_file(params.get("t1wb", None)))
+    cargs.append(execution.input_file(params.get("t2upper", None)))
+    if params.get("t2middle", None) is not None:
+        cargs.append(execution.input_file(params.get("t2middle", None)))
+    cargs.append(execution.input_file(params.get("t2lower", None)))
+    cargs.append(params.get("t2combined", None))
+    if params.get("show", False):
         cargs.append("show")
     return cargs
 
@@ -150,7 +128,7 @@ def mri_create_t2combined_outputs(
     ret = MriCreateT2combinedOutputs(
         root=execution.output_file("."),
         logfile=execution.output_file("/root/mri_create_t2combined.log"),
-        t2combined_output=execution.output_file(params.get("t2combined")),
+        t2combined_output=execution.output_file(params.get("t2combined", None)),
     )
     return ret
 
@@ -232,7 +210,6 @@ def mri_create_t2combined(
 __all__ = [
     "MRI_CREATE_T2COMBINED_METADATA",
     "MriCreateT2combinedOutputs",
-    "MriCreateT2combinedParameters",
     "mri_create_t2combined",
     "mri_create_t2combined_execute",
     "mri_create_t2combined_params",

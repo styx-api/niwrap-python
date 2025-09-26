@@ -14,7 +14,23 @@ SPMREGISTER_METADATA = Metadata(
 
 
 SpmregisterParameters = typing.TypedDict('SpmregisterParameters', {
-    "@type": typing.Literal["freesurfer.spmregister"],
+    "@type": typing.NotRequired[typing.Literal["freesurfer/spmregister"]],
+    "subjid": str,
+    "mov": str,
+    "reg": str,
+    "frame": typing.NotRequired[float | None],
+    "mid_frame": bool,
+    "template_out": typing.NotRequired[str | None],
+    "fsvol": typing.NotRequired[str | None],
+    "force_ras": bool,
+    "outvol": typing.NotRequired[str | None],
+    "tmpdir": typing.NotRequired[str | None],
+    "nocleanup": bool,
+    "version": bool,
+    "help": bool,
+})
+SpmregisterParametersTagged = typing.TypedDict('SpmregisterParametersTagged', {
+    "@type": typing.Literal["freesurfer/spmregister"],
     "subjid": str,
     "mov": str,
     "reg": str,
@@ -31,41 +47,9 @@ SpmregisterParameters = typing.TypedDict('SpmregisterParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "freesurfer.spmregister": spmregister_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "freesurfer.spmregister": spmregister_outputs,
-    }.get(t)
-
-
 class SpmregisterOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `spmregister(...)`.
+    Output object returned when calling `SpmregisterParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -89,7 +73,7 @@ def spmregister_params(
     nocleanup: bool = False,
     version: bool = False,
     help_: bool = False,
-) -> SpmregisterParameters:
+) -> SpmregisterParametersTagged:
     """
     Build parameters.
     
@@ -116,7 +100,7 @@ def spmregister_params(
         Parameter dictionary
     """
     params = {
-        "@type": "freesurfer.spmregister",
+        "@type": "freesurfer/spmregister",
         "subjid": subjid,
         "mov": mov,
         "reg": reg,
@@ -156,50 +140,50 @@ def spmregister_cargs(
     cargs.append("spmregister")
     cargs.extend([
         "--s",
-        params.get("subjid")
+        params.get("subjid", None)
     ])
     cargs.extend([
         "--mov",
-        params.get("mov")
+        params.get("mov", None)
     ])
     cargs.extend([
         "--reg",
-        params.get("reg")
+        params.get("reg", None)
     ])
-    if params.get("frame") is not None:
+    if params.get("frame", None) is not None:
         cargs.extend([
             "--frame",
-            str(params.get("frame"))
+            str(params.get("frame", None))
         ])
-    if params.get("mid_frame"):
+    if params.get("mid_frame", False):
         cargs.append("--mid-frame")
-    if params.get("template_out") is not None:
+    if params.get("template_out", None) is not None:
         cargs.extend([
             "--template-out",
-            params.get("template_out")
+            params.get("template_out", None)
         ])
-    if params.get("fsvol") is not None:
+    if params.get("fsvol", None) is not None:
         cargs.extend([
             "--fsvol",
-            params.get("fsvol")
+            params.get("fsvol", None)
         ])
-    if params.get("force_ras"):
+    if params.get("force_ras", False):
         cargs.append("--force-ras")
-    if params.get("outvol") is not None:
+    if params.get("outvol", None) is not None:
         cargs.extend([
             "--o",
-            params.get("outvol")
+            params.get("outvol", None)
         ])
-    if params.get("tmpdir") is not None:
+    if params.get("tmpdir", None) is not None:
         cargs.extend([
             "--tmp",
-            params.get("tmpdir")
+            params.get("tmpdir", None)
         ])
-    if params.get("nocleanup"):
+    if params.get("nocleanup", False):
         cargs.append("--nocleanup")
-    if params.get("version"):
+    if params.get("version", False):
         cargs.append("--version")
-    if params.get("help"):
+    if params.get("help", False):
         cargs.append("--help")
     return cargs
 
@@ -220,7 +204,7 @@ def spmregister_outputs(
     ret = SpmregisterOutputs(
         root=execution.output_file("."),
         registration_file=execution.output_file("register.dat"),
-        resampled_mov=execution.output_file(params.get("outvol")) if (params.get("outvol") is not None) else None,
+        resampled_mov=execution.output_file(params.get("outvol", None)) if (params.get("outvol") is not None) else None,
     )
     return ret
 
@@ -322,7 +306,6 @@ def spmregister(
 __all__ = [
     "SPMREGISTER_METADATA",
     "SpmregisterOutputs",
-    "SpmregisterParameters",
     "spmregister",
     "spmregister_execute",
     "spmregister_params",

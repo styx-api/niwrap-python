@@ -14,7 +14,26 @@ V_3D_RETINO_PHASE_METADATA = Metadata(
 
 
 V3dRetinoPhaseParameters = typing.TypedDict('V3dRetinoPhaseParameters', {
-    "@type": typing.Literal["afni.3dRetinoPhase"],
+    "@type": typing.NotRequired[typing.Literal["afni/3dRetinoPhase"]],
+    "prefix": str,
+    "dataset": InputPathType,
+    "exp": typing.NotRequired[str | None],
+    "con": typing.NotRequired[str | None],
+    "clw": typing.NotRequired[str | None],
+    "ccw": typing.NotRequired[str | None],
+    "spectra": bool,
+    "tstim": typing.NotRequired[float | None],
+    "nrings": typing.NotRequired[float | None],
+    "nwedges": typing.NotRequired[float | None],
+    "ort_adjust": typing.NotRequired[float | None],
+    "pre_stim": typing.NotRequired[float | None],
+    "sum_adjust": typing.NotRequired[str | None],
+    "phase_estimate": typing.NotRequired[str | None],
+    "ref_ts": typing.NotRequired[InputPathType | None],
+    "multi_ref_ts": typing.NotRequired[InputPathType | None],
+})
+V3dRetinoPhaseParametersTagged = typing.TypedDict('V3dRetinoPhaseParametersTagged', {
+    "@type": typing.Literal["afni/3dRetinoPhase"],
     "prefix": str,
     "dataset": InputPathType,
     "exp": typing.NotRequired[str | None],
@@ -34,41 +53,9 @@ V3dRetinoPhaseParameters = typing.TypedDict('V3dRetinoPhaseParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "afni.3dRetinoPhase": v_3d_retino_phase_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "afni.3dRetinoPhase": v_3d_retino_phase_outputs,
-    }.get(t)
-
-
 class V3dRetinoPhaseOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `v_3d_retino_phase(...)`.
+    Output object returned when calling `V3dRetinoPhaseParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -99,7 +86,7 @@ def v_3d_retino_phase_params(
     phase_estimate: str | None = None,
     ref_ts: InputPathType | None = None,
     multi_ref_ts: InputPathType | None = None,
-) -> V3dRetinoPhaseParameters:
+) -> V3dRetinoPhaseParametersTagged:
     """
     Build parameters.
     
@@ -127,7 +114,7 @@ def v_3d_retino_phase_params(
         Parameter dictionary
     """
     params = {
-        "@type": "afni.3dRetinoPhase",
+        "@type": "afni/3dRetinoPhase",
         "prefix": prefix,
         "dataset": dataset,
         "spectra": spectra,
@@ -176,74 +163,74 @@ def v_3d_retino_phase_cargs(
     """
     cargs = []
     cargs.append("3dRetinoPhase")
-    cargs.append(params.get("prefix"))
-    cargs.append(execution.input_file(params.get("dataset")))
-    if params.get("exp") is not None:
+    cargs.append(params.get("prefix", None))
+    cargs.append(execution.input_file(params.get("dataset", None)))
+    if params.get("exp", None) is not None:
         cargs.extend([
             "-exp",
-            params.get("exp")
+            params.get("exp", None)
         ])
-    if params.get("con") is not None:
+    if params.get("con", None) is not None:
         cargs.extend([
             "-con",
-            params.get("con")
+            params.get("con", None)
         ])
-    if params.get("clw") is not None:
+    if params.get("clw", None) is not None:
         cargs.extend([
             "-clw",
-            params.get("clw")
+            params.get("clw", None)
         ])
-    if params.get("ccw") is not None:
+    if params.get("ccw", None) is not None:
         cargs.extend([
             "-ccw",
-            params.get("ccw")
+            params.get("ccw", None)
         ])
-    if params.get("spectra"):
+    if params.get("spectra", False):
         cargs.append("-spectra")
-    if params.get("tstim") is not None:
+    if params.get("tstim", None) is not None:
         cargs.extend([
             "-Tstim",
-            str(params.get("tstim"))
+            str(params.get("tstim", None))
         ])
-    if params.get("nrings") is not None:
+    if params.get("nrings", None) is not None:
         cargs.extend([
             "-nrings",
-            str(params.get("nrings"))
+            str(params.get("nrings", None))
         ])
-    if params.get("nwedges") is not None:
+    if params.get("nwedges", None) is not None:
         cargs.extend([
             "-nwedges",
-            str(params.get("nwedges"))
+            str(params.get("nwedges", None))
         ])
-    if params.get("ort_adjust") is not None:
+    if params.get("ort_adjust", None) is not None:
         cargs.extend([
             "-ort_adjust",
-            str(params.get("ort_adjust"))
+            str(params.get("ort_adjust", None))
         ])
-    if params.get("pre_stim") is not None:
+    if params.get("pre_stim", None) is not None:
         cargs.extend([
             "-pre_stim",
-            str(params.get("pre_stim"))
+            str(params.get("pre_stim", None))
         ])
-    if params.get("sum_adjust") is not None:
+    if params.get("sum_adjust", None) is not None:
         cargs.extend([
             "-sum_adjust",
-            params.get("sum_adjust")
+            params.get("sum_adjust", None)
         ])
-    if params.get("phase_estimate") is not None:
+    if params.get("phase_estimate", None) is not None:
         cargs.extend([
             "-phase_estimate",
-            params.get("phase_estimate")
+            params.get("phase_estimate", None)
         ])
-    if params.get("ref_ts") is not None:
+    if params.get("ref_ts", None) is not None:
         cargs.extend([
             "-ref_ts",
-            execution.input_file(params.get("ref_ts"))
+            execution.input_file(params.get("ref_ts", None))
         ])
-    if params.get("multi_ref_ts") is not None:
+    if params.get("multi_ref_ts", None) is not None:
         cargs.extend([
             "-multi_ref_ts",
-            execution.input_file(params.get("multi_ref_ts"))
+            execution.input_file(params.get("multi_ref_ts", None))
         ])
     return cargs
 
@@ -263,10 +250,10 @@ def v_3d_retino_phase_outputs(
     """
     ret = V3dRetinoPhaseOutputs(
         root=execution.output_file("."),
-        ecc_plus=execution.output_file(params.get("prefix") + ".ecc+"),
-        ecc_minus=execution.output_file(params.get("prefix") + ".ecc-"),
-        pol_plus=execution.output_file(params.get("prefix") + ".pol+"),
-        pol_minus=execution.output_file(params.get("prefix") + ".pol-"),
+        ecc_plus=execution.output_file(params.get("prefix", None) + ".ecc+"),
+        ecc_minus=execution.output_file(params.get("prefix", None) + ".ecc-"),
+        pol_plus=execution.output_file(params.get("prefix", None) + ".pol+"),
+        pol_minus=execution.output_file(params.get("prefix", None) + ".pol-"),
     )
     return ret
 
@@ -376,7 +363,6 @@ def v_3d_retino_phase(
 
 __all__ = [
     "V3dRetinoPhaseOutputs",
-    "V3dRetinoPhaseParameters",
     "V_3D_RETINO_PHASE_METADATA",
     "v_3d_retino_phase",
     "v_3d_retino_phase_execute",

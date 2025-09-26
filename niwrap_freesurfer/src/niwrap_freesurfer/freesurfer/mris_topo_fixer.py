@@ -14,47 +14,20 @@ MRIS_TOPO_FIXER_METADATA = Metadata(
 
 
 MrisTopoFixerParameters = typing.TypedDict('MrisTopoFixerParameters', {
-    "@type": typing.Literal["freesurfer.mris_topo_fixer"],
+    "@type": typing.NotRequired[typing.Literal["freesurfer/mris_topo_fixer"]],
+    "input_surface": InputPathType,
+    "output_surface": str,
+})
+MrisTopoFixerParametersTagged = typing.TypedDict('MrisTopoFixerParametersTagged', {
+    "@type": typing.Literal["freesurfer/mris_topo_fixer"],
     "input_surface": InputPathType,
     "output_surface": str,
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "freesurfer.mris_topo_fixer": mris_topo_fixer_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "freesurfer.mris_topo_fixer": mris_topo_fixer_outputs,
-    }.get(t)
-
-
 class MrisTopoFixerOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `mris_topo_fixer(...)`.
+    Output object returned when calling `MrisTopoFixerParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -65,7 +38,7 @@ class MrisTopoFixerOutputs(typing.NamedTuple):
 def mris_topo_fixer_params(
     input_surface: InputPathType,
     output_surface: str,
-) -> MrisTopoFixerParameters:
+) -> MrisTopoFixerParametersTagged:
     """
     Build parameters.
     
@@ -76,7 +49,7 @@ def mris_topo_fixer_params(
         Parameter dictionary
     """
     params = {
-        "@type": "freesurfer.mris_topo_fixer",
+        "@type": "freesurfer/mris_topo_fixer",
         "input_surface": input_surface,
         "output_surface": output_surface,
     }
@@ -98,8 +71,8 @@ def mris_topo_fixer_cargs(
     """
     cargs = []
     cargs.append("mris_topo_fixer")
-    cargs.append(execution.input_file(params.get("input_surface")))
-    cargs.append(params.get("output_surface"))
+    cargs.append(execution.input_file(params.get("input_surface", None)))
+    cargs.append(params.get("output_surface", None))
     return cargs
 
 
@@ -118,7 +91,7 @@ def mris_topo_fixer_outputs(
     """
     ret = MrisTopoFixerOutputs(
         root=execution.output_file("."),
-        fixed_surface=execution.output_file(params.get("output_surface")),
+        fixed_surface=execution.output_file(params.get("output_surface", None)),
     )
     return ret
 
@@ -182,7 +155,6 @@ def mris_topo_fixer(
 __all__ = [
     "MRIS_TOPO_FIXER_METADATA",
     "MrisTopoFixerOutputs",
-    "MrisTopoFixerParameters",
     "mris_topo_fixer",
     "mris_topo_fixer_execute",
     "mris_topo_fixer_params",

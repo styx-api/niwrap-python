@@ -14,7 +14,41 @@ MRI_WATERSHED_METADATA = Metadata(
 
 
 MriWatershedParameters = typing.TypedDict('MriWatershedParameters', {
-    "@type": typing.Literal["freesurfer.mri_watershed"],
+    "@type": typing.NotRequired[typing.Literal["freesurfer/mri_watershed"]],
+    "input_volume": InputPathType,
+    "output_volume": str,
+    "weight": typing.NotRequired[float | None],
+    "no_wta_flag": bool,
+    "proba_merging": typing.NotRequired[float | None],
+    "preflooding_height": typing.NotRequired[float | None],
+    "no_seedpt_flag": bool,
+    "no_ta_flag": bool,
+    "copy_flag": bool,
+    "atlas_flag": bool,
+    "surf_name": typing.NotRequired[str | None],
+    "usesurf_ras_flag": bool,
+    "no_t1_analysis_flag": bool,
+    "shrink_surface_flag": bool,
+    "expand_surface_flag": bool,
+    "use_watershed_flag": bool,
+    "t1_volume": typing.NotRequired[InputPathType | None],
+    "wat_temp_flag": bool,
+    "first_temp_flag": bool,
+    "surf_debug_flag": bool,
+    "brain_surf_name": typing.NotRequired[str | None],
+    "shrink_brain_surf": typing.NotRequired[str | None],
+    "seed_point": typing.NotRequired[list[float] | None],
+    "center_brain": typing.NotRequired[list[float] | None],
+    "brain_radius": typing.NotRequired[float | None],
+    "watershed_threshold": typing.NotRequired[float | None],
+    "no_watershed_analysis_flag": bool,
+    "label_flag": bool,
+    "manual_params": typing.NotRequired[list[float] | None],
+    "xthresh": typing.NotRequired[float | None],
+    "mask_flag": bool,
+})
+MriWatershedParametersTagged = typing.TypedDict('MriWatershedParametersTagged', {
+    "@type": typing.Literal["freesurfer/mri_watershed"],
     "input_volume": InputPathType,
     "output_volume": str,
     "weight": typing.NotRequired[float | None],
@@ -49,41 +83,9 @@ MriWatershedParameters = typing.TypedDict('MriWatershedParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "freesurfer.mri_watershed": mri_watershed_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "freesurfer.mri_watershed": mri_watershed_outputs,
-    }.get(t)
-
-
 class MriWatershedOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `mri_watershed(...)`.
+    Output object returned when calling `MriWatershedParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -125,7 +127,7 @@ def mri_watershed_params(
     manual_params: list[float] | None = None,
     xthresh: float | None = None,
     mask_flag: bool = False,
-) -> MriWatershedParameters:
+) -> MriWatershedParametersTagged:
     """
     Build parameters.
     
@@ -170,7 +172,7 @@ def mri_watershed_params(
         Parameter dictionary
     """
     params = {
-        "@type": "freesurfer.mri_watershed",
+        "@type": "freesurfer/mri_watershed",
         "input_volume": input_volume,
         "output_volume": output_volume,
         "no_wta_flag": no_wta_flag,
@@ -234,104 +236,104 @@ def mri_watershed_cargs(
     """
     cargs = []
     cargs.append("mri_watershed")
-    cargs.append(execution.input_file(params.get("input_volume")))
-    cargs.append(params.get("output_volume"))
-    if params.get("weight") is not None:
+    cargs.append(execution.input_file(params.get("input_volume", None)))
+    cargs.append(params.get("output_volume", None))
+    if params.get("weight", None) is not None:
         cargs.extend([
             "-w",
-            str(params.get("weight"))
+            str(params.get("weight", None))
         ])
-    if params.get("no_wta_flag"):
+    if params.get("no_wta_flag", False):
         cargs.append("-no_wta")
-    if params.get("proba_merging") is not None:
+    if params.get("proba_merging", None) is not None:
         cargs.extend([
             "-b",
-            str(params.get("proba_merging"))
+            str(params.get("proba_merging", None))
         ])
-    if params.get("preflooding_height") is not None:
+    if params.get("preflooding_height", None) is not None:
         cargs.extend([
             "-h",
-            str(params.get("preflooding_height"))
+            str(params.get("preflooding_height", None))
         ])
-    if params.get("no_seedpt_flag"):
+    if params.get("no_seedpt_flag", False):
         cargs.append("-no_seedpt")
-    if params.get("no_ta_flag"):
+    if params.get("no_ta_flag", False):
         cargs.append("-no-ta")
-    if params.get("copy_flag"):
+    if params.get("copy_flag", False):
         cargs.append("-copy")
-    if params.get("atlas_flag"):
+    if params.get("atlas_flag", False):
         cargs.append("-atlas")
-    if params.get("surf_name") is not None:
+    if params.get("surf_name", None) is not None:
         cargs.extend([
             "-surf",
-            params.get("surf_name")
+            params.get("surf_name", None)
         ])
-    if params.get("usesurf_ras_flag"):
+    if params.get("usesurf_ras_flag", False):
         cargs.append("-useSRAS")
-    if params.get("no_t1_analysis_flag"):
+    if params.get("no_t1_analysis_flag", False):
         cargs.append("-noT1")
-    if params.get("shrink_surface_flag"):
+    if params.get("shrink_surface_flag", False):
         cargs.append("-less")
-    if params.get("expand_surface_flag"):
+    if params.get("expand_surface_flag", False):
         cargs.append("-more")
-    if params.get("use_watershed_flag"):
+    if params.get("use_watershed_flag", False):
         cargs.append("-wat")
-    if params.get("t1_volume") is not None:
+    if params.get("t1_volume", None) is not None:
         cargs.extend([
             "-T1",
-            execution.input_file(params.get("t1_volume"))
+            execution.input_file(params.get("t1_volume", None))
         ])
-    if params.get("wat_temp_flag"):
+    if params.get("wat_temp_flag", False):
         cargs.append("-wat+temp")
-    if params.get("first_temp_flag"):
+    if params.get("first_temp_flag", False):
         cargs.append("-first_temp")
-    if params.get("surf_debug_flag"):
+    if params.get("surf_debug_flag", False):
         cargs.append("-surf_debug")
-    if params.get("brain_surf_name") is not None:
+    if params.get("brain_surf_name", None) is not None:
         cargs.extend([
             "-brainsurf",
-            params.get("brain_surf_name")
+            params.get("brain_surf_name", None)
         ])
-    if params.get("shrink_brain_surf") is not None:
+    if params.get("shrink_brain_surf", None) is not None:
         cargs.extend([
             "-shk_br_surf",
-            params.get("shrink_brain_surf")
+            params.get("shrink_brain_surf", None)
         ])
-    if params.get("seed_point") is not None:
+    if params.get("seed_point", None) is not None:
         cargs.extend([
             "-s",
-            *map(str, params.get("seed_point"))
+            *map(str, params.get("seed_point", None))
         ])
-    if params.get("center_brain") is not None:
+    if params.get("center_brain", None) is not None:
         cargs.extend([
             "-c",
-            *map(str, params.get("center_brain"))
+            *map(str, params.get("center_brain", None))
         ])
-    if params.get("brain_radius") is not None:
+    if params.get("brain_radius", None) is not None:
         cargs.extend([
             "-r",
-            str(params.get("brain_radius"))
+            str(params.get("brain_radius", None))
         ])
-    if params.get("watershed_threshold") is not None:
+    if params.get("watershed_threshold", None) is not None:
         cargs.extend([
             "-t",
-            str(params.get("watershed_threshold"))
+            str(params.get("watershed_threshold", None))
         ])
-    if params.get("no_watershed_analysis_flag"):
+    if params.get("no_watershed_analysis_flag", False):
         cargs.append("-n")
-    if params.get("label_flag"):
+    if params.get("label_flag", False):
         cargs.append("-LABEL")
-    if params.get("manual_params") is not None:
+    if params.get("manual_params", None) is not None:
         cargs.extend([
             "-man",
-            *map(str, params.get("manual_params"))
+            *map(str, params.get("manual_params", None))
         ])
-    if params.get("xthresh") is not None:
+    if params.get("xthresh", None) is not None:
         cargs.extend([
             "-xthresh",
-            str(params.get("xthresh"))
+            str(params.get("xthresh", None))
         ])
-    if params.get("mask_flag"):
+    if params.get("mask_flag", False):
         cargs.append("-mask")
     return cargs
 
@@ -351,8 +353,8 @@ def mri_watershed_outputs(
     """
     ret = MriWatershedOutputs(
         root=execution.output_file("."),
-        output_brain_vol=execution.output_file(params.get("output_volume")),
-        output_brain_surf=execution.output_file(params.get("brain_surf_name")) if (params.get("brain_surf_name") is not None) else None,
+        output_brain_vol=execution.output_file(params.get("output_volume", None)),
+        output_brain_surf=execution.output_file(params.get("brain_surf_name", None)) if (params.get("brain_surf_name") is not None) else None,
     )
     return ret
 
@@ -510,7 +512,6 @@ def mri_watershed(
 __all__ = [
     "MRI_WATERSHED_METADATA",
     "MriWatershedOutputs",
-    "MriWatershedParameters",
     "mri_watershed",
     "mri_watershed_execute",
     "mri_watershed_params",

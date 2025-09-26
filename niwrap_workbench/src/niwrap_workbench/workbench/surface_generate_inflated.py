@@ -14,7 +14,14 @@ SURFACE_GENERATE_INFLATED_METADATA = Metadata(
 
 
 SurfaceGenerateInflatedParameters = typing.TypedDict('SurfaceGenerateInflatedParameters', {
-    "@type": typing.Literal["workbench.surface-generate-inflated"],
+    "@type": typing.NotRequired[typing.Literal["workbench/surface-generate-inflated"]],
+    "anatomical_surface_in": InputPathType,
+    "inflated_surface_out": str,
+    "very_inflated_surface_out": str,
+    "opt_iterations_scale_iterations_scale_value": typing.NotRequired[float | None],
+})
+SurfaceGenerateInflatedParametersTagged = typing.TypedDict('SurfaceGenerateInflatedParametersTagged', {
+    "@type": typing.Literal["workbench/surface-generate-inflated"],
     "anatomical_surface_in": InputPathType,
     "inflated_surface_out": str,
     "very_inflated_surface_out": str,
@@ -22,41 +29,9 @@ SurfaceGenerateInflatedParameters = typing.TypedDict('SurfaceGenerateInflatedPar
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "workbench.surface-generate-inflated": surface_generate_inflated_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "workbench.surface-generate-inflated": surface_generate_inflated_outputs,
-    }.get(t)
-
-
 class SurfaceGenerateInflatedOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `surface_generate_inflated(...)`.
+    Output object returned when calling `SurfaceGenerateInflatedParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -71,7 +46,7 @@ def surface_generate_inflated_params(
     inflated_surface_out: str,
     very_inflated_surface_out: str,
     opt_iterations_scale_iterations_scale_value: float | None = None,
-) -> SurfaceGenerateInflatedParameters:
+) -> SurfaceGenerateInflatedParametersTagged:
     """
     Build parameters.
     
@@ -85,7 +60,7 @@ def surface_generate_inflated_params(
         Parameter dictionary
     """
     params = {
-        "@type": "workbench.surface-generate-inflated",
+        "@type": "workbench/surface-generate-inflated",
         "anatomical_surface_in": anatomical_surface_in,
         "inflated_surface_out": inflated_surface_out,
         "very_inflated_surface_out": very_inflated_surface_out,
@@ -111,13 +86,13 @@ def surface_generate_inflated_cargs(
     cargs = []
     cargs.append("wb_command")
     cargs.append("-surface-generate-inflated")
-    cargs.append(execution.input_file(params.get("anatomical_surface_in")))
-    cargs.append(params.get("inflated_surface_out"))
-    cargs.append(params.get("very_inflated_surface_out"))
-    if params.get("opt_iterations_scale_iterations_scale_value") is not None:
+    cargs.append(execution.input_file(params.get("anatomical_surface_in", None)))
+    cargs.append(params.get("inflated_surface_out", None))
+    cargs.append(params.get("very_inflated_surface_out", None))
+    if params.get("opt_iterations_scale_iterations_scale_value", None) is not None:
         cargs.extend([
             "-iterations-scale",
-            str(params.get("opt_iterations_scale_iterations_scale_value"))
+            str(params.get("opt_iterations_scale_iterations_scale_value", None))
         ])
     return cargs
 
@@ -137,8 +112,8 @@ def surface_generate_inflated_outputs(
     """
     ret = SurfaceGenerateInflatedOutputs(
         root=execution.output_file("."),
-        inflated_surface_out=execution.output_file(params.get("inflated_surface_out")),
-        very_inflated_surface_out=execution.output_file(params.get("very_inflated_surface_out")),
+        inflated_surface_out=execution.output_file(params.get("inflated_surface_out", None)),
+        very_inflated_surface_out=execution.output_file(params.get("very_inflated_surface_out", None)),
     )
     return ret
 
@@ -221,7 +196,6 @@ def surface_generate_inflated(
 __all__ = [
     "SURFACE_GENERATE_INFLATED_METADATA",
     "SurfaceGenerateInflatedOutputs",
-    "SurfaceGenerateInflatedParameters",
     "surface_generate_inflated",
     "surface_generate_inflated_execute",
     "surface_generate_inflated_params",

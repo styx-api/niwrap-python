@@ -14,7 +14,18 @@ ANTS_MOTION_CORR_STATS_METADATA = Metadata(
 
 
 AntsMotionCorrStatsParameters = typing.TypedDict('AntsMotionCorrStatsParameters', {
-    "@type": typing.Literal["ants.antsMotionCorrStats"],
+    "@type": typing.NotRequired[typing.Literal["ants/antsMotionCorrStats"]],
+    "mask": InputPathType,
+    "moco_params": InputPathType,
+    "output": str,
+    "transform_index": typing.NotRequired[int | None],
+    "framewise": typing.NotRequired[typing.Literal[0, 1] | None],
+    "spatial_map": bool,
+    "timeseries_displacement": bool,
+    "help": typing.NotRequired[typing.Literal[0, 1] | None],
+})
+AntsMotionCorrStatsParametersTagged = typing.TypedDict('AntsMotionCorrStatsParametersTagged', {
+    "@type": typing.Literal["ants/antsMotionCorrStats"],
     "mask": InputPathType,
     "moco_params": InputPathType,
     "output": str,
@@ -26,41 +37,9 @@ AntsMotionCorrStatsParameters = typing.TypedDict('AntsMotionCorrStatsParameters'
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "ants.antsMotionCorrStats": ants_motion_corr_stats_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "ants.antsMotionCorrStats": ants_motion_corr_stats_outputs,
-    }.get(t)
-
-
 class AntsMotionCorrStatsOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `ants_motion_corr_stats(...)`.
+    Output object returned when calling `AntsMotionCorrStatsParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -77,7 +56,7 @@ def ants_motion_corr_stats_params(
     spatial_map: bool = False,
     timeseries_displacement: bool = False,
     help_: typing.Literal[0, 1] | None = None,
-) -> AntsMotionCorrStatsParameters:
+) -> AntsMotionCorrStatsParametersTagged:
     """
     Build parameters.
     
@@ -95,7 +74,7 @@ def ants_motion_corr_stats_params(
         Parameter dictionary
     """
     params = {
-        "@type": "ants.antsMotionCorrStats",
+        "@type": "ants/antsMotionCorrStats",
         "mask": mask,
         "moco_params": moco_params,
         "output": output,
@@ -128,34 +107,34 @@ def ants_motion_corr_stats_cargs(
     cargs.append("antsMotionCorrStats")
     cargs.extend([
         "-x",
-        execution.input_file(params.get("mask"))
+        execution.input_file(params.get("mask", None))
     ])
     cargs.extend([
         "-m",
-        execution.input_file(params.get("moco_params"))
+        execution.input_file(params.get("moco_params", None))
     ])
     cargs.extend([
         "-o",
-        params.get("output")
+        params.get("output", None)
     ])
-    if params.get("transform_index") is not None:
+    if params.get("transform_index", None) is not None:
         cargs.extend([
             "-t",
-            str(params.get("transform_index"))
+            str(params.get("transform_index", None))
         ])
-    if params.get("framewise") is not None:
+    if params.get("framewise", None) is not None:
         cargs.extend([
             "-f",
-            str(params.get("framewise"))
+            str(params.get("framewise", None))
         ])
-    if params.get("spatial_map"):
+    if params.get("spatial_map", False):
         cargs.append("-s")
-    if params.get("timeseries_displacement"):
+    if params.get("timeseries_displacement", False):
         cargs.append("-d")
-    if params.get("help") is not None:
+    if params.get("help", None) is not None:
         cargs.extend([
             "--help",
-            str(params.get("help"))
+            str(params.get("help", None))
         ])
     return cargs
 
@@ -175,7 +154,7 @@ def ants_motion_corr_stats_outputs(
     """
     ret = AntsMotionCorrStatsOutputs(
         root=execution.output_file("."),
-        corrected_csv=execution.output_file(params.get("output")),
+        corrected_csv=execution.output_file(params.get("output", None)),
     )
     return ret
 
@@ -268,7 +247,6 @@ def ants_motion_corr_stats(
 __all__ = [
     "ANTS_MOTION_CORR_STATS_METADATA",
     "AntsMotionCorrStatsOutputs",
-    "AntsMotionCorrStatsParameters",
     "ants_motion_corr_stats",
     "ants_motion_corr_stats_execute",
     "ants_motion_corr_stats_params",

@@ -14,7 +14,26 @@ SURF_SMOOTH_METADATA = Metadata(
 
 
 SurfSmoothParameters = typing.TypedDict('SurfSmoothParameters', {
-    "@type": typing.Literal["afni.SurfSmooth"],
+    "@type": typing.NotRequired[typing.Literal["afni/SurfSmooth"]],
+    "surface": str,
+    "method": str,
+    "input_data": typing.NotRequired[InputPathType | None],
+    "target_fwhm": typing.NotRequired[float | None],
+    "fwhm": typing.NotRequired[float | None],
+    "number_iterations": typing.NotRequired[float | None],
+    "output_file": typing.NotRequired[str | None],
+    "band_pass_frequency": typing.NotRequired[float | None],
+    "lambda_mu": typing.NotRequired[str | None],
+    "interp_weights": typing.NotRequired[str | None],
+    "node_mask": typing.NotRequired[InputPathType | None],
+    "surface_output": typing.NotRequired[InputPathType | None],
+    "dbg_node": typing.NotRequired[float | None],
+    "use_neighbors_outside_mask": bool,
+    "talk_suma": bool,
+    "refresh_rate": typing.NotRequired[float | None],
+})
+SurfSmoothParametersTagged = typing.TypedDict('SurfSmoothParametersTagged', {
+    "@type": typing.Literal["afni/SurfSmooth"],
     "surface": str,
     "method": str,
     "input_data": typing.NotRequired[InputPathType | None],
@@ -34,41 +53,9 @@ SurfSmoothParameters = typing.TypedDict('SurfSmoothParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "afni.SurfSmooth": surf_smooth_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "afni.SurfSmooth": surf_smooth_outputs,
-    }.get(t)
-
-
 class SurfSmoothOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `surf_smooth(...)`.
+    Output object returned when calling `SurfSmoothParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -93,7 +80,7 @@ def surf_smooth_params(
     use_neighbors_outside_mask: bool = False,
     talk_suma: bool = False,
     refresh_rate: float | None = None,
-) -> SurfSmoothParameters:
+) -> SurfSmoothParametersTagged:
     """
     Build parameters.
     
@@ -130,7 +117,7 @@ def surf_smooth_params(
         Parameter dictionary
     """
     params = {
-        "@type": "afni.SurfSmooth",
+        "@type": "afni/SurfSmooth",
         "surface": surface,
         "method": method,
         "use_neighbors_outside_mask": use_neighbors_outside_mask,
@@ -180,75 +167,75 @@ def surf_smooth_cargs(
     cargs.append("SurfSmooth")
     cargs.extend([
         "-SURF_1",
-        params.get("surface")
+        params.get("surface", None)
     ])
     cargs.extend([
         "-met",
-        params.get("method")
+        params.get("method", None)
     ])
-    if params.get("input_data") is not None:
+    if params.get("input_data", None) is not None:
         cargs.extend([
             "-input",
-            execution.input_file(params.get("input_data"))
+            execution.input_file(params.get("input_data", None))
         ])
-    if params.get("target_fwhm") is not None:
+    if params.get("target_fwhm", None) is not None:
         cargs.extend([
             "-target_fwhm",
-            str(params.get("target_fwhm"))
+            str(params.get("target_fwhm", None))
         ])
-    if params.get("fwhm") is not None:
+    if params.get("fwhm", None) is not None:
         cargs.extend([
             "-fwhm",
-            str(params.get("fwhm"))
+            str(params.get("fwhm", None))
         ])
-    if params.get("number_iterations") is not None:
+    if params.get("number_iterations", None) is not None:
         cargs.extend([
             "-Niter",
-            str(params.get("number_iterations"))
+            str(params.get("number_iterations", None))
         ])
-    if params.get("output_file") is not None:
+    if params.get("output_file", None) is not None:
         cargs.extend([
             "-output",
-            params.get("output_file")
+            params.get("output_file", None)
         ])
-    if params.get("band_pass_frequency") is not None:
+    if params.get("band_pass_frequency", None) is not None:
         cargs.extend([
             "-kpb",
-            str(params.get("band_pass_frequency"))
+            str(params.get("band_pass_frequency", None))
         ])
-    if params.get("lambda_mu") is not None:
+    if params.get("lambda_mu", None) is not None:
         cargs.extend([
             "-lm",
-            params.get("lambda_mu")
+            params.get("lambda_mu", None)
         ])
-    if params.get("interp_weights") is not None:
+    if params.get("interp_weights", None) is not None:
         cargs.extend([
             "-iw",
-            params.get("interp_weights")
+            params.get("interp_weights", None)
         ])
-    if params.get("node_mask") is not None:
+    if params.get("node_mask", None) is not None:
         cargs.extend([
             "-MASK",
-            execution.input_file(params.get("node_mask"))
+            execution.input_file(params.get("node_mask", None))
         ])
-    if params.get("surface_output") is not None:
+    if params.get("surface_output", None) is not None:
         cargs.extend([
             "-surf_out",
-            execution.input_file(params.get("surface_output"))
+            execution.input_file(params.get("surface_output", None))
         ])
-    if params.get("dbg_node") is not None:
+    if params.get("dbg_node", None) is not None:
         cargs.extend([
             "-dbg_n",
-            str(params.get("dbg_node"))
+            str(params.get("dbg_node", None))
         ])
-    if params.get("use_neighbors_outside_mask"):
+    if params.get("use_neighbors_outside_mask", False):
         cargs.append("-use_neighbors_outside_mask")
-    if params.get("talk_suma"):
+    if params.get("talk_suma", False):
         cargs.append("-talk_suma")
-    if params.get("refresh_rate") is not None:
+    if params.get("refresh_rate", None) is not None:
         cargs.extend([
             "-refresh_rate",
-            str(params.get("refresh_rate"))
+            str(params.get("refresh_rate", None))
         ])
     return cargs
 
@@ -268,7 +255,7 @@ def surf_smooth_outputs(
     """
     ret = SurfSmoothOutputs(
         root=execution.output_file("."),
-        out_file=execution.output_file(params.get("output_file")) if (params.get("output_file") is not None) else None,
+        out_file=execution.output_file(params.get("output_file", None)) if (params.get("output_file") is not None) else None,
     )
     return ret
 
@@ -386,7 +373,6 @@ def surf_smooth(
 __all__ = [
     "SURF_SMOOTH_METADATA",
     "SurfSmoothOutputs",
-    "SurfSmoothParameters",
     "surf_smooth",
     "surf_smooth_execute",
     "surf_smooth_params",

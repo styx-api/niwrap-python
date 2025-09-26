@@ -14,7 +14,14 @@ RECON_ALL_CLINICAL_SH_METADATA = Metadata(
 
 
 ReconAllClinicalShParameters = typing.TypedDict('ReconAllClinicalShParameters', {
-    "@type": typing.Literal["freesurfer.recon-all-clinical.sh"],
+    "@type": typing.NotRequired[typing.Literal["freesurfer/recon-all-clinical.sh"]],
+    "input_scan": InputPathType,
+    "subject_id": str,
+    "threads": int,
+    "subject_dir": typing.NotRequired[str | None],
+})
+ReconAllClinicalShParametersTagged = typing.TypedDict('ReconAllClinicalShParametersTagged', {
+    "@type": typing.Literal["freesurfer/recon-all-clinical.sh"],
     "input_scan": InputPathType,
     "subject_id": str,
     "threads": int,
@@ -22,40 +29,9 @@ ReconAllClinicalShParameters = typing.TypedDict('ReconAllClinicalShParameters', 
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "freesurfer.recon-all-clinical.sh": recon_all_clinical_sh_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-    }.get(t)
-
-
 class ReconAllClinicalShOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `recon_all_clinical_sh(...)`.
+    Output object returned when calling `ReconAllClinicalShParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -66,7 +42,7 @@ def recon_all_clinical_sh_params(
     subject_id: str,
     threads: int,
     subject_dir: str | None = None,
-) -> ReconAllClinicalShParameters:
+) -> ReconAllClinicalShParametersTagged:
     """
     Build parameters.
     
@@ -80,7 +56,7 @@ def recon_all_clinical_sh_params(
         Parameter dictionary
     """
     params = {
-        "@type": "freesurfer.recon-all-clinical.sh",
+        "@type": "freesurfer/recon-all-clinical.sh",
         "input_scan": input_scan,
         "subject_id": subject_id,
         "threads": threads,
@@ -105,11 +81,11 @@ def recon_all_clinical_sh_cargs(
     """
     cargs = []
     cargs.append("recon-all-clinical.sh")
-    cargs.append(execution.input_file(params.get("input_scan")))
-    cargs.append(params.get("subject_id"))
-    cargs.append(str(params.get("threads")))
-    if params.get("subject_dir") is not None:
-        cargs.append(params.get("subject_dir"))
+    cargs.append(execution.input_file(params.get("input_scan", None)))
+    cargs.append(params.get("subject_id", None))
+    cargs.append(str(params.get("threads", None)))
+    if params.get("subject_dir", None) is not None:
+        cargs.append(params.get("subject_dir", None))
     return cargs
 
 
@@ -200,7 +176,6 @@ def recon_all_clinical_sh(
 __all__ = [
     "RECON_ALL_CLINICAL_SH_METADATA",
     "ReconAllClinicalShOutputs",
-    "ReconAllClinicalShParameters",
     "recon_all_clinical_sh",
     "recon_all_clinical_sh_execute",
     "recon_all_clinical_sh_params",

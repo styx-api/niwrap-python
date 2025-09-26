@@ -14,47 +14,22 @@ V_24SWAP_METADATA = Metadata(
 
 
 V24swapParameters = typing.TypedDict('V24swapParameters', {
-    "@type": typing.Literal["afni.24swap"],
+    "@type": typing.NotRequired[typing.Literal["afni/24swap"]],
+    "quiet": bool,
+    "pattern": typing.NotRequired[str | None],
+    "input_files": list[InputPathType],
+})
+V24swapParametersTagged = typing.TypedDict('V24swapParametersTagged', {
+    "@type": typing.Literal["afni/24swap"],
     "quiet": bool,
     "pattern": typing.NotRequired[str | None],
     "input_files": list[InputPathType],
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "afni.24swap": v_24swap_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-    }.get(t)
-
-
 class V24swapOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `v_24swap(...)`.
+    Output object returned when calling `V24swapParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -64,7 +39,7 @@ def v_24swap_params(
     input_files: list[InputPathType],
     quiet: bool = False,
     pattern: str | None = None,
-) -> V24swapParameters:
+) -> V24swapParametersTagged:
     """
     Build parameters.
     
@@ -76,7 +51,7 @@ def v_24swap_params(
         Parameter dictionary
     """
     params = {
-        "@type": "afni.24swap",
+        "@type": "afni/24swap",
         "quiet": quiet,
         "input_files": input_files,
     }
@@ -100,14 +75,14 @@ def v_24swap_cargs(
     """
     cargs = []
     cargs.append("24swap")
-    if params.get("quiet"):
+    if params.get("quiet", False):
         cargs.append("-q")
-    if params.get("pattern") is not None:
+    if params.get("pattern", None) is not None:
         cargs.extend([
             "-pattern",
-            params.get("pattern")
+            params.get("pattern", None)
         ])
-    cargs.extend([execution.input_file(f) for f in params.get("input_files")])
+    cargs.extend([execution.input_file(f) for f in params.get("input_files", None)])
     return cargs
 
 
@@ -191,7 +166,6 @@ def v_24swap(
 
 __all__ = [
     "V24swapOutputs",
-    "V24swapParameters",
     "V_24SWAP_METADATA",
     "v_24swap",
     "v_24swap_execute",

@@ -14,46 +14,20 @@ SCENE_FILE_RELOCATE_METADATA = Metadata(
 
 
 SceneFileRelocateParameters = typing.TypedDict('SceneFileRelocateParameters', {
-    "@type": typing.Literal["workbench.scene-file-relocate"],
+    "@type": typing.NotRequired[typing.Literal["workbench/scene-file-relocate"]],
+    "input_scene": str,
+    "output_scene": str,
+})
+SceneFileRelocateParametersTagged = typing.TypedDict('SceneFileRelocateParametersTagged', {
+    "@type": typing.Literal["workbench/scene-file-relocate"],
     "input_scene": str,
     "output_scene": str,
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "workbench.scene-file-relocate": scene_file_relocate_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-    }.get(t)
-
-
 class SceneFileRelocateOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `scene_file_relocate(...)`.
+    Output object returned when calling `SceneFileRelocateParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -62,7 +36,7 @@ class SceneFileRelocateOutputs(typing.NamedTuple):
 def scene_file_relocate_params(
     input_scene: str,
     output_scene: str,
-) -> SceneFileRelocateParameters:
+) -> SceneFileRelocateParametersTagged:
     """
     Build parameters.
     
@@ -73,7 +47,7 @@ def scene_file_relocate_params(
         Parameter dictionary
     """
     params = {
-        "@type": "workbench.scene-file-relocate",
+        "@type": "workbench/scene-file-relocate",
         "input_scene": input_scene,
         "output_scene": output_scene,
     }
@@ -96,8 +70,8 @@ def scene_file_relocate_cargs(
     cargs = []
     cargs.append("wb_command")
     cargs.append("-scene-file-relocate")
-    cargs.append(params.get("input_scene"))
-    cargs.append(params.get("output_scene"))
+    cargs.append(params.get("input_scene", None))
+    cargs.append(params.get("output_scene", None))
     return cargs
 
 
@@ -189,7 +163,6 @@ def scene_file_relocate(
 __all__ = [
     "SCENE_FILE_RELOCATE_METADATA",
     "SceneFileRelocateOutputs",
-    "SceneFileRelocateParameters",
     "scene_file_relocate",
     "scene_file_relocate_execute",
     "scene_file_relocate_params",

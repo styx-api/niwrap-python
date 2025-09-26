@@ -14,47 +14,22 @@ SURFACE_AFFINE_REGRESSION_METADATA = Metadata(
 
 
 SurfaceAffineRegressionParameters = typing.TypedDict('SurfaceAffineRegressionParameters', {
-    "@type": typing.Literal["workbench.surface-affine-regression"],
+    "@type": typing.NotRequired[typing.Literal["workbench/surface-affine-regression"]],
+    "source": InputPathType,
+    "target": InputPathType,
+    "affine_out": str,
+})
+SurfaceAffineRegressionParametersTagged = typing.TypedDict('SurfaceAffineRegressionParametersTagged', {
+    "@type": typing.Literal["workbench/surface-affine-regression"],
     "source": InputPathType,
     "target": InputPathType,
     "affine_out": str,
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "workbench.surface-affine-regression": surface_affine_regression_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-    }.get(t)
-
-
 class SurfaceAffineRegressionOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `surface_affine_regression(...)`.
+    Output object returned when calling `SurfaceAffineRegressionParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -64,7 +39,7 @@ def surface_affine_regression_params(
     source: InputPathType,
     target: InputPathType,
     affine_out: str,
-) -> SurfaceAffineRegressionParameters:
+) -> SurfaceAffineRegressionParametersTagged:
     """
     Build parameters.
     
@@ -76,7 +51,7 @@ def surface_affine_regression_params(
         Parameter dictionary
     """
     params = {
-        "@type": "workbench.surface-affine-regression",
+        "@type": "workbench/surface-affine-regression",
         "source": source,
         "target": target,
         "affine_out": affine_out,
@@ -100,9 +75,9 @@ def surface_affine_regression_cargs(
     cargs = []
     cargs.append("wb_command")
     cargs.append("-surface-affine-regression")
-    cargs.append(execution.input_file(params.get("source")))
-    cargs.append(execution.input_file(params.get("target")))
-    cargs.append(params.get("affine_out"))
+    cargs.append(execution.input_file(params.get("source", None)))
+    cargs.append(execution.input_file(params.get("target", None)))
+    cargs.append(params.get("affine_out", None))
     return cargs
 
 
@@ -199,7 +174,6 @@ def surface_affine_regression(
 __all__ = [
     "SURFACE_AFFINE_REGRESSION_METADATA",
     "SurfaceAffineRegressionOutputs",
-    "SurfaceAffineRegressionParameters",
     "surface_affine_regression",
     "surface_affine_regression_execute",
     "surface_affine_regression_params",

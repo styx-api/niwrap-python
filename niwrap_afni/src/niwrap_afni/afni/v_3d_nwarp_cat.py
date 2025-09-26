@@ -14,7 +14,19 @@ V_3D_NWARP_CAT_METADATA = Metadata(
 
 
 V3dNwarpCatParameters = typing.TypedDict('V3dNwarpCatParameters', {
-    "@type": typing.Literal["afni.3dNwarpCat"],
+    "@type": typing.NotRequired[typing.Literal["afni/3dNwarpCat"]],
+    "interpolation": typing.NotRequired[str | None],
+    "verbosity": bool,
+    "output_prefix": str,
+    "space_marker": typing.NotRequired[str | None],
+    "warp1": InputPathType,
+    "warp2": InputPathType,
+    "additional_warps": typing.NotRequired[list[InputPathType] | None],
+    "invert_final_warp": bool,
+    "extra_padding": typing.NotRequired[float | None],
+})
+V3dNwarpCatParametersTagged = typing.TypedDict('V3dNwarpCatParametersTagged', {
+    "@type": typing.Literal["afni/3dNwarpCat"],
     "interpolation": typing.NotRequired[str | None],
     "verbosity": bool,
     "output_prefix": str,
@@ -27,41 +39,9 @@ V3dNwarpCatParameters = typing.TypedDict('V3dNwarpCatParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "afni.3dNwarpCat": v_3d_nwarp_cat_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "afni.3dNwarpCat": v_3d_nwarp_cat_outputs,
-    }.get(t)
-
-
 class V3dNwarpCatOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `v_3d_nwarp_cat(...)`.
+    Output object returned when calling `V3dNwarpCatParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -81,7 +61,7 @@ def v_3d_nwarp_cat_params(
     additional_warps: list[InputPathType] | None = None,
     invert_final_warp: bool = False,
     extra_padding: float | None = None,
-) -> V3dNwarpCatParameters:
+) -> V3dNwarpCatParametersTagged:
     """
     Build parameters.
     
@@ -102,7 +82,7 @@ def v_3d_nwarp_cat_params(
         Parameter dictionary
     """
     params = {
-        "@type": "afni.3dNwarpCat",
+        "@type": "afni/3dNwarpCat",
         "verbosity": verbosity,
         "output_prefix": output_prefix,
         "warp1": warp1,
@@ -135,38 +115,38 @@ def v_3d_nwarp_cat_cargs(
     """
     cargs = []
     cargs.append("3dNwarpCat")
-    if params.get("interpolation") is not None:
+    if params.get("interpolation", None) is not None:
         cargs.extend([
             "-interp",
-            params.get("interpolation")
+            params.get("interpolation", None)
         ])
-    if params.get("verbosity"):
+    if params.get("verbosity", False):
         cargs.append("-verb")
     cargs.extend([
         "-prefix",
-        params.get("output_prefix")
+        params.get("output_prefix", None)
     ])
-    if params.get("space_marker") is not None:
+    if params.get("space_marker", None) is not None:
         cargs.extend([
             "-space",
-            params.get("space_marker")
+            params.get("space_marker", None)
         ])
     cargs.extend([
         "-warp1",
-        execution.input_file(params.get("warp1"))
+        execution.input_file(params.get("warp1", None))
     ])
     cargs.extend([
         "-warp2",
-        execution.input_file(params.get("warp2"))
+        execution.input_file(params.get("warp2", None))
     ])
-    if params.get("additional_warps") is not None:
-        cargs.extend([execution.input_file(f) for f in params.get("additional_warps")])
-    if params.get("invert_final_warp"):
+    if params.get("additional_warps", None) is not None:
+        cargs.extend([execution.input_file(f) for f in params.get("additional_warps", None)])
+    if params.get("invert_final_warp", False):
         cargs.append("-iwarp")
-    if params.get("extra_padding") is not None:
+    if params.get("extra_padding", None) is not None:
         cargs.extend([
             "-expad",
-            str(params.get("extra_padding"))
+            str(params.get("extra_padding", None))
         ])
     return cargs
 
@@ -186,8 +166,8 @@ def v_3d_nwarp_cat_outputs(
     """
     ret = V3dNwarpCatOutputs(
         root=execution.output_file("."),
-        output_matrix=execution.output_file(params.get("output_prefix") + ".aff12.1D"),
-        output_dataset=execution.output_file(params.get("output_prefix") + "+tlrc.HEAD"),
+        output_matrix=execution.output_file(params.get("output_prefix", None) + ".aff12.1D"),
+        output_dataset=execution.output_file(params.get("output_prefix", None) + "+tlrc.HEAD"),
     )
     return ret
 
@@ -274,7 +254,6 @@ def v_3d_nwarp_cat(
 
 __all__ = [
     "V3dNwarpCatOutputs",
-    "V3dNwarpCatParameters",
     "V_3D_NWARP_CAT_METADATA",
     "v_3d_nwarp_cat",
     "v_3d_nwarp_cat_execute",

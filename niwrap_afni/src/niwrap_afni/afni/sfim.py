@@ -14,7 +14,15 @@ SFIM_METADATA = Metadata(
 
 
 SfimParameters = typing.TypedDict('SfimParameters', {
-    "@type": typing.Literal["afni.sfim"],
+    "@type": typing.NotRequired[typing.Literal["afni/sfim"]],
+    "input_images": list[InputPathType],
+    "sfint_file": typing.NotRequired[str | None],
+    "baseline_state": typing.NotRequired[str | None],
+    "local_base_option": bool,
+    "output_prefix": typing.NotRequired[str | None],
+})
+SfimParametersTagged = typing.TypedDict('SfimParametersTagged', {
+    "@type": typing.Literal["afni/sfim"],
     "input_images": list[InputPathType],
     "sfint_file": typing.NotRequired[str | None],
     "baseline_state": typing.NotRequired[str | None],
@@ -23,40 +31,9 @@ SfimParameters = typing.TypedDict('SfimParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "afni.sfim": sfim_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-    }.get(t)
-
-
 class SfimOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `sfim(...)`.
+    Output object returned when calling `SfimParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -68,7 +45,7 @@ def sfim_params(
     baseline_state: str | None = None,
     local_base_option: bool = False,
     output_prefix: str | None = None,
-) -> SfimParameters:
+) -> SfimParametersTagged:
     """
     Build parameters.
     
@@ -88,7 +65,7 @@ def sfim_params(
         Parameter dictionary
     """
     params = {
-        "@type": "afni.sfim",
+        "@type": "afni/sfim",
         "input_images": input_images,
         "local_base_option": local_base_option,
     }
@@ -116,23 +93,23 @@ def sfim_cargs(
     """
     cargs = []
     cargs.append("sfim")
-    cargs.extend([execution.input_file(f) for f in params.get("input_images")])
-    if params.get("sfint_file") is not None:
+    cargs.extend([execution.input_file(f) for f in params.get("input_images", None)])
+    if params.get("sfint_file", None) is not None:
         cargs.extend([
             "-sfint",
-            params.get("sfint_file")
+            params.get("sfint_file", None)
         ])
-    if params.get("baseline_state") is not None:
+    if params.get("baseline_state", None) is not None:
         cargs.extend([
             "-base",
-            params.get("baseline_state")
+            params.get("baseline_state", None)
         ])
-    if params.get("local_base_option"):
+    if params.get("local_base_option", False):
         cargs.append("-localbase")
-    if params.get("output_prefix") is not None:
+    if params.get("output_prefix", None) is not None:
         cargs.extend([
             "-prefix",
-            params.get("output_prefix")
+            params.get("output_prefix", None)
         ])
     return cargs
 
@@ -230,7 +207,6 @@ def sfim(
 __all__ = [
     "SFIM_METADATA",
     "SfimOutputs",
-    "SfimParameters",
     "sfim",
     "sfim_execute",
     "sfim_params",

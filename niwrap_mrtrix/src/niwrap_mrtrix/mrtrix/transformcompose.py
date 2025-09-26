@@ -14,26 +14,39 @@ TRANSFORMCOMPOSE_METADATA = Metadata(
 
 
 TransformcomposeConfigParameters = typing.TypedDict('TransformcomposeConfigParameters', {
-    "@type": typing.Literal["mrtrix.transformcompose.config"],
+    "@type": typing.NotRequired[typing.Literal["config"]],
+    "key": str,
+    "value": str,
+})
+TransformcomposeConfigParametersTagged = typing.TypedDict('TransformcomposeConfigParametersTagged', {
+    "@type": typing.Literal["config"],
     "key": str,
     "value": str,
 })
 
 
 TransformcomposeVariousStringParameters = typing.TypedDict('TransformcomposeVariousStringParameters', {
-    "@type": typing.Literal["mrtrix.transformcompose.VariousString"],
+    "@type": typing.NotRequired[typing.Literal["VariousString"]],
+    "obj": str,
+})
+TransformcomposeVariousStringParametersTagged = typing.TypedDict('TransformcomposeVariousStringParametersTagged', {
+    "@type": typing.Literal["VariousString"],
     "obj": str,
 })
 
 
 TransformcomposeVariousFileParameters = typing.TypedDict('TransformcomposeVariousFileParameters', {
-    "@type": typing.Literal["mrtrix.transformcompose.VariousFile"],
+    "@type": typing.NotRequired[typing.Literal["VariousFile"]],
+    "obj": InputPathType,
+})
+TransformcomposeVariousFileParametersTagged = typing.TypedDict('TransformcomposeVariousFileParametersTagged', {
+    "@type": typing.Literal["VariousFile"],
     "obj": InputPathType,
 })
 
 
 TransformcomposeParameters = typing.TypedDict('TransformcomposeParameters', {
-    "@type": typing.Literal["mrtrix.transformcompose"],
+    "@type": typing.NotRequired[typing.Literal["mrtrix/transformcompose"]],
     "template": typing.NotRequired[InputPathType | None],
     "info": bool,
     "quiet": bool,
@@ -44,11 +57,25 @@ TransformcomposeParameters = typing.TypedDict('TransformcomposeParameters', {
     "help": bool,
     "version": bool,
     "input": list[InputPathType],
-    "output": typing.Union[TransformcomposeVariousStringParameters, TransformcomposeVariousFileParameters],
+    "output": typing.Union[TransformcomposeVariousStringParametersTagged, TransformcomposeVariousFileParametersTagged],
+})
+TransformcomposeParametersTagged = typing.TypedDict('TransformcomposeParametersTagged', {
+    "@type": typing.Literal["mrtrix/transformcompose"],
+    "template": typing.NotRequired[InputPathType | None],
+    "info": bool,
+    "quiet": bool,
+    "debug": bool,
+    "force": bool,
+    "nthreads": typing.NotRequired[int | None],
+    "config": typing.NotRequired[list[TransformcomposeConfigParameters] | None],
+    "help": bool,
+    "version": bool,
+    "input": list[InputPathType],
+    "output": typing.Union[TransformcomposeVariousStringParametersTagged, TransformcomposeVariousFileParametersTagged],
 })
 
 
-def dyn_cargs(
+def transformcompose_output_cargs_dyn_fn(
     t: str,
 ) -> typing.Any:
     """
@@ -60,14 +87,12 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "mrtrix.transformcompose": transformcompose_cargs,
-        "mrtrix.transformcompose.config": transformcompose_config_cargs,
-        "mrtrix.transformcompose.VariousString": transformcompose_various_string_cargs,
-        "mrtrix.transformcompose.VariousFile": transformcompose_various_file_cargs,
+        "VariousString": transformcompose_various_string_cargs,
+        "VariousFile": transformcompose_various_file_cargs,
     }.get(t)
 
 
-def dyn_outputs(
+def transformcompose_output_outputs_dyn_fn(
     t: str,
 ) -> typing.Any:
     """
@@ -85,7 +110,7 @@ def dyn_outputs(
 def transformcompose_config_params(
     key: str,
     value: str,
-) -> TransformcomposeConfigParameters:
+) -> TransformcomposeConfigParametersTagged:
     """
     Build parameters.
     
@@ -96,7 +121,7 @@ def transformcompose_config_params(
         Parameter dictionary
     """
     params = {
-        "@type": "mrtrix.transformcompose.config",
+        "@type": "config",
         "key": key,
         "value": value,
     }
@@ -118,14 +143,14 @@ def transformcompose_config_cargs(
     """
     cargs = []
     cargs.append("-config")
-    cargs.append(params.get("key"))
-    cargs.append(params.get("value"))
+    cargs.append(params.get("key", None))
+    cargs.append(params.get("value", None))
     return cargs
 
 
 def transformcompose_various_string_params(
     obj: str,
-) -> TransformcomposeVariousStringParameters:
+) -> TransformcomposeVariousStringParametersTagged:
     """
     Build parameters.
     
@@ -135,7 +160,7 @@ def transformcompose_various_string_params(
         Parameter dictionary
     """
     params = {
-        "@type": "mrtrix.transformcompose.VariousString",
+        "@type": "VariousString",
         "obj": obj,
     }
     return params
@@ -155,13 +180,13 @@ def transformcompose_various_string_cargs(
         Command-line arguments.
     """
     cargs = []
-    cargs.append(params.get("obj"))
+    cargs.append(params.get("obj", None))
     return cargs
 
 
 def transformcompose_various_file_params(
     obj: InputPathType,
-) -> TransformcomposeVariousFileParameters:
+) -> TransformcomposeVariousFileParametersTagged:
     """
     Build parameters.
     
@@ -171,7 +196,7 @@ def transformcompose_various_file_params(
         Parameter dictionary
     """
     params = {
-        "@type": "mrtrix.transformcompose.VariousFile",
+        "@type": "VariousFile",
         "obj": obj,
     }
     return params
@@ -191,13 +216,13 @@ def transformcompose_various_file_cargs(
         Command-line arguments.
     """
     cargs = []
-    cargs.append(execution.input_file(params.get("obj")))
+    cargs.append(execution.input_file(params.get("obj", None)))
     return cargs
 
 
 class TransformcomposeOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `transformcompose(...)`.
+    Output object returned when calling `TransformcomposeParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -205,7 +230,7 @@ class TransformcomposeOutputs(typing.NamedTuple):
 
 def transformcompose_params(
     input_: list[InputPathType],
-    output: typing.Union[TransformcomposeVariousStringParameters, TransformcomposeVariousFileParameters],
+    output: typing.Union[TransformcomposeVariousStringParametersTagged, TransformcomposeVariousFileParametersTagged],
     template: InputPathType | None = None,
     info: bool = False,
     quiet: bool = False,
@@ -215,7 +240,7 @@ def transformcompose_params(
     config: list[TransformcomposeConfigParameters] | None = None,
     help_: bool = False,
     version: bool = False,
-) -> TransformcomposeParameters:
+) -> TransformcomposeParametersTagged:
     """
     Build parameters.
     
@@ -240,7 +265,7 @@ def transformcompose_params(
         Parameter dictionary
     """
     params = {
-        "@type": "mrtrix.transformcompose",
+        "@type": "mrtrix/transformcompose",
         "info": info,
         "quiet": quiet,
         "debug": debug,
@@ -274,32 +299,32 @@ def transformcompose_cargs(
     """
     cargs = []
     cargs.append("transformcompose")
-    if params.get("template") is not None:
+    if params.get("template", None) is not None:
         cargs.extend([
             "-template",
-            execution.input_file(params.get("template"))
+            execution.input_file(params.get("template", None))
         ])
-    if params.get("info"):
+    if params.get("info", False):
         cargs.append("-info")
-    if params.get("quiet"):
+    if params.get("quiet", False):
         cargs.append("-quiet")
-    if params.get("debug"):
+    if params.get("debug", False):
         cargs.append("-debug")
-    if params.get("force"):
+    if params.get("force", False):
         cargs.append("-force")
-    if params.get("nthreads") is not None:
+    if params.get("nthreads", None) is not None:
         cargs.extend([
             "-nthreads",
-            str(params.get("nthreads"))
+            str(params.get("nthreads", None))
         ])
-    if params.get("config") is not None:
-        cargs.extend([a for c in [dyn_cargs(s["@type"])(s, execution) for s in params.get("config")] for a in c])
-    if params.get("help"):
+    if params.get("config", None) is not None:
+        cargs.extend([a for c in [transformcompose_config_cargs(s, execution) for s in params.get("config", None)] for a in c])
+    if params.get("help", False):
         cargs.append("-help")
-    if params.get("version"):
+    if params.get("version", False):
         cargs.append("-version")
-    cargs.extend([execution.input_file(f) for f in params.get("input")])
-    cargs.extend(dyn_cargs(params.get("output")["@type"])(params.get("output"), execution))
+    cargs.extend([execution.input_file(f) for f in params.get("input", None)])
+    cargs.extend(transformcompose_output_cargs_dyn_fn(params.get("output", None)["@type"])(params.get("output", None), execution))
     return cargs
 
 
@@ -374,7 +399,7 @@ def transformcompose_execute(
 
 def transformcompose(
     input_: list[InputPathType],
-    output: typing.Union[TransformcomposeVariousStringParameters, TransformcomposeVariousFileParameters],
+    output: typing.Union[TransformcomposeVariousStringParametersTagged, TransformcomposeVariousFileParametersTagged],
     template: InputPathType | None = None,
     info: bool = False,
     quiet: bool = False,
@@ -456,11 +481,7 @@ def transformcompose(
 
 __all__ = [
     "TRANSFORMCOMPOSE_METADATA",
-    "TransformcomposeConfigParameters",
     "TransformcomposeOutputs",
-    "TransformcomposeParameters",
-    "TransformcomposeVariousFileParameters",
-    "TransformcomposeVariousStringParameters",
     "transformcompose",
     "transformcompose_config_params",
     "transformcompose_execute",

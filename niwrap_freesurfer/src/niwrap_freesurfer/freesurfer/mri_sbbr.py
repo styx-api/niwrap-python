@@ -14,7 +14,34 @@ MRI_SBBR_METADATA = Metadata(
 
 
 MriSbbrParameters = typing.TypedDict('MriSbbrParameters', {
-    "@type": typing.Literal["freesurfer.mri_sbbr"],
+    "@type": typing.NotRequired[typing.Literal["freesurfer/mri_sbbr"]],
+    "template_volume": InputPathType,
+    "surface_file": InputPathType,
+    "init_reg_file": InputPathType,
+    "t1": bool,
+    "t2": bool,
+    "optimization_type": typing.NotRequired[float | None],
+    "distance_in": typing.NotRequired[float | None],
+    "distance_out": typing.NotRequired[float | None],
+    "slope": typing.NotRequired[float | None],
+    "ftol": typing.NotRequired[float | None],
+    "linmintol": typing.NotRequired[float | None],
+    "niters_max": typing.NotRequired[float | None],
+    "search": typing.NotRequired[str | None],
+    "search1d": typing.NotRequired[str | None],
+    "parameter_set": typing.NotRequired[str | None],
+    "increment": typing.NotRequired[float | None],
+    "slice_number": typing.NotRequired[float | None],
+    "threads": typing.NotRequired[float | None],
+    "output_registration": typing.NotRequired[str | None],
+    "inverted_output_registration": typing.NotRequired[str | None],
+    "output_surface": typing.NotRequired[str | None],
+    "debug": bool,
+    "diagnostic": bool,
+    "check_options": bool,
+})
+MriSbbrParametersTagged = typing.TypedDict('MriSbbrParametersTagged', {
+    "@type": typing.Literal["freesurfer/mri_sbbr"],
     "template_volume": InputPathType,
     "surface_file": InputPathType,
     "init_reg_file": InputPathType,
@@ -42,40 +69,9 @@ MriSbbrParameters = typing.TypedDict('MriSbbrParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "freesurfer.mri_sbbr": mri_sbbr_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-    }.get(t)
-
-
 class MriSbbrOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `mri_sbbr(...)`.
+    Output object returned when calling `MriSbbrParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -106,7 +102,7 @@ def mri_sbbr_params(
     debug: bool = False,
     diagnostic: bool = False,
     check_options: bool = False,
-) -> MriSbbrParameters:
+) -> MriSbbrParametersTagged:
     """
     Build parameters.
     
@@ -140,7 +136,7 @@ def mri_sbbr_params(
         Parameter dictionary
     """
     params = {
-        "@type": "freesurfer.mri_sbbr",
+        "@type": "freesurfer/mri_sbbr",
         "template_volume": template_volume,
         "surface_file": surface_file,
         "init_reg_file": init_reg_file,
@@ -202,105 +198,105 @@ def mri_sbbr_cargs(
     cargs.append("mri_sbbr")
     cargs.extend([
         "--mov",
-        execution.input_file(params.get("template_volume"))
+        execution.input_file(params.get("template_volume", None))
     ])
     cargs.extend([
         "--surf",
-        execution.input_file(params.get("surface_file"))
+        execution.input_file(params.get("surface_file", None))
     ])
     cargs.extend([
         "--init-reg",
-        execution.input_file(params.get("init_reg_file"))
+        execution.input_file(params.get("init_reg_file", None))
     ])
-    if params.get("t1"):
+    if params.get("t1", False):
         cargs.append("--t1")
-    if params.get("t2"):
+    if params.get("t2", False):
         cargs.append("--t2")
-    if params.get("optimization_type") is not None:
+    if params.get("optimization_type", None) is not None:
         cargs.extend([
             "--opt",
-            str(params.get("optimization_type"))
+            str(params.get("optimization_type", None))
         ])
-    if params.get("distance_in") is not None:
+    if params.get("distance_in", None) is not None:
         cargs.extend([
             "--din",
-            str(params.get("distance_in"))
+            str(params.get("distance_in", None))
         ])
-    if params.get("distance_out") is not None:
+    if params.get("distance_out", None) is not None:
         cargs.extend([
             "--dout",
-            str(params.get("distance_out"))
+            str(params.get("distance_out", None))
         ])
-    if params.get("slope") is not None:
+    if params.get("slope", None) is not None:
         cargs.extend([
             "--slope",
-            str(params.get("slope"))
+            str(params.get("slope", None))
         ])
-    if params.get("ftol") is not None:
+    if params.get("ftol", None) is not None:
         cargs.extend([
             "--ftol",
-            str(params.get("ftol"))
+            str(params.get("ftol", None))
         ])
-    if params.get("linmintol") is not None:
+    if params.get("linmintol", None) is not None:
         cargs.extend([
             "--linmintol",
-            str(params.get("linmintol"))
+            str(params.get("linmintol", None))
         ])
-    if params.get("niters_max") is not None:
+    if params.get("niters_max", None) is not None:
         cargs.extend([
             "--niters-max",
-            str(params.get("niters_max"))
+            str(params.get("niters_max", None))
         ])
-    if params.get("search") is not None:
+    if params.get("search", None) is not None:
         cargs.extend([
             "--search",
-            params.get("search")
+            params.get("search", None)
         ])
-    if params.get("search1d") is not None:
+    if params.get("search1d", None) is not None:
         cargs.extend([
             "--search1d",
-            params.get("search1d")
+            params.get("search1d", None)
         ])
-    if params.get("parameter_set") is not None:
+    if params.get("parameter_set", None) is not None:
         cargs.extend([
             "--p",
-            params.get("parameter_set")
+            params.get("parameter_set", None)
         ])
-    if params.get("increment") is not None:
+    if params.get("increment", None) is not None:
         cargs.extend([
             "--inc",
-            str(params.get("increment"))
+            str(params.get("increment", None))
         ])
-    if params.get("slice_number") is not None:
+    if params.get("slice_number", None) is not None:
         cargs.extend([
             "--slice",
-            str(params.get("slice_number"))
+            str(params.get("slice_number", None))
         ])
-    if params.get("threads") is not None:
+    if params.get("threads", None) is not None:
         cargs.extend([
             "--threads",
-            str(params.get("threads"))
+            str(params.get("threads", None))
         ])
-    if params.get("output_registration") is not None:
+    if params.get("output_registration", None) is not None:
         cargs.extend([
             "--reg",
-            params.get("output_registration")
+            params.get("output_registration", None)
         ])
-    if params.get("inverted_output_registration") is not None:
+    if params.get("inverted_output_registration", None) is not None:
         cargs.extend([
             "--reg-inv",
-            params.get("inverted_output_registration")
+            params.get("inverted_output_registration", None)
         ])
-    if params.get("output_surface") is not None:
+    if params.get("output_surface", None) is not None:
         cargs.extend([
             "--out-surf",
-            params.get("output_surface")
+            params.get("output_surface", None)
         ])
-    if params.get("debug"):
+    if params.get("debug", False):
         cargs.append("--debug")
-    if params.get("diagnostic"):
+    if params.get("diagnostic", False):
         cargs.append("--diag")
-    if params.get("check_options"):
+    if params.get("check_options", False):
         cargs.append("--checkopts")
     return cargs
 
@@ -450,7 +446,6 @@ def mri_sbbr(
 __all__ = [
     "MRI_SBBR_METADATA",
     "MriSbbrOutputs",
-    "MriSbbrParameters",
     "mri_sbbr",
     "mri_sbbr_execute",
     "mri_sbbr_params",

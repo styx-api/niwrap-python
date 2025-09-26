@@ -14,7 +14,39 @@ FAT_PROC_DWI_TO_DT_METADATA = Metadata(
 
 
 FatProcDwiToDtParameters = typing.TypedDict('FatProcDwiToDtParameters', {
-    "@type": typing.Literal["afni.fat_proc_dwi_to_dt"],
+    "@type": typing.NotRequired[typing.Literal["afni/fat_proc_dwi_to_dt"]],
+    "in_dwi": InputPathType,
+    "in_gradmat": InputPathType,
+    "prefix": str,
+    "in_bvals": typing.NotRequired[InputPathType | None],
+    "mask": typing.NotRequired[InputPathType | None],
+    "mask_from_struc": bool,
+    "in_struc_res": typing.NotRequired[InputPathType | None],
+    "in_ref_orig": typing.NotRequired[InputPathType | None],
+    "prefix_dti": typing.NotRequired[str | None],
+    "flip_x": bool,
+    "flip_y": bool,
+    "flip_z": bool,
+    "no_flip": bool,
+    "no_scale_out_1000": bool,
+    "no_reweight": bool,
+    "no_cumulative_wts": bool,
+    "qc_fa_thr": typing.NotRequired[float | None],
+    "qc_fa_max": typing.NotRequired[float | None],
+    "qc_fa_unc_max": typing.NotRequired[float | None],
+    "qc_v12_unc_max": typing.NotRequired[float | None],
+    "qc_prefix": typing.NotRequired[str | None],
+    "no_qc_view": bool,
+    "no_cmd_out": bool,
+    "workdir": typing.NotRequired[str | None],
+    "no_clean": bool,
+    "uncert_off": bool,
+    "uncert_iters": typing.NotRequired[float | None],
+    "uncert_extra_cmds": typing.NotRequired[str | None],
+    "check_abs_min": typing.NotRequired[float | None],
+})
+FatProcDwiToDtParametersTagged = typing.TypedDict('FatProcDwiToDtParametersTagged', {
+    "@type": typing.Literal["afni/fat_proc_dwi_to_dt"],
     "in_dwi": InputPathType,
     "in_gradmat": InputPathType,
     "prefix": str,
@@ -47,40 +79,9 @@ FatProcDwiToDtParameters = typing.TypedDict('FatProcDwiToDtParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "afni.fat_proc_dwi_to_dt": fat_proc_dwi_to_dt_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-    }.get(t)
-
-
 class FatProcDwiToDtOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `fat_proc_dwi_to_dt(...)`.
+    Output object returned when calling `FatProcDwiToDtParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -116,7 +117,7 @@ def fat_proc_dwi_to_dt_params(
     uncert_iters: float | None = None,
     uncert_extra_cmds: str | None = None,
     check_abs_min: float | None = None,
-) -> FatProcDwiToDtParameters:
+) -> FatProcDwiToDtParametersTagged:
     """
     Build parameters.
     
@@ -170,7 +171,7 @@ def fat_proc_dwi_to_dt_params(
         Parameter dictionary
     """
     params = {
-        "@type": "afni.fat_proc_dwi_to_dt",
+        "@type": "afni/fat_proc_dwi_to_dt",
         "in_dwi": in_dwi,
         "in_gradmat": in_gradmat,
         "prefix": prefix,
@@ -233,108 +234,108 @@ def fat_proc_dwi_to_dt_cargs(
     """
     cargs = []
     cargs.append("fat_proc_dwi_to_dt")
-    cargs.append(execution.input_file(params.get("in_dwi")))
+    cargs.append(execution.input_file(params.get("in_dwi", None)))
     cargs.extend([
         "-in_col_matA | -in_col_matT | -in_col_vec | -in_row_vec",
-        execution.input_file(params.get("in_gradmat"))
+        execution.input_file(params.get("in_gradmat", None))
     ])
     cargs.extend([
         "-prefix",
-        params.get("prefix")
+        params.get("prefix", None)
     ])
-    if params.get("in_bvals") is not None:
+    if params.get("in_bvals", None) is not None:
         cargs.extend([
             "-in_bvals",
-            execution.input_file(params.get("in_bvals"))
+            execution.input_file(params.get("in_bvals", None))
         ])
-    if params.get("mask") is not None:
+    if params.get("mask", None) is not None:
         cargs.extend([
             "-mask",
-            execution.input_file(params.get("mask"))
+            execution.input_file(params.get("mask", None))
         ])
-    if params.get("mask_from_struc"):
+    if params.get("mask_from_struc", False):
         cargs.append("-mask_from_struc")
-    if params.get("in_struc_res") is not None:
+    if params.get("in_struc_res", None) is not None:
         cargs.extend([
             "-in_struc_res",
-            execution.input_file(params.get("in_struc_res"))
+            execution.input_file(params.get("in_struc_res", None))
         ])
-    if params.get("in_ref_orig") is not None:
+    if params.get("in_ref_orig", None) is not None:
         cargs.extend([
             "-in_ref_orig",
-            execution.input_file(params.get("in_ref_orig"))
+            execution.input_file(params.get("in_ref_orig", None))
         ])
-    if params.get("prefix_dti") is not None:
+    if params.get("prefix_dti", None) is not None:
         cargs.extend([
             "-prefix_dti",
-            params.get("prefix_dti")
+            params.get("prefix_dti", None)
         ])
-    if params.get("flip_x"):
+    if params.get("flip_x", False):
         cargs.append("-flip_x")
-    if params.get("flip_y"):
+    if params.get("flip_y", False):
         cargs.append("-flip_y")
-    if params.get("flip_z"):
+    if params.get("flip_z", False):
         cargs.append("-flip_z")
-    if params.get("no_flip"):
+    if params.get("no_flip", False):
         cargs.append("-no_flip")
-    if params.get("no_scale_out_1000"):
+    if params.get("no_scale_out_1000", False):
         cargs.append("-no_scale_out_1000")
-    if params.get("no_reweight"):
+    if params.get("no_reweight", False):
         cargs.append("-no_reweight")
-    if params.get("no_cumulative_wts"):
+    if params.get("no_cumulative_wts", False):
         cargs.append("-no_cumulative_wts")
-    if params.get("qc_fa_thr") is not None:
+    if params.get("qc_fa_thr", None) is not None:
         cargs.extend([
             "-qc_fa_thr",
-            str(params.get("qc_fa_thr"))
+            str(params.get("qc_fa_thr", None))
         ])
-    if params.get("qc_fa_max") is not None:
+    if params.get("qc_fa_max", None) is not None:
         cargs.extend([
             "-qc_fa_max",
-            str(params.get("qc_fa_max"))
+            str(params.get("qc_fa_max", None))
         ])
-    if params.get("qc_fa_unc_max") is not None:
+    if params.get("qc_fa_unc_max", None) is not None:
         cargs.extend([
             "-qc_fa_unc_max",
-            str(params.get("qc_fa_unc_max"))
+            str(params.get("qc_fa_unc_max", None))
         ])
-    if params.get("qc_v12_unc_max") is not None:
+    if params.get("qc_v12_unc_max", None) is not None:
         cargs.extend([
             "-qc_v12_unc_max",
-            str(params.get("qc_v12_unc_max"))
+            str(params.get("qc_v12_unc_max", None))
         ])
-    if params.get("qc_prefix") is not None:
+    if params.get("qc_prefix", None) is not None:
         cargs.extend([
             "-qc_prefix",
-            params.get("qc_prefix")
+            params.get("qc_prefix", None)
         ])
-    if params.get("no_qc_view"):
+    if params.get("no_qc_view", False):
         cargs.append("-no_qc_view")
-    if params.get("no_cmd_out"):
+    if params.get("no_cmd_out", False):
         cargs.append("-no_cmd_out")
-    if params.get("workdir") is not None:
+    if params.get("workdir", None) is not None:
         cargs.extend([
             "-workdir",
-            params.get("workdir")
+            params.get("workdir", None)
         ])
-    if params.get("no_clean"):
+    if params.get("no_clean", False):
         cargs.append("-no_clean")
-    if params.get("uncert_off"):
+    if params.get("uncert_off", False):
         cargs.append("-uncert_off")
-    if params.get("uncert_iters") is not None:
+    if params.get("uncert_iters", None) is not None:
         cargs.extend([
             "-uncert_iters",
-            str(params.get("uncert_iters"))
+            str(params.get("uncert_iters", None))
         ])
-    if params.get("uncert_extra_cmds") is not None:
+    if params.get("uncert_extra_cmds", None) is not None:
         cargs.extend([
             "-uncert_extra_cmds",
-            params.get("uncert_extra_cmds")
+            params.get("uncert_extra_cmds", None)
         ])
-    if params.get("check_abs_min") is not None:
+    if params.get("check_abs_min", None) is not None:
         cargs.extend([
             "-check_abs_min",
-            str(params.get("check_abs_min"))
+            str(params.get("check_abs_min", None))
         ])
     return cargs
 
@@ -516,7 +517,6 @@ def fat_proc_dwi_to_dt(
 __all__ = [
     "FAT_PROC_DWI_TO_DT_METADATA",
     "FatProcDwiToDtOutputs",
-    "FatProcDwiToDtParameters",
     "fat_proc_dwi_to_dt",
     "fat_proc_dwi_to_dt_execute",
     "fat_proc_dwi_to_dt_params",

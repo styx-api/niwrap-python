@@ -14,7 +14,20 @@ NEURO_DECONVOLVE_PY_METADATA = Metadata(
 
 
 NeuroDeconvolvePyParameters = typing.TypedDict('NeuroDeconvolvePyParameters', {
-    "@type": typing.Literal["afni.neuro_deconvolve.py"],
+    "@type": typing.NotRequired[typing.Literal["afni/neuro_deconvolve.py"]],
+    "input_file": InputPathType,
+    "prefix": str,
+    "script": str,
+    "kernel": typing.NotRequired[str | None],
+    "kernel_file": typing.NotRequired[str | None],
+    "mask_dset": typing.NotRequired[InputPathType | None],
+    "old_style": bool,
+    "tr": typing.NotRequired[float | None],
+    "tr_nup": typing.NotRequired[float | None],
+    "verbosity": typing.NotRequired[float | None],
+})
+NeuroDeconvolvePyParametersTagged = typing.TypedDict('NeuroDeconvolvePyParametersTagged', {
+    "@type": typing.Literal["afni/neuro_deconvolve.py"],
     "input_file": InputPathType,
     "prefix": str,
     "script": str,
@@ -28,41 +41,9 @@ NeuroDeconvolvePyParameters = typing.TypedDict('NeuroDeconvolvePyParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "afni.neuro_deconvolve.py": neuro_deconvolve_py_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "afni.neuro_deconvolve.py": neuro_deconvolve_py_outputs,
-    }.get(t)
-
-
 class NeuroDeconvolvePyOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `neuro_deconvolve_py(...)`.
+    Output object returned when calling `NeuroDeconvolvePyParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -85,7 +66,7 @@ def neuro_deconvolve_py_params(
     tr: float | None = None,
     tr_nup: float | None = None,
     verbosity: float | None = None,
-) -> NeuroDeconvolvePyParameters:
+) -> NeuroDeconvolvePyParametersTagged:
     """
     Build parameters.
     
@@ -106,7 +87,7 @@ def neuro_deconvolve_py_params(
         Parameter dictionary
     """
     params = {
-        "@type": "afni.neuro_deconvolve.py",
+        "@type": "afni/neuro_deconvolve.py",
         "input_file": input_file,
         "prefix": prefix,
         "script": script,
@@ -142,40 +123,40 @@ def neuro_deconvolve_py_cargs(
     """
     cargs = []
     cargs.append("neuro_deconvolve.py")
-    cargs.append(execution.input_file(params.get("input_file")))
-    cargs.append(params.get("prefix"))
-    cargs.append(params.get("script"))
-    if params.get("kernel") is not None:
+    cargs.append(execution.input_file(params.get("input_file", None)))
+    cargs.append(params.get("prefix", None))
+    cargs.append(params.get("script", None))
+    if params.get("kernel", None) is not None:
         cargs.extend([
             "-kernel",
-            params.get("kernel")
+            params.get("kernel", None)
         ])
-    if params.get("kernel_file") is not None:
+    if params.get("kernel_file", None) is not None:
         cargs.extend([
             "-kernel_file",
-            params.get("kernel_file")
+            params.get("kernel_file", None)
         ])
-    if params.get("mask_dset") is not None:
+    if params.get("mask_dset", None) is not None:
         cargs.extend([
             "-mask_dset",
-            execution.input_file(params.get("mask_dset"))
+            execution.input_file(params.get("mask_dset", None))
         ])
-    if params.get("old_style"):
+    if params.get("old_style", False):
         cargs.append("-old")
-    if params.get("tr") is not None:
+    if params.get("tr", None) is not None:
         cargs.extend([
             "-tr",
-            str(params.get("tr"))
+            str(params.get("tr", None))
         ])
-    if params.get("tr_nup") is not None:
+    if params.get("tr_nup", None) is not None:
         cargs.extend([
             "-tr_nup",
-            str(params.get("tr_nup"))
+            str(params.get("tr_nup", None))
         ])
-    if params.get("verbosity") is not None:
+    if params.get("verbosity", None) is not None:
         cargs.extend([
             "-verb",
-            str(params.get("verbosity"))
+            str(params.get("verbosity", None))
         ])
     return cargs
 
@@ -195,9 +176,9 @@ def neuro_deconvolve_py_outputs(
     """
     ret = NeuroDeconvolvePyOutputs(
         root=execution.output_file("."),
-        output_head=execution.output_file(params.get("prefix") + "+orig.HEAD"),
-        output_brik=execution.output_file(params.get("prefix") + "+orig.BRIK"),
-        kernel_file_out=execution.output_file(params.get("kernel_file")) if (params.get("kernel_file") is not None) else None,
+        output_head=execution.output_file(params.get("prefix", None) + "+orig.HEAD"),
+        output_brik=execution.output_file(params.get("prefix", None) + "+orig.BRIK"),
+        kernel_file_out=execution.output_file(params.get("kernel_file", None)) if (params.get("kernel_file") is not None) else None,
     )
     return ret
 
@@ -289,7 +270,6 @@ def neuro_deconvolve_py(
 __all__ = [
     "NEURO_DECONVOLVE_PY_METADATA",
     "NeuroDeconvolvePyOutputs",
-    "NeuroDeconvolvePyParameters",
     "neuro_deconvolve_py",
     "neuro_deconvolve_py_execute",
     "neuro_deconvolve_py_params",

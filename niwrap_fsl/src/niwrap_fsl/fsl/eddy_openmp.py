@@ -14,7 +14,54 @@ EDDY_OPENMP_METADATA = Metadata(
 
 
 EddyOpenmpParameters = typing.TypedDict('EddyOpenmpParameters', {
-    "@type": typing.Literal["fsl.eddy_openmp"],
+    "@type": typing.NotRequired[typing.Literal["fsl/eddy_openmp"]],
+    "imain": InputPathType,
+    "mask": InputPathType,
+    "index": InputPathType,
+    "acqp": InputPathType,
+    "bvecs": InputPathType,
+    "bvals": InputPathType,
+    "out": str,
+    "mb": typing.NotRequired[float | None],
+    "mb_offs": typing.NotRequired[float | None],
+    "slspec": typing.NotRequired[InputPathType | None],
+    "json": typing.NotRequired[InputPathType | None],
+    "mporder": typing.NotRequired[float | None],
+    "s2v_lambda": typing.NotRequired[float | None],
+    "topup": typing.NotRequired[InputPathType | None],
+    "field": typing.NotRequired[InputPathType | None],
+    "field_mat": typing.NotRequired[InputPathType | None],
+    "flm": typing.NotRequired[typing.Literal["movement", "linear", "quadratic", "cubic"] | None],
+    "slm": typing.NotRequired[typing.Literal["none", "linear", "quadratic"] | None],
+    "fwhm": typing.NotRequired[float | None],
+    "niter": typing.NotRequired[float | None],
+    "s2v_niter": typing.NotRequired[float | None],
+    "cnr_maps": bool,
+    "residuals": bool,
+    "fep": bool,
+    "interp": typing.NotRequired[typing.Literal["spline", "trilinear"] | None],
+    "s2v_interp": typing.NotRequired[typing.Literal["spline", "trilinear"] | None],
+    "resamp": typing.NotRequired[typing.Literal["jac", "lsr"] | None],
+    "nvoxhp": typing.NotRequired[float | None],
+    "initrand": typing.NotRequired[float | None],
+    "ff": typing.NotRequired[float | None],
+    "repol": bool,
+    "ol_nstd": typing.NotRequired[float | None],
+    "ol_nvox": typing.NotRequired[float | None],
+    "ol_type": typing.NotRequired[typing.Literal["sw", "gw", "both"] | None],
+    "ol_pos": bool,
+    "ol_sqr": bool,
+    "estimate_move_by_susceptibility": bool,
+    "mbs_niter": typing.NotRequired[float | None],
+    "mbs_lambda": typing.NotRequired[float | None],
+    "mbs_ksp": typing.NotRequired[float | None],
+    "dont_sep_offs_move": bool,
+    "dont_peas": bool,
+    "data_is_shelled": bool,
+    "verbose": bool,
+})
+EddyOpenmpParametersTagged = typing.TypedDict('EddyOpenmpParametersTagged', {
+    "@type": typing.Literal["fsl/eddy_openmp"],
     "imain": InputPathType,
     "mask": InputPathType,
     "index": InputPathType,
@@ -62,41 +109,9 @@ EddyOpenmpParameters = typing.TypedDict('EddyOpenmpParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "fsl.eddy_openmp": eddy_openmp_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "fsl.eddy_openmp": eddy_openmp_outputs,
-    }.get(t)
-
-
 class EddyOpenmpOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `eddy_openmp(...)`.
+    Output object returned when calling `EddyOpenmpParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -188,7 +203,7 @@ def eddy_openmp_params(
     dont_peas: bool = False,
     data_is_shelled: bool = False,
     verbose: bool = False,
-) -> EddyOpenmpParameters:
+) -> EddyOpenmpParametersTagged:
     """
     Build parameters.
     
@@ -260,7 +275,7 @@ def eddy_openmp_params(
         Parameter dictionary
     """
     params = {
-        "@type": "fsl.eddy_openmp",
+        "@type": "fsl/eddy_openmp",
         "imain": imain,
         "mask": mask,
         "index": index,
@@ -350,86 +365,86 @@ def eddy_openmp_cargs(
     """
     cargs = []
     cargs.append("eddy_openmp")
-    cargs.append("--imain=" + execution.input_file(params.get("imain")))
-    cargs.append("--mask=" + execution.input_file(params.get("mask")))
-    cargs.append("--index=" + execution.input_file(params.get("index")))
-    cargs.append("--acqp=" + execution.input_file(params.get("acqp")))
-    cargs.append("--bvecs=" + execution.input_file(params.get("bvecs")))
-    cargs.append("--bvals=" + execution.input_file(params.get("bvals")))
-    cargs.append("--out=" + params.get("out"))
-    if params.get("mb") is not None:
-        cargs.append("--mb=" + str(params.get("mb")))
-    if params.get("mb_offs") is not None:
-        cargs.append("--mb_offs=" + str(params.get("mb_offs")))
-    if params.get("slspec") is not None:
-        cargs.append("--slspec=" + execution.input_file(params.get("slspec")))
-    if params.get("json") is not None:
-        cargs.append("--json=" + execution.input_file(params.get("json")))
-    if params.get("mporder") is not None:
-        cargs.append("--mporder=" + str(params.get("mporder")))
-    if params.get("s2v_lambda") is not None:
-        cargs.append("--s2v_lambda=" + str(params.get("s2v_lambda")))
-    if params.get("topup") is not None:
-        cargs.append("--topup=" + execution.input_file(params.get("topup"), resolve_parent=True))
-    if params.get("field") is not None:
-        cargs.append("--field=" + execution.input_file(params.get("field")))
-    if params.get("field_mat") is not None:
-        cargs.append("--field_mat=" + execution.input_file(params.get("field_mat")))
-    if params.get("flm") is not None:
-        cargs.append("--flm=" + params.get("flm"))
-    if params.get("slm") is not None:
-        cargs.append("--slm=" + params.get("slm"))
-    if params.get("fwhm") is not None:
-        cargs.append("--fwhm=" + str(params.get("fwhm")))
-    if params.get("niter") is not None:
-        cargs.append("--niter=" + str(params.get("niter")))
-    if params.get("s2v_niter") is not None:
-        cargs.append("--s2v_niter=" + str(params.get("s2v_niter")))
-    if params.get("cnr_maps"):
+    cargs.append("--imain=" + execution.input_file(params.get("imain", None)))
+    cargs.append("--mask=" + execution.input_file(params.get("mask", None)))
+    cargs.append("--index=" + execution.input_file(params.get("index", None)))
+    cargs.append("--acqp=" + execution.input_file(params.get("acqp", None)))
+    cargs.append("--bvecs=" + execution.input_file(params.get("bvecs", None)))
+    cargs.append("--bvals=" + execution.input_file(params.get("bvals", None)))
+    cargs.append("--out=" + params.get("out", "eddy_corrected"))
+    if params.get("mb", None) is not None:
+        cargs.append("--mb=" + str(params.get("mb", None)))
+    if params.get("mb_offs", None) is not None:
+        cargs.append("--mb_offs=" + str(params.get("mb_offs", None)))
+    if params.get("slspec", None) is not None:
+        cargs.append("--slspec=" + execution.input_file(params.get("slspec", None)))
+    if params.get("json", None) is not None:
+        cargs.append("--json=" + execution.input_file(params.get("json", None)))
+    if params.get("mporder", None) is not None:
+        cargs.append("--mporder=" + str(params.get("mporder", None)))
+    if params.get("s2v_lambda", None) is not None:
+        cargs.append("--s2v_lambda=" + str(params.get("s2v_lambda", None)))
+    if params.get("topup", None) is not None:
+        cargs.append("--topup=" + execution.input_file(params.get("topup", None), resolve_parent=True))
+    if params.get("field", None) is not None:
+        cargs.append("--field=" + execution.input_file(params.get("field", None)))
+    if params.get("field_mat", None) is not None:
+        cargs.append("--field_mat=" + execution.input_file(params.get("field_mat", None)))
+    if params.get("flm", None) is not None:
+        cargs.append("--flm=" + params.get("flm", None))
+    if params.get("slm", None) is not None:
+        cargs.append("--slm=" + params.get("slm", None))
+    if params.get("fwhm", None) is not None:
+        cargs.append("--fwhm=" + str(params.get("fwhm", None)))
+    if params.get("niter", None) is not None:
+        cargs.append("--niter=" + str(params.get("niter", None)))
+    if params.get("s2v_niter", None) is not None:
+        cargs.append("--s2v_niter=" + str(params.get("s2v_niter", None)))
+    if params.get("cnr_maps", False):
         cargs.append("--cnr_maps")
-    if params.get("residuals"):
+    if params.get("residuals", False):
         cargs.append("--residuals")
-    if params.get("fep"):
+    if params.get("fep", False):
         cargs.append("--fep")
-    if params.get("interp") is not None:
-        cargs.append("--interp=" + params.get("interp"))
-    if params.get("s2v_interp") is not None:
-        cargs.append("--s2v_interp=" + params.get("s2v_interp"))
-    if params.get("resamp") is not None:
-        cargs.append("--resamp=" + params.get("resamp"))
-    if params.get("nvoxhp") is not None:
-        cargs.append("--nvoxhp=" + str(params.get("nvoxhp")))
-    if params.get("initrand") is not None:
-        cargs.append("--initrand=" + str(params.get("initrand")))
-    if params.get("ff") is not None:
-        cargs.append("--ff=" + str(params.get("ff")))
-    if params.get("repol"):
+    if params.get("interp", None) is not None:
+        cargs.append("--interp=" + params.get("interp", None))
+    if params.get("s2v_interp", None) is not None:
+        cargs.append("--s2v_interp=" + params.get("s2v_interp", None))
+    if params.get("resamp", None) is not None:
+        cargs.append("--resamp=" + params.get("resamp", None))
+    if params.get("nvoxhp", None) is not None:
+        cargs.append("--nvoxhp=" + str(params.get("nvoxhp", None)))
+    if params.get("initrand", None) is not None:
+        cargs.append("--initrand=" + str(params.get("initrand", None)))
+    if params.get("ff", None) is not None:
+        cargs.append("--ff=" + str(params.get("ff", None)))
+    if params.get("repol", False):
         cargs.append("--repol")
-    if params.get("ol_nstd") is not None:
-        cargs.append("--ol_nstd=" + str(params.get("ol_nstd")))
-    if params.get("ol_nvox") is not None:
-        cargs.append("--ol_nvox=" + str(params.get("ol_nvox")))
-    if params.get("ol_type") is not None:
-        cargs.append("--ol_type=" + params.get("ol_type"))
-    if params.get("ol_pos"):
+    if params.get("ol_nstd", None) is not None:
+        cargs.append("--ol_nstd=" + str(params.get("ol_nstd", None)))
+    if params.get("ol_nvox", None) is not None:
+        cargs.append("--ol_nvox=" + str(params.get("ol_nvox", None)))
+    if params.get("ol_type", None) is not None:
+        cargs.append("--ol_type=" + params.get("ol_type", None))
+    if params.get("ol_pos", False):
         cargs.append("--ol_pos")
-    if params.get("ol_sqr"):
+    if params.get("ol_sqr", False):
         cargs.append("--ol_sqr")
-    if params.get("estimate_move_by_susceptibility"):
+    if params.get("estimate_move_by_susceptibility", False):
         cargs.append("--estimate_move_by_susceptibility")
-    if params.get("mbs_niter") is not None:
-        cargs.append("--mbs_niter=" + str(params.get("mbs_niter")))
-    if params.get("mbs_lambda") is not None:
-        cargs.append("--mbs_lambda=" + str(params.get("mbs_lambda")))
-    if params.get("mbs_ksp") is not None:
-        cargs.append("--mbs_ksp=" + str(params.get("mbs_ksp")))
-    if params.get("dont_sep_offs_move"):
+    if params.get("mbs_niter", None) is not None:
+        cargs.append("--mbs_niter=" + str(params.get("mbs_niter", None)))
+    if params.get("mbs_lambda", None) is not None:
+        cargs.append("--mbs_lambda=" + str(params.get("mbs_lambda", None)))
+    if params.get("mbs_ksp", None) is not None:
+        cargs.append("--mbs_ksp=" + str(params.get("mbs_ksp", None)))
+    if params.get("dont_sep_offs_move", False):
         cargs.append("--dont_sep_offs_move")
-    if params.get("dont_peas"):
+    if params.get("dont_peas", False):
         cargs.append("--dont_peas")
-    if params.get("data_is_shelled"):
+    if params.get("data_is_shelled", False):
         cargs.append("--data_is_shelled")
-    if params.get("verbose"):
+    if params.get("verbose", False):
         cargs.append("--verbose")
     return cargs
 
@@ -449,25 +464,25 @@ def eddy_openmp_outputs(
     """
     ret = EddyOpenmpOutputs(
         root=execution.output_file("."),
-        out=execution.output_file(params.get("out") + ".nii.gz"),
-        eddy_parameters=execution.output_file(params.get("out") + ".eddy_parameters"),
-        rotated_bvecs=execution.output_file(params.get("out") + ".eddy_rotated_bvecs"),
-        rotated_bvecs_slr=execution.output_file(params.get("out") + ".eddy_rotated_bvecs_for_SLR"),
-        command_txt=execution.output_file(params.get("out") + ".eddy_command_txt"),
-        input_parameters=execution.output_file(params.get("out") + ".eddy_values_of_all_input_parameters"),
-        movement_rms=execution.output_file(params.get("out") + ".eddy_movement_rms"),
-        restricted_movement_rms=execution.output_file(params.get("out") + ".eddy_restricted_movement_rms"),
-        shell_alignment_parameters=execution.output_file(params.get("out") + ".eddy_post_eddy_shell_alignment_parameters"),
-        shell_pe_translation_parameters=execution.output_file(params.get("out") + ".eddy_post_eddy_shell_PE_translation_parameters"),
-        outlier_report=execution.output_file(params.get("out") + ".eddy_outlier_report"),
-        outlier_map=execution.output_file(params.get("out") + ".eddy_outlier_map"),
-        outlier_n_stdev_map=execution.output_file(params.get("out") + ".eddy_outlier_n_stdev_map"),
-        outlier_n_sqr_stdev_map=execution.output_file(params.get("out") + ".eddy_outlier_n_sqr_stdev_map"),
-        outlier_free_data=execution.output_file(params.get("out") + ".eddy_outlier_free_data.nii.gz"),
-        movement_over_time=execution.output_file(params.get("out") + ".eddy_movement_over_time"),
-        mbs_first_order_fields=execution.output_file(params.get("out") + ".eddy_mbs_first_order_fields.nii.gz"),
-        cnr_maps=execution.output_file(params.get("out") + ".eddy_cnr_maps"),
-        residuals=execution.output_file(params.get("out") + ".eddy_residuals"),
+        out=execution.output_file(params.get("out", "eddy_corrected") + ".nii.gz"),
+        eddy_parameters=execution.output_file(params.get("out", "eddy_corrected") + ".eddy_parameters"),
+        rotated_bvecs=execution.output_file(params.get("out", "eddy_corrected") + ".eddy_rotated_bvecs"),
+        rotated_bvecs_slr=execution.output_file(params.get("out", "eddy_corrected") + ".eddy_rotated_bvecs_for_SLR"),
+        command_txt=execution.output_file(params.get("out", "eddy_corrected") + ".eddy_command_txt"),
+        input_parameters=execution.output_file(params.get("out", "eddy_corrected") + ".eddy_values_of_all_input_parameters"),
+        movement_rms=execution.output_file(params.get("out", "eddy_corrected") + ".eddy_movement_rms"),
+        restricted_movement_rms=execution.output_file(params.get("out", "eddy_corrected") + ".eddy_restricted_movement_rms"),
+        shell_alignment_parameters=execution.output_file(params.get("out", "eddy_corrected") + ".eddy_post_eddy_shell_alignment_parameters"),
+        shell_pe_translation_parameters=execution.output_file(params.get("out", "eddy_corrected") + ".eddy_post_eddy_shell_PE_translation_parameters"),
+        outlier_report=execution.output_file(params.get("out", "eddy_corrected") + ".eddy_outlier_report"),
+        outlier_map=execution.output_file(params.get("out", "eddy_corrected") + ".eddy_outlier_map"),
+        outlier_n_stdev_map=execution.output_file(params.get("out", "eddy_corrected") + ".eddy_outlier_n_stdev_map"),
+        outlier_n_sqr_stdev_map=execution.output_file(params.get("out", "eddy_corrected") + ".eddy_outlier_n_sqr_stdev_map"),
+        outlier_free_data=execution.output_file(params.get("out", "eddy_corrected") + ".eddy_outlier_free_data.nii.gz"),
+        movement_over_time=execution.output_file(params.get("out", "eddy_corrected") + ".eddy_movement_over_time"),
+        mbs_first_order_fields=execution.output_file(params.get("out", "eddy_corrected") + ".eddy_mbs_first_order_fields.nii.gz"),
+        cnr_maps=execution.output_file(params.get("out", "eddy_corrected") + ".eddy_cnr_maps"),
+        residuals=execution.output_file(params.get("out", "eddy_corrected") + ".eddy_residuals"),
     )
     return ret
 
@@ -676,7 +691,6 @@ def eddy_openmp(
 __all__ = [
     "EDDY_OPENMP_METADATA",
     "EddyOpenmpOutputs",
-    "EddyOpenmpParameters",
     "eddy_openmp",
     "eddy_openmp_execute",
     "eddy_openmp_params",

@@ -14,48 +14,22 @@ MRI_JOINT_DENSITY_METADATA = Metadata(
 
 
 MriJointDensityParameters = typing.TypedDict('MriJointDensityParameters', {
-    "@type": typing.Literal["freesurfer.mri_joint_density"],
+    "@type": typing.NotRequired[typing.Literal["freesurfer/mri_joint_density"]],
+    "vol1": InputPathType,
+    "vol2": InputPathType,
+    "output_density_file": str,
+})
+MriJointDensityParametersTagged = typing.TypedDict('MriJointDensityParametersTagged', {
+    "@type": typing.Literal["freesurfer/mri_joint_density"],
     "vol1": InputPathType,
     "vol2": InputPathType,
     "output_density_file": str,
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "freesurfer.mri_joint_density": mri_joint_density_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "freesurfer.mri_joint_density": mri_joint_density_outputs,
-    }.get(t)
-
-
 class MriJointDensityOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `mri_joint_density(...)`.
+    Output object returned when calling `MriJointDensityParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -67,7 +41,7 @@ def mri_joint_density_params(
     vol1: InputPathType,
     vol2: InputPathType,
     output_density_file: str,
-) -> MriJointDensityParameters:
+) -> MriJointDensityParametersTagged:
     """
     Build parameters.
     
@@ -79,7 +53,7 @@ def mri_joint_density_params(
         Parameter dictionary
     """
     params = {
-        "@type": "freesurfer.mri_joint_density",
+        "@type": "freesurfer/mri_joint_density",
         "vol1": vol1,
         "vol2": vol2,
         "output_density_file": output_density_file,
@@ -102,9 +76,9 @@ def mri_joint_density_cargs(
     """
     cargs = []
     cargs.append("mri_joint_density")
-    cargs.append(execution.input_file(params.get("vol1")))
-    cargs.append(execution.input_file(params.get("vol2")))
-    cargs.append(params.get("output_density_file"))
+    cargs.append(execution.input_file(params.get("vol1", None)))
+    cargs.append(execution.input_file(params.get("vol2", None)))
+    cargs.append(params.get("output_density_file", None))
     return cargs
 
 
@@ -123,7 +97,7 @@ def mri_joint_density_outputs(
     """
     ret = MriJointDensityOutputs(
         root=execution.output_file("."),
-        output_file=execution.output_file(params.get("output_density_file")),
+        output_file=execution.output_file(params.get("output_density_file", None)),
     )
     return ret
 
@@ -190,7 +164,6 @@ def mri_joint_density(
 __all__ = [
     "MRI_JOINT_DENSITY_METADATA",
     "MriJointDensityOutputs",
-    "MriJointDensityParameters",
     "mri_joint_density",
     "mri_joint_density_execute",
     "mri_joint_density_params",

@@ -14,7 +14,19 @@ MRIS_ESTIMATE_WM_METADATA = Metadata(
 
 
 MrisEstimateWmParameters = typing.TypedDict('MrisEstimateWmParameters', {
-    "@type": typing.Literal["freesurfer.mris_estimate_wm"],
+    "@type": typing.NotRequired[typing.Literal["freesurfer/mris_estimate_wm"]],
+    "subjs": list[str],
+    "hemi": str,
+    "sdir": typing.NotRequired[str | None],
+    "model": typing.NotRequired[str | None],
+    "suffix": typing.NotRequired[str | None],
+    "gpu": bool,
+    "rsi": bool,
+    "single_iter": bool,
+    "vol": typing.NotRequired[str | None],
+})
+MrisEstimateWmParametersTagged = typing.TypedDict('MrisEstimateWmParametersTagged', {
+    "@type": typing.Literal["freesurfer/mris_estimate_wm"],
     "subjs": list[str],
     "hemi": str,
     "sdir": typing.NotRequired[str | None],
@@ -27,40 +39,9 @@ MrisEstimateWmParameters = typing.TypedDict('MrisEstimateWmParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "freesurfer.mris_estimate_wm": mris_estimate_wm_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-    }.get(t)
-
-
 class MrisEstimateWmOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `mris_estimate_wm(...)`.
+    Output object returned when calling `MrisEstimateWmParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -76,7 +57,7 @@ def mris_estimate_wm_params(
     rsi: bool = False,
     single_iter: bool = False,
     vol: str | None = None,
-) -> MrisEstimateWmParameters:
+) -> MrisEstimateWmParametersTagged:
     """
     Build parameters.
     
@@ -94,7 +75,7 @@ def mris_estimate_wm_params(
         Parameter dictionary
     """
     params = {
-        "@type": "freesurfer.mris_estimate_wm",
+        "@type": "freesurfer/mris_estimate_wm",
         "subjs": subjs,
         "hemi": hemi,
         "gpu": gpu,
@@ -129,37 +110,37 @@ def mris_estimate_wm_cargs(
     cargs.append("mris_estimate_wm")
     cargs.extend([
         "-s",
-        *params.get("subjs")
+        *params.get("subjs", None)
     ])
     cargs.extend([
         "--hemi",
-        params.get("hemi")
+        params.get("hemi", None)
     ])
-    if params.get("sdir") is not None:
+    if params.get("sdir", None) is not None:
         cargs.extend([
             "-d",
-            params.get("sdir")
+            params.get("sdir", None)
         ])
-    if params.get("model") is not None:
+    if params.get("model", None) is not None:
         cargs.extend([
             "-m",
-            params.get("model")
+            params.get("model", None)
         ])
-    if params.get("suffix") is not None:
+    if params.get("suffix", None) is not None:
         cargs.extend([
             "-x",
-            params.get("suffix")
+            params.get("suffix", None)
         ])
-    if params.get("gpu"):
+    if params.get("gpu", False):
         cargs.append("-g")
-    if params.get("rsi"):
+    if params.get("rsi", False):
         cargs.append("--rsi")
-    if params.get("single_iter"):
+    if params.get("single_iter", False):
         cargs.append("--single-iter")
-    if params.get("vol") is not None:
+    if params.get("vol", None) is not None:
         cargs.extend([
             "--vol",
-            params.get("vol")
+            params.get("vol", None)
         ])
     return cargs
 
@@ -263,7 +244,6 @@ def mris_estimate_wm(
 __all__ = [
     "MRIS_ESTIMATE_WM_METADATA",
     "MrisEstimateWmOutputs",
-    "MrisEstimateWmParameters",
     "mris_estimate_wm",
     "mris_estimate_wm_execute",
     "mris_estimate_wm_params",

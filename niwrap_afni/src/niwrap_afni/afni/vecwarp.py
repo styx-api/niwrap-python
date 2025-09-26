@@ -14,7 +14,17 @@ VECWARP_METADATA = Metadata(
 
 
 VecwarpParameters = typing.TypedDict('VecwarpParameters', {
-    "@type": typing.Literal["afni.Vecwarp"],
+    "@type": typing.NotRequired[typing.Literal["afni/Vecwarp"]],
+    "apar": typing.NotRequired[InputPathType | None],
+    "matvec": typing.NotRequired[InputPathType | None],
+    "forward": bool,
+    "backward": bool,
+    "input": typing.NotRequired[InputPathType | None],
+    "output": typing.NotRequired[str | None],
+    "force": bool,
+})
+VecwarpParametersTagged = typing.TypedDict('VecwarpParametersTagged', {
+    "@type": typing.Literal["afni/Vecwarp"],
     "apar": typing.NotRequired[InputPathType | None],
     "matvec": typing.NotRequired[InputPathType | None],
     "forward": bool,
@@ -25,41 +35,9 @@ VecwarpParameters = typing.TypedDict('VecwarpParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "afni.Vecwarp": vecwarp_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "afni.Vecwarp": vecwarp_outputs,
-    }.get(t)
-
-
 class VecwarpOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `vecwarp(...)`.
+    Output object returned when calling `VecwarpParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -75,7 +53,7 @@ def vecwarp_params(
     input_: InputPathType | None = None,
     output: str | None = None,
     force: bool = False,
-) -> VecwarpParameters:
+) -> VecwarpParametersTagged:
     """
     Build parameters.
     
@@ -99,7 +77,7 @@ def vecwarp_params(
         Parameter dictionary
     """
     params = {
-        "@type": "afni.Vecwarp",
+        "@type": "afni/Vecwarp",
         "forward": forward,
         "backward": backward,
         "force": force,
@@ -130,31 +108,31 @@ def vecwarp_cargs(
     """
     cargs = []
     cargs.append("Vecwarp")
-    if params.get("apar") is not None:
+    if params.get("apar", None) is not None:
         cargs.extend([
             "-apar",
-            execution.input_file(params.get("apar"))
+            execution.input_file(params.get("apar", None))
         ])
-    if params.get("matvec") is not None:
+    if params.get("matvec", None) is not None:
         cargs.extend([
             "-matvec",
-            execution.input_file(params.get("matvec"))
+            execution.input_file(params.get("matvec", None))
         ])
-    if params.get("forward"):
+    if params.get("forward", False):
         cargs.append("-forward")
-    if params.get("backward"):
+    if params.get("backward", False):
         cargs.append("-backward")
-    if params.get("input") is not None:
+    if params.get("input", None) is not None:
         cargs.extend([
             "-input",
-            execution.input_file(params.get("input"))
+            execution.input_file(params.get("input", None))
         ])
-    if params.get("output") is not None:
+    if params.get("output", None) is not None:
         cargs.extend([
             "-output",
-            params.get("output")
+            params.get("output", None)
         ])
-    if params.get("force"):
+    if params.get("force", False):
         cargs.append("-force")
     return cargs
 
@@ -174,7 +152,7 @@ def vecwarp_outputs(
     """
     ret = VecwarpOutputs(
         root=execution.output_file("."),
-        output_file=execution.output_file(params.get("output")) if (params.get("output") is not None) else None,
+        output_file=execution.output_file(params.get("output", None)) if (params.get("output") is not None) else None,
     )
     return ret
 
@@ -263,7 +241,6 @@ def vecwarp(
 __all__ = [
     "VECWARP_METADATA",
     "VecwarpOutputs",
-    "VecwarpParameters",
     "vecwarp",
     "vecwarp_execute",
     "vecwarp_params",

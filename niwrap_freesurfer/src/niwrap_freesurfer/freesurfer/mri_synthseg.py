@@ -14,7 +14,25 @@ MRI_SYNTHSEG_METADATA = Metadata(
 
 
 MriSynthsegParameters = typing.TypedDict('MriSynthsegParameters', {
-    "@type": typing.Literal["freesurfer.mri_synthseg"],
+    "@type": typing.NotRequired[typing.Literal["freesurfer/mri_synthseg"]],
+    "input_image": InputPathType,
+    "output_segmentation": str,
+    "cortex_parcellation": bool,
+    "robust_prediction": bool,
+    "fast_prediction": bool,
+    "clip_ct": bool,
+    "output_volume": typing.NotRequired[str | None],
+    "output_qc": typing.NotRequired[str | None],
+    "output_posteriors": typing.NotRequired[str | None],
+    "resampled_images": typing.NotRequired[str | None],
+    "image_patch_size": typing.NotRequired[list[float] | None],
+    "threads": typing.NotRequired[float | None],
+    "cpu": bool,
+    "version_1": bool,
+    "photo_synthseg": typing.NotRequired[str | None],
+})
+MriSynthsegParametersTagged = typing.TypedDict('MriSynthsegParametersTagged', {
+    "@type": typing.Literal["freesurfer/mri_synthseg"],
     "input_image": InputPathType,
     "output_segmentation": str,
     "cortex_parcellation": bool,
@@ -33,41 +51,9 @@ MriSynthsegParameters = typing.TypedDict('MriSynthsegParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "freesurfer.mri_synthseg": mri_synthseg_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "freesurfer.mri_synthseg": mri_synthseg_outputs,
-    }.get(t)
-
-
 class MriSynthsegOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `mri_synthseg(...)`.
+    Output object returned when calling `MriSynthsegParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -99,7 +85,7 @@ def mri_synthseg_params(
     cpu: bool = False,
     version_1: bool = False,
     photo_synthseg: str | None = None,
-) -> MriSynthsegParameters:
+) -> MriSynthsegParametersTagged:
     """
     Build parameters.
     
@@ -130,7 +116,7 @@ def mri_synthseg_params(
         Parameter dictionary
     """
     params = {
-        "@type": "freesurfer.mri_synthseg",
+        "@type": "freesurfer/mri_synthseg",
         "input_image": input_image,
         "output_segmentation": output_segmentation,
         "cortex_parcellation": cortex_parcellation,
@@ -172,34 +158,34 @@ def mri_synthseg_cargs(
     """
     cargs = []
     cargs.append("mri_synthseg")
-    cargs.append(execution.input_file(params.get("input_image")))
-    cargs.append(params.get("output_segmentation"))
-    if params.get("cortex_parcellation"):
+    cargs.append(execution.input_file(params.get("input_image", None)))
+    cargs.append(params.get("output_segmentation", None))
+    if params.get("cortex_parcellation", False):
         cargs.append("--parc")
-    if params.get("robust_prediction"):
+    if params.get("robust_prediction", False):
         cargs.append("--robust")
-    if params.get("fast_prediction"):
+    if params.get("fast_prediction", False):
         cargs.append("--fast")
-    if params.get("clip_ct"):
+    if params.get("clip_ct", False):
         cargs.append("--ct")
-    if params.get("output_volume") is not None:
-        cargs.append(params.get("output_volume"))
-    if params.get("output_qc") is not None:
-        cargs.append(params.get("output_qc"))
-    if params.get("output_posteriors") is not None:
-        cargs.append(params.get("output_posteriors"))
-    if params.get("resampled_images") is not None:
-        cargs.append(params.get("resampled_images"))
-    if params.get("image_patch_size") is not None:
-        cargs.extend(map(str, params.get("image_patch_size")))
-    if params.get("threads") is not None:
-        cargs.append(str(params.get("threads")))
-    if params.get("cpu"):
+    if params.get("output_volume", None) is not None:
+        cargs.append(params.get("output_volume", None))
+    if params.get("output_qc", None) is not None:
+        cargs.append(params.get("output_qc", None))
+    if params.get("output_posteriors", None) is not None:
+        cargs.append(params.get("output_posteriors", None))
+    if params.get("resampled_images", None) is not None:
+        cargs.append(params.get("resampled_images", None))
+    if params.get("image_patch_size", None) is not None:
+        cargs.extend(map(str, params.get("image_patch_size", None)))
+    if params.get("threads", None) is not None:
+        cargs.append(str(params.get("threads", None)))
+    if params.get("cpu", False):
         cargs.append("--cpu")
-    if params.get("version_1"):
+    if params.get("version_1", False):
         cargs.append("--v1")
-    if params.get("photo_synthseg") is not None:
-        cargs.append(params.get("photo_synthseg"))
+    if params.get("photo_synthseg", None) is not None:
+        cargs.append(params.get("photo_synthseg", None))
     return cargs
 
 
@@ -218,11 +204,11 @@ def mri_synthseg_outputs(
     """
     ret = MriSynthsegOutputs(
         root=execution.output_file("."),
-        output_segmentation_file=execution.output_file(params.get("output_segmentation")),
-        output_volume_csv=execution.output_file(params.get("output_volume")) if (params.get("output_volume") is not None) else None,
-        output_qc_csv=execution.output_file(params.get("output_qc")) if (params.get("output_qc") is not None) else None,
-        output_posteriors_file=execution.output_file(params.get("output_posteriors")) if (params.get("output_posteriors") is not None) else None,
-        resampled_images_file=execution.output_file(params.get("resampled_images")) if (params.get("resampled_images") is not None) else None,
+        output_segmentation_file=execution.output_file(params.get("output_segmentation", None)),
+        output_volume_csv=execution.output_file(params.get("output_volume", None)) if (params.get("output_volume") is not None) else None,
+        output_qc_csv=execution.output_file(params.get("output_qc", None)) if (params.get("output_qc") is not None) else None,
+        output_posteriors_file=execution.output_file(params.get("output_posteriors", None)) if (params.get("output_posteriors") is not None) else None,
+        resampled_images_file=execution.output_file(params.get("resampled_images", None)) if (params.get("resampled_images") is not None) else None,
     )
     return ret
 
@@ -332,7 +318,6 @@ def mri_synthseg(
 __all__ = [
     "MRI_SYNTHSEG_METADATA",
     "MriSynthsegOutputs",
-    "MriSynthsegParameters",
     "mri_synthseg",
     "mri_synthseg_execute",
     "mri_synthseg_params",

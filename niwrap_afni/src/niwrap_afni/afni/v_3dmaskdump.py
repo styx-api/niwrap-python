@@ -14,7 +14,30 @@ V_3DMASKDUMP_METADATA = Metadata(
 
 
 V3dmaskdumpParameters = typing.TypedDict('V3dmaskdumpParameters', {
-    "@type": typing.Literal["afni.3dmaskdump"],
+    "@type": typing.NotRequired[typing.Literal["afni/3dmaskdump"]],
+    "input_files": list[InputPathType],
+    "mask_dataset": typing.NotRequired[InputPathType | None],
+    "mask_range": typing.NotRequired[list[str] | None],
+    "output_index": bool,
+    "output_noijk": bool,
+    "output_xyz": bool,
+    "output_filename": typing.NotRequired[str | None],
+    "calc_mask_opts": typing.NotRequired[str | None],
+    "xbox_coords": typing.NotRequired[str | None],
+    "dbox_coords": typing.NotRequired[str | None],
+    "nbox_coords": typing.NotRequired[str | None],
+    "ibox_coords": typing.NotRequired[str | None],
+    "xball_coords": typing.NotRequired[str | None],
+    "dball_coords": typing.NotRequired[str | None],
+    "nball_coords": typing.NotRequired[str | None],
+    "nozero_output": bool,
+    "random_voxels": typing.NotRequired[float | None],
+    "random_seed": typing.NotRequired[float | None],
+    "output_niml": typing.NotRequired[str | None],
+    "quiet_mode": bool,
+})
+V3dmaskdumpParametersTagged = typing.TypedDict('V3dmaskdumpParametersTagged', {
+    "@type": typing.Literal["afni/3dmaskdump"],
     "input_files": list[InputPathType],
     "mask_dataset": typing.NotRequired[InputPathType | None],
     "mask_range": typing.NotRequired[list[str] | None],
@@ -38,41 +61,9 @@ V3dmaskdumpParameters = typing.TypedDict('V3dmaskdumpParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "afni.3dmaskdump": v_3dmaskdump_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "afni.3dmaskdump": v_3dmaskdump_outputs,
-    }.get(t)
-
-
 class V3dmaskdumpOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `v_3dmaskdump(...)`.
+    Output object returned when calling `V3dmaskdumpParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -101,7 +92,7 @@ def v_3dmaskdump_params(
     random_seed: float | None = None,
     output_niml: str | None = None,
     quiet_mode: bool = False,
-) -> V3dmaskdumpParameters:
+) -> V3dmaskdumpParametersTagged:
     """
     Build parameters.
     
@@ -140,7 +131,7 @@ def v_3dmaskdump_params(
         Parameter dictionary
     """
     params = {
-        "@type": "afni.3dmaskdump",
+        "@type": "afni/3dmaskdump",
         "input_files": input_files,
         "output_index": output_index,
         "output_noijk": output_noijk,
@@ -194,86 +185,86 @@ def v_3dmaskdump_cargs(
     """
     cargs = []
     cargs.append("3dmaskdump")
-    cargs.extend([execution.input_file(f) for f in params.get("input_files")])
-    if params.get("mask_dataset") is not None:
+    cargs.extend([execution.input_file(f) for f in params.get("input_files", None)])
+    if params.get("mask_dataset", None) is not None:
         cargs.extend([
             "-mask",
-            execution.input_file(params.get("mask_dataset"))
+            execution.input_file(params.get("mask_dataset", None))
         ])
-    if params.get("mask_range") is not None:
+    if params.get("mask_range", None) is not None:
         cargs.extend([
             "-mrange",
-            *params.get("mask_range")
+            *params.get("mask_range", None)
         ])
-    if params.get("output_index"):
+    if params.get("output_index", False):
         cargs.append("-index")
-    if params.get("output_noijk"):
+    if params.get("output_noijk", False):
         cargs.append("-noijk")
-    if params.get("output_xyz"):
+    if params.get("output_xyz", False):
         cargs.append("-xyz")
-    if params.get("output_filename") is not None:
+    if params.get("output_filename", None) is not None:
         cargs.extend([
             "-o",
-            params.get("output_filename")
+            params.get("output_filename", None)
         ])
-    if params.get("calc_mask_opts") is not None:
+    if params.get("calc_mask_opts", None) is not None:
         cargs.extend([
             "-cmask",
-            params.get("calc_mask_opts")
+            params.get("calc_mask_opts", None)
         ])
-    if params.get("xbox_coords") is not None:
+    if params.get("xbox_coords", None) is not None:
         cargs.extend([
             "-xbox",
-            params.get("xbox_coords")
+            params.get("xbox_coords", None)
         ])
-    if params.get("dbox_coords") is not None:
+    if params.get("dbox_coords", None) is not None:
         cargs.extend([
             "-dbox",
-            params.get("dbox_coords")
+            params.get("dbox_coords", None)
         ])
-    if params.get("nbox_coords") is not None:
+    if params.get("nbox_coords", None) is not None:
         cargs.extend([
             "-nbox",
-            params.get("nbox_coords")
+            params.get("nbox_coords", None)
         ])
-    if params.get("ibox_coords") is not None:
+    if params.get("ibox_coords", None) is not None:
         cargs.extend([
             "-ibox",
-            params.get("ibox_coords")
+            params.get("ibox_coords", None)
         ])
-    if params.get("xball_coords") is not None:
+    if params.get("xball_coords", None) is not None:
         cargs.extend([
             "-xball",
-            params.get("xball_coords")
+            params.get("xball_coords", None)
         ])
-    if params.get("dball_coords") is not None:
+    if params.get("dball_coords", None) is not None:
         cargs.extend([
             "-dball",
-            params.get("dball_coords")
+            params.get("dball_coords", None)
         ])
-    if params.get("nball_coords") is not None:
+    if params.get("nball_coords", None) is not None:
         cargs.extend([
             "-nball",
-            params.get("nball_coords")
+            params.get("nball_coords", None)
         ])
-    if params.get("nozero_output"):
+    if params.get("nozero_output", False):
         cargs.append("-nozero")
-    if params.get("random_voxels") is not None:
+    if params.get("random_voxels", None) is not None:
         cargs.extend([
             "-n_rand",
-            str(params.get("random_voxels"))
+            str(params.get("random_voxels", None))
         ])
-    if params.get("random_seed") is not None:
+    if params.get("random_seed", None) is not None:
         cargs.extend([
             "-n_randseed",
-            str(params.get("random_seed"))
+            str(params.get("random_seed", None))
         ])
-    if params.get("output_niml") is not None:
+    if params.get("output_niml", None) is not None:
         cargs.extend([
             "-niml",
-            params.get("output_niml")
+            params.get("output_niml", None)
         ])
-    if params.get("quiet_mode"):
+    if params.get("quiet_mode", False):
         cargs.append("-quiet")
     return cargs
 
@@ -293,7 +284,7 @@ def v_3dmaskdump_outputs(
     """
     ret = V3dmaskdumpOutputs(
         root=execution.output_file("."),
-        output_file=execution.output_file(params.get("output_filename")) if (params.get("output_filename") is not None) else None,
+        output_file=execution.output_file(params.get("output_filename", None)) if (params.get("output_filename") is not None) else None,
     )
     return ret
 
@@ -422,7 +413,6 @@ def v_3dmaskdump(
 
 __all__ = [
     "V3dmaskdumpOutputs",
-    "V3dmaskdumpParameters",
     "V_3DMASKDUMP_METADATA",
     "v_3dmaskdump",
     "v_3dmaskdump_execute",

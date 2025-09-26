@@ -14,7 +14,22 @@ PARC_ATLAS_JACKKNIFE_TEST_METADATA = Metadata(
 
 
 ParcAtlasJackknifeTestParameters = typing.TypedDict('ParcAtlasJackknifeTestParameters', {
-    "@type": typing.Literal["freesurfer.parc_atlas_jackknife_test"],
+    "@type": typing.NotRequired[typing.Literal["freesurfer/parc_atlas_jackknife_test"]],
+    "register": bool,
+    "reg_dist": typing.NotRequired[str | None],
+    "reg_append": typing.NotRequired[str | None],
+    "reg_copy": typing.NotRequired[str | None],
+    "train": bool,
+    "classify": bool,
+    "test": bool,
+    "all": bool,
+    "subjects_dir": typing.NotRequired[str | None],
+    "freesurfer_home": typing.NotRequired[str | None],
+    "binaries_path": typing.NotRequired[str | None],
+    "dontrun": bool,
+})
+ParcAtlasJackknifeTestParametersTagged = typing.TypedDict('ParcAtlasJackknifeTestParametersTagged', {
+    "@type": typing.Literal["freesurfer/parc_atlas_jackknife_test"],
     "register": bool,
     "reg_dist": typing.NotRequired[str | None],
     "reg_append": typing.NotRequired[str | None],
@@ -30,41 +45,9 @@ ParcAtlasJackknifeTestParameters = typing.TypedDict('ParcAtlasJackknifeTestParam
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "freesurfer.parc_atlas_jackknife_test": parc_atlas_jackknife_test_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "freesurfer.parc_atlas_jackknife_test": parc_atlas_jackknife_test_outputs,
-    }.get(t)
-
-
 class ParcAtlasJackknifeTestOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `parc_atlas_jackknife_test(...)`.
+    Output object returned when calling `ParcAtlasJackknifeTestParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -85,7 +68,7 @@ def parc_atlas_jackknife_test_params(
     freesurfer_home: str | None = None,
     binaries_path: str | None = None,
     dontrun: bool = False,
-) -> ParcAtlasJackknifeTestParameters:
+) -> ParcAtlasJackknifeTestParametersTagged:
     """
     Build parameters.
     
@@ -106,7 +89,7 @@ def parc_atlas_jackknife_test_params(
         Parameter dictionary
     """
     params = {
-        "@type": "freesurfer.parc_atlas_jackknife_test",
+        "@type": "freesurfer/parc_atlas_jackknife_test",
         "register": register,
         "train": train,
         "classify": classify,
@@ -144,47 +127,47 @@ def parc_atlas_jackknife_test_cargs(
     """
     cargs = []
     cargs.append("parc_atlas_jackknife_test")
-    if params.get("register"):
+    if params.get("register", False):
         cargs.append("-register")
-    if params.get("reg_dist") is not None:
+    if params.get("reg_dist", None) is not None:
         cargs.extend([
             "-reg_dist",
-            params.get("reg_dist")
+            params.get("reg_dist", None)
         ])
-    if params.get("reg_append") is not None:
+    if params.get("reg_append", None) is not None:
         cargs.extend([
             "-reg_append",
-            params.get("reg_append")
+            params.get("reg_append", None)
         ])
-    if params.get("reg_copy") is not None:
+    if params.get("reg_copy", None) is not None:
         cargs.extend([
             "-reg_copy",
-            params.get("reg_copy")
+            params.get("reg_copy", None)
         ])
-    if params.get("train"):
+    if params.get("train", False):
         cargs.append("-train")
-    if params.get("classify"):
+    if params.get("classify", False):
         cargs.append("-classify")
-    if params.get("test"):
+    if params.get("test", False):
         cargs.append("-test")
-    if params.get("all"):
+    if params.get("all", False):
         cargs.append("-all")
-    if params.get("subjects_dir") is not None:
+    if params.get("subjects_dir", None) is not None:
         cargs.extend([
             "-sd",
-            params.get("subjects_dir")
+            params.get("subjects_dir", None)
         ])
-    if params.get("freesurfer_home") is not None:
+    if params.get("freesurfer_home", None) is not None:
         cargs.extend([
             "-fshome",
-            params.get("freesurfer_home")
+            params.get("freesurfer_home", None)
         ])
-    if params.get("binaries_path") is not None:
+    if params.get("binaries_path", None) is not None:
         cargs.extend([
             "-binhome",
-            params.get("binaries_path")
+            params.get("binaries_path", None)
         ])
-    if params.get("dontrun"):
+    if params.get("dontrun", False):
         cargs.append("-dontrun")
     return cargs
 
@@ -298,7 +281,6 @@ def parc_atlas_jackknife_test(
 __all__ = [
     "PARC_ATLAS_JACKKNIFE_TEST_METADATA",
     "ParcAtlasJackknifeTestOutputs",
-    "ParcAtlasJackknifeTestParameters",
     "parc_atlas_jackknife_test",
     "parc_atlas_jackknife_test_execute",
     "parc_atlas_jackknife_test_params",

@@ -14,48 +14,22 @@ MRI_COMPUTE_DISTANCES_METADATA = Metadata(
 
 
 MriComputeDistancesParameters = typing.TypedDict('MriComputeDistancesParameters', {
-    "@type": typing.Literal["freesurfer.mri_compute_distances"],
+    "@type": typing.NotRequired[typing.Literal["freesurfer/mri_compute_distances"]],
+    "source": InputPathType,
+    "target": InputPathType,
+    "output_xform": str,
+})
+MriComputeDistancesParametersTagged = typing.TypedDict('MriComputeDistancesParametersTagged', {
+    "@type": typing.Literal["freesurfer/mri_compute_distances"],
     "source": InputPathType,
     "target": InputPathType,
     "output_xform": str,
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "freesurfer.mri_compute_distances": mri_compute_distances_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "freesurfer.mri_compute_distances": mri_compute_distances_outputs,
-    }.get(t)
-
-
 class MriComputeDistancesOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `mri_compute_distances(...)`.
+    Output object returned when calling `MriComputeDistancesParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -67,7 +41,7 @@ def mri_compute_distances_params(
     source: InputPathType,
     target: InputPathType,
     output_xform: str,
-) -> MriComputeDistancesParameters:
+) -> MriComputeDistancesParametersTagged:
     """
     Build parameters.
     
@@ -80,7 +54,7 @@ def mri_compute_distances_params(
         Parameter dictionary
     """
     params = {
-        "@type": "freesurfer.mri_compute_distances",
+        "@type": "freesurfer/mri_compute_distances",
         "source": source,
         "target": target,
         "output_xform": output_xform,
@@ -103,9 +77,9 @@ def mri_compute_distances_cargs(
     """
     cargs = []
     cargs.append("mri_compute_distances")
-    cargs.append(execution.input_file(params.get("source")))
-    cargs.append(execution.input_file(params.get("target")))
-    cargs.append(params.get("output_xform"))
+    cargs.append(execution.input_file(params.get("source", None)))
+    cargs.append(execution.input_file(params.get("target", None)))
+    cargs.append(params.get("output_xform", None))
     return cargs
 
 
@@ -124,7 +98,7 @@ def mri_compute_distances_outputs(
     """
     ret = MriComputeDistancesOutputs(
         root=execution.output_file("."),
-        output_xform_file=execution.output_file(params.get("output_xform")),
+        output_xform_file=execution.output_file(params.get("output_xform", None)),
     )
     return ret
 
@@ -192,7 +166,6 @@ def mri_compute_distances(
 __all__ = [
     "MRI_COMPUTE_DISTANCES_METADATA",
     "MriComputeDistancesOutputs",
-    "MriComputeDistancesParameters",
     "mri_compute_distances",
     "mri_compute_distances_execute",
     "mri_compute_distances_params",

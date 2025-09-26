@@ -14,48 +14,22 @@ QUANTIFY_THALAMIC_NUCLEI_SH_METADATA = Metadata(
 
 
 QuantifyThalamicNucleiShParameters = typing.TypedDict('QuantifyThalamicNucleiShParameters', {
-    "@type": typing.Literal["freesurfer.quantifyThalamicNuclei.sh"],
+    "@type": typing.NotRequired[typing.Literal["freesurfer/quantifyThalamicNuclei.sh"]],
+    "output_file": str,
+    "analysis_id": str,
+    "subjects_directory": typing.NotRequired[str | None],
+})
+QuantifyThalamicNucleiShParametersTagged = typing.TypedDict('QuantifyThalamicNucleiShParametersTagged', {
+    "@type": typing.Literal["freesurfer/quantifyThalamicNuclei.sh"],
     "output_file": str,
     "analysis_id": str,
     "subjects_directory": typing.NotRequired[str | None],
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "freesurfer.quantifyThalamicNuclei.sh": quantify_thalamic_nuclei_sh_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "freesurfer.quantifyThalamicNuclei.sh": quantify_thalamic_nuclei_sh_outputs,
-    }.get(t)
-
-
 class QuantifyThalamicNucleiShOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `quantify_thalamic_nuclei_sh(...)`.
+    Output object returned when calling `QuantifyThalamicNucleiShParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -67,7 +41,7 @@ def quantify_thalamic_nuclei_sh_params(
     output_file: str,
     analysis_id: str,
     subjects_directory: str | None = None,
-) -> QuantifyThalamicNucleiShParameters:
+) -> QuantifyThalamicNucleiShParametersTagged:
     """
     Build parameters.
     
@@ -79,7 +53,7 @@ def quantify_thalamic_nuclei_sh_params(
         Parameter dictionary
     """
     params = {
-        "@type": "freesurfer.quantifyThalamicNuclei.sh",
+        "@type": "freesurfer/quantifyThalamicNuclei.sh",
         "output_file": output_file,
         "analysis_id": analysis_id,
     }
@@ -103,10 +77,10 @@ def quantify_thalamic_nuclei_sh_cargs(
     """
     cargs = []
     cargs.append("quantifyThalamicNuclei.sh")
-    cargs.append(params.get("output_file"))
-    cargs.append(params.get("analysis_id"))
-    if params.get("subjects_directory") is not None:
-        cargs.append(params.get("subjects_directory"))
+    cargs.append(params.get("output_file", None))
+    cargs.append(params.get("analysis_id", None))
+    if params.get("subjects_directory", None) is not None:
+        cargs.append(params.get("subjects_directory", None))
     return cargs
 
 
@@ -125,7 +99,7 @@ def quantify_thalamic_nuclei_sh_outputs(
     """
     ret = QuantifyThalamicNucleiShOutputs(
         root=execution.output_file("."),
-        results_file=execution.output_file(params.get("output_file")),
+        results_file=execution.output_file(params.get("output_file", None)),
     )
     return ret
 
@@ -192,7 +166,6 @@ def quantify_thalamic_nuclei_sh(
 __all__ = [
     "QUANTIFY_THALAMIC_NUCLEI_SH_METADATA",
     "QuantifyThalamicNucleiShOutputs",
-    "QuantifyThalamicNucleiShParameters",
     "quantify_thalamic_nuclei_sh",
     "quantify_thalamic_nuclei_sh_execute",
     "quantify_thalamic_nuclei_sh_params",

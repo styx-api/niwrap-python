@@ -14,7 +14,34 @@ V__UPDATE_AFNI_BINARIES_METADATA = Metadata(
 
 
 VUpdateAfniBinariesParameters = typing.TypedDict('VUpdateAfniBinariesParameters', {
-    "@type": typing.Literal["afni.@update.afni.binaries"],
+    "@type": typing.NotRequired[typing.Literal["afni/@update.afni.binaries"]],
+    "defaults_flag": bool,
+    "help_flag": bool,
+    "help_sys_progs_flag": bool,
+    "apsearch": typing.NotRequired[str | None],
+    "bindir": typing.NotRequired[str | None],
+    "curl_flag": bool,
+    "do_dotfiles_flag": bool,
+    "do_extras_flag": bool,
+    "echo_flag": bool,
+    "make_backup": typing.NotRequired[str | None],
+    "no_cert_verify_flag": bool,
+    "no_recur_flag": bool,
+    "proto": typing.NotRequired[str | None],
+    "quick_flag": bool,
+    "show_obsoletes_flag": bool,
+    "show_obsoletes_grep_flag": bool,
+    "show_system_progs_flag": bool,
+    "sys_ok_flag": bool,
+    "test_flag": bool,
+    "test_protos_flag": bool,
+    "revert_flag": bool,
+    "local_package": typing.NotRequired[str | None],
+    "prog_list": typing.NotRequired[list[str] | None],
+    "package": typing.NotRequired[str | None],
+})
+VUpdateAfniBinariesParametersTagged = typing.TypedDict('VUpdateAfniBinariesParametersTagged', {
+    "@type": typing.Literal["afni/@update.afni.binaries"],
     "defaults_flag": bool,
     "help_flag": bool,
     "help_sys_progs_flag": bool,
@@ -42,40 +69,9 @@ VUpdateAfniBinariesParameters = typing.TypedDict('VUpdateAfniBinariesParameters'
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "afni.@update.afni.binaries": v__update_afni_binaries_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-    }.get(t)
-
-
 class VUpdateAfniBinariesOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `v__update_afni_binaries(...)`.
+    Output object returned when calling `VUpdateAfniBinariesParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -106,7 +102,7 @@ def v__update_afni_binaries_params(
     local_package: str | None = None,
     prog_list: list[str] | None = None,
     package: str | None = None,
-) -> VUpdateAfniBinariesParameters:
+) -> VUpdateAfniBinariesParametersTagged:
     """
     Build parameters.
     
@@ -140,7 +136,7 @@ def v__update_afni_binaries_params(
         Parameter dictionary
     """
     params = {
-        "@type": "afni.@update.afni.binaries",
+        "@type": "afni/@update.afni.binaries",
         "defaults_flag": defaults_flag,
         "help_flag": help_flag,
         "help_sys_progs_flag": help_sys_progs_flag,
@@ -191,74 +187,74 @@ def v__update_afni_binaries_cargs(
     """
     cargs = []
     cargs.append("@update.afni.binaries")
-    if params.get("defaults_flag"):
+    if params.get("defaults_flag", False):
         cargs.append("-defaults")
-    if params.get("help_flag"):
+    if params.get("help_flag", False):
         cargs.append("-help")
-    if params.get("help_sys_progs_flag"):
+    if params.get("help_sys_progs_flag", False):
         cargs.append("-help_sys_progs")
-    if params.get("apsearch") is not None:
+    if params.get("apsearch", None) is not None:
         cargs.extend([
             "-apsearch",
-            params.get("apsearch")
+            params.get("apsearch", None)
         ])
-    if params.get("bindir") is not None:
+    if params.get("bindir", None) is not None:
         cargs.extend([
             "-bindir",
-            params.get("bindir")
+            params.get("bindir", None)
         ])
-    if params.get("curl_flag"):
+    if params.get("curl_flag", False):
         cargs.append("-curl")
-    if params.get("do_dotfiles_flag"):
+    if params.get("do_dotfiles_flag", False):
         cargs.append("-do_dotfiles")
-    if params.get("do_extras_flag"):
+    if params.get("do_extras_flag", False):
         cargs.append("-do_extras")
-    if params.get("echo_flag"):
+    if params.get("echo_flag", False):
         cargs.append("-echo")
-    if params.get("make_backup") is not None:
+    if params.get("make_backup", None) is not None:
         cargs.extend([
             "-make_backup",
-            params.get("make_backup")
+            params.get("make_backup", None)
         ])
-    if params.get("no_cert_verify_flag"):
+    if params.get("no_cert_verify_flag", False):
         cargs.append("-no_cert_verify")
-    if params.get("no_recur_flag"):
+    if params.get("no_recur_flag", False):
         cargs.append("-no_recur")
-    if params.get("proto") is not None:
+    if params.get("proto", None) is not None:
         cargs.extend([
             "-proto",
-            params.get("proto")
+            params.get("proto", None)
         ])
-    if params.get("quick_flag"):
+    if params.get("quick_flag", False):
         cargs.append("-quick")
-    if params.get("show_obsoletes_flag"):
+    if params.get("show_obsoletes_flag", False):
         cargs.append("-show_obsoletes")
-    if params.get("show_obsoletes_grep_flag"):
+    if params.get("show_obsoletes_grep_flag", False):
         cargs.append("-show_obsoletes_grep")
-    if params.get("show_system_progs_flag"):
+    if params.get("show_system_progs_flag", False):
         cargs.append("-show_system_progs")
-    if params.get("sys_ok_flag"):
+    if params.get("sys_ok_flag", False):
         cargs.append("-sys_ok")
-    if params.get("test_flag"):
+    if params.get("test_flag", False):
         cargs.append("-test")
-    if params.get("test_protos_flag"):
+    if params.get("test_protos_flag", False):
         cargs.append("-test_protos")
-    if params.get("revert_flag"):
+    if params.get("revert_flag", False):
         cargs.append("-revert")
-    if params.get("local_package") is not None:
+    if params.get("local_package", None) is not None:
         cargs.extend([
             "-local_package",
-            params.get("local_package")
+            params.get("local_package", None)
         ])
-    if params.get("prog_list") is not None:
+    if params.get("prog_list", None) is not None:
         cargs.extend([
             "-prog_list",
-            *params.get("prog_list")
+            *params.get("prog_list", None)
         ])
-    if params.get("package") is not None:
+    if params.get("package", None) is not None:
         cargs.extend([
             "-package",
-            params.get("package")
+            params.get("package", None)
         ])
     return cargs
 
@@ -407,7 +403,6 @@ def v__update_afni_binaries(
 
 __all__ = [
     "VUpdateAfniBinariesOutputs",
-    "VUpdateAfniBinariesParameters",
     "V__UPDATE_AFNI_BINARIES_METADATA",
     "v__update_afni_binaries",
     "v__update_afni_binaries_execute",

@@ -14,7 +14,16 @@ V_3DNEWID_METADATA = Metadata(
 
 
 V3dnewidParameters = typing.TypedDict('V3dnewidParameters', {
-    "@type": typing.Literal["afni.3dnewid"],
+    "@type": typing.NotRequired[typing.Literal["afni/3dnewid"]],
+    "datasets": list[InputPathType],
+    "fun": typing.NotRequired[float | None],
+    "fun11": bool,
+    "int": bool,
+    "hash": typing.NotRequired[str | None],
+    "MD5": typing.NotRequired[str | None],
+})
+V3dnewidParametersTagged = typing.TypedDict('V3dnewidParametersTagged', {
+    "@type": typing.Literal["afni/3dnewid"],
     "datasets": list[InputPathType],
     "fun": typing.NotRequired[float | None],
     "fun11": bool,
@@ -24,40 +33,9 @@ V3dnewidParameters = typing.TypedDict('V3dnewidParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "afni.3dnewid": v_3dnewid_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-    }.get(t)
-
-
 class V3dnewidOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `v_3dnewid(...)`.
+    Output object returned when calling `V3dnewidParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -70,7 +48,7 @@ def v_3dnewid_params(
     int_: bool = False,
     hash_: str | None = None,
     md5: str | None = None,
-) -> V3dnewidParameters:
+) -> V3dnewidParametersTagged:
     """
     Build parameters.
     
@@ -90,7 +68,7 @@ def v_3dnewid_params(
         Parameter dictionary
     """
     params = {
-        "@type": "afni.3dnewid",
+        "@type": "afni/3dnewid",
         "datasets": datasets,
         "fun11": fun11,
         "int": int_,
@@ -119,25 +97,25 @@ def v_3dnewid_cargs(
     """
     cargs = []
     cargs.append("3dnewid")
-    cargs.extend([execution.input_file(f) for f in params.get("datasets")])
-    if params.get("fun") is not None:
+    cargs.extend([execution.input_file(f) for f in params.get("datasets", None)])
+    if params.get("fun", None) is not None:
         cargs.extend([
             "-fun",
-            str(params.get("fun"))
+            str(params.get("fun", None))
         ])
-    if params.get("fun11"):
+    if params.get("fun11", False):
         cargs.append("-fun11")
-    if params.get("int"):
+    if params.get("int", False):
         cargs.append("-int")
-    if params.get("hash") is not None:
+    if params.get("hash", None) is not None:
         cargs.extend([
             "-hash",
-            params.get("hash")
+            params.get("hash", None)
         ])
-    if params.get("MD5") is not None:
+    if params.get("MD5", None) is not None:
         cargs.extend([
             "-MD5",
-            params.get("MD5")
+            params.get("MD5", None)
         ])
     return cargs
 
@@ -238,7 +216,6 @@ def v_3dnewid(
 
 __all__ = [
     "V3dnewidOutputs",
-    "V3dnewidParameters",
     "V_3DNEWID_METADATA",
     "v_3dnewid",
     "v_3dnewid_execute",

@@ -14,7 +14,14 @@ V_3DDOT_BETA_METADATA = Metadata(
 
 
 V3ddotBetaParameters = typing.TypedDict('V3ddotBetaParameters', {
-    "@type": typing.Literal["afni.3ddot_beta"],
+    "@type": typing.NotRequired[typing.Literal["afni/3ddot_beta"]],
+    "input_file": InputPathType,
+    "prefix": str,
+    "doeta2": bool,
+    "mask": typing.NotRequired[InputPathType | None],
+})
+V3ddotBetaParametersTagged = typing.TypedDict('V3ddotBetaParametersTagged', {
+    "@type": typing.Literal["afni/3ddot_beta"],
     "input_file": InputPathType,
     "prefix": str,
     "doeta2": bool,
@@ -22,41 +29,9 @@ V3ddotBetaParameters = typing.TypedDict('V3ddotBetaParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "afni.3ddot_beta": v_3ddot_beta_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "afni.3ddot_beta": v_3ddot_beta_outputs,
-    }.get(t)
-
-
 class V3ddotBetaOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `v_3ddot_beta(...)`.
+    Output object returned when calling `V3ddotBetaParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -69,7 +44,7 @@ def v_3ddot_beta_params(
     prefix: str,
     doeta2: bool = False,
     mask: InputPathType | None = None,
-) -> V3ddotBetaParameters:
+) -> V3ddotBetaParametersTagged:
     """
     Build parameters.
     
@@ -82,7 +57,7 @@ def v_3ddot_beta_params(
         Parameter dictionary
     """
     params = {
-        "@type": "afni.3ddot_beta",
+        "@type": "afni/3ddot_beta",
         "input_file": input_file,
         "prefix": prefix,
         "doeta2": doeta2,
@@ -109,18 +84,18 @@ def v_3ddot_beta_cargs(
     cargs.append("3ddot_beta")
     cargs.extend([
         "-input",
-        execution.input_file(params.get("input_file"))
+        execution.input_file(params.get("input_file", None))
     ])
     cargs.extend([
         "-prefix",
-        params.get("prefix")
+        params.get("prefix", None)
     ])
-    if params.get("doeta2"):
+    if params.get("doeta2", False):
         cargs.append("-doeta2")
-    if params.get("mask") is not None:
+    if params.get("mask", None) is not None:
         cargs.extend([
             "-mask",
-            execution.input_file(params.get("mask"))
+            execution.input_file(params.get("mask", None))
         ])
     return cargs
 
@@ -140,7 +115,7 @@ def v_3ddot_beta_outputs(
     """
     ret = V3ddotBetaOutputs(
         root=execution.output_file("."),
-        output_file=execution.output_file(params.get("prefix") + "_eta2.dat"),
+        output_file=execution.output_file(params.get("prefix", None) + "_eta2.dat"),
     )
     return ret
 
@@ -211,7 +186,6 @@ def v_3ddot_beta(
 
 __all__ = [
     "V3ddotBetaOutputs",
-    "V3ddotBetaParameters",
     "V_3DDOT_BETA_METADATA",
     "v_3ddot_beta",
     "v_3ddot_beta_execute",

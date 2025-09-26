@@ -14,14 +14,33 @@ SH2POWER_METADATA = Metadata(
 
 
 Sh2powerConfigParameters = typing.TypedDict('Sh2powerConfigParameters', {
-    "@type": typing.Literal["mrtrix.sh2power.config"],
+    "@type": typing.NotRequired[typing.Literal["config"]],
+    "key": str,
+    "value": str,
+})
+Sh2powerConfigParametersTagged = typing.TypedDict('Sh2powerConfigParametersTagged', {
+    "@type": typing.Literal["config"],
     "key": str,
     "value": str,
 })
 
 
 Sh2powerParameters = typing.TypedDict('Sh2powerParameters', {
-    "@type": typing.Literal["mrtrix.sh2power"],
+    "@type": typing.NotRequired[typing.Literal["mrtrix/sh2power"]],
+    "spectrum": bool,
+    "info": bool,
+    "quiet": bool,
+    "debug": bool,
+    "force": bool,
+    "nthreads": typing.NotRequired[int | None],
+    "config": typing.NotRequired[list[Sh2powerConfigParameters] | None],
+    "help": bool,
+    "version": bool,
+    "SH": InputPathType,
+    "power": str,
+})
+Sh2powerParametersTagged = typing.TypedDict('Sh2powerParametersTagged', {
+    "@type": typing.Literal["mrtrix/sh2power"],
     "spectrum": bool,
     "info": bool,
     "quiet": bool,
@@ -36,43 +55,10 @@ Sh2powerParameters = typing.TypedDict('Sh2powerParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "mrtrix.sh2power": sh2power_cargs,
-        "mrtrix.sh2power.config": sh2power_config_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "mrtrix.sh2power": sh2power_outputs,
-    }.get(t)
-
-
 def sh2power_config_params(
     key: str,
     value: str,
-) -> Sh2powerConfigParameters:
+) -> Sh2powerConfigParametersTagged:
     """
     Build parameters.
     
@@ -83,7 +69,7 @@ def sh2power_config_params(
         Parameter dictionary
     """
     params = {
-        "@type": "mrtrix.sh2power.config",
+        "@type": "config",
         "key": key,
         "value": value,
     }
@@ -105,14 +91,14 @@ def sh2power_config_cargs(
     """
     cargs = []
     cargs.append("-config")
-    cargs.append(params.get("key"))
-    cargs.append(params.get("value"))
+    cargs.append(params.get("key", None))
+    cargs.append(params.get("value", None))
     return cargs
 
 
 class Sh2powerOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `sh2power(...)`.
+    Output object returned when calling `Sh2powerParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -132,7 +118,7 @@ def sh2power_params(
     config: list[Sh2powerConfigParameters] | None = None,
     help_: bool = False,
     version: bool = False,
-) -> Sh2powerParameters:
+) -> Sh2powerParametersTagged:
     """
     Build parameters.
     
@@ -157,7 +143,7 @@ def sh2power_params(
         Parameter dictionary
     """
     params = {
-        "@type": "mrtrix.sh2power",
+        "@type": "mrtrix/sh2power",
         "spectrum": spectrum,
         "info": info,
         "quiet": quiet,
@@ -190,29 +176,29 @@ def sh2power_cargs(
     """
     cargs = []
     cargs.append("sh2power")
-    if params.get("spectrum"):
+    if params.get("spectrum", False):
         cargs.append("-spectrum")
-    if params.get("info"):
+    if params.get("info", False):
         cargs.append("-info")
-    if params.get("quiet"):
+    if params.get("quiet", False):
         cargs.append("-quiet")
-    if params.get("debug"):
+    if params.get("debug", False):
         cargs.append("-debug")
-    if params.get("force"):
+    if params.get("force", False):
         cargs.append("-force")
-    if params.get("nthreads") is not None:
+    if params.get("nthreads", None) is not None:
         cargs.extend([
             "-nthreads",
-            str(params.get("nthreads"))
+            str(params.get("nthreads", None))
         ])
-    if params.get("config") is not None:
-        cargs.extend([a for c in [dyn_cargs(s["@type"])(s, execution) for s in params.get("config")] for a in c])
-    if params.get("help"):
+    if params.get("config", None) is not None:
+        cargs.extend([a for c in [sh2power_config_cargs(s, execution) for s in params.get("config", None)] for a in c])
+    if params.get("help", False):
         cargs.append("-help")
-    if params.get("version"):
+    if params.get("version", False):
         cargs.append("-version")
-    cargs.append(execution.input_file(params.get("SH")))
-    cargs.append(params.get("power"))
+    cargs.append(execution.input_file(params.get("SH", None)))
+    cargs.append(params.get("power", None))
     return cargs
 
 
@@ -231,7 +217,7 @@ def sh2power_outputs(
     """
     ret = Sh2powerOutputs(
         root=execution.output_file("."),
-        power=execution.output_file(params.get("power")),
+        power=execution.output_file(params.get("power", None)),
     )
     return ret
 
@@ -348,9 +334,7 @@ def sh2power(
 
 __all__ = [
     "SH2POWER_METADATA",
-    "Sh2powerConfigParameters",
     "Sh2powerOutputs",
-    "Sh2powerParameters",
     "sh2power",
     "sh2power_config_params",
     "sh2power_execute",

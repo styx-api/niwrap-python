@@ -14,32 +14,49 @@ FIXELCFESTATS_METADATA = Metadata(
 
 
 FixelcfestatsColumnParameters = typing.TypedDict('FixelcfestatsColumnParameters', {
-    "@type": typing.Literal["mrtrix.fixelcfestats.column"],
+    "@type": typing.NotRequired[typing.Literal["column"]],
+    "path": InputPathType,
+})
+FixelcfestatsColumnParametersTagged = typing.TypedDict('FixelcfestatsColumnParametersTagged', {
+    "@type": typing.Literal["column"],
     "path": InputPathType,
 })
 
 
 FixelcfestatsConfigParameters = typing.TypedDict('FixelcfestatsConfigParameters', {
-    "@type": typing.Literal["mrtrix.fixelcfestats.config"],
+    "@type": typing.NotRequired[typing.Literal["config"]],
+    "key": str,
+    "value": str,
+})
+FixelcfestatsConfigParametersTagged = typing.TypedDict('FixelcfestatsConfigParametersTagged', {
+    "@type": typing.Literal["config"],
     "key": str,
     "value": str,
 })
 
 
 FixelcfestatsVariousStringParameters = typing.TypedDict('FixelcfestatsVariousStringParameters', {
-    "@type": typing.Literal["mrtrix.fixelcfestats.VariousString"],
+    "@type": typing.NotRequired[typing.Literal["VariousString"]],
+    "obj": str,
+})
+FixelcfestatsVariousStringParametersTagged = typing.TypedDict('FixelcfestatsVariousStringParametersTagged', {
+    "@type": typing.Literal["VariousString"],
     "obj": str,
 })
 
 
 FixelcfestatsVariousFileParameters = typing.TypedDict('FixelcfestatsVariousFileParameters', {
-    "@type": typing.Literal["mrtrix.fixelcfestats.VariousFile"],
+    "@type": typing.NotRequired[typing.Literal["VariousFile"]],
+    "obj": InputPathType,
+})
+FixelcfestatsVariousFileParametersTagged = typing.TypedDict('FixelcfestatsVariousFileParametersTagged', {
+    "@type": typing.Literal["VariousFile"],
     "obj": InputPathType,
 })
 
 
 FixelcfestatsParameters = typing.TypedDict('FixelcfestatsParameters', {
-    "@type": typing.Literal["mrtrix.fixelcfestats"],
+    "@type": typing.NotRequired[typing.Literal["mrtrix/fixelcfestats"]],
     "mask": typing.NotRequired[InputPathType | None],
     "notest": bool,
     "errors": typing.NotRequired[str | None],
@@ -73,12 +90,50 @@ FixelcfestatsParameters = typing.TypedDict('FixelcfestatsParameters', {
     "subjects": InputPathType,
     "design": InputPathType,
     "contrast": InputPathType,
-    "connectivity": typing.Union[FixelcfestatsVariousStringParameters, FixelcfestatsVariousFileParameters],
+    "connectivity": typing.Union[FixelcfestatsVariousStringParametersTagged, FixelcfestatsVariousFileParametersTagged],
+    "out_fixel_directory": str,
+})
+FixelcfestatsParametersTagged = typing.TypedDict('FixelcfestatsParametersTagged', {
+    "@type": typing.Literal["mrtrix/fixelcfestats"],
+    "mask": typing.NotRequired[InputPathType | None],
+    "notest": bool,
+    "errors": typing.NotRequired[str | None],
+    "exchange_within": typing.NotRequired[InputPathType | None],
+    "exchange_whole": typing.NotRequired[InputPathType | None],
+    "strong": bool,
+    "nshuffles": typing.NotRequired[int | None],
+    "permutations": typing.NotRequired[InputPathType | None],
+    "nonstationarity": bool,
+    "skew_nonstationarity": typing.NotRequired[float | None],
+    "nshuffles_nonstationarity": typing.NotRequired[int | None],
+    "permutations_nonstationarity": typing.NotRequired[InputPathType | None],
+    "cfe_dh": typing.NotRequired[float | None],
+    "cfe_e": typing.NotRequired[float | None],
+    "cfe_h": typing.NotRequired[float | None],
+    "cfe_c": typing.NotRequired[float | None],
+    "cfe_legacy": bool,
+    "variance": typing.NotRequired[InputPathType | None],
+    "ftests": typing.NotRequired[InputPathType | None],
+    "fonly": bool,
+    "column": typing.NotRequired[list[FixelcfestatsColumnParameters] | None],
+    "info": bool,
+    "quiet": bool,
+    "debug": bool,
+    "force": bool,
+    "nthreads": typing.NotRequired[int | None],
+    "config": typing.NotRequired[list[FixelcfestatsConfigParameters] | None],
+    "help": bool,
+    "version": bool,
+    "in_fixel_directory": InputPathType,
+    "subjects": InputPathType,
+    "design": InputPathType,
+    "contrast": InputPathType,
+    "connectivity": typing.Union[FixelcfestatsVariousStringParametersTagged, FixelcfestatsVariousFileParametersTagged],
     "out_fixel_directory": str,
 })
 
 
-def dyn_cargs(
+def fixelcfestats_connectivity_cargs_dyn_fn(
     t: str,
 ) -> typing.Any:
     """
@@ -90,15 +145,12 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "mrtrix.fixelcfestats": fixelcfestats_cargs,
-        "mrtrix.fixelcfestats.column": fixelcfestats_column_cargs,
-        "mrtrix.fixelcfestats.config": fixelcfestats_config_cargs,
-        "mrtrix.fixelcfestats.VariousString": fixelcfestats_various_string_cargs,
-        "mrtrix.fixelcfestats.VariousFile": fixelcfestats_various_file_cargs,
+        "VariousString": fixelcfestats_various_string_cargs,
+        "VariousFile": fixelcfestats_various_file_cargs,
     }.get(t)
 
 
-def dyn_outputs(
+def fixelcfestats_connectivity_outputs_dyn_fn(
     t: str,
 ) -> typing.Any:
     """
@@ -115,7 +167,7 @@ def dyn_outputs(
 
 def fixelcfestats_column_params(
     path: InputPathType,
-) -> FixelcfestatsColumnParameters:
+) -> FixelcfestatsColumnParametersTagged:
     """
     Build parameters.
     
@@ -128,7 +180,7 @@ def fixelcfestats_column_params(
         Parameter dictionary
     """
     params = {
-        "@type": "mrtrix.fixelcfestats.column",
+        "@type": "column",
         "path": path,
     }
     return params
@@ -149,14 +201,14 @@ def fixelcfestats_column_cargs(
     """
     cargs = []
     cargs.append("-column")
-    cargs.append(execution.input_file(params.get("path")))
+    cargs.append(execution.input_file(params.get("path", None)))
     return cargs
 
 
 def fixelcfestats_config_params(
     key: str,
     value: str,
-) -> FixelcfestatsConfigParameters:
+) -> FixelcfestatsConfigParametersTagged:
     """
     Build parameters.
     
@@ -167,7 +219,7 @@ def fixelcfestats_config_params(
         Parameter dictionary
     """
     params = {
-        "@type": "mrtrix.fixelcfestats.config",
+        "@type": "config",
         "key": key,
         "value": value,
     }
@@ -189,14 +241,14 @@ def fixelcfestats_config_cargs(
     """
     cargs = []
     cargs.append("-config")
-    cargs.append(params.get("key"))
-    cargs.append(params.get("value"))
+    cargs.append(params.get("key", None))
+    cargs.append(params.get("value", None))
     return cargs
 
 
 def fixelcfestats_various_string_params(
     obj: str,
-) -> FixelcfestatsVariousStringParameters:
+) -> FixelcfestatsVariousStringParametersTagged:
     """
     Build parameters.
     
@@ -206,7 +258,7 @@ def fixelcfestats_various_string_params(
         Parameter dictionary
     """
     params = {
-        "@type": "mrtrix.fixelcfestats.VariousString",
+        "@type": "VariousString",
         "obj": obj,
     }
     return params
@@ -226,13 +278,13 @@ def fixelcfestats_various_string_cargs(
         Command-line arguments.
     """
     cargs = []
-    cargs.append(params.get("obj"))
+    cargs.append(params.get("obj", None))
     return cargs
 
 
 def fixelcfestats_various_file_params(
     obj: InputPathType,
-) -> FixelcfestatsVariousFileParameters:
+) -> FixelcfestatsVariousFileParametersTagged:
     """
     Build parameters.
     
@@ -242,7 +294,7 @@ def fixelcfestats_various_file_params(
         Parameter dictionary
     """
     params = {
-        "@type": "mrtrix.fixelcfestats.VariousFile",
+        "@type": "VariousFile",
         "obj": obj,
     }
     return params
@@ -262,13 +314,13 @@ def fixelcfestats_various_file_cargs(
         Command-line arguments.
     """
     cargs = []
-    cargs.append(execution.input_file(params.get("obj")))
+    cargs.append(execution.input_file(params.get("obj", None)))
     return cargs
 
 
 class FixelcfestatsOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `fixelcfestats(...)`.
+    Output object returned when calling `FixelcfestatsParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -279,7 +331,7 @@ def fixelcfestats_params(
     subjects: InputPathType,
     design: InputPathType,
     contrast: InputPathType,
-    connectivity: typing.Union[FixelcfestatsVariousStringParameters, FixelcfestatsVariousFileParameters],
+    connectivity: typing.Union[FixelcfestatsVariousStringParametersTagged, FixelcfestatsVariousFileParametersTagged],
     out_fixel_directory: str,
     mask: InputPathType | None = None,
     notest: bool = False,
@@ -310,7 +362,7 @@ def fixelcfestats_params(
     config: list[FixelcfestatsConfigParameters] | None = None,
     help_: bool = False,
     version: bool = False,
-) -> FixelcfestatsParameters:
+) -> FixelcfestatsParametersTagged:
     """
     Build parameters.
     
@@ -392,7 +444,7 @@ def fixelcfestats_params(
         Parameter dictionary
     """
     params = {
-        "@type": "mrtrix.fixelcfestats",
+        "@type": "mrtrix/fixelcfestats",
         "notest": notest,
         "strong": strong,
         "nonstationarity": nonstationarity,
@@ -465,118 +517,118 @@ def fixelcfestats_cargs(
     """
     cargs = []
     cargs.append("fixelcfestats")
-    if params.get("mask") is not None:
+    if params.get("mask", None) is not None:
         cargs.extend([
             "-mask",
-            execution.input_file(params.get("mask"))
+            execution.input_file(params.get("mask", None))
         ])
-    if params.get("notest"):
+    if params.get("notest", False):
         cargs.append("-notest")
-    if params.get("errors") is not None:
+    if params.get("errors", None) is not None:
         cargs.extend([
             "-errors",
-            params.get("errors")
+            params.get("errors", None)
         ])
-    if params.get("exchange_within") is not None:
+    if params.get("exchange_within", None) is not None:
         cargs.extend([
             "-exchange_within",
-            execution.input_file(params.get("exchange_within"))
+            execution.input_file(params.get("exchange_within", None))
         ])
-    if params.get("exchange_whole") is not None:
+    if params.get("exchange_whole", None) is not None:
         cargs.extend([
             "-exchange_whole",
-            execution.input_file(params.get("exchange_whole"))
+            execution.input_file(params.get("exchange_whole", None))
         ])
-    if params.get("strong"):
+    if params.get("strong", False):
         cargs.append("-strong")
-    if params.get("nshuffles") is not None:
+    if params.get("nshuffles", None) is not None:
         cargs.extend([
             "-nshuffles",
-            str(params.get("nshuffles"))
+            str(params.get("nshuffles", None))
         ])
-    if params.get("permutations") is not None:
+    if params.get("permutations", None) is not None:
         cargs.extend([
             "-permutations",
-            execution.input_file(params.get("permutations"))
+            execution.input_file(params.get("permutations", None))
         ])
-    if params.get("nonstationarity"):
+    if params.get("nonstationarity", False):
         cargs.append("-nonstationarity")
-    if params.get("skew_nonstationarity") is not None:
+    if params.get("skew_nonstationarity", None) is not None:
         cargs.extend([
             "-skew_nonstationarity",
-            str(params.get("skew_nonstationarity"))
+            str(params.get("skew_nonstationarity", None))
         ])
-    if params.get("nshuffles_nonstationarity") is not None:
+    if params.get("nshuffles_nonstationarity", None) is not None:
         cargs.extend([
             "-nshuffles_nonstationarity",
-            str(params.get("nshuffles_nonstationarity"))
+            str(params.get("nshuffles_nonstationarity", None))
         ])
-    if params.get("permutations_nonstationarity") is not None:
+    if params.get("permutations_nonstationarity", None) is not None:
         cargs.extend([
             "-permutations_nonstationarity",
-            execution.input_file(params.get("permutations_nonstationarity"))
+            execution.input_file(params.get("permutations_nonstationarity", None))
         ])
-    if params.get("cfe_dh") is not None:
+    if params.get("cfe_dh", None) is not None:
         cargs.extend([
             "-cfe_dh",
-            str(params.get("cfe_dh"))
+            str(params.get("cfe_dh", None))
         ])
-    if params.get("cfe_e") is not None:
+    if params.get("cfe_e", None) is not None:
         cargs.extend([
             "-cfe_e",
-            str(params.get("cfe_e"))
+            str(params.get("cfe_e", None))
         ])
-    if params.get("cfe_h") is not None:
+    if params.get("cfe_h", None) is not None:
         cargs.extend([
             "-cfe_h",
-            str(params.get("cfe_h"))
+            str(params.get("cfe_h", None))
         ])
-    if params.get("cfe_c") is not None:
+    if params.get("cfe_c", None) is not None:
         cargs.extend([
             "-cfe_c",
-            str(params.get("cfe_c"))
+            str(params.get("cfe_c", None))
         ])
-    if params.get("cfe_legacy"):
+    if params.get("cfe_legacy", False):
         cargs.append("-cfe_legacy")
-    if params.get("variance") is not None:
+    if params.get("variance", None) is not None:
         cargs.extend([
             "-variance",
-            execution.input_file(params.get("variance"))
+            execution.input_file(params.get("variance", None))
         ])
-    if params.get("ftests") is not None:
+    if params.get("ftests", None) is not None:
         cargs.extend([
             "-ftests",
-            execution.input_file(params.get("ftests"))
+            execution.input_file(params.get("ftests", None))
         ])
-    if params.get("fonly"):
+    if params.get("fonly", False):
         cargs.append("-fonly")
-    if params.get("column") is not None:
-        cargs.extend([a for c in [dyn_cargs(s["@type"])(s, execution) for s in params.get("column")] for a in c])
-    if params.get("info"):
+    if params.get("column", None) is not None:
+        cargs.extend([a for c in [fixelcfestats_column_cargs(s, execution) for s in params.get("column", None)] for a in c])
+    if params.get("info", False):
         cargs.append("-info")
-    if params.get("quiet"):
+    if params.get("quiet", False):
         cargs.append("-quiet")
-    if params.get("debug"):
+    if params.get("debug", False):
         cargs.append("-debug")
-    if params.get("force"):
+    if params.get("force", False):
         cargs.append("-force")
-    if params.get("nthreads") is not None:
+    if params.get("nthreads", None) is not None:
         cargs.extend([
             "-nthreads",
-            str(params.get("nthreads"))
+            str(params.get("nthreads", None))
         ])
-    if params.get("config") is not None:
-        cargs.extend([a for c in [dyn_cargs(s["@type"])(s, execution) for s in params.get("config")] for a in c])
-    if params.get("help"):
+    if params.get("config", None) is not None:
+        cargs.extend([a for c in [fixelcfestats_config_cargs(s, execution) for s in params.get("config", None)] for a in c])
+    if params.get("help", False):
         cargs.append("-help")
-    if params.get("version"):
+    if params.get("version", False):
         cargs.append("-version")
-    cargs.append(execution.input_file(params.get("in_fixel_directory")))
-    cargs.append(execution.input_file(params.get("subjects")))
-    cargs.append(execution.input_file(params.get("design")))
-    cargs.append(execution.input_file(params.get("contrast")))
-    cargs.extend(dyn_cargs(params.get("connectivity")["@type"])(params.get("connectivity"), execution))
-    cargs.append(params.get("out_fixel_directory"))
+    cargs.append(execution.input_file(params.get("in_fixel_directory", None)))
+    cargs.append(execution.input_file(params.get("subjects", None)))
+    cargs.append(execution.input_file(params.get("design", None)))
+    cargs.append(execution.input_file(params.get("contrast", None)))
+    cargs.extend(fixelcfestats_connectivity_cargs_dyn_fn(params.get("connectivity", None)["@type"])(params.get("connectivity", None), execution))
+    cargs.append(params.get("out_fixel_directory", None))
     return cargs
 
 
@@ -676,7 +728,7 @@ def fixelcfestats(
     subjects: InputPathType,
     design: InputPathType,
     contrast: InputPathType,
-    connectivity: typing.Union[FixelcfestatsVariousStringParameters, FixelcfestatsVariousFileParameters],
+    connectivity: typing.Union[FixelcfestatsVariousStringParametersTagged, FixelcfestatsVariousFileParametersTagged],
     out_fixel_directory: str,
     mask: InputPathType | None = None,
     notest: bool = False,
@@ -882,12 +934,7 @@ def fixelcfestats(
 
 __all__ = [
     "FIXELCFESTATS_METADATA",
-    "FixelcfestatsColumnParameters",
-    "FixelcfestatsConfigParameters",
     "FixelcfestatsOutputs",
-    "FixelcfestatsParameters",
-    "FixelcfestatsVariousFileParameters",
-    "FixelcfestatsVariousStringParameters",
     "fixelcfestats",
     "fixelcfestats_column_params",
     "fixelcfestats_config_params",

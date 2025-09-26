@@ -14,7 +14,14 @@ MAKE_CORTEX_LABEL_METADATA = Metadata(
 
 
 MakeCortexLabelParameters = typing.TypedDict('MakeCortexLabelParameters', {
-    "@type": typing.Literal["freesurfer.make_cortex_label"],
+    "@type": typing.NotRequired[typing.Literal["freesurfer/make_cortex_label"]],
+    "subject": str,
+    "hemi": typing.NotRequired[str | None],
+    "use_a2009s": bool,
+    "output_name": typing.NotRequired[str | None],
+})
+MakeCortexLabelParametersTagged = typing.TypedDict('MakeCortexLabelParametersTagged', {
+    "@type": typing.Literal["freesurfer/make_cortex_label"],
     "subject": str,
     "hemi": typing.NotRequired[str | None],
     "use_a2009s": bool,
@@ -22,41 +29,9 @@ MakeCortexLabelParameters = typing.TypedDict('MakeCortexLabelParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "freesurfer.make_cortex_label": make_cortex_label_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "freesurfer.make_cortex_label": make_cortex_label_outputs,
-    }.get(t)
-
-
 class MakeCortexLabelOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `make_cortex_label(...)`.
+    Output object returned when calling `MakeCortexLabelParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -71,7 +46,7 @@ def make_cortex_label_params(
     hemi: str | None = None,
     use_a2009s: bool = False,
     output_name: str | None = None,
-) -> MakeCortexLabelParameters:
+) -> MakeCortexLabelParametersTagged:
     """
     Build parameters.
     
@@ -86,7 +61,7 @@ def make_cortex_label_params(
         Parameter dictionary
     """
     params = {
-        "@type": "freesurfer.make_cortex_label",
+        "@type": "freesurfer/make_cortex_label",
         "subject": subject,
         "use_a2009s": use_a2009s,
     }
@@ -114,19 +89,19 @@ def make_cortex_label_cargs(
     cargs.append("make_cortex_label")
     cargs.extend([
         "--s",
-        params.get("subject")
+        params.get("subject", None)
     ])
-    if params.get("hemi") is not None:
+    if params.get("hemi", None) is not None:
         cargs.extend([
             "--h",
-            params.get("hemi")
+            params.get("hemi", None)
         ])
-    if params.get("use_a2009s"):
+    if params.get("use_a2009s", False):
         cargs.append("--a2009s")
-    if params.get("output_name") is not None:
+    if params.get("output_name", None) is not None:
         cargs.extend([
             "--o",
-            params.get("output_name")
+            params.get("output_name", None)
         ])
     return cargs
 
@@ -146,8 +121,8 @@ def make_cortex_label_outputs(
     """
     ret = MakeCortexLabelOutputs(
         root=execution.output_file("."),
-        lh_output_label_file=execution.output_file("lh." + params.get("output_name") + ".label") if (params.get("output_name") is not None) else None,
-        rh_output_label_file=execution.output_file("rh." + params.get("output_name") + ".label") if (params.get("output_name") is not None) else None,
+        lh_output_label_file=execution.output_file("lh." + params.get("output_name", None) + ".label") if (params.get("output_name") is not None) else None,
+        rh_output_label_file=execution.output_file("rh." + params.get("output_name", None) + ".label") if (params.get("output_name") is not None) else None,
     )
     return ret
 
@@ -219,7 +194,6 @@ def make_cortex_label(
 __all__ = [
     "MAKE_CORTEX_LABEL_METADATA",
     "MakeCortexLabelOutputs",
-    "MakeCortexLabelParameters",
     "make_cortex_label",
     "make_cortex_label_execute",
     "make_cortex_label_params",

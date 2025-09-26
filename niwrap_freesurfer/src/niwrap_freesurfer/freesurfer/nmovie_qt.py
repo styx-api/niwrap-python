@@ -14,45 +14,18 @@ NMOVIE_QT_METADATA = Metadata(
 
 
 NmovieQtParameters = typing.TypedDict('NmovieQtParameters', {
-    "@type": typing.Literal["freesurfer.nmovie_qt"],
+    "@type": typing.NotRequired[typing.Literal["freesurfer/nmovie_qt"]],
+    "images": list[InputPathType],
+})
+NmovieQtParametersTagged = typing.TypedDict('NmovieQtParametersTagged', {
+    "@type": typing.Literal["freesurfer/nmovie_qt"],
     "images": list[InputPathType],
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "freesurfer.nmovie_qt": nmovie_qt_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-    }.get(t)
-
-
 class NmovieQtOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `nmovie_qt(...)`.
+    Output object returned when calling `NmovieQtParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -60,7 +33,7 @@ class NmovieQtOutputs(typing.NamedTuple):
 
 def nmovie_qt_params(
     images: list[InputPathType],
-) -> NmovieQtParameters:
+) -> NmovieQtParametersTagged:
     """
     Build parameters.
     
@@ -71,7 +44,7 @@ def nmovie_qt_params(
         Parameter dictionary
     """
     params = {
-        "@type": "freesurfer.nmovie_qt",
+        "@type": "freesurfer/nmovie_qt",
         "images": images,
     }
     return params
@@ -92,7 +65,7 @@ def nmovie_qt_cargs(
     """
     cargs = []
     cargs.append("nmovie_qt")
-    cargs.extend([execution.input_file(f) for f in params.get("images")])
+    cargs.extend([execution.input_file(f) for f in params.get("images", None)])
     return cargs
 
 
@@ -172,7 +145,6 @@ def nmovie_qt(
 __all__ = [
     "NMOVIE_QT_METADATA",
     "NmovieQtOutputs",
-    "NmovieQtParameters",
     "nmovie_qt",
     "nmovie_qt_execute",
     "nmovie_qt_params",

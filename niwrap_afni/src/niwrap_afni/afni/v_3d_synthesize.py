@@ -14,7 +14,17 @@ V_3D_SYNTHESIZE_METADATA = Metadata(
 
 
 V3dSynthesizeParameters = typing.TypedDict('V3dSynthesizeParameters', {
-    "@type": typing.Literal["afni.3dSynthesize"],
+    "@type": typing.NotRequired[typing.Literal["afni/3dSynthesize"]],
+    "c_bucket": InputPathType,
+    "matrix": InputPathType,
+    "select": str,
+    "prefix": str,
+    "dry_flag": bool,
+    "tr": typing.NotRequired[float | None],
+    "cenfill": typing.NotRequired[typing.Literal["zero", "nbhr", "none"] | None],
+})
+V3dSynthesizeParametersTagged = typing.TypedDict('V3dSynthesizeParametersTagged', {
+    "@type": typing.Literal["afni/3dSynthesize"],
     "c_bucket": InputPathType,
     "matrix": InputPathType,
     "select": str,
@@ -25,40 +35,9 @@ V3dSynthesizeParameters = typing.TypedDict('V3dSynthesizeParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "afni.3dSynthesize": v_3d_synthesize_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-    }.get(t)
-
-
 class V3dSynthesizeOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `v_3d_synthesize(...)`.
+    Output object returned when calling `V3dSynthesizeParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -72,7 +51,7 @@ def v_3d_synthesize_params(
     dry_flag: bool = False,
     tr: float | None = None,
     cenfill: typing.Literal["zero", "nbhr", "none"] | None = None,
-) -> V3dSynthesizeParameters:
+) -> V3dSynthesizeParametersTagged:
     """
     Build parameters.
     
@@ -91,7 +70,7 @@ def v_3d_synthesize_params(
         Parameter dictionary
     """
     params = {
-        "@type": "afni.3dSynthesize",
+        "@type": "afni/3dSynthesize",
         "c_bucket": c_bucket,
         "matrix": matrix,
         "select": select_,
@@ -122,31 +101,31 @@ def v_3d_synthesize_cargs(
     cargs.append("3dSynthesize")
     cargs.extend([
         "-cbucket",
-        execution.input_file(params.get("c_bucket"))
+        execution.input_file(params.get("c_bucket", None))
     ])
     cargs.extend([
         "-matrix",
-        execution.input_file(params.get("matrix"))
+        execution.input_file(params.get("matrix", None))
     ])
     cargs.extend([
         "-select",
-        params.get("select")
+        params.get("select", None)
     ])
     cargs.extend([
         "-prefix",
-        params.get("prefix")
+        params.get("prefix", None)
     ])
-    if params.get("dry_flag"):
+    if params.get("dry_flag", False):
         cargs.append("-dry")
-    if params.get("tr") is not None:
+    if params.get("tr", None) is not None:
         cargs.extend([
             "-TR",
-            str(params.get("tr"))
+            str(params.get("tr", None))
         ])
-    if params.get("cenfill") is not None:
+    if params.get("cenfill", None) is not None:
         cargs.extend([
             "-cenfill",
-            params.get("cenfill")
+            params.get("cenfill", None)
         ])
     return cargs
 
@@ -248,7 +227,6 @@ def v_3d_synthesize(
 
 __all__ = [
     "V3dSynthesizeOutputs",
-    "V3dSynthesizeParameters",
     "V_3D_SYNTHESIZE_METADATA",
     "v_3d_synthesize",
     "v_3d_synthesize_execute",

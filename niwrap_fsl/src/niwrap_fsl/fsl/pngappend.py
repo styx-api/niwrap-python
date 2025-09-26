@@ -14,46 +14,20 @@ PNGAPPEND_METADATA = Metadata(
 
 
 PngappendParameters = typing.TypedDict('PngappendParameters', {
-    "@type": typing.Literal["fsl.pngappend"],
+    "@type": typing.NotRequired[typing.Literal["fsl/pngappend"]],
+    "input_files_and_options": list[str],
+    "output_file": InputPathType,
+})
+PngappendParametersTagged = typing.TypedDict('PngappendParametersTagged', {
+    "@type": typing.Literal["fsl/pngappend"],
     "input_files_and_options": list[str],
     "output_file": InputPathType,
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "fsl.pngappend": pngappend_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-    }.get(t)
-
-
 class PngappendOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `pngappend(...)`.
+    Output object returned when calling `PngappendParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -62,7 +36,7 @@ class PngappendOutputs(typing.NamedTuple):
 def pngappend_params(
     input_files_and_options: list[str],
     output_file: InputPathType,
-) -> PngappendParameters:
+) -> PngappendParametersTagged:
     """
     Build parameters.
     
@@ -74,7 +48,7 @@ def pngappend_params(
         Parameter dictionary
     """
     params = {
-        "@type": "fsl.pngappend",
+        "@type": "fsl/pngappend",
         "input_files_and_options": input_files_and_options,
         "output_file": output_file,
     }
@@ -96,8 +70,8 @@ def pngappend_cargs(
     """
     cargs = []
     cargs.append("pngappend")
-    cargs.extend(params.get("input_files_and_options"))
-    cargs.append(execution.input_file(params.get("output_file")))
+    cargs.extend(params.get("input_files_and_options", None))
+    cargs.append(execution.input_file(params.get("output_file", None)))
     return cargs
 
 
@@ -182,7 +156,6 @@ def pngappend(
 __all__ = [
     "PNGAPPEND_METADATA",
     "PngappendOutputs",
-    "PngappendParameters",
     "pngappend",
     "pngappend_execute",
     "pngappend_params",

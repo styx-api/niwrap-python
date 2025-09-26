@@ -14,7 +14,52 @@ V_3D_VOL2_SURF_METADATA = Metadata(
 
 
 V3dVol2SurfParameters = typing.TypedDict('V3dVol2SurfParameters', {
-    "@type": typing.Literal["afni.3dVol2Surf"],
+    "@type": typing.NotRequired[typing.Literal["afni/3dVol2Surf"]],
+    "spec_file": InputPathType,
+    "sv": InputPathType,
+    "grid_parent": InputPathType,
+    "map_func": str,
+    "surf_A": str,
+    "surf_B": typing.NotRequired[str | None],
+    "out_1D": typing.NotRequired[str | None],
+    "out_niml": typing.NotRequired[str | None],
+    "use_norms": bool,
+    "norm_len": typing.NotRequired[float | None],
+    "first_node": typing.NotRequired[float | None],
+    "last_node": typing.NotRequired[float | None],
+    "debug_level": typing.NotRequired[float | None],
+    "dnode": typing.NotRequired[float | None],
+    "f_steps": typing.NotRequired[float | None],
+    "f_index": typing.NotRequired[str | None],
+    "f_p1_mm": typing.NotRequired[float | None],
+    "f_pn_mm": typing.NotRequired[float | None],
+    "f_p1_fr": typing.NotRequired[float | None],
+    "f_pn_fr": typing.NotRequired[float | None],
+    "skip_col_nodes": bool,
+    "skip_col_1dindex": bool,
+    "skip_col_i": bool,
+    "skip_col_j": bool,
+    "skip_col_k": bool,
+    "skip_col_vals": bool,
+    "no_headers": bool,
+    "save_seg_coords": typing.NotRequired[str | None],
+    "cmask": typing.NotRequired[str | None],
+    "gp_index": typing.NotRequired[float | None],
+    "oob_index": typing.NotRequired[float | None],
+    "oob_value": typing.NotRequired[float | None],
+    "oom_value": typing.NotRequired[float | None],
+    "outcols_afni_nsd": bool,
+    "outcols_1_result": bool,
+    "outcols_results": bool,
+    "outcols_nsd_format": bool,
+    "help": bool,
+    "hist": bool,
+    "version": bool,
+    "keep_norm_dir": bool,
+    "reverse_norm_dir": bool,
+})
+V3dVol2SurfParametersTagged = typing.TypedDict('V3dVol2SurfParametersTagged', {
+    "@type": typing.Literal["afni/3dVol2Surf"],
     "spec_file": InputPathType,
     "sv": InputPathType,
     "grid_parent": InputPathType,
@@ -60,41 +105,9 @@ V3dVol2SurfParameters = typing.TypedDict('V3dVol2SurfParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "afni.3dVol2Surf": v_3d_vol2_surf_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "afni.3dVol2Surf": v_3d_vol2_surf_outputs,
-    }.get(t)
-
-
 class V3dVol2SurfOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `v_3d_vol2_surf(...)`.
+    Output object returned when calling `V3dVol2SurfParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -149,7 +162,7 @@ def v_3d_vol2_surf_params(
     version: bool = False,
     keep_norm_dir: bool = False,
     reverse_norm_dir: bool = False,
-) -> V3dVol2SurfParameters:
+) -> V3dVol2SurfParametersTagged:
     """
     Build parameters.
     
@@ -207,7 +220,7 @@ def v_3d_vol2_surf_params(
         Parameter dictionary
     """
     params = {
-        "@type": "afni.3dVol2Surf",
+        "@type": "afni/3dVol2Surf",
         "spec_file": spec_file,
         "sv": sv,
         "grid_parent": grid_parent,
@@ -289,156 +302,156 @@ def v_3d_vol2_surf_cargs(
     """
     cargs = []
     cargs.append("3dVol2Surf")
-    cargs.append(execution.input_file(params.get("spec_file")))
+    cargs.append(execution.input_file(params.get("spec_file", None)))
     cargs.extend([
         "-sv",
-        execution.input_file(params.get("sv"))
+        execution.input_file(params.get("sv", None))
     ])
     cargs.extend([
         "-grid_parent",
-        execution.input_file(params.get("grid_parent"))
+        execution.input_file(params.get("grid_parent", None))
     ])
     cargs.extend([
         "-map_func",
-        params.get("map_func")
+        params.get("map_func", None)
     ])
     cargs.extend([
         "-surf_A",
-        params.get("surf_A")
+        params.get("surf_A", None)
     ])
-    if params.get("surf_B") is not None:
+    if params.get("surf_B", None) is not None:
         cargs.extend([
             "-surf_B",
-            params.get("surf_B")
+            params.get("surf_B", None)
         ])
-    if params.get("out_1D") is not None:
+    if params.get("out_1D", None) is not None:
         cargs.extend([
             "-out_1D",
-            params.get("out_1D")
+            params.get("out_1D", None)
         ])
-    if params.get("out_niml") is not None:
+    if params.get("out_niml", None) is not None:
         cargs.extend([
             "-out_niml",
-            params.get("out_niml")
+            params.get("out_niml", None)
         ])
-    if params.get("use_norms"):
+    if params.get("use_norms", False):
         cargs.append("-use_norms")
-    if params.get("norm_len") is not None:
+    if params.get("norm_len", None) is not None:
         cargs.extend([
             "-norm_len",
-            str(params.get("norm_len"))
+            str(params.get("norm_len", None))
         ])
-    if params.get("first_node") is not None:
+    if params.get("first_node", None) is not None:
         cargs.extend([
             "-first_node",
-            str(params.get("first_node"))
+            str(params.get("first_node", None))
         ])
-    if params.get("last_node") is not None:
+    if params.get("last_node", None) is not None:
         cargs.extend([
             "-last_node",
-            str(params.get("last_node"))
+            str(params.get("last_node", None))
         ])
-    if params.get("debug_level") is not None:
+    if params.get("debug_level", None) is not None:
         cargs.extend([
             "-debug",
-            str(params.get("debug_level"))
+            str(params.get("debug_level", None))
         ])
-    if params.get("dnode") is not None:
+    if params.get("dnode", None) is not None:
         cargs.extend([
             "-dnode",
-            str(params.get("dnode"))
+            str(params.get("dnode", None))
         ])
-    if params.get("f_steps") is not None:
+    if params.get("f_steps", None) is not None:
         cargs.extend([
             "-f_steps",
-            str(params.get("f_steps"))
+            str(params.get("f_steps", None))
         ])
-    if params.get("f_index") is not None:
+    if params.get("f_index", None) is not None:
         cargs.extend([
             "-f_index",
-            params.get("f_index")
+            params.get("f_index", None)
         ])
-    if params.get("f_p1_mm") is not None:
+    if params.get("f_p1_mm", None) is not None:
         cargs.extend([
             "-f_p1_mm",
-            str(params.get("f_p1_mm"))
+            str(params.get("f_p1_mm", None))
         ])
-    if params.get("f_pn_mm") is not None:
+    if params.get("f_pn_mm", None) is not None:
         cargs.extend([
             "-f_pn_mm",
-            str(params.get("f_pn_mm"))
+            str(params.get("f_pn_mm", None))
         ])
-    if params.get("f_p1_fr") is not None:
+    if params.get("f_p1_fr", None) is not None:
         cargs.extend([
             "-f_p1_fr",
-            str(params.get("f_p1_fr"))
+            str(params.get("f_p1_fr", None))
         ])
-    if params.get("f_pn_fr") is not None:
+    if params.get("f_pn_fr", None) is not None:
         cargs.extend([
             "-f_pn_fr",
-            str(params.get("f_pn_fr"))
+            str(params.get("f_pn_fr", None))
         ])
-    if params.get("skip_col_nodes"):
+    if params.get("skip_col_nodes", False):
         cargs.append("-skip_col_nodes")
-    if params.get("skip_col_1dindex"):
+    if params.get("skip_col_1dindex", False):
         cargs.append("-skip_col_1dindex")
-    if params.get("skip_col_i"):
+    if params.get("skip_col_i", False):
         cargs.append("-skip_col_i")
-    if params.get("skip_col_j"):
+    if params.get("skip_col_j", False):
         cargs.append("-skip_col_j")
-    if params.get("skip_col_k"):
+    if params.get("skip_col_k", False):
         cargs.append("-skip_col_k")
-    if params.get("skip_col_vals"):
+    if params.get("skip_col_vals", False):
         cargs.append("-skip_col_vals")
-    if params.get("no_headers"):
+    if params.get("no_headers", False):
         cargs.append("-no_headers")
-    if params.get("save_seg_coords") is not None:
+    if params.get("save_seg_coords", None) is not None:
         cargs.extend([
             "-save_seg_coords",
-            params.get("save_seg_coords")
+            params.get("save_seg_coords", None)
         ])
-    if params.get("cmask") is not None:
+    if params.get("cmask", None) is not None:
         cargs.extend([
             "-cmask",
-            params.get("cmask")
+            params.get("cmask", None)
         ])
-    if params.get("gp_index") is not None:
+    if params.get("gp_index", None) is not None:
         cargs.extend([
             "-gp_index",
-            str(params.get("gp_index"))
+            str(params.get("gp_index", None))
         ])
-    if params.get("oob_index") is not None:
+    if params.get("oob_index", None) is not None:
         cargs.extend([
             "-oob_index",
-            str(params.get("oob_index"))
+            str(params.get("oob_index", None))
         ])
-    if params.get("oob_value") is not None:
+    if params.get("oob_value", None) is not None:
         cargs.extend([
             "-oob_value",
-            str(params.get("oob_value"))
+            str(params.get("oob_value", None))
         ])
-    if params.get("oom_value") is not None:
+    if params.get("oom_value", None) is not None:
         cargs.extend([
             "-oom_value",
-            str(params.get("oom_value"))
+            str(params.get("oom_value", None))
         ])
-    if params.get("outcols_afni_nsd"):
+    if params.get("outcols_afni_nsd", False):
         cargs.append("-outcols_afni_NSD")
-    if params.get("outcols_1_result"):
+    if params.get("outcols_1_result", False):
         cargs.append("-outcols_1_result")
-    if params.get("outcols_results"):
+    if params.get("outcols_results", False):
         cargs.append("-outcols_results")
-    if params.get("outcols_nsd_format"):
+    if params.get("outcols_nsd_format", False):
         cargs.append("-outcols_NSD_format")
-    if params.get("help"):
+    if params.get("help", False):
         cargs.append("-help")
-    if params.get("hist"):
+    if params.get("hist", False):
         cargs.append("-hist")
-    if params.get("version"):
+    if params.get("version", False):
         cargs.append("-version")
-    if params.get("keep_norm_dir"):
+    if params.get("keep_norm_dir", False):
         cargs.append("-keep_norm_dir")
-    if params.get("reverse_norm_dir"):
+    if params.get("reverse_norm_dir", False):
         cargs.append("-reverse_norm_dir")
     return cargs
 
@@ -458,9 +471,9 @@ def v_3d_vol2_surf_outputs(
     """
     ret = V3dVol2SurfOutputs(
         root=execution.output_file("."),
-        out_1d_file=execution.output_file(params.get("out_1D")) if (params.get("out_1D") is not None) else None,
-        out_niml_file=execution.output_file(params.get("out_niml")) if (params.get("out_niml") is not None) else None,
-        seg_coords_file=execution.output_file(params.get("save_seg_coords")) if (params.get("save_seg_coords") is not None) else None,
+        out_1d_file=execution.output_file(params.get("out_1D", None)) if (params.get("out_1D") is not None) else None,
+        out_niml_file=execution.output_file(params.get("out_niml", None)) if (params.get("out_niml") is not None) else None,
+        seg_coords_file=execution.output_file(params.get("save_seg_coords", None)) if (params.get("save_seg_coords") is not None) else None,
     )
     return ret
 
@@ -650,7 +663,6 @@ def v_3d_vol2_surf(
 
 __all__ = [
     "V3dVol2SurfOutputs",
-    "V3dVol2SurfParameters",
     "V_3D_VOL2_SURF_METADATA",
     "v_3d_vol2_surf",
     "v_3d_vol2_surf_execute",

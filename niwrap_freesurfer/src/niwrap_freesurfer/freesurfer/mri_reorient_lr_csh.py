@@ -14,7 +14,17 @@ MRI_REORIENT_LR_CSH_METADATA = Metadata(
 
 
 MriReorientLrCshParameters = typing.TypedDict('MriReorientLrCshParameters', {
-    "@type": typing.Literal["freesurfer.mri_reorient_LR.csh"],
+    "@type": typing.NotRequired[typing.Literal["freesurfer/mri_reorient_LR.csh"]],
+    "input_vol": InputPathType,
+    "output_vol": str,
+    "display_result": bool,
+    "clean_files": bool,
+    "output_registration": bool,
+    "version": bool,
+    "help": bool,
+})
+MriReorientLrCshParametersTagged = typing.TypedDict('MriReorientLrCshParametersTagged', {
+    "@type": typing.Literal["freesurfer/mri_reorient_LR.csh"],
     "input_vol": InputPathType,
     "output_vol": str,
     "display_result": bool,
@@ -25,41 +35,9 @@ MriReorientLrCshParameters = typing.TypedDict('MriReorientLrCshParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "freesurfer.mri_reorient_LR.csh": mri_reorient_lr_csh_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "freesurfer.mri_reorient_LR.csh": mri_reorient_lr_csh_outputs,
-    }.get(t)
-
-
 class MriReorientLrCshOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `mri_reorient_lr_csh(...)`.
+    Output object returned when calling `MriReorientLrCshParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -75,7 +53,7 @@ def mri_reorient_lr_csh_params(
     output_registration: bool = False,
     version: bool = False,
     help_: bool = False,
-) -> MriReorientLrCshParameters:
+) -> MriReorientLrCshParametersTagged:
     """
     Build parameters.
     
@@ -92,7 +70,7 @@ def mri_reorient_lr_csh_params(
         Parameter dictionary
     """
     params = {
-        "@type": "freesurfer.mri_reorient_LR.csh",
+        "@type": "freesurfer/mri_reorient_LR.csh",
         "input_vol": input_vol,
         "output_vol": output_vol,
         "display_result": display_result,
@@ -121,21 +99,21 @@ def mri_reorient_lr_csh_cargs(
     cargs.append("mri_reorient_LR.csh")
     cargs.extend([
         "--i",
-        execution.input_file(params.get("input_vol"))
+        execution.input_file(params.get("input_vol", None))
     ])
     cargs.extend([
         "--o",
-        params.get("output_vol")
+        params.get("output_vol", None)
     ])
-    if params.get("display_result"):
+    if params.get("display_result", False):
         cargs.append("--disp")
-    if params.get("clean_files"):
+    if params.get("clean_files", False):
         cargs.append("--clean")
-    if params.get("output_registration"):
+    if params.get("output_registration", False):
         cargs.append("--outreg")
-    if params.get("version"):
+    if params.get("version", False):
         cargs.append("--version")
-    if params.get("help"):
+    if params.get("help", False):
         cargs.append("--help")
     return cargs
 
@@ -155,7 +133,7 @@ def mri_reorient_lr_csh_outputs(
     """
     ret = MriReorientLrCshOutputs(
         root=execution.output_file("."),
-        reoriented_vol=execution.output_file(params.get("output_vol")),
+        reoriented_vol=execution.output_file(params.get("output_vol", None)),
     )
     return ret
 
@@ -235,7 +213,6 @@ def mri_reorient_lr_csh(
 __all__ = [
     "MRI_REORIENT_LR_CSH_METADATA",
     "MriReorientLrCshOutputs",
-    "MriReorientLrCshParameters",
     "mri_reorient_lr_csh",
     "mri_reorient_lr_csh_execute",
     "mri_reorient_lr_csh_params",

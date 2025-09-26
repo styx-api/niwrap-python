@@ -14,7 +14,17 @@ MRIS_ROTATE_METADATA = Metadata(
 
 
 MrisRotateParameters = typing.TypedDict('MrisRotateParameters', {
-    "@type": typing.Literal["freesurfer.mris_rotate"],
+    "@type": typing.NotRequired[typing.Literal["freesurfer/mris_rotate"]],
+    "input_surface": InputPathType,
+    "alpha_deg": float,
+    "beta_deg": float,
+    "gamma_deg": float,
+    "output_surface": str,
+    "regfile": typing.NotRequired[InputPathType | None],
+    "invalidate_geometry": bool,
+})
+MrisRotateParametersTagged = typing.TypedDict('MrisRotateParametersTagged', {
+    "@type": typing.Literal["freesurfer/mris_rotate"],
     "input_surface": InputPathType,
     "alpha_deg": float,
     "beta_deg": float,
@@ -25,41 +35,9 @@ MrisRotateParameters = typing.TypedDict('MrisRotateParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "freesurfer.mris_rotate": mris_rotate_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "freesurfer.mris_rotate": mris_rotate_outputs,
-    }.get(t)
-
-
 class MrisRotateOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `mris_rotate(...)`.
+    Output object returned when calling `MrisRotateParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -75,7 +53,7 @@ def mris_rotate_params(
     output_surface: str,
     regfile: InputPathType | None = None,
     invalidate_geometry: bool = False,
-) -> MrisRotateParameters:
+) -> MrisRotateParametersTagged:
     """
     Build parameters.
     
@@ -92,7 +70,7 @@ def mris_rotate_params(
         Parameter dictionary
     """
     params = {
-        "@type": "freesurfer.mris_rotate",
+        "@type": "freesurfer/mris_rotate",
         "input_surface": input_surface,
         "alpha_deg": alpha_deg,
         "beta_deg": beta_deg,
@@ -120,17 +98,17 @@ def mris_rotate_cargs(
     """
     cargs = []
     cargs.append("mris_rotate")
-    cargs.append(execution.input_file(params.get("input_surface")))
-    cargs.append(str(params.get("alpha_deg")))
-    cargs.append(str(params.get("beta_deg")))
-    cargs.append(str(params.get("gamma_deg")))
-    cargs.append(params.get("output_surface"))
-    if params.get("regfile") is not None:
+    cargs.append(execution.input_file(params.get("input_surface", None)))
+    cargs.append(str(params.get("alpha_deg", None)))
+    cargs.append(str(params.get("beta_deg", None)))
+    cargs.append(str(params.get("gamma_deg", None)))
+    cargs.append(params.get("output_surface", None))
+    if params.get("regfile", None) is not None:
         cargs.extend([
             "-r",
-            execution.input_file(params.get("regfile"))
+            execution.input_file(params.get("regfile", None))
         ])
-    if params.get("invalidate_geometry"):
+    if params.get("invalidate_geometry", False):
         cargs.append("-n")
     return cargs
 
@@ -150,7 +128,7 @@ def mris_rotate_outputs(
     """
     ret = MrisRotateOutputs(
         root=execution.output_file("."),
-        rotated_surface=execution.output_file(params.get("output_surface")),
+        rotated_surface=execution.output_file(params.get("output_surface", None)),
     )
     return ret
 
@@ -230,7 +208,6 @@ def mris_rotate(
 __all__ = [
     "MRIS_ROTATE_METADATA",
     "MrisRotateOutputs",
-    "MrisRotateParameters",
     "mris_rotate",
     "mris_rotate_execute",
     "mris_rotate_params",

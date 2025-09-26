@@ -14,7 +14,49 @@ SURF_CLUST_METADATA = Metadata(
 
 
 SurfClustParameters = typing.TypedDict('SurfClustParameters', {
-    "@type": typing.Literal["afni.SurfClust"],
+    "@type": typing.NotRequired[typing.Literal["afni/SurfClust"]],
+    "specfile": typing.NotRequired[InputPathType | None],
+    "input_surface": typing.NotRequired[str | None],
+    "input_surf_name": typing.NotRequired[InputPathType | None],
+    "input_dataset": list[InputPathType],
+    "rmm": float,
+    "amm2": typing.NotRequired[float | None],
+    "min_nodes": typing.NotRequired[float | None],
+    "prefix": typing.NotRequired[str | None],
+    "out_clusterdset": bool,
+    "out_roidset": bool,
+    "out_fulllist": bool,
+    "sort_none": bool,
+    "sort_n_nodes": bool,
+    "sort_area": bool,
+    "thresh_col": typing.NotRequired[float | None],
+    "thresh": typing.NotRequired[float | None],
+    "athresh": typing.NotRequired[float | None],
+    "ir_range": typing.NotRequired[list[float] | None],
+    "ex_range": typing.NotRequired[list[float] | None],
+    "prepend_node_index": bool,
+    "update": typing.NotRequired[float | None],
+    "no_cent": bool,
+    "cent": bool,
+    "novolreg": bool,
+    "noxform": bool,
+    "set_env": typing.NotRequired[str | None],
+    "trace": bool,
+    "trace_extreme": bool,
+    "no_memory_trace": bool,
+    "yes_memory_trace": bool,
+    "mini_help": bool,
+    "help": bool,
+    "extreme_help": bool,
+    "view_help": bool,
+    "web_help": bool,
+    "find_help": typing.NotRequired[str | None],
+    "raw_help": bool,
+    "spx_help": bool,
+    "aspx_help": bool,
+})
+SurfClustParametersTagged = typing.TypedDict('SurfClustParametersTagged', {
+    "@type": typing.Literal["afni/SurfClust"],
     "specfile": typing.NotRequired[InputPathType | None],
     "input_surface": typing.NotRequired[str | None],
     "input_surf_name": typing.NotRequired[InputPathType | None],
@@ -57,41 +99,9 @@ SurfClustParameters = typing.TypedDict('SurfClustParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "afni.SurfClust": surf_clust_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "afni.SurfClust": surf_clust_outputs,
-    }.get(t)
-
-
 class SurfClustOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `surf_clust(...)`.
+    Output object returned when calling `SurfClustParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -143,7 +153,7 @@ def surf_clust_params(
     raw_help: bool = False,
     spx_help: bool = False,
     aspx_help: bool = False,
-) -> SurfClustParameters:
+) -> SurfClustParametersTagged:
     """
     Build parameters.
     
@@ -204,7 +214,7 @@ def surf_clust_params(
         Parameter dictionary
     """
     params = {
-        "@type": "afni.SurfClust",
+        "@type": "afni/SurfClust",
         "input_dataset": input_dataset,
         "rmm": rmm,
         "out_clusterdset": out_clusterdset,
@@ -277,129 +287,129 @@ def surf_clust_cargs(
     """
     cargs = []
     cargs.append("SurfClust")
-    if params.get("specfile") is not None:
+    if params.get("specfile", None) is not None:
         cargs.extend([
             "-spec",
-            execution.input_file(params.get("specfile"))
+            execution.input_file(params.get("specfile", None))
         ])
-    if params.get("input_surface") is not None:
+    if params.get("input_surface", None) is not None:
         cargs.extend([
             "-surf_A",
-            params.get("input_surface")
+            params.get("input_surface", None)
         ])
-    if params.get("input_surf_name") is not None:
+    if params.get("input_surf_name", None) is not None:
         cargs.extend([
             "-i",
-            execution.input_file(params.get("input_surf_name"))
+            execution.input_file(params.get("input_surf_name", None))
         ])
     cargs.extend([
         "-input",
-        *[execution.input_file(f) for f in params.get("input_dataset")]
+        *[execution.input_file(f) for f in params.get("input_dataset", None)]
     ])
     cargs.extend([
         "-rmm",
-        str(params.get("rmm"))
+        str(params.get("rmm", None))
     ])
-    if params.get("amm2") is not None:
+    if params.get("amm2", None) is not None:
         cargs.extend([
             "-amm2",
-            str(params.get("amm2"))
+            str(params.get("amm2", None))
         ])
-    if params.get("min_nodes") is not None:
+    if params.get("min_nodes", None) is not None:
         cargs.extend([
             "-n",
-            str(params.get("min_nodes"))
+            str(params.get("min_nodes", None))
         ])
-    if params.get("prefix") is not None:
+    if params.get("prefix", None) is not None:
         cargs.extend([
             "-prefix",
-            params.get("prefix")
+            params.get("prefix", None)
         ])
-    if params.get("out_clusterdset"):
+    if params.get("out_clusterdset", False):
         cargs.append("-out_clusterdset")
-    if params.get("out_roidset"):
+    if params.get("out_roidset", False):
         cargs.append("-out_roidset")
-    if params.get("out_fulllist"):
+    if params.get("out_fulllist", False):
         cargs.append("-out_fulllist")
-    if params.get("sort_none"):
+    if params.get("sort_none", False):
         cargs.append("-sort_none")
-    if params.get("sort_n_nodes"):
+    if params.get("sort_n_nodes", False):
         cargs.append("-sort_n_nodes")
-    if params.get("sort_area"):
+    if params.get("sort_area", False):
         cargs.append("-sort_area")
-    if params.get("thresh_col") is not None:
+    if params.get("thresh_col", None) is not None:
         cargs.extend([
             "-thresh_col",
-            str(params.get("thresh_col"))
+            str(params.get("thresh_col", None))
         ])
-    if params.get("thresh") is not None:
+    if params.get("thresh", None) is not None:
         cargs.extend([
             "-thresh",
-            str(params.get("thresh"))
+            str(params.get("thresh", None))
         ])
-    if params.get("athresh") is not None:
+    if params.get("athresh", None) is not None:
         cargs.extend([
             "-athresh",
-            str(params.get("athresh"))
+            str(params.get("athresh", None))
         ])
-    if params.get("ir_range") is not None:
+    if params.get("ir_range", None) is not None:
         cargs.extend([
             "-ir_range",
-            *map(str, params.get("ir_range"))
+            *map(str, params.get("ir_range", None))
         ])
-    if params.get("ex_range") is not None:
+    if params.get("ex_range", None) is not None:
         cargs.extend([
             "-ex_range",
-            *map(str, params.get("ex_range"))
+            *map(str, params.get("ex_range", None))
         ])
-    if params.get("prepend_node_index"):
+    if params.get("prepend_node_index", False):
         cargs.append("-prepend_node_index")
-    if params.get("update") is not None:
+    if params.get("update", None) is not None:
         cargs.extend([
             "-update",
-            str(params.get("update"))
+            str(params.get("update", None))
         ])
-    if params.get("no_cent"):
+    if params.get("no_cent", False):
         cargs.append("-no_cent")
-    if params.get("cent"):
+    if params.get("cent", False):
         cargs.append("-cent")
-    if params.get("novolreg"):
+    if params.get("novolreg", False):
         cargs.append("-novolreg")
-    if params.get("noxform"):
+    if params.get("noxform", False):
         cargs.append("-noxform")
-    if params.get("set_env") is not None:
+    if params.get("set_env", None) is not None:
         cargs.extend([
             "-setenv",
-            params.get("set_env")
+            params.get("set_env", None)
         ])
-    if params.get("trace"):
+    if params.get("trace", False):
         cargs.append("-trace")
-    if params.get("trace_extreme"):
+    if params.get("trace_extreme", False):
         cargs.append("-TRACE")
-    if params.get("no_memory_trace"):
+    if params.get("no_memory_trace", False):
         cargs.append("-nomall")
-    if params.get("yes_memory_trace"):
+    if params.get("yes_memory_trace", False):
         cargs.append("-yesmall")
-    if params.get("mini_help"):
+    if params.get("mini_help", False):
         cargs.append("-h")
-    if params.get("help"):
+    if params.get("help", False):
         cargs.append("-help")
-    if params.get("extreme_help"):
+    if params.get("extreme_help", False):
         cargs.append("-HELP")
-    if params.get("view_help"):
+    if params.get("view_help", False):
         cargs.append("-h_view")
-    if params.get("web_help"):
+    if params.get("web_help", False):
         cargs.append("-h_web")
-    if params.get("find_help") is not None:
+    if params.get("find_help", None) is not None:
         cargs.extend([
             "-h_find",
-            params.get("find_help")
+            params.get("find_help", None)
         ])
-    if params.get("raw_help"):
+    if params.get("raw_help", False):
         cargs.append("-h_raw")
-    if params.get("spx_help"):
+    if params.get("spx_help", False):
         cargs.append("-h_spx")
-    if params.get("aspx_help"):
+    if params.get("aspx_help", False):
         cargs.append("-h_aspx")
     return cargs
 
@@ -419,9 +429,9 @@ def surf_clust_outputs(
     """
     ret = SurfClustOutputs(
         root=execution.output_file("."),
-        cluster_table=execution.output_file(params.get("prefix") + "_ClstTable_rXX_aXX.1D") if (params.get("prefix") is not None) else None,
-        clustered_dataset=execution.output_file(params.get("prefix") + "_Clustered_rXX_aXX.dset") if (params.get("prefix") is not None) else None,
-        roi_dataset=execution.output_file(params.get("prefix") + "_ClstMsk_rXX_aXX.dset") if (params.get("prefix") is not None) else None,
+        cluster_table=execution.output_file(params.get("prefix", None) + "_ClstTable_rXX_aXX.1D") if (params.get("prefix") is not None) else None,
+        clustered_dataset=execution.output_file(params.get("prefix", None) + "_Clustered_rXX_aXX.dset") if (params.get("prefix") is not None) else None,
+        roi_dataset=execution.output_file(params.get("prefix", None) + "_ClstMsk_rXX_aXX.dset") if (params.get("prefix") is not None) else None,
     )
     return ret
 
@@ -609,7 +619,6 @@ def surf_clust(
 __all__ = [
     "SURF_CLUST_METADATA",
     "SurfClustOutputs",
-    "SurfClustParameters",
     "surf_clust",
     "surf_clust_execute",
     "surf_clust_params",

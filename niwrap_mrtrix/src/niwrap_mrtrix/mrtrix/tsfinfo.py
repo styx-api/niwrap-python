@@ -14,14 +14,33 @@ TSFINFO_METADATA = Metadata(
 
 
 TsfinfoConfigParameters = typing.TypedDict('TsfinfoConfigParameters', {
-    "@type": typing.Literal["mrtrix.tsfinfo.config"],
+    "@type": typing.NotRequired[typing.Literal["config"]],
+    "key": str,
+    "value": str,
+})
+TsfinfoConfigParametersTagged = typing.TypedDict('TsfinfoConfigParametersTagged', {
+    "@type": typing.Literal["config"],
     "key": str,
     "value": str,
 })
 
 
 TsfinfoParameters = typing.TypedDict('TsfinfoParameters', {
-    "@type": typing.Literal["mrtrix.tsfinfo"],
+    "@type": typing.NotRequired[typing.Literal["mrtrix/tsfinfo"]],
+    "count": bool,
+    "ascii": typing.NotRequired[str | None],
+    "info": bool,
+    "quiet": bool,
+    "debug": bool,
+    "force": bool,
+    "nthreads": typing.NotRequired[int | None],
+    "config": typing.NotRequired[list[TsfinfoConfigParameters] | None],
+    "help": bool,
+    "version": bool,
+    "tracks": list[InputPathType],
+})
+TsfinfoParametersTagged = typing.TypedDict('TsfinfoParametersTagged', {
+    "@type": typing.Literal["mrtrix/tsfinfo"],
     "count": bool,
     "ascii": typing.NotRequired[str | None],
     "info": bool,
@@ -36,42 +55,10 @@ TsfinfoParameters = typing.TypedDict('TsfinfoParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "mrtrix.tsfinfo": tsfinfo_cargs,
-        "mrtrix.tsfinfo.config": tsfinfo_config_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-    }.get(t)
-
-
 def tsfinfo_config_params(
     key: str,
     value: str,
-) -> TsfinfoConfigParameters:
+) -> TsfinfoConfigParametersTagged:
     """
     Build parameters.
     
@@ -82,7 +69,7 @@ def tsfinfo_config_params(
         Parameter dictionary
     """
     params = {
-        "@type": "mrtrix.tsfinfo.config",
+        "@type": "config",
         "key": key,
         "value": value,
     }
@@ -104,14 +91,14 @@ def tsfinfo_config_cargs(
     """
     cargs = []
     cargs.append("-config")
-    cargs.append(params.get("key"))
-    cargs.append(params.get("value"))
+    cargs.append(params.get("key", None))
+    cargs.append(params.get("value", None))
     return cargs
 
 
 class TsfinfoOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `tsfinfo(...)`.
+    Output object returned when calling `TsfinfoParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -129,7 +116,7 @@ def tsfinfo_params(
     config: list[TsfinfoConfigParameters] | None = None,
     help_: bool = False,
     version: bool = False,
-) -> TsfinfoParameters:
+) -> TsfinfoParametersTagged:
     """
     Build parameters.
     
@@ -154,7 +141,7 @@ def tsfinfo_params(
         Parameter dictionary
     """
     params = {
-        "@type": "mrtrix.tsfinfo",
+        "@type": "mrtrix/tsfinfo",
         "count": count,
         "info": info,
         "quiet": quiet,
@@ -188,33 +175,33 @@ def tsfinfo_cargs(
     """
     cargs = []
     cargs.append("tsfinfo")
-    if params.get("count"):
+    if params.get("count", False):
         cargs.append("-count")
-    if params.get("ascii") is not None:
+    if params.get("ascii", None) is not None:
         cargs.extend([
             "-ascii",
-            params.get("ascii")
+            params.get("ascii", None)
         ])
-    if params.get("info"):
+    if params.get("info", False):
         cargs.append("-info")
-    if params.get("quiet"):
+    if params.get("quiet", False):
         cargs.append("-quiet")
-    if params.get("debug"):
+    if params.get("debug", False):
         cargs.append("-debug")
-    if params.get("force"):
+    if params.get("force", False):
         cargs.append("-force")
-    if params.get("nthreads") is not None:
+    if params.get("nthreads", None) is not None:
         cargs.extend([
             "-nthreads",
-            str(params.get("nthreads"))
+            str(params.get("nthreads", None))
         ])
-    if params.get("config") is not None:
-        cargs.extend([a for c in [dyn_cargs(s["@type"])(s, execution) for s in params.get("config")] for a in c])
-    if params.get("help"):
+    if params.get("config", None) is not None:
+        cargs.extend([a for c in [tsfinfo_config_cargs(s, execution) for s in params.get("config", None)] for a in c])
+    if params.get("help", False):
         cargs.append("-help")
-    if params.get("version"):
+    if params.get("version", False):
         cargs.append("-version")
-    cargs.extend([execution.input_file(f) for f in params.get("tracks")])
+    cargs.extend([execution.input_file(f) for f in params.get("tracks", None)])
     return cargs
 
 
@@ -339,9 +326,7 @@ def tsfinfo(
 
 __all__ = [
     "TSFINFO_METADATA",
-    "TsfinfoConfigParameters",
     "TsfinfoOutputs",
-    "TsfinfoParameters",
     "tsfinfo",
     "tsfinfo_config_params",
     "tsfinfo_execute",

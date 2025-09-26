@@ -14,7 +14,17 @@ SURFACE_INFLATION_METADATA = Metadata(
 
 
 SurfaceInflationParameters = typing.TypedDict('SurfaceInflationParameters', {
-    "@type": typing.Literal["workbench.surface-inflation"],
+    "@type": typing.NotRequired[typing.Literal["workbench/surface-inflation"]],
+    "anatomical_surface_in": InputPathType,
+    "surface_in": InputPathType,
+    "number_of_smoothing_cycles": int,
+    "smoothing_strength": float,
+    "smoothing_iterations": int,
+    "inflation_factor": float,
+    "surface_out": str,
+})
+SurfaceInflationParametersTagged = typing.TypedDict('SurfaceInflationParametersTagged', {
+    "@type": typing.Literal["workbench/surface-inflation"],
     "anatomical_surface_in": InputPathType,
     "surface_in": InputPathType,
     "number_of_smoothing_cycles": int,
@@ -25,41 +35,9 @@ SurfaceInflationParameters = typing.TypedDict('SurfaceInflationParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "workbench.surface-inflation": surface_inflation_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "workbench.surface-inflation": surface_inflation_outputs,
-    }.get(t)
-
-
 class SurfaceInflationOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `surface_inflation(...)`.
+    Output object returned when calling `SurfaceInflationParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -75,7 +53,7 @@ def surface_inflation_params(
     smoothing_iterations: int,
     inflation_factor: float,
     surface_out: str,
-) -> SurfaceInflationParameters:
+) -> SurfaceInflationParametersTagged:
     """
     Build parameters.
     
@@ -91,7 +69,7 @@ def surface_inflation_params(
         Parameter dictionary
     """
     params = {
-        "@type": "workbench.surface-inflation",
+        "@type": "workbench/surface-inflation",
         "anatomical_surface_in": anatomical_surface_in,
         "surface_in": surface_in,
         "number_of_smoothing_cycles": number_of_smoothing_cycles,
@@ -119,13 +97,13 @@ def surface_inflation_cargs(
     cargs = []
     cargs.append("wb_command")
     cargs.append("-surface-inflation")
-    cargs.append(execution.input_file(params.get("anatomical_surface_in")))
-    cargs.append(execution.input_file(params.get("surface_in")))
-    cargs.append(str(params.get("number_of_smoothing_cycles")))
-    cargs.append(str(params.get("smoothing_strength")))
-    cargs.append(str(params.get("smoothing_iterations")))
-    cargs.append(str(params.get("inflation_factor")))
-    cargs.append(params.get("surface_out"))
+    cargs.append(execution.input_file(params.get("anatomical_surface_in", None)))
+    cargs.append(execution.input_file(params.get("surface_in", None)))
+    cargs.append(str(params.get("number_of_smoothing_cycles", None)))
+    cargs.append(str(params.get("smoothing_strength", None)))
+    cargs.append(str(params.get("smoothing_iterations", None)))
+    cargs.append(str(params.get("inflation_factor", None)))
+    cargs.append(params.get("surface_out", None))
     return cargs
 
 
@@ -144,7 +122,7 @@ def surface_inflation_outputs(
     """
     ret = SurfaceInflationOutputs(
         root=execution.output_file("."),
-        surface_out=execution.output_file(params.get("surface_out")),
+        surface_out=execution.output_file(params.get("surface_out", None)),
     )
     return ret
 
@@ -229,7 +207,6 @@ def surface_inflation(
 __all__ = [
     "SURFACE_INFLATION_METADATA",
     "SurfaceInflationOutputs",
-    "SurfaceInflationParameters",
     "surface_inflation",
     "surface_inflation_execute",
     "surface_inflation_params",

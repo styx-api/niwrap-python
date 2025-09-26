@@ -14,7 +14,34 @@ FSLVBM_2_TEMPLATE_METADATA = Metadata(
 
 
 Fslvbm2TemplateParameters = typing.TypedDict('Fslvbm2TemplateParameters', {
-    "@type": typing.Literal["fsl.fslvbm_2_template"],
+    "@type": typing.NotRequired[typing.Literal["fsl/fslvbm_2_template"]],
+    "arch": typing.NotRequired[str | None],
+    "coprocessor": typing.NotRequired[str | None],
+    "coprocessor_multi": typing.NotRequired[str | None],
+    "coprocessor_class": typing.NotRequired[str | None],
+    "coprocessor_toolkit": typing.NotRequired[str | None],
+    "jobhold": typing.NotRequired[str | None],
+    "array_hold": typing.NotRequired[str | None],
+    "logdir": typing.NotRequired[str | None],
+    "mailoptions": typing.NotRequired[str | None],
+    "mailto": typing.NotRequired[str | None],
+    "name": typing.NotRequired[str | None],
+    "priority": typing.NotRequired[str | None],
+    "queue": typing.NotRequired[str | None],
+    "resource": typing.NotRequired[str | None],
+    "delete_job": typing.NotRequired[str | None],
+    "memory_gb": typing.NotRequired[float | None],
+    "parallel_env": typing.NotRequired[str | None],
+    "array_task": typing.NotRequired[str | None],
+    "array_native": typing.NotRequired[str | None],
+    "num_tasks": typing.NotRequired[float | None],
+    "coprocessor_name": typing.NotRequired[str | None],
+    "project": typing.NotRequired[str | None],
+    "runtime_limit": typing.NotRequired[float | None],
+    "job_file": typing.NotRequired[InputPathType | None],
+})
+Fslvbm2TemplateParametersTagged = typing.TypedDict('Fslvbm2TemplateParametersTagged', {
+    "@type": typing.Literal["fsl/fslvbm_2_template"],
     "arch": typing.NotRequired[str | None],
     "coprocessor": typing.NotRequired[str | None],
     "coprocessor_multi": typing.NotRequired[str | None],
@@ -42,40 +69,9 @@ Fslvbm2TemplateParameters = typing.TypedDict('Fslvbm2TemplateParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "fsl.fslvbm_2_template": fslvbm_2_template_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-    }.get(t)
-
-
 class Fslvbm2TemplateOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `fslvbm_2_template(...)`.
+    Output object returned when calling `Fslvbm2TemplateParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -106,7 +102,7 @@ def fslvbm_2_template_params(
     project: str | None = None,
     runtime_limit: float | None = None,
     job_file: InputPathType | None = None,
-) -> Fslvbm2TemplateParameters:
+) -> Fslvbm2TemplateParametersTagged:
     """
     Build parameters.
     
@@ -139,7 +135,7 @@ def fslvbm_2_template_params(
         Parameter dictionary
     """
     params = {
-        "@type": "fsl.fslvbm_2_template",
+        "@type": "fsl/fslvbm_2_template",
     }
     if arch is not None:
         params["arch"] = arch
@@ -207,125 +203,125 @@ def fslvbm_2_template_cargs(
     """
     cargs = []
     cargs.append("fslvbm_2_template")
-    if params.get("arch") is not None:
+    if params.get("arch", None) is not None:
         cargs.extend([
             "-a",
-            params.get("arch")
+            params.get("arch", None)
         ])
-    if params.get("coprocessor") is not None:
+    if params.get("coprocessor", None) is not None:
         cargs.extend([
             "-c",
-            params.get("coprocessor")
+            params.get("coprocessor", None)
         ])
-    if params.get("coprocessor_multi") is not None:
+    if params.get("coprocessor_multi", None) is not None:
         cargs.extend([
             "--coprocessor_multi",
-            params.get("coprocessor_multi")
+            params.get("coprocessor_multi", None)
         ])
-    if params.get("coprocessor_class") is not None:
+    if params.get("coprocessor_class", None) is not None:
         cargs.extend([
             "--coprocessor_class",
-            params.get("coprocessor_class")
+            params.get("coprocessor_class", None)
         ])
-    if params.get("coprocessor_toolkit") is not None:
+    if params.get("coprocessor_toolkit", None) is not None:
         cargs.extend([
             "--coprocessor_toolkit",
-            params.get("coprocessor_toolkit")
+            params.get("coprocessor_toolkit", None)
         ])
-    if params.get("jobhold") is not None:
+    if params.get("jobhold", None) is not None:
         cargs.extend([
             "-j",
-            params.get("jobhold")
+            params.get("jobhold", None)
         ])
-    if params.get("array_hold") is not None:
+    if params.get("array_hold", None) is not None:
         cargs.extend([
             "--array_hold",
-            params.get("array_hold")
+            params.get("array_hold", None)
         ])
-    if params.get("logdir") is not None:
+    if params.get("logdir", None) is not None:
         cargs.extend([
             "-l",
-            params.get("logdir")
+            params.get("logdir", None)
         ])
-    if params.get("mailoptions") is not None:
+    if params.get("mailoptions", None) is not None:
         cargs.extend([
             "-m",
-            params.get("mailoptions")
+            params.get("mailoptions", None)
         ])
-    if params.get("mailto") is not None:
+    if params.get("mailto", None) is not None:
         cargs.extend([
             "-M",
-            params.get("mailto")
+            params.get("mailto", None)
         ])
-    if params.get("name") is not None:
+    if params.get("name", None) is not None:
         cargs.extend([
             "-N",
-            params.get("name")
+            params.get("name", None)
         ])
-    if params.get("priority") is not None:
+    if params.get("priority", None) is not None:
         cargs.extend([
             "-p",
-            params.get("priority")
+            params.get("priority", None)
         ])
-    if params.get("queue") is not None:
+    if params.get("queue", None) is not None:
         cargs.extend([
             "-q",
-            params.get("queue")
+            params.get("queue", None)
         ])
-    if params.get("resource") is not None:
+    if params.get("resource", None) is not None:
         cargs.extend([
             "-r",
-            params.get("resource")
+            params.get("resource", None)
         ])
-    if params.get("delete_job") is not None:
+    if params.get("delete_job", None) is not None:
         cargs.extend([
             "--delete_job",
-            params.get("delete_job")
+            params.get("delete_job", None)
         ])
-    if params.get("memory_gb") is not None:
+    if params.get("memory_gb", None) is not None:
         cargs.extend([
             "-R",
-            str(params.get("memory_gb"))
+            str(params.get("memory_gb", None))
         ])
-    if params.get("parallel_env") is not None:
+    if params.get("parallel_env", None) is not None:
         cargs.extend([
             "-s",
-            params.get("parallel_env")
+            params.get("parallel_env", None)
         ])
-    if params.get("array_task") is not None:
+    if params.get("array_task", None) is not None:
         cargs.extend([
             "-t",
-            params.get("array_task")
+            params.get("array_task", None)
         ])
-    if params.get("array_native") is not None:
+    if params.get("array_native", None) is not None:
         cargs.extend([
             "--array_native",
-            params.get("array_native")
+            params.get("array_native", None)
         ])
-    if params.get("num_tasks") is not None:
+    if params.get("num_tasks", None) is not None:
         cargs.extend([
             "-x",
-            str(params.get("num_tasks"))
+            str(params.get("num_tasks", None))
         ])
-    if params.get("coprocessor_name") is not None:
+    if params.get("coprocessor_name", None) is not None:
         cargs.extend([
             "--has_coprocessor",
-            params.get("coprocessor_name")
+            params.get("coprocessor_name", None)
         ])
-    if params.get("project") is not None:
+    if params.get("project", None) is not None:
         cargs.extend([
             "--project",
-            params.get("project")
+            params.get("project", None)
         ])
-    if params.get("runtime_limit") is not None:
+    if params.get("runtime_limit", None) is not None:
         cargs.extend([
             "-T",
-            str(params.get("runtime_limit"))
+            str(params.get("runtime_limit", None))
         ])
-    if params.get("job_file") is not None:
+    if params.get("job_file", None) is not None:
         cargs.extend([
             "-z",
-            execution.input_file(params.get("job_file"))
+            execution.input_file(params.get("job_file", None))
         ])
     return cargs
 
@@ -474,7 +470,6 @@ def fslvbm_2_template(
 __all__ = [
     "FSLVBM_2_TEMPLATE_METADATA",
     "Fslvbm2TemplateOutputs",
-    "Fslvbm2TemplateParameters",
     "fslvbm_2_template",
     "fslvbm_2_template_execute",
     "fslvbm_2_template_params",

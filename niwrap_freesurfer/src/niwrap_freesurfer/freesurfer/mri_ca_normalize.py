@@ -14,7 +14,37 @@ MRI_CA_NORMALIZE_METADATA = Metadata(
 
 
 MriCaNormalizeParameters = typing.TypedDict('MriCaNormalizeParameters', {
-    "@type": typing.Literal["freesurfer.mri_ca_normalize"],
+    "@type": typing.NotRequired[typing.Literal["freesurfer/mri_ca_normalize"]],
+    "input_brain_volumes": list[InputPathType],
+    "atlas_file": InputPathType,
+    "xform_file": InputPathType,
+    "output_volumes": list[str],
+    "seg_file": typing.NotRequired[InputPathType | None],
+    "sigma_value": typing.NotRequired[float | None],
+    "fsamples_file": typing.NotRequired[InputPathType | None],
+    "dilate_iters": typing.NotRequired[float | None],
+    "nsamples_file": typing.NotRequired[InputPathType | None],
+    "mask_vol": typing.NotRequired[InputPathType | None],
+    "control_points_file": typing.NotRequired[InputPathType | None],
+    "fonly_file": typing.NotRequired[InputPathType | None],
+    "diag_file": typing.NotRequired[InputPathType | None],
+    "debug_voxel_coords": typing.NotRequired[list[float] | None],
+    "debug_node_coords": typing.NotRequired[list[float] | None],
+    "tr_value": typing.NotRequired[float | None],
+    "te_value": typing.NotRequired[float | None],
+    "alpha_value": typing.NotRequired[float | None],
+    "example_mri_vol": typing.NotRequired[InputPathType | None],
+    "extra_norm_pctl": typing.NotRequired[float | None],
+    "prior_threshold": typing.NotRequired[float | None],
+    "n_regions": typing.NotRequired[float | None],
+    "verbose_value": typing.NotRequired[float | None],
+    "top_percent": typing.NotRequired[float | None],
+    "novar_flag": bool,
+    "renorm_file": typing.NotRequired[InputPathType | None],
+    "flash_flag": bool,
+})
+MriCaNormalizeParametersTagged = typing.TypedDict('MriCaNormalizeParametersTagged', {
+    "@type": typing.Literal["freesurfer/mri_ca_normalize"],
     "input_brain_volumes": list[InputPathType],
     "atlas_file": InputPathType,
     "xform_file": InputPathType,
@@ -45,41 +75,9 @@ MriCaNormalizeParameters = typing.TypedDict('MriCaNormalizeParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "freesurfer.mri_ca_normalize": mri_ca_normalize_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "freesurfer.mri_ca_normalize": mri_ca_normalize_outputs,
-    }.get(t)
-
-
 class MriCaNormalizeOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `mri_ca_normalize(...)`.
+    Output object returned when calling `MriCaNormalizeParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -115,7 +113,7 @@ def mri_ca_normalize_params(
     novar_flag: bool = False,
     renorm_file: InputPathType | None = None,
     flash_flag: bool = False,
-) -> MriCaNormalizeParameters:
+) -> MriCaNormalizeParametersTagged:
     """
     Build parameters.
     
@@ -156,7 +154,7 @@ def mri_ca_normalize_params(
         Parameter dictionary
     """
     params = {
-        "@type": "freesurfer.mri_ca_normalize",
+        "@type": "freesurfer/mri_ca_normalize",
         "input_brain_volumes": input_brain_volumes,
         "atlas_file": atlas_file,
         "xform_file": xform_file,
@@ -224,118 +222,118 @@ def mri_ca_normalize_cargs(
     """
     cargs = []
     cargs.append("mri_ca_normalize")
-    cargs.extend([execution.input_file(f) for f in params.get("input_brain_volumes")])
-    cargs.append(execution.input_file(params.get("atlas_file")))
-    cargs.append(execution.input_file(params.get("xform_file")))
-    cargs.extend(params.get("output_volumes"))
-    if params.get("seg_file") is not None:
+    cargs.extend([execution.input_file(f) for f in params.get("input_brain_volumes", None)])
+    cargs.append(execution.input_file(params.get("atlas_file", None)))
+    cargs.append(execution.input_file(params.get("xform_file", None)))
+    cargs.extend(params.get("output_volumes", None))
+    if params.get("seg_file", None) is not None:
         cargs.extend([
             "-seg",
-            execution.input_file(params.get("seg_file"))
+            execution.input_file(params.get("seg_file", None))
         ])
-    if params.get("sigma_value") is not None:
+    if params.get("sigma_value", None) is not None:
         cargs.extend([
             "-sigma",
-            str(params.get("sigma_value"))
+            str(params.get("sigma_value", None))
         ])
-    if params.get("fsamples_file") is not None:
+    if params.get("fsamples_file", None) is not None:
         cargs.extend([
             "-fsamples",
-            execution.input_file(params.get("fsamples_file"))
+            execution.input_file(params.get("fsamples_file", None))
         ])
-    if params.get("dilate_iters") is not None:
+    if params.get("dilate_iters", None) is not None:
         cargs.extend([
             "-dilate",
-            str(params.get("dilate_iters"))
+            str(params.get("dilate_iters", None))
         ])
-    if params.get("nsamples_file") is not None:
+    if params.get("nsamples_file", None) is not None:
         cargs.extend([
             "-nsamples",
-            execution.input_file(params.get("nsamples_file"))
+            execution.input_file(params.get("nsamples_file", None))
         ])
-    if params.get("mask_vol") is not None:
+    if params.get("mask_vol", None) is not None:
         cargs.extend([
             "-mask",
-            execution.input_file(params.get("mask_vol"))
+            execution.input_file(params.get("mask_vol", None))
         ])
-    if params.get("control_points_file") is not None:
+    if params.get("control_points_file", None) is not None:
         cargs.extend([
             "-f",
-            execution.input_file(params.get("control_points_file"))
+            execution.input_file(params.get("control_points_file", None))
         ])
-    if params.get("fonly_file") is not None:
+    if params.get("fonly_file", None) is not None:
         cargs.extend([
             "-fonly",
-            execution.input_file(params.get("fonly_file"))
+            execution.input_file(params.get("fonly_file", None))
         ])
-    if params.get("diag_file") is not None:
+    if params.get("diag_file", None) is not None:
         cargs.extend([
             "-diag",
-            execution.input_file(params.get("diag_file"))
+            execution.input_file(params.get("diag_file", None))
         ])
-    if params.get("debug_voxel_coords") is not None:
+    if params.get("debug_voxel_coords", None) is not None:
         cargs.extend([
             "-debug_voxel",
-            *map(str, params.get("debug_voxel_coords"))
+            *map(str, params.get("debug_voxel_coords", None))
         ])
-    if params.get("debug_node_coords") is not None:
+    if params.get("debug_node_coords", None) is not None:
         cargs.extend([
             "-debug_node",
-            *map(str, params.get("debug_node_coords"))
+            *map(str, params.get("debug_node_coords", None))
         ])
-    if params.get("tr_value") is not None:
+    if params.get("tr_value", None) is not None:
         cargs.extend([
             "-tr",
-            str(params.get("tr_value"))
+            str(params.get("tr_value", None))
         ])
-    if params.get("te_value") is not None:
+    if params.get("te_value", None) is not None:
         cargs.extend([
             "-te",
-            str(params.get("te_value"))
+            str(params.get("te_value", None))
         ])
-    if params.get("alpha_value") is not None:
+    if params.get("alpha_value", None) is not None:
         cargs.extend([
             "-alpha",
-            str(params.get("alpha_value"))
+            str(params.get("alpha_value", None))
         ])
-    if params.get("example_mri_vol") is not None:
+    if params.get("example_mri_vol", None) is not None:
         cargs.extend([
             "-example",
-            execution.input_file(params.get("example_mri_vol"))
+            execution.input_file(params.get("example_mri_vol", None))
         ])
-    if params.get("extra_norm_pctl") is not None:
+    if params.get("extra_norm_pctl", None) is not None:
         cargs.extend([
             "-extra_norm",
-            str(params.get("extra_norm_pctl"))
+            str(params.get("extra_norm_pctl", None))
         ])
-    if params.get("prior_threshold") is not None:
+    if params.get("prior_threshold", None) is not None:
         cargs.extend([
             "-prior",
-            str(params.get("prior_threshold"))
+            str(params.get("prior_threshold", None))
         ])
-    if params.get("n_regions") is not None:
+    if params.get("n_regions", None) is not None:
         cargs.extend([
             "-n",
-            str(params.get("n_regions"))
+            str(params.get("n_regions", None))
         ])
-    if params.get("verbose_value") is not None:
+    if params.get("verbose_value", None) is not None:
         cargs.extend([
             "-v",
-            str(params.get("verbose_value"))
+            str(params.get("verbose_value", None))
         ])
-    if params.get("top_percent") is not None:
+    if params.get("top_percent", None) is not None:
         cargs.extend([
             "-p",
-            str(params.get("top_percent"))
+            str(params.get("top_percent", None))
         ])
-    if params.get("novar_flag"):
+    if params.get("novar_flag", False):
         cargs.append("-novar")
-    if params.get("renorm_file") is not None:
+    if params.get("renorm_file", None) is not None:
         cargs.extend([
             "-renorm",
-            execution.input_file(params.get("renorm_file"))
+            execution.input_file(params.get("renorm_file", None))
         ])
-    if params.get("flash_flag"):
+    if params.get("flash_flag", False):
         cargs.append("-flash")
     return cargs
 
@@ -501,7 +499,6 @@ def mri_ca_normalize(
 __all__ = [
     "MRI_CA_NORMALIZE_METADATA",
     "MriCaNormalizeOutputs",
-    "MriCaNormalizeParameters",
     "mri_ca_normalize",
     "mri_ca_normalize_execute",
     "mri_ca_normalize_params",

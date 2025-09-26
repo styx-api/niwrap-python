@@ -14,7 +14,25 @@ APPLYWARP_METADATA = Metadata(
 
 
 ApplywarpParameters = typing.TypedDict('ApplywarpParameters', {
-    "@type": typing.Literal["fsl.applywarp"],
+    "@type": typing.NotRequired[typing.Literal["fsl/applywarp"]],
+    "interp": typing.NotRequired[typing.Literal["nn", "trilinear", "sinc", "spline"] | None],
+    "in_file": InputPathType,
+    "ref_file": InputPathType,
+    "out_file": typing.NotRequired[str | None],
+    "relwarp": bool,
+    "abswarp": bool,
+    "datatype": typing.NotRequired[typing.Literal["char", "short", "int", "float", "double"] | None],
+    "field_file": typing.NotRequired[InputPathType | None],
+    "mask_file": typing.NotRequired[InputPathType | None],
+    "output_type": typing.NotRequired[typing.Literal["NIFTI", "NIFTI_PAIR", "NIFTI_GZ", "NIFTI_PAIR_GZ"] | None],
+    "postmat": typing.NotRequired[InputPathType | None],
+    "premat": typing.NotRequired[InputPathType | None],
+    "superlevel": typing.NotRequired[typing.Literal["a"] | None],
+    "superlevel_2": typing.NotRequired[int | None],
+    "supersample": bool,
+})
+ApplywarpParametersTagged = typing.TypedDict('ApplywarpParametersTagged', {
+    "@type": typing.Literal["fsl/applywarp"],
     "interp": typing.NotRequired[typing.Literal["nn", "trilinear", "sinc", "spline"] | None],
     "in_file": InputPathType,
     "ref_file": InputPathType,
@@ -33,41 +51,9 @@ ApplywarpParameters = typing.TypedDict('ApplywarpParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "fsl.applywarp": applywarp_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "fsl.applywarp": applywarp_outputs,
-    }.get(t)
-
-
 class ApplywarpOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `applywarp(...)`.
+    Output object returned when calling `ApplywarpParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -91,7 +77,7 @@ def applywarp_params(
     superlevel: typing.Literal["a"] | None = None,
     superlevel_2: int | None = None,
     supersample: bool = False,
-) -> ApplywarpParameters:
+) -> ApplywarpParametersTagged:
     """
     Build parameters.
     
@@ -120,7 +106,7 @@ def applywarp_params(
         Parameter dictionary
     """
     params = {
-        "@type": "fsl.applywarp",
+        "@type": "fsl/applywarp",
         "in_file": in_file,
         "ref_file": ref_file,
         "relwarp": relwarp,
@@ -165,33 +151,33 @@ def applywarp_cargs(
     """
     cargs = []
     cargs.append("applywarp")
-    if params.get("interp") is not None:
-        cargs.append("--interp=" + params.get("interp"))
-    cargs.append("--in=" + execution.input_file(params.get("in_file")))
-    cargs.append("--ref=" + execution.input_file(params.get("ref_file")))
-    if params.get("out_file") is not None:
-        cargs.append("--out=" + params.get("out_file"))
-    if params.get("relwarp"):
+    if params.get("interp", None) is not None:
+        cargs.append("--interp=" + params.get("interp", None))
+    cargs.append("--in=" + execution.input_file(params.get("in_file", None)))
+    cargs.append("--ref=" + execution.input_file(params.get("ref_file", None)))
+    if params.get("out_file", None) is not None:
+        cargs.append("--out=" + params.get("out_file", None))
+    if params.get("relwarp", False):
         cargs.append("--rel")
-    if params.get("abswarp"):
+    if params.get("abswarp", False):
         cargs.append("--abs")
-    if params.get("datatype") is not None:
-        cargs.append("--datatype=" + params.get("datatype"))
-    if params.get("field_file") is not None:
-        cargs.append("--warp=" + execution.input_file(params.get("field_file")))
-    if params.get("mask_file") is not None:
-        cargs.append("--mask=" + execution.input_file(params.get("mask_file")))
-    if params.get("output_type") is not None:
-        cargs.append(params.get("output_type"))
-    if params.get("postmat") is not None:
-        cargs.append("--postmat=" + execution.input_file(params.get("postmat")))
-    if params.get("premat") is not None:
-        cargs.append("--premat=" + execution.input_file(params.get("premat")))
-    if params.get("superlevel") is not None:
-        cargs.append("--superlevel=" + params.get("superlevel"))
-    if params.get("superlevel_2") is not None:
-        cargs.append("--superlevel=" + str(params.get("superlevel_2")))
-    if params.get("supersample"):
+    if params.get("datatype", None) is not None:
+        cargs.append("--datatype=" + params.get("datatype", None))
+    if params.get("field_file", None) is not None:
+        cargs.append("--warp=" + execution.input_file(params.get("field_file", None)))
+    if params.get("mask_file", None) is not None:
+        cargs.append("--mask=" + execution.input_file(params.get("mask_file", None)))
+    if params.get("output_type", None) is not None:
+        cargs.append(params.get("output_type", None))
+    if params.get("postmat", None) is not None:
+        cargs.append("--postmat=" + execution.input_file(params.get("postmat", None)))
+    if params.get("premat", None) is not None:
+        cargs.append("--premat=" + execution.input_file(params.get("premat", None)))
+    if params.get("superlevel", None) is not None:
+        cargs.append("--superlevel=" + params.get("superlevel", None))
+    if params.get("superlevel_2", None) is not None:
+        cargs.append("--superlevel=" + str(params.get("superlevel_2", None)))
+    if params.get("supersample", False):
         cargs.append("--super")
     return cargs
 
@@ -211,7 +197,7 @@ def applywarp_outputs(
     """
     ret = ApplywarpOutputs(
         root=execution.output_file("."),
-        out_file_outfile=execution.output_file(params.get("out_file")) if (params.get("out_file") is not None) else None,
+        out_file_outfile=execution.output_file(params.get("out_file", None)) if (params.get("out_file") is not None) else None,
     )
     return ret
 
@@ -319,7 +305,6 @@ def applywarp(
 __all__ = [
     "APPLYWARP_METADATA",
     "ApplywarpOutputs",
-    "ApplywarpParameters",
     "applywarp",
     "applywarp_execute",
     "applywarp_params",

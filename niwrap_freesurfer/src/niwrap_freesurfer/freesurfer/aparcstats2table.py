@@ -14,7 +14,28 @@ APARCSTATS2TABLE_METADATA = Metadata(
 
 
 Aparcstats2tableParameters = typing.TypedDict('Aparcstats2tableParameters', {
-    "@type": typing.Literal["freesurfer.aparcstats2table"],
+    "@type": typing.NotRequired[typing.Literal["freesurfer/aparcstats2table"]],
+    "subjects": typing.NotRequired[list[str] | None],
+    "subjectsfile": typing.NotRequired[InputPathType | None],
+    "qdec": typing.NotRequired[InputPathType | None],
+    "qdec_long": typing.NotRequired[InputPathType | None],
+    "hemi": str,
+    "tablefile": InputPathType,
+    "parcellation": typing.NotRequired[str | None],
+    "measure": typing.NotRequired[str | None],
+    "delimiter": typing.NotRequired[str | None],
+    "skip_missing": bool,
+    "parcid_only": bool,
+    "common_parcs": bool,
+    "parcs_file": typing.NotRequired[InputPathType | None],
+    "report_rois": bool,
+    "transpose": bool,
+    "debug": bool,
+    "etiv": bool,
+    "scale": typing.NotRequired[float | None],
+})
+Aparcstats2tableParametersTagged = typing.TypedDict('Aparcstats2tableParametersTagged', {
+    "@type": typing.Literal["freesurfer/aparcstats2table"],
     "subjects": typing.NotRequired[list[str] | None],
     "subjectsfile": typing.NotRequired[InputPathType | None],
     "qdec": typing.NotRequired[InputPathType | None],
@@ -36,41 +57,9 @@ Aparcstats2tableParameters = typing.TypedDict('Aparcstats2tableParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "freesurfer.aparcstats2table": aparcstats2table_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "freesurfer.aparcstats2table": aparcstats2table_outputs,
-    }.get(t)
-
-
 class Aparcstats2tableOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `aparcstats2table(...)`.
+    Output object returned when calling `Aparcstats2tableParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -97,7 +86,7 @@ def aparcstats2table_params(
     debug: bool = False,
     etiv: bool = False,
     scale: float | None = None,
-) -> Aparcstats2tableParameters:
+) -> Aparcstats2tableParametersTagged:
     """
     Build parameters.
     
@@ -124,7 +113,7 @@ def aparcstats2table_params(
         Parameter dictionary
     """
     params = {
-        "@type": "freesurfer.aparcstats2table",
+        "@type": "freesurfer/aparcstats2table",
         "hemi": hemi,
         "tablefile": tablefile,
         "skip_missing": skip_missing,
@@ -171,72 +160,72 @@ def aparcstats2table_cargs(
     """
     cargs = []
     cargs.append("aparcstats2table")
-    if params.get("subjects") is not None:
+    if params.get("subjects", None) is not None:
         cargs.extend([
             "--subjects",
-            *params.get("subjects")
+            *params.get("subjects", None)
         ])
-    if params.get("subjectsfile") is not None:
+    if params.get("subjectsfile", None) is not None:
         cargs.extend([
             "--subjectsfile",
-            execution.input_file(params.get("subjectsfile"))
+            execution.input_file(params.get("subjectsfile", None))
         ])
-    if params.get("qdec") is not None:
+    if params.get("qdec", None) is not None:
         cargs.extend([
             "--qdec",
-            execution.input_file(params.get("qdec"))
+            execution.input_file(params.get("qdec", None))
         ])
-    if params.get("qdec_long") is not None:
+    if params.get("qdec_long", None) is not None:
         cargs.extend([
             "--qdec-long",
-            execution.input_file(params.get("qdec_long"))
+            execution.input_file(params.get("qdec_long", None))
         ])
     cargs.extend([
         "--hemi",
-        params.get("hemi")
+        params.get("hemi", None)
     ])
     cargs.extend([
         "-t",
-        execution.input_file(params.get("tablefile"))
+        execution.input_file(params.get("tablefile", None))
     ])
-    if params.get("parcellation") is not None:
+    if params.get("parcellation", None) is not None:
         cargs.extend([
             "--parc",
-            params.get("parcellation")
+            params.get("parcellation", None)
         ])
-    if params.get("measure") is not None:
+    if params.get("measure", None) is not None:
         cargs.extend([
             "-m",
-            params.get("measure")
+            params.get("measure", None)
         ])
-    if params.get("delimiter") is not None:
+    if params.get("delimiter", None) is not None:
         cargs.extend([
             "-d",
-            params.get("delimiter")
+            params.get("delimiter", None)
         ])
-    if params.get("skip_missing"):
+    if params.get("skip_missing", False):
         cargs.append("--skip")
-    if params.get("parcid_only"):
+    if params.get("parcid_only", False):
         cargs.append("--parcid-only")
-    if params.get("common_parcs"):
+    if params.get("common_parcs", False):
         cargs.append("--common-parcs")
-    if params.get("parcs_file") is not None:
+    if params.get("parcs_file", None) is not None:
         cargs.extend([
             "--parcs-from-file",
-            execution.input_file(params.get("parcs_file"))
+            execution.input_file(params.get("parcs_file", None))
         ])
-    if params.get("report_rois"):
+    if params.get("report_rois", False):
         cargs.append("--report-rois")
-    if params.get("transpose"):
+    if params.get("transpose", False):
         cargs.append("--transpose")
-    if params.get("debug"):
+    if params.get("debug", False):
         cargs.append("-v")
-    if params.get("etiv"):
+    if params.get("etiv", False):
         cargs.append("--etiv")
-    if params.get("scale") is not None:
+    if params.get("scale", None) is not None:
         cargs.extend([
             "--scale",
-            str(params.get("scale"))
+            str(params.get("scale", None))
         ])
     return cargs
 
@@ -256,7 +245,7 @@ def aparcstats2table_outputs(
     """
     ret = Aparcstats2tableOutputs(
         root=execution.output_file("."),
-        output_table=execution.output_file(pathlib.Path(params.get("tablefile")).name),
+        output_table=execution.output_file(pathlib.Path(params.get("tablefile", None)).name),
     )
     return ret
 
@@ -370,7 +359,6 @@ def aparcstats2table(
 __all__ = [
     "APARCSTATS2TABLE_METADATA",
     "Aparcstats2tableOutputs",
-    "Aparcstats2tableParameters",
     "aparcstats2table",
     "aparcstats2table_execute",
     "aparcstats2table_params",

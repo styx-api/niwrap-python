@@ -14,48 +14,22 @@ MRI_DIST_SURF_LABEL_METADATA = Metadata(
 
 
 MriDistSurfLabelParameters = typing.TypedDict('MriDistSurfLabelParameters', {
-    "@type": typing.Literal["freesurfer.mri_dist_surf_label"],
+    "@type": typing.NotRequired[typing.Literal["freesurfer/mri_dist_surf_label"]],
+    "surface": InputPathType,
+    "label_file": InputPathType,
+    "output": str,
+})
+MriDistSurfLabelParametersTagged = typing.TypedDict('MriDistSurfLabelParametersTagged', {
+    "@type": typing.Literal["freesurfer/mri_dist_surf_label"],
     "surface": InputPathType,
     "label_file": InputPathType,
     "output": str,
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "freesurfer.mri_dist_surf_label": mri_dist_surf_label_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "freesurfer.mri_dist_surf_label": mri_dist_surf_label_outputs,
-    }.get(t)
-
-
 class MriDistSurfLabelOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `mri_dist_surf_label(...)`.
+    Output object returned when calling `MriDistSurfLabelParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -67,7 +41,7 @@ def mri_dist_surf_label_params(
     surface: InputPathType,
     label_file: InputPathType,
     output: str,
-) -> MriDistSurfLabelParameters:
+) -> MriDistSurfLabelParametersTagged:
     """
     Build parameters.
     
@@ -79,7 +53,7 @@ def mri_dist_surf_label_params(
         Parameter dictionary
     """
     params = {
-        "@type": "freesurfer.mri_dist_surf_label",
+        "@type": "freesurfer/mri_dist_surf_label",
         "surface": surface,
         "label_file": label_file,
         "output": output,
@@ -102,9 +76,9 @@ def mri_dist_surf_label_cargs(
     """
     cargs = []
     cargs.append("mri_dist_surf_label")
-    cargs.append(execution.input_file(params.get("surface")))
-    cargs.append(execution.input_file(params.get("label_file")))
-    cargs.append(params.get("output"))
+    cargs.append(execution.input_file(params.get("surface", None)))
+    cargs.append(execution.input_file(params.get("label_file", None)))
+    cargs.append(params.get("output", None))
     return cargs
 
 
@@ -123,7 +97,7 @@ def mri_dist_surf_label_outputs(
     """
     ret = MriDistSurfLabelOutputs(
         root=execution.output_file("."),
-        output=execution.output_file(params.get("output")),
+        output=execution.output_file(params.get("output", None)),
     )
     return ret
 
@@ -190,7 +164,6 @@ def mri_dist_surf_label(
 __all__ = [
     "MRI_DIST_SURF_LABEL_METADATA",
     "MriDistSurfLabelOutputs",
-    "MriDistSurfLabelParameters",
     "mri_dist_surf_label",
     "mri_dist_surf_label_execute",
     "mri_dist_surf_label_params",

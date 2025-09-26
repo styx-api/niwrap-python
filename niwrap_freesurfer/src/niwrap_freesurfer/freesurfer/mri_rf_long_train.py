@@ -14,7 +14,19 @@ MRI_RF_LONG_TRAIN_METADATA = Metadata(
 
 
 MriRfLongTrainParameters = typing.TypedDict('MriRfLongTrainParameters', {
-    "@type": typing.Literal["freesurfer.mri_rf_long_train"],
+    "@type": typing.NotRequired[typing.Literal["freesurfer/mri_rf_long_train"]],
+    "seg_dir": str,
+    "xform": str,
+    "mask": typing.NotRequired[str | None],
+    "node_spacing": typing.NotRequired[float | None],
+    "prior_spacing": typing.NotRequired[float | None],
+    "input_data": typing.NotRequired[list[str] | None],
+    "check": bool,
+    "subjects": list[str],
+    "output_rfa": str,
+})
+MriRfLongTrainParametersTagged = typing.TypedDict('MriRfLongTrainParametersTagged', {
+    "@type": typing.Literal["freesurfer/mri_rf_long_train"],
     "seg_dir": str,
     "xform": str,
     "mask": typing.NotRequired[str | None],
@@ -27,41 +39,9 @@ MriRfLongTrainParameters = typing.TypedDict('MriRfLongTrainParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "freesurfer.mri_rf_long_train": mri_rf_long_train_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "freesurfer.mri_rf_long_train": mri_rf_long_train_outputs,
-    }.get(t)
-
-
 class MriRfLongTrainOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `mri_rf_long_train(...)`.
+    Output object returned when calling `MriRfLongTrainParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -79,7 +59,7 @@ def mri_rf_long_train_params(
     prior_spacing: float | None = None,
     input_data: list[str] | None = None,
     check: bool = False,
-) -> MriRfLongTrainParameters:
+) -> MriRfLongTrainParametersTagged:
     """
     Build parameters.
     
@@ -99,7 +79,7 @@ def mri_rf_long_train_params(
         Parameter dictionary
     """
     params = {
-        "@type": "freesurfer.mri_rf_long_train",
+        "@type": "freesurfer/mri_rf_long_train",
         "seg_dir": seg_dir,
         "xform": xform,
         "check": check,
@@ -134,36 +114,36 @@ def mri_rf_long_train_cargs(
     cargs.append("mri_rf_long_train")
     cargs.extend([
         "-seg",
-        params.get("seg_dir")
+        params.get("seg_dir", None)
     ])
     cargs.extend([
         "-xform",
-        params.get("xform")
+        params.get("xform", None)
     ])
-    if params.get("mask") is not None:
+    if params.get("mask", None) is not None:
         cargs.extend([
             "-mask",
-            params.get("mask")
+            params.get("mask", None)
         ])
-    if params.get("node_spacing") is not None:
+    if params.get("node_spacing", None) is not None:
         cargs.extend([
             "-node_spacing",
-            str(params.get("node_spacing"))
+            str(params.get("node_spacing", None))
         ])
-    if params.get("prior_spacing") is not None:
+    if params.get("prior_spacing", None) is not None:
         cargs.extend([
             "-prior_spacing",
-            str(params.get("prior_spacing"))
+            str(params.get("prior_spacing", None))
         ])
-    if params.get("input_data") is not None:
+    if params.get("input_data", None) is not None:
         cargs.extend([
             "-input",
-            *params.get("input_data")
+            *params.get("input_data", None)
         ])
-    if params.get("check"):
+    if params.get("check", False):
         cargs.append("-check")
-    cargs.extend(params.get("subjects"))
-    cargs.append(params.get("output_rfa"))
+    cargs.extend(params.get("subjects", None))
+    cargs.append(params.get("output_rfa", None))
     return cargs
 
 
@@ -182,7 +162,7 @@ def mri_rf_long_train_outputs(
     """
     ret = MriRfLongTrainOutputs(
         root=execution.output_file("."),
-        output_rfa_file=execution.output_file(params.get("output_rfa") + ".rfa"),
+        output_rfa_file=execution.output_file(params.get("output_rfa", None) + ".rfa"),
     )
     return ret
 
@@ -269,7 +249,6 @@ def mri_rf_long_train(
 __all__ = [
     "MRI_RF_LONG_TRAIN_METADATA",
     "MriRfLongTrainOutputs",
-    "MriRfLongTrainParameters",
     "mri_rf_long_train",
     "mri_rf_long_train_execute",
     "mri_rf_long_train_params",

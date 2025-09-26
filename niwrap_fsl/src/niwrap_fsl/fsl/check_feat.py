@@ -14,47 +14,20 @@ CHECK_FEAT_METADATA = Metadata(
 
 
 CheckFeatParameters = typing.TypedDict('CheckFeatParameters', {
-    "@type": typing.Literal["fsl.checkFEAT"],
+    "@type": typing.NotRequired[typing.Literal["fsl/checkFEAT"]],
+    "report_file": InputPathType,
+    "report_log_file": InputPathType,
+})
+CheckFeatParametersTagged = typing.TypedDict('CheckFeatParametersTagged', {
+    "@type": typing.Literal["fsl/checkFEAT"],
     "report_file": InputPathType,
     "report_log_file": InputPathType,
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "fsl.checkFEAT": check_feat_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "fsl.checkFEAT": check_feat_outputs,
-    }.get(t)
-
-
 class CheckFeatOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `check_feat(...)`.
+    Output object returned when calling `CheckFeatParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -67,7 +40,7 @@ class CheckFeatOutputs(typing.NamedTuple):
 def check_feat_params(
     report_file: InputPathType,
     report_log_file: InputPathType,
-) -> CheckFeatParameters:
+) -> CheckFeatParametersTagged:
     """
     Build parameters.
     
@@ -78,7 +51,7 @@ def check_feat_params(
         Parameter dictionary
     """
     params = {
-        "@type": "fsl.checkFEAT",
+        "@type": "fsl/checkFEAT",
         "report_file": report_file,
         "report_log_file": report_log_file,
     }
@@ -100,8 +73,8 @@ def check_feat_cargs(
     """
     cargs = []
     cargs.append("checkFEAT")
-    cargs.append(execution.input_file(params.get("report_file")))
-    cargs.append(execution.input_file(params.get("report_log_file")))
+    cargs.append(execution.input_file(params.get("report_file", None)))
+    cargs.append(execution.input_file(params.get("report_log_file", None)))
     return cargs
 
 
@@ -185,7 +158,6 @@ def check_feat(
 __all__ = [
     "CHECK_FEAT_METADATA",
     "CheckFeatOutputs",
-    "CheckFeatParameters",
     "check_feat",
     "check_feat_execute",
     "check_feat_params",

@@ -14,48 +14,22 @@ MRI_SURFACEMASK_METADATA = Metadata(
 
 
 MriSurfacemaskParameters = typing.TypedDict('MriSurfacemaskParameters', {
-    "@type": typing.Literal["freesurfer.mri_surfacemask"],
+    "@type": typing.NotRequired[typing.Literal["freesurfer/mri_surfacemask"]],
+    "input_volume": InputPathType,
+    "input_surface": InputPathType,
+    "output_volume": str,
+})
+MriSurfacemaskParametersTagged = typing.TypedDict('MriSurfacemaskParametersTagged', {
+    "@type": typing.Literal["freesurfer/mri_surfacemask"],
     "input_volume": InputPathType,
     "input_surface": InputPathType,
     "output_volume": str,
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "freesurfer.mri_surfacemask": mri_surfacemask_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "freesurfer.mri_surfacemask": mri_surfacemask_outputs,
-    }.get(t)
-
-
 class MriSurfacemaskOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `mri_surfacemask(...)`.
+    Output object returned when calling `MriSurfacemaskParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -67,7 +41,7 @@ def mri_surfacemask_params(
     input_volume: InputPathType,
     input_surface: InputPathType,
     output_volume: str,
-) -> MriSurfacemaskParameters:
+) -> MriSurfacemaskParametersTagged:
     """
     Build parameters.
     
@@ -80,7 +54,7 @@ def mri_surfacemask_params(
         Parameter dictionary
     """
     params = {
-        "@type": "freesurfer.mri_surfacemask",
+        "@type": "freesurfer/mri_surfacemask",
         "input_volume": input_volume,
         "input_surface": input_surface,
         "output_volume": output_volume,
@@ -103,9 +77,9 @@ def mri_surfacemask_cargs(
     """
     cargs = []
     cargs.append("mri_surfacemask")
-    cargs.append(execution.input_file(params.get("input_volume")))
-    cargs.append(execution.input_file(params.get("input_surface")))
-    cargs.append(params.get("output_volume"))
+    cargs.append(execution.input_file(params.get("input_volume", None)))
+    cargs.append(execution.input_file(params.get("input_surface", None)))
+    cargs.append(params.get("output_volume", None))
     return cargs
 
 
@@ -124,7 +98,7 @@ def mri_surfacemask_outputs(
     """
     ret = MriSurfacemaskOutputs(
         root=execution.output_file("."),
-        output_volume_file=execution.output_file(params.get("output_volume")),
+        output_volume_file=execution.output_file(params.get("output_volume", None)),
     )
     return ret
 
@@ -194,7 +168,6 @@ def mri_surfacemask(
 __all__ = [
     "MRI_SURFACEMASK_METADATA",
     "MriSurfacemaskOutputs",
-    "MriSurfacemaskParameters",
     "mri_surfacemask",
     "mri_surfacemask_execute",
     "mri_surfacemask_params",

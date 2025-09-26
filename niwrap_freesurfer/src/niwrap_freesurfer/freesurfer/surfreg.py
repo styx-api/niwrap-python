@@ -14,7 +14,26 @@ SURFREG_METADATA = Metadata(
 
 
 SurfregParameters = typing.TypedDict('SurfregParameters', {
-    "@type": typing.Literal["freesurfer.surfreg"],
+    "@type": typing.NotRequired[typing.Literal["freesurfer/surfreg"]],
+    "subject": str,
+    "target": str,
+    "cross_hemi": bool,
+    "reg_lh": bool,
+    "reg_rh": bool,
+    "reg_both": bool,
+    "no_annot": bool,
+    "annot": typing.NotRequired[str | None],
+    "aparc": bool,
+    "noneg": bool,
+    "init_reg": typing.NotRequired[str | None],
+    "lta": typing.NotRequired[str | None],
+    "init_from_tal": bool,
+    "outsurf": typing.NotRequired[str | None],
+    "no_set_vol_geom": bool,
+    "threads": typing.NotRequired[float | None],
+})
+SurfregParametersTagged = typing.TypedDict('SurfregParametersTagged', {
+    "@type": typing.Literal["freesurfer/surfreg"],
     "subject": str,
     "target": str,
     "cross_hemi": bool,
@@ -34,41 +53,9 @@ SurfregParameters = typing.TypedDict('SurfregParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "freesurfer.surfreg": surfreg_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "freesurfer.surfreg": surfreg_outputs,
-    }.get(t)
-
-
 class SurfregOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `surfreg(...)`.
+    Output object returned when calling `SurfregParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -93,7 +80,7 @@ def surfreg_params(
     outsurf: str | None = None,
     no_set_vol_geom: bool = False,
     threads: float | None = None,
-) -> SurfregParameters:
+) -> SurfregParametersTagged:
     """
     Build parameters.
     
@@ -118,7 +105,7 @@ def surfreg_params(
         Parameter dictionary
     """
     params = {
-        "@type": "freesurfer.surfreg",
+        "@type": "freesurfer/surfreg",
         "subject": subject,
         "target": target,
         "cross_hemi": cross_hemi,
@@ -161,54 +148,54 @@ def surfreg_cargs(
     cargs.append("surfreg")
     cargs.extend([
         "--s",
-        params.get("subject")
+        params.get("subject", None)
     ])
     cargs.extend([
         "--t",
-        params.get("target")
+        params.get("target", None)
     ])
-    if params.get("cross_hemi"):
+    if params.get("cross_hemi", False):
         cargs.append("--xhemi")
-    if params.get("reg_lh"):
+    if params.get("reg_lh", False):
         cargs.append("--lh")
-    if params.get("reg_rh"):
+    if params.get("reg_rh", False):
         cargs.append("--rh")
-    if params.get("reg_both"):
+    if params.get("reg_both", False):
         cargs.append("--lhrh")
-    if params.get("no_annot"):
+    if params.get("no_annot", False):
         cargs.append("--no-annot")
-    if params.get("annot") is not None:
+    if params.get("annot", None) is not None:
         cargs.extend([
             "--annot",
-            params.get("annot")
+            params.get("annot", None)
         ])
-    if params.get("aparc"):
+    if params.get("aparc", False):
         cargs.append("--aparc")
-    if params.get("noneg"):
+    if params.get("noneg", False):
         cargs.append("--noneg")
-    if params.get("init_reg") is not None:
+    if params.get("init_reg", None) is not None:
         cargs.extend([
             "--init-reg",
-            params.get("init_reg")
+            params.get("init_reg", None)
         ])
-    if params.get("lta") is not None:
+    if params.get("lta", None) is not None:
         cargs.extend([
             "--lta",
-            params.get("lta")
+            params.get("lta", None)
         ])
-    if params.get("init_from_tal"):
+    if params.get("init_from_tal", False):
         cargs.append("--init-from-tal")
-    if params.get("outsurf") is not None:
+    if params.get("outsurf", None) is not None:
         cargs.extend([
             "--o",
-            params.get("outsurf")
+            params.get("outsurf", None)
         ])
-    if params.get("no_set_vol_geom"):
+    if params.get("no_set_vol_geom", False):
         cargs.append("--no-set-vol-geom")
-    if params.get("threads") is not None:
+    if params.get("threads", None) is not None:
         cargs.extend([
             "--threads",
-            str(params.get("threads"))
+            str(params.get("threads", None))
         ])
     return cargs
 
@@ -338,7 +325,6 @@ def surfreg(
 __all__ = [
     "SURFREG_METADATA",
     "SurfregOutputs",
-    "SurfregParameters",
     "surfreg",
     "surfreg_execute",
     "surfreg_params",

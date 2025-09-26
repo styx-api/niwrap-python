@@ -14,7 +14,22 @@ REG_TOOLS_METADATA = Metadata(
 
 
 RegToolsParameters = typing.TypedDict('RegToolsParameters', {
-    "@type": typing.Literal["niftyreg.reg_tools"],
+    "@type": typing.NotRequired[typing.Literal["niftyreg/reg_tools"]],
+    "input_image": InputPathType,
+    "output_image": typing.NotRequired[str | None],
+    "add_value_or_image": typing.NotRequired[str | None],
+    "sub_value_or_image": typing.NotRequired[str | None],
+    "mul_value_or_image": typing.NotRequired[str | None],
+    "div_value_or_image": typing.NotRequired[str | None],
+    "smooth_value": typing.NotRequired[float | None],
+    "smooth_gaussian": typing.NotRequired[list[float] | None],
+    "rms_image": typing.NotRequired[InputPathType | None],
+    "binarize": bool,
+    "threshold_value": typing.NotRequired[float | None],
+    "nan_mask_image": typing.NotRequired[InputPathType | None],
+})
+RegToolsParametersTagged = typing.TypedDict('RegToolsParametersTagged', {
+    "@type": typing.Literal["niftyreg/reg_tools"],
     "input_image": InputPathType,
     "output_image": typing.NotRequired[str | None],
     "add_value_or_image": typing.NotRequired[str | None],
@@ -30,41 +45,9 @@ RegToolsParameters = typing.TypedDict('RegToolsParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "niftyreg.reg_tools": reg_tools_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "niftyreg.reg_tools": reg_tools_outputs,
-    }.get(t)
-
-
 class RegToolsOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `reg_tools(...)`.
+    Output object returned when calling `RegToolsParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -85,7 +68,7 @@ def reg_tools_params(
     binarize: bool = False,
     threshold_value: float | None = None,
     nan_mask_image: InputPathType | None = None,
-) -> RegToolsParameters:
+) -> RegToolsParametersTagged:
     """
     Build parameters.
     
@@ -107,7 +90,7 @@ def reg_tools_params(
         Parameter dictionary
     """
     params = {
-        "@type": "niftyreg.reg_tools",
+        "@type": "niftyreg/reg_tools",
         "input_image": input_image,
         "binarize": binarize,
     }
@@ -151,59 +134,59 @@ def reg_tools_cargs(
     cargs.append("reg_tools")
     cargs.extend([
         "-in",
-        execution.input_file(params.get("input_image"))
+        execution.input_file(params.get("input_image", None))
     ])
-    if params.get("output_image") is not None:
+    if params.get("output_image", None) is not None:
         cargs.extend([
             "-out",
-            params.get("output_image")
+            params.get("output_image", None)
         ])
-    if params.get("add_value_or_image") is not None:
+    if params.get("add_value_or_image", None) is not None:
         cargs.extend([
             "-add",
-            params.get("add_value_or_image")
+            params.get("add_value_or_image", None)
         ])
-    if params.get("sub_value_or_image") is not None:
+    if params.get("sub_value_or_image", None) is not None:
         cargs.extend([
             "-sub",
-            params.get("sub_value_or_image")
+            params.get("sub_value_or_image", None)
         ])
-    if params.get("mul_value_or_image") is not None:
+    if params.get("mul_value_or_image", None) is not None:
         cargs.extend([
             "-mul",
-            params.get("mul_value_or_image")
+            params.get("mul_value_or_image", None)
         ])
-    if params.get("div_value_or_image") is not None:
+    if params.get("div_value_or_image", None) is not None:
         cargs.extend([
             "-div",
-            params.get("div_value_or_image")
+            params.get("div_value_or_image", None)
         ])
-    if params.get("smooth_value") is not None:
+    if params.get("smooth_value", None) is not None:
         cargs.extend([
             "-smo",
-            str(params.get("smooth_value"))
+            str(params.get("smooth_value", None))
         ])
-    if params.get("smooth_gaussian") is not None:
+    if params.get("smooth_gaussian", None) is not None:
         cargs.extend([
             "-smoG",
-            *map(str, params.get("smooth_gaussian"))
+            *map(str, params.get("smooth_gaussian", None))
         ])
-    if params.get("rms_image") is not None:
+    if params.get("rms_image", None) is not None:
         cargs.extend([
             "-rms",
-            execution.input_file(params.get("rms_image"))
+            execution.input_file(params.get("rms_image", None))
         ])
-    if params.get("binarize"):
+    if params.get("binarize", False):
         cargs.append("-bin")
-    if params.get("threshold_value") is not None:
+    if params.get("threshold_value", None) is not None:
         cargs.extend([
             "-thr",
-            str(params.get("threshold_value"))
+            str(params.get("threshold_value", None))
         ])
-    if params.get("nan_mask_image") is not None:
+    if params.get("nan_mask_image", None) is not None:
         cargs.extend([
             "-nan",
-            execution.input_file(params.get("nan_mask_image"))
+            execution.input_file(params.get("nan_mask_image", None))
         ])
     return cargs
 
@@ -223,7 +206,7 @@ def reg_tools_outputs(
     """
     ret = RegToolsOutputs(
         root=execution.output_file("."),
-        output_image_file=execution.output_file(params.get("output_image")) if (params.get("output_image") is not None) else None,
+        output_image_file=execution.output_file(params.get("output_image", None)) if (params.get("output_image") is not None) else None,
     )
     return ret
 
@@ -318,7 +301,6 @@ def reg_tools(
 __all__ = [
     "REG_TOOLS_METADATA",
     "RegToolsOutputs",
-    "RegToolsParameters",
     "reg_tools",
     "reg_tools_execute",
     "reg_tools_params",

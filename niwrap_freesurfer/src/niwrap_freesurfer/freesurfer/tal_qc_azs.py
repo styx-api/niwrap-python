@@ -14,45 +14,18 @@ TAL_QC_AZS_METADATA = Metadata(
 
 
 TalQcAzsParameters = typing.TypedDict('TalQcAzsParameters', {
-    "@type": typing.Literal["freesurfer.tal_QC_AZS"],
+    "@type": typing.NotRequired[typing.Literal["freesurfer/tal_QC_AZS"]],
+    "logfile": InputPathType,
+})
+TalQcAzsParametersTagged = typing.TypedDict('TalQcAzsParametersTagged', {
+    "@type": typing.Literal["freesurfer/tal_QC_AZS"],
     "logfile": InputPathType,
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "freesurfer.tal_QC_AZS": tal_qc_azs_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-    }.get(t)
-
-
 class TalQcAzsOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `tal_qc_azs(...)`.
+    Output object returned when calling `TalQcAzsParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -60,7 +33,7 @@ class TalQcAzsOutputs(typing.NamedTuple):
 
 def tal_qc_azs_params(
     logfile: InputPathType,
-) -> TalQcAzsParameters:
+) -> TalQcAzsParametersTagged:
     """
     Build parameters.
     
@@ -70,7 +43,7 @@ def tal_qc_azs_params(
         Parameter dictionary
     """
     params = {
-        "@type": "freesurfer.tal_QC_AZS",
+        "@type": "freesurfer/tal_QC_AZS",
         "logfile": logfile,
     }
     return params
@@ -91,7 +64,7 @@ def tal_qc_azs_cargs(
     """
     cargs = []
     cargs.append("tal_QC_AZS")
-    cargs.append(execution.input_file(params.get("logfile")))
+    cargs.append(execution.input_file(params.get("logfile", None)))
     return cargs
 
 
@@ -170,7 +143,6 @@ def tal_qc_azs(
 __all__ = [
     "TAL_QC_AZS_METADATA",
     "TalQcAzsOutputs",
-    "TalQcAzsParameters",
     "tal_qc_azs",
     "tal_qc_azs_execute",
     "tal_qc_azs_params",

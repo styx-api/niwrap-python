@@ -14,7 +14,20 @@ CREATE_ICOSAHEDRON_METADATA = Metadata(
 
 
 CreateIcosahedronParameters = typing.TypedDict('CreateIcosahedronParameters', {
-    "@type": typing.Literal["afni.CreateIcosahedron"],
+    "@type": typing.NotRequired[typing.Literal["afni/CreateIcosahedron"]],
+    "rad": typing.NotRequired[float | None],
+    "rec_depth": typing.NotRequired[float | None],
+    "lin_depth": typing.NotRequired[float | None],
+    "min_nodes": typing.NotRequired[float | None],
+    "nums": bool,
+    "nums_quiet": bool,
+    "center_coordinates": typing.NotRequired[list[float] | None],
+    "to_sphere": bool,
+    "output_prefix": typing.NotRequired[str | None],
+    "help": bool,
+})
+CreateIcosahedronParametersTagged = typing.TypedDict('CreateIcosahedronParametersTagged', {
+    "@type": typing.Literal["afni/CreateIcosahedron"],
     "rad": typing.NotRequired[float | None],
     "rec_depth": typing.NotRequired[float | None],
     "lin_depth": typing.NotRequired[float | None],
@@ -28,40 +41,9 @@ CreateIcosahedronParameters = typing.TypedDict('CreateIcosahedronParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "afni.CreateIcosahedron": create_icosahedron_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-    }.get(t)
-
-
 class CreateIcosahedronOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `create_icosahedron(...)`.
+    Output object returned when calling `CreateIcosahedronParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -78,7 +60,7 @@ def create_icosahedron_params(
     to_sphere: bool = False,
     output_prefix: str | None = None,
     help_: bool = False,
-) -> CreateIcosahedronParameters:
+) -> CreateIcosahedronParametersTagged:
     """
     Build parameters.
     
@@ -99,7 +81,7 @@ def create_icosahedron_params(
         Parameter dictionary
     """
     params = {
-        "@type": "afni.CreateIcosahedron",
+        "@type": "afni/CreateIcosahedron",
         "nums": nums,
         "nums_quiet": nums_quiet,
         "to_sphere": to_sphere,
@@ -135,43 +117,43 @@ def create_icosahedron_cargs(
     """
     cargs = []
     cargs.append("CreateIcosahedron")
-    if params.get("rad") is not None:
+    if params.get("rad", None) is not None:
         cargs.extend([
             "-rad",
-            str(params.get("rad"))
+            str(params.get("rad", None))
         ])
-    if params.get("rec_depth") is not None:
+    if params.get("rec_depth", None) is not None:
         cargs.extend([
             "-rd",
-            str(params.get("rec_depth"))
+            str(params.get("rec_depth", None))
         ])
-    if params.get("lin_depth") is not None:
+    if params.get("lin_depth", None) is not None:
         cargs.extend([
             "-ld",
-            str(params.get("lin_depth"))
+            str(params.get("lin_depth", None))
         ])
-    if params.get("min_nodes") is not None:
+    if params.get("min_nodes", None) is not None:
         cargs.extend([
             "-min_nodes",
-            str(params.get("min_nodes"))
+            str(params.get("min_nodes", None))
         ])
-    if params.get("nums"):
+    if params.get("nums", False):
         cargs.append("-nums")
-    if params.get("nums_quiet"):
+    if params.get("nums_quiet", False):
         cargs.append("-nums_quiet")
-    if params.get("center_coordinates") is not None:
+    if params.get("center_coordinates", None) is not None:
         cargs.extend([
             "-ctr",
-            *map(str, params.get("center_coordinates"))
+            *map(str, params.get("center_coordinates", None))
         ])
-    if params.get("to_sphere"):
+    if params.get("to_sphere", False):
         cargs.append("-tosphere")
-    if params.get("output_prefix") is not None:
+    if params.get("output_prefix", None) is not None:
         cargs.extend([
             "-prefix",
-            params.get("output_prefix")
+            params.get("output_prefix", None)
         ])
-    if params.get("help"):
+    if params.get("help", False):
         cargs.append("-help")
     return cargs
 
@@ -280,7 +262,6 @@ def create_icosahedron(
 __all__ = [
     "CREATE_ICOSAHEDRON_METADATA",
     "CreateIcosahedronOutputs",
-    "CreateIcosahedronParameters",
     "create_icosahedron",
     "create_icosahedron_execute",
     "create_icosahedron_params",

@@ -14,48 +14,22 @@ MRI_DCT_ALIGN_BINARY_METADATA = Metadata(
 
 
 MriDctAlignBinaryParameters = typing.TypedDict('MriDctAlignBinaryParameters', {
-    "@type": typing.Literal["freesurfer.mri_dct_align_binary"],
+    "@type": typing.NotRequired[typing.Literal["freesurfer/mri_dct_align_binary"]],
+    "source_image": InputPathType,
+    "destination_image": InputPathType,
+    "output_transformation": str,
+})
+MriDctAlignBinaryParametersTagged = typing.TypedDict('MriDctAlignBinaryParametersTagged', {
+    "@type": typing.Literal["freesurfer/mri_dct_align_binary"],
     "source_image": InputPathType,
     "destination_image": InputPathType,
     "output_transformation": str,
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "freesurfer.mri_dct_align_binary": mri_dct_align_binary_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "freesurfer.mri_dct_align_binary": mri_dct_align_binary_outputs,
-    }.get(t)
-
-
 class MriDctAlignBinaryOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `mri_dct_align_binary(...)`.
+    Output object returned when calling `MriDctAlignBinaryParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -67,7 +41,7 @@ def mri_dct_align_binary_params(
     source_image: InputPathType,
     destination_image: InputPathType,
     output_transformation: str,
-) -> MriDctAlignBinaryParameters:
+) -> MriDctAlignBinaryParametersTagged:
     """
     Build parameters.
     
@@ -79,7 +53,7 @@ def mri_dct_align_binary_params(
         Parameter dictionary
     """
     params = {
-        "@type": "freesurfer.mri_dct_align_binary",
+        "@type": "freesurfer/mri_dct_align_binary",
         "source_image": source_image,
         "destination_image": destination_image,
         "output_transformation": output_transformation,
@@ -102,9 +76,9 @@ def mri_dct_align_binary_cargs(
     """
     cargs = []
     cargs.append("mri_dct_align_binary")
-    cargs.append(execution.input_file(params.get("source_image")))
-    cargs.append(execution.input_file(params.get("destination_image")))
-    cargs.append(params.get("output_transformation"))
+    cargs.append(execution.input_file(params.get("source_image", None)))
+    cargs.append(execution.input_file(params.get("destination_image", None)))
+    cargs.append(params.get("output_transformation", None))
     return cargs
 
 
@@ -123,7 +97,7 @@ def mri_dct_align_binary_outputs(
     """
     ret = MriDctAlignBinaryOutputs(
         root=execution.output_file("."),
-        output_transformation_file=execution.output_file(params.get("output_transformation")),
+        output_transformation_file=execution.output_file(params.get("output_transformation", None)),
     )
     return ret
 
@@ -190,7 +164,6 @@ def mri_dct_align_binary(
 __all__ = [
     "MRI_DCT_ALIGN_BINARY_METADATA",
     "MriDctAlignBinaryOutputs",
-    "MriDctAlignBinaryParameters",
     "mri_dct_align_binary",
     "mri_dct_align_binary_execute",
     "mri_dct_align_binary_params",

@@ -14,7 +14,17 @@ MRI_SYNTHESIZE_METADATA = Metadata(
 
 
 MriSynthesizeParameters = typing.TypedDict('MriSynthesizeParameters', {
-    "@type": typing.Literal["freesurfer.mri_synthesize"],
+    "@type": typing.NotRequired[typing.Literal["freesurfer/mri_synthesize"]],
+    "tr": float,
+    "alpha": float,
+    "te": float,
+    "t1_volume": InputPathType,
+    "pd_volume": InputPathType,
+    "output_volume": str,
+    "fixed_weight": bool,
+})
+MriSynthesizeParametersTagged = typing.TypedDict('MriSynthesizeParametersTagged', {
+    "@type": typing.Literal["freesurfer/mri_synthesize"],
     "tr": float,
     "alpha": float,
     "te": float,
@@ -25,41 +35,9 @@ MriSynthesizeParameters = typing.TypedDict('MriSynthesizeParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "freesurfer.mri_synthesize": mri_synthesize_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "freesurfer.mri_synthesize": mri_synthesize_outputs,
-    }.get(t)
-
-
 class MriSynthesizeOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `mri_synthesize(...)`.
+    Output object returned when calling `MriSynthesizeParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -75,7 +53,7 @@ def mri_synthesize_params(
     pd_volume: InputPathType,
     output_volume: str,
     fixed_weight: bool = False,
-) -> MriSynthesizeParameters:
+) -> MriSynthesizeParametersTagged:
     """
     Build parameters.
     
@@ -92,7 +70,7 @@ def mri_synthesize_params(
         Parameter dictionary
     """
     params = {
-        "@type": "freesurfer.mri_synthesize",
+        "@type": "freesurfer/mri_synthesize",
         "tr": tr,
         "alpha": alpha,
         "te": te,
@@ -119,13 +97,13 @@ def mri_synthesize_cargs(
     """
     cargs = []
     cargs.append("mri_synthesize")
-    cargs.append(str(params.get("tr")))
-    cargs.append(str(params.get("alpha")))
-    cargs.append(str(params.get("te")))
-    cargs.append(execution.input_file(params.get("t1_volume")))
-    cargs.append(execution.input_file(params.get("pd_volume")))
-    cargs.append(params.get("output_volume"))
-    if params.get("fixed_weight"):
+    cargs.append(str(params.get("tr", None)))
+    cargs.append(str(params.get("alpha", None)))
+    cargs.append(str(params.get("te", None)))
+    cargs.append(execution.input_file(params.get("t1_volume", None)))
+    cargs.append(execution.input_file(params.get("pd_volume", None)))
+    cargs.append(params.get("output_volume", None))
+    if params.get("fixed_weight", False):
         cargs.append("-w")
     return cargs
 
@@ -145,7 +123,7 @@ def mri_synthesize_outputs(
     """
     ret = MriSynthesizeOutputs(
         root=execution.output_file("."),
-        synthesized_output=execution.output_file(params.get("output_volume")),
+        synthesized_output=execution.output_file(params.get("output_volume", None)),
     )
     return ret
 
@@ -227,7 +205,6 @@ def mri_synthesize(
 __all__ = [
     "MRI_SYNTHESIZE_METADATA",
     "MriSynthesizeOutputs",
-    "MriSynthesizeParameters",
     "mri_synthesize",
     "mri_synthesize_execute",
     "mri_synthesize_params",

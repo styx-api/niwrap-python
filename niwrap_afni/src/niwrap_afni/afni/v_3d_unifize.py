@@ -14,7 +14,24 @@ V_3D_UNIFIZE_METADATA = Metadata(
 
 
 V3dUnifizeParameters = typing.TypedDict('V3dUnifizeParameters', {
-    "@type": typing.Literal["afni.3dUnifize"],
+    "@type": typing.NotRequired[typing.Literal["afni/3dUnifize"]],
+    "cl_frac": typing.NotRequired[float | None],
+    "epi": bool,
+    "gm": bool,
+    "no_duplo": bool,
+    "num_threads": typing.NotRequired[int | None],
+    "outputtype": typing.NotRequired[typing.Literal["NIFTI", "AFNI", "NIFTI_GZ"] | None],
+    "quiet": bool,
+    "rbt": typing.NotRequired[list[float] | None],
+    "prefix": typing.NotRequired[str | None],
+    "scale_file": typing.NotRequired[InputPathType | None],
+    "t2": bool,
+    "t2_up": typing.NotRequired[float | None],
+    "urad": typing.NotRequired[float | None],
+    "in_file": InputPathType,
+})
+V3dUnifizeParametersTagged = typing.TypedDict('V3dUnifizeParametersTagged', {
+    "@type": typing.Literal["afni/3dUnifize"],
     "cl_frac": typing.NotRequired[float | None],
     "epi": bool,
     "gm": bool,
@@ -32,41 +49,9 @@ V3dUnifizeParameters = typing.TypedDict('V3dUnifizeParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "afni.3dUnifize": v_3d_unifize_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "afni.3dUnifize": v_3d_unifize_outputs,
-    }.get(t)
-
-
 class V3dUnifizeOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `v_3d_unifize(...)`.
+    Output object returned when calling `V3dUnifizeParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -91,7 +76,7 @@ def v_3d_unifize_params(
     t2: bool = False,
     t2_up: float | None = None,
     urad: float | None = None,
-) -> V3dUnifizeParameters:
+) -> V3dUnifizeParametersTagged:
     """
     Build parameters.
     
@@ -136,7 +121,7 @@ def v_3d_unifize_params(
         Parameter dictionary
     """
     params = {
-        "@type": "afni.3dUnifize",
+        "@type": "afni/3dUnifize",
         "epi": epi,
         "gm": gm,
         "no_duplo": no_duplo,
@@ -178,53 +163,53 @@ def v_3d_unifize_cargs(
     """
     cargs = []
     cargs.append("3dUnifize")
-    if params.get("cl_frac") is not None:
+    if params.get("cl_frac", None) is not None:
         cargs.extend([
             "-clfrac",
-            str(params.get("cl_frac"))
+            str(params.get("cl_frac", None))
         ])
-    if params.get("epi"):
+    if params.get("epi", False):
         cargs.append("-EPI")
-    if params.get("gm"):
+    if params.get("gm", False):
         cargs.append("-GM")
-    if params.get("no_duplo"):
+    if params.get("no_duplo", False):
         cargs.append("-noduplo")
-    if params.get("num_threads") is not None:
-        cargs.append(str(params.get("num_threads")))
-    if params.get("outputtype") is not None:
-        cargs.append(params.get("outputtype"))
-    if params.get("quiet"):
+    if params.get("num_threads", None) is not None:
+        cargs.append(str(params.get("num_threads", None)))
+    if params.get("outputtype", None) is not None:
+        cargs.append(params.get("outputtype", None))
+    if params.get("quiet", False):
         cargs.append("-quiet")
-    if params.get("rbt") is not None:
+    if params.get("rbt", None) is not None:
         cargs.extend([
             "-rbt",
-            *map(str, params.get("rbt"))
+            *map(str, params.get("rbt", None))
         ])
-    if params.get("prefix") is not None:
+    if params.get("prefix", None) is not None:
         cargs.extend([
             "-prefix",
-            params.get("prefix")
+            params.get("prefix", None)
         ])
-    if params.get("scale_file") is not None:
+    if params.get("scale_file", None) is not None:
         cargs.extend([
             "-ssave",
-            execution.input_file(params.get("scale_file"))
+            execution.input_file(params.get("scale_file", None))
         ])
-    if params.get("t2"):
+    if params.get("t2", False):
         cargs.append("-T2")
-    if params.get("t2_up") is not None:
+    if params.get("t2_up", None) is not None:
         cargs.extend([
             "-T2up",
-            str(params.get("t2_up"))
+            str(params.get("t2_up", None))
         ])
-    if params.get("urad") is not None:
+    if params.get("urad", None) is not None:
         cargs.extend([
             "-Urad",
-            str(params.get("urad"))
+            str(params.get("urad", None))
         ])
     cargs.extend([
         "-input",
-        execution.input_file(params.get("in_file"))
+        execution.input_file(params.get("in_file", None))
     ])
     return cargs
 
@@ -244,8 +229,8 @@ def v_3d_unifize_outputs(
     """
     ret = V3dUnifizeOutputs(
         root=execution.output_file("."),
-        out_file=execution.output_file(params.get("prefix")) if (params.get("prefix") is not None) else None,
-        scale_file_outfile=execution.output_file(pathlib.Path(params.get("scale_file")).name) if (params.get("scale_file") is not None) else None,
+        out_file=execution.output_file(params.get("prefix", None)) if (params.get("prefix") is not None) else None,
+        scale_file_outfile=execution.output_file(pathlib.Path(params.get("scale_file", None)).name) if (params.get("scale_file") is not None) else None,
     )
     return ret
 
@@ -400,7 +385,6 @@ def v_3d_unifize(
 
 __all__ = [
     "V3dUnifizeOutputs",
-    "V3dUnifizeParameters",
     "V_3D_UNIFIZE_METADATA",
     "v_3d_unifize",
     "v_3d_unifize_execute",

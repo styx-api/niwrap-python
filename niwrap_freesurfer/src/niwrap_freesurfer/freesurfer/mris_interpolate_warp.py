@@ -14,47 +14,22 @@ MRIS_INTERPOLATE_WARP_METADATA = Metadata(
 
 
 MrisInterpolateWarpParameters = typing.TypedDict('MrisInterpolateWarpParameters', {
-    "@type": typing.Literal["freesurfer.mris_interpolate_warp"],
+    "@type": typing.NotRequired[typing.Literal["freesurfer/mris_interpolate_warp"]],
+    "start_surface": InputPathType,
+    "end_surface": InputPathType,
+    "warp_field": InputPathType,
+})
+MrisInterpolateWarpParametersTagged = typing.TypedDict('MrisInterpolateWarpParametersTagged', {
+    "@type": typing.Literal["freesurfer/mris_interpolate_warp"],
     "start_surface": InputPathType,
     "end_surface": InputPathType,
     "warp_field": InputPathType,
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "freesurfer.mris_interpolate_warp": mris_interpolate_warp_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-    }.get(t)
-
-
 class MrisInterpolateWarpOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `mris_interpolate_warp(...)`.
+    Output object returned when calling `MrisInterpolateWarpParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -64,7 +39,7 @@ def mris_interpolate_warp_params(
     start_surface: InputPathType,
     end_surface: InputPathType,
     warp_field: InputPathType,
-) -> MrisInterpolateWarpParameters:
+) -> MrisInterpolateWarpParametersTagged:
     """
     Build parameters.
     
@@ -76,7 +51,7 @@ def mris_interpolate_warp_params(
         Parameter dictionary
     """
     params = {
-        "@type": "freesurfer.mris_interpolate_warp",
+        "@type": "freesurfer/mris_interpolate_warp",
         "start_surface": start_surface,
         "end_surface": end_surface,
         "warp_field": warp_field,
@@ -99,9 +74,9 @@ def mris_interpolate_warp_cargs(
     """
     cargs = []
     cargs.append("mris_interpolate_warp")
-    cargs.append(execution.input_file(params.get("start_surface")))
-    cargs.append(execution.input_file(params.get("end_surface")))
-    cargs.append(execution.input_file(params.get("warp_field")))
+    cargs.append(execution.input_file(params.get("start_surface", None)))
+    cargs.append(execution.input_file(params.get("end_surface", None)))
+    cargs.append(execution.input_file(params.get("warp_field", None)))
     return cargs
 
 
@@ -186,7 +161,6 @@ def mris_interpolate_warp(
 __all__ = [
     "MRIS_INTERPOLATE_WARP_METADATA",
     "MrisInterpolateWarpOutputs",
-    "MrisInterpolateWarpParameters",
     "mris_interpolate_warp",
     "mris_interpolate_warp_execute",
     "mris_interpolate_warp_params",

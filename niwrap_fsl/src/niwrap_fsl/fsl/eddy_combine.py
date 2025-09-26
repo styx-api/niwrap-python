@@ -14,7 +14,20 @@ EDDY_COMBINE_METADATA = Metadata(
 
 
 EddyCombineParameters = typing.TypedDict('EddyCombineParameters', {
-    "@type": typing.Literal["fsl.eddy_combine"],
+    "@type": typing.NotRequired[typing.Literal["fsl/eddy_combine"]],
+    "pos_data": InputPathType,
+    "pos_bvals": InputPathType,
+    "pos_bvecs": InputPathType,
+    "pos_series_vol": float,
+    "neg_data": InputPathType,
+    "neg_bvals": InputPathType,
+    "neg_bvecs": InputPathType,
+    "neg_series_vol": float,
+    "output_path": str,
+    "only_matched_flag": int,
+})
+EddyCombineParametersTagged = typing.TypedDict('EddyCombineParametersTagged', {
+    "@type": typing.Literal["fsl/eddy_combine"],
     "pos_data": InputPathType,
     "pos_bvals": InputPathType,
     "pos_bvecs": InputPathType,
@@ -28,41 +41,9 @@ EddyCombineParameters = typing.TypedDict('EddyCombineParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "fsl.eddy_combine": eddy_combine_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "fsl.eddy_combine": eddy_combine_outputs,
-    }.get(t)
-
-
 class EddyCombineOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `eddy_combine(...)`.
+    Output object returned when calling `EddyCombineParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -85,7 +66,7 @@ def eddy_combine_params(
     neg_series_vol: float,
     output_path: str,
     only_matched_flag: int,
-) -> EddyCombineParameters:
+) -> EddyCombineParametersTagged:
     """
     Build parameters.
     
@@ -111,7 +92,7 @@ def eddy_combine_params(
         Parameter dictionary
     """
     params = {
-        "@type": "fsl.eddy_combine",
+        "@type": "fsl/eddy_combine",
         "pos_data": pos_data,
         "pos_bvals": pos_bvals,
         "pos_bvecs": pos_bvecs,
@@ -141,16 +122,16 @@ def eddy_combine_cargs(
     """
     cargs = []
     cargs.append("eddy_combine")
-    cargs.append(execution.input_file(params.get("pos_data")))
-    cargs.append(execution.input_file(params.get("pos_bvals")))
-    cargs.append(execution.input_file(params.get("pos_bvecs")))
-    cargs.append(str(params.get("pos_series_vol")))
-    cargs.append(execution.input_file(params.get("neg_data")))
-    cargs.append(execution.input_file(params.get("neg_bvals")))
-    cargs.append(execution.input_file(params.get("neg_bvecs")))
-    cargs.append(str(params.get("neg_series_vol")))
-    cargs.append(params.get("output_path"))
-    cargs.append(str(params.get("only_matched_flag")))
+    cargs.append(execution.input_file(params.get("pos_data", None)))
+    cargs.append(execution.input_file(params.get("pos_bvals", None)))
+    cargs.append(execution.input_file(params.get("pos_bvecs", None)))
+    cargs.append(str(params.get("pos_series_vol", None)))
+    cargs.append(execution.input_file(params.get("neg_data", None)))
+    cargs.append(execution.input_file(params.get("neg_bvals", None)))
+    cargs.append(execution.input_file(params.get("neg_bvecs", None)))
+    cargs.append(str(params.get("neg_series_vol", None)))
+    cargs.append(params.get("output_path", None))
+    cargs.append(str(params.get("only_matched_flag", None)))
     return cargs
 
 
@@ -169,9 +150,9 @@ def eddy_combine_outputs(
     """
     ret = EddyCombineOutputs(
         root=execution.output_file("."),
-        combined_data=execution.output_file(params.get("output_path") + "/combined_data.nii.gz"),
-        combined_bvals=execution.output_file(params.get("output_path") + "/combined_bvals"),
-        combined_bvecs=execution.output_file(params.get("output_path") + "/combined_bvecs"),
+        combined_data=execution.output_file(params.get("output_path", None) + "/combined_data.nii.gz"),
+        combined_bvals=execution.output_file(params.get("output_path", None) + "/combined_bvals"),
+        combined_bvecs=execution.output_file(params.get("output_path", None) + "/combined_bvecs"),
     )
     return ret
 
@@ -268,7 +249,6 @@ def eddy_combine(
 __all__ = [
     "EDDY_COMBINE_METADATA",
     "EddyCombineOutputs",
-    "EddyCombineParameters",
     "eddy_combine",
     "eddy_combine_execute",
     "eddy_combine_params",

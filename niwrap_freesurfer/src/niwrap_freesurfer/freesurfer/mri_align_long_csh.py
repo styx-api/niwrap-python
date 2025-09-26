@@ -14,46 +14,18 @@ MRI_ALIGN_LONG_CSH_METADATA = Metadata(
 
 
 MriAlignLongCshParameters = typing.TypedDict('MriAlignLongCshParameters', {
-    "@type": typing.Literal["freesurfer.mri_align_long.csh"],
+    "@type": typing.NotRequired[typing.Literal["freesurfer/mri_align_long.csh"]],
+    "base_id": str,
+})
+MriAlignLongCshParametersTagged = typing.TypedDict('MriAlignLongCshParametersTagged', {
+    "@type": typing.Literal["freesurfer/mri_align_long.csh"],
     "base_id": str,
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "freesurfer.mri_align_long.csh": mri_align_long_csh_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "freesurfer.mri_align_long.csh": mri_align_long_csh_outputs,
-    }.get(t)
-
-
 class MriAlignLongCshOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `mri_align_long_csh(...)`.
+    Output object returned when calling `MriAlignLongCshParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -65,7 +37,7 @@ class MriAlignLongCshOutputs(typing.NamedTuple):
 
 def mri_align_long_csh_params(
     base_id: str,
-) -> MriAlignLongCshParameters:
+) -> MriAlignLongCshParametersTagged:
     """
     Build parameters.
     
@@ -75,7 +47,7 @@ def mri_align_long_csh_params(
         Parameter dictionary
     """
     params = {
-        "@type": "freesurfer.mri_align_long.csh",
+        "@type": "freesurfer/mri_align_long.csh",
         "base_id": base_id,
     }
     return params
@@ -96,7 +68,7 @@ def mri_align_long_csh_cargs(
     """
     cargs = []
     cargs.append("mri_align_long.csh")
-    cargs.append(params.get("base_id"))
+    cargs.append(params.get("base_id", None))
     return cargs
 
 
@@ -179,7 +151,6 @@ def mri_align_long_csh(
 __all__ = [
     "MRI_ALIGN_LONG_CSH_METADATA",
     "MriAlignLongCshOutputs",
-    "MriAlignLongCshParameters",
     "mri_align_long_csh",
     "mri_align_long_csh_execute",
     "mri_align_long_csh_params",

@@ -14,48 +14,22 @@ V_3D_CONVOLVE_METADATA = Metadata(
 
 
 V3dConvolveParameters = typing.TypedDict('V3dConvolveParameters', {
-    "@type": typing.Literal["afni.3dConvolve"],
+    "@type": typing.NotRequired[typing.Literal["afni/3dConvolve"]],
+    "infile": InputPathType,
+    "outfile": str,
+    "options": typing.NotRequired[str | None],
+})
+V3dConvolveParametersTagged = typing.TypedDict('V3dConvolveParametersTagged', {
+    "@type": typing.Literal["afni/3dConvolve"],
     "infile": InputPathType,
     "outfile": str,
     "options": typing.NotRequired[str | None],
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "afni.3dConvolve": v_3d_convolve_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "afni.3dConvolve": v_3d_convolve_outputs,
-    }.get(t)
-
-
 class V3dConvolveOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `v_3d_convolve(...)`.
+    Output object returned when calling `V3dConvolveParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -67,7 +41,7 @@ def v_3d_convolve_params(
     infile: InputPathType,
     outfile: str,
     options: str | None = None,
-) -> V3dConvolveParameters:
+) -> V3dConvolveParametersTagged:
     """
     Build parameters.
     
@@ -79,7 +53,7 @@ def v_3d_convolve_params(
         Parameter dictionary
     """
     params = {
-        "@type": "afni.3dConvolve",
+        "@type": "afni/3dConvolve",
         "infile": infile,
         "outfile": outfile,
     }
@@ -103,12 +77,12 @@ def v_3d_convolve_cargs(
     """
     cargs = []
     cargs.append("3dConvolve")
-    cargs.append(execution.input_file(params.get("infile")))
-    cargs.append(params.get("outfile"))
-    if params.get("options") is not None:
+    cargs.append(execution.input_file(params.get("infile", None)))
+    cargs.append(params.get("outfile", None))
+    if params.get("options", None) is not None:
         cargs.extend([
             "-options",
-            params.get("options")
+            params.get("options", None)
         ])
     return cargs
 
@@ -128,7 +102,7 @@ def v_3d_convolve_outputs(
     """
     ret = V3dConvolveOutputs(
         root=execution.output_file("."),
-        outfile=execution.output_file(params.get("outfile")),
+        outfile=execution.output_file(params.get("outfile", None)),
     )
     return ret
 
@@ -194,7 +168,6 @@ def v_3d_convolve(
 
 __all__ = [
     "V3dConvolveOutputs",
-    "V3dConvolveParameters",
     "V_3D_CONVOLVE_METADATA",
     "v_3d_convolve",
     "v_3d_convolve_execute",

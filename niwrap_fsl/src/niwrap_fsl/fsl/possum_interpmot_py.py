@@ -14,7 +14,17 @@ POSSUM_INTERPMOT_PY_METADATA = Metadata(
 
 
 PossumInterpmotPyParameters = typing.TypedDict('PossumInterpmotPyParameters', {
-    "@type": typing.Literal["fsl.possum_interpmot.py"],
+    "@type": typing.NotRequired[typing.Literal["fsl/possum_interpmot.py"]],
+    "motion_type": int,
+    "tr": float,
+    "tr_slice": float,
+    "nslices": int,
+    "nvols": int,
+    "custom_motion_file": InputPathType,
+    "output_file": str,
+})
+PossumInterpmotPyParametersTagged = typing.TypedDict('PossumInterpmotPyParametersTagged', {
+    "@type": typing.Literal["fsl/possum_interpmot.py"],
     "motion_type": int,
     "tr": float,
     "tr_slice": float,
@@ -25,41 +35,9 @@ PossumInterpmotPyParameters = typing.TypedDict('PossumInterpmotPyParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "fsl.possum_interpmot.py": possum_interpmot_py_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "fsl.possum_interpmot.py": possum_interpmot_py_outputs,
-    }.get(t)
-
-
 class PossumInterpmotPyOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `possum_interpmot_py(...)`.
+    Output object returned when calling `PossumInterpmotPyParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -75,7 +53,7 @@ def possum_interpmot_py_params(
     nvols: int,
     custom_motion_file: InputPathType,
     output_file: str,
-) -> PossumInterpmotPyParameters:
+) -> PossumInterpmotPyParametersTagged:
     """
     Build parameters.
     
@@ -92,7 +70,7 @@ def possum_interpmot_py_params(
         Parameter dictionary
     """
     params = {
-        "@type": "fsl.possum_interpmot.py",
+        "@type": "fsl/possum_interpmot.py",
         "motion_type": motion_type,
         "tr": tr,
         "tr_slice": tr_slice,
@@ -119,13 +97,13 @@ def possum_interpmot_py_cargs(
     """
     cargs = []
     cargs.append("possum_interpmot.py")
-    cargs.append(str(params.get("motion_type")))
-    cargs.append(str(params.get("tr")))
-    cargs.append(str(params.get("tr_slice")))
-    cargs.append(str(params.get("nslices")))
-    cargs.append(str(params.get("nvols")))
-    cargs.append(execution.input_file(params.get("custom_motion_file")))
-    cargs.append(params.get("output_file"))
+    cargs.append(str(params.get("motion_type", None)))
+    cargs.append(str(params.get("tr", None)))
+    cargs.append(str(params.get("tr_slice", None)))
+    cargs.append(str(params.get("nslices", None)))
+    cargs.append(str(params.get("nvols", None)))
+    cargs.append(execution.input_file(params.get("custom_motion_file", None)))
+    cargs.append(params.get("output_file", None))
     return cargs
 
 
@@ -144,7 +122,7 @@ def possum_interpmot_py_outputs(
     """
     ret = PossumInterpmotPyOutputs(
         root=execution.output_file("."),
-        outfile=execution.output_file(params.get("output_file")),
+        outfile=execution.output_file(params.get("output_file", None)),
     )
     return ret
 
@@ -224,7 +202,6 @@ def possum_interpmot_py(
 __all__ = [
     "POSSUM_INTERPMOT_PY_METADATA",
     "PossumInterpmotPyOutputs",
-    "PossumInterpmotPyParameters",
     "possum_interpmot_py",
     "possum_interpmot_py_execute",
     "possum_interpmot_py_params",

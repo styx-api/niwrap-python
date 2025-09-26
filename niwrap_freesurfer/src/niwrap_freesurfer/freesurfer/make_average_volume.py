@@ -14,7 +14,25 @@ MAKE_AVERAGE_VOLUME_METADATA = Metadata(
 
 
 MakeAverageVolumeParameters = typing.TypedDict('MakeAverageVolumeParameters', {
-    "@type": typing.Literal["freesurfer.make_average_volume"],
+    "@type": typing.NotRequired[typing.Literal["freesurfer/make_average_volume"]],
+    "subjects": list[str],
+    "fsgd": typing.NotRequired[InputPathType | None],
+    "out": typing.NotRequired[str | None],
+    "topdir": typing.NotRequired[str | None],
+    "xform": typing.NotRequired[str | None],
+    "sdir": typing.NotRequired[str | None],
+    "sd_flag": bool,
+    "force_flag": bool,
+    "keep_all_orig_flag": bool,
+    "no_aseg_flag": bool,
+    "ctab": typing.NotRequired[str | None],
+    "ctab_default_flag": bool,
+    "echo_flag": bool,
+    "debug_flag": bool,
+    "nocleanup_flag": bool,
+})
+MakeAverageVolumeParametersTagged = typing.TypedDict('MakeAverageVolumeParametersTagged', {
+    "@type": typing.Literal["freesurfer/make_average_volume"],
     "subjects": list[str],
     "fsgd": typing.NotRequired[InputPathType | None],
     "out": typing.NotRequired[str | None],
@@ -33,40 +51,9 @@ MakeAverageVolumeParameters = typing.TypedDict('MakeAverageVolumeParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "freesurfer.make_average_volume": make_average_volume_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-    }.get(t)
-
-
 class MakeAverageVolumeOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `make_average_volume(...)`.
+    Output object returned when calling `MakeAverageVolumeParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -88,7 +75,7 @@ def make_average_volume_params(
     echo_flag: bool = False,
     debug_flag: bool = False,
     nocleanup_flag: bool = False,
-) -> MakeAverageVolumeParameters:
+) -> MakeAverageVolumeParametersTagged:
     """
     Build parameters.
     
@@ -113,7 +100,7 @@ def make_average_volume_params(
         Parameter dictionary
     """
     params = {
-        "@type": "freesurfer.make_average_volume",
+        "@type": "freesurfer/make_average_volume",
         "subjects": subjects,
         "sd_flag": sd_flag,
         "force_flag": force_flag,
@@ -156,53 +143,53 @@ def make_average_volume_cargs(
     cargs.append("make_average_volume")
     cargs.extend([
         "--subjects",
-        *params.get("subjects")
+        *params.get("subjects", None)
     ])
-    if params.get("fsgd") is not None:
+    if params.get("fsgd", None) is not None:
         cargs.extend([
             "--fsgd",
-            execution.input_file(params.get("fsgd"))
+            execution.input_file(params.get("fsgd", None))
         ])
-    if params.get("out") is not None:
+    if params.get("out", None) is not None:
         cargs.extend([
             "--out",
-            params.get("out")
+            params.get("out", None)
         ])
-    if params.get("topdir") is not None:
+    if params.get("topdir", None) is not None:
         cargs.extend([
             "--topdir",
-            params.get("topdir")
+            params.get("topdir", None)
         ])
-    if params.get("xform") is not None:
+    if params.get("xform", None) is not None:
         cargs.extend([
             "--xform",
-            params.get("xform")
+            params.get("xform", None)
         ])
-    if params.get("sdir") is not None:
+    if params.get("sdir", None) is not None:
         cargs.extend([
             "--sdir",
-            params.get("sdir")
+            params.get("sdir", None)
         ])
-    if params.get("sd_flag"):
+    if params.get("sd_flag", False):
         cargs.append("--sd")
-    if params.get("force_flag"):
+    if params.get("force_flag", False):
         cargs.append("--force")
-    if params.get("keep_all_orig_flag"):
+    if params.get("keep_all_orig_flag", False):
         cargs.append("--keep-all-orig")
-    if params.get("no_aseg_flag"):
+    if params.get("no_aseg_flag", False):
         cargs.append("--no-aseg")
-    if params.get("ctab") is not None:
+    if params.get("ctab", None) is not None:
         cargs.extend([
             "--ctab",
-            params.get("ctab")
+            params.get("ctab", None)
         ])
-    if params.get("ctab_default_flag"):
+    if params.get("ctab_default_flag", False):
         cargs.append("--ctab-default")
-    if params.get("echo_flag"):
+    if params.get("echo_flag", False):
         cargs.append("--echo")
-    if params.get("debug_flag"):
+    if params.get("debug_flag", False):
         cargs.append("--debug")
-    if params.get("nocleanup_flag"):
+    if params.get("nocleanup_flag", False):
         cargs.append("--nocleanup")
     return cargs
 
@@ -325,7 +312,6 @@ def make_average_volume(
 __all__ = [
     "MAKE_AVERAGE_VOLUME_METADATA",
     "MakeAverageVolumeOutputs",
-    "MakeAverageVolumeParameters",
     "make_average_volume",
     "make_average_volume_execute",
     "make_average_volume_params",

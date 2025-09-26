@@ -14,7 +14,16 @@ V__BUILD_AFNI_XLIB_METADATA = Metadata(
 
 
 VBuildAfniXlibParameters = typing.TypedDict('VBuildAfniXlibParameters', {
-    "@type": typing.Literal["afni.@build_afni_Xlib"],
+    "@type": typing.NotRequired[typing.Literal["afni/@build_afni_Xlib"]],
+    "afniX": bool,
+    "localinstall": bool,
+    "debug_symbols": bool,
+    "lib32": bool,
+    "lib64": bool,
+    "packages": list[str],
+})
+VBuildAfniXlibParametersTagged = typing.TypedDict('VBuildAfniXlibParametersTagged', {
+    "@type": typing.Literal["afni/@build_afni_Xlib"],
     "afniX": bool,
     "localinstall": bool,
     "debug_symbols": bool,
@@ -24,40 +33,9 @@ VBuildAfniXlibParameters = typing.TypedDict('VBuildAfniXlibParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "afni.@build_afni_Xlib": v__build_afni_xlib_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-    }.get(t)
-
-
 class VBuildAfniXlibOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `v__build_afni_xlib(...)`.
+    Output object returned when calling `VBuildAfniXlibParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -70,7 +48,7 @@ def v__build_afni_xlib_params(
     debug_symbols: bool = False,
     lib32: bool = False,
     lib64: bool = False,
-) -> VBuildAfniXlibParameters:
+) -> VBuildAfniXlibParametersTagged:
     """
     Build parameters.
     
@@ -87,7 +65,7 @@ def v__build_afni_xlib_params(
         Parameter dictionary
     """
     params = {
-        "@type": "afni.@build_afni_Xlib",
+        "@type": "afni/@build_afni_Xlib",
         "afniX": afni_x,
         "localinstall": localinstall,
         "debug_symbols": debug_symbols,
@@ -113,17 +91,17 @@ def v__build_afni_xlib_cargs(
     """
     cargs = []
     cargs.append("@build_afni_Xlib")
-    if params.get("afniX"):
+    if params.get("afniX", False):
         cargs.append("-afniX")
-    if params.get("localinstall"):
+    if params.get("localinstall", False):
         cargs.append("-localinstall")
-    if params.get("debug_symbols"):
+    if params.get("debug_symbols", False):
         cargs.append("-g")
-    if params.get("lib32"):
+    if params.get("lib32", False):
         cargs.append("-lib32")
-    if params.get("lib64"):
+    if params.get("lib64", False):
         cargs.append("-lib64")
-    cargs.extend(params.get("packages"))
+    cargs.extend(params.get("packages", None))
     return cargs
 
 
@@ -218,7 +196,6 @@ def v__build_afni_xlib(
 
 __all__ = [
     "VBuildAfniXlibOutputs",
-    "VBuildAfniXlibParameters",
     "V__BUILD_AFNI_XLIB_METADATA",
     "v__build_afni_xlib",
     "v__build_afni_xlib_execute",

@@ -14,7 +14,18 @@ FIRST_FLIRT_METADATA = Metadata(
 
 
 FirstFlirtParameters = typing.TypedDict('FirstFlirtParameters', {
-    "@type": typing.Literal["fsl.first_flirt"],
+    "@type": typing.NotRequired[typing.Literal["fsl/first_flirt"]],
+    "input_image": InputPathType,
+    "output_basename": str,
+    "already_brain_extracted_flag": bool,
+    "debug_flag": bool,
+    "inweight_flag": bool,
+    "strucweight_mask": typing.NotRequired[InputPathType | None],
+    "cort_flag": bool,
+    "cost_function": typing.NotRequired[str | None],
+})
+FirstFlirtParametersTagged = typing.TypedDict('FirstFlirtParametersTagged', {
+    "@type": typing.Literal["fsl/first_flirt"],
     "input_image": InputPathType,
     "output_basename": str,
     "already_brain_extracted_flag": bool,
@@ -26,41 +37,9 @@ FirstFlirtParameters = typing.TypedDict('FirstFlirtParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "fsl.first_flirt": first_flirt_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "fsl.first_flirt": first_flirt_outputs,
-    }.get(t)
-
-
 class FirstFlirtOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `first_flirt(...)`.
+    Output object returned when calling `FirstFlirtParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -81,7 +60,7 @@ def first_flirt_params(
     strucweight_mask: InputPathType | None = None,
     cort_flag: bool = False,
     cost_function: str | None = None,
-) -> FirstFlirtParameters:
+) -> FirstFlirtParametersTagged:
     """
     Build parameters.
     
@@ -102,7 +81,7 @@ def first_flirt_params(
         Parameter dictionary
     """
     params = {
-        "@type": "fsl.first_flirt",
+        "@type": "fsl/first_flirt",
         "input_image": input_image,
         "output_basename": output_basename,
         "already_brain_extracted_flag": already_brain_extracted_flag,
@@ -132,25 +111,25 @@ def first_flirt_cargs(
     """
     cargs = []
     cargs.append("first_flirt")
-    cargs.append(execution.input_file(params.get("input_image")))
-    cargs.append(params.get("output_basename"))
-    if params.get("already_brain_extracted_flag"):
+    cargs.append(execution.input_file(params.get("input_image", None)))
+    cargs.append(params.get("output_basename", None))
+    if params.get("already_brain_extracted_flag", False):
         cargs.append("-b")
-    if params.get("debug_flag"):
+    if params.get("debug_flag", False):
         cargs.append("-d")
-    if params.get("inweight_flag"):
+    if params.get("inweight_flag", False):
         cargs.append("-inweight")
-    if params.get("strucweight_mask") is not None:
+    if params.get("strucweight_mask", None) is not None:
         cargs.extend([
             "-strucweight",
-            execution.input_file(params.get("strucweight_mask"))
+            execution.input_file(params.get("strucweight_mask", None))
         ])
-    if params.get("cort_flag"):
+    if params.get("cort_flag", False):
         cargs.append("-cort")
-    if params.get("cost_function") is not None:
+    if params.get("cost_function", None) is not None:
         cargs.extend([
             "-cost",
-            params.get("cost_function")
+            params.get("cost_function", None)
         ])
     return cargs
 
@@ -170,9 +149,9 @@ def first_flirt_outputs(
     """
     ret = FirstFlirtOutputs(
         root=execution.output_file("."),
-        registered_output_image=execution.output_file(params.get("output_basename") + "_result.nii.gz"),
-        log_file=execution.output_file(params.get("output_basename") + "_log.txt"),
-        transformation_matrix=execution.output_file(params.get("output_basename") + "_matrix.mat"),
+        registered_output_image=execution.output_file(params.get("output_basename", None) + "_result.nii.gz"),
+        log_file=execution.output_file(params.get("output_basename", None) + "_log.txt"),
+        transformation_matrix=execution.output_file(params.get("output_basename", None) + "_matrix.mat"),
     )
     return ret
 
@@ -260,7 +239,6 @@ def first_flirt(
 __all__ = [
     "FIRST_FLIRT_METADATA",
     "FirstFlirtOutputs",
-    "FirstFlirtParameters",
     "first_flirt",
     "first_flirt_execute",
     "first_flirt_params",

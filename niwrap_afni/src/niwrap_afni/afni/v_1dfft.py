@@ -14,7 +14,19 @@ V_1DFFT_METADATA = Metadata(
 
 
 V1dfftParameters = typing.TypedDict('V1dfftParameters', {
-    "@type": typing.Literal["afni.1dfft"],
+    "@type": typing.NotRequired[typing.Literal["afni/1dfft"]],
+    "infile": InputPathType,
+    "outfile": str,
+    "ignore": typing.NotRequired[float | None],
+    "use": typing.NotRequired[float | None],
+    "nfft": typing.NotRequired[float | None],
+    "tocx": bool,
+    "fromcx": bool,
+    "hilbert": bool,
+    "nodetrend": bool,
+})
+V1dfftParametersTagged = typing.TypedDict('V1dfftParametersTagged', {
+    "@type": typing.Literal["afni/1dfft"],
     "infile": InputPathType,
     "outfile": str,
     "ignore": typing.NotRequired[float | None],
@@ -27,41 +39,9 @@ V1dfftParameters = typing.TypedDict('V1dfftParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "afni.1dfft": v_1dfft_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "afni.1dfft": v_1dfft_outputs,
-    }.get(t)
-
-
 class V1dfftOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `v_1dfft(...)`.
+    Output object returned when calling `V1dfftParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -79,7 +59,7 @@ def v_1dfft_params(
     fromcx: bool = False,
     hilbert: bool = False,
     nodetrend: bool = False,
-) -> V1dfftParameters:
+) -> V1dfftParametersTagged:
     """
     Build parameters.
     
@@ -102,7 +82,7 @@ def v_1dfft_params(
         Parameter dictionary
     """
     params = {
-        "@type": "afni.1dfft",
+        "@type": "afni/1dfft",
         "infile": infile,
         "outfile": outfile,
         "tocx": tocx,
@@ -134,30 +114,30 @@ def v_1dfft_cargs(
     """
     cargs = []
     cargs.append("1dfft")
-    cargs.append(execution.input_file(params.get("infile")))
-    cargs.append(params.get("outfile"))
-    if params.get("ignore") is not None:
+    cargs.append(execution.input_file(params.get("infile", None)))
+    cargs.append(params.get("outfile", None))
+    if params.get("ignore", None) is not None:
         cargs.extend([
             "-ignore",
-            str(params.get("ignore"))
+            str(params.get("ignore", None))
         ])
-    if params.get("use") is not None:
+    if params.get("use", None) is not None:
         cargs.extend([
             "-use",
-            str(params.get("use"))
+            str(params.get("use", None))
         ])
-    if params.get("nfft") is not None:
+    if params.get("nfft", None) is not None:
         cargs.extend([
             "-nfft",
-            str(params.get("nfft"))
+            str(params.get("nfft", None))
         ])
-    if params.get("tocx"):
+    if params.get("tocx", False):
         cargs.append("-tocx")
-    if params.get("fromcx"):
+    if params.get("fromcx", False):
         cargs.append("-fromcx")
-    if params.get("hilbert"):
+    if params.get("hilbert", False):
         cargs.append("-hilbert")
-    if params.get("nodetrend"):
+    if params.get("nodetrend", False):
         cargs.append("-nodetrend")
     return cargs
 
@@ -177,7 +157,7 @@ def v_1dfft_outputs(
     """
     ret = V1dfftOutputs(
         root=execution.output_file("."),
-        out_fft=execution.output_file(params.get("outfile")),
+        out_fft=execution.output_file(params.get("outfile", None)),
     )
     return ret
 
@@ -266,7 +246,6 @@ def v_1dfft(
 
 __all__ = [
     "V1dfftOutputs",
-    "V1dfftParameters",
     "V_1DFFT_METADATA",
     "v_1dfft",
     "v_1dfft_execute",

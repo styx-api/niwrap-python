@@ -14,14 +14,32 @@ METRIC_SMOOTHING_METADATA = Metadata(
 
 
 MetricSmoothingRoiParameters = typing.TypedDict('MetricSmoothingRoiParameters', {
-    "@type": typing.Literal["workbench.metric-smoothing.roi"],
+    "@type": typing.NotRequired[typing.Literal["roi"]],
+    "roi_metric": InputPathType,
+    "opt_match_columns": bool,
+})
+MetricSmoothingRoiParametersTagged = typing.TypedDict('MetricSmoothingRoiParametersTagged', {
+    "@type": typing.Literal["roi"],
     "roi_metric": InputPathType,
     "opt_match_columns": bool,
 })
 
 
 MetricSmoothingParameters = typing.TypedDict('MetricSmoothingParameters', {
-    "@type": typing.Literal["workbench.metric-smoothing"],
+    "@type": typing.NotRequired[typing.Literal["workbench/metric-smoothing"]],
+    "surface": InputPathType,
+    "metric_in": InputPathType,
+    "smoothing_kernel": float,
+    "metric_out": str,
+    "opt_fwhm": bool,
+    "roi": typing.NotRequired[MetricSmoothingRoiParameters | None],
+    "opt_fix_zeros": bool,
+    "opt_column_column": typing.NotRequired[str | None],
+    "opt_corrected_areas_area_metric": typing.NotRequired[InputPathType | None],
+    "opt_method_method": typing.NotRequired[str | None],
+})
+MetricSmoothingParametersTagged = typing.TypedDict('MetricSmoothingParametersTagged', {
+    "@type": typing.Literal["workbench/metric-smoothing"],
     "surface": InputPathType,
     "metric_in": InputPathType,
     "smoothing_kernel": float,
@@ -35,43 +53,10 @@ MetricSmoothingParameters = typing.TypedDict('MetricSmoothingParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "workbench.metric-smoothing": metric_smoothing_cargs,
-        "workbench.metric-smoothing.roi": metric_smoothing_roi_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "workbench.metric-smoothing": metric_smoothing_outputs,
-    }.get(t)
-
-
 def metric_smoothing_roi_params(
     roi_metric: InputPathType,
     opt_match_columns: bool = False,
-) -> MetricSmoothingRoiParameters:
+) -> MetricSmoothingRoiParametersTagged:
     """
     Build parameters.
     
@@ -83,7 +68,7 @@ def metric_smoothing_roi_params(
         Parameter dictionary
     """
     params = {
-        "@type": "workbench.metric-smoothing.roi",
+        "@type": "roi",
         "roi_metric": roi_metric,
         "opt_match_columns": opt_match_columns,
     }
@@ -105,15 +90,15 @@ def metric_smoothing_roi_cargs(
     """
     cargs = []
     cargs.append("-roi")
-    cargs.append(execution.input_file(params.get("roi_metric")))
-    if params.get("opt_match_columns"):
+    cargs.append(execution.input_file(params.get("roi_metric", None)))
+    if params.get("opt_match_columns", False):
         cargs.append("-match-columns")
     return cargs
 
 
 class MetricSmoothingOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `metric_smoothing(...)`.
+    Output object returned when calling `MetricSmoothingParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -132,7 +117,7 @@ def metric_smoothing_params(
     opt_column_column: str | None = None,
     opt_corrected_areas_area_metric: InputPathType | None = None,
     opt_method_method: str | None = None,
-) -> MetricSmoothingParameters:
+) -> MetricSmoothingParametersTagged:
     """
     Build parameters.
     
@@ -156,7 +141,7 @@ def metric_smoothing_params(
         Parameter dictionary
     """
     params = {
-        "@type": "workbench.metric-smoothing",
+        "@type": "workbench/metric-smoothing",
         "surface": surface,
         "metric_in": metric_in,
         "smoothing_kernel": smoothing_kernel,
@@ -191,30 +176,30 @@ def metric_smoothing_cargs(
     cargs = []
     cargs.append("wb_command")
     cargs.append("-metric-smoothing")
-    cargs.append(execution.input_file(params.get("surface")))
-    cargs.append(execution.input_file(params.get("metric_in")))
-    cargs.append(str(params.get("smoothing_kernel")))
-    cargs.append(params.get("metric_out"))
-    if params.get("opt_fwhm"):
+    cargs.append(execution.input_file(params.get("surface", None)))
+    cargs.append(execution.input_file(params.get("metric_in", None)))
+    cargs.append(str(params.get("smoothing_kernel", None)))
+    cargs.append(params.get("metric_out", None))
+    if params.get("opt_fwhm", False):
         cargs.append("-fwhm")
-    if params.get("roi") is not None:
-        cargs.extend(dyn_cargs(params.get("roi")["@type"])(params.get("roi"), execution))
-    if params.get("opt_fix_zeros"):
+    if params.get("roi", None) is not None:
+        cargs.extend(metric_smoothing_roi_cargs(params.get("roi", None), execution))
+    if params.get("opt_fix_zeros", False):
         cargs.append("-fix-zeros")
-    if params.get("opt_column_column") is not None:
+    if params.get("opt_column_column", None) is not None:
         cargs.extend([
             "-column",
-            params.get("opt_column_column")
+            params.get("opt_column_column", None)
         ])
-    if params.get("opt_corrected_areas_area_metric") is not None:
+    if params.get("opt_corrected_areas_area_metric", None) is not None:
         cargs.extend([
             "-corrected-areas",
-            execution.input_file(params.get("opt_corrected_areas_area_metric"))
+            execution.input_file(params.get("opt_corrected_areas_area_metric", None))
         ])
-    if params.get("opt_method_method") is not None:
+    if params.get("opt_method_method", None) is not None:
         cargs.extend([
             "-method",
-            params.get("opt_method_method")
+            params.get("opt_method_method", None)
         ])
     return cargs
 
@@ -234,7 +219,7 @@ def metric_smoothing_outputs(
     """
     ret = MetricSmoothingOutputs(
         root=execution.output_file("."),
-        metric_out=execution.output_file(params.get("metric_out")),
+        metric_out=execution.output_file(params.get("metric_out", None)),
     )
     return ret
 
@@ -415,8 +400,6 @@ def metric_smoothing(
 __all__ = [
     "METRIC_SMOOTHING_METADATA",
     "MetricSmoothingOutputs",
-    "MetricSmoothingParameters",
-    "MetricSmoothingRoiParameters",
     "metric_smoothing",
     "metric_smoothing_execute",
     "metric_smoothing_params",

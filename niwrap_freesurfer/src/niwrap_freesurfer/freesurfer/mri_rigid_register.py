@@ -14,48 +14,22 @@ MRI_RIGID_REGISTER_METADATA = Metadata(
 
 
 MriRigidRegisterParameters = typing.TypedDict('MriRigidRegisterParameters', {
-    "@type": typing.Literal["freesurfer.mri_rigid_register"],
+    "@type": typing.NotRequired[typing.Literal["freesurfer/mri_rigid_register"]],
+    "source_volume": InputPathType,
+    "target_volume": InputPathType,
+    "transform_output": str,
+})
+MriRigidRegisterParametersTagged = typing.TypedDict('MriRigidRegisterParametersTagged', {
+    "@type": typing.Literal["freesurfer/mri_rigid_register"],
     "source_volume": InputPathType,
     "target_volume": InputPathType,
     "transform_output": str,
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "freesurfer.mri_rigid_register": mri_rigid_register_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "freesurfer.mri_rigid_register": mri_rigid_register_outputs,
-    }.get(t)
-
-
 class MriRigidRegisterOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `mri_rigid_register(...)`.
+    Output object returned when calling `MriRigidRegisterParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -67,7 +41,7 @@ def mri_rigid_register_params(
     source_volume: InputPathType,
     target_volume: InputPathType,
     transform_output: str,
-) -> MriRigidRegisterParameters:
+) -> MriRigidRegisterParametersTagged:
     """
     Build parameters.
     
@@ -79,7 +53,7 @@ def mri_rigid_register_params(
         Parameter dictionary
     """
     params = {
-        "@type": "freesurfer.mri_rigid_register",
+        "@type": "freesurfer/mri_rigid_register",
         "source_volume": source_volume,
         "target_volume": target_volume,
         "transform_output": transform_output,
@@ -102,9 +76,9 @@ def mri_rigid_register_cargs(
     """
     cargs = []
     cargs.append("mri_rigid_register")
-    cargs.append(execution.input_file(params.get("source_volume")))
-    cargs.append(execution.input_file(params.get("target_volume")))
-    cargs.append(params.get("transform_output"))
+    cargs.append(execution.input_file(params.get("source_volume", None)))
+    cargs.append(execution.input_file(params.get("target_volume", None)))
+    cargs.append(params.get("transform_output", None))
     return cargs
 
 
@@ -123,7 +97,7 @@ def mri_rigid_register_outputs(
     """
     ret = MriRigidRegisterOutputs(
         root=execution.output_file("."),
-        transform_file=execution.output_file(params.get("transform_output")),
+        transform_file=execution.output_file(params.get("transform_output", None)),
     )
     return ret
 
@@ -190,7 +164,6 @@ def mri_rigid_register(
 __all__ = [
     "MRI_RIGID_REGISTER_METADATA",
     "MriRigidRegisterOutputs",
-    "MriRigidRegisterParameters",
     "mri_rigid_register",
     "mri_rigid_register_execute",
     "mri_rigid_register_params",

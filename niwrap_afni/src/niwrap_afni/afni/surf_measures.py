@@ -14,7 +14,28 @@ SURF_MEASURES_METADATA = Metadata(
 
 
 SurfMeasuresParameters = typing.TypedDict('SurfMeasuresParameters', {
-    "@type": typing.Literal["afni.SurfMeasures"],
+    "@type": typing.NotRequired[typing.Literal["afni/SurfMeasures"]],
+    "spec_file": InputPathType,
+    "surf_A": str,
+    "surf_B": typing.NotRequired[str | None],
+    "out_1D": typing.NotRequired[str | None],
+    "out_dset": str,
+    "func": typing.NotRequired[list[str] | None],
+    "surf_volume": typing.NotRequired[InputPathType | None],
+    "cmask": typing.NotRequired[str | None],
+    "debug": typing.NotRequired[int | None],
+    "dnode": typing.NotRequired[float | None],
+    "nodes_1D": typing.NotRequired[InputPathType | None],
+    "info_all": bool,
+    "info_area": bool,
+    "info_norms": bool,
+    "info_thick": bool,
+    "info_vol": bool,
+    "info_volg": bool,
+    "ver": bool,
+})
+SurfMeasuresParametersTagged = typing.TypedDict('SurfMeasuresParametersTagged', {
+    "@type": typing.Literal["afni/SurfMeasures"],
     "spec_file": InputPathType,
     "surf_A": str,
     "surf_B": typing.NotRequired[str | None],
@@ -36,41 +57,9 @@ SurfMeasuresParameters = typing.TypedDict('SurfMeasuresParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "afni.SurfMeasures": surf_measures_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "afni.SurfMeasures": surf_measures_outputs,
-    }.get(t)
-
-
 class SurfMeasuresOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `surf_measures(...)`.
+    Output object returned when calling `SurfMeasuresParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -99,7 +88,7 @@ def surf_measures_params(
     info_vol: bool = False,
     info_volg: bool = False,
     ver: bool = False,
-) -> SurfMeasuresParameters:
+) -> SurfMeasuresParametersTagged:
     """
     Build parameters.
     
@@ -127,7 +116,7 @@ def surf_measures_params(
         Parameter dictionary
     """
     params = {
-        "@type": "afni.SurfMeasures",
+        "@type": "afni/SurfMeasures",
         "spec_file": spec_file,
         "surf_A": surf_a,
         "out_dset": out_dset,
@@ -175,69 +164,69 @@ def surf_measures_cargs(
     cargs.append("SurfMeasures")
     cargs.extend([
         "-spec",
-        execution.input_file(params.get("spec_file"))
+        execution.input_file(params.get("spec_file", None))
     ])
     cargs.extend([
         "-surf_A",
-        params.get("surf_A")
+        params.get("surf_A", None)
     ])
-    if params.get("surf_B") is not None:
+    if params.get("surf_B", None) is not None:
         cargs.extend([
             "-surf_B",
-            params.get("surf_B")
+            params.get("surf_B", None)
         ])
-    if params.get("out_1D") is not None:
+    if params.get("out_1D", None) is not None:
         cargs.extend([
             "-out_1D",
-            params.get("out_1D")
+            params.get("out_1D", None)
         ])
     cargs.extend([
         "-out",
-        params.get("out_dset")
+        params.get("out_dset", None)
     ])
-    if params.get("func") is not None:
+    if params.get("func", None) is not None:
         cargs.extend([
             "-func",
-            *params.get("func")
+            *params.get("func", None)
         ])
-    if params.get("surf_volume") is not None:
+    if params.get("surf_volume", None) is not None:
         cargs.extend([
             "-sv",
-            execution.input_file(params.get("surf_volume"))
+            execution.input_file(params.get("surf_volume", None))
         ])
-    if params.get("cmask") is not None:
+    if params.get("cmask", None) is not None:
         cargs.extend([
             "-cmask",
-            params.get("cmask")
+            params.get("cmask", None)
         ])
-    if params.get("debug") is not None:
+    if params.get("debug", None) is not None:
         cargs.extend([
             "-debug",
-            str(params.get("debug"))
+            str(params.get("debug", None))
         ])
-    if params.get("dnode") is not None:
+    if params.get("dnode", None) is not None:
         cargs.extend([
             "-dnode",
-            str(params.get("dnode"))
+            str(params.get("dnode", None))
         ])
-    if params.get("nodes_1D") is not None:
+    if params.get("nodes_1D", None) is not None:
         cargs.extend([
             "-nodes_1D",
-            execution.input_file(params.get("nodes_1D"))
+            execution.input_file(params.get("nodes_1D", None))
         ])
-    if params.get("info_all"):
+    if params.get("info_all", False):
         cargs.append("-info_all")
-    if params.get("info_area"):
+    if params.get("info_area", False):
         cargs.append("-info_area")
-    if params.get("info_norms"):
+    if params.get("info_norms", False):
         cargs.append("-info_norms")
-    if params.get("info_thick"):
+    if params.get("info_thick", False):
         cargs.append("-info_thick")
-    if params.get("info_vol"):
+    if params.get("info_vol", False):
         cargs.append("-info_vol")
-    if params.get("info_volg"):
+    if params.get("info_volg", False):
         cargs.append("-info_volg")
-    if params.get("ver"):
+    if params.get("ver", False):
         cargs.append("-ver")
     return cargs
 
@@ -257,8 +246,8 @@ def surf_measures_outputs(
     """
     ret = SurfMeasuresOutputs(
         root=execution.output_file("."),
-        output_1_d=execution.output_file(params.get("out_1D") + ".1D") if (params.get("out_1D") is not None) else None,
-        output_dset=execution.output_file(params.get("out_dset")),
+        output_1_d=execution.output_file(params.get("out_1D", None) + ".1D") if (params.get("out_1D") is not None) else None,
+        output_dset=execution.output_file(params.get("out_dset", None)),
     )
     return ret
 
@@ -371,7 +360,6 @@ def surf_measures(
 __all__ = [
     "SURF_MEASURES_METADATA",
     "SurfMeasuresOutputs",
-    "SurfMeasuresParameters",
     "surf_measures",
     "surf_measures_execute",
     "surf_measures_params",

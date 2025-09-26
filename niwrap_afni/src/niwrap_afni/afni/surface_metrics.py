@@ -14,7 +14,33 @@ SURFACE_METRICS_METADATA = Metadata(
 
 
 SurfaceMetricsParameters = typing.TypedDict('SurfaceMetricsParameters', {
-    "@type": typing.Literal["afni.SurfaceMetrics"],
+    "@type": typing.NotRequired[typing.Literal["afni/SurfaceMetrics"]],
+    "volume": bool,
+    "convexity": bool,
+    "closest_node": typing.NotRequired[InputPathType | None],
+    "area": bool,
+    "tri_sines": bool,
+    "tri_cosines": bool,
+    "tri_CoSines": bool,
+    "tri_angles": bool,
+    "node_angles": bool,
+    "curvature": bool,
+    "edges": bool,
+    "node_normals": bool,
+    "face_normals": bool,
+    "normals_scale": typing.NotRequired[float | None],
+    "coords": bool,
+    "sph_coords": bool,
+    "sph_coords_center": typing.NotRequired[list[float] | None],
+    "boundary_nodes": bool,
+    "boundary_triangles": bool,
+    "internal_nodes": bool,
+    "surf1": str,
+    "tlrc": bool,
+    "prefix": typing.NotRequired[str | None],
+})
+SurfaceMetricsParametersTagged = typing.TypedDict('SurfaceMetricsParametersTagged', {
+    "@type": typing.Literal["afni/SurfaceMetrics"],
     "volume": bool,
     "convexity": bool,
     "closest_node": typing.NotRequired[InputPathType | None],
@@ -41,40 +67,9 @@ SurfaceMetricsParameters = typing.TypedDict('SurfaceMetricsParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "afni.SurfaceMetrics": surface_metrics_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-    }.get(t)
-
-
 class SurfaceMetricsOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `surface_metrics(...)`.
+    Output object returned when calling `SurfaceMetricsParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -104,7 +99,7 @@ def surface_metrics_params(
     internal_nodes: bool = False,
     tlrc: bool = False,
     prefix: str | None = None,
-) -> SurfaceMetricsParameters:
+) -> SurfaceMetricsParametersTagged:
     """
     Build parameters.
     
@@ -138,7 +133,7 @@ def surface_metrics_params(
         Parameter dictionary
     """
     params = {
-        "@type": "afni.SurfaceMetrics",
+        "@type": "afni/SurfaceMetrics",
         "volume": volume,
         "convexity": convexity,
         "area": area,
@@ -185,65 +180,65 @@ def surface_metrics_cargs(
     """
     cargs = []
     cargs.append("SurfaceMetrics")
-    if params.get("volume"):
+    if params.get("volume", False):
         cargs.append("-vol")
-    if params.get("convexity"):
+    if params.get("convexity", False):
         cargs.append("-conv")
-    if params.get("closest_node") is not None:
+    if params.get("closest_node", None) is not None:
         cargs.extend([
             "-closest_node",
-            execution.input_file(params.get("closest_node"))
+            execution.input_file(params.get("closest_node", None))
         ])
-    if params.get("area"):
+    if params.get("area", False):
         cargs.append("-area")
-    if params.get("tri_sines"):
+    if params.get("tri_sines", False):
         cargs.append("-tri_sines")
-    if params.get("tri_cosines"):
+    if params.get("tri_cosines", False):
         cargs.append("-tri_cosines")
-    if params.get("tri_CoSines"):
+    if params.get("tri_CoSines", False):
         cargs.append("-tri_CoSines")
-    if params.get("tri_angles"):
+    if params.get("tri_angles", False):
         cargs.append("-tri_angles")
-    if params.get("node_angles"):
+    if params.get("node_angles", False):
         cargs.append("-node_angles")
-    if params.get("curvature"):
+    if params.get("curvature", False):
         cargs.append("-curv")
-    if params.get("edges"):
+    if params.get("edges", False):
         cargs.append("-edges")
-    if params.get("node_normals"):
+    if params.get("node_normals", False):
         cargs.append("-node_normals")
-    if params.get("face_normals"):
+    if params.get("face_normals", False):
         cargs.append("-face_normals")
-    if params.get("normals_scale") is not None:
+    if params.get("normals_scale", None) is not None:
         cargs.extend([
             "-normals_scale",
-            str(params.get("normals_scale"))
+            str(params.get("normals_scale", None))
         ])
-    if params.get("coords"):
+    if params.get("coords", False):
         cargs.append("-coords")
-    if params.get("sph_coords"):
+    if params.get("sph_coords", False):
         cargs.append("-sph_coords")
-    if params.get("sph_coords_center") is not None:
+    if params.get("sph_coords_center", None) is not None:
         cargs.extend([
             "-sph_coords_center",
-            *map(str, params.get("sph_coords_center"))
+            *map(str, params.get("sph_coords_center", None))
         ])
-    if params.get("boundary_nodes"):
+    if params.get("boundary_nodes", False):
         cargs.append("-boundary_nodes")
-    if params.get("boundary_triangles"):
+    if params.get("boundary_triangles", False):
         cargs.append("-boundary_triangles")
-    if params.get("internal_nodes"):
+    if params.get("internal_nodes", False):
         cargs.append("-internal_nodes")
     cargs.extend([
         "-SURF_1",
-        params.get("surf1")
+        params.get("surf1", None)
     ])
-    if params.get("tlrc"):
+    if params.get("tlrc", False):
         cargs.append("-tlrc")
-    if params.get("prefix") is not None:
+    if params.get("prefix", None) is not None:
         cargs.extend([
             "-prefix",
-            params.get("prefix")
+            params.get("prefix", None)
         ])
     return cargs
 
@@ -391,7 +386,6 @@ def surface_metrics(
 __all__ = [
     "SURFACE_METRICS_METADATA",
     "SurfaceMetricsOutputs",
-    "SurfaceMetricsParameters",
     "surface_metrics",
     "surface_metrics_execute",
     "surface_metrics_params",

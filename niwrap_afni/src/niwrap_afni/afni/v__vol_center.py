@@ -14,46 +14,20 @@ V__VOL_CENTER_METADATA = Metadata(
 
 
 VVolCenterParameters = typing.TypedDict('VVolCenterParameters', {
-    "@type": typing.Literal["afni.@VolCenter"],
+    "@type": typing.NotRequired[typing.Literal["afni/@VolCenter"]],
+    "dset": InputPathType,
+    "orient": typing.NotRequired[str | None],
+})
+VVolCenterParametersTagged = typing.TypedDict('VVolCenterParametersTagged', {
+    "@type": typing.Literal["afni/@VolCenter"],
     "dset": InputPathType,
     "orient": typing.NotRequired[str | None],
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "afni.@VolCenter": v__vol_center_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-    }.get(t)
-
-
 class VVolCenterOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `v__vol_center(...)`.
+    Output object returned when calling `VVolCenterParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -62,7 +36,7 @@ class VVolCenterOutputs(typing.NamedTuple):
 def v__vol_center_params(
     dset: InputPathType,
     orient: str | None = None,
-) -> VVolCenterParameters:
+) -> VVolCenterParametersTagged:
     """
     Build parameters.
     
@@ -73,7 +47,7 @@ def v__vol_center_params(
         Parameter dictionary
     """
     params = {
-        "@type": "afni.@VolCenter",
+        "@type": "afni/@VolCenter",
         "dset": dset,
     }
     if orient is not None:
@@ -98,12 +72,12 @@ def v__vol_center_cargs(
     cargs.append("@VolCenter")
     cargs.extend([
         "-dset",
-        execution.input_file(params.get("dset"))
+        execution.input_file(params.get("dset", None))
     ])
-    if params.get("orient") is not None:
+    if params.get("orient", None) is not None:
         cargs.extend([
             "-or",
-            params.get("orient")
+            params.get("orient", None)
         ])
     return cargs
 
@@ -185,7 +159,6 @@ def v__vol_center(
 
 __all__ = [
     "VVolCenterOutputs",
-    "VVolCenterParameters",
     "V__VOL_CENTER_METADATA",
     "v__vol_center",
     "v__vol_center_execute",

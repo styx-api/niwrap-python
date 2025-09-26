@@ -14,7 +14,14 @@ MRI_LABEL_HISTO_METADATA = Metadata(
 
 
 MriLabelHistoParameters = typing.TypedDict('MriLabelHistoParameters', {
-    "@type": typing.Literal["freesurfer.mri_label_histo"],
+    "@type": typing.NotRequired[typing.Literal["freesurfer/mri_label_histo"]],
+    "t1_volume": InputPathType,
+    "labeled_volume": InputPathType,
+    "label": float,
+    "output": str,
+})
+MriLabelHistoParametersTagged = typing.TypedDict('MriLabelHistoParametersTagged', {
+    "@type": typing.Literal["freesurfer/mri_label_histo"],
     "t1_volume": InputPathType,
     "labeled_volume": InputPathType,
     "label": float,
@@ -22,41 +29,9 @@ MriLabelHistoParameters = typing.TypedDict('MriLabelHistoParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "freesurfer.mri_label_histo": mri_label_histo_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "freesurfer.mri_label_histo": mri_label_histo_outputs,
-    }.get(t)
-
-
 class MriLabelHistoOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `mri_label_histo(...)`.
+    Output object returned when calling `MriLabelHistoParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -69,7 +44,7 @@ def mri_label_histo_params(
     labeled_volume: InputPathType,
     label: float,
     output: str,
-) -> MriLabelHistoParameters:
+) -> MriLabelHistoParametersTagged:
     """
     Build parameters.
     
@@ -82,7 +57,7 @@ def mri_label_histo_params(
         Parameter dictionary
     """
     params = {
-        "@type": "freesurfer.mri_label_histo",
+        "@type": "freesurfer/mri_label_histo",
         "t1_volume": t1_volume,
         "labeled_volume": labeled_volume,
         "label": label,
@@ -106,10 +81,10 @@ def mri_label_histo_cargs(
     """
     cargs = []
     cargs.append("mri_label_histo")
-    cargs.append(execution.input_file(params.get("t1_volume")))
-    cargs.append(execution.input_file(params.get("labeled_volume")))
-    cargs.append(str(params.get("label")))
-    cargs.append(params.get("output"))
+    cargs.append(execution.input_file(params.get("t1_volume", None)))
+    cargs.append(execution.input_file(params.get("labeled_volume", None)))
+    cargs.append(str(params.get("label", None)))
+    cargs.append(params.get("output", None))
     return cargs
 
 
@@ -128,7 +103,7 @@ def mri_label_histo_outputs(
     """
     ret = MriLabelHistoOutputs(
         root=execution.output_file("."),
-        histogram_output=execution.output_file(params.get("output")),
+        histogram_output=execution.output_file(params.get("output", None)),
     )
     return ret
 
@@ -198,7 +173,6 @@ def mri_label_histo(
 __all__ = [
     "MRI_LABEL_HISTO_METADATA",
     "MriLabelHistoOutputs",
-    "MriLabelHistoParameters",
     "mri_label_histo",
     "mri_label_histo_execute",
     "mri_label_histo_params",

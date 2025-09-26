@@ -14,46 +14,20 @@ SPM_T_TO_B_METADATA = Metadata(
 
 
 SpmTToBParameters = typing.TypedDict('SpmTToBParameters', {
-    "@type": typing.Literal["freesurfer.spm_t_to_b"],
+    "@type": typing.NotRequired[typing.Literal["freesurfer/spm_t_to_b"]],
+    "spm_stem_format": str,
+    "bshort_stem": str,
+})
+SpmTToBParametersTagged = typing.TypedDict('SpmTToBParametersTagged', {
+    "@type": typing.Literal["freesurfer/spm_t_to_b"],
     "spm_stem_format": str,
     "bshort_stem": str,
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "freesurfer.spm_t_to_b": spm_t_to_b_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-    }.get(t)
-
-
 class SpmTToBOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `spm_t_to_b(...)`.
+    Output object returned when calling `SpmTToBParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -62,7 +36,7 @@ class SpmTToBOutputs(typing.NamedTuple):
 def spm_t_to_b_params(
     spm_stem_format: str,
     bshort_stem: str,
-) -> SpmTToBParameters:
+) -> SpmTToBParametersTagged:
     """
     Build parameters.
     
@@ -73,7 +47,7 @@ def spm_t_to_b_params(
         Parameter dictionary
     """
     params = {
-        "@type": "freesurfer.spm_t_to_b",
+        "@type": "freesurfer/spm_t_to_b",
         "spm_stem_format": spm_stem_format,
         "bshort_stem": bshort_stem,
     }
@@ -95,8 +69,8 @@ def spm_t_to_b_cargs(
     """
     cargs = []
     cargs.append("spm_t_to_b")
-    cargs.append(params.get("spm_stem_format"))
-    cargs.append(params.get("bshort_stem"))
+    cargs.append(params.get("spm_stem_format", None))
+    cargs.append(params.get("bshort_stem", None))
     return cargs
 
 
@@ -178,7 +152,6 @@ def spm_t_to_b(
 __all__ = [
     "SPM_T_TO_B_METADATA",
     "SpmTToBOutputs",
-    "SpmTToBParameters",
     "spm_t_to_b",
     "spm_t_to_b_execute",
     "spm_t_to_b_params",

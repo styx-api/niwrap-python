@@ -14,7 +14,21 @@ V_3D_TSORT_METADATA = Metadata(
 
 
 V3dTsortParameters = typing.TypedDict('V3dTsortParameters', {
-    "@type": typing.Literal["afni.3dTsort"],
+    "@type": typing.NotRequired[typing.Literal["afni/3dTsort"]],
+    "input_file": InputPathType,
+    "prefix": typing.NotRequired[str | None],
+    "inc": bool,
+    "dec": bool,
+    "rank": bool,
+    "ind": bool,
+    "val": bool,
+    "random": bool,
+    "ranfft": bool,
+    "randft": bool,
+    "datum": typing.NotRequired[str | None],
+})
+V3dTsortParametersTagged = typing.TypedDict('V3dTsortParametersTagged', {
+    "@type": typing.Literal["afni/3dTsort"],
     "input_file": InputPathType,
     "prefix": typing.NotRequired[str | None],
     "inc": bool,
@@ -29,41 +43,9 @@ V3dTsortParameters = typing.TypedDict('V3dTsortParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "afni.3dTsort": v_3d_tsort_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "afni.3dTsort": v_3d_tsort_outputs,
-    }.get(t)
-
-
 class V3dTsortOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `v_3d_tsort(...)`.
+    Output object returned when calling `V3dTsortParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -83,7 +65,7 @@ def v_3d_tsort_params(
     ranfft: bool = False,
     randft: bool = False,
     datum: str | None = None,
-) -> V3dTsortParameters:
+) -> V3dTsortParametersTagged:
     """
     Build parameters.
     
@@ -104,7 +86,7 @@ def v_3d_tsort_params(
         Parameter dictionary
     """
     params = {
-        "@type": "afni.3dTsort",
+        "@type": "afni/3dTsort",
         "input_file": input_file,
         "inc": inc,
         "dec": dec,
@@ -137,32 +119,32 @@ def v_3d_tsort_cargs(
     """
     cargs = []
     cargs.append("3dTsort")
-    cargs.append(execution.input_file(params.get("input_file")))
-    if params.get("prefix") is not None:
+    cargs.append(execution.input_file(params.get("input_file", None)))
+    if params.get("prefix", None) is not None:
         cargs.extend([
             "-prefix",
-            params.get("prefix")
+            params.get("prefix", None)
         ])
-    if params.get("inc"):
+    if params.get("inc", False):
         cargs.append("-inc")
-    if params.get("dec"):
+    if params.get("dec", False):
         cargs.append("-dec")
-    if params.get("rank"):
+    if params.get("rank", False):
         cargs.append("-rank")
-    if params.get("ind"):
+    if params.get("ind", False):
         cargs.append("-ind")
-    if params.get("val"):
+    if params.get("val", False):
         cargs.append("-val")
-    if params.get("random"):
+    if params.get("random", False):
         cargs.append("-random")
-    if params.get("ranfft"):
+    if params.get("ranfft", False):
         cargs.append("-ranFFT")
-    if params.get("randft"):
+    if params.get("randft", False):
         cargs.append("-ranDFT")
-    if params.get("datum") is not None:
+    if params.get("datum", None) is not None:
         cargs.extend([
             "-datum",
-            params.get("datum")
+            params.get("datum", None)
         ])
     return cargs
 
@@ -182,7 +164,7 @@ def v_3d_tsort_outputs(
     """
     ret = V3dTsortOutputs(
         root=execution.output_file("."),
-        output_dataset=execution.output_file(params.get("prefix") + ".nii.gz") if (params.get("prefix") is not None) else None,
+        output_dataset=execution.output_file(params.get("prefix", None) + ".nii.gz") if (params.get("prefix") is not None) else None,
     )
     return ret
 
@@ -273,7 +255,6 @@ def v_3d_tsort(
 
 __all__ = [
     "V3dTsortOutputs",
-    "V3dTsortParameters",
     "V_3D_TSORT_METADATA",
     "v_3d_tsort",
     "v_3d_tsort_execute",

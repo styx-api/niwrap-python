@@ -14,7 +14,17 @@ SIGLOSS_METADATA = Metadata(
 
 
 SiglossParameters = typing.TypedDict('SiglossParameters', {
-    "@type": typing.Literal["fsl.sigloss"],
+    "@type": typing.NotRequired[typing.Literal["fsl/sigloss"]],
+    "input_b0map": InputPathType,
+    "output_sigloss": str,
+    "input_mask": typing.NotRequired[InputPathType | None],
+    "echo_time": typing.NotRequired[float | None],
+    "slice_direction": typing.NotRequired[typing.Literal["x", "y", "z"] | None],
+    "verbose_flag": bool,
+    "help_flag": bool,
+})
+SiglossParametersTagged = typing.TypedDict('SiglossParametersTagged', {
+    "@type": typing.Literal["fsl/sigloss"],
     "input_b0map": InputPathType,
     "output_sigloss": str,
     "input_mask": typing.NotRequired[InputPathType | None],
@@ -25,40 +35,9 @@ SiglossParameters = typing.TypedDict('SiglossParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "fsl.sigloss": sigloss_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-    }.get(t)
-
-
 class SiglossOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `sigloss(...)`.
+    Output object returned when calling `SiglossParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -72,7 +51,7 @@ def sigloss_params(
     slice_direction: typing.Literal["x", "y", "z"] | None = None,
     verbose_flag: bool = False,
     help_flag: bool = False,
-) -> SiglossParameters:
+) -> SiglossParametersTagged:
     """
     Build parameters.
     
@@ -88,7 +67,7 @@ def sigloss_params(
         Parameter dictionary
     """
     params = {
-        "@type": "fsl.sigloss",
+        "@type": "fsl/sigloss",
         "input_b0map": input_b0map,
         "output_sigloss": output_sigloss,
         "verbose_flag": verbose_flag,
@@ -120,30 +99,30 @@ def sigloss_cargs(
     cargs.append("sigloss")
     cargs.extend([
         "-i",
-        execution.input_file(params.get("input_b0map"))
+        execution.input_file(params.get("input_b0map", None))
     ])
     cargs.extend([
         "-s",
-        params.get("output_sigloss")
+        params.get("output_sigloss", None)
     ])
-    if params.get("input_mask") is not None:
+    if params.get("input_mask", None) is not None:
         cargs.extend([
             "-m",
-            execution.input_file(params.get("input_mask"))
+            execution.input_file(params.get("input_mask", None))
         ])
-    if params.get("echo_time") is not None:
+    if params.get("echo_time", None) is not None:
         cargs.extend([
             "--te",
-            str(params.get("echo_time"))
+            str(params.get("echo_time", None))
         ])
-    if params.get("slice_direction") is not None:
+    if params.get("slice_direction", None) is not None:
         cargs.extend([
             "-d",
-            params.get("slice_direction")
+            params.get("slice_direction", None)
         ])
-    if params.get("verbose_flag"):
+    if params.get("verbose_flag", False):
         cargs.append("-v")
-    if params.get("help_flag"):
+    if params.get("help_flag", False):
         cargs.append("-h")
     return cargs
 
@@ -241,7 +220,6 @@ def sigloss(
 __all__ = [
     "SIGLOSS_METADATA",
     "SiglossOutputs",
-    "SiglossParameters",
     "sigloss",
     "sigloss_execute",
     "sigloss_params",

@@ -14,7 +14,31 @@ V_3DTTEST___METADATA = Metadata(
 
 
 V3dttestParameters = typing.TypedDict('V3dttestParameters', {
-    "@type": typing.Literal["afni.3dttest++"],
+    "@type": typing.NotRequired[typing.Literal["afni/3dttest++"]],
+    "setA": list[str],
+    "setB": typing.NotRequired[list[str] | None],
+    "setA_long": typing.NotRequired[list[str] | None],
+    "setB_long": typing.NotRequired[list[str] | None],
+    "covariates": typing.NotRequired[InputPathType | None],
+    "labelA": typing.NotRequired[str | None],
+    "labelB": typing.NotRequired[str | None],
+    "setweightA": typing.NotRequired[InputPathType | None],
+    "setweightB": typing.NotRequired[InputPathType | None],
+    "prefix": typing.NotRequired[str | None],
+    "resid": typing.NotRequired[str | None],
+    "paired": bool,
+    "unpooled": bool,
+    "mask": typing.NotRequired[InputPathType | None],
+    "exblur": typing.NotRequired[int | None],
+    "randomsign": bool,
+    "permute": bool,
+    "ETAC": bool,
+    "ETAC_blur": typing.NotRequired[list[float] | None],
+    "ETAC_opt": typing.NotRequired[list[str] | None],
+    "seed": typing.NotRequired[float | None],
+})
+V3dttestParametersTagged = typing.TypedDict('V3dttestParametersTagged', {
+    "@type": typing.Literal["afni/3dttest++"],
     "setA": list[str],
     "setB": typing.NotRequired[list[str] | None],
     "setA_long": typing.NotRequired[list[str] | None],
@@ -39,41 +63,9 @@ V3dttestParameters = typing.TypedDict('V3dttestParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "afni.3dttest++": v_3dttest___cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "afni.3dttest++": v_3dttest___outputs,
-    }.get(t)
-
-
 class V3dttestOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `v_3dttest__(...)`.
+    Output object returned when calling `V3dttestParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -105,7 +97,7 @@ def v_3dttest___params(
     etac_blur: list[float] | None = None,
     etac_opt: list[str] | None = None,
     seed: float | None = None,
-) -> V3dttestParameters:
+) -> V3dttestParametersTagged:
     """
     Build parameters.
     
@@ -146,7 +138,7 @@ def v_3dttest___params(
         Parameter dictionary
     """
     params = {
-        "@type": "afni.3dttest++",
+        "@type": "afni/3dttest++",
         "setA": set_a,
         "paired": paired,
         "unpooled": unpooled,
@@ -204,92 +196,92 @@ def v_3dttest___cargs(
     cargs.append("3dttest++")
     cargs.extend([
         "-setA",
-        *params.get("setA")
+        *params.get("setA", None)
     ])
-    if params.get("setB") is not None:
+    if params.get("setB", None) is not None:
         cargs.extend([
             "-setB",
-            *params.get("setB")
+            *params.get("setB", None)
         ])
-    if params.get("setA_long") is not None:
+    if params.get("setA_long", None) is not None:
         cargs.extend([
             "-setA",
-            *params.get("setA_long")
+            *params.get("setA_long", None)
         ])
-    if params.get("setB_long") is not None:
+    if params.get("setB_long", None) is not None:
         cargs.extend([
             "-setB",
-            *params.get("setB_long")
+            *params.get("setB_long", None)
         ])
-    if params.get("covariates") is not None:
+    if params.get("covariates", None) is not None:
         cargs.extend([
             "-covariates",
-            execution.input_file(params.get("covariates"))
+            execution.input_file(params.get("covariates", None))
         ])
-    if params.get("labelA") is not None:
+    if params.get("labelA", None) is not None:
         cargs.extend([
             "-labelA",
-            params.get("labelA")
+            params.get("labelA", None)
         ])
-    if params.get("labelB") is not None:
+    if params.get("labelB", None) is not None:
         cargs.extend([
             "-labelB",
-            params.get("labelB")
+            params.get("labelB", None)
         ])
-    if params.get("setweightA") is not None:
+    if params.get("setweightA", None) is not None:
         cargs.extend([
             "-setweightA",
-            execution.input_file(params.get("setweightA"))
+            execution.input_file(params.get("setweightA", None))
         ])
-    if params.get("setweightB") is not None:
+    if params.get("setweightB", None) is not None:
         cargs.extend([
             "-setweightB",
-            execution.input_file(params.get("setweightB"))
+            execution.input_file(params.get("setweightB", None))
         ])
-    if params.get("prefix") is not None:
+    if params.get("prefix", None) is not None:
         cargs.extend([
             "-prefix",
-            params.get("prefix")
+            params.get("prefix", None)
         ])
-    if params.get("resid") is not None:
+    if params.get("resid", None) is not None:
         cargs.extend([
             "-resid",
-            params.get("resid")
+            params.get("resid", None)
         ])
-    if params.get("paired"):
+    if params.get("paired", False):
         cargs.append("-paired")
-    if params.get("unpooled"):
+    if params.get("unpooled", False):
         cargs.append("-unpooled")
-    if params.get("mask") is not None:
+    if params.get("mask", None) is not None:
         cargs.extend([
             "-mask",
-            execution.input_file(params.get("mask"))
+            execution.input_file(params.get("mask", None))
         ])
-    if params.get("exblur") is not None:
+    if params.get("exblur", None) is not None:
         cargs.extend([
             "-exblur",
-            str(params.get("exblur"))
+            str(params.get("exblur", None))
         ])
-    if params.get("randomsign"):
+    if params.get("randomsign", False):
         cargs.append("-randomsign")
-    if params.get("permute"):
+    if params.get("permute", False):
         cargs.append("-permute")
-    if params.get("ETAC"):
+    if params.get("ETAC", False):
         cargs.append("-ETAC")
-    if params.get("ETAC_blur") is not None:
+    if params.get("ETAC_blur", None) is not None:
         cargs.extend([
             "-ETAC_blur",
-            *map(str, params.get("ETAC_blur"))
+            *map(str, params.get("ETAC_blur", None))
         ])
-    if params.get("ETAC_opt") is not None:
+    if params.get("ETAC_opt", None) is not None:
         cargs.extend([
             "-ETAC_opt",
-            *params.get("ETAC_opt")
+            *params.get("ETAC_opt", None)
         ])
-    if params.get("seed") is not None:
+    if params.get("seed", None) is not None:
         cargs.extend([
             "-seed",
-            str(params.get("seed"))
+            str(params.get("seed", None))
         ])
     return cargs
 
@@ -309,8 +301,8 @@ def v_3dttest___outputs(
     """
     ret = V3dttestOutputs(
         root=execution.output_file("."),
-        out_file=execution.output_file(params.get("prefix") + ".nii.gz") if (params.get("prefix") is not None) else None,
-        residuals=execution.output_file(params.get("resid") + ".nii.gz") if (params.get("resid") is not None) else None,
+        out_file=execution.output_file(params.get("prefix", None) + ".nii.gz") if (params.get("prefix") is not None) else None,
+        residuals=execution.output_file(params.get("resid", None) + ".nii.gz") if (params.get("resid") is not None) else None,
     )
     return ret
 
@@ -441,7 +433,6 @@ def v_3dttest__(
 
 __all__ = [
     "V3dttestOutputs",
-    "V3dttestParameters",
     "V_3DTTEST___METADATA",
     "v_3dttest__",
     "v_3dttest___execute",

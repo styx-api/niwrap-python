@@ -14,45 +14,18 @@ V__SURF_SMOOTH_HEAT_07_EXAMPLES_METADATA = Metadata(
 
 
 VSurfSmoothHeat07ExamplesParameters = typing.TypedDict('VSurfSmoothHeat07ExamplesParameters', {
-    "@type": typing.Literal["afni.@SurfSmooth.HEAT_07.examples"],
+    "@type": typing.NotRequired[typing.Literal["afni/@SurfSmooth.HEAT_07.examples"]],
+    "path_to_suma_demo": str,
+})
+VSurfSmoothHeat07ExamplesParametersTagged = typing.TypedDict('VSurfSmoothHeat07ExamplesParametersTagged', {
+    "@type": typing.Literal["afni/@SurfSmooth.HEAT_07.examples"],
     "path_to_suma_demo": str,
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "afni.@SurfSmooth.HEAT_07.examples": v__surf_smooth_heat_07_examples_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-    }.get(t)
-
-
 class VSurfSmoothHeat07ExamplesOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `v__surf_smooth_heat_07_examples(...)`.
+    Output object returned when calling `VSurfSmoothHeat07ExamplesParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -60,7 +33,7 @@ class VSurfSmoothHeat07ExamplesOutputs(typing.NamedTuple):
 
 def v__surf_smooth_heat_07_examples_params(
     path_to_suma_demo: str,
-) -> VSurfSmoothHeat07ExamplesParameters:
+) -> VSurfSmoothHeat07ExamplesParametersTagged:
     """
     Build parameters.
     
@@ -70,7 +43,7 @@ def v__surf_smooth_heat_07_examples_params(
         Parameter dictionary
     """
     params = {
-        "@type": "afni.@SurfSmooth.HEAT_07.examples",
+        "@type": "afni/@SurfSmooth.HEAT_07.examples",
         "path_to_suma_demo": path_to_suma_demo,
     }
     return params
@@ -91,7 +64,7 @@ def v__surf_smooth_heat_07_examples_cargs(
     """
     cargs = []
     cargs.append("@SurfSmooth.HEAT_07.examples")
-    cargs.append(params.get("path_to_suma_demo"))
+    cargs.append(params.get("path_to_suma_demo", None))
     return cargs
 
 
@@ -169,7 +142,6 @@ def v__surf_smooth_heat_07_examples(
 
 __all__ = [
     "VSurfSmoothHeat07ExamplesOutputs",
-    "VSurfSmoothHeat07ExamplesParameters",
     "V__SURF_SMOOTH_HEAT_07_EXAMPLES_METADATA",
     "v__surf_smooth_heat_07_examples",
     "v__surf_smooth_heat_07_examples_execute",

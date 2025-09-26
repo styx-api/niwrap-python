@@ -14,7 +14,16 @@ V__ELECTRO_GRID_METADATA = Metadata(
 
 
 VElectroGridParameters = typing.TypedDict('VElectroGridParameters', {
-    "@type": typing.Literal["afni.@ElectroGrid"],
+    "@type": typing.NotRequired[typing.Literal["afni/@ElectroGrid"]],
+    "strip": typing.NotRequired[int | None],
+    "grid": typing.NotRequired[list[int] | None],
+    "prefix": typing.NotRequired[str | None],
+    "coords": typing.NotRequired[InputPathType | None],
+    "with_markers": bool,
+    "echo": bool,
+})
+VElectroGridParametersTagged = typing.TypedDict('VElectroGridParametersTagged', {
+    "@type": typing.Literal["afni/@ElectroGrid"],
     "strip": typing.NotRequired[int | None],
     "grid": typing.NotRequired[list[int] | None],
     "prefix": typing.NotRequired[str | None],
@@ -24,41 +33,9 @@ VElectroGridParameters = typing.TypedDict('VElectroGridParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "afni.@ElectroGrid": v__electro_grid_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "afni.@ElectroGrid": v__electro_grid_outputs,
-    }.get(t)
-
-
 class VElectroGridOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `v__electro_grid(...)`.
+    Output object returned when calling `VElectroGridParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -73,7 +50,7 @@ def v__electro_grid_params(
     coords: InputPathType | None = None,
     with_markers: bool = False,
     echo: bool = False,
-) -> VElectroGridParameters:
+) -> VElectroGridParametersTagged:
     """
     Build parameters.
     
@@ -91,7 +68,7 @@ def v__electro_grid_params(
         Parameter dictionary
     """
     params = {
-        "@type": "afni.@ElectroGrid",
+        "@type": "afni/@ElectroGrid",
         "with_markers": with_markers,
         "echo": echo,
     }
@@ -121,29 +98,29 @@ def v__electro_grid_cargs(
     """
     cargs = []
     cargs.append("@ElectroGrid")
-    if params.get("strip") is not None:
+    if params.get("strip", None) is not None:
         cargs.extend([
             "-strip",
-            str(params.get("strip"))
+            str(params.get("strip", None))
         ])
-    if params.get("grid") is not None:
+    if params.get("grid", None) is not None:
         cargs.extend([
             "-grid",
-            *map(str, params.get("grid"))
+            *map(str, params.get("grid", None))
         ])
-    if params.get("prefix") is not None:
+    if params.get("prefix", None) is not None:
         cargs.extend([
             "-prefix",
-            params.get("prefix")
+            params.get("prefix", None)
         ])
-    if params.get("coords") is not None:
+    if params.get("coords", None) is not None:
         cargs.extend([
             "-coords",
-            execution.input_file(params.get("coords"))
+            execution.input_file(params.get("coords", None))
         ])
-    if params.get("with_markers"):
+    if params.get("with_markers", False):
         cargs.append("-with_markers")
-    if params.get("echo"):
+    if params.get("echo", False):
         cargs.append("-echo")
     return cargs
 
@@ -163,7 +140,7 @@ def v__electro_grid_outputs(
     """
     ret = VElectroGridOutputs(
         root=execution.output_file("."),
-        output_surface=execution.output_file(params.get("prefix") + ".gii") if (params.get("prefix") is not None) else None,
+        output_surface=execution.output_file(params.get("prefix", None) + ".gii") if (params.get("prefix") is not None) else None,
     )
     return ret
 
@@ -241,7 +218,6 @@ def v__electro_grid(
 
 __all__ = [
     "VElectroGridOutputs",
-    "VElectroGridParameters",
     "V__ELECTRO_GRID_METADATA",
     "v__electro_grid",
     "v__electro_grid_execute",

@@ -14,7 +14,18 @@ LTA_DIFF_METADATA = Metadata(
 
 
 LtaDiffParameters = typing.TypedDict('LtaDiffParameters', {
-    "@type": typing.Literal["freesurfer.lta_diff"],
+    "@type": typing.NotRequired[typing.Literal["freesurfer/lta_diff"]],
+    "transform1": InputPathType,
+    "transform2": typing.NotRequired[InputPathType | None],
+    "dist_type": typing.NotRequired[int | None],
+    "invert1": bool,
+    "invert2": bool,
+    "vox": bool,
+    "normdiv": typing.NotRequired[float | None],
+    "radius": typing.NotRequired[float | None],
+})
+LtaDiffParametersTagged = typing.TypedDict('LtaDiffParametersTagged', {
+    "@type": typing.Literal["freesurfer/lta_diff"],
     "transform1": InputPathType,
     "transform2": typing.NotRequired[InputPathType | None],
     "dist_type": typing.NotRequired[int | None],
@@ -26,40 +37,9 @@ LtaDiffParameters = typing.TypedDict('LtaDiffParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "freesurfer.lta_diff": lta_diff_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-    }.get(t)
-
-
 class LtaDiffOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `lta_diff(...)`.
+    Output object returned when calling `LtaDiffParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -74,7 +54,7 @@ def lta_diff_params(
     vox: bool = False,
     normdiv: float | None = None,
     radius: float | None = None,
-) -> LtaDiffParameters:
+) -> LtaDiffParametersTagged:
     """
     Build parameters.
     
@@ -96,7 +76,7 @@ def lta_diff_params(
         Parameter dictionary
     """
     params = {
-        "@type": "freesurfer.lta_diff",
+        "@type": "freesurfer/lta_diff",
         "transform1": transform1,
         "invert1": invert1,
         "invert2": invert2,
@@ -128,29 +108,29 @@ def lta_diff_cargs(
     """
     cargs = []
     cargs.append("lta_diff")
-    cargs.append(execution.input_file(params.get("transform1")))
-    if params.get("transform2") is not None:
-        cargs.append(execution.input_file(params.get("transform2")))
-    if params.get("dist_type") is not None:
+    cargs.append(execution.input_file(params.get("transform1", None)))
+    if params.get("transform2", None) is not None:
+        cargs.append(execution.input_file(params.get("transform2", None)))
+    if params.get("dist_type", None) is not None:
         cargs.extend([
             "--dist",
-            str(params.get("dist_type"))
+            str(params.get("dist_type", None))
         ])
-    if params.get("invert1"):
+    if params.get("invert1", False):
         cargs.append("--invert1")
-    if params.get("invert2"):
+    if params.get("invert2", False):
         cargs.append("--invert2")
-    if params.get("vox"):
+    if params.get("vox", False):
         cargs.append("--vox")
-    if params.get("normdiv") is not None:
+    if params.get("normdiv", None) is not None:
         cargs.extend([
             "--normdiv",
-            str(params.get("normdiv"))
+            str(params.get("normdiv", None))
         ])
-    if params.get("radius") is not None:
+    if params.get("radius", None) is not None:
         cargs.extend([
             "--radius",
-            str(params.get("radius"))
+            str(params.get("radius", None))
         ])
     return cargs
 
@@ -258,7 +238,6 @@ def lta_diff(
 __all__ = [
     "LTA_DIFF_METADATA",
     "LtaDiffOutputs",
-    "LtaDiffParameters",
     "lta_diff",
     "lta_diff_execute",
     "lta_diff_params",

@@ -14,7 +14,20 @@ V__MEASURE_EROSION_THICK_METADATA = Metadata(
 
 
 VMeasureErosionThickParameters = typing.TypedDict('VMeasureErosionThickParameters', {
-    "@type": typing.Literal["afni.@measure_erosion_thick"],
+    "@type": typing.NotRequired[typing.Literal["afni/@measure_erosion_thick"]],
+    "maskset": InputPathType,
+    "surfset": InputPathType,
+    "outdir": typing.NotRequired[str | None],
+    "resample": typing.NotRequired[str | None],
+    "surfsmooth": typing.NotRequired[float | None],
+    "smoothmm": typing.NotRequired[float | None],
+    "maxthick": typing.NotRequired[float | None],
+    "depthsearch": typing.NotRequired[float | None],
+    "keep_temp_files": bool,
+    "surfsmooth_method": typing.NotRequired[str | None],
+})
+VMeasureErosionThickParametersTagged = typing.TypedDict('VMeasureErosionThickParametersTagged', {
+    "@type": typing.Literal["afni/@measure_erosion_thick"],
     "maskset": InputPathType,
     "surfset": InputPathType,
     "outdir": typing.NotRequired[str | None],
@@ -28,41 +41,9 @@ VMeasureErosionThickParameters = typing.TypedDict('VMeasureErosionThickParameter
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "afni.@measure_erosion_thick": v__measure_erosion_thick_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "afni.@measure_erosion_thick": v__measure_erosion_thick_outputs,
-    }.get(t)
-
-
 class VMeasureErosionThickOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `v__measure_erosion_thick(...)`.
+    Output object returned when calling `VMeasureErosionThickParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -97,7 +78,7 @@ def v__measure_erosion_thick_params(
     depthsearch: float | None = None,
     keep_temp_files: bool = False,
     surfsmooth_method: str | None = None,
-) -> VMeasureErosionThickParameters:
+) -> VMeasureErosionThickParametersTagged:
     """
     Build parameters.
     
@@ -123,7 +104,7 @@ def v__measure_erosion_thick_params(
         Parameter dictionary
     """
     params = {
-        "@type": "afni.@measure_erosion_thick",
+        "@type": "afni/@measure_erosion_thick",
         "maskset": maskset,
         "surfset": surfset,
         "keep_temp_files": keep_temp_files,
@@ -162,48 +143,48 @@ def v__measure_erosion_thick_cargs(
     cargs.append("@measure_erosion_thick")
     cargs.extend([
         "-maskset",
-        execution.input_file(params.get("maskset"))
+        execution.input_file(params.get("maskset", None))
     ])
     cargs.extend([
         "-surfset",
-        execution.input_file(params.get("surfset"))
+        execution.input_file(params.get("surfset", None))
     ])
-    if params.get("outdir") is not None:
+    if params.get("outdir", None) is not None:
         cargs.extend([
             "-outdir",
-            params.get("outdir")
+            params.get("outdir", None)
         ])
-    if params.get("resample") is not None:
+    if params.get("resample", None) is not None:
         cargs.extend([
             "-resample",
-            params.get("resample")
+            params.get("resample", None)
         ])
-    if params.get("surfsmooth") is not None:
+    if params.get("surfsmooth", None) is not None:
         cargs.extend([
             "-surfsmooth",
-            str(params.get("surfsmooth"))
+            str(params.get("surfsmooth", None))
         ])
-    if params.get("smoothmm") is not None:
+    if params.get("smoothmm", None) is not None:
         cargs.extend([
             "-smoothmm",
-            str(params.get("smoothmm"))
+            str(params.get("smoothmm", None))
         ])
-    if params.get("maxthick") is not None:
+    if params.get("maxthick", None) is not None:
         cargs.extend([
             "-maxthick",
-            str(params.get("maxthick"))
+            str(params.get("maxthick", None))
         ])
-    if params.get("depthsearch") is not None:
+    if params.get("depthsearch", None) is not None:
         cargs.extend([
             "-depthsearch",
-            str(params.get("depthsearch"))
+            str(params.get("depthsearch", None))
         ])
-    if params.get("keep_temp_files"):
+    if params.get("keep_temp_files", False):
         cargs.append("-keep_temp_files")
-    if params.get("surfsmooth_method") is not None:
+    if params.get("surfsmooth_method", None) is not None:
         cargs.extend([
             "-surfsmooth_method",
-            params.get("surfsmooth_method")
+            params.get("surfsmooth_method", None)
         ])
     return cargs
 
@@ -325,7 +306,6 @@ def v__measure_erosion_thick(
 
 __all__ = [
     "VMeasureErosionThickOutputs",
-    "VMeasureErosionThickParameters",
     "V__MEASURE_EROSION_THICK_METADATA",
     "v__measure_erosion_thick",
     "v__measure_erosion_thick_execute",

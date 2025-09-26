@@ -14,7 +14,30 @@ V_3D_EXTREMA_METADATA = Metadata(
 
 
 V3dExtremaParameters = typing.TypedDict('V3dExtremaParameters', {
-    "@type": typing.Literal["afni.3dExtrema"],
+    "@type": typing.NotRequired[typing.Literal["afni/3dExtrema"]],
+    "input_dataset": InputPathType,
+    "output_prefix": typing.NotRequired[str | None],
+    "output_session": typing.NotRequired[str | None],
+    "quiet": bool,
+    "mask_file": typing.NotRequired[InputPathType | None],
+    "mask_threshold": typing.NotRequired[float | None],
+    "data_threshold": typing.NotRequired[float | None],
+    "n_best": typing.NotRequired[float | None],
+    "separation_distance": typing.NotRequired[float | None],
+    "minima": bool,
+    "maxima": bool,
+    "strict": bool,
+    "partial": bool,
+    "interior": bool,
+    "closure": bool,
+    "slice": bool,
+    "volume": bool,
+    "remove": bool,
+    "average": bool,
+    "weight": bool,
+})
+V3dExtremaParametersTagged = typing.TypedDict('V3dExtremaParametersTagged', {
+    "@type": typing.Literal["afni/3dExtrema"],
     "input_dataset": InputPathType,
     "output_prefix": typing.NotRequired[str | None],
     "output_session": typing.NotRequired[str | None],
@@ -38,41 +61,9 @@ V3dExtremaParameters = typing.TypedDict('V3dExtremaParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "afni.3dExtrema": v_3d_extrema_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "afni.3dExtrema": v_3d_extrema_outputs,
-    }.get(t)
-
-
 class V3dExtremaOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `v_3d_extrema(...)`.
+    Output object returned when calling `V3dExtremaParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -103,7 +94,7 @@ def v_3d_extrema_params(
     remove: bool = False,
     average: bool = False,
     weight: bool = False,
-) -> V3dExtremaParameters:
+) -> V3dExtremaParametersTagged:
     """
     Build parameters.
     
@@ -135,7 +126,7 @@ def v_3d_extrema_params(
         Parameter dictionary
     """
     params = {
-        "@type": "afni.3dExtrema",
+        "@type": "afni/3dExtrema",
         "input_dataset": input_dataset,
         "quiet": quiet,
         "minima": minima,
@@ -182,65 +173,65 @@ def v_3d_extrema_cargs(
     """
     cargs = []
     cargs.append("3dExtrema")
-    cargs.append(execution.input_file(params.get("input_dataset")))
-    if params.get("output_prefix") is not None:
+    cargs.append(execution.input_file(params.get("input_dataset", None)))
+    if params.get("output_prefix", None) is not None:
         cargs.extend([
             "-prefix",
-            params.get("output_prefix")
+            params.get("output_prefix", None)
         ])
-    if params.get("output_session") is not None:
+    if params.get("output_session", None) is not None:
         cargs.extend([
             "-session",
-            params.get("output_session")
+            params.get("output_session", None)
         ])
-    if params.get("quiet"):
+    if params.get("quiet", False):
         cargs.append("-quiet")
-    if params.get("mask_file") is not None:
+    if params.get("mask_file", None) is not None:
         cargs.extend([
             "-mask_file",
-            execution.input_file(params.get("mask_file"))
+            execution.input_file(params.get("mask_file", None))
         ])
-    if params.get("mask_threshold") is not None:
+    if params.get("mask_threshold", None) is not None:
         cargs.extend([
             "-mask_thr",
-            str(params.get("mask_threshold"))
+            str(params.get("mask_threshold", None))
         ])
-    if params.get("data_threshold") is not None:
+    if params.get("data_threshold", None) is not None:
         cargs.extend([
             "-data_thr",
-            str(params.get("data_threshold"))
+            str(params.get("data_threshold", None))
         ])
-    if params.get("n_best") is not None:
+    if params.get("n_best", None) is not None:
         cargs.extend([
             "-nbest",
-            str(params.get("n_best"))
+            str(params.get("n_best", None))
         ])
-    if params.get("separation_distance") is not None:
+    if params.get("separation_distance", None) is not None:
         cargs.extend([
             "-sep_dist",
-            str(params.get("separation_distance"))
+            str(params.get("separation_distance", None))
         ])
-    if params.get("minima"):
+    if params.get("minima", False):
         cargs.append("-minima")
-    if params.get("maxima"):
+    if params.get("maxima", False):
         cargs.append("-maxima")
-    if params.get("strict"):
+    if params.get("strict", False):
         cargs.append("-strict")
-    if params.get("partial"):
+    if params.get("partial", False):
         cargs.append("-partial")
-    if params.get("interior"):
+    if params.get("interior", False):
         cargs.append("-interior")
-    if params.get("closure"):
+    if params.get("closure", False):
         cargs.append("-closure")
-    if params.get("slice"):
+    if params.get("slice", False):
         cargs.append("-slice")
-    if params.get("volume"):
+    if params.get("volume", False):
         cargs.append("-volume")
-    if params.get("remove"):
+    if params.get("remove", False):
         cargs.append("-remove")
-    if params.get("average"):
+    if params.get("average", False):
         cargs.append("-average")
-    if params.get("weight"):
+    if params.get("weight", False):
         cargs.append("-weight")
     return cargs
 
@@ -260,8 +251,8 @@ def v_3d_extrema_outputs(
     """
     ret = V3dExtremaOutputs(
         root=execution.output_file("."),
-        output_head_file=execution.output_file(params.get("output_prefix") + ".HEAD") if (params.get("output_prefix") is not None) else None,
-        output_brik_file=execution.output_file(params.get("output_prefix") + ".BRIK") if (params.get("output_prefix") is not None) else None,
+        output_head_file=execution.output_file(params.get("output_prefix", None) + ".HEAD") if (params.get("output_prefix") is not None) else None,
+        output_brik_file=execution.output_file(params.get("output_prefix", None) + ".BRIK") if (params.get("output_prefix") is not None) else None,
     )
     return ret
 
@@ -381,7 +372,6 @@ def v_3d_extrema(
 
 __all__ = [
     "V3dExtremaOutputs",
-    "V3dExtremaParameters",
     "V_3D_EXTREMA_METADATA",
     "v_3d_extrema",
     "v_3d_extrema_execute",

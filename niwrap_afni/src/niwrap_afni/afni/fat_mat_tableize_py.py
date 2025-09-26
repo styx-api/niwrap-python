@@ -14,7 +14,20 @@ FAT_MAT_TABLEIZE_PY_METADATA = Metadata(
 
 
 FatMatTableizePyParameters = typing.TypedDict('FatMatTableizePyParameters', {
-    "@type": typing.Literal["afni.fat_mat_tableize.py"],
+    "@type": typing.NotRequired[typing.Literal["afni/fat_mat_tableize.py"]],
+    "input_matrices": list[str],
+    "input_csv": typing.NotRequired[InputPathType | None],
+    "input_list": typing.NotRequired[InputPathType | None],
+    "output_prefix": str,
+    "parameters": typing.NotRequired[list[str] | None],
+    "version": bool,
+    "date": bool,
+    "help": bool,
+    "help_short": bool,
+    "help_view": bool,
+})
+FatMatTableizePyParametersTagged = typing.TypedDict('FatMatTableizePyParametersTagged', {
+    "@type": typing.Literal["afni/fat_mat_tableize.py"],
     "input_matrices": list[str],
     "input_csv": typing.NotRequired[InputPathType | None],
     "input_list": typing.NotRequired[InputPathType | None],
@@ -28,41 +41,9 @@ FatMatTableizePyParameters = typing.TypedDict('FatMatTableizePyParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "afni.fat_mat_tableize.py": fat_mat_tableize_py_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "afni.fat_mat_tableize.py": fat_mat_tableize_py_outputs,
-    }.get(t)
-
-
 class FatMatTableizePyOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `fat_mat_tableize_py(...)`.
+    Output object returned when calling `FatMatTableizePyParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -84,7 +65,7 @@ def fat_mat_tableize_py_params(
     help_: bool = False,
     help_short: bool = False,
     help_view: bool = False,
-) -> FatMatTableizePyParameters:
+) -> FatMatTableizePyParametersTagged:
     """
     Build parameters.
     
@@ -108,7 +89,7 @@ def fat_mat_tableize_py_params(
         Parameter dictionary
     """
     params = {
-        "@type": "afni.fat_mat_tableize.py",
+        "@type": "afni/fat_mat_tableize.py",
         "input_matrices": input_matrices,
         "output_prefix": output_prefix,
         "version": version,
@@ -143,36 +124,36 @@ def fat_mat_tableize_py_cargs(
     cargs.append("fat_mat_tableize.py")
     cargs.extend([
         "-in_mat",
-        *params.get("input_matrices")
+        *params.get("input_matrices", None)
     ])
-    if params.get("input_csv") is not None:
+    if params.get("input_csv", None) is not None:
         cargs.extend([
             "-in_csv",
-            execution.input_file(params.get("input_csv"))
+            execution.input_file(params.get("input_csv", None))
         ])
-    if params.get("input_list") is not None:
+    if params.get("input_list", None) is not None:
         cargs.extend([
             "-in_listfile",
-            execution.input_file(params.get("input_list"))
+            execution.input_file(params.get("input_list", None))
         ])
     cargs.extend([
         "-prefix",
-        params.get("output_prefix")
+        params.get("output_prefix", None)
     ])
-    if params.get("parameters") is not None:
+    if params.get("parameters", None) is not None:
         cargs.extend([
             "-pars",
-            *params.get("parameters")
+            *params.get("parameters", None)
         ])
-    if params.get("version"):
+    if params.get("version", False):
         cargs.append("-ver")
-    if params.get("date"):
+    if params.get("date", False):
         cargs.append("-date")
-    if params.get("help"):
+    if params.get("help", False):
         cargs.append("-help")
-    if params.get("help_short"):
+    if params.get("help_short", False):
         cargs.append("-h")
-    if params.get("help_view"):
+    if params.get("help_view", False):
         cargs.append("-hview")
     return cargs
 
@@ -192,8 +173,8 @@ def fat_mat_tableize_py_outputs(
     """
     ret = FatMatTableizePyOutputs(
         root=execution.output_file("."),
-        output_table=execution.output_file(params.get("output_prefix") + "_tbl.txt"),
-        output_log=execution.output_file(params.get("output_prefix") + "_prep.log"),
+        output_table=execution.output_file(params.get("output_prefix", None) + "_tbl.txt"),
+        output_log=execution.output_file(params.get("output_prefix", None) + "_prep.log"),
     )
     return ret
 
@@ -290,7 +271,6 @@ def fat_mat_tableize_py(
 __all__ = [
     "FAT_MAT_TABLEIZE_PY_METADATA",
     "FatMatTableizePyOutputs",
-    "FatMatTableizePyParameters",
     "fat_mat_tableize_py",
     "fat_mat_tableize_py_execute",
     "fat_mat_tableize_py_params",

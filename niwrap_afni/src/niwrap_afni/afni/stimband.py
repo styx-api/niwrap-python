@@ -14,7 +14,16 @@ STIMBAND_METADATA = Metadata(
 
 
 StimbandParameters = typing.TypedDict('StimbandParameters', {
-    "@type": typing.Literal["afni.stimband"],
+    "@type": typing.NotRequired[typing.Literal["afni/stimband"]],
+    "verbose_flag": bool,
+    "matrixfiles": list[InputPathType],
+    "additional_matrixfiles": typing.NotRequired[list[InputPathType] | None],
+    "min_freq": typing.NotRequired[float | None],
+    "min_bwidth": typing.NotRequired[float | None],
+    "min_pow": typing.NotRequired[float | None],
+})
+StimbandParametersTagged = typing.TypedDict('StimbandParametersTagged', {
+    "@type": typing.Literal["afni/stimband"],
     "verbose_flag": bool,
     "matrixfiles": list[InputPathType],
     "additional_matrixfiles": typing.NotRequired[list[InputPathType] | None],
@@ -24,41 +33,9 @@ StimbandParameters = typing.TypedDict('StimbandParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "afni.stimband": stimband_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "afni.stimband": stimband_outputs,
-    }.get(t)
-
-
 class StimbandOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `stimband(...)`.
+    Output object returned when calling `StimbandParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -74,7 +51,7 @@ def stimband_params(
     min_freq: float | None = None,
     min_bwidth: float | None = None,
     min_pow: float | None = None,
-) -> StimbandParameters:
+) -> StimbandParametersTagged:
     """
     Build parameters.
     
@@ -93,7 +70,7 @@ def stimband_params(
         Parameter dictionary
     """
     params = {
-        "@type": "afni.stimband",
+        "@type": "afni/stimband",
         "verbose_flag": verbose_flag,
         "matrixfiles": matrixfiles,
     }
@@ -123,28 +100,28 @@ def stimband_cargs(
     """
     cargs = []
     cargs.append("stimband")
-    if params.get("verbose_flag"):
+    if params.get("verbose_flag", False):
         cargs.append("-verb")
-    cargs.extend([execution.input_file(f) for f in params.get("matrixfiles")])
-    if params.get("additional_matrixfiles") is not None:
+    cargs.extend([execution.input_file(f) for f in params.get("matrixfiles", None)])
+    if params.get("additional_matrixfiles", None) is not None:
         cargs.extend([
             "-matrix",
-            *[execution.input_file(f) for f in params.get("additional_matrixfiles")]
+            *[execution.input_file(f) for f in params.get("additional_matrixfiles", None)]
         ])
-    if params.get("min_freq") is not None:
+    if params.get("min_freq", None) is not None:
         cargs.extend([
             "-min_freq",
-            str(params.get("min_freq"))
+            str(params.get("min_freq", None))
         ])
-    if params.get("min_bwidth") is not None:
+    if params.get("min_bwidth", None) is not None:
         cargs.extend([
             "-min_bwidth",
-            str(params.get("min_bwidth"))
+            str(params.get("min_bwidth", None))
         ])
-    if params.get("min_pow") is not None:
+    if params.get("min_pow", None) is not None:
         cargs.extend([
             "-min_pow",
-            str(params.get("min_pow"))
+            str(params.get("min_pow", None))
         ])
     return cargs
 
@@ -246,7 +223,6 @@ def stimband(
 __all__ = [
     "STIMBAND_METADATA",
     "StimbandOutputs",
-    "StimbandParameters",
     "stimband",
     "stimband_execute",
     "stimband_params",

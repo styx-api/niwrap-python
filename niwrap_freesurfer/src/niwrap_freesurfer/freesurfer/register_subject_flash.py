@@ -14,46 +14,18 @@ REGISTER_SUBJECT_FLASH_METADATA = Metadata(
 
 
 RegisterSubjectFlashParameters = typing.TypedDict('RegisterSubjectFlashParameters', {
-    "@type": typing.Literal["freesurfer.register_subject_flash"],
+    "@type": typing.NotRequired[typing.Literal["freesurfer/register_subject_flash"]],
+    "input_volumes": list[InputPathType],
+})
+RegisterSubjectFlashParametersTagged = typing.TypedDict('RegisterSubjectFlashParametersTagged', {
+    "@type": typing.Literal["freesurfer/register_subject_flash"],
     "input_volumes": list[InputPathType],
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "freesurfer.register_subject_flash": register_subject_flash_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "freesurfer.register_subject_flash": register_subject_flash_outputs,
-    }.get(t)
-
-
 class RegisterSubjectFlashOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `register_subject_flash(...)`.
+    Output object returned when calling `RegisterSubjectFlashParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -63,7 +35,7 @@ class RegisterSubjectFlashOutputs(typing.NamedTuple):
 
 def register_subject_flash_params(
     input_volumes: list[InputPathType],
-) -> RegisterSubjectFlashParameters:
+) -> RegisterSubjectFlashParametersTagged:
     """
     Build parameters.
     
@@ -73,7 +45,7 @@ def register_subject_flash_params(
         Parameter dictionary
     """
     params = {
-        "@type": "freesurfer.register_subject_flash",
+        "@type": "freesurfer/register_subject_flash",
         "input_volumes": input_volumes,
     }
     return params
@@ -94,7 +66,7 @@ def register_subject_flash_cargs(
     """
     cargs = []
     cargs.append("register_subject_flash")
-    cargs.extend([execution.input_file(f) for f in params.get("input_volumes")])
+    cargs.extend([execution.input_file(f) for f in params.get("input_volumes", None)])
     return cargs
 
 
@@ -174,7 +146,6 @@ def register_subject_flash(
 __all__ = [
     "REGISTER_SUBJECT_FLASH_METADATA",
     "RegisterSubjectFlashOutputs",
-    "RegisterSubjectFlashParameters",
     "register_subject_flash",
     "register_subject_flash_execute",
     "register_subject_flash_params",

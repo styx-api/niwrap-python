@@ -14,45 +14,18 @@ FREEVIEW_METADATA = Metadata(
 
 
 FreeviewParameters = typing.TypedDict('FreeviewParameters', {
-    "@type": typing.Literal["freesurfer.freeview"],
+    "@type": typing.NotRequired[typing.Literal["freesurfer/freeview"]],
+    "args": typing.NotRequired[str | None],
+})
+FreeviewParametersTagged = typing.TypedDict('FreeviewParametersTagged', {
+    "@type": typing.Literal["freesurfer/freeview"],
     "args": typing.NotRequired[str | None],
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "freesurfer.freeview": freeview_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-    }.get(t)
-
-
 class FreeviewOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `freeview(...)`.
+    Output object returned when calling `FreeviewParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -60,7 +33,7 @@ class FreeviewOutputs(typing.NamedTuple):
 
 def freeview_params(
     args: str | None = None,
-) -> FreeviewParameters:
+) -> FreeviewParametersTagged:
     """
     Build parameters.
     
@@ -70,7 +43,7 @@ def freeview_params(
         Parameter dictionary
     """
     params = {
-        "@type": "freesurfer.freeview",
+        "@type": "freesurfer/freeview",
     }
     if args is not None:
         params["args"] = args
@@ -92,8 +65,8 @@ def freeview_cargs(
     """
     cargs = []
     cargs.append("freeview")
-    if params.get("args") is not None:
-        cargs.append(params.get("args"))
+    if params.get("args", None) is not None:
+        cargs.append(params.get("args", None))
     return cargs
 
 
@@ -172,7 +145,6 @@ def freeview(
 __all__ = [
     "FREEVIEW_METADATA",
     "FreeviewOutputs",
-    "FreeviewParameters",
     "freeview",
     "freeview_execute",
     "freeview_params",

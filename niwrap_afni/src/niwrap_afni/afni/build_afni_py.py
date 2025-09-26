@@ -14,7 +14,26 @@ BUILD_AFNI_PY_METADATA = Metadata(
 
 
 BuildAfniPyParameters = typing.TypedDict('BuildAfniPyParameters', {
-    "@type": typing.Literal["afni.build_afni.py"],
+    "@type": typing.NotRequired[typing.Literal["afni/build_afni.py"]],
+    "build_root": str,
+    "clean_root": typing.NotRequired[str | None],
+    "git_branch": typing.NotRequired[str | None],
+    "git_tag": typing.NotRequired[str | None],
+    "git_update": typing.NotRequired[str | None],
+    "make_target": typing.NotRequired[str | None],
+    "makefile": typing.NotRequired[str | None],
+    "package": typing.NotRequired[str | None],
+    "prep_only": bool,
+    "run_cmake": typing.NotRequired[str | None],
+    "run_make": typing.NotRequired[str | None],
+    "verbose_level": typing.NotRequired[float | None],
+    "help": bool,
+    "history": bool,
+    "show_valid_opts": bool,
+    "version": bool,
+})
+BuildAfniPyParametersTagged = typing.TypedDict('BuildAfniPyParametersTagged', {
+    "@type": typing.Literal["afni/build_afni.py"],
     "build_root": str,
     "clean_root": typing.NotRequired[str | None],
     "git_branch": typing.NotRequired[str | None],
@@ -34,41 +53,9 @@ BuildAfniPyParameters = typing.TypedDict('BuildAfniPyParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "afni.build_afni.py": build_afni_py_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "afni.build_afni.py": build_afni_py_outputs,
-    }.get(t)
-
-
 class BuildAfniPyOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `build_afni_py(...)`.
+    Output object returned when calling `BuildAfniPyParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -95,7 +82,7 @@ def build_afni_py_params(
     history: bool = False,
     show_valid_opts: bool = False,
     version: bool = False,
-) -> BuildAfniPyParameters:
+) -> BuildAfniPyParametersTagged:
     """
     Build parameters.
     
@@ -120,7 +107,7 @@ def build_afni_py_params(
         Parameter dictionary
     """
     params = {
-        "@type": "afni.build_afni.py",
+        "@type": "afni/build_afni.py",
         "build_root": build_root,
         "prep_only": prep_only,
         "help": help_,
@@ -168,67 +155,67 @@ def build_afni_py_cargs(
     cargs.append("build_afni.py")
     cargs.extend([
         "-build_root",
-        params.get("build_root")
+        params.get("build_root", None)
     ])
-    if params.get("clean_root") is not None:
+    if params.get("clean_root", None) is not None:
         cargs.extend([
             "-clean_root",
-            params.get("clean_root")
+            params.get("clean_root", None)
         ])
-    if params.get("git_branch") is not None:
+    if params.get("git_branch", None) is not None:
         cargs.extend([
             "-git_branch",
-            params.get("git_branch")
+            params.get("git_branch", None)
         ])
-    if params.get("git_tag") is not None:
+    if params.get("git_tag", None) is not None:
         cargs.extend([
             "-git_tag",
-            params.get("git_tag")
+            params.get("git_tag", None)
         ])
-    if params.get("git_update") is not None:
+    if params.get("git_update", None) is not None:
         cargs.extend([
             "-git_update",
-            params.get("git_update")
+            params.get("git_update", None)
         ])
-    if params.get("make_target") is not None:
+    if params.get("make_target", None) is not None:
         cargs.extend([
             "-make_target",
-            params.get("make_target")
+            params.get("make_target", None)
         ])
-    if params.get("makefile") is not None:
+    if params.get("makefile", None) is not None:
         cargs.extend([
             "-makefile",
-            params.get("makefile")
+            params.get("makefile", None)
         ])
-    if params.get("package") is not None:
+    if params.get("package", None) is not None:
         cargs.extend([
             "-package",
-            params.get("package")
+            params.get("package", None)
         ])
-    if params.get("prep_only"):
+    if params.get("prep_only", False):
         cargs.append("-prep_only")
-    if params.get("run_cmake") is not None:
+    if params.get("run_cmake", None) is not None:
         cargs.extend([
             "-run_cmake",
-            params.get("run_cmake")
+            params.get("run_cmake", None)
         ])
-    if params.get("run_make") is not None:
+    if params.get("run_make", None) is not None:
         cargs.extend([
             "-run_make",
-            params.get("run_make")
+            params.get("run_make", None)
         ])
-    if params.get("verbose_level") is not None:
+    if params.get("verbose_level", None) is not None:
         cargs.extend([
             "-verb",
-            str(params.get("verbose_level"))
+            str(params.get("verbose_level", None))
         ])
-    if params.get("help"):
+    if params.get("help", False):
         cargs.append("-help")
-    if params.get("history"):
+    if params.get("history", False):
         cargs.append("-hist")
-    if params.get("show_valid_opts"):
+    if params.get("show_valid_opts", False):
         cargs.append("-show_valid_opts")
-    if params.get("version"):
+    if params.get("version", False):
         cargs.append("-ver")
     return cargs
 
@@ -248,8 +235,8 @@ def build_afni_py_outputs(
     """
     ret = BuildAfniPyOutputs(
         root=execution.output_file("."),
-        command_history_file=execution.output_file(params.get("build_root") + "/hist_commands.txt"),
-        screen_output_history=execution.output_file(params.get("build_root") + "/screen_output_history.txt"),
+        command_history_file=execution.output_file(params.get("build_root", None) + "/hist_commands.txt"),
+        screen_output_history=execution.output_file(params.get("build_root", None) + "/screen_output_history.txt"),
     )
     return ret
 
@@ -355,7 +342,6 @@ def build_afni_py(
 __all__ = [
     "BUILD_AFNI_PY_METADATA",
     "BuildAfniPyOutputs",
-    "BuildAfniPyParameters",
     "build_afni_py",
     "build_afni_py_execute",
     "build_afni_py_params",

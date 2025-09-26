@@ -14,48 +14,22 @@ CIFTI_ALL_LABELS_TO_ROIS_METADATA = Metadata(
 
 
 CiftiAllLabelsToRoisParameters = typing.TypedDict('CiftiAllLabelsToRoisParameters', {
-    "@type": typing.Literal["workbench.cifti-all-labels-to-rois"],
+    "@type": typing.NotRequired[typing.Literal["workbench/cifti-all-labels-to-rois"]],
+    "label_in": InputPathType,
+    "map": str,
+    "cifti_out": str,
+})
+CiftiAllLabelsToRoisParametersTagged = typing.TypedDict('CiftiAllLabelsToRoisParametersTagged', {
+    "@type": typing.Literal["workbench/cifti-all-labels-to-rois"],
     "label_in": InputPathType,
     "map": str,
     "cifti_out": str,
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "workbench.cifti-all-labels-to-rois": cifti_all_labels_to_rois_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "workbench.cifti-all-labels-to-rois": cifti_all_labels_to_rois_outputs,
-    }.get(t)
-
-
 class CiftiAllLabelsToRoisOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `cifti_all_labels_to_rois(...)`.
+    Output object returned when calling `CiftiAllLabelsToRoisParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -67,7 +41,7 @@ def cifti_all_labels_to_rois_params(
     label_in: InputPathType,
     map_: str,
     cifti_out: str,
-) -> CiftiAllLabelsToRoisParameters:
+) -> CiftiAllLabelsToRoisParametersTagged:
     """
     Build parameters.
     
@@ -79,7 +53,7 @@ def cifti_all_labels_to_rois_params(
         Parameter dictionary
     """
     params = {
-        "@type": "workbench.cifti-all-labels-to-rois",
+        "@type": "workbench/cifti-all-labels-to-rois",
         "label_in": label_in,
         "map": map_,
         "cifti_out": cifti_out,
@@ -103,9 +77,9 @@ def cifti_all_labels_to_rois_cargs(
     cargs = []
     cargs.append("wb_command")
     cargs.append("-cifti-all-labels-to-rois")
-    cargs.append(execution.input_file(params.get("label_in")))
-    cargs.append(params.get("map"))
-    cargs.append(params.get("cifti_out"))
+    cargs.append(execution.input_file(params.get("label_in", None)))
+    cargs.append(params.get("map", None))
+    cargs.append(params.get("cifti_out", None))
     return cargs
 
 
@@ -124,7 +98,7 @@ def cifti_all_labels_to_rois_outputs(
     """
     ret = CiftiAllLabelsToRoisOutputs(
         root=execution.output_file("."),
-        cifti_out=execution.output_file(params.get("cifti_out")),
+        cifti_out=execution.output_file(params.get("cifti_out", None)),
     )
     return ret
 
@@ -205,7 +179,6 @@ def cifti_all_labels_to_rois(
 __all__ = [
     "CIFTI_ALL_LABELS_TO_ROIS_METADATA",
     "CiftiAllLabelsToRoisOutputs",
-    "CiftiAllLabelsToRoisParameters",
     "cifti_all_labels_to_rois",
     "cifti_all_labels_to_rois_execute",
     "cifti_all_labels_to_rois_params",

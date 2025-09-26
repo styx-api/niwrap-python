@@ -14,276 +14,439 @@ MRCALC_METADATA = Metadata(
 
 
 MrcalcAbsParameters = typing.TypedDict('MrcalcAbsParameters', {
-    "@type": typing.Literal["mrtrix.mrcalc.abs"],
+    "@type": typing.NotRequired[typing.Literal["abs"]],
+})
+MrcalcAbsParametersTagged = typing.TypedDict('MrcalcAbsParametersTagged', {
+    "@type": typing.Literal["abs"],
 })
 
 
 MrcalcNegParameters = typing.TypedDict('MrcalcNegParameters', {
-    "@type": typing.Literal["mrtrix.mrcalc.neg"],
+    "@type": typing.NotRequired[typing.Literal["neg"]],
+})
+MrcalcNegParametersTagged = typing.TypedDict('MrcalcNegParametersTagged', {
+    "@type": typing.Literal["neg"],
 })
 
 
 MrcalcAddParameters = typing.TypedDict('MrcalcAddParameters', {
-    "@type": typing.Literal["mrtrix.mrcalc.add"],
+    "@type": typing.NotRequired[typing.Literal["add"]],
+})
+MrcalcAddParametersTagged = typing.TypedDict('MrcalcAddParametersTagged', {
+    "@type": typing.Literal["add"],
 })
 
 
 MrcalcSubtractParameters = typing.TypedDict('MrcalcSubtractParameters', {
-    "@type": typing.Literal["mrtrix.mrcalc.subtract"],
+    "@type": typing.NotRequired[typing.Literal["subtract"]],
+})
+MrcalcSubtractParametersTagged = typing.TypedDict('MrcalcSubtractParametersTagged', {
+    "@type": typing.Literal["subtract"],
 })
 
 
 MrcalcMultiplyParameters = typing.TypedDict('MrcalcMultiplyParameters', {
-    "@type": typing.Literal["mrtrix.mrcalc.multiply"],
+    "@type": typing.NotRequired[typing.Literal["multiply"]],
+})
+MrcalcMultiplyParametersTagged = typing.TypedDict('MrcalcMultiplyParametersTagged', {
+    "@type": typing.Literal["multiply"],
 })
 
 
 MrcalcDivideParameters = typing.TypedDict('MrcalcDivideParameters', {
-    "@type": typing.Literal["mrtrix.mrcalc.divide"],
+    "@type": typing.NotRequired[typing.Literal["divide"]],
+})
+MrcalcDivideParametersTagged = typing.TypedDict('MrcalcDivideParametersTagged', {
+    "@type": typing.Literal["divide"],
 })
 
 
 MrcalcMinParameters = typing.TypedDict('MrcalcMinParameters', {
-    "@type": typing.Literal["mrtrix.mrcalc.min"],
+    "@type": typing.NotRequired[typing.Literal["min"]],
+})
+MrcalcMinParametersTagged = typing.TypedDict('MrcalcMinParametersTagged', {
+    "@type": typing.Literal["min"],
 })
 
 
 MrcalcMaxParameters = typing.TypedDict('MrcalcMaxParameters', {
-    "@type": typing.Literal["mrtrix.mrcalc.max"],
+    "@type": typing.NotRequired[typing.Literal["max"]],
+})
+MrcalcMaxParametersTagged = typing.TypedDict('MrcalcMaxParametersTagged', {
+    "@type": typing.Literal["max"],
 })
 
 
 MrcalcLtParameters = typing.TypedDict('MrcalcLtParameters', {
-    "@type": typing.Literal["mrtrix.mrcalc.lt"],
+    "@type": typing.NotRequired[typing.Literal["lt"]],
+})
+MrcalcLtParametersTagged = typing.TypedDict('MrcalcLtParametersTagged', {
+    "@type": typing.Literal["lt"],
 })
 
 
 MrcalcGtParameters = typing.TypedDict('MrcalcGtParameters', {
-    "@type": typing.Literal["mrtrix.mrcalc.gt"],
+    "@type": typing.NotRequired[typing.Literal["gt"]],
+})
+MrcalcGtParametersTagged = typing.TypedDict('MrcalcGtParametersTagged', {
+    "@type": typing.Literal["gt"],
 })
 
 
 MrcalcLeParameters = typing.TypedDict('MrcalcLeParameters', {
-    "@type": typing.Literal["mrtrix.mrcalc.le"],
+    "@type": typing.NotRequired[typing.Literal["le"]],
+})
+MrcalcLeParametersTagged = typing.TypedDict('MrcalcLeParametersTagged', {
+    "@type": typing.Literal["le"],
 })
 
 
 MrcalcGeParameters = typing.TypedDict('MrcalcGeParameters', {
-    "@type": typing.Literal["mrtrix.mrcalc.ge"],
+    "@type": typing.NotRequired[typing.Literal["ge"]],
+})
+MrcalcGeParametersTagged = typing.TypedDict('MrcalcGeParametersTagged', {
+    "@type": typing.Literal["ge"],
 })
 
 
 MrcalcEqParameters = typing.TypedDict('MrcalcEqParameters', {
-    "@type": typing.Literal["mrtrix.mrcalc.eq"],
+    "@type": typing.NotRequired[typing.Literal["eq"]],
+})
+MrcalcEqParametersTagged = typing.TypedDict('MrcalcEqParametersTagged', {
+    "@type": typing.Literal["eq"],
 })
 
 
 MrcalcNeqParameters = typing.TypedDict('MrcalcNeqParameters', {
-    "@type": typing.Literal["mrtrix.mrcalc.neq"],
+    "@type": typing.NotRequired[typing.Literal["neq"]],
+})
+MrcalcNeqParametersTagged = typing.TypedDict('MrcalcNeqParametersTagged', {
+    "@type": typing.Literal["neq"],
 })
 
 
 MrcalcIfParameters = typing.TypedDict('MrcalcIfParameters', {
-    "@type": typing.Literal["mrtrix.mrcalc.if"],
+    "@type": typing.NotRequired[typing.Literal["if"]],
+})
+MrcalcIfParametersTagged = typing.TypedDict('MrcalcIfParametersTagged', {
+    "@type": typing.Literal["if"],
 })
 
 
 MrcalcReplaceParameters = typing.TypedDict('MrcalcReplaceParameters', {
-    "@type": typing.Literal["mrtrix.mrcalc.replace"],
+    "@type": typing.NotRequired[typing.Literal["replace"]],
+})
+MrcalcReplaceParametersTagged = typing.TypedDict('MrcalcReplaceParametersTagged', {
+    "@type": typing.Literal["replace"],
 })
 
 
 MrcalcSqrtParameters = typing.TypedDict('MrcalcSqrtParameters', {
-    "@type": typing.Literal["mrtrix.mrcalc.sqrt"],
+    "@type": typing.NotRequired[typing.Literal["sqrt"]],
+})
+MrcalcSqrtParametersTagged = typing.TypedDict('MrcalcSqrtParametersTagged', {
+    "@type": typing.Literal["sqrt"],
 })
 
 
 MrcalcPowParameters = typing.TypedDict('MrcalcPowParameters', {
-    "@type": typing.Literal["mrtrix.mrcalc.pow"],
+    "@type": typing.NotRequired[typing.Literal["pow"]],
+})
+MrcalcPowParametersTagged = typing.TypedDict('MrcalcPowParametersTagged', {
+    "@type": typing.Literal["pow"],
 })
 
 
 MrcalcRoundParameters = typing.TypedDict('MrcalcRoundParameters', {
-    "@type": typing.Literal["mrtrix.mrcalc.round"],
+    "@type": typing.NotRequired[typing.Literal["round"]],
+})
+MrcalcRoundParametersTagged = typing.TypedDict('MrcalcRoundParametersTagged', {
+    "@type": typing.Literal["round"],
 })
 
 
 MrcalcCeilParameters = typing.TypedDict('MrcalcCeilParameters', {
-    "@type": typing.Literal["mrtrix.mrcalc.ceil"],
+    "@type": typing.NotRequired[typing.Literal["ceil"]],
+})
+MrcalcCeilParametersTagged = typing.TypedDict('MrcalcCeilParametersTagged', {
+    "@type": typing.Literal["ceil"],
 })
 
 
 MrcalcFloorParameters = typing.TypedDict('MrcalcFloorParameters', {
-    "@type": typing.Literal["mrtrix.mrcalc.floor"],
+    "@type": typing.NotRequired[typing.Literal["floor"]],
+})
+MrcalcFloorParametersTagged = typing.TypedDict('MrcalcFloorParametersTagged', {
+    "@type": typing.Literal["floor"],
 })
 
 
 MrcalcNotParameters = typing.TypedDict('MrcalcNotParameters', {
-    "@type": typing.Literal["mrtrix.mrcalc.not"],
+    "@type": typing.NotRequired[typing.Literal["not"]],
+})
+MrcalcNotParametersTagged = typing.TypedDict('MrcalcNotParametersTagged', {
+    "@type": typing.Literal["not"],
 })
 
 
 MrcalcAndParameters = typing.TypedDict('MrcalcAndParameters', {
-    "@type": typing.Literal["mrtrix.mrcalc.and"],
+    "@type": typing.NotRequired[typing.Literal["and"]],
+})
+MrcalcAndParametersTagged = typing.TypedDict('MrcalcAndParametersTagged', {
+    "@type": typing.Literal["and"],
 })
 
 
 MrcalcOrParameters = typing.TypedDict('MrcalcOrParameters', {
-    "@type": typing.Literal["mrtrix.mrcalc.or"],
+    "@type": typing.NotRequired[typing.Literal["or"]],
+})
+MrcalcOrParametersTagged = typing.TypedDict('MrcalcOrParametersTagged', {
+    "@type": typing.Literal["or"],
 })
 
 
 MrcalcXorParameters = typing.TypedDict('MrcalcXorParameters', {
-    "@type": typing.Literal["mrtrix.mrcalc.xor"],
+    "@type": typing.NotRequired[typing.Literal["xor"]],
+})
+MrcalcXorParametersTagged = typing.TypedDict('MrcalcXorParametersTagged', {
+    "@type": typing.Literal["xor"],
 })
 
 
 MrcalcIsnanParameters = typing.TypedDict('MrcalcIsnanParameters', {
-    "@type": typing.Literal["mrtrix.mrcalc.isnan"],
+    "@type": typing.NotRequired[typing.Literal["isnan"]],
+})
+MrcalcIsnanParametersTagged = typing.TypedDict('MrcalcIsnanParametersTagged', {
+    "@type": typing.Literal["isnan"],
 })
 
 
 MrcalcIsinfParameters = typing.TypedDict('MrcalcIsinfParameters', {
-    "@type": typing.Literal["mrtrix.mrcalc.isinf"],
+    "@type": typing.NotRequired[typing.Literal["isinf"]],
+})
+MrcalcIsinfParametersTagged = typing.TypedDict('MrcalcIsinfParametersTagged', {
+    "@type": typing.Literal["isinf"],
 })
 
 
 MrcalcFiniteParameters = typing.TypedDict('MrcalcFiniteParameters', {
-    "@type": typing.Literal["mrtrix.mrcalc.finite"],
+    "@type": typing.NotRequired[typing.Literal["finite"]],
+})
+MrcalcFiniteParametersTagged = typing.TypedDict('MrcalcFiniteParametersTagged', {
+    "@type": typing.Literal["finite"],
 })
 
 
 MrcalcComplexParameters = typing.TypedDict('MrcalcComplexParameters', {
-    "@type": typing.Literal["mrtrix.mrcalc.complex"],
+    "@type": typing.NotRequired[typing.Literal["complex"]],
+})
+MrcalcComplexParametersTagged = typing.TypedDict('MrcalcComplexParametersTagged', {
+    "@type": typing.Literal["complex"],
 })
 
 
 MrcalcPolarParameters = typing.TypedDict('MrcalcPolarParameters', {
-    "@type": typing.Literal["mrtrix.mrcalc.polar"],
+    "@type": typing.NotRequired[typing.Literal["polar"]],
+})
+MrcalcPolarParametersTagged = typing.TypedDict('MrcalcPolarParametersTagged', {
+    "@type": typing.Literal["polar"],
 })
 
 
 MrcalcRealParameters = typing.TypedDict('MrcalcRealParameters', {
-    "@type": typing.Literal["mrtrix.mrcalc.real"],
+    "@type": typing.NotRequired[typing.Literal["real"]],
+})
+MrcalcRealParametersTagged = typing.TypedDict('MrcalcRealParametersTagged', {
+    "@type": typing.Literal["real"],
 })
 
 
 MrcalcImagParameters = typing.TypedDict('MrcalcImagParameters', {
-    "@type": typing.Literal["mrtrix.mrcalc.imag"],
+    "@type": typing.NotRequired[typing.Literal["imag"]],
+})
+MrcalcImagParametersTagged = typing.TypedDict('MrcalcImagParametersTagged', {
+    "@type": typing.Literal["imag"],
 })
 
 
 MrcalcPhaseParameters = typing.TypedDict('MrcalcPhaseParameters', {
-    "@type": typing.Literal["mrtrix.mrcalc.phase"],
+    "@type": typing.NotRequired[typing.Literal["phase"]],
+})
+MrcalcPhaseParametersTagged = typing.TypedDict('MrcalcPhaseParametersTagged', {
+    "@type": typing.Literal["phase"],
 })
 
 
 MrcalcConjParameters = typing.TypedDict('MrcalcConjParameters', {
-    "@type": typing.Literal["mrtrix.mrcalc.conj"],
+    "@type": typing.NotRequired[typing.Literal["conj"]],
+})
+MrcalcConjParametersTagged = typing.TypedDict('MrcalcConjParametersTagged', {
+    "@type": typing.Literal["conj"],
 })
 
 
 MrcalcProjParameters = typing.TypedDict('MrcalcProjParameters', {
-    "@type": typing.Literal["mrtrix.mrcalc.proj"],
+    "@type": typing.NotRequired[typing.Literal["proj"]],
+})
+MrcalcProjParametersTagged = typing.TypedDict('MrcalcProjParametersTagged', {
+    "@type": typing.Literal["proj"],
 })
 
 
 MrcalcExpParameters = typing.TypedDict('MrcalcExpParameters', {
-    "@type": typing.Literal["mrtrix.mrcalc.exp"],
+    "@type": typing.NotRequired[typing.Literal["exp"]],
+})
+MrcalcExpParametersTagged = typing.TypedDict('MrcalcExpParametersTagged', {
+    "@type": typing.Literal["exp"],
 })
 
 
 MrcalcLogParameters = typing.TypedDict('MrcalcLogParameters', {
-    "@type": typing.Literal["mrtrix.mrcalc.log"],
+    "@type": typing.NotRequired[typing.Literal["log"]],
+})
+MrcalcLogParametersTagged = typing.TypedDict('MrcalcLogParametersTagged', {
+    "@type": typing.Literal["log"],
 })
 
 
 MrcalcLog10Parameters = typing.TypedDict('MrcalcLog10Parameters', {
-    "@type": typing.Literal["mrtrix.mrcalc.log10"],
+    "@type": typing.NotRequired[typing.Literal["log10"]],
+})
+MrcalcLog10ParametersTagged = typing.TypedDict('MrcalcLog10ParametersTagged', {
+    "@type": typing.Literal["log10"],
 })
 
 
 MrcalcCosParameters = typing.TypedDict('MrcalcCosParameters', {
-    "@type": typing.Literal["mrtrix.mrcalc.cos"],
+    "@type": typing.NotRequired[typing.Literal["cos"]],
+})
+MrcalcCosParametersTagged = typing.TypedDict('MrcalcCosParametersTagged', {
+    "@type": typing.Literal["cos"],
 })
 
 
 MrcalcSinParameters = typing.TypedDict('MrcalcSinParameters', {
-    "@type": typing.Literal["mrtrix.mrcalc.sin"],
+    "@type": typing.NotRequired[typing.Literal["sin"]],
+})
+MrcalcSinParametersTagged = typing.TypedDict('MrcalcSinParametersTagged', {
+    "@type": typing.Literal["sin"],
 })
 
 
 MrcalcTanParameters = typing.TypedDict('MrcalcTanParameters', {
-    "@type": typing.Literal["mrtrix.mrcalc.tan"],
+    "@type": typing.NotRequired[typing.Literal["tan"]],
+})
+MrcalcTanParametersTagged = typing.TypedDict('MrcalcTanParametersTagged', {
+    "@type": typing.Literal["tan"],
 })
 
 
 MrcalcAcosParameters = typing.TypedDict('MrcalcAcosParameters', {
-    "@type": typing.Literal["mrtrix.mrcalc.acos"],
+    "@type": typing.NotRequired[typing.Literal["acos"]],
+})
+MrcalcAcosParametersTagged = typing.TypedDict('MrcalcAcosParametersTagged', {
+    "@type": typing.Literal["acos"],
 })
 
 
 MrcalcAsinParameters = typing.TypedDict('MrcalcAsinParameters', {
-    "@type": typing.Literal["mrtrix.mrcalc.asin"],
+    "@type": typing.NotRequired[typing.Literal["asin"]],
+})
+MrcalcAsinParametersTagged = typing.TypedDict('MrcalcAsinParametersTagged', {
+    "@type": typing.Literal["asin"],
 })
 
 
 MrcalcAtanParameters = typing.TypedDict('MrcalcAtanParameters', {
-    "@type": typing.Literal["mrtrix.mrcalc.atan"],
+    "@type": typing.NotRequired[typing.Literal["atan"]],
+})
+MrcalcAtanParametersTagged = typing.TypedDict('MrcalcAtanParametersTagged', {
+    "@type": typing.Literal["atan"],
 })
 
 
 MrcalcCoshParameters = typing.TypedDict('MrcalcCoshParameters', {
-    "@type": typing.Literal["mrtrix.mrcalc.cosh"],
+    "@type": typing.NotRequired[typing.Literal["cosh"]],
+})
+MrcalcCoshParametersTagged = typing.TypedDict('MrcalcCoshParametersTagged', {
+    "@type": typing.Literal["cosh"],
 })
 
 
 MrcalcSinhParameters = typing.TypedDict('MrcalcSinhParameters', {
-    "@type": typing.Literal["mrtrix.mrcalc.sinh"],
+    "@type": typing.NotRequired[typing.Literal["sinh"]],
+})
+MrcalcSinhParametersTagged = typing.TypedDict('MrcalcSinhParametersTagged', {
+    "@type": typing.Literal["sinh"],
 })
 
 
 MrcalcTanhParameters = typing.TypedDict('MrcalcTanhParameters', {
-    "@type": typing.Literal["mrtrix.mrcalc.tanh"],
+    "@type": typing.NotRequired[typing.Literal["tanh"]],
+})
+MrcalcTanhParametersTagged = typing.TypedDict('MrcalcTanhParametersTagged', {
+    "@type": typing.Literal["tanh"],
 })
 
 
 MrcalcAcoshParameters = typing.TypedDict('MrcalcAcoshParameters', {
-    "@type": typing.Literal["mrtrix.mrcalc.acosh"],
+    "@type": typing.NotRequired[typing.Literal["acosh"]],
+})
+MrcalcAcoshParametersTagged = typing.TypedDict('MrcalcAcoshParametersTagged', {
+    "@type": typing.Literal["acosh"],
 })
 
 
 MrcalcAsinhParameters = typing.TypedDict('MrcalcAsinhParameters', {
-    "@type": typing.Literal["mrtrix.mrcalc.asinh"],
+    "@type": typing.NotRequired[typing.Literal["asinh"]],
+})
+MrcalcAsinhParametersTagged = typing.TypedDict('MrcalcAsinhParametersTagged', {
+    "@type": typing.Literal["asinh"],
 })
 
 
 MrcalcAtanhParameters = typing.TypedDict('MrcalcAtanhParameters', {
-    "@type": typing.Literal["mrtrix.mrcalc.atanh"],
+    "@type": typing.NotRequired[typing.Literal["atanh"]],
+})
+MrcalcAtanhParametersTagged = typing.TypedDict('MrcalcAtanhParametersTagged', {
+    "@type": typing.Literal["atanh"],
 })
 
 
 MrcalcConfigParameters = typing.TypedDict('MrcalcConfigParameters', {
-    "@type": typing.Literal["mrtrix.mrcalc.config"],
+    "@type": typing.NotRequired[typing.Literal["config"]],
+    "key": str,
+    "value": str,
+})
+MrcalcConfigParametersTagged = typing.TypedDict('MrcalcConfigParametersTagged', {
+    "@type": typing.Literal["config"],
     "key": str,
     "value": str,
 })
 
 
 MrcalcVariousStringParameters = typing.TypedDict('MrcalcVariousStringParameters', {
-    "@type": typing.Literal["mrtrix.mrcalc.VariousString"],
+    "@type": typing.NotRequired[typing.Literal["VariousString"]],
+    "obj": str,
+})
+MrcalcVariousStringParametersTagged = typing.TypedDict('MrcalcVariousStringParametersTagged', {
+    "@type": typing.Literal["VariousString"],
     "obj": str,
 })
 
 
 MrcalcVariousFileParameters = typing.TypedDict('MrcalcVariousFileParameters', {
-    "@type": typing.Literal["mrtrix.mrcalc.VariousFile"],
+    "@type": typing.NotRequired[typing.Literal["VariousFile"]],
+    "obj": InputPathType,
+})
+MrcalcVariousFileParametersTagged = typing.TypedDict('MrcalcVariousFileParametersTagged', {
+    "@type": typing.Literal["VariousFile"],
     "obj": InputPathType,
 })
 
 
 MrcalcParameters = typing.TypedDict('MrcalcParameters', {
-    "@type": typing.Literal["mrtrix.mrcalc"],
+    "@type": typing.NotRequired[typing.Literal["mrtrix/mrcalc"]],
     "abs": typing.NotRequired[list[MrcalcAbsParameters] | None],
     "neg": typing.NotRequired[list[MrcalcNegParameters] | None],
     "add": typing.NotRequired[list[MrcalcAddParameters] | None],
@@ -343,11 +506,74 @@ MrcalcParameters = typing.TypedDict('MrcalcParameters', {
     "config": typing.NotRequired[list[MrcalcConfigParameters] | None],
     "help": bool,
     "version": bool,
-    "operand": list[typing.Union[MrcalcVariousStringParameters, MrcalcVariousFileParameters]],
+    "operand": list[typing.Union[MrcalcVariousStringParametersTagged, MrcalcVariousFileParametersTagged]],
+})
+MrcalcParametersTagged = typing.TypedDict('MrcalcParametersTagged', {
+    "@type": typing.Literal["mrtrix/mrcalc"],
+    "abs": typing.NotRequired[list[MrcalcAbsParameters] | None],
+    "neg": typing.NotRequired[list[MrcalcNegParameters] | None],
+    "add": typing.NotRequired[list[MrcalcAddParameters] | None],
+    "subtract": typing.NotRequired[list[MrcalcSubtractParameters] | None],
+    "multiply": typing.NotRequired[list[MrcalcMultiplyParameters] | None],
+    "divide": typing.NotRequired[list[MrcalcDivideParameters] | None],
+    "min": typing.NotRequired[list[MrcalcMinParameters] | None],
+    "max": typing.NotRequired[list[MrcalcMaxParameters] | None],
+    "lt": typing.NotRequired[list[MrcalcLtParameters] | None],
+    "gt": typing.NotRequired[list[MrcalcGtParameters] | None],
+    "le": typing.NotRequired[list[MrcalcLeParameters] | None],
+    "ge": typing.NotRequired[list[MrcalcGeParameters] | None],
+    "eq": typing.NotRequired[list[MrcalcEqParameters] | None],
+    "neq": typing.NotRequired[list[MrcalcNeqParameters] | None],
+    "if": typing.NotRequired[list[MrcalcIfParameters] | None],
+    "replace": typing.NotRequired[list[MrcalcReplaceParameters] | None],
+    "sqrt": typing.NotRequired[list[MrcalcSqrtParameters] | None],
+    "pow": typing.NotRequired[list[MrcalcPowParameters] | None],
+    "round": typing.NotRequired[list[MrcalcRoundParameters] | None],
+    "ceil": typing.NotRequired[list[MrcalcCeilParameters] | None],
+    "floor": typing.NotRequired[list[MrcalcFloorParameters] | None],
+    "not": typing.NotRequired[list[MrcalcNotParameters] | None],
+    "and": typing.NotRequired[list[MrcalcAndParameters] | None],
+    "or": typing.NotRequired[list[MrcalcOrParameters] | None],
+    "xor": typing.NotRequired[list[MrcalcXorParameters] | None],
+    "isnan": typing.NotRequired[list[MrcalcIsnanParameters] | None],
+    "isinf": typing.NotRequired[list[MrcalcIsinfParameters] | None],
+    "finite": typing.NotRequired[list[MrcalcFiniteParameters] | None],
+    "complex": typing.NotRequired[list[MrcalcComplexParameters] | None],
+    "polar": typing.NotRequired[list[MrcalcPolarParameters] | None],
+    "real": typing.NotRequired[list[MrcalcRealParameters] | None],
+    "imag": typing.NotRequired[list[MrcalcImagParameters] | None],
+    "phase": typing.NotRequired[list[MrcalcPhaseParameters] | None],
+    "conj": typing.NotRequired[list[MrcalcConjParameters] | None],
+    "proj": typing.NotRequired[list[MrcalcProjParameters] | None],
+    "exp": typing.NotRequired[list[MrcalcExpParameters] | None],
+    "log": typing.NotRequired[list[MrcalcLogParameters] | None],
+    "log10": typing.NotRequired[list[MrcalcLog10Parameters] | None],
+    "cos": typing.NotRequired[list[MrcalcCosParameters] | None],
+    "sin": typing.NotRequired[list[MrcalcSinParameters] | None],
+    "tan": typing.NotRequired[list[MrcalcTanParameters] | None],
+    "acos": typing.NotRequired[list[MrcalcAcosParameters] | None],
+    "asin": typing.NotRequired[list[MrcalcAsinParameters] | None],
+    "atan": typing.NotRequired[list[MrcalcAtanParameters] | None],
+    "cosh": typing.NotRequired[list[MrcalcCoshParameters] | None],
+    "sinh": typing.NotRequired[list[MrcalcSinhParameters] | None],
+    "tanh": typing.NotRequired[list[MrcalcTanhParameters] | None],
+    "acosh": typing.NotRequired[list[MrcalcAcoshParameters] | None],
+    "asinh": typing.NotRequired[list[MrcalcAsinhParameters] | None],
+    "atanh": typing.NotRequired[list[MrcalcAtanhParameters] | None],
+    "datatype": typing.NotRequired[str | None],
+    "info": bool,
+    "quiet": bool,
+    "debug": bool,
+    "force": bool,
+    "nthreads": typing.NotRequired[int | None],
+    "config": typing.NotRequired[list[MrcalcConfigParameters] | None],
+    "help": bool,
+    "version": bool,
+    "operand": list[typing.Union[MrcalcVariousStringParametersTagged, MrcalcVariousFileParametersTagged]],
 })
 
 
-def dyn_cargs(
+def mrcalc_operand_cargs_dyn_fn(
     t: str,
 ) -> typing.Any:
     """
@@ -359,64 +585,12 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "mrtrix.mrcalc": mrcalc_cargs,
-        "mrtrix.mrcalc.abs": mrcalc_abs_cargs,
-        "mrtrix.mrcalc.neg": mrcalc_neg_cargs,
-        "mrtrix.mrcalc.add": mrcalc_add_cargs,
-        "mrtrix.mrcalc.subtract": mrcalc_subtract_cargs,
-        "mrtrix.mrcalc.multiply": mrcalc_multiply_cargs,
-        "mrtrix.mrcalc.divide": mrcalc_divide_cargs,
-        "mrtrix.mrcalc.min": mrcalc_min_cargs,
-        "mrtrix.mrcalc.max": mrcalc_max_cargs,
-        "mrtrix.mrcalc.lt": mrcalc_lt_cargs,
-        "mrtrix.mrcalc.gt": mrcalc_gt_cargs,
-        "mrtrix.mrcalc.le": mrcalc_le_cargs,
-        "mrtrix.mrcalc.ge": mrcalc_ge_cargs,
-        "mrtrix.mrcalc.eq": mrcalc_eq_cargs,
-        "mrtrix.mrcalc.neq": mrcalc_neq_cargs,
-        "mrtrix.mrcalc.if": mrcalc_if_cargs,
-        "mrtrix.mrcalc.replace": mrcalc_replace_cargs,
-        "mrtrix.mrcalc.sqrt": mrcalc_sqrt_cargs,
-        "mrtrix.mrcalc.pow": mrcalc_pow_cargs,
-        "mrtrix.mrcalc.round": mrcalc_round_cargs,
-        "mrtrix.mrcalc.ceil": mrcalc_ceil_cargs,
-        "mrtrix.mrcalc.floor": mrcalc_floor_cargs,
-        "mrtrix.mrcalc.not": mrcalc_not_cargs,
-        "mrtrix.mrcalc.and": mrcalc_and_cargs,
-        "mrtrix.mrcalc.or": mrcalc_or_cargs,
-        "mrtrix.mrcalc.xor": mrcalc_xor_cargs,
-        "mrtrix.mrcalc.isnan": mrcalc_isnan_cargs,
-        "mrtrix.mrcalc.isinf": mrcalc_isinf_cargs,
-        "mrtrix.mrcalc.finite": mrcalc_finite_cargs,
-        "mrtrix.mrcalc.complex": mrcalc_complex_cargs,
-        "mrtrix.mrcalc.polar": mrcalc_polar_cargs,
-        "mrtrix.mrcalc.real": mrcalc_real_cargs,
-        "mrtrix.mrcalc.imag": mrcalc_imag_cargs,
-        "mrtrix.mrcalc.phase": mrcalc_phase_cargs,
-        "mrtrix.mrcalc.conj": mrcalc_conj_cargs,
-        "mrtrix.mrcalc.proj": mrcalc_proj_cargs,
-        "mrtrix.mrcalc.exp": mrcalc_exp_cargs,
-        "mrtrix.mrcalc.log": mrcalc_log_cargs,
-        "mrtrix.mrcalc.log10": mrcalc_log10_cargs,
-        "mrtrix.mrcalc.cos": mrcalc_cos_cargs,
-        "mrtrix.mrcalc.sin": mrcalc_sin_cargs,
-        "mrtrix.mrcalc.tan": mrcalc_tan_cargs,
-        "mrtrix.mrcalc.acos": mrcalc_acos_cargs,
-        "mrtrix.mrcalc.asin": mrcalc_asin_cargs,
-        "mrtrix.mrcalc.atan": mrcalc_atan_cargs,
-        "mrtrix.mrcalc.cosh": mrcalc_cosh_cargs,
-        "mrtrix.mrcalc.sinh": mrcalc_sinh_cargs,
-        "mrtrix.mrcalc.tanh": mrcalc_tanh_cargs,
-        "mrtrix.mrcalc.acosh": mrcalc_acosh_cargs,
-        "mrtrix.mrcalc.asinh": mrcalc_asinh_cargs,
-        "mrtrix.mrcalc.atanh": mrcalc_atanh_cargs,
-        "mrtrix.mrcalc.config": mrcalc_config_cargs,
-        "mrtrix.mrcalc.VariousString": mrcalc_various_string_cargs,
-        "mrtrix.mrcalc.VariousFile": mrcalc_various_file_cargs,
+        "VariousString": mrcalc_various_string_cargs,
+        "VariousFile": mrcalc_various_file_cargs,
     }.get(t)
 
 
-def dyn_outputs(
+def mrcalc_operand_outputs_dyn_fn(
     t: str,
 ) -> typing.Any:
     """
@@ -432,7 +606,7 @@ def dyn_outputs(
 
 
 def mrcalc_abs_params(
-) -> MrcalcAbsParameters:
+) -> MrcalcAbsParametersTagged:
     """
     Build parameters.
     
@@ -441,7 +615,7 @@ def mrcalc_abs_params(
         Parameter dictionary
     """
     params = {
-        "@type": "mrtrix.mrcalc.abs",
+        "@type": "abs",
     }
     return params
 
@@ -465,7 +639,7 @@ def mrcalc_abs_cargs(
 
 
 def mrcalc_neg_params(
-) -> MrcalcNegParameters:
+) -> MrcalcNegParametersTagged:
     """
     Build parameters.
     
@@ -474,7 +648,7 @@ def mrcalc_neg_params(
         Parameter dictionary
     """
     params = {
-        "@type": "mrtrix.mrcalc.neg",
+        "@type": "neg",
     }
     return params
 
@@ -498,7 +672,7 @@ def mrcalc_neg_cargs(
 
 
 def mrcalc_add_params(
-) -> MrcalcAddParameters:
+) -> MrcalcAddParametersTagged:
     """
     Build parameters.
     
@@ -507,7 +681,7 @@ def mrcalc_add_params(
         Parameter dictionary
     """
     params = {
-        "@type": "mrtrix.mrcalc.add",
+        "@type": "add",
     }
     return params
 
@@ -531,7 +705,7 @@ def mrcalc_add_cargs(
 
 
 def mrcalc_subtract_params(
-) -> MrcalcSubtractParameters:
+) -> MrcalcSubtractParametersTagged:
     """
     Build parameters.
     
@@ -540,7 +714,7 @@ def mrcalc_subtract_params(
         Parameter dictionary
     """
     params = {
-        "@type": "mrtrix.mrcalc.subtract",
+        "@type": "subtract",
     }
     return params
 
@@ -564,7 +738,7 @@ def mrcalc_subtract_cargs(
 
 
 def mrcalc_multiply_params(
-) -> MrcalcMultiplyParameters:
+) -> MrcalcMultiplyParametersTagged:
     """
     Build parameters.
     
@@ -573,7 +747,7 @@ def mrcalc_multiply_params(
         Parameter dictionary
     """
     params = {
-        "@type": "mrtrix.mrcalc.multiply",
+        "@type": "multiply",
     }
     return params
 
@@ -597,7 +771,7 @@ def mrcalc_multiply_cargs(
 
 
 def mrcalc_divide_params(
-) -> MrcalcDivideParameters:
+) -> MrcalcDivideParametersTagged:
     """
     Build parameters.
     
@@ -606,7 +780,7 @@ def mrcalc_divide_params(
         Parameter dictionary
     """
     params = {
-        "@type": "mrtrix.mrcalc.divide",
+        "@type": "divide",
     }
     return params
 
@@ -630,7 +804,7 @@ def mrcalc_divide_cargs(
 
 
 def mrcalc_min_params(
-) -> MrcalcMinParameters:
+) -> MrcalcMinParametersTagged:
     """
     Build parameters.
     
@@ -639,7 +813,7 @@ def mrcalc_min_params(
         Parameter dictionary
     """
     params = {
-        "@type": "mrtrix.mrcalc.min",
+        "@type": "min",
     }
     return params
 
@@ -663,7 +837,7 @@ def mrcalc_min_cargs(
 
 
 def mrcalc_max_params(
-) -> MrcalcMaxParameters:
+) -> MrcalcMaxParametersTagged:
     """
     Build parameters.
     
@@ -672,7 +846,7 @@ def mrcalc_max_params(
         Parameter dictionary
     """
     params = {
-        "@type": "mrtrix.mrcalc.max",
+        "@type": "max",
     }
     return params
 
@@ -696,7 +870,7 @@ def mrcalc_max_cargs(
 
 
 def mrcalc_lt_params(
-) -> MrcalcLtParameters:
+) -> MrcalcLtParametersTagged:
     """
     Build parameters.
     
@@ -705,7 +879,7 @@ def mrcalc_lt_params(
         Parameter dictionary
     """
     params = {
-        "@type": "mrtrix.mrcalc.lt",
+        "@type": "lt",
     }
     return params
 
@@ -729,7 +903,7 @@ def mrcalc_lt_cargs(
 
 
 def mrcalc_gt_params(
-) -> MrcalcGtParameters:
+) -> MrcalcGtParametersTagged:
     """
     Build parameters.
     
@@ -738,7 +912,7 @@ def mrcalc_gt_params(
         Parameter dictionary
     """
     params = {
-        "@type": "mrtrix.mrcalc.gt",
+        "@type": "gt",
     }
     return params
 
@@ -762,7 +936,7 @@ def mrcalc_gt_cargs(
 
 
 def mrcalc_le_params(
-) -> MrcalcLeParameters:
+) -> MrcalcLeParametersTagged:
     """
     Build parameters.
     
@@ -771,7 +945,7 @@ def mrcalc_le_params(
         Parameter dictionary
     """
     params = {
-        "@type": "mrtrix.mrcalc.le",
+        "@type": "le",
     }
     return params
 
@@ -795,7 +969,7 @@ def mrcalc_le_cargs(
 
 
 def mrcalc_ge_params(
-) -> MrcalcGeParameters:
+) -> MrcalcGeParametersTagged:
     """
     Build parameters.
     
@@ -804,7 +978,7 @@ def mrcalc_ge_params(
         Parameter dictionary
     """
     params = {
-        "@type": "mrtrix.mrcalc.ge",
+        "@type": "ge",
     }
     return params
 
@@ -828,7 +1002,7 @@ def mrcalc_ge_cargs(
 
 
 def mrcalc_eq_params(
-) -> MrcalcEqParameters:
+) -> MrcalcEqParametersTagged:
     """
     Build parameters.
     
@@ -837,7 +1011,7 @@ def mrcalc_eq_params(
         Parameter dictionary
     """
     params = {
-        "@type": "mrtrix.mrcalc.eq",
+        "@type": "eq",
     }
     return params
 
@@ -861,7 +1035,7 @@ def mrcalc_eq_cargs(
 
 
 def mrcalc_neq_params(
-) -> MrcalcNeqParameters:
+) -> MrcalcNeqParametersTagged:
     """
     Build parameters.
     
@@ -870,7 +1044,7 @@ def mrcalc_neq_params(
         Parameter dictionary
     """
     params = {
-        "@type": "mrtrix.mrcalc.neq",
+        "@type": "neq",
     }
     return params
 
@@ -894,7 +1068,7 @@ def mrcalc_neq_cargs(
 
 
 def mrcalc_if_params(
-) -> MrcalcIfParameters:
+) -> MrcalcIfParametersTagged:
     """
     Build parameters.
     
@@ -903,7 +1077,7 @@ def mrcalc_if_params(
         Parameter dictionary
     """
     params = {
-        "@type": "mrtrix.mrcalc.if",
+        "@type": "if",
     }
     return params
 
@@ -927,7 +1101,7 @@ def mrcalc_if_cargs(
 
 
 def mrcalc_replace_params(
-) -> MrcalcReplaceParameters:
+) -> MrcalcReplaceParametersTagged:
     """
     Build parameters.
     
@@ -936,7 +1110,7 @@ def mrcalc_replace_params(
         Parameter dictionary
     """
     params = {
-        "@type": "mrtrix.mrcalc.replace",
+        "@type": "replace",
     }
     return params
 
@@ -960,7 +1134,7 @@ def mrcalc_replace_cargs(
 
 
 def mrcalc_sqrt_params(
-) -> MrcalcSqrtParameters:
+) -> MrcalcSqrtParametersTagged:
     """
     Build parameters.
     
@@ -969,7 +1143,7 @@ def mrcalc_sqrt_params(
         Parameter dictionary
     """
     params = {
-        "@type": "mrtrix.mrcalc.sqrt",
+        "@type": "sqrt",
     }
     return params
 
@@ -993,7 +1167,7 @@ def mrcalc_sqrt_cargs(
 
 
 def mrcalc_pow_params(
-) -> MrcalcPowParameters:
+) -> MrcalcPowParametersTagged:
     """
     Build parameters.
     
@@ -1002,7 +1176,7 @@ def mrcalc_pow_params(
         Parameter dictionary
     """
     params = {
-        "@type": "mrtrix.mrcalc.pow",
+        "@type": "pow",
     }
     return params
 
@@ -1026,7 +1200,7 @@ def mrcalc_pow_cargs(
 
 
 def mrcalc_round_params(
-) -> MrcalcRoundParameters:
+) -> MrcalcRoundParametersTagged:
     """
     Build parameters.
     
@@ -1035,7 +1209,7 @@ def mrcalc_round_params(
         Parameter dictionary
     """
     params = {
-        "@type": "mrtrix.mrcalc.round",
+        "@type": "round",
     }
     return params
 
@@ -1059,7 +1233,7 @@ def mrcalc_round_cargs(
 
 
 def mrcalc_ceil_params(
-) -> MrcalcCeilParameters:
+) -> MrcalcCeilParametersTagged:
     """
     Build parameters.
     
@@ -1068,7 +1242,7 @@ def mrcalc_ceil_params(
         Parameter dictionary
     """
     params = {
-        "@type": "mrtrix.mrcalc.ceil",
+        "@type": "ceil",
     }
     return params
 
@@ -1092,7 +1266,7 @@ def mrcalc_ceil_cargs(
 
 
 def mrcalc_floor_params(
-) -> MrcalcFloorParameters:
+) -> MrcalcFloorParametersTagged:
     """
     Build parameters.
     
@@ -1101,7 +1275,7 @@ def mrcalc_floor_params(
         Parameter dictionary
     """
     params = {
-        "@type": "mrtrix.mrcalc.floor",
+        "@type": "floor",
     }
     return params
 
@@ -1125,7 +1299,7 @@ def mrcalc_floor_cargs(
 
 
 def mrcalc_not_params(
-) -> MrcalcNotParameters:
+) -> MrcalcNotParametersTagged:
     """
     Build parameters.
     
@@ -1134,7 +1308,7 @@ def mrcalc_not_params(
         Parameter dictionary
     """
     params = {
-        "@type": "mrtrix.mrcalc.not",
+        "@type": "not",
     }
     return params
 
@@ -1158,7 +1332,7 @@ def mrcalc_not_cargs(
 
 
 def mrcalc_and_params(
-) -> MrcalcAndParameters:
+) -> MrcalcAndParametersTagged:
     """
     Build parameters.
     
@@ -1167,7 +1341,7 @@ def mrcalc_and_params(
         Parameter dictionary
     """
     params = {
-        "@type": "mrtrix.mrcalc.and",
+        "@type": "and",
     }
     return params
 
@@ -1191,7 +1365,7 @@ def mrcalc_and_cargs(
 
 
 def mrcalc_or_params(
-) -> MrcalcOrParameters:
+) -> MrcalcOrParametersTagged:
     """
     Build parameters.
     
@@ -1200,7 +1374,7 @@ def mrcalc_or_params(
         Parameter dictionary
     """
     params = {
-        "@type": "mrtrix.mrcalc.or",
+        "@type": "or",
     }
     return params
 
@@ -1224,7 +1398,7 @@ def mrcalc_or_cargs(
 
 
 def mrcalc_xor_params(
-) -> MrcalcXorParameters:
+) -> MrcalcXorParametersTagged:
     """
     Build parameters.
     
@@ -1233,7 +1407,7 @@ def mrcalc_xor_params(
         Parameter dictionary
     """
     params = {
-        "@type": "mrtrix.mrcalc.xor",
+        "@type": "xor",
     }
     return params
 
@@ -1257,7 +1431,7 @@ def mrcalc_xor_cargs(
 
 
 def mrcalc_isnan_params(
-) -> MrcalcIsnanParameters:
+) -> MrcalcIsnanParametersTagged:
     """
     Build parameters.
     
@@ -1266,7 +1440,7 @@ def mrcalc_isnan_params(
         Parameter dictionary
     """
     params = {
-        "@type": "mrtrix.mrcalc.isnan",
+        "@type": "isnan",
     }
     return params
 
@@ -1290,7 +1464,7 @@ def mrcalc_isnan_cargs(
 
 
 def mrcalc_isinf_params(
-) -> MrcalcIsinfParameters:
+) -> MrcalcIsinfParametersTagged:
     """
     Build parameters.
     
@@ -1299,7 +1473,7 @@ def mrcalc_isinf_params(
         Parameter dictionary
     """
     params = {
-        "@type": "mrtrix.mrcalc.isinf",
+        "@type": "isinf",
     }
     return params
 
@@ -1323,7 +1497,7 @@ def mrcalc_isinf_cargs(
 
 
 def mrcalc_finite_params(
-) -> MrcalcFiniteParameters:
+) -> MrcalcFiniteParametersTagged:
     """
     Build parameters.
     
@@ -1332,7 +1506,7 @@ def mrcalc_finite_params(
         Parameter dictionary
     """
     params = {
-        "@type": "mrtrix.mrcalc.finite",
+        "@type": "finite",
     }
     return params
 
@@ -1356,7 +1530,7 @@ def mrcalc_finite_cargs(
 
 
 def mrcalc_complex_params(
-) -> MrcalcComplexParameters:
+) -> MrcalcComplexParametersTagged:
     """
     Build parameters.
     
@@ -1365,7 +1539,7 @@ def mrcalc_complex_params(
         Parameter dictionary
     """
     params = {
-        "@type": "mrtrix.mrcalc.complex",
+        "@type": "complex",
     }
     return params
 
@@ -1389,7 +1563,7 @@ def mrcalc_complex_cargs(
 
 
 def mrcalc_polar_params(
-) -> MrcalcPolarParameters:
+) -> MrcalcPolarParametersTagged:
     """
     Build parameters.
     
@@ -1398,7 +1572,7 @@ def mrcalc_polar_params(
         Parameter dictionary
     """
     params = {
-        "@type": "mrtrix.mrcalc.polar",
+        "@type": "polar",
     }
     return params
 
@@ -1422,7 +1596,7 @@ def mrcalc_polar_cargs(
 
 
 def mrcalc_real_params(
-) -> MrcalcRealParameters:
+) -> MrcalcRealParametersTagged:
     """
     Build parameters.
     
@@ -1431,7 +1605,7 @@ def mrcalc_real_params(
         Parameter dictionary
     """
     params = {
-        "@type": "mrtrix.mrcalc.real",
+        "@type": "real",
     }
     return params
 
@@ -1455,7 +1629,7 @@ def mrcalc_real_cargs(
 
 
 def mrcalc_imag_params(
-) -> MrcalcImagParameters:
+) -> MrcalcImagParametersTagged:
     """
     Build parameters.
     
@@ -1464,7 +1638,7 @@ def mrcalc_imag_params(
         Parameter dictionary
     """
     params = {
-        "@type": "mrtrix.mrcalc.imag",
+        "@type": "imag",
     }
     return params
 
@@ -1488,7 +1662,7 @@ def mrcalc_imag_cargs(
 
 
 def mrcalc_phase_params(
-) -> MrcalcPhaseParameters:
+) -> MrcalcPhaseParametersTagged:
     """
     Build parameters.
     
@@ -1497,7 +1671,7 @@ def mrcalc_phase_params(
         Parameter dictionary
     """
     params = {
-        "@type": "mrtrix.mrcalc.phase",
+        "@type": "phase",
     }
     return params
 
@@ -1521,7 +1695,7 @@ def mrcalc_phase_cargs(
 
 
 def mrcalc_conj_params(
-) -> MrcalcConjParameters:
+) -> MrcalcConjParametersTagged:
     """
     Build parameters.
     
@@ -1530,7 +1704,7 @@ def mrcalc_conj_params(
         Parameter dictionary
     """
     params = {
-        "@type": "mrtrix.mrcalc.conj",
+        "@type": "conj",
     }
     return params
 
@@ -1554,7 +1728,7 @@ def mrcalc_conj_cargs(
 
 
 def mrcalc_proj_params(
-) -> MrcalcProjParameters:
+) -> MrcalcProjParametersTagged:
     """
     Build parameters.
     
@@ -1563,7 +1737,7 @@ def mrcalc_proj_params(
         Parameter dictionary
     """
     params = {
-        "@type": "mrtrix.mrcalc.proj",
+        "@type": "proj",
     }
     return params
 
@@ -1587,7 +1761,7 @@ def mrcalc_proj_cargs(
 
 
 def mrcalc_exp_params(
-) -> MrcalcExpParameters:
+) -> MrcalcExpParametersTagged:
     """
     Build parameters.
     
@@ -1596,7 +1770,7 @@ def mrcalc_exp_params(
         Parameter dictionary
     """
     params = {
-        "@type": "mrtrix.mrcalc.exp",
+        "@type": "exp",
     }
     return params
 
@@ -1620,7 +1794,7 @@ def mrcalc_exp_cargs(
 
 
 def mrcalc_log_params(
-) -> MrcalcLogParameters:
+) -> MrcalcLogParametersTagged:
     """
     Build parameters.
     
@@ -1629,7 +1803,7 @@ def mrcalc_log_params(
         Parameter dictionary
     """
     params = {
-        "@type": "mrtrix.mrcalc.log",
+        "@type": "log",
     }
     return params
 
@@ -1653,7 +1827,7 @@ def mrcalc_log_cargs(
 
 
 def mrcalc_log10_params(
-) -> MrcalcLog10Parameters:
+) -> MrcalcLog10ParametersTagged:
     """
     Build parameters.
     
@@ -1662,7 +1836,7 @@ def mrcalc_log10_params(
         Parameter dictionary
     """
     params = {
-        "@type": "mrtrix.mrcalc.log10",
+        "@type": "log10",
     }
     return params
 
@@ -1686,7 +1860,7 @@ def mrcalc_log10_cargs(
 
 
 def mrcalc_cos_params(
-) -> MrcalcCosParameters:
+) -> MrcalcCosParametersTagged:
     """
     Build parameters.
     
@@ -1695,7 +1869,7 @@ def mrcalc_cos_params(
         Parameter dictionary
     """
     params = {
-        "@type": "mrtrix.mrcalc.cos",
+        "@type": "cos",
     }
     return params
 
@@ -1719,7 +1893,7 @@ def mrcalc_cos_cargs(
 
 
 def mrcalc_sin_params(
-) -> MrcalcSinParameters:
+) -> MrcalcSinParametersTagged:
     """
     Build parameters.
     
@@ -1728,7 +1902,7 @@ def mrcalc_sin_params(
         Parameter dictionary
     """
     params = {
-        "@type": "mrtrix.mrcalc.sin",
+        "@type": "sin",
     }
     return params
 
@@ -1752,7 +1926,7 @@ def mrcalc_sin_cargs(
 
 
 def mrcalc_tan_params(
-) -> MrcalcTanParameters:
+) -> MrcalcTanParametersTagged:
     """
     Build parameters.
     
@@ -1761,7 +1935,7 @@ def mrcalc_tan_params(
         Parameter dictionary
     """
     params = {
-        "@type": "mrtrix.mrcalc.tan",
+        "@type": "tan",
     }
     return params
 
@@ -1785,7 +1959,7 @@ def mrcalc_tan_cargs(
 
 
 def mrcalc_acos_params(
-) -> MrcalcAcosParameters:
+) -> MrcalcAcosParametersTagged:
     """
     Build parameters.
     
@@ -1794,7 +1968,7 @@ def mrcalc_acos_params(
         Parameter dictionary
     """
     params = {
-        "@type": "mrtrix.mrcalc.acos",
+        "@type": "acos",
     }
     return params
 
@@ -1818,7 +1992,7 @@ def mrcalc_acos_cargs(
 
 
 def mrcalc_asin_params(
-) -> MrcalcAsinParameters:
+) -> MrcalcAsinParametersTagged:
     """
     Build parameters.
     
@@ -1827,7 +2001,7 @@ def mrcalc_asin_params(
         Parameter dictionary
     """
     params = {
-        "@type": "mrtrix.mrcalc.asin",
+        "@type": "asin",
     }
     return params
 
@@ -1851,7 +2025,7 @@ def mrcalc_asin_cargs(
 
 
 def mrcalc_atan_params(
-) -> MrcalcAtanParameters:
+) -> MrcalcAtanParametersTagged:
     """
     Build parameters.
     
@@ -1860,7 +2034,7 @@ def mrcalc_atan_params(
         Parameter dictionary
     """
     params = {
-        "@type": "mrtrix.mrcalc.atan",
+        "@type": "atan",
     }
     return params
 
@@ -1884,7 +2058,7 @@ def mrcalc_atan_cargs(
 
 
 def mrcalc_cosh_params(
-) -> MrcalcCoshParameters:
+) -> MrcalcCoshParametersTagged:
     """
     Build parameters.
     
@@ -1893,7 +2067,7 @@ def mrcalc_cosh_params(
         Parameter dictionary
     """
     params = {
-        "@type": "mrtrix.mrcalc.cosh",
+        "@type": "cosh",
     }
     return params
 
@@ -1917,7 +2091,7 @@ def mrcalc_cosh_cargs(
 
 
 def mrcalc_sinh_params(
-) -> MrcalcSinhParameters:
+) -> MrcalcSinhParametersTagged:
     """
     Build parameters.
     
@@ -1926,7 +2100,7 @@ def mrcalc_sinh_params(
         Parameter dictionary
     """
     params = {
-        "@type": "mrtrix.mrcalc.sinh",
+        "@type": "sinh",
     }
     return params
 
@@ -1950,7 +2124,7 @@ def mrcalc_sinh_cargs(
 
 
 def mrcalc_tanh_params(
-) -> MrcalcTanhParameters:
+) -> MrcalcTanhParametersTagged:
     """
     Build parameters.
     
@@ -1959,7 +2133,7 @@ def mrcalc_tanh_params(
         Parameter dictionary
     """
     params = {
-        "@type": "mrtrix.mrcalc.tanh",
+        "@type": "tanh",
     }
     return params
 
@@ -1983,7 +2157,7 @@ def mrcalc_tanh_cargs(
 
 
 def mrcalc_acosh_params(
-) -> MrcalcAcoshParameters:
+) -> MrcalcAcoshParametersTagged:
     """
     Build parameters.
     
@@ -1992,7 +2166,7 @@ def mrcalc_acosh_params(
         Parameter dictionary
     """
     params = {
-        "@type": "mrtrix.mrcalc.acosh",
+        "@type": "acosh",
     }
     return params
 
@@ -2016,7 +2190,7 @@ def mrcalc_acosh_cargs(
 
 
 def mrcalc_asinh_params(
-) -> MrcalcAsinhParameters:
+) -> MrcalcAsinhParametersTagged:
     """
     Build parameters.
     
@@ -2025,7 +2199,7 @@ def mrcalc_asinh_params(
         Parameter dictionary
     """
     params = {
-        "@type": "mrtrix.mrcalc.asinh",
+        "@type": "asinh",
     }
     return params
 
@@ -2049,7 +2223,7 @@ def mrcalc_asinh_cargs(
 
 
 def mrcalc_atanh_params(
-) -> MrcalcAtanhParameters:
+) -> MrcalcAtanhParametersTagged:
     """
     Build parameters.
     
@@ -2058,7 +2232,7 @@ def mrcalc_atanh_params(
         Parameter dictionary
     """
     params = {
-        "@type": "mrtrix.mrcalc.atanh",
+        "@type": "atanh",
     }
     return params
 
@@ -2084,7 +2258,7 @@ def mrcalc_atanh_cargs(
 def mrcalc_config_params(
     key: str,
     value: str,
-) -> MrcalcConfigParameters:
+) -> MrcalcConfigParametersTagged:
     """
     Build parameters.
     
@@ -2095,7 +2269,7 @@ def mrcalc_config_params(
         Parameter dictionary
     """
     params = {
-        "@type": "mrtrix.mrcalc.config",
+        "@type": "config",
         "key": key,
         "value": value,
     }
@@ -2117,14 +2291,14 @@ def mrcalc_config_cargs(
     """
     cargs = []
     cargs.append("-config")
-    cargs.append(params.get("key"))
-    cargs.append(params.get("value"))
+    cargs.append(params.get("key", None))
+    cargs.append(params.get("value", None))
     return cargs
 
 
 def mrcalc_various_string_params(
     obj: str,
-) -> MrcalcVariousStringParameters:
+) -> MrcalcVariousStringParametersTagged:
     """
     Build parameters.
     
@@ -2134,7 +2308,7 @@ def mrcalc_various_string_params(
         Parameter dictionary
     """
     params = {
-        "@type": "mrtrix.mrcalc.VariousString",
+        "@type": "VariousString",
         "obj": obj,
     }
     return params
@@ -2154,13 +2328,13 @@ def mrcalc_various_string_cargs(
         Command-line arguments.
     """
     cargs = []
-    cargs.append(params.get("obj"))
+    cargs.append(params.get("obj", None))
     return cargs
 
 
 def mrcalc_various_file_params(
     obj: InputPathType,
-) -> MrcalcVariousFileParameters:
+) -> MrcalcVariousFileParametersTagged:
     """
     Build parameters.
     
@@ -2170,7 +2344,7 @@ def mrcalc_various_file_params(
         Parameter dictionary
     """
     params = {
-        "@type": "mrtrix.mrcalc.VariousFile",
+        "@type": "VariousFile",
         "obj": obj,
     }
     return params
@@ -2190,20 +2364,20 @@ def mrcalc_various_file_cargs(
         Command-line arguments.
     """
     cargs = []
-    cargs.append(execution.input_file(params.get("obj")))
+    cargs.append(execution.input_file(params.get("obj", None)))
     return cargs
 
 
 class MrcalcOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `mrcalc(...)`.
+    Output object returned when calling `MrcalcParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
 
 
 def mrcalc_params(
-    operand: list[typing.Union[MrcalcVariousStringParameters, MrcalcVariousFileParameters]],
+    operand: list[typing.Union[MrcalcVariousStringParametersTagged, MrcalcVariousFileParametersTagged]],
     abs_: list[MrcalcAbsParameters] | None = None,
     neg: list[MrcalcNegParameters] | None = None,
     add: list[MrcalcAddParameters] | None = None,
@@ -2263,7 +2437,7 @@ def mrcalc_params(
     config: list[MrcalcConfigParameters] | None = None,
     help_: bool = False,
     version: bool = False,
-) -> MrcalcParameters:
+) -> MrcalcParametersTagged:
     """
     Build parameters.
     
@@ -2353,7 +2527,7 @@ def mrcalc_params(
         Parameter dictionary
     """
     params = {
-        "@type": "mrtrix.mrcalc",
+        "@type": "mrtrix/mrcalc",
         "info": info,
         "quiet": quiet,
         "debug": debug,
@@ -2486,131 +2660,131 @@ def mrcalc_cargs(
     """
     cargs = []
     cargs.append("mrcalc")
-    if params.get("abs") is not None:
-        cargs.extend([a for c in [dyn_cargs(s["@type"])(s, execution) for s in params.get("abs")] for a in c])
-    if params.get("neg") is not None:
-        cargs.extend([a for c in [dyn_cargs(s["@type"])(s, execution) for s in params.get("neg")] for a in c])
-    if params.get("add") is not None:
-        cargs.extend([a for c in [dyn_cargs(s["@type"])(s, execution) for s in params.get("add")] for a in c])
-    if params.get("subtract") is not None:
-        cargs.extend([a for c in [dyn_cargs(s["@type"])(s, execution) for s in params.get("subtract")] for a in c])
-    if params.get("multiply") is not None:
-        cargs.extend([a for c in [dyn_cargs(s["@type"])(s, execution) for s in params.get("multiply")] for a in c])
-    if params.get("divide") is not None:
-        cargs.extend([a for c in [dyn_cargs(s["@type"])(s, execution) for s in params.get("divide")] for a in c])
-    if params.get("min") is not None:
-        cargs.extend([a for c in [dyn_cargs(s["@type"])(s, execution) for s in params.get("min")] for a in c])
-    if params.get("max") is not None:
-        cargs.extend([a for c in [dyn_cargs(s["@type"])(s, execution) for s in params.get("max")] for a in c])
-    if params.get("lt") is not None:
-        cargs.extend([a for c in [dyn_cargs(s["@type"])(s, execution) for s in params.get("lt")] for a in c])
-    if params.get("gt") is not None:
-        cargs.extend([a for c in [dyn_cargs(s["@type"])(s, execution) for s in params.get("gt")] for a in c])
-    if params.get("le") is not None:
-        cargs.extend([a for c in [dyn_cargs(s["@type"])(s, execution) for s in params.get("le")] for a in c])
-    if params.get("ge") is not None:
-        cargs.extend([a for c in [dyn_cargs(s["@type"])(s, execution) for s in params.get("ge")] for a in c])
-    if params.get("eq") is not None:
-        cargs.extend([a for c in [dyn_cargs(s["@type"])(s, execution) for s in params.get("eq")] for a in c])
-    if params.get("neq") is not None:
-        cargs.extend([a for c in [dyn_cargs(s["@type"])(s, execution) for s in params.get("neq")] for a in c])
-    if params.get("if") is not None:
-        cargs.extend([a for c in [dyn_cargs(s["@type"])(s, execution) for s in params.get("if")] for a in c])
-    if params.get("replace") is not None:
-        cargs.extend([a for c in [dyn_cargs(s["@type"])(s, execution) for s in params.get("replace")] for a in c])
-    if params.get("sqrt") is not None:
-        cargs.extend([a for c in [dyn_cargs(s["@type"])(s, execution) for s in params.get("sqrt")] for a in c])
-    if params.get("pow") is not None:
-        cargs.extend([a for c in [dyn_cargs(s["@type"])(s, execution) for s in params.get("pow")] for a in c])
-    if params.get("round") is not None:
-        cargs.extend([a for c in [dyn_cargs(s["@type"])(s, execution) for s in params.get("round")] for a in c])
-    if params.get("ceil") is not None:
-        cargs.extend([a for c in [dyn_cargs(s["@type"])(s, execution) for s in params.get("ceil")] for a in c])
-    if params.get("floor") is not None:
-        cargs.extend([a for c in [dyn_cargs(s["@type"])(s, execution) for s in params.get("floor")] for a in c])
-    if params.get("not") is not None:
-        cargs.extend([a for c in [dyn_cargs(s["@type"])(s, execution) for s in params.get("not")] for a in c])
-    if params.get("and") is not None:
-        cargs.extend([a for c in [dyn_cargs(s["@type"])(s, execution) for s in params.get("and")] for a in c])
-    if params.get("or") is not None:
-        cargs.extend([a for c in [dyn_cargs(s["@type"])(s, execution) for s in params.get("or")] for a in c])
-    if params.get("xor") is not None:
-        cargs.extend([a for c in [dyn_cargs(s["@type"])(s, execution) for s in params.get("xor")] for a in c])
-    if params.get("isnan") is not None:
-        cargs.extend([a for c in [dyn_cargs(s["@type"])(s, execution) for s in params.get("isnan")] for a in c])
-    if params.get("isinf") is not None:
-        cargs.extend([a for c in [dyn_cargs(s["@type"])(s, execution) for s in params.get("isinf")] for a in c])
-    if params.get("finite") is not None:
-        cargs.extend([a for c in [dyn_cargs(s["@type"])(s, execution) for s in params.get("finite")] for a in c])
-    if params.get("complex") is not None:
-        cargs.extend([a for c in [dyn_cargs(s["@type"])(s, execution) for s in params.get("complex")] for a in c])
-    if params.get("polar") is not None:
-        cargs.extend([a for c in [dyn_cargs(s["@type"])(s, execution) for s in params.get("polar")] for a in c])
-    if params.get("real") is not None:
-        cargs.extend([a for c in [dyn_cargs(s["@type"])(s, execution) for s in params.get("real")] for a in c])
-    if params.get("imag") is not None:
-        cargs.extend([a for c in [dyn_cargs(s["@type"])(s, execution) for s in params.get("imag")] for a in c])
-    if params.get("phase") is not None:
-        cargs.extend([a for c in [dyn_cargs(s["@type"])(s, execution) for s in params.get("phase")] for a in c])
-    if params.get("conj") is not None:
-        cargs.extend([a for c in [dyn_cargs(s["@type"])(s, execution) for s in params.get("conj")] for a in c])
-    if params.get("proj") is not None:
-        cargs.extend([a for c in [dyn_cargs(s["@type"])(s, execution) for s in params.get("proj")] for a in c])
-    if params.get("exp") is not None:
-        cargs.extend([a for c in [dyn_cargs(s["@type"])(s, execution) for s in params.get("exp")] for a in c])
-    if params.get("log") is not None:
-        cargs.extend([a for c in [dyn_cargs(s["@type"])(s, execution) for s in params.get("log")] for a in c])
-    if params.get("log10") is not None:
-        cargs.extend([a for c in [dyn_cargs(s["@type"])(s, execution) for s in params.get("log10")] for a in c])
-    if params.get("cos") is not None:
-        cargs.extend([a for c in [dyn_cargs(s["@type"])(s, execution) for s in params.get("cos")] for a in c])
-    if params.get("sin") is not None:
-        cargs.extend([a for c in [dyn_cargs(s["@type"])(s, execution) for s in params.get("sin")] for a in c])
-    if params.get("tan") is not None:
-        cargs.extend([a for c in [dyn_cargs(s["@type"])(s, execution) for s in params.get("tan")] for a in c])
-    if params.get("acos") is not None:
-        cargs.extend([a for c in [dyn_cargs(s["@type"])(s, execution) for s in params.get("acos")] for a in c])
-    if params.get("asin") is not None:
-        cargs.extend([a for c in [dyn_cargs(s["@type"])(s, execution) for s in params.get("asin")] for a in c])
-    if params.get("atan") is not None:
-        cargs.extend([a for c in [dyn_cargs(s["@type"])(s, execution) for s in params.get("atan")] for a in c])
-    if params.get("cosh") is not None:
-        cargs.extend([a for c in [dyn_cargs(s["@type"])(s, execution) for s in params.get("cosh")] for a in c])
-    if params.get("sinh") is not None:
-        cargs.extend([a for c in [dyn_cargs(s["@type"])(s, execution) for s in params.get("sinh")] for a in c])
-    if params.get("tanh") is not None:
-        cargs.extend([a for c in [dyn_cargs(s["@type"])(s, execution) for s in params.get("tanh")] for a in c])
-    if params.get("acosh") is not None:
-        cargs.extend([a for c in [dyn_cargs(s["@type"])(s, execution) for s in params.get("acosh")] for a in c])
-    if params.get("asinh") is not None:
-        cargs.extend([a for c in [dyn_cargs(s["@type"])(s, execution) for s in params.get("asinh")] for a in c])
-    if params.get("atanh") is not None:
-        cargs.extend([a for c in [dyn_cargs(s["@type"])(s, execution) for s in params.get("atanh")] for a in c])
-    if params.get("datatype") is not None:
+    if params.get("abs", None) is not None:
+        cargs.extend([a for c in [mrcalc_abs_cargs(s, execution) for s in params.get("abs", None)] for a in c])
+    if params.get("neg", None) is not None:
+        cargs.extend([a for c in [mrcalc_neg_cargs(s, execution) for s in params.get("neg", None)] for a in c])
+    if params.get("add", None) is not None:
+        cargs.extend([a for c in [mrcalc_add_cargs(s, execution) for s in params.get("add", None)] for a in c])
+    if params.get("subtract", None) is not None:
+        cargs.extend([a for c in [mrcalc_subtract_cargs(s, execution) for s in params.get("subtract", None)] for a in c])
+    if params.get("multiply", None) is not None:
+        cargs.extend([a for c in [mrcalc_multiply_cargs(s, execution) for s in params.get("multiply", None)] for a in c])
+    if params.get("divide", None) is not None:
+        cargs.extend([a for c in [mrcalc_divide_cargs(s, execution) for s in params.get("divide", None)] for a in c])
+    if params.get("min", None) is not None:
+        cargs.extend([a for c in [mrcalc_min_cargs(s, execution) for s in params.get("min", None)] for a in c])
+    if params.get("max", None) is not None:
+        cargs.extend([a for c in [mrcalc_max_cargs(s, execution) for s in params.get("max", None)] for a in c])
+    if params.get("lt", None) is not None:
+        cargs.extend([a for c in [mrcalc_lt_cargs(s, execution) for s in params.get("lt", None)] for a in c])
+    if params.get("gt", None) is not None:
+        cargs.extend([a for c in [mrcalc_gt_cargs(s, execution) for s in params.get("gt", None)] for a in c])
+    if params.get("le", None) is not None:
+        cargs.extend([a for c in [mrcalc_le_cargs(s, execution) for s in params.get("le", None)] for a in c])
+    if params.get("ge", None) is not None:
+        cargs.extend([a for c in [mrcalc_ge_cargs(s, execution) for s in params.get("ge", None)] for a in c])
+    if params.get("eq", None) is not None:
+        cargs.extend([a for c in [mrcalc_eq_cargs(s, execution) for s in params.get("eq", None)] for a in c])
+    if params.get("neq", None) is not None:
+        cargs.extend([a for c in [mrcalc_neq_cargs(s, execution) for s in params.get("neq", None)] for a in c])
+    if params.get("if", None) is not None:
+        cargs.extend([a for c in [mrcalc_if_cargs(s, execution) for s in params.get("if", None)] for a in c])
+    if params.get("replace", None) is not None:
+        cargs.extend([a for c in [mrcalc_replace_cargs(s, execution) for s in params.get("replace", None)] for a in c])
+    if params.get("sqrt", None) is not None:
+        cargs.extend([a for c in [mrcalc_sqrt_cargs(s, execution) for s in params.get("sqrt", None)] for a in c])
+    if params.get("pow", None) is not None:
+        cargs.extend([a for c in [mrcalc_pow_cargs(s, execution) for s in params.get("pow", None)] for a in c])
+    if params.get("round", None) is not None:
+        cargs.extend([a for c in [mrcalc_round_cargs(s, execution) for s in params.get("round", None)] for a in c])
+    if params.get("ceil", None) is not None:
+        cargs.extend([a for c in [mrcalc_ceil_cargs(s, execution) for s in params.get("ceil", None)] for a in c])
+    if params.get("floor", None) is not None:
+        cargs.extend([a for c in [mrcalc_floor_cargs(s, execution) for s in params.get("floor", None)] for a in c])
+    if params.get("not", None) is not None:
+        cargs.extend([a for c in [mrcalc_not_cargs(s, execution) for s in params.get("not", None)] for a in c])
+    if params.get("and", None) is not None:
+        cargs.extend([a for c in [mrcalc_and_cargs(s, execution) for s in params.get("and", None)] for a in c])
+    if params.get("or", None) is not None:
+        cargs.extend([a for c in [mrcalc_or_cargs(s, execution) for s in params.get("or", None)] for a in c])
+    if params.get("xor", None) is not None:
+        cargs.extend([a for c in [mrcalc_xor_cargs(s, execution) for s in params.get("xor", None)] for a in c])
+    if params.get("isnan", None) is not None:
+        cargs.extend([a for c in [mrcalc_isnan_cargs(s, execution) for s in params.get("isnan", None)] for a in c])
+    if params.get("isinf", None) is not None:
+        cargs.extend([a for c in [mrcalc_isinf_cargs(s, execution) for s in params.get("isinf", None)] for a in c])
+    if params.get("finite", None) is not None:
+        cargs.extend([a for c in [mrcalc_finite_cargs(s, execution) for s in params.get("finite", None)] for a in c])
+    if params.get("complex", None) is not None:
+        cargs.extend([a for c in [mrcalc_complex_cargs(s, execution) for s in params.get("complex", None)] for a in c])
+    if params.get("polar", None) is not None:
+        cargs.extend([a for c in [mrcalc_polar_cargs(s, execution) for s in params.get("polar", None)] for a in c])
+    if params.get("real", None) is not None:
+        cargs.extend([a for c in [mrcalc_real_cargs(s, execution) for s in params.get("real", None)] for a in c])
+    if params.get("imag", None) is not None:
+        cargs.extend([a for c in [mrcalc_imag_cargs(s, execution) for s in params.get("imag", None)] for a in c])
+    if params.get("phase", None) is not None:
+        cargs.extend([a for c in [mrcalc_phase_cargs(s, execution) for s in params.get("phase", None)] for a in c])
+    if params.get("conj", None) is not None:
+        cargs.extend([a for c in [mrcalc_conj_cargs(s, execution) for s in params.get("conj", None)] for a in c])
+    if params.get("proj", None) is not None:
+        cargs.extend([a for c in [mrcalc_proj_cargs(s, execution) for s in params.get("proj", None)] for a in c])
+    if params.get("exp", None) is not None:
+        cargs.extend([a for c in [mrcalc_exp_cargs(s, execution) for s in params.get("exp", None)] for a in c])
+    if params.get("log", None) is not None:
+        cargs.extend([a for c in [mrcalc_log_cargs(s, execution) for s in params.get("log", None)] for a in c])
+    if params.get("log10", None) is not None:
+        cargs.extend([a for c in [mrcalc_log10_cargs(s, execution) for s in params.get("log10", None)] for a in c])
+    if params.get("cos", None) is not None:
+        cargs.extend([a for c in [mrcalc_cos_cargs(s, execution) for s in params.get("cos", None)] for a in c])
+    if params.get("sin", None) is not None:
+        cargs.extend([a for c in [mrcalc_sin_cargs(s, execution) for s in params.get("sin", None)] for a in c])
+    if params.get("tan", None) is not None:
+        cargs.extend([a for c in [mrcalc_tan_cargs(s, execution) for s in params.get("tan", None)] for a in c])
+    if params.get("acos", None) is not None:
+        cargs.extend([a for c in [mrcalc_acos_cargs(s, execution) for s in params.get("acos", None)] for a in c])
+    if params.get("asin", None) is not None:
+        cargs.extend([a for c in [mrcalc_asin_cargs(s, execution) for s in params.get("asin", None)] for a in c])
+    if params.get("atan", None) is not None:
+        cargs.extend([a for c in [mrcalc_atan_cargs(s, execution) for s in params.get("atan", None)] for a in c])
+    if params.get("cosh", None) is not None:
+        cargs.extend([a for c in [mrcalc_cosh_cargs(s, execution) for s in params.get("cosh", None)] for a in c])
+    if params.get("sinh", None) is not None:
+        cargs.extend([a for c in [mrcalc_sinh_cargs(s, execution) for s in params.get("sinh", None)] for a in c])
+    if params.get("tanh", None) is not None:
+        cargs.extend([a for c in [mrcalc_tanh_cargs(s, execution) for s in params.get("tanh", None)] for a in c])
+    if params.get("acosh", None) is not None:
+        cargs.extend([a for c in [mrcalc_acosh_cargs(s, execution) for s in params.get("acosh", None)] for a in c])
+    if params.get("asinh", None) is not None:
+        cargs.extend([a for c in [mrcalc_asinh_cargs(s, execution) for s in params.get("asinh", None)] for a in c])
+    if params.get("atanh", None) is not None:
+        cargs.extend([a for c in [mrcalc_atanh_cargs(s, execution) for s in params.get("atanh", None)] for a in c])
+    if params.get("datatype", None) is not None:
         cargs.extend([
             "-datatype",
-            params.get("datatype")
+            params.get("datatype", None)
         ])
-    if params.get("info"):
+    if params.get("info", False):
         cargs.append("-info")
-    if params.get("quiet"):
+    if params.get("quiet", False):
         cargs.append("-quiet")
-    if params.get("debug"):
+    if params.get("debug", False):
         cargs.append("-debug")
-    if params.get("force"):
+    if params.get("force", False):
         cargs.append("-force")
-    if params.get("nthreads") is not None:
+    if params.get("nthreads", None) is not None:
         cargs.extend([
             "-nthreads",
-            str(params.get("nthreads"))
+            str(params.get("nthreads", None))
         ])
-    if params.get("config") is not None:
-        cargs.extend([a for c in [dyn_cargs(s["@type"])(s, execution) for s in params.get("config")] for a in c])
-    if params.get("help"):
+    if params.get("config", None) is not None:
+        cargs.extend([a for c in [mrcalc_config_cargs(s, execution) for s in params.get("config", None)] for a in c])
+    if params.get("help", False):
         cargs.append("-help")
-    if params.get("version"):
+    if params.get("version", False):
         cargs.append("-version")
-    cargs.extend([a for c in [dyn_cargs(s["@type"])(s, execution) for s in params.get("operand")] for a in c])
+    cargs.extend([a for c in [mrcalc_operand_cargs_dyn_fn(s["@type"])(s, execution) for s in params.get("operand", None)] for a in c])
     return cargs
 
 
@@ -2688,7 +2862,7 @@ def mrcalc_execute(
 
 
 def mrcalc(
-    operand: list[typing.Union[MrcalcVariousStringParameters, MrcalcVariousFileParameters]],
+    operand: list[typing.Union[MrcalcVariousStringParametersTagged, MrcalcVariousFileParametersTagged]],
     abs_: list[MrcalcAbsParameters] | None = None,
     neg: list[MrcalcNegParameters] | None = None,
     add: list[MrcalcAddParameters] | None = None,
@@ -2938,61 +3112,7 @@ def mrcalc(
 
 __all__ = [
     "MRCALC_METADATA",
-    "MrcalcAbsParameters",
-    "MrcalcAcosParameters",
-    "MrcalcAcoshParameters",
-    "MrcalcAddParameters",
-    "MrcalcAndParameters",
-    "MrcalcAsinParameters",
-    "MrcalcAsinhParameters",
-    "MrcalcAtanParameters",
-    "MrcalcAtanhParameters",
-    "MrcalcCeilParameters",
-    "MrcalcComplexParameters",
-    "MrcalcConfigParameters",
-    "MrcalcConjParameters",
-    "MrcalcCosParameters",
-    "MrcalcCoshParameters",
-    "MrcalcDivideParameters",
-    "MrcalcEqParameters",
-    "MrcalcExpParameters",
-    "MrcalcFiniteParameters",
-    "MrcalcFloorParameters",
-    "MrcalcGeParameters",
-    "MrcalcGtParameters",
-    "MrcalcIfParameters",
-    "MrcalcImagParameters",
-    "MrcalcIsinfParameters",
-    "MrcalcIsnanParameters",
-    "MrcalcLeParameters",
-    "MrcalcLog10Parameters",
-    "MrcalcLogParameters",
-    "MrcalcLtParameters",
-    "MrcalcMaxParameters",
-    "MrcalcMinParameters",
-    "MrcalcMultiplyParameters",
-    "MrcalcNegParameters",
-    "MrcalcNeqParameters",
-    "MrcalcNotParameters",
-    "MrcalcOrParameters",
     "MrcalcOutputs",
-    "MrcalcParameters",
-    "MrcalcPhaseParameters",
-    "MrcalcPolarParameters",
-    "MrcalcPowParameters",
-    "MrcalcProjParameters",
-    "MrcalcRealParameters",
-    "MrcalcReplaceParameters",
-    "MrcalcRoundParameters",
-    "MrcalcSinParameters",
-    "MrcalcSinhParameters",
-    "MrcalcSqrtParameters",
-    "MrcalcSubtractParameters",
-    "MrcalcTanParameters",
-    "MrcalcTanhParameters",
-    "MrcalcVariousFileParameters",
-    "MrcalcVariousStringParameters",
-    "MrcalcXorParameters",
     "mrcalc",
     "mrcalc_abs_params",
     "mrcalc_acos_params",

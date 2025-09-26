@@ -14,7 +14,14 @@ FS_UPDATE_METADATA = Metadata(
 
 
 FsUpdateParameters = typing.TypedDict('FsUpdateParameters', {
-    "@type": typing.Literal["freesurfer.fs_update"],
+    "@type": typing.NotRequired[typing.Literal["freesurfer/fs_update"]],
+    "update_path": typing.NotRequired[str | None],
+    "help_short": bool,
+    "help_medium": bool,
+    "help_long": bool,
+})
+FsUpdateParametersTagged = typing.TypedDict('FsUpdateParametersTagged', {
+    "@type": typing.Literal["freesurfer/fs_update"],
     "update_path": typing.NotRequired[str | None],
     "help_short": bool,
     "help_medium": bool,
@@ -22,40 +29,9 @@ FsUpdateParameters = typing.TypedDict('FsUpdateParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "freesurfer.fs_update": fs_update_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-    }.get(t)
-
-
 class FsUpdateOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `fs_update(...)`.
+    Output object returned when calling `FsUpdateParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -66,7 +42,7 @@ def fs_update_params(
     help_short: bool = False,
     help_medium: bool = False,
     help_long: bool = False,
-) -> FsUpdateParameters:
+) -> FsUpdateParametersTagged:
     """
     Build parameters.
     
@@ -80,7 +56,7 @@ def fs_update_params(
         Parameter dictionary
     """
     params = {
-        "@type": "freesurfer.fs_update",
+        "@type": "freesurfer/fs_update",
         "help_short": help_short,
         "help_medium": help_medium,
         "help_long": help_long,
@@ -105,13 +81,13 @@ def fs_update_cargs(
     """
     cargs = []
     cargs.append("fs_update")
-    if params.get("update_path") is not None:
-        cargs.append(params.get("update_path"))
-    if params.get("help_short"):
+    if params.get("update_path", None) is not None:
+        cargs.append(params.get("update_path", None))
+    if params.get("help_short", False):
         cargs.append("-h")
-    if params.get("help_medium"):
+    if params.get("help_medium", False):
         cargs.append("-help")
-    if params.get("help_long"):
+    if params.get("help_long", False):
         cargs.append("--help")
     return cargs
 
@@ -201,7 +177,6 @@ def fs_update(
 __all__ = [
     "FS_UPDATE_METADATA",
     "FsUpdateOutputs",
-    "FsUpdateParameters",
     "fs_update",
     "fs_update_execute",
     "fs_update_params",

@@ -14,21 +14,37 @@ GREEDY_METADATA = Metadata(
 
 
 GreedyInputImagesParameters = typing.TypedDict('GreedyInputImagesParameters', {
-    "@type": typing.Literal["greedy.greedy.input_images"],
+    "@type": typing.NotRequired[typing.Literal["input_images"]],
+    "fixed": InputPathType,
+    "moving": InputPathType,
+})
+GreedyInputImagesParametersTagged = typing.TypedDict('GreedyInputImagesParametersTagged', {
+    "@type": typing.Literal["input_images"],
     "fixed": InputPathType,
     "moving": InputPathType,
 })
 
 
 GreedyInvertParameters = typing.TypedDict('GreedyInvertParameters', {
-    "@type": typing.Literal["greedy.greedy.invert"],
+    "@type": typing.NotRequired[typing.Literal["invert"]],
+    "inwarp": InputPathType,
+    "outwarp": str,
+})
+GreedyInvertParametersTagged = typing.TypedDict('GreedyInvertParametersTagged', {
+    "@type": typing.Literal["invert"],
     "inwarp": InputPathType,
     "outwarp": str,
 })
 
 
 GreedyRootParameters = typing.TypedDict('GreedyRootParameters', {
-    "@type": typing.Literal["greedy.greedy.root"],
+    "@type": typing.NotRequired[typing.Literal["root"]],
+    "inwarp": InputPathType,
+    "outwarp": str,
+    "n": int,
+})
+GreedyRootParametersTagged = typing.TypedDict('GreedyRootParametersTagged', {
+    "@type": typing.Literal["root"],
     "inwarp": InputPathType,
     "outwarp": str,
     "n": int,
@@ -36,28 +52,49 @@ GreedyRootParameters = typing.TypedDict('GreedyRootParameters', {
 
 
 GreedyJacobianParameters = typing.TypedDict('GreedyJacobianParameters', {
-    "@type": typing.Literal["greedy.greedy.jacobian"],
+    "@type": typing.NotRequired[typing.Literal["jacobian"]],
+    "inwarp": InputPathType,
+    "outjac": str,
+})
+GreedyJacobianParametersTagged = typing.TypedDict('GreedyJacobianParametersTagged', {
+    "@type": typing.Literal["jacobian"],
     "inwarp": InputPathType,
     "outjac": str,
 })
 
 
 GreedyMetricParameters = typing.TypedDict('GreedyMetricParameters', {
-    "@type": typing.Literal["greedy.greedy.metric"],
+    "@type": typing.NotRequired[typing.Literal["metric"]],
+    "metric_type": typing.Literal["SSD", "MI", "NMI", "NCC", "MAHAL"],
+    "metric_param": typing.NotRequired[float | None],
+})
+GreedyMetricParametersTagged = typing.TypedDict('GreedyMetricParametersTagged', {
+    "@type": typing.Literal["metric"],
     "metric_type": typing.Literal["SSD", "MI", "NMI", "NCC", "MAHAL"],
     "metric_param": typing.NotRequired[float | None],
 })
 
 
 GreedyTjrParameters = typing.TypedDict('GreedyTjrParameters', {
-    "@type": typing.Literal["greedy.greedy.tjr"],
+    "@type": typing.NotRequired[typing.Literal["tjr"]],
+    "mesh": InputPathType,
+    "weight": float,
+})
+GreedyTjrParametersTagged = typing.TypedDict('GreedyTjrParametersTagged', {
+    "@type": typing.Literal["tjr"],
     "mesh": InputPathType,
     "weight": float,
 })
 
 
 GreedySearchParameters = typing.TypedDict('GreedySearchParameters', {
-    "@type": typing.Literal["greedy.greedy.search"],
+    "@type": typing.NotRequired[typing.Literal["search"]],
+    "n": int,
+    "rot": str,
+    "tran": float,
+})
+GreedySearchParametersTagged = typing.TypedDict('GreedySearchParametersTagged', {
+    "@type": typing.Literal["search"],
     "n": int,
     "rot": str,
     "tran": float,
@@ -65,44 +102,69 @@ GreedySearchParameters = typing.TypedDict('GreedySearchParameters', {
 
 
 GreedyResliceMovingImageParameters = typing.TypedDict('GreedyResliceMovingImageParameters', {
-    "@type": typing.Literal["greedy.greedy.reslice_moving_image"],
+    "@type": typing.NotRequired[typing.Literal["reslice_moving_image"]],
+    "moving": InputPathType,
+    "output": str,
+})
+GreedyResliceMovingImageParametersTagged = typing.TypedDict('GreedyResliceMovingImageParametersTagged', {
+    "@type": typing.Literal["reslice_moving_image"],
     "moving": InputPathType,
     "output": str,
 })
 
 
 GreedyResliceSurfaceParameters = typing.TypedDict('GreedyResliceSurfaceParameters', {
-    "@type": typing.Literal["greedy.greedy.reslice_surface"],
+    "@type": typing.NotRequired[typing.Literal["reslice_surface"]],
+    "inmesh": InputPathType,
+    "outmesh": str,
+})
+GreedyResliceSurfaceParametersTagged = typing.TypedDict('GreedyResliceSurfaceParametersTagged', {
+    "@type": typing.Literal["reslice_surface"],
     "inmesh": InputPathType,
     "outmesh": str,
 })
 
 
 GreedyNnParameters = typing.TypedDict('GreedyNnParameters', {
-    "@type": typing.Literal["greedy.greedy.nn"],
+    "@type": typing.NotRequired[typing.Literal["nn"]],
+})
+GreedyNnParametersTagged = typing.TypedDict('GreedyNnParametersTagged', {
+    "@type": typing.Literal["nn"],
 })
 
 
 GreedyLinearParameters = typing.TypedDict('GreedyLinearParameters', {
-    "@type": typing.Literal["greedy.greedy.linear"],
+    "@type": typing.NotRequired[typing.Literal["linear"]],
+})
+GreedyLinearParametersTagged = typing.TypedDict('GreedyLinearParametersTagged', {
+    "@type": typing.Literal["linear"],
 })
 
 
 GreedyLabelParameters = typing.TypedDict('GreedyLabelParameters', {
-    "@type": typing.Literal["greedy.greedy.label"],
+    "@type": typing.NotRequired[typing.Literal["label"]],
+    "sigma_spec": str,
+})
+GreedyLabelParametersTagged = typing.TypedDict('GreedyLabelParametersTagged', {
+    "@type": typing.Literal["label"],
     "sigma_spec": str,
 })
 
 
 GreedyResliceSimplexJacobianParameters = typing.TypedDict('GreedyResliceSimplexJacobianParameters', {
-    "@type": typing.Literal["greedy.greedy.reslice_simplex_jacobian"],
+    "@type": typing.NotRequired[typing.Literal["reslice_simplex_jacobian"]],
+    "inmesh": InputPathType,
+    "outmesh": str,
+})
+GreedyResliceSimplexJacobianParametersTagged = typing.TypedDict('GreedyResliceSimplexJacobianParametersTagged', {
+    "@type": typing.Literal["reslice_simplex_jacobian"],
     "inmesh": InputPathType,
     "outmesh": str,
 })
 
 
 GreedyParameters = typing.TypedDict('GreedyParameters', {
-    "@type": typing.Literal["greedy.greedy"],
+    "@type": typing.NotRequired[typing.Literal["greedy/greedy"]],
     "dimensions": int,
     "input_images": typing.NotRequired[GreedyInputImagesParameters | None],
     "output": typing.NotRequired[str | None],
@@ -156,7 +218,82 @@ GreedyParameters = typing.TypedDict('GreedyParameters', {
     "fixed_reslicing_image": typing.NotRequired[InputPathType | None],
     "reslice_moving_image": typing.NotRequired[GreedyResliceMovingImageParameters | None],
     "reslice_surface": typing.NotRequired[GreedyResliceSurfaceParameters | None],
-    "interpolation": typing.NotRequired[typing.Union[GreedyNnParameters, GreedyLinearParameters, GreedyLabelParameters] | None],
+    "interpolation": typing.NotRequired[typing.Union[GreedyNnParametersTagged, GreedyLinearParametersTagged, GreedyLabelParametersTagged] | None],
+    "reslice_background": typing.NotRequired[float | None],
+    "reslice_datatype": typing.NotRequired[typing.Literal["auto", "double", "float", "uint", "int", "ushort", "short", "uchar", "char"] | None],
+    "reslice_composite": typing.NotRequired[InputPathType | None],
+    "reslice_jacobian": typing.NotRequired[InputPathType | None],
+    "reslice_simplex_jacobian": typing.NotRequired[GreedyResliceSimplexJacobianParameters | None],
+    "reslice_mask": typing.NotRequired[InputPathType | None],
+    "metric_gradient": typing.NotRequired[InputPathType | None],
+    "debug_deriv": bool,
+    "debug_deriv_eps": typing.NotRequired[float | None],
+    "debug_aff_obj": bool,
+    "dump_pyramid": bool,
+    "dump_moving": bool,
+    "dump_frequency": typing.NotRequired[float | None],
+    "dump_prefix": typing.NotRequired[str | None],
+    "powell": bool,
+    "float": bool,
+    "version": bool,
+    "verbosity": typing.NotRequired[typing.Literal[0, 1, 2] | None],
+})
+GreedyParametersTagged = typing.TypedDict('GreedyParametersTagged', {
+    "@type": typing.Literal["greedy/greedy"],
+    "dimensions": int,
+    "input_images": typing.NotRequired[GreedyInputImagesParameters | None],
+    "output": typing.NotRequired[str | None],
+    "affine": bool,
+    "brute": typing.NotRequired[str | None],
+    "moments": typing.NotRequired[typing.Literal[1, 2] | None],
+    "reslice": typing.NotRequired[list[InputPathType] | None],
+    "invert": typing.NotRequired[GreedyInvertParameters | None],
+    "root": typing.NotRequired[GreedyRootParameters | None],
+    "jacobian": typing.NotRequired[GreedyJacobianParameters | None],
+    "metric_mode": bool,
+    "defopt": bool,
+    "weight": typing.NotRequired[float | None],
+    "metric": typing.NotRequired[GreedyMetricParameters | None],
+    "step_size": typing.NotRequired[str | None],
+    "iterations": typing.NotRequired[str | None],
+    "threads": typing.NotRequired[int | None],
+    "fixed_mask": typing.NotRequired[InputPathType | None],
+    "gm_trim": typing.NotRequired[float | None],
+    "moving_mask": typing.NotRequired[InputPathType | None],
+    "wncc_mask_dilate": bool,
+    "reference_image": typing.NotRequired[InputPathType | None],
+    "ref_pad": typing.NotRequired[float | None],
+    "background": typing.NotRequired[str | None],
+    "input_transform": typing.NotRequired[InputPathType | None],
+    "zero_last_dimension": bool,
+    "time_step_mode": typing.NotRequired[typing.Literal["CONST", "SCALE", "SCALEDOWN"] | None],
+    "smoothing": typing.NotRequired[str | None],
+    "inverse_warp": typing.NotRequired[InputPathType | None],
+    "root_warp": typing.NotRequired[InputPathType | None],
+    "warp_precision": typing.NotRequired[float | None],
+    "noise": typing.NotRequired[float | None],
+    "exponent": typing.NotRequired[float | None],
+    "svf_mode": bool,
+    "svlb": bool,
+    "sv_incompr": bool,
+    "initial_warp": typing.NotRequired[InputPathType | None],
+    "tjr": typing.NotRequired[GreedyTjrParameters | None],
+    "wr": typing.NotRequired[float | None],
+    "initial_affine": typing.NotRequired[InputPathType | None],
+    "ia_identity": bool,
+    "ia_voxel_grid": bool,
+    "ia_image_centers": bool,
+    "ia_image_side": typing.NotRequired[str | None],
+    "ia_moments": typing.NotRequired[typing.Literal[1, 2] | None],
+    "affine_dof": typing.NotRequired[typing.Literal[6, 7, 12] | None],
+    "jitter": typing.NotRequired[float | None],
+    "search": typing.NotRequired[GreedySearchParameters | None],
+    "det": typing.NotRequired[typing.Literal[-1, 1] | None],
+    "cov_id": bool,
+    "fixed_reslicing_image": typing.NotRequired[InputPathType | None],
+    "reslice_moving_image": typing.NotRequired[GreedyResliceMovingImageParameters | None],
+    "reslice_surface": typing.NotRequired[GreedyResliceSurfaceParameters | None],
+    "interpolation": typing.NotRequired[typing.Union[GreedyNnParametersTagged, GreedyLinearParametersTagged, GreedyLabelParametersTagged] | None],
     "reslice_background": typing.NotRequired[float | None],
     "reslice_datatype": typing.NotRequired[typing.Literal["auto", "double", "float", "uint", "int", "ushort", "short", "uchar", "char"] | None],
     "reslice_composite": typing.NotRequired[InputPathType | None],
@@ -178,7 +315,7 @@ GreedyParameters = typing.TypedDict('GreedyParameters', {
 })
 
 
-def dyn_cargs(
+def greedy_interpolation_cargs_dyn_fn(
     t: str,
 ) -> typing.Any:
     """
@@ -190,24 +327,13 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "greedy.greedy": greedy_cargs,
-        "greedy.greedy.input_images": greedy_input_images_cargs,
-        "greedy.greedy.invert": greedy_invert_cargs,
-        "greedy.greedy.root": greedy_root_cargs,
-        "greedy.greedy.jacobian": greedy_jacobian_cargs,
-        "greedy.greedy.metric": greedy_metric_cargs,
-        "greedy.greedy.tjr": greedy_tjr_cargs,
-        "greedy.greedy.search": greedy_search_cargs,
-        "greedy.greedy.reslice_moving_image": greedy_reslice_moving_image_cargs,
-        "greedy.greedy.reslice_surface": greedy_reslice_surface_cargs,
-        "greedy.greedy.nn": greedy_nn_cargs,
-        "greedy.greedy.linear": greedy_linear_cargs,
-        "greedy.greedy.label": greedy_label_cargs,
-        "greedy.greedy.reslice_simplex_jacobian": greedy_reslice_simplex_jacobian_cargs,
+        "nn": greedy_nn_cargs,
+        "linear": greedy_linear_cargs,
+        "label": greedy_label_cargs,
     }.get(t)
 
 
-def dyn_outputs(
+def greedy_interpolation_outputs_dyn_fn(
     t: str,
 ) -> typing.Any:
     """
@@ -219,20 +345,13 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "greedy.greedy": greedy_outputs,
-        "greedy.greedy.invert": greedy_invert_outputs,
-        "greedy.greedy.root": greedy_root_outputs,
-        "greedy.greedy.jacobian": greedy_jacobian_outputs,
-        "greedy.greedy.reslice_moving_image": greedy_reslice_moving_image_outputs,
-        "greedy.greedy.reslice_surface": greedy_reslice_surface_outputs,
-        "greedy.greedy.reslice_simplex_jacobian": greedy_reslice_simplex_jacobian_outputs,
     }.get(t)
 
 
 def greedy_input_images_params(
     fixed: InputPathType,
     moving: InputPathType,
-) -> GreedyInputImagesParameters:
+) -> GreedyInputImagesParametersTagged:
     """
     Build parameters.
     
@@ -243,7 +362,7 @@ def greedy_input_images_params(
         Parameter dictionary
     """
     params = {
-        "@type": "greedy.greedy.input_images",
+        "@type": "input_images",
         "fixed": fixed,
         "moving": moving,
     }
@@ -264,8 +383,8 @@ def greedy_input_images_cargs(
         Command-line arguments.
     """
     cargs = []
-    cargs.append(execution.input_file(params.get("fixed")))
-    cargs.append(execution.input_file(params.get("moving")))
+    cargs.append(execution.input_file(params.get("fixed", None)))
+    cargs.append(execution.input_file(params.get("moving", None)))
     return cargs
 
 
@@ -282,7 +401,7 @@ class GreedyInvertOutputs(typing.NamedTuple):
 def greedy_invert_params(
     inwarp: InputPathType,
     outwarp: str,
-) -> GreedyInvertParameters:
+) -> GreedyInvertParametersTagged:
     """
     Build parameters.
     
@@ -293,7 +412,7 @@ def greedy_invert_params(
         Parameter dictionary
     """
     params = {
-        "@type": "greedy.greedy.invert",
+        "@type": "invert",
         "inwarp": inwarp,
         "outwarp": outwarp,
     }
@@ -314,8 +433,8 @@ def greedy_invert_cargs(
         Command-line arguments.
     """
     cargs = []
-    cargs.append(execution.input_file(params.get("inwarp")))
-    cargs.append(params.get("outwarp"))
+    cargs.append(execution.input_file(params.get("inwarp", None)))
+    cargs.append(params.get("outwarp", None))
     return cargs
 
 
@@ -334,7 +453,7 @@ def greedy_invert_outputs(
     """
     ret = GreedyInvertOutputs(
         root=execution.output_file("."),
-        inverted_warp=execution.output_file(params.get("outwarp")),
+        inverted_warp=execution.output_file(params.get("outwarp", None)),
     )
     return ret
 
@@ -353,7 +472,7 @@ def greedy_root_params(
     inwarp: InputPathType,
     outwarp: str,
     n: int,
-) -> GreedyRootParameters:
+) -> GreedyRootParametersTagged:
     """
     Build parameters.
     
@@ -365,7 +484,7 @@ def greedy_root_params(
         Parameter dictionary
     """
     params = {
-        "@type": "greedy.greedy.root",
+        "@type": "root",
         "inwarp": inwarp,
         "outwarp": outwarp,
         "n": n,
@@ -387,9 +506,9 @@ def greedy_root_cargs(
         Command-line arguments.
     """
     cargs = []
-    cargs.append(execution.input_file(params.get("inwarp")))
-    cargs.append(params.get("outwarp"))
-    cargs.append(str(params.get("n")))
+    cargs.append(execution.input_file(params.get("inwarp", None)))
+    cargs.append(params.get("outwarp", None))
+    cargs.append(str(params.get("n", None)))
     return cargs
 
 
@@ -408,7 +527,7 @@ def greedy_root_outputs(
     """
     ret = GreedyRootOutputs(
         root=execution.output_file("."),
-        root_warp=execution.output_file(params.get("outwarp")),
+        root_warp=execution.output_file(params.get("outwarp", None)),
     )
     return ret
 
@@ -426,7 +545,7 @@ class GreedyJacobianOutputs(typing.NamedTuple):
 def greedy_jacobian_params(
     inwarp: InputPathType,
     outjac: str,
-) -> GreedyJacobianParameters:
+) -> GreedyJacobianParametersTagged:
     """
     Build parameters.
     
@@ -437,7 +556,7 @@ def greedy_jacobian_params(
         Parameter dictionary
     """
     params = {
-        "@type": "greedy.greedy.jacobian",
+        "@type": "jacobian",
         "inwarp": inwarp,
         "outjac": outjac,
     }
@@ -458,8 +577,8 @@ def greedy_jacobian_cargs(
         Command-line arguments.
     """
     cargs = []
-    cargs.append(execution.input_file(params.get("inwarp")))
-    cargs.append(params.get("outjac"))
+    cargs.append(execution.input_file(params.get("inwarp", None)))
+    cargs.append(params.get("outjac", None))
     return cargs
 
 
@@ -478,7 +597,7 @@ def greedy_jacobian_outputs(
     """
     ret = GreedyJacobianOutputs(
         root=execution.output_file("."),
-        jacobian_determinant=execution.output_file(params.get("outjac")),
+        jacobian_determinant=execution.output_file(params.get("outjac", None)),
     )
     return ret
 
@@ -486,7 +605,7 @@ def greedy_jacobian_outputs(
 def greedy_metric_params(
     metric_type: typing.Literal["SSD", "MI", "NMI", "NCC", "MAHAL"],
     metric_param: float | None = None,
-) -> GreedyMetricParameters:
+) -> GreedyMetricParametersTagged:
     """
     Build parameters.
     
@@ -497,7 +616,7 @@ def greedy_metric_params(
         Parameter dictionary
     """
     params = {
-        "@type": "greedy.greedy.metric",
+        "@type": "metric",
         "metric_type": metric_type,
     }
     if metric_param is not None:
@@ -519,16 +638,16 @@ def greedy_metric_cargs(
         Command-line arguments.
     """
     cargs = []
-    cargs.append(params.get("metric_type"))
-    if params.get("metric_param") is not None:
-        cargs.append(str(params.get("metric_param")))
+    cargs.append(params.get("metric_type", None))
+    if params.get("metric_param", None) is not None:
+        cargs.append(str(params.get("metric_param", None)))
     return cargs
 
 
 def greedy_tjr_params(
     mesh: InputPathType,
     weight: float,
-) -> GreedyTjrParameters:
+) -> GreedyTjrParametersTagged:
     """
     Build parameters.
     
@@ -539,7 +658,7 @@ def greedy_tjr_params(
         Parameter dictionary
     """
     params = {
-        "@type": "greedy.greedy.tjr",
+        "@type": "tjr",
         "mesh": mesh,
         "weight": weight,
     }
@@ -560,8 +679,8 @@ def greedy_tjr_cargs(
         Command-line arguments.
     """
     cargs = []
-    cargs.append(execution.input_file(params.get("mesh")))
-    cargs.append(str(params.get("weight")))
+    cargs.append(execution.input_file(params.get("mesh", None)))
+    cargs.append(str(params.get("weight", None)))
     return cargs
 
 
@@ -569,7 +688,7 @@ def greedy_search_params(
     n: int,
     rot: str,
     tran: float,
-) -> GreedySearchParameters:
+) -> GreedySearchParametersTagged:
     """
     Build parameters.
     
@@ -582,7 +701,7 @@ def greedy_search_params(
         Parameter dictionary
     """
     params = {
-        "@type": "greedy.greedy.search",
+        "@type": "search",
         "n": n,
         "rot": rot,
         "tran": tran,
@@ -604,9 +723,9 @@ def greedy_search_cargs(
         Command-line arguments.
     """
     cargs = []
-    cargs.append(str(params.get("n")))
-    cargs.append(params.get("rot"))
-    cargs.append(str(params.get("tran")))
+    cargs.append(str(params.get("n", None)))
+    cargs.append(params.get("rot", None))
+    cargs.append(str(params.get("tran", None)))
     return cargs
 
 
@@ -623,7 +742,7 @@ class GreedyResliceMovingImageOutputs(typing.NamedTuple):
 def greedy_reslice_moving_image_params(
     moving: InputPathType,
     output: str,
-) -> GreedyResliceMovingImageParameters:
+) -> GreedyResliceMovingImageParametersTagged:
     """
     Build parameters.
     
@@ -634,7 +753,7 @@ def greedy_reslice_moving_image_params(
         Parameter dictionary
     """
     params = {
-        "@type": "greedy.greedy.reslice_moving_image",
+        "@type": "reslice_moving_image",
         "moving": moving,
         "output": output,
     }
@@ -655,8 +774,8 @@ def greedy_reslice_moving_image_cargs(
         Command-line arguments.
     """
     cargs = []
-    cargs.append(execution.input_file(params.get("moving")))
-    cargs.append(params.get("output"))
+    cargs.append(execution.input_file(params.get("moving", None)))
+    cargs.append(params.get("output", None))
     return cargs
 
 
@@ -675,7 +794,7 @@ def greedy_reslice_moving_image_outputs(
     """
     ret = GreedyResliceMovingImageOutputs(
         root=execution.output_file("."),
-        resliced_image=execution.output_file(params.get("output")),
+        resliced_image=execution.output_file(params.get("output", None)),
     )
     return ret
 
@@ -693,7 +812,7 @@ class GreedyResliceSurfaceOutputs(typing.NamedTuple):
 def greedy_reslice_surface_params(
     inmesh: InputPathType,
     outmesh: str,
-) -> GreedyResliceSurfaceParameters:
+) -> GreedyResliceSurfaceParametersTagged:
     """
     Build parameters.
     
@@ -704,7 +823,7 @@ def greedy_reslice_surface_params(
         Parameter dictionary
     """
     params = {
-        "@type": "greedy.greedy.reslice_surface",
+        "@type": "reslice_surface",
         "inmesh": inmesh,
         "outmesh": outmesh,
     }
@@ -725,8 +844,8 @@ def greedy_reslice_surface_cargs(
         Command-line arguments.
     """
     cargs = []
-    cargs.append(execution.input_file(params.get("inmesh")))
-    cargs.append(params.get("outmesh"))
+    cargs.append(execution.input_file(params.get("inmesh", None)))
+    cargs.append(params.get("outmesh", None))
     return cargs
 
 
@@ -745,13 +864,13 @@ def greedy_reslice_surface_outputs(
     """
     ret = GreedyResliceSurfaceOutputs(
         root=execution.output_file("."),
-        warped_mesh=execution.output_file(params.get("outmesh")),
+        warped_mesh=execution.output_file(params.get("outmesh", None)),
     )
     return ret
 
 
 def greedy_nn_params(
-) -> GreedyNnParameters:
+) -> GreedyNnParametersTagged:
     """
     Build parameters.
     
@@ -760,7 +879,7 @@ def greedy_nn_params(
         Parameter dictionary
     """
     params = {
-        "@type": "greedy.greedy.nn",
+        "@type": "nn",
     }
     return params
 
@@ -784,7 +903,7 @@ def greedy_nn_cargs(
 
 
 def greedy_linear_params(
-) -> GreedyLinearParameters:
+) -> GreedyLinearParametersTagged:
     """
     Build parameters.
     
@@ -793,7 +912,7 @@ def greedy_linear_params(
         Parameter dictionary
     """
     params = {
-        "@type": "greedy.greedy.linear",
+        "@type": "linear",
     }
     return params
 
@@ -818,7 +937,7 @@ def greedy_linear_cargs(
 
 def greedy_label_params(
     sigma_spec: str,
-) -> GreedyLabelParameters:
+) -> GreedyLabelParametersTagged:
     """
     Build parameters.
     
@@ -832,7 +951,7 @@ def greedy_label_params(
         Parameter dictionary
     """
     params = {
-        "@type": "greedy.greedy.label",
+        "@type": "label",
         "sigma_spec": sigma_spec,
     }
     return params
@@ -853,7 +972,7 @@ def greedy_label_cargs(
     """
     cargs = []
     cargs.append("LABEL")
-    cargs.append(params.get("sigma_spec"))
+    cargs.append(params.get("sigma_spec", None))
     return cargs
 
 
@@ -870,7 +989,7 @@ class GreedyResliceSimplexJacobianOutputs(typing.NamedTuple):
 def greedy_reslice_simplex_jacobian_params(
     inmesh: InputPathType,
     outmesh: str,
-) -> GreedyResliceSimplexJacobianParameters:
+) -> GreedyResliceSimplexJacobianParametersTagged:
     """
     Build parameters.
     
@@ -881,7 +1000,7 @@ def greedy_reslice_simplex_jacobian_params(
         Parameter dictionary
     """
     params = {
-        "@type": "greedy.greedy.reslice_simplex_jacobian",
+        "@type": "reslice_simplex_jacobian",
         "inmesh": inmesh,
         "outmesh": outmesh,
     }
@@ -902,8 +1021,8 @@ def greedy_reslice_simplex_jacobian_cargs(
         Command-line arguments.
     """
     cargs = []
-    cargs.append(execution.input_file(params.get("inmesh")))
-    cargs.append(params.get("outmesh"))
+    cargs.append(execution.input_file(params.get("inmesh", None)))
+    cargs.append(params.get("outmesh", None))
     return cargs
 
 
@@ -922,14 +1041,14 @@ def greedy_reslice_simplex_jacobian_outputs(
     """
     ret = GreedyResliceSimplexJacobianOutputs(
         root=execution.output_file("."),
-        jacobian_mesh=execution.output_file(params.get("outmesh")),
+        jacobian_mesh=execution.output_file(params.get("outmesh", None)),
     )
     return ret
 
 
 class GreedyOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `greedy_(...)`.
+    Output object returned when calling `GreedyParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -1003,7 +1122,7 @@ def greedy_params(
     fixed_reslicing_image: InputPathType | None = None,
     reslice_moving_image: GreedyResliceMovingImageParameters | None = None,
     reslice_surface: GreedyResliceSurfaceParameters | None = None,
-    interpolation: typing.Union[GreedyNnParameters, GreedyLinearParameters, GreedyLabelParameters] | None = None,
+    interpolation: typing.Union[GreedyNnParametersTagged, GreedyLinearParametersTagged, GreedyLabelParametersTagged] | None = None,
     reslice_background: float | None = None,
     reslice_datatype: typing.Literal["auto", "double", "float", "uint", "int", "ushort", "short", "uchar", "char"] | None = None,
     reslice_composite: InputPathType | None = None,
@@ -1022,7 +1141,7 @@ def greedy_params(
     float_: bool = False,
     version: bool = False,
     verbosity: typing.Literal[0, 1, 2] | None = None,
-) -> GreedyParameters:
+) -> GreedyParametersTagged:
     """
     Build parameters.
     
@@ -1135,7 +1254,7 @@ def greedy_params(
         Parameter dictionary
     """
     params = {
-        "@type": "greedy.greedy",
+        "@type": "greedy/greedy",
         "dimensions": dimensions,
         "affine": affine,
         "metric_mode": metric_mode,
@@ -1281,305 +1400,305 @@ def greedy_cargs(
     cargs.append("greedy")
     cargs.extend([
         "-d",
-        str(params.get("dimensions"))
+        str(params.get("dimensions", None))
     ])
-    if params.get("input_images") is not None:
+    if params.get("input_images", None) is not None:
         cargs.extend([
             "-i",
-            *dyn_cargs(params.get("input_images")["@type"])(params.get("input_images"), execution)
+            *greedy_input_images_cargs(params.get("input_images", None), execution)
         ])
-    if params.get("output") is not None:
+    if params.get("output", None) is not None:
         cargs.extend([
             "-o",
-            params.get("output")
+            params.get("output", None)
         ])
-    if params.get("affine"):
+    if params.get("affine", False):
         cargs.append("-a")
-    if params.get("brute") is not None:
+    if params.get("brute", None) is not None:
         cargs.extend([
             "-brute",
-            params.get("brute")
+            params.get("brute", None)
         ])
-    if params.get("moments") is not None:
+    if params.get("moments", None) is not None:
         cargs.extend([
             "-moments",
-            str(params.get("moments"))
+            str(params.get("moments", None))
         ])
-    if params.get("reslice") is not None:
+    if params.get("reslice", None) is not None:
         cargs.extend([
             "-r",
-            *[execution.input_file(f) for f in params.get("reslice")]
+            *[execution.input_file(f) for f in params.get("reslice", None)]
         ])
-    if params.get("invert") is not None:
+    if params.get("invert", None) is not None:
         cargs.extend([
             "-iw",
-            *dyn_cargs(params.get("invert")["@type"])(params.get("invert"), execution)
+            *greedy_invert_cargs(params.get("invert", None), execution)
         ])
-    if params.get("root") is not None:
+    if params.get("root", None) is not None:
         cargs.extend([
             "-root",
-            *dyn_cargs(params.get("root")["@type"])(params.get("root"), execution)
+            *greedy_root_cargs(params.get("root", None), execution)
         ])
-    if params.get("jacobian") is not None:
+    if params.get("jacobian", None) is not None:
         cargs.extend([
             "-jac",
-            *dyn_cargs(params.get("jacobian")["@type"])(params.get("jacobian"), execution)
+            *greedy_jacobian_cargs(params.get("jacobian", None), execution)
         ])
-    if params.get("metric_mode"):
+    if params.get("metric_mode", False):
         cargs.append("-metric")
-    if params.get("defopt"):
+    if params.get("defopt", False):
         cargs.append("-defopt")
-    if params.get("weight") is not None:
+    if params.get("weight", None) is not None:
         cargs.extend([
             "-w",
-            str(params.get("weight"))
+            str(params.get("weight", None))
         ])
-    if params.get("metric") is not None:
+    if params.get("metric", None) is not None:
         cargs.extend([
             "-m",
-            *dyn_cargs(params.get("metric")["@type"])(params.get("metric"), execution)
+            *greedy_metric_cargs(params.get("metric", None), execution)
         ])
-    if params.get("step_size") is not None:
+    if params.get("step_size", None) is not None:
         cargs.extend([
             "-e",
-            params.get("step_size")
+            params.get("step_size", None)
         ])
-    if params.get("iterations") is not None:
+    if params.get("iterations", None) is not None:
         cargs.extend([
             "-n",
-            params.get("iterations")
+            params.get("iterations", None)
         ])
-    if params.get("threads") is not None:
+    if params.get("threads", None) is not None:
         cargs.extend([
             "-threads",
-            str(params.get("threads"))
+            str(params.get("threads", None))
         ])
-    if params.get("fixed_mask") is not None:
+    if params.get("fixed_mask", None) is not None:
         cargs.extend([
             "-gm",
-            execution.input_file(params.get("fixed_mask"))
+            execution.input_file(params.get("fixed_mask", None))
         ])
-    if params.get("gm_trim") is not None:
+    if params.get("gm_trim", None) is not None:
         cargs.extend([
             "-gm-trim",
-            str(params.get("gm_trim"))
+            str(params.get("gm_trim", None))
         ])
-    if params.get("moving_mask") is not None:
+    if params.get("moving_mask", None) is not None:
         cargs.extend([
             "-mm",
-            execution.input_file(params.get("moving_mask"))
+            execution.input_file(params.get("moving_mask", None))
         ])
-    if params.get("wncc_mask_dilate"):
+    if params.get("wncc_mask_dilate", False):
         cargs.append("-wncc-mask-dilate")
-    if params.get("reference_image") is not None:
+    if params.get("reference_image", None) is not None:
         cargs.extend([
             "-ref",
-            execution.input_file(params.get("reference_image"))
+            execution.input_file(params.get("reference_image", None))
         ])
-    if params.get("ref_pad") is not None:
+    if params.get("ref_pad", None) is not None:
         cargs.extend([
             "-ref-pad",
-            str(params.get("ref_pad"))
+            str(params.get("ref_pad", None))
         ])
-    if params.get("background") is not None:
+    if params.get("background", None) is not None:
         cargs.extend([
             "-bg",
-            params.get("background")
+            params.get("background", None)
         ])
-    if params.get("input_transform") is not None:
+    if params.get("input_transform", None) is not None:
         cargs.extend([
             "-it",
-            execution.input_file(params.get("input_transform"))
+            execution.input_file(params.get("input_transform", None))
         ])
-    if params.get("zero_last_dimension"):
+    if params.get("zero_last_dimension", False):
         cargs.append("-z")
-    if params.get("time_step_mode") is not None:
+    if params.get("time_step_mode", None) is not None:
         cargs.extend([
             "-tscale",
-            params.get("time_step_mode")
+            params.get("time_step_mode", None)
         ])
-    if params.get("smoothing") is not None:
+    if params.get("smoothing", None) is not None:
         cargs.extend([
             "-s",
-            params.get("smoothing")
+            params.get("smoothing", None)
         ])
-    if params.get("inverse_warp") is not None:
+    if params.get("inverse_warp", None) is not None:
         cargs.extend([
             "-oinv",
-            execution.input_file(params.get("inverse_warp"))
+            execution.input_file(params.get("inverse_warp", None))
         ])
-    if params.get("root_warp") is not None:
+    if params.get("root_warp", None) is not None:
         cargs.extend([
             "-oroot",
-            execution.input_file(params.get("root_warp"))
+            execution.input_file(params.get("root_warp", None))
         ])
-    if params.get("warp_precision") is not None:
+    if params.get("warp_precision", None) is not None:
         cargs.extend([
             "-wp",
-            str(params.get("warp_precision"))
+            str(params.get("warp_precision", None))
         ])
-    if params.get("noise") is not None:
+    if params.get("noise", None) is not None:
         cargs.extend([
             "-noise",
-            str(params.get("noise"))
+            str(params.get("noise", None))
         ])
-    if params.get("exponent") is not None:
+    if params.get("exponent", None) is not None:
         cargs.extend([
             "-exp",
-            str(params.get("exponent"))
+            str(params.get("exponent", None))
         ])
-    if params.get("svf_mode"):
+    if params.get("svf_mode", False):
         cargs.append("-sv")
-    if params.get("svlb"):
+    if params.get("svlb", False):
         cargs.append("-svlb")
-    if params.get("sv_incompr"):
+    if params.get("sv_incompr", False):
         cargs.append("-sv-incompr")
-    if params.get("initial_warp") is not None:
+    if params.get("initial_warp", None) is not None:
         cargs.extend([
             "-id",
-            execution.input_file(params.get("initial_warp"))
+            execution.input_file(params.get("initial_warp", None))
         ])
-    if params.get("tjr") is not None:
+    if params.get("tjr", None) is not None:
         cargs.extend([
             "-tjr",
-            *dyn_cargs(params.get("tjr")["@type"])(params.get("tjr"), execution)
+            *greedy_tjr_cargs(params.get("tjr", None), execution)
         ])
-    if params.get("wr") is not None:
+    if params.get("wr", None) is not None:
         cargs.extend([
             "-wr",
-            str(params.get("wr"))
+            str(params.get("wr", None))
         ])
-    if params.get("initial_affine") is not None:
+    if params.get("initial_affine", None) is not None:
         cargs.extend([
             "-ia",
-            execution.input_file(params.get("initial_affine"))
+            execution.input_file(params.get("initial_affine", None))
         ])
-    if params.get("ia_identity"):
+    if params.get("ia_identity", False):
         cargs.append("-ia-identity")
-    if params.get("ia_voxel_grid"):
+    if params.get("ia_voxel_grid", False):
         cargs.append("-ia-voxel-grid")
-    if params.get("ia_image_centers"):
+    if params.get("ia_image_centers", False):
         cargs.append("-ia-image-centers")
-    if params.get("ia_image_side") is not None:
+    if params.get("ia_image_side", None) is not None:
         cargs.extend([
             "-ia-image-side",
-            params.get("ia_image_side")
+            params.get("ia_image_side", None)
         ])
-    if params.get("ia_moments") is not None:
+    if params.get("ia_moments", None) is not None:
         cargs.extend([
             "-ia-moments",
-            str(params.get("ia_moments"))
+            str(params.get("ia_moments", None))
         ])
-    if params.get("affine_dof") is not None:
+    if params.get("affine_dof", None) is not None:
         cargs.extend([
             "-dof",
-            str(params.get("affine_dof"))
+            str(params.get("affine_dof", None))
         ])
-    if params.get("jitter") is not None:
+    if params.get("jitter", None) is not None:
         cargs.extend([
             "-jitter",
-            str(params.get("jitter"))
+            str(params.get("jitter", None))
         ])
-    if params.get("search") is not None:
+    if params.get("search", None) is not None:
         cargs.extend([
             "-search",
-            *dyn_cargs(params.get("search")["@type"])(params.get("search"), execution)
+            *greedy_search_cargs(params.get("search", None), execution)
         ])
-    if params.get("det") is not None:
+    if params.get("det", None) is not None:
         cargs.extend([
             "-det",
-            str(params.get("det"))
+            str(params.get("det", None))
         ])
-    if params.get("cov_id"):
+    if params.get("cov_id", False):
         cargs.append("-cov-id")
-    if params.get("fixed_reslicing_image") is not None:
+    if params.get("fixed_reslicing_image", None) is not None:
         cargs.extend([
             "-rf",
-            execution.input_file(params.get("fixed_reslicing_image"))
+            execution.input_file(params.get("fixed_reslicing_image", None))
         ])
-    if params.get("reslice_moving_image") is not None:
+    if params.get("reslice_moving_image", None) is not None:
         cargs.extend([
             "-rm",
-            *dyn_cargs(params.get("reslice_moving_image")["@type"])(params.get("reslice_moving_image"), execution)
+            *greedy_reslice_moving_image_cargs(params.get("reslice_moving_image", None), execution)
         ])
-    if params.get("reslice_surface") is not None:
+    if params.get("reslice_surface", None) is not None:
         cargs.extend([
             "-rs",
-            *dyn_cargs(params.get("reslice_surface")["@type"])(params.get("reslice_surface"), execution)
+            *greedy_reslice_surface_cargs(params.get("reslice_surface", None), execution)
         ])
-    if params.get("interpolation") is not None:
+    if params.get("interpolation", None) is not None:
         cargs.extend([
             "-ri",
-            *dyn_cargs(params.get("interpolation")["@type"])(params.get("interpolation"), execution)
+            *greedy_interpolation_cargs_dyn_fn(params.get("interpolation", None)["@type"])(params.get("interpolation", None), execution)
         ])
-    if params.get("reslice_background") is not None:
+    if params.get("reslice_background", None) is not None:
         cargs.extend([
             "-rb",
-            str(params.get("reslice_background"))
+            str(params.get("reslice_background", None))
         ])
-    if params.get("reslice_datatype") is not None:
+    if params.get("reslice_datatype", None) is not None:
         cargs.extend([
             "-rt",
-            params.get("reslice_datatype")
+            params.get("reslice_datatype", None)
         ])
-    if params.get("reslice_composite") is not None:
+    if params.get("reslice_composite", None) is not None:
         cargs.extend([
             "-rc",
-            execution.input_file(params.get("reslice_composite"))
+            execution.input_file(params.get("reslice_composite", None))
         ])
-    if params.get("reslice_jacobian") is not None:
+    if params.get("reslice_jacobian", None) is not None:
         cargs.extend([
             "-rj",
-            execution.input_file(params.get("reslice_jacobian"))
+            execution.input_file(params.get("reslice_jacobian", None))
         ])
-    if params.get("reslice_simplex_jacobian") is not None:
+    if params.get("reslice_simplex_jacobian", None) is not None:
         cargs.extend([
             "-rsj",
-            *dyn_cargs(params.get("reslice_simplex_jacobian")["@type"])(params.get("reslice_simplex_jacobian"), execution)
+            *greedy_reslice_simplex_jacobian_cargs(params.get("reslice_simplex_jacobian", None), execution)
         ])
-    if params.get("reslice_mask") is not None:
+    if params.get("reslice_mask", None) is not None:
         cargs.extend([
             "-rk",
-            execution.input_file(params.get("reslice_mask"))
+            execution.input_file(params.get("reslice_mask", None))
         ])
-    if params.get("metric_gradient") is not None:
+    if params.get("metric_gradient", None) is not None:
         cargs.extend([
             "-og",
-            execution.input_file(params.get("metric_gradient"))
+            execution.input_file(params.get("metric_gradient", None))
         ])
-    if params.get("debug_deriv"):
+    if params.get("debug_deriv", False):
         cargs.append("-debug-deriv")
-    if params.get("debug_deriv_eps") is not None:
+    if params.get("debug_deriv_eps", None) is not None:
         cargs.extend([
             "-debug-deriv-eps",
-            str(params.get("debug_deriv_eps"))
+            str(params.get("debug_deriv_eps", None))
         ])
-    if params.get("debug_aff_obj"):
+    if params.get("debug_aff_obj", False):
         cargs.append("-debug-aff-obj")
-    if params.get("dump_pyramid"):
+    if params.get("dump_pyramid", False):
         cargs.append("-dump-pyramid")
-    if params.get("dump_moving"):
+    if params.get("dump_moving", False):
         cargs.append("-dump-moving")
-    if params.get("dump_frequency") is not None:
+    if params.get("dump_frequency", None) is not None:
         cargs.extend([
             "-dump-freq",
-            str(params.get("dump_frequency"))
+            str(params.get("dump_frequency", None))
         ])
-    if params.get("dump_prefix") is not None:
+    if params.get("dump_prefix", None) is not None:
         cargs.extend([
             "-dump-prefix",
-            params.get("dump_prefix")
+            params.get("dump_prefix", None)
         ])
-    if params.get("powell"):
+    if params.get("powell", False):
         cargs.append("-powell")
-    if params.get("float"):
+    if params.get("float", False):
         cargs.append("-float")
-    if params.get("version"):
+    if params.get("version", False):
         cargs.append("-version")
-    if params.get("verbosity") is not None:
+    if params.get("verbosity", None) is not None:
         cargs.extend([
             "-V",
-            str(params.get("verbosity"))
+            str(params.get("verbosity", None))
         ])
     return cargs
 
@@ -1599,13 +1718,13 @@ def greedy_outputs(
     """
     ret = GreedyOutputs(
         root=execution.output_file("."),
-        output_file=execution.output_file(params.get("output")) if (params.get("output") is not None) else None,
-        invert=dyn_outputs(params.get("invert")["@type"])(params.get("invert"), execution) if params.get("invert") else None,
-        root_=dyn_outputs(params.get("root")["@type"])(params.get("root"), execution) if params.get("root") else None,
-        jacobian=dyn_outputs(params.get("jacobian")["@type"])(params.get("jacobian"), execution) if params.get("jacobian") else None,
-        reslice_moving_image=dyn_outputs(params.get("reslice_moving_image")["@type"])(params.get("reslice_moving_image"), execution) if params.get("reslice_moving_image") else None,
-        reslice_surface=dyn_outputs(params.get("reslice_surface")["@type"])(params.get("reslice_surface"), execution) if params.get("reslice_surface") else None,
-        reslice_simplex_jacobian=dyn_outputs(params.get("reslice_simplex_jacobian")["@type"])(params.get("reslice_simplex_jacobian"), execution) if params.get("reslice_simplex_jacobian") else None,
+        output_file=execution.output_file(params.get("output", None)) if (params.get("output") is not None) else None,
+        invert=greedy_invert_outputs(params.get("invert"), execution) if params.get("invert") else None,
+        root_=greedy_root_outputs(params.get("root"), execution) if params.get("root") else None,
+        jacobian=greedy_jacobian_outputs(params.get("jacobian"), execution) if params.get("jacobian") else None,
+        reslice_moving_image=greedy_reslice_moving_image_outputs(params.get("reslice_moving_image"), execution) if params.get("reslice_moving_image") else None,
+        reslice_surface=greedy_reslice_surface_outputs(params.get("reslice_surface"), execution) if params.get("reslice_surface") else None,
+        reslice_simplex_jacobian=greedy_reslice_simplex_jacobian_outputs(params.get("reslice_simplex_jacobian"), execution) if params.get("reslice_simplex_jacobian") else None,
     )
     return ret
 
@@ -1692,7 +1811,7 @@ def greedy_(
     fixed_reslicing_image: InputPathType | None = None,
     reslice_moving_image: GreedyResliceMovingImageParameters | None = None,
     reslice_surface: GreedyResliceSurfaceParameters | None = None,
-    interpolation: typing.Union[GreedyNnParameters, GreedyLinearParameters, GreedyLabelParameters] | None = None,
+    interpolation: typing.Union[GreedyNnParametersTagged, GreedyLinearParametersTagged, GreedyLabelParametersTagged] | None = None,
     reslice_background: float | None = None,
     reslice_datatype: typing.Literal["auto", "double", "float", "uint", "int", "ushort", "short", "uchar", "char"] | None = None,
     reslice_composite: InputPathType | None = None,
@@ -1910,27 +2029,13 @@ def greedy_(
 
 __all__ = [
     "GREEDY_METADATA",
-    "GreedyInputImagesParameters",
     "GreedyInvertOutputs",
-    "GreedyInvertParameters",
     "GreedyJacobianOutputs",
-    "GreedyJacobianParameters",
-    "GreedyLabelParameters",
-    "GreedyLinearParameters",
-    "GreedyMetricParameters",
-    "GreedyNnParameters",
     "GreedyOutputs",
-    "GreedyParameters",
     "GreedyResliceMovingImageOutputs",
-    "GreedyResliceMovingImageParameters",
     "GreedyResliceSimplexJacobianOutputs",
-    "GreedyResliceSimplexJacobianParameters",
     "GreedyResliceSurfaceOutputs",
-    "GreedyResliceSurfaceParameters",
     "GreedyRootOutputs",
-    "GreedyRootParameters",
-    "GreedySearchParameters",
-    "GreedyTjrParameters",
     "greedy_",
     "greedy_execute",
     "greedy_input_images_params",

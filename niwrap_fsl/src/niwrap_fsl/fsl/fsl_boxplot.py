@@ -14,7 +14,19 @@ FSL_BOXPLOT_METADATA = Metadata(
 
 
 FslBoxplotParameters = typing.TypedDict('FslBoxplotParameters', {
-    "@type": typing.Literal["fsl.fsl_boxplot"],
+    "@type": typing.NotRequired[typing.Literal["fsl/fsl_boxplot"]],
+    "input_files": list[InputPathType],
+    "output_image": str,
+    "help_flag": bool,
+    "title": typing.NotRequired[str | None],
+    "legend_file": typing.NotRequired[InputPathType | None],
+    "x_label": typing.NotRequired[str | None],
+    "y_label": typing.NotRequired[str | None],
+    "plot_height": typing.NotRequired[float | None],
+    "plot_width": typing.NotRequired[float | None],
+})
+FslBoxplotParametersTagged = typing.TypedDict('FslBoxplotParametersTagged', {
+    "@type": typing.Literal["fsl/fsl_boxplot"],
     "input_files": list[InputPathType],
     "output_image": str,
     "help_flag": bool,
@@ -27,41 +39,9 @@ FslBoxplotParameters = typing.TypedDict('FslBoxplotParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "fsl.fsl_boxplot": fsl_boxplot_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "fsl.fsl_boxplot": fsl_boxplot_outputs,
-    }.get(t)
-
-
 class FslBoxplotOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `fsl_boxplot(...)`.
+    Output object returned when calling `FslBoxplotParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -79,7 +59,7 @@ def fsl_boxplot_params(
     y_label: str | None = None,
     plot_height: float | None = None,
     plot_width: float | None = None,
-) -> FslBoxplotParameters:
+) -> FslBoxplotParametersTagged:
     """
     Build parameters.
     
@@ -98,7 +78,7 @@ def fsl_boxplot_params(
         Parameter dictionary
     """
     params = {
-        "@type": "fsl.fsl_boxplot",
+        "@type": "fsl/fsl_boxplot",
         "input_files": input_files,
         "output_image": output_image,
         "help_flag": help_flag,
@@ -135,43 +115,43 @@ def fsl_boxplot_cargs(
     cargs.append("fsl_boxplot")
     cargs.extend([
         "--in",
-        *[execution.input_file(f) for f in params.get("input_files")]
+        *[execution.input_file(f) for f in params.get("input_files", None)]
     ])
     cargs.extend([
         "--out",
-        params.get("output_image")
+        params.get("output_image", None)
     ])
-    if params.get("help_flag"):
+    if params.get("help_flag", False):
         cargs.append("--help")
-    if params.get("title") is not None:
+    if params.get("title", None) is not None:
         cargs.extend([
             "--title",
-            params.get("title")
+            params.get("title", None)
         ])
-    if params.get("legend_file") is not None:
+    if params.get("legend_file", None) is not None:
         cargs.extend([
             "--legend",
-            execution.input_file(params.get("legend_file"))
+            execution.input_file(params.get("legend_file", None))
         ])
-    if params.get("x_label") is not None:
+    if params.get("x_label", None) is not None:
         cargs.extend([
             "--xlabel",
-            params.get("x_label")
+            params.get("x_label", None)
         ])
-    if params.get("y_label") is not None:
+    if params.get("y_label", None) is not None:
         cargs.extend([
             "--ylabel",
-            params.get("y_label")
+            params.get("y_label", None)
         ])
-    if params.get("plot_height") is not None:
+    if params.get("plot_height", None) is not None:
         cargs.extend([
             "--height",
-            str(params.get("plot_height"))
+            str(params.get("plot_height", None))
         ])
-    if params.get("plot_width") is not None:
+    if params.get("plot_width", None) is not None:
         cargs.extend([
             "--width",
-            str(params.get("plot_width"))
+            str(params.get("plot_width", None))
         ])
     return cargs
 
@@ -191,7 +171,7 @@ def fsl_boxplot_outputs(
     """
     ret = FslBoxplotOutputs(
         root=execution.output_file("."),
-        output_png=execution.output_file(params.get("output_image") + ".png"),
+        output_png=execution.output_file(params.get("output_image", None) + ".png"),
     )
     return ret
 
@@ -277,7 +257,6 @@ def fsl_boxplot(
 __all__ = [
     "FSL_BOXPLOT_METADATA",
     "FslBoxplotOutputs",
-    "FslBoxplotParameters",
     "fsl_boxplot",
     "fsl_boxplot_execute",
     "fsl_boxplot_params",

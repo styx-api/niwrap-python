@@ -14,7 +14,14 @@ SURFACE_SMOOTHING_METADATA = Metadata(
 
 
 SurfaceSmoothingParameters = typing.TypedDict('SurfaceSmoothingParameters', {
-    "@type": typing.Literal["workbench.surface-smoothing"],
+    "@type": typing.NotRequired[typing.Literal["workbench/surface-smoothing"]],
+    "surface_in": InputPathType,
+    "smoothing_strength": float,
+    "smoothing_iterations": int,
+    "surface_out": str,
+})
+SurfaceSmoothingParametersTagged = typing.TypedDict('SurfaceSmoothingParametersTagged', {
+    "@type": typing.Literal["workbench/surface-smoothing"],
     "surface_in": InputPathType,
     "smoothing_strength": float,
     "smoothing_iterations": int,
@@ -22,41 +29,9 @@ SurfaceSmoothingParameters = typing.TypedDict('SurfaceSmoothingParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "workbench.surface-smoothing": surface_smoothing_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "workbench.surface-smoothing": surface_smoothing_outputs,
-    }.get(t)
-
-
 class SurfaceSmoothingOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `surface_smoothing(...)`.
+    Output object returned when calling `SurfaceSmoothingParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -69,7 +44,7 @@ def surface_smoothing_params(
     smoothing_strength: float,
     smoothing_iterations: int,
     surface_out: str,
-) -> SurfaceSmoothingParameters:
+) -> SurfaceSmoothingParametersTagged:
     """
     Build parameters.
     
@@ -82,7 +57,7 @@ def surface_smoothing_params(
         Parameter dictionary
     """
     params = {
-        "@type": "workbench.surface-smoothing",
+        "@type": "workbench/surface-smoothing",
         "surface_in": surface_in,
         "smoothing_strength": smoothing_strength,
         "smoothing_iterations": smoothing_iterations,
@@ -107,10 +82,10 @@ def surface_smoothing_cargs(
     cargs = []
     cargs.append("wb_command")
     cargs.append("-surface-smoothing")
-    cargs.append(execution.input_file(params.get("surface_in")))
-    cargs.append(str(params.get("smoothing_strength")))
-    cargs.append(str(params.get("smoothing_iterations")))
-    cargs.append(params.get("surface_out"))
+    cargs.append(execution.input_file(params.get("surface_in", None)))
+    cargs.append(str(params.get("smoothing_strength", None)))
+    cargs.append(str(params.get("smoothing_iterations", None)))
+    cargs.append(params.get("surface_out", None))
     return cargs
 
 
@@ -129,7 +104,7 @@ def surface_smoothing_outputs(
     """
     ret = SurfaceSmoothingOutputs(
         root=execution.output_file("."),
-        surface_out=execution.output_file(params.get("surface_out")),
+        surface_out=execution.output_file(params.get("surface_out", None)),
     )
     return ret
 
@@ -205,7 +180,6 @@ def surface_smoothing(
 __all__ = [
     "SURFACE_SMOOTHING_METADATA",
     "SurfaceSmoothingOutputs",
-    "SurfaceSmoothingParameters",
     "surface_smoothing",
     "surface_smoothing_execute",
     "surface_smoothing_params",

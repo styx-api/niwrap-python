@@ -14,7 +14,44 @@ TRAC_ALL_METADATA = Metadata(
 
 
 TracAllParameters = typing.TypedDict('TracAllParameters', {
-    "@type": typing.Literal["freesurfer.trac-all"],
+    "@type": typing.NotRequired[typing.Literal["freesurfer/trac-all"]],
+    "config_file": typing.NotRequired[InputPathType | None],
+    "subject_name": typing.NotRequired[str | None],
+    "dicom_file": typing.NotRequired[InputPathType | None],
+    "pre_processing": bool,
+    "bedpost": bool,
+    "pathway_reconstruction": bool,
+    "assemble_measures": bool,
+    "image_corrections": bool,
+    "no_image_corrections": bool,
+    "image_quality_assessment": bool,
+    "no_image_quality_assessment": bool,
+    "intra_registration": bool,
+    "no_intra_registration": bool,
+    "tensor_fit": bool,
+    "no_tensor_fit": bool,
+    "inter_registration": bool,
+    "no_inter_registration": bool,
+    "pathway_priors": bool,
+    "no_pathway_priors": bool,
+    "infant_options": bool,
+    "job_file": typing.NotRequired[InputPathType | None],
+    "log_file": typing.NotRequired[str | None],
+    "no_append_log": bool,
+    "cmd_file": typing.NotRequired[str | None],
+    "no_is_running": bool,
+    "subjects_directory": typing.NotRequired[str | None],
+    "umask": typing.NotRequired[str | None],
+    "group_id": typing.NotRequired[str | None],
+    "allow_core_dump": bool,
+    "debug_mode": bool,
+    "dont_run": bool,
+    "only_versions": bool,
+    "version_info": bool,
+    "help": bool,
+})
+TracAllParametersTagged = typing.TypedDict('TracAllParametersTagged', {
+    "@type": typing.Literal["freesurfer/trac-all"],
     "config_file": typing.NotRequired[InputPathType | None],
     "subject_name": typing.NotRequired[str | None],
     "dicom_file": typing.NotRequired[InputPathType | None],
@@ -52,41 +89,9 @@ TracAllParameters = typing.TypedDict('TracAllParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "freesurfer.trac-all": trac_all_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "freesurfer.trac-all": trac_all_outputs,
-    }.get(t)
-
-
 class TracAllOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `trac_all(...)`.
+    Output object returned when calling `TracAllParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -131,7 +136,7 @@ def trac_all_params(
     only_versions: bool = False,
     version_info: bool = False,
     help_: bool = False,
-) -> TracAllParameters:
+) -> TracAllParametersTagged:
     """
     Build parameters.
     
@@ -178,7 +183,7 @@ def trac_all_params(
         Parameter dictionary
     """
     params = {
-        "@type": "freesurfer.trac-all",
+        "@type": "freesurfer/trac-all",
         "pre_processing": pre_processing,
         "bedpost": bedpost,
         "pathway_reconstruction": pathway_reconstruction,
@@ -241,100 +246,100 @@ def trac_all_cargs(
     """
     cargs = []
     cargs.append("trac-all")
-    if params.get("config_file") is not None:
+    if params.get("config_file", None) is not None:
         cargs.extend([
             "-c",
-            execution.input_file(params.get("config_file"))
+            execution.input_file(params.get("config_file", None))
         ])
-    if params.get("subject_name") is not None:
+    if params.get("subject_name", None) is not None:
         cargs.extend([
             "-s",
-            params.get("subject_name")
+            params.get("subject_name", None)
         ])
-    if params.get("dicom_file") is not None:
+    if params.get("dicom_file", None) is not None:
         cargs.extend([
             "-i",
-            execution.input_file(params.get("dicom_file"))
+            execution.input_file(params.get("dicom_file", None))
         ])
-    if params.get("pre_processing"):
+    if params.get("pre_processing", False):
         cargs.append("-prep")
-    if params.get("bedpost"):
+    if params.get("bedpost", False):
         cargs.append("-bedp")
-    if params.get("pathway_reconstruction"):
+    if params.get("pathway_reconstruction", False):
         cargs.append("-path")
-    if params.get("assemble_measures"):
+    if params.get("assemble_measures", False):
         cargs.append("-stat")
-    if params.get("image_corrections"):
+    if params.get("image_corrections", False):
         cargs.append("-corr")
-    if params.get("no_image_corrections"):
+    if params.get("no_image_corrections", False):
         cargs.append("-nocorr")
-    if params.get("image_quality_assessment"):
+    if params.get("image_quality_assessment", False):
         cargs.append("-qa")
-    if params.get("no_image_quality_assessment"):
+    if params.get("no_image_quality_assessment", False):
         cargs.append("-noqa")
-    if params.get("intra_registration"):
+    if params.get("intra_registration", False):
         cargs.append("-intra")
-    if params.get("no_intra_registration"):
+    if params.get("no_intra_registration", False):
         cargs.append("-nointra")
-    if params.get("tensor_fit"):
+    if params.get("tensor_fit", False):
         cargs.append("-tensor")
-    if params.get("no_tensor_fit"):
+    if params.get("no_tensor_fit", False):
         cargs.append("-notensor")
-    if params.get("inter_registration"):
+    if params.get("inter_registration", False):
         cargs.append("-inter")
-    if params.get("no_inter_registration"):
+    if params.get("no_inter_registration", False):
         cargs.append("-nointer")
-    if params.get("pathway_priors"):
+    if params.get("pathway_priors", False):
         cargs.append("-prior")
-    if params.get("no_pathway_priors"):
+    if params.get("no_pathway_priors", False):
         cargs.append("-noprior")
-    if params.get("infant_options"):
+    if params.get("infant_options", False):
         cargs.append("-infant")
-    if params.get("job_file") is not None:
+    if params.get("job_file", None) is not None:
         cargs.extend([
             "-jobs",
-            execution.input_file(params.get("job_file"))
+            execution.input_file(params.get("job_file", None))
         ])
-    if params.get("log_file") is not None:
+    if params.get("log_file", None) is not None:
         cargs.extend([
             "-log",
-            params.get("log_file")
+            params.get("log_file", None)
         ])
-    if params.get("no_append_log"):
+    if params.get("no_append_log", False):
         cargs.append("-noappendlog")
-    if params.get("cmd_file") is not None:
+    if params.get("cmd_file", None) is not None:
         cargs.extend([
             "-cmd",
-            params.get("cmd_file")
+            params.get("cmd_file", None)
         ])
-    if params.get("no_is_running"):
+    if params.get("no_is_running", False):
         cargs.append("-no-isrunning")
-    if params.get("subjects_directory") is not None:
+    if params.get("subjects_directory", None) is not None:
         cargs.extend([
             "-sd",
-            params.get("subjects_directory")
+            params.get("subjects_directory", None)
         ])
-    if params.get("umask") is not None:
+    if params.get("umask", None) is not None:
         cargs.extend([
             "-umask",
-            params.get("umask")
+            params.get("umask", None)
         ])
-    if params.get("group_id") is not None:
+    if params.get("group_id", None) is not None:
         cargs.extend([
             "-grp",
-            params.get("group_id")
+            params.get("group_id", None)
         ])
-    if params.get("allow_core_dump"):
+    if params.get("allow_core_dump", False):
         cargs.append("-allowcoredump")
-    if params.get("debug_mode"):
+    if params.get("debug_mode", False):
         cargs.append("-debug")
-    if params.get("dont_run"):
+    if params.get("dont_run", False):
         cargs.append("-dontrun")
-    if params.get("only_versions"):
+    if params.get("only_versions", False):
         cargs.append("-onlyversions")
-    if params.get("version_info"):
+    if params.get("version_info", False):
         cargs.append("-version")
-    if params.get("help"):
+    if params.get("help", False):
         cargs.append("-help")
     return cargs
 
@@ -519,7 +524,6 @@ def trac_all(
 __all__ = [
     "TRAC_ALL_METADATA",
     "TracAllOutputs",
-    "TracAllParameters",
     "trac_all",
     "trac_all_execute",
     "trac_all_params",

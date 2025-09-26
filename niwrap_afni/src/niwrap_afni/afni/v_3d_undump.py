@@ -14,7 +14,26 @@ V_3D_UNDUMP_METADATA = Metadata(
 
 
 V3dUndumpParameters = typing.TypedDict('V3dUndumpParameters', {
-    "@type": typing.Literal["afni.3dUndump"],
+    "@type": typing.NotRequired[typing.Literal["afni/3dUndump"]],
+    "input_files": list[InputPathType],
+    "prefix": typing.NotRequired[str | None],
+    "master": typing.NotRequired[InputPathType | None],
+    "dimensions": typing.NotRequired[list[float] | None],
+    "mask": typing.NotRequired[InputPathType | None],
+    "datatype": typing.NotRequired[str | None],
+    "dval": typing.NotRequired[float | None],
+    "fval": typing.NotRequired[float | None],
+    "ijk": bool,
+    "xyz": bool,
+    "sphere_radius": typing.NotRequired[float | None],
+    "cube_mode": bool,
+    "orient": typing.NotRequired[str | None],
+    "head_only": bool,
+    "roimask": typing.NotRequired[InputPathType | None],
+    "allow_nan": bool,
+})
+V3dUndumpParametersTagged = typing.TypedDict('V3dUndumpParametersTagged', {
+    "@type": typing.Literal["afni/3dUndump"],
     "input_files": list[InputPathType],
     "prefix": typing.NotRequired[str | None],
     "master": typing.NotRequired[InputPathType | None],
@@ -34,41 +53,9 @@ V3dUndumpParameters = typing.TypedDict('V3dUndumpParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "afni.3dUndump": v_3d_undump_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "afni.3dUndump": v_3d_undump_outputs,
-    }.get(t)
-
-
 class V3dUndumpOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `v_3d_undump(...)`.
+    Output object returned when calling `V3dUndumpParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -93,7 +80,7 @@ def v_3d_undump_params(
     head_only: bool = False,
     roimask: InputPathType | None = None,
     allow_nan: bool = False,
-) -> V3dUndumpParameters:
+) -> V3dUndumpParametersTagged:
     """
     Build parameters.
     
@@ -130,7 +117,7 @@ def v_3d_undump_params(
         Parameter dictionary
     """
     params = {
-        "@type": "afni.3dUndump",
+        "@type": "afni/3dUndump",
         "input_files": input_files,
         "ijk": ijk,
         "xyz": xyz,
@@ -176,66 +163,66 @@ def v_3d_undump_cargs(
     """
     cargs = []
     cargs.append("3dUndump")
-    cargs.extend([execution.input_file(f) for f in params.get("input_files")])
-    if params.get("prefix") is not None:
+    cargs.extend([execution.input_file(f) for f in params.get("input_files", None)])
+    if params.get("prefix", None) is not None:
         cargs.extend([
             "-prefix",
-            params.get("prefix")
+            params.get("prefix", None)
         ])
-    if params.get("master") is not None:
+    if params.get("master", None) is not None:
         cargs.extend([
             "-master",
-            execution.input_file(params.get("master"))
+            execution.input_file(params.get("master", None))
         ])
-    if params.get("dimensions") is not None:
+    if params.get("dimensions", None) is not None:
         cargs.extend([
             "-dimen",
-            *map(str, params.get("dimensions"))
+            *map(str, params.get("dimensions", None))
         ])
-    if params.get("mask") is not None:
+    if params.get("mask", None) is not None:
         cargs.extend([
             "-mask",
-            execution.input_file(params.get("mask"))
+            execution.input_file(params.get("mask", None))
         ])
-    if params.get("datatype") is not None:
+    if params.get("datatype", None) is not None:
         cargs.extend([
             "-datum",
-            params.get("datatype")
+            params.get("datatype", None)
         ])
-    if params.get("dval") is not None:
+    if params.get("dval", None) is not None:
         cargs.extend([
             "-dval",
-            str(params.get("dval"))
+            str(params.get("dval", None))
         ])
-    if params.get("fval") is not None:
+    if params.get("fval", None) is not None:
         cargs.extend([
             "-fval",
-            str(params.get("fval"))
+            str(params.get("fval", None))
         ])
-    if params.get("ijk"):
+    if params.get("ijk", False):
         cargs.append("-ijk")
-    if params.get("xyz"):
+    if params.get("xyz", False):
         cargs.append("-xyz")
-    if params.get("sphere_radius") is not None:
+    if params.get("sphere_radius", None) is not None:
         cargs.extend([
             "-srad",
-            str(params.get("sphere_radius"))
+            str(params.get("sphere_radius", None))
         ])
-    if params.get("cube_mode"):
+    if params.get("cube_mode", False):
         cargs.append("-cubes")
-    if params.get("orient") is not None:
+    if params.get("orient", None) is not None:
         cargs.extend([
             "-orient",
-            params.get("orient")
+            params.get("orient", None)
         ])
-    if params.get("head_only"):
+    if params.get("head_only", False):
         cargs.append("-head_only")
-    if params.get("roimask") is not None:
+    if params.get("roimask", None) is not None:
         cargs.extend([
             "-ROImask",
-            execution.input_file(params.get("roimask"))
+            execution.input_file(params.get("roimask", None))
         ])
-    if params.get("allow_nan"):
+    if params.get("allow_nan", False):
         cargs.append("-allow_NaN")
     return cargs
 
@@ -255,7 +242,7 @@ def v_3d_undump_outputs(
     """
     ret = V3dUndumpOutputs(
         root=execution.output_file("."),
-        outfile=execution.output_file(params.get("prefix") + ".nii.gz") if (params.get("prefix") is not None) else None,
+        outfile=execution.output_file(params.get("prefix", None) + ".nii.gz") if (params.get("prefix") is not None) else None,
     )
     return ret
 
@@ -374,7 +361,6 @@ def v_3d_undump(
 
 __all__ = [
     "V3dUndumpOutputs",
-    "V3dUndumpParameters",
     "V_3D_UNDUMP_METADATA",
     "v_3d_undump",
     "v_3d_undump_execute",

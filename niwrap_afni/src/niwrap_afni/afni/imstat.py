@@ -14,7 +14,14 @@ IMSTAT_METADATA = Metadata(
 
 
 ImstatParameters = typing.TypedDict('ImstatParameters', {
-    "@type": typing.Literal["afni.imstat"],
+    "@type": typing.NotRequired[typing.Literal["afni/imstat"]],
+    "no_label": bool,
+    "quiet": bool,
+    "pixstat_prefix": typing.NotRequired[str | None],
+    "image_files": list[InputPathType],
+})
+ImstatParametersTagged = typing.TypedDict('ImstatParametersTagged', {
+    "@type": typing.Literal["afni/imstat"],
     "no_label": bool,
     "quiet": bool,
     "pixstat_prefix": typing.NotRequired[str | None],
@@ -22,41 +29,9 @@ ImstatParameters = typing.TypedDict('ImstatParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "afni.imstat": imstat_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "afni.imstat": imstat_outputs,
-    }.get(t)
-
-
 class ImstatOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `imstat(...)`.
+    Output object returned when calling `ImstatParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -72,7 +47,7 @@ def imstat_params(
     no_label: bool = False,
     quiet: bool = False,
     pixstat_prefix: str | None = None,
-) -> ImstatParameters:
+) -> ImstatParametersTagged:
     """
     Build parameters.
     
@@ -88,7 +63,7 @@ def imstat_params(
         Parameter dictionary
     """
     params = {
-        "@type": "afni.imstat",
+        "@type": "afni/imstat",
         "no_label": no_label,
         "quiet": quiet,
         "image_files": image_files,
@@ -113,16 +88,16 @@ def imstat_cargs(
     """
     cargs = []
     cargs.append("imstat")
-    if params.get("no_label"):
+    if params.get("no_label", False):
         cargs.append("-nolabel")
-    if params.get("quiet"):
+    if params.get("quiet", False):
         cargs.append("-quiet")
-    if params.get("pixstat_prefix") is not None:
+    if params.get("pixstat_prefix", None) is not None:
         cargs.extend([
             "-pixstat",
-            params.get("pixstat_prefix")
+            params.get("pixstat_prefix", None)
         ])
-    cargs.extend([execution.input_file(f) for f in params.get("image_files")])
+    cargs.extend([execution.input_file(f) for f in params.get("image_files", None)])
     return cargs
 
 
@@ -141,8 +116,8 @@ def imstat_outputs(
     """
     ret = ImstatOutputs(
         root=execution.output_file("."),
-        mean_output=execution.output_file(params.get("pixstat_prefix") + ".mean") if (params.get("pixstat_prefix") is not None) else None,
-        sdev_output=execution.output_file(params.get("pixstat_prefix") + ".sdev") if (params.get("pixstat_prefix") is not None) else None,
+        mean_output=execution.output_file(params.get("pixstat_prefix", None) + ".mean") if (params.get("pixstat_prefix") is not None) else None,
+        sdev_output=execution.output_file(params.get("pixstat_prefix", None) + ".sdev") if (params.get("pixstat_prefix") is not None) else None,
     )
     return ret
 
@@ -215,7 +190,6 @@ def imstat(
 __all__ = [
     "IMSTAT_METADATA",
     "ImstatOutputs",
-    "ImstatParameters",
     "imstat",
     "imstat_execute",
     "imstat_params",

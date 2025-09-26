@@ -14,48 +14,22 @@ PERFUSION_SUBTRACT_METADATA = Metadata(
 
 
 PerfusionSubtractParameters = typing.TypedDict('PerfusionSubtractParameters', {
-    "@type": typing.Literal["fsl.perfusion_subtract"],
+    "@type": typing.NotRequired[typing.Literal["fsl/perfusion_subtract"]],
+    "four_d_input": InputPathType,
+    "four_d_output": str,
+    "control_first_flag": bool,
+})
+PerfusionSubtractParametersTagged = typing.TypedDict('PerfusionSubtractParametersTagged', {
+    "@type": typing.Literal["fsl/perfusion_subtract"],
     "four_d_input": InputPathType,
     "four_d_output": str,
     "control_first_flag": bool,
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "fsl.perfusion_subtract": perfusion_subtract_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "fsl.perfusion_subtract": perfusion_subtract_outputs,
-    }.get(t)
-
-
 class PerfusionSubtractOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `perfusion_subtract(...)`.
+    Output object returned when calling `PerfusionSubtractParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -67,7 +41,7 @@ def perfusion_subtract_params(
     four_d_input: InputPathType,
     four_d_output: str,
     control_first_flag: bool = False,
-) -> PerfusionSubtractParameters:
+) -> PerfusionSubtractParametersTagged:
     """
     Build parameters.
     
@@ -81,7 +55,7 @@ def perfusion_subtract_params(
         Parameter dictionary
     """
     params = {
-        "@type": "fsl.perfusion_subtract",
+        "@type": "fsl/perfusion_subtract",
         "four_d_input": four_d_input,
         "four_d_output": four_d_output,
         "control_first_flag": control_first_flag,
@@ -104,9 +78,9 @@ def perfusion_subtract_cargs(
     """
     cargs = []
     cargs.append("perfusion_subtract")
-    cargs.append(execution.input_file(params.get("four_d_input")))
-    cargs.append(params.get("four_d_output"))
-    if params.get("control_first_flag"):
+    cargs.append(execution.input_file(params.get("four_d_input", None)))
+    cargs.append(params.get("four_d_output", None))
+    if params.get("control_first_flag", False):
         cargs.append("-c")
     return cargs
 
@@ -126,7 +100,7 @@ def perfusion_subtract_outputs(
     """
     ret = PerfusionSubtractOutputs(
         root=execution.output_file("."),
-        output_file=execution.output_file(params.get("four_d_output") + ".nii.gz"),
+        output_file=execution.output_file(params.get("four_d_output", None) + ".nii.gz"),
     )
     return ret
 
@@ -195,7 +169,6 @@ def perfusion_subtract(
 __all__ = [
     "PERFUSION_SUBTRACT_METADATA",
     "PerfusionSubtractOutputs",
-    "PerfusionSubtractParameters",
     "perfusion_subtract",
     "perfusion_subtract_execute",
     "perfusion_subtract_params",

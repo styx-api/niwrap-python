@@ -14,7 +14,14 @@ V_3D_RANK_METADATA = Metadata(
 
 
 V3dRankParameters = typing.TypedDict('V3dRankParameters', {
-    "@type": typing.Literal["afni.3dRank"],
+    "@type": typing.NotRequired[typing.Literal["afni/3dRank"]],
+    "input_datasets": list[InputPathType],
+    "output_prefix": typing.NotRequired[str | None],
+    "version_info": bool,
+    "help_info": bool,
+})
+V3dRankParametersTagged = typing.TypedDict('V3dRankParametersTagged', {
+    "@type": typing.Literal["afni/3dRank"],
     "input_datasets": list[InputPathType],
     "output_prefix": typing.NotRequired[str | None],
     "version_info": bool,
@@ -22,41 +29,9 @@ V3dRankParameters = typing.TypedDict('V3dRankParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "afni.3dRank": v_3d_rank_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "afni.3dRank": v_3d_rank_outputs,
-    }.get(t)
-
-
 class V3dRankOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `v_3d_rank(...)`.
+    Output object returned when calling `V3dRankParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -74,7 +49,7 @@ def v_3d_rank_params(
     output_prefix: str | None = None,
     version_info: bool = False,
     help_info: bool = False,
-) -> V3dRankParameters:
+) -> V3dRankParametersTagged:
     """
     Build parameters.
     
@@ -90,7 +65,7 @@ def v_3d_rank_params(
         Parameter dictionary
     """
     params = {
-        "@type": "afni.3dRank",
+        "@type": "afni/3dRank",
         "input_datasets": input_datasets,
         "version_info": version_info,
         "help_info": help_info,
@@ -115,15 +90,15 @@ def v_3d_rank_cargs(
     """
     cargs = []
     cargs.append("3dRank")
-    cargs.extend([execution.input_file(f) for f in params.get("input_datasets")])
-    if params.get("output_prefix") is not None:
+    cargs.extend([execution.input_file(f) for f in params.get("input_datasets", None)])
+    if params.get("output_prefix", None) is not None:
         cargs.extend([
             "-prefix",
-            params.get("output_prefix")
+            params.get("output_prefix", None)
         ])
-    if params.get("version_info"):
+    if params.get("version_info", False):
         cargs.append("-ver")
-    if params.get("help_info"):
+    if params.get("help_info", False):
         cargs.append("-help")
     return cargs
 
@@ -143,9 +118,9 @@ def v_3d_rank_outputs(
     """
     ret = V3dRankOutputs(
         root=execution.output_file("."),
-        output_dataset_head=execution.output_file(params.get("output_prefix") + ".HEAD") if (params.get("output_prefix") is not None) else None,
-        output_dataset_brik=execution.output_file(params.get("output_prefix") + ".BRIK") if (params.get("output_prefix") is not None) else None,
-        rank_map_file=execution.output_file(params.get("output_prefix") + ".1D") if (params.get("output_prefix") is not None) else None,
+        output_dataset_head=execution.output_file(params.get("output_prefix", None) + ".HEAD") if (params.get("output_prefix") is not None) else None,
+        output_dataset_brik=execution.output_file(params.get("output_prefix", None) + ".BRIK") if (params.get("output_prefix") is not None) else None,
+        rank_map_file=execution.output_file(params.get("output_prefix", None) + ".1D") if (params.get("output_prefix") is not None) else None,
     )
     return ret
 
@@ -219,7 +194,6 @@ def v_3d_rank(
 
 __all__ = [
     "V3dRankOutputs",
-    "V3dRankParameters",
     "V_3D_RANK_METADATA",
     "v_3d_rank",
     "v_3d_rank_execute",

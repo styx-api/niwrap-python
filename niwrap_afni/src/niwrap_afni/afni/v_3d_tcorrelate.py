@@ -14,7 +14,26 @@ V_3D_TCORRELATE_METADATA = Metadata(
 
 
 V3dTcorrelateParameters = typing.TypedDict('V3dTcorrelateParameters', {
-    "@type": typing.Literal["afni.3dTcorrelate"],
+    "@type": typing.NotRequired[typing.Literal["afni/3dTcorrelate"]],
+    "xset": InputPathType,
+    "yset": InputPathType,
+    "pearson": bool,
+    "spearman": bool,
+    "quadrant": bool,
+    "ktaub": bool,
+    "covariance": bool,
+    "partial": typing.NotRequired[InputPathType | None],
+    "ycoef": bool,
+    "fisher": bool,
+    "polort": typing.NotRequired[int | None],
+    "ort": typing.NotRequired[InputPathType | None],
+    "autoclip": bool,
+    "automask": bool,
+    "zcensor": bool,
+    "prefix": typing.NotRequired[str | None],
+})
+V3dTcorrelateParametersTagged = typing.TypedDict('V3dTcorrelateParametersTagged', {
+    "@type": typing.Literal["afni/3dTcorrelate"],
     "xset": InputPathType,
     "yset": InputPathType,
     "pearson": bool,
@@ -34,41 +53,9 @@ V3dTcorrelateParameters = typing.TypedDict('V3dTcorrelateParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "afni.3dTcorrelate": v_3d_tcorrelate_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "afni.3dTcorrelate": v_3d_tcorrelate_outputs,
-    }.get(t)
-
-
 class V3dTcorrelateOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `v_3d_tcorrelate(...)`.
+    Output object returned when calling `V3dTcorrelateParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -93,7 +80,7 @@ def v_3d_tcorrelate_params(
     automask: bool = False,
     zcensor: bool = False,
     prefix: str | None = None,
-) -> V3dTcorrelateParameters:
+) -> V3dTcorrelateParametersTagged:
     """
     Build parameters.
     
@@ -138,7 +125,7 @@ def v_3d_tcorrelate_params(
         Parameter dictionary
     """
     params = {
-        "@type": "afni.3dTcorrelate",
+        "@type": "afni/3dTcorrelate",
         "xset": xset,
         "yset": yset,
         "pearson": pearson,
@@ -178,47 +165,47 @@ def v_3d_tcorrelate_cargs(
     """
     cargs = []
     cargs.append("3dTcorrelate")
-    cargs.append(execution.input_file(params.get("xset")))
-    cargs.append(execution.input_file(params.get("yset")))
-    if params.get("pearson"):
+    cargs.append(execution.input_file(params.get("xset", None)))
+    cargs.append(execution.input_file(params.get("yset", None)))
+    if params.get("pearson", False):
         cargs.append("-pearson")
-    if params.get("spearman"):
+    if params.get("spearman", False):
         cargs.append("-spearman")
-    if params.get("quadrant"):
+    if params.get("quadrant", False):
         cargs.append("-quadrant")
-    if params.get("ktaub"):
+    if params.get("ktaub", False):
         cargs.append("-ktaub")
-    if params.get("covariance"):
+    if params.get("covariance", False):
         cargs.append("-covariance")
-    if params.get("partial") is not None:
+    if params.get("partial", None) is not None:
         cargs.extend([
             "-partial",
-            execution.input_file(params.get("partial"))
+            execution.input_file(params.get("partial", None))
         ])
-    if params.get("ycoef"):
+    if params.get("ycoef", False):
         cargs.append("-ycoef")
-    if params.get("fisher"):
+    if params.get("fisher", False):
         cargs.append("-Fisher")
-    if params.get("polort") is not None:
+    if params.get("polort", None) is not None:
         cargs.extend([
             "-polort",
-            str(params.get("polort"))
+            str(params.get("polort", None))
         ])
-    if params.get("ort") is not None:
+    if params.get("ort", None) is not None:
         cargs.extend([
             "-ort",
-            execution.input_file(params.get("ort"))
+            execution.input_file(params.get("ort", None))
         ])
-    if params.get("autoclip"):
+    if params.get("autoclip", False):
         cargs.append("-autoclip")
-    if params.get("automask"):
+    if params.get("automask", False):
         cargs.append("-automask")
-    if params.get("zcensor"):
+    if params.get("zcensor", False):
         cargs.append("-zcensor")
-    if params.get("prefix") is not None:
+    if params.get("prefix", None) is not None:
         cargs.extend([
             "-prefix",
-            params.get("prefix")
+            params.get("prefix", None)
         ])
     return cargs
 
@@ -238,7 +225,7 @@ def v_3d_tcorrelate_outputs(
     """
     ret = V3dTcorrelateOutputs(
         root=execution.output_file("."),
-        out_file=execution.output_file(params.get("prefix")) if (params.get("prefix") is not None) else None,
+        out_file=execution.output_file(params.get("prefix", None)) if (params.get("prefix") is not None) else None,
     )
     return ret
 
@@ -365,7 +352,6 @@ def v_3d_tcorrelate(
 
 __all__ = [
     "V3dTcorrelateOutputs",
-    "V3dTcorrelateParameters",
     "V_3D_TCORRELATE_METADATA",
     "v_3d_tcorrelate",
     "v_3d_tcorrelate_execute",

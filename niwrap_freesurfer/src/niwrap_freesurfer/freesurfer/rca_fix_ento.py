@@ -14,7 +14,15 @@ RCA_FIX_ENTO_METADATA = Metadata(
 
 
 RcaFixEntoParameters = typing.TypedDict('RcaFixEntoParameters', {
-    "@type": typing.Literal["freesurfer.rca-fix-ento"],
+    "@type": typing.NotRequired[typing.Literal["freesurfer/rca-fix-ento"]],
+    "subject": str,
+    "threads": typing.NotRequired[float | None],
+    "submit": bool,
+    "account": typing.NotRequired[str | None],
+    "brain_mask": bool,
+})
+RcaFixEntoParametersTagged = typing.TypedDict('RcaFixEntoParametersTagged', {
+    "@type": typing.Literal["freesurfer/rca-fix-ento"],
     "subject": str,
     "threads": typing.NotRequired[float | None],
     "submit": bool,
@@ -23,41 +31,9 @@ RcaFixEntoParameters = typing.TypedDict('RcaFixEntoParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "freesurfer.rca-fix-ento": rca_fix_ento_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "freesurfer.rca-fix-ento": rca_fix_ento_outputs,
-    }.get(t)
-
-
 class RcaFixEntoOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `rca_fix_ento(...)`.
+    Output object returned when calling `RcaFixEntoParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -75,7 +51,7 @@ def rca_fix_ento_params(
     submit: bool = False,
     account: str | None = None,
     brain_mask: bool = False,
-) -> RcaFixEntoParameters:
+) -> RcaFixEntoParametersTagged:
     """
     Build parameters.
     
@@ -91,7 +67,7 @@ def rca_fix_ento_params(
         Parameter dictionary
     """
     params = {
-        "@type": "freesurfer.rca-fix-ento",
+        "@type": "freesurfer/rca-fix-ento",
         "subject": subject,
         "submit": submit,
         "brain_mask": brain_mask,
@@ -120,21 +96,21 @@ def rca_fix_ento_cargs(
     cargs.append("rca-fix-ento")
     cargs.extend([
         "-s",
-        params.get("subject")
+        params.get("subject", None)
     ])
-    if params.get("threads") is not None:
+    if params.get("threads", None) is not None:
         cargs.extend([
             "--threads",
-            str(params.get("threads"))
+            str(params.get("threads", None))
         ])
-    if params.get("submit"):
+    if params.get("submit", False):
         cargs.append("--submit")
-    if params.get("account") is not None:
+    if params.get("account", None) is not None:
         cargs.extend([
             "--account",
-            params.get("account")
+            params.get("account", None)
         ])
-    if params.get("brain_mask"):
+    if params.get("brain_mask", False):
         cargs.append("--brain-mask")
     return cargs
 
@@ -154,9 +130,9 @@ def rca_fix_ento_outputs(
     """
     ret = RcaFixEntoOutputs(
         root=execution.output_file("."),
-        entowm_output=execution.output_file(params.get("subject") + "/mri/entowm.mgz"),
-        finalsurfs_output=execution.output_file(params.get("subject") + "/mri/brain.finalsurfs.manedit.mgz"),
-        backup_finalsufs_output=execution.output_file(params.get("subject") + "/mri/backup.brain.finalsurfs.manedit.mgz"),
+        entowm_output=execution.output_file(params.get("subject", None) + "/mri/entowm.mgz"),
+        finalsurfs_output=execution.output_file(params.get("subject", None) + "/mri/brain.finalsurfs.manedit.mgz"),
+        backup_finalsufs_output=execution.output_file(params.get("subject", None) + "/mri/backup.brain.finalsurfs.manedit.mgz"),
     )
     return ret
 
@@ -233,7 +209,6 @@ def rca_fix_ento(
 __all__ = [
     "RCA_FIX_ENTO_METADATA",
     "RcaFixEntoOutputs",
-    "RcaFixEntoParameters",
     "rca_fix_ento",
     "rca_fix_ento_execute",
     "rca_fix_ento_params",

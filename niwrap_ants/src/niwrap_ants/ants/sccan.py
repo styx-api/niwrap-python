@@ -14,7 +14,37 @@ SCCAN_METADATA = Metadata(
 
 
 SccanParameters = typing.TypedDict('SccanParameters', {
-    "@type": typing.Literal["ants.sccan"],
+    "@type": typing.NotRequired[typing.Literal["ants/sccan"]],
+    "output": typing.NotRequired[str | None],
+    "n_permutations": typing.NotRequired[int | None],
+    "smoother": typing.NotRequired[int | None],
+    "row_sparseness": typing.NotRequired[int | None],
+    "iterations": typing.NotRequired[int | None],
+    "n_eigenvectors": typing.NotRequired[int | None],
+    "robustify": typing.NotRequired[int | None],
+    "covering": typing.NotRequired[int | None],
+    "uselong": typing.NotRequired[int | None],
+    "l1": typing.NotRequired[float | None],
+    "pclusterthresh": typing.NotRequired[float | None],
+    "qclusterthresh": typing.NotRequired[float | None],
+    "ridge_cca": typing.NotRequired[float | None],
+    "initialization": typing.NotRequired[str | None],
+    "initialization2": typing.NotRequired[str | None],
+    "mask": typing.NotRequired[InputPathType | None],
+    "mask2": typing.NotRequired[InputPathType | None],
+    "partial_scca_option": typing.NotRequired[str | None],
+    "prior_weight": typing.NotRequired[float | None],
+    "get_small": typing.NotRequired[float | None],
+    "verbose": typing.NotRequired[float | None],
+    "imageset_to_matrix": typing.NotRequired[str | None],
+    "timeseriesimage_to_matrix": typing.NotRequired[str | None],
+    "vector_to_image": typing.NotRequired[str | None],
+    "imageset_to_projections": typing.NotRequired[str | None],
+    "scca": typing.NotRequired[str | None],
+    "svd": typing.NotRequired[str | None],
+})
+SccanParametersTagged = typing.TypedDict('SccanParametersTagged', {
+    "@type": typing.Literal["ants/sccan"],
     "output": typing.NotRequired[str | None],
     "n_permutations": typing.NotRequired[int | None],
     "smoother": typing.NotRequired[int | None],
@@ -45,40 +75,9 @@ SccanParameters = typing.TypedDict('SccanParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "ants.sccan": sccan_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-    }.get(t)
-
-
 class SccanOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `sccan(...)`.
+    Output object returned when calling `SccanParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -112,7 +111,7 @@ def sccan_params(
     imageset_to_projections: str | None = None,
     scca: str | None = None,
     svd: str | None = None,
-) -> SccanParameters:
+) -> SccanParametersTagged:
     """
     Build parameters.
     
@@ -158,7 +157,7 @@ def sccan_params(
         Parameter dictionary
     """
     params = {
-        "@type": "ants.sccan",
+        "@type": "ants/sccan",
     }
     if output is not None:
         params["output"] = output
@@ -232,140 +231,140 @@ def sccan_cargs(
     """
     cargs = []
     cargs.append("sccan")
-    if params.get("output") is not None:
+    if params.get("output", None) is not None:
         cargs.extend([
             "-o",
-            params.get("output")
+            params.get("output", None)
         ])
-    if params.get("n_permutations") is not None:
+    if params.get("n_permutations", None) is not None:
         cargs.extend([
             "-p",
-            str(params.get("n_permutations"))
+            str(params.get("n_permutations", None))
         ])
-    if params.get("smoother") is not None:
+    if params.get("smoother", None) is not None:
         cargs.extend([
             "-s",
-            str(params.get("smoother"))
+            str(params.get("smoother", None))
         ])
-    if params.get("row_sparseness") is not None:
+    if params.get("row_sparseness", None) is not None:
         cargs.extend([
             "-z",
-            str(params.get("row_sparseness"))
+            str(params.get("row_sparseness", None))
         ])
-    if params.get("iterations") is not None:
+    if params.get("iterations", None) is not None:
         cargs.extend([
             "-i",
-            str(params.get("iterations"))
+            str(params.get("iterations", None))
         ])
-    if params.get("n_eigenvectors") is not None:
+    if params.get("n_eigenvectors", None) is not None:
         cargs.extend([
             "-n",
-            str(params.get("n_eigenvectors"))
+            str(params.get("n_eigenvectors", None))
         ])
-    if params.get("robustify") is not None:
+    if params.get("robustify", None) is not None:
         cargs.extend([
             "-r",
-            str(params.get("robustify"))
+            str(params.get("robustify", None))
         ])
-    if params.get("covering") is not None:
+    if params.get("covering", None) is not None:
         cargs.extend([
             "-c",
-            str(params.get("covering"))
+            str(params.get("covering", None))
         ])
-    if params.get("uselong") is not None:
+    if params.get("uselong", None) is not None:
         cargs.extend([
             "-g",
-            str(params.get("uselong"))
+            str(params.get("uselong", None))
         ])
-    if params.get("l1") is not None:
+    if params.get("l1", None) is not None:
         cargs.extend([
             "-l",
-            str(params.get("l1"))
+            str(params.get("l1", None))
         ])
-    if params.get("pclusterthresh") is not None:
+    if params.get("pclusterthresh", None) is not None:
         cargs.extend([
             "--PClusterThresh",
-            str(params.get("pclusterthresh"))
+            str(params.get("pclusterthresh", None))
         ])
-    if params.get("qclusterthresh") is not None:
+    if params.get("qclusterthresh", None) is not None:
         cargs.extend([
             "--QClusterThresh",
-            str(params.get("qclusterthresh"))
+            str(params.get("qclusterthresh", None))
         ])
-    if params.get("ridge_cca") is not None:
+    if params.get("ridge_cca", None) is not None:
         cargs.extend([
             "-e",
-            str(params.get("ridge_cca"))
+            str(params.get("ridge_cca", None))
         ])
-    if params.get("initialization") is not None:
+    if params.get("initialization", None) is not None:
         cargs.extend([
             "--initialization",
-            params.get("initialization")
+            params.get("initialization", None)
         ])
-    if params.get("initialization2") is not None:
+    if params.get("initialization2", None) is not None:
         cargs.extend([
             "--initialization2",
-            params.get("initialization2")
+            params.get("initialization2", None)
         ])
-    if params.get("mask") is not None:
+    if params.get("mask", None) is not None:
         cargs.extend([
             "--mask",
-            execution.input_file(params.get("mask"))
+            execution.input_file(params.get("mask", None))
         ])
-    if params.get("mask2") is not None:
+    if params.get("mask2", None) is not None:
         cargs.extend([
             "--mask2",
-            execution.input_file(params.get("mask2"))
+            execution.input_file(params.get("mask2", None))
         ])
-    if params.get("partial_scca_option") is not None:
+    if params.get("partial_scca_option", None) is not None:
         cargs.extend([
             "--partial-scca-option",
-            params.get("partial_scca_option")
+            params.get("partial_scca_option", None)
         ])
-    if params.get("prior_weight") is not None:
+    if params.get("prior_weight", None) is not None:
         cargs.extend([
             "--prior-weight",
-            str(params.get("prior_weight"))
+            str(params.get("prior_weight", None))
         ])
-    if params.get("get_small") is not None:
+    if params.get("get_small", None) is not None:
         cargs.extend([
             "--get-small",
-            str(params.get("get_small"))
+            str(params.get("get_small", None))
         ])
-    if params.get("verbose") is not None:
+    if params.get("verbose", None) is not None:
         cargs.extend([
             "-v",
-            str(params.get("verbose"))
+            str(params.get("verbose", None))
         ])
-    if params.get("imageset_to_matrix") is not None:
+    if params.get("imageset_to_matrix", None) is not None:
         cargs.extend([
             "--imageset-to-matrix",
-            params.get("imageset_to_matrix")
+            params.get("imageset_to_matrix", None)
         ])
-    if params.get("timeseriesimage_to_matrix") is not None:
+    if params.get("timeseriesimage_to_matrix", None) is not None:
         cargs.extend([
             "--timeseriesimage-to-matrix",
-            params.get("timeseriesimage_to_matrix")
+            params.get("timeseriesimage_to_matrix", None)
         ])
-    if params.get("vector_to_image") is not None:
+    if params.get("vector_to_image", None) is not None:
         cargs.extend([
             "--vector-to-image",
-            params.get("vector_to_image")
+            params.get("vector_to_image", None)
         ])
-    if params.get("imageset_to_projections") is not None:
+    if params.get("imageset_to_projections", None) is not None:
         cargs.extend([
             "--imageset-to-projections",
-            params.get("imageset_to_projections")
+            params.get("imageset_to_projections", None)
         ])
-    if params.get("scca") is not None:
+    if params.get("scca", None) is not None:
         cargs.extend([
             "--scca",
-            params.get("scca")
+            params.get("scca", None)
         ])
-    if params.get("svd") is not None:
+    if params.get("svd", None) is not None:
         cargs.extend([
             "--svd",
-            params.get("svd")
+            params.get("svd", None)
         ])
     return cargs
 
@@ -537,7 +536,6 @@ def sccan(
 __all__ = [
     "SCCAN_METADATA",
     "SccanOutputs",
-    "SccanParameters",
     "sccan",
     "sccan_execute",
     "sccan_params",

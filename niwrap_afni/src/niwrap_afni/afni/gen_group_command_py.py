@@ -14,7 +14,22 @@ GEN_GROUP_COMMAND_PY_METADATA = Metadata(
 
 
 GenGroupCommandPyParameters = typing.TypedDict('GenGroupCommandPyParameters', {
-    "@type": typing.Literal["afni.gen_group_command.py"],
+    "@type": typing.NotRequired[typing.Literal["afni/gen_group_command.py"]],
+    "command_name": str,
+    "datasets": list[str],
+    "prefix": typing.NotRequired[str | None],
+    "set_labels": typing.NotRequired[list[str] | None],
+    "subj_prefix": typing.NotRequired[str | None],
+    "subj_suffix": typing.NotRequired[str | None],
+    "subs_betas": typing.NotRequired[list[str] | None],
+    "subs_tstats": typing.NotRequired[list[str] | None],
+    "type": typing.NotRequired[str | None],
+    "verb": typing.NotRequired[str | None],
+    "write_script": typing.NotRequired[str | None],
+    "other_options": typing.NotRequired[list[str] | None],
+})
+GenGroupCommandPyParametersTagged = typing.TypedDict('GenGroupCommandPyParametersTagged', {
+    "@type": typing.Literal["afni/gen_group_command.py"],
     "command_name": str,
     "datasets": list[str],
     "prefix": typing.NotRequired[str | None],
@@ -30,41 +45,9 @@ GenGroupCommandPyParameters = typing.TypedDict('GenGroupCommandPyParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "afni.gen_group_command.py": gen_group_command_py_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "afni.gen_group_command.py": gen_group_command_py_outputs,
-    }.get(t)
-
-
 class GenGroupCommandPyOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `gen_group_command_py(...)`.
+    Output object returned when calling `GenGroupCommandPyParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -85,7 +68,7 @@ def gen_group_command_py_params(
     verb: str | None = None,
     write_script: str | None = None,
     other_options: list[str] | None = None,
-) -> GenGroupCommandPyParameters:
+) -> GenGroupCommandPyParametersTagged:
     """
     Build parameters.
     
@@ -107,7 +90,7 @@ def gen_group_command_py_params(
         Parameter dictionary
     """
     params = {
-        "@type": "afni.gen_group_command.py",
+        "@type": "afni/gen_group_command.py",
         "command_name": command_name,
         "datasets": datasets,
     }
@@ -151,61 +134,61 @@ def gen_group_command_py_cargs(
     cargs.append("gen_group_command.py")
     cargs.extend([
         "-command",
-        params.get("command_name")
+        params.get("command_name", None)
     ])
     cargs.extend([
         "-dsets",
-        *params.get("datasets")
+        *params.get("datasets", None)
     ])
-    if params.get("prefix") is not None:
+    if params.get("prefix", None) is not None:
         cargs.extend([
             "-prefix",
-            params.get("prefix")
+            params.get("prefix", None)
         ])
-    if params.get("set_labels") is not None:
+    if params.get("set_labels", None) is not None:
         cargs.extend([
             "-set_labels",
-            *params.get("set_labels")
+            *params.get("set_labels", None)
         ])
-    if params.get("subj_prefix") is not None:
+    if params.get("subj_prefix", None) is not None:
         cargs.extend([
             "-subj_prefix",
-            params.get("subj_prefix")
+            params.get("subj_prefix", None)
         ])
-    if params.get("subj_suffix") is not None:
+    if params.get("subj_suffix", None) is not None:
         cargs.extend([
             "-subj_suffix",
-            params.get("subj_suffix")
+            params.get("subj_suffix", None)
         ])
-    if params.get("subs_betas") is not None:
+    if params.get("subs_betas", None) is not None:
         cargs.extend([
             "-subs_betas",
-            *params.get("subs_betas")
+            *params.get("subs_betas", None)
         ])
-    if params.get("subs_tstats") is not None:
+    if params.get("subs_tstats", None) is not None:
         cargs.extend([
             "-subs_tstats",
-            *params.get("subs_tstats")
+            *params.get("subs_tstats", None)
         ])
-    if params.get("type") is not None:
+    if params.get("type", None) is not None:
         cargs.extend([
             "-type",
-            params.get("type")
+            params.get("type", None)
         ])
-    if params.get("verb") is not None:
+    if params.get("verb", None) is not None:
         cargs.extend([
             "-verb",
-            params.get("verb")
+            params.get("verb", None)
         ])
-    if params.get("write_script") is not None:
+    if params.get("write_script", None) is not None:
         cargs.extend([
             "-write_script",
-            params.get("write_script")
+            params.get("write_script", None)
         ])
-    if params.get("other_options") is not None:
+    if params.get("other_options", None) is not None:
         cargs.extend([
             "-options",
-            *params.get("other_options")
+            *params.get("other_options", None)
         ])
     return cargs
 
@@ -225,7 +208,7 @@ def gen_group_command_py_outputs(
     """
     ret = GenGroupCommandPyOutputs(
         root=execution.output_file("."),
-        output_script=execution.output_file(params.get("write_script")) if (params.get("write_script") is not None) else None,
+        output_script=execution.output_file(params.get("write_script", None)) if (params.get("write_script") is not None) else None,
     )
     return ret
 
@@ -322,7 +305,6 @@ def gen_group_command_py(
 __all__ = [
     "GEN_GROUP_COMMAND_PY_METADATA",
     "GenGroupCommandPyOutputs",
-    "GenGroupCommandPyParameters",
     "gen_group_command_py",
     "gen_group_command_py_execute",
     "gen_group_command_py_params",

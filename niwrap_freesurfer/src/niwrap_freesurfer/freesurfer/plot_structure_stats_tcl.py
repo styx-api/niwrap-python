@@ -14,47 +14,20 @@ PLOT_STRUCTURE_STATS_TCL_METADATA = Metadata(
 
 
 PlotStructureStatsTclParameters = typing.TypedDict('PlotStructureStatsTclParameters', {
-    "@type": typing.Literal["freesurfer.plot_structure_stats.tcl"],
+    "@type": typing.NotRequired[typing.Literal["freesurfer/plot_structure_stats.tcl"]],
+    "input_file": InputPathType,
+    "output_file": str,
+})
+PlotStructureStatsTclParametersTagged = typing.TypedDict('PlotStructureStatsTclParametersTagged', {
+    "@type": typing.Literal["freesurfer/plot_structure_stats.tcl"],
     "input_file": InputPathType,
     "output_file": str,
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "freesurfer.plot_structure_stats.tcl": plot_structure_stats_tcl_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "freesurfer.plot_structure_stats.tcl": plot_structure_stats_tcl_outputs,
-    }.get(t)
-
-
 class PlotStructureStatsTclOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `plot_structure_stats_tcl(...)`.
+    Output object returned when calling `PlotStructureStatsTclParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -65,7 +38,7 @@ class PlotStructureStatsTclOutputs(typing.NamedTuple):
 def plot_structure_stats_tcl_params(
     input_file: InputPathType,
     output_file: str,
-) -> PlotStructureStatsTclParameters:
+) -> PlotStructureStatsTclParametersTagged:
     """
     Build parameters.
     
@@ -76,7 +49,7 @@ def plot_structure_stats_tcl_params(
         Parameter dictionary
     """
     params = {
-        "@type": "freesurfer.plot_structure_stats.tcl",
+        "@type": "freesurfer/plot_structure_stats.tcl",
         "input_file": input_file,
         "output_file": output_file,
     }
@@ -98,8 +71,8 @@ def plot_structure_stats_tcl_cargs(
     """
     cargs = []
     cargs.append("plot_structure_stats.tcl")
-    cargs.append(execution.input_file(params.get("input_file")))
-    cargs.append(params.get("output_file"))
+    cargs.append(execution.input_file(params.get("input_file", None)))
+    cargs.append(params.get("output_file", None))
     return cargs
 
 
@@ -118,7 +91,7 @@ def plot_structure_stats_tcl_outputs(
     """
     ret = PlotStructureStatsTclOutputs(
         root=execution.output_file("."),
-        plot_file=execution.output_file(params.get("output_file") + ".png"),
+        plot_file=execution.output_file(params.get("output_file", None) + ".png"),
     )
     return ret
 
@@ -182,7 +155,6 @@ def plot_structure_stats_tcl(
 __all__ = [
     "PLOT_STRUCTURE_STATS_TCL_METADATA",
     "PlotStructureStatsTclOutputs",
-    "PlotStructureStatsTclParameters",
     "plot_structure_stats_tcl",
     "plot_structure_stats_tcl_execute",
     "plot_structure_stats_tcl_params",

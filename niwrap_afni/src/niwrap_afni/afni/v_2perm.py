@@ -14,7 +14,16 @@ V_2PERM_METADATA = Metadata(
 
 
 V2permParameters = typing.TypedDict('V2permParameters', {
-    "@type": typing.Literal["afni.2perm"],
+    "@type": typing.NotRequired[typing.Literal["afni/2perm"]],
+    "prefix": typing.NotRequired[str | None],
+    "comma": bool,
+    "bottom_int": float,
+    "top_int": float,
+    "subset1_size": typing.NotRequired[float | None],
+    "subset2_size": typing.NotRequired[float | None],
+})
+V2permParametersTagged = typing.TypedDict('V2permParametersTagged', {
+    "@type": typing.Literal["afni/2perm"],
     "prefix": typing.NotRequired[str | None],
     "comma": bool,
     "bottom_int": float,
@@ -24,41 +33,9 @@ V2permParameters = typing.TypedDict('V2permParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "afni.2perm": v_2perm_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "afni.2perm": v_2perm_outputs,
-    }.get(t)
-
-
 class V2permOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `v_2perm(...)`.
+    Output object returned when calling `V2permParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -75,7 +52,7 @@ def v_2perm_params(
     comma: bool = False,
     subset1_size: float | None = None,
     subset2_size: float | None = None,
-) -> V2permParameters:
+) -> V2permParametersTagged:
     """
     Build parameters.
     
@@ -92,7 +69,7 @@ def v_2perm_params(
         Parameter dictionary
     """
     params = {
-        "@type": "afni.2perm",
+        "@type": "afni/2perm",
         "comma": comma,
         "bottom_int": bottom_int,
         "top_int": top_int,
@@ -121,19 +98,19 @@ def v_2perm_cargs(
     """
     cargs = []
     cargs.append("2perm")
-    if params.get("prefix") is not None:
+    if params.get("prefix", None) is not None:
         cargs.extend([
             "-prefix",
-            params.get("prefix")
+            params.get("prefix", None)
         ])
-    if params.get("comma"):
+    if params.get("comma", False):
         cargs.append("-comma")
-    cargs.append(str(params.get("bottom_int")))
-    cargs.append(str(params.get("top_int")))
-    if params.get("subset1_size") is not None:
-        cargs.append(str(params.get("subset1_size")))
-    if params.get("subset2_size") is not None:
-        cargs.append(str(params.get("subset2_size")))
+    cargs.append(str(params.get("bottom_int", None)))
+    cargs.append(str(params.get("top_int", None)))
+    if params.get("subset1_size", None) is not None:
+        cargs.append(str(params.get("subset1_size", None)))
+    if params.get("subset2_size", None) is not None:
+        cargs.append(str(params.get("subset2_size", None)))
     return cargs
 
 
@@ -152,8 +129,8 @@ def v_2perm_outputs(
     """
     ret = V2permOutputs(
         root=execution.output_file("."),
-        file_a=execution.output_file(params.get("prefix") + "_A") if (params.get("prefix") is not None) else None,
-        file_b=execution.output_file(params.get("prefix") + "_B") if (params.get("prefix") is not None) else None,
+        file_a=execution.output_file(params.get("prefix", None) + "_A") if (params.get("prefix") is not None) else None,
+        file_b=execution.output_file(params.get("prefix", None) + "_B") if (params.get("prefix") is not None) else None,
     )
     return ret
 
@@ -230,7 +207,6 @@ def v_2perm(
 
 __all__ = [
     "V2permOutputs",
-    "V2permParameters",
     "V_2PERM_METADATA",
     "v_2perm",
     "v_2perm_execute",

@@ -14,7 +14,34 @@ V_3D_ANOVA2_METADATA = Metadata(
 
 
 V3dAnova2Parameters = typing.TypedDict('V3dAnova2Parameters', {
-    "@type": typing.Literal["afni.3dANOVA2"],
+    "@type": typing.NotRequired[typing.Literal["afni/3dANOVA2"]],
+    "type": int,
+    "alevels": int,
+    "blevels": int,
+    "dataset": typing.NotRequired[list[str] | None],
+    "voxel": typing.NotRequired[int | None],
+    "diskspace": bool,
+    "mask": typing.NotRequired[InputPathType | None],
+    "ftr": typing.NotRequired[str | None],
+    "fa": typing.NotRequired[str | None],
+    "fb": typing.NotRequired[str | None],
+    "fab": typing.NotRequired[str | None],
+    "amean": typing.NotRequired[str | None],
+    "bmean": typing.NotRequired[str | None],
+    "xmean": typing.NotRequired[str | None],
+    "adiff": typing.NotRequired[str | None],
+    "bdiff": typing.NotRequired[str | None],
+    "xdiff": typing.NotRequired[str | None],
+    "acontr": typing.NotRequired[str | None],
+    "bcontr": typing.NotRequired[str | None],
+    "xcontr": typing.NotRequired[str | None],
+    "bucket": typing.NotRequired[str | None],
+    "old_method": bool,
+    "ok": bool,
+    "assume_sph": bool,
+})
+V3dAnova2ParametersTagged = typing.TypedDict('V3dAnova2ParametersTagged', {
+    "@type": typing.Literal["afni/3dANOVA2"],
     "type": int,
     "alevels": int,
     "blevels": int,
@@ -42,41 +69,9 @@ V3dAnova2Parameters = typing.TypedDict('V3dAnova2Parameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "afni.3dANOVA2": v_3d_anova2_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "afni.3dANOVA2": v_3d_anova2_outputs,
-    }.get(t)
-
-
 class V3dAnova2Outputs(typing.NamedTuple):
     """
-    Output object returned when calling `v_3d_anova2(...)`.
+    Output object returned when calling `V3dAnova2Parameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -137,7 +132,7 @@ def v_3d_anova2_params(
     old_method: bool = False,
     ok: bool = False,
     assume_sph: bool = False,
-) -> V3dAnova2Parameters:
+) -> V3dAnova2ParametersTagged:
     """
     Build parameters.
     
@@ -178,7 +173,7 @@ def v_3d_anova2_params(
         Parameter dictionary
     """
     params = {
-        "@type": "afni.3dANOVA2",
+        "@type": "afni/3dANOVA2",
         "type": type_,
         "alevels": alevels,
         "blevels": blevels,
@@ -241,108 +236,108 @@ def v_3d_anova2_cargs(
     cargs.append("3dANOVA2")
     cargs.extend([
         "-type",
-        str(params.get("type"))
+        str(params.get("type", None))
     ])
     cargs.extend([
         "-alevels",
-        str(params.get("alevels"))
+        str(params.get("alevels", None))
     ])
     cargs.extend([
         "-blevels",
-        str(params.get("blevels"))
+        str(params.get("blevels", None))
     ])
-    if params.get("dataset") is not None:
+    if params.get("dataset", None) is not None:
         cargs.extend([
             "-dset",
-            *params.get("dataset")
+            *params.get("dataset", None)
         ])
-    if params.get("voxel") is not None:
+    if params.get("voxel", None) is not None:
         cargs.extend([
             "-voxel",
-            str(params.get("voxel"))
+            str(params.get("voxel", None))
         ])
-    if params.get("diskspace"):
+    if params.get("diskspace", False):
         cargs.append("-diskspace")
-    if params.get("mask") is not None:
+    if params.get("mask", None) is not None:
         cargs.extend([
             "-mask",
-            execution.input_file(params.get("mask"))
+            execution.input_file(params.get("mask", None))
         ])
-    if params.get("ftr") is not None:
+    if params.get("ftr", None) is not None:
         cargs.extend([
             "-ftr",
-            params.get("ftr")
+            params.get("ftr", None)
         ])
-    if params.get("fa") is not None:
+    if params.get("fa", None) is not None:
         cargs.extend([
             "-fa",
-            params.get("fa")
+            params.get("fa", None)
         ])
-    if params.get("fb") is not None:
+    if params.get("fb", None) is not None:
         cargs.extend([
             "-fb",
-            params.get("fb")
+            params.get("fb", None)
         ])
-    if params.get("fab") is not None:
+    if params.get("fab", None) is not None:
         cargs.extend([
             "-fab",
-            params.get("fab")
+            params.get("fab", None)
         ])
-    if params.get("amean") is not None:
+    if params.get("amean", None) is not None:
         cargs.extend([
             "-amean",
-            params.get("amean")
+            params.get("amean", None)
         ])
-    if params.get("bmean") is not None:
+    if params.get("bmean", None) is not None:
         cargs.extend([
             "-bmean",
-            params.get("bmean")
+            params.get("bmean", None)
         ])
-    if params.get("xmean") is not None:
+    if params.get("xmean", None) is not None:
         cargs.extend([
             "-xmean",
-            params.get("xmean")
+            params.get("xmean", None)
         ])
-    if params.get("adiff") is not None:
+    if params.get("adiff", None) is not None:
         cargs.extend([
             "-adiff",
-            params.get("adiff")
+            params.get("adiff", None)
         ])
-    if params.get("bdiff") is not None:
+    if params.get("bdiff", None) is not None:
         cargs.extend([
             "-bdiff",
-            params.get("bdiff")
+            params.get("bdiff", None)
         ])
-    if params.get("xdiff") is not None:
+    if params.get("xdiff", None) is not None:
         cargs.extend([
             "-xdiff",
-            params.get("xdiff")
+            params.get("xdiff", None)
         ])
-    if params.get("acontr") is not None:
+    if params.get("acontr", None) is not None:
         cargs.extend([
             "-acontr",
-            params.get("acontr")
+            params.get("acontr", None)
         ])
-    if params.get("bcontr") is not None:
+    if params.get("bcontr", None) is not None:
         cargs.extend([
             "-bcontr",
-            params.get("bcontr")
+            params.get("bcontr", None)
         ])
-    if params.get("xcontr") is not None:
+    if params.get("xcontr", None) is not None:
         cargs.extend([
             "-xcontr",
-            params.get("xcontr")
+            params.get("xcontr", None)
         ])
-    if params.get("bucket") is not None:
+    if params.get("bucket", None) is not None:
         cargs.extend([
             "-bucket",
-            params.get("bucket")
+            params.get("bucket", None)
         ])
-    if params.get("old_method"):
+    if params.get("old_method", False):
         cargs.append("-old_method")
-    if params.get("ok"):
+    if params.get("ok", False):
         cargs.append("-OK")
-    if params.get("assume_sph"):
+    if params.get("assume_sph", False):
         cargs.append("-assume_sph")
     return cargs
 
@@ -362,20 +357,20 @@ def v_3d_anova2_outputs(
     """
     ret = V3dAnova2Outputs(
         root=execution.output_file("."),
-        output_ftr=execution.output_file(params.get("ftr") + ".+tlrc") if (params.get("ftr") is not None) else None,
-        output_fa=execution.output_file(params.get("fa") + ".+tlrc") if (params.get("fa") is not None) else None,
-        output_fb=execution.output_file(params.get("fb") + ".+tlrc") if (params.get("fb") is not None) else None,
-        output_fab=execution.output_file(params.get("fab") + ".+tlrc") if (params.get("fab") is not None) else None,
-        output_amean=execution.output_file(params.get("amean") + ".+tlrc") if (params.get("amean") is not None) else None,
-        output_bmean=execution.output_file(params.get("bmean") + ".+tlrc") if (params.get("bmean") is not None) else None,
-        output_xmean=execution.output_file(params.get("xmean") + ".+tlrc") if (params.get("xmean") is not None) else None,
-        output_adiff=execution.output_file(params.get("adiff") + ".+tlrc") if (params.get("adiff") is not None) else None,
-        output_bdiff=execution.output_file(params.get("bdiff") + ".+tlrc") if (params.get("bdiff") is not None) else None,
-        output_xdiff=execution.output_file(params.get("xdiff") + ".+tlrc") if (params.get("xdiff") is not None) else None,
-        output_acontr=execution.output_file(params.get("acontr") + ".+tlrc") if (params.get("acontr") is not None) else None,
-        output_bcontr=execution.output_file(params.get("bcontr") + ".+tlrc") if (params.get("bcontr") is not None) else None,
-        output_xcontr=execution.output_file(params.get("xcontr") + ".+tlrc") if (params.get("xcontr") is not None) else None,
-        output_bucket=execution.output_file(params.get("bucket") + ".+tlrc") if (params.get("bucket") is not None) else None,
+        output_ftr=execution.output_file(params.get("ftr", None) + ".+tlrc") if (params.get("ftr") is not None) else None,
+        output_fa=execution.output_file(params.get("fa", None) + ".+tlrc") if (params.get("fa") is not None) else None,
+        output_fb=execution.output_file(params.get("fb", None) + ".+tlrc") if (params.get("fb") is not None) else None,
+        output_fab=execution.output_file(params.get("fab", None) + ".+tlrc") if (params.get("fab") is not None) else None,
+        output_amean=execution.output_file(params.get("amean", None) + ".+tlrc") if (params.get("amean") is not None) else None,
+        output_bmean=execution.output_file(params.get("bmean", None) + ".+tlrc") if (params.get("bmean") is not None) else None,
+        output_xmean=execution.output_file(params.get("xmean", None) + ".+tlrc") if (params.get("xmean") is not None) else None,
+        output_adiff=execution.output_file(params.get("adiff", None) + ".+tlrc") if (params.get("adiff") is not None) else None,
+        output_bdiff=execution.output_file(params.get("bdiff", None) + ".+tlrc") if (params.get("bdiff") is not None) else None,
+        output_xdiff=execution.output_file(params.get("xdiff", None) + ".+tlrc") if (params.get("xdiff") is not None) else None,
+        output_acontr=execution.output_file(params.get("acontr", None) + ".+tlrc") if (params.get("acontr") is not None) else None,
+        output_bcontr=execution.output_file(params.get("bcontr", None) + ".+tlrc") if (params.get("bcontr") is not None) else None,
+        output_xcontr=execution.output_file(params.get("xcontr", None) + ".+tlrc") if (params.get("xcontr") is not None) else None,
+        output_bucket=execution.output_file(params.get("bucket", None) + ".+tlrc") if (params.get("bucket") is not None) else None,
     )
     return ret
 
@@ -514,7 +509,6 @@ def v_3d_anova2(
 
 __all__ = [
     "V3dAnova2Outputs",
-    "V3dAnova2Parameters",
     "V_3D_ANOVA2_METADATA",
     "v_3d_anova2",
     "v_3d_anova2_execute",

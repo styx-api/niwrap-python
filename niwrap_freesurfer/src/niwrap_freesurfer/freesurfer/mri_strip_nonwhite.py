@@ -14,7 +14,14 @@ MRI_STRIP_NONWHITE_METADATA = Metadata(
 
 
 MriStripNonwhiteParameters = typing.TypedDict('MriStripNonwhiteParameters', {
-    "@type": typing.Literal["freesurfer.mri_strip_nonwhite"],
+    "@type": typing.NotRequired[typing.Literal["freesurfer/mri_strip_nonwhite"]],
+    "input_volume": InputPathType,
+    "transform": InputPathType,
+    "template_volume": InputPathType,
+    "output_volume": str,
+})
+MriStripNonwhiteParametersTagged = typing.TypedDict('MriStripNonwhiteParametersTagged', {
+    "@type": typing.Literal["freesurfer/mri_strip_nonwhite"],
     "input_volume": InputPathType,
     "transform": InputPathType,
     "template_volume": InputPathType,
@@ -22,41 +29,9 @@ MriStripNonwhiteParameters = typing.TypedDict('MriStripNonwhiteParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "freesurfer.mri_strip_nonwhite": mri_strip_nonwhite_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "freesurfer.mri_strip_nonwhite": mri_strip_nonwhite_outputs,
-    }.get(t)
-
-
 class MriStripNonwhiteOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `mri_strip_nonwhite(...)`.
+    Output object returned when calling `MriStripNonwhiteParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -69,7 +44,7 @@ def mri_strip_nonwhite_params(
     transform: InputPathType,
     template_volume: InputPathType,
     output_volume: str,
-) -> MriStripNonwhiteParameters:
+) -> MriStripNonwhiteParametersTagged:
     """
     Build parameters.
     
@@ -83,7 +58,7 @@ def mri_strip_nonwhite_params(
         Parameter dictionary
     """
     params = {
-        "@type": "freesurfer.mri_strip_nonwhite",
+        "@type": "freesurfer/mri_strip_nonwhite",
         "input_volume": input_volume,
         "transform": transform,
         "template_volume": template_volume,
@@ -107,10 +82,10 @@ def mri_strip_nonwhite_cargs(
     """
     cargs = []
     cargs.append("mri_strip_nonwhite")
-    cargs.append(execution.input_file(params.get("input_volume")))
-    cargs.append(execution.input_file(params.get("transform")))
-    cargs.append(execution.input_file(params.get("template_volume")))
-    cargs.append(params.get("output_volume"))
+    cargs.append(execution.input_file(params.get("input_volume", None)))
+    cargs.append(execution.input_file(params.get("transform", None)))
+    cargs.append(execution.input_file(params.get("template_volume", None)))
+    cargs.append(params.get("output_volume", None))
     return cargs
 
 
@@ -129,7 +104,7 @@ def mri_strip_nonwhite_outputs(
     """
     ret = MriStripNonwhiteOutputs(
         root=execution.output_file("."),
-        output_file=execution.output_file(params.get("output_volume")),
+        output_file=execution.output_file(params.get("output_volume", None)),
     )
     return ret
 
@@ -202,7 +177,6 @@ def mri_strip_nonwhite(
 __all__ = [
     "MRI_STRIP_NONWHITE_METADATA",
     "MriStripNonwhiteOutputs",
-    "MriStripNonwhiteParameters",
     "mri_strip_nonwhite",
     "mri_strip_nonwhite_execute",
     "mri_strip_nonwhite_params",

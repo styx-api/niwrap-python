@@ -14,46 +14,20 @@ MRI_ADD_NEW_TP_METADATA = Metadata(
 
 
 MriAddNewTpParameters = typing.TypedDict('MriAddNewTpParameters', {
-    "@type": typing.Literal["freesurfer.mri_add_new_tp"],
+    "@type": typing.NotRequired[typing.Literal["freesurfer/mri_add_new_tp"]],
+    "base_id": str,
+    "newtp_id": str,
+})
+MriAddNewTpParametersTagged = typing.TypedDict('MriAddNewTpParametersTagged', {
+    "@type": typing.Literal["freesurfer/mri_add_new_tp"],
     "base_id": str,
     "newtp_id": str,
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "freesurfer.mri_add_new_tp": mri_add_new_tp_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-    }.get(t)
-
-
 class MriAddNewTpOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `mri_add_new_tp(...)`.
+    Output object returned when calling `MriAddNewTpParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -62,7 +36,7 @@ class MriAddNewTpOutputs(typing.NamedTuple):
 def mri_add_new_tp_params(
     base_id: str,
     newtp_id: str,
-) -> MriAddNewTpParameters:
+) -> MriAddNewTpParametersTagged:
     """
     Build parameters.
     
@@ -73,7 +47,7 @@ def mri_add_new_tp_params(
         Parameter dictionary
     """
     params = {
-        "@type": "freesurfer.mri_add_new_tp",
+        "@type": "freesurfer/mri_add_new_tp",
         "base_id": base_id,
         "newtp_id": newtp_id,
     }
@@ -95,8 +69,8 @@ def mri_add_new_tp_cargs(
     """
     cargs = []
     cargs.append("mri_add_new_tp")
-    cargs.append(params.get("base_id"))
-    cargs.append(params.get("newtp_id"))
+    cargs.append(params.get("base_id", None))
+    cargs.append(params.get("newtp_id", None))
     return cargs
 
 
@@ -180,7 +154,6 @@ def mri_add_new_tp(
 __all__ = [
     "MRI_ADD_NEW_TP_METADATA",
     "MriAddNewTpOutputs",
-    "MriAddNewTpParameters",
     "mri_add_new_tp",
     "mri_add_new_tp_execute",
     "mri_add_new_tp_params",

@@ -14,7 +14,16 @@ MULTIPLY_IMAGES_METADATA = Metadata(
 
 
 MultiplyImagesParameters = typing.TypedDict('MultiplyImagesParameters', {
-    "@type": typing.Literal["ants.MultiplyImages"],
+    "@type": typing.NotRequired[typing.Literal["ants/MultiplyImages"]],
+    "dimension": typing.Literal[3, 2],
+    "first_input": InputPathType,
+    "second_input": typing.NotRequired[InputPathType | None],
+    "second_input_2": typing.NotRequired[float | None],
+    "output_product_image": str,
+    "num_threads": typing.NotRequired[int | None],
+})
+MultiplyImagesParametersTagged = typing.TypedDict('MultiplyImagesParametersTagged', {
+    "@type": typing.Literal["ants/MultiplyImages"],
     "dimension": typing.Literal[3, 2],
     "first_input": InputPathType,
     "second_input": typing.NotRequired[InputPathType | None],
@@ -24,41 +33,9 @@ MultiplyImagesParameters = typing.TypedDict('MultiplyImagesParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "ants.MultiplyImages": multiply_images_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "ants.MultiplyImages": multiply_images_outputs,
-    }.get(t)
-
-
 class MultiplyImagesOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `multiply_images(...)`.
+    Output object returned when calling `MultiplyImagesParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -73,7 +50,7 @@ def multiply_images_params(
     second_input: InputPathType | None = None,
     second_input_2: float | None = None,
     num_threads: int | None = None,
-) -> MultiplyImagesParameters:
+) -> MultiplyImagesParametersTagged:
     """
     Build parameters.
     
@@ -91,7 +68,7 @@ def multiply_images_params(
         Parameter dictionary
     """
     params = {
-        "@type": "ants.MultiplyImages",
+        "@type": "ants/MultiplyImages",
         "dimension": dimension,
         "first_input": first_input,
         "output_product_image": output_product_image,
@@ -120,15 +97,15 @@ def multiply_images_cargs(
     """
     cargs = []
     cargs.append("MultiplyImages")
-    cargs.append(str(params.get("dimension")))
-    cargs.append(execution.input_file(params.get("first_input")))
-    if params.get("second_input") is not None:
-        cargs.append(execution.input_file(params.get("second_input")))
-    if params.get("second_input_2") is not None:
-        cargs.append(str(params.get("second_input_2")))
-    cargs.append(params.get("output_product_image"))
-    if params.get("num_threads") is not None:
-        cargs.append(str(params.get("num_threads")))
+    cargs.append(str(params.get("dimension", None)))
+    cargs.append(execution.input_file(params.get("first_input", None)))
+    if params.get("second_input", None) is not None:
+        cargs.append(execution.input_file(params.get("second_input", None)))
+    if params.get("second_input_2", None) is not None:
+        cargs.append(str(params.get("second_input_2", None)))
+    cargs.append(params.get("output_product_image", None))
+    if params.get("num_threads", None) is not None:
+        cargs.append(str(params.get("num_threads", None)))
     return cargs
 
 
@@ -147,7 +124,7 @@ def multiply_images_outputs(
     """
     ret = MultiplyImagesOutputs(
         root=execution.output_file("."),
-        output_product_image_outfile=execution.output_file(params.get("output_product_image")),
+        output_product_image_outfile=execution.output_file(params.get("output_product_image", None)),
     )
     return ret
 
@@ -230,7 +207,6 @@ def multiply_images(
 __all__ = [
     "MULTIPLY_IMAGES_METADATA",
     "MultiplyImagesOutputs",
-    "MultiplyImagesParameters",
     "multiply_images",
     "multiply_images_execute",
     "multiply_images_params",

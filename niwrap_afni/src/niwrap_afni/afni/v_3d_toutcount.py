@@ -14,7 +14,20 @@ V_3D_TOUTCOUNT_METADATA = Metadata(
 
 
 V3dToutcountParameters = typing.TypedDict('V3dToutcountParameters', {
-    "@type": typing.Literal["afni.3dToutcount"],
+    "@type": typing.NotRequired[typing.Literal["afni/3dToutcount"]],
+    "input_dataset": str,
+    "output_prefix": typing.NotRequired[str | None],
+    "mask_dataset": typing.NotRequired[str | None],
+    "q_threshold": typing.NotRequired[float | None],
+    "autoclip": bool,
+    "automask": bool,
+    "fraction": bool,
+    "range": bool,
+    "polort_order": typing.NotRequired[float | None],
+    "legendre": bool,
+})
+V3dToutcountParametersTagged = typing.TypedDict('V3dToutcountParametersTagged', {
+    "@type": typing.Literal["afni/3dToutcount"],
     "input_dataset": str,
     "output_prefix": typing.NotRequired[str | None],
     "mask_dataset": typing.NotRequired[str | None],
@@ -28,41 +41,9 @@ V3dToutcountParameters = typing.TypedDict('V3dToutcountParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "afni.3dToutcount": v_3d_toutcount_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "afni.3dToutcount": v_3d_toutcount_outputs,
-    }.get(t)
-
-
 class V3dToutcountOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `v_3d_toutcount(...)`.
+    Output object returned when calling `V3dToutcountParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -83,7 +64,7 @@ def v_3d_toutcount_params(
     range_: bool = False,
     polort_order: float | None = None,
     legendre: bool = False,
-) -> V3dToutcountParameters:
+) -> V3dToutcountParametersTagged:
     """
     Build parameters.
     
@@ -108,7 +89,7 @@ def v_3d_toutcount_params(
         Parameter dictionary
     """
     params = {
-        "@type": "afni.3dToutcount",
+        "@type": "afni/3dToutcount",
         "input_dataset": input_dataset,
         "autoclip": autoclip,
         "automask": automask,
@@ -142,33 +123,33 @@ def v_3d_toutcount_cargs(
     """
     cargs = []
     cargs.append("3dToutcount")
-    cargs.append(params.get("input_dataset"))
-    if params.get("output_prefix") is not None:
-        cargs.append(params.get("output_prefix"))
-    if params.get("mask_dataset") is not None:
+    cargs.append(params.get("input_dataset", None))
+    if params.get("output_prefix", None) is not None:
+        cargs.append(params.get("output_prefix", None))
+    if params.get("mask_dataset", None) is not None:
         cargs.extend([
             "-mask",
-            params.get("mask_dataset")
+            params.get("mask_dataset", None)
         ])
-    if params.get("q_threshold") is not None:
+    if params.get("q_threshold", None) is not None:
         cargs.extend([
             "-qthr",
-            str(params.get("q_threshold"))
+            str(params.get("q_threshold", None))
         ])
-    if params.get("autoclip"):
+    if params.get("autoclip", False):
         cargs.append("-autoclip")
-    if params.get("automask"):
+    if params.get("automask", False):
         cargs.append("-automask")
-    if params.get("fraction"):
+    if params.get("fraction", False):
         cargs.append("-fraction")
-    if params.get("range"):
+    if params.get("range", False):
         cargs.append("-range")
-    if params.get("polort_order") is not None:
+    if params.get("polort_order", None) is not None:
         cargs.extend([
             "-polort",
-            str(params.get("polort_order"))
+            str(params.get("polort_order", None))
         ])
-    if params.get("legendre"):
+    if params.get("legendre", False):
         cargs.append("-legendre")
     return cargs
 
@@ -188,8 +169,8 @@ def v_3d_toutcount_outputs(
     """
     ret = V3dToutcountOutputs(
         root=execution.output_file("."),
-        output_afni_head=execution.output_file(params.get("output_prefix") + ".HEAD") if (params.get("output_prefix") is not None) else None,
-        output_afni_brik=execution.output_file(params.get("output_prefix") + ".BRIK") if (params.get("output_prefix") is not None) else None,
+        output_afni_head=execution.output_file(params.get("output_prefix", None) + ".HEAD") if (params.get("output_prefix") is not None) else None,
+        output_afni_brik=execution.output_file(params.get("output_prefix", None) + ".BRIK") if (params.get("output_prefix") is not None) else None,
     )
     return ret
 
@@ -282,7 +263,6 @@ def v_3d_toutcount(
 
 __all__ = [
     "V3dToutcountOutputs",
-    "V3dToutcountParameters",
     "V_3D_TOUTCOUNT_METADATA",
     "v_3d_toutcount",
     "v_3d_toutcount_execute",

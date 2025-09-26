@@ -14,26 +14,39 @@ MRFILTER_METADATA = Metadata(
 
 
 MrfilterVariousStringParameters = typing.TypedDict('MrfilterVariousStringParameters', {
-    "@type": typing.Literal["mrtrix.mrfilter.VariousString"],
+    "@type": typing.NotRequired[typing.Literal["VariousString"]],
+    "obj": str,
+})
+MrfilterVariousStringParametersTagged = typing.TypedDict('MrfilterVariousStringParametersTagged', {
+    "@type": typing.Literal["VariousString"],
     "obj": str,
 })
 
 
 MrfilterVariousFileParameters = typing.TypedDict('MrfilterVariousFileParameters', {
-    "@type": typing.Literal["mrtrix.mrfilter.VariousFile"],
+    "@type": typing.NotRequired[typing.Literal["VariousFile"]],
+    "obj": InputPathType,
+})
+MrfilterVariousFileParametersTagged = typing.TypedDict('MrfilterVariousFileParametersTagged', {
+    "@type": typing.Literal["VariousFile"],
     "obj": InputPathType,
 })
 
 
 MrfilterConfigParameters = typing.TypedDict('MrfilterConfigParameters', {
-    "@type": typing.Literal["mrtrix.mrfilter.config"],
+    "@type": typing.NotRequired[typing.Literal["config"]],
+    "key": str,
+    "value": str,
+})
+MrfilterConfigParametersTagged = typing.TypedDict('MrfilterConfigParametersTagged', {
+    "@type": typing.Literal["config"],
     "key": str,
     "value": str,
 })
 
 
 MrfilterParameters = typing.TypedDict('MrfilterParameters', {
-    "@type": typing.Literal["mrtrix.mrfilter"],
+    "@type": typing.NotRequired[typing.Literal["mrtrix/mrfilter"]],
     "axes": typing.NotRequired[list[int] | None],
     "inverse": bool,
     "magnitude": bool,
@@ -51,7 +64,39 @@ MrfilterParameters = typing.TypedDict('MrfilterParameters', {
     "bridge": typing.NotRequired[int | None],
     "maskin": typing.NotRequired[InputPathType | None],
     "maskout": typing.NotRequired[str | None],
-    "strides": typing.NotRequired[typing.Union[MrfilterVariousStringParameters, MrfilterVariousFileParameters] | None],
+    "strides": typing.NotRequired[typing.Union[MrfilterVariousStringParametersTagged, MrfilterVariousFileParametersTagged] | None],
+    "info": bool,
+    "quiet": bool,
+    "debug": bool,
+    "force": bool,
+    "nthreads": typing.NotRequired[int | None],
+    "config": typing.NotRequired[list[MrfilterConfigParameters] | None],
+    "help": bool,
+    "version": bool,
+    "input": InputPathType,
+    "filter": str,
+    "output": str,
+})
+MrfilterParametersTagged = typing.TypedDict('MrfilterParametersTagged', {
+    "@type": typing.Literal["mrtrix/mrfilter"],
+    "axes": typing.NotRequired[list[int] | None],
+    "inverse": bool,
+    "magnitude": bool,
+    "centre_zero": bool,
+    "stdev": typing.NotRequired[list[float] | None],
+    "magnitude_1": bool,
+    "scanner": bool,
+    "extent": typing.NotRequired[list[int] | None],
+    "extent_1": typing.NotRequired[list[int] | None],
+    "stdev_1": typing.NotRequired[list[float] | None],
+    "fwhm": typing.NotRequired[list[float] | None],
+    "extent_2": typing.NotRequired[list[int] | None],
+    "zupper": typing.NotRequired[float | None],
+    "zlower": typing.NotRequired[float | None],
+    "bridge": typing.NotRequired[int | None],
+    "maskin": typing.NotRequired[InputPathType | None],
+    "maskout": typing.NotRequired[str | None],
+    "strides": typing.NotRequired[typing.Union[MrfilterVariousStringParametersTagged, MrfilterVariousFileParametersTagged] | None],
     "info": bool,
     "quiet": bool,
     "debug": bool,
@@ -66,7 +111,7 @@ MrfilterParameters = typing.TypedDict('MrfilterParameters', {
 })
 
 
-def dyn_cargs(
+def mrfilter_strides_cargs_dyn_fn(
     t: str,
 ) -> typing.Any:
     """
@@ -78,14 +123,12 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "mrtrix.mrfilter": mrfilter_cargs,
-        "mrtrix.mrfilter.VariousString": mrfilter_various_string_cargs,
-        "mrtrix.mrfilter.VariousFile": mrfilter_various_file_cargs,
-        "mrtrix.mrfilter.config": mrfilter_config_cargs,
+        "VariousString": mrfilter_various_string_cargs,
+        "VariousFile": mrfilter_various_file_cargs,
     }.get(t)
 
 
-def dyn_outputs(
+def mrfilter_strides_outputs_dyn_fn(
     t: str,
 ) -> typing.Any:
     """
@@ -97,13 +140,12 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "mrtrix.mrfilter": mrfilter_outputs,
     }.get(t)
 
 
 def mrfilter_various_string_params(
     obj: str,
-) -> MrfilterVariousStringParameters:
+) -> MrfilterVariousStringParametersTagged:
     """
     Build parameters.
     
@@ -113,7 +155,7 @@ def mrfilter_various_string_params(
         Parameter dictionary
     """
     params = {
-        "@type": "mrtrix.mrfilter.VariousString",
+        "@type": "VariousString",
         "obj": obj,
     }
     return params
@@ -133,13 +175,13 @@ def mrfilter_various_string_cargs(
         Command-line arguments.
     """
     cargs = []
-    cargs.append(params.get("obj"))
+    cargs.append(params.get("obj", None))
     return cargs
 
 
 def mrfilter_various_file_params(
     obj: InputPathType,
-) -> MrfilterVariousFileParameters:
+) -> MrfilterVariousFileParametersTagged:
     """
     Build parameters.
     
@@ -149,7 +191,7 @@ def mrfilter_various_file_params(
         Parameter dictionary
     """
     params = {
-        "@type": "mrtrix.mrfilter.VariousFile",
+        "@type": "VariousFile",
         "obj": obj,
     }
     return params
@@ -169,14 +211,14 @@ def mrfilter_various_file_cargs(
         Command-line arguments.
     """
     cargs = []
-    cargs.append(execution.input_file(params.get("obj")))
+    cargs.append(execution.input_file(params.get("obj", None)))
     return cargs
 
 
 def mrfilter_config_params(
     key: str,
     value: str,
-) -> MrfilterConfigParameters:
+) -> MrfilterConfigParametersTagged:
     """
     Build parameters.
     
@@ -187,7 +229,7 @@ def mrfilter_config_params(
         Parameter dictionary
     """
     params = {
-        "@type": "mrtrix.mrfilter.config",
+        "@type": "config",
         "key": key,
         "value": value,
     }
@@ -209,14 +251,14 @@ def mrfilter_config_cargs(
     """
     cargs = []
     cargs.append("-config")
-    cargs.append(params.get("key"))
-    cargs.append(params.get("value"))
+    cargs.append(params.get("key", None))
+    cargs.append(params.get("value", None))
     return cargs
 
 
 class MrfilterOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `mrfilter(...)`.
+    Output object returned when calling `MrfilterParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -248,7 +290,7 @@ def mrfilter_params(
     bridge: int | None = None,
     maskin: InputPathType | None = None,
     maskout: str | None = None,
-    strides: typing.Union[MrfilterVariousStringParameters, MrfilterVariousFileParameters] | None = None,
+    strides: typing.Union[MrfilterVariousStringParametersTagged, MrfilterVariousFileParametersTagged] | None = None,
     info: bool = False,
     quiet: bool = False,
     debug: bool = False,
@@ -257,7 +299,7 @@ def mrfilter_params(
     config: list[MrfilterConfigParameters] | None = None,
     help_: bool = False,
     version: bool = False,
-) -> MrfilterParameters:
+) -> MrfilterParametersTagged:
     """
     Build parameters.
     
@@ -329,7 +371,7 @@ def mrfilter_params(
         Parameter dictionary
     """
     params = {
-        "@type": "mrtrix.mrfilter",
+        "@type": "mrtrix/mrfilter",
         "inverse": inverse,
         "magnitude": magnitude,
         "centre_zero": centre_zero,
@@ -393,103 +435,103 @@ def mrfilter_cargs(
     """
     cargs = []
     cargs.append("mrfilter")
-    if params.get("axes") is not None:
+    if params.get("axes", None) is not None:
         cargs.extend([
             "-axes",
-            *map(str, params.get("axes"))
+            *map(str, params.get("axes", None))
         ])
-    if params.get("inverse"):
+    if params.get("inverse", False):
         cargs.append("-inverse")
-    if params.get("magnitude"):
+    if params.get("magnitude", False):
         cargs.append("-magnitude")
-    if params.get("centre_zero"):
+    if params.get("centre_zero", False):
         cargs.append("-centre_zero")
-    if params.get("stdev") is not None:
+    if params.get("stdev", None) is not None:
         cargs.extend([
             "-stdev",
-            ",".join(map(str, params.get("stdev")))
+            ",".join(map(str, params.get("stdev", None)))
         ])
-    if params.get("magnitude_1"):
+    if params.get("magnitude_1", False):
         cargs.append("-magnitude")
-    if params.get("scanner"):
+    if params.get("scanner", False):
         cargs.append("-scanner")
-    if params.get("extent") is not None:
+    if params.get("extent", None) is not None:
         cargs.extend([
             "-extent",
-            ",".join(map(str, params.get("extent")))
+            ",".join(map(str, params.get("extent", None)))
         ])
-    if params.get("extent_1") is not None:
+    if params.get("extent_1", None) is not None:
         cargs.extend([
             "-extent",
-            ",".join(map(str, params.get("extent_1")))
+            ",".join(map(str, params.get("extent_1", None)))
         ])
-    if params.get("stdev_1") is not None:
+    if params.get("stdev_1", None) is not None:
         cargs.extend([
             "-stdev",
-            ",".join(map(str, params.get("stdev_1")))
+            ",".join(map(str, params.get("stdev_1", None)))
         ])
-    if params.get("fwhm") is not None:
+    if params.get("fwhm", None) is not None:
         cargs.extend([
             "-fwhm",
-            ",".join(map(str, params.get("fwhm")))
+            ",".join(map(str, params.get("fwhm", None)))
         ])
-    if params.get("extent_2") is not None:
+    if params.get("extent_2", None) is not None:
         cargs.extend([
             "-extent",
-            ",".join(map(str, params.get("extent_2")))
+            ",".join(map(str, params.get("extent_2", None)))
         ])
-    if params.get("zupper") is not None:
+    if params.get("zupper", None) is not None:
         cargs.extend([
             "-zupper",
-            str(params.get("zupper"))
+            str(params.get("zupper", None))
         ])
-    if params.get("zlower") is not None:
+    if params.get("zlower", None) is not None:
         cargs.extend([
             "-zlower",
-            str(params.get("zlower"))
+            str(params.get("zlower", None))
         ])
-    if params.get("bridge") is not None:
+    if params.get("bridge", None) is not None:
         cargs.extend([
             "-bridge",
-            str(params.get("bridge"))
+            str(params.get("bridge", None))
         ])
-    if params.get("maskin") is not None:
+    if params.get("maskin", None) is not None:
         cargs.extend([
             "-maskin",
-            execution.input_file(params.get("maskin"))
+            execution.input_file(params.get("maskin", None))
         ])
-    if params.get("maskout") is not None:
+    if params.get("maskout", None) is not None:
         cargs.extend([
             "-maskout",
-            params.get("maskout")
+            params.get("maskout", None)
         ])
-    if params.get("strides") is not None:
+    if params.get("strides", None) is not None:
         cargs.extend([
             "-strides",
-            *dyn_cargs(params.get("strides")["@type"])(params.get("strides"), execution)
+            *mrfilter_strides_cargs_dyn_fn(params.get("strides", None)["@type"])(params.get("strides", None), execution)
         ])
-    if params.get("info"):
+    if params.get("info", False):
         cargs.append("-info")
-    if params.get("quiet"):
+    if params.get("quiet", False):
         cargs.append("-quiet")
-    if params.get("debug"):
+    if params.get("debug", False):
         cargs.append("-debug")
-    if params.get("force"):
+    if params.get("force", False):
         cargs.append("-force")
-    if params.get("nthreads") is not None:
+    if params.get("nthreads", None) is not None:
         cargs.extend([
             "-nthreads",
-            str(params.get("nthreads"))
+            str(params.get("nthreads", None))
         ])
-    if params.get("config") is not None:
-        cargs.extend([a for c in [dyn_cargs(s["@type"])(s, execution) for s in params.get("config")] for a in c])
-    if params.get("help"):
+    if params.get("config", None) is not None:
+        cargs.extend([a for c in [mrfilter_config_cargs(s, execution) for s in params.get("config", None)] for a in c])
+    if params.get("help", False):
         cargs.append("-help")
-    if params.get("version"):
+    if params.get("version", False):
         cargs.append("-version")
-    cargs.append(execution.input_file(params.get("input")))
-    cargs.append(params.get("filter"))
-    cargs.append(params.get("output"))
+    cargs.append(execution.input_file(params.get("input", None)))
+    cargs.append(params.get("filter", None))
+    cargs.append(params.get("output", None))
     return cargs
 
 
@@ -508,8 +550,8 @@ def mrfilter_outputs(
     """
     ret = MrfilterOutputs(
         root=execution.output_file("."),
-        output=execution.output_file(params.get("output")),
-        maskout=execution.output_file(params.get("maskout")) if (params.get("maskout") is not None) else None,
+        output=execution.output_file(params.get("output", None)),
+        maskout=execution.output_file(params.get("maskout", None)) if (params.get("maskout") is not None) else None,
     )
     return ret
 
@@ -573,7 +615,7 @@ def mrfilter(
     bridge: int | None = None,
     maskin: InputPathType | None = None,
     maskout: str | None = None,
-    strides: typing.Union[MrfilterVariousStringParameters, MrfilterVariousFileParameters] | None = None,
+    strides: typing.Union[MrfilterVariousStringParametersTagged, MrfilterVariousFileParametersTagged] | None = None,
     info: bool = False,
     quiet: bool = False,
     debug: bool = False,
@@ -707,11 +749,7 @@ def mrfilter(
 
 __all__ = [
     "MRFILTER_METADATA",
-    "MrfilterConfigParameters",
     "MrfilterOutputs",
-    "MrfilterParameters",
-    "MrfilterVariousFileParameters",
-    "MrfilterVariousStringParameters",
     "mrfilter",
     "mrfilter_config_params",
     "mrfilter_execute",

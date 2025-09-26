@@ -14,7 +14,21 @@ TKSURFERFV_METADATA = Metadata(
 
 
 TksurferfvParameters = typing.TypedDict('TksurferfvParameters', {
-    "@type": typing.Literal["freesurfer.tksurferfv"],
+    "@type": typing.NotRequired[typing.Literal["freesurfer/tksurferfv"]],
+    "subject": str,
+    "hemi": str,
+    "surface": str,
+    "tksurfer": bool,
+    "all_surfaces": bool,
+    "vgl": bool,
+    "no_vgl": bool,
+    "no_outline": bool,
+    "neuro_orientation": bool,
+    "rotate_around_cursor": bool,
+    "heat_scale": typing.NotRequired[str | None],
+})
+TksurferfvParametersTagged = typing.TypedDict('TksurferfvParametersTagged', {
+    "@type": typing.Literal["freesurfer/tksurferfv"],
     "subject": str,
     "hemi": str,
     "surface": str,
@@ -29,40 +43,9 @@ TksurferfvParameters = typing.TypedDict('TksurferfvParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "freesurfer.tksurferfv": tksurferfv_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-    }.get(t)
-
-
 class TksurferfvOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `tksurferfv(...)`.
+    Output object returned when calling `TksurferfvParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -80,7 +63,7 @@ def tksurferfv_params(
     neuro_orientation: bool = False,
     rotate_around_cursor: bool = False,
     heat_scale: str | None = None,
-) -> TksurferfvParameters:
+) -> TksurferfvParametersTagged:
     """
     Build parameters.
     
@@ -102,7 +85,7 @@ def tksurferfv_params(
         Parameter dictionary
     """
     params = {
-        "@type": "freesurfer.tksurferfv",
+        "@type": "freesurfer/tksurferfv",
         "subject": subject,
         "hemi": hemi,
         "surface": surface,
@@ -134,25 +117,25 @@ def tksurferfv_cargs(
     """
     cargs = []
     cargs.append("tksurferfv")
-    cargs.append(params.get("subject"))
-    cargs.append(params.get("hemi"))
-    cargs.append(params.get("surface"))
-    if params.get("tksurfer"):
+    cargs.append(params.get("subject", None))
+    cargs.append(params.get("hemi", None))
+    cargs.append(params.get("surface", None))
+    if params.get("tksurfer", False):
         cargs.append("-tksurfer")
-    if params.get("all_surfaces"):
+    if params.get("all_surfaces", False):
         cargs.append("-all")
-    if params.get("vgl"):
+    if params.get("vgl", False):
         cargs.append("-vgl")
-    if params.get("no_vgl"):
+    if params.get("no_vgl", False):
         cargs.append("-no-vgl")
-    if params.get("no_outline"):
+    if params.get("no_outline", False):
         cargs.append("-no-outline")
-    if params.get("neuro_orientation"):
+    if params.get("neuro_orientation", False):
         cargs.append("-neuro")
-    if params.get("rotate_around_cursor"):
+    if params.get("rotate_around_cursor", False):
         cargs.append("-rca")
-    if params.get("heat_scale") is not None:
-        cargs.append(params.get("heat_scale"))
+    if params.get("heat_scale", None) is not None:
+        cargs.append(params.get("heat_scale", None))
     return cargs
 
 
@@ -263,7 +246,6 @@ def tksurferfv(
 __all__ = [
     "TKSURFERFV_METADATA",
     "TksurferfvOutputs",
-    "TksurferfvParameters",
     "tksurferfv",
     "tksurferfv_execute",
     "tksurferfv_params",

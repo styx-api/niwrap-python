@@ -14,7 +14,20 @@ AP_RUN_SIMPLE_REST_TCSH_METADATA = Metadata(
 
 
 ApRunSimpleRestTcshParameters = typing.TypedDict('ApRunSimpleRestTcshParameters', {
-    "@type": typing.Literal["afni.ap_run_simple_rest.tcsh"],
+    "@type": typing.NotRequired[typing.Literal["afni/ap_run_simple_rest.tcsh"]],
+    "anat": typing.NotRequired[InputPathType | None],
+    "epi": list[InputPathType],
+    "nt_rm": typing.NotRequired[float | None],
+    "run_ap": bool,
+    "run_proc": bool,
+    "subjid": typing.NotRequired[str | None],
+    "template": typing.NotRequired[InputPathType | None],
+    "compressor": typing.NotRequired[str | None],
+    "verb": typing.NotRequired[float | None],
+    "echo": bool,
+})
+ApRunSimpleRestTcshParametersTagged = typing.TypedDict('ApRunSimpleRestTcshParametersTagged', {
+    "@type": typing.Literal["afni/ap_run_simple_rest.tcsh"],
     "anat": typing.NotRequired[InputPathType | None],
     "epi": list[InputPathType],
     "nt_rm": typing.NotRequired[float | None],
@@ -28,41 +41,9 @@ ApRunSimpleRestTcshParameters = typing.TypedDict('ApRunSimpleRestTcshParameters'
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "afni.ap_run_simple_rest.tcsh": ap_run_simple_rest_tcsh_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "afni.ap_run_simple_rest.tcsh": ap_run_simple_rest_tcsh_outputs,
-    }.get(t)
-
-
 class ApRunSimpleRestTcshOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `ap_run_simple_rest_tcsh(...)`.
+    Output object returned when calling `ApRunSimpleRestTcshParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -85,7 +66,7 @@ def ap_run_simple_rest_tcsh_params(
     compressor: str | None = None,
     verb: float | None = None,
     echo: bool = False,
-) -> ApRunSimpleRestTcshParameters:
+) -> ApRunSimpleRestTcshParametersTagged:
     """
     Build parameters.
     
@@ -104,7 +85,7 @@ def ap_run_simple_rest_tcsh_params(
         Parameter dictionary
     """
     params = {
-        "@type": "afni.ap_run_simple_rest.tcsh",
+        "@type": "afni/ap_run_simple_rest.tcsh",
         "epi": epi,
         "run_ap": run_ap,
         "run_proc": run_proc,
@@ -140,45 +121,45 @@ def ap_run_simple_rest_tcsh_cargs(
     """
     cargs = []
     cargs.append("ap_run_simple_rest.tcsh")
-    if params.get("anat") is not None:
+    if params.get("anat", None) is not None:
         cargs.extend([
             "-anat",
-            execution.input_file(params.get("anat"))
+            execution.input_file(params.get("anat", None))
         ])
     cargs.extend([
         "-epi",
-        *[execution.input_file(f) for f in params.get("epi")]
+        *[execution.input_file(f) for f in params.get("epi", None)]
     ])
-    if params.get("nt_rm") is not None:
+    if params.get("nt_rm", None) is not None:
         cargs.extend([
             "-nt_rm",
-            str(params.get("nt_rm"))
+            str(params.get("nt_rm", None))
         ])
-    if params.get("run_ap"):
+    if params.get("run_ap", False):
         cargs.append("-run_ap")
-    if params.get("run_proc"):
+    if params.get("run_proc", False):
         cargs.append("-run_proc")
-    if params.get("subjid") is not None:
+    if params.get("subjid", None) is not None:
         cargs.extend([
             "-subjid",
-            params.get("subjid")
+            params.get("subjid", None)
         ])
-    if params.get("template") is not None:
+    if params.get("template", None) is not None:
         cargs.extend([
             "-template",
-            execution.input_file(params.get("template"))
+            execution.input_file(params.get("template", None))
         ])
-    if params.get("compressor") is not None:
+    if params.get("compressor", None) is not None:
         cargs.extend([
             "-compressor",
-            params.get("compressor")
+            params.get("compressor", None)
         ])
-    if params.get("verb") is not None:
+    if params.get("verb", None) is not None:
         cargs.extend([
             "-verb",
-            str(params.get("verb"))
+            str(params.get("verb", None))
         ])
-    if params.get("echo"):
+    if params.get("echo", False):
         cargs.append("-echo")
     return cargs
 
@@ -198,9 +179,9 @@ def ap_run_simple_rest_tcsh_outputs(
     """
     ret = ApRunSimpleRestTcshOutputs(
         root=execution.output_file("."),
-        run_ap_script=execution.output_file("run_ap_" + params.get("subjid")) if (params.get("subjid") is not None) else None,
-        proc_script=execution.output_file("proc." + params.get("subjid")) if (params.get("subjid") is not None) else None,
-        proc_results_dir=execution.output_file(params.get("subjid") + ".results") if (params.get("subjid") is not None) else None,
+        run_ap_script=execution.output_file("run_ap_" + params.get("subjid", None)) if (params.get("subjid") is not None) else None,
+        proc_script=execution.output_file("proc." + params.get("subjid", None)) if (params.get("subjid") is not None) else None,
+        proc_results_dir=execution.output_file(params.get("subjid", None) + ".results") if (params.get("subjid") is not None) else None,
     )
     return ret
 
@@ -288,7 +269,6 @@ def ap_run_simple_rest_tcsh(
 __all__ = [
     "AP_RUN_SIMPLE_REST_TCSH_METADATA",
     "ApRunSimpleRestTcshOutputs",
-    "ApRunSimpleRestTcshParameters",
     "ap_run_simple_rest_tcsh",
     "ap_run_simple_rest_tcsh_execute",
     "ap_run_simple_rest_tcsh_params",

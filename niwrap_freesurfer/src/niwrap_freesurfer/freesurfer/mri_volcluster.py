@@ -14,7 +14,58 @@ MRI_VOLCLUSTER_METADATA = Metadata(
 
 
 MriVolclusterParameters = typing.TypedDict('MriVolclusterParameters', {
-    "@type": typing.Literal["freesurfer.mri_volcluster"],
+    "@type": typing.NotRequired[typing.Literal["freesurfer/mri_volcluster"]],
+    "input_file": InputPathType,
+    "summary_file": typing.NotRequired[str | None],
+    "output_volid": typing.NotRequired[str | None],
+    "output_cluster_num_volid": typing.NotRequired[str | None],
+    "cwsig_volid": typing.NotRequired[str | None],
+    "pointset_file": typing.NotRequired[str | None],
+    "min_threshold": typing.NotRequired[float | None],
+    "max_threshold": typing.NotRequired[float | None],
+    "sign": typing.NotRequired[str | None],
+    "no_adjust_flag": bool,
+    "match_value": typing.NotRequired[float | None],
+    "cwpval_threshold": typing.NotRequired[float | None],
+    "registration_file": typing.NotRequired[InputPathType | None],
+    "mni152reg_flag": bool,
+    "regheader_subject": typing.NotRequired[str | None],
+    "fsaverage_flag": bool,
+    "frame_number": typing.NotRequired[float | None],
+    "csd_files": typing.NotRequired[list[InputPathType] | None],
+    "cwsig_map": typing.NotRequired[str | None],
+    "vwsig_map": typing.NotRequired[str | None],
+    "max_cwpval_file": typing.NotRequired[str | None],
+    "csdpdf_file": typing.NotRequired[str | None],
+    "csdpdf_only_flag": bool,
+    "fwhm_value": typing.NotRequired[float | None],
+    "fwhm_file": typing.NotRequired[InputPathType | None],
+    "min_size": typing.NotRequired[float | None],
+    "min_size_vox": typing.NotRequired[float | None],
+    "min_distance": typing.NotRequired[float | None],
+    "allow_diag_flag": bool,
+    "bonferroni_number": typing.NotRequired[float | None],
+    "bonferroni_max_number": typing.NotRequired[float | None],
+    "sig2p_max_flag": bool,
+    "gte_flag": bool,
+    "mask_volid": typing.NotRequired[InputPathType | None],
+    "mask_type": typing.NotRequired[str | None],
+    "mask_frame": typing.NotRequired[float | None],
+    "mask_threshold": typing.NotRequired[float | None],
+    "mask_sign": typing.NotRequired[str | None],
+    "mask_invert_flag": bool,
+    "out_mask_volid": typing.NotRequired[str | None],
+    "out_mask_type": typing.NotRequired[str | None],
+    "label_file": typing.NotRequired[str | None],
+    "nlabel_cluster": typing.NotRequired[float | None],
+    "label_base": typing.NotRequired[str | None],
+    "synth_func": typing.NotRequired[str | None],
+    "diagnostic_level": typing.NotRequired[float | None],
+    "fill_params": typing.NotRequired[str | None],
+    "help_flag": bool,
+})
+MriVolclusterParametersTagged = typing.TypedDict('MriVolclusterParametersTagged', {
+    "@type": typing.Literal["freesurfer/mri_volcluster"],
     "input_file": InputPathType,
     "summary_file": typing.NotRequired[str | None],
     "output_volid": typing.NotRequired[str | None],
@@ -66,41 +117,9 @@ MriVolclusterParameters = typing.TypedDict('MriVolclusterParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "freesurfer.mri_volcluster": mri_volcluster_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "freesurfer.mri_volcluster": mri_volcluster_outputs,
-    }.get(t)
-
-
 class MriVolclusterOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `mri_volcluster(...)`.
+    Output object returned when calling `MriVolclusterParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -163,7 +182,7 @@ def mri_volcluster_params(
     diagnostic_level: float | None = None,
     fill_params: str | None = None,
     help_flag: bool = False,
-) -> MriVolclusterParameters:
+) -> MriVolclusterParametersTagged:
     """
     Build parameters.
     
@@ -221,7 +240,7 @@ def mri_volcluster_params(
         Parameter dictionary
     """
     params = {
-        "@type": "freesurfer.mri_volcluster",
+        "@type": "freesurfer/mri_volcluster",
         "input_file": input_file,
         "no_adjust_flag": no_adjust_flag,
         "mni152reg_flag": mni152reg_flag,
@@ -329,215 +348,215 @@ def mri_volcluster_cargs(
     cargs.append("mri_volcluster")
     cargs.extend([
         "--in",
-        execution.input_file(params.get("input_file"))
+        execution.input_file(params.get("input_file", None))
     ])
-    if params.get("summary_file") is not None:
+    if params.get("summary_file", None) is not None:
         cargs.extend([
             "--sum",
-            params.get("summary_file")
+            params.get("summary_file", None)
         ])
-    if params.get("output_volid") is not None:
+    if params.get("output_volid", None) is not None:
         cargs.extend([
             "--out",
-            params.get("output_volid")
+            params.get("output_volid", None)
         ])
-    if params.get("output_cluster_num_volid") is not None:
+    if params.get("output_cluster_num_volid", None) is not None:
         cargs.extend([
             "--ocn",
-            params.get("output_cluster_num_volid")
+            params.get("output_cluster_num_volid", None)
         ])
-    if params.get("cwsig_volid") is not None:
+    if params.get("cwsig_volid", None) is not None:
         cargs.extend([
             "--cwsig",
-            params.get("cwsig_volid")
+            params.get("cwsig_volid", None)
         ])
-    if params.get("pointset_file") is not None:
+    if params.get("pointset_file", None) is not None:
         cargs.extend([
             "--pointset",
-            params.get("pointset_file")
+            params.get("pointset_file", None)
         ])
-    if params.get("min_threshold") is not None:
+    if params.get("min_threshold", None) is not None:
         cargs.extend([
             "--thmin",
-            str(params.get("min_threshold"))
+            str(params.get("min_threshold", None))
         ])
-    if params.get("max_threshold") is not None:
+    if params.get("max_threshold", None) is not None:
         cargs.extend([
             "--thmax",
-            str(params.get("max_threshold"))
+            str(params.get("max_threshold", None))
         ])
-    if params.get("sign") is not None:
+    if params.get("sign", None) is not None:
         cargs.extend([
             "--sign",
-            params.get("sign")
+            params.get("sign", None)
         ])
-    if params.get("no_adjust_flag"):
+    if params.get("no_adjust_flag", False):
         cargs.append("--no-adjust")
-    if params.get("match_value") is not None:
+    if params.get("match_value", None) is not None:
         cargs.extend([
             "--match",
-            str(params.get("match_value"))
+            str(params.get("match_value", None))
         ])
-    if params.get("cwpval_threshold") is not None:
+    if params.get("cwpval_threshold", None) is not None:
         cargs.extend([
             "--cwpvalthresh",
-            str(params.get("cwpval_threshold"))
+            str(params.get("cwpval_threshold", None))
         ])
-    if params.get("registration_file") is not None:
+    if params.get("registration_file", None) is not None:
         cargs.extend([
             "--reg",
-            execution.input_file(params.get("registration_file"))
+            execution.input_file(params.get("registration_file", None))
         ])
-    if params.get("mni152reg_flag"):
+    if params.get("mni152reg_flag", False):
         cargs.append("--mni152reg")
-    if params.get("regheader_subject") is not None:
+    if params.get("regheader_subject", None) is not None:
         cargs.extend([
             "--regheader",
-            params.get("regheader_subject")
+            params.get("regheader_subject", None)
         ])
-    if params.get("fsaverage_flag"):
+    if params.get("fsaverage_flag", False):
         cargs.append("--fsaverage")
-    if params.get("frame_number") is not None:
+    if params.get("frame_number", None) is not None:
         cargs.extend([
             "--frame",
-            str(params.get("frame_number"))
+            str(params.get("frame_number", None))
         ])
-    if params.get("csd_files") is not None:
+    if params.get("csd_files", None) is not None:
         cargs.extend([
             "--csd",
-            *[execution.input_file(f) for f in params.get("csd_files")]
+            *[execution.input_file(f) for f in params.get("csd_files", None)]
         ])
-    if params.get("cwsig_map") is not None:
+    if params.get("cwsig_map", None) is not None:
         cargs.extend([
             "--cwsig",
-            params.get("cwsig_map")
+            params.get("cwsig_map", None)
         ])
-    if params.get("vwsig_map") is not None:
+    if params.get("vwsig_map", None) is not None:
         cargs.extend([
             "--vwsig",
-            params.get("vwsig_map")
+            params.get("vwsig_map", None)
         ])
-    if params.get("max_cwpval_file") is not None:
+    if params.get("max_cwpval_file", None) is not None:
         cargs.extend([
             "--maxcwpval",
-            params.get("max_cwpval_file")
+            params.get("max_cwpval_file", None)
         ])
-    if params.get("csdpdf_file") is not None:
+    if params.get("csdpdf_file", None) is not None:
         cargs.extend([
             "--csdpdf",
-            params.get("csdpdf_file")
+            params.get("csdpdf_file", None)
         ])
-    if params.get("csdpdf_only_flag"):
+    if params.get("csdpdf_only_flag", False):
         cargs.append("--csdpdf-only")
-    if params.get("fwhm_value") is not None:
+    if params.get("fwhm_value", None) is not None:
         cargs.extend([
             "--fwhm",
-            str(params.get("fwhm_value"))
+            str(params.get("fwhm_value", None))
         ])
-    if params.get("fwhm_file") is not None:
+    if params.get("fwhm_file", None) is not None:
         cargs.extend([
             "--fwhmdat",
-            execution.input_file(params.get("fwhm_file"))
+            execution.input_file(params.get("fwhm_file", None))
         ])
-    if params.get("min_size") is not None:
+    if params.get("min_size", None) is not None:
         cargs.extend([
             "--minsize",
-            str(params.get("min_size"))
+            str(params.get("min_size", None))
         ])
-    if params.get("min_size_vox") is not None:
+    if params.get("min_size_vox", None) is not None:
         cargs.extend([
             "--minsizevox",
-            str(params.get("min_size_vox"))
+            str(params.get("min_size_vox", None))
         ])
-    if params.get("min_distance") is not None:
+    if params.get("min_distance", None) is not None:
         cargs.extend([
             "--mindist",
-            str(params.get("min_distance"))
+            str(params.get("min_distance", None))
         ])
-    if params.get("allow_diag_flag"):
+    if params.get("allow_diag_flag", False):
         cargs.append("--allowdiag")
-    if params.get("bonferroni_number") is not None:
+    if params.get("bonferroni_number", None) is not None:
         cargs.extend([
             "--bonferroni",
-            str(params.get("bonferroni_number"))
+            str(params.get("bonferroni_number", None))
         ])
-    if params.get("bonferroni_max_number") is not None:
+    if params.get("bonferroni_max_number", None) is not None:
         cargs.extend([
             "--bonferroni-max",
-            str(params.get("bonferroni_max_number"))
+            str(params.get("bonferroni_max_number", None))
         ])
-    if params.get("sig2p_max_flag"):
+    if params.get("sig2p_max_flag", False):
         cargs.append("--sig2p-max")
-    if params.get("gte_flag"):
+    if params.get("gte_flag", False):
         cargs.append("--gte")
-    if params.get("mask_volid") is not None:
+    if params.get("mask_volid", None) is not None:
         cargs.extend([
             "--mask",
-            execution.input_file(params.get("mask_volid"))
+            execution.input_file(params.get("mask_volid", None))
         ])
-    if params.get("mask_type") is not None:
+    if params.get("mask_type", None) is not None:
         cargs.extend([
             "--mask_type",
-            params.get("mask_type")
+            params.get("mask_type", None)
         ])
-    if params.get("mask_frame") is not None:
+    if params.get("mask_frame", None) is not None:
         cargs.extend([
             "--maskframe",
-            str(params.get("mask_frame"))
+            str(params.get("mask_frame", None))
         ])
-    if params.get("mask_threshold") is not None:
+    if params.get("mask_threshold", None) is not None:
         cargs.extend([
             "--maskthresh",
-            str(params.get("mask_threshold"))
+            str(params.get("mask_threshold", None))
         ])
-    if params.get("mask_sign") is not None:
+    if params.get("mask_sign", None) is not None:
         cargs.extend([
             "--masksign",
-            params.get("mask_sign")
+            params.get("mask_sign", None)
         ])
-    if params.get("mask_invert_flag"):
+    if params.get("mask_invert_flag", False):
         cargs.append("--maskinvert")
-    if params.get("out_mask_volid") is not None:
+    if params.get("out_mask_volid", None) is not None:
         cargs.extend([
             "--outmask",
-            params.get("out_mask_volid")
+            params.get("out_mask_volid", None)
         ])
-    if params.get("out_mask_type") is not None:
+    if params.get("out_mask_type", None) is not None:
         cargs.extend([
             "--outmask_type",
-            params.get("out_mask_type")
+            params.get("out_mask_type", None)
         ])
-    if params.get("label_file") is not None:
+    if params.get("label_file", None) is not None:
         cargs.extend([
             "--label",
-            params.get("label_file")
+            params.get("label_file", None)
         ])
-    if params.get("nlabel_cluster") is not None:
+    if params.get("nlabel_cluster", None) is not None:
         cargs.extend([
             "--nlabelcluster",
-            str(params.get("nlabel_cluster"))
+            str(params.get("nlabel_cluster", None))
         ])
-    if params.get("label_base") is not None:
+    if params.get("label_base", None) is not None:
         cargs.extend([
             "--labelbase",
-            params.get("label_base")
+            params.get("label_base", None)
         ])
-    if params.get("synth_func") is not None:
+    if params.get("synth_func", None) is not None:
         cargs.extend([
             "--synth",
-            params.get("synth_func")
+            params.get("synth_func", None)
         ])
-    if params.get("diagnostic_level") is not None:
+    if params.get("diagnostic_level", None) is not None:
         cargs.extend([
             "--diag",
-            str(params.get("diagnostic_level"))
+            str(params.get("diagnostic_level", None))
         ])
-    if params.get("fill_params") is not None:
+    if params.get("fill_params", None) is not None:
         cargs.extend([
             "--fill",
-            params.get("fill_params")
+            params.get("fill_params", None)
         ])
-    if params.get("help_flag"):
+    if params.get("help_flag", False):
         cargs.append("--help")
     return cargs
 
@@ -557,10 +576,10 @@ def mri_volcluster_outputs(
     """
     ret = MriVolclusterOutputs(
         root=execution.output_file("."),
-        output_volume=execution.output_file(params.get("output_volid")) if (params.get("output_volid") is not None) else None,
-        output_cluster_number_volume=execution.output_file(params.get("output_cluster_num_volid")) if (params.get("output_cluster_num_volid") is not None) else None,
-        output_binary_mask=execution.output_file(params.get("out_mask_volid")) if (params.get("out_mask_volid") is not None) else None,
-        output_label_file=execution.output_file(params.get("label_file")) if (params.get("label_file") is not None) else None,
+        output_volume=execution.output_file(params.get("output_volid", None)) if (params.get("output_volid") is not None) else None,
+        output_cluster_number_volume=execution.output_file(params.get("output_cluster_num_volid", None)) if (params.get("output_cluster_num_volid") is not None) else None,
+        output_binary_mask=execution.output_file(params.get("out_mask_volid", None)) if (params.get("out_mask_volid") is not None) else None,
+        output_label_file=execution.output_file(params.get("label_file", None)) if (params.get("label_file") is not None) else None,
     )
     return ret
 
@@ -763,7 +782,6 @@ def mri_volcluster(
 __all__ = [
     "MRI_VOLCLUSTER_METADATA",
     "MriVolclusterOutputs",
-    "MriVolclusterParameters",
     "mri_volcluster",
     "mri_volcluster_execute",
     "mri_volcluster_params",

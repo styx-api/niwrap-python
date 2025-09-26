@@ -14,45 +14,18 @@ SURFACE_INFORMATION_METADATA = Metadata(
 
 
 SurfaceInformationParameters = typing.TypedDict('SurfaceInformationParameters', {
-    "@type": typing.Literal["workbench.surface-information"],
+    "@type": typing.NotRequired[typing.Literal["workbench/surface-information"]],
+    "surface_file": InputPathType,
+})
+SurfaceInformationParametersTagged = typing.TypedDict('SurfaceInformationParametersTagged', {
+    "@type": typing.Literal["workbench/surface-information"],
     "surface_file": InputPathType,
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "workbench.surface-information": surface_information_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-    }.get(t)
-
-
 class SurfaceInformationOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `surface_information(...)`.
+    Output object returned when calling `SurfaceInformationParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -60,7 +33,7 @@ class SurfaceInformationOutputs(typing.NamedTuple):
 
 def surface_information_params(
     surface_file: InputPathType,
-) -> SurfaceInformationParameters:
+) -> SurfaceInformationParametersTagged:
     """
     Build parameters.
     
@@ -70,7 +43,7 @@ def surface_information_params(
         Parameter dictionary
     """
     params = {
-        "@type": "workbench.surface-information",
+        "@type": "workbench/surface-information",
         "surface_file": surface_file,
     }
     return params
@@ -92,7 +65,7 @@ def surface_information_cargs(
     cargs = []
     cargs.append("wb_command")
     cargs.append("-surface-information")
-    cargs.append(execution.input_file(params.get("surface_file")))
+    cargs.append(execution.input_file(params.get("surface_file", None)))
     return cargs
 
 
@@ -177,7 +150,6 @@ def surface_information(
 __all__ = [
     "SURFACE_INFORMATION_METADATA",
     "SurfaceInformationOutputs",
-    "SurfaceInformationParameters",
     "surface_information",
     "surface_information_execute",
     "surface_information_params",

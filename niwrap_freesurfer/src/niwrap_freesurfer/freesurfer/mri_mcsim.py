@@ -14,7 +14,33 @@ MRI_MCSIM_METADATA = Metadata(
 
 
 MriMcsimParameters = typing.TypedDict('MriMcsimParameters', {
-    "@type": typing.Literal["freesurfer.mri_mcsim"],
+    "@type": typing.NotRequired[typing.Literal["freesurfer/mri_mcsim"]],
+    "top_output_dir": str,
+    "base_name": str,
+    "surface": list[str],
+    "num_repetitions": float,
+    "fwhm_values": typing.NotRequired[list[float] | None],
+    "fwhm_max": typing.NotRequired[float | None],
+    "avg_vertex_area": bool,
+    "random_seed": typing.NotRequired[float | None],
+    "label_file": typing.NotRequired[InputPathType | None],
+    "mask_file": typing.NotRequired[InputPathType | None],
+    "no_label": bool,
+    "no_save_mask": bool,
+    "surface_name": typing.NotRequired[str | None],
+    "log_file": typing.NotRequired[str | None],
+    "done_file": typing.NotRequired[str | None],
+    "stop_file": typing.NotRequired[str | None],
+    "save_file": typing.NotRequired[str | None],
+    "save_iter": bool,
+    "subjects_dir": typing.NotRequired[str | None],
+    "debug": bool,
+    "check_opts": bool,
+    "help": bool,
+    "version": bool,
+})
+MriMcsimParametersTagged = typing.TypedDict('MriMcsimParametersTagged', {
+    "@type": typing.Literal["freesurfer/mri_mcsim"],
     "top_output_dir": str,
     "base_name": str,
     "surface": list[str],
@@ -41,41 +67,9 @@ MriMcsimParameters = typing.TypedDict('MriMcsimParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "freesurfer.mri_mcsim": mri_mcsim_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "freesurfer.mri_mcsim": mri_mcsim_outputs,
-    }.get(t)
-
-
 class MriMcsimOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `mri_mcsim(...)`.
+    Output object returned when calling `MriMcsimParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -113,7 +107,7 @@ def mri_mcsim_params(
     check_opts: bool = False,
     help_: bool = False,
     version: bool = False,
-) -> MriMcsimParameters:
+) -> MriMcsimParametersTagged:
     """
     Build parameters.
     
@@ -146,7 +140,7 @@ def mri_mcsim_params(
         Parameter dictionary
     """
     params = {
-        "@type": "freesurfer.mri_mcsim",
+        "@type": "freesurfer/mri_mcsim",
         "top_output_dir": top_output_dir,
         "base_name": base_name,
         "surface": surface,
@@ -202,90 +196,90 @@ def mri_mcsim_cargs(
     cargs.append("mri_mcsim")
     cargs.extend([
         "--o",
-        params.get("top_output_dir")
+        params.get("top_output_dir", None)
     ])
     cargs.extend([
         "--base",
-        params.get("base_name")
+        params.get("base_name", None)
     ])
     cargs.extend([
         "--surface",
-        *params.get("surface")
+        *params.get("surface", None)
     ])
     cargs.extend([
         "--nreps",
-        str(params.get("num_repetitions"))
+        str(params.get("num_repetitions", None))
     ])
-    if params.get("fwhm_values") is not None:
+    if params.get("fwhm_values", None) is not None:
         cargs.extend([
             "--fwhm",
-            *map(str, params.get("fwhm_values"))
+            *map(str, params.get("fwhm_values", None))
         ])
-    if params.get("fwhm_max") is not None:
+    if params.get("fwhm_max", None) is not None:
         cargs.extend([
             "--fwhm-max",
-            str(params.get("fwhm_max"))
+            str(params.get("fwhm_max", None))
         ])
-    if params.get("avg_vertex_area"):
+    if params.get("avg_vertex_area", False):
         cargs.append("--avgvtxarea")
-    if params.get("random_seed") is not None:
+    if params.get("random_seed", None) is not None:
         cargs.extend([
             "--seed",
-            str(params.get("random_seed"))
+            str(params.get("random_seed", None))
         ])
-    if params.get("label_file") is not None:
+    if params.get("label_file", None) is not None:
         cargs.extend([
             "--label",
-            execution.input_file(params.get("label_file"))
+            execution.input_file(params.get("label_file", None))
         ])
-    if params.get("mask_file") is not None:
+    if params.get("mask_file", None) is not None:
         cargs.extend([
             "--mask",
-            execution.input_file(params.get("mask_file"))
+            execution.input_file(params.get("mask_file", None))
         ])
-    if params.get("no_label"):
+    if params.get("no_label", False):
         cargs.append("--no-label")
-    if params.get("no_save_mask"):
+    if params.get("no_save_mask", False):
         cargs.append("--no-save-mask")
-    if params.get("surface_name") is not None:
+    if params.get("surface_name", None) is not None:
         cargs.extend([
             "--surfname",
-            params.get("surface_name")
+            params.get("surface_name", None)
         ])
-    if params.get("log_file") is not None:
+    if params.get("log_file", None) is not None:
         cargs.extend([
             "--log",
-            params.get("log_file")
+            params.get("log_file", None)
         ])
-    if params.get("done_file") is not None:
+    if params.get("done_file", None) is not None:
         cargs.extend([
             "--done",
-            params.get("done_file")
+            params.get("done_file", None)
         ])
-    if params.get("stop_file") is not None:
+    if params.get("stop_file", None) is not None:
         cargs.extend([
             "--stop",
-            params.get("stop_file")
+            params.get("stop_file", None)
         ])
-    if params.get("save_file") is not None:
+    if params.get("save_file", None) is not None:
         cargs.extend([
             "--save",
-            params.get("save_file")
+            params.get("save_file", None)
         ])
-    if params.get("save_iter"):
+    if params.get("save_iter", False):
         cargs.append("--save-iter")
-    if params.get("subjects_dir") is not None:
+    if params.get("subjects_dir", None) is not None:
         cargs.extend([
             "--sd",
-            params.get("subjects_dir")
+            params.get("subjects_dir", None)
         ])
-    if params.get("debug"):
+    if params.get("debug", False):
         cargs.append("--debug")
-    if params.get("check_opts"):
+    if params.get("check_opts", False):
         cargs.append("--checkopts")
-    if params.get("help"):
+    if params.get("help", False):
         cargs.append("--help")
-    if params.get("version"):
+    if params.get("version", False):
         cargs.append("--version")
     return cargs
 
@@ -305,10 +299,10 @@ def mri_mcsim_outputs(
     """
     ret = MriMcsimOutputs(
         root=execution.output_file("."),
-        csd_output=execution.output_file(params.get("top_output_dir") + "/" + params.get("base_name") + ".csd"),
-        done_output=execution.output_file(params.get("top_output_dir") + "/done/" + params.get("done_file")) if (params.get("done_file") is not None) else None,
-        iteration_save=execution.output_file(params.get("top_output_dir") + "/" + params.get("save_file")) if (params.get("save_file") is not None) else None,
-        log_output=execution.output_file(params.get("top_output_dir") + "/log/" + params.get("log_file")) if (params.get("log_file") is not None) else None,
+        csd_output=execution.output_file(params.get("top_output_dir", None) + "/" + params.get("base_name", None) + ".csd"),
+        done_output=execution.output_file(params.get("top_output_dir", None) + "/done/" + params.get("done_file", None)) if (params.get("done_file") is not None) else None,
+        iteration_save=execution.output_file(params.get("top_output_dir", None) + "/" + params.get("save_file", None)) if (params.get("save_file") is not None) else None,
+        log_output=execution.output_file(params.get("top_output_dir", None) + "/log/" + params.get("log_file", None)) if (params.get("log_file") is not None) else None,
     )
     return ret
 
@@ -436,7 +430,6 @@ def mri_mcsim(
 __all__ = [
     "MRI_MCSIM_METADATA",
     "MriMcsimOutputs",
-    "MriMcsimParameters",
     "mri_mcsim",
     "mri_mcsim_execute",
     "mri_mcsim_params",

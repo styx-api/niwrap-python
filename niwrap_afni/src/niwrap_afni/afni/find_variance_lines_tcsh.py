@@ -14,7 +14,25 @@ FIND_VARIANCE_LINES_TCSH_METADATA = Metadata(
 
 
 FindVarianceLinesTcshParameters = typing.TypedDict('FindVarianceLinesTcshParameters', {
-    "@type": typing.Literal["afni.find_variance_lines.tcsh"],
+    "@type": typing.NotRequired[typing.Literal["afni/find_variance_lines.tcsh"]],
+    "input_files": list[InputPathType],
+    "mask": typing.NotRequired[str | None],
+    "min_cvox": typing.NotRequired[int | None],
+    "min_nt": typing.NotRequired[int | None],
+    "nerode": typing.NotRequired[int | None],
+    "nfirst": typing.NotRequired[int | None],
+    "percentile": typing.NotRequired[int | None],
+    "polort": typing.NotRequired[str | None],
+    "output_dir": typing.NotRequired[str | None],
+    "do_clean": typing.NotRequired[int | None],
+    "do_img": typing.NotRequired[int | None],
+    "echo": bool,
+    "help": bool,
+    "hist": bool,
+    "ver": bool,
+})
+FindVarianceLinesTcshParametersTagged = typing.TypedDict('FindVarianceLinesTcshParametersTagged', {
+    "@type": typing.Literal["afni/find_variance_lines.tcsh"],
     "input_files": list[InputPathType],
     "mask": typing.NotRequired[str | None],
     "min_cvox": typing.NotRequired[int | None],
@@ -33,41 +51,9 @@ FindVarianceLinesTcshParameters = typing.TypedDict('FindVarianceLinesTcshParamet
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "afni.find_variance_lines.tcsh": find_variance_lines_tcsh_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "afni.find_variance_lines.tcsh": find_variance_lines_tcsh_outputs,
-    }.get(t)
-
-
 class FindVarianceLinesTcshOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `find_variance_lines_tcsh(...)`.
+    Output object returned when calling `FindVarianceLinesTcshParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -91,7 +77,7 @@ def find_variance_lines_tcsh_params(
     help_: bool = False,
     hist: bool = False,
     ver: bool = False,
-) -> FindVarianceLinesTcshParameters:
+) -> FindVarianceLinesTcshParametersTagged:
     """
     Build parameters.
     
@@ -115,7 +101,7 @@ def find_variance_lines_tcsh_params(
         Parameter dictionary
     """
     params = {
-        "@type": "afni.find_variance_lines.tcsh",
+        "@type": "afni/find_variance_lines.tcsh",
         "input_files": input_files,
         "echo": echo,
         "help": help_,
@@ -160,64 +146,64 @@ def find_variance_lines_tcsh_cargs(
     """
     cargs = []
     cargs.append("find_variance_lines.tcsh")
-    cargs.extend([execution.input_file(f) for f in params.get("input_files")])
-    if params.get("mask") is not None:
+    cargs.extend([execution.input_file(f) for f in params.get("input_files", None)])
+    if params.get("mask", None) is not None:
         cargs.extend([
             "-mask",
-            params.get("mask")
+            params.get("mask", None)
         ])
-    if params.get("min_cvox") is not None:
+    if params.get("min_cvox", None) is not None:
         cargs.extend([
             "-min_cvox",
-            str(params.get("min_cvox"))
+            str(params.get("min_cvox", None))
         ])
-    if params.get("min_nt") is not None:
+    if params.get("min_nt", None) is not None:
         cargs.extend([
             "-min_nt",
-            str(params.get("min_nt"))
+            str(params.get("min_nt", None))
         ])
-    if params.get("nerode") is not None:
+    if params.get("nerode", None) is not None:
         cargs.extend([
             "-nerode",
-            str(params.get("nerode"))
+            str(params.get("nerode", None))
         ])
-    if params.get("nfirst") is not None:
+    if params.get("nfirst", None) is not None:
         cargs.extend([
             "-nfirst",
-            str(params.get("nfirst"))
+            str(params.get("nfirst", None))
         ])
-    if params.get("percentile") is not None:
+    if params.get("percentile", None) is not None:
         cargs.extend([
             "-perc",
-            str(params.get("percentile"))
+            str(params.get("percentile", None))
         ])
-    if params.get("polort") is not None:
+    if params.get("polort", None) is not None:
         cargs.extend([
             "-polort",
-            params.get("polort")
+            params.get("polort", None)
         ])
-    if params.get("output_dir") is not None:
+    if params.get("output_dir", None) is not None:
         cargs.extend([
             "-rdir",
-            params.get("output_dir")
+            params.get("output_dir", None)
         ])
-    if params.get("do_clean") is not None:
+    if params.get("do_clean", None) is not None:
         cargs.extend([
             "-do_clean",
-            str(params.get("do_clean"))
+            str(params.get("do_clean", None))
         ])
-    if params.get("do_img") is not None:
+    if params.get("do_img", None) is not None:
         cargs.extend([
             "-do_img",
-            str(params.get("do_img"))
+            str(params.get("do_img", None))
         ])
-    if params.get("echo"):
+    if params.get("echo", False):
         cargs.append("-echo")
-    if params.get("help"):
+    if params.get("help", False):
         cargs.append("-help")
-    if params.get("hist"):
+    if params.get("hist", False):
         cargs.append("-hist")
-    if params.get("ver"):
+    if params.get("ver", False):
         cargs.append("-ver")
     return cargs
 
@@ -237,7 +223,7 @@ def find_variance_lines_tcsh_outputs(
     """
     ret = FindVarianceLinesTcshOutputs(
         root=execution.output_file("."),
-        output_directory=execution.output_file(params.get("output_dir")) if (params.get("output_dir") is not None) else None,
+        output_directory=execution.output_file(params.get("output_dir", None)) if (params.get("output_dir") is not None) else None,
     )
     return ret
 
@@ -342,7 +328,6 @@ def find_variance_lines_tcsh(
 __all__ = [
     "FIND_VARIANCE_LINES_TCSH_METADATA",
     "FindVarianceLinesTcshOutputs",
-    "FindVarianceLinesTcshParameters",
     "find_variance_lines_tcsh",
     "find_variance_lines_tcsh_execute",
     "find_variance_lines_tcsh_params",

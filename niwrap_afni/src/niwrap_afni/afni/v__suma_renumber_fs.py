@@ -14,46 +14,18 @@ V__SUMA_RENUMBER_FS_METADATA = Metadata(
 
 
 VSumaRenumberFsParameters = typing.TypedDict('VSumaRenumberFsParameters', {
-    "@type": typing.Literal["afni.@SUMA_renumber_FS"],
+    "@type": typing.NotRequired[typing.Literal["afni/@SUMA_renumber_FS"]],
+    "sumadir": str,
+})
+VSumaRenumberFsParametersTagged = typing.TypedDict('VSumaRenumberFsParametersTagged', {
+    "@type": typing.Literal["afni/@SUMA_renumber_FS"],
     "sumadir": str,
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "afni.@SUMA_renumber_FS": v__suma_renumber_fs_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "afni.@SUMA_renumber_FS": v__suma_renumber_fs_outputs,
-    }.get(t)
-
-
 class VSumaRenumberFsOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `v__suma_renumber_fs(...)`.
+    Output object returned when calling `VSumaRenumberFsParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -84,7 +56,7 @@ class VSumaRenumberFsOutputs(typing.NamedTuple):
 
 def v__suma_renumber_fs_params(
     sumadir: str,
-) -> VSumaRenumberFsParameters:
+) -> VSumaRenumberFsParametersTagged:
     """
     Build parameters.
     
@@ -94,7 +66,7 @@ def v__suma_renumber_fs_params(
         Parameter dictionary
     """
     params = {
-        "@type": "afni.@SUMA_renumber_FS",
+        "@type": "afni/@SUMA_renumber_FS",
         "sumadir": sumadir,
     }
     return params
@@ -115,7 +87,7 @@ def v__suma_renumber_fs_cargs(
     """
     cargs = []
     cargs.append("@SUMA_renumber_FS")
-    cargs.append(params.get("sumadir"))
+    cargs.append(params.get("sumadir", None))
     return cargs
 
 
@@ -206,7 +178,6 @@ def v__suma_renumber_fs(
 
 __all__ = [
     "VSumaRenumberFsOutputs",
-    "VSumaRenumberFsParameters",
     "V__SUMA_RENUMBER_FS_METADATA",
     "v__suma_renumber_fs",
     "v__suma_renumber_fs_execute",

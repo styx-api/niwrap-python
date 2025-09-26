@@ -14,7 +14,27 @@ MRI_FILL_METADATA = Metadata(
 
 
 MriFillParameters = typing.TypedDict('MriFillParameters', {
-    "@type": typing.Literal["freesurfer.mri_fill"],
+    "@type": typing.NotRequired[typing.Literal["freesurfer/mri_fill"]],
+    "input_mr_dir": str,
+    "output_mr_dir": str,
+    "threshold": typing.NotRequired[float | None],
+    "xform_name": typing.NotRequired[str | None],
+    "segmentation_file": typing.NotRequired[InputPathType | None],
+    "atlas_file": typing.NotRequired[InputPathType | None],
+    "fill_ven": bool,
+    "seed_cc_tal": typing.NotRequired[list[float] | None],
+    "seed_pons_tal": typing.NotRequired[list[float] | None],
+    "seed_lh_tal": typing.NotRequired[list[float] | None],
+    "seed_rh_tal": typing.NotRequired[list[float] | None],
+    "seed_cc_vox": typing.NotRequired[list[float] | None],
+    "seed_pons_vox": typing.NotRequired[list[float] | None],
+    "auto_man_files": typing.NotRequired[list[str] | None],
+    "no_auto_man": bool,
+    "pointset_args": typing.NotRequired[list[str] | None],
+    "ctab_file": typing.NotRequired[InputPathType | None],
+})
+MriFillParametersTagged = typing.TypedDict('MriFillParametersTagged', {
+    "@type": typing.Literal["freesurfer/mri_fill"],
     "input_mr_dir": str,
     "output_mr_dir": str,
     "threshold": typing.NotRequired[float | None],
@@ -35,41 +55,9 @@ MriFillParameters = typing.TypedDict('MriFillParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "freesurfer.mri_fill": mri_fill_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "freesurfer.mri_fill": mri_fill_outputs,
-    }.get(t)
-
-
 class MriFillOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `mri_fill(...)`.
+    Output object returned when calling `MriFillParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -96,7 +84,7 @@ def mri_fill_params(
     no_auto_man: bool = False,
     pointset_args: list[str] | None = None,
     ctab_file: InputPathType | None = None,
-) -> MriFillParameters:
+) -> MriFillParametersTagged:
     """
     Build parameters.
     
@@ -131,7 +119,7 @@ def mri_fill_params(
         Parameter dictionary
     """
     params = {
-        "@type": "freesurfer.mri_fill",
+        "@type": "freesurfer/mri_fill",
         "input_mr_dir": input_mr_dir,
         "output_mr_dir": output_mr_dir,
         "fill_ven": fill_ven,
@@ -181,76 +169,76 @@ def mri_fill_cargs(
     """
     cargs = []
     cargs.append("mri_fill")
-    cargs.append(params.get("input_mr_dir"))
-    cargs.append(params.get("output_mr_dir"))
-    if params.get("threshold") is not None:
+    cargs.append(params.get("input_mr_dir", None))
+    cargs.append(params.get("output_mr_dir", None))
+    if params.get("threshold", None) is not None:
         cargs.extend([
             "-T",
-            str(params.get("threshold"))
+            str(params.get("threshold", None))
         ])
-    if params.get("xform_name") is not None:
+    if params.get("xform_name", None) is not None:
         cargs.extend([
             "-xform",
-            params.get("xform_name")
+            params.get("xform_name", None)
         ])
-    if params.get("segmentation_file") is not None:
+    if params.get("segmentation_file", None) is not None:
         cargs.extend([
             "-segmentation",
-            execution.input_file(params.get("segmentation_file"))
+            execution.input_file(params.get("segmentation_file", None))
         ])
-    if params.get("atlas_file") is not None:
+    if params.get("atlas_file", None) is not None:
         cargs.extend([
             "-atlas",
-            execution.input_file(params.get("atlas_file"))
+            execution.input_file(params.get("atlas_file", None))
         ])
-    if params.get("fill_ven"):
+    if params.get("fill_ven", False):
         cargs.append("-fillven")
-    if params.get("seed_cc_tal") is not None:
+    if params.get("seed_cc_tal", None) is not None:
         cargs.extend([
             "-C",
-            *map(str, params.get("seed_cc_tal"))
+            *map(str, params.get("seed_cc_tal", None))
         ])
-    if params.get("seed_pons_tal") is not None:
+    if params.get("seed_pons_tal", None) is not None:
         cargs.extend([
             "-P",
-            *map(str, params.get("seed_pons_tal"))
+            *map(str, params.get("seed_pons_tal", None))
         ])
-    if params.get("seed_lh_tal") is not None:
+    if params.get("seed_lh_tal", None) is not None:
         cargs.extend([
             "-lh",
-            *map(str, params.get("seed_lh_tal"))
+            *map(str, params.get("seed_lh_tal", None))
         ])
-    if params.get("seed_rh_tal") is not None:
+    if params.get("seed_rh_tal", None) is not None:
         cargs.extend([
             "-rh",
-            *map(str, params.get("seed_rh_tal"))
+            *map(str, params.get("seed_rh_tal", None))
         ])
-    if params.get("seed_cc_vox") is not None:
+    if params.get("seed_cc_vox", None) is not None:
         cargs.extend([
             "-CV",
-            *map(str, params.get("seed_cc_vox"))
+            *map(str, params.get("seed_cc_vox", None))
         ])
-    if params.get("seed_pons_vox") is not None:
+    if params.get("seed_pons_vox", None) is not None:
         cargs.extend([
             "-PV",
-            *map(str, params.get("seed_pons_vox"))
+            *map(str, params.get("seed_pons_vox", None))
         ])
-    if params.get("auto_man_files") is not None:
+    if params.get("auto_man_files", None) is not None:
         cargs.extend([
             "-auto-man",
-            *params.get("auto_man_files")
+            *params.get("auto_man_files", None)
         ])
-    if params.get("no_auto_man"):
+    if params.get("no_auto_man", False):
         cargs.append("-no-auto-man")
-    if params.get("pointset_args") is not None:
+    if params.get("pointset_args", None) is not None:
         cargs.extend([
             "-pointset",
-            *params.get("pointset_args")
+            *params.get("pointset_args", None)
         ])
-    if params.get("ctab_file") is not None:
+    if params.get("ctab_file", None) is not None:
         cargs.extend([
             "-ctab",
-            execution.input_file(params.get("ctab_file"))
+            execution.input_file(params.get("ctab_file", None))
         ])
     return cargs
 
@@ -270,7 +258,7 @@ def mri_fill_outputs(
     """
     ret = MriFillOutputs(
         root=execution.output_file("."),
-        filled_volume=execution.output_file(params.get("output_mr_dir") + "/filled"),
+        filled_volume=execution.output_file(params.get("output_mr_dir", None) + "/filled"),
     )
     return ret
 
@@ -390,7 +378,6 @@ def mri_fill(
 __all__ = [
     "MRI_FILL_METADATA",
     "MriFillOutputs",
-    "MriFillParameters",
     "mri_fill",
     "mri_fill_execute",
     "mri_fill_params",

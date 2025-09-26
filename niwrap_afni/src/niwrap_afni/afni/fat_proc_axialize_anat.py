@@ -14,7 +14,32 @@ FAT_PROC_AXIALIZE_ANAT_METADATA = Metadata(
 
 
 FatProcAxializeAnatParameters = typing.TypedDict('FatProcAxializeAnatParameters', {
-    "@type": typing.Literal["afni.fat_proc_axialize_anat"],
+    "@type": typing.NotRequired[typing.Literal["afni/fat_proc_axialize_anat"]],
+    "in_file": InputPathType,
+    "ref_file": InputPathType,
+    "prefix": str,
+    "mode_t2w": bool,
+    "mode_t1w": bool,
+    "workdir": typing.NotRequired[str | None],
+    "out_match_ref": bool,
+    "do_ceil_out": bool,
+    "extra_al_wtmask": typing.NotRequired[InputPathType | None],
+    "extra_al_cost": typing.NotRequired[str | None],
+    "extra_al_opts": typing.NotRequired[str | None],
+    "focus_mask": typing.NotRequired[InputPathType | None],
+    "focus_by_ss": bool,
+    "remove_inf_sli": typing.NotRequired[float | None],
+    "pre_align_center_mass": bool,
+    "pre_center_mass": bool,
+    "post_lr_symm": bool,
+    "no_pre_lr_symm": bool,
+    "no_clean": bool,
+    "qc_ulay_range": typing.NotRequired[list[float] | None],
+    "no_qc_view": bool,
+    "qc_prefix": typing.NotRequired[str | None],
+})
+FatProcAxializeAnatParametersTagged = typing.TypedDict('FatProcAxializeAnatParametersTagged', {
+    "@type": typing.Literal["afni/fat_proc_axialize_anat"],
     "in_file": InputPathType,
     "ref_file": InputPathType,
     "prefix": str,
@@ -40,41 +65,9 @@ FatProcAxializeAnatParameters = typing.TypedDict('FatProcAxializeAnatParameters'
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "afni.fat_proc_axialize_anat": fat_proc_axialize_anat_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "afni.fat_proc_axialize_anat": fat_proc_axialize_anat_outputs,
-    }.get(t)
-
-
 class FatProcAxializeAnatOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `fat_proc_axialize_anat(...)`.
+    Output object returned when calling `FatProcAxializeAnatParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -108,7 +101,7 @@ def fat_proc_axialize_anat_params(
     qc_ulay_range: list[float] | None = None,
     no_qc_view: bool = False,
     qc_prefix: str | None = None,
-) -> FatProcAxializeAnatParameters:
+) -> FatProcAxializeAnatParametersTagged:
     """
     Build parameters.
     
@@ -146,7 +139,7 @@ def fat_proc_axialize_anat_params(
         Parameter dictionary
     """
     params = {
-        "@type": "afni.fat_proc_axialize_anat",
+        "@type": "afni/fat_proc_axialize_anat",
         "in_file": in_file,
         "ref_file": ref_file,
         "prefix": prefix,
@@ -196,70 +189,70 @@ def fat_proc_axialize_anat_cargs(
     """
     cargs = []
     cargs.append("fat_proc_axialize_anat")
-    cargs.append(execution.input_file(params.get("in_file")))
-    cargs.append(execution.input_file(params.get("ref_file")))
-    cargs.append(params.get("prefix"))
-    if params.get("mode_t2w"):
+    cargs.append(execution.input_file(params.get("in_file", None)))
+    cargs.append(execution.input_file(params.get("ref_file", None)))
+    cargs.append(params.get("prefix", None))
+    if params.get("mode_t2w", False):
         cargs.append("-mode_t2w")
-    if params.get("mode_t1w"):
+    if params.get("mode_t1w", False):
         cargs.append("-mode_t1w")
-    if params.get("workdir") is not None:
+    if params.get("workdir", None) is not None:
         cargs.extend([
             "-workdir",
-            params.get("workdir")
+            params.get("workdir", None)
         ])
-    if params.get("out_match_ref"):
+    if params.get("out_match_ref", False):
         cargs.append("-out_match_ref")
-    if params.get("do_ceil_out"):
+    if params.get("do_ceil_out", False):
         cargs.append("-do_ceil_out")
-    if params.get("extra_al_wtmask") is not None:
+    if params.get("extra_al_wtmask", None) is not None:
         cargs.extend([
             "-extra_al_wtmask",
-            execution.input_file(params.get("extra_al_wtmask"))
+            execution.input_file(params.get("extra_al_wtmask", None))
         ])
-    if params.get("extra_al_cost") is not None:
+    if params.get("extra_al_cost", None) is not None:
         cargs.extend([
             "-extra_al_cost",
-            params.get("extra_al_cost")
+            params.get("extra_al_cost", None)
         ])
-    if params.get("extra_al_opts") is not None:
+    if params.get("extra_al_opts", None) is not None:
         cargs.extend([
             "-extra_al_opts",
-            params.get("extra_al_opts")
+            params.get("extra_al_opts", None)
         ])
-    if params.get("focus_mask") is not None:
+    if params.get("focus_mask", None) is not None:
         cargs.extend([
             "-focus_mask",
-            execution.input_file(params.get("focus_mask"))
+            execution.input_file(params.get("focus_mask", None))
         ])
-    if params.get("focus_by_ss"):
+    if params.get("focus_by_ss", False):
         cargs.append("-focus_by_ss")
-    if params.get("remove_inf_sli") is not None:
+    if params.get("remove_inf_sli", None) is not None:
         cargs.extend([
             "-remove_inf_sli",
-            str(params.get("remove_inf_sli"))
+            str(params.get("remove_inf_sli", None))
         ])
-    if params.get("pre_align_center_mass"):
+    if params.get("pre_align_center_mass", False):
         cargs.append("-pre_align_center_mass")
-    if params.get("pre_center_mass"):
+    if params.get("pre_center_mass", False):
         cargs.append("-pre_center_mass")
-    if params.get("post_lr_symm"):
+    if params.get("post_lr_symm", False):
         cargs.append("-post_lr_symm")
-    if params.get("no_pre_lr_symm"):
+    if params.get("no_pre_lr_symm", False):
         cargs.append("-no_pre_lr_symm")
-    if params.get("no_clean"):
+    if params.get("no_clean", False):
         cargs.append("-no_clean")
-    if params.get("qc_ulay_range") is not None:
+    if params.get("qc_ulay_range", None) is not None:
         cargs.extend([
             "-qc1_ulay_range",
-            *map(str, params.get("qc_ulay_range"))
+            *map(str, params.get("qc_ulay_range", None))
         ])
-    if params.get("no_qc_view"):
+    if params.get("no_qc_view", False):
         cargs.append("-no_qc_view")
-    if params.get("qc_prefix") is not None:
+    if params.get("qc_prefix", None) is not None:
         cargs.extend([
             "-qc_prefix",
-            params.get("qc_prefix")
+            params.get("qc_prefix", None)
         ])
     return cargs
 
@@ -279,8 +272,8 @@ def fat_proc_axialize_anat_outputs(
     """
     ret = FatProcAxializeAnatOutputs(
         root=execution.output_file("."),
-        output_file=execution.output_file(params.get("prefix") + ".nii.gz"),
-        working_directory=execution.output_file(params.get("workdir")) if (params.get("workdir") is not None) else None,
+        output_file=execution.output_file(params.get("prefix", None) + ".nii.gz"),
+        working_directory=execution.output_file(params.get("workdir", None)) if (params.get("workdir") is not None) else None,
     )
     return ret
 
@@ -413,7 +406,6 @@ def fat_proc_axialize_anat(
 __all__ = [
     "FAT_PROC_AXIALIZE_ANAT_METADATA",
     "FatProcAxializeAnatOutputs",
-    "FatProcAxializeAnatParameters",
     "fat_proc_axialize_anat",
     "fat_proc_axialize_anat_execute",
     "fat_proc_axialize_anat_params",

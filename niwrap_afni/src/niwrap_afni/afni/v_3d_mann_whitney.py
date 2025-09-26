@@ -14,7 +14,15 @@ V_3D_MANN_WHITNEY_METADATA = Metadata(
 
 
 V3dMannWhitneyParameters = typing.TypedDict('V3dMannWhitneyParameters', {
-    "@type": typing.Literal["afni.3dMannWhitney"],
+    "@type": typing.NotRequired[typing.Literal["afni/3dMannWhitney"]],
+    "dset1_x": list[str],
+    "dset2_y": list[str],
+    "output_prefix": str,
+    "workmem": typing.NotRequired[int | None],
+    "voxel_num": typing.NotRequired[int | None],
+})
+V3dMannWhitneyParametersTagged = typing.TypedDict('V3dMannWhitneyParametersTagged', {
+    "@type": typing.Literal["afni/3dMannWhitney"],
     "dset1_x": list[str],
     "dset2_y": list[str],
     "output_prefix": str,
@@ -23,40 +31,9 @@ V3dMannWhitneyParameters = typing.TypedDict('V3dMannWhitneyParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "afni.3dMannWhitney": v_3d_mann_whitney_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-    }.get(t)
-
-
 class V3dMannWhitneyOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `v_3d_mann_whitney(...)`.
+    Output object returned when calling `V3dMannWhitneyParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -68,7 +45,7 @@ def v_3d_mann_whitney_params(
     output_prefix: str,
     workmem: int | None = None,
     voxel_num: int | None = None,
-) -> V3dMannWhitneyParameters:
+) -> V3dMannWhitneyParametersTagged:
     """
     Build parameters.
     
@@ -85,7 +62,7 @@ def v_3d_mann_whitney_params(
         Parameter dictionary
     """
     params = {
-        "@type": "afni.3dMannWhitney",
+        "@type": "afni/3dMannWhitney",
         "dset1_x": dset1_x,
         "dset2_y": dset2_y,
         "output_prefix": output_prefix,
@@ -114,25 +91,25 @@ def v_3d_mann_whitney_cargs(
     cargs.append("3dMannWhitney")
     cargs.extend([
         "-dset 1",
-        *params.get("dset1_x")
+        *params.get("dset1_x", None)
     ])
     cargs.extend([
         "-dset 2",
-        *params.get("dset2_y")
+        *params.get("dset2_y", None)
     ])
     cargs.extend([
         "-out",
-        params.get("output_prefix")
+        params.get("output_prefix", None)
     ])
-    if params.get("workmem") is not None:
+    if params.get("workmem", None) is not None:
         cargs.extend([
             "-workmem",
-            str(params.get("workmem"))
+            str(params.get("workmem", None))
         ])
-    if params.get("voxel_num") is not None:
+    if params.get("voxel_num", None) is not None:
         cargs.extend([
             "-voxel",
-            str(params.get("voxel_num"))
+            str(params.get("voxel_num", None))
         ])
     return cargs
 
@@ -226,7 +203,6 @@ def v_3d_mann_whitney(
 
 __all__ = [
     "V3dMannWhitneyOutputs",
-    "V3dMannWhitneyParameters",
     "V_3D_MANN_WHITNEY_METADATA",
     "v_3d_mann_whitney",
     "v_3d_mann_whitney_execute",

@@ -14,7 +14,24 @@ V_3D_NWARP_APPLY_METADATA = Metadata(
 
 
 V3dNwarpApplyParameters = typing.TypedDict('V3dNwarpApplyParameters', {
-    "@type": typing.Literal["afni.3dNwarpApply"],
+    "@type": typing.NotRequired[typing.Literal["afni/3dNwarpApply"]],
+    "nwarp": str,
+    "iwarp": bool,
+    "source": str,
+    "master": typing.NotRequired[str | None],
+    "newgrid": typing.NotRequired[str | None],
+    "dxyz": typing.NotRequired[str | None],
+    "interp": typing.NotRequired[str | None],
+    "ainterp": typing.NotRequired[str | None],
+    "prefix": typing.NotRequired[str | None],
+    "suffix": typing.NotRequired[str | None],
+    "short": bool,
+    "wprefix": typing.NotRequired[str | None],
+    "quiet": bool,
+    "verb": bool,
+})
+V3dNwarpApplyParametersTagged = typing.TypedDict('V3dNwarpApplyParametersTagged', {
+    "@type": typing.Literal["afni/3dNwarpApply"],
     "nwarp": str,
     "iwarp": bool,
     "source": str,
@@ -32,41 +49,9 @@ V3dNwarpApplyParameters = typing.TypedDict('V3dNwarpApplyParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "afni.3dNwarpApply": v_3d_nwarp_apply_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "afni.3dNwarpApply": v_3d_nwarp_apply_outputs,
-    }.get(t)
-
-
 class V3dNwarpApplyOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `v_3d_nwarp_apply(...)`.
+    Output object returned when calling `V3dNwarpApplyParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -89,7 +74,7 @@ def v_3d_nwarp_apply_params(
     wprefix: str | None = None,
     quiet: bool = False,
     verb: bool = False,
-) -> V3dNwarpApplyParameters:
+) -> V3dNwarpApplyParametersTagged:
     """
     Build parameters.
     
@@ -119,7 +104,7 @@ def v_3d_nwarp_apply_params(
         Parameter dictionary
     """
     params = {
-        "@type": "afni.3dNwarpApply",
+        "@type": "afni/3dNwarpApply",
         "nwarp": nwarp,
         "iwarp": iwarp,
         "source": source,
@@ -163,59 +148,59 @@ def v_3d_nwarp_apply_cargs(
     cargs.append("3dNwarpApply")
     cargs.extend([
         "-nwarp",
-        params.get("nwarp")
+        params.get("nwarp", None)
     ])
-    if params.get("iwarp"):
+    if params.get("iwarp", False):
         cargs.append("-iwarp")
     cargs.extend([
         "-source",
-        params.get("source")
+        params.get("source", None)
     ])
-    if params.get("master") is not None:
+    if params.get("master", None) is not None:
         cargs.extend([
             "-master",
-            params.get("master")
+            params.get("master", None)
         ])
-    if params.get("newgrid") is not None:
+    if params.get("newgrid", None) is not None:
         cargs.extend([
             "-newgrid",
-            params.get("newgrid")
+            params.get("newgrid", None)
         ])
-    if params.get("dxyz") is not None:
+    if params.get("dxyz", None) is not None:
         cargs.extend([
             "-dxyz",
-            params.get("dxyz")
+            params.get("dxyz", None)
         ])
-    if params.get("interp") is not None:
+    if params.get("interp", None) is not None:
         cargs.extend([
             "-interp",
-            params.get("interp")
+            params.get("interp", None)
         ])
-    if params.get("ainterp") is not None:
+    if params.get("ainterp", None) is not None:
         cargs.extend([
             "-ainterp",
-            params.get("ainterp")
+            params.get("ainterp", None)
         ])
-    if params.get("prefix") is not None:
+    if params.get("prefix", None) is not None:
         cargs.extend([
             "-prefix",
-            params.get("prefix")
+            params.get("prefix", None)
         ])
-    if params.get("suffix") is not None:
+    if params.get("suffix", None) is not None:
         cargs.extend([
             "-suffix",
-            params.get("suffix")
+            params.get("suffix", None)
         ])
-    if params.get("short"):
+    if params.get("short", False):
         cargs.append("-short")
-    if params.get("wprefix") is not None:
+    if params.get("wprefix", None) is not None:
         cargs.extend([
             "-wprefix",
-            params.get("wprefix")
+            params.get("wprefix", None)
         ])
-    if params.get("quiet"):
+    if params.get("quiet", False):
         cargs.append("-quiet")
-    if params.get("verb"):
+    if params.get("verb", False):
         cargs.append("-verb")
     return cargs
 
@@ -235,7 +220,7 @@ def v_3d_nwarp_apply_outputs(
     """
     ret = V3dNwarpApplyOutputs(
         root=execution.output_file("."),
-        warped_output=execution.output_file(params.get("prefix") + "_" + params.get("source") + "_warped.nii.gz") if (params.get("prefix") is not None) else None,
+        warped_output=execution.output_file(params.get("prefix", None) + "_" + params.get("source", None) + "_warped.nii.gz") if (params.get("prefix") is not None) else None,
     )
     return ret
 
@@ -343,7 +328,6 @@ def v_3d_nwarp_apply(
 
 __all__ = [
     "V3dNwarpApplyOutputs",
-    "V3dNwarpApplyParameters",
     "V_3D_NWARP_APPLY_METADATA",
     "v_3d_nwarp_apply",
     "v_3d_nwarp_apply_execute",

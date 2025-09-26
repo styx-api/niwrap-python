@@ -14,45 +14,18 @@ ADJUNCT_CALC_MONT_DIMS_PY_METADATA = Metadata(
 
 
 AdjunctCalcMontDimsPyParameters = typing.TypedDict('AdjunctCalcMontDimsPyParameters', {
-    "@type": typing.Literal["afni.adjunct_calc_mont_dims.py"],
+    "@type": typing.NotRequired[typing.Literal["afni/adjunct_calc_mont_dims.py"]],
+    "help": bool,
+})
+AdjunctCalcMontDimsPyParametersTagged = typing.TypedDict('AdjunctCalcMontDimsPyParametersTagged', {
+    "@type": typing.Literal["afni/adjunct_calc_mont_dims.py"],
     "help": bool,
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "afni.adjunct_calc_mont_dims.py": adjunct_calc_mont_dims_py_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-    }.get(t)
-
-
 class AdjunctCalcMontDimsPyOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `adjunct_calc_mont_dims_py(...)`.
+    Output object returned when calling `AdjunctCalcMontDimsPyParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -60,7 +33,7 @@ class AdjunctCalcMontDimsPyOutputs(typing.NamedTuple):
 
 def adjunct_calc_mont_dims_py_params(
     help_: bool = False,
-) -> AdjunctCalcMontDimsPyParameters:
+) -> AdjunctCalcMontDimsPyParametersTagged:
     """
     Build parameters.
     
@@ -70,7 +43,7 @@ def adjunct_calc_mont_dims_py_params(
         Parameter dictionary
     """
     params = {
-        "@type": "afni.adjunct_calc_mont_dims.py",
+        "@type": "afni/adjunct_calc_mont_dims.py",
         "help": help_,
     }
     return params
@@ -91,7 +64,7 @@ def adjunct_calc_mont_dims_py_cargs(
     """
     cargs = []
     cargs.append("adjunct_calc_mont_dims.py")
-    if params.get("help"):
+    if params.get("help", False):
         cargs.append("-help")
     return cargs
 
@@ -171,7 +144,6 @@ def adjunct_calc_mont_dims_py(
 __all__ = [
     "ADJUNCT_CALC_MONT_DIMS_PY_METADATA",
     "AdjunctCalcMontDimsPyOutputs",
-    "AdjunctCalcMontDimsPyParameters",
     "adjunct_calc_mont_dims_py",
     "adjunct_calc_mont_dims_py_execute",
     "adjunct_calc_mont_dims_py_params",

@@ -14,7 +14,19 @@ V_1DCAT_METADATA = Metadata(
 
 
 V1dcatParameters = typing.TypedDict('V1dcatParameters', {
-    "@type": typing.Literal["afni.1dcat"],
+    "@type": typing.NotRequired[typing.Literal["afni/1dcat"]],
+    "input_files": list[InputPathType],
+    "tsv_output": bool,
+    "csv_output": bool,
+    "nonconst_output": bool,
+    "nonfixed_output": bool,
+    "number_format": typing.NotRequired[str | None],
+    "stack_output": bool,
+    "column_row_selection": typing.NotRequired[str | None],
+    "ok_empty": bool,
+})
+V1dcatParametersTagged = typing.TypedDict('V1dcatParametersTagged', {
+    "@type": typing.Literal["afni/1dcat"],
     "input_files": list[InputPathType],
     "tsv_output": bool,
     "csv_output": bool,
@@ -27,41 +39,9 @@ V1dcatParameters = typing.TypedDict('V1dcatParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "afni.1dcat": v_1dcat_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "afni.1dcat": v_1dcat_outputs,
-    }.get(t)
-
-
 class V1dcatOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `v_1dcat(...)`.
+    Output object returned when calling `V1dcatParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -79,7 +59,7 @@ def v_1dcat_params(
     stack_output: bool = False,
     column_row_selection: str | None = None,
     ok_empty: bool = False,
-) -> V1dcatParameters:
+) -> V1dcatParametersTagged:
     """
     Build parameters.
     
@@ -102,7 +82,7 @@ def v_1dcat_params(
         Parameter dictionary
     """
     params = {
-        "@type": "afni.1dcat",
+        "@type": "afni/1dcat",
         "input_files": input_files,
         "tsv_output": tsv_output,
         "csv_output": csv_output,
@@ -133,28 +113,28 @@ def v_1dcat_cargs(
     """
     cargs = []
     cargs.append("1dcat")
-    cargs.extend([execution.input_file(f) for f in params.get("input_files")])
-    if params.get("tsv_output"):
+    cargs.extend([execution.input_file(f) for f in params.get("input_files", None)])
+    if params.get("tsv_output", False):
         cargs.append("-tsvout")
-    if params.get("csv_output"):
+    if params.get("csv_output", False):
         cargs.append("-csvout")
-    if params.get("nonconst_output"):
+    if params.get("nonconst_output", False):
         cargs.append("-nonconst")
-    if params.get("nonfixed_output"):
+    if params.get("nonfixed_output", False):
         cargs.append("-nonfixed")
-    if params.get("number_format") is not None:
+    if params.get("number_format", None) is not None:
         cargs.extend([
             "-form",
-            params.get("number_format")
+            params.get("number_format", None)
         ])
-    if params.get("stack_output"):
+    if params.get("stack_output", False):
         cargs.append("-stack")
-    if params.get("column_row_selection") is not None:
+    if params.get("column_row_selection", None) is not None:
         cargs.extend([
             "-sel",
-            params.get("column_row_selection")
+            params.get("column_row_selection", None)
         ])
-    if params.get("ok_empty"):
+    if params.get("ok_empty", False):
         cargs.append("-OKempty")
     return cargs
 
@@ -263,7 +243,6 @@ def v_1dcat(
 
 __all__ = [
     "V1dcatOutputs",
-    "V1dcatParameters",
     "V_1DCAT_METADATA",
     "v_1dcat",
     "v_1dcat_execute",

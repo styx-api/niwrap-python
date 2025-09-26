@@ -14,7 +14,50 @@ V__RETINO_PROC_METADATA = Metadata(
 
 
 VRetinoProcParameters = typing.TypedDict('VRetinoProcParameters', {
-    "@type": typing.Literal["afni.@RetinoProc"],
+    "@type": typing.NotRequired[typing.Literal["afni/@RetinoProc"]],
+    "ccw": typing.NotRequired[list[InputPathType] | None],
+    "clw": typing.NotRequired[list[InputPathType] | None],
+    "exp": typing.NotRequired[list[InputPathType] | None],
+    "con": typing.NotRequired[list[InputPathType] | None],
+    "epi_ref": typing.NotRequired[InputPathType | None],
+    "epi_anat_ref": typing.NotRequired[InputPathType | None],
+    "anat_vol": typing.NotRequired[InputPathType | None],
+    "anat_vol_epi": typing.NotRequired[InputPathType | None],
+    "surf_vol": typing.NotRequired[InputPathType | None],
+    "surf_vol_epi": typing.NotRequired[InputPathType | None],
+    "phase": bool,
+    "delay": bool,
+    "tr": float,
+    "period_ecc": float,
+    "period_pol": float,
+    "pre_ecc": typing.NotRequired[float | None],
+    "pre_pol": typing.NotRequired[float | None],
+    "on_ecc": typing.NotRequired[str | None],
+    "on_pol": typing.NotRequired[str | None],
+    "var_on_ecc": typing.NotRequired[str | None],
+    "var_on_pol": typing.NotRequired[str | None],
+    "nwedges": typing.NotRequired[float | None],
+    "nrings": typing.NotRequired[float | None],
+    "fwhm_pol": typing.NotRequired[float | None],
+    "fwhm_ecc": typing.NotRequired[float | None],
+    "ignore": typing.NotRequired[float | None],
+    "no_tshift": bool,
+    "spec_left": typing.NotRequired[InputPathType | None],
+    "spec_right": typing.NotRequired[InputPathType | None],
+    "dorts": typing.NotRequired[InputPathType | None],
+    "ccw_orts": typing.NotRequired[list[InputPathType] | None],
+    "clw_orts": typing.NotRequired[list[InputPathType] | None],
+    "exp_orts": typing.NotRequired[list[InputPathType] | None],
+    "con_orts": typing.NotRequired[list[InputPathType] | None],
+    "sid": typing.NotRequired[str | None],
+    "out_dir": typing.NotRequired[str | None],
+    "echo": bool,
+    "echo_edu": bool,
+    "a2e_opts": typing.NotRequired[str | None],
+    "aea_opts": typing.NotRequired[str | None],
+})
+VRetinoProcParametersTagged = typing.TypedDict('VRetinoProcParametersTagged', {
+    "@type": typing.Literal["afni/@RetinoProc"],
     "ccw": typing.NotRequired[list[InputPathType] | None],
     "clw": typing.NotRequired[list[InputPathType] | None],
     "exp": typing.NotRequired[list[InputPathType] | None],
@@ -58,40 +101,9 @@ VRetinoProcParameters = typing.TypedDict('VRetinoProcParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "afni.@RetinoProc": v__retino_proc_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-    }.get(t)
-
-
 class VRetinoProcOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `v__retino_proc(...)`.
+    Output object returned when calling `VRetinoProcParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -138,7 +150,7 @@ def v__retino_proc_params(
     echo_edu: bool = False,
     a2e_opts: str | None = None,
     aea_opts: str | None = None,
-) -> VRetinoProcParameters:
+) -> VRetinoProcParametersTagged:
     """
     Build parameters.
     
@@ -192,7 +204,7 @@ def v__retino_proc_params(
         Parameter dictionary
     """
     params = {
-        "@type": "afni.@RetinoProc",
+        "@type": "afni/@RetinoProc",
         "phase": phase,
         "delay": delay,
         "tr": tr,
@@ -284,187 +296,187 @@ def v__retino_proc_cargs(
     """
     cargs = []
     cargs.append("@RetinoProc")
-    if params.get("ccw") is not None:
+    if params.get("ccw", None) is not None:
         cargs.extend([
             "-ccw",
-            *[execution.input_file(f) for f in params.get("ccw")]
+            *[execution.input_file(f) for f in params.get("ccw", None)]
         ])
-    if params.get("clw") is not None:
+    if params.get("clw", None) is not None:
         cargs.extend([
             "-clw",
-            *[execution.input_file(f) for f in params.get("clw")]
+            *[execution.input_file(f) for f in params.get("clw", None)]
         ])
-    if params.get("exp") is not None:
+    if params.get("exp", None) is not None:
         cargs.extend([
             "-exp",
-            *[execution.input_file(f) for f in params.get("exp")]
+            *[execution.input_file(f) for f in params.get("exp", None)]
         ])
-    if params.get("con") is not None:
+    if params.get("con", None) is not None:
         cargs.extend([
             "-con",
-            *[execution.input_file(f) for f in params.get("con")]
+            *[execution.input_file(f) for f in params.get("con", None)]
         ])
-    if params.get("epi_ref") is not None:
+    if params.get("epi_ref", None) is not None:
         cargs.extend([
             "-epi_ref",
-            execution.input_file(params.get("epi_ref"))
+            execution.input_file(params.get("epi_ref", None))
         ])
-    if params.get("epi_anat_ref") is not None:
+    if params.get("epi_anat_ref", None) is not None:
         cargs.extend([
             "-epi_anat_ref",
-            execution.input_file(params.get("epi_anat_ref"))
+            execution.input_file(params.get("epi_anat_ref", None))
         ])
-    if params.get("anat_vol") is not None:
+    if params.get("anat_vol", None) is not None:
         cargs.extend([
             "-anat_vol",
-            execution.input_file(params.get("anat_vol"))
+            execution.input_file(params.get("anat_vol", None))
         ])
-    if params.get("anat_vol_epi") is not None:
+    if params.get("anat_vol_epi", None) is not None:
         cargs.extend([
             "-anat_vol@epi",
-            execution.input_file(params.get("anat_vol_epi"))
+            execution.input_file(params.get("anat_vol_epi", None))
         ])
-    if params.get("surf_vol") is not None:
+    if params.get("surf_vol", None) is not None:
         cargs.extend([
             "-surf_vol",
-            execution.input_file(params.get("surf_vol"))
+            execution.input_file(params.get("surf_vol", None))
         ])
-    if params.get("surf_vol_epi") is not None:
+    if params.get("surf_vol_epi", None) is not None:
         cargs.extend([
             "-surf_vol@epi",
-            execution.input_file(params.get("surf_vol_epi"))
+            execution.input_file(params.get("surf_vol_epi", None))
         ])
-    if params.get("phase"):
+    if params.get("phase", False):
         cargs.append("-phase")
-    if params.get("delay"):
+    if params.get("delay", False):
         cargs.append("-delay")
     cargs.extend([
         "-TR",
-        str(params.get("tr"))
+        str(params.get("tr", None))
     ])
     cargs.extend([
         "-period_ecc",
-        str(params.get("period_ecc"))
+        str(params.get("period_ecc", None))
     ])
     cargs.extend([
         "-period_pol",
-        str(params.get("period_pol"))
+        str(params.get("period_pol", None))
     ])
-    if params.get("pre_ecc") is not None:
+    if params.get("pre_ecc", None) is not None:
         cargs.extend([
             "-pre_ecc",
-            str(params.get("pre_ecc"))
+            str(params.get("pre_ecc", None))
         ])
-    if params.get("pre_pol") is not None:
+    if params.get("pre_pol", None) is not None:
         cargs.extend([
             "-pre_pol",
-            str(params.get("pre_pol"))
+            str(params.get("pre_pol", None))
         ])
-    if params.get("on_ecc") is not None:
+    if params.get("on_ecc", None) is not None:
         cargs.extend([
             "-on_ecc",
-            params.get("on_ecc")
+            params.get("on_ecc", None)
         ])
-    if params.get("on_pol") is not None:
+    if params.get("on_pol", None) is not None:
         cargs.extend([
             "-on_pol",
-            params.get("on_pol")
+            params.get("on_pol", None)
         ])
-    if params.get("var_on_ecc") is not None:
+    if params.get("var_on_ecc", None) is not None:
         cargs.extend([
             "-var_on_ecc",
-            params.get("var_on_ecc")
+            params.get("var_on_ecc", None)
         ])
-    if params.get("var_on_pol") is not None:
+    if params.get("var_on_pol", None) is not None:
         cargs.extend([
             "-var_on_pol",
-            params.get("var_on_pol")
+            params.get("var_on_pol", None)
         ])
-    if params.get("nwedges") is not None:
+    if params.get("nwedges", None) is not None:
         cargs.extend([
             "-nwedges",
-            str(params.get("nwedges"))
+            str(params.get("nwedges", None))
         ])
-    if params.get("nrings") is not None:
+    if params.get("nrings", None) is not None:
         cargs.extend([
             "-nrings",
-            str(params.get("nrings"))
+            str(params.get("nrings", None))
         ])
-    if params.get("fwhm_pol") is not None:
+    if params.get("fwhm_pol", None) is not None:
         cargs.extend([
             "-fwhm_pol",
-            str(params.get("fwhm_pol"))
+            str(params.get("fwhm_pol", None))
         ])
-    if params.get("fwhm_ecc") is not None:
+    if params.get("fwhm_ecc", None) is not None:
         cargs.extend([
             "-fwhm_ecc",
-            str(params.get("fwhm_ecc"))
+            str(params.get("fwhm_ecc", None))
         ])
-    if params.get("ignore") is not None:
+    if params.get("ignore", None) is not None:
         cargs.extend([
             "-ignore",
-            str(params.get("ignore"))
+            str(params.get("ignore", None))
         ])
-    if params.get("no_tshift"):
+    if params.get("no_tshift", False):
         cargs.append("-no_tshift")
-    if params.get("spec_left") is not None:
+    if params.get("spec_left", None) is not None:
         cargs.extend([
             "-spec_left",
-            execution.input_file(params.get("spec_left"))
+            execution.input_file(params.get("spec_left", None))
         ])
-    if params.get("spec_right") is not None:
+    if params.get("spec_right", None) is not None:
         cargs.extend([
             "-spec_right",
-            execution.input_file(params.get("spec_right"))
+            execution.input_file(params.get("spec_right", None))
         ])
-    if params.get("dorts") is not None:
+    if params.get("dorts", None) is not None:
         cargs.extend([
             "-dorts",
-            execution.input_file(params.get("dorts"))
+            execution.input_file(params.get("dorts", None))
         ])
-    if params.get("ccw_orts") is not None:
+    if params.get("ccw_orts", None) is not None:
         cargs.extend([
             "-ccw_orts",
-            *[execution.input_file(f) for f in params.get("ccw_orts")]
+            *[execution.input_file(f) for f in params.get("ccw_orts", None)]
         ])
-    if params.get("clw_orts") is not None:
+    if params.get("clw_orts", None) is not None:
         cargs.extend([
             "-clw_orts",
-            *[execution.input_file(f) for f in params.get("clw_orts")]
+            *[execution.input_file(f) for f in params.get("clw_orts", None)]
         ])
-    if params.get("exp_orts") is not None:
+    if params.get("exp_orts", None) is not None:
         cargs.extend([
             "-exp_orts",
-            *[execution.input_file(f) for f in params.get("exp_orts")]
+            *[execution.input_file(f) for f in params.get("exp_orts", None)]
         ])
-    if params.get("con_orts") is not None:
+    if params.get("con_orts", None) is not None:
         cargs.extend([
             "-con_orts",
-            *[execution.input_file(f) for f in params.get("con_orts")]
+            *[execution.input_file(f) for f in params.get("con_orts", None)]
         ])
-    if params.get("sid") is not None:
+    if params.get("sid", None) is not None:
         cargs.extend([
             "-sid",
-            params.get("sid")
+            params.get("sid", None)
         ])
-    if params.get("out_dir") is not None:
+    if params.get("out_dir", None) is not None:
         cargs.extend([
             "-out_dir",
-            params.get("out_dir")
+            params.get("out_dir", None)
         ])
-    if params.get("echo"):
+    if params.get("echo", False):
         cargs.append("-echo")
-    if params.get("echo_edu"):
+    if params.get("echo_edu", False):
         cargs.append("-echo_edu")
-    if params.get("a2e_opts") is not None:
+    if params.get("a2e_opts", None) is not None:
         cargs.extend([
             "-A2E_opts",
-            params.get("a2e_opts")
+            params.get("a2e_opts", None)
         ])
-    if params.get("aea_opts") is not None:
+    if params.get("aea_opts", None) is not None:
         cargs.extend([
             "-AEA_opts",
-            params.get("aea_opts")
+            params.get("aea_opts", None)
         ])
     return cargs
 
@@ -667,7 +679,6 @@ def v__retino_proc(
 
 __all__ = [
     "VRetinoProcOutputs",
-    "VRetinoProcParameters",
     "V__RETINO_PROC_METADATA",
     "v__retino_proc",
     "v__retino_proc_execute",

@@ -14,7 +14,18 @@ FSL_REG_METADATA = Metadata(
 
 
 FslRegParameters = typing.TypedDict('FslRegParameters', {
-    "@type": typing.Literal["fsl.fsl_reg"],
+    "@type": typing.NotRequired[typing.Literal["fsl/fsl_reg"]],
+    "input_file": InputPathType,
+    "reference_file": InputPathType,
+    "output_file": str,
+    "estimate_only_flag": bool,
+    "affine_only_flag": bool,
+    "fnirt_fa_config_flag": bool,
+    "flirt_options": typing.NotRequired[str | None],
+    "fnirt_options": typing.NotRequired[str | None],
+})
+FslRegParametersTagged = typing.TypedDict('FslRegParametersTagged', {
+    "@type": typing.Literal["fsl/fsl_reg"],
     "input_file": InputPathType,
     "reference_file": InputPathType,
     "output_file": str,
@@ -26,41 +37,9 @@ FslRegParameters = typing.TypedDict('FslRegParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "fsl.fsl_reg": fsl_reg_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "fsl.fsl_reg": fsl_reg_outputs,
-    }.get(t)
-
-
 class FslRegOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `fsl_reg(...)`.
+    Output object returned when calling `FslRegParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -77,7 +56,7 @@ def fsl_reg_params(
     fnirt_fa_config_flag: bool = False,
     flirt_options: str | None = None,
     fnirt_options: str | None = None,
-) -> FslRegParameters:
+) -> FslRegParametersTagged:
     """
     Build parameters.
     
@@ -94,7 +73,7 @@ def fsl_reg_params(
         Parameter dictionary
     """
     params = {
-        "@type": "fsl.fsl_reg",
+        "@type": "fsl/fsl_reg",
         "input_file": input_file,
         "reference_file": reference_file,
         "output_file": output_file,
@@ -124,24 +103,24 @@ def fsl_reg_cargs(
     """
     cargs = []
     cargs.append("fsl_reg")
-    cargs.append(execution.input_file(params.get("input_file")))
-    cargs.append(execution.input_file(params.get("reference_file")))
-    cargs.append(params.get("output_file"))
-    if params.get("estimate_only_flag"):
+    cargs.append(execution.input_file(params.get("input_file", None)))
+    cargs.append(execution.input_file(params.get("reference_file", None)))
+    cargs.append(params.get("output_file", None))
+    if params.get("estimate_only_flag", False):
         cargs.append("-e")
-    if params.get("affine_only_flag"):
+    if params.get("affine_only_flag", False):
         cargs.append("-a")
-    if params.get("fnirt_fa_config_flag"):
+    if params.get("fnirt_fa_config_flag", False):
         cargs.append("-FA")
-    if params.get("flirt_options") is not None:
+    if params.get("flirt_options", None) is not None:
         cargs.extend([
             "-flirt",
-            params.get("flirt_options")
+            params.get("flirt_options", None)
         ])
-    if params.get("fnirt_options") is not None:
+    if params.get("fnirt_options", None) is not None:
         cargs.extend([
             "-fnirt",
-            params.get("fnirt_options")
+            params.get("fnirt_options", None)
         ])
     return cargs
 
@@ -161,7 +140,7 @@ def fsl_reg_outputs(
     """
     ret = FslRegOutputs(
         root=execution.output_file("."),
-        output_transform_file=execution.output_file(params.get("output_file")),
+        output_transform_file=execution.output_file(params.get("output_file", None)),
     )
     return ret
 
@@ -243,7 +222,6 @@ def fsl_reg(
 __all__ = [
     "FSL_REG_METADATA",
     "FslRegOutputs",
-    "FslRegParameters",
     "fsl_reg",
     "fsl_reg_execute",
     "fsl_reg_params",

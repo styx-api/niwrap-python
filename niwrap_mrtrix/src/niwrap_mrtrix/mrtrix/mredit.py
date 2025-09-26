@@ -14,7 +14,13 @@ MREDIT_METADATA = Metadata(
 
 
 MreditPlaneParameters = typing.TypedDict('MreditPlaneParameters', {
-    "@type": typing.Literal["mrtrix.mredit.plane"],
+    "@type": typing.NotRequired[typing.Literal["plane"]],
+    "axis": int,
+    "coord": list[int],
+    "value": float,
+})
+MreditPlaneParametersTagged = typing.TypedDict('MreditPlaneParametersTagged', {
+    "@type": typing.Literal["plane"],
     "axis": int,
     "coord": list[int],
     "value": float,
@@ -22,7 +28,13 @@ MreditPlaneParameters = typing.TypedDict('MreditPlaneParameters', {
 
 
 MreditSphereParameters = typing.TypedDict('MreditSphereParameters', {
-    "@type": typing.Literal["mrtrix.mredit.sphere"],
+    "@type": typing.NotRequired[typing.Literal["sphere"]],
+    "position": list[float],
+    "radius": float,
+    "value": float,
+})
+MreditSphereParametersTagged = typing.TypedDict('MreditSphereParametersTagged', {
+    "@type": typing.Literal["sphere"],
     "position": list[float],
     "radius": float,
     "value": float,
@@ -30,21 +42,48 @@ MreditSphereParameters = typing.TypedDict('MreditSphereParameters', {
 
 
 MreditVoxelParameters = typing.TypedDict('MreditVoxelParameters', {
-    "@type": typing.Literal["mrtrix.mredit.voxel"],
+    "@type": typing.NotRequired[typing.Literal["voxel"]],
+    "position": list[float],
+    "value": float,
+})
+MreditVoxelParametersTagged = typing.TypedDict('MreditVoxelParametersTagged', {
+    "@type": typing.Literal["voxel"],
     "position": list[float],
     "value": float,
 })
 
 
 MreditConfigParameters = typing.TypedDict('MreditConfigParameters', {
-    "@type": typing.Literal["mrtrix.mredit.config"],
+    "@type": typing.NotRequired[typing.Literal["config"]],
+    "key": str,
+    "value": str,
+})
+MreditConfigParametersTagged = typing.TypedDict('MreditConfigParametersTagged', {
+    "@type": typing.Literal["config"],
     "key": str,
     "value": str,
 })
 
 
 MreditParameters = typing.TypedDict('MreditParameters', {
-    "@type": typing.Literal["mrtrix.mredit"],
+    "@type": typing.NotRequired[typing.Literal["mrtrix/mredit"]],
+    "plane": typing.NotRequired[list[MreditPlaneParameters] | None],
+    "sphere": typing.NotRequired[list[MreditSphereParameters] | None],
+    "voxel": typing.NotRequired[list[MreditVoxelParameters] | None],
+    "scanner": bool,
+    "info": bool,
+    "quiet": bool,
+    "debug": bool,
+    "force": bool,
+    "nthreads": typing.NotRequired[int | None],
+    "config": typing.NotRequired[list[MreditConfigParameters] | None],
+    "help": bool,
+    "version": bool,
+    "input": InputPathType,
+    "output": typing.NotRequired[str | None],
+})
+MreditParametersTagged = typing.TypedDict('MreditParametersTagged', {
+    "@type": typing.Literal["mrtrix/mredit"],
     "plane": typing.NotRequired[list[MreditPlaneParameters] | None],
     "sphere": typing.NotRequired[list[MreditSphereParameters] | None],
     "voxel": typing.NotRequired[list[MreditVoxelParameters] | None],
@@ -62,47 +101,11 @@ MreditParameters = typing.TypedDict('MreditParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "mrtrix.mredit": mredit_cargs,
-        "mrtrix.mredit.plane": mredit_plane_cargs,
-        "mrtrix.mredit.sphere": mredit_sphere_cargs,
-        "mrtrix.mredit.voxel": mredit_voxel_cargs,
-        "mrtrix.mredit.config": mredit_config_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "mrtrix.mredit": mredit_outputs,
-    }.get(t)
-
-
 def mredit_plane_params(
     axis: int,
     coord: list[int],
     value: float,
-) -> MreditPlaneParameters:
+) -> MreditPlaneParametersTagged:
     """
     Build parameters.
     
@@ -114,7 +117,7 @@ def mredit_plane_params(
         Parameter dictionary
     """
     params = {
-        "@type": "mrtrix.mredit.plane",
+        "@type": "plane",
         "axis": axis,
         "coord": coord,
         "value": value,
@@ -137,9 +140,9 @@ def mredit_plane_cargs(
     """
     cargs = []
     cargs.append("-plane")
-    cargs.append(str(params.get("axis")))
-    cargs.extend(map(str, params.get("coord")))
-    cargs.append(str(params.get("value")))
+    cargs.append(str(params.get("axis", None)))
+    cargs.extend(map(str, params.get("coord", None)))
+    cargs.append(str(params.get("value", None)))
     return cargs
 
 
@@ -147,7 +150,7 @@ def mredit_sphere_params(
     position: list[float],
     radius: float,
     value: float,
-) -> MreditSphereParameters:
+) -> MreditSphereParametersTagged:
     """
     Build parameters.
     
@@ -159,7 +162,7 @@ def mredit_sphere_params(
         Parameter dictionary
     """
     params = {
-        "@type": "mrtrix.mredit.sphere",
+        "@type": "sphere",
         "position": position,
         "radius": radius,
         "value": value,
@@ -182,16 +185,16 @@ def mredit_sphere_cargs(
     """
     cargs = []
     cargs.append("-sphere")
-    cargs.extend(map(str, params.get("position")))
-    cargs.append(str(params.get("radius")))
-    cargs.append(str(params.get("value")))
+    cargs.extend(map(str, params.get("position", None)))
+    cargs.append(str(params.get("radius", None)))
+    cargs.append(str(params.get("value", None)))
     return cargs
 
 
 def mredit_voxel_params(
     position: list[float],
     value: float,
-) -> MreditVoxelParameters:
+) -> MreditVoxelParametersTagged:
     """
     Build parameters.
     
@@ -202,7 +205,7 @@ def mredit_voxel_params(
         Parameter dictionary
     """
     params = {
-        "@type": "mrtrix.mredit.voxel",
+        "@type": "voxel",
         "position": position,
         "value": value,
     }
@@ -224,15 +227,15 @@ def mredit_voxel_cargs(
     """
     cargs = []
     cargs.append("-voxel")
-    cargs.extend(map(str, params.get("position")))
-    cargs.append(str(params.get("value")))
+    cargs.extend(map(str, params.get("position", None)))
+    cargs.append(str(params.get("value", None)))
     return cargs
 
 
 def mredit_config_params(
     key: str,
     value: str,
-) -> MreditConfigParameters:
+) -> MreditConfigParametersTagged:
     """
     Build parameters.
     
@@ -243,7 +246,7 @@ def mredit_config_params(
         Parameter dictionary
     """
     params = {
-        "@type": "mrtrix.mredit.config",
+        "@type": "config",
         "key": key,
         "value": value,
     }
@@ -265,14 +268,14 @@ def mredit_config_cargs(
     """
     cargs = []
     cargs.append("-config")
-    cargs.append(params.get("key"))
-    cargs.append(params.get("value"))
+    cargs.append(params.get("key", None))
+    cargs.append(params.get("value", None))
     return cargs
 
 
 class MreditOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `mredit(...)`.
+    Output object returned when calling `MreditParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -295,7 +298,7 @@ def mredit_params(
     help_: bool = False,
     version: bool = False,
     output: str | None = None,
-) -> MreditParameters:
+) -> MreditParametersTagged:
     """
     Build parameters.
     
@@ -323,7 +326,7 @@ def mredit_params(
         Parameter dictionary
     """
     params = {
-        "@type": "mrtrix.mredit",
+        "@type": "mrtrix/mredit",
         "scanner": scanner,
         "info": info,
         "quiet": quiet,
@@ -363,36 +366,36 @@ def mredit_cargs(
     """
     cargs = []
     cargs.append("mredit")
-    if params.get("plane") is not None:
-        cargs.extend([a for c in [dyn_cargs(s["@type"])(s, execution) for s in params.get("plane")] for a in c])
-    if params.get("sphere") is not None:
-        cargs.extend([a for c in [dyn_cargs(s["@type"])(s, execution) for s in params.get("sphere")] for a in c])
-    if params.get("voxel") is not None:
-        cargs.extend([a for c in [dyn_cargs(s["@type"])(s, execution) for s in params.get("voxel")] for a in c])
-    if params.get("scanner"):
+    if params.get("plane", None) is not None:
+        cargs.extend([a for c in [mredit_plane_cargs(s, execution) for s in params.get("plane", None)] for a in c])
+    if params.get("sphere", None) is not None:
+        cargs.extend([a for c in [mredit_sphere_cargs(s, execution) for s in params.get("sphere", None)] for a in c])
+    if params.get("voxel", None) is not None:
+        cargs.extend([a for c in [mredit_voxel_cargs(s, execution) for s in params.get("voxel", None)] for a in c])
+    if params.get("scanner", False):
         cargs.append("-scanner")
-    if params.get("info"):
+    if params.get("info", False):
         cargs.append("-info")
-    if params.get("quiet"):
+    if params.get("quiet", False):
         cargs.append("-quiet")
-    if params.get("debug"):
+    if params.get("debug", False):
         cargs.append("-debug")
-    if params.get("force"):
+    if params.get("force", False):
         cargs.append("-force")
-    if params.get("nthreads") is not None:
+    if params.get("nthreads", None) is not None:
         cargs.extend([
             "-nthreads",
-            str(params.get("nthreads"))
+            str(params.get("nthreads", None))
         ])
-    if params.get("config") is not None:
-        cargs.extend([a for c in [dyn_cargs(s["@type"])(s, execution) for s in params.get("config")] for a in c])
-    if params.get("help"):
+    if params.get("config", None) is not None:
+        cargs.extend([a for c in [mredit_config_cargs(s, execution) for s in params.get("config", None)] for a in c])
+    if params.get("help", False):
         cargs.append("-help")
-    if params.get("version"):
+    if params.get("version", False):
         cargs.append("-version")
-    cargs.append(execution.input_file(params.get("input")))
-    if params.get("output") is not None:
-        cargs.append(params.get("output"))
+    cargs.append(execution.input_file(params.get("input", None)))
+    if params.get("output", None) is not None:
+        cargs.append(params.get("output", None))
     return cargs
 
 
@@ -411,7 +414,7 @@ def mredit_outputs(
     """
     ret = MreditOutputs(
         root=execution.output_file("."),
-        output=execution.output_file(params.get("output")) if (params.get("output") is not None) else None,
+        output=execution.output_file(params.get("output", None)) if (params.get("output") is not None) else None,
     )
     return ret
 
@@ -535,12 +538,7 @@ def mredit(
 
 __all__ = [
     "MREDIT_METADATA",
-    "MreditConfigParameters",
     "MreditOutputs",
-    "MreditParameters",
-    "MreditPlaneParameters",
-    "MreditSphereParameters",
-    "MreditVoxelParameters",
     "mredit",
     "mredit_config_params",
     "mredit_execute",

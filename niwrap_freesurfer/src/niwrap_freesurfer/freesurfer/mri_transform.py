@@ -14,7 +14,15 @@ MRI_TRANSFORM_METADATA = Metadata(
 
 
 MriTransformParameters = typing.TypedDict('MriTransformParameters', {
-    "@type": typing.Literal["freesurfer.mri_transform"],
+    "@type": typing.NotRequired[typing.Literal["freesurfer/mri_transform"]],
+    "input_volume": InputPathType,
+    "lta_file": InputPathType,
+    "output_file": str,
+    "out_like": typing.NotRequired[InputPathType | None],
+    "invert": bool,
+})
+MriTransformParametersTagged = typing.TypedDict('MriTransformParametersTagged', {
+    "@type": typing.Literal["freesurfer/mri_transform"],
     "input_volume": InputPathType,
     "lta_file": InputPathType,
     "output_file": str,
@@ -23,41 +31,9 @@ MriTransformParameters = typing.TypedDict('MriTransformParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "freesurfer.mri_transform": mri_transform_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "freesurfer.mri_transform": mri_transform_outputs,
-    }.get(t)
-
-
 class MriTransformOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `mri_transform(...)`.
+    Output object returned when calling `MriTransformParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -71,7 +47,7 @@ def mri_transform_params(
     output_file: str,
     out_like: InputPathType | None = None,
     invert: bool = False,
-) -> MriTransformParameters:
+) -> MriTransformParametersTagged:
     """
     Build parameters.
     
@@ -85,7 +61,7 @@ def mri_transform_params(
         Parameter dictionary
     """
     params = {
-        "@type": "freesurfer.mri_transform",
+        "@type": "freesurfer/mri_transform",
         "input_volume": input_volume,
         "lta_file": lta_file,
         "output_file": output_file,
@@ -111,15 +87,15 @@ def mri_transform_cargs(
     """
     cargs = []
     cargs.append("mri_transform")
-    cargs.append(execution.input_file(params.get("input_volume")))
-    cargs.append(execution.input_file(params.get("lta_file")))
-    cargs.append(params.get("output_file"))
-    if params.get("out_like") is not None:
+    cargs.append(execution.input_file(params.get("input_volume", None)))
+    cargs.append(execution.input_file(params.get("lta_file", None)))
+    cargs.append(params.get("output_file", None))
+    if params.get("out_like", None) is not None:
         cargs.extend([
             "-out_like",
-            execution.input_file(params.get("out_like"))
+            execution.input_file(params.get("out_like", None))
         ])
-    if params.get("invert"):
+    if params.get("invert", False):
         cargs.append("-I")
     return cargs
 
@@ -139,7 +115,7 @@ def mri_transform_outputs(
     """
     ret = MriTransformOutputs(
         root=execution.output_file("."),
-        transformed_output=execution.output_file(params.get("output_file")),
+        transformed_output=execution.output_file(params.get("output_file", None)),
     )
     return ret
 
@@ -212,7 +188,6 @@ def mri_transform(
 __all__ = [
     "MRI_TRANSFORM_METADATA",
     "MriTransformOutputs",
-    "MriTransformParameters",
     "mri_transform",
     "mri_transform_execute",
     "mri_transform_params",

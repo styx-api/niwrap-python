@@ -14,46 +14,20 @@ RECONBATCHJOBS_METADATA = Metadata(
 
 
 ReconbatchjobsParameters = typing.TypedDict('ReconbatchjobsParameters', {
-    "@type": typing.Literal["freesurfer.reconbatchjobs"],
+    "@type": typing.NotRequired[typing.Literal["freesurfer/reconbatchjobs"]],
+    "logfile": str,
+    "cmdfiles": list[str],
+})
+ReconbatchjobsParametersTagged = typing.TypedDict('ReconbatchjobsParametersTagged', {
+    "@type": typing.Literal["freesurfer/reconbatchjobs"],
     "logfile": str,
     "cmdfiles": list[str],
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "freesurfer.reconbatchjobs": reconbatchjobs_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-    }.get(t)
-
-
 class ReconbatchjobsOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `reconbatchjobs(...)`.
+    Output object returned when calling `ReconbatchjobsParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -62,7 +36,7 @@ class ReconbatchjobsOutputs(typing.NamedTuple):
 def reconbatchjobs_params(
     logfile: str,
     cmdfiles: list[str],
-) -> ReconbatchjobsParameters:
+) -> ReconbatchjobsParametersTagged:
     """
     Build parameters.
     
@@ -73,7 +47,7 @@ def reconbatchjobs_params(
         Parameter dictionary
     """
     params = {
-        "@type": "freesurfer.reconbatchjobs",
+        "@type": "freesurfer/reconbatchjobs",
         "logfile": logfile,
         "cmdfiles": cmdfiles,
     }
@@ -95,8 +69,8 @@ def reconbatchjobs_cargs(
     """
     cargs = []
     cargs.append("reconbatchjobs")
-    cargs.append(params.get("logfile"))
-    cargs.extend(params.get("cmdfiles"))
+    cargs.append(params.get("logfile", None))
+    cargs.extend(params.get("cmdfiles", None))
     return cargs
 
 
@@ -178,7 +152,6 @@ def reconbatchjobs(
 __all__ = [
     "RECONBATCHJOBS_METADATA",
     "ReconbatchjobsOutputs",
-    "ReconbatchjobsParameters",
     "reconbatchjobs",
     "reconbatchjobs_execute",
     "reconbatchjobs_params",

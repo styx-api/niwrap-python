@@ -14,7 +14,36 @@ V__DJUNCT_EDGY_ALIGN_CHECK_METADATA = Metadata(
 
 
 VDjunctEdgyAlignCheckParameters = typing.TypedDict('VDjunctEdgyAlignCheckParameters', {
-    "@type": typing.Literal["afni.@djunct_edgy_align_check"],
+    "@type": typing.NotRequired[typing.Literal["afni/@djunct_edgy_align_check"]],
+    "ULAY": str,
+    "OLAY": str,
+    "PREFIX": str,
+    "set_dicom_xyz": typing.NotRequired[list[float] | None],
+    "box_focus_slices": typing.NotRequired[str | None],
+    "montgap": typing.NotRequired[float | None],
+    "montcolor": typing.NotRequired[str | None],
+    "cbar": typing.NotRequired[str | None],
+    "save_ftype": typing.NotRequired[str | None],
+    "umin_fac": typing.NotRequired[float | None],
+    "montx": typing.NotRequired[float | None],
+    "monty": typing.NotRequired[float | None],
+    "use_olay_grid": typing.NotRequired[str | None],
+    "label_mode": typing.NotRequired[str | None],
+    "help_flag": bool,
+    "ver_flag": bool,
+    "echo_flag": bool,
+    "sharpen_ulay_off_flag": bool,
+    "mask_olay_edges_flag": bool,
+    "no_cor_flag": bool,
+    "no_sag_flag": bool,
+    "no_axi_flag": bool,
+    "no_clean_flag": bool,
+    "ulay_range": typing.NotRequired[list[float] | None],
+    "ulay_range_nz": typing.NotRequired[list[float] | None],
+    "ulay_range_am": typing.NotRequired[list[float] | None],
+})
+VDjunctEdgyAlignCheckParametersTagged = typing.TypedDict('VDjunctEdgyAlignCheckParametersTagged', {
+    "@type": typing.Literal["afni/@djunct_edgy_align_check"],
     "ULAY": str,
     "OLAY": str,
     "PREFIX": str,
@@ -44,40 +73,9 @@ VDjunctEdgyAlignCheckParameters = typing.TypedDict('VDjunctEdgyAlignCheckParamet
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "afni.@djunct_edgy_align_check": v__djunct_edgy_align_check_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-    }.get(t)
-
-
 class VDjunctEdgyAlignCheckOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `v__djunct_edgy_align_check(...)`.
+    Output object returned when calling `VDjunctEdgyAlignCheckParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -110,7 +108,7 @@ def v__djunct_edgy_align_check_params(
     ulay_range: list[float] | None = None,
     ulay_range_nz: list[float] | None = None,
     ulay_range_am: list[float] | None = None,
-) -> VDjunctEdgyAlignCheckParameters:
+) -> VDjunctEdgyAlignCheckParametersTagged:
     """
     Build parameters.
     
@@ -145,7 +143,7 @@ def v__djunct_edgy_align_check_params(
         Parameter dictionary
     """
     params = {
-        "@type": "afni.@djunct_edgy_align_check",
+        "@type": "afni/@djunct_edgy_align_check",
         "ULAY": ulay,
         "OLAY": olay,
         "PREFIX": prefix,
@@ -205,55 +203,55 @@ def v__djunct_edgy_align_check_cargs(
     """
     cargs = []
     cargs.append("@djunct_edgy_align_check")
-    cargs.append(params.get("ULAY"))
-    cargs.append(params.get("OLAY"))
-    cargs.append(params.get("PREFIX"))
-    if params.get("set_dicom_xyz") is not None:
-        cargs.extend(map(str, params.get("set_dicom_xyz")))
-    if params.get("box_focus_slices") is not None:
-        cargs.append(params.get("box_focus_slices"))
-    if params.get("montgap") is not None:
-        cargs.append(str(params.get("montgap")))
-    if params.get("montcolor") is not None:
-        cargs.append(params.get("montcolor"))
-    if params.get("cbar") is not None:
-        cargs.append(params.get("cbar"))
-    if params.get("save_ftype") is not None:
-        cargs.append(params.get("save_ftype"))
-    if params.get("umin_fac") is not None:
-        cargs.append(str(params.get("umin_fac")))
-    if params.get("montx") is not None:
-        cargs.append(str(params.get("montx")))
-    if params.get("monty") is not None:
-        cargs.append(str(params.get("monty")))
-    if params.get("use_olay_grid") is not None:
-        cargs.append(params.get("use_olay_grid"))
-    if params.get("label_mode") is not None:
-        cargs.append(params.get("label_mode"))
-    if params.get("help_flag"):
+    cargs.append(params.get("ULAY", None))
+    cargs.append(params.get("OLAY", None))
+    cargs.append(params.get("PREFIX", None))
+    if params.get("set_dicom_xyz", None) is not None:
+        cargs.extend(map(str, params.get("set_dicom_xyz", None)))
+    if params.get("box_focus_slices", None) is not None:
+        cargs.append(params.get("box_focus_slices", None))
+    if params.get("montgap", None) is not None:
+        cargs.append(str(params.get("montgap", None)))
+    if params.get("montcolor", None) is not None:
+        cargs.append(params.get("montcolor", None))
+    if params.get("cbar", None) is not None:
+        cargs.append(params.get("cbar", None))
+    if params.get("save_ftype", None) is not None:
+        cargs.append(params.get("save_ftype", None))
+    if params.get("umin_fac", None) is not None:
+        cargs.append(str(params.get("umin_fac", None)))
+    if params.get("montx", None) is not None:
+        cargs.append(str(params.get("montx", None)))
+    if params.get("monty", None) is not None:
+        cargs.append(str(params.get("monty", None)))
+    if params.get("use_olay_grid", None) is not None:
+        cargs.append(params.get("use_olay_grid", None))
+    if params.get("label_mode", None) is not None:
+        cargs.append(params.get("label_mode", None))
+    if params.get("help_flag", False):
         cargs.append("-help")
-    if params.get("ver_flag"):
+    if params.get("ver_flag", False):
         cargs.append("-ver")
-    if params.get("echo_flag"):
+    if params.get("echo_flag", False):
         cargs.append("-echo")
-    if params.get("sharpen_ulay_off_flag"):
+    if params.get("sharpen_ulay_off_flag", False):
         cargs.append("-sharpen_ulay_off")
-    if params.get("mask_olay_edges_flag"):
+    if params.get("mask_olay_edges_flag", False):
         cargs.append("-mask_olay_edges")
-    if params.get("no_cor_flag"):
+    if params.get("no_cor_flag", False):
         cargs.append("-no_cor")
-    if params.get("no_sag_flag"):
+    if params.get("no_sag_flag", False):
         cargs.append("-no_sag")
-    if params.get("no_axi_flag"):
+    if params.get("no_axi_flag", False):
         cargs.append("-no_axi")
-    if params.get("no_clean_flag"):
+    if params.get("no_clean_flag", False):
         cargs.append("-no_clean")
-    if params.get("ulay_range") is not None:
-        cargs.extend(map(str, params.get("ulay_range")))
-    if params.get("ulay_range_nz") is not None:
-        cargs.extend(map(str, params.get("ulay_range_nz")))
-    if params.get("ulay_range_am") is not None:
-        cargs.extend(map(str, params.get("ulay_range_am")))
+    if params.get("ulay_range", None) is not None:
+        cargs.extend(map(str, params.get("ulay_range", None)))
+    if params.get("ulay_range_nz", None) is not None:
+        cargs.extend(map(str, params.get("ulay_range_nz", None)))
+    if params.get("ulay_range_am", None) is not None:
+        cargs.extend(map(str, params.get("ulay_range_am", None)))
     return cargs
 
 
@@ -408,7 +406,6 @@ def v__djunct_edgy_align_check(
 
 __all__ = [
     "VDjunctEdgyAlignCheckOutputs",
-    "VDjunctEdgyAlignCheckParameters",
     "V__DJUNCT_EDGY_ALIGN_CHECK_METADATA",
     "v__djunct_edgy_align_check",
     "v__djunct_edgy_align_check_execute",

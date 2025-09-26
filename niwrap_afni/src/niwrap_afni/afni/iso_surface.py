@@ -14,7 +14,24 @@ ISO_SURFACE_METADATA = Metadata(
 
 
 IsoSurfaceParameters = typing.TypedDict('IsoSurfaceParameters', {
-    "@type": typing.Literal["afni.IsoSurface"],
+    "@type": typing.NotRequired[typing.Literal["afni/IsoSurface"]],
+    "input_vol": typing.NotRequired[InputPathType | None],
+    "shape_spec": typing.NotRequired[list[str] | None],
+    "isorois": bool,
+    "isoval": typing.NotRequired[str | None],
+    "isorange": typing.NotRequired[list[str] | None],
+    "isocmask": typing.NotRequired[str | None],
+    "output_prefix": typing.NotRequired[str | None],
+    "tsmooth": typing.NotRequired[list[str] | None],
+    "debug": typing.NotRequired[str | None],
+    "autocrop": bool,
+    "remesh": typing.NotRequired[str | None],
+    "xform": typing.NotRequired[str | None],
+    "novolreg": bool,
+    "noxform": bool,
+})
+IsoSurfaceParametersTagged = typing.TypedDict('IsoSurfaceParametersTagged', {
+    "@type": typing.Literal["afni/IsoSurface"],
     "input_vol": typing.NotRequired[InputPathType | None],
     "shape_spec": typing.NotRequired[list[str] | None],
     "isorois": bool,
@@ -32,41 +49,9 @@ IsoSurfaceParameters = typing.TypedDict('IsoSurfaceParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "afni.IsoSurface": iso_surface_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "afni.IsoSurface": iso_surface_outputs,
-    }.get(t)
-
-
 class IsoSurfaceOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `iso_surface(...)`.
+    Output object returned when calling `IsoSurfaceParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -93,7 +78,7 @@ def iso_surface_params(
     xform: str | None = None,
     novolreg: bool = False,
     noxform: bool = False,
-) -> IsoSurfaceParameters:
+) -> IsoSurfaceParametersTagged:
     """
     Build parameters.
     
@@ -118,7 +103,7 @@ def iso_surface_params(
         Parameter dictionary
     """
     params = {
-        "@type": "afni.IsoSurface",
+        "@type": "afni/IsoSurface",
         "isorois": isorois,
         "autocrop": autocrop,
         "novolreg": novolreg,
@@ -162,63 +147,63 @@ def iso_surface_cargs(
     """
     cargs = []
     cargs.append("IsoSurface")
-    if params.get("input_vol") is not None:
+    if params.get("input_vol", None) is not None:
         cargs.extend([
             "-input",
-            execution.input_file(params.get("input_vol"))
+            execution.input_file(params.get("input_vol", None))
         ])
-    if params.get("shape_spec") is not None:
+    if params.get("shape_spec", None) is not None:
         cargs.extend([
             "-shape",
-            *params.get("shape_spec")
+            *params.get("shape_spec", None)
         ])
-    if params.get("isorois"):
+    if params.get("isorois", False):
         cargs.append("-isorois")
-    if params.get("isoval") is not None:
+    if params.get("isoval", None) is not None:
         cargs.extend([
             "-isoval",
-            params.get("isoval")
+            params.get("isoval", None)
         ])
-    if params.get("isorange") is not None:
+    if params.get("isorange", None) is not None:
         cargs.extend([
             "-isorange",
-            *params.get("isorange")
+            *params.get("isorange", None)
         ])
-    if params.get("isocmask") is not None:
+    if params.get("isocmask", None) is not None:
         cargs.extend([
             "-isocmask",
-            params.get("isocmask")
+            params.get("isocmask", None)
         ])
-    if params.get("output_prefix") is not None:
+    if params.get("output_prefix", None) is not None:
         cargs.extend([
             "-o_TYPE",
-            params.get("output_prefix")
+            params.get("output_prefix", None)
         ])
-    if params.get("tsmooth") is not None:
+    if params.get("tsmooth", None) is not None:
         cargs.extend([
             "-Tsmooth",
-            *params.get("tsmooth")
+            *params.get("tsmooth", None)
         ])
-    if params.get("debug") is not None:
+    if params.get("debug", None) is not None:
         cargs.extend([
             "-debug",
-            params.get("debug")
+            params.get("debug", None)
         ])
-    if params.get("autocrop"):
+    if params.get("autocrop", False):
         cargs.append("-autocrop")
-    if params.get("remesh") is not None:
+    if params.get("remesh", None) is not None:
         cargs.extend([
             "-remesh",
-            params.get("remesh")
+            params.get("remesh", None)
         ])
-    if params.get("xform") is not None:
+    if params.get("xform", None) is not None:
         cargs.extend([
             "-xform",
-            params.get("xform")
+            params.get("xform", None)
         ])
-    if params.get("novolreg"):
+    if params.get("novolreg", False):
         cargs.append("-novolreg")
-    if params.get("noxform"):
+    if params.get("noxform", False):
         cargs.append("-noxform")
     return cargs
 
@@ -342,7 +327,6 @@ def iso_surface(
 __all__ = [
     "ISO_SURFACE_METADATA",
     "IsoSurfaceOutputs",
-    "IsoSurfaceParameters",
     "iso_surface",
     "iso_surface_execute",
     "iso_surface_params",

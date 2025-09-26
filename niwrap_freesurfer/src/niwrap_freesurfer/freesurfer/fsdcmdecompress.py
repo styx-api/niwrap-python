@@ -14,7 +14,16 @@ FSDCMDECOMPRESS_METADATA = Metadata(
 
 
 FsdcmdecompressParameters = typing.TypedDict('FsdcmdecompressParameters', {
-    "@type": typing.Literal["freesurfer.fsdcmdecompress"],
+    "@type": typing.NotRequired[typing.Literal["freesurfer/fsdcmdecompress"]],
+    "indcmfile": InputPathType,
+    "outdcmfile": str,
+    "dcmtk": bool,
+    "jpeg": bool,
+    "rle": bool,
+    "gdcm": bool,
+})
+FsdcmdecompressParametersTagged = typing.TypedDict('FsdcmdecompressParametersTagged', {
+    "@type": typing.Literal["freesurfer/fsdcmdecompress"],
     "indcmfile": InputPathType,
     "outdcmfile": str,
     "dcmtk": bool,
@@ -24,41 +33,9 @@ FsdcmdecompressParameters = typing.TypedDict('FsdcmdecompressParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "freesurfer.fsdcmdecompress": fsdcmdecompress_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "freesurfer.fsdcmdecompress": fsdcmdecompress_outputs,
-    }.get(t)
-
-
 class FsdcmdecompressOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `fsdcmdecompress(...)`.
+    Output object returned when calling `FsdcmdecompressParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -73,7 +50,7 @@ def fsdcmdecompress_params(
     jpeg: bool = False,
     rle: bool = False,
     gdcm: bool = False,
-) -> FsdcmdecompressParameters:
+) -> FsdcmdecompressParametersTagged:
     """
     Build parameters.
     
@@ -88,7 +65,7 @@ def fsdcmdecompress_params(
         Parameter dictionary
     """
     params = {
-        "@type": "freesurfer.fsdcmdecompress",
+        "@type": "freesurfer/fsdcmdecompress",
         "indcmfile": indcmfile,
         "outdcmfile": outdcmfile,
         "dcmtk": dcmtk,
@@ -116,19 +93,19 @@ def fsdcmdecompress_cargs(
     cargs.append("fsdcmdecompress")
     cargs.extend([
         "--i",
-        execution.input_file(params.get("indcmfile"))
+        execution.input_file(params.get("indcmfile", None))
     ])
     cargs.extend([
         "--o",
-        params.get("outdcmfile")
+        params.get("outdcmfile", None)
     ])
-    if params.get("dcmtk"):
+    if params.get("dcmtk", False):
         cargs.append("--dcmtk")
-    if params.get("jpeg"):
+    if params.get("jpeg", False):
         cargs.append("--jpeg")
-    if params.get("rle"):
+    if params.get("rle", False):
         cargs.append("--rle")
-    if params.get("gdcm"):
+    if params.get("gdcm", False):
         cargs.append("--gdcm")
     return cargs
 
@@ -148,7 +125,7 @@ def fsdcmdecompress_outputs(
     """
     ret = FsdcmdecompressOutputs(
         root=execution.output_file("."),
-        out_file=execution.output_file(params.get("outdcmfile")),
+        out_file=execution.output_file(params.get("outdcmfile", None)),
     )
     return ret
 
@@ -224,7 +201,6 @@ def fsdcmdecompress(
 __all__ = [
     "FSDCMDECOMPRESS_METADATA",
     "FsdcmdecompressOutputs",
-    "FsdcmdecompressParameters",
     "fsdcmdecompress",
     "fsdcmdecompress_execute",
     "fsdcmdecompress_params",

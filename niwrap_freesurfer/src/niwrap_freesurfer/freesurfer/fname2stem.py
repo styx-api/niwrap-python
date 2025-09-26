@@ -14,45 +14,18 @@ FNAME2STEM_METADATA = Metadata(
 
 
 Fname2stemParameters = typing.TypedDict('Fname2stemParameters', {
-    "@type": typing.Literal["freesurfer.fname2stem"],
+    "@type": typing.NotRequired[typing.Literal["freesurfer/fname2stem"]],
+    "filename": str,
+})
+Fname2stemParametersTagged = typing.TypedDict('Fname2stemParametersTagged', {
+    "@type": typing.Literal["freesurfer/fname2stem"],
     "filename": str,
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "freesurfer.fname2stem": fname2stem_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-    }.get(t)
-
-
 class Fname2stemOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `fname2stem(...)`.
+    Output object returned when calling `Fname2stemParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -60,7 +33,7 @@ class Fname2stemOutputs(typing.NamedTuple):
 
 def fname2stem_params(
     filename: str,
-) -> Fname2stemParameters:
+) -> Fname2stemParametersTagged:
     """
     Build parameters.
     
@@ -71,7 +44,7 @@ def fname2stem_params(
         Parameter dictionary
     """
     params = {
-        "@type": "freesurfer.fname2stem",
+        "@type": "freesurfer/fname2stem",
         "filename": filename,
     }
     return params
@@ -92,7 +65,7 @@ def fname2stem_cargs(
     """
     cargs = []
     cargs.append("fname2stem")
-    cargs.append(params.get("filename"))
+    cargs.append(params.get("filename", None))
     return cargs
 
 
@@ -174,7 +147,6 @@ def fname2stem(
 __all__ = [
     "FNAME2STEM_METADATA",
     "Fname2stemOutputs",
-    "Fname2stemParameters",
     "fname2stem",
     "fname2stem_execute",
     "fname2stem_params",

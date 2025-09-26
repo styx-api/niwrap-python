@@ -14,7 +14,48 @@ DCMUNPACK_METADATA = Metadata(
 
 
 DcmunpackParameters = typing.TypedDict('DcmunpackParameters', {
-    "@type": typing.Literal["freesurfer.dcmunpack"],
+    "@type": typing.NotRequired[typing.Literal["freesurfer/dcmunpack"]],
+    "src": str,
+    "targ": typing.NotRequired[str | None],
+    "run": typing.NotRequired[str | None],
+    "auto_runseq": typing.NotRequired[str | None],
+    "keep_scouts": bool,
+    "scanonly": typing.NotRequired[str | None],
+    "one_per_dir": bool,
+    "ext": typing.NotRequired[str | None],
+    "pre": typing.NotRequired[str | None],
+    "pat": typing.NotRequired[str | None],
+    "no_infodump": bool,
+    "generic": bool,
+    "copy_only": bool,
+    "no_convert": bool,
+    "force_update": bool,
+    "max": bool,
+    "base": bool,
+    "key_string": typing.NotRequired[str | None],
+    "index_out": typing.NotRequired[str | None],
+    "index_in": typing.NotRequired[str | None],
+    "it_dicom": bool,
+    "no_exit_on_error": bool,
+    "run_skip": typing.NotRequired[str | None],
+    "no_rescale_dicom": bool,
+    "rescale_dicom": bool,
+    "no_dwi": bool,
+    "iid": typing.NotRequired[list[float] | None],
+    "ijd": typing.NotRequired[list[float] | None],
+    "ikd": typing.NotRequired[list[float] | None],
+    "extra_info": bool,
+    "first_dicom": bool,
+    "no_dcm2niix": bool,
+    "phase": bool,
+    "fips": typing.NotRequired[str | None],
+    "fips_run": typing.NotRequired[str | None],
+    "xml_only": bool,
+    "log": typing.NotRequired[str | None],
+    "debug": bool,
+})
+DcmunpackParametersTagged = typing.TypedDict('DcmunpackParametersTagged', {
+    "@type": typing.Literal["freesurfer/dcmunpack"],
     "src": str,
     "targ": typing.NotRequired[str | None],
     "run": typing.NotRequired[str | None],
@@ -56,40 +97,9 @@ DcmunpackParameters = typing.TypedDict('DcmunpackParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "freesurfer.dcmunpack": dcmunpack_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-    }.get(t)
-
-
 class DcmunpackOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `dcmunpack(...)`.
+    Output object returned when calling `DcmunpackParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -134,7 +144,7 @@ def dcmunpack_params(
     xml_only: bool = False,
     log: str | None = None,
     debug: bool = False,
-) -> DcmunpackParameters:
+) -> DcmunpackParametersTagged:
     """
     Build parameters.
     
@@ -189,7 +199,7 @@ def dcmunpack_params(
         Parameter dictionary
     """
     params = {
-        "@type": "freesurfer.dcmunpack",
+        "@type": "freesurfer/dcmunpack",
         "src": src,
         "keep_scouts": keep_scouts,
         "one_per_dir": one_per_dir,
@@ -266,132 +276,132 @@ def dcmunpack_cargs(
     cargs.append("dcmunpack")
     cargs.extend([
         "-src",
-        params.get("src")
+        params.get("src", None)
     ])
-    if params.get("targ") is not None:
+    if params.get("targ", None) is not None:
         cargs.extend([
             "-targ",
-            params.get("targ")
+            params.get("targ", None)
         ])
-    if params.get("run") is not None:
+    if params.get("run", None) is not None:
         cargs.extend([
             "-run",
-            params.get("run")
+            params.get("run", None)
         ])
-    if params.get("auto_runseq") is not None:
+    if params.get("auto_runseq", None) is not None:
         cargs.extend([
             "-auto-runseq",
-            params.get("auto_runseq")
+            params.get("auto_runseq", None)
         ])
-    if params.get("keep_scouts"):
+    if params.get("keep_scouts", False):
         cargs.append("-keep-scouts")
-    if params.get("scanonly") is not None:
+    if params.get("scanonly", None) is not None:
         cargs.extend([
             "-scanonly",
-            params.get("scanonly")
+            params.get("scanonly", None)
         ])
-    if params.get("one_per_dir"):
+    if params.get("one_per_dir", False):
         cargs.append("-one-per-dir")
-    if params.get("ext") is not None:
+    if params.get("ext", None) is not None:
         cargs.extend([
             "-ext",
-            params.get("ext")
+            params.get("ext", None)
         ])
-    if params.get("pre") is not None:
+    if params.get("pre", None) is not None:
         cargs.extend([
             "-pre",
-            params.get("pre")
+            params.get("pre", None)
         ])
-    if params.get("pat") is not None:
+    if params.get("pat", None) is not None:
         cargs.extend([
             "-pat",
-            params.get("pat")
+            params.get("pat", None)
         ])
-    if params.get("no_infodump"):
+    if params.get("no_infodump", False):
         cargs.append("-no-infodump")
-    if params.get("generic"):
+    if params.get("generic", False):
         cargs.append("-generic")
-    if params.get("copy_only"):
+    if params.get("copy_only", False):
         cargs.append("-copy-only")
-    if params.get("no_convert"):
+    if params.get("no_convert", False):
         cargs.append("-no-convert")
-    if params.get("force_update"):
+    if params.get("force_update", False):
         cargs.append("-force-update")
-    if params.get("max"):
+    if params.get("max", False):
         cargs.append("-max")
-    if params.get("base"):
+    if params.get("base", False):
         cargs.append("-base")
-    if params.get("key_string") is not None:
+    if params.get("key_string", None) is not None:
         cargs.extend([
             "-key",
-            params.get("key_string")
+            params.get("key_string", None)
         ])
-    if params.get("index_out") is not None:
+    if params.get("index_out", None) is not None:
         cargs.extend([
             "-index-out",
-            params.get("index_out")
+            params.get("index_out", None)
         ])
-    if params.get("index_in") is not None:
+    if params.get("index_in", None) is not None:
         cargs.extend([
             "-index-in",
-            params.get("index_in")
+            params.get("index_in", None)
         ])
-    if params.get("it_dicom"):
+    if params.get("it_dicom", False):
         cargs.append("-itdicom")
-    if params.get("no_exit_on_error"):
+    if params.get("no_exit_on_error", False):
         cargs.append("-no-exit-on-error")
-    if params.get("run_skip") is not None:
+    if params.get("run_skip", None) is not None:
         cargs.extend([
             "-run-skip",
-            params.get("run_skip")
+            params.get("run_skip", None)
         ])
-    if params.get("no_rescale_dicom"):
+    if params.get("no_rescale_dicom", False):
         cargs.append("-no-rescale-dicom")
-    if params.get("rescale_dicom"):
+    if params.get("rescale_dicom", False):
         cargs.append("-rescale-dicom")
-    if params.get("no_dwi"):
+    if params.get("no_dwi", False):
         cargs.append("-no-dwi")
-    if params.get("iid") is not None:
+    if params.get("iid", None) is not None:
         cargs.extend([
             "-iid",
-            *map(str, params.get("iid"))
+            *map(str, params.get("iid", None))
         ])
-    if params.get("ijd") is not None:
+    if params.get("ijd", None) is not None:
         cargs.extend([
             "-ijd",
-            *map(str, params.get("ijd"))
+            *map(str, params.get("ijd", None))
         ])
-    if params.get("ikd") is not None:
+    if params.get("ikd", None) is not None:
         cargs.extend([
             "-ikd",
-            *map(str, params.get("ikd"))
+            *map(str, params.get("ikd", None))
         ])
-    if params.get("extra_info"):
+    if params.get("extra_info", False):
         cargs.append("-extra-info")
-    if params.get("first_dicom"):
+    if params.get("first_dicom", False):
         cargs.append("-first-dicom")
-    if params.get("no_dcm2niix"):
+    if params.get("no_dcm2niix", False):
         cargs.append("-no-dcm2niix")
-    if params.get("phase"):
+    if params.get("phase", False):
         cargs.append("-phase")
-    if params.get("fips") is not None:
+    if params.get("fips", None) is not None:
         cargs.extend([
             "-fips",
-            params.get("fips")
+            params.get("fips", None)
         ])
-    if params.get("fips_run") is not None:
+    if params.get("fips_run", None) is not None:
         cargs.extend([
             "-fips-run",
-            params.get("fips_run")
+            params.get("fips_run", None)
         ])
-    if params.get("xml_only"):
+    if params.get("xml_only", False):
         cargs.append("-xml-only")
-    if params.get("log") is not None:
+    if params.get("log", None) is not None:
         cargs.extend([
             "-log",
-            params.get("log")
+            params.get("log", None)
         ])
-    if params.get("debug"):
+    if params.get("debug", False):
         cargs.append("-debug")
     return cargs
 
@@ -592,7 +602,6 @@ def dcmunpack(
 __all__ = [
     "DCMUNPACK_METADATA",
     "DcmunpackOutputs",
-    "DcmunpackParameters",
     "dcmunpack",
     "dcmunpack_execute",
     "dcmunpack_params",

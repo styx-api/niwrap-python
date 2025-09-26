@@ -14,47 +14,20 @@ SEGMENT_HA_T1_LONG_SH_METADATA = Metadata(
 
 
 SegmentHaT1LongShParameters = typing.TypedDict('SegmentHaT1LongShParameters', {
-    "@type": typing.Literal["freesurfer.segmentHA_T1_long.sh"],
+    "@type": typing.NotRequired[typing.Literal["freesurfer/segmentHA_T1_long.sh"]],
+    "subject_dir": str,
+    "subject_id": str,
+})
+SegmentHaT1LongShParametersTagged = typing.TypedDict('SegmentHaT1LongShParametersTagged', {
+    "@type": typing.Literal["freesurfer/segmentHA_T1_long.sh"],
     "subject_dir": str,
     "subject_id": str,
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "freesurfer.segmentHA_T1_long.sh": segment_ha_t1_long_sh_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "freesurfer.segmentHA_T1_long.sh": segment_ha_t1_long_sh_outputs,
-    }.get(t)
-
-
 class SegmentHaT1LongShOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `segment_ha_t1_long_sh(...)`.
+    Output object returned when calling `SegmentHaT1LongShParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -65,7 +38,7 @@ class SegmentHaT1LongShOutputs(typing.NamedTuple):
 def segment_ha_t1_long_sh_params(
     subject_dir: str,
     subject_id: str,
-) -> SegmentHaT1LongShParameters:
+) -> SegmentHaT1LongShParametersTagged:
     """
     Build parameters.
     
@@ -76,7 +49,7 @@ def segment_ha_t1_long_sh_params(
         Parameter dictionary
     """
     params = {
-        "@type": "freesurfer.segmentHA_T1_long.sh",
+        "@type": "freesurfer/segmentHA_T1_long.sh",
         "subject_dir": subject_dir,
         "subject_id": subject_id,
     }
@@ -98,8 +71,8 @@ def segment_ha_t1_long_sh_cargs(
     """
     cargs = []
     cargs.append("segmentHA_T1_long.sh")
-    cargs.append(params.get("subject_dir"))
-    cargs.append(params.get("subject_id"))
+    cargs.append(params.get("subject_dir", None))
+    cargs.append(params.get("subject_id", None))
     return cargs
 
 
@@ -118,7 +91,7 @@ def segment_ha_t1_long_sh_outputs(
     """
     ret = SegmentHaT1LongShOutputs(
         root=execution.output_file("."),
-        output_dir=execution.output_file(params.get("subject_dir") + "/" + params.get("subject_id") + "_long_segment/output"),
+        output_dir=execution.output_file(params.get("subject_dir", None) + "/" + params.get("subject_id", None) + "_long_segment/output"),
     )
     return ret
 
@@ -182,7 +155,6 @@ def segment_ha_t1_long_sh(
 __all__ = [
     "SEGMENT_HA_T1_LONG_SH_METADATA",
     "SegmentHaT1LongShOutputs",
-    "SegmentHaT1LongShParameters",
     "segment_ha_t1_long_sh",
     "segment_ha_t1_long_sh_execute",
     "segment_ha_t1_long_sh_params",

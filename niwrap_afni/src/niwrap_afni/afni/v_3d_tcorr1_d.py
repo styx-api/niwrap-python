@@ -14,7 +14,18 @@ V_3D_TCORR1_D_METADATA = Metadata(
 
 
 V3dTcorr1DParameters = typing.TypedDict('V3dTcorr1DParameters', {
-    "@type": typing.Literal["afni.3dTcorr1D"],
+    "@type": typing.NotRequired[typing.Literal["afni/3dTcorr1D"]],
+    "ktaub": bool,
+    "num_threads": typing.NotRequired[int | None],
+    "outputtype": typing.NotRequired[typing.Literal["NIFTI", "AFNI", "NIFTI_GZ"] | None],
+    "pearson": bool,
+    "quadrant": bool,
+    "spearman": bool,
+    "xset": InputPathType,
+    "y_1d": InputPathType,
+})
+V3dTcorr1DParametersTagged = typing.TypedDict('V3dTcorr1DParametersTagged', {
+    "@type": typing.Literal["afni/3dTcorr1D"],
     "ktaub": bool,
     "num_threads": typing.NotRequired[int | None],
     "outputtype": typing.NotRequired[typing.Literal["NIFTI", "AFNI", "NIFTI_GZ"] | None],
@@ -26,41 +37,9 @@ V3dTcorr1DParameters = typing.TypedDict('V3dTcorr1DParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "afni.3dTcorr1D": v_3d_tcorr1_d_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "afni.3dTcorr1D": v_3d_tcorr1_d_outputs,
-    }.get(t)
-
-
 class V3dTcorr1DOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `v_3d_tcorr1_d(...)`.
+    Output object returned when calling `V3dTcorr1DParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -79,7 +58,7 @@ def v_3d_tcorr1_d_params(
     pearson: bool = False,
     quadrant: bool = False,
     spearman: bool = False,
-) -> V3dTcorr1DParameters:
+) -> V3dTcorr1DParametersTagged:
     """
     Build parameters.
     
@@ -96,7 +75,7 @@ def v_3d_tcorr1_d_params(
         Parameter dictionary
     """
     params = {
-        "@type": "afni.3dTcorr1D",
+        "@type": "afni/3dTcorr1D",
         "ktaub": ktaub,
         "pearson": pearson,
         "quadrant": quadrant,
@@ -126,18 +105,18 @@ def v_3d_tcorr1_d_cargs(
     """
     cargs = []
     cargs.append("3dTcorr1D")
-    if params.get("ktaub"):
+    if params.get("ktaub", False):
         cargs.append("-ktaub")
-    if params.get("num_threads") is not None:
-        cargs.append(str(params.get("num_threads")))
-    if params.get("outputtype") is not None:
-        cargs.append(params.get("outputtype"))
-    if params.get("pearson"):
+    if params.get("num_threads", None) is not None:
+        cargs.append(str(params.get("num_threads", None)))
+    if params.get("outputtype", None) is not None:
+        cargs.append(params.get("outputtype", None))
+    if params.get("pearson", False):
         cargs.append("-pearson")
-    if params.get("quadrant"):
+    if params.get("quadrant", False):
         cargs.append("-quadrant")
-    if params.get("spearman"):
-        cargs.append("-spearman" + execution.input_file(params.get("xset")) + execution.input_file(params.get("y_1d")))
+    if params.get("spearman", False):
+        cargs.append("-spearman" + execution.input_file(params.get("xset", None)) + execution.input_file(params.get("y_1d", None)))
     return cargs
 
 
@@ -156,7 +135,7 @@ def v_3d_tcorr1_d_outputs(
     """
     ret = V3dTcorr1DOutputs(
         root=execution.output_file("."),
-        out_file=execution.output_file(pathlib.Path(params.get("xset")).name + "_correlation.nii.gz"),
+        out_file=execution.output_file(pathlib.Path(params.get("xset", None)).name + "_correlation.nii.gz"),
         out_file_=execution.output_file("out_file"),
     )
     return ret
@@ -240,7 +219,6 @@ def v_3d_tcorr1_d(
 
 __all__ = [
     "V3dTcorr1DOutputs",
-    "V3dTcorr1DParameters",
     "V_3D_TCORR1_D_METADATA",
     "v_3d_tcorr1_d",
     "v_3d_tcorr1_d_execute",

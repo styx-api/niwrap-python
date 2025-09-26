@@ -14,46 +14,18 @@ DICOM_TO_RAW_METADATA = Metadata(
 
 
 DicomToRawParameters = typing.TypedDict('DicomToRawParameters', {
-    "@type": typing.Literal["afni.dicom_to_raw"],
+    "@type": typing.NotRequired[typing.Literal["afni/dicom_to_raw"]],
+    "input_dicom": InputPathType,
+})
+DicomToRawParametersTagged = typing.TypedDict('DicomToRawParametersTagged', {
+    "@type": typing.Literal["afni/dicom_to_raw"],
     "input_dicom": InputPathType,
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "afni.dicom_to_raw": dicom_to_raw_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "afni.dicom_to_raw": dicom_to_raw_outputs,
-    }.get(t)
-
-
 class DicomToRawOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `dicom_to_raw(...)`.
+    Output object returned when calling `DicomToRawParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -63,7 +35,7 @@ class DicomToRawOutputs(typing.NamedTuple):
 
 def dicom_to_raw_params(
     input_dicom: InputPathType,
-) -> DicomToRawParameters:
+) -> DicomToRawParametersTagged:
     """
     Build parameters.
     
@@ -73,7 +45,7 @@ def dicom_to_raw_params(
         Parameter dictionary
     """
     params = {
-        "@type": "afni.dicom_to_raw",
+        "@type": "afni/dicom_to_raw",
         "input_dicom": input_dicom,
     }
     return params
@@ -94,7 +66,7 @@ def dicom_to_raw_cargs(
     """
     cargs = []
     cargs.append("dicom_to_raw")
-    cargs.append(execution.input_file(params.get("input_dicom")))
+    cargs.append(execution.input_file(params.get("input_dicom", None)))
     return cargs
 
 
@@ -113,7 +85,7 @@ def dicom_to_raw_outputs(
     """
     ret = DicomToRawOutputs(
         root=execution.output_file("."),
-        output_raw_file=execution.output_file(pathlib.Path(params.get("input_dicom")).name + ".raw.0001"),
+        output_raw_file=execution.output_file(pathlib.Path(params.get("input_dicom", None)).name + ".raw.0001"),
     )
     return ret
 
@@ -174,7 +146,6 @@ def dicom_to_raw(
 __all__ = [
     "DICOM_TO_RAW_METADATA",
     "DicomToRawOutputs",
-    "DicomToRawParameters",
     "dicom_to_raw",
     "dicom_to_raw_execute",
     "dicom_to_raw_params",

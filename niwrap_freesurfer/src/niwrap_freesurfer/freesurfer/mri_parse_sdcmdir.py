@@ -14,7 +14,15 @@ MRI_PARSE_SDCMDIR_METADATA = Metadata(
 
 
 MriParseSdcmdirParameters = typing.TypedDict('MriParseSdcmdirParameters', {
-    "@type": typing.Literal["freesurfer.mri_parse_sdcmdir"],
+    "@type": typing.NotRequired[typing.Literal["freesurfer/mri_parse_sdcmdir"]],
+    "sdicomdir": str,
+    "outfile": typing.NotRequired[str | None],
+    "sortbyrun": bool,
+    "summarize": bool,
+    "dwi": bool,
+})
+MriParseSdcmdirParametersTagged = typing.TypedDict('MriParseSdcmdirParametersTagged', {
+    "@type": typing.Literal["freesurfer/mri_parse_sdcmdir"],
     "sdicomdir": str,
     "outfile": typing.NotRequired[str | None],
     "sortbyrun": bool,
@@ -23,40 +31,9 @@ MriParseSdcmdirParameters = typing.TypedDict('MriParseSdcmdirParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "freesurfer.mri_parse_sdcmdir": mri_parse_sdcmdir_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-    }.get(t)
-
-
 class MriParseSdcmdirOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `mri_parse_sdcmdir(...)`.
+    Output object returned when calling `MriParseSdcmdirParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -68,7 +45,7 @@ def mri_parse_sdcmdir_params(
     sortbyrun: bool = False,
     summarize: bool = False,
     dwi: bool = False,
-) -> MriParseSdcmdirParameters:
+) -> MriParseSdcmdirParametersTagged:
     """
     Build parameters.
     
@@ -83,7 +60,7 @@ def mri_parse_sdcmdir_params(
         Parameter dictionary
     """
     params = {
-        "@type": "freesurfer.mri_parse_sdcmdir",
+        "@type": "freesurfer/mri_parse_sdcmdir",
         "sdicomdir": sdicomdir,
         "sortbyrun": sortbyrun,
         "summarize": summarize,
@@ -111,18 +88,18 @@ def mri_parse_sdcmdir_cargs(
     cargs.append("mri_parse_sdcmdir")
     cargs.extend([
         "--d",
-        params.get("sdicomdir")
+        params.get("sdicomdir", None)
     ])
-    if params.get("outfile") is not None:
+    if params.get("outfile", None) is not None:
         cargs.extend([
             "--o",
-            params.get("outfile")
+            params.get("outfile", None)
         ])
-    if params.get("sortbyrun"):
+    if params.get("sortbyrun", False):
         cargs.append("--sortbyrun")
-    if params.get("summarize"):
+    if params.get("summarize", False):
         cargs.append("--summarize")
-    if params.get("dwi"):
+    if params.get("dwi", False):
         cargs.append("--dwi")
     return cargs
 
@@ -217,7 +194,6 @@ def mri_parse_sdcmdir(
 __all__ = [
     "MRI_PARSE_SDCMDIR_METADATA",
     "MriParseSdcmdirOutputs",
-    "MriParseSdcmdirParameters",
     "mri_parse_sdcmdir",
     "mri_parse_sdcmdir_execute",
     "mri_parse_sdcmdir_params",

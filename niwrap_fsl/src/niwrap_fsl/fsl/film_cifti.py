@@ -14,7 +14,19 @@ FILM_CIFTI_METADATA = Metadata(
 
 
 FilmCiftiParameters = typing.TypedDict('FilmCiftiParameters', {
-    "@type": typing.Literal["fsl.film_cifti"],
+    "@type": typing.NotRequired[typing.Literal["fsl/film_cifti"]],
+    "input_filename": InputPathType,
+    "basename": str,
+    "left_surface": InputPathType,
+    "right_surface": InputPathType,
+    "susan_threshold": typing.NotRequired[float | None],
+    "susan_extent": typing.NotRequired[float | None],
+    "surface_sigma": typing.NotRequired[float | None],
+    "surface_extent": typing.NotRequired[float | None],
+    "film_options": typing.NotRequired[str | None],
+})
+FilmCiftiParametersTagged = typing.TypedDict('FilmCiftiParametersTagged', {
+    "@type": typing.Literal["fsl/film_cifti"],
     "input_filename": InputPathType,
     "basename": str,
     "left_surface": InputPathType,
@@ -27,41 +39,9 @@ FilmCiftiParameters = typing.TypedDict('FilmCiftiParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "fsl.film_cifti": film_cifti_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "fsl.film_cifti": film_cifti_outputs,
-    }.get(t)
-
-
 class FilmCiftiOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `film_cifti(...)`.
+    Output object returned when calling `FilmCiftiParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -79,7 +59,7 @@ def film_cifti_params(
     surface_sigma: float | None = None,
     surface_extent: float | None = None,
     film_options: str | None = None,
-) -> FilmCiftiParameters:
+) -> FilmCiftiParametersTagged:
     """
     Build parameters.
     
@@ -99,7 +79,7 @@ def film_cifti_params(
         Parameter dictionary
     """
     params = {
-        "@type": "fsl.film_cifti",
+        "@type": "fsl/film_cifti",
         "input_filename": input_filename,
         "basename": basename,
         "left_surface": left_surface,
@@ -135,44 +115,44 @@ def film_cifti_cargs(
     cargs.append("film_cifti")
     cargs.extend([
         "-i",
-        execution.input_file(params.get("input_filename"))
+        execution.input_file(params.get("input_filename", None))
     ])
     cargs.extend([
         "-o",
-        params.get("basename")
+        params.get("basename", None)
     ])
     cargs.extend([
         "-l",
-        execution.input_file(params.get("left_surface"))
+        execution.input_file(params.get("left_surface", None))
     ])
     cargs.extend([
         "-r",
-        execution.input_file(params.get("right_surface"))
+        execution.input_file(params.get("right_surface", None))
     ])
-    if params.get("susan_threshold") is not None:
+    if params.get("susan_threshold", None) is not None:
         cargs.extend([
             "--st",
-            str(params.get("susan_threshold"))
+            str(params.get("susan_threshold", None))
         ])
-    if params.get("susan_extent") is not None:
+    if params.get("susan_extent", None) is not None:
         cargs.extend([
             "--sm",
-            str(params.get("susan_extent"))
+            str(params.get("susan_extent", None))
         ])
-    if params.get("surface_sigma") is not None:
+    if params.get("surface_sigma", None) is not None:
         cargs.extend([
             "--ss",
-            str(params.get("surface_sigma"))
+            str(params.get("surface_sigma", None))
         ])
-    if params.get("surface_extent") is not None:
+    if params.get("surface_extent", None) is not None:
         cargs.extend([
             "--se",
-            str(params.get("surface_extent"))
+            str(params.get("surface_extent", None))
         ])
-    if params.get("film_options") is not None:
+    if params.get("film_options", None) is not None:
         cargs.extend([
             "--filmOptions",
-            params.get("film_options")
+            params.get("film_options", None)
         ])
     return cargs
 
@@ -192,7 +172,7 @@ def film_cifti_outputs(
     """
     ret = FilmCiftiOutputs(
         root=execution.output_file("."),
-        output_results=execution.output_file(params.get("basename") + "_results.nii.gz"),
+        output_results=execution.output_file(params.get("basename", None) + "_results.nii.gz"),
     )
     return ret
 
@@ -279,7 +259,6 @@ def film_cifti(
 __all__ = [
     "FILM_CIFTI_METADATA",
     "FilmCiftiOutputs",
-    "FilmCiftiParameters",
     "film_cifti",
     "film_cifti_execute",
     "film_cifti_params",

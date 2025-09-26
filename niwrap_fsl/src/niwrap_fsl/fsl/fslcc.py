@@ -14,7 +14,17 @@ FSLCC_METADATA = Metadata(
 
 
 FslccParameters = typing.TypedDict('FslccParameters', {
-    "@type": typing.Literal["fsl.fslcc"],
+    "@type": typing.NotRequired[typing.Literal["fsl/fslcc"]],
+    "first_input": InputPathType,
+    "second_input": InputPathType,
+    "mask": typing.NotRequired[InputPathType | None],
+    "noabs_flag": bool,
+    "nodemean_flag": bool,
+    "threshold": typing.NotRequired[float | None],
+    "decimal_places": typing.NotRequired[float | None],
+})
+FslccParametersTagged = typing.TypedDict('FslccParametersTagged', {
+    "@type": typing.Literal["fsl/fslcc"],
     "first_input": InputPathType,
     "second_input": InputPathType,
     "mask": typing.NotRequired[InputPathType | None],
@@ -25,40 +35,9 @@ FslccParameters = typing.TypedDict('FslccParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "fsl.fslcc": fslcc_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-    }.get(t)
-
-
 class FslccOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `fslcc(...)`.
+    Output object returned when calling `FslccParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -72,7 +51,7 @@ def fslcc_params(
     nodemean_flag: bool = False,
     threshold: float | None = None,
     decimal_places: float | None = None,
-) -> FslccParameters:
+) -> FslccParametersTagged:
     """
     Build parameters.
     
@@ -89,7 +68,7 @@ def fslcc_params(
         Parameter dictionary
     """
     params = {
-        "@type": "fsl.fslcc",
+        "@type": "fsl/fslcc",
         "first_input": first_input,
         "second_input": second_input,
         "noabs_flag": noabs_flag,
@@ -119,26 +98,26 @@ def fslcc_cargs(
     """
     cargs = []
     cargs.append("fslcc")
-    cargs.append(execution.input_file(params.get("first_input")))
-    cargs.append(execution.input_file(params.get("second_input")))
-    if params.get("mask") is not None:
+    cargs.append(execution.input_file(params.get("first_input", None)))
+    cargs.append(execution.input_file(params.get("second_input", None)))
+    if params.get("mask", None) is not None:
         cargs.extend([
             "-m",
-            execution.input_file(params.get("mask"))
+            execution.input_file(params.get("mask", None))
         ])
-    if params.get("noabs_flag"):
+    if params.get("noabs_flag", False):
         cargs.append("--noabs")
-    if params.get("nodemean_flag"):
+    if params.get("nodemean_flag", False):
         cargs.append("--nodemean")
-    if params.get("threshold") is not None:
+    if params.get("threshold", None) is not None:
         cargs.extend([
             "-t",
-            str(params.get("threshold"))
+            str(params.get("threshold", None))
         ])
-    if params.get("decimal_places") is not None:
+    if params.get("decimal_places", None) is not None:
         cargs.extend([
             "-p",
-            str(params.get("decimal_places"))
+            str(params.get("decimal_places", None))
         ])
     return cargs
 
@@ -237,7 +216,6 @@ def fslcc(
 __all__ = [
     "FSLCC_METADATA",
     "FslccOutputs",
-    "FslccParameters",
     "fslcc",
     "fslcc_execute",
     "fslcc_params",

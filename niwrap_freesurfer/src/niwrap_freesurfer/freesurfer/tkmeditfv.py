@@ -14,7 +14,42 @@ TKMEDITFV_METADATA = Metadata(
 
 
 TkmeditfvParameters = typing.TypedDict('TkmeditfvParameters', {
-    "@type": typing.Literal["freesurfer.tkmeditfv"],
+    "@type": typing.NotRequired[typing.Literal["freesurfer/tkmeditfv"]],
+    "subject": typing.NotRequired[str | None],
+    "mainvol": InputPathType,
+    "aux_volume": typing.NotRequired[InputPathType | None],
+    "seg_volume": typing.NotRequired[InputPathType | None],
+    "overlay": typing.NotRequired[InputPathType | None],
+    "timecourse": typing.NotRequired[InputPathType | None],
+    "overlay_registration": typing.NotRequired[InputPathType | None],
+    "surface": typing.NotRequired[list[str] | None],
+    "extra_volumes": typing.NotRequired[list[InputPathType] | None],
+    "crs_location": typing.NotRequired[list[float] | None],
+    "zoom_level": typing.NotRequired[float | None],
+    "additional_segments": typing.NotRequired[list[InputPathType] | None],
+    "load_white": bool,
+    "load_pial": bool,
+    "load_orig": bool,
+    "load_orig_nofix": bool,
+    "load_smoothwm_nofix": bool,
+    "load_white_preaparc": bool,
+    "load_inflated": bool,
+    "annot": typing.NotRequired[str | None],
+    "load_aparc": bool,
+    "surfext": typing.NotRequired[str | None],
+    "seg_outline": bool,
+    "intensity_minmax": typing.NotRequired[list[float] | None],
+    "load_defects": bool,
+    "load_defect_pointset": bool,
+    "trilin_interpolation": bool,
+    "neurological_orientation": bool,
+    "rotate_around_cursor": bool,
+    "vgl_display": bool,
+    "use_tkmedit": bool,
+    "load_aparc_aseg": bool,
+})
+TkmeditfvParametersTagged = typing.TypedDict('TkmeditfvParametersTagged', {
+    "@type": typing.Literal["freesurfer/tkmeditfv"],
     "subject": typing.NotRequired[str | None],
     "mainvol": InputPathType,
     "aux_volume": typing.NotRequired[InputPathType | None],
@@ -50,40 +85,9 @@ TkmeditfvParameters = typing.TypedDict('TkmeditfvParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "freesurfer.tkmeditfv": tkmeditfv_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-    }.get(t)
-
-
 class TkmeditfvOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `tkmeditfv(...)`.
+    Output object returned when calling `TkmeditfvParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -122,7 +126,7 @@ def tkmeditfv_params(
     vgl_display: bool = False,
     use_tkmedit: bool = False,
     load_aparc_aseg: bool = False,
-) -> TkmeditfvParameters:
+) -> TkmeditfvParametersTagged:
     """
     Build parameters.
     
@@ -164,7 +168,7 @@ def tkmeditfv_params(
         Parameter dictionary
     """
     params = {
-        "@type": "freesurfer.tkmeditfv",
+        "@type": "freesurfer/tkmeditfv",
         "mainvol": mainvol,
         "load_white": load_white,
         "load_pial": load_pial,
@@ -230,107 +234,107 @@ def tkmeditfv_cargs(
     """
     cargs = []
     cargs.append("tkmeditfv")
-    if params.get("subject") is not None:
-        cargs.append(params.get("subject"))
-    cargs.append(execution.input_file(params.get("mainvol")))
-    if params.get("aux_volume") is not None:
+    if params.get("subject", None) is not None:
+        cargs.append(params.get("subject", None))
+    cargs.append(execution.input_file(params.get("mainvol", None)))
+    if params.get("aux_volume", None) is not None:
         cargs.extend([
             "-aux",
-            execution.input_file(params.get("aux_volume"))
+            execution.input_file(params.get("aux_volume", None))
         ])
-    if params.get("seg_volume") is not None:
+    if params.get("seg_volume", None) is not None:
         cargs.extend([
             "-seg",
-            execution.input_file(params.get("seg_volume"))
+            execution.input_file(params.get("seg_volume", None))
         ])
-    if params.get("overlay") is not None:
+    if params.get("overlay", None) is not None:
         cargs.extend([
             "-ov",
-            execution.input_file(params.get("overlay"))
+            execution.input_file(params.get("overlay", None))
         ])
-    if params.get("timecourse") is not None:
+    if params.get("timecourse", None) is not None:
         cargs.extend([
             "-t",
-            execution.input_file(params.get("timecourse"))
+            execution.input_file(params.get("timecourse", None))
         ])
-    if params.get("overlay_registration") is not None:
+    if params.get("overlay_registration", None) is not None:
         cargs.extend([
             "-reg",
-            execution.input_file(params.get("overlay_registration"))
+            execution.input_file(params.get("overlay_registration", None))
         ])
-    if params.get("surface") is not None:
+    if params.get("surface", None) is not None:
         cargs.extend([
             "-surf",
-            *params.get("surface")
+            *params.get("surface", None)
         ])
-    if params.get("extra_volumes") is not None:
+    if params.get("extra_volumes", None) is not None:
         cargs.extend([
             "-vol",
-            *[execution.input_file(f) for f in params.get("extra_volumes")]
+            *[execution.input_file(f) for f in params.get("extra_volumes", None)]
         ])
-    if params.get("crs_location") is not None:
+    if params.get("crs_location", None) is not None:
         cargs.extend([
             "-crs",
-            *map(str, params.get("crs_location"))
+            *map(str, params.get("crs_location", None))
         ])
-    if params.get("zoom_level") is not None:
+    if params.get("zoom_level", None) is not None:
         cargs.extend([
             "-zoom",
-            str(params.get("zoom_level"))
+            str(params.get("zoom_level", None))
         ])
-    if params.get("additional_segments") is not None:
+    if params.get("additional_segments", None) is not None:
         cargs.extend([
             "-seg2",
-            *[execution.input_file(f) for f in params.get("additional_segments")]
+            *[execution.input_file(f) for f in params.get("additional_segments", None)]
         ])
-    if params.get("load_white"):
+    if params.get("load_white", False):
         cargs.append("-white")
-    if params.get("load_pial"):
+    if params.get("load_pial", False):
         cargs.append("-pial")
-    if params.get("load_orig"):
+    if params.get("load_orig", False):
         cargs.append("-orig")
-    if params.get("load_orig_nofix"):
+    if params.get("load_orig_nofix", False):
         cargs.append("-orig.nofix")
-    if params.get("load_smoothwm_nofix"):
+    if params.get("load_smoothwm_nofix", False):
         cargs.append("-smoothwm.nofix")
-    if params.get("load_white_preaparc"):
+    if params.get("load_white_preaparc", False):
         cargs.append("-white.preaparc")
-    if params.get("load_inflated"):
+    if params.get("load_inflated", False):
         cargs.append("-inflated")
-    if params.get("annot") is not None:
+    if params.get("annot", None) is not None:
         cargs.extend([
             "-annot",
-            params.get("annot")
+            params.get("annot", None)
         ])
-    if params.get("load_aparc"):
+    if params.get("load_aparc", False):
         cargs.append("-aparc")
-    if params.get("surfext") is not None:
+    if params.get("surfext", None) is not None:
         cargs.extend([
             "-surfext",
-            params.get("surfext")
+            params.get("surfext", None)
         ])
-    if params.get("seg_outline"):
+    if params.get("seg_outline", False):
         cargs.append("-seg-outline")
-    if params.get("intensity_minmax") is not None:
+    if params.get("intensity_minmax", None) is not None:
         cargs.extend([
             "-main-minmax",
-            *map(str, params.get("intensity_minmax"))
+            *map(str, params.get("intensity_minmax", None))
         ])
-    if params.get("load_defects"):
+    if params.get("load_defects", False):
         cargs.append("-defects")
-    if params.get("load_defect_pointset"):
+    if params.get("load_defect_pointset", False):
         cargs.append("-defectps")
-    if params.get("trilin_interpolation"):
+    if params.get("trilin_interpolation", False):
         cargs.append("-trilin")
-    if params.get("neurological_orientation"):
+    if params.get("neurological_orientation", False):
         cargs.append("-neuro")
-    if params.get("rotate_around_cursor"):
+    if params.get("rotate_around_cursor", False):
         cargs.append("-rotate-around-cursor")
-    if params.get("vgl_display"):
+    if params.get("vgl_display", False):
         cargs.append("-vgl")
-    if params.get("use_tkmedit"):
+    if params.get("use_tkmedit", False):
         cargs.append("-tkmedit")
-    if params.get("load_aparc_aseg"):
+    if params.get("load_aparc_aseg", False):
         cargs.append("-aparc+aseg")
     return cargs
 
@@ -506,7 +510,6 @@ def tkmeditfv(
 __all__ = [
     "TKMEDITFV_METADATA",
     "TkmeditfvOutputs",
-    "TkmeditfvParameters",
     "tkmeditfv",
     "tkmeditfv_execute",
     "tkmeditfv_params",

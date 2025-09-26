@@ -1,15 +1,15 @@
-from niwrap_mrtrix import mrtrix
-from niwrap_mrtrix3tissue import mrtrix3tissue
-from niwrap_greedy import greedy
-from niwrap_c3d import c3d
-from niwrap_niftyreg import niftyreg
-from niwrap_afni import afni
-from niwrap_fastsurfer import fastsurfer
-from niwrap_dcm2niix import dcm2niix
 from niwrap_freesurfer import freesurfer
-from niwrap_fsl import fsl
+from niwrap_mrtrix3tissue import mrtrix3tissue
+from niwrap_afni import afni
+from niwrap_c3d import c3d
+from niwrap_mrtrix import mrtrix
 from niwrap_workbench import workbench
+from niwrap_dcm2niix import dcm2niix
 from niwrap_ants import ants
+from niwrap_fastsurfer import fastsurfer
+from niwrap_fsl import fsl
+from niwrap_greedy import greedy
+from niwrap_niftyreg import niftyreg
 from styxdefs import *  # Reexport styxdefs
 from styxdocker import DockerRunner
 from styxsingularity import SingularityRunner
@@ -39,3 +39,19 @@ def use_singularity(*args, **kwargs):
 def use_graph(*args, **kwargs):
     """Set the GraphRunner as the global runner."""
     set_global_runner(GraphRunner(*args, **kwargs))
+
+def execute(params, runner: Runner | None = None):
+    stype = params["@type"]
+    if (stype.startswith("freesurfer/")): return freesurfer.execute(params, runner)
+    if (stype.startswith("mrtrix3tissue/")): return mrtrix3tissue.execute(params, runner)
+    if (stype.startswith("afni/")): return afni.execute(params, runner)
+    if (stype.startswith("c3d/")): return c3d.execute(params, runner)
+    if (stype.startswith("mrtrix/")): return mrtrix.execute(params, runner)
+    if (stype.startswith("workbench/")): return workbench.execute(params, runner)
+    if (stype.startswith("dcm2niix/")): return dcm2niix.execute(params, runner)
+    if (stype.startswith("ants/")): return ants.execute(params, runner)
+    if (stype.startswith("fastsurfer/")): return fastsurfer.execute(params, runner)
+    if (stype.startswith("fsl/")): return fsl.execute(params, runner)
+    if (stype.startswith("greedy/")): return greedy.execute(params, runner)
+    if (stype.startswith("niftyreg/")): return niftyreg.execute(params, runner)
+    return None

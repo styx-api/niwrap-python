@@ -14,46 +14,18 @@ V__DO_EXAMPLES_METADATA = Metadata(
 
 
 VDoExamplesParameters = typing.TypedDict('VDoExamplesParameters', {
-    "@type": typing.Literal["afni.@DO.examples"],
+    "@type": typing.NotRequired[typing.Literal["afni/@DO.examples"]],
+    "auto_test": bool,
+})
+VDoExamplesParametersTagged = typing.TypedDict('VDoExamplesParametersTagged', {
+    "@type": typing.Literal["afni/@DO.examples"],
     "auto_test": bool,
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "afni.@DO.examples": v__do_examples_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "afni.@DO.examples": v__do_examples_outputs,
-    }.get(t)
-
-
 class VDoExamplesOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `v__do_examples(...)`.
+    Output object returned when calling `VDoExamplesParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -63,7 +35,7 @@ class VDoExamplesOutputs(typing.NamedTuple):
 
 def v__do_examples_params(
     auto_test: bool = False,
-) -> VDoExamplesParameters:
+) -> VDoExamplesParametersTagged:
     """
     Build parameters.
     
@@ -75,7 +47,7 @@ def v__do_examples_params(
         Parameter dictionary
     """
     params = {
-        "@type": "afni.@DO.examples",
+        "@type": "afni/@DO.examples",
         "auto_test": auto_test,
     }
     return params
@@ -96,7 +68,7 @@ def v__do_examples_cargs(
     """
     cargs = []
     cargs.append("@DO.examples")
-    if params.get("auto_test"):
+    if params.get("auto_test", False):
         cargs.append("-auto_test")
     return cargs
 
@@ -178,7 +150,6 @@ def v__do_examples(
 
 __all__ = [
     "VDoExamplesOutputs",
-    "VDoExamplesParameters",
     "V__DO_EXAMPLES_METADATA",
     "v__do_examples",
     "v__do_examples_execute",

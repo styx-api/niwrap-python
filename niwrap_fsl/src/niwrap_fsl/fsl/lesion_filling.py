@@ -14,7 +14,17 @@ LESION_FILLING_METADATA = Metadata(
 
 
 LesionFillingParameters = typing.TypedDict('LesionFillingParameters', {
-    "@type": typing.Literal["fsl.lesion_filling"],
+    "@type": typing.NotRequired[typing.Literal["fsl/lesion_filling"]],
+    "infile": InputPathType,
+    "outfile": str,
+    "lesionmask": InputPathType,
+    "wmmask": typing.NotRequired[InputPathType | None],
+    "verbose_flag": bool,
+    "components_flag": bool,
+    "help_flag": bool,
+})
+LesionFillingParametersTagged = typing.TypedDict('LesionFillingParametersTagged', {
+    "@type": typing.Literal["fsl/lesion_filling"],
     "infile": InputPathType,
     "outfile": str,
     "lesionmask": InputPathType,
@@ -25,41 +35,9 @@ LesionFillingParameters = typing.TypedDict('LesionFillingParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "fsl.lesion_filling": lesion_filling_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "fsl.lesion_filling": lesion_filling_outputs,
-    }.get(t)
-
-
 class LesionFillingOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `lesion_filling(...)`.
+    Output object returned when calling `LesionFillingParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -75,7 +53,7 @@ def lesion_filling_params(
     verbose_flag: bool = False,
     components_flag: bool = False,
     help_flag: bool = False,
-) -> LesionFillingParameters:
+) -> LesionFillingParametersTagged:
     """
     Build parameters.
     
@@ -91,7 +69,7 @@ def lesion_filling_params(
         Parameter dictionary
     """
     params = {
-        "@type": "fsl.lesion_filling",
+        "@type": "fsl/lesion_filling",
         "infile": infile,
         "outfile": outfile,
         "lesionmask": lesionmask,
@@ -121,26 +99,26 @@ def lesion_filling_cargs(
     cargs.append("lesion_filling")
     cargs.extend([
         "-i",
-        execution.input_file(params.get("infile"))
+        execution.input_file(params.get("infile", None))
     ])
     cargs.extend([
         "-o",
-        params.get("outfile")
+        params.get("outfile", None)
     ])
     cargs.extend([
         "-l",
-        execution.input_file(params.get("lesionmask"))
+        execution.input_file(params.get("lesionmask", None))
     ])
-    if params.get("wmmask") is not None:
+    if params.get("wmmask", None) is not None:
         cargs.extend([
             "-w",
-            execution.input_file(params.get("wmmask"))
+            execution.input_file(params.get("wmmask", None))
         ])
-    if params.get("verbose_flag"):
+    if params.get("verbose_flag", False):
         cargs.append("-v")
-    if params.get("components_flag"):
+    if params.get("components_flag", False):
         cargs.append("-c")
-    if params.get("help_flag"):
+    if params.get("help_flag", False):
         cargs.append("-h")
     return cargs
 
@@ -160,7 +138,7 @@ def lesion_filling_outputs(
     """
     ret = LesionFillingOutputs(
         root=execution.output_file("."),
-        outfile=execution.output_file(params.get("outfile")),
+        outfile=execution.output_file(params.get("outfile", None)),
     )
     return ret
 
@@ -239,7 +217,6 @@ def lesion_filling(
 __all__ = [
     "LESION_FILLING_METADATA",
     "LesionFillingOutputs",
-    "LesionFillingParameters",
     "lesion_filling",
     "lesion_filling_execute",
     "lesion_filling_params",

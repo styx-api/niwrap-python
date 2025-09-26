@@ -14,7 +14,16 @@ MRIS_TRANSFORM_METADATA = Metadata(
 
 
 MrisTransformParameters = typing.TypedDict('MrisTransformParameters', {
-    "@type": typing.Literal["freesurfer.mris_transform"],
+    "@type": typing.NotRequired[typing.Literal["freesurfer/mris_transform"]],
+    "input_surface": InputPathType,
+    "transform": InputPathType,
+    "output_surface": str,
+    "trx_src": typing.NotRequired[InputPathType | None],
+    "trx_dst": typing.NotRequired[InputPathType | None],
+    "is_inverse": bool,
+})
+MrisTransformParametersTagged = typing.TypedDict('MrisTransformParametersTagged', {
+    "@type": typing.Literal["freesurfer/mris_transform"],
     "input_surface": InputPathType,
     "transform": InputPathType,
     "output_surface": str,
@@ -24,41 +33,9 @@ MrisTransformParameters = typing.TypedDict('MrisTransformParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "freesurfer.mris_transform": mris_transform_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "freesurfer.mris_transform": mris_transform_outputs,
-    }.get(t)
-
-
 class MrisTransformOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `mris_transform(...)`.
+    Output object returned when calling `MrisTransformParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -73,7 +50,7 @@ def mris_transform_params(
     trx_src: InputPathType | None = None,
     trx_dst: InputPathType | None = None,
     is_inverse: bool = False,
-) -> MrisTransformParameters:
+) -> MrisTransformParametersTagged:
     """
     Build parameters.
     
@@ -91,7 +68,7 @@ def mris_transform_params(
         Parameter dictionary
     """
     params = {
-        "@type": "freesurfer.mris_transform",
+        "@type": "freesurfer/mris_transform",
         "input_surface": input_surface,
         "transform": transform,
         "output_surface": output_surface,
@@ -119,20 +96,20 @@ def mris_transform_cargs(
     """
     cargs = []
     cargs.append("mris_transform")
-    cargs.append(execution.input_file(params.get("input_surface")))
-    cargs.append(execution.input_file(params.get("transform")))
-    cargs.append(params.get("output_surface"))
-    if params.get("trx_src") is not None:
+    cargs.append(execution.input_file(params.get("input_surface", None)))
+    cargs.append(execution.input_file(params.get("transform", None)))
+    cargs.append(params.get("output_surface", None))
+    if params.get("trx_src", None) is not None:
         cargs.extend([
             "--trx-src",
-            execution.input_file(params.get("trx_src"))
+            execution.input_file(params.get("trx_src", None))
         ])
-    if params.get("trx_dst") is not None:
+    if params.get("trx_dst", None) is not None:
         cargs.extend([
             "--trx-dst",
-            execution.input_file(params.get("trx_dst"))
+            execution.input_file(params.get("trx_dst", None))
         ])
-    if params.get("is_inverse"):
+    if params.get("is_inverse", False):
         cargs.append("--is-inverse")
     return cargs
 
@@ -152,7 +129,7 @@ def mris_transform_outputs(
     """
     ret = MrisTransformOutputs(
         root=execution.output_file("."),
-        transformed_output_surface=execution.output_file(params.get("output_surface")),
+        transformed_output_surface=execution.output_file(params.get("output_surface", None)),
     )
     return ret
 
@@ -233,7 +210,6 @@ def mris_transform(
 __all__ = [
     "MRIS_TRANSFORM_METADATA",
     "MrisTransformOutputs",
-    "MrisTransformParameters",
     "mris_transform",
     "mris_transform_execute",
     "mris_transform_params",

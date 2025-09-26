@@ -14,7 +14,17 @@ V__FAT_TRACT_COLORIZE_METADATA = Metadata(
 
 
 VFatTractColorizeParameters = typing.TypedDict('VFatTractColorizeParameters', {
-    "@type": typing.Literal["afni.@fat_tract_colorize"],
+    "@type": typing.NotRequired[typing.Literal["afni/@fat_tract_colorize"]],
+    "in_fa": InputPathType,
+    "in_v1": InputPathType,
+    "in_tracts": str,
+    "prefix": str,
+    "in_ulay": typing.NotRequired[InputPathType | None],
+    "no_view": bool,
+    "only_view": bool,
+})
+VFatTractColorizeParametersTagged = typing.TypedDict('VFatTractColorizeParametersTagged', {
+    "@type": typing.Literal["afni/@fat_tract_colorize"],
     "in_fa": InputPathType,
     "in_v1": InputPathType,
     "in_tracts": str,
@@ -25,41 +35,9 @@ VFatTractColorizeParameters = typing.TypedDict('VFatTractColorizeParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "afni.@fat_tract_colorize": v__fat_tract_colorize_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "afni.@fat_tract_colorize": v__fat_tract_colorize_outputs,
-    }.get(t)
-
-
 class VFatTractColorizeOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `v__fat_tract_colorize(...)`.
+    Output object returned when calling `VFatTractColorizeParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -82,7 +60,7 @@ def v__fat_tract_colorize_params(
     in_ulay: InputPathType | None = None,
     no_view: bool = False,
     only_view: bool = False,
-) -> VFatTractColorizeParameters:
+) -> VFatTractColorizeParametersTagged:
     """
     Build parameters.
     
@@ -104,7 +82,7 @@ def v__fat_tract_colorize_params(
         Parameter dictionary
     """
     params = {
-        "@type": "afni.@fat_tract_colorize",
+        "@type": "afni/@fat_tract_colorize",
         "in_fa": in_fa,
         "in_v1": in_v1,
         "in_tracts": in_tracts,
@@ -134,28 +112,28 @@ def v__fat_tract_colorize_cargs(
     cargs.append("@fat_tract_colorize")
     cargs.extend([
         "-in_fa",
-        execution.input_file(params.get("in_fa"))
+        execution.input_file(params.get("in_fa", None))
     ])
     cargs.extend([
         "-in_v1",
-        execution.input_file(params.get("in_v1"))
+        execution.input_file(params.get("in_v1", None))
     ])
     cargs.extend([
         "-in_tracts",
-        params.get("in_tracts")
+        params.get("in_tracts", None)
     ])
     cargs.extend([
         "-prefix",
-        params.get("prefix")
+        params.get("prefix", None)
     ])
-    if params.get("in_ulay") is not None:
+    if params.get("in_ulay", None) is not None:
         cargs.extend([
             "-in_ulay",
-            execution.input_file(params.get("in_ulay"))
+            execution.input_file(params.get("in_ulay", None))
         ])
-    if params.get("no_view"):
+    if params.get("no_view", False):
         cargs.append("-no_view")
-    if params.get("only_view"):
+    if params.get("only_view", False):
         cargs.append("-only_view")
     return cargs
 
@@ -175,10 +153,10 @@ def v__fat_tract_colorize_outputs(
     """
     ret = VFatTractColorizeOutputs(
         root=execution.output_file("."),
-        output_hue_volume=execution.output_file(params.get("prefix") + "_RGB_HUE.nii.gz"),
-        output_iso_surface=execution.output_file(params.get("prefix") + "_RGB_iso.ply"),
-        output_iso_spec=execution.output_file(params.get("prefix") + "_RGB_iso.spec"),
-        output_proj_surface=execution.output_file(params.get("prefix") + "_RGB.niml.dset"),
+        output_hue_volume=execution.output_file(params.get("prefix", None) + "_RGB_HUE.nii.gz"),
+        output_iso_surface=execution.output_file(params.get("prefix", None) + "_RGB_iso.ply"),
+        output_iso_spec=execution.output_file(params.get("prefix", None) + "_RGB_iso.spec"),
+        output_proj_surface=execution.output_file(params.get("prefix", None) + "_RGB.niml.dset"),
     )
     return ret
 
@@ -264,7 +242,6 @@ def v__fat_tract_colorize(
 
 __all__ = [
     "VFatTractColorizeOutputs",
-    "VFatTractColorizeParameters",
     "V__FAT_TRACT_COLORIZE_METADATA",
     "v__fat_tract_colorize",
     "v__fat_tract_colorize_execute",

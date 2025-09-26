@@ -14,47 +14,20 @@ UNPACK_IMA1_TCL_METADATA = Metadata(
 
 
 UnpackIma1TclParameters = typing.TypedDict('UnpackIma1TclParameters', {
-    "@type": typing.Literal["freesurfer.unpack_ima1.tcl"],
+    "@type": typing.NotRequired[typing.Literal["freesurfer/unpack_ima1.tcl"]],
+    "input_directory": str,
+    "output_directory": str,
+})
+UnpackIma1TclParametersTagged = typing.TypedDict('UnpackIma1TclParametersTagged', {
+    "@type": typing.Literal["freesurfer/unpack_ima1.tcl"],
     "input_directory": str,
     "output_directory": str,
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "freesurfer.unpack_ima1.tcl": unpack_ima1_tcl_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "freesurfer.unpack_ima1.tcl": unpack_ima1_tcl_outputs,
-    }.get(t)
-
-
 class UnpackIma1TclOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `unpack_ima1_tcl(...)`.
+    Output object returned when calling `UnpackIma1TclParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -65,7 +38,7 @@ class UnpackIma1TclOutputs(typing.NamedTuple):
 def unpack_ima1_tcl_params(
     input_directory: str,
     output_directory: str,
-) -> UnpackIma1TclParameters:
+) -> UnpackIma1TclParametersTagged:
     """
     Build parameters.
     
@@ -78,7 +51,7 @@ def unpack_ima1_tcl_params(
         Parameter dictionary
     """
     params = {
-        "@type": "freesurfer.unpack_ima1.tcl",
+        "@type": "freesurfer/unpack_ima1.tcl",
         "input_directory": input_directory,
         "output_directory": output_directory,
     }
@@ -100,8 +73,8 @@ def unpack_ima1_tcl_cargs(
     """
     cargs = []
     cargs.append("unpack_ima1.tcl")
-    cargs.append(params.get("input_directory"))
-    cargs.append(params.get("output_directory"))
+    cargs.append(params.get("input_directory", None))
+    cargs.append(params.get("output_directory", None))
     return cargs
 
 
@@ -120,7 +93,7 @@ def unpack_ima1_tcl_outputs(
     """
     ret = UnpackIma1TclOutputs(
         root=execution.output_file("."),
-        output_directory=execution.output_file(params.get("output_directory")),
+        output_directory=execution.output_file(params.get("output_directory", None)),
     )
     return ret
 
@@ -186,7 +159,6 @@ def unpack_ima1_tcl(
 __all__ = [
     "UNPACK_IMA1_TCL_METADATA",
     "UnpackIma1TclOutputs",
-    "UnpackIma1TclParameters",
     "unpack_ima1_tcl",
     "unpack_ima1_tcl_execute",
     "unpack_ima1_tcl_params",

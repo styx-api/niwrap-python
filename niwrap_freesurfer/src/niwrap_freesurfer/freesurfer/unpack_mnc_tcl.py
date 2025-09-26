@@ -14,48 +14,22 @@ UNPACK_MNC_TCL_METADATA = Metadata(
 
 
 UnpackMncTclParameters = typing.TypedDict('UnpackMncTclParameters', {
-    "@type": typing.Literal["freesurfer.unpack_mnc.tcl"],
+    "@type": typing.NotRequired[typing.Literal["freesurfer/unpack_mnc.tcl"]],
+    "verbose": bool,
+    "output_dir": typing.NotRequired[str | None],
+    "input_file": typing.NotRequired[InputPathType | None],
+})
+UnpackMncTclParametersTagged = typing.TypedDict('UnpackMncTclParametersTagged', {
+    "@type": typing.Literal["freesurfer/unpack_mnc.tcl"],
     "verbose": bool,
     "output_dir": typing.NotRequired[str | None],
     "input_file": typing.NotRequired[InputPathType | None],
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "freesurfer.unpack_mnc.tcl": unpack_mnc_tcl_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "freesurfer.unpack_mnc.tcl": unpack_mnc_tcl_outputs,
-    }.get(t)
-
-
 class UnpackMncTclOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `unpack_mnc_tcl(...)`.
+    Output object returned when calling `UnpackMncTclParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -67,7 +41,7 @@ def unpack_mnc_tcl_params(
     verbose: bool = False,
     output_dir: str | None = None,
     input_file: InputPathType | None = None,
-) -> UnpackMncTclParameters:
+) -> UnpackMncTclParametersTagged:
     """
     Build parameters.
     
@@ -79,7 +53,7 @@ def unpack_mnc_tcl_params(
         Parameter dictionary
     """
     params = {
-        "@type": "freesurfer.unpack_mnc.tcl",
+        "@type": "freesurfer/unpack_mnc.tcl",
         "verbose": verbose,
     }
     if output_dir is not None:
@@ -104,17 +78,17 @@ def unpack_mnc_tcl_cargs(
     """
     cargs = []
     cargs.append("unpack_mnc.tcl")
-    if params.get("verbose"):
+    if params.get("verbose", False):
         cargs.append("-v")
-    if params.get("output_dir") is not None:
+    if params.get("output_dir", None) is not None:
         cargs.extend([
             "-o",
-            params.get("output_dir")
+            params.get("output_dir", None)
         ])
-    if params.get("input_file") is not None:
+    if params.get("input_file", None) is not None:
         cargs.extend([
             "-i",
-            execution.input_file(params.get("input_file"))
+            execution.input_file(params.get("input_file", None))
         ])
     return cargs
 
@@ -134,7 +108,7 @@ def unpack_mnc_tcl_outputs(
     """
     ret = UnpackMncTclOutputs(
         root=execution.output_file("."),
-        unpacked_file=execution.output_file(params.get("output_dir") + "/unpacked_data.mnc") if (params.get("output_dir") is not None) else None,
+        unpacked_file=execution.output_file(params.get("output_dir", None) + "/unpacked_data.mnc") if (params.get("output_dir") is not None) else None,
     )
     return ret
 
@@ -201,7 +175,6 @@ def unpack_mnc_tcl(
 __all__ = [
     "UNPACK_MNC_TCL_METADATA",
     "UnpackMncTclOutputs",
-    "UnpackMncTclParameters",
     "unpack_mnc_tcl",
     "unpack_mnc_tcl_execute",
     "unpack_mnc_tcl_params",

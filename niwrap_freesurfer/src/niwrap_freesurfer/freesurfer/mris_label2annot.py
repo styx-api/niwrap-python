@@ -14,7 +14,24 @@ MRIS_LABEL2ANNOT_METADATA = Metadata(
 
 
 MrisLabel2annotParameters = typing.TypedDict('MrisLabel2annotParameters', {
-    "@type": typing.Literal["freesurfer.mris_label2annot"],
+    "@type": typing.NotRequired[typing.Literal["freesurfer/mris_label2annot"]],
+    "subject": str,
+    "hemi": str,
+    "ctabfile": InputPathType,
+    "annotname": str,
+    "index_offset": typing.NotRequired[float | None],
+    "label_files": typing.NotRequired[list[InputPathType] | None],
+    "annot_path": typing.NotRequired[str | None],
+    "labeldir": typing.NotRequired[str | None],
+    "ldir_default": bool,
+    "no_unknown": bool,
+    "thresh": typing.NotRequired[float | None],
+    "maxstatwinner": bool,
+    "surf": typing.NotRequired[str | None],
+    "subjects_dir": typing.NotRequired[str | None],
+})
+MrisLabel2annotParametersTagged = typing.TypedDict('MrisLabel2annotParametersTagged', {
+    "@type": typing.Literal["freesurfer/mris_label2annot"],
     "subject": str,
     "hemi": str,
     "ctabfile": InputPathType,
@@ -32,41 +49,9 @@ MrisLabel2annotParameters = typing.TypedDict('MrisLabel2annotParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "freesurfer.mris_label2annot": mris_label2annot_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "freesurfer.mris_label2annot": mris_label2annot_outputs,
-    }.get(t)
-
-
 class MrisLabel2annotOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `mris_label2annot(...)`.
+    Output object returned when calling `MrisLabel2annotParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -89,7 +74,7 @@ def mris_label2annot_params(
     maxstatwinner: bool = False,
     surf: str | None = None,
     subjects_dir: str | None = None,
-) -> MrisLabel2annotParameters:
+) -> MrisLabel2annotParametersTagged:
     """
     Build parameters.
     
@@ -112,7 +97,7 @@ def mris_label2annot_params(
         Parameter dictionary
     """
     params = {
-        "@type": "freesurfer.mris_label2annot",
+        "@type": "freesurfer/mris_label2annot",
         "subject": subject,
         "hemi": hemi,
         "ctabfile": ctabfile,
@@ -155,60 +140,60 @@ def mris_label2annot_cargs(
     cargs.append("mris_label2annot")
     cargs.extend([
         "-s",
-        params.get("subject")
+        params.get("subject", None)
     ])
     cargs.extend([
         "-h",
-        params.get("hemi")
+        params.get("hemi", None)
     ])
     cargs.extend([
         "-ctab",
-        execution.input_file(params.get("ctabfile"))
+        execution.input_file(params.get("ctabfile", None))
     ])
     cargs.extend([
         "-a",
-        params.get("annotname")
+        params.get("annotname", None)
     ])
-    if params.get("index_offset") is not None:
+    if params.get("index_offset", None) is not None:
         cargs.extend([
             "--offset",
-            str(params.get("index_offset"))
+            str(params.get("index_offset", None))
         ])
-    if params.get("label_files") is not None:
+    if params.get("label_files", None) is not None:
         cargs.extend([
             "--l",
-            *[execution.input_file(f) for f in params.get("label_files")]
+            *[execution.input_file(f) for f in params.get("label_files", None)]
         ])
-    if params.get("annot_path") is not None:
+    if params.get("annot_path", None) is not None:
         cargs.extend([
             "--annot-path",
-            params.get("annot_path")
+            params.get("annot_path", None)
         ])
-    if params.get("labeldir") is not None:
+    if params.get("labeldir", None) is not None:
         cargs.extend([
             "--ldir",
-            params.get("labeldir")
+            params.get("labeldir", None)
         ])
-    if params.get("ldir_default"):
+    if params.get("ldir_default", False):
         cargs.append("--ldir-default")
-    if params.get("no_unknown"):
+    if params.get("no_unknown", False):
         cargs.append("--no-unknown")
-    if params.get("thresh") is not None:
+    if params.get("thresh", None) is not None:
         cargs.extend([
             "--thresh",
-            str(params.get("thresh"))
+            str(params.get("thresh", None))
         ])
-    if params.get("maxstatwinner"):
+    if params.get("maxstatwinner", False):
         cargs.append("--maxstatwinner")
-    if params.get("surf") is not None:
+    if params.get("surf", None) is not None:
         cargs.extend([
             "--surf",
-            params.get("surf")
+            params.get("surf", None)
         ])
-    if params.get("subjects_dir") is not None:
+    if params.get("subjects_dir", None) is not None:
         cargs.extend([
             "--sd",
-            params.get("subjects_dir")
+            params.get("subjects_dir", None)
         ])
     return cargs
 
@@ -228,7 +213,7 @@ def mris_label2annot_outputs(
     """
     ret = MrisLabel2annotOutputs(
         root=execution.output_file("."),
-        annot_file=execution.output_file(params.get("hemi") + "." + params.get("annotname") + ".annot"),
+        annot_file=execution.output_file(params.get("hemi", None) + "." + params.get("annotname", None) + ".annot"),
     )
     return ret
 
@@ -328,7 +313,6 @@ def mris_label2annot(
 __all__ = [
     "MRIS_LABEL2ANNOT_METADATA",
     "MrisLabel2annotOutputs",
-    "MrisLabel2annotParameters",
     "mris_label2annot",
     "mris_label2annot_execute",
     "mris_label2annot_params",

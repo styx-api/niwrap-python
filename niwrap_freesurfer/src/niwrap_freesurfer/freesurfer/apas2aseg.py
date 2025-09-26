@@ -14,48 +14,22 @@ APAS2ASEG_METADATA = Metadata(
 
 
 Apas2asegParameters = typing.TypedDict('Apas2asegParameters', {
-    "@type": typing.Literal["freesurfer.apas2aseg"],
+    "@type": typing.NotRequired[typing.Literal["freesurfer/apas2aseg"]],
+    "subject": typing.NotRequired[str | None],
+    "input_aparc_aseg": typing.NotRequired[InputPathType | None],
+    "output_seg": typing.NotRequired[str | None],
+})
+Apas2asegParametersTagged = typing.TypedDict('Apas2asegParametersTagged', {
+    "@type": typing.Literal["freesurfer/apas2aseg"],
     "subject": typing.NotRequired[str | None],
     "input_aparc_aseg": typing.NotRequired[InputPathType | None],
     "output_seg": typing.NotRequired[str | None],
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "freesurfer.apas2aseg": apas2aseg_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "freesurfer.apas2aseg": apas2aseg_outputs,
-    }.get(t)
-
-
 class Apas2asegOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `apas2aseg(...)`.
+    Output object returned when calling `Apas2asegParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -67,7 +41,7 @@ def apas2aseg_params(
     subject: str | None = None,
     input_aparc_aseg: InputPathType | None = None,
     output_seg: str | None = None,
-) -> Apas2asegParameters:
+) -> Apas2asegParametersTagged:
     """
     Build parameters.
     
@@ -80,7 +54,7 @@ def apas2aseg_params(
         Parameter dictionary
     """
     params = {
-        "@type": "freesurfer.apas2aseg",
+        "@type": "freesurfer/apas2aseg",
     }
     if subject is not None:
         params["subject"] = subject
@@ -106,20 +80,20 @@ def apas2aseg_cargs(
     """
     cargs = []
     cargs.append("apas2aseg")
-    if params.get("subject") is not None:
+    if params.get("subject", None) is not None:
         cargs.extend([
             "--s",
-            params.get("subject")
+            params.get("subject", None)
         ])
-    if params.get("input_aparc_aseg") is not None:
+    if params.get("input_aparc_aseg", None) is not None:
         cargs.extend([
             "--i",
-            execution.input_file(params.get("input_aparc_aseg"))
+            execution.input_file(params.get("input_aparc_aseg", None))
         ])
-    if params.get("output_seg") is not None:
+    if params.get("output_seg", None) is not None:
         cargs.extend([
             "--o",
-            params.get("output_seg")
+            params.get("output_seg", None)
         ])
     return cargs
 
@@ -139,7 +113,7 @@ def apas2aseg_outputs(
     """
     ret = Apas2asegOutputs(
         root=execution.output_file("."),
-        output_seg_file=execution.output_file(params.get("output_seg")) if (params.get("output_seg") is not None) else None,
+        output_seg_file=execution.output_file(params.get("output_seg", None)) if (params.get("output_seg") is not None) else None,
     )
     return ret
 
@@ -209,7 +183,6 @@ def apas2aseg(
 __all__ = [
     "APAS2ASEG_METADATA",
     "Apas2asegOutputs",
-    "Apas2asegParameters",
     "apas2aseg",
     "apas2aseg_execute",
     "apas2aseg_params",

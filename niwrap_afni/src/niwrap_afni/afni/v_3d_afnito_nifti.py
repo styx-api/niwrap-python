@@ -14,7 +14,18 @@ V_3D_AFNITO_NIFTI_METADATA = Metadata(
 
 
 V3dAfnitoNiftiParameters = typing.TypedDict('V3dAfnitoNiftiParameters', {
-    "@type": typing.Literal["afni.3dAFNItoNIFTI"],
+    "@type": typing.NotRequired[typing.Literal["afni/3dAFNItoNIFTI"]],
+    "input_dataset": InputPathType,
+    "prefix": typing.NotRequired[str | None],
+    "verbose": bool,
+    "force_float": bool,
+    "pure": bool,
+    "denote": bool,
+    "oldid": bool,
+    "newid": bool,
+})
+V3dAfnitoNiftiParametersTagged = typing.TypedDict('V3dAfnitoNiftiParametersTagged', {
+    "@type": typing.Literal["afni/3dAFNItoNIFTI"],
     "input_dataset": InputPathType,
     "prefix": typing.NotRequired[str | None],
     "verbose": bool,
@@ -26,41 +37,9 @@ V3dAfnitoNiftiParameters = typing.TypedDict('V3dAfnitoNiftiParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "afni.3dAFNItoNIFTI": v_3d_afnito_nifti_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "afni.3dAFNItoNIFTI": v_3d_afnito_nifti_outputs,
-    }.get(t)
-
-
 class V3dAfnitoNiftiOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `v_3d_afnito_nifti(...)`.
+    Output object returned when calling `V3dAfnitoNiftiParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -77,7 +56,7 @@ def v_3d_afnito_nifti_params(
     denote: bool = False,
     oldid: bool = False,
     newid: bool = False,
-) -> V3dAfnitoNiftiParameters:
+) -> V3dAfnitoNiftiParametersTagged:
     """
     Build parameters.
     
@@ -95,7 +74,7 @@ def v_3d_afnito_nifti_params(
         Parameter dictionary
     """
     params = {
-        "@type": "afni.3dAFNItoNIFTI",
+        "@type": "afni/3dAFNItoNIFTI",
         "input_dataset": input_dataset,
         "verbose": verbose,
         "force_float": force_float,
@@ -124,23 +103,23 @@ def v_3d_afnito_nifti_cargs(
     """
     cargs = []
     cargs.append("3dAFNItoNIFTI")
-    cargs.append(execution.input_file(params.get("input_dataset")))
-    if params.get("prefix") is not None:
+    cargs.append(execution.input_file(params.get("input_dataset", None)))
+    if params.get("prefix", None) is not None:
         cargs.extend([
             "-prefix",
-            params.get("prefix")
+            params.get("prefix", None)
         ])
-    if params.get("verbose"):
+    if params.get("verbose", False):
         cargs.append("-verb")
-    if params.get("force_float"):
+    if params.get("force_float", False):
         cargs.append("-float")
-    if params.get("pure"):
+    if params.get("pure", False):
         cargs.append("-pure")
-    if params.get("denote"):
+    if params.get("denote", False):
         cargs.append("-denote")
-    if params.get("oldid"):
+    if params.get("oldid", False):
         cargs.append("-oldid")
-    if params.get("newid"):
+    if params.get("newid", False):
         cargs.append("-newid")
     return cargs
 
@@ -160,7 +139,7 @@ def v_3d_afnito_nifti_outputs(
     """
     ret = V3dAfnitoNiftiOutputs(
         root=execution.output_file("."),
-        output_nifti=execution.output_file(params.get("prefix") + ".nii") if (params.get("prefix") is not None) else None,
+        output_nifti=execution.output_file(params.get("prefix", None) + ".nii") if (params.get("prefix") is not None) else None,
     )
     return ret
 
@@ -242,7 +221,6 @@ def v_3d_afnito_nifti(
 
 __all__ = [
     "V3dAfnitoNiftiOutputs",
-    "V3dAfnitoNiftiParameters",
     "V_3D_AFNITO_NIFTI_METADATA",
     "v_3d_afnito_nifti",
     "v_3d_afnito_nifti_execute",

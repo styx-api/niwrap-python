@@ -14,7 +14,18 @@ LONG_STATS_COMBINE_METADATA = Metadata(
 
 
 LongStatsCombineParameters = typing.TypedDict('LongStatsCombineParameters', {
-    "@type": typing.Literal["freesurfer.long_stats_combine"],
+    "@type": typing.NotRequired[typing.Literal["freesurfer/long_stats_combine"]],
+    "qdec": InputPathType,
+    "stats": str,
+    "measure": str,
+    "subject_dir": str,
+    "output_qdec": str,
+    "output_stats": typing.NotRequired[str | None],
+    "input_stats": typing.NotRequired[InputPathType | None],
+    "cross_sectional": bool,
+})
+LongStatsCombineParametersTagged = typing.TypedDict('LongStatsCombineParametersTagged', {
+    "@type": typing.Literal["freesurfer/long_stats_combine"],
     "qdec": InputPathType,
     "stats": str,
     "measure": str,
@@ -26,41 +37,9 @@ LongStatsCombineParameters = typing.TypedDict('LongStatsCombineParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "freesurfer.long_stats_combine": long_stats_combine_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "freesurfer.long_stats_combine": long_stats_combine_outputs,
-    }.get(t)
-
-
 class LongStatsCombineOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `long_stats_combine(...)`.
+    Output object returned when calling `LongStatsCombineParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -79,7 +58,7 @@ def long_stats_combine_params(
     output_stats: str | None = None,
     input_stats: InputPathType | None = None,
     cross_sectional: bool = False,
-) -> LongStatsCombineParameters:
+) -> LongStatsCombineParametersTagged:
     """
     Build parameters.
     
@@ -99,7 +78,7 @@ def long_stats_combine_params(
         Parameter dictionary
     """
     params = {
-        "@type": "freesurfer.long_stats_combine",
+        "@type": "freesurfer/long_stats_combine",
         "qdec": qdec,
         "stats": stats,
         "measure": measure,
@@ -131,35 +110,35 @@ def long_stats_combine_cargs(
     cargs.append("long_stats_combine")
     cargs.extend([
         "--qdec",
-        execution.input_file(params.get("qdec"))
+        execution.input_file(params.get("qdec", None))
     ])
     cargs.extend([
         "--stats",
-        params.get("stats")
+        params.get("stats", None)
     ])
     cargs.extend([
         "--meas",
-        params.get("measure")
+        params.get("measure", None)
     ])
     cargs.extend([
         "--sd",
-        params.get("subject_dir")
+        params.get("subject_dir", None)
     ])
     cargs.extend([
         "--outqdec",
-        params.get("output_qdec")
+        params.get("output_qdec", None)
     ])
-    if params.get("output_stats") is not None:
+    if params.get("output_stats", None) is not None:
         cargs.extend([
             "--outstats",
-            params.get("output_stats")
+            params.get("output_stats", None)
         ])
-    if params.get("input_stats") is not None:
+    if params.get("input_stats", None) is not None:
         cargs.extend([
             "--instats",
-            execution.input_file(params.get("input_stats"))
+            execution.input_file(params.get("input_stats", None))
         ])
-    if params.get("cross_sectional"):
+    if params.get("cross_sectional", False):
         cargs.append("--cross")
     return cargs
 
@@ -179,8 +158,8 @@ def long_stats_combine_outputs(
     """
     ret = LongStatsCombineOutputs(
         root=execution.output_file("."),
-        output_qdec_file=execution.output_file(params.get("output_qdec")),
-        output_stacked_stats_file=execution.output_file(params.get("output_stats")) if (params.get("output_stats") is not None) else None,
+        output_qdec_file=execution.output_file(params.get("output_qdec", None)),
+        output_stacked_stats_file=execution.output_file(params.get("output_stats", None)) if (params.get("output_stats") is not None) else None,
     )
     return ret
 
@@ -267,7 +246,6 @@ def long_stats_combine(
 __all__ = [
     "LONG_STATS_COMBINE_METADATA",
     "LongStatsCombineOutputs",
-    "LongStatsCombineParameters",
     "long_stats_combine",
     "long_stats_combine_execute",
     "long_stats_combine_params",

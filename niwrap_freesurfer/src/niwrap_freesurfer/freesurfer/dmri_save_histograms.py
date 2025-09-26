@@ -14,7 +14,15 @@ DMRI_SAVE_HISTOGRAMS_METADATA = Metadata(
 
 
 DmriSaveHistogramsParameters = typing.TypedDict('DmriSaveHistogramsParameters', {
-    "@type": typing.Literal["freesurfer.dmri_saveHistograms"],
+    "@type": typing.NotRequired[typing.Literal["freesurfer/dmri_saveHistograms"]],
+    "parcellation": InputPathType,
+    "number_of_bundles": float,
+    "vtk_bundle_list": list[InputPathType],
+    "output_csv": str,
+    "brain_bundle_flag": bool,
+})
+DmriSaveHistogramsParametersTagged = typing.TypedDict('DmriSaveHistogramsParametersTagged', {
+    "@type": typing.Literal["freesurfer/dmri_saveHistograms"],
     "parcellation": InputPathType,
     "number_of_bundles": float,
     "vtk_bundle_list": list[InputPathType],
@@ -23,41 +31,9 @@ DmriSaveHistogramsParameters = typing.TypedDict('DmriSaveHistogramsParameters', 
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "freesurfer.dmri_saveHistograms": dmri_save_histograms_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "freesurfer.dmri_saveHistograms": dmri_save_histograms_outputs,
-    }.get(t)
-
-
 class DmriSaveHistogramsOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `dmri_save_histograms(...)`.
+    Output object returned when calling `DmriSaveHistogramsParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -71,7 +47,7 @@ def dmri_save_histograms_params(
     vtk_bundle_list: list[InputPathType],
     output_csv: str,
     brain_bundle_flag: bool = False,
-) -> DmriSaveHistogramsParameters:
+) -> DmriSaveHistogramsParametersTagged:
     """
     Build parameters.
     
@@ -85,7 +61,7 @@ def dmri_save_histograms_params(
         Parameter dictionary
     """
     params = {
-        "@type": "freesurfer.dmri_saveHistograms",
+        "@type": "freesurfer/dmri_saveHistograms",
         "parcellation": parcellation,
         "number_of_bundles": number_of_bundles,
         "vtk_bundle_list": vtk_bundle_list,
@@ -112,18 +88,18 @@ def dmri_save_histograms_cargs(
     cargs.append("dmri_saveHistograms")
     cargs.extend([
         "-p",
-        execution.input_file(params.get("parcellation"))
+        execution.input_file(params.get("parcellation", None))
     ])
     cargs.extend([
         "-f",
-        str(params.get("number_of_bundles"))
+        str(params.get("number_of_bundles", None))
     ])
-    cargs.extend([execution.input_file(f) for f in params.get("vtk_bundle_list")])
+    cargs.extend([execution.input_file(f) for f in params.get("vtk_bundle_list", None)])
     cargs.extend([
         "-o",
-        params.get("output_csv")
+        params.get("output_csv", None)
     ])
-    if params.get("brain_bundle_flag"):
+    if params.get("brain_bundle_flag", False):
         cargs.append("-bb")
     return cargs
 
@@ -216,7 +192,6 @@ def dmri_save_histograms(
 __all__ = [
     "DMRI_SAVE_HISTOGRAMS_METADATA",
     "DmriSaveHistogramsOutputs",
-    "DmriSaveHistogramsParameters",
     "dmri_save_histograms",
     "dmri_save_histograms_execute",
     "dmri_save_histograms_params",

@@ -14,7 +14,23 @@ TEDANA_WRAPPER_PY_METADATA = Metadata(
 
 
 TedanaWrapperPyParameters = typing.TypedDict('TedanaWrapperPyParameters', {
-    "@type": typing.Literal["afni.tedana_wrapper.py"],
+    "@type": typing.NotRequired[typing.Literal["afni/tedana_wrapper.py"]],
+    "input_files": list[InputPathType],
+    "echo_times": list[float],
+    "mask": InputPathType,
+    "results_dir": typing.NotRequired[str | None],
+    "prefix": typing.NotRequired[str | None],
+    "save_all": bool,
+    "prep_only": bool,
+    "tedana_prog": typing.NotRequired[str | None],
+    "tedana_is_exec": bool,
+    "ted_label": typing.NotRequired[str | None],
+    "tedana_opts": typing.NotRequired[str | None],
+    "help": bool,
+    "detailed_help": bool,
+})
+TedanaWrapperPyParametersTagged = typing.TypedDict('TedanaWrapperPyParametersTagged', {
+    "@type": typing.Literal["afni/tedana_wrapper.py"],
     "input_files": list[InputPathType],
     "echo_times": list[float],
     "mask": InputPathType,
@@ -31,41 +47,9 @@ TedanaWrapperPyParameters = typing.TypedDict('TedanaWrapperPyParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "afni.tedana_wrapper.py": tedana_wrapper_py_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "afni.tedana_wrapper.py": tedana_wrapper_py_outputs,
-    }.get(t)
-
-
 class TedanaWrapperPyOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `tedana_wrapper_py(...)`.
+    Output object returned when calling `TedanaWrapperPyParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -89,7 +73,7 @@ def tedana_wrapper_py_params(
     tedana_opts: str | None = None,
     help_: bool = False,
     detailed_help: bool = False,
-) -> TedanaWrapperPyParameters:
+) -> TedanaWrapperPyParametersTagged:
     """
     Build parameters.
     
@@ -116,7 +100,7 @@ def tedana_wrapper_py_params(
         Parameter dictionary
     """
     params = {
-        "@type": "afni.tedana_wrapper.py",
+        "@type": "afni/tedana_wrapper.py",
         "input_files": input_files,
         "echo_times": echo_times,
         "mask": mask,
@@ -156,50 +140,50 @@ def tedana_wrapper_py_cargs(
     cargs.append("tedana_wrapper.py")
     cargs.extend([
         "-input",
-        *[execution.input_file(f) for f in params.get("input_files")]
+        *[execution.input_file(f) for f in params.get("input_files", None)]
     ])
     cargs.extend([
         "-TE",
-        *map(str, params.get("echo_times"))
+        *map(str, params.get("echo_times", None))
     ])
     cargs.extend([
         "-mask",
-        execution.input_file(params.get("mask"))
+        execution.input_file(params.get("mask", None))
     ])
-    if params.get("results_dir") is not None:
+    if params.get("results_dir", None) is not None:
         cargs.extend([
             "-results_dir",
-            params.get("results_dir")
+            params.get("results_dir", None)
         ])
-    if params.get("prefix") is not None:
+    if params.get("prefix", None) is not None:
         cargs.extend([
             "-prefix",
-            params.get("prefix")
+            params.get("prefix", None)
         ])
-    if params.get("save_all"):
+    if params.get("save_all", False):
         cargs.append("-save_all")
-    if params.get("prep_only"):
+    if params.get("prep_only", False):
         cargs.append("-prep_only")
-    if params.get("tedana_prog") is not None:
+    if params.get("tedana_prog", None) is not None:
         cargs.extend([
             "-tedana_prog",
-            params.get("tedana_prog")
+            params.get("tedana_prog", None)
         ])
-    if params.get("tedana_is_exec"):
+    if params.get("tedana_is_exec", False):
         cargs.append("-tedana_is_exec")
-    if params.get("ted_label") is not None:
+    if params.get("ted_label", None) is not None:
         cargs.extend([
             "-ted_label",
-            params.get("ted_label")
+            params.get("ted_label", None)
         ])
-    if params.get("tedana_opts") is not None:
+    if params.get("tedana_opts", None) is not None:
         cargs.extend([
             "-tedana_opts",
-            params.get("tedana_opts")
+            params.get("tedana_opts", None)
         ])
-    if params.get("help"):
+    if params.get("help", False):
         cargs.append("-h")
-    if params.get("detailed_help"):
+    if params.get("detailed_help", False):
         cargs.append("-help")
     return cargs
 
@@ -219,8 +203,8 @@ def tedana_wrapper_py_outputs(
     """
     ret = TedanaWrapperPyOutputs(
         root=execution.output_file("."),
-        tedana_output=execution.output_file(params.get("results_dir") + "/" + params.get("prefix") + "_ted_output") if (params.get("results_dir") is not None and params.get("prefix") is not None) else None,
-        tedana_report=execution.output_file(params.get("results_dir") + "/" + params.get("prefix") + "_tedana_report.txt") if (params.get("results_dir") is not None and params.get("prefix") is not None) else None,
+        tedana_output=execution.output_file(params.get("results_dir", None) + "/" + params.get("prefix", None) + "_ted_output") if (params.get("results_dir") is not None and params.get("prefix") is not None) else None,
+        tedana_report=execution.output_file(params.get("results_dir", None) + "/" + params.get("prefix", None) + "_tedana_report.txt") if (params.get("results_dir") is not None and params.get("prefix") is not None) else None,
     )
     return ret
 
@@ -322,7 +306,6 @@ def tedana_wrapper_py(
 __all__ = [
     "TEDANA_WRAPPER_PY_METADATA",
     "TedanaWrapperPyOutputs",
-    "TedanaWrapperPyParameters",
     "tedana_wrapper_py",
     "tedana_wrapper_py_execute",
     "tedana_wrapper_py_params",

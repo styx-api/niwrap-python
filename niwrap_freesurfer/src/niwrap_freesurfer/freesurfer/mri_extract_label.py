@@ -14,7 +14,18 @@ MRI_EXTRACT_LABEL_METADATA = Metadata(
 
 
 MriExtractLabelParameters = typing.TypedDict('MriExtractLabelParameters', {
-    "@type": typing.Literal["freesurfer.mri_extract_label"],
+    "@type": typing.NotRequired[typing.Literal["freesurfer/mri_extract_label"]],
+    "input_volume": InputPathType,
+    "labels": list[str],
+    "output_name": str,
+    "gaussian_smoothing": typing.NotRequired[float | None],
+    "transform_file": typing.NotRequired[InputPathType | None],
+    "exit_none_found": bool,
+    "dilate": typing.NotRequired[float | None],
+    "erode": typing.NotRequired[float | None],
+})
+MriExtractLabelParametersTagged = typing.TypedDict('MriExtractLabelParametersTagged', {
+    "@type": typing.Literal["freesurfer/mri_extract_label"],
     "input_volume": InputPathType,
     "labels": list[str],
     "output_name": str,
@@ -26,41 +37,9 @@ MriExtractLabelParameters = typing.TypedDict('MriExtractLabelParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "freesurfer.mri_extract_label": mri_extract_label_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "freesurfer.mri_extract_label": mri_extract_label_outputs,
-    }.get(t)
-
-
 class MriExtractLabelOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `mri_extract_label(...)`.
+    Output object returned when calling `MriExtractLabelParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -77,7 +56,7 @@ def mri_extract_label_params(
     exit_none_found: bool = False,
     dilate: float | None = None,
     erode: float | None = None,
-) -> MriExtractLabelParameters:
+) -> MriExtractLabelParametersTagged:
     """
     Build parameters.
     
@@ -96,7 +75,7 @@ def mri_extract_label_params(
         Parameter dictionary
     """
     params = {
-        "@type": "freesurfer.mri_extract_label",
+        "@type": "freesurfer/mri_extract_label",
         "input_volume": input_volume,
         "labels": labels,
         "output_name": output_name,
@@ -128,30 +107,30 @@ def mri_extract_label_cargs(
     """
     cargs = []
     cargs.append("mri_extract_label")
-    cargs.append(execution.input_file(params.get("input_volume")))
-    cargs.extend(params.get("labels"))
-    cargs.append(params.get("output_name"))
-    if params.get("gaussian_smoothing") is not None:
+    cargs.append(execution.input_file(params.get("input_volume", None)))
+    cargs.extend(params.get("labels", None))
+    cargs.append(params.get("output_name", None))
+    if params.get("gaussian_smoothing", None) is not None:
         cargs.extend([
             "-s",
-            str(params.get("gaussian_smoothing"))
+            str(params.get("gaussian_smoothing", None))
         ])
-    if params.get("transform_file") is not None:
+    if params.get("transform_file", None) is not None:
         cargs.extend([
             "-t",
-            execution.input_file(params.get("transform_file"))
+            execution.input_file(params.get("transform_file", None))
         ])
-    if params.get("exit_none_found"):
+    if params.get("exit_none_found", False):
         cargs.append("-exit_none_found")
-    if params.get("dilate") is not None:
+    if params.get("dilate", None) is not None:
         cargs.extend([
             "-dilate",
-            str(params.get("dilate"))
+            str(params.get("dilate", None))
         ])
-    if params.get("erode") is not None:
+    if params.get("erode", None) is not None:
         cargs.extend([
             "-erode",
-            str(params.get("erode"))
+            str(params.get("erode", None))
         ])
     return cargs
 
@@ -171,7 +150,7 @@ def mri_extract_label_outputs(
     """
     ret = MriExtractLabelOutputs(
         root=execution.output_file("."),
-        output_volume=execution.output_file(params.get("output_name")),
+        output_volume=execution.output_file(params.get("output_name", None)),
     )
     return ret
 
@@ -255,7 +234,6 @@ def mri_extract_label(
 __all__ = [
     "MRI_EXTRACT_LABEL_METADATA",
     "MriExtractLabelOutputs",
-    "MriExtractLabelParameters",
     "mri_extract_label",
     "mri_extract_label_execute",
     "mri_extract_label_params",

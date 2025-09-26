@@ -14,21 +14,40 @@ VOLUME_TFCE_METADATA = Metadata(
 
 
 VolumeTfcePresmoothParameters = typing.TypedDict('VolumeTfcePresmoothParameters', {
-    "@type": typing.Literal["workbench.volume-tfce.presmooth"],
+    "@type": typing.NotRequired[typing.Literal["presmooth"]],
+    "kernel": float,
+    "opt_fwhm": bool,
+})
+VolumeTfcePresmoothParametersTagged = typing.TypedDict('VolumeTfcePresmoothParametersTagged', {
+    "@type": typing.Literal["presmooth"],
     "kernel": float,
     "opt_fwhm": bool,
 })
 
 
 VolumeTfceParametersParameters = typing.TypedDict('VolumeTfceParametersParameters', {
-    "@type": typing.Literal["workbench.volume-tfce.parameters"],
+    "@type": typing.NotRequired[typing.Literal["parameters"]],
+    "e": float,
+    "h": float,
+})
+VolumeTfceParametersParametersTagged = typing.TypedDict('VolumeTfceParametersParametersTagged', {
+    "@type": typing.Literal["parameters"],
     "e": float,
     "h": float,
 })
 
 
 VolumeTfceParameters = typing.TypedDict('VolumeTfceParameters', {
-    "@type": typing.Literal["workbench.volume-tfce"],
+    "@type": typing.NotRequired[typing.Literal["workbench/volume-tfce"]],
+    "volume_in": InputPathType,
+    "volume_out": str,
+    "presmooth": typing.NotRequired[VolumeTfcePresmoothParameters | None],
+    "opt_roi_roi_volume": typing.NotRequired[InputPathType | None],
+    "parameters": typing.NotRequired[VolumeTfceParametersParameters | None],
+    "opt_subvolume_subvolume": typing.NotRequired[str | None],
+})
+VolumeTfceParametersTagged = typing.TypedDict('VolumeTfceParametersTagged', {
+    "@type": typing.Literal["workbench/volume-tfce"],
     "volume_in": InputPathType,
     "volume_out": str,
     "presmooth": typing.NotRequired[VolumeTfcePresmoothParameters | None],
@@ -38,44 +57,10 @@ VolumeTfceParameters = typing.TypedDict('VolumeTfceParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "workbench.volume-tfce": volume_tfce_cargs,
-        "workbench.volume-tfce.presmooth": volume_tfce_presmooth_cargs,
-        "workbench.volume-tfce.parameters": volume_tfce_parameters_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "workbench.volume-tfce": volume_tfce_outputs,
-    }.get(t)
-
-
 def volume_tfce_presmooth_params(
     kernel: float,
     opt_fwhm: bool = False,
-) -> VolumeTfcePresmoothParameters:
+) -> VolumeTfcePresmoothParametersTagged:
     """
     Build parameters.
     
@@ -87,7 +72,7 @@ def volume_tfce_presmooth_params(
         Parameter dictionary
     """
     params = {
-        "@type": "workbench.volume-tfce.presmooth",
+        "@type": "presmooth",
         "kernel": kernel,
         "opt_fwhm": opt_fwhm,
     }
@@ -109,8 +94,8 @@ def volume_tfce_presmooth_cargs(
     """
     cargs = []
     cargs.append("-presmooth")
-    cargs.append(str(params.get("kernel")))
-    if params.get("opt_fwhm"):
+    cargs.append(str(params.get("kernel", None)))
+    if params.get("opt_fwhm", False):
         cargs.append("-fwhm")
     return cargs
 
@@ -118,7 +103,7 @@ def volume_tfce_presmooth_cargs(
 def volume_tfce_parameters_params(
     e: float,
     h: float,
-) -> VolumeTfceParametersParameters:
+) -> VolumeTfceParametersParametersTagged:
     """
     Build parameters.
     
@@ -129,7 +114,7 @@ def volume_tfce_parameters_params(
         Parameter dictionary
     """
     params = {
-        "@type": "workbench.volume-tfce.parameters",
+        "@type": "parameters",
         "e": e,
         "h": h,
     }
@@ -151,14 +136,14 @@ def volume_tfce_parameters_cargs(
     """
     cargs = []
     cargs.append("-parameters")
-    cargs.append(str(params.get("e")))
-    cargs.append(str(params.get("h")))
+    cargs.append(str(params.get("e", None)))
+    cargs.append(str(params.get("h", None)))
     return cargs
 
 
 class VolumeTfceOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `volume_tfce(...)`.
+    Output object returned when calling `VolumeTfceParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -173,7 +158,7 @@ def volume_tfce_params(
     opt_roi_roi_volume: InputPathType | None = None,
     parameters: VolumeTfceParametersParameters | None = None,
     opt_subvolume_subvolume: str | None = None,
-) -> VolumeTfceParameters:
+) -> VolumeTfceParametersTagged:
     """
     Build parameters.
     
@@ -190,7 +175,7 @@ def volume_tfce_params(
         Parameter dictionary
     """
     params = {
-        "@type": "workbench.volume-tfce",
+        "@type": "workbench/volume-tfce",
         "volume_in": volume_in,
         "volume_out": volume_out,
     }
@@ -221,21 +206,21 @@ def volume_tfce_cargs(
     cargs = []
     cargs.append("wb_command")
     cargs.append("-volume-tfce")
-    cargs.append(execution.input_file(params.get("volume_in")))
-    cargs.append(params.get("volume_out"))
-    if params.get("presmooth") is not None:
-        cargs.extend(dyn_cargs(params.get("presmooth")["@type"])(params.get("presmooth"), execution))
-    if params.get("opt_roi_roi_volume") is not None:
+    cargs.append(execution.input_file(params.get("volume_in", None)))
+    cargs.append(params.get("volume_out", None))
+    if params.get("presmooth", None) is not None:
+        cargs.extend(volume_tfce_presmooth_cargs(params.get("presmooth", None), execution))
+    if params.get("opt_roi_roi_volume", None) is not None:
         cargs.extend([
             "-roi",
-            execution.input_file(params.get("opt_roi_roi_volume"))
+            execution.input_file(params.get("opt_roi_roi_volume", None))
         ])
-    if params.get("parameters") is not None:
-        cargs.extend(dyn_cargs(params.get("parameters")["@type"])(params.get("parameters"), execution))
-    if params.get("opt_subvolume_subvolume") is not None:
+    if params.get("parameters", None) is not None:
+        cargs.extend(volume_tfce_parameters_cargs(params.get("parameters", None), execution))
+    if params.get("opt_subvolume_subvolume", None) is not None:
         cargs.extend([
             "-subvolume",
-            params.get("opt_subvolume_subvolume")
+            params.get("opt_subvolume_subvolume", None)
         ])
     return cargs
 
@@ -255,7 +240,7 @@ def volume_tfce_outputs(
     """
     ret = VolumeTfceOutputs(
         root=execution.output_file("."),
-        volume_out=execution.output_file(params.get("volume_out")),
+        volume_out=execution.output_file(params.get("volume_out", None)),
     )
     return ret
 
@@ -371,9 +356,6 @@ def volume_tfce(
 __all__ = [
     "VOLUME_TFCE_METADATA",
     "VolumeTfceOutputs",
-    "VolumeTfceParameters",
-    "VolumeTfceParametersParameters",
-    "VolumeTfcePresmoothParameters",
     "volume_tfce",
     "volume_tfce_execute",
     "volume_tfce_parameters_params",

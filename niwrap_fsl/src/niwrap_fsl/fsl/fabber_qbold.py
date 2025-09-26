@@ -14,7 +14,45 @@ FABBER_QBOLD_METADATA = Metadata(
 
 
 FabberQboldParameters = typing.TypedDict('FabberQboldParameters', {
-    "@type": typing.Literal["fsl.fabber_qbold"],
+    "@type": typing.NotRequired[typing.Literal["fsl/fabber_qbold"]],
+    "output_dir": str,
+    "method": str,
+    "model": str,
+    "data": InputPathType,
+    "data_n": typing.NotRequired[InputPathType | None],
+    "data_order": typing.NotRequired[str | None],
+    "mask": typing.NotRequired[InputPathType | None],
+    "mt_n": typing.NotRequired[float | None],
+    "suppdata": typing.NotRequired[InputPathType | None],
+    "listmethods": bool,
+    "listmodels": bool,
+    "listparams": bool,
+    "descparams": bool,
+    "listoutputs": bool,
+    "evaluate": typing.NotRequired[str | None],
+    "evaluate_params": typing.NotRequired[str | None],
+    "evaluate_nt": typing.NotRequired[float | None],
+    "simple_output": bool,
+    "overwrite": bool,
+    "link_latest": bool,
+    "loadmodels": typing.NotRequired[InputPathType | None],
+    "dump_param_names": bool,
+    "save_model_fit": bool,
+    "save_residuals": bool,
+    "save_model_extras": bool,
+    "save_mvn": bool,
+    "save_mean": bool,
+    "save_std": bool,
+    "save_var": bool,
+    "save_zstat": bool,
+    "save_noise_mean": bool,
+    "save_noise_std": bool,
+    "save_free_energy": bool,
+    "optfile": typing.NotRequired[InputPathType | None],
+    "debug": bool,
+})
+FabberQboldParametersTagged = typing.TypedDict('FabberQboldParametersTagged', {
+    "@type": typing.Literal["fsl/fabber_qbold"],
     "output_dir": str,
     "method": str,
     "model": str,
@@ -53,41 +91,9 @@ FabberQboldParameters = typing.TypedDict('FabberQboldParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "fsl.fabber_qbold": fabber_qbold_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "fsl.fabber_qbold": fabber_qbold_outputs,
-    }.get(t)
-
-
 class FabberQboldOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `fabber_qbold(...)`.
+    Output object returned when calling `FabberQboldParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -155,7 +161,7 @@ def fabber_qbold_params(
     save_free_energy: bool = False,
     optfile: InputPathType | None = None,
     debug: bool = False,
-) -> FabberQboldParameters:
+) -> FabberQboldParametersTagged:
     """
     Build parameters.
     
@@ -219,7 +225,7 @@ def fabber_qbold_params(
         Parameter dictionary
     """
     params = {
-        "@type": "fsl.fabber_qbold",
+        "@type": "fsl/fabber_qbold",
         "output_dir": output_dir,
         "method": method,
         "model": model,
@@ -286,111 +292,111 @@ def fabber_qbold_cargs(
     cargs.append("fabber_qbold")
     cargs.extend([
         "--output",
-        params.get("output_dir")
+        params.get("output_dir", None)
     ])
     cargs.extend([
         "--method",
-        params.get("method")
+        params.get("method", None)
     ])
     cargs.extend([
         "--model",
-        params.get("model")
+        params.get("model", None)
     ])
     cargs.extend([
         "--data",
-        execution.input_file(params.get("data"))
+        execution.input_file(params.get("data", None))
     ])
-    if params.get("data_n") is not None:
+    if params.get("data_n", None) is not None:
         cargs.extend([
             "--data<n>",
-            execution.input_file(params.get("data_n"))
+            execution.input_file(params.get("data_n", None))
         ])
-    if params.get("data_order") is not None:
+    if params.get("data_order", None) is not None:
         cargs.extend([
             "--data-order",
-            params.get("data_order")
+            params.get("data_order", None)
         ])
-    if params.get("mask") is not None:
+    if params.get("mask", None) is not None:
         cargs.extend([
             "--mask",
-            execution.input_file(params.get("mask"))
+            execution.input_file(params.get("mask", None))
         ])
-    if params.get("mt_n") is not None:
+    if params.get("mt_n", None) is not None:
         cargs.extend([
             "--mt<n>",
-            str(params.get("mt_n"))
+            str(params.get("mt_n", None))
         ])
-    if params.get("suppdata") is not None:
+    if params.get("suppdata", None) is not None:
         cargs.extend([
             "--suppdata",
-            execution.input_file(params.get("suppdata"))
+            execution.input_file(params.get("suppdata", None))
         ])
-    if params.get("listmethods"):
+    if params.get("listmethods", False):
         cargs.append("--listmethods")
-    if params.get("listmodels"):
+    if params.get("listmodels", False):
         cargs.append("--listmodels")
-    if params.get("listparams"):
+    if params.get("listparams", False):
         cargs.append("--listparams")
-    if params.get("descparams"):
+    if params.get("descparams", False):
         cargs.append("--descparams")
-    if params.get("listoutputs"):
+    if params.get("listoutputs", False):
         cargs.append("--listoutputs")
-    if params.get("evaluate") is not None:
+    if params.get("evaluate", None) is not None:
         cargs.extend([
             "--evaluate",
-            params.get("evaluate")
+            params.get("evaluate", None)
         ])
-    if params.get("evaluate_params") is not None:
+    if params.get("evaluate_params", None) is not None:
         cargs.extend([
             "--evaluate-params",
-            params.get("evaluate_params")
+            params.get("evaluate_params", None)
         ])
-    if params.get("evaluate_nt") is not None:
+    if params.get("evaluate_nt", None) is not None:
         cargs.extend([
             "--evaluate-nt",
-            str(params.get("evaluate_nt"))
+            str(params.get("evaluate_nt", None))
         ])
-    if params.get("simple_output"):
+    if params.get("simple_output", False):
         cargs.append("--simple-output")
-    if params.get("overwrite"):
+    if params.get("overwrite", False):
         cargs.append("--overwrite")
-    if params.get("link_latest"):
+    if params.get("link_latest", False):
         cargs.append("--link-to-latest")
-    if params.get("loadmodels") is not None:
+    if params.get("loadmodels", None) is not None:
         cargs.extend([
             "--loadmodels",
-            execution.input_file(params.get("loadmodels"))
+            execution.input_file(params.get("loadmodels", None))
         ])
-    if params.get("dump_param_names"):
+    if params.get("dump_param_names", False):
         cargs.append("--dump-param-names")
-    if params.get("save_model_fit"):
+    if params.get("save_model_fit", False):
         cargs.append("--save-model-fit")
-    if params.get("save_residuals"):
+    if params.get("save_residuals", False):
         cargs.append("--save-residuals")
-    if params.get("save_model_extras"):
+    if params.get("save_model_extras", False):
         cargs.append("--save-model-extras")
-    if params.get("save_mvn"):
+    if params.get("save_mvn", False):
         cargs.append("--save-mvn")
-    if params.get("save_mean"):
+    if params.get("save_mean", False):
         cargs.append("--save-mean")
-    if params.get("save_std"):
+    if params.get("save_std", False):
         cargs.append("--save-std")
-    if params.get("save_var"):
+    if params.get("save_var", False):
         cargs.append("--save-var")
-    if params.get("save_zstat"):
+    if params.get("save_zstat", False):
         cargs.append("--save-zstat")
-    if params.get("save_noise_mean"):
+    if params.get("save_noise_mean", False):
         cargs.append("--save-noise-mean")
-    if params.get("save_noise_std"):
+    if params.get("save_noise_std", False):
         cargs.append("--save-noise-std")
-    if params.get("save_free_energy"):
+    if params.get("save_free_energy", False):
         cargs.append("--save-free-energy")
-    if params.get("optfile") is not None:
+    if params.get("optfile", None) is not None:
         cargs.extend([
             "--optfile",
-            execution.input_file(params.get("optfile"))
+            execution.input_file(params.get("optfile", None))
         ])
-    if params.get("debug"):
+    if params.get("debug", False):
         cargs.append("--debug")
     return cargs
 
@@ -410,19 +416,19 @@ def fabber_qbold_outputs(
     """
     ret = FabberQboldOutputs(
         root=execution.output_file("."),
-        paramnames_file=execution.output_file(params.get("output_dir") + "/paramnames.txt"),
-        model_fit_file=execution.output_file(params.get("output_dir") + "/model_fit.nii.gz"),
-        residuals_file=execution.output_file(params.get("output_dir") + "/residuals.nii.gz"),
-        model_extras_file=execution.output_file(params.get("output_dir") + "/model_extras.nii.gz"),
-        mvn_file=execution.output_file(params.get("output_dir") + "/mvn.nii.gz"),
-        mean_file=execution.output_file(params.get("output_dir") + "/mean.nii.gz"),
-        std_file=execution.output_file(params.get("output_dir") + "/std.nii.gz"),
-        var_file=execution.output_file(params.get("output_dir") + "/var.nii.gz"),
-        zstat_file=execution.output_file(params.get("output_dir") + "/zstat.nii.gz"),
-        noise_mean_file=execution.output_file(params.get("output_dir") + "/noise_mean.nii.gz"),
-        noise_std_file=execution.output_file(params.get("output_dir") + "/noise_std.nii.gz"),
-        free_energy_file=execution.output_file(params.get("output_dir") + "/free_energy.nii.gz"),
-        logfile=execution.output_file(params.get("output_dir") + "/logfile.txt"),
+        paramnames_file=execution.output_file(params.get("output_dir", None) + "/paramnames.txt"),
+        model_fit_file=execution.output_file(params.get("output_dir", None) + "/model_fit.nii.gz"),
+        residuals_file=execution.output_file(params.get("output_dir", None) + "/residuals.nii.gz"),
+        model_extras_file=execution.output_file(params.get("output_dir", None) + "/model_extras.nii.gz"),
+        mvn_file=execution.output_file(params.get("output_dir", None) + "/mvn.nii.gz"),
+        mean_file=execution.output_file(params.get("output_dir", None) + "/mean.nii.gz"),
+        std_file=execution.output_file(params.get("output_dir", None) + "/std.nii.gz"),
+        var_file=execution.output_file(params.get("output_dir", None) + "/var.nii.gz"),
+        zstat_file=execution.output_file(params.get("output_dir", None) + "/zstat.nii.gz"),
+        noise_mean_file=execution.output_file(params.get("output_dir", None) + "/noise_mean.nii.gz"),
+        noise_std_file=execution.output_file(params.get("output_dir", None) + "/noise_std.nii.gz"),
+        free_energy_file=execution.output_file(params.get("output_dir", None) + "/free_energy.nii.gz"),
+        logfile=execution.output_file(params.get("output_dir", None) + "/logfile.txt"),
     )
     return ret
 
@@ -605,7 +611,6 @@ def fabber_qbold(
 __all__ = [
     "FABBER_QBOLD_METADATA",
     "FabberQboldOutputs",
-    "FabberQboldParameters",
     "fabber_qbold",
     "fabber_qbold_execute",
     "fabber_qbold_params",

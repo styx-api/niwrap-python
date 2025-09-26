@@ -14,7 +14,17 @@ FEATREGAPPLY_METADATA = Metadata(
 
 
 FeatregapplyParameters = typing.TypedDict('FeatregapplyParameters', {
-    "@type": typing.Literal["fsl.featregapply"],
+    "@type": typing.NotRequired[typing.Literal["fsl/featregapply"]],
+    "feat_directory": str,
+    "force_flag": bool,
+    "cleanup_flag": bool,
+    "upsample_trilinear": typing.NotRequired[InputPathType | None],
+    "upsample_spline": typing.NotRequired[InputPathType | None],
+    "standard_space_res": typing.NotRequired[float | None],
+    "exclude_filtered_func_flag": bool,
+})
+FeatregapplyParametersTagged = typing.TypedDict('FeatregapplyParametersTagged', {
+    "@type": typing.Literal["fsl/featregapply"],
     "feat_directory": str,
     "force_flag": bool,
     "cleanup_flag": bool,
@@ -25,41 +35,9 @@ FeatregapplyParameters = typing.TypedDict('FeatregapplyParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "fsl.featregapply": featregapply_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "fsl.featregapply": featregapply_outputs,
-    }.get(t)
-
-
 class FeatregapplyOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `featregapply(...)`.
+    Output object returned when calling `FeatregapplyParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -75,7 +53,7 @@ def featregapply_params(
     upsample_spline: InputPathType | None = None,
     standard_space_res: float | None = None,
     exclude_filtered_func_flag: bool = False,
-) -> FeatregapplyParameters:
+) -> FeatregapplyParametersTagged:
     """
     Build parameters.
     
@@ -97,7 +75,7 @@ def featregapply_params(
         Parameter dictionary
     """
     params = {
-        "@type": "fsl.featregapply",
+        "@type": "fsl/featregapply",
         "feat_directory": feat_directory,
         "force_flag": force_flag,
         "cleanup_flag": cleanup_flag,
@@ -127,27 +105,27 @@ def featregapply_cargs(
     """
     cargs = []
     cargs.append("featregapply")
-    cargs.append(params.get("feat_directory"))
-    if params.get("force_flag"):
+    cargs.append(params.get("feat_directory", None))
+    if params.get("force_flag", False):
         cargs.append("-f")
-    if params.get("cleanup_flag"):
+    if params.get("cleanup_flag", False):
         cargs.append("-c")
-    if params.get("upsample_trilinear") is not None:
+    if params.get("upsample_trilinear", None) is not None:
         cargs.extend([
             "-l",
-            execution.input_file(params.get("upsample_trilinear"))
+            execution.input_file(params.get("upsample_trilinear", None))
         ])
-    if params.get("upsample_spline") is not None:
+    if params.get("upsample_spline", None) is not None:
         cargs.extend([
             "-s",
-            execution.input_file(params.get("upsample_spline"))
+            execution.input_file(params.get("upsample_spline", None))
         ])
-    if params.get("standard_space_res") is not None:
+    if params.get("standard_space_res", None) is not None:
         cargs.extend([
             "-r",
-            str(params.get("standard_space_res"))
+            str(params.get("standard_space_res", None))
         ])
-    if params.get("exclude_filtered_func_flag"):
+    if params.get("exclude_filtered_func_flag", False):
         cargs.append("-e")
     return cargs
 
@@ -167,7 +145,7 @@ def featregapply_outputs(
     """
     ret = FeatregapplyOutputs(
         root=execution.output_file("."),
-        output_directory=execution.output_file(params.get("feat_directory") + "/reg_standard"),
+        output_directory=execution.output_file(params.get("feat_directory", None) + "/reg_standard"),
     )
     return ret
 
@@ -252,7 +230,6 @@ def featregapply(
 __all__ = [
     "FEATREGAPPLY_METADATA",
     "FeatregapplyOutputs",
-    "FeatregapplyParameters",
     "featregapply",
     "featregapply_execute",
     "featregapply_params",

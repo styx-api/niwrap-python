@@ -14,45 +14,18 @@ SEGMENT_SUBJECT_NOTAL_METADATA = Metadata(
 
 
 SegmentSubjectNotalParameters = typing.TypedDict('SegmentSubjectNotalParameters', {
-    "@type": typing.Literal["freesurfer.segment_subject_notal"],
+    "@type": typing.NotRequired[typing.Literal["freesurfer/segment_subject_notal"]],
+    "subject_path": str,
+})
+SegmentSubjectNotalParametersTagged = typing.TypedDict('SegmentSubjectNotalParametersTagged', {
+    "@type": typing.Literal["freesurfer/segment_subject_notal"],
     "subject_path": str,
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "freesurfer.segment_subject_notal": segment_subject_notal_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-    }.get(t)
-
-
 class SegmentSubjectNotalOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `segment_subject_notal(...)`.
+    Output object returned when calling `SegmentSubjectNotalParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -60,7 +33,7 @@ class SegmentSubjectNotalOutputs(typing.NamedTuple):
 
 def segment_subject_notal_params(
     subject_path: str,
-) -> SegmentSubjectNotalParameters:
+) -> SegmentSubjectNotalParametersTagged:
     """
     Build parameters.
     
@@ -70,7 +43,7 @@ def segment_subject_notal_params(
         Parameter dictionary
     """
     params = {
-        "@type": "freesurfer.segment_subject_notal",
+        "@type": "freesurfer/segment_subject_notal",
         "subject_path": subject_path,
     }
     return params
@@ -91,7 +64,7 @@ def segment_subject_notal_cargs(
     """
     cargs = []
     cargs.append("segment_subject_notal")
-    cargs.append(params.get("subject_path"))
+    cargs.append(params.get("subject_path", None))
     return cargs
 
 
@@ -170,7 +143,6 @@ def segment_subject_notal(
 __all__ = [
     "SEGMENT_SUBJECT_NOTAL_METADATA",
     "SegmentSubjectNotalOutputs",
-    "SegmentSubjectNotalParameters",
     "segment_subject_notal",
     "segment_subject_notal_execute",
     "segment_subject_notal_params",

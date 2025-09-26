@@ -14,7 +14,17 @@ V_3D_AUTOMASK_METADATA = Metadata(
 
 
 V3dAutomaskParameters = typing.TypedDict('V3dAutomaskParameters', {
-    "@type": typing.Literal["afni.3dAutomask"],
+    "@type": typing.NotRequired[typing.Literal["afni/3dAutomask"]],
+    "prefix": typing.NotRequired[str | None],
+    "apply_prefix": typing.NotRequired[str | None],
+    "clfrac": typing.NotRequired[float | None],
+    "dilate": typing.NotRequired[int | None],
+    "erode": typing.NotRequired[int | None],
+    "outputtype": typing.NotRequired[typing.Literal["NIFTI", "AFNI", "NIFTI_GZ"] | None],
+    "in_file": InputPathType,
+})
+V3dAutomaskParametersTagged = typing.TypedDict('V3dAutomaskParametersTagged', {
+    "@type": typing.Literal["afni/3dAutomask"],
     "prefix": typing.NotRequired[str | None],
     "apply_prefix": typing.NotRequired[str | None],
     "clfrac": typing.NotRequired[float | None],
@@ -25,41 +35,9 @@ V3dAutomaskParameters = typing.TypedDict('V3dAutomaskParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "afni.3dAutomask": v_3d_automask_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "afni.3dAutomask": v_3d_automask_outputs,
-    }.get(t)
-
-
 class V3dAutomaskOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `v_3d_automask(...)`.
+    Output object returned when calling `V3dAutomaskParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -77,7 +55,7 @@ def v_3d_automask_params(
     dilate: int | None = None,
     erode: int | None = None,
     outputtype: typing.Literal["NIFTI", "AFNI", "NIFTI_GZ"] | None = None,
-) -> V3dAutomaskParameters:
+) -> V3dAutomaskParametersTagged:
     """
     Build parameters.
     
@@ -95,7 +73,7 @@ def v_3d_automask_params(
         Parameter dictionary
     """
     params = {
-        "@type": "afni.3dAutomask",
+        "@type": "afni/3dAutomask",
         "in_file": in_file,
     }
     if prefix is not None:
@@ -128,34 +106,34 @@ def v_3d_automask_cargs(
     """
     cargs = []
     cargs.append("3dAutomask")
-    if params.get("prefix") is not None:
+    if params.get("prefix", None) is not None:
         cargs.extend([
             "-prefix",
-            params.get("prefix")
+            params.get("prefix", None)
         ])
-    if params.get("apply_prefix") is not None:
+    if params.get("apply_prefix", None) is not None:
         cargs.extend([
             "-apply_prefix",
-            params.get("apply_prefix")
+            params.get("apply_prefix", None)
         ])
-    if params.get("clfrac") is not None:
+    if params.get("clfrac", None) is not None:
         cargs.extend([
             "-clfrac",
-            str(params.get("clfrac"))
+            str(params.get("clfrac", None))
         ])
-    if params.get("dilate") is not None:
+    if params.get("dilate", None) is not None:
         cargs.extend([
             "-dilate",
-            str(params.get("dilate"))
+            str(params.get("dilate", None))
         ])
-    if params.get("erode") is not None:
+    if params.get("erode", None) is not None:
         cargs.extend([
             "-erode",
-            str(params.get("erode"))
+            str(params.get("erode", None))
         ])
-    if params.get("outputtype") is not None:
-        cargs.append(params.get("outputtype"))
-    cargs.append(execution.input_file(params.get("in_file")))
+    if params.get("outputtype", None) is not None:
+        cargs.append(params.get("outputtype", None))
+    cargs.append(execution.input_file(params.get("in_file", None)))
     return cargs
 
 
@@ -174,8 +152,8 @@ def v_3d_automask_outputs(
     """
     ret = V3dAutomaskOutputs(
         root=execution.output_file("."),
-        brain_file=execution.output_file(params.get("apply_prefix")) if (params.get("apply_prefix") is not None) else None,
-        mask_file=execution.output_file(params.get("prefix")) if (params.get("prefix") is not None) else None,
+        brain_file=execution.output_file(params.get("apply_prefix", None)) if (params.get("apply_prefix") is not None) else None,
+        mask_file=execution.output_file(params.get("prefix", None)) if (params.get("prefix") is not None) else None,
     )
     return ret
 
@@ -255,7 +233,6 @@ def v_3d_automask(
 
 __all__ = [
     "V3dAutomaskOutputs",
-    "V3dAutomaskParameters",
     "V_3D_AUTOMASK_METADATA",
     "v_3d_automask",
     "v_3d_automask_execute",

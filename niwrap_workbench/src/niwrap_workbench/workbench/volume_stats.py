@@ -14,14 +14,28 @@ VOLUME_STATS_METADATA = Metadata(
 
 
 VolumeStatsRoiParameters = typing.TypedDict('VolumeStatsRoiParameters', {
-    "@type": typing.Literal["workbench.volume-stats.roi"],
+    "@type": typing.NotRequired[typing.Literal["roi"]],
+    "roi_volume": InputPathType,
+    "opt_match_maps": bool,
+})
+VolumeStatsRoiParametersTagged = typing.TypedDict('VolumeStatsRoiParametersTagged', {
+    "@type": typing.Literal["roi"],
     "roi_volume": InputPathType,
     "opt_match_maps": bool,
 })
 
 
 VolumeStatsParameters = typing.TypedDict('VolumeStatsParameters', {
-    "@type": typing.Literal["workbench.volume-stats"],
+    "@type": typing.NotRequired[typing.Literal["workbench/volume-stats"]],
+    "volume_in": InputPathType,
+    "opt_reduce_operation": typing.NotRequired[str | None],
+    "opt_percentile_percent": typing.NotRequired[float | None],
+    "opt_subvolume_subvolume": typing.NotRequired[str | None],
+    "roi": typing.NotRequired[VolumeStatsRoiParameters | None],
+    "opt_show_map_name": bool,
+})
+VolumeStatsParametersTagged = typing.TypedDict('VolumeStatsParametersTagged', {
+    "@type": typing.Literal["workbench/volume-stats"],
     "volume_in": InputPathType,
     "opt_reduce_operation": typing.NotRequired[str | None],
     "opt_percentile_percent": typing.NotRequired[float | None],
@@ -31,42 +45,10 @@ VolumeStatsParameters = typing.TypedDict('VolumeStatsParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "workbench.volume-stats": volume_stats_cargs,
-        "workbench.volume-stats.roi": volume_stats_roi_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-    }.get(t)
-
-
 def volume_stats_roi_params(
     roi_volume: InputPathType,
     opt_match_maps: bool = False,
-) -> VolumeStatsRoiParameters:
+) -> VolumeStatsRoiParametersTagged:
     """
     Build parameters.
     
@@ -78,7 +60,7 @@ def volume_stats_roi_params(
         Parameter dictionary
     """
     params = {
-        "@type": "workbench.volume-stats.roi",
+        "@type": "roi",
         "roi_volume": roi_volume,
         "opt_match_maps": opt_match_maps,
     }
@@ -100,15 +82,15 @@ def volume_stats_roi_cargs(
     """
     cargs = []
     cargs.append("-roi")
-    cargs.append(execution.input_file(params.get("roi_volume")))
-    if params.get("opt_match_maps"):
+    cargs.append(execution.input_file(params.get("roi_volume", None)))
+    if params.get("opt_match_maps", False):
         cargs.append("-match-maps")
     return cargs
 
 
 class VolumeStatsOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `volume_stats(...)`.
+    Output object returned when calling `VolumeStatsParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -121,7 +103,7 @@ def volume_stats_params(
     opt_subvolume_subvolume: str | None = None,
     roi: VolumeStatsRoiParameters | None = None,
     opt_show_map_name: bool = False,
-) -> VolumeStatsParameters:
+) -> VolumeStatsParametersTagged:
     """
     Build parameters.
     
@@ -139,7 +121,7 @@ def volume_stats_params(
         Parameter dictionary
     """
     params = {
-        "@type": "workbench.volume-stats",
+        "@type": "workbench/volume-stats",
         "volume_in": volume_in,
         "opt_show_map_name": opt_show_map_name,
     }
@@ -170,25 +152,25 @@ def volume_stats_cargs(
     cargs = []
     cargs.append("wb_command")
     cargs.append("-volume-stats")
-    cargs.append(execution.input_file(params.get("volume_in")))
-    if params.get("opt_reduce_operation") is not None:
+    cargs.append(execution.input_file(params.get("volume_in", None)))
+    if params.get("opt_reduce_operation", None) is not None:
         cargs.extend([
             "-reduce",
-            params.get("opt_reduce_operation")
+            params.get("opt_reduce_operation", None)
         ])
-    if params.get("opt_percentile_percent") is not None:
+    if params.get("opt_percentile_percent", None) is not None:
         cargs.extend([
             "-percentile",
-            str(params.get("opt_percentile_percent"))
+            str(params.get("opt_percentile_percent", None))
         ])
-    if params.get("opt_subvolume_subvolume") is not None:
+    if params.get("opt_subvolume_subvolume", None) is not None:
         cargs.extend([
             "-subvolume",
-            params.get("opt_subvolume_subvolume")
+            params.get("opt_subvolume_subvolume", None)
         ])
-    if params.get("roi") is not None:
-        cargs.extend(dyn_cargs(params.get("roi")["@type"])(params.get("roi"), execution))
-    if params.get("opt_show_map_name"):
+    if params.get("roi", None) is not None:
+        cargs.extend(volume_stats_roi_cargs(params.get("roi", None), execution))
+    if params.get("opt_show_map_name", False):
         cargs.append("-show-map-name")
     return cargs
 
@@ -340,8 +322,6 @@ def volume_stats(
 __all__ = [
     "VOLUME_STATS_METADATA",
     "VolumeStatsOutputs",
-    "VolumeStatsParameters",
-    "VolumeStatsRoiParameters",
     "volume_stats",
     "volume_stats_execute",
     "volume_stats_params",

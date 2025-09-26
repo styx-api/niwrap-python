@@ -14,14 +14,43 @@ TENSOR2METRIC_METADATA = Metadata(
 
 
 Tensor2metricConfigParameters = typing.TypedDict('Tensor2metricConfigParameters', {
-    "@type": typing.Literal["mrtrix.tensor2metric.config"],
+    "@type": typing.NotRequired[typing.Literal["config"]],
+    "key": str,
+    "value": str,
+})
+Tensor2metricConfigParametersTagged = typing.TypedDict('Tensor2metricConfigParametersTagged', {
+    "@type": typing.Literal["config"],
     "key": str,
     "value": str,
 })
 
 
 Tensor2metricParameters = typing.TypedDict('Tensor2metricParameters', {
-    "@type": typing.Literal["mrtrix.tensor2metric"],
+    "@type": typing.NotRequired[typing.Literal["mrtrix/tensor2metric"]],
+    "adc": typing.NotRequired[str | None],
+    "fa": typing.NotRequired[str | None],
+    "ad": typing.NotRequired[str | None],
+    "rd": typing.NotRequired[str | None],
+    "cl": typing.NotRequired[str | None],
+    "cp": typing.NotRequired[str | None],
+    "cs": typing.NotRequired[str | None],
+    "value": typing.NotRequired[str | None],
+    "vector": typing.NotRequired[str | None],
+    "num": typing.NotRequired[list[int] | None],
+    "modulate": typing.NotRequired[str | None],
+    "mask": typing.NotRequired[InputPathType | None],
+    "info": bool,
+    "quiet": bool,
+    "debug": bool,
+    "force": bool,
+    "nthreads": typing.NotRequired[int | None],
+    "config": typing.NotRequired[list[Tensor2metricConfigParameters] | None],
+    "help": bool,
+    "version": bool,
+    "tensor": InputPathType,
+})
+Tensor2metricParametersTagged = typing.TypedDict('Tensor2metricParametersTagged', {
+    "@type": typing.Literal["mrtrix/tensor2metric"],
     "adc": typing.NotRequired[str | None],
     "fa": typing.NotRequired[str | None],
     "ad": typing.NotRequired[str | None],
@@ -46,43 +75,10 @@ Tensor2metricParameters = typing.TypedDict('Tensor2metricParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "mrtrix.tensor2metric": tensor2metric_cargs,
-        "mrtrix.tensor2metric.config": tensor2metric_config_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "mrtrix.tensor2metric": tensor2metric_outputs,
-    }.get(t)
-
-
 def tensor2metric_config_params(
     key: str,
     value: str,
-) -> Tensor2metricConfigParameters:
+) -> Tensor2metricConfigParametersTagged:
     """
     Build parameters.
     
@@ -93,7 +89,7 @@ def tensor2metric_config_params(
         Parameter dictionary
     """
     params = {
-        "@type": "mrtrix.tensor2metric.config",
+        "@type": "config",
         "key": key,
         "value": value,
     }
@@ -115,14 +111,14 @@ def tensor2metric_config_cargs(
     """
     cargs = []
     cargs.append("-config")
-    cargs.append(params.get("key"))
-    cargs.append(params.get("value"))
+    cargs.append(params.get("key", None))
+    cargs.append(params.get("value", None))
     return cargs
 
 
 class Tensor2metricOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `tensor2metric(...)`.
+    Output object returned when calling `Tensor2metricParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -174,7 +170,7 @@ def tensor2metric_params(
     config: list[Tensor2metricConfigParameters] | None = None,
     help_: bool = False,
     version: bool = False,
-) -> Tensor2metricParameters:
+) -> Tensor2metricParametersTagged:
     """
     Build parameters.
     
@@ -220,7 +216,7 @@ def tensor2metric_params(
         Parameter dictionary
     """
     params = {
-        "@type": "mrtrix.tensor2metric",
+        "@type": "mrtrix/tensor2metric",
         "info": info,
         "quiet": quiet,
         "debug": debug,
@@ -275,86 +271,86 @@ def tensor2metric_cargs(
     """
     cargs = []
     cargs.append("tensor2metric")
-    if params.get("adc") is not None:
+    if params.get("adc", None) is not None:
         cargs.extend([
             "-adc",
-            params.get("adc")
+            params.get("adc", None)
         ])
-    if params.get("fa") is not None:
+    if params.get("fa", None) is not None:
         cargs.extend([
             "-fa",
-            params.get("fa")
+            params.get("fa", None)
         ])
-    if params.get("ad") is not None:
+    if params.get("ad", None) is not None:
         cargs.extend([
             "-ad",
-            params.get("ad")
+            params.get("ad", None)
         ])
-    if params.get("rd") is not None:
+    if params.get("rd", None) is not None:
         cargs.extend([
             "-rd",
-            params.get("rd")
+            params.get("rd", None)
         ])
-    if params.get("cl") is not None:
+    if params.get("cl", None) is not None:
         cargs.extend([
             "-cl",
-            params.get("cl")
+            params.get("cl", None)
         ])
-    if params.get("cp") is not None:
+    if params.get("cp", None) is not None:
         cargs.extend([
             "-cp",
-            params.get("cp")
+            params.get("cp", None)
         ])
-    if params.get("cs") is not None:
+    if params.get("cs", None) is not None:
         cargs.extend([
             "-cs",
-            params.get("cs")
+            params.get("cs", None)
         ])
-    if params.get("value") is not None:
+    if params.get("value", None) is not None:
         cargs.extend([
             "-value",
-            params.get("value")
+            params.get("value", None)
         ])
-    if params.get("vector") is not None:
+    if params.get("vector", None) is not None:
         cargs.extend([
             "-vector",
-            params.get("vector")
+            params.get("vector", None)
         ])
-    if params.get("num") is not None:
+    if params.get("num", None) is not None:
         cargs.extend([
             "-num",
-            *map(str, params.get("num"))
+            *map(str, params.get("num", None))
         ])
-    if params.get("modulate") is not None:
+    if params.get("modulate", None) is not None:
         cargs.extend([
             "-modulate",
-            params.get("modulate")
+            params.get("modulate", None)
         ])
-    if params.get("mask") is not None:
+    if params.get("mask", None) is not None:
         cargs.extend([
             "-mask",
-            execution.input_file(params.get("mask"))
+            execution.input_file(params.get("mask", None))
         ])
-    if params.get("info"):
+    if params.get("info", False):
         cargs.append("-info")
-    if params.get("quiet"):
+    if params.get("quiet", False):
         cargs.append("-quiet")
-    if params.get("debug"):
+    if params.get("debug", False):
         cargs.append("-debug")
-    if params.get("force"):
+    if params.get("force", False):
         cargs.append("-force")
-    if params.get("nthreads") is not None:
+    if params.get("nthreads", None) is not None:
         cargs.extend([
             "-nthreads",
-            str(params.get("nthreads"))
+            str(params.get("nthreads", None))
         ])
-    if params.get("config") is not None:
-        cargs.extend([a for c in [dyn_cargs(s["@type"])(s, execution) for s in params.get("config")] for a in c])
-    if params.get("help"):
+    if params.get("config", None) is not None:
+        cargs.extend([a for c in [tensor2metric_config_cargs(s, execution) for s in params.get("config", None)] for a in c])
+    if params.get("help", False):
         cargs.append("-help")
-    if params.get("version"):
+    if params.get("version", False):
         cargs.append("-version")
-    cargs.append(execution.input_file(params.get("tensor")))
+    cargs.append(execution.input_file(params.get("tensor", None)))
     return cargs
 
 
@@ -373,15 +369,15 @@ def tensor2metric_outputs(
     """
     ret = Tensor2metricOutputs(
         root=execution.output_file("."),
-        adc=execution.output_file(params.get("adc")) if (params.get("adc") is not None) else None,
-        fa=execution.output_file(params.get("fa")) if (params.get("fa") is not None) else None,
-        ad=execution.output_file(params.get("ad")) if (params.get("ad") is not None) else None,
-        rd=execution.output_file(params.get("rd")) if (params.get("rd") is not None) else None,
-        cl=execution.output_file(params.get("cl")) if (params.get("cl") is not None) else None,
-        cp=execution.output_file(params.get("cp")) if (params.get("cp") is not None) else None,
-        cs=execution.output_file(params.get("cs")) if (params.get("cs") is not None) else None,
-        value=execution.output_file(params.get("value")) if (params.get("value") is not None) else None,
-        vector=execution.output_file(params.get("vector")) if (params.get("vector") is not None) else None,
+        adc=execution.output_file(params.get("adc", None)) if (params.get("adc") is not None) else None,
+        fa=execution.output_file(params.get("fa", None)) if (params.get("fa") is not None) else None,
+        ad=execution.output_file(params.get("ad", None)) if (params.get("ad") is not None) else None,
+        rd=execution.output_file(params.get("rd", None)) if (params.get("rd") is not None) else None,
+        cl=execution.output_file(params.get("cl", None)) if (params.get("cl") is not None) else None,
+        cp=execution.output_file(params.get("cp", None)) if (params.get("cp") is not None) else None,
+        cs=execution.output_file(params.get("cs", None)) if (params.get("cs") is not None) else None,
+        value=execution.output_file(params.get("value", None)) if (params.get("value") is not None) else None,
+        vector=execution.output_file(params.get("vector", None)) if (params.get("vector") is not None) else None,
     )
     return ret
 
@@ -539,9 +535,7 @@ def tensor2metric(
 
 __all__ = [
     "TENSOR2METRIC_METADATA",
-    "Tensor2metricConfigParameters",
     "Tensor2metricOutputs",
-    "Tensor2metricParameters",
     "tensor2metric",
     "tensor2metric_config_params",
     "tensor2metric_execute",

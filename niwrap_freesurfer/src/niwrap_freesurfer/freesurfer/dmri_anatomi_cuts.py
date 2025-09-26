@@ -14,7 +14,17 @@ DMRI_ANATOMI_CUTS_METADATA = Metadata(
 
 
 DmriAnatomiCutsParameters = typing.TypedDict('DmriAnatomiCutsParameters', {
-    "@type": typing.Literal["freesurfer.dmri_AnatomiCuts"],
+    "@type": typing.NotRequired[typing.Literal["freesurfer/dmri_AnatomiCuts"]],
+    "segmentation_file": InputPathType,
+    "fiber_file": InputPathType,
+    "clusters": float,
+    "points": float,
+    "fibers_eigen": float,
+    "output_folder": str,
+    "direction_flag": typing.Literal["s", "d", "a", "o"],
+})
+DmriAnatomiCutsParametersTagged = typing.TypedDict('DmriAnatomiCutsParametersTagged', {
+    "@type": typing.Literal["freesurfer/dmri_AnatomiCuts"],
     "segmentation_file": InputPathType,
     "fiber_file": InputPathType,
     "clusters": float,
@@ -25,41 +35,9 @@ DmriAnatomiCutsParameters = typing.TypedDict('DmriAnatomiCutsParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "freesurfer.dmri_AnatomiCuts": dmri_anatomi_cuts_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "freesurfer.dmri_AnatomiCuts": dmri_anatomi_cuts_outputs,
-    }.get(t)
-
-
 class DmriAnatomiCutsOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `dmri_anatomi_cuts(...)`.
+    Output object returned when calling `DmriAnatomiCutsParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -75,7 +53,7 @@ def dmri_anatomi_cuts_params(
     fibers_eigen: float,
     output_folder: str,
     direction_flag: typing.Literal["s", "d", "a", "o"],
-) -> DmriAnatomiCutsParameters:
+) -> DmriAnatomiCutsParametersTagged:
     """
     Build parameters.
     
@@ -92,7 +70,7 @@ def dmri_anatomi_cuts_params(
         Parameter dictionary
     """
     params = {
-        "@type": "freesurfer.dmri_AnatomiCuts",
+        "@type": "freesurfer/dmri_AnatomiCuts",
         "segmentation_file": segmentation_file,
         "fiber_file": fiber_file,
         "clusters": clusters,
@@ -121,31 +99,31 @@ def dmri_anatomi_cuts_cargs(
     cargs.append("dmri_AnatomiCuts")
     cargs.extend([
         "-s",
-        execution.input_file(params.get("segmentation_file"))
+        execution.input_file(params.get("segmentation_file", None))
     ])
     cargs.extend([
         "-f",
-        execution.input_file(params.get("fiber_file"))
+        execution.input_file(params.get("fiber_file", None))
     ])
     cargs.extend([
         "-c",
-        str(params.get("clusters"))
+        str(params.get("clusters", None))
     ])
     cargs.extend([
         "-n",
-        str(params.get("points"))
+        str(params.get("points", None))
     ])
     cargs.extend([
         "-e",
-        str(params.get("fibers_eigen"))
+        str(params.get("fibers_eigen", None))
     ])
     cargs.extend([
         "-o",
-        params.get("output_folder")
+        params.get("output_folder", None)
     ])
     cargs.extend([
         "-d",
-        params.get("direction_flag")
+        params.get("direction_flag", None)
     ])
     return cargs
 
@@ -165,7 +143,7 @@ def dmri_anatomi_cuts_outputs(
     """
     ret = DmriAnatomiCutsOutputs(
         root=execution.output_file("."),
-        output_vtk=execution.output_file(params.get("output_folder") + "/output.vtk"),
+        output_vtk=execution.output_file(params.get("output_folder", None) + "/output.vtk"),
     )
     return ret
 
@@ -245,7 +223,6 @@ def dmri_anatomi_cuts(
 __all__ = [
     "DMRI_ANATOMI_CUTS_METADATA",
     "DmriAnatomiCutsOutputs",
-    "DmriAnatomiCutsParameters",
     "dmri_anatomi_cuts",
     "dmri_anatomi_cuts_execute",
     "dmri_anatomi_cuts_params",

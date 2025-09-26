@@ -14,7 +14,21 @@ ROI2DATASET_METADATA = Metadata(
 
 
 Roi2datasetParameters = typing.TypedDict('Roi2datasetParameters', {
-    "@type": typing.Literal["afni.ROI2dataset"],
+    "@type": typing.NotRequired[typing.Literal["afni/ROI2dataset"]],
+    "prefix": str,
+    "input_rois": list[InputPathType],
+    "keep_separate": bool,
+    "nodelist": typing.NotRequired[str | None],
+    "nodelist_nodups": typing.NotRequired[str | None],
+    "nodelist_with_roival": bool,
+    "label_dset": typing.NotRequired[str | None],
+    "output_format": typing.NotRequired[str | None],
+    "domain_parent_id": typing.NotRequired[str | None],
+    "pad_to_node": typing.NotRequired[float | None],
+    "pad_label": typing.NotRequired[float | None],
+})
+Roi2datasetParametersTagged = typing.TypedDict('Roi2datasetParametersTagged', {
+    "@type": typing.Literal["afni/ROI2dataset"],
     "prefix": str,
     "input_rois": list[InputPathType],
     "keep_separate": bool,
@@ -29,40 +43,9 @@ Roi2datasetParameters = typing.TypedDict('Roi2datasetParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "afni.ROI2dataset": roi2dataset_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-    }.get(t)
-
-
 class Roi2datasetOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `roi2dataset(...)`.
+    Output object returned when calling `Roi2datasetParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -80,7 +63,7 @@ def roi2dataset_params(
     domain_parent_id: str | None = None,
     pad_to_node: float | None = None,
     pad_label: float | None = None,
-) -> Roi2datasetParameters:
+) -> Roi2datasetParametersTagged:
     """
     Build parameters.
     
@@ -109,7 +92,7 @@ def roi2dataset_params(
         Parameter dictionary
     """
     params = {
-        "@type": "afni.ROI2dataset",
+        "@type": "afni/ROI2dataset",
         "prefix": prefix,
         "input_rois": input_rois,
         "keep_separate": keep_separate,
@@ -149,47 +132,47 @@ def roi2dataset_cargs(
     cargs.append("ROI2dataset")
     cargs.extend([
         "-prefix",
-        params.get("prefix")
+        params.get("prefix", None)
     ])
-    cargs.extend([execution.input_file(f) for f in params.get("input_rois")])
-    if params.get("keep_separate"):
+    cargs.extend([execution.input_file(f) for f in params.get("input_rois", None)])
+    if params.get("keep_separate", False):
         cargs.append("-keep_separate")
-    if params.get("nodelist") is not None:
+    if params.get("nodelist", None) is not None:
         cargs.extend([
             "-nodelist",
-            params.get("nodelist")
+            params.get("nodelist", None)
         ])
-    if params.get("nodelist_nodups") is not None:
+    if params.get("nodelist_nodups", None) is not None:
         cargs.extend([
             "-nodelist.nodups",
-            params.get("nodelist_nodups")
+            params.get("nodelist_nodups", None)
         ])
-    if params.get("nodelist_with_roival"):
+    if params.get("nodelist_with_roival", False):
         cargs.append("-nodelist_with_ROIval")
-    if params.get("label_dset") is not None:
+    if params.get("label_dset", None) is not None:
         cargs.extend([
             "-label_dset",
-            params.get("label_dset")
+            params.get("label_dset", None)
         ])
-    if params.get("output_format") is not None:
+    if params.get("output_format", None) is not None:
         cargs.extend([
             "-of",
-            params.get("output_format")
+            params.get("output_format", None)
         ])
-    if params.get("domain_parent_id") is not None:
+    if params.get("domain_parent_id", None) is not None:
         cargs.extend([
             "-dom_par_id",
-            params.get("domain_parent_id")
+            params.get("domain_parent_id", None)
         ])
-    if params.get("pad_to_node") is not None:
+    if params.get("pad_to_node", None) is not None:
         cargs.extend([
             "-pad_to_node",
-            str(params.get("pad_to_node"))
+            str(params.get("pad_to_node", None))
         ])
-    if params.get("pad_label") is not None:
+    if params.get("pad_label", None) is not None:
         cargs.extend([
             "-pad_label",
-            str(params.get("pad_label"))
+            str(params.get("pad_label", None))
         ])
     return cargs
 
@@ -308,7 +291,6 @@ def roi2dataset(
 __all__ = [
     "ROI2DATASET_METADATA",
     "Roi2datasetOutputs",
-    "Roi2datasetParameters",
     "roi2dataset",
     "roi2dataset_execute",
     "roi2dataset_params",

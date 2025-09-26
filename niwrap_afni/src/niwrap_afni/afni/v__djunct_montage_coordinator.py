@@ -14,7 +14,17 @@ V__DJUNCT_MONTAGE_COORDINATOR_METADATA = Metadata(
 
 
 VDjunctMontageCoordinatorParameters = typing.TypedDict('VDjunctMontageCoordinatorParameters', {
-    "@type": typing.Literal["afni.@djunct_montage_coordinator"],
+    "@type": typing.NotRequired[typing.Literal["afni/@djunct_montage_coordinator"]],
+    "input_file": InputPathType,
+    "montx": float,
+    "monty": float,
+    "out_ijk": bool,
+    "out_xyz": bool,
+    "help": bool,
+    "version": bool,
+})
+VDjunctMontageCoordinatorParametersTagged = typing.TypedDict('VDjunctMontageCoordinatorParametersTagged', {
+    "@type": typing.Literal["afni/@djunct_montage_coordinator"],
     "input_file": InputPathType,
     "montx": float,
     "monty": float,
@@ -25,41 +35,9 @@ VDjunctMontageCoordinatorParameters = typing.TypedDict('VDjunctMontageCoordinato
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "afni.@djunct_montage_coordinator": v__djunct_montage_coordinator_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "afni.@djunct_montage_coordinator": v__djunct_montage_coordinator_outputs,
-    }.get(t)
-
-
 class VDjunctMontageCoordinatorOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `v__djunct_montage_coordinator(...)`.
+    Output object returned when calling `VDjunctMontageCoordinatorParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -75,7 +53,7 @@ def v__djunct_montage_coordinator_params(
     out_xyz: bool = False,
     help_: bool = False,
     version: bool = False,
-) -> VDjunctMontageCoordinatorParameters:
+) -> VDjunctMontageCoordinatorParametersTagged:
     """
     Build parameters.
     
@@ -93,7 +71,7 @@ def v__djunct_montage_coordinator_params(
         Parameter dictionary
     """
     params = {
-        "@type": "afni.@djunct_montage_coordinator",
+        "@type": "afni/@djunct_montage_coordinator",
         "input_file": input_file,
         "montx": montx,
         "monty": monty,
@@ -122,23 +100,23 @@ def v__djunct_montage_coordinator_cargs(
     cargs.append("@djunct_montage_coordinator")
     cargs.extend([
         "-inset",
-        execution.input_file(params.get("input_file"))
+        execution.input_file(params.get("input_file", None))
     ])
     cargs.extend([
         "-montx",
-        str(params.get("montx"))
+        str(params.get("montx", None))
     ])
     cargs.extend([
         "-monty",
-        str(params.get("monty"))
+        str(params.get("monty", None))
     ])
-    if params.get("out_ijk"):
+    if params.get("out_ijk", False):
         cargs.append("-out_ijk")
-    if params.get("out_xyz"):
+    if params.get("out_xyz", False):
         cargs.append("-out_xyz")
-    if params.get("help"):
+    if params.get("help", False):
         cargs.append("-help")
-    if params.get("version"):
+    if params.get("version", False):
         cargs.append("-ver")
     return cargs
 
@@ -240,7 +218,6 @@ def v__djunct_montage_coordinator(
 
 __all__ = [
     "VDjunctMontageCoordinatorOutputs",
-    "VDjunctMontageCoordinatorParameters",
     "V__DJUNCT_MONTAGE_COORDINATOR_METADATA",
     "v__djunct_montage_coordinator",
     "v__djunct_montage_coordinator_execute",

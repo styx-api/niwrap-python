@@ -14,47 +14,20 @@ FIDUCIALS_CORRECTION_METADATA = Metadata(
 
 
 FiducialsCorrectionParameters = typing.TypedDict('FiducialsCorrectionParameters', {
-    "@type": typing.Literal["freesurfer.fiducials_correction"],
+    "@type": typing.NotRequired[typing.Literal["freesurfer/fiducials_correction"]],
+    "input_file": InputPathType,
+    "output_file": str,
+})
+FiducialsCorrectionParametersTagged = typing.TypedDict('FiducialsCorrectionParametersTagged', {
+    "@type": typing.Literal["freesurfer/fiducials_correction"],
     "input_file": InputPathType,
     "output_file": str,
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "freesurfer.fiducials_correction": fiducials_correction_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "freesurfer.fiducials_correction": fiducials_correction_outputs,
-    }.get(t)
-
-
 class FiducialsCorrectionOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `fiducials_correction(...)`.
+    Output object returned when calling `FiducialsCorrectionParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -65,7 +38,7 @@ class FiducialsCorrectionOutputs(typing.NamedTuple):
 def fiducials_correction_params(
     input_file: InputPathType,
     output_file: str,
-) -> FiducialsCorrectionParameters:
+) -> FiducialsCorrectionParametersTagged:
     """
     Build parameters.
     
@@ -77,7 +50,7 @@ def fiducials_correction_params(
         Parameter dictionary
     """
     params = {
-        "@type": "freesurfer.fiducials_correction",
+        "@type": "freesurfer/fiducials_correction",
         "input_file": input_file,
         "output_file": output_file,
     }
@@ -99,8 +72,8 @@ def fiducials_correction_cargs(
     """
     cargs = []
     cargs.append("fiducials_correction")
-    cargs.append(execution.input_file(params.get("input_file")))
-    cargs.append(params.get("output_file"))
+    cargs.append(execution.input_file(params.get("input_file", None)))
+    cargs.append(params.get("output_file", None))
     return cargs
 
 
@@ -119,7 +92,7 @@ def fiducials_correction_outputs(
     """
     ret = FiducialsCorrectionOutputs(
         root=execution.output_file("."),
-        output_file=execution.output_file(params.get("output_file")),
+        output_file=execution.output_file(params.get("output_file", None)),
     )
     return ret
 
@@ -188,7 +161,6 @@ def fiducials_correction(
 __all__ = [
     "FIDUCIALS_CORRECTION_METADATA",
     "FiducialsCorrectionOutputs",
-    "FiducialsCorrectionParameters",
     "fiducials_correction",
     "fiducials_correction_execute",
     "fiducials_correction_params",

@@ -14,7 +14,14 @@ MRI_FUSE_INTENSITY_IMAGES_METADATA = Metadata(
 
 
 MriFuseIntensityImagesParameters = typing.TypedDict('MriFuseIntensityImagesParameters', {
-    "@type": typing.Literal["freesurfer.mri_fuse_intensity_images"],
+    "@type": typing.NotRequired[typing.Literal["freesurfer/mri_fuse_intensity_images"]],
+    "longitudinal_time_point_file": InputPathType,
+    "input_volume": InputPathType,
+    "transform_file": InputPathType,
+    "output_volume": str,
+})
+MriFuseIntensityImagesParametersTagged = typing.TypedDict('MriFuseIntensityImagesParametersTagged', {
+    "@type": typing.Literal["freesurfer/mri_fuse_intensity_images"],
     "longitudinal_time_point_file": InputPathType,
     "input_volume": InputPathType,
     "transform_file": InputPathType,
@@ -22,41 +29,9 @@ MriFuseIntensityImagesParameters = typing.TypedDict('MriFuseIntensityImagesParam
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "freesurfer.mri_fuse_intensity_images": mri_fuse_intensity_images_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "freesurfer.mri_fuse_intensity_images": mri_fuse_intensity_images_outputs,
-    }.get(t)
-
-
 class MriFuseIntensityImagesOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `mri_fuse_intensity_images(...)`.
+    Output object returned when calling `MriFuseIntensityImagesParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -69,7 +44,7 @@ def mri_fuse_intensity_images_params(
     input_volume: InputPathType,
     transform_file: InputPathType,
     output_volume: str,
-) -> MriFuseIntensityImagesParameters:
+) -> MriFuseIntensityImagesParametersTagged:
     """
     Build parameters.
     
@@ -83,7 +58,7 @@ def mri_fuse_intensity_images_params(
         Parameter dictionary
     """
     params = {
-        "@type": "freesurfer.mri_fuse_intensity_images",
+        "@type": "freesurfer/mri_fuse_intensity_images",
         "longitudinal_time_point_file": longitudinal_time_point_file,
         "input_volume": input_volume,
         "transform_file": transform_file,
@@ -107,10 +82,10 @@ def mri_fuse_intensity_images_cargs(
     """
     cargs = []
     cargs.append("mri_fuse_intensity_images")
-    cargs.append(execution.input_file(params.get("longitudinal_time_point_file")))
-    cargs.append(execution.input_file(params.get("input_volume")))
-    cargs.append(execution.input_file(params.get("transform_file")))
-    cargs.append(params.get("output_volume"))
+    cargs.append(execution.input_file(params.get("longitudinal_time_point_file", None)))
+    cargs.append(execution.input_file(params.get("input_volume", None)))
+    cargs.append(execution.input_file(params.get("transform_file", None)))
+    cargs.append(params.get("output_volume", None))
     return cargs
 
 
@@ -129,7 +104,7 @@ def mri_fuse_intensity_images_outputs(
     """
     ret = MriFuseIntensityImagesOutputs(
         root=execution.output_file("."),
-        fused_intensity_image=execution.output_file(params.get("output_volume")),
+        fused_intensity_image=execution.output_file(params.get("output_volume", None)),
     )
     return ret
 
@@ -200,7 +175,6 @@ def mri_fuse_intensity_images(
 __all__ = [
     "MRI_FUSE_INTENSITY_IMAGES_METADATA",
     "MriFuseIntensityImagesOutputs",
-    "MriFuseIntensityImagesParameters",
     "mri_fuse_intensity_images",
     "mri_fuse_intensity_images_execute",
     "mri_fuse_intensity_images_params",

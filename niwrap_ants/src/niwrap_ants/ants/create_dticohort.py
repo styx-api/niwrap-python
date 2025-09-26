@@ -14,7 +14,18 @@ CREATE_DTICOHORT_METADATA = Metadata(
 
 
 CreateDticohortParameters = typing.TypedDict('CreateDticohortParameters', {
-    "@type": typing.Literal["ants.CreateDTICohort"],
+    "@type": typing.NotRequired[typing.Literal["ants/CreateDTICohort"]],
+    "image_dimensionality": typing.NotRequired[typing.Literal[2, 3] | None],
+    "dti_atlas": InputPathType,
+    "label_mask_image": typing.NotRequired[str | None],
+    "noise_sigma": typing.NotRequired[float | None],
+    "pathology": typing.NotRequired[str | None],
+    "dwi_parameters": str,
+    "registered_population": typing.NotRequired[InputPathType | None],
+    "output": str,
+})
+CreateDticohortParametersTagged = typing.TypedDict('CreateDticohortParametersTagged', {
+    "@type": typing.Literal["ants/CreateDTICohort"],
     "image_dimensionality": typing.NotRequired[typing.Literal[2, 3] | None],
     "dti_atlas": InputPathType,
     "label_mask_image": typing.NotRequired[str | None],
@@ -26,41 +37,9 @@ CreateDticohortParameters = typing.TypedDict('CreateDticohortParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "ants.CreateDTICohort": create_dticohort_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "ants.CreateDTICohort": create_dticohort_outputs,
-    }.get(t)
-
-
 class CreateDticohortOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `create_dticohort(...)`.
+    Output object returned when calling `CreateDticohortParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -77,7 +56,7 @@ def create_dticohort_params(
     noise_sigma: float | None = None,
     pathology: str | None = None,
     registered_population: InputPathType | None = None,
-) -> CreateDticohortParameters:
+) -> CreateDticohortParametersTagged:
     """
     Build parameters.
     
@@ -111,7 +90,7 @@ def create_dticohort_params(
         Parameter dictionary
     """
     params = {
-        "@type": "ants.CreateDTICohort",
+        "@type": "ants/CreateDTICohort",
         "dti_atlas": dti_atlas,
         "dwi_parameters": dwi_parameters,
         "output": output,
@@ -144,42 +123,42 @@ def create_dticohort_cargs(
     """
     cargs = []
     cargs.append("CreateDTICohort")
-    if params.get("image_dimensionality") is not None:
+    if params.get("image_dimensionality", None) is not None:
         cargs.extend([
             "--image-dimensionality",
-            str(params.get("image_dimensionality"))
+            str(params.get("image_dimensionality", None))
         ])
     cargs.extend([
         "--dti-atlas",
-        execution.input_file(params.get("dti_atlas"))
+        execution.input_file(params.get("dti_atlas", None))
     ])
-    if params.get("label_mask_image") is not None:
+    if params.get("label_mask_image", None) is not None:
         cargs.extend([
             "--label-mask-image",
-            params.get("label_mask_image")
+            params.get("label_mask_image", None)
         ])
-    if params.get("noise_sigma") is not None:
+    if params.get("noise_sigma", None) is not None:
         cargs.extend([
             "--noise-sigma",
-            str(params.get("noise_sigma"))
+            str(params.get("noise_sigma", None))
         ])
-    if params.get("pathology") is not None:
+    if params.get("pathology", None) is not None:
         cargs.extend([
             "--pathology",
-            params.get("pathology")
+            params.get("pathology", None)
         ])
     cargs.extend([
         "--dwi-parameters",
-        params.get("dwi_parameters")
+        params.get("dwi_parameters", None)
     ])
-    if params.get("registered_population") is not None:
+    if params.get("registered_population", None) is not None:
         cargs.extend([
             "--registered-population",
-            execution.input_file(params.get("registered_population"))
+            execution.input_file(params.get("registered_population", None))
         ])
     cargs.extend([
         "--output",
-        params.get("output")
+        params.get("output", None)
     ])
     return cargs
 
@@ -304,7 +283,6 @@ def create_dticohort(
 __all__ = [
     "CREATE_DTICOHORT_METADATA",
     "CreateDticohortOutputs",
-    "CreateDticohortParameters",
     "create_dticohort",
     "create_dticohort_execute",
     "create_dticohort_params",

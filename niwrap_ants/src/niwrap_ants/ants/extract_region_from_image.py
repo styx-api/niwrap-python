@@ -14,41 +14,66 @@ EXTRACT_REGION_FROM_IMAGE_METADATA = Metadata(
 
 
 ExtractRegionFromImageRegionMinMaxIndexParameters = typing.TypedDict('ExtractRegionFromImageRegionMinMaxIndexParameters', {
-    "@type": typing.Literal["ants.ExtractRegionFromImage.region_min_max_index"],
+    "@type": typing.NotRequired[typing.Literal["region_min_max_index"]],
+    "min_index": str,
+    "max_index": str,
+})
+ExtractRegionFromImageRegionMinMaxIndexParametersTagged = typing.TypedDict('ExtractRegionFromImageRegionMinMaxIndexParametersTagged', {
+    "@type": typing.Literal["region_min_max_index"],
     "min_index": str,
     "max_index": str,
 })
 
 
 ExtractRegionFromImageRegionLabelParameters = typing.TypedDict('ExtractRegionFromImageRegionLabelParameters', {
-    "@type": typing.Literal["ants.ExtractRegionFromImage.region_label"],
+    "@type": typing.NotRequired[typing.Literal["region_label"]],
+    "label": str,
+})
+ExtractRegionFromImageRegionLabelParametersTagged = typing.TypedDict('ExtractRegionFromImageRegionLabelParametersTagged', {
+    "@type": typing.Literal["region_label"],
     "label": str,
 })
 
 
 ExtractRegionFromImageRegionDomainImageParameters = typing.TypedDict('ExtractRegionFromImageRegionDomainImageParameters', {
-    "@type": typing.Literal["ants.ExtractRegionFromImage.region_domain_image"],
+    "@type": typing.NotRequired[typing.Literal["region_domain_image"]],
+    "domain_image": InputPathType,
+})
+ExtractRegionFromImageRegionDomainImageParametersTagged = typing.TypedDict('ExtractRegionFromImageRegionDomainImageParametersTagged', {
+    "@type": typing.Literal["region_domain_image"],
     "domain_image": InputPathType,
 })
 
 
 ExtractRegionFromImageRegionLabelWithImageParameters = typing.TypedDict('ExtractRegionFromImageRegionLabelWithImageParameters', {
-    "@type": typing.Literal["ants.ExtractRegionFromImage.region_label_with_image"],
+    "@type": typing.NotRequired[typing.Literal["region_label_with_image"]],
+    "label": str,
+    "label_image": InputPathType,
+})
+ExtractRegionFromImageRegionLabelWithImageParametersTagged = typing.TypedDict('ExtractRegionFromImageRegionLabelWithImageParametersTagged', {
+    "@type": typing.Literal["region_label_with_image"],
     "label": str,
     "label_image": InputPathType,
 })
 
 
 ExtractRegionFromImageParameters = typing.TypedDict('ExtractRegionFromImageParameters', {
-    "@type": typing.Literal["ants.ExtractRegionFromImage"],
+    "@type": typing.NotRequired[typing.Literal["ants/ExtractRegionFromImage"]],
     "image_dimension": int,
     "input_image": InputPathType,
     "output_image": str,
-    "region_specification": typing.Union[ExtractRegionFromImageRegionMinMaxIndexParameters, ExtractRegionFromImageRegionLabelParameters, ExtractRegionFromImageRegionDomainImageParameters, ExtractRegionFromImageRegionLabelWithImageParameters],
+    "region_specification": typing.Union[ExtractRegionFromImageRegionMinMaxIndexParametersTagged, ExtractRegionFromImageRegionLabelParametersTagged, ExtractRegionFromImageRegionDomainImageParametersTagged, ExtractRegionFromImageRegionLabelWithImageParametersTagged],
+})
+ExtractRegionFromImageParametersTagged = typing.TypedDict('ExtractRegionFromImageParametersTagged', {
+    "@type": typing.Literal["ants/ExtractRegionFromImage"],
+    "image_dimension": int,
+    "input_image": InputPathType,
+    "output_image": str,
+    "region_specification": typing.Union[ExtractRegionFromImageRegionMinMaxIndexParametersTagged, ExtractRegionFromImageRegionLabelParametersTagged, ExtractRegionFromImageRegionDomainImageParametersTagged, ExtractRegionFromImageRegionLabelWithImageParametersTagged],
 })
 
 
-def dyn_cargs(
+def extract_region_from_image_region_specification_cargs_dyn_fn(
     t: str,
 ) -> typing.Any:
     """
@@ -60,15 +85,14 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "ants.ExtractRegionFromImage": extract_region_from_image_cargs,
-        "ants.ExtractRegionFromImage.region_min_max_index": extract_region_from_image_region_min_max_index_cargs,
-        "ants.ExtractRegionFromImage.region_label": extract_region_from_image_region_label_cargs,
-        "ants.ExtractRegionFromImage.region_domain_image": extract_region_from_image_region_domain_image_cargs,
-        "ants.ExtractRegionFromImage.region_label_with_image": extract_region_from_image_region_label_with_image_cargs,
+        "region_min_max_index": extract_region_from_image_region_min_max_index_cargs,
+        "region_label": extract_region_from_image_region_label_cargs,
+        "region_domain_image": extract_region_from_image_region_domain_image_cargs,
+        "region_label_with_image": extract_region_from_image_region_label_with_image_cargs,
     }.get(t)
 
 
-def dyn_outputs(
+def extract_region_from_image_region_specification_outputs_dyn_fn(
     t: str,
 ) -> typing.Any:
     """
@@ -80,14 +104,13 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "ants.ExtractRegionFromImage": extract_region_from_image_outputs,
     }.get(t)
 
 
 def extract_region_from_image_region_min_max_index_params(
     min_index: str,
     max_index: str,
-) -> ExtractRegionFromImageRegionMinMaxIndexParameters:
+) -> ExtractRegionFromImageRegionMinMaxIndexParametersTagged:
     """
     Build parameters.
     
@@ -98,7 +121,7 @@ def extract_region_from_image_region_min_max_index_params(
         Parameter dictionary
     """
     params = {
-        "@type": "ants.ExtractRegionFromImage.region_min_max_index",
+        "@type": "region_min_max_index",
         "min_index": min_index,
         "max_index": max_index,
     }
@@ -119,14 +142,14 @@ def extract_region_from_image_region_min_max_index_cargs(
         Command-line arguments.
     """
     cargs = []
-    cargs.append(params.get("min_index"))
-    cargs.append(params.get("max_index"))
+    cargs.append(params.get("min_index", None))
+    cargs.append(params.get("max_index", None))
     return cargs
 
 
 def extract_region_from_image_region_label_params(
     label: str,
-) -> ExtractRegionFromImageRegionLabelParameters:
+) -> ExtractRegionFromImageRegionLabelParametersTagged:
     """
     Build parameters.
     
@@ -137,7 +160,7 @@ def extract_region_from_image_region_label_params(
         Parameter dictionary
     """
     params = {
-        "@type": "ants.ExtractRegionFromImage.region_label",
+        "@type": "region_label",
         "label": label,
     }
     return params
@@ -157,13 +180,13 @@ def extract_region_from_image_region_label_cargs(
         Command-line arguments.
     """
     cargs = []
-    cargs.append(params.get("label"))
+    cargs.append(params.get("label", None))
     return cargs
 
 
 def extract_region_from_image_region_domain_image_params(
     domain_image: InputPathType,
-) -> ExtractRegionFromImageRegionDomainImageParameters:
+) -> ExtractRegionFromImageRegionDomainImageParametersTagged:
     """
     Build parameters.
     
@@ -174,7 +197,7 @@ def extract_region_from_image_region_domain_image_params(
         Parameter dictionary
     """
     params = {
-        "@type": "ants.ExtractRegionFromImage.region_domain_image",
+        "@type": "region_domain_image",
         "domain_image": domain_image,
     }
     return params
@@ -194,14 +217,14 @@ def extract_region_from_image_region_domain_image_cargs(
         Command-line arguments.
     """
     cargs = []
-    cargs.append(execution.input_file(params.get("domain_image")))
+    cargs.append(execution.input_file(params.get("domain_image", None)))
     return cargs
 
 
 def extract_region_from_image_region_label_with_image_params(
     label: str,
     label_image: InputPathType,
-) -> ExtractRegionFromImageRegionLabelWithImageParameters:
+) -> ExtractRegionFromImageRegionLabelWithImageParametersTagged:
     """
     Build parameters.
     
@@ -212,7 +235,7 @@ def extract_region_from_image_region_label_with_image_params(
         Parameter dictionary
     """
     params = {
-        "@type": "ants.ExtractRegionFromImage.region_label_with_image",
+        "@type": "region_label_with_image",
         "label": label,
         "label_image": label_image,
     }
@@ -233,15 +256,15 @@ def extract_region_from_image_region_label_with_image_cargs(
         Command-line arguments.
     """
     cargs = []
-    cargs.append(params.get("label"))
-    cargs.append(execution.input_file(params.get("label_image")))
+    cargs.append(params.get("label", None))
+    cargs.append(execution.input_file(params.get("label_image", None)))
     cargs.append("1")
     return cargs
 
 
 class ExtractRegionFromImageOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `extract_region_from_image(...)`.
+    Output object returned when calling `ExtractRegionFromImageParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -253,8 +276,8 @@ def extract_region_from_image_params(
     image_dimension: int,
     input_image: InputPathType,
     output_image: str,
-    region_specification: typing.Union[ExtractRegionFromImageRegionMinMaxIndexParameters, ExtractRegionFromImageRegionLabelParameters, ExtractRegionFromImageRegionDomainImageParameters, ExtractRegionFromImageRegionLabelWithImageParameters],
-) -> ExtractRegionFromImageParameters:
+    region_specification: typing.Union[ExtractRegionFromImageRegionMinMaxIndexParametersTagged, ExtractRegionFromImageRegionLabelParametersTagged, ExtractRegionFromImageRegionDomainImageParametersTagged, ExtractRegionFromImageRegionLabelWithImageParametersTagged],
+) -> ExtractRegionFromImageParametersTagged:
     """
     Build parameters.
     
@@ -270,7 +293,7 @@ def extract_region_from_image_params(
         Parameter dictionary
     """
     params = {
-        "@type": "ants.ExtractRegionFromImage",
+        "@type": "ants/ExtractRegionFromImage",
         "image_dimension": image_dimension,
         "input_image": input_image,
         "output_image": output_image,
@@ -294,10 +317,10 @@ def extract_region_from_image_cargs(
     """
     cargs = []
     cargs.append("ExtractRegionFromImage")
-    cargs.append(str(params.get("image_dimension")))
-    cargs.append(execution.input_file(params.get("input_image")))
-    cargs.append(params.get("output_image"))
-    cargs.extend(dyn_cargs(params.get("region_specification")["@type"])(params.get("region_specification"), execution))
+    cargs.append(str(params.get("image_dimension", None)))
+    cargs.append(execution.input_file(params.get("input_image", None)))
+    cargs.append(params.get("output_image", None))
+    cargs.extend(extract_region_from_image_region_specification_cargs_dyn_fn(params.get("region_specification", None)["@type"])(params.get("region_specification", None), execution))
     return cargs
 
 
@@ -316,7 +339,7 @@ def extract_region_from_image_outputs(
     """
     ret = ExtractRegionFromImageOutputs(
         root=execution.output_file("."),
-        output_image_file=execution.output_file(params.get("output_image")),
+        output_image_file=execution.output_file(params.get("output_image", None)),
     )
     return ret
 
@@ -355,7 +378,7 @@ def extract_region_from_image(
     image_dimension: int,
     input_image: InputPathType,
     output_image: str,
-    region_specification: typing.Union[ExtractRegionFromImageRegionMinMaxIndexParameters, ExtractRegionFromImageRegionLabelParameters, ExtractRegionFromImageRegionDomainImageParameters, ExtractRegionFromImageRegionLabelWithImageParameters],
+    region_specification: typing.Union[ExtractRegionFromImageRegionMinMaxIndexParametersTagged, ExtractRegionFromImageRegionLabelParametersTagged, ExtractRegionFromImageRegionDomainImageParametersTagged, ExtractRegionFromImageRegionLabelWithImageParametersTagged],
     runner: Runner | None = None,
 ) -> ExtractRegionFromImageOutputs:
     """
@@ -393,11 +416,6 @@ def extract_region_from_image(
 __all__ = [
     "EXTRACT_REGION_FROM_IMAGE_METADATA",
     "ExtractRegionFromImageOutputs",
-    "ExtractRegionFromImageParameters",
-    "ExtractRegionFromImageRegionDomainImageParameters",
-    "ExtractRegionFromImageRegionLabelParameters",
-    "ExtractRegionFromImageRegionLabelWithImageParameters",
-    "ExtractRegionFromImageRegionMinMaxIndexParameters",
     "extract_region_from_image",
     "extract_region_from_image_execute",
     "extract_region_from_image_params",

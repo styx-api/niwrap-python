@@ -14,7 +14,14 @@ MRIS_MORPH_STATS_METADATA = Metadata(
 
 
 MrisMorphStatsParameters = typing.TypedDict('MrisMorphStatsParameters', {
-    "@type": typing.Literal["freesurfer.mris_morph_stats"],
+    "@type": typing.NotRequired[typing.Literal["freesurfer/mris_morph_stats"]],
+    "subject_name": str,
+    "hemisphere": typing.Literal["lh", "rh"],
+    "morphed_surface": InputPathType,
+    "output_name": str,
+})
+MrisMorphStatsParametersTagged = typing.TypedDict('MrisMorphStatsParametersTagged', {
+    "@type": typing.Literal["freesurfer/mris_morph_stats"],
     "subject_name": str,
     "hemisphere": typing.Literal["lh", "rh"],
     "morphed_surface": InputPathType,
@@ -22,41 +29,9 @@ MrisMorphStatsParameters = typing.TypedDict('MrisMorphStatsParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "freesurfer.mris_morph_stats": mris_morph_stats_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "freesurfer.mris_morph_stats": mris_morph_stats_outputs,
-    }.get(t)
-
-
 class MrisMorphStatsOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `mris_morph_stats(...)`.
+    Output object returned when calling `MrisMorphStatsParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -69,7 +44,7 @@ def mris_morph_stats_params(
     hemisphere: typing.Literal["lh", "rh"],
     morphed_surface: InputPathType,
     output_name: str,
-) -> MrisMorphStatsParameters:
+) -> MrisMorphStatsParametersTagged:
     """
     Build parameters.
     
@@ -83,7 +58,7 @@ def mris_morph_stats_params(
         Parameter dictionary
     """
     params = {
-        "@type": "freesurfer.mris_morph_stats",
+        "@type": "freesurfer/mris_morph_stats",
         "subject_name": subject_name,
         "hemisphere": hemisphere,
         "morphed_surface": morphed_surface,
@@ -107,10 +82,10 @@ def mris_morph_stats_cargs(
     """
     cargs = []
     cargs.append("mris_morph_stats")
-    cargs.append(params.get("subject_name"))
-    cargs.append(params.get("hemisphere"))
-    cargs.append(execution.input_file(params.get("morphed_surface")))
-    cargs.append(params.get("output_name"))
+    cargs.append(params.get("subject_name", None))
+    cargs.append(params.get("hemisphere", None))
+    cargs.append(execution.input_file(params.get("morphed_surface", None)))
+    cargs.append(params.get("output_name", None))
     return cargs
 
 
@@ -129,7 +104,7 @@ def mris_morph_stats_outputs(
     """
     ret = MrisMorphStatsOutputs(
         root=execution.output_file("."),
-        stats_output=execution.output_file(params.get("output_name")),
+        stats_output=execution.output_file(params.get("output_name", None)),
     )
     return ret
 
@@ -202,7 +177,6 @@ def mris_morph_stats(
 __all__ = [
     "MRIS_MORPH_STATS_METADATA",
     "MrisMorphStatsOutputs",
-    "MrisMorphStatsParameters",
     "mris_morph_stats",
     "mris_morph_stats_execute",
     "mris_morph_stats_params",

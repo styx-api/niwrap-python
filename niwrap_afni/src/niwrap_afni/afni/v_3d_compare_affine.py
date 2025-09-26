@@ -14,48 +14,22 @@ V_3D_COMPARE_AFFINE_METADATA = Metadata(
 
 
 V3dCompareAffineParameters = typing.TypedDict('V3dCompareAffineParameters', {
-    "@type": typing.Literal["afni.3dCompareAffine"],
+    "@type": typing.NotRequired[typing.Literal["afni/3dCompareAffine"]],
+    "mask": typing.NotRequired[str | None],
+    "dset": typing.NotRequired[InputPathType | None],
+    "affine": typing.NotRequired[list[str] | None],
+})
+V3dCompareAffineParametersTagged = typing.TypedDict('V3dCompareAffineParametersTagged', {
+    "@type": typing.Literal["afni/3dCompareAffine"],
     "mask": typing.NotRequired[str | None],
     "dset": typing.NotRequired[InputPathType | None],
     "affine": typing.NotRequired[list[str] | None],
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "afni.3dCompareAffine": v_3d_compare_affine_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "afni.3dCompareAffine": v_3d_compare_affine_outputs,
-    }.get(t)
-
-
 class V3dCompareAffineOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `v_3d_compare_affine(...)`.
+    Output object returned when calling `V3dCompareAffineParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -67,7 +41,7 @@ def v_3d_compare_affine_params(
     mask: str | None = None,
     dset: InputPathType | None = None,
     affine: list[str] | None = None,
-) -> V3dCompareAffineParameters:
+) -> V3dCompareAffineParametersTagged:
     """
     Build parameters.
     
@@ -82,7 +56,7 @@ def v_3d_compare_affine_params(
         Parameter dictionary
     """
     params = {
-        "@type": "afni.3dCompareAffine",
+        "@type": "afni/3dCompareAffine",
     }
     if mask is not None:
         params["mask"] = mask
@@ -108,20 +82,20 @@ def v_3d_compare_affine_cargs(
     """
     cargs = []
     cargs.append("3dCompareAffine")
-    if params.get("mask") is not None:
+    if params.get("mask", None) is not None:
         cargs.extend([
             "-mask",
-            params.get("mask")
+            params.get("mask", None)
         ])
-    if params.get("dset") is not None:
+    if params.get("dset", None) is not None:
         cargs.extend([
             "-dset",
-            execution.input_file(params.get("dset"))
+            execution.input_file(params.get("dset", None))
         ])
-    if params.get("affine") is not None:
+    if params.get("affine", None) is not None:
         cargs.extend([
             "-affine",
-            *params.get("affine")
+            *params.get("affine", None)
         ])
     return cargs
 
@@ -212,7 +186,6 @@ def v_3d_compare_affine(
 
 __all__ = [
     "V3dCompareAffineOutputs",
-    "V3dCompareAffineParameters",
     "V_3D_COMPARE_AFFINE_METADATA",
     "v_3d_compare_affine",
     "v_3d_compare_affine_execute",

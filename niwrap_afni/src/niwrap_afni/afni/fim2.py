@@ -14,7 +14,33 @@ FIM2_METADATA = Metadata(
 
 
 Fim2Parameters = typing.TypedDict('Fim2Parameters', {
-    "@type": typing.Literal["afni.fim2"],
+    "@type": typing.NotRequired[typing.Literal["afni/fim2"]],
+    "image_files": list[InputPathType],
+    "pcnt": typing.NotRequired[float | None],
+    "pcthresh": typing.NotRequired[float | None],
+    "im1": typing.NotRequired[int | None],
+    "num": typing.NotRequired[int | None],
+    "non": bool,
+    "coef": typing.NotRequired[float | None],
+    "ort": typing.NotRequired[list[InputPathType] | None],
+    "ideal": typing.NotRequired[list[InputPathType] | None],
+    "polref": typing.NotRequired[int | None],
+    "fimfile": typing.NotRequired[str | None],
+    "corr": bool,
+    "corfile": typing.NotRequired[str | None],
+    "cnrfile": typing.NotRequired[str | None],
+    "sigfile": typing.NotRequired[str | None],
+    "fitfile": typing.NotRequired[str | None],
+    "subort": typing.NotRequired[str | None],
+    "flim": bool,
+    "clean": bool,
+    "clip": bool,
+    "q": bool,
+    "dfspace": bool,
+    "regbase": typing.NotRequired[str | None],
+})
+Fim2ParametersTagged = typing.TypedDict('Fim2ParametersTagged', {
+    "@type": typing.Literal["afni/fim2"],
     "image_files": list[InputPathType],
     "pcnt": typing.NotRequired[float | None],
     "pcthresh": typing.NotRequired[float | None],
@@ -41,41 +67,9 @@ Fim2Parameters = typing.TypedDict('Fim2Parameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "afni.fim2": fim2_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "afni.fim2": fim2_outputs,
-    }.get(t)
-
-
 class Fim2Outputs(typing.NamedTuple):
     """
-    Output object returned when calling `fim2(...)`.
+    Output object returned when calling `Fim2Parameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -117,7 +111,7 @@ def fim2_params(
     q: bool = False,
     dfspace: bool = False,
     regbase: str | None = None,
-) -> Fim2Parameters:
+) -> Fim2ParametersTagged:
     """
     Build parameters.
     
@@ -157,7 +151,7 @@ def fim2_params(
         Parameter dictionary
     """
     params = {
-        "@type": "afni.fim2",
+        "@type": "afni/fim2",
         "image_files": image_files,
         "non": non,
         "corr": corr,
@@ -215,95 +209,95 @@ def fim2_cargs(
     """
     cargs = []
     cargs.append("fim2")
-    cargs.extend([execution.input_file(f) for f in params.get("image_files")])
-    if params.get("pcnt") is not None:
+    cargs.extend([execution.input_file(f) for f in params.get("image_files", None)])
+    if params.get("pcnt", None) is not None:
         cargs.extend([
             "-pcnt",
-            str(params.get("pcnt"))
+            str(params.get("pcnt", None))
         ])
-    if params.get("pcthresh") is not None:
+    if params.get("pcthresh", None) is not None:
         cargs.extend([
             "-pcthresh",
-            str(params.get("pcthresh"))
+            str(params.get("pcthresh", None))
         ])
-    if params.get("im1") is not None:
+    if params.get("im1", None) is not None:
         cargs.extend([
             "-im1",
-            str(params.get("im1"))
+            str(params.get("im1", None))
         ])
-    if params.get("num") is not None:
+    if params.get("num", None) is not None:
         cargs.extend([
             "-num",
-            str(params.get("num"))
+            str(params.get("num", None))
         ])
-    if params.get("non"):
+    if params.get("non", False):
         cargs.append("-non")
-    if params.get("coef") is not None:
+    if params.get("coef", None) is not None:
         cargs.extend([
             "-coef",
-            str(params.get("coef"))
+            str(params.get("coef", None))
         ])
-    if params.get("ort") is not None:
+    if params.get("ort", None) is not None:
         cargs.extend([
             "-ort",
-            *[execution.input_file(f) for f in params.get("ort")]
+            *[execution.input_file(f) for f in params.get("ort", None)]
         ])
-    if params.get("ideal") is not None:
+    if params.get("ideal", None) is not None:
         cargs.extend([
             "-ideal",
-            *[execution.input_file(f) for f in params.get("ideal")]
+            *[execution.input_file(f) for f in params.get("ideal", None)]
         ])
-    if params.get("polref") is not None:
+    if params.get("polref", None) is not None:
         cargs.extend([
             "-polref",
-            str(params.get("polref"))
+            str(params.get("polref", None))
         ])
-    if params.get("fimfile") is not None:
+    if params.get("fimfile", None) is not None:
         cargs.extend([
             "-fimfile",
-            params.get("fimfile")
+            params.get("fimfile", None)
         ])
-    if params.get("corr"):
+    if params.get("corr", False):
         cargs.append("-corr")
-    if params.get("corfile") is not None:
+    if params.get("corfile", None) is not None:
         cargs.extend([
             "-corfile",
-            params.get("corfile")
+            params.get("corfile", None)
         ])
-    if params.get("cnrfile") is not None:
+    if params.get("cnrfile", None) is not None:
         cargs.extend([
             "-cnrfile",
-            params.get("cnrfile")
+            params.get("cnrfile", None)
         ])
-    if params.get("sigfile") is not None:
+    if params.get("sigfile", None) is not None:
         cargs.extend([
             "-sigfile",
-            params.get("sigfile")
+            params.get("sigfile", None)
         ])
-    if params.get("fitfile") is not None:
+    if params.get("fitfile", None) is not None:
         cargs.extend([
             "-fitfile",
-            params.get("fitfile")
+            params.get("fitfile", None)
         ])
-    if params.get("subort") is not None:
+    if params.get("subort", None) is not None:
         cargs.extend([
             "-subort",
-            params.get("subort")
+            params.get("subort", None)
         ])
-    if params.get("flim"):
+    if params.get("flim", False):
         cargs.append("-flim")
-    if params.get("clean"):
+    if params.get("clean", False):
         cargs.append("-clean")
-    if params.get("clip"):
+    if params.get("clip", False):
         cargs.append("-clip")
-    if params.get("q"):
+    if params.get("q", False):
         cargs.append("-q")
-    if params.get("dfspace"):
+    if params.get("dfspace", False):
         cargs.append("-dfspace")
-    if params.get("regbase") is not None:
+    if params.get("regbase", None) is not None:
         cargs.extend([
             "-regbase",
-            params.get("regbase")
+            params.get("regbase", None)
         ])
     return cargs
 
@@ -323,12 +317,12 @@ def fim2_outputs(
     """
     ret = Fim2Outputs(
         root=execution.output_file("."),
-        activation_magnitudes=execution.output_file(params.get("fimfile")) if (params.get("fimfile") is not None) else None,
-        correlation_image=execution.output_file(params.get("corfile")) if (params.get("corfile") is not None) else None,
-        contrast_to_noise_image=execution.output_file(params.get("cnrfile")) if (params.get("cnrfile") is not None) else None,
-        std_deviation_image=execution.output_file(params.get("sigfile")) if (params.get("sigfile") is not None) else None,
-        ls_fit_coefficients=execution.output_file(params.get("fitfile")) if (params.get("fitfile") is not None) else None,
-        subtracted_references=execution.output_file(params.get("subort")) if (params.get("subort") is not None) else None,
+        activation_magnitudes=execution.output_file(params.get("fimfile", None)) if (params.get("fimfile") is not None) else None,
+        correlation_image=execution.output_file(params.get("corfile", None)) if (params.get("corfile") is not None) else None,
+        contrast_to_noise_image=execution.output_file(params.get("cnrfile", None)) if (params.get("cnrfile") is not None) else None,
+        std_deviation_image=execution.output_file(params.get("sigfile", None)) if (params.get("sigfile") is not None) else None,
+        ls_fit_coefficients=execution.output_file(params.get("fitfile", None)) if (params.get("fitfile") is not None) else None,
+        subtracted_references=execution.output_file(params.get("subort", None)) if (params.get("subort") is not None) else None,
     )
     return ret
 
@@ -463,7 +457,6 @@ def fim2(
 __all__ = [
     "FIM2_METADATA",
     "Fim2Outputs",
-    "Fim2Parameters",
     "fim2",
     "fim2_execute",
     "fim2_params",

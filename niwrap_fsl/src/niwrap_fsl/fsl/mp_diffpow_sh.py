@@ -14,47 +14,20 @@ MP_DIFFPOW_SH_METADATA = Metadata(
 
 
 MpDiffpowShParameters = typing.TypedDict('MpDiffpowShParameters', {
-    "@type": typing.Literal["fsl.mp_diffpow.sh"],
+    "@type": typing.NotRequired[typing.Literal["fsl/mp_diffpow.sh"]],
+    "reg_file": InputPathType,
+    "diff_reg_file": str,
+})
+MpDiffpowShParametersTagged = typing.TypedDict('MpDiffpowShParametersTagged', {
+    "@type": typing.Literal["fsl/mp_diffpow.sh"],
     "reg_file": InputPathType,
     "diff_reg_file": str,
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "fsl.mp_diffpow.sh": mp_diffpow_sh_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "fsl.mp_diffpow.sh": mp_diffpow_sh_outputs,
-    }.get(t)
-
-
 class MpDiffpowShOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `mp_diffpow_sh(...)`.
+    Output object returned when calling `MpDiffpowShParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -66,7 +39,7 @@ class MpDiffpowShOutputs(typing.NamedTuple):
 def mp_diffpow_sh_params(
     reg_file: InputPathType,
     diff_reg_file: str,
-) -> MpDiffpowShParameters:
+) -> MpDiffpowShParametersTagged:
     """
     Build parameters.
     
@@ -79,7 +52,7 @@ def mp_diffpow_sh_params(
         Parameter dictionary
     """
     params = {
-        "@type": "fsl.mp_diffpow.sh",
+        "@type": "fsl/mp_diffpow.sh",
         "reg_file": reg_file,
         "diff_reg_file": diff_reg_file,
     }
@@ -101,8 +74,8 @@ def mp_diffpow_sh_cargs(
     """
     cargs = []
     cargs.append("mp_diffpow.sh")
-    cargs.append(execution.input_file(params.get("reg_file")))
-    cargs.append(params.get("diff_reg_file"))
+    cargs.append(execution.input_file(params.get("reg_file", None)))
+    cargs.append(params.get("diff_reg_file", None))
     return cargs
 
 
@@ -121,7 +94,7 @@ def mp_diffpow_sh_outputs(
     """
     ret = MpDiffpowShOutputs(
         root=execution.output_file("."),
-        outfile=execution.output_file(params.get("diff_reg_file")),
+        outfile=execution.output_file(params.get("diff_reg_file", None)),
     )
     return ret
 
@@ -191,7 +164,6 @@ def mp_diffpow_sh(
 __all__ = [
     "MP_DIFFPOW_SH_METADATA",
     "MpDiffpowShOutputs",
-    "MpDiffpowShParameters",
     "mp_diffpow_sh",
     "mp_diffpow_sh_execute",
     "mp_diffpow_sh_params",

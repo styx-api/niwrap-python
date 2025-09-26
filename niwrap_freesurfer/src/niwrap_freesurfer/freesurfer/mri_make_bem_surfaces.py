@@ -14,47 +14,20 @@ MRI_MAKE_BEM_SURFACES_METADATA = Metadata(
 
 
 MriMakeBemSurfacesParameters = typing.TypedDict('MriMakeBemSurfacesParameters', {
-    "@type": typing.Literal["freesurfer.mri_make_bem_surfaces"],
+    "@type": typing.NotRequired[typing.Literal["freesurfer/mri_make_bem_surfaces"]],
+    "name": str,
+    "mfile": typing.NotRequired[InputPathType | None],
+})
+MriMakeBemSurfacesParametersTagged = typing.TypedDict('MriMakeBemSurfacesParametersTagged', {
+    "@type": typing.Literal["freesurfer/mri_make_bem_surfaces"],
     "name": str,
     "mfile": typing.NotRequired[InputPathType | None],
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "freesurfer.mri_make_bem_surfaces": mri_make_bem_surfaces_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "freesurfer.mri_make_bem_surfaces": mri_make_bem_surfaces_outputs,
-    }.get(t)
-
-
 class MriMakeBemSurfacesOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `mri_make_bem_surfaces(...)`.
+    Output object returned when calling `MriMakeBemSurfacesParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -67,7 +40,7 @@ class MriMakeBemSurfacesOutputs(typing.NamedTuple):
 def mri_make_bem_surfaces_params(
     name: str,
     mfile: InputPathType | None = None,
-) -> MriMakeBemSurfacesParameters:
+) -> MriMakeBemSurfacesParametersTagged:
     """
     Build parameters.
     
@@ -78,7 +51,7 @@ def mri_make_bem_surfaces_params(
         Parameter dictionary
     """
     params = {
-        "@type": "freesurfer.mri_make_bem_surfaces",
+        "@type": "freesurfer/mri_make_bem_surfaces",
         "name": name,
     }
     if mfile is not None:
@@ -101,9 +74,9 @@ def mri_make_bem_surfaces_cargs(
     """
     cargs = []
     cargs.append("mri_make_bem_surfaces")
-    cargs.append(params.get("name"))
-    if params.get("mfile") is not None:
-        cargs.append(execution.input_file(params.get("mfile")))
+    cargs.append(params.get("name", None))
+    if params.get("mfile", None) is not None:
+        cargs.append(execution.input_file(params.get("mfile", None)))
     return cargs
 
 
@@ -187,7 +160,6 @@ def mri_make_bem_surfaces(
 __all__ = [
     "MRI_MAKE_BEM_SURFACES_METADATA",
     "MriMakeBemSurfacesOutputs",
-    "MriMakeBemSurfacesParameters",
     "mri_make_bem_surfaces",
     "mri_make_bem_surfaces_execute",
     "mri_make_bem_surfaces_params",

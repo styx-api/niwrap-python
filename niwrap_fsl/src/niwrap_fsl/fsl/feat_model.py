@@ -14,46 +14,20 @@ FEAT_MODEL_METADATA = Metadata(
 
 
 FeatModelParameters = typing.TypedDict('FeatModelParameters', {
-    "@type": typing.Literal["fsl.feat_model"],
+    "@type": typing.NotRequired[typing.Literal["fsl/feat_model"]],
+    "design_name_root": str,
+    "confound_matrix": typing.NotRequired[InputPathType | None],
+})
+FeatModelParametersTagged = typing.TypedDict('FeatModelParametersTagged', {
+    "@type": typing.Literal["fsl/feat_model"],
     "design_name_root": str,
     "confound_matrix": typing.NotRequired[InputPathType | None],
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "fsl.feat_model": feat_model_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-    }.get(t)
-
-
 class FeatModelOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `feat_model(...)`.
+    Output object returned when calling `FeatModelParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -62,7 +36,7 @@ class FeatModelOutputs(typing.NamedTuple):
 def feat_model_params(
     design_name_root: str,
     confound_matrix: InputPathType | None = None,
-) -> FeatModelParameters:
+) -> FeatModelParametersTagged:
     """
     Build parameters.
     
@@ -73,7 +47,7 @@ def feat_model_params(
         Parameter dictionary
     """
     params = {
-        "@type": "fsl.feat_model",
+        "@type": "fsl/feat_model",
         "design_name_root": design_name_root,
     }
     if confound_matrix is not None:
@@ -96,9 +70,9 @@ def feat_model_cargs(
     """
     cargs = []
     cargs.append("feat_model")
-    cargs.append(params.get("design_name_root"))
-    if params.get("confound_matrix") is not None:
-        cargs.append(execution.input_file(params.get("confound_matrix")))
+    cargs.append(params.get("design_name_root", None))
+    if params.get("confound_matrix", None) is not None:
+        cargs.append(execution.input_file(params.get("confound_matrix", None)))
     return cargs
 
 
@@ -180,7 +154,6 @@ def feat_model(
 __all__ = [
     "FEAT_MODEL_METADATA",
     "FeatModelOutputs",
-    "FeatModelParameters",
     "feat_model",
     "feat_model_execute",
     "feat_model_params",

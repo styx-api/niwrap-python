@@ -14,7 +14,18 @@ EXAMINE_XMAT_METADATA = Metadata(
 
 
 ExamineXmatParameters = typing.TypedDict('ExamineXmatParameters', {
-    "@type": typing.Literal["afni.ExamineXmat"],
+    "@type": typing.NotRequired[typing.Literal["afni/ExamineXmat"]],
+    "input_file": typing.NotRequired[InputPathType | None],
+    "interactive": bool,
+    "prefix": typing.NotRequired[str | None],
+    "cprefix": typing.NotRequired[str | None],
+    "pprefix": typing.NotRequired[str | None],
+    "select": typing.NotRequired[str | None],
+    "msg_trace": bool,
+    "verbosity": typing.NotRequired[float | None],
+})
+ExamineXmatParametersTagged = typing.TypedDict('ExamineXmatParametersTagged', {
+    "@type": typing.Literal["afni/ExamineXmat"],
     "input_file": typing.NotRequired[InputPathType | None],
     "interactive": bool,
     "prefix": typing.NotRequired[str | None],
@@ -26,41 +37,9 @@ ExamineXmatParameters = typing.TypedDict('ExamineXmatParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "afni.ExamineXmat": examine_xmat_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "afni.ExamineXmat": examine_xmat_outputs,
-    }.get(t)
-
-
 class ExamineXmatOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `examine_xmat(...)`.
+    Output object returned when calling `ExamineXmatParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -85,7 +64,7 @@ def examine_xmat_params(
     select_: str | None = None,
     msg_trace: bool = False,
     verbosity: float | None = None,
-) -> ExamineXmatParameters:
+) -> ExamineXmatParametersTagged:
     """
     Build parameters.
     
@@ -104,7 +83,7 @@ def examine_xmat_params(
         Parameter dictionary
     """
     params = {
-        "@type": "afni.ExamineXmat",
+        "@type": "afni/ExamineXmat",
         "interactive": interactive,
         "msg_trace": msg_trace,
     }
@@ -138,39 +117,39 @@ def examine_xmat_cargs(
     """
     cargs = []
     cargs.append("ExamineXmat")
-    if params.get("input_file") is not None:
+    if params.get("input_file", None) is not None:
         cargs.extend([
             "-input",
-            execution.input_file(params.get("input_file"))
+            execution.input_file(params.get("input_file", None))
         ])
-    if params.get("interactive"):
+    if params.get("interactive", False):
         cargs.append("-interactive")
-    if params.get("prefix") is not None:
+    if params.get("prefix", None) is not None:
         cargs.extend([
             "-prefix",
-            params.get("prefix")
+            params.get("prefix", None)
         ])
-    if params.get("cprefix") is not None:
+    if params.get("cprefix", None) is not None:
         cargs.extend([
             "-cprefix",
-            params.get("cprefix")
+            params.get("cprefix", None)
         ])
-    if params.get("pprefix") is not None:
+    if params.get("pprefix", None) is not None:
         cargs.extend([
             "-pprefix",
-            params.get("pprefix")
+            params.get("pprefix", None)
         ])
-    if params.get("select") is not None:
+    if params.get("select", None) is not None:
         cargs.extend([
             "-select",
-            params.get("select")
+            params.get("select", None)
         ])
-    if params.get("msg_trace"):
+    if params.get("msg_trace", False):
         cargs.append("-msg.trace")
-    if params.get("verbosity") is not None:
+    if params.get("verbosity", None) is not None:
         cargs.extend([
             "-verb",
-            str(params.get("verbosity"))
+            str(params.get("verbosity", None))
         ])
     return cargs
 
@@ -190,11 +169,11 @@ def examine_xmat_outputs(
     """
     ret = ExamineXmatOutputs(
         root=execution.output_file("."),
-        plot_image=execution.output_file(params.get("prefix") + ".jpg") if (params.get("prefix") is not None) else None,
-        plot_image_png=execution.output_file(params.get("prefix") + ".png") if (params.get("prefix") is not None) else None,
-        plot_image_pdf=execution.output_file(params.get("prefix") + ".pdf") if (params.get("prefix") is not None) else None,
-        cor_image=execution.output_file(params.get("cprefix") + ".jpg") if (params.get("cprefix") is not None) else None,
-        plot_image_prefix=execution.output_file(params.get("pprefix") + ".jpg") if (params.get("pprefix") is not None) else None,
+        plot_image=execution.output_file(params.get("prefix", None) + ".jpg") if (params.get("prefix") is not None) else None,
+        plot_image_png=execution.output_file(params.get("prefix", None) + ".png") if (params.get("prefix") is not None) else None,
+        plot_image_pdf=execution.output_file(params.get("prefix", None) + ".pdf") if (params.get("prefix") is not None) else None,
+        cor_image=execution.output_file(params.get("cprefix", None) + ".jpg") if (params.get("cprefix") is not None) else None,
+        plot_image_prefix=execution.output_file(params.get("pprefix", None) + ".jpg") if (params.get("pprefix") is not None) else None,
     )
     return ret
 
@@ -278,7 +257,6 @@ def examine_xmat(
 __all__ = [
     "EXAMINE_XMAT_METADATA",
     "ExamineXmatOutputs",
-    "ExamineXmatParameters",
     "examine_xmat",
     "examine_xmat_execute",
     "examine_xmat_params",

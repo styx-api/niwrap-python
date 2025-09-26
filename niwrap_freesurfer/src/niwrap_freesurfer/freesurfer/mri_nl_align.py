@@ -14,7 +14,58 @@ MRI_NL_ALIGN_METADATA = Metadata(
 
 
 MriNlAlignParameters = typing.TypedDict('MriNlAlignParameters', {
-    "@type": typing.Literal["freesurfer.mri_nl_align"],
+    "@type": typing.NotRequired[typing.Literal["freesurfer/mri_nl_align"]],
+    "source": InputPathType,
+    "target": InputPathType,
+    "warp": str,
+    "debug_voxel": typing.NotRequired[list[float] | None],
+    "debug_node": typing.NotRequired[list[float] | None],
+    "no_neg": typing.NotRequired[float | None],
+    "renormalize": typing.NotRequired[float | None],
+    "aseg_flag": bool,
+    "diag_volume": typing.NotRequired[str | None],
+    "optimal_flag": bool,
+    "momentum_flag": bool,
+    "fixed_flag": bool,
+    "distance": typing.NotRequired[float | None],
+    "dtrans": typing.NotRequired[float | None],
+    "match_peak_flag": bool,
+    "erode": typing.NotRequired[float | None],
+    "match_mean": typing.NotRequired[float | None],
+    "intensity": typing.NotRequired[float | None],
+    "ll": typing.NotRequired[float | None],
+    "noregrid_flag": bool,
+    "regrid_flag": bool,
+    "view": typing.NotRequired[list[float] | None],
+    "levels": typing.NotRequired[float | None],
+    "area_smoothness": typing.NotRequired[float | None],
+    "asmooth": typing.NotRequired[float | None],
+    "area": typing.NotRequired[float | None],
+    "tolerance": typing.NotRequired[float | None],
+    "sigma": typing.NotRequired[float | None],
+    "min_sigma": typing.NotRequired[float | None],
+    "ribbon": typing.NotRequired[InputPathType | None],
+    "rthresh": typing.NotRequired[float | None],
+    "scale": typing.NotRequired[float | None],
+    "dt": typing.NotRequired[float | None],
+    "passes": typing.NotRequired[float | None],
+    "skip": typing.NotRequired[float | None],
+    "apply": typing.NotRequired[float | None],
+    "distance_log": typing.NotRequired[float | None],
+    "momentum": typing.NotRequired[float | None],
+    "iterations": typing.NotRequired[float | None],
+    "smoothness": typing.NotRequired[float | None],
+    "transform": typing.NotRequired[InputPathType | None],
+    "inverse_transform": typing.NotRequired[InputPathType | None],
+    "binary": typing.NotRequired[float | None],
+    "jacobian": typing.NotRequired[float | None],
+    "disable_zero_locations": typing.NotRequired[float | None],
+    "smooth_averages": typing.NotRequired[float | None],
+    "exp_k": typing.NotRequired[float | None],
+    "diagnostics": typing.NotRequired[float | None],
+})
+MriNlAlignParametersTagged = typing.TypedDict('MriNlAlignParametersTagged', {
+    "@type": typing.Literal["freesurfer/mri_nl_align"],
     "source": InputPathType,
     "target": InputPathType,
     "warp": str,
@@ -66,41 +117,9 @@ MriNlAlignParameters = typing.TypedDict('MriNlAlignParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "freesurfer.mri_nl_align": mri_nl_align_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "freesurfer.mri_nl_align": mri_nl_align_outputs,
-    }.get(t)
-
-
 class MriNlAlignOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `mri_nl_align(...)`.
+    Output object returned when calling `MriNlAlignParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -157,7 +176,7 @@ def mri_nl_align_params(
     smooth_averages: float | None = None,
     exp_k: float | None = None,
     diagnostics: float | None = None,
-) -> MriNlAlignParameters:
+) -> MriNlAlignParametersTagged:
     """
     Build parameters.
     
@@ -214,7 +233,7 @@ def mri_nl_align_params(
         Parameter dictionary
     """
     params = {
-        "@type": "freesurfer.mri_nl_align",
+        "@type": "freesurfer/mri_nl_align",
         "source": source,
         "target": target,
         "warp": warp,
@@ -320,212 +339,212 @@ def mri_nl_align_cargs(
     """
     cargs = []
     cargs.append("mri_nl_align")
-    cargs.append(execution.input_file(params.get("source")))
-    cargs.append(execution.input_file(params.get("target")))
-    cargs.append(params.get("warp"))
-    if params.get("debug_voxel") is not None:
+    cargs.append(execution.input_file(params.get("source", None)))
+    cargs.append(execution.input_file(params.get("target", None)))
+    cargs.append(params.get("warp", None))
+    if params.get("debug_voxel", None) is not None:
         cargs.extend([
             "-debug_voxel",
-            *map(str, params.get("debug_voxel"))
+            *map(str, params.get("debug_voxel", None))
         ])
-    if params.get("debug_node") is not None:
+    if params.get("debug_node", None) is not None:
         cargs.extend([
             "-debug_node",
-            *map(str, params.get("debug_node"))
+            *map(str, params.get("debug_node", None))
         ])
-    if params.get("no_neg") is not None:
+    if params.get("no_neg", None) is not None:
         cargs.extend([
             "-noneg",
-            str(params.get("no_neg"))
+            str(params.get("no_neg", None))
         ])
-    if params.get("renormalize") is not None:
+    if params.get("renormalize", None) is not None:
         cargs.extend([
             "-renormalize",
-            str(params.get("renormalize"))
+            str(params.get("renormalize", None))
         ])
-    if params.get("aseg_flag"):
+    if params.get("aseg_flag", False):
         cargs.append("-aseg")
-    if params.get("diag_volume") is not None:
+    if params.get("diag_volume", None) is not None:
         cargs.extend([
             "-diag2",
-            params.get("diag_volume")
+            params.get("diag_volume", None)
         ])
-    if params.get("optimal_flag"):
+    if params.get("optimal_flag", False):
         cargs.append("-OPTIMAL")
-    if params.get("momentum_flag"):
+    if params.get("momentum_flag", False):
         cargs.append("-MOMENTUM")
-    if params.get("fixed_flag"):
+    if params.get("fixed_flag", False):
         cargs.append("-FIXED")
-    if params.get("distance") is not None:
+    if params.get("distance", None) is not None:
         cargs.extend([
             "-distance",
-            str(params.get("distance"))
+            str(params.get("distance", None))
         ])
-    if params.get("dtrans") is not None:
+    if params.get("dtrans", None) is not None:
         cargs.extend([
             "-dtrans",
-            str(params.get("dtrans"))
+            str(params.get("dtrans", None))
         ])
-    if params.get("match_peak_flag"):
+    if params.get("match_peak_flag", False):
         cargs.append("-match_peak")
-    if params.get("erode") is not None:
+    if params.get("erode", None) is not None:
         cargs.extend([
             "-erode",
-            str(params.get("erode"))
+            str(params.get("erode", None))
         ])
-    if params.get("match_mean") is not None:
+    if params.get("match_mean", None) is not None:
         cargs.extend([
             "-match_mean",
-            str(params.get("match_mean"))
+            str(params.get("match_mean", None))
         ])
-    if params.get("intensity") is not None:
+    if params.get("intensity", None) is not None:
         cargs.extend([
             "-intensity",
-            str(params.get("intensity"))
+            str(params.get("intensity", None))
         ])
-    if params.get("ll") is not None:
+    if params.get("ll", None) is not None:
         cargs.extend([
             "-ll",
-            str(params.get("ll"))
+            str(params.get("ll", None))
         ])
-    if params.get("noregrid_flag"):
+    if params.get("noregrid_flag", False):
         cargs.append("-noregrid")
-    if params.get("regrid_flag"):
+    if params.get("regrid_flag", False):
         cargs.append("-regrid")
-    if params.get("view") is not None:
+    if params.get("view", None) is not None:
         cargs.extend([
             "-view",
-            *map(str, params.get("view"))
+            *map(str, params.get("view", None))
         ])
-    if params.get("levels") is not None:
+    if params.get("levels", None) is not None:
         cargs.extend([
             "-levels",
-            str(params.get("levels"))
+            str(params.get("levels", None))
         ])
-    if params.get("area_smoothness") is not None:
+    if params.get("area_smoothness", None) is not None:
         cargs.extend([
             "-areasmoothness",
-            str(params.get("area_smoothness"))
+            str(params.get("area_smoothness", None))
         ])
-    if params.get("asmooth") is not None:
+    if params.get("asmooth", None) is not None:
         cargs.extend([
             "-asmooth",
-            str(params.get("asmooth"))
+            str(params.get("asmooth", None))
         ])
-    if params.get("area") is not None:
+    if params.get("area", None) is not None:
         cargs.extend([
             "-area",
-            str(params.get("area"))
+            str(params.get("area", None))
         ])
-    if params.get("tolerance") is not None:
+    if params.get("tolerance", None) is not None:
         cargs.extend([
             "-tol",
-            str(params.get("tolerance"))
+            str(params.get("tolerance", None))
         ])
-    if params.get("sigma") is not None:
+    if params.get("sigma", None) is not None:
         cargs.extend([
             "-sigma",
-            str(params.get("sigma"))
+            str(params.get("sigma", None))
         ])
-    if params.get("min_sigma") is not None:
+    if params.get("min_sigma", None) is not None:
         cargs.extend([
             "-min_sigma",
-            str(params.get("min_sigma"))
+            str(params.get("min_sigma", None))
         ])
-    if params.get("ribbon") is not None:
+    if params.get("ribbon", None) is not None:
         cargs.extend([
             "-ribbon",
-            execution.input_file(params.get("ribbon"))
+            execution.input_file(params.get("ribbon", None))
         ])
-    if params.get("rthresh") is not None:
+    if params.get("rthresh", None) is not None:
         cargs.extend([
             "-rthresh",
-            str(params.get("rthresh"))
+            str(params.get("rthresh", None))
         ])
-    if params.get("scale") is not None:
+    if params.get("scale", None) is not None:
         cargs.extend([
             "-scale",
-            str(params.get("scale"))
+            str(params.get("scale", None))
         ])
-    if params.get("dt") is not None:
+    if params.get("dt", None) is not None:
         cargs.extend([
             "-dt",
-            str(params.get("dt"))
+            str(params.get("dt", None))
         ])
-    if params.get("passes") is not None:
+    if params.get("passes", None) is not None:
         cargs.extend([
             "-passes",
-            str(params.get("passes"))
+            str(params.get("passes", None))
         ])
-    if params.get("skip") is not None:
+    if params.get("skip", None) is not None:
         cargs.extend([
             "-skip",
-            str(params.get("skip"))
+            str(params.get("skip", None))
         ])
-    if params.get("apply") is not None:
+    if params.get("apply", None) is not None:
         cargs.extend([
             "-apply",
-            str(params.get("apply"))
+            str(params.get("apply", None))
         ])
-    if params.get("distance_log") is not None:
+    if params.get("distance_log", None) is not None:
         cargs.extend([
             "-D",
-            str(params.get("distance_log"))
+            str(params.get("distance_log", None))
         ])
-    if params.get("momentum") is not None:
+    if params.get("momentum", None) is not None:
         cargs.extend([
             "-M",
-            str(params.get("momentum"))
+            str(params.get("momentum", None))
         ])
-    if params.get("iterations") is not None:
+    if params.get("iterations", None) is not None:
         cargs.extend([
             "-N",
-            str(params.get("iterations"))
+            str(params.get("iterations", None))
         ])
-    if params.get("smoothness") is not None:
+    if params.get("smoothness", None) is not None:
         cargs.extend([
             "-s",
-            str(params.get("smoothness"))
+            str(params.get("smoothness", None))
         ])
-    if params.get("transform") is not None:
+    if params.get("transform", None) is not None:
         cargs.extend([
             "-T",
-            execution.input_file(params.get("transform"))
+            execution.input_file(params.get("transform", None))
         ])
-    if params.get("inverse_transform") is not None:
+    if params.get("inverse_transform", None) is not None:
         cargs.extend([
             "-I",
-            execution.input_file(params.get("inverse_transform"))
+            execution.input_file(params.get("inverse_transform", None))
         ])
-    if params.get("binary") is not None:
+    if params.get("binary", None) is not None:
         cargs.extend([
             "-B",
-            str(params.get("binary"))
+            str(params.get("binary", None))
         ])
-    if params.get("jacobian") is not None:
+    if params.get("jacobian", None) is not None:
         cargs.extend([
             "-J",
-            str(params.get("jacobian"))
+            str(params.get("jacobian", None))
         ])
-    if params.get("disable_zero_locations") is not None:
+    if params.get("disable_zero_locations", None) is not None:
         cargs.extend([
             "-Z",
-            str(params.get("disable_zero_locations"))
+            str(params.get("disable_zero_locations", None))
         ])
-    if params.get("smooth_averages") is not None:
+    if params.get("smooth_averages", None) is not None:
         cargs.extend([
             "-a",
-            str(params.get("smooth_averages"))
+            str(params.get("smooth_averages", None))
         ])
-    if params.get("exp_k") is not None:
+    if params.get("exp_k", None) is not None:
         cargs.extend([
             "-K",
-            str(params.get("exp_k"))
+            str(params.get("exp_k", None))
         ])
-    if params.get("diagnostics") is not None:
+    if params.get("diagnostics", None) is not None:
         cargs.extend([
             "-W",
-            str(params.get("diagnostics"))
+            str(params.get("diagnostics", None))
         ])
     return cargs
 
@@ -545,7 +564,7 @@ def mri_nl_align_outputs(
     """
     ret = MriNlAlignOutputs(
         root=execution.output_file("."),
-        warp_output=execution.output_file(params.get("warp")),
+        warp_output=execution.output_file(params.get("warp", None)),
     )
     return ret
 
@@ -747,7 +766,6 @@ def mri_nl_align(
 __all__ = [
     "MRI_NL_ALIGN_METADATA",
     "MriNlAlignOutputs",
-    "MriNlAlignParameters",
     "mri_nl_align",
     "mri_nl_align_execute",
     "mri_nl_align_params",

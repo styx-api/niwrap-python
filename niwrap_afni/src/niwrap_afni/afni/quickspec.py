@@ -14,7 +14,17 @@ QUICKSPEC_METADATA = Metadata(
 
 
 QuickspecParameters = typing.TypedDict('QuickspecParameters', {
-    "@type": typing.Literal["afni.quickspec"],
+    "@type": typing.NotRequired[typing.Literal["afni/quickspec"]],
+    "tn": list[str],
+    "tsn": list[str],
+    "tsnad": typing.NotRequired[list[str] | None],
+    "tsnadm": typing.NotRequired[list[str] | None],
+    "tsnadl": typing.NotRequired[list[str] | None],
+    "spec": typing.NotRequired[str | None],
+    "help": bool,
+})
+QuickspecParametersTagged = typing.TypedDict('QuickspecParametersTagged', {
+    "@type": typing.Literal["afni/quickspec"],
     "tn": list[str],
     "tsn": list[str],
     "tsnad": typing.NotRequired[list[str] | None],
@@ -25,41 +35,9 @@ QuickspecParameters = typing.TypedDict('QuickspecParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "afni.quickspec": quickspec_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "afni.quickspec": quickspec_outputs,
-    }.get(t)
-
-
 class QuickspecOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `quickspec(...)`.
+    Output object returned when calling `QuickspecParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -75,7 +53,7 @@ def quickspec_params(
     tsnadl: list[str] | None = None,
     spec: str | None = None,
     help_: bool = False,
-) -> QuickspecParameters:
+) -> QuickspecParametersTagged:
     """
     Build parameters.
     
@@ -94,7 +72,7 @@ def quickspec_params(
         Parameter dictionary
     """
     params = {
-        "@type": "afni.quickspec",
+        "@type": "afni/quickspec",
         "tn": tn,
         "tsn": tsn,
         "help": help_,
@@ -127,33 +105,33 @@ def quickspec_cargs(
     cargs.append("quickspec")
     cargs.extend([
         "-tn",
-        *params.get("tn")
+        *params.get("tn", None)
     ])
     cargs.extend([
         "-tsn",
-        *params.get("tsn")
+        *params.get("tsn", None)
     ])
-    if params.get("tsnad") is not None:
+    if params.get("tsnad", None) is not None:
         cargs.extend([
             "-tsnad",
-            *params.get("tsnad")
+            *params.get("tsnad", None)
         ])
-    if params.get("tsnadm") is not None:
+    if params.get("tsnadm", None) is not None:
         cargs.extend([
             "-tsnadm",
-            *params.get("tsnadm")
+            *params.get("tsnadm", None)
         ])
-    if params.get("tsnadl") is not None:
+    if params.get("tsnadl", None) is not None:
         cargs.extend([
             "-tsnadl",
-            *params.get("tsnadl")
+            *params.get("tsnadl", None)
         ])
-    if params.get("spec") is not None:
+    if params.get("spec", None) is not None:
         cargs.extend([
             "-spec",
-            params.get("spec")
+            params.get("spec", None)
         ])
-    if params.get("help"):
+    if params.get("help", False):
         cargs.append("-h")
     return cargs
 
@@ -173,7 +151,7 @@ def quickspec_outputs(
     """
     ret = QuickspecOutputs(
         root=execution.output_file("."),
-        out_specfile=execution.output_file(params.get("spec")) if (params.get("spec") is not None) else None,
+        out_specfile=execution.output_file(params.get("spec", None)) if (params.get("spec") is not None) else None,
     )
     return ret
 
@@ -257,7 +235,6 @@ def quickspec(
 __all__ = [
     "QUICKSPEC_METADATA",
     "QuickspecOutputs",
-    "QuickspecParameters",
     "quickspec",
     "quickspec_execute",
     "quickspec_params",

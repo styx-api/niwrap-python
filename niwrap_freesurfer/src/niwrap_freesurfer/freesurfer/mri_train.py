@@ -14,47 +14,20 @@ MRI_TRAIN_METADATA = Metadata(
 
 
 MriTrainParameters = typing.TypedDict('MriTrainParameters', {
-    "@type": typing.Literal["freesurfer.mri_train"],
+    "@type": typing.NotRequired[typing.Literal["freesurfer/mri_train"]],
+    "training_file": InputPathType,
+    "output_file": str,
+})
+MriTrainParametersTagged = typing.TypedDict('MriTrainParametersTagged', {
+    "@type": typing.Literal["freesurfer/mri_train"],
     "training_file": InputPathType,
     "output_file": str,
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "freesurfer.mri_train": mri_train_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "freesurfer.mri_train": mri_train_outputs,
-    }.get(t)
-
-
 class MriTrainOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `mri_train(...)`.
+    Output object returned when calling `MriTrainParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -65,7 +38,7 @@ class MriTrainOutputs(typing.NamedTuple):
 def mri_train_params(
     training_file: InputPathType,
     output_file: str,
-) -> MriTrainParameters:
+) -> MriTrainParametersTagged:
     """
     Build parameters.
     
@@ -76,7 +49,7 @@ def mri_train_params(
         Parameter dictionary
     """
     params = {
-        "@type": "freesurfer.mri_train",
+        "@type": "freesurfer/mri_train",
         "training_file": training_file,
         "output_file": output_file,
     }
@@ -98,8 +71,8 @@ def mri_train_cargs(
     """
     cargs = []
     cargs.append("mri_train")
-    cargs.append(execution.input_file(params.get("training_file")))
-    cargs.append(params.get("output_file"))
+    cargs.append(execution.input_file(params.get("training_file", None)))
+    cargs.append(params.get("output_file", None))
     return cargs
 
 
@@ -118,7 +91,7 @@ def mri_train_outputs(
     """
     ret = MriTrainOutputs(
         root=execution.output_file("."),
-        output_file_generated=execution.output_file(params.get("output_file")),
+        output_file_generated=execution.output_file(params.get("output_file", None)),
     )
     return ret
 
@@ -182,7 +155,6 @@ def mri_train(
 __all__ = [
     "MRI_TRAIN_METADATA",
     "MriTrainOutputs",
-    "MriTrainParameters",
     "mri_train",
     "mri_train_execute",
     "mri_train_params",

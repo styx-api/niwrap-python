@@ -14,46 +14,18 @@ SEGMENT_SUBJECT_NOTAL2_METADATA = Metadata(
 
 
 SegmentSubjectNotal2Parameters = typing.TypedDict('SegmentSubjectNotal2Parameters', {
-    "@type": typing.Literal["freesurfer.segment_subject_notal2"],
+    "@type": typing.NotRequired[typing.Literal["freesurfer/segment_subject_notal2"]],
+    "license_file": InputPathType,
+})
+SegmentSubjectNotal2ParametersTagged = typing.TypedDict('SegmentSubjectNotal2ParametersTagged', {
+    "@type": typing.Literal["freesurfer/segment_subject_notal2"],
     "license_file": InputPathType,
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "freesurfer.segment_subject_notal2": segment_subject_notal2_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "freesurfer.segment_subject_notal2": segment_subject_notal2_outputs,
-    }.get(t)
-
-
 class SegmentSubjectNotal2Outputs(typing.NamedTuple):
     """
-    Output object returned when calling `segment_subject_notal2(...)`.
+    Output object returned when calling `SegmentSubjectNotal2Parameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -63,7 +35,7 @@ class SegmentSubjectNotal2Outputs(typing.NamedTuple):
 
 def segment_subject_notal2_params(
     license_file: InputPathType,
-) -> SegmentSubjectNotal2Parameters:
+) -> SegmentSubjectNotal2ParametersTagged:
     """
     Build parameters.
     
@@ -75,7 +47,7 @@ def segment_subject_notal2_params(
         Parameter dictionary
     """
     params = {
-        "@type": "freesurfer.segment_subject_notal2",
+        "@type": "freesurfer/segment_subject_notal2",
         "license_file": license_file,
     }
     return params
@@ -98,7 +70,7 @@ def segment_subject_notal2_cargs(
     cargs.append("segment_subject_notal2")
     cargs.extend([
         "--fs-license-file",
-        execution.input_file(params.get("license_file"))
+        execution.input_file(params.get("license_file", None))
     ])
     return cargs
 
@@ -181,7 +153,6 @@ def segment_subject_notal2(
 __all__ = [
     "SEGMENT_SUBJECT_NOTAL2_METADATA",
     "SegmentSubjectNotal2Outputs",
-    "SegmentSubjectNotal2Parameters",
     "segment_subject_notal2",
     "segment_subject_notal2_execute",
     "segment_subject_notal2_params",

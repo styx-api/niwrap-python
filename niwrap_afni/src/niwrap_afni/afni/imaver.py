@@ -14,48 +14,22 @@ IMAVER_METADATA = Metadata(
 
 
 ImaverParameters = typing.TypedDict('ImaverParameters', {
-    "@type": typing.Literal["afni.imaver"],
+    "@type": typing.NotRequired[typing.Literal["afni/imaver"]],
+    "out_ave": typing.NotRequired[str | None],
+    "out_sig": typing.NotRequired[str | None],
+    "input_images": list[InputPathType],
+})
+ImaverParametersTagged = typing.TypedDict('ImaverParametersTagged', {
+    "@type": typing.Literal["afni/imaver"],
     "out_ave": typing.NotRequired[str | None],
     "out_sig": typing.NotRequired[str | None],
     "input_images": list[InputPathType],
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "afni.imaver": imaver_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "afni.imaver": imaver_outputs,
-    }.get(t)
-
-
 class ImaverOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `imaver(...)`.
+    Output object returned when calling `ImaverParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -69,7 +43,7 @@ def imaver_params(
     input_images: list[InputPathType],
     out_ave: str | None = None,
     out_sig: str | None = None,
-) -> ImaverParameters:
+) -> ImaverParametersTagged:
     """
     Build parameters.
     
@@ -81,7 +55,7 @@ def imaver_params(
         Parameter dictionary
     """
     params = {
-        "@type": "afni.imaver",
+        "@type": "afni/imaver",
         "input_images": input_images,
     }
     if out_ave is not None:
@@ -106,11 +80,11 @@ def imaver_cargs(
     """
     cargs = []
     cargs.append("imaver")
-    if params.get("out_ave") is not None:
-        cargs.append(params.get("out_ave"))
-    if params.get("out_sig") is not None:
-        cargs.append(params.get("out_sig"))
-    cargs.extend([execution.input_file(f) for f in params.get("input_images")])
+    if params.get("out_ave", None) is not None:
+        cargs.append(params.get("out_ave", None))
+    if params.get("out_sig", None) is not None:
+        cargs.append(params.get("out_sig", None))
+    cargs.extend([execution.input_file(f) for f in params.get("input_images", None)])
     return cargs
 
 
@@ -129,8 +103,8 @@ def imaver_outputs(
     """
     ret = ImaverOutputs(
         root=execution.output_file("."),
-        out_ave_output=execution.output_file(params.get("out_ave")) if (params.get("out_ave") is not None) else None,
-        out_sig_output=execution.output_file(params.get("out_sig")) if (params.get("out_sig") is not None) else None,
+        out_ave_output=execution.output_file(params.get("out_ave", None)) if (params.get("out_ave") is not None) else None,
+        out_sig_output=execution.output_file(params.get("out_sig", None)) if (params.get("out_sig") is not None) else None,
     )
     return ret
 
@@ -199,7 +173,6 @@ def imaver(
 __all__ = [
     "IMAVER_METADATA",
     "ImaverOutputs",
-    "ImaverParameters",
     "imaver",
     "imaver_execute",
     "imaver_params",

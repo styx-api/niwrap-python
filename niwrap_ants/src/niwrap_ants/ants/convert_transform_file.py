@@ -14,7 +14,17 @@ CONVERT_TRANSFORM_FILE_METADATA = Metadata(
 
 
 ConvertTransformFileParameters = typing.TypedDict('ConvertTransformFileParameters', {
-    "@type": typing.Literal["ants.ConvertTransformFile"],
+    "@type": typing.NotRequired[typing.Literal["ants/ConvertTransformFile"]],
+    "dimensions": int,
+    "input_transform_file": InputPathType,
+    "output_transform_file": str,
+    "matrix": bool,
+    "homogeneous_matrix": bool,
+    "RAS": bool,
+    "convert_to_affine_type": bool,
+})
+ConvertTransformFileParametersTagged = typing.TypedDict('ConvertTransformFileParametersTagged', {
+    "@type": typing.Literal["ants/ConvertTransformFile"],
     "dimensions": int,
     "input_transform_file": InputPathType,
     "output_transform_file": str,
@@ -25,40 +35,9 @@ ConvertTransformFileParameters = typing.TypedDict('ConvertTransformFileParameter
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "ants.ConvertTransformFile": convert_transform_file_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-    }.get(t)
-
-
 class ConvertTransformFileOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `convert_transform_file(...)`.
+    Output object returned when calling `ConvertTransformFileParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -72,7 +51,7 @@ def convert_transform_file_params(
     homogeneous_matrix: bool = False,
     ras: bool = False,
     convert_to_affine_type: bool = False,
-) -> ConvertTransformFileParameters:
+) -> ConvertTransformFileParametersTagged:
     """
     Build parameters.
     
@@ -93,7 +72,7 @@ def convert_transform_file_params(
         Parameter dictionary
     """
     params = {
-        "@type": "ants.ConvertTransformFile",
+        "@type": "ants/ConvertTransformFile",
         "dimensions": dimensions,
         "input_transform_file": input_transform_file,
         "output_transform_file": output_transform_file,
@@ -120,16 +99,16 @@ def convert_transform_file_cargs(
     """
     cargs = []
     cargs.append("ConvertTransformFile")
-    cargs.append(str(params.get("dimensions")))
-    cargs.append(execution.input_file(params.get("input_transform_file")))
-    cargs.append(params.get("output_transform_file"))
-    if params.get("matrix"):
+    cargs.append(str(params.get("dimensions", None)))
+    cargs.append(execution.input_file(params.get("input_transform_file", None)))
+    cargs.append(params.get("output_transform_file", None))
+    if params.get("matrix", False):
         cargs.append("--matrix")
-    if params.get("homogeneous_matrix"):
+    if params.get("homogeneous_matrix", False):
         cargs.append("--homogeneousMatrix")
-    if params.get("RAS"):
+    if params.get("RAS", False):
         cargs.append("--RAS")
-    if params.get("convert_to_affine_type"):
+    if params.get("convert_to_affine_type", False):
         cargs.append("--convertToAffineType")
     return cargs
 
@@ -238,7 +217,6 @@ def convert_transform_file(
 __all__ = [
     "CONVERT_TRANSFORM_FILE_METADATA",
     "ConvertTransformFileOutputs",
-    "ConvertTransformFileParameters",
     "convert_transform_file",
     "convert_transform_file_execute",
     "convert_transform_file_params",

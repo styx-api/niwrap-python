@@ -14,7 +14,16 @@ V_3D_UPSAMPLE_METADATA = Metadata(
 
 
 V3dUpsampleParameters = typing.TypedDict('V3dUpsampleParameters', {
-    "@type": typing.Literal["afni.3dUpsample"],
+    "@type": typing.NotRequired[typing.Literal["afni/3dUpsample"]],
+    "upsample_factor": int,
+    "input_dataset": str,
+    "linear_interpolation": bool,
+    "output_prefix": typing.NotRequired[str | None],
+    "verbose_flag": bool,
+    "datatype": typing.NotRequired[str | None],
+})
+V3dUpsampleParametersTagged = typing.TypedDict('V3dUpsampleParametersTagged', {
+    "@type": typing.Literal["afni/3dUpsample"],
     "upsample_factor": int,
     "input_dataset": str,
     "linear_interpolation": bool,
@@ -24,41 +33,9 @@ V3dUpsampleParameters = typing.TypedDict('V3dUpsampleParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "afni.3dUpsample": v_3d_upsample_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "afni.3dUpsample": v_3d_upsample_outputs,
-    }.get(t)
-
-
 class V3dUpsampleOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `v_3d_upsample(...)`.
+    Output object returned when calling `V3dUpsampleParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -75,7 +52,7 @@ def v_3d_upsample_params(
     output_prefix: str | None = None,
     verbose_flag: bool = False,
     datatype: str | None = None,
-) -> V3dUpsampleParameters:
+) -> V3dUpsampleParametersTagged:
     """
     Build parameters.
     
@@ -94,7 +71,7 @@ def v_3d_upsample_params(
         Parameter dictionary
     """
     params = {
-        "@type": "afni.3dUpsample",
+        "@type": "afni/3dUpsample",
         "upsample_factor": upsample_factor,
         "input_dataset": input_dataset,
         "linear_interpolation": linear_interpolation,
@@ -124,25 +101,25 @@ def v_3d_upsample_cargs(
     cargs.append("3dUpsample")
     cargs.extend([
         "-n",
-        str(params.get("upsample_factor"))
+        str(params.get("upsample_factor", None))
     ])
     cargs.extend([
         "-input",
-        params.get("input_dataset")
+        params.get("input_dataset", None)
     ])
-    if params.get("linear_interpolation"):
+    if params.get("linear_interpolation", False):
         cargs.append("-1")
-    if params.get("output_prefix") is not None:
+    if params.get("output_prefix", None) is not None:
         cargs.extend([
             "-prefix",
-            params.get("output_prefix")
+            params.get("output_prefix", None)
         ])
-    if params.get("verbose_flag"):
+    if params.get("verbose_flag", False):
         cargs.append("-verb")
-    if params.get("datatype") is not None:
+    if params.get("datatype", None) is not None:
         cargs.extend([
             "-datum",
-            params.get("datatype")
+            params.get("datatype", None)
         ])
     return cargs
 
@@ -162,8 +139,8 @@ def v_3d_upsample_outputs(
     """
     ret = V3dUpsampleOutputs(
         root=execution.output_file("."),
-        output_brik=execution.output_file(params.get("output_prefix") + "+orig.BRIK") if (params.get("output_prefix") is not None) else None,
-        output_head=execution.output_file(params.get("output_prefix") + "+orig.HEAD") if (params.get("output_prefix") is not None) else None,
+        output_brik=execution.output_file(params.get("output_prefix", None) + "+orig.BRIK") if (params.get("output_prefix") is not None) else None,
+        output_head=execution.output_file(params.get("output_prefix", None) + "+orig.HEAD") if (params.get("output_prefix") is not None) else None,
     )
     return ret
 
@@ -242,7 +219,6 @@ def v_3d_upsample(
 
 __all__ = [
     "V3dUpsampleOutputs",
-    "V3dUpsampleParameters",
     "V_3D_UPSAMPLE_METADATA",
     "v_3d_upsample",
     "v_3d_upsample_execute",

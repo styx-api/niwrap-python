@@ -14,7 +14,13 @@ V_5TTGEN_METADATA = Metadata(
 
 
 V5ttgenFreesurferParameters = typing.TypedDict('V5ttgenFreesurferParameters', {
-    "@type": typing.Literal["mrtrix.5ttgen.freesurfer"],
+    "@type": typing.NotRequired[typing.Literal["freesurfer"]],
+    "input": InputPathType,
+    "output": str,
+    "lut": typing.NotRequired[InputPathType | None],
+})
+V5ttgenFreesurferParametersTagged = typing.TypedDict('V5ttgenFreesurferParametersTagged', {
+    "@type": typing.Literal["freesurfer"],
     "input": InputPathType,
     "output": str,
     "lut": typing.NotRequired[InputPathType | None],
@@ -22,7 +28,15 @@ V5ttgenFreesurferParameters = typing.TypedDict('V5ttgenFreesurferParameters', {
 
 
 V5ttgenFslParameters = typing.TypedDict('V5ttgenFslParameters', {
-    "@type": typing.Literal["mrtrix.5ttgen.fsl"],
+    "@type": typing.NotRequired[typing.Literal["fsl"]],
+    "input": InputPathType,
+    "output": str,
+    "t2": typing.NotRequired[InputPathType | None],
+    "mask": typing.NotRequired[InputPathType | None],
+    "premasked": bool,
+})
+V5ttgenFslParametersTagged = typing.TypedDict('V5ttgenFslParametersTagged', {
+    "@type": typing.Literal["fsl"],
     "input": InputPathType,
     "output": str,
     "t2": typing.NotRequired[InputPathType | None],
@@ -32,14 +46,28 @@ V5ttgenFslParameters = typing.TypedDict('V5ttgenFslParameters', {
 
 
 V5ttgenGifParameters = typing.TypedDict('V5ttgenGifParameters', {
-    "@type": typing.Literal["mrtrix.5ttgen.gif"],
+    "@type": typing.NotRequired[typing.Literal["gif"]],
+    "input": InputPathType,
+    "output": str,
+})
+V5ttgenGifParametersTagged = typing.TypedDict('V5ttgenGifParametersTagged', {
+    "@type": typing.Literal["gif"],
     "input": InputPathType,
     "output": str,
 })
 
 
 V5ttgenHsvsParameters = typing.TypedDict('V5ttgenHsvsParameters', {
-    "@type": typing.Literal["mrtrix.5ttgen.hsvs"],
+    "@type": typing.NotRequired[typing.Literal["hsvs"]],
+    "input": InputPathType,
+    "output": str,
+    "template": typing.NotRequired[InputPathType | None],
+    "hippocampi": typing.NotRequired[typing.Literal["subfields", "first", "aseg"] | None],
+    "thalami": typing.NotRequired[typing.Literal["nuclei", "first", "aseg"] | None],
+    "white_stem": bool,
+})
+V5ttgenHsvsParametersTagged = typing.TypedDict('V5ttgenHsvsParametersTagged', {
+    "@type": typing.Literal["hsvs"],
     "input": InputPathType,
     "output": str,
     "template": typing.NotRequired[InputPathType | None],
@@ -50,15 +78,37 @@ V5ttgenHsvsParameters = typing.TypedDict('V5ttgenHsvsParameters', {
 
 
 V5ttgenConfigParameters = typing.TypedDict('V5ttgenConfigParameters', {
-    "@type": typing.Literal["mrtrix.5ttgen.config"],
+    "@type": typing.NotRequired[typing.Literal["config"]],
+    "key": str,
+    "value": str,
+})
+V5ttgenConfigParametersTagged = typing.TypedDict('V5ttgenConfigParametersTagged', {
+    "@type": typing.Literal["config"],
     "key": str,
     "value": str,
 })
 
 
 V5ttgenParameters = typing.TypedDict('V5ttgenParameters', {
-    "@type": typing.Literal["mrtrix.5ttgen"],
-    "algorithm": typing.Union[V5ttgenFreesurferParameters, V5ttgenFslParameters, V5ttgenGifParameters, V5ttgenHsvsParameters],
+    "@type": typing.NotRequired[typing.Literal["mrtrix/5ttgen"]],
+    "algorithm": typing.Union[V5ttgenFreesurferParametersTagged, V5ttgenFslParametersTagged, V5ttgenGifParametersTagged, V5ttgenHsvsParametersTagged],
+    "nocrop": bool,
+    "sgm_amyg_hipp": bool,
+    "nocleanup": bool,
+    "scratch": typing.NotRequired[str | None],
+    "continue": typing.NotRequired[str | None],
+    "info": bool,
+    "quiet": bool,
+    "debug": bool,
+    "force": bool,
+    "nthreads": typing.NotRequired[int | None],
+    "config": typing.NotRequired[list[V5ttgenConfigParameters] | None],
+    "help": bool,
+    "version": bool,
+})
+V5ttgenParametersTagged = typing.TypedDict('V5ttgenParametersTagged', {
+    "@type": typing.Literal["mrtrix/5ttgen"],
+    "algorithm": typing.Union[V5ttgenFreesurferParametersTagged, V5ttgenFslParametersTagged, V5ttgenGifParametersTagged, V5ttgenHsvsParametersTagged],
     "nocrop": bool,
     "sgm_amyg_hipp": bool,
     "nocleanup": bool,
@@ -75,7 +125,7 @@ V5ttgenParameters = typing.TypedDict('V5ttgenParameters', {
 })
 
 
-def dyn_cargs(
+def v_5ttgen_algorithm_cargs_dyn_fn(
     t: str,
 ) -> typing.Any:
     """
@@ -87,16 +137,14 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "mrtrix.5ttgen": v_5ttgen_cargs,
-        "mrtrix.5ttgen.freesurfer": v_5ttgen_freesurfer_cargs,
-        "mrtrix.5ttgen.fsl": v_5ttgen_fsl_cargs,
-        "mrtrix.5ttgen.gif": v_5ttgen_gif_cargs,
-        "mrtrix.5ttgen.hsvs": v_5ttgen_hsvs_cargs,
-        "mrtrix.5ttgen.config": v_5ttgen_config_cargs,
+        "freesurfer": v_5ttgen_freesurfer_cargs,
+        "fsl": v_5ttgen_fsl_cargs,
+        "gif": v_5ttgen_gif_cargs,
+        "hsvs": v_5ttgen_hsvs_cargs,
     }.get(t)
 
 
-def dyn_outputs(
+def v_5ttgen_algorithm_outputs_dyn_fn(
     t: str,
 ) -> typing.Any:
     """
@@ -108,11 +156,10 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "mrtrix.5ttgen": v_5ttgen_outputs,
-        "mrtrix.5ttgen.freesurfer": v_5ttgen_freesurfer_outputs,
-        "mrtrix.5ttgen.fsl": v_5ttgen_fsl_outputs,
-        "mrtrix.5ttgen.gif": v_5ttgen_gif_outputs,
-        "mrtrix.5ttgen.hsvs": v_5ttgen_hsvs_outputs,
+        "freesurfer": v_5ttgen_freesurfer_outputs,
+        "fsl": v_5ttgen_fsl_outputs,
+        "gif": v_5ttgen_gif_outputs,
+        "hsvs": v_5ttgen_hsvs_outputs,
     }.get(t)
 
 
@@ -130,7 +177,7 @@ def v_5ttgen_freesurfer_params(
     input_: InputPathType,
     output: str,
     lut: InputPathType | None = None,
-) -> V5ttgenFreesurferParameters:
+) -> V5ttgenFreesurferParametersTagged:
     """
     Build parameters.
     
@@ -144,7 +191,7 @@ def v_5ttgen_freesurfer_params(
         Parameter dictionary
     """
     params = {
-        "@type": "mrtrix.5ttgen.freesurfer",
+        "@type": "freesurfer",
         "input": input_,
         "output": output,
     }
@@ -168,12 +215,12 @@ def v_5ttgen_freesurfer_cargs(
     """
     cargs = []
     cargs.append("freesurfer")
-    cargs.append(execution.input_file(params.get("input")))
-    cargs.append(params.get("output"))
-    if params.get("lut") is not None:
+    cargs.append(execution.input_file(params.get("input", None)))
+    cargs.append(params.get("output", None))
+    if params.get("lut", None) is not None:
         cargs.extend([
             "-lut",
-            execution.input_file(params.get("lut"))
+            execution.input_file(params.get("lut", None))
         ])
     return cargs
 
@@ -193,7 +240,7 @@ def v_5ttgen_freesurfer_outputs(
     """
     ret = V5ttgenFreesurferOutputs(
         root=execution.output_file("."),
-        output=execution.output_file(params.get("output")),
+        output=execution.output_file(params.get("output", None)),
     )
     return ret
 
@@ -214,7 +261,7 @@ def v_5ttgen_fsl_params(
     t2: InputPathType | None = None,
     mask: InputPathType | None = None,
     premasked: bool = False,
-) -> V5ttgenFslParameters:
+) -> V5ttgenFslParametersTagged:
     """
     Build parameters.
     
@@ -231,7 +278,7 @@ def v_5ttgen_fsl_params(
         Parameter dictionary
     """
     params = {
-        "@type": "mrtrix.5ttgen.fsl",
+        "@type": "fsl",
         "input": input_,
         "output": output,
         "premasked": premasked,
@@ -258,19 +305,19 @@ def v_5ttgen_fsl_cargs(
     """
     cargs = []
     cargs.append("fsl")
-    cargs.append(execution.input_file(params.get("input")))
-    cargs.append(params.get("output"))
-    if params.get("t2") is not None:
+    cargs.append(execution.input_file(params.get("input", None)))
+    cargs.append(params.get("output", None))
+    if params.get("t2", None) is not None:
         cargs.extend([
             "-t2",
-            execution.input_file(params.get("t2"))
+            execution.input_file(params.get("t2", None))
         ])
-    if params.get("mask") is not None:
+    if params.get("mask", None) is not None:
         cargs.extend([
             "-mask",
-            execution.input_file(params.get("mask"))
+            execution.input_file(params.get("mask", None))
         ])
-    if params.get("premasked"):
+    if params.get("premasked", False):
         cargs.append("-premasked")
     return cargs
 
@@ -290,7 +337,7 @@ def v_5ttgen_fsl_outputs(
     """
     ret = V5ttgenFslOutputs(
         root=execution.output_file("."),
-        output=execution.output_file(params.get("output")),
+        output=execution.output_file(params.get("output", None)),
     )
     return ret
 
@@ -308,7 +355,7 @@ class V5ttgenGifOutputs(typing.NamedTuple):
 def v_5ttgen_gif_params(
     input_: InputPathType,
     output: str,
-) -> V5ttgenGifParameters:
+) -> V5ttgenGifParametersTagged:
     """
     Build parameters.
     
@@ -319,7 +366,7 @@ def v_5ttgen_gif_params(
         Parameter dictionary
     """
     params = {
-        "@type": "mrtrix.5ttgen.gif",
+        "@type": "gif",
         "input": input_,
         "output": output,
     }
@@ -341,8 +388,8 @@ def v_5ttgen_gif_cargs(
     """
     cargs = []
     cargs.append("gif")
-    cargs.append(execution.input_file(params.get("input")))
-    cargs.append(params.get("output"))
+    cargs.append(execution.input_file(params.get("input", None)))
+    cargs.append(params.get("output", None))
     return cargs
 
 
@@ -361,7 +408,7 @@ def v_5ttgen_gif_outputs(
     """
     ret = V5ttgenGifOutputs(
         root=execution.output_file("."),
-        output=execution.output_file(params.get("output")),
+        output=execution.output_file(params.get("output", None)),
     )
     return ret
 
@@ -383,7 +430,7 @@ def v_5ttgen_hsvs_params(
     hippocampi: typing.Literal["subfields", "first", "aseg"] | None = None,
     thalami: typing.Literal["nuclei", "first", "aseg"] | None = None,
     white_stem: bool = False,
-) -> V5ttgenHsvsParameters:
+) -> V5ttgenHsvsParametersTagged:
     """
     Build parameters.
     
@@ -401,7 +448,7 @@ def v_5ttgen_hsvs_params(
         Parameter dictionary
     """
     params = {
-        "@type": "mrtrix.5ttgen.hsvs",
+        "@type": "hsvs",
         "input": input_,
         "output": output,
         "white_stem": white_stem,
@@ -430,24 +477,24 @@ def v_5ttgen_hsvs_cargs(
     """
     cargs = []
     cargs.append("hsvs")
-    cargs.append(execution.input_file(params.get("input")))
-    cargs.append(params.get("output"))
-    if params.get("template") is not None:
+    cargs.append(execution.input_file(params.get("input", None)))
+    cargs.append(params.get("output", None))
+    if params.get("template", None) is not None:
         cargs.extend([
             "-template",
-            execution.input_file(params.get("template"))
+            execution.input_file(params.get("template", None))
         ])
-    if params.get("hippocampi") is not None:
+    if params.get("hippocampi", None) is not None:
         cargs.extend([
             "-hippocampi",
-            params.get("hippocampi")
+            params.get("hippocampi", None)
         ])
-    if params.get("thalami") is not None:
+    if params.get("thalami", None) is not None:
         cargs.extend([
             "-thalami",
-            params.get("thalami")
+            params.get("thalami", None)
         ])
-    if params.get("white_stem"):
+    if params.get("white_stem", False):
         cargs.append("-white_stem")
     return cargs
 
@@ -467,7 +514,7 @@ def v_5ttgen_hsvs_outputs(
     """
     ret = V5ttgenHsvsOutputs(
         root=execution.output_file("."),
-        output=execution.output_file(params.get("output")),
+        output=execution.output_file(params.get("output", None)),
     )
     return ret
 
@@ -475,7 +522,7 @@ def v_5ttgen_hsvs_outputs(
 def v_5ttgen_config_params(
     key: str,
     value: str,
-) -> V5ttgenConfigParameters:
+) -> V5ttgenConfigParametersTagged:
     """
     Build parameters.
     
@@ -486,7 +533,7 @@ def v_5ttgen_config_params(
         Parameter dictionary
     """
     params = {
-        "@type": "mrtrix.5ttgen.config",
+        "@type": "config",
         "key": key,
         "value": value,
     }
@@ -508,14 +555,14 @@ def v_5ttgen_config_cargs(
     """
     cargs = []
     cargs.append("-config")
-    cargs.append(params.get("key"))
-    cargs.append(params.get("value"))
+    cargs.append(params.get("key", None))
+    cargs.append(params.get("value", None))
     return cargs
 
 
 class V5ttgenOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `v_5ttgen(...)`.
+    Output object returned when calling `V5ttgenParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -525,7 +572,7 @@ class V5ttgenOutputs(typing.NamedTuple):
 
 
 def v_5ttgen_params(
-    algorithm: typing.Union[V5ttgenFreesurferParameters, V5ttgenFslParameters, V5ttgenGifParameters, V5ttgenHsvsParameters],
+    algorithm: typing.Union[V5ttgenFreesurferParametersTagged, V5ttgenFslParametersTagged, V5ttgenGifParametersTagged, V5ttgenHsvsParametersTagged],
     nocrop: bool = False,
     sgm_amyg_hipp: bool = False,
     nocleanup: bool = False,
@@ -539,7 +586,7 @@ def v_5ttgen_params(
     config: list[V5ttgenConfigParameters] | None = None,
     help_: bool = False,
     version: bool = False,
-) -> V5ttgenParameters:
+) -> V5ttgenParametersTagged:
     """
     Build parameters.
     
@@ -574,7 +621,7 @@ def v_5ttgen_params(
         Parameter dictionary
     """
     params = {
-        "@type": "mrtrix.5ttgen",
+        "@type": "mrtrix/5ttgen",
         "algorithm": algorithm,
         "nocrop": nocrop,
         "sgm_amyg_hipp": sgm_amyg_hipp,
@@ -612,41 +659,41 @@ def v_5ttgen_cargs(
     """
     cargs = []
     cargs.append("5ttgen")
-    cargs.extend(dyn_cargs(params.get("algorithm")["@type"])(params.get("algorithm"), execution))
-    if params.get("nocrop"):
+    cargs.extend(v_5ttgen_algorithm_cargs_dyn_fn(params.get("algorithm", None)["@type"])(params.get("algorithm", None), execution))
+    if params.get("nocrop", False):
         cargs.append("-nocrop")
-    if params.get("sgm_amyg_hipp"):
+    if params.get("sgm_amyg_hipp", False):
         cargs.append("-sgm_amyg_hipp")
-    if params.get("nocleanup"):
+    if params.get("nocleanup", False):
         cargs.append("-nocleanup")
-    if params.get("scratch") is not None:
+    if params.get("scratch", None) is not None:
         cargs.extend([
             "-scratch",
-            params.get("scratch")
+            params.get("scratch", None)
         ])
-    if params.get("continue") is not None:
+    if params.get("continue", None) is not None:
         cargs.extend([
             "-continue",
-            params.get("continue")
+            params.get("continue", None)
         ])
-    if params.get("info"):
+    if params.get("info", False):
         cargs.append("-info")
-    if params.get("quiet"):
+    if params.get("quiet", False):
         cargs.append("-quiet")
-    if params.get("debug"):
+    if params.get("debug", False):
         cargs.append("-debug")
-    if params.get("force"):
+    if params.get("force", False):
         cargs.append("-force")
-    if params.get("nthreads") is not None:
+    if params.get("nthreads", None) is not None:
         cargs.extend([
             "-nthreads",
-            str(params.get("nthreads"))
+            str(params.get("nthreads", None))
         ])
-    if params.get("config") is not None:
-        cargs.extend([a for c in [dyn_cargs(s["@type"])(s, execution) for s in params.get("config")] for a in c])
-    if params.get("help"):
+    if params.get("config", None) is not None:
+        cargs.extend([a for c in [v_5ttgen_config_cargs(s, execution) for s in params.get("config", None)] for a in c])
+    if params.get("help", False):
         cargs.append("-help")
-    if params.get("version"):
+    if params.get("version", False):
         cargs.append("-version")
     return cargs
 
@@ -666,7 +713,7 @@ def v_5ttgen_outputs(
     """
     ret = V5ttgenOutputs(
         root=execution.output_file("."),
-        algorithm=dyn_outputs(params.get("algorithm")["@type"])(params.get("algorithm"), execution),
+        algorithm=v_5ttgen_algorithm_outputs_dyn_fn(params.get("algorithm")["@type"])(params.get("algorithm"), execution),
     )
     return ret
 
@@ -711,7 +758,7 @@ def v_5ttgen_execute(
 
 
 def v_5ttgen(
-    algorithm: typing.Union[V5ttgenFreesurferParameters, V5ttgenFslParameters, V5ttgenGifParameters, V5ttgenHsvsParameters],
+    algorithm: typing.Union[V5ttgenFreesurferParametersTagged, V5ttgenFslParametersTagged, V5ttgenGifParametersTagged, V5ttgenHsvsParametersTagged],
     nocrop: bool = False,
     sgm_amyg_hipp: bool = False,
     nocleanup: bool = False,
@@ -798,17 +845,11 @@ def v_5ttgen(
 
 
 __all__ = [
-    "V5ttgenConfigParameters",
     "V5ttgenFreesurferOutputs",
-    "V5ttgenFreesurferParameters",
     "V5ttgenFslOutputs",
-    "V5ttgenFslParameters",
     "V5ttgenGifOutputs",
-    "V5ttgenGifParameters",
     "V5ttgenHsvsOutputs",
-    "V5ttgenHsvsParameters",
     "V5ttgenOutputs",
-    "V5ttgenParameters",
     "V_5TTGEN_METADATA",
     "v_5ttgen",
     "v_5ttgen_config_params",

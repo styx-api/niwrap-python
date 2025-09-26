@@ -14,7 +14,16 @@ METRIC_ROIS_TO_BORDER_METADATA = Metadata(
 
 
 MetricRoisToBorderParameters = typing.TypedDict('MetricRoisToBorderParameters', {
-    "@type": typing.Literal["workbench.metric-rois-to-border"],
+    "@type": typing.NotRequired[typing.Literal["workbench/metric-rois-to-border"]],
+    "surface": InputPathType,
+    "metric": InputPathType,
+    "class_name": str,
+    "border_out": str,
+    "opt_placement_fraction": typing.NotRequired[float | None],
+    "opt_column_column": typing.NotRequired[str | None],
+})
+MetricRoisToBorderParametersTagged = typing.TypedDict('MetricRoisToBorderParametersTagged', {
+    "@type": typing.Literal["workbench/metric-rois-to-border"],
     "surface": InputPathType,
     "metric": InputPathType,
     "class_name": str,
@@ -24,41 +33,9 @@ MetricRoisToBorderParameters = typing.TypedDict('MetricRoisToBorderParameters', 
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "workbench.metric-rois-to-border": metric_rois_to_border_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "workbench.metric-rois-to-border": metric_rois_to_border_outputs,
-    }.get(t)
-
-
 class MetricRoisToBorderOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `metric_rois_to_border(...)`.
+    Output object returned when calling `MetricRoisToBorderParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -73,7 +50,7 @@ def metric_rois_to_border_params(
     border_out: str,
     opt_placement_fraction: float | None = None,
     opt_column_column: str | None = None,
-) -> MetricRoisToBorderParameters:
+) -> MetricRoisToBorderParametersTagged:
     """
     Build parameters.
     
@@ -89,7 +66,7 @@ def metric_rois_to_border_params(
         Parameter dictionary
     """
     params = {
-        "@type": "workbench.metric-rois-to-border",
+        "@type": "workbench/metric-rois-to-border",
         "surface": surface,
         "metric": metric,
         "class_name": class_name,
@@ -118,19 +95,19 @@ def metric_rois_to_border_cargs(
     cargs = []
     cargs.append("wb_command")
     cargs.append("-metric-rois-to-border")
-    cargs.append(execution.input_file(params.get("surface")))
-    cargs.append(execution.input_file(params.get("metric")))
-    cargs.append(params.get("class_name"))
-    cargs.append(params.get("border_out"))
-    if params.get("opt_placement_fraction") is not None:
+    cargs.append(execution.input_file(params.get("surface", None)))
+    cargs.append(execution.input_file(params.get("metric", None)))
+    cargs.append(params.get("class_name", None))
+    cargs.append(params.get("border_out", None))
+    if params.get("opt_placement_fraction", None) is not None:
         cargs.extend([
             "-placement",
-            str(params.get("opt_placement_fraction"))
+            str(params.get("opt_placement_fraction", None))
         ])
-    if params.get("opt_column_column") is not None:
+    if params.get("opt_column_column", None) is not None:
         cargs.extend([
             "-column",
-            params.get("opt_column_column")
+            params.get("opt_column_column", None)
         ])
     return cargs
 
@@ -150,7 +127,7 @@ def metric_rois_to_border_outputs(
     """
     ret = MetricRoisToBorderOutputs(
         root=execution.output_file("."),
-        border_out=execution.output_file(params.get("border_out")),
+        border_out=execution.output_file(params.get("border_out", None)),
     )
     return ret
 
@@ -235,7 +212,6 @@ def metric_rois_to_border(
 __all__ = [
     "METRIC_ROIS_TO_BORDER_METADATA",
     "MetricRoisToBorderOutputs",
-    "MetricRoisToBorderParameters",
     "metric_rois_to_border",
     "metric_rois_to_border_execute",
     "metric_rois_to_border_params",

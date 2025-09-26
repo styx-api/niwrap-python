@@ -14,7 +14,15 @@ V_3D_FRIEDMAN_METADATA = Metadata(
 
 
 V3dFriedmanParameters = typing.TypedDict('V3dFriedmanParameters', {
-    "@type": typing.Literal["afni.3dFriedman"],
+    "@type": typing.NotRequired[typing.Literal["afni/3dFriedman"]],
+    "levels": int,
+    "datasets": list[InputPathType],
+    "workmem": typing.NotRequired[int | None],
+    "voxel_num": typing.NotRequired[int | None],
+    "output_prefix": str,
+})
+V3dFriedmanParametersTagged = typing.TypedDict('V3dFriedmanParametersTagged', {
+    "@type": typing.Literal["afni/3dFriedman"],
     "levels": int,
     "datasets": list[InputPathType],
     "workmem": typing.NotRequired[int | None],
@@ -23,40 +31,9 @@ V3dFriedmanParameters = typing.TypedDict('V3dFriedmanParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "afni.3dFriedman": v_3d_friedman_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-    }.get(t)
-
-
 class V3dFriedmanOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `v_3d_friedman(...)`.
+    Output object returned when calling `V3dFriedmanParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -68,7 +45,7 @@ def v_3d_friedman_params(
     output_prefix: str,
     workmem: int | None = None,
     voxel_num: int | None = None,
-) -> V3dFriedmanParameters:
+) -> V3dFriedmanParametersTagged:
     """
     Build parameters.
     
@@ -82,7 +59,7 @@ def v_3d_friedman_params(
         Parameter dictionary
     """
     params = {
-        "@type": "afni.3dFriedman",
+        "@type": "afni/3dFriedman",
         "levels": levels,
         "datasets": datasets,
         "output_prefix": output_prefix,
@@ -109,24 +86,24 @@ def v_3d_friedman_cargs(
     """
     cargs = []
     cargs.append("3dFriedman")
-    cargs.append(str(params.get("levels")))
+    cargs.append(str(params.get("levels", None)))
     cargs.extend([
         "-dset",
-        *[execution.input_file(f) for f in params.get("datasets")]
+        *[execution.input_file(f) for f in params.get("datasets", None)]
     ])
-    if params.get("workmem") is not None:
+    if params.get("workmem", None) is not None:
         cargs.extend([
             "-workmem",
-            str(params.get("workmem"))
+            str(params.get("workmem", None))
         ])
-    if params.get("voxel_num") is not None:
+    if params.get("voxel_num", None) is not None:
         cargs.extend([
             "-voxel",
-            str(params.get("voxel_num"))
+            str(params.get("voxel_num", None))
         ])
     cargs.extend([
         "-out",
-        params.get("output_prefix")
+        params.get("output_prefix", None)
     ])
     return cargs
 
@@ -219,7 +196,6 @@ def v_3d_friedman(
 
 __all__ = [
     "V3dFriedmanOutputs",
-    "V3dFriedmanParameters",
     "V_3D_FRIEDMAN_METADATA",
     "v_3d_friedman",
     "v_3d_friedman_execute",

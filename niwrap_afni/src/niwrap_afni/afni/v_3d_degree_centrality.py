@@ -14,7 +14,18 @@ V_3D_DEGREE_CENTRALITY_METADATA = Metadata(
 
 
 V3dDegreeCentralityParameters = typing.TypedDict('V3dDegreeCentralityParameters', {
-    "@type": typing.Literal["afni.3dDegreeCentrality"],
+    "@type": typing.NotRequired[typing.Literal["afni/3dDegreeCentrality"]],
+    "autoclip": bool,
+    "automask": bool,
+    "in_file": InputPathType,
+    "mask": typing.NotRequired[InputPathType | None],
+    "oned_file": typing.NotRequired[str | None],
+    "polort": typing.NotRequired[int | None],
+    "sparsity": typing.NotRequired[float | None],
+    "thresh": typing.NotRequired[float | None],
+})
+V3dDegreeCentralityParametersTagged = typing.TypedDict('V3dDegreeCentralityParametersTagged', {
+    "@type": typing.Literal["afni/3dDegreeCentrality"],
     "autoclip": bool,
     "automask": bool,
     "in_file": InputPathType,
@@ -26,41 +37,9 @@ V3dDegreeCentralityParameters = typing.TypedDict('V3dDegreeCentralityParameters'
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "afni.3dDegreeCentrality": v_3d_degree_centrality_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "afni.3dDegreeCentrality": v_3d_degree_centrality_outputs,
-    }.get(t)
-
-
 class V3dDegreeCentralityOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `v_3d_degree_centrality(...)`.
+    Output object returned when calling `V3dDegreeCentralityParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -81,7 +60,7 @@ def v_3d_degree_centrality_params(
     polort: int | None = None,
     sparsity: float | None = None,
     thresh: float | None = None,
-) -> V3dDegreeCentralityParameters:
+) -> V3dDegreeCentralityParametersTagged:
     """
     Build parameters.
     
@@ -98,7 +77,7 @@ def v_3d_degree_centrality_params(
         Parameter dictionary
     """
     params = {
-        "@type": "afni.3dDegreeCentrality",
+        "@type": "afni/3dDegreeCentrality",
         "autoclip": autoclip,
         "automask": automask,
         "in_file": in_file,
@@ -131,35 +110,35 @@ def v_3d_degree_centrality_cargs(
     """
     cargs = []
     cargs.append("3dDegreeCentrality")
-    if params.get("autoclip"):
+    if params.get("autoclip", False):
         cargs.append("-autoclip")
-    if params.get("automask"):
+    if params.get("automask", False):
         cargs.append("-automask")
-    cargs.append(execution.input_file(params.get("in_file")))
-    if params.get("mask") is not None:
+    cargs.append(execution.input_file(params.get("in_file", None)))
+    if params.get("mask", None) is not None:
         cargs.extend([
             "-mask",
-            execution.input_file(params.get("mask"))
+            execution.input_file(params.get("mask", None))
         ])
-    if params.get("oned_file") is not None:
+    if params.get("oned_file", None) is not None:
         cargs.extend([
             "-out1D",
-            params.get("oned_file")
+            params.get("oned_file", None)
         ])
-    if params.get("polort") is not None:
+    if params.get("polort", None) is not None:
         cargs.extend([
             "-polort",
-            str(params.get("polort"))
+            str(params.get("polort", None))
         ])
-    if params.get("sparsity") is not None:
+    if params.get("sparsity", None) is not None:
         cargs.extend([
             "-sparsity",
-            str(params.get("sparsity"))
+            str(params.get("sparsity", None))
         ])
-    if params.get("thresh") is not None:
+    if params.get("thresh", None) is not None:
         cargs.extend([
             "-thresh",
-            str(params.get("thresh"))
+            str(params.get("thresh", None))
         ])
     return cargs
 
@@ -179,8 +158,8 @@ def v_3d_degree_centrality_outputs(
     """
     ret = V3dDegreeCentralityOutputs(
         root=execution.output_file("."),
-        out_file=execution.output_file(pathlib.Path(params.get("in_file")).name),
-        oned_file_outfile=execution.output_file(params.get("oned_file")) if (params.get("oned_file") is not None) else None,
+        out_file=execution.output_file(pathlib.Path(params.get("in_file", None)).name),
+        oned_file_outfile=execution.output_file(params.get("oned_file", None)) if (params.get("oned_file") is not None) else None,
     )
     return ret
 
@@ -267,7 +246,6 @@ def v_3d_degree_centrality(
 
 __all__ = [
     "V3dDegreeCentralityOutputs",
-    "V3dDegreeCentralityParameters",
     "V_3D_DEGREE_CENTRALITY_METADATA",
     "v_3d_degree_centrality",
     "v_3d_degree_centrality_execute",

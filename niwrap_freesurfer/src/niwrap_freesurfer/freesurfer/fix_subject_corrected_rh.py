@@ -14,46 +14,18 @@ FIX_SUBJECT_CORRECTED_RH_METADATA = Metadata(
 
 
 FixSubjectCorrectedRhParameters = typing.TypedDict('FixSubjectCorrectedRhParameters', {
-    "@type": typing.Literal["freesurfer.fix_subject_corrected-rh"],
+    "@type": typing.NotRequired[typing.Literal["freesurfer/fix_subject_corrected-rh"]],
+    "subject_dir": str,
+})
+FixSubjectCorrectedRhParametersTagged = typing.TypedDict('FixSubjectCorrectedRhParametersTagged', {
+    "@type": typing.Literal["freesurfer/fix_subject_corrected-rh"],
     "subject_dir": str,
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "freesurfer.fix_subject_corrected-rh": fix_subject_corrected_rh_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "freesurfer.fix_subject_corrected-rh": fix_subject_corrected_rh_outputs,
-    }.get(t)
-
-
 class FixSubjectCorrectedRhOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `fix_subject_corrected_rh(...)`.
+    Output object returned when calling `FixSubjectCorrectedRhParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -63,7 +35,7 @@ class FixSubjectCorrectedRhOutputs(typing.NamedTuple):
 
 def fix_subject_corrected_rh_params(
     subject_dir: str,
-) -> FixSubjectCorrectedRhParameters:
+) -> FixSubjectCorrectedRhParametersTagged:
     """
     Build parameters.
     
@@ -73,7 +45,7 @@ def fix_subject_corrected_rh_params(
         Parameter dictionary
     """
     params = {
-        "@type": "freesurfer.fix_subject_corrected-rh",
+        "@type": "freesurfer/fix_subject_corrected-rh",
         "subject_dir": subject_dir,
     }
     return params
@@ -96,7 +68,7 @@ def fix_subject_corrected_rh_cargs(
     cargs.append("fix_subject_corrected-rh")
     cargs.extend([
         "-rh",
-        params.get("subject_dir")
+        params.get("subject_dir", None)
     ])
     return cargs
 
@@ -116,7 +88,7 @@ def fix_subject_corrected_rh_outputs(
     """
     ret = FixSubjectCorrectedRhOutputs(
         root=execution.output_file("."),
-        log_file=execution.output_file(params.get("subject_dir") + "/scripts_output.log"),
+        log_file=execution.output_file(params.get("subject_dir", None) + "/scripts_output.log"),
     )
     return ret
 
@@ -177,7 +149,6 @@ def fix_subject_corrected_rh(
 __all__ = [
     "FIX_SUBJECT_CORRECTED_RH_METADATA",
     "FixSubjectCorrectedRhOutputs",
-    "FixSubjectCorrectedRhParameters",
     "fix_subject_corrected_rh",
     "fix_subject_corrected_rh_execute",
     "fix_subject_corrected_rh_params",

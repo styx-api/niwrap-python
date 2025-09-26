@@ -14,7 +14,15 @@ V_3D_SLICE_NDICE_METADATA = Metadata(
 
 
 V3dSliceNdiceParameters = typing.TypedDict('V3dSliceNdiceParameters', {
-    "@type": typing.Literal["afni.3dSliceNDice"],
+    "@type": typing.NotRequired[typing.Literal["afni/3dSliceNDice"]],
+    "infile_a": InputPathType,
+    "infile_b": InputPathType,
+    "output_prefix": str,
+    "out_domain": typing.NotRequired[typing.Literal["all", "AorB", "AandB", "Amask", "Bmask"] | None],
+    "no_cmd_echo": bool,
+})
+V3dSliceNdiceParametersTagged = typing.TypedDict('V3dSliceNdiceParametersTagged', {
+    "@type": typing.Literal["afni/3dSliceNDice"],
     "infile_a": InputPathType,
     "infile_b": InputPathType,
     "output_prefix": str,
@@ -23,41 +31,9 @@ V3dSliceNdiceParameters = typing.TypedDict('V3dSliceNdiceParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "afni.3dSliceNDice": v_3d_slice_ndice_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "afni.3dSliceNDice": v_3d_slice_ndice_outputs,
-    }.get(t)
-
-
 class V3dSliceNdiceOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `v_3d_slice_ndice(...)`.
+    Output object returned when calling `V3dSliceNdiceParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -77,7 +53,7 @@ def v_3d_slice_ndice_params(
     output_prefix: str,
     out_domain: typing.Literal["all", "AorB", "AandB", "Amask", "Bmask"] | None = None,
     no_cmd_echo: bool = False,
-) -> V3dSliceNdiceParameters:
+) -> V3dSliceNdiceParametersTagged:
     """
     Build parameters.
     
@@ -93,7 +69,7 @@ def v_3d_slice_ndice_params(
         Parameter dictionary
     """
     params = {
-        "@type": "afni.3dSliceNDice",
+        "@type": "afni/3dSliceNDice",
         "infile_a": infile_a,
         "infile_b": infile_b,
         "output_prefix": output_prefix,
@@ -121,22 +97,22 @@ def v_3d_slice_ndice_cargs(
     cargs.append("3dSliceNDice")
     cargs.extend([
         "-insetA",
-        execution.input_file(params.get("infile_a"))
+        execution.input_file(params.get("infile_a", None))
     ])
     cargs.extend([
         "-insetB",
-        execution.input_file(params.get("infile_b"))
+        execution.input_file(params.get("infile_b", None))
     ])
     cargs.extend([
         "-prefix",
-        params.get("output_prefix")
+        params.get("output_prefix", None)
     ])
-    if params.get("out_domain") is not None:
+    if params.get("out_domain", None) is not None:
         cargs.extend([
             "-out_domain",
-            params.get("out_domain")
+            params.get("out_domain", None)
         ])
-    if params.get("no_cmd_echo"):
+    if params.get("no_cmd_echo", False):
         cargs.append("-no_cmd_echo")
     return cargs
 
@@ -156,9 +132,9 @@ def v_3d_slice_ndice_outputs(
     """
     ret = V3dSliceNdiceOutputs(
         root=execution.output_file("."),
-        output_rl=execution.output_file(params.get("output_prefix") + "_0_RL.1D"),
-        output_ap=execution.output_file(params.get("output_prefix") + "_1_AP.1D"),
-        output_is=execution.output_file(params.get("output_prefix") + "_2_IS.1D"),
+        output_rl=execution.output_file(params.get("output_prefix", None) + "_0_RL.1D"),
+        output_ap=execution.output_file(params.get("output_prefix", None) + "_1_AP.1D"),
+        output_is=execution.output_file(params.get("output_prefix", None) + "_2_IS.1D"),
     )
     return ret
 
@@ -234,7 +210,6 @@ def v_3d_slice_ndice(
 
 __all__ = [
     "V3dSliceNdiceOutputs",
-    "V3dSliceNdiceParameters",
     "V_3D_SLICE_NDICE_METADATA",
     "v_3d_slice_ndice",
     "v_3d_slice_ndice_execute",

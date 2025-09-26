@@ -14,7 +14,17 @@ CJPEG_METADATA = Metadata(
 
 
 CjpegParameters = typing.TypedDict('CjpegParameters', {
-    "@type": typing.Literal["afni.cjpeg"],
+    "@type": typing.NotRequired[typing.Literal["afni/cjpeg"]],
+    "quality": typing.NotRequired[float | None],
+    "grayscale": bool,
+    "optimize": bool,
+    "baseline": bool,
+    "progressive": bool,
+    "outfile": str,
+    "infile": InputPathType,
+})
+CjpegParametersTagged = typing.TypedDict('CjpegParametersTagged', {
+    "@type": typing.Literal["afni/cjpeg"],
     "quality": typing.NotRequired[float | None],
     "grayscale": bool,
     "optimize": bool,
@@ -25,41 +35,9 @@ CjpegParameters = typing.TypedDict('CjpegParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "afni.cjpeg": cjpeg_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "afni.cjpeg": cjpeg_outputs,
-    }.get(t)
-
-
 class CjpegOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `cjpeg(...)`.
+    Output object returned when calling `CjpegParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -75,7 +53,7 @@ def cjpeg_params(
     optimize: bool = False,
     baseline: bool = False,
     progressive: bool = False,
-) -> CjpegParameters:
+) -> CjpegParametersTagged:
     """
     Build parameters.
     
@@ -91,7 +69,7 @@ def cjpeg_params(
         Parameter dictionary
     """
     params = {
-        "@type": "afni.cjpeg",
+        "@type": "afni/cjpeg",
         "grayscale": grayscale,
         "optimize": optimize,
         "baseline": baseline,
@@ -119,21 +97,21 @@ def cjpeg_cargs(
     """
     cargs = []
     cargs.append("cjpeg")
-    if params.get("quality") is not None:
+    if params.get("quality", None) is not None:
         cargs.extend([
             "-quality",
-            str(params.get("quality"))
+            str(params.get("quality", None))
         ])
-    if params.get("grayscale"):
+    if params.get("grayscale", False):
         cargs.append("-grayscale")
-    if params.get("optimize"):
+    if params.get("optimize", False):
         cargs.append("-optimize")
-    if params.get("baseline"):
+    if params.get("baseline", False):
         cargs.append("-baseline")
-    if params.get("progressive"):
+    if params.get("progressive", False):
         cargs.append("-progressive")
-    cargs.append(params.get("outfile"))
-    cargs.append(execution.input_file(params.get("infile")))
+    cargs.append(params.get("outfile", None))
+    cargs.append(execution.input_file(params.get("infile", None)))
     return cargs
 
 
@@ -152,7 +130,7 @@ def cjpeg_outputs(
     """
     ret = CjpegOutputs(
         root=execution.output_file("."),
-        outfile=execution.output_file(params.get("outfile")),
+        outfile=execution.output_file(params.get("outfile", None)),
     )
     return ret
 
@@ -231,7 +209,6 @@ def cjpeg(
 __all__ = [
     "CJPEG_METADATA",
     "CjpegOutputs",
-    "CjpegParameters",
     "cjpeg",
     "cjpeg_execute",
     "cjpeg_params",

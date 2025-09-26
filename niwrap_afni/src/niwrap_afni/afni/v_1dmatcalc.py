@@ -14,46 +14,18 @@ V_1DMATCALC_METADATA = Metadata(
 
 
 V1dmatcalcParameters = typing.TypedDict('V1dmatcalcParameters', {
-    "@type": typing.Literal["afni.1dmatcalc"],
+    "@type": typing.NotRequired[typing.Literal["afni/1dmatcalc"]],
+    "expression": typing.NotRequired[str | None],
+})
+V1dmatcalcParametersTagged = typing.TypedDict('V1dmatcalcParametersTagged', {
+    "@type": typing.Literal["afni/1dmatcalc"],
     "expression": typing.NotRequired[str | None],
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "afni.1dmatcalc": v_1dmatcalc_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "afni.1dmatcalc": v_1dmatcalc_outputs,
-    }.get(t)
-
-
 class V1dmatcalcOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `v_1dmatcalc(...)`.
+    Output object returned when calling `V1dmatcalcParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -63,7 +35,7 @@ class V1dmatcalcOutputs(typing.NamedTuple):
 
 def v_1dmatcalc_params(
     expression: str | None = None,
-) -> V1dmatcalcParameters:
+) -> V1dmatcalcParametersTagged:
     """
     Build parameters.
     
@@ -73,7 +45,7 @@ def v_1dmatcalc_params(
         Parameter dictionary
     """
     params = {
-        "@type": "afni.1dmatcalc",
+        "@type": "afni/1dmatcalc",
     }
     if expression is not None:
         params["expression"] = expression
@@ -95,8 +67,8 @@ def v_1dmatcalc_cargs(
     """
     cargs = []
     cargs.append("1dmatcalc")
-    if params.get("expression") is not None:
-        cargs.append(params.get("expression"))
+    if params.get("expression", None) is not None:
+        cargs.append(params.get("expression", None))
     return cargs
 
 
@@ -177,7 +149,6 @@ def v_1dmatcalc(
 
 __all__ = [
     "V1dmatcalcOutputs",
-    "V1dmatcalcParameters",
     "V_1DMATCALC_METADATA",
     "v_1dmatcalc",
     "v_1dmatcalc_execute",

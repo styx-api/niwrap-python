@@ -14,47 +14,22 @@ COMPUTE_VOX2VOX_METADATA = Metadata(
 
 
 ComputeVox2voxParameters = typing.TypedDict('ComputeVox2voxParameters', {
-    "@type": typing.Literal["freesurfer.compute_vox2vox"],
+    "@type": typing.NotRequired[typing.Literal["freesurfer/compute_vox2vox"]],
+    "source": InputPathType,
+    "t4file": InputPathType,
+    "target": InputPathType,
+})
+ComputeVox2voxParametersTagged = typing.TypedDict('ComputeVox2voxParametersTagged', {
+    "@type": typing.Literal["freesurfer/compute_vox2vox"],
     "source": InputPathType,
     "t4file": InputPathType,
     "target": InputPathType,
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "freesurfer.compute_vox2vox": compute_vox2vox_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-    }.get(t)
-
-
 class ComputeVox2voxOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `compute_vox2vox(...)`.
+    Output object returned when calling `ComputeVox2voxParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -64,7 +39,7 @@ def compute_vox2vox_params(
     source: InputPathType,
     t4file: InputPathType,
     target: InputPathType,
-) -> ComputeVox2voxParameters:
+) -> ComputeVox2voxParametersTagged:
     """
     Build parameters.
     
@@ -76,7 +51,7 @@ def compute_vox2vox_params(
         Parameter dictionary
     """
     params = {
-        "@type": "freesurfer.compute_vox2vox",
+        "@type": "freesurfer/compute_vox2vox",
         "source": source,
         "t4file": t4file,
         "target": target,
@@ -99,9 +74,9 @@ def compute_vox2vox_cargs(
     """
     cargs = []
     cargs.append("compute_vox2vox")
-    cargs.append(execution.input_file(params.get("source")))
-    cargs.append(execution.input_file(params.get("t4file")))
-    cargs.append(execution.input_file(params.get("target")))
+    cargs.append(execution.input_file(params.get("source", None)))
+    cargs.append(execution.input_file(params.get("t4file", None)))
+    cargs.append(execution.input_file(params.get("target", None)))
     return cargs
 
 
@@ -186,7 +161,6 @@ def compute_vox2vox(
 __all__ = [
     "COMPUTE_VOX2VOX_METADATA",
     "ComputeVox2voxOutputs",
-    "ComputeVox2voxParameters",
     "compute_vox2vox",
     "compute_vox2vox_execute",
     "compute_vox2vox_params",

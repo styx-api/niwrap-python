@@ -14,47 +14,20 @@ FIRST_ROI_SLICESDIR_METADATA = Metadata(
 
 
 FirstRoiSlicesdirParameters = typing.TypedDict('FirstRoiSlicesdirParameters', {
-    "@type": typing.Literal["fsl.first_roi_slicesdir"],
+    "@type": typing.NotRequired[typing.Literal["fsl/first_roi_slicesdir"]],
+    "input_t1_images": str,
+    "input_label_images": str,
+})
+FirstRoiSlicesdirParametersTagged = typing.TypedDict('FirstRoiSlicesdirParametersTagged', {
+    "@type": typing.Literal["fsl/first_roi_slicesdir"],
     "input_t1_images": str,
     "input_label_images": str,
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "fsl.first_roi_slicesdir": first_roi_slicesdir_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "fsl.first_roi_slicesdir": first_roi_slicesdir_outputs,
-    }.get(t)
-
-
 class FirstRoiSlicesdirOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `first_roi_slicesdir(...)`.
+    Output object returned when calling `FirstRoiSlicesdirParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -67,7 +40,7 @@ class FirstRoiSlicesdirOutputs(typing.NamedTuple):
 def first_roi_slicesdir_params(
     input_t1_images: str,
     input_label_images: str,
-) -> FirstRoiSlicesdirParameters:
+) -> FirstRoiSlicesdirParametersTagged:
     """
     Build parameters.
     
@@ -80,7 +53,7 @@ def first_roi_slicesdir_params(
         Parameter dictionary
     """
     params = {
-        "@type": "fsl.first_roi_slicesdir",
+        "@type": "fsl/first_roi_slicesdir",
         "input_t1_images": input_t1_images,
         "input_label_images": input_label_images,
     }
@@ -102,8 +75,8 @@ def first_roi_slicesdir_cargs(
     """
     cargs = []
     cargs.append("first_roi_slicesdir")
-    cargs.append(params.get("input_t1_images"))
-    cargs.append(params.get("input_label_images"))
+    cargs.append(params.get("input_t1_images", None))
+    cargs.append(params.get("input_label_images", None))
     return cargs
 
 
@@ -122,8 +95,8 @@ def first_roi_slicesdir_outputs(
     """
     ret = FirstRoiSlicesdirOutputs(
         root=execution.output_file("."),
-        t1_slicesdir=execution.output_file(params.get("input_t1_images") + "_slicesdir"),
-        label_slicesdir=execution.output_file(params.get("input_label_images") + "_slicesdir"),
+        t1_slicesdir=execution.output_file(params.get("input_t1_images", None) + "_slicesdir"),
+        label_slicesdir=execution.output_file(params.get("input_label_images", None) + "_slicesdir"),
     )
     return ret
 
@@ -189,7 +162,6 @@ def first_roi_slicesdir(
 __all__ = [
     "FIRST_ROI_SLICESDIR_METADATA",
     "FirstRoiSlicesdirOutputs",
-    "FirstRoiSlicesdirParameters",
     "first_roi_slicesdir",
     "first_roi_slicesdir_execute",
     "first_roi_slicesdir_params",

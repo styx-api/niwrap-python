@@ -14,7 +14,54 @@ MRIS_PLACE_SURFACE_METADATA = Metadata(
 
 
 MrisPlaceSurfaceParameters = typing.TypedDict('MrisPlaceSurfaceParameters', {
-    "@type": typing.Literal["freesurfer.mris_place_surface"],
+    "@type": typing.NotRequired[typing.Literal["freesurfer/mris_place_surface"]],
+    "output_surface": str,
+    "input_surface": str,
+    "autodetect_gray_white_stats": str,
+    "input_volume": str,
+    "surface_type_group": typing.Literal["--white", "--pial"],
+    "hemi_group": typing.Literal["--lh", "--rh"],
+    "wm_segment": typing.NotRequired[str | None],
+    "out_volume": typing.NotRequired[str | None],
+    "out_volume_only": typing.NotRequired[str | None],
+    "restore_255": bool,
+    "segmentation": typing.NotRequired[str | None],
+    "cortical_parcellation": typing.NotRequired[str | None],
+    "nsmooth": typing.NotRequired[float | None],
+    "smooth_after_rip": bool,
+    "max_cbv_dist": typing.NotRequired[float | None],
+    "rip_label": typing.NotRequired[str | None],
+    "rip_midline": bool,
+    "rip_bg": bool,
+    "rip_bg_no_annot": bool,
+    "no_rip_freeze": bool,
+    "rip_wmsa": bool,
+    "rip_lesion": bool,
+    "no_rip": bool,
+    "rip_overlay": typing.NotRequired[str | None],
+    "rip_surface": typing.NotRequired[str | None],
+    "rip_projection": typing.NotRequired[list[float] | None],
+    "repulse_surface": typing.NotRequired[str | None],
+    "white_surface": typing.NotRequired[str | None],
+    "blend_surface": typing.NotRequired[str | None],
+    "multimodal_input": typing.NotRequired[str | None],
+    "mm_refine": bool,
+    "pin_medial_wall": typing.NotRequired[str | None],
+    "no_intensity_proc": bool,
+    "debug_vertex": typing.NotRequired[float | None],
+    "ripflag_out": typing.NotRequired[str | None],
+    "local_max": typing.NotRequired[str | None],
+    "target_surf": typing.NotRequired[str | None],
+    "stop_mask": bool,
+    "mm_intensity_limits": typing.NotRequired[str | None],
+    "cover_seg": typing.NotRequired[str | None],
+    "first_peak_d1": bool,
+    "first_peak_d2": bool,
+    "white_border_low_factor": typing.NotRequired[float | None],
+    "fill_lateral_ventricles": typing.NotRequired[list[float] | None],
+})
+MrisPlaceSurfaceParametersTagged = typing.TypedDict('MrisPlaceSurfaceParametersTagged', {
+    "@type": typing.Literal["freesurfer/mris_place_surface"],
     "output_surface": str,
     "input_surface": str,
     "autodetect_gray_white_stats": str,
@@ -62,40 +109,9 @@ MrisPlaceSurfaceParameters = typing.TypedDict('MrisPlaceSurfaceParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "freesurfer.mris_place_surface": mris_place_surface_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-    }.get(t)
-
-
 class MrisPlaceSurfaceOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `mris_place_surface(...)`.
+    Output object returned when calling `MrisPlaceSurfaceParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -146,7 +162,7 @@ def mris_place_surface_params(
     first_peak_d2: bool = False,
     white_border_low_factor: float | None = None,
     fill_lateral_ventricles: list[float] | None = None,
-) -> MrisPlaceSurfaceParameters:
+) -> MrisPlaceSurfaceParametersTagged:
     """
     Build parameters.
     
@@ -222,7 +238,7 @@ def mris_place_surface_params(
         Parameter dictionary
     """
     params = {
-        "@type": "freesurfer.mris_place_surface",
+        "@type": "freesurfer/mris_place_surface",
         "output_surface": output_surface,
         "input_surface": input_surface,
         "autodetect_gray_white_stats": autodetect_gray_white_stats,
@@ -312,169 +328,169 @@ def mris_place_surface_cargs(
     cargs.append("mris_place_surface")
     cargs.extend([
         "--o",
-        params.get("output_surface")
+        params.get("output_surface", None)
     ])
     cargs.extend([
         "--i",
-        params.get("input_surface")
+        params.get("input_surface", None)
     ])
     cargs.extend([
         "--adgw",
-        params.get("autodetect_gray_white_stats")
+        params.get("autodetect_gray_white_stats", None)
     ])
     cargs.extend([
         "--invol",
-        params.get("input_volume")
+        params.get("input_volume", None)
     ])
-    cargs.append(params.get("surface_type_group"))
-    cargs.append(params.get("hemi_group"))
-    if params.get("wm_segment") is not None:
+    cargs.append(params.get("surface_type_group", None))
+    cargs.append(params.get("hemi_group", None))
+    if params.get("wm_segment", None) is not None:
         cargs.extend([
             "--wm",
-            params.get("wm_segment")
+            params.get("wm_segment", None)
         ])
-    if params.get("out_volume") is not None:
+    if params.get("out_volume", None) is not None:
         cargs.extend([
             "--outvol",
-            params.get("out_volume")
+            params.get("out_volume", None)
         ])
-    if params.get("out_volume_only") is not None:
+    if params.get("out_volume_only", None) is not None:
         cargs.extend([
             "--outvol-only",
-            params.get("out_volume_only")
+            params.get("out_volume_only", None)
         ])
-    if params.get("restore_255"):
+    if params.get("restore_255", False):
         cargs.append("--restore-255")
-    if params.get("segmentation") is not None:
+    if params.get("segmentation", None) is not None:
         cargs.extend([
             "--seg",
-            params.get("segmentation")
+            params.get("segmentation", None)
         ])
-    if params.get("cortical_parcellation") is not None:
+    if params.get("cortical_parcellation", None) is not None:
         cargs.extend([
             "--aparc",
-            params.get("cortical_parcellation")
+            params.get("cortical_parcellation", None)
         ])
-    if params.get("nsmooth") is not None:
+    if params.get("nsmooth", None) is not None:
         cargs.extend([
             "--nsmooth",
-            str(params.get("nsmooth"))
+            str(params.get("nsmooth", None))
         ])
-    if params.get("smooth_after_rip"):
+    if params.get("smooth_after_rip", False):
         cargs.append("--smooth-after-rip")
-    if params.get("max_cbv_dist") is not None:
+    if params.get("max_cbv_dist", None) is not None:
         cargs.extend([
             "--max-cbv-dist",
-            str(params.get("max_cbv_dist"))
+            str(params.get("max_cbv_dist", None))
         ])
-    if params.get("rip_label") is not None:
+    if params.get("rip_label", None) is not None:
         cargs.extend([
             "--rip-label",
-            params.get("rip_label")
+            params.get("rip_label", None)
         ])
-    if params.get("rip_midline"):
+    if params.get("rip_midline", False):
         cargs.append("--rip-midline")
-    if params.get("rip_bg"):
+    if params.get("rip_bg", False):
         cargs.append("--rip-bg")
-    if params.get("rip_bg_no_annot"):
+    if params.get("rip_bg_no_annot", False):
         cargs.append("--rip-bg-no-annot")
-    if params.get("no_rip_freeze"):
+    if params.get("no_rip_freeze", False):
         cargs.append("--no-rip-freeze")
-    if params.get("rip_wmsa"):
+    if params.get("rip_wmsa", False):
         cargs.append("--rip-wmsa")
-    if params.get("rip_lesion"):
+    if params.get("rip_lesion", False):
         cargs.append("--rip-lesion")
-    if params.get("no_rip"):
+    if params.get("no_rip", False):
         cargs.append("--no-rip")
-    if params.get("rip_overlay") is not None:
+    if params.get("rip_overlay", None) is not None:
         cargs.extend([
             "--rip-overlay",
-            params.get("rip_overlay")
+            params.get("rip_overlay", None)
         ])
-    if params.get("rip_surface") is not None:
+    if params.get("rip_surface", None) is not None:
         cargs.extend([
             "--ripsurface",
-            params.get("rip_surface")
+            params.get("rip_surface", None)
         ])
-    if params.get("rip_projection") is not None:
+    if params.get("rip_projection", None) is not None:
         cargs.extend([
             "--rip-projection",
-            *map(str, params.get("rip_projection"))
+            *map(str, params.get("rip_projection", None))
         ])
-    if params.get("repulse_surface") is not None:
+    if params.get("repulse_surface", None) is not None:
         cargs.extend([
             "--repulse-surf",
-            params.get("repulse_surface")
+            params.get("repulse_surface", None)
         ])
-    if params.get("white_surface") is not None:
+    if params.get("white_surface", None) is not None:
         cargs.extend([
             "--white-surf",
-            params.get("white_surface")
+            params.get("white_surface", None)
         ])
-    if params.get("blend_surface") is not None:
+    if params.get("blend_surface", None) is not None:
         cargs.extend([
             "--blend-surf",
-            params.get("blend_surface")
+            params.get("blend_surface", None)
         ])
-    if params.get("multimodal_input") is not None:
+    if params.get("multimodal_input", None) is not None:
         cargs.extend([
             "--mmvol",
-            params.get("multimodal_input")
+            params.get("multimodal_input", None)
         ])
-    if params.get("mm_refine"):
+    if params.get("mm_refine", False):
         cargs.append("--mm-refine")
-    if params.get("pin_medial_wall") is not None:
+    if params.get("pin_medial_wall", None) is not None:
         cargs.extend([
             "--pin-medial-wall",
-            params.get("pin_medial_wall")
+            params.get("pin_medial_wall", None)
         ])
-    if params.get("no_intensity_proc"):
+    if params.get("no_intensity_proc", False):
         cargs.append("--no-intensity-proc")
-    if params.get("debug_vertex") is not None:
+    if params.get("debug_vertex", None) is not None:
         cargs.extend([
             "--debug-vertex",
-            str(params.get("debug_vertex"))
+            str(params.get("debug_vertex", None))
         ])
-    if params.get("ripflag_out") is not None:
+    if params.get("ripflag_out", None) is not None:
         cargs.extend([
             "--ripflag-out",
-            params.get("ripflag_out")
+            params.get("ripflag_out", None)
         ])
-    if params.get("local_max") is not None:
+    if params.get("local_max", None) is not None:
         cargs.extend([
             "--local-max",
-            params.get("local_max")
+            params.get("local_max", None)
         ])
-    if params.get("target_surf") is not None:
+    if params.get("target_surf", None) is not None:
         cargs.extend([
             "--target",
-            params.get("target_surf")
+            params.get("target_surf", None)
         ])
-    if params.get("stop_mask"):
+    if params.get("stop_mask", False):
         cargs.append("--stop")
-    if params.get("mm_intensity_limits") is not None:
+    if params.get("mm_intensity_limits", None) is not None:
         cargs.extend([
             "--mm_{min,max}_{inside,outside}",
-            params.get("mm_intensity_limits")
+            params.get("mm_intensity_limits", None)
         ])
-    if params.get("cover_seg") is not None:
+    if params.get("cover_seg", None) is not None:
         cargs.extend([
             "--cover-seg",
-            params.get("cover_seg")
+            params.get("cover_seg", None)
         ])
-    if params.get("first_peak_d1"):
+    if params.get("first_peak_d1", False):
         cargs.append("--first-peak-d1")
-    if params.get("first_peak_d2"):
+    if params.get("first_peak_d2", False):
         cargs.append("--first-peak-d2")
-    if params.get("white_border_low_factor") is not None:
+    if params.get("white_border_low_factor", None) is not None:
         cargs.extend([
             "--white_border_low_factor",
-            str(params.get("white_border_low_factor"))
+            str(params.get("white_border_low_factor", None))
         ])
-    if params.get("fill_lateral_ventricles") is not None:
+    if params.get("fill_lateral_ventricles", None) is not None:
         cargs.extend([
             "--fill-lat-vents",
-            *map(str, params.get("fill_lateral_ventricles"))
+            *map(str, params.get("fill_lateral_ventricles", None))
         ])
     return cargs
 
@@ -710,7 +726,6 @@ def mris_place_surface(
 __all__ = [
     "MRIS_PLACE_SURFACE_METADATA",
     "MrisPlaceSurfaceOutputs",
-    "MrisPlaceSurfaceParameters",
     "mris_place_surface",
     "mris_place_surface_execute",
     "mris_place_surface_params",

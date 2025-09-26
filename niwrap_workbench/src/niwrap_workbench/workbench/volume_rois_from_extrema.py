@@ -14,7 +14,17 @@ VOLUME_ROIS_FROM_EXTREMA_METADATA = Metadata(
 
 
 VolumeRoisFromExtremaParameters = typing.TypedDict('VolumeRoisFromExtremaParameters', {
-    "@type": typing.Literal["workbench.volume-rois-from-extrema"],
+    "@type": typing.NotRequired[typing.Literal["workbench/volume-rois-from-extrema"]],
+    "volume_in": InputPathType,
+    "limit": float,
+    "volume_out": str,
+    "opt_gaussian_sigma": typing.NotRequired[float | None],
+    "opt_roi_roi_volume": typing.NotRequired[InputPathType | None],
+    "opt_overlap_logic_method": typing.NotRequired[str | None],
+    "opt_subvolume_subvol": typing.NotRequired[str | None],
+})
+VolumeRoisFromExtremaParametersTagged = typing.TypedDict('VolumeRoisFromExtremaParametersTagged', {
+    "@type": typing.Literal["workbench/volume-rois-from-extrema"],
     "volume_in": InputPathType,
     "limit": float,
     "volume_out": str,
@@ -25,41 +35,9 @@ VolumeRoisFromExtremaParameters = typing.TypedDict('VolumeRoisFromExtremaParamet
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "workbench.volume-rois-from-extrema": volume_rois_from_extrema_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "workbench.volume-rois-from-extrema": volume_rois_from_extrema_outputs,
-    }.get(t)
-
-
 class VolumeRoisFromExtremaOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `volume_rois_from_extrema(...)`.
+    Output object returned when calling `VolumeRoisFromExtremaParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -75,7 +53,7 @@ def volume_rois_from_extrema_params(
     opt_roi_roi_volume: InputPathType | None = None,
     opt_overlap_logic_method: str | None = None,
     opt_subvolume_subvol: str | None = None,
-) -> VolumeRoisFromExtremaParameters:
+) -> VolumeRoisFromExtremaParametersTagged:
     """
     Build parameters.
     
@@ -95,7 +73,7 @@ def volume_rois_from_extrema_params(
         Parameter dictionary
     """
     params = {
-        "@type": "workbench.volume-rois-from-extrema",
+        "@type": "workbench/volume-rois-from-extrema",
         "volume_in": volume_in,
         "limit": limit,
         "volume_out": volume_out,
@@ -127,28 +105,28 @@ def volume_rois_from_extrema_cargs(
     cargs = []
     cargs.append("wb_command")
     cargs.append("-volume-rois-from-extrema")
-    cargs.append(execution.input_file(params.get("volume_in")))
-    cargs.append(str(params.get("limit")))
-    cargs.append(params.get("volume_out"))
-    if params.get("opt_gaussian_sigma") is not None:
+    cargs.append(execution.input_file(params.get("volume_in", None)))
+    cargs.append(str(params.get("limit", None)))
+    cargs.append(params.get("volume_out", None))
+    if params.get("opt_gaussian_sigma", None) is not None:
         cargs.extend([
             "-gaussian",
-            str(params.get("opt_gaussian_sigma"))
+            str(params.get("opt_gaussian_sigma", None))
         ])
-    if params.get("opt_roi_roi_volume") is not None:
+    if params.get("opt_roi_roi_volume", None) is not None:
         cargs.extend([
             "-roi",
-            execution.input_file(params.get("opt_roi_roi_volume"))
+            execution.input_file(params.get("opt_roi_roi_volume", None))
         ])
-    if params.get("opt_overlap_logic_method") is not None:
+    if params.get("opt_overlap_logic_method", None) is not None:
         cargs.extend([
             "-overlap-logic",
-            params.get("opt_overlap_logic_method")
+            params.get("opt_overlap_logic_method", None)
         ])
-    if params.get("opt_subvolume_subvol") is not None:
+    if params.get("opt_subvolume_subvol", None) is not None:
         cargs.extend([
             "-subvolume",
-            params.get("opt_subvolume_subvol")
+            params.get("opt_subvolume_subvol", None)
         ])
     return cargs
 
@@ -168,7 +146,7 @@ def volume_rois_from_extrema_outputs(
     """
     ret = VolumeRoisFromExtremaOutputs(
         root=execution.output_file("."),
-        volume_out=execution.output_file(params.get("volume_out")),
+        volume_out=execution.output_file(params.get("volume_out", None)),
     )
     return ret
 
@@ -269,7 +247,6 @@ def volume_rois_from_extrema(
 __all__ = [
     "VOLUME_ROIS_FROM_EXTREMA_METADATA",
     "VolumeRoisFromExtremaOutputs",
-    "VolumeRoisFromExtremaParameters",
     "volume_rois_from_extrema",
     "volume_rois_from_extrema_execute",
     "volume_rois_from_extrema_params",

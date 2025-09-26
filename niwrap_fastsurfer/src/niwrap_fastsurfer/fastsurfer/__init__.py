@@ -41,5 +41,5 @@ def execute(
         runner: Command runner.
     """
     return {
-        "fastsurfer.run_fastsurfer.sh": run_fastsurfer_sh_execute,
+        "fastsurfer/run_fastsurfer.sh": run_fastsurfer_sh_execute,
     }[params["@type"]](params, runner)

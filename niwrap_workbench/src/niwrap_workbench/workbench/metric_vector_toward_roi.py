@@ -14,7 +14,14 @@ METRIC_VECTOR_TOWARD_ROI_METADATA = Metadata(
 
 
 MetricVectorTowardRoiParameters = typing.TypedDict('MetricVectorTowardRoiParameters', {
-    "@type": typing.Literal["workbench.metric-vector-toward-roi"],
+    "@type": typing.NotRequired[typing.Literal["workbench/metric-vector-toward-roi"]],
+    "surface": InputPathType,
+    "target_roi": InputPathType,
+    "metric_out": str,
+    "opt_roi_roi_metric": typing.NotRequired[InputPathType | None],
+})
+MetricVectorTowardRoiParametersTagged = typing.TypedDict('MetricVectorTowardRoiParametersTagged', {
+    "@type": typing.Literal["workbench/metric-vector-toward-roi"],
     "surface": InputPathType,
     "target_roi": InputPathType,
     "metric_out": str,
@@ -22,41 +29,9 @@ MetricVectorTowardRoiParameters = typing.TypedDict('MetricVectorTowardRoiParamet
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "workbench.metric-vector-toward-roi": metric_vector_toward_roi_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "workbench.metric-vector-toward-roi": metric_vector_toward_roi_outputs,
-    }.get(t)
-
-
 class MetricVectorTowardRoiOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `metric_vector_toward_roi(...)`.
+    Output object returned when calling `MetricVectorTowardRoiParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -69,7 +44,7 @@ def metric_vector_toward_roi_params(
     target_roi: InputPathType,
     metric_out: str,
     opt_roi_roi_metric: InputPathType | None = None,
-) -> MetricVectorTowardRoiParameters:
+) -> MetricVectorTowardRoiParametersTagged:
     """
     Build parameters.
     
@@ -83,7 +58,7 @@ def metric_vector_toward_roi_params(
         Parameter dictionary
     """
     params = {
-        "@type": "workbench.metric-vector-toward-roi",
+        "@type": "workbench/metric-vector-toward-roi",
         "surface": surface,
         "target_roi": target_roi,
         "metric_out": metric_out,
@@ -109,13 +84,13 @@ def metric_vector_toward_roi_cargs(
     cargs = []
     cargs.append("wb_command")
     cargs.append("-metric-vector-toward-roi")
-    cargs.append(execution.input_file(params.get("surface")))
-    cargs.append(execution.input_file(params.get("target_roi")))
-    cargs.append(params.get("metric_out"))
-    if params.get("opt_roi_roi_metric") is not None:
+    cargs.append(execution.input_file(params.get("surface", None)))
+    cargs.append(execution.input_file(params.get("target_roi", None)))
+    cargs.append(params.get("metric_out", None))
+    if params.get("opt_roi_roi_metric", None) is not None:
         cargs.extend([
             "-roi",
-            execution.input_file(params.get("opt_roi_roi_metric"))
+            execution.input_file(params.get("opt_roi_roi_metric", None))
         ])
     return cargs
 
@@ -135,7 +110,7 @@ def metric_vector_toward_roi_outputs(
     """
     ret = MetricVectorTowardRoiOutputs(
         root=execution.output_file("."),
-        metric_out=execution.output_file(params.get("metric_out")),
+        metric_out=execution.output_file(params.get("metric_out", None)),
     )
     return ret
 
@@ -212,7 +187,6 @@ def metric_vector_toward_roi(
 __all__ = [
     "METRIC_VECTOR_TOWARD_ROI_METADATA",
     "MetricVectorTowardRoiOutputs",
-    "MetricVectorTowardRoiParameters",
     "metric_vector_toward_roi",
     "metric_vector_toward_roi_execute",
     "metric_vector_toward_roi_params",

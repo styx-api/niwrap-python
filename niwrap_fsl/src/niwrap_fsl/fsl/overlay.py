@@ -14,7 +14,22 @@ OVERLAY_METADATA = Metadata(
 
 
 OverlayParameters = typing.TypedDict('OverlayParameters', {
-    "@type": typing.Literal["fsl.overlay"],
+    "@type": typing.NotRequired[typing.Literal["fsl/overlay"]],
+    "auto_thresh_bg": bool,
+    "background_image": InputPathType,
+    "bg_thresh": list[float],
+    "full_bg_range": bool,
+    "out_file": typing.NotRequired[str | None],
+    "out_type": typing.NotRequired[typing.Literal["float", "int"] | None],
+    "output_type": typing.NotRequired[typing.Literal["NIFTI", "NIFTI_PAIR", "NIFTI_GZ", "NIFTI_PAIR_GZ"] | None],
+    "stat_image": InputPathType,
+    "stat_image2": typing.NotRequired[InputPathType | None],
+    "stat_thresh": list[float],
+    "stat_thresh2": typing.NotRequired[list[float] | None],
+    "use_checkerboard": bool,
+})
+OverlayParametersTagged = typing.TypedDict('OverlayParametersTagged', {
+    "@type": typing.Literal["fsl/overlay"],
     "auto_thresh_bg": bool,
     "background_image": InputPathType,
     "bg_thresh": list[float],
@@ -30,41 +45,9 @@ OverlayParameters = typing.TypedDict('OverlayParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "fsl.overlay": overlay_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "fsl.overlay": overlay_outputs,
-    }.get(t)
-
-
 class OverlayOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `overlay(...)`.
+    Output object returned when calling `OverlayParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -85,7 +68,7 @@ def overlay_params(
     stat_image2: InputPathType | None = None,
     stat_thresh2: list[float] | None = None,
     use_checkerboard: bool = False,
-) -> OverlayParameters:
+) -> OverlayParametersTagged:
     """
     Build parameters.
     
@@ -110,7 +93,7 @@ def overlay_params(
         Parameter dictionary
     """
     params = {
-        "@type": "fsl.overlay",
+        "@type": "fsl/overlay",
         "auto_thresh_bg": auto_thresh_bg,
         "background_image": background_image,
         "bg_thresh": bg_thresh,
@@ -147,25 +130,25 @@ def overlay_cargs(
     """
     cargs = []
     cargs.append("overlay")
-    if params.get("auto_thresh_bg"):
+    if params.get("auto_thresh_bg", False):
         cargs.append("-a")
-    cargs.append(execution.input_file(params.get("background_image")))
-    cargs.extend(map(str, params.get("bg_thresh")))
-    if params.get("full_bg_range"):
+    cargs.append(execution.input_file(params.get("background_image", None)))
+    cargs.extend(map(str, params.get("bg_thresh", None)))
+    if params.get("full_bg_range", False):
         cargs.append("-A")
-    if params.get("out_file") is not None:
-        cargs.append(params.get("out_file"))
-    if params.get("out_type") is not None:
-        cargs.append(params.get("out_type"))
-    if params.get("output_type") is not None:
-        cargs.append(params.get("output_type"))
-    cargs.append(execution.input_file(params.get("stat_image")))
-    if params.get("stat_image2") is not None:
-        cargs.append(execution.input_file(params.get("stat_image2")))
-    cargs.extend(map(str, params.get("stat_thresh")))
-    if params.get("stat_thresh2") is not None:
-        cargs.extend(map(str, params.get("stat_thresh2")))
-    if params.get("use_checkerboard"):
+    if params.get("out_file", None) is not None:
+        cargs.append(params.get("out_file", None))
+    if params.get("out_type", None) is not None:
+        cargs.append(params.get("out_type", None))
+    if params.get("output_type", None) is not None:
+        cargs.append(params.get("output_type", None))
+    cargs.append(execution.input_file(params.get("stat_image", None)))
+    if params.get("stat_image2", None) is not None:
+        cargs.append(execution.input_file(params.get("stat_image2", None)))
+    cargs.extend(map(str, params.get("stat_thresh", None)))
+    if params.get("stat_thresh2", None) is not None:
+        cargs.extend(map(str, params.get("stat_thresh2", None)))
+    if params.get("use_checkerboard", False):
         cargs.append("-c")
     return cargs
 
@@ -185,7 +168,7 @@ def overlay_outputs(
     """
     ret = OverlayOutputs(
         root=execution.output_file("."),
-        out_file_outfile=execution.output_file(params.get("out_file")) if (params.get("out_file") is not None) else None,
+        out_file_outfile=execution.output_file(params.get("out_file", None)) if (params.get("out_file") is not None) else None,
     )
     return ret
 
@@ -285,7 +268,6 @@ def overlay(
 __all__ = [
     "OVERLAY_METADATA",
     "OverlayOutputs",
-    "OverlayParameters",
     "overlay",
     "overlay_execute",
     "overlay_params",

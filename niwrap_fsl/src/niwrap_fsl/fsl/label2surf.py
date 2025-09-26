@@ -14,7 +14,15 @@ LABEL2SURF_METADATA = Metadata(
 
 
 Label2surfParameters = typing.TypedDict('Label2surfParameters', {
-    "@type": typing.Literal["fsl.label2surf"],
+    "@type": typing.NotRequired[typing.Literal["fsl/label2surf"]],
+    "input_surface": InputPathType,
+    "output_surface": str,
+    "labels": InputPathType,
+    "verbose_flag": bool,
+    "help_flag": bool,
+})
+Label2surfParametersTagged = typing.TypedDict('Label2surfParametersTagged', {
+    "@type": typing.Literal["fsl/label2surf"],
     "input_surface": InputPathType,
     "output_surface": str,
     "labels": InputPathType,
@@ -23,41 +31,9 @@ Label2surfParameters = typing.TypedDict('Label2surfParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "fsl.label2surf": label2surf_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "fsl.label2surf": label2surf_outputs,
-    }.get(t)
-
-
 class Label2surfOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `label2surf(...)`.
+    Output object returned when calling `Label2surfParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -71,7 +47,7 @@ def label2surf_params(
     labels: InputPathType,
     verbose_flag: bool = False,
     help_flag: bool = False,
-) -> Label2surfParameters:
+) -> Label2surfParametersTagged:
     """
     Build parameters.
     
@@ -85,7 +61,7 @@ def label2surf_params(
         Parameter dictionary
     """
     params = {
-        "@type": "fsl.label2surf",
+        "@type": "fsl/label2surf",
         "input_surface": input_surface,
         "output_surface": output_surface,
         "labels": labels,
@@ -112,19 +88,19 @@ def label2surf_cargs(
     cargs.append("label2surf")
     cargs.extend([
         "--surf",
-        execution.input_file(params.get("input_surface"))
+        execution.input_file(params.get("input_surface", None))
     ])
     cargs.extend([
         "--out",
-        params.get("output_surface")
+        params.get("output_surface", None)
     ])
     cargs.extend([
         "--labels",
-        execution.input_file(params.get("labels"))
+        execution.input_file(params.get("labels", None))
     ])
-    if params.get("verbose_flag"):
+    if params.get("verbose_flag", False):
         cargs.append("--verbose")
-    if params.get("help_flag"):
+    if params.get("help_flag", False):
         cargs.append("--help")
     return cargs
 
@@ -144,7 +120,7 @@ def label2surf_outputs(
     """
     ret = Label2surfOutputs(
         root=execution.output_file("."),
-        out_surf=execution.output_file(params.get("output_surface")),
+        out_surf=execution.output_file(params.get("output_surface", None)),
     )
     return ret
 
@@ -217,7 +193,6 @@ def label2surf(
 __all__ = [
     "LABEL2SURF_METADATA",
     "Label2surfOutputs",
-    "Label2surfParameters",
     "label2surf",
     "label2surf_execute",
     "label2surf_params",

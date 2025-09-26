@@ -14,7 +14,46 @@ V_3D_WARP_DRIVE_METADATA = Metadata(
 
 
 V3dWarpDriveParameters = typing.TypedDict('V3dWarpDriveParameters', {
-    "@type": typing.Literal["afni.3dWarpDrive"],
+    "@type": typing.NotRequired[typing.Literal["afni/3dWarpDrive"]],
+    "dataset": InputPathType,
+    "base_dataset": InputPathType,
+    "prefix": str,
+    "shift_only": bool,
+    "shift_rotate": bool,
+    "shift_rotate_scale": bool,
+    "affine_general": bool,
+    "bilinear_general": bool,
+    "linear": bool,
+    "cubic": bool,
+    "NN": bool,
+    "quintic": bool,
+    "input_dataset": typing.NotRequired[InputPathType | None],
+    "verbosity_flag": bool,
+    "summary_file": typing.NotRequired[str | None],
+    "max_iterations": typing.NotRequired[int | None],
+    "delta": typing.NotRequired[float | None],
+    "weight": typing.NotRequired[str | None],
+    "convergence_thresh": typing.NotRequired[float | None],
+    "twopass": bool,
+    "final_mode": typing.NotRequired[str | None],
+    "parfix": typing.NotRequired[list[str] | None],
+    "oned_file": typing.NotRequired[InputPathType | None],
+    "float_format": bool,
+    "coarserot_init": bool,
+    "oned_matrix_save": typing.NotRequired[InputPathType | None],
+    "sdu_order": bool,
+    "sud_order": bool,
+    "dsu_order": bool,
+    "dus_order": bool,
+    "usd_order": bool,
+    "uds_order": bool,
+    "supper_s_matrix": bool,
+    "slower_s_matrix": bool,
+    "ashift": bool,
+    "bshift": bool,
+})
+V3dWarpDriveParametersTagged = typing.TypedDict('V3dWarpDriveParametersTagged', {
+    "@type": typing.Literal["afni/3dWarpDrive"],
     "dataset": InputPathType,
     "base_dataset": InputPathType,
     "prefix": str,
@@ -54,41 +93,9 @@ V3dWarpDriveParameters = typing.TypedDict('V3dWarpDriveParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "afni.3dWarpDrive": v_3d_warp_drive_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "afni.3dWarpDrive": v_3d_warp_drive_outputs,
-    }.get(t)
-
-
 class V3dWarpDriveOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `v_3d_warp_drive(...)`.
+    Output object returned when calling `V3dWarpDriveParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -139,7 +146,7 @@ def v_3d_warp_drive_params(
     slower_s_matrix: bool = False,
     ashift: bool = False,
     bshift: bool = False,
-) -> V3dWarpDriveParameters:
+) -> V3dWarpDriveParametersTagged:
     """
     Build parameters.
     
@@ -210,7 +217,7 @@ def v_3d_warp_drive_params(
         Parameter dictionary
     """
     params = {
-        "@type": "afni.3dWarpDrive",
+        "@type": "afni/3dWarpDrive",
         "dataset": dataset,
         "base_dataset": base_dataset,
         "prefix": prefix,
@@ -276,110 +283,110 @@ def v_3d_warp_drive_cargs(
     """
     cargs = []
     cargs.append("3dWarpDrive")
-    cargs.append(execution.input_file(params.get("dataset")))
+    cargs.append(execution.input_file(params.get("dataset", None)))
     cargs.extend([
         "-base",
-        execution.input_file(params.get("base_dataset"))
+        execution.input_file(params.get("base_dataset", None))
     ])
     cargs.extend([
         "-prefix",
-        params.get("prefix")
+        params.get("prefix", None)
     ])
-    if params.get("shift_only"):
+    if params.get("shift_only", False):
         cargs.append("-shift_only")
-    if params.get("shift_rotate"):
+    if params.get("shift_rotate", False):
         cargs.append("-shift_rotate")
-    if params.get("shift_rotate_scale"):
+    if params.get("shift_rotate_scale", False):
         cargs.append("-shift_rotate_scale")
-    if params.get("affine_general"):
+    if params.get("affine_general", False):
         cargs.append("-affine_general")
-    if params.get("bilinear_general"):
+    if params.get("bilinear_general", False):
         cargs.append("-bilinear_general")
-    if params.get("linear"):
+    if params.get("linear", False):
         cargs.append("-linear")
-    if params.get("cubic"):
+    if params.get("cubic", False):
         cargs.append("-cubic")
-    if params.get("NN"):
+    if params.get("NN", False):
         cargs.append("-NN")
-    if params.get("quintic"):
+    if params.get("quintic", False):
         cargs.append("-quintic")
-    if params.get("input_dataset") is not None:
+    if params.get("input_dataset", None) is not None:
         cargs.extend([
             "-input",
-            execution.input_file(params.get("input_dataset"))
+            execution.input_file(params.get("input_dataset", None))
         ])
-    if params.get("verbosity_flag"):
+    if params.get("verbosity_flag", False):
         cargs.append("-verb")
-    if params.get("summary_file") is not None:
+    if params.get("summary_file", None) is not None:
         cargs.extend([
             "-summ",
-            params.get("summary_file")
+            params.get("summary_file", None)
         ])
-    if params.get("max_iterations") is not None:
+    if params.get("max_iterations", None) is not None:
         cargs.extend([
             "-maxite",
-            str(params.get("max_iterations"))
+            str(params.get("max_iterations", None))
         ])
-    if params.get("delta") is not None:
+    if params.get("delta", None) is not None:
         cargs.extend([
             "-delta",
-            str(params.get("delta"))
+            str(params.get("delta", None))
         ])
-    if params.get("weight") is not None:
+    if params.get("weight", None) is not None:
         cargs.extend([
             "-weight",
-            params.get("weight")
+            params.get("weight", None)
         ])
-    if params.get("convergence_thresh") is not None:
+    if params.get("convergence_thresh", None) is not None:
         cargs.extend([
             "-thresh",
-            str(params.get("convergence_thresh"))
+            str(params.get("convergence_thresh", None))
         ])
-    if params.get("twopass"):
+    if params.get("twopass", False):
         cargs.append("-twopass")
-    if params.get("final_mode") is not None:
+    if params.get("final_mode", None) is not None:
         cargs.extend([
             "-final",
-            params.get("final_mode")
+            params.get("final_mode", None)
         ])
-    if params.get("parfix") is not None:
+    if params.get("parfix", None) is not None:
         cargs.extend([
             "-parfix",
-            *params.get("parfix")
+            *params.get("parfix", None)
         ])
-    if params.get("oned_file") is not None:
+    if params.get("oned_file", None) is not None:
         cargs.extend([
             "-1Dfile",
-            execution.input_file(params.get("oned_file"))
+            execution.input_file(params.get("oned_file", None))
         ])
-    if params.get("float_format"):
+    if params.get("float_format", False):
         cargs.append("-float")
-    if params.get("coarserot_init"):
+    if params.get("coarserot_init", False):
         cargs.append("-coarserot")
-    if params.get("oned_matrix_save") is not None:
+    if params.get("oned_matrix_save", None) is not None:
         cargs.extend([
             "-1Dmatrix_save",
-            execution.input_file(params.get("oned_matrix_save"))
+            execution.input_file(params.get("oned_matrix_save", None))
         ])
-    if params.get("sdu_order"):
+    if params.get("sdu_order", False):
         cargs.append("-SDU")
-    if params.get("sud_order"):
+    if params.get("sud_order", False):
         cargs.append("-SUD")
-    if params.get("dsu_order"):
+    if params.get("dsu_order", False):
         cargs.append("-DSU")
-    if params.get("dus_order"):
+    if params.get("dus_order", False):
         cargs.append("-DUS")
-    if params.get("usd_order"):
+    if params.get("usd_order", False):
         cargs.append("-USD")
-    if params.get("uds_order"):
+    if params.get("uds_order", False):
         cargs.append("-UDS")
-    if params.get("supper_s_matrix"):
+    if params.get("supper_s_matrix", False):
         cargs.append("-Supper")
-    if params.get("slower_s_matrix"):
+    if params.get("slower_s_matrix", False):
         cargs.append("-Slower")
-    if params.get("ashift"):
+    if params.get("ashift", False):
         cargs.append("-ashift")
-    if params.get("bshift"):
+    if params.get("bshift", False):
         cargs.append("-bshift")
     return cargs
 
@@ -399,10 +406,10 @@ def v_3d_warp_drive_outputs(
     """
     ret = V3dWarpDriveOutputs(
         root=execution.output_file("."),
-        output_dataset=execution.output_file(params.get("prefix") + "+orig"),
-        output_summary=execution.output_file(params.get("summary_file")) if (params.get("summary_file") is not None) else None,
-        oned_output_file=execution.output_file(pathlib.Path(params.get("oned_file")).name) if (params.get("oned_file") is not None) else None,
-        matrix_output_file=execution.output_file(pathlib.Path(params.get("oned_matrix_save")).name) if (params.get("oned_matrix_save") is not None) else None,
+        output_dataset=execution.output_file(params.get("prefix", None) + "+orig"),
+        output_summary=execution.output_file(params.get("summary_file", None)) if (params.get("summary_file") is not None) else None,
+        oned_output_file=execution.output_file(pathlib.Path(params.get("oned_file", None)).name) if (params.get("oned_file") is not None) else None,
+        matrix_output_file=execution.output_file(pathlib.Path(params.get("oned_matrix_save", None)).name) if (params.get("oned_matrix_save") is not None) else None,
     )
     return ret
 
@@ -595,7 +602,6 @@ def v_3d_warp_drive(
 
 __all__ = [
     "V3dWarpDriveOutputs",
-    "V3dWarpDriveParameters",
     "V_3D_WARP_DRIVE_METADATA",
     "v_3d_warp_drive",
     "v_3d_warp_drive_execute",

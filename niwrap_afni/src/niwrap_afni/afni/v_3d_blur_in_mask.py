@@ -14,7 +14,21 @@ V_3D_BLUR_IN_MASK_METADATA = Metadata(
 
 
 V3dBlurInMaskParameters = typing.TypedDict('V3dBlurInMaskParameters', {
-    "@type": typing.Literal["afni.3dBlurInMask"],
+    "@type": typing.NotRequired[typing.Literal["afni/3dBlurInMask"]],
+    "input_file": InputPathType,
+    "output_prefix": str,
+    "fwhm": float,
+    "fwhm_dataset": typing.NotRequired[InputPathType | None],
+    "mask": typing.NotRequired[InputPathType | None],
+    "multi_mask": typing.NotRequired[InputPathType | None],
+    "automask": bool,
+    "preserve": bool,
+    "quiet": bool,
+    "float": bool,
+    "fwhm_xyz": typing.NotRequired[list[float] | None],
+})
+V3dBlurInMaskParametersTagged = typing.TypedDict('V3dBlurInMaskParametersTagged', {
+    "@type": typing.Literal["afni/3dBlurInMask"],
     "input_file": InputPathType,
     "output_prefix": str,
     "fwhm": float,
@@ -29,41 +43,9 @@ V3dBlurInMaskParameters = typing.TypedDict('V3dBlurInMaskParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "afni.3dBlurInMask": v_3d_blur_in_mask_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "afni.3dBlurInMask": v_3d_blur_in_mask_outputs,
-    }.get(t)
-
-
 class V3dBlurInMaskOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `v_3d_blur_in_mask(...)`.
+    Output object returned when calling `V3dBlurInMaskParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -83,7 +65,7 @@ def v_3d_blur_in_mask_params(
     quiet: bool = False,
     float_: bool = False,
     fwhm_xyz: list[float] | None = None,
-) -> V3dBlurInMaskParameters:
+) -> V3dBlurInMaskParametersTagged:
     """
     Build parameters.
     
@@ -107,7 +89,7 @@ def v_3d_blur_in_mask_params(
         Parameter dictionary
     """
     params = {
-        "@type": "afni.3dBlurInMask",
+        "@type": "afni/3dBlurInMask",
         "input_file": input_file,
         "output_prefix": output_prefix,
         "fwhm": fwhm,
@@ -142,39 +124,39 @@ def v_3d_blur_in_mask_cargs(
     """
     cargs = []
     cargs.append("3dBlurInMask")
-    cargs.append(execution.input_file(params.get("input_file")))
-    cargs.append(params.get("output_prefix"))
+    cargs.append(execution.input_file(params.get("input_file", None)))
+    cargs.append(params.get("output_prefix", None))
     cargs.extend([
         "-FWHM",
-        str(params.get("fwhm"))
+        str(params.get("fwhm", None))
     ])
-    if params.get("fwhm_dataset") is not None:
+    if params.get("fwhm_dataset", None) is not None:
         cargs.extend([
             "-FWHMdset",
-            execution.input_file(params.get("fwhm_dataset"))
+            execution.input_file(params.get("fwhm_dataset", None))
         ])
-    if params.get("mask") is not None:
+    if params.get("mask", None) is not None:
         cargs.extend([
             "-mask",
-            execution.input_file(params.get("mask"))
+            execution.input_file(params.get("mask", None))
         ])
-    if params.get("multi_mask") is not None:
+    if params.get("multi_mask", None) is not None:
         cargs.extend([
             "-Mmask",
-            execution.input_file(params.get("multi_mask"))
+            execution.input_file(params.get("multi_mask", None))
         ])
-    if params.get("automask"):
+    if params.get("automask", False):
         cargs.append("-automask")
-    if params.get("preserve"):
+    if params.get("preserve", False):
         cargs.append("-preserve")
-    if params.get("quiet"):
+    if params.get("quiet", False):
         cargs.append("-quiet")
-    if params.get("float"):
+    if params.get("float", False):
         cargs.append("-float")
-    if params.get("fwhm_xyz") is not None:
+    if params.get("fwhm_xyz", None) is not None:
         cargs.extend([
             "-FWHMxyz",
-            *map(str, params.get("fwhm_xyz"))
+            *map(str, params.get("fwhm_xyz", None))
         ])
     return cargs
 
@@ -194,7 +176,7 @@ def v_3d_blur_in_mask_outputs(
     """
     ret = V3dBlurInMaskOutputs(
         root=execution.output_file("."),
-        output_file=execution.output_file(params.get("output_prefix")),
+        output_file=execution.output_file(params.get("output_prefix", None)),
     )
     return ret
 
@@ -288,7 +270,6 @@ def v_3d_blur_in_mask(
 
 __all__ = [
     "V3dBlurInMaskOutputs",
-    "V3dBlurInMaskParameters",
     "V_3D_BLUR_IN_MASK_METADATA",
     "v_3d_blur_in_mask",
     "v_3d_blur_in_mask_execute",

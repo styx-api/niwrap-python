@@ -14,7 +14,20 @@ MRI_SEG_DIFF_METADATA = Metadata(
 
 
 MriSegDiffParameters = typing.TypedDict('MriSegDiffParameters', {
-    "@type": typing.Literal["freesurfer.mri_seg_diff"],
+    "@type": typing.NotRequired[typing.Literal["freesurfer/mri_seg_diff"]],
+    "seg1": typing.NotRequired[InputPathType | None],
+    "seg2": typing.NotRequired[InputPathType | None],
+    "seg": typing.NotRequired[InputPathType | None],
+    "diff": str,
+    "diff_in": typing.NotRequired[InputPathType | None],
+    "merged": typing.NotRequired[str | None],
+    "diff_force": bool,
+    "debug": bool,
+    "checkopts": bool,
+    "version": bool,
+})
+MriSegDiffParametersTagged = typing.TypedDict('MriSegDiffParametersTagged', {
+    "@type": typing.Literal["freesurfer/mri_seg_diff"],
     "seg1": typing.NotRequired[InputPathType | None],
     "seg2": typing.NotRequired[InputPathType | None],
     "seg": typing.NotRequired[InputPathType | None],
@@ -28,41 +41,9 @@ MriSegDiffParameters = typing.TypedDict('MriSegDiffParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "freesurfer.mri_seg_diff": mri_seg_diff_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "freesurfer.mri_seg_diff": mri_seg_diff_outputs,
-    }.get(t)
-
-
 class MriSegDiffOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `mri_seg_diff(...)`.
+    Output object returned when calling `MriSegDiffParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -83,7 +64,7 @@ def mri_seg_diff_params(
     debug: bool = False,
     checkopts: bool = False,
     version: bool = False,
-) -> MriSegDiffParameters:
+) -> MriSegDiffParametersTagged:
     """
     Build parameters.
     
@@ -102,7 +83,7 @@ def mri_seg_diff_params(
         Parameter dictionary
     """
     params = {
-        "@type": "freesurfer.mri_seg_diff",
+        "@type": "freesurfer/mri_seg_diff",
         "diff": diff,
         "diff_force": diff_force,
         "debug": debug,
@@ -137,42 +118,42 @@ def mri_seg_diff_cargs(
     """
     cargs = []
     cargs.append("mri_seg_diff")
-    if params.get("seg1") is not None:
+    if params.get("seg1", None) is not None:
         cargs.extend([
             "--seg1",
-            execution.input_file(params.get("seg1"))
+            execution.input_file(params.get("seg1", None))
         ])
-    if params.get("seg2") is not None:
+    if params.get("seg2", None) is not None:
         cargs.extend([
             "--seg2",
-            execution.input_file(params.get("seg2"))
+            execution.input_file(params.get("seg2", None))
         ])
-    if params.get("seg") is not None:
+    if params.get("seg", None) is not None:
         cargs.extend([
             "--seg",
-            execution.input_file(params.get("seg"))
+            execution.input_file(params.get("seg", None))
         ])
     cargs.extend([
         "--diff",
-        params.get("diff")
+        params.get("diff", None)
     ])
-    if params.get("diff_in") is not None:
+    if params.get("diff_in", None) is not None:
         cargs.extend([
             "--diff-in",
-            execution.input_file(params.get("diff_in"))
+            execution.input_file(params.get("diff_in", None))
         ])
-    if params.get("merged") is not None:
+    if params.get("merged", None) is not None:
         cargs.extend([
             "--merged",
-            params.get("merged")
+            params.get("merged", None)
         ])
-    if params.get("diff_force"):
+    if params.get("diff_force", False):
         cargs.append("--diff-force")
-    if params.get("debug"):
+    if params.get("debug", False):
         cargs.append("--debug")
-    if params.get("checkopts"):
+    if params.get("checkopts", False):
         cargs.append("--checkopts")
-    if params.get("version"):
+    if params.get("version", False):
         cargs.append("--version")
     return cargs
 
@@ -192,8 +173,8 @@ def mri_seg_diff_outputs(
     """
     ret = MriSegDiffOutputs(
         root=execution.output_file("."),
-        diff_output=execution.output_file(params.get("diff")),
-        merged_output=execution.output_file(params.get("merged")) if (params.get("merged") is not None) else None,
+        diff_output=execution.output_file(params.get("diff", None)),
+        merged_output=execution.output_file(params.get("merged", None)) if (params.get("merged") is not None) else None,
     )
     return ret
 
@@ -283,7 +264,6 @@ def mri_seg_diff(
 __all__ = [
     "MRI_SEG_DIFF_METADATA",
     "MriSegDiffOutputs",
-    "MriSegDiffParameters",
     "mri_seg_diff",
     "mri_seg_diff_execute",
     "mri_seg_diff_params",

@@ -14,7 +14,19 @@ V_3D_SURF_MASK_METADATA = Metadata(
 
 
 V3dSurfMaskParameters = typing.TypedDict('V3dSurfMaskParameters', {
-    "@type": typing.Literal["afni.3dSurfMask"],
+    "@type": typing.NotRequired[typing.Literal["afni/3dSurfMask"]],
+    "surface_type": str,
+    "surface_file": InputPathType,
+    "prefix": str,
+    "grid_parent": InputPathType,
+    "fill_method": typing.NotRequired[str | None],
+    "surface_volume": typing.NotRequired[InputPathType | None],
+    "mask_only": bool,
+    "flip_orientation": bool,
+    "no_distance": bool,
+})
+V3dSurfMaskParametersTagged = typing.TypedDict('V3dSurfMaskParametersTagged', {
+    "@type": typing.Literal["afni/3dSurfMask"],
     "surface_type": str,
     "surface_file": InputPathType,
     "prefix": str,
@@ -27,41 +39,9 @@ V3dSurfMaskParameters = typing.TypedDict('V3dSurfMaskParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "afni.3dSurfMask": v_3d_surf_mask_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "afni.3dSurfMask": v_3d_surf_mask_outputs,
-    }.get(t)
-
-
 class V3dSurfMaskOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `v_3d_surf_mask(...)`.
+    Output object returned when calling `V3dSurfMaskParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -81,7 +61,7 @@ def v_3d_surf_mask_params(
     mask_only: bool = False,
     flip_orientation: bool = False,
     no_distance: bool = False,
-) -> V3dSurfMaskParameters:
+) -> V3dSurfMaskParametersTagged:
     """
     Build parameters.
     
@@ -101,7 +81,7 @@ def v_3d_surf_mask_params(
         Parameter dictionary
     """
     params = {
-        "@type": "afni.3dSurfMask",
+        "@type": "afni/3dSurfMask",
         "surface_type": surface_type,
         "surface_file": surface_file,
         "prefix": prefix,
@@ -132,25 +112,25 @@ def v_3d_surf_mask_cargs(
     """
     cargs = []
     cargs.append("3dSurfMask")
-    cargs.append(params.get("surface_type"))
-    cargs.append(execution.input_file(params.get("surface_file")))
-    cargs.append(params.get("prefix"))
-    cargs.append(execution.input_file(params.get("grid_parent")))
-    if params.get("fill_method") is not None:
+    cargs.append(params.get("surface_type", None))
+    cargs.append(execution.input_file(params.get("surface_file", None)))
+    cargs.append(params.get("prefix", None))
+    cargs.append(execution.input_file(params.get("grid_parent", None)))
+    if params.get("fill_method", None) is not None:
         cargs.extend([
             "-fill_method",
-            params.get("fill_method")
+            params.get("fill_method", None)
         ])
-    if params.get("surface_volume") is not None:
+    if params.get("surface_volume", None) is not None:
         cargs.extend([
             "-sv",
-            execution.input_file(params.get("surface_volume"))
+            execution.input_file(params.get("surface_volume", None))
         ])
-    if params.get("mask_only"):
+    if params.get("mask_only", False):
         cargs.append("-mask_only")
-    if params.get("flip_orientation"):
+    if params.get("flip_orientation", False):
         cargs.append("-flip_orientation")
-    if params.get("no_distance"):
+    if params.get("no_distance", False):
         cargs.append("-no_dist")
     return cargs
 
@@ -170,8 +150,8 @@ def v_3d_surf_mask_outputs(
     """
     ret = V3dSurfMaskOutputs(
         root=execution.output_file("."),
-        output_mask=execution.output_file(params.get("prefix") + ".m+orig.BRIK"),
-        distance_dataset=execution.output_file(params.get("prefix") + ".d+orig.BRIK"),
+        output_mask=execution.output_file(params.get("prefix", None) + ".m+orig.BRIK"),
+        distance_dataset=execution.output_file(params.get("prefix", None) + ".d+orig.BRIK"),
     )
     return ret
 
@@ -259,7 +239,6 @@ def v_3d_surf_mask(
 
 __all__ = [
     "V3dSurfMaskOutputs",
-    "V3dSurfMaskParameters",
     "V_3D_SURF_MASK_METADATA",
     "v_3d_surf_mask",
     "v_3d_surf_mask_execute",

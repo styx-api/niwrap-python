@@ -14,7 +14,31 @@ MAKE_BIANCA_MASK_METADATA = Metadata(
 
 
 MakeBiancaMaskParameters = typing.TypedDict('MakeBiancaMaskParameters', {
-    "@type": typing.Literal["fsl.make_bianca_mask"],
+    "@type": typing.NotRequired[typing.Literal["fsl/make_bianca_mask"]],
+    "input_image": InputPathType,
+    "output_image": str,
+    "overlay_flag": bool,
+    "binary_mask_flag": bool,
+    "approx_skull_flag": bool,
+    "no_seg_output_flag": bool,
+    "fractional_intensity": typing.NotRequired[float | None],
+    "vg_fractional_intensity": typing.NotRequired[float | None],
+    "head_radius": typing.NotRequired[float | None],
+    "center_of_gravity": typing.NotRequired[str | None],
+    "thresholding_flag": bool,
+    "vtk_mesh": bool,
+    "robust_iters_flag": bool,
+    "residual_optic_cleanup_flag": bool,
+    "reduce_bias_flag": bool,
+    "slice_padding_flag": bool,
+    "whole_set_mask_flag": bool,
+    "additional_surfaces_flag": bool,
+    "additional_surfaces_t2": typing.NotRequired[InputPathType | None],
+    "verbose_flag": bool,
+    "debug_flag": bool,
+})
+MakeBiancaMaskParametersTagged = typing.TypedDict('MakeBiancaMaskParametersTagged', {
+    "@type": typing.Literal["fsl/make_bianca_mask"],
     "input_image": InputPathType,
     "output_image": str,
     "overlay_flag": bool,
@@ -39,41 +63,9 @@ MakeBiancaMaskParameters = typing.TypedDict('MakeBiancaMaskParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "fsl.make_bianca_mask": make_bianca_mask_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "fsl.make_bianca_mask": make_bianca_mask_outputs,
-    }.get(t)
-
-
 class MakeBiancaMaskOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `make_bianca_mask(...)`.
+    Output object returned when calling `MakeBiancaMaskParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -103,7 +95,7 @@ def make_bianca_mask_params(
     additional_surfaces_t2: InputPathType | None = None,
     verbose_flag: bool = False,
     debug_flag: bool = False,
-) -> MakeBiancaMaskParameters:
+) -> MakeBiancaMaskParametersTagged:
     """
     Build parameters.
     
@@ -145,7 +137,7 @@ def make_bianca_mask_params(
         Parameter dictionary
     """
     params = {
-        "@type": "fsl.make_bianca_mask",
+        "@type": "fsl/make_bianca_mask",
         "input_image": input_image,
         "output_image": output_image,
         "overlay_flag": overlay_flag,
@@ -191,60 +183,60 @@ def make_bianca_mask_cargs(
     """
     cargs = []
     cargs.append("make_bianca_mask")
-    cargs.append(execution.input_file(params.get("input_image")))
-    cargs.append(params.get("output_image"))
-    if params.get("overlay_flag"):
+    cargs.append(execution.input_file(params.get("input_image", None)))
+    cargs.append(params.get("output_image", None))
+    if params.get("overlay_flag", False):
         cargs.append("-o")
-    if params.get("binary_mask_flag"):
+    if params.get("binary_mask_flag", False):
         cargs.append("-m")
-    if params.get("approx_skull_flag"):
+    if params.get("approx_skull_flag", False):
         cargs.append("-s")
-    if params.get("no_seg_output_flag"):
+    if params.get("no_seg_output_flag", False):
         cargs.append("-n")
-    if params.get("fractional_intensity") is not None:
+    if params.get("fractional_intensity", None) is not None:
         cargs.extend([
             "-f",
-            str(params.get("fractional_intensity"))
+            str(params.get("fractional_intensity", None))
         ])
-    if params.get("vg_fractional_intensity") is not None:
+    if params.get("vg_fractional_intensity", None) is not None:
         cargs.extend([
             "-g",
-            str(params.get("vg_fractional_intensity"))
+            str(params.get("vg_fractional_intensity", None))
         ])
-    if params.get("head_radius") is not None:
+    if params.get("head_radius", None) is not None:
         cargs.extend([
             "-r",
-            str(params.get("head_radius"))
+            str(params.get("head_radius", None))
         ])
-    if params.get("center_of_gravity") is not None:
+    if params.get("center_of_gravity", None) is not None:
         cargs.extend([
             "-c",
-            params.get("center_of_gravity")
+            params.get("center_of_gravity", None)
         ])
-    if params.get("thresholding_flag"):
+    if params.get("thresholding_flag", False):
         cargs.append("-t")
-    if params.get("vtk_mesh"):
+    if params.get("vtk_mesh", False):
         cargs.append("-e")
-    if params.get("robust_iters_flag"):
+    if params.get("robust_iters_flag", False):
         cargs.append("-R")
-    if params.get("residual_optic_cleanup_flag"):
+    if params.get("residual_optic_cleanup_flag", False):
         cargs.append("-S")
-    if params.get("reduce_bias_flag"):
+    if params.get("reduce_bias_flag", False):
         cargs.append("-B")
-    if params.get("slice_padding_flag"):
+    if params.get("slice_padding_flag", False):
         cargs.append("-Z")
-    if params.get("whole_set_mask_flag"):
+    if params.get("whole_set_mask_flag", False):
         cargs.append("-F")
-    if params.get("additional_surfaces_flag"):
+    if params.get("additional_surfaces_flag", False):
         cargs.append("-A")
-    if params.get("additional_surfaces_t2") is not None:
+    if params.get("additional_surfaces_t2", None) is not None:
         cargs.extend([
             "-A2",
-            execution.input_file(params.get("additional_surfaces_t2"))
+            execution.input_file(params.get("additional_surfaces_t2", None))
         ])
-    if params.get("verbose_flag"):
+    if params.get("verbose_flag", False):
         cargs.append("-v")
-    if params.get("debug_flag"):
+    if params.get("debug_flag", False):
         cargs.append("-d")
     return cargs
 
@@ -264,7 +256,7 @@ def make_bianca_mask_outputs(
     """
     ret = MakeBiancaMaskOutputs(
         root=execution.output_file("."),
-        output_image=execution.output_file(params.get("output_image")),
+        output_image=execution.output_file(params.get("output_image", None)),
     )
     return ret
 
@@ -397,7 +389,6 @@ def make_bianca_mask(
 __all__ = [
     "MAKE_BIANCA_MASK_METADATA",
     "MakeBiancaMaskOutputs",
-    "MakeBiancaMaskParameters",
     "make_bianca_mask",
     "make_bianca_mask_execute",
     "make_bianca_mask_params",

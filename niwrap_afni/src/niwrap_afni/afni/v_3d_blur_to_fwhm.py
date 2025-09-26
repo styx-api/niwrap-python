@@ -14,7 +14,18 @@ V_3D_BLUR_TO_FWHM_METADATA = Metadata(
 
 
 V3dBlurToFwhmParameters = typing.TypedDict('V3dBlurToFwhmParameters', {
-    "@type": typing.Literal["afni.3dBlurToFWHM"],
+    "@type": typing.NotRequired[typing.Literal["afni/3dBlurToFWHM"]],
+    "automask": bool,
+    "blurmaster": typing.NotRequired[InputPathType | None],
+    "fwhm": typing.NotRequired[float | None],
+    "fwhmxy": typing.NotRequired[float | None],
+    "in_file": InputPathType,
+    "mask": typing.NotRequired[InputPathType | None],
+    "outputtype": typing.NotRequired[typing.Literal["NIFTI", "AFNI", "NIFTI_GZ"] | None],
+    "prefix": typing.NotRequired[str | None],
+})
+V3dBlurToFwhmParametersTagged = typing.TypedDict('V3dBlurToFwhmParametersTagged', {
+    "@type": typing.Literal["afni/3dBlurToFWHM"],
     "automask": bool,
     "blurmaster": typing.NotRequired[InputPathType | None],
     "fwhm": typing.NotRequired[float | None],
@@ -26,41 +37,9 @@ V3dBlurToFwhmParameters = typing.TypedDict('V3dBlurToFwhmParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "afni.3dBlurToFWHM": v_3d_blur_to_fwhm_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "afni.3dBlurToFWHM": v_3d_blur_to_fwhm_outputs,
-    }.get(t)
-
-
 class V3dBlurToFwhmOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `v_3d_blur_to_fwhm(...)`.
+    Output object returned when calling `V3dBlurToFwhmParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -77,7 +56,7 @@ def v_3d_blur_to_fwhm_params(
     mask: InputPathType | None = None,
     outputtype: typing.Literal["NIFTI", "AFNI", "NIFTI_GZ"] | None = None,
     prefix: str | None = None,
-) -> V3dBlurToFwhmParameters:
+) -> V3dBlurToFwhmParametersTagged:
     """
     Build parameters.
     
@@ -95,7 +74,7 @@ def v_3d_blur_to_fwhm_params(
         Parameter dictionary
     """
     params = {
-        "@type": "afni.3dBlurToFWHM",
+        "@type": "afni/3dBlurToFWHM",
         "automask": automask,
         "in_file": in_file,
     }
@@ -129,38 +108,38 @@ def v_3d_blur_to_fwhm_cargs(
     """
     cargs = []
     cargs.append("3dBlurToFWHM")
-    if params.get("automask"):
+    if params.get("automask", False):
         cargs.append("-automask")
-    if params.get("blurmaster") is not None:
+    if params.get("blurmaster", None) is not None:
         cargs.extend([
             "-blurmaster",
-            execution.input_file(params.get("blurmaster"))
+            execution.input_file(params.get("blurmaster", None))
         ])
-    if params.get("fwhm") is not None:
+    if params.get("fwhm", None) is not None:
         cargs.extend([
             "-FWHM",
-            str(params.get("fwhm"))
+            str(params.get("fwhm", None))
         ])
-    if params.get("fwhmxy") is not None:
+    if params.get("fwhmxy", None) is not None:
         cargs.extend([
             "-FWHMxy",
-            str(params.get("fwhmxy"))
+            str(params.get("fwhmxy", None))
         ])
     cargs.extend([
         "-input",
-        execution.input_file(params.get("in_file"))
+        execution.input_file(params.get("in_file", None))
     ])
-    if params.get("mask") is not None:
+    if params.get("mask", None) is not None:
         cargs.extend([
             "-mask",
-            execution.input_file(params.get("mask"))
+            execution.input_file(params.get("mask", None))
         ])
-    if params.get("outputtype") is not None:
-        cargs.append(params.get("outputtype"))
-    if params.get("prefix") is not None:
+    if params.get("outputtype", None) is not None:
+        cargs.append(params.get("outputtype", None))
+    if params.get("prefix", None) is not None:
         cargs.extend([
             "-prefix",
-            params.get("prefix")
+            params.get("prefix", None)
         ])
     return cargs
 
@@ -180,7 +159,7 @@ def v_3d_blur_to_fwhm_outputs(
     """
     ret = V3dBlurToFwhmOutputs(
         root=execution.output_file("."),
-        out_file=execution.output_file(params.get("prefix")) if (params.get("prefix") is not None) else None,
+        out_file=execution.output_file(params.get("prefix", None)) if (params.get("prefix") is not None) else None,
     )
     return ret
 
@@ -264,7 +243,6 @@ def v_3d_blur_to_fwhm(
 
 __all__ = [
     "V3dBlurToFwhmOutputs",
-    "V3dBlurToFwhmParameters",
     "V_3D_BLUR_TO_FWHM_METADATA",
     "v_3d_blur_to_fwhm",
     "v_3d_blur_to_fwhm_execute",

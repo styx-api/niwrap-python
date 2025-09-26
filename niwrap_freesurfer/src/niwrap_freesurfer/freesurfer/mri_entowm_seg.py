@@ -14,7 +14,35 @@ MRI_ENTOWM_SEG_METADATA = Metadata(
 
 
 MriEntowmSegParameters = typing.TypedDict('MriEntowmSegParameters', {
-    "@type": typing.Literal["freesurfer.mri_entowm_seg"],
+    "@type": typing.NotRequired[typing.Literal["freesurfer/mri_entowm_seg"]],
+    "input_image": typing.NotRequired[InputPathType | None],
+    "output_segmentation": typing.NotRequired[str | None],
+    "recon_subjects": typing.NotRequired[list[str] | None],
+    "subjects_directory": typing.NotRequired[str | None],
+    "conform": bool,
+    "etiv": bool,
+    "tal": typing.NotRequired[str | None],
+    "write_posteriors": bool,
+    "write_volumes": bool,
+    "write_qa_stats": bool,
+    "exclude_labels": typing.NotRequired[list[str] | None],
+    "keep_ac": bool,
+    "vox_count_volumes": bool,
+    "model_weights": typing.NotRequired[str | None],
+    "color_table": typing.NotRequired[str | None],
+    "population_stats": typing.NotRequired[str | None],
+    "debug": bool,
+    "vmp": bool,
+    "threads": typing.NotRequired[float | None],
+    "seven_tesla": bool,
+    "percentile": typing.NotRequired[float | None],
+    "cuda_device": typing.NotRequired[str | None],
+    "output_base": typing.NotRequired[str | None],
+    "no_cite_sclimbic": bool,
+    "nchannels": typing.NotRequired[float | None],
+})
+MriEntowmSegParametersTagged = typing.TypedDict('MriEntowmSegParametersTagged', {
+    "@type": typing.Literal["freesurfer/mri_entowm_seg"],
     "input_image": typing.NotRequired[InputPathType | None],
     "output_segmentation": typing.NotRequired[str | None],
     "recon_subjects": typing.NotRequired[list[str] | None],
@@ -43,41 +71,9 @@ MriEntowmSegParameters = typing.TypedDict('MriEntowmSegParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "freesurfer.mri_entowm_seg": mri_entowm_seg_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "freesurfer.mri_entowm_seg": mri_entowm_seg_outputs,
-    }.get(t)
-
-
 class MriEntowmSegOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `mri_entowm_seg(...)`.
+    Output object returned when calling `MriEntowmSegParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -117,7 +113,7 @@ def mri_entowm_seg_params(
     output_base: str | None = None,
     no_cite_sclimbic: bool = False,
     nchannels: float | None = None,
-) -> MriEntowmSegParameters:
+) -> MriEntowmSegParametersTagged:
     """
     Build parameters.
     
@@ -160,7 +156,7 @@ def mri_entowm_seg_params(
         Parameter dictionary
     """
     params = {
-        "@type": "freesurfer.mri_entowm_seg",
+        "@type": "freesurfer/mri_entowm_seg",
         "conform": conform,
         "etiv": etiv,
         "write_posteriors": write_posteriors,
@@ -219,97 +215,97 @@ def mri_entowm_seg_cargs(
     """
     cargs = []
     cargs.append("mri_entowm_seg")
-    if params.get("input_image") is not None:
+    if params.get("input_image", None) is not None:
         cargs.extend([
             "-i",
-            execution.input_file(params.get("input_image"))
+            execution.input_file(params.get("input_image", None))
         ])
-    if params.get("output_segmentation") is not None:
+    if params.get("output_segmentation", None) is not None:
         cargs.extend([
             "-o",
-            params.get("output_segmentation")
+            params.get("output_segmentation", None)
         ])
-    if params.get("recon_subjects") is not None:
+    if params.get("recon_subjects", None) is not None:
         cargs.extend([
             "-s",
-            *params.get("recon_subjects")
+            *params.get("recon_subjects", None)
         ])
-    if params.get("subjects_directory") is not None:
+    if params.get("subjects_directory", None) is not None:
         cargs.extend([
             "--sd",
-            params.get("subjects_directory")
+            params.get("subjects_directory", None)
         ])
-    if params.get("conform"):
+    if params.get("conform", False):
         cargs.append("--conform")
-    if params.get("etiv"):
+    if params.get("etiv", False):
         cargs.append("--etiv")
-    if params.get("tal") is not None:
+    if params.get("tal", None) is not None:
         cargs.extend([
             "--tal",
-            params.get("tal")
+            params.get("tal", None)
         ])
-    if params.get("write_posteriors"):
+    if params.get("write_posteriors", False):
         cargs.append("--write_posteriors")
-    if params.get("write_volumes"):
+    if params.get("write_volumes", False):
         cargs.append("--write_volumes")
-    if params.get("write_qa_stats"):
+    if params.get("write_qa_stats", False):
         cargs.append("--write_qa_stats")
-    if params.get("exclude_labels") is not None:
+    if params.get("exclude_labels", None) is not None:
         cargs.extend([
             "--exclude",
-            *params.get("exclude_labels")
+            *params.get("exclude_labels", None)
         ])
-    if params.get("keep_ac"):
+    if params.get("keep_ac", False):
         cargs.append("--keep_ac")
-    if params.get("vox_count_volumes"):
+    if params.get("vox_count_volumes", False):
         cargs.append("--vox-count-volumes")
-    if params.get("model_weights") is not None:
+    if params.get("model_weights", None) is not None:
         cargs.extend([
             "--model",
-            params.get("model_weights")
+            params.get("model_weights", None)
         ])
-    if params.get("color_table") is not None:
+    if params.get("color_table", None) is not None:
         cargs.extend([
             "--ctab",
-            params.get("color_table")
+            params.get("color_table", None)
         ])
-    if params.get("population_stats") is not None:
+    if params.get("population_stats", None) is not None:
         cargs.extend([
             "--population-stats",
-            params.get("population_stats")
+            params.get("population_stats", None)
         ])
-    if params.get("debug"):
+    if params.get("debug", False):
         cargs.append("--debug")
-    if params.get("vmp"):
+    if params.get("vmp", False):
         cargs.append("--vmp")
-    if params.get("threads") is not None:
+    if params.get("threads", None) is not None:
         cargs.extend([
             "--threads",
-            str(params.get("threads"))
+            str(params.get("threads", None))
         ])
-    if params.get("seven_tesla"):
+    if params.get("seven_tesla", False):
         cargs.append("--7T")
-    if params.get("percentile") is not None:
+    if params.get("percentile", None) is not None:
         cargs.extend([
             "--percentile",
-            str(params.get("percentile"))
+            str(params.get("percentile", None))
         ])
-    if params.get("cuda_device") is not None:
+    if params.get("cuda_device", None) is not None:
         cargs.extend([
             "--cuda-device",
-            params.get("cuda_device")
+            params.get("cuda_device", None)
         ])
-    if params.get("output_base") is not None:
+    if params.get("output_base", None) is not None:
         cargs.extend([
             "--output-base",
-            params.get("output_base")
+            params.get("output_base", None)
         ])
-    if params.get("no_cite_sclimbic"):
+    if params.get("no_cite_sclimbic", False):
         cargs.append("--no-cite-sclimbic")
-    if params.get("nchannels") is not None:
+    if params.get("nchannels", None) is not None:
         cargs.extend([
             "--nchannels",
-            str(params.get("nchannels"))
+            str(params.get("nchannels", None))
         ])
     return cargs
 
@@ -329,10 +325,10 @@ def mri_entowm_seg_outputs(
     """
     ret = MriEntowmSegOutputs(
         root=execution.output_file("."),
-        output_file=execution.output_file(params.get("output_segmentation")) if (params.get("output_segmentation") is not None) else None,
-        label_posteriors=execution.output_file(params.get("output_base") + "_posterior.mgz") if (params.get("output_base") is not None) else None,
-        volume_stats=execution.output_file(params.get("output_base") + "_volumes.txt") if (params.get("output_base") is not None) else None,
-        qa_stats=execution.output_file(params.get("output_base") + "_qa_stats.txt") if (params.get("output_base") is not None) else None,
+        output_file=execution.output_file(params.get("output_segmentation", None)) if (params.get("output_segmentation") is not None) else None,
+        label_posteriors=execution.output_file(params.get("output_base", None) + "_posterior.mgz") if (params.get("output_base") is not None) else None,
+        volume_stats=execution.output_file(params.get("output_base", None) + "_volumes.txt") if (params.get("output_base") is not None) else None,
+        qa_stats=execution.output_file(params.get("output_base", None) + "_qa_stats.txt") if (params.get("output_base") is not None) else None,
     )
     return ret
 
@@ -476,7 +472,6 @@ def mri_entowm_seg(
 __all__ = [
     "MRI_ENTOWM_SEG_METADATA",
     "MriEntowmSegOutputs",
-    "MriEntowmSegParameters",
     "mri_entowm_seg",
     "mri_entowm_seg_execute",
     "mri_entowm_seg_params",

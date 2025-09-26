@@ -14,7 +14,22 @@ SAMSEG2RECON_METADATA = Metadata(
 
 
 Samseg2reconParameters = typing.TypedDict('Samseg2reconParameters', {
-    "@type": typing.Literal["freesurfer.samseg2recon"],
+    "@type": typing.NotRequired[typing.Literal["freesurfer/samseg2recon"]],
+    "subject": str,
+    "samseg_dir": typing.NotRequired[str | None],
+    "no_cc": bool,
+    "fill": bool,
+    "normalization2": bool,
+    "uchar": bool,
+    "no_keep_exc": bool,
+    "long_tp": typing.NotRequired[float | None],
+    "base": bool,
+    "mask_file": typing.NotRequired[InputPathType | None],
+    "from_recon_all": bool,
+    "force_update": bool,
+})
+Samseg2reconParametersTagged = typing.TypedDict('Samseg2reconParametersTagged', {
+    "@type": typing.Literal["freesurfer/samseg2recon"],
     "subject": str,
     "samseg_dir": typing.NotRequired[str | None],
     "no_cc": bool,
@@ -30,41 +45,9 @@ Samseg2reconParameters = typing.TypedDict('Samseg2reconParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "freesurfer.samseg2recon": samseg2recon_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "freesurfer.samseg2recon": samseg2recon_outputs,
-    }.get(t)
-
-
 class Samseg2reconOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `samseg2recon(...)`.
+    Output object returned when calling `Samseg2reconParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -90,7 +73,7 @@ def samseg2recon_params(
     mask_file: InputPathType | None = None,
     from_recon_all: bool = False,
     force_update: bool = False,
-) -> Samseg2reconParameters:
+) -> Samseg2reconParametersTagged:
     """
     Build parameters.
     
@@ -113,7 +96,7 @@ def samseg2recon_params(
         Parameter dictionary
     """
     params = {
-        "@type": "freesurfer.samseg2recon",
+        "@type": "freesurfer/samseg2recon",
         "subject": subject,
         "no_cc": no_cc,
         "fill": fill,
@@ -150,38 +133,38 @@ def samseg2recon_cargs(
     cargs.append("samseg2recon")
     cargs.extend([
         "--s",
-        params.get("subject")
+        params.get("subject", None)
     ])
-    if params.get("samseg_dir") is not None:
+    if params.get("samseg_dir", None) is not None:
         cargs.extend([
             "--samseg",
-            params.get("samseg_dir")
+            params.get("samseg_dir", None)
         ])
-    if params.get("no_cc"):
+    if params.get("no_cc", False):
         cargs.append("--no-cc")
-    if params.get("fill"):
+    if params.get("fill", False):
         cargs.append("--fill")
-    if params.get("normalization2"):
+    if params.get("normalization2", False):
         cargs.append("--normalization2")
-    if params.get("uchar"):
+    if params.get("uchar", False):
         cargs.append("--uchar")
-    if params.get("no_keep_exc"):
+    if params.get("no_keep_exc", False):
         cargs.append("--no-keep-exc")
-    if params.get("long_tp") is not None:
+    if params.get("long_tp", None) is not None:
         cargs.extend([
             "--long",
-            str(params.get("long_tp"))
+            str(params.get("long_tp", None))
         ])
-    if params.get("base"):
+    if params.get("base", False):
         cargs.append("--base")
-    if params.get("mask_file") is not None:
+    if params.get("mask_file", None) is not None:
         cargs.extend([
             "--m",
-            execution.input_file(params.get("mask_file"))
+            execution.input_file(params.get("mask_file", None))
         ])
-    if params.get("from_recon_all"):
+    if params.get("from_recon_all", False):
         cargs.append("--from-recon-all")
-    if params.get("force_update"):
+    if params.get("force_update", False):
         cargs.append("--force-update")
     return cargs
 
@@ -201,9 +184,9 @@ def samseg2recon_outputs(
     """
     ret = Samseg2reconOutputs(
         root=execution.output_file("."),
-        filled_mgz=execution.output_file(params.get("subject") + "/mri/filled.mgz"),
-        norm_mgz=execution.output_file(params.get("subject") + "/mri/norm.mgz"),
-        orig_mgz=execution.output_file(params.get("subject") + "/mri/orig/001.mgz"),
+        filled_mgz=execution.output_file(params.get("subject", None) + "/mri/filled.mgz"),
+        norm_mgz=execution.output_file(params.get("subject", None) + "/mri/norm.mgz"),
+        orig_mgz=execution.output_file(params.get("subject", None) + "/mri/orig/001.mgz"),
     )
     return ret
 
@@ -301,7 +284,6 @@ def samseg2recon(
 __all__ = [
     "SAMSEG2RECON_METADATA",
     "Samseg2reconOutputs",
-    "Samseg2reconParameters",
     "samseg2recon",
     "samseg2recon_execute",
     "samseg2recon_params",

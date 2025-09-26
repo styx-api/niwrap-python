@@ -14,7 +14,25 @@ VOL2SEGAVG_METADATA = Metadata(
 
 
 Vol2segavgParameters = typing.TypedDict('Vol2segavgParameters', {
-    "@type": typing.Literal["freesurfer.vol2segavg"],
+    "@type": typing.NotRequired[typing.Literal["freesurfer/vol2segavg"]],
+    "output_file": str,
+    "input_volume": InputPathType,
+    "registration": str,
+    "segmentation_file": InputPathType,
+    "aparc_aseg_flag": bool,
+    "subject_id": typing.NotRequired[str | None],
+    "segmentation_id": typing.NotRequired[list[float] | None],
+    "multiply_value": typing.NotRequired[float | None],
+    "no_bb_flag": bool,
+    "erode_value": typing.NotRequired[float | None],
+    "dilate_value": typing.NotRequired[float | None],
+    "wm_flag": bool,
+    "vcsf_flag": bool,
+    "xcsf_flag": bool,
+    "remove_mean_flag": bool,
+})
+Vol2segavgParametersTagged = typing.TypedDict('Vol2segavgParametersTagged', {
+    "@type": typing.Literal["freesurfer/vol2segavg"],
     "output_file": str,
     "input_volume": InputPathType,
     "registration": str,
@@ -33,41 +51,9 @@ Vol2segavgParameters = typing.TypedDict('Vol2segavgParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "freesurfer.vol2segavg": vol2segavg_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "freesurfer.vol2segavg": vol2segavg_outputs,
-    }.get(t)
-
-
 class Vol2segavgOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `vol2segavg(...)`.
+    Output object returned when calling `Vol2segavgParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -91,7 +77,7 @@ def vol2segavg_params(
     vcsf_flag: bool = False,
     xcsf_flag: bool = False,
     remove_mean_flag: bool = False,
-) -> Vol2segavgParameters:
+) -> Vol2segavgParametersTagged:
     """
     Build parameters.
     
@@ -116,7 +102,7 @@ def vol2segavg_params(
         Parameter dictionary
     """
     params = {
-        "@type": "freesurfer.vol2segavg",
+        "@type": "freesurfer/vol2segavg",
         "output_file": output_file,
         "input_volume": input_volume,
         "registration": registration,
@@ -158,56 +144,56 @@ def vol2segavg_cargs(
     cargs.append("vol2segavg")
     cargs.extend([
         "--o",
-        params.get("output_file")
+        params.get("output_file", None)
     ])
     cargs.extend([
         "--i",
-        execution.input_file(params.get("input_volume"))
+        execution.input_file(params.get("input_volume", None))
     ])
     cargs.extend([
         "--reg",
-        params.get("registration")
+        params.get("registration", None)
     ])
     cargs.extend([
         "--seg",
-        execution.input_file(params.get("segmentation_file"))
+        execution.input_file(params.get("segmentation_file", None))
     ])
-    if params.get("aparc_aseg_flag"):
+    if params.get("aparc_aseg_flag", False):
         cargs.append("--aparc+aseg")
-    if params.get("subject_id") is not None:
+    if params.get("subject_id", None) is not None:
         cargs.extend([
             "--s",
-            params.get("subject_id")
+            params.get("subject_id", None)
         ])
-    if params.get("segmentation_id") is not None:
+    if params.get("segmentation_id", None) is not None:
         cargs.extend([
             "--segid",
-            *map(str, params.get("segmentation_id"))
+            *map(str, params.get("segmentation_id", None))
         ])
-    if params.get("multiply_value") is not None:
+    if params.get("multiply_value", None) is not None:
         cargs.extend([
             "--mul",
-            str(params.get("multiply_value"))
+            str(params.get("multiply_value", None))
         ])
-    if params.get("no_bb_flag"):
+    if params.get("no_bb_flag", False):
         cargs.append("--no-bb")
-    if params.get("erode_value") is not None:
+    if params.get("erode_value", None) is not None:
         cargs.extend([
             "--erode",
-            str(params.get("erode_value"))
+            str(params.get("erode_value", None))
         ])
-    if params.get("dilate_value") is not None:
+    if params.get("dilate_value", None) is not None:
         cargs.extend([
             "--dilate",
-            str(params.get("dilate_value"))
+            str(params.get("dilate_value", None))
         ])
-    if params.get("wm_flag"):
+    if params.get("wm_flag", False):
         cargs.append("--wm")
-    if params.get("vcsf_flag"):
+    if params.get("vcsf_flag", False):
         cargs.append("--vcsf")
-    if params.get("xcsf_flag"):
+    if params.get("xcsf_flag", False):
         cargs.append("--xcsf")
-    if params.get("remove_mean_flag"):
+    if params.get("remove_mean_flag", False):
         cargs.append("--remove-mean")
     return cargs
 
@@ -227,7 +213,7 @@ def vol2segavg_outputs(
     """
     ret = Vol2segavgOutputs(
         root=execution.output_file("."),
-        output_file=execution.output_file(params.get("output_file")),
+        output_file=execution.output_file(params.get("output_file", None)),
     )
     return ret
 
@@ -333,7 +319,6 @@ def vol2segavg(
 __all__ = [
     "VOL2SEGAVG_METADATA",
     "Vol2segavgOutputs",
-    "Vol2segavgParameters",
     "vol2segavg",
     "vol2segavg_execute",
     "vol2segavg_params",

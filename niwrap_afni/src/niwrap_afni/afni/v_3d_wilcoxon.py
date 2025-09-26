@@ -14,7 +14,15 @@ V_3D_WILCOXON_METADATA = Metadata(
 
 
 V3dWilcoxonParameters = typing.TypedDict('V3dWilcoxonParameters', {
-    "@type": typing.Literal["afni.3dWilcoxon"],
+    "@type": typing.NotRequired[typing.Literal["afni/3dWilcoxon"]],
+    "workmem": typing.NotRequired[float | None],
+    "voxel": typing.NotRequired[float | None],
+    "dset1_x": list[InputPathType],
+    "dset2_y": list[InputPathType],
+    "output_prefix": str,
+})
+V3dWilcoxonParametersTagged = typing.TypedDict('V3dWilcoxonParametersTagged', {
+    "@type": typing.Literal["afni/3dWilcoxon"],
     "workmem": typing.NotRequired[float | None],
     "voxel": typing.NotRequired[float | None],
     "dset1_x": list[InputPathType],
@@ -23,41 +31,9 @@ V3dWilcoxonParameters = typing.TypedDict('V3dWilcoxonParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "afni.3dWilcoxon": v_3d_wilcoxon_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "afni.3dWilcoxon": v_3d_wilcoxon_outputs,
-    }.get(t)
-
-
 class V3dWilcoxonOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `v_3d_wilcoxon(...)`.
+    Output object returned when calling `V3dWilcoxonParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -71,7 +47,7 @@ def v_3d_wilcoxon_params(
     output_prefix: str,
     workmem: float | None = None,
     voxel: float | None = None,
-) -> V3dWilcoxonParameters:
+) -> V3dWilcoxonParametersTagged:
     """
     Build parameters.
     
@@ -88,7 +64,7 @@ def v_3d_wilcoxon_params(
         Parameter dictionary
     """
     params = {
-        "@type": "afni.3dWilcoxon",
+        "@type": "afni/3dWilcoxon",
         "dset1_x": dset1_x,
         "dset2_y": dset2_y,
         "output_prefix": output_prefix,
@@ -115,27 +91,27 @@ def v_3d_wilcoxon_cargs(
     """
     cargs = []
     cargs.append("3dWilcoxon")
-    if params.get("workmem") is not None:
+    if params.get("workmem", None) is not None:
         cargs.extend([
             "-workmem",
-            str(params.get("workmem"))
+            str(params.get("workmem", None))
         ])
-    if params.get("voxel") is not None:
+    if params.get("voxel", None) is not None:
         cargs.extend([
             "-voxel",
-            str(params.get("voxel"))
+            str(params.get("voxel", None))
         ])
     cargs.extend([
         "-dset 1",
-        *[execution.input_file(f) for f in params.get("dset1_x")]
+        *[execution.input_file(f) for f in params.get("dset1_x", None)]
     ])
     cargs.extend([
         "-dset 2",
-        *[execution.input_file(f) for f in params.get("dset2_y")]
+        *[execution.input_file(f) for f in params.get("dset2_y", None)]
     ])
     cargs.extend([
         "-out",
-        params.get("output_prefix")
+        params.get("output_prefix", None)
     ])
     return cargs
 
@@ -155,7 +131,7 @@ def v_3d_wilcoxon_outputs(
     """
     ret = V3dWilcoxonOutputs(
         root=execution.output_file("."),
-        output_file=execution.output_file(params.get("output_prefix")),
+        output_file=execution.output_file(params.get("output_prefix", None)),
     )
     return ret
 
@@ -232,7 +208,6 @@ def v_3d_wilcoxon(
 
 __all__ = [
     "V3dWilcoxonOutputs",
-    "V3dWilcoxonParameters",
     "V_3D_WILCOXON_METADATA",
     "v_3d_wilcoxon",
     "v_3d_wilcoxon_execute",

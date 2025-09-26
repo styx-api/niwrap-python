@@ -14,7 +14,16 @@ IMAGE_SET_STATISTICS_METADATA = Metadata(
 
 
 ImageSetStatisticsParameters = typing.TypedDict('ImageSetStatisticsParameters', {
-    "@type": typing.Literal["ants.ImageSetStatistics"],
+    "@type": typing.NotRequired[typing.Literal["ants/ImageSetStatistics"]],
+    "image_dimension": int,
+    "controls_list": InputPathType,
+    "output_image": str,
+    "which_stat": typing.Literal[0, 1, 2, 3, 4, 5, 6, 7],
+    "roi": typing.NotRequired[InputPathType | None],
+    "imagelist2": typing.NotRequired[InputPathType | None],
+})
+ImageSetStatisticsParametersTagged = typing.TypedDict('ImageSetStatisticsParametersTagged', {
+    "@type": typing.Literal["ants/ImageSetStatistics"],
     "image_dimension": int,
     "controls_list": InputPathType,
     "output_image": str,
@@ -24,41 +33,9 @@ ImageSetStatisticsParameters = typing.TypedDict('ImageSetStatisticsParameters', 
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "ants.ImageSetStatistics": image_set_statistics_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "ants.ImageSetStatistics": image_set_statistics_outputs,
-    }.get(t)
-
-
 class ImageSetStatisticsOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `image_set_statistics(...)`.
+    Output object returned when calling `ImageSetStatisticsParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -73,7 +50,7 @@ def image_set_statistics_params(
     which_stat: typing.Literal[0, 1, 2, 3, 4, 5, 6, 7],
     roi: InputPathType | None = None,
     imagelist2: InputPathType | None = None,
-) -> ImageSetStatisticsParameters:
+) -> ImageSetStatisticsParametersTagged:
     """
     Build parameters.
     
@@ -95,7 +72,7 @@ def image_set_statistics_params(
         Parameter dictionary
     """
     params = {
-        "@type": "ants.ImageSetStatistics",
+        "@type": "ants/ImageSetStatistics",
         "image_dimension": image_dimension,
         "controls_list": controls_list,
         "output_image": output_image,
@@ -123,28 +100,28 @@ def image_set_statistics_cargs(
     """
     cargs = []
     cargs.append("ImageSetStatistics")
-    cargs.append(str(params.get("image_dimension")))
+    cargs.append(str(params.get("image_dimension", None)))
     cargs.extend([
         "[CONTROLS_LIST]",
-        execution.input_file(params.get("controls_list"))
+        execution.input_file(params.get("controls_list", None))
     ])
     cargs.extend([
         "[OUTPUT_IMAGE]",
-        params.get("output_image")
+        params.get("output_image", None)
     ])
     cargs.extend([
         "[WHICH_STAT]",
-        str(params.get("which_stat"))
+        str(params.get("which_stat", None))
     ])
-    if params.get("roi") is not None:
+    if params.get("roi", None) is not None:
         cargs.extend([
             "[ROI]",
-            execution.input_file(params.get("roi"))
+            execution.input_file(params.get("roi", None))
         ])
-    if params.get("imagelist2") is not None:
+    if params.get("imagelist2", None) is not None:
         cargs.extend([
             "[IMAGELIST2]",
-            execution.input_file(params.get("imagelist2"))
+            execution.input_file(params.get("imagelist2", None))
         ])
     return cargs
 
@@ -164,7 +141,7 @@ def image_set_statistics_outputs(
     """
     ret = ImageSetStatisticsOutputs(
         root=execution.output_file("."),
-        computed_statistics_image=execution.output_file(params.get("output_image")),
+        computed_statistics_image=execution.output_file(params.get("output_image", None)),
     )
     return ret
 
@@ -251,7 +228,6 @@ def image_set_statistics(
 __all__ = [
     "IMAGE_SET_STATISTICS_METADATA",
     "ImageSetStatisticsOutputs",
-    "ImageSetStatisticsParameters",
     "image_set_statistics",
     "image_set_statistics_execute",
     "image_set_statistics_params",

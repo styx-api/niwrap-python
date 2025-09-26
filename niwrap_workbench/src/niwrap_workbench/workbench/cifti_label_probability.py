@@ -14,48 +14,22 @@ CIFTI_LABEL_PROBABILITY_METADATA = Metadata(
 
 
 CiftiLabelProbabilityParameters = typing.TypedDict('CiftiLabelProbabilityParameters', {
-    "@type": typing.Literal["workbench.cifti-label-probability"],
+    "@type": typing.NotRequired[typing.Literal["workbench/cifti-label-probability"]],
+    "label_maps": InputPathType,
+    "probability_dscalar_out": str,
+    "opt_exclude_unlabeled": bool,
+})
+CiftiLabelProbabilityParametersTagged = typing.TypedDict('CiftiLabelProbabilityParametersTagged', {
+    "@type": typing.Literal["workbench/cifti-label-probability"],
     "label_maps": InputPathType,
     "probability_dscalar_out": str,
     "opt_exclude_unlabeled": bool,
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "workbench.cifti-label-probability": cifti_label_probability_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "workbench.cifti-label-probability": cifti_label_probability_outputs,
-    }.get(t)
-
-
 class CiftiLabelProbabilityOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `cifti_label_probability(...)`.
+    Output object returned when calling `CiftiLabelProbabilityParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -67,7 +41,7 @@ def cifti_label_probability_params(
     label_maps: InputPathType,
     probability_dscalar_out: str,
     opt_exclude_unlabeled: bool = False,
-) -> CiftiLabelProbabilityParameters:
+) -> CiftiLabelProbabilityParametersTagged:
     """
     Build parameters.
     
@@ -82,7 +56,7 @@ def cifti_label_probability_params(
         Parameter dictionary
     """
     params = {
-        "@type": "workbench.cifti-label-probability",
+        "@type": "workbench/cifti-label-probability",
         "label_maps": label_maps,
         "probability_dscalar_out": probability_dscalar_out,
         "opt_exclude_unlabeled": opt_exclude_unlabeled,
@@ -106,9 +80,9 @@ def cifti_label_probability_cargs(
     cargs = []
     cargs.append("wb_command")
     cargs.append("-cifti-label-probability")
-    cargs.append(execution.input_file(params.get("label_maps")))
-    cargs.append(params.get("probability_dscalar_out"))
-    if params.get("opt_exclude_unlabeled"):
+    cargs.append(execution.input_file(params.get("label_maps", None)))
+    cargs.append(params.get("probability_dscalar_out", None))
+    if params.get("opt_exclude_unlabeled", False):
         cargs.append("-exclude-unlabeled")
     return cargs
 
@@ -128,7 +102,7 @@ def cifti_label_probability_outputs(
     """
     ret = CiftiLabelProbabilityOutputs(
         root=execution.output_file("."),
-        probability_dscalar_out=execution.output_file(params.get("probability_dscalar_out")),
+        probability_dscalar_out=execution.output_file(params.get("probability_dscalar_out", None)),
     )
     return ret
 
@@ -206,7 +180,6 @@ def cifti_label_probability(
 __all__ = [
     "CIFTI_LABEL_PROBABILITY_METADATA",
     "CiftiLabelProbabilityOutputs",
-    "CiftiLabelProbabilityParameters",
     "cifti_label_probability",
     "cifti_label_probability_execute",
     "cifti_label_probability_params",

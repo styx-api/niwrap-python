@@ -14,7 +14,34 @@ MRI_DEFACER_METADATA = Metadata(
 
 
 MriDefacerParameters = typing.TypedDict('MriDefacerParameters', {
-    "@type": typing.Literal["freesurfer.mri_defacer"],
+    "@type": typing.NotRequired[typing.Literal["freesurfer/mri_defacer"]],
+    "input_volume": InputPathType,
+    "headmask": InputPathType,
+    "tempsurf": InputPathType,
+    "templabel": typing.NotRequired[list[InputPathType] | None],
+    "watermark": typing.NotRequired[float | None],
+    "defaced_volume": str,
+    "facemask": typing.NotRequired[str | None],
+    "fill_constants": typing.NotRequired[list[float] | None],
+    "exclude_mask": typing.NotRequired[InputPathType | None],
+    "tempreg": typing.NotRequired[InputPathType | None],
+    "minsurfpath": typing.NotRequired[str | None],
+    "maxsurfpath": typing.NotRequired[str | None],
+    "distbounds": typing.NotRequired[InputPathType | None],
+    "distoverlay": typing.NotRequired[InputPathType | None],
+    "distdat": typing.NotRequired[InputPathType | None],
+    "statspath": typing.NotRequired[InputPathType | None],
+    "output_tempsurf": typing.NotRequired[InputPathType | None],
+    "apply_to_volume": typing.NotRequired[list[str] | None],
+    "ripple_center": typing.NotRequired[list[float] | None],
+    "apply_ripple": typing.NotRequired[list[str] | None],
+    "diagnostic_level": typing.NotRequired[float | None],
+    "debug": bool,
+    "checkopts": bool,
+    "version": bool,
+})
+MriDefacerParametersTagged = typing.TypedDict('MriDefacerParametersTagged', {
+    "@type": typing.Literal["freesurfer/mri_defacer"],
     "input_volume": InputPathType,
     "headmask": InputPathType,
     "tempsurf": InputPathType,
@@ -42,40 +69,9 @@ MriDefacerParameters = typing.TypedDict('MriDefacerParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "freesurfer.mri_defacer": mri_defacer_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-    }.get(t)
-
-
 class MriDefacerOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `mri_defacer(...)`.
+    Output object returned when calling `MriDefacerParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -106,7 +102,7 @@ def mri_defacer_params(
     debug: bool = False,
     checkopts: bool = False,
     version: bool = False,
-) -> MriDefacerParameters:
+) -> MriDefacerParametersTagged:
     """
     Build parameters.
     
@@ -139,7 +135,7 @@ def mri_defacer_params(
         Parameter dictionary
     """
     params = {
-        "@type": "freesurfer.mri_defacer",
+        "@type": "freesurfer/mri_defacer",
         "input_volume": input_volume,
         "headmask": headmask,
         "tempsurf": tempsurf,
@@ -202,110 +198,110 @@ def mri_defacer_cargs(
     cargs.append("mri_defacer")
     cargs.extend([
         "-i",
-        execution.input_file(params.get("input_volume"))
+        execution.input_file(params.get("input_volume", None))
     ])
     cargs.extend([
         "-hm",
-        execution.input_file(params.get("headmask"))
+        execution.input_file(params.get("headmask", None))
     ])
     cargs.extend([
         "-ts",
-        execution.input_file(params.get("tempsurf"))
+        execution.input_file(params.get("tempsurf", None))
     ])
-    if params.get("templabel") is not None:
+    if params.get("templabel", None) is not None:
         cargs.extend([
             "--l",
-            *[execution.input_file(f) for f in params.get("templabel")]
+            *[execution.input_file(f) for f in params.get("templabel", None)]
         ])
-    if params.get("watermark") is not None:
+    if params.get("watermark", None) is not None:
         cargs.extend([
             "--w",
-            str(params.get("watermark"))
+            str(params.get("watermark", None))
         ])
     cargs.extend([
         "-o",
-        params.get("defaced_volume")
+        params.get("defaced_volume", None)
     ])
-    if params.get("facemask") is not None:
+    if params.get("facemask", None) is not None:
         cargs.extend([
             "--m",
-            params.get("facemask")
+            params.get("facemask", None)
         ])
-    if params.get("fill_constants") is not None:
+    if params.get("fill_constants", None) is not None:
         cargs.extend([
             "--fill-const",
-            *map(str, params.get("fill_constants"))
+            *map(str, params.get("fill_constants", None))
         ])
-    if params.get("exclude_mask") is not None:
+    if params.get("exclude_mask", None) is not None:
         cargs.extend([
             "--xmask",
-            execution.input_file(params.get("exclude_mask"))
+            execution.input_file(params.get("exclude_mask", None))
         ])
-    if params.get("tempreg") is not None:
+    if params.get("tempreg", None) is not None:
         cargs.extend([
             "--reg",
-            execution.input_file(params.get("tempreg"))
+            execution.input_file(params.get("tempreg", None))
         ])
-    if params.get("minsurfpath") is not None:
+    if params.get("minsurfpath", None) is not None:
         cargs.extend([
             "--min",
-            params.get("minsurfpath")
+            params.get("minsurfpath", None)
         ])
-    if params.get("maxsurfpath") is not None:
+    if params.get("maxsurfpath", None) is not None:
         cargs.extend([
             "--max",
-            params.get("maxsurfpath")
+            params.get("maxsurfpath", None)
         ])
-    if params.get("distbounds") is not None:
+    if params.get("distbounds", None) is not None:
         cargs.extend([
             "--distbounds",
-            execution.input_file(params.get("distbounds"))
+            execution.input_file(params.get("distbounds", None))
         ])
-    if params.get("distoverlay") is not None:
+    if params.get("distoverlay", None) is not None:
         cargs.extend([
             "--distoverlay",
-            execution.input_file(params.get("distoverlay"))
+            execution.input_file(params.get("distoverlay", None))
         ])
-    if params.get("distdat") is not None:
+    if params.get("distdat", None) is not None:
         cargs.extend([
             "--distdat",
-            execution.input_file(params.get("distdat"))
+            execution.input_file(params.get("distdat", None))
         ])
-    if params.get("statspath") is not None:
+    if params.get("statspath", None) is not None:
         cargs.extend([
             "--stats",
-            execution.input_file(params.get("statspath"))
+            execution.input_file(params.get("statspath", None))
         ])
-    if params.get("output_tempsurf") is not None:
+    if params.get("output_tempsurf", None) is not None:
         cargs.extend([
             "--ots",
-            execution.input_file(params.get("output_tempsurf"))
+            execution.input_file(params.get("output_tempsurf", None))
         ])
-    if params.get("apply_to_volume") is not None:
+    if params.get("apply_to_volume", None) is not None:
         cargs.extend([
             "--apply",
-            *params.get("apply_to_volume")
+            *params.get("apply_to_volume", None)
         ])
-    if params.get("ripple_center") is not None:
+    if params.get("ripple_center", None) is not None:
         cargs.extend([
             "--ripple-center",
-            *map(str, params.get("ripple_center"))
+            *map(str, params.get("ripple_center", None))
         ])
-    if params.get("apply_ripple") is not None:
+    if params.get("apply_ripple", None) is not None:
         cargs.extend([
             "--apply-ripple",
-            *params.get("apply_ripple")
+            *params.get("apply_ripple", None)
         ])
-    if params.get("diagnostic_level") is not None:
+    if params.get("diagnostic_level", None) is not None:
         cargs.extend([
             "--gdiag",
-            str(params.get("diagnostic_level"))
+            str(params.get("diagnostic_level", None))
         ])
-    if params.get("debug"):
+    if params.get("debug", False):
         cargs.append("--debug")
-    if params.get("checkopts"):
+    if params.get("checkopts", False):
         cargs.append("--checkopts")
-    if params.get("version"):
+    if params.get("version", False):
         cargs.append("--version")
     return cargs
 
@@ -454,7 +450,6 @@ def mri_defacer(
 __all__ = [
     "MRI_DEFACER_METADATA",
     "MriDefacerOutputs",
-    "MriDefacerParameters",
     "mri_defacer",
     "mri_defacer_execute",
     "mri_defacer_params",

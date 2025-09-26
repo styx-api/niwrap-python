@@ -14,28 +14,56 @@ SHCONV_METADATA = Metadata(
 
 
 ShconvVariousStringParameters = typing.TypedDict('ShconvVariousStringParameters', {
-    "@type": typing.Literal["mrtrix.shconv.VariousString"],
+    "@type": typing.NotRequired[typing.Literal["VariousString"]],
+    "obj": str,
+})
+ShconvVariousStringParametersTagged = typing.TypedDict('ShconvVariousStringParametersTagged', {
+    "@type": typing.Literal["VariousString"],
     "obj": str,
 })
 
 
 ShconvVariousFileParameters = typing.TypedDict('ShconvVariousFileParameters', {
-    "@type": typing.Literal["mrtrix.shconv.VariousFile"],
+    "@type": typing.NotRequired[typing.Literal["VariousFile"]],
+    "obj": InputPathType,
+})
+ShconvVariousFileParametersTagged = typing.TypedDict('ShconvVariousFileParametersTagged', {
+    "@type": typing.Literal["VariousFile"],
     "obj": InputPathType,
 })
 
 
 ShconvConfigParameters = typing.TypedDict('ShconvConfigParameters', {
-    "@type": typing.Literal["mrtrix.shconv.config"],
+    "@type": typing.NotRequired[typing.Literal["config"]],
+    "key": str,
+    "value": str,
+})
+ShconvConfigParametersTagged = typing.TypedDict('ShconvConfigParametersTagged', {
+    "@type": typing.Literal["config"],
     "key": str,
     "value": str,
 })
 
 
 ShconvParameters = typing.TypedDict('ShconvParameters', {
-    "@type": typing.Literal["mrtrix.shconv"],
+    "@type": typing.NotRequired[typing.Literal["mrtrix/shconv"]],
     "datatype": typing.NotRequired[str | None],
-    "strides": typing.NotRequired[typing.Union[ShconvVariousStringParameters, ShconvVariousFileParameters] | None],
+    "strides": typing.NotRequired[typing.Union[ShconvVariousStringParametersTagged, ShconvVariousFileParametersTagged] | None],
+    "info": bool,
+    "quiet": bool,
+    "debug": bool,
+    "force": bool,
+    "nthreads": typing.NotRequired[int | None],
+    "config": typing.NotRequired[list[ShconvConfigParameters] | None],
+    "help": bool,
+    "version": bool,
+    "odf_response": list[str],
+    "SH_out": str,
+})
+ShconvParametersTagged = typing.TypedDict('ShconvParametersTagged', {
+    "@type": typing.Literal["mrtrix/shconv"],
+    "datatype": typing.NotRequired[str | None],
+    "strides": typing.NotRequired[typing.Union[ShconvVariousStringParametersTagged, ShconvVariousFileParametersTagged] | None],
     "info": bool,
     "quiet": bool,
     "debug": bool,
@@ -49,7 +77,7 @@ ShconvParameters = typing.TypedDict('ShconvParameters', {
 })
 
 
-def dyn_cargs(
+def shconv_strides_cargs_dyn_fn(
     t: str,
 ) -> typing.Any:
     """
@@ -61,14 +89,12 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "mrtrix.shconv": shconv_cargs,
-        "mrtrix.shconv.VariousString": shconv_various_string_cargs,
-        "mrtrix.shconv.VariousFile": shconv_various_file_cargs,
-        "mrtrix.shconv.config": shconv_config_cargs,
+        "VariousString": shconv_various_string_cargs,
+        "VariousFile": shconv_various_file_cargs,
     }.get(t)
 
 
-def dyn_outputs(
+def shconv_strides_outputs_dyn_fn(
     t: str,
 ) -> typing.Any:
     """
@@ -80,13 +106,12 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "mrtrix.shconv": shconv_outputs,
     }.get(t)
 
 
 def shconv_various_string_params(
     obj: str,
-) -> ShconvVariousStringParameters:
+) -> ShconvVariousStringParametersTagged:
     """
     Build parameters.
     
@@ -96,7 +121,7 @@ def shconv_various_string_params(
         Parameter dictionary
     """
     params = {
-        "@type": "mrtrix.shconv.VariousString",
+        "@type": "VariousString",
         "obj": obj,
     }
     return params
@@ -116,13 +141,13 @@ def shconv_various_string_cargs(
         Command-line arguments.
     """
     cargs = []
-    cargs.append(params.get("obj"))
+    cargs.append(params.get("obj", None))
     return cargs
 
 
 def shconv_various_file_params(
     obj: InputPathType,
-) -> ShconvVariousFileParameters:
+) -> ShconvVariousFileParametersTagged:
     """
     Build parameters.
     
@@ -132,7 +157,7 @@ def shconv_various_file_params(
         Parameter dictionary
     """
     params = {
-        "@type": "mrtrix.shconv.VariousFile",
+        "@type": "VariousFile",
         "obj": obj,
     }
     return params
@@ -152,14 +177,14 @@ def shconv_various_file_cargs(
         Command-line arguments.
     """
     cargs = []
-    cargs.append(execution.input_file(params.get("obj")))
+    cargs.append(execution.input_file(params.get("obj", None)))
     return cargs
 
 
 def shconv_config_params(
     key: str,
     value: str,
-) -> ShconvConfigParameters:
+) -> ShconvConfigParametersTagged:
     """
     Build parameters.
     
@@ -170,7 +195,7 @@ def shconv_config_params(
         Parameter dictionary
     """
     params = {
-        "@type": "mrtrix.shconv.config",
+        "@type": "config",
         "key": key,
         "value": value,
     }
@@ -192,14 +217,14 @@ def shconv_config_cargs(
     """
     cargs = []
     cargs.append("-config")
-    cargs.append(params.get("key"))
-    cargs.append(params.get("value"))
+    cargs.append(params.get("key", None))
+    cargs.append(params.get("value", None))
     return cargs
 
 
 class ShconvOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `shconv(...)`.
+    Output object returned when calling `ShconvParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -211,7 +236,7 @@ def shconv_params(
     odf_response: list[str],
     sh_out: str,
     datatype: str | None = None,
-    strides: typing.Union[ShconvVariousStringParameters, ShconvVariousFileParameters] | None = None,
+    strides: typing.Union[ShconvVariousStringParametersTagged, ShconvVariousFileParametersTagged] | None = None,
     info: bool = False,
     quiet: bool = False,
     debug: bool = False,
@@ -220,7 +245,7 @@ def shconv_params(
     config: list[ShconvConfigParameters] | None = None,
     help_: bool = False,
     version: bool = False,
-) -> ShconvParameters:
+) -> ShconvParametersTagged:
     """
     Build parameters.
     
@@ -253,7 +278,7 @@ def shconv_params(
         Parameter dictionary
     """
     params = {
-        "@type": "mrtrix.shconv",
+        "@type": "mrtrix/shconv",
         "info": info,
         "quiet": quiet,
         "debug": debug,
@@ -289,37 +314,37 @@ def shconv_cargs(
     """
     cargs = []
     cargs.append("shconv")
-    if params.get("datatype") is not None:
+    if params.get("datatype", None) is not None:
         cargs.extend([
             "-datatype",
-            params.get("datatype")
+            params.get("datatype", None)
         ])
-    if params.get("strides") is not None:
+    if params.get("strides", None) is not None:
         cargs.extend([
             "-strides",
-            *dyn_cargs(params.get("strides")["@type"])(params.get("strides"), execution)
+            *shconv_strides_cargs_dyn_fn(params.get("strides", None)["@type"])(params.get("strides", None), execution)
         ])
-    if params.get("info"):
+    if params.get("info", False):
         cargs.append("-info")
-    if params.get("quiet"):
+    if params.get("quiet", False):
         cargs.append("-quiet")
-    if params.get("debug"):
+    if params.get("debug", False):
         cargs.append("-debug")
-    if params.get("force"):
+    if params.get("force", False):
         cargs.append("-force")
-    if params.get("nthreads") is not None:
+    if params.get("nthreads", None) is not None:
         cargs.extend([
             "-nthreads",
-            str(params.get("nthreads"))
+            str(params.get("nthreads", None))
         ])
-    if params.get("config") is not None:
-        cargs.extend([a for c in [dyn_cargs(s["@type"])(s, execution) for s in params.get("config")] for a in c])
-    if params.get("help"):
+    if params.get("config", None) is not None:
+        cargs.extend([a for c in [shconv_config_cargs(s, execution) for s in params.get("config", None)] for a in c])
+    if params.get("help", False):
         cargs.append("-help")
-    if params.get("version"):
+    if params.get("version", False):
         cargs.append("-version")
-    cargs.extend(params.get("odf_response"))
-    cargs.append(params.get("SH_out"))
+    cargs.extend(params.get("odf_response", None))
+    cargs.append(params.get("SH_out", None))
     return cargs
 
 
@@ -338,7 +363,7 @@ def shconv_outputs(
     """
     ret = ShconvOutputs(
         root=execution.output_file("."),
-        sh_out=execution.output_file(params.get("SH_out")),
+        sh_out=execution.output_file(params.get("SH_out", None)),
     )
     return ret
 
@@ -398,7 +423,7 @@ def shconv(
     odf_response: list[str],
     sh_out: str,
     datatype: str | None = None,
-    strides: typing.Union[ShconvVariousStringParameters, ShconvVariousFileParameters] | None = None,
+    strides: typing.Union[ShconvVariousStringParametersTagged, ShconvVariousFileParametersTagged] | None = None,
     info: bool = False,
     quiet: bool = False,
     debug: bool = False,
@@ -489,11 +514,7 @@ def shconv(
 
 __all__ = [
     "SHCONV_METADATA",
-    "ShconvConfigParameters",
     "ShconvOutputs",
-    "ShconvParameters",
-    "ShconvVariousFileParameters",
-    "ShconvVariousStringParameters",
     "shconv",
     "shconv_config_params",
     "shconv_execute",

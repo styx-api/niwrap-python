@@ -14,7 +14,16 @@ MRIS_COMPUTE_VOLUME_FRACTIONS_METADATA = Metadata(
 
 
 MrisComputeVolumeFractionsParameters = typing.TypedDict('MrisComputeVolumeFractionsParameters', {
-    "@type": typing.Literal["freesurfer.mris_compute_volume_fractions"],
+    "@type": typing.NotRequired[typing.Literal["freesurfer/mris_compute_volume_fractions"]],
+    "volume_file": InputPathType,
+    "surface_file": InputPathType,
+    "accuracy": float,
+    "output_file": str,
+    "debug": bool,
+    "checkopts": bool,
+})
+MrisComputeVolumeFractionsParametersTagged = typing.TypedDict('MrisComputeVolumeFractionsParametersTagged', {
+    "@type": typing.Literal["freesurfer/mris_compute_volume_fractions"],
     "volume_file": InputPathType,
     "surface_file": InputPathType,
     "accuracy": float,
@@ -24,41 +33,9 @@ MrisComputeVolumeFractionsParameters = typing.TypedDict('MrisComputeVolumeFracti
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "freesurfer.mris_compute_volume_fractions": mris_compute_volume_fractions_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "freesurfer.mris_compute_volume_fractions": mris_compute_volume_fractions_outputs,
-    }.get(t)
-
-
 class MrisComputeVolumeFractionsOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `mris_compute_volume_fractions(...)`.
+    Output object returned when calling `MrisComputeVolumeFractionsParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -73,7 +50,7 @@ def mris_compute_volume_fractions_params(
     output_file: str,
     debug: bool = False,
     checkopts: bool = False,
-) -> MrisComputeVolumeFractionsParameters:
+) -> MrisComputeVolumeFractionsParametersTagged:
     """
     Build parameters.
     
@@ -88,7 +65,7 @@ def mris_compute_volume_fractions_params(
         Parameter dictionary
     """
     params = {
-        "@type": "freesurfer.mris_compute_volume_fractions",
+        "@type": "freesurfer/mris_compute_volume_fractions",
         "volume_file": volume_file,
         "surface_file": surface_file,
         "accuracy": accuracy,
@@ -116,23 +93,23 @@ def mris_compute_volume_fractions_cargs(
     cargs.append("mris_compute_volume_fractions")
     cargs.extend([
         "--vol",
-        execution.input_file(params.get("volume_file"))
+        execution.input_file(params.get("volume_file", None))
     ])
     cargs.extend([
         "--surf",
-        execution.input_file(params.get("surface_file"))
+        execution.input_file(params.get("surface_file", None))
     ])
     cargs.extend([
         "--acc",
-        str(params.get("accuracy"))
+        str(params.get("accuracy", None))
     ])
     cargs.extend([
         "--out",
-        params.get("output_file")
+        params.get("output_file", None)
     ])
-    if params.get("debug"):
+    if params.get("debug", False):
         cargs.append("--debug")
-    if params.get("checkopts"):
+    if params.get("checkopts", False):
         cargs.append("--checkopts")
     return cargs
 
@@ -152,7 +129,7 @@ def mris_compute_volume_fractions_outputs(
     """
     ret = MrisComputeVolumeFractionsOutputs(
         root=execution.output_file("."),
-        output_volume_file=execution.output_file(params.get("output_file")),
+        output_volume_file=execution.output_file(params.get("output_file", None)),
     )
     return ret
 
@@ -228,7 +205,6 @@ def mris_compute_volume_fractions(
 __all__ = [
     "MRIS_COMPUTE_VOLUME_FRACTIONS_METADATA",
     "MrisComputeVolumeFractionsOutputs",
-    "MrisComputeVolumeFractionsParameters",
     "mris_compute_volume_fractions",
     "mris_compute_volume_fractions_execute",
     "mris_compute_volume_fractions_params",

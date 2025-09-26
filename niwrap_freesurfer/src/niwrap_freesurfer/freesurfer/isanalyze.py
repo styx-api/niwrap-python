@@ -14,45 +14,18 @@ ISANALYZE_METADATA = Metadata(
 
 
 IsanalyzeParameters = typing.TypedDict('IsanalyzeParameters', {
-    "@type": typing.Literal["freesurfer.isanalyze"],
+    "@type": typing.NotRequired[typing.Literal["freesurfer/isanalyze"]],
+    "input_file": InputPathType,
+})
+IsanalyzeParametersTagged = typing.TypedDict('IsanalyzeParametersTagged', {
+    "@type": typing.Literal["freesurfer/isanalyze"],
     "input_file": InputPathType,
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "freesurfer.isanalyze": isanalyze_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-    }.get(t)
-
-
 class IsanalyzeOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `isanalyze(...)`.
+    Output object returned when calling `IsanalyzeParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -60,7 +33,7 @@ class IsanalyzeOutputs(typing.NamedTuple):
 
 def isanalyze_params(
     input_file: InputPathType,
-) -> IsanalyzeParameters:
+) -> IsanalyzeParametersTagged:
     """
     Build parameters.
     
@@ -70,7 +43,7 @@ def isanalyze_params(
         Parameter dictionary
     """
     params = {
-        "@type": "freesurfer.isanalyze",
+        "@type": "freesurfer/isanalyze",
         "input_file": input_file,
     }
     return params
@@ -91,7 +64,7 @@ def isanalyze_cargs(
     """
     cargs = []
     cargs.append("isanalyze")
-    cargs.append(execution.input_file(params.get("input_file")))
+    cargs.append(execution.input_file(params.get("input_file", None)))
     return cargs
 
 
@@ -170,7 +143,6 @@ def isanalyze(
 __all__ = [
     "ISANALYZE_METADATA",
     "IsanalyzeOutputs",
-    "IsanalyzeParameters",
     "isanalyze",
     "isanalyze_execute",
     "isanalyze_params",

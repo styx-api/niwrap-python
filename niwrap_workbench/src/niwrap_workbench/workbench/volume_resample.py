@@ -14,42 +14,77 @@ VOLUME_RESAMPLE_METADATA = Metadata(
 
 
 VolumeResampleFlirtParameters = typing.TypedDict('VolumeResampleFlirtParameters', {
-    "@type": typing.Literal["workbench.volume-resample.affine.flirt"],
+    "@type": typing.NotRequired[typing.Literal["flirt"]],
+    "source_volume": str,
+    "target_volume": str,
+})
+VolumeResampleFlirtParametersTagged = typing.TypedDict('VolumeResampleFlirtParametersTagged', {
+    "@type": typing.Literal["flirt"],
     "source_volume": str,
     "target_volume": str,
 })
 
 
 VolumeResampleAffineParameters = typing.TypedDict('VolumeResampleAffineParameters', {
-    "@type": typing.Literal["workbench.volume-resample.affine"],
+    "@type": typing.NotRequired[typing.Literal["affine"]],
+    "affine": str,
+    "flirt": typing.NotRequired[VolumeResampleFlirtParameters | None],
+})
+VolumeResampleAffineParametersTagged = typing.TypedDict('VolumeResampleAffineParametersTagged', {
+    "@type": typing.Literal["affine"],
     "affine": str,
     "flirt": typing.NotRequired[VolumeResampleFlirtParameters | None],
 })
 
 
 VolumeResampleFlirt1Parameters = typing.TypedDict('VolumeResampleFlirt1Parameters', {
-    "@type": typing.Literal["workbench.volume-resample.affine_series.flirt"],
+    "@type": typing.NotRequired[typing.Literal["flirt_1"]],
+    "source_volume": str,
+    "target_volume": str,
+})
+VolumeResampleFlirt1ParametersTagged = typing.TypedDict('VolumeResampleFlirt1ParametersTagged', {
+    "@type": typing.Literal["flirt_1"],
     "source_volume": str,
     "target_volume": str,
 })
 
 
 VolumeResampleAffineSeriesParameters = typing.TypedDict('VolumeResampleAffineSeriesParameters', {
-    "@type": typing.Literal["workbench.volume-resample.affine_series"],
+    "@type": typing.NotRequired[typing.Literal["affine_series"]],
+    "affine_series": str,
+    "flirt": typing.NotRequired[VolumeResampleFlirt1Parameters | None],
+})
+VolumeResampleAffineSeriesParametersTagged = typing.TypedDict('VolumeResampleAffineSeriesParametersTagged', {
+    "@type": typing.Literal["affine_series"],
     "affine_series": str,
     "flirt": typing.NotRequired[VolumeResampleFlirt1Parameters | None],
 })
 
 
 VolumeResampleWarpParameters = typing.TypedDict('VolumeResampleWarpParameters', {
-    "@type": typing.Literal["workbench.volume-resample.warp"],
+    "@type": typing.NotRequired[typing.Literal["warp"]],
+    "warpfield": str,
+    "opt_fnirt_source_volume": typing.NotRequired[str | None],
+})
+VolumeResampleWarpParametersTagged = typing.TypedDict('VolumeResampleWarpParametersTagged', {
+    "@type": typing.Literal["warp"],
     "warpfield": str,
     "opt_fnirt_source_volume": typing.NotRequired[str | None],
 })
 
 
 VolumeResampleParameters = typing.TypedDict('VolumeResampleParameters', {
-    "@type": typing.Literal["workbench.volume-resample"],
+    "@type": typing.NotRequired[typing.Literal["workbench/volume-resample"]],
+    "volume_in": InputPathType,
+    "volume_space": str,
+    "method": str,
+    "volume_out": str,
+    "affine": typing.NotRequired[list[VolumeResampleAffineParameters] | None],
+    "affine_series": typing.NotRequired[list[VolumeResampleAffineSeriesParameters] | None],
+    "warp": typing.NotRequired[list[VolumeResampleWarpParameters] | None],
+})
+VolumeResampleParametersTagged = typing.TypedDict('VolumeResampleParametersTagged', {
+    "@type": typing.Literal["workbench/volume-resample"],
     "volume_in": InputPathType,
     "volume_space": str,
     "method": str,
@@ -60,47 +95,10 @@ VolumeResampleParameters = typing.TypedDict('VolumeResampleParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "workbench.volume-resample": volume_resample_cargs,
-        "workbench.volume-resample.affine": volume_resample_affine_cargs,
-        "workbench.volume-resample.affine.flirt": volume_resample_flirt_cargs,
-        "workbench.volume-resample.affine_series": volume_resample_affine_series_cargs,
-        "workbench.volume-resample.affine_series.flirt": volume_resample_flirt_1_cargs,
-        "workbench.volume-resample.warp": volume_resample_warp_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "workbench.volume-resample": volume_resample_outputs,
-    }.get(t)
-
-
 def volume_resample_flirt_params(
     source_volume: str,
     target_volume: str,
-) -> VolumeResampleFlirtParameters:
+) -> VolumeResampleFlirtParametersTagged:
     """
     Build parameters.
     
@@ -111,7 +109,7 @@ def volume_resample_flirt_params(
         Parameter dictionary
     """
     params = {
-        "@type": "workbench.volume-resample.affine.flirt",
+        "@type": "flirt",
         "source_volume": source_volume,
         "target_volume": target_volume,
     }
@@ -133,15 +131,15 @@ def volume_resample_flirt_cargs(
     """
     cargs = []
     cargs.append("-flirt")
-    cargs.append(params.get("source_volume"))
-    cargs.append(params.get("target_volume"))
+    cargs.append(params.get("source_volume", None))
+    cargs.append(params.get("target_volume", None))
     return cargs
 
 
 def volume_resample_affine_params(
     affine: str,
     flirt: VolumeResampleFlirtParameters | None = None,
-) -> VolumeResampleAffineParameters:
+) -> VolumeResampleAffineParametersTagged:
     """
     Build parameters.
     
@@ -152,7 +150,7 @@ def volume_resample_affine_params(
         Parameter dictionary
     """
     params = {
-        "@type": "workbench.volume-resample.affine",
+        "@type": "affine",
         "affine": affine,
     }
     if flirt is not None:
@@ -175,16 +173,16 @@ def volume_resample_affine_cargs(
     """
     cargs = []
     cargs.append("-affine")
-    cargs.append(params.get("affine"))
-    if params.get("flirt") is not None:
-        cargs.extend(dyn_cargs(params.get("flirt")["@type"])(params.get("flirt"), execution))
+    cargs.append(params.get("affine", None))
+    if params.get("flirt", None) is not None:
+        cargs.extend(volume_resample_flirt_cargs(params.get("flirt", None), execution))
     return cargs
 
 
 def volume_resample_flirt_1_params(
     source_volume: str,
     target_volume: str,
-) -> VolumeResampleFlirt1Parameters:
+) -> VolumeResampleFlirt1ParametersTagged:
     """
     Build parameters.
     
@@ -195,7 +193,7 @@ def volume_resample_flirt_1_params(
         Parameter dictionary
     """
     params = {
-        "@type": "workbench.volume-resample.affine_series.flirt",
+        "@type": "flirt_1",
         "source_volume": source_volume,
         "target_volume": target_volume,
     }
@@ -217,15 +215,15 @@ def volume_resample_flirt_1_cargs(
     """
     cargs = []
     cargs.append("-flirt")
-    cargs.append(params.get("source_volume"))
-    cargs.append(params.get("target_volume"))
+    cargs.append(params.get("source_volume", None))
+    cargs.append(params.get("target_volume", None))
     return cargs
 
 
 def volume_resample_affine_series_params(
     affine_series: str,
     flirt: VolumeResampleFlirt1Parameters | None = None,
-) -> VolumeResampleAffineSeriesParameters:
+) -> VolumeResampleAffineSeriesParametersTagged:
     """
     Build parameters.
     
@@ -237,7 +235,7 @@ def volume_resample_affine_series_params(
         Parameter dictionary
     """
     params = {
-        "@type": "workbench.volume-resample.affine_series",
+        "@type": "affine_series",
         "affine_series": affine_series,
     }
     if flirt is not None:
@@ -260,16 +258,16 @@ def volume_resample_affine_series_cargs(
     """
     cargs = []
     cargs.append("-affine-series")
-    cargs.append(params.get("affine_series"))
-    if params.get("flirt") is not None:
-        cargs.extend(dyn_cargs(params.get("flirt")["@type"])(params.get("flirt"), execution))
+    cargs.append(params.get("affine_series", None))
+    if params.get("flirt", None) is not None:
+        cargs.extend(volume_resample_flirt_1_cargs(params.get("flirt", None), execution))
     return cargs
 
 
 def volume_resample_warp_params(
     warpfield: str,
     opt_fnirt_source_volume: str | None = None,
-) -> VolumeResampleWarpParameters:
+) -> VolumeResampleWarpParametersTagged:
     """
     Build parameters.
     
@@ -281,7 +279,7 @@ def volume_resample_warp_params(
         Parameter dictionary
     """
     params = {
-        "@type": "workbench.volume-resample.warp",
+        "@type": "warp",
         "warpfield": warpfield,
     }
     if opt_fnirt_source_volume is not None:
@@ -304,18 +302,18 @@ def volume_resample_warp_cargs(
     """
     cargs = []
     cargs.append("-warp")
-    cargs.append(params.get("warpfield"))
-    if params.get("opt_fnirt_source_volume") is not None:
+    cargs.append(params.get("warpfield", None))
+    if params.get("opt_fnirt_source_volume", None) is not None:
         cargs.extend([
             "-fnirt",
-            params.get("opt_fnirt_source_volume")
+            params.get("opt_fnirt_source_volume", None)
         ])
     return cargs
 
 
 class VolumeResampleOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `volume_resample(...)`.
+    Output object returned when calling `VolumeResampleParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -331,7 +329,7 @@ def volume_resample_params(
     affine: list[VolumeResampleAffineParameters] | None = None,
     affine_series: list[VolumeResampleAffineSeriesParameters] | None = None,
     warp: list[VolumeResampleWarpParameters] | None = None,
-) -> VolumeResampleParameters:
+) -> VolumeResampleParametersTagged:
     """
     Build parameters.
     
@@ -347,7 +345,7 @@ def volume_resample_params(
         Parameter dictionary
     """
     params = {
-        "@type": "workbench.volume-resample",
+        "@type": "workbench/volume-resample",
         "volume_in": volume_in,
         "volume_space": volume_space,
         "method": method,
@@ -378,16 +376,16 @@ def volume_resample_cargs(
     cargs = []
     cargs.append("wb_command")
     cargs.append("-volume-resample")
-    cargs.append(execution.input_file(params.get("volume_in")))
-    cargs.append(params.get("volume_space"))
-    cargs.append(params.get("method"))
-    cargs.append(params.get("volume_out"))
-    if params.get("affine") is not None:
-        cargs.extend([a for c in [dyn_cargs(s["@type"])(s, execution) for s in params.get("affine")] for a in c])
-    if params.get("affine_series") is not None:
-        cargs.extend([a for c in [dyn_cargs(s["@type"])(s, execution) for s in params.get("affine_series")] for a in c])
-    if params.get("warp") is not None:
-        cargs.extend([a for c in [dyn_cargs(s["@type"])(s, execution) for s in params.get("warp")] for a in c])
+    cargs.append(execution.input_file(params.get("volume_in", None)))
+    cargs.append(params.get("volume_space", None))
+    cargs.append(params.get("method", None))
+    cargs.append(params.get("volume_out", None))
+    if params.get("affine", None) is not None:
+        cargs.extend([a for c in [volume_resample_affine_cargs(s, execution) for s in params.get("affine", None)] for a in c])
+    if params.get("affine_series", None) is not None:
+        cargs.extend([a for c in [volume_resample_affine_series_cargs(s, execution) for s in params.get("affine_series", None)] for a in c])
+    if params.get("warp", None) is not None:
+        cargs.extend([a for c in [volume_resample_warp_cargs(s, execution) for s in params.get("warp", None)] for a in c])
     return cargs
 
 
@@ -406,7 +404,7 @@ def volume_resample_outputs(
     """
     ret = VolumeResampleOutputs(
         root=execution.output_file("."),
-        volume_out=execution.output_file(params.get("volume_out")),
+        volume_out=execution.output_file(params.get("volume_out", None)),
     )
     return ret
 
@@ -508,13 +506,7 @@ def volume_resample(
 
 __all__ = [
     "VOLUME_RESAMPLE_METADATA",
-    "VolumeResampleAffineParameters",
-    "VolumeResampleAffineSeriesParameters",
-    "VolumeResampleFlirt1Parameters",
-    "VolumeResampleFlirtParameters",
     "VolumeResampleOutputs",
-    "VolumeResampleParameters",
-    "VolumeResampleWarpParameters",
     "volume_resample",
     "volume_resample_affine_params",
     "volume_resample_affine_series_params",

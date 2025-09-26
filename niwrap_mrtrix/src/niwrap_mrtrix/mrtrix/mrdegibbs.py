@@ -14,14 +14,37 @@ MRDEGIBBS_METADATA = Metadata(
 
 
 MrdegibbsConfigParameters = typing.TypedDict('MrdegibbsConfigParameters', {
-    "@type": typing.Literal["mrtrix.mrdegibbs.config"],
+    "@type": typing.NotRequired[typing.Literal["config"]],
+    "key": str,
+    "value": str,
+})
+MrdegibbsConfigParametersTagged = typing.TypedDict('MrdegibbsConfigParametersTagged', {
+    "@type": typing.Literal["config"],
     "key": str,
     "value": str,
 })
 
 
 MrdegibbsParameters = typing.TypedDict('MrdegibbsParameters', {
-    "@type": typing.Literal["mrtrix.mrdegibbs"],
+    "@type": typing.NotRequired[typing.Literal["mrtrix/mrdegibbs"]],
+    "axes": typing.NotRequired[list[int] | None],
+    "nshifts": typing.NotRequired[int | None],
+    "minW": typing.NotRequired[int | None],
+    "maxW": typing.NotRequired[int | None],
+    "datatype": typing.NotRequired[str | None],
+    "info": bool,
+    "quiet": bool,
+    "debug": bool,
+    "force": bool,
+    "nthreads": typing.NotRequired[int | None],
+    "config": typing.NotRequired[list[MrdegibbsConfigParameters] | None],
+    "help": bool,
+    "version": bool,
+    "in": InputPathType,
+    "out": str,
+})
+MrdegibbsParametersTagged = typing.TypedDict('MrdegibbsParametersTagged', {
+    "@type": typing.Literal["mrtrix/mrdegibbs"],
     "axes": typing.NotRequired[list[int] | None],
     "nshifts": typing.NotRequired[int | None],
     "minW": typing.NotRequired[int | None],
@@ -40,43 +63,10 @@ MrdegibbsParameters = typing.TypedDict('MrdegibbsParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "mrtrix.mrdegibbs": mrdegibbs_cargs,
-        "mrtrix.mrdegibbs.config": mrdegibbs_config_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "mrtrix.mrdegibbs": mrdegibbs_outputs,
-    }.get(t)
-
-
 def mrdegibbs_config_params(
     key: str,
     value: str,
-) -> MrdegibbsConfigParameters:
+) -> MrdegibbsConfigParametersTagged:
     """
     Build parameters.
     
@@ -87,7 +77,7 @@ def mrdegibbs_config_params(
         Parameter dictionary
     """
     params = {
-        "@type": "mrtrix.mrdegibbs.config",
+        "@type": "config",
         "key": key,
         "value": value,
     }
@@ -109,14 +99,14 @@ def mrdegibbs_config_cargs(
     """
     cargs = []
     cargs.append("-config")
-    cargs.append(params.get("key"))
-    cargs.append(params.get("value"))
+    cargs.append(params.get("key", None))
+    cargs.append(params.get("value", None))
     return cargs
 
 
 class MrdegibbsOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `mrdegibbs(...)`.
+    Output object returned when calling `MrdegibbsParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -140,7 +130,7 @@ def mrdegibbs_params(
     config: list[MrdegibbsConfigParameters] | None = None,
     help_: bool = False,
     version: bool = False,
-) -> MrdegibbsParameters:
+) -> MrdegibbsParametersTagged:
     """
     Build parameters.
     
@@ -173,7 +163,7 @@ def mrdegibbs_params(
         Parameter dictionary
     """
     params = {
-        "@type": "mrtrix.mrdegibbs",
+        "@type": "mrtrix/mrdegibbs",
         "info": info,
         "quiet": quiet,
         "debug": debug,
@@ -215,52 +205,52 @@ def mrdegibbs_cargs(
     """
     cargs = []
     cargs.append("mrdegibbs")
-    if params.get("axes") is not None:
+    if params.get("axes", None) is not None:
         cargs.extend([
             "-axes",
-            *map(str, params.get("axes"))
+            *map(str, params.get("axes", None))
         ])
-    if params.get("nshifts") is not None:
+    if params.get("nshifts", None) is not None:
         cargs.extend([
             "-nshifts",
-            str(params.get("nshifts"))
+            str(params.get("nshifts", None))
         ])
-    if params.get("minW") is not None:
+    if params.get("minW", None) is not None:
         cargs.extend([
             "-minW",
-            str(params.get("minW"))
+            str(params.get("minW", None))
         ])
-    if params.get("maxW") is not None:
+    if params.get("maxW", None) is not None:
         cargs.extend([
             "-maxW",
-            str(params.get("maxW"))
+            str(params.get("maxW", None))
         ])
-    if params.get("datatype") is not None:
+    if params.get("datatype", None) is not None:
         cargs.extend([
             "-datatype",
-            params.get("datatype")
+            params.get("datatype", None)
         ])
-    if params.get("info"):
+    if params.get("info", False):
         cargs.append("-info")
-    if params.get("quiet"):
+    if params.get("quiet", False):
         cargs.append("-quiet")
-    if params.get("debug"):
+    if params.get("debug", False):
         cargs.append("-debug")
-    if params.get("force"):
+    if params.get("force", False):
         cargs.append("-force")
-    if params.get("nthreads") is not None:
+    if params.get("nthreads", None) is not None:
         cargs.extend([
             "-nthreads",
-            str(params.get("nthreads"))
+            str(params.get("nthreads", None))
         ])
-    if params.get("config") is not None:
-        cargs.extend([a for c in [dyn_cargs(s["@type"])(s, execution) for s in params.get("config")] for a in c])
-    if params.get("help"):
+    if params.get("config", None) is not None:
+        cargs.extend([a for c in [mrdegibbs_config_cargs(s, execution) for s in params.get("config", None)] for a in c])
+    if params.get("help", False):
         cargs.append("-help")
-    if params.get("version"):
+    if params.get("version", False):
         cargs.append("-version")
-    cargs.append(execution.input_file(params.get("in")))
-    cargs.append(params.get("out"))
+    cargs.append(execution.input_file(params.get("in", None)))
+    cargs.append(params.get("out", None))
     return cargs
 
 
@@ -279,7 +269,7 @@ def mrdegibbs_outputs(
     """
     ret = MrdegibbsOutputs(
         root=execution.output_file("."),
-        out=execution.output_file(params.get("out")),
+        out=execution.output_file(params.get("out", None)),
     )
     return ret
 
@@ -438,9 +428,7 @@ def mrdegibbs(
 
 __all__ = [
     "MRDEGIBBS_METADATA",
-    "MrdegibbsConfigParameters",
     "MrdegibbsOutputs",
-    "MrdegibbsParameters",
     "mrdegibbs",
     "mrdegibbs_config_params",
     "mrdegibbs_execute",

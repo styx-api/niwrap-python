@@ -14,7 +14,14 @@ MRIS_PARCELLATE_CONNECTIVITY_METADATA = Metadata(
 
 
 MrisParcellateConnectivityParameters = typing.TypedDict('MrisParcellateConnectivityParameters', {
-    "@type": typing.Literal["freesurfer.mris_parcellate_connectivity"],
+    "@type": typing.NotRequired[typing.Literal["freesurfer/mris_parcellate_connectivity"]],
+    "smooth_iterations": typing.NotRequired[float | None],
+    "input_surface": InputPathType,
+    "input_correlations": InputPathType,
+    "output_parcellation": str,
+})
+MrisParcellateConnectivityParametersTagged = typing.TypedDict('MrisParcellateConnectivityParametersTagged', {
+    "@type": typing.Literal["freesurfer/mris_parcellate_connectivity"],
     "smooth_iterations": typing.NotRequired[float | None],
     "input_surface": InputPathType,
     "input_correlations": InputPathType,
@@ -22,41 +29,9 @@ MrisParcellateConnectivityParameters = typing.TypedDict('MrisParcellateConnectiv
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "freesurfer.mris_parcellate_connectivity": mris_parcellate_connectivity_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "freesurfer.mris_parcellate_connectivity": mris_parcellate_connectivity_outputs,
-    }.get(t)
-
-
 class MrisParcellateConnectivityOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `mris_parcellate_connectivity(...)`.
+    Output object returned when calling `MrisParcellateConnectivityParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -69,7 +44,7 @@ def mris_parcellate_connectivity_params(
     input_correlations: InputPathType,
     output_parcellation: str,
     smooth_iterations: float | None = None,
-) -> MrisParcellateConnectivityParameters:
+) -> MrisParcellateConnectivityParametersTagged:
     """
     Build parameters.
     
@@ -83,7 +58,7 @@ def mris_parcellate_connectivity_params(
         Parameter dictionary
     """
     params = {
-        "@type": "freesurfer.mris_parcellate_connectivity",
+        "@type": "freesurfer/mris_parcellate_connectivity",
         "input_surface": input_surface,
         "input_correlations": input_correlations,
         "output_parcellation": output_parcellation,
@@ -108,14 +83,14 @@ def mris_parcellate_connectivity_cargs(
     """
     cargs = []
     cargs.append("mris_parcellate_connectivity")
-    if params.get("smooth_iterations") is not None:
+    if params.get("smooth_iterations", None) is not None:
         cargs.extend([
             "-n",
-            str(params.get("smooth_iterations"))
+            str(params.get("smooth_iterations", None))
         ])
-    cargs.append(execution.input_file(params.get("input_surface")))
-    cargs.append(execution.input_file(params.get("input_correlations")))
-    cargs.append(params.get("output_parcellation"))
+    cargs.append(execution.input_file(params.get("input_surface", None)))
+    cargs.append(execution.input_file(params.get("input_correlations", None)))
+    cargs.append(params.get("output_parcellation", None))
     return cargs
 
 
@@ -134,7 +109,7 @@ def mris_parcellate_connectivity_outputs(
     """
     ret = MrisParcellateConnectivityOutputs(
         root=execution.output_file("."),
-        parcellation_output=execution.output_file(params.get("output_parcellation")),
+        parcellation_output=execution.output_file(params.get("output_parcellation", None)),
     )
     return ret
 
@@ -205,7 +180,6 @@ def mris_parcellate_connectivity(
 __all__ = [
     "MRIS_PARCELLATE_CONNECTIVITY_METADATA",
     "MrisParcellateConnectivityOutputs",
-    "MrisParcellateConnectivityParameters",
     "mris_parcellate_connectivity",
     "mris_parcellate_connectivity_execute",
     "mris_parcellate_connectivity_params",

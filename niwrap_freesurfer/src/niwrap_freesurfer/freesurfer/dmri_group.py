@@ -14,7 +14,17 @@ DMRI_GROUP_METADATA = Metadata(
 
 
 DmriGroupParameters = typing.TypedDict('DmriGroupParameters', {
-    "@type": typing.Literal["freesurfer.dmri_group"],
+    "@type": typing.NotRequired[typing.Literal["freesurfer/dmri_group"]],
+    "input_list": InputPathType,
+    "reference_volume": InputPathType,
+    "output_base": str,
+    "no_interpolation": bool,
+    "sections_num": typing.NotRequired[float | None],
+    "debug_mode": bool,
+    "check_options": bool,
+})
+DmriGroupParametersTagged = typing.TypedDict('DmriGroupParametersTagged', {
+    "@type": typing.Literal["freesurfer/dmri_group"],
     "input_list": InputPathType,
     "reference_volume": InputPathType,
     "output_base": str,
@@ -25,40 +35,9 @@ DmriGroupParameters = typing.TypedDict('DmriGroupParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "freesurfer.dmri_group": dmri_group_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-    }.get(t)
-
-
 class DmriGroupOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `dmri_group(...)`.
+    Output object returned when calling `DmriGroupParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -72,7 +51,7 @@ def dmri_group_params(
     sections_num: float | None = None,
     debug_mode: bool = False,
     check_options: bool = False,
-) -> DmriGroupParameters:
+) -> DmriGroupParametersTagged:
     """
     Build parameters.
     
@@ -90,7 +69,7 @@ def dmri_group_params(
         Parameter dictionary
     """
     params = {
-        "@type": "freesurfer.dmri_group",
+        "@type": "freesurfer/dmri_group",
         "input_list": input_list,
         "reference_volume": reference_volume,
         "output_base": output_base,
@@ -120,26 +99,26 @@ def dmri_group_cargs(
     cargs.append("dmri_group")
     cargs.extend([
         "--list",
-        execution.input_file(params.get("input_list"))
+        execution.input_file(params.get("input_list", None))
     ])
     cargs.extend([
         "--ref",
-        execution.input_file(params.get("reference_volume"))
+        execution.input_file(params.get("reference_volume", None))
     ])
     cargs.extend([
         "--out",
-        params.get("output_base")
+        params.get("output_base", None)
     ])
-    if params.get("no_interpolation"):
+    if params.get("no_interpolation", False):
         cargs.append("--nointerp")
-    if params.get("sections_num") is not None:
+    if params.get("sections_num", None) is not None:
         cargs.extend([
             "--sec",
-            str(params.get("sections_num"))
+            str(params.get("sections_num", None))
         ])
-    if params.get("debug_mode"):
+    if params.get("debug_mode", False):
         cargs.append("--debug")
-    if params.get("check_options"):
+    if params.get("check_options", False):
         cargs.append("--checkopts")
     return cargs
 
@@ -239,7 +218,6 @@ def dmri_group(
 __all__ = [
     "DMRI_GROUP_METADATA",
     "DmriGroupOutputs",
-    "DmriGroupParameters",
     "dmri_group",
     "dmri_group_execute",
     "dmri_group_params",

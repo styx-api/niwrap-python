@@ -14,7 +14,36 @@ V_3D_GEN_PRIORS_METADATA = Metadata(
 
 
 V3dGenPriorsParameters = typing.TypedDict('V3dGenPriorsParameters', {
-    "@type": typing.Literal["afni.3dGenPriors"],
+    "@type": typing.NotRequired[typing.Literal["afni/3dGenPriors"]],
+    "sigs": InputPathType,
+    "tdist": InputPathType,
+    "cprefix": str,
+    "pprefix": str,
+    "labeltable": InputPathType,
+    "do": str,
+    "prefix": typing.NotRequired[str | None],
+    "cmask": typing.NotRequired[str | None],
+    "mask": typing.NotRequired[str | None],
+    "mrange": typing.NotRequired[list[float] | None],
+    "debug": typing.NotRequired[float | None],
+    "vox_debug": typing.NotRequired[str | None],
+    "vox_debug_file": typing.NotRequired[str | None],
+    "uid": typing.NotRequired[str | None],
+    "use_tmp": bool,
+    "no_tmp": bool,
+    "pset": typing.NotRequired[str | None],
+    "cset": typing.NotRequired[str | None],
+    "regroup_classes": typing.NotRequired[str | None],
+    "classes": typing.NotRequired[str | None],
+    "features": typing.NotRequired[str | None],
+    "strict_feature_match": bool,
+    "featgroups": typing.NotRequired[str | None],
+    "show_this_dist": typing.NotRequired[str | None],
+    "fast": bool,
+    "slow": bool,
+})
+V3dGenPriorsParametersTagged = typing.TypedDict('V3dGenPriorsParametersTagged', {
+    "@type": typing.Literal["afni/3dGenPriors"],
     "sigs": InputPathType,
     "tdist": InputPathType,
     "cprefix": str,
@@ -44,41 +73,9 @@ V3dGenPriorsParameters = typing.TypedDict('V3dGenPriorsParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "afni.3dGenPriors": v_3d_gen_priors_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "afni.3dGenPriors": v_3d_gen_priors_outputs,
-    }.get(t)
-
-
 class V3dGenPriorsOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `v_3d_gen_priors(...)`.
+    Output object returned when calling `V3dGenPriorsParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -115,7 +112,7 @@ def v_3d_gen_priors_params(
     show_this_dist: str | None = None,
     fast: bool = False,
     slow: bool = False,
-) -> V3dGenPriorsParameters:
+) -> V3dGenPriorsParametersTagged:
     """
     Build parameters.
     
@@ -155,7 +152,7 @@ def v_3d_gen_priors_params(
         Parameter dictionary
     """
     params = {
-        "@type": "afni.3dGenPriors",
+        "@type": "afni/3dGenPriors",
         "sigs": sigs,
         "tdist": tdist,
         "cprefix": cprefix,
@@ -218,112 +215,112 @@ def v_3d_gen_priors_cargs(
     cargs.append("3dGenPriors")
     cargs.extend([
         "-sig",
-        execution.input_file(params.get("sigs"))
+        execution.input_file(params.get("sigs", None))
     ])
     cargs.extend([
         "-tdist",
-        execution.input_file(params.get("tdist"))
+        execution.input_file(params.get("tdist", None))
     ])
     cargs.extend([
         "-cprefix",
-        params.get("cprefix")
+        params.get("cprefix", None)
     ])
     cargs.extend([
         "-pprefix",
-        params.get("pprefix")
+        params.get("pprefix", None)
     ])
     cargs.extend([
         "-labeltable",
-        execution.input_file(params.get("labeltable"))
+        execution.input_file(params.get("labeltable", None))
     ])
     cargs.extend([
         "-do",
-        params.get("do")
+        params.get("do", None)
     ])
-    if params.get("prefix") is not None:
+    if params.get("prefix", None) is not None:
         cargs.extend([
             "-prefix",
-            params.get("prefix")
+            params.get("prefix", None)
         ])
-    if params.get("cmask") is not None:
+    if params.get("cmask", None) is not None:
         cargs.extend([
             "-cmask",
-            params.get("cmask")
+            params.get("cmask", None)
         ])
-    if params.get("mask") is not None:
+    if params.get("mask", None) is not None:
         cargs.extend([
             "-mask",
-            params.get("mask")
+            params.get("mask", None)
         ])
-    if params.get("mrange") is not None:
+    if params.get("mrange", None) is not None:
         cargs.extend([
             "-mrange",
-            *map(str, params.get("mrange"))
+            *map(str, params.get("mrange", None))
         ])
-    if params.get("debug") is not None:
+    if params.get("debug", None) is not None:
         cargs.extend([
             "-debug",
-            str(params.get("debug"))
+            str(params.get("debug", None))
         ])
-    if params.get("vox_debug") is not None:
+    if params.get("vox_debug", None) is not None:
         cargs.extend([
             "-vox_debug",
-            params.get("vox_debug")
+            params.get("vox_debug", None)
         ])
-    if params.get("vox_debug_file") is not None:
+    if params.get("vox_debug_file", None) is not None:
         cargs.extend([
             "-vox_debug_file",
-            params.get("vox_debug_file")
+            params.get("vox_debug_file", None)
         ])
-    if params.get("uid") is not None:
+    if params.get("uid", None) is not None:
         cargs.extend([
             "-uid",
-            params.get("uid")
+            params.get("uid", None)
         ])
-    if params.get("use_tmp"):
+    if params.get("use_tmp", False):
         cargs.append("-use_tmp")
-    if params.get("no_tmp"):
+    if params.get("no_tmp", False):
         cargs.append("-no_tmp")
-    if params.get("pset") is not None:
+    if params.get("pset", None) is not None:
         cargs.extend([
             "-pset",
-            params.get("pset")
+            params.get("pset", None)
         ])
-    if params.get("cset") is not None:
+    if params.get("cset", None) is not None:
         cargs.extend([
             "-cset",
-            params.get("cset")
+            params.get("cset", None)
         ])
-    if params.get("regroup_classes") is not None:
+    if params.get("regroup_classes", None) is not None:
         cargs.extend([
             "-regroup_classes",
-            params.get("regroup_classes")
+            params.get("regroup_classes", None)
         ])
-    if params.get("classes") is not None:
+    if params.get("classes", None) is not None:
         cargs.extend([
             "-classes",
-            params.get("classes")
+            params.get("classes", None)
         ])
-    if params.get("features") is not None:
+    if params.get("features", None) is not None:
         cargs.extend([
             "-features",
-            params.get("features")
+            params.get("features", None)
         ])
-    if params.get("strict_feature_match"):
+    if params.get("strict_feature_match", False):
         cargs.append("-strict_feature_match")
-    if params.get("featgroups") is not None:
+    if params.get("featgroups", None) is not None:
         cargs.extend([
             "-featgroups",
-            params.get("featgroups")
+            params.get("featgroups", None)
         ])
-    if params.get("show_this_dist") is not None:
+    if params.get("show_this_dist", None) is not None:
         cargs.extend([
             "-ShowThisDist",
-            params.get("show_this_dist")
+            params.get("show_this_dist", None)
         ])
-    if params.get("fast"):
+    if params.get("fast", False):
         cargs.append("-fast")
-    if params.get("slow"):
+    if params.get("slow", False):
         cargs.append("-slow")
     return cargs
 
@@ -343,8 +340,8 @@ def v_3d_gen_priors_outputs(
     """
     ret = V3dGenPriorsOutputs(
         root=execution.output_file("."),
-        out_cprefix=execution.output_file(params.get("cprefix") + ".nii.gz"),
-        out_pprefix=execution.output_file(params.get("pprefix") + ".nii.gz"),
+        out_cprefix=execution.output_file(params.get("cprefix", None) + ".nii.gz"),
+        out_pprefix=execution.output_file(params.get("pprefix", None) + ".nii.gz"),
     )
     return ret
 
@@ -484,7 +481,6 @@ def v_3d_gen_priors(
 
 __all__ = [
     "V3dGenPriorsOutputs",
-    "V3dGenPriorsParameters",
     "V_3D_GEN_PRIORS_METADATA",
     "v_3d_gen_priors",
     "v_3d_gen_priors_execute",

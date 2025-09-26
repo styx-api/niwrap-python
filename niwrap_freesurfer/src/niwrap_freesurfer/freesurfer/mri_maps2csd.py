@@ -14,7 +14,21 @@ MRI_MAPS2CSD_METADATA = Metadata(
 
 
 MriMaps2csdParameters = typing.TypedDict('MriMaps2csdParameters', {
-    "@type": typing.Literal["freesurfer.mri_maps2csd"],
+    "@type": typing.NotRequired[typing.Literal["freesurfer/mri_maps2csd"]],
+    "input_files": list[str],
+    "csd_file": typing.NotRequired[str | None],
+    "pdf_file": typing.NotRequired[str | None],
+    "subject_hemi_surf": typing.NotRequired[str | None],
+    "thresh": typing.NotRequired[float | None],
+    "sign": typing.NotRequired[str | None],
+    "csd_apply_file": typing.NotRequired[str | None],
+    "apply_out": typing.NotRequired[str | None],
+    "subjects_dir": typing.NotRequired[str | None],
+    "debug": bool,
+    "checkopts": bool,
+})
+MriMaps2csdParametersTagged = typing.TypedDict('MriMaps2csdParametersTagged', {
+    "@type": typing.Literal["freesurfer/mri_maps2csd"],
     "input_files": list[str],
     "csd_file": typing.NotRequired[str | None],
     "pdf_file": typing.NotRequired[str | None],
@@ -29,40 +43,9 @@ MriMaps2csdParameters = typing.TypedDict('MriMaps2csdParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "freesurfer.mri_maps2csd": mri_maps2csd_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-    }.get(t)
-
-
 class MriMaps2csdOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `mri_maps2csd(...)`.
+    Output object returned when calling `MriMaps2csdParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -80,7 +63,7 @@ def mri_maps2csd_params(
     subjects_dir: str | None = None,
     debug: bool = False,
     checkopts: bool = False,
-) -> MriMaps2csdParameters:
+) -> MriMaps2csdParametersTagged:
     """
     Build parameters.
     
@@ -101,7 +84,7 @@ def mri_maps2csd_params(
         Parameter dictionary
     """
     params = {
-        "@type": "freesurfer.mri_maps2csd",
+        "@type": "freesurfer/mri_maps2csd",
         "input_files": input_files,
         "debug": debug,
         "checkopts": checkopts,
@@ -142,48 +125,48 @@ def mri_maps2csd_cargs(
     cargs.append("mri_maps2csd")
     cargs.extend([
         "--i",
-        *params.get("input_files")
+        *params.get("input_files", None)
     ])
-    if params.get("csd_file") is not None:
+    if params.get("csd_file", None) is not None:
         cargs.extend([
             "--csd",
-            params.get("csd_file")
+            params.get("csd_file", None)
         ])
-    if params.get("pdf_file") is not None:
+    if params.get("pdf_file", None) is not None:
         cargs.extend([
             "--pdf",
-            params.get("pdf_file")
+            params.get("pdf_file", None)
         ])
-    if params.get("subject_hemi_surf") is not None:
+    if params.get("subject_hemi_surf", None) is not None:
         cargs.extend([
             "--s",
-            params.get("subject_hemi_surf")
+            params.get("subject_hemi_surf", None)
         ])
-    if params.get("thresh") is not None:
+    if params.get("thresh", None) is not None:
         cargs.extend([
             "--thresh",
-            str(params.get("thresh"))
+            str(params.get("thresh", None))
         ])
-    if params.get("sign") is not None:
+    if params.get("sign", None) is not None:
         cargs.extend([
             "--sign",
-            params.get("sign")
+            params.get("sign", None)
         ])
-    if params.get("csd_apply_file") is not None:
+    if params.get("csd_apply_file", None) is not None:
         cargs.extend([
             "--csd-apply",
-            params.get("csd_apply_file")
+            params.get("csd_apply_file", None)
         ])
-    if params.get("apply_out") is not None:
-        cargs.append(params.get("apply_out"))
-    if params.get("subjects_dir") is not None:
+    if params.get("apply_out", None) is not None:
+        cargs.append(params.get("apply_out", None))
+    if params.get("subjects_dir", None) is not None:
         cargs.extend([
             "--sd",
-            params.get("subjects_dir")
+            params.get("subjects_dir", None)
         ])
-    if params.get("debug"):
+    if params.get("debug", False):
         cargs.append("--debug")
-    if params.get("checkopts"):
+    if params.get("checkopts", False):
         cargs.append("--checkopts")
     return cargs
 
@@ -294,7 +277,6 @@ def mri_maps2csd(
 __all__ = [
     "MRI_MAPS2CSD_METADATA",
     "MriMaps2csdOutputs",
-    "MriMaps2csdParameters",
     "mri_maps2csd",
     "mri_maps2csd_execute",
     "mri_maps2csd_params",

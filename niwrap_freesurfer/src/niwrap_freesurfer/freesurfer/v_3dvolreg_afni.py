@@ -14,48 +14,22 @@ V_3DVOLREG_AFNI_METADATA = Metadata(
 
 
 V3dvolregAfniParameters = typing.TypedDict('V3dvolregAfniParameters', {
-    "@type": typing.Literal["freesurfer.3dvolreg.afni"],
+    "@type": typing.NotRequired[typing.Literal["freesurfer/3dvolreg.afni"]],
+    "input_file": InputPathType,
+    "output_file": str,
+    "options": typing.NotRequired[str | None],
+})
+V3dvolregAfniParametersTagged = typing.TypedDict('V3dvolregAfniParametersTagged', {
+    "@type": typing.Literal["freesurfer/3dvolreg.afni"],
     "input_file": InputPathType,
     "output_file": str,
     "options": typing.NotRequired[str | None],
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "freesurfer.3dvolreg.afni": v_3dvolreg_afni_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "freesurfer.3dvolreg.afni": v_3dvolreg_afni_outputs,
-    }.get(t)
-
-
 class V3dvolregAfniOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `v_3dvolreg_afni(...)`.
+    Output object returned when calling `V3dvolregAfniParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -67,7 +41,7 @@ def v_3dvolreg_afni_params(
     input_file: InputPathType,
     output_file: str,
     options: str | None = None,
-) -> V3dvolregAfniParameters:
+) -> V3dvolregAfniParametersTagged:
     """
     Build parameters.
     
@@ -79,7 +53,7 @@ def v_3dvolreg_afni_params(
         Parameter dictionary
     """
     params = {
-        "@type": "freesurfer.3dvolreg.afni",
+        "@type": "freesurfer/3dvolreg.afni",
         "input_file": input_file,
         "output_file": output_file,
     }
@@ -103,10 +77,10 @@ def v_3dvolreg_afni_cargs(
     """
     cargs = []
     cargs.append("3dvolreg.afni")
-    cargs.append(execution.input_file(params.get("input_file")))
-    cargs.append(params.get("output_file"))
-    if params.get("options") is not None:
-        cargs.append(params.get("options"))
+    cargs.append(execution.input_file(params.get("input_file", None)))
+    cargs.append(params.get("output_file", None))
+    if params.get("options", None) is not None:
+        cargs.append(params.get("options", None))
     return cargs
 
 
@@ -125,7 +99,7 @@ def v_3dvolreg_afni_outputs(
     """
     ret = V3dvolregAfniOutputs(
         root=execution.output_file("."),
-        registered_output=execution.output_file(params.get("output_file") + ".nii"),
+        registered_output=execution.output_file(params.get("output_file", None) + ".nii"),
     )
     return ret
 
@@ -191,7 +165,6 @@ def v_3dvolreg_afni(
 
 __all__ = [
     "V3dvolregAfniOutputs",
-    "V3dvolregAfniParameters",
     "V_3DVOLREG_AFNI_METADATA",
     "v_3dvolreg_afni",
     "v_3dvolreg_afni_execute",

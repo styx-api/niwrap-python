@@ -14,7 +14,15 @@ MRI_SYNTHSR_HYPERFINE_METADATA = Metadata(
 
 
 MriSynthsrHyperfineParameters = typing.TypedDict('MriSynthsrHyperfineParameters', {
-    "@type": typing.Literal["freesurfer.mri_synthsr_hyperfine"],
+    "@type": typing.NotRequired[typing.Literal["freesurfer/mri_synthsr_hyperfine"]],
+    "t1_image": InputPathType,
+    "t2_image": InputPathType,
+    "output": str,
+    "threads": typing.NotRequired[float | None],
+    "cpu": bool,
+})
+MriSynthsrHyperfineParametersTagged = typing.TypedDict('MriSynthsrHyperfineParametersTagged', {
+    "@type": typing.Literal["freesurfer/mri_synthsr_hyperfine"],
     "t1_image": InputPathType,
     "t2_image": InputPathType,
     "output": str,
@@ -23,41 +31,9 @@ MriSynthsrHyperfineParameters = typing.TypedDict('MriSynthsrHyperfineParameters'
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "freesurfer.mri_synthsr_hyperfine": mri_synthsr_hyperfine_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "freesurfer.mri_synthsr_hyperfine": mri_synthsr_hyperfine_outputs,
-    }.get(t)
-
-
 class MriSynthsrHyperfineOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `mri_synthsr_hyperfine(...)`.
+    Output object returned when calling `MriSynthsrHyperfineParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -71,7 +47,7 @@ def mri_synthsr_hyperfine_params(
     output: str,
     threads: float | None = None,
     cpu: bool = False,
-) -> MriSynthsrHyperfineParameters:
+) -> MriSynthsrHyperfineParametersTagged:
     """
     Build parameters.
     
@@ -90,7 +66,7 @@ def mri_synthsr_hyperfine_params(
         Parameter dictionary
     """
     params = {
-        "@type": "freesurfer.mri_synthsr_hyperfine",
+        "@type": "freesurfer/mri_synthsr_hyperfine",
         "t1_image": t1_image,
         "t2_image": t2_image,
         "output": output,
@@ -118,22 +94,22 @@ def mri_synthsr_hyperfine_cargs(
     cargs.append("mri_synthsr_hyperfine")
     cargs.extend([
         "--t1",
-        execution.input_file(params.get("t1_image"))
+        execution.input_file(params.get("t1_image", None))
     ])
     cargs.extend([
         "--t2",
-        execution.input_file(params.get("t2_image"))
+        execution.input_file(params.get("t2_image", None))
     ])
     cargs.extend([
         "--o",
-        params.get("output")
+        params.get("output", None)
     ])
-    if params.get("threads") is not None:
+    if params.get("threads", None) is not None:
         cargs.extend([
             "--threads",
-            str(params.get("threads"))
+            str(params.get("threads", None))
         ])
-    if params.get("cpu"):
+    if params.get("cpu", False):
         cargs.append("--cpu")
     return cargs
 
@@ -153,7 +129,7 @@ def mri_synthsr_hyperfine_outputs(
     """
     ret = MriSynthsrHyperfineOutputs(
         root=execution.output_file("."),
-        synthetic_mprage=execution.output_file(params.get("output")),
+        synthetic_mprage=execution.output_file(params.get("output", None)),
     )
     return ret
 
@@ -233,7 +209,6 @@ def mri_synthsr_hyperfine(
 __all__ = [
     "MRI_SYNTHSR_HYPERFINE_METADATA",
     "MriSynthsrHyperfineOutputs",
-    "MriSynthsrHyperfineParameters",
     "mri_synthsr_hyperfine",
     "mri_synthsr_hyperfine_execute",
     "mri_synthsr_hyperfine_params",

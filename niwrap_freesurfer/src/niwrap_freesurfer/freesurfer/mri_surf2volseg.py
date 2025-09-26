@@ -14,7 +14,35 @@ MRI_SURF2VOLSEG_METADATA = Metadata(
 
 
 MriSurf2volsegParameters = typing.TypedDict('MriSurf2volsegParameters', {
-    "@type": typing.Literal["freesurfer.mri_surf2volseg"],
+    "@type": typing.NotRequired[typing.Literal["freesurfer/mri_surf2volseg"]],
+    "input_segmentation": typing.NotRequired[InputPathType | None],
+    "output_segmentation": typing.NotRequired[str | None],
+    "source_segmentation": typing.NotRequired[InputPathType | None],
+    "lh_white_surf": typing.NotRequired[InputPathType | None],
+    "lh_pial_surf": typing.NotRequired[InputPathType | None],
+    "rh_white_surf": typing.NotRequired[InputPathType | None],
+    "rh_pial_surf": typing.NotRequired[InputPathType | None],
+    "lh_cortex_mask": typing.NotRequired[InputPathType | None],
+    "rh_cortex_mask": typing.NotRequired[InputPathType | None],
+    "fix_presurf_ribbon": typing.NotRequired[InputPathType | None],
+    "label_cortex": bool,
+    "label_wm": bool,
+    "label_wm_unknown": typing.NotRequired[list[float] | None],
+    "lh_annotation": typing.NotRequired[InputPathType | None],
+    "rh_annotation": typing.NotRequired[InputPathType | None],
+    "wmparc_dmax": typing.NotRequired[float | None],
+    "rip_unknown": bool,
+    "hypo_as_wm": bool,
+    "hashres": typing.NotRequired[float | None],
+    "nhops": typing.NotRequired[float | None],
+    "help_flag": bool,
+    "version_flag": bool,
+    "crs_test": typing.NotRequired[list[float] | None],
+    "ctab_file": typing.NotRequired[InputPathType | None],
+    "threads_number": typing.NotRequired[float | None],
+})
+MriSurf2volsegParametersTagged = typing.TypedDict('MriSurf2volsegParametersTagged', {
+    "@type": typing.Literal["freesurfer/mri_surf2volseg"],
     "input_segmentation": typing.NotRequired[InputPathType | None],
     "output_segmentation": typing.NotRequired[str | None],
     "source_segmentation": typing.NotRequired[InputPathType | None],
@@ -43,40 +71,9 @@ MriSurf2volsegParameters = typing.TypedDict('MriSurf2volsegParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "freesurfer.mri_surf2volseg": mri_surf2volseg_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-    }.get(t)
-
-
 class MriSurf2volsegOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `mri_surf2volseg(...)`.
+    Output object returned when calling `MriSurf2volsegParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -108,7 +105,7 @@ def mri_surf2volseg_params(
     crs_test: list[float] | None = None,
     ctab_file: InputPathType | None = None,
     threads_number: float | None = None,
-) -> MriSurf2volsegParameters:
+) -> MriSurf2volsegParametersTagged:
     """
     Build parameters.
     
@@ -152,7 +149,7 @@ def mri_surf2volseg_params(
         Parameter dictionary
     """
     params = {
-        "@type": "freesurfer.mri_surf2volseg",
+        "@type": "freesurfer/mri_surf2volseg",
         "label_cortex": label_cortex,
         "label_wm": label_wm,
         "rip_unknown": rip_unknown,
@@ -216,112 +213,112 @@ def mri_surf2volseg_cargs(
     """
     cargs = []
     cargs.append("mri_surf2volseg")
-    if params.get("input_segmentation") is not None:
+    if params.get("input_segmentation", None) is not None:
         cargs.extend([
             "--i",
-            execution.input_file(params.get("input_segmentation"))
+            execution.input_file(params.get("input_segmentation", None))
         ])
-    if params.get("output_segmentation") is not None:
+    if params.get("output_segmentation", None) is not None:
         cargs.extend([
             "--o",
-            params.get("output_segmentation")
+            params.get("output_segmentation", None)
         ])
-    if params.get("source_segmentation") is not None:
+    if params.get("source_segmentation", None) is not None:
         cargs.extend([
             "--src",
-            execution.input_file(params.get("source_segmentation"))
+            execution.input_file(params.get("source_segmentation", None))
         ])
-    if params.get("lh_white_surf") is not None:
+    if params.get("lh_white_surf", None) is not None:
         cargs.extend([
             "--lh-white",
-            execution.input_file(params.get("lh_white_surf"))
+            execution.input_file(params.get("lh_white_surf", None))
         ])
-    if params.get("lh_pial_surf") is not None:
+    if params.get("lh_pial_surf", None) is not None:
         cargs.extend([
             "--lh-pial",
-            execution.input_file(params.get("lh_pial_surf"))
+            execution.input_file(params.get("lh_pial_surf", None))
         ])
-    if params.get("rh_white_surf") is not None:
+    if params.get("rh_white_surf", None) is not None:
         cargs.extend([
             "--rh-white",
-            execution.input_file(params.get("rh_white_surf"))
+            execution.input_file(params.get("rh_white_surf", None))
         ])
-    if params.get("rh_pial_surf") is not None:
+    if params.get("rh_pial_surf", None) is not None:
         cargs.extend([
             "--rh-pial",
-            execution.input_file(params.get("rh_pial_surf"))
+            execution.input_file(params.get("rh_pial_surf", None))
         ])
-    if params.get("lh_cortex_mask") is not None:
+    if params.get("lh_cortex_mask", None) is not None:
         cargs.extend([
             "--lh-cortex-mask",
-            execution.input_file(params.get("lh_cortex_mask"))
+            execution.input_file(params.get("lh_cortex_mask", None))
         ])
-    if params.get("rh_cortex_mask") is not None:
+    if params.get("rh_cortex_mask", None) is not None:
         cargs.extend([
             "--rh-cortex-mask",
-            execution.input_file(params.get("rh_cortex_mask"))
+            execution.input_file(params.get("rh_cortex_mask", None))
         ])
-    if params.get("fix_presurf_ribbon") is not None:
+    if params.get("fix_presurf_ribbon", None) is not None:
         cargs.extend([
             "--fix-presurf-with-ribbon",
-            execution.input_file(params.get("fix_presurf_ribbon"))
+            execution.input_file(params.get("fix_presurf_ribbon", None))
         ])
-    if params.get("label_cortex"):
+    if params.get("label_cortex", False):
         cargs.append("--label-cortex")
-    if params.get("label_wm"):
+    if params.get("label_wm", False):
         cargs.append("--label-wm")
-    if params.get("label_wm_unknown") is not None:
+    if params.get("label_wm_unknown", None) is not None:
         cargs.extend([
             "--label-wm-unknown",
-            *map(str, params.get("label_wm_unknown"))
+            *map(str, params.get("label_wm_unknown", None))
         ])
-    if params.get("lh_annotation") is not None:
+    if params.get("lh_annotation", None) is not None:
         cargs.extend([
             "--lh-annot",
-            execution.input_file(params.get("lh_annotation"))
+            execution.input_file(params.get("lh_annotation", None))
         ])
-    if params.get("rh_annotation") is not None:
+    if params.get("rh_annotation", None) is not None:
         cargs.extend([
             "--rh-annot",
-            execution.input_file(params.get("rh_annotation"))
+            execution.input_file(params.get("rh_annotation", None))
         ])
-    if params.get("wmparc_dmax") is not None:
+    if params.get("wmparc_dmax", None) is not None:
         cargs.extend([
             "--wmparc-dmax",
-            str(params.get("wmparc_dmax"))
+            str(params.get("wmparc_dmax", None))
         ])
-    if params.get("rip_unknown"):
+    if params.get("rip_unknown", False):
         cargs.append("--rip-unknown")
-    if params.get("hypo_as_wm"):
+    if params.get("hypo_as_wm", False):
         cargs.append("--hypo-as-wm")
-    if params.get("hashres") is not None:
+    if params.get("hashres", None) is not None:
         cargs.extend([
             "--hashres",
-            str(params.get("hashres"))
+            str(params.get("hashres", None))
         ])
-    if params.get("nhops") is not None:
+    if params.get("nhops", None) is not None:
         cargs.extend([
             "--nhops",
-            str(params.get("nhops"))
+            str(params.get("nhops", None))
         ])
-    if params.get("help_flag"):
+    if params.get("help_flag", False):
         cargs.append("--help")
-    if params.get("version_flag"):
+    if params.get("version_flag", False):
         cargs.append("--version")
-    if params.get("crs_test") is not None:
+    if params.get("crs_test", None) is not None:
         cargs.extend([
             "--crs-test",
-            *map(str, params.get("crs_test"))
+            *map(str, params.get("crs_test", None))
         ])
-    if params.get("ctab_file") is not None:
+    if params.get("ctab_file", None) is not None:
         cargs.extend([
             "--ctab",
-            execution.input_file(params.get("ctab_file"))
+            execution.input_file(params.get("ctab_file", None))
         ])
-    if params.get("threads_number") is not None:
+    if params.get("threads_number", None) is not None:
         cargs.extend([
             "--threads",
-            str(params.get("threads_number"))
+            str(params.get("threads_number", None))
         ])
     return cargs
 
@@ -487,7 +484,6 @@ def mri_surf2volseg(
 __all__ = [
     "MRI_SURF2VOLSEG_METADATA",
     "MriSurf2volsegOutputs",
-    "MriSurf2volsegParameters",
     "mri_surf2volseg",
     "mri_surf2volseg_execute",
     "mri_surf2volseg_params",

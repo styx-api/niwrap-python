@@ -14,14 +14,34 @@ WARPINVERT_METADATA = Metadata(
 
 
 WarpinvertConfigParameters = typing.TypedDict('WarpinvertConfigParameters', {
-    "@type": typing.Literal["mrtrix.warpinvert.config"],
+    "@type": typing.NotRequired[typing.Literal["config"]],
+    "key": str,
+    "value": str,
+})
+WarpinvertConfigParametersTagged = typing.TypedDict('WarpinvertConfigParametersTagged', {
+    "@type": typing.Literal["config"],
     "key": str,
     "value": str,
 })
 
 
 WarpinvertParameters = typing.TypedDict('WarpinvertParameters', {
-    "@type": typing.Literal["mrtrix.warpinvert"],
+    "@type": typing.NotRequired[typing.Literal["mrtrix/warpinvert"]],
+    "template": typing.NotRequired[InputPathType | None],
+    "displacement": bool,
+    "info": bool,
+    "quiet": bool,
+    "debug": bool,
+    "force": bool,
+    "nthreads": typing.NotRequired[int | None],
+    "config": typing.NotRequired[list[WarpinvertConfigParameters] | None],
+    "help": bool,
+    "version": bool,
+    "in": InputPathType,
+    "out": str,
+})
+WarpinvertParametersTagged = typing.TypedDict('WarpinvertParametersTagged', {
+    "@type": typing.Literal["mrtrix/warpinvert"],
     "template": typing.NotRequired[InputPathType | None],
     "displacement": bool,
     "info": bool,
@@ -37,43 +57,10 @@ WarpinvertParameters = typing.TypedDict('WarpinvertParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "mrtrix.warpinvert": warpinvert_cargs,
-        "mrtrix.warpinvert.config": warpinvert_config_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "mrtrix.warpinvert": warpinvert_outputs,
-    }.get(t)
-
-
 def warpinvert_config_params(
     key: str,
     value: str,
-) -> WarpinvertConfigParameters:
+) -> WarpinvertConfigParametersTagged:
     """
     Build parameters.
     
@@ -84,7 +71,7 @@ def warpinvert_config_params(
         Parameter dictionary
     """
     params = {
-        "@type": "mrtrix.warpinvert.config",
+        "@type": "config",
         "key": key,
         "value": value,
     }
@@ -106,14 +93,14 @@ def warpinvert_config_cargs(
     """
     cargs = []
     cargs.append("-config")
-    cargs.append(params.get("key"))
-    cargs.append(params.get("value"))
+    cargs.append(params.get("key", None))
+    cargs.append(params.get("value", None))
     return cargs
 
 
 class WarpinvertOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `warpinvert(...)`.
+    Output object returned when calling `WarpinvertParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -134,7 +121,7 @@ def warpinvert_params(
     config: list[WarpinvertConfigParameters] | None = None,
     help_: bool = False,
     version: bool = False,
-) -> WarpinvertParameters:
+) -> WarpinvertParametersTagged:
     """
     Build parameters.
     
@@ -160,7 +147,7 @@ def warpinvert_params(
         Parameter dictionary
     """
     params = {
-        "@type": "mrtrix.warpinvert",
+        "@type": "mrtrix/warpinvert",
         "displacement": displacement,
         "info": info,
         "quiet": quiet,
@@ -195,34 +182,34 @@ def warpinvert_cargs(
     """
     cargs = []
     cargs.append("warpinvert")
-    if params.get("template") is not None:
+    if params.get("template", None) is not None:
         cargs.extend([
             "-template",
-            execution.input_file(params.get("template"))
+            execution.input_file(params.get("template", None))
         ])
-    if params.get("displacement"):
+    if params.get("displacement", False):
         cargs.append("-displacement")
-    if params.get("info"):
+    if params.get("info", False):
         cargs.append("-info")
-    if params.get("quiet"):
+    if params.get("quiet", False):
         cargs.append("-quiet")
-    if params.get("debug"):
+    if params.get("debug", False):
         cargs.append("-debug")
-    if params.get("force"):
+    if params.get("force", False):
         cargs.append("-force")
-    if params.get("nthreads") is not None:
+    if params.get("nthreads", None) is not None:
         cargs.extend([
             "-nthreads",
-            str(params.get("nthreads"))
+            str(params.get("nthreads", None))
         ])
-    if params.get("config") is not None:
-        cargs.extend([a for c in [dyn_cargs(s["@type"])(s, execution) for s in params.get("config")] for a in c])
-    if params.get("help"):
+    if params.get("config", None) is not None:
+        cargs.extend([a for c in [warpinvert_config_cargs(s, execution) for s in params.get("config", None)] for a in c])
+    if params.get("help", False):
         cargs.append("-help")
-    if params.get("version"):
+    if params.get("version", False):
         cargs.append("-version")
-    cargs.append(execution.input_file(params.get("in")))
-    cargs.append(params.get("out"))
+    cargs.append(execution.input_file(params.get("in", None)))
+    cargs.append(params.get("out", None))
     return cargs
 
 
@@ -241,7 +228,7 @@ def warpinvert_outputs(
     """
     ret = WarpinvertOutputs(
         root=execution.output_file("."),
-        out=execution.output_file(params.get("out")),
+        out=execution.output_file(params.get("out", None)),
     )
     return ret
 
@@ -365,9 +352,7 @@ def warpinvert(
 
 __all__ = [
     "WARPINVERT_METADATA",
-    "WarpinvertConfigParameters",
     "WarpinvertOutputs",
-    "WarpinvertParameters",
     "warpinvert",
     "warpinvert_config_params",
     "warpinvert_execute",

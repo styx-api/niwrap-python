@@ -14,7 +14,16 @@ RCBF_PREP_METADATA = Metadata(
 
 
 RcbfPrepParameters = typing.TypedDict('RcbfPrepParameters', {
-    "@type": typing.Literal["freesurfer.rcbf-prep"],
+    "@type": typing.NotRequired[typing.Literal["freesurfer/rcbf-prep"]],
+    "outdir": str,
+    "rcbfvol": InputPathType,
+    "subject": typing.NotRequired[str | None],
+    "roitab": typing.NotRequired[InputPathType | None],
+    "register": typing.NotRequired[InputPathType | None],
+    "template": typing.NotRequired[InputPathType | None],
+})
+RcbfPrepParametersTagged = typing.TypedDict('RcbfPrepParametersTagged', {
+    "@type": typing.Literal["freesurfer/rcbf-prep"],
     "outdir": str,
     "rcbfvol": InputPathType,
     "subject": typing.NotRequired[str | None],
@@ -24,41 +33,9 @@ RcbfPrepParameters = typing.TypedDict('RcbfPrepParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "freesurfer.rcbf-prep": rcbf_prep_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "freesurfer.rcbf-prep": rcbf_prep_outputs,
-    }.get(t)
-
-
 class RcbfPrepOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `rcbf_prep(...)`.
+    Output object returned when calling `RcbfPrepParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -79,7 +56,7 @@ def rcbf_prep_params(
     roitab: InputPathType | None = None,
     register: InputPathType | None = None,
     template: InputPathType | None = None,
-) -> RcbfPrepParameters:
+) -> RcbfPrepParametersTagged:
     """
     Build parameters.
     
@@ -96,7 +73,7 @@ def rcbf_prep_params(
         Parameter dictionary
     """
     params = {
-        "@type": "freesurfer.rcbf-prep",
+        "@type": "freesurfer/rcbf-prep",
         "outdir": outdir,
         "rcbfvol": rcbfvol,
     }
@@ -128,31 +105,31 @@ def rcbf_prep_cargs(
     cargs.append("rcbf-prep")
     cargs.extend([
         "--o",
-        params.get("outdir")
+        params.get("outdir", None)
     ])
     cargs.extend([
         "--rcbf",
-        execution.input_file(params.get("rcbfvol"))
+        execution.input_file(params.get("rcbfvol", None))
     ])
-    if params.get("subject") is not None:
+    if params.get("subject", None) is not None:
         cargs.extend([
             "--s",
-            params.get("subject")
+            params.get("subject", None)
         ])
-    if params.get("roitab") is not None:
+    if params.get("roitab", None) is not None:
         cargs.extend([
             "--roitab",
-            execution.input_file(params.get("roitab"))
+            execution.input_file(params.get("roitab", None))
         ])
-    if params.get("register") is not None:
+    if params.get("register", None) is not None:
         cargs.extend([
             "--reg",
-            execution.input_file(params.get("register"))
+            execution.input_file(params.get("register", None))
         ])
-    if params.get("template") is not None:
+    if params.get("template", None) is not None:
         cargs.extend([
             "--t",
-            execution.input_file(params.get("template"))
+            execution.input_file(params.get("template", None))
         ])
     return cargs
 
@@ -172,10 +149,10 @@ def rcbf_prep_outputs(
     """
     ret = RcbfPrepOutputs(
         root=execution.output_file("."),
-        lh_hemisphere_rcbf=execution.output_file(params.get("outdir") + "/lh.rcbf.mgh"),
-        rh_hemisphere_rcbf_right=execution.output_file(params.get("outdir") + "/rh.rcbf.mgh"),
-        mni305_rcbf=execution.output_file(params.get("outdir") + "/rcbf.mni305.nii"),
-        roi_stats=execution.output_file(params.get("outdir") + "/roi.dat"),
+        lh_hemisphere_rcbf=execution.output_file(params.get("outdir", None) + "/lh.rcbf.mgh"),
+        rh_hemisphere_rcbf_right=execution.output_file(params.get("outdir", None) + "/rh.rcbf.mgh"),
+        mni305_rcbf=execution.output_file(params.get("outdir", None) + "/rcbf.mni305.nii"),
+        roi_stats=execution.output_file(params.get("outdir", None) + "/roi.dat"),
     )
     return ret
 
@@ -255,7 +232,6 @@ def rcbf_prep(
 __all__ = [
     "RCBF_PREP_METADATA",
     "RcbfPrepOutputs",
-    "RcbfPrepParameters",
     "rcbf_prep",
     "rcbf_prep_execute",
     "rcbf_prep_params",

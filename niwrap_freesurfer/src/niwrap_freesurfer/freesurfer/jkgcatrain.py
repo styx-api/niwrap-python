@@ -14,7 +14,15 @@ JKGCATRAIN_METADATA = Metadata(
 
 
 JkgcatrainParameters = typing.TypedDict('JkgcatrainParameters', {
-    "@type": typing.Literal["freesurfer.jkgcatrain"],
+    "@type": typing.NotRequired[typing.Literal["freesurfer/jkgcatrain"]],
+    "gca_directory": str,
+    "iteration_number": typing.NotRequired[float | None],
+    "num_threads": typing.NotRequired[float | None],
+    "no_submit": bool,
+    "mail_flag": bool,
+})
+JkgcatrainParametersTagged = typing.TypedDict('JkgcatrainParametersTagged', {
+    "@type": typing.Literal["freesurfer/jkgcatrain"],
     "gca_directory": str,
     "iteration_number": typing.NotRequired[float | None],
     "num_threads": typing.NotRequired[float | None],
@@ -23,40 +31,9 @@ JkgcatrainParameters = typing.TypedDict('JkgcatrainParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "freesurfer.jkgcatrain": jkgcatrain_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-    }.get(t)
-
-
 class JkgcatrainOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `jkgcatrain(...)`.
+    Output object returned when calling `JkgcatrainParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -68,7 +45,7 @@ def jkgcatrain_params(
     num_threads: float | None = None,
     no_submit: bool = False,
     mail_flag: bool = False,
-) -> JkgcatrainParameters:
+) -> JkgcatrainParametersTagged:
     """
     Build parameters.
     
@@ -82,7 +59,7 @@ def jkgcatrain_params(
         Parameter dictionary
     """
     params = {
-        "@type": "freesurfer.jkgcatrain",
+        "@type": "freesurfer/jkgcatrain",
         "gca_directory": gca_directory,
         "no_submit": no_submit,
         "mail_flag": mail_flag,
@@ -111,21 +88,21 @@ def jkgcatrain_cargs(
     cargs.append("jkgcatrain")
     cargs.extend([
         "--g",
-        params.get("gca_directory")
+        params.get("gca_directory", None)
     ])
-    if params.get("iteration_number") is not None:
+    if params.get("iteration_number", None) is not None:
         cargs.extend([
             "--iter",
-            str(params.get("iteration_number"))
+            str(params.get("iteration_number", None))
         ])
-    if params.get("num_threads") is not None:
+    if params.get("num_threads", None) is not None:
         cargs.extend([
             "--nthreads",
-            str(params.get("num_threads"))
+            str(params.get("num_threads", None))
         ])
-    if params.get("no_submit"):
+    if params.get("no_submit", False):
         cargs.append("--no-submit")
-    if params.get("mail_flag"):
+    if params.get("mail_flag", False):
         cargs.append("--pb-m")
     return cargs
 
@@ -217,7 +194,6 @@ def jkgcatrain(
 __all__ = [
     "JKGCATRAIN_METADATA",
     "JkgcatrainOutputs",
-    "JkgcatrainParameters",
     "jkgcatrain",
     "jkgcatrain_execute",
     "jkgcatrain_params",

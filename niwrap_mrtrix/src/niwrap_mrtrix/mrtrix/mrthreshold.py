@@ -14,14 +14,43 @@ MRTHRESHOLD_METADATA = Metadata(
 
 
 MrthresholdConfigParameters = typing.TypedDict('MrthresholdConfigParameters', {
-    "@type": typing.Literal["mrtrix.mrthreshold.config"],
+    "@type": typing.NotRequired[typing.Literal["config"]],
+    "key": str,
+    "value": str,
+})
+MrthresholdConfigParametersTagged = typing.TypedDict('MrthresholdConfigParametersTagged', {
+    "@type": typing.Literal["config"],
     "key": str,
     "value": str,
 })
 
 
 MrthresholdParameters = typing.TypedDict('MrthresholdParameters', {
-    "@type": typing.Literal["mrtrix.mrthreshold"],
+    "@type": typing.NotRequired[typing.Literal["mrtrix/mrthreshold"]],
+    "abs": typing.NotRequired[float | None],
+    "percentile": typing.NotRequired[float | None],
+    "top": typing.NotRequired[int | None],
+    "bottom": typing.NotRequired[int | None],
+    "allvolumes": bool,
+    "ignorezero": bool,
+    "mask": typing.NotRequired[InputPathType | None],
+    "comparison": typing.NotRequired[str | None],
+    "invert": bool,
+    "out_masked": bool,
+    "nan": bool,
+    "info": bool,
+    "quiet": bool,
+    "debug": bool,
+    "force": bool,
+    "nthreads": typing.NotRequired[int | None],
+    "config": typing.NotRequired[list[MrthresholdConfigParameters] | None],
+    "help": bool,
+    "version": bool,
+    "input": InputPathType,
+    "output": typing.NotRequired[str | None],
+})
+MrthresholdParametersTagged = typing.TypedDict('MrthresholdParametersTagged', {
+    "@type": typing.Literal["mrtrix/mrthreshold"],
     "abs": typing.NotRequired[float | None],
     "percentile": typing.NotRequired[float | None],
     "top": typing.NotRequired[int | None],
@@ -46,43 +75,10 @@ MrthresholdParameters = typing.TypedDict('MrthresholdParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "mrtrix.mrthreshold": mrthreshold_cargs,
-        "mrtrix.mrthreshold.config": mrthreshold_config_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "mrtrix.mrthreshold": mrthreshold_outputs,
-    }.get(t)
-
-
 def mrthreshold_config_params(
     key: str,
     value: str,
-) -> MrthresholdConfigParameters:
+) -> MrthresholdConfigParametersTagged:
     """
     Build parameters.
     
@@ -93,7 +89,7 @@ def mrthreshold_config_params(
         Parameter dictionary
     """
     params = {
-        "@type": "mrtrix.mrthreshold.config",
+        "@type": "config",
         "key": key,
         "value": value,
     }
@@ -115,14 +111,14 @@ def mrthreshold_config_cargs(
     """
     cargs = []
     cargs.append("-config")
-    cargs.append(params.get("key"))
-    cargs.append(params.get("value"))
+    cargs.append(params.get("key", None))
+    cargs.append(params.get("value", None))
     return cargs
 
 
 class MrthresholdOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `mrthreshold(...)`.
+    Output object returned when calling `MrthresholdParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -152,7 +148,7 @@ def mrthreshold_params(
     help_: bool = False,
     version: bool = False,
     output: str | None = None,
-) -> MrthresholdParameters:
+) -> MrthresholdParametersTagged:
     """
     Build parameters.
     
@@ -197,7 +193,7 @@ def mrthreshold_params(
         Parameter dictionary
     """
     params = {
-        "@type": "mrtrix.mrthreshold",
+        "@type": "mrtrix/mrthreshold",
         "allvolumes": allvolumes,
         "ignorezero": ignorezero,
         "invert": invert,
@@ -247,68 +243,68 @@ def mrthreshold_cargs(
     """
     cargs = []
     cargs.append("mrthreshold")
-    if params.get("abs") is not None:
+    if params.get("abs", None) is not None:
         cargs.extend([
             "-abs",
-            str(params.get("abs"))
+            str(params.get("abs", None))
         ])
-    if params.get("percentile") is not None:
+    if params.get("percentile", None) is not None:
         cargs.extend([
             "-percentile",
-            str(params.get("percentile"))
+            str(params.get("percentile", None))
         ])
-    if params.get("top") is not None:
+    if params.get("top", None) is not None:
         cargs.extend([
             "-top",
-            str(params.get("top"))
+            str(params.get("top", None))
         ])
-    if params.get("bottom") is not None:
+    if params.get("bottom", None) is not None:
         cargs.extend([
             "-bottom",
-            str(params.get("bottom"))
+            str(params.get("bottom", None))
         ])
-    if params.get("allvolumes"):
+    if params.get("allvolumes", False):
         cargs.append("-allvolumes")
-    if params.get("ignorezero"):
+    if params.get("ignorezero", False):
         cargs.append("-ignorezero")
-    if params.get("mask") is not None:
+    if params.get("mask", None) is not None:
         cargs.extend([
             "-mask",
-            execution.input_file(params.get("mask"))
+            execution.input_file(params.get("mask", None))
         ])
-    if params.get("comparison") is not None:
+    if params.get("comparison", None) is not None:
         cargs.extend([
             "-comparison",
-            params.get("comparison")
+            params.get("comparison", None)
         ])
-    if params.get("invert"):
+    if params.get("invert", False):
         cargs.append("-invert")
-    if params.get("out_masked"):
+    if params.get("out_masked", False):
         cargs.append("-out_masked")
-    if params.get("nan"):
+    if params.get("nan", False):
         cargs.append("-nan")
-    if params.get("info"):
+    if params.get("info", False):
         cargs.append("-info")
-    if params.get("quiet"):
+    if params.get("quiet", False):
         cargs.append("-quiet")
-    if params.get("debug"):
+    if params.get("debug", False):
         cargs.append("-debug")
-    if params.get("force"):
+    if params.get("force", False):
         cargs.append("-force")
-    if params.get("nthreads") is not None:
+    if params.get("nthreads", None) is not None:
         cargs.extend([
             "-nthreads",
-            str(params.get("nthreads"))
+            str(params.get("nthreads", None))
         ])
-    if params.get("config") is not None:
-        cargs.extend([a for c in [dyn_cargs(s["@type"])(s, execution) for s in params.get("config")] for a in c])
-    if params.get("help"):
+    if params.get("config", None) is not None:
+        cargs.extend([a for c in [mrthreshold_config_cargs(s, execution) for s in params.get("config", None)] for a in c])
+    if params.get("help", False):
         cargs.append("-help")
-    if params.get("version"):
+    if params.get("version", False):
         cargs.append("-version")
-    cargs.append(execution.input_file(params.get("input")))
-    if params.get("output") is not None:
-        cargs.append(params.get("output"))
+    cargs.append(execution.input_file(params.get("input", None)))
+    if params.get("output", None) is not None:
+        cargs.append(params.get("output", None))
     return cargs
 
 
@@ -327,7 +323,7 @@ def mrthreshold_outputs(
     """
     ret = MrthresholdOutputs(
         root=execution.output_file("."),
-        output=execution.output_file(params.get("output")) if (params.get("output") is not None) else None,
+        output=execution.output_file(params.get("output", None)) if (params.get("output") is not None) else None,
     )
     return ret
 
@@ -544,9 +540,7 @@ def mrthreshold(
 
 __all__ = [
     "MRTHRESHOLD_METADATA",
-    "MrthresholdConfigParameters",
     "MrthresholdOutputs",
-    "MrthresholdParameters",
     "mrthreshold",
     "mrthreshold_config_params",
     "mrthreshold_execute",

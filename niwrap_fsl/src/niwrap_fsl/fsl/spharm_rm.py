@@ -14,7 +14,15 @@ SPHARM_RM_METADATA = Metadata(
 
 
 SpharmRmParameters = typing.TypedDict('SpharmRmParameters', {
-    "@type": typing.Literal["fsl.spharm_rm"],
+    "@type": typing.NotRequired[typing.Literal["fsl/spharm_rm"]],
+    "input_file": InputPathType,
+    "output_file": str,
+    "mask_file": typing.NotRequired[InputPathType | None],
+    "number_of_terms": typing.NotRequired[float | None],
+    "verbose_flag": bool,
+})
+SpharmRmParametersTagged = typing.TypedDict('SpharmRmParametersTagged', {
+    "@type": typing.Literal["fsl/spharm_rm"],
     "input_file": InputPathType,
     "output_file": str,
     "mask_file": typing.NotRequired[InputPathType | None],
@@ -23,41 +31,9 @@ SpharmRmParameters = typing.TypedDict('SpharmRmParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "fsl.spharm_rm": spharm_rm_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "fsl.spharm_rm": spharm_rm_outputs,
-    }.get(t)
-
-
 class SpharmRmOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `spharm_rm(...)`.
+    Output object returned when calling `SpharmRmParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -71,7 +47,7 @@ def spharm_rm_params(
     mask_file: InputPathType | None = None,
     number_of_terms: float | None = None,
     verbose_flag: bool = False,
-) -> SpharmRmParameters:
+) -> SpharmRmParametersTagged:
     """
     Build parameters.
     
@@ -86,7 +62,7 @@ def spharm_rm_params(
         Parameter dictionary
     """
     params = {
-        "@type": "fsl.spharm_rm",
+        "@type": "fsl/spharm_rm",
         "input_file": input_file,
         "output_file": output_file,
         "verbose_flag": verbose_flag,
@@ -115,23 +91,23 @@ def spharm_rm_cargs(
     cargs.append("spharm_rm")
     cargs.extend([
         "--in",
-        execution.input_file(params.get("input_file"))
+        execution.input_file(params.get("input_file", None))
     ])
     cargs.extend([
         "--out",
-        params.get("output_file")
+        params.get("output_file", None)
     ])
-    if params.get("mask_file") is not None:
+    if params.get("mask_file", None) is not None:
         cargs.extend([
             "-m",
-            execution.input_file(params.get("mask_file"))
+            execution.input_file(params.get("mask_file", None))
         ])
-    if params.get("number_of_terms") is not None:
+    if params.get("number_of_terms", None) is not None:
         cargs.extend([
             "-n",
-            str(params.get("number_of_terms"))
+            str(params.get("number_of_terms", None))
         ])
-    if params.get("verbose_flag"):
+    if params.get("verbose_flag", False):
         cargs.append("--verbose")
     return cargs
 
@@ -151,7 +127,7 @@ def spharm_rm_outputs(
     """
     ret = SpharmRmOutputs(
         root=execution.output_file("."),
-        outfile=execution.output_file(params.get("output_file")),
+        outfile=execution.output_file(params.get("output_file", None)),
     )
     return ret
 
@@ -225,7 +201,6 @@ def spharm_rm(
 __all__ = [
     "SPHARM_RM_METADATA",
     "SpharmRmOutputs",
-    "SpharmRmParameters",
     "spharm_rm",
     "spharm_rm_execute",
     "spharm_rm_params",

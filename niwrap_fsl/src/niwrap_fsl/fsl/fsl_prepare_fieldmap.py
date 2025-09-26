@@ -14,7 +14,16 @@ FSL_PREPARE_FIELDMAP_METADATA = Metadata(
 
 
 FslPrepareFieldmapParameters = typing.TypedDict('FslPrepareFieldmapParameters', {
-    "@type": typing.Literal["fsl.fsl_prepare_fieldmap"],
+    "@type": typing.NotRequired[typing.Literal["fsl/fsl_prepare_fieldmap"]],
+    "scanner": str,
+    "phase_image": InputPathType,
+    "magnitude_image": InputPathType,
+    "out_image": str,
+    "delta_te": float,
+    "nocheck_flag": bool,
+})
+FslPrepareFieldmapParametersTagged = typing.TypedDict('FslPrepareFieldmapParametersTagged', {
+    "@type": typing.Literal["fsl/fsl_prepare_fieldmap"],
     "scanner": str,
     "phase_image": InputPathType,
     "magnitude_image": InputPathType,
@@ -24,41 +33,9 @@ FslPrepareFieldmapParameters = typing.TypedDict('FslPrepareFieldmapParameters', 
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "fsl.fsl_prepare_fieldmap": fsl_prepare_fieldmap_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "fsl.fsl_prepare_fieldmap": fsl_prepare_fieldmap_outputs,
-    }.get(t)
-
-
 class FslPrepareFieldmapOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `fsl_prepare_fieldmap(...)`.
+    Output object returned when calling `FslPrepareFieldmapParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -73,7 +50,7 @@ def fsl_prepare_fieldmap_params(
     out_image: str,
     delta_te: float,
     nocheck_flag: bool = False,
-) -> FslPrepareFieldmapParameters:
+) -> FslPrepareFieldmapParametersTagged:
     """
     Build parameters.
     
@@ -89,7 +66,7 @@ def fsl_prepare_fieldmap_params(
         Parameter dictionary
     """
     params = {
-        "@type": "fsl.fsl_prepare_fieldmap",
+        "@type": "fsl/fsl_prepare_fieldmap",
         "scanner": scanner,
         "phase_image": phase_image,
         "magnitude_image": magnitude_image,
@@ -115,12 +92,12 @@ def fsl_prepare_fieldmap_cargs(
     """
     cargs = []
     cargs.append("fsl_prepare_fieldmap")
-    cargs.append(params.get("scanner"))
-    cargs.append(execution.input_file(params.get("phase_image")))
-    cargs.append(execution.input_file(params.get("magnitude_image")))
-    cargs.append(params.get("out_image"))
-    cargs.append(str(params.get("delta_te")))
-    if params.get("nocheck_flag"):
+    cargs.append(params.get("scanner", None))
+    cargs.append(execution.input_file(params.get("phase_image", None)))
+    cargs.append(execution.input_file(params.get("magnitude_image", None)))
+    cargs.append(params.get("out_image", None))
+    cargs.append(str(params.get("delta_te", None)))
+    if params.get("nocheck_flag", False):
         cargs.append("--nocheck")
     return cargs
 
@@ -140,7 +117,7 @@ def fsl_prepare_fieldmap_outputs(
     """
     ret = FslPrepareFieldmapOutputs(
         root=execution.output_file("."),
-        output_fieldmap=execution.output_file(params.get("out_image") + ".nii.gz"),
+        output_fieldmap=execution.output_file(params.get("out_image", None) + ".nii.gz"),
     )
     return ret
 
@@ -219,7 +196,6 @@ def fsl_prepare_fieldmap(
 __all__ = [
     "FSL_PREPARE_FIELDMAP_METADATA",
     "FslPrepareFieldmapOutputs",
-    "FslPrepareFieldmapParameters",
     "fsl_prepare_fieldmap",
     "fsl_prepare_fieldmap_execute",
     "fsl_prepare_fieldmap_params",

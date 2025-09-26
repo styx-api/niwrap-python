@@ -14,7 +14,14 @@ IMCALC_METADATA = Metadata(
 
 
 ImcalcParameters = typing.TypedDict('ImcalcParameters', {
-    "@type": typing.Literal["afni.imcalc"],
+    "@type": typing.NotRequired[typing.Literal["afni/imcalc"]],
+    "datum_type": typing.NotRequired[str | None],
+    "image_inputs": typing.NotRequired[list[InputPathType] | None],
+    "expression": str,
+    "output_name": typing.NotRequired[str | None],
+})
+ImcalcParametersTagged = typing.TypedDict('ImcalcParametersTagged', {
+    "@type": typing.Literal["afni/imcalc"],
     "datum_type": typing.NotRequired[str | None],
     "image_inputs": typing.NotRequired[list[InputPathType] | None],
     "expression": str,
@@ -22,41 +29,9 @@ ImcalcParameters = typing.TypedDict('ImcalcParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "afni.imcalc": imcalc_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "afni.imcalc": imcalc_outputs,
-    }.get(t)
-
-
 class ImcalcOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `imcalc(...)`.
+    Output object returned when calling `ImcalcParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -70,7 +45,7 @@ def imcalc_params(
     datum_type: str | None = None,
     image_inputs: list[InputPathType] | None = None,
     output_name: str | None = None,
-) -> ImcalcParameters:
+) -> ImcalcParametersTagged:
     """
     Build parameters.
     
@@ -91,7 +66,7 @@ def imcalc_params(
         Parameter dictionary
     """
     params = {
-        "@type": "afni.imcalc",
+        "@type": "afni/imcalc",
         "expression": expression,
     }
     if datum_type is not None:
@@ -118,24 +93,24 @@ def imcalc_cargs(
     """
     cargs = []
     cargs.append("imcalc")
-    if params.get("datum_type") is not None:
+    if params.get("datum_type", None) is not None:
         cargs.extend([
             "-datum type",
-            params.get("datum_type")
+            params.get("datum_type", None)
         ])
-    if params.get("image_inputs") is not None:
+    if params.get("image_inputs", None) is not None:
         cargs.extend([
             "-a",
-            *[execution.input_file(f) for f in params.get("image_inputs")]
+            *[execution.input_file(f) for f in params.get("image_inputs", None)]
         ])
     cargs.extend([
         "-expr",
-        params.get("expression")
+        params.get("expression", None)
     ])
-    if params.get("output_name") is not None:
+    if params.get("output_name", None) is not None:
         cargs.extend([
             "-output",
-            params.get("output_name")
+            params.get("output_name", None)
         ])
     return cargs
 
@@ -155,7 +130,7 @@ def imcalc_outputs(
     """
     ret = ImcalcOutputs(
         root=execution.output_file("."),
-        output_image=execution.output_file(params.get("output_name")) if (params.get("output_name") is not None) else None,
+        output_image=execution.output_file(params.get("output_name", None)) if (params.get("output_name") is not None) else None,
     )
     return ret
 
@@ -233,7 +208,6 @@ def imcalc(
 __all__ = [
     "IMCALC_METADATA",
     "ImcalcOutputs",
-    "ImcalcParameters",
     "imcalc",
     "imcalc_execute",
     "imcalc_params",

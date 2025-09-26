@@ -14,46 +14,20 @@ LABEL_EXPORT_TABLE_METADATA = Metadata(
 
 
 LabelExportTableParameters = typing.TypedDict('LabelExportTableParameters', {
-    "@type": typing.Literal["workbench.label-export-table"],
+    "@type": typing.NotRequired[typing.Literal["workbench/label-export-table"]],
+    "label_in": InputPathType,
+    "table_out": str,
+})
+LabelExportTableParametersTagged = typing.TypedDict('LabelExportTableParametersTagged', {
+    "@type": typing.Literal["workbench/label-export-table"],
     "label_in": InputPathType,
     "table_out": str,
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "workbench.label-export-table": label_export_table_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-    }.get(t)
-
-
 class LabelExportTableOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `label_export_table(...)`.
+    Output object returned when calling `LabelExportTableParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -62,7 +36,7 @@ class LabelExportTableOutputs(typing.NamedTuple):
 def label_export_table_params(
     label_in: InputPathType,
     table_out: str,
-) -> LabelExportTableParameters:
+) -> LabelExportTableParametersTagged:
     """
     Build parameters.
     
@@ -73,7 +47,7 @@ def label_export_table_params(
         Parameter dictionary
     """
     params = {
-        "@type": "workbench.label-export-table",
+        "@type": "workbench/label-export-table",
         "label_in": label_in,
         "table_out": table_out,
     }
@@ -96,8 +70,8 @@ def label_export_table_cargs(
     cargs = []
     cargs.append("wb_command")
     cargs.append("-label-export-table")
-    cargs.append(execution.input_file(params.get("label_in")))
-    cargs.append(params.get("table_out"))
+    cargs.append(execution.input_file(params.get("label_in", None)))
+    cargs.append(params.get("table_out", None))
     return cargs
 
 
@@ -185,7 +159,6 @@ def label_export_table(
 __all__ = [
     "LABEL_EXPORT_TABLE_METADATA",
     "LabelExportTableOutputs",
-    "LabelExportTableParameters",
     "label_export_table",
     "label_export_table_execute",
     "label_export_table_params",

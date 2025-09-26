@@ -14,7 +14,15 @@ SMOOTHEST_METADATA = Metadata(
 
 
 SmoothestParameters = typing.TypedDict('SmoothestParameters', {
-    "@type": typing.Literal["fsl.smoothest"],
+    "@type": typing.NotRequired[typing.Literal["fsl/smoothest"]],
+    "dof": typing.NotRequired[float | None],
+    "residual_fit_image": typing.NotRequired[InputPathType | None],
+    "zstat_image": typing.NotRequired[InputPathType | None],
+    "mask": InputPathType,
+    "verbose_flag": bool,
+})
+SmoothestParametersTagged = typing.TypedDict('SmoothestParametersTagged', {
+    "@type": typing.Literal["fsl/smoothest"],
     "dof": typing.NotRequired[float | None],
     "residual_fit_image": typing.NotRequired[InputPathType | None],
     "zstat_image": typing.NotRequired[InputPathType | None],
@@ -23,40 +31,9 @@ SmoothestParameters = typing.TypedDict('SmoothestParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "fsl.smoothest": smoothest_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-    }.get(t)
-
-
 class SmoothestOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `smoothest(...)`.
+    Output object returned when calling `SmoothestParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -68,7 +45,7 @@ def smoothest_params(
     residual_fit_image: InputPathType | None = None,
     zstat_image: InputPathType | None = None,
     verbose_flag: bool = False,
-) -> SmoothestParameters:
+) -> SmoothestParametersTagged:
     """
     Build parameters.
     
@@ -82,7 +59,7 @@ def smoothest_params(
         Parameter dictionary
     """
     params = {
-        "@type": "fsl.smoothest",
+        "@type": "fsl/smoothest",
         "mask": mask,
         "verbose_flag": verbose_flag,
     }
@@ -110,26 +87,26 @@ def smoothest_cargs(
     """
     cargs = []
     cargs.append("smoothest")
-    if params.get("dof") is not None:
+    if params.get("dof", None) is not None:
         cargs.extend([
             "-d",
-            str(params.get("dof"))
+            str(params.get("dof", None))
         ])
-    if params.get("residual_fit_image") is not None:
+    if params.get("residual_fit_image", None) is not None:
         cargs.extend([
             "-r",
-            execution.input_file(params.get("residual_fit_image"))
+            execution.input_file(params.get("residual_fit_image", None))
         ])
-    if params.get("zstat_image") is not None:
+    if params.get("zstat_image", None) is not None:
         cargs.extend([
             "-z",
-            execution.input_file(params.get("zstat_image"))
+            execution.input_file(params.get("zstat_image", None))
         ])
     cargs.extend([
         "-m",
-        execution.input_file(params.get("mask"))
+        execution.input_file(params.get("mask", None))
     ])
-    if params.get("verbose_flag"):
+    if params.get("verbose_flag", False):
         cargs.append("-V")
     return cargs
 
@@ -221,7 +198,6 @@ def smoothest(
 __all__ = [
     "SMOOTHEST_METADATA",
     "SmoothestOutputs",
-    "SmoothestParameters",
     "smoothest",
     "smoothest_execute",
     "smoothest_params",

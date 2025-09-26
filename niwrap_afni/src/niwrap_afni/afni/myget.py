@@ -14,48 +14,22 @@ MYGET_METADATA = Metadata(
 
 
 MygetParameters = typing.TypedDict('MygetParameters', {
-    "@type": typing.Literal["afni.myget"],
+    "@type": typing.NotRequired[typing.Literal["afni/myget"]],
+    "protocol_version": typing.NotRequired[typing.Literal["-1", "-1.1"] | None],
+    "url": str,
+    "output_file": str,
+})
+MygetParametersTagged = typing.TypedDict('MygetParametersTagged', {
+    "@type": typing.Literal["afni/myget"],
     "protocol_version": typing.NotRequired[typing.Literal["-1", "-1.1"] | None],
     "url": str,
     "output_file": str,
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "afni.myget": myget_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "afni.myget": myget_outputs,
-    }.get(t)
-
-
 class MygetOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `myget(...)`.
+    Output object returned when calling `MygetParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -67,7 +41,7 @@ def myget_params(
     url: str,
     output_file: str,
     protocol_version: typing.Literal["-1", "-1.1"] | None = None,
-) -> MygetParameters:
+) -> MygetParametersTagged:
     """
     Build parameters.
     
@@ -80,7 +54,7 @@ def myget_params(
         Parameter dictionary
     """
     params = {
-        "@type": "afni.myget",
+        "@type": "afni/myget",
         "url": url,
         "output_file": output_file,
     }
@@ -104,12 +78,12 @@ def myget_cargs(
     """
     cargs = []
     cargs.append("myget")
-    if params.get("protocol_version") is not None:
-        cargs.append(params.get("protocol_version"))
-    cargs.append(params.get("url"))
+    if params.get("protocol_version", None) is not None:
+        cargs.append(params.get("protocol_version", None))
+    cargs.append(params.get("url", None))
     cargs.extend([
         ">",
-        params.get("output_file")
+        params.get("output_file", None)
     ])
     return cargs
 
@@ -129,7 +103,7 @@ def myget_outputs(
     """
     ret = MygetOutputs(
         root=execution.output_file("."),
-        output_file=execution.output_file(params.get("output_file")),
+        output_file=execution.output_file(params.get("output_file", None)),
     )
     return ret
 
@@ -197,7 +171,6 @@ def myget(
 __all__ = [
     "MYGET_METADATA",
     "MygetOutputs",
-    "MygetParameters",
     "myget",
     "myget_execute",
     "myget_params",

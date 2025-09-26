@@ -14,7 +14,20 @@ MRI_SYNTHSR_METADATA = Metadata(
 
 
 MriSynthsrParameters = typing.TypedDict('MriSynthsrParameters', {
-    "@type": typing.Literal["freesurfer.mri_synthsr"],
+    "@type": typing.NotRequired[typing.Literal["freesurfer/mri_synthsr"]],
+    "input": str,
+    "output": str,
+    "ct": bool,
+    "disable_sharpening": bool,
+    "disable_flipping": bool,
+    "lowfield": bool,
+    "v1": bool,
+    "threads": typing.NotRequired[float | None],
+    "cpu": bool,
+    "model": typing.NotRequired[str | None],
+})
+MriSynthsrParametersTagged = typing.TypedDict('MriSynthsrParametersTagged', {
+    "@type": typing.Literal["freesurfer/mri_synthsr"],
     "input": str,
     "output": str,
     "ct": bool,
@@ -28,40 +41,9 @@ MriSynthsrParameters = typing.TypedDict('MriSynthsrParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "freesurfer.mri_synthsr": mri_synthsr_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-    }.get(t)
-
-
 class MriSynthsrOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `mri_synthsr(...)`.
+    Output object returned when calling `MriSynthsrParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -78,7 +60,7 @@ def mri_synthsr_params(
     threads: float | None = None,
     cpu: bool = False,
     model: str | None = None,
-) -> MriSynthsrParameters:
+) -> MriSynthsrParametersTagged:
     """
     Build parameters.
     
@@ -102,7 +84,7 @@ def mri_synthsr_params(
         Parameter dictionary
     """
     params = {
-        "@type": "freesurfer.mri_synthsr",
+        "@type": "freesurfer/mri_synthsr",
         "input": input_,
         "output": output,
         "ct": ct,
@@ -134,29 +116,29 @@ def mri_synthsr_cargs(
     """
     cargs = []
     cargs.append("mri_synthsr")
-    cargs.append(params.get("input"))
-    cargs.append(params.get("output"))
-    if params.get("ct"):
+    cargs.append(params.get("input", None))
+    cargs.append(params.get("output", None))
+    if params.get("ct", False):
         cargs.append("--ct")
-    if params.get("disable_sharpening"):
+    if params.get("disable_sharpening", False):
         cargs.append("--disable_sharpening")
-    if params.get("disable_flipping"):
+    if params.get("disable_flipping", False):
         cargs.append("--disable_flipping")
-    if params.get("lowfield"):
+    if params.get("lowfield", False):
         cargs.append("--lowfield")
-    if params.get("v1"):
+    if params.get("v1", False):
         cargs.append("--v1")
-    if params.get("threads") is not None:
+    if params.get("threads", None) is not None:
         cargs.extend([
             "--threads",
-            str(params.get("threads"))
+            str(params.get("threads", None))
         ])
-    if params.get("cpu"):
+    if params.get("cpu", False):
         cargs.append("--cpu")
-    if params.get("model") is not None:
+    if params.get("model", None) is not None:
         cargs.extend([
             "--model",
-            params.get("model")
+            params.get("model", None)
         ])
     return cargs
 
@@ -270,7 +252,6 @@ def mri_synthsr(
 __all__ = [
     "MRI_SYNTHSR_METADATA",
     "MriSynthsrOutputs",
-    "MriSynthsrParameters",
     "mri_synthsr",
     "mri_synthsr_execute",
     "mri_synthsr_params",

@@ -14,7 +14,16 @@ CIFTI_PARCELLATE_METADATA = Metadata(
 
 
 CiftiParcellateSpatialWeightsParameters = typing.TypedDict('CiftiParcellateSpatialWeightsParameters', {
-    "@type": typing.Literal["workbench.cifti-parcellate.spatial_weights"],
+    "@type": typing.NotRequired[typing.Literal["spatial_weights"]],
+    "opt_left_area_surf_left_surf": typing.NotRequired[InputPathType | None],
+    "opt_right_area_surf_right_surf": typing.NotRequired[InputPathType | None],
+    "opt_cerebellum_area_surf_cerebellum_surf": typing.NotRequired[InputPathType | None],
+    "opt_left_area_metric_left_metric": typing.NotRequired[InputPathType | None],
+    "opt_right_area_metric_right_metric": typing.NotRequired[InputPathType | None],
+    "opt_cerebellum_area_metric_cerebellum_metric": typing.NotRequired[InputPathType | None],
+})
+CiftiParcellateSpatialWeightsParametersTagged = typing.TypedDict('CiftiParcellateSpatialWeightsParametersTagged', {
+    "@type": typing.Literal["spatial_weights"],
     "opt_left_area_surf_left_surf": typing.NotRequired[InputPathType | None],
     "opt_right_area_surf_right_surf": typing.NotRequired[InputPathType | None],
     "opt_cerebellum_area_surf_cerebellum_surf": typing.NotRequired[InputPathType | None],
@@ -25,14 +34,35 @@ CiftiParcellateSpatialWeightsParameters = typing.TypedDict('CiftiParcellateSpati
 
 
 CiftiParcellateExcludeOutliersParameters = typing.TypedDict('CiftiParcellateExcludeOutliersParameters', {
-    "@type": typing.Literal["workbench.cifti-parcellate.exclude_outliers"],
+    "@type": typing.NotRequired[typing.Literal["exclude_outliers"]],
+    "sigma_below": float,
+    "sigma_above": float,
+})
+CiftiParcellateExcludeOutliersParametersTagged = typing.TypedDict('CiftiParcellateExcludeOutliersParametersTagged', {
+    "@type": typing.Literal["exclude_outliers"],
     "sigma_below": float,
     "sigma_above": float,
 })
 
 
 CiftiParcellateParameters = typing.TypedDict('CiftiParcellateParameters', {
-    "@type": typing.Literal["workbench.cifti-parcellate"],
+    "@type": typing.NotRequired[typing.Literal["workbench/cifti-parcellate"]],
+    "cifti_in": InputPathType,
+    "cifti_label": InputPathType,
+    "direction": str,
+    "cifti_out": str,
+    "spatial_weights": typing.NotRequired[CiftiParcellateSpatialWeightsParameters | None],
+    "opt_cifti_weights_weight_cifti": typing.NotRequired[InputPathType | None],
+    "opt_method_method": typing.NotRequired[str | None],
+    "exclude_outliers": typing.NotRequired[CiftiParcellateExcludeOutliersParameters | None],
+    "opt_only_numeric": bool,
+    "opt_fill_value_value": typing.NotRequired[float | None],
+    "opt_nonempty_mask_out_mask_out": typing.NotRequired[str | None],
+    "opt_legacy_mode": bool,
+    "opt_include_empty": bool,
+})
+CiftiParcellateParametersTagged = typing.TypedDict('CiftiParcellateParametersTagged', {
+    "@type": typing.Literal["workbench/cifti-parcellate"],
     "cifti_in": InputPathType,
     "cifti_label": InputPathType,
     "direction": str,
@@ -49,40 +79,6 @@ CiftiParcellateParameters = typing.TypedDict('CiftiParcellateParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "workbench.cifti-parcellate": cifti_parcellate_cargs,
-        "workbench.cifti-parcellate.spatial_weights": cifti_parcellate_spatial_weights_cargs,
-        "workbench.cifti-parcellate.exclude_outliers": cifti_parcellate_exclude_outliers_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "workbench.cifti-parcellate": cifti_parcellate_outputs,
-    }.get(t)
-
-
 def cifti_parcellate_spatial_weights_params(
     opt_left_area_surf_left_surf: InputPathType | None = None,
     opt_right_area_surf_right_surf: InputPathType | None = None,
@@ -90,7 +86,7 @@ def cifti_parcellate_spatial_weights_params(
     opt_left_area_metric_left_metric: InputPathType | None = None,
     opt_right_area_metric_right_metric: InputPathType | None = None,
     opt_cerebellum_area_metric_cerebellum_metric: InputPathType | None = None,
-) -> CiftiParcellateSpatialWeightsParameters:
+) -> CiftiParcellateSpatialWeightsParametersTagged:
     """
     Build parameters.
     
@@ -112,7 +108,7 @@ def cifti_parcellate_spatial_weights_params(
         Parameter dictionary
     """
     params = {
-        "@type": "workbench.cifti-parcellate.spatial_weights",
+        "@type": "spatial_weights",
     }
     if opt_left_area_surf_left_surf is not None:
         params["opt_left_area_surf_left_surf"] = opt_left_area_surf_left_surf
@@ -144,35 +140,35 @@ def cifti_parcellate_spatial_weights_cargs(
     """
     cargs = []
     cargs.append("-spatial-weights")
-    if params.get("opt_left_area_surf_left_surf") is not None:
+    if params.get("opt_left_area_surf_left_surf", None) is not None:
         cargs.extend([
             "-left-area-surf",
-            execution.input_file(params.get("opt_left_area_surf_left_surf"))
+            execution.input_file(params.get("opt_left_area_surf_left_surf", None))
         ])
-    if params.get("opt_right_area_surf_right_surf") is not None:
+    if params.get("opt_right_area_surf_right_surf", None) is not None:
         cargs.extend([
             "-right-area-surf",
-            execution.input_file(params.get("opt_right_area_surf_right_surf"))
+            execution.input_file(params.get("opt_right_area_surf_right_surf", None))
         ])
-    if params.get("opt_cerebellum_area_surf_cerebellum_surf") is not None:
+    if params.get("opt_cerebellum_area_surf_cerebellum_surf", None) is not None:
         cargs.extend([
             "-cerebellum-area-surf",
-            execution.input_file(params.get("opt_cerebellum_area_surf_cerebellum_surf"))
+            execution.input_file(params.get("opt_cerebellum_area_surf_cerebellum_surf", None))
         ])
-    if params.get("opt_left_area_metric_left_metric") is not None:
+    if params.get("opt_left_area_metric_left_metric", None) is not None:
         cargs.extend([
             "-left-area-metric",
-            execution.input_file(params.get("opt_left_area_metric_left_metric"))
+            execution.input_file(params.get("opt_left_area_metric_left_metric", None))
         ])
-    if params.get("opt_right_area_metric_right_metric") is not None:
+    if params.get("opt_right_area_metric_right_metric", None) is not None:
         cargs.extend([
             "-right-area-metric",
-            execution.input_file(params.get("opt_right_area_metric_right_metric"))
+            execution.input_file(params.get("opt_right_area_metric_right_metric", None))
         ])
-    if params.get("opt_cerebellum_area_metric_cerebellum_metric") is not None:
+    if params.get("opt_cerebellum_area_metric_cerebellum_metric", None) is not None:
         cargs.extend([
             "-cerebellum-area-metric",
-            execution.input_file(params.get("opt_cerebellum_area_metric_cerebellum_metric"))
+            execution.input_file(params.get("opt_cerebellum_area_metric_cerebellum_metric", None))
         ])
     return cargs
 
@@ -180,7 +176,7 @@ def cifti_parcellate_spatial_weights_cargs(
 def cifti_parcellate_exclude_outliers_params(
     sigma_below: float,
     sigma_above: float,
-) -> CiftiParcellateExcludeOutliersParameters:
+) -> CiftiParcellateExcludeOutliersParametersTagged:
     """
     Build parameters.
     
@@ -191,7 +187,7 @@ def cifti_parcellate_exclude_outliers_params(
         Parameter dictionary
     """
     params = {
-        "@type": "workbench.cifti-parcellate.exclude_outliers",
+        "@type": "exclude_outliers",
         "sigma_below": sigma_below,
         "sigma_above": sigma_above,
     }
@@ -213,14 +209,14 @@ def cifti_parcellate_exclude_outliers_cargs(
     """
     cargs = []
     cargs.append("-exclude-outliers")
-    cargs.append(str(params.get("sigma_below")))
-    cargs.append(str(params.get("sigma_above")))
+    cargs.append(str(params.get("sigma_below", None)))
+    cargs.append(str(params.get("sigma_above", None)))
     return cargs
 
 
 class CiftiParcellateOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `cifti_parcellate(...)`.
+    Output object returned when calling `CiftiParcellateParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -245,7 +241,7 @@ def cifti_parcellate_params(
     opt_nonempty_mask_out_mask_out: str | None = None,
     opt_legacy_mode: bool = False,
     opt_include_empty: bool = False,
-) -> CiftiParcellateParameters:
+) -> CiftiParcellateParametersTagged:
     """
     Build parameters.
     
@@ -276,7 +272,7 @@ def cifti_parcellate_params(
         Parameter dictionary
     """
     params = {
-        "@type": "workbench.cifti-parcellate",
+        "@type": "workbench/cifti-parcellate",
         "cifti_in": cifti_in,
         "cifti_label": cifti_label,
         "direction": direction,
@@ -316,39 +312,39 @@ def cifti_parcellate_cargs(
     cargs = []
     cargs.append("wb_command")
     cargs.append("-cifti-parcellate")
-    cargs.append(execution.input_file(params.get("cifti_in")))
-    cargs.append(execution.input_file(params.get("cifti_label")))
-    cargs.append(params.get("direction"))
-    cargs.append(params.get("cifti_out"))
-    if params.get("spatial_weights") is not None:
-        cargs.extend(dyn_cargs(params.get("spatial_weights")["@type"])(params.get("spatial_weights"), execution))
-    if params.get("opt_cifti_weights_weight_cifti") is not None:
+    cargs.append(execution.input_file(params.get("cifti_in", None)))
+    cargs.append(execution.input_file(params.get("cifti_label", None)))
+    cargs.append(params.get("direction", None))
+    cargs.append(params.get("cifti_out", None))
+    if params.get("spatial_weights", None) is not None:
+        cargs.extend(cifti_parcellate_spatial_weights_cargs(params.get("spatial_weights", None), execution))
+    if params.get("opt_cifti_weights_weight_cifti", None) is not None:
         cargs.extend([
             "-cifti-weights",
-            execution.input_file(params.get("opt_cifti_weights_weight_cifti"))
+            execution.input_file(params.get("opt_cifti_weights_weight_cifti", None))
         ])
-    if params.get("opt_method_method") is not None:
+    if params.get("opt_method_method", None) is not None:
         cargs.extend([
             "-method",
-            params.get("opt_method_method")
+            params.get("opt_method_method", None)
         ])
-    if params.get("exclude_outliers") is not None:
-        cargs.extend(dyn_cargs(params.get("exclude_outliers")["@type"])(params.get("exclude_outliers"), execution))
-    if params.get("opt_only_numeric"):
+    if params.get("exclude_outliers", None) is not None:
+        cargs.extend(cifti_parcellate_exclude_outliers_cargs(params.get("exclude_outliers", None), execution))
+    if params.get("opt_only_numeric", False):
         cargs.append("-only-numeric")
-    if params.get("opt_fill_value_value") is not None:
+    if params.get("opt_fill_value_value", None) is not None:
         cargs.extend([
             "-fill-value",
-            str(params.get("opt_fill_value_value"))
+            str(params.get("opt_fill_value_value", None))
         ])
-    if params.get("opt_nonempty_mask_out_mask_out") is not None:
+    if params.get("opt_nonempty_mask_out_mask_out", None) is not None:
         cargs.extend([
             "-nonempty-mask-out",
-            params.get("opt_nonempty_mask_out_mask_out")
+            params.get("opt_nonempty_mask_out_mask_out", None)
         ])
-    if params.get("opt_legacy_mode"):
+    if params.get("opt_legacy_mode", False):
         cargs.append("-legacy-mode")
-    if params.get("opt_include_empty"):
+    if params.get("opt_include_empty", False):
         cargs.append("-include-empty")
     return cargs
 
@@ -368,8 +364,8 @@ def cifti_parcellate_outputs(
     """
     ret = CiftiParcellateOutputs(
         root=execution.output_file("."),
-        cifti_out=execution.output_file(params.get("cifti_out")),
-        opt_nonempty_mask_out_mask_out=execution.output_file(params.get("opt_nonempty_mask_out_mask_out")) if (params.get("opt_nonempty_mask_out_mask_out") is not None) else None,
+        cifti_out=execution.output_file(params.get("cifti_out", None)),
+        opt_nonempty_mask_out_mask_out=execution.output_file(params.get("opt_nonempty_mask_out_mask_out", None)) if (params.get("opt_nonempty_mask_out_mask_out") is not None) else None,
     )
     return ret
 
@@ -546,10 +542,7 @@ def cifti_parcellate(
 
 __all__ = [
     "CIFTI_PARCELLATE_METADATA",
-    "CiftiParcellateExcludeOutliersParameters",
     "CiftiParcellateOutputs",
-    "CiftiParcellateParameters",
-    "CiftiParcellateSpatialWeightsParameters",
     "cifti_parcellate",
     "cifti_parcellate_exclude_outliers_params",
     "cifti_parcellate_execute",

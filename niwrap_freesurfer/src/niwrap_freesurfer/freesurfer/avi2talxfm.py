@@ -14,7 +14,14 @@ AVI2TALXFM_METADATA = Metadata(
 
 
 Avi2talxfmParameters = typing.TypedDict('Avi2talxfmParameters', {
-    "@type": typing.Literal["freesurfer.avi2talxfm"],
+    "@type": typing.NotRequired[typing.Literal["freesurfer/avi2talxfm"]],
+    "input_volume": InputPathType,
+    "target_volume": InputPathType,
+    "vox2vox_transform": InputPathType,
+    "output_xfm": str,
+})
+Avi2talxfmParametersTagged = typing.TypedDict('Avi2talxfmParametersTagged', {
+    "@type": typing.Literal["freesurfer/avi2talxfm"],
     "input_volume": InputPathType,
     "target_volume": InputPathType,
     "vox2vox_transform": InputPathType,
@@ -22,41 +29,9 @@ Avi2talxfmParameters = typing.TypedDict('Avi2talxfmParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "freesurfer.avi2talxfm": avi2talxfm_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "freesurfer.avi2talxfm": avi2talxfm_outputs,
-    }.get(t)
-
-
 class Avi2talxfmOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `avi2talxfm(...)`.
+    Output object returned when calling `Avi2talxfmParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -69,7 +44,7 @@ def avi2talxfm_params(
     target_volume: InputPathType,
     vox2vox_transform: InputPathType,
     output_xfm: str,
-) -> Avi2talxfmParameters:
+) -> Avi2talxfmParametersTagged:
     """
     Build parameters.
     
@@ -82,7 +57,7 @@ def avi2talxfm_params(
         Parameter dictionary
     """
     params = {
-        "@type": "freesurfer.avi2talxfm",
+        "@type": "freesurfer/avi2talxfm",
         "input_volume": input_volume,
         "target_volume": target_volume,
         "vox2vox_transform": vox2vox_transform,
@@ -106,10 +81,10 @@ def avi2talxfm_cargs(
     """
     cargs = []
     cargs.append("avi2talxfm")
-    cargs.append(execution.input_file(params.get("input_volume")))
-    cargs.append(execution.input_file(params.get("target_volume")))
-    cargs.append(execution.input_file(params.get("vox2vox_transform")))
-    cargs.append(params.get("output_xfm"))
+    cargs.append(execution.input_file(params.get("input_volume", None)))
+    cargs.append(execution.input_file(params.get("target_volume", None)))
+    cargs.append(execution.input_file(params.get("vox2vox_transform", None)))
+    cargs.append(params.get("output_xfm", None))
     return cargs
 
 
@@ -128,7 +103,7 @@ def avi2talxfm_outputs(
     """
     ret = Avi2talxfmOutputs(
         root=execution.output_file("."),
-        output_xfm_file=execution.output_file(params.get("output_xfm")),
+        output_xfm_file=execution.output_file(params.get("output_xfm", None)),
     )
     return ret
 
@@ -198,7 +173,6 @@ def avi2talxfm(
 __all__ = [
     "AVI2TALXFM_METADATA",
     "Avi2talxfmOutputs",
-    "Avi2talxfmParameters",
     "avi2talxfm",
     "avi2talxfm_execute",
     "avi2talxfm_params",

@@ -14,7 +14,29 @@ ASL_MFREE_METADATA = Metadata(
 
 
 AslMfreeParameters = typing.TypedDict('AslMfreeParameters', {
-    "@type": typing.Literal["fsl.asl_mfree"],
+    "@type": typing.NotRequired[typing.Literal["fsl/asl_mfree"]],
+    "datafile": InputPathType,
+    "mask": InputPathType,
+    "out": str,
+    "aif": InputPathType,
+    "dt": float,
+    "metric": typing.NotRequired[InputPathType | None],
+    "mthresh": typing.NotRequired[float | None],
+    "tcorrect": bool,
+    "bata": typing.NotRequired[InputPathType | None],
+    "batt": typing.NotRequired[InputPathType | None],
+    "bat": bool,
+    "bat_grad_thr": typing.NotRequired[float | None],
+    "t1": typing.NotRequired[float | None],
+    "fa": typing.NotRequired[float | None],
+    "std": bool,
+    "nwb": typing.NotRequired[float | None],
+    "turbo_quasar": bool,
+    "shift_factor": typing.NotRequired[float | None],
+    "verbose": bool,
+})
+AslMfreeParametersTagged = typing.TypedDict('AslMfreeParametersTagged', {
+    "@type": typing.Literal["fsl/asl_mfree"],
     "datafile": InputPathType,
     "mask": InputPathType,
     "out": str,
@@ -37,41 +59,9 @@ AslMfreeParameters = typing.TypedDict('AslMfreeParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "fsl.asl_mfree": asl_mfree_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "fsl.asl_mfree": asl_mfree_outputs,
-    }.get(t)
-
-
 class AslMfreeOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `asl_mfree(...)`.
+    Output object returned when calling `AslMfreeParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -101,7 +91,7 @@ def asl_mfree_params(
     turbo_quasar: bool = False,
     shift_factor: float | None = None,
     verbose: bool = False,
-) -> AslMfreeParameters:
+) -> AslMfreeParametersTagged:
     """
     Build parameters.
     
@@ -134,7 +124,7 @@ def asl_mfree_params(
         Parameter dictionary
     """
     params = {
-        "@type": "fsl.asl_mfree",
+        "@type": "fsl/asl_mfree",
         "datafile": datafile,
         "mask": mask,
         "out": out,
@@ -184,78 +174,78 @@ def asl_mfree_cargs(
     cargs.append("asl_mfree")
     cargs.extend([
         "--data",
-        execution.input_file(params.get("datafile"))
+        execution.input_file(params.get("datafile", None))
     ])
     cargs.extend([
         "--mask",
-        execution.input_file(params.get("mask"))
+        execution.input_file(params.get("mask", None))
     ])
     cargs.extend([
         "--out",
-        params.get("out")
+        params.get("out", None)
     ])
     cargs.extend([
         "--aif",
-        execution.input_file(params.get("aif"))
+        execution.input_file(params.get("aif", None))
     ])
     cargs.extend([
         "--dt",
-        str(params.get("dt"))
+        str(params.get("dt", None))
     ])
-    if params.get("metric") is not None:
+    if params.get("metric", None) is not None:
         cargs.extend([
             "--metric",
-            execution.input_file(params.get("metric"))
+            execution.input_file(params.get("metric", None))
         ])
-    if params.get("mthresh") is not None:
+    if params.get("mthresh", None) is not None:
         cargs.extend([
             "--mthresh",
-            str(params.get("mthresh"))
+            str(params.get("mthresh", None))
         ])
-    if params.get("tcorrect"):
+    if params.get("tcorrect", False):
         cargs.append("--tcorrect")
-    if params.get("bata") is not None:
+    if params.get("bata", None) is not None:
         cargs.extend([
             "--bata",
-            execution.input_file(params.get("bata"))
+            execution.input_file(params.get("bata", None))
         ])
-    if params.get("batt") is not None:
+    if params.get("batt", None) is not None:
         cargs.extend([
             "--batt",
-            execution.input_file(params.get("batt"))
+            execution.input_file(params.get("batt", None))
         ])
-    if params.get("bat"):
+    if params.get("bat", False):
         cargs.append("--bat")
-    if params.get("bat_grad_thr") is not None:
+    if params.get("bat_grad_thr", None) is not None:
         cargs.extend([
             "--bat_grad_thr",
-            str(params.get("bat_grad_thr"))
+            str(params.get("bat_grad_thr", None))
         ])
-    if params.get("t1") is not None:
+    if params.get("t1", None) is not None:
         cargs.extend([
             "--t1",
-            str(params.get("t1"))
+            str(params.get("t1", None))
         ])
-    if params.get("fa") is not None:
+    if params.get("fa", None) is not None:
         cargs.extend([
             "--fa",
-            str(params.get("fa"))
+            str(params.get("fa", None))
         ])
-    if params.get("std"):
+    if params.get("std", False):
         cargs.append("--std")
-    if params.get("nwb") is not None:
+    if params.get("nwb", None) is not None:
         cargs.extend([
             "--nwb",
-            str(params.get("nwb"))
+            str(params.get("nwb", None))
         ])
-    if params.get("turbo_quasar"):
+    if params.get("turbo_quasar", False):
         cargs.append("--turbo_quasar")
-    if params.get("shift_factor") is not None:
+    if params.get("shift_factor", None) is not None:
         cargs.extend([
             "--shift_factor",
-            str(params.get("shift_factor"))
+            str(params.get("shift_factor", None))
         ])
-    if params.get("verbose"):
+    if params.get("verbose", False):
         cargs.append("--verbose")
     return cargs
 
@@ -275,8 +265,8 @@ def asl_mfree_outputs(
     """
     ret = AslMfreeOutputs(
         root=execution.output_file("."),
-        result_file=execution.output_file(params.get("out") + "/results.nii.gz"),
-        bat_img=execution.output_file(params.get("out") + "/bat.nii.gz"),
+        result_file=execution.output_file(params.get("out", None) + "/results.nii.gz"),
+        bat_img=execution.output_file(params.get("out", None) + "/bat.nii.gz"),
     )
     return ret
 
@@ -396,7 +386,6 @@ def asl_mfree(
 __all__ = [
     "ASL_MFREE_METADATA",
     "AslMfreeOutputs",
-    "AslMfreeParameters",
     "asl_mfree",
     "asl_mfree_execute",
     "asl_mfree_params",

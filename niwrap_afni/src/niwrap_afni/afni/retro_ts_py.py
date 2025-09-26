@@ -14,7 +14,35 @@ RETRO_TS_PY_METADATA = Metadata(
 
 
 RetroTsPyParameters = typing.TypedDict('RetroTsPyParameters', {
-    "@type": typing.Literal["afni.RetroTS.py"],
+    "@type": typing.NotRequired[typing.Literal["afni/RetroTS.py"]],
+    "resp_file": typing.NotRequired[InputPathType | None],
+    "card_file": typing.NotRequired[InputPathType | None],
+    "phys_fs": typing.NotRequired[float | None],
+    "num_slices": float,
+    "volume_tr": float,
+    "phys_file": typing.NotRequired[InputPathType | None],
+    "phys_json": typing.NotRequired[InputPathType | None],
+    "prefix": typing.NotRequired[str | None],
+    "rvt_shifts": typing.NotRequired[str | None],
+    "rvt_out": bool,
+    "resp_cutoff_freq": typing.NotRequired[float | None],
+    "cardiac_cutoff_freq": typing.NotRequired[float | None],
+    "cardiac_out": bool,
+    "respiration_out": bool,
+    "interp_style": typing.NotRequired[str | None],
+    "fir_order": typing.NotRequired[float | None],
+    "quiet": bool,
+    "demo": bool,
+    "show_graphs": bool,
+    "debug": bool,
+    "slice_offset": typing.NotRequired[str | None],
+    "slice_major": typing.NotRequired[float | None],
+    "slice_order": typing.NotRequired[str | None],
+    "zero_phase_offset": bool,
+    "legacy_transform": typing.NotRequired[float | None],
+})
+RetroTsPyParametersTagged = typing.TypedDict('RetroTsPyParametersTagged', {
+    "@type": typing.Literal["afni/RetroTS.py"],
     "resp_file": typing.NotRequired[InputPathType | None],
     "card_file": typing.NotRequired[InputPathType | None],
     "phys_fs": typing.NotRequired[float | None],
@@ -43,41 +71,9 @@ RetroTsPyParameters = typing.TypedDict('RetroTsPyParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "afni.RetroTS.py": retro_ts_py_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "afni.RetroTS.py": retro_ts_py_outputs,
-    }.get(t)
-
-
 class RetroTsPyOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `retro_ts_py(...)`.
+    Output object returned when calling `RetroTsPyParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -111,7 +107,7 @@ def retro_ts_py_params(
     slice_order: str | None = None,
     zero_phase_offset: bool = False,
     legacy_transform: float | None = None,
-) -> RetroTsPyParameters:
+) -> RetroTsPyParametersTagged:
     """
     Build parameters.
     
@@ -153,7 +149,7 @@ def retro_ts_py_params(
         Parameter dictionary
     """
     params = {
-        "@type": "afni.RetroTS.py",
+        "@type": "afni/RetroTS.py",
         "num_slices": num_slices,
         "volume_tr": volume_tr,
         "rvt_out": rvt_out,
@@ -213,104 +209,104 @@ def retro_ts_py_cargs(
     """
     cargs = []
     cargs.append("RetroTS.py")
-    if params.get("resp_file") is not None:
+    if params.get("resp_file", None) is not None:
         cargs.extend([
             "-r",
-            execution.input_file(params.get("resp_file"))
+            execution.input_file(params.get("resp_file", None))
         ])
-    if params.get("card_file") is not None:
+    if params.get("card_file", None) is not None:
         cargs.extend([
             "-c",
-            execution.input_file(params.get("card_file"))
+            execution.input_file(params.get("card_file", None))
         ])
-    if params.get("phys_fs") is not None:
+    if params.get("phys_fs", None) is not None:
         cargs.extend([
             "-p",
-            str(params.get("phys_fs"))
+            str(params.get("phys_fs", None))
         ])
     cargs.extend([
         "-n",
-        str(params.get("num_slices"))
+        str(params.get("num_slices", None))
     ])
     cargs.extend([
         "-v",
-        str(params.get("volume_tr"))
+        str(params.get("volume_tr", None))
     ])
-    if params.get("phys_file") is not None:
+    if params.get("phys_file", None) is not None:
         cargs.extend([
             "-phys_file",
-            execution.input_file(params.get("phys_file"))
+            execution.input_file(params.get("phys_file", None))
         ])
-    if params.get("phys_json") is not None:
+    if params.get("phys_json", None) is not None:
         cargs.extend([
             "-phys_json",
-            execution.input_file(params.get("phys_json"))
+            execution.input_file(params.get("phys_json", None))
         ])
-    if params.get("prefix") is not None:
+    if params.get("prefix", None) is not None:
         cargs.extend([
             "-prefix",
-            params.get("prefix")
+            params.get("prefix", None)
         ])
-    if params.get("rvt_shifts") is not None:
+    if params.get("rvt_shifts", None) is not None:
         cargs.extend([
             "-rvt_shifts",
-            params.get("rvt_shifts")
+            params.get("rvt_shifts", None)
         ])
-    if params.get("rvt_out"):
+    if params.get("rvt_out", False):
         cargs.append("-rvt_out")
-    if params.get("resp_cutoff_freq") is not None:
+    if params.get("resp_cutoff_freq", None) is not None:
         cargs.extend([
             "-respiration_cutoff_frequency",
-            str(params.get("resp_cutoff_freq"))
+            str(params.get("resp_cutoff_freq", None))
         ])
-    if params.get("cardiac_cutoff_freq") is not None:
+    if params.get("cardiac_cutoff_freq", None) is not None:
         cargs.extend([
             "-cardiac_cutoff_frequency",
-            str(params.get("cardiac_cutoff_freq"))
+            str(params.get("cardiac_cutoff_freq", None))
         ])
-    if params.get("cardiac_out"):
+    if params.get("cardiac_out", False):
         cargs.append("-cardiac_out")
-    if params.get("respiration_out"):
+    if params.get("respiration_out", False):
         cargs.append("-respiration_out")
-    if params.get("interp_style") is not None:
+    if params.get("interp_style", None) is not None:
         cargs.extend([
             "-interpolation_style",
-            params.get("interp_style")
+            params.get("interp_style", None)
         ])
-    if params.get("fir_order") is not None:
+    if params.get("fir_order", None) is not None:
         cargs.extend([
             "-fir_order",
-            str(params.get("fir_order"))
+            str(params.get("fir_order", None))
         ])
-    if params.get("quiet"):
+    if params.get("quiet", False):
         cargs.append("-quiet")
-    if params.get("demo"):
+    if params.get("demo", False):
         cargs.append("-demo")
-    if params.get("show_graphs"):
+    if params.get("show_graphs", False):
         cargs.append("-show_graphs")
-    if params.get("debug"):
+    if params.get("debug", False):
         cargs.append("-debug")
-    if params.get("slice_offset") is not None:
+    if params.get("slice_offset", None) is not None:
         cargs.extend([
             "-slice_offset",
-            params.get("slice_offset")
+            params.get("slice_offset", None)
         ])
-    if params.get("slice_major") is not None:
+    if params.get("slice_major", None) is not None:
         cargs.extend([
             "-slice_major",
-            str(params.get("slice_major"))
+            str(params.get("slice_major", None))
         ])
-    if params.get("slice_order") is not None:
+    if params.get("slice_order", None) is not None:
         cargs.extend([
             "-slice_order",
-            params.get("slice_order")
+            params.get("slice_order", None)
         ])
-    if params.get("zero_phase_offset"):
+    if params.get("zero_phase_offset", False):
         cargs.append("-zero_phase_offset")
-    if params.get("legacy_transform") is not None:
+    if params.get("legacy_transform", None) is not None:
         cargs.extend([
             "-legacy_transform",
-            str(params.get("legacy_transform"))
+            str(params.get("legacy_transform", None))
         ])
     return cargs
 
@@ -330,7 +326,7 @@ def retro_ts_py_outputs(
     """
     ret = RetroTsPyOutputs(
         root=execution.output_file("."),
-        output_file=execution.output_file(params.get("prefix") + ".slibase.1D") if (params.get("prefix") is not None) else None,
+        output_file=execution.output_file(params.get("prefix", None) + ".slibase.1D") if (params.get("prefix") is not None) else None,
     )
     return ret
 
@@ -475,7 +471,6 @@ def retro_ts_py(
 __all__ = [
     "RETRO_TS_PY_METADATA",
     "RetroTsPyOutputs",
-    "RetroTsPyParameters",
     "retro_ts_py",
     "retro_ts_py_execute",
     "retro_ts_py_params",

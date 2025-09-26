@@ -14,46 +14,20 @@ AFNI_RUN_R_METADATA = Metadata(
 
 
 AfniRunRParameters = typing.TypedDict('AfniRunRParameters', {
-    "@type": typing.Literal["afni.afni_run_R"],
+    "@type": typing.NotRequired[typing.Literal["afni/afni_run_R"]],
+    "r_script": InputPathType,
+    "r_args": list[str],
+})
+AfniRunRParametersTagged = typing.TypedDict('AfniRunRParametersTagged', {
+    "@type": typing.Literal["afni/afni_run_R"],
     "r_script": InputPathType,
     "r_args": list[str],
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "afni.afni_run_R": afni_run_r_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-    }.get(t)
-
-
 class AfniRunROutputs(typing.NamedTuple):
     """
-    Output object returned when calling `afni_run_r(...)`.
+    Output object returned when calling `AfniRunRParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -62,7 +36,7 @@ class AfniRunROutputs(typing.NamedTuple):
 def afni_run_r_params(
     r_script: InputPathType,
     r_args: list[str],
-) -> AfniRunRParameters:
+) -> AfniRunRParametersTagged:
     """
     Build parameters.
     
@@ -73,7 +47,7 @@ def afni_run_r_params(
         Parameter dictionary
     """
     params = {
-        "@type": "afni.afni_run_R",
+        "@type": "afni/afni_run_R",
         "r_script": r_script,
         "r_args": r_args,
     }
@@ -95,8 +69,8 @@ def afni_run_r_cargs(
     """
     cargs = []
     cargs.append("afni_run_R")
-    cargs.append(execution.input_file(params.get("r_script")))
-    cargs.extend(params.get("r_args"))
+    cargs.append(execution.input_file(params.get("r_script", None)))
+    cargs.extend(params.get("r_args", None))
     return cargs
 
 
@@ -178,7 +152,6 @@ def afni_run_r(
 __all__ = [
     "AFNI_RUN_R_METADATA",
     "AfniRunROutputs",
-    "AfniRunRParameters",
     "afni_run_r",
     "afni_run_r_execute",
     "afni_run_r_params",

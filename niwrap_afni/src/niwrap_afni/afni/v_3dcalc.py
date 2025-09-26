@@ -14,7 +14,20 @@ V_3DCALC_METADATA = Metadata(
 
 
 V3dcalcParameters = typing.TypedDict('V3dcalcParameters', {
-    "@type": typing.Literal["afni.3dcalc"],
+    "@type": typing.NotRequired[typing.Literal["afni/3dcalc"]],
+    "in_file_a": InputPathType,
+    "in_file_b": typing.NotRequired[InputPathType | None],
+    "in_file_c": typing.NotRequired[InputPathType | None],
+    "other": typing.NotRequired[InputPathType | None],
+    "overwrite": bool,
+    "single_idx": typing.NotRequired[int | None],
+    "start_idx": typing.NotRequired[int | None],
+    "stop_idx": typing.NotRequired[int | None],
+    "expr": str,
+    "prefix": typing.NotRequired[str | None],
+})
+V3dcalcParametersTagged = typing.TypedDict('V3dcalcParametersTagged', {
+    "@type": typing.Literal["afni/3dcalc"],
     "in_file_a": InputPathType,
     "in_file_b": typing.NotRequired[InputPathType | None],
     "in_file_c": typing.NotRequired[InputPathType | None],
@@ -28,41 +41,9 @@ V3dcalcParameters = typing.TypedDict('V3dcalcParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "afni.3dcalc": v_3dcalc_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "afni.3dcalc": v_3dcalc_outputs,
-    }.get(t)
-
-
 class V3dcalcOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `v_3dcalc(...)`.
+    Output object returned when calling `V3dcalcParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -81,7 +62,7 @@ def v_3dcalc_params(
     start_idx: int | None = None,
     stop_idx: int | None = None,
     prefix: str | None = None,
-) -> V3dcalcParameters:
+) -> V3dcalcParametersTagged:
     """
     Build parameters.
     
@@ -100,7 +81,7 @@ def v_3dcalc_params(
         Parameter dictionary
     """
     params = {
-        "@type": "afni.3dcalc",
+        "@type": "afni/3dcalc",
         "in_file_a": in_file_a,
         "overwrite": overwrite,
         "expr": expr,
@@ -139,36 +120,36 @@ def v_3dcalc_cargs(
     cargs.append("3dcalc")
     cargs.extend([
         "-a",
-        execution.input_file(params.get("in_file_a"))
+        execution.input_file(params.get("in_file_a", None))
     ])
-    if params.get("in_file_b") is not None:
+    if params.get("in_file_b", None) is not None:
         cargs.extend([
             "-b",
-            execution.input_file(params.get("in_file_b"))
+            execution.input_file(params.get("in_file_b", None))
         ])
-    if params.get("in_file_c") is not None:
+    if params.get("in_file_c", None) is not None:
         cargs.extend([
             "-c",
-            execution.input_file(params.get("in_file_c"))
+            execution.input_file(params.get("in_file_c", None))
         ])
-    if params.get("other") is not None:
-        cargs.append(execution.input_file(params.get("other")))
-    if params.get("overwrite"):
+    if params.get("other", None) is not None:
+        cargs.append(execution.input_file(params.get("other", None)))
+    if params.get("overwrite", False):
         cargs.append("-overwrite")
-    if params.get("single_idx") is not None:
-        cargs.append(str(params.get("single_idx")))
-    if params.get("start_idx") is not None:
-        cargs.append(str(params.get("start_idx")))
-    if params.get("stop_idx") is not None:
-        cargs.append(str(params.get("stop_idx")))
+    if params.get("single_idx", None) is not None:
+        cargs.append(str(params.get("single_idx", None)))
+    if params.get("start_idx", None) is not None:
+        cargs.append(str(params.get("start_idx", None)))
+    if params.get("stop_idx", None) is not None:
+        cargs.append(str(params.get("stop_idx", None)))
     cargs.extend([
         "-expr",
-        params.get("expr")
+        params.get("expr", None)
     ])
-    if params.get("prefix") is not None:
+    if params.get("prefix", None) is not None:
         cargs.extend([
             "-prefix",
-            params.get("prefix")
+            params.get("prefix", None)
         ])
     return cargs
 
@@ -188,7 +169,7 @@ def v_3dcalc_outputs(
     """
     ret = V3dcalcOutputs(
         root=execution.output_file("."),
-        out_file=execution.output_file(params.get("prefix")) if (params.get("prefix") is not None) else None,
+        out_file=execution.output_file(params.get("prefix", None)) if (params.get("prefix") is not None) else None,
     )
     return ret
 
@@ -275,7 +256,6 @@ def v_3dcalc(
 
 __all__ = [
     "V3dcalcOutputs",
-    "V3dcalcParameters",
     "V_3DCALC_METADATA",
     "v_3dcalc",
     "v_3dcalc_execute",

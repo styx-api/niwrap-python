@@ -14,7 +14,15 @@ V_4DFPTOANALYZE_METADATA = Metadata(
 
 
 V4dfptoanalyzeParameters = typing.TypedDict('V4dfptoanalyzeParameters', {
-    "@type": typing.Literal["freesurfer.4dfptoanalyze"],
+    "@type": typing.NotRequired[typing.Literal["freesurfer/4dfptoanalyze"]],
+    "input_file": InputPathType,
+    "scale_factor": typing.NotRequired[float | None],
+    "output_8bit": bool,
+    "spm99": bool,
+    "endianness": typing.NotRequired[str | None],
+})
+V4dfptoanalyzeParametersTagged = typing.TypedDict('V4dfptoanalyzeParametersTagged', {
+    "@type": typing.Literal["freesurfer/4dfptoanalyze"],
     "input_file": InputPathType,
     "scale_factor": typing.NotRequired[float | None],
     "output_8bit": bool,
@@ -23,41 +31,9 @@ V4dfptoanalyzeParameters = typing.TypedDict('V4dfptoanalyzeParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "freesurfer.4dfptoanalyze": v_4dfptoanalyze_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "freesurfer.4dfptoanalyze": v_4dfptoanalyze_outputs,
-    }.get(t)
-
-
 class V4dfptoanalyzeOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `v_4dfptoanalyze(...)`.
+    Output object returned when calling `V4dfptoanalyzeParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -73,7 +49,7 @@ def v_4dfptoanalyze_params(
     output_8bit: bool = False,
     spm99: bool = False,
     endianness: str | None = None,
-) -> V4dfptoanalyzeParameters:
+) -> V4dfptoanalyzeParametersTagged:
     """
     Build parameters.
     
@@ -87,7 +63,7 @@ def v_4dfptoanalyze_params(
         Parameter dictionary
     """
     params = {
-        "@type": "freesurfer.4dfptoanalyze",
+        "@type": "freesurfer/4dfptoanalyze",
         "input_file": input_file,
         "output_8bit": output_8bit,
         "spm99": spm99,
@@ -114,20 +90,20 @@ def v_4dfptoanalyze_cargs(
     """
     cargs = []
     cargs.append("4dfptoanalyze")
-    cargs.append(execution.input_file(params.get("input_file")))
-    if params.get("scale_factor") is not None:
+    cargs.append(execution.input_file(params.get("input_file", None)))
+    if params.get("scale_factor", None) is not None:
         cargs.extend([
             "-c",
-            str(params.get("scale_factor"))
+            str(params.get("scale_factor", None))
         ])
-    if params.get("output_8bit"):
+    if params.get("output_8bit", False):
         cargs.append("-8")
-    if params.get("spm99"):
+    if params.get("spm99", False):
         cargs.append("-SPM99")
-    if params.get("endianness") is not None:
+    if params.get("endianness", None) is not None:
         cargs.extend([
             "-@",
-            params.get("endianness")
+            params.get("endianness", None)
         ])
     return cargs
 
@@ -147,8 +123,8 @@ def v_4dfptoanalyze_outputs(
     """
     ret = V4dfptoanalyzeOutputs(
         root=execution.output_file("."),
-        analyze_hdr=execution.output_file(pathlib.Path(params.get("input_file")).name + "_analyze.hdr"),
-        analyze_img=execution.output_file(pathlib.Path(params.get("input_file")).name + "_analyze.img"),
+        analyze_hdr=execution.output_file(pathlib.Path(params.get("input_file", None)).name + "_analyze.hdr"),
+        analyze_img=execution.output_file(pathlib.Path(params.get("input_file", None)).name + "_analyze.img"),
     )
     return ret
 
@@ -220,7 +196,6 @@ def v_4dfptoanalyze(
 
 __all__ = [
     "V4dfptoanalyzeOutputs",
-    "V4dfptoanalyzeParameters",
     "V_4DFPTOANALYZE_METADATA",
     "v_4dfptoanalyze",
     "v_4dfptoanalyze_execute",

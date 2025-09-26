@@ -14,7 +14,16 @@ ABIDS_TOOL_PY_METADATA = Metadata(
 
 
 AbidsToolPyParameters = typing.TypedDict('AbidsToolPyParameters', {
-    "@type": typing.Literal["afni.abids_tool.py"],
+    "@type": typing.NotRequired[typing.Literal["afni/abids_tool.py"]],
+    "input_files": list[InputPathType],
+    "tr_match": bool,
+    "add_tr": bool,
+    "add_slice_times": bool,
+    "copy_prefix": typing.NotRequired[list[str] | None],
+    "help_flag": bool,
+})
+AbidsToolPyParametersTagged = typing.TypedDict('AbidsToolPyParametersTagged', {
+    "@type": typing.Literal["afni/abids_tool.py"],
     "input_files": list[InputPathType],
     "tr_match": bool,
     "add_tr": bool,
@@ -24,40 +33,9 @@ AbidsToolPyParameters = typing.TypedDict('AbidsToolPyParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "afni.abids_tool.py": abids_tool_py_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-    }.get(t)
-
-
 class AbidsToolPyOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `abids_tool_py(...)`.
+    Output object returned when calling `AbidsToolPyParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -70,7 +48,7 @@ def abids_tool_py_params(
     add_slice_times: bool = False,
     copy_prefix: list[str] | None = None,
     help_flag: bool = False,
-) -> AbidsToolPyParameters:
+) -> AbidsToolPyParametersTagged:
     """
     Build parameters.
     
@@ -89,7 +67,7 @@ def abids_tool_py_params(
         Parameter dictionary
     """
     params = {
-        "@type": "afni.abids_tool.py",
+        "@type": "afni/abids_tool.py",
         "input_files": input_files,
         "tr_match": tr_match,
         "add_tr": add_tr,
@@ -116,19 +94,19 @@ def abids_tool_py_cargs(
     """
     cargs = []
     cargs.append("abids_tool.py")
-    cargs.extend([execution.input_file(f) for f in params.get("input_files")])
-    if params.get("tr_match"):
+    cargs.extend([execution.input_file(f) for f in params.get("input_files", None)])
+    if params.get("tr_match", False):
         cargs.append("-TR_match")
-    if params.get("add_tr"):
+    if params.get("add_tr", False):
         cargs.append("-add_TR")
-    if params.get("add_slice_times"):
+    if params.get("add_slice_times", False):
         cargs.append("-add_slice_times")
-    if params.get("copy_prefix") is not None:
+    if params.get("copy_prefix", None) is not None:
         cargs.extend([
             "-copy",
-            *params.get("copy_prefix")
+            *params.get("copy_prefix", None)
         ])
-    if params.get("help_flag"):
+    if params.get("help_flag", False):
         cargs.append("-help")
     return cargs
 
@@ -231,7 +209,6 @@ def abids_tool_py(
 __all__ = [
     "ABIDS_TOOL_PY_METADATA",
     "AbidsToolPyOutputs",
-    "AbidsToolPyParameters",
     "abids_tool_py",
     "abids_tool_py_execute",
     "abids_tool_py_params",

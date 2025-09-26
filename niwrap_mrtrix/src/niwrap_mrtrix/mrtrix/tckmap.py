@@ -14,31 +14,75 @@ TCKMAP_METADATA = Metadata(
 
 
 TckmapVariousStringParameters = typing.TypedDict('TckmapVariousStringParameters', {
-    "@type": typing.Literal["mrtrix.tckmap.VariousString"],
+    "@type": typing.NotRequired[typing.Literal["VariousString"]],
+    "obj": str,
+})
+TckmapVariousStringParametersTagged = typing.TypedDict('TckmapVariousStringParametersTagged', {
+    "@type": typing.Literal["VariousString"],
     "obj": str,
 })
 
 
 TckmapVariousFileParameters = typing.TypedDict('TckmapVariousFileParameters', {
-    "@type": typing.Literal["mrtrix.tckmap.VariousFile"],
+    "@type": typing.NotRequired[typing.Literal["VariousFile"]],
+    "obj": InputPathType,
+})
+TckmapVariousFileParametersTagged = typing.TypedDict('TckmapVariousFileParametersTagged', {
+    "@type": typing.Literal["VariousFile"],
     "obj": InputPathType,
 })
 
 
 TckmapConfigParameters = typing.TypedDict('TckmapConfigParameters', {
-    "@type": typing.Literal["mrtrix.tckmap.config"],
+    "@type": typing.NotRequired[typing.Literal["config"]],
+    "key": str,
+    "value": str,
+})
+TckmapConfigParametersTagged = typing.TypedDict('TckmapConfigParametersTagged', {
+    "@type": typing.Literal["config"],
     "key": str,
     "value": str,
 })
 
 
 TckmapParameters = typing.TypedDict('TckmapParameters', {
-    "@type": typing.Literal["mrtrix.tckmap"],
+    "@type": typing.NotRequired[typing.Literal["mrtrix/tckmap"]],
     "template": typing.NotRequired[InputPathType | None],
     "vox": typing.NotRequired[list[float] | None],
     "datatype": typing.NotRequired[str | None],
     "dec": bool,
-    "dixel": typing.NotRequired[typing.Union[TckmapVariousStringParameters, TckmapVariousFileParameters] | None],
+    "dixel": typing.NotRequired[typing.Union[TckmapVariousStringParametersTagged, TckmapVariousFileParametersTagged] | None],
+    "tod": typing.NotRequired[int | None],
+    "contrast": typing.NotRequired[str | None],
+    "image": typing.NotRequired[InputPathType | None],
+    "vector_file": typing.NotRequired[InputPathType | None],
+    "stat_vox": typing.NotRequired[str | None],
+    "stat_tck": typing.NotRequired[str | None],
+    "fwhm_tck": typing.NotRequired[float | None],
+    "map_zero": bool,
+    "backtrack": bool,
+    "upsample": typing.NotRequired[int | None],
+    "precise": bool,
+    "ends_only": bool,
+    "tck_weights_in": typing.NotRequired[InputPathType | None],
+    "info": bool,
+    "quiet": bool,
+    "debug": bool,
+    "force": bool,
+    "nthreads": typing.NotRequired[int | None],
+    "config": typing.NotRequired[list[TckmapConfigParameters] | None],
+    "help": bool,
+    "version": bool,
+    "tracks": InputPathType,
+    "output": str,
+})
+TckmapParametersTagged = typing.TypedDict('TckmapParametersTagged', {
+    "@type": typing.Literal["mrtrix/tckmap"],
+    "template": typing.NotRequired[InputPathType | None],
+    "vox": typing.NotRequired[list[float] | None],
+    "datatype": typing.NotRequired[str | None],
+    "dec": bool,
+    "dixel": typing.NotRequired[typing.Union[TckmapVariousStringParametersTagged, TckmapVariousFileParametersTagged] | None],
     "tod": typing.NotRequired[int | None],
     "contrast": typing.NotRequired[str | None],
     "image": typing.NotRequired[InputPathType | None],
@@ -65,7 +109,7 @@ TckmapParameters = typing.TypedDict('TckmapParameters', {
 })
 
 
-def dyn_cargs(
+def tckmap_dixel_cargs_dyn_fn(
     t: str,
 ) -> typing.Any:
     """
@@ -77,14 +121,12 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "mrtrix.tckmap": tckmap_cargs,
-        "mrtrix.tckmap.VariousString": tckmap_various_string_cargs,
-        "mrtrix.tckmap.VariousFile": tckmap_various_file_cargs,
-        "mrtrix.tckmap.config": tckmap_config_cargs,
+        "VariousString": tckmap_various_string_cargs,
+        "VariousFile": tckmap_various_file_cargs,
     }.get(t)
 
 
-def dyn_outputs(
+def tckmap_dixel_outputs_dyn_fn(
     t: str,
 ) -> typing.Any:
     """
@@ -96,13 +138,12 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "mrtrix.tckmap": tckmap_outputs,
     }.get(t)
 
 
 def tckmap_various_string_params(
     obj: str,
-) -> TckmapVariousStringParameters:
+) -> TckmapVariousStringParametersTagged:
     """
     Build parameters.
     
@@ -112,7 +153,7 @@ def tckmap_various_string_params(
         Parameter dictionary
     """
     params = {
-        "@type": "mrtrix.tckmap.VariousString",
+        "@type": "VariousString",
         "obj": obj,
     }
     return params
@@ -132,13 +173,13 @@ def tckmap_various_string_cargs(
         Command-line arguments.
     """
     cargs = []
-    cargs.append(params.get("obj"))
+    cargs.append(params.get("obj", None))
     return cargs
 
 
 def tckmap_various_file_params(
     obj: InputPathType,
-) -> TckmapVariousFileParameters:
+) -> TckmapVariousFileParametersTagged:
     """
     Build parameters.
     
@@ -148,7 +189,7 @@ def tckmap_various_file_params(
         Parameter dictionary
     """
     params = {
-        "@type": "mrtrix.tckmap.VariousFile",
+        "@type": "VariousFile",
         "obj": obj,
     }
     return params
@@ -168,14 +209,14 @@ def tckmap_various_file_cargs(
         Command-line arguments.
     """
     cargs = []
-    cargs.append(execution.input_file(params.get("obj")))
+    cargs.append(execution.input_file(params.get("obj", None)))
     return cargs
 
 
 def tckmap_config_params(
     key: str,
     value: str,
-) -> TckmapConfigParameters:
+) -> TckmapConfigParametersTagged:
     """
     Build parameters.
     
@@ -186,7 +227,7 @@ def tckmap_config_params(
         Parameter dictionary
     """
     params = {
-        "@type": "mrtrix.tckmap.config",
+        "@type": "config",
         "key": key,
         "value": value,
     }
@@ -208,14 +249,14 @@ def tckmap_config_cargs(
     """
     cargs = []
     cargs.append("-config")
-    cargs.append(params.get("key"))
-    cargs.append(params.get("value"))
+    cargs.append(params.get("key", None))
+    cargs.append(params.get("value", None))
     return cargs
 
 
 class TckmapOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `tckmap(...)`.
+    Output object returned when calling `TckmapParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -230,7 +271,7 @@ def tckmap_params(
     vox: list[float] | None = None,
     datatype: str | None = None,
     dec: bool = False,
-    dixel: typing.Union[TckmapVariousStringParameters, TckmapVariousFileParameters] | None = None,
+    dixel: typing.Union[TckmapVariousStringParametersTagged, TckmapVariousFileParametersTagged] | None = None,
     tod: int | None = None,
     contrast: str | None = None,
     image: InputPathType | None = None,
@@ -252,7 +293,7 @@ def tckmap_params(
     config: list[TckmapConfigParameters] | None = None,
     help_: bool = False,
     version: bool = False,
-) -> TckmapParameters:
+) -> TckmapParametersTagged:
     """
     Build parameters.
     
@@ -326,7 +367,7 @@ def tckmap_params(
         Parameter dictionary
     """
     params = {
-        "@type": "mrtrix.tckmap",
+        "@type": "mrtrix/tckmap",
         "dec": dec,
         "map_zero": map_zero,
         "backtrack": backtrack,
@@ -389,102 +430,102 @@ def tckmap_cargs(
     """
     cargs = []
     cargs.append("tckmap")
-    if params.get("template") is not None:
+    if params.get("template", None) is not None:
         cargs.extend([
             "-template",
-            execution.input_file(params.get("template"))
+            execution.input_file(params.get("template", None))
         ])
-    if params.get("vox") is not None:
+    if params.get("vox", None) is not None:
         cargs.extend([
             "-vox",
-            ",".join(map(str, params.get("vox")))
+            ",".join(map(str, params.get("vox", None)))
         ])
-    if params.get("datatype") is not None:
+    if params.get("datatype", None) is not None:
         cargs.extend([
             "-datatype",
-            params.get("datatype")
+            params.get("datatype", None)
         ])
-    if params.get("dec"):
+    if params.get("dec", False):
         cargs.append("-dec")
-    if params.get("dixel") is not None:
+    if params.get("dixel", None) is not None:
         cargs.extend([
             "-dixel",
-            *dyn_cargs(params.get("dixel")["@type"])(params.get("dixel"), execution)
+            *tckmap_dixel_cargs_dyn_fn(params.get("dixel", None)["@type"])(params.get("dixel", None), execution)
         ])
-    if params.get("tod") is not None:
+    if params.get("tod", None) is not None:
         cargs.extend([
             "-tod",
-            str(params.get("tod"))
+            str(params.get("tod", None))
         ])
-    if params.get("contrast") is not None:
+    if params.get("contrast", None) is not None:
         cargs.extend([
             "-contrast",
-            params.get("contrast")
+            params.get("contrast", None)
         ])
-    if params.get("image") is not None:
+    if params.get("image", None) is not None:
         cargs.extend([
             "-image",
-            execution.input_file(params.get("image"))
+            execution.input_file(params.get("image", None))
         ])
-    if params.get("vector_file") is not None:
+    if params.get("vector_file", None) is not None:
         cargs.extend([
             "-vector_file",
-            execution.input_file(params.get("vector_file"))
+            execution.input_file(params.get("vector_file", None))
         ])
-    if params.get("stat_vox") is not None:
+    if params.get("stat_vox", None) is not None:
         cargs.extend([
             "-stat_vox",
-            params.get("stat_vox")
+            params.get("stat_vox", None)
         ])
-    if params.get("stat_tck") is not None:
+    if params.get("stat_tck", None) is not None:
         cargs.extend([
             "-stat_tck",
-            params.get("stat_tck")
+            params.get("stat_tck", None)
         ])
-    if params.get("fwhm_tck") is not None:
+    if params.get("fwhm_tck", None) is not None:
         cargs.extend([
             "-fwhm_tck",
-            str(params.get("fwhm_tck"))
+            str(params.get("fwhm_tck", None))
         ])
-    if params.get("map_zero"):
+    if params.get("map_zero", False):
         cargs.append("-map_zero")
-    if params.get("backtrack"):
+    if params.get("backtrack", False):
         cargs.append("-backtrack")
-    if params.get("upsample") is not None:
+    if params.get("upsample", None) is not None:
         cargs.extend([
             "-upsample",
-            str(params.get("upsample"))
+            str(params.get("upsample", None))
         ])
-    if params.get("precise"):
+    if params.get("precise", False):
         cargs.append("-precise")
-    if params.get("ends_only"):
+    if params.get("ends_only", False):
         cargs.append("-ends_only")
-    if params.get("tck_weights_in") is not None:
+    if params.get("tck_weights_in", None) is not None:
         cargs.extend([
             "-tck_weights_in",
-            execution.input_file(params.get("tck_weights_in"))
+            execution.input_file(params.get("tck_weights_in", None))
         ])
-    if params.get("info"):
+    if params.get("info", False):
         cargs.append("-info")
-    if params.get("quiet"):
+    if params.get("quiet", False):
         cargs.append("-quiet")
-    if params.get("debug"):
+    if params.get("debug", False):
         cargs.append("-debug")
-    if params.get("force"):
+    if params.get("force", False):
         cargs.append("-force")
-    if params.get("nthreads") is not None:
+    if params.get("nthreads", None) is not None:
         cargs.extend([
             "-nthreads",
-            str(params.get("nthreads"))
+            str(params.get("nthreads", None))
         ])
-    if params.get("config") is not None:
-        cargs.extend([a for c in [dyn_cargs(s["@type"])(s, execution) for s in params.get("config")] for a in c])
-    if params.get("help"):
+    if params.get("config", None) is not None:
+        cargs.extend([a for c in [tckmap_config_cargs(s, execution) for s in params.get("config", None)] for a in c])
+    if params.get("help", False):
         cargs.append("-help")
-    if params.get("version"):
+    if params.get("version", False):
         cargs.append("-version")
-    cargs.append(execution.input_file(params.get("tracks")))
-    cargs.append(params.get("output"))
+    cargs.append(execution.input_file(params.get("tracks", None)))
+    cargs.append(params.get("output", None))
     return cargs
 
 
@@ -503,7 +544,7 @@ def tckmap_outputs(
     """
     ret = TckmapOutputs(
         root=execution.output_file("."),
-        output=execution.output_file(params.get("output")),
+        output=execution.output_file(params.get("output", None)),
     )
     return ret
 
@@ -584,7 +625,7 @@ def tckmap(
     vox: list[float] | None = None,
     datatype: str | None = None,
     dec: bool = False,
-    dixel: typing.Union[TckmapVariousStringParameters, TckmapVariousFileParameters] | None = None,
+    dixel: typing.Union[TckmapVariousStringParametersTagged, TckmapVariousFileParametersTagged] | None = None,
     tod: int | None = None,
     contrast: str | None = None,
     image: InputPathType | None = None,
@@ -763,11 +804,7 @@ def tckmap(
 
 __all__ = [
     "TCKMAP_METADATA",
-    "TckmapConfigParameters",
     "TckmapOutputs",
-    "TckmapParameters",
-    "TckmapVariousFileParameters",
-    "TckmapVariousStringParameters",
     "tckmap",
     "tckmap_config_params",
     "tckmap_execute",

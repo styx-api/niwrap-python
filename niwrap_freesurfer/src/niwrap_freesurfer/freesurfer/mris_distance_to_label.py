@@ -14,46 +14,20 @@ MRIS_DISTANCE_TO_LABEL_METADATA = Metadata(
 
 
 MrisDistanceToLabelParameters = typing.TypedDict('MrisDistanceToLabelParameters', {
-    "@type": typing.Literal["freesurfer.mris_distance_to_label"],
+    "@type": typing.NotRequired[typing.Literal["freesurfer/mris_distance_to_label"]],
+    "hemisphere": str,
+    "subject_1": str,
+})
+MrisDistanceToLabelParametersTagged = typing.TypedDict('MrisDistanceToLabelParametersTagged', {
+    "@type": typing.Literal["freesurfer/mris_distance_to_label"],
     "hemisphere": str,
     "subject_1": str,
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "freesurfer.mris_distance_to_label": mris_distance_to_label_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-    }.get(t)
-
-
 class MrisDistanceToLabelOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `mris_distance_to_label(...)`.
+    Output object returned when calling `MrisDistanceToLabelParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -62,7 +36,7 @@ class MrisDistanceToLabelOutputs(typing.NamedTuple):
 def mris_distance_to_label_params(
     hemisphere: str,
     subject_1: str,
-) -> MrisDistanceToLabelParameters:
+) -> MrisDistanceToLabelParametersTagged:
     """
     Build parameters.
     
@@ -74,7 +48,7 @@ def mris_distance_to_label_params(
         Parameter dictionary
     """
     params = {
-        "@type": "freesurfer.mris_distance_to_label",
+        "@type": "freesurfer/mris_distance_to_label",
         "hemisphere": hemisphere,
         "subject_1": subject_1,
     }
@@ -96,8 +70,8 @@ def mris_distance_to_label_cargs(
     """
     cargs = []
     cargs.append("mris_distance_to_label")
-    cargs.append(params.get("hemisphere"))
-    cargs.append(params.get("subject_1"))
+    cargs.append(params.get("hemisphere", None))
+    cargs.append(params.get("subject_1", None))
     return cargs
 
 
@@ -182,7 +156,6 @@ def mris_distance_to_label(
 __all__ = [
     "MRIS_DISTANCE_TO_LABEL_METADATA",
     "MrisDistanceToLabelOutputs",
-    "MrisDistanceToLabelParameters",
     "mris_distance_to_label",
     "mris_distance_to_label_execute",
     "mris_distance_to_label_params",

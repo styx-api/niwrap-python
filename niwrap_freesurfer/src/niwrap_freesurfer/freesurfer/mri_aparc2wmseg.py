@@ -14,7 +14,14 @@ MRI_APARC2WMSEG_METADATA = Metadata(
 
 
 MriAparc2wmsegParameters = typing.TypedDict('MriAparc2wmsegParameters', {
-    "@type": typing.Literal["freesurfer.mri_aparc2wmseg"],
+    "@type": typing.NotRequired[typing.Literal["freesurfer/mri_aparc2wmseg"]],
+    "subject": str,
+    "wmseg_file": str,
+    "help": bool,
+    "version": bool,
+})
+MriAparc2wmsegParametersTagged = typing.TypedDict('MriAparc2wmsegParametersTagged', {
+    "@type": typing.Literal["freesurfer/mri_aparc2wmseg"],
     "subject": str,
     "wmseg_file": str,
     "help": bool,
@@ -22,40 +29,9 @@ MriAparc2wmsegParameters = typing.TypedDict('MriAparc2wmsegParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "freesurfer.mri_aparc2wmseg": mri_aparc2wmseg_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-    }.get(t)
-
-
 class MriAparc2wmsegOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `mri_aparc2wmseg(...)`.
+    Output object returned when calling `MriAparc2wmsegParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -66,7 +42,7 @@ def mri_aparc2wmseg_params(
     wmseg_file: str,
     help_: bool = False,
     version: bool = False,
-) -> MriAparc2wmsegParameters:
+) -> MriAparc2wmsegParametersTagged:
     """
     Build parameters.
     
@@ -79,7 +55,7 @@ def mri_aparc2wmseg_params(
         Parameter dictionary
     """
     params = {
-        "@type": "freesurfer.mri_aparc2wmseg",
+        "@type": "freesurfer/mri_aparc2wmseg",
         "subject": subject,
         "wmseg_file": wmseg_file,
         "help": help_,
@@ -105,15 +81,15 @@ def mri_aparc2wmseg_cargs(
     cargs.append("mri_aparc2wmseg")
     cargs.extend([
         "--s",
-        params.get("subject")
+        params.get("subject", None)
     ])
     cargs.extend([
         "--wmseg",
-        params.get("wmseg_file")
+        params.get("wmseg_file", None)
     ])
-    if params.get("help"):
+    if params.get("help", False):
         cargs.append("--help")
-    if params.get("version"):
+    if params.get("version", False):
         cargs.append("--version")
     return cargs
 
@@ -204,7 +180,6 @@ def mri_aparc2wmseg(
 __all__ = [
     "MRI_APARC2WMSEG_METADATA",
     "MriAparc2wmsegOutputs",
-    "MriAparc2wmsegParameters",
     "mri_aparc2wmseg",
     "mri_aparc2wmseg_execute",
     "mri_aparc2wmseg_params",

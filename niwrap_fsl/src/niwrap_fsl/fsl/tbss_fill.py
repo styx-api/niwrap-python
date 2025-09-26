@@ -14,7 +14,15 @@ TBSS_FILL_METADATA = Metadata(
 
 
 TbssFillParameters = typing.TypedDict('TbssFillParameters', {
-    "@type": typing.Literal["fsl.tbss_fill"],
+    "@type": typing.NotRequired[typing.Literal["fsl/tbss_fill"]],
+    "stats_image": InputPathType,
+    "threshold": float,
+    "mean_fa": InputPathType,
+    "output": str,
+    "include_negative_flag": bool,
+})
+TbssFillParametersTagged = typing.TypedDict('TbssFillParametersTagged', {
+    "@type": typing.Literal["fsl/tbss_fill"],
     "stats_image": InputPathType,
     "threshold": float,
     "mean_fa": InputPathType,
@@ -23,41 +31,9 @@ TbssFillParameters = typing.TypedDict('TbssFillParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "fsl.tbss_fill": tbss_fill_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "fsl.tbss_fill": tbss_fill_outputs,
-    }.get(t)
-
-
 class TbssFillOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `tbss_fill(...)`.
+    Output object returned when calling `TbssFillParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -71,7 +47,7 @@ def tbss_fill_params(
     mean_fa: InputPathType,
     output: str,
     include_negative_flag: bool = False,
-) -> TbssFillParameters:
+) -> TbssFillParametersTagged:
     """
     Build parameters.
     
@@ -85,7 +61,7 @@ def tbss_fill_params(
         Parameter dictionary
     """
     params = {
-        "@type": "fsl.tbss_fill",
+        "@type": "fsl/tbss_fill",
         "stats_image": stats_image,
         "threshold": threshold,
         "mean_fa": mean_fa,
@@ -110,11 +86,11 @@ def tbss_fill_cargs(
     """
     cargs = []
     cargs.append("tbss_fill")
-    cargs.append(execution.input_file(params.get("stats_image")))
-    cargs.append(str(params.get("threshold")))
-    cargs.append(execution.input_file(params.get("mean_fa")))
-    cargs.append(params.get("output"))
-    if params.get("include_negative_flag"):
+    cargs.append(execution.input_file(params.get("stats_image", None)))
+    cargs.append(str(params.get("threshold", None)))
+    cargs.append(execution.input_file(params.get("mean_fa", None)))
+    cargs.append(params.get("output", None))
+    if params.get("include_negative_flag", False):
         cargs.append("-n")
     return cargs
 
@@ -134,7 +110,7 @@ def tbss_fill_outputs(
     """
     ret = TbssFillOutputs(
         root=execution.output_file("."),
-        filled_skeleton=execution.output_file(params.get("output")),
+        filled_skeleton=execution.output_file(params.get("output", None)),
     )
     return ret
 
@@ -207,7 +183,6 @@ def tbss_fill(
 __all__ = [
     "TBSS_FILL_METADATA",
     "TbssFillOutputs",
-    "TbssFillParameters",
     "tbss_fill",
     "tbss_fill_execute",
     "tbss_fill_params",

@@ -14,7 +14,20 @@ V_3D_PAR2_AFNI_PL_METADATA = Metadata(
 
 
 V3dPar2AfniPlParameters = typing.TypedDict('V3dPar2AfniPlParameters', {
-    "@type": typing.Literal["afni.3dPAR2AFNI.pl"],
+    "@type": typing.NotRequired[typing.Literal["afni/3dPAR2AFNI.pl"]],
+    "input_file": InputPathType,
+    "skip_outliers_test": bool,
+    "output_nifti": bool,
+    "output_analyze": bool,
+    "output_dir": typing.NotRequired[str | None],
+    "verbose_flag": bool,
+    "gzip_files": bool,
+    "byte_swap_2": bool,
+    "byte_swap_4": bool,
+    "help_flag": bool,
+})
+V3dPar2AfniPlParametersTagged = typing.TypedDict('V3dPar2AfniPlParametersTagged', {
+    "@type": typing.Literal["afni/3dPAR2AFNI.pl"],
     "input_file": InputPathType,
     "skip_outliers_test": bool,
     "output_nifti": bool,
@@ -28,41 +41,9 @@ V3dPar2AfniPlParameters = typing.TypedDict('V3dPar2AfniPlParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "afni.3dPAR2AFNI.pl": v_3d_par2_afni_pl_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "afni.3dPAR2AFNI.pl": v_3d_par2_afni_pl_outputs,
-    }.get(t)
-
-
 class V3dPar2AfniPlOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `v_3d_par2_afni_pl(...)`.
+    Output object returned when calling `V3dPar2AfniPlParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -81,7 +62,7 @@ def v_3d_par2_afni_pl_params(
     byte_swap_2: bool = False,
     byte_swap_4: bool = False,
     help_flag: bool = False,
-) -> V3dPar2AfniPlParameters:
+) -> V3dPar2AfniPlParametersTagged:
     """
     Build parameters.
     
@@ -107,7 +88,7 @@ def v_3d_par2_afni_pl_params(
         Parameter dictionary
     """
     params = {
-        "@type": "afni.3dPAR2AFNI.pl",
+        "@type": "afni/3dPAR2AFNI.pl",
         "input_file": input_file,
         "skip_outliers_test": skip_outliers_test,
         "output_nifti": output_nifti,
@@ -138,27 +119,27 @@ def v_3d_par2_afni_pl_cargs(
     """
     cargs = []
     cargs.append("3dPAR2AFNI.pl")
-    cargs.append(execution.input_file(params.get("input_file")))
-    if params.get("skip_outliers_test"):
+    cargs.append(execution.input_file(params.get("input_file", None)))
+    if params.get("skip_outliers_test", False):
         cargs.append("-s")
-    if params.get("output_nifti"):
+    if params.get("output_nifti", False):
         cargs.append("-n")
-    if params.get("output_analyze"):
+    if params.get("output_analyze", False):
         cargs.append("-a")
-    if params.get("output_dir") is not None:
+    if params.get("output_dir", None) is not None:
         cargs.extend([
             "-o",
-            params.get("output_dir")
+            params.get("output_dir", None)
         ])
-    if params.get("verbose_flag"):
+    if params.get("verbose_flag", False):
         cargs.append("-v")
-    if params.get("gzip_files"):
+    if params.get("gzip_files", False):
         cargs.append("-g")
-    if params.get("byte_swap_2"):
+    if params.get("byte_swap_2", False):
         cargs.append("-2")
-    if params.get("byte_swap_4"):
+    if params.get("byte_swap_4", False):
         cargs.append("-4")
-    if params.get("help_flag"):
+    if params.get("help_flag", False):
         cargs.append("-h")
     return cargs
 
@@ -178,7 +159,7 @@ def v_3d_par2_afni_pl_outputs(
     """
     ret = V3dPar2AfniPlOutputs(
         root=execution.output_file("."),
-        output_files=execution.output_file(pathlib.Path(params.get("input_file")).name + "_converted"),
+        output_files=execution.output_file(pathlib.Path(params.get("input_file", None)).name + "_converted"),
     )
     return ret
 
@@ -272,7 +253,6 @@ def v_3d_par2_afni_pl(
 
 __all__ = [
     "V3dPar2AfniPlOutputs",
-    "V3dPar2AfniPlParameters",
     "V_3D_PAR2_AFNI_PL_METADATA",
     "v_3d_par2_afni_pl",
     "v_3d_par2_afni_pl_execute",

@@ -14,7 +14,16 @@ SMOOTH_IMAGE_METADATA = Metadata(
 
 
 SmoothImageParameters = typing.TypedDict('SmoothImageParameters', {
-    "@type": typing.Literal["ants.SmoothImage"],
+    "@type": typing.NotRequired[typing.Literal["ants/SmoothImage"]],
+    "image_dimension": int,
+    "image_ext": InputPathType,
+    "smoothing_sigma": str,
+    "out_image_ext": str,
+    "sigma_units": typing.NotRequired[typing.Literal[0, 1] | None],
+    "median_filter": typing.NotRequired[typing.Literal[0, 1] | None],
+})
+SmoothImageParametersTagged = typing.TypedDict('SmoothImageParametersTagged', {
+    "@type": typing.Literal["ants/SmoothImage"],
     "image_dimension": int,
     "image_ext": InputPathType,
     "smoothing_sigma": str,
@@ -24,41 +33,9 @@ SmoothImageParameters = typing.TypedDict('SmoothImageParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "ants.SmoothImage": smooth_image_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "ants.SmoothImage": smooth_image_outputs,
-    }.get(t)
-
-
 class SmoothImageOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `smooth_image(...)`.
+    Output object returned when calling `SmoothImageParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -73,7 +50,7 @@ def smooth_image_params(
     out_image_ext: str,
     sigma_units: typing.Literal[0, 1] | None = None,
     median_filter: typing.Literal[0, 1] | None = None,
-) -> SmoothImageParameters:
+) -> SmoothImageParametersTagged:
     """
     Build parameters.
     
@@ -91,7 +68,7 @@ def smooth_image_params(
         Parameter dictionary
     """
     params = {
-        "@type": "ants.SmoothImage",
+        "@type": "ants/SmoothImage",
         "image_dimension": image_dimension,
         "image_ext": image_ext,
         "smoothing_sigma": smoothing_sigma,
@@ -119,14 +96,14 @@ def smooth_image_cargs(
     """
     cargs = []
     cargs.append("SmoothImage")
-    cargs.append(str(params.get("image_dimension")))
-    cargs.append(execution.input_file(params.get("image_ext")))
-    cargs.append(params.get("smoothing_sigma"))
-    cargs.append(params.get("out_image_ext"))
-    if params.get("sigma_units") is not None:
-        cargs.append(str(params.get("sigma_units")))
-    if params.get("median_filter") is not None:
-        cargs.append(str(params.get("median_filter")))
+    cargs.append(str(params.get("image_dimension", None)))
+    cargs.append(execution.input_file(params.get("image_ext", None)))
+    cargs.append(params.get("smoothing_sigma", None))
+    cargs.append(params.get("out_image_ext", None))
+    if params.get("sigma_units", None) is not None:
+        cargs.append(str(params.get("sigma_units", None)))
+    if params.get("median_filter", None) is not None:
+        cargs.append(str(params.get("median_filter", None)))
     return cargs
 
 
@@ -145,7 +122,7 @@ def smooth_image_outputs(
     """
     ret = SmoothImageOutputs(
         root=execution.output_file("."),
-        smoothed_image=execution.output_file(params.get("out_image_ext")),
+        smoothed_image=execution.output_file(params.get("out_image_ext", None)),
     )
     return ret
 
@@ -226,7 +203,6 @@ def smooth_image(
 __all__ = [
     "SMOOTH_IMAGE_METADATA",
     "SmoothImageOutputs",
-    "SmoothImageParameters",
     "smooth_image",
     "smooth_image_execute",
     "smooth_image_params",

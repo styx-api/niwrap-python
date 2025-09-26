@@ -14,48 +14,22 @@ MRIS_SHRINKWRAP_METADATA = Metadata(
 
 
 MrisShrinkwrapParameters = typing.TypedDict('MrisShrinkwrapParameters', {
-    "@type": typing.Literal["freesurfer.mris_shrinkwrap"],
+    "@type": typing.NotRequired[typing.Literal["freesurfer/mris_shrinkwrap"]],
+    "volume": InputPathType,
+    "output_name": str,
+    "threshold": typing.NotRequired[float | None],
+})
+MrisShrinkwrapParametersTagged = typing.TypedDict('MrisShrinkwrapParametersTagged', {
+    "@type": typing.Literal["freesurfer/mris_shrinkwrap"],
     "volume": InputPathType,
     "output_name": str,
     "threshold": typing.NotRequired[float | None],
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "freesurfer.mris_shrinkwrap": mris_shrinkwrap_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "freesurfer.mris_shrinkwrap": mris_shrinkwrap_outputs,
-    }.get(t)
-
-
 class MrisShrinkwrapOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `mris_shrinkwrap(...)`.
+    Output object returned when calling `MrisShrinkwrapParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -71,7 +45,7 @@ def mris_shrinkwrap_params(
     volume: InputPathType,
     output_name: str,
     threshold: float | None = None,
-) -> MrisShrinkwrapParameters:
+) -> MrisShrinkwrapParametersTagged:
     """
     Build parameters.
     
@@ -84,7 +58,7 @@ def mris_shrinkwrap_params(
         Parameter dictionary
     """
     params = {
-        "@type": "freesurfer.mris_shrinkwrap",
+        "@type": "freesurfer/mris_shrinkwrap",
         "volume": volume,
         "output_name": output_name,
     }
@@ -108,12 +82,12 @@ def mris_shrinkwrap_cargs(
     """
     cargs = []
     cargs.append("mris_shrinkwrap")
-    cargs.append(execution.input_file(params.get("volume")))
-    cargs.append(params.get("output_name"))
-    if params.get("threshold") is not None:
+    cargs.append(execution.input_file(params.get("volume", None)))
+    cargs.append(params.get("output_name", None))
+    if params.get("threshold", None) is not None:
         cargs.extend([
             "-t",
-            str(params.get("threshold"))
+            str(params.get("threshold", None))
         ])
     return cargs
 
@@ -133,9 +107,9 @@ def mris_shrinkwrap_outputs(
     """
     ret = MrisShrinkwrapOutputs(
         root=execution.output_file("."),
-        inner_skull=execution.output_file(params.get("output_name") + "_inner_skull.tri"),
-        outer_skull=execution.output_file(params.get("output_name") + "_outer_skull.tri"),
-        outer_skin=execution.output_file(params.get("output_name") + "_outer_skin.tri"),
+        inner_skull=execution.output_file(params.get("output_name", None) + "_inner_skull.tri"),
+        outer_skull=execution.output_file(params.get("output_name", None) + "_outer_skull.tri"),
+        outer_skin=execution.output_file(params.get("output_name", None) + "_outer_skin.tri"),
     )
     return ret
 
@@ -203,7 +177,6 @@ def mris_shrinkwrap(
 __all__ = [
     "MRIS_SHRINKWRAP_METADATA",
     "MrisShrinkwrapOutputs",
-    "MrisShrinkwrapParameters",
     "mris_shrinkwrap",
     "mris_shrinkwrap_execute",
     "mris_shrinkwrap_params",

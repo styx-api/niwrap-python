@@ -14,7 +14,20 @@ DICOM_HDR_METADATA = Metadata(
 
 
 DicomHdrParameters = typing.TypedDict('DicomHdrParameters', {
-    "@type": typing.Literal["afni.dicom_hdr"],
+    "@type": typing.NotRequired[typing.Literal["afni/dicom_hdr"]],
+    "files": list[InputPathType],
+    "hex": bool,
+    "noname": bool,
+    "sexinfo": bool,
+    "mulfram": bool,
+    "v_dump": typing.NotRequired[float | None],
+    "no_length": bool,
+    "slice_times": bool,
+    "slice_times_verb": bool,
+    "siemens_csa_data": bool,
+})
+DicomHdrParametersTagged = typing.TypedDict('DicomHdrParametersTagged', {
+    "@type": typing.Literal["afni/dicom_hdr"],
     "files": list[InputPathType],
     "hex": bool,
     "noname": bool,
@@ -28,40 +41,9 @@ DicomHdrParameters = typing.TypedDict('DicomHdrParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "afni.dicom_hdr": dicom_hdr_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-    }.get(t)
-
-
 class DicomHdrOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `dicom_hdr(...)`.
+    Output object returned when calling `DicomHdrParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -78,7 +60,7 @@ def dicom_hdr_params(
     slice_times: bool = False,
     slice_times_verb: bool = False,
     siemens_csa_data: bool = False,
-) -> DicomHdrParameters:
+) -> DicomHdrParametersTagged:
     """
     Build parameters.
     
@@ -100,7 +82,7 @@ def dicom_hdr_params(
         Parameter dictionary
     """
     params = {
-        "@type": "afni.dicom_hdr",
+        "@type": "afni/dicom_hdr",
         "files": files,
         "hex": hex_,
         "noname": noname,
@@ -131,27 +113,27 @@ def dicom_hdr_cargs(
     """
     cargs = []
     cargs.append("dicom_hdr")
-    cargs.extend([execution.input_file(f) for f in params.get("files")])
-    if params.get("hex"):
+    cargs.extend([execution.input_file(f) for f in params.get("files", None)])
+    if params.get("hex", False):
         cargs.append("-hex")
-    if params.get("noname"):
+    if params.get("noname", False):
         cargs.append("-noname")
-    if params.get("sexinfo"):
+    if params.get("sexinfo", False):
         cargs.append("-sexinfo")
-    if params.get("mulfram"):
+    if params.get("mulfram", False):
         cargs.append("-mulfram")
-    if params.get("v_dump") is not None:
+    if params.get("v_dump", None) is not None:
         cargs.extend([
             "-v",
-            str(params.get("v_dump"))
+            str(params.get("v_dump", None))
         ])
-    if params.get("no_length"):
+    if params.get("no_length", False):
         cargs.append("-no_length")
-    if params.get("slice_times"):
+    if params.get("slice_times", False):
         cargs.append("-slice_times")
-    if params.get("slice_times_verb"):
+    if params.get("slice_times_verb", False):
         cargs.append("-slice_times_verb")
-    if params.get("siemens_csa_data"):
+    if params.get("siemens_csa_data", False):
         cargs.append("-siemens_csa_data")
     return cargs
 
@@ -261,7 +243,6 @@ def dicom_hdr(
 __all__ = [
     "DICOM_HDR_METADATA",
     "DicomHdrOutputs",
-    "DicomHdrParameters",
     "dicom_hdr",
     "dicom_hdr_execute",
     "dicom_hdr_params",

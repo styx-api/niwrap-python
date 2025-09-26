@@ -14,7 +14,15 @@ CONVERT_XFM_METADATA = Metadata(
 
 
 ConvertXfmParameters = typing.TypedDict('ConvertXfmParameters', {
-    "@type": typing.Literal["fsl.convert_xfm"],
+    "@type": typing.NotRequired[typing.Literal["fsl/convert_xfm"]],
+    "out_file": typing.NotRequired[str | None],
+    "invert_xfm": bool,
+    "concat_xfm": typing.NotRequired[InputPathType | None],
+    "fix_scale_skew": typing.NotRequired[InputPathType | None],
+    "in_file": InputPathType,
+})
+ConvertXfmParametersTagged = typing.TypedDict('ConvertXfmParametersTagged', {
+    "@type": typing.Literal["fsl/convert_xfm"],
     "out_file": typing.NotRequired[str | None],
     "invert_xfm": bool,
     "concat_xfm": typing.NotRequired[InputPathType | None],
@@ -23,41 +31,9 @@ ConvertXfmParameters = typing.TypedDict('ConvertXfmParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "fsl.convert_xfm": convert_xfm_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "fsl.convert_xfm": convert_xfm_outputs,
-    }.get(t)
-
-
 class ConvertXfmOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `convert_xfm(...)`.
+    Output object returned when calling `ConvertXfmParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -71,7 +47,7 @@ def convert_xfm_params(
     invert_xfm: bool = False,
     concat_xfm: InputPathType | None = None,
     fix_scale_skew: InputPathType | None = None,
-) -> ConvertXfmParameters:
+) -> ConvertXfmParametersTagged:
     """
     Build parameters.
     
@@ -85,7 +61,7 @@ def convert_xfm_params(
         Parameter dictionary
     """
     params = {
-        "@type": "fsl.convert_xfm",
+        "@type": "fsl/convert_xfm",
         "invert_xfm": invert_xfm,
         "in_file": in_file,
     }
@@ -113,24 +89,24 @@ def convert_xfm_cargs(
     """
     cargs = []
     cargs.append("convert_xfm")
-    if params.get("out_file") is not None:
+    if params.get("out_file", None) is not None:
         cargs.extend([
             "-omat",
-            params.get("out_file")
+            params.get("out_file", None)
         ])
-    if params.get("invert_xfm"):
+    if params.get("invert_xfm", False):
         cargs.append("-inverse")
-    if params.get("concat_xfm") is not None:
+    if params.get("concat_xfm", None) is not None:
         cargs.extend([
             "-concat",
-            execution.input_file(params.get("concat_xfm"))
+            execution.input_file(params.get("concat_xfm", None))
         ])
-    if params.get("fix_scale_skew") is not None:
+    if params.get("fix_scale_skew", None) is not None:
         cargs.extend([
             "-fixscaleskew",
-            execution.input_file(params.get("fix_scale_skew"))
+            execution.input_file(params.get("fix_scale_skew", None))
         ])
-    cargs.append(execution.input_file(params.get("in_file")))
+    cargs.append(execution.input_file(params.get("in_file", None)))
     return cargs
 
 
@@ -149,7 +125,7 @@ def convert_xfm_outputs(
     """
     ret = ConvertXfmOutputs(
         root=execution.output_file("."),
-        output_transformation=execution.output_file(params.get("out_file")) if (params.get("out_file") is not None) else None,
+        output_transformation=execution.output_file(params.get("out_file", None)) if (params.get("out_file") is not None) else None,
     )
     return ret
 
@@ -230,7 +206,6 @@ def convert_xfm(
 __all__ = [
     "CONVERT_XFM_METADATA",
     "ConvertXfmOutputs",
-    "ConvertXfmParameters",
     "convert_xfm",
     "convert_xfm_execute",
     "convert_xfm_params",

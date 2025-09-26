@@ -14,7 +14,15 @@ METADATA_STRING_REPLACE_METADATA = Metadata(
 
 
 MetadataStringReplaceParameters = typing.TypedDict('MetadataStringReplaceParameters', {
-    "@type": typing.Literal["workbench.metadata-string-replace"],
+    "@type": typing.NotRequired[typing.Literal["workbench/metadata-string-replace"]],
+    "input_file": str,
+    "find_string": str,
+    "replace_string": str,
+    "output_file": str,
+    "opt_case_insensitive": bool,
+})
+MetadataStringReplaceParametersTagged = typing.TypedDict('MetadataStringReplaceParametersTagged', {
+    "@type": typing.Literal["workbench/metadata-string-replace"],
     "input_file": str,
     "find_string": str,
     "replace_string": str,
@@ -23,40 +31,9 @@ MetadataStringReplaceParameters = typing.TypedDict('MetadataStringReplaceParamet
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "workbench.metadata-string-replace": metadata_string_replace_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-    }.get(t)
-
-
 class MetadataStringReplaceOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `metadata_string_replace(...)`.
+    Output object returned when calling `MetadataStringReplaceParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -68,7 +45,7 @@ def metadata_string_replace_params(
     replace_string: str,
     output_file: str,
     opt_case_insensitive: bool = False,
-) -> MetadataStringReplaceParameters:
+) -> MetadataStringReplaceParametersTagged:
     """
     Build parameters.
     
@@ -82,7 +59,7 @@ def metadata_string_replace_params(
         Parameter dictionary
     """
     params = {
-        "@type": "workbench.metadata-string-replace",
+        "@type": "workbench/metadata-string-replace",
         "input_file": input_file,
         "find_string": find_string,
         "replace_string": replace_string,
@@ -108,11 +85,11 @@ def metadata_string_replace_cargs(
     cargs = []
     cargs.append("wb_command")
     cargs.append("-metadata-string-replace")
-    cargs.append(params.get("input_file"))
-    cargs.append(params.get("find_string"))
-    cargs.append(params.get("replace_string"))
-    cargs.append(params.get("output_file"))
-    if params.get("opt_case_insensitive"):
+    cargs.append(params.get("input_file", None))
+    cargs.append(params.get("find_string", None))
+    cargs.append(params.get("replace_string", None))
+    cargs.append(params.get("output_file", None))
+    if params.get("opt_case_insensitive", False):
         cargs.append("-case-insensitive")
     return cargs
 
@@ -210,7 +187,6 @@ def metadata_string_replace(
 __all__ = [
     "METADATA_STRING_REPLACE_METADATA",
     "MetadataStringReplaceOutputs",
-    "MetadataStringReplaceParameters",
     "metadata_string_replace",
     "metadata_string_replace_execute",
     "metadata_string_replace_params",

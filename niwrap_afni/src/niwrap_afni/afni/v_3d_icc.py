@@ -14,7 +14,24 @@ V_3D_ICC_METADATA = Metadata(
 
 
 V3dIccParameters = typing.TypedDict('V3dIccParameters', {
-    "@type": typing.Literal["afni.3dICC"],
+    "@type": typing.NotRequired[typing.Literal["afni/3dICC"]],
+    "model": str,
+    "prefix": str,
+    "mask": typing.NotRequired[InputPathType | None],
+    "data_table": str,
+    "bounds": typing.NotRequired[list[float] | None],
+    "jobs": typing.NotRequired[float | None],
+    "qVars": typing.NotRequired[str | None],
+    "qVarCenters": typing.NotRequired[str | None],
+    "subj": typing.NotRequired[str | None],
+    "input_file_column": typing.NotRequired[str | None],
+    "tStat": typing.NotRequired[str | None],
+    "dbgArgs": bool,
+    "cio": bool,
+    "rio": bool,
+})
+V3dIccParametersTagged = typing.TypedDict('V3dIccParametersTagged', {
+    "@type": typing.Literal["afni/3dICC"],
     "model": str,
     "prefix": str,
     "mask": typing.NotRequired[InputPathType | None],
@@ -32,41 +49,9 @@ V3dIccParameters = typing.TypedDict('V3dIccParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "afni.3dICC": v_3d_icc_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "afni.3dICC": v_3d_icc_outputs,
-    }.get(t)
-
-
 class V3dIccOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `v_3d_icc(...)`.
+    Output object returned when calling `V3dIccParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -89,7 +74,7 @@ def v_3d_icc_params(
     dbg_args: bool = False,
     cio: bool = False,
     rio: bool = False,
-) -> V3dIccParameters:
+) -> V3dIccParametersTagged:
     """
     Build parameters.
     
@@ -129,7 +114,7 @@ def v_3d_icc_params(
         Parameter dictionary
     """
     params = {
-        "@type": "afni.3dICC",
+        "@type": "afni/3dICC",
         "model": model,
         "prefix": prefix,
         "data_table": data_table,
@@ -171,60 +156,60 @@ def v_3d_icc_cargs(
     """
     cargs = []
     cargs.append("3dICC")
-    cargs.append(params.get("model"))
+    cargs.append(params.get("model", None))
     cargs.extend([
         "-prefix",
-        params.get("prefix")
+        params.get("prefix", None)
     ])
-    if params.get("mask") is not None:
+    if params.get("mask", None) is not None:
         cargs.extend([
             "-mask",
-            execution.input_file(params.get("mask"))
+            execution.input_file(params.get("mask", None))
         ])
     cargs.extend([
         "-dataTable",
-        params.get("data_table")
+        params.get("data_table", None)
     ])
-    if params.get("bounds") is not None:
+    if params.get("bounds", None) is not None:
         cargs.extend([
             "-bounds",
-            *map(str, params.get("bounds"))
+            *map(str, params.get("bounds", None))
         ])
-    if params.get("jobs") is not None:
+    if params.get("jobs", None) is not None:
         cargs.extend([
             "-jobs",
-            str(params.get("jobs"))
+            str(params.get("jobs", None))
         ])
-    if params.get("qVars") is not None:
+    if params.get("qVars", None) is not None:
         cargs.extend([
             "-qVars",
-            params.get("qVars")
+            params.get("qVars", None)
         ])
-    if params.get("qVarCenters") is not None:
+    if params.get("qVarCenters", None) is not None:
         cargs.extend([
             "-qVarCenters",
-            params.get("qVarCenters")
+            params.get("qVarCenters", None)
         ])
-    if params.get("subj") is not None:
+    if params.get("subj", None) is not None:
         cargs.extend([
             "-Subj",
-            params.get("subj")
+            params.get("subj", None)
         ])
-    if params.get("input_file_column") is not None:
+    if params.get("input_file_column", None) is not None:
         cargs.extend([
             "-IF",
-            params.get("input_file_column")
+            params.get("input_file_column", None)
         ])
-    if params.get("tStat") is not None:
+    if params.get("tStat", None) is not None:
         cargs.extend([
             "-tStat",
-            params.get("tStat")
+            params.get("tStat", None)
         ])
-    if params.get("dbgArgs"):
+    if params.get("dbgArgs", False):
         cargs.append("-dbgArgs")
-    if params.get("cio"):
+    if params.get("cio", False):
         cargs.append("-cio")
-    if params.get("rio"):
+    if params.get("rio", False):
         cargs.append("-Rio")
     return cargs
 
@@ -244,7 +229,7 @@ def v_3d_icc_outputs(
     """
     ret = V3dIccOutputs(
         root=execution.output_file("."),
-        output_file=execution.output_file(params.get("prefix")),
+        output_file=execution.output_file(params.get("prefix", None)),
     )
     return ret
 
@@ -360,7 +345,6 @@ def v_3d_icc(
 
 __all__ = [
     "V3dIccOutputs",
-    "V3dIccParameters",
     "V_3D_ICC_METADATA",
     "v_3d_icc",
     "v_3d_icc_execute",

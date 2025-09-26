@@ -14,7 +14,15 @@ SURF_RETINO_MAP_METADATA = Metadata(
 
 
 SurfRetinoMapParameters = typing.TypedDict('SurfRetinoMapParameters', {
-    "@type": typing.Literal["afni.SurfRetinoMap"],
+    "@type": typing.NotRequired[typing.Literal["afni/SurfRetinoMap"]],
+    "surface": str,
+    "polar": str,
+    "eccentricity": str,
+    "prefix": typing.NotRequired[str | None],
+    "node_debug": typing.NotRequired[float | None],
+})
+SurfRetinoMapParametersTagged = typing.TypedDict('SurfRetinoMapParametersTagged', {
+    "@type": typing.Literal["afni/SurfRetinoMap"],
     "surface": str,
     "polar": str,
     "eccentricity": str,
@@ -23,41 +31,9 @@ SurfRetinoMapParameters = typing.TypedDict('SurfRetinoMapParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "afni.SurfRetinoMap": surf_retino_map_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "afni.SurfRetinoMap": surf_retino_map_outputs,
-    }.get(t)
-
-
 class SurfRetinoMapOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `surf_retino_map(...)`.
+    Output object returned when calling `SurfRetinoMapParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -73,7 +49,7 @@ def surf_retino_map_params(
     eccentricity: str,
     prefix: str | None = None,
     node_debug: float | None = None,
-) -> SurfRetinoMapParameters:
+) -> SurfRetinoMapParametersTagged:
     """
     Build parameters.
     
@@ -89,7 +65,7 @@ def surf_retino_map_params(
         Parameter dictionary
     """
     params = {
-        "@type": "afni.SurfRetinoMap",
+        "@type": "afni/SurfRetinoMap",
         "surface": surface,
         "polar": polar,
         "eccentricity": eccentricity,
@@ -116,18 +92,18 @@ def surf_retino_map_cargs(
     """
     cargs = []
     cargs.append("SurfRetinoMap")
-    cargs.append(params.get("surface"))
-    cargs.append(params.get("polar"))
-    cargs.append(params.get("eccentricity"))
-    if params.get("prefix") is not None:
+    cargs.append(params.get("surface", None))
+    cargs.append(params.get("polar", None))
+    cargs.append(params.get("eccentricity", None))
+    if params.get("prefix", None) is not None:
         cargs.extend([
             "--prefix",
-            params.get("prefix")
+            params.get("prefix", None)
         ])
-    if params.get("node_debug") is not None:
+    if params.get("node_debug", None) is not None:
         cargs.extend([
             "--node_dbg",
-            str(params.get("node_debug"))
+            str(params.get("node_debug", None))
         ])
     return cargs
 
@@ -147,8 +123,8 @@ def surf_retino_map_outputs(
     """
     ret = SurfRetinoMapOutputs(
         root=execution.output_file("."),
-        vfr_output=execution.output_file(params.get("prefix") + "_VFR.nii.gz") if (params.get("prefix") is not None) else None,
-        threshold_max_output=execution.output_file(params.get("prefix") + "_threshold_max.nii.gz") if (params.get("prefix") is not None) else None,
+        vfr_output=execution.output_file(params.get("prefix", None) + "_VFR.nii.gz") if (params.get("prefix") is not None) else None,
+        threshold_max_output=execution.output_file(params.get("prefix", None) + "_threshold_max.nii.gz") if (params.get("prefix") is not None) else None,
     )
     return ret
 
@@ -223,7 +199,6 @@ def surf_retino_map(
 __all__ = [
     "SURF_RETINO_MAP_METADATA",
     "SurfRetinoMapOutputs",
-    "SurfRetinoMapParameters",
     "surf_retino_map",
     "surf_retino_map_execute",
     "surf_retino_map_params",

@@ -14,7 +14,17 @@ WM_ANAT_SNR_METADATA = Metadata(
 
 
 WmAnatSnrParameters = typing.TypedDict('WmAnatSnrParameters', {
-    "@type": typing.Literal["freesurfer.wm-anat-snr"],
+    "@type": typing.NotRequired[typing.Literal["freesurfer/wm-anat-snr"]],
+    "subject": str,
+    "output_file": str,
+    "force": bool,
+    "nerode": typing.NotRequired[int | None],
+    "tmp_dir": typing.NotRequired[str | None],
+    "cleanup": bool,
+    "no_cleanup": bool,
+})
+WmAnatSnrParametersTagged = typing.TypedDict('WmAnatSnrParametersTagged', {
+    "@type": typing.Literal["freesurfer/wm-anat-snr"],
     "subject": str,
     "output_file": str,
     "force": bool,
@@ -25,41 +35,9 @@ WmAnatSnrParameters = typing.TypedDict('WmAnatSnrParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "freesurfer.wm-anat-snr": wm_anat_snr_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "freesurfer.wm-anat-snr": wm_anat_snr_outputs,
-    }.get(t)
-
-
 class WmAnatSnrOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `wm_anat_snr(...)`.
+    Output object returned when calling `WmAnatSnrParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -75,7 +53,7 @@ def wm_anat_snr_params(
     tmp_dir: str | None = None,
     cleanup: bool = False,
     no_cleanup: bool = False,
-) -> WmAnatSnrParameters:
+) -> WmAnatSnrParametersTagged:
     """
     Build parameters.
     
@@ -91,7 +69,7 @@ def wm_anat_snr_params(
         Parameter dictionary
     """
     params = {
-        "@type": "freesurfer.wm-anat-snr",
+        "@type": "freesurfer/wm-anat-snr",
         "subject": subject,
         "output_file": output_file,
         "force": force,
@@ -122,27 +100,27 @@ def wm_anat_snr_cargs(
     cargs.append("wm-anat-snr")
     cargs.extend([
         "--s",
-        params.get("subject")
+        params.get("subject", None)
     ])
     cargs.extend([
         "--o",
-        params.get("output_file")
+        params.get("output_file", None)
     ])
-    if params.get("force"):
+    if params.get("force", False):
         cargs.append("--force")
-    if params.get("nerode") is not None:
+    if params.get("nerode", None) is not None:
         cargs.extend([
             "--nerode",
-            str(params.get("nerode"))
+            str(params.get("nerode", None))
         ])
-    if params.get("tmp_dir") is not None:
+    if params.get("tmp_dir", None) is not None:
         cargs.extend([
             "--tmp",
-            params.get("tmp_dir")
+            params.get("tmp_dir", None)
         ])
-    if params.get("cleanup"):
+    if params.get("cleanup", False):
         cargs.append("--cleanup")
-    if params.get("no_cleanup"):
+    if params.get("no_cleanup", False):
         cargs.append("--no-cleanup")
     return cargs
 
@@ -162,7 +140,7 @@ def wm_anat_snr_outputs(
     """
     ret = WmAnatSnrOutputs(
         root=execution.output_file("."),
-        output_datafile=execution.output_file(params.get("output_file")),
+        output_datafile=execution.output_file(params.get("output_file", None)),
     )
     return ret
 
@@ -243,7 +221,6 @@ def wm_anat_snr(
 __all__ = [
     "WM_ANAT_SNR_METADATA",
     "WmAnatSnrOutputs",
-    "WmAnatSnrParameters",
     "wm_anat_snr",
     "wm_anat_snr_execute",
     "wm_anat_snr_params",

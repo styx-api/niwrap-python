@@ -14,45 +14,18 @@ UBER_PROC_PY_METADATA = Metadata(
 
 
 UberProcPyParameters = typing.TypedDict('UberProcPyParameters', {
-    "@type": typing.Literal["afni.uber_proc.py"],
+    "@type": typing.NotRequired[typing.Literal["afni/uber_proc.py"]],
+    "results_dir": typing.NotRequired[str | None],
+})
+UberProcPyParametersTagged = typing.TypedDict('UberProcPyParametersTagged', {
+    "@type": typing.Literal["afni/uber_proc.py"],
     "results_dir": typing.NotRequired[str | None],
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "afni.uber_proc.py": uber_proc_py_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-    }.get(t)
-
-
 class UberProcPyOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `uber_proc_py(...)`.
+    Output object returned when calling `UberProcPyParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -60,7 +33,7 @@ class UberProcPyOutputs(typing.NamedTuple):
 
 def uber_proc_py_params(
     results_dir: str | None = None,
-) -> UberProcPyParameters:
+) -> UberProcPyParametersTagged:
     """
     Build parameters.
     
@@ -71,7 +44,7 @@ def uber_proc_py_params(
         Parameter dictionary
     """
     params = {
-        "@type": "afni.uber_proc.py",
+        "@type": "afni/uber_proc.py",
     }
     if results_dir is not None:
         params["results_dir"] = results_dir
@@ -93,8 +66,8 @@ def uber_proc_py_cargs(
     """
     cargs = []
     cargs.append("uber_proc.py")
-    if params.get("results_dir") is not None:
-        cargs.append(params.get("results_dir"))
+    if params.get("results_dir", None) is not None:
+        cargs.append(params.get("results_dir", None))
     return cargs
 
 
@@ -174,7 +147,6 @@ def uber_proc_py(
 __all__ = [
     "UBER_PROC_PY_METADATA",
     "UberProcPyOutputs",
-    "UberProcPyParameters",
     "uber_proc_py",
     "uber_proc_py_execute",
     "uber_proc_py_params",

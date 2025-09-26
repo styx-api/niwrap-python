@@ -14,7 +14,46 @@ FABBER_DWI_METADATA = Metadata(
 
 
 FabberDwiParameters = typing.TypedDict('FabberDwiParameters', {
-    "@type": typing.Literal["fsl.fabber_dwi"],
+    "@type": typing.NotRequired[typing.Literal["fsl/fabber_dwi"]],
+    "output_dir": str,
+    "method": str,
+    "model": str,
+    "data_file": InputPathType,
+    "help_flag": bool,
+    "listmethods_flag": bool,
+    "listmodels_flag": bool,
+    "listparams_flag": bool,
+    "descparams_flag": bool,
+    "listoutputs_flag": bool,
+    "evaluate": typing.NotRequired[str | None],
+    "evaluate_params": typing.NotRequired[str | None],
+    "evaluate_nt": typing.NotRequired[int | None],
+    "simple_output_flag": bool,
+    "overwrite_flag": bool,
+    "link_to_latest_flag": bool,
+    "loadmodels": typing.NotRequired[InputPathType | None],
+    "multiple_data_files": typing.NotRequired[InputPathType | None],
+    "data_order": typing.NotRequired[str | None],
+    "mask_file": typing.NotRequired[InputPathType | None],
+    "masked_timepoints": typing.NotRequired[int | None],
+    "supp_data": typing.NotRequired[InputPathType | None],
+    "dump_param_names_flag": bool,
+    "save_model_fit_flag": bool,
+    "save_residuals_flag": bool,
+    "save_model_extras_flag": bool,
+    "save_mvn_flag": bool,
+    "save_mean_flag": bool,
+    "save_std_flag": bool,
+    "save_var_flag": bool,
+    "save_zstat_flag": bool,
+    "save_noise_mean_flag": bool,
+    "save_noise_std_flag": bool,
+    "save_free_energy_flag": bool,
+    "optfile": typing.NotRequired[InputPathType | None],
+    "debug_flag": bool,
+})
+FabberDwiParametersTagged = typing.TypedDict('FabberDwiParametersTagged', {
+    "@type": typing.Literal["fsl/fabber_dwi"],
     "output_dir": str,
     "method": str,
     "model": str,
@@ -54,41 +93,9 @@ FabberDwiParameters = typing.TypedDict('FabberDwiParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "fsl.fabber_dwi": fabber_dwi_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "fsl.fabber_dwi": fabber_dwi_outputs,
-    }.get(t)
-
-
 class FabberDwiOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `fabber_dwi(...)`.
+    Output object returned when calling `FabberDwiParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -133,7 +140,7 @@ def fabber_dwi_params(
     save_free_energy_flag: bool = False,
     optfile: InputPathType | None = None,
     debug_flag: bool = False,
-) -> FabberDwiParameters:
+) -> FabberDwiParametersTagged:
     """
     Build parameters.
     
@@ -201,7 +208,7 @@ def fabber_dwi_params(
         Parameter dictionary
     """
     params = {
-        "@type": "fsl.fabber_dwi",
+        "@type": "fsl/fabber_dwi",
         "output_dir": output_dir,
         "method": method,
         "model": model,
@@ -269,113 +276,113 @@ def fabber_dwi_cargs(
     cargs.append("fabber_dwi")
     cargs.extend([
         "--output",
-        params.get("output_dir")
+        params.get("output_dir", None)
     ])
     cargs.extend([
         "--method",
-        params.get("method")
+        params.get("method", None)
     ])
     cargs.extend([
         "--model",
-        params.get("model")
+        params.get("model", None)
     ])
     cargs.extend([
         "--data",
-        execution.input_file(params.get("data_file"))
+        execution.input_file(params.get("data_file", None))
     ])
-    if params.get("help_flag"):
+    if params.get("help_flag", False):
         cargs.append("--help")
-    if params.get("listmethods_flag"):
+    if params.get("listmethods_flag", False):
         cargs.append("--listmethods")
-    if params.get("listmodels_flag"):
+    if params.get("listmodels_flag", False):
         cargs.append("--listmodels")
-    if params.get("listparams_flag"):
+    if params.get("listparams_flag", False):
         cargs.append("--listparams")
-    if params.get("descparams_flag"):
+    if params.get("descparams_flag", False):
         cargs.append("--descparams")
-    if params.get("listoutputs_flag"):
+    if params.get("listoutputs_flag", False):
         cargs.append("--listoutputs")
-    if params.get("evaluate") is not None:
+    if params.get("evaluate", None) is not None:
         cargs.extend([
             "--evaluate",
-            params.get("evaluate")
+            params.get("evaluate", None)
         ])
-    if params.get("evaluate_params") is not None:
+    if params.get("evaluate_params", None) is not None:
         cargs.extend([
             "--evaluate-params",
-            params.get("evaluate_params")
+            params.get("evaluate_params", None)
         ])
-    if params.get("evaluate_nt") is not None:
+    if params.get("evaluate_nt", None) is not None:
         cargs.extend([
             "--evaluate-nt",
-            str(params.get("evaluate_nt"))
+            str(params.get("evaluate_nt", None))
         ])
-    if params.get("simple_output_flag"):
+    if params.get("simple_output_flag", False):
         cargs.append("--simple-output")
-    if params.get("overwrite_flag"):
+    if params.get("overwrite_flag", False):
         cargs.append("--overwrite")
-    if params.get("link_to_latest_flag"):
+    if params.get("link_to_latest_flag", False):
         cargs.append("--link-to-latest")
-    if params.get("loadmodels") is not None:
+    if params.get("loadmodels", None) is not None:
         cargs.extend([
             "--loadmodels",
-            execution.input_file(params.get("loadmodels"))
+            execution.input_file(params.get("loadmodels", None))
         ])
-    if params.get("multiple_data_files") is not None:
+    if params.get("multiple_data_files", None) is not None:
         cargs.extend([
             "--data<n>",
-            execution.input_file(params.get("multiple_data_files"))
+            execution.input_file(params.get("multiple_data_files", None))
         ])
-    if params.get("data_order") is not None:
+    if params.get("data_order", None) is not None:
         cargs.extend([
             "--data-order",
-            params.get("data_order")
+            params.get("data_order", None)
         ])
-    if params.get("mask_file") is not None:
+    if params.get("mask_file", None) is not None:
         cargs.extend([
             "--mask",
-            execution.input_file(params.get("mask_file"))
+            execution.input_file(params.get("mask_file", None))
         ])
-    if params.get("masked_timepoints") is not None:
+    if params.get("masked_timepoints", None) is not None:
         cargs.extend([
             "--mt<n>",
-            str(params.get("masked_timepoints"))
+            str(params.get("masked_timepoints", None))
         ])
-    if params.get("supp_data") is not None:
+    if params.get("supp_data", None) is not None:
         cargs.extend([
             "--suppdata",
-            execution.input_file(params.get("supp_data"))
+            execution.input_file(params.get("supp_data", None))
         ])
-    if params.get("dump_param_names_flag"):
+    if params.get("dump_param_names_flag", False):
         cargs.append("--dump-param-names")
-    if params.get("save_model_fit_flag"):
+    if params.get("save_model_fit_flag", False):
         cargs.append("--save-model-fit")
-    if params.get("save_residuals_flag"):
+    if params.get("save_residuals_flag", False):
         cargs.append("--save-residuals")
-    if params.get("save_model_extras_flag"):
+    if params.get("save_model_extras_flag", False):
         cargs.append("--save-model-extras")
-    if params.get("save_mvn_flag"):
+    if params.get("save_mvn_flag", False):
         cargs.append("--save-mvn")
-    if params.get("save_mean_flag"):
+    if params.get("save_mean_flag", False):
         cargs.append("--save-mean")
-    if params.get("save_std_flag"):
+    if params.get("save_std_flag", False):
         cargs.append("--save-std")
-    if params.get("save_var_flag"):
+    if params.get("save_var_flag", False):
         cargs.append("--save-var")
-    if params.get("save_zstat_flag"):
+    if params.get("save_zstat_flag", False):
         cargs.append("--save-zstat")
-    if params.get("save_noise_mean_flag"):
+    if params.get("save_noise_mean_flag", False):
         cargs.append("--save-noise-mean")
-    if params.get("save_noise_std_flag"):
+    if params.get("save_noise_std_flag", False):
         cargs.append("--save-noise-std")
-    if params.get("save_free_energy_flag"):
+    if params.get("save_free_energy_flag", False):
         cargs.append("--save-free-energy")
-    if params.get("optfile") is not None:
+    if params.get("optfile", None) is not None:
         cargs.extend([
             "--optfile",
-            execution.input_file(params.get("optfile"))
+            execution.input_file(params.get("optfile", None))
         ])
-    if params.get("debug_flag"):
+    if params.get("debug_flag", False):
         cargs.append("--debug")
     return cargs
 
@@ -395,7 +402,7 @@ def fabber_dwi_outputs(
     """
     ret = FabberDwiOutputs(
         root=execution.output_file("."),
-        output_files=execution.output_file(params.get("output_dir")),
+        output_files=execution.output_file(params.get("output_dir", None)),
     )
     return ret
 
@@ -586,7 +593,6 @@ def fabber_dwi(
 __all__ = [
     "FABBER_DWI_METADATA",
     "FabberDwiOutputs",
-    "FabberDwiParameters",
     "fabber_dwi",
     "fabber_dwi_execute",
     "fabber_dwi_params",

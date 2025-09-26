@@ -14,7 +14,32 @@ GIFTI_TOOL_METADATA = Metadata(
 
 
 GiftiToolParameters = typing.TypedDict('GiftiToolParameters', {
-    "@type": typing.Literal["afni.gifti_tool"],
+    "@type": typing.NotRequired[typing.Literal["afni/gifti_tool"]],
+    "infile": InputPathType,
+    "new_numda": typing.NotRequired[float | None],
+    "new_dtype": typing.NotRequired[str | None],
+    "new_intent": typing.NotRequired[str | None],
+    "new_ndim": typing.NotRequired[float | None],
+    "new_dims": typing.NotRequired[list[float] | None],
+    "write_gifti": str,
+    "set_extern_filelist": typing.NotRequired[list[str] | None],
+    "mod_add_data": bool,
+    "verb": typing.NotRequired[float | None],
+    "show_gifti": bool,
+    "read_das": typing.NotRequired[list[float] | None],
+    "mod_gim_atr": typing.NotRequired[list[str] | None],
+    "mod_gim_meta": typing.NotRequired[list[str] | None],
+    "mod_da_atr": typing.NotRequired[list[str] | None],
+    "mod_da_meta": typing.NotRequired[list[str] | None],
+    "mod_das": typing.NotRequired[list[float] | None],
+    "new_dset": bool,
+    "compare_gifti": bool,
+    "compare_data": bool,
+    "compare_verb": typing.NotRequired[float | None],
+    "approx_gifti": bool,
+})
+GiftiToolParametersTagged = typing.TypedDict('GiftiToolParametersTagged', {
+    "@type": typing.Literal["afni/gifti_tool"],
     "infile": InputPathType,
     "new_numda": typing.NotRequired[float | None],
     "new_dtype": typing.NotRequired[str | None],
@@ -40,41 +65,9 @@ GiftiToolParameters = typing.TypedDict('GiftiToolParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "afni.gifti_tool": gifti_tool_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "afni.gifti_tool": gifti_tool_outputs,
-    }.get(t)
-
-
 class GiftiToolOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `gifti_tool(...)`.
+    Output object returned when calling `GiftiToolParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -105,7 +98,7 @@ def gifti_tool_params(
     compare_data: bool = False,
     compare_verb: float | None = None,
     approx_gifti: bool = False,
-) -> GiftiToolParameters:
+) -> GiftiToolParametersTagged:
     """
     Build parameters.
     
@@ -136,7 +129,7 @@ def gifti_tool_params(
         Parameter dictionary
     """
     params = {
-        "@type": "afni.gifti_tool",
+        "@type": "afni/gifti_tool",
         "infile": infile,
         "write_gifti": write_gifti,
         "mod_add_data": mod_add_data,
@@ -194,93 +187,93 @@ def gifti_tool_cargs(
     cargs.append("gifti_tool")
     cargs.extend([
         "-infile",
-        execution.input_file(params.get("infile"))
+        execution.input_file(params.get("infile", None))
     ])
-    if params.get("new_numda") is not None:
+    if params.get("new_numda", None) is not None:
         cargs.extend([
             "-new_numDA",
-            str(params.get("new_numda"))
+            str(params.get("new_numda", None))
         ])
-    if params.get("new_dtype") is not None:
+    if params.get("new_dtype", None) is not None:
         cargs.extend([
             "-new_dtype",
-            params.get("new_dtype")
+            params.get("new_dtype", None)
         ])
-    if params.get("new_intent") is not None:
+    if params.get("new_intent", None) is not None:
         cargs.extend([
             "-new_intent",
-            params.get("new_intent")
+            params.get("new_intent", None)
         ])
-    if params.get("new_ndim") is not None:
+    if params.get("new_ndim", None) is not None:
         cargs.extend([
             "-new_ndim",
-            str(params.get("new_ndim"))
+            str(params.get("new_ndim", None))
         ])
-    if params.get("new_dims") is not None:
+    if params.get("new_dims", None) is not None:
         cargs.extend([
             "-new_dims",
-            *map(str, params.get("new_dims"))
+            *map(str, params.get("new_dims", None))
         ])
     cargs.extend([
         "-write_gifti",
-        params.get("write_gifti")
+        params.get("write_gifti", None)
     ])
-    if params.get("set_extern_filelist") is not None:
+    if params.get("set_extern_filelist", None) is not None:
         cargs.extend([
             "-set_extern_filelist",
-            *params.get("set_extern_filelist")
+            *params.get("set_extern_filelist", None)
         ])
-    if params.get("mod_add_data"):
+    if params.get("mod_add_data", False):
         cargs.append("-mod_add_data")
-    if params.get("verb") is not None:
+    if params.get("verb", None) is not None:
         cargs.extend([
             "-verb",
-            str(params.get("verb"))
+            str(params.get("verb", None))
         ])
-    if params.get("show_gifti"):
+    if params.get("show_gifti", False):
         cargs.append("-show_gifti")
-    if params.get("read_das") is not None:
+    if params.get("read_das", None) is not None:
         cargs.extend([
             "-read_DAs",
-            *map(str, params.get("read_das"))
+            *map(str, params.get("read_das", None))
         ])
-    if params.get("mod_gim_atr") is not None:
+    if params.get("mod_gim_atr", None) is not None:
         cargs.extend([
             "-mod_gim_atr",
-            *params.get("mod_gim_atr")
+            *params.get("mod_gim_atr", None)
         ])
-    if params.get("mod_gim_meta") is not None:
+    if params.get("mod_gim_meta", None) is not None:
         cargs.extend([
             "-mod_gim_meta",
-            *params.get("mod_gim_meta")
+            *params.get("mod_gim_meta", None)
         ])
-    if params.get("mod_da_atr") is not None:
+    if params.get("mod_da_atr", None) is not None:
         cargs.extend([
             "-mod_DA_atr",
-            *params.get("mod_da_atr")
+            *params.get("mod_da_atr", None)
         ])
-    if params.get("mod_da_meta") is not None:
+    if params.get("mod_da_meta", None) is not None:
         cargs.extend([
             "-mod_DA_meta",
-            *params.get("mod_da_meta")
+            *params.get("mod_da_meta", None)
         ])
-    if params.get("mod_das") is not None:
+    if params.get("mod_das", None) is not None:
         cargs.extend([
             "-mod_DAs",
-            *map(str, params.get("mod_das"))
+            *map(str, params.get("mod_das", None))
         ])
-    if params.get("new_dset"):
+    if params.get("new_dset", False):
         cargs.append("-new_dset")
-    if params.get("compare_gifti"):
+    if params.get("compare_gifti", False):
         cargs.append("-compare_gifti")
-    if params.get("compare_data"):
+    if params.get("compare_data", False):
         cargs.append("-compare_data")
-    if params.get("compare_verb") is not None:
+    if params.get("compare_verb", None) is not None:
         cargs.extend([
             "-compare_verb",
-            str(params.get("compare_verb"))
+            str(params.get("compare_verb", None))
         ])
-    if params.get("approx_gifti"):
+    if params.get("approx_gifti", False):
         cargs.append("-approx_gifti")
     return cargs
 
@@ -300,7 +293,7 @@ def gifti_tool_outputs(
     """
     ret = GiftiToolOutputs(
         root=execution.output_file("."),
-        output_gifti=execution.output_file(params.get("write_gifti")),
+        output_gifti=execution.output_file(params.get("write_gifti", None)),
     )
     return ret
 
@@ -424,7 +417,6 @@ def gifti_tool(
 __all__ = [
     "GIFTI_TOOL_METADATA",
     "GiftiToolOutputs",
-    "GiftiToolParameters",
     "gifti_tool",
     "gifti_tool_execute",
     "gifti_tool_params",

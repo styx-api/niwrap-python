@@ -14,7 +14,21 @@ MMPPSP_METADATA = Metadata(
 
 
 MmppspParameters = typing.TypedDict('MmppspParameters', {
-    "@type": typing.Literal["freesurfer.mmppsp"],
+    "@type": typing.NotRequired[typing.Literal["freesurfer/mmppsp"]],
+    "samseg_dir": str,
+    "outdir": str,
+    "lh_flag": bool,
+    "rh_flag": bool,
+    "likelihood_flag": bool,
+    "posterior_flag": bool,
+    "force_update_flag": bool,
+    "threads": typing.NotRequired[float | None],
+    "no_initsphreg_flag": bool,
+    "stop_after": typing.NotRequired[str | None],
+    "wexpanddist": typing.NotRequired[float | None],
+})
+MmppspParametersTagged = typing.TypedDict('MmppspParametersTagged', {
+    "@type": typing.Literal["freesurfer/mmppsp"],
     "samseg_dir": str,
     "outdir": str,
     "lh_flag": bool,
@@ -29,41 +43,9 @@ MmppspParameters = typing.TypedDict('MmppspParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "freesurfer.mmppsp": mmppsp_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "freesurfer.mmppsp": mmppsp_outputs,
-    }.get(t)
-
-
 class MmppspOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `mmppsp(...)`.
+    Output object returned when calling `MmppspParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -83,7 +65,7 @@ def mmppsp_params(
     no_initsphreg_flag: bool = False,
     stop_after: str | None = None,
     wexpanddist: float | None = None,
-) -> MmppspParameters:
+) -> MmppspParametersTagged:
     """
     Build parameters.
     
@@ -105,7 +87,7 @@ def mmppsp_params(
         Parameter dictionary
     """
     params = {
-        "@type": "freesurfer.mmppsp",
+        "@type": "freesurfer/mmppsp",
         "samseg_dir": samseg_dir,
         "outdir": outdir,
         "lh_flag": lh_flag,
@@ -141,38 +123,38 @@ def mmppsp_cargs(
     cargs.append("mmppsp")
     cargs.extend([
         "--samseg",
-        params.get("samseg_dir")
+        params.get("samseg_dir", None)
     ])
     cargs.extend([
         "--o",
-        params.get("outdir")
+        params.get("outdir", None)
     ])
-    if params.get("lh_flag"):
+    if params.get("lh_flag", False):
         cargs.append("--lh")
-    if params.get("rh_flag"):
+    if params.get("rh_flag", False):
         cargs.append("--rh")
-    if params.get("likelihood_flag"):
+    if params.get("likelihood_flag", False):
         cargs.append("--likelihood")
-    if params.get("posterior_flag"):
+    if params.get("posterior_flag", False):
         cargs.append("--posterior")
-    if params.get("force_update_flag"):
+    if params.get("force_update_flag", False):
         cargs.append("--force-update")
-    if params.get("threads") is not None:
+    if params.get("threads", None) is not None:
         cargs.extend([
             "--threads",
-            str(params.get("threads"))
+            str(params.get("threads", None))
         ])
-    if params.get("no_initsphreg_flag"):
+    if params.get("no_initsphreg_flag", False):
         cargs.append("--no-initsphreg")
-    if params.get("stop_after") is not None:
+    if params.get("stop_after", None) is not None:
         cargs.extend([
             "--stop-after",
-            params.get("stop_after")
+            params.get("stop_after", None)
         ])
-    if params.get("wexpanddist") is not None:
+    if params.get("wexpanddist", None) is not None:
         cargs.extend([
             "--wexpanddist",
-            str(params.get("wexpanddist"))
+            str(params.get("wexpanddist", None))
         ])
     return cargs
 
@@ -192,7 +174,7 @@ def mmppsp_outputs(
     """
     ret = MmppspOutputs(
         root=execution.output_file("."),
-        output_surface=execution.output_file(params.get("outdir") + "/surf"),
+        output_surface=execution.output_file(params.get("outdir", None) + "/surf"),
     )
     return ret
 
@@ -285,7 +267,6 @@ def mmppsp(
 __all__ = [
     "MMPPSP_METADATA",
     "MmppspOutputs",
-    "MmppspParameters",
     "mmppsp",
     "mmppsp_execute",
     "mmppsp_params",

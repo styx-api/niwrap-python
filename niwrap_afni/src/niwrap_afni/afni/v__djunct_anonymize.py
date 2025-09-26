@@ -14,7 +14,14 @@ V__DJUNCT_ANONYMIZE_METADATA = Metadata(
 
 
 VDjunctAnonymizeParameters = typing.TypedDict('VDjunctAnonymizeParameters', {
-    "@type": typing.Literal["afni.@djunct_anonymize"],
+    "@type": typing.NotRequired[typing.Literal["afni/@djunct_anonymize"]],
+    "input": InputPathType,
+    "add_note": typing.NotRequired[str | None],
+    "copy_to": typing.NotRequired[InputPathType | None],
+    "overwrite": bool,
+})
+VDjunctAnonymizeParametersTagged = typing.TypedDict('VDjunctAnonymizeParametersTagged', {
+    "@type": typing.Literal["afni/@djunct_anonymize"],
     "input": InputPathType,
     "add_note": typing.NotRequired[str | None],
     "copy_to": typing.NotRequired[InputPathType | None],
@@ -22,40 +29,9 @@ VDjunctAnonymizeParameters = typing.TypedDict('VDjunctAnonymizeParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "afni.@djunct_anonymize": v__djunct_anonymize_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-    }.get(t)
-
-
 class VDjunctAnonymizeOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `v__djunct_anonymize(...)`.
+    Output object returned when calling `VDjunctAnonymizeParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -66,7 +42,7 @@ def v__djunct_anonymize_params(
     add_note: str | None = None,
     copy_to: InputPathType | None = None,
     overwrite: bool = False,
-) -> VDjunctAnonymizeParameters:
+) -> VDjunctAnonymizeParametersTagged:
     """
     Build parameters.
     
@@ -79,7 +55,7 @@ def v__djunct_anonymize_params(
         Parameter dictionary
     """
     params = {
-        "@type": "afni.@djunct_anonymize",
+        "@type": "afni/@djunct_anonymize",
         "input": input_,
         "overwrite": overwrite,
     }
@@ -105,18 +81,18 @@ def v__djunct_anonymize_cargs(
     """
     cargs = []
     cargs.append("@djunct_anonymize")
-    cargs.append(execution.input_file(params.get("input")))
-    if params.get("add_note") is not None:
+    cargs.append(execution.input_file(params.get("input", None)))
+    if params.get("add_note", None) is not None:
         cargs.extend([
             "-add_note",
-            params.get("add_note")
+            params.get("add_note", None)
         ])
-    if params.get("copy_to") is not None:
+    if params.get("copy_to", None) is not None:
         cargs.extend([
             "-copy_to",
-            execution.input_file(params.get("copy_to"))
+            execution.input_file(params.get("copy_to", None))
         ])
-    if params.get("overwrite"):
+    if params.get("overwrite", False):
         cargs.append("-overwrite")
     return cargs
 
@@ -204,7 +180,6 @@ def v__djunct_anonymize(
 
 __all__ = [
     "VDjunctAnonymizeOutputs",
-    "VDjunctAnonymizeParameters",
     "V__DJUNCT_ANONYMIZE_METADATA",
     "v__djunct_anonymize",
     "v__djunct_anonymize_execute",

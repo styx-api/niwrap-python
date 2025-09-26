@@ -14,7 +14,16 @@ MRIS_COMPUTE_ACORR_METADATA = Metadata(
 
 
 MrisComputeAcorrParameters = typing.TypedDict('MrisComputeAcorrParameters', {
-    "@type": typing.Literal["freesurfer.mris_compute_acorr"],
+    "@type": typing.NotRequired[typing.Literal["freesurfer/mris_compute_acorr"]],
+    "output_subject": str,
+    "hemi": str,
+    "surf": InputPathType,
+    "curv": InputPathType,
+    "c1_subjects": list[str],
+    "c2_subjects": list[str],
+})
+MrisComputeAcorrParametersTagged = typing.TypedDict('MrisComputeAcorrParametersTagged', {
+    "@type": typing.Literal["freesurfer/mris_compute_acorr"],
     "output_subject": str,
     "hemi": str,
     "surf": InputPathType,
@@ -24,40 +33,9 @@ MrisComputeAcorrParameters = typing.TypedDict('MrisComputeAcorrParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "freesurfer.mris_compute_acorr": mris_compute_acorr_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-    }.get(t)
-
-
 class MrisComputeAcorrOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `mris_compute_acorr(...)`.
+    Output object returned when calling `MrisComputeAcorrParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -70,7 +48,7 @@ def mris_compute_acorr_params(
     curv: InputPathType,
     c1_subjects: list[str],
     c2_subjects: list[str],
-) -> MrisComputeAcorrParameters:
+) -> MrisComputeAcorrParametersTagged:
     """
     Build parameters.
     
@@ -86,7 +64,7 @@ def mris_compute_acorr_params(
         Parameter dictionary
     """
     params = {
-        "@type": "freesurfer.mris_compute_acorr",
+        "@type": "freesurfer/mris_compute_acorr",
         "output_subject": output_subject,
         "hemi": hemi,
         "surf": surf,
@@ -114,13 +92,13 @@ def mris_compute_acorr_cargs(
     cargs.append("mris_compute_acorr")
     cargs.extend([
         "-o",
-        params.get("output_subject")
+        params.get("output_subject", None)
     ])
-    cargs.append(params.get("hemi"))
-    cargs.append(execution.input_file(params.get("surf")))
-    cargs.append(execution.input_file(params.get("curv")))
-    cargs.extend(params.get("c1_subjects"))
-    cargs.extend(params.get("c2_subjects"))
+    cargs.append(params.get("hemi", None))
+    cargs.append(execution.input_file(params.get("surf", None)))
+    cargs.append(execution.input_file(params.get("curv", None)))
+    cargs.extend(params.get("c1_subjects", None))
+    cargs.extend(params.get("c2_subjects", None))
     return cargs
 
 
@@ -217,7 +195,6 @@ def mris_compute_acorr(
 __all__ = [
     "MRIS_COMPUTE_ACORR_METADATA",
     "MrisComputeAcorrOutputs",
-    "MrisComputeAcorrParameters",
     "mris_compute_acorr",
     "mris_compute_acorr_execute",
     "mris_compute_acorr_params",

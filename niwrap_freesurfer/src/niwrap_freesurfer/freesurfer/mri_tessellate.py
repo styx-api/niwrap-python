@@ -14,7 +14,16 @@ MRI_TESSELLATE_METADATA = Metadata(
 
 
 MriTessellateParameters = typing.TypedDict('MriTessellateParameters', {
-    "@type": typing.Literal["freesurfer.mri_tessellate"],
+    "@type": typing.NotRequired[typing.Literal["freesurfer/mri_tessellate"]],
+    "input_volume": InputPathType,
+    "label_value": int,
+    "output_surf": str,
+    "different_labels": bool,
+    "max_vertices": typing.NotRequired[int | None],
+    "real_ras": bool,
+})
+MriTessellateParametersTagged = typing.TypedDict('MriTessellateParametersTagged', {
+    "@type": typing.Literal["freesurfer/mri_tessellate"],
     "input_volume": InputPathType,
     "label_value": int,
     "output_surf": str,
@@ -24,41 +33,9 @@ MriTessellateParameters = typing.TypedDict('MriTessellateParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "freesurfer.mri_tessellate": mri_tessellate_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "freesurfer.mri_tessellate": mri_tessellate_outputs,
-    }.get(t)
-
-
 class MriTessellateOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `mri_tessellate(...)`.
+    Output object returned when calling `MriTessellateParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -73,7 +50,7 @@ def mri_tessellate_params(
     different_labels: bool = False,
     max_vertices: int | None = None,
     real_ras: bool = False,
-) -> MriTessellateParameters:
+) -> MriTessellateParametersTagged:
     """
     Build parameters.
     
@@ -91,7 +68,7 @@ def mri_tessellate_params(
         Parameter dictionary
     """
     params = {
-        "@type": "freesurfer.mri_tessellate",
+        "@type": "freesurfer/mri_tessellate",
         "input_volume": input_volume,
         "label_value": label_value,
         "output_surf": output_surf,
@@ -118,17 +95,17 @@ def mri_tessellate_cargs(
     """
     cargs = []
     cargs.append("mri_tessellate")
-    cargs.append(execution.input_file(params.get("input_volume")))
-    cargs.append(str(params.get("label_value")))
-    cargs.append(params.get("output_surf"))
-    if params.get("different_labels"):
+    cargs.append(execution.input_file(params.get("input_volume", None)))
+    cargs.append(str(params.get("label_value", None)))
+    cargs.append(params.get("output_surf", None))
+    if params.get("different_labels", False):
         cargs.append("-a")
-    if params.get("max_vertices") is not None:
+    if params.get("max_vertices", None) is not None:
         cargs.extend([
             "-maxv",
-            str(params.get("max_vertices"))
+            str(params.get("max_vertices", None))
         ])
-    if params.get("real_ras"):
+    if params.get("real_ras", False):
         cargs.append("-n")
     return cargs
 
@@ -148,7 +125,7 @@ def mri_tessellate_outputs(
     """
     ret = MriTessellateOutputs(
         root=execution.output_file("."),
-        output_surface_file=execution.output_file(params.get("output_surf")),
+        output_surface_file=execution.output_file(params.get("output_surf", None)),
     )
     return ret
 
@@ -227,7 +204,6 @@ def mri_tessellate(
 __all__ = [
     "MRI_TESSELLATE_METADATA",
     "MriTessellateOutputs",
-    "MriTessellateParameters",
     "mri_tessellate",
     "mri_tessellate_execute",
     "mri_tessellate_params",

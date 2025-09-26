@@ -14,45 +14,18 @@ ADJUNCT_SIMPLIFY_COST_PY_METADATA = Metadata(
 
 
 AdjunctSimplifyCostPyParameters = typing.TypedDict('AdjunctSimplifyCostPyParameters', {
-    "@type": typing.Literal["afni.adjunct_simplify_cost.py"],
+    "@type": typing.NotRequired[typing.Literal["afni/adjunct_simplify_cost.py"]],
+    "cost_function": str,
+})
+AdjunctSimplifyCostPyParametersTagged = typing.TypedDict('AdjunctSimplifyCostPyParametersTagged', {
+    "@type": typing.Literal["afni/adjunct_simplify_cost.py"],
     "cost_function": str,
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "afni.adjunct_simplify_cost.py": adjunct_simplify_cost_py_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-    }.get(t)
-
-
 class AdjunctSimplifyCostPyOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `adjunct_simplify_cost_py(...)`.
+    Output object returned when calling `AdjunctSimplifyCostPyParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -60,7 +33,7 @@ class AdjunctSimplifyCostPyOutputs(typing.NamedTuple):
 
 def adjunct_simplify_cost_py_params(
     cost_function: str,
-) -> AdjunctSimplifyCostPyParameters:
+) -> AdjunctSimplifyCostPyParametersTagged:
     """
     Build parameters.
     
@@ -70,7 +43,7 @@ def adjunct_simplify_cost_py_params(
         Parameter dictionary
     """
     params = {
-        "@type": "afni.adjunct_simplify_cost.py",
+        "@type": "afni/adjunct_simplify_cost.py",
         "cost_function": cost_function,
     }
     return params
@@ -91,7 +64,7 @@ def adjunct_simplify_cost_py_cargs(
     """
     cargs = []
     cargs.append("adjunct_simplify_cost.py")
-    cargs.append(params.get("cost_function"))
+    cargs.append(params.get("cost_function", None))
     return cargs
 
 
@@ -172,7 +145,6 @@ def adjunct_simplify_cost_py(
 __all__ = [
     "ADJUNCT_SIMPLIFY_COST_PY_METADATA",
     "AdjunctSimplifyCostPyOutputs",
-    "AdjunctSimplifyCostPyParameters",
     "adjunct_simplify_cost_py",
     "adjunct_simplify_cost_py_execute",
     "adjunct_simplify_cost_py_params",

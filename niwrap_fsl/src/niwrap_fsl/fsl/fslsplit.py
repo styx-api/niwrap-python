@@ -14,7 +14,16 @@ FSLSPLIT_METADATA = Metadata(
 
 
 FslsplitParameters = typing.TypedDict('FslsplitParameters', {
-    "@type": typing.Literal["fsl.fslsplit"],
+    "@type": typing.NotRequired[typing.Literal["fsl/fslsplit"]],
+    "infile": InputPathType,
+    "output_basename": typing.NotRequired[str | None],
+    "separation_x": bool,
+    "separation_y": bool,
+    "separation_z": bool,
+    "separation_time": bool,
+})
+FslsplitParametersTagged = typing.TypedDict('FslsplitParametersTagged', {
+    "@type": typing.Literal["fsl/fslsplit"],
     "infile": InputPathType,
     "output_basename": typing.NotRequired[str | None],
     "separation_x": bool,
@@ -24,41 +33,9 @@ FslsplitParameters = typing.TypedDict('FslsplitParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "fsl.fslsplit": fslsplit_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "fsl.fslsplit": fslsplit_outputs,
-    }.get(t)
-
-
 class FslsplitOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `fslsplit(...)`.
+    Output object returned when calling `FslsplitParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -73,7 +50,7 @@ def fslsplit_params(
     separation_y: bool = False,
     separation_z: bool = False,
     separation_time: bool = False,
-) -> FslsplitParameters:
+) -> FslsplitParametersTagged:
     """
     Build parameters.
     
@@ -88,7 +65,7 @@ def fslsplit_params(
         Parameter dictionary
     """
     params = {
-        "@type": "fsl.fslsplit",
+        "@type": "fsl/fslsplit",
         "infile": infile,
         "separation_x": separation_x,
         "separation_y": separation_y,
@@ -115,16 +92,16 @@ def fslsplit_cargs(
     """
     cargs = []
     cargs.append("fslsplit")
-    cargs.append(execution.input_file(params.get("infile")))
-    if params.get("output_basename") is not None:
-        cargs.append(params.get("output_basename"))
-    if params.get("separation_x"):
+    cargs.append(execution.input_file(params.get("infile", None)))
+    if params.get("output_basename", None) is not None:
+        cargs.append(params.get("output_basename", None))
+    if params.get("separation_x", False):
         cargs.append("-x")
-    if params.get("separation_y"):
+    if params.get("separation_y", False):
         cargs.append("-y")
-    if params.get("separation_z"):
+    if params.get("separation_z", False):
         cargs.append("-z")
-    if params.get("separation_time"):
+    if params.get("separation_time", False):
         cargs.append("-t")
     return cargs
 
@@ -144,7 +121,7 @@ def fslsplit_outputs(
     """
     ret = FslsplitOutputs(
         root=execution.output_file("."),
-        out_files=execution.output_file(params.get("output_basename")) if (params.get("output_basename") is not None) else None,
+        out_files=execution.output_file(params.get("output_basename", None)) if (params.get("output_basename") is not None) else None,
     )
     return ret
 
@@ -220,7 +197,6 @@ def fslsplit(
 __all__ = [
     "FSLSPLIT_METADATA",
     "FslsplitOutputs",
-    "FslsplitParameters",
     "fslsplit",
     "fslsplit_execute",
     "fslsplit_params",

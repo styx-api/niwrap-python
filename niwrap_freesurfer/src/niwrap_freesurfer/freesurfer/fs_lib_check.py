@@ -14,7 +14,14 @@ FS_LIB_CHECK_METADATA = Metadata(
 
 
 FsLibCheckParameters = typing.TypedDict('FsLibCheckParameters', {
-    "@type": typing.Literal["freesurfer.fs_lib_check"],
+    "@type": typing.NotRequired[typing.Literal["freesurfer/fs_lib_check"]],
+    "use_ldconfig": bool,
+    "use_rpm": bool,
+    "show_help": bool,
+    "show_version": bool,
+})
+FsLibCheckParametersTagged = typing.TypedDict('FsLibCheckParametersTagged', {
+    "@type": typing.Literal["freesurfer/fs_lib_check"],
     "use_ldconfig": bool,
     "use_rpm": bool,
     "show_help": bool,
@@ -22,40 +29,9 @@ FsLibCheckParameters = typing.TypedDict('FsLibCheckParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "freesurfer.fs_lib_check": fs_lib_check_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-    }.get(t)
-
-
 class FsLibCheckOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `fs_lib_check(...)`.
+    Output object returned when calling `FsLibCheckParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -66,7 +42,7 @@ def fs_lib_check_params(
     use_rpm: bool = False,
     show_help: bool = False,
     show_version: bool = False,
-) -> FsLibCheckParameters:
+) -> FsLibCheckParametersTagged:
     """
     Build parameters.
     
@@ -84,7 +60,7 @@ def fs_lib_check_params(
         Parameter dictionary
     """
     params = {
-        "@type": "freesurfer.fs_lib_check",
+        "@type": "freesurfer/fs_lib_check",
         "use_ldconfig": use_ldconfig,
         "use_rpm": use_rpm,
         "show_help": show_help,
@@ -108,13 +84,13 @@ def fs_lib_check_cargs(
     """
     cargs = []
     cargs.append("fs_lib_check")
-    if params.get("use_ldconfig"):
+    if params.get("use_ldconfig", False):
         cargs.append("-l")
-    if params.get("use_rpm"):
+    if params.get("use_rpm", False):
         cargs.append("-r")
-    if params.get("show_help"):
+    if params.get("show_help", False):
         cargs.append("-h")
-    if params.get("show_version"):
+    if params.get("show_version", False):
         cargs.append("-v")
     return cargs
 
@@ -210,7 +186,6 @@ def fs_lib_check(
 __all__ = [
     "FS_LIB_CHECK_METADATA",
     "FsLibCheckOutputs",
-    "FsLibCheckParameters",
     "fs_lib_check",
     "fs_lib_check_execute",
     "fs_lib_check_params",

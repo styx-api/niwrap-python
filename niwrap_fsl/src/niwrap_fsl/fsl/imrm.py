@@ -14,45 +14,18 @@ IMRM_METADATA = Metadata(
 
 
 ImrmParameters = typing.TypedDict('ImrmParameters', {
-    "@type": typing.Literal["fsl.imrm"],
+    "@type": typing.NotRequired[typing.Literal["fsl/imrm"]],
+    "images_to_remove": list[str],
+})
+ImrmParametersTagged = typing.TypedDict('ImrmParametersTagged', {
+    "@type": typing.Literal["fsl/imrm"],
     "images_to_remove": list[str],
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "fsl.imrm": imrm_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-    }.get(t)
-
-
 class ImrmOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `imrm(...)`.
+    Output object returned when calling `ImrmParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -60,7 +33,7 @@ class ImrmOutputs(typing.NamedTuple):
 
 def imrm_params(
     images_to_remove: list[str],
-) -> ImrmParameters:
+) -> ImrmParametersTagged:
     """
     Build parameters.
     
@@ -71,7 +44,7 @@ def imrm_params(
         Parameter dictionary
     """
     params = {
-        "@type": "fsl.imrm",
+        "@type": "fsl/imrm",
         "images_to_remove": images_to_remove,
     }
     return params
@@ -92,7 +65,7 @@ def imrm_cargs(
     """
     cargs = []
     cargs.append("imrm")
-    cargs.extend(params.get("images_to_remove"))
+    cargs.extend(params.get("images_to_remove", None))
     return cargs
 
 
@@ -172,7 +145,6 @@ def imrm(
 __all__ = [
     "IMRM_METADATA",
     "ImrmOutputs",
-    "ImrmParameters",
     "imrm",
     "imrm_execute",
     "imrm_params",

@@ -14,7 +14,17 @@ MRI_MATRIX_MULTIPLY_METADATA = Metadata(
 
 
 MriMatrixMultiplyParameters = typing.TypedDict('MriMatrixMultiplyParameters', {
-    "@type": typing.Literal["freesurfer.mri_matrix_multiply"],
+    "@type": typing.NotRequired[typing.Literal["freesurfer/mri_matrix_multiply"]],
+    "input_matrices": list[InputPathType],
+    "inverted_input_matrices": typing.NotRequired[list[InputPathType] | None],
+    "output_matrix": str,
+    "verbose": bool,
+    "fsl": bool,
+    "binarize": bool,
+    "subject_name": typing.NotRequired[str | None],
+})
+MriMatrixMultiplyParametersTagged = typing.TypedDict('MriMatrixMultiplyParametersTagged', {
+    "@type": typing.Literal["freesurfer/mri_matrix_multiply"],
     "input_matrices": list[InputPathType],
     "inverted_input_matrices": typing.NotRequired[list[InputPathType] | None],
     "output_matrix": str,
@@ -25,41 +35,9 @@ MriMatrixMultiplyParameters = typing.TypedDict('MriMatrixMultiplyParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "freesurfer.mri_matrix_multiply": mri_matrix_multiply_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "freesurfer.mri_matrix_multiply": mri_matrix_multiply_outputs,
-    }.get(t)
-
-
 class MriMatrixMultiplyOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `mri_matrix_multiply(...)`.
+    Output object returned when calling `MriMatrixMultiplyParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -75,7 +53,7 @@ def mri_matrix_multiply_params(
     fsl: bool = False,
     binarize: bool = False,
     subject_name: str | None = None,
-) -> MriMatrixMultiplyParameters:
+) -> MriMatrixMultiplyParametersTagged:
     """
     Build parameters.
     
@@ -92,7 +70,7 @@ def mri_matrix_multiply_params(
         Parameter dictionary
     """
     params = {
-        "@type": "freesurfer.mri_matrix_multiply",
+        "@type": "freesurfer/mri_matrix_multiply",
         "input_matrices": input_matrices,
         "output_matrix": output_matrix,
         "verbose": verbose,
@@ -123,27 +101,27 @@ def mri_matrix_multiply_cargs(
     cargs.append("mri_matrix_multiply")
     cargs.extend([
         "-im",
-        *[execution.input_file(f) for f in params.get("input_matrices")]
+        *[execution.input_file(f) for f in params.get("input_matrices", None)]
     ])
-    if params.get("inverted_input_matrices") is not None:
+    if params.get("inverted_input_matrices", None) is not None:
         cargs.extend([
             "-iim",
-            *[execution.input_file(f) for f in params.get("inverted_input_matrices")]
+            *[execution.input_file(f) for f in params.get("inverted_input_matrices", None)]
         ])
     cargs.extend([
         "-om",
-        params.get("output_matrix")
+        params.get("output_matrix", None)
     ])
-    if params.get("verbose"):
+    if params.get("verbose", False):
         cargs.append("-v")
-    if params.get("fsl"):
+    if params.get("fsl", False):
         cargs.append("-fsl")
-    if params.get("binarize"):
+    if params.get("binarize", False):
         cargs.append("-bin")
-    if params.get("subject_name") is not None:
+    if params.get("subject_name", None) is not None:
         cargs.extend([
             "-s",
-            params.get("subject_name")
+            params.get("subject_name", None)
         ])
     return cargs
 
@@ -163,7 +141,7 @@ def mri_matrix_multiply_outputs(
     """
     ret = MriMatrixMultiplyOutputs(
         root=execution.output_file("."),
-        output_matrix_file=execution.output_file(params.get("output_matrix")),
+        output_matrix_file=execution.output_file(params.get("output_matrix", None)),
     )
     return ret
 
@@ -245,7 +223,6 @@ def mri_matrix_multiply(
 __all__ = [
     "MRI_MATRIX_MULTIPLY_METADATA",
     "MriMatrixMultiplyOutputs",
-    "MriMatrixMultiplyParameters",
     "mri_matrix_multiply",
     "mri_matrix_multiply_execute",
     "mri_matrix_multiply_params",

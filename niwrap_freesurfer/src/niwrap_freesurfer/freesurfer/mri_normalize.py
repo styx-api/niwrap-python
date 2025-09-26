@@ -14,7 +14,44 @@ MRI_NORMALIZE_METADATA = Metadata(
 
 
 MriNormalizeParameters = typing.TypedDict('MriNormalizeParameters', {
-    "@type": typing.Literal["freesurfer.mri_normalize"],
+    "@type": typing.NotRequired[typing.Literal["freesurfer/mri_normalize"]],
+    "input_vol": InputPathType,
+    "output_vol": str,
+    "norm_iters": typing.NotRequired[float | None],
+    "disable_1d": bool,
+    "nonmax_suppress": typing.NotRequired[float | None],
+    "conform": bool,
+    "nonconform": bool,
+    "gentle": bool,
+    "control_points": typing.NotRequired[InputPathType | None],
+    "fonly_control_points": typing.NotRequired[InputPathType | None],
+    "lonly_labels": typing.NotRequired[InputPathType | None],
+    "labels": typing.NotRequired[InputPathType | None],
+    "write_volumes": typing.NotRequired[str | None],
+    "intensity_above": typing.NotRequired[float | None],
+    "intensity_below": typing.NotRequired[float | None],
+    "intensity_gradient": typing.NotRequired[float | None],
+    "prune": bool,
+    "no_gentle_cp": bool,
+    "mask_file": typing.NotRequired[InputPathType | None],
+    "atlas_transform": typing.NotRequired[str | None],
+    "noskull": bool,
+    "monkey": bool,
+    "nosnr": bool,
+    "sigma_smooth": typing.NotRequired[float | None],
+    "aseg_file": typing.NotRequired[InputPathType | None],
+    "debug_v": typing.NotRequired[str | None],
+    "debug_d": typing.NotRequired[str | None],
+    "renorm_vol": typing.NotRequired[InputPathType | None],
+    "checknorm_vol": typing.NotRequired[str | None],
+    "load_read_cp": typing.NotRequired[str | None],
+    "cp_output_vol": typing.NotRequired[InputPathType | None],
+    "surface_transform": typing.NotRequired[str | None],
+    "seed_value": typing.NotRequired[float | None],
+    "print_help": bool,
+})
+MriNormalizeParametersTagged = typing.TypedDict('MriNormalizeParametersTagged', {
+    "@type": typing.Literal["freesurfer/mri_normalize"],
     "input_vol": InputPathType,
     "output_vol": str,
     "norm_iters": typing.NotRequired[float | None],
@@ -52,41 +89,9 @@ MriNormalizeParameters = typing.TypedDict('MriNormalizeParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "freesurfer.mri_normalize": mri_normalize_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "freesurfer.mri_normalize": mri_normalize_outputs,
-    }.get(t)
-
-
 class MriNormalizeOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `mri_normalize(...)`.
+    Output object returned when calling `MriNormalizeParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -131,7 +136,7 @@ def mri_normalize_params(
     surface_transform: str | None = None,
     seed_value: float | None = None,
     print_help: bool = False,
-) -> MriNormalizeParameters:
+) -> MriNormalizeParametersTagged:
     """
     Build parameters.
     
@@ -182,7 +187,7 @@ def mri_normalize_params(
         Parameter dictionary
     """
     params = {
-        "@type": "freesurfer.mri_normalize",
+        "@type": "freesurfer/mri_normalize",
         "input_vol": input_vol,
         "output_vol": output_vol,
         "disable_1d": disable_1d,
@@ -258,137 +263,137 @@ def mri_normalize_cargs(
     """
     cargs = []
     cargs.append("mri_normalize")
-    cargs.append(execution.input_file(params.get("input_vol")))
-    cargs.append(params.get("output_vol"))
-    if params.get("norm_iters") is not None:
+    cargs.append(execution.input_file(params.get("input_vol", None)))
+    cargs.append(params.get("output_vol", None))
+    if params.get("norm_iters", None) is not None:
         cargs.extend([
             "-n",
-            str(params.get("norm_iters"))
+            str(params.get("norm_iters", None))
         ])
-    if params.get("disable_1d"):
+    if params.get("disable_1d", False):
         cargs.append("-no1d")
-    if params.get("nonmax_suppress") is not None:
+    if params.get("nonmax_suppress", None) is not None:
         cargs.extend([
             "-nonmax_suppress",
-            str(params.get("nonmax_suppress"))
+            str(params.get("nonmax_suppress", None))
         ])
-    if params.get("conform"):
+    if params.get("conform", False):
         cargs.append("-conform")
-    if params.get("nonconform"):
+    if params.get("nonconform", False):
         cargs.append("-noconform")
-    if params.get("gentle"):
+    if params.get("gentle", False):
         cargs.append("-gentle")
-    if params.get("control_points") is not None:
+    if params.get("control_points", None) is not None:
         cargs.extend([
             "-f",
-            execution.input_file(params.get("control_points"))
+            execution.input_file(params.get("control_points", None))
         ])
-    if params.get("fonly_control_points") is not None:
+    if params.get("fonly_control_points", None) is not None:
         cargs.extend([
             "-fonly",
-            execution.input_file(params.get("fonly_control_points"))
+            execution.input_file(params.get("fonly_control_points", None))
         ])
-    if params.get("lonly_labels") is not None:
+    if params.get("lonly_labels", None) is not None:
         cargs.extend([
             "-lonly",
-            execution.input_file(params.get("lonly_labels"))
+            execution.input_file(params.get("lonly_labels", None))
         ])
-    if params.get("labels") is not None:
+    if params.get("labels", None) is not None:
         cargs.extend([
             "-label",
-            execution.input_file(params.get("labels"))
+            execution.input_file(params.get("labels", None))
         ])
-    if params.get("write_volumes") is not None:
+    if params.get("write_volumes", None) is not None:
         cargs.extend([
             "-w",
-            params.get("write_volumes")
+            params.get("write_volumes", None)
         ])
-    if params.get("intensity_above") is not None:
+    if params.get("intensity_above", None) is not None:
         cargs.extend([
             "-a",
-            str(params.get("intensity_above"))
+            str(params.get("intensity_above", None))
         ])
-    if params.get("intensity_below") is not None:
+    if params.get("intensity_below", None) is not None:
         cargs.extend([
             "-b",
-            str(params.get("intensity_below"))
+            str(params.get("intensity_below", None))
         ])
-    if params.get("intensity_gradient") is not None:
+    if params.get("intensity_gradient", None) is not None:
         cargs.extend([
             "-g",
-            str(params.get("intensity_gradient"))
+            str(params.get("intensity_gradient", None))
         ])
-    if params.get("prune"):
+    if params.get("prune", False):
         cargs.append("-prune")
-    if params.get("no_gentle_cp"):
+    if params.get("no_gentle_cp", False):
         cargs.append("-no-gentle-cp")
-    if params.get("mask_file") is not None:
+    if params.get("mask_file", None) is not None:
         cargs.extend([
             "-MASK",
-            execution.input_file(params.get("mask_file"))
+            execution.input_file(params.get("mask_file", None))
         ])
-    if params.get("atlas_transform") is not None:
+    if params.get("atlas_transform", None) is not None:
         cargs.extend([
             "-atlas",
-            params.get("atlas_transform")
+            params.get("atlas_transform", None)
         ])
-    if params.get("noskull"):
+    if params.get("noskull", False):
         cargs.append("-noskull")
-    if params.get("monkey"):
+    if params.get("monkey", False):
         cargs.append("-monkey")
-    if params.get("nosnr"):
+    if params.get("nosnr", False):
         cargs.append("-nosnr")
-    if params.get("sigma_smooth") is not None:
+    if params.get("sigma_smooth", None) is not None:
         cargs.extend([
             "-sigma",
-            str(params.get("sigma_smooth"))
+            str(params.get("sigma_smooth", None))
         ])
-    if params.get("aseg_file") is not None:
+    if params.get("aseg_file", None) is not None:
         cargs.extend([
             "-aseg",
-            execution.input_file(params.get("aseg_file"))
+            execution.input_file(params.get("aseg_file", None))
         ])
-    if params.get("debug_v") is not None:
+    if params.get("debug_v", None) is not None:
         cargs.extend([
             "-v",
-            params.get("debug_v")
+            params.get("debug_v", None)
         ])
-    if params.get("debug_d") is not None:
+    if params.get("debug_d", None) is not None:
         cargs.extend([
             "-d",
-            params.get("debug_d")
+            params.get("debug_d", None)
         ])
-    if params.get("renorm_vol") is not None:
+    if params.get("renorm_vol", None) is not None:
         cargs.extend([
             "-renorm",
-            execution.input_file(params.get("renorm_vol"))
+            execution.input_file(params.get("renorm_vol", None))
         ])
-    if params.get("checknorm_vol") is not None:
+    if params.get("checknorm_vol", None) is not None:
         cargs.extend([
             "-checknorm",
-            params.get("checknorm_vol")
+            params.get("checknorm_vol", None)
         ])
-    if params.get("load_read_cp") is not None:
+    if params.get("load_read_cp", None) is not None:
         cargs.extend([
             "-r",
-            params.get("load_read_cp")
+            params.get("load_read_cp", None)
         ])
-    if params.get("cp_output_vol") is not None:
+    if params.get("cp_output_vol", None) is not None:
         cargs.extend([
             "-c",
-            execution.input_file(params.get("cp_output_vol"))
+            execution.input_file(params.get("cp_output_vol", None))
         ])
-    if params.get("surface_transform") is not None:
+    if params.get("surface_transform", None) is not None:
         cargs.extend([
             "-surface",
-            params.get("surface_transform")
+            params.get("surface_transform", None)
         ])
-    if params.get("seed_value") is not None:
+    if params.get("seed_value", None) is not None:
         cargs.extend([
             "-seed",
-            str(params.get("seed_value"))
+            str(params.get("seed_value", None))
         ])
-    if params.get("print_help"):
+    if params.get("print_help", False):
         cargs.append("-u")
     return cargs
 
@@ -408,7 +413,7 @@ def mri_normalize_outputs(
     """
     ret = MriNormalizeOutputs(
         root=execution.output_file("."),
-        output_volume=execution.output_file(params.get("output_vol")),
+        output_volume=execution.output_file(params.get("output_vol", None)),
         controlpoints_output=execution.output_file("controlpoints_volume.nii.gz"),
     )
     return ret
@@ -581,7 +586,6 @@ def mri_normalize(
 __all__ = [
     "MRI_NORMALIZE_METADATA",
     "MriNormalizeOutputs",
-    "MriNormalizeParameters",
     "mri_normalize",
     "mri_normalize_execute",
     "mri_normalize_params",

@@ -14,7 +14,17 @@ SUPER_RESOLUTION_METADATA = Metadata(
 
 
 SuperResolutionParameters = typing.TypedDict('SuperResolutionParameters', {
-    "@type": typing.Literal["ants.SuperResolution"],
+    "@type": typing.NotRequired[typing.Literal["ants/SuperResolution"]],
+    "image_dimension": int,
+    "output_image": str,
+    "domain_image": InputPathType,
+    "gradient_sigma": float,
+    "mesh_size": float,
+    "number_of_levels": int,
+    "input_image_files": list[InputPathType],
+})
+SuperResolutionParametersTagged = typing.TypedDict('SuperResolutionParametersTagged', {
+    "@type": typing.Literal["ants/SuperResolution"],
     "image_dimension": int,
     "output_image": str,
     "domain_image": InputPathType,
@@ -25,41 +35,9 @@ SuperResolutionParameters = typing.TypedDict('SuperResolutionParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "ants.SuperResolution": super_resolution_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "ants.SuperResolution": super_resolution_outputs,
-    }.get(t)
-
-
 class SuperResolutionOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `super_resolution(...)`.
+    Output object returned when calling `SuperResolutionParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -75,7 +53,7 @@ def super_resolution_params(
     mesh_size: float,
     number_of_levels: int,
     input_image_files: list[InputPathType],
-) -> SuperResolutionParameters:
+) -> SuperResolutionParametersTagged:
     """
     Build parameters.
     
@@ -95,7 +73,7 @@ def super_resolution_params(
         Parameter dictionary
     """
     params = {
-        "@type": "ants.SuperResolution",
+        "@type": "ants/SuperResolution",
         "image_dimension": image_dimension,
         "output_image": output_image,
         "domain_image": domain_image,
@@ -122,13 +100,13 @@ def super_resolution_cargs(
     """
     cargs = []
     cargs.append("SuperResolution")
-    cargs.append(str(params.get("image_dimension")))
-    cargs.append(params.get("output_image"))
-    cargs.append(execution.input_file(params.get("domain_image")))
-    cargs.append(str(params.get("gradient_sigma")))
-    cargs.append(str(params.get("mesh_size")))
-    cargs.append(str(params.get("number_of_levels")))
-    cargs.extend([execution.input_file(f) for f in params.get("input_image_files")])
+    cargs.append(str(params.get("image_dimension", None)))
+    cargs.append(params.get("output_image", None))
+    cargs.append(execution.input_file(params.get("domain_image", None)))
+    cargs.append(str(params.get("gradient_sigma", None)))
+    cargs.append(str(params.get("mesh_size", None)))
+    cargs.append(str(params.get("number_of_levels", None)))
+    cargs.extend([execution.input_file(f) for f in params.get("input_image_files", None)])
     return cargs
 
 
@@ -147,7 +125,7 @@ def super_resolution_outputs(
     """
     ret = SuperResolutionOutputs(
         root=execution.output_file("."),
-        super_resolved_image=execution.output_file(params.get("output_image")),
+        super_resolved_image=execution.output_file(params.get("output_image", None)),
     )
     return ret
 
@@ -236,7 +214,6 @@ def super_resolution(
 __all__ = [
     "SUPER_RESOLUTION_METADATA",
     "SuperResolutionOutputs",
-    "SuperResolutionParameters",
     "super_resolution",
     "super_resolution_execute",
     "super_resolution_params",

@@ -14,7 +14,17 @@ METRIC_LABEL_IMPORT_METADATA = Metadata(
 
 
 MetricLabelImportParameters = typing.TypedDict('MetricLabelImportParameters', {
-    "@type": typing.Literal["workbench.metric-label-import"],
+    "@type": typing.NotRequired[typing.Literal["workbench/metric-label-import"]],
+    "input": InputPathType,
+    "label_list_file": str,
+    "output": str,
+    "opt_discard_others": bool,
+    "opt_unlabeled_value_value": typing.NotRequired[int | None],
+    "opt_column_column": typing.NotRequired[str | None],
+    "opt_drop_unused_labels": bool,
+})
+MetricLabelImportParametersTagged = typing.TypedDict('MetricLabelImportParametersTagged', {
+    "@type": typing.Literal["workbench/metric-label-import"],
     "input": InputPathType,
     "label_list_file": str,
     "output": str,
@@ -25,41 +35,9 @@ MetricLabelImportParameters = typing.TypedDict('MetricLabelImportParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "workbench.metric-label-import": metric_label_import_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "workbench.metric-label-import": metric_label_import_outputs,
-    }.get(t)
-
-
 class MetricLabelImportOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `metric_label_import(...)`.
+    Output object returned when calling `MetricLabelImportParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -75,7 +53,7 @@ def metric_label_import_params(
     opt_unlabeled_value_value: int | None = None,
     opt_column_column: str | None = None,
     opt_drop_unused_labels: bool = False,
-) -> MetricLabelImportParameters:
+) -> MetricLabelImportParametersTagged:
     """
     Build parameters.
     
@@ -95,7 +73,7 @@ def metric_label_import_params(
         Parameter dictionary
     """
     params = {
-        "@type": "workbench.metric-label-import",
+        "@type": "workbench/metric-label-import",
         "input": input_,
         "label_list_file": label_list_file,
         "output": output,
@@ -125,22 +103,22 @@ def metric_label_import_cargs(
     cargs = []
     cargs.append("wb_command")
     cargs.append("-metric-label-import")
-    cargs.append(execution.input_file(params.get("input")))
-    cargs.append(params.get("label_list_file"))
-    cargs.append(params.get("output"))
-    if params.get("opt_discard_others"):
+    cargs.append(execution.input_file(params.get("input", None)))
+    cargs.append(params.get("label_list_file", None))
+    cargs.append(params.get("output", None))
+    if params.get("opt_discard_others", False):
         cargs.append("-discard-others")
-    if params.get("opt_unlabeled_value_value") is not None:
+    if params.get("opt_unlabeled_value_value", None) is not None:
         cargs.extend([
             "-unlabeled-value",
-            str(params.get("opt_unlabeled_value_value"))
+            str(params.get("opt_unlabeled_value_value", None))
         ])
-    if params.get("opt_column_column") is not None:
+    if params.get("opt_column_column", None) is not None:
         cargs.extend([
             "-column",
-            params.get("opt_column_column")
+            params.get("opt_column_column", None)
         ])
-    if params.get("opt_drop_unused_labels"):
+    if params.get("opt_drop_unused_labels", False):
         cargs.append("-drop-unused-labels")
     return cargs
 
@@ -160,7 +138,7 @@ def metric_label_import_outputs(
     """
     ret = MetricLabelImportOutputs(
         root=execution.output_file("."),
-        output=execution.output_file(params.get("output")),
+        output=execution.output_file(params.get("output", None)),
     )
     return ret
 
@@ -291,7 +269,6 @@ def metric_label_import(
 __all__ = [
     "METRIC_LABEL_IMPORT_METADATA",
     "MetricLabelImportOutputs",
-    "MetricLabelImportParameters",
     "metric_label_import",
     "metric_label_import_execute",
     "metric_label_import_params",

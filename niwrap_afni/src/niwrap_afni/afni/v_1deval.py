@@ -14,7 +14,18 @@ V_1DEVAL_METADATA = Metadata(
 
 
 V1devalParameters = typing.TypedDict('V1devalParameters', {
-    "@type": typing.Literal["afni.1deval"],
+    "@type": typing.NotRequired[typing.Literal["afni/1deval"]],
+    "del": typing.NotRequired[float | None],
+    "start": typing.NotRequired[float | None],
+    "num": typing.NotRequired[float | None],
+    "index": typing.NotRequired[InputPathType | None],
+    "1D": bool,
+    "symbols": typing.NotRequired[list[InputPathType] | None],
+    "symbol_values": typing.NotRequired[list[str] | None],
+    "expression": str,
+})
+V1devalParametersTagged = typing.TypedDict('V1devalParametersTagged', {
+    "@type": typing.Literal["afni/1deval"],
     "del": typing.NotRequired[float | None],
     "start": typing.NotRequired[float | None],
     "num": typing.NotRequired[float | None],
@@ -26,41 +37,9 @@ V1devalParameters = typing.TypedDict('V1devalParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "afni.1deval": v_1deval_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "afni.1deval": v_1deval_outputs,
-    }.get(t)
-
-
 class V1devalOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `v_1deval(...)`.
+    Output object returned when calling `V1devalParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -77,7 +56,7 @@ def v_1deval_params(
     v_1_d: bool = False,
     symbols: list[InputPathType] | None = None,
     symbol_values: list[str] | None = None,
-) -> V1devalParameters:
+) -> V1devalParametersTagged:
     """
     Build parameters.
     
@@ -100,7 +79,7 @@ def v_1deval_params(
         Parameter dictionary
     """
     params = {
-        "@type": "afni.1deval",
+        "@type": "afni/1deval",
         "1D": v_1_d,
         "expression": expression,
     }
@@ -134,41 +113,41 @@ def v_1deval_cargs(
     """
     cargs = []
     cargs.append("1deval")
-    if params.get("del") is not None:
+    if params.get("del", None) is not None:
         cargs.extend([
             "-del",
-            str(params.get("del"))
+            str(params.get("del", None))
         ])
-    if params.get("start") is not None:
+    if params.get("start", None) is not None:
         cargs.extend([
             "-start",
-            str(params.get("start"))
+            str(params.get("start", None))
         ])
-    if params.get("num") is not None:
+    if params.get("num", None) is not None:
         cargs.extend([
             "-num",
-            str(params.get("num"))
+            str(params.get("num", None))
         ])
-    if params.get("index") is not None:
+    if params.get("index", None) is not None:
         cargs.extend([
             "-index",
-            execution.input_file(params.get("index"))
+            execution.input_file(params.get("index", None))
         ])
-    if params.get("1D"):
+    if params.get("1D", False):
         cargs.append("-1D:")
-    if params.get("symbols") is not None:
+    if params.get("symbols", None) is not None:
         cargs.extend([
             "-a",
-            *[execution.input_file(f) for f in params.get("symbols")]
+            *[execution.input_file(f) for f in params.get("symbols", None)]
         ])
-    if params.get("symbol_values") is not None:
+    if params.get("symbol_values", None) is not None:
         cargs.extend([
             "-a=",
-            *params.get("symbol_values")
+            *params.get("symbol_values", None)
         ])
     cargs.extend([
         "-expr",
-        params.get("expression")
+        params.get("expression", None)
     ])
     return cargs
 
@@ -277,7 +256,6 @@ def v_1deval(
 
 __all__ = [
     "V1devalOutputs",
-    "V1devalParameters",
     "V_1DEVAL_METADATA",
     "v_1deval",
     "v_1deval_execute",

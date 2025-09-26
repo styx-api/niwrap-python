@@ -14,48 +14,22 @@ GIFTI_LABEL_ADD_PREFIX_METADATA = Metadata(
 
 
 GiftiLabelAddPrefixParameters = typing.TypedDict('GiftiLabelAddPrefixParameters', {
-    "@type": typing.Literal["workbench.gifti-label-add-prefix"],
+    "@type": typing.NotRequired[typing.Literal["workbench/gifti-label-add-prefix"]],
+    "label_in": InputPathType,
+    "prefix": str,
+    "label_out": str,
+})
+GiftiLabelAddPrefixParametersTagged = typing.TypedDict('GiftiLabelAddPrefixParametersTagged', {
+    "@type": typing.Literal["workbench/gifti-label-add-prefix"],
     "label_in": InputPathType,
     "prefix": str,
     "label_out": str,
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "workbench.gifti-label-add-prefix": gifti_label_add_prefix_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "workbench.gifti-label-add-prefix": gifti_label_add_prefix_outputs,
-    }.get(t)
-
-
 class GiftiLabelAddPrefixOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `gifti_label_add_prefix(...)`.
+    Output object returned when calling `GiftiLabelAddPrefixParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -67,7 +41,7 @@ def gifti_label_add_prefix_params(
     label_in: InputPathType,
     prefix: str,
     label_out: str,
-) -> GiftiLabelAddPrefixParameters:
+) -> GiftiLabelAddPrefixParametersTagged:
     """
     Build parameters.
     
@@ -79,7 +53,7 @@ def gifti_label_add_prefix_params(
         Parameter dictionary
     """
     params = {
-        "@type": "workbench.gifti-label-add-prefix",
+        "@type": "workbench/gifti-label-add-prefix",
         "label_in": label_in,
         "prefix": prefix,
         "label_out": label_out,
@@ -103,9 +77,9 @@ def gifti_label_add_prefix_cargs(
     cargs = []
     cargs.append("wb_command")
     cargs.append("-gifti-label-add-prefix")
-    cargs.append(execution.input_file(params.get("label_in")))
-    cargs.append(params.get("prefix"))
-    cargs.append(params.get("label_out"))
+    cargs.append(execution.input_file(params.get("label_in", None)))
+    cargs.append(params.get("prefix", None))
+    cargs.append(params.get("label_out", None))
     return cargs
 
 
@@ -124,7 +98,7 @@ def gifti_label_add_prefix_outputs(
     """
     ret = GiftiLabelAddPrefixOutputs(
         root=execution.output_file("."),
-        label_out=execution.output_file(params.get("label_out")),
+        label_out=execution.output_file(params.get("label_out", None)),
     )
     return ret
 
@@ -195,7 +169,6 @@ def gifti_label_add_prefix(
 __all__ = [
     "GIFTI_LABEL_ADD_PREFIX_METADATA",
     "GiftiLabelAddPrefixOutputs",
-    "GiftiLabelAddPrefixParameters",
     "gifti_label_add_prefix",
     "gifti_label_add_prefix_execute",
     "gifti_label_add_prefix_params",

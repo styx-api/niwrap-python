@@ -14,47 +14,20 @@ REGISTER_CHILD_METADATA = Metadata(
 
 
 RegisterChildParameters = typing.TypedDict('RegisterChildParameters', {
-    "@type": typing.Literal["freesurfer.register_child"],
+    "@type": typing.NotRequired[typing.Literal["freesurfer/register_child"]],
+    "input_volume": InputPathType,
+    "output_directory": str,
+})
+RegisterChildParametersTagged = typing.TypedDict('RegisterChildParametersTagged', {
+    "@type": typing.Literal["freesurfer/register_child"],
     "input_volume": InputPathType,
     "output_directory": str,
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "freesurfer.register_child": register_child_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "freesurfer.register_child": register_child_outputs,
-    }.get(t)
-
-
 class RegisterChildOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `register_child(...)`.
+    Output object returned when calling `RegisterChildParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -67,7 +40,7 @@ class RegisterChildOutputs(typing.NamedTuple):
 def register_child_params(
     input_volume: InputPathType,
     output_directory: str,
-) -> RegisterChildParameters:
+) -> RegisterChildParametersTagged:
     """
     Build parameters.
     
@@ -78,7 +51,7 @@ def register_child_params(
         Parameter dictionary
     """
     params = {
-        "@type": "freesurfer.register_child",
+        "@type": "freesurfer/register_child",
         "input_volume": input_volume,
         "output_directory": output_directory,
     }
@@ -100,8 +73,8 @@ def register_child_cargs(
     """
     cargs = []
     cargs.append("register_child")
-    cargs.append(execution.input_file(params.get("input_volume")))
-    cargs.append(params.get("output_directory"))
+    cargs.append(execution.input_file(params.get("input_volume", None)))
+    cargs.append(params.get("output_directory", None))
     return cargs
 
 
@@ -120,8 +93,8 @@ def register_child_outputs(
     """
     ret = RegisterChildOutputs(
         root=execution.output_file("."),
-        transformed_control_points=execution.output_file(params.get("output_directory") + "/fsamples"),
-        intensity_normalized_volume=execution.output_file(params.get("output_directory") + "/norm"),
+        transformed_control_points=execution.output_file(params.get("output_directory", None) + "/fsamples"),
+        intensity_normalized_volume=execution.output_file(params.get("output_directory", None) + "/norm"),
     )
     return ret
 
@@ -185,7 +158,6 @@ def register_child(
 __all__ = [
     "REGISTER_CHILD_METADATA",
     "RegisterChildOutputs",
-    "RegisterChildParameters",
     "register_child",
     "register_child_execute",
     "register_child_params",

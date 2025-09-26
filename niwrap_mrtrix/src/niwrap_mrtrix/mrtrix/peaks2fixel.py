@@ -14,14 +14,33 @@ PEAKS2FIXEL_METADATA = Metadata(
 
 
 Peaks2fixelConfigParameters = typing.TypedDict('Peaks2fixelConfigParameters', {
-    "@type": typing.Literal["mrtrix.peaks2fixel.config"],
+    "@type": typing.NotRequired[typing.Literal["config"]],
+    "key": str,
+    "value": str,
+})
+Peaks2fixelConfigParametersTagged = typing.TypedDict('Peaks2fixelConfigParametersTagged', {
+    "@type": typing.Literal["config"],
     "key": str,
     "value": str,
 })
 
 
 Peaks2fixelParameters = typing.TypedDict('Peaks2fixelParameters', {
-    "@type": typing.Literal["mrtrix.peaks2fixel"],
+    "@type": typing.NotRequired[typing.Literal["mrtrix/peaks2fixel"]],
+    "dataname": typing.NotRequired[str | None],
+    "info": bool,
+    "quiet": bool,
+    "debug": bool,
+    "force": bool,
+    "nthreads": typing.NotRequired[int | None],
+    "config": typing.NotRequired[list[Peaks2fixelConfigParameters] | None],
+    "help": bool,
+    "version": bool,
+    "directions": InputPathType,
+    "fixels": str,
+})
+Peaks2fixelParametersTagged = typing.TypedDict('Peaks2fixelParametersTagged', {
+    "@type": typing.Literal["mrtrix/peaks2fixel"],
     "dataname": typing.NotRequired[str | None],
     "info": bool,
     "quiet": bool,
@@ -36,43 +55,10 @@ Peaks2fixelParameters = typing.TypedDict('Peaks2fixelParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "mrtrix.peaks2fixel": peaks2fixel_cargs,
-        "mrtrix.peaks2fixel.config": peaks2fixel_config_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "mrtrix.peaks2fixel": peaks2fixel_outputs,
-    }.get(t)
-
-
 def peaks2fixel_config_params(
     key: str,
     value: str,
-) -> Peaks2fixelConfigParameters:
+) -> Peaks2fixelConfigParametersTagged:
     """
     Build parameters.
     
@@ -83,7 +69,7 @@ def peaks2fixel_config_params(
         Parameter dictionary
     """
     params = {
-        "@type": "mrtrix.peaks2fixel.config",
+        "@type": "config",
         "key": key,
         "value": value,
     }
@@ -105,14 +91,14 @@ def peaks2fixel_config_cargs(
     """
     cargs = []
     cargs.append("-config")
-    cargs.append(params.get("key"))
-    cargs.append(params.get("value"))
+    cargs.append(params.get("key", None))
+    cargs.append(params.get("value", None))
     return cargs
 
 
 class Peaks2fixelOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `peaks2fixel(...)`.
+    Output object returned when calling `Peaks2fixelParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -132,7 +118,7 @@ def peaks2fixel_params(
     config: list[Peaks2fixelConfigParameters] | None = None,
     help_: bool = False,
     version: bool = False,
-) -> Peaks2fixelParameters:
+) -> Peaks2fixelParametersTagged:
     """
     Build parameters.
     
@@ -158,7 +144,7 @@ def peaks2fixel_params(
         Parameter dictionary
     """
     params = {
-        "@type": "mrtrix.peaks2fixel",
+        "@type": "mrtrix/peaks2fixel",
         "info": info,
         "quiet": quiet,
         "debug": debug,
@@ -192,32 +178,32 @@ def peaks2fixel_cargs(
     """
     cargs = []
     cargs.append("peaks2fixel")
-    if params.get("dataname") is not None:
+    if params.get("dataname", None) is not None:
         cargs.extend([
             "-dataname",
-            params.get("dataname")
+            params.get("dataname", None)
         ])
-    if params.get("info"):
+    if params.get("info", False):
         cargs.append("-info")
-    if params.get("quiet"):
+    if params.get("quiet", False):
         cargs.append("-quiet")
-    if params.get("debug"):
+    if params.get("debug", False):
         cargs.append("-debug")
-    if params.get("force"):
+    if params.get("force", False):
         cargs.append("-force")
-    if params.get("nthreads") is not None:
+    if params.get("nthreads", None) is not None:
         cargs.extend([
             "-nthreads",
-            str(params.get("nthreads"))
+            str(params.get("nthreads", None))
         ])
-    if params.get("config") is not None:
-        cargs.extend([a for c in [dyn_cargs(s["@type"])(s, execution) for s in params.get("config")] for a in c])
-    if params.get("help"):
+    if params.get("config", None) is not None:
+        cargs.extend([a for c in [peaks2fixel_config_cargs(s, execution) for s in params.get("config", None)] for a in c])
+    if params.get("help", False):
         cargs.append("-help")
-    if params.get("version"):
+    if params.get("version", False):
         cargs.append("-version")
-    cargs.append(execution.input_file(params.get("directions")))
-    cargs.append(params.get("fixels"))
+    cargs.append(execution.input_file(params.get("directions", None)))
+    cargs.append(params.get("fixels", None))
     return cargs
 
 
@@ -236,7 +222,7 @@ def peaks2fixel_outputs(
     """
     ret = Peaks2fixelOutputs(
         root=execution.output_file("."),
-        fixels=execution.output_file(params.get("fixels")),
+        fixels=execution.output_file(params.get("fixels", None)),
     )
     return ret
 
@@ -344,9 +330,7 @@ def peaks2fixel(
 
 __all__ = [
     "PEAKS2FIXEL_METADATA",
-    "Peaks2fixelConfigParameters",
     "Peaks2fixelOutputs",
-    "Peaks2fixelParameters",
     "peaks2fixel",
     "peaks2fixel_config_params",
     "peaks2fixel_execute",

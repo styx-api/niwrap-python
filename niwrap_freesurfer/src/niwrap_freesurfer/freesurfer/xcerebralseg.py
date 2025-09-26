@@ -14,7 +14,20 @@ XCEREBRALSEG_METADATA = Metadata(
 
 
 XcerebralsegParameters = typing.TypedDict('XcerebralsegParameters', {
-    "@type": typing.Literal["freesurfer.xcerebralseg"],
+    "@type": typing.NotRequired[typing.Literal["freesurfer/xcerebralseg"]],
+    "subject": str,
+    "output_volume": typing.NotRequired[str | None],
+    "atlas": typing.NotRequired[str | None],
+    "mergevol": typing.NotRequired[str | None],
+    "source_volume": typing.NotRequired[str | None],
+    "no_stats": bool,
+    "seg1_name": typing.NotRequired[str | None],
+    "no_pons": bool,
+    "no_vermis": bool,
+    "threads": typing.NotRequired[float | None],
+})
+XcerebralsegParametersTagged = typing.TypedDict('XcerebralsegParametersTagged', {
+    "@type": typing.Literal["freesurfer/xcerebralseg"],
     "subject": str,
     "output_volume": typing.NotRequired[str | None],
     "atlas": typing.NotRequired[str | None],
@@ -28,41 +41,9 @@ XcerebralsegParameters = typing.TypedDict('XcerebralsegParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "freesurfer.xcerebralseg": xcerebralseg_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "freesurfer.xcerebralseg": xcerebralseg_outputs,
-    }.get(t)
-
-
 class XcerebralsegOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `xcerebralseg(...)`.
+    Output object returned when calling `XcerebralsegParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -81,7 +62,7 @@ def xcerebralseg_params(
     no_pons: bool = False,
     no_vermis: bool = False,
     threads: float | None = None,
-) -> XcerebralsegParameters:
+) -> XcerebralsegParametersTagged:
     """
     Build parameters.
     
@@ -102,7 +83,7 @@ def xcerebralseg_params(
         Parameter dictionary
     """
     params = {
-        "@type": "freesurfer.xcerebralseg",
+        "@type": "freesurfer/xcerebralseg",
         "subject": subject,
         "no_stats": no_stats,
         "no_pons": no_pons,
@@ -140,43 +121,43 @@ def xcerebralseg_cargs(
     cargs.append("xcerebralseg")
     cargs.extend([
         "--s",
-        params.get("subject")
+        params.get("subject", None)
     ])
-    if params.get("output_volume") is not None:
+    if params.get("output_volume", None) is not None:
         cargs.extend([
             "--o",
-            params.get("output_volume")
+            params.get("output_volume", None)
         ])
-    if params.get("atlas") is not None:
+    if params.get("atlas", None) is not None:
         cargs.extend([
             "--atlas",
-            params.get("atlas")
+            params.get("atlas", None)
         ])
-    if params.get("mergevol") is not None:
+    if params.get("mergevol", None) is not None:
         cargs.extend([
             "--m",
-            params.get("mergevol")
+            params.get("mergevol", None)
         ])
-    if params.get("source_volume") is not None:
+    if params.get("source_volume", None) is not None:
         cargs.extend([
             "--srcvol",
-            params.get("source_volume")
+            params.get("source_volume", None)
         ])
-    if params.get("no_stats"):
+    if params.get("no_stats", False):
         cargs.append("--no-stats")
-    if params.get("seg1_name") is not None:
+    if params.get("seg1_name", None) is not None:
         cargs.extend([
             "--seg1",
-            params.get("seg1_name")
+            params.get("seg1_name", None)
         ])
-    if params.get("no_pons"):
+    if params.get("no_pons", False):
         cargs.append("--no-pons")
-    if params.get("no_vermis"):
+    if params.get("no_vermis", False):
         cargs.append("--no-vermis")
-    if params.get("threads") is not None:
+    if params.get("threads", None) is not None:
         cargs.extend([
             "--threads",
-            str(params.get("threads"))
+            str(params.get("threads", None))
         ])
     return cargs
 
@@ -290,7 +271,6 @@ def xcerebralseg(
 __all__ = [
     "XCEREBRALSEG_METADATA",
     "XcerebralsegOutputs",
-    "XcerebralsegParameters",
     "xcerebralseg",
     "xcerebralseg_execute",
     "xcerebralseg_params",

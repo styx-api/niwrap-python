@@ -14,7 +14,19 @@ XTRACT_STATS_METADATA = Metadata(
 
 
 XtractStatsParameters = typing.TypedDict('XtractStatsParameters', {
-    "@type": typing.Literal["fsl.xtract_stats"],
+    "@type": typing.NotRequired[typing.Literal["fsl/xtract_stats"]],
+    "folder_basename": str,
+    "XTRACT_dir": str,
+    "xtract2diff": str,
+    "reference_image": typing.NotRequired[InputPathType | None],
+    "output_file": typing.NotRequired[str | None],
+    "structures_file": typing.NotRequired[InputPathType | None],
+    "threshold": typing.NotRequired[float | None],
+    "measurements": typing.NotRequired[str | None],
+    "keep_temp_files": bool,
+})
+XtractStatsParametersTagged = typing.TypedDict('XtractStatsParametersTagged', {
+    "@type": typing.Literal["fsl/xtract_stats"],
     "folder_basename": str,
     "XTRACT_dir": str,
     "xtract2diff": str,
@@ -27,41 +39,9 @@ XtractStatsParameters = typing.TypedDict('XtractStatsParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "fsl.xtract_stats": xtract_stats_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "fsl.xtract_stats": xtract_stats_outputs,
-    }.get(t)
-
-
 class XtractStatsOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `xtract_stats(...)`.
+    Output object returned when calling `XtractStatsParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -79,7 +59,7 @@ def xtract_stats_params(
     threshold: float | None = None,
     measurements: str | None = None,
     keep_temp_files: bool = False,
-) -> XtractStatsParameters:
+) -> XtractStatsParametersTagged:
     """
     Build parameters.
     
@@ -106,7 +86,7 @@ def xtract_stats_params(
         Parameter dictionary
     """
     params = {
-        "@type": "fsl.xtract_stats",
+        "@type": "fsl/xtract_stats",
         "folder_basename": folder_basename,
         "XTRACT_dir": xtract_dir,
         "xtract2diff": xtract2diff,
@@ -142,42 +122,42 @@ def xtract_stats_cargs(
     cargs.append("xtract_stats")
     cargs.extend([
         "-d",
-        params.get("folder_basename")
+        params.get("folder_basename", None)
     ])
     cargs.extend([
         "-xtract",
-        params.get("XTRACT_dir")
+        params.get("XTRACT_dir", None)
     ])
     cargs.extend([
         "-w",
-        params.get("xtract2diff")
+        params.get("xtract2diff", None)
     ])
-    if params.get("reference_image") is not None:
+    if params.get("reference_image", None) is not None:
         cargs.extend([
             "-r",
-            execution.input_file(params.get("reference_image"))
+            execution.input_file(params.get("reference_image", None))
         ])
-    if params.get("output_file") is not None:
+    if params.get("output_file", None) is not None:
         cargs.extend([
             "-out",
-            params.get("output_file")
+            params.get("output_file", None)
         ])
-    if params.get("structures_file") is not None:
+    if params.get("structures_file", None) is not None:
         cargs.extend([
             "-str",
-            execution.input_file(params.get("structures_file"))
+            execution.input_file(params.get("structures_file", None))
         ])
-    if params.get("threshold") is not None:
+    if params.get("threshold", None) is not None:
         cargs.extend([
             "-thr",
-            str(params.get("threshold"))
+            str(params.get("threshold", None))
         ])
-    if params.get("measurements") is not None:
+    if params.get("measurements", None) is not None:
         cargs.extend([
             "-meas",
-            params.get("measurements")
+            params.get("measurements", None)
         ])
-    if params.get("keep_temp_files"):
+    if params.get("keep_temp_files", False):
         cargs.append("-keepfiles")
     return cargs
 
@@ -197,7 +177,7 @@ def xtract_stats_outputs(
     """
     ret = XtractStatsOutputs(
         root=execution.output_file("."),
-        csv_output=execution.output_file(params.get("output_file")) if (params.get("output_file") is not None) else None,
+        csv_output=execution.output_file(params.get("output_file", None)) if (params.get("output_file") is not None) else None,
     )
     return ret
 
@@ -291,7 +271,6 @@ def xtract_stats(
 __all__ = [
     "XTRACT_STATS_METADATA",
     "XtractStatsOutputs",
-    "XtractStatsParameters",
     "xtract_stats",
     "xtract_stats_execute",
     "xtract_stats_params",

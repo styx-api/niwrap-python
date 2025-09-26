@@ -14,48 +14,22 @@ V_3D_TFILTER_METADATA = Metadata(
 
 
 V3dTfilterParameters = typing.TypedDict('V3dTfilterParameters', {
-    "@type": typing.Literal["afni.3dTfilter"],
+    "@type": typing.NotRequired[typing.Literal["afni/3dTfilter"]],
+    "inputdataset": InputPathType,
+    "outputdataset": str,
+    "filters": list[str],
+})
+V3dTfilterParametersTagged = typing.TypedDict('V3dTfilterParametersTagged', {
+    "@type": typing.Literal["afni/3dTfilter"],
     "inputdataset": InputPathType,
     "outputdataset": str,
     "filters": list[str],
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "afni.3dTfilter": v_3d_tfilter_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "afni.3dTfilter": v_3d_tfilter_outputs,
-    }.get(t)
-
-
 class V3dTfilterOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `v_3d_tfilter(...)`.
+    Output object returned when calling `V3dTfilterParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -67,7 +41,7 @@ def v_3d_tfilter_params(
     inputdataset: InputPathType,
     outputdataset: str,
     filters: list[str],
-) -> V3dTfilterParameters:
+) -> V3dTfilterParametersTagged:
     """
     Build parameters.
     
@@ -79,7 +53,7 @@ def v_3d_tfilter_params(
         Parameter dictionary
     """
     params = {
-        "@type": "afni.3dTfilter",
+        "@type": "afni/3dTfilter",
         "inputdataset": inputdataset,
         "outputdataset": outputdataset,
         "filters": filters,
@@ -104,15 +78,15 @@ def v_3d_tfilter_cargs(
     cargs.append("3dTfilter")
     cargs.extend([
         "-input",
-        execution.input_file(params.get("inputdataset"))
+        execution.input_file(params.get("inputdataset", None))
     ])
     cargs.extend([
         "-prefix",
-        params.get("outputdataset")
+        params.get("outputdataset", None)
     ])
     cargs.extend([
         "-filter",
-        *params.get("filters")
+        *params.get("filters", None)
     ])
     return cargs
 
@@ -132,7 +106,7 @@ def v_3d_tfilter_outputs(
     """
     ret = V3dTfilterOutputs(
         root=execution.output_file("."),
-        output_dataset=execution.output_file(params.get("outputdataset")),
+        output_dataset=execution.output_file(params.get("outputdataset", None)),
     )
     return ret
 
@@ -200,7 +174,6 @@ def v_3d_tfilter(
 
 __all__ = [
     "V3dTfilterOutputs",
-    "V3dTfilterParameters",
     "V_3D_TFILTER_METADATA",
     "v_3d_tfilter",
     "v_3d_tfilter_execute",

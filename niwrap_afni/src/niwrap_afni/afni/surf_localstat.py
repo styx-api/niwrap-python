@@ -14,7 +14,16 @@ SURF_LOCALSTAT_METADATA = Metadata(
 
 
 SurfLocalstatParameters = typing.TypedDict('SurfLocalstatParameters', {
-    "@type": typing.Literal["afni.SurfLocalstat"],
+    "@type": typing.NotRequired[typing.Literal["afni/SurfLocalstat"]],
+    "hood": typing.NotRequired[float | None],
+    "nbhd_rad": typing.NotRequired[float | None],
+    "prefix": str,
+    "stat": typing.Literal["mean", "mode", "num", "FWHM", "ALL"],
+    "input_dataset": InputPathType,
+    "surface": InputPathType,
+})
+SurfLocalstatParametersTagged = typing.TypedDict('SurfLocalstatParametersTagged', {
+    "@type": typing.Literal["afni/SurfLocalstat"],
     "hood": typing.NotRequired[float | None],
     "nbhd_rad": typing.NotRequired[float | None],
     "prefix": str,
@@ -24,41 +33,9 @@ SurfLocalstatParameters = typing.TypedDict('SurfLocalstatParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "afni.SurfLocalstat": surf_localstat_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "afni.SurfLocalstat": surf_localstat_outputs,
-    }.get(t)
-
-
 class SurfLocalstatOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `surf_localstat(...)`.
+    Output object returned when calling `SurfLocalstatParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -73,7 +50,7 @@ def surf_localstat_params(
     surface: InputPathType,
     hood: float | None = None,
     nbhd_rad: float | None = None,
-) -> SurfLocalstatParameters:
+) -> SurfLocalstatParametersTagged:
     """
     Build parameters.
     
@@ -90,7 +67,7 @@ def surf_localstat_params(
         Parameter dictionary
     """
     params = {
-        "@type": "afni.SurfLocalstat",
+        "@type": "afni/SurfLocalstat",
         "prefix": prefix,
         "stat": stat_,
         "input_dataset": input_dataset,
@@ -118,31 +95,31 @@ def surf_localstat_cargs(
     """
     cargs = []
     cargs.append("SurfLocalstat")
-    if params.get("hood") is not None:
+    if params.get("hood", None) is not None:
         cargs.extend([
             "-hood",
-            str(params.get("hood"))
+            str(params.get("hood", None))
         ])
-    if params.get("nbhd_rad") is not None:
+    if params.get("nbhd_rad", None) is not None:
         cargs.extend([
             "-nbhd_rad",
-            str(params.get("nbhd_rad"))
+            str(params.get("nbhd_rad", None))
         ])
     cargs.extend([
         "-prefix",
-        params.get("prefix")
+        params.get("prefix", None)
     ])
     cargs.extend([
         "-stat",
-        params.get("stat")
+        params.get("stat", None)
     ])
     cargs.extend([
         "-input",
-        execution.input_file(params.get("input_dataset"))
+        execution.input_file(params.get("input_dataset", None))
     ])
     cargs.extend([
         "-i_gii",
-        execution.input_file(params.get("surface"))
+        execution.input_file(params.get("surface", None))
     ])
     return cargs
 
@@ -162,7 +139,7 @@ def surf_localstat_outputs(
     """
     ret = SurfLocalstatOutputs(
         root=execution.output_file("."),
-        output_file=execution.output_file(params.get("prefix") + ".niml.dset"),
+        output_file=execution.output_file(params.get("prefix", None) + ".niml.dset"),
     )
     return ret
 
@@ -240,7 +217,6 @@ def surf_localstat(
 __all__ = [
     "SURF_LOCALSTAT_METADATA",
     "SurfLocalstatOutputs",
-    "SurfLocalstatParameters",
     "surf_localstat",
     "surf_localstat_execute",
     "surf_localstat_params",

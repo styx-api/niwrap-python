@@ -14,7 +14,15 @@ CIFTI_LABEL_TO_ROI_METADATA = Metadata(
 
 
 CiftiLabelToRoiParameters = typing.TypedDict('CiftiLabelToRoiParameters', {
-    "@type": typing.Literal["workbench.cifti-label-to-roi"],
+    "@type": typing.NotRequired[typing.Literal["workbench/cifti-label-to-roi"]],
+    "label_in": InputPathType,
+    "scalar_out": str,
+    "opt_name_label_name": typing.NotRequired[str | None],
+    "opt_key_label_key": typing.NotRequired[int | None],
+    "opt_map_map": typing.NotRequired[str | None],
+})
+CiftiLabelToRoiParametersTagged = typing.TypedDict('CiftiLabelToRoiParametersTagged', {
+    "@type": typing.Literal["workbench/cifti-label-to-roi"],
     "label_in": InputPathType,
     "scalar_out": str,
     "opt_name_label_name": typing.NotRequired[str | None],
@@ -23,41 +31,9 @@ CiftiLabelToRoiParameters = typing.TypedDict('CiftiLabelToRoiParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "workbench.cifti-label-to-roi": cifti_label_to_roi_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "workbench.cifti-label-to-roi": cifti_label_to_roi_outputs,
-    }.get(t)
-
-
 class CiftiLabelToRoiOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `cifti_label_to_roi(...)`.
+    Output object returned when calling `CiftiLabelToRoiParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -71,7 +47,7 @@ def cifti_label_to_roi_params(
     opt_name_label_name: str | None = None,
     opt_key_label_key: int | None = None,
     opt_map_map: str | None = None,
-) -> CiftiLabelToRoiParameters:
+) -> CiftiLabelToRoiParametersTagged:
     """
     Build parameters.
     
@@ -87,7 +63,7 @@ def cifti_label_to_roi_params(
         Parameter dictionary
     """
     params = {
-        "@type": "workbench.cifti-label-to-roi",
+        "@type": "workbench/cifti-label-to-roi",
         "label_in": label_in,
         "scalar_out": scalar_out,
     }
@@ -116,22 +92,22 @@ def cifti_label_to_roi_cargs(
     cargs = []
     cargs.append("wb_command")
     cargs.append("-cifti-label-to-roi")
-    cargs.append(execution.input_file(params.get("label_in")))
-    cargs.append(params.get("scalar_out"))
-    if params.get("opt_name_label_name") is not None:
+    cargs.append(execution.input_file(params.get("label_in", None)))
+    cargs.append(params.get("scalar_out", None))
+    if params.get("opt_name_label_name", None) is not None:
         cargs.extend([
             "-name",
-            params.get("opt_name_label_name")
+            params.get("opt_name_label_name", None)
         ])
-    if params.get("opt_key_label_key") is not None:
+    if params.get("opt_key_label_key", None) is not None:
         cargs.extend([
             "-key",
-            str(params.get("opt_key_label_key"))
+            str(params.get("opt_key_label_key", None))
         ])
-    if params.get("opt_map_map") is not None:
+    if params.get("opt_map_map", None) is not None:
         cargs.extend([
             "-map",
-            params.get("opt_map_map")
+            params.get("opt_map_map", None)
         ])
     return cargs
 
@@ -151,7 +127,7 @@ def cifti_label_to_roi_outputs(
     """
     ret = CiftiLabelToRoiOutputs(
         root=execution.output_file("."),
-        scalar_out=execution.output_file(params.get("scalar_out")),
+        scalar_out=execution.output_file(params.get("scalar_out", None)),
     )
     return ret
 
@@ -236,7 +212,6 @@ def cifti_label_to_roi(
 __all__ = [
     "CIFTI_LABEL_TO_ROI_METADATA",
     "CiftiLabelToRoiOutputs",
-    "CiftiLabelToRoiParameters",
     "cifti_label_to_roi",
     "cifti_label_to_roi_execute",
     "cifti_label_to_roi_params",

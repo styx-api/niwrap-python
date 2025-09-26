@@ -14,7 +14,19 @@ SURF2SURF_METADATA = Metadata(
 
 
 Surf2surfParameters = typing.TypedDict('Surf2surfParameters', {
-    "@type": typing.Literal["fsl.surf2surf"],
+    "@type": typing.NotRequired[typing.Literal["fsl/surf2surf"]],
+    "input_surface": InputPathType,
+    "output_surface": InputPathType,
+    "input_convention": typing.NotRequired[str | None],
+    "output_convention": typing.NotRequired[str | None],
+    "input_ref_volume": typing.NotRequired[InputPathType | None],
+    "output_ref_volume": typing.NotRequired[InputPathType | None],
+    "transform": typing.NotRequired[InputPathType | None],
+    "output_type": typing.NotRequired[str | None],
+    "output_values": typing.NotRequired[str | None],
+})
+Surf2surfParametersTagged = typing.TypedDict('Surf2surfParametersTagged', {
+    "@type": typing.Literal["fsl/surf2surf"],
     "input_surface": InputPathType,
     "output_surface": InputPathType,
     "input_convention": typing.NotRequired[str | None],
@@ -27,40 +39,9 @@ Surf2surfParameters = typing.TypedDict('Surf2surfParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "fsl.surf2surf": surf2surf_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-    }.get(t)
-
-
 class Surf2surfOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `surf2surf(...)`.
+    Output object returned when calling `Surf2surfParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -76,7 +57,7 @@ def surf2surf_params(
     transform: InputPathType | None = None,
     output_type: str | None = None,
     output_values: str | None = None,
-) -> Surf2surfParameters:
+) -> Surf2surfParametersTagged:
     """
     Build parameters.
     
@@ -99,7 +80,7 @@ def surf2surf_params(
         Parameter dictionary
     """
     params = {
-        "@type": "fsl.surf2surf",
+        "@type": "fsl/surf2surf",
         "input_surface": input_surface,
         "output_surface": output_surface,
     }
@@ -135,42 +116,42 @@ def surf2surf_cargs(
     """
     cargs = []
     cargs.append("surf2surf")
-    cargs.append("--surfin=" + execution.input_file(params.get("input_surface")))
-    cargs.append("--surfout=" + execution.input_file(params.get("output_surface")))
-    if params.get("input_convention") is not None:
+    cargs.append("--surfin=" + execution.input_file(params.get("input_surface", None)))
+    cargs.append("--surfout=" + execution.input_file(params.get("output_surface", None)))
+    if params.get("input_convention", None) is not None:
         cargs.extend([
             "--convin",
-            params.get("input_convention")
+            params.get("input_convention", None)
         ])
-    if params.get("output_convention") is not None:
+    if params.get("output_convention", None) is not None:
         cargs.extend([
             "--convout",
-            params.get("output_convention")
+            params.get("output_convention", None)
         ])
-    if params.get("input_ref_volume") is not None:
+    if params.get("input_ref_volume", None) is not None:
         cargs.extend([
             "--volin",
-            execution.input_file(params.get("input_ref_volume"))
+            execution.input_file(params.get("input_ref_volume", None))
         ])
-    if params.get("output_ref_volume") is not None:
+    if params.get("output_ref_volume", None) is not None:
         cargs.extend([
             "--volout",
-            execution.input_file(params.get("output_ref_volume"))
+            execution.input_file(params.get("output_ref_volume", None))
         ])
-    if params.get("transform") is not None:
+    if params.get("transform", None) is not None:
         cargs.extend([
             "--xfm",
-            execution.input_file(params.get("transform"))
+            execution.input_file(params.get("transform", None))
         ])
-    if params.get("output_type") is not None:
+    if params.get("output_type", None) is not None:
         cargs.extend([
             "--outputtype",
-            params.get("output_type")
+            params.get("output_type", None)
         ])
-    if params.get("output_values") is not None:
+    if params.get("output_values", None) is not None:
         cargs.extend([
             "--values",
-            params.get("output_values")
+            params.get("output_values", None)
         ])
     return cargs
 
@@ -279,7 +260,6 @@ def surf2surf(
 __all__ = [
     "SURF2SURF_METADATA",
     "Surf2surfOutputs",
-    "Surf2surfParameters",
     "surf2surf",
     "surf2surf_execute",
     "surf2surf_params",

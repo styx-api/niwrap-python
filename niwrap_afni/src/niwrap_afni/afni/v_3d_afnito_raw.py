@@ -14,47 +14,22 @@ V_3D_AFNITO_RAW_METADATA = Metadata(
 
 
 V3dAfnitoRawParameters = typing.TypedDict('V3dAfnitoRawParameters', {
-    "@type": typing.Literal["afni.3dAFNItoRaw"],
+    "@type": typing.NotRequired[typing.Literal["afni/3dAFNItoRaw"]],
+    "output_file": typing.NotRequired[str | None],
+    "force_float": bool,
+    "dataset": str,
+})
+V3dAfnitoRawParametersTagged = typing.TypedDict('V3dAfnitoRawParametersTagged', {
+    "@type": typing.Literal["afni/3dAFNItoRaw"],
     "output_file": typing.NotRequired[str | None],
     "force_float": bool,
     "dataset": str,
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "afni.3dAFNItoRaw": v_3d_afnito_raw_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-    }.get(t)
-
-
 class V3dAfnitoRawOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `v_3d_afnito_raw(...)`.
+    Output object returned when calling `V3dAfnitoRawParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -64,7 +39,7 @@ def v_3d_afnito_raw_params(
     dataset: str,
     output_file: str | None = None,
     force_float: bool = False,
-) -> V3dAfnitoRawParameters:
+) -> V3dAfnitoRawParametersTagged:
     """
     Build parameters.
     
@@ -79,7 +54,7 @@ def v_3d_afnito_raw_params(
         Parameter dictionary
     """
     params = {
-        "@type": "afni.3dAFNItoRaw",
+        "@type": "afni/3dAFNItoRaw",
         "force_float": force_float,
         "dataset": dataset,
     }
@@ -103,14 +78,14 @@ def v_3d_afnito_raw_cargs(
     """
     cargs = []
     cargs.append("3dAFNItoRaw")
-    if params.get("output_file") is not None:
+    if params.get("output_file", None) is not None:
         cargs.extend([
             "-output",
-            params.get("output_file")
+            params.get("output_file", None)
         ])
-    if params.get("force_float"):
+    if params.get("force_float", False):
         cargs.append("-datum float")
-    cargs.append(params.get("dataset"))
+    cargs.append(params.get("dataset", None))
     return cargs
 
 
@@ -199,7 +174,6 @@ def v_3d_afnito_raw(
 
 __all__ = [
     "V3dAfnitoRawOutputs",
-    "V3dAfnitoRawParameters",
     "V_3D_AFNITO_RAW_METADATA",
     "v_3d_afnito_raw",
     "v_3d_afnito_raw_execute",

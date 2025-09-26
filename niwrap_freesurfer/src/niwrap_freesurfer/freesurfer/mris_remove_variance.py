@@ -14,7 +14,14 @@ MRIS_REMOVE_VARIANCE_METADATA = Metadata(
 
 
 MrisRemoveVarianceParameters = typing.TypedDict('MrisRemoveVarianceParameters', {
-    "@type": typing.Literal["freesurfer.mris_remove_variance"],
+    "@type": typing.NotRequired[typing.Literal["freesurfer/mris_remove_variance"]],
+    "input_surface_file": InputPathType,
+    "curvature_file": InputPathType,
+    "curvature_file_to_remove": InputPathType,
+    "output_curvature_file": str,
+})
+MrisRemoveVarianceParametersTagged = typing.TypedDict('MrisRemoveVarianceParametersTagged', {
+    "@type": typing.Literal["freesurfer/mris_remove_variance"],
     "input_surface_file": InputPathType,
     "curvature_file": InputPathType,
     "curvature_file_to_remove": InputPathType,
@@ -22,41 +29,9 @@ MrisRemoveVarianceParameters = typing.TypedDict('MrisRemoveVarianceParameters', 
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "freesurfer.mris_remove_variance": mris_remove_variance_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "freesurfer.mris_remove_variance": mris_remove_variance_outputs,
-    }.get(t)
-
-
 class MrisRemoveVarianceOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `mris_remove_variance(...)`.
+    Output object returned when calling `MrisRemoveVarianceParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -69,7 +44,7 @@ def mris_remove_variance_params(
     curvature_file: InputPathType,
     curvature_file_to_remove: InputPathType,
     output_curvature_file: str,
-) -> MrisRemoveVarianceParameters:
+) -> MrisRemoveVarianceParametersTagged:
     """
     Build parameters.
     
@@ -83,7 +58,7 @@ def mris_remove_variance_params(
         Parameter dictionary
     """
     params = {
-        "@type": "freesurfer.mris_remove_variance",
+        "@type": "freesurfer/mris_remove_variance",
         "input_surface_file": input_surface_file,
         "curvature_file": curvature_file,
         "curvature_file_to_remove": curvature_file_to_remove,
@@ -107,10 +82,10 @@ def mris_remove_variance_cargs(
     """
     cargs = []
     cargs.append("mris_remove_variance")
-    cargs.append(execution.input_file(params.get("input_surface_file")))
-    cargs.append(execution.input_file(params.get("curvature_file")))
-    cargs.append(execution.input_file(params.get("curvature_file_to_remove")))
-    cargs.append(params.get("output_curvature_file"))
+    cargs.append(execution.input_file(params.get("input_surface_file", None)))
+    cargs.append(execution.input_file(params.get("curvature_file", None)))
+    cargs.append(execution.input_file(params.get("curvature_file_to_remove", None)))
+    cargs.append(params.get("output_curvature_file", None))
     return cargs
 
 
@@ -129,7 +104,7 @@ def mris_remove_variance_outputs(
     """
     ret = MrisRemoveVarianceOutputs(
         root=execution.output_file("."),
-        resulting_curvature_file=execution.output_file(params.get("output_curvature_file")),
+        resulting_curvature_file=execution.output_file(params.get("output_curvature_file", None)),
     )
     return ret
 
@@ -202,7 +177,6 @@ def mris_remove_variance(
 __all__ = [
     "MRIS_REMOVE_VARIANCE_METADATA",
     "MrisRemoveVarianceOutputs",
-    "MrisRemoveVarianceParameters",
     "mris_remove_variance",
     "mris_remove_variance_execute",
     "mris_remove_variance_params",

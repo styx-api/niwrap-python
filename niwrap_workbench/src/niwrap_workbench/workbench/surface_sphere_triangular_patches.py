@@ -14,47 +14,22 @@ SURFACE_SPHERE_TRIANGULAR_PATCHES_METADATA = Metadata(
 
 
 SurfaceSphereTriangularPatchesParameters = typing.TypedDict('SurfaceSphereTriangularPatchesParameters', {
-    "@type": typing.Literal["workbench.surface-sphere-triangular-patches"],
+    "@type": typing.NotRequired[typing.Literal["workbench/surface-sphere-triangular-patches"]],
+    "sphere": InputPathType,
+    "divisions": int,
+    "text_out": str,
+})
+SurfaceSphereTriangularPatchesParametersTagged = typing.TypedDict('SurfaceSphereTriangularPatchesParametersTagged', {
+    "@type": typing.Literal["workbench/surface-sphere-triangular-patches"],
     "sphere": InputPathType,
     "divisions": int,
     "text_out": str,
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "workbench.surface-sphere-triangular-patches": surface_sphere_triangular_patches_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-    }.get(t)
-
-
 class SurfaceSphereTriangularPatchesOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `surface_sphere_triangular_patches(...)`.
+    Output object returned when calling `SurfaceSphereTriangularPatchesParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -64,7 +39,7 @@ def surface_sphere_triangular_patches_params(
     sphere: InputPathType,
     divisions: int,
     text_out: str,
-) -> SurfaceSphereTriangularPatchesParameters:
+) -> SurfaceSphereTriangularPatchesParametersTagged:
     """
     Build parameters.
     
@@ -77,7 +52,7 @@ def surface_sphere_triangular_patches_params(
         Parameter dictionary
     """
     params = {
-        "@type": "workbench.surface-sphere-triangular-patches",
+        "@type": "workbench/surface-sphere-triangular-patches",
         "sphere": sphere,
         "divisions": divisions,
         "text_out": text_out,
@@ -101,9 +76,9 @@ def surface_sphere_triangular_patches_cargs(
     cargs = []
     cargs.append("wb_command")
     cargs.append("-surface-sphere-triangular-patches")
-    cargs.append(execution.input_file(params.get("sphere")))
-    cargs.append(str(params.get("divisions")))
-    cargs.append(params.get("text_out"))
+    cargs.append(execution.input_file(params.get("sphere", None)))
+    cargs.append(str(params.get("divisions", None)))
+    cargs.append(params.get("text_out", None))
     return cargs
 
 
@@ -195,7 +170,6 @@ def surface_sphere_triangular_patches(
 __all__ = [
     "SURFACE_SPHERE_TRIANGULAR_PATCHES_METADATA",
     "SurfaceSphereTriangularPatchesOutputs",
-    "SurfaceSphereTriangularPatchesParameters",
     "surface_sphere_triangular_patches",
     "surface_sphere_triangular_patches_execute",
     "surface_sphere_triangular_patches_params",

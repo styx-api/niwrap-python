@@ -14,7 +14,40 @@ MIDEFACE_METADATA = Metadata(
 
 
 MidefaceParameters = typing.TypedDict('MidefaceParameters', {
-    "@type": typing.Literal["freesurfer.mideface"],
+    "@type": typing.NotRequired[typing.Literal["freesurfer/mideface"]],
+    "input_volume": InputPathType,
+    "output_volume": str,
+    "facemask": typing.NotRequired[InputPathType | None],
+    "output_dir": typing.NotRequired[str | None],
+    "exclusion_mask": typing.NotRequired[InputPathType | None],
+    "samseg_ndilations": typing.NotRequired[float | None],
+    "samseg_json": typing.NotRequired[str | None],
+    "samseg_fast": bool,
+    "no_samseg_fast": bool,
+    "init_reg": typing.NotRequired[InputPathType | None],
+    "synthseg_ndilations": typing.NotRequired[float | None],
+    "fill_const": typing.NotRequired[list[float] | None],
+    "fill_zero": bool,
+    "fhi": typing.NotRequired[float | None],
+    "no_ears": bool,
+    "back_of_head": bool,
+    "forehead": bool,
+    "pics": bool,
+    "code": typing.NotRequired[str | None],
+    "image_convert": typing.NotRequired[str | None],
+    "no_post": bool,
+    "threads": typing.NotRequired[float | None],
+    "force": bool,
+    "output_format": typing.NotRequired[str | None],
+    "atlas": typing.NotRequired[str | None],
+    "expert": typing.NotRequired[str | None],
+    "display_no": typing.NotRequired[float | None],
+    "apply_volume": typing.NotRequired[str | None],
+    "check_volume": typing.NotRequired[InputPathType | None],
+    "check_output_file": typing.NotRequired[InputPathType | None],
+})
+MidefaceParametersTagged = typing.TypedDict('MidefaceParametersTagged', {
+    "@type": typing.Literal["freesurfer/mideface"],
     "input_volume": InputPathType,
     "output_volume": str,
     "facemask": typing.NotRequired[InputPathType | None],
@@ -48,41 +81,9 @@ MidefaceParameters = typing.TypedDict('MidefaceParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "freesurfer.mideface": mideface_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "freesurfer.mideface": mideface_outputs,
-    }.get(t)
-
-
 class MidefaceOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `mideface(...)`.
+    Output object returned when calling `MidefaceParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -123,7 +124,7 @@ def mideface_params(
     apply_volume: str | None = None,
     check_volume: InputPathType | None = None,
     check_output_file: InputPathType | None = None,
-) -> MidefaceParameters:
+) -> MidefaceParametersTagged:
     """
     Build parameters.
     
@@ -162,7 +163,7 @@ def mideface_params(
         Parameter dictionary
     """
     params = {
-        "@type": "freesurfer.mideface",
+        "@type": "freesurfer/mideface",
         "input_volume": input_volume,
         "output_volume": output_volume,
         "samseg_fast": samseg_fast,
@@ -233,124 +234,124 @@ def mideface_cargs(
     cargs.append("mideface")
     cargs.extend([
         "--i",
-        execution.input_file(params.get("input_volume"))
+        execution.input_file(params.get("input_volume", None))
     ])
     cargs.extend([
         "--o",
-        params.get("output_volume")
+        params.get("output_volume", None)
     ])
-    if params.get("facemask") is not None:
+    if params.get("facemask", None) is not None:
         cargs.extend([
             "--facemask",
-            execution.input_file(params.get("facemask"))
+            execution.input_file(params.get("facemask", None))
         ])
-    if params.get("output_dir") is not None:
+    if params.get("output_dir", None) is not None:
         cargs.extend([
             "--odir",
-            params.get("output_dir")
+            params.get("output_dir", None)
         ])
-    if params.get("exclusion_mask") is not None:
+    if params.get("exclusion_mask", None) is not None:
         cargs.extend([
             "--xmask",
-            execution.input_file(params.get("exclusion_mask"))
+            execution.input_file(params.get("exclusion_mask", None))
         ])
-    if params.get("samseg_ndilations") is not None:
+    if params.get("samseg_ndilations", None) is not None:
         cargs.extend([
             "--xmask-samseg",
-            str(params.get("samseg_ndilations"))
+            str(params.get("samseg_ndilations", None))
         ])
-    if params.get("samseg_json") is not None:
+    if params.get("samseg_json", None) is not None:
         cargs.extend([
             "--samseg-json",
-            params.get("samseg_json")
+            params.get("samseg_json", None)
         ])
-    if params.get("samseg_fast"):
+    if params.get("samseg_fast", False):
         cargs.append("--samseg-fast")
-    if params.get("no_samseg_fast"):
+    if params.get("no_samseg_fast", False):
         cargs.append("--no-samseg-fast")
-    if params.get("init_reg") is not None:
+    if params.get("init_reg", None) is not None:
         cargs.extend([
             "--init-reg",
-            execution.input_file(params.get("init_reg"))
+            execution.input_file(params.get("init_reg", None))
         ])
-    if params.get("synthseg_ndilations") is not None:
+    if params.get("synthseg_ndilations", None) is not None:
         cargs.extend([
             "--xmask-synthseg",
-            str(params.get("synthseg_ndilations"))
+            str(params.get("synthseg_ndilations", None))
         ])
-    if params.get("fill_const") is not None:
+    if params.get("fill_const", None) is not None:
         cargs.extend([
             "--fill-const",
-            *map(str, params.get("fill_const"))
+            *map(str, params.get("fill_const", None))
         ])
-    if params.get("fill_zero"):
+    if params.get("fill_zero", False):
         cargs.append("--fill-zero")
-    if params.get("fhi") is not None:
+    if params.get("fhi", None) is not None:
         cargs.extend([
             "--fhi",
-            str(params.get("fhi"))
+            str(params.get("fhi", None))
         ])
-    if params.get("no_ears"):
+    if params.get("no_ears", False):
         cargs.append("--no-ears")
-    if params.get("back_of_head"):
+    if params.get("back_of_head", False):
         cargs.append("--back-of-head")
-    if params.get("forehead"):
+    if params.get("forehead", False):
         cargs.append("--forehead")
-    if params.get("pics"):
+    if params.get("pics", False):
         cargs.append("--pics")
-    if params.get("code") is not None:
+    if params.get("code", None) is not None:
         cargs.extend([
             "--code",
-            params.get("code")
+            params.get("code", None)
         ])
-    if params.get("image_convert") is not None:
+    if params.get("image_convert", None) is not None:
         cargs.extend([
             "--imconvert",
-            params.get("image_convert")
+            params.get("image_convert", None)
         ])
-    if params.get("no_post"):
+    if params.get("no_post", False):
         cargs.append("--no-post")
-    if params.get("threads") is not None:
+    if params.get("threads", None) is not None:
         cargs.extend([
             "--threads",
-            str(params.get("threads"))
+            str(params.get("threads", None))
         ])
-    if params.get("force"):
+    if params.get("force", False):
         cargs.append("--force")
-    if params.get("output_format") is not None:
+    if params.get("output_format", None) is not None:
         cargs.extend([
             "--nii --nii.gz --mgz",
-            params.get("output_format")
+            params.get("output_format", None)
         ])
-    if params.get("atlas") is not None:
+    if params.get("atlas", None) is not None:
         cargs.extend([
             "--atlas",
-            params.get("atlas")
+            params.get("atlas", None)
         ])
-    if params.get("expert") is not None:
+    if params.get("expert", None) is not None:
         cargs.extend([
             "--expert",
-            params.get("expert")
+            params.get("expert", None)
         ])
-    if params.get("display_no") is not None:
+    if params.get("display_no", None) is not None:
         cargs.extend([
             "--display",
-            str(params.get("display_no"))
+            str(params.get("display_no", None))
         ])
-    if params.get("apply_volume") is not None:
+    if params.get("apply_volume", None) is not None:
         cargs.extend([
             "--apply",
-            params.get("apply_volume")
+            params.get("apply_volume", None)
         ])
-    if params.get("check_volume") is not None:
+    if params.get("check_volume", None) is not None:
         cargs.extend([
             "--check",
-            execution.input_file(params.get("check_volume"))
+            execution.input_file(params.get("check_volume", None))
         ])
-    if params.get("check_output_file") is not None:
+    if params.get("check_output_file", None) is not None:
         cargs.extend([
             "--check",
-            execution.input_file(params.get("check_output_file"))
+            execution.input_file(params.get("check_output_file", None))
         ])
     return cargs
 
@@ -370,8 +371,8 @@ def mideface_outputs(
     """
     ret = MidefaceOutputs(
         root=execution.output_file("."),
-        defaced_output=execution.output_file(params.get("output_volume")),
-        facemask_output=execution.output_file(pathlib.Path(params.get("facemask")).name) if (params.get("facemask") is not None) else None,
+        defaced_output=execution.output_file(params.get("output_volume", None)),
+        facemask_output=execution.output_file(pathlib.Path(params.get("facemask", None)).name) if (params.get("facemask") is not None) else None,
     )
     return ret
 
@@ -519,7 +520,6 @@ def mideface(
 __all__ = [
     "MIDEFACE_METADATA",
     "MidefaceOutputs",
-    "MidefaceParameters",
     "mideface",
     "mideface_execute",
     "mideface_params",

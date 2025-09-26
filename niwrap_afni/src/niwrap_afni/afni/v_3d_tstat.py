@@ -14,7 +14,71 @@ V_3D_TSTAT_METADATA = Metadata(
 
 
 V3dTstatParameters = typing.TypedDict('V3dTstatParameters', {
-    "@type": typing.Literal["afni.3dTstat"],
+    "@type": typing.NotRequired[typing.Literal["afni/3dTstat"]],
+    "in_file": InputPathType,
+    "mask": typing.NotRequired[InputPathType | None],
+    "num_threads": typing.NotRequired[int | None],
+    "options": typing.NotRequired[str | None],
+    "outputtype": typing.NotRequired[typing.Literal["NIFTI", "AFNI", "NIFTI_GZ"] | None],
+    "sum": bool,
+    "abssum": bool,
+    "sos": bool,
+    "l2norm": bool,
+    "mean": bool,
+    "slope": bool,
+    "stdev": bool,
+    "stdevNOD": bool,
+    "cvar": bool,
+    "cvarNOD": bool,
+    "cvarinv": bool,
+    "cvarinvNOD": bool,
+    "tsnr": bool,
+    "MAD": bool,
+    "DW": bool,
+    "median": bool,
+    "nzmedian": bool,
+    "nzstdev": bool,
+    "bmv": bool,
+    "MSSD": bool,
+    "MSSDsqrt": bool,
+    "MASDx": bool,
+    "min": bool,
+    "max": bool,
+    "absmax": bool,
+    "signed_absmax": bool,
+    "percentile": bool,
+    "argmin": bool,
+    "argmin1": bool,
+    "argmax": bool,
+    "argmax1": bool,
+    "argabsmax": bool,
+    "argabsmax1": bool,
+    "duration": bool,
+    "onset": bool,
+    "offset": bool,
+    "centroid": bool,
+    "centduration": bool,
+    "nzmean": bool,
+    "zcount": bool,
+    "nzcount": bool,
+    "autocorr": bool,
+    "autoreg": bool,
+    "accumulate": bool,
+    "centromean": bool,
+    "skewness": bool,
+    "kurtosis": bool,
+    "firstvalue": bool,
+    "tdiff": bool,
+    "prefix": typing.NotRequired[str | None],
+    "datum": typing.NotRequired[str | None],
+    "nscale": bool,
+    "basepercent": typing.NotRequired[float | None],
+    "mask_mset": typing.NotRequired[InputPathType | None],
+    "mrange": typing.NotRequired[str | None],
+    "cmask": typing.NotRequired[str | None],
+})
+V3dTstatParametersTagged = typing.TypedDict('V3dTstatParametersTagged', {
+    "@type": typing.Literal["afni/3dTstat"],
     "in_file": InputPathType,
     "mask": typing.NotRequired[InputPathType | None],
     "num_threads": typing.NotRequired[int | None],
@@ -79,41 +143,9 @@ V3dTstatParameters = typing.TypedDict('V3dTstatParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "afni.3dTstat": v_3d_tstat_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "afni.3dTstat": v_3d_tstat_outputs,
-    }.get(t)
-
-
 class V3dTstatOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `v_3d_tstat(...)`.
+    Output object returned when calling `V3dTstatParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -183,7 +215,7 @@ def v_3d_tstat_params(
     mask_mset: InputPathType | None = None,
     mrange: str | None = None,
     cmask: str | None = None,
-) -> V3dTstatParameters:
+) -> V3dTstatParametersTagged:
     """
     Build parameters.
     
@@ -270,7 +302,7 @@ def v_3d_tstat_params(
         Parameter dictionary
     """
     params = {
-        "@type": "afni.3dTstat",
+        "@type": "afni/3dTstat",
         "in_file": in_file,
         "sum": sum_,
         "abssum": abssum,
@@ -361,147 +393,147 @@ def v_3d_tstat_cargs(
     """
     cargs = []
     cargs.append("3dTstat")
-    cargs.append(execution.input_file(params.get("in_file")))
-    if params.get("mask") is not None:
+    cargs.append(execution.input_file(params.get("in_file", None)))
+    if params.get("mask", None) is not None:
         cargs.extend([
             "-mask",
-            execution.input_file(params.get("mask"))
+            execution.input_file(params.get("mask", None))
         ])
-    if params.get("num_threads") is not None:
-        cargs.append(str(params.get("num_threads")))
-    if params.get("options") is not None:
-        cargs.append(params.get("options"))
-    if params.get("outputtype") is not None:
-        cargs.append(params.get("outputtype"))
-    if params.get("sum"):
+    if params.get("num_threads", None) is not None:
+        cargs.append(str(params.get("num_threads", None)))
+    if params.get("options", None) is not None:
+        cargs.append(params.get("options", None))
+    if params.get("outputtype", None) is not None:
+        cargs.append(params.get("outputtype", None))
+    if params.get("sum", False):
         cargs.append("-sum")
-    if params.get("abssum"):
+    if params.get("abssum", False):
         cargs.append("-abssum")
-    if params.get("sos"):
+    if params.get("sos", False):
         cargs.append("-sos")
-    if params.get("l2norm"):
+    if params.get("l2norm", False):
         cargs.append("-l2norm")
-    if params.get("mean"):
+    if params.get("mean", False):
         cargs.append("-mean")
-    if params.get("slope"):
+    if params.get("slope", False):
         cargs.append("-slope")
-    if params.get("stdev"):
+    if params.get("stdev", False):
         cargs.append("-stdev")
-    if params.get("stdevNOD"):
+    if params.get("stdevNOD", False):
         cargs.append("-stdevNOD")
-    if params.get("cvar"):
+    if params.get("cvar", False):
         cargs.append("-cvar")
-    if params.get("cvarNOD"):
+    if params.get("cvarNOD", False):
         cargs.append("-cvarNOD")
-    if params.get("cvarinv"):
+    if params.get("cvarinv", False):
         cargs.append("-cvarinv")
-    if params.get("cvarinvNOD"):
+    if params.get("cvarinvNOD", False):
         cargs.append("-cvarinvNOD")
-    if params.get("tsnr"):
+    if params.get("tsnr", False):
         cargs.append("-tsnr")
-    if params.get("MAD"):
+    if params.get("MAD", False):
         cargs.append("-MAD")
-    if params.get("DW"):
+    if params.get("DW", False):
         cargs.append("-DW")
-    if params.get("median"):
+    if params.get("median", False):
         cargs.append("-median")
-    if params.get("nzmedian"):
+    if params.get("nzmedian", False):
         cargs.append("-nzmedian")
-    if params.get("nzstdev"):
+    if params.get("nzstdev", False):
         cargs.append("-nzstdev")
-    if params.get("bmv"):
+    if params.get("bmv", False):
         cargs.append("-bmv")
-    if params.get("MSSD"):
+    if params.get("MSSD", False):
         cargs.append("-MSSD")
-    if params.get("MSSDsqrt"):
+    if params.get("MSSDsqrt", False):
         cargs.append("-MSSDsqrt")
-    if params.get("MASDx"):
+    if params.get("MASDx", False):
         cargs.append("-MASDx")
-    if params.get("min"):
+    if params.get("min", False):
         cargs.append("-min")
-    if params.get("max"):
+    if params.get("max", False):
         cargs.append("-max")
-    if params.get("absmax"):
+    if params.get("absmax", False):
         cargs.append("-absmax")
-    if params.get("signed_absmax"):
+    if params.get("signed_absmax", False):
         cargs.append("-signed_absmax")
-    if params.get("percentile"):
+    if params.get("percentile", False):
         cargs.append("-percentile")
-    if params.get("argmin"):
+    if params.get("argmin", False):
         cargs.append("-argmin")
-    if params.get("argmin1"):
+    if params.get("argmin1", False):
         cargs.append("-argmin1")
-    if params.get("argmax"):
+    if params.get("argmax", False):
         cargs.append("-argmax")
-    if params.get("argmax1"):
+    if params.get("argmax1", False):
         cargs.append("-argmax1")
-    if params.get("argabsmax"):
+    if params.get("argabsmax", False):
         cargs.append("-argabsmax")
-    if params.get("argabsmax1"):
+    if params.get("argabsmax1", False):
         cargs.append("-argabsmax1")
-    if params.get("duration"):
+    if params.get("duration", False):
         cargs.append("-duration")
-    if params.get("onset"):
+    if params.get("onset", False):
         cargs.append("-onset")
-    if params.get("offset"):
+    if params.get("offset", False):
         cargs.append("-offset")
-    if params.get("centroid"):
+    if params.get("centroid", False):
         cargs.append("-centroid")
-    if params.get("centduration"):
+    if params.get("centduration", False):
         cargs.append("-centduration")
-    if params.get("nzmean"):
+    if params.get("nzmean", False):
         cargs.append("-nzmean")
-    if params.get("zcount"):
+    if params.get("zcount", False):
         cargs.append("-zcount")
-    if params.get("nzcount"):
+    if params.get("nzcount", False):
         cargs.append("-nzcount")
-    if params.get("autocorr"):
+    if params.get("autocorr", False):
         cargs.append("-autocorr")
-    if params.get("autoreg"):
+    if params.get("autoreg", False):
         cargs.append("-autoreg")
-    if params.get("accumulate"):
+    if params.get("accumulate", False):
         cargs.append("-accumulate")
-    if params.get("centromean"):
+    if params.get("centromean", False):
         cargs.append("-centromean")
-    if params.get("skewness"):
+    if params.get("skewness", False):
         cargs.append("-skewness")
-    if params.get("kurtosis"):
+    if params.get("kurtosis", False):
         cargs.append("-kurtosis")
-    if params.get("firstvalue"):
+    if params.get("firstvalue", False):
         cargs.append("-firstvalue")
-    if params.get("tdiff"):
+    if params.get("tdiff", False):
         cargs.append("-tdiff")
-    if params.get("prefix") is not None:
+    if params.get("prefix", None) is not None:
         cargs.extend([
             "-prefix",
-            params.get("prefix")
+            params.get("prefix", None)
         ])
-    if params.get("datum") is not None:
+    if params.get("datum", None) is not None:
         cargs.extend([
             "-datum",
-            params.get("datum")
+            params.get("datum", None)
         ])
-    if params.get("nscale"):
+    if params.get("nscale", False):
         cargs.append("-nscale")
-    if params.get("basepercent") is not None:
+    if params.get("basepercent", None) is not None:
         cargs.extend([
             "-basepercent",
-            str(params.get("basepercent"))
+            str(params.get("basepercent", None))
         ])
-    if params.get("mask_mset") is not None:
+    if params.get("mask_mset", None) is not None:
         cargs.extend([
             "-mask",
-            execution.input_file(params.get("mask_mset"))
+            execution.input_file(params.get("mask_mset", None))
         ])
-    if params.get("mrange") is not None:
+    if params.get("mrange", None) is not None:
         cargs.extend([
             "-mrange",
-            params.get("mrange")
+            params.get("mrange", None)
         ])
-    if params.get("cmask") is not None:
+    if params.get("cmask", None) is not None:
         cargs.extend([
             "-cmask",
-            params.get("cmask")
+            params.get("cmask", None)
         ])
     return cargs
 
@@ -521,7 +553,7 @@ def v_3d_tstat_outputs(
     """
     ret = V3dTstatOutputs(
         root=execution.output_file("."),
-        out_file=execution.output_file(params.get("prefix")) if (params.get("prefix") is not None) else None,
+        out_file=execution.output_file(params.get("prefix", None)) if (params.get("prefix") is not None) else None,
     )
     return ret
 
@@ -778,7 +810,6 @@ def v_3d_tstat(
 
 __all__ = [
     "V3dTstatOutputs",
-    "V3dTstatParameters",
     "V_3D_TSTAT_METADATA",
     "v_3d_tstat",
     "v_3d_tstat_execute",

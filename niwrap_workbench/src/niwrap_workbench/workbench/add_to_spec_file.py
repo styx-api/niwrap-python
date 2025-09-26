@@ -14,47 +14,22 @@ ADD_TO_SPEC_FILE_METADATA = Metadata(
 
 
 AddToSpecFileParameters = typing.TypedDict('AddToSpecFileParameters', {
-    "@type": typing.Literal["workbench.add-to-spec-file"],
+    "@type": typing.NotRequired[typing.Literal["workbench/add-to-spec-file"]],
+    "specfile": str,
+    "structure": str,
+    "filename": str,
+})
+AddToSpecFileParametersTagged = typing.TypedDict('AddToSpecFileParametersTagged', {
+    "@type": typing.Literal["workbench/add-to-spec-file"],
     "specfile": str,
     "structure": str,
     "filename": str,
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "workbench.add-to-spec-file": add_to_spec_file_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-    }.get(t)
-
-
 class AddToSpecFileOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `add_to_spec_file(...)`.
+    Output object returned when calling `AddToSpecFileParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -64,7 +39,7 @@ def add_to_spec_file_params(
     specfile: str,
     structure: str,
     filename: str,
-) -> AddToSpecFileParameters:
+) -> AddToSpecFileParametersTagged:
     """
     Build parameters.
     
@@ -76,7 +51,7 @@ def add_to_spec_file_params(
         Parameter dictionary
     """
     params = {
-        "@type": "workbench.add-to-spec-file",
+        "@type": "workbench/add-to-spec-file",
         "specfile": specfile,
         "structure": structure,
         "filename": filename,
@@ -100,9 +75,9 @@ def add_to_spec_file_cargs(
     cargs = []
     cargs.append("wb_command")
     cargs.append("-add-to-spec-file")
-    cargs.append(params.get("specfile"))
-    cargs.append(params.get("structure"))
-    cargs.append(params.get("filename"))
+    cargs.append(params.get("specfile", None))
+    cargs.append(params.get("structure", None))
+    cargs.append(params.get("filename", None))
     return cargs
 
 
@@ -265,7 +240,6 @@ def add_to_spec_file(
 __all__ = [
     "ADD_TO_SPEC_FILE_METADATA",
     "AddToSpecFileOutputs",
-    "AddToSpecFileParameters",
     "add_to_spec_file",
     "add_to_spec_file_execute",
     "add_to_spec_file_params",

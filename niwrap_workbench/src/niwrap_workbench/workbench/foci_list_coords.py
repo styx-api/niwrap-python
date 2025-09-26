@@ -14,47 +14,22 @@ FOCI_LIST_COORDS_METADATA = Metadata(
 
 
 FociListCoordsParameters = typing.TypedDict('FociListCoordsParameters', {
-    "@type": typing.Literal["workbench.foci-list-coords"],
+    "@type": typing.NotRequired[typing.Literal["workbench/foci-list-coords"]],
+    "foci_file": InputPathType,
+    "coord_file_out": str,
+    "opt_names_out_names_file_out": typing.NotRequired[str | None],
+})
+FociListCoordsParametersTagged = typing.TypedDict('FociListCoordsParametersTagged', {
+    "@type": typing.Literal["workbench/foci-list-coords"],
     "foci_file": InputPathType,
     "coord_file_out": str,
     "opt_names_out_names_file_out": typing.NotRequired[str | None],
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "workbench.foci-list-coords": foci_list_coords_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-    }.get(t)
-
-
 class FociListCoordsOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `foci_list_coords(...)`.
+    Output object returned when calling `FociListCoordsParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -64,7 +39,7 @@ def foci_list_coords_params(
     foci_file: InputPathType,
     coord_file_out: str,
     opt_names_out_names_file_out: str | None = None,
-) -> FociListCoordsParameters:
+) -> FociListCoordsParametersTagged:
     """
     Build parameters.
     
@@ -77,7 +52,7 @@ def foci_list_coords_params(
         Parameter dictionary
     """
     params = {
-        "@type": "workbench.foci-list-coords",
+        "@type": "workbench/foci-list-coords",
         "foci_file": foci_file,
         "coord_file_out": coord_file_out,
     }
@@ -102,12 +77,12 @@ def foci_list_coords_cargs(
     cargs = []
     cargs.append("wb_command")
     cargs.append("-foci-list-coords")
-    cargs.append(execution.input_file(params.get("foci_file")))
-    cargs.append(params.get("coord_file_out"))
-    if params.get("opt_names_out_names_file_out") is not None:
+    cargs.append(execution.input_file(params.get("foci_file", None)))
+    cargs.append(params.get("coord_file_out", None))
+    if params.get("opt_names_out_names_file_out", None) is not None:
         cargs.extend([
             "-names-out",
-            params.get("opt_names_out_names_file_out")
+            params.get("opt_names_out_names_file_out", None)
         ])
     return cargs
 
@@ -200,7 +175,6 @@ def foci_list_coords(
 __all__ = [
     "FOCI_LIST_COORDS_METADATA",
     "FociListCoordsOutputs",
-    "FociListCoordsParameters",
     "foci_list_coords",
     "foci_list_coords_execute",
     "foci_list_coords_params",

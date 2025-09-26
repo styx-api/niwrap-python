@@ -14,47 +14,22 @@ IMGLOB_METADATA = Metadata(
 
 
 ImglobParameters = typing.TypedDict('ImglobParameters', {
-    "@type": typing.Literal["fsl.imglob"],
+    "@type": typing.NotRequired[typing.Literal["fsl/imglob"]],
+    "multiple_extensions": bool,
+    "input_list": list[str],
+    "single_extension": bool,
+})
+ImglobParametersTagged = typing.TypedDict('ImglobParametersTagged', {
+    "@type": typing.Literal["fsl/imglob"],
     "multiple_extensions": bool,
     "input_list": list[str],
     "single_extension": bool,
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "fsl.imglob": imglob_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-    }.get(t)
-
-
 class ImglobOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `imglob(...)`.
+    Output object returned when calling `ImglobParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -64,7 +39,7 @@ def imglob_params(
     input_list: list[str],
     multiple_extensions: bool = False,
     single_extension: bool = False,
-) -> ImglobParameters:
+) -> ImglobParametersTagged:
     """
     Build parameters.
     
@@ -76,7 +51,7 @@ def imglob_params(
         Parameter dictionary
     """
     params = {
-        "@type": "fsl.imglob",
+        "@type": "fsl/imglob",
         "multiple_extensions": multiple_extensions,
         "input_list": input_list,
         "single_extension": single_extension,
@@ -99,10 +74,10 @@ def imglob_cargs(
     """
     cargs = []
     cargs.append("imglob")
-    if params.get("multiple_extensions"):
+    if params.get("multiple_extensions", False):
         cargs.append("-extensions")
-    cargs.extend(params.get("input_list"))
-    if params.get("single_extension"):
+    cargs.extend(params.get("input_list", None))
+    if params.get("single_extension", False):
         cargs.append("-extension")
     return cargs
 
@@ -188,7 +163,6 @@ def imglob(
 __all__ = [
     "IMGLOB_METADATA",
     "ImglobOutputs",
-    "ImglobParameters",
     "imglob",
     "imglob_execute",
     "imglob_params",

@@ -14,46 +14,18 @@ UNIQ_IMAGES_METADATA = Metadata(
 
 
 UniqImagesParameters = typing.TypedDict('UniqImagesParameters', {
-    "@type": typing.Literal["afni.uniq_images"],
+    "@type": typing.NotRequired[typing.Literal["afni/uniq_images"]],
+    "input_files": list[InputPathType],
+})
+UniqImagesParametersTagged = typing.TypedDict('UniqImagesParametersTagged', {
+    "@type": typing.Literal["afni/uniq_images"],
     "input_files": list[InputPathType],
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "afni.uniq_images": uniq_images_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "afni.uniq_images": uniq_images_outputs,
-    }.get(t)
-
-
 class UniqImagesOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `uniq_images(...)`.
+    Output object returned when calling `UniqImagesParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -63,7 +35,7 @@ class UniqImagesOutputs(typing.NamedTuple):
 
 def uniq_images_params(
     input_files: list[InputPathType],
-) -> UniqImagesParameters:
+) -> UniqImagesParametersTagged:
     """
     Build parameters.
     
@@ -73,7 +45,7 @@ def uniq_images_params(
         Parameter dictionary
     """
     params = {
-        "@type": "afni.uniq_images",
+        "@type": "afni/uniq_images",
         "input_files": input_files,
     }
     return params
@@ -94,7 +66,7 @@ def uniq_images_cargs(
     """
     cargs = []
     cargs.append("uniq_images")
-    cargs.extend([execution.input_file(f) for f in params.get("input_files")])
+    cargs.extend([execution.input_file(f) for f in params.get("input_files", None)])
     return cargs
 
 
@@ -178,7 +150,6 @@ def uniq_images(
 __all__ = [
     "UNIQ_IMAGES_METADATA",
     "UniqImagesOutputs",
-    "UniqImagesParameters",
     "uniq_images",
     "uniq_images_execute",
     "uniq_images_params",

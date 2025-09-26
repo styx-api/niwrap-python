@@ -14,48 +14,22 @@ MRIS_SEGMENT_METADATA = Metadata(
 
 
 MrisSegmentParameters = typing.TypedDict('MrisSegmentParameters', {
-    "@type": typing.Literal["freesurfer.mris_segment"],
+    "@type": typing.NotRequired[typing.Literal["freesurfer/mris_segment"]],
+    "subjects": list[str],
+    "output_subject": str,
+    "output_file": str,
+})
+MrisSegmentParametersTagged = typing.TypedDict('MrisSegmentParametersTagged', {
+    "@type": typing.Literal["freesurfer/mris_segment"],
     "subjects": list[str],
     "output_subject": str,
     "output_file": str,
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "freesurfer.mris_segment": mris_segment_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "freesurfer.mris_segment": mris_segment_outputs,
-    }.get(t)
-
-
 class MrisSegmentOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `mris_segment(...)`.
+    Output object returned when calling `MrisSegmentParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -67,7 +41,7 @@ def mris_segment_params(
     subjects: list[str],
     output_subject: str,
     output_file: str,
-) -> MrisSegmentParameters:
+) -> MrisSegmentParametersTagged:
     """
     Build parameters.
     
@@ -79,7 +53,7 @@ def mris_segment_params(
         Parameter dictionary
     """
     params = {
-        "@type": "freesurfer.mris_segment",
+        "@type": "freesurfer/mris_segment",
         "subjects": subjects,
         "output_subject": output_subject,
         "output_file": output_file,
@@ -102,9 +76,9 @@ def mris_segment_cargs(
     """
     cargs = []
     cargs.append("mris_segment")
-    cargs.extend(params.get("subjects"))
-    cargs.append(params.get("output_subject"))
-    cargs.append(params.get("output_file"))
+    cargs.extend(params.get("subjects", None))
+    cargs.append(params.get("output_subject", None))
+    cargs.append(params.get("output_file", None))
     return cargs
 
 
@@ -123,7 +97,7 @@ def mris_segment_outputs(
     """
     ret = MrisSegmentOutputs(
         root=execution.output_file("."),
-        segmented_output=execution.output_file(params.get("output_file")),
+        segmented_output=execution.output_file(params.get("output_file", None)),
     )
     return ret
 
@@ -190,7 +164,6 @@ def mris_segment(
 __all__ = [
     "MRIS_SEGMENT_METADATA",
     "MrisSegmentOutputs",
-    "MrisSegmentParameters",
     "mris_segment",
     "mris_segment_execute",
     "mris_segment_params",

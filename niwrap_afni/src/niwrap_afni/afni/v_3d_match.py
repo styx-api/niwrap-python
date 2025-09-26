@@ -14,7 +14,19 @@ V_3D_MATCH_METADATA = Metadata(
 
 
 V3dMatchParameters = typing.TypedDict('V3dMatchParameters', {
-    "@type": typing.Literal["afni.3dMatch"],
+    "@type": typing.NotRequired[typing.Literal["afni/3dMatch"]],
+    "inset": InputPathType,
+    "refset": InputPathType,
+    "mask": typing.NotRequired[InputPathType | None],
+    "in_min": typing.NotRequired[float | None],
+    "in_max": typing.NotRequired[float | None],
+    "ref_min": typing.NotRequired[float | None],
+    "ref_max": typing.NotRequired[float | None],
+    "prefix": str,
+    "only_dice_thr": bool,
+})
+V3dMatchParametersTagged = typing.TypedDict('V3dMatchParametersTagged', {
+    "@type": typing.Literal["afni/3dMatch"],
     "inset": InputPathType,
     "refset": InputPathType,
     "mask": typing.NotRequired[InputPathType | None],
@@ -27,41 +39,9 @@ V3dMatchParameters = typing.TypedDict('V3dMatchParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "afni.3dMatch": v_3d_match_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "afni.3dMatch": v_3d_match_outputs,
-    }.get(t)
-
-
 class V3dMatchOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `v_3d_match(...)`.
+    Output object returned when calling `V3dMatchParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -87,7 +67,7 @@ def v_3d_match_params(
     ref_min: float | None = None,
     ref_max: float | None = None,
     only_dice_thr: bool = False,
-) -> V3dMatchParameters:
+) -> V3dMatchParametersTagged:
     """
     Build parameters.
     
@@ -111,7 +91,7 @@ def v_3d_match_params(
         Parameter dictionary
     """
     params = {
-        "@type": "afni.3dMatch",
+        "@type": "afni/3dMatch",
         "inset": inset,
         "refset": refset,
         "prefix": prefix,
@@ -147,42 +127,42 @@ def v_3d_match_cargs(
     cargs.append("3dMatch")
     cargs.extend([
         "-inset",
-        execution.input_file(params.get("inset"))
+        execution.input_file(params.get("inset", None))
     ])
     cargs.extend([
         "-refset",
-        execution.input_file(params.get("refset"))
+        execution.input_file(params.get("refset", None))
     ])
-    if params.get("mask") is not None:
+    if params.get("mask", None) is not None:
         cargs.extend([
             "-mask",
-            execution.input_file(params.get("mask"))
+            execution.input_file(params.get("mask", None))
         ])
-    if params.get("in_min") is not None:
+    if params.get("in_min", None) is not None:
         cargs.extend([
             "-in_min",
-            str(params.get("in_min"))
+            str(params.get("in_min", None))
         ])
-    if params.get("in_max") is not None:
+    if params.get("in_max", None) is not None:
         cargs.extend([
             "-in_max",
-            str(params.get("in_max"))
+            str(params.get("in_max", None))
         ])
-    if params.get("ref_min") is not None:
+    if params.get("ref_min", None) is not None:
         cargs.extend([
             "-ref_min",
-            str(params.get("ref_min"))
+            str(params.get("ref_min", None))
         ])
-    if params.get("ref_max") is not None:
+    if params.get("ref_max", None) is not None:
         cargs.extend([
             "-ref_max",
-            str(params.get("ref_max"))
+            str(params.get("ref_max", None))
         ])
     cargs.extend([
         "-prefix",
-        params.get("prefix")
+        params.get("prefix", None)
     ])
-    if params.get("only_dice_thr"):
+    if params.get("only_dice_thr", False):
         cargs.append("-only_dice_thr")
     return cargs
 
@@ -202,10 +182,10 @@ def v_3d_match_outputs(
     """
     ret = V3dMatchOutputs(
         root=execution.output_file("."),
-        ref_brik=execution.output_file(params.get("prefix") + "_REF+orig.BRIK"),
-        ref_coeff_vals=execution.output_file(params.get("prefix") + "_REF_coeff.vals"),
-        in_brik=execution.output_file(params.get("prefix") + "_IN+orig.BRIK"),
-        in_coeff_vals=execution.output_file(params.get("prefix") + "_IN_coeff.vals"),
+        ref_brik=execution.output_file(params.get("prefix", None) + "_REF+orig.BRIK"),
+        ref_coeff_vals=execution.output_file(params.get("prefix", None) + "_REF_coeff.vals"),
+        in_brik=execution.output_file(params.get("prefix", None) + "_IN+orig.BRIK"),
+        in_coeff_vals=execution.output_file(params.get("prefix", None) + "_IN_coeff.vals"),
     )
     return ret
 
@@ -297,7 +277,6 @@ def v_3d_match(
 
 __all__ = [
     "V3dMatchOutputs",
-    "V3dMatchParameters",
     "V_3D_MATCH_METADATA",
     "v_3d_match",
     "v_3d_match_execute",

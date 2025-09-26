@@ -14,48 +14,22 @@ V_3D_OVERLAP_METADATA = Metadata(
 
 
 V3dOverlapParameters = typing.TypedDict('V3dOverlapParameters', {
-    "@type": typing.Literal["afni.3dOverlap"],
+    "@type": typing.NotRequired[typing.Literal["afni/3dOverlap"]],
+    "dataset1": InputPathType,
+    "dataset2": list[InputPathType],
+    "save_prefix": typing.NotRequired[str | None],
+})
+V3dOverlapParametersTagged = typing.TypedDict('V3dOverlapParametersTagged', {
+    "@type": typing.Literal["afni/3dOverlap"],
     "dataset1": InputPathType,
     "dataset2": list[InputPathType],
     "save_prefix": typing.NotRequired[str | None],
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "afni.3dOverlap": v_3d_overlap_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "afni.3dOverlap": v_3d_overlap_outputs,
-    }.get(t)
-
-
 class V3dOverlapOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `v_3d_overlap(...)`.
+    Output object returned when calling `V3dOverlapParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -69,7 +43,7 @@ def v_3d_overlap_params(
     dataset1: InputPathType,
     dataset2: list[InputPathType],
     save_prefix: str | None = None,
-) -> V3dOverlapParameters:
+) -> V3dOverlapParametersTagged:
     """
     Build parameters.
     
@@ -82,7 +56,7 @@ def v_3d_overlap_params(
         Parameter dictionary
     """
     params = {
-        "@type": "afni.3dOverlap",
+        "@type": "afni/3dOverlap",
         "dataset1": dataset1,
         "dataset2": dataset2,
     }
@@ -106,12 +80,12 @@ def v_3d_overlap_cargs(
     """
     cargs = []
     cargs.append("3dOverlap")
-    cargs.append(execution.input_file(params.get("dataset1")))
-    cargs.extend([execution.input_file(f) for f in params.get("dataset2")])
-    if params.get("save_prefix") is not None:
+    cargs.append(execution.input_file(params.get("dataset1", None)))
+    cargs.extend([execution.input_file(f) for f in params.get("dataset2", None)])
+    if params.get("save_prefix", None) is not None:
         cargs.extend([
             "-save",
-            params.get("save_prefix")
+            params.get("save_prefix", None)
         ])
     return cargs
 
@@ -131,8 +105,8 @@ def v_3d_overlap_outputs(
     """
     ret = V3dOverlapOutputs(
         root=execution.output_file("."),
-        output_brik=execution.output_file(params.get("save_prefix") + "+orig.BRIK") if (params.get("save_prefix") is not None) else None,
-        output_head=execution.output_file(params.get("save_prefix") + "+orig.HEAD") if (params.get("save_prefix") is not None) else None,
+        output_brik=execution.output_file(params.get("save_prefix", None) + "+orig.BRIK") if (params.get("save_prefix") is not None) else None,
+        output_head=execution.output_file(params.get("save_prefix", None) + "+orig.HEAD") if (params.get("save_prefix") is not None) else None,
     )
     return ret
 
@@ -199,7 +173,6 @@ def v_3d_overlap(
 
 __all__ = [
     "V3dOverlapOutputs",
-    "V3dOverlapParameters",
     "V_3D_OVERLAP_METADATA",
     "v_3d_overlap",
     "v_3d_overlap_execute",

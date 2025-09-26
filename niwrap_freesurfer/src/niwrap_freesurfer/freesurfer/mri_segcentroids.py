@@ -14,7 +14,17 @@ MRI_SEGCENTROIDS_METADATA = Metadata(
 
 
 MriSegcentroidsParameters = typing.TypedDict('MriSegcentroidsParameters', {
-    "@type": typing.Literal["freesurfer.mri_segcentroids"],
+    "@type": typing.NotRequired[typing.Literal["freesurfer/mri_segcentroids"]],
+    "input_segmentation": InputPathType,
+    "output_file": str,
+    "pointset_flag": bool,
+    "registration_file": typing.NotRequired[InputPathType | None],
+    "weights_file": typing.NotRequired[InputPathType | None],
+    "lut_file": typing.NotRequired[InputPathType | None],
+    "default_lut_flag": bool,
+})
+MriSegcentroidsParametersTagged = typing.TypedDict('MriSegcentroidsParametersTagged', {
+    "@type": typing.Literal["freesurfer/mri_segcentroids"],
     "input_segmentation": InputPathType,
     "output_file": str,
     "pointset_flag": bool,
@@ -25,41 +35,9 @@ MriSegcentroidsParameters = typing.TypedDict('MriSegcentroidsParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "freesurfer.mri_segcentroids": mri_segcentroids_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "freesurfer.mri_segcentroids": mri_segcentroids_outputs,
-    }.get(t)
-
-
 class MriSegcentroidsOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `mri_segcentroids(...)`.
+    Output object returned when calling `MriSegcentroidsParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -75,7 +53,7 @@ def mri_segcentroids_params(
     weights_file: InputPathType | None = None,
     lut_file: InputPathType | None = None,
     default_lut_flag: bool = False,
-) -> MriSegcentroidsParameters:
+) -> MriSegcentroidsParametersTagged:
     """
     Build parameters.
     
@@ -91,7 +69,7 @@ def mri_segcentroids_params(
         Parameter dictionary
     """
     params = {
-        "@type": "freesurfer.mri_segcentroids",
+        "@type": "freesurfer/mri_segcentroids",
         "input_segmentation": input_segmentation,
         "output_file": output_file,
         "pointset_flag": pointset_flag,
@@ -123,30 +101,30 @@ def mri_segcentroids_cargs(
     cargs.append("mri_segcentroids")
     cargs.extend([
         "--i",
-        execution.input_file(params.get("input_segmentation"))
+        execution.input_file(params.get("input_segmentation", None))
     ])
     cargs.extend([
         "--o",
-        params.get("output_file")
+        params.get("output_file", None)
     ])
-    if params.get("pointset_flag"):
+    if params.get("pointset_flag", False):
         cargs.append("--p")
-    if params.get("registration_file") is not None:
+    if params.get("registration_file", None) is not None:
         cargs.extend([
             "--reg",
-            execution.input_file(params.get("registration_file"))
+            execution.input_file(params.get("registration_file", None))
         ])
-    if params.get("weights_file") is not None:
+    if params.get("weights_file", None) is not None:
         cargs.extend([
             "--weights",
-            execution.input_file(params.get("weights_file"))
+            execution.input_file(params.get("weights_file", None))
         ])
-    if params.get("lut_file") is not None:
+    if params.get("lut_file", None) is not None:
         cargs.extend([
             "--ctab",
-            execution.input_file(params.get("lut_file"))
+            execution.input_file(params.get("lut_file", None))
         ])
-    if params.get("default_lut_flag"):
+    if params.get("default_lut_flag", False):
         cargs.append("--ctab-default")
     return cargs
 
@@ -166,7 +144,7 @@ def mri_segcentroids_outputs(
     """
     ret = MriSegcentroidsOutputs(
         root=execution.output_file("."),
-        output_centroids=execution.output_file(params.get("output_file")),
+        output_centroids=execution.output_file(params.get("output_file", None)),
     )
     return ret
 
@@ -245,7 +223,6 @@ def mri_segcentroids(
 __all__ = [
     "MRI_SEGCENTROIDS_METADATA",
     "MriSegcentroidsOutputs",
-    "MriSegcentroidsParameters",
     "mri_segcentroids",
     "mri_segcentroids_execute",
     "mri_segcentroids_params",

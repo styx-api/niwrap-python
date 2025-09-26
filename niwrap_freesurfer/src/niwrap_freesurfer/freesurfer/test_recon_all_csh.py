@@ -14,7 +14,16 @@ TEST_RECON_ALL_CSH_METADATA = Metadata(
 
 
 TestReconAllCshParameters = typing.TypedDict('TestReconAllCshParameters', {
-    "@type": typing.Literal["freesurfer.test_recon-all.csh"],
+    "@type": typing.NotRequired[typing.Literal["freesurfer/test_recon-all.csh"]],
+    "reference_subj_source_dir": typing.NotRequired[str | None],
+    "reference_subjid": typing.NotRequired[str | None],
+    "test_subject_dest_dir": typing.NotRequired[str | None],
+    "test_subjid": typing.NotRequired[str | None],
+    "freesurfer_home": typing.NotRequired[str | None],
+    "norecon": bool,
+})
+TestReconAllCshParametersTagged = typing.TypedDict('TestReconAllCshParametersTagged', {
+    "@type": typing.Literal["freesurfer/test_recon-all.csh"],
     "reference_subj_source_dir": typing.NotRequired[str | None],
     "reference_subjid": typing.NotRequired[str | None],
     "test_subject_dest_dir": typing.NotRequired[str | None],
@@ -24,41 +33,9 @@ TestReconAllCshParameters = typing.TypedDict('TestReconAllCshParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "freesurfer.test_recon-all.csh": test_recon_all_csh_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "freesurfer.test_recon-all.csh": test_recon_all_csh_outputs,
-    }.get(t)
-
-
 class TestReconAllCshOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `test_recon_all_csh(...)`.
+    Output object returned when calling `TestReconAllCshParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -89,7 +66,7 @@ def test_recon_all_csh_params(
     test_subjid: str | None = None,
     freesurfer_home: str | None = None,
     norecon: bool = False,
-) -> TestReconAllCshParameters:
+) -> TestReconAllCshParametersTagged:
     """
     Build parameters.
     
@@ -104,7 +81,7 @@ def test_recon_all_csh_params(
         Parameter dictionary
     """
     params = {
-        "@type": "freesurfer.test_recon-all.csh",
+        "@type": "freesurfer/test_recon-all.csh",
         "norecon": norecon,
     }
     if reference_subj_source_dir is not None:
@@ -135,32 +112,32 @@ def test_recon_all_csh_cargs(
     """
     cargs = []
     cargs.append("test_recon-all.csh")
-    if params.get("reference_subj_source_dir") is not None:
+    if params.get("reference_subj_source_dir", None) is not None:
         cargs.extend([
             "-rsd",
-            params.get("reference_subj_source_dir")
+            params.get("reference_subj_source_dir", None)
         ])
-    if params.get("reference_subjid") is not None:
+    if params.get("reference_subjid", None) is not None:
         cargs.extend([
             "-rs",
-            params.get("reference_subjid")
+            params.get("reference_subjid", None)
         ])
-    if params.get("test_subject_dest_dir") is not None:
+    if params.get("test_subject_dest_dir", None) is not None:
         cargs.extend([
             "-tsd",
-            params.get("test_subject_dest_dir")
+            params.get("test_subject_dest_dir", None)
         ])
-    if params.get("test_subjid") is not None:
+    if params.get("test_subjid", None) is not None:
         cargs.extend([
             "-ts",
-            params.get("test_subjid")
+            params.get("test_subjid", None)
         ])
-    if params.get("freesurfer_home") is not None:
+    if params.get("freesurfer_home", None) is not None:
         cargs.extend([
             "-fshome",
-            params.get("freesurfer_home")
+            params.get("freesurfer_home", None)
         ])
-    if params.get("norecon"):
+    if params.get("norecon", False):
         cargs.append("-norecon")
     return cargs
 
@@ -264,7 +241,6 @@ def test_recon_all_csh(
 __all__ = [
     "TEST_RECON_ALL_CSH_METADATA",
     "TestReconAllCshOutputs",
-    "TestReconAllCshParameters",
     "test_recon_all_csh",
     "test_recon_all_csh_execute",
     "test_recon_all_csh_params",

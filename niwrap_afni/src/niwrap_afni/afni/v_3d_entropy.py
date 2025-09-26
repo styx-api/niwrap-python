@@ -14,46 +14,20 @@ V_3D_ENTROPY_METADATA = Metadata(
 
 
 V3dEntropyParameters = typing.TypedDict('V3dEntropyParameters', {
-    "@type": typing.Literal["afni.3dEntropy"],
+    "@type": typing.NotRequired[typing.Literal["afni/3dEntropy"]],
+    "zskip": bool,
+    "input_dataset": InputPathType,
+})
+V3dEntropyParametersTagged = typing.TypedDict('V3dEntropyParametersTagged', {
+    "@type": typing.Literal["afni/3dEntropy"],
     "zskip": bool,
     "input_dataset": InputPathType,
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "afni.3dEntropy": v_3d_entropy_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-    }.get(t)
-
-
 class V3dEntropyOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `v_3d_entropy(...)`.
+    Output object returned when calling `V3dEntropyParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -62,7 +36,7 @@ class V3dEntropyOutputs(typing.NamedTuple):
 def v_3d_entropy_params(
     input_dataset: InputPathType,
     zskip: bool = False,
-) -> V3dEntropyParameters:
+) -> V3dEntropyParametersTagged:
     """
     Build parameters.
     
@@ -73,7 +47,7 @@ def v_3d_entropy_params(
         Parameter dictionary
     """
     params = {
-        "@type": "afni.3dEntropy",
+        "@type": "afni/3dEntropy",
         "zskip": zskip,
         "input_dataset": input_dataset,
     }
@@ -95,9 +69,9 @@ def v_3d_entropy_cargs(
     """
     cargs = []
     cargs.append("3dEntropy")
-    if params.get("zskip"):
+    if params.get("zskip", False):
         cargs.append("-zskip")
-    cargs.append(execution.input_file(params.get("input_dataset")))
+    cargs.append(execution.input_file(params.get("input_dataset", None)))
     return cargs
 
 
@@ -178,7 +152,6 @@ def v_3d_entropy(
 
 __all__ = [
     "V3dEntropyOutputs",
-    "V3dEntropyParameters",
     "V_3D_ENTROPY_METADATA",
     "v_3d_entropy",
     "v_3d_entropy_execute",

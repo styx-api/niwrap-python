@@ -14,7 +14,16 @@ MRIS_RESAMPLE_METADATA = Metadata(
 
 
 MrisResampleParameters = typing.TypedDict('MrisResampleParameters', {
-    "@type": typing.Literal["freesurfer.mris_resample"],
+    "@type": typing.NotRequired[typing.Literal["freesurfer/mris_resample"]],
+    "atlas_reg": InputPathType,
+    "subject_reg": InputPathType,
+    "subject_surf": InputPathType,
+    "output": str,
+    "annot_in": typing.NotRequired[InputPathType | None],
+    "annot_out": typing.NotRequired[str | None],
+})
+MrisResampleParametersTagged = typing.TypedDict('MrisResampleParametersTagged', {
+    "@type": typing.Literal["freesurfer/mris_resample"],
     "atlas_reg": InputPathType,
     "subject_reg": InputPathType,
     "subject_surf": InputPathType,
@@ -24,41 +33,9 @@ MrisResampleParameters = typing.TypedDict('MrisResampleParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "freesurfer.mris_resample": mris_resample_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "freesurfer.mris_resample": mris_resample_outputs,
-    }.get(t)
-
-
 class MrisResampleOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `mris_resample(...)`.
+    Output object returned when calling `MrisResampleParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -75,7 +52,7 @@ def mris_resample_params(
     output: str,
     annot_in: InputPathType | None = None,
     annot_out: str | None = None,
-) -> MrisResampleParameters:
+) -> MrisResampleParametersTagged:
     """
     Build parameters.
     
@@ -92,7 +69,7 @@ def mris_resample_params(
         Parameter dictionary
     """
     params = {
-        "@type": "freesurfer.mris_resample",
+        "@type": "freesurfer/mris_resample",
         "atlas_reg": atlas_reg,
         "subject_reg": subject_reg,
         "subject_surf": subject_surf,
@@ -122,29 +99,29 @@ def mris_resample_cargs(
     cargs.append("mris_resample")
     cargs.extend([
         "-atlas_reg",
-        execution.input_file(params.get("atlas_reg"))
+        execution.input_file(params.get("atlas_reg", None))
     ])
     cargs.extend([
         "-subject_reg",
-        execution.input_file(params.get("subject_reg"))
+        execution.input_file(params.get("subject_reg", None))
     ])
     cargs.extend([
         "-subject_surf",
-        execution.input_file(params.get("subject_surf"))
+        execution.input_file(params.get("subject_surf", None))
     ])
     cargs.extend([
         "-out",
-        params.get("output")
+        params.get("output", None)
     ])
-    if params.get("annot_in") is not None:
+    if params.get("annot_in", None) is not None:
         cargs.extend([
             "--annot_in",
-            execution.input_file(params.get("annot_in"))
+            execution.input_file(params.get("annot_in", None))
         ])
-    if params.get("annot_out") is not None:
+    if params.get("annot_out", None) is not None:
         cargs.extend([
             "--annot_out",
-            params.get("annot_out")
+            params.get("annot_out", None)
         ])
     return cargs
 
@@ -164,8 +141,8 @@ def mris_resample_outputs(
     """
     ret = MrisResampleOutputs(
         root=execution.output_file("."),
-        resampled_surface_output=execution.output_file(params.get("output")),
-        resampled_annotation_output=execution.output_file(params.get("annot_out")) if (params.get("annot_out") is not None) else None,
+        resampled_surface_output=execution.output_file(params.get("output", None)),
+        resampled_annotation_output=execution.output_file(params.get("annot_out", None)) if (params.get("annot_out") is not None) else None,
     )
     return ret
 
@@ -243,7 +220,6 @@ def mris_resample(
 __all__ = [
     "MRIS_RESAMPLE_METADATA",
     "MrisResampleOutputs",
-    "MrisResampleParameters",
     "mris_resample",
     "mris_resample_execute",
     "mris_resample_params",

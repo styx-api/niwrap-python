@@ -14,7 +14,14 @@ SURFACE_SPHERE_PROJECT_UNPROJECT_METADATA = Metadata(
 
 
 SurfaceSphereProjectUnprojectParameters = typing.TypedDict('SurfaceSphereProjectUnprojectParameters', {
-    "@type": typing.Literal["workbench.surface-sphere-project-unproject"],
+    "@type": typing.NotRequired[typing.Literal["workbench/surface-sphere-project-unproject"]],
+    "sphere_in": InputPathType,
+    "sphere_project_to": InputPathType,
+    "sphere_unproject_from": InputPathType,
+    "sphere_out": str,
+})
+SurfaceSphereProjectUnprojectParametersTagged = typing.TypedDict('SurfaceSphereProjectUnprojectParametersTagged', {
+    "@type": typing.Literal["workbench/surface-sphere-project-unproject"],
     "sphere_in": InputPathType,
     "sphere_project_to": InputPathType,
     "sphere_unproject_from": InputPathType,
@@ -22,41 +29,9 @@ SurfaceSphereProjectUnprojectParameters = typing.TypedDict('SurfaceSphereProject
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "workbench.surface-sphere-project-unproject": surface_sphere_project_unproject_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "workbench.surface-sphere-project-unproject": surface_sphere_project_unproject_outputs,
-    }.get(t)
-
-
 class SurfaceSphereProjectUnprojectOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `surface_sphere_project_unproject(...)`.
+    Output object returned when calling `SurfaceSphereProjectUnprojectParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -69,7 +44,7 @@ def surface_sphere_project_unproject_params(
     sphere_project_to: InputPathType,
     sphere_unproject_from: InputPathType,
     sphere_out: str,
-) -> SurfaceSphereProjectUnprojectParameters:
+) -> SurfaceSphereProjectUnprojectParametersTagged:
     """
     Build parameters.
     
@@ -83,7 +58,7 @@ def surface_sphere_project_unproject_params(
         Parameter dictionary
     """
     params = {
-        "@type": "workbench.surface-sphere-project-unproject",
+        "@type": "workbench/surface-sphere-project-unproject",
         "sphere_in": sphere_in,
         "sphere_project_to": sphere_project_to,
         "sphere_unproject_from": sphere_unproject_from,
@@ -108,10 +83,10 @@ def surface_sphere_project_unproject_cargs(
     cargs = []
     cargs.append("wb_command")
     cargs.append("-surface-sphere-project-unproject")
-    cargs.append(execution.input_file(params.get("sphere_in")))
-    cargs.append(execution.input_file(params.get("sphere_project_to")))
-    cargs.append(execution.input_file(params.get("sphere_unproject_from")))
-    cargs.append(params.get("sphere_out"))
+    cargs.append(execution.input_file(params.get("sphere_in", None)))
+    cargs.append(execution.input_file(params.get("sphere_project_to", None)))
+    cargs.append(execution.input_file(params.get("sphere_unproject_from", None)))
+    cargs.append(params.get("sphere_out", None))
     return cargs
 
 
@@ -130,7 +105,7 @@ def surface_sphere_project_unproject_outputs(
     """
     ret = SurfaceSphereProjectUnprojectOutputs(
         root=execution.output_file("."),
-        sphere_out=execution.output_file(params.get("sphere_out")),
+        sphere_out=execution.output_file(params.get("sphere_out", None)),
     )
     return ret
 
@@ -311,7 +286,6 @@ def surface_sphere_project_unproject(
 __all__ = [
     "SURFACE_SPHERE_PROJECT_UNPROJECT_METADATA",
     "SurfaceSphereProjectUnprojectOutputs",
-    "SurfaceSphereProjectUnprojectParameters",
     "surface_sphere_project_unproject",
     "surface_sphere_project_unproject_execute",
     "surface_sphere_project_unproject_params",

@@ -14,7 +14,18 @@ VOLUME_PARCEL_RESAMPLING_GENERIC_METADATA = Metadata(
 
 
 VolumeParcelResamplingGenericParameters = typing.TypedDict('VolumeParcelResamplingGenericParameters', {
-    "@type": typing.Literal["workbench.volume-parcel-resampling-generic"],
+    "@type": typing.NotRequired[typing.Literal["workbench/volume-parcel-resampling-generic"]],
+    "volume_in": InputPathType,
+    "cur_parcels": InputPathType,
+    "new_parcels": InputPathType,
+    "kernel": float,
+    "volume_out": str,
+    "opt_fwhm": bool,
+    "opt_fix_zeros": bool,
+    "opt_subvolume_subvol": typing.NotRequired[str | None],
+})
+VolumeParcelResamplingGenericParametersTagged = typing.TypedDict('VolumeParcelResamplingGenericParametersTagged', {
+    "@type": typing.Literal["workbench/volume-parcel-resampling-generic"],
     "volume_in": InputPathType,
     "cur_parcels": InputPathType,
     "new_parcels": InputPathType,
@@ -26,41 +37,9 @@ VolumeParcelResamplingGenericParameters = typing.TypedDict('VolumeParcelResampli
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "workbench.volume-parcel-resampling-generic": volume_parcel_resampling_generic_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "workbench.volume-parcel-resampling-generic": volume_parcel_resampling_generic_outputs,
-    }.get(t)
-
-
 class VolumeParcelResamplingGenericOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `volume_parcel_resampling_generic(...)`.
+    Output object returned when calling `VolumeParcelResamplingGenericParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -77,7 +56,7 @@ def volume_parcel_resampling_generic_params(
     opt_fwhm: bool = False,
     opt_fix_zeros: bool = False,
     opt_subvolume_subvol: str | None = None,
-) -> VolumeParcelResamplingGenericParameters:
+) -> VolumeParcelResamplingGenericParametersTagged:
     """
     Build parameters.
     
@@ -96,7 +75,7 @@ def volume_parcel_resampling_generic_params(
         Parameter dictionary
     """
     params = {
-        "@type": "workbench.volume-parcel-resampling-generic",
+        "@type": "workbench/volume-parcel-resampling-generic",
         "volume_in": volume_in,
         "cur_parcels": cur_parcels,
         "new_parcels": new_parcels,
@@ -126,19 +105,19 @@ def volume_parcel_resampling_generic_cargs(
     cargs = []
     cargs.append("wb_command")
     cargs.append("-volume-parcel-resampling-generic")
-    cargs.append(execution.input_file(params.get("volume_in")))
-    cargs.append(execution.input_file(params.get("cur_parcels")))
-    cargs.append(execution.input_file(params.get("new_parcels")))
-    cargs.append(str(params.get("kernel")))
-    cargs.append(params.get("volume_out"))
-    if params.get("opt_fwhm"):
+    cargs.append(execution.input_file(params.get("volume_in", None)))
+    cargs.append(execution.input_file(params.get("cur_parcels", None)))
+    cargs.append(execution.input_file(params.get("new_parcels", None)))
+    cargs.append(str(params.get("kernel", None)))
+    cargs.append(params.get("volume_out", None))
+    if params.get("opt_fwhm", False):
         cargs.append("-fwhm")
-    if params.get("opt_fix_zeros"):
+    if params.get("opt_fix_zeros", False):
         cargs.append("-fix-zeros")
-    if params.get("opt_subvolume_subvol") is not None:
+    if params.get("opt_subvolume_subvol", None) is not None:
         cargs.extend([
             "-subvolume",
-            params.get("opt_subvolume_subvol")
+            params.get("opt_subvolume_subvol", None)
         ])
     return cargs
 
@@ -158,7 +137,7 @@ def volume_parcel_resampling_generic_outputs(
     """
     ret = VolumeParcelResamplingGenericOutputs(
         root=execution.output_file("."),
-        volume_out=execution.output_file(params.get("volume_out")),
+        volume_out=execution.output_file(params.get("volume_out", None)),
     )
     return ret
 
@@ -262,7 +241,6 @@ def volume_parcel_resampling_generic(
 __all__ = [
     "VOLUME_PARCEL_RESAMPLING_GENERIC_METADATA",
     "VolumeParcelResamplingGenericOutputs",
-    "VolumeParcelResamplingGenericParameters",
     "volume_parcel_resampling_generic",
     "volume_parcel_resampling_generic_execute",
     "volume_parcel_resampling_generic_params",

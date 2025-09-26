@@ -14,7 +14,25 @@ MERGE_STATS_TABLES_METADATA = Metadata(
 
 
 MergeStatsTablesParameters = typing.TypedDict('MergeStatsTablesParameters', {
-    "@type": typing.Literal["freesurfer.merge_stats_tables"],
+    "@type": typing.NotRequired[typing.Literal["freesurfer/merge_stats_tables"]],
+    "subjects": typing.NotRequired[list[str] | None],
+    "subject": typing.NotRequired[str | None],
+    "subjectsfile": typing.NotRequired[InputPathType | None],
+    "inputs": typing.NotRequired[list[InputPathType] | None],
+    "input": typing.NotRequired[InputPathType | None],
+    "outputfile": str,
+    "meas": str,
+    "common_segs": bool,
+    "all_segs": bool,
+    "intable": typing.NotRequired[InputPathType | None],
+    "subdir": typing.NotRequired[str | None],
+    "delimiter": typing.NotRequired[str | None],
+    "transpose": bool,
+    "skip": bool,
+    "debug": bool,
+})
+MergeStatsTablesParametersTagged = typing.TypedDict('MergeStatsTablesParametersTagged', {
+    "@type": typing.Literal["freesurfer/merge_stats_tables"],
     "subjects": typing.NotRequired[list[str] | None],
     "subject": typing.NotRequired[str | None],
     "subjectsfile": typing.NotRequired[InputPathType | None],
@@ -33,41 +51,9 @@ MergeStatsTablesParameters = typing.TypedDict('MergeStatsTablesParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "freesurfer.merge_stats_tables": merge_stats_tables_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "freesurfer.merge_stats_tables": merge_stats_tables_outputs,
-    }.get(t)
-
-
 class MergeStatsTablesOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `merge_stats_tables(...)`.
+    Output object returned when calling `MergeStatsTablesParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -91,7 +77,7 @@ def merge_stats_tables_params(
     transpose: bool = False,
     skip: bool = False,
     debug: bool = False,
-) -> MergeStatsTablesParameters:
+) -> MergeStatsTablesParametersTagged:
     """
     Build parameters.
     
@@ -121,7 +107,7 @@ def merge_stats_tables_params(
         Parameter dictionary
     """
     params = {
-        "@type": "freesurfer.merge_stats_tables",
+        "@type": "freesurfer/merge_stats_tables",
         "outputfile": outputfile,
         "meas": meas,
         "common_segs": common_segs,
@@ -164,63 +150,63 @@ def merge_stats_tables_cargs(
     """
     cargs = []
     cargs.append("merge_stats_tables")
-    if params.get("subjects") is not None:
+    if params.get("subjects", None) is not None:
         cargs.extend([
             "--subjects",
-            *params.get("subjects")
+            *params.get("subjects", None)
         ])
-    if params.get("subject") is not None:
+    if params.get("subject", None) is not None:
         cargs.extend([
             "-s",
-            params.get("subject")
+            params.get("subject", None)
         ])
-    if params.get("subjectsfile") is not None:
+    if params.get("subjectsfile", None) is not None:
         cargs.extend([
             "--subjectsfile",
-            execution.input_file(params.get("subjectsfile"))
+            execution.input_file(params.get("subjectsfile", None))
         ])
-    if params.get("inputs") is not None:
+    if params.get("inputs", None) is not None:
         cargs.extend([
             "--inputs",
-            *[execution.input_file(f) for f in params.get("inputs")]
+            *[execution.input_file(f) for f in params.get("inputs", None)]
         ])
-    if params.get("input") is not None:
+    if params.get("input", None) is not None:
         cargs.extend([
             "-i",
-            execution.input_file(params.get("input"))
+            execution.input_file(params.get("input", None))
         ])
     cargs.extend([
         "-t",
-        params.get("outputfile")
+        params.get("outputfile", None)
     ])
     cargs.extend([
         "-m",
-        params.get("meas")
+        params.get("meas", None)
     ])
-    if params.get("common_segs"):
+    if params.get("common_segs", False):
         cargs.append("--common-segs")
-    if params.get("all_segs"):
+    if params.get("all_segs", False):
         cargs.append("--all-segs")
-    if params.get("intable") is not None:
+    if params.get("intable", None) is not None:
         cargs.extend([
             "--intable",
-            execution.input_file(params.get("intable"))
+            execution.input_file(params.get("intable", None))
         ])
-    if params.get("subdir") is not None:
+    if params.get("subdir", None) is not None:
         cargs.extend([
             "--subdir",
-            params.get("subdir")
+            params.get("subdir", None)
         ])
-    if params.get("delimiter") is not None:
+    if params.get("delimiter", None) is not None:
         cargs.extend([
             "-d",
-            params.get("delimiter")
+            params.get("delimiter", None)
         ])
-    if params.get("transpose"):
+    if params.get("transpose", False):
         cargs.append("--transpose")
-    if params.get("skip"):
+    if params.get("skip", False):
         cargs.append("--skip")
-    if params.get("debug"):
+    if params.get("debug", False):
         cargs.append("-v")
     return cargs
 
@@ -240,7 +226,7 @@ def merge_stats_tables_outputs(
     """
     ret = MergeStatsTablesOutputs(
         root=execution.output_file("."),
-        merged_stats_table=execution.output_file(params.get("outputfile")),
+        merged_stats_table=execution.output_file(params.get("outputfile", None)),
     )
     return ret
 
@@ -351,7 +337,6 @@ def merge_stats_tables(
 __all__ = [
     "MERGE_STATS_TABLES_METADATA",
     "MergeStatsTablesOutputs",
-    "MergeStatsTablesParameters",
     "merge_stats_tables",
     "merge_stats_tables_execute",
     "merge_stats_tables_params",

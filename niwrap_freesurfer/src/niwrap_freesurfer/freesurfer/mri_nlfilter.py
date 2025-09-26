@@ -14,7 +14,22 @@ MRI_NLFILTER_METADATA = Metadata(
 
 
 MriNlfilterParameters = typing.TypedDict('MriNlfilterParameters', {
-    "@type": typing.Literal["freesurfer.mri_nlfilter"],
+    "@type": typing.NotRequired[typing.Literal["freesurfer/mri_nlfilter"]],
+    "input_image": InputPathType,
+    "output_image": str,
+    "blur_sigma": typing.NotRequired[float | None],
+    "gaussian_sigma": typing.NotRequired[float | None],
+    "mean_flag": bool,
+    "window_size": typing.NotRequired[float | None],
+    "cplov_flag": bool,
+    "minmax_flag": bool,
+    "no_offsets_flag": bool,
+    "no_crop_flag": bool,
+    "version_flag": bool,
+    "help_flag": bool,
+})
+MriNlfilterParametersTagged = typing.TypedDict('MriNlfilterParametersTagged', {
+    "@type": typing.Literal["freesurfer/mri_nlfilter"],
     "input_image": InputPathType,
     "output_image": str,
     "blur_sigma": typing.NotRequired[float | None],
@@ -30,41 +45,9 @@ MriNlfilterParameters = typing.TypedDict('MriNlfilterParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "freesurfer.mri_nlfilter": mri_nlfilter_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "freesurfer.mri_nlfilter": mri_nlfilter_outputs,
-    }.get(t)
-
-
 class MriNlfilterOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `mri_nlfilter(...)`.
+    Output object returned when calling `MriNlfilterParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -85,7 +68,7 @@ def mri_nlfilter_params(
     no_crop_flag: bool = False,
     version_flag: bool = False,
     help_flag: bool = False,
-) -> MriNlfilterParameters:
+) -> MriNlfilterParametersTagged:
     """
     Build parameters.
     
@@ -109,7 +92,7 @@ def mri_nlfilter_params(
         Parameter dictionary
     """
     params = {
-        "@type": "freesurfer.mri_nlfilter",
+        "@type": "freesurfer/mri_nlfilter",
         "input_image": input_image,
         "output_image": output_image,
         "mean_flag": mean_flag,
@@ -144,36 +127,36 @@ def mri_nlfilter_cargs(
     """
     cargs = []
     cargs.append("mri_nlfilter")
-    cargs.append(execution.input_file(params.get("input_image")))
-    cargs.append(params.get("output_image"))
-    if params.get("blur_sigma") is not None:
+    cargs.append(execution.input_file(params.get("input_image", None)))
+    cargs.append(params.get("output_image", None))
+    if params.get("blur_sigma", None) is not None:
         cargs.extend([
             "-blur",
-            str(params.get("blur_sigma"))
+            str(params.get("blur_sigma", None))
         ])
-    if params.get("gaussian_sigma") is not None:
+    if params.get("gaussian_sigma", None) is not None:
         cargs.extend([
             "-gaussian",
-            str(params.get("gaussian_sigma"))
+            str(params.get("gaussian_sigma", None))
         ])
-    if params.get("mean_flag"):
+    if params.get("mean_flag", False):
         cargs.append("-mean")
-    if params.get("window_size") is not None:
+    if params.get("window_size", None) is not None:
         cargs.extend([
             "-w",
-            str(params.get("window_size"))
+            str(params.get("window_size", None))
         ])
-    if params.get("cplov_flag"):
+    if params.get("cplov_flag", False):
         cargs.append("-cplov")
-    if params.get("minmax_flag"):
+    if params.get("minmax_flag", False):
         cargs.append("-minmax")
-    if params.get("no_offsets_flag"):
+    if params.get("no_offsets_flag", False):
         cargs.append("-n")
-    if params.get("no_crop_flag"):
+    if params.get("no_crop_flag", False):
         cargs.append("-nc")
-    if params.get("version_flag"):
+    if params.get("version_flag", False):
         cargs.append("--version")
-    if params.get("help_flag"):
+    if params.get("help_flag", False):
         cargs.append("--help")
     return cargs
 
@@ -193,7 +176,7 @@ def mri_nlfilter_outputs(
     """
     ret = MriNlfilterOutputs(
         root=execution.output_file("."),
-        output_file=execution.output_file(params.get("output_image")),
+        output_file=execution.output_file(params.get("output_image", None)),
     )
     return ret
 
@@ -294,7 +277,6 @@ def mri_nlfilter(
 __all__ = [
     "MRI_NLFILTER_METADATA",
     "MriNlfilterOutputs",
-    "MriNlfilterParameters",
     "mri_nlfilter",
     "mri_nlfilter_execute",
     "mri_nlfilter_params",

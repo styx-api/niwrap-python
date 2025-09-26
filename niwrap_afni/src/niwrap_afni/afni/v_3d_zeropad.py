@@ -14,7 +14,25 @@ V_3D_ZEROPAD_METADATA = Metadata(
 
 
 V3dZeropadParameters = typing.TypedDict('V3dZeropadParameters', {
-    "@type": typing.Literal["afni.3dZeropad"],
+    "@type": typing.NotRequired[typing.Literal["afni/3dZeropad"]],
+    "dataset": InputPathType,
+    "I": typing.NotRequired[float | None],
+    "S": typing.NotRequired[float | None],
+    "A": typing.NotRequired[float | None],
+    "P": typing.NotRequired[float | None],
+    "L": typing.NotRequired[float | None],
+    "R": typing.NotRequired[float | None],
+    "z": typing.NotRequired[float | None],
+    "RL": typing.NotRequired[float | None],
+    "AP": typing.NotRequired[float | None],
+    "IS": typing.NotRequired[float | None],
+    "pad2even": bool,
+    "mm_flag": bool,
+    "master_dataset": typing.NotRequired[InputPathType | None],
+    "prefix": typing.NotRequired[str | None],
+})
+V3dZeropadParametersTagged = typing.TypedDict('V3dZeropadParametersTagged', {
+    "@type": typing.Literal["afni/3dZeropad"],
     "dataset": InputPathType,
     "I": typing.NotRequired[float | None],
     "S": typing.NotRequired[float | None],
@@ -33,41 +51,9 @@ V3dZeropadParameters = typing.TypedDict('V3dZeropadParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "afni.3dZeropad": v_3d_zeropad_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "afni.3dZeropad": v_3d_zeropad_outputs,
-    }.get(t)
-
-
 class V3dZeropadOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `v_3d_zeropad(...)`.
+    Output object returned when calling `V3dZeropadParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -93,7 +79,7 @@ def v_3d_zeropad_params(
     mm_flag: bool = False,
     master_dataset: InputPathType | None = None,
     prefix: str | None = None,
-) -> V3dZeropadParameters:
+) -> V3dZeropadParametersTagged:
     """
     Build parameters.
     
@@ -125,7 +111,7 @@ def v_3d_zeropad_params(
         Parameter dictionary
     """
     params = {
-        "@type": "afni.3dZeropad",
+        "@type": "afni/3dZeropad",
         "dataset": dataset,
         "pad2even": pad2even,
         "mm_flag": mm_flag,
@@ -172,70 +158,70 @@ def v_3d_zeropad_cargs(
     """
     cargs = []
     cargs.append("3dZeropad")
-    cargs.append(execution.input_file(params.get("dataset")))
-    if params.get("I") is not None:
+    cargs.append(execution.input_file(params.get("dataset", None)))
+    if params.get("I", None) is not None:
         cargs.extend([
             "-I",
-            str(params.get("I"))
+            str(params.get("I", None))
         ])
-    if params.get("S") is not None:
+    if params.get("S", None) is not None:
         cargs.extend([
             "-S",
-            str(params.get("S"))
+            str(params.get("S", None))
         ])
-    if params.get("A") is not None:
+    if params.get("A", None) is not None:
         cargs.extend([
             "-A",
-            str(params.get("A"))
+            str(params.get("A", None))
         ])
-    if params.get("P") is not None:
+    if params.get("P", None) is not None:
         cargs.extend([
             "-P",
-            str(params.get("P"))
+            str(params.get("P", None))
         ])
-    if params.get("L") is not None:
+    if params.get("L", None) is not None:
         cargs.extend([
             "-L",
-            str(params.get("L"))
+            str(params.get("L", None))
         ])
-    if params.get("R") is not None:
+    if params.get("R", None) is not None:
         cargs.extend([
             "-R",
-            str(params.get("R"))
+            str(params.get("R", None))
         ])
-    if params.get("z") is not None:
+    if params.get("z", None) is not None:
         cargs.extend([
             "-z",
-            str(params.get("z"))
+            str(params.get("z", None))
         ])
-    if params.get("RL") is not None:
+    if params.get("RL", None) is not None:
         cargs.extend([
             "-RL",
-            str(params.get("RL"))
+            str(params.get("RL", None))
         ])
-    if params.get("AP") is not None:
+    if params.get("AP", None) is not None:
         cargs.extend([
             "-AP",
-            str(params.get("AP"))
+            str(params.get("AP", None))
         ])
-    if params.get("IS") is not None:
+    if params.get("IS", None) is not None:
         cargs.extend([
             "-IS",
-            str(params.get("IS"))
+            str(params.get("IS", None))
         ])
-    if params.get("pad2even"):
+    if params.get("pad2even", False):
         cargs.append("-pad2evens")
-    if params.get("mm_flag"):
+    if params.get("mm_flag", False):
         cargs.append("-mm")
-    if params.get("master_dataset") is not None:
+    if params.get("master_dataset", None) is not None:
         cargs.extend([
             "-master",
-            execution.input_file(params.get("master_dataset"))
+            execution.input_file(params.get("master_dataset", None))
         ])
-    if params.get("prefix") is not None:
+    if params.get("prefix", None) is not None:
         cargs.extend([
             "-prefix",
-            params.get("prefix")
+            params.get("prefix", None)
         ])
     return cargs
 
@@ -255,8 +241,8 @@ def v_3d_zeropad_outputs(
     """
     ret = V3dZeropadOutputs(
         root=execution.output_file("."),
-        output_dataset_brik=execution.output_file(params.get("prefix") + "+orig.BRIK") if (params.get("prefix") is not None) else None,
-        output_dataset_head=execution.output_file(params.get("prefix") + "+orig.HEAD") if (params.get("prefix") is not None) else None,
+        output_dataset_brik=execution.output_file(params.get("prefix", None) + "+orig.BRIK") if (params.get("prefix") is not None) else None,
+        output_dataset_head=execution.output_file(params.get("prefix", None) + "+orig.HEAD") if (params.get("prefix") is not None) else None,
     )
     return ret
 
@@ -368,7 +354,6 @@ def v_3d_zeropad(
 
 __all__ = [
     "V3dZeropadOutputs",
-    "V3dZeropadParameters",
     "V_3D_ZEROPAD_METADATA",
     "v_3d_zeropad",
     "v_3d_zeropad_execute",

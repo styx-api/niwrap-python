@@ -14,7 +14,31 @@ MRI_APARC2ASEG_METADATA = Metadata(
 
 
 MriAparc2asegParameters = typing.TypedDict('MriAparc2asegParameters', {
-    "@type": typing.Literal["freesurfer.mri_aparc2aseg"],
+    "@type": typing.NotRequired[typing.Literal["freesurfer/mri_aparc2aseg"]],
+    "subject": typing.NotRequired[str | None],
+    "output_volfile": typing.NotRequired[str | None],
+    "old_ribbon": bool,
+    "new_ribbon": bool,
+    "a2005s": bool,
+    "a2009s": bool,
+    "annot_name": typing.NotRequired[str | None],
+    "annot_table": typing.NotRequired[str | None],
+    "base_offset": typing.NotRequired[float | None],
+    "label_wm": bool,
+    "wmparc_dmax": typing.NotRequired[float | None],
+    "rip_unknown": bool,
+    "hypo_as_wm": bool,
+    "no_fix_parahip": bool,
+    "smooth_normals": typing.NotRequired[float | None],
+    "crs_test": typing.NotRequired[str | None],
+    "left_hemisphere": bool,
+    "right_hemisphere": bool,
+    "threads": typing.NotRequired[float | None],
+    "help": bool,
+    "version": bool,
+})
+MriAparc2asegParametersTagged = typing.TypedDict('MriAparc2asegParametersTagged', {
+    "@type": typing.Literal["freesurfer/mri_aparc2aseg"],
     "subject": typing.NotRequired[str | None],
     "output_volfile": typing.NotRequired[str | None],
     "old_ribbon": bool,
@@ -39,41 +63,9 @@ MriAparc2asegParameters = typing.TypedDict('MriAparc2asegParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "freesurfer.mri_aparc2aseg": mri_aparc2aseg_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "freesurfer.mri_aparc2aseg": mri_aparc2aseg_outputs,
-    }.get(t)
-
-
 class MriAparc2asegOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `mri_aparc2aseg(...)`.
+    Output object returned when calling `MriAparc2asegParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -103,7 +95,7 @@ def mri_aparc2aseg_params(
     threads: float | None = None,
     help_: bool = False,
     version: bool = False,
-) -> MriAparc2asegParameters:
+) -> MriAparc2asegParametersTagged:
     """
     Build parameters.
     
@@ -141,7 +133,7 @@ def mri_aparc2aseg_params(
         Parameter dictionary
     """
     params = {
-        "@type": "freesurfer.mri_aparc2aseg",
+        "@type": "freesurfer/mri_aparc2aseg",
         "old_ribbon": old_ribbon,
         "new_ribbon": new_ribbon,
         "a2005s": a2005s,
@@ -191,74 +183,74 @@ def mri_aparc2aseg_cargs(
     """
     cargs = []
     cargs.append("mri_aparc2aseg")
-    if params.get("subject") is not None:
+    if params.get("subject", None) is not None:
         cargs.extend([
             "--s",
-            params.get("subject")
+            params.get("subject", None)
         ])
-    if params.get("output_volfile") is not None:
+    if params.get("output_volfile", None) is not None:
         cargs.extend([
             "--o",
-            params.get("output_volfile")
+            params.get("output_volfile", None)
         ])
-    if params.get("old_ribbon"):
+    if params.get("old_ribbon", False):
         cargs.append("--old-ribbon")
-    if params.get("new_ribbon"):
+    if params.get("new_ribbon", False):
         cargs.append("--new-ribbon")
-    if params.get("a2005s"):
+    if params.get("a2005s", False):
         cargs.append("--a2005s")
-    if params.get("a2009s"):
+    if params.get("a2009s", False):
         cargs.append("--a2009s")
-    if params.get("annot_name") is not None:
+    if params.get("annot_name", None) is not None:
         cargs.extend([
             "--annot",
-            params.get("annot_name")
+            params.get("annot_name", None)
         ])
-    if params.get("annot_table") is not None:
+    if params.get("annot_table", None) is not None:
         cargs.extend([
             "--annot-table",
-            params.get("annot_table")
+            params.get("annot_table", None)
         ])
-    if params.get("base_offset") is not None:
+    if params.get("base_offset", None) is not None:
         cargs.extend([
             "--base-offset",
-            str(params.get("base_offset"))
+            str(params.get("base_offset", None))
         ])
-    if params.get("label_wm"):
+    if params.get("label_wm", False):
         cargs.append("--labelwm")
-    if params.get("wmparc_dmax") is not None:
+    if params.get("wmparc_dmax", None) is not None:
         cargs.extend([
             "--wmparc-dmax",
-            str(params.get("wmparc_dmax"))
+            str(params.get("wmparc_dmax", None))
         ])
-    if params.get("rip_unknown"):
+    if params.get("rip_unknown", False):
         cargs.append("--rip-unknown")
-    if params.get("hypo_as_wm"):
+    if params.get("hypo_as_wm", False):
         cargs.append("--hypo-as-wm")
-    if params.get("no_fix_parahip"):
+    if params.get("no_fix_parahip", False):
         cargs.append("--no-fix-parahip")
-    if params.get("smooth_normals") is not None:
+    if params.get("smooth_normals", None) is not None:
         cargs.extend([
             "--smooth_normals",
-            str(params.get("smooth_normals"))
+            str(params.get("smooth_normals", None))
         ])
-    if params.get("crs_test") is not None:
+    if params.get("crs_test", None) is not None:
         cargs.extend([
             "--crs-test",
-            params.get("crs_test")
+            params.get("crs_test", None)
         ])
-    if params.get("left_hemisphere"):
+    if params.get("left_hemisphere", False):
         cargs.append("--lh")
-    if params.get("right_hemisphere"):
+    if params.get("right_hemisphere", False):
         cargs.append("--rh")
-    if params.get("threads") is not None:
+    if params.get("threads", None) is not None:
         cargs.extend([
             "--threads",
-            str(params.get("threads"))
+            str(params.get("threads", None))
         ])
-    if params.get("help"):
+    if params.get("help", False):
         cargs.append("--help")
-    if params.get("version"):
+    if params.get("version", False):
         cargs.append("--version")
     return cargs
 
@@ -409,7 +401,6 @@ def mri_aparc2aseg(
 __all__ = [
     "MRI_APARC2ASEG_METADATA",
     "MriAparc2asegOutputs",
-    "MriAparc2asegParameters",
     "mri_aparc2aseg",
     "mri_aparc2aseg_execute",
     "mri_aparc2aseg_params",

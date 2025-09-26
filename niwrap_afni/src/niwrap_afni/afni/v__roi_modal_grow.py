@@ -14,7 +14,16 @@ V__ROI_MODAL_GROW_METADATA = Metadata(
 
 
 VRoiModalGrowParameters = typing.TypedDict('VRoiModalGrowParameters', {
-    "@type": typing.Literal["afni.@ROI_modal_grow"],
+    "@type": typing.NotRequired[typing.Literal["afni/@ROI_modal_grow"]],
+    "input_dset": InputPathType,
+    "niters": float,
+    "outdir": typing.NotRequired[str | None],
+    "mask": typing.NotRequired[InputPathType | None],
+    "prefix": typing.NotRequired[str | None],
+    "neighborhood_type": typing.NotRequired[int | None],
+})
+VRoiModalGrowParametersTagged = typing.TypedDict('VRoiModalGrowParametersTagged', {
+    "@type": typing.Literal["afni/@ROI_modal_grow"],
     "input_dset": InputPathType,
     "niters": float,
     "outdir": typing.NotRequired[str | None],
@@ -24,41 +33,9 @@ VRoiModalGrowParameters = typing.TypedDict('VRoiModalGrowParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "afni.@ROI_modal_grow": v__roi_modal_grow_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "afni.@ROI_modal_grow": v__roi_modal_grow_outputs,
-    }.get(t)
-
-
 class VRoiModalGrowOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `v__roi_modal_grow(...)`.
+    Output object returned when calling `VRoiModalGrowParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -73,7 +50,7 @@ def v__roi_modal_grow_params(
     mask: InputPathType | None = None,
     prefix: str | None = None,
     neighborhood_type: int | None = None,
-) -> VRoiModalGrowParameters:
+) -> VRoiModalGrowParametersTagged:
     """
     Build parameters.
     
@@ -95,7 +72,7 @@ def v__roi_modal_grow_params(
         Parameter dictionary
     """
     params = {
-        "@type": "afni.@ROI_modal_grow",
+        "@type": "afni/@ROI_modal_grow",
         "input_dset": input_dset,
         "niters": niters,
     }
@@ -127,31 +104,31 @@ def v__roi_modal_grow_cargs(
     cargs.append("@ROI_modal_grow")
     cargs.extend([
         "-input",
-        execution.input_file(params.get("input_dset"))
+        execution.input_file(params.get("input_dset", None))
     ])
     cargs.extend([
         "-niters",
-        str(params.get("niters"))
+        str(params.get("niters", None))
     ])
-    if params.get("outdir") is not None:
+    if params.get("outdir", None) is not None:
         cargs.extend([
             "-outdir",
-            params.get("outdir")
+            params.get("outdir", None)
         ])
-    if params.get("mask") is not None:
+    if params.get("mask", None) is not None:
         cargs.extend([
             "-mask",
-            execution.input_file(params.get("mask"))
+            execution.input_file(params.get("mask", None))
         ])
-    if params.get("prefix") is not None:
+    if params.get("prefix", None) is not None:
         cargs.extend([
             "-prefix",
-            params.get("prefix")
+            params.get("prefix", None)
         ])
-    if params.get("neighborhood_type") is not None:
+    if params.get("neighborhood_type", None) is not None:
         cargs.extend([
             "-NN",
-            str(params.get("neighborhood_type"))
+            str(params.get("neighborhood_type", None))
         ])
     return cargs
 
@@ -171,7 +148,7 @@ def v__roi_modal_grow_outputs(
     """
     ret = VRoiModalGrowOutputs(
         root=execution.output_file("."),
-        output_file=execution.output_file(params.get("outdir") + "/" + params.get("prefix") + ".nii.gz") if (params.get("outdir") is not None and params.get("prefix") is not None) else None,
+        output_file=execution.output_file(params.get("outdir", None) + "/" + params.get("prefix", None) + ".nii.gz") if (params.get("outdir") is not None and params.get("prefix") is not None) else None,
     )
     return ret
 
@@ -255,7 +232,6 @@ def v__roi_modal_grow(
 
 __all__ = [
     "VRoiModalGrowOutputs",
-    "VRoiModalGrowParameters",
     "V__ROI_MODAL_GROW_METADATA",
     "v__roi_modal_grow",
     "v__roi_modal_grow_execute",

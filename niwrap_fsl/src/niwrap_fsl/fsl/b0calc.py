@@ -14,7 +14,25 @@ B0CALC_METADATA = Metadata(
 
 
 B0calcParameters = typing.TypedDict('B0calcParameters', {
-    "@type": typing.Literal["fsl.b0calc"],
+    "@type": typing.NotRequired[typing.Literal["fsl/b0calc"]],
+    "input_file": InputPathType,
+    "output_file": str,
+    "zero_order_x": typing.NotRequired[float | None],
+    "zero_order_y": typing.NotRequired[float | None],
+    "zero_order_z": typing.NotRequired[float | None],
+    "b0_x": typing.NotRequired[float | None],
+    "b0_y": typing.NotRequired[float | None],
+    "b0_z": typing.NotRequired[float | None],
+    "delta": typing.NotRequired[float | None],
+    "chi0": typing.NotRequired[float | None],
+    "xyz_flag": bool,
+    "extend_boundary": typing.NotRequired[float | None],
+    "direct_conv": bool,
+    "verbose_flag": bool,
+    "help_flag": bool,
+})
+B0calcParametersTagged = typing.TypedDict('B0calcParametersTagged', {
+    "@type": typing.Literal["fsl/b0calc"],
     "input_file": InputPathType,
     "output_file": str,
     "zero_order_x": typing.NotRequired[float | None],
@@ -33,41 +51,9 @@ B0calcParameters = typing.TypedDict('B0calcParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "fsl.b0calc": b0calc_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "fsl.b0calc": b0calc_outputs,
-    }.get(t)
-
-
 class B0calcOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `b0calc(...)`.
+    Output object returned when calling `B0calcParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -97,7 +83,7 @@ def b0calc_params(
     direct_conv: bool = False,
     verbose_flag: bool = False,
     help_flag: bool = False,
-) -> B0calcParameters:
+) -> B0calcParametersTagged:
     """
     Build parameters.
     
@@ -125,7 +111,7 @@ def b0calc_params(
         Parameter dictionary
     """
     params = {
-        "@type": "fsl.b0calc",
+        "@type": "fsl/b0calc",
         "input_file": input_file,
         "output_file": output_file,
         "xyz_flag": xyz_flag,
@@ -171,64 +157,64 @@ def b0calc_cargs(
     cargs.append("b0calc")
     cargs.extend([
         "-i",
-        execution.input_file(params.get("input_file"))
+        execution.input_file(params.get("input_file", None))
     ])
     cargs.extend([
         "-o",
-        params.get("output_file")
+        params.get("output_file", None)
     ])
-    if params.get("zero_order_x") is not None:
+    if params.get("zero_order_x", None) is not None:
         cargs.extend([
             "--gx",
-            str(params.get("zero_order_x"))
+            str(params.get("zero_order_x", None))
         ])
-    if params.get("zero_order_y") is not None:
+    if params.get("zero_order_y", None) is not None:
         cargs.extend([
             "--gy",
-            str(params.get("zero_order_y"))
+            str(params.get("zero_order_y", None))
         ])
-    if params.get("zero_order_z") is not None:
+    if params.get("zero_order_z", None) is not None:
         cargs.extend([
             "--gz",
-            str(params.get("zero_order_z"))
+            str(params.get("zero_order_z", None))
         ])
-    if params.get("b0_x") is not None:
+    if params.get("b0_x", None) is not None:
         cargs.extend([
             "--b0x",
-            str(params.get("b0_x"))
+            str(params.get("b0_x", None))
         ])
-    if params.get("b0_y") is not None:
+    if params.get("b0_y", None) is not None:
         cargs.extend([
             "--b0y",
-            str(params.get("b0_y"))
+            str(params.get("b0_y", None))
         ])
-    if params.get("b0_z") is not None:
+    if params.get("b0_z", None) is not None:
         cargs.extend([
             "--b0",
-            str(params.get("b0_z"))
+            str(params.get("b0_z", None))
         ])
-    if params.get("delta") is not None:
+    if params.get("delta", None) is not None:
         cargs.extend([
             "-d",
-            str(params.get("delta"))
+            str(params.get("delta", None))
         ])
-    if params.get("chi0") is not None:
+    if params.get("chi0", None) is not None:
         cargs.extend([
             "--chi0",
-            str(params.get("chi0"))
+            str(params.get("chi0", None))
         ])
-    if params.get("xyz_flag"):
+    if params.get("xyz_flag", False):
         cargs.append("--xyz")
-    if params.get("extend_boundary") is not None:
+    if params.get("extend_boundary", None) is not None:
         cargs.extend([
             "--extendboundary",
-            str(params.get("extend_boundary"))
+            str(params.get("extend_boundary", None))
         ])
-    if params.get("direct_conv"):
+    if params.get("direct_conv", False):
         cargs.append("--directconv")
-    if params.get("verbose_flag"):
+    if params.get("verbose_flag", False):
         cargs.append("-v")
-    if params.get("help_flag"):
+    if params.get("help_flag", False):
         cargs.append("-h")
     return cargs
 
@@ -248,10 +234,10 @@ def b0calc_outputs(
     """
     ret = B0calcOutputs(
         root=execution.output_file("."),
-        b0_output=execution.output_file(params.get("output_file")),
-        b0_output_x=execution.output_file(params.get("output_file") + "_x"),
-        b0_output_y=execution.output_file(params.get("output_file") + "_y"),
-        b0_output_z=execution.output_file(params.get("output_file") + "_z"),
+        b0_output=execution.output_file(params.get("output_file", None)),
+        b0_output_x=execution.output_file(params.get("output_file", None) + "_x"),
+        b0_output_y=execution.output_file(params.get("output_file", None) + "_y"),
+        b0_output_z=execution.output_file(params.get("output_file", None) + "_z"),
     )
     return ret
 
@@ -358,7 +344,6 @@ def b0calc(
 __all__ = [
     "B0CALC_METADATA",
     "B0calcOutputs",
-    "B0calcParameters",
     "b0calc",
     "b0calc_execute",
     "b0calc_params",

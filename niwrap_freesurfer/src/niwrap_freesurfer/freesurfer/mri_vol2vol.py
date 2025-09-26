@@ -14,7 +14,54 @@ MRI_VOL2VOL_METADATA = Metadata(
 
 
 MriVol2volParameters = typing.TypedDict('MriVol2volParameters', {
-    "@type": typing.Literal["freesurfer.mri_vol2vol"],
+    "@type": typing.NotRequired[typing.Literal["freesurfer/mri_vol2vol"]],
+    "movvol": InputPathType,
+    "targvol": InputPathType,
+    "outvol": InputPathType,
+    "dispvol": typing.NotRequired[InputPathType | None],
+    "downsample": typing.NotRequired[list[float] | None],
+    "register_dat": typing.NotRequired[InputPathType | None],
+    "lta": typing.NotRequired[InputPathType | None],
+    "lta_inv": typing.NotRequired[InputPathType | None],
+    "fsl": typing.NotRequired[InputPathType | None],
+    "xfm": typing.NotRequired[InputPathType | None],
+    "inv": bool,
+    "tal": bool,
+    "talres": typing.NotRequired[float | None],
+    "talxfm": typing.NotRequired[InputPathType | None],
+    "m3z": typing.NotRequired[InputPathType | None],
+    "inv_morph": bool,
+    "fstarg": typing.NotRequired[str | None],
+    "crop": typing.NotRequired[float | None],
+    "slice_crop": typing.NotRequired[list[float] | None],
+    "slice_reverse": bool,
+    "slice_bias": typing.NotRequired[float | None],
+    "interp": typing.NotRequired[str | None],
+    "fill_average": bool,
+    "fill_conserve": bool,
+    "fill_up": typing.NotRequired[float | None],
+    "mul": typing.NotRequired[float | None],
+    "precision": typing.NotRequired[str | None],
+    "keep_precision": bool,
+    "kernel": bool,
+    "copy_ctab": bool,
+    "gcam": typing.NotRequired[str | None],
+    "spm_warp": typing.NotRequired[str | None],
+    "map_point": typing.NotRequired[str | None],
+    "map_point_inv_lta": typing.NotRequired[str | None],
+    "no_resample": bool,
+    "rot": typing.NotRequired[list[float] | None],
+    "trans": typing.NotRequired[list[float] | None],
+    "shear": typing.NotRequired[list[float] | None],
+    "reg_final": typing.NotRequired[InputPathType | None],
+    "synth": bool,
+    "seed": typing.NotRequired[float | None],
+    "save_reg": bool,
+    "debug": bool,
+    "version": bool,
+})
+MriVol2volParametersTagged = typing.TypedDict('MriVol2volParametersTagged', {
+    "@type": typing.Literal["freesurfer/mri_vol2vol"],
     "movvol": InputPathType,
     "targvol": InputPathType,
     "outvol": InputPathType,
@@ -62,41 +109,9 @@ MriVol2volParameters = typing.TypedDict('MriVol2volParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "freesurfer.mri_vol2vol": mri_vol2vol_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "freesurfer.mri_vol2vol": mri_vol2vol_outputs,
-    }.get(t)
-
-
 class MriVol2volOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `mri_vol2vol(...)`.
+    Output object returned when calling `MriVol2volParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -149,7 +164,7 @@ def mri_vol2vol_params(
     save_reg: bool = False,
     debug: bool = False,
     version: bool = False,
-) -> MriVol2volParameters:
+) -> MriVol2volParametersTagged:
     """
     Build parameters.
     
@@ -210,7 +225,7 @@ def mri_vol2vol_params(
         Parameter dictionary
     """
     params = {
-        "@type": "freesurfer.mri_vol2vol",
+        "@type": "freesurfer/mri_vol2vol",
         "movvol": movvol,
         "targvol": targvol,
         "outvol": outvol,
@@ -301,171 +316,171 @@ def mri_vol2vol_cargs(
     """
     cargs = []
     cargs.append("mri_vol2vol")
-    cargs.append(execution.input_file(params.get("movvol")))
-    cargs.append(execution.input_file(params.get("targvol")))
-    cargs.append(execution.input_file(params.get("outvol")))
-    if params.get("dispvol") is not None:
+    cargs.append(execution.input_file(params.get("movvol", None)))
+    cargs.append(execution.input_file(params.get("targvol", None)))
+    cargs.append(execution.input_file(params.get("outvol", None)))
+    if params.get("dispvol", None) is not None:
         cargs.extend([
             "--disp",
-            execution.input_file(params.get("dispvol"))
+            execution.input_file(params.get("dispvol", None))
         ])
-    if params.get("downsample") is not None:
+    if params.get("downsample", None) is not None:
         cargs.extend([
             "--downsample",
-            *map(str, params.get("downsample"))
+            *map(str, params.get("downsample", None))
         ])
-    if params.get("register_dat") is not None:
+    if params.get("register_dat", None) is not None:
         cargs.extend([
             "--reg",
-            execution.input_file(params.get("register_dat"))
+            execution.input_file(params.get("register_dat", None))
         ])
-    if params.get("lta") is not None:
+    if params.get("lta", None) is not None:
         cargs.extend([
             "--lta",
-            execution.input_file(params.get("lta"))
+            execution.input_file(params.get("lta", None))
         ])
-    if params.get("lta_inv") is not None:
+    if params.get("lta_inv", None) is not None:
         cargs.extend([
             "--lta-inv",
-            execution.input_file(params.get("lta_inv"))
+            execution.input_file(params.get("lta_inv", None))
         ])
-    if params.get("fsl") is not None:
+    if params.get("fsl", None) is not None:
         cargs.extend([
             "--fsl",
-            execution.input_file(params.get("fsl"))
+            execution.input_file(params.get("fsl", None))
         ])
-    if params.get("xfm") is not None:
+    if params.get("xfm", None) is not None:
         cargs.extend([
             "--xfm",
-            execution.input_file(params.get("xfm"))
+            execution.input_file(params.get("xfm", None))
         ])
-    if params.get("inv"):
+    if params.get("inv", False):
         cargs.append("--inv")
-    if params.get("tal"):
+    if params.get("tal", False):
         cargs.append("--tal")
-    if params.get("talres") is not None:
+    if params.get("talres", None) is not None:
         cargs.extend([
             "--talres",
-            str(params.get("talres"))
+            str(params.get("talres", None))
         ])
-    if params.get("talxfm") is not None:
+    if params.get("talxfm", None) is not None:
         cargs.extend([
             "--talxfm",
-            execution.input_file(params.get("talxfm"))
+            execution.input_file(params.get("talxfm", None))
         ])
-    if params.get("m3z") is not None:
+    if params.get("m3z", None) is not None:
         cargs.extend([
             "--m3z",
-            execution.input_file(params.get("m3z"))
+            execution.input_file(params.get("m3z", None))
         ])
-    if params.get("inv_morph"):
+    if params.get("inv_morph", False):
         cargs.append("--inv-morph")
-    if params.get("fstarg") is not None:
+    if params.get("fstarg", None) is not None:
         cargs.extend([
             "--fstarg",
-            params.get("fstarg")
+            params.get("fstarg", None)
         ])
-    if params.get("crop") is not None:
+    if params.get("crop", None) is not None:
         cargs.extend([
             "--crop",
-            str(params.get("crop"))
+            str(params.get("crop", None))
         ])
-    if params.get("slice_crop") is not None:
+    if params.get("slice_crop", None) is not None:
         cargs.extend([
             "--slice-crop",
-            *map(str, params.get("slice_crop"))
+            *map(str, params.get("slice_crop", None))
         ])
-    if params.get("slice_reverse"):
+    if params.get("slice_reverse", False):
         cargs.append("--slice-reverse")
-    if params.get("slice_bias") is not None:
+    if params.get("slice_bias", None) is not None:
         cargs.extend([
             "--slice-bias",
-            str(params.get("slice_bias"))
+            str(params.get("slice_bias", None))
         ])
-    if params.get("interp") is not None:
+    if params.get("interp", None) is not None:
         cargs.extend([
             "--interp",
-            params.get("interp")
+            params.get("interp", None)
         ])
-    if params.get("fill_average"):
+    if params.get("fill_average", False):
         cargs.append("--fill-average")
-    if params.get("fill_conserve"):
+    if params.get("fill_conserve", False):
         cargs.append("--fill-conserve")
-    if params.get("fill_up") is not None:
+    if params.get("fill_up", None) is not None:
         cargs.extend([
             "--fill-upsample",
-            str(params.get("fill_up"))
+            str(params.get("fill_up", None))
         ])
-    if params.get("mul") is not None:
+    if params.get("mul", None) is not None:
         cargs.extend([
             "--mul",
-            str(params.get("mul"))
+            str(params.get("mul", None))
         ])
-    if params.get("precision") is not None:
+    if params.get("precision", None) is not None:
         cargs.extend([
             "--precision",
-            params.get("precision")
+            params.get("precision", None)
         ])
-    if params.get("keep_precision"):
+    if params.get("keep_precision", False):
         cargs.append("--keep-precision")
-    if params.get("kernel"):
+    if params.get("kernel", False):
         cargs.append("--kernel")
-    if params.get("copy_ctab"):
+    if params.get("copy_ctab", False):
         cargs.append("--copy-ctab")
-    if params.get("gcam") is not None:
+    if params.get("gcam", None) is not None:
         cargs.extend([
             "--gcam",
-            params.get("gcam")
+            params.get("gcam", None)
         ])
-    if params.get("spm_warp") is not None:
+    if params.get("spm_warp", None) is not None:
         cargs.extend([
             "--spm-warp",
-            params.get("spm_warp")
+            params.get("spm_warp", None)
         ])
-    if params.get("map_point") is not None:
+    if params.get("map_point", None) is not None:
         cargs.extend([
             "--map-point",
-            params.get("map_point")
+            params.get("map_point", None)
         ])
-    if params.get("map_point_inv_lta") is not None:
+    if params.get("map_point_inv_lta", None) is not None:
         cargs.extend([
             "--map-point-inv-lta",
-            params.get("map_point_inv_lta")
+            params.get("map_point_inv_lta", None)
         ])
-    if params.get("no_resample"):
+    if params.get("no_resample", False):
         cargs.append("--no-resample")
-    if params.get("rot") is not None:
+    if params.get("rot", None) is not None:
         cargs.extend([
             "--rot",
-            *map(str, params.get("rot"))
+            *map(str, params.get("rot", None))
         ])
-    if params.get("trans") is not None:
+    if params.get("trans", None) is not None:
         cargs.extend([
             "--trans",
-            *map(str, params.get("trans"))
+            *map(str, params.get("trans", None))
         ])
-    if params.get("shear") is not None:
+    if params.get("shear", None) is not None:
         cargs.extend([
             "--shear",
-            *map(str, params.get("shear"))
+            *map(str, params.get("shear", None))
         ])
-    if params.get("reg_final") is not None:
+    if params.get("reg_final", None) is not None:
         cargs.extend([
             "--reg-final",
-            execution.input_file(params.get("reg_final"))
+            execution.input_file(params.get("reg_final", None))
         ])
-    if params.get("synth"):
+    if params.get("synth", False):
         cargs.append("--synth")
-    if params.get("seed") is not None:
+    if params.get("seed", None) is not None:
         cargs.extend([
             "--seed",
-            str(params.get("seed"))
+            str(params.get("seed", None))
         ])
-    if params.get("save_reg"):
+    if params.get("save_reg", False):
         cargs.append("--save-reg")
-    if params.get("debug"):
+    if params.get("debug", False):
         cargs.append("--debug")
-    if params.get("version"):
+    if params.get("version", False):
         cargs.append("--version")
     return cargs
 
@@ -485,7 +500,7 @@ def mri_vol2vol_outputs(
     """
     ret = MriVol2volOutputs(
         root=execution.output_file("."),
-        output_volume=execution.output_file(pathlib.Path(params.get("outvol")).name),
+        output_volume=execution.output_file(pathlib.Path(params.get("outvol", None)).name),
     )
     return ret
 
@@ -685,7 +700,6 @@ def mri_vol2vol(
 __all__ = [
     "MRI_VOL2VOL_METADATA",
     "MriVol2volOutputs",
-    "MriVol2volParameters",
     "mri_vol2vol",
     "mri_vol2vol_execute",
     "mri_vol2vol_params",

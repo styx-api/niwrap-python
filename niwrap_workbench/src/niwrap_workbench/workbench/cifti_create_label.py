@@ -14,35 +14,63 @@ CIFTI_CREATE_LABEL_METADATA = Metadata(
 
 
 CiftiCreateLabelVolumeParameters = typing.TypedDict('CiftiCreateLabelVolumeParameters', {
-    "@type": typing.Literal["workbench.cifti-create-label.volume"],
+    "@type": typing.NotRequired[typing.Literal["volume"]],
+    "label_volume": InputPathType,
+    "structure_label_volume": InputPathType,
+})
+CiftiCreateLabelVolumeParametersTagged = typing.TypedDict('CiftiCreateLabelVolumeParametersTagged', {
+    "@type": typing.Literal["volume"],
     "label_volume": InputPathType,
     "structure_label_volume": InputPathType,
 })
 
 
 CiftiCreateLabelLeftLabelParameters = typing.TypedDict('CiftiCreateLabelLeftLabelParameters', {
-    "@type": typing.Literal["workbench.cifti-create-label.left_label"],
+    "@type": typing.NotRequired[typing.Literal["left_label"]],
+    "label": InputPathType,
+    "opt_roi_left_roi_metric": typing.NotRequired[InputPathType | None],
+})
+CiftiCreateLabelLeftLabelParametersTagged = typing.TypedDict('CiftiCreateLabelLeftLabelParametersTagged', {
+    "@type": typing.Literal["left_label"],
     "label": InputPathType,
     "opt_roi_left_roi_metric": typing.NotRequired[InputPathType | None],
 })
 
 
 CiftiCreateLabelRightLabelParameters = typing.TypedDict('CiftiCreateLabelRightLabelParameters', {
-    "@type": typing.Literal["workbench.cifti-create-label.right_label"],
+    "@type": typing.NotRequired[typing.Literal["right_label"]],
+    "label": InputPathType,
+    "opt_roi_right_roi_metric": typing.NotRequired[InputPathType | None],
+})
+CiftiCreateLabelRightLabelParametersTagged = typing.TypedDict('CiftiCreateLabelRightLabelParametersTagged', {
+    "@type": typing.Literal["right_label"],
     "label": InputPathType,
     "opt_roi_right_roi_metric": typing.NotRequired[InputPathType | None],
 })
 
 
 CiftiCreateLabelCerebellumLabelParameters = typing.TypedDict('CiftiCreateLabelCerebellumLabelParameters', {
-    "@type": typing.Literal["workbench.cifti-create-label.cerebellum_label"],
+    "@type": typing.NotRequired[typing.Literal["cerebellum_label"]],
+    "label": InputPathType,
+    "opt_roi_cerebellum_roi_metric": typing.NotRequired[InputPathType | None],
+})
+CiftiCreateLabelCerebellumLabelParametersTagged = typing.TypedDict('CiftiCreateLabelCerebellumLabelParametersTagged', {
+    "@type": typing.Literal["cerebellum_label"],
     "label": InputPathType,
     "opt_roi_cerebellum_roi_metric": typing.NotRequired[InputPathType | None],
 })
 
 
 CiftiCreateLabelParameters = typing.TypedDict('CiftiCreateLabelParameters', {
-    "@type": typing.Literal["workbench.cifti-create-label"],
+    "@type": typing.NotRequired[typing.Literal["workbench/cifti-create-label"]],
+    "cifti_out": str,
+    "volume": typing.NotRequired[CiftiCreateLabelVolumeParameters | None],
+    "left_label": typing.NotRequired[CiftiCreateLabelLeftLabelParameters | None],
+    "right_label": typing.NotRequired[CiftiCreateLabelRightLabelParameters | None],
+    "cerebellum_label": typing.NotRequired[CiftiCreateLabelCerebellumLabelParameters | None],
+})
+CiftiCreateLabelParametersTagged = typing.TypedDict('CiftiCreateLabelParametersTagged', {
+    "@type": typing.Literal["workbench/cifti-create-label"],
     "cifti_out": str,
     "volume": typing.NotRequired[CiftiCreateLabelVolumeParameters | None],
     "left_label": typing.NotRequired[CiftiCreateLabelLeftLabelParameters | None],
@@ -51,46 +79,10 @@ CiftiCreateLabelParameters = typing.TypedDict('CiftiCreateLabelParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "workbench.cifti-create-label": cifti_create_label_cargs,
-        "workbench.cifti-create-label.volume": cifti_create_label_volume_cargs,
-        "workbench.cifti-create-label.left_label": cifti_create_label_left_label_cargs,
-        "workbench.cifti-create-label.right_label": cifti_create_label_right_label_cargs,
-        "workbench.cifti-create-label.cerebellum_label": cifti_create_label_cerebellum_label_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "workbench.cifti-create-label": cifti_create_label_outputs,
-    }.get(t)
-
-
 def cifti_create_label_volume_params(
     label_volume: InputPathType,
     structure_label_volume: InputPathType,
-) -> CiftiCreateLabelVolumeParameters:
+) -> CiftiCreateLabelVolumeParametersTagged:
     """
     Build parameters.
     
@@ -102,7 +94,7 @@ def cifti_create_label_volume_params(
         Parameter dictionary
     """
     params = {
-        "@type": "workbench.cifti-create-label.volume",
+        "@type": "volume",
         "label_volume": label_volume,
         "structure_label_volume": structure_label_volume,
     }
@@ -124,15 +116,15 @@ def cifti_create_label_volume_cargs(
     """
     cargs = []
     cargs.append("-volume")
-    cargs.append(execution.input_file(params.get("label_volume")))
-    cargs.append(execution.input_file(params.get("structure_label_volume")))
+    cargs.append(execution.input_file(params.get("label_volume", None)))
+    cargs.append(execution.input_file(params.get("structure_label_volume", None)))
     return cargs
 
 
 def cifti_create_label_left_label_params(
     label: InputPathType,
     opt_roi_left_roi_metric: InputPathType | None = None,
-) -> CiftiCreateLabelLeftLabelParameters:
+) -> CiftiCreateLabelLeftLabelParametersTagged:
     """
     Build parameters.
     
@@ -144,7 +136,7 @@ def cifti_create_label_left_label_params(
         Parameter dictionary
     """
     params = {
-        "@type": "workbench.cifti-create-label.left_label",
+        "@type": "left_label",
         "label": label,
     }
     if opt_roi_left_roi_metric is not None:
@@ -167,11 +159,11 @@ def cifti_create_label_left_label_cargs(
     """
     cargs = []
     cargs.append("-left-label")
-    cargs.append(execution.input_file(params.get("label")))
-    if params.get("opt_roi_left_roi_metric") is not None:
+    cargs.append(execution.input_file(params.get("label", None)))
+    if params.get("opt_roi_left_roi_metric", None) is not None:
         cargs.extend([
             "-roi-left",
-            execution.input_file(params.get("opt_roi_left_roi_metric"))
+            execution.input_file(params.get("opt_roi_left_roi_metric", None))
         ])
     return cargs
 
@@ -179,7 +171,7 @@ def cifti_create_label_left_label_cargs(
 def cifti_create_label_right_label_params(
     label: InputPathType,
     opt_roi_right_roi_metric: InputPathType | None = None,
-) -> CiftiCreateLabelRightLabelParameters:
+) -> CiftiCreateLabelRightLabelParametersTagged:
     """
     Build parameters.
     
@@ -191,7 +183,7 @@ def cifti_create_label_right_label_params(
         Parameter dictionary
     """
     params = {
-        "@type": "workbench.cifti-create-label.right_label",
+        "@type": "right_label",
         "label": label,
     }
     if opt_roi_right_roi_metric is not None:
@@ -214,11 +206,11 @@ def cifti_create_label_right_label_cargs(
     """
     cargs = []
     cargs.append("-right-label")
-    cargs.append(execution.input_file(params.get("label")))
-    if params.get("opt_roi_right_roi_metric") is not None:
+    cargs.append(execution.input_file(params.get("label", None)))
+    if params.get("opt_roi_right_roi_metric", None) is not None:
         cargs.extend([
             "-roi-right",
-            execution.input_file(params.get("opt_roi_right_roi_metric"))
+            execution.input_file(params.get("opt_roi_right_roi_metric", None))
         ])
     return cargs
 
@@ -226,7 +218,7 @@ def cifti_create_label_right_label_cargs(
 def cifti_create_label_cerebellum_label_params(
     label: InputPathType,
     opt_roi_cerebellum_roi_metric: InputPathType | None = None,
-) -> CiftiCreateLabelCerebellumLabelParameters:
+) -> CiftiCreateLabelCerebellumLabelParametersTagged:
     """
     Build parameters.
     
@@ -238,7 +230,7 @@ def cifti_create_label_cerebellum_label_params(
         Parameter dictionary
     """
     params = {
-        "@type": "workbench.cifti-create-label.cerebellum_label",
+        "@type": "cerebellum_label",
         "label": label,
     }
     if opt_roi_cerebellum_roi_metric is not None:
@@ -261,18 +253,18 @@ def cifti_create_label_cerebellum_label_cargs(
     """
     cargs = []
     cargs.append("-cerebellum-label")
-    cargs.append(execution.input_file(params.get("label")))
-    if params.get("opt_roi_cerebellum_roi_metric") is not None:
+    cargs.append(execution.input_file(params.get("label", None)))
+    if params.get("opt_roi_cerebellum_roi_metric", None) is not None:
         cargs.extend([
             "-roi-cerebellum",
-            execution.input_file(params.get("opt_roi_cerebellum_roi_metric"))
+            execution.input_file(params.get("opt_roi_cerebellum_roi_metric", None))
         ])
     return cargs
 
 
 class CiftiCreateLabelOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `cifti_create_label(...)`.
+    Output object returned when calling `CiftiCreateLabelParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -286,7 +278,7 @@ def cifti_create_label_params(
     left_label: CiftiCreateLabelLeftLabelParameters | None = None,
     right_label: CiftiCreateLabelRightLabelParameters | None = None,
     cerebellum_label: CiftiCreateLabelCerebellumLabelParameters | None = None,
-) -> CiftiCreateLabelParameters:
+) -> CiftiCreateLabelParametersTagged:
     """
     Build parameters.
     
@@ -300,7 +292,7 @@ def cifti_create_label_params(
         Parameter dictionary
     """
     params = {
-        "@type": "workbench.cifti-create-label",
+        "@type": "workbench/cifti-create-label",
         "cifti_out": cifti_out,
     }
     if volume is not None:
@@ -330,15 +322,15 @@ def cifti_create_label_cargs(
     cargs = []
     cargs.append("wb_command")
     cargs.append("-cifti-create-label")
-    cargs.append(params.get("cifti_out"))
-    if params.get("volume") is not None:
-        cargs.extend(dyn_cargs(params.get("volume")["@type"])(params.get("volume"), execution))
-    if params.get("left_label") is not None:
-        cargs.extend(dyn_cargs(params.get("left_label")["@type"])(params.get("left_label"), execution))
-    if params.get("right_label") is not None:
-        cargs.extend(dyn_cargs(params.get("right_label")["@type"])(params.get("right_label"), execution))
-    if params.get("cerebellum_label") is not None:
-        cargs.extend(dyn_cargs(params.get("cerebellum_label")["@type"])(params.get("cerebellum_label"), execution))
+    cargs.append(params.get("cifti_out", None))
+    if params.get("volume", None) is not None:
+        cargs.extend(cifti_create_label_volume_cargs(params.get("volume", None), execution))
+    if params.get("left_label", None) is not None:
+        cargs.extend(cifti_create_label_left_label_cargs(params.get("left_label", None), execution))
+    if params.get("right_label", None) is not None:
+        cargs.extend(cifti_create_label_right_label_cargs(params.get("right_label", None), execution))
+    if params.get("cerebellum_label", None) is not None:
+        cargs.extend(cifti_create_label_cerebellum_label_cargs(params.get("cerebellum_label", None), execution))
     return cargs
 
 
@@ -357,7 +349,7 @@ def cifti_create_label_outputs(
     """
     ret = CiftiCreateLabelOutputs(
         root=execution.output_file("."),
-        cifti_out=execution.output_file(params.get("cifti_out")),
+        cifti_out=execution.output_file(params.get("cifti_out", None)),
     )
     return ret
 
@@ -525,12 +517,7 @@ def cifti_create_label(
 
 __all__ = [
     "CIFTI_CREATE_LABEL_METADATA",
-    "CiftiCreateLabelCerebellumLabelParameters",
-    "CiftiCreateLabelLeftLabelParameters",
     "CiftiCreateLabelOutputs",
-    "CiftiCreateLabelParameters",
-    "CiftiCreateLabelRightLabelParameters",
-    "CiftiCreateLabelVolumeParameters",
     "cifti_create_label",
     "cifti_create_label_cerebellum_label_params",
     "cifti_create_label_execute",

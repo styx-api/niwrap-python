@@ -14,7 +14,20 @@ DCMSPLIT_METADATA = Metadata(
 
 
 DcmsplitParameters = typing.TypedDict('DcmsplitParameters', {
-    "@type": typing.Literal["freesurfer.dcmsplit"],
+    "@type": typing.NotRequired[typing.Literal["freesurfer/dcmsplit"]],
+    "dcm_dir": str,
+    "out_dir": str,
+    "copy": bool,
+    "link": bool,
+    "split_name": bool,
+    "split_uid": bool,
+    "series_no": bool,
+    "series_plus": bool,
+    "dicom_tag": typing.NotRequired[str | None],
+    "study_description": bool,
+})
+DcmsplitParametersTagged = typing.TypedDict('DcmsplitParametersTagged', {
+    "@type": typing.Literal["freesurfer/dcmsplit"],
     "dcm_dir": str,
     "out_dir": str,
     "copy": bool,
@@ -28,40 +41,9 @@ DcmsplitParameters = typing.TypedDict('DcmsplitParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "freesurfer.dcmsplit": dcmsplit_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-    }.get(t)
-
-
 class DcmsplitOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `dcmsplit(...)`.
+    Output object returned when calling `DcmsplitParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -78,7 +60,7 @@ def dcmsplit_params(
     series_plus: bool = False,
     dicom_tag: str | None = None,
     study_description: bool = False,
-) -> DcmsplitParameters:
+) -> DcmsplitParametersTagged:
     """
     Build parameters.
     
@@ -97,7 +79,7 @@ def dcmsplit_params(
         Parameter dictionary
     """
     params = {
-        "@type": "freesurfer.dcmsplit",
+        "@type": "freesurfer/dcmsplit",
         "dcm_dir": dcm_dir,
         "out_dir": out_dir,
         "copy": copy_,
@@ -130,30 +112,30 @@ def dcmsplit_cargs(
     cargs.append("dcmsplit")
     cargs.extend([
         "--dcm",
-        params.get("dcm_dir")
+        params.get("dcm_dir", None)
     ])
     cargs.extend([
         "--o",
-        params.get("out_dir")
+        params.get("out_dir", None)
     ])
-    if params.get("copy"):
+    if params.get("copy", False):
         cargs.append("--cp")
-    if params.get("link"):
+    if params.get("link", False):
         cargs.append("--link")
-    if params.get("split_name"):
+    if params.get("split_name", False):
         cargs.append("--name")
-    if params.get("split_uid"):
+    if params.get("split_uid", False):
         cargs.append("--uid")
-    if params.get("series_no"):
+    if params.get("series_no", False):
         cargs.append("--seriesno")
-    if params.get("series_plus"):
+    if params.get("series_plus", False):
         cargs.append("--series+")
-    if params.get("dicom_tag") is not None:
+    if params.get("dicom_tag", None) is not None:
         cargs.extend([
             "--t",
-            params.get("dicom_tag")
+            params.get("dicom_tag", None)
         ])
-    if params.get("study_description"):
+    if params.get("study_description", False):
         cargs.append("--studyDes")
     return cargs
 
@@ -260,7 +242,6 @@ def dcmsplit(
 __all__ = [
     "DCMSPLIT_METADATA",
     "DcmsplitOutputs",
-    "DcmsplitParameters",
     "dcmsplit",
     "dcmsplit_execute",
     "dcmsplit_params",

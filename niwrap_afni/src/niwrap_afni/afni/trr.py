@@ -14,7 +14,28 @@ TRR_METADATA = Metadata(
 
 
 TrrParameters = typing.TypedDict('TrrParameters', {
-    "@type": typing.Literal["afni.TRR"],
+    "@type": typing.NotRequired[typing.Literal["afni/TRR"]],
+    "prefix": str,
+    "chains": typing.NotRequired[float | None],
+    "iterations": typing.NotRequired[float | None],
+    "response_var": str,
+    "subject_var": str,
+    "repetition_var": typing.NotRequired[str | None],
+    "condition_var": typing.NotRequired[str | None],
+    "data_table": InputPathType,
+    "categorical_vars": typing.NotRequired[str | None],
+    "quantitative_vars": typing.NotRequired[str | None],
+    "response_dist": typing.NotRequired[str | None],
+    "model": typing.NotRequired[str | None],
+    "plot_size": typing.NotRequired[list[float] | None],
+    "standard_error": typing.NotRequired[str | None],
+    "t_stat": typing.NotRequired[str | None],
+    "within_chain_parallelization": typing.NotRequired[float | None],
+    "debug": bool,
+    "verbose": typing.NotRequired[float | None],
+})
+TrrParametersTagged = typing.TypedDict('TrrParametersTagged', {
+    "@type": typing.Literal["afni/TRR"],
     "prefix": str,
     "chains": typing.NotRequired[float | None],
     "iterations": typing.NotRequired[float | None],
@@ -36,41 +57,9 @@ TrrParameters = typing.TypedDict('TrrParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "afni.TRR": trr_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "afni.TRR": trr_outputs,
-    }.get(t)
-
-
 class TrrOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `trr(...)`.
+    Output object returned when calling `TrrParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -102,7 +91,7 @@ def trr_params(
     within_chain_parallelization: float | None = None,
     debug: bool = False,
     verbose: float | None = None,
-) -> TrrParameters:
+) -> TrrParametersTagged:
     """
     Build parameters.
     
@@ -133,7 +122,7 @@ def trr_params(
         Parameter dictionary
     """
     params = {
-        "@type": "afni.TRR",
+        "@type": "afni/TRR",
         "prefix": prefix,
         "response_var": response_var,
         "subject_var": subject_var,
@@ -186,86 +175,86 @@ def trr_cargs(
     cargs.append("TRR")
     cargs.extend([
         "-prefix",
-        params.get("prefix")
+        params.get("prefix", None)
     ])
-    if params.get("chains") is not None:
+    if params.get("chains", None) is not None:
         cargs.extend([
             "-chains",
-            str(params.get("chains"))
+            str(params.get("chains", None))
         ])
-    if params.get("iterations") is not None:
+    if params.get("iterations", None) is not None:
         cargs.extend([
             "-iterations",
-            str(params.get("iterations"))
+            str(params.get("iterations", None))
         ])
     cargs.extend([
         "-Y",
-        params.get("response_var")
+        params.get("response_var", None)
     ])
     cargs.extend([
         "-subject",
-        params.get("subject_var")
+        params.get("subject_var", None)
     ])
-    if params.get("repetition_var") is not None:
+    if params.get("repetition_var", None) is not None:
         cargs.extend([
             "-repetition",
-            params.get("repetition_var")
+            params.get("repetition_var", None)
         ])
-    if params.get("condition_var") is not None:
+    if params.get("condition_var", None) is not None:
         cargs.extend([
             "-condition",
-            params.get("condition_var")
+            params.get("condition_var", None)
         ])
     cargs.extend([
         "-dataTable",
-        execution.input_file(params.get("data_table"))
+        execution.input_file(params.get("data_table", None))
     ])
-    if params.get("categorical_vars") is not None:
+    if params.get("categorical_vars", None) is not None:
         cargs.extend([
             "-cVars",
-            params.get("categorical_vars")
+            params.get("categorical_vars", None)
         ])
-    if params.get("quantitative_vars") is not None:
+    if params.get("quantitative_vars", None) is not None:
         cargs.extend([
             "-qVars",
-            params.get("quantitative_vars")
+            params.get("quantitative_vars", None)
         ])
-    if params.get("response_dist") is not None:
+    if params.get("response_dist", None) is not None:
         cargs.extend([
             "-distY",
-            params.get("response_dist")
+            params.get("response_dist", None)
         ])
-    if params.get("model") is not None:
+    if params.get("model", None) is not None:
         cargs.extend([
             "-model",
-            params.get("model")
+            params.get("model", None)
         ])
-    if params.get("plot_size") is not None:
+    if params.get("plot_size", None) is not None:
         cargs.extend([
             "-PDP",
-            *map(str, params.get("plot_size"))
+            *map(str, params.get("plot_size", None))
         ])
-    if params.get("standard_error") is not None:
+    if params.get("standard_error", None) is not None:
         cargs.extend([
             "-se",
-            params.get("standard_error")
+            params.get("standard_error", None)
         ])
-    if params.get("t_stat") is not None:
+    if params.get("t_stat", None) is not None:
         cargs.extend([
             "-tstat",
-            params.get("t_stat")
+            params.get("t_stat", None)
         ])
-    if params.get("within_chain_parallelization") is not None:
+    if params.get("within_chain_parallelization", None) is not None:
         cargs.extend([
             "-WCP",
-            str(params.get("within_chain_parallelization"))
+            str(params.get("within_chain_parallelization", None))
         ])
-    if params.get("debug"):
+    if params.get("debug", False):
         cargs.append("-dbgArgs")
-    if params.get("verbose") is not None:
+    if params.get("verbose", None) is not None:
         cargs.extend([
             "-verb",
-            str(params.get("verbose"))
+            str(params.get("verbose", None))
         ])
     return cargs
 
@@ -285,9 +274,9 @@ def trr_outputs(
     """
     ret = TrrOutputs(
         root=execution.output_file("."),
-        output_file_txt=execution.output_file(params.get("prefix") + ".txt"),
-        output_file_pdf=execution.output_file(params.get("prefix") + ".pdf"),
-        output_file_rdata=execution.output_file(params.get("prefix") + ".RData"),
+        output_file_txt=execution.output_file(params.get("prefix", None) + ".txt"),
+        output_file_pdf=execution.output_file(params.get("prefix", None) + ".pdf"),
+        output_file_rdata=execution.output_file(params.get("prefix", None) + ".RData"),
     )
     return ret
 
@@ -403,7 +392,6 @@ def trr(
 __all__ = [
     "TRR_METADATA",
     "TrrOutputs",
-    "TrrParameters",
     "trr",
     "trr_execute",
     "trr_params",

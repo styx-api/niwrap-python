@@ -14,47 +14,20 @@ VOLUME_FILL_HOLES_METADATA = Metadata(
 
 
 VolumeFillHolesParameters = typing.TypedDict('VolumeFillHolesParameters', {
-    "@type": typing.Literal["workbench.volume-fill-holes"],
+    "@type": typing.NotRequired[typing.Literal["workbench/volume-fill-holes"]],
+    "volume_in": InputPathType,
+    "volume_out": str,
+})
+VolumeFillHolesParametersTagged = typing.TypedDict('VolumeFillHolesParametersTagged', {
+    "@type": typing.Literal["workbench/volume-fill-holes"],
     "volume_in": InputPathType,
     "volume_out": str,
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "workbench.volume-fill-holes": volume_fill_holes_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "workbench.volume-fill-holes": volume_fill_holes_outputs,
-    }.get(t)
-
-
 class VolumeFillHolesOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `volume_fill_holes(...)`.
+    Output object returned when calling `VolumeFillHolesParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -65,7 +38,7 @@ class VolumeFillHolesOutputs(typing.NamedTuple):
 def volume_fill_holes_params(
     volume_in: InputPathType,
     volume_out: str,
-) -> VolumeFillHolesParameters:
+) -> VolumeFillHolesParametersTagged:
     """
     Build parameters.
     
@@ -76,7 +49,7 @@ def volume_fill_holes_params(
         Parameter dictionary
     """
     params = {
-        "@type": "workbench.volume-fill-holes",
+        "@type": "workbench/volume-fill-holes",
         "volume_in": volume_in,
         "volume_out": volume_out,
     }
@@ -99,8 +72,8 @@ def volume_fill_holes_cargs(
     cargs = []
     cargs.append("wb_command")
     cargs.append("-volume-fill-holes")
-    cargs.append(execution.input_file(params.get("volume_in")))
-    cargs.append(params.get("volume_out"))
+    cargs.append(execution.input_file(params.get("volume_in", None)))
+    cargs.append(params.get("volume_out", None))
     return cargs
 
 
@@ -119,7 +92,7 @@ def volume_fill_holes_outputs(
     """
     ret = VolumeFillHolesOutputs(
         root=execution.output_file("."),
-        volume_out=execution.output_file(params.get("volume_out")),
+        volume_out=execution.output_file(params.get("volume_out", None)),
     )
     return ret
 
@@ -189,7 +162,6 @@ def volume_fill_holes(
 __all__ = [
     "VOLUME_FILL_HOLES_METADATA",
     "VolumeFillHolesOutputs",
-    "VolumeFillHolesParameters",
     "volume_fill_holes",
     "volume_fill_holes_execute",
     "volume_fill_holes_params",

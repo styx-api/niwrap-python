@@ -14,48 +14,22 @@ VOLUME_ALL_LABELS_TO_ROIS_METADATA = Metadata(
 
 
 VolumeAllLabelsToRoisParameters = typing.TypedDict('VolumeAllLabelsToRoisParameters', {
-    "@type": typing.Literal["workbench.volume-all-labels-to-rois"],
+    "@type": typing.NotRequired[typing.Literal["workbench/volume-all-labels-to-rois"]],
+    "label_in": InputPathType,
+    "map": str,
+    "volume_out": str,
+})
+VolumeAllLabelsToRoisParametersTagged = typing.TypedDict('VolumeAllLabelsToRoisParametersTagged', {
+    "@type": typing.Literal["workbench/volume-all-labels-to-rois"],
     "label_in": InputPathType,
     "map": str,
     "volume_out": str,
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "workbench.volume-all-labels-to-rois": volume_all_labels_to_rois_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "workbench.volume-all-labels-to-rois": volume_all_labels_to_rois_outputs,
-    }.get(t)
-
-
 class VolumeAllLabelsToRoisOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `volume_all_labels_to_rois(...)`.
+    Output object returned when calling `VolumeAllLabelsToRoisParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -67,7 +41,7 @@ def volume_all_labels_to_rois_params(
     label_in: InputPathType,
     map_: str,
     volume_out: str,
-) -> VolumeAllLabelsToRoisParameters:
+) -> VolumeAllLabelsToRoisParametersTagged:
     """
     Build parameters.
     
@@ -79,7 +53,7 @@ def volume_all_labels_to_rois_params(
         Parameter dictionary
     """
     params = {
-        "@type": "workbench.volume-all-labels-to-rois",
+        "@type": "workbench/volume-all-labels-to-rois",
         "label_in": label_in,
         "map": map_,
         "volume_out": volume_out,
@@ -103,9 +77,9 @@ def volume_all_labels_to_rois_cargs(
     cargs = []
     cargs.append("wb_command")
     cargs.append("-volume-all-labels-to-rois")
-    cargs.append(execution.input_file(params.get("label_in")))
-    cargs.append(params.get("map"))
-    cargs.append(params.get("volume_out"))
+    cargs.append(execution.input_file(params.get("label_in", None)))
+    cargs.append(params.get("map", None))
+    cargs.append(params.get("volume_out", None))
     return cargs
 
 
@@ -124,7 +98,7 @@ def volume_all_labels_to_rois_outputs(
     """
     ret = VolumeAllLabelsToRoisOutputs(
         root=execution.output_file("."),
-        volume_out=execution.output_file(params.get("volume_out")),
+        volume_out=execution.output_file(params.get("volume_out", None)),
     )
     return ret
 
@@ -199,7 +173,6 @@ def volume_all_labels_to_rois(
 __all__ = [
     "VOLUME_ALL_LABELS_TO_ROIS_METADATA",
     "VolumeAllLabelsToRoisOutputs",
-    "VolumeAllLabelsToRoisParameters",
     "volume_all_labels_to_rois",
     "volume_all_labels_to_rois_execute",
     "volume_all_labels_to_rois_params",

@@ -14,7 +14,18 @@ MAKEVOL_METADATA = Metadata(
 
 
 MakevolParameters = typing.TypedDict('MakevolParameters', {
-    "@type": typing.Literal["freesurfer.makevol"],
+    "@type": typing.NotRequired[typing.Literal["freesurfer/makevol"]],
+    "filename": typing.NotRequired[str | None],
+    "width": typing.NotRequired[int | None],
+    "height": typing.NotRequired[int | None],
+    "depth": typing.NotRequired[int | None],
+    "sizex": typing.NotRequired[float | None],
+    "sizey": typing.NotRequired[float | None],
+    "sizez": typing.NotRequired[float | None],
+    "set_method": typing.NotRequired[str | None],
+})
+MakevolParametersTagged = typing.TypedDict('MakevolParametersTagged', {
+    "@type": typing.Literal["freesurfer/makevol"],
     "filename": typing.NotRequired[str | None],
     "width": typing.NotRequired[int | None],
     "height": typing.NotRequired[int | None],
@@ -26,41 +37,9 @@ MakevolParameters = typing.TypedDict('MakevolParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "freesurfer.makevol": makevol_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "freesurfer.makevol": makevol_outputs,
-    }.get(t)
-
-
 class MakevolOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `makevol(...)`.
+    Output object returned when calling `MakevolParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -77,7 +56,7 @@ def makevol_params(
     sizey: float | None = None,
     sizez: float | None = None,
     set_method: str | None = None,
-) -> MakevolParameters:
+) -> MakevolParametersTagged:
     """
     Build parameters.
     
@@ -95,7 +74,7 @@ def makevol_params(
         Parameter dictionary
     """
     params = {
-        "@type": "freesurfer.makevol",
+        "@type": "freesurfer/makevol",
     }
     if filename is not None:
         params["filename"] = filename
@@ -131,45 +110,45 @@ def makevol_cargs(
     """
     cargs = []
     cargs.append("makevol")
-    if params.get("filename") is not None:
+    if params.get("filename", None) is not None:
         cargs.extend([
             "-f",
-            params.get("filename")
+            params.get("filename", None)
         ])
-    if params.get("width") is not None:
+    if params.get("width", None) is not None:
         cargs.extend([
             "-x",
-            str(params.get("width"))
+            str(params.get("width", None))
         ])
-    if params.get("height") is not None:
+    if params.get("height", None) is not None:
         cargs.extend([
             "-y",
-            str(params.get("height"))
+            str(params.get("height", None))
         ])
-    if params.get("depth") is not None:
+    if params.get("depth", None) is not None:
         cargs.extend([
             "-z",
-            str(params.get("depth"))
+            str(params.get("depth", None))
         ])
-    if params.get("sizex") is not None:
+    if params.get("sizex", None) is not None:
         cargs.extend([
             "--sizex",
-            str(params.get("sizex"))
+            str(params.get("sizex", None))
         ])
-    if params.get("sizey") is not None:
+    if params.get("sizey", None) is not None:
         cargs.extend([
             "--sizey",
-            str(params.get("sizey"))
+            str(params.get("sizey", None))
         ])
-    if params.get("sizez") is not None:
+    if params.get("sizez", None) is not None:
         cargs.extend([
             "--sizez",
-            str(params.get("sizez"))
+            str(params.get("sizez", None))
         ])
-    if params.get("set_method") is not None:
+    if params.get("set_method", None) is not None:
         cargs.extend([
             "--set-method",
-            params.get("set_method")
+            params.get("set_method", None)
         ])
     return cargs
 
@@ -189,7 +168,7 @@ def makevol_outputs(
     """
     ret = MakevolOutputs(
         root=execution.output_file("."),
-        output_file=execution.output_file(params.get("filename")) if (params.get("filename") is not None) else None,
+        output_file=execution.output_file(params.get("filename", None)) if (params.get("filename") is not None) else None,
     )
     return ret
 
@@ -272,7 +251,6 @@ def makevol(
 __all__ = [
     "MAKEVOL_METADATA",
     "MakevolOutputs",
-    "MakevolParameters",
     "makevol",
     "makevol_execute",
     "makevol_params",

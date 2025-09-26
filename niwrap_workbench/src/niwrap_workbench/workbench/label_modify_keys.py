@@ -14,7 +14,14 @@ LABEL_MODIFY_KEYS_METADATA = Metadata(
 
 
 LabelModifyKeysParameters = typing.TypedDict('LabelModifyKeysParameters', {
-    "@type": typing.Literal["workbench.label-modify-keys"],
+    "@type": typing.NotRequired[typing.Literal["workbench/label-modify-keys"]],
+    "label_in": InputPathType,
+    "remap_file": str,
+    "label_out": str,
+    "opt_column_column": typing.NotRequired[str | None],
+})
+LabelModifyKeysParametersTagged = typing.TypedDict('LabelModifyKeysParametersTagged', {
+    "@type": typing.Literal["workbench/label-modify-keys"],
     "label_in": InputPathType,
     "remap_file": str,
     "label_out": str,
@@ -22,41 +29,9 @@ LabelModifyKeysParameters = typing.TypedDict('LabelModifyKeysParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "workbench.label-modify-keys": label_modify_keys_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "workbench.label-modify-keys": label_modify_keys_outputs,
-    }.get(t)
-
-
 class LabelModifyKeysOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `label_modify_keys(...)`.
+    Output object returned when calling `LabelModifyKeysParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -69,7 +44,7 @@ def label_modify_keys_params(
     remap_file: str,
     label_out: str,
     opt_column_column: str | None = None,
-) -> LabelModifyKeysParameters:
+) -> LabelModifyKeysParametersTagged:
     """
     Build parameters.
     
@@ -83,7 +58,7 @@ def label_modify_keys_params(
         Parameter dictionary
     """
     params = {
-        "@type": "workbench.label-modify-keys",
+        "@type": "workbench/label-modify-keys",
         "label_in": label_in,
         "remap_file": remap_file,
         "label_out": label_out,
@@ -109,13 +84,13 @@ def label_modify_keys_cargs(
     cargs = []
     cargs.append("wb_command")
     cargs.append("-label-modify-keys")
-    cargs.append(execution.input_file(params.get("label_in")))
-    cargs.append(params.get("remap_file"))
-    cargs.append(params.get("label_out"))
-    if params.get("opt_column_column") is not None:
+    cargs.append(execution.input_file(params.get("label_in", None)))
+    cargs.append(params.get("remap_file", None))
+    cargs.append(params.get("label_out", None))
+    if params.get("opt_column_column", None) is not None:
         cargs.extend([
             "-column",
-            params.get("opt_column_column")
+            params.get("opt_column_column", None)
         ])
     return cargs
 
@@ -135,7 +110,7 @@ def label_modify_keys_outputs(
     """
     ret = LabelModifyKeysOutputs(
         root=execution.output_file("."),
-        label_out=execution.output_file(params.get("label_out")),
+        label_out=execution.output_file(params.get("label_out", None)),
     )
     return ret
 
@@ -234,7 +209,6 @@ def label_modify_keys(
 __all__ = [
     "LABEL_MODIFY_KEYS_METADATA",
     "LabelModifyKeysOutputs",
-    "LabelModifyKeysParameters",
     "label_modify_keys",
     "label_modify_keys_execute",
     "label_modify_keys_params",

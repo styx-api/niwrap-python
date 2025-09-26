@@ -14,7 +14,19 @@ MRI_SPH2SURF_METADATA = Metadata(
 
 
 MriSph2surfParameters = typing.TypedDict('MriSph2surfParameters', {
-    "@type": typing.Literal["freesurfer.mri-sph2surf"],
+    "@type": typing.NotRequired[typing.Literal["freesurfer/mri-sph2surf"]],
+    "instem": str,
+    "outstem": str,
+    "hemi": str,
+    "subject": str,
+    "offset": typing.NotRequired[float | None],
+    "svitdir": typing.NotRequired[str | None],
+    "umask": typing.NotRequired[str | None],
+    "verbose": bool,
+    "version": bool,
+})
+MriSph2surfParametersTagged = typing.TypedDict('MriSph2surfParametersTagged', {
+    "@type": typing.Literal["freesurfer/mri-sph2surf"],
     "instem": str,
     "outstem": str,
     "hemi": str,
@@ -27,41 +39,9 @@ MriSph2surfParameters = typing.TypedDict('MriSph2surfParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "freesurfer.mri-sph2surf": mri_sph2surf_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "freesurfer.mri-sph2surf": mri_sph2surf_outputs,
-    }.get(t)
-
-
 class MriSph2surfOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `mri_sph2surf(...)`.
+    Output object returned when calling `MriSph2surfParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -79,7 +59,7 @@ def mri_sph2surf_params(
     umask: str | None = None,
     verbose: bool = False,
     version: bool = False,
-) -> MriSph2surfParameters:
+) -> MriSph2surfParametersTagged:
     """
     Build parameters.
     
@@ -102,7 +82,7 @@ def mri_sph2surf_params(
         Parameter dictionary
     """
     params = {
-        "@type": "freesurfer.mri-sph2surf",
+        "@type": "freesurfer/mri-sph2surf",
         "instem": instem,
         "outstem": outstem,
         "hemi": hemi,
@@ -136,38 +116,38 @@ def mri_sph2surf_cargs(
     cargs.append("mri-sph2surf")
     cargs.extend([
         "-i",
-        params.get("instem")
+        params.get("instem", None)
     ])
     cargs.extend([
         "-o",
-        params.get("outstem")
+        params.get("outstem", None)
     ])
     cargs.extend([
         "-hemi",
-        params.get("hemi")
+        params.get("hemi", None)
     ])
     cargs.extend([
         "-s",
-        params.get("subject")
+        params.get("subject", None)
     ])
-    if params.get("offset") is not None:
+    if params.get("offset", None) is not None:
         cargs.extend([
             "-offset",
-            str(params.get("offset"))
+            str(params.get("offset", None))
         ])
-    if params.get("svitdir") is not None:
+    if params.get("svitdir", None) is not None:
         cargs.extend([
             "-svitdir",
-            params.get("svitdir")
+            params.get("svitdir", None)
         ])
-    if params.get("umask") is not None:
+    if params.get("umask", None) is not None:
         cargs.extend([
             "-umask",
-            params.get("umask")
+            params.get("umask", None)
         ])
-    if params.get("verbose"):
+    if params.get("verbose", False):
         cargs.append("-verbose")
-    if params.get("version"):
+    if params.get("version", False):
         cargs.append("-version")
     return cargs
 
@@ -187,7 +167,7 @@ def mri_sph2surf_outputs(
     """
     ret = MriSph2surfOutputs(
         root=execution.output_file("."),
-        output_file=execution.output_file(params.get("outstem") + "-" + params.get("hemi") + ".w"),
+        output_file=execution.output_file(params.get("outstem", None) + "-" + params.get("hemi", None) + ".w"),
     )
     return ret
 
@@ -279,7 +259,6 @@ def mri_sph2surf(
 __all__ = [
     "MRI_SPH2SURF_METADATA",
     "MriSph2surfOutputs",
-    "MriSph2surfParameters",
     "mri_sph2surf",
     "mri_sph2surf_execute",
     "mri_sph2surf_params",

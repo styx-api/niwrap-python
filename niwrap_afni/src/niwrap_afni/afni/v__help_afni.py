@@ -14,7 +14,16 @@ V__HELP_AFNI_METADATA = Metadata(
 
 
 VHelpAfniParameters = typing.TypedDict('VHelpAfniParameters', {
-    "@type": typing.Literal["afni.@help.AFNI"],
+    "@type": typing.NotRequired[typing.Literal["afni/@help.AFNI"]],
+    "match": typing.NotRequired[str | None],
+    "lynx": bool,
+    "vi": bool,
+    "less": bool,
+    "nedit": bool,
+    "noview": bool,
+})
+VHelpAfniParametersTagged = typing.TypedDict('VHelpAfniParametersTagged', {
+    "@type": typing.Literal["afni/@help.AFNI"],
     "match": typing.NotRequired[str | None],
     "lynx": bool,
     "vi": bool,
@@ -24,40 +33,9 @@ VHelpAfniParameters = typing.TypedDict('VHelpAfniParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "afni.@help.AFNI": v__help_afni_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-    }.get(t)
-
-
 class VHelpAfniOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `v__help_afni(...)`.
+    Output object returned when calling `VHelpAfniParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -70,7 +48,7 @@ def v__help_afni_params(
     less: bool = False,
     nedit: bool = False,
     noview: bool = False,
-) -> VHelpAfniParameters:
+) -> VHelpAfniParametersTagged:
     """
     Build parameters.
     
@@ -87,7 +65,7 @@ def v__help_afni_params(
         Parameter dictionary
     """
     params = {
-        "@type": "afni.@help.AFNI",
+        "@type": "afni/@help.AFNI",
         "lynx": lynx,
         "vi": vi,
         "less": less,
@@ -114,20 +92,20 @@ def v__help_afni_cargs(
     """
     cargs = []
     cargs.append("@help.AFNI")
-    if params.get("match") is not None:
+    if params.get("match", None) is not None:
         cargs.extend([
             "-match",
-            params.get("match")
+            params.get("match", None)
         ])
-    if params.get("lynx"):
+    if params.get("lynx", False):
         cargs.append("-lynx")
-    if params.get("vi"):
+    if params.get("vi", False):
         cargs.append("-vi")
-    if params.get("less"):
+    if params.get("less", False):
         cargs.append("-less")
-    if params.get("nedit"):
+    if params.get("nedit", False):
         cargs.append("-nedit")
-    if params.get("noview"):
+    if params.get("noview", False):
         cargs.append("-noview")
     return cargs
 
@@ -223,7 +201,6 @@ def v__help_afni(
 
 __all__ = [
     "VHelpAfniOutputs",
-    "VHelpAfniParameters",
     "V__HELP_AFNI_METADATA",
     "v__help_afni",
     "v__help_afni_execute",

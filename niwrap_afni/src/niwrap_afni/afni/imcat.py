@@ -14,7 +14,35 @@ IMCAT_METADATA = Metadata(
 
 
 ImcatParameters = typing.TypedDict('ImcatParameters', {
-    "@type": typing.Literal["afni.imcat"],
+    "@type": typing.NotRequired[typing.Literal["afni/imcat"]],
+    "input_files": list[InputPathType],
+    "scale_image": typing.NotRequired[InputPathType | None],
+    "scale_pixels": typing.NotRequired[InputPathType | None],
+    "scale_intensity": bool,
+    "gscale": typing.NotRequired[float | None],
+    "rgb_out": bool,
+    "res_in": typing.NotRequired[list[float] | None],
+    "respad_in": typing.NotRequired[list[float] | None],
+    "pad_val": typing.NotRequired[float | None],
+    "crop": typing.NotRequired[list[float] | None],
+    "autocrop_ctol": typing.NotRequired[float | None],
+    "autocrop_atol": typing.NotRequired[float | None],
+    "autocrop": bool,
+    "zero_wrap": bool,
+    "white_wrap": bool,
+    "gray_wrap": typing.NotRequired[float | None],
+    "image_wrap": bool,
+    "rand_wrap": bool,
+    "prefix": typing.NotRequired[str | None],
+    "matrix": typing.NotRequired[list[float] | None],
+    "nx": typing.NotRequired[float | None],
+    "ny": typing.NotRequired[float | None],
+    "matrix_from_scale": bool,
+    "gap": typing.NotRequired[float | None],
+    "gap_col": typing.NotRequired[list[float] | None],
+})
+ImcatParametersTagged = typing.TypedDict('ImcatParametersTagged', {
+    "@type": typing.Literal["afni/imcat"],
     "input_files": list[InputPathType],
     "scale_image": typing.NotRequired[InputPathType | None],
     "scale_pixels": typing.NotRequired[InputPathType | None],
@@ -43,41 +71,9 @@ ImcatParameters = typing.TypedDict('ImcatParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "afni.imcat": imcat_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "afni.imcat": imcat_outputs,
-    }.get(t)
-
-
 class ImcatOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `imcat(...)`.
+    Output object returned when calling `ImcatParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -111,7 +107,7 @@ def imcat_params(
     matrix_from_scale: bool = False,
     gap: float | None = None,
     gap_col: list[float] | None = None,
-) -> ImcatParameters:
+) -> ImcatParametersTagged:
     """
     Build parameters.
     
@@ -166,7 +162,7 @@ def imcat_params(
         Parameter dictionary
     """
     params = {
-        "@type": "afni.imcat",
+        "@type": "afni/imcat",
         "input_files": input_files,
         "scale_intensity": scale_intensity,
         "rgb_out": rgb_out,
@@ -227,102 +223,102 @@ def imcat_cargs(
     """
     cargs = []
     cargs.append("imcat")
-    cargs.extend([execution.input_file(f) for f in params.get("input_files")])
-    if params.get("scale_image") is not None:
+    cargs.extend([execution.input_file(f) for f in params.get("input_files", None)])
+    if params.get("scale_image", None) is not None:
         cargs.extend([
             "-scale_image",
-            execution.input_file(params.get("scale_image"))
+            execution.input_file(params.get("scale_image", None))
         ])
-    if params.get("scale_pixels") is not None:
+    if params.get("scale_pixels", None) is not None:
         cargs.extend([
             "-scale_pixels",
-            execution.input_file(params.get("scale_pixels"))
+            execution.input_file(params.get("scale_pixels", None))
         ])
-    if params.get("scale_intensity"):
+    if params.get("scale_intensity", False):
         cargs.append("-scale_intensity")
-    if params.get("gscale") is not None:
+    if params.get("gscale", None) is not None:
         cargs.extend([
             "-gscale",
-            str(params.get("gscale"))
+            str(params.get("gscale", None))
         ])
-    if params.get("rgb_out"):
+    if params.get("rgb_out", False):
         cargs.append("-rgb_out")
-    if params.get("res_in") is not None:
+    if params.get("res_in", None) is not None:
         cargs.extend([
             "-res_in",
-            *map(str, params.get("res_in"))
+            *map(str, params.get("res_in", None))
         ])
-    if params.get("respad_in") is not None:
+    if params.get("respad_in", None) is not None:
         cargs.extend([
             "-respad_in",
-            *map(str, params.get("respad_in"))
+            *map(str, params.get("respad_in", None))
         ])
-    if params.get("pad_val") is not None:
+    if params.get("pad_val", None) is not None:
         cargs.extend([
             "-pad_val",
-            str(params.get("pad_val"))
+            str(params.get("pad_val", None))
         ])
-    if params.get("crop") is not None:
+    if params.get("crop", None) is not None:
         cargs.extend([
             "-crop",
-            *map(str, params.get("crop"))
+            *map(str, params.get("crop", None))
         ])
-    if params.get("autocrop_ctol") is not None:
+    if params.get("autocrop_ctol", None) is not None:
         cargs.extend([
             "-autocrop_ctol",
-            str(params.get("autocrop_ctol"))
+            str(params.get("autocrop_ctol", None))
         ])
-    if params.get("autocrop_atol") is not None:
+    if params.get("autocrop_atol", None) is not None:
         cargs.extend([
             "-autocrop_atol",
-            str(params.get("autocrop_atol"))
+            str(params.get("autocrop_atol", None))
         ])
-    if params.get("autocrop"):
+    if params.get("autocrop", False):
         cargs.append("-autocrop")
-    if params.get("zero_wrap"):
+    if params.get("zero_wrap", False):
         cargs.append("-zero_wrap")
-    if params.get("white_wrap"):
+    if params.get("white_wrap", False):
         cargs.append("-white_wrap")
-    if params.get("gray_wrap") is not None:
+    if params.get("gray_wrap", None) is not None:
         cargs.extend([
             "-gray_wrap",
-            str(params.get("gray_wrap"))
+            str(params.get("gray_wrap", None))
         ])
-    if params.get("image_wrap"):
+    if params.get("image_wrap", False):
         cargs.append("-image_wrap")
-    if params.get("rand_wrap"):
+    if params.get("rand_wrap", False):
         cargs.append("-rand_wrap")
-    if params.get("prefix") is not None:
+    if params.get("prefix", None) is not None:
         cargs.extend([
             "-prefix",
-            params.get("prefix")
+            params.get("prefix", None)
         ])
-    if params.get("matrix") is not None:
+    if params.get("matrix", None) is not None:
         cargs.extend([
             "-matrix",
-            *map(str, params.get("matrix"))
+            *map(str, params.get("matrix", None))
         ])
-    if params.get("nx") is not None:
+    if params.get("nx", None) is not None:
         cargs.extend([
             "-nx",
-            str(params.get("nx"))
+            str(params.get("nx", None))
         ])
-    if params.get("ny") is not None:
+    if params.get("ny", None) is not None:
         cargs.extend([
             "-ny",
-            str(params.get("ny"))
+            str(params.get("ny", None))
         ])
-    if params.get("matrix_from_scale"):
+    if params.get("matrix_from_scale", False):
         cargs.append("-matrix_from_scale")
-    if params.get("gap") is not None:
+    if params.get("gap", None) is not None:
         cargs.extend([
             "-gap",
-            str(params.get("gap"))
+            str(params.get("gap", None))
         ])
-    if params.get("gap_col") is not None:
+    if params.get("gap_col", None) is not None:
         cargs.extend([
             "-gap_col",
-            *map(str, params.get("gap_col"))
+            *map(str, params.get("gap_col", None))
         ])
     return cargs
 
@@ -342,7 +338,7 @@ def imcat_outputs(
     """
     ret = ImcatOutputs(
         root=execution.output_file("."),
-        output_image_file=execution.output_file(params.get("prefix") + "output_image.[EXT]") if (params.get("prefix") is not None) else None,
+        output_image_file=execution.output_file(params.get("prefix", None) + "output_image.[EXT]") if (params.get("prefix") is not None) else None,
     )
     return ret
 
@@ -498,7 +494,6 @@ def imcat(
 __all__ = [
     "IMCAT_METADATA",
     "ImcatOutputs",
-    "ImcatParameters",
     "imcat",
     "imcat_execute",
     "imcat_params",

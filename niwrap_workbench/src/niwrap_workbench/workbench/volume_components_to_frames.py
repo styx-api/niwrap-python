@@ -14,47 +14,20 @@ VOLUME_COMPONENTS_TO_FRAMES_METADATA = Metadata(
 
 
 VolumeComponentsToFramesParameters = typing.TypedDict('VolumeComponentsToFramesParameters', {
-    "@type": typing.Literal["workbench.volume-components-to-frames"],
+    "@type": typing.NotRequired[typing.Literal["workbench/volume-components-to-frames"]],
+    "input": InputPathType,
+    "output": str,
+})
+VolumeComponentsToFramesParametersTagged = typing.TypedDict('VolumeComponentsToFramesParametersTagged', {
+    "@type": typing.Literal["workbench/volume-components-to-frames"],
     "input": InputPathType,
     "output": str,
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "workbench.volume-components-to-frames": volume_components_to_frames_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "workbench.volume-components-to-frames": volume_components_to_frames_outputs,
-    }.get(t)
-
-
 class VolumeComponentsToFramesOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `volume_components_to_frames(...)`.
+    Output object returned when calling `VolumeComponentsToFramesParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -65,7 +38,7 @@ class VolumeComponentsToFramesOutputs(typing.NamedTuple):
 def volume_components_to_frames_params(
     input_: InputPathType,
     output: str,
-) -> VolumeComponentsToFramesParameters:
+) -> VolumeComponentsToFramesParametersTagged:
     """
     Build parameters.
     
@@ -76,7 +49,7 @@ def volume_components_to_frames_params(
         Parameter dictionary
     """
     params = {
-        "@type": "workbench.volume-components-to-frames",
+        "@type": "workbench/volume-components-to-frames",
         "input": input_,
         "output": output,
     }
@@ -99,8 +72,8 @@ def volume_components_to_frames_cargs(
     cargs = []
     cargs.append("wb_command")
     cargs.append("-volume-components-to-frames")
-    cargs.append(execution.input_file(params.get("input")))
-    cargs.append(params.get("output"))
+    cargs.append(execution.input_file(params.get("input", None)))
+    cargs.append(params.get("output", None))
     return cargs
 
 
@@ -119,7 +92,7 @@ def volume_components_to_frames_outputs(
     """
     ret = VolumeComponentsToFramesOutputs(
         root=execution.output_file("."),
-        output=execution.output_file(params.get("output")),
+        output=execution.output_file(params.get("output", None)),
     )
     return ret
 
@@ -189,7 +162,6 @@ def volume_components_to_frames(
 __all__ = [
     "VOLUME_COMPONENTS_TO_FRAMES_METADATA",
     "VolumeComponentsToFramesOutputs",
-    "VolumeComponentsToFramesParameters",
     "volume_components_to_frames",
     "volume_components_to_frames_execute",
     "volume_components_to_frames_params",

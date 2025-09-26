@@ -14,48 +14,22 @@ MAKE_UPRIGHT_METADATA = Metadata(
 
 
 MakeUprightParameters = typing.TypedDict('MakeUprightParameters', {
-    "@type": typing.Literal["freesurfer.make_upright"],
+    "@type": typing.NotRequired[typing.Literal["freesurfer/make_upright"]],
+    "input_image": InputPathType,
+    "output_image": str,
+    "transformation_map": InputPathType,
+})
+MakeUprightParametersTagged = typing.TypedDict('MakeUprightParametersTagged', {
+    "@type": typing.Literal["freesurfer/make_upright"],
     "input_image": InputPathType,
     "output_image": str,
     "transformation_map": InputPathType,
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "freesurfer.make_upright": make_upright_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "freesurfer.make_upright": make_upright_outputs,
-    }.get(t)
-
-
 class MakeUprightOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `make_upright(...)`.
+    Output object returned when calling `MakeUprightParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -67,7 +41,7 @@ def make_upright_params(
     input_image: InputPathType,
     output_image: str,
     transformation_map: InputPathType,
-) -> MakeUprightParameters:
+) -> MakeUprightParametersTagged:
     """
     Build parameters.
     
@@ -79,7 +53,7 @@ def make_upright_params(
         Parameter dictionary
     """
     params = {
-        "@type": "freesurfer.make_upright",
+        "@type": "freesurfer/make_upright",
         "input_image": input_image,
         "output_image": output_image,
         "transformation_map": transformation_map,
@@ -102,9 +76,9 @@ def make_upright_cargs(
     """
     cargs = []
     cargs.append("make_upright")
-    cargs.append(execution.input_file(params.get("input_image")))
-    cargs.append(params.get("output_image"))
-    cargs.append(execution.input_file(params.get("transformation_map")))
+    cargs.append(execution.input_file(params.get("input_image", None)))
+    cargs.append(params.get("output_image", None))
+    cargs.append(execution.input_file(params.get("transformation_map", None)))
     return cargs
 
 
@@ -123,7 +97,7 @@ def make_upright_outputs(
     """
     ret = MakeUprightOutputs(
         root=execution.output_file("."),
-        registered_image=execution.output_file(params.get("output_image")),
+        registered_image=execution.output_file(params.get("output_image", None)),
     )
     return ret
 
@@ -194,7 +168,6 @@ def make_upright(
 __all__ = [
     "MAKE_UPRIGHT_METADATA",
     "MakeUprightOutputs",
-    "MakeUprightParameters",
     "make_upright",
     "make_upright_execute",
     "make_upright_params",

@@ -14,7 +14,18 @@ MRI_MAKE_UCHAR_METADATA = Metadata(
 
 
 MriMakeUcharParameters = typing.TypedDict('MriMakeUcharParameters', {
-    "@type": typing.Literal["freesurfer.mri_make_uchar"],
+    "@type": typing.NotRequired[typing.Literal["freesurfer/mri_make_uchar"]],
+    "input_volume": InputPathType,
+    "talairach_xform": InputPathType,
+    "output_volume": str,
+    "first_percentile": typing.NotRequired[float | None],
+    "wm_percentile": typing.NotRequired[float | None],
+    "max_radius": typing.NotRequired[float | None],
+    "cumulative_histo": typing.NotRequired[str | None],
+    "vradvol": typing.NotRequired[str | None],
+})
+MriMakeUcharParametersTagged = typing.TypedDict('MriMakeUcharParametersTagged', {
+    "@type": typing.Literal["freesurfer/mri_make_uchar"],
     "input_volume": InputPathType,
     "talairach_xform": InputPathType,
     "output_volume": str,
@@ -26,41 +37,9 @@ MriMakeUcharParameters = typing.TypedDict('MriMakeUcharParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "freesurfer.mri_make_uchar": mri_make_uchar_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "freesurfer.mri_make_uchar": mri_make_uchar_outputs,
-    }.get(t)
-
-
 class MriMakeUcharOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `mri_make_uchar(...)`.
+    Output object returned when calling `MriMakeUcharParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -77,7 +56,7 @@ def mri_make_uchar_params(
     max_radius: float | None = None,
     cumulative_histo: str | None = None,
     vradvol: str | None = None,
-) -> MriMakeUcharParameters:
+) -> MriMakeUcharParametersTagged:
     """
     Build parameters.
     
@@ -96,7 +75,7 @@ def mri_make_uchar_params(
         Parameter dictionary
     """
     params = {
-        "@type": "freesurfer.mri_make_uchar",
+        "@type": "freesurfer/mri_make_uchar",
         "input_volume": input_volume,
         "talairach_xform": talairach_xform,
         "output_volume": output_volume,
@@ -129,33 +108,33 @@ def mri_make_uchar_cargs(
     """
     cargs = []
     cargs.append("mri_make_uchar")
-    cargs.append(execution.input_file(params.get("input_volume")))
-    cargs.append(execution.input_file(params.get("talairach_xform")))
-    cargs.append(params.get("output_volume"))
-    if params.get("first_percentile") is not None:
+    cargs.append(execution.input_file(params.get("input_volume", None)))
+    cargs.append(execution.input_file(params.get("talairach_xform", None)))
+    cargs.append(params.get("output_volume", None))
+    if params.get("first_percentile", None) is not None:
         cargs.extend([
             "-f",
-            str(params.get("first_percentile"))
+            str(params.get("first_percentile", None))
         ])
-    if params.get("wm_percentile") is not None:
+    if params.get("wm_percentile", None) is not None:
         cargs.extend([
             "-w",
-            str(params.get("wm_percentile"))
+            str(params.get("wm_percentile", None))
         ])
-    if params.get("max_radius") is not None:
+    if params.get("max_radius", None) is not None:
         cargs.extend([
             "-r",
-            str(params.get("max_radius"))
+            str(params.get("max_radius", None))
         ])
-    if params.get("cumulative_histo") is not None:
+    if params.get("cumulative_histo", None) is not None:
         cargs.extend([
             "-h",
-            params.get("cumulative_histo")
+            params.get("cumulative_histo", None)
         ])
-    if params.get("vradvol") is not None:
+    if params.get("vradvol", None) is not None:
         cargs.extend([
             "-v",
-            params.get("vradvol")
+            params.get("vradvol", None)
         ])
     return cargs
 
@@ -175,7 +154,7 @@ def mri_make_uchar_outputs(
     """
     ret = MriMakeUcharOutputs(
         root=execution.output_file("."),
-        output_file=execution.output_file(params.get("output_volume")),
+        output_file=execution.output_file(params.get("output_volume", None)),
     )
     return ret
 
@@ -261,7 +240,6 @@ def mri_make_uchar(
 __all__ = [
     "MRI_MAKE_UCHAR_METADATA",
     "MriMakeUcharOutputs",
-    "MriMakeUcharParameters",
     "mri_make_uchar",
     "mri_make_uchar_execute",
     "mri_make_uchar_params",

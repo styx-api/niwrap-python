@@ -14,45 +14,18 @@ INVFEATREG_METADATA = Metadata(
 
 
 InvfeatregParameters = typing.TypedDict('InvfeatregParameters', {
-    "@type": typing.Literal["fsl.invfeatreg"],
+    "@type": typing.NotRequired[typing.Literal["fsl/invfeatreg"]],
+    "feat_directory": str,
+})
+InvfeatregParametersTagged = typing.TypedDict('InvfeatregParametersTagged', {
+    "@type": typing.Literal["fsl/invfeatreg"],
     "feat_directory": str,
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "fsl.invfeatreg": invfeatreg_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-    }.get(t)
-
-
 class InvfeatregOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `invfeatreg(...)`.
+    Output object returned when calling `InvfeatregParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -60,7 +33,7 @@ class InvfeatregOutputs(typing.NamedTuple):
 
 def invfeatreg_params(
     feat_directory: str,
-) -> InvfeatregParameters:
+) -> InvfeatregParametersTagged:
     """
     Build parameters.
     
@@ -70,7 +43,7 @@ def invfeatreg_params(
         Parameter dictionary
     """
     params = {
-        "@type": "fsl.invfeatreg",
+        "@type": "fsl/invfeatreg",
         "feat_directory": feat_directory,
     }
     return params
@@ -91,7 +64,7 @@ def invfeatreg_cargs(
     """
     cargs = []
     cargs.append("invfeatreg")
-    cargs.append(params.get("feat_directory"))
+    cargs.append(params.get("feat_directory", None))
     return cargs
 
 
@@ -170,7 +143,6 @@ def invfeatreg(
 __all__ = [
     "INVFEATREG_METADATA",
     "InvfeatregOutputs",
-    "InvfeatregParameters",
     "invfeatreg",
     "invfeatreg_execute",
     "invfeatreg_params",

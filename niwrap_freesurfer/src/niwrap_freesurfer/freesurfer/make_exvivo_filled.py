@@ -14,7 +14,14 @@ MAKE_EXVIVO_FILLED_METADATA = Metadata(
 
 
 MakeExvivoFilledParameters = typing.TypedDict('MakeExvivoFilledParameters', {
-    "@type": typing.Literal["freesurfer.make_exvivo_filled"],
+    "@type": typing.NotRequired[typing.Literal["freesurfer/make_exvivo_filled"]],
+    "subject_name": str,
+    "input_samseg": InputPathType,
+    "input_intensity_vol": InputPathType,
+    "hemi_both": str,
+})
+MakeExvivoFilledParametersTagged = typing.TypedDict('MakeExvivoFilledParametersTagged', {
+    "@type": typing.Literal["freesurfer/make_exvivo_filled"],
     "subject_name": str,
     "input_samseg": InputPathType,
     "input_intensity_vol": InputPathType,
@@ -22,40 +29,9 @@ MakeExvivoFilledParameters = typing.TypedDict('MakeExvivoFilledParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "freesurfer.make_exvivo_filled": make_exvivo_filled_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-    }.get(t)
-
-
 class MakeExvivoFilledOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `make_exvivo_filled(...)`.
+    Output object returned when calling `MakeExvivoFilledParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -66,7 +42,7 @@ def make_exvivo_filled_params(
     input_samseg: InputPathType,
     input_intensity_vol: InputPathType,
     hemi_both: str,
-) -> MakeExvivoFilledParameters:
+) -> MakeExvivoFilledParametersTagged:
     """
     Build parameters.
     
@@ -79,7 +55,7 @@ def make_exvivo_filled_params(
         Parameter dictionary
     """
     params = {
-        "@type": "freesurfer.make_exvivo_filled",
+        "@type": "freesurfer/make_exvivo_filled",
         "subject_name": subject_name,
         "input_samseg": input_samseg,
         "input_intensity_vol": input_intensity_vol,
@@ -103,10 +79,10 @@ def make_exvivo_filled_cargs(
     """
     cargs = []
     cargs.append("make_exvivo_filled")
-    cargs.append(params.get("subject_name"))
-    cargs.append(execution.input_file(params.get("input_samseg")))
-    cargs.append(execution.input_file(params.get("input_intensity_vol")))
-    cargs.append(params.get("hemi_both"))
+    cargs.append(params.get("subject_name", None))
+    cargs.append(execution.input_file(params.get("input_samseg", None)))
+    cargs.append(execution.input_file(params.get("input_intensity_vol", None)))
+    cargs.append(params.get("hemi_both", None))
     return cargs
 
 
@@ -194,7 +170,6 @@ def make_exvivo_filled(
 __all__ = [
     "MAKE_EXVIVO_FILLED_METADATA",
     "MakeExvivoFilledOutputs",
-    "MakeExvivoFilledParameters",
     "make_exvivo_filled",
     "make_exvivo_filled_execute",
     "make_exvivo_filled_params",

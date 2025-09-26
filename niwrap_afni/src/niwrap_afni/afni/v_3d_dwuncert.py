@@ -14,7 +14,19 @@ V_3D_DWUNCERT_METADATA = Metadata(
 
 
 V3dDwuncertParameters = typing.TypedDict('V3dDwuncertParameters', {
-    "@type": typing.Literal["afni.3dDWUncert"],
+    "@type": typing.NotRequired[typing.Literal["afni/3dDWUncert"]],
+    "input_file": InputPathType,
+    "input_prefix": str,
+    "output_prefix": str,
+    "grad_file": typing.NotRequired[InputPathType | None],
+    "bmatrix_file": typing.NotRequired[InputPathType | None],
+    "num_iters": typing.NotRequired[float | None],
+    "mask_file": typing.NotRequired[InputPathType | None],
+    "calc_thr_fa": typing.NotRequired[float | None],
+    "csf_fa": typing.NotRequired[float | None],
+})
+V3dDwuncertParametersTagged = typing.TypedDict('V3dDwuncertParametersTagged', {
+    "@type": typing.Literal["afni/3dDWUncert"],
     "input_file": InputPathType,
     "input_prefix": str,
     "output_prefix": str,
@@ -27,41 +39,9 @@ V3dDwuncertParameters = typing.TypedDict('V3dDwuncertParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "afni.3dDWUncert": v_3d_dwuncert_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "afni.3dDWUncert": v_3d_dwuncert_outputs,
-    }.get(t)
-
-
 class V3dDwuncertOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `v_3d_dwuncert(...)`.
+    Output object returned when calling `V3dDwuncertParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -79,7 +59,7 @@ def v_3d_dwuncert_params(
     mask_file: InputPathType | None = None,
     calc_thr_fa: float | None = None,
     csf_fa: float | None = None,
-) -> V3dDwuncertParameters:
+) -> V3dDwuncertParametersTagged:
     """
     Build parameters.
     
@@ -98,7 +78,7 @@ def v_3d_dwuncert_params(
         Parameter dictionary
     """
     params = {
-        "@type": "afni.3dDWUncert",
+        "@type": "afni/3dDWUncert",
         "input_file": input_file,
         "input_prefix": input_prefix,
         "output_prefix": output_prefix,
@@ -135,45 +115,45 @@ def v_3d_dwuncert_cargs(
     cargs.append("3dDWUncert")
     cargs.extend([
         "-inset",
-        execution.input_file(params.get("input_file"))
+        execution.input_file(params.get("input_file", None))
     ])
     cargs.extend([
         "-input",
-        params.get("input_prefix")
+        params.get("input_prefix", None)
     ])
     cargs.extend([
         "-prefix",
-        params.get("output_prefix")
+        params.get("output_prefix", None)
     ])
-    if params.get("grad_file") is not None:
+    if params.get("grad_file", None) is not None:
         cargs.extend([
             "-grads",
-            execution.input_file(params.get("grad_file"))
+            execution.input_file(params.get("grad_file", None))
         ])
-    if params.get("bmatrix_file") is not None:
+    if params.get("bmatrix_file", None) is not None:
         cargs.extend([
             "-bmatrix_FULL",
-            execution.input_file(params.get("bmatrix_file"))
+            execution.input_file(params.get("bmatrix_file", None))
         ])
-    if params.get("num_iters") is not None:
+    if params.get("num_iters", None) is not None:
         cargs.extend([
             "-iters",
-            str(params.get("num_iters"))
+            str(params.get("num_iters", None))
         ])
-    if params.get("mask_file") is not None:
+    if params.get("mask_file", None) is not None:
         cargs.extend([
             "-mask",
-            execution.input_file(params.get("mask_file"))
+            execution.input_file(params.get("mask_file", None))
         ])
-    if params.get("calc_thr_fa") is not None:
+    if params.get("calc_thr_fa", None) is not None:
         cargs.extend([
             "-calc_thr_FA",
-            str(params.get("calc_thr_fa"))
+            str(params.get("calc_thr_fa", None))
         ])
-    if params.get("csf_fa") is not None:
+    if params.get("csf_fa", None) is not None:
         cargs.extend([
             "-csf_fa",
-            str(params.get("csf_fa"))
+            str(params.get("csf_fa", None))
         ])
     return cargs
 
@@ -193,7 +173,7 @@ def v_3d_dwuncert_outputs(
     """
     ret = V3dDwuncertOutputs(
         root=execution.output_file("."),
-        output_file=execution.output_file(params.get("output_prefix") + "+.HEAD/" + params.get("output_prefix") + "+.BRIK"),
+        output_file=execution.output_file(params.get("output_prefix", None) + "+.HEAD/" + params.get("output_prefix", None) + "+.BRIK"),
     )
     return ret
 
@@ -280,7 +260,6 @@ def v_3d_dwuncert(
 
 __all__ = [
     "V3dDwuncertOutputs",
-    "V3dDwuncertParameters",
     "V_3D_DWUNCERT_METADATA",
     "v_3d_dwuncert",
     "v_3d_dwuncert_execute",

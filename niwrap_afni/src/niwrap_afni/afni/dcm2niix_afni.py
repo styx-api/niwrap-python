@@ -14,7 +14,39 @@ DCM2NIIX_AFNI_METADATA = Metadata(
 
 
 Dcm2niixAfniParameters = typing.TypedDict('Dcm2niixAfniParameters', {
-    "@type": typing.Literal["afni.dcm2niix_afni"],
+    "@type": typing.NotRequired[typing.Literal["afni/dcm2niix_afni"]],
+    "input_folder": str,
+    "compression_level": typing.NotRequired[int | None],
+    "adjacent_dicoms": typing.NotRequired[str | None],
+    "bids_sidecar": typing.NotRequired[str | None],
+    "anonymize_bids": typing.NotRequired[str | None],
+    "comment": typing.NotRequired[str | None],
+    "directory_search_depth": typing.NotRequired[int | None],
+    "export_format": typing.NotRequired[str | None],
+    "filename_template": typing.NotRequired[str | None],
+    "generate_defaults": typing.NotRequired[str | None],
+    "ignore_images": typing.NotRequired[str | None],
+    "lossless_scale": typing.NotRequired[str | None],
+    "merge_slices": typing.NotRequired[str | None],
+    "series_crc_number": typing.NotRequired[list[str] | None],
+    "output_directory": typing.NotRequired[str | None],
+    "phillips_scaling": typing.NotRequired[str | None],
+    "rename_dicoms": typing.NotRequired[str | None],
+    "single_file_mode": typing.NotRequired[str | None],
+    "up_to_date": bool,
+    "verbose": typing.NotRequired[str | None],
+    "write_behavior": typing.NotRequired[int | None],
+    "crop_3d": typing.NotRequired[str | None],
+    "gz_compress": typing.NotRequired[str | None],
+    "big_endian": typing.NotRequired[str | None],
+    "progress": typing.NotRequired[str | None],
+    "ignore_trigger_times": bool,
+    "terse": bool,
+    "version": bool,
+    "xml": bool,
+})
+Dcm2niixAfniParametersTagged = typing.TypedDict('Dcm2niixAfniParametersTagged', {
+    "@type": typing.Literal["afni/dcm2niix_afni"],
     "input_folder": str,
     "compression_level": typing.NotRequired[int | None],
     "adjacent_dicoms": typing.NotRequired[str | None],
@@ -47,41 +79,9 @@ Dcm2niixAfniParameters = typing.TypedDict('Dcm2niixAfniParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "afni.dcm2niix_afni": dcm2niix_afni_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "afni.dcm2niix_afni": dcm2niix_afni_outputs,
-    }.get(t)
-
-
 class Dcm2niixAfniOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `dcm2niix_afni(...)`.
+    Output object returned when calling `Dcm2niixAfniParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -119,7 +119,7 @@ def dcm2niix_afni_params(
     terse: bool = False,
     version: bool = False,
     xml_: bool = False,
-) -> Dcm2niixAfniParameters:
+) -> Dcm2niixAfniParametersTagged:
     """
     Build parameters.
     
@@ -172,7 +172,7 @@ def dcm2niix_afni_params(
         Parameter dictionary
     """
     params = {
-        "@type": "afni.dcm2niix_afni",
+        "@type": "afni/dcm2niix_afni",
         "input_folder": input_folder,
         "up_to_date": up_to_date,
         "ignore_trigger_times": ignore_trigger_times,
@@ -244,131 +244,131 @@ def dcm2niix_afni_cargs(
     """
     cargs = []
     cargs.append("dcm2niix_afni")
-    cargs.append(params.get("input_folder"))
-    if params.get("compression_level") is not None:
+    cargs.append(params.get("input_folder", None))
+    if params.get("compression_level", None) is not None:
         cargs.extend([
             "-1..-9",
-            str(params.get("compression_level"))
+            str(params.get("compression_level", None))
         ])
-    if params.get("adjacent_dicoms") is not None:
+    if params.get("adjacent_dicoms", None) is not None:
         cargs.extend([
             "-a",
-            params.get("adjacent_dicoms")
+            params.get("adjacent_dicoms", None)
         ])
-    if params.get("bids_sidecar") is not None:
+    if params.get("bids_sidecar", None) is not None:
         cargs.extend([
             "-b",
-            params.get("bids_sidecar")
+            params.get("bids_sidecar", None)
         ])
-    if params.get("anonymize_bids") is not None:
+    if params.get("anonymize_bids", None) is not None:
         cargs.extend([
             "-ba",
-            params.get("anonymize_bids")
+            params.get("anonymize_bids", None)
         ])
-    if params.get("comment") is not None:
+    if params.get("comment", None) is not None:
         cargs.extend([
             "-c",
-            params.get("comment")
+            params.get("comment", None)
         ])
-    if params.get("directory_search_depth") is not None:
+    if params.get("directory_search_depth", None) is not None:
         cargs.extend([
             "-d",
-            str(params.get("directory_search_depth"))
+            str(params.get("directory_search_depth", None))
         ])
-    if params.get("export_format") is not None:
+    if params.get("export_format", None) is not None:
         cargs.extend([
             "-e",
-            params.get("export_format")
+            params.get("export_format", None)
         ])
-    if params.get("filename_template") is not None:
+    if params.get("filename_template", None) is not None:
         cargs.extend([
             "-f",
-            params.get("filename_template")
+            params.get("filename_template", None)
         ])
-    if params.get("generate_defaults") is not None:
+    if params.get("generate_defaults", None) is not None:
         cargs.extend([
             "-g",
-            params.get("generate_defaults")
+            params.get("generate_defaults", None)
         ])
-    if params.get("ignore_images") is not None:
+    if params.get("ignore_images", None) is not None:
         cargs.extend([
             "-i",
-            params.get("ignore_images")
+            params.get("ignore_images", None)
         ])
-    if params.get("lossless_scale") is not None:
+    if params.get("lossless_scale", None) is not None:
         cargs.extend([
             "-l",
-            params.get("lossless_scale")
+            params.get("lossless_scale", None)
         ])
-    if params.get("merge_slices") is not None:
+    if params.get("merge_slices", None) is not None:
         cargs.extend([
             "-m",
-            params.get("merge_slices")
+            params.get("merge_slices", None)
         ])
-    if params.get("series_crc_number") is not None:
+    if params.get("series_crc_number", None) is not None:
         cargs.extend([
             "-n",
-            *params.get("series_crc_number")
+            *params.get("series_crc_number", None)
         ])
-    if params.get("output_directory") is not None:
+    if params.get("output_directory", None) is not None:
         cargs.extend([
             "-o",
-            params.get("output_directory")
+            params.get("output_directory", None)
         ])
-    if params.get("phillips_scaling") is not None:
+    if params.get("phillips_scaling", None) is not None:
         cargs.extend([
             "-p",
-            params.get("phillips_scaling")
+            params.get("phillips_scaling", None)
         ])
-    if params.get("rename_dicoms") is not None:
+    if params.get("rename_dicoms", None) is not None:
         cargs.extend([
             "-r",
-            params.get("rename_dicoms")
+            params.get("rename_dicoms", None)
         ])
-    if params.get("single_file_mode") is not None:
+    if params.get("single_file_mode", None) is not None:
         cargs.extend([
             "-s",
-            params.get("single_file_mode")
+            params.get("single_file_mode", None)
         ])
-    if params.get("up_to_date"):
+    if params.get("up_to_date", False):
         cargs.append("-u")
-    if params.get("verbose") is not None:
+    if params.get("verbose", None) is not None:
         cargs.extend([
             "-v",
-            params.get("verbose")
+            params.get("verbose", None)
         ])
-    if params.get("write_behavior") is not None:
+    if params.get("write_behavior", None) is not None:
         cargs.extend([
             "-w",
-            str(params.get("write_behavior"))
+            str(params.get("write_behavior", None))
         ])
-    if params.get("crop_3d") is not None:
+    if params.get("crop_3d", None) is not None:
         cargs.extend([
             "-x",
-            params.get("crop_3d")
+            params.get("crop_3d", None)
         ])
-    if params.get("gz_compress") is not None:
+    if params.get("gz_compress", None) is not None:
         cargs.extend([
             "-z",
-            params.get("gz_compress")
+            params.get("gz_compress", None)
         ])
-    if params.get("big_endian") is not None:
+    if params.get("big_endian", None) is not None:
         cargs.extend([
             "--big-endian",
-            params.get("big_endian")
+            params.get("big_endian", None)
         ])
-    if params.get("progress") is not None:
+    if params.get("progress", None) is not None:
         cargs.extend([
             "--progress",
-            params.get("progress")
+            params.get("progress", None)
         ])
-    if params.get("ignore_trigger_times"):
+    if params.get("ignore_trigger_times", False):
         cargs.append("--ignore_trigger_times")
-    if params.get("terse"):
+    if params.get("terse", False):
         cargs.append("--terse")
-    if params.get("version"):
+    if params.get("version", False):
         cargs.append("--version")
-    if params.get("xml"):
+    if params.get("xml", False):
         cargs.append("--xml")
     return cargs
 
@@ -388,7 +388,7 @@ def dcm2niix_afni_outputs(
     """
     ret = Dcm2niixAfniOutputs(
         root=execution.output_file("."),
-        output_directory=execution.output_file(params.get("output_directory")) if (params.get("output_directory") is not None) else None,
+        output_directory=execution.output_file(params.get("output_directory", None)) if (params.get("output_directory") is not None) else None,
     )
     return ret
 
@@ -548,7 +548,6 @@ def dcm2niix_afni(
 __all__ = [
     "DCM2NIIX_AFNI_METADATA",
     "Dcm2niixAfniOutputs",
-    "Dcm2niixAfniParameters",
     "dcm2niix_afni",
     "dcm2niix_afni_execute",
     "dcm2niix_afni_params",

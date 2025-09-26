@@ -14,7 +14,16 @@ BIASFIELD_METADATA = Metadata(
 
 
 BiasfieldParameters = typing.TypedDict('BiasfieldParameters', {
-    "@type": typing.Literal["freesurfer.biasfield"],
+    "@type": typing.NotRequired[typing.Literal["freesurfer/biasfield"]],
+    "subject": str,
+    "tmpdir": typing.NotRequired[str | None],
+    "no_cleanup": bool,
+    "help": bool,
+    "debug": bool,
+    "version": bool,
+})
+BiasfieldParametersTagged = typing.TypedDict('BiasfieldParametersTagged', {
+    "@type": typing.Literal["freesurfer/biasfield"],
     "subject": str,
     "tmpdir": typing.NotRequired[str | None],
     "no_cleanup": bool,
@@ -24,41 +33,9 @@ BiasfieldParameters = typing.TypedDict('BiasfieldParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "freesurfer.biasfield": biasfield_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "freesurfer.biasfield": biasfield_outputs,
-    }.get(t)
-
-
 class BiasfieldOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `biasfield(...)`.
+    Output object returned when calling `BiasfieldParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -75,7 +52,7 @@ def biasfield_params(
     help_: bool = False,
     debug: bool = False,
     version: bool = False,
-) -> BiasfieldParameters:
+) -> BiasfieldParametersTagged:
     """
     Build parameters.
     
@@ -90,7 +67,7 @@ def biasfield_params(
         Parameter dictionary
     """
     params = {
-        "@type": "freesurfer.biasfield",
+        "@type": "freesurfer/biasfield",
         "subject": subject,
         "no_cleanup": no_cleanup,
         "help": help_,
@@ -119,20 +96,20 @@ def biasfield_cargs(
     cargs.append("biasfield")
     cargs.extend([
         "--s",
-        params.get("subject")
+        params.get("subject", None)
     ])
-    if params.get("tmpdir") is not None:
+    if params.get("tmpdir", None) is not None:
         cargs.extend([
             "--tmp",
-            params.get("tmpdir")
+            params.get("tmpdir", None)
         ])
-    if params.get("no_cleanup"):
+    if params.get("no_cleanup", False):
         cargs.append("--nocleanup")
-    if params.get("help"):
+    if params.get("help", False):
         cargs.append("--help")
-    if params.get("debug"):
+    if params.get("debug", False):
         cargs.append("--debug")
-    if params.get("version"):
+    if params.get("version", False):
         cargs.append("--version")
     return cargs
 
@@ -231,7 +208,6 @@ def biasfield(
 __all__ = [
     "BIASFIELD_METADATA",
     "BiasfieldOutputs",
-    "BiasfieldParameters",
     "biasfield",
     "biasfield_execute",
     "biasfield_params",

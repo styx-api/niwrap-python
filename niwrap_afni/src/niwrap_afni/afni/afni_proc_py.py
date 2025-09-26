@@ -14,7 +14,21 @@ AFNI_PROC_PY_METADATA = Metadata(
 
 
 AfniProcPyParameters = typing.TypedDict('AfniProcPyParameters', {
-    "@type": typing.Literal["afni.afni_proc.py"],
+    "@type": typing.NotRequired[typing.Literal["afni/afni_proc.py"]],
+    "dsets": list[InputPathType],
+    "subj_id": str,
+    "out_dir": typing.NotRequired[str | None],
+    "blocks": typing.NotRequired[list[str] | None],
+    "anat": InputPathType,
+    "echo_times": typing.NotRequired[list[float] | None],
+    "stim_times": typing.NotRequired[list[InputPathType] | None],
+    "stim_files": typing.NotRequired[list[InputPathType] | None],
+    "copy_files": typing.NotRequired[list[InputPathType] | None],
+    "copy_anat": typing.NotRequired[InputPathType | None],
+    "regress_params": typing.NotRequired[list[str] | None],
+})
+AfniProcPyParametersTagged = typing.TypedDict('AfniProcPyParametersTagged', {
+    "@type": typing.Literal["afni/afni_proc.py"],
     "dsets": list[InputPathType],
     "subj_id": str,
     "out_dir": typing.NotRequired[str | None],
@@ -29,41 +43,9 @@ AfniProcPyParameters = typing.TypedDict('AfniProcPyParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "afni.afni_proc.py": afni_proc_py_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "afni.afni_proc.py": afni_proc_py_outputs,
-    }.get(t)
-
-
 class AfniProcPyOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `afni_proc_py(...)`.
+    Output object returned when calling `AfniProcPyParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -83,7 +65,7 @@ def afni_proc_py_params(
     copy_files: list[InputPathType] | None = None,
     copy_anat: InputPathType | None = None,
     regress_params: list[str] | None = None,
-) -> AfniProcPyParameters:
+) -> AfniProcPyParametersTagged:
     """
     Build parameters.
     
@@ -107,7 +89,7 @@ def afni_proc_py_params(
         Parameter dictionary
     """
     params = {
-        "@type": "afni.afni_proc.py",
+        "@type": "afni/afni_proc.py",
         "dsets": dsets,
         "subj_id": subj_id,
         "anat": anat,
@@ -146,27 +128,27 @@ def afni_proc_py_cargs(
     """
     cargs = []
     cargs.append("afni_proc.py")
-    cargs.extend([execution.input_file(f) for f in params.get("dsets")])
-    cargs.append(params.get("subj_id"))
-    if params.get("out_dir") is not None:
-        cargs.append(params.get("out_dir"))
-    if params.get("blocks") is not None:
-        cargs.extend(params.get("blocks"))
-    cargs.append(execution.input_file(params.get("anat")))
-    if params.get("echo_times") is not None:
-        cargs.extend(map(str, params.get("echo_times")))
-    if params.get("stim_times") is not None:
-        cargs.extend([execution.input_file(f) for f in params.get("stim_times")])
-    if params.get("stim_files") is not None:
-        cargs.extend([execution.input_file(f) for f in params.get("stim_files")])
-    if params.get("copy_files") is not None:
-        cargs.extend([execution.input_file(f) for f in params.get("copy_files")])
-    if params.get("copy_anat") is not None:
-        cargs.append(execution.input_file(params.get("copy_anat")))
-    if params.get("regress_params") is not None:
+    cargs.extend([execution.input_file(f) for f in params.get("dsets", None)])
+    cargs.append(params.get("subj_id", None))
+    if params.get("out_dir", None) is not None:
+        cargs.append(params.get("out_dir", None))
+    if params.get("blocks", None) is not None:
+        cargs.extend(params.get("blocks", None))
+    cargs.append(execution.input_file(params.get("anat", None)))
+    if params.get("echo_times", None) is not None:
+        cargs.extend(map(str, params.get("echo_times", None)))
+    if params.get("stim_times", None) is not None:
+        cargs.extend([execution.input_file(f) for f in params.get("stim_times", None)])
+    if params.get("stim_files", None) is not None:
+        cargs.extend([execution.input_file(f) for f in params.get("stim_files", None)])
+    if params.get("copy_files", None) is not None:
+        cargs.extend([execution.input_file(f) for f in params.get("copy_files", None)])
+    if params.get("copy_anat", None) is not None:
+        cargs.append(execution.input_file(params.get("copy_anat", None)))
+    if params.get("regress_params", None) is not None:
         cargs.extend([
             "-regress_opts_3dD",
-            *params.get("regress_params")
+            *params.get("regress_params", None)
         ])
     return cargs
 
@@ -186,7 +168,7 @@ def afni_proc_py_outputs(
     """
     ret = AfniProcPyOutputs(
         root=execution.output_file("."),
-        output_directory=execution.output_file(params.get("out_dir")) if (params.get("out_dir") is not None) else None,
+        output_directory=execution.output_file(params.get("out_dir", None)) if (params.get("out_dir") is not None) else None,
     )
     return ret
 
@@ -281,7 +263,6 @@ def afni_proc_py(
 __all__ = [
     "AFNI_PROC_PY_METADATA",
     "AfniProcPyOutputs",
-    "AfniProcPyParameters",
     "afni_proc_py",
     "afni_proc_py_execute",
     "afni_proc_py_params",

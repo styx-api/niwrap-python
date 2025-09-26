@@ -14,7 +14,29 @@ MRI_GTMSEG_METADATA = Metadata(
 
 
 MriGtmsegParameters = typing.TypedDict('MriGtmsegParameters', {
-    "@type": typing.Literal["freesurfer.mri_gtmseg"],
+    "@type": typing.NotRequired[typing.Literal["freesurfer/mri_gtmseg"]],
+    "output_volume": str,
+    "source_subject": str,
+    "internal_usf": typing.NotRequired[float | None],
+    "apas_file": typing.NotRequired[InputPathType | None],
+    "context_annotation": typing.NotRequired[list[str] | None],
+    "subseg_wm": bool,
+    "wm_annotation": typing.NotRequired[list[str] | None],
+    "dmax": typing.NotRequired[float | None],
+    "keep_hypo": bool,
+    "keep_cc": bool,
+    "ctab": typing.NotRequired[InputPathType | None],
+    "lhminmax": typing.NotRequired[list[float] | None],
+    "rhminmax": typing.NotRequired[list[float] | None],
+    "output_usf": typing.NotRequired[float | None],
+    "threads": typing.NotRequired[float | None],
+    "threads_max": bool,
+    "threads_max_1": bool,
+    "debug": bool,
+    "check_opts": bool,
+})
+MriGtmsegParametersTagged = typing.TypedDict('MriGtmsegParametersTagged', {
+    "@type": typing.Literal["freesurfer/mri_gtmseg"],
     "output_volume": str,
     "source_subject": str,
     "internal_usf": typing.NotRequired[float | None],
@@ -37,40 +59,9 @@ MriGtmsegParameters = typing.TypedDict('MriGtmsegParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "freesurfer.mri_gtmseg": mri_gtmseg_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-    }.get(t)
-
-
 class MriGtmsegOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `mri_gtmseg(...)`.
+    Output object returned when calling `MriGtmsegParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -96,7 +87,7 @@ def mri_gtmseg_params(
     threads_max_1: bool = False,
     debug: bool = False,
     check_opts: bool = False,
-) -> MriGtmsegParameters:
+) -> MriGtmsegParametersTagged:
     """
     Build parameters.
     
@@ -134,7 +125,7 @@ def mri_gtmseg_params(
         Parameter dictionary
     """
     params = {
-        "@type": "freesurfer.mri_gtmseg",
+        "@type": "freesurfer/mri_gtmseg",
         "output_volume": output_volume,
         "source_subject": source_subject,
         "subseg_wm": subseg_wm,
@@ -185,75 +176,75 @@ def mri_gtmseg_cargs(
     cargs.append("mri_gtmseg")
     cargs.extend([
         "--o",
-        params.get("output_volume")
+        params.get("output_volume", None)
     ])
     cargs.extend([
         "--s",
-        params.get("source_subject")
+        params.get("source_subject", None)
     ])
-    if params.get("internal_usf") is not None:
+    if params.get("internal_usf", None) is not None:
         cargs.extend([
             "--internal-usf",
-            str(params.get("internal_usf"))
+            str(params.get("internal_usf", None))
         ])
-    if params.get("apas_file") is not None:
+    if params.get("apas_file", None) is not None:
         cargs.extend([
             "--apas",
-            execution.input_file(params.get("apas_file"))
+            execution.input_file(params.get("apas_file", None))
         ])
-    if params.get("context_annotation") is not None:
+    if params.get("context_annotation", None) is not None:
         cargs.extend([
             "--ctx-annot",
-            *params.get("context_annotation")
+            *params.get("context_annotation", None)
         ])
-    if params.get("subseg_wm"):
+    if params.get("subseg_wm", False):
         cargs.append("--subseg-wm")
-    if params.get("wm_annotation") is not None:
+    if params.get("wm_annotation", None) is not None:
         cargs.extend([
             "--wm-annot",
-            *params.get("wm_annotation")
+            *params.get("wm_annotation", None)
         ])
-    if params.get("dmax") is not None:
+    if params.get("dmax", None) is not None:
         cargs.extend([
             "--dmax",
-            str(params.get("dmax"))
+            str(params.get("dmax", None))
         ])
-    if params.get("keep_hypo"):
+    if params.get("keep_hypo", False):
         cargs.append("--keep-hypo")
-    if params.get("keep_cc"):
+    if params.get("keep_cc", False):
         cargs.append("--keep-cc")
-    if params.get("ctab") is not None:
+    if params.get("ctab", None) is not None:
         cargs.extend([
             "--ctab",
-            execution.input_file(params.get("ctab"))
+            execution.input_file(params.get("ctab", None))
         ])
-    if params.get("lhminmax") is not None:
+    if params.get("lhminmax", None) is not None:
         cargs.extend([
             "--lhminmax",
-            *map(str, params.get("lhminmax"))
+            *map(str, params.get("lhminmax", None))
         ])
-    if params.get("rhminmax") is not None:
+    if params.get("rhminmax", None) is not None:
         cargs.extend([
             "--rhminmax",
-            *map(str, params.get("rhminmax"))
+            *map(str, params.get("rhminmax", None))
         ])
-    if params.get("output_usf") is not None:
+    if params.get("output_usf", None) is not None:
         cargs.extend([
             "--output-usf",
-            str(params.get("output_usf"))
+            str(params.get("output_usf", None))
         ])
-    if params.get("threads") is not None:
+    if params.get("threads", None) is not None:
         cargs.extend([
             "--threads",
-            str(params.get("threads"))
+            str(params.get("threads", None))
         ])
-    if params.get("threads_max"):
+    if params.get("threads_max", False):
         cargs.append("--threads-max")
-    if params.get("threads_max_1"):
+    if params.get("threads_max_1", False):
         cargs.append("--threads-max-1")
-    if params.get("debug"):
+    if params.get("debug", False):
         cargs.append("--debug")
-    if params.get("check_opts"):
+    if params.get("check_opts", False):
         cargs.append("--checkopts")
     return cargs
 
@@ -399,7 +390,6 @@ def mri_gtmseg(
 __all__ = [
     "MRI_GTMSEG_METADATA",
     "MriGtmsegOutputs",
-    "MriGtmsegParameters",
     "mri_gtmseg",
     "mri_gtmseg_execute",
     "mri_gtmseg_params",

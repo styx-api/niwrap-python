@@ -14,7 +14,16 @@ MRIS_COMPUTE_LGI_METADATA = Metadata(
 
 
 MrisComputeLgiParameters = typing.TypedDict('MrisComputeLgiParameters', {
-    "@type": typing.Literal["freesurfer.mris_compute_lgi"],
+    "@type": typing.NotRequired[typing.Literal["freesurfer/mris_compute_lgi"]],
+    "input_surface": InputPathType,
+    "close_sphere_size": typing.NotRequired[float | None],
+    "smooth_iters": typing.NotRequired[float | None],
+    "step_size": typing.NotRequired[float | None],
+    "echo": bool,
+    "dontrun": bool,
+})
+MrisComputeLgiParametersTagged = typing.TypedDict('MrisComputeLgiParametersTagged', {
+    "@type": typing.Literal["freesurfer/mris_compute_lgi"],
     "input_surface": InputPathType,
     "close_sphere_size": typing.NotRequired[float | None],
     "smooth_iters": typing.NotRequired[float | None],
@@ -24,41 +33,9 @@ MrisComputeLgiParameters = typing.TypedDict('MrisComputeLgiParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "freesurfer.mris_compute_lgi": mris_compute_lgi_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "freesurfer.mris_compute_lgi": mris_compute_lgi_outputs,
-    }.get(t)
-
-
 class MrisComputeLgiOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `mris_compute_lgi(...)`.
+    Output object returned when calling `MrisComputeLgiParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -73,7 +50,7 @@ def mris_compute_lgi_params(
     step_size: float | None = None,
     echo: bool = False,
     dontrun: bool = False,
-) -> MrisComputeLgiParameters:
+) -> MrisComputeLgiParametersTagged:
     """
     Build parameters.
     
@@ -91,7 +68,7 @@ def mris_compute_lgi_params(
         Parameter dictionary
     """
     params = {
-        "@type": "freesurfer.mris_compute_lgi",
+        "@type": "freesurfer/mris_compute_lgi",
         "input_surface": input_surface,
         "echo": echo,
         "dontrun": dontrun,
@@ -122,26 +99,26 @@ def mris_compute_lgi_cargs(
     cargs.append("mris_compute_lgi")
     cargs.extend([
         "--i",
-        execution.input_file(params.get("input_surface"))
+        execution.input_file(params.get("input_surface", None))
     ])
-    if params.get("close_sphere_size") is not None:
+    if params.get("close_sphere_size", None) is not None:
         cargs.extend([
             "--close_sphere_size",
-            str(params.get("close_sphere_size"))
+            str(params.get("close_sphere_size", None))
         ])
-    if params.get("smooth_iters") is not None:
+    if params.get("smooth_iters", None) is not None:
         cargs.extend([
             "--smooth_iters",
-            str(params.get("smooth_iters"))
+            str(params.get("smooth_iters", None))
         ])
-    if params.get("step_size") is not None:
+    if params.get("step_size", None) is not None:
         cargs.extend([
             "--step_size",
-            str(params.get("step_size"))
+            str(params.get("step_size", None))
         ])
-    if params.get("echo"):
+    if params.get("echo", False):
         cargs.append("--echo")
-    if params.get("dontrun"):
+    if params.get("dontrun", False):
         cargs.append("--dontrun")
     return cargs
 
@@ -161,7 +138,7 @@ def mris_compute_lgi_outputs(
     """
     ret = MrisComputeLgiOutputs(
         root=execution.output_file("."),
-        output_surface_map=execution.output_file(pathlib.Path(params.get("input_surface")).name + "_lgi"),
+        output_surface_map=execution.output_file(pathlib.Path(params.get("input_surface", None)).name + "_lgi"),
     )
     return ret
 
@@ -242,7 +219,6 @@ def mris_compute_lgi(
 __all__ = [
     "MRIS_COMPUTE_LGI_METADATA",
     "MrisComputeLgiOutputs",
-    "MrisComputeLgiParameters",
     "mris_compute_lgi",
     "mris_compute_lgi_execute",
     "mris_compute_lgi_params",

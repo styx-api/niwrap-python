@@ -14,7 +14,24 @@ FSLMEANTS_METADATA = Metadata(
 
 
 FslmeantsParameters = typing.TypedDict('FslmeantsParameters', {
-    "@type": typing.Literal["fsl.fslmeants"],
+    "@type": typing.NotRequired[typing.Literal["fsl/fslmeants"]],
+    "input_image": InputPathType,
+    "output": typing.NotRequired[str | None],
+    "mask": typing.NotRequired[InputPathType | None],
+    "coordinates": typing.NotRequired[list[float] | None],
+    "usemm_flag": bool,
+    "showall_flag": bool,
+    "eigenv_flag": bool,
+    "eigenvariates_order": typing.NotRequired[float | None],
+    "no_bin_flag": bool,
+    "label_image": typing.NotRequired[InputPathType | None],
+    "transpose_flag": bool,
+    "weighted_mean_flag": bool,
+    "verbose_flag": bool,
+    "help_flag": bool,
+})
+FslmeantsParametersTagged = typing.TypedDict('FslmeantsParametersTagged', {
+    "@type": typing.Literal["fsl/fslmeants"],
     "input_image": InputPathType,
     "output": typing.NotRequired[str | None],
     "mask": typing.NotRequired[InputPathType | None],
@@ -32,41 +49,9 @@ FslmeantsParameters = typing.TypedDict('FslmeantsParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "fsl.fslmeants": fslmeants_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "fsl.fslmeants": fslmeants_outputs,
-    }.get(t)
-
-
 class FslmeantsOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `fslmeants(...)`.
+    Output object returned when calling `FslmeantsParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -89,7 +74,7 @@ def fslmeants_params(
     weighted_mean_flag: bool = False,
     verbose_flag: bool = False,
     help_flag: bool = False,
-) -> FslmeantsParameters:
+) -> FslmeantsParametersTagged:
     """
     Build parameters.
     
@@ -118,7 +103,7 @@ def fslmeants_params(
         Parameter dictionary
     """
     params = {
-        "@type": "fsl.fslmeants",
+        "@type": "fsl/fslmeants",
         "input_image": input_image,
         "usemm_flag": usemm_flag,
         "showall_flag": showall_flag,
@@ -159,48 +144,48 @@ def fslmeants_cargs(
     cargs.append("fslmeants")
     cargs.extend([
         "-i",
-        execution.input_file(params.get("input_image"))
+        execution.input_file(params.get("input_image", None))
     ])
-    if params.get("output") is not None:
+    if params.get("output", None) is not None:
         cargs.extend([
             "-o",
-            params.get("output")
+            params.get("output", None)
         ])
-    if params.get("mask") is not None:
+    if params.get("mask", None) is not None:
         cargs.extend([
             "-m",
-            execution.input_file(params.get("mask"))
+            execution.input_file(params.get("mask", None))
         ])
-    if params.get("coordinates") is not None:
+    if params.get("coordinates", None) is not None:
         cargs.extend([
             "-c",
-            *map(str, params.get("coordinates"))
+            *map(str, params.get("coordinates", None))
         ])
-    if params.get("usemm_flag"):
+    if params.get("usemm_flag", False):
         cargs.append("--usemm")
-    if params.get("showall_flag"):
+    if params.get("showall_flag", False):
         cargs.append("--showall")
-    if params.get("eigenv_flag"):
+    if params.get("eigenv_flag", False):
         cargs.append("--eig")
-    if params.get("eigenvariates_order") is not None:
+    if params.get("eigenvariates_order", None) is not None:
         cargs.extend([
             "--order",
-            str(params.get("eigenvariates_order"))
+            str(params.get("eigenvariates_order", None))
         ])
-    if params.get("no_bin_flag"):
+    if params.get("no_bin_flag", False):
         cargs.append("--no_bin")
-    if params.get("label_image") is not None:
+    if params.get("label_image", None) is not None:
         cargs.extend([
             "--label",
-            execution.input_file(params.get("label_image"))
+            execution.input_file(params.get("label_image", None))
         ])
-    if params.get("transpose_flag"):
+    if params.get("transpose_flag", False):
         cargs.append("--transpose")
-    if params.get("weighted_mean_flag"):
+    if params.get("weighted_mean_flag", False):
         cargs.append("-w")
-    if params.get("verbose_flag"):
+    if params.get("verbose_flag", False):
         cargs.append("-v")
-    if params.get("help_flag"):
+    if params.get("help_flag", False):
         cargs.append("-h")
     return cargs
 
@@ -220,7 +205,7 @@ def fslmeants_outputs(
     """
     ret = FslmeantsOutputs(
         root=execution.output_file("."),
-        output_text_matrix=execution.output_file(params.get("output")) if (params.get("output") is not None) else None,
+        output_text_matrix=execution.output_file(params.get("output", None)) if (params.get("output") is not None) else None,
     )
     return ret
 
@@ -326,7 +311,6 @@ def fslmeants(
 __all__ = [
     "FSLMEANTS_METADATA",
     "FslmeantsOutputs",
-    "FslmeantsParameters",
     "fslmeants",
     "fslmeants_execute",
     "fslmeants_params",

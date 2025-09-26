@@ -14,7 +14,15 @@ CIFTI_LABEL_ADJACENCY_METADATA = Metadata(
 
 
 CiftiLabelAdjacencyParameters = typing.TypedDict('CiftiLabelAdjacencyParameters', {
-    "@type": typing.Literal["workbench.cifti-label-adjacency"],
+    "@type": typing.NotRequired[typing.Literal["workbench/cifti-label-adjacency"]],
+    "label_in": InputPathType,
+    "adjacency_out": str,
+    "opt_left_surface_surface": typing.NotRequired[InputPathType | None],
+    "opt_right_surface_surface": typing.NotRequired[InputPathType | None],
+    "opt_cerebellum_surface_surface": typing.NotRequired[InputPathType | None],
+})
+CiftiLabelAdjacencyParametersTagged = typing.TypedDict('CiftiLabelAdjacencyParametersTagged', {
+    "@type": typing.Literal["workbench/cifti-label-adjacency"],
     "label_in": InputPathType,
     "adjacency_out": str,
     "opt_left_surface_surface": typing.NotRequired[InputPathType | None],
@@ -23,41 +31,9 @@ CiftiLabelAdjacencyParameters = typing.TypedDict('CiftiLabelAdjacencyParameters'
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "workbench.cifti-label-adjacency": cifti_label_adjacency_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "workbench.cifti-label-adjacency": cifti_label_adjacency_outputs,
-    }.get(t)
-
-
 class CiftiLabelAdjacencyOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `cifti_label_adjacency(...)`.
+    Output object returned when calling `CiftiLabelAdjacencyParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -71,7 +47,7 @@ def cifti_label_adjacency_params(
     opt_left_surface_surface: InputPathType | None = None,
     opt_right_surface_surface: InputPathType | None = None,
     opt_cerebellum_surface_surface: InputPathType | None = None,
-) -> CiftiLabelAdjacencyParameters:
+) -> CiftiLabelAdjacencyParametersTagged:
     """
     Build parameters.
     
@@ -88,7 +64,7 @@ def cifti_label_adjacency_params(
         Parameter dictionary
     """
     params = {
-        "@type": "workbench.cifti-label-adjacency",
+        "@type": "workbench/cifti-label-adjacency",
         "label_in": label_in,
         "adjacency_out": adjacency_out,
     }
@@ -117,22 +93,22 @@ def cifti_label_adjacency_cargs(
     cargs = []
     cargs.append("wb_command")
     cargs.append("-cifti-label-adjacency")
-    cargs.append(execution.input_file(params.get("label_in")))
-    cargs.append(params.get("adjacency_out"))
-    if params.get("opt_left_surface_surface") is not None:
+    cargs.append(execution.input_file(params.get("label_in", None)))
+    cargs.append(params.get("adjacency_out", None))
+    if params.get("opt_left_surface_surface", None) is not None:
         cargs.extend([
             "-left-surface",
-            execution.input_file(params.get("opt_left_surface_surface"))
+            execution.input_file(params.get("opt_left_surface_surface", None))
         ])
-    if params.get("opt_right_surface_surface") is not None:
+    if params.get("opt_right_surface_surface", None) is not None:
         cargs.extend([
             "-right-surface",
-            execution.input_file(params.get("opt_right_surface_surface"))
+            execution.input_file(params.get("opt_right_surface_surface", None))
         ])
-    if params.get("opt_cerebellum_surface_surface") is not None:
+    if params.get("opt_cerebellum_surface_surface", None) is not None:
         cargs.extend([
             "-cerebellum-surface",
-            execution.input_file(params.get("opt_cerebellum_surface_surface"))
+            execution.input_file(params.get("opt_cerebellum_surface_surface", None))
         ])
     return cargs
 
@@ -152,7 +128,7 @@ def cifti_label_adjacency_outputs(
     """
     ret = CiftiLabelAdjacencyOutputs(
         root=execution.output_file("."),
-        adjacency_out=execution.output_file(params.get("adjacency_out")),
+        adjacency_out=execution.output_file(params.get("adjacency_out", None)),
     )
     return ret
 
@@ -238,7 +214,6 @@ def cifti_label_adjacency(
 __all__ = [
     "CIFTI_LABEL_ADJACENCY_METADATA",
     "CiftiLabelAdjacencyOutputs",
-    "CiftiLabelAdjacencyParameters",
     "cifti_label_adjacency",
     "cifti_label_adjacency_execute",
     "cifti_label_adjacency_params",

@@ -14,7 +14,28 @@ V__CLIP_VOLUME_METADATA = Metadata(
 
 
 VClipVolumeParameters = typing.TypedDict('VClipVolumeParameters', {
-    "@type": typing.Literal["afni.@clip_volume"],
+    "@type": typing.NotRequired[typing.Literal["afni/@clip_volume"]],
+    "input_volume": InputPathType,
+    "below_zmm": typing.NotRequired[float | None],
+    "above_zmm": typing.NotRequired[float | None],
+    "left_xmm": typing.NotRequired[float | None],
+    "right_xmm": typing.NotRequired[float | None],
+    "anterior_ymm": typing.NotRequired[float | None],
+    "posterior_ymm": typing.NotRequired[float | None],
+    "box": typing.NotRequired[list[float] | None],
+    "mask_box": typing.NotRequired[list[float] | None],
+    "and_logic": bool,
+    "or_logic": bool,
+    "verbosity": bool,
+    "crop_allzero": bool,
+    "crop_greedy": bool,
+    "crop": bool,
+    "crop_npad": typing.NotRequired[float | None],
+    "output_prefix": typing.NotRequired[str | None],
+    "followers": typing.NotRequired[list[InputPathType] | None],
+})
+VClipVolumeParametersTagged = typing.TypedDict('VClipVolumeParametersTagged', {
+    "@type": typing.Literal["afni/@clip_volume"],
     "input_volume": InputPathType,
     "below_zmm": typing.NotRequired[float | None],
     "above_zmm": typing.NotRequired[float | None],
@@ -36,41 +57,9 @@ VClipVolumeParameters = typing.TypedDict('VClipVolumeParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "afni.@clip_volume": v__clip_volume_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "afni.@clip_volume": v__clip_volume_outputs,
-    }.get(t)
-
-
 class VClipVolumeOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `v__clip_volume(...)`.
+    Output object returned when calling `VClipVolumeParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -99,7 +88,7 @@ def v__clip_volume_params(
     crop_npad: float | None = None,
     output_prefix: str | None = None,
     followers: list[InputPathType] | None = None,
-) -> VClipVolumeParameters:
+) -> VClipVolumeParametersTagged:
     """
     Build parameters.
     
@@ -131,7 +120,7 @@ def v__clip_volume_params(
         Parameter dictionary
     """
     params = {
-        "@type": "afni.@clip_volume",
+        "@type": "afni/@clip_volume",
         "input_volume": input_volume,
         "and_logic": and_logic,
         "or_logic": or_logic,
@@ -180,73 +169,73 @@ def v__clip_volume_cargs(
     """
     cargs = []
     cargs.append("@clip_volume")
-    cargs.append(execution.input_file(params.get("input_volume")))
-    if params.get("below_zmm") is not None:
+    cargs.append(execution.input_file(params.get("input_volume", None)))
+    if params.get("below_zmm", None) is not None:
         cargs.extend([
             "-below",
-            str(params.get("below_zmm"))
+            str(params.get("below_zmm", None))
         ])
-    if params.get("above_zmm") is not None:
+    if params.get("above_zmm", None) is not None:
         cargs.extend([
             "-above",
-            str(params.get("above_zmm"))
+            str(params.get("above_zmm", None))
         ])
-    if params.get("left_xmm") is not None:
+    if params.get("left_xmm", None) is not None:
         cargs.extend([
             "-left",
-            str(params.get("left_xmm"))
+            str(params.get("left_xmm", None))
         ])
-    if params.get("right_xmm") is not None:
+    if params.get("right_xmm", None) is not None:
         cargs.extend([
             "-right",
-            str(params.get("right_xmm"))
+            str(params.get("right_xmm", None))
         ])
-    if params.get("anterior_ymm") is not None:
+    if params.get("anterior_ymm", None) is not None:
         cargs.extend([
             "-anterior",
-            str(params.get("anterior_ymm"))
+            str(params.get("anterior_ymm", None))
         ])
-    if params.get("posterior_ymm") is not None:
+    if params.get("posterior_ymm", None) is not None:
         cargs.extend([
             "-posterior",
-            str(params.get("posterior_ymm"))
+            str(params.get("posterior_ymm", None))
         ])
-    if params.get("box") is not None:
+    if params.get("box", None) is not None:
         cargs.extend([
             "-box",
-            *map(str, params.get("box"))
+            *map(str, params.get("box", None))
         ])
-    if params.get("mask_box") is not None:
+    if params.get("mask_box", None) is not None:
         cargs.extend([
             "-mask_box",
-            *map(str, params.get("mask_box"))
+            *map(str, params.get("mask_box", None))
         ])
-    if params.get("and_logic"):
+    if params.get("and_logic", False):
         cargs.append("-and")
-    if params.get("or_logic"):
+    if params.get("or_logic", False):
         cargs.append("-or")
-    if params.get("verbosity"):
+    if params.get("verbosity", False):
         cargs.append("-verb")
-    if params.get("crop_allzero"):
+    if params.get("crop_allzero", False):
         cargs.append("-crop_allzero")
-    if params.get("crop_greedy"):
+    if params.get("crop_greedy", False):
         cargs.append("-crop_greedy")
-    if params.get("crop"):
+    if params.get("crop", False):
         cargs.append("-crop")
-    if params.get("crop_npad") is not None:
+    if params.get("crop_npad", None) is not None:
         cargs.extend([
             "-crop_npad",
-            str(params.get("crop_npad"))
+            str(params.get("crop_npad", None))
         ])
-    if params.get("output_prefix") is not None:
+    if params.get("output_prefix", None) is not None:
         cargs.extend([
             "-prefix",
-            params.get("output_prefix")
+            params.get("output_prefix", None)
         ])
-    if params.get("followers") is not None:
+    if params.get("followers", None) is not None:
         cargs.extend([
             "-followers",
-            *[execution.input_file(f) for f in params.get("followers")]
+            *[execution.input_file(f) for f in params.get("followers", None)]
         ])
     return cargs
 
@@ -266,8 +255,8 @@ def v__clip_volume_outputs(
     """
     ret = VClipVolumeOutputs(
         root=execution.output_file("."),
-        output_clipped_volume=execution.output_file(params.get("output_prefix") + "_clp.nii.gz") if (params.get("output_prefix") is not None) else None,
-        output_followers=execution.output_file(params.get("output_prefix") + "_follow_clp.nii.gz") if (params.get("output_prefix") is not None) else None,
+        output_clipped_volume=execution.output_file(params.get("output_prefix", None) + "_clp.nii.gz") if (params.get("output_prefix") is not None) else None,
+        output_followers=execution.output_file(params.get("output_prefix", None) + "_follow_clp.nii.gz") if (params.get("output_prefix") is not None) else None,
     )
     return ret
 
@@ -385,7 +374,6 @@ def v__clip_volume(
 
 __all__ = [
     "VClipVolumeOutputs",
-    "VClipVolumeParameters",
     "V__CLIP_VOLUME_METADATA",
     "v__clip_volume",
     "v__clip_volume_execute",

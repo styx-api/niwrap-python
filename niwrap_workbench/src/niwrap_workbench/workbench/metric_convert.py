@@ -14,14 +14,25 @@ METRIC_CONVERT_METADATA = Metadata(
 
 
 MetricConvertToNiftiParameters = typing.TypedDict('MetricConvertToNiftiParameters', {
-    "@type": typing.Literal["workbench.metric-convert.to_nifti"],
+    "@type": typing.NotRequired[typing.Literal["to_nifti"]],
+    "metric_in": InputPathType,
+    "nifti_out": str,
+})
+MetricConvertToNiftiParametersTagged = typing.TypedDict('MetricConvertToNiftiParametersTagged', {
+    "@type": typing.Literal["to_nifti"],
     "metric_in": InputPathType,
     "nifti_out": str,
 })
 
 
 MetricConvertFromNiftiParameters = typing.TypedDict('MetricConvertFromNiftiParameters', {
-    "@type": typing.Literal["workbench.metric-convert.from_nifti"],
+    "@type": typing.NotRequired[typing.Literal["from_nifti"]],
+    "nifti_in": InputPathType,
+    "surface_in": InputPathType,
+    "metric_out": str,
+})
+MetricConvertFromNiftiParametersTagged = typing.TypedDict('MetricConvertFromNiftiParametersTagged', {
+    "@type": typing.Literal["from_nifti"],
     "nifti_in": InputPathType,
     "surface_in": InputPathType,
     "metric_out": str,
@@ -29,46 +40,15 @@ MetricConvertFromNiftiParameters = typing.TypedDict('MetricConvertFromNiftiParam
 
 
 MetricConvertParameters = typing.TypedDict('MetricConvertParameters', {
-    "@type": typing.Literal["workbench.metric-convert"],
+    "@type": typing.NotRequired[typing.Literal["workbench/metric-convert"]],
     "to_nifti": typing.NotRequired[MetricConvertToNiftiParameters | None],
     "from_nifti": typing.NotRequired[MetricConvertFromNiftiParameters | None],
 })
-
-
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "workbench.metric-convert": metric_convert_cargs,
-        "workbench.metric-convert.to_nifti": metric_convert_to_nifti_cargs,
-        "workbench.metric-convert.from_nifti": metric_convert_from_nifti_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "workbench.metric-convert": metric_convert_outputs,
-        "workbench.metric-convert.to_nifti": metric_convert_to_nifti_outputs,
-        "workbench.metric-convert.from_nifti": metric_convert_from_nifti_outputs,
-    }.get(t)
+MetricConvertParametersTagged = typing.TypedDict('MetricConvertParametersTagged', {
+    "@type": typing.Literal["workbench/metric-convert"],
+    "to_nifti": typing.NotRequired[MetricConvertToNiftiParameters | None],
+    "from_nifti": typing.NotRequired[MetricConvertFromNiftiParameters | None],
+})
 
 
 class MetricConvertToNiftiOutputs(typing.NamedTuple):
@@ -84,7 +64,7 @@ class MetricConvertToNiftiOutputs(typing.NamedTuple):
 def metric_convert_to_nifti_params(
     metric_in: InputPathType,
     nifti_out: str,
-) -> MetricConvertToNiftiParameters:
+) -> MetricConvertToNiftiParametersTagged:
     """
     Build parameters.
     
@@ -95,7 +75,7 @@ def metric_convert_to_nifti_params(
         Parameter dictionary
     """
     params = {
-        "@type": "workbench.metric-convert.to_nifti",
+        "@type": "to_nifti",
         "metric_in": metric_in,
         "nifti_out": nifti_out,
     }
@@ -117,8 +97,8 @@ def metric_convert_to_nifti_cargs(
     """
     cargs = []
     cargs.append("-to-nifti")
-    cargs.append(execution.input_file(params.get("metric_in")))
-    cargs.append(params.get("nifti_out"))
+    cargs.append(execution.input_file(params.get("metric_in", None)))
+    cargs.append(params.get("nifti_out", None))
     return cargs
 
 
@@ -137,7 +117,7 @@ def metric_convert_to_nifti_outputs(
     """
     ret = MetricConvertToNiftiOutputs(
         root=execution.output_file("."),
-        nifti_out=execution.output_file(params.get("nifti_out")),
+        nifti_out=execution.output_file(params.get("nifti_out", None)),
     )
     return ret
 
@@ -156,7 +136,7 @@ def metric_convert_from_nifti_params(
     nifti_in: InputPathType,
     surface_in: InputPathType,
     metric_out: str,
-) -> MetricConvertFromNiftiParameters:
+) -> MetricConvertFromNiftiParametersTagged:
     """
     Build parameters.
     
@@ -168,7 +148,7 @@ def metric_convert_from_nifti_params(
         Parameter dictionary
     """
     params = {
-        "@type": "workbench.metric-convert.from_nifti",
+        "@type": "from_nifti",
         "nifti_in": nifti_in,
         "surface_in": surface_in,
         "metric_out": metric_out,
@@ -191,9 +171,9 @@ def metric_convert_from_nifti_cargs(
     """
     cargs = []
     cargs.append("-from-nifti")
-    cargs.append(execution.input_file(params.get("nifti_in")))
-    cargs.append(execution.input_file(params.get("surface_in")))
-    cargs.append(params.get("metric_out"))
+    cargs.append(execution.input_file(params.get("nifti_in", None)))
+    cargs.append(execution.input_file(params.get("surface_in", None)))
+    cargs.append(params.get("metric_out", None))
     return cargs
 
 
@@ -212,14 +192,14 @@ def metric_convert_from_nifti_outputs(
     """
     ret = MetricConvertFromNiftiOutputs(
         root=execution.output_file("."),
-        metric_out=execution.output_file(params.get("metric_out")),
+        metric_out=execution.output_file(params.get("metric_out", None)),
     )
     return ret
 
 
 class MetricConvertOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `metric_convert(...)`.
+    Output object returned when calling `MetricConvertParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -232,7 +212,7 @@ class MetricConvertOutputs(typing.NamedTuple):
 def metric_convert_params(
     to_nifti: MetricConvertToNiftiParameters | None = None,
     from_nifti: MetricConvertFromNiftiParameters | None = None,
-) -> MetricConvertParameters:
+) -> MetricConvertParametersTagged:
     """
     Build parameters.
     
@@ -243,7 +223,7 @@ def metric_convert_params(
         Parameter dictionary
     """
     params = {
-        "@type": "workbench.metric-convert",
+        "@type": "workbench/metric-convert",
     }
     if to_nifti is not None:
         params["to_nifti"] = to_nifti
@@ -268,10 +248,10 @@ def metric_convert_cargs(
     cargs = []
     cargs.append("wb_command")
     cargs.append("-metric-convert")
-    if params.get("to_nifti") is not None:
-        cargs.extend(dyn_cargs(params.get("to_nifti")["@type"])(params.get("to_nifti"), execution))
-    if params.get("from_nifti") is not None:
-        cargs.extend(dyn_cargs(params.get("from_nifti")["@type"])(params.get("from_nifti"), execution))
+    if params.get("to_nifti", None) is not None:
+        cargs.extend(metric_convert_to_nifti_cargs(params.get("to_nifti", None), execution))
+    if params.get("from_nifti", None) is not None:
+        cargs.extend(metric_convert_from_nifti_cargs(params.get("from_nifti", None), execution))
     return cargs
 
 
@@ -290,8 +270,8 @@ def metric_convert_outputs(
     """
     ret = MetricConvertOutputs(
         root=execution.output_file("."),
-        to_nifti=dyn_outputs(params.get("to_nifti")["@type"])(params.get("to_nifti"), execution) if params.get("to_nifti") else None,
-        from_nifti=dyn_outputs(params.get("from_nifti")["@type"])(params.get("from_nifti"), execution) if params.get("from_nifti") else None,
+        to_nifti=metric_convert_to_nifti_outputs(params.get("to_nifti"), execution) if params.get("to_nifti") else None,
+        from_nifti=metric_convert_from_nifti_outputs(params.get("from_nifti"), execution) if params.get("from_nifti") else None,
     )
     return ret
 
@@ -363,11 +343,8 @@ def metric_convert(
 __all__ = [
     "METRIC_CONVERT_METADATA",
     "MetricConvertFromNiftiOutputs",
-    "MetricConvertFromNiftiParameters",
     "MetricConvertOutputs",
-    "MetricConvertParameters",
     "MetricConvertToNiftiOutputs",
-    "MetricConvertToNiftiParameters",
     "metric_convert",
     "metric_convert_execute",
     "metric_convert_from_nifti_params",

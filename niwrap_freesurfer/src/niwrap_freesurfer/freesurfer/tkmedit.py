@@ -14,46 +14,20 @@ TKMEDIT_METADATA = Metadata(
 
 
 TkmeditParameters = typing.TypedDict('TkmeditParameters', {
-    "@type": typing.Literal["freesurfer.tkmedit"],
+    "@type": typing.NotRequired[typing.Literal["freesurfer/tkmedit"]],
+    "input_volume": InputPathType,
+    "options": typing.NotRequired[str | None],
+})
+TkmeditParametersTagged = typing.TypedDict('TkmeditParametersTagged', {
+    "@type": typing.Literal["freesurfer/tkmedit"],
     "input_volume": InputPathType,
     "options": typing.NotRequired[str | None],
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "freesurfer.tkmedit": tkmedit_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-    }.get(t)
-
-
 class TkmeditOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `tkmedit(...)`.
+    Output object returned when calling `TkmeditParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -62,7 +36,7 @@ class TkmeditOutputs(typing.NamedTuple):
 def tkmedit_params(
     input_volume: InputPathType,
     options: str | None = None,
-) -> TkmeditParameters:
+) -> TkmeditParametersTagged:
     """
     Build parameters.
     
@@ -73,7 +47,7 @@ def tkmedit_params(
         Parameter dictionary
     """
     params = {
-        "@type": "freesurfer.tkmedit",
+        "@type": "freesurfer/tkmedit",
         "input_volume": input_volume,
     }
     if options is not None:
@@ -96,9 +70,9 @@ def tkmedit_cargs(
     """
     cargs = []
     cargs.append("tkmedit")
-    cargs.append(execution.input_file(params.get("input_volume")))
-    if params.get("options") is not None:
-        cargs.append(params.get("options"))
+    cargs.append(execution.input_file(params.get("input_volume", None)))
+    if params.get("options", None) is not None:
+        cargs.append(params.get("options", None))
     return cargs
 
 
@@ -184,7 +158,6 @@ def tkmedit(
 __all__ = [
     "TKMEDIT_METADATA",
     "TkmeditOutputs",
-    "TkmeditParameters",
     "tkmedit",
     "tkmedit_execute",
     "tkmedit_params",

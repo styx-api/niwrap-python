@@ -14,7 +14,14 @@ MRI_MI_METADATA = Metadata(
 
 
 MriMiParameters = typing.TypedDict('MriMiParameters', {
-    "@type": typing.Literal["freesurfer.mri_mi"],
+    "@type": typing.NotRequired[typing.Literal["freesurfer/mri_mi"]],
+    "input_file1": InputPathType,
+    "input_file2": InputPathType,
+    "bins": typing.NotRequired[str | None],
+    "silent": bool,
+})
+MriMiParametersTagged = typing.TypedDict('MriMiParametersTagged', {
+    "@type": typing.Literal["freesurfer/mri_mi"],
     "input_file1": InputPathType,
     "input_file2": InputPathType,
     "bins": typing.NotRequired[str | None],
@@ -22,40 +29,9 @@ MriMiParameters = typing.TypedDict('MriMiParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "freesurfer.mri_mi": mri_mi_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-    }.get(t)
-
-
 class MriMiOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `mri_mi(...)`.
+    Output object returned when calling `MriMiParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -66,7 +42,7 @@ def mri_mi_params(
     input_file2: InputPathType,
     bins: str | None = None,
     silent: bool = False,
-) -> MriMiParameters:
+) -> MriMiParametersTagged:
     """
     Build parameters.
     
@@ -80,7 +56,7 @@ def mri_mi_params(
         Parameter dictionary
     """
     params = {
-        "@type": "freesurfer.mri_mi",
+        "@type": "freesurfer/mri_mi",
         "input_file1": input_file1,
         "input_file2": input_file2,
         "silent": silent,
@@ -105,14 +81,14 @@ def mri_mi_cargs(
     """
     cargs = []
     cargs.append("mri_mi")
-    cargs.append(execution.input_file(params.get("input_file1")))
-    cargs.append(execution.input_file(params.get("input_file2")))
-    if params.get("bins") is not None:
+    cargs.append(execution.input_file(params.get("input_file1", None)))
+    cargs.append(execution.input_file(params.get("input_file2", None)))
+    if params.get("bins", None) is not None:
         cargs.extend([
             "--bins",
-            params.get("bins")
+            params.get("bins", None)
         ])
-    if params.get("silent"):
+    if params.get("silent", False):
         cargs.append("--silent")
     return cargs
 
@@ -202,7 +178,6 @@ def mri_mi(
 __all__ = [
     "MRI_MI_METADATA",
     "MriMiOutputs",
-    "MriMiParameters",
     "mri_mi",
     "mri_mi_execute",
     "mri_mi_params",

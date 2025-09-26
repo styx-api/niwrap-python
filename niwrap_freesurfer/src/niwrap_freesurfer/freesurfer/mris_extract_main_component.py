@@ -14,47 +14,20 @@ MRIS_EXTRACT_MAIN_COMPONENT_METADATA = Metadata(
 
 
 MrisExtractMainComponentParameters = typing.TypedDict('MrisExtractMainComponentParameters', {
-    "@type": typing.Literal["freesurfer.mris_extract_main_component"],
+    "@type": typing.NotRequired[typing.Literal["freesurfer/mris_extract_main_component"]],
+    "input_surface": InputPathType,
+    "output_surface": str,
+})
+MrisExtractMainComponentParametersTagged = typing.TypedDict('MrisExtractMainComponentParametersTagged', {
+    "@type": typing.Literal["freesurfer/mris_extract_main_component"],
     "input_surface": InputPathType,
     "output_surface": str,
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "freesurfer.mris_extract_main_component": mris_extract_main_component_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "freesurfer.mris_extract_main_component": mris_extract_main_component_outputs,
-    }.get(t)
-
-
 class MrisExtractMainComponentOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `mris_extract_main_component(...)`.
+    Output object returned when calling `MrisExtractMainComponentParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -65,7 +38,7 @@ class MrisExtractMainComponentOutputs(typing.NamedTuple):
 def mris_extract_main_component_params(
     input_surface: InputPathType,
     output_surface: str,
-) -> MrisExtractMainComponentParameters:
+) -> MrisExtractMainComponentParametersTagged:
     """
     Build parameters.
     
@@ -76,7 +49,7 @@ def mris_extract_main_component_params(
         Parameter dictionary
     """
     params = {
-        "@type": "freesurfer.mris_extract_main_component",
+        "@type": "freesurfer/mris_extract_main_component",
         "input_surface": input_surface,
         "output_surface": output_surface,
     }
@@ -98,8 +71,8 @@ def mris_extract_main_component_cargs(
     """
     cargs = []
     cargs.append("mris_extract_main_component")
-    cargs.append(execution.input_file(params.get("input_surface")))
-    cargs.append(params.get("output_surface"))
+    cargs.append(execution.input_file(params.get("input_surface", None)))
+    cargs.append(params.get("output_surface", None))
     return cargs
 
 
@@ -118,7 +91,7 @@ def mris_extract_main_component_outputs(
     """
     ret = MrisExtractMainComponentOutputs(
         root=execution.output_file("."),
-        output_surface_file=execution.output_file(params.get("output_surface")),
+        output_surface_file=execution.output_file(params.get("output_surface", None)),
     )
     return ret
 
@@ -182,7 +155,6 @@ def mris_extract_main_component(
 __all__ = [
     "MRIS_EXTRACT_MAIN_COMPONENT_METADATA",
     "MrisExtractMainComponentOutputs",
-    "MrisExtractMainComponentParameters",
     "mris_extract_main_component",
     "mris_extract_main_component_execute",
     "mris_extract_main_component_params",

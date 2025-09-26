@@ -14,7 +14,15 @@ V__SUMA_REPREFIXIZE_SPEC_METADATA = Metadata(
 
 
 VSumaReprefixizeSpecParameters = typing.TypedDict('VSumaReprefixizeSpecParameters', {
-    "@type": typing.Literal["afni.@suma_reprefixize_spec"],
+    "@type": typing.NotRequired[typing.Literal["afni/@suma_reprefixize_spec"]],
+    "input_file": InputPathType,
+    "prefix": str,
+    "output_dir": str,
+    "work_dir": str,
+    "no_clean": bool,
+})
+VSumaReprefixizeSpecParametersTagged = typing.TypedDict('VSumaReprefixizeSpecParametersTagged', {
+    "@type": typing.Literal["afni/@suma_reprefixize_spec"],
     "input_file": InputPathType,
     "prefix": str,
     "output_dir": str,
@@ -23,40 +31,9 @@ VSumaReprefixizeSpecParameters = typing.TypedDict('VSumaReprefixizeSpecParameter
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "afni.@suma_reprefixize_spec": v__suma_reprefixize_spec_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-    }.get(t)
-
-
 class VSumaReprefixizeSpecOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `v__suma_reprefixize_spec(...)`.
+    Output object returned when calling `VSumaReprefixizeSpecParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -68,7 +45,7 @@ def v__suma_reprefixize_spec_params(
     output_dir: str,
     work_dir: str,
     no_clean: bool = False,
-) -> VSumaReprefixizeSpecParameters:
+) -> VSumaReprefixizeSpecParametersTagged:
     """
     Build parameters.
     
@@ -82,7 +59,7 @@ def v__suma_reprefixize_spec_params(
         Parameter dictionary
     """
     params = {
-        "@type": "afni.@suma_reprefixize_spec",
+        "@type": "afni/@suma_reprefixize_spec",
         "input_file": input_file,
         "prefix": prefix,
         "output_dir": output_dir,
@@ -109,21 +86,21 @@ def v__suma_reprefixize_spec_cargs(
     cargs.append("@suma_reprefixize_spec")
     cargs.extend([
         "-input",
-        execution.input_file(params.get("input_file"))
+        execution.input_file(params.get("input_file", None))
     ])
     cargs.extend([
         "-preprefix",
-        params.get("prefix")
+        params.get("prefix", None)
     ])
     cargs.extend([
         "-odir",
-        params.get("output_dir")
+        params.get("output_dir", None)
     ])
     cargs.extend([
         "-workdir",
-        params.get("work_dir")
+        params.get("work_dir", None)
     ])
-    if params.get("no_clean"):
+    if params.get("no_clean", False):
         cargs.append("-no_clean")
     return cargs
 
@@ -214,7 +191,6 @@ def v__suma_reprefixize_spec(
 
 __all__ = [
     "VSumaReprefixizeSpecOutputs",
-    "VSumaReprefixizeSpecParameters",
     "V__SUMA_REPREFIXIZE_SPEC_METADATA",
     "v__suma_reprefixize_spec",
     "v__suma_reprefixize_spec_execute",

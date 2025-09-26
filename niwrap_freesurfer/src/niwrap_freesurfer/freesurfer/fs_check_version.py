@@ -14,7 +14,17 @@ FS_CHECK_VERSION_METADATA = Metadata(
 
 
 FsCheckVersionParameters = typing.TypedDict('FsCheckVersionParameters', {
-    "@type": typing.Literal["freesurfer.fs-check-version"],
+    "@type": typing.NotRequired[typing.Literal["freesurfer/fs-check-version"]],
+    "subjects_dir": str,
+    "outfile": str,
+    "subject": typing.NotRequired[str | None],
+    "require_match": bool,
+    "no_require_match": bool,
+    "test": bool,
+    "test_debug": bool,
+})
+FsCheckVersionParametersTagged = typing.TypedDict('FsCheckVersionParametersTagged', {
+    "@type": typing.Literal["freesurfer/fs-check-version"],
     "subjects_dir": str,
     "outfile": str,
     "subject": typing.NotRequired[str | None],
@@ -25,41 +35,9 @@ FsCheckVersionParameters = typing.TypedDict('FsCheckVersionParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "freesurfer.fs-check-version": fs_check_version_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "freesurfer.fs-check-version": fs_check_version_outputs,
-    }.get(t)
-
-
 class FsCheckVersionOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `fs_check_version(...)`.
+    Output object returned when calling `FsCheckVersionParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -75,7 +53,7 @@ def fs_check_version_params(
     no_require_match: bool = False,
     test: bool = False,
     test_debug: bool = False,
-) -> FsCheckVersionParameters:
+) -> FsCheckVersionParametersTagged:
     """
     Build parameters.
     
@@ -91,7 +69,7 @@ def fs_check_version_params(
         Parameter dictionary
     """
     params = {
-        "@type": "freesurfer.fs-check-version",
+        "@type": "freesurfer/fs-check-version",
         "subjects_dir": subjects_dir,
         "outfile": outfile,
         "require_match": require_match,
@@ -121,24 +99,24 @@ def fs_check_version_cargs(
     cargs.append("fs-check-version")
     cargs.extend([
         "--sd",
-        params.get("subjects_dir")
+        params.get("subjects_dir", None)
     ])
     cargs.extend([
         "--o",
-        params.get("outfile")
+        params.get("outfile", None)
     ])
-    if params.get("subject") is not None:
+    if params.get("subject", None) is not None:
         cargs.extend([
             "--s",
-            params.get("subject")
+            params.get("subject", None)
         ])
-    if params.get("require_match"):
+    if params.get("require_match", False):
         cargs.append("--require-match")
-    if params.get("no_require_match"):
+    if params.get("no_require_match", False):
         cargs.append("--no-require-match")
-    if params.get("test"):
+    if params.get("test", False):
         cargs.append("--test")
-    if params.get("test_debug"):
+    if params.get("test_debug", False):
         cargs.append("--test-debug")
     return cargs
 
@@ -158,7 +136,7 @@ def fs_check_version_outputs(
     """
     ret = FsCheckVersionOutputs(
         root=execution.output_file("."),
-        output_file=execution.output_file(params.get("outfile")),
+        output_file=execution.output_file(params.get("outfile", None)),
     )
     return ret
 
@@ -239,7 +217,6 @@ def fs_check_version(
 __all__ = [
     "FS_CHECK_VERSION_METADATA",
     "FsCheckVersionOutputs",
-    "FsCheckVersionParameters",
     "fs_check_version",
     "fs_check_version_execute",
     "fs_check_version_params",

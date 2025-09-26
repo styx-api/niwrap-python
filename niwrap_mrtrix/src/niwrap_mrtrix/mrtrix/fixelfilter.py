@@ -14,38 +14,59 @@ FIXELFILTER_METADATA = Metadata(
 
 
 FixelfilterConfigParameters = typing.TypedDict('FixelfilterConfigParameters', {
-    "@type": typing.Literal["mrtrix.fixelfilter.config"],
+    "@type": typing.NotRequired[typing.Literal["config"]],
+    "key": str,
+    "value": str,
+})
+FixelfilterConfigParametersTagged = typing.TypedDict('FixelfilterConfigParametersTagged', {
+    "@type": typing.Literal["config"],
     "key": str,
     "value": str,
 })
 
 
 FixelfilterVariousStringParameters = typing.TypedDict('FixelfilterVariousStringParameters', {
-    "@type": typing.Literal["mrtrix.fixelfilter.VariousString"],
+    "@type": typing.NotRequired[typing.Literal["VariousString"]],
+    "obj": str,
+})
+FixelfilterVariousStringParametersTagged = typing.TypedDict('FixelfilterVariousStringParametersTagged', {
+    "@type": typing.Literal["VariousString"],
     "obj": str,
 })
 
 
 FixelfilterVariousFileParameters = typing.TypedDict('FixelfilterVariousFileParameters', {
-    "@type": typing.Literal["mrtrix.fixelfilter.VariousFile"],
+    "@type": typing.NotRequired[typing.Literal["VariousFile"]],
+    "obj": InputPathType,
+})
+FixelfilterVariousFileParametersTagged = typing.TypedDict('FixelfilterVariousFileParametersTagged', {
+    "@type": typing.Literal["VariousFile"],
     "obj": InputPathType,
 })
 
 
 FixelfilterVariousString1Parameters = typing.TypedDict('FixelfilterVariousString1Parameters', {
-    "@type": typing.Literal["mrtrix.fixelfilter.VariousString"],
+    "@type": typing.NotRequired[typing.Literal["VariousString_1"]],
+    "obj": str,
+})
+FixelfilterVariousString1ParametersTagged = typing.TypedDict('FixelfilterVariousString1ParametersTagged', {
+    "@type": typing.Literal["VariousString_1"],
     "obj": str,
 })
 
 
 FixelfilterVariousFile1Parameters = typing.TypedDict('FixelfilterVariousFile1Parameters', {
-    "@type": typing.Literal["mrtrix.fixelfilter.VariousFile"],
+    "@type": typing.NotRequired[typing.Literal["VariousFile_1"]],
+    "obj": InputPathType,
+})
+FixelfilterVariousFile1ParametersTagged = typing.TypedDict('FixelfilterVariousFile1ParametersTagged', {
+    "@type": typing.Literal["VariousFile_1"],
     "obj": InputPathType,
 })
 
 
 FixelfilterParameters = typing.TypedDict('FixelfilterParameters', {
-    "@type": typing.Literal["mrtrix.fixelfilter"],
+    "@type": typing.NotRequired[typing.Literal["mrtrix/fixelfilter"]],
     "matrix": InputPathType,
     "threshold_value": typing.NotRequired[float | None],
     "threshold_connectivity": typing.NotRequired[float | None],
@@ -60,13 +81,33 @@ FixelfilterParameters = typing.TypedDict('FixelfilterParameters', {
     "config": typing.NotRequired[list[FixelfilterConfigParameters] | None],
     "help": bool,
     "version": bool,
-    "input": typing.Union[FixelfilterVariousStringParameters, FixelfilterVariousFileParameters],
+    "input": typing.Union[FixelfilterVariousStringParametersTagged, FixelfilterVariousFileParametersTagged],
     "filter": str,
-    "output": typing.Union[FixelfilterVariousString1Parameters, FixelfilterVariousFile1Parameters],
+    "output": typing.Union[FixelfilterVariousString1ParametersTagged, FixelfilterVariousFile1ParametersTagged],
+})
+FixelfilterParametersTagged = typing.TypedDict('FixelfilterParametersTagged', {
+    "@type": typing.Literal["mrtrix/fixelfilter"],
+    "matrix": InputPathType,
+    "threshold_value": typing.NotRequired[float | None],
+    "threshold_connectivity": typing.NotRequired[float | None],
+    "fwhm": typing.NotRequired[float | None],
+    "minweight": typing.NotRequired[float | None],
+    "mask": typing.NotRequired[InputPathType | None],
+    "info": bool,
+    "quiet": bool,
+    "debug": bool,
+    "force": bool,
+    "nthreads": typing.NotRequired[int | None],
+    "config": typing.NotRequired[list[FixelfilterConfigParameters] | None],
+    "help": bool,
+    "version": bool,
+    "input": typing.Union[FixelfilterVariousStringParametersTagged, FixelfilterVariousFileParametersTagged],
+    "filter": str,
+    "output": typing.Union[FixelfilterVariousString1ParametersTagged, FixelfilterVariousFile1ParametersTagged],
 })
 
 
-def dyn_cargs(
+def fixelfilter_input_cargs_dyn_fn(
     t: str,
 ) -> typing.Any:
     """
@@ -78,16 +119,44 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "mrtrix.fixelfilter": fixelfilter_cargs,
-        "mrtrix.fixelfilter.config": fixelfilter_config_cargs,
-        "mrtrix.fixelfilter.VariousString": fixelfilter_various_string_cargs,
-        "mrtrix.fixelfilter.VariousFile": fixelfilter_various_file_cargs,
-        "mrtrix.fixelfilter.VariousString": fixelfilter_various_string_1_cargs,
-        "mrtrix.fixelfilter.VariousFile": fixelfilter_various_file_1_cargs,
+        "VariousString": fixelfilter_various_string_cargs,
+        "VariousFile": fixelfilter_various_file_cargs,
     }.get(t)
 
 
-def dyn_outputs(
+def fixelfilter_input_outputs_dyn_fn(
+    t: str,
+) -> typing.Any:
+    """
+    Get build outputs function by command type.
+    
+    Args:
+        t: Command type.
+    Returns:
+        Build outputs function.
+    """
+    return {
+    }.get(t)
+
+
+def fixelfilter_output_cargs_dyn_fn(
+    t: str,
+) -> typing.Any:
+    """
+    Get build cargs function by command type.
+    
+    Args:
+        t: Command type.
+    Returns:
+        Build cargs function.
+    """
+    return {
+        "VariousString_1": fixelfilter_various_string_1_cargs,
+        "VariousFile_1": fixelfilter_various_file_1_cargs,
+    }.get(t)
+
+
+def fixelfilter_output_outputs_dyn_fn(
     t: str,
 ) -> typing.Any:
     """
@@ -105,7 +174,7 @@ def dyn_outputs(
 def fixelfilter_config_params(
     key: str,
     value: str,
-) -> FixelfilterConfigParameters:
+) -> FixelfilterConfigParametersTagged:
     """
     Build parameters.
     
@@ -116,7 +185,7 @@ def fixelfilter_config_params(
         Parameter dictionary
     """
     params = {
-        "@type": "mrtrix.fixelfilter.config",
+        "@type": "config",
         "key": key,
         "value": value,
     }
@@ -138,14 +207,14 @@ def fixelfilter_config_cargs(
     """
     cargs = []
     cargs.append("-config")
-    cargs.append(params.get("key"))
-    cargs.append(params.get("value"))
+    cargs.append(params.get("key", None))
+    cargs.append(params.get("value", None))
     return cargs
 
 
 def fixelfilter_various_string_params(
     obj: str,
-) -> FixelfilterVariousStringParameters:
+) -> FixelfilterVariousStringParametersTagged:
     """
     Build parameters.
     
@@ -155,7 +224,7 @@ def fixelfilter_various_string_params(
         Parameter dictionary
     """
     params = {
-        "@type": "mrtrix.fixelfilter.VariousString",
+        "@type": "VariousString",
         "obj": obj,
     }
     return params
@@ -175,13 +244,13 @@ def fixelfilter_various_string_cargs(
         Command-line arguments.
     """
     cargs = []
-    cargs.append(params.get("obj"))
+    cargs.append(params.get("obj", None))
     return cargs
 
 
 def fixelfilter_various_file_params(
     obj: InputPathType,
-) -> FixelfilterVariousFileParameters:
+) -> FixelfilterVariousFileParametersTagged:
     """
     Build parameters.
     
@@ -191,7 +260,7 @@ def fixelfilter_various_file_params(
         Parameter dictionary
     """
     params = {
-        "@type": "mrtrix.fixelfilter.VariousFile",
+        "@type": "VariousFile",
         "obj": obj,
     }
     return params
@@ -211,13 +280,13 @@ def fixelfilter_various_file_cargs(
         Command-line arguments.
     """
     cargs = []
-    cargs.append(execution.input_file(params.get("obj")))
+    cargs.append(execution.input_file(params.get("obj", None)))
     return cargs
 
 
 def fixelfilter_various_string_1_params(
     obj: str,
-) -> FixelfilterVariousString1Parameters:
+) -> FixelfilterVariousString1ParametersTagged:
     """
     Build parameters.
     
@@ -227,7 +296,7 @@ def fixelfilter_various_string_1_params(
         Parameter dictionary
     """
     params = {
-        "@type": "mrtrix.fixelfilter.VariousString",
+        "@type": "VariousString_1",
         "obj": obj,
     }
     return params
@@ -247,13 +316,13 @@ def fixelfilter_various_string_1_cargs(
         Command-line arguments.
     """
     cargs = []
-    cargs.append(params.get("obj"))
+    cargs.append(params.get("obj", None))
     return cargs
 
 
 def fixelfilter_various_file_1_params(
     obj: InputPathType,
-) -> FixelfilterVariousFile1Parameters:
+) -> FixelfilterVariousFile1ParametersTagged:
     """
     Build parameters.
     
@@ -263,7 +332,7 @@ def fixelfilter_various_file_1_params(
         Parameter dictionary
     """
     params = {
-        "@type": "mrtrix.fixelfilter.VariousFile",
+        "@type": "VariousFile_1",
         "obj": obj,
     }
     return params
@@ -283,13 +352,13 @@ def fixelfilter_various_file_1_cargs(
         Command-line arguments.
     """
     cargs = []
-    cargs.append(execution.input_file(params.get("obj")))
+    cargs.append(execution.input_file(params.get("obj", None)))
     return cargs
 
 
 class FixelfilterOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `fixelfilter(...)`.
+    Output object returned when calling `FixelfilterParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -297,9 +366,9 @@ class FixelfilterOutputs(typing.NamedTuple):
 
 def fixelfilter_params(
     matrix: InputPathType,
-    input_: typing.Union[FixelfilterVariousStringParameters, FixelfilterVariousFileParameters],
+    input_: typing.Union[FixelfilterVariousStringParametersTagged, FixelfilterVariousFileParametersTagged],
     filter_: str,
-    output: typing.Union[FixelfilterVariousString1Parameters, FixelfilterVariousFile1Parameters],
+    output: typing.Union[FixelfilterVariousString1ParametersTagged, FixelfilterVariousFile1ParametersTagged],
     threshold_value: float | None = None,
     threshold_connectivity: float | None = None,
     fwhm: float | None = None,
@@ -313,7 +382,7 @@ def fixelfilter_params(
     config: list[FixelfilterConfigParameters] | None = None,
     help_: bool = False,
     version: bool = False,
-) -> FixelfilterParameters:
+) -> FixelfilterParametersTagged:
     """
     Build parameters.
     
@@ -351,7 +420,7 @@ def fixelfilter_params(
         Parameter dictionary
     """
     params = {
-        "@type": "mrtrix.fixelfilter",
+        "@type": "mrtrix/fixelfilter",
         "matrix": matrix,
         "info": info,
         "quiet": quiet,
@@ -397,55 +466,55 @@ def fixelfilter_cargs(
     cargs.append("fixelfilter")
     cargs.extend([
         "-matrix",
-        execution.input_file(params.get("matrix"))
+        execution.input_file(params.get("matrix", None))
     ])
-    if params.get("threshold_value") is not None:
+    if params.get("threshold_value", None) is not None:
         cargs.extend([
             "-threshold_value",
-            str(params.get("threshold_value"))
+            str(params.get("threshold_value", None))
         ])
-    if params.get("threshold_connectivity") is not None:
+    if params.get("threshold_connectivity", None) is not None:
         cargs.extend([
             "-threshold_connectivity",
-            str(params.get("threshold_connectivity"))
+            str(params.get("threshold_connectivity", None))
         ])
-    if params.get("fwhm") is not None:
+    if params.get("fwhm", None) is not None:
         cargs.extend([
             "-fwhm",
-            str(params.get("fwhm"))
+            str(params.get("fwhm", None))
         ])
-    if params.get("minweight") is not None:
+    if params.get("minweight", None) is not None:
         cargs.extend([
             "-minweight",
-            str(params.get("minweight"))
+            str(params.get("minweight", None))
         ])
-    if params.get("mask") is not None:
+    if params.get("mask", None) is not None:
         cargs.extend([
             "-mask",
-            execution.input_file(params.get("mask"))
+            execution.input_file(params.get("mask", None))
         ])
-    if params.get("info"):
+    if params.get("info", False):
         cargs.append("-info")
-    if params.get("quiet"):
+    if params.get("quiet", False):
         cargs.append("-quiet")
-    if params.get("debug"):
+    if params.get("debug", False):
         cargs.append("-debug")
-    if params.get("force"):
+    if params.get("force", False):
         cargs.append("-force")
-    if params.get("nthreads") is not None:
+    if params.get("nthreads", None) is not None:
         cargs.extend([
             "-nthreads",
-            str(params.get("nthreads"))
+            str(params.get("nthreads", None))
         ])
-    if params.get("config") is not None:
-        cargs.extend([a for c in [dyn_cargs(s["@type"])(s, execution) for s in params.get("config")] for a in c])
-    if params.get("help"):
+    if params.get("config", None) is not None:
+        cargs.extend([a for c in [fixelfilter_config_cargs(s, execution) for s in params.get("config", None)] for a in c])
+    if params.get("help", False):
         cargs.append("-help")
-    if params.get("version"):
+    if params.get("version", False):
         cargs.append("-version")
-    cargs.extend(dyn_cargs(params.get("input")["@type"])(params.get("input"), execution))
-    cargs.append(params.get("filter"))
-    cargs.extend(dyn_cargs(params.get("output")["@type"])(params.get("output"), execution))
+    cargs.extend(fixelfilter_input_cargs_dyn_fn(params.get("input", None)["@type"])(params.get("input", None), execution))
+    cargs.append(params.get("filter", None))
+    cargs.extend(fixelfilter_output_cargs_dyn_fn(params.get("output", None)["@type"])(params.get("output", None), execution))
     return cargs
 
 
@@ -508,9 +577,9 @@ def fixelfilter_execute(
 
 def fixelfilter(
     matrix: InputPathType,
-    input_: typing.Union[FixelfilterVariousStringParameters, FixelfilterVariousFileParameters],
+    input_: typing.Union[FixelfilterVariousStringParametersTagged, FixelfilterVariousFileParametersTagged],
     filter_: str,
-    output: typing.Union[FixelfilterVariousString1Parameters, FixelfilterVariousFile1Parameters],
+    output: typing.Union[FixelfilterVariousString1ParametersTagged, FixelfilterVariousFile1ParametersTagged],
     threshold_value: float | None = None,
     threshold_connectivity: float | None = None,
     fwhm: float | None = None,
@@ -603,13 +672,7 @@ def fixelfilter(
 
 __all__ = [
     "FIXELFILTER_METADATA",
-    "FixelfilterConfigParameters",
     "FixelfilterOutputs",
-    "FixelfilterParameters",
-    "FixelfilterVariousFile1Parameters",
-    "FixelfilterVariousFileParameters",
-    "FixelfilterVariousString1Parameters",
-    "FixelfilterVariousStringParameters",
     "fixelfilter",
     "fixelfilter_config_params",
     "fixelfilter_execute",

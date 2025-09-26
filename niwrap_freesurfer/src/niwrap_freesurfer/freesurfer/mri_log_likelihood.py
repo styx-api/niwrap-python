@@ -14,47 +14,22 @@ MRI_LOG_LIKELIHOOD_METADATA = Metadata(
 
 
 MriLogLikelihoodParameters = typing.TypedDict('MriLogLikelihoodParameters', {
-    "@type": typing.Literal["freesurfer.mri_log_likelihood"],
+    "@type": typing.NotRequired[typing.Literal["freesurfer/mri_log_likelihood"]],
+    "input_brain_images": list[InputPathType],
+    "atlas_file": InputPathType,
+    "transform_file": InputPathType,
+})
+MriLogLikelihoodParametersTagged = typing.TypedDict('MriLogLikelihoodParametersTagged', {
+    "@type": typing.Literal["freesurfer/mri_log_likelihood"],
     "input_brain_images": list[InputPathType],
     "atlas_file": InputPathType,
     "transform_file": InputPathType,
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "freesurfer.mri_log_likelihood": mri_log_likelihood_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-    }.get(t)
-
-
 class MriLogLikelihoodOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `mri_log_likelihood(...)`.
+    Output object returned when calling `MriLogLikelihoodParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -64,7 +39,7 @@ def mri_log_likelihood_params(
     input_brain_images: list[InputPathType],
     atlas_file: InputPathType,
     transform_file: InputPathType,
-) -> MriLogLikelihoodParameters:
+) -> MriLogLikelihoodParametersTagged:
     """
     Build parameters.
     
@@ -76,7 +51,7 @@ def mri_log_likelihood_params(
         Parameter dictionary
     """
     params = {
-        "@type": "freesurfer.mri_log_likelihood",
+        "@type": "freesurfer/mri_log_likelihood",
         "input_brain_images": input_brain_images,
         "atlas_file": atlas_file,
         "transform_file": transform_file,
@@ -99,9 +74,9 @@ def mri_log_likelihood_cargs(
     """
     cargs = []
     cargs.append("mri_log_likelihood")
-    cargs.extend([execution.input_file(f) for f in params.get("input_brain_images")])
-    cargs.append(execution.input_file(params.get("atlas_file")))
-    cargs.append(execution.input_file(params.get("transform_file")))
+    cargs.extend([execution.input_file(f) for f in params.get("input_brain_images", None)])
+    cargs.append(execution.input_file(params.get("atlas_file", None)))
+    cargs.append(execution.input_file(params.get("transform_file", None)))
     return cargs
 
 
@@ -186,7 +161,6 @@ def mri_log_likelihood(
 __all__ = [
     "MRI_LOG_LIKELIHOOD_METADATA",
     "MriLogLikelihoodOutputs",
-    "MriLogLikelihoodParameters",
     "mri_log_likelihood",
     "mri_log_likelihood_execute",
     "mri_log_likelihood_params",

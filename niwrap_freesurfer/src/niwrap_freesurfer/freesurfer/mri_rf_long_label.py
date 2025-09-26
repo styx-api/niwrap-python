@@ -14,45 +14,18 @@ MRI_RF_LONG_LABEL_METADATA = Metadata(
 
 
 MriRfLongLabelParameters = typing.TypedDict('MriRfLongLabelParameters', {
-    "@type": typing.Literal["freesurfer.mri_rf_long_label"],
+    "@type": typing.NotRequired[typing.Literal["freesurfer/mri_rf_long_label"]],
+    "help_flag": typing.NotRequired[str | None],
+})
+MriRfLongLabelParametersTagged = typing.TypedDict('MriRfLongLabelParametersTagged', {
+    "@type": typing.Literal["freesurfer/mri_rf_long_label"],
     "help_flag": typing.NotRequired[str | None],
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "freesurfer.mri_rf_long_label": mri_rf_long_label_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-    }.get(t)
-
-
 class MriRfLongLabelOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `mri_rf_long_label(...)`.
+    Output object returned when calling `MriRfLongLabelParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -60,7 +33,7 @@ class MriRfLongLabelOutputs(typing.NamedTuple):
 
 def mri_rf_long_label_params(
     help_flag: str | None = None,
-) -> MriRfLongLabelParameters:
+) -> MriRfLongLabelParametersTagged:
     """
     Build parameters.
     
@@ -70,7 +43,7 @@ def mri_rf_long_label_params(
         Parameter dictionary
     """
     params = {
-        "@type": "freesurfer.mri_rf_long_label",
+        "@type": "freesurfer/mri_rf_long_label",
     }
     if help_flag is not None:
         params["help_flag"] = help_flag
@@ -92,8 +65,8 @@ def mri_rf_long_label_cargs(
     """
     cargs = []
     cargs.append("mri_rf_long_label")
-    if params.get("help_flag") is not None:
-        cargs.append(params.get("help_flag"))
+    if params.get("help_flag", None) is not None:
+        cargs.append(params.get("help_flag", None))
     return cargs
 
 
@@ -172,7 +145,6 @@ def mri_rf_long_label(
 __all__ = [
     "MRI_RF_LONG_LABEL_METADATA",
     "MriRfLongLabelOutputs",
-    "MriRfLongLabelParameters",
     "mri_rf_long_label",
     "mri_rf_long_label_execute",
     "mri_rf_long_label_params",

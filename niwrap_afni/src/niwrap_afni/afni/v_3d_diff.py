@@ -14,7 +14,18 @@ V_3D_DIFF_METADATA = Metadata(
 
 
 V3dDiffParameters = typing.TypedDict('V3dDiffParameters', {
-    "@type": typing.Literal["afni.3dDiff"],
+    "@type": typing.NotRequired[typing.Literal["afni/3dDiff"]],
+    "dataset_a": InputPathType,
+    "dataset_b": InputPathType,
+    "tolerance": typing.NotRequired[float | None],
+    "mask": typing.NotRequired[InputPathType | None],
+    "quiet_mode": bool,
+    "tabular_mode": bool,
+    "brutalist_mode": bool,
+    "long_report_mode": bool,
+})
+V3dDiffParametersTagged = typing.TypedDict('V3dDiffParametersTagged', {
+    "@type": typing.Literal["afni/3dDiff"],
     "dataset_a": InputPathType,
     "dataset_b": InputPathType,
     "tolerance": typing.NotRequired[float | None],
@@ -26,41 +37,9 @@ V3dDiffParameters = typing.TypedDict('V3dDiffParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "afni.3dDiff": v_3d_diff_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "afni.3dDiff": v_3d_diff_outputs,
-    }.get(t)
-
-
 class V3dDiffOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `v_3d_diff(...)`.
+    Output object returned when calling `V3dDiffParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -77,7 +56,7 @@ def v_3d_diff_params(
     tabular_mode: bool = False,
     brutalist_mode: bool = False,
     long_report_mode: bool = False,
-) -> V3dDiffParameters:
+) -> V3dDiffParametersTagged:
     """
     Build parameters.
     
@@ -95,7 +74,7 @@ def v_3d_diff_params(
         Parameter dictionary
     """
     params = {
-        "@type": "afni.3dDiff",
+        "@type": "afni/3dDiff",
         "dataset_a": dataset_a,
         "dataset_b": dataset_b,
         "quiet_mode": quiet_mode,
@@ -127,29 +106,29 @@ def v_3d_diff_cargs(
     cargs.append("3dDiff")
     cargs.extend([
         "-a",
-        execution.input_file(params.get("dataset_a"))
+        execution.input_file(params.get("dataset_a", None))
     ])
     cargs.extend([
         "-b",
-        execution.input_file(params.get("dataset_b"))
+        execution.input_file(params.get("dataset_b", None))
     ])
-    if params.get("tolerance") is not None:
+    if params.get("tolerance", None) is not None:
         cargs.extend([
             "-tol",
-            str(params.get("tolerance"))
+            str(params.get("tolerance", None))
         ])
-    if params.get("mask") is not None:
+    if params.get("mask", None) is not None:
         cargs.extend([
             "-mask",
-            execution.input_file(params.get("mask"))
+            execution.input_file(params.get("mask", None))
         ])
-    if params.get("quiet_mode"):
+    if params.get("quiet_mode", False):
         cargs.append("-q")
-    if params.get("tabular_mode"):
+    if params.get("tabular_mode", False):
         cargs.append("-tabular")
-    if params.get("brutalist_mode"):
+    if params.get("brutalist_mode", False):
         cargs.append("-brutalist")
-    if params.get("long_report_mode"):
+    if params.get("long_report_mode", False):
         cargs.append("-long_report")
     return cargs
 
@@ -169,7 +148,7 @@ def v_3d_diff_outputs(
     """
     ret = V3dDiffOutputs(
         root=execution.output_file("."),
-        output_log=execution.output_file(pathlib.Path(params.get("dataset_a")).name + "_vs_" + pathlib.Path(params.get("dataset_b")).name + ".log"),
+        output_log=execution.output_file(pathlib.Path(params.get("dataset_a", None)).name + "_vs_" + pathlib.Path(params.get("dataset_b", None)).name + ".log"),
     )
     return ret
 
@@ -251,7 +230,6 @@ def v_3d_diff(
 
 __all__ = [
     "V3dDiffOutputs",
-    "V3dDiffParameters",
     "V_3D_DIFF_METADATA",
     "v_3d_diff",
     "v_3d_diff_execute",

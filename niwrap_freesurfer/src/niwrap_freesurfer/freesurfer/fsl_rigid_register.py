@@ -14,7 +14,32 @@ FSL_RIGID_REGISTER_METADATA = Metadata(
 
 
 FslRigidRegisterParameters = typing.TypedDict('FslRigidRegisterParameters', {
-    "@type": typing.Literal["freesurfer.fsl_rigid_register"],
+    "@type": typing.NotRequired[typing.Literal["freesurfer/fsl_rigid_register"]],
+    "refvol": InputPathType,
+    "inputvol": InputPathType,
+    "outputvol": str,
+    "fslmat": typing.NotRequired[str | None],
+    "regmat": typing.NotRequired[str | None],
+    "xfmmat": typing.NotRequired[str | None],
+    "ltamat": typing.NotRequired[str | None],
+    "noinitgeom": bool,
+    "applyxfm": typing.NotRequired[InputPathType | None],
+    "applyinitxfm": bool,
+    "initxfm": typing.NotRequired[InputPathType | None],
+    "maxangle": typing.NotRequired[float | None],
+    "interp": typing.NotRequired[str | None],
+    "dof": typing.NotRequired[float | None],
+    "bins": typing.NotRequired[float | None],
+    "cost": typing.NotRequired[str | None],
+    "tmpdir": typing.NotRequired[str | None],
+    "nocleanup": bool,
+    "cleanup": bool,
+    "subject": typing.NotRequired[str | None],
+    "version": bool,
+    "help": bool,
+})
+FslRigidRegisterParametersTagged = typing.TypedDict('FslRigidRegisterParametersTagged', {
+    "@type": typing.Literal["freesurfer/fsl_rigid_register"],
     "refvol": InputPathType,
     "inputvol": InputPathType,
     "outputvol": str,
@@ -40,41 +65,9 @@ FslRigidRegisterParameters = typing.TypedDict('FslRigidRegisterParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "freesurfer.fsl_rigid_register": fsl_rigid_register_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "freesurfer.fsl_rigid_register": fsl_rigid_register_outputs,
-    }.get(t)
-
-
 class FslRigidRegisterOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `fsl_rigid_register(...)`.
+    Output object returned when calling `FslRigidRegisterParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -105,7 +98,7 @@ def fsl_rigid_register_params(
     subject: str | None = None,
     version: bool = False,
     help_: bool = False,
-) -> FslRigidRegisterParameters:
+) -> FslRigidRegisterParametersTagged:
     """
     Build parameters.
     
@@ -140,7 +133,7 @@ def fsl_rigid_register_params(
         Parameter dictionary
     """
     params = {
-        "@type": "freesurfer.fsl_rigid_register",
+        "@type": "freesurfer/fsl_rigid_register",
         "refvol": refvol,
         "inputvol": inputvol,
         "outputvol": outputvol,
@@ -197,92 +190,92 @@ def fsl_rigid_register_cargs(
     cargs.append("fsl_rigid_register")
     cargs.extend([
         "-r",
-        execution.input_file(params.get("refvol"))
+        execution.input_file(params.get("refvol", None))
     ])
     cargs.extend([
         "-i",
-        execution.input_file(params.get("inputvol"))
+        execution.input_file(params.get("inputvol", None))
     ])
     cargs.extend([
         "-o",
-        params.get("outputvol")
+        params.get("outputvol", None)
     ])
-    if params.get("fslmat") is not None:
+    if params.get("fslmat", None) is not None:
         cargs.extend([
             "-fslmat",
-            params.get("fslmat")
+            params.get("fslmat", None)
         ])
-    if params.get("regmat") is not None:
+    if params.get("regmat", None) is not None:
         cargs.extend([
             "-regmat",
-            params.get("regmat")
+            params.get("regmat", None)
         ])
-    if params.get("xfmmat") is not None:
+    if params.get("xfmmat", None) is not None:
         cargs.extend([
             "-xfmmat",
-            params.get("xfmmat")
+            params.get("xfmmat", None)
         ])
-    if params.get("ltamat") is not None:
+    if params.get("ltamat", None) is not None:
         cargs.extend([
             "-ltamat",
-            params.get("ltamat")
+            params.get("ltamat", None)
         ])
-    if params.get("noinitgeom"):
+    if params.get("noinitgeom", False):
         cargs.append("-noinitgeom")
-    if params.get("applyxfm") is not None:
+    if params.get("applyxfm", None) is not None:
         cargs.extend([
             "-applyxfm",
-            execution.input_file(params.get("applyxfm"))
+            execution.input_file(params.get("applyxfm", None))
         ])
-    if params.get("applyinitxfm"):
+    if params.get("applyinitxfm", False):
         cargs.append("-applyinitxfm")
-    if params.get("initxfm") is not None:
+    if params.get("initxfm", None) is not None:
         cargs.extend([
             "-initxfm",
-            execution.input_file(params.get("initxfm"))
+            execution.input_file(params.get("initxfm", None))
         ])
-    if params.get("maxangle") is not None:
+    if params.get("maxangle", None) is not None:
         cargs.extend([
             "-maxangle",
-            str(params.get("maxangle"))
+            str(params.get("maxangle", None))
         ])
-    if params.get("interp") is not None:
+    if params.get("interp", None) is not None:
         cargs.extend([
             "-interp",
-            params.get("interp")
+            params.get("interp", None)
         ])
-    if params.get("dof") is not None:
+    if params.get("dof", None) is not None:
         cargs.extend([
             "-dof",
-            str(params.get("dof"))
+            str(params.get("dof", None))
         ])
-    if params.get("bins") is not None:
+    if params.get("bins", None) is not None:
         cargs.extend([
             "-bins",
-            str(params.get("bins"))
+            str(params.get("bins", None))
         ])
-    if params.get("cost") is not None:
+    if params.get("cost", None) is not None:
         cargs.extend([
             "-cost",
-            params.get("cost")
+            params.get("cost", None)
         ])
-    if params.get("tmpdir") is not None:
+    if params.get("tmpdir", None) is not None:
         cargs.extend([
             "-tmpdir",
-            params.get("tmpdir")
+            params.get("tmpdir", None)
         ])
-    if params.get("nocleanup"):
+    if params.get("nocleanup", False):
         cargs.append("-nocleanup")
-    if params.get("cleanup"):
+    if params.get("cleanup", False):
         cargs.append("-cleanup")
-    if params.get("subject") is not None:
+    if params.get("subject", None) is not None:
         cargs.extend([
             "-subject",
-            params.get("subject")
+            params.get("subject", None)
         ])
-    if params.get("version"):
+    if params.get("version", False):
         cargs.append("-version")
-    if params.get("help"):
+    if params.get("help", False):
         cargs.append("-help")
     return cargs
 
@@ -302,7 +295,7 @@ def fsl_rigid_register_outputs(
     """
     ret = FslRigidRegisterOutputs(
         root=execution.output_file("."),
-        fslmat_output=execution.output_file(params.get("outputvol") + ".fslmat"),
+        fslmat_output=execution.output_file(params.get("outputvol", None) + ".fslmat"),
     )
     return ret
 
@@ -432,7 +425,6 @@ def fsl_rigid_register(
 __all__ = [
     "FSL_RIGID_REGISTER_METADATA",
     "FslRigidRegisterOutputs",
-    "FslRigidRegisterParameters",
     "fsl_rigid_register",
     "fsl_rigid_register_execute",
     "fsl_rigid_register_params",

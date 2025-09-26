@@ -14,47 +14,20 @@ FSL2ASCII_METADATA = Metadata(
 
 
 Fsl2asciiParameters = typing.TypedDict('Fsl2asciiParameters', {
-    "@type": typing.Literal["fsl.fsl2ascii"],
+    "@type": typing.NotRequired[typing.Literal["fsl/fsl2ascii"]],
+    "input_file": InputPathType,
+    "output_file": str,
+})
+Fsl2asciiParametersTagged = typing.TypedDict('Fsl2asciiParametersTagged', {
+    "@type": typing.Literal["fsl/fsl2ascii"],
     "input_file": InputPathType,
     "output_file": str,
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "fsl.fsl2ascii": fsl2ascii_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "fsl.fsl2ascii": fsl2ascii_outputs,
-    }.get(t)
-
-
 class Fsl2asciiOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `fsl2ascii(...)`.
+    Output object returned when calling `Fsl2asciiParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -65,7 +38,7 @@ class Fsl2asciiOutputs(typing.NamedTuple):
 def fsl2ascii_params(
     input_file: InputPathType,
     output_file: str,
-) -> Fsl2asciiParameters:
+) -> Fsl2asciiParametersTagged:
     """
     Build parameters.
     
@@ -76,7 +49,7 @@ def fsl2ascii_params(
         Parameter dictionary
     """
     params = {
-        "@type": "fsl.fsl2ascii",
+        "@type": "fsl/fsl2ascii",
         "input_file": input_file,
         "output_file": output_file,
     }
@@ -98,8 +71,8 @@ def fsl2ascii_cargs(
     """
     cargs = []
     cargs.append("fsl2ascii")
-    cargs.append(execution.input_file(params.get("input_file")))
-    cargs.append(params.get("output_file"))
+    cargs.append(execution.input_file(params.get("input_file", None)))
+    cargs.append(params.get("output_file", None))
     return cargs
 
 
@@ -118,7 +91,7 @@ def fsl2ascii_outputs(
     """
     ret = Fsl2asciiOutputs(
         root=execution.output_file("."),
-        output_ascii_file=execution.output_file(params.get("output_file")),
+        output_ascii_file=execution.output_file(params.get("output_file", None)),
     )
     return ret
 
@@ -182,7 +155,6 @@ def fsl2ascii(
 __all__ = [
     "FSL2ASCII_METADATA",
     "Fsl2asciiOutputs",
-    "Fsl2asciiParameters",
     "fsl2ascii",
     "fsl2ascii_execute",
     "fsl2ascii_params",

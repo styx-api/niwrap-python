@@ -14,7 +14,108 @@ FSLMATHS_METADATA = Metadata(
 
 
 FslmathsOperationParameters = typing.TypedDict('FslmathsOperationParameters', {
-    "@type": typing.Literal["fsl.fslmaths.operations"],
+    "@type": typing.NotRequired[typing.Literal["operation"]],
+    "add": typing.NotRequired[float | None],
+    "sub": typing.NotRequired[float | None],
+    "mul": typing.NotRequired[float | None],
+    "div": typing.NotRequired[float | None],
+    "rem": typing.NotRequired[float | None],
+    "mas": typing.NotRequired[InputPathType | None],
+    "thr": typing.NotRequired[float | None],
+    "thrp": typing.NotRequired[float | None],
+    "thrP": typing.NotRequired[float | None],
+    "uthr": typing.NotRequired[float | None],
+    "uthrp": typing.NotRequired[float | None],
+    "uthrP": typing.NotRequired[float | None],
+    "max": typing.NotRequired[float | None],
+    "min": typing.NotRequired[float | None],
+    "seed": typing.NotRequired[float | None],
+    "restart": typing.NotRequired[InputPathType | None],
+    "save": bool,
+    "exp": bool,
+    "log": bool,
+    "sin": bool,
+    "cos": bool,
+    "tan": bool,
+    "asin": bool,
+    "acos": bool,
+    "atan": bool,
+    "sqr": bool,
+    "sqrt": bool,
+    "recip": bool,
+    "abs": bool,
+    "bin": bool,
+    "binv": bool,
+    "fillh": bool,
+    "fillh26": bool,
+    "index": bool,
+    "grid": typing.NotRequired[list[float] | None],
+    "edge": bool,
+    "tfce": typing.NotRequired[list[float] | None],
+    "tfceS": typing.NotRequired[list[float] | None],
+    "nan": bool,
+    "nanm": bool,
+    "rand": bool,
+    "randn": bool,
+    "inm": typing.NotRequired[float | None],
+    "ing": typing.NotRequired[float | None],
+    "range": bool,
+    "tensor_decomp": bool,
+    "kernel_3D": bool,
+    "kernel_2D": bool,
+    "kernel_box": typing.NotRequired[float | None],
+    "kernel_boxv": typing.NotRequired[float | None],
+    "kernel_boxv3": typing.NotRequired[list[float] | None],
+    "kernel_gauss": typing.NotRequired[float | None],
+    "kernel_sphere": typing.NotRequired[float | None],
+    "kernel_file": typing.NotRequired[InputPathType | None],
+    "dilM": bool,
+    "dilD": bool,
+    "dilF": bool,
+    "dilall": bool,
+    "ero": bool,
+    "eroF": bool,
+    "fmedian": bool,
+    "fmean": bool,
+    "fmeanu": bool,
+    "s": typing.NotRequired[float | None],
+    "subsamp2": bool,
+    "subsamp2offc": bool,
+    "Tmean": bool,
+    "Xmean": bool,
+    "Ymean": bool,
+    "Zmean": bool,
+    "Tstd": bool,
+    "Xstd": bool,
+    "Ystd": bool,
+    "Zstd": bool,
+    "Tmax": bool,
+    "Xmax": bool,
+    "Ymax": bool,
+    "Zmax": bool,
+    "Tmaxn": bool,
+    "Xmaxn": bool,
+    "Ymaxn": bool,
+    "Zmaxn": bool,
+    "Tmin": bool,
+    "Xmin": bool,
+    "Ymin": bool,
+    "Zmin": bool,
+    "Tmedian": bool,
+    "Xmedian": bool,
+    "Ymedian": bool,
+    "Zmedian": bool,
+    "Tperc": typing.NotRequired[float | None],
+    "Xperc": typing.NotRequired[float | None],
+    "Yperc": typing.NotRequired[float | None],
+    "Zperc": typing.NotRequired[float | None],
+    "Tar1": bool,
+    "roi": typing.NotRequired[list[float] | None],
+    "bptf": typing.NotRequired[list[float] | None],
+    "roc": typing.NotRequired[list[float] | None],
+})
+FslmathsOperationParametersTagged = typing.TypedDict('FslmathsOperationParametersTagged', {
+    "@type": typing.Literal["operation"],
     "add": typing.NotRequired[float | None],
     "sub": typing.NotRequired[float | None],
     "mul": typing.NotRequired[float | None],
@@ -117,46 +218,21 @@ FslmathsOperationParameters = typing.TypedDict('FslmathsOperationParameters', {
 
 
 FslmathsParameters = typing.TypedDict('FslmathsParameters', {
-    "@type": typing.Literal["fsl.fslmaths"],
+    "@type": typing.NotRequired[typing.Literal["fsl/fslmaths"]],
     "datatype_internal": typing.NotRequired[typing.Literal["char", "short", "int", "float", "double", "input"] | None],
     "input_files": list[InputPathType],
     "operations": list[FslmathsOperationParameters],
     "output": str,
     "output_datatype": typing.NotRequired[typing.Literal["char", "short", "int", "float", "double", "input"] | None],
 })
-
-
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "fsl.fslmaths": fslmaths_cargs,
-        "fsl.fslmaths.operations": fslmaths_operation_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "fsl.fslmaths": fslmaths_outputs,
-    }.get(t)
+FslmathsParametersTagged = typing.TypedDict('FslmathsParametersTagged', {
+    "@type": typing.Literal["fsl/fslmaths"],
+    "datatype_internal": typing.NotRequired[typing.Literal["char", "short", "int", "float", "double", "input"] | None],
+    "input_files": list[InputPathType],
+    "operations": list[FslmathsOperationParameters],
+    "output": str,
+    "output_datatype": typing.NotRequired[typing.Literal["char", "short", "int", "float", "double", "input"] | None],
+})
 
 
 def fslmaths_operation_params(
@@ -258,7 +334,7 @@ def fslmaths_operation_params(
     roi: list[float] | None = None,
     bptf: list[float] | None = None,
     roc: list[float] | None = None,
-) -> FslmathsOperationParameters:
+) -> FslmathsOperationParametersTagged:
     """
     Build parameters.
     
@@ -389,7 +465,7 @@ def fslmaths_operation_params(
         Parameter dictionary
     """
     params = {
-        "@type": "fsl.fslmaths.operations",
+        "@type": "operation",
         "save": save,
         "exp": exp,
         "log": log,
@@ -541,313 +617,313 @@ def fslmaths_operation_cargs(
         Command-line arguments.
     """
     cargs = []
-    if params.get("add") is not None:
+    if params.get("add", None) is not None:
         cargs.extend([
             "-add",
-            str(params.get("add"))
+            str(params.get("add", None))
         ])
-    if params.get("sub") is not None:
+    if params.get("sub", None) is not None:
         cargs.extend([
             "-sub",
-            str(params.get("sub"))
+            str(params.get("sub", None))
         ])
-    if params.get("mul") is not None:
+    if params.get("mul", None) is not None:
         cargs.extend([
             "-mul",
-            str(params.get("mul"))
+            str(params.get("mul", None))
         ])
-    if params.get("div") is not None:
+    if params.get("div", None) is not None:
         cargs.extend([
             "-div",
-            str(params.get("div"))
+            str(params.get("div", None))
         ])
-    if params.get("rem") is not None:
+    if params.get("rem", None) is not None:
         cargs.extend([
             "-rem",
-            str(params.get("rem"))
+            str(params.get("rem", None))
         ])
-    if params.get("mas") is not None:
+    if params.get("mas", None) is not None:
         cargs.extend([
             "-mas",
-            execution.input_file(params.get("mas"))
+            execution.input_file(params.get("mas", None))
         ])
-    if params.get("thr") is not None:
+    if params.get("thr", None) is not None:
         cargs.extend([
             "-thr",
-            str(params.get("thr"))
+            str(params.get("thr", None))
         ])
-    if params.get("thrp") is not None:
+    if params.get("thrp", None) is not None:
         cargs.extend([
             "-thrp",
-            str(params.get("thrp"))
+            str(params.get("thrp", None))
         ])
-    if params.get("thrP") is not None:
+    if params.get("thrP", None) is not None:
         cargs.extend([
             "-thrP",
-            str(params.get("thrP"))
+            str(params.get("thrP", None))
         ])
-    if params.get("uthr") is not None:
+    if params.get("uthr", None) is not None:
         cargs.extend([
             "-uthr",
-            str(params.get("uthr"))
+            str(params.get("uthr", None))
         ])
-    if params.get("uthrp") is not None:
+    if params.get("uthrp", None) is not None:
         cargs.extend([
             "-uthrp",
-            str(params.get("uthrp"))
+            str(params.get("uthrp", None))
         ])
-    if params.get("uthrP") is not None:
+    if params.get("uthrP", None) is not None:
         cargs.extend([
             "-uthrP",
-            str(params.get("uthrP"))
+            str(params.get("uthrP", None))
         ])
-    if params.get("max") is not None:
+    if params.get("max", None) is not None:
         cargs.extend([
             "-max",
-            str(params.get("max"))
+            str(params.get("max", None))
         ])
-    if params.get("min") is not None:
+    if params.get("min", None) is not None:
         cargs.extend([
             "-min",
-            str(params.get("min"))
+            str(params.get("min", None))
         ])
-    if params.get("seed") is not None:
+    if params.get("seed", None) is not None:
         cargs.extend([
             "-seed",
-            str(params.get("seed"))
+            str(params.get("seed", None))
         ])
-    if params.get("restart") is not None:
+    if params.get("restart", None) is not None:
         cargs.extend([
             "-restart",
-            execution.input_file(params.get("restart"))
+            execution.input_file(params.get("restart", None))
         ])
-    if params.get("save"):
+    if params.get("save", False):
         cargs.append("-save")
-    if params.get("exp"):
+    if params.get("exp", False):
         cargs.append("-exp")
-    if params.get("log"):
+    if params.get("log", False):
         cargs.append("-log")
-    if params.get("sin"):
+    if params.get("sin", False):
         cargs.append("-sin")
-    if params.get("cos"):
+    if params.get("cos", False):
         cargs.append("-cos")
-    if params.get("tan"):
+    if params.get("tan", False):
         cargs.append("-tan")
-    if params.get("asin"):
+    if params.get("asin", False):
         cargs.append("-asin")
-    if params.get("acos"):
+    if params.get("acos", False):
         cargs.append("-acos")
-    if params.get("atan"):
+    if params.get("atan", False):
         cargs.append("-atan")
-    if params.get("sqr"):
+    if params.get("sqr", False):
         cargs.append("-sqr")
-    if params.get("sqrt"):
+    if params.get("sqrt", False):
         cargs.append("-sqrt")
-    if params.get("recip"):
+    if params.get("recip", False):
         cargs.append("-recip")
-    if params.get("abs"):
+    if params.get("abs", False):
         cargs.append("-abs")
-    if params.get("bin"):
+    if params.get("bin", False):
         cargs.append("-bin")
-    if params.get("binv"):
+    if params.get("binv", False):
         cargs.append("-binv")
-    if params.get("fillh"):
+    if params.get("fillh", False):
         cargs.append("-fillh")
-    if params.get("fillh26"):
+    if params.get("fillh26", False):
         cargs.append("-fillh26")
-    if params.get("index"):
+    if params.get("index", False):
         cargs.append("-index")
-    if params.get("grid") is not None:
+    if params.get("grid", None) is not None:
         cargs.extend([
             "-grid",
-            *map(str, params.get("grid"))
+            *map(str, params.get("grid", None))
         ])
-    if params.get("edge"):
+    if params.get("edge", False):
         cargs.append("-edge")
-    if params.get("tfce") is not None:
+    if params.get("tfce", None) is not None:
         cargs.extend([
             "-tfce",
-            *map(str, params.get("tfce"))
+            *map(str, params.get("tfce", None))
         ])
-    if params.get("tfceS") is not None:
+    if params.get("tfceS", None) is not None:
         cargs.extend([
             "-tfceS",
-            *map(str, params.get("tfceS"))
+            *map(str, params.get("tfceS", None))
         ])
-    if params.get("nan"):
+    if params.get("nan", False):
         cargs.append("-nan")
-    if params.get("nanm"):
+    if params.get("nanm", False):
         cargs.append("-nanm")
-    if params.get("rand"):
+    if params.get("rand", False):
         cargs.append("-rand")
-    if params.get("randn"):
+    if params.get("randn", False):
         cargs.append("-randn")
-    if params.get("inm") is not None:
+    if params.get("inm", None) is not None:
         cargs.extend([
             "-inm",
-            str(params.get("inm"))
+            str(params.get("inm", None))
         ])
-    if params.get("ing") is not None:
+    if params.get("ing", None) is not None:
         cargs.extend([
             "-ing",
-            str(params.get("ing"))
+            str(params.get("ing", None))
         ])
-    if params.get("range"):
+    if params.get("range", False):
         cargs.append("-range")
-    if params.get("tensor_decomp"):
+    if params.get("tensor_decomp", False):
         cargs.append("-tensor_decomp")
-    if params.get("kernel_3D"):
+    if params.get("kernel_3D", False):
         cargs.append("-kernel 3D")
-    if params.get("kernel_2D"):
+    if params.get("kernel_2D", False):
         cargs.append("-kernel 2D")
-    if params.get("kernel_box") is not None:
+    if params.get("kernel_box", None) is not None:
         cargs.extend([
             "-kernel box",
-            str(params.get("kernel_box"))
+            str(params.get("kernel_box", None))
         ])
-    if params.get("kernel_boxv") is not None:
+    if params.get("kernel_boxv", None) is not None:
         cargs.extend([
             "-kernel boxv",
-            str(params.get("kernel_boxv"))
+            str(params.get("kernel_boxv", None))
         ])
-    if params.get("kernel_boxv3") is not None:
+    if params.get("kernel_boxv3", None) is not None:
         cargs.extend([
             "-kernel boxv3",
-            *map(str, params.get("kernel_boxv3"))
+            *map(str, params.get("kernel_boxv3", None))
         ])
-    if params.get("kernel_gauss") is not None:
+    if params.get("kernel_gauss", None) is not None:
         cargs.extend([
             "-kernel gauss",
-            str(params.get("kernel_gauss"))
+            str(params.get("kernel_gauss", None))
         ])
-    if params.get("kernel_sphere") is not None:
+    if params.get("kernel_sphere", None) is not None:
         cargs.extend([
             "-kernel sphere",
-            str(params.get("kernel_sphere"))
+            str(params.get("kernel_sphere", None))
         ])
-    if params.get("kernel_file") is not None:
+    if params.get("kernel_file", None) is not None:
         cargs.extend([
             "-kernel file",
-            execution.input_file(params.get("kernel_file"))
+            execution.input_file(params.get("kernel_file", None))
         ])
-    if params.get("dilM"):
+    if params.get("dilM", False):
         cargs.append("-dilM")
-    if params.get("dilD"):
+    if params.get("dilD", False):
         cargs.append("-dilD")
-    if params.get("dilF"):
+    if params.get("dilF", False):
         cargs.append("-dilF")
-    if params.get("dilall"):
+    if params.get("dilall", False):
         cargs.append("-dilall")
-    if params.get("ero"):
+    if params.get("ero", False):
         cargs.append("-ero")
-    if params.get("eroF"):
+    if params.get("eroF", False):
         cargs.append("-eroF")
-    if params.get("fmedian"):
+    if params.get("fmedian", False):
         cargs.append("-fmedian")
-    if params.get("fmean"):
+    if params.get("fmean", False):
         cargs.append("-fmean")
-    if params.get("fmeanu"):
+    if params.get("fmeanu", False):
         cargs.append("-fmeanu")
-    if params.get("s") is not None:
+    if params.get("s", None) is not None:
         cargs.extend([
             "-s",
-            str(params.get("s"))
+            str(params.get("s", None))
         ])
-    if params.get("subsamp2"):
+    if params.get("subsamp2", False):
         cargs.append("-subsamp2")
-    if params.get("subsamp2offc"):
+    if params.get("subsamp2offc", False):
         cargs.append("-subsamp2offc")
-    if params.get("Tmean"):
+    if params.get("Tmean", False):
         cargs.append("-Tmean")
-    if params.get("Xmean"):
+    if params.get("Xmean", False):
         cargs.append("-Xmean")
-    if params.get("Ymean"):
+    if params.get("Ymean", False):
         cargs.append("-Ymean")
-    if params.get("Zmean"):
+    if params.get("Zmean", False):
         cargs.append("-Zmean")
-    if params.get("Tstd"):
+    if params.get("Tstd", False):
         cargs.append("-Tstd")
-    if params.get("Xstd"):
+    if params.get("Xstd", False):
         cargs.append("-Xstd")
-    if params.get("Ystd"):
+    if params.get("Ystd", False):
         cargs.append("-Ystd")
-    if params.get("Zstd"):
+    if params.get("Zstd", False):
         cargs.append("-Zstd")
-    if params.get("Tmax"):
+    if params.get("Tmax", False):
         cargs.append("-Tmax")
-    if params.get("Xmax"):
+    if params.get("Xmax", False):
         cargs.append("-Xmax")
-    if params.get("Ymax"):
+    if params.get("Ymax", False):
         cargs.append("-Ymax")
-    if params.get("Zmax"):
+    if params.get("Zmax", False):
         cargs.append("-Zmax")
-    if params.get("Tmaxn"):
+    if params.get("Tmaxn", False):
         cargs.append("-Tmaxn")
-    if params.get("Xmaxn"):
+    if params.get("Xmaxn", False):
         cargs.append("-Xmaxn")
-    if params.get("Ymaxn"):
+    if params.get("Ymaxn", False):
         cargs.append("-Ymaxn")
-    if params.get("Zmaxn"):
+    if params.get("Zmaxn", False):
         cargs.append("-Zmaxn")
-    if params.get("Tmin"):
+    if params.get("Tmin", False):
         cargs.append("-Tmin")
-    if params.get("Xmin"):
+    if params.get("Xmin", False):
         cargs.append("-Xmin")
-    if params.get("Ymin"):
+    if params.get("Ymin", False):
         cargs.append("-Ymin")
-    if params.get("Zmin"):
+    if params.get("Zmin", False):
         cargs.append("-Zmin")
-    if params.get("Tmedian"):
+    if params.get("Tmedian", False):
         cargs.append("-Tmedian")
-    if params.get("Xmedian"):
+    if params.get("Xmedian", False):
         cargs.append("-Xmedian")
-    if params.get("Ymedian"):
+    if params.get("Ymedian", False):
         cargs.append("-Ymedian")
-    if params.get("Zmedian"):
+    if params.get("Zmedian", False):
         cargs.append("-Zmedian")
-    if params.get("Tperc") is not None:
+    if params.get("Tperc", None) is not None:
         cargs.extend([
             "-Tperc",
-            str(params.get("Tperc"))
+            str(params.get("Tperc", None))
         ])
-    if params.get("Xperc") is not None:
+    if params.get("Xperc", None) is not None:
         cargs.extend([
             "-Xperc",
-            str(params.get("Xperc"))
+            str(params.get("Xperc", None))
         ])
-    if params.get("Yperc") is not None:
+    if params.get("Yperc", None) is not None:
         cargs.extend([
             "-Yperc",
-            str(params.get("Yperc"))
+            str(params.get("Yperc", None))
         ])
-    if params.get("Zperc") is not None:
+    if params.get("Zperc", None) is not None:
         cargs.extend([
             "-Zperc",
-            str(params.get("Zperc"))
+            str(params.get("Zperc", None))
         ])
-    if params.get("Tar1"):
+    if params.get("Tar1", False):
         cargs.append("-Tar1")
-    if params.get("roi") is not None:
+    if params.get("roi", None) is not None:
         cargs.extend([
             "-roi",
-            *map(str, params.get("roi"))
+            *map(str, params.get("roi", None))
         ])
-    if params.get("bptf") is not None:
+    if params.get("bptf", None) is not None:
         cargs.extend([
             "-bptf",
-            *map(str, params.get("bptf"))
+            *map(str, params.get("bptf", None))
         ])
-    if params.get("roc") is not None:
+    if params.get("roc", None) is not None:
         cargs.extend([
             "-roc",
-            *map(str, params.get("roc"))
+            *map(str, params.get("roc", None))
         ])
     return cargs
 
 
 class FslmathsOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `fslmaths(...)`.
+    Output object returned when calling `FslmathsParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -861,7 +937,7 @@ def fslmaths_params(
     output: str,
     datatype_internal: typing.Literal["char", "short", "int", "float", "double", "input"] | None = None,
     output_datatype: typing.Literal["char", "short", "int", "float", "double", "input"] | None = None,
-) -> FslmathsParameters:
+) -> FslmathsParametersTagged:
     """
     Build parameters.
     
@@ -875,7 +951,7 @@ def fslmaths_params(
         Parameter dictionary
     """
     params = {
-        "@type": "fsl.fslmaths",
+        "@type": "fsl/fslmaths",
         "input_files": input_files,
         "operations": operations,
         "output": output,
@@ -902,18 +978,18 @@ def fslmaths_cargs(
     """
     cargs = []
     cargs.append("fslmaths")
-    if params.get("datatype_internal") is not None:
+    if params.get("datatype_internal", None) is not None:
         cargs.extend([
             "-dt",
-            params.get("datatype_internal")
+            params.get("datatype_internal", None)
         ])
-    cargs.extend([execution.input_file(f) for f in params.get("input_files")])
-    cargs.extend([a for c in [dyn_cargs(s["@type"])(s, execution) for s in params.get("operations")] for a in c])
-    cargs.append(params.get("output"))
-    if params.get("output_datatype") is not None:
+    cargs.extend([execution.input_file(f) for f in params.get("input_files", None)])
+    cargs.extend([a for c in [fslmaths_operation_cargs(s, execution) for s in params.get("operations", None)] for a in c])
+    cargs.append(params.get("output", None))
+    if params.get("output_datatype", None) is not None:
         cargs.extend([
             "-odt",
-            params.get("output_datatype")
+            params.get("output_datatype", None)
         ])
     return cargs
 
@@ -933,7 +1009,7 @@ def fslmaths_outputs(
     """
     ret = FslmathsOutputs(
         root=execution.output_file("."),
-        output_file=execution.output_file(params.get("output")),
+        output_file=execution.output_file(params.get("output", None)),
     )
     return ret
 
@@ -1005,9 +1081,7 @@ def fslmaths(
 
 __all__ = [
     "FSLMATHS_METADATA",
-    "FslmathsOperationParameters",
     "FslmathsOutputs",
-    "FslmathsParameters",
     "fslmaths",
     "fslmaths_execute",
     "fslmaths_operation_params",

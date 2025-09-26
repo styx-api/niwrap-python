@@ -14,7 +14,13 @@ TCKRESAMPLE_METADATA = Metadata(
 
 
 TckresampleLineParameters = typing.TypedDict('TckresampleLineParameters', {
-    "@type": typing.Literal["mrtrix.tckresample.line"],
+    "@type": typing.NotRequired[typing.Literal["line"]],
+    "num": int,
+    "start": list[float],
+    "end": list[float],
+})
+TckresampleLineParametersTagged = typing.TypedDict('TckresampleLineParametersTagged', {
+    "@type": typing.Literal["line"],
     "num": int,
     "start": list[float],
     "end": list[float],
@@ -22,7 +28,14 @@ TckresampleLineParameters = typing.TypedDict('TckresampleLineParameters', {
 
 
 TckresampleArcParameters = typing.TypedDict('TckresampleArcParameters', {
-    "@type": typing.Literal["mrtrix.tckresample.arc"],
+    "@type": typing.NotRequired[typing.Literal["arc"]],
+    "num": int,
+    "start": list[float],
+    "mid": list[float],
+    "end": list[float],
+})
+TckresampleArcParametersTagged = typing.TypedDict('TckresampleArcParametersTagged', {
+    "@type": typing.Literal["arc"],
     "num": int,
     "start": list[float],
     "mid": list[float],
@@ -31,14 +44,39 @@ TckresampleArcParameters = typing.TypedDict('TckresampleArcParameters', {
 
 
 TckresampleConfigParameters = typing.TypedDict('TckresampleConfigParameters', {
-    "@type": typing.Literal["mrtrix.tckresample.config"],
+    "@type": typing.NotRequired[typing.Literal["config"]],
+    "key": str,
+    "value": str,
+})
+TckresampleConfigParametersTagged = typing.TypedDict('TckresampleConfigParametersTagged', {
+    "@type": typing.Literal["config"],
     "key": str,
     "value": str,
 })
 
 
 TckresampleParameters = typing.TypedDict('TckresampleParameters', {
-    "@type": typing.Literal["mrtrix.tckresample"],
+    "@type": typing.NotRequired[typing.Literal["mrtrix/tckresample"]],
+    "upsample": typing.NotRequired[int | None],
+    "downsample": typing.NotRequired[int | None],
+    "step_size": typing.NotRequired[float | None],
+    "num_points": typing.NotRequired[int | None],
+    "endpoints": bool,
+    "line": typing.NotRequired[TckresampleLineParameters | None],
+    "arc": typing.NotRequired[TckresampleArcParameters | None],
+    "info": bool,
+    "quiet": bool,
+    "debug": bool,
+    "force": bool,
+    "nthreads": typing.NotRequired[int | None],
+    "config": typing.NotRequired[list[TckresampleConfigParameters] | None],
+    "help": bool,
+    "version": bool,
+    "in_tracks": InputPathType,
+    "out_tracks": str,
+})
+TckresampleParametersTagged = typing.TypedDict('TckresampleParametersTagged', {
+    "@type": typing.Literal["mrtrix/tckresample"],
     "upsample": typing.NotRequired[int | None],
     "downsample": typing.NotRequired[int | None],
     "step_size": typing.NotRequired[float | None],
@@ -59,46 +97,11 @@ TckresampleParameters = typing.TypedDict('TckresampleParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "mrtrix.tckresample": tckresample_cargs,
-        "mrtrix.tckresample.line": tckresample_line_cargs,
-        "mrtrix.tckresample.arc": tckresample_arc_cargs,
-        "mrtrix.tckresample.config": tckresample_config_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "mrtrix.tckresample": tckresample_outputs,
-    }.get(t)
-
-
 def tckresample_line_params(
     num: int,
     start: list[float],
     end: list[float],
-) -> TckresampleLineParameters:
+) -> TckresampleLineParametersTagged:
     """
     Build parameters.
     
@@ -116,7 +119,7 @@ def tckresample_line_params(
         Parameter dictionary
     """
     params = {
-        "@type": "mrtrix.tckresample.line",
+        "@type": "line",
         "num": num,
         "start": start,
         "end": end,
@@ -139,9 +142,9 @@ def tckresample_line_cargs(
     """
     cargs = []
     cargs.append("-line")
-    cargs.append(str(params.get("num")))
-    cargs.append(",".join(map(str, params.get("start"))))
-    cargs.append(",".join(map(str, params.get("end"))))
+    cargs.append(str(params.get("num", None)))
+    cargs.append(",".join(map(str, params.get("start", None))))
+    cargs.append(",".join(map(str, params.get("end", None))))
     return cargs
 
 
@@ -150,7 +153,7 @@ def tckresample_arc_params(
     start: list[float],
     mid: list[float],
     end: list[float],
-) -> TckresampleArcParameters:
+) -> TckresampleArcParametersTagged:
     """
     Build parameters.
     
@@ -171,7 +174,7 @@ def tckresample_arc_params(
         Parameter dictionary
     """
     params = {
-        "@type": "mrtrix.tckresample.arc",
+        "@type": "arc",
         "num": num,
         "start": start,
         "mid": mid,
@@ -195,17 +198,17 @@ def tckresample_arc_cargs(
     """
     cargs = []
     cargs.append("-arc")
-    cargs.append(str(params.get("num")))
-    cargs.append(",".join(map(str, params.get("start"))))
-    cargs.append(",".join(map(str, params.get("mid"))))
-    cargs.append(",".join(map(str, params.get("end"))))
+    cargs.append(str(params.get("num", None)))
+    cargs.append(",".join(map(str, params.get("start", None))))
+    cargs.append(",".join(map(str, params.get("mid", None))))
+    cargs.append(",".join(map(str, params.get("end", None))))
     return cargs
 
 
 def tckresample_config_params(
     key: str,
     value: str,
-) -> TckresampleConfigParameters:
+) -> TckresampleConfigParametersTagged:
     """
     Build parameters.
     
@@ -216,7 +219,7 @@ def tckresample_config_params(
         Parameter dictionary
     """
     params = {
-        "@type": "mrtrix.tckresample.config",
+        "@type": "config",
         "key": key,
         "value": value,
     }
@@ -238,14 +241,14 @@ def tckresample_config_cargs(
     """
     cargs = []
     cargs.append("-config")
-    cargs.append(params.get("key"))
-    cargs.append(params.get("value"))
+    cargs.append(params.get("key", None))
+    cargs.append(params.get("value", None))
     return cargs
 
 
 class TckresampleOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `tckresample(...)`.
+    Output object returned when calling `TckresampleParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -271,7 +274,7 @@ def tckresample_params(
     config: list[TckresampleConfigParameters] | None = None,
     help_: bool = False,
     version: bool = False,
-) -> TckresampleParameters:
+) -> TckresampleParametersTagged:
     """
     Build parameters.
     
@@ -308,7 +311,7 @@ def tckresample_params(
         Parameter dictionary
     """
     params = {
-        "@type": "mrtrix.tckresample",
+        "@type": "mrtrix/tckresample",
         "endpoints": endpoints,
         "info": info,
         "quiet": quiet,
@@ -353,53 +356,53 @@ def tckresample_cargs(
     """
     cargs = []
     cargs.append("tckresample")
-    if params.get("upsample") is not None:
+    if params.get("upsample", None) is not None:
         cargs.extend([
             "-upsample",
-            str(params.get("upsample"))
+            str(params.get("upsample", None))
         ])
-    if params.get("downsample") is not None:
+    if params.get("downsample", None) is not None:
         cargs.extend([
             "-downsample",
-            str(params.get("downsample"))
+            str(params.get("downsample", None))
         ])
-    if params.get("step_size") is not None:
+    if params.get("step_size", None) is not None:
         cargs.extend([
             "-step_size",
-            str(params.get("step_size"))
+            str(params.get("step_size", None))
         ])
-    if params.get("num_points") is not None:
+    if params.get("num_points", None) is not None:
         cargs.extend([
             "-num_points",
-            str(params.get("num_points"))
+            str(params.get("num_points", None))
         ])
-    if params.get("endpoints"):
+    if params.get("endpoints", False):
         cargs.append("-endpoints")
-    if params.get("line") is not None:
-        cargs.extend(dyn_cargs(params.get("line")["@type"])(params.get("line"), execution))
-    if params.get("arc") is not None:
-        cargs.extend(dyn_cargs(params.get("arc")["@type"])(params.get("arc"), execution))
-    if params.get("info"):
+    if params.get("line", None) is not None:
+        cargs.extend(tckresample_line_cargs(params.get("line", None), execution))
+    if params.get("arc", None) is not None:
+        cargs.extend(tckresample_arc_cargs(params.get("arc", None), execution))
+    if params.get("info", False):
         cargs.append("-info")
-    if params.get("quiet"):
+    if params.get("quiet", False):
         cargs.append("-quiet")
-    if params.get("debug"):
+    if params.get("debug", False):
         cargs.append("-debug")
-    if params.get("force"):
+    if params.get("force", False):
         cargs.append("-force")
-    if params.get("nthreads") is not None:
+    if params.get("nthreads", None) is not None:
         cargs.extend([
             "-nthreads",
-            str(params.get("nthreads"))
+            str(params.get("nthreads", None))
         ])
-    if params.get("config") is not None:
-        cargs.extend([a for c in [dyn_cargs(s["@type"])(s, execution) for s in params.get("config")] for a in c])
-    if params.get("help"):
+    if params.get("config", None) is not None:
+        cargs.extend([a for c in [tckresample_config_cargs(s, execution) for s in params.get("config", None)] for a in c])
+    if params.get("help", False):
         cargs.append("-help")
-    if params.get("version"):
+    if params.get("version", False):
         cargs.append("-version")
-    cargs.append(execution.input_file(params.get("in_tracks")))
-    cargs.append(params.get("out_tracks"))
+    cargs.append(execution.input_file(params.get("in_tracks", None)))
+    cargs.append(params.get("out_tracks", None))
     return cargs
 
 
@@ -418,7 +421,7 @@ def tckresample_outputs(
     """
     ret = TckresampleOutputs(
         root=execution.output_file("."),
-        out_tracks=execution.output_file(params.get("out_tracks")),
+        out_tracks=execution.output_file(params.get("out_tracks", None)),
     )
     return ret
 
@@ -571,11 +574,7 @@ def tckresample(
 
 __all__ = [
     "TCKRESAMPLE_METADATA",
-    "TckresampleArcParameters",
-    "TckresampleConfigParameters",
-    "TckresampleLineParameters",
     "TckresampleOutputs",
-    "TckresampleParameters",
     "tckresample",
     "tckresample_arc_params",
     "tckresample_config_params",

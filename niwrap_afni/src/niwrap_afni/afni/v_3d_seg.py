@@ -14,7 +14,29 @@ V_3D_SEG_METADATA = Metadata(
 
 
 V3dSegParameters = typing.TypedDict('V3dSegParameters', {
-    "@type": typing.Literal["afni.3dSeg"],
+    "@type": typing.NotRequired[typing.Literal["afni/3dSeg"]],
+    "anat": InputPathType,
+    "mask": typing.NotRequired[str | None],
+    "blur_meth": typing.NotRequired[str | None],
+    "bias_fwhm": typing.NotRequired[float | None],
+    "classes": typing.NotRequired[str | None],
+    "Bmrf": typing.NotRequired[float | None],
+    "bias_classes": typing.NotRequired[str | None],
+    "prefix": typing.NotRequired[str | None],
+    "overwrite": bool,
+    "debug": typing.NotRequired[float | None],
+    "mixfrac": typing.NotRequired[str | None],
+    "mixfloor": typing.NotRequired[float | None],
+    "gold": typing.NotRequired[InputPathType | None],
+    "gold_bias": typing.NotRequired[InputPathType | None],
+    "main_N": typing.NotRequired[float | None],
+    "cset": typing.NotRequired[InputPathType | None],
+    "labeltable": typing.NotRequired[InputPathType | None],
+    "vox_debug": typing.NotRequired[str | None],
+    "vox_debug_file": typing.NotRequired[str | None],
+})
+V3dSegParametersTagged = typing.TypedDict('V3dSegParametersTagged', {
+    "@type": typing.Literal["afni/3dSeg"],
     "anat": InputPathType,
     "mask": typing.NotRequired[str | None],
     "blur_meth": typing.NotRequired[str | None],
@@ -37,41 +59,9 @@ V3dSegParameters = typing.TypedDict('V3dSegParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "afni.3dSeg": v_3d_seg_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "afni.3dSeg": v_3d_seg_outputs,
-    }.get(t)
-
-
 class V3dSegOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `v_3d_seg(...)`.
+    Output object returned when calling `V3dSegParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -103,7 +93,7 @@ def v_3d_seg_params(
     labeltable: InputPathType | None = None,
     vox_debug: str | None = None,
     vox_debug_file: str | None = None,
-) -> V3dSegParameters:
+) -> V3dSegParametersTagged:
     """
     Build parameters.
     
@@ -141,7 +131,7 @@ def v_3d_seg_params(
         Parameter dictionary
     """
     params = {
-        "@type": "afni.3dSeg",
+        "@type": "afni/3dSeg",
         "anat": anat,
         "overwrite": overwrite,
     }
@@ -199,94 +189,94 @@ def v_3d_seg_cargs(
     cargs.append("3dSeg")
     cargs.extend([
         "-anat",
-        execution.input_file(params.get("anat"))
+        execution.input_file(params.get("anat", None))
     ])
-    if params.get("mask") is not None:
+    if params.get("mask", None) is not None:
         cargs.extend([
             "-mask",
-            params.get("mask")
+            params.get("mask", None)
         ])
-    if params.get("blur_meth") is not None:
+    if params.get("blur_meth", None) is not None:
         cargs.extend([
             "-blur_meth",
-            params.get("blur_meth")
+            params.get("blur_meth", None)
         ])
-    if params.get("bias_fwhm") is not None:
+    if params.get("bias_fwhm", None) is not None:
         cargs.extend([
             "-bias_fwhm",
-            str(params.get("bias_fwhm"))
+            str(params.get("bias_fwhm", None))
         ])
-    if params.get("classes") is not None:
+    if params.get("classes", None) is not None:
         cargs.extend([
             "-classes",
-            params.get("classes")
+            params.get("classes", None)
         ])
-    if params.get("Bmrf") is not None:
+    if params.get("Bmrf", None) is not None:
         cargs.extend([
             "-Bmrf",
-            str(params.get("Bmrf"))
+            str(params.get("Bmrf", None))
         ])
-    if params.get("bias_classes") is not None:
+    if params.get("bias_classes", None) is not None:
         cargs.extend([
             "-bias_classes",
-            params.get("bias_classes")
+            params.get("bias_classes", None)
         ])
-    if params.get("prefix") is not None:
+    if params.get("prefix", None) is not None:
         cargs.extend([
             "-prefix",
-            params.get("prefix")
+            params.get("prefix", None)
         ])
-    if params.get("overwrite"):
+    if params.get("overwrite", False):
         cargs.append("-overwrite")
-    if params.get("debug") is not None:
+    if params.get("debug", None) is not None:
         cargs.extend([
             "-debug",
-            str(params.get("debug"))
+            str(params.get("debug", None))
         ])
-    if params.get("mixfrac") is not None:
+    if params.get("mixfrac", None) is not None:
         cargs.extend([
             "-mixfrac",
-            params.get("mixfrac")
+            params.get("mixfrac", None)
         ])
-    if params.get("mixfloor") is not None:
+    if params.get("mixfloor", None) is not None:
         cargs.extend([
             "-mixfloor",
-            str(params.get("mixfloor"))
+            str(params.get("mixfloor", None))
         ])
-    if params.get("gold") is not None:
+    if params.get("gold", None) is not None:
         cargs.extend([
             "-gold",
-            execution.input_file(params.get("gold"))
+            execution.input_file(params.get("gold", None))
         ])
-    if params.get("gold_bias") is not None:
+    if params.get("gold_bias", None) is not None:
         cargs.extend([
             "-gold_bias",
-            execution.input_file(params.get("gold_bias"))
+            execution.input_file(params.get("gold_bias", None))
         ])
-    if params.get("main_N") is not None:
+    if params.get("main_N", None) is not None:
         cargs.extend([
             "-main_N",
-            str(params.get("main_N"))
+            str(params.get("main_N", None))
         ])
-    if params.get("cset") is not None:
+    if params.get("cset", None) is not None:
         cargs.extend([
             "-cset",
-            execution.input_file(params.get("cset"))
+            execution.input_file(params.get("cset", None))
         ])
-    if params.get("labeltable") is not None:
+    if params.get("labeltable", None) is not None:
         cargs.extend([
             "-labeltable",
-            execution.input_file(params.get("labeltable"))
+            execution.input_file(params.get("labeltable", None))
         ])
-    if params.get("vox_debug") is not None:
+    if params.get("vox_debug", None) is not None:
         cargs.extend([
             "-vox_debug",
-            params.get("vox_debug")
+            params.get("vox_debug", None)
         ])
-    if params.get("vox_debug_file") is not None:
+    if params.get("vox_debug_file", None) is not None:
         cargs.extend([
             "-vox_debug_file",
-            params.get("vox_debug_file")
+            params.get("vox_debug_file", None)
         ])
     return cargs
 
@@ -306,9 +296,9 @@ def v_3d_seg_outputs(
     """
     ret = V3dSegOutputs(
         root=execution.output_file("."),
-        segmented_volume=execution.output_file(params.get("prefix") + "_Segsy+orig.HEAD") if (params.get("prefix") is not None) else None,
-        bias_field=execution.output_file(params.get("prefix") + "_BiasField+orig.HEAD") if (params.get("prefix") is not None) else None,
-        classified_volume=execution.output_file(params.get("prefix") + "_Classes+orig.HEAD") if (params.get("prefix") is not None) else None,
+        segmented_volume=execution.output_file(params.get("prefix", None) + "_Segsy+orig.HEAD") if (params.get("prefix") is not None) else None,
+        bias_field=execution.output_file(params.get("prefix", None) + "_BiasField+orig.HEAD") if (params.get("prefix") is not None) else None,
+        classified_volume=execution.output_file(params.get("prefix", None) + "_Classes+orig.HEAD") if (params.get("prefix") is not None) else None,
     )
     return ret
 
@@ -434,7 +424,6 @@ def v_3d_seg(
 
 __all__ = [
     "V3dSegOutputs",
-    "V3dSegParameters",
     "V_3D_SEG_METADATA",
     "v_3d_seg",
     "v_3d_seg_execute",

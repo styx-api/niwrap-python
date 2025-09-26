@@ -14,7 +14,20 @@ WARP_TENSOR_IMAGE_MULTI_TRANSFORM_METADATA = Metadata(
 
 
 WarpTensorImageMultiTransformParameters = typing.TypedDict('WarpTensorImageMultiTransformParameters', {
-    "@type": typing.Literal["ants.WarpTensorImageMultiTransform"],
+    "@type": typing.NotRequired[typing.Literal["ants/WarpTensorImageMultiTransform"]],
+    "image_dimension": int,
+    "moving_image": InputPathType,
+    "output_image": str,
+    "reference_image": typing.NotRequired[InputPathType | None],
+    "tightest_bounding_box": bool,
+    "reslice_by_header": bool,
+    "use_nearest_neighbor": bool,
+    "transforms": list[str],
+    "ants_prefix": typing.NotRequired[str | None],
+    "ants_prefix_invert": typing.NotRequired[str | None],
+})
+WarpTensorImageMultiTransformParametersTagged = typing.TypedDict('WarpTensorImageMultiTransformParametersTagged', {
+    "@type": typing.Literal["ants/WarpTensorImageMultiTransform"],
     "image_dimension": int,
     "moving_image": InputPathType,
     "output_image": str,
@@ -28,41 +41,9 @@ WarpTensorImageMultiTransformParameters = typing.TypedDict('WarpTensorImageMulti
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "ants.WarpTensorImageMultiTransform": warp_tensor_image_multi_transform_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "ants.WarpTensorImageMultiTransform": warp_tensor_image_multi_transform_outputs,
-    }.get(t)
-
-
 class WarpTensorImageMultiTransformOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `warp_tensor_image_multi_transform(...)`.
+    Output object returned when calling `WarpTensorImageMultiTransformParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -81,7 +62,7 @@ def warp_tensor_image_multi_transform_params(
     use_nearest_neighbor: bool = False,
     ants_prefix: str | None = None,
     ants_prefix_invert: str | None = None,
-) -> WarpTensorImageMultiTransformParameters:
+) -> WarpTensorImageMultiTransformParametersTagged:
     """
     Build parameters.
     
@@ -107,7 +88,7 @@ def warp_tensor_image_multi_transform_params(
         Parameter dictionary
     """
     params = {
-        "@type": "ants.WarpTensorImageMultiTransform",
+        "@type": "ants/WarpTensorImageMultiTransform",
         "image_dimension": image_dimension,
         "moving_image": moving_image,
         "output_image": output_image,
@@ -140,30 +121,30 @@ def warp_tensor_image_multi_transform_cargs(
     """
     cargs = []
     cargs.append("WarpTensorImageMultiTransform")
-    cargs.append(str(params.get("image_dimension")))
-    cargs.append(execution.input_file(params.get("moving_image")))
-    cargs.append(params.get("output_image"))
-    if params.get("reference_image") is not None:
+    cargs.append(str(params.get("image_dimension", None)))
+    cargs.append(execution.input_file(params.get("moving_image", None)))
+    cargs.append(params.get("output_image", None))
+    if params.get("reference_image", None) is not None:
         cargs.extend([
             "-R",
-            execution.input_file(params.get("reference_image"))
+            execution.input_file(params.get("reference_image", None))
         ])
-    if params.get("tightest_bounding_box"):
+    if params.get("tightest_bounding_box", False):
         cargs.append("--tightest-bounding-box")
-    if params.get("reslice_by_header"):
+    if params.get("reslice_by_header", False):
         cargs.append("--reslice-by-header")
-    if params.get("use_nearest_neighbor"):
+    if params.get("use_nearest_neighbor", False):
         cargs.append("--use-NN")
-    cargs.extend(params.get("transforms"))
-    if params.get("ants_prefix") is not None:
+    cargs.extend(params.get("transforms", None))
+    if params.get("ants_prefix", None) is not None:
         cargs.extend([
             "--ANTS-prefix",
-            params.get("ants_prefix")
+            params.get("ants_prefix", None)
         ])
-    if params.get("ants_prefix_invert") is not None:
+    if params.get("ants_prefix_invert", None) is not None:
         cargs.extend([
             "--ANTS-prefix-invert",
-            params.get("ants_prefix_invert")
+            params.get("ants_prefix_invert", None)
         ])
     return cargs
 
@@ -183,7 +164,7 @@ def warp_tensor_image_multi_transform_outputs(
     """
     ret = WarpTensorImageMultiTransformOutputs(
         root=execution.output_file("."),
-        output_image_file=execution.output_file(params.get("output_image")),
+        output_image_file=execution.output_file(params.get("output_image", None)),
     )
     return ret
 
@@ -284,7 +265,6 @@ def warp_tensor_image_multi_transform(
 __all__ = [
     "WARP_TENSOR_IMAGE_MULTI_TRANSFORM_METADATA",
     "WarpTensorImageMultiTransformOutputs",
-    "WarpTensorImageMultiTransformParameters",
     "warp_tensor_image_multi_transform",
     "warp_tensor_image_multi_transform_execute",
     "warp_tensor_image_multi_transform_params",

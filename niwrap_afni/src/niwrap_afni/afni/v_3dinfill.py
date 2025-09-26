@@ -14,7 +14,20 @@ V_3DINFILL_METADATA = Metadata(
 
 
 V3dinfillParameters = typing.TypedDict('V3dinfillParameters', {
-    "@type": typing.Literal["afni.3dinfill"],
+    "@type": typing.NotRequired[typing.Literal["afni/3dinfill"]],
+    "input": InputPathType,
+    "prefix": typing.NotRequired[str | None],
+    "niter": typing.NotRequired[float | None],
+    "blend": typing.NotRequired[typing.Literal["MODE", "AVG", "AUTO", "SOLID", "SOLID_CLEAN"] | None],
+    "minhits": typing.NotRequired[float | None],
+    "ed": typing.NotRequired[list[float] | None],
+    "mask": typing.NotRequired[InputPathType | None],
+    "mask_range": typing.NotRequired[list[float] | None],
+    "mrange": typing.NotRequired[list[float] | None],
+    "cmask": typing.NotRequired[str | None],
+})
+V3dinfillParametersTagged = typing.TypedDict('V3dinfillParametersTagged', {
+    "@type": typing.Literal["afni/3dinfill"],
     "input": InputPathType,
     "prefix": typing.NotRequired[str | None],
     "niter": typing.NotRequired[float | None],
@@ -28,41 +41,9 @@ V3dinfillParameters = typing.TypedDict('V3dinfillParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "afni.3dinfill": v_3dinfill_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "afni.3dinfill": v_3dinfill_outputs,
-    }.get(t)
-
-
 class V3dinfillOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `v_3dinfill(...)`.
+    Output object returned when calling `V3dinfillParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -81,7 +62,7 @@ def v_3dinfill_params(
     mask_range: list[float] | None = None,
     mrange: list[float] | None = None,
     cmask: str | None = None,
-) -> V3dinfillParameters:
+) -> V3dinfillParametersTagged:
     """
     Build parameters.
     
@@ -103,7 +84,7 @@ def v_3dinfill_params(
         Parameter dictionary
     """
     params = {
-        "@type": "afni.3dinfill",
+        "@type": "afni/3dinfill",
         "input": input_,
     }
     if prefix is not None:
@@ -144,52 +125,52 @@ def v_3dinfill_cargs(
     cargs.append("3dinfill")
     cargs.extend([
         "-input",
-        execution.input_file(params.get("input"))
+        execution.input_file(params.get("input", None))
     ])
-    if params.get("prefix") is not None:
+    if params.get("prefix", None) is not None:
         cargs.extend([
             "-prefix",
-            params.get("prefix")
+            params.get("prefix", None)
         ])
-    if params.get("niter") is not None:
+    if params.get("niter", None) is not None:
         cargs.extend([
             "-Niter",
-            str(params.get("niter"))
+            str(params.get("niter", None))
         ])
-    if params.get("blend") is not None:
+    if params.get("blend", None) is not None:
         cargs.extend([
             "-blend",
-            params.get("blend")
+            params.get("blend", None)
         ])
-    if params.get("minhits") is not None:
+    if params.get("minhits", None) is not None:
         cargs.extend([
             "-minhits",
-            str(params.get("minhits"))
+            str(params.get("minhits", None))
         ])
-    if params.get("ed") is not None:
+    if params.get("ed", None) is not None:
         cargs.extend([
             "-ed",
-            *map(str, params.get("ed"))
+            *map(str, params.get("ed", None))
         ])
-    if params.get("mask") is not None:
+    if params.get("mask", None) is not None:
         cargs.extend([
             "-mask",
-            execution.input_file(params.get("mask"))
+            execution.input_file(params.get("mask", None))
         ])
-    if params.get("mask_range") is not None:
+    if params.get("mask_range", None) is not None:
         cargs.extend([
             "-mask_range",
-            *map(str, params.get("mask_range"))
+            *map(str, params.get("mask_range", None))
         ])
-    if params.get("mrange") is not None:
+    if params.get("mrange", None) is not None:
         cargs.extend([
             "-mrange",
-            *map(str, params.get("mrange"))
+            *map(str, params.get("mrange", None))
         ])
-    if params.get("cmask") is not None:
+    if params.get("cmask", None) is not None:
         cargs.extend([
             "-cmask",
-            params.get("cmask")
+            params.get("cmask", None)
         ])
     return cargs
 
@@ -209,7 +190,7 @@ def v_3dinfill_outputs(
     """
     ret = V3dinfillOutputs(
         root=execution.output_file("."),
-        output_filled=execution.output_file(params.get("prefix") + "_filled.nii.gz") if (params.get("prefix") is not None) else None,
+        output_filled=execution.output_file(params.get("prefix", None) + "_filled.nii.gz") if (params.get("prefix") is not None) else None,
     )
     return ret
 
@@ -299,7 +280,6 @@ def v_3dinfill(
 
 __all__ = [
     "V3dinfillOutputs",
-    "V3dinfillParameters",
     "V_3DINFILL_METADATA",
     "v_3dinfill",
     "v_3dinfill_execute",

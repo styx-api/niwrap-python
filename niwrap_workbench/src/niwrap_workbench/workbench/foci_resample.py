@@ -14,28 +14,53 @@ FOCI_RESAMPLE_METADATA = Metadata(
 
 
 FociResampleLeftSurfacesParameters = typing.TypedDict('FociResampleLeftSurfacesParameters', {
-    "@type": typing.Literal["workbench.foci-resample.left_surfaces"],
+    "@type": typing.NotRequired[typing.Literal["left_surfaces"]],
+    "current_surf": InputPathType,
+    "new_surf": InputPathType,
+})
+FociResampleLeftSurfacesParametersTagged = typing.TypedDict('FociResampleLeftSurfacesParametersTagged', {
+    "@type": typing.Literal["left_surfaces"],
     "current_surf": InputPathType,
     "new_surf": InputPathType,
 })
 
 
 FociResampleRightSurfacesParameters = typing.TypedDict('FociResampleRightSurfacesParameters', {
-    "@type": typing.Literal["workbench.foci-resample.right_surfaces"],
+    "@type": typing.NotRequired[typing.Literal["right_surfaces"]],
+    "current_surf": InputPathType,
+    "new_surf": InputPathType,
+})
+FociResampleRightSurfacesParametersTagged = typing.TypedDict('FociResampleRightSurfacesParametersTagged', {
+    "@type": typing.Literal["right_surfaces"],
     "current_surf": InputPathType,
     "new_surf": InputPathType,
 })
 
 
 FociResampleCerebellumSurfacesParameters = typing.TypedDict('FociResampleCerebellumSurfacesParameters', {
-    "@type": typing.Literal["workbench.foci-resample.cerebellum_surfaces"],
+    "@type": typing.NotRequired[typing.Literal["cerebellum_surfaces"]],
+    "current_surf": InputPathType,
+    "new_surf": InputPathType,
+})
+FociResampleCerebellumSurfacesParametersTagged = typing.TypedDict('FociResampleCerebellumSurfacesParametersTagged', {
+    "@type": typing.Literal["cerebellum_surfaces"],
     "current_surf": InputPathType,
     "new_surf": InputPathType,
 })
 
 
 FociResampleParameters = typing.TypedDict('FociResampleParameters', {
-    "@type": typing.Literal["workbench.foci-resample"],
+    "@type": typing.NotRequired[typing.Literal["workbench/foci-resample"]],
+    "foci_in": InputPathType,
+    "foci_out": str,
+    "left_surfaces": typing.NotRequired[FociResampleLeftSurfacesParameters | None],
+    "right_surfaces": typing.NotRequired[FociResampleRightSurfacesParameters | None],
+    "cerebellum_surfaces": typing.NotRequired[FociResampleCerebellumSurfacesParameters | None],
+    "opt_discard_distance_from_surface": bool,
+    "opt_restore_xyz": bool,
+})
+FociResampleParametersTagged = typing.TypedDict('FociResampleParametersTagged', {
+    "@type": typing.Literal["workbench/foci-resample"],
     "foci_in": InputPathType,
     "foci_out": str,
     "left_surfaces": typing.NotRequired[FociResampleLeftSurfacesParameters | None],
@@ -46,45 +71,10 @@ FociResampleParameters = typing.TypedDict('FociResampleParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "workbench.foci-resample": foci_resample_cargs,
-        "workbench.foci-resample.left_surfaces": foci_resample_left_surfaces_cargs,
-        "workbench.foci-resample.right_surfaces": foci_resample_right_surfaces_cargs,
-        "workbench.foci-resample.cerebellum_surfaces": foci_resample_cerebellum_surfaces_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "workbench.foci-resample": foci_resample_outputs,
-    }.get(t)
-
-
 def foci_resample_left_surfaces_params(
     current_surf: InputPathType,
     new_surf: InputPathType,
-) -> FociResampleLeftSurfacesParameters:
+) -> FociResampleLeftSurfacesParametersTagged:
     """
     Build parameters.
     
@@ -95,7 +85,7 @@ def foci_resample_left_surfaces_params(
         Parameter dictionary
     """
     params = {
-        "@type": "workbench.foci-resample.left_surfaces",
+        "@type": "left_surfaces",
         "current_surf": current_surf,
         "new_surf": new_surf,
     }
@@ -117,15 +107,15 @@ def foci_resample_left_surfaces_cargs(
     """
     cargs = []
     cargs.append("-left-surfaces")
-    cargs.append(execution.input_file(params.get("current_surf")))
-    cargs.append(execution.input_file(params.get("new_surf")))
+    cargs.append(execution.input_file(params.get("current_surf", None)))
+    cargs.append(execution.input_file(params.get("new_surf", None)))
     return cargs
 
 
 def foci_resample_right_surfaces_params(
     current_surf: InputPathType,
     new_surf: InputPathType,
-) -> FociResampleRightSurfacesParameters:
+) -> FociResampleRightSurfacesParametersTagged:
     """
     Build parameters.
     
@@ -136,7 +126,7 @@ def foci_resample_right_surfaces_params(
         Parameter dictionary
     """
     params = {
-        "@type": "workbench.foci-resample.right_surfaces",
+        "@type": "right_surfaces",
         "current_surf": current_surf,
         "new_surf": new_surf,
     }
@@ -158,15 +148,15 @@ def foci_resample_right_surfaces_cargs(
     """
     cargs = []
     cargs.append("-right-surfaces")
-    cargs.append(execution.input_file(params.get("current_surf")))
-    cargs.append(execution.input_file(params.get("new_surf")))
+    cargs.append(execution.input_file(params.get("current_surf", None)))
+    cargs.append(execution.input_file(params.get("new_surf", None)))
     return cargs
 
 
 def foci_resample_cerebellum_surfaces_params(
     current_surf: InputPathType,
     new_surf: InputPathType,
-) -> FociResampleCerebellumSurfacesParameters:
+) -> FociResampleCerebellumSurfacesParametersTagged:
     """
     Build parameters.
     
@@ -177,7 +167,7 @@ def foci_resample_cerebellum_surfaces_params(
         Parameter dictionary
     """
     params = {
-        "@type": "workbench.foci-resample.cerebellum_surfaces",
+        "@type": "cerebellum_surfaces",
         "current_surf": current_surf,
         "new_surf": new_surf,
     }
@@ -199,14 +189,14 @@ def foci_resample_cerebellum_surfaces_cargs(
     """
     cargs = []
     cargs.append("-cerebellum-surfaces")
-    cargs.append(execution.input_file(params.get("current_surf")))
-    cargs.append(execution.input_file(params.get("new_surf")))
+    cargs.append(execution.input_file(params.get("current_surf", None)))
+    cargs.append(execution.input_file(params.get("new_surf", None)))
     return cargs
 
 
 class FociResampleOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `foci_resample(...)`.
+    Output object returned when calling `FociResampleParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -222,7 +212,7 @@ def foci_resample_params(
     cerebellum_surfaces: FociResampleCerebellumSurfacesParameters | None = None,
     opt_discard_distance_from_surface: bool = False,
     opt_restore_xyz: bool = False,
-) -> FociResampleParameters:
+) -> FociResampleParametersTagged:
     """
     Build parameters.
     
@@ -240,7 +230,7 @@ def foci_resample_params(
         Parameter dictionary
     """
     params = {
-        "@type": "workbench.foci-resample",
+        "@type": "workbench/foci-resample",
         "foci_in": foci_in,
         "foci_out": foci_out,
         "opt_discard_distance_from_surface": opt_discard_distance_from_surface,
@@ -271,17 +261,17 @@ def foci_resample_cargs(
     cargs = []
     cargs.append("wb_command")
     cargs.append("-foci-resample")
-    cargs.append(execution.input_file(params.get("foci_in")))
-    cargs.append(params.get("foci_out"))
-    if params.get("left_surfaces") is not None:
-        cargs.extend(dyn_cargs(params.get("left_surfaces")["@type"])(params.get("left_surfaces"), execution))
-    if params.get("right_surfaces") is not None:
-        cargs.extend(dyn_cargs(params.get("right_surfaces")["@type"])(params.get("right_surfaces"), execution))
-    if params.get("cerebellum_surfaces") is not None:
-        cargs.extend(dyn_cargs(params.get("cerebellum_surfaces")["@type"])(params.get("cerebellum_surfaces"), execution))
-    if params.get("opt_discard_distance_from_surface"):
+    cargs.append(execution.input_file(params.get("foci_in", None)))
+    cargs.append(params.get("foci_out", None))
+    if params.get("left_surfaces", None) is not None:
+        cargs.extend(foci_resample_left_surfaces_cargs(params.get("left_surfaces", None), execution))
+    if params.get("right_surfaces", None) is not None:
+        cargs.extend(foci_resample_right_surfaces_cargs(params.get("right_surfaces", None), execution))
+    if params.get("cerebellum_surfaces", None) is not None:
+        cargs.extend(foci_resample_cerebellum_surfaces_cargs(params.get("cerebellum_surfaces", None), execution))
+    if params.get("opt_discard_distance_from_surface", False):
         cargs.append("-discard-distance-from-surface")
-    if params.get("opt_restore_xyz"):
+    if params.get("opt_restore_xyz", False):
         cargs.append("-restore-xyz")
     return cargs
 
@@ -301,7 +291,7 @@ def foci_resample_outputs(
     """
     ret = FociResampleOutputs(
         root=execution.output_file("."),
-        foci_out=execution.output_file(params.get("foci_out")),
+        foci_out=execution.output_file(params.get("foci_out", None)),
     )
     return ret
 
@@ -393,11 +383,7 @@ def foci_resample(
 
 __all__ = [
     "FOCI_RESAMPLE_METADATA",
-    "FociResampleCerebellumSurfacesParameters",
-    "FociResampleLeftSurfacesParameters",
     "FociResampleOutputs",
-    "FociResampleParameters",
-    "FociResampleRightSurfacesParameters",
     "foci_resample",
     "foci_resample_cerebellum_surfaces_params",
     "foci_resample_execute",

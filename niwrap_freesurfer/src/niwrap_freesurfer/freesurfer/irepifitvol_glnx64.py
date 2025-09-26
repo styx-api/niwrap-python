@@ -14,47 +14,20 @@ IREPIFITVOL_GLNX64_METADATA = Metadata(
 
 
 IrepifitvolGlnx64Parameters = typing.TypedDict('IrepifitvolGlnx64Parameters', {
-    "@type": typing.Literal["freesurfer.irepifitvol.glnx64"],
+    "@type": typing.NotRequired[typing.Literal["freesurfer/irepifitvol.glnx64"]],
+    "input_file": InputPathType,
+    "output_file": str,
+})
+IrepifitvolGlnx64ParametersTagged = typing.TypedDict('IrepifitvolGlnx64ParametersTagged', {
+    "@type": typing.Literal["freesurfer/irepifitvol.glnx64"],
     "input_file": InputPathType,
     "output_file": str,
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "freesurfer.irepifitvol.glnx64": irepifitvol_glnx64_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "freesurfer.irepifitvol.glnx64": irepifitvol_glnx64_outputs,
-    }.get(t)
-
-
 class IrepifitvolGlnx64Outputs(typing.NamedTuple):
     """
-    Output object returned when calling `irepifitvol_glnx64(...)`.
+    Output object returned when calling `IrepifitvolGlnx64Parameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -65,7 +38,7 @@ class IrepifitvolGlnx64Outputs(typing.NamedTuple):
 def irepifitvol_glnx64_params(
     input_file: InputPathType,
     output_file: str,
-) -> IrepifitvolGlnx64Parameters:
+) -> IrepifitvolGlnx64ParametersTagged:
     """
     Build parameters.
     
@@ -76,7 +49,7 @@ def irepifitvol_glnx64_params(
         Parameter dictionary
     """
     params = {
-        "@type": "freesurfer.irepifitvol.glnx64",
+        "@type": "freesurfer/irepifitvol.glnx64",
         "input_file": input_file,
         "output_file": output_file,
     }
@@ -98,8 +71,8 @@ def irepifitvol_glnx64_cargs(
     """
     cargs = []
     cargs.append("irepifitvol.glnx64")
-    cargs.append(execution.input_file(params.get("input_file")))
-    cargs.append(params.get("output_file"))
+    cargs.append(execution.input_file(params.get("input_file", None)))
+    cargs.append(params.get("output_file", None))
     return cargs
 
 
@@ -118,7 +91,7 @@ def irepifitvol_glnx64_outputs(
     """
     ret = IrepifitvolGlnx64Outputs(
         root=execution.output_file("."),
-        output_volume=execution.output_file(params.get("output_file")),
+        output_volume=execution.output_file(params.get("output_file", None)),
     )
     return ret
 
@@ -184,7 +157,6 @@ def irepifitvol_glnx64(
 __all__ = [
     "IREPIFITVOL_GLNX64_METADATA",
     "IrepifitvolGlnx64Outputs",
-    "IrepifitvolGlnx64Parameters",
     "irepifitvol_glnx64",
     "irepifitvol_glnx64_execute",
     "irepifitvol_glnx64_params",

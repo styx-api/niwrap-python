@@ -14,7 +14,34 @@ V_3D_CLUSTERIZE_METADATA = Metadata(
 
 
 V3dClusterizeParameters = typing.TypedDict('V3dClusterizeParameters', {
-    "@type": typing.Literal["afni.3dClusterize"],
+    "@type": typing.NotRequired[typing.Literal["afni/3dClusterize"]],
+    "inset": InputPathType,
+    "mask": typing.NotRequired[InputPathType | None],
+    "mask_from_hdr": bool,
+    "out_mask": typing.NotRequired[str | None],
+    "ithr": str,
+    "idat": typing.NotRequired[str | None],
+    "onesided": typing.NotRequired[str | None],
+    "twosided": typing.NotRequired[str | None],
+    "bisided": typing.NotRequired[str | None],
+    "within_range": typing.NotRequired[str | None],
+    "nn": int,
+    "clust_nvox": typing.NotRequired[int | None],
+    "clust_vol": typing.NotRequired[int | None],
+    "pref_map": typing.NotRequired[str | None],
+    "pref_dat": typing.NotRequired[str | None],
+    "one_d_format": bool,
+    "no_one_d_format": bool,
+    "summarize": bool,
+    "nosum": bool,
+    "quiet": bool,
+    "outvol_if_no_clust": bool,
+    "orient": typing.NotRequired[str | None],
+    "abs_table_data": bool,
+    "binary": bool,
+})
+V3dClusterizeParametersTagged = typing.TypedDict('V3dClusterizeParametersTagged', {
+    "@type": typing.Literal["afni/3dClusterize"],
     "inset": InputPathType,
     "mask": typing.NotRequired[InputPathType | None],
     "mask_from_hdr": bool,
@@ -42,41 +69,9 @@ V3dClusterizeParameters = typing.TypedDict('V3dClusterizeParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "afni.3dClusterize": v_3d_clusterize_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "afni.3dClusterize": v_3d_clusterize_outputs,
-    }.get(t)
-
-
 class V3dClusterizeOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `v_3d_clusterize(...)`.
+    Output object returned when calling `V3dClusterizeParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -113,7 +108,7 @@ def v_3d_clusterize_params(
     orient: str | None = None,
     abs_table_data: bool = False,
     binary: bool = False,
-) -> V3dClusterizeParameters:
+) -> V3dClusterizeParametersTagged:
     """
     Build parameters.
     
@@ -148,7 +143,7 @@ def v_3d_clusterize_params(
         Parameter dictionary
     """
     params = {
-        "@type": "afni.3dClusterize",
+        "@type": "afni/3dClusterize",
         "inset": inset,
         "mask_from_hdr": mask_from_hdr,
         "ithr": ithr,
@@ -206,93 +201,93 @@ def v_3d_clusterize_cargs(
     cargs.append("3dClusterize")
     cargs.extend([
         "-inset",
-        execution.input_file(params.get("inset"))
+        execution.input_file(params.get("inset", None))
     ])
-    if params.get("mask") is not None:
+    if params.get("mask", None) is not None:
         cargs.extend([
             "-mask",
-            execution.input_file(params.get("mask"))
+            execution.input_file(params.get("mask", None))
         ])
-    if params.get("mask_from_hdr"):
+    if params.get("mask_from_hdr", False):
         cargs.append("-mask_from_hdr")
-    if params.get("out_mask") is not None:
+    if params.get("out_mask", None) is not None:
         cargs.extend([
             "-out_mask",
-            params.get("out_mask")
+            params.get("out_mask", None)
         ])
     cargs.extend([
         "-ithr",
-        params.get("ithr")
+        params.get("ithr", None)
     ])
-    if params.get("idat") is not None:
+    if params.get("idat", None) is not None:
         cargs.extend([
             "-idat",
-            params.get("idat")
+            params.get("idat", None)
         ])
-    if params.get("onesided") is not None:
+    if params.get("onesided", None) is not None:
         cargs.extend([
             "-1sided",
-            params.get("onesided")
+            params.get("onesided", None)
         ])
-    if params.get("twosided") is not None:
+    if params.get("twosided", None) is not None:
         cargs.extend([
             "-2sided",
-            params.get("twosided")
+            params.get("twosided", None)
         ])
-    if params.get("bisided") is not None:
+    if params.get("bisided", None) is not None:
         cargs.extend([
             "-bisided",
-            params.get("bisided")
+            params.get("bisided", None)
         ])
-    if params.get("within_range") is not None:
+    if params.get("within_range", None) is not None:
         cargs.extend([
             "-within_range",
-            params.get("within_range")
+            params.get("within_range", None)
         ])
     cargs.extend([
         "-NN",
-        str(params.get("nn"))
+        str(params.get("nn", None))
     ])
-    if params.get("clust_nvox") is not None:
+    if params.get("clust_nvox", None) is not None:
         cargs.extend([
             "-clust_nvox",
-            str(params.get("clust_nvox"))
+            str(params.get("clust_nvox", None))
         ])
-    if params.get("clust_vol") is not None:
+    if params.get("clust_vol", None) is not None:
         cargs.extend([
             "-clust_vol",
-            str(params.get("clust_vol"))
+            str(params.get("clust_vol", None))
         ])
-    if params.get("pref_map") is not None:
+    if params.get("pref_map", None) is not None:
         cargs.extend([
             "-pref_map",
-            params.get("pref_map")
+            params.get("pref_map", None)
         ])
-    if params.get("pref_dat") is not None:
+    if params.get("pref_dat", None) is not None:
         cargs.extend([
             "-pref_dat",
-            params.get("pref_dat")
+            params.get("pref_dat", None)
         ])
-    if params.get("one_d_format"):
+    if params.get("one_d_format", False):
         cargs.append("-1Dformat")
-    if params.get("no_one_d_format"):
+    if params.get("no_one_d_format", False):
         cargs.append("-no_1Dformat")
-    if params.get("summarize"):
+    if params.get("summarize", False):
         cargs.append("-summarize")
-    if params.get("nosum"):
+    if params.get("nosum", False):
         cargs.append("-nosum")
-    if params.get("quiet"):
+    if params.get("quiet", False):
         cargs.append("-quiet")
-    if params.get("outvol_if_no_clust"):
+    if params.get("outvol_if_no_clust", False):
         cargs.append("-outvol_if_no_clust")
-    if params.get("orient") is not None:
+    if params.get("orient", None) is not None:
         cargs.extend([
             "-orient",
-            params.get("orient")
+            params.get("orient", None)
         ])
-    if params.get("abs_table_data"):
+    if params.get("abs_table_data", False):
         cargs.append("-abs_table_data")
-    if params.get("binary"):
+    if params.get("binary", False):
         cargs.append("-binary")
     return cargs
 
@@ -312,9 +307,9 @@ def v_3d_clusterize_outputs(
     """
     ret = V3dClusterizeOutputs(
         root=execution.output_file("."),
-        out_map_file=execution.output_file(params.get("pref_map") + "+orig.HEAD") if (params.get("pref_map") is not None) else None,
-        out_data_file=execution.output_file(params.get("pref_dat") + "+orig.HEAD") if (params.get("pref_dat") is not None) else None,
-        out_mask_file=execution.output_file(params.get("out_mask") + "+orig.HEAD") if (params.get("out_mask") is not None) else None,
+        out_map_file=execution.output_file(params.get("pref_map", None) + "+orig.HEAD") if (params.get("pref_map") is not None) else None,
+        out_data_file=execution.output_file(params.get("pref_dat", None) + "+orig.HEAD") if (params.get("pref_dat") is not None) else None,
+        out_mask_file=execution.output_file(params.get("out_mask", None) + "+orig.HEAD") if (params.get("out_mask") is not None) else None,
     )
     return ret
 
@@ -445,7 +440,6 @@ def v_3d_clusterize(
 
 __all__ = [
     "V3dClusterizeOutputs",
-    "V3dClusterizeParameters",
     "V_3D_CLUSTERIZE_METADATA",
     "v_3d_clusterize",
     "v_3d_clusterize_execute",

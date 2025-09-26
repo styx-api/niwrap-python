@@ -14,7 +14,73 @@ MRIS_REGISTER_METADATA = Metadata(
 
 
 MrisRegisterParameters = typing.TypedDict('MrisRegisterParameters', {
-    "@type": typing.Literal["freesurfer.mris_register"],
+    "@type": typing.NotRequired[typing.Literal["freesurfer/mris_register"]],
+    "surf_fname": InputPathType,
+    "target": InputPathType,
+    "out_fname": str,
+    "one_flag": bool,
+    "addframe": typing.NotRequired[str | None],
+    "annot_name": typing.NotRequired[str | None],
+    "curvature_fname": typing.NotRequired[InputPathType | None],
+    "canonical_name": typing.NotRequired[str | None],
+    "inflated": bool,
+    "inflated_name": typing.NotRequired[str | None],
+    "label_file": typing.NotRequired[str | None],
+    "orig_name": typing.NotRequired[str | None],
+    "overlay_values": typing.NotRequired[str | None],
+    "overlay_dir": typing.NotRequired[str | None],
+    "starting_reg_fname": typing.NotRequired[InputPathType | None],
+    "jacobian_fname": typing.NotRequired[str | None],
+    "n_averages": typing.NotRequired[float | None],
+    "adaptive": bool,
+    "l_area": typing.NotRequired[float | None],
+    "l_corr": typing.NotRequired[float | None],
+    "curvature_flag": bool,
+    "l_dist": typing.NotRequired[float | None],
+    "dt_value": typing.NotRequired[float | None],
+    "dt_decrease": typing.NotRequired[float | None],
+    "dt_increase": typing.NotRequired[float | None],
+    "l_external": typing.NotRequired[float | None],
+    "error_ratio": typing.NotRequired[float | None],
+    "initial_flag": bool,
+    "l_laplacian": typing.NotRequired[float | None],
+    "line_min": bool,
+    "momentum": typing.NotRequired[float | None],
+    "max_degrees": typing.NotRequired[float | None],
+    "median": bool,
+    "min_degrees": typing.NotRequired[float | None],
+    "multi_scale": typing.NotRequired[float | None],
+    "n_iterations": typing.NotRequired[float | None],
+    "n_angles": typing.NotRequired[float | None],
+    "neighborhood_size": typing.NotRequired[float | None],
+    "l_nlarea": typing.NotRequired[float | None],
+    "no_curv": bool,
+    "no_normalization": bool,
+    "no_rotation": bool,
+    "no_sulc": bool,
+    "num_surfaces": typing.NotRequired[float | None],
+    "overlay_corr": typing.NotRequired[float | None],
+    "max_passes": typing.NotRequired[float | None],
+    "l_parea": typing.NotRequired[float | None],
+    "remove_negative": typing.NotRequired[float | None],
+    "reverse": bool,
+    "rotate_values": typing.NotRequired[str | None],
+    "registration_file": typing.NotRequired[InputPathType | None],
+    "scale": typing.NotRequired[float | None],
+    "search_flag": bool,
+    "spring_value": typing.NotRequired[float | None],
+    "tolerance": typing.NotRequired[float | None],
+    "topology_flag": bool,
+    "vnum": typing.NotRequired[str | None],
+    "vsmooth": bool,
+    "write_iterations": typing.NotRequired[float | None],
+    "gdiag_no": typing.NotRequired[float | None],
+    "vector_flag": bool,
+    "threads": typing.NotRequired[float | None],
+    "version_flag": bool,
+})
+MrisRegisterParametersTagged = typing.TypedDict('MrisRegisterParametersTagged', {
+    "@type": typing.Literal["freesurfer/mris_register"],
     "surf_fname": InputPathType,
     "target": InputPathType,
     "out_fname": str,
@@ -81,41 +147,9 @@ MrisRegisterParameters = typing.TypedDict('MrisRegisterParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "freesurfer.mris_register": mris_register_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "freesurfer.mris_register": mris_register_outputs,
-    }.get(t)
-
-
 class MrisRegisterOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `mris_register(...)`.
+    Output object returned when calling `MrisRegisterParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -189,7 +223,7 @@ def mris_register_params(
     vector_flag: bool = False,
     threads: float | None = None,
     version_flag: bool = False,
-) -> MrisRegisterParameters:
+) -> MrisRegisterParametersTagged:
     """
     Build parameters.
     
@@ -271,7 +305,7 @@ def mris_register_params(
         Parameter dictionary
     """
     params = {
-        "@type": "freesurfer.mris_register",
+        "@type": "freesurfer/mris_register",
         "surf_fname": surf_fname,
         "target": target,
         "out_fname": out_fname,
@@ -397,257 +431,257 @@ def mris_register_cargs(
     """
     cargs = []
     cargs.append("mris_register")
-    cargs.append(execution.input_file(params.get("surf_fname")))
-    cargs.append(execution.input_file(params.get("target")))
-    cargs.append(params.get("out_fname"))
-    if params.get("one_flag"):
+    cargs.append(execution.input_file(params.get("surf_fname", None)))
+    cargs.append(execution.input_file(params.get("target", None)))
+    cargs.append(params.get("out_fname", None))
+    if params.get("one_flag", False):
         cargs.append("-1")
-    if params.get("addframe") is not None:
+    if params.get("addframe", None) is not None:
         cargs.extend([
             "-addframe",
-            params.get("addframe")
+            params.get("addframe", None)
         ])
-    if params.get("annot_name") is not None:
+    if params.get("annot_name", None) is not None:
         cargs.extend([
             "-annot",
-            params.get("annot_name")
+            params.get("annot_name", None)
         ])
-    if params.get("curvature_fname") is not None:
+    if params.get("curvature_fname", None) is not None:
         cargs.extend([
             "-C",
-            execution.input_file(params.get("curvature_fname"))
+            execution.input_file(params.get("curvature_fname", None))
         ])
-    if params.get("canonical_name") is not None:
+    if params.get("canonical_name", None) is not None:
         cargs.extend([
             "-canon",
-            params.get("canonical_name")
+            params.get("canonical_name", None)
         ])
-    if params.get("inflated"):
+    if params.get("inflated", False):
         cargs.append("-inflated")
-    if params.get("inflated_name") is not None:
+    if params.get("inflated_name", None) is not None:
         cargs.extend([
             "-infname",
-            params.get("inflated_name")
+            params.get("inflated_name", None)
         ])
-    if params.get("label_file") is not None:
+    if params.get("label_file", None) is not None:
         cargs.extend([
             "-L",
-            params.get("label_file")
+            params.get("label_file", None)
         ])
-    if params.get("orig_name") is not None:
+    if params.get("orig_name", None) is not None:
         cargs.extend([
             "-O",
-            params.get("orig_name")
+            params.get("orig_name", None)
         ])
-    if params.get("overlay_values") is not None:
+    if params.get("overlay_values", None) is not None:
         cargs.extend([
             "-overlay",
-            params.get("overlay_values")
+            params.get("overlay_values", None)
         ])
-    if params.get("overlay_dir") is not None:
+    if params.get("overlay_dir", None) is not None:
         cargs.extend([
             "-overlay-dir",
-            params.get("overlay_dir")
+            params.get("overlay_dir", None)
         ])
-    if params.get("starting_reg_fname") is not None:
+    if params.get("starting_reg_fname", None) is not None:
         cargs.extend([
             "-sreg",
-            execution.input_file(params.get("starting_reg_fname"))
+            execution.input_file(params.get("starting_reg_fname", None))
         ])
-    if params.get("jacobian_fname") is not None:
+    if params.get("jacobian_fname", None) is not None:
         cargs.extend([
             "-jacobian",
-            params.get("jacobian_fname")
+            params.get("jacobian_fname", None)
         ])
-    if params.get("n_averages") is not None:
+    if params.get("n_averages", None) is not None:
         cargs.extend([
             "-A",
-            str(params.get("n_averages"))
+            str(params.get("n_averages", None))
         ])
-    if params.get("adaptive"):
+    if params.get("adaptive", False):
         cargs.append("-adaptive")
-    if params.get("l_area") is not None:
+    if params.get("l_area", None) is not None:
         cargs.extend([
             "-area",
-            str(params.get("l_area"))
+            str(params.get("l_area", None))
         ])
-    if params.get("l_corr") is not None:
+    if params.get("l_corr", None) is not None:
         cargs.extend([
             "-corr",
-            str(params.get("l_corr"))
+            str(params.get("l_corr", None))
         ])
-    if params.get("curvature_flag"):
+    if params.get("curvature_flag", False):
         cargs.append("-curv")
-    if params.get("l_dist") is not None:
+    if params.get("l_dist", None) is not None:
         cargs.extend([
             "-dist",
-            str(params.get("l_dist"))
+            str(params.get("l_dist", None))
         ])
-    if params.get("dt_value") is not None:
+    if params.get("dt_value", None) is not None:
         cargs.extend([
             "-dt",
-            str(params.get("dt_value"))
+            str(params.get("dt_value", None))
         ])
-    if params.get("dt_decrease") is not None:
+    if params.get("dt_decrease", None) is not None:
         cargs.extend([
             "-dt_dec",
-            str(params.get("dt_decrease"))
+            str(params.get("dt_decrease", None))
         ])
-    if params.get("dt_increase") is not None:
+    if params.get("dt_increase", None) is not None:
         cargs.extend([
             "-dt_inc",
-            str(params.get("dt_increase"))
+            str(params.get("dt_increase", None))
         ])
-    if params.get("l_external") is not None:
+    if params.get("l_external", None) is not None:
         cargs.extend([
             "-E",
-            str(params.get("l_external"))
+            str(params.get("l_external", None))
         ])
-    if params.get("error_ratio") is not None:
+    if params.get("error_ratio", None) is not None:
         cargs.extend([
             "-error_ratio",
-            str(params.get("error_ratio"))
+            str(params.get("error_ratio", None))
         ])
-    if params.get("initial_flag"):
+    if params.get("initial_flag", False):
         cargs.append("-init")
-    if params.get("l_laplacian") is not None:
+    if params.get("l_laplacian", None) is not None:
         cargs.extend([
             "-lap",
-            str(params.get("l_laplacian"))
+            str(params.get("l_laplacian", None))
         ])
-    if params.get("line_min"):
+    if params.get("line_min", False):
         cargs.append("-lm")
-    if params.get("momentum") is not None:
+    if params.get("momentum", None) is not None:
         cargs.extend([
             "-M",
-            str(params.get("momentum"))
+            str(params.get("momentum", None))
         ])
-    if params.get("max_degrees") is not None:
+    if params.get("max_degrees", None) is not None:
         cargs.extend([
             "-max_degrees",
-            str(params.get("max_degrees"))
+            str(params.get("max_degrees", None))
         ])
-    if params.get("median"):
+    if params.get("median", False):
         cargs.append("-median")
-    if params.get("min_degrees") is not None:
+    if params.get("min_degrees", None) is not None:
         cargs.extend([
             "-min_degrees",
-            str(params.get("min_degrees"))
+            str(params.get("min_degrees", None))
         ])
-    if params.get("multi_scale") is not None:
+    if params.get("multi_scale", None) is not None:
         cargs.extend([
             "-multi_scale",
-            str(params.get("multi_scale"))
+            str(params.get("multi_scale", None))
         ])
-    if params.get("n_iterations") is not None:
+    if params.get("n_iterations", None) is not None:
         cargs.extend([
             "-N",
-            str(params.get("n_iterations"))
+            str(params.get("n_iterations", None))
         ])
-    if params.get("n_angles") is not None:
+    if params.get("n_angles", None) is not None:
         cargs.extend([
             "-nangles",
-            str(params.get("n_angles"))
+            str(params.get("n_angles", None))
         ])
-    if params.get("neighborhood_size") is not None:
+    if params.get("neighborhood_size", None) is not None:
         cargs.extend([
             "-nbrs",
-            str(params.get("neighborhood_size"))
+            str(params.get("neighborhood_size", None))
         ])
-    if params.get("l_nlarea") is not None:
+    if params.get("l_nlarea", None) is not None:
         cargs.extend([
             "-nlarea",
-            str(params.get("l_nlarea"))
+            str(params.get("l_nlarea", None))
         ])
-    if params.get("no_curv"):
+    if params.get("no_curv", False):
         cargs.append("-nocurv")
-    if params.get("no_normalization"):
+    if params.get("no_normalization", False):
         cargs.append("-nonorm")
-    if params.get("no_rotation"):
+    if params.get("no_rotation", False):
         cargs.append("-norot")
-    if params.get("no_sulc"):
+    if params.get("no_sulc", False):
         cargs.append("-nosulc")
-    if params.get("num_surfaces") is not None:
+    if params.get("num_surfaces", None) is not None:
         cargs.extend([
             "-nsurfaces",
-            str(params.get("num_surfaces"))
+            str(params.get("num_surfaces", None))
         ])
-    if params.get("overlay_corr") is not None:
+    if params.get("overlay_corr", None) is not None:
         cargs.extend([
             "-ocorr",
-            str(params.get("overlay_corr"))
+            str(params.get("overlay_corr", None))
         ])
-    if params.get("max_passes") is not None:
+    if params.get("max_passes", None) is not None:
         cargs.extend([
             "-P",
-            str(params.get("max_passes"))
+            str(params.get("max_passes", None))
         ])
-    if params.get("l_parea") is not None:
+    if params.get("l_parea", None) is not None:
         cargs.extend([
             "-parea",
-            str(params.get("l_parea"))
+            str(params.get("l_parea", None))
         ])
-    if params.get("remove_negative") is not None:
+    if params.get("remove_negative", None) is not None:
         cargs.extend([
             "-remove_negative",
-            str(params.get("remove_negative"))
+            str(params.get("remove_negative", None))
         ])
-    if params.get("reverse"):
+    if params.get("reverse", False):
         cargs.append("-reverse")
-    if params.get("rotate_values") is not None:
+    if params.get("rotate_values", None) is not None:
         cargs.extend([
             "-rotate",
-            params.get("rotate_values")
+            params.get("rotate_values", None)
         ])
-    if params.get("registration_file") is not None:
+    if params.get("registration_file", None) is not None:
         cargs.extend([
             "-reg",
-            execution.input_file(params.get("registration_file"))
+            execution.input_file(params.get("registration_file", None))
         ])
-    if params.get("scale") is not None:
+    if params.get("scale", None) is not None:
         cargs.extend([
             "-S",
-            str(params.get("scale"))
+            str(params.get("scale", None))
         ])
-    if params.get("search_flag"):
+    if params.get("search_flag", False):
         cargs.append("-search")
-    if params.get("spring_value") is not None:
+    if params.get("spring_value", None) is not None:
         cargs.extend([
             "-spring",
-            str(params.get("spring_value"))
+            str(params.get("spring_value", None))
         ])
-    if params.get("tolerance") is not None:
+    if params.get("tolerance", None) is not None:
         cargs.extend([
             "-tol",
-            str(params.get("tolerance"))
+            str(params.get("tolerance", None))
         ])
-    if params.get("topology_flag"):
+    if params.get("topology_flag", False):
         cargs.append("-topology")
-    if params.get("vnum") is not None:
+    if params.get("vnum", None) is not None:
         cargs.extend([
             "-vnum",
-            params.get("vnum")
+            params.get("vnum", None)
         ])
-    if params.get("vsmooth"):
+    if params.get("vsmooth", False):
         cargs.append("-vsmooth")
-    if params.get("write_iterations") is not None:
+    if params.get("write_iterations", None) is not None:
         cargs.extend([
             "-W",
-            str(params.get("write_iterations"))
+            str(params.get("write_iterations", None))
         ])
-    if params.get("gdiag_no") is not None:
+    if params.get("gdiag_no", None) is not None:
         cargs.extend([
             "-V",
-            str(params.get("gdiag_no"))
+            str(params.get("gdiag_no", None))
         ])
-    if params.get("vector_flag"):
+    if params.get("vector_flag", False):
         cargs.append("-vector")
-    if params.get("threads") is not None:
+    if params.get("threads", None) is not None:
         cargs.extend([
             "-threads",
-            str(params.get("threads"))
+            str(params.get("threads", None))
         ])
-    if params.get("version_flag"):
+    if params.get("version_flag", False):
         cargs.append("--version")
     return cargs
 
@@ -667,8 +701,8 @@ def mris_register_outputs(
     """
     ret = MrisRegisterOutputs(
         root=execution.output_file("."),
-        output_surface_file=execution.output_file(params.get("out_fname")),
-        jacobian_output=execution.output_file(params.get("jacobian_fname")) if (params.get("jacobian_fname") is not None) else None,
+        output_surface_file=execution.output_file(params.get("out_fname", None)),
+        jacobian_output=execution.output_file(params.get("jacobian_fname", None)) if (params.get("jacobian_fname") is not None) else None,
     )
     return ret
 
@@ -925,7 +959,6 @@ def mris_register(
 __all__ = [
     "MRIS_REGISTER_METADATA",
     "MrisRegisterOutputs",
-    "MrisRegisterParameters",
     "mris_register",
     "mris_register_execute",
     "mris_register_params",

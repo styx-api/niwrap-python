@@ -14,7 +14,14 @@ MRI_EXTRACT_FCD_FEATURES_METADATA = Metadata(
 
 
 MriExtractFcdFeaturesParameters = typing.TypedDict('MriExtractFcdFeaturesParameters', {
-    "@type": typing.Literal["freesurfer.mri_extract_fcd_features"],
+    "@type": typing.NotRequired[typing.Literal["freesurfer/mri_extract_fcd_features"]],
+    "subject": str,
+    "hemi": str,
+    "output_file": InputPathType,
+    "subjects_dir": typing.NotRequired[str | None],
+})
+MriExtractFcdFeaturesParametersTagged = typing.TypedDict('MriExtractFcdFeaturesParametersTagged', {
+    "@type": typing.Literal["freesurfer/mri_extract_fcd_features"],
     "subject": str,
     "hemi": str,
     "output_file": InputPathType,
@@ -22,40 +29,9 @@ MriExtractFcdFeaturesParameters = typing.TypedDict('MriExtractFcdFeaturesParamet
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "freesurfer.mri_extract_fcd_features": mri_extract_fcd_features_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-    }.get(t)
-
-
 class MriExtractFcdFeaturesOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `mri_extract_fcd_features(...)`.
+    Output object returned when calling `MriExtractFcdFeaturesParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -66,7 +42,7 @@ def mri_extract_fcd_features_params(
     hemi: str,
     output_file: InputPathType,
     subjects_dir: str | None = None,
-) -> MriExtractFcdFeaturesParameters:
+) -> MriExtractFcdFeaturesParametersTagged:
     """
     Build parameters.
     
@@ -80,7 +56,7 @@ def mri_extract_fcd_features_params(
         Parameter dictionary
     """
     params = {
-        "@type": "freesurfer.mri_extract_fcd_features",
+        "@type": "freesurfer/mri_extract_fcd_features",
         "subject": subject,
         "hemi": hemi,
         "output_file": output_file,
@@ -105,13 +81,13 @@ def mri_extract_fcd_features_cargs(
     """
     cargs = []
     cargs.append("mri_extract_fcd_features")
-    cargs.append(params.get("subject"))
-    cargs.append(params.get("hemi"))
-    cargs.append(execution.input_file(params.get("output_file")))
-    if params.get("subjects_dir") is not None:
+    cargs.append(params.get("subject", None))
+    cargs.append(params.get("hemi", None))
+    cargs.append(execution.input_file(params.get("output_file", None)))
+    if params.get("subjects_dir", None) is not None:
         cargs.extend([
             "sdir",
-            params.get("subjects_dir")
+            params.get("subjects_dir", None)
         ])
     return cargs
 
@@ -201,7 +177,6 @@ def mri_extract_fcd_features(
 __all__ = [
     "MRI_EXTRACT_FCD_FEATURES_METADATA",
     "MriExtractFcdFeaturesOutputs",
-    "MriExtractFcdFeaturesParameters",
     "mri_extract_fcd_features",
     "mri_extract_fcd_features_execute",
     "mri_extract_fcd_features_params",

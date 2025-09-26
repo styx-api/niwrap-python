@@ -14,35 +14,66 @@ CIFTI_CREATE_DENSE_TIMESERIES_METADATA = Metadata(
 
 
 CiftiCreateDenseTimeseriesVolumeParameters = typing.TypedDict('CiftiCreateDenseTimeseriesVolumeParameters', {
-    "@type": typing.Literal["workbench.cifti-create-dense-timeseries.volume"],
+    "@type": typing.NotRequired[typing.Literal["volume"]],
+    "volume_data": InputPathType,
+    "structure_label_volume": InputPathType,
+})
+CiftiCreateDenseTimeseriesVolumeParametersTagged = typing.TypedDict('CiftiCreateDenseTimeseriesVolumeParametersTagged', {
+    "@type": typing.Literal["volume"],
     "volume_data": InputPathType,
     "structure_label_volume": InputPathType,
 })
 
 
 CiftiCreateDenseTimeseriesLeftMetricParameters = typing.TypedDict('CiftiCreateDenseTimeseriesLeftMetricParameters', {
-    "@type": typing.Literal["workbench.cifti-create-dense-timeseries.left_metric"],
+    "@type": typing.NotRequired[typing.Literal["left_metric"]],
+    "metric": InputPathType,
+    "opt_roi_left_roi_metric": typing.NotRequired[InputPathType | None],
+})
+CiftiCreateDenseTimeseriesLeftMetricParametersTagged = typing.TypedDict('CiftiCreateDenseTimeseriesLeftMetricParametersTagged', {
+    "@type": typing.Literal["left_metric"],
     "metric": InputPathType,
     "opt_roi_left_roi_metric": typing.NotRequired[InputPathType | None],
 })
 
 
 CiftiCreateDenseTimeseriesRightMetricParameters = typing.TypedDict('CiftiCreateDenseTimeseriesRightMetricParameters', {
-    "@type": typing.Literal["workbench.cifti-create-dense-timeseries.right_metric"],
+    "@type": typing.NotRequired[typing.Literal["right_metric"]],
+    "metric": InputPathType,
+    "opt_roi_right_roi_metric": typing.NotRequired[InputPathType | None],
+})
+CiftiCreateDenseTimeseriesRightMetricParametersTagged = typing.TypedDict('CiftiCreateDenseTimeseriesRightMetricParametersTagged', {
+    "@type": typing.Literal["right_metric"],
     "metric": InputPathType,
     "opt_roi_right_roi_metric": typing.NotRequired[InputPathType | None],
 })
 
 
 CiftiCreateDenseTimeseriesCerebellumMetricParameters = typing.TypedDict('CiftiCreateDenseTimeseriesCerebellumMetricParameters', {
-    "@type": typing.Literal["workbench.cifti-create-dense-timeseries.cerebellum_metric"],
+    "@type": typing.NotRequired[typing.Literal["cerebellum_metric"]],
+    "metric": InputPathType,
+    "opt_roi_cerebellum_roi_metric": typing.NotRequired[InputPathType | None],
+})
+CiftiCreateDenseTimeseriesCerebellumMetricParametersTagged = typing.TypedDict('CiftiCreateDenseTimeseriesCerebellumMetricParametersTagged', {
+    "@type": typing.Literal["cerebellum_metric"],
     "metric": InputPathType,
     "opt_roi_cerebellum_roi_metric": typing.NotRequired[InputPathType | None],
 })
 
 
 CiftiCreateDenseTimeseriesParameters = typing.TypedDict('CiftiCreateDenseTimeseriesParameters', {
-    "@type": typing.Literal["workbench.cifti-create-dense-timeseries"],
+    "@type": typing.NotRequired[typing.Literal["workbench/cifti-create-dense-timeseries"]],
+    "cifti_out": str,
+    "volume": typing.NotRequired[CiftiCreateDenseTimeseriesVolumeParameters | None],
+    "left_metric": typing.NotRequired[CiftiCreateDenseTimeseriesLeftMetricParameters | None],
+    "right_metric": typing.NotRequired[CiftiCreateDenseTimeseriesRightMetricParameters | None],
+    "cerebellum_metric": typing.NotRequired[CiftiCreateDenseTimeseriesCerebellumMetricParameters | None],
+    "opt_timestep_interval": typing.NotRequired[float | None],
+    "opt_timestart_start": typing.NotRequired[float | None],
+    "opt_unit_unit": typing.NotRequired[str | None],
+})
+CiftiCreateDenseTimeseriesParametersTagged = typing.TypedDict('CiftiCreateDenseTimeseriesParametersTagged', {
+    "@type": typing.Literal["workbench/cifti-create-dense-timeseries"],
     "cifti_out": str,
     "volume": typing.NotRequired[CiftiCreateDenseTimeseriesVolumeParameters | None],
     "left_metric": typing.NotRequired[CiftiCreateDenseTimeseriesLeftMetricParameters | None],
@@ -54,46 +85,10 @@ CiftiCreateDenseTimeseriesParameters = typing.TypedDict('CiftiCreateDenseTimeser
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "workbench.cifti-create-dense-timeseries": cifti_create_dense_timeseries_cargs,
-        "workbench.cifti-create-dense-timeseries.volume": cifti_create_dense_timeseries_volume_cargs,
-        "workbench.cifti-create-dense-timeseries.left_metric": cifti_create_dense_timeseries_left_metric_cargs,
-        "workbench.cifti-create-dense-timeseries.right_metric": cifti_create_dense_timeseries_right_metric_cargs,
-        "workbench.cifti-create-dense-timeseries.cerebellum_metric": cifti_create_dense_timeseries_cerebellum_metric_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "workbench.cifti-create-dense-timeseries": cifti_create_dense_timeseries_outputs,
-    }.get(t)
-
-
 def cifti_create_dense_timeseries_volume_params(
     volume_data: InputPathType,
     structure_label_volume: InputPathType,
-) -> CiftiCreateDenseTimeseriesVolumeParameters:
+) -> CiftiCreateDenseTimeseriesVolumeParametersTagged:
     """
     Build parameters.
     
@@ -106,7 +101,7 @@ def cifti_create_dense_timeseries_volume_params(
         Parameter dictionary
     """
     params = {
-        "@type": "workbench.cifti-create-dense-timeseries.volume",
+        "@type": "volume",
         "volume_data": volume_data,
         "structure_label_volume": structure_label_volume,
     }
@@ -128,15 +123,15 @@ def cifti_create_dense_timeseries_volume_cargs(
     """
     cargs = []
     cargs.append("-volume")
-    cargs.append(execution.input_file(params.get("volume_data")))
-    cargs.append(execution.input_file(params.get("structure_label_volume")))
+    cargs.append(execution.input_file(params.get("volume_data", None)))
+    cargs.append(execution.input_file(params.get("structure_label_volume", None)))
     return cargs
 
 
 def cifti_create_dense_timeseries_left_metric_params(
     metric: InputPathType,
     opt_roi_left_roi_metric: InputPathType | None = None,
-) -> CiftiCreateDenseTimeseriesLeftMetricParameters:
+) -> CiftiCreateDenseTimeseriesLeftMetricParametersTagged:
     """
     Build parameters.
     
@@ -148,7 +143,7 @@ def cifti_create_dense_timeseries_left_metric_params(
         Parameter dictionary
     """
     params = {
-        "@type": "workbench.cifti-create-dense-timeseries.left_metric",
+        "@type": "left_metric",
         "metric": metric,
     }
     if opt_roi_left_roi_metric is not None:
@@ -171,11 +166,11 @@ def cifti_create_dense_timeseries_left_metric_cargs(
     """
     cargs = []
     cargs.append("-left-metric")
-    cargs.append(execution.input_file(params.get("metric")))
-    if params.get("opt_roi_left_roi_metric") is not None:
+    cargs.append(execution.input_file(params.get("metric", None)))
+    if params.get("opt_roi_left_roi_metric", None) is not None:
         cargs.extend([
             "-roi-left",
-            execution.input_file(params.get("opt_roi_left_roi_metric"))
+            execution.input_file(params.get("opt_roi_left_roi_metric", None))
         ])
     return cargs
 
@@ -183,7 +178,7 @@ def cifti_create_dense_timeseries_left_metric_cargs(
 def cifti_create_dense_timeseries_right_metric_params(
     metric: InputPathType,
     opt_roi_right_roi_metric: InputPathType | None = None,
-) -> CiftiCreateDenseTimeseriesRightMetricParameters:
+) -> CiftiCreateDenseTimeseriesRightMetricParametersTagged:
     """
     Build parameters.
     
@@ -195,7 +190,7 @@ def cifti_create_dense_timeseries_right_metric_params(
         Parameter dictionary
     """
     params = {
-        "@type": "workbench.cifti-create-dense-timeseries.right_metric",
+        "@type": "right_metric",
         "metric": metric,
     }
     if opt_roi_right_roi_metric is not None:
@@ -218,11 +213,11 @@ def cifti_create_dense_timeseries_right_metric_cargs(
     """
     cargs = []
     cargs.append("-right-metric")
-    cargs.append(execution.input_file(params.get("metric")))
-    if params.get("opt_roi_right_roi_metric") is not None:
+    cargs.append(execution.input_file(params.get("metric", None)))
+    if params.get("opt_roi_right_roi_metric", None) is not None:
         cargs.extend([
             "-roi-right",
-            execution.input_file(params.get("opt_roi_right_roi_metric"))
+            execution.input_file(params.get("opt_roi_right_roi_metric", None))
         ])
     return cargs
 
@@ -230,7 +225,7 @@ def cifti_create_dense_timeseries_right_metric_cargs(
 def cifti_create_dense_timeseries_cerebellum_metric_params(
     metric: InputPathType,
     opt_roi_cerebellum_roi_metric: InputPathType | None = None,
-) -> CiftiCreateDenseTimeseriesCerebellumMetricParameters:
+) -> CiftiCreateDenseTimeseriesCerebellumMetricParametersTagged:
     """
     Build parameters.
     
@@ -242,7 +237,7 @@ def cifti_create_dense_timeseries_cerebellum_metric_params(
         Parameter dictionary
     """
     params = {
-        "@type": "workbench.cifti-create-dense-timeseries.cerebellum_metric",
+        "@type": "cerebellum_metric",
         "metric": metric,
     }
     if opt_roi_cerebellum_roi_metric is not None:
@@ -265,18 +260,18 @@ def cifti_create_dense_timeseries_cerebellum_metric_cargs(
     """
     cargs = []
     cargs.append("-cerebellum-metric")
-    cargs.append(execution.input_file(params.get("metric")))
-    if params.get("opt_roi_cerebellum_roi_metric") is not None:
+    cargs.append(execution.input_file(params.get("metric", None)))
+    if params.get("opt_roi_cerebellum_roi_metric", None) is not None:
         cargs.extend([
             "-roi-cerebellum",
-            execution.input_file(params.get("opt_roi_cerebellum_roi_metric"))
+            execution.input_file(params.get("opt_roi_cerebellum_roi_metric", None))
         ])
     return cargs
 
 
 class CiftiCreateDenseTimeseriesOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `cifti_create_dense_timeseries(...)`.
+    Output object returned when calling `CiftiCreateDenseTimeseriesParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -293,7 +288,7 @@ def cifti_create_dense_timeseries_params(
     opt_timestep_interval: float | None = None,
     opt_timestart_start: float | None = None,
     opt_unit_unit: str | None = None,
-) -> CiftiCreateDenseTimeseriesParameters:
+) -> CiftiCreateDenseTimeseriesParametersTagged:
     """
     Build parameters.
     
@@ -313,7 +308,7 @@ def cifti_create_dense_timeseries_params(
         Parameter dictionary
     """
     params = {
-        "@type": "workbench.cifti-create-dense-timeseries",
+        "@type": "workbench/cifti-create-dense-timeseries",
         "cifti_out": cifti_out,
     }
     if volume is not None:
@@ -349,29 +344,29 @@ def cifti_create_dense_timeseries_cargs(
     cargs = []
     cargs.append("wb_command")
     cargs.append("-cifti-create-dense-timeseries")
-    cargs.append(params.get("cifti_out"))
-    if params.get("volume") is not None:
-        cargs.extend(dyn_cargs(params.get("volume")["@type"])(params.get("volume"), execution))
-    if params.get("left_metric") is not None:
-        cargs.extend(dyn_cargs(params.get("left_metric")["@type"])(params.get("left_metric"), execution))
-    if params.get("right_metric") is not None:
-        cargs.extend(dyn_cargs(params.get("right_metric")["@type"])(params.get("right_metric"), execution))
-    if params.get("cerebellum_metric") is not None:
-        cargs.extend(dyn_cargs(params.get("cerebellum_metric")["@type"])(params.get("cerebellum_metric"), execution))
-    if params.get("opt_timestep_interval") is not None:
+    cargs.append(params.get("cifti_out", None))
+    if params.get("volume", None) is not None:
+        cargs.extend(cifti_create_dense_timeseries_volume_cargs(params.get("volume", None), execution))
+    if params.get("left_metric", None) is not None:
+        cargs.extend(cifti_create_dense_timeseries_left_metric_cargs(params.get("left_metric", None), execution))
+    if params.get("right_metric", None) is not None:
+        cargs.extend(cifti_create_dense_timeseries_right_metric_cargs(params.get("right_metric", None), execution))
+    if params.get("cerebellum_metric", None) is not None:
+        cargs.extend(cifti_create_dense_timeseries_cerebellum_metric_cargs(params.get("cerebellum_metric", None), execution))
+    if params.get("opt_timestep_interval", None) is not None:
         cargs.extend([
             "-timestep",
-            str(params.get("opt_timestep_interval"))
+            str(params.get("opt_timestep_interval", None))
         ])
-    if params.get("opt_timestart_start") is not None:
+    if params.get("opt_timestart_start", None) is not None:
         cargs.extend([
             "-timestart",
-            str(params.get("opt_timestart_start"))
+            str(params.get("opt_timestart_start", None))
         ])
-    if params.get("opt_unit_unit") is not None:
+    if params.get("opt_unit_unit", None) is not None:
         cargs.extend([
             "-unit",
-            params.get("opt_unit_unit")
+            params.get("opt_unit_unit", None)
         ])
     return cargs
 
@@ -391,7 +386,7 @@ def cifti_create_dense_timeseries_outputs(
     """
     ret = CiftiCreateDenseTimeseriesOutputs(
         root=execution.output_file("."),
-        cifti_out=execution.output_file(params.get("cifti_out")),
+        cifti_out=execution.output_file(params.get("cifti_out", None)),
     )
     return ret
 
@@ -573,12 +568,7 @@ def cifti_create_dense_timeseries(
 
 __all__ = [
     "CIFTI_CREATE_DENSE_TIMESERIES_METADATA",
-    "CiftiCreateDenseTimeseriesCerebellumMetricParameters",
-    "CiftiCreateDenseTimeseriesLeftMetricParameters",
     "CiftiCreateDenseTimeseriesOutputs",
-    "CiftiCreateDenseTimeseriesParameters",
-    "CiftiCreateDenseTimeseriesRightMetricParameters",
-    "CiftiCreateDenseTimeseriesVolumeParameters",
     "cifti_create_dense_timeseries",
     "cifti_create_dense_timeseries_cerebellum_metric_params",
     "cifti_create_dense_timeseries_execute",

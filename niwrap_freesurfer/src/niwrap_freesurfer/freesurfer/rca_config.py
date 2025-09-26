@@ -14,7 +14,14 @@ RCA_CONFIG_METADATA = Metadata(
 
 
 RcaConfigParameters = typing.TypedDict('RcaConfigParameters', {
-    "@type": typing.Literal["freesurfer.rca-config"],
+    "@type": typing.NotRequired[typing.Literal["freesurfer/rca-config"]],
+    "source_config": InputPathType,
+    "updated_config": InputPathType,
+    "unknown_args_file": InputPathType,
+    "args": typing.NotRequired[list[str] | None],
+})
+RcaConfigParametersTagged = typing.TypedDict('RcaConfigParametersTagged', {
+    "@type": typing.Literal["freesurfer/rca-config"],
     "source_config": InputPathType,
     "updated_config": InputPathType,
     "unknown_args_file": InputPathType,
@@ -22,40 +29,9 @@ RcaConfigParameters = typing.TypedDict('RcaConfigParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "freesurfer.rca-config": rca_config_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-    }.get(t)
-
-
 class RcaConfigOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `rca_config(...)`.
+    Output object returned when calling `RcaConfigParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -66,7 +42,7 @@ def rca_config_params(
     updated_config: InputPathType,
     unknown_args_file: InputPathType,
     args: list[str] | None = None,
-) -> RcaConfigParameters:
+) -> RcaConfigParametersTagged:
     """
     Build parameters.
     
@@ -80,7 +56,7 @@ def rca_config_params(
         Parameter dictionary
     """
     params = {
-        "@type": "freesurfer.rca-config",
+        "@type": "freesurfer/rca-config",
         "source_config": source_config,
         "updated_config": updated_config,
         "unknown_args_file": unknown_args_file,
@@ -107,12 +83,12 @@ def rca_config_cargs(
     cargs.append("rca-config")
     cargs.extend([
         "-config",
-        execution.input_file(params.get("source_config"))
+        execution.input_file(params.get("source_config", None))
     ])
-    cargs.append(execution.input_file(params.get("updated_config")))
-    cargs.append(execution.input_file(params.get("unknown_args_file")))
-    if params.get("args") is not None:
-        cargs.extend(params.get("args"))
+    cargs.append(execution.input_file(params.get("updated_config", None)))
+    cargs.append(execution.input_file(params.get("unknown_args_file", None)))
+    if params.get("args", None) is not None:
+        cargs.extend(params.get("args", None))
     return cargs
 
 
@@ -201,7 +177,6 @@ def rca_config(
 __all__ = [
     "RCA_CONFIG_METADATA",
     "RcaConfigOutputs",
-    "RcaConfigParameters",
     "rca_config",
     "rca_config_execute",
     "rca_config_params",

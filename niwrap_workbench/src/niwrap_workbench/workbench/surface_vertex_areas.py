@@ -14,47 +14,20 @@ SURFACE_VERTEX_AREAS_METADATA = Metadata(
 
 
 SurfaceVertexAreasParameters = typing.TypedDict('SurfaceVertexAreasParameters', {
-    "@type": typing.Literal["workbench.surface-vertex-areas"],
+    "@type": typing.NotRequired[typing.Literal["workbench/surface-vertex-areas"]],
+    "surface": InputPathType,
+    "metric": str,
+})
+SurfaceVertexAreasParametersTagged = typing.TypedDict('SurfaceVertexAreasParametersTagged', {
+    "@type": typing.Literal["workbench/surface-vertex-areas"],
     "surface": InputPathType,
     "metric": str,
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "workbench.surface-vertex-areas": surface_vertex_areas_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "workbench.surface-vertex-areas": surface_vertex_areas_outputs,
-    }.get(t)
-
-
 class SurfaceVertexAreasOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `surface_vertex_areas(...)`.
+    Output object returned when calling `SurfaceVertexAreasParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -65,7 +38,7 @@ class SurfaceVertexAreasOutputs(typing.NamedTuple):
 def surface_vertex_areas_params(
     surface: InputPathType,
     metric: str,
-) -> SurfaceVertexAreasParameters:
+) -> SurfaceVertexAreasParametersTagged:
     """
     Build parameters.
     
@@ -76,7 +49,7 @@ def surface_vertex_areas_params(
         Parameter dictionary
     """
     params = {
-        "@type": "workbench.surface-vertex-areas",
+        "@type": "workbench/surface-vertex-areas",
         "surface": surface,
         "metric": metric,
     }
@@ -99,8 +72,8 @@ def surface_vertex_areas_cargs(
     cargs = []
     cargs.append("wb_command")
     cargs.append("-surface-vertex-areas")
-    cargs.append(execution.input_file(params.get("surface")))
-    cargs.append(params.get("metric"))
+    cargs.append(execution.input_file(params.get("surface", None)))
+    cargs.append(params.get("metric", None))
     return cargs
 
 
@@ -119,7 +92,7 @@ def surface_vertex_areas_outputs(
     """
     ret = SurfaceVertexAreasOutputs(
         root=execution.output_file("."),
-        metric=execution.output_file(params.get("metric")),
+        metric=execution.output_file(params.get("metric", None)),
     )
     return ret
 
@@ -189,7 +162,6 @@ def surface_vertex_areas(
 __all__ = [
     "SURFACE_VERTEX_AREAS_METADATA",
     "SurfaceVertexAreasOutputs",
-    "SurfaceVertexAreasParameters",
     "surface_vertex_areas",
     "surface_vertex_areas_execute",
     "surface_vertex_areas_params",

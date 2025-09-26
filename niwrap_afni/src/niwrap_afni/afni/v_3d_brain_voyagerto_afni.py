@@ -14,7 +14,24 @@ V_3D_BRAIN_VOYAGERTO_AFNI_METADATA = Metadata(
 
 
 V3dBrainVoyagertoAfniParameters = typing.TypedDict('V3dBrainVoyagertoAfniParameters', {
-    "@type": typing.Literal["afni.3dBRAIN_VOYAGERtoAFNI"],
+    "@type": typing.NotRequired[typing.Literal["afni/3dBRAIN_VOYAGERtoAFNI"]],
+    "input_file": InputPathType,
+    "force_byte_swap": bool,
+    "brainvoyager_qx": bool,
+    "tlrc_space": bool,
+    "acpc_space": bool,
+    "orig_space": bool,
+    "prefix": typing.NotRequired[str | None],
+    "novolreg": bool,
+    "noxform": bool,
+    "set_environment": typing.NotRequired[str | None],
+    "trace_debugging": bool,
+    "trace_extreme_debugging": bool,
+    "turn_off_memory_tracing": bool,
+    "turn_on_memory_tracing": bool,
+})
+V3dBrainVoyagertoAfniParametersTagged = typing.TypedDict('V3dBrainVoyagertoAfniParametersTagged', {
+    "@type": typing.Literal["afni/3dBRAIN_VOYAGERtoAFNI"],
     "input_file": InputPathType,
     "force_byte_swap": bool,
     "brainvoyager_qx": bool,
@@ -32,41 +49,9 @@ V3dBrainVoyagertoAfniParameters = typing.TypedDict('V3dBrainVoyagertoAfniParamet
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "afni.3dBRAIN_VOYAGERtoAFNI": v_3d_brain_voyagerto_afni_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "afni.3dBRAIN_VOYAGERtoAFNI": v_3d_brain_voyagerto_afni_outputs,
-    }.get(t)
-
-
 class V3dBrainVoyagertoAfniOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `v_3d_brain_voyagerto_afni(...)`.
+    Output object returned when calling `V3dBrainVoyagertoAfniParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -91,7 +76,7 @@ def v_3d_brain_voyagerto_afni_params(
     trace_extreme_debugging: bool = False,
     turn_off_memory_tracing: bool = False,
     turn_on_memory_tracing: bool = False,
-) -> V3dBrainVoyagertoAfniParameters:
+) -> V3dBrainVoyagertoAfniParametersTagged:
     """
     Build parameters.
     
@@ -116,7 +101,7 @@ def v_3d_brain_voyagerto_afni_params(
         Parameter dictionary
     """
     params = {
-        "@type": "afni.3dBRAIN_VOYAGERtoAFNI",
+        "@type": "afni/3dBRAIN_VOYAGERtoAFNI",
         "input_file": input_file,
         "force_byte_swap": force_byte_swap,
         "brainvoyager_qx": brainvoyager_qx,
@@ -154,39 +139,39 @@ def v_3d_brain_voyagerto_afni_cargs(
     cargs.append("3dBRAIN_VOYAGERtoAFNI")
     cargs.extend([
         "--input",
-        execution.input_file(params.get("input_file"))
+        execution.input_file(params.get("input_file", None))
     ])
-    if params.get("force_byte_swap"):
+    if params.get("force_byte_swap", False):
         cargs.append("-bs")
-    if params.get("brainvoyager_qx"):
+    if params.get("brainvoyager_qx", False):
         cargs.append("-qx")
-    if params.get("tlrc_space"):
+    if params.get("tlrc_space", False):
         cargs.append("-tlrc")
-    if params.get("acpc_space"):
+    if params.get("acpc_space", False):
         cargs.append("-acpc")
-    if params.get("orig_space"):
+    if params.get("orig_space", False):
         cargs.append("-orig")
-    if params.get("prefix") is not None:
+    if params.get("prefix", None) is not None:
         cargs.extend([
             "--prefix",
-            params.get("prefix")
+            params.get("prefix", None)
         ])
-    if params.get("novolreg"):
+    if params.get("novolreg", False):
         cargs.append("-novolreg")
-    if params.get("noxform"):
+    if params.get("noxform", False):
         cargs.append("-noxform")
-    if params.get("set_environment") is not None:
+    if params.get("set_environment", None) is not None:
         cargs.extend([
             "-setenv",
-            params.get("set_environment")
+            params.get("set_environment", None)
         ])
-    if params.get("trace_debugging"):
+    if params.get("trace_debugging", False):
         cargs.append("-trace")
-    if params.get("trace_extreme_debugging"):
+    if params.get("trace_extreme_debugging", False):
         cargs.append("-TRACE")
-    if params.get("turn_off_memory_tracing"):
+    if params.get("turn_off_memory_tracing", False):
         cargs.append("-nomall")
-    if params.get("turn_on_memory_tracing"):
+    if params.get("turn_on_memory_tracing", False):
         cargs.append("-yesmall")
     return cargs
 
@@ -310,7 +295,6 @@ def v_3d_brain_voyagerto_afni(
 
 __all__ = [
     "V3dBrainVoyagertoAfniOutputs",
-    "V3dBrainVoyagertoAfniParameters",
     "V_3D_BRAIN_VOYAGERTO_AFNI_METADATA",
     "v_3d_brain_voyagerto_afni",
     "v_3d_brain_voyagerto_afni_execute",

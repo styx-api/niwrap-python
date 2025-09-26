@@ -14,7 +14,20 @@ FAT_PROC_CONVERT_DCM_ANAT_METADATA = Metadata(
 
 
 FatProcConvertDcmAnatParameters = typing.TypedDict('FatProcConvertDcmAnatParameters', {
-    "@type": typing.Literal["afni.fat_proc_convert_dcm_anat"],
+    "@type": typing.NotRequired[typing.Literal["afni/fat_proc_convert_dcm_anat"]],
+    "dicom_directory": typing.NotRequired[str | None],
+    "nifti_input": typing.NotRequired[InputPathType | None],
+    "prefix": str,
+    "workdir": typing.NotRequired[str | None],
+    "orient": typing.NotRequired[str | None],
+    "no_clean": bool,
+    "reorig_reorient_off": bool,
+    "qc_prefix": typing.NotRequired[str | None],
+    "no_cmd_out": bool,
+    "no_qc_view": bool,
+})
+FatProcConvertDcmAnatParametersTagged = typing.TypedDict('FatProcConvertDcmAnatParametersTagged', {
+    "@type": typing.Literal["afni/fat_proc_convert_dcm_anat"],
     "dicom_directory": typing.NotRequired[str | None],
     "nifti_input": typing.NotRequired[InputPathType | None],
     "prefix": str,
@@ -28,41 +41,9 @@ FatProcConvertDcmAnatParameters = typing.TypedDict('FatProcConvertDcmAnatParamet
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "afni.fat_proc_convert_dcm_anat": fat_proc_convert_dcm_anat_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "afni.fat_proc_convert_dcm_anat": fat_proc_convert_dcm_anat_outputs,
-    }.get(t)
-
-
 class FatProcConvertDcmAnatOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `fat_proc_convert_dcm_anat(...)`.
+    Output object returned when calling `FatProcConvertDcmAnatParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -81,7 +62,7 @@ def fat_proc_convert_dcm_anat_params(
     qc_prefix: str | None = None,
     no_cmd_out: bool = False,
     no_qc_view: bool = False,
-) -> FatProcConvertDcmAnatParameters:
+) -> FatProcConvertDcmAnatParametersTagged:
     """
     Build parameters.
     
@@ -108,7 +89,7 @@ def fat_proc_convert_dcm_anat_params(
         Parameter dictionary
     """
     params = {
-        "@type": "afni.fat_proc_convert_dcm_anat",
+        "@type": "afni/fat_proc_convert_dcm_anat",
         "prefix": prefix,
         "no_clean": no_clean,
         "reorig_reorient_off": reorig_reorient_off,
@@ -143,42 +124,42 @@ def fat_proc_convert_dcm_anat_cargs(
     """
     cargs = []
     cargs.append("fat_proc_convert_dcm_anat")
-    if params.get("dicom_directory") is not None:
+    if params.get("dicom_directory", None) is not None:
         cargs.extend([
             "-indir",
-            params.get("dicom_directory")
+            params.get("dicom_directory", None)
         ])
-    if params.get("nifti_input") is not None:
+    if params.get("nifti_input", None) is not None:
         cargs.extend([
             "-innii",
-            execution.input_file(params.get("nifti_input"))
+            execution.input_file(params.get("nifti_input", None))
         ])
     cargs.extend([
         "-prefix",
-        params.get("prefix")
+        params.get("prefix", None)
     ])
-    if params.get("workdir") is not None:
+    if params.get("workdir", None) is not None:
         cargs.extend([
             "-workdir",
-            params.get("workdir")
+            params.get("workdir", None)
         ])
-    if params.get("orient") is not None:
+    if params.get("orient", None) is not None:
         cargs.extend([
             "-orient",
-            params.get("orient")
+            params.get("orient", None)
         ])
-    if params.get("no_clean"):
+    if params.get("no_clean", False):
         cargs.append("-no_clean")
-    if params.get("reorig_reorient_off"):
+    if params.get("reorig_reorient_off", False):
         cargs.append("-reorig_reorient_off")
-    if params.get("qc_prefix") is not None:
+    if params.get("qc_prefix", None) is not None:
         cargs.extend([
             "-qc_prefix",
-            params.get("qc_prefix")
+            params.get("qc_prefix", None)
         ])
-    if params.get("no_cmd_out"):
+    if params.get("no_cmd_out", False):
         cargs.append("-no_cmd_out")
-    if params.get("no_qc_view"):
+    if params.get("no_qc_view", False):
         cargs.append("-no_qc_view")
     return cargs
 
@@ -198,7 +179,7 @@ def fat_proc_convert_dcm_anat_outputs(
     """
     ret = FatProcConvertDcmAnatOutputs(
         root=execution.output_file("."),
-        output_volume=execution.output_file(params.get("prefix") + ".nii.gz"),
+        output_volume=execution.output_file(params.get("prefix", None) + ".nii.gz"),
     )
     return ret
 
@@ -296,7 +277,6 @@ def fat_proc_convert_dcm_anat(
 __all__ = [
     "FAT_PROC_CONVERT_DCM_ANAT_METADATA",
     "FatProcConvertDcmAnatOutputs",
-    "FatProcConvertDcmAnatParameters",
     "fat_proc_convert_dcm_anat",
     "fat_proc_convert_dcm_anat_execute",
     "fat_proc_convert_dcm_anat_params",

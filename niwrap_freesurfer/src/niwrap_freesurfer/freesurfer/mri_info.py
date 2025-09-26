@@ -14,7 +14,62 @@ MRI_INFO_METADATA = Metadata(
 
 
 MriInfoParameters = typing.TypedDict('MriInfoParameters', {
-    "@type": typing.Literal["freesurfer.mri_info"],
+    "@type": typing.NotRequired[typing.Literal["freesurfer/mri_info"]],
+    "input1": InputPathType,
+    "input2": typing.NotRequired[InputPathType | None],
+    "conformed": bool,
+    "conformed_to_min": bool,
+    "is_1mm_iso": bool,
+    "type": bool,
+    "tr": bool,
+    "te": bool,
+    "ti": bool,
+    "fa": bool,
+    "pedir": bool,
+    "res": bool,
+    "cres": bool,
+    "rres": bool,
+    "sres": bool,
+    "voxvol": bool,
+    "voxvolsum": bool,
+    "ncols": bool,
+    "nrows": bool,
+    "nslices": bool,
+    "dim": bool,
+    "cdc": bool,
+    "rdc": bool,
+    "sdc": bool,
+    "vox2ras": bool,
+    "ras2vox": bool,
+    "vox2ras_tkr": bool,
+    "ras2vox_tkr": bool,
+    "vox2ras_fsl": bool,
+    "tkr2scanner": bool,
+    "scanner2tkr": bool,
+    "ras_good": bool,
+    "cras": bool,
+    "center": bool,
+    "zero_cras": bool,
+    "p0": bool,
+    "det": bool,
+    "dof": bool,
+    "nframes": bool,
+    "mid_frame": bool,
+    "format": bool,
+    "orientation": bool,
+    "slicedirection": bool,
+    "autoalign": bool,
+    "ctab": bool,
+    "cmds": bool,
+    "dump": bool,
+    "voxel_crs": typing.NotRequired[list[str] | None],
+    "entropy": bool,
+    "output_file": typing.NotRequired[InputPathType | None],
+    "orig_ras2vox": bool,
+    "in_type": typing.NotRequired[str | None],
+})
+MriInfoParametersTagged = typing.TypedDict('MriInfoParametersTagged', {
+    "@type": typing.Literal["freesurfer/mri_info"],
     "input1": InputPathType,
     "input2": typing.NotRequired[InputPathType | None],
     "conformed": bool,
@@ -70,40 +125,9 @@ MriInfoParameters = typing.TypedDict('MriInfoParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "freesurfer.mri_info": mri_info_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-    }.get(t)
-
-
 class MriInfoOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `mri_info(...)`.
+    Output object returned when calling `MriInfoParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -162,7 +186,7 @@ def mri_info_params(
     output_file: InputPathType | None = None,
     orig_ras2vox: bool = False,
     in_type: str | None = None,
-) -> MriInfoParameters:
+) -> MriInfoParametersTagged:
     """
     Build parameters.
     
@@ -224,7 +248,7 @@ def mri_info_params(
         Parameter dictionary
     """
     params = {
-        "@type": "freesurfer.mri_info",
+        "@type": "freesurfer/mri_info",
         "input1": input1,
         "conformed": conformed,
         "conformed_to_min": conformed_to_min,
@@ -300,117 +324,117 @@ def mri_info_cargs(
     """
     cargs = []
     cargs.append("mri_info")
-    cargs.append(execution.input_file(params.get("input1")))
-    if params.get("input2") is not None:
-        cargs.append(execution.input_file(params.get("input2")))
-    if params.get("conformed"):
+    cargs.append(execution.input_file(params.get("input1", None)))
+    if params.get("input2", None) is not None:
+        cargs.append(execution.input_file(params.get("input2", None)))
+    if params.get("conformed", False):
         cargs.append("--conformed")
-    if params.get("conformed_to_min"):
+    if params.get("conformed_to_min", False):
         cargs.append("--conformed-to-min")
-    if params.get("is_1mm_iso"):
+    if params.get("is_1mm_iso", False):
         cargs.append("--is-1mm-iso")
-    if params.get("type"):
+    if params.get("type", False):
         cargs.append("--type")
-    if params.get("tr"):
+    if params.get("tr", False):
         cargs.append("--tr")
-    if params.get("te"):
+    if params.get("te", False):
         cargs.append("--te")
-    if params.get("ti"):
+    if params.get("ti", False):
         cargs.append("--ti")
-    if params.get("fa"):
+    if params.get("fa", False):
         cargs.append("--fa")
-    if params.get("pedir"):
+    if params.get("pedir", False):
         cargs.append("--pedir")
-    if params.get("res"):
+    if params.get("res", False):
         cargs.append("--res")
-    if params.get("cres"):
+    if params.get("cres", False):
         cargs.append("--cres")
-    if params.get("rres"):
+    if params.get("rres", False):
         cargs.append("--rres")
-    if params.get("sres"):
+    if params.get("sres", False):
         cargs.append("--sres")
-    if params.get("voxvol"):
+    if params.get("voxvol", False):
         cargs.append("--voxvol")
-    if params.get("voxvolsum"):
+    if params.get("voxvolsum", False):
         cargs.append("--voxvolsum")
-    if params.get("ncols"):
+    if params.get("ncols", False):
         cargs.append("--ncols")
-    if params.get("nrows"):
+    if params.get("nrows", False):
         cargs.append("--nrows")
-    if params.get("nslices"):
+    if params.get("nslices", False):
         cargs.append("--nslices")
-    if params.get("dim"):
+    if params.get("dim", False):
         cargs.append("--dim")
-    if params.get("cdc"):
+    if params.get("cdc", False):
         cargs.append("--cdc")
-    if params.get("rdc"):
+    if params.get("rdc", False):
         cargs.append("--rdc")
-    if params.get("sdc"):
+    if params.get("sdc", False):
         cargs.append("--sdc")
-    if params.get("vox2ras"):
+    if params.get("vox2ras", False):
         cargs.append("--vox2ras")
-    if params.get("ras2vox"):
+    if params.get("ras2vox", False):
         cargs.append("--ras2vox")
-    if params.get("vox2ras_tkr"):
+    if params.get("vox2ras_tkr", False):
         cargs.append("--vox2ras-tkr")
-    if params.get("ras2vox_tkr"):
+    if params.get("ras2vox_tkr", False):
         cargs.append("--ras2vox-tkr")
-    if params.get("vox2ras_fsl"):
+    if params.get("vox2ras_fsl", False):
         cargs.append("--vox2ras-fsl")
-    if params.get("tkr2scanner"):
+    if params.get("tkr2scanner", False):
         cargs.append("--tkr2scanner")
-    if params.get("scanner2tkr"):
+    if params.get("scanner2tkr", False):
         cargs.append("--scanner2tkr")
-    if params.get("ras_good"):
+    if params.get("ras_good", False):
         cargs.append("--ras_good")
-    if params.get("cras"):
+    if params.get("cras", False):
         cargs.append("--cras")
-    if params.get("center"):
+    if params.get("center", False):
         cargs.append("--center")
-    if params.get("zero_cras"):
+    if params.get("zero_cras", False):
         cargs.append("--zero-cras")
-    if params.get("p0"):
+    if params.get("p0", False):
         cargs.append("--p0")
-    if params.get("det"):
+    if params.get("det", False):
         cargs.append("--det")
-    if params.get("dof"):
+    if params.get("dof", False):
         cargs.append("--dof")
-    if params.get("nframes"):
+    if params.get("nframes", False):
         cargs.append("--nframes")
-    if params.get("mid_frame"):
+    if params.get("mid_frame", False):
         cargs.append("--mid-frame")
-    if params.get("format"):
+    if params.get("format", False):
         cargs.append("--format")
-    if params.get("orientation"):
+    if params.get("orientation", False):
         cargs.append("--orientation")
-    if params.get("slicedirection"):
+    if params.get("slicedirection", False):
         cargs.append("--slicedirection")
-    if params.get("autoalign"):
+    if params.get("autoalign", False):
         cargs.append("--autoalign")
-    if params.get("ctab"):
+    if params.get("ctab", False):
         cargs.append("--ctab")
-    if params.get("cmds"):
+    if params.get("cmds", False):
         cargs.append("--cmds")
-    if params.get("dump"):
+    if params.get("dump", False):
         cargs.append("--dump")
-    if params.get("voxel_crs") is not None:
+    if params.get("voxel_crs", None) is not None:
         cargs.extend([
             "--voxel",
-            *params.get("voxel_crs")
+            *params.get("voxel_crs", None)
         ])
-    if params.get("entropy"):
+    if params.get("entropy", False):
         cargs.append("--entropy")
-    if params.get("output_file") is not None:
+    if params.get("output_file", None) is not None:
         cargs.extend([
             "--o",
-            execution.input_file(params.get("output_file"))
+            execution.input_file(params.get("output_file", None))
         ])
-    if params.get("orig_ras2vox"):
+    if params.get("orig_ras2vox", False):
         cargs.append("--orig_ras2vox")
-    if params.get("in_type") is not None:
+    if params.get("in_type", None) is not None:
         cargs.extend([
             "--in_type",
-            params.get("in_type")
+            params.get("in_type", None)
         ])
     return cargs
 
@@ -644,7 +668,6 @@ def mri_info(
 __all__ = [
     "MRI_INFO_METADATA",
     "MriInfoOutputs",
-    "MriInfoParameters",
     "mri_info",
     "mri_info_execute",
     "mri_info_params",

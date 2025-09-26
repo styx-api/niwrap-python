@@ -14,7 +14,21 @@ SURF2_VOL_COORD_METADATA = Metadata(
 
 
 Surf2VolCoordParameters = typing.TypedDict('Surf2VolCoordParameters', {
-    "@type": typing.Literal["afni.Surf2VolCoord"],
+    "@type": typing.NotRequired[typing.Literal["afni/Surf2VolCoord"]],
+    "surface": str,
+    "grid_vol": InputPathType,
+    "grid_subbrick": typing.NotRequired[float | None],
+    "sv": typing.NotRequired[InputPathType | None],
+    "one_node": typing.NotRequired[str | None],
+    "closest_nodes": InputPathType,
+    "qual": typing.NotRequired[str | None],
+    "lpi": bool,
+    "rai": bool,
+    "verb_level": typing.NotRequired[float | None],
+    "prefix": str,
+})
+Surf2VolCoordParametersTagged = typing.TypedDict('Surf2VolCoordParametersTagged', {
+    "@type": typing.Literal["afni/Surf2VolCoord"],
     "surface": str,
     "grid_vol": InputPathType,
     "grid_subbrick": typing.NotRequired[float | None],
@@ -29,41 +43,9 @@ Surf2VolCoordParameters = typing.TypedDict('Surf2VolCoordParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "afni.Surf2VolCoord": surf2_vol_coord_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "afni.Surf2VolCoord": surf2_vol_coord_outputs,
-    }.get(t)
-
-
 class Surf2VolCoordOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `surf2_vol_coord(...)`.
+    Output object returned when calling `Surf2VolCoordParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -83,7 +65,7 @@ def surf2_vol_coord_params(
     lpi: bool = False,
     rai: bool = False,
     verb_level: float | None = None,
-) -> Surf2VolCoordParameters:
+) -> Surf2VolCoordParametersTagged:
     """
     Build parameters.
     
@@ -107,7 +89,7 @@ def surf2_vol_coord_params(
         Parameter dictionary
     """
     params = {
-        "@type": "afni.Surf2VolCoord",
+        "@type": "afni/Surf2VolCoord",
         "surface": surface,
         "grid_vol": grid_vol,
         "closest_nodes": closest_nodes,
@@ -145,48 +127,48 @@ def surf2_vol_coord_cargs(
     cargs.append("Surf2VolCoord")
     cargs.extend([
         "-i_TYPE",
-        params.get("surface")
+        params.get("surface", None)
     ])
     cargs.extend([
         "-grid_parent",
-        execution.input_file(params.get("grid_vol"))
+        execution.input_file(params.get("grid_vol", None))
     ])
-    if params.get("grid_subbrick") is not None:
+    if params.get("grid_subbrick", None) is not None:
         cargs.extend([
             "-grid_subbrick",
-            str(params.get("grid_subbrick"))
+            str(params.get("grid_subbrick", None))
         ])
-    if params.get("sv") is not None:
+    if params.get("sv", None) is not None:
         cargs.extend([
             "-sv",
-            execution.input_file(params.get("sv"))
+            execution.input_file(params.get("sv", None))
         ])
-    if params.get("one_node") is not None:
+    if params.get("one_node", None) is not None:
         cargs.extend([
             "-one_node",
-            params.get("one_node")
+            params.get("one_node", None)
         ])
     cargs.extend([
         "-closest_nodes",
-        execution.input_file(params.get("closest_nodes"))
+        execution.input_file(params.get("closest_nodes", None))
     ])
-    if params.get("qual") is not None:
+    if params.get("qual", None) is not None:
         cargs.extend([
             "-qual",
-            params.get("qual")
+            params.get("qual", None)
         ])
-    if params.get("lpi"):
+    if params.get("lpi", False):
         cargs.append("-LPI")
-    if params.get("rai"):
+    if params.get("rai", False):
         cargs.append("-RAI")
-    if params.get("verb_level") is not None:
+    if params.get("verb_level", None) is not None:
         cargs.extend([
             "-verb",
-            str(params.get("verb_level"))
+            str(params.get("verb_level", None))
         ])
     cargs.extend([
         "-prefix",
-        params.get("prefix")
+        params.get("prefix", None)
     ])
     return cargs
 
@@ -206,7 +188,7 @@ def surf2_vol_coord_outputs(
     """
     ret = Surf2VolCoordOutputs(
         root=execution.output_file("."),
-        results_file=execution.output_file(params.get("prefix")),
+        results_file=execution.output_file(params.get("prefix", None)),
     )
     return ret
 
@@ -303,7 +285,6 @@ def surf2_vol_coord(
 __all__ = [
     "SURF2_VOL_COORD_METADATA",
     "Surf2VolCoordOutputs",
-    "Surf2VolCoordParameters",
     "surf2_vol_coord",
     "surf2_vol_coord_execute",
     "surf2_vol_coord_params",

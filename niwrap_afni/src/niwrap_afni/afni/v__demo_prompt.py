@@ -14,46 +14,18 @@ V__DEMO_PROMPT_METADATA = Metadata(
 
 
 VDemoPromptParameters = typing.TypedDict('VDemoPromptParameters', {
-    "@type": typing.Literal["afni.@demo_prompt"],
+    "@type": typing.NotRequired[typing.Literal["afni/@demo_prompt"]],
+    "message": str,
+})
+VDemoPromptParametersTagged = typing.TypedDict('VDemoPromptParametersTagged', {
+    "@type": typing.Literal["afni/@demo_prompt"],
     "message": str,
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "afni.@demo_prompt": v__demo_prompt_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "afni.@demo_prompt": v__demo_prompt_outputs,
-    }.get(t)
-
-
 class VDemoPromptOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `v__demo_prompt(...)`.
+    Output object returned when calling `VDemoPromptParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -63,7 +35,7 @@ class VDemoPromptOutputs(typing.NamedTuple):
 
 def v__demo_prompt_params(
     message: str,
-) -> VDemoPromptParameters:
+) -> VDemoPromptParametersTagged:
     """
     Build parameters.
     
@@ -73,7 +45,7 @@ def v__demo_prompt_params(
         Parameter dictionary
     """
     params = {
-        "@type": "afni.@demo_prompt",
+        "@type": "afni/@demo_prompt",
         "message": message,
     }
     return params
@@ -94,7 +66,7 @@ def v__demo_prompt_cargs(
     """
     cargs = []
     cargs.append("@demo_prompt")
-    cargs.append(params.get("message"))
+    cargs.append(params.get("message", None))
     return cargs
 
 
@@ -173,7 +145,6 @@ def v__demo_prompt(
 
 __all__ = [
     "VDemoPromptOutputs",
-    "VDemoPromptParameters",
     "V__DEMO_PROMPT_METADATA",
     "v__demo_prompt",
     "v__demo_prompt_execute",

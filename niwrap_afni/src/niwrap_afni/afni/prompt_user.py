@@ -14,47 +14,22 @@ PROMPT_USER_METADATA = Metadata(
 
 
 PromptUserParameters = typing.TypedDict('PromptUserParameters', {
-    "@type": typing.Literal["afni.prompt_user"],
+    "@type": typing.NotRequired[typing.Literal["afni/prompt_user"]],
+    "pause_message": str,
+    "timeout": typing.NotRequired[float | None],
+    "timeout_alias": typing.NotRequired[float | None],
+})
+PromptUserParametersTagged = typing.TypedDict('PromptUserParametersTagged', {
+    "@type": typing.Literal["afni/prompt_user"],
     "pause_message": str,
     "timeout": typing.NotRequired[float | None],
     "timeout_alias": typing.NotRequired[float | None],
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "afni.prompt_user": prompt_user_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-    }.get(t)
-
-
 class PromptUserOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `prompt_user(...)`.
+    Output object returned when calling `PromptUserParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -64,7 +39,7 @@ def prompt_user_params(
     pause_message: str,
     timeout: float | None = None,
     timeout_alias: float | None = None,
-) -> PromptUserParameters:
+) -> PromptUserParametersTagged:
     """
     Build parameters.
     
@@ -78,7 +53,7 @@ def prompt_user_params(
         Parameter dictionary
     """
     params = {
-        "@type": "afni.prompt_user",
+        "@type": "afni/prompt_user",
         "pause_message": pause_message,
     }
     if timeout is not None:
@@ -105,17 +80,17 @@ def prompt_user_cargs(
     cargs.append("prompt_user")
     cargs.extend([
         "<-pause>",
-        params.get("pause_message")
+        params.get("pause_message", None)
     ])
-    if params.get("timeout") is not None:
+    if params.get("timeout", None) is not None:
         cargs.extend([
             "-timeout",
-            str(params.get("timeout"))
+            str(params.get("timeout", None))
         ])
-    if params.get("timeout_alias") is not None:
+    if params.get("timeout_alias", None) is not None:
         cargs.extend([
             "-to",
-            str(params.get("timeout_alias"))
+            str(params.get("timeout_alias", None))
         ])
     return cargs
 
@@ -203,7 +178,6 @@ def prompt_user(
 __all__ = [
     "PROMPT_USER_METADATA",
     "PromptUserOutputs",
-    "PromptUserParameters",
     "prompt_user",
     "prompt_user_execute",
     "prompt_user_params",

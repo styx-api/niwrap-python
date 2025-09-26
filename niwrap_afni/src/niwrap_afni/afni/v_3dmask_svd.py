@@ -14,7 +14,19 @@ V_3DMASK_SVD_METADATA = Metadata(
 
 
 V3dmaskSvdParameters = typing.TypedDict('V3dmaskSvdParameters', {
-    "@type": typing.Literal["afni.3dmaskSVD"],
+    "@type": typing.NotRequired[typing.Literal["afni/3dmaskSVD"]],
+    "input_dataset": InputPathType,
+    "vnorm": bool,
+    "sval": typing.NotRequired[float | None],
+    "mask_file": typing.NotRequired[InputPathType | None],
+    "automask": bool,
+    "polort": typing.NotRequired[float | None],
+    "bandpass": typing.NotRequired[list[str] | None],
+    "ort": typing.NotRequired[list[InputPathType] | None],
+    "alt_input": typing.NotRequired[InputPathType | None],
+})
+V3dmaskSvdParametersTagged = typing.TypedDict('V3dmaskSvdParametersTagged', {
+    "@type": typing.Literal["afni/3dmaskSVD"],
     "input_dataset": InputPathType,
     "vnorm": bool,
     "sval": typing.NotRequired[float | None],
@@ -27,41 +39,9 @@ V3dmaskSvdParameters = typing.TypedDict('V3dmaskSvdParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "afni.3dmaskSVD": v_3dmask_svd_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "afni.3dmaskSVD": v_3dmask_svd_outputs,
-    }.get(t)
-
-
 class V3dmaskSvdOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `v_3dmask_svd(...)`.
+    Output object returned when calling `V3dmaskSvdParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -79,7 +59,7 @@ def v_3dmask_svd_params(
     bandpass: list[str] | None = None,
     ort: list[InputPathType] | None = None,
     alt_input: InputPathType | None = None,
-) -> V3dmaskSvdParameters:
+) -> V3dmaskSvdParametersTagged:
     """
     Build parameters.
     
@@ -98,7 +78,7 @@ def v_3dmask_svd_params(
         Parameter dictionary
     """
     params = {
-        "@type": "afni.3dmaskSVD",
+        "@type": "afni/3dmaskSVD",
         "input_dataset": input_dataset,
         "vnorm": vnorm,
         "automask": automask,
@@ -133,40 +113,40 @@ def v_3dmask_svd_cargs(
     """
     cargs = []
     cargs.append("3dmaskSVD")
-    cargs.append(execution.input_file(params.get("input_dataset")))
-    if params.get("vnorm"):
+    cargs.append(execution.input_file(params.get("input_dataset", None)))
+    if params.get("vnorm", False):
         cargs.append("-vnorm")
-    if params.get("sval") is not None:
+    if params.get("sval", None) is not None:
         cargs.extend([
             "-sval",
-            str(params.get("sval"))
+            str(params.get("sval", None))
         ])
-    if params.get("mask_file") is not None:
+    if params.get("mask_file", None) is not None:
         cargs.extend([
             "-mask",
-            execution.input_file(params.get("mask_file"))
+            execution.input_file(params.get("mask_file", None))
         ])
-    if params.get("automask"):
+    if params.get("automask", False):
         cargs.append("-automask")
-    if params.get("polort") is not None:
+    if params.get("polort", None) is not None:
         cargs.extend([
             "-polort",
-            str(params.get("polort"))
+            str(params.get("polort", None))
         ])
-    if params.get("bandpass") is not None:
+    if params.get("bandpass", None) is not None:
         cargs.extend([
             "-bpass",
-            *params.get("bandpass")
+            *params.get("bandpass", None)
         ])
-    if params.get("ort") is not None:
+    if params.get("ort", None) is not None:
         cargs.extend([
             "-ort",
-            *[execution.input_file(f) for f in params.get("ort")]
+            *[execution.input_file(f) for f in params.get("ort", None)]
         ])
-    if params.get("alt_input") is not None:
+    if params.get("alt_input", None) is not None:
         cargs.extend([
             "-input",
-            execution.input_file(params.get("alt_input"))
+            execution.input_file(params.get("alt_input", None))
         ])
     return cargs
 
@@ -273,7 +253,6 @@ def v_3dmask_svd(
 
 __all__ = [
     "V3dmaskSvdOutputs",
-    "V3dmaskSvdParameters",
     "V_3DMASK_SVD_METADATA",
     "v_3dmask_svd",
     "v_3dmask_svd_execute",

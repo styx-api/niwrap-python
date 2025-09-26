@@ -14,47 +14,20 @@ QUICK_ALPHA_VALS_PY_METADATA = Metadata(
 
 
 QuickAlphaValsPyParameters = typing.TypedDict('QuickAlphaValsPyParameters', {
-    "@type": typing.Literal["afni.quick.alpha.vals.py"],
+    "@type": typing.NotRequired[typing.Literal["afni/quick.alpha.vals.py"]],
+    "niter": typing.NotRequired[int | None],
+    "max_file": InputPathType,
+})
+QuickAlphaValsPyParametersTagged = typing.TypedDict('QuickAlphaValsPyParametersTagged', {
+    "@type": typing.Literal["afni/quick.alpha.vals.py"],
     "niter": typing.NotRequired[int | None],
     "max_file": InputPathType,
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "afni.quick.alpha.vals.py": quick_alpha_vals_py_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "afni.quick.alpha.vals.py": quick_alpha_vals_py_outputs,
-    }.get(t)
-
-
 class QuickAlphaValsPyOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `quick_alpha_vals_py(...)`.
+    Output object returned when calling `QuickAlphaValsPyParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -65,7 +38,7 @@ class QuickAlphaValsPyOutputs(typing.NamedTuple):
 def quick_alpha_vals_py_params(
     max_file: InputPathType,
     niter: int | None = None,
-) -> QuickAlphaValsPyParameters:
+) -> QuickAlphaValsPyParametersTagged:
     """
     Build parameters.
     
@@ -76,7 +49,7 @@ def quick_alpha_vals_py_params(
         Parameter dictionary
     """
     params = {
-        "@type": "afni.quick.alpha.vals.py",
+        "@type": "afni/quick.alpha.vals.py",
         "max_file": max_file,
     }
     if niter is not None:
@@ -99,12 +72,12 @@ def quick_alpha_vals_py_cargs(
     """
     cargs = []
     cargs.append("quick.alpha.vals.py")
-    if params.get("niter") is not None:
+    if params.get("niter", None) is not None:
         cargs.extend([
             "-niter",
-            str(params.get("niter"))
+            str(params.get("niter", None))
         ])
-    cargs.append(execution.input_file(params.get("max_file")))
+    cargs.append(execution.input_file(params.get("max_file", None)))
     return cargs
 
 
@@ -187,7 +160,6 @@ def quick_alpha_vals_py(
 __all__ = [
     "QUICK_ALPHA_VALS_PY_METADATA",
     "QuickAlphaValsPyOutputs",
-    "QuickAlphaValsPyParameters",
     "quick_alpha_vals_py",
     "quick_alpha_vals_py_execute",
     "quick_alpha_vals_py_params",

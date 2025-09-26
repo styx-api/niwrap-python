@@ -14,7 +14,26 @@ CONVEX_HULL_METADATA = Metadata(
 
 
 ConvexHullParameters = typing.TypedDict('ConvexHullParameters', {
-    "@type": typing.Literal["afni.ConvexHull"],
+    "@type": typing.NotRequired[typing.Literal["afni/ConvexHull"]],
+    "vol": typing.NotRequired[InputPathType | None],
+    "isoval": typing.NotRequired[float | None],
+    "isorange": typing.NotRequired[list[float] | None],
+    "isocmask": typing.NotRequired[str | None],
+    "xform": typing.NotRequired[str | None],
+    "surface_input": typing.NotRequired[InputPathType | None],
+    "surf_vol": typing.NotRequired[InputPathType | None],
+    "input_1d": typing.NotRequired[InputPathType | None],
+    "q_opt": typing.NotRequired[str | None],
+    "proj_xy": bool,
+    "orig_coord": bool,
+    "these_coords": typing.NotRequired[InputPathType | None],
+    "output_prefix": typing.NotRequired[str | None],
+    "debug": typing.NotRequired[str | None],
+    "novolreg": bool,
+    "setenv": typing.NotRequired[str | None],
+})
+ConvexHullParametersTagged = typing.TypedDict('ConvexHullParametersTagged', {
+    "@type": typing.Literal["afni/ConvexHull"],
     "vol": typing.NotRequired[InputPathType | None],
     "isoval": typing.NotRequired[float | None],
     "isorange": typing.NotRequired[list[float] | None],
@@ -34,41 +53,9 @@ ConvexHullParameters = typing.TypedDict('ConvexHullParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "afni.ConvexHull": convex_hull_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "afni.ConvexHull": convex_hull_outputs,
-    }.get(t)
-
-
 class ConvexHullOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `convex_hull(...)`.
+    Output object returned when calling `ConvexHullParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -93,7 +80,7 @@ def convex_hull_params(
     debug: str | None = None,
     novolreg: bool = False,
     setenv: str | None = None,
-) -> ConvexHullParameters:
+) -> ConvexHullParametersTagged:
     """
     Build parameters.
     
@@ -128,7 +115,7 @@ def convex_hull_params(
         Parameter dictionary
     """
     params = {
-        "@type": "afni.ConvexHull",
+        "@type": "afni/ConvexHull",
         "proj_xy": proj_xy,
         "orig_coord": orig_coord,
         "novolreg": novolreg,
@@ -177,76 +164,76 @@ def convex_hull_cargs(
     """
     cargs = []
     cargs.append("ConvexHull")
-    if params.get("vol") is not None:
+    if params.get("vol", None) is not None:
         cargs.extend([
             "-input",
-            execution.input_file(params.get("vol"))
+            execution.input_file(params.get("vol", None))
         ])
-    if params.get("isoval") is not None:
+    if params.get("isoval", None) is not None:
         cargs.extend([
             "-isoval",
-            str(params.get("isoval"))
+            str(params.get("isoval", None))
         ])
-    if params.get("isorange") is not None:
+    if params.get("isorange", None) is not None:
         cargs.extend([
             "-isorange",
-            *map(str, params.get("isorange"))
+            *map(str, params.get("isorange", None))
         ])
-    if params.get("isocmask") is not None:
+    if params.get("isocmask", None) is not None:
         cargs.extend([
             "-isocmask",
-            params.get("isocmask")
+            params.get("isocmask", None)
         ])
-    if params.get("xform") is not None:
+    if params.get("xform", None) is not None:
         cargs.extend([
             "-xform",
-            params.get("xform")
+            params.get("xform", None)
         ])
-    if params.get("surface_input") is not None:
+    if params.get("surface_input", None) is not None:
         cargs.extend([
             "-i_TYPE",
-            execution.input_file(params.get("surface_input"))
+            execution.input_file(params.get("surface_input", None))
         ])
-    if params.get("surf_vol") is not None:
+    if params.get("surf_vol", None) is not None:
         cargs.extend([
             "-sv",
-            execution.input_file(params.get("surf_vol"))
+            execution.input_file(params.get("surf_vol", None))
         ])
-    if params.get("input_1d") is not None:
+    if params.get("input_1d", None) is not None:
         cargs.extend([
             "-input_1D",
-            execution.input_file(params.get("input_1d"))
+            execution.input_file(params.get("input_1d", None))
         ])
-    if params.get("q_opt") is not None:
+    if params.get("q_opt", None) is not None:
         cargs.extend([
             "-q_opt",
-            params.get("q_opt")
+            params.get("q_opt", None)
         ])
-    if params.get("proj_xy"):
+    if params.get("proj_xy", False):
         cargs.append("-proj_xy")
-    if params.get("orig_coord"):
+    if params.get("orig_coord", False):
         cargs.append("-orig_coord")
-    if params.get("these_coords") is not None:
+    if params.get("these_coords", None) is not None:
         cargs.extend([
             "-these_coords",
-            execution.input_file(params.get("these_coords"))
+            execution.input_file(params.get("these_coords", None))
         ])
-    if params.get("output_prefix") is not None:
+    if params.get("output_prefix", None) is not None:
         cargs.extend([
             "-o_TYPE",
-            params.get("output_prefix")
+            params.get("output_prefix", None)
         ])
-    if params.get("debug") is not None:
+    if params.get("debug", None) is not None:
         cargs.extend([
             "-debug",
-            params.get("debug")
+            params.get("debug", None)
         ])
-    if params.get("novolreg"):
+    if params.get("novolreg", False):
         cargs.append("-novolreg")
-    if params.get("setenv") is not None:
+    if params.get("setenv", None) is not None:
         cargs.extend([
             "-setenv",
-            params.get("setenv")
+            params.get("setenv", None)
         ])
     return cargs
 
@@ -266,7 +253,7 @@ def convex_hull_outputs(
     """
     ret = ConvexHullOutputs(
         root=execution.output_file("."),
-        out_surf=execution.output_file(params.get("output_prefix")) if (params.get("output_prefix") is not None) else None,
+        out_surf=execution.output_file(params.get("output_prefix", None)) if (params.get("output_prefix") is not None) else None,
     )
     return ret
 
@@ -384,7 +371,6 @@ def convex_hull(
 __all__ = [
     "CONVEX_HULL_METADATA",
     "ConvexHullOutputs",
-    "ConvexHullParameters",
     "convex_hull",
     "convex_hull_execute",
     "convex_hull_params",

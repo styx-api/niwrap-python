@@ -14,7 +14,16 @@ XCORR_METADATA = Metadata(
 
 
 XcorrParameters = typing.TypedDict('XcorrParameters', {
-    "@type": typing.Literal["freesurfer.xcorr"],
+    "@type": typing.NotRequired[typing.Literal["freesurfer/xcorr"]],
+    "input1": InputPathType,
+    "input2": InputPathType,
+    "output": str,
+    "log_file": typing.NotRequired[str | None],
+    "tmp_dir": typing.NotRequired[str | None],
+    "no_cleanup": bool,
+})
+XcorrParametersTagged = typing.TypedDict('XcorrParametersTagged', {
+    "@type": typing.Literal["freesurfer/xcorr"],
     "input1": InputPathType,
     "input2": InputPathType,
     "output": str,
@@ -24,41 +33,9 @@ XcorrParameters = typing.TypedDict('XcorrParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "freesurfer.xcorr": xcorr_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "freesurfer.xcorr": xcorr_outputs,
-    }.get(t)
-
-
 class XcorrOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `xcorr(...)`.
+    Output object returned when calling `XcorrParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -75,7 +52,7 @@ def xcorr_params(
     log_file: str | None = None,
     tmp_dir: str | None = None,
     no_cleanup: bool = False,
-) -> XcorrParameters:
+) -> XcorrParametersTagged:
     """
     Build parameters.
     
@@ -90,7 +67,7 @@ def xcorr_params(
         Parameter dictionary
     """
     params = {
-        "@type": "freesurfer.xcorr",
+        "@type": "freesurfer/xcorr",
         "input1": input1,
         "input2": input2,
         "output": output,
@@ -120,27 +97,27 @@ def xcorr_cargs(
     cargs.append("xcorr")
     cargs.extend([
         "--i1",
-        execution.input_file(params.get("input1"))
+        execution.input_file(params.get("input1", None))
     ])
     cargs.extend([
         "--i2",
-        execution.input_file(params.get("input2"))
+        execution.input_file(params.get("input2", None))
     ])
     cargs.extend([
         "--o",
-        params.get("output")
+        params.get("output", None)
     ])
-    if params.get("log_file") is not None:
+    if params.get("log_file", None) is not None:
         cargs.extend([
             "--log",
-            params.get("log_file")
+            params.get("log_file", None)
         ])
-    if params.get("tmp_dir") is not None:
+    if params.get("tmp_dir", None) is not None:
         cargs.extend([
             "--tmp",
-            params.get("tmp_dir")
+            params.get("tmp_dir", None)
         ])
-    if params.get("no_cleanup"):
+    if params.get("no_cleanup", False):
         cargs.append("--no-cleanup")
     return cargs
 
@@ -160,8 +137,8 @@ def xcorr_outputs(
     """
     ret = XcorrOutputs(
         root=execution.output_file("."),
-        out_xcorrfile=execution.output_file(params.get("output")),
-        log_output=execution.output_file(params.get("log_file")) if (params.get("log_file") is not None) else None,
+        out_xcorrfile=execution.output_file(params.get("output", None)),
+        log_output=execution.output_file(params.get("log_file", None)) if (params.get("log_file") is not None) else None,
     )
     return ret
 
@@ -237,7 +214,6 @@ def xcorr(
 __all__ = [
     "XCORR_METADATA",
     "XcorrOutputs",
-    "XcorrParameters",
     "xcorr",
     "xcorr_execute",
     "xcorr_params",

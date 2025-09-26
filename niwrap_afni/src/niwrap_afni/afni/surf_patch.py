@@ -14,7 +14,31 @@ SURF_PATCH_METADATA = Metadata(
 
 
 SurfPatchParameters = typing.TypedDict('SurfPatchParameters', {
-    "@type": typing.Literal["afni.SurfPatch"],
+    "@type": typing.NotRequired[typing.Literal["afni/SurfPatch"]],
+    "spec_file": InputPathType,
+    "surf_A": InputPathType,
+    "surf_B": InputPathType,
+    "nodefile": InputPathType,
+    "inode": float,
+    "ilabel": float,
+    "prefix": str,
+    "hits": typing.NotRequired[float | None],
+    "masklabel": typing.NotRequired[str | None],
+    "vol": bool,
+    "vol_only": bool,
+    "patch2surf": bool,
+    "coord_gain": typing.NotRequired[float | None],
+    "check_bowtie": bool,
+    "fix_bowtie": bool,
+    "ok_bowtie": bool,
+    "adjust_contour": bool,
+    "do_not_adjust_contour": bool,
+    "stitched_surface": typing.NotRequired[InputPathType | None],
+    "flip_orientation": bool,
+    "verbosity": typing.NotRequired[float | None],
+})
+SurfPatchParametersTagged = typing.TypedDict('SurfPatchParametersTagged', {
+    "@type": typing.Literal["afni/SurfPatch"],
     "spec_file": InputPathType,
     "surf_A": InputPathType,
     "surf_B": InputPathType,
@@ -39,41 +63,9 @@ SurfPatchParameters = typing.TypedDict('SurfPatchParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "afni.SurfPatch": surf_patch_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "afni.SurfPatch": surf_patch_outputs,
-    }.get(t)
-
-
 class SurfPatchOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `surf_patch(...)`.
+    Output object returned when calling `SurfPatchParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -107,7 +99,7 @@ def surf_patch_params(
     stitched_surface: InputPathType | None = None,
     flip_orientation: bool = False,
     verbosity: float | None = None,
-) -> SurfPatchParameters:
+) -> SurfPatchParametersTagged:
     """
     Build parameters.
     
@@ -148,7 +140,7 @@ def surf_patch_params(
         Parameter dictionary
     """
     params = {
-        "@type": "afni.SurfPatch",
+        "@type": "afni/SurfPatch",
         "spec_file": spec_file,
         "surf_A": surf_a,
         "surf_B": surf_b,
@@ -194,67 +186,67 @@ def surf_patch_cargs(
     """
     cargs = []
     cargs.append("SurfPatch")
-    cargs.append(execution.input_file(params.get("spec_file")))
+    cargs.append(execution.input_file(params.get("spec_file", None)))
     cargs.extend([
         "-surf_A",
-        execution.input_file(params.get("surf_A"))
+        execution.input_file(params.get("surf_A", None))
     ])
     cargs.extend([
         "-surf_B",
-        execution.input_file(params.get("surf_B"))
+        execution.input_file(params.get("surf_B", None))
     ])
     cargs.extend([
         "-input",
-        execution.input_file(params.get("nodefile"))
+        execution.input_file(params.get("nodefile", None))
     ])
-    cargs.append(str(params.get("inode")))
-    cargs.append(str(params.get("ilabel")))
+    cargs.append(str(params.get("inode", None)))
+    cargs.append(str(params.get("ilabel", None)))
     cargs.extend([
         "-prefix",
-        params.get("prefix")
+        params.get("prefix", None)
     ])
-    if params.get("hits") is not None:
+    if params.get("hits", None) is not None:
         cargs.extend([
             "-hits",
-            str(params.get("hits"))
+            str(params.get("hits", None))
         ])
-    if params.get("masklabel") is not None:
+    if params.get("masklabel", None) is not None:
         cargs.extend([
             "-masklabel",
-            params.get("masklabel")
+            params.get("masklabel", None)
         ])
-    if params.get("vol"):
+    if params.get("vol", False):
         cargs.append("-vol")
-    if params.get("vol_only"):
+    if params.get("vol_only", False):
         cargs.append("-vol_only")
-    if params.get("patch2surf"):
+    if params.get("patch2surf", False):
         cargs.append("-patch2surf")
-    if params.get("coord_gain") is not None:
+    if params.get("coord_gain", None) is not None:
         cargs.extend([
             "-coord_gain",
-            str(params.get("coord_gain"))
+            str(params.get("coord_gain", None))
         ])
-    if params.get("check_bowtie"):
+    if params.get("check_bowtie", False):
         cargs.append("-check_bowtie")
-    if params.get("fix_bowtie"):
+    if params.get("fix_bowtie", False):
         cargs.append("-fix_bowtie")
-    if params.get("ok_bowtie"):
+    if params.get("ok_bowtie", False):
         cargs.append("-ok_bowtie")
-    if params.get("adjust_contour"):
+    if params.get("adjust_contour", False):
         cargs.append("-adjust_contour")
-    if params.get("do_not_adjust_contour"):
+    if params.get("do_not_adjust_contour", False):
         cargs.append("-do-not-adjust_contour")
-    if params.get("stitched_surface") is not None:
+    if params.get("stitched_surface", None) is not None:
         cargs.extend([
             "-stitched_surface",
-            execution.input_file(params.get("stitched_surface"))
+            execution.input_file(params.get("stitched_surface", None))
         ])
-    if params.get("flip_orientation"):
+    if params.get("flip_orientation", False):
         cargs.append("-flip_orientation")
-    if params.get("verbosity") is not None:
+    if params.get("verbosity", None) is not None:
         cargs.extend([
             "-verb",
-            str(params.get("verbosity"))
+            str(params.get("verbosity", None))
         ])
     return cargs
 
@@ -274,9 +266,9 @@ def surf_patch_outputs(
     """
     ret = SurfPatchOutputs(
         root=execution.output_file("."),
-        outpatch_a=execution.output_file(params.get("prefix") + "_A"),
-        outpatch_b=execution.output_file(params.get("prefix") + "_B"),
-        out_stitched_surface=execution.output_file(params.get("prefix") + "_stitched"),
+        outpatch_a=execution.output_file(params.get("prefix", None) + "_A"),
+        outpatch_b=execution.output_file(params.get("prefix", None) + "_B"),
+        out_stitched_surface=execution.output_file(params.get("prefix", None) + "_stitched"),
     )
     return ret
 
@@ -410,7 +402,6 @@ def surf_patch(
 __all__ = [
     "SURF_PATCH_METADATA",
     "SurfPatchOutputs",
-    "SurfPatchParameters",
     "surf_patch",
     "surf_patch_execute",
     "surf_patch_params",

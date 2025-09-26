@@ -14,48 +14,22 @@ DTISTUDIO_FIBERTO_SEGMENTS_METADATA = Metadata(
 
 
 DtistudioFibertoSegmentsParameters = typing.TypedDict('DtistudioFibertoSegmentsParameters', {
-    "@type": typing.Literal["afni.DTIStudioFibertoSegments"],
+    "@type": typing.NotRequired[typing.Literal["afni/DTIStudioFibertoSegments"]],
+    "dataset": InputPathType,
+    "output_file": typing.NotRequired[str | None],
+    "swap_flag": bool,
+})
+DtistudioFibertoSegmentsParametersTagged = typing.TypedDict('DtistudioFibertoSegmentsParametersTagged', {
+    "@type": typing.Literal["afni/DTIStudioFibertoSegments"],
     "dataset": InputPathType,
     "output_file": typing.NotRequired[str | None],
     "swap_flag": bool,
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "afni.DTIStudioFibertoSegments": dtistudio_fiberto_segments_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "afni.DTIStudioFibertoSegments": dtistudio_fiberto_segments_outputs,
-    }.get(t)
-
-
 class DtistudioFibertoSegmentsOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `dtistudio_fiberto_segments(...)`.
+    Output object returned when calling `DtistudioFibertoSegmentsParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -67,7 +41,7 @@ def dtistudio_fiberto_segments_params(
     dataset: InputPathType,
     output_file: str | None = None,
     swap_flag: bool = False,
-) -> DtistudioFibertoSegmentsParameters:
+) -> DtistudioFibertoSegmentsParametersTagged:
     """
     Build parameters.
     
@@ -79,7 +53,7 @@ def dtistudio_fiberto_segments_params(
         Parameter dictionary
     """
     params = {
-        "@type": "afni.DTIStudioFibertoSegments",
+        "@type": "afni/DTIStudioFibertoSegments",
         "dataset": dataset,
         "swap_flag": swap_flag,
     }
@@ -103,13 +77,13 @@ def dtistudio_fiberto_segments_cargs(
     """
     cargs = []
     cargs.append("DTIStudioFibertoSegments")
-    cargs.append(execution.input_file(params.get("dataset")))
-    if params.get("output_file") is not None:
+    cargs.append(execution.input_file(params.get("dataset", None)))
+    if params.get("output_file", None) is not None:
         cargs.extend([
             "-output",
-            params.get("output_file")
+            params.get("output_file", None)
         ])
-    if params.get("swap_flag"):
+    if params.get("swap_flag", False):
         cargs.append("-swap")
     return cargs
 
@@ -129,7 +103,7 @@ def dtistudio_fiberto_segments_outputs(
     """
     ret = DtistudioFibertoSegmentsOutputs(
         root=execution.output_file("."),
-        output_segment_file=execution.output_file(params.get("output_file")) if (params.get("output_file") is not None) else None,
+        output_segment_file=execution.output_file(params.get("output_file", None)) if (params.get("output_file") is not None) else None,
     )
     return ret
 
@@ -196,7 +170,6 @@ def dtistudio_fiberto_segments(
 __all__ = [
     "DTISTUDIO_FIBERTO_SEGMENTS_METADATA",
     "DtistudioFibertoSegmentsOutputs",
-    "DtistudioFibertoSegmentsParameters",
     "dtistudio_fiberto_segments",
     "dtistudio_fiberto_segments_execute",
     "dtistudio_fiberto_segments_params",

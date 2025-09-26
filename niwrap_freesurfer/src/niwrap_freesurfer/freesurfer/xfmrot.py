@@ -14,48 +14,22 @@ XFMROT_METADATA = Metadata(
 
 
 XfmrotParameters = typing.TypedDict('XfmrotParameters', {
-    "@type": typing.Literal["freesurfer.xfmrot"],
+    "@type": typing.NotRequired[typing.Literal["freesurfer/xfmrot"]],
+    "transform_file": InputPathType,
+    "input_vector_file": InputPathType,
+    "output_vector_file": typing.NotRequired[str | None],
+})
+XfmrotParametersTagged = typing.TypedDict('XfmrotParametersTagged', {
+    "@type": typing.Literal["freesurfer/xfmrot"],
     "transform_file": InputPathType,
     "input_vector_file": InputPathType,
     "output_vector_file": typing.NotRequired[str | None],
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "freesurfer.xfmrot": xfmrot_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "freesurfer.xfmrot": xfmrot_outputs,
-    }.get(t)
-
-
 class XfmrotOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `xfmrot(...)`.
+    Output object returned when calling `XfmrotParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -67,7 +41,7 @@ def xfmrot_params(
     transform_file: InputPathType,
     input_vector_file: InputPathType,
     output_vector_file: str | None = None,
-) -> XfmrotParameters:
+) -> XfmrotParametersTagged:
     """
     Build parameters.
     
@@ -82,7 +56,7 @@ def xfmrot_params(
         Parameter dictionary
     """
     params = {
-        "@type": "freesurfer.xfmrot",
+        "@type": "freesurfer/xfmrot",
         "transform_file": transform_file,
         "input_vector_file": input_vector_file,
     }
@@ -106,10 +80,10 @@ def xfmrot_cargs(
     """
     cargs = []
     cargs.append("xfmrot")
-    cargs.append(execution.input_file(params.get("transform_file")))
-    cargs.append(execution.input_file(params.get("input_vector_file")))
-    if params.get("output_vector_file") is not None:
-        cargs.append(params.get("output_vector_file"))
+    cargs.append(execution.input_file(params.get("transform_file", None)))
+    cargs.append(execution.input_file(params.get("input_vector_file", None)))
+    if params.get("output_vector_file", None) is not None:
+        cargs.append(params.get("output_vector_file", None))
     return cargs
 
 
@@ -128,7 +102,7 @@ def xfmrot_outputs(
     """
     ret = XfmrotOutputs(
         root=execution.output_file("."),
-        transformed_vector=execution.output_file(params.get("output_vector_file")) if (params.get("output_vector_file") is not None) else None,
+        transformed_vector=execution.output_file(params.get("output_vector_file", None)) if (params.get("output_vector_file") is not None) else None,
     )
     return ret
 
@@ -200,7 +174,6 @@ def xfmrot(
 __all__ = [
     "XFMROT_METADATA",
     "XfmrotOutputs",
-    "XfmrotParameters",
     "xfmrot",
     "xfmrot_execute",
     "xfmrot_params",

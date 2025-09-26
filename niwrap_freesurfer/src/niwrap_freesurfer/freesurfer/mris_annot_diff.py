@@ -14,7 +14,14 @@ MRIS_ANNOT_DIFF_METADATA = Metadata(
 
 
 MrisAnnotDiffParameters = typing.TypedDict('MrisAnnotDiffParameters', {
-    "@type": typing.Literal["freesurfer.mris_annot_diff"],
+    "@type": typing.NotRequired[typing.Literal["freesurfer/mris_annot_diff"]],
+    "annot1": InputPathType,
+    "annot2": InputPathType,
+    "diff_ctab": bool,
+    "verbose": bool,
+})
+MrisAnnotDiffParametersTagged = typing.TypedDict('MrisAnnotDiffParametersTagged', {
+    "@type": typing.Literal["freesurfer/mris_annot_diff"],
     "annot1": InputPathType,
     "annot2": InputPathType,
     "diff_ctab": bool,
@@ -22,40 +29,9 @@ MrisAnnotDiffParameters = typing.TypedDict('MrisAnnotDiffParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "freesurfer.mris_annot_diff": mris_annot_diff_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-    }.get(t)
-
-
 class MrisAnnotDiffOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `mris_annot_diff(...)`.
+    Output object returned when calling `MrisAnnotDiffParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -66,7 +42,7 @@ def mris_annot_diff_params(
     annot2: InputPathType,
     diff_ctab: bool = False,
     verbose: bool = False,
-) -> MrisAnnotDiffParameters:
+) -> MrisAnnotDiffParametersTagged:
     """
     Build parameters.
     
@@ -79,7 +55,7 @@ def mris_annot_diff_params(
         Parameter dictionary
     """
     params = {
-        "@type": "freesurfer.mris_annot_diff",
+        "@type": "freesurfer/mris_annot_diff",
         "annot1": annot1,
         "annot2": annot2,
         "diff_ctab": diff_ctab,
@@ -103,11 +79,11 @@ def mris_annot_diff_cargs(
     """
     cargs = []
     cargs.append("mris_annot_diff")
-    cargs.append(execution.input_file(params.get("annot1")))
-    cargs.append(execution.input_file(params.get("annot2")))
-    if params.get("diff_ctab"):
+    cargs.append(execution.input_file(params.get("annot1", None)))
+    cargs.append(execution.input_file(params.get("annot2", None)))
+    if params.get("diff_ctab", False):
         cargs.append("--diff-ctab")
-    if params.get("verbose"):
+    if params.get("verbose", False):
         cargs.append("--verbose")
     return cargs
 
@@ -196,7 +172,6 @@ def mris_annot_diff(
 __all__ = [
     "MRIS_ANNOT_DIFF_METADATA",
     "MrisAnnotDiffOutputs",
-    "MrisAnnotDiffParameters",
     "mris_annot_diff",
     "mris_annot_diff_execute",
     "mris_annot_diff_params",

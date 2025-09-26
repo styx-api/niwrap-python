@@ -14,7 +14,39 @@ OXFORD_ASL_METADATA = Metadata(
 
 
 OxfordAslParameters = typing.TypedDict('OxfordAslParameters', {
-    "@type": typing.Literal["fsl.oxford_asl"],
+    "@type": typing.NotRequired[typing.Literal["fsl/oxford_asl"]],
+    "asl_data": InputPathType,
+    "output_dir_name": str,
+    "mask": typing.NotRequired[InputPathType | None],
+    "spatial_smoothing": bool,
+    "white_paper_analysis": bool,
+    "motion_correction": bool,
+    "input_asl_format": typing.NotRequired[str | None],
+    "input_block_format": typing.NotRequired[str | None],
+    "inversion_times": typing.NotRequired[str | None],
+    "ti_image": typing.NotRequired[InputPathType | None],
+    "casl": bool,
+    "arterial_suppression": bool,
+    "bolus_duration": typing.NotRequired[float | None],
+    "bat": typing.NotRequired[float | None],
+    "tissue_t1": typing.NotRequired[float | None],
+    "blood_t1": typing.NotRequired[float | None],
+    "slice_timing_difference": typing.NotRequired[float | None],
+    "slice_band": typing.NotRequired[float | None],
+    "flip_angle": typing.NotRequired[float | None],
+    "fsl_anat_dir": typing.NotRequired[str | None],
+    "structural_image": typing.NotRequired[InputPathType | None],
+    "bet_structural_image": typing.NotRequired[InputPathType | None],
+    "fast_segmentation_images": typing.NotRequired[str | None],
+    "sensitivity_correction": bool,
+    "precomputed_m0_value": typing.NotRequired[float | None],
+    "inversion_efficiency": typing.NotRequired[float | None],
+    "tr_calibration_data": typing.NotRequired[float | None],
+    "calibration_image": typing.NotRequired[InputPathType | None],
+    "calibration_method": typing.NotRequired[str | None],
+})
+OxfordAslParametersTagged = typing.TypedDict('OxfordAslParametersTagged', {
+    "@type": typing.Literal["fsl/oxford_asl"],
     "asl_data": InputPathType,
     "output_dir_name": str,
     "mask": typing.NotRequired[InputPathType | None],
@@ -47,41 +79,9 @@ OxfordAslParameters = typing.TypedDict('OxfordAslParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "fsl.oxford_asl": oxford_asl_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "fsl.oxford_asl": oxford_asl_outputs,
-    }.get(t)
-
-
 class OxfordAslOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `oxford_asl(...)`.
+    Output object returned when calling `OxfordAslParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -119,7 +119,7 @@ def oxford_asl_params(
     tr_calibration_data: float | None = None,
     calibration_image: InputPathType | None = None,
     calibration_method: str | None = None,
-) -> OxfordAslParameters:
+) -> OxfordAslParametersTagged:
     """
     Build parameters.
     
@@ -160,7 +160,7 @@ def oxford_asl_params(
         Parameter dictionary
     """
     params = {
-        "@type": "fsl.oxford_asl",
+        "@type": "fsl/oxford_asl",
         "asl_data": asl_data,
         "output_dir_name": output_dir_name,
         "spatial_smoothing": spatial_smoothing,
@@ -232,128 +232,128 @@ def oxford_asl_cargs(
     cargs.append("oxford_asl")
     cargs.extend([
         "-i",
-        execution.input_file(params.get("asl_data"))
+        execution.input_file(params.get("asl_data", None))
     ])
     cargs.extend([
         "-o",
-        params.get("output_dir_name")
+        params.get("output_dir_name", None)
     ])
-    if params.get("mask") is not None:
+    if params.get("mask", None) is not None:
         cargs.extend([
             "-m",
-            execution.input_file(params.get("mask"))
+            execution.input_file(params.get("mask", None))
         ])
-    if params.get("spatial_smoothing"):
+    if params.get("spatial_smoothing", False):
         cargs.append("--spatial")
-    if params.get("white_paper_analysis"):
+    if params.get("white_paper_analysis", False):
         cargs.append("--wp")
-    if params.get("motion_correction"):
+    if params.get("motion_correction", False):
         cargs.append("--mc")
-    if params.get("input_asl_format") is not None:
+    if params.get("input_asl_format", None) is not None:
         cargs.extend([
             "--iaf",
-            params.get("input_asl_format")
+            params.get("input_asl_format", None)
         ])
-    if params.get("input_block_format") is not None:
+    if params.get("input_block_format", None) is not None:
         cargs.extend([
             "--ibf",
-            params.get("input_block_format")
+            params.get("input_block_format", None)
         ])
-    if params.get("inversion_times") is not None:
+    if params.get("inversion_times", None) is not None:
         cargs.extend([
             "--tis",
-            params.get("inversion_times")
+            params.get("inversion_times", None)
         ])
-    if params.get("ti_image") is not None:
+    if params.get("ti_image", None) is not None:
         cargs.extend([
             "--tiimg",
-            execution.input_file(params.get("ti_image"))
+            execution.input_file(params.get("ti_image", None))
         ])
-    if params.get("casl"):
+    if params.get("casl", False):
         cargs.append("--casl")
-    if params.get("arterial_suppression"):
+    if params.get("arterial_suppression", False):
         cargs.append("--artsupp")
-    if params.get("bolus_duration") is not None:
+    if params.get("bolus_duration", None) is not None:
         cargs.extend([
             "--bolus",
-            str(params.get("bolus_duration"))
+            str(params.get("bolus_duration", None))
         ])
-    if params.get("bat") is not None:
+    if params.get("bat", None) is not None:
         cargs.extend([
             "--bat",
-            str(params.get("bat"))
+            str(params.get("bat", None))
         ])
-    if params.get("tissue_t1") is not None:
+    if params.get("tissue_t1", None) is not None:
         cargs.extend([
             "--t1",
-            str(params.get("tissue_t1"))
+            str(params.get("tissue_t1", None))
         ])
-    if params.get("blood_t1") is not None:
+    if params.get("blood_t1", None) is not None:
         cargs.extend([
             "--t1b",
-            str(params.get("blood_t1"))
+            str(params.get("blood_t1", None))
         ])
-    if params.get("slice_timing_difference") is not None:
+    if params.get("slice_timing_difference", None) is not None:
         cargs.extend([
             "--slicedt",
-            str(params.get("slice_timing_difference"))
+            str(params.get("slice_timing_difference", None))
         ])
-    if params.get("slice_band") is not None:
+    if params.get("slice_band", None) is not None:
         cargs.extend([
             "--sliceband",
-            str(params.get("slice_band"))
+            str(params.get("slice_band", None))
         ])
-    if params.get("flip_angle") is not None:
+    if params.get("flip_angle", None) is not None:
         cargs.extend([
             "--fa",
-            str(params.get("flip_angle"))
+            str(params.get("flip_angle", None))
         ])
-    if params.get("fsl_anat_dir") is not None:
+    if params.get("fsl_anat_dir", None) is not None:
         cargs.extend([
             "--fslanat",
-            params.get("fsl_anat_dir")
+            params.get("fsl_anat_dir", None)
         ])
-    if params.get("structural_image") is not None:
+    if params.get("structural_image", None) is not None:
         cargs.extend([
             "-s",
-            execution.input_file(params.get("structural_image"))
+            execution.input_file(params.get("structural_image", None))
         ])
-    if params.get("bet_structural_image") is not None:
+    if params.get("bet_structural_image", None) is not None:
         cargs.extend([
             "--sbrain",
-            execution.input_file(params.get("bet_structural_image"))
+            execution.input_file(params.get("bet_structural_image", None))
         ])
-    if params.get("fast_segmentation_images") is not None:
+    if params.get("fast_segmentation_images", None) is not None:
         cargs.extend([
             "--fastsrc",
-            params.get("fast_segmentation_images")
+            params.get("fast_segmentation_images", None)
         ])
-    if params.get("sensitivity_correction"):
+    if params.get("sensitivity_correction", False):
         cargs.append("--senscorr")
-    if params.get("precomputed_m0_value") is not None:
+    if params.get("precomputed_m0_value", None) is not None:
         cargs.extend([
             "--M0",
-            str(params.get("precomputed_m0_value"))
+            str(params.get("precomputed_m0_value", None))
         ])
-    if params.get("inversion_efficiency") is not None:
+    if params.get("inversion_efficiency", None) is not None:
         cargs.extend([
             "--alpha",
-            str(params.get("inversion_efficiency"))
+            str(params.get("inversion_efficiency", None))
         ])
-    if params.get("tr_calibration_data") is not None:
+    if params.get("tr_calibration_data", None) is not None:
         cargs.extend([
             "--tr",
-            str(params.get("tr_calibration_data"))
+            str(params.get("tr_calibration_data", None))
         ])
-    if params.get("calibration_image") is not None:
+    if params.get("calibration_image", None) is not None:
         cargs.extend([
             "-c",
-            execution.input_file(params.get("calibration_image"))
+            execution.input_file(params.get("calibration_image", None))
         ])
-    if params.get("calibration_method") is not None:
+    if params.get("calibration_method", None) is not None:
         cargs.extend([
             "--cmethod",
-            params.get("calibration_method")
+            params.get("calibration_method", None)
         ])
     return cargs
 
@@ -373,7 +373,7 @@ def oxford_asl_outputs(
     """
     ret = OxfordAslOutputs(
         root=execution.output_file("."),
-        output_dir=execution.output_file(params.get("output_dir_name")),
+        output_dir=execution.output_file(params.get("output_dir_name", None)),
     )
     return ret
 
@@ -521,7 +521,6 @@ def oxford_asl(
 __all__ = [
     "OXFORD_ASL_METADATA",
     "OxfordAslOutputs",
-    "OxfordAslParameters",
     "oxford_asl",
     "oxford_asl_execute",
     "oxford_asl_params",

@@ -14,45 +14,18 @@ CHECK_SUBJECT_METADATA = Metadata(
 
 
 CheckSubjectParameters = typing.TypedDict('CheckSubjectParameters', {
-    "@type": typing.Literal["freesurfer.check_subject"],
+    "@type": typing.NotRequired[typing.Literal["freesurfer/check_subject"]],
+    "subject_dir": str,
+})
+CheckSubjectParametersTagged = typing.TypedDict('CheckSubjectParametersTagged', {
+    "@type": typing.Literal["freesurfer/check_subject"],
     "subject_dir": str,
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "freesurfer.check_subject": check_subject_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-    }.get(t)
-
-
 class CheckSubjectOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `check_subject(...)`.
+    Output object returned when calling `CheckSubjectParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -60,7 +33,7 @@ class CheckSubjectOutputs(typing.NamedTuple):
 
 def check_subject_params(
     subject_dir: str,
-) -> CheckSubjectParameters:
+) -> CheckSubjectParametersTagged:
     """
     Build parameters.
     
@@ -70,7 +43,7 @@ def check_subject_params(
         Parameter dictionary
     """
     params = {
-        "@type": "freesurfer.check_subject",
+        "@type": "freesurfer/check_subject",
         "subject_dir": subject_dir,
     }
     return params
@@ -91,7 +64,7 @@ def check_subject_cargs(
     """
     cargs = []
     cargs.append("check_subject")
-    cargs.append(params.get("subject_dir"))
+    cargs.append(params.get("subject_dir", None))
     return cargs
 
 
@@ -170,7 +143,6 @@ def check_subject(
 __all__ = [
     "CHECK_SUBJECT_METADATA",
     "CheckSubjectOutputs",
-    "CheckSubjectParameters",
     "check_subject",
     "check_subject_execute",
     "check_subject_params",

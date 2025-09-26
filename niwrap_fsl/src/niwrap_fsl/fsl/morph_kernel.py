@@ -14,47 +14,20 @@ MORPH_KERNEL_METADATA = Metadata(
 
 
 MorphKernelParameters = typing.TypedDict('MorphKernelParameters', {
-    "@type": typing.Literal["fsl.morph_kernel"],
+    "@type": typing.NotRequired[typing.Literal["fsl/morph_kernel"]],
+    "cube_side_length": float,
+    "sphere_radius": float,
+})
+MorphKernelParametersTagged = typing.TypedDict('MorphKernelParametersTagged', {
+    "@type": typing.Literal["fsl/morph_kernel"],
     "cube_side_length": float,
     "sphere_radius": float,
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "fsl.morph_kernel": morph_kernel_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "fsl.morph_kernel": morph_kernel_outputs,
-    }.get(t)
-
-
 class MorphKernelOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `morph_kernel(...)`.
+    Output object returned when calling `MorphKernelParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -65,7 +38,7 @@ class MorphKernelOutputs(typing.NamedTuple):
 def morph_kernel_params(
     cube_side_length: float,
     sphere_radius: float,
-) -> MorphKernelParameters:
+) -> MorphKernelParametersTagged:
     """
     Build parameters.
     
@@ -76,7 +49,7 @@ def morph_kernel_params(
         Parameter dictionary
     """
     params = {
-        "@type": "fsl.morph_kernel",
+        "@type": "fsl/morph_kernel",
         "cube_side_length": cube_side_length,
         "sphere_radius": sphere_radius,
     }
@@ -98,8 +71,8 @@ def morph_kernel_cargs(
     """
     cargs = []
     cargs.append("morph_kernel")
-    cargs.append(str(params.get("cube_side_length")))
-    cargs.append(str(params.get("sphere_radius")))
+    cargs.append(str(params.get("cube_side_length", None)))
+    cargs.append(str(params.get("sphere_radius", None)))
     return cargs
 
 
@@ -182,7 +155,6 @@ def morph_kernel(
 __all__ = [
     "MORPH_KERNEL_METADATA",
     "MorphKernelOutputs",
-    "MorphKernelParameters",
     "morph_kernel",
     "morph_kernel_execute",
     "morph_kernel_params",

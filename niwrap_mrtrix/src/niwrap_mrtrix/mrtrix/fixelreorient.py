@@ -14,14 +14,33 @@ FIXELREORIENT_METADATA = Metadata(
 
 
 FixelreorientConfigParameters = typing.TypedDict('FixelreorientConfigParameters', {
-    "@type": typing.Literal["mrtrix.fixelreorient.config"],
+    "@type": typing.NotRequired[typing.Literal["config"]],
+    "key": str,
+    "value": str,
+})
+FixelreorientConfigParametersTagged = typing.TypedDict('FixelreorientConfigParametersTagged', {
+    "@type": typing.Literal["config"],
     "key": str,
     "value": str,
 })
 
 
 FixelreorientParameters = typing.TypedDict('FixelreorientParameters', {
-    "@type": typing.Literal["mrtrix.fixelreorient"],
+    "@type": typing.NotRequired[typing.Literal["mrtrix/fixelreorient"]],
+    "info": bool,
+    "quiet": bool,
+    "debug": bool,
+    "force": bool,
+    "nthreads": typing.NotRequired[int | None],
+    "config": typing.NotRequired[list[FixelreorientConfigParameters] | None],
+    "help": bool,
+    "version": bool,
+    "fixel_in": InputPathType,
+    "warp": InputPathType,
+    "fixel_out": str,
+})
+FixelreorientParametersTagged = typing.TypedDict('FixelreorientParametersTagged', {
+    "@type": typing.Literal["mrtrix/fixelreorient"],
     "info": bool,
     "quiet": bool,
     "debug": bool,
@@ -36,43 +55,10 @@ FixelreorientParameters = typing.TypedDict('FixelreorientParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "mrtrix.fixelreorient": fixelreorient_cargs,
-        "mrtrix.fixelreorient.config": fixelreorient_config_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "mrtrix.fixelreorient": fixelreorient_outputs,
-    }.get(t)
-
-
 def fixelreorient_config_params(
     key: str,
     value: str,
-) -> FixelreorientConfigParameters:
+) -> FixelreorientConfigParametersTagged:
     """
     Build parameters.
     
@@ -83,7 +69,7 @@ def fixelreorient_config_params(
         Parameter dictionary
     """
     params = {
-        "@type": "mrtrix.fixelreorient.config",
+        "@type": "config",
         "key": key,
         "value": value,
     }
@@ -105,14 +91,14 @@ def fixelreorient_config_cargs(
     """
     cargs = []
     cargs.append("-config")
-    cargs.append(params.get("key"))
-    cargs.append(params.get("value"))
+    cargs.append(params.get("key", None))
+    cargs.append(params.get("value", None))
     return cargs
 
 
 class FixelreorientOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `fixelreorient(...)`.
+    Output object returned when calling `FixelreorientParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -135,7 +121,7 @@ def fixelreorient_params(
     config: list[FixelreorientConfigParameters] | None = None,
     help_: bool = False,
     version: bool = False,
-) -> FixelreorientParameters:
+) -> FixelreorientParametersTagged:
     """
     Build parameters.
     
@@ -166,7 +152,7 @@ def fixelreorient_params(
         Parameter dictionary
     """
     params = {
-        "@type": "mrtrix.fixelreorient",
+        "@type": "mrtrix/fixelreorient",
         "info": info,
         "quiet": quiet,
         "debug": debug,
@@ -199,28 +185,28 @@ def fixelreorient_cargs(
     """
     cargs = []
     cargs.append("fixelreorient")
-    if params.get("info"):
+    if params.get("info", False):
         cargs.append("-info")
-    if params.get("quiet"):
+    if params.get("quiet", False):
         cargs.append("-quiet")
-    if params.get("debug"):
+    if params.get("debug", False):
         cargs.append("-debug")
-    if params.get("force"):
+    if params.get("force", False):
         cargs.append("-force")
-    if params.get("nthreads") is not None:
+    if params.get("nthreads", None) is not None:
         cargs.extend([
             "-nthreads",
-            str(params.get("nthreads"))
+            str(params.get("nthreads", None))
         ])
-    if params.get("config") is not None:
-        cargs.extend([a for c in [dyn_cargs(s["@type"])(s, execution) for s in params.get("config")] for a in c])
-    if params.get("help"):
+    if params.get("config", None) is not None:
+        cargs.extend([a for c in [fixelreorient_config_cargs(s, execution) for s in params.get("config", None)] for a in c])
+    if params.get("help", False):
         cargs.append("-help")
-    if params.get("version"):
+    if params.get("version", False):
         cargs.append("-version")
-    cargs.append(execution.input_file(params.get("fixel_in")))
-    cargs.append(execution.input_file(params.get("warp")))
-    cargs.append(params.get("fixel_out"))
+    cargs.append(execution.input_file(params.get("fixel_in", None)))
+    cargs.append(execution.input_file(params.get("warp", None)))
+    cargs.append(params.get("fixel_out", None))
     return cargs
 
 
@@ -239,7 +225,7 @@ def fixelreorient_outputs(
     """
     ret = FixelreorientOutputs(
         root=execution.output_file("."),
-        fixel_out=execution.output_file(params.get("fixel_out")),
+        fixel_out=execution.output_file(params.get("fixel_out", None)),
     )
     return ret
 
@@ -356,9 +342,7 @@ def fixelreorient(
 
 __all__ = [
     "FIXELREORIENT_METADATA",
-    "FixelreorientConfigParameters",
     "FixelreorientOutputs",
-    "FixelreorientParameters",
     "fixelreorient",
     "fixelreorient_config_params",
     "fixelreorient_execute",

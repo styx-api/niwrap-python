@@ -14,47 +14,22 @@ SURFACE_MATCH_METADATA = Metadata(
 
 
 SurfaceMatchParameters = typing.TypedDict('SurfaceMatchParameters', {
-    "@type": typing.Literal["workbench.surface-match"],
+    "@type": typing.NotRequired[typing.Literal["workbench/surface-match"]],
+    "match_surface_file": InputPathType,
+    "input_surface_file": InputPathType,
+    "output_surface_name": str,
+})
+SurfaceMatchParametersTagged = typing.TypedDict('SurfaceMatchParametersTagged', {
+    "@type": typing.Literal["workbench/surface-match"],
     "match_surface_file": InputPathType,
     "input_surface_file": InputPathType,
     "output_surface_name": str,
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "workbench.surface-match": surface_match_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-    }.get(t)
-
-
 class SurfaceMatchOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `surface_match(...)`.
+    Output object returned when calling `SurfaceMatchParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -64,7 +39,7 @@ def surface_match_params(
     match_surface_file: InputPathType,
     input_surface_file: InputPathType,
     output_surface_name: str,
-) -> SurfaceMatchParameters:
+) -> SurfaceMatchParametersTagged:
     """
     Build parameters.
     
@@ -76,7 +51,7 @@ def surface_match_params(
         Parameter dictionary
     """
     params = {
-        "@type": "workbench.surface-match",
+        "@type": "workbench/surface-match",
         "match_surface_file": match_surface_file,
         "input_surface_file": input_surface_file,
         "output_surface_name": output_surface_name,
@@ -100,9 +75,9 @@ def surface_match_cargs(
     cargs = []
     cargs.append("wb_command")
     cargs.append("-surface-match")
-    cargs.append(execution.input_file(params.get("match_surface_file")))
-    cargs.append(execution.input_file(params.get("input_surface_file")))
-    cargs.append(params.get("output_surface_name"))
+    cargs.append(execution.input_file(params.get("match_surface_file", None)))
+    cargs.append(execution.input_file(params.get("input_surface_file", None)))
+    cargs.append(params.get("output_surface_name", None))
     return cargs
 
 
@@ -193,7 +168,6 @@ def surface_match(
 __all__ = [
     "SURFACE_MATCH_METADATA",
     "SurfaceMatchOutputs",
-    "SurfaceMatchParameters",
     "surface_match",
     "surface_match_execute",
     "surface_match_params",

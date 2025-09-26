@@ -14,7 +14,15 @@ V_1D_NLFIT_METADATA = Metadata(
 
 
 V1dNlfitParameters = typing.TypedDict('V1dNlfitParameters', {
-    "@type": typing.Literal["afni.1dNLfit"],
+    "@type": typing.NotRequired[typing.Literal["afni/1dNLfit"]],
+    "expression": str,
+    "independent_variable": str,
+    "parameters": list[str],
+    "dependent_data": InputPathType,
+    "method": typing.NotRequired[int | None],
+})
+V1dNlfitParametersTagged = typing.TypedDict('V1dNlfitParametersTagged', {
+    "@type": typing.Literal["afni/1dNLfit"],
     "expression": str,
     "independent_variable": str,
     "parameters": list[str],
@@ -23,41 +31,9 @@ V1dNlfitParameters = typing.TypedDict('V1dNlfitParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "afni.1dNLfit": v_1d_nlfit_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "afni.1dNLfit": v_1d_nlfit_outputs,
-    }.get(t)
-
-
 class V1dNlfitOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `v_1d_nlfit(...)`.
+    Output object returned when calling `V1dNlfitParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -72,7 +48,7 @@ def v_1d_nlfit_params(
     parameters: list[str],
     dependent_data: InputPathType,
     method: int | None = None,
-) -> V1dNlfitParameters:
+) -> V1dNlfitParametersTagged:
     """
     Build parameters.
     
@@ -99,7 +75,7 @@ def v_1d_nlfit_params(
         Parameter dictionary
     """
     params = {
-        "@type": "afni.1dNLfit",
+        "@type": "afni/1dNLfit",
         "expression": expression,
         "independent_variable": independent_variable,
         "parameters": parameters,
@@ -127,24 +103,24 @@ def v_1d_nlfit_cargs(
     cargs.append("1dNLfit")
     cargs.extend([
         "-expr",
-        params.get("expression")
+        params.get("expression", None)
     ])
     cargs.extend([
         "-indvar",
-        params.get("independent_variable")
+        params.get("independent_variable", None)
     ])
     cargs.extend([
         "-param",
-        *params.get("parameters")
+        *params.get("parameters", None)
     ])
     cargs.extend([
         "-depdata",
-        execution.input_file(params.get("dependent_data"))
+        execution.input_file(params.get("dependent_data", None))
     ])
-    if params.get("method") is not None:
+    if params.get("method", None) is not None:
         cargs.extend([
             "-meth",
-            str(params.get("method"))
+            str(params.get("method", None))
         ])
     return cargs
 
@@ -251,7 +227,6 @@ def v_1d_nlfit(
 
 __all__ = [
     "V1dNlfitOutputs",
-    "V1dNlfitParameters",
     "V_1D_NLFIT_METADATA",
     "v_1d_nlfit",
     "v_1d_nlfit_execute",

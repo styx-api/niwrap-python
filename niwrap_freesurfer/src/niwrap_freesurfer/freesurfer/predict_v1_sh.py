@@ -14,7 +14,16 @@ PREDICT_V1_SH_METADATA = Metadata(
 
 
 PredictV1ShParameters = typing.TypedDict('PredictV1ShParameters', {
-    "@type": typing.Literal["freesurfer.predict_v1.sh"],
+    "@type": typing.NotRequired[typing.Literal["freesurfer/predict_v1.sh"]],
+    "template": typing.NotRequired[str | None],
+    "inflated_surface_flag": bool,
+    "hemisphere": typing.NotRequired[str | None],
+    "print_mode_flag": bool,
+    "subjects": list[str],
+    "usage_flag": bool,
+})
+PredictV1ShParametersTagged = typing.TypedDict('PredictV1ShParametersTagged', {
+    "@type": typing.Literal["freesurfer/predict_v1.sh"],
     "template": typing.NotRequired[str | None],
     "inflated_surface_flag": bool,
     "hemisphere": typing.NotRequired[str | None],
@@ -24,40 +33,9 @@ PredictV1ShParameters = typing.TypedDict('PredictV1ShParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "freesurfer.predict_v1.sh": predict_v1_sh_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-    }.get(t)
-
-
 class PredictV1ShOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `predict_v1_sh(...)`.
+    Output object returned when calling `PredictV1ShParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -70,7 +48,7 @@ def predict_v1_sh_params(
     hemisphere: str | None = None,
     print_mode_flag: bool = False,
     usage_flag: bool = False,
-) -> PredictV1ShParameters:
+) -> PredictV1ShParametersTagged:
     """
     Build parameters.
     
@@ -86,7 +64,7 @@ def predict_v1_sh_params(
         Parameter dictionary
     """
     params = {
-        "@type": "freesurfer.predict_v1.sh",
+        "@type": "freesurfer/predict_v1.sh",
         "inflated_surface_flag": inflated_surface_flag,
         "print_mode_flag": print_mode_flag,
         "subjects": subjects,
@@ -114,22 +92,22 @@ def predict_v1_sh_cargs(
     """
     cargs = []
     cargs.append("predict_v1.sh")
-    if params.get("template") is not None:
+    if params.get("template", None) is not None:
         cargs.extend([
             "-t",
-            params.get("template")
+            params.get("template", None)
         ])
-    if params.get("inflated_surface_flag"):
+    if params.get("inflated_surface_flag", False):
         cargs.append("-i")
-    if params.get("hemisphere") is not None:
+    if params.get("hemisphere", None) is not None:
         cargs.extend([
             "-h",
-            params.get("hemisphere")
+            params.get("hemisphere", None)
         ])
-    if params.get("print_mode_flag"):
+    if params.get("print_mode_flag", False):
         cargs.append("-p")
-    cargs.extend(params.get("subjects"))
-    if params.get("usage_flag"):
+    cargs.extend(params.get("subjects", None))
+    if params.get("usage_flag", False):
         cargs.append("-u")
     return cargs
 
@@ -225,7 +203,6 @@ def predict_v1_sh(
 __all__ = [
     "PREDICT_V1_SH_METADATA",
     "PredictV1ShOutputs",
-    "PredictV1ShParameters",
     "predict_v1_sh",
     "predict_v1_sh_execute",
     "predict_v1_sh_params",

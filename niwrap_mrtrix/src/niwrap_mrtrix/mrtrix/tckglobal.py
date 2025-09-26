@@ -14,20 +14,64 @@ TCKGLOBAL_METADATA = Metadata(
 
 
 TckglobalRisoParameters = typing.TypedDict('TckglobalRisoParameters', {
-    "@type": typing.Literal["mrtrix.tckglobal.riso"],
+    "@type": typing.NotRequired[typing.Literal["riso"]],
+    "response": InputPathType,
+})
+TckglobalRisoParametersTagged = typing.TypedDict('TckglobalRisoParametersTagged', {
+    "@type": typing.Literal["riso"],
     "response": InputPathType,
 })
 
 
 TckglobalConfigParameters = typing.TypedDict('TckglobalConfigParameters', {
-    "@type": typing.Literal["mrtrix.tckglobal.config"],
+    "@type": typing.NotRequired[typing.Literal["config"]],
+    "key": str,
+    "value": str,
+})
+TckglobalConfigParametersTagged = typing.TypedDict('TckglobalConfigParametersTagged', {
+    "@type": typing.Literal["config"],
     "key": str,
     "value": str,
 })
 
 
 TckglobalParameters = typing.TypedDict('TckglobalParameters', {
-    "@type": typing.Literal["mrtrix.tckglobal"],
+    "@type": typing.NotRequired[typing.Literal["mrtrix/tckglobal"]],
+    "grad": typing.NotRequired[InputPathType | None],
+    "mask": typing.NotRequired[InputPathType | None],
+    "riso": typing.NotRequired[list[TckglobalRisoParameters] | None],
+    "lmax": typing.NotRequired[int | None],
+    "length": typing.NotRequired[float | None],
+    "weight": typing.NotRequired[float | None],
+    "ppot": typing.NotRequired[float | None],
+    "cpot": typing.NotRequired[float | None],
+    "t0": typing.NotRequired[float | None],
+    "t1": typing.NotRequired[float | None],
+    "niter": typing.NotRequired[int | None],
+    "fod": typing.NotRequired[str | None],
+    "noapo": bool,
+    "fiso": typing.NotRequired[str | None],
+    "eext": typing.NotRequired[str | None],
+    "etrend": typing.NotRequired[str | None],
+    "balance": typing.NotRequired[float | None],
+    "density": typing.NotRequired[float | None],
+    "prob": typing.NotRequired[list[float] | None],
+    "beta": typing.NotRequired[float | None],
+    "lambda": typing.NotRequired[float | None],
+    "info": bool,
+    "quiet": bool,
+    "debug": bool,
+    "force": bool,
+    "nthreads": typing.NotRequired[int | None],
+    "config": typing.NotRequired[list[TckglobalConfigParameters] | None],
+    "help": bool,
+    "version": bool,
+    "source": InputPathType,
+    "response": InputPathType,
+    "tracks": str,
+})
+TckglobalParametersTagged = typing.TypedDict('TckglobalParametersTagged', {
+    "@type": typing.Literal["mrtrix/tckglobal"],
     "grad": typing.NotRequired[InputPathType | None],
     "mask": typing.NotRequired[InputPathType | None],
     "riso": typing.NotRequired[list[TckglobalRisoParameters] | None],
@@ -63,43 +107,9 @@ TckglobalParameters = typing.TypedDict('TckglobalParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "mrtrix.tckglobal": tckglobal_cargs,
-        "mrtrix.tckglobal.riso": tckglobal_riso_cargs,
-        "mrtrix.tckglobal.config": tckglobal_config_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "mrtrix.tckglobal": tckglobal_outputs,
-    }.get(t)
-
-
 def tckglobal_riso_params(
     response: InputPathType,
-) -> TckglobalRisoParameters:
+) -> TckglobalRisoParametersTagged:
     """
     Build parameters.
     
@@ -110,7 +120,7 @@ def tckglobal_riso_params(
         Parameter dictionary
     """
     params = {
-        "@type": "mrtrix.tckglobal.riso",
+        "@type": "riso",
         "response": response,
     }
     return params
@@ -131,14 +141,14 @@ def tckglobal_riso_cargs(
     """
     cargs = []
     cargs.append("-riso")
-    cargs.append(execution.input_file(params.get("response")))
+    cargs.append(execution.input_file(params.get("response", None)))
     return cargs
 
 
 def tckglobal_config_params(
     key: str,
     value: str,
-) -> TckglobalConfigParameters:
+) -> TckglobalConfigParametersTagged:
     """
     Build parameters.
     
@@ -149,7 +159,7 @@ def tckglobal_config_params(
         Parameter dictionary
     """
     params = {
-        "@type": "mrtrix.tckglobal.config",
+        "@type": "config",
         "key": key,
         "value": value,
     }
@@ -171,14 +181,14 @@ def tckglobal_config_cargs(
     """
     cargs = []
     cargs.append("-config")
-    cargs.append(params.get("key"))
-    cargs.append(params.get("value"))
+    cargs.append(params.get("key", None))
+    cargs.append(params.get("value", None))
     return cargs
 
 
 class TckglobalOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `tckglobal(...)`.
+    Output object returned when calling `TckglobalParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -234,7 +244,7 @@ def tckglobal_params(
     config: list[TckglobalConfigParameters] | None = None,
     help_: bool = False,
     version: bool = False,
-) -> TckglobalParameters:
+) -> TckglobalParametersTagged:
     """
     Build parameters.
     
@@ -306,7 +316,7 @@ def tckglobal_params(
         Parameter dictionary
     """
     params = {
-        "@type": "mrtrix.tckglobal",
+        "@type": "mrtrix/tckglobal",
         "noapo": noapo,
         "info": info,
         "quiet": quiet,
@@ -380,127 +390,127 @@ def tckglobal_cargs(
     """
     cargs = []
     cargs.append("tckglobal")
-    if params.get("grad") is not None:
+    if params.get("grad", None) is not None:
         cargs.extend([
             "-grad",
-            execution.input_file(params.get("grad"))
+            execution.input_file(params.get("grad", None))
         ])
-    if params.get("mask") is not None:
+    if params.get("mask", None) is not None:
         cargs.extend([
             "-mask",
-            execution.input_file(params.get("mask"))
+            execution.input_file(params.get("mask", None))
         ])
-    if params.get("riso") is not None:
-        cargs.extend([a for c in [dyn_cargs(s["@type"])(s, execution) for s in params.get("riso")] for a in c])
-    if params.get("lmax") is not None:
+    if params.get("riso", None) is not None:
+        cargs.extend([a for c in [tckglobal_riso_cargs(s, execution) for s in params.get("riso", None)] for a in c])
+    if params.get("lmax", None) is not None:
         cargs.extend([
             "-lmax",
-            str(params.get("lmax"))
+            str(params.get("lmax", None))
         ])
-    if params.get("length") is not None:
+    if params.get("length", None) is not None:
         cargs.extend([
             "-length",
-            str(params.get("length"))
+            str(params.get("length", None))
         ])
-    if params.get("weight") is not None:
+    if params.get("weight", None) is not None:
         cargs.extend([
             "-weight",
-            str(params.get("weight"))
+            str(params.get("weight", None))
         ])
-    if params.get("ppot") is not None:
+    if params.get("ppot", None) is not None:
         cargs.extend([
             "-ppot",
-            str(params.get("ppot"))
+            str(params.get("ppot", None))
         ])
-    if params.get("cpot") is not None:
+    if params.get("cpot", None) is not None:
         cargs.extend([
             "-cpot",
-            str(params.get("cpot"))
+            str(params.get("cpot", None))
         ])
-    if params.get("t0") is not None:
+    if params.get("t0", None) is not None:
         cargs.extend([
             "-t0",
-            str(params.get("t0"))
+            str(params.get("t0", None))
         ])
-    if params.get("t1") is not None:
+    if params.get("t1", None) is not None:
         cargs.extend([
             "-t1",
-            str(params.get("t1"))
+            str(params.get("t1", None))
         ])
-    if params.get("niter") is not None:
+    if params.get("niter", None) is not None:
         cargs.extend([
             "-niter",
-            str(params.get("niter"))
+            str(params.get("niter", None))
         ])
-    if params.get("fod") is not None:
+    if params.get("fod", None) is not None:
         cargs.extend([
             "-fod",
-            params.get("fod")
+            params.get("fod", None)
         ])
-    if params.get("noapo"):
+    if params.get("noapo", False):
         cargs.append("-noapo")
-    if params.get("fiso") is not None:
+    if params.get("fiso", None) is not None:
         cargs.extend([
             "-fiso",
-            params.get("fiso")
+            params.get("fiso", None)
         ])
-    if params.get("eext") is not None:
+    if params.get("eext", None) is not None:
         cargs.extend([
             "-eext",
-            params.get("eext")
+            params.get("eext", None)
         ])
-    if params.get("etrend") is not None:
+    if params.get("etrend", None) is not None:
         cargs.extend([
             "-etrend",
-            params.get("etrend")
+            params.get("etrend", None)
         ])
-    if params.get("balance") is not None:
+    if params.get("balance", None) is not None:
         cargs.extend([
             "-balance",
-            str(params.get("balance"))
+            str(params.get("balance", None))
         ])
-    if params.get("density") is not None:
+    if params.get("density", None) is not None:
         cargs.extend([
             "-density",
-            str(params.get("density"))
+            str(params.get("density", None))
         ])
-    if params.get("prob") is not None:
+    if params.get("prob", None) is not None:
         cargs.extend([
             "-prob",
-            *map(str, params.get("prob"))
+            *map(str, params.get("prob", None))
         ])
-    if params.get("beta") is not None:
+    if params.get("beta", None) is not None:
         cargs.extend([
             "-beta",
-            str(params.get("beta"))
+            str(params.get("beta", None))
         ])
-    if params.get("lambda") is not None:
+    if params.get("lambda", None) is not None:
         cargs.extend([
             "-lambda",
-            str(params.get("lambda"))
+            str(params.get("lambda", None))
         ])
-    if params.get("info"):
+    if params.get("info", False):
         cargs.append("-info")
-    if params.get("quiet"):
+    if params.get("quiet", False):
         cargs.append("-quiet")
-    if params.get("debug"):
+    if params.get("debug", False):
         cargs.append("-debug")
-    if params.get("force"):
+    if params.get("force", False):
         cargs.append("-force")
-    if params.get("nthreads") is not None:
+    if params.get("nthreads", None) is not None:
         cargs.extend([
             "-nthreads",
-            str(params.get("nthreads"))
+            str(params.get("nthreads", None))
         ])
-    if params.get("config") is not None:
-        cargs.extend([a for c in [dyn_cargs(s["@type"])(s, execution) for s in params.get("config")] for a in c])
-    if params.get("help"):
+    if params.get("config", None) is not None:
+        cargs.extend([a for c in [tckglobal_config_cargs(s, execution) for s in params.get("config", None)] for a in c])
+    if params.get("help", False):
         cargs.append("-help")
-    if params.get("version"):
+    if params.get("version", False):
         cargs.append("-version")
-    cargs.append(execution.input_file(params.get("source")))
-    cargs.append(execution.input_file(params.get("response")))
-    cargs.append(params.get("tracks"))
+    cargs.append(execution.input_file(params.get("source", None)))
+    cargs.append(execution.input_file(params.get("response", None)))
+    cargs.append(params.get("tracks", None))
     return cargs
 
 
@@ -519,11 +529,11 @@ def tckglobal_outputs(
     """
     ret = TckglobalOutputs(
         root=execution.output_file("."),
-        tracks=execution.output_file(params.get("tracks")),
-        fod=execution.output_file(params.get("fod")) if (params.get("fod") is not None) else None,
-        fiso=execution.output_file(params.get("fiso")) if (params.get("fiso") is not None) else None,
-        eext=execution.output_file(params.get("eext")) if (params.get("eext") is not None) else None,
-        etrend=execution.output_file(params.get("etrend")) if (params.get("etrend") is not None) else None,
+        tracks=execution.output_file(params.get("tracks", None)),
+        fod=execution.output_file(params.get("fod", None)) if (params.get("fod") is not None) else None,
+        fiso=execution.output_file(params.get("fiso", None)) if (params.get("fiso") is not None) else None,
+        eext=execution.output_file(params.get("eext", None)) if (params.get("eext") is not None) else None,
+        etrend=execution.output_file(params.get("etrend", None)) if (params.get("etrend") is not None) else None,
     )
     return ret
 
@@ -751,10 +761,7 @@ def tckglobal(
 
 __all__ = [
     "TCKGLOBAL_METADATA",
-    "TckglobalConfigParameters",
     "TckglobalOutputs",
-    "TckglobalParameters",
-    "TckglobalRisoParameters",
     "tckglobal",
     "tckglobal_config_params",
     "tckglobal_execute",

@@ -14,47 +14,20 @@ SEGMENT_THALAMIC_NUCLEI_SH_METADATA = Metadata(
 
 
 SegmentThalamicNucleiShParameters = typing.TypedDict('SegmentThalamicNucleiShParameters', {
-    "@type": typing.Literal["freesurfer.segmentThalamicNuclei.sh"],
+    "@type": typing.NotRequired[typing.Literal["freesurfer/segmentThalamicNuclei.sh"]],
+    "subject_id": str,
+    "output_dir": str,
+})
+SegmentThalamicNucleiShParametersTagged = typing.TypedDict('SegmentThalamicNucleiShParametersTagged', {
+    "@type": typing.Literal["freesurfer/segmentThalamicNuclei.sh"],
     "subject_id": str,
     "output_dir": str,
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "freesurfer.segmentThalamicNuclei.sh": segment_thalamic_nuclei_sh_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "freesurfer.segmentThalamicNuclei.sh": segment_thalamic_nuclei_sh_outputs,
-    }.get(t)
-
-
 class SegmentThalamicNucleiShOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `segment_thalamic_nuclei_sh(...)`.
+    Output object returned when calling `SegmentThalamicNucleiShParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -65,7 +38,7 @@ class SegmentThalamicNucleiShOutputs(typing.NamedTuple):
 def segment_thalamic_nuclei_sh_params(
     subject_id: str,
     output_dir: str,
-) -> SegmentThalamicNucleiShParameters:
+) -> SegmentThalamicNucleiShParametersTagged:
     """
     Build parameters.
     
@@ -76,7 +49,7 @@ def segment_thalamic_nuclei_sh_params(
         Parameter dictionary
     """
     params = {
-        "@type": "freesurfer.segmentThalamicNuclei.sh",
+        "@type": "freesurfer/segmentThalamicNuclei.sh",
         "subject_id": subject_id,
         "output_dir": output_dir,
     }
@@ -98,8 +71,8 @@ def segment_thalamic_nuclei_sh_cargs(
     """
     cargs = []
     cargs.append("segmentThalamicNuclei.sh")
-    cargs.append(params.get("subject_id"))
-    cargs.append(params.get("output_dir"))
+    cargs.append(params.get("subject_id", None))
+    cargs.append(params.get("output_dir", None))
     return cargs
 
 
@@ -118,7 +91,7 @@ def segment_thalamic_nuclei_sh_outputs(
     """
     ret = SegmentThalamicNucleiShOutputs(
         root=execution.output_file("."),
-        thalamic_nuclei_output=execution.output_file(params.get("output_dir") + "/" + params.get("subject_id") + "_thalamic_nuclei.mgz"),
+        thalamic_nuclei_output=execution.output_file(params.get("output_dir", None) + "/" + params.get("subject_id", None) + "_thalamic_nuclei.mgz"),
     )
     return ret
 
@@ -182,7 +155,6 @@ def segment_thalamic_nuclei_sh(
 __all__ = [
     "SEGMENT_THALAMIC_NUCLEI_SH_METADATA",
     "SegmentThalamicNucleiShOutputs",
-    "SegmentThalamicNucleiShParameters",
     "segment_thalamic_nuclei_sh",
     "segment_thalamic_nuclei_sh_execute",
     "segment_thalamic_nuclei_sh_params",

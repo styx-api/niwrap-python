@@ -14,7 +14,32 @@ V_3DANISOSMOOTH_METADATA = Metadata(
 
 
 V3danisosmoothParameters = typing.TypedDict('V3danisosmoothParameters', {
-    "@type": typing.Literal["afni.3danisosmooth"],
+    "@type": typing.NotRequired[typing.Literal["afni/3danisosmooth"]],
+    "input_dataset": InputPathType,
+    "prefix": typing.NotRequired[str | None],
+    "iterations": typing.NotRequired[float | None],
+    "2d_flag": bool,
+    "3d_flag": bool,
+    "mask_dataset": typing.NotRequired[InputPathType | None],
+    "automask_flag": bool,
+    "viewer_flag": bool,
+    "nosmooth_flag": bool,
+    "sigma1": typing.NotRequired[float | None],
+    "sigma2": typing.NotRequired[float | None],
+    "deltat": typing.NotRequired[float | None],
+    "savetempdata_flag": bool,
+    "save_temp_with_diff_measures_flag": bool,
+    "phiding_flag": bool,
+    "phiexp_flag": bool,
+    "noneg_flag": bool,
+    "setneg_value": typing.NotRequired[float | None],
+    "edgefraction": typing.NotRequired[float | None],
+    "datum_type": typing.NotRequired[str | None],
+    "matchorig_flag": bool,
+    "help_flag": bool,
+})
+V3danisosmoothParametersTagged = typing.TypedDict('V3danisosmoothParametersTagged', {
+    "@type": typing.Literal["afni/3danisosmooth"],
     "input_dataset": InputPathType,
     "prefix": typing.NotRequired[str | None],
     "iterations": typing.NotRequired[float | None],
@@ -40,41 +65,9 @@ V3danisosmoothParameters = typing.TypedDict('V3danisosmoothParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "afni.3danisosmooth": v_3danisosmooth_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "afni.3danisosmooth": v_3danisosmooth_outputs,
-    }.get(t)
-
-
 class V3danisosmoothOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `v_3danisosmooth(...)`.
+    Output object returned when calling `V3danisosmoothParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -122,7 +115,7 @@ def v_3danisosmooth_params(
     datum_type: str | None = None,
     matchorig_flag: bool = False,
     help_flag: bool = False,
-) -> V3danisosmoothParameters:
+) -> V3danisosmoothParametersTagged:
     """
     Build parameters.
     
@@ -158,7 +151,7 @@ def v_3danisosmooth_params(
         Parameter dictionary
     """
     params = {
-        "@type": "afni.3danisosmooth",
+        "@type": "afni/3danisosmooth",
         "input_dataset": input_dataset,
         "2d_flag": v_2d_flag,
         "3d_flag": v_3d_flag,
@@ -209,75 +202,75 @@ def v_3danisosmooth_cargs(
     """
     cargs = []
     cargs.append("3danisosmooth")
-    cargs.append(execution.input_file(params.get("input_dataset")))
-    if params.get("prefix") is not None:
+    cargs.append(execution.input_file(params.get("input_dataset", None)))
+    if params.get("prefix", None) is not None:
         cargs.extend([
             "-prefix",
-            params.get("prefix")
+            params.get("prefix", None)
         ])
-    if params.get("iterations") is not None:
+    if params.get("iterations", None) is not None:
         cargs.extend([
             "-iters",
-            str(params.get("iterations"))
+            str(params.get("iterations", None))
         ])
-    if params.get("2d_flag"):
+    if params.get("2d_flag", False):
         cargs.append("-2D")
-    if params.get("3d_flag"):
+    if params.get("3d_flag", False):
         cargs.append("-3D")
-    if params.get("mask_dataset") is not None:
+    if params.get("mask_dataset", None) is not None:
         cargs.extend([
             "-mask",
-            execution.input_file(params.get("mask_dataset"))
+            execution.input_file(params.get("mask_dataset", None))
         ])
-    if params.get("automask_flag"):
+    if params.get("automask_flag", False):
         cargs.append("-automask")
-    if params.get("viewer_flag"):
+    if params.get("viewer_flag", False):
         cargs.append("-viewer")
-    if params.get("nosmooth_flag"):
+    if params.get("nosmooth_flag", False):
         cargs.append("-nosmooth")
-    if params.get("sigma1") is not None:
+    if params.get("sigma1", None) is not None:
         cargs.extend([
             "-sigma1",
-            str(params.get("sigma1"))
+            str(params.get("sigma1", None))
         ])
-    if params.get("sigma2") is not None:
+    if params.get("sigma2", None) is not None:
         cargs.extend([
             "-sigma2",
-            str(params.get("sigma2"))
+            str(params.get("sigma2", None))
         ])
-    if params.get("deltat") is not None:
+    if params.get("deltat", None) is not None:
         cargs.extend([
             "-deltat",
-            str(params.get("deltat"))
+            str(params.get("deltat", None))
         ])
-    if params.get("savetempdata_flag"):
+    if params.get("savetempdata_flag", False):
         cargs.append("-savetempdata")
-    if params.get("save_temp_with_diff_measures_flag"):
+    if params.get("save_temp_with_diff_measures_flag", False):
         cargs.append("-save_temp_with_diff_measures")
-    if params.get("phiding_flag"):
+    if params.get("phiding_flag", False):
         cargs.append("-phiding")
-    if params.get("phiexp_flag"):
+    if params.get("phiexp_flag", False):
         cargs.append("-phiexp")
-    if params.get("noneg_flag"):
+    if params.get("noneg_flag", False):
         cargs.append("-noneg")
-    if params.get("setneg_value") is not None:
+    if params.get("setneg_value", None) is not None:
         cargs.extend([
             "-setneg",
-            str(params.get("setneg_value"))
+            str(params.get("setneg_value", None))
         ])
-    if params.get("edgefraction") is not None:
+    if params.get("edgefraction", None) is not None:
         cargs.extend([
             "-edgefraction",
-            str(params.get("edgefraction"))
+            str(params.get("edgefraction", None))
         ])
-    if params.get("datum_type") is not None:
+    if params.get("datum_type", None) is not None:
         cargs.extend([
             "-datum",
-            params.get("datum_type")
+            params.get("datum_type", None)
         ])
-    if params.get("matchorig_flag"):
+    if params.get("matchorig_flag", False):
         cargs.append("-matchorig")
-    if params.get("help_flag"):
+    if params.get("help_flag", False):
         cargs.append("-help")
     return cargs
 
@@ -297,7 +290,7 @@ def v_3danisosmooth_outputs(
     """
     ret = V3danisosmoothOutputs(
         root=execution.output_file("."),
-        output_dataset=execution.output_file(params.get("prefix") + "+smooth") if (params.get("prefix") is not None) else None,
+        output_dataset=execution.output_file(params.get("prefix", None) + "+smooth") if (params.get("prefix") is not None) else None,
         gradient_data=execution.output_file("Gradient.ITER"),
         eigens_data=execution.output_file("Eigens.ITER"),
         phi_data=execution.output_file("phi.ITER"),
@@ -433,7 +426,6 @@ def v_3danisosmooth(
 
 __all__ = [
     "V3danisosmoothOutputs",
-    "V3danisosmoothParameters",
     "V_3DANISOSMOOTH_METADATA",
     "v_3danisosmooth",
     "v_3danisosmooth_execute",

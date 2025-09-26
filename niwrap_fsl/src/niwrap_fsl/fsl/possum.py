@@ -14,7 +14,34 @@ POSSUM_METADATA = Metadata(
 
 
 PossumParameters = typing.TypedDict('PossumParameters', {
-    "@type": typing.Literal["fsl.possum"],
+    "@type": typing.NotRequired[typing.Literal["fsl/possum"]],
+    "input_volume": InputPathType,
+    "mr_parameters": InputPathType,
+    "motion_matrix": InputPathType,
+    "pulse_sequence": str,
+    "rf_slice_profile": InputPathType,
+    "output_signal": str,
+    "event_matrix": InputPathType,
+    "verbose": bool,
+    "help": bool,
+    "kcoord": bool,
+    "b0_inhomogeneities": typing.NotRequired[str | None],
+    "extra_b0_inhomogeneities": typing.NotRequired[InputPathType | None],
+    "b0_inhomogeneities_timecourse": typing.NotRequired[InputPathType | None],
+    "rf_inhomogeneity_receive": typing.NotRequired[InputPathType | None],
+    "rf_inhomogeneity_transmit": typing.NotRequired[InputPathType | None],
+    "activation_volume": typing.NotRequired[InputPathType | None],
+    "activation_timecourse": typing.NotRequired[InputPathType | None],
+    "activation_4d_volume": typing.NotRequired[InputPathType | None],
+    "activation_4d_timecourse": typing.NotRequired[InputPathType | None],
+    "level": typing.NotRequired[str | None],
+    "num_procs": typing.NotRequired[float | None],
+    "proc_id": typing.NotRequired[float | None],
+    "no_speedup": bool,
+    "rf_average": bool,
+})
+PossumParametersTagged = typing.TypedDict('PossumParametersTagged', {
+    "@type": typing.Literal["fsl/possum"],
     "input_volume": InputPathType,
     "mr_parameters": InputPathType,
     "motion_matrix": InputPathType,
@@ -42,41 +69,9 @@ PossumParameters = typing.TypedDict('PossumParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "fsl.possum": possum_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "fsl.possum": possum_outputs,
-    }.get(t)
-
-
 class PossumOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `possum(...)`.
+    Output object returned when calling `PossumParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -109,7 +104,7 @@ def possum_params(
     proc_id: float | None = None,
     no_speedup: bool = False,
     rf_average: bool = False,
-) -> PossumParameters:
+) -> PossumParametersTagged:
     """
     Build parameters.
     
@@ -148,7 +143,7 @@ def possum_params(
         Parameter dictionary
     """
     params = {
-        "@type": "fsl.possum",
+        "@type": "fsl/possum",
         "input_volume": input_volume,
         "mr_parameters": mr_parameters,
         "motion_matrix": motion_matrix,
@@ -206,101 +201,101 @@ def possum_cargs(
     cargs.append("possum")
     cargs.extend([
         "--inp",
-        execution.input_file(params.get("input_volume"))
+        execution.input_file(params.get("input_volume", None))
     ])
     cargs.extend([
         "--mrpar",
-        execution.input_file(params.get("mr_parameters"))
+        execution.input_file(params.get("mr_parameters", None))
     ])
     cargs.extend([
         "--motion",
-        execution.input_file(params.get("motion_matrix"))
+        execution.input_file(params.get("motion_matrix", None))
     ])
     cargs.extend([
         "--pulse",
-        params.get("pulse_sequence")
+        params.get("pulse_sequence", None)
     ])
     cargs.extend([
         "--slcprof",
-        execution.input_file(params.get("rf_slice_profile"))
+        execution.input_file(params.get("rf_slice_profile", None))
     ])
     cargs.extend([
         "--out",
-        params.get("output_signal")
+        params.get("output_signal", None)
     ])
     cargs.extend([
         "--mainmatx",
-        execution.input_file(params.get("event_matrix"))
+        execution.input_file(params.get("event_matrix", None))
     ])
-    if params.get("verbose"):
+    if params.get("verbose", False):
         cargs.append("--verbose")
-    if params.get("help"):
+    if params.get("help", False):
         cargs.append("--help")
-    if params.get("kcoord"):
+    if params.get("kcoord", False):
         cargs.append("--kcoord")
-    if params.get("b0_inhomogeneities") is not None:
+    if params.get("b0_inhomogeneities", None) is not None:
         cargs.extend([
             "--b0p",
-            params.get("b0_inhomogeneities")
+            params.get("b0_inhomogeneities", None)
         ])
-    if params.get("extra_b0_inhomogeneities") is not None:
+    if params.get("extra_b0_inhomogeneities", None) is not None:
         cargs.extend([
             "--b0extra",
-            execution.input_file(params.get("extra_b0_inhomogeneities"))
+            execution.input_file(params.get("extra_b0_inhomogeneities", None))
         ])
-    if params.get("b0_inhomogeneities_timecourse") is not None:
+    if params.get("b0_inhomogeneities_timecourse", None) is not None:
         cargs.extend([
             "--b0time",
-            execution.input_file(params.get("b0_inhomogeneities_timecourse"))
+            execution.input_file(params.get("b0_inhomogeneities_timecourse", None))
         ])
-    if params.get("rf_inhomogeneity_receive") is not None:
+    if params.get("rf_inhomogeneity_receive", None) is not None:
         cargs.extend([
             "--rfr",
-            execution.input_file(params.get("rf_inhomogeneity_receive"))
+            execution.input_file(params.get("rf_inhomogeneity_receive", None))
         ])
-    if params.get("rf_inhomogeneity_transmit") is not None:
+    if params.get("rf_inhomogeneity_transmit", None) is not None:
         cargs.extend([
             "--rft",
-            execution.input_file(params.get("rf_inhomogeneity_transmit"))
+            execution.input_file(params.get("rf_inhomogeneity_transmit", None))
         ])
-    if params.get("activation_volume") is not None:
+    if params.get("activation_volume", None) is not None:
         cargs.extend([
             "--activ",
-            execution.input_file(params.get("activation_volume"))
+            execution.input_file(params.get("activation_volume", None))
         ])
-    if params.get("activation_timecourse") is not None:
+    if params.get("activation_timecourse", None) is not None:
         cargs.extend([
             "--activt",
-            execution.input_file(params.get("activation_timecourse"))
+            execution.input_file(params.get("activation_timecourse", None))
         ])
-    if params.get("activation_4d_volume") is not None:
+    if params.get("activation_4d_volume", None) is not None:
         cargs.extend([
             "--activ4D",
-            execution.input_file(params.get("activation_4d_volume"))
+            execution.input_file(params.get("activation_4d_volume", None))
         ])
-    if params.get("activation_4d_timecourse") is not None:
+    if params.get("activation_4d_timecourse", None) is not None:
         cargs.extend([
             "--activt4D",
-            execution.input_file(params.get("activation_4d_timecourse"))
+            execution.input_file(params.get("activation_4d_timecourse", None))
         ])
-    if params.get("level") is not None:
+    if params.get("level", None) is not None:
         cargs.extend([
             "--lev",
-            params.get("level")
+            params.get("level", None)
         ])
-    if params.get("num_procs") is not None:
+    if params.get("num_procs", None) is not None:
         cargs.extend([
             "--nproc",
-            str(params.get("num_procs"))
+            str(params.get("num_procs", None))
         ])
-    if params.get("proc_id") is not None:
+    if params.get("proc_id", None) is not None:
         cargs.extend([
             "--procid",
-            str(params.get("proc_id"))
+            str(params.get("proc_id", None))
         ])
-    if params.get("no_speedup"):
+    if params.get("no_speedup", False):
         cargs.append("--nospeedup")
-    if params.get("rf_average"):
+    if params.get("rf_average", False):
         cargs.append("--rfavg")
     return cargs
 
@@ -456,7 +451,6 @@ def possum(
 __all__ = [
     "POSSUM_METADATA",
     "PossumOutputs",
-    "PossumParameters",
     "possum",
     "possum_execute",
     "possum_params",

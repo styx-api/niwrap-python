@@ -14,47 +14,20 @@ IMLN_METADATA = Metadata(
 
 
 ImlnParameters = typing.TypedDict('ImlnParameters', {
-    "@type": typing.Literal["fsl.imln"],
+    "@type": typing.NotRequired[typing.Literal["fsl/imln"]],
+    "input_file": InputPathType,
+    "link_name": str,
+})
+ImlnParametersTagged = typing.TypedDict('ImlnParametersTagged', {
+    "@type": typing.Literal["fsl/imln"],
     "input_file": InputPathType,
     "link_name": str,
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "fsl.imln": imln_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "fsl.imln": imln_outputs,
-    }.get(t)
-
-
 class ImlnOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `imln(...)`.
+    Output object returned when calling `ImlnParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -65,7 +38,7 @@ class ImlnOutputs(typing.NamedTuple):
 def imln_params(
     input_file: InputPathType,
     link_name: str,
-) -> ImlnParameters:
+) -> ImlnParametersTagged:
     """
     Build parameters.
     
@@ -76,7 +49,7 @@ def imln_params(
         Parameter dictionary
     """
     params = {
-        "@type": "fsl.imln",
+        "@type": "fsl/imln",
         "input_file": input_file,
         "link_name": link_name,
     }
@@ -98,8 +71,8 @@ def imln_cargs(
     """
     cargs = []
     cargs.append("imln")
-    cargs.append(execution.input_file(params.get("input_file")))
-    cargs.append(params.get("link_name"))
+    cargs.append(execution.input_file(params.get("input_file", None)))
+    cargs.append(params.get("link_name", None))
     return cargs
 
 
@@ -118,7 +91,7 @@ def imln_outputs(
     """
     ret = ImlnOutputs(
         root=execution.output_file("."),
-        output_link=execution.output_file(params.get("link_name")),
+        output_link=execution.output_file(params.get("link_name", None)),
     )
     return ret
 
@@ -182,7 +155,6 @@ def imln(
 __all__ = [
     "IMLN_METADATA",
     "ImlnOutputs",
-    "ImlnParameters",
     "imln",
     "imln_execute",
     "imln_params",

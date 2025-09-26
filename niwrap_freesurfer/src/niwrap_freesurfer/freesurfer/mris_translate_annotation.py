@@ -14,7 +14,15 @@ MRIS_TRANSLATE_ANNOTATION_METADATA = Metadata(
 
 
 MrisTranslateAnnotationParameters = typing.TypedDict('MrisTranslateAnnotationParameters', {
-    "@type": typing.Literal["freesurfer.mris_translate_annotation"],
+    "@type": typing.NotRequired[typing.Literal["freesurfer/mris_translate_annotation"]],
+    "subject": str,
+    "hemi": str,
+    "in_annot": InputPathType,
+    "translation_file": InputPathType,
+    "out_annot": str,
+})
+MrisTranslateAnnotationParametersTagged = typing.TypedDict('MrisTranslateAnnotationParametersTagged', {
+    "@type": typing.Literal["freesurfer/mris_translate_annotation"],
     "subject": str,
     "hemi": str,
     "in_annot": InputPathType,
@@ -23,41 +31,9 @@ MrisTranslateAnnotationParameters = typing.TypedDict('MrisTranslateAnnotationPar
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "freesurfer.mris_translate_annotation": mris_translate_annotation_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "freesurfer.mris_translate_annotation": mris_translate_annotation_outputs,
-    }.get(t)
-
-
 class MrisTranslateAnnotationOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `mris_translate_annotation(...)`.
+    Output object returned when calling `MrisTranslateAnnotationParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -71,7 +47,7 @@ def mris_translate_annotation_params(
     in_annot: InputPathType,
     translation_file: InputPathType,
     out_annot: str,
-) -> MrisTranslateAnnotationParameters:
+) -> MrisTranslateAnnotationParametersTagged:
     """
     Build parameters.
     
@@ -85,7 +61,7 @@ def mris_translate_annotation_params(
         Parameter dictionary
     """
     params = {
-        "@type": "freesurfer.mris_translate_annotation",
+        "@type": "freesurfer/mris_translate_annotation",
         "subject": subject,
         "hemi": hemi,
         "in_annot": in_annot,
@@ -110,11 +86,11 @@ def mris_translate_annotation_cargs(
     """
     cargs = []
     cargs.append("mris_translate_annotation")
-    cargs.append(params.get("subject"))
-    cargs.append(params.get("hemi"))
-    cargs.append(execution.input_file(params.get("in_annot")))
-    cargs.append(execution.input_file(params.get("translation_file")))
-    cargs.append(params.get("out_annot"))
+    cargs.append(params.get("subject", None))
+    cargs.append(params.get("hemi", None))
+    cargs.append(execution.input_file(params.get("in_annot", None)))
+    cargs.append(execution.input_file(params.get("translation_file", None)))
+    cargs.append(params.get("out_annot", None))
     return cargs
 
 
@@ -133,7 +109,7 @@ def mris_translate_annotation_outputs(
     """
     ret = MrisTranslateAnnotationOutputs(
         root=execution.output_file("."),
-        output_annotation=execution.output_file(params.get("out_annot")),
+        output_annotation=execution.output_file(params.get("out_annot", None)),
     )
     return ret
 
@@ -206,7 +182,6 @@ def mris_translate_annotation(
 __all__ = [
     "MRIS_TRANSLATE_ANNOTATION_METADATA",
     "MrisTranslateAnnotationOutputs",
-    "MrisTranslateAnnotationParameters",
     "mris_translate_annotation",
     "mris_translate_annotation_execute",
     "mris_translate_annotation_params",

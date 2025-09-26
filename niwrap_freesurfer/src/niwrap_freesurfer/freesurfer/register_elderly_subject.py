@@ -14,7 +14,16 @@ REGISTER_ELDERLY_SUBJECT_METADATA = Metadata(
 
 
 RegisterElderlySubjectParameters = typing.TypedDict('RegisterElderlySubjectParameters', {
-    "@type": typing.Literal["freesurfer.register_elderly_subject"],
+    "@type": typing.NotRequired[typing.Literal["freesurfer/register_elderly_subject"]],
+    "sampling_percentage": typing.NotRequired[float | None],
+    "output_fsamples": str,
+    "output_norm": str,
+    "input_volume": InputPathType,
+    "gca_file": InputPathType,
+    "transform_file": InputPathType,
+})
+RegisterElderlySubjectParametersTagged = typing.TypedDict('RegisterElderlySubjectParametersTagged', {
+    "@type": typing.Literal["freesurfer/register_elderly_subject"],
     "sampling_percentage": typing.NotRequired[float | None],
     "output_fsamples": str,
     "output_norm": str,
@@ -24,41 +33,9 @@ RegisterElderlySubjectParameters = typing.TypedDict('RegisterElderlySubjectParam
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "freesurfer.register_elderly_subject": register_elderly_subject_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "freesurfer.register_elderly_subject": register_elderly_subject_outputs,
-    }.get(t)
-
-
 class RegisterElderlySubjectOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `register_elderly_subject(...)`.
+    Output object returned when calling `RegisterElderlySubjectParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -75,7 +52,7 @@ def register_elderly_subject_params(
     gca_file: InputPathType,
     transform_file: InputPathType,
     sampling_percentage: float | None = None,
-) -> RegisterElderlySubjectParameters:
+) -> RegisterElderlySubjectParametersTagged:
     """
     Build parameters.
     
@@ -91,7 +68,7 @@ def register_elderly_subject_params(
         Parameter dictionary
     """
     params = {
-        "@type": "freesurfer.register_elderly_subject",
+        "@type": "freesurfer/register_elderly_subject",
         "output_fsamples": output_fsamples,
         "output_norm": output_norm,
         "input_volume": input_volume,
@@ -118,22 +95,22 @@ def register_elderly_subject_cargs(
     """
     cargs = []
     cargs.append("register_elderly_subject")
-    if params.get("sampling_percentage") is not None:
+    if params.get("sampling_percentage", None) is not None:
         cargs.extend([
             "-p",
-            str(params.get("sampling_percentage"))
+            str(params.get("sampling_percentage", None))
         ])
     cargs.extend([
         "-fsamples",
-        params.get("output_fsamples")
+        params.get("output_fsamples", None)
     ])
     cargs.extend([
         "-norm",
-        params.get("output_norm")
+        params.get("output_norm", None)
     ])
-    cargs.append(execution.input_file(params.get("input_volume")))
-    cargs.append(execution.input_file(params.get("gca_file")))
-    cargs.append(execution.input_file(params.get("transform_file")))
+    cargs.append(execution.input_file(params.get("input_volume", None)))
+    cargs.append(execution.input_file(params.get("gca_file", None)))
+    cargs.append(execution.input_file(params.get("transform_file", None)))
     return cargs
 
 
@@ -152,8 +129,8 @@ def register_elderly_subject_outputs(
     """
     ret = RegisterElderlySubjectOutputs(
         root=execution.output_file("."),
-        transformed_fsamples_output=execution.output_file(params.get("output_fsamples")),
-        normalized_volume_output=execution.output_file(params.get("output_norm")),
+        transformed_fsamples_output=execution.output_file(params.get("output_fsamples", None)),
+        normalized_volume_output=execution.output_file(params.get("output_norm", None)),
     )
     return ret
 
@@ -232,7 +209,6 @@ def register_elderly_subject(
 __all__ = [
     "REGISTER_ELDERLY_SUBJECT_METADATA",
     "RegisterElderlySubjectOutputs",
-    "RegisterElderlySubjectParameters",
     "register_elderly_subject",
     "register_elderly_subject_execute",
     "register_elderly_subject_params",

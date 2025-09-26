@@ -14,47 +14,20 @@ DMRI_NEIGHBORING_REGIONS_METADATA = Metadata(
 
 
 DmriNeighboringRegionsParameters = typing.TypedDict('DmriNeighboringRegionsParameters', {
-    "@type": typing.Literal["freesurfer.dmri_neighboringRegions"],
+    "@type": typing.NotRequired[typing.Literal["freesurfer/dmri_neighboringRegions"]],
+    "input_file": InputPathType,
+    "output_file": str,
+})
+DmriNeighboringRegionsParametersTagged = typing.TypedDict('DmriNeighboringRegionsParametersTagged', {
+    "@type": typing.Literal["freesurfer/dmri_neighboringRegions"],
     "input_file": InputPathType,
     "output_file": str,
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "freesurfer.dmri_neighboringRegions": dmri_neighboring_regions_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "freesurfer.dmri_neighboringRegions": dmri_neighboring_regions_outputs,
-    }.get(t)
-
-
 class DmriNeighboringRegionsOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `dmri_neighboring_regions(...)`.
+    Output object returned when calling `DmriNeighboringRegionsParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -65,7 +38,7 @@ class DmriNeighboringRegionsOutputs(typing.NamedTuple):
 def dmri_neighboring_regions_params(
     input_file: InputPathType,
     output_file: str,
-) -> DmriNeighboringRegionsParameters:
+) -> DmriNeighboringRegionsParametersTagged:
     """
     Build parameters.
     
@@ -76,7 +49,7 @@ def dmri_neighboring_regions_params(
         Parameter dictionary
     """
     params = {
-        "@type": "freesurfer.dmri_neighboringRegions",
+        "@type": "freesurfer/dmri_neighboringRegions",
         "input_file": input_file,
         "output_file": output_file,
     }
@@ -98,8 +71,8 @@ def dmri_neighboring_regions_cargs(
     """
     cargs = []
     cargs.append("dmri_neighboringRegions")
-    cargs.append(execution.input_file(params.get("input_file")))
-    cargs.append(params.get("output_file"))
+    cargs.append(execution.input_file(params.get("input_file", None)))
+    cargs.append(params.get("output_file", None))
     return cargs
 
 
@@ -118,7 +91,7 @@ def dmri_neighboring_regions_outputs(
     """
     ret = DmriNeighboringRegionsOutputs(
         root=execution.output_file("."),
-        result_file=execution.output_file(params.get("output_file")),
+        result_file=execution.output_file(params.get("output_file", None)),
     )
     return ret
 
@@ -182,7 +155,6 @@ def dmri_neighboring_regions(
 __all__ = [
     "DMRI_NEIGHBORING_REGIONS_METADATA",
     "DmriNeighboringRegionsOutputs",
-    "DmriNeighboringRegionsParameters",
     "dmri_neighboring_regions",
     "dmri_neighboring_regions_execute",
     "dmri_neighboring_regions_params",

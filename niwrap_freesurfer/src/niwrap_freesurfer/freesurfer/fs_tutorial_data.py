@@ -14,46 +14,18 @@ FS_TUTORIAL_DATA_METADATA = Metadata(
 
 
 FsTutorialDataParameters = typing.TypedDict('FsTutorialDataParameters', {
-    "@type": typing.Literal["freesurfer.fs_tutorial_data"],
+    "@type": typing.NotRequired[typing.Literal["freesurfer/fs_tutorial_data"]],
+    "rsync_options": typing.NotRequired[list[str] | None],
+})
+FsTutorialDataParametersTagged = typing.TypedDict('FsTutorialDataParametersTagged', {
+    "@type": typing.Literal["freesurfer/fs_tutorial_data"],
     "rsync_options": typing.NotRequired[list[str] | None],
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "freesurfer.fs_tutorial_data": fs_tutorial_data_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "freesurfer.fs_tutorial_data": fs_tutorial_data_outputs,
-    }.get(t)
-
-
 class FsTutorialDataOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `fs_tutorial_data(...)`.
+    Output object returned when calling `FsTutorialDataParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -63,7 +35,7 @@ class FsTutorialDataOutputs(typing.NamedTuple):
 
 def fs_tutorial_data_params(
     rsync_options: list[str] | None = None,
-) -> FsTutorialDataParameters:
+) -> FsTutorialDataParametersTagged:
     """
     Build parameters.
     
@@ -73,7 +45,7 @@ def fs_tutorial_data_params(
         Parameter dictionary
     """
     params = {
-        "@type": "freesurfer.fs_tutorial_data",
+        "@type": "freesurfer/fs_tutorial_data",
     }
     if rsync_options is not None:
         params["rsync_options"] = rsync_options
@@ -95,8 +67,8 @@ def fs_tutorial_data_cargs(
     """
     cargs = []
     cargs.append("fs_tutorial_data")
-    if params.get("rsync_options") is not None:
-        cargs.extend(params.get("rsync_options"))
+    if params.get("rsync_options", None) is not None:
+        cargs.extend(params.get("rsync_options", None))
     return cargs
 
 
@@ -176,7 +148,6 @@ def fs_tutorial_data(
 __all__ = [
     "FS_TUTORIAL_DATA_METADATA",
     "FsTutorialDataOutputs",
-    "FsTutorialDataParameters",
     "fs_tutorial_data",
     "fs_tutorial_data_execute",
     "fs_tutorial_data_params",

@@ -14,7 +14,70 @@ TKREGISTER2_CMDL_METADATA = Metadata(
 
 
 Tkregister2CmdlParameters = typing.TypedDict('Tkregister2CmdlParameters', {
-    "@type": typing.Literal["freesurfer.tkregister2_cmdl"],
+    "@type": typing.NotRequired[typing.Literal["freesurfer/tkregister2_cmdl"]],
+    "movable_volume": InputPathType,
+    "target_volume": InputPathType,
+    "fstarg_flag": bool,
+    "reg_file": typing.NotRequired[InputPathType | None],
+    "check_reg_flag": bool,
+    "regheader_flag": bool,
+    "regheader_center_flag": bool,
+    "fsl_targ_flag": bool,
+    "fsl_targ_lr_flag": bool,
+    "gca_subject": typing.NotRequired[str | None],
+    "gca_skull_subject": typing.NotRequired[str | None],
+    "no_zero_cras_flag": bool,
+    "movbright": typing.NotRequired[float | None],
+    "no_inorm_flag": bool,
+    "fmov": typing.NotRequired[float | None],
+    "fmov_targ_flag": bool,
+    "plane": typing.NotRequired[str | None],
+    "slice": typing.NotRequired[float | None],
+    "volview": typing.NotRequired[str | None],
+    "fov": typing.NotRequired[float | None],
+    "movscale": typing.NotRequired[float | None],
+    "surf": typing.NotRequired[str | None],
+    "surf_rgb": typing.NotRequired[list[float] | None],
+    "lh_only_flag": bool,
+    "rh_only_flag": bool,
+    "fstal_flag": bool,
+    "talxfmname": typing.NotRequired[str | None],
+    "ixfm": typing.NotRequired[InputPathType | None],
+    "xfm": typing.NotRequired[InputPathType | None],
+    "xfmout": typing.NotRequired[InputPathType | None],
+    "fsl": typing.NotRequired[InputPathType | None],
+    "fslregout": typing.NotRequired[InputPathType | None],
+    "freeview": typing.NotRequired[InputPathType | None],
+    "vox2vox": typing.NotRequired[InputPathType | None],
+    "lta": typing.NotRequired[InputPathType | None],
+    "lta_inv": typing.NotRequired[InputPathType | None],
+    "ltaout": typing.NotRequired[InputPathType | None],
+    "ltaout_inv_flag": bool,
+    "feat": typing.NotRequired[str | None],
+    "fsfeat": typing.NotRequired[str | None],
+    "identity_flag": bool,
+    "subject_id": typing.NotRequired[str | None],
+    "subjects_dir": typing.NotRequired[str | None],
+    "nofix_flag": bool,
+    "float2int": typing.NotRequired[str | None],
+    "title": typing.NotRequired[str | None],
+    "tag_flag": bool,
+    "mov_orientation": typing.NotRequired[str | None],
+    "targ_orientation": typing.NotRequired[str | None],
+    "int": typing.NotRequired[list[str] | None],
+    "double_window_size_flag": bool,
+    "window_scale": typing.NotRequired[float | None],
+    "det": typing.NotRequired[InputPathType | None],
+    "aseg_flag": bool,
+    "aparc_flag": bool,
+    "wmparc_flag": bool,
+    "gdiagno": typing.NotRequired[float | None],
+    "trans": typing.NotRequired[list[float] | None],
+    "rot": typing.NotRequired[list[float] | None],
+    "conf_targ_flag": bool,
+})
+Tkregister2CmdlParametersTagged = typing.TypedDict('Tkregister2CmdlParametersTagged', {
+    "@type": typing.Literal["freesurfer/tkregister2_cmdl"],
     "movable_volume": InputPathType,
     "target_volume": InputPathType,
     "fstarg_flag": bool,
@@ -78,40 +141,9 @@ Tkregister2CmdlParameters = typing.TypedDict('Tkregister2CmdlParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "freesurfer.tkregister2_cmdl": tkregister2_cmdl_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-    }.get(t)
-
-
 class Tkregister2CmdlOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `tkregister2_cmdl(...)`.
+    Output object returned when calling `Tkregister2CmdlParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -178,7 +210,7 @@ def tkregister2_cmdl_params(
     trans: list[float] | None = None,
     rot: list[float] | None = None,
     conf_targ_flag: bool = False,
-) -> Tkregister2CmdlParameters:
+) -> Tkregister2CmdlParametersTagged:
     """
     Build parameters.
     
@@ -249,7 +281,7 @@ def tkregister2_cmdl_params(
         Parameter dictionary
     """
     params = {
-        "@type": "freesurfer.tkregister2_cmdl",
+        "@type": "freesurfer/tkregister2_cmdl",
         "movable_volume": movable_volume,
         "target_volume": target_volume,
         "fstarg_flag": fstarg_flag,
@@ -368,238 +400,238 @@ def tkregister2_cmdl_cargs(
     cargs.append("tkregister2_cmdl")
     cargs.extend([
         "--mov",
-        execution.input_file(params.get("movable_volume"))
+        execution.input_file(params.get("movable_volume", None))
     ])
     cargs.extend([
         "--targ",
-        execution.input_file(params.get("target_volume"))
+        execution.input_file(params.get("target_volume", None))
     ])
-    if params.get("fstarg_flag"):
+    if params.get("fstarg_flag", False):
         cargs.append("--fstarg")
-    if params.get("reg_file") is not None:
+    if params.get("reg_file", None) is not None:
         cargs.extend([
             "--reg",
-            execution.input_file(params.get("reg_file"))
+            execution.input_file(params.get("reg_file", None))
         ])
-    if params.get("check_reg_flag"):
+    if params.get("check_reg_flag", False):
         cargs.append("--check-reg")
-    if params.get("regheader_flag"):
+    if params.get("regheader_flag", False):
         cargs.append("--regheader")
-    if params.get("regheader_center_flag"):
+    if params.get("regheader_center_flag", False):
         cargs.append("--regheader-center")
-    if params.get("fsl_targ_flag"):
+    if params.get("fsl_targ_flag", False):
         cargs.append("--fsl-targ")
-    if params.get("fsl_targ_lr_flag"):
+    if params.get("fsl_targ_lr_flag", False):
         cargs.append("--fsl-targ-lr")
-    if params.get("gca_subject") is not None:
+    if params.get("gca_subject", None) is not None:
         cargs.extend([
             "--gca",
-            params.get("gca_subject")
+            params.get("gca_subject", None)
         ])
-    if params.get("gca_skull_subject") is not None:
+    if params.get("gca_skull_subject", None) is not None:
         cargs.extend([
             "--gca-skull",
-            params.get("gca_skull_subject")
+            params.get("gca_skull_subject", None)
         ])
-    if params.get("no_zero_cras_flag"):
+    if params.get("no_zero_cras_flag", False):
         cargs.append("--no-zero-cras")
-    if params.get("movbright") is not None:
+    if params.get("movbright", None) is not None:
         cargs.extend([
             "--movbright",
-            str(params.get("movbright"))
+            str(params.get("movbright", None))
         ])
-    if params.get("no_inorm_flag"):
+    if params.get("no_inorm_flag", False):
         cargs.append("--no-inorm")
-    if params.get("fmov") is not None:
+    if params.get("fmov", None) is not None:
         cargs.extend([
             "--fmov",
-            str(params.get("fmov"))
+            str(params.get("fmov", None))
         ])
-    if params.get("fmov_targ_flag"):
+    if params.get("fmov_targ_flag", False):
         cargs.append("--fmov-targ")
-    if params.get("plane") is not None:
+    if params.get("plane", None) is not None:
         cargs.extend([
             "--plane",
-            params.get("plane")
+            params.get("plane", None)
         ])
-    if params.get("slice") is not None:
+    if params.get("slice", None) is not None:
         cargs.extend([
             "--slice",
-            str(params.get("slice"))
+            str(params.get("slice", None))
         ])
-    if params.get("volview") is not None:
+    if params.get("volview", None) is not None:
         cargs.extend([
             "--volview",
-            params.get("volview")
+            params.get("volview", None)
         ])
-    if params.get("fov") is not None:
+    if params.get("fov", None) is not None:
         cargs.extend([
             "--fov",
-            str(params.get("fov"))
+            str(params.get("fov", None))
         ])
-    if params.get("movscale") is not None:
+    if params.get("movscale", None) is not None:
         cargs.extend([
             "--movscale",
-            str(params.get("movscale"))
+            str(params.get("movscale", None))
         ])
-    if params.get("surf") is not None:
+    if params.get("surf", None) is not None:
         cargs.extend([
             "--surf",
-            params.get("surf")
+            params.get("surf", None)
         ])
-    if params.get("surf_rgb") is not None:
+    if params.get("surf_rgb", None) is not None:
         cargs.extend([
             "--surf-rgb",
-            *map(str, params.get("surf_rgb"))
+            *map(str, params.get("surf_rgb", None))
         ])
-    if params.get("lh_only_flag"):
+    if params.get("lh_only_flag", False):
         cargs.append("--lh-only")
-    if params.get("rh_only_flag"):
+    if params.get("rh_only_flag", False):
         cargs.append("--rh-only")
-    if params.get("fstal_flag"):
+    if params.get("fstal_flag", False):
         cargs.append("--fstal")
-    if params.get("talxfmname") is not None:
+    if params.get("talxfmname", None) is not None:
         cargs.extend([
             "--talxfmname",
-            params.get("talxfmname")
+            params.get("talxfmname", None)
         ])
-    if params.get("ixfm") is not None:
+    if params.get("ixfm", None) is not None:
         cargs.extend([
             "--ixfm",
-            execution.input_file(params.get("ixfm"))
+            execution.input_file(params.get("ixfm", None))
         ])
-    if params.get("xfm") is not None:
+    if params.get("xfm", None) is not None:
         cargs.extend([
             "--xfm",
-            execution.input_file(params.get("xfm"))
+            execution.input_file(params.get("xfm", None))
         ])
-    if params.get("xfmout") is not None:
+    if params.get("xfmout", None) is not None:
         cargs.extend([
             "--xfmout",
-            execution.input_file(params.get("xfmout"))
+            execution.input_file(params.get("xfmout", None))
         ])
-    if params.get("fsl") is not None:
+    if params.get("fsl", None) is not None:
         cargs.extend([
             "--fsl",
-            execution.input_file(params.get("fsl"))
+            execution.input_file(params.get("fsl", None))
         ])
-    if params.get("fslregout") is not None:
+    if params.get("fslregout", None) is not None:
         cargs.extend([
             "--fslregout",
-            execution.input_file(params.get("fslregout"))
+            execution.input_file(params.get("fslregout", None))
         ])
-    if params.get("freeview") is not None:
+    if params.get("freeview", None) is not None:
         cargs.extend([
             "--freeview",
-            execution.input_file(params.get("freeview"))
+            execution.input_file(params.get("freeview", None))
         ])
-    if params.get("vox2vox") is not None:
+    if params.get("vox2vox", None) is not None:
         cargs.extend([
             "--vox2vox",
-            execution.input_file(params.get("vox2vox"))
+            execution.input_file(params.get("vox2vox", None))
         ])
-    if params.get("lta") is not None:
+    if params.get("lta", None) is not None:
         cargs.extend([
             "--lta",
-            execution.input_file(params.get("lta"))
+            execution.input_file(params.get("lta", None))
         ])
-    if params.get("lta_inv") is not None:
+    if params.get("lta_inv", None) is not None:
         cargs.extend([
             "--lta-inv",
-            execution.input_file(params.get("lta_inv"))
+            execution.input_file(params.get("lta_inv", None))
         ])
-    if params.get("ltaout") is not None:
+    if params.get("ltaout", None) is not None:
         cargs.extend([
             "--ltaout",
-            execution.input_file(params.get("ltaout"))
+            execution.input_file(params.get("ltaout", None))
         ])
-    if params.get("ltaout_inv_flag"):
+    if params.get("ltaout_inv_flag", False):
         cargs.append("--ltaout-inv")
-    if params.get("feat") is not None:
+    if params.get("feat", None) is not None:
         cargs.extend([
             "--feat",
-            params.get("feat")
+            params.get("feat", None)
         ])
-    if params.get("fsfeat") is not None:
+    if params.get("fsfeat", None) is not None:
         cargs.extend([
             "--fsfeat",
-            params.get("fsfeat")
+            params.get("fsfeat", None)
         ])
-    if params.get("identity_flag"):
+    if params.get("identity_flag", False):
         cargs.append("--identity")
-    if params.get("subject_id") is not None:
+    if params.get("subject_id", None) is not None:
         cargs.extend([
             "--s",
-            params.get("subject_id")
+            params.get("subject_id", None)
         ])
-    if params.get("subjects_dir") is not None:
+    if params.get("subjects_dir", None) is not None:
         cargs.extend([
             "--sd",
-            params.get("subjects_dir")
+            params.get("subjects_dir", None)
         ])
-    if params.get("nofix_flag"):
+    if params.get("nofix_flag", False):
         cargs.append("--nofix")
-    if params.get("float2int") is not None:
+    if params.get("float2int", None) is not None:
         cargs.extend([
             "--float2int",
-            params.get("float2int")
+            params.get("float2int", None)
         ])
-    if params.get("title") is not None:
+    if params.get("title", None) is not None:
         cargs.extend([
             "--title",
-            params.get("title")
+            params.get("title", None)
         ])
-    if params.get("tag_flag"):
+    if params.get("tag_flag", False):
         cargs.append("--tag")
-    if params.get("mov_orientation") is not None:
+    if params.get("mov_orientation", None) is not None:
         cargs.extend([
             "--mov-orientation",
-            params.get("mov_orientation")
+            params.get("mov_orientation", None)
         ])
-    if params.get("targ_orientation") is not None:
+    if params.get("targ_orientation", None) is not None:
         cargs.extend([
             "--targ-orientation",
-            params.get("targ_orientation")
+            params.get("targ_orientation", None)
         ])
-    if params.get("int") is not None:
+    if params.get("int", None) is not None:
         cargs.extend([
             "--int",
-            *params.get("int")
+            *params.get("int", None)
         ])
-    if params.get("double_window_size_flag"):
+    if params.get("double_window_size_flag", False):
         cargs.append("--2")
-    if params.get("window_scale") is not None:
+    if params.get("window_scale", None) is not None:
         cargs.extend([
             "--size",
-            str(params.get("window_scale"))
+            str(params.get("window_scale", None))
         ])
-    if params.get("det") is not None:
+    if params.get("det", None) is not None:
         cargs.extend([
             "--det",
-            execution.input_file(params.get("det"))
+            execution.input_file(params.get("det", None))
         ])
-    if params.get("aseg_flag"):
+    if params.get("aseg_flag", False):
         cargs.append("--aseg")
-    if params.get("aparc_flag"):
+    if params.get("aparc_flag", False):
         cargs.append("--aparc+aseg")
-    if params.get("wmparc_flag"):
+    if params.get("wmparc_flag", False):
         cargs.append("--wmparc")
-    if params.get("gdiagno") is not None:
+    if params.get("gdiagno", None) is not None:
         cargs.extend([
             "--gdiagno",
-            str(params.get("gdiagno"))
+            str(params.get("gdiagno", None))
         ])
-    if params.get("trans") is not None:
+    if params.get("trans", None) is not None:
         cargs.extend([
             "--trans",
-            *map(str, params.get("trans"))
+            *map(str, params.get("trans", None))
         ])
-    if params.get("rot") is not None:
+    if params.get("rot", None) is not None:
         cargs.extend([
             "--rot",
-            *map(str, params.get("rot"))
+            *map(str, params.get("rot", None))
         ])
-    if params.get("conf_targ_flag"):
+    if params.get("conf_targ_flag", False):
         cargs.append("--conf-targ")
     return cargs
 
@@ -862,7 +894,6 @@ def tkregister2_cmdl(
 __all__ = [
     "TKREGISTER2_CMDL_METADATA",
     "Tkregister2CmdlOutputs",
-    "Tkregister2CmdlParameters",
     "tkregister2_cmdl",
     "tkregister2_cmdl_execute",
     "tkregister2_cmdl_params",

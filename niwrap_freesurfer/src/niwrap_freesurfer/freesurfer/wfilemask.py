@@ -14,7 +14,16 @@ WFILEMASK_METADATA = Metadata(
 
 
 WfilemaskParameters = typing.TypedDict('WfilemaskParameters', {
-    "@type": typing.Literal["freesurfer.wfilemask"],
+    "@type": typing.NotRequired[typing.Literal["freesurfer/wfilemask"]],
+    "w_file": InputPathType,
+    "label_file": InputPathType,
+    "output_file": str,
+    "permission_mask": typing.NotRequired[str | None],
+    "help_flag": bool,
+    "version_flag": bool,
+})
+WfilemaskParametersTagged = typing.TypedDict('WfilemaskParametersTagged', {
+    "@type": typing.Literal["freesurfer/wfilemask"],
     "w_file": InputPathType,
     "label_file": InputPathType,
     "output_file": str,
@@ -24,41 +33,9 @@ WfilemaskParameters = typing.TypedDict('WfilemaskParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "freesurfer.wfilemask": wfilemask_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "freesurfer.wfilemask": wfilemask_outputs,
-    }.get(t)
-
-
 class WfilemaskOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `wfilemask(...)`.
+    Output object returned when calling `WfilemaskParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -73,7 +50,7 @@ def wfilemask_params(
     permission_mask: str | None = None,
     help_flag: bool = False,
     version_flag: bool = False,
-) -> WfilemaskParameters:
+) -> WfilemaskParametersTagged:
     """
     Build parameters.
     
@@ -88,7 +65,7 @@ def wfilemask_params(
         Parameter dictionary
     """
     params = {
-        "@type": "freesurfer.wfilemask",
+        "@type": "freesurfer/wfilemask",
         "w_file": w_file,
         "label_file": label_file,
         "output_file": output_file,
@@ -117,24 +94,24 @@ def wfilemask_cargs(
     cargs.append("wfilemask")
     cargs.extend([
         "-w",
-        execution.input_file(params.get("w_file"))
+        execution.input_file(params.get("w_file", None))
     ])
     cargs.extend([
         "-l",
-        execution.input_file(params.get("label_file"))
+        execution.input_file(params.get("label_file", None))
     ])
     cargs.extend([
         "-o",
-        params.get("output_file")
+        params.get("output_file", None)
     ])
-    if params.get("permission_mask") is not None:
+    if params.get("permission_mask", None) is not None:
         cargs.extend([
             "-umask",
-            params.get("permission_mask")
+            params.get("permission_mask", None)
         ])
-    if params.get("help_flag"):
+    if params.get("help_flag", False):
         cargs.append("-help")
-    if params.get("version_flag"):
+    if params.get("version_flag", False):
         cargs.append("-version")
     return cargs
 
@@ -154,7 +131,7 @@ def wfilemask_outputs(
     """
     ret = WfilemaskOutputs(
         root=execution.output_file("."),
-        output_w_file=execution.output_file(params.get("output_file")),
+        output_w_file=execution.output_file(params.get("output_file", None)),
     )
     return ret
 
@@ -230,7 +207,6 @@ def wfilemask(
 __all__ = [
     "WFILEMASK_METADATA",
     "WfilemaskOutputs",
-    "WfilemaskParameters",
     "wfilemask",
     "wfilemask_execute",
     "wfilemask_params",

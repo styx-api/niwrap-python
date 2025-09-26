@@ -14,7 +14,16 @@ V_3D_ZREGRID_METADATA = Metadata(
 
 
 V3dZregridParameters = typing.TypedDict('V3dZregridParameters', {
-    "@type": typing.Literal["afni.3dZregrid"],
+    "@type": typing.NotRequired[typing.Literal["afni/3dZregrid"]],
+    "z_thickness": typing.NotRequired[float | None],
+    "slice_count": typing.NotRequired[float | None],
+    "z_size": typing.NotRequired[float | None],
+    "prefix": typing.NotRequired[str | None],
+    "infile": InputPathType,
+    "verbose": bool,
+})
+V3dZregridParametersTagged = typing.TypedDict('V3dZregridParametersTagged', {
+    "@type": typing.Literal["afni/3dZregrid"],
     "z_thickness": typing.NotRequired[float | None],
     "slice_count": typing.NotRequired[float | None],
     "z_size": typing.NotRequired[float | None],
@@ -24,41 +33,9 @@ V3dZregridParameters = typing.TypedDict('V3dZregridParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "afni.3dZregrid": v_3d_zregrid_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "afni.3dZregrid": v_3d_zregrid_outputs,
-    }.get(t)
-
-
 class V3dZregridOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `v_3d_zregrid(...)`.
+    Output object returned when calling `V3dZregridParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -75,7 +52,7 @@ def v_3d_zregrid_params(
     z_size: float | None = None,
     prefix: str | None = None,
     verbose: bool = False,
-) -> V3dZregridParameters:
+) -> V3dZregridParametersTagged:
     """
     Build parameters.
     
@@ -91,7 +68,7 @@ def v_3d_zregrid_params(
         Parameter dictionary
     """
     params = {
-        "@type": "afni.3dZregrid",
+        "@type": "afni/3dZregrid",
         "infile": infile,
         "verbose": verbose,
     }
@@ -121,28 +98,28 @@ def v_3d_zregrid_cargs(
     """
     cargs = []
     cargs.append("3dZregrid")
-    if params.get("z_thickness") is not None:
+    if params.get("z_thickness", None) is not None:
         cargs.extend([
             "-dz",
-            str(params.get("z_thickness"))
+            str(params.get("z_thickness", None))
         ])
-    if params.get("slice_count") is not None:
+    if params.get("slice_count", None) is not None:
         cargs.extend([
             "-nz",
-            str(params.get("slice_count"))
+            str(params.get("slice_count", None))
         ])
-    if params.get("z_size") is not None:
+    if params.get("z_size", None) is not None:
         cargs.extend([
             "-zsize",
-            str(params.get("z_size"))
+            str(params.get("z_size", None))
         ])
-    if params.get("prefix") is not None:
+    if params.get("prefix", None) is not None:
         cargs.extend([
             "-prefix",
-            params.get("prefix")
+            params.get("prefix", None)
         ])
-    cargs.append(execution.input_file(params.get("infile")))
-    if params.get("verbose"):
+    cargs.append(execution.input_file(params.get("infile", None)))
+    if params.get("verbose", False):
         cargs.append("-verb")
     return cargs
 
@@ -162,8 +139,8 @@ def v_3d_zregrid_outputs(
     """
     ret = V3dZregridOutputs(
         root=execution.output_file("."),
-        outfile_head=execution.output_file(params.get("prefix") + "+orig.HEAD") if (params.get("prefix") is not None) else None,
-        outfile_brik=execution.output_file(params.get("prefix") + "+orig.BRIK") if (params.get("prefix") is not None) else None,
+        outfile_head=execution.output_file(params.get("prefix", None) + "+orig.HEAD") if (params.get("prefix") is not None) else None,
+        outfile_brik=execution.output_file(params.get("prefix", None) + "+orig.BRIK") if (params.get("prefix") is not None) else None,
     )
     return ret
 
@@ -239,7 +216,6 @@ def v_3d_zregrid(
 
 __all__ = [
     "V3dZregridOutputs",
-    "V3dZregridParameters",
     "V_3D_ZREGRID_METADATA",
     "v_3d_zregrid",
     "v_3d_zregrid_execute",

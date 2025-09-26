@@ -14,7 +14,25 @@ V_3DPC_METADATA = Metadata(
 
 
 V3dpcParameters = typing.TypedDict('V3dpcParameters', {
-    "@type": typing.Literal["afni.3dpc"],
+    "@type": typing.NotRequired[typing.Literal["afni/3dpc"]],
+    "datasets": list[InputPathType],
+    "dmean": bool,
+    "vmean": bool,
+    "vnorm": bool,
+    "normalize": bool,
+    "nscale": bool,
+    "pcsave": typing.NotRequired[str | None],
+    "reduce": typing.NotRequired[list[str] | None],
+    "prefix": typing.NotRequired[str | None],
+    "dummy_lines": typing.NotRequired[int | None],
+    "verbose": bool,
+    "quiet": bool,
+    "eigonly": bool,
+    "float": bool,
+    "mask": typing.NotRequired[InputPathType | None],
+})
+V3dpcParametersTagged = typing.TypedDict('V3dpcParametersTagged', {
+    "@type": typing.Literal["afni/3dpc"],
     "datasets": list[InputPathType],
     "dmean": bool,
     "vmean": bool,
@@ -33,41 +51,9 @@ V3dpcParameters = typing.TypedDict('V3dpcParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "afni.3dpc": v_3dpc_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "afni.3dpc": v_3dpc_outputs,
-    }.get(t)
-
-
 class V3dpcOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `v_3dpc(...)`.
+    Output object returned when calling `V3dpcParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -99,7 +85,7 @@ def v_3dpc_params(
     eigonly: bool = False,
     float_: bool = False,
     mask: InputPathType | None = None,
-) -> V3dpcParameters:
+) -> V3dpcParametersTagged:
     """
     Build parameters.
     
@@ -126,7 +112,7 @@ def v_3dpc_params(
         Parameter dictionary
     """
     params = {
-        "@type": "afni.3dpc",
+        "@type": "afni/3dpc",
         "datasets": datasets,
         "dmean": dmean,
         "vmean": vmean,
@@ -166,49 +152,49 @@ def v_3dpc_cargs(
     """
     cargs = []
     cargs.append("3dpc")
-    cargs.extend([execution.input_file(f) for f in params.get("datasets")])
-    if params.get("dmean"):
+    cargs.extend([execution.input_file(f) for f in params.get("datasets", None)])
+    if params.get("dmean", False):
         cargs.append("-dmean")
-    if params.get("vmean"):
+    if params.get("vmean", False):
         cargs.append("-vmean")
-    if params.get("vnorm"):
+    if params.get("vnorm", False):
         cargs.append("-vnorm")
-    if params.get("normalize"):
+    if params.get("normalize", False):
         cargs.append("-normalize")
-    if params.get("nscale"):
+    if params.get("nscale", False):
         cargs.append("-nscale")
-    if params.get("pcsave") is not None:
+    if params.get("pcsave", None) is not None:
         cargs.extend([
             "-pcsave",
-            params.get("pcsave")
+            params.get("pcsave", None)
         ])
-    if params.get("reduce") is not None:
+    if params.get("reduce", None) is not None:
         cargs.extend([
             "-reduce",
-            *params.get("reduce")
+            *params.get("reduce", None)
         ])
-    if params.get("prefix") is not None:
+    if params.get("prefix", None) is not None:
         cargs.extend([
             "-prefix",
-            params.get("prefix")
+            params.get("prefix", None)
         ])
-    if params.get("dummy_lines") is not None:
+    if params.get("dummy_lines", None) is not None:
         cargs.extend([
             "-1ddum",
-            str(params.get("dummy_lines"))
+            str(params.get("dummy_lines", None))
         ])
-    if params.get("verbose"):
+    if params.get("verbose", False):
         cargs.append("-verbose")
-    if params.get("quiet"):
+    if params.get("quiet", False):
         cargs.append("-quiet")
-    if params.get("eigonly"):
+    if params.get("eigonly", False):
         cargs.append("-eigonly")
-    if params.get("float"):
+    if params.get("float", False):
         cargs.append("-float")
-    if params.get("mask") is not None:
+    if params.get("mask", None) is not None:
         cargs.extend([
             "-mask",
-            execution.input_file(params.get("mask"))
+            execution.input_file(params.get("mask", None))
         ])
     return cargs
 
@@ -228,11 +214,11 @@ def v_3dpc_outputs(
     """
     ret = V3dpcOutputs(
         root=execution.output_file("."),
-        output_dataset=execution.output_file(params.get("prefix") + "+orig.BRIK") if (params.get("prefix") is not None) else None,
-        output_header=execution.output_file(params.get("prefix") + "+orig.HEAD") if (params.get("prefix") is not None) else None,
-        output_eig=execution.output_file(params.get("prefix") + "_eig.1D") if (params.get("prefix") is not None) else None,
-        output_vec=execution.output_file(params.get("prefix") + "_vec.1D") if (params.get("prefix") is not None) else None,
-        output_individual_vec=execution.output_file(params.get("prefix") + "[NN].1D") if (params.get("prefix") is not None) else None,
+        output_dataset=execution.output_file(params.get("prefix", None) + "+orig.BRIK") if (params.get("prefix") is not None) else None,
+        output_header=execution.output_file(params.get("prefix", None) + "+orig.HEAD") if (params.get("prefix") is not None) else None,
+        output_eig=execution.output_file(params.get("prefix", None) + "_eig.1D") if (params.get("prefix") is not None) else None,
+        output_vec=execution.output_file(params.get("prefix", None) + "_vec.1D") if (params.get("prefix") is not None) else None,
+        output_individual_vec=execution.output_file(params.get("prefix", None) + "[NN].1D") if (params.get("prefix") is not None) else None,
     )
     return ret
 
@@ -337,7 +323,6 @@ def v_3dpc(
 
 __all__ = [
     "V3dpcOutputs",
-    "V3dpcParameters",
     "V_3DPC_METADATA",
     "v_3dpc",
     "v_3dpc_execute",

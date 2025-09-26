@@ -14,7 +14,19 @@ APPLYTOPUP_METADATA = Metadata(
 
 
 ApplytopupParameters = typing.TypedDict('ApplytopupParameters', {
-    "@type": typing.Literal["fsl.applytopup"],
+    "@type": typing.NotRequired[typing.Literal["fsl/applytopup"]],
+    "imain": list[InputPathType],
+    "datain": InputPathType,
+    "inindex": list[str],
+    "topup": InputPathType,
+    "out": str,
+    "method": typing.NotRequired[typing.Literal["jac", "lsr"] | None],
+    "interp": typing.NotRequired[typing.Literal["trilinear", "spline"] | None],
+    "datatype": typing.NotRequired[typing.Literal["char", "short", "int", "float", "double"] | None],
+    "verbose": bool,
+})
+ApplytopupParametersTagged = typing.TypedDict('ApplytopupParametersTagged', {
+    "@type": typing.Literal["fsl/applytopup"],
     "imain": list[InputPathType],
     "datain": InputPathType,
     "inindex": list[str],
@@ -27,41 +39,9 @@ ApplytopupParameters = typing.TypedDict('ApplytopupParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "fsl.applytopup": applytopup_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "fsl.applytopup": applytopup_outputs,
-    }.get(t)
-
-
 class ApplytopupOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `applytopup(...)`.
+    Output object returned when calling `ApplytopupParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -79,7 +59,7 @@ def applytopup_params(
     interp: typing.Literal["trilinear", "spline"] | None = None,
     datatype: typing.Literal["char", "short", "int", "float", "double"] | None = None,
     verbose: bool = False,
-) -> ApplytopupParameters:
+) -> ApplytopupParametersTagged:
     """
     Build parameters.
     
@@ -99,7 +79,7 @@ def applytopup_params(
         Parameter dictionary
     """
     params = {
-        "@type": "fsl.applytopup",
+        "@type": "fsl/applytopup",
         "imain": imain,
         "datain": datain,
         "inindex": inindex,
@@ -131,18 +111,18 @@ def applytopup_cargs(
     """
     cargs = []
     cargs.append("applytopup")
-    cargs.append("--imain=" + ",".join([execution.input_file(f) for f in params.get("imain")]))
-    cargs.append("--datain=" + execution.input_file(params.get("datain")))
-    cargs.append("--inindex=" + ",".join(params.get("inindex")))
-    cargs.append("--topup=" + execution.input_file(params.get("topup"), resolve_parent=True))
-    cargs.append("--out=" + params.get("out"))
-    if params.get("method") is not None:
-        cargs.append("--method=" + params.get("method"))
-    if params.get("interp") is not None:
-        cargs.append("--interp=" + params.get("interp"))
-    if params.get("datatype") is not None:
-        cargs.append("--datatype=" + params.get("datatype"))
-    if params.get("verbose"):
+    cargs.append("--imain=" + ",".join([execution.input_file(f) for f in params.get("imain", None)]))
+    cargs.append("--datain=" + execution.input_file(params.get("datain", None)))
+    cargs.append("--inindex=" + ",".join(params.get("inindex", None)))
+    cargs.append("--topup=" + execution.input_file(params.get("topup", None), resolve_parent=True))
+    cargs.append("--out=" + params.get("out", None))
+    if params.get("method", None) is not None:
+        cargs.append("--method=" + params.get("method", None))
+    if params.get("interp", None) is not None:
+        cargs.append("--interp=" + params.get("interp", None))
+    if params.get("datatype", None) is not None:
+        cargs.append("--datatype=" + params.get("datatype", None))
+    if params.get("verbose", False):
         cargs.append("--verbose")
     return cargs
 
@@ -162,7 +142,7 @@ def applytopup_outputs(
     """
     ret = ApplytopupOutputs(
         root=execution.output_file("."),
-        output_file=execution.output_file(params.get("out")),
+        output_file=execution.output_file(params.get("out", None)),
     )
     return ret
 
@@ -251,7 +231,6 @@ def applytopup(
 __all__ = [
     "APPLYTOPUP_METADATA",
     "ApplytopupOutputs",
-    "ApplytopupParameters",
     "applytopup",
     "applytopup_execute",
     "applytopup_params",

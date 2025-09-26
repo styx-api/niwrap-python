@@ -14,7 +14,42 @@ OPTSEQ2_METADATA = Metadata(
 
 
 Optseq2Parameters = typing.TypedDict('Optseq2Parameters', {
-    "@type": typing.Literal["freesurfer.optseq2"],
+    "@type": typing.NotRequired[typing.Literal["freesurfer/optseq2"]],
+    "ntp": float,
+    "tr": float,
+    "tprescan": float,
+    "psdwin": list[float],
+    "event": typing.NotRequired[list[str] | None],
+    "repvar": typing.NotRequired[str | None],
+    "polyfit": typing.NotRequired[float | None],
+    "tnullmin": typing.NotRequired[float | None],
+    "tnullmax": typing.NotRequired[float | None],
+    "nsearch": typing.NotRequired[float | None],
+    "tsearch": typing.NotRequired[float | None],
+    "first_order_cb": typing.NotRequired[float | None],
+    "ar1": typing.NotRequired[float | None],
+    "penalize": typing.NotRequired[list[float] | None],
+    "evc": typing.NotRequired[list[float] | None],
+    "cmtx": typing.NotRequired[InputPathType | None],
+    "cost": typing.NotRequired[str | None],
+    "sumdelays": bool,
+    "seed": typing.NotRequired[float | None],
+    "nkeep": typing.NotRequired[float | None],
+    "outstem": typing.NotRequired[str | None],
+    "mtxstem": typing.NotRequired[str | None],
+    "cmtxfile": typing.NotRequired[str | None],
+    "summaryfile": typing.NotRequired[str | None],
+    "logfile": typing.NotRequired[str | None],
+    "pctupdate": typing.NotRequired[float | None],
+    "sviterfile": typing.NotRequired[str | None],
+    "instem": typing.NotRequired[str | None],
+    "input_schedule": typing.NotRequired[list[str] | None],
+    "nosearch": bool,
+    "help": bool,
+    "version": bool,
+})
+Optseq2ParametersTagged = typing.TypedDict('Optseq2ParametersTagged', {
+    "@type": typing.Literal["freesurfer/optseq2"],
     "ntp": float,
     "tr": float,
     "tprescan": float,
@@ -50,41 +85,9 @@ Optseq2Parameters = typing.TypedDict('Optseq2Parameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "freesurfer.optseq2": optseq2_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "freesurfer.optseq2": optseq2_outputs,
-    }.get(t)
-
-
 class Optseq2Outputs(typing.NamedTuple):
     """
-    Output object returned when calling `optseq2(...)`.
+    Output object returned when calling `Optseq2Parameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -135,7 +138,7 @@ def optseq2_params(
     nosearch: bool = False,
     help_: bool = False,
     version: bool = False,
-) -> Optseq2Parameters:
+) -> Optseq2ParametersTagged:
     """
     Build parameters.
     
@@ -181,7 +184,7 @@ def optseq2_params(
         Parameter dictionary
     """
     params = {
-        "@type": "freesurfer.optseq2",
+        "@type": "freesurfer/optseq2",
         "ntp": ntp,
         "tr": tr,
         "tprescan": tprescan,
@@ -259,147 +262,147 @@ def optseq2_cargs(
     cargs.append("optseq2")
     cargs.extend([
         "--ntp",
-        str(params.get("ntp"))
+        str(params.get("ntp", None))
     ])
     cargs.extend([
         "--tr",
-        str(params.get("tr"))
+        str(params.get("tr", None))
     ])
     cargs.extend([
         "--tprescan",
-        str(params.get("tprescan"))
+        str(params.get("tprescan", None))
     ])
     cargs.extend([
         "--psdwin",
-        *map(str, params.get("psdwin"))
+        *map(str, params.get("psdwin", None))
     ])
-    if params.get("event") is not None:
+    if params.get("event", None) is not None:
         cargs.extend([
             "--ev",
-            *params.get("event")
+            *params.get("event", None)
         ])
-    if params.get("repvar") is not None:
+    if params.get("repvar", None) is not None:
         cargs.extend([
             "--repvar",
-            params.get("repvar")
+            params.get("repvar", None)
         ])
-    if params.get("polyfit") is not None:
+    if params.get("polyfit", None) is not None:
         cargs.extend([
             "--polyfit",
-            str(params.get("polyfit"))
+            str(params.get("polyfit", None))
         ])
-    if params.get("tnullmin") is not None:
+    if params.get("tnullmin", None) is not None:
         cargs.extend([
             "--tnullmin",
-            str(params.get("tnullmin"))
+            str(params.get("tnullmin", None))
         ])
-    if params.get("tnullmax") is not None:
+    if params.get("tnullmax", None) is not None:
         cargs.extend([
             "--tnullmax",
-            str(params.get("tnullmax"))
+            str(params.get("tnullmax", None))
         ])
-    if params.get("nsearch") is not None:
+    if params.get("nsearch", None) is not None:
         cargs.extend([
             "--nsearch",
-            str(params.get("nsearch"))
+            str(params.get("nsearch", None))
         ])
-    if params.get("tsearch") is not None:
+    if params.get("tsearch", None) is not None:
         cargs.extend([
             "--tsearch",
-            str(params.get("tsearch"))
+            str(params.get("tsearch", None))
         ])
-    if params.get("first_order_cb") is not None:
+    if params.get("first_order_cb", None) is not None:
         cargs.extend([
             "--focb",
-            str(params.get("first_order_cb"))
+            str(params.get("first_order_cb", None))
         ])
-    if params.get("ar1") is not None:
+    if params.get("ar1", None) is not None:
         cargs.extend([
             "--ar1",
-            str(params.get("ar1"))
+            str(params.get("ar1", None))
         ])
-    if params.get("penalize") is not None:
+    if params.get("penalize", None) is not None:
         cargs.extend([
             "--pen",
-            *map(str, params.get("penalize"))
+            *map(str, params.get("penalize", None))
         ])
-    if params.get("evc") is not None:
+    if params.get("evc", None) is not None:
         cargs.extend([
             "--evc",
-            *map(str, params.get("evc"))
+            *map(str, params.get("evc", None))
         ])
-    if params.get("cmtx") is not None:
+    if params.get("cmtx", None) is not None:
         cargs.extend([
             "--C",
-            execution.input_file(params.get("cmtx"))
+            execution.input_file(params.get("cmtx", None))
         ])
-    if params.get("cost") is not None:
+    if params.get("cost", None) is not None:
         cargs.extend([
             "--cost",
-            params.get("cost")
+            params.get("cost", None)
         ])
-    if params.get("sumdelays"):
+    if params.get("sumdelays", False):
         cargs.append("--sumdelays")
-    if params.get("seed") is not None:
+    if params.get("seed", None) is not None:
         cargs.extend([
             "--seed",
-            str(params.get("seed"))
+            str(params.get("seed", None))
         ])
-    if params.get("nkeep") is not None:
+    if params.get("nkeep", None) is not None:
         cargs.extend([
             "--nkeep",
-            str(params.get("nkeep"))
+            str(params.get("nkeep", None))
         ])
-    if params.get("outstem") is not None:
+    if params.get("outstem", None) is not None:
         cargs.extend([
             "--o",
-            params.get("outstem")
+            params.get("outstem", None)
         ])
-    if params.get("mtxstem") is not None:
+    if params.get("mtxstem", None) is not None:
         cargs.extend([
             "--mtx",
-            params.get("mtxstem")
+            params.get("mtxstem", None)
         ])
-    if params.get("cmtxfile") is not None:
+    if params.get("cmtxfile", None) is not None:
         cargs.extend([
             "--cmtx",
-            params.get("cmtxfile")
+            params.get("cmtxfile", None)
         ])
-    if params.get("summaryfile") is not None:
+    if params.get("summaryfile", None) is not None:
         cargs.extend([
             "--sum",
-            params.get("summaryfile")
+            params.get("summaryfile", None)
         ])
-    if params.get("logfile") is not None:
+    if params.get("logfile", None) is not None:
         cargs.extend([
             "--log",
-            params.get("logfile")
+            params.get("logfile", None)
         ])
-    if params.get("pctupdate") is not None:
+    if params.get("pctupdate", None) is not None:
         cargs.extend([
             "--pctupdate",
-            str(params.get("pctupdate"))
+            str(params.get("pctupdate", None))
         ])
-    if params.get("sviterfile") is not None:
+    if params.get("sviterfile", None) is not None:
         cargs.extend([
             "--sviter",
-            params.get("sviterfile")
+            params.get("sviterfile", None)
         ])
-    if params.get("instem") is not None:
+    if params.get("instem", None) is not None:
         cargs.extend([
             "--i",
-            params.get("instem")
+            params.get("instem", None)
         ])
-    if params.get("input_schedule") is not None:
+    if params.get("input_schedule", None) is not None:
         cargs.extend([
             "--in",
-            *params.get("input_schedule")
+            *params.get("input_schedule", None)
         ])
-    if params.get("nosearch"):
+    if params.get("nosearch", False):
         cargs.append("--nosearch")
-    if params.get("help"):
+    if params.get("help", False):
         cargs.append("--help")
-    if params.get("version"):
+    if params.get("version", False):
         cargs.append("--version")
     return cargs
 
@@ -419,12 +422,12 @@ def optseq2_outputs(
     """
     ret = Optseq2Outputs(
         root=execution.output_file("."),
-        output_schedules=execution.output_file(params.get("outstem") + "-RRR.par") if (params.get("outstem") is not None) else None,
-        output_design_matrices=execution.output_file(params.get("mtxstem") + "_RRR.mat") if (params.get("mtxstem") is not None) else None,
-        output_contrast_matrix=execution.output_file(params.get("cmtxfile")) if (params.get("cmtxfile") is not None) else None,
-        output_summary=execution.output_file(params.get("summaryfile")) if (params.get("summaryfile") is not None) else None,
-        output_log=execution.output_file(params.get("logfile")) if (params.get("logfile") is not None) else None,
-        output_sviter=execution.output_file(params.get("sviterfile")) if (params.get("sviterfile") is not None) else None,
+        output_schedules=execution.output_file(params.get("outstem", None) + "-RRR.par") if (params.get("outstem") is not None) else None,
+        output_design_matrices=execution.output_file(params.get("mtxstem", None) + "_RRR.mat") if (params.get("mtxstem") is not None) else None,
+        output_contrast_matrix=execution.output_file(params.get("cmtxfile", None)) if (params.get("cmtxfile") is not None) else None,
+        output_summary=execution.output_file(params.get("summaryfile", None)) if (params.get("summaryfile") is not None) else None,
+        output_log=execution.output_file(params.get("logfile", None)) if (params.get("logfile") is not None) else None,
+        output_sviter=execution.output_file(params.get("sviterfile", None)) if (params.get("sviterfile") is not None) else None,
     )
     return ret
 
@@ -585,7 +588,6 @@ def optseq2(
 __all__ = [
     "OPTSEQ2_METADATA",
     "Optseq2Outputs",
-    "Optseq2Parameters",
     "optseq2",
     "optseq2_execute",
     "optseq2_params",

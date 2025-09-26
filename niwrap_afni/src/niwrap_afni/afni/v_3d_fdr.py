@@ -14,7 +14,24 @@ V_3D_FDR_METADATA = Metadata(
 
 
 V3dFdrParameters = typing.TypedDict('V3dFdrParameters', {
-    "@type": typing.Literal["afni.3dFDR"],
+    "@type": typing.NotRequired[typing.Literal["afni/3dFDR"]],
+    "input_file": InputPathType,
+    "input1d_file": typing.NotRequired[InputPathType | None],
+    "mask_file": typing.NotRequired[InputPathType | None],
+    "mask_threshold": typing.NotRequired[float | None],
+    "constant_type": typing.NotRequired[typing.Literal["cind", "cdep"] | None],
+    "quiet": bool,
+    "list": bool,
+    "prefix": str,
+    "mode_option": typing.NotRequired[typing.Literal["old", "new"] | None],
+    "pmask": bool,
+    "nopmask": bool,
+    "force": bool,
+    "float": bool,
+    "qval": bool,
+})
+V3dFdrParametersTagged = typing.TypedDict('V3dFdrParametersTagged', {
+    "@type": typing.Literal["afni/3dFDR"],
     "input_file": InputPathType,
     "input1d_file": typing.NotRequired[InputPathType | None],
     "mask_file": typing.NotRequired[InputPathType | None],
@@ -32,41 +49,9 @@ V3dFdrParameters = typing.TypedDict('V3dFdrParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "afni.3dFDR": v_3d_fdr_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "afni.3dFDR": v_3d_fdr_outputs,
-    }.get(t)
-
-
 class V3dFdrOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `v_3d_fdr(...)`.
+    Output object returned when calling `V3dFdrParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -93,7 +78,7 @@ def v_3d_fdr_params(
     force: bool = False,
     float_: bool = False,
     qval: bool = False,
-) -> V3dFdrParameters:
+) -> V3dFdrParametersTagged:
     """
     Build parameters.
     
@@ -122,7 +107,7 @@ def v_3d_fdr_params(
         Parameter dictionary
     """
     params = {
-        "@type": "afni.3dFDR",
+        "@type": "afni/3dFDR",
         "input_file": input_file,
         "quiet": quiet,
         "list": list_,
@@ -163,50 +148,50 @@ def v_3d_fdr_cargs(
     cargs.append("3dFDR")
     cargs.extend([
         "-input",
-        execution.input_file(params.get("input_file"))
+        execution.input_file(params.get("input_file", None))
     ])
-    if params.get("input1d_file") is not None:
+    if params.get("input1d_file", None) is not None:
         cargs.extend([
             "-input1D",
-            execution.input_file(params.get("input1d_file"))
+            execution.input_file(params.get("input1d_file", None))
         ])
-    if params.get("mask_file") is not None:
+    if params.get("mask_file", None) is not None:
         cargs.extend([
             "-mask_file",
-            execution.input_file(params.get("mask_file"))
+            execution.input_file(params.get("mask_file", None))
         ])
-    if params.get("mask_threshold") is not None:
+    if params.get("mask_threshold", None) is not None:
         cargs.extend([
             "-mask_thr",
-            str(params.get("mask_threshold"))
+            str(params.get("mask_threshold", None))
         ])
-    if params.get("constant_type") is not None:
+    if params.get("constant_type", None) is not None:
         cargs.extend([
             "-c",
-            params.get("constant_type")
+            params.get("constant_type", None)
         ])
-    if params.get("quiet"):
+    if params.get("quiet", False):
         cargs.append("-quiet")
-    if params.get("list"):
+    if params.get("list", False):
         cargs.append("-list")
     cargs.extend([
         "-prefix",
-        params.get("prefix")
+        params.get("prefix", None)
     ])
-    if params.get("mode_option") is not None:
+    if params.get("mode_option", None) is not None:
         cargs.extend([
             "-",
-            params.get("mode_option")
+            params.get("mode_option", None)
         ])
-    if params.get("pmask"):
+    if params.get("pmask", False):
         cargs.append("-pmask")
-    if params.get("nopmask"):
+    if params.get("nopmask", False):
         cargs.append("-nopmask")
-    if params.get("force"):
+    if params.get("force", False):
         cargs.append("-force")
-    if params.get("float"):
+    if params.get("float", False):
         cargs.append("-float")
-    if params.get("qval"):
+    if params.get("qval", False):
         cargs.append("-qval")
     return cargs
 
@@ -226,9 +211,9 @@ def v_3d_fdr_outputs(
     """
     ret = V3dFdrOutputs(
         root=execution.output_file("."),
-        output_brik=execution.output_file(params.get("prefix") + "+orig.BRIK"),
-        output_head=execution.output_file(params.get("prefix") + "+orig.HEAD"),
-        output_1d=execution.output_file(params.get("prefix") + ".1D"),
+        output_brik=execution.output_file(params.get("prefix", None) + "+orig.BRIK"),
+        output_head=execution.output_file(params.get("prefix", None) + "+orig.HEAD"),
+        output_1d=execution.output_file(params.get("prefix", None) + ".1D"),
     )
     return ret
 
@@ -335,7 +320,6 @@ def v_3d_fdr(
 
 __all__ = [
     "V3dFdrOutputs",
-    "V3dFdrParameters",
     "V_3D_FDR_METADATA",
     "v_3d_fdr",
     "v_3d_fdr_execute",

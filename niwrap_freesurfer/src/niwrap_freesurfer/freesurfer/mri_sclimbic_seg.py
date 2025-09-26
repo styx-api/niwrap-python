@@ -14,7 +14,35 @@ MRI_SCLIMBIC_SEG_METADATA = Metadata(
 
 
 MriSclimbicSegParameters = typing.TypedDict('MriSclimbicSegParameters', {
-    "@type": typing.Literal["freesurfer.mri_sclimbic_seg"],
+    "@type": typing.NotRequired[typing.Literal["freesurfer/mri_sclimbic_seg"]],
+    "input_file": str,
+    "output_file": str,
+    "subjects": typing.NotRequired[list[str] | None],
+    "subjects_dir": typing.NotRequired[str | None],
+    "conform": bool,
+    "etiv": bool,
+    "exclude_labels": typing.NotRequired[list[str] | None],
+    "keep_ac": bool,
+    "vox_count_volumes": bool,
+    "model_file": typing.NotRequired[InputPathType | None],
+    "ctab_file": typing.NotRequired[InputPathType | None],
+    "population_stats": typing.NotRequired[InputPathType | None],
+    "debug": bool,
+    "vmp": bool,
+    "threads": typing.NotRequired[int | None],
+    "tal_xfm": typing.NotRequired[str | None],
+    "write_posteriors": bool,
+    "write_volumes": bool,
+    "write_qa_stats": bool,
+    "preprocess_7T": bool,
+    "percentile": typing.NotRequired[float | None],
+    "cuda_device": typing.NotRequired[str | None],
+    "output_base": typing.NotRequired[str | None],
+    "no_cite": bool,
+    "nchannels": typing.NotRequired[int | None],
+})
+MriSclimbicSegParametersTagged = typing.TypedDict('MriSclimbicSegParametersTagged', {
+    "@type": typing.Literal["freesurfer/mri_sclimbic_seg"],
     "input_file": str,
     "output_file": str,
     "subjects": typing.NotRequired[list[str] | None],
@@ -43,41 +71,9 @@ MriSclimbicSegParameters = typing.TypedDict('MriSclimbicSegParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "freesurfer.mri_sclimbic_seg": mri_sclimbic_seg_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "freesurfer.mri_sclimbic_seg": mri_sclimbic_seg_outputs,
-    }.get(t)
-
-
 class MriSclimbicSegOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `mri_sclimbic_seg(...)`.
+    Output object returned when calling `MriSclimbicSegParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -111,7 +107,7 @@ def mri_sclimbic_seg_params(
     output_base: str | None = None,
     no_cite: bool = False,
     nchannels: int | None = None,
-) -> MriSclimbicSegParameters:
+) -> MriSclimbicSegParametersTagged:
     """
     Build parameters.
     
@@ -154,7 +150,7 @@ def mri_sclimbic_seg_params(
         Parameter dictionary
     """
     params = {
-        "@type": "freesurfer.mri_sclimbic_seg",
+        "@type": "freesurfer/mri_sclimbic_seg",
         "input_file": input_file,
         "output_file": output_file,
         "conform": conform,
@@ -213,93 +209,93 @@ def mri_sclimbic_seg_cargs(
     cargs.append("mri_sclimbic_seg")
     cargs.extend([
         "-i",
-        params.get("input_file")
+        params.get("input_file", None)
     ])
     cargs.extend([
         "-o",
-        params.get("output_file")
+        params.get("output_file", None)
     ])
-    if params.get("subjects") is not None:
+    if params.get("subjects", None) is not None:
         cargs.extend([
             "-s",
-            *params.get("subjects")
+            *params.get("subjects", None)
         ])
-    if params.get("subjects_dir") is not None:
+    if params.get("subjects_dir", None) is not None:
         cargs.extend([
             "--sd",
-            params.get("subjects_dir")
+            params.get("subjects_dir", None)
         ])
-    if params.get("conform"):
+    if params.get("conform", False):
         cargs.append("--conform")
-    if params.get("etiv"):
+    if params.get("etiv", False):
         cargs.append("--etiv")
-    if params.get("exclude_labels") is not None:
+    if params.get("exclude_labels", None) is not None:
         cargs.extend([
             "--exclude",
-            *params.get("exclude_labels")
+            *params.get("exclude_labels", None)
         ])
-    if params.get("keep_ac"):
+    if params.get("keep_ac", False):
         cargs.append("--keep_ac")
-    if params.get("vox_count_volumes"):
+    if params.get("vox_count_volumes", False):
         cargs.append("--vox-count-volumes")
-    if params.get("model_file") is not None:
+    if params.get("model_file", None) is not None:
         cargs.extend([
             "--model",
-            execution.input_file(params.get("model_file"))
+            execution.input_file(params.get("model_file", None))
         ])
-    if params.get("ctab_file") is not None:
+    if params.get("ctab_file", None) is not None:
         cargs.extend([
             "--ctab",
-            execution.input_file(params.get("ctab_file"))
+            execution.input_file(params.get("ctab_file", None))
         ])
-    if params.get("population_stats") is not None:
+    if params.get("population_stats", None) is not None:
         cargs.extend([
             "--population-stats",
-            execution.input_file(params.get("population_stats"))
+            execution.input_file(params.get("population_stats", None))
         ])
-    if params.get("debug"):
+    if params.get("debug", False):
         cargs.append("--debug")
-    if params.get("vmp"):
+    if params.get("vmp", False):
         cargs.append("--vmp")
-    if params.get("threads") is not None:
+    if params.get("threads", None) is not None:
         cargs.extend([
             "--threads",
-            str(params.get("threads"))
+            str(params.get("threads", None))
         ])
-    if params.get("tal_xfm") is not None:
+    if params.get("tal_xfm", None) is not None:
         cargs.extend([
             "--tal",
-            params.get("tal_xfm")
+            params.get("tal_xfm", None)
         ])
-    if params.get("write_posteriors"):
+    if params.get("write_posteriors", False):
         cargs.append("--write_posteriors")
-    if params.get("write_volumes"):
+    if params.get("write_volumes", False):
         cargs.append("--write_volumes")
-    if params.get("write_qa_stats"):
+    if params.get("write_qa_stats", False):
         cargs.append("--write_qa_stats")
-    if params.get("preprocess_7T"):
+    if params.get("preprocess_7T", False):
         cargs.append("--7T")
-    if params.get("percentile") is not None:
+    if params.get("percentile", None) is not None:
         cargs.extend([
             "--percentile",
-            str(params.get("percentile"))
+            str(params.get("percentile", None))
         ])
-    if params.get("cuda_device") is not None:
+    if params.get("cuda_device", None) is not None:
         cargs.extend([
             "--cuda-device",
-            params.get("cuda_device")
+            params.get("cuda_device", None)
         ])
-    if params.get("output_base") is not None:
+    if params.get("output_base", None) is not None:
         cargs.extend([
             "--output-base",
-            params.get("output_base")
+            params.get("output_base", None)
         ])
-    if params.get("no_cite"):
+    if params.get("no_cite", False):
         cargs.append("--no-cite-sclimbic")
-    if params.get("nchannels") is not None:
+    if params.get("nchannels", None) is not None:
         cargs.extend([
             "--nchannels",
-            str(params.get("nchannels"))
+            str(params.get("nchannels", None))
         ])
     return cargs
 
@@ -319,7 +315,7 @@ def mri_sclimbic_seg_outputs(
     """
     ret = MriSclimbicSegOutputs(
         root=execution.output_file("."),
-        segmentation_output=execution.output_file(params.get("output_file")),
+        segmentation_output=execution.output_file(params.get("output_file", None)),
     )
     return ret
 
@@ -461,7 +457,6 @@ def mri_sclimbic_seg(
 __all__ = [
     "MRI_SCLIMBIC_SEG_METADATA",
     "MriSclimbicSegOutputs",
-    "MriSclimbicSegParameters",
     "mri_sclimbic_seg",
     "mri_sclimbic_seg_execute",
     "mri_sclimbic_seg_params",

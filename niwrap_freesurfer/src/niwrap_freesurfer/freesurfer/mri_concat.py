@@ -14,7 +14,58 @@ MRI_CONCAT_METADATA = Metadata(
 
 
 MriConcatParameters = typing.TypedDict('MriConcatParameters', {
-    "@type": typing.Literal["freesurfer.mri_concat"],
+    "@type": typing.NotRequired[typing.Literal["freesurfer/mri_concat"]],
+    "input_files": list[InputPathType],
+    "output_file": str,
+    "file_list": typing.NotRequired[str | None],
+    "paired_sum": bool,
+    "paired_avg": bool,
+    "paired_diff": bool,
+    "paired_diff_norm": bool,
+    "paired_diff_norm1": bool,
+    "paired_diff_norm2": bool,
+    "norm_mean": bool,
+    "norm1": bool,
+    "matrix": typing.NotRequired[InputPathType | None],
+    "frame_weight": typing.NotRequired[InputPathType | None],
+    "norm_weight": bool,
+    "group_mean": typing.NotRequired[float | None],
+    "combine": bool,
+    "keep_datatype": bool,
+    "abs": bool,
+    "pos": bool,
+    "neg": bool,
+    "mean": bool,
+    "median": bool,
+    "mean_div_n": bool,
+    "sum": bool,
+    "var": bool,
+    "std": bool,
+    "max": bool,
+    "max_index": bool,
+    "max_index_prune": bool,
+    "max_index_add": typing.NotRequired[float | None],
+    "min": bool,
+    "replicate_times": typing.NotRequired[float | None],
+    "fnorm": bool,
+    "conjunction": bool,
+    "vote": bool,
+    "sort": bool,
+    "temporal_ar1": typing.NotRequired[float | None],
+    "prune": bool,
+    "pca": bool,
+    "pca_mask": typing.NotRequired[InputPathType | None],
+    "scm": bool,
+    "zconcat": typing.NotRequired[str | None],
+    "max_bonfcor": bool,
+    "multiply": typing.NotRequired[float | None],
+    "add": typing.NotRequired[float | None],
+    "mask_file": typing.NotRequired[InputPathType | None],
+    "rms": bool,
+    "no_check": bool,
+})
+MriConcatParametersTagged = typing.TypedDict('MriConcatParametersTagged', {
+    "@type": typing.Literal["freesurfer/mri_concat"],
     "input_files": list[InputPathType],
     "output_file": str,
     "file_list": typing.NotRequired[str | None],
@@ -66,40 +117,9 @@ MriConcatParameters = typing.TypedDict('MriConcatParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "freesurfer.mri_concat": mri_concat_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-    }.get(t)
-
-
 class MriConcatOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `mri_concat(...)`.
+    Output object returned when calling `MriConcatParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -154,7 +174,7 @@ def mri_concat_params(
     mask_file: InputPathType | None = None,
     rms: bool = False,
     no_check: bool = False,
-) -> MriConcatParameters:
+) -> MriConcatParametersTagged:
     """
     Build parameters.
     
@@ -215,7 +235,7 @@ def mri_concat_params(
         Parameter dictionary
     """
     params = {
-        "@type": "freesurfer.mri_concat",
+        "@type": "freesurfer/mri_concat",
         "input_files": input_files,
         "output_file": output_file,
         "paired_sum": paired_sum,
@@ -295,138 +315,138 @@ def mri_concat_cargs(
     """
     cargs = []
     cargs.append("mri_concat")
-    cargs.extend([execution.input_file(f) for f in params.get("input_files")])
+    cargs.extend([execution.input_file(f) for f in params.get("input_files", None)])
     cargs.extend([
         "--o",
-        params.get("output_file")
+        params.get("output_file", None)
     ])
-    if params.get("file_list") is not None:
+    if params.get("file_list", None) is not None:
         cargs.extend([
             "--f",
-            params.get("file_list")
+            params.get("file_list", None)
         ])
-    if params.get("paired_sum"):
+    if params.get("paired_sum", False):
         cargs.append("--paired-sum")
-    if params.get("paired_avg"):
+    if params.get("paired_avg", False):
         cargs.append("--paired-avg")
-    if params.get("paired_diff"):
+    if params.get("paired_diff", False):
         cargs.append("--paired-diff")
-    if params.get("paired_diff_norm"):
+    if params.get("paired_diff_norm", False):
         cargs.append("--paired-diff-norm")
-    if params.get("paired_diff_norm1"):
+    if params.get("paired_diff_norm1", False):
         cargs.append("--paired-diff-norm1")
-    if params.get("paired_diff_norm2"):
+    if params.get("paired_diff_norm2", False):
         cargs.append("--paired-diff-norm2")
-    if params.get("norm_mean"):
+    if params.get("norm_mean", False):
         cargs.append("--norm-mean")
-    if params.get("norm1"):
+    if params.get("norm1", False):
         cargs.append("--norm1")
-    if params.get("matrix") is not None:
+    if params.get("matrix", None) is not None:
         cargs.extend([
             "--mtx",
-            execution.input_file(params.get("matrix"))
+            execution.input_file(params.get("matrix", None))
         ])
-    if params.get("frame_weight") is not None:
+    if params.get("frame_weight", None) is not None:
         cargs.extend([
             "--w",
-            execution.input_file(params.get("frame_weight"))
+            execution.input_file(params.get("frame_weight", None))
         ])
-    if params.get("norm_weight"):
+    if params.get("norm_weight", False):
         cargs.append("--wn")
-    if params.get("group_mean") is not None:
+    if params.get("group_mean", None) is not None:
         cargs.extend([
             "--gmean",
-            str(params.get("group_mean"))
+            str(params.get("group_mean", None))
         ])
-    if params.get("combine"):
+    if params.get("combine", False):
         cargs.append("--combine")
-    if params.get("keep_datatype"):
+    if params.get("keep_datatype", False):
         cargs.append("--keep-datatype")
-    if params.get("abs"):
+    if params.get("abs", False):
         cargs.append("--abs")
-    if params.get("pos"):
+    if params.get("pos", False):
         cargs.append("--pos")
-    if params.get("neg"):
+    if params.get("neg", False):
         cargs.append("--neg")
-    if params.get("mean"):
+    if params.get("mean", False):
         cargs.append("--mean")
-    if params.get("median"):
+    if params.get("median", False):
         cargs.append("--median")
-    if params.get("mean_div_n"):
+    if params.get("mean_div_n", False):
         cargs.append("--mean-div-n")
-    if params.get("sum"):
+    if params.get("sum", False):
         cargs.append("--sum")
-    if params.get("var"):
+    if params.get("var", False):
         cargs.append("--var")
-    if params.get("std"):
+    if params.get("std", False):
         cargs.append("--std")
-    if params.get("max"):
+    if params.get("max", False):
         cargs.append("--max")
-    if params.get("max_index"):
+    if params.get("max_index", False):
         cargs.append("--max-index")
-    if params.get("max_index_prune"):
+    if params.get("max_index_prune", False):
         cargs.append("--max-index-prune")
-    if params.get("max_index_add") is not None:
+    if params.get("max_index_add", None) is not None:
         cargs.extend([
             "--max-index-add",
-            str(params.get("max_index_add"))
+            str(params.get("max_index_add", None))
         ])
-    if params.get("min"):
+    if params.get("min", False):
         cargs.append("--min")
-    if params.get("replicate_times") is not None:
+    if params.get("replicate_times", None) is not None:
         cargs.extend([
             "--rep",
-            str(params.get("replicate_times"))
+            str(params.get("replicate_times", None))
         ])
-    if params.get("fnorm"):
+    if params.get("fnorm", False):
         cargs.append("--fnorm")
-    if params.get("conjunction"):
+    if params.get("conjunction", False):
         cargs.append("--conjunct")
-    if params.get("vote"):
+    if params.get("vote", False):
         cargs.append("--vote")
-    if params.get("sort"):
+    if params.get("sort", False):
         cargs.append("--sort")
-    if params.get("temporal_ar1") is not None:
+    if params.get("temporal_ar1", None) is not None:
         cargs.extend([
             "--tar1",
-            str(params.get("temporal_ar1"))
+            str(params.get("temporal_ar1", None))
         ])
-    if params.get("prune"):
+    if params.get("prune", False):
         cargs.append("--prune")
-    if params.get("pca"):
+    if params.get("pca", False):
         cargs.append("--pca")
-    if params.get("pca_mask") is not None:
+    if params.get("pca_mask", None) is not None:
         cargs.extend([
             "--pca-mask",
-            execution.input_file(params.get("pca_mask"))
+            execution.input_file(params.get("pca_mask", None))
         ])
-    if params.get("scm"):
+    if params.get("scm", False):
         cargs.append("--scm")
-    if params.get("zconcat") is not None:
+    if params.get("zconcat", None) is not None:
         cargs.extend([
             "--zconcat",
-            params.get("zconcat")
+            params.get("zconcat", None)
         ])
-    if params.get("max_bonfcor"):
+    if params.get("max_bonfcor", False):
         cargs.append("--max-bonfcor")
-    if params.get("multiply") is not None:
+    if params.get("multiply", None) is not None:
         cargs.extend([
             "--mul",
-            str(params.get("multiply"))
+            str(params.get("multiply", None))
         ])
-    if params.get("add") is not None:
+    if params.get("add", None) is not None:
         cargs.extend([
             "--add",
-            str(params.get("add"))
+            str(params.get("add", None))
         ])
-    if params.get("mask_file") is not None:
+    if params.get("mask_file", None) is not None:
         cargs.extend([
             "--mask",
-            execution.input_file(params.get("mask_file"))
+            execution.input_file(params.get("mask_file", None))
         ])
-    if params.get("rms"):
+    if params.get("rms", False):
         cargs.append("--rms")
-    if params.get("no_check"):
+    if params.get("no_check", False):
         cargs.append("--no-check")
     return cargs
 
@@ -651,7 +671,6 @@ def mri_concat(
 __all__ = [
     "MRI_CONCAT_METADATA",
     "MriConcatOutputs",
-    "MriConcatParameters",
     "mri_concat",
     "mri_concat_execute",
     "mri_concat_params",

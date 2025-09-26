@@ -14,48 +14,22 @@ MRIS_COPY_HEADER_METADATA = Metadata(
 
 
 MrisCopyHeaderParameters = typing.TypedDict('MrisCopyHeaderParameters', {
-    "@type": typing.Literal["freesurfer.mris_copy_header"],
+    "@type": typing.NotRequired[typing.Literal["freesurfer/mris_copy_header"]],
+    "input_surface": InputPathType,
+    "template_surface": InputPathType,
+    "output_surface": str,
+})
+MrisCopyHeaderParametersTagged = typing.TypedDict('MrisCopyHeaderParametersTagged', {
+    "@type": typing.Literal["freesurfer/mris_copy_header"],
     "input_surface": InputPathType,
     "template_surface": InputPathType,
     "output_surface": str,
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "freesurfer.mris_copy_header": mris_copy_header_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "freesurfer.mris_copy_header": mris_copy_header_outputs,
-    }.get(t)
-
-
 class MrisCopyHeaderOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `mris_copy_header(...)`.
+    Output object returned when calling `MrisCopyHeaderParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -67,7 +41,7 @@ def mris_copy_header_params(
     input_surface: InputPathType,
     template_surface: InputPathType,
     output_surface: str,
-) -> MrisCopyHeaderParameters:
+) -> MrisCopyHeaderParametersTagged:
     """
     Build parameters.
     
@@ -80,7 +54,7 @@ def mris_copy_header_params(
         Parameter dictionary
     """
     params = {
-        "@type": "freesurfer.mris_copy_header",
+        "@type": "freesurfer/mris_copy_header",
         "input_surface": input_surface,
         "template_surface": template_surface,
         "output_surface": output_surface,
@@ -103,9 +77,9 @@ def mris_copy_header_cargs(
     """
     cargs = []
     cargs.append("mris_copy_header")
-    cargs.append(execution.input_file(params.get("input_surface")))
-    cargs.append(execution.input_file(params.get("template_surface")))
-    cargs.append(params.get("output_surface"))
+    cargs.append(execution.input_file(params.get("input_surface", None)))
+    cargs.append(execution.input_file(params.get("template_surface", None)))
+    cargs.append(params.get("output_surface", None))
     return cargs
 
 
@@ -124,7 +98,7 @@ def mris_copy_header_outputs(
     """
     ret = MrisCopyHeaderOutputs(
         root=execution.output_file("."),
-        out_surface=execution.output_file(params.get("output_surface")),
+        out_surface=execution.output_file(params.get("output_surface", None)),
     )
     return ret
 
@@ -194,7 +168,6 @@ def mris_copy_header(
 __all__ = [
     "MRIS_COPY_HEADER_METADATA",
     "MrisCopyHeaderOutputs",
-    "MrisCopyHeaderParameters",
     "mris_copy_header",
     "mris_copy_header_execute",
     "mris_copy_header_params",

@@ -14,46 +14,20 @@ MRIS_VOLUME_METADATA = Metadata(
 
 
 MrisVolumeParameters = typing.TypedDict('MrisVolumeParameters', {
-    "@type": typing.Literal["freesurfer.mris_volume"],
+    "@type": typing.NotRequired[typing.Literal["freesurfer/mris_volume"]],
+    "surface_file": InputPathType,
+    "verbose_flag": bool,
+})
+MrisVolumeParametersTagged = typing.TypedDict('MrisVolumeParametersTagged', {
+    "@type": typing.Literal["freesurfer/mris_volume"],
     "surface_file": InputPathType,
     "verbose_flag": bool,
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "freesurfer.mris_volume": mris_volume_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-    }.get(t)
-
-
 class MrisVolumeOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `mris_volume(...)`.
+    Output object returned when calling `MrisVolumeParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -62,7 +36,7 @@ class MrisVolumeOutputs(typing.NamedTuple):
 def mris_volume_params(
     surface_file: InputPathType,
     verbose_flag: bool = False,
-) -> MrisVolumeParameters:
+) -> MrisVolumeParametersTagged:
     """
     Build parameters.
     
@@ -73,7 +47,7 @@ def mris_volume_params(
         Parameter dictionary
     """
     params = {
-        "@type": "freesurfer.mris_volume",
+        "@type": "freesurfer/mris_volume",
         "surface_file": surface_file,
         "verbose_flag": verbose_flag,
     }
@@ -95,8 +69,8 @@ def mris_volume_cargs(
     """
     cargs = []
     cargs.append("mris_volume")
-    cargs.append(execution.input_file(params.get("surface_file")))
-    if params.get("verbose_flag"):
+    cargs.append(execution.input_file(params.get("surface_file", None)))
+    if params.get("verbose_flag", False):
         cargs.append("-v")
     return cargs
 
@@ -181,7 +155,6 @@ def mris_volume(
 __all__ = [
     "MRIS_VOLUME_METADATA",
     "MrisVolumeOutputs",
-    "MrisVolumeParameters",
     "mris_volume",
     "mris_volume_execute",
     "mris_volume_params",

@@ -14,7 +14,14 @@ V_3DMATCALC_METADATA = Metadata(
 
 
 V3dmatcalcParameters = typing.TypedDict('V3dmatcalcParameters', {
-    "@type": typing.Literal["afni.3dmatcalc"],
+    "@type": typing.NotRequired[typing.Literal["afni/3dmatcalc"]],
+    "input_dataset": InputPathType,
+    "input_matrix": InputPathType,
+    "output_dataset": str,
+    "mask": typing.NotRequired[InputPathType | None],
+})
+V3dmatcalcParametersTagged = typing.TypedDict('V3dmatcalcParametersTagged', {
+    "@type": typing.Literal["afni/3dmatcalc"],
     "input_dataset": InputPathType,
     "input_matrix": InputPathType,
     "output_dataset": str,
@@ -22,41 +29,9 @@ V3dmatcalcParameters = typing.TypedDict('V3dmatcalcParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "afni.3dmatcalc": v_3dmatcalc_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "afni.3dmatcalc": v_3dmatcalc_outputs,
-    }.get(t)
-
-
 class V3dmatcalcOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `v_3dmatcalc(...)`.
+    Output object returned when calling `V3dmatcalcParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -71,7 +46,7 @@ def v_3dmatcalc_params(
     input_matrix: InputPathType,
     output_dataset: str,
     mask: InputPathType | None = None,
-) -> V3dmatcalcParameters:
+) -> V3dmatcalcParametersTagged:
     """
     Build parameters.
     
@@ -86,7 +61,7 @@ def v_3dmatcalc_params(
         Parameter dictionary
     """
     params = {
-        "@type": "afni.3dmatcalc",
+        "@type": "afni/3dmatcalc",
         "input_dataset": input_dataset,
         "input_matrix": input_matrix,
         "output_dataset": output_dataset,
@@ -113,20 +88,20 @@ def v_3dmatcalc_cargs(
     cargs.append("3dmatcalc")
     cargs.extend([
         "-input",
-        execution.input_file(params.get("input_dataset"))
+        execution.input_file(params.get("input_dataset", None))
     ])
     cargs.extend([
         "-matrix",
-        execution.input_file(params.get("input_matrix"))
+        execution.input_file(params.get("input_matrix", None))
     ])
     cargs.extend([
         "-prefix",
-        params.get("output_dataset")
+        params.get("output_dataset", None)
     ])
-    if params.get("mask") is not None:
+    if params.get("mask", None) is not None:
         cargs.extend([
             "-mask",
-            execution.input_file(params.get("mask"))
+            execution.input_file(params.get("mask", None))
         ])
     return cargs
 
@@ -146,8 +121,8 @@ def v_3dmatcalc_outputs(
     """
     ret = V3dmatcalcOutputs(
         root=execution.output_file("."),
-        output_header=execution.output_file(params.get("output_dataset") + "+tlrc.HEAD"),
-        output_brick=execution.output_file(params.get("output_dataset") + "+tlrc.BRIK"),
+        output_header=execution.output_file(params.get("output_dataset", None) + "+tlrc.HEAD"),
+        output_brick=execution.output_file(params.get("output_dataset", None) + "+tlrc.BRIK"),
     )
     return ret
 
@@ -218,7 +193,6 @@ def v_3dmatcalc(
 
 __all__ = [
     "V3dmatcalcOutputs",
-    "V3dmatcalcParameters",
     "V_3DMATCALC_METADATA",
     "v_3dmatcalc",
     "v_3dmatcalc_execute",

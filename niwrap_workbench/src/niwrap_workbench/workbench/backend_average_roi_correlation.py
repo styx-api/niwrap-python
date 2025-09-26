@@ -14,46 +14,20 @@ BACKEND_AVERAGE_ROI_CORRELATION_METADATA = Metadata(
 
 
 BackendAverageRoiCorrelationParameters = typing.TypedDict('BackendAverageRoiCorrelationParameters', {
-    "@type": typing.Literal["workbench.backend-average-roi-correlation"],
+    "@type": typing.NotRequired[typing.Literal["workbench/backend-average-roi-correlation"]],
+    "index_list": str,
+    "out_file": str,
+})
+BackendAverageRoiCorrelationParametersTagged = typing.TypedDict('BackendAverageRoiCorrelationParametersTagged', {
+    "@type": typing.Literal["workbench/backend-average-roi-correlation"],
     "index_list": str,
     "out_file": str,
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "workbench.backend-average-roi-correlation": backend_average_roi_correlation_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-    }.get(t)
-
-
 class BackendAverageRoiCorrelationOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `backend_average_roi_correlation(...)`.
+    Output object returned when calling `BackendAverageRoiCorrelationParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -62,7 +36,7 @@ class BackendAverageRoiCorrelationOutputs(typing.NamedTuple):
 def backend_average_roi_correlation_params(
     index_list: str,
     out_file: str,
-) -> BackendAverageRoiCorrelationParameters:
+) -> BackendAverageRoiCorrelationParametersTagged:
     """
     Build parameters.
     
@@ -74,7 +48,7 @@ def backend_average_roi_correlation_params(
         Parameter dictionary
     """
     params = {
-        "@type": "workbench.backend-average-roi-correlation",
+        "@type": "workbench/backend-average-roi-correlation",
         "index_list": index_list,
         "out_file": out_file,
     }
@@ -97,8 +71,8 @@ def backend_average_roi_correlation_cargs(
     cargs = []
     cargs.append("wb_command")
     cargs.append("-backend-average-roi-correlation")
-    cargs.append(params.get("index_list"))
-    cargs.append(params.get("out_file"))
+    cargs.append(params.get("index_list", None))
+    cargs.append(params.get("out_file", None))
     return cargs
 
 
@@ -191,7 +165,6 @@ def backend_average_roi_correlation(
 __all__ = [
     "BACKEND_AVERAGE_ROI_CORRELATION_METADATA",
     "BackendAverageRoiCorrelationOutputs",
-    "BackendAverageRoiCorrelationParameters",
     "backend_average_roi_correlation",
     "backend_average_roi_correlation_execute",
     "backend_average_roi_correlation_params",

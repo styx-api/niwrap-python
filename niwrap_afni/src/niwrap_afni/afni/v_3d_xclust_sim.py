@@ -14,7 +14,28 @@ V_3D_XCLUST_SIM_METADATA = Metadata(
 
 
 V3dXclustSimParameters = typing.TypedDict('V3dXclustSimParameters', {
-    "@type": typing.Literal["afni.3dXClustSim"],
+    "@type": typing.NotRequired[typing.Literal["afni/3dXClustSim"]],
+    "inset": InputPathType,
+    "insdat": typing.NotRequired[InputPathType | None],
+    "nn": typing.NotRequired[float | None],
+    "sid": typing.NotRequired[float | None],
+    "hpow": typing.NotRequired[list[float] | None],
+    "ncase": typing.NotRequired[list[str] | None],
+    "pthr": typing.NotRequired[list[float] | None],
+    "fpr": typing.NotRequired[float | None],
+    "multiFPR": bool,
+    "minclust": typing.NotRequired[float | None],
+    "local": bool,
+    "global": bool,
+    "nolocal": bool,
+    "noglobal": bool,
+    "splitfrac": typing.NotRequired[float | None],
+    "prefix": typing.NotRequired[str | None],
+    "verbose": bool,
+    "quiet": bool,
+})
+V3dXclustSimParametersTagged = typing.TypedDict('V3dXclustSimParametersTagged', {
+    "@type": typing.Literal["afni/3dXClustSim"],
     "inset": InputPathType,
     "insdat": typing.NotRequired[InputPathType | None],
     "nn": typing.NotRequired[float | None],
@@ -36,40 +57,9 @@ V3dXclustSimParameters = typing.TypedDict('V3dXclustSimParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "afni.3dXClustSim": v_3d_xclust_sim_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-    }.get(t)
-
-
 class V3dXclustSimOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `v_3d_xclust_sim(...)`.
+    Output object returned when calling `V3dXclustSimParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -94,7 +84,7 @@ def v_3d_xclust_sim_params(
     prefix: str | None = None,
     verbose: bool = False,
     quiet: bool = False,
-) -> V3dXclustSimParameters:
+) -> V3dXclustSimParametersTagged:
     """
     Build parameters.
     
@@ -123,7 +113,7 @@ def v_3d_xclust_sim_params(
         Parameter dictionary
     """
     params = {
-        "@type": "afni.3dXClustSim",
+        "@type": "afni/3dXClustSim",
         "inset": inset,
         "multiFPR": multi_fpr,
         "local": local,
@@ -171,67 +161,67 @@ def v_3d_xclust_sim_cargs(
     """
     cargs = []
     cargs.append("3dXClustSim")
-    cargs.append(execution.input_file(params.get("inset")))
-    if params.get("insdat") is not None:
-        cargs.append(execution.input_file(params.get("insdat")))
-    if params.get("nn") is not None:
+    cargs.append(execution.input_file(params.get("inset", None)))
+    if params.get("insdat", None) is not None:
+        cargs.append(execution.input_file(params.get("insdat", None)))
+    if params.get("nn", None) is not None:
         cargs.extend([
             "-NN",
-            str(params.get("nn"))
+            str(params.get("nn", None))
         ])
-    if params.get("sid") is not None:
+    if params.get("sid", None) is not None:
         cargs.extend([
             "-sid",
-            str(params.get("sid"))
+            str(params.get("sid", None))
         ])
-    if params.get("hpow") is not None:
+    if params.get("hpow", None) is not None:
         cargs.extend([
             "-hpow",
-            *map(str, params.get("hpow"))
+            *map(str, params.get("hpow", None))
         ])
-    if params.get("ncase") is not None:
+    if params.get("ncase", None) is not None:
         cargs.extend([
             "-ncase",
-            *params.get("ncase")
+            *params.get("ncase", None)
         ])
-    if params.get("pthr") is not None:
+    if params.get("pthr", None) is not None:
         cargs.extend([
             "-pthr",
-            *map(str, params.get("pthr"))
+            *map(str, params.get("pthr", None))
         ])
-    if params.get("fpr") is not None:
+    if params.get("fpr", None) is not None:
         cargs.extend([
             "-FPR",
-            str(params.get("fpr"))
+            str(params.get("fpr", None))
         ])
-    if params.get("multiFPR"):
+    if params.get("multiFPR", False):
         cargs.append("-multiFPR")
-    if params.get("minclust") is not None:
+    if params.get("minclust", None) is not None:
         cargs.extend([
             "-minclust",
-            str(params.get("minclust"))
+            str(params.get("minclust", None))
         ])
-    if params.get("local"):
+    if params.get("local", False):
         cargs.append("-local")
-    if params.get("global"):
+    if params.get("global", False):
         cargs.append("-global")
-    if params.get("nolocal"):
+    if params.get("nolocal", False):
         cargs.append("-nolocal")
-    if params.get("noglobal"):
+    if params.get("noglobal", False):
         cargs.append("-noglobal")
-    if params.get("splitfrac") is not None:
+    if params.get("splitfrac", None) is not None:
         cargs.extend([
             "-splitfrac",
-            str(params.get("splitfrac"))
+            str(params.get("splitfrac", None))
         ])
-    if params.get("prefix") is not None:
+    if params.get("prefix", None) is not None:
         cargs.extend([
             "-prefix",
-            params.get("prefix")
+            params.get("prefix", None)
         ])
-    if params.get("verbose"):
+    if params.get("verbose", False):
         cargs.append("-verb")
-    if params.get("quiet"):
+    if params.get("quiet", False):
         cargs.append("-quiet")
     return cargs
 
@@ -363,7 +353,6 @@ def v_3d_xclust_sim(
 
 __all__ = [
     "V3dXclustSimOutputs",
-    "V3dXclustSimParameters",
     "V_3D_XCLUST_SIM_METADATA",
     "v_3d_xclust_sim",
     "v_3d_xclust_sim_execute",

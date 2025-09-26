@@ -14,48 +14,22 @@ SPHERE_SUBJECT_METADATA = Metadata(
 
 
 SphereSubjectParameters = typing.TypedDict('SphereSubjectParameters', {
-    "@type": typing.Literal["freesurfer.sphere_subject"],
+    "@type": typing.NotRequired[typing.Literal["freesurfer/sphere_subject"]],
+    "input_dir": str,
+    "output_file": str,
+    "license_file": typing.NotRequired[str | None],
+})
+SphereSubjectParametersTagged = typing.TypedDict('SphereSubjectParametersTagged', {
+    "@type": typing.Literal["freesurfer/sphere_subject"],
     "input_dir": str,
     "output_file": str,
     "license_file": typing.NotRequired[str | None],
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "freesurfer.sphere_subject": sphere_subject_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "freesurfer.sphere_subject": sphere_subject_outputs,
-    }.get(t)
-
-
 class SphereSubjectOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `sphere_subject(...)`.
+    Output object returned when calling `SphereSubjectParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -67,7 +41,7 @@ def sphere_subject_params(
     input_dir: str,
     output_file: str,
     license_file: str | None = None,
-) -> SphereSubjectParameters:
+) -> SphereSubjectParametersTagged:
     """
     Build parameters.
     
@@ -79,7 +53,7 @@ def sphere_subject_params(
         Parameter dictionary
     """
     params = {
-        "@type": "freesurfer.sphere_subject",
+        "@type": "freesurfer/sphere_subject",
         "input_dir": input_dir,
         "output_file": output_file,
     }
@@ -103,10 +77,10 @@ def sphere_subject_cargs(
     """
     cargs = []
     cargs.append("sphere_subject")
-    cargs.append(params.get("input_dir"))
-    cargs.append(params.get("output_file"))
-    if params.get("license_file") is not None:
-        cargs.append(params.get("license_file"))
+    cargs.append(params.get("input_dir", None))
+    cargs.append(params.get("output_file", None))
+    if params.get("license_file", None) is not None:
+        cargs.append(params.get("license_file", None))
     return cargs
 
 
@@ -125,7 +99,7 @@ def sphere_subject_outputs(
     """
     ret = SphereSubjectOutputs(
         root=execution.output_file("."),
-        output_result=execution.output_file(params.get("output_file")),
+        output_result=execution.output_file(params.get("output_file", None)),
     )
     return ret
 
@@ -192,7 +166,6 @@ def sphere_subject(
 __all__ = [
     "SPHERE_SUBJECT_METADATA",
     "SphereSubjectOutputs",
-    "SphereSubjectParameters",
     "sphere_subject",
     "sphere_subject_execute",
     "sphere_subject_params",

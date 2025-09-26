@@ -14,7 +14,18 @@ MRIS_LABEL_AREA_METADATA = Metadata(
 
 
 MrisLabelAreaParameters = typing.TypedDict('MrisLabelAreaParameters', {
-    "@type": typing.Literal["freesurfer.mris_label_area"],
+    "@type": typing.NotRequired[typing.Literal["freesurfer/mris_label_area"]],
+    "pct_flag": bool,
+    "log_file": typing.NotRequired[str | None],
+    "brain_vol": typing.NotRequired[str | None],
+    "subject_name": str,
+    "hemi": str,
+    "surf_name": str,
+    "annot_name": str,
+    "labels": list[str],
+})
+MrisLabelAreaParametersTagged = typing.TypedDict('MrisLabelAreaParametersTagged', {
+    "@type": typing.Literal["freesurfer/mris_label_area"],
     "pct_flag": bool,
     "log_file": typing.NotRequired[str | None],
     "brain_vol": typing.NotRequired[str | None],
@@ -26,40 +37,9 @@ MrisLabelAreaParameters = typing.TypedDict('MrisLabelAreaParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "freesurfer.mris_label_area": mris_label_area_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-    }.get(t)
-
-
 class MrisLabelAreaOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `mris_label_area(...)`.
+    Output object returned when calling `MrisLabelAreaParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -74,7 +54,7 @@ def mris_label_area_params(
     pct_flag: bool = False,
     log_file: str | None = None,
     brain_vol: str | None = None,
-) -> MrisLabelAreaParameters:
+) -> MrisLabelAreaParametersTagged:
     """
     Build parameters.
     
@@ -91,7 +71,7 @@ def mris_label_area_params(
         Parameter dictionary
     """
     params = {
-        "@type": "freesurfer.mris_label_area",
+        "@type": "freesurfer/mris_label_area",
         "pct_flag": pct_flag,
         "subject_name": subject_name,
         "hemi": hemi,
@@ -121,23 +101,23 @@ def mris_label_area_cargs(
     """
     cargs = []
     cargs.append("mris_label_area")
-    if params.get("pct_flag"):
+    if params.get("pct_flag", False):
         cargs.append("-p")
-    if params.get("log_file") is not None:
+    if params.get("log_file", None) is not None:
         cargs.extend([
             "-l",
-            params.get("log_file")
+            params.get("log_file", None)
         ])
-    if params.get("brain_vol") is not None:
+    if params.get("brain_vol", None) is not None:
         cargs.extend([
             "-b",
-            params.get("brain_vol")
+            params.get("brain_vol", None)
         ])
-    cargs.append(params.get("subject_name"))
-    cargs.append(params.get("hemi"))
-    cargs.append(params.get("surf_name"))
-    cargs.append(params.get("annot_name"))
-    cargs.extend(params.get("labels"))
+    cargs.append(params.get("subject_name", None))
+    cargs.append(params.get("hemi", None))
+    cargs.append(params.get("surf_name", None))
+    cargs.append(params.get("annot_name", None))
+    cargs.extend(params.get("labels", None))
     return cargs
 
 
@@ -239,7 +219,6 @@ def mris_label_area(
 __all__ = [
     "MRIS_LABEL_AREA_METADATA",
     "MrisLabelAreaOutputs",
-    "MrisLabelAreaParameters",
     "mris_label_area",
     "mris_label_area_execute",
     "mris_label_area_params",

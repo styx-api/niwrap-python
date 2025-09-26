@@ -14,46 +14,20 @@ RUN_SEGMENT_SUBJECT_T2_AUTO_ESTIMATE_ALVEUS_ML_SH_METADATA = Metadata(
 
 
 RunSegmentSubjectT2AutoEstimateAlveusMlShParameters = typing.TypedDict('RunSegmentSubjectT2AutoEstimateAlveusMlShParameters', {
-    "@type": typing.Literal["freesurfer.run_segmentSubjectT2_autoEstimateAlveusML.sh"],
+    "@type": typing.NotRequired[typing.Literal["freesurfer/run_segmentSubjectT2_autoEstimateAlveusML.sh"]],
+    "deployed_mcr_root": str,
+    "arguments": typing.NotRequired[list[str] | None],
+})
+RunSegmentSubjectT2AutoEstimateAlveusMlShParametersTagged = typing.TypedDict('RunSegmentSubjectT2AutoEstimateAlveusMlShParametersTagged', {
+    "@type": typing.Literal["freesurfer/run_segmentSubjectT2_autoEstimateAlveusML.sh"],
     "deployed_mcr_root": str,
     "arguments": typing.NotRequired[list[str] | None],
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "freesurfer.run_segmentSubjectT2_autoEstimateAlveusML.sh": run_segment_subject_t2_auto_estimate_alveus_ml_sh_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-    }.get(t)
-
-
 class RunSegmentSubjectT2AutoEstimateAlveusMlShOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `run_segment_subject_t2_auto_estimate_alveus_ml_sh(...)`.
+    Output object returned when calling `RunSegmentSubjectT2AutoEstimateAlveusMlShParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -62,7 +36,7 @@ class RunSegmentSubjectT2AutoEstimateAlveusMlShOutputs(typing.NamedTuple):
 def run_segment_subject_t2_auto_estimate_alveus_ml_sh_params(
     deployed_mcr_root: str,
     arguments: list[str] | None = None,
-) -> RunSegmentSubjectT2AutoEstimateAlveusMlShParameters:
+) -> RunSegmentSubjectT2AutoEstimateAlveusMlShParametersTagged:
     """
     Build parameters.
     
@@ -75,7 +49,7 @@ def run_segment_subject_t2_auto_estimate_alveus_ml_sh_params(
         Parameter dictionary
     """
     params = {
-        "@type": "freesurfer.run_segmentSubjectT2_autoEstimateAlveusML.sh",
+        "@type": "freesurfer/run_segmentSubjectT2_autoEstimateAlveusML.sh",
         "deployed_mcr_root": deployed_mcr_root,
     }
     if arguments is not None:
@@ -98,9 +72,9 @@ def run_segment_subject_t2_auto_estimate_alveus_ml_sh_cargs(
     """
     cargs = []
     cargs.append("run_segmentSubjectT2_autoEstimateAlveusML.sh")
-    cargs.append(params.get("deployed_mcr_root"))
-    if params.get("arguments") is not None:
-        cargs.extend(params.get("arguments"))
+    cargs.append(params.get("deployed_mcr_root", None))
+    if params.get("arguments", None) is not None:
+        cargs.extend(params.get("arguments", None))
     return cargs
 
 
@@ -188,7 +162,6 @@ def run_segment_subject_t2_auto_estimate_alveus_ml_sh(
 __all__ = [
     "RUN_SEGMENT_SUBJECT_T2_AUTO_ESTIMATE_ALVEUS_ML_SH_METADATA",
     "RunSegmentSubjectT2AutoEstimateAlveusMlShOutputs",
-    "RunSegmentSubjectT2AutoEstimateAlveusMlShParameters",
     "run_segment_subject_t2_auto_estimate_alveus_ml_sh",
     "run_segment_subject_t2_auto_estimate_alveus_ml_sh_execute",
     "run_segment_subject_t2_auto_estimate_alveus_ml_sh_params",

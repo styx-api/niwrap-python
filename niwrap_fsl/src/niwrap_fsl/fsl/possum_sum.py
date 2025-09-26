@@ -14,7 +14,14 @@ POSSUM_SUM_METADATA = Metadata(
 
 
 PossumSumParameters = typing.TypedDict('PossumSumParameters', {
-    "@type": typing.Literal["fsl.possum_sum"],
+    "@type": typing.NotRequired[typing.Literal["fsl/possum_sum"]],
+    "input_signal": InputPathType,
+    "output_signal": str,
+    "num_processors": typing.NotRequired[int | None],
+    "verbose_flag": bool,
+})
+PossumSumParametersTagged = typing.TypedDict('PossumSumParametersTagged', {
+    "@type": typing.Literal["fsl/possum_sum"],
     "input_signal": InputPathType,
     "output_signal": str,
     "num_processors": typing.NotRequired[int | None],
@@ -22,41 +29,9 @@ PossumSumParameters = typing.TypedDict('PossumSumParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "fsl.possum_sum": possum_sum_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "fsl.possum_sum": possum_sum_outputs,
-    }.get(t)
-
-
 class PossumSumOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `possum_sum(...)`.
+    Output object returned when calling `PossumSumParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -69,7 +44,7 @@ def possum_sum_params(
     output_signal: str,
     num_processors: int | None = None,
     verbose_flag: bool = False,
-) -> PossumSumParameters:
+) -> PossumSumParametersTagged:
     """
     Build parameters.
     
@@ -83,7 +58,7 @@ def possum_sum_params(
         Parameter dictionary
     """
     params = {
-        "@type": "fsl.possum_sum",
+        "@type": "fsl/possum_sum",
         "input_signal": input_signal,
         "output_signal": output_signal,
         "verbose_flag": verbose_flag,
@@ -110,18 +85,18 @@ def possum_sum_cargs(
     cargs.append("possum_sum")
     cargs.extend([
         "-i",
-        execution.input_file(params.get("input_signal"))
+        execution.input_file(params.get("input_signal", None))
     ])
     cargs.extend([
         "-o",
-        params.get("output_signal")
+        params.get("output_signal", None)
     ])
-    if params.get("num_processors") is not None:
+    if params.get("num_processors", None) is not None:
         cargs.extend([
             "-n",
-            str(params.get("num_processors"))
+            str(params.get("num_processors", None))
         ])
-    if params.get("verbose_flag"):
+    if params.get("verbose_flag", False):
         cargs.append("-v")
     return cargs
 
@@ -141,7 +116,7 @@ def possum_sum_outputs(
     """
     ret = PossumSumOutputs(
         root=execution.output_file("."),
-        output_file=execution.output_file(params.get("output_signal")),
+        output_file=execution.output_file(params.get("output_signal", None)),
     )
     return ret
 
@@ -212,7 +187,6 @@ def possum_sum(
 __all__ = [
     "POSSUM_SUM_METADATA",
     "PossumSumOutputs",
-    "PossumSumParameters",
     "possum_sum",
     "possum_sum_execute",
     "possum_sum_params",

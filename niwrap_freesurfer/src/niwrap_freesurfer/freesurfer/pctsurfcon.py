@@ -14,7 +14,23 @@ PCTSURFCON_METADATA = Metadata(
 
 
 PctsurfconParameters = typing.TypedDict('PctsurfconParameters', {
-    "@type": typing.Literal["freesurfer.pctsurfcon"],
+    "@type": typing.NotRequired[typing.Literal["freesurfer/pctsurfcon"]],
+    "subject": str,
+    "fsvol": typing.NotRequired[str | None],
+    "outbase": typing.NotRequired[str | None],
+    "lh_only": bool,
+    "rh_only": bool,
+    "gm_proj_frac": typing.NotRequired[float | None],
+    "gm_proj_abs": typing.NotRequired[float | None],
+    "wm_proj_abs": typing.NotRequired[float | None],
+    "neg": bool,
+    "no_mask": bool,
+    "pial": bool,
+    "tmp": typing.NotRequired[str | None],
+    "nocleanup": bool,
+})
+PctsurfconParametersTagged = typing.TypedDict('PctsurfconParametersTagged', {
+    "@type": typing.Literal["freesurfer/pctsurfcon"],
     "subject": str,
     "fsvol": typing.NotRequired[str | None],
     "outbase": typing.NotRequired[str | None],
@@ -31,40 +47,9 @@ PctsurfconParameters = typing.TypedDict('PctsurfconParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "freesurfer.pctsurfcon": pctsurfcon_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-    }.get(t)
-
-
 class PctsurfconOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `pctsurfcon(...)`.
+    Output object returned when calling `PctsurfconParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -84,7 +69,7 @@ def pctsurfcon_params(
     pial: bool = False,
     tmp: str | None = None,
     nocleanup: bool = False,
-) -> PctsurfconParameters:
+) -> PctsurfconParametersTagged:
     """
     Build parameters.
     
@@ -106,7 +91,7 @@ def pctsurfcon_params(
         Parameter dictionary
     """
     params = {
-        "@type": "freesurfer.pctsurfcon",
+        "@type": "freesurfer/pctsurfcon",
         "subject": subject,
         "lh_only": lh_only,
         "rh_only": rh_only,
@@ -147,49 +132,49 @@ def pctsurfcon_cargs(
     cargs.append("pctsurfcon")
     cargs.extend([
         "-s",
-        params.get("subject")
+        params.get("subject", None)
     ])
-    if params.get("fsvol") is not None:
+    if params.get("fsvol", None) is not None:
         cargs.extend([
             "--fsvol",
-            params.get("fsvol")
+            params.get("fsvol", None)
         ])
-    if params.get("outbase") is not None:
+    if params.get("outbase", None) is not None:
         cargs.extend([
             "--b",
-            params.get("outbase")
+            params.get("outbase", None)
         ])
-    if params.get("lh_only"):
+    if params.get("lh_only", False):
         cargs.append("--lh-only")
-    if params.get("rh_only"):
+    if params.get("rh_only", False):
         cargs.append("--rh-only")
-    if params.get("gm_proj_frac") is not None:
+    if params.get("gm_proj_frac", None) is not None:
         cargs.extend([
             "--gm-proj-frac",
-            str(params.get("gm_proj_frac"))
+            str(params.get("gm_proj_frac", None))
         ])
-    if params.get("gm_proj_abs") is not None:
+    if params.get("gm_proj_abs", None) is not None:
         cargs.extend([
             "--gm-proj-abs",
-            str(params.get("gm_proj_abs"))
+            str(params.get("gm_proj_abs", None))
         ])
-    if params.get("wm_proj_abs") is not None:
+    if params.get("wm_proj_abs", None) is not None:
         cargs.extend([
             "--wm-proj-abs",
-            str(params.get("wm_proj_abs"))
+            str(params.get("wm_proj_abs", None))
         ])
-    if params.get("neg"):
+    if params.get("neg", False):
         cargs.append("--neg")
-    if params.get("no_mask"):
+    if params.get("no_mask", False):
         cargs.append("--no-mask")
-    if params.get("pial"):
+    if params.get("pial", False):
         cargs.append("--pial")
-    if params.get("tmp") is not None:
+    if params.get("tmp", None) is not None:
         cargs.extend([
             "--tmp",
-            params.get("tmp")
+            params.get("tmp", None)
         ])
-    if params.get("nocleanup"):
+    if params.get("nocleanup", False):
         cargs.append("--nocleanup")
     return cargs
 
@@ -305,7 +290,6 @@ def pctsurfcon(
 __all__ = [
     "PCTSURFCON_METADATA",
     "PctsurfconOutputs",
-    "PctsurfconParameters",
     "pctsurfcon",
     "pctsurfcon_execute",
     "pctsurfcon_params",

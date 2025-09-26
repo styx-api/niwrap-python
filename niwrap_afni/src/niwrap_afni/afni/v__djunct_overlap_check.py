@@ -14,7 +14,34 @@ V__DJUNCT_OVERLAP_CHECK_METADATA = Metadata(
 
 
 VDjunctOverlapCheckParameters = typing.TypedDict('VDjunctOverlapCheckParameters', {
-    "@type": typing.Literal["afni.@djunct_overlap_check"],
+    "@type": typing.NotRequired[typing.Literal["afni/@djunct_overlap_check"]],
+    "ulay": InputPathType,
+    "olay": InputPathType,
+    "prefix": str,
+    "box_focus_slices": typing.NotRequired[InputPathType | None],
+    "montgap": typing.NotRequired[float | None],
+    "montcolor": typing.NotRequired[str | None],
+    "cbar": typing.NotRequired[str | None],
+    "opacity": typing.NotRequired[float | None],
+    "zerocolor": typing.NotRequired[str | None],
+    "set_dicom_xyz": typing.NotRequired[list[float] | None],
+    "ulay_range": typing.NotRequired[list[float] | None],
+    "ulay_range_nz": typing.NotRequired[list[float] | None],
+    "montx": typing.NotRequired[float | None],
+    "monty": typing.NotRequired[float | None],
+    "montx_cat": typing.NotRequired[float | None],
+    "monty_cat": typing.NotRequired[float | None],
+    "label_mode": typing.NotRequired[str | None],
+    "pbar_posonly_off": bool,
+    "edgy_ulay": bool,
+    "set_dicom_xyz_off": bool,
+    "no_cor": bool,
+    "no_axi": bool,
+    "no_sag": bool,
+    "no_clean": bool,
+})
+VDjunctOverlapCheckParametersTagged = typing.TypedDict('VDjunctOverlapCheckParametersTagged', {
+    "@type": typing.Literal["afni/@djunct_overlap_check"],
     "ulay": InputPathType,
     "olay": InputPathType,
     "prefix": str,
@@ -42,40 +69,9 @@ VDjunctOverlapCheckParameters = typing.TypedDict('VDjunctOverlapCheckParameters'
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "afni.@djunct_overlap_check": v__djunct_overlap_check_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-    }.get(t)
-
-
 class VDjunctOverlapCheckOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `v__djunct_overlap_check(...)`.
+    Output object returned when calling `VDjunctOverlapCheckParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -106,7 +102,7 @@ def v__djunct_overlap_check_params(
     no_axi: bool = False,
     no_sag: bool = False,
     no_clean: bool = False,
-) -> VDjunctOverlapCheckParameters:
+) -> VDjunctOverlapCheckParametersTagged:
     """
     Build parameters.
     
@@ -139,7 +135,7 @@ def v__djunct_overlap_check_params(
         Parameter dictionary
     """
     params = {
-        "@type": "afni.@djunct_overlap_check",
+        "@type": "afni/@djunct_overlap_check",
         "ulay": ulay,
         "olay": olay,
         "prefix": prefix,
@@ -197,89 +193,89 @@ def v__djunct_overlap_check_cargs(
     """
     cargs = []
     cargs.append("@djunct_overlap_check")
-    cargs.append(execution.input_file(params.get("ulay")))
-    cargs.append(execution.input_file(params.get("olay")))
-    cargs.append(params.get("prefix"))
-    if params.get("box_focus_slices") is not None:
-        cargs.append(execution.input_file(params.get("box_focus_slices")))
-    if params.get("montgap") is not None:
+    cargs.append(execution.input_file(params.get("ulay", None)))
+    cargs.append(execution.input_file(params.get("olay", None)))
+    cargs.append(params.get("prefix", None))
+    if params.get("box_focus_slices", None) is not None:
+        cargs.append(execution.input_file(params.get("box_focus_slices", None)))
+    if params.get("montgap", None) is not None:
         cargs.extend([
             "-montgap",
-            str(params.get("montgap"))
+            str(params.get("montgap", None))
         ])
-    if params.get("montcolor") is not None:
+    if params.get("montcolor", None) is not None:
         cargs.extend([
             "-montcolor",
-            params.get("montcolor")
+            params.get("montcolor", None)
         ])
-    if params.get("cbar") is not None:
+    if params.get("cbar", None) is not None:
         cargs.extend([
             "-cbar",
-            params.get("cbar")
+            params.get("cbar", None)
         ])
-    if params.get("opacity") is not None:
+    if params.get("opacity", None) is not None:
         cargs.extend([
             "-opacity",
-            str(params.get("opacity"))
+            str(params.get("opacity", None))
         ])
-    if params.get("zerocolor") is not None:
+    if params.get("zerocolor", None) is not None:
         cargs.extend([
             "-zerocolor",
-            params.get("zerocolor")
+            params.get("zerocolor", None)
         ])
-    if params.get("set_dicom_xyz") is not None:
+    if params.get("set_dicom_xyz", None) is not None:
         cargs.extend([
             "-set_dicom_xyz",
-            *map(str, params.get("set_dicom_xyz"))
+            *map(str, params.get("set_dicom_xyz", None))
         ])
-    if params.get("ulay_range") is not None:
+    if params.get("ulay_range", None) is not None:
         cargs.extend([
             "-ulay_range",
-            *map(str, params.get("ulay_range"))
+            *map(str, params.get("ulay_range", None))
         ])
-    if params.get("ulay_range_nz") is not None:
+    if params.get("ulay_range_nz", None) is not None:
         cargs.extend([
             "-ulay_range_nz",
-            *map(str, params.get("ulay_range_nz"))
+            *map(str, params.get("ulay_range_nz", None))
         ])
-    if params.get("montx") is not None:
+    if params.get("montx", None) is not None:
         cargs.extend([
             "-montx",
-            str(params.get("montx"))
+            str(params.get("montx", None))
         ])
-    if params.get("monty") is not None:
+    if params.get("monty", None) is not None:
         cargs.extend([
             "-monty",
-            str(params.get("monty"))
+            str(params.get("monty", None))
         ])
-    if params.get("montx_cat") is not None:
+    if params.get("montx_cat", None) is not None:
         cargs.extend([
             "-montx_cat",
-            str(params.get("montx_cat"))
+            str(params.get("montx_cat", None))
         ])
-    if params.get("monty_cat") is not None:
+    if params.get("monty_cat", None) is not None:
         cargs.extend([
             "-monty_cat",
-            str(params.get("monty_cat"))
+            str(params.get("monty_cat", None))
         ])
-    if params.get("label_mode") is not None:
+    if params.get("label_mode", None) is not None:
         cargs.extend([
             "-label_mode",
-            params.get("label_mode")
+            params.get("label_mode", None)
         ])
-    if params.get("pbar_posonly_off"):
+    if params.get("pbar_posonly_off", False):
         cargs.append("-pbar_posonly_off")
-    if params.get("edgy_ulay"):
+    if params.get("edgy_ulay", False):
         cargs.append("-edgy_ulay")
-    if params.get("set_dicom_xyz_off"):
+    if params.get("set_dicom_xyz_off", False):
         cargs.append("-set_dicom_xyz_off")
-    if params.get("no_cor"):
+    if params.get("no_cor", False):
         cargs.append("-no_cor")
-    if params.get("no_axi"):
+    if params.get("no_axi", False):
         cargs.append("-no_axi")
-    if params.get("no_sag"):
+    if params.get("no_sag", False):
         cargs.append("-no_sag")
-    if params.get("no_clean"):
+    if params.get("no_clean", False):
         cargs.append("-no_clean")
     return cargs
 
@@ -427,7 +423,6 @@ def v__djunct_overlap_check(
 
 __all__ = [
     "VDjunctOverlapCheckOutputs",
-    "VDjunctOverlapCheckParameters",
     "V__DJUNCT_OVERLAP_CHECK_METADATA",
     "v__djunct_overlap_check",
     "v__djunct_overlap_check_execute",

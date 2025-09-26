@@ -14,7 +14,18 @@ BEDPOSTX_MGH_METADATA = Metadata(
 
 
 BedpostxMghParameters = typing.TypedDict('BedpostxMghParameters', {
-    "@type": typing.Literal["freesurfer.bedpostx_mgh"],
+    "@type": typing.NotRequired[typing.Literal["freesurfer/bedpostx_mgh"]],
+    "subject_directory": str,
+    "fibres": typing.NotRequired[float | None],
+    "ard_weight": typing.NotRequired[float | None],
+    "burnin": typing.NotRequired[float | None],
+    "jumps": typing.NotRequired[float | None],
+    "sample_every": typing.NotRequired[float | None],
+    "deconv_model": typing.NotRequired[float | None],
+    "gradient_nonlin": bool,
+})
+BedpostxMghParametersTagged = typing.TypedDict('BedpostxMghParametersTagged', {
+    "@type": typing.Literal["freesurfer/bedpostx_mgh"],
     "subject_directory": str,
     "fibres": typing.NotRequired[float | None],
     "ard_weight": typing.NotRequired[float | None],
@@ -26,40 +37,9 @@ BedpostxMghParameters = typing.TypedDict('BedpostxMghParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "freesurfer.bedpostx_mgh": bedpostx_mgh_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-    }.get(t)
-
-
 class BedpostxMghOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `bedpostx_mgh(...)`.
+    Output object returned when calling `BedpostxMghParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -74,7 +54,7 @@ def bedpostx_mgh_params(
     sample_every: float | None = None,
     deconv_model: float | None = None,
     gradient_nonlin: bool = False,
-) -> BedpostxMghParameters:
+) -> BedpostxMghParametersTagged:
     """
     Build parameters.
     
@@ -94,7 +74,7 @@ def bedpostx_mgh_params(
         Parameter dictionary
     """
     params = {
-        "@type": "freesurfer.bedpostx_mgh",
+        "@type": "freesurfer/bedpostx_mgh",
         "subject_directory": subject_directory,
         "gradient_nonlin": gradient_nonlin,
     }
@@ -128,38 +108,38 @@ def bedpostx_mgh_cargs(
     """
     cargs = []
     cargs.append("bedpostx_mgh")
-    cargs.append(params.get("subject_directory"))
-    if params.get("fibres") is not None:
+    cargs.append(params.get("subject_directory", None))
+    if params.get("fibres", None) is not None:
         cargs.extend([
             "-n",
-            str(params.get("fibres"))
+            str(params.get("fibres", None))
         ])
-    if params.get("ard_weight") is not None:
+    if params.get("ard_weight", None) is not None:
         cargs.extend([
             "-w",
-            str(params.get("ard_weight"))
+            str(params.get("ard_weight", None))
         ])
-    if params.get("burnin") is not None:
+    if params.get("burnin", None) is not None:
         cargs.extend([
             "-b",
-            str(params.get("burnin"))
+            str(params.get("burnin", None))
         ])
-    if params.get("jumps") is not None:
+    if params.get("jumps", None) is not None:
         cargs.extend([
             "-j",
-            str(params.get("jumps"))
+            str(params.get("jumps", None))
         ])
-    if params.get("sample_every") is not None:
+    if params.get("sample_every", None) is not None:
         cargs.extend([
             "-s",
-            str(params.get("sample_every"))
+            str(params.get("sample_every", None))
         ])
-    if params.get("deconv_model") is not None:
+    if params.get("deconv_model", None) is not None:
         cargs.extend([
             "-model",
-            str(params.get("deconv_model"))
+            str(params.get("deconv_model", None))
         ])
-    if params.get("gradient_nonlin"):
+    if params.get("gradient_nonlin", False):
         cargs.append("-g")
     return cargs
 
@@ -265,7 +245,6 @@ def bedpostx_mgh(
 __all__ = [
     "BEDPOSTX_MGH_METADATA",
     "BedpostxMghOutputs",
-    "BedpostxMghParameters",
     "bedpostx_mgh",
     "bedpostx_mgh_execute",
     "bedpostx_mgh_params",

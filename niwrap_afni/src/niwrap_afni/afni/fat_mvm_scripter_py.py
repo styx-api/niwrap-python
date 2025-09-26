@@ -14,7 +14,23 @@ FAT_MVM_SCRIPTER_PY_METADATA = Metadata(
 
 
 FatMvmScripterPyParameters = typing.TypedDict('FatMvmScripterPyParameters', {
-    "@type": typing.Literal["afni.fat_mvm_scripter.py"],
+    "@type": typing.NotRequired[typing.Literal["afni/fat_mvm_scripter.py"]],
+    "prefix": str,
+    "table": InputPathType,
+    "log": InputPathType,
+    "vars": typing.NotRequired[str | None],
+    "file_vars": typing.NotRequired[InputPathType | None],
+    "Pars": typing.NotRequired[str | None],
+    "file_Pars": typing.NotRequired[InputPathType | None],
+    "rois": typing.NotRequired[str | None],
+    "file_rois": typing.NotRequired[InputPathType | None],
+    "no_posthoc": bool,
+    "NA_warn_off": bool,
+    "subnet_pref": typing.NotRequired[str | None],
+    "cat_pair_off": bool,
+})
+FatMvmScripterPyParametersTagged = typing.TypedDict('FatMvmScripterPyParametersTagged', {
+    "@type": typing.Literal["afni/fat_mvm_scripter.py"],
     "prefix": str,
     "table": InputPathType,
     "log": InputPathType,
@@ -31,41 +47,9 @@ FatMvmScripterPyParameters = typing.TypedDict('FatMvmScripterPyParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "afni.fat_mvm_scripter.py": fat_mvm_scripter_py_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "afni.fat_mvm_scripter.py": fat_mvm_scripter_py_outputs,
-    }.get(t)
-
-
 class FatMvmScripterPyOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `fat_mvm_scripter_py(...)`.
+    Output object returned when calling `FatMvmScripterPyParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -90,7 +74,7 @@ def fat_mvm_scripter_py_params(
     na_warn_off: bool = False,
     subnet_pref: str | None = None,
     cat_pair_off: bool = False,
-) -> FatMvmScripterPyParameters:
+) -> FatMvmScripterPyParametersTagged:
     """
     Build parameters.
     
@@ -127,7 +111,7 @@ def fat_mvm_scripter_py_params(
         Parameter dictionary
     """
     params = {
-        "@type": "afni.fat_mvm_scripter.py",
+        "@type": "afni/fat_mvm_scripter.py",
         "prefix": prefix,
         "table": table,
         "log": log,
@@ -169,56 +153,56 @@ def fat_mvm_scripter_py_cargs(
     cargs.append("fat_mvm_scripter.py")
     cargs.extend([
         "--prefix",
-        params.get("prefix")
+        params.get("prefix", None)
     ])
     cargs.extend([
         "--table",
-        execution.input_file(params.get("table"))
+        execution.input_file(params.get("table", None))
     ])
     cargs.extend([
         "--log",
-        execution.input_file(params.get("log"))
+        execution.input_file(params.get("log", None))
     ])
-    if params.get("vars") is not None:
+    if params.get("vars", None) is not None:
         cargs.extend([
             "--vars",
-            params.get("vars")
+            params.get("vars", None)
         ])
-    if params.get("file_vars") is not None:
+    if params.get("file_vars", None) is not None:
         cargs.extend([
             "--file_vars",
-            execution.input_file(params.get("file_vars"))
+            execution.input_file(params.get("file_vars", None))
         ])
-    if params.get("Pars") is not None:
+    if params.get("Pars", None) is not None:
         cargs.extend([
             "--Pars",
-            params.get("Pars")
+            params.get("Pars", None)
         ])
-    if params.get("file_Pars") is not None:
+    if params.get("file_Pars", None) is not None:
         cargs.extend([
             "--File_Pars",
-            execution.input_file(params.get("file_Pars"))
+            execution.input_file(params.get("file_Pars", None))
         ])
-    if params.get("rois") is not None:
+    if params.get("rois", None) is not None:
         cargs.extend([
             "--rois",
-            params.get("rois")
+            params.get("rois", None)
         ])
-    if params.get("file_rois") is not None:
+    if params.get("file_rois", None) is not None:
         cargs.extend([
             "--file_rois",
-            execution.input_file(params.get("file_rois"))
+            execution.input_file(params.get("file_rois", None))
         ])
-    if params.get("no_posthoc"):
+    if params.get("no_posthoc", False):
         cargs.append("--no_posthoc")
-    if params.get("NA_warn_off"):
+    if params.get("NA_warn_off", False):
         cargs.append("--NA_warn_off")
-    if params.get("subnet_pref") is not None:
+    if params.get("subnet_pref", None) is not None:
         cargs.extend([
             "--subnet_pref",
-            params.get("subnet_pref")
+            params.get("subnet_pref", None)
         ])
-    if params.get("cat_pair_off"):
+    if params.get("cat_pair_off", False):
         cargs.append("--cat_pair_off")
     return cargs
 
@@ -238,8 +222,8 @@ def fat_mvm_scripter_py_outputs(
     """
     ret = FatMvmScripterPyOutputs(
         root=execution.output_file("."),
-        generated_script=execution.output_file(params.get("prefix") + "_scri.tcsh"),
-        results_file=execution.output_file(params.get("prefix") + "_MVM.txt"),
+        generated_script=execution.output_file(params.get("prefix", None) + "_scri.tcsh"),
+        results_file=execution.output_file(params.get("prefix", None) + "_MVM.txt"),
     )
     return ret
 
@@ -351,7 +335,6 @@ def fat_mvm_scripter_py(
 __all__ = [
     "FAT_MVM_SCRIPTER_PY_METADATA",
     "FatMvmScripterPyOutputs",
-    "FatMvmScripterPyParameters",
     "fat_mvm_scripter_py",
     "fat_mvm_scripter_py_execute",
     "fat_mvm_scripter_py_params",

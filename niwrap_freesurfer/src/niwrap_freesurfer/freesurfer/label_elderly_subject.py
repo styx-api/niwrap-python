@@ -14,7 +14,14 @@ LABEL_ELDERLY_SUBJECT_METADATA = Metadata(
 
 
 LabelElderlySubjectParameters = typing.TypedDict('LabelElderlySubjectParameters', {
-    "@type": typing.Literal["freesurfer.label_elderly_subject"],
+    "@type": typing.NotRequired[typing.Literal["freesurfer/label_elderly_subject"]],
+    "norm_volume": InputPathType,
+    "transform_lta": InputPathType,
+    "classifier_array": typing.NotRequired[InputPathType | None],
+    "aseg_volume": InputPathType,
+})
+LabelElderlySubjectParametersTagged = typing.TypedDict('LabelElderlySubjectParametersTagged', {
+    "@type": typing.Literal["freesurfer/label_elderly_subject"],
     "norm_volume": InputPathType,
     "transform_lta": InputPathType,
     "classifier_array": typing.NotRequired[InputPathType | None],
@@ -22,41 +29,9 @@ LabelElderlySubjectParameters = typing.TypedDict('LabelElderlySubjectParameters'
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "freesurfer.label_elderly_subject": label_elderly_subject_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "freesurfer.label_elderly_subject": label_elderly_subject_outputs,
-    }.get(t)
-
-
 class LabelElderlySubjectOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `label_elderly_subject(...)`.
+    Output object returned when calling `LabelElderlySubjectParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -69,7 +44,7 @@ def label_elderly_subject_params(
     transform_lta: InputPathType,
     aseg_volume: InputPathType,
     classifier_array: InputPathType | None = None,
-) -> LabelElderlySubjectParameters:
+) -> LabelElderlySubjectParametersTagged:
     """
     Build parameters.
     
@@ -82,7 +57,7 @@ def label_elderly_subject_params(
         Parameter dictionary
     """
     params = {
-        "@type": "freesurfer.label_elderly_subject",
+        "@type": "freesurfer/label_elderly_subject",
         "norm_volume": norm_volume,
         "transform_lta": transform_lta,
         "aseg_volume": aseg_volume,
@@ -107,11 +82,11 @@ def label_elderly_subject_cargs(
     """
     cargs = []
     cargs.append("label_elderly_subject")
-    cargs.append(execution.input_file(params.get("norm_volume")))
-    cargs.append(execution.input_file(params.get("transform_lta")))
-    if params.get("classifier_array") is not None:
-        cargs.append(execution.input_file(params.get("classifier_array")))
-    cargs.append(execution.input_file(params.get("aseg_volume")))
+    cargs.append(execution.input_file(params.get("norm_volume", None)))
+    cargs.append(execution.input_file(params.get("transform_lta", None)))
+    if params.get("classifier_array", None) is not None:
+        cargs.append(execution.input_file(params.get("classifier_array", None)))
+    cargs.append(execution.input_file(params.get("aseg_volume", None)))
     return cargs
 
 
@@ -130,7 +105,7 @@ def label_elderly_subject_outputs(
     """
     ret = LabelElderlySubjectOutputs(
         root=execution.output_file("."),
-        labeled_volume=execution.output_file(pathlib.Path(params.get("aseg_volume")).name + "_labeled.mgz"),
+        labeled_volume=execution.output_file(pathlib.Path(params.get("aseg_volume", None)).name + "_labeled.mgz"),
     )
     return ret
 
@@ -202,7 +177,6 @@ def label_elderly_subject(
 __all__ = [
     "LABEL_ELDERLY_SUBJECT_METADATA",
     "LabelElderlySubjectOutputs",
-    "LabelElderlySubjectParameters",
     "label_elderly_subject",
     "label_elderly_subject_execute",
     "label_elderly_subject_params",

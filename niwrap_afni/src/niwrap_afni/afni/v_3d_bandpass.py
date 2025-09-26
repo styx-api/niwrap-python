@@ -14,7 +14,27 @@ V_3D_BANDPASS_METADATA = Metadata(
 
 
 V3dBandpassParameters = typing.TypedDict('V3dBandpassParameters', {
-    "@type": typing.Literal["afni.3dBandpass"],
+    "@type": typing.NotRequired[typing.Literal["afni/3dBandpass"]],
+    "prefix": typing.NotRequired[str | None],
+    "automask": bool,
+    "blur": typing.NotRequired[float | None],
+    "despike": bool,
+    "highpass": float,
+    "lowpass": float,
+    "in_file": InputPathType,
+    "localPV": typing.NotRequired[float | None],
+    "mask": typing.NotRequired[InputPathType | None],
+    "nfft": typing.NotRequired[int | None],
+    "no_detrend": bool,
+    "normalize": bool,
+    "notrans": bool,
+    "orthogonalize_dset": typing.NotRequired[InputPathType | None],
+    "orthogonalize_file": typing.NotRequired[list[InputPathType] | None],
+    "outputtype": typing.NotRequired[typing.Literal["NIFTI", "AFNI", "NIFTI_GZ"] | None],
+    "tr": typing.NotRequired[float | None],
+})
+V3dBandpassParametersTagged = typing.TypedDict('V3dBandpassParametersTagged', {
+    "@type": typing.Literal["afni/3dBandpass"],
     "prefix": typing.NotRequired[str | None],
     "automask": bool,
     "blur": typing.NotRequired[float | None],
@@ -35,41 +55,9 @@ V3dBandpassParameters = typing.TypedDict('V3dBandpassParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "afni.3dBandpass": v_3d_bandpass_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "afni.3dBandpass": v_3d_bandpass_outputs,
-    }.get(t)
-
-
 class V3dBandpassOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `v_3d_bandpass(...)`.
+    Output object returned when calling `V3dBandpassParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -95,7 +83,7 @@ def v_3d_bandpass_params(
     orthogonalize_file: list[InputPathType] | None = None,
     outputtype: typing.Literal["NIFTI", "AFNI", "NIFTI_GZ"] | None = None,
     tr: float | None = None,
-) -> V3dBandpassParameters:
+) -> V3dBandpassParametersTagged:
     """
     Build parameters.
     
@@ -135,7 +123,7 @@ def v_3d_bandpass_params(
         Parameter dictionary
     """
     params = {
-        "@type": "afni.3dBandpass",
+        "@type": "afni/3dBandpass",
         "automask": automask,
         "despike": despike,
         "highpass": highpass,
@@ -181,60 +169,60 @@ def v_3d_bandpass_cargs(
     """
     cargs = []
     cargs.append("3dBandpass")
-    if params.get("prefix") is not None:
+    if params.get("prefix", None) is not None:
         cargs.extend([
             "-prefix",
-            params.get("prefix")
+            params.get("prefix", None)
         ])
-    if params.get("automask"):
+    if params.get("automask", False):
         cargs.append("-automask")
-    if params.get("blur") is not None:
+    if params.get("blur", None) is not None:
         cargs.extend([
             "-blur",
-            str(params.get("blur"))
+            str(params.get("blur", None))
         ])
-    if params.get("despike"):
+    if params.get("despike", False):
         cargs.append("-despike")
-    cargs.append(str(params.get("highpass")))
-    cargs.append(str(params.get("lowpass")))
-    cargs.append(execution.input_file(params.get("in_file")))
-    if params.get("localPV") is not None:
+    cargs.append(str(params.get("highpass", None)))
+    cargs.append(str(params.get("lowpass", None)))
+    cargs.append(execution.input_file(params.get("in_file", None)))
+    if params.get("localPV", None) is not None:
         cargs.extend([
             "-localPV",
-            str(params.get("localPV"))
+            str(params.get("localPV", None))
         ])
-    if params.get("mask") is not None:
+    if params.get("mask", None) is not None:
         cargs.extend([
             "-mask",
-            execution.input_file(params.get("mask"))
+            execution.input_file(params.get("mask", None))
         ])
-    if params.get("nfft") is not None:
+    if params.get("nfft", None) is not None:
         cargs.extend([
             "-nfft",
-            str(params.get("nfft"))
+            str(params.get("nfft", None))
         ])
-    if params.get("no_detrend"):
+    if params.get("no_detrend", False):
         cargs.append("-nodetrend")
-    if params.get("normalize"):
+    if params.get("normalize", False):
         cargs.append("-norm")
-    if params.get("notrans"):
+    if params.get("notrans", False):
         cargs.append("-notrans")
-    if params.get("orthogonalize_dset") is not None:
+    if params.get("orthogonalize_dset", None) is not None:
         cargs.extend([
             "-dsort",
-            execution.input_file(params.get("orthogonalize_dset"))
+            execution.input_file(params.get("orthogonalize_dset", None))
         ])
-    if params.get("orthogonalize_file") is not None:
+    if params.get("orthogonalize_file", None) is not None:
         cargs.extend([
             "-ort",
-            *[execution.input_file(f) for f in params.get("orthogonalize_file")]
+            *[execution.input_file(f) for f in params.get("orthogonalize_file", None)]
         ])
-    if params.get("outputtype") is not None:
-        cargs.append(params.get("outputtype"))
-    if params.get("tr") is not None:
+    if params.get("outputtype", None) is not None:
+        cargs.append(params.get("outputtype", None))
+    if params.get("tr", None) is not None:
         cargs.extend([
             "-dt",
-            str(params.get("tr"))
+            str(params.get("tr", None))
         ])
     return cargs
 
@@ -254,7 +242,7 @@ def v_3d_bandpass_outputs(
     """
     ret = V3dBandpassOutputs(
         root=execution.output_file("."),
-        out_file=execution.output_file(params.get("prefix")) if (params.get("prefix") is not None) else None,
+        out_file=execution.output_file(params.get("prefix", None)) if (params.get("prefix") is not None) else None,
     )
     return ret
 
@@ -378,7 +366,6 @@ def v_3d_bandpass(
 
 __all__ = [
     "V3dBandpassOutputs",
-    "V3dBandpassParameters",
     "V_3D_BANDPASS_METADATA",
     "v_3d_bandpass",
     "v_3d_bandpass_execute",

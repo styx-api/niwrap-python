@@ -14,46 +14,20 @@ LONG_CREATE_BASE_SIGMA_METADATA = Metadata(
 
 
 LongCreateBaseSigmaParameters = typing.TypedDict('LongCreateBaseSigmaParameters', {
-    "@type": typing.Literal["freesurfer.long_create_base_sigma"],
+    "@type": typing.NotRequired[typing.Literal["freesurfer/long_create_base_sigma"]],
+    "base_id": str,
+    "sigma": int,
+})
+LongCreateBaseSigmaParametersTagged = typing.TypedDict('LongCreateBaseSigmaParametersTagged', {
+    "@type": typing.Literal["freesurfer/long_create_base_sigma"],
     "base_id": str,
     "sigma": int,
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "freesurfer.long_create_base_sigma": long_create_base_sigma_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-    }.get(t)
-
-
 class LongCreateBaseSigmaOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `long_create_base_sigma(...)`.
+    Output object returned when calling `LongCreateBaseSigmaParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -62,7 +36,7 @@ class LongCreateBaseSigmaOutputs(typing.NamedTuple):
 def long_create_base_sigma_params(
     base_id: str,
     sigma: int,
-) -> LongCreateBaseSigmaParameters:
+) -> LongCreateBaseSigmaParametersTagged:
     """
     Build parameters.
     
@@ -73,7 +47,7 @@ def long_create_base_sigma_params(
         Parameter dictionary
     """
     params = {
-        "@type": "freesurfer.long_create_base_sigma",
+        "@type": "freesurfer/long_create_base_sigma",
         "base_id": base_id,
         "sigma": sigma,
     }
@@ -95,8 +69,8 @@ def long_create_base_sigma_cargs(
     """
     cargs = []
     cargs.append("long_create_base_sigma")
-    cargs.append(params.get("base_id"))
-    cargs.append(str(params.get("sigma")))
+    cargs.append(params.get("base_id", None))
+    cargs.append(str(params.get("sigma", None)))
     return cargs
 
 
@@ -182,7 +156,6 @@ def long_create_base_sigma(
 __all__ = [
     "LONG_CREATE_BASE_SIGMA_METADATA",
     "LongCreateBaseSigmaOutputs",
-    "LongCreateBaseSigmaParameters",
     "long_create_base_sigma",
     "long_create_base_sigma_execute",
     "long_create_base_sigma_params",

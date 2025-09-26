@@ -14,7 +14,19 @@ MRI_VOLDIFF_METADATA = Metadata(
 
 
 MriVoldiffParameters = typing.TypedDict('MriVoldiffParameters', {
-    "@type": typing.Literal["freesurfer.mri_voldiff"],
+    "@type": typing.NotRequired[typing.Literal["freesurfer/mri_voldiff"]],
+    "volume1": InputPathType,
+    "volume2": InputPathType,
+    "vox2ras_thresh": typing.NotRequired[float | None],
+    "pix_thresh": typing.NotRequired[float | None],
+    "allow_precision": bool,
+    "allow_resolution": bool,
+    "allow_vox2ras": bool,
+    "debug": bool,
+    "checkopts": bool,
+})
+MriVoldiffParametersTagged = typing.TypedDict('MriVoldiffParametersTagged', {
+    "@type": typing.Literal["freesurfer/mri_voldiff"],
     "volume1": InputPathType,
     "volume2": InputPathType,
     "vox2ras_thresh": typing.NotRequired[float | None],
@@ -27,40 +39,9 @@ MriVoldiffParameters = typing.TypedDict('MriVoldiffParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "freesurfer.mri_voldiff": mri_voldiff_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-    }.get(t)
-
-
 class MriVoldiffOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `mri_voldiff(...)`.
+    Output object returned when calling `MriVoldiffParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -76,7 +57,7 @@ def mri_voldiff_params(
     allow_vox2ras: bool = False,
     debug: bool = False,
     checkopts: bool = False,
-) -> MriVoldiffParameters:
+) -> MriVoldiffParametersTagged:
     """
     Build parameters.
     
@@ -94,7 +75,7 @@ def mri_voldiff_params(
         Parameter dictionary
     """
     params = {
-        "@type": "freesurfer.mri_voldiff",
+        "@type": "freesurfer/mri_voldiff",
         "volume1": volume1,
         "volume2": volume2,
         "allow_precision": allow_precision,
@@ -127,31 +108,31 @@ def mri_voldiff_cargs(
     cargs.append("mri_voldiff")
     cargs.extend([
         "-v1",
-        execution.input_file(params.get("volume1"))
+        execution.input_file(params.get("volume1", None))
     ])
     cargs.extend([
         "-v2",
-        execution.input_file(params.get("volume2"))
+        execution.input_file(params.get("volume2", None))
     ])
-    if params.get("vox2ras_thresh") is not None:
+    if params.get("vox2ras_thresh", None) is not None:
         cargs.extend([
             "--vox2ras",
-            str(params.get("vox2ras_thresh"))
+            str(params.get("vox2ras_thresh", None))
         ])
-    if params.get("pix_thresh") is not None:
+    if params.get("pix_thresh", None) is not None:
         cargs.extend([
             "--pix",
-            str(params.get("pix_thresh"))
+            str(params.get("pix_thresh", None))
         ])
-    if params.get("allow_precision"):
+    if params.get("allow_precision", False):
         cargs.append("--allow-prec")
-    if params.get("allow_resolution"):
+    if params.get("allow_resolution", False):
         cargs.append("--allow-res")
-    if params.get("allow_vox2ras"):
+    if params.get("allow_vox2ras", False):
         cargs.append("--allow-vox2ras")
-    if params.get("debug"):
+    if params.get("debug", False):
         cargs.append("--debug")
-    if params.get("checkopts"):
+    if params.get("checkopts", False):
         cargs.append("--checkopts")
     return cargs
 
@@ -257,7 +238,6 @@ def mri_voldiff(
 __all__ = [
     "MRI_VOLDIFF_METADATA",
     "MriVoldiffOutputs",
-    "MriVoldiffParameters",
     "mri_voldiff",
     "mri_voldiff_execute",
     "mri_voldiff_params",

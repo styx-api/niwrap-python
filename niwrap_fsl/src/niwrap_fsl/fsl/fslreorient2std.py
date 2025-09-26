@@ -14,48 +14,22 @@ FSLREORIENT2STD_METADATA = Metadata(
 
 
 Fslreorient2stdParameters = typing.TypedDict('Fslreorient2stdParameters', {
-    "@type": typing.Literal["fsl.fslreorient2std"],
+    "@type": typing.NotRequired[typing.Literal["fsl/fslreorient2std"]],
+    "input_image": InputPathType,
+    "output_image": typing.NotRequired[str | None],
+    "matrix_file": typing.NotRequired[str | None],
+})
+Fslreorient2stdParametersTagged = typing.TypedDict('Fslreorient2stdParametersTagged', {
+    "@type": typing.Literal["fsl/fslreorient2std"],
     "input_image": InputPathType,
     "output_image": typing.NotRequired[str | None],
     "matrix_file": typing.NotRequired[str | None],
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "fsl.fslreorient2std": fslreorient2std_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "fsl.fslreorient2std": fslreorient2std_outputs,
-    }.get(t)
-
-
 class Fslreorient2stdOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `fslreorient2std(...)`.
+    Output object returned when calling `Fslreorient2stdParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -69,7 +43,7 @@ def fslreorient2std_params(
     input_image: InputPathType,
     output_image: str | None = None,
     matrix_file: str | None = None,
-) -> Fslreorient2stdParameters:
+) -> Fslreorient2stdParametersTagged:
     """
     Build parameters.
     
@@ -84,7 +58,7 @@ def fslreorient2std_params(
         Parameter dictionary
     """
     params = {
-        "@type": "fsl.fslreorient2std",
+        "@type": "fsl/fslreorient2std",
         "input_image": input_image,
     }
     if output_image is not None:
@@ -109,13 +83,13 @@ def fslreorient2std_cargs(
     """
     cargs = []
     cargs.append("fslreorient2std")
-    cargs.append(execution.input_file(params.get("input_image")))
-    if params.get("output_image") is not None:
-        cargs.append(params.get("output_image"))
-    if params.get("matrix_file") is not None:
+    cargs.append(execution.input_file(params.get("input_image", None)))
+    if params.get("output_image", None) is not None:
+        cargs.append(params.get("output_image", None))
+    if params.get("matrix_file", None) is not None:
         cargs.extend([
             "-m",
-            params.get("matrix_file")
+            params.get("matrix_file", None)
         ])
     return cargs
 
@@ -135,8 +109,8 @@ def fslreorient2std_outputs(
     """
     ret = Fslreorient2stdOutputs(
         root=execution.output_file("."),
-        output_image=execution.output_file(params.get("output_image").removesuffix(".nii.gz") + ".nii.gz") if (params.get("output_image") is not None) else None,
-        matrix_output=execution.output_file(params.get("matrix_file")) if (params.get("matrix_file") is not None) else None,
+        output_image=execution.output_file(params.get("output_image", None).removesuffix(".nii.gz") + ".nii.gz") if (params.get("output_image") is not None) else None,
+        matrix_output=execution.output_file(params.get("matrix_file", None)) if (params.get("matrix_file") is not None) else None,
     )
     return ret
 
@@ -208,7 +182,6 @@ def fslreorient2std(
 __all__ = [
     "FSLREORIENT2STD_METADATA",
     "Fslreorient2stdOutputs",
-    "Fslreorient2stdParameters",
     "fslreorient2std",
     "fslreorient2std_execute",
     "fslreorient2std_params",

@@ -14,7 +14,25 @@ MRIS_MAKE_AVERAGE_SURFACE_METADATA = Metadata(
 
 
 MrisMakeAverageSurfaceParameters = typing.TypedDict('MrisMakeAverageSurfaceParameters', {
-    "@type": typing.Literal["freesurfer.mris_make_average_surface"],
+    "@type": typing.NotRequired[typing.Literal["freesurfer/mris_make_average_surface"]],
+    "hemi": str,
+    "outsurfname": str,
+    "cansurfname": str,
+    "outsubject": str,
+    "subjects": list[str],
+    "sdir": typing.NotRequired[str | None],
+    "sdir_out": typing.NotRequired[str | None],
+    "nonorm_flag": bool,
+    "icoorder": typing.NotRequired[float | None],
+    "xfmname": typing.NotRequired[str | None],
+    "templatename": typing.NotRequired[str | None],
+    "surfname": typing.NotRequired[str | None],
+    "surf2surf_flag": bool,
+    "simple": typing.NotRequired[list[str] | None],
+    "diagno": typing.NotRequired[float | None],
+})
+MrisMakeAverageSurfaceParametersTagged = typing.TypedDict('MrisMakeAverageSurfaceParametersTagged', {
+    "@type": typing.Literal["freesurfer/mris_make_average_surface"],
     "hemi": str,
     "outsurfname": str,
     "cansurfname": str,
@@ -33,41 +51,9 @@ MrisMakeAverageSurfaceParameters = typing.TypedDict('MrisMakeAverageSurfaceParam
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "freesurfer.mris_make_average_surface": mris_make_average_surface_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "freesurfer.mris_make_average_surface": mris_make_average_surface_outputs,
-    }.get(t)
-
-
 class MrisMakeAverageSurfaceOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `mris_make_average_surface(...)`.
+    Output object returned when calling `MrisMakeAverageSurfaceParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -91,7 +77,7 @@ def mris_make_average_surface_params(
     surf2surf_flag: bool = False,
     simple: list[str] | None = None,
     diagno: float | None = None,
-) -> MrisMakeAverageSurfaceParameters:
+) -> MrisMakeAverageSurfaceParametersTagged:
     """
     Build parameters.
     
@@ -117,7 +103,7 @@ def mris_make_average_surface_params(
         Parameter dictionary
     """
     params = {
-        "@type": "freesurfer.mris_make_average_surface",
+        "@type": "freesurfer/mris_make_average_surface",
         "hemi": hemi,
         "outsurfname": outsurfname,
         "cansurfname": cansurfname,
@@ -160,54 +146,54 @@ def mris_make_average_surface_cargs(
     """
     cargs = []
     cargs.append("mris_make_average_surface")
-    cargs.append(params.get("hemi"))
-    cargs.append(params.get("outsurfname"))
-    cargs.append(params.get("cansurfname"))
-    cargs.append(params.get("outsubject"))
-    cargs.extend(params.get("subjects"))
-    if params.get("sdir") is not None:
+    cargs.append(params.get("hemi", None))
+    cargs.append(params.get("outsurfname", None))
+    cargs.append(params.get("cansurfname", None))
+    cargs.append(params.get("outsubject", None))
+    cargs.extend(params.get("subjects", None))
+    if params.get("sdir", None) is not None:
         cargs.extend([
             "-sdir",
-            params.get("sdir")
+            params.get("sdir", None)
         ])
-    if params.get("sdir_out") is not None:
+    if params.get("sdir_out", None) is not None:
         cargs.extend([
             "-sdir-out",
-            params.get("sdir_out")
+            params.get("sdir_out", None)
         ])
-    if params.get("nonorm_flag"):
+    if params.get("nonorm_flag", False):
         cargs.append("-nonorm")
-    if params.get("icoorder") is not None:
+    if params.get("icoorder", None) is not None:
         cargs.extend([
             "-i",
-            str(params.get("icoorder"))
+            str(params.get("icoorder", None))
         ])
-    if params.get("xfmname") is not None:
+    if params.get("xfmname", None) is not None:
         cargs.extend([
             "-x",
-            params.get("xfmname")
+            params.get("xfmname", None)
         ])
-    if params.get("templatename") is not None:
+    if params.get("templatename", None) is not None:
         cargs.extend([
             "-t",
-            params.get("templatename")
+            params.get("templatename", None)
         ])
-    if params.get("surfname") is not None:
+    if params.get("surfname", None) is not None:
         cargs.extend([
             "-s",
-            params.get("surfname")
+            params.get("surfname", None)
         ])
-    if params.get("surf2surf_flag"):
+    if params.get("surf2surf_flag", False):
         cargs.append("-surf2surf")
-    if params.get("simple") is not None:
+    if params.get("simple", None) is not None:
         cargs.extend([
             "-simple",
-            *params.get("simple")
+            *params.get("simple", None)
         ])
-    if params.get("diagno") is not None:
+    if params.get("diagno", None) is not None:
         cargs.extend([
             "-v",
-            str(params.get("diagno"))
+            str(params.get("diagno", None))
         ])
     return cargs
 
@@ -227,7 +213,7 @@ def mris_make_average_surface_outputs(
     """
     ret = MrisMakeAverageSurfaceOutputs(
         root=execution.output_file("."),
-        output_surface=execution.output_file(params.get("sdir_out") + "/" + params.get("outsubject") + "/" + params.get("outsurfname")) if (params.get("sdir_out") is not None) else None,
+        output_surface=execution.output_file(params.get("sdir_out", None) + "/" + params.get("outsubject", None) + "/" + params.get("outsurfname", None)) if (params.get("sdir_out") is not None) else None,
     )
     return ret
 
@@ -334,7 +320,6 @@ def mris_make_average_surface(
 __all__ = [
     "MRIS_MAKE_AVERAGE_SURFACE_METADATA",
     "MrisMakeAverageSurfaceOutputs",
-    "MrisMakeAverageSurfaceParameters",
     "mris_make_average_surface",
     "mris_make_average_surface_execute",
     "mris_make_average_surface_params",

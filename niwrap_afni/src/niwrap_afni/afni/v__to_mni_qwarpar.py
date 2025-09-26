@@ -14,47 +14,20 @@ V__TO_MNI_QWARPAR_METADATA = Metadata(
 
 
 VToMniQwarparParameters = typing.TypedDict('VToMniQwarparParameters', {
-    "@type": typing.Literal["afni.@toMNI_Qwarpar"],
+    "@type": typing.NotRequired[typing.Literal["afni/@toMNI_Qwarpar"]],
+    "numcpu": float,
+    "numjob": float,
+})
+VToMniQwarparParametersTagged = typing.TypedDict('VToMniQwarparParametersTagged', {
+    "@type": typing.Literal["afni/@toMNI_Qwarpar"],
     "numcpu": float,
     "numjob": float,
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "afni.@toMNI_Qwarpar": v__to_mni_qwarpar_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "afni.@toMNI_Qwarpar": v__to_mni_qwarpar_outputs,
-    }.get(t)
-
-
 class VToMniQwarparOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `v__to_mni_qwarpar(...)`.
+    Output object returned when calling `VToMniQwarparParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -65,7 +38,7 @@ class VToMniQwarparOutputs(typing.NamedTuple):
 def v__to_mni_qwarpar_params(
     numcpu: float,
     numjob: float,
-) -> VToMniQwarparParameters:
+) -> VToMniQwarparParametersTagged:
     """
     Build parameters.
     
@@ -78,7 +51,7 @@ def v__to_mni_qwarpar_params(
         Parameter dictionary
     """
     params = {
-        "@type": "afni.@toMNI_Qwarpar",
+        "@type": "afni/@toMNI_Qwarpar",
         "numcpu": numcpu,
         "numjob": numjob,
     }
@@ -100,8 +73,8 @@ def v__to_mni_qwarpar_cargs(
     """
     cargs = []
     cargs.append("@toMNI_Qwarpar")
-    cargs.append(str(params.get("numcpu")))
-    cargs.append(str(params.get("numjob")))
+    cargs.append(str(params.get("numcpu", None)))
+    cargs.append(str(params.get("numjob", None)))
     return cargs
 
 
@@ -187,7 +160,6 @@ def v__to_mni_qwarpar(
 
 __all__ = [
     "VToMniQwarparOutputs",
-    "VToMniQwarparParameters",
     "V__TO_MNI_QWARPAR_METADATA",
     "v__to_mni_qwarpar",
     "v__to_mni_qwarpar_execute",

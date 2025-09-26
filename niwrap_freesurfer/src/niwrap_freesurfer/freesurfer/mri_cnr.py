@@ -14,7 +14,18 @@ MRI_CNR_METADATA = Metadata(
 
 
 MriCnrParameters = typing.TypedDict('MriCnrParameters', {
-    "@type": typing.Literal["freesurfer.mri_cnr"],
+    "@type": typing.NotRequired[typing.Literal["freesurfer/mri_cnr"]],
+    "surf_dir": str,
+    "volume_files": list[InputPathType],
+    "slope": typing.NotRequired[list[str] | None],
+    "logfile": typing.NotRequired[str | None],
+    "labels": typing.NotRequired[list[str] | None],
+    "print_total_cnr": bool,
+    "version_flag": bool,
+    "help_flag": bool,
+})
+MriCnrParametersTagged = typing.TypedDict('MriCnrParametersTagged', {
+    "@type": typing.Literal["freesurfer/mri_cnr"],
     "surf_dir": str,
     "volume_files": list[InputPathType],
     "slope": typing.NotRequired[list[str] | None],
@@ -26,40 +37,9 @@ MriCnrParameters = typing.TypedDict('MriCnrParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "freesurfer.mri_cnr": mri_cnr_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-    }.get(t)
-
-
 class MriCnrOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `mri_cnr(...)`.
+    Output object returned when calling `MriCnrParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -74,7 +54,7 @@ def mri_cnr_params(
     print_total_cnr: bool = False,
     version_flag: bool = False,
     help_flag: bool = False,
-) -> MriCnrParameters:
+) -> MriCnrParametersTagged:
     """
     Build parameters.
     
@@ -96,7 +76,7 @@ def mri_cnr_params(
         Parameter dictionary
     """
     params = {
-        "@type": "freesurfer.mri_cnr",
+        "@type": "freesurfer/mri_cnr",
         "surf_dir": surf_dir,
         "volume_files": volume_files,
         "print_total_cnr": print_total_cnr,
@@ -127,28 +107,28 @@ def mri_cnr_cargs(
     """
     cargs = []
     cargs.append("mri_cnr")
-    cargs.append(params.get("surf_dir"))
-    cargs.extend([execution.input_file(f) for f in params.get("volume_files")])
-    if params.get("slope") is not None:
+    cargs.append(params.get("surf_dir", None))
+    cargs.extend([execution.input_file(f) for f in params.get("volume_files", None)])
+    if params.get("slope", None) is not None:
         cargs.extend([
             "-s",
-            *params.get("slope")
+            *params.get("slope", None)
         ])
-    if params.get("logfile") is not None:
+    if params.get("logfile", None) is not None:
         cargs.extend([
             "-l",
-            params.get("logfile")
+            params.get("logfile", None)
         ])
-    if params.get("labels") is not None:
+    if params.get("labels", None) is not None:
         cargs.extend([
             "label",
-            *params.get("labels")
+            *params.get("labels", None)
         ])
-    if params.get("print_total_cnr"):
+    if params.get("print_total_cnr", False):
         cargs.append("-t")
-    if params.get("version_flag"):
+    if params.get("version_flag", False):
         cargs.append("-version")
-    if params.get("help_flag"):
+    if params.get("help_flag", False):
         cargs.append("-help")
     return cargs
 
@@ -256,7 +236,6 @@ def mri_cnr(
 __all__ = [
     "MRI_CNR_METADATA",
     "MriCnrOutputs",
-    "MriCnrParameters",
     "mri_cnr",
     "mri_cnr_execute",
     "mri_cnr_params",

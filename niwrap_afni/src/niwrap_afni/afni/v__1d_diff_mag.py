@@ -14,46 +14,18 @@ V__1D_DIFF_MAG_METADATA = Metadata(
 
 
 V1dDiffMagParameters = typing.TypedDict('V1dDiffMagParameters', {
-    "@type": typing.Literal["afni.@1dDiffMag"],
+    "@type": typing.NotRequired[typing.Literal["afni/@1dDiffMag"]],
+    "infile": InputPathType,
+})
+V1dDiffMagParametersTagged = typing.TypedDict('V1dDiffMagParametersTagged', {
+    "@type": typing.Literal["afni/@1dDiffMag"],
     "infile": InputPathType,
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "afni.@1dDiffMag": v__1d_diff_mag_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "afni.@1dDiffMag": v__1d_diff_mag_outputs,
-    }.get(t)
-
-
 class V1dDiffMagOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `v__1d_diff_mag(...)`.
+    Output object returned when calling `V1dDiffMagParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -63,7 +35,7 @@ class V1dDiffMagOutputs(typing.NamedTuple):
 
 def v__1d_diff_mag_params(
     infile: InputPathType,
-) -> V1dDiffMagParameters:
+) -> V1dDiffMagParametersTagged:
     """
     Build parameters.
     
@@ -74,7 +46,7 @@ def v__1d_diff_mag_params(
         Parameter dictionary
     """
     params = {
-        "@type": "afni.@1dDiffMag",
+        "@type": "afni/@1dDiffMag",
         "infile": infile,
     }
     return params
@@ -95,7 +67,7 @@ def v__1d_diff_mag_cargs(
     """
     cargs = []
     cargs.append("@1dDiffMag")
-    cargs.append(execution.input_file(params.get("infile")))
+    cargs.append(execution.input_file(params.get("infile", None)))
     return cargs
 
 
@@ -175,7 +147,6 @@ def v__1d_diff_mag(
 
 __all__ = [
     "V1dDiffMagOutputs",
-    "V1dDiffMagParameters",
     "V__1D_DIFF_MAG_METADATA",
     "v__1d_diff_mag",
     "v__1d_diff_mag_execute",

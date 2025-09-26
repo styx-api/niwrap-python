@@ -14,35 +14,62 @@ VOLUME_PALETTE_METADATA = Metadata(
 
 
 VolumePalettePosPercentParameters = typing.TypedDict('VolumePalettePosPercentParameters', {
-    "@type": typing.Literal["workbench.volume-palette.pos_percent"],
+    "@type": typing.NotRequired[typing.Literal["pos_percent"]],
+    "pos_min__": float,
+    "pos_max__": float,
+})
+VolumePalettePosPercentParametersTagged = typing.TypedDict('VolumePalettePosPercentParametersTagged', {
+    "@type": typing.Literal["pos_percent"],
     "pos_min__": float,
     "pos_max__": float,
 })
 
 
 VolumePaletteNegPercentParameters = typing.TypedDict('VolumePaletteNegPercentParameters', {
-    "@type": typing.Literal["workbench.volume-palette.neg_percent"],
+    "@type": typing.NotRequired[typing.Literal["neg_percent"]],
+    "neg_min__": float,
+    "neg_max__": float,
+})
+VolumePaletteNegPercentParametersTagged = typing.TypedDict('VolumePaletteNegPercentParametersTagged', {
+    "@type": typing.Literal["neg_percent"],
     "neg_min__": float,
     "neg_max__": float,
 })
 
 
 VolumePalettePosUserParameters = typing.TypedDict('VolumePalettePosUserParameters', {
-    "@type": typing.Literal["workbench.volume-palette.pos_user"],
+    "@type": typing.NotRequired[typing.Literal["pos_user"]],
+    "pos_min_user": float,
+    "pos_max_user": float,
+})
+VolumePalettePosUserParametersTagged = typing.TypedDict('VolumePalettePosUserParametersTagged', {
+    "@type": typing.Literal["pos_user"],
     "pos_min_user": float,
     "pos_max_user": float,
 })
 
 
 VolumePaletteNegUserParameters = typing.TypedDict('VolumePaletteNegUserParameters', {
-    "@type": typing.Literal["workbench.volume-palette.neg_user"],
+    "@type": typing.NotRequired[typing.Literal["neg_user"]],
+    "neg_min_user": float,
+    "neg_max_user": float,
+})
+VolumePaletteNegUserParametersTagged = typing.TypedDict('VolumePaletteNegUserParametersTagged', {
+    "@type": typing.Literal["neg_user"],
     "neg_min_user": float,
     "neg_max_user": float,
 })
 
 
 VolumePaletteThresholdingParameters = typing.TypedDict('VolumePaletteThresholdingParameters', {
-    "@type": typing.Literal["workbench.volume-palette.thresholding"],
+    "@type": typing.NotRequired[typing.Literal["thresholding"]],
+    "type": str,
+    "test": str,
+    "min": float,
+    "max": float,
+})
+VolumePaletteThresholdingParametersTagged = typing.TypedDict('VolumePaletteThresholdingParametersTagged', {
+    "@type": typing.Literal["thresholding"],
     "type": str,
     "test": str,
     "min": float,
@@ -51,7 +78,24 @@ VolumePaletteThresholdingParameters = typing.TypedDict('VolumePaletteThresholdin
 
 
 VolumePaletteParameters = typing.TypedDict('VolumePaletteParameters', {
-    "@type": typing.Literal["workbench.volume-palette"],
+    "@type": typing.NotRequired[typing.Literal["workbench/volume-palette"]],
+    "volume": str,
+    "mode": str,
+    "opt_subvolume_subvolume": typing.NotRequired[str | None],
+    "pos_percent": typing.NotRequired[VolumePalettePosPercentParameters | None],
+    "neg_percent": typing.NotRequired[VolumePaletteNegPercentParameters | None],
+    "pos_user": typing.NotRequired[VolumePalettePosUserParameters | None],
+    "neg_user": typing.NotRequired[VolumePaletteNegUserParameters | None],
+    "opt_interpolate_interpolate": typing.NotRequired[typing.Literal["true", "false"] | None],
+    "opt_disp_pos_display": typing.NotRequired[typing.Literal["true", "false"] | None],
+    "opt_disp_neg_display": typing.NotRequired[typing.Literal["true", "false"] | None],
+    "opt_disp_zero_display": typing.NotRequired[typing.Literal["true", "false"] | None],
+    "opt_palette_name_name": typing.NotRequired[str | None],
+    "thresholding": typing.NotRequired[VolumePaletteThresholdingParameters | None],
+    "opt_inversion_type": typing.NotRequired[str | None],
+})
+VolumePaletteParametersTagged = typing.TypedDict('VolumePaletteParametersTagged', {
+    "@type": typing.Literal["workbench/volume-palette"],
     "volume": str,
     "mode": str,
     "opt_subvolume_subvolume": typing.NotRequired[str | None],
@@ -69,46 +113,10 @@ VolumePaletteParameters = typing.TypedDict('VolumePaletteParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "workbench.volume-palette": volume_palette_cargs,
-        "workbench.volume-palette.pos_percent": volume_palette_pos_percent_cargs,
-        "workbench.volume-palette.neg_percent": volume_palette_neg_percent_cargs,
-        "workbench.volume-palette.pos_user": volume_palette_pos_user_cargs,
-        "workbench.volume-palette.neg_user": volume_palette_neg_user_cargs,
-        "workbench.volume-palette.thresholding": volume_palette_thresholding_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-    }.get(t)
-
-
 def volume_palette_pos_percent_params(
     pos_min__: float,
     pos_max__: float,
-) -> VolumePalettePosPercentParameters:
+) -> VolumePalettePosPercentParametersTagged:
     """
     Build parameters.
     
@@ -119,7 +127,7 @@ def volume_palette_pos_percent_params(
         Parameter dictionary
     """
     params = {
-        "@type": "workbench.volume-palette.pos_percent",
+        "@type": "pos_percent",
         "pos_min__": pos_min__,
         "pos_max__": pos_max__,
     }
@@ -141,15 +149,15 @@ def volume_palette_pos_percent_cargs(
     """
     cargs = []
     cargs.append("-pos-percent")
-    cargs.append(str(params.get("pos_min__")))
-    cargs.append(str(params.get("pos_max__")))
+    cargs.append(str(params.get("pos_min__", None)))
+    cargs.append(str(params.get("pos_max__", None)))
     return cargs
 
 
 def volume_palette_neg_percent_params(
     neg_min__: float,
     neg_max__: float,
-) -> VolumePaletteNegPercentParameters:
+) -> VolumePaletteNegPercentParametersTagged:
     """
     Build parameters.
     
@@ -160,7 +168,7 @@ def volume_palette_neg_percent_params(
         Parameter dictionary
     """
     params = {
-        "@type": "workbench.volume-palette.neg_percent",
+        "@type": "neg_percent",
         "neg_min__": neg_min__,
         "neg_max__": neg_max__,
     }
@@ -182,15 +190,15 @@ def volume_palette_neg_percent_cargs(
     """
     cargs = []
     cargs.append("-neg-percent")
-    cargs.append(str(params.get("neg_min__")))
-    cargs.append(str(params.get("neg_max__")))
+    cargs.append(str(params.get("neg_min__", None)))
+    cargs.append(str(params.get("neg_max__", None)))
     return cargs
 
 
 def volume_palette_pos_user_params(
     pos_min_user: float,
     pos_max_user: float,
-) -> VolumePalettePosUserParameters:
+) -> VolumePalettePosUserParametersTagged:
     """
     Build parameters.
     
@@ -201,7 +209,7 @@ def volume_palette_pos_user_params(
         Parameter dictionary
     """
     params = {
-        "@type": "workbench.volume-palette.pos_user",
+        "@type": "pos_user",
         "pos_min_user": pos_min_user,
         "pos_max_user": pos_max_user,
     }
@@ -223,15 +231,15 @@ def volume_palette_pos_user_cargs(
     """
     cargs = []
     cargs.append("-pos-user")
-    cargs.append(str(params.get("pos_min_user")))
-    cargs.append(str(params.get("pos_max_user")))
+    cargs.append(str(params.get("pos_min_user", None)))
+    cargs.append(str(params.get("pos_max_user", None)))
     return cargs
 
 
 def volume_palette_neg_user_params(
     neg_min_user: float,
     neg_max_user: float,
-) -> VolumePaletteNegUserParameters:
+) -> VolumePaletteNegUserParametersTagged:
     """
     Build parameters.
     
@@ -242,7 +250,7 @@ def volume_palette_neg_user_params(
         Parameter dictionary
     """
     params = {
-        "@type": "workbench.volume-palette.neg_user",
+        "@type": "neg_user",
         "neg_min_user": neg_min_user,
         "neg_max_user": neg_max_user,
     }
@@ -264,8 +272,8 @@ def volume_palette_neg_user_cargs(
     """
     cargs = []
     cargs.append("-neg-user")
-    cargs.append(str(params.get("neg_min_user")))
-    cargs.append(str(params.get("neg_max_user")))
+    cargs.append(str(params.get("neg_min_user", None)))
+    cargs.append(str(params.get("neg_max_user", None)))
     return cargs
 
 
@@ -274,7 +282,7 @@ def volume_palette_thresholding_params(
     test: str,
     min_: float,
     max_: float,
-) -> VolumePaletteThresholdingParameters:
+) -> VolumePaletteThresholdingParametersTagged:
     """
     Build parameters.
     
@@ -287,7 +295,7 @@ def volume_palette_thresholding_params(
         Parameter dictionary
     """
     params = {
-        "@type": "workbench.volume-palette.thresholding",
+        "@type": "thresholding",
         "type": type_,
         "test": test,
         "min": min_,
@@ -311,16 +319,16 @@ def volume_palette_thresholding_cargs(
     """
     cargs = []
     cargs.append("-thresholding")
-    cargs.append(params.get("type"))
-    cargs.append(params.get("test"))
-    cargs.append(str(params.get("min")))
-    cargs.append(str(params.get("max")))
+    cargs.append(params.get("type", None))
+    cargs.append(params.get("test", None))
+    cargs.append(str(params.get("min", None)))
+    cargs.append(str(params.get("max", None)))
     return cargs
 
 
 class VolumePaletteOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `volume_palette(...)`.
+    Output object returned when calling `VolumePaletteParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -341,7 +349,7 @@ def volume_palette_params(
     opt_palette_name_name: str | None = None,
     thresholding: VolumePaletteThresholdingParameters | None = None,
     opt_inversion_type: str | None = None,
-) -> VolumePaletteParameters:
+) -> VolumePaletteParametersTagged:
     """
     Build parameters.
     
@@ -369,7 +377,7 @@ def volume_palette_params(
         Parameter dictionary
     """
     params = {
-        "@type": "workbench.volume-palette",
+        "@type": "workbench/volume-palette",
         "volume": volume,
         "mode": mode,
     }
@@ -416,52 +424,52 @@ def volume_palette_cargs(
     cargs = []
     cargs.append("wb_command")
     cargs.append("-volume-palette")
-    cargs.append(params.get("volume"))
-    cargs.append(params.get("mode"))
-    if params.get("opt_subvolume_subvolume") is not None:
+    cargs.append(params.get("volume", None))
+    cargs.append(params.get("mode", None))
+    if params.get("opt_subvolume_subvolume", None) is not None:
         cargs.extend([
             "-subvolume",
-            params.get("opt_subvolume_subvolume")
+            params.get("opt_subvolume_subvolume", None)
         ])
-    if params.get("pos_percent") is not None:
-        cargs.extend(dyn_cargs(params.get("pos_percent")["@type"])(params.get("pos_percent"), execution))
-    if params.get("neg_percent") is not None:
-        cargs.extend(dyn_cargs(params.get("neg_percent")["@type"])(params.get("neg_percent"), execution))
-    if params.get("pos_user") is not None:
-        cargs.extend(dyn_cargs(params.get("pos_user")["@type"])(params.get("pos_user"), execution))
-    if params.get("neg_user") is not None:
-        cargs.extend(dyn_cargs(params.get("neg_user")["@type"])(params.get("neg_user"), execution))
-    if params.get("opt_interpolate_interpolate") is not None:
+    if params.get("pos_percent", None) is not None:
+        cargs.extend(volume_palette_pos_percent_cargs(params.get("pos_percent", None), execution))
+    if params.get("neg_percent", None) is not None:
+        cargs.extend(volume_palette_neg_percent_cargs(params.get("neg_percent", None), execution))
+    if params.get("pos_user", None) is not None:
+        cargs.extend(volume_palette_pos_user_cargs(params.get("pos_user", None), execution))
+    if params.get("neg_user", None) is not None:
+        cargs.extend(volume_palette_neg_user_cargs(params.get("neg_user", None), execution))
+    if params.get("opt_interpolate_interpolate", None) is not None:
         cargs.extend([
             "-interpolate",
-            params.get("opt_interpolate_interpolate")
+            params.get("opt_interpolate_interpolate", None)
         ])
-    if params.get("opt_disp_pos_display") is not None:
+    if params.get("opt_disp_pos_display", None) is not None:
         cargs.extend([
             "-disp-pos",
-            params.get("opt_disp_pos_display")
+            params.get("opt_disp_pos_display", None)
         ])
-    if params.get("opt_disp_neg_display") is not None:
+    if params.get("opt_disp_neg_display", None) is not None:
         cargs.extend([
             "-disp-neg",
-            params.get("opt_disp_neg_display")
+            params.get("opt_disp_neg_display", None)
         ])
-    if params.get("opt_disp_zero_display") is not None:
+    if params.get("opt_disp_zero_display", None) is not None:
         cargs.extend([
             "-disp-zero",
-            params.get("opt_disp_zero_display")
+            params.get("opt_disp_zero_display", None)
         ])
-    if params.get("opt_palette_name_name") is not None:
+    if params.get("opt_palette_name_name", None) is not None:
         cargs.extend([
             "-palette-name",
-            params.get("opt_palette_name_name")
+            params.get("opt_palette_name_name", None)
         ])
-    if params.get("thresholding") is not None:
-        cargs.extend(dyn_cargs(params.get("thresholding")["@type"])(params.get("thresholding"), execution))
-    if params.get("opt_inversion_type") is not None:
+    if params.get("thresholding", None) is not None:
+        cargs.extend(volume_palette_thresholding_cargs(params.get("thresholding", None), execution))
+    if params.get("opt_inversion_type", None) is not None:
         cargs.extend([
             "-inversion",
-            params.get("opt_inversion_type")
+            params.get("opt_inversion_type", None)
         ])
     return cargs
 
@@ -736,13 +744,7 @@ def volume_palette(
 
 __all__ = [
     "VOLUME_PALETTE_METADATA",
-    "VolumePaletteNegPercentParameters",
-    "VolumePaletteNegUserParameters",
     "VolumePaletteOutputs",
-    "VolumePaletteParameters",
-    "VolumePalettePosPercentParameters",
-    "VolumePalettePosUserParameters",
-    "VolumePaletteThresholdingParameters",
     "volume_palette",
     "volume_palette_execute",
     "volume_palette_neg_percent_params",

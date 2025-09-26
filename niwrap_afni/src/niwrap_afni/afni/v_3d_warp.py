@@ -14,7 +14,32 @@ V_3D_WARP_METADATA = Metadata(
 
 
 V3dWarpParameters = typing.TypedDict('V3dWarpParameters', {
-    "@type": typing.Literal["afni.3dWarp"],
+    "@type": typing.NotRequired[typing.Literal["afni/3dWarp"]],
+    "matvec_in2out": typing.NotRequired[InputPathType | None],
+    "matvec_out2in": typing.NotRequired[InputPathType | None],
+    "tta2mni": bool,
+    "mni2tta": bool,
+    "matparent": typing.NotRequired[str | None],
+    "card2oblique": typing.NotRequired[str | None],
+    "oblique_parent": typing.NotRequired[str | None],
+    "deoblique": bool,
+    "oblique2card": bool,
+    "disp_obl_xform_only": bool,
+    "linear": bool,
+    "cubic": bool,
+    "NN": bool,
+    "quintic": bool,
+    "wsinc5": bool,
+    "fsl_matvec": bool,
+    "newgrid": typing.NotRequired[float | None],
+    "gridset": typing.NotRequired[str | None],
+    "zpad": typing.NotRequired[float | None],
+    "verb": bool,
+    "prefix": typing.NotRequired[str | None],
+    "dataset": str,
+})
+V3dWarpParametersTagged = typing.TypedDict('V3dWarpParametersTagged', {
+    "@type": typing.Literal["afni/3dWarp"],
     "matvec_in2out": typing.NotRequired[InputPathType | None],
     "matvec_out2in": typing.NotRequired[InputPathType | None],
     "tta2mni": bool,
@@ -40,40 +65,9 @@ V3dWarpParameters = typing.TypedDict('V3dWarpParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "afni.3dWarp": v_3d_warp_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-    }.get(t)
-
-
 class V3dWarpOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `v_3d_warp(...)`.
+    Output object returned when calling `V3dWarpParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -102,7 +96,7 @@ def v_3d_warp_params(
     zpad: float | None = None,
     verb: bool = False,
     prefix: str | None = None,
-) -> V3dWarpParameters:
+) -> V3dWarpParametersTagged:
     """
     Build parameters.
     
@@ -138,7 +132,7 @@ def v_3d_warp_params(
         Parameter dictionary
     """
     params = {
-        "@type": "afni.3dWarp",
+        "@type": "afni/3dWarp",
         "tta2mni": tta2mni,
         "mni2tta": mni2tta,
         "deoblique": deoblique,
@@ -189,76 +183,76 @@ def v_3d_warp_cargs(
     """
     cargs = []
     cargs.append("3dWarp")
-    if params.get("matvec_in2out") is not None:
+    if params.get("matvec_in2out", None) is not None:
         cargs.extend([
             "-matvec_in2out",
-            execution.input_file(params.get("matvec_in2out"))
+            execution.input_file(params.get("matvec_in2out", None))
         ])
-    if params.get("matvec_out2in") is not None:
+    if params.get("matvec_out2in", None) is not None:
         cargs.extend([
             "-matvec_out2in",
-            execution.input_file(params.get("matvec_out2in"))
+            execution.input_file(params.get("matvec_out2in", None))
         ])
-    if params.get("tta2mni"):
+    if params.get("tta2mni", False):
         cargs.append("-tta2mni")
-    if params.get("mni2tta"):
+    if params.get("mni2tta", False):
         cargs.append("-mni2tta")
-    if params.get("matparent") is not None:
+    if params.get("matparent", None) is not None:
         cargs.extend([
             "-matparent",
-            params.get("matparent")
+            params.get("matparent", None)
         ])
-    if params.get("card2oblique") is not None:
+    if params.get("card2oblique", None) is not None:
         cargs.extend([
             "-card2oblique",
-            params.get("card2oblique")
+            params.get("card2oblique", None)
         ])
-    if params.get("oblique_parent") is not None:
+    if params.get("oblique_parent", None) is not None:
         cargs.extend([
             "-oblique_parent",
-            params.get("oblique_parent")
+            params.get("oblique_parent", None)
         ])
-    if params.get("deoblique"):
+    if params.get("deoblique", False):
         cargs.append("-deoblique")
-    if params.get("oblique2card"):
+    if params.get("oblique2card", False):
         cargs.append("-oblique2card")
-    if params.get("disp_obl_xform_only"):
+    if params.get("disp_obl_xform_only", False):
         cargs.append("-disp_obl_xform_only")
-    if params.get("linear"):
+    if params.get("linear", False):
         cargs.append("-linear")
-    if params.get("cubic"):
+    if params.get("cubic", False):
         cargs.append("-cubic")
-    if params.get("NN"):
+    if params.get("NN", False):
         cargs.append("-NN")
-    if params.get("quintic"):
+    if params.get("quintic", False):
         cargs.append("-quintic")
-    if params.get("wsinc5"):
+    if params.get("wsinc5", False):
         cargs.append("-wsinc5")
-    if params.get("fsl_matvec"):
+    if params.get("fsl_matvec", False):
         cargs.append("-fsl_matvec")
-    if params.get("newgrid") is not None:
+    if params.get("newgrid", None) is not None:
         cargs.extend([
             "-newgrid",
-            str(params.get("newgrid"))
+            str(params.get("newgrid", None))
         ])
-    if params.get("gridset") is not None:
+    if params.get("gridset", None) is not None:
         cargs.extend([
             "-gridset",
-            params.get("gridset")
+            params.get("gridset", None)
         ])
-    if params.get("zpad") is not None:
+    if params.get("zpad", None) is not None:
         cargs.extend([
             "-zpad",
-            str(params.get("zpad"))
+            str(params.get("zpad", None))
         ])
-    if params.get("verb"):
+    if params.get("verb", False):
         cargs.append("-verb")
-    if params.get("prefix") is not None:
+    if params.get("prefix", None) is not None:
         cargs.extend([
             "-prefix",
-            params.get("prefix")
+            params.get("prefix", None)
         ])
-    cargs.append(params.get("dataset"))
+    cargs.append(params.get("dataset", None))
     return cargs
 
 
@@ -404,7 +398,6 @@ def v_3d_warp(
 
 __all__ = [
     "V3dWarpOutputs",
-    "V3dWarpParameters",
     "V_3D_WARP_METADATA",
     "v_3d_warp",
     "v_3d_warp_execute",

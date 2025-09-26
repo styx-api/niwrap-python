@@ -14,48 +14,22 @@ REREGISTER_SUBJECT_MIXED_METADATA = Metadata(
 
 
 ReregisterSubjectMixedParameters = typing.TypedDict('ReregisterSubjectMixedParameters', {
-    "@type": typing.Literal["freesurfer.reregister_subject_mixed"],
+    "@type": typing.NotRequired[typing.Literal["freesurfer/reregister_subject_mixed"]],
+    "input_volume": InputPathType,
+    "output_directory": str,
+    "threads": typing.NotRequired[float | None],
+})
+ReregisterSubjectMixedParametersTagged = typing.TypedDict('ReregisterSubjectMixedParametersTagged', {
+    "@type": typing.Literal["freesurfer/reregister_subject_mixed"],
     "input_volume": InputPathType,
     "output_directory": str,
     "threads": typing.NotRequired[float | None],
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "freesurfer.reregister_subject_mixed": reregister_subject_mixed_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "freesurfer.reregister_subject_mixed": reregister_subject_mixed_outputs,
-    }.get(t)
-
-
 class ReregisterSubjectMixedOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `reregister_subject_mixed(...)`.
+    Output object returned when calling `ReregisterSubjectMixedParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -71,7 +45,7 @@ def reregister_subject_mixed_params(
     input_volume: InputPathType,
     output_directory: str,
     threads: float | None = None,
-) -> ReregisterSubjectMixedParameters:
+) -> ReregisterSubjectMixedParametersTagged:
     """
     Build parameters.
     
@@ -84,7 +58,7 @@ def reregister_subject_mixed_params(
         Parameter dictionary
     """
     params = {
-        "@type": "freesurfer.reregister_subject_mixed",
+        "@type": "freesurfer/reregister_subject_mixed",
         "input_volume": input_volume,
         "output_directory": output_directory,
     }
@@ -108,10 +82,10 @@ def reregister_subject_mixed_cargs(
     """
     cargs = []
     cargs.append("reregister_subject_mixed")
-    cargs.append(execution.input_file(params.get("input_volume")))
-    cargs.append(params.get("output_directory"))
-    if params.get("threads") is not None:
-        cargs.append(str(params.get("threads")))
+    cargs.append(execution.input_file(params.get("input_volume", None)))
+    cargs.append(params.get("output_directory", None))
+    if params.get("threads", None) is not None:
+        cargs.append(str(params.get("threads", None)))
     return cargs
 
 
@@ -130,8 +104,8 @@ def reregister_subject_mixed_outputs(
     """
     ret = ReregisterSubjectMixedOutputs(
         root=execution.output_file("."),
-        control_points=execution.output_file(params.get("output_directory") + "/mri/fsamples"),
-        intensity_normalized=execution.output_file(params.get("output_directory") + "/mri/norm"),
+        control_points=execution.output_file(params.get("output_directory", None) + "/mri/fsamples"),
+        intensity_normalized=execution.output_file(params.get("output_directory", None) + "/mri/norm"),
         log_file=execution.output_file("talairach.log"),
     )
     return ret
@@ -200,7 +174,6 @@ def reregister_subject_mixed(
 __all__ = [
     "REREGISTER_SUBJECT_MIXED_METADATA",
     "ReregisterSubjectMixedOutputs",
-    "ReregisterSubjectMixedParameters",
     "reregister_subject_mixed",
     "reregister_subject_mixed_execute",
     "reregister_subject_mixed_params",

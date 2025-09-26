@@ -14,7 +14,42 @@ V_1DPLOT_PY_METADATA = Metadata(
 
 
 V1dplotPyParameters = typing.TypedDict('V1dplotPyParameters', {
-    "@type": typing.Literal["afni.1dplot.py"],
+    "@type": typing.NotRequired[typing.Literal["afni/1dplot.py"]],
+    "infiles": list[InputPathType],
+    "prefix": str,
+    "help": bool,
+    "boxplot_on": bool,
+    "bplot_view": typing.NotRequired[str | None],
+    "margin_off": bool,
+    "scale": typing.NotRequired[list[str] | None],
+    "xfile": typing.NotRequired[InputPathType | None],
+    "xvals": typing.NotRequired[list[float] | None],
+    "yaxis": typing.NotRequired[list[str] | None],
+    "ylabels": typing.NotRequired[list[str] | None],
+    "ylabels_maxlen": typing.NotRequired[float | None],
+    "legend_on": bool,
+    "legend_labels": typing.NotRequired[list[str] | None],
+    "legend_locs": typing.NotRequired[list[str] | None],
+    "xlabel": typing.NotRequired[str | None],
+    "title": typing.NotRequired[str | None],
+    "reverse_order": bool,
+    "sepscl": bool,
+    "one_graph": bool,
+    "dpi": typing.NotRequired[float | None],
+    "figsize": typing.NotRequired[list[float] | None],
+    "fontsize": typing.NotRequired[float | None],
+    "fontfamily": typing.NotRequired[str | None],
+    "fontstyles": typing.NotRequired[str | None],
+    "colors": typing.NotRequired[list[str] | None],
+    "patches": typing.NotRequired[list[str] | None],
+    "censor_trs": typing.NotRequired[list[str] | None],
+    "censor_files": typing.NotRequired[list[InputPathType] | None],
+    "censor_hline": typing.NotRequired[list[str] | None],
+    "censor_rgb": typing.NotRequired[str | None],
+    "bkgd_color": typing.NotRequired[str | None],
+})
+V1dplotPyParametersTagged = typing.TypedDict('V1dplotPyParametersTagged', {
+    "@type": typing.Literal["afni/1dplot.py"],
     "infiles": list[InputPathType],
     "prefix": str,
     "help": bool,
@@ -50,41 +85,9 @@ V1dplotPyParameters = typing.TypedDict('V1dplotPyParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "afni.1dplot.py": v_1dplot_py_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "afni.1dplot.py": v_1dplot_py_outputs,
-    }.get(t)
-
-
 class V1dplotPyOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `v_1dplot_py(...)`.
+    Output object returned when calling `V1dplotPyParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -125,7 +128,7 @@ def v_1dplot_py_params(
     censor_hline: list[str] | None = None,
     censor_rgb: str | None = None,
     bkgd_color: str | None = None,
-) -> V1dplotPyParameters:
+) -> V1dplotPyParametersTagged:
     """
     Build parameters.
     
@@ -178,7 +181,7 @@ def v_1dplot_py_params(
         Parameter dictionary
     """
     params = {
-        "@type": "afni.1dplot.py",
+        "@type": "afni/1dplot.py",
         "infiles": infiles,
         "prefix": prefix,
         "help": help_,
@@ -255,140 +258,140 @@ def v_1dplot_py_cargs(
     cargs.append("1dplot.py")
     cargs.extend([
         "-infiles",
-        *[execution.input_file(f) for f in params.get("infiles")]
+        *[execution.input_file(f) for f in params.get("infiles", None)]
     ])
     cargs.extend([
         "-prefix",
-        params.get("prefix")
+        params.get("prefix", None)
     ])
-    if params.get("help"):
+    if params.get("help", False):
         cargs.append("-h")
-    if params.get("boxplot_on"):
+    if params.get("boxplot_on", False):
         cargs.append("-boxplot_on")
-    if params.get("bplot_view") is not None:
+    if params.get("bplot_view", None) is not None:
         cargs.extend([
             "-bplot_view",
-            params.get("bplot_view")
+            params.get("bplot_view", None)
         ])
-    if params.get("margin_off"):
+    if params.get("margin_off", False):
         cargs.append("-margin_off")
-    if params.get("scale") is not None:
+    if params.get("scale", None) is not None:
         cargs.extend([
             "-scale",
-            *params.get("scale")
+            *params.get("scale", None)
         ])
-    if params.get("xfile") is not None:
+    if params.get("xfile", None) is not None:
         cargs.extend([
             "-xfile",
-            execution.input_file(params.get("xfile"))
+            execution.input_file(params.get("xfile", None))
         ])
-    if params.get("xvals") is not None:
+    if params.get("xvals", None) is not None:
         cargs.extend([
             "-xvals",
-            *map(str, params.get("xvals"))
+            *map(str, params.get("xvals", None))
         ])
-    if params.get("yaxis") is not None:
+    if params.get("yaxis", None) is not None:
         cargs.extend([
             "-yaxis",
-            *params.get("yaxis")
+            *params.get("yaxis", None)
         ])
-    if params.get("ylabels") is not None:
+    if params.get("ylabels", None) is not None:
         cargs.extend([
             "-ylabels",
-            *params.get("ylabels")
+            *params.get("ylabels", None)
         ])
-    if params.get("ylabels_maxlen") is not None:
+    if params.get("ylabels_maxlen", None) is not None:
         cargs.extend([
             "-ylabels_maxlen",
-            str(params.get("ylabels_maxlen"))
+            str(params.get("ylabels_maxlen", None))
         ])
-    if params.get("legend_on"):
+    if params.get("legend_on", False):
         cargs.append("-legend_on")
-    if params.get("legend_labels") is not None:
+    if params.get("legend_labels", None) is not None:
         cargs.extend([
             "-legend_labels",
-            *params.get("legend_labels")
+            *params.get("legend_labels", None)
         ])
-    if params.get("legend_locs") is not None:
+    if params.get("legend_locs", None) is not None:
         cargs.extend([
             "-legend_locs",
-            *params.get("legend_locs")
+            *params.get("legend_locs", None)
         ])
-    if params.get("xlabel") is not None:
+    if params.get("xlabel", None) is not None:
         cargs.extend([
             "-xlabel",
-            params.get("xlabel")
+            params.get("xlabel", None)
         ])
-    if params.get("title") is not None:
+    if params.get("title", None) is not None:
         cargs.extend([
             "-title",
-            params.get("title")
+            params.get("title", None)
         ])
-    if params.get("reverse_order"):
+    if params.get("reverse_order", False):
         cargs.append("-reverse_order")
-    if params.get("sepscl"):
+    if params.get("sepscl", False):
         cargs.append("-sepscl")
-    if params.get("one_graph"):
+    if params.get("one_graph", False):
         cargs.append("-one_graph")
-    if params.get("dpi") is not None:
+    if params.get("dpi", None) is not None:
         cargs.extend([
             "-dpi",
-            str(params.get("dpi"))
+            str(params.get("dpi", None))
         ])
-    if params.get("figsize") is not None:
+    if params.get("figsize", None) is not None:
         cargs.extend([
             "-figsize",
-            *map(str, params.get("figsize"))
+            *map(str, params.get("figsize", None))
         ])
-    if params.get("fontsize") is not None:
+    if params.get("fontsize", None) is not None:
         cargs.extend([
             "-fontsize",
-            str(params.get("fontsize"))
+            str(params.get("fontsize", None))
         ])
-    if params.get("fontfamily") is not None:
+    if params.get("fontfamily", None) is not None:
         cargs.extend([
             "-fontfamily",
-            params.get("fontfamily")
+            params.get("fontfamily", None)
         ])
-    if params.get("fontstyles") is not None:
+    if params.get("fontstyles", None) is not None:
         cargs.extend([
             "-fontstyles",
-            params.get("fontstyles")
+            params.get("fontstyles", None)
         ])
-    if params.get("colors") is not None:
+    if params.get("colors", None) is not None:
         cargs.extend([
             "-colors",
-            *params.get("colors")
+            *params.get("colors", None)
         ])
-    if params.get("patches") is not None:
+    if params.get("patches", None) is not None:
         cargs.extend([
             "-patches",
-            *params.get("patches")
+            *params.get("patches", None)
         ])
-    if params.get("censor_trs") is not None:
+    if params.get("censor_trs", None) is not None:
         cargs.extend([
             "-censor_trs",
-            *params.get("censor_trs")
+            *params.get("censor_trs", None)
         ])
-    if params.get("censor_files") is not None:
+    if params.get("censor_files", None) is not None:
         cargs.extend([
             "-censor_files",
-            *[execution.input_file(f) for f in params.get("censor_files")]
+            *[execution.input_file(f) for f in params.get("censor_files", None)]
         ])
-    if params.get("censor_hline") is not None:
+    if params.get("censor_hline", None) is not None:
         cargs.extend([
             "-censor_hline",
-            *params.get("censor_hline")
+            *params.get("censor_hline", None)
         ])
-    if params.get("censor_rgb") is not None:
+    if params.get("censor_rgb", None) is not None:
         cargs.extend([
             "-censor_RGB",
-            params.get("censor_rgb")
+            params.get("censor_rgb", None)
         ])
-    if params.get("bkgd_color") is not None:
+    if params.get("bkgd_color", None) is not None:
         cargs.extend([
             "-bkgd_color",
-            params.get("bkgd_color")
+            params.get("bkgd_color", None)
         ])
     return cargs
 
@@ -408,7 +411,7 @@ def v_1dplot_py_outputs(
     """
     ret = V1dplotPyOutputs(
         root=execution.output_file("."),
-        output_image=execution.output_file(params.get("prefix") + ".jpg"),
+        output_image=execution.output_file(params.get("prefix", None) + ".jpg"),
     )
     return ret
 
@@ -575,7 +578,6 @@ def v_1dplot_py(
 
 __all__ = [
     "V1dplotPyOutputs",
-    "V1dplotPyParameters",
     "V_1DPLOT_PY_METADATA",
     "v_1dplot_py",
     "v_1dplot_py_execute",

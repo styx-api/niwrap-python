@@ -14,7 +14,42 @@ FABBER_ASL_METADATA = Metadata(
 
 
 FabberAslParameters = typing.TypedDict('FabberAslParameters', {
-    "@type": typing.Literal["fsl.fabber_asl"],
+    "@type": typing.NotRequired[typing.Literal["fsl/fabber_asl"]],
+    "listmethods": bool,
+    "listmodels": bool,
+    "listparams": bool,
+    "descparams": bool,
+    "listoutputs": bool,
+    "evaluate": typing.NotRequired[str | None],
+    "evaluate_params": typing.NotRequired[str | None],
+    "evaluate_nt": typing.NotRequired[float | None],
+    "simple_output": bool,
+    "output": str,
+    "overwrite": bool,
+    "link_to_latest": bool,
+    "method": str,
+    "model": str,
+    "loadmodels": typing.NotRequired[InputPathType | None],
+    "data": InputPathType,
+    "mask": typing.NotRequired[InputPathType | None],
+    "suppdata": typing.NotRequired[InputPathType | None],
+    "dump_param_names": bool,
+    "save_model_fit": bool,
+    "save_residuals": bool,
+    "save_model_extras": bool,
+    "save_mvn": bool,
+    "save_mean": bool,
+    "save_std": bool,
+    "save_var": bool,
+    "save_zstat": bool,
+    "save_noise_mean": bool,
+    "save_noise_std": bool,
+    "save_free_energy": bool,
+    "optfile": typing.NotRequired[str | None],
+    "debug": bool,
+})
+FabberAslParametersTagged = typing.TypedDict('FabberAslParametersTagged', {
+    "@type": typing.Literal["fsl/fabber_asl"],
     "listmethods": bool,
     "listmodels": bool,
     "listparams": bool,
@@ -50,41 +85,9 @@ FabberAslParameters = typing.TypedDict('FabberAslParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "fsl.fabber_asl": fabber_asl_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "fsl.fabber_asl": fabber_asl_outputs,
-    }.get(t)
-
-
 class FabberAslOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `fabber_asl(...)`.
+    Output object returned when calling `FabberAslParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -147,7 +150,7 @@ def fabber_asl_params(
     save_free_energy: bool = False,
     optfile: str | None = None,
     debug: bool = False,
-) -> FabberAslParameters:
+) -> FabberAslParametersTagged:
     """
     Build parameters.
     
@@ -205,7 +208,7 @@ def fabber_asl_params(
         Parameter dictionary
     """
     params = {
-        "@type": "fsl.fabber_asl",
+        "@type": "fsl/fabber_asl",
         "listmethods": listmethods,
         "listmodels": listmodels,
         "listparams": listparams,
@@ -264,65 +267,65 @@ def fabber_asl_cargs(
     """
     cargs = []
     cargs.append("fabber_asl")
-    if params.get("listmethods"):
+    if params.get("listmethods", False):
         cargs.append("--listmethods")
-    if params.get("listmodels"):
+    if params.get("listmodels", False):
         cargs.append("--listmodels")
-    if params.get("listparams"):
+    if params.get("listparams", False):
         cargs.append("--listparams")
-    if params.get("descparams"):
+    if params.get("descparams", False):
         cargs.append("--descparams")
-    if params.get("listoutputs"):
+    if params.get("listoutputs", False):
         cargs.append("--listoutputs")
-    if params.get("evaluate") is not None:
-        cargs.append(params.get("evaluate"))
-    if params.get("evaluate_params") is not None:
-        cargs.append(params.get("evaluate_params"))
-    if params.get("evaluate_nt") is not None:
-        cargs.append(str(params.get("evaluate_nt")))
-    if params.get("simple_output"):
+    if params.get("evaluate", None) is not None:
+        cargs.append(params.get("evaluate", None))
+    if params.get("evaluate_params", None) is not None:
+        cargs.append(params.get("evaluate_params", None))
+    if params.get("evaluate_nt", None) is not None:
+        cargs.append(str(params.get("evaluate_nt", None)))
+    if params.get("simple_output", False):
         cargs.append("--simple-output")
-    cargs.append(params.get("output"))
-    if params.get("overwrite"):
+    cargs.append(params.get("output", None))
+    if params.get("overwrite", False):
         cargs.append("--overwrite")
-    if params.get("link_to_latest"):
+    if params.get("link_to_latest", False):
         cargs.append("--link-to-latest")
-    cargs.append(params.get("method"))
-    cargs.append(params.get("model"))
-    if params.get("loadmodels") is not None:
-        cargs.append(execution.input_file(params.get("loadmodels")))
-    cargs.append(execution.input_file(params.get("data")))
-    if params.get("mask") is not None:
-        cargs.append(execution.input_file(params.get("mask")))
-    if params.get("suppdata") is not None:
-        cargs.append(execution.input_file(params.get("suppdata")))
-    if params.get("dump_param_names"):
+    cargs.append(params.get("method", None))
+    cargs.append(params.get("model", None))
+    if params.get("loadmodels", None) is not None:
+        cargs.append(execution.input_file(params.get("loadmodels", None)))
+    cargs.append(execution.input_file(params.get("data", None)))
+    if params.get("mask", None) is not None:
+        cargs.append(execution.input_file(params.get("mask", None)))
+    if params.get("suppdata", None) is not None:
+        cargs.append(execution.input_file(params.get("suppdata", None)))
+    if params.get("dump_param_names", False):
         cargs.append("--dump-param-names")
-    if params.get("save_model_fit"):
+    if params.get("save_model_fit", False):
         cargs.append("--save-model-fit")
-    if params.get("save_residuals"):
+    if params.get("save_residuals", False):
         cargs.append("--save-residuals")
-    if params.get("save_model_extras"):
+    if params.get("save_model_extras", False):
         cargs.append("--save-model-extras")
-    if params.get("save_mvn"):
+    if params.get("save_mvn", False):
         cargs.append("--save-mvn")
-    if params.get("save_mean"):
+    if params.get("save_mean", False):
         cargs.append("--save-mean")
-    if params.get("save_std"):
+    if params.get("save_std", False):
         cargs.append("--save-std")
-    if params.get("save_var"):
+    if params.get("save_var", False):
         cargs.append("--save-var")
-    if params.get("save_zstat"):
+    if params.get("save_zstat", False):
         cargs.append("--save-zstat")
-    if params.get("save_noise_mean"):
+    if params.get("save_noise_mean", False):
         cargs.append("--save-noise-mean")
-    if params.get("save_noise_std"):
+    if params.get("save_noise_std", False):
         cargs.append("--save-noise-std")
-    if params.get("save_free_energy"):
+    if params.get("save_free_energy", False):
         cargs.append("--save-free-energy")
-    if params.get("optfile") is not None:
-        cargs.append(params.get("optfile"))
-    if params.get("debug"):
+    if params.get("optfile", None) is not None:
+        cargs.append(params.get("optfile", None))
+    if params.get("debug", False):
         cargs.append("--debug")
     return cargs
 
@@ -342,18 +345,18 @@ def fabber_asl_outputs(
     """
     ret = FabberAslOutputs(
         root=execution.output_file("."),
-        logfile=execution.output_file(params.get("output") + "/logfile.txt"),
-        modelfit=execution.output_file(params.get("output") + "/model_fit.nii.gz"),
-        residuals=execution.output_file(params.get("output") + "/residuals.nii.gz"),
-        model_extras=execution.output_file(params.get("output") + "/extras.nii.gz"),
-        mvn=execution.output_file(params.get("output") + "/mvn.nii.gz"),
-        means=execution.output_file(params.get("output") + "/means.nii.gz"),
-        stds=execution.output_file(params.get("output") + "/stds.nii.gz"),
-        variances=execution.output_file(params.get("output") + "/variances.nii.gz"),
-        zstats=execution.output_file(params.get("output") + "/zstats.nii.gz"),
-        noise_means=execution.output_file(params.get("output") + "/noise_means.nii.gz"),
-        noise_stds=execution.output_file(params.get("output") + "/noise_stds.nii.gz"),
-        free_energy=execution.output_file(params.get("output") + "/free_energy.nii.gz"),
+        logfile=execution.output_file(params.get("output", None) + "/logfile.txt"),
+        modelfit=execution.output_file(params.get("output", None) + "/model_fit.nii.gz"),
+        residuals=execution.output_file(params.get("output", None) + "/residuals.nii.gz"),
+        model_extras=execution.output_file(params.get("output", None) + "/extras.nii.gz"),
+        mvn=execution.output_file(params.get("output", None) + "/mvn.nii.gz"),
+        means=execution.output_file(params.get("output", None) + "/means.nii.gz"),
+        stds=execution.output_file(params.get("output", None) + "/stds.nii.gz"),
+        variances=execution.output_file(params.get("output", None) + "/variances.nii.gz"),
+        zstats=execution.output_file(params.get("output", None) + "/zstats.nii.gz"),
+        noise_means=execution.output_file(params.get("output", None) + "/noise_means.nii.gz"),
+        noise_stds=execution.output_file(params.get("output", None) + "/noise_stds.nii.gz"),
+        free_energy=execution.output_file(params.get("output", None) + "/free_energy.nii.gz"),
     )
     return ret
 
@@ -524,7 +527,6 @@ def fabber_asl(
 __all__ = [
     "FABBER_ASL_METADATA",
     "FabberAslOutputs",
-    "FabberAslParameters",
     "fabber_asl",
     "fabber_asl_execute",
     "fabber_asl_params",

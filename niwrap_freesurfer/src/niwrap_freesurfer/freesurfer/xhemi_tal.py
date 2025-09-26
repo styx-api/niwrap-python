@@ -14,45 +14,18 @@ XHEMI_TAL_METADATA = Metadata(
 
 
 XhemiTalParameters = typing.TypedDict('XhemiTalParameters', {
-    "@type": typing.Literal["freesurfer.xhemi-tal"],
+    "@type": typing.NotRequired[typing.Literal["freesurfer/xhemi-tal"]],
+    "subject": str,
+})
+XhemiTalParametersTagged = typing.TypedDict('XhemiTalParametersTagged', {
+    "@type": typing.Literal["freesurfer/xhemi-tal"],
     "subject": str,
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "freesurfer.xhemi-tal": xhemi_tal_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-    }.get(t)
-
-
 class XhemiTalOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `xhemi_tal(...)`.
+    Output object returned when calling `XhemiTalParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -60,7 +33,7 @@ class XhemiTalOutputs(typing.NamedTuple):
 
 def xhemi_tal_params(
     subject: str,
-) -> XhemiTalParameters:
+) -> XhemiTalParametersTagged:
     """
     Build parameters.
     
@@ -70,7 +43,7 @@ def xhemi_tal_params(
         Parameter dictionary
     """
     params = {
-        "@type": "freesurfer.xhemi-tal",
+        "@type": "freesurfer/xhemi-tal",
         "subject": subject,
     }
     return params
@@ -93,7 +66,7 @@ def xhemi_tal_cargs(
     cargs.append("xhemi-tal")
     cargs.extend([
         "--s",
-        params.get("subject")
+        params.get("subject", None)
     ])
     return cargs
 
@@ -175,7 +148,6 @@ def xhemi_tal(
 __all__ = [
     "XHEMI_TAL_METADATA",
     "XhemiTalOutputs",
-    "XhemiTalParameters",
     "xhemi_tal",
     "xhemi_tal_execute",
     "xhemi_tal_params",

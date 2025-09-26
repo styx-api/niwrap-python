@@ -14,46 +14,20 @@ MRIS_EXTRACT_PATCHES_METADATA = Metadata(
 
 
 MrisExtractPatchesParameters = typing.TypedDict('MrisExtractPatchesParameters', {
-    "@type": typing.Literal["freesurfer.mris_extract_patches"],
+    "@type": typing.NotRequired[typing.Literal["freesurfer/mris_extract_patches"]],
+    "subject": str,
+    "output_dir": str,
+})
+MrisExtractPatchesParametersTagged = typing.TypedDict('MrisExtractPatchesParametersTagged', {
+    "@type": typing.Literal["freesurfer/mris_extract_patches"],
     "subject": str,
     "output_dir": str,
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "freesurfer.mris_extract_patches": mris_extract_patches_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-    }.get(t)
-
-
 class MrisExtractPatchesOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `mris_extract_patches(...)`.
+    Output object returned when calling `MrisExtractPatchesParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -62,7 +36,7 @@ class MrisExtractPatchesOutputs(typing.NamedTuple):
 def mris_extract_patches_params(
     subject: str,
     output_dir: str,
-) -> MrisExtractPatchesParameters:
+) -> MrisExtractPatchesParametersTagged:
     """
     Build parameters.
     
@@ -73,7 +47,7 @@ def mris_extract_patches_params(
         Parameter dictionary
     """
     params = {
-        "@type": "freesurfer.mris_extract_patches",
+        "@type": "freesurfer/mris_extract_patches",
         "subject": subject,
         "output_dir": output_dir,
     }
@@ -95,8 +69,8 @@ def mris_extract_patches_cargs(
     """
     cargs = []
     cargs.append("mris_extract_patches")
-    cargs.append(params.get("subject"))
-    cargs.append(params.get("output_dir"))
+    cargs.append(params.get("subject", None))
+    cargs.append(params.get("output_dir", None))
     return cargs
 
 
@@ -178,7 +152,6 @@ def mris_extract_patches(
 __all__ = [
     "MRIS_EXTRACT_PATCHES_METADATA",
     "MrisExtractPatchesOutputs",
-    "MrisExtractPatchesParameters",
     "mris_extract_patches",
     "mris_extract_patches_execute",
     "mris_extract_patches_params",

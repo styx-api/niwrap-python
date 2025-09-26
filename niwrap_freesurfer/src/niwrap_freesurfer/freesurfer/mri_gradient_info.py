@@ -14,46 +14,18 @@ MRI_GRADIENT_INFO_METADATA = Metadata(
 
 
 MriGradientInfoParameters = typing.TypedDict('MriGradientInfoParameters', {
-    "@type": typing.Literal["freesurfer.mri_gradient_info"],
+    "@type": typing.NotRequired[typing.Literal["freesurfer/mri_gradient_info"]],
+    "input_image": InputPathType,
+})
+MriGradientInfoParametersTagged = typing.TypedDict('MriGradientInfoParametersTagged', {
+    "@type": typing.Literal["freesurfer/mri_gradient_info"],
     "input_image": InputPathType,
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "freesurfer.mri_gradient_info": mri_gradient_info_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "freesurfer.mri_gradient_info": mri_gradient_info_outputs,
-    }.get(t)
-
-
 class MriGradientInfoOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `mri_gradient_info(...)`.
+    Output object returned when calling `MriGradientInfoParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -63,7 +35,7 @@ class MriGradientInfoOutputs(typing.NamedTuple):
 
 def mri_gradient_info_params(
     input_image: InputPathType,
-) -> MriGradientInfoParameters:
+) -> MriGradientInfoParametersTagged:
     """
     Build parameters.
     
@@ -73,7 +45,7 @@ def mri_gradient_info_params(
         Parameter dictionary
     """
     params = {
-        "@type": "freesurfer.mri_gradient_info",
+        "@type": "freesurfer/mri_gradient_info",
         "input_image": input_image,
     }
     return params
@@ -94,7 +66,7 @@ def mri_gradient_info_cargs(
     """
     cargs = []
     cargs.append("mri_gradient_info")
-    cargs.append(execution.input_file(params.get("input_image")))
+    cargs.append(execution.input_file(params.get("input_image", None)))
     return cargs
 
 
@@ -174,7 +146,6 @@ def mri_gradient_info(
 __all__ = [
     "MRI_GRADIENT_INFO_METADATA",
     "MriGradientInfoOutputs",
-    "MriGradientInfoParameters",
     "mri_gradient_info",
     "mri_gradient_info_execute",
     "mri_gradient_info_params",

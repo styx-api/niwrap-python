@@ -14,7 +14,14 @@ SRATIO_METADATA = Metadata(
 
 
 SratioParameters = typing.TypedDict('SratioParameters', {
-    "@type": typing.Literal["freesurfer.sratio"],
+    "@type": typing.NotRequired[typing.Literal["freesurfer/sratio"]],
+    "value_a": float,
+    "value_b": float,
+    "abs_flag": bool,
+    "mask_threshold": typing.NotRequired[float | None],
+})
+SratioParametersTagged = typing.TypedDict('SratioParametersTagged', {
+    "@type": typing.Literal["freesurfer/sratio"],
     "value_a": float,
     "value_b": float,
     "abs_flag": bool,
@@ -22,41 +29,9 @@ SratioParameters = typing.TypedDict('SratioParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "freesurfer.sratio": sratio_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "freesurfer.sratio": sratio_outputs,
-    }.get(t)
-
-
 class SratioOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `sratio(...)`.
+    Output object returned when calling `SratioParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -69,7 +44,7 @@ def sratio_params(
     value_b: float,
     abs_flag: bool = False,
     mask_threshold: float | None = None,
-) -> SratioParameters:
+) -> SratioParametersTagged:
     """
     Build parameters.
     
@@ -82,7 +57,7 @@ def sratio_params(
         Parameter dictionary
     """
     params = {
-        "@type": "freesurfer.sratio",
+        "@type": "freesurfer/sratio",
         "value_a": value_a,
         "value_b": value_b,
         "abs_flag": abs_flag,
@@ -107,14 +82,14 @@ def sratio_cargs(
     """
     cargs = []
     cargs.append("sratio")
-    cargs.append(str(params.get("value_a")))
-    cargs.append(str(params.get("value_b")))
-    if params.get("abs_flag"):
+    cargs.append(str(params.get("value_a", None)))
+    cargs.append(str(params.get("value_b", None)))
+    if params.get("abs_flag", False):
         cargs.append("--abs")
-    if params.get("mask_threshold") is not None:
+    if params.get("mask_threshold", None) is not None:
         cargs.extend([
             "--mask-thresh",
-            str(params.get("mask_threshold"))
+            str(params.get("mask_threshold", None))
         ])
     return cargs
 
@@ -206,7 +181,6 @@ def sratio(
 __all__ = [
     "SRATIO_METADATA",
     "SratioOutputs",
-    "SratioParameters",
     "sratio",
     "sratio_execute",
     "sratio_params",

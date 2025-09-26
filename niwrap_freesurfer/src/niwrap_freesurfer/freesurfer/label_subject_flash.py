@@ -14,7 +14,15 @@ LABEL_SUBJECT_FLASH_METADATA = Metadata(
 
 
 LabelSubjectFlashParameters = typing.TypedDict('LabelSubjectFlashParameters', {
-    "@type": typing.Literal["freesurfer.label_subject_flash"],
+    "@type": typing.NotRequired[typing.Literal["freesurfer/label_subject_flash"]],
+    "tissue_params": InputPathType,
+    "norm_volume": InputPathType,
+    "transform_file": InputPathType,
+    "classifier_array": InputPathType,
+    "aseg_output": str,
+})
+LabelSubjectFlashParametersTagged = typing.TypedDict('LabelSubjectFlashParametersTagged', {
+    "@type": typing.Literal["freesurfer/label_subject_flash"],
     "tissue_params": InputPathType,
     "norm_volume": InputPathType,
     "transform_file": InputPathType,
@@ -23,41 +31,9 @@ LabelSubjectFlashParameters = typing.TypedDict('LabelSubjectFlashParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "freesurfer.label_subject_flash": label_subject_flash_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "freesurfer.label_subject_flash": label_subject_flash_outputs,
-    }.get(t)
-
-
 class LabelSubjectFlashOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `label_subject_flash(...)`.
+    Output object returned when calling `LabelSubjectFlashParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -71,7 +47,7 @@ def label_subject_flash_params(
     transform_file: InputPathType,
     classifier_array: InputPathType,
     aseg_output: str,
-) -> LabelSubjectFlashParameters:
+) -> LabelSubjectFlashParametersTagged:
     """
     Build parameters.
     
@@ -85,7 +61,7 @@ def label_subject_flash_params(
         Parameter dictionary
     """
     params = {
-        "@type": "freesurfer.label_subject_flash",
+        "@type": "freesurfer/label_subject_flash",
         "tissue_params": tissue_params,
         "norm_volume": norm_volume,
         "transform_file": transform_file,
@@ -112,12 +88,12 @@ def label_subject_flash_cargs(
     cargs.append("label_subject_flash")
     cargs.extend([
         "-flash",
-        execution.input_file(params.get("tissue_params"))
+        execution.input_file(params.get("tissue_params", None))
     ])
-    cargs.append(execution.input_file(params.get("norm_volume")))
-    cargs.append(execution.input_file(params.get("transform_file")))
-    cargs.append(execution.input_file(params.get("classifier_array")))
-    cargs.append(params.get("aseg_output"))
+    cargs.append(execution.input_file(params.get("norm_volume", None)))
+    cargs.append(execution.input_file(params.get("transform_file", None)))
+    cargs.append(execution.input_file(params.get("classifier_array", None)))
+    cargs.append(params.get("aseg_output", None))
     return cargs
 
 
@@ -136,7 +112,7 @@ def label_subject_flash_outputs(
     """
     ret = LabelSubjectFlashOutputs(
         root=execution.output_file("."),
-        aseg_outfile=execution.output_file(params.get("aseg_output")),
+        aseg_outfile=execution.output_file(params.get("aseg_output", None)),
     )
     return ret
 
@@ -211,7 +187,6 @@ def label_subject_flash(
 __all__ = [
     "LABEL_SUBJECT_FLASH_METADATA",
     "LabelSubjectFlashOutputs",
-    "LabelSubjectFlashParameters",
     "label_subject_flash",
     "label_subject_flash_execute",
     "label_subject_flash_params",

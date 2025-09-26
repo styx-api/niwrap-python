@@ -14,45 +14,18 @@ DMRI_AC_SH_METADATA = Metadata(
 
 
 DmriAcShParameters = typing.TypedDict('DmriAcShParameters', {
-    "@type": typing.Literal["freesurfer.dmri_ac.sh"],
+    "@type": typing.NotRequired[typing.Literal["freesurfer/dmri_ac.sh"]],
+    "additional_args": typing.NotRequired[str | None],
+})
+DmriAcShParametersTagged = typing.TypedDict('DmriAcShParametersTagged', {
+    "@type": typing.Literal["freesurfer/dmri_ac.sh"],
     "additional_args": typing.NotRequired[str | None],
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "freesurfer.dmri_ac.sh": dmri_ac_sh_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-    }.get(t)
-
-
 class DmriAcShOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `dmri_ac_sh(...)`.
+    Output object returned when calling `DmriAcShParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -60,7 +33,7 @@ class DmriAcShOutputs(typing.NamedTuple):
 
 def dmri_ac_sh_params(
     additional_args: str | None = None,
-) -> DmriAcShParameters:
+) -> DmriAcShParametersTagged:
     """
     Build parameters.
     
@@ -70,7 +43,7 @@ def dmri_ac_sh_params(
         Parameter dictionary
     """
     params = {
-        "@type": "freesurfer.dmri_ac.sh",
+        "@type": "freesurfer/dmri_ac.sh",
     }
     if additional_args is not None:
         params["additional_args"] = additional_args
@@ -92,8 +65,8 @@ def dmri_ac_sh_cargs(
     """
     cargs = []
     cargs.append("dmri_ac.sh")
-    if params.get("additional_args") is not None:
-        cargs.append(params.get("additional_args"))
+    if params.get("additional_args", None) is not None:
+        cargs.append(params.get("additional_args", None))
     return cargs
 
 
@@ -172,7 +145,6 @@ def dmri_ac_sh(
 __all__ = [
     "DMRI_AC_SH_METADATA",
     "DmriAcShOutputs",
-    "DmriAcShParameters",
     "dmri_ac_sh",
     "dmri_ac_sh_execute",
     "dmri_ac_sh_params",

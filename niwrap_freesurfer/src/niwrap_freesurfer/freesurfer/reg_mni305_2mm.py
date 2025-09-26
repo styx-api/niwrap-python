@@ -14,47 +14,20 @@ REG_MNI305_2MM_METADATA = Metadata(
 
 
 RegMni3052mmParameters = typing.TypedDict('RegMni3052mmParameters', {
-    "@type": typing.Literal["freesurfer.reg-mni305.2mm"],
+    "@type": typing.NotRequired[typing.Literal["freesurfer/reg-mni305.2mm"]],
+    "subject_id": str,
+    "regfile": InputPathType,
+})
+RegMni3052mmParametersTagged = typing.TypedDict('RegMni3052mmParametersTagged', {
+    "@type": typing.Literal["freesurfer/reg-mni305.2mm"],
     "subject_id": str,
     "regfile": InputPathType,
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "freesurfer.reg-mni305.2mm": reg_mni305_2mm_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "freesurfer.reg-mni305.2mm": reg_mni305_2mm_outputs,
-    }.get(t)
-
-
 class RegMni3052mmOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `reg_mni305_2mm(...)`.
+    Output object returned when calling `RegMni3052mmParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -65,7 +38,7 @@ class RegMni3052mmOutputs(typing.NamedTuple):
 def reg_mni305_2mm_params(
     subject_id: str,
     regfile: InputPathType,
-) -> RegMni3052mmParameters:
+) -> RegMni3052mmParametersTagged:
     """
     Build parameters.
     
@@ -77,7 +50,7 @@ def reg_mni305_2mm_params(
         Parameter dictionary
     """
     params = {
-        "@type": "freesurfer.reg-mni305.2mm",
+        "@type": "freesurfer/reg-mni305.2mm",
         "subject_id": subject_id,
         "regfile": regfile,
     }
@@ -101,11 +74,11 @@ def reg_mni305_2mm_cargs(
     cargs.append("reg-mni305.2mm")
     cargs.extend([
         "--s",
-        params.get("subject_id")
+        params.get("subject_id", None)
     ])
     cargs.extend([
         "--reg",
-        execution.input_file(params.get("regfile"))
+        execution.input_file(params.get("regfile", None))
     ])
     return cargs
 
@@ -125,7 +98,7 @@ def reg_mni305_2mm_outputs(
     """
     ret = RegMni3052mmOutputs(
         root=execution.output_file("."),
-        output_regfile=execution.output_file(pathlib.Path(params.get("regfile")).name),
+        output_regfile=execution.output_file(pathlib.Path(params.get("regfile", None)).name),
     )
     return ret
 
@@ -192,7 +165,6 @@ def reg_mni305_2mm(
 __all__ = [
     "REG_MNI305_2MM_METADATA",
     "RegMni3052mmOutputs",
-    "RegMni3052mmParameters",
     "reg_mni305_2mm",
     "reg_mni305_2mm_execute",
     "reg_mni305_2mm_params",

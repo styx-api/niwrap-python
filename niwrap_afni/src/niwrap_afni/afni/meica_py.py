@@ -14,7 +14,18 @@ MEICA_PY_METADATA = Metadata(
 
 
 MeicaPyParameters = typing.TypedDict('MeicaPyParameters', {
-    "@type": typing.Literal["afni.meica.py"],
+    "@type": typing.NotRequired[typing.Literal["afni/meica.py"]],
+    "infile": InputPathType,
+    "echo_times": str,
+    "affine": str,
+    "output_directory": str,
+    "components": typing.NotRequired[float | None],
+    "talairach": bool,
+    "threshold": typing.NotRequired[float | None],
+    "debug": bool,
+})
+MeicaPyParametersTagged = typing.TypedDict('MeicaPyParametersTagged', {
+    "@type": typing.Literal["afni/meica.py"],
     "infile": InputPathType,
     "echo_times": str,
     "affine": str,
@@ -26,41 +37,9 @@ MeicaPyParameters = typing.TypedDict('MeicaPyParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "afni.meica.py": meica_py_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "afni.meica.py": meica_py_outputs,
-    }.get(t)
-
-
 class MeicaPyOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `meica_py(...)`.
+    Output object returned when calling `MeicaPyParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -79,7 +58,7 @@ def meica_py_params(
     talairach: bool = False,
     threshold: float | None = None,
     debug: bool = False,
-) -> MeicaPyParameters:
+) -> MeicaPyParametersTagged:
     """
     Build parameters.
     
@@ -96,7 +75,7 @@ def meica_py_params(
         Parameter dictionary
     """
     params = {
-        "@type": "afni.meica.py",
+        "@type": "afni/meica.py",
         "infile": infile,
         "echo_times": echo_times,
         "affine": affine,
@@ -128,33 +107,33 @@ def meica_py_cargs(
     cargs.append("meica.py")
     cargs.extend([
         "-d",
-        execution.input_file(params.get("infile"))
+        execution.input_file(params.get("infile", None))
     ])
     cargs.extend([
         "-e",
-        params.get("echo_times")
+        params.get("echo_times", None)
     ])
     cargs.extend([
         "-a",
-        params.get("affine")
+        params.get("affine", None)
     ])
     cargs.extend([
         "-o",
-        params.get("output_directory")
+        params.get("output_directory", None)
     ])
-    if params.get("components") is not None:
+    if params.get("components", None) is not None:
         cargs.extend([
             "-c",
-            str(params.get("components"))
+            str(params.get("components", None))
         ])
-    if params.get("talairach"):
+    if params.get("talairach", False):
         cargs.append("-t")
-    if params.get("threshold") is not None:
+    if params.get("threshold", None) is not None:
         cargs.extend([
             "--thresh",
-            str(params.get("threshold"))
+            str(params.get("threshold", None))
         ])
-    if params.get("debug"):
+    if params.get("debug", False):
         cargs.append("--debug")
     return cargs
 
@@ -174,8 +153,8 @@ def meica_py_outputs(
     """
     ret = MeicaPyOutputs(
         root=execution.output_file("."),
-        cleaned_bold=execution.output_file(params.get("output_directory") + "/cleaned_bold.nii.gz"),
-        components_output=execution.output_file(params.get("output_directory") + "/components.nii.gz"),
+        cleaned_bold=execution.output_file(params.get("output_directory", None) + "/cleaned_bold.nii.gz"),
+        components_output=execution.output_file(params.get("output_directory", None) + "/components.nii.gz"),
     )
     return ret
 
@@ -257,7 +236,6 @@ def meica_py(
 __all__ = [
     "MEICA_PY_METADATA",
     "MeicaPyOutputs",
-    "MeicaPyParameters",
     "meica_py",
     "meica_py_execute",
     "meica_py_params",

@@ -14,7 +14,17 @@ IMROTATE_METADATA = Metadata(
 
 
 ImrotateParameters = typing.TypedDict('ImrotateParameters', {
-    "@type": typing.Literal["afni.imrotate"],
+    "@type": typing.NotRequired[typing.Literal["afni/imrotate"]],
+    "linear_interpolation": bool,
+    "fourier_interpolation": bool,
+    "dx": float,
+    "dy": float,
+    "phi": float,
+    "input_image": InputPathType,
+    "output_image": str,
+})
+ImrotateParametersTagged = typing.TypedDict('ImrotateParametersTagged', {
+    "@type": typing.Literal["afni/imrotate"],
     "linear_interpolation": bool,
     "fourier_interpolation": bool,
     "dx": float,
@@ -25,41 +35,9 @@ ImrotateParameters = typing.TypedDict('ImrotateParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "afni.imrotate": imrotate_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "afni.imrotate": imrotate_outputs,
-    }.get(t)
-
-
 class ImrotateOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `imrotate(...)`.
+    Output object returned when calling `ImrotateParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -75,7 +53,7 @@ def imrotate_params(
     output_image: str,
     linear_interpolation: bool = False,
     fourier_interpolation: bool = False,
-) -> ImrotateParameters:
+) -> ImrotateParametersTagged:
     """
     Build parameters.
     
@@ -91,7 +69,7 @@ def imrotate_params(
         Parameter dictionary
     """
     params = {
-        "@type": "afni.imrotate",
+        "@type": "afni/imrotate",
         "linear_interpolation": linear_interpolation,
         "fourier_interpolation": fourier_interpolation,
         "dx": dx,
@@ -118,15 +96,15 @@ def imrotate_cargs(
     """
     cargs = []
     cargs.append("imrotate")
-    if params.get("linear_interpolation"):
+    if params.get("linear_interpolation", False):
         cargs.append("-linear")
-    if params.get("fourier_interpolation"):
+    if params.get("fourier_interpolation", False):
         cargs.append("-Fourier")
-    cargs.append(str(params.get("dx")))
-    cargs.append(str(params.get("dy")))
-    cargs.append(str(params.get("phi")))
-    cargs.append(execution.input_file(params.get("input_image")))
-    cargs.append(params.get("output_image"))
+    cargs.append(str(params.get("dx", None)))
+    cargs.append(str(params.get("dy", None)))
+    cargs.append(str(params.get("phi", None)))
+    cargs.append(execution.input_file(params.get("input_image", None)))
+    cargs.append(params.get("output_image", None))
     return cargs
 
 
@@ -145,7 +123,7 @@ def imrotate_outputs(
     """
     ret = ImrotateOutputs(
         root=execution.output_file("."),
-        output_image_file=execution.output_file(params.get("output_image")),
+        output_image_file=execution.output_file(params.get("output_image", None)),
     )
     return ret
 
@@ -224,7 +202,6 @@ def imrotate(
 __all__ = [
     "IMROTATE_METADATA",
     "ImrotateOutputs",
-    "ImrotateParameters",
     "imrotate",
     "imrotate_execute",
     "imrotate_params",

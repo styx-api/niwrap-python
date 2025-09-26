@@ -14,7 +14,15 @@ V_3D_DTEIG_METADATA = Metadata(
 
 
 V3dDteigParameters = typing.TypedDict('V3dDteigParameters', {
-    "@type": typing.Literal["afni.3dDTeig"],
+    "@type": typing.NotRequired[typing.Literal["afni/3dDTeig"]],
+    "input_dataset": str,
+    "prefix": typing.NotRequired[str | None],
+    "datum": typing.NotRequired[typing.Literal["byte", "short", "float"] | None],
+    "sep_dsets": bool,
+    "uddata": bool,
+})
+V3dDteigParametersTagged = typing.TypedDict('V3dDteigParametersTagged', {
+    "@type": typing.Literal["afni/3dDTeig"],
     "input_dataset": str,
     "prefix": typing.NotRequired[str | None],
     "datum": typing.NotRequired[typing.Literal["byte", "short", "float"] | None],
@@ -23,41 +31,9 @@ V3dDteigParameters = typing.TypedDict('V3dDteigParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "afni.3dDTeig": v_3d_dteig_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "afni.3dDTeig": v_3d_dteig_outputs,
-    }.get(t)
-
-
 class V3dDteigOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `v_3d_dteig(...)`.
+    Output object returned when calling `V3dDteigParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -79,7 +55,7 @@ def v_3d_dteig_params(
     datum: typing.Literal["byte", "short", "float"] | None = None,
     sep_dsets: bool = False,
     uddata: bool = False,
-) -> V3dDteigParameters:
+) -> V3dDteigParametersTagged:
     """
     Build parameters.
     
@@ -95,7 +71,7 @@ def v_3d_dteig_params(
         Parameter dictionary
     """
     params = {
-        "@type": "afni.3dDTeig",
+        "@type": "afni/3dDTeig",
         "input_dataset": input_dataset,
         "sep_dsets": sep_dsets,
         "uddata": uddata,
@@ -122,20 +98,20 @@ def v_3d_dteig_cargs(
     """
     cargs = []
     cargs.append("3dDTeig")
-    cargs.append(params.get("input_dataset"))
-    if params.get("prefix") is not None:
+    cargs.append(params.get("input_dataset", None))
+    if params.get("prefix", None) is not None:
         cargs.extend([
             "-prefix",
-            params.get("prefix")
+            params.get("prefix", None)
         ])
-    if params.get("datum") is not None:
+    if params.get("datum", None) is not None:
         cargs.extend([
             "-datum",
-            params.get("datum")
+            params.get("datum", None)
         ])
-    if params.get("sep_dsets"):
+    if params.get("sep_dsets", False):
         cargs.append("-sep_dsets")
-    if params.get("uddata"):
+    if params.get("uddata", False):
         cargs.append("-uddata")
     return cargs
 
@@ -155,11 +131,11 @@ def v_3d_dteig_outputs(
     """
     ret = V3dDteigOutputs(
         root=execution.output_file("."),
-        output_dataset=execution.output_file(params.get("prefix") + ".nii.gz") if (params.get("prefix") is not None) else None,
-        output_lambda=execution.output_file(params.get("prefix") + "_lambda.nii.gz") if (params.get("prefix") is not None) else None,
-        output_eigvec=execution.output_file(params.get("prefix") + "_eigvec.nii.gz") if (params.get("prefix") is not None) else None,
-        output_fa=execution.output_file(params.get("prefix") + "_FA.nii.gz") if (params.get("prefix") is not None) else None,
-        output_md=execution.output_file(params.get("prefix") + "_MD.nii.gz") if (params.get("prefix") is not None) else None,
+        output_dataset=execution.output_file(params.get("prefix", None) + ".nii.gz") if (params.get("prefix") is not None) else None,
+        output_lambda=execution.output_file(params.get("prefix", None) + "_lambda.nii.gz") if (params.get("prefix") is not None) else None,
+        output_eigvec=execution.output_file(params.get("prefix", None) + "_eigvec.nii.gz") if (params.get("prefix") is not None) else None,
+        output_fa=execution.output_file(params.get("prefix", None) + "_FA.nii.gz") if (params.get("prefix") is not None) else None,
+        output_md=execution.output_file(params.get("prefix", None) + "_MD.nii.gz") if (params.get("prefix") is not None) else None,
     )
     return ret
 
@@ -233,7 +209,6 @@ def v_3d_dteig(
 
 __all__ = [
     "V3dDteigOutputs",
-    "V3dDteigParameters",
     "V_3D_DTEIG_METADATA",
     "v_3d_dteig",
     "v_3d_dteig_execute",

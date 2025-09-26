@@ -14,7 +14,21 @@ WMSASEG_METADATA = Metadata(
 
 
 WmsasegParameters = typing.TypedDict('WmsasegParameters', {
-    "@type": typing.Literal["freesurfer.wmsaseg"],
+    "@type": typing.NotRequired[typing.Literal["freesurfer/wmsaseg"]],
+    "subject": str,
+    "source_orig": typing.NotRequired[str | None],
+    "source_long": bool,
+    "output_subdir": typing.NotRequired[str | None],
+    "gca_file": typing.NotRequired[InputPathType | None],
+    "no_reg": bool,
+    "no_canorm": bool,
+    "init_spm": bool,
+    "reg_only": bool,
+    "halo1": bool,
+    "halo2": bool,
+})
+WmsasegParametersTagged = typing.TypedDict('WmsasegParametersTagged', {
+    "@type": typing.Literal["freesurfer/wmsaseg"],
     "subject": str,
     "source_orig": typing.NotRequired[str | None],
     "source_long": bool,
@@ -29,41 +43,9 @@ WmsasegParameters = typing.TypedDict('WmsasegParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "freesurfer.wmsaseg": wmsaseg_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "freesurfer.wmsaseg": wmsaseg_outputs,
-    }.get(t)
-
-
 class WmsasegOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `wmsaseg(...)`.
+    Output object returned when calling `WmsasegParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -85,7 +67,7 @@ def wmsaseg_params(
     reg_only: bool = False,
     halo1: bool = False,
     halo2: bool = False,
-) -> WmsasegParameters:
+) -> WmsasegParametersTagged:
     """
     Build parameters.
     
@@ -105,7 +87,7 @@ def wmsaseg_params(
         Parameter dictionary
     """
     params = {
-        "@type": "freesurfer.wmsaseg",
+        "@type": "freesurfer/wmsaseg",
         "subject": subject,
         "source_long": source_long,
         "no_reg": no_reg,
@@ -141,36 +123,36 @@ def wmsaseg_cargs(
     cargs.append("wmsaseg")
     cargs.extend([
         "-s",
-        params.get("subject")
+        params.get("subject", None)
     ])
-    if params.get("source_orig") is not None:
+    if params.get("source_orig", None) is not None:
         cargs.extend([
             "--s+orig",
-            params.get("source_orig")
+            params.get("source_orig", None)
         ])
-    if params.get("source_long"):
+    if params.get("source_long", False):
         cargs.append("--s+long")
-    if params.get("output_subdir") is not None:
+    if params.get("output_subdir", None) is not None:
         cargs.extend([
             "--sub",
-            params.get("output_subdir")
+            params.get("output_subdir", None)
         ])
-    if params.get("gca_file") is not None:
+    if params.get("gca_file", None) is not None:
         cargs.extend([
             "--gca",
-            execution.input_file(params.get("gca_file"))
+            execution.input_file(params.get("gca_file", None))
         ])
-    if params.get("no_reg"):
+    if params.get("no_reg", False):
         cargs.append("--no-reg")
-    if params.get("no_canorm"):
+    if params.get("no_canorm", False):
         cargs.append("--no-canorm")
-    if params.get("init_spm"):
+    if params.get("init_spm", False):
         cargs.append("--init-spm")
-    if params.get("reg_only"):
+    if params.get("reg_only", False):
         cargs.append("--reg-only")
-    if params.get("halo1"):
+    if params.get("halo1", False):
         cargs.append("--halo1")
-    if params.get("halo2"):
+    if params.get("halo2", False):
         cargs.append("--halo2")
     return cargs
 
@@ -190,8 +172,8 @@ def wmsaseg_outputs(
     """
     ret = WmsasegOutputs(
         root=execution.output_file("."),
-        t1_canorm=execution.output_file(params.get("output_subdir") + "/T1.canorm.mgz") if (params.get("output_subdir") is not None) else None,
-        wmsa_lta=execution.output_file(params.get("output_subdir") + "/wmsa.lta") if (params.get("output_subdir") is not None) else None,
+        t1_canorm=execution.output_file(params.get("output_subdir", None) + "/T1.canorm.mgz") if (params.get("output_subdir") is not None) else None,
+        wmsa_lta=execution.output_file(params.get("output_subdir", None) + "/wmsa.lta") if (params.get("output_subdir") is not None) else None,
     )
     return ret
 
@@ -282,7 +264,6 @@ def wmsaseg(
 __all__ = [
     "WMSASEG_METADATA",
     "WmsasegOutputs",
-    "WmsasegParameters",
     "wmsaseg",
     "wmsaseg_execute",
     "wmsaseg_params",

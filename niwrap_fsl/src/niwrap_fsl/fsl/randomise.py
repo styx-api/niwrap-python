@@ -14,7 +14,38 @@ RANDOMISE_METADATA = Metadata(
 
 
 RandomiseParameters = typing.TypedDict('RandomiseParameters', {
-    "@type": typing.Literal["fsl.randomise"],
+    "@type": typing.NotRequired[typing.Literal["fsl/randomise"]],
+    "in_file": InputPathType,
+    "base_name": typing.NotRequired[str | None],
+    "design_mat": typing.NotRequired[InputPathType | None],
+    "tcon": typing.NotRequired[InputPathType | None],
+    "c_thresh": typing.NotRequired[float | None],
+    "cm_thresh": typing.NotRequired[float | None],
+    "demean": bool,
+    "f_c_thresh": typing.NotRequired[float | None],
+    "f_cm_thresh": typing.NotRequired[float | None],
+    "f_only": bool,
+    "fcon": typing.NotRequired[InputPathType | None],
+    "mask": typing.NotRequired[InputPathType | None],
+    "num_perm": typing.NotRequired[int | None],
+    "one_sample_group_mean": bool,
+    "output_type": typing.NotRequired[typing.Literal["NIFTI", "NIFTI_PAIR", "NIFTI_GZ", "NIFTI_PAIR_GZ"] | None],
+    "p_vec_n_dist_files": bool,
+    "raw_stats_imgs": bool,
+    "seed": typing.NotRequired[int | None],
+    "show_info_parallel_mode": bool,
+    "show_total_perms": bool,
+    "tfce": bool,
+    "tfce2D": bool,
+    "tfce_C": typing.NotRequired[float | None],
+    "tfce_E": typing.NotRequired[float | None],
+    "tfce_H": typing.NotRequired[float | None],
+    "var_smooth": typing.NotRequired[int | None],
+    "vox_p_values": bool,
+    "x_block_labels": typing.NotRequired[InputPathType | None],
+})
+RandomiseParametersTagged = typing.TypedDict('RandomiseParametersTagged', {
+    "@type": typing.Literal["fsl/randomise"],
     "in_file": InputPathType,
     "base_name": typing.NotRequired[str | None],
     "design_mat": typing.NotRequired[InputPathType | None],
@@ -46,41 +77,9 @@ RandomiseParameters = typing.TypedDict('RandomiseParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "fsl.randomise": randomise_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "fsl.randomise": randomise_outputs,
-    }.get(t)
-
-
 class RandomiseOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `randomise(...)`.
+    Output object returned when calling `RandomiseParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -127,7 +126,7 @@ def randomise_params(
     var_smooth: int | None = None,
     vox_p_values: bool = False,
     x_block_labels: InputPathType | None = None,
-) -> RandomiseParameters:
+) -> RandomiseParametersTagged:
     """
     Build parameters.
     
@@ -172,7 +171,7 @@ def randomise_params(
         Parameter dictionary
     """
     params = {
-        "@type": "fsl.randomise",
+        "@type": "fsl/randomise",
         "in_file": in_file,
         "demean": demean,
         "f_only": f_only,
@@ -239,97 +238,97 @@ def randomise_cargs(
     cargs.append("randomise")
     cargs.extend([
         "-i",
-        execution.input_file(params.get("in_file"))
+        execution.input_file(params.get("in_file", None))
     ])
-    if params.get("base_name") is not None:
+    if params.get("base_name", None) is not None:
         cargs.extend([
             "-o",
-            params.get("base_name")
+            params.get("base_name", None)
         ])
-    if params.get("design_mat") is not None:
+    if params.get("design_mat", None) is not None:
         cargs.extend([
             "-d",
-            execution.input_file(params.get("design_mat"))
+            execution.input_file(params.get("design_mat", None))
         ])
-    if params.get("tcon") is not None:
+    if params.get("tcon", None) is not None:
         cargs.extend([
             "-t",
-            execution.input_file(params.get("tcon"))
+            execution.input_file(params.get("tcon", None))
         ])
-    if params.get("c_thresh") is not None:
+    if params.get("c_thresh", None) is not None:
         cargs.extend([
             "-c",
-            str(params.get("c_thresh"))
+            str(params.get("c_thresh", None))
         ])
-    if params.get("cm_thresh") is not None:
+    if params.get("cm_thresh", None) is not None:
         cargs.extend([
             "-C",
-            str(params.get("cm_thresh"))
+            str(params.get("cm_thresh", None))
         ])
-    if params.get("demean"):
+    if params.get("demean", False):
         cargs.append("-D")
-    if params.get("f_c_thresh") is not None:
+    if params.get("f_c_thresh", None) is not None:
         cargs.extend([
             "-F",
-            str(params.get("f_c_thresh"))
+            str(params.get("f_c_thresh", None))
         ])
-    if params.get("f_cm_thresh") is not None:
+    if params.get("f_cm_thresh", None) is not None:
         cargs.extend([
             "-S",
-            str(params.get("f_cm_thresh"))
+            str(params.get("f_cm_thresh", None))
         ])
-    if params.get("f_only"):
+    if params.get("f_only", False):
         cargs.append("--fonly")
-    if params.get("fcon") is not None:
+    if params.get("fcon", None) is not None:
         cargs.extend([
             "-f",
-            execution.input_file(params.get("fcon"))
+            execution.input_file(params.get("fcon", None))
         ])
-    if params.get("mask") is not None:
+    if params.get("mask", None) is not None:
         cargs.extend([
             "-m",
-            execution.input_file(params.get("mask"))
+            execution.input_file(params.get("mask", None))
         ])
-    if params.get("num_perm") is not None:
+    if params.get("num_perm", None) is not None:
         cargs.extend([
             "-n",
-            str(params.get("num_perm"))
+            str(params.get("num_perm", None))
         ])
-    if params.get("one_sample_group_mean"):
+    if params.get("one_sample_group_mean", False):
         cargs.append("-1")
-    if params.get("output_type") is not None:
-        cargs.append(params.get("output_type"))
-    if params.get("p_vec_n_dist_files"):
+    if params.get("output_type", None) is not None:
+        cargs.append(params.get("output_type", None))
+    if params.get("p_vec_n_dist_files", False):
         cargs.append("-P")
-    if params.get("raw_stats_imgs"):
+    if params.get("raw_stats_imgs", False):
         cargs.append("-R")
-    if params.get("seed") is not None:
-        cargs.append("--seed=" + str(params.get("seed")))
-    if params.get("show_info_parallel_mode"):
+    if params.get("seed", None) is not None:
+        cargs.append("--seed=" + str(params.get("seed", None)))
+    if params.get("show_info_parallel_mode", False):
         cargs.append("-Q")
-    if params.get("show_total_perms"):
+    if params.get("show_total_perms", False):
         cargs.append("-q")
-    if params.get("tfce"):
+    if params.get("tfce", False):
         cargs.append("-T")
-    if params.get("tfce2D"):
+    if params.get("tfce2D", False):
         cargs.append("--T2")
-    if params.get("tfce_C") is not None:
-        cargs.append("--tfce_C=" + str(params.get("tfce_C")))
-    if params.get("tfce_E") is not None:
-        cargs.append("--tfce_E=" + str(params.get("tfce_E")))
-    if params.get("tfce_H") is not None:
-        cargs.append("--tfce_H=" + str(params.get("tfce_H")))
-    if params.get("var_smooth") is not None:
+    if params.get("tfce_C", None) is not None:
+        cargs.append("--tfce_C=" + str(params.get("tfce_C", None)))
+    if params.get("tfce_E", None) is not None:
+        cargs.append("--tfce_E=" + str(params.get("tfce_E", None)))
+    if params.get("tfce_H", None) is not None:
+        cargs.append("--tfce_H=" + str(params.get("tfce_H", None)))
+    if params.get("var_smooth", None) is not None:
         cargs.extend([
             "-v",
-            str(params.get("var_smooth"))
+            str(params.get("var_smooth", None))
         ])
-    if params.get("vox_p_values"):
+    if params.get("vox_p_values", False):
         cargs.append("-x")
-    if params.get("x_block_labels") is not None:
+    if params.get("x_block_labels", None) is not None:
         cargs.extend([
             "-e",
-            execution.input_file(params.get("x_block_labels"))
+            execution.input_file(params.get("x_block_labels", None))
         ])
     return cargs
 
@@ -506,7 +505,6 @@ def randomise(
 __all__ = [
     "RANDOMISE_METADATA",
     "RandomiseOutputs",
-    "RandomiseParameters",
     "randomise",
     "randomise_execute",
     "randomise_params",

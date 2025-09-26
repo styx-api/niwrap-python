@@ -14,7 +14,14 @@ FFTEST_METADATA = Metadata(
 
 
 FftestParameters = typing.TypedDict('FftestParameters', {
-    "@type": typing.Literal["afni.fftest"],
+    "@type": typing.NotRequired[typing.Literal["afni/fftest"]],
+    "length": float,
+    "num_tests": float,
+    "vector_size": float,
+    "quiet_mode": bool,
+})
+FftestParametersTagged = typing.TypedDict('FftestParametersTagged', {
+    "@type": typing.Literal["afni/fftest"],
     "length": float,
     "num_tests": float,
     "vector_size": float,
@@ -22,40 +29,9 @@ FftestParameters = typing.TypedDict('FftestParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "afni.fftest": fftest_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-    }.get(t)
-
-
 class FftestOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `fftest(...)`.
+    Output object returned when calling `FftestParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -66,7 +42,7 @@ def fftest_params(
     num_tests: float,
     vector_size: float,
     quiet_mode: bool = False,
-) -> FftestParameters:
+) -> FftestParametersTagged:
     """
     Build parameters.
     
@@ -79,7 +55,7 @@ def fftest_params(
         Parameter dictionary
     """
     params = {
-        "@type": "afni.fftest",
+        "@type": "afni/fftest",
         "length": length,
         "num_tests": num_tests,
         "vector_size": vector_size,
@@ -103,10 +79,10 @@ def fftest_cargs(
     """
     cargs = []
     cargs.append("fftest")
-    cargs.append(str(params.get("length")))
-    cargs.append(str(params.get("num_tests")))
-    cargs.append(str(params.get("vector_size")))
-    if params.get("quiet_mode"):
+    cargs.append(str(params.get("length", None)))
+    cargs.append(str(params.get("num_tests", None)))
+    cargs.append(str(params.get("vector_size", None)))
+    if params.get("quiet_mode", False):
         cargs.append("-q")
     return cargs
 
@@ -195,7 +171,6 @@ def fftest(
 __all__ = [
     "FFTEST_METADATA",
     "FftestOutputs",
-    "FftestParameters",
     "fftest",
     "fftest_execute",
     "fftest_params",

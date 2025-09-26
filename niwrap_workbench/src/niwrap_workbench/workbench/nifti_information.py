@@ -14,19 +14,34 @@ NIFTI_INFORMATION_METADATA = Metadata(
 
 
 NiftiInformationPrintHeaderParameters = typing.TypedDict('NiftiInformationPrintHeaderParameters', {
-    "@type": typing.Literal["workbench.nifti-information.print_header"],
+    "@type": typing.NotRequired[typing.Literal["print_header"]],
+    "opt_allow_truncated": bool,
+})
+NiftiInformationPrintHeaderParametersTagged = typing.TypedDict('NiftiInformationPrintHeaderParametersTagged', {
+    "@type": typing.Literal["print_header"],
     "opt_allow_truncated": bool,
 })
 
 
 NiftiInformationPrintXmlParameters = typing.TypedDict('NiftiInformationPrintXmlParameters', {
-    "@type": typing.Literal["workbench.nifti-information.print_xml"],
+    "@type": typing.NotRequired[typing.Literal["print_xml"]],
+    "opt_version_version": typing.NotRequired[str | None],
+})
+NiftiInformationPrintXmlParametersTagged = typing.TypedDict('NiftiInformationPrintXmlParametersTagged', {
+    "@type": typing.Literal["print_xml"],
     "opt_version_version": typing.NotRequired[str | None],
 })
 
 
 NiftiInformationParameters = typing.TypedDict('NiftiInformationParameters', {
-    "@type": typing.Literal["workbench.nifti-information"],
+    "@type": typing.NotRequired[typing.Literal["workbench/nifti-information"]],
+    "nifti_file": str,
+    "print_header": typing.NotRequired[NiftiInformationPrintHeaderParameters | None],
+    "opt_print_matrix": bool,
+    "print_xml": typing.NotRequired[NiftiInformationPrintXmlParameters | None],
+})
+NiftiInformationParametersTagged = typing.TypedDict('NiftiInformationParametersTagged', {
+    "@type": typing.Literal["workbench/nifti-information"],
     "nifti_file": str,
     "print_header": typing.NotRequired[NiftiInformationPrintHeaderParameters | None],
     "opt_print_matrix": bool,
@@ -34,42 +49,9 @@ NiftiInformationParameters = typing.TypedDict('NiftiInformationParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "workbench.nifti-information": nifti_information_cargs,
-        "workbench.nifti-information.print_header": nifti_information_print_header_cargs,
-        "workbench.nifti-information.print_xml": nifti_information_print_xml_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-    }.get(t)
-
-
 def nifti_information_print_header_params(
     opt_allow_truncated: bool = False,
-) -> NiftiInformationPrintHeaderParameters:
+) -> NiftiInformationPrintHeaderParametersTagged:
     """
     Build parameters.
     
@@ -79,7 +61,7 @@ def nifti_information_print_header_params(
         Parameter dictionary
     """
     params = {
-        "@type": "workbench.nifti-information.print_header",
+        "@type": "print_header",
         "opt_allow_truncated": opt_allow_truncated,
     }
     return params
@@ -100,14 +82,14 @@ def nifti_information_print_header_cargs(
     """
     cargs = []
     cargs.append("-print-header")
-    if params.get("opt_allow_truncated"):
+    if params.get("opt_allow_truncated", False):
         cargs.append("-allow-truncated")
     return cargs
 
 
 def nifti_information_print_xml_params(
     opt_version_version: str | None = None,
-) -> NiftiInformationPrintXmlParameters:
+) -> NiftiInformationPrintXmlParametersTagged:
     """
     Build parameters.
     
@@ -118,7 +100,7 @@ def nifti_information_print_xml_params(
         Parameter dictionary
     """
     params = {
-        "@type": "workbench.nifti-information.print_xml",
+        "@type": "print_xml",
     }
     if opt_version_version is not None:
         params["opt_version_version"] = opt_version_version
@@ -140,17 +122,17 @@ def nifti_information_print_xml_cargs(
     """
     cargs = []
     cargs.append("-print-xml")
-    if params.get("opt_version_version") is not None:
+    if params.get("opt_version_version", None) is not None:
         cargs.extend([
             "-version",
-            params.get("opt_version_version")
+            params.get("opt_version_version", None)
         ])
     return cargs
 
 
 class NiftiInformationOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `nifti_information(...)`.
+    Output object returned when calling `NiftiInformationParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -161,7 +143,7 @@ def nifti_information_params(
     print_header: NiftiInformationPrintHeaderParameters | None = None,
     opt_print_matrix: bool = False,
     print_xml: NiftiInformationPrintXmlParameters | None = None,
-) -> NiftiInformationParameters:
+) -> NiftiInformationParametersTagged:
     """
     Build parameters.
     
@@ -174,7 +156,7 @@ def nifti_information_params(
         Parameter dictionary
     """
     params = {
-        "@type": "workbench.nifti-information",
+        "@type": "workbench/nifti-information",
         "nifti_file": nifti_file,
         "opt_print_matrix": opt_print_matrix,
     }
@@ -201,13 +183,13 @@ def nifti_information_cargs(
     cargs = []
     cargs.append("wb_command")
     cargs.append("-nifti-information")
-    cargs.append(params.get("nifti_file"))
-    if params.get("print_header") is not None:
-        cargs.extend(dyn_cargs(params.get("print_header")["@type"])(params.get("print_header"), execution))
-    if params.get("opt_print_matrix"):
+    cargs.append(params.get("nifti_file", None))
+    if params.get("print_header", None) is not None:
+        cargs.extend(nifti_information_print_header_cargs(params.get("print_header", None), execution))
+    if params.get("opt_print_matrix", False):
         cargs.append("-print-matrix")
-    if params.get("print_xml") is not None:
-        cargs.extend(dyn_cargs(params.get("print_xml")["@type"])(params.get("print_xml"), execution))
+    if params.get("print_xml", None) is not None:
+        cargs.extend(nifti_information_print_xml_cargs(params.get("print_xml", None), execution))
     return cargs
 
 
@@ -299,9 +281,6 @@ def nifti_information(
 __all__ = [
     "NIFTI_INFORMATION_METADATA",
     "NiftiInformationOutputs",
-    "NiftiInformationParameters",
-    "NiftiInformationPrintHeaderParameters",
-    "NiftiInformationPrintXmlParameters",
     "nifti_information",
     "nifti_information_execute",
     "nifti_information_params",

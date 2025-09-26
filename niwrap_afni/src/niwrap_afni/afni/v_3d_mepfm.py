@@ -14,7 +14,15 @@ V_3D_MEPFM_METADATA = Metadata(
 
 
 V3dMepfmParameters = typing.TypedDict('V3dMepfmParameters', {
-    "@type": typing.Literal["afni.3dMEPFM"],
+    "@type": typing.NotRequired[typing.Literal["afni/3dMEPFM"]],
+    "input_files": list[str],
+    "dbgArgs": bool,
+    "mask": typing.NotRequired[InputPathType | None],
+    "hrf_model": typing.NotRequired[str | None],
+    "verbosity": typing.NotRequired[int | None],
+})
+V3dMepfmParametersTagged = typing.TypedDict('V3dMepfmParametersTagged', {
+    "@type": typing.Literal["afni/3dMEPFM"],
     "input_files": list[str],
     "dbgArgs": bool,
     "mask": typing.NotRequired[InputPathType | None],
@@ -23,41 +31,9 @@ V3dMepfmParameters = typing.TypedDict('V3dMepfmParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "afni.3dMEPFM": v_3d_mepfm_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "afni.3dMEPFM": v_3d_mepfm_outputs,
-    }.get(t)
-
-
 class V3dMepfmOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `v_3d_mepfm(...)`.
+    Output object returned when calling `V3dMepfmParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -84,7 +60,7 @@ def v_3d_mepfm_params(
     mask: InputPathType | None = None,
     hrf_model: str | None = None,
     verbosity: int | None = None,
-) -> V3dMepfmParameters:
+) -> V3dMepfmParametersTagged:
     """
     Build parameters.
     
@@ -101,7 +77,7 @@ def v_3d_mepfm_params(
         Parameter dictionary
     """
     params = {
-        "@type": "afni.3dMEPFM",
+        "@type": "afni/3dMEPFM",
         "input_files": input_files,
         "dbgArgs": dbg_args,
     }
@@ -131,24 +107,24 @@ def v_3d_mepfm_cargs(
     cargs.append("3dMEPFM")
     cargs.extend([
         "-input",
-        *params.get("input_files")
+        *params.get("input_files", None)
     ])
-    if params.get("dbgArgs"):
+    if params.get("dbgArgs", False):
         cargs.append("-dbgArgs")
-    if params.get("mask") is not None:
+    if params.get("mask", None) is not None:
         cargs.extend([
             "-mask",
-            execution.input_file(params.get("mask"))
+            execution.input_file(params.get("mask", None))
         ])
-    if params.get("hrf_model") is not None:
+    if params.get("hrf_model", None) is not None:
         cargs.extend([
             "-hrf",
-            params.get("hrf_model")
+            params.get("hrf_model", None)
         ])
-    if params.get("verbosity") is not None:
+    if params.get("verbosity", None) is not None:
         cargs.extend([
             "-verb",
-            str(params.get("verbosity"))
+            str(params.get("verbosity", None))
         ])
     return cargs
 
@@ -252,7 +228,6 @@ def v_3d_mepfm(
 
 __all__ = [
     "V3dMepfmOutputs",
-    "V3dMepfmParameters",
     "V_3D_MEPFM_METADATA",
     "v_3d_mepfm",
     "v_3d_mepfm_execute",

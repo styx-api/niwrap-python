@@ -14,14 +14,39 @@ FOD2DEC_METADATA = Metadata(
 
 
 Fod2decConfigParameters = typing.TypedDict('Fod2decConfigParameters', {
-    "@type": typing.Literal["mrtrix.fod2dec.config"],
+    "@type": typing.NotRequired[typing.Literal["config"]],
+    "key": str,
+    "value": str,
+})
+Fod2decConfigParametersTagged = typing.TypedDict('Fod2decConfigParametersTagged', {
+    "@type": typing.Literal["config"],
     "key": str,
     "value": str,
 })
 
 
 Fod2decParameters = typing.TypedDict('Fod2decParameters', {
-    "@type": typing.Literal["mrtrix.fod2dec"],
+    "@type": typing.NotRequired[typing.Literal["mrtrix/fod2dec"]],
+    "mask": typing.NotRequired[InputPathType | None],
+    "contrast": typing.NotRequired[InputPathType | None],
+    "lum": bool,
+    "lum_coefs": typing.NotRequired[list[float] | None],
+    "lum_gamma": typing.NotRequired[float | None],
+    "threshold": typing.NotRequired[float | None],
+    "no_weight": bool,
+    "info": bool,
+    "quiet": bool,
+    "debug": bool,
+    "force": bool,
+    "nthreads": typing.NotRequired[int | None],
+    "config": typing.NotRequired[list[Fod2decConfigParameters] | None],
+    "help": bool,
+    "version": bool,
+    "input": InputPathType,
+    "output": str,
+})
+Fod2decParametersTagged = typing.TypedDict('Fod2decParametersTagged', {
+    "@type": typing.Literal["mrtrix/fod2dec"],
     "mask": typing.NotRequired[InputPathType | None],
     "contrast": typing.NotRequired[InputPathType | None],
     "lum": bool,
@@ -42,43 +67,10 @@ Fod2decParameters = typing.TypedDict('Fod2decParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "mrtrix.fod2dec": fod2dec_cargs,
-        "mrtrix.fod2dec.config": fod2dec_config_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "mrtrix.fod2dec": fod2dec_outputs,
-    }.get(t)
-
-
 def fod2dec_config_params(
     key: str,
     value: str,
-) -> Fod2decConfigParameters:
+) -> Fod2decConfigParametersTagged:
     """
     Build parameters.
     
@@ -89,7 +81,7 @@ def fod2dec_config_params(
         Parameter dictionary
     """
     params = {
-        "@type": "mrtrix.fod2dec.config",
+        "@type": "config",
         "key": key,
         "value": value,
     }
@@ -111,14 +103,14 @@ def fod2dec_config_cargs(
     """
     cargs = []
     cargs.append("-config")
-    cargs.append(params.get("key"))
-    cargs.append(params.get("value"))
+    cargs.append(params.get("key", None))
+    cargs.append(params.get("value", None))
     return cargs
 
 
 class Fod2decOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `fod2dec(...)`.
+    Output object returned when calling `Fod2decParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -144,7 +136,7 @@ def fod2dec_params(
     config: list[Fod2decConfigParameters] | None = None,
     help_: bool = False,
     version: bool = False,
-) -> Fod2decParameters:
+) -> Fod2decParametersTagged:
     """
     Build parameters.
     
@@ -191,7 +183,7 @@ def fod2dec_params(
         Parameter dictionary
     """
     params = {
-        "@type": "mrtrix.fod2dec",
+        "@type": "mrtrix/fod2dec",
         "lum": lum,
         "no_weight": no_weight,
         "info": info,
@@ -235,56 +227,56 @@ def fod2dec_cargs(
     """
     cargs = []
     cargs.append("fod2dec")
-    if params.get("mask") is not None:
+    if params.get("mask", None) is not None:
         cargs.extend([
             "-mask",
-            execution.input_file(params.get("mask"))
+            execution.input_file(params.get("mask", None))
         ])
-    if params.get("contrast") is not None:
+    if params.get("contrast", None) is not None:
         cargs.extend([
             "-contrast",
-            execution.input_file(params.get("contrast"))
+            execution.input_file(params.get("contrast", None))
         ])
-    if params.get("lum"):
+    if params.get("lum", False):
         cargs.append("-lum")
-    if params.get("lum_coefs") is not None:
+    if params.get("lum_coefs", None) is not None:
         cargs.extend([
             "-lum_coefs",
-            *map(str, params.get("lum_coefs"))
+            *map(str, params.get("lum_coefs", None))
         ])
-    if params.get("lum_gamma") is not None:
+    if params.get("lum_gamma", None) is not None:
         cargs.extend([
             "-lum_gamma",
-            str(params.get("lum_gamma"))
+            str(params.get("lum_gamma", None))
         ])
-    if params.get("threshold") is not None:
+    if params.get("threshold", None) is not None:
         cargs.extend([
             "-threshold",
-            str(params.get("threshold"))
+            str(params.get("threshold", None))
         ])
-    if params.get("no_weight"):
+    if params.get("no_weight", False):
         cargs.append("-no_weight")
-    if params.get("info"):
+    if params.get("info", False):
         cargs.append("-info")
-    if params.get("quiet"):
+    if params.get("quiet", False):
         cargs.append("-quiet")
-    if params.get("debug"):
+    if params.get("debug", False):
         cargs.append("-debug")
-    if params.get("force"):
+    if params.get("force", False):
         cargs.append("-force")
-    if params.get("nthreads") is not None:
+    if params.get("nthreads", None) is not None:
         cargs.extend([
             "-nthreads",
-            str(params.get("nthreads"))
+            str(params.get("nthreads", None))
         ])
-    if params.get("config") is not None:
-        cargs.extend([a for c in [dyn_cargs(s["@type"])(s, execution) for s in params.get("config")] for a in c])
-    if params.get("help"):
+    if params.get("config", None) is not None:
+        cargs.extend([a for c in [fod2dec_config_cargs(s, execution) for s in params.get("config", None)] for a in c])
+    if params.get("help", False):
         cargs.append("-help")
-    if params.get("version"):
+    if params.get("version", False):
         cargs.append("-version")
-    cargs.append(execution.input_file(params.get("input")))
-    cargs.append(params.get("output"))
+    cargs.append(execution.input_file(params.get("input", None)))
+    cargs.append(params.get("output", None))
     return cargs
 
 
@@ -303,7 +295,7 @@ def fod2dec_outputs(
     """
     ret = Fod2decOutputs(
         root=execution.output_file("."),
-        output=execution.output_file(params.get("output")),
+        output=execution.output_file(params.get("output", None)),
     )
     return ret
 
@@ -464,9 +456,7 @@ def fod2dec(
 
 __all__ = [
     "FOD2DEC_METADATA",
-    "Fod2decConfigParameters",
     "Fod2decOutputs",
-    "Fod2decParameters",
     "fod2dec",
     "fod2dec_config_params",
     "fod2dec_execute",

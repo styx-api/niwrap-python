@@ -14,7 +14,19 @@ MRIS_INFLATE_METADATA = Metadata(
 
 
 MrisInflateParameters = typing.TypedDict('MrisInflateParameters', {
-    "@type": typing.Literal["freesurfer.mris_inflate"],
+    "@type": typing.NotRequired[typing.Literal["freesurfer/mris_inflate"]],
+    "input_surface": InputPathType,
+    "output_surface": str,
+    "max_iterations": typing.NotRequired[float | None],
+    "snapshot_interval": typing.NotRequired[float | None],
+    "dist_coefficient": typing.NotRequired[float | None],
+    "no_save_sulc": bool,
+    "sulcname": typing.NotRequired[str | None],
+    "mm_flag": bool,
+    "scale_flag": typing.NotRequired[float | None],
+})
+MrisInflateParametersTagged = typing.TypedDict('MrisInflateParametersTagged', {
+    "@type": typing.Literal["freesurfer/mris_inflate"],
     "input_surface": InputPathType,
     "output_surface": str,
     "max_iterations": typing.NotRequired[float | None],
@@ -27,41 +39,9 @@ MrisInflateParameters = typing.TypedDict('MrisInflateParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "freesurfer.mris_inflate": mris_inflate_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "freesurfer.mris_inflate": mris_inflate_outputs,
-    }.get(t)
-
-
 class MrisInflateOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `mris_inflate(...)`.
+    Output object returned when calling `MrisInflateParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -79,7 +59,7 @@ def mris_inflate_params(
     sulcname: str | None = None,
     mm_flag: bool = False,
     scale_flag: float | None = None,
-) -> MrisInflateParameters:
+) -> MrisInflateParametersTagged:
     """
     Build parameters.
     
@@ -100,7 +80,7 @@ def mris_inflate_params(
         Parameter dictionary
     """
     params = {
-        "@type": "freesurfer.mris_inflate",
+        "@type": "freesurfer/mris_inflate",
         "input_surface": input_surface,
         "output_surface": output_surface,
         "no_save_sulc": no_save_sulc,
@@ -134,36 +114,36 @@ def mris_inflate_cargs(
     """
     cargs = []
     cargs.append("mris_inflate")
-    cargs.append(execution.input_file(params.get("input_surface")))
-    cargs.append(params.get("output_surface"))
-    if params.get("max_iterations") is not None:
+    cargs.append(execution.input_file(params.get("input_surface", None)))
+    cargs.append(params.get("output_surface", None))
+    if params.get("max_iterations", None) is not None:
         cargs.extend([
             "-n",
-            str(params.get("max_iterations"))
+            str(params.get("max_iterations", None))
         ])
-    if params.get("snapshot_interval") is not None:
+    if params.get("snapshot_interval", None) is not None:
         cargs.extend([
             "-w",
-            str(params.get("snapshot_interval"))
+            str(params.get("snapshot_interval", None))
         ])
-    if params.get("dist_coefficient") is not None:
+    if params.get("dist_coefficient", None) is not None:
         cargs.extend([
             "-dist",
-            str(params.get("dist_coefficient"))
+            str(params.get("dist_coefficient", None))
         ])
-    if params.get("no_save_sulc"):
+    if params.get("no_save_sulc", False):
         cargs.append("-no-save-sulc")
-    if params.get("sulcname") is not None:
+    if params.get("sulcname", None) is not None:
         cargs.extend([
             "-sulc",
-            params.get("sulcname")
+            params.get("sulcname", None)
         ])
-    if params.get("mm_flag"):
+    if params.get("mm_flag", False):
         cargs.append("-mm")
-    if params.get("scale_flag") is not None:
+    if params.get("scale_flag", None) is not None:
         cargs.extend([
             "-scale",
-            str(params.get("scale_flag"))
+            str(params.get("scale_flag", None))
         ])
     return cargs
 
@@ -183,7 +163,7 @@ def mris_inflate_outputs(
     """
     ret = MrisInflateOutputs(
         root=execution.output_file("."),
-        output_surface_file=execution.output_file(params.get("output_surface")),
+        output_surface_file=execution.output_file(params.get("output_surface", None)),
     )
     return ret
 
@@ -271,7 +251,6 @@ def mris_inflate(
 __all__ = [
     "MRIS_INFLATE_METADATA",
     "MrisInflateOutputs",
-    "MrisInflateParameters",
     "mris_inflate",
     "mris_inflate_execute",
     "mris_inflate_params",

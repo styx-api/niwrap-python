@@ -14,7 +14,18 @@ MRIS_REFINE_SURFACES_METADATA = Metadata(
 
 
 MrisRefineSurfacesParameters = typing.TypedDict('MrisRefineSurfacesParameters', {
-    "@type": typing.Literal["freesurfer.mris_refine_surfaces"],
+    "@type": typing.NotRequired[typing.Literal["freesurfer/mris_refine_surfaces"]],
+    "subject_name": str,
+    "hemi": str,
+    "hires_volume": str,
+    "label_file": str,
+    "low_to_hires_xfm": typing.NotRequired[str | None],
+    "sdir": typing.NotRequired[str | None],
+    "use_mgz": bool,
+    "suffix": typing.NotRequired[str | None],
+})
+MrisRefineSurfacesParametersTagged = typing.TypedDict('MrisRefineSurfacesParametersTagged', {
+    "@type": typing.Literal["freesurfer/mris_refine_surfaces"],
     "subject_name": str,
     "hemi": str,
     "hires_volume": str,
@@ -26,41 +37,9 @@ MrisRefineSurfacesParameters = typing.TypedDict('MrisRefineSurfacesParameters', 
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "freesurfer.mris_refine_surfaces": mris_refine_surfaces_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "freesurfer.mris_refine_surfaces": mris_refine_surfaces_outputs,
-    }.get(t)
-
-
 class MrisRefineSurfacesOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `mris_refine_surfaces(...)`.
+    Output object returned when calling `MrisRefineSurfacesParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -79,7 +58,7 @@ def mris_refine_surfaces_params(
     sdir: str | None = None,
     use_mgz: bool = False,
     suffix: str | None = None,
-) -> MrisRefineSurfacesParameters:
+) -> MrisRefineSurfacesParametersTagged:
     """
     Build parameters.
     
@@ -97,7 +76,7 @@ def mris_refine_surfaces_params(
         Parameter dictionary
     """
     params = {
-        "@type": "freesurfer.mris_refine_surfaces",
+        "@type": "freesurfer/mris_refine_surfaces",
         "subject_name": subject_name,
         "hemi": hemi,
         "hires_volume": hires_volume,
@@ -128,23 +107,23 @@ def mris_refine_surfaces_cargs(
     """
     cargs = []
     cargs.append("mris_refine_surfaces")
-    cargs.append(params.get("subject_name"))
-    cargs.append(params.get("hemi"))
-    cargs.append(params.get("hires_volume"))
-    cargs.append(params.get("label_file"))
-    if params.get("low_to_hires_xfm") is not None:
-        cargs.append(params.get("low_to_hires_xfm"))
-    if params.get("sdir") is not None:
+    cargs.append(params.get("subject_name", None))
+    cargs.append(params.get("hemi", None))
+    cargs.append(params.get("hires_volume", None))
+    cargs.append(params.get("label_file", None))
+    if params.get("low_to_hires_xfm", None) is not None:
+        cargs.append(params.get("low_to_hires_xfm", None))
+    if params.get("sdir", None) is not None:
         cargs.extend([
             "-sdir",
-            params.get("sdir")
+            params.get("sdir", None)
         ])
-    if params.get("use_mgz"):
+    if params.get("use_mgz", False):
         cargs.append("-mgz")
-    if params.get("suffix") is not None:
+    if params.get("suffix", None) is not None:
         cargs.extend([
             "-suffix",
-            params.get("suffix")
+            params.get("suffix", None)
         ])
     return cargs
 
@@ -164,8 +143,8 @@ def mris_refine_surfaces_outputs(
     """
     ret = MrisRefineSurfacesOutputs(
         root=execution.output_file("."),
-        pial_surface=execution.output_file("$(SUBJECTS_DIR)/" + params.get("subject_name") + "/surf/" + params.get("hemi") + ".pialhires"),
-        white_surface=execution.output_file("$(SUBJECTS_DIR)/" + params.get("subject_name") + "/surf/" + params.get("hemi") + ".whitehires"),
+        pial_surface=execution.output_file("$(SUBJECTS_DIR)/" + params.get("subject_name", None) + "/surf/" + params.get("hemi", None) + ".pialhires"),
+        white_surface=execution.output_file("$(SUBJECTS_DIR)/" + params.get("subject_name", None) + "/surf/" + params.get("hemi", None) + ".whitehires"),
     )
     return ret
 
@@ -248,7 +227,6 @@ def mris_refine_surfaces(
 __all__ = [
     "MRIS_REFINE_SURFACES_METADATA",
     "MrisRefineSurfacesOutputs",
-    "MrisRefineSurfacesParameters",
     "mris_refine_surfaces",
     "mris_refine_surfaces_execute",
     "mris_refine_surfaces_params",

@@ -14,45 +14,18 @@ MORPH_ONLY_SUBJECT_METADATA = Metadata(
 
 
 MorphOnlySubjectParameters = typing.TypedDict('MorphOnlySubjectParameters', {
-    "@type": typing.Literal["freesurfer.morph_only_subject"],
+    "@type": typing.NotRequired[typing.Literal["freesurfer/morph_only_subject"]],
+    "placeholder_input": typing.NotRequired[str | None],
+})
+MorphOnlySubjectParametersTagged = typing.TypedDict('MorphOnlySubjectParametersTagged', {
+    "@type": typing.Literal["freesurfer/morph_only_subject"],
     "placeholder_input": typing.NotRequired[str | None],
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "freesurfer.morph_only_subject": morph_only_subject_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-    }.get(t)
-
-
 class MorphOnlySubjectOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `morph_only_subject(...)`.
+    Output object returned when calling `MorphOnlySubjectParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -60,7 +33,7 @@ class MorphOnlySubjectOutputs(typing.NamedTuple):
 
 def morph_only_subject_params(
     placeholder_input: str | None = None,
-) -> MorphOnlySubjectParameters:
+) -> MorphOnlySubjectParametersTagged:
     """
     Build parameters.
     
@@ -71,7 +44,7 @@ def morph_only_subject_params(
         Parameter dictionary
     """
     params = {
-        "@type": "freesurfer.morph_only_subject",
+        "@type": "freesurfer/morph_only_subject",
     }
     if placeholder_input is not None:
         params["placeholder_input"] = placeholder_input
@@ -93,8 +66,8 @@ def morph_only_subject_cargs(
     """
     cargs = []
     cargs.append("morph_only_subject")
-    if params.get("placeholder_input") is not None:
-        cargs.append(params.get("placeholder_input"))
+    if params.get("placeholder_input", None) is not None:
+        cargs.append(params.get("placeholder_input", None))
     return cargs
 
 
@@ -176,7 +149,6 @@ def morph_only_subject(
 __all__ = [
     "MORPH_ONLY_SUBJECT_METADATA",
     "MorphOnlySubjectOutputs",
-    "MorphOnlySubjectParameters",
     "morph_only_subject",
     "morph_only_subject_execute",
     "morph_only_subject_params",

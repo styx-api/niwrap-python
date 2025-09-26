@@ -14,7 +14,14 @@ SURFACE_TO_SURFACE_3D_DISTANCE_METADATA = Metadata(
 
 
 SurfaceToSurface3dDistanceParameters = typing.TypedDict('SurfaceToSurface3dDistanceParameters', {
-    "@type": typing.Literal["workbench.surface-to-surface-3d-distance"],
+    "@type": typing.NotRequired[typing.Literal["workbench/surface-to-surface-3d-distance"]],
+    "surface_comp": InputPathType,
+    "surface_ref": InputPathType,
+    "dists_out": str,
+    "opt_vectors_vectors_out": typing.NotRequired[str | None],
+})
+SurfaceToSurface3dDistanceParametersTagged = typing.TypedDict('SurfaceToSurface3dDistanceParametersTagged', {
+    "@type": typing.Literal["workbench/surface-to-surface-3d-distance"],
     "surface_comp": InputPathType,
     "surface_ref": InputPathType,
     "dists_out": str,
@@ -22,41 +29,9 @@ SurfaceToSurface3dDistanceParameters = typing.TypedDict('SurfaceToSurface3dDista
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "workbench.surface-to-surface-3d-distance": surface_to_surface_3d_distance_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "workbench.surface-to-surface-3d-distance": surface_to_surface_3d_distance_outputs,
-    }.get(t)
-
-
 class SurfaceToSurface3dDistanceOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `surface_to_surface_3d_distance(...)`.
+    Output object returned when calling `SurfaceToSurface3dDistanceParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -71,7 +46,7 @@ def surface_to_surface_3d_distance_params(
     surface_ref: InputPathType,
     dists_out: str,
     opt_vectors_vectors_out: str | None = None,
-) -> SurfaceToSurface3dDistanceParameters:
+) -> SurfaceToSurface3dDistanceParametersTagged:
     """
     Build parameters.
     
@@ -85,7 +60,7 @@ def surface_to_surface_3d_distance_params(
         Parameter dictionary
     """
     params = {
-        "@type": "workbench.surface-to-surface-3d-distance",
+        "@type": "workbench/surface-to-surface-3d-distance",
         "surface_comp": surface_comp,
         "surface_ref": surface_ref,
         "dists_out": dists_out,
@@ -111,13 +86,13 @@ def surface_to_surface_3d_distance_cargs(
     cargs = []
     cargs.append("wb_command")
     cargs.append("-surface-to-surface-3d-distance")
-    cargs.append(execution.input_file(params.get("surface_comp")))
-    cargs.append(execution.input_file(params.get("surface_ref")))
-    cargs.append(params.get("dists_out"))
-    if params.get("opt_vectors_vectors_out") is not None:
+    cargs.append(execution.input_file(params.get("surface_comp", None)))
+    cargs.append(execution.input_file(params.get("surface_ref", None)))
+    cargs.append(params.get("dists_out", None))
+    if params.get("opt_vectors_vectors_out", None) is not None:
         cargs.extend([
             "-vectors",
-            params.get("opt_vectors_vectors_out")
+            params.get("opt_vectors_vectors_out", None)
         ])
     return cargs
 
@@ -137,8 +112,8 @@ def surface_to_surface_3d_distance_outputs(
     """
     ret = SurfaceToSurface3dDistanceOutputs(
         root=execution.output_file("."),
-        dists_out=execution.output_file(params.get("dists_out")),
-        opt_vectors_vectors_out=execution.output_file(params.get("opt_vectors_vectors_out")) if (params.get("opt_vectors_vectors_out") is not None) else None,
+        dists_out=execution.output_file(params.get("dists_out", None)),
+        opt_vectors_vectors_out=execution.output_file(params.get("opt_vectors_vectors_out", None)) if (params.get("opt_vectors_vectors_out") is not None) else None,
     )
     return ret
 
@@ -217,7 +192,6 @@ def surface_to_surface_3d_distance(
 __all__ = [
     "SURFACE_TO_SURFACE_3D_DISTANCE_METADATA",
     "SurfaceToSurface3dDistanceOutputs",
-    "SurfaceToSurface3dDistanceParameters",
     "surface_to_surface_3d_distance",
     "surface_to_surface_3d_distance_execute",
     "surface_to_surface_3d_distance_params",

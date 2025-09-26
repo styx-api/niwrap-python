@@ -14,7 +14,13 @@ CONVERT_MATRIX4_TO_MATRIX2_METADATA = Metadata(
 
 
 ConvertMatrix4ToMatrix2IndividualFibersParameters = typing.TypedDict('ConvertMatrix4ToMatrix2IndividualFibersParameters', {
-    "@type": typing.Literal["workbench.convert-matrix4-to-matrix2.individual_fibers"],
+    "@type": typing.NotRequired[typing.Literal["individual_fibers"]],
+    "fiber_1": str,
+    "fiber_2": str,
+    "fiber_3": str,
+})
+ConvertMatrix4ToMatrix2IndividualFibersParametersTagged = typing.TypedDict('ConvertMatrix4ToMatrix2IndividualFibersParametersTagged', {
+    "@type": typing.Literal["individual_fibers"],
     "fiber_1": str,
     "fiber_2": str,
     "fiber_3": str,
@@ -22,46 +28,19 @@ ConvertMatrix4ToMatrix2IndividualFibersParameters = typing.TypedDict('ConvertMat
 
 
 ConvertMatrix4ToMatrix2Parameters = typing.TypedDict('ConvertMatrix4ToMatrix2Parameters', {
-    "@type": typing.Literal["workbench.convert-matrix4-to-matrix2"],
+    "@type": typing.NotRequired[typing.Literal["workbench/convert-matrix4-to-matrix2"]],
     "matrix4_wbsparse": str,
     "counts_out": str,
     "opt_distances_distance_out": typing.NotRequired[str | None],
     "individual_fibers": typing.NotRequired[ConvertMatrix4ToMatrix2IndividualFibersParameters | None],
 })
-
-
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "workbench.convert-matrix4-to-matrix2": convert_matrix4_to_matrix2_cargs,
-        "workbench.convert-matrix4-to-matrix2.individual_fibers": convert_matrix4_to_matrix2_individual_fibers_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "workbench.convert-matrix4-to-matrix2": convert_matrix4_to_matrix2_outputs,
-        "workbench.convert-matrix4-to-matrix2.individual_fibers": convert_matrix4_to_matrix2_individual_fibers_outputs,
-    }.get(t)
+ConvertMatrix4ToMatrix2ParametersTagged = typing.TypedDict('ConvertMatrix4ToMatrix2ParametersTagged', {
+    "@type": typing.Literal["workbench/convert-matrix4-to-matrix2"],
+    "matrix4_wbsparse": str,
+    "counts_out": str,
+    "opt_distances_distance_out": typing.NotRequired[str | None],
+    "individual_fibers": typing.NotRequired[ConvertMatrix4ToMatrix2IndividualFibersParameters | None],
+})
 
 
 class ConvertMatrix4ToMatrix2IndividualFibersOutputs(typing.NamedTuple):
@@ -82,7 +61,7 @@ def convert_matrix4_to_matrix2_individual_fibers_params(
     fiber_1: str,
     fiber_2: str,
     fiber_3: str,
-) -> ConvertMatrix4ToMatrix2IndividualFibersParameters:
+) -> ConvertMatrix4ToMatrix2IndividualFibersParametersTagged:
     """
     Build parameters.
     
@@ -94,7 +73,7 @@ def convert_matrix4_to_matrix2_individual_fibers_params(
         Parameter dictionary
     """
     params = {
-        "@type": "workbench.convert-matrix4-to-matrix2.individual_fibers",
+        "@type": "individual_fibers",
         "fiber_1": fiber_1,
         "fiber_2": fiber_2,
         "fiber_3": fiber_3,
@@ -117,9 +96,9 @@ def convert_matrix4_to_matrix2_individual_fibers_cargs(
     """
     cargs = []
     cargs.append("-individual-fibers")
-    cargs.append(params.get("fiber_1"))
-    cargs.append(params.get("fiber_2"))
-    cargs.append(params.get("fiber_3"))
+    cargs.append(params.get("fiber_1", None))
+    cargs.append(params.get("fiber_2", None))
+    cargs.append(params.get("fiber_3", None))
     return cargs
 
 
@@ -138,16 +117,16 @@ def convert_matrix4_to_matrix2_individual_fibers_outputs(
     """
     ret = ConvertMatrix4ToMatrix2IndividualFibersOutputs(
         root=execution.output_file("."),
-        fiber_1=execution.output_file(params.get("fiber_1")),
-        fiber_2=execution.output_file(params.get("fiber_2")),
-        fiber_3=execution.output_file(params.get("fiber_3")),
+        fiber_1=execution.output_file(params.get("fiber_1", None)),
+        fiber_2=execution.output_file(params.get("fiber_2", None)),
+        fiber_3=execution.output_file(params.get("fiber_3", None)),
     )
     return ret
 
 
 class ConvertMatrix4ToMatrix2Outputs(typing.NamedTuple):
     """
-    Output object returned when calling `convert_matrix4_to_matrix2(...)`.
+    Output object returned when calling `ConvertMatrix4ToMatrix2Parameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -164,7 +143,7 @@ def convert_matrix4_to_matrix2_params(
     counts_out: str,
     opt_distances_distance_out: str | None = None,
     individual_fibers: ConvertMatrix4ToMatrix2IndividualFibersParameters | None = None,
-) -> ConvertMatrix4ToMatrix2Parameters:
+) -> ConvertMatrix4ToMatrix2ParametersTagged:
     """
     Build parameters.
     
@@ -178,7 +157,7 @@ def convert_matrix4_to_matrix2_params(
         Parameter dictionary
     """
     params = {
-        "@type": "workbench.convert-matrix4-to-matrix2",
+        "@type": "workbench/convert-matrix4-to-matrix2",
         "matrix4_wbsparse": matrix4_wbsparse,
         "counts_out": counts_out,
     }
@@ -205,15 +184,15 @@ def convert_matrix4_to_matrix2_cargs(
     cargs = []
     cargs.append("wb_command")
     cargs.append("-convert-matrix4-to-matrix2")
-    cargs.append(params.get("matrix4_wbsparse"))
-    cargs.append(params.get("counts_out"))
-    if params.get("opt_distances_distance_out") is not None:
+    cargs.append(params.get("matrix4_wbsparse", None))
+    cargs.append(params.get("counts_out", None))
+    if params.get("opt_distances_distance_out", None) is not None:
         cargs.extend([
             "-distances",
-            params.get("opt_distances_distance_out")
+            params.get("opt_distances_distance_out", None)
         ])
-    if params.get("individual_fibers") is not None:
-        cargs.extend(dyn_cargs(params.get("individual_fibers")["@type"])(params.get("individual_fibers"), execution))
+    if params.get("individual_fibers", None) is not None:
+        cargs.extend(convert_matrix4_to_matrix2_individual_fibers_cargs(params.get("individual_fibers", None), execution))
     return cargs
 
 
@@ -232,9 +211,9 @@ def convert_matrix4_to_matrix2_outputs(
     """
     ret = ConvertMatrix4ToMatrix2Outputs(
         root=execution.output_file("."),
-        counts_out=execution.output_file(params.get("counts_out")),
-        opt_distances_distance_out=execution.output_file(params.get("opt_distances_distance_out")) if (params.get("opt_distances_distance_out") is not None) else None,
-        individual_fibers=dyn_outputs(params.get("individual_fibers")["@type"])(params.get("individual_fibers"), execution) if params.get("individual_fibers") else None,
+        counts_out=execution.output_file(params.get("counts_out", None)),
+        opt_distances_distance_out=execution.output_file(params.get("opt_distances_distance_out", None)) if (params.get("opt_distances_distance_out") is not None) else None,
+        individual_fibers=convert_matrix4_to_matrix2_individual_fibers_outputs(params.get("individual_fibers"), execution) if params.get("individual_fibers") else None,
     )
     return ret
 
@@ -317,9 +296,7 @@ def convert_matrix4_to_matrix2(
 __all__ = [
     "CONVERT_MATRIX4_TO_MATRIX2_METADATA",
     "ConvertMatrix4ToMatrix2IndividualFibersOutputs",
-    "ConvertMatrix4ToMatrix2IndividualFibersParameters",
     "ConvertMatrix4ToMatrix2Outputs",
-    "ConvertMatrix4ToMatrix2Parameters",
     "convert_matrix4_to_matrix2",
     "convert_matrix4_to_matrix2_execute",
     "convert_matrix4_to_matrix2_individual_fibers_params",

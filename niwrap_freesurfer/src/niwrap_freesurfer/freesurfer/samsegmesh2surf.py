@@ -14,7 +14,16 @@ SAMSEGMESH2SURF_METADATA = Metadata(
 
 
 Samsegmesh2surfParameters = typing.TypedDict('Samsegmesh2surfParameters', {
-    "@type": typing.Literal["freesurfer.samsegmesh2surf"],
+    "@type": typing.NotRequired[typing.Literal["freesurfer/samsegmesh2surf"]],
+    "atlas_mesh": InputPathType,
+    "template": typing.NotRequired[InputPathType | None],
+    "lta_transform": typing.NotRequired[InputPathType | None],
+    "output_surface": typing.NotRequired[str | None],
+    "output_priors": typing.NotRequired[str | None],
+    "invert_flag": bool,
+})
+Samsegmesh2surfParametersTagged = typing.TypedDict('Samsegmesh2surfParametersTagged', {
+    "@type": typing.Literal["freesurfer/samsegmesh2surf"],
     "atlas_mesh": InputPathType,
     "template": typing.NotRequired[InputPathType | None],
     "lta_transform": typing.NotRequired[InputPathType | None],
@@ -24,41 +33,9 @@ Samsegmesh2surfParameters = typing.TypedDict('Samsegmesh2surfParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "freesurfer.samsegmesh2surf": samsegmesh2surf_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "freesurfer.samsegmesh2surf": samsegmesh2surf_outputs,
-    }.get(t)
-
-
 class Samsegmesh2surfOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `samsegmesh2surf(...)`.
+    Output object returned when calling `Samsegmesh2surfParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -75,7 +52,7 @@ def samsegmesh2surf_params(
     output_surface: str | None = None,
     output_priors: str | None = None,
     invert_flag: bool = False,
-) -> Samsegmesh2surfParameters:
+) -> Samsegmesh2surfParametersTagged:
     """
     Build parameters.
     
@@ -90,7 +67,7 @@ def samsegmesh2surf_params(
         Parameter dictionary
     """
     params = {
-        "@type": "freesurfer.samsegmesh2surf",
+        "@type": "freesurfer/samsegmesh2surf",
         "atlas_mesh": atlas_mesh,
         "invert_flag": invert_flag,
     }
@@ -122,29 +99,29 @@ def samsegmesh2surf_cargs(
     cargs.append("samsegmesh2surf")
     cargs.extend([
         "--atlasmesh",
-        execution.input_file(params.get("atlas_mesh"))
+        execution.input_file(params.get("atlas_mesh", None))
     ])
-    if params.get("template") is not None:
+    if params.get("template", None) is not None:
         cargs.extend([
             "--template",
-            execution.input_file(params.get("template"))
+            execution.input_file(params.get("template", None))
         ])
-    if params.get("lta_transform") is not None:
+    if params.get("lta_transform", None) is not None:
         cargs.extend([
             "--lta",
-            execution.input_file(params.get("lta_transform"))
+            execution.input_file(params.get("lta_transform", None))
         ])
-    if params.get("output_surface") is not None:
+    if params.get("output_surface", None) is not None:
         cargs.extend([
             "--osurf",
-            params.get("output_surface")
+            params.get("output_surface", None)
         ])
-    if params.get("output_priors") is not None:
+    if params.get("output_priors", None) is not None:
         cargs.extend([
             "--opriors",
-            params.get("output_priors")
+            params.get("output_priors", None)
         ])
-    if params.get("invert_flag"):
+    if params.get("invert_flag", False):
         cargs.append("--invert")
     return cargs
 
@@ -164,8 +141,8 @@ def samsegmesh2surf_outputs(
     """
     ret = Samsegmesh2surfOutputs(
         root=execution.output_file("."),
-        output_surface_file=execution.output_file(params.get("output_surface")) if (params.get("output_surface") is not None) else None,
-        output_priors_file=execution.output_file(params.get("output_priors")) if (params.get("output_priors") is not None) else None,
+        output_surface_file=execution.output_file(params.get("output_surface", None)) if (params.get("output_surface") is not None) else None,
+        output_priors_file=execution.output_file(params.get("output_priors", None)) if (params.get("output_priors") is not None) else None,
     )
     return ret
 
@@ -243,7 +220,6 @@ def samsegmesh2surf(
 __all__ = [
     "SAMSEGMESH2SURF_METADATA",
     "Samsegmesh2surfOutputs",
-    "Samsegmesh2surfParameters",
     "samsegmesh2surf",
     "samsegmesh2surf_execute",
     "samsegmesh2surf_params",

@@ -14,14 +14,28 @@ CIFTI_STATS_METADATA = Metadata(
 
 
 CiftiStatsRoiParameters = typing.TypedDict('CiftiStatsRoiParameters', {
-    "@type": typing.Literal["workbench.cifti-stats.roi"],
+    "@type": typing.NotRequired[typing.Literal["roi"]],
+    "roi_cifti": InputPathType,
+    "opt_match_maps": bool,
+})
+CiftiStatsRoiParametersTagged = typing.TypedDict('CiftiStatsRoiParametersTagged', {
+    "@type": typing.Literal["roi"],
     "roi_cifti": InputPathType,
     "opt_match_maps": bool,
 })
 
 
 CiftiStatsParameters = typing.TypedDict('CiftiStatsParameters', {
-    "@type": typing.Literal["workbench.cifti-stats"],
+    "@type": typing.NotRequired[typing.Literal["workbench/cifti-stats"]],
+    "cifti_in": InputPathType,
+    "opt_reduce_operation": typing.NotRequired[str | None],
+    "opt_percentile_percent": typing.NotRequired[float | None],
+    "opt_column_column": typing.NotRequired[int | None],
+    "roi": typing.NotRequired[CiftiStatsRoiParameters | None],
+    "opt_show_map_name": bool,
+})
+CiftiStatsParametersTagged = typing.TypedDict('CiftiStatsParametersTagged', {
+    "@type": typing.Literal["workbench/cifti-stats"],
     "cifti_in": InputPathType,
     "opt_reduce_operation": typing.NotRequired[str | None],
     "opt_percentile_percent": typing.NotRequired[float | None],
@@ -31,42 +45,10 @@ CiftiStatsParameters = typing.TypedDict('CiftiStatsParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "workbench.cifti-stats": cifti_stats_cargs,
-        "workbench.cifti-stats.roi": cifti_stats_roi_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-    }.get(t)
-
-
 def cifti_stats_roi_params(
     roi_cifti: InputPathType,
     opt_match_maps: bool = False,
-) -> CiftiStatsRoiParameters:
+) -> CiftiStatsRoiParametersTagged:
     """
     Build parameters.
     
@@ -78,7 +60,7 @@ def cifti_stats_roi_params(
         Parameter dictionary
     """
     params = {
-        "@type": "workbench.cifti-stats.roi",
+        "@type": "roi",
         "roi_cifti": roi_cifti,
         "opt_match_maps": opt_match_maps,
     }
@@ -100,15 +82,15 @@ def cifti_stats_roi_cargs(
     """
     cargs = []
     cargs.append("-roi")
-    cargs.append(execution.input_file(params.get("roi_cifti")))
-    if params.get("opt_match_maps"):
+    cargs.append(execution.input_file(params.get("roi_cifti", None)))
+    if params.get("opt_match_maps", False):
         cargs.append("-match-maps")
     return cargs
 
 
 class CiftiStatsOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `cifti_stats(...)`.
+    Output object returned when calling `CiftiStatsParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -121,7 +103,7 @@ def cifti_stats_params(
     opt_column_column: int | None = None,
     roi: CiftiStatsRoiParameters | None = None,
     opt_show_map_name: bool = False,
-) -> CiftiStatsParameters:
+) -> CiftiStatsParametersTagged:
     """
     Build parameters.
     
@@ -139,7 +121,7 @@ def cifti_stats_params(
         Parameter dictionary
     """
     params = {
-        "@type": "workbench.cifti-stats",
+        "@type": "workbench/cifti-stats",
         "cifti_in": cifti_in,
         "opt_show_map_name": opt_show_map_name,
     }
@@ -170,25 +152,25 @@ def cifti_stats_cargs(
     cargs = []
     cargs.append("wb_command")
     cargs.append("-cifti-stats")
-    cargs.append(execution.input_file(params.get("cifti_in")))
-    if params.get("opt_reduce_operation") is not None:
+    cargs.append(execution.input_file(params.get("cifti_in", None)))
+    if params.get("opt_reduce_operation", None) is not None:
         cargs.extend([
             "-reduce",
-            params.get("opt_reduce_operation")
+            params.get("opt_reduce_operation", None)
         ])
-    if params.get("opt_percentile_percent") is not None:
+    if params.get("opt_percentile_percent", None) is not None:
         cargs.extend([
             "-percentile",
-            str(params.get("opt_percentile_percent"))
+            str(params.get("opt_percentile_percent", None))
         ])
-    if params.get("opt_column_column") is not None:
+    if params.get("opt_column_column", None) is not None:
         cargs.extend([
             "-column",
-            str(params.get("opt_column_column"))
+            str(params.get("opt_column_column", None))
         ])
-    if params.get("roi") is not None:
-        cargs.extend(dyn_cargs(params.get("roi")["@type"])(params.get("roi"), execution))
-    if params.get("opt_show_map_name"):
+    if params.get("roi", None) is not None:
+        cargs.extend(cifti_stats_roi_cargs(params.get("roi", None), execution))
+    if params.get("opt_show_map_name", False):
         cargs.append("-show-map-name")
     return cargs
 
@@ -340,8 +322,6 @@ def cifti_stats(
 __all__ = [
     "CIFTI_STATS_METADATA",
     "CiftiStatsOutputs",
-    "CiftiStatsParameters",
-    "CiftiStatsRoiParameters",
     "cifti_stats",
     "cifti_stats_execute",
     "cifti_stats_params",

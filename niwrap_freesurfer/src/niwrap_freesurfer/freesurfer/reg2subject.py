@@ -14,45 +14,18 @@ REG2SUBJECT_METADATA = Metadata(
 
 
 Reg2subjectParameters = typing.TypedDict('Reg2subjectParameters', {
-    "@type": typing.Literal["freesurfer.reg2subject"],
+    "@type": typing.NotRequired[typing.Literal["freesurfer/reg2subject"]],
+    "regfile": InputPathType,
+})
+Reg2subjectParametersTagged = typing.TypedDict('Reg2subjectParametersTagged', {
+    "@type": typing.Literal["freesurfer/reg2subject"],
     "regfile": InputPathType,
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "freesurfer.reg2subject": reg2subject_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-    }.get(t)
-
-
 class Reg2subjectOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `reg2subject(...)`.
+    Output object returned when calling `Reg2subjectParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -60,7 +33,7 @@ class Reg2subjectOutputs(typing.NamedTuple):
 
 def reg2subject_params(
     regfile: InputPathType,
-) -> Reg2subjectParameters:
+) -> Reg2subjectParametersTagged:
     """
     Build parameters.
     
@@ -70,7 +43,7 @@ def reg2subject_params(
         Parameter dictionary
     """
     params = {
-        "@type": "freesurfer.reg2subject",
+        "@type": "freesurfer/reg2subject",
         "regfile": regfile,
     }
     return params
@@ -93,7 +66,7 @@ def reg2subject_cargs(
     cargs.append("reg2subject")
     cargs.extend([
         "--r",
-        execution.input_file(params.get("regfile"))
+        execution.input_file(params.get("regfile", None))
     ])
     return cargs
 
@@ -175,7 +148,6 @@ def reg2subject(
 __all__ = [
     "REG2SUBJECT_METADATA",
     "Reg2subjectOutputs",
-    "Reg2subjectParameters",
     "reg2subject",
     "reg2subject_execute",
     "reg2subject_params",

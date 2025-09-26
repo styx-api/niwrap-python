@@ -14,46 +14,20 @@ V__GET_AFNI_PREFIX_METADATA = Metadata(
 
 
 VGetAfniPrefixParameters = typing.TypedDict('VGetAfniPrefixParameters', {
-    "@type": typing.Literal["afni.@GetAfniPrefix"],
+    "@type": typing.NotRequired[typing.Literal["afni/@GetAfniPrefix"]],
+    "name": InputPathType,
+    "suffix": typing.NotRequired[str | None],
+})
+VGetAfniPrefixParametersTagged = typing.TypedDict('VGetAfniPrefixParametersTagged', {
+    "@type": typing.Literal["afni/@GetAfniPrefix"],
     "name": InputPathType,
     "suffix": typing.NotRequired[str | None],
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "afni.@GetAfniPrefix": v__get_afni_prefix_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-    }.get(t)
-
-
 class VGetAfniPrefixOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `v__get_afni_prefix(...)`.
+    Output object returned when calling `VGetAfniPrefixParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -62,7 +36,7 @@ class VGetAfniPrefixOutputs(typing.NamedTuple):
 def v__get_afni_prefix_params(
     name: InputPathType,
     suffix: str | None = None,
-) -> VGetAfniPrefixParameters:
+) -> VGetAfniPrefixParametersTagged:
     """
     Build parameters.
     
@@ -73,7 +47,7 @@ def v__get_afni_prefix_params(
         Parameter dictionary
     """
     params = {
-        "@type": "afni.@GetAfniPrefix",
+        "@type": "afni/@GetAfniPrefix",
         "name": name,
     }
     if suffix is not None:
@@ -96,9 +70,9 @@ def v__get_afni_prefix_cargs(
     """
     cargs = []
     cargs.append("@GetAfniPrefix")
-    cargs.append(execution.input_file(params.get("name")))
-    if params.get("suffix") is not None:
-        cargs.append(params.get("suffix"))
+    cargs.append(execution.input_file(params.get("name", None)))
+    if params.get("suffix", None) is not None:
+        cargs.append(params.get("suffix", None))
     return cargs
 
 
@@ -179,7 +153,6 @@ def v__get_afni_prefix(
 
 __all__ = [
     "VGetAfniPrefixOutputs",
-    "VGetAfniPrefixParameters",
     "V__GET_AFNI_PREFIX_METADATA",
     "v__get_afni_prefix",
     "v__get_afni_prefix_execute",

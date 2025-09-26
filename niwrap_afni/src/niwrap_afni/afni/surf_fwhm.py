@@ -14,7 +14,24 @@ SURF_FWHM_METADATA = Metadata(
 
 
 SurfFwhmParameters = typing.TypedDict('SurfFwhmParameters', {
-    "@type": typing.Literal["afni.SurfFWHM"],
+    "@type": typing.NotRequired[typing.Literal["afni/SurfFWHM"]],
+    "input_file": InputPathType,
+    "mask": typing.NotRequired[InputPathType | None],
+    "surf_1": typing.NotRequired[str | None],
+    "surf_sphere": typing.NotRequired[str | None],
+    "clean": bool,
+    "detrend": typing.NotRequired[float | None],
+    "detpoly": typing.NotRequired[float | None],
+    "detprefix": typing.NotRequired[str | None],
+    "prefix": typing.NotRequired[str | None],
+    "vox_size": typing.NotRequired[float | None],
+    "neighborhood": typing.NotRequired[float | None],
+    "ok_warn": bool,
+    "examples": bool,
+    "slice": bool,
+})
+SurfFwhmParametersTagged = typing.TypedDict('SurfFwhmParametersTagged', {
+    "@type": typing.Literal["afni/SurfFWHM"],
     "input_file": InputPathType,
     "mask": typing.NotRequired[InputPathType | None],
     "surf_1": typing.NotRequired[str | None],
@@ -32,41 +49,9 @@ SurfFwhmParameters = typing.TypedDict('SurfFwhmParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "afni.SurfFWHM": surf_fwhm_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "afni.SurfFWHM": surf_fwhm_outputs,
-    }.get(t)
-
-
 class SurfFwhmOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `surf_fwhm(...)`.
+    Output object returned when calling `SurfFwhmParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -95,7 +80,7 @@ def surf_fwhm_params(
     ok_warn: bool = False,
     examples: bool = False,
     slice_: bool = False,
-) -> SurfFwhmParameters:
+) -> SurfFwhmParametersTagged:
     """
     Build parameters.
     
@@ -122,7 +107,7 @@ def surf_fwhm_params(
         Parameter dictionary
     """
     params = {
-        "@type": "afni.SurfFWHM",
+        "@type": "afni/SurfFWHM",
         "input_file": input_file,
         "clean": clean,
         "ok_warn": ok_warn,
@@ -165,59 +150,59 @@ def surf_fwhm_cargs(
     """
     cargs = []
     cargs.append("SurfFWHM")
-    cargs.append(execution.input_file(params.get("input_file")))
-    if params.get("mask") is not None:
+    cargs.append(execution.input_file(params.get("input_file", None)))
+    if params.get("mask", None) is not None:
         cargs.extend([
             "-MASK",
-            execution.input_file(params.get("mask"))
+            execution.input_file(params.get("mask", None))
         ])
-    if params.get("surf_1") is not None:
+    if params.get("surf_1", None) is not None:
         cargs.extend([
             "-SURF_1",
-            params.get("surf_1")
+            params.get("surf_1", None)
         ])
-    if params.get("surf_sphere") is not None:
+    if params.get("surf_sphere", None) is not None:
         cargs.extend([
             "-SURF_SPHERE",
-            params.get("surf_sphere")
+            params.get("surf_sphere", None)
         ])
-    if params.get("clean"):
+    if params.get("clean", False):
         cargs.append("-clean")
-    if params.get("detrend") is not None:
+    if params.get("detrend", None) is not None:
         cargs.extend([
             "-detrend",
-            str(params.get("detrend"))
+            str(params.get("detrend", None))
         ])
-    if params.get("detpoly") is not None:
+    if params.get("detpoly", None) is not None:
         cargs.extend([
             "-detpoly",
-            str(params.get("detpoly"))
+            str(params.get("detpoly", None))
         ])
-    if params.get("detprefix") is not None:
+    if params.get("detprefix", None) is not None:
         cargs.extend([
             "-detprefix",
-            params.get("detprefix")
+            params.get("detprefix", None)
         ])
-    if params.get("prefix") is not None:
+    if params.get("prefix", None) is not None:
         cargs.extend([
             "-prefix",
-            params.get("prefix")
+            params.get("prefix", None)
         ])
-    if params.get("vox_size") is not None:
+    if params.get("vox_size", None) is not None:
         cargs.extend([
             "-vox_size",
-            str(params.get("vox_size"))
+            str(params.get("vox_size", None))
         ])
-    if params.get("neighborhood") is not None:
+    if params.get("neighborhood", None) is not None:
         cargs.extend([
             "-hood",
-            str(params.get("neighborhood"))
+            str(params.get("neighborhood", None))
         ])
-    if params.get("ok_warn"):
+    if params.get("ok_warn", False):
         cargs.append("-ok_warn")
-    if params.get("examples"):
+    if params.get("examples", False):
         cargs.append("-examples")
-    if params.get("slice"):
+    if params.get("slice", False):
         cargs.append("-slice")
     return cargs
 
@@ -237,10 +222,10 @@ def surf_fwhm_outputs(
     """
     ret = SurfFwhmOutputs(
         root=execution.output_file("."),
-        detrended_output=execution.output_file(params.get("prefix") + ".1D.dset") if (params.get("prefix") is not None) else None,
-        main_output=execution.output_file(params.get("prefix") + ".nii.gz") if (params.get("prefix") is not None) else None,
-        histogram_output=execution.output_file(params.get("prefix") + "_histog.1D") if (params.get("prefix") is not None) else None,
-        mask_output=execution.output_file(params.get("prefix") + "_mask.nii.gz") if (params.get("prefix") is not None) else None,
+        detrended_output=execution.output_file(params.get("prefix", None) + ".1D.dset") if (params.get("prefix") is not None) else None,
+        main_output=execution.output_file(params.get("prefix", None) + ".nii.gz") if (params.get("prefix") is not None) else None,
+        histogram_output=execution.output_file(params.get("prefix", None) + "_histog.1D") if (params.get("prefix") is not None) else None,
+        mask_output=execution.output_file(params.get("prefix", None) + "_mask.nii.gz") if (params.get("prefix") is not None) else None,
     )
     return ret
 
@@ -344,7 +329,6 @@ def surf_fwhm(
 __all__ = [
     "SURF_FWHM_METADATA",
     "SurfFwhmOutputs",
-    "SurfFwhmParameters",
     "surf_fwhm",
     "surf_fwhm_execute",
     "surf_fwhm_params",

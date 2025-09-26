@@ -14,46 +14,18 @@ V__STATAUXCODE_METADATA = Metadata(
 
 
 VStatauxcodeParameters = typing.TypedDict('VStatauxcodeParameters', {
-    "@type": typing.Literal["afni.@statauxcode"],
+    "@type": typing.NotRequired[typing.Literal["afni/@statauxcode"]],
+    "code": str,
+})
+VStatauxcodeParametersTagged = typing.TypedDict('VStatauxcodeParametersTagged', {
+    "@type": typing.Literal["afni/@statauxcode"],
     "code": str,
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "afni.@statauxcode": v__statauxcode_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "afni.@statauxcode": v__statauxcode_outputs,
-    }.get(t)
-
-
 class VStatauxcodeOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `v__statauxcode(...)`.
+    Output object returned when calling `VStatauxcodeParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -63,7 +35,7 @@ class VStatauxcodeOutputs(typing.NamedTuple):
 
 def v__statauxcode_params(
     code_: str,
-) -> VStatauxcodeParameters:
+) -> VStatauxcodeParametersTagged:
     """
     Build parameters.
     
@@ -74,7 +46,7 @@ def v__statauxcode_params(
         Parameter dictionary
     """
     params = {
-        "@type": "afni.@statauxcode",
+        "@type": "afni/@statauxcode",
         "code": code_,
     }
     return params
@@ -95,7 +67,7 @@ def v__statauxcode_cargs(
     """
     cargs = []
     cargs.append("@statauxcode")
-    cargs.append(params.get("code"))
+    cargs.append(params.get("code", None))
     return cargs
 
 
@@ -175,7 +147,6 @@ def v__statauxcode(
 
 __all__ = [
     "VStatauxcodeOutputs",
-    "VStatauxcodeParameters",
     "V__STATAUXCODE_METADATA",
     "v__statauxcode",
     "v__statauxcode_execute",

@@ -14,7 +14,27 @@ FSL_SBCA_METADATA = Metadata(
 
 
 FslSbcaParameters = typing.TypedDict('FslSbcaParameters', {
-    "@type": typing.Literal["fsl.fsl_sbca"],
+    "@type": typing.NotRequired[typing.Literal["fsl/fsl_sbca"]],
+    "infile": InputPathType,
+    "seed": InputPathType,
+    "target": InputPathType,
+    "out": str,
+    "reg_flag": bool,
+    "conf_files": typing.NotRequired[list[InputPathType] | None],
+    "seed_data": typing.NotRequired[InputPathType | None],
+    "binarise_flag": bool,
+    "mean_flag": bool,
+    "abs_cc_flag": bool,
+    "order": typing.NotRequired[float | None],
+    "out_seeds_flag": bool,
+    "out_seedmask_flag": bool,
+    "out_ttcs_flag": bool,
+    "out_conf_flag": bool,
+    "verbose_flag": bool,
+    "help_flag": bool,
+})
+FslSbcaParametersTagged = typing.TypedDict('FslSbcaParametersTagged', {
+    "@type": typing.Literal["fsl/fsl_sbca"],
     "infile": InputPathType,
     "seed": InputPathType,
     "target": InputPathType,
@@ -35,41 +55,9 @@ FslSbcaParameters = typing.TypedDict('FslSbcaParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "fsl.fsl_sbca": fsl_sbca_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "fsl.fsl_sbca": fsl_sbca_outputs,
-    }.get(t)
-
-
 class FslSbcaOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `fsl_sbca(...)`.
+    Output object returned when calling `FslSbcaParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -99,7 +87,7 @@ def fsl_sbca_params(
     out_conf_flag: bool = False,
     verbose_flag: bool = False,
     help_flag: bool = False,
-) -> FslSbcaParameters:
+) -> FslSbcaParametersTagged:
     """
     Build parameters.
     
@@ -130,7 +118,7 @@ def fsl_sbca_params(
         Parameter dictionary
     """
     params = {
-        "@type": "fsl.fsl_sbca",
+        "@type": "fsl/fsl_sbca",
         "infile": infile,
         "seed": seed,
         "target": target,
@@ -172,54 +160,54 @@ def fsl_sbca_cargs(
     cargs.append("fsl_sbca")
     cargs.extend([
         "--in",
-        execution.input_file(params.get("infile"))
+        execution.input_file(params.get("infile", None))
     ])
     cargs.extend([
         "--seed",
-        execution.input_file(params.get("seed"))
+        execution.input_file(params.get("seed", None))
     ])
     cargs.extend([
         "--target",
-        execution.input_file(params.get("target"))
+        execution.input_file(params.get("target", None))
     ])
     cargs.extend([
         "--out",
-        params.get("out")
+        params.get("out", None)
     ])
-    if params.get("reg_flag"):
+    if params.get("reg_flag", False):
         cargs.append("--reg")
-    if params.get("conf_files") is not None:
+    if params.get("conf_files", None) is not None:
         cargs.extend([
             "--conf",
-            *[execution.input_file(f) for f in params.get("conf_files")]
+            *[execution.input_file(f) for f in params.get("conf_files", None)]
         ])
-    if params.get("seed_data") is not None:
+    if params.get("seed_data", None) is not None:
         cargs.extend([
             "--seeddata",
-            execution.input_file(params.get("seed_data"))
+            execution.input_file(params.get("seed_data", None))
         ])
-    if params.get("binarise_flag"):
+    if params.get("binarise_flag", False):
         cargs.append("--bin")
-    if params.get("mean_flag"):
+    if params.get("mean_flag", False):
         cargs.append("--mean")
-    if params.get("abs_cc_flag"):
+    if params.get("abs_cc_flag", False):
         cargs.append("--abscc")
-    if params.get("order") is not None:
+    if params.get("order", None) is not None:
         cargs.extend([
             "--order",
-            str(params.get("order"))
+            str(params.get("order", None))
         ])
-    if params.get("out_seeds_flag"):
+    if params.get("out_seeds_flag", False):
         cargs.append("--out_seeds")
-    if params.get("out_seedmask_flag"):
+    if params.get("out_seedmask_flag", False):
         cargs.append("--out_seedmask")
-    if params.get("out_ttcs_flag"):
+    if params.get("out_ttcs_flag", False):
         cargs.append("--out_ttcs")
-    if params.get("out_conf_flag"):
+    if params.get("out_conf_flag", False):
         cargs.append("--out_conf")
-    if params.get("verbose_flag"):
+    if params.get("verbose_flag", False):
         cargs.append("-v")
-    if params.get("help_flag"):
+    if params.get("help_flag", False):
         cargs.append("-h")
     return cargs
 
@@ -239,9 +227,9 @@ def fsl_sbca_outputs(
     """
     ret = FslSbcaOutputs(
         root=execution.output_file("."),
-        output_seed_mask_image=execution.output_file(params.get("out") + "_seeds"),
-        output_seed_mask_image_base=execution.output_file(params.get("out") + "_seedmask"),
-        output_confound_time_courses=execution.output_file(params.get("out") + "_confounds.txt"),
+        output_seed_mask_image=execution.output_file(params.get("out", None) + "_seeds"),
+        output_seed_mask_image_base=execution.output_file(params.get("out", None) + "_seedmask"),
+        output_confound_time_courses=execution.output_file(params.get("out", None) + "_confounds.txt"),
     )
     return ret
 
@@ -357,7 +345,6 @@ def fsl_sbca(
 __all__ = [
     "FSL_SBCA_METADATA",
     "FslSbcaOutputs",
-    "FslSbcaParameters",
     "fsl_sbca",
     "fsl_sbca_execute",
     "fsl_sbca_params",

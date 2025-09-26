@@ -14,7 +14,39 @@ MRIS_DIFF_METADATA = Metadata(
 
 
 MrisDiffParameters = typing.TypedDict('MrisDiffParameters', {
-    "@type": typing.Literal["freesurfer.mris_diff"],
+    "@type": typing.NotRequired[typing.Literal["freesurfer/mris_diff"]],
+    "surface1": InputPathType,
+    "surface2": InputPathType,
+    "subject1": str,
+    "subject2": str,
+    "subj_dir1": typing.NotRequired[str | None],
+    "subj_dir2": typing.NotRequired[str | None],
+    "hemisphere": str,
+    "surf": typing.NotRequired[str | None],
+    "curv": typing.NotRequired[str | None],
+    "aparc": typing.NotRequired[str | None],
+    "aparc2": typing.NotRequired[str | None],
+    "simple": bool,
+    "simple_patch": bool,
+    "thresh": typing.NotRequired[float | None],
+    "maxerrs": typing.NotRequired[float | None],
+    "renumbered": bool,
+    "worst_bucket": typing.NotRequired[str | None],
+    "grid": typing.NotRequired[str | None],
+    "no_check_xyz": bool,
+    "no_check_nxyz": bool,
+    "xyz_rms": typing.NotRequired[str | None],
+    "angle_rms": typing.NotRequired[str | None],
+    "seed": typing.NotRequired[float | None],
+    "min_dist": typing.NotRequired[str | None],
+    "debug": bool,
+    "gdiag_no": typing.NotRequired[float | None],
+    "check_opts": bool,
+    "help": bool,
+    "version": bool,
+})
+MrisDiffParametersTagged = typing.TypedDict('MrisDiffParametersTagged', {
+    "@type": typing.Literal["freesurfer/mris_diff"],
     "surface1": InputPathType,
     "surface2": InputPathType,
     "subject1": str,
@@ -47,40 +79,9 @@ MrisDiffParameters = typing.TypedDict('MrisDiffParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "freesurfer.mris_diff": mris_diff_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-    }.get(t)
-
-
 class MrisDiffOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `mris_diff(...)`.
+    Output object returned when calling `MrisDiffParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -116,7 +117,7 @@ def mris_diff_params(
     check_opts: bool = False,
     help_: bool = False,
     version: bool = False,
-) -> MrisDiffParameters:
+) -> MrisDiffParametersTagged:
     """
     Build parameters.
     
@@ -156,7 +157,7 @@ def mris_diff_params(
         Parameter dictionary
     """
     params = {
-        "@type": "freesurfer.mris_diff",
+        "@type": "freesurfer/mris_diff",
         "surface1": surface1,
         "surface2": surface2,
         "subject1": subject1,
@@ -220,112 +221,112 @@ def mris_diff_cargs(
     """
     cargs = []
     cargs.append("mris_diff")
-    cargs.append(execution.input_file(params.get("surface1")))
-    cargs.append(execution.input_file(params.get("surface2")))
+    cargs.append(execution.input_file(params.get("surface1", None)))
+    cargs.append(execution.input_file(params.get("surface2", None)))
     cargs.extend([
         "--s1",
-        params.get("subject1")
+        params.get("subject1", None)
     ])
     cargs.extend([
         "--s2",
-        params.get("subject2")
+        params.get("subject2", None)
     ])
-    if params.get("subj_dir1") is not None:
+    if params.get("subj_dir1", None) is not None:
         cargs.extend([
             "--sd1",
-            params.get("subj_dir1")
+            params.get("subj_dir1", None)
         ])
-    if params.get("subj_dir2") is not None:
+    if params.get("subj_dir2", None) is not None:
         cargs.extend([
             "--sd2",
-            params.get("subj_dir2")
+            params.get("subj_dir2", None)
         ])
     cargs.extend([
         "--hemi",
-        params.get("hemisphere")
+        params.get("hemisphere", None)
     ])
-    if params.get("surf") is not None:
+    if params.get("surf", None) is not None:
         cargs.extend([
             "--surf",
-            params.get("surf")
+            params.get("surf", None)
         ])
-    if params.get("curv") is not None:
+    if params.get("curv", None) is not None:
         cargs.extend([
             "--curv",
-            params.get("curv")
+            params.get("curv", None)
         ])
-    if params.get("aparc") is not None:
+    if params.get("aparc", None) is not None:
         cargs.extend([
             "--aparc",
-            params.get("aparc")
+            params.get("aparc", None)
         ])
-    if params.get("aparc2") is not None:
+    if params.get("aparc2", None) is not None:
         cargs.extend([
             "--aparc2",
-            params.get("aparc2")
+            params.get("aparc2", None)
         ])
-    if params.get("simple"):
+    if params.get("simple", False):
         cargs.append("--simple")
-    if params.get("simple_patch"):
+    if params.get("simple_patch", False):
         cargs.append("--simple-patch")
-    if params.get("thresh") is not None:
+    if params.get("thresh", None) is not None:
         cargs.extend([
             "--thresh",
-            str(params.get("thresh"))
+            str(params.get("thresh", None))
         ])
-    if params.get("maxerrs") is not None:
+    if params.get("maxerrs", None) is not None:
         cargs.extend([
             "--maxerrs",
-            str(params.get("maxerrs"))
+            str(params.get("maxerrs", None))
         ])
-    if params.get("renumbered"):
+    if params.get("renumbered", False):
         cargs.append("--renumbered")
-    if params.get("worst_bucket") is not None:
+    if params.get("worst_bucket", None) is not None:
         cargs.extend([
             "--worst-bucket",
-            params.get("worst_bucket")
+            params.get("worst_bucket", None)
         ])
-    if params.get("grid") is not None:
+    if params.get("grid", None) is not None:
         cargs.extend([
             "--grid",
-            params.get("grid")
+            params.get("grid", None)
         ])
-    if params.get("no_check_xyz"):
+    if params.get("no_check_xyz", False):
         cargs.append("--no-check-xyz")
-    if params.get("no_check_nxyz"):
+    if params.get("no_check_nxyz", False):
         cargs.append("--no-check-nxyz")
-    if params.get("xyz_rms") is not None:
+    if params.get("xyz_rms", None) is not None:
         cargs.extend([
             "--xyz-rms",
-            params.get("xyz_rms")
+            params.get("xyz_rms", None)
         ])
-    if params.get("angle_rms") is not None:
+    if params.get("angle_rms", None) is not None:
         cargs.extend([
             "--angle-rms",
-            params.get("angle_rms")
+            params.get("angle_rms", None)
         ])
-    if params.get("seed") is not None:
+    if params.get("seed", None) is not None:
         cargs.extend([
             "--seed",
-            str(params.get("seed"))
+            str(params.get("seed", None))
         ])
-    if params.get("min_dist") is not None:
+    if params.get("min_dist", None) is not None:
         cargs.extend([
             "--min-dist",
-            params.get("min_dist")
+            params.get("min_dist", None)
         ])
-    if params.get("debug"):
+    if params.get("debug", False):
         cargs.append("--debug")
-    if params.get("gdiag_no") is not None:
+    if params.get("gdiag_no", None) is not None:
         cargs.extend([
             "--gdiag_no",
-            str(params.get("gdiag_no"))
+            str(params.get("gdiag_no", None))
         ])
-    if params.get("check_opts"):
+    if params.get("check_opts", False):
         cargs.append("--checkopts")
-    if params.get("help"):
+    if params.get("help", False):
         cargs.append("--help")
-    if params.get("version"):
+    if params.get("version", False):
         cargs.append("--version")
     return cargs
 
@@ -491,7 +492,6 @@ def mris_diff(
 __all__ = [
     "MRIS_DIFF_METADATA",
     "MrisDiffOutputs",
-    "MrisDiffParameters",
     "mris_diff",
     "mris_diff_execute",
     "mris_diff_params",

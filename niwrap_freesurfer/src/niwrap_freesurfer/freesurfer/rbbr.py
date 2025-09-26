@@ -14,7 +14,32 @@ RBBR_METADATA = Metadata(
 
 
 RbbrParameters = typing.TypedDict('RbbrParameters', {
-    "@type": typing.Literal["freesurfer.rbbr"],
+    "@type": typing.NotRequired[typing.Literal["freesurfer/rbbr"]],
+    "subject": typing.NotRequired[str | None],
+    "moving_image": str,
+    "t1_contrast": bool,
+    "t2_contrast": bool,
+    "init_reg": bool,
+    "init_spm": bool,
+    "init_fsl": bool,
+    "init_header": bool,
+    "cost_threshold": typing.NotRequired[float | None],
+    "gtm_synthesize": typing.NotRequired[str | None],
+    "tt_reduce": bool,
+    "iterations": typing.NotRequired[float | None],
+    "output_reg": typing.NotRequired[str | None],
+    "output_lta": typing.NotRequired[str | None],
+    "left_hemi": bool,
+    "right_hemi": bool,
+    "gm_proj_frac": typing.NotRequired[float | None],
+    "gm_proj_abs": typing.NotRequired[float | None],
+    "wm_proj_abs": typing.NotRequired[float | None],
+    "frame_no": typing.NotRequired[float | None],
+    "output_template": typing.NotRequired[str | None],
+    "no_merge": bool,
+})
+RbbrParametersTagged = typing.TypedDict('RbbrParametersTagged', {
+    "@type": typing.Literal["freesurfer/rbbr"],
     "subject": typing.NotRequired[str | None],
     "moving_image": str,
     "t1_contrast": bool,
@@ -40,41 +65,9 @@ RbbrParameters = typing.TypedDict('RbbrParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "freesurfer.rbbr": rbbr_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "freesurfer.rbbr": rbbr_outputs,
-    }.get(t)
-
-
 class RbbrOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `rbbr(...)`.
+    Output object returned when calling `RbbrParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -109,7 +102,7 @@ def rbbr_params(
     frame_no: float | None = None,
     output_template: str | None = None,
     no_merge: bool = False,
-) -> RbbrParameters:
+) -> RbbrParametersTagged:
     """
     Build parameters.
     
@@ -140,7 +133,7 @@ def rbbr_params(
         Parameter dictionary
     """
     params = {
-        "@type": "freesurfer.rbbr",
+        "@type": "freesurfer/rbbr",
         "moving_image": moving_image,
         "t1_contrast": t1_contrast,
         "t2_contrast": t2_contrast,
@@ -193,84 +186,84 @@ def rbbr_cargs(
     """
     cargs = []
     cargs.append("rbbr")
-    if params.get("subject") is not None:
+    if params.get("subject", None) is not None:
         cargs.extend([
             "--s",
-            params.get("subject")
+            params.get("subject", None)
         ])
     cargs.extend([
         "--mov",
-        params.get("moving_image")
+        params.get("moving_image", None)
     ])
-    if params.get("t1_contrast"):
+    if params.get("t1_contrast", False):
         cargs.append("--t1")
-    if params.get("t2_contrast"):
+    if params.get("t2_contrast", False):
         cargs.append("--t2")
-    if params.get("init_reg"):
+    if params.get("init_reg", False):
         cargs.append("--init-reg")
-    if params.get("init_spm"):
+    if params.get("init_spm", False):
         cargs.append("--init-spm")
-    if params.get("init_fsl"):
+    if params.get("init_fsl", False):
         cargs.append("--init-fsl")
-    if params.get("init_header"):
+    if params.get("init_header", False):
         cargs.append("--init-header")
-    if params.get("cost_threshold") is not None:
+    if params.get("cost_threshold", None) is not None:
         cargs.extend([
             "--cthresh",
-            str(params.get("cost_threshold"))
+            str(params.get("cost_threshold", None))
         ])
-    if params.get("gtm_synthesize") is not None:
+    if params.get("gtm_synthesize", None) is not None:
         cargs.extend([
             "--gtm",
-            params.get("gtm_synthesize")
+            params.get("gtm_synthesize", None)
         ])
-    if params.get("tt_reduce"):
+    if params.get("tt_reduce", False):
         cargs.append("--tt-reduce")
-    if params.get("iterations") is not None:
+    if params.get("iterations", None) is not None:
         cargs.extend([
             "--iters",
-            str(params.get("iterations"))
+            str(params.get("iterations", None))
         ])
-    if params.get("output_reg") is not None:
+    if params.get("output_reg", None) is not None:
         cargs.extend([
             "--reg",
-            params.get("output_reg")
+            params.get("output_reg", None)
         ])
-    if params.get("output_lta") is not None:
+    if params.get("output_lta", None) is not None:
         cargs.extend([
             "--lta",
-            params.get("output_lta")
+            params.get("output_lta", None)
         ])
-    if params.get("left_hemi"):
+    if params.get("left_hemi", False):
         cargs.append("--lh-only")
-    if params.get("right_hemi"):
+    if params.get("right_hemi", False):
         cargs.append("--rh-only")
-    if params.get("gm_proj_frac") is not None:
+    if params.get("gm_proj_frac", None) is not None:
         cargs.extend([
             "--gm-proj-frac",
-            str(params.get("gm_proj_frac"))
+            str(params.get("gm_proj_frac", None))
         ])
-    if params.get("gm_proj_abs") is not None:
+    if params.get("gm_proj_abs", None) is not None:
         cargs.extend([
             "--gm-proj-abs",
-            str(params.get("gm_proj_abs"))
+            str(params.get("gm_proj_abs", None))
         ])
-    if params.get("wm_proj_abs") is not None:
+    if params.get("wm_proj_abs", None) is not None:
         cargs.extend([
             "--wm-proj-abs",
-            str(params.get("wm_proj_abs"))
+            str(params.get("wm_proj_abs", None))
         ])
-    if params.get("frame_no") is not None:
+    if params.get("frame_no", None) is not None:
         cargs.extend([
             "--frame",
-            str(params.get("frame_no"))
+            str(params.get("frame_no", None))
         ])
-    if params.get("output_template") is not None:
+    if params.get("output_template", None) is not None:
         cargs.extend([
             "--template",
-            params.get("output_template")
+            params.get("output_template", None)
         ])
-    if params.get("no_merge"):
+    if params.get("no_merge", False):
         cargs.append("--no-merge")
     return cargs
 
@@ -290,9 +283,9 @@ def rbbr_outputs(
     """
     ret = RbbrOutputs(
         root=execution.output_file("."),
-        output_reg_file=execution.output_file(params.get("output_reg")) if (params.get("output_reg") is not None) else None,
-        output_lta_file=execution.output_file(params.get("output_lta")) if (params.get("output_lta") is not None) else None,
-        output_template_file=execution.output_file(params.get("output_template")) if (params.get("output_template") is not None) else None,
+        output_reg_file=execution.output_file(params.get("output_reg", None)) if (params.get("output_reg") is not None) else None,
+        output_lta_file=execution.output_file(params.get("output_lta", None)) if (params.get("output_lta") is not None) else None,
+        output_template_file=execution.output_file(params.get("output_template", None)) if (params.get("output_template") is not None) else None,
     )
     return ret
 
@@ -416,7 +409,6 @@ def rbbr(
 __all__ = [
     "RBBR_METADATA",
     "RbbrOutputs",
-    "RbbrParameters",
     "rbbr",
     "rbbr_execute",
     "rbbr_params",

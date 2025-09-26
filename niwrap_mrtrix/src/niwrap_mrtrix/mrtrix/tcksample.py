@@ -14,14 +14,37 @@ TCKSAMPLE_METADATA = Metadata(
 
 
 TcksampleConfigParameters = typing.TypedDict('TcksampleConfigParameters', {
-    "@type": typing.Literal["mrtrix.tcksample.config"],
+    "@type": typing.NotRequired[typing.Literal["config"]],
+    "key": str,
+    "value": str,
+})
+TcksampleConfigParametersTagged = typing.TypedDict('TcksampleConfigParametersTagged', {
+    "@type": typing.Literal["config"],
     "key": str,
     "value": str,
 })
 
 
 TcksampleParameters = typing.TypedDict('TcksampleParameters', {
-    "@type": typing.Literal["mrtrix.tcksample"],
+    "@type": typing.NotRequired[typing.Literal["mrtrix/tcksample"]],
+    "stat_tck": typing.NotRequired[str | None],
+    "nointerp": bool,
+    "precise": bool,
+    "use_tdi_fraction": bool,
+    "info": bool,
+    "quiet": bool,
+    "debug": bool,
+    "force": bool,
+    "nthreads": typing.NotRequired[int | None],
+    "config": typing.NotRequired[list[TcksampleConfigParameters] | None],
+    "help": bool,
+    "version": bool,
+    "tracks": InputPathType,
+    "image": InputPathType,
+    "values": str,
+})
+TcksampleParametersTagged = typing.TypedDict('TcksampleParametersTagged', {
+    "@type": typing.Literal["mrtrix/tcksample"],
     "stat_tck": typing.NotRequired[str | None],
     "nointerp": bool,
     "precise": bool,
@@ -40,43 +63,10 @@ TcksampleParameters = typing.TypedDict('TcksampleParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "mrtrix.tcksample": tcksample_cargs,
-        "mrtrix.tcksample.config": tcksample_config_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "mrtrix.tcksample": tcksample_outputs,
-    }.get(t)
-
-
 def tcksample_config_params(
     key: str,
     value: str,
-) -> TcksampleConfigParameters:
+) -> TcksampleConfigParametersTagged:
     """
     Build parameters.
     
@@ -87,7 +77,7 @@ def tcksample_config_params(
         Parameter dictionary
     """
     params = {
-        "@type": "mrtrix.tcksample.config",
+        "@type": "config",
         "key": key,
         "value": value,
     }
@@ -109,14 +99,14 @@ def tcksample_config_cargs(
     """
     cargs = []
     cargs.append("-config")
-    cargs.append(params.get("key"))
-    cargs.append(params.get("value"))
+    cargs.append(params.get("key", None))
+    cargs.append(params.get("value", None))
     return cargs
 
 
 class TcksampleOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `tcksample(...)`.
+    Output object returned when calling `TcksampleParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -140,7 +130,7 @@ def tcksample_params(
     config: list[TcksampleConfigParameters] | None = None,
     help_: bool = False,
     version: bool = False,
-) -> TcksampleParameters:
+) -> TcksampleParametersTagged:
     """
     Build parameters.
     
@@ -175,7 +165,7 @@ def tcksample_params(
         Parameter dictionary
     """
     params = {
-        "@type": "mrtrix.tcksample",
+        "@type": "mrtrix/tcksample",
         "nointerp": nointerp,
         "precise": precise,
         "use_tdi_fraction": use_tdi_fraction,
@@ -213,39 +203,39 @@ def tcksample_cargs(
     """
     cargs = []
     cargs.append("tcksample")
-    if params.get("stat_tck") is not None:
+    if params.get("stat_tck", None) is not None:
         cargs.extend([
             "-stat_tck",
-            params.get("stat_tck")
+            params.get("stat_tck", None)
         ])
-    if params.get("nointerp"):
+    if params.get("nointerp", False):
         cargs.append("-nointerp")
-    if params.get("precise"):
+    if params.get("precise", False):
         cargs.append("-precise")
-    if params.get("use_tdi_fraction"):
+    if params.get("use_tdi_fraction", False):
         cargs.append("-use_tdi_fraction")
-    if params.get("info"):
+    if params.get("info", False):
         cargs.append("-info")
-    if params.get("quiet"):
+    if params.get("quiet", False):
         cargs.append("-quiet")
-    if params.get("debug"):
+    if params.get("debug", False):
         cargs.append("-debug")
-    if params.get("force"):
+    if params.get("force", False):
         cargs.append("-force")
-    if params.get("nthreads") is not None:
+    if params.get("nthreads", None) is not None:
         cargs.extend([
             "-nthreads",
-            str(params.get("nthreads"))
+            str(params.get("nthreads", None))
         ])
-    if params.get("config") is not None:
-        cargs.extend([a for c in [dyn_cargs(s["@type"])(s, execution) for s in params.get("config")] for a in c])
-    if params.get("help"):
+    if params.get("config", None) is not None:
+        cargs.extend([a for c in [tcksample_config_cargs(s, execution) for s in params.get("config", None)] for a in c])
+    if params.get("help", False):
         cargs.append("-help")
-    if params.get("version"):
+    if params.get("version", False):
         cargs.append("-version")
-    cargs.append(execution.input_file(params.get("tracks")))
-    cargs.append(execution.input_file(params.get("image")))
-    cargs.append(params.get("values"))
+    cargs.append(execution.input_file(params.get("tracks", None)))
+    cargs.append(execution.input_file(params.get("image", None)))
+    cargs.append(params.get("values", None))
     return cargs
 
 
@@ -264,7 +254,7 @@ def tcksample_outputs(
     """
     ret = TcksampleOutputs(
         root=execution.output_file("."),
-        values_=execution.output_file(params.get("values")),
+        values_=execution.output_file(params.get("values", None)),
     )
     return ret
 
@@ -399,9 +389,7 @@ def tcksample(
 
 __all__ = [
     "TCKSAMPLE_METADATA",
-    "TcksampleConfigParameters",
     "TcksampleOutputs",
-    "TcksampleParameters",
     "tcksample",
     "tcksample_config_params",
     "tcksample_execute",

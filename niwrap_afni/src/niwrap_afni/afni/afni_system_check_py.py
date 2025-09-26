@@ -14,7 +14,20 @@ AFNI_SYSTEM_CHECK_PY_METADATA = Metadata(
 
 
 AfniSystemCheckPyParameters = typing.TypedDict('AfniSystemCheckPyParameters', {
-    "@type": typing.Literal["afni.afni_system_check.py"],
+    "@type": typing.NotRequired[typing.Literal["afni/afni_system_check.py"]],
+    "check_all": bool,
+    "find_prog": typing.NotRequired[str | None],
+    "exact": typing.NotRequired[str | None],
+    "disp_num_cpu": bool,
+    "disp_ver_matplotlib": bool,
+    "dot_file_list": bool,
+    "dot_file_show": bool,
+    "dot_file_pack": typing.NotRequired[str | None],
+    "casematch": typing.NotRequired[str | None],
+    "data_root": typing.NotRequired[str | None],
+})
+AfniSystemCheckPyParametersTagged = typing.TypedDict('AfniSystemCheckPyParametersTagged', {
+    "@type": typing.Literal["afni/afni_system_check.py"],
     "check_all": bool,
     "find_prog": typing.NotRequired[str | None],
     "exact": typing.NotRequired[str | None],
@@ -28,40 +41,9 @@ AfniSystemCheckPyParameters = typing.TypedDict('AfniSystemCheckPyParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "afni.afni_system_check.py": afni_system_check_py_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-    }.get(t)
-
-
 class AfniSystemCheckPyOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `afni_system_check_py(...)`.
+    Output object returned when calling `AfniSystemCheckPyParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -78,7 +60,7 @@ def afni_system_check_py_params(
     dot_file_pack: str | None = None,
     casematch: str | None = None,
     data_root: str | None = None,
-) -> AfniSystemCheckPyParameters:
+) -> AfniSystemCheckPyParametersTagged:
     """
     Build parameters.
     
@@ -97,7 +79,7 @@ def afni_system_check_py_params(
         Parameter dictionary
     """
     params = {
-        "@type": "afni.afni_system_check.py",
+        "@type": "afni/afni_system_check.py",
         "check_all": check_all,
         "disp_num_cpu": disp_num_cpu,
         "disp_ver_matplotlib": disp_ver_matplotlib,
@@ -132,40 +114,40 @@ def afni_system_check_py_cargs(
     """
     cargs = []
     cargs.append("afni_system_check.py")
-    if params.get("check_all"):
+    if params.get("check_all", False):
         cargs.append("-check_all")
-    if params.get("find_prog") is not None:
+    if params.get("find_prog", None) is not None:
         cargs.extend([
             "-find_prog",
-            params.get("find_prog")
+            params.get("find_prog", None)
         ])
-    if params.get("exact") is not None:
+    if params.get("exact", None) is not None:
         cargs.extend([
             "-exact",
-            params.get("exact")
+            params.get("exact", None)
         ])
-    if params.get("disp_num_cpu"):
+    if params.get("disp_num_cpu", False):
         cargs.append("-disp_num_cpu")
-    if params.get("disp_ver_matplotlib"):
+    if params.get("disp_ver_matplotlib", False):
         cargs.append("-disp_ver_matplotlib")
-    if params.get("dot_file_list"):
+    if params.get("dot_file_list", False):
         cargs.append("-dot_file_list")
-    if params.get("dot_file_show"):
+    if params.get("dot_file_show", False):
         cargs.append("-dot_file_show")
-    if params.get("dot_file_pack") is not None:
+    if params.get("dot_file_pack", None) is not None:
         cargs.extend([
             "-dot_file_pack",
-            params.get("dot_file_pack")
+            params.get("dot_file_pack", None)
         ])
-    if params.get("casematch") is not None:
+    if params.get("casematch", None) is not None:
         cargs.extend([
             "-casematch",
-            params.get("casematch")
+            params.get("casematch", None)
         ])
-    if params.get("data_root") is not None:
+    if params.get("data_root", None) is not None:
         cargs.extend([
             "-data_root",
-            params.get("data_root")
+            params.get("data_root", None)
         ])
     return cargs
 
@@ -272,7 +254,6 @@ def afni_system_check_py(
 __all__ = [
     "AFNI_SYSTEM_CHECK_PY_METADATA",
     "AfniSystemCheckPyOutputs",
-    "AfniSystemCheckPyParameters",
     "afni_system_check_py",
     "afni_system_check_py_execute",
     "afni_system_check_py_params",

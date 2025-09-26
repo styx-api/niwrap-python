@@ -14,7 +14,14 @@ MRI_FSLMAT_TO_LTA_METADATA = Metadata(
 
 
 MriFslmatToLtaParameters = typing.TypedDict('MriFslmatToLtaParameters', {
-    "@type": typing.Literal["freesurfer.mri_fslmat_to_lta"],
+    "@type": typing.NotRequired[typing.Literal["freesurfer/mri_fslmat_to_lta"]],
+    "src_vol": InputPathType,
+    "target_vol": InputPathType,
+    "fslmat_file": InputPathType,
+    "lta_file": str,
+})
+MriFslmatToLtaParametersTagged = typing.TypedDict('MriFslmatToLtaParametersTagged', {
+    "@type": typing.Literal["freesurfer/mri_fslmat_to_lta"],
     "src_vol": InputPathType,
     "target_vol": InputPathType,
     "fslmat_file": InputPathType,
@@ -22,41 +29,9 @@ MriFslmatToLtaParameters = typing.TypedDict('MriFslmatToLtaParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "freesurfer.mri_fslmat_to_lta": mri_fslmat_to_lta_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "freesurfer.mri_fslmat_to_lta": mri_fslmat_to_lta_outputs,
-    }.get(t)
-
-
 class MriFslmatToLtaOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `mri_fslmat_to_lta(...)`.
+    Output object returned when calling `MriFslmatToLtaParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -70,7 +45,7 @@ def mri_fslmat_to_lta_params(
     target_vol: InputPathType,
     fslmat_file: InputPathType,
     lta_file: str,
-) -> MriFslmatToLtaParameters:
+) -> MriFslmatToLtaParametersTagged:
     """
     Build parameters.
     
@@ -83,7 +58,7 @@ def mri_fslmat_to_lta_params(
         Parameter dictionary
     """
     params = {
-        "@type": "freesurfer.mri_fslmat_to_lta",
+        "@type": "freesurfer/mri_fslmat_to_lta",
         "src_vol": src_vol,
         "target_vol": target_vol,
         "fslmat_file": fslmat_file,
@@ -107,10 +82,10 @@ def mri_fslmat_to_lta_cargs(
     """
     cargs = []
     cargs.append("mri_fslmat_to_lta")
-    cargs.append(execution.input_file(params.get("src_vol")))
-    cargs.append(execution.input_file(params.get("target_vol")))
-    cargs.append(execution.input_file(params.get("fslmat_file")))
-    cargs.append(params.get("lta_file"))
+    cargs.append(execution.input_file(params.get("src_vol", None)))
+    cargs.append(execution.input_file(params.get("target_vol", None)))
+    cargs.append(execution.input_file(params.get("fslmat_file", None)))
+    cargs.append(params.get("lta_file", None))
     return cargs
 
 
@@ -129,7 +104,7 @@ def mri_fslmat_to_lta_outputs(
     """
     ret = MriFslmatToLtaOutputs(
         root=execution.output_file("."),
-        output_lta_file=execution.output_file(params.get("lta_file")),
+        output_lta_file=execution.output_file(params.get("lta_file", None)),
     )
     return ret
 
@@ -201,7 +176,6 @@ def mri_fslmat_to_lta(
 __all__ = [
     "MRI_FSLMAT_TO_LTA_METADATA",
     "MriFslmatToLtaOutputs",
-    "MriFslmatToLtaParameters",
     "mri_fslmat_to_lta",
     "mri_fslmat_to_lta_execute",
     "mri_fslmat_to_lta_params",

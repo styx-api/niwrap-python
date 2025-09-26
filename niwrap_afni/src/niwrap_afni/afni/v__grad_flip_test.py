@@ -14,7 +14,24 @@ V__GRAD_FLIP_TEST_METADATA = Metadata(
 
 
 VGradFlipTestParameters = typing.TypedDict('VGradFlipTestParameters', {
-    "@type": typing.Literal["afni.@GradFlipTest"],
+    "@type": typing.NotRequired[typing.Literal["afni/@GradFlipTest"]],
+    "dwi": InputPathType,
+    "grad_row_vec": typing.NotRequired[InputPathType | None],
+    "grad_col_vec": typing.NotRequired[InputPathType | None],
+    "grad_col_matA": typing.NotRequired[InputPathType | None],
+    "grad_col_matT": typing.NotRequired[InputPathType | None],
+    "mask": typing.NotRequired[InputPathType | None],
+    "bvals": typing.NotRequired[InputPathType | None],
+    "thresh_fa": typing.NotRequired[float | None],
+    "thresh_len": typing.NotRequired[float | None],
+    "prefix": typing.NotRequired[str | None],
+    "check_abs_min": typing.NotRequired[float | None],
+    "scale_out_1000": bool,
+    "wdir": typing.NotRequired[str | None],
+    "do_clean": bool,
+})
+VGradFlipTestParametersTagged = typing.TypedDict('VGradFlipTestParametersTagged', {
+    "@type": typing.Literal["afni/@GradFlipTest"],
     "dwi": InputPathType,
     "grad_row_vec": typing.NotRequired[InputPathType | None],
     "grad_col_vec": typing.NotRequired[InputPathType | None],
@@ -32,41 +49,9 @@ VGradFlipTestParameters = typing.TypedDict('VGradFlipTestParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "afni.@GradFlipTest": v__grad_flip_test_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "afni.@GradFlipTest": v__grad_flip_test_outputs,
-    }.get(t)
-
-
 class VGradFlipTestOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `v__grad_flip_test(...)`.
+    Output object returned when calling `VGradFlipTestParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -91,7 +76,7 @@ def v__grad_flip_test_params(
     scale_out_1000: bool = False,
     wdir: str | None = None,
     do_clean: bool = False,
-) -> VGradFlipTestParameters:
+) -> VGradFlipTestParametersTagged:
     """
     Build parameters.
     
@@ -120,7 +105,7 @@ def v__grad_flip_test_params(
         Parameter dictionary
     """
     params = {
-        "@type": "afni.@GradFlipTest",
+        "@type": "afni/@GradFlipTest",
         "dwi": dwi,
         "scale_out_1000": scale_out_1000,
         "do_clean": do_clean,
@@ -167,66 +152,66 @@ def v__grad_flip_test_cargs(
     cargs.append("@GradFlipTest")
     cargs.extend([
         "-in_dwi",
-        execution.input_file(params.get("dwi"))
+        execution.input_file(params.get("dwi", None))
     ])
-    if params.get("grad_row_vec") is not None:
+    if params.get("grad_row_vec", None) is not None:
         cargs.extend([
             "-in_row_vec",
-            execution.input_file(params.get("grad_row_vec"))
+            execution.input_file(params.get("grad_row_vec", None))
         ])
-    if params.get("grad_col_vec") is not None:
+    if params.get("grad_col_vec", None) is not None:
         cargs.extend([
             "-in_col_vec",
-            execution.input_file(params.get("grad_col_vec"))
+            execution.input_file(params.get("grad_col_vec", None))
         ])
-    if params.get("grad_col_matA") is not None:
+    if params.get("grad_col_matA", None) is not None:
         cargs.extend([
             "-in_col_matA",
-            execution.input_file(params.get("grad_col_matA"))
+            execution.input_file(params.get("grad_col_matA", None))
         ])
-    if params.get("grad_col_matT") is not None:
+    if params.get("grad_col_matT", None) is not None:
         cargs.extend([
             "-in_col_matT",
-            execution.input_file(params.get("grad_col_matT"))
+            execution.input_file(params.get("grad_col_matT", None))
         ])
-    if params.get("mask") is not None:
+    if params.get("mask", None) is not None:
         cargs.extend([
             "-mask",
-            execution.input_file(params.get("mask"))
+            execution.input_file(params.get("mask", None))
         ])
-    if params.get("bvals") is not None:
+    if params.get("bvals", None) is not None:
         cargs.extend([
             "-in_bvals",
-            execution.input_file(params.get("bvals"))
+            execution.input_file(params.get("bvals", None))
         ])
-    if params.get("thresh_fa") is not None:
+    if params.get("thresh_fa", None) is not None:
         cargs.extend([
             "-alg_Thresh_FA",
-            str(params.get("thresh_fa"))
+            str(params.get("thresh_fa", None))
         ])
-    if params.get("thresh_len") is not None:
+    if params.get("thresh_len", None) is not None:
         cargs.extend([
             "-alg_Thresh_Len",
-            str(params.get("thresh_len"))
+            str(params.get("thresh_len", None))
         ])
-    if params.get("prefix") is not None:
+    if params.get("prefix", None) is not None:
         cargs.extend([
             "-prefix",
-            params.get("prefix")
+            params.get("prefix", None)
         ])
-    if params.get("check_abs_min") is not None:
+    if params.get("check_abs_min", None) is not None:
         cargs.extend([
             "-check_abs_min",
-            str(params.get("check_abs_min"))
+            str(params.get("check_abs_min", None))
         ])
-    if params.get("scale_out_1000"):
+    if params.get("scale_out_1000", False):
         cargs.append("-scale_out_1000")
-    if params.get("wdir") is not None:
+    if params.get("wdir", None) is not None:
         cargs.extend([
             "-wdir",
-            params.get("wdir")
+            params.get("wdir", None)
         ])
-    if params.get("do_clean"):
+    if params.get("do_clean", False):
         cargs.append("-do_clean")
     return cargs
 
@@ -246,7 +231,7 @@ def v__grad_flip_test_outputs(
     """
     ret = VGradFlipTestOutputs(
         root=execution.output_file("."),
-        output_file=execution.output_file(params.get("prefix") + ".txt") if (params.get("prefix") is not None) else None,
+        output_file=execution.output_file(params.get("prefix", None) + ".txt") if (params.get("prefix") is not None) else None,
         temp_directory=execution.output_file("_tmp_TESTFLIP"),
     )
     return ret
@@ -352,7 +337,6 @@ def v__grad_flip_test(
 
 __all__ = [
     "VGradFlipTestOutputs",
-    "VGradFlipTestParameters",
     "V__GRAD_FLIP_TEST_METADATA",
     "v__grad_flip_test",
     "v__grad_flip_test_execute",

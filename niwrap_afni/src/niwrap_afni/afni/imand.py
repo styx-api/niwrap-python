@@ -14,48 +14,22 @@ IMAND_METADATA = Metadata(
 
 
 ImandParameters = typing.TypedDict('ImandParameters', {
-    "@type": typing.Literal["afni.imand"],
+    "@type": typing.NotRequired[typing.Literal["afni/imand"]],
+    "threshold": typing.NotRequired[float | None],
+    "input_images": list[InputPathType],
+    "output_image": str,
+})
+ImandParametersTagged = typing.TypedDict('ImandParametersTagged', {
+    "@type": typing.Literal["afni/imand"],
     "threshold": typing.NotRequired[float | None],
     "input_images": list[InputPathType],
     "output_image": str,
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "afni.imand": imand_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "afni.imand": imand_outputs,
-    }.get(t)
-
-
 class ImandOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `imand(...)`.
+    Output object returned when calling `ImandParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -67,7 +41,7 @@ def imand_params(
     input_images: list[InputPathType],
     output_image: str,
     threshold: float | None = None,
-) -> ImandParameters:
+) -> ImandParametersTagged:
     """
     Build parameters.
     
@@ -81,7 +55,7 @@ def imand_params(
         Parameter dictionary
     """
     params = {
-        "@type": "afni.imand",
+        "@type": "afni/imand",
         "input_images": input_images,
         "output_image": output_image,
     }
@@ -105,13 +79,13 @@ def imand_cargs(
     """
     cargs = []
     cargs.append("imand")
-    if params.get("threshold") is not None:
+    if params.get("threshold", None) is not None:
         cargs.extend([
             "--thresh",
-            str(params.get("threshold"))
+            str(params.get("threshold", None))
         ])
-    cargs.extend([execution.input_file(f) for f in params.get("input_images")])
-    cargs.append(params.get("output_image"))
+    cargs.extend([execution.input_file(f) for f in params.get("input_images", None)])
+    cargs.append(params.get("output_image", None))
     return cargs
 
 
@@ -130,7 +104,7 @@ def imand_outputs(
     """
     ret = ImandOutputs(
         root=execution.output_file("."),
-        outfile=execution.output_file(params.get("output_image")),
+        outfile=execution.output_file(params.get("output_image", None)),
     )
     return ret
 
@@ -201,7 +175,6 @@ def imand(
 __all__ = [
     "IMAND_METADATA",
     "ImandOutputs",
-    "ImandParameters",
     "imand",
     "imand_execute",
     "imand_params",

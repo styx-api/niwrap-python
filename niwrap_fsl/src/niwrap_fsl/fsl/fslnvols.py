@@ -14,45 +14,18 @@ FSLNVOLS_METADATA = Metadata(
 
 
 FslnvolsParameters = typing.TypedDict('FslnvolsParameters', {
-    "@type": typing.Literal["fsl.fslnvols"],
+    "@type": typing.NotRequired[typing.Literal["fsl/fslnvols"]],
+    "infile": InputPathType,
+})
+FslnvolsParametersTagged = typing.TypedDict('FslnvolsParametersTagged', {
+    "@type": typing.Literal["fsl/fslnvols"],
     "infile": InputPathType,
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "fsl.fslnvols": fslnvols_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-    }.get(t)
-
-
 class FslnvolsOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `fslnvols(...)`.
+    Output object returned when calling `FslnvolsParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -60,7 +33,7 @@ class FslnvolsOutputs(typing.NamedTuple):
 
 def fslnvols_params(
     infile: InputPathType,
-) -> FslnvolsParameters:
+) -> FslnvolsParametersTagged:
     """
     Build parameters.
     
@@ -70,7 +43,7 @@ def fslnvols_params(
         Parameter dictionary
     """
     params = {
-        "@type": "fsl.fslnvols",
+        "@type": "fsl/fslnvols",
         "infile": infile,
     }
     return params
@@ -91,7 +64,7 @@ def fslnvols_cargs(
     """
     cargs = []
     cargs.append("fslnvols")
-    cargs.append(execution.input_file(params.get("infile")))
+    cargs.append(execution.input_file(params.get("infile", None)))
     return cargs
 
 
@@ -170,7 +143,6 @@ def fslnvols(
 __all__ = [
     "FSLNVOLS_METADATA",
     "FslnvolsOutputs",
-    "FslnvolsParameters",
     "fslnvols",
     "fslnvols_execute",
     "fslnvols_params",

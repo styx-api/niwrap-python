@@ -14,7 +14,22 @@ MRI_STOPMASK_METADATA = Metadata(
 
 
 MriStopmaskParameters = typing.TypedDict('MriStopmaskParameters', {
-    "@type": typing.Literal["freesurfer.mri_stopmask"],
+    "@type": typing.NotRequired[typing.Literal["freesurfer/mri_stopmask"]],
+    "output_mask": str,
+    "filled": list[InputPathType],
+    "aseg_presurf": InputPathType,
+    "lateral_ventricles": bool,
+    "wmsa": typing.NotRequired[float | None],
+    "wm_voxels": typing.NotRequired[InputPathType | None],
+    "brain_final_surfs": typing.NotRequired[InputPathType | None],
+    "no_filled": bool,
+    "no_lv": bool,
+    "no_wmsa": bool,
+    "no_wm": bool,
+    "no_bfs": bool,
+})
+MriStopmaskParametersTagged = typing.TypedDict('MriStopmaskParametersTagged', {
+    "@type": typing.Literal["freesurfer/mri_stopmask"],
     "output_mask": str,
     "filled": list[InputPathType],
     "aseg_presurf": InputPathType,
@@ -30,41 +45,9 @@ MriStopmaskParameters = typing.TypedDict('MriStopmaskParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "freesurfer.mri_stopmask": mri_stopmask_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "freesurfer.mri_stopmask": mri_stopmask_outputs,
-    }.get(t)
-
-
 class MriStopmaskOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `mri_stopmask(...)`.
+    Output object returned when calling `MriStopmaskParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -85,7 +68,7 @@ def mri_stopmask_params(
     no_wmsa: bool = False,
     no_wm: bool = False,
     no_bfs: bool = False,
-) -> MriStopmaskParameters:
+) -> MriStopmaskParametersTagged:
     """
     Build parameters.
     
@@ -110,7 +93,7 @@ def mri_stopmask_params(
         Parameter dictionary
     """
     params = {
-        "@type": "freesurfer.mri_stopmask",
+        "@type": "freesurfer/mri_stopmask",
         "output_mask": output_mask,
         "filled": filled,
         "aseg_presurf": aseg_presurf,
@@ -147,42 +130,42 @@ def mri_stopmask_cargs(
     cargs.append("mri_stopmask")
     cargs.extend([
         "--o",
-        params.get("output_mask")
+        params.get("output_mask", None)
     ])
     cargs.extend([
         "--filled",
-        *[execution.input_file(f) for f in params.get("filled")]
+        *[execution.input_file(f) for f in params.get("filled", None)]
     ])
     cargs.extend([
         "--aseg",
-        execution.input_file(params.get("aseg_presurf"))
+        execution.input_file(params.get("aseg_presurf", None))
     ])
-    if params.get("lateral_ventricles"):
+    if params.get("lateral_ventricles", False):
         cargs.append("--lv")
-    if params.get("wmsa") is not None:
+    if params.get("wmsa", None) is not None:
         cargs.extend([
             "--wmsa",
-            str(params.get("wmsa"))
+            str(params.get("wmsa", None))
         ])
-    if params.get("wm_voxels") is not None:
+    if params.get("wm_voxels", None) is not None:
         cargs.extend([
             "--wm",
-            execution.input_file(params.get("wm_voxels"))
+            execution.input_file(params.get("wm_voxels", None))
         ])
-    if params.get("brain_final_surfs") is not None:
+    if params.get("brain_final_surfs", None) is not None:
         cargs.extend([
             "--bfs",
-            execution.input_file(params.get("brain_final_surfs"))
+            execution.input_file(params.get("brain_final_surfs", None))
         ])
-    if params.get("no_filled"):
+    if params.get("no_filled", False):
         cargs.append("--no-filled")
-    if params.get("no_lv"):
+    if params.get("no_lv", False):
         cargs.append("--no-lv")
-    if params.get("no_wmsa"):
+    if params.get("no_wmsa", False):
         cargs.append("--no-wmsa")
-    if params.get("no_wm"):
+    if params.get("no_wm", False):
         cargs.append("--no-wm")
-    if params.get("no_bfs"):
+    if params.get("no_bfs", False):
         cargs.append("--no-bfs")
     return cargs
 
@@ -202,7 +185,7 @@ def mri_stopmask_outputs(
     """
     ret = MriStopmaskOutputs(
         root=execution.output_file("."),
-        generated_mask=execution.output_file(params.get("output_mask")),
+        generated_mask=execution.output_file(params.get("output_mask", None)),
     )
     return ret
 
@@ -304,7 +287,6 @@ def mri_stopmask(
 __all__ = [
     "MRI_STOPMASK_METADATA",
     "MriStopmaskOutputs",
-    "MriStopmaskParameters",
     "mri_stopmask",
     "mri_stopmask_execute",
     "mri_stopmask_params",

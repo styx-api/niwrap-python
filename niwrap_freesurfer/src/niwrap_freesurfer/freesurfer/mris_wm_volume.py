@@ -14,7 +14,16 @@ MRIS_WM_VOLUME_METADATA = Metadata(
 
 
 MrisWmVolumeParameters = typing.TypedDict('MrisWmVolumeParameters', {
-    "@type": typing.Literal["freesurfer.mris_wm_volume"],
+    "@type": typing.NotRequired[typing.Literal["freesurfer/mris_wm_volume"]],
+    "subject": str,
+    "hemi": str,
+    "subjects_dir": typing.NotRequired[str | None],
+    "whitesurfname": typing.NotRequired[str | None],
+    "asegname": typing.NotRequired[str | None],
+    "verbose": bool,
+})
+MrisWmVolumeParametersTagged = typing.TypedDict('MrisWmVolumeParametersTagged', {
+    "@type": typing.Literal["freesurfer/mris_wm_volume"],
     "subject": str,
     "hemi": str,
     "subjects_dir": typing.NotRequired[str | None],
@@ -24,40 +33,9 @@ MrisWmVolumeParameters = typing.TypedDict('MrisWmVolumeParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "freesurfer.mris_wm_volume": mris_wm_volume_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-    }.get(t)
-
-
 class MrisWmVolumeOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `mris_wm_volume(...)`.
+    Output object returned when calling `MrisWmVolumeParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -70,7 +48,7 @@ def mris_wm_volume_params(
     whitesurfname: str | None = None,
     asegname: str | None = None,
     verbose: bool = False,
-) -> MrisWmVolumeParameters:
+) -> MrisWmVolumeParametersTagged:
     """
     Build parameters.
     
@@ -85,7 +63,7 @@ def mris_wm_volume_params(
         Parameter dictionary
     """
     params = {
-        "@type": "freesurfer.mris_wm_volume",
+        "@type": "freesurfer/mris_wm_volume",
         "subject": subject,
         "hemi": hemi,
         "verbose": verbose,
@@ -114,24 +92,24 @@ def mris_wm_volume_cargs(
     """
     cargs = []
     cargs.append("mris_wm_volume")
-    cargs.append(params.get("subject"))
-    cargs.append(params.get("hemi"))
-    if params.get("subjects_dir") is not None:
+    cargs.append(params.get("subject", None))
+    cargs.append(params.get("hemi", None))
+    if params.get("subjects_dir", None) is not None:
         cargs.extend([
             "-SDIR",
-            params.get("subjects_dir")
+            params.get("subjects_dir", None)
         ])
-    if params.get("whitesurfname") is not None:
+    if params.get("whitesurfname", None) is not None:
         cargs.extend([
             "-white",
-            params.get("whitesurfname")
+            params.get("whitesurfname", None)
         ])
-    if params.get("asegname") is not None:
+    if params.get("asegname", None) is not None:
         cargs.extend([
             "-aseg",
-            params.get("asegname")
+            params.get("asegname", None)
         ])
-    if params.get("verbose"):
+    if params.get("verbose", False):
         cargs.append("-v")
     return cargs
 
@@ -228,7 +206,6 @@ def mris_wm_volume(
 __all__ = [
     "MRIS_WM_VOLUME_METADATA",
     "MrisWmVolumeOutputs",
-    "MrisWmVolumeParameters",
     "mris_wm_volume",
     "mris_wm_volume_execute",
     "mris_wm_volume_params",

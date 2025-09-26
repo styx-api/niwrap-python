@@ -14,47 +14,20 @@ FSL_GEN_3_D_METADATA = Metadata(
 
 
 FslGen3DParameters = typing.TypedDict('FslGen3DParameters', {
-    "@type": typing.Literal["fsl.fsl_gen_3D"],
+    "@type": typing.NotRequired[typing.Literal["fsl/fsl_gen_3D"]],
+    "infile": InputPathType,
+    "outfile": InputPathType,
+})
+FslGen3DParametersTagged = typing.TypedDict('FslGen3DParametersTagged', {
+    "@type": typing.Literal["fsl/fsl_gen_3D"],
     "infile": InputPathType,
     "outfile": InputPathType,
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "fsl.fsl_gen_3D": fsl_gen_3_d_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "fsl.fsl_gen_3D": fsl_gen_3_d_outputs,
-    }.get(t)
-
-
 class FslGen3DOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `fsl_gen_3_d(...)`.
+    Output object returned when calling `FslGen3DParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -65,7 +38,7 @@ class FslGen3DOutputs(typing.NamedTuple):
 def fsl_gen_3_d_params(
     infile: InputPathType,
     outfile: InputPathType,
-) -> FslGen3DParameters:
+) -> FslGen3DParametersTagged:
     """
     Build parameters.
     
@@ -76,7 +49,7 @@ def fsl_gen_3_d_params(
         Parameter dictionary
     """
     params = {
-        "@type": "fsl.fsl_gen_3D",
+        "@type": "fsl/fsl_gen_3D",
         "infile": infile,
         "outfile": outfile,
     }
@@ -98,8 +71,8 @@ def fsl_gen_3_d_cargs(
     """
     cargs = []
     cargs.append("fsl_gen_3D")
-    cargs.append(execution.input_file(params.get("infile")))
-    cargs.append(execution.input_file(params.get("outfile")))
+    cargs.append(execution.input_file(params.get("infile", None)))
+    cargs.append(execution.input_file(params.get("outfile", None)))
     return cargs
 
 
@@ -118,7 +91,7 @@ def fsl_gen_3_d_outputs(
     """
     ret = FslGen3DOutputs(
         root=execution.output_file("."),
-        output_snapshot=execution.output_file(pathlib.Path(params.get("outfile")).name),
+        output_snapshot=execution.output_file(pathlib.Path(params.get("outfile", None)).name),
     )
     return ret
 
@@ -182,7 +155,6 @@ def fsl_gen_3_d(
 __all__ = [
     "FSL_GEN_3_D_METADATA",
     "FslGen3DOutputs",
-    "FslGen3DParameters",
     "fsl_gen_3_d",
     "fsl_gen_3_d_execute",
     "fsl_gen_3_d_params",

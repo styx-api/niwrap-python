@@ -14,7 +14,21 @@ FAT_PROC_CONNEC_VIS_METADATA = Metadata(
 
 
 FatProcConnecVisParameters = typing.TypedDict('FatProcConnecVisParameters', {
-    "@type": typing.Literal["afni.fat_proc_connec_vis"],
+    "@type": typing.NotRequired[typing.Literal["afni/fat_proc_connec_vis"]],
+    "in_rois": str,
+    "prefix": str,
+    "prefix_file": typing.NotRequired[str | None],
+    "tsmoo_kpb": typing.NotRequired[float | None],
+    "tsmoo_niter": typing.NotRequired[float | None],
+    "iso_opt": typing.NotRequired[str | None],
+    "trackid_no_or": bool,
+    "output_tcat": bool,
+    "output_tstat": bool,
+    "wdir": typing.NotRequired[str | None],
+    "no_clean": bool,
+})
+FatProcConnecVisParametersTagged = typing.TypedDict('FatProcConnecVisParametersTagged', {
+    "@type": typing.Literal["afni/fat_proc_connec_vis"],
     "in_rois": str,
     "prefix": str,
     "prefix_file": typing.NotRequired[str | None],
@@ -29,41 +43,9 @@ FatProcConnecVisParameters = typing.TypedDict('FatProcConnecVisParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "afni.fat_proc_connec_vis": fat_proc_connec_vis_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "afni.fat_proc_connec_vis": fat_proc_connec_vis_outputs,
-    }.get(t)
-
-
 class FatProcConnecVisOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `fat_proc_connec_vis(...)`.
+    Output object returned when calling `FatProcConnecVisParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -88,7 +70,7 @@ def fat_proc_connec_vis_params(
     output_tstat: bool = False,
     wdir: str | None = None,
     no_clean: bool = False,
-) -> FatProcConnecVisParameters:
+) -> FatProcConnecVisParametersTagged:
     """
     Build parameters.
     
@@ -132,7 +114,7 @@ def fat_proc_connec_vis_params(
         Parameter dictionary
     """
     params = {
-        "@type": "afni.fat_proc_connec_vis",
+        "@type": "afni/fat_proc_connec_vis",
         "in_rois": in_rois,
         "prefix": prefix,
         "trackid_no_or": trackid_no_or,
@@ -168,40 +150,40 @@ def fat_proc_connec_vis_cargs(
     """
     cargs = []
     cargs.append("fat_proc_connec_vis")
-    cargs.append(params.get("in_rois"))
-    cargs.append(params.get("prefix"))
-    if params.get("prefix_file") is not None:
+    cargs.append(params.get("in_rois", None))
+    cargs.append(params.get("prefix", None))
+    if params.get("prefix_file", None) is not None:
         cargs.extend([
             "-prefix_file",
-            params.get("prefix_file")
+            params.get("prefix_file", None)
         ])
-    if params.get("tsmoo_kpb") is not None:
+    if params.get("tsmoo_kpb", None) is not None:
         cargs.extend([
             "-tsmoo_kpb",
-            str(params.get("tsmoo_kpb"))
+            str(params.get("tsmoo_kpb", None))
         ])
-    if params.get("tsmoo_niter") is not None:
+    if params.get("tsmoo_niter", None) is not None:
         cargs.extend([
             "-tsmoo_niter",
-            str(params.get("tsmoo_niter"))
+            str(params.get("tsmoo_niter", None))
         ])
-    if params.get("iso_opt") is not None:
+    if params.get("iso_opt", None) is not None:
         cargs.extend([
             "-iso_opt",
-            params.get("iso_opt")
+            params.get("iso_opt", None)
         ])
-    if params.get("trackid_no_or"):
+    if params.get("trackid_no_or", False):
         cargs.append("-trackid_no_or")
-    if params.get("output_tcat"):
+    if params.get("output_tcat", False):
         cargs.append("-output_tcat")
-    if params.get("output_tstat"):
+    if params.get("output_tstat", False):
         cargs.append("-output_tstat")
-    if params.get("wdir") is not None:
+    if params.get("wdir", None) is not None:
         cargs.extend([
             "-wdir",
-            params.get("wdir")
+            params.get("wdir", None)
         ])
-    if params.get("no_clean"):
+    if params.get("no_clean", False):
         cargs.append("-no_clean")
     return cargs
 
@@ -221,9 +203,9 @@ def fat_proc_connec_vis_outputs(
     """
     ret = FatProcConnecVisOutputs(
         root=execution.output_file("."),
-        cmd_txt=execution.output_file(params.get("prefix") + "_cmd.txt"),
-        tcat_file=execution.output_file(params.get("prefix") + "_tcat.nii.gz"),
-        tstat_file=execution.output_file(params.get("prefix") + "_tstat.nii.gz"),
+        cmd_txt=execution.output_file(params.get("prefix", None) + "_cmd.txt"),
+        tcat_file=execution.output_file(params.get("prefix", None) + "_tcat.nii.gz"),
+        tstat_file=execution.output_file(params.get("prefix", None) + "_tstat.nii.gz"),
     )
     return ret
 
@@ -344,7 +326,6 @@ def fat_proc_connec_vis(
 __all__ = [
     "FAT_PROC_CONNEC_VIS_METADATA",
     "FatProcConnecVisOutputs",
-    "FatProcConnecVisParameters",
     "fat_proc_connec_vis",
     "fat_proc_connec_vis_execute",
     "fat_proc_connec_vis_params",

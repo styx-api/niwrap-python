@@ -14,7 +14,25 @@ TCALC_METADATA = Metadata(
 
 
 TcalcParameters = typing.TypedDict('TcalcParameters', {
-    "@type": typing.Literal["fsl.tcalc"],
+    "@type": typing.NotRequired[typing.Literal["fsl/tcalc"]],
+    "input_image": InputPathType,
+    "output_image": str,
+    "echo_time": typing.NotRequired[float | None],
+    "repetition_time": typing.NotRequired[float | None],
+    "mrpar_file": typing.NotRequired[InputPathType | None],
+    "num_voxel_x": typing.NotRequired[float | None],
+    "num_voxel_y": typing.NotRequired[float | None],
+    "num_voxel_z": typing.NotRequired[float | None],
+    "voxel_size_x": typing.NotRequired[float | None],
+    "voxel_size_y": typing.NotRequired[float | None],
+    "voxel_size_z": typing.NotRequired[float | None],
+    "start_position": typing.NotRequired[float | None],
+    "noise_sigma": typing.NotRequired[float | None],
+    "save_flag": bool,
+    "verbose_flag": bool,
+})
+TcalcParametersTagged = typing.TypedDict('TcalcParametersTagged', {
+    "@type": typing.Literal["fsl/tcalc"],
     "input_image": InputPathType,
     "output_image": str,
     "echo_time": typing.NotRequired[float | None],
@@ -33,41 +51,9 @@ TcalcParameters = typing.TypedDict('TcalcParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "fsl.tcalc": tcalc_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "fsl.tcalc": tcalc_outputs,
-    }.get(t)
-
-
 class TcalcOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `tcalc(...)`.
+    Output object returned when calling `TcalcParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -93,7 +79,7 @@ def tcalc_params(
     noise_sigma: float | None = None,
     save_flag: bool = False,
     verbose_flag: bool = False,
-) -> TcalcParameters:
+) -> TcalcParametersTagged:
     """
     Build parameters.
     
@@ -120,7 +106,7 @@ def tcalc_params(
         Parameter dictionary
     """
     params = {
-        "@type": "fsl.tcalc",
+        "@type": "fsl/tcalc",
         "input_image": input_image,
         "output_image": output_image,
         "save_flag": save_flag,
@@ -166,66 +152,66 @@ def tcalc_cargs(
     """
     cargs = []
     cargs.append("tcalc")
-    cargs.append("--input=" + execution.input_file(params.get("input_image")))
-    cargs.append("--output=" + params.get("output_image"))
-    if params.get("echo_time") is not None:
+    cargs.append("--input=" + execution.input_file(params.get("input_image", None)))
+    cargs.append("--output=" + params.get("output_image", None))
+    if params.get("echo_time", None) is not None:
         cargs.extend([
             "--te",
-            str(params.get("echo_time"))
+            str(params.get("echo_time", None))
         ])
-    if params.get("repetition_time") is not None:
+    if params.get("repetition_time", None) is not None:
         cargs.extend([
             "--tr",
-            str(params.get("repetition_time"))
+            str(params.get("repetition_time", None))
         ])
-    if params.get("mrpar_file") is not None:
+    if params.get("mrpar_file", None) is not None:
         cargs.extend([
             "--mrpar",
-            execution.input_file(params.get("mrpar_file"))
+            execution.input_file(params.get("mrpar_file", None))
         ])
-    if params.get("num_voxel_x") is not None:
+    if params.get("num_voxel_x", None) is not None:
         cargs.extend([
             "--nx",
-            str(params.get("num_voxel_x"))
+            str(params.get("num_voxel_x", None))
         ])
-    if params.get("num_voxel_y") is not None:
+    if params.get("num_voxel_y", None) is not None:
         cargs.extend([
             "--ny",
-            str(params.get("num_voxel_y"))
+            str(params.get("num_voxel_y", None))
         ])
-    if params.get("num_voxel_z") is not None:
+    if params.get("num_voxel_z", None) is not None:
         cargs.extend([
             "--nz",
-            str(params.get("num_voxel_z"))
+            str(params.get("num_voxel_z", None))
         ])
-    if params.get("voxel_size_x") is not None:
+    if params.get("voxel_size_x", None) is not None:
         cargs.extend([
             "--dx",
-            str(params.get("voxel_size_x"))
+            str(params.get("voxel_size_x", None))
         ])
-    if params.get("voxel_size_y") is not None:
+    if params.get("voxel_size_y", None) is not None:
         cargs.extend([
             "--dy",
-            str(params.get("voxel_size_y"))
+            str(params.get("voxel_size_y", None))
         ])
-    if params.get("voxel_size_z") is not None:
+    if params.get("voxel_size_z", None) is not None:
         cargs.extend([
             "--dz",
-            str(params.get("voxel_size_z"))
+            str(params.get("voxel_size_z", None))
         ])
-    if params.get("start_position") is not None:
+    if params.get("start_position", None) is not None:
         cargs.extend([
             "--zstart",
-            str(params.get("start_position"))
+            str(params.get("start_position", None))
         ])
-    if params.get("noise_sigma") is not None:
+    if params.get("noise_sigma", None) is not None:
         cargs.extend([
             "--sigma",
-            str(params.get("noise_sigma"))
+            str(params.get("noise_sigma", None))
         ])
-    if params.get("save_flag"):
+    if params.get("save_flag", False):
         cargs.append("--save")
-    if params.get("verbose_flag"):
+    if params.get("verbose_flag", False):
         cargs.append("--verbose")
     return cargs
 
@@ -245,8 +231,8 @@ def tcalc_outputs(
     """
     ret = TcalcOutputs(
         root=execution.output_file("."),
-        output_image_file=execution.output_file(params.get("output_image")),
-        original_output_image_file=execution.output_file(params.get("output_image") + "_original"),
+        output_image_file=execution.output_file(params.get("output_image", None)),
+        original_output_image_file=execution.output_file(params.get("output_image", None) + "_original"),
     )
     return ret
 
@@ -352,7 +338,6 @@ def tcalc(
 __all__ = [
     "TCALC_METADATA",
     "TcalcOutputs",
-    "TcalcParameters",
     "tcalc",
     "tcalc_execute",
     "tcalc_params",

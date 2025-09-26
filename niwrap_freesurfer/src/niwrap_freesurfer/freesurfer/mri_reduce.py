@@ -14,47 +14,20 @@ MRI_REDUCE_METADATA = Metadata(
 
 
 MriReduceParameters = typing.TypedDict('MriReduceParameters', {
-    "@type": typing.Literal["freesurfer.mri_reduce"],
+    "@type": typing.NotRequired[typing.Literal["freesurfer/mri_reduce"]],
+    "input_file": InputPathType,
+    "output_file": str,
+})
+MriReduceParametersTagged = typing.TypedDict('MriReduceParametersTagged', {
+    "@type": typing.Literal["freesurfer/mri_reduce"],
     "input_file": InputPathType,
     "output_file": str,
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "freesurfer.mri_reduce": mri_reduce_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "freesurfer.mri_reduce": mri_reduce_outputs,
-    }.get(t)
-
-
 class MriReduceOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `mri_reduce(...)`.
+    Output object returned when calling `MriReduceParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -65,7 +38,7 @@ class MriReduceOutputs(typing.NamedTuple):
 def mri_reduce_params(
     input_file: InputPathType,
     output_file: str,
-) -> MriReduceParameters:
+) -> MriReduceParametersTagged:
     """
     Build parameters.
     
@@ -76,7 +49,7 @@ def mri_reduce_params(
         Parameter dictionary
     """
     params = {
-        "@type": "freesurfer.mri_reduce",
+        "@type": "freesurfer/mri_reduce",
         "input_file": input_file,
         "output_file": output_file,
     }
@@ -98,8 +71,8 @@ def mri_reduce_cargs(
     """
     cargs = []
     cargs.append("mri_reduce")
-    cargs.append(execution.input_file(params.get("input_file")))
-    cargs.append(params.get("output_file"))
+    cargs.append(execution.input_file(params.get("input_file", None)))
+    cargs.append(params.get("output_file", None))
     return cargs
 
 
@@ -118,7 +91,7 @@ def mri_reduce_outputs(
     """
     ret = MriReduceOutputs(
         root=execution.output_file("."),
-        reduced_output=execution.output_file(params.get("output_file")),
+        reduced_output=execution.output_file(params.get("output_file", None)),
     )
     return ret
 
@@ -182,7 +155,6 @@ def mri_reduce(
 __all__ = [
     "MRI_REDUCE_METADATA",
     "MriReduceOutputs",
-    "MriReduceParameters",
     "mri_reduce",
     "mri_reduce_execute",
     "mri_reduce_params",

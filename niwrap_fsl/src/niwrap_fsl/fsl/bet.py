@@ -14,7 +14,31 @@ BET_METADATA = Metadata(
 
 
 BetParameters = typing.TypedDict('BetParameters', {
-    "@type": typing.Literal["fsl.bet"],
+    "@type": typing.NotRequired[typing.Literal["fsl/bet"]],
+    "infile": InputPathType,
+    "maskfile": str,
+    "fractional_intensity": typing.NotRequired[float | None],
+    "vg_fractional_intensity": typing.NotRequired[float | None],
+    "center_of_gravity": typing.NotRequired[list[float] | None],
+    "overlay": bool,
+    "binary_mask": bool,
+    "approx_skull": bool,
+    "no_seg_output": bool,
+    "vtk_mesh": bool,
+    "head_radius": typing.NotRequired[float | None],
+    "thresholding": bool,
+    "robust_iters": bool,
+    "residual_optic_cleanup": bool,
+    "reduce_bias": bool,
+    "slice_padding": bool,
+    "whole_set_mask": bool,
+    "additional_surfaces": bool,
+    "additional_surfaces_t2": typing.NotRequired[InputPathType | None],
+    "verbose": bool,
+    "debug": bool,
+})
+BetParametersTagged = typing.TypedDict('BetParametersTagged', {
+    "@type": typing.Literal["fsl/bet"],
     "infile": InputPathType,
     "maskfile": str,
     "fractional_intensity": typing.NotRequired[float | None],
@@ -39,41 +63,9 @@ BetParameters = typing.TypedDict('BetParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "fsl.bet": bet_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "fsl.bet": bet_outputs,
-    }.get(t)
-
-
 class BetOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `bet(...)`.
+    Output object returned when calling `BetParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -131,7 +123,7 @@ def bet_params(
     additional_surfaces_t2: InputPathType | None = None,
     verbose: bool = False,
     debug: bool = False,
-) -> BetParameters:
+) -> BetParametersTagged:
     """
     Build parameters.
     
@@ -193,7 +185,7 @@ def bet_params(
         Parameter dictionary
     """
     params = {
-        "@type": "fsl.bet",
+        "@type": "fsl/bet",
         "infile": infile,
         "maskfile": maskfile,
         "overlay": overlay,
@@ -239,60 +231,60 @@ def bet_cargs(
     """
     cargs = []
     cargs.append("bet")
-    cargs.append(execution.input_file(params.get("infile")))
-    cargs.append(params.get("maskfile"))
-    if params.get("fractional_intensity") is not None:
+    cargs.append(execution.input_file(params.get("infile", None)))
+    cargs.append(params.get("maskfile", "img_bet"))
+    if params.get("fractional_intensity", None) is not None:
         cargs.extend([
             "-f",
-            str(params.get("fractional_intensity"))
+            str(params.get("fractional_intensity", None))
         ])
-    if params.get("vg_fractional_intensity") is not None:
+    if params.get("vg_fractional_intensity", None) is not None:
         cargs.extend([
             "-g",
-            str(params.get("vg_fractional_intensity"))
+            str(params.get("vg_fractional_intensity", None))
         ])
-    if params.get("center_of_gravity") is not None:
+    if params.get("center_of_gravity", None) is not None:
         cargs.extend([
             "-c",
-            *map(str, params.get("center_of_gravity"))
+            *map(str, params.get("center_of_gravity", None))
         ])
-    if params.get("overlay"):
+    if params.get("overlay", False):
         cargs.append("-o")
-    if params.get("binary_mask"):
+    if params.get("binary_mask", False):
         cargs.append("-m")
-    if params.get("approx_skull"):
+    if params.get("approx_skull", False):
         cargs.append("-s")
-    if params.get("no_seg_output"):
+    if params.get("no_seg_output", False):
         cargs.append("-n")
-    if params.get("vtk_mesh"):
+    if params.get("vtk_mesh", False):
         cargs.append("-e")
-    if params.get("head_radius") is not None:
+    if params.get("head_radius", None) is not None:
         cargs.extend([
             "-r",
-            str(params.get("head_radius"))
+            str(params.get("head_radius", None))
         ])
-    if params.get("thresholding"):
+    if params.get("thresholding", False):
         cargs.append("-t")
-    if params.get("robust_iters"):
+    if params.get("robust_iters", False):
         cargs.append("-R")
-    if params.get("residual_optic_cleanup"):
+    if params.get("residual_optic_cleanup", False):
         cargs.append("-S")
-    if params.get("reduce_bias"):
+    if params.get("reduce_bias", False):
         cargs.append("-B")
-    if params.get("slice_padding"):
+    if params.get("slice_padding", False):
         cargs.append("-Z")
-    if params.get("whole_set_mask"):
+    if params.get("whole_set_mask", False):
         cargs.append("-F")
-    if params.get("additional_surfaces"):
+    if params.get("additional_surfaces", False):
         cargs.append("-A")
-    if params.get("additional_surfaces_t2") is not None:
+    if params.get("additional_surfaces_t2", None) is not None:
         cargs.extend([
             "-A2",
-            execution.input_file(params.get("additional_surfaces_t2"))
+            execution.input_file(params.get("additional_surfaces_t2", None))
         ])
-    if params.get("verbose"):
+    if params.get("verbose", False):
         cargs.append("-v")
-    if params.get("debug"):
+    if params.get("debug", False):
         cargs.append("-d")
     return cargs
 
@@ -312,21 +304,21 @@ def bet_outputs(
     """
     ret = BetOutputs(
         root=execution.output_file("."),
-        outfile=execution.output_file(params.get("maskfile") + ".nii.gz"),
-        binary_mask=execution.output_file(params.get("maskfile") + "_mask.nii.gz"),
-        overlay_file=execution.output_file(params.get("maskfile") + "_overlay.nii.gz"),
-        approx_skull_img=execution.output_file(params.get("maskfile") + "_skull.nii.gz"),
-        output_vtk_mesh=execution.output_file(params.get("maskfile") + "_mesh.vtk"),
-        skull_mask=execution.output_file(params.get("maskfile") + "_skull_mask.nii.gz"),
-        out_inskull_mask=execution.output_file(params.get("maskfile") + "_inskull_mask.nii.gz"),
-        out_inskull_mesh=execution.output_file(params.get("maskfile") + "_inskull_mesh.nii.gz"),
-        out_inskull_off=execution.output_file(params.get("maskfile") + "_inskull_mesh.off"),
-        out_outskin_mask=execution.output_file(params.get("maskfile") + "_outskin_mask.nii.gz"),
-        out_outskin_mesh=execution.output_file(params.get("maskfile") + "_outskin_mesh.nii.gz"),
-        out_outskin_off=execution.output_file(params.get("maskfile") + "_outskin_mesh.off"),
-        out_outskull_mask=execution.output_file(params.get("maskfile") + "_outskull_mask.nii.gz"),
-        out_outskull_mesh=execution.output_file(params.get("maskfile") + "_outskull_mesh.nii.gz"),
-        out_outskull_off=execution.output_file(params.get("maskfile") + "_outskull_mesh.off"),
+        outfile=execution.output_file(params.get("maskfile", "img_bet") + ".nii.gz"),
+        binary_mask=execution.output_file(params.get("maskfile", "img_bet") + "_mask.nii.gz"),
+        overlay_file=execution.output_file(params.get("maskfile", "img_bet") + "_overlay.nii.gz"),
+        approx_skull_img=execution.output_file(params.get("maskfile", "img_bet") + "_skull.nii.gz"),
+        output_vtk_mesh=execution.output_file(params.get("maskfile", "img_bet") + "_mesh.vtk"),
+        skull_mask=execution.output_file(params.get("maskfile", "img_bet") + "_skull_mask.nii.gz"),
+        out_inskull_mask=execution.output_file(params.get("maskfile", "img_bet") + "_inskull_mask.nii.gz"),
+        out_inskull_mesh=execution.output_file(params.get("maskfile", "img_bet") + "_inskull_mesh.nii.gz"),
+        out_inskull_off=execution.output_file(params.get("maskfile", "img_bet") + "_inskull_mesh.off"),
+        out_outskin_mask=execution.output_file(params.get("maskfile", "img_bet") + "_outskin_mask.nii.gz"),
+        out_outskin_mesh=execution.output_file(params.get("maskfile", "img_bet") + "_outskin_mesh.nii.gz"),
+        out_outskin_off=execution.output_file(params.get("maskfile", "img_bet") + "_outskin_mesh.off"),
+        out_outskull_mask=execution.output_file(params.get("maskfile", "img_bet") + "_outskull_mask.nii.gz"),
+        out_outskull_mesh=execution.output_file(params.get("maskfile", "img_bet") + "_outskull_mesh.nii.gz"),
+        out_outskull_off=execution.output_file(params.get("maskfile", "img_bet") + "_outskull_mesh.off"),
     )
     return ret
 
@@ -479,7 +471,6 @@ def bet(
 __all__ = [
     "BET_METADATA",
     "BetOutputs",
-    "BetParameters",
     "bet",
     "bet_execute",
     "bet_params",

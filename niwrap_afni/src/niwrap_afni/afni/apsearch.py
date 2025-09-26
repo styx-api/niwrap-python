@@ -14,48 +14,22 @@ APSEARCH_METADATA = Metadata(
 
 
 ApsearchParameters = typing.TypedDict('ApsearchParameters', {
-    "@type": typing.Literal["afni.apsearch"],
+    "@type": typing.NotRequired[typing.Literal["afni/apsearch"]],
+    "search_term": str,
+    "file_output": typing.NotRequired[str | None],
+    "verbose": bool,
+})
+ApsearchParametersTagged = typing.TypedDict('ApsearchParametersTagged', {
+    "@type": typing.Literal["afni/apsearch"],
     "search_term": str,
     "file_output": typing.NotRequired[str | None],
     "verbose": bool,
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "afni.apsearch": apsearch_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "afni.apsearch": apsearch_outputs,
-    }.get(t)
-
-
 class ApsearchOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `apsearch(...)`.
+    Output object returned when calling `ApsearchParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -67,7 +41,7 @@ def apsearch_params(
     search_term: str,
     file_output: str | None = None,
     verbose: bool = False,
-) -> ApsearchParameters:
+) -> ApsearchParametersTagged:
     """
     Build parameters.
     
@@ -79,7 +53,7 @@ def apsearch_params(
         Parameter dictionary
     """
     params = {
-        "@type": "afni.apsearch",
+        "@type": "afni/apsearch",
         "search_term": search_term,
         "verbose": verbose,
     }
@@ -103,10 +77,10 @@ def apsearch_cargs(
     """
     cargs = []
     cargs.append("apsearch")
-    cargs.append(params.get("search_term"))
-    if params.get("file_output") is not None:
-        cargs.append(params.get("file_output"))
-    if params.get("verbose"):
+    cargs.append(params.get("search_term", None))
+    if params.get("file_output", None) is not None:
+        cargs.append(params.get("file_output", None))
+    if params.get("verbose", False):
         cargs.append("-v")
     return cargs
 
@@ -126,7 +100,7 @@ def apsearch_outputs(
     """
     ret = ApsearchOutputs(
         root=execution.output_file("."),
-        output_file=execution.output_file(params.get("file_output")) if (params.get("file_output") is not None) else None,
+        output_file=execution.output_file(params.get("file_output", None)) if (params.get("file_output") is not None) else None,
     )
     return ret
 
@@ -193,7 +167,6 @@ def apsearch(
 __all__ = [
     "APSEARCH_METADATA",
     "ApsearchOutputs",
-    "ApsearchParameters",
     "apsearch",
     "apsearch_execute",
     "apsearch_params",

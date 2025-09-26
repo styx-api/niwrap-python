@@ -14,7 +14,16 @@ SUMA_CHANGE_SPEC_METADATA = Metadata(
 
 
 SumaChangeSpecParameters = typing.TypedDict('SumaChangeSpecParameters', {
-    "@type": typing.Literal["afni.suma_change_spec"],
+    "@type": typing.NotRequired[typing.Literal["afni/suma_change_spec"]],
+    "input": InputPathType,
+    "state": str,
+    "domainparent": typing.NotRequired[str | None],
+    "output": typing.NotRequired[str | None],
+    "remove": bool,
+    "anatomical": bool,
+})
+SumaChangeSpecParametersTagged = typing.TypedDict('SumaChangeSpecParametersTagged', {
+    "@type": typing.Literal["afni/suma_change_spec"],
     "input": InputPathType,
     "state": str,
     "domainparent": typing.NotRequired[str | None],
@@ -24,41 +33,9 @@ SumaChangeSpecParameters = typing.TypedDict('SumaChangeSpecParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "afni.suma_change_spec": suma_change_spec_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "afni.suma_change_spec": suma_change_spec_outputs,
-    }.get(t)
-
-
 class SumaChangeSpecOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `suma_change_spec(...)`.
+    Output object returned when calling `SumaChangeSpecParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -75,7 +52,7 @@ def suma_change_spec_params(
     output: str | None = None,
     remove: bool = False,
     anatomical: bool = False,
-) -> SumaChangeSpecParameters:
+) -> SumaChangeSpecParametersTagged:
     """
     Build parameters.
     
@@ -90,7 +67,7 @@ def suma_change_spec_params(
         Parameter dictionary
     """
     params = {
-        "@type": "afni.suma_change_spec",
+        "@type": "afni/suma_change_spec",
         "input": input_,
         "state": state,
         "remove": remove,
@@ -118,15 +95,15 @@ def suma_change_spec_cargs(
     """
     cargs = []
     cargs.append("suma_change_spec")
-    cargs.append(execution.input_file(params.get("input")))
-    cargs.append(params.get("state"))
-    if params.get("domainparent") is not None:
-        cargs.append(params.get("domainparent"))
-    if params.get("output") is not None:
-        cargs.append(params.get("output"))
-    if params.get("remove"):
+    cargs.append(execution.input_file(params.get("input", None)))
+    cargs.append(params.get("state", None))
+    if params.get("domainparent", None) is not None:
+        cargs.append(params.get("domainparent", None))
+    if params.get("output", None) is not None:
+        cargs.append(params.get("output", None))
+    if params.get("remove", False):
         cargs.append("-remove")
-    if params.get("anatomical"):
+    if params.get("anatomical", False):
         cargs.append("-anatomical")
     return cargs
 
@@ -146,8 +123,8 @@ def suma_change_spec_outputs(
     """
     ret = SumaChangeSpecOutputs(
         root=execution.output_file("."),
-        output_spec=execution.output_file(params.get("output")) if (params.get("output") is not None) else None,
-        backup_spec=execution.output_file(pathlib.Path(params.get("input")).name + ".bkp"),
+        output_spec=execution.output_file(params.get("output", None)) if (params.get("output") is not None) else None,
+        backup_spec=execution.output_file(pathlib.Path(params.get("input", None)).name + ".bkp"),
     )
     return ret
 
@@ -223,7 +200,6 @@ def suma_change_spec(
 __all__ = [
     "SUMA_CHANGE_SPEC_METADATA",
     "SumaChangeSpecOutputs",
-    "SumaChangeSpecParameters",
     "suma_change_spec",
     "suma_change_spec_execute",
     "suma_change_spec_params",

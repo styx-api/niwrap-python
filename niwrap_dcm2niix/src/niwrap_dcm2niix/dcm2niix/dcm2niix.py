@@ -14,7 +14,39 @@ DCM2NIIX_METADATA = Metadata(
 
 
 Dcm2niixParameters = typing.TypedDict('Dcm2niixParameters', {
-    "@type": typing.Literal["dcm2niix.dcm2niix"],
+    "@type": typing.NotRequired[typing.Literal["dcm2niix/dcm2niix"]],
+    "compression_level": typing.NotRequired[float | None],
+    "adjacent": typing.NotRequired[typing.Literal["y", "n"] | None],
+    "bids": typing.NotRequired[typing.Literal["y", "n", "o"] | None],
+    "bids_anon": typing.NotRequired[typing.Literal["y", "n"] | None],
+    "comment": typing.NotRequired[str | None],
+    "depth": typing.NotRequired[float | None],
+    "export_format": typing.NotRequired[typing.Literal["y", "n", "o", "j", "b"] | None],
+    "filename": typing.NotRequired[str | None],
+    "defaults": typing.NotRequired[typing.Literal["y", "n", "o", "i"] | None],
+    "ignore_derived": typing.NotRequired[typing.Literal["y", "n"] | None],
+    "scaling": typing.NotRequired[typing.Literal["y", "n", "o"] | None],
+    "merge_2d": typing.NotRequired[typing.Literal["n", "y", "0", "1", "2"] | None],
+    "series_number": typing.NotRequired[str | None],
+    "output_dir": typing.NotRequired[str | None],
+    "philips_scaling": typing.NotRequired[typing.Literal["y", "n"] | None],
+    "search_mode": typing.NotRequired[typing.Literal["y", "l", "n"] | None],
+    "rename": typing.NotRequired[typing.Literal["y", "n"] | None],
+    "single_file": typing.NotRequired[typing.Literal["y", "n"] | None],
+    "update_check": bool,
+    "verbose": typing.NotRequired[typing.Literal["0", "1", "2"] | None],
+    "conflict_behavior": typing.NotRequired[float | None],
+    "crop_3d": typing.NotRequired[typing.Literal["y", "n", "i"] | None],
+    "compression": typing.NotRequired[typing.Literal["y", "o", "i", "n", "3"] | None],
+    "endian": typing.NotRequired[typing.Literal["y", "n", "o"] | None],
+    "progress": typing.NotRequired[typing.Literal["y", "n"] | None],
+    "ignore_trigger": bool,
+    "terse": bool,
+    "xml": bool,
+    "input_dir": InputPathType,
+})
+Dcm2niixParametersTagged = typing.TypedDict('Dcm2niixParametersTagged', {
+    "@type": typing.Literal["dcm2niix/dcm2niix"],
     "compression_level": typing.NotRequired[float | None],
     "adjacent": typing.NotRequired[typing.Literal["y", "n"] | None],
     "bids": typing.NotRequired[typing.Literal["y", "n", "o"] | None],
@@ -47,40 +79,9 @@ Dcm2niixParameters = typing.TypedDict('Dcm2niixParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "dcm2niix.dcm2niix": dcm2niix_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-    }.get(t)
-
-
 class Dcm2niixOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `dcm2niix_(...)`.
+    Output object returned when calling `Dcm2niixParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -116,7 +117,7 @@ def dcm2niix_params(
     ignore_trigger: bool = False,
     terse: bool = False,
     xml_: bool = False,
-) -> Dcm2niixParameters:
+) -> Dcm2niixParametersTagged:
     """
     Build parameters.
     
@@ -170,7 +171,7 @@ def dcm2niix_params(
         Parameter dictionary
     """
     params = {
-        "@type": "dcm2niix.dcm2niix",
+        "@type": "dcm2niix/dcm2niix",
         "update_check": update_check,
         "ignore_trigger": ignore_trigger,
         "terse": terse,
@@ -243,132 +244,132 @@ def dcm2niix_cargs(
     """
     cargs = []
     cargs.append("dcm2niix")
-    if params.get("compression_level") is not None:
-        cargs.append("-" + str(params.get("compression_level")))
-    if params.get("adjacent") is not None:
+    if params.get("compression_level", None) is not None:
+        cargs.append("-" + str(params.get("compression_level", None)))
+    if params.get("adjacent", None) is not None:
         cargs.extend([
             "-a",
-            params.get("adjacent")
+            params.get("adjacent", None)
         ])
-    if params.get("bids") is not None:
+    if params.get("bids", None) is not None:
         cargs.extend([
             "-b",
-            params.get("bids")
+            params.get("bids", None)
         ])
-    if params.get("bids_anon") is not None:
+    if params.get("bids_anon", None) is not None:
         cargs.extend([
             "-ba",
-            params.get("bids_anon")
+            params.get("bids_anon", None)
         ])
-    if params.get("comment") is not None:
+    if params.get("comment", None) is not None:
         cargs.extend([
             "-c",
-            params.get("comment")
+            params.get("comment", None)
         ])
-    if params.get("depth") is not None:
+    if params.get("depth", None) is not None:
         cargs.extend([
             "-d",
-            str(params.get("depth"))
+            str(params.get("depth", None))
         ])
-    if params.get("export_format") is not None:
+    if params.get("export_format", None) is not None:
         cargs.extend([
             "-e",
-            params.get("export_format")
+            params.get("export_format", None)
         ])
-    if params.get("filename") is not None:
+    if params.get("filename", None) is not None:
         cargs.extend([
             "-f",
-            params.get("filename")
+            params.get("filename", None)
         ])
-    if params.get("defaults") is not None:
+    if params.get("defaults", None) is not None:
         cargs.extend([
             "-g",
-            params.get("defaults")
+            params.get("defaults", None)
         ])
-    if params.get("ignore_derived") is not None:
+    if params.get("ignore_derived", None) is not None:
         cargs.extend([
             "-i",
-            params.get("ignore_derived")
+            params.get("ignore_derived", None)
         ])
-    if params.get("scaling") is not None:
+    if params.get("scaling", None) is not None:
         cargs.extend([
             "-l",
-            params.get("scaling")
+            params.get("scaling", None)
         ])
-    if params.get("merge_2d") is not None:
+    if params.get("merge_2d", None) is not None:
         cargs.extend([
             "-m",
-            params.get("merge_2d")
+            params.get("merge_2d", None)
         ])
-    if params.get("series_number") is not None:
+    if params.get("series_number", None) is not None:
         cargs.extend([
             "-n",
-            params.get("series_number")
+            params.get("series_number", None)
         ])
-    if params.get("output_dir") is not None:
+    if params.get("output_dir", ".") is not None:
         cargs.extend([
             "-o",
-            params.get("output_dir")
+            params.get("output_dir", ".")
         ])
-    if params.get("philips_scaling") is not None:
+    if params.get("philips_scaling", None) is not None:
         cargs.extend([
             "-p",
-            params.get("philips_scaling")
+            params.get("philips_scaling", None)
         ])
-    if params.get("search_mode") is not None:
+    if params.get("search_mode", None) is not None:
         cargs.extend([
             "-q",
-            params.get("search_mode")
+            params.get("search_mode", None)
         ])
-    if params.get("rename") is not None:
+    if params.get("rename", None) is not None:
         cargs.extend([
             "-r",
-            params.get("rename")
+            params.get("rename", None)
         ])
-    if params.get("single_file") is not None:
+    if params.get("single_file", None) is not None:
         cargs.extend([
             "-s",
-            params.get("single_file")
+            params.get("single_file", None)
         ])
-    if params.get("update_check"):
+    if params.get("update_check", False):
         cargs.append("-u")
-    if params.get("verbose") is not None:
+    if params.get("verbose", None) is not None:
         cargs.extend([
             "-v",
-            params.get("verbose")
+            params.get("verbose", None)
         ])
-    if params.get("conflict_behavior") is not None:
+    if params.get("conflict_behavior", None) is not None:
         cargs.extend([
             "-w",
-            str(params.get("conflict_behavior"))
+            str(params.get("conflict_behavior", None))
         ])
-    if params.get("crop_3d") is not None:
+    if params.get("crop_3d", None) is not None:
         cargs.extend([
             "-x",
-            params.get("crop_3d")
+            params.get("crop_3d", None)
         ])
-    if params.get("compression") is not None:
+    if params.get("compression", None) is not None:
         cargs.extend([
             "-z",
-            params.get("compression")
+            params.get("compression", None)
         ])
-    if params.get("endian") is not None:
+    if params.get("endian", None) is not None:
         cargs.extend([
             "--big-endian",
-            params.get("endian")
+            params.get("endian", None)
         ])
-    if params.get("progress") is not None:
+    if params.get("progress", None) is not None:
         cargs.extend([
             "--progress",
-            params.get("progress")
+            params.get("progress", None)
         ])
-    if params.get("ignore_trigger"):
+    if params.get("ignore_trigger", False):
         cargs.append("--ignore_trigger_times")
-    if params.get("terse"):
+    if params.get("terse", False):
         cargs.append("--terse")
-    if params.get("xml"):
+    if params.get("xml", False):
         cargs.append("--xml")
-    cargs.append(execution.input_file(params.get("input_dir")))
+    cargs.append(execution.input_file(params.get("input_dir", None)))
     return cargs
 
 
@@ -545,7 +546,6 @@ def dcm2niix_(
 __all__ = [
     "DCM2NIIX_METADATA",
     "Dcm2niixOutputs",
-    "Dcm2niixParameters",
     "dcm2niix_",
     "dcm2niix_execute",
     "dcm2niix_params",

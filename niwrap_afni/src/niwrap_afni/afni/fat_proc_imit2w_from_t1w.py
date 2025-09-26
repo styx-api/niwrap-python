@@ -14,7 +14,18 @@ FAT_PROC_IMIT2W_FROM_T1W_METADATA = Metadata(
 
 
 FatProcImit2wFromT1wParameters = typing.TypedDict('FatProcImit2wFromT1wParameters', {
-    "@type": typing.Literal["afni.fat_proc_imit2w_from_t1w"],
+    "@type": typing.NotRequired[typing.Literal["afni/fat_proc_imit2w_from_t1w"]],
+    "t1_file": InputPathType,
+    "prefix": str,
+    "workdir": typing.NotRequired[str | None],
+    "mask": typing.NotRequired[InputPathType | None],
+    "ss_blur_fwhm": typing.NotRequired[float | None],
+    "no_clean": bool,
+    "no_qc_view": bool,
+    "qc_prefix": typing.NotRequired[str | None],
+})
+FatProcImit2wFromT1wParametersTagged = typing.TypedDict('FatProcImit2wFromT1wParametersTagged', {
+    "@type": typing.Literal["afni/fat_proc_imit2w_from_t1w"],
     "t1_file": InputPathType,
     "prefix": str,
     "workdir": typing.NotRequired[str | None],
@@ -26,41 +37,9 @@ FatProcImit2wFromT1wParameters = typing.TypedDict('FatProcImit2wFromT1wParameter
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "afni.fat_proc_imit2w_from_t1w": fat_proc_imit2w_from_t1w_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "afni.fat_proc_imit2w_from_t1w": fat_proc_imit2w_from_t1w_outputs,
-    }.get(t)
-
-
 class FatProcImit2wFromT1wOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `fat_proc_imit2w_from_t1w(...)`.
+    Output object returned when calling `FatProcImit2wFromT1wParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -82,7 +61,7 @@ def fat_proc_imit2w_from_t1w_params(
     no_clean: bool = False,
     no_qc_view: bool = False,
     qc_prefix: str | None = None,
-) -> FatProcImit2wFromT1wParameters:
+) -> FatProcImit2wFromT1wParametersTagged:
     """
     Build parameters.
     
@@ -105,7 +84,7 @@ def fat_proc_imit2w_from_t1w_params(
         Parameter dictionary
     """
     params = {
-        "@type": "afni.fat_proc_imit2w_from_t1w",
+        "@type": "afni/fat_proc_imit2w_from_t1w",
         "t1_file": t1_file,
         "prefix": prefix,
         "no_clean": no_clean,
@@ -139,35 +118,35 @@ def fat_proc_imit2w_from_t1w_cargs(
     cargs.append("fat_proc_imit2w_from_t1w")
     cargs.extend([
         "-inset",
-        execution.input_file(params.get("t1_file"))
+        execution.input_file(params.get("t1_file", None))
     ])
     cargs.extend([
         "-prefix",
-        params.get("prefix")
+        params.get("prefix", None)
     ])
-    if params.get("workdir") is not None:
+    if params.get("workdir", None) is not None:
         cargs.extend([
             "-workdir",
-            params.get("workdir")
+            params.get("workdir", None)
         ])
-    if params.get("mask") is not None:
+    if params.get("mask", None) is not None:
         cargs.extend([
             "-mask",
-            execution.input_file(params.get("mask"))
+            execution.input_file(params.get("mask", None))
         ])
-    if params.get("ss_blur_fwhm") is not None:
+    if params.get("ss_blur_fwhm", None) is not None:
         cargs.extend([
             "-ss_blur_fwhm",
-            str(params.get("ss_blur_fwhm"))
+            str(params.get("ss_blur_fwhm", None))
         ])
-    if params.get("no_clean"):
+    if params.get("no_clean", False):
         cargs.append("-no_clean")
-    if params.get("no_qc_view"):
+    if params.get("no_qc_view", False):
         cargs.append("-no_qc_view")
-    if params.get("qc_prefix") is not None:
+    if params.get("qc_prefix", None) is not None:
         cargs.extend([
             "-qc_prefix",
-            params.get("qc_prefix")
+            params.get("qc_prefix", None)
         ])
     return cargs
 
@@ -187,9 +166,9 @@ def fat_proc_imit2w_from_t1w_outputs(
     """
     ret = FatProcImit2wFromT1wOutputs(
         root=execution.output_file("."),
-        t2w_contrast_volume=execution.output_file(params.get("prefix") + ".nii.gz"),
-        cleaned_t1w_volume=execution.output_file(params.get("prefix") + "_orig.nii.gz"),
-        skull_stripped_t1w=execution.output_file(params.get("prefix") + "_orig_ss.nii.gz"),
+        t2w_contrast_volume=execution.output_file(params.get("prefix", None) + ".nii.gz"),
+        cleaned_t1w_volume=execution.output_file(params.get("prefix", None) + "_orig.nii.gz"),
+        skull_stripped_t1w=execution.output_file(params.get("prefix", None) + "_orig_ss.nii.gz"),
     )
     return ret
 
@@ -277,7 +256,6 @@ def fat_proc_imit2w_from_t1w(
 __all__ = [
     "FAT_PROC_IMIT2W_FROM_T1W_METADATA",
     "FatProcImit2wFromT1wOutputs",
-    "FatProcImit2wFromT1wParameters",
     "fat_proc_imit2w_from_t1w",
     "fat_proc_imit2w_from_t1w_execute",
     "fat_proc_imit2w_from_t1w_params",

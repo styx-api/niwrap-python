@@ -14,7 +14,14 @@ MRIS_LEFT_RIGHT_REGISTER_METADATA = Metadata(
 
 
 MrisLeftRightRegisterParameters = typing.TypedDict('MrisLeftRightRegisterParameters', {
-    "@type": typing.Literal["freesurfer.mris_left_right_register"],
+    "@type": typing.NotRequired[typing.Literal["freesurfer/mris_left_right_register"]],
+    "lh_sphere": InputPathType,
+    "rh_sphere": InputPathType,
+    "lh_sphere_left_right": str,
+    "rh_sphere_left_right": str,
+})
+MrisLeftRightRegisterParametersTagged = typing.TypedDict('MrisLeftRightRegisterParametersTagged', {
+    "@type": typing.Literal["freesurfer/mris_left_right_register"],
     "lh_sphere": InputPathType,
     "rh_sphere": InputPathType,
     "lh_sphere_left_right": str,
@@ -22,41 +29,9 @@ MrisLeftRightRegisterParameters = typing.TypedDict('MrisLeftRightRegisterParamet
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "freesurfer.mris_left_right_register": mris_left_right_register_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "freesurfer.mris_left_right_register": mris_left_right_register_outputs,
-    }.get(t)
-
-
 class MrisLeftRightRegisterOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `mris_left_right_register(...)`.
+    Output object returned when calling `MrisLeftRightRegisterParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -71,7 +46,7 @@ def mris_left_right_register_params(
     rh_sphere: InputPathType,
     lh_sphere_left_right: str,
     rh_sphere_left_right: str,
-) -> MrisLeftRightRegisterParameters:
+) -> MrisLeftRightRegisterParametersTagged:
     """
     Build parameters.
     
@@ -86,7 +61,7 @@ def mris_left_right_register_params(
         Parameter dictionary
     """
     params = {
-        "@type": "freesurfer.mris_left_right_register",
+        "@type": "freesurfer/mris_left_right_register",
         "lh_sphere": lh_sphere,
         "rh_sphere": rh_sphere,
         "lh_sphere_left_right": lh_sphere_left_right,
@@ -110,10 +85,10 @@ def mris_left_right_register_cargs(
     """
     cargs = []
     cargs.append("mris_left_right_register")
-    cargs.append(execution.input_file(params.get("lh_sphere")))
-    cargs.append(execution.input_file(params.get("rh_sphere")))
-    cargs.append(params.get("lh_sphere_left_right"))
-    cargs.append(params.get("rh_sphere_left_right"))
+    cargs.append(execution.input_file(params.get("lh_sphere", None)))
+    cargs.append(execution.input_file(params.get("rh_sphere", None)))
+    cargs.append(params.get("lh_sphere_left_right", None))
+    cargs.append(params.get("rh_sphere_left_right", None))
     return cargs
 
 
@@ -132,8 +107,8 @@ def mris_left_right_register_outputs(
     """
     ret = MrisLeftRightRegisterOutputs(
         root=execution.output_file("."),
-        out_lh_sphere_left_right=execution.output_file(params.get("lh_sphere_left_right")),
-        out_rh_sphere_left_right=execution.output_file(params.get("rh_sphere_left_right")),
+        out_lh_sphere_left_right=execution.output_file(params.get("lh_sphere_left_right", None)),
+        out_rh_sphere_left_right=execution.output_file(params.get("rh_sphere_left_right", None)),
     )
     return ret
 
@@ -205,7 +180,6 @@ def mris_left_right_register(
 __all__ = [
     "MRIS_LEFT_RIGHT_REGISTER_METADATA",
     "MrisLeftRightRegisterOutputs",
-    "MrisLeftRightRegisterParameters",
     "mris_left_right_register",
     "mris_left_right_register_execute",
     "mris_left_right_register_params",

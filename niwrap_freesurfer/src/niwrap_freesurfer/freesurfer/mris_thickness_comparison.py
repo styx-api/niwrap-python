@@ -14,7 +14,15 @@ MRIS_THICKNESS_COMPARISON_METADATA = Metadata(
 
 
 MrisThicknessComparisonParameters = typing.TypedDict('MrisThicknessComparisonParameters', {
-    "@type": typing.Literal["freesurfer.mris_thickness_comparison"],
+    "@type": typing.NotRequired[typing.Literal["freesurfer/mris_thickness_comparison"]],
+    "subject": str,
+    "hemi": str,
+    "thickness_file": InputPathType,
+    "w_file": InputPathType,
+    "labels": list[str],
+})
+MrisThicknessComparisonParametersTagged = typing.TypedDict('MrisThicknessComparisonParametersTagged', {
+    "@type": typing.Literal["freesurfer/mris_thickness_comparison"],
     "subject": str,
     "hemi": str,
     "thickness_file": InputPathType,
@@ -23,40 +31,9 @@ MrisThicknessComparisonParameters = typing.TypedDict('MrisThicknessComparisonPar
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "freesurfer.mris_thickness_comparison": mris_thickness_comparison_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-    }.get(t)
-
-
 class MrisThicknessComparisonOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `mris_thickness_comparison(...)`.
+    Output object returned when calling `MrisThicknessComparisonParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -68,7 +45,7 @@ def mris_thickness_comparison_params(
     thickness_file: InputPathType,
     w_file: InputPathType,
     labels: list[str],
-) -> MrisThicknessComparisonParameters:
+) -> MrisThicknessComparisonParametersTagged:
     """
     Build parameters.
     
@@ -82,7 +59,7 @@ def mris_thickness_comparison_params(
         Parameter dictionary
     """
     params = {
-        "@type": "freesurfer.mris_thickness_comparison",
+        "@type": "freesurfer/mris_thickness_comparison",
         "subject": subject,
         "hemi": hemi,
         "thickness_file": thickness_file,
@@ -107,11 +84,11 @@ def mris_thickness_comparison_cargs(
     """
     cargs = []
     cargs.append("mris_thickness_comparison")
-    cargs.append(params.get("subject"))
-    cargs.append(params.get("hemi"))
-    cargs.append(execution.input_file(params.get("thickness_file")))
-    cargs.append(execution.input_file(params.get("w_file")))
-    cargs.extend(params.get("labels"))
+    cargs.append(params.get("subject", None))
+    cargs.append(params.get("hemi", None))
+    cargs.append(execution.input_file(params.get("thickness_file", None)))
+    cargs.append(execution.input_file(params.get("w_file", None)))
+    cargs.extend(params.get("labels", None))
     return cargs
 
 
@@ -204,7 +181,6 @@ def mris_thickness_comparison(
 __all__ = [
     "MRIS_THICKNESS_COMPARISON_METADATA",
     "MrisThicknessComparisonOutputs",
-    "MrisThicknessComparisonParameters",
     "mris_thickness_comparison",
     "mris_thickness_comparison_execute",
     "mris_thickness_comparison_params",

@@ -14,7 +14,17 @@ POSSUM_MATRIX_METADATA = Metadata(
 
 
 PossumMatrixParameters = typing.TypedDict('PossumMatrixParameters', {
-    "@type": typing.Literal["fsl.possum_matrix"],
+    "@type": typing.NotRequired[typing.Literal["fsl/possum_matrix"]],
+    "pulse_sequence": str,
+    "motion_matrix": str,
+    "output_matrix": str,
+    "verbose_flag": bool,
+    "help_flag": bool,
+    "old_version_flag": bool,
+    "segment_size": typing.NotRequired[float | None],
+})
+PossumMatrixParametersTagged = typing.TypedDict('PossumMatrixParametersTagged', {
+    "@type": typing.Literal["fsl/possum_matrix"],
     "pulse_sequence": str,
     "motion_matrix": str,
     "output_matrix": str,
@@ -25,41 +35,9 @@ PossumMatrixParameters = typing.TypedDict('PossumMatrixParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "fsl.possum_matrix": possum_matrix_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "fsl.possum_matrix": possum_matrix_outputs,
-    }.get(t)
-
-
 class PossumMatrixOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `possum_matrix(...)`.
+    Output object returned when calling `PossumMatrixParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -75,7 +53,7 @@ def possum_matrix_params(
     help_flag: bool = False,
     old_version_flag: bool = False,
     segment_size: float | None = None,
-) -> PossumMatrixParameters:
+) -> PossumMatrixParametersTagged:
     """
     Build parameters.
     
@@ -97,7 +75,7 @@ def possum_matrix_params(
         Parameter dictionary
     """
     params = {
-        "@type": "fsl.possum_matrix",
+        "@type": "fsl/possum_matrix",
         "pulse_sequence": pulse_sequence,
         "motion_matrix": motion_matrix,
         "output_matrix": output_matrix,
@@ -127,26 +105,26 @@ def possum_matrix_cargs(
     cargs.append("possum_matrix")
     cargs.extend([
         "-p",
-        params.get("pulse_sequence")
+        params.get("pulse_sequence", None)
     ])
     cargs.extend([
         "-m",
-        params.get("motion_matrix")
+        params.get("motion_matrix", None)
     ])
     cargs.extend([
         "-o",
-        params.get("output_matrix")
+        params.get("output_matrix", None)
     ])
-    if params.get("verbose_flag"):
+    if params.get("verbose_flag", False):
         cargs.append("-v")
-    if params.get("help_flag"):
+    if params.get("help_flag", False):
         cargs.append("-h")
-    if params.get("old_version_flag"):
+    if params.get("old_version_flag", False):
         cargs.append("--old")
-    if params.get("segment_size") is not None:
+    if params.get("segment_size", None) is not None:
         cargs.extend([
             "--seg",
-            str(params.get("segment_size"))
+            str(params.get("segment_size", None))
         ])
     return cargs
 
@@ -166,7 +144,7 @@ def possum_matrix_outputs(
     """
     ret = PossumMatrixOutputs(
         root=execution.output_file("."),
-        output_main_matrix=execution.output_file(params.get("output_matrix")),
+        output_main_matrix=execution.output_file(params.get("output_matrix", None)),
     )
     return ret
 
@@ -251,7 +229,6 @@ def possum_matrix(
 __all__ = [
     "POSSUM_MATRIX_METADATA",
     "PossumMatrixOutputs",
-    "PossumMatrixParameters",
     "possum_matrix",
     "possum_matrix_execute",
     "possum_matrix_params",

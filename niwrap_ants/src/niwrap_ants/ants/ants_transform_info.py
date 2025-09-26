@@ -14,46 +14,18 @@ ANTS_TRANSFORM_INFO_METADATA = Metadata(
 
 
 AntsTransformInfoParameters = typing.TypedDict('AntsTransformInfoParameters', {
-    "@type": typing.Literal["ants.antsTransformInfo"],
+    "@type": typing.NotRequired[typing.Literal["ants/antsTransformInfo"]],
+    "transform_file": InputPathType,
+})
+AntsTransformInfoParametersTagged = typing.TypedDict('AntsTransformInfoParametersTagged', {
+    "@type": typing.Literal["ants/antsTransformInfo"],
     "transform_file": InputPathType,
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "ants.antsTransformInfo": ants_transform_info_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "ants.antsTransformInfo": ants_transform_info_outputs,
-    }.get(t)
-
-
 class AntsTransformInfoOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `ants_transform_info(...)`.
+    Output object returned when calling `AntsTransformInfoParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -63,7 +35,7 @@ class AntsTransformInfoOutputs(typing.NamedTuple):
 
 def ants_transform_info_params(
     transform_file: InputPathType,
-) -> AntsTransformInfoParameters:
+) -> AntsTransformInfoParametersTagged:
     """
     Build parameters.
     
@@ -74,7 +46,7 @@ def ants_transform_info_params(
         Parameter dictionary
     """
     params = {
-        "@type": "ants.antsTransformInfo",
+        "@type": "ants/antsTransformInfo",
         "transform_file": transform_file,
     }
     return params
@@ -97,7 +69,7 @@ def ants_transform_info_cargs(
     cargs.append("antsTransformInfo")
     cargs.extend([
         "--file",
-        execution.input_file(params.get("transform_file"))
+        execution.input_file(params.get("transform_file", None))
     ])
     return cargs
 
@@ -179,7 +151,6 @@ def ants_transform_info(
 __all__ = [
     "ANTS_TRANSFORM_INFO_METADATA",
     "AntsTransformInfoOutputs",
-    "AntsTransformInfoParameters",
     "ants_transform_info",
     "ants_transform_info_execute",
     "ants_transform_info_params",

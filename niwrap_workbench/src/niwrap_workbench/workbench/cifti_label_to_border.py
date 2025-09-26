@@ -14,53 +14,31 @@ CIFTI_LABEL_TO_BORDER_METADATA = Metadata(
 
 
 CiftiLabelToBorderBorderParameters = typing.TypedDict('CiftiLabelToBorderBorderParameters', {
-    "@type": typing.Literal["workbench.cifti-label-to-border.border"],
+    "@type": typing.NotRequired[typing.Literal["border"]],
+    "surface": InputPathType,
+    "border_out": str,
+})
+CiftiLabelToBorderBorderParametersTagged = typing.TypedDict('CiftiLabelToBorderBorderParametersTagged', {
+    "@type": typing.Literal["border"],
     "surface": InputPathType,
     "border_out": str,
 })
 
 
 CiftiLabelToBorderParameters = typing.TypedDict('CiftiLabelToBorderParameters', {
-    "@type": typing.Literal["workbench.cifti-label-to-border"],
+    "@type": typing.NotRequired[typing.Literal["workbench/cifti-label-to-border"]],
     "cifti_in": InputPathType,
     "opt_placement_fraction": typing.NotRequired[float | None],
     "opt_column_column": typing.NotRequired[str | None],
     "border": typing.NotRequired[list[CiftiLabelToBorderBorderParameters] | None],
 })
-
-
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "workbench.cifti-label-to-border": cifti_label_to_border_cargs,
-        "workbench.cifti-label-to-border.border": cifti_label_to_border_border_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "workbench.cifti-label-to-border": cifti_label_to_border_outputs,
-        "workbench.cifti-label-to-border.border": cifti_label_to_border_border_outputs,
-    }.get(t)
+CiftiLabelToBorderParametersTagged = typing.TypedDict('CiftiLabelToBorderParametersTagged', {
+    "@type": typing.Literal["workbench/cifti-label-to-border"],
+    "cifti_in": InputPathType,
+    "opt_placement_fraction": typing.NotRequired[float | None],
+    "opt_column_column": typing.NotRequired[str | None],
+    "border": typing.NotRequired[list[CiftiLabelToBorderBorderParameters] | None],
+})
 
 
 class CiftiLabelToBorderBorderOutputs(typing.NamedTuple):
@@ -76,7 +54,7 @@ class CiftiLabelToBorderBorderOutputs(typing.NamedTuple):
 def cifti_label_to_border_border_params(
     surface: InputPathType,
     border_out: str,
-) -> CiftiLabelToBorderBorderParameters:
+) -> CiftiLabelToBorderBorderParametersTagged:
     """
     Build parameters.
     
@@ -87,7 +65,7 @@ def cifti_label_to_border_border_params(
         Parameter dictionary
     """
     params = {
-        "@type": "workbench.cifti-label-to-border.border",
+        "@type": "border",
         "surface": surface,
         "border_out": border_out,
     }
@@ -109,8 +87,8 @@ def cifti_label_to_border_border_cargs(
     """
     cargs = []
     cargs.append("-border")
-    cargs.append(execution.input_file(params.get("surface")))
-    cargs.append(params.get("border_out"))
+    cargs.append(execution.input_file(params.get("surface", None)))
+    cargs.append(params.get("border_out", None))
     return cargs
 
 
@@ -129,14 +107,14 @@ def cifti_label_to_border_border_outputs(
     """
     ret = CiftiLabelToBorderBorderOutputs(
         root=execution.output_file("."),
-        border_out=execution.output_file(params.get("border_out")),
+        border_out=execution.output_file(params.get("border_out", None)),
     )
     return ret
 
 
 class CiftiLabelToBorderOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `cifti_label_to_border(...)`.
+    Output object returned when calling `CiftiLabelToBorderParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -150,7 +128,7 @@ def cifti_label_to_border_params(
     opt_placement_fraction: float | None = None,
     opt_column_column: str | None = None,
     border: list[CiftiLabelToBorderBorderParameters] | None = None,
-) -> CiftiLabelToBorderParameters:
+) -> CiftiLabelToBorderParametersTagged:
     """
     Build parameters.
     
@@ -164,7 +142,7 @@ def cifti_label_to_border_params(
         Parameter dictionary
     """
     params = {
-        "@type": "workbench.cifti-label-to-border",
+        "@type": "workbench/cifti-label-to-border",
         "cifti_in": cifti_in,
     }
     if opt_placement_fraction is not None:
@@ -192,19 +170,19 @@ def cifti_label_to_border_cargs(
     cargs = []
     cargs.append("wb_command")
     cargs.append("-cifti-label-to-border")
-    cargs.append(execution.input_file(params.get("cifti_in")))
-    if params.get("opt_placement_fraction") is not None:
+    cargs.append(execution.input_file(params.get("cifti_in", None)))
+    if params.get("opt_placement_fraction", None) is not None:
         cargs.extend([
             "-placement",
-            str(params.get("opt_placement_fraction"))
+            str(params.get("opt_placement_fraction", None))
         ])
-    if params.get("opt_column_column") is not None:
+    if params.get("opt_column_column", None) is not None:
         cargs.extend([
             "-column",
-            params.get("opt_column_column")
+            params.get("opt_column_column", None)
         ])
-    if params.get("border") is not None:
-        cargs.extend([a for c in [dyn_cargs(s["@type"])(s, execution) for s in params.get("border")] for a in c])
+    if params.get("border", None) is not None:
+        cargs.extend([a for c in [cifti_label_to_border_border_cargs(s, execution) for s in params.get("border", None)] for a in c])
     return cargs
 
 
@@ -223,7 +201,7 @@ def cifti_label_to_border_outputs(
     """
     ret = CiftiLabelToBorderOutputs(
         root=execution.output_file("."),
-        border=[dyn_outputs(i["@type"])(i, execution) if dyn_outputs(i["@type"]) else None for i in params.get("border")] if params.get("border") else None,
+        border=[cifti_label_to_border_border_outputs(i, execution) if cifti_label_to_border_border_outputs else None for i in params.get("border")] if params.get("border") else None,
     )
     return ret
 
@@ -302,9 +280,7 @@ def cifti_label_to_border(
 __all__ = [
     "CIFTI_LABEL_TO_BORDER_METADATA",
     "CiftiLabelToBorderBorderOutputs",
-    "CiftiLabelToBorderBorderParameters",
     "CiftiLabelToBorderOutputs",
-    "CiftiLabelToBorderParameters",
     "cifti_label_to_border",
     "cifti_label_to_border_border_params",
     "cifti_label_to_border_execute",

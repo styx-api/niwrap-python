@@ -14,7 +14,18 @@ FAT_PROC_SELECT_VOLS_METADATA = Metadata(
 
 
 FatProcSelectVolsParameters = typing.TypedDict('FatProcSelectVolsParameters', {
-    "@type": typing.Literal["afni.fat_proc_select_vols"],
+    "@type": typing.NotRequired[typing.Literal["afni/fat_proc_select_vols"]],
+    "dwi_input": InputPathType,
+    "img_input": InputPathType,
+    "prefix": str,
+    "in_bads": typing.NotRequired[InputPathType | None],
+    "apply_to_vols": bool,
+    "do_movie": typing.NotRequired[str | None],
+    "workdir": typing.NotRequired[str | None],
+    "no_cmd_out": bool,
+})
+FatProcSelectVolsParametersTagged = typing.TypedDict('FatProcSelectVolsParametersTagged', {
+    "@type": typing.Literal["afni/fat_proc_select_vols"],
     "dwi_input": InputPathType,
     "img_input": InputPathType,
     "prefix": str,
@@ -26,41 +37,9 @@ FatProcSelectVolsParameters = typing.TypedDict('FatProcSelectVolsParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "afni.fat_proc_select_vols": fat_proc_select_vols_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "afni.fat_proc_select_vols": fat_proc_select_vols_outputs,
-    }.get(t)
-
-
 class FatProcSelectVolsOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `fat_proc_select_vols(...)`.
+    Output object returned when calling `FatProcSelectVolsParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -77,7 +56,7 @@ def fat_proc_select_vols_params(
     do_movie: str | None = None,
     workdir: str | None = None,
     no_cmd_out: bool = False,
-) -> FatProcSelectVolsParameters:
+) -> FatProcSelectVolsParametersTagged:
     """
     Build parameters.
     
@@ -98,7 +77,7 @@ def fat_proc_select_vols_params(
         Parameter dictionary
     """
     params = {
-        "@type": "afni.fat_proc_select_vols",
+        "@type": "afni/fat_proc_select_vols",
         "dwi_input": dwi_input,
         "img_input": img_input,
         "prefix": prefix,
@@ -131,34 +110,34 @@ def fat_proc_select_vols_cargs(
     cargs.append("fat_proc_select_vols")
     cargs.extend([
         "-in_dwi",
-        execution.input_file(params.get("dwi_input"))
+        execution.input_file(params.get("dwi_input", None))
     ])
     cargs.extend([
         "-in_img",
-        execution.input_file(params.get("img_input"))
+        execution.input_file(params.get("img_input", None))
     ])
     cargs.extend([
         "-prefix",
-        params.get("prefix")
+        params.get("prefix", None)
     ])
-    if params.get("in_bads") is not None:
+    if params.get("in_bads", None) is not None:
         cargs.extend([
             "-in_bads",
-            execution.input_file(params.get("in_bads"))
+            execution.input_file(params.get("in_bads", None))
         ])
-    if params.get("apply_to_vols"):
+    if params.get("apply_to_vols", False):
         cargs.append("-apply_to_vols")
-    if params.get("do_movie") is not None:
+    if params.get("do_movie", None) is not None:
         cargs.extend([
             "-do_movie",
-            params.get("do_movie")
+            params.get("do_movie", None)
         ])
-    if params.get("workdir") is not None:
+    if params.get("workdir", None) is not None:
         cargs.extend([
             "-workdir",
-            params.get("workdir")
+            params.get("workdir", None)
         ])
-    if params.get("no_cmd_out"):
+    if params.get("no_cmd_out", False):
         cargs.append("-no_cmd_out")
     return cargs
 
@@ -178,7 +157,7 @@ def fat_proc_select_vols_outputs(
     """
     ret = FatProcSelectVolsOutputs(
         root=execution.output_file("."),
-        output_selector_string=execution.output_file(params.get("prefix") + "_bads.txt"),
+        output_selector_string=execution.output_file(params.get("prefix", None) + "_bads.txt"),
     )
     return ret
 
@@ -264,7 +243,6 @@ def fat_proc_select_vols(
 __all__ = [
     "FAT_PROC_SELECT_VOLS_METADATA",
     "FatProcSelectVolsOutputs",
-    "FatProcSelectVolsParameters",
     "fat_proc_select_vols",
     "fat_proc_select_vols_execute",
     "fat_proc_select_vols_params",

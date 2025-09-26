@@ -14,7 +14,16 @@ DICOM_HINFO_METADATA = Metadata(
 
 
 DicomHinfoParameters = typing.TypedDict('DicomHinfoParameters', {
-    "@type": typing.Literal["afni.dicom_hinfo"],
+    "@type": typing.NotRequired[typing.Literal["afni/dicom_hinfo"]],
+    "tag": list[str],
+    "sepstr": typing.NotRequired[str | None],
+    "full_entry": bool,
+    "no_name": bool,
+    "namelast": bool,
+    "files": list[InputPathType],
+})
+DicomHinfoParametersTagged = typing.TypedDict('DicomHinfoParametersTagged', {
+    "@type": typing.Literal["afni/dicom_hinfo"],
     "tag": list[str],
     "sepstr": typing.NotRequired[str | None],
     "full_entry": bool,
@@ -24,40 +33,9 @@ DicomHinfoParameters = typing.TypedDict('DicomHinfoParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "afni.dicom_hinfo": dicom_hinfo_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-    }.get(t)
-
-
 class DicomHinfoOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `dicom_hinfo(...)`.
+    Output object returned when calling `DicomHinfoParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -70,7 +48,7 @@ def dicom_hinfo_params(
     full_entry: bool = False,
     no_name: bool = False,
     namelast: bool = False,
-) -> DicomHinfoParameters:
+) -> DicomHinfoParametersTagged:
     """
     Build parameters.
     
@@ -87,7 +65,7 @@ def dicom_hinfo_params(
         Parameter dictionary
     """
     params = {
-        "@type": "afni.dicom_hinfo",
+        "@type": "afni/dicom_hinfo",
         "tag": tag,
         "full_entry": full_entry,
         "no_name": no_name,
@@ -116,20 +94,20 @@ def dicom_hinfo_cargs(
     cargs.append("dicom_hinfo")
     cargs.extend([
         "-tag",
-        *params.get("tag")
+        *params.get("tag", None)
     ])
-    if params.get("sepstr") is not None:
+    if params.get("sepstr", None) is not None:
         cargs.extend([
             "-sepstr",
-            params.get("sepstr")
+            params.get("sepstr", None)
         ])
-    if params.get("full_entry"):
+    if params.get("full_entry", False):
         cargs.append("-full_entry")
-    if params.get("no_name"):
+    if params.get("no_name", False):
         cargs.append("-no_name")
-    if params.get("namelast"):
+    if params.get("namelast", False):
         cargs.append("-namelast")
-    cargs.extend([execution.input_file(f) for f in params.get("files")])
+    cargs.extend([execution.input_file(f) for f in params.get("files", None)])
     return cargs
 
 
@@ -225,7 +203,6 @@ def dicom_hinfo(
 __all__ = [
     "DICOM_HINFO_METADATA",
     "DicomHinfoOutputs",
-    "DicomHinfoParameters",
     "dicom_hinfo",
     "dicom_hinfo_execute",
     "dicom_hinfo_params",

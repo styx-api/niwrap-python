@@ -14,7 +14,15 @@ IMMASK_METADATA = Metadata(
 
 
 ImmaskParameters = typing.TypedDict('ImmaskParameters', {
-    "@type": typing.Literal["afni.immask"],
+    "@type": typing.NotRequired[typing.Literal["afni/immask"]],
+    "threshold": typing.NotRequired[float | None],
+    "mask_image": typing.NotRequired[InputPathType | None],
+    "positive_only": bool,
+    "input_image": InputPathType,
+    "output_image": str,
+})
+ImmaskParametersTagged = typing.TypedDict('ImmaskParametersTagged', {
+    "@type": typing.Literal["afni/immask"],
     "threshold": typing.NotRequired[float | None],
     "mask_image": typing.NotRequired[InputPathType | None],
     "positive_only": bool,
@@ -23,41 +31,9 @@ ImmaskParameters = typing.TypedDict('ImmaskParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "afni.immask": immask_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "afni.immask": immask_outputs,
-    }.get(t)
-
-
 class ImmaskOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `immask(...)`.
+    Output object returned when calling `ImmaskParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -71,7 +47,7 @@ def immask_params(
     threshold: float | None = None,
     mask_image: InputPathType | None = None,
     positive_only: bool = False,
-) -> ImmaskParameters:
+) -> ImmaskParametersTagged:
     """
     Build parameters.
     
@@ -87,7 +63,7 @@ def immask_params(
         Parameter dictionary
     """
     params = {
-        "@type": "afni.immask",
+        "@type": "afni/immask",
         "positive_only": positive_only,
         "input_image": input_image,
         "output_image": output_image,
@@ -114,20 +90,20 @@ def immask_cargs(
     """
     cargs = []
     cargs.append("immask")
-    if params.get("threshold") is not None:
+    if params.get("threshold", None) is not None:
         cargs.extend([
             "-thresh",
-            str(params.get("threshold"))
+            str(params.get("threshold", None))
         ])
-    if params.get("mask_image") is not None:
+    if params.get("mask_image", None) is not None:
         cargs.extend([
             "-mask",
-            execution.input_file(params.get("mask_image"))
+            execution.input_file(params.get("mask_image", None))
         ])
-    if params.get("positive_only"):
+    if params.get("positive_only", False):
         cargs.append("-pos")
-    cargs.append(execution.input_file(params.get("input_image")))
-    cargs.append(params.get("output_image"))
+    cargs.append(execution.input_file(params.get("input_image", None)))
+    cargs.append(params.get("output_image", None))
     return cargs
 
 
@@ -146,7 +122,7 @@ def immask_outputs(
     """
     ret = ImmaskOutputs(
         root=execution.output_file("."),
-        output_file=execution.output_file(params.get("output_image")),
+        output_file=execution.output_file(params.get("output_image", None)),
     )
     return ret
 
@@ -223,7 +199,6 @@ def immask(
 __all__ = [
     "IMMASK_METADATA",
     "ImmaskOutputs",
-    "ImmaskParameters",
     "immask",
     "immask_execute",
     "immask_params",

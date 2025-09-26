@@ -14,7 +14,23 @@ CLUST_EXP_STAT_PARSE_PY_METADATA = Metadata(
 
 
 ClustExpStatParsePyParameters = typing.TypedDict('ClustExpStatParsePyParameters', {
-    "@type": typing.Literal["afni.ClustExp_StatParse.py"],
+    "@type": typing.NotRequired[typing.Literal["afni/ClustExp_StatParse.py"]],
+    "statdset": InputPathType,
+    "meanbrik": float,
+    "threshbrik": float,
+    "subjdset": InputPathType,
+    "subjtable": InputPathType,
+    "master": InputPathType,
+    "prefix": typing.NotRequired[str | None],
+    "pval": typing.NotRequired[float | None],
+    "minvox": typing.NotRequired[float | None],
+    "atlas": typing.NotRequired[str | None],
+    "session": typing.NotRequired[str | None],
+    "noshiny": bool,
+    "overwrite": bool,
+})
+ClustExpStatParsePyParametersTagged = typing.TypedDict('ClustExpStatParsePyParametersTagged', {
+    "@type": typing.Literal["afni/ClustExp_StatParse.py"],
     "statdset": InputPathType,
     "meanbrik": float,
     "threshbrik": float,
@@ -31,41 +47,9 @@ ClustExpStatParsePyParameters = typing.TypedDict('ClustExpStatParsePyParameters'
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "afni.ClustExp_StatParse.py": clust_exp_stat_parse_py_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "afni.ClustExp_StatParse.py": clust_exp_stat_parse_py_outputs,
-    }.get(t)
-
-
 class ClustExpStatParsePyOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `clust_exp_stat_parse_py(...)`.
+    Output object returned when calling `ClustExpStatParsePyParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -103,7 +87,7 @@ def clust_exp_stat_parse_py_params(
     session: str | None = None,
     noshiny: bool = False,
     overwrite: bool = False,
-) -> ClustExpStatParsePyParameters:
+) -> ClustExpStatParsePyParametersTagged:
     """
     Build parameters.
     
@@ -127,7 +111,7 @@ def clust_exp_stat_parse_py_params(
         Parameter dictionary
     """
     params = {
-        "@type": "afni.ClustExp_StatParse.py",
+        "@type": "afni/ClustExp_StatParse.py",
         "statdset": statdset,
         "meanbrik": meanbrik,
         "threshbrik": threshbrik,
@@ -167,56 +151,56 @@ def clust_exp_stat_parse_py_cargs(
     cargs.append("ClustExp_StatParse.py")
     cargs.extend([
         "-StatDSET",
-        execution.input_file(params.get("statdset"))
+        execution.input_file(params.get("statdset", None))
     ])
     cargs.extend([
         "-MeanBrik",
-        str(params.get("meanbrik"))
+        str(params.get("meanbrik", None))
     ])
     cargs.extend([
         "-ThreshBrik",
-        str(params.get("threshbrik"))
+        str(params.get("threshbrik", None))
     ])
     cargs.extend([
         "-SubjDSET",
-        execution.input_file(params.get("subjdset"))
+        execution.input_file(params.get("subjdset", None))
     ])
     cargs.extend([
         "-SubjTable",
-        execution.input_file(params.get("subjtable"))
+        execution.input_file(params.get("subjtable", None))
     ])
     cargs.extend([
         "-master",
-        execution.input_file(params.get("master"))
+        execution.input_file(params.get("master", None))
     ])
-    if params.get("prefix") is not None:
+    if params.get("prefix", None) is not None:
         cargs.extend([
             "-prefix",
-            params.get("prefix")
+            params.get("prefix", None)
         ])
-    if params.get("pval") is not None:
+    if params.get("pval", None) is not None:
         cargs.extend([
             "-p",
-            str(params.get("pval"))
+            str(params.get("pval", None))
         ])
-    if params.get("minvox") is not None:
+    if params.get("minvox", None) is not None:
         cargs.extend([
             "-MinVox",
-            str(params.get("minvox"))
+            str(params.get("minvox", None))
         ])
-    if params.get("atlas") is not None:
+    if params.get("atlas", None) is not None:
         cargs.extend([
             "-atlas",
-            params.get("atlas")
+            params.get("atlas", None)
         ])
-    if params.get("session") is not None:
+    if params.get("session", None) is not None:
         cargs.extend([
             "-session",
-            params.get("session")
+            params.get("session", None)
         ])
-    if params.get("noshiny"):
+    if params.get("noshiny", False):
         cargs.append("-NoShiny")
-    if params.get("overwrite"):
+    if params.get("overwrite", False):
         cargs.append("-overwrite")
     return cargs
 
@@ -236,14 +220,14 @@ def clust_exp_stat_parse_py_outputs(
     """
     ret = ClustExpStatParsePyOutputs(
         root=execution.output_file("."),
-        table_mean=execution.output_file(params.get("prefix") + "_p_uncor_" + str(params.get("pval")) + "_mean.csv") if (params.get("prefix") is not None and params.get("pval") is not None) else None,
-        group_table=execution.output_file(params.get("prefix") + "_GroupTable.csv") if (params.get("prefix") is not None) else None,
-        v_3dclust_output=execution.output_file(params.get("prefix") + "_p_uncor_" + str(params.get("pval")) + "_3dclust.1D") if (params.get("prefix") is not None and params.get("pval") is not None) else None,
-        clusters_output=execution.output_file(params.get("prefix") + "_p_uncor_" + str(params.get("pval")) + "_clusters.csv") if (params.get("prefix") is not None and params.get("pval") is not None) else None,
-        statinfo_output=execution.output_file(params.get("prefix") + "_StatInfo.csv") if (params.get("prefix") is not None) else None,
-        thresholded_dataset=execution.output_file(params.get("prefix") + "_p_uncor_" + str(params.get("pval")) + ".nii.gz") if (params.get("prefix") is not None and params.get("pval") is not None) else None,
-        thresholded_mask_dataset=execution.output_file(params.get("prefix") + "_p_uncor_" + str(params.get("pval")) + "_mask.nii.gz") if (params.get("prefix") is not None and params.get("pval") is not None) else None,
-        master_copy=execution.output_file(params.get("prefix") + "_master.nii.gz") if (params.get("prefix") is not None) else None,
+        table_mean=execution.output_file(params.get("prefix", None) + "_p_uncor_" + str(params.get("pval", None)) + "_mean.csv") if (params.get("prefix") is not None and params.get("pval") is not None) else None,
+        group_table=execution.output_file(params.get("prefix", None) + "_GroupTable.csv") if (params.get("prefix") is not None) else None,
+        v_3dclust_output=execution.output_file(params.get("prefix", None) + "_p_uncor_" + str(params.get("pval", None)) + "_3dclust.1D") if (params.get("prefix") is not None and params.get("pval") is not None) else None,
+        clusters_output=execution.output_file(params.get("prefix", None) + "_p_uncor_" + str(params.get("pval", None)) + "_clusters.csv") if (params.get("prefix") is not None and params.get("pval") is not None) else None,
+        statinfo_output=execution.output_file(params.get("prefix", None) + "_StatInfo.csv") if (params.get("prefix") is not None) else None,
+        thresholded_dataset=execution.output_file(params.get("prefix", None) + "_p_uncor_" + str(params.get("pval", None)) + ".nii.gz") if (params.get("prefix") is not None and params.get("pval") is not None) else None,
+        thresholded_mask_dataset=execution.output_file(params.get("prefix", None) + "_p_uncor_" + str(params.get("pval", None)) + "_mask.nii.gz") if (params.get("prefix") is not None and params.get("pval") is not None) else None,
+        master_copy=execution.output_file(params.get("prefix", None) + "_master.nii.gz") if (params.get("prefix") is not None) else None,
     )
     return ret
 
@@ -344,7 +328,6 @@ def clust_exp_stat_parse_py(
 __all__ = [
     "CLUST_EXP_STAT_PARSE_PY_METADATA",
     "ClustExpStatParsePyOutputs",
-    "ClustExpStatParsePyParameters",
     "clust_exp_stat_parse_py",
     "clust_exp_stat_parse_py_execute",
     "clust_exp_stat_parse_py_params",

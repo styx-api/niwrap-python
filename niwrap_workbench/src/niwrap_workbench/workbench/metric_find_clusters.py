@@ -14,7 +14,22 @@ METRIC_FIND_CLUSTERS_METADATA = Metadata(
 
 
 MetricFindClustersParameters = typing.TypedDict('MetricFindClustersParameters', {
-    "@type": typing.Literal["workbench.metric-find-clusters"],
+    "@type": typing.NotRequired[typing.Literal["workbench/metric-find-clusters"]],
+    "surface": InputPathType,
+    "metric_in": InputPathType,
+    "value_threshold": float,
+    "minimum_area": float,
+    "metric_out": str,
+    "opt_less_than": bool,
+    "opt_roi_roi_metric": typing.NotRequired[InputPathType | None],
+    "opt_corrected_areas_area_metric": typing.NotRequired[InputPathType | None],
+    "opt_column_column": typing.NotRequired[str | None],
+    "opt_size_ratio_ratio": typing.NotRequired[float | None],
+    "opt_distance_distance": typing.NotRequired[float | None],
+    "opt_start_startval": typing.NotRequired[int | None],
+})
+MetricFindClustersParametersTagged = typing.TypedDict('MetricFindClustersParametersTagged', {
+    "@type": typing.Literal["workbench/metric-find-clusters"],
     "surface": InputPathType,
     "metric_in": InputPathType,
     "value_threshold": float,
@@ -30,41 +45,9 @@ MetricFindClustersParameters = typing.TypedDict('MetricFindClustersParameters', 
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "workbench.metric-find-clusters": metric_find_clusters_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "workbench.metric-find-clusters": metric_find_clusters_outputs,
-    }.get(t)
-
-
 class MetricFindClustersOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `metric_find_clusters(...)`.
+    Output object returned when calling `MetricFindClustersParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -85,7 +68,7 @@ def metric_find_clusters_params(
     opt_size_ratio_ratio: float | None = None,
     opt_distance_distance: float | None = None,
     opt_start_startval: int | None = None,
-) -> MetricFindClustersParameters:
+) -> MetricFindClustersParametersTagged:
     """
     Build parameters.
     
@@ -113,7 +96,7 @@ def metric_find_clusters_params(
         Parameter dictionary
     """
     params = {
-        "@type": "workbench.metric-find-clusters",
+        "@type": "workbench/metric-find-clusters",
         "surface": surface,
         "metric_in": metric_in,
         "value_threshold": value_threshold,
@@ -152,42 +135,42 @@ def metric_find_clusters_cargs(
     cargs = []
     cargs.append("wb_command")
     cargs.append("-metric-find-clusters")
-    cargs.append(execution.input_file(params.get("surface")))
-    cargs.append(execution.input_file(params.get("metric_in")))
-    cargs.append(str(params.get("value_threshold")))
-    cargs.append(str(params.get("minimum_area")))
-    cargs.append(params.get("metric_out"))
-    if params.get("opt_less_than"):
+    cargs.append(execution.input_file(params.get("surface", None)))
+    cargs.append(execution.input_file(params.get("metric_in", None)))
+    cargs.append(str(params.get("value_threshold", None)))
+    cargs.append(str(params.get("minimum_area", None)))
+    cargs.append(params.get("metric_out", None))
+    if params.get("opt_less_than", False):
         cargs.append("-less-than")
-    if params.get("opt_roi_roi_metric") is not None:
+    if params.get("opt_roi_roi_metric", None) is not None:
         cargs.extend([
             "-roi",
-            execution.input_file(params.get("opt_roi_roi_metric"))
+            execution.input_file(params.get("opt_roi_roi_metric", None))
         ])
-    if params.get("opt_corrected_areas_area_metric") is not None:
+    if params.get("opt_corrected_areas_area_metric", None) is not None:
         cargs.extend([
             "-corrected-areas",
-            execution.input_file(params.get("opt_corrected_areas_area_metric"))
+            execution.input_file(params.get("opt_corrected_areas_area_metric", None))
         ])
-    if params.get("opt_column_column") is not None:
+    if params.get("opt_column_column", None) is not None:
         cargs.extend([
             "-column",
-            params.get("opt_column_column")
+            params.get("opt_column_column", None)
         ])
-    if params.get("opt_size_ratio_ratio") is not None:
+    if params.get("opt_size_ratio_ratio", None) is not None:
         cargs.extend([
             "-size-ratio",
-            str(params.get("opt_size_ratio_ratio"))
+            str(params.get("opt_size_ratio_ratio", None))
         ])
-    if params.get("opt_distance_distance") is not None:
+    if params.get("opt_distance_distance", None) is not None:
         cargs.extend([
             "-distance",
-            str(params.get("opt_distance_distance"))
+            str(params.get("opt_distance_distance", None))
         ])
-    if params.get("opt_start_startval") is not None:
+    if params.get("opt_start_startval", None) is not None:
         cargs.extend([
             "-start",
-            str(params.get("opt_start_startval"))
+            str(params.get("opt_start_startval", None))
         ])
     return cargs
 
@@ -207,7 +190,7 @@ def metric_find_clusters_outputs(
     """
     ret = MetricFindClustersOutputs(
         root=execution.output_file("."),
-        metric_out=execution.output_file(params.get("metric_out")),
+        metric_out=execution.output_file(params.get("metric_out", None)),
     )
     return ret
 
@@ -326,7 +309,6 @@ def metric_find_clusters(
 __all__ = [
     "METRIC_FIND_CLUSTERS_METADATA",
     "MetricFindClustersOutputs",
-    "MetricFindClustersParameters",
     "metric_find_clusters",
     "metric_find_clusters_execute",
     "metric_find_clusters_params",

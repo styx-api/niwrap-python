@@ -14,7 +14,20 @@ DISTANCEMAP_METADATA = Metadata(
 
 
 DistancemapParameters = typing.TypedDict('DistancemapParameters', {
-    "@type": typing.Literal["fsl.distancemap"],
+    "@type": typing.NotRequired[typing.Literal["fsl/distancemap"]],
+    "input_image": InputPathType,
+    "output_image": str,
+    "mask_image": typing.NotRequired[InputPathType | None],
+    "second_image": typing.NotRequired[InputPathType | None],
+    "local_maxima_image": typing.NotRequired[InputPathType | None],
+    "segmented_image": typing.NotRequired[InputPathType | None],
+    "invert_flag": bool,
+    "interpolate_values": typing.NotRequired[InputPathType | None],
+    "verbose_flag": bool,
+    "help_flag": bool,
+})
+DistancemapParametersTagged = typing.TypedDict('DistancemapParametersTagged', {
+    "@type": typing.Literal["fsl/distancemap"],
     "input_image": InputPathType,
     "output_image": str,
     "mask_image": typing.NotRequired[InputPathType | None],
@@ -28,41 +41,9 @@ DistancemapParameters = typing.TypedDict('DistancemapParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "fsl.distancemap": distancemap_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "fsl.distancemap": distancemap_outputs,
-    }.get(t)
-
-
 class DistancemapOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `distancemap(...)`.
+    Output object returned when calling `DistancemapParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -85,7 +66,7 @@ def distancemap_params(
     interpolate_values: InputPathType | None = None,
     verbose_flag: bool = False,
     help_flag: bool = False,
-) -> DistancemapParameters:
+) -> DistancemapParametersTagged:
     """
     Build parameters.
     
@@ -108,7 +89,7 @@ def distancemap_params(
         Parameter dictionary
     """
     params = {
-        "@type": "fsl.distancemap",
+        "@type": "fsl/distancemap",
         "input_image": input_image,
         "output_image": output_image,
         "invert_flag": invert_flag,
@@ -145,42 +126,42 @@ def distancemap_cargs(
     cargs.append("distancemap")
     cargs.extend([
         "-i",
-        execution.input_file(params.get("input_image"))
+        execution.input_file(params.get("input_image", None))
     ])
     cargs.extend([
         "-o",
-        params.get("output_image")
+        params.get("output_image", None)
     ])
-    if params.get("mask_image") is not None:
+    if params.get("mask_image", None) is not None:
         cargs.extend([
             "-m",
-            execution.input_file(params.get("mask_image"))
+            execution.input_file(params.get("mask_image", None))
         ])
-    if params.get("second_image") is not None:
+    if params.get("second_image", None) is not None:
         cargs.extend([
             "--secondim",
-            execution.input_file(params.get("second_image"))
+            execution.input_file(params.get("second_image", None))
         ])
-    if params.get("local_maxima_image") is not None:
+    if params.get("local_maxima_image", None) is not None:
         cargs.extend([
             "-l",
-            execution.input_file(params.get("local_maxima_image"))
+            execution.input_file(params.get("local_maxima_image", None))
         ])
-    if params.get("segmented_image") is not None:
+    if params.get("segmented_image", None) is not None:
         cargs.extend([
             "-s",
-            execution.input_file(params.get("segmented_image"))
+            execution.input_file(params.get("segmented_image", None))
         ])
-    if params.get("invert_flag"):
+    if params.get("invert_flag", False):
         cargs.append("--invert")
-    if params.get("interpolate_values") is not None:
+    if params.get("interpolate_values", None) is not None:
         cargs.extend([
             "--interp",
-            execution.input_file(params.get("interpolate_values"))
+            execution.input_file(params.get("interpolate_values", None))
         ])
-    if params.get("verbose_flag"):
+    if params.get("verbose_flag", False):
         cargs.append("-v")
-    if params.get("help_flag"):
+    if params.get("help_flag", False):
         cargs.append("-h")
     return cargs
 
@@ -200,9 +181,9 @@ def distancemap_outputs(
     """
     ret = DistancemapOutputs(
         root=execution.output_file("."),
-        output_distancemap=execution.output_file(params.get("output_image")),
-        output_local_maxima=execution.output_file(pathlib.Path(params.get("local_maxima_image")).name) if (params.get("local_maxima_image") is not None) else None,
-        output_segmented_image=execution.output_file(pathlib.Path(params.get("segmented_image")).name) if (params.get("segmented_image") is not None) else None,
+        output_distancemap=execution.output_file(params.get("output_image", None)),
+        output_local_maxima=execution.output_file(pathlib.Path(params.get("local_maxima_image", None)).name) if (params.get("local_maxima_image") is not None) else None,
+        output_segmented_image=execution.output_file(pathlib.Path(params.get("segmented_image", None)).name) if (params.get("segmented_image") is not None) else None,
     )
     return ret
 
@@ -294,7 +275,6 @@ def distancemap(
 __all__ = [
     "DISTANCEMAP_METADATA",
     "DistancemapOutputs",
-    "DistancemapParameters",
     "distancemap",
     "distancemap_execute",
     "distancemap_params",

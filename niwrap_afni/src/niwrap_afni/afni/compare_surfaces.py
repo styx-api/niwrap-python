@@ -14,7 +14,25 @@ COMPARE_SURFACES_METADATA = Metadata(
 
 
 CompareSurfacesParameters = typing.TypedDict('CompareSurfacesParameters', {
-    "@type": typing.Literal["afni.CompareSurfaces"],
+    "@type": typing.NotRequired[typing.Literal["afni/CompareSurfaces"]],
+    "spec_file": InputPathType,
+    "hemisphere": typing.Literal["L", "R"],
+    "volume_parent_1": InputPathType,
+    "volume_parent_2": InputPathType,
+    "file_prefix": typing.NotRequired[str | None],
+    "one_node": typing.NotRequired[float | None],
+    "node_range": typing.NotRequired[list[float] | None],
+    "no_consistency_check": bool,
+    "no_volreg": bool,
+    "no_transform": bool,
+    "set_environment_variable": typing.NotRequired[str | None],
+    "trace": bool,
+    "extreme_trace": bool,
+    "no_memory_trace": bool,
+    "yes_memory_trace": bool,
+})
+CompareSurfacesParametersTagged = typing.TypedDict('CompareSurfacesParametersTagged', {
+    "@type": typing.Literal["afni/CompareSurfaces"],
     "spec_file": InputPathType,
     "hemisphere": typing.Literal["L", "R"],
     "volume_parent_1": InputPathType,
@@ -33,41 +51,9 @@ CompareSurfacesParameters = typing.TypedDict('CompareSurfacesParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "afni.CompareSurfaces": compare_surfaces_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "afni.CompareSurfaces": compare_surfaces_outputs,
-    }.get(t)
-
-
 class CompareSurfacesOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `compare_surfaces(...)`.
+    Output object returned when calling `CompareSurfacesParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -93,7 +79,7 @@ def compare_surfaces_params(
     extreme_trace: bool = False,
     no_memory_trace: bool = False,
     yes_memory_trace: bool = False,
-) -> CompareSurfacesParameters:
+) -> CompareSurfacesParametersTagged:
     """
     Build parameters.
     
@@ -123,7 +109,7 @@ def compare_surfaces_params(
         Parameter dictionary
     """
     params = {
-        "@type": "afni.CompareSurfaces",
+        "@type": "afni/CompareSurfaces",
         "spec_file": spec_file,
         "hemisphere": hemisphere,
         "volume_parent_1": volume_parent_1,
@@ -164,53 +150,53 @@ def compare_surfaces_cargs(
     cargs.append("CompareSurfaces")
     cargs.extend([
         "-spec",
-        execution.input_file(params.get("spec_file"))
+        execution.input_file(params.get("spec_file", None))
     ])
     cargs.extend([
         "-hemi",
-        params.get("hemisphere")
+        params.get("hemisphere", None)
     ])
     cargs.extend([
         "-sv1",
-        execution.input_file(params.get("volume_parent_1"))
+        execution.input_file(params.get("volume_parent_1", None))
     ])
     cargs.extend([
         "-sv2",
-        execution.input_file(params.get("volume_parent_2"))
+        execution.input_file(params.get("volume_parent_2", None))
     ])
-    if params.get("file_prefix") is not None:
+    if params.get("file_prefix", None) is not None:
         cargs.extend([
             "-prefix",
-            params.get("file_prefix")
+            params.get("file_prefix", None)
         ])
-    if params.get("one_node") is not None:
+    if params.get("one_node", None) is not None:
         cargs.extend([
             "-onenode",
-            str(params.get("one_node"))
+            str(params.get("one_node", None))
         ])
-    if params.get("node_range") is not None:
+    if params.get("node_range", None) is not None:
         cargs.extend([
             "-noderange",
-            *map(str, params.get("node_range"))
+            *map(str, params.get("node_range", None))
         ])
-    if params.get("no_consistency_check"):
+    if params.get("no_consistency_check", False):
         cargs.append("-nocons")
-    if params.get("no_volreg"):
+    if params.get("no_volreg", False):
         cargs.append("-novolreg")
-    if params.get("no_transform"):
+    if params.get("no_transform", False):
         cargs.append("-noxform")
-    if params.get("set_environment_variable") is not None:
+    if params.get("set_environment_variable", None) is not None:
         cargs.extend([
             "-setenv",
-            params.get("set_environment_variable")
+            params.get("set_environment_variable", None)
         ])
-    if params.get("trace"):
+    if params.get("trace", False):
         cargs.append("-trace")
-    if params.get("extreme_trace"):
+    if params.get("extreme_trace", False):
         cargs.append("-TRACE")
-    if params.get("no_memory_trace"):
+    if params.get("no_memory_trace", False):
         cargs.append("-nomall")
-    if params.get("yes_memory_trace"):
+    if params.get("yes_memory_trace", False):
         cargs.append("-yesmall")
     return cargs
 
@@ -230,8 +216,8 @@ def compare_surfaces_outputs(
     """
     ret = CompareSurfacesOutputs(
         root=execution.output_file("."),
-        distance_output_file=execution.output_file(params.get("file_prefix") + "_distance.txt") if (params.get("file_prefix") is not None) else None,
-        color_output_file=execution.output_file(params.get("file_prefix") + "_color.txt") if (params.get("file_prefix") is not None) else None,
+        distance_output_file=execution.output_file(params.get("file_prefix", None) + "_distance.txt") if (params.get("file_prefix") is not None) else None,
+        color_output_file=execution.output_file(params.get("file_prefix", None) + "_color.txt") if (params.get("file_prefix") is not None) else None,
     )
     return ret
 
@@ -342,7 +328,6 @@ def compare_surfaces(
 __all__ = [
     "COMPARE_SURFACES_METADATA",
     "CompareSurfacesOutputs",
-    "CompareSurfacesParameters",
     "compare_surfaces",
     "compare_surfaces_execute",
     "compare_surfaces_params",

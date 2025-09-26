@@ -14,7 +14,29 @@ MRI_ANNOTATION2LABEL_METADATA = Metadata(
 
 
 MriAnnotation2labelParameters = typing.TypedDict('MriAnnotation2labelParameters', {
-    "@type": typing.Literal["freesurfer.mri_annotation2label"],
+    "@type": typing.NotRequired[typing.Literal["freesurfer/mri_annotation2label"]],
+    "subject": str,
+    "hemi": str,
+    "lobes": typing.NotRequired[InputPathType | None],
+    "lobes_strict": typing.NotRequired[InputPathType | None],
+    "lobes_strict_phcg": typing.NotRequired[InputPathType | None],
+    "label": typing.NotRequired[float | None],
+    "labelbase": typing.NotRequired[str | None],
+    "outdir": typing.NotRequired[str | None],
+    "seg": typing.NotRequired[InputPathType | None],
+    "segbase": typing.NotRequired[float | None],
+    "ctab": typing.NotRequired[InputPathType | None],
+    "border": typing.NotRequired[InputPathType | None],
+    "border_annot": typing.NotRequired[str | None],
+    "annotation": typing.NotRequired[str | None],
+    "subjects_dir": typing.NotRequired[str | None],
+    "surface": typing.NotRequired[str | None],
+    "stat": typing.NotRequired[InputPathType | None],
+    "help": bool,
+    "version": bool,
+})
+MriAnnotation2labelParametersTagged = typing.TypedDict('MriAnnotation2labelParametersTagged', {
+    "@type": typing.Literal["freesurfer/mri_annotation2label"],
     "subject": str,
     "hemi": str,
     "lobes": typing.NotRequired[InputPathType | None],
@@ -37,40 +59,9 @@ MriAnnotation2labelParameters = typing.TypedDict('MriAnnotation2labelParameters'
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "freesurfer.mri_annotation2label": mri_annotation2label_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-    }.get(t)
-
-
 class MriAnnotation2labelOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `mri_annotation2label(...)`.
+    Output object returned when calling `MriAnnotation2labelParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -96,7 +87,7 @@ def mri_annotation2label_params(
     stat_: InputPathType | None = None,
     help_: bool = False,
     version: bool = False,
-) -> MriAnnotation2labelParameters:
+) -> MriAnnotation2labelParametersTagged:
     """
     Build parameters.
     
@@ -127,7 +118,7 @@ def mri_annotation2label_params(
         Parameter dictionary
     """
     params = {
-        "@type": "freesurfer.mri_annotation2label",
+        "@type": "freesurfer/mri_annotation2label",
         "subject": subject,
         "hemi": hemi,
         "help": help_,
@@ -183,90 +174,90 @@ def mri_annotation2label_cargs(
     cargs.append("mri_annotation2label")
     cargs.extend([
         "--subject",
-        params.get("subject")
+        params.get("subject", None)
     ])
     cargs.extend([
         "--hemi",
-        params.get("hemi")
+        params.get("hemi", None)
     ])
-    if params.get("lobes") is not None:
+    if params.get("lobes", None) is not None:
         cargs.extend([
             "--lobes",
-            execution.input_file(params.get("lobes"))
+            execution.input_file(params.get("lobes", None))
         ])
-    if params.get("lobes_strict") is not None:
+    if params.get("lobes_strict", None) is not None:
         cargs.extend([
             "--lobesStrict",
-            execution.input_file(params.get("lobes_strict"))
+            execution.input_file(params.get("lobes_strict", None))
         ])
-    if params.get("lobes_strict_phcg") is not None:
+    if params.get("lobes_strict_phcg", None) is not None:
         cargs.extend([
             "--lobesStrictPHCG",
-            execution.input_file(params.get("lobes_strict_phcg"))
+            execution.input_file(params.get("lobes_strict_phcg", None))
         ])
-    if params.get("label") is not None:
+    if params.get("label", None) is not None:
         cargs.extend([
             "--label",
-            str(params.get("label"))
+            str(params.get("label", None))
         ])
-    if params.get("labelbase") is not None:
+    if params.get("labelbase", None) is not None:
         cargs.extend([
             "--labelbase",
-            params.get("labelbase")
+            params.get("labelbase", None)
         ])
-    if params.get("outdir") is not None:
+    if params.get("outdir", None) is not None:
         cargs.extend([
             "--outdir",
-            params.get("outdir")
+            params.get("outdir", None)
         ])
-    if params.get("seg") is not None:
+    if params.get("seg", None) is not None:
         cargs.extend([
             "--seg",
-            execution.input_file(params.get("seg"))
+            execution.input_file(params.get("seg", None))
         ])
-    if params.get("segbase") is not None:
+    if params.get("segbase", None) is not None:
         cargs.extend([
             "--segbase",
-            str(params.get("segbase"))
+            str(params.get("segbase", None))
         ])
-    if params.get("ctab") is not None:
+    if params.get("ctab", None) is not None:
         cargs.extend([
             "--ctab",
-            execution.input_file(params.get("ctab"))
+            execution.input_file(params.get("ctab", None))
         ])
-    if params.get("border") is not None:
+    if params.get("border", None) is not None:
         cargs.extend([
             "--border",
-            execution.input_file(params.get("border"))
+            execution.input_file(params.get("border", None))
         ])
-    if params.get("border_annot") is not None:
+    if params.get("border_annot", None) is not None:
         cargs.extend([
             "--border-annot",
-            params.get("border_annot")
+            params.get("border_annot", None)
         ])
-    if params.get("annotation") is not None:
+    if params.get("annotation", None) is not None:
         cargs.extend([
             "--annotation",
-            params.get("annotation")
+            params.get("annotation", None)
         ])
-    if params.get("subjects_dir") is not None:
+    if params.get("subjects_dir", None) is not None:
         cargs.extend([
             "--sd",
-            params.get("subjects_dir")
+            params.get("subjects_dir", None)
         ])
-    if params.get("surface") is not None:
+    if params.get("surface", None) is not None:
         cargs.extend([
             "--surface",
-            params.get("surface")
+            params.get("surface", None)
         ])
-    if params.get("stat") is not None:
+    if params.get("stat", None) is not None:
         cargs.extend([
             "--stat",
-            execution.input_file(params.get("stat"))
+            execution.input_file(params.get("stat", None))
         ])
-    if params.get("help"):
+    if params.get("help", False):
         cargs.append("--help")
-    if params.get("version"):
+    if params.get("version", False):
         cargs.append("--version")
     return cargs
 
@@ -405,7 +396,6 @@ def mri_annotation2label(
 __all__ = [
     "MRI_ANNOTATION2LABEL_METADATA",
     "MriAnnotation2labelOutputs",
-    "MriAnnotation2labelParameters",
     "mri_annotation2label",
     "mri_annotation2label_execute",
     "mri_annotation2label_params",

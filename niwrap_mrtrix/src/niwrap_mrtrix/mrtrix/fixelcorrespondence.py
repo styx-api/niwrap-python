@@ -14,14 +14,35 @@ FIXELCORRESPONDENCE_METADATA = Metadata(
 
 
 FixelcorrespondenceConfigParameters = typing.TypedDict('FixelcorrespondenceConfigParameters', {
-    "@type": typing.Literal["mrtrix.fixelcorrespondence.config"],
+    "@type": typing.NotRequired[typing.Literal["config"]],
+    "key": str,
+    "value": str,
+})
+FixelcorrespondenceConfigParametersTagged = typing.TypedDict('FixelcorrespondenceConfigParametersTagged', {
+    "@type": typing.Literal["config"],
     "key": str,
     "value": str,
 })
 
 
 FixelcorrespondenceParameters = typing.TypedDict('FixelcorrespondenceParameters', {
-    "@type": typing.Literal["mrtrix.fixelcorrespondence"],
+    "@type": typing.NotRequired[typing.Literal["mrtrix/fixelcorrespondence"]],
+    "angle": typing.NotRequired[float | None],
+    "info": bool,
+    "quiet": bool,
+    "debug": bool,
+    "force": bool,
+    "nthreads": typing.NotRequired[int | None],
+    "config": typing.NotRequired[list[FixelcorrespondenceConfigParameters] | None],
+    "help": bool,
+    "version": bool,
+    "subject_data": InputPathType,
+    "template_directory": InputPathType,
+    "output_directory": str,
+    "output_data": str,
+})
+FixelcorrespondenceParametersTagged = typing.TypedDict('FixelcorrespondenceParametersTagged', {
+    "@type": typing.Literal["mrtrix/fixelcorrespondence"],
     "angle": typing.NotRequired[float | None],
     "info": bool,
     "quiet": bool,
@@ -38,42 +59,10 @@ FixelcorrespondenceParameters = typing.TypedDict('FixelcorrespondenceParameters'
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "mrtrix.fixelcorrespondence": fixelcorrespondence_cargs,
-        "mrtrix.fixelcorrespondence.config": fixelcorrespondence_config_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-    }.get(t)
-
-
 def fixelcorrespondence_config_params(
     key: str,
     value: str,
-) -> FixelcorrespondenceConfigParameters:
+) -> FixelcorrespondenceConfigParametersTagged:
     """
     Build parameters.
     
@@ -84,7 +73,7 @@ def fixelcorrespondence_config_params(
         Parameter dictionary
     """
     params = {
-        "@type": "mrtrix.fixelcorrespondence.config",
+        "@type": "config",
         "key": key,
         "value": value,
     }
@@ -106,14 +95,14 @@ def fixelcorrespondence_config_cargs(
     """
     cargs = []
     cargs.append("-config")
-    cargs.append(params.get("key"))
-    cargs.append(params.get("value"))
+    cargs.append(params.get("key", None))
+    cargs.append(params.get("value", None))
     return cargs
 
 
 class FixelcorrespondenceOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `fixelcorrespondence(...)`.
+    Output object returned when calling `FixelcorrespondenceParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -133,7 +122,7 @@ def fixelcorrespondence_params(
     config: list[FixelcorrespondenceConfigParameters] | None = None,
     help_: bool = False,
     version: bool = False,
-) -> FixelcorrespondenceParameters:
+) -> FixelcorrespondenceParametersTagged:
     """
     Build parameters.
     
@@ -163,7 +152,7 @@ def fixelcorrespondence_params(
         Parameter dictionary
     """
     params = {
-        "@type": "mrtrix.fixelcorrespondence",
+        "@type": "mrtrix/fixelcorrespondence",
         "info": info,
         "quiet": quiet,
         "debug": debug,
@@ -199,34 +188,34 @@ def fixelcorrespondence_cargs(
     """
     cargs = []
     cargs.append("fixelcorrespondence")
-    if params.get("angle") is not None:
+    if params.get("angle", None) is not None:
         cargs.extend([
             "-angle",
-            str(params.get("angle"))
+            str(params.get("angle", None))
         ])
-    if params.get("info"):
+    if params.get("info", False):
         cargs.append("-info")
-    if params.get("quiet"):
+    if params.get("quiet", False):
         cargs.append("-quiet")
-    if params.get("debug"):
+    if params.get("debug", False):
         cargs.append("-debug")
-    if params.get("force"):
+    if params.get("force", False):
         cargs.append("-force")
-    if params.get("nthreads") is not None:
+    if params.get("nthreads", None) is not None:
         cargs.extend([
             "-nthreads",
-            str(params.get("nthreads"))
+            str(params.get("nthreads", None))
         ])
-    if params.get("config") is not None:
-        cargs.extend([a for c in [dyn_cargs(s["@type"])(s, execution) for s in params.get("config")] for a in c])
-    if params.get("help"):
+    if params.get("config", None) is not None:
+        cargs.extend([a for c in [fixelcorrespondence_config_cargs(s, execution) for s in params.get("config", None)] for a in c])
+    if params.get("help", False):
         cargs.append("-help")
-    if params.get("version"):
+    if params.get("version", False):
         cargs.append("-version")
-    cargs.append(execution.input_file(params.get("subject_data")))
-    cargs.append(execution.input_file(params.get("template_directory")))
-    cargs.append(params.get("output_directory"))
-    cargs.append(params.get("output_data"))
+    cargs.append(execution.input_file(params.get("subject_data", None)))
+    cargs.append(execution.input_file(params.get("template_directory", None)))
+    cargs.append(params.get("output_directory", None))
+    cargs.append(params.get("output_data", None))
     return cargs
 
 
@@ -366,9 +355,7 @@ def fixelcorrespondence(
 
 __all__ = [
     "FIXELCORRESPONDENCE_METADATA",
-    "FixelcorrespondenceConfigParameters",
     "FixelcorrespondenceOutputs",
-    "FixelcorrespondenceParameters",
     "fixelcorrespondence",
     "fixelcorrespondence_config_params",
     "fixelcorrespondence_execute",

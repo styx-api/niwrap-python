@@ -14,7 +14,21 @@ DMRI_MATCH_METADATA = Metadata(
 
 
 DmriMatchParameters = typing.TypedDict('DmriMatchParameters', {
-    "@type": typing.Literal["freesurfer.dmri_match"],
+    "@type": typing.NotRequired[typing.Literal["freesurfer/dmri_match"]],
+    "parcellation1": InputPathType,
+    "parcellation2": InputPathType,
+    "num_clusters": float,
+    "clustering_path1": InputPathType,
+    "clustering_path2": InputPathType,
+    "labels": bool,
+    "euclidean": bool,
+    "bounding_box": bool,
+    "symmetry": bool,
+    "inter_hemi_ratio_removal": typing.NotRequired[str | None],
+    "output": str,
+})
+DmriMatchParametersTagged = typing.TypedDict('DmriMatchParametersTagged', {
+    "@type": typing.Literal["freesurfer/dmri_match"],
     "parcellation1": InputPathType,
     "parcellation2": InputPathType,
     "num_clusters": float,
@@ -29,41 +43,9 @@ DmriMatchParameters = typing.TypedDict('DmriMatchParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "freesurfer.dmri_match": dmri_match_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "freesurfer.dmri_match": dmri_match_outputs,
-    }.get(t)
-
-
 class DmriMatchOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `dmri_match(...)`.
+    Output object returned when calling `DmriMatchParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -83,7 +65,7 @@ def dmri_match_params(
     bounding_box: bool = False,
     symmetry: bool = False,
     inter_hemi_ratio_removal: str | None = None,
-) -> DmriMatchParameters:
+) -> DmriMatchParametersTagged:
     """
     Build parameters.
     
@@ -105,7 +87,7 @@ def dmri_match_params(
         Parameter dictionary
     """
     params = {
-        "@type": "freesurfer.dmri_match",
+        "@type": "freesurfer/dmri_match",
         "parcellation1": parcellation1,
         "parcellation2": parcellation2,
         "num_clusters": num_clusters,
@@ -139,37 +121,37 @@ def dmri_match_cargs(
     cargs.append("dmri_match")
     cargs.extend([
         "-s1",
-        execution.input_file(params.get("parcellation1"))
+        execution.input_file(params.get("parcellation1", None))
     ])
     cargs.extend([
         "-s2",
-        execution.input_file(params.get("parcellation2"))
+        execution.input_file(params.get("parcellation2", None))
     ])
     cargs.extend([
         "-c",
-        str(params.get("num_clusters"))
+        str(params.get("num_clusters", None))
     ])
     cargs.extend([
         "-h1",
-        execution.input_file(params.get("clustering_path1"))
+        execution.input_file(params.get("clustering_path1", None))
     ])
     cargs.extend([
         "-h2",
-        execution.input_file(params.get("clustering_path2"))
+        execution.input_file(params.get("clustering_path2", None))
     ])
-    if params.get("labels"):
+    if params.get("labels", False):
         cargs.append("-labels")
-    if params.get("euclidean"):
+    if params.get("euclidean", False):
         cargs.append("-euclid")
-    if params.get("bounding_box"):
+    if params.get("bounding_box", False):
         cargs.append("-bb")
-    if params.get("symmetry"):
+    if params.get("symmetry", False):
         cargs.append("-sym")
-    if params.get("inter_hemi_ratio_removal") is not None:
-        cargs.append(params.get("inter_hemi_ratio_removal"))
+    if params.get("inter_hemi_ratio_removal", None) is not None:
+        cargs.append(params.get("inter_hemi_ratio_removal", None))
     cargs.extend([
         "-o",
-        params.get("output")
+        params.get("output", None)
     ])
     return cargs
 
@@ -189,7 +171,7 @@ def dmri_match_outputs(
     """
     ret = DmriMatchOutputs(
         root=execution.output_file("."),
-        output_file=execution.output_file(params.get("output")),
+        output_file=execution.output_file(params.get("output", None)),
     )
     return ret
 
@@ -282,7 +264,6 @@ def dmri_match(
 __all__ = [
     "DMRI_MATCH_METADATA",
     "DmriMatchOutputs",
-    "DmriMatchParameters",
     "dmri_match",
     "dmri_match_execute",
     "dmri_match_params",

@@ -14,7 +14,16 @@ CBLUMWMGYRI_METADATA = Metadata(
 
 
 CblumwmgyriParameters = typing.TypedDict('CblumwmgyriParameters', {
-    "@type": typing.Literal["freesurfer.cblumwmgyri"],
+    "@type": typing.NotRequired[typing.Literal["freesurfer/cblumwmgyri"]],
+    "subject": str,
+    "source_seg": typing.NotRequired[InputPathType | None],
+    "n_erodes_dilates": typing.NotRequired[float | None],
+    "out_seg": typing.NotRequired[str | None],
+    "no_segstats": bool,
+    "subjects_dir": typing.NotRequired[str | None],
+})
+CblumwmgyriParametersTagged = typing.TypedDict('CblumwmgyriParametersTagged', {
+    "@type": typing.Literal["freesurfer/cblumwmgyri"],
     "subject": str,
     "source_seg": typing.NotRequired[InputPathType | None],
     "n_erodes_dilates": typing.NotRequired[float | None],
@@ -24,41 +33,9 @@ CblumwmgyriParameters = typing.TypedDict('CblumwmgyriParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "freesurfer.cblumwmgyri": cblumwmgyri_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "freesurfer.cblumwmgyri": cblumwmgyri_outputs,
-    }.get(t)
-
-
 class CblumwmgyriOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `cblumwmgyri(...)`.
+    Output object returned when calling `CblumwmgyriParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -73,7 +50,7 @@ def cblumwmgyri_params(
     out_seg: str | None = None,
     no_segstats: bool = False,
     subjects_dir: str | None = None,
-) -> CblumwmgyriParameters:
+) -> CblumwmgyriParametersTagged:
     """
     Build parameters.
     
@@ -88,7 +65,7 @@ def cblumwmgyri_params(
         Parameter dictionary
     """
     params = {
-        "@type": "freesurfer.cblumwmgyri",
+        "@type": "freesurfer/cblumwmgyri",
         "subject": subject,
         "no_segstats": no_segstats,
     }
@@ -120,29 +97,29 @@ def cblumwmgyri_cargs(
     cargs.append("cblumwmgyri")
     cargs.extend([
         "--s",
-        params.get("subject")
+        params.get("subject", None)
     ])
-    if params.get("source_seg") is not None:
+    if params.get("source_seg", None) is not None:
         cargs.extend([
             "--seg",
-            execution.input_file(params.get("source_seg"))
+            execution.input_file(params.get("source_seg", None))
         ])
-    if params.get("n_erodes_dilates") is not None:
+    if params.get("n_erodes_dilates", None) is not None:
         cargs.extend([
             "--n",
-            str(params.get("n_erodes_dilates"))
+            str(params.get("n_erodes_dilates", None))
         ])
-    if params.get("out_seg") is not None:
+    if params.get("out_seg", None) is not None:
         cargs.extend([
             "--o",
-            params.get("out_seg")
+            params.get("out_seg", None)
         ])
-    if params.get("no_segstats"):
+    if params.get("no_segstats", False):
         cargs.append("--no-segstats")
-    if params.get("subjects_dir") is not None:
+    if params.get("subjects_dir", None) is not None:
         cargs.extend([
             "--sd",
-            params.get("subjects_dir")
+            params.get("subjects_dir", None)
         ])
     return cargs
 
@@ -162,7 +139,7 @@ def cblumwmgyri_outputs(
     """
     ret = CblumwmgyriOutputs(
         root=execution.output_file("."),
-        output_seg_file=execution.output_file(params.get("out_seg")) if (params.get("out_seg") is not None) else None,
+        output_seg_file=execution.output_file(params.get("out_seg", None)) if (params.get("out_seg") is not None) else None,
     )
     return ret
 
@@ -240,7 +217,6 @@ def cblumwmgyri(
 __all__ = [
     "CBLUMWMGYRI_METADATA",
     "CblumwmgyriOutputs",
-    "CblumwmgyriParameters",
     "cblumwmgyri",
     "cblumwmgyri_execute",
     "cblumwmgyri_params",

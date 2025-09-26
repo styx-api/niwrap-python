@@ -14,47 +14,20 @@ V_3D_DESPIKE_METADATA = Metadata(
 
 
 V3dDespikeParameters = typing.TypedDict('V3dDespikeParameters', {
-    "@type": typing.Literal["afni.3dDespike"],
+    "@type": typing.NotRequired[typing.Literal["afni/3dDespike"]],
+    "prefix": typing.NotRequired[str | None],
+    "in_file": InputPathType,
+})
+V3dDespikeParametersTagged = typing.TypedDict('V3dDespikeParametersTagged', {
+    "@type": typing.Literal["afni/3dDespike"],
     "prefix": typing.NotRequired[str | None],
     "in_file": InputPathType,
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "afni.3dDespike": v_3d_despike_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "afni.3dDespike": v_3d_despike_outputs,
-    }.get(t)
-
-
 class V3dDespikeOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `v_3d_despike(...)`.
+    Output object returned when calling `V3dDespikeParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -65,7 +38,7 @@ class V3dDespikeOutputs(typing.NamedTuple):
 def v_3d_despike_params(
     in_file: InputPathType,
     prefix: str | None = None,
-) -> V3dDespikeParameters:
+) -> V3dDespikeParametersTagged:
     """
     Build parameters.
     
@@ -76,7 +49,7 @@ def v_3d_despike_params(
         Parameter dictionary
     """
     params = {
-        "@type": "afni.3dDespike",
+        "@type": "afni/3dDespike",
         "in_file": in_file,
     }
     if prefix is not None:
@@ -99,12 +72,12 @@ def v_3d_despike_cargs(
     """
     cargs = []
     cargs.append("3dDespike")
-    if params.get("prefix") is not None:
+    if params.get("prefix", None) is not None:
         cargs.extend([
             "-prefix",
-            params.get("prefix")
+            params.get("prefix", None)
         ])
-    cargs.append(execution.input_file(params.get("in_file")))
+    cargs.append(execution.input_file(params.get("in_file", None)))
     return cargs
 
 
@@ -123,7 +96,7 @@ def v_3d_despike_outputs(
     """
     ret = V3dDespikeOutputs(
         root=execution.output_file("."),
-        out_file=execution.output_file(params.get("prefix")) if (params.get("prefix") is not None) else None,
+        out_file=execution.output_file(params.get("prefix", None)) if (params.get("prefix") is not None) else None,
     )
     return ret
 
@@ -188,7 +161,6 @@ def v_3d_despike(
 
 __all__ = [
     "V3dDespikeOutputs",
-    "V3dDespikeParameters",
     "V_3D_DESPIKE_METADATA",
     "v_3d_despike",
     "v_3d_despike_execute",

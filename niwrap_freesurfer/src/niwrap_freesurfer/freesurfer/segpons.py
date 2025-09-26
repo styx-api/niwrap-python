@@ -14,7 +14,16 @@ SEGPONS_METADATA = Metadata(
 
 
 SegponsParameters = typing.TypedDict('SegponsParameters', {
-    "@type": typing.Literal["freesurfer.segpons"],
+    "@type": typing.NotRequired[typing.Literal["freesurfer/segpons"]],
+    "subject": str,
+    "aseg": bool,
+    "apas": bool,
+    "seg": typing.NotRequired[InputPathType | None],
+    "no_refine": bool,
+    "pons152_mask": typing.NotRequired[InputPathType | None],
+})
+SegponsParametersTagged = typing.TypedDict('SegponsParametersTagged', {
+    "@type": typing.Literal["freesurfer/segpons"],
     "subject": str,
     "aseg": bool,
     "apas": bool,
@@ -24,41 +33,9 @@ SegponsParameters = typing.TypedDict('SegponsParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "freesurfer.segpons": segpons_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "freesurfer.segpons": segpons_outputs,
-    }.get(t)
-
-
 class SegponsOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `segpons(...)`.
+    Output object returned when calling `SegponsParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -73,7 +50,7 @@ def segpons_params(
     seg: InputPathType | None = None,
     no_refine: bool = False,
     pons152_mask: InputPathType | None = None,
-) -> SegponsParameters:
+) -> SegponsParametersTagged:
     """
     Build parameters.
     
@@ -88,7 +65,7 @@ def segpons_params(
         Parameter dictionary
     """
     params = {
-        "@type": "freesurfer.segpons",
+        "@type": "freesurfer/segpons",
         "subject": subject,
         "aseg": aseg,
         "apas": apas,
@@ -118,23 +95,23 @@ def segpons_cargs(
     cargs.append("segpons")
     cargs.extend([
         "-s",
-        params.get("subject")
+        params.get("subject", None)
     ])
-    if params.get("aseg"):
+    if params.get("aseg", False):
         cargs.append("--aseg")
-    if params.get("apas"):
+    if params.get("apas", False):
         cargs.append("--apas")
-    if params.get("seg") is not None:
+    if params.get("seg", None) is not None:
         cargs.extend([
             "--seg",
-            execution.input_file(params.get("seg"))
+            execution.input_file(params.get("seg", None))
         ])
-    if params.get("no_refine"):
+    if params.get("no_refine", False):
         cargs.append("--no-refine")
-    if params.get("pons152_mask") is not None:
+    if params.get("pons152_mask", None) is not None:
         cargs.extend([
             "--pons152",
-            execution.input_file(params.get("pons152_mask"))
+            execution.input_file(params.get("pons152_mask", None))
         ])
     return cargs
 
@@ -154,7 +131,7 @@ def segpons_outputs(
     """
     ret = SegponsOutputs(
         root=execution.output_file("."),
-        pons_output=execution.output_file(params.get("subject") + "+pons.mgz"),
+        pons_output=execution.output_file(params.get("subject", None) + "+pons.mgz"),
     )
     return ret
 
@@ -230,7 +207,6 @@ def segpons(
 __all__ = [
     "SEGPONS_METADATA",
     "SegponsOutputs",
-    "SegponsParameters",
     "segpons",
     "segpons_execute",
     "segpons_params",

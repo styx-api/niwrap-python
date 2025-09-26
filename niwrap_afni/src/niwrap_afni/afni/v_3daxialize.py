@@ -14,7 +14,18 @@ V_3DAXIALIZE_METADATA = Metadata(
 
 
 V3daxializeParameters = typing.TypedDict('V3daxializeParameters', {
-    "@type": typing.Literal["afni.3daxialize"],
+    "@type": typing.NotRequired[typing.Literal["afni/3daxialize"]],
+    "infile": InputPathType,
+    "prefix": typing.NotRequired[str | None],
+    "verb": bool,
+    "sagittal": bool,
+    "coronal": bool,
+    "axial": bool,
+    "orient_code": typing.NotRequired[str | None],
+    "frugal": bool,
+})
+V3daxializeParametersTagged = typing.TypedDict('V3daxializeParametersTagged', {
+    "@type": typing.Literal["afni/3daxialize"],
     "infile": InputPathType,
     "prefix": typing.NotRequired[str | None],
     "verb": bool,
@@ -26,41 +37,9 @@ V3daxializeParameters = typing.TypedDict('V3daxializeParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "afni.3daxialize": v_3daxialize_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "afni.3daxialize": v_3daxialize_outputs,
-    }.get(t)
-
-
 class V3daxializeOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `v_3daxialize(...)`.
+    Output object returned when calling `V3daxializeParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -77,7 +56,7 @@ def v_3daxialize_params(
     axial: bool = False,
     orient_code: str | None = None,
     frugal: bool = False,
-) -> V3daxializeParameters:
+) -> V3daxializeParametersTagged:
     """
     Build parameters.
     
@@ -97,7 +76,7 @@ def v_3daxialize_params(
         Parameter dictionary
     """
     params = {
-        "@type": "afni.3daxialize",
+        "@type": "afni/3daxialize",
         "infile": infile,
         "verb": verb,
         "sagittal": sagittal,
@@ -127,26 +106,26 @@ def v_3daxialize_cargs(
     """
     cargs = []
     cargs.append("3daxialize")
-    cargs.append(execution.input_file(params.get("infile")))
-    if params.get("prefix") is not None:
+    cargs.append(execution.input_file(params.get("infile", None)))
+    if params.get("prefix", None) is not None:
         cargs.extend([
             "-prefix",
-            params.get("prefix")
+            params.get("prefix", None)
         ])
-    if params.get("verb"):
+    if params.get("verb", False):
         cargs.append("-verb")
-    if params.get("sagittal"):
+    if params.get("sagittal", False):
         cargs.append("-sagittal")
-    if params.get("coronal"):
+    if params.get("coronal", False):
         cargs.append("-coronal")
-    if params.get("axial"):
+    if params.get("axial", False):
         cargs.append("-axial")
-    if params.get("orient_code") is not None:
+    if params.get("orient_code", None) is not None:
         cargs.extend([
             "-orient",
-            params.get("orient_code")
+            params.get("orient_code", None)
         ])
-    if params.get("frugal"):
+    if params.get("frugal", False):
         cargs.append("-frugal")
     return cargs
 
@@ -166,7 +145,7 @@ def v_3daxialize_outputs(
     """
     ret = V3daxializeOutputs(
         root=execution.output_file("."),
-        outfile=execution.output_file(params.get("prefix") + "+orig") if (params.get("prefix") is not None) else None,
+        outfile=execution.output_file(params.get("prefix", None) + "+orig") if (params.get("prefix") is not None) else None,
     )
     return ret
 
@@ -252,7 +231,6 @@ def v_3daxialize(
 
 __all__ = [
     "V3daxializeOutputs",
-    "V3daxializeParameters",
     "V_3DAXIALIZE_METADATA",
     "v_3daxialize",
     "v_3daxialize_execute",

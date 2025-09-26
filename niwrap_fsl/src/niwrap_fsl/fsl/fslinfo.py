@@ -14,45 +14,18 @@ FSLINFO_METADATA = Metadata(
 
 
 FslinfoParameters = typing.TypedDict('FslinfoParameters', {
-    "@type": typing.Literal["fsl.fslinfo"],
+    "@type": typing.NotRequired[typing.Literal["fsl/fslinfo"]],
+    "filename": InputPathType,
+})
+FslinfoParametersTagged = typing.TypedDict('FslinfoParametersTagged', {
+    "@type": typing.Literal["fsl/fslinfo"],
     "filename": InputPathType,
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "fsl.fslinfo": fslinfo_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-    }.get(t)
-
-
 class FslinfoOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `fslinfo(...)`.
+    Output object returned when calling `FslinfoParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -60,7 +33,7 @@ class FslinfoOutputs(typing.NamedTuple):
 
 def fslinfo_params(
     filename: InputPathType,
-) -> FslinfoParameters:
+) -> FslinfoParametersTagged:
     """
     Build parameters.
     
@@ -70,7 +43,7 @@ def fslinfo_params(
         Parameter dictionary
     """
     params = {
-        "@type": "fsl.fslinfo",
+        "@type": "fsl/fslinfo",
         "filename": filename,
     }
     return params
@@ -91,7 +64,7 @@ def fslinfo_cargs(
     """
     cargs = []
     cargs.append("fslinfo")
-    cargs.append(execution.input_file(params.get("filename")))
+    cargs.append(execution.input_file(params.get("filename", None)))
     return cargs
 
 
@@ -170,7 +143,6 @@ def fslinfo(
 __all__ = [
     "FSLINFO_METADATA",
     "FslinfoOutputs",
-    "FslinfoParameters",
     "fslinfo",
     "fslinfo_execute",
     "fslinfo_params",

@@ -14,7 +14,14 @@ MRI_EXTRACT_METADATA = Metadata(
 
 
 MriExtractParameters = typing.TypedDict('MriExtractParameters', {
-    "@type": typing.Literal["freesurfer.mri_extract"],
+    "@type": typing.NotRequired[typing.Literal["freesurfer/mri_extract"]],
+    "like_template": typing.NotRequired[InputPathType | None],
+    "src_volume": InputPathType,
+    "dst_volume": InputPathType,
+    "coordinates": typing.NotRequired[list[float] | None],
+})
+MriExtractParametersTagged = typing.TypedDict('MriExtractParametersTagged', {
+    "@type": typing.Literal["freesurfer/mri_extract"],
     "like_template": typing.NotRequired[InputPathType | None],
     "src_volume": InputPathType,
     "dst_volume": InputPathType,
@@ -22,41 +29,9 @@ MriExtractParameters = typing.TypedDict('MriExtractParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "freesurfer.mri_extract": mri_extract_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "freesurfer.mri_extract": mri_extract_outputs,
-    }.get(t)
-
-
 class MriExtractOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `mri_extract(...)`.
+    Output object returned when calling `MriExtractParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -69,7 +44,7 @@ def mri_extract_params(
     dst_volume: InputPathType,
     like_template: InputPathType | None = None,
     coordinates: list[float] | None = None,
-) -> MriExtractParameters:
+) -> MriExtractParametersTagged:
     """
     Build parameters.
     
@@ -84,7 +59,7 @@ def mri_extract_params(
         Parameter dictionary
     """
     params = {
-        "@type": "freesurfer.mri_extract",
+        "@type": "freesurfer/mri_extract",
         "src_volume": src_volume,
         "dst_volume": dst_volume,
     }
@@ -110,15 +85,15 @@ def mri_extract_cargs(
     """
     cargs = []
     cargs.append("mri_extract")
-    if params.get("like_template") is not None:
+    if params.get("like_template", None) is not None:
         cargs.extend([
             "-like",
-            execution.input_file(params.get("like_template"))
+            execution.input_file(params.get("like_template", None))
         ])
-    cargs.append(execution.input_file(params.get("src_volume")))
-    cargs.append(execution.input_file(params.get("dst_volume")))
-    if params.get("coordinates") is not None:
-        cargs.extend(map(str, params.get("coordinates")))
+    cargs.append(execution.input_file(params.get("src_volume", None)))
+    cargs.append(execution.input_file(params.get("dst_volume", None)))
+    if params.get("coordinates", None) is not None:
+        cargs.extend(map(str, params.get("coordinates", None)))
     return cargs
 
 
@@ -137,7 +112,7 @@ def mri_extract_outputs(
     """
     ret = MriExtractOutputs(
         root=execution.output_file("."),
-        output_extracted_volume=execution.output_file(pathlib.Path(params.get("dst_volume")).name),
+        output_extracted_volume=execution.output_file(pathlib.Path(params.get("dst_volume", None)).name),
     )
     return ret
 
@@ -209,7 +184,6 @@ def mri_extract(
 __all__ = [
     "MRI_EXTRACT_METADATA",
     "MriExtractOutputs",
-    "MriExtractParameters",
     "mri_extract",
     "mri_extract_execute",
     "mri_extract_params",

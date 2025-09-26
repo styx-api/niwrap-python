@@ -14,7 +14,19 @@ XSANATREG_METADATA = Metadata(
 
 
 XsanatregParameters = typing.TypedDict('XsanatregParameters', {
-    "@type": typing.Literal["freesurfer.xsanatreg"],
+    "@type": typing.NotRequired[typing.Literal["freesurfer/xsanatreg"]],
+    "src_cordir": str,
+    "targ_cordir": str,
+    "transform_file": str,
+    "temp_directory": typing.NotRequired[str | None],
+    "source_minc": typing.NotRequired[str | None],
+    "target_minc": typing.NotRequired[str | None],
+    "no_cleanup": bool,
+    "version": bool,
+    "umask": typing.NotRequired[str | None],
+})
+XsanatregParametersTagged = typing.TypedDict('XsanatregParametersTagged', {
+    "@type": typing.Literal["freesurfer/xsanatreg"],
     "src_cordir": str,
     "targ_cordir": str,
     "transform_file": str,
@@ -27,40 +39,9 @@ XsanatregParameters = typing.TypedDict('XsanatregParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "freesurfer.xsanatreg": xsanatreg_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-    }.get(t)
-
-
 class XsanatregOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `xsanatreg(...)`.
+    Output object returned when calling `XsanatregParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -76,7 +57,7 @@ def xsanatreg_params(
     no_cleanup: bool = False,
     version: bool = False,
     umask: str | None = None,
-) -> XsanatregParameters:
+) -> XsanatregParametersTagged:
     """
     Build parameters.
     
@@ -96,7 +77,7 @@ def xsanatreg_params(
         Parameter dictionary
     """
     params = {
-        "@type": "freesurfer.xsanatreg",
+        "@type": "freesurfer/xsanatreg",
         "src_cordir": src_cordir,
         "targ_cordir": targ_cordir,
         "transform_file": transform_file,
@@ -131,39 +112,39 @@ def xsanatreg_cargs(
     cargs.append("xsanatreg")
     cargs.extend([
         "-src",
-        params.get("src_cordir")
+        params.get("src_cordir", None)
     ])
     cargs.extend([
         "-targ",
-        params.get("targ_cordir")
+        params.get("targ_cordir", None)
     ])
     cargs.extend([
         "-xfm",
-        params.get("transform_file")
+        params.get("transform_file", None)
     ])
-    if params.get("temp_directory") is not None:
+    if params.get("temp_directory", None) is not None:
         cargs.extend([
             "-tmpdir",
-            params.get("temp_directory")
+            params.get("temp_directory", None)
         ])
-    if params.get("source_minc") is not None:
+    if params.get("source_minc", None) is not None:
         cargs.extend([
             "-srcminc",
-            params.get("source_minc")
+            params.get("source_minc", None)
         ])
-    if params.get("target_minc") is not None:
+    if params.get("target_minc", None) is not None:
         cargs.extend([
             "-targminc",
-            params.get("target_minc")
+            params.get("target_minc", None)
         ])
-    if params.get("no_cleanup"):
+    if params.get("no_cleanup", False):
         cargs.append("-nocleanup")
-    if params.get("version"):
+    if params.get("version", False):
         cargs.append("-version")
-    if params.get("umask") is not None:
+    if params.get("umask", None) is not None:
         cargs.extend([
             "-umask",
-            params.get("umask")
+            params.get("umask", None)
         ])
     return cargs
 
@@ -269,7 +250,6 @@ def xsanatreg(
 __all__ = [
     "XSANATREG_METADATA",
     "XsanatregOutputs",
-    "XsanatregParameters",
     "xsanatreg",
     "xsanatreg_execute",
     "xsanatreg_params",

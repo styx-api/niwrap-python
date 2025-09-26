@@ -14,7 +14,15 @@ MAP_TO_BASE_METADATA = Metadata(
 
 
 MapToBaseParameters = typing.TypedDict('MapToBaseParameters', {
-    "@type": typing.Literal["freesurfer.map_to_base"],
+    "@type": typing.NotRequired[typing.Literal["freesurfer/map_to_base"]],
+    "baseid": str,
+    "tpid": str,
+    "input_image": str,
+    "resample_type": str,
+    "cross": typing.NotRequired[str | None],
+})
+MapToBaseParametersTagged = typing.TypedDict('MapToBaseParametersTagged', {
+    "@type": typing.Literal["freesurfer/map_to_base"],
     "baseid": str,
     "tpid": str,
     "input_image": str,
@@ -23,41 +31,9 @@ MapToBaseParameters = typing.TypedDict('MapToBaseParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "freesurfer.map_to_base": map_to_base_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "freesurfer.map_to_base": map_to_base_outputs,
-    }.get(t)
-
-
 class MapToBaseOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `map_to_base(...)`.
+    Output object returned when calling `MapToBaseParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -81,7 +57,7 @@ def map_to_base_params(
     input_image: str,
     resample_type: str,
     cross: str | None = None,
-) -> MapToBaseParameters:
+) -> MapToBaseParametersTagged:
     """
     Build parameters.
     
@@ -97,7 +73,7 @@ def map_to_base_params(
         Parameter dictionary
     """
     params = {
-        "@type": "freesurfer.map_to_base",
+        "@type": "freesurfer/map_to_base",
         "baseid": baseid,
         "tpid": tpid,
         "input_image": input_image,
@@ -123,12 +99,12 @@ def map_to_base_cargs(
     """
     cargs = []
     cargs.append("map_to_base")
-    cargs.append(params.get("baseid"))
-    cargs.append(params.get("tpid"))
-    cargs.append(params.get("input_image"))
-    cargs.append(params.get("resample_type"))
-    if params.get("cross") is not None:
-        cargs.append(params.get("cross"))
+    cargs.append(params.get("baseid", None))
+    cargs.append(params.get("tpid", None))
+    cargs.append(params.get("input_image", None))
+    cargs.append(params.get("resample_type", None))
+    if params.get("cross", None) is not None:
+        cargs.append(params.get("cross", None))
     return cargs
 
 
@@ -147,10 +123,10 @@ def map_to_base_outputs(
     """
     ret = MapToBaseOutputs(
         root=execution.output_file("."),
-        output_long_mri=execution.output_file(params.get("baseid") + "/mri/" + params.get("tpid") + "-long." + params.get("input_image")),
-        output_long_surf=execution.output_file(params.get("baseid") + "/surf/" + params.get("tpid") + "-long." + params.get("input_image")),
-        output_cross_mri=execution.output_file(params.get("baseid") + "/mri/" + params.get("tpid") + "-cross." + params.get("input_image")),
-        output_cross_surf=execution.output_file(params.get("baseid") + "/surf/" + params.get("tpid") + "-cross." + params.get("input_image")),
+        output_long_mri=execution.output_file(params.get("baseid", None) + "/mri/" + params.get("tpid", None) + "-long." + params.get("input_image", None)),
+        output_long_surf=execution.output_file(params.get("baseid", None) + "/surf/" + params.get("tpid", None) + "-long." + params.get("input_image", None)),
+        output_cross_mri=execution.output_file(params.get("baseid", None) + "/mri/" + params.get("tpid", None) + "-cross." + params.get("input_image", None)),
+        output_cross_surf=execution.output_file(params.get("baseid", None) + "/surf/" + params.get("tpid", None) + "-cross." + params.get("input_image", None)),
     )
     return ret
 
@@ -229,7 +205,6 @@ def map_to_base(
 __all__ = [
     "MAP_TO_BASE_METADATA",
     "MapToBaseOutputs",
-    "MapToBaseParameters",
     "map_to_base",
     "map_to_base_execute",
     "map_to_base_params",

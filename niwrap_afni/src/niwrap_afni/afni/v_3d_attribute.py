@@ -14,7 +14,18 @@ V_3D_ATTRIBUTE_METADATA = Metadata(
 
 
 V3dAttributeParameters = typing.TypedDict('V3dAttributeParameters', {
-    "@type": typing.Literal["afni.3dAttribute"],
+    "@type": typing.NotRequired[typing.Literal["afni/3dAttribute"]],
+    "all": bool,
+    "name": bool,
+    "center": bool,
+    "ssep": typing.NotRequired[str | None],
+    "sprep": typing.NotRequired[str | None],
+    "quote": bool,
+    "aname": str,
+    "dset": InputPathType,
+})
+V3dAttributeParametersTagged = typing.TypedDict('V3dAttributeParametersTagged', {
+    "@type": typing.Literal["afni/3dAttribute"],
     "all": bool,
     "name": bool,
     "center": bool,
@@ -26,41 +37,9 @@ V3dAttributeParameters = typing.TypedDict('V3dAttributeParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "afni.3dAttribute": v_3d_attribute_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "afni.3dAttribute": v_3d_attribute_outputs,
-    }.get(t)
-
-
 class V3dAttributeOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `v_3d_attribute(...)`.
+    Output object returned when calling `V3dAttributeParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -77,7 +56,7 @@ def v_3d_attribute_params(
     ssep: str | None = None,
     sprep: str | None = None,
     quote: bool = False,
-) -> V3dAttributeParameters:
+) -> V3dAttributeParametersTagged:
     """
     Build parameters.
     
@@ -95,7 +74,7 @@ def v_3d_attribute_params(
         Parameter dictionary
     """
     params = {
-        "@type": "afni.3dAttribute",
+        "@type": "afni/3dAttribute",
         "all": all_,
         "name": name,
         "center": center,
@@ -125,26 +104,26 @@ def v_3d_attribute_cargs(
     """
     cargs = []
     cargs.append("3dAttribute")
-    if params.get("all"):
+    if params.get("all", False):
         cargs.append("-all")
-    if params.get("name"):
+    if params.get("name", False):
         cargs.append("-name")
-    if params.get("center"):
+    if params.get("center", False):
         cargs.append("-center")
-    if params.get("ssep") is not None:
+    if params.get("ssep", None) is not None:
         cargs.extend([
             "-ssep",
-            params.get("ssep")
+            params.get("ssep", None)
         ])
-    if params.get("sprep") is not None:
+    if params.get("sprep", None) is not None:
         cargs.extend([
             "-sprep",
-            params.get("sprep")
+            params.get("sprep", None)
         ])
-    if params.get("quote"):
+    if params.get("quote", False):
         cargs.append("-quote")
-    cargs.append(params.get("aname"))
-    cargs.append(execution.input_file(params.get("dset")))
+    cargs.append(params.get("aname", None))
+    cargs.append(execution.input_file(params.get("dset", None)))
     return cargs
 
 
@@ -247,7 +226,6 @@ def v_3d_attribute(
 
 __all__ = [
     "V3dAttributeOutputs",
-    "V3dAttributeParameters",
     "V_3D_ATTRIBUTE_METADATA",
     "v_3d_attribute",
     "v_3d_attribute_execute",

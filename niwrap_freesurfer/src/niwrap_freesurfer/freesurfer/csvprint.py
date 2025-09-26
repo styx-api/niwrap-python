@@ -14,45 +14,18 @@ CSVPRINT_METADATA = Metadata(
 
 
 CsvprintParameters = typing.TypedDict('CsvprintParameters', {
-    "@type": typing.Literal["freesurfer.csvprint"],
+    "@type": typing.NotRequired[typing.Literal["freesurfer/csvprint"]],
+    "infile": InputPathType,
+})
+CsvprintParametersTagged = typing.TypedDict('CsvprintParametersTagged', {
+    "@type": typing.Literal["freesurfer/csvprint"],
     "infile": InputPathType,
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "freesurfer.csvprint": csvprint_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-    }.get(t)
-
-
 class CsvprintOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `csvprint(...)`.
+    Output object returned when calling `CsvprintParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -60,7 +33,7 @@ class CsvprintOutputs(typing.NamedTuple):
 
 def csvprint_params(
     infile: InputPathType,
-) -> CsvprintParameters:
+) -> CsvprintParametersTagged:
     """
     Build parameters.
     
@@ -70,7 +43,7 @@ def csvprint_params(
         Parameter dictionary
     """
     params = {
-        "@type": "freesurfer.csvprint",
+        "@type": "freesurfer/csvprint",
         "infile": infile,
     }
     return params
@@ -91,7 +64,7 @@ def csvprint_cargs(
     """
     cargs = []
     cargs.append("csvprint")
-    cargs.append(execution.input_file(params.get("infile")))
+    cargs.append(execution.input_file(params.get("infile", None)))
     return cargs
 
 
@@ -170,7 +143,6 @@ def csvprint(
 __all__ = [
     "CSVPRINT_METADATA",
     "CsvprintOutputs",
-    "CsvprintParameters",
     "csvprint",
     "csvprint_execute",
     "csvprint_params",

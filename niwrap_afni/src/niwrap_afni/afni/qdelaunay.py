@@ -14,7 +14,43 @@ QDELAUNAY_METADATA = Metadata(
 
 
 QdelaunayParameters = typing.TypedDict('QdelaunayParameters', {
-    "@type": typing.Literal["afni.qdelaunay"],
+    "@type": typing.NotRequired[typing.Literal["afni/qdelaunay"]],
+    "input_file": InputPathType,
+    "furthest_site": bool,
+    "triangulated_output": bool,
+    "joggled_input": bool,
+    "joggle_range": typing.NotRequired[float | None],
+    "search_simplex": bool,
+    "point_infinity": bool,
+    "delaunay_visible": typing.NotRequired[str | None],
+    "delaunay_regions": typing.NotRequired[str | None],
+    "trace_level": typing.NotRequired[float | None],
+    "check": bool,
+    "statistics": bool,
+    "verify": bool,
+    "output_stdout": bool,
+    "facets_summary": typing.NotRequired[float | None],
+    "input_file_option": typing.NotRequired[InputPathType | None],
+    "output_file_option": typing.NotRequired[InputPathType | None],
+    "trace_point": typing.NotRequired[float | None],
+    "trace_merge": typing.NotRequired[float | None],
+    "trace_merge_width": typing.NotRequired[float | None],
+    "stop_point": typing.NotRequired[float | None],
+    "stop_cone_point": typing.NotRequired[float | None],
+    "centrum_radius": typing.NotRequired[float | None],
+    "max_angle_cosine": typing.NotRequired[float | None],
+    "perturb_factor": typing.NotRequired[float | None],
+    "min_facet_width": typing.NotRequired[float | None],
+    "facet_dump": bool,
+    "geomview": bool,
+    "vertices_incident": bool,
+    "mathematica": bool,
+    "off_format": bool,
+    "point_coordinates": bool,
+    "summary": bool,
+})
+QdelaunayParametersTagged = typing.TypedDict('QdelaunayParametersTagged', {
+    "@type": typing.Literal["afni/qdelaunay"],
     "input_file": InputPathType,
     "furthest_site": bool,
     "triangulated_output": bool,
@@ -51,40 +87,9 @@ QdelaunayParameters = typing.TypedDict('QdelaunayParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "afni.qdelaunay": qdelaunay_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-    }.get(t)
-
-
 class QdelaunayOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `qdelaunay(...)`.
+    Output object returned when calling `QdelaunayParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -124,7 +129,7 @@ def qdelaunay_params(
     off_format: bool = False,
     point_coordinates: bool = False,
     summary: bool = False,
-) -> QdelaunayParameters:
+) -> QdelaunayParametersTagged:
     """
     Build parameters.
     
@@ -171,7 +176,7 @@ def qdelaunay_params(
         Parameter dictionary
     """
     params = {
-        "@type": "afni.qdelaunay",
+        "@type": "afni/qdelaunay",
         "input_file": input_file,
         "furthest_site": furthest_site,
         "triangulated_output": triangulated_output,
@@ -240,118 +245,118 @@ def qdelaunay_cargs(
     """
     cargs = []
     cargs.append("qdelaunay")
-    cargs.append(execution.input_file(params.get("input_file")))
-    if params.get("furthest_site"):
+    cargs.append(execution.input_file(params.get("input_file", None)))
+    if params.get("furthest_site", False):
         cargs.append("Qu")
-    if params.get("triangulated_output"):
+    if params.get("triangulated_output", False):
         cargs.append("Qt")
-    if params.get("joggled_input"):
+    if params.get("joggled_input", False):
         cargs.append("QJ")
-    if params.get("joggle_range") is not None:
+    if params.get("joggle_range", None) is not None:
         cargs.extend([
             "QJn",
-            str(params.get("joggle_range"))
+            str(params.get("joggle_range", None))
         ])
-    if params.get("search_simplex"):
+    if params.get("search_simplex", False):
         cargs.append("Qs")
-    if params.get("point_infinity"):
+    if params.get("point_infinity", False):
         cargs.append("Qz")
-    if params.get("delaunay_visible") is not None:
+    if params.get("delaunay_visible", None) is not None:
         cargs.extend([
             "QGn",
-            params.get("delaunay_visible")
+            params.get("delaunay_visible", None)
         ])
-    if params.get("delaunay_regions") is not None:
+    if params.get("delaunay_regions", None) is not None:
         cargs.extend([
             "QVn",
-            params.get("delaunay_regions")
+            params.get("delaunay_regions", None)
         ])
-    if params.get("trace_level") is not None:
+    if params.get("trace_level", None) is not None:
         cargs.extend([
             "T4",
-            str(params.get("trace_level"))
+            str(params.get("trace_level", None))
         ])
-    if params.get("check"):
+    if params.get("check", False):
         cargs.append("Tc")
-    if params.get("statistics"):
+    if params.get("statistics", False):
         cargs.append("Ts")
-    if params.get("verify"):
+    if params.get("verify", False):
         cargs.append("Tv")
-    if params.get("output_stdout"):
+    if params.get("output_stdout", False):
         cargs.append("Tz")
-    if params.get("facets_summary") is not None:
+    if params.get("facets_summary", None) is not None:
         cargs.extend([
             "TFn",
-            str(params.get("facets_summary"))
+            str(params.get("facets_summary", None))
         ])
-    if params.get("input_file_option") is not None:
+    if params.get("input_file_option", None) is not None:
         cargs.extend([
             "TI",
-            execution.input_file(params.get("input_file_option"))
+            execution.input_file(params.get("input_file_option", None))
         ])
-    if params.get("output_file_option") is not None:
+    if params.get("output_file_option", None) is not None:
         cargs.extend([
             "TO",
-            execution.input_file(params.get("output_file_option"))
+            execution.input_file(params.get("output_file_option", None))
         ])
-    if params.get("trace_point") is not None:
+    if params.get("trace_point", None) is not None:
         cargs.extend([
             "TPn",
-            str(params.get("trace_point"))
+            str(params.get("trace_point", None))
         ])
-    if params.get("trace_merge") is not None:
+    if params.get("trace_merge", None) is not None:
         cargs.extend([
             "TMn",
-            str(params.get("trace_merge"))
+            str(params.get("trace_merge", None))
         ])
-    if params.get("trace_merge_width") is not None:
+    if params.get("trace_merge_width", None) is not None:
         cargs.extend([
             "TWn",
-            str(params.get("trace_merge_width"))
+            str(params.get("trace_merge_width", None))
         ])
-    if params.get("stop_point") is not None:
+    if params.get("stop_point", None) is not None:
         cargs.extend([
             "TVn",
-            str(params.get("stop_point"))
+            str(params.get("stop_point", None))
         ])
-    if params.get("stop_cone_point") is not None:
+    if params.get("stop_cone_point", None) is not None:
         cargs.extend([
             "TCn",
-            str(params.get("stop_cone_point"))
+            str(params.get("stop_cone_point", None))
         ])
-    if params.get("centrum_radius") is not None:
+    if params.get("centrum_radius", None) is not None:
         cargs.extend([
             "Cn",
-            str(params.get("centrum_radius"))
+            str(params.get("centrum_radius", None))
         ])
-    if params.get("max_angle_cosine") is not None:
+    if params.get("max_angle_cosine", None) is not None:
         cargs.extend([
             "An",
-            str(params.get("max_angle_cosine"))
+            str(params.get("max_angle_cosine", None))
         ])
-    if params.get("perturb_factor") is not None:
+    if params.get("perturb_factor", None) is not None:
         cargs.extend([
             "Rn",
-            str(params.get("perturb_factor"))
+            str(params.get("perturb_factor", None))
         ])
-    if params.get("min_facet_width") is not None:
+    if params.get("min_facet_width", None) is not None:
         cargs.extend([
             "Wn",
-            str(params.get("min_facet_width"))
+            str(params.get("min_facet_width", None))
         ])
-    if params.get("facet_dump"):
+    if params.get("facet_dump", False):
         cargs.append("f")
-    if params.get("geomview"):
+    if params.get("geomview", False):
         cargs.append("G")
-    if params.get("vertices_incident"):
+    if params.get("vertices_incident", False):
         cargs.append("i")
-    if params.get("mathematica"):
+    if params.get("mathematica", False):
         cargs.append("m")
-    if params.get("off_format"):
+    if params.get("off_format", False):
         cargs.append("o")
-    if params.get("point_coordinates"):
+    if params.get("point_coordinates", False):
         cargs.append("p")
-    if params.get("summary"):
+    if params.get("summary", False):
         cargs.append("s")
     return cargs
 
@@ -532,7 +537,6 @@ def qdelaunay(
 __all__ = [
     "QDELAUNAY_METADATA",
     "QdelaunayOutputs",
-    "QdelaunayParameters",
     "qdelaunay",
     "qdelaunay_execute",
     "qdelaunay_params",

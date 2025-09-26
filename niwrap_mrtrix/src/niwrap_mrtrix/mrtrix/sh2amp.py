@@ -14,37 +14,74 @@ SH2AMP_METADATA = Metadata(
 
 
 Sh2ampFslgradParameters = typing.TypedDict('Sh2ampFslgradParameters', {
-    "@type": typing.Literal["mrtrix.sh2amp.fslgrad"],
+    "@type": typing.NotRequired[typing.Literal["fslgrad"]],
+    "bvecs": InputPathType,
+    "bvals": InputPathType,
+})
+Sh2ampFslgradParametersTagged = typing.TypedDict('Sh2ampFslgradParametersTagged', {
+    "@type": typing.Literal["fslgrad"],
     "bvecs": InputPathType,
     "bvals": InputPathType,
 })
 
 
 Sh2ampVariousStringParameters = typing.TypedDict('Sh2ampVariousStringParameters', {
-    "@type": typing.Literal["mrtrix.sh2amp.VariousString"],
+    "@type": typing.NotRequired[typing.Literal["VariousString"]],
+    "obj": str,
+})
+Sh2ampVariousStringParametersTagged = typing.TypedDict('Sh2ampVariousStringParametersTagged', {
+    "@type": typing.Literal["VariousString"],
     "obj": str,
 })
 
 
 Sh2ampVariousFileParameters = typing.TypedDict('Sh2ampVariousFileParameters', {
-    "@type": typing.Literal["mrtrix.sh2amp.VariousFile"],
+    "@type": typing.NotRequired[typing.Literal["VariousFile"]],
+    "obj": InputPathType,
+})
+Sh2ampVariousFileParametersTagged = typing.TypedDict('Sh2ampVariousFileParametersTagged', {
+    "@type": typing.Literal["VariousFile"],
     "obj": InputPathType,
 })
 
 
 Sh2ampConfigParameters = typing.TypedDict('Sh2ampConfigParameters', {
-    "@type": typing.Literal["mrtrix.sh2amp.config"],
+    "@type": typing.NotRequired[typing.Literal["config"]],
+    "key": str,
+    "value": str,
+})
+Sh2ampConfigParametersTagged = typing.TypedDict('Sh2ampConfigParametersTagged', {
+    "@type": typing.Literal["config"],
     "key": str,
     "value": str,
 })
 
 
 Sh2ampParameters = typing.TypedDict('Sh2ampParameters', {
-    "@type": typing.Literal["mrtrix.sh2amp"],
+    "@type": typing.NotRequired[typing.Literal["mrtrix/sh2amp"]],
     "nonnegative": bool,
     "grad": typing.NotRequired[InputPathType | None],
     "fslgrad": typing.NotRequired[Sh2ampFslgradParameters | None],
-    "strides": typing.NotRequired[typing.Union[Sh2ampVariousStringParameters, Sh2ampVariousFileParameters] | None],
+    "strides": typing.NotRequired[typing.Union[Sh2ampVariousStringParametersTagged, Sh2ampVariousFileParametersTagged] | None],
+    "datatype": typing.NotRequired[str | None],
+    "info": bool,
+    "quiet": bool,
+    "debug": bool,
+    "force": bool,
+    "nthreads": typing.NotRequired[int | None],
+    "config": typing.NotRequired[list[Sh2ampConfigParameters] | None],
+    "help": bool,
+    "version": bool,
+    "input": InputPathType,
+    "directions": InputPathType,
+    "output": str,
+})
+Sh2ampParametersTagged = typing.TypedDict('Sh2ampParametersTagged', {
+    "@type": typing.Literal["mrtrix/sh2amp"],
+    "nonnegative": bool,
+    "grad": typing.NotRequired[InputPathType | None],
+    "fslgrad": typing.NotRequired[Sh2ampFslgradParameters | None],
+    "strides": typing.NotRequired[typing.Union[Sh2ampVariousStringParametersTagged, Sh2ampVariousFileParametersTagged] | None],
     "datatype": typing.NotRequired[str | None],
     "info": bool,
     "quiet": bool,
@@ -60,7 +97,7 @@ Sh2ampParameters = typing.TypedDict('Sh2ampParameters', {
 })
 
 
-def dyn_cargs(
+def sh2amp_strides_cargs_dyn_fn(
     t: str,
 ) -> typing.Any:
     """
@@ -72,15 +109,12 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "mrtrix.sh2amp": sh2amp_cargs,
-        "mrtrix.sh2amp.fslgrad": sh2amp_fslgrad_cargs,
-        "mrtrix.sh2amp.VariousString": sh2amp_various_string_cargs,
-        "mrtrix.sh2amp.VariousFile": sh2amp_various_file_cargs,
-        "mrtrix.sh2amp.config": sh2amp_config_cargs,
+        "VariousString": sh2amp_various_string_cargs,
+        "VariousFile": sh2amp_various_file_cargs,
     }.get(t)
 
 
-def dyn_outputs(
+def sh2amp_strides_outputs_dyn_fn(
     t: str,
 ) -> typing.Any:
     """
@@ -92,14 +126,13 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "mrtrix.sh2amp": sh2amp_outputs,
     }.get(t)
 
 
 def sh2amp_fslgrad_params(
     bvecs: InputPathType,
     bvals: InputPathType,
-) -> Sh2ampFslgradParameters:
+) -> Sh2ampFslgradParametersTagged:
     """
     Build parameters.
     
@@ -116,7 +149,7 @@ def sh2amp_fslgrad_params(
         Parameter dictionary
     """
     params = {
-        "@type": "mrtrix.sh2amp.fslgrad",
+        "@type": "fslgrad",
         "bvecs": bvecs,
         "bvals": bvals,
     }
@@ -138,14 +171,14 @@ def sh2amp_fslgrad_cargs(
     """
     cargs = []
     cargs.append("-fslgrad")
-    cargs.append(execution.input_file(params.get("bvecs")))
-    cargs.append(execution.input_file(params.get("bvals")))
+    cargs.append(execution.input_file(params.get("bvecs", None)))
+    cargs.append(execution.input_file(params.get("bvals", None)))
     return cargs
 
 
 def sh2amp_various_string_params(
     obj: str,
-) -> Sh2ampVariousStringParameters:
+) -> Sh2ampVariousStringParametersTagged:
     """
     Build parameters.
     
@@ -155,7 +188,7 @@ def sh2amp_various_string_params(
         Parameter dictionary
     """
     params = {
-        "@type": "mrtrix.sh2amp.VariousString",
+        "@type": "VariousString",
         "obj": obj,
     }
     return params
@@ -175,13 +208,13 @@ def sh2amp_various_string_cargs(
         Command-line arguments.
     """
     cargs = []
-    cargs.append(params.get("obj"))
+    cargs.append(params.get("obj", None))
     return cargs
 
 
 def sh2amp_various_file_params(
     obj: InputPathType,
-) -> Sh2ampVariousFileParameters:
+) -> Sh2ampVariousFileParametersTagged:
     """
     Build parameters.
     
@@ -191,7 +224,7 @@ def sh2amp_various_file_params(
         Parameter dictionary
     """
     params = {
-        "@type": "mrtrix.sh2amp.VariousFile",
+        "@type": "VariousFile",
         "obj": obj,
     }
     return params
@@ -211,14 +244,14 @@ def sh2amp_various_file_cargs(
         Command-line arguments.
     """
     cargs = []
-    cargs.append(execution.input_file(params.get("obj")))
+    cargs.append(execution.input_file(params.get("obj", None)))
     return cargs
 
 
 def sh2amp_config_params(
     key: str,
     value: str,
-) -> Sh2ampConfigParameters:
+) -> Sh2ampConfigParametersTagged:
     """
     Build parameters.
     
@@ -229,7 +262,7 @@ def sh2amp_config_params(
         Parameter dictionary
     """
     params = {
-        "@type": "mrtrix.sh2amp.config",
+        "@type": "config",
         "key": key,
         "value": value,
     }
@@ -251,14 +284,14 @@ def sh2amp_config_cargs(
     """
     cargs = []
     cargs.append("-config")
-    cargs.append(params.get("key"))
-    cargs.append(params.get("value"))
+    cargs.append(params.get("key", None))
+    cargs.append(params.get("value", None))
     return cargs
 
 
 class Sh2ampOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `sh2amp(...)`.
+    Output object returned when calling `Sh2ampParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -274,7 +307,7 @@ def sh2amp_params(
     nonnegative: bool = False,
     grad: InputPathType | None = None,
     fslgrad: Sh2ampFslgradParameters | None = None,
-    strides: typing.Union[Sh2ampVariousStringParameters, Sh2ampVariousFileParameters] | None = None,
+    strides: typing.Union[Sh2ampVariousStringParametersTagged, Sh2ampVariousFileParametersTagged] | None = None,
     datatype: str | None = None,
     info: bool = False,
     quiet: bool = False,
@@ -284,7 +317,7 @@ def sh2amp_params(
     config: list[Sh2ampConfigParameters] | None = None,
     help_: bool = False,
     version: bool = False,
-) -> Sh2ampParameters:
+) -> Sh2ampParametersTagged:
     """
     Build parameters.
     
@@ -332,7 +365,7 @@ def sh2amp_params(
         Parameter dictionary
     """
     params = {
-        "@type": "mrtrix.sh2amp",
+        "@type": "mrtrix/sh2amp",
         "nonnegative": nonnegative,
         "info": info,
         "quiet": quiet,
@@ -374,47 +407,47 @@ def sh2amp_cargs(
     """
     cargs = []
     cargs.append("sh2amp")
-    if params.get("nonnegative"):
+    if params.get("nonnegative", False):
         cargs.append("-nonnegative")
-    if params.get("grad") is not None:
+    if params.get("grad", None) is not None:
         cargs.extend([
             "-grad",
-            execution.input_file(params.get("grad"))
+            execution.input_file(params.get("grad", None))
         ])
-    if params.get("fslgrad") is not None:
-        cargs.extend(dyn_cargs(params.get("fslgrad")["@type"])(params.get("fslgrad"), execution))
-    if params.get("strides") is not None:
+    if params.get("fslgrad", None) is not None:
+        cargs.extend(sh2amp_fslgrad_cargs(params.get("fslgrad", None), execution))
+    if params.get("strides", None) is not None:
         cargs.extend([
             "-strides",
-            *dyn_cargs(params.get("strides")["@type"])(params.get("strides"), execution)
+            *sh2amp_strides_cargs_dyn_fn(params.get("strides", None)["@type"])(params.get("strides", None), execution)
         ])
-    if params.get("datatype") is not None:
+    if params.get("datatype", None) is not None:
         cargs.extend([
             "-datatype",
-            params.get("datatype")
+            params.get("datatype", None)
         ])
-    if params.get("info"):
+    if params.get("info", False):
         cargs.append("-info")
-    if params.get("quiet"):
+    if params.get("quiet", False):
         cargs.append("-quiet")
-    if params.get("debug"):
+    if params.get("debug", False):
         cargs.append("-debug")
-    if params.get("force"):
+    if params.get("force", False):
         cargs.append("-force")
-    if params.get("nthreads") is not None:
+    if params.get("nthreads", None) is not None:
         cargs.extend([
             "-nthreads",
-            str(params.get("nthreads"))
+            str(params.get("nthreads", None))
         ])
-    if params.get("config") is not None:
-        cargs.extend([a for c in [dyn_cargs(s["@type"])(s, execution) for s in params.get("config")] for a in c])
-    if params.get("help"):
+    if params.get("config", None) is not None:
+        cargs.extend([a for c in [sh2amp_config_cargs(s, execution) for s in params.get("config", None)] for a in c])
+    if params.get("help", False):
         cargs.append("-help")
-    if params.get("version"):
+    if params.get("version", False):
         cargs.append("-version")
-    cargs.append(execution.input_file(params.get("input")))
-    cargs.append(execution.input_file(params.get("directions")))
-    cargs.append(params.get("output"))
+    cargs.append(execution.input_file(params.get("input", None)))
+    cargs.append(execution.input_file(params.get("directions", None)))
+    cargs.append(params.get("output", None))
     return cargs
 
 
@@ -433,7 +466,7 @@ def sh2amp_outputs(
     """
     ret = Sh2ampOutputs(
         root=execution.output_file("."),
-        output=execution.output_file(params.get("output")),
+        output=execution.output_file(params.get("output", None)),
     )
     return ret
 
@@ -507,7 +540,7 @@ def sh2amp(
     nonnegative: bool = False,
     grad: InputPathType | None = None,
     fslgrad: Sh2ampFslgradParameters | None = None,
-    strides: typing.Union[Sh2ampVariousStringParameters, Sh2ampVariousFileParameters] | None = None,
+    strides: typing.Union[Sh2ampVariousStringParametersTagged, Sh2ampVariousFileParametersTagged] | None = None,
     datatype: str | None = None,
     info: bool = False,
     quiet: bool = False,
@@ -629,12 +662,7 @@ def sh2amp(
 
 __all__ = [
     "SH2AMP_METADATA",
-    "Sh2ampConfigParameters",
-    "Sh2ampFslgradParameters",
     "Sh2ampOutputs",
-    "Sh2ampParameters",
-    "Sh2ampVariousFileParameters",
-    "Sh2ampVariousStringParameters",
     "sh2amp",
     "sh2amp_config_params",
     "sh2amp_execute",

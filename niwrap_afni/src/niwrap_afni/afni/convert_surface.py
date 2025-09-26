@@ -14,7 +14,20 @@ CONVERT_SURFACE_METADATA = Metadata(
 
 
 ConvertSurfaceParameters = typing.TypedDict('ConvertSurfaceParameters', {
-    "@type": typing.Literal["afni.ConvertSurface"],
+    "@type": typing.NotRequired[typing.Literal["afni/ConvertSurface"]],
+    "input_surface": str,
+    "output_surface": str,
+    "surface_volume": typing.NotRequired[str | None],
+    "transform_tlrc": bool,
+    "mni_rai": bool,
+    "mni_lpi": bool,
+    "xmat_1D": typing.NotRequired[str | None],
+    "ixmat_1D": typing.NotRequired[str | None],
+    "seed": typing.NotRequired[str | None],
+    "native": bool,
+})
+ConvertSurfaceParametersTagged = typing.TypedDict('ConvertSurfaceParametersTagged', {
+    "@type": typing.Literal["afni/ConvertSurface"],
     "input_surface": str,
     "output_surface": str,
     "surface_volume": typing.NotRequired[str | None],
@@ -28,41 +41,9 @@ ConvertSurfaceParameters = typing.TypedDict('ConvertSurfaceParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "afni.ConvertSurface": convert_surface_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "afni.ConvertSurface": convert_surface_outputs,
-    }.get(t)
-
-
 class ConvertSurfaceOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `convert_surface(...)`.
+    Output object returned when calling `ConvertSurfaceParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -81,7 +62,7 @@ def convert_surface_params(
     ixmat_1_d: str | None = None,
     seed: str | None = None,
     native: bool = False,
-) -> ConvertSurfaceParameters:
+) -> ConvertSurfaceParametersTagged:
     """
     Build parameters.
     
@@ -102,7 +83,7 @@ def convert_surface_params(
         Parameter dictionary
     """
     params = {
-        "@type": "afni.ConvertSurface",
+        "@type": "afni/ConvertSurface",
         "input_surface": input_surface,
         "output_surface": output_surface,
         "transform_tlrc": transform_tlrc,
@@ -138,39 +119,39 @@ def convert_surface_cargs(
     cargs.append("ConvertSurface")
     cargs.extend([
         "-i",
-        params.get("input_surface")
+        params.get("input_surface", None)
     ])
     cargs.extend([
         "-o",
-        params.get("output_surface")
+        params.get("output_surface", None)
     ])
-    if params.get("surface_volume") is not None:
+    if params.get("surface_volume", None) is not None:
         cargs.extend([
             "-sv",
-            params.get("surface_volume")
+            params.get("surface_volume", None)
         ])
-    if params.get("transform_tlrc"):
+    if params.get("transform_tlrc", False):
         cargs.append("-tlrc")
-    if params.get("mni_rai"):
+    if params.get("mni_rai", False):
         cargs.append("-MNI_rai")
-    if params.get("mni_lpi"):
+    if params.get("mni_lpi", False):
         cargs.append("-MNI_lpi")
-    if params.get("xmat_1D") is not None:
+    if params.get("xmat_1D", None) is not None:
         cargs.extend([
             "-xmat_1D",
-            params.get("xmat_1D")
+            params.get("xmat_1D", None)
         ])
-    if params.get("ixmat_1D") is not None:
+    if params.get("ixmat_1D", None) is not None:
         cargs.extend([
             "-ixmat_1D",
-            params.get("ixmat_1D")
+            params.get("ixmat_1D", None)
         ])
-    if params.get("seed") is not None:
+    if params.get("seed", None) is not None:
         cargs.extend([
             "-seed",
-            params.get("seed")
+            params.get("seed", None)
         ])
-    if params.get("native"):
+    if params.get("native", False):
         cargs.append("-native")
     return cargs
 
@@ -190,7 +171,7 @@ def convert_surface_outputs(
     """
     ret = ConvertSurfaceOutputs(
         root=execution.output_file("."),
-        output_surface_file=execution.output_file(params.get("output_surface")),
+        output_surface_file=execution.output_file(params.get("output_surface", None)),
     )
     return ret
 
@@ -282,7 +263,6 @@ def convert_surface(
 __all__ = [
     "CONVERT_SURFACE_METADATA",
     "ConvertSurfaceOutputs",
-    "ConvertSurfaceParameters",
     "convert_surface",
     "convert_surface_execute",
     "convert_surface_params",

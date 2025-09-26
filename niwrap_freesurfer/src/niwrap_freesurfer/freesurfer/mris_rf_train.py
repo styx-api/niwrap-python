@@ -14,7 +14,14 @@ MRIS_RF_TRAIN_METADATA = Metadata(
 
 
 MrisRfTrainParameters = typing.TypedDict('MrisRfTrainParameters', {
-    "@type": typing.Literal["freesurfer.mris_rf_train"],
+    "@type": typing.NotRequired[typing.Literal["freesurfer/mris_rf_train"]],
+    "subjects": list[str],
+    "output_name": str,
+    "hemi": typing.NotRequired[str | None],
+    "surf": typing.NotRequired[str | None],
+})
+MrisRfTrainParametersTagged = typing.TypedDict('MrisRfTrainParametersTagged', {
+    "@type": typing.Literal["freesurfer/mris_rf_train"],
     "subjects": list[str],
     "output_name": str,
     "hemi": typing.NotRequired[str | None],
@@ -22,40 +29,9 @@ MrisRfTrainParameters = typing.TypedDict('MrisRfTrainParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "freesurfer.mris_rf_train": mris_rf_train_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-    }.get(t)
-
-
 class MrisRfTrainOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `mris_rf_train(...)`.
+    Output object returned when calling `MrisRfTrainParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -66,7 +42,7 @@ def mris_rf_train_params(
     output_name: str,
     hemi: str | None = None,
     surf: str | None = None,
-) -> MrisRfTrainParameters:
+) -> MrisRfTrainParametersTagged:
     """
     Build parameters.
     
@@ -80,7 +56,7 @@ def mris_rf_train_params(
         Parameter dictionary
     """
     params = {
-        "@type": "freesurfer.mris_rf_train",
+        "@type": "freesurfer/mris_rf_train",
         "subjects": subjects,
         "output_name": output_name,
     }
@@ -106,17 +82,17 @@ def mris_rf_train_cargs(
     """
     cargs = []
     cargs.append("mris_rf_train")
-    cargs.extend(params.get("subjects"))
-    cargs.append(params.get("output_name"))
-    if params.get("hemi") is not None:
+    cargs.extend(params.get("subjects", None))
+    cargs.append(params.get("output_name", None))
+    if params.get("hemi", None) is not None:
         cargs.extend([
             "--hemi",
-            params.get("hemi")
+            params.get("hemi", None)
         ])
-    if params.get("surf") is not None:
+    if params.get("surf", None) is not None:
         cargs.extend([
             "--surf",
-            params.get("surf")
+            params.get("surf", None)
         ])
     return cargs
 
@@ -206,7 +182,6 @@ def mris_rf_train(
 __all__ = [
     "MRIS_RF_TRAIN_METADATA",
     "MrisRfTrainOutputs",
-    "MrisRfTrainParameters",
     "mris_rf_train",
     "mris_rf_train_execute",
     "mris_rf_train_params",

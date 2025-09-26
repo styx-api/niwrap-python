@@ -14,7 +14,23 @@ DMRI_VOX2VOX_METADATA = Metadata(
 
 
 DmriVox2voxParameters = typing.TypedDict('DmriVox2voxParameters', {
-    "@type": typing.Literal["freesurfer.dmri_vox2vox"],
+    "@type": typing.NotRequired[typing.Literal["freesurfer/dmri_vox2vox"]],
+    "input_files": list[InputPathType],
+    "input_directory": typing.NotRequired[str | None],
+    "output_files": list[str],
+    "output_directory": typing.NotRequired[str | None],
+    "input_reference": InputPathType,
+    "output_reference": InputPathType,
+    "affine_registration": InputPathType,
+    "nonlinear_registration": InputPathType,
+    "inverse_nonlinear": bool,
+    "debug": bool,
+    "check_options": bool,
+    "help": bool,
+    "version": bool,
+})
+DmriVox2voxParametersTagged = typing.TypedDict('DmriVox2voxParametersTagged', {
+    "@type": typing.Literal["freesurfer/dmri_vox2vox"],
     "input_files": list[InputPathType],
     "input_directory": typing.NotRequired[str | None],
     "output_files": list[str],
@@ -31,40 +47,9 @@ DmriVox2voxParameters = typing.TypedDict('DmriVox2voxParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "freesurfer.dmri_vox2vox": dmri_vox2vox_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-    }.get(t)
-
-
 class DmriVox2voxOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `dmri_vox2vox(...)`.
+    Output object returned when calling `DmriVox2voxParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -84,7 +69,7 @@ def dmri_vox2vox_params(
     check_options: bool = False,
     help_: bool = False,
     version: bool = False,
-) -> DmriVox2voxParameters:
+) -> DmriVox2voxParametersTagged:
     """
     Build parameters.
     
@@ -110,7 +95,7 @@ def dmri_vox2vox_params(
         Parameter dictionary
     """
     params = {
-        "@type": "freesurfer.dmri_vox2vox",
+        "@type": "freesurfer/dmri_vox2vox",
         "input_files": input_files,
         "output_files": output_files,
         "input_reference": input_reference,
@@ -147,47 +132,47 @@ def dmri_vox2vox_cargs(
     cargs.append("dmri_vox2vox")
     cargs.extend([
         "--in",
-        *[execution.input_file(f) for f in params.get("input_files")]
+        *[execution.input_file(f) for f in params.get("input_files", None)]
     ])
-    if params.get("input_directory") is not None:
+    if params.get("input_directory", None) is not None:
         cargs.extend([
             "--indir",
-            params.get("input_directory")
+            params.get("input_directory", None)
         ])
     cargs.extend([
         "--out",
-        *params.get("output_files")
+        *params.get("output_files", None)
     ])
-    if params.get("output_directory") is not None:
+    if params.get("output_directory", None) is not None:
         cargs.extend([
             "--outdir",
-            params.get("output_directory")
+            params.get("output_directory", None)
         ])
     cargs.extend([
         "--inref",
-        execution.input_file(params.get("input_reference"))
+        execution.input_file(params.get("input_reference", None))
     ])
     cargs.extend([
         "--outref",
-        execution.input_file(params.get("output_reference"))
+        execution.input_file(params.get("output_reference", None))
     ])
     cargs.extend([
         "--reg",
-        execution.input_file(params.get("affine_registration"))
+        execution.input_file(params.get("affine_registration", None))
     ])
     cargs.extend([
         "--regnl",
-        execution.input_file(params.get("nonlinear_registration"))
+        execution.input_file(params.get("nonlinear_registration", None))
     ])
-    if params.get("inverse_nonlinear"):
+    if params.get("inverse_nonlinear", False):
         cargs.append("--invnl")
-    if params.get("debug"):
+    if params.get("debug", False):
         cargs.append("--debug")
-    if params.get("check_options"):
+    if params.get("check_options", False):
         cargs.append("--checkopts")
-    if params.get("help"):
+    if params.get("help", False):
         cargs.append("--help")
-    if params.get("version"):
+    if params.get("version", False):
         cargs.append("--version")
     return cargs
 
@@ -307,7 +292,6 @@ def dmri_vox2vox(
 __all__ = [
     "DMRI_VOX2VOX_METADATA",
     "DmriVox2voxOutputs",
-    "DmriVox2voxParameters",
     "dmri_vox2vox",
     "dmri_vox2vox_execute",
     "dmri_vox2vox_params",

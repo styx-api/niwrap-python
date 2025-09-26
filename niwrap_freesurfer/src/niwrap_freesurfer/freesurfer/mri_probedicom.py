@@ -14,48 +14,22 @@ MRI_PROBEDICOM_METADATA = Metadata(
 
 
 MriProbedicomParameters = typing.TypedDict('MriProbedicomParameters', {
-    "@type": typing.Literal["freesurfer.mri_probedicom"],
+    "@type": typing.NotRequired[typing.Literal["freesurfer/mri_probedicom"]],
+    "dicom_file": InputPathType,
+    "option1": typing.NotRequired[str | None],
+    "option2": typing.NotRequired[str | None],
+})
+MriProbedicomParametersTagged = typing.TypedDict('MriProbedicomParametersTagged', {
+    "@type": typing.Literal["freesurfer/mri_probedicom"],
     "dicom_file": InputPathType,
     "option1": typing.NotRequired[str | None],
     "option2": typing.NotRequired[str | None],
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "freesurfer.mri_probedicom": mri_probedicom_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "freesurfer.mri_probedicom": mri_probedicom_outputs,
-    }.get(t)
-
-
 class MriProbedicomOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `mri_probedicom(...)`.
+    Output object returned when calling `MriProbedicomParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -67,7 +41,7 @@ def mri_probedicom_params(
     dicom_file: InputPathType,
     option1: str | None = None,
     option2: str | None = None,
-) -> MriProbedicomParameters:
+) -> MriProbedicomParametersTagged:
     """
     Build parameters.
     
@@ -79,7 +53,7 @@ def mri_probedicom_params(
         Parameter dictionary
     """
     params = {
-        "@type": "freesurfer.mri_probedicom",
+        "@type": "freesurfer/mri_probedicom",
         "dicom_file": dicom_file,
     }
     if option1 is not None:
@@ -104,16 +78,16 @@ def mri_probedicom_cargs(
     """
     cargs = []
     cargs.append("mri_probedicom")
-    cargs.append(execution.input_file(params.get("dicom_file")))
-    if params.get("option1") is not None:
+    cargs.append(execution.input_file(params.get("dicom_file", None)))
+    if params.get("option1", None) is not None:
         cargs.extend([
             "-option1",
-            params.get("option1")
+            params.get("option1", None)
         ])
-    if params.get("option2") is not None:
+    if params.get("option2", None) is not None:
         cargs.extend([
             "-option2",
-            params.get("option2")
+            params.get("option2", None)
         ])
     return cargs
 
@@ -200,7 +174,6 @@ def mri_probedicom(
 __all__ = [
     "MRI_PROBEDICOM_METADATA",
     "MriProbedicomOutputs",
-    "MriProbedicomParameters",
     "mri_probedicom",
     "mri_probedicom_execute",
     "mri_probedicom_params",

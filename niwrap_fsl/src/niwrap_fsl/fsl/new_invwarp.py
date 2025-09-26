@@ -14,7 +14,20 @@ NEW_INVWARP_METADATA = Metadata(
 
 
 NewInvwarpParameters = typing.TypedDict('NewInvwarpParameters', {
-    "@type": typing.Literal["fsl.new_invwarp"],
+    "@type": typing.NotRequired[typing.Literal["fsl/new_invwarp"]],
+    "warpvol": InputPathType,
+    "outvol": str,
+    "refvol": InputPathType,
+    "relflag": bool,
+    "absflag": bool,
+    "noconstraintflag": bool,
+    "jmin": typing.NotRequired[float | None],
+    "jmax": typing.NotRequired[float | None],
+    "debugflag": bool,
+    "verboseflag": bool,
+})
+NewInvwarpParametersTagged = typing.TypedDict('NewInvwarpParametersTagged', {
+    "@type": typing.Literal["fsl/new_invwarp"],
     "warpvol": InputPathType,
     "outvol": str,
     "refvol": InputPathType,
@@ -28,41 +41,9 @@ NewInvwarpParameters = typing.TypedDict('NewInvwarpParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "fsl.new_invwarp": new_invwarp_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "fsl.new_invwarp": new_invwarp_outputs,
-    }.get(t)
-
-
 class NewInvwarpOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `new_invwarp(...)`.
+    Output object returned when calling `NewInvwarpParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -81,7 +62,7 @@ def new_invwarp_params(
     jmax: float | None = None,
     debugflag: bool = False,
     verboseflag: bool = False,
-) -> NewInvwarpParameters:
+) -> NewInvwarpParametersTagged:
     """
     Build parameters.
     
@@ -101,7 +82,7 @@ def new_invwarp_params(
         Parameter dictionary
     """
     params = {
-        "@type": "fsl.new_invwarp",
+        "@type": "fsl/new_invwarp",
         "warpvol": warpvol,
         "outvol": outvol,
         "refvol": refvol,
@@ -135,35 +116,35 @@ def new_invwarp_cargs(
     cargs.append("new_invwarp")
     cargs.extend([
         "-w",
-        execution.input_file(params.get("warpvol"))
+        execution.input_file(params.get("warpvol", None))
     ])
     cargs.extend([
         "-o",
-        params.get("outvol")
+        params.get("outvol", None)
     ])
     cargs.extend([
         "-r",
-        execution.input_file(params.get("refvol"))
+        execution.input_file(params.get("refvol", None))
     ])
-    if params.get("relflag"):
+    if params.get("relflag", False):
         cargs.append("--rel")
-    if params.get("absflag"):
+    if params.get("absflag", False):
         cargs.append("--abs")
-    if params.get("noconstraintflag"):
+    if params.get("noconstraintflag", False):
         cargs.append("--noconstraint")
-    if params.get("jmin") is not None:
+    if params.get("jmin", None) is not None:
         cargs.extend([
             "--jmin",
-            str(params.get("jmin"))
+            str(params.get("jmin", None))
         ])
-    if params.get("jmax") is not None:
+    if params.get("jmax", None) is not None:
         cargs.extend([
             "--jmax",
-            str(params.get("jmax"))
+            str(params.get("jmax", None))
         ])
-    if params.get("debugflag"):
+    if params.get("debugflag", False):
         cargs.append("--debug")
-    if params.get("verboseflag"):
+    if params.get("verboseflag", False):
         cargs.append("-v")
     return cargs
 
@@ -183,7 +164,7 @@ def new_invwarp_outputs(
     """
     ret = NewInvwarpOutputs(
         root=execution.output_file("."),
-        out_volume=execution.output_file(params.get("outvol")),
+        out_volume=execution.output_file(params.get("outvol", None)),
     )
     return ret
 
@@ -272,7 +253,6 @@ def new_invwarp(
 __all__ = [
     "NEW_INVWARP_METADATA",
     "NewInvwarpOutputs",
-    "NewInvwarpParameters",
     "new_invwarp",
     "new_invwarp_execute",
     "new_invwarp_params",

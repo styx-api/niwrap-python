@@ -14,7 +14,34 @@ MRI_FIELDSIGN_METADATA = Metadata(
 
 
 MriFieldsignParameters = typing.TypedDict('MriFieldsignParameters', {
-    "@type": typing.Literal["freesurfer.mri_fieldsign"],
+    "@type": typing.NotRequired[typing.Literal["freesurfer/mri_fieldsign"]],
+    "fieldsign_file": str,
+    "eccen_values": list[float],
+    "polar_values": list[float],
+    "subject": str,
+    "hemisphere": str,
+    "patch_file": typing.NotRequired[str | None],
+    "occip_flag": bool,
+    "sphere_flag": bool,
+    "fwhm": typing.NotRequired[float | None],
+    "nsmooth": typing.NotRequired[float | None],
+    "reverse_flag": bool,
+    "old_flag": bool,
+    "eccen_rotation": typing.NotRequired[float | None],
+    "polar_rotation": typing.NotRequired[float | None],
+    "eccen_output": typing.NotRequired[float | None],
+    "polar_output": typing.NotRequired[float | None],
+    "eccen_sfa_file": typing.NotRequired[InputPathType | None],
+    "polar_sfa_file": typing.NotRequired[InputPathType | None],
+    "sfa_dir": typing.NotRequired[str | None],
+    "sfa_true_flag": bool,
+    "debug_flag": bool,
+    "checkopts_flag": bool,
+    "help_flag": bool,
+    "version_flag": bool,
+})
+MriFieldsignParametersTagged = typing.TypedDict('MriFieldsignParametersTagged', {
+    "@type": typing.Literal["freesurfer/mri_fieldsign"],
     "fieldsign_file": str,
     "eccen_values": list[float],
     "polar_values": list[float],
@@ -42,40 +69,9 @@ MriFieldsignParameters = typing.TypedDict('MriFieldsignParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "freesurfer.mri_fieldsign": mri_fieldsign_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-    }.get(t)
-
-
 class MriFieldsignOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `mri_fieldsign(...)`.
+    Output object returned when calling `MriFieldsignParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -106,7 +102,7 @@ def mri_fieldsign_params(
     checkopts_flag: bool = False,
     help_flag: bool = False,
     version_flag: bool = False,
-) -> MriFieldsignParameters:
+) -> MriFieldsignParametersTagged:
     """
     Build parameters.
     
@@ -139,7 +135,7 @@ def mri_fieldsign_params(
         Parameter dictionary
     """
     params = {
-        "@type": "freesurfer.mri_fieldsign",
+        "@type": "freesurfer/mri_fieldsign",
         "fieldsign_file": fieldsign_file,
         "eccen_values": eccen_values,
         "polar_values": polar_values,
@@ -195,91 +191,91 @@ def mri_fieldsign_cargs(
     cargs.append("mri_fieldsign")
     cargs.extend([
         "--fs",
-        params.get("fieldsign_file")
+        params.get("fieldsign_file", None)
     ])
     cargs.extend([
         "--eccen",
-        *map(str, params.get("eccen_values"))
+        *map(str, params.get("eccen_values", None))
     ])
     cargs.extend([
         "--polar",
-        *map(str, params.get("polar_values"))
+        *map(str, params.get("polar_values", None))
     ])
     cargs.extend([
         "--s",
-        params.get("subject")
+        params.get("subject", None)
     ])
     cargs.extend([
         "--hemi",
-        params.get("hemisphere")
+        params.get("hemisphere", None)
     ])
-    if params.get("patch_file") is not None:
+    if params.get("patch_file", None) is not None:
         cargs.extend([
             "--patch",
-            params.get("patch_file")
+            params.get("patch_file", None)
         ])
-    if params.get("occip_flag"):
+    if params.get("occip_flag", False):
         cargs.append("--occip")
-    if params.get("sphere_flag"):
+    if params.get("sphere_flag", False):
         cargs.append("--sphere")
-    if params.get("fwhm") is not None:
+    if params.get("fwhm", None) is not None:
         cargs.extend([
             "--fwhm",
-            str(params.get("fwhm"))
+            str(params.get("fwhm", None))
         ])
-    if params.get("nsmooth") is not None:
+    if params.get("nsmooth", None) is not None:
         cargs.extend([
             "--nsmooth",
-            str(params.get("nsmooth"))
+            str(params.get("nsmooth", None))
         ])
-    if params.get("reverse_flag"):
+    if params.get("reverse_flag", False):
         cargs.append("--rev")
-    if params.get("old_flag"):
+    if params.get("old_flag", False):
         cargs.append("--old")
-    if params.get("eccen_rotation") is not None:
+    if params.get("eccen_rotation", None) is not None:
         cargs.extend([
             "--eccen-rot",
-            str(params.get("eccen_rotation"))
+            str(params.get("eccen_rotation", None))
         ])
-    if params.get("polar_rotation") is not None:
+    if params.get("polar_rotation", None) is not None:
         cargs.extend([
             "--polar-rot",
-            str(params.get("polar_rotation"))
+            str(params.get("polar_rotation", None))
         ])
-    if params.get("eccen_output") is not None:
+    if params.get("eccen_output", None) is not None:
         cargs.extend([
             "--eccen-out",
-            str(params.get("eccen_output"))
+            str(params.get("eccen_output", None))
         ])
-    if params.get("polar_output") is not None:
+    if params.get("polar_output", None) is not None:
         cargs.extend([
             "--polar-out",
-            str(params.get("polar_output"))
+            str(params.get("polar_output", None))
         ])
-    if params.get("eccen_sfa_file") is not None:
+    if params.get("eccen_sfa_file", None) is not None:
         cargs.extend([
             "--eccen-sfa",
-            execution.input_file(params.get("eccen_sfa_file"))
+            execution.input_file(params.get("eccen_sfa_file", None))
         ])
-    if params.get("polar_sfa_file") is not None:
+    if params.get("polar_sfa_file", None) is not None:
         cargs.extend([
             "--polar-sfa",
-            execution.input_file(params.get("polar_sfa_file"))
+            execution.input_file(params.get("polar_sfa_file", None))
         ])
-    if params.get("sfa_dir") is not None:
+    if params.get("sfa_dir", None) is not None:
         cargs.extend([
             "--sfa",
-            params.get("sfa_dir")
+            params.get("sfa_dir", None)
         ])
-    if params.get("sfa_true_flag"):
+    if params.get("sfa_true_flag", False):
         cargs.append("--sfa-true")
-    if params.get("debug_flag"):
+    if params.get("debug_flag", False):
         cargs.append("--debug")
-    if params.get("checkopts_flag"):
+    if params.get("checkopts_flag", False):
         cargs.append("--checkopts")
-    if params.get("help_flag"):
+    if params.get("help_flag", False):
         cargs.append("--help")
-    if params.get("version_flag"):
+    if params.get("version_flag", False):
         cargs.append("--version")
     return cargs
 
@@ -428,7 +424,6 @@ def mri_fieldsign(
 __all__ = [
     "MRI_FIELDSIGN_METADATA",
     "MriFieldsignOutputs",
-    "MriFieldsignParameters",
     "mri_fieldsign",
     "mri_fieldsign_execute",
     "mri_fieldsign_params",

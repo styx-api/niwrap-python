@@ -14,46 +14,18 @@ V__GET_AFNI_VIEW_METADATA = Metadata(
 
 
 VGetAfniViewParameters = typing.TypedDict('VGetAfniViewParameters', {
-    "@type": typing.Literal["afni.@GetAfniView"],
+    "@type": typing.NotRequired[typing.Literal["afni/@GetAfniView"]],
+    "dataset_name": str,
+})
+VGetAfniViewParametersTagged = typing.TypedDict('VGetAfniViewParametersTagged', {
+    "@type": typing.Literal["afni/@GetAfniView"],
     "dataset_name": str,
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "afni.@GetAfniView": v__get_afni_view_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "afni.@GetAfniView": v__get_afni_view_outputs,
-    }.get(t)
-
-
 class VGetAfniViewOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `v__get_afni_view(...)`.
+    Output object returned when calling `VGetAfniViewParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -63,7 +35,7 @@ class VGetAfniViewOutputs(typing.NamedTuple):
 
 def v__get_afni_view_params(
     dataset_name: str,
-) -> VGetAfniViewParameters:
+) -> VGetAfniViewParametersTagged:
     """
     Build parameters.
     
@@ -74,7 +46,7 @@ def v__get_afni_view_params(
         Parameter dictionary
     """
     params = {
-        "@type": "afni.@GetAfniView",
+        "@type": "afni/@GetAfniView",
         "dataset_name": dataset_name,
     }
     return params
@@ -95,7 +67,7 @@ def v__get_afni_view_cargs(
     """
     cargs = []
     cargs.append("@GetAfniView")
-    cargs.append(params.get("dataset_name"))
+    cargs.append(params.get("dataset_name", None))
     return cargs
 
 
@@ -175,7 +147,6 @@ def v__get_afni_view(
 
 __all__ = [
     "VGetAfniViewOutputs",
-    "VGetAfniViewParameters",
     "V__GET_AFNI_VIEW_METADATA",
     "v__get_afni_view",
     "v__get_afni_view_execute",

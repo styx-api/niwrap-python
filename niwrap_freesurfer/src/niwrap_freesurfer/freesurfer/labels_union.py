@@ -14,48 +14,22 @@ LABELS_UNION_METADATA = Metadata(
 
 
 LabelsUnionParameters = typing.TypedDict('LabelsUnionParameters', {
-    "@type": typing.Literal["freesurfer.labels_union"],
+    "@type": typing.NotRequired[typing.Literal["freesurfer/labels_union"]],
+    "label1": InputPathType,
+    "label2": InputPathType,
+    "outputname": str,
+})
+LabelsUnionParametersTagged = typing.TypedDict('LabelsUnionParametersTagged', {
+    "@type": typing.Literal["freesurfer/labels_union"],
     "label1": InputPathType,
     "label2": InputPathType,
     "outputname": str,
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "freesurfer.labels_union": labels_union_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "freesurfer.labels_union": labels_union_outputs,
-    }.get(t)
-
-
 class LabelsUnionOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `labels_union(...)`.
+    Output object returned when calling `LabelsUnionParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -67,7 +41,7 @@ def labels_union_params(
     label1: InputPathType,
     label2: InputPathType,
     outputname: str,
-) -> LabelsUnionParameters:
+) -> LabelsUnionParametersTagged:
     """
     Build parameters.
     
@@ -80,7 +54,7 @@ def labels_union_params(
         Parameter dictionary
     """
     params = {
-        "@type": "freesurfer.labels_union",
+        "@type": "freesurfer/labels_union",
         "label1": label1,
         "label2": label2,
         "outputname": outputname,
@@ -103,9 +77,9 @@ def labels_union_cargs(
     """
     cargs = []
     cargs.append("labels_union")
-    cargs.append(execution.input_file(params.get("label1")))
-    cargs.append(execution.input_file(params.get("label2")))
-    cargs.append(params.get("outputname"))
+    cargs.append(execution.input_file(params.get("label1", None)))
+    cargs.append(execution.input_file(params.get("label2", None)))
+    cargs.append(params.get("outputname", None))
     return cargs
 
 
@@ -124,7 +98,7 @@ def labels_union_outputs(
     """
     ret = LabelsUnionOutputs(
         root=execution.output_file("."),
-        union_label=execution.output_file(params.get("outputname")),
+        union_label=execution.output_file(params.get("outputname", None)),
     )
     return ret
 
@@ -192,7 +166,6 @@ def labels_union(
 __all__ = [
     "LABELS_UNION_METADATA",
     "LabelsUnionOutputs",
-    "LabelsUnionParameters",
     "labels_union",
     "labels_union_execute",
     "labels_union_params",

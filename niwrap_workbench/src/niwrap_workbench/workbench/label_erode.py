@@ -14,7 +14,17 @@ LABEL_ERODE_METADATA = Metadata(
 
 
 LabelErodeParameters = typing.TypedDict('LabelErodeParameters', {
-    "@type": typing.Literal["workbench.label-erode"],
+    "@type": typing.NotRequired[typing.Literal["workbench/label-erode"]],
+    "label": InputPathType,
+    "surface": InputPathType,
+    "erode_dist": float,
+    "label_out": str,
+    "opt_roi_roi_metric": typing.NotRequired[InputPathType | None],
+    "opt_column_column": typing.NotRequired[str | None],
+    "opt_corrected_areas_area_metric": typing.NotRequired[InputPathType | None],
+})
+LabelErodeParametersTagged = typing.TypedDict('LabelErodeParametersTagged', {
+    "@type": typing.Literal["workbench/label-erode"],
     "label": InputPathType,
     "surface": InputPathType,
     "erode_dist": float,
@@ -25,41 +35,9 @@ LabelErodeParameters = typing.TypedDict('LabelErodeParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "workbench.label-erode": label_erode_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "workbench.label-erode": label_erode_outputs,
-    }.get(t)
-
-
 class LabelErodeOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `label_erode(...)`.
+    Output object returned when calling `LabelErodeParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -75,7 +53,7 @@ def label_erode_params(
     opt_roi_roi_metric: InputPathType | None = None,
     opt_column_column: str | None = None,
     opt_corrected_areas_area_metric: InputPathType | None = None,
-) -> LabelErodeParameters:
+) -> LabelErodeParametersTagged:
     """
     Build parameters.
     
@@ -95,7 +73,7 @@ def label_erode_params(
         Parameter dictionary
     """
     params = {
-        "@type": "workbench.label-erode",
+        "@type": "workbench/label-erode",
         "label": label,
         "surface": surface,
         "erode_dist": erode_dist,
@@ -126,24 +104,24 @@ def label_erode_cargs(
     cargs = []
     cargs.append("wb_command")
     cargs.append("-label-erode")
-    cargs.append(execution.input_file(params.get("label")))
-    cargs.append(execution.input_file(params.get("surface")))
-    cargs.append(str(params.get("erode_dist")))
-    cargs.append(params.get("label_out"))
-    if params.get("opt_roi_roi_metric") is not None:
+    cargs.append(execution.input_file(params.get("label", None)))
+    cargs.append(execution.input_file(params.get("surface", None)))
+    cargs.append(str(params.get("erode_dist", None)))
+    cargs.append(params.get("label_out", None))
+    if params.get("opt_roi_roi_metric", None) is not None:
         cargs.extend([
             "-roi",
-            execution.input_file(params.get("opt_roi_roi_metric"))
+            execution.input_file(params.get("opt_roi_roi_metric", None))
         ])
-    if params.get("opt_column_column") is not None:
+    if params.get("opt_column_column", None) is not None:
         cargs.extend([
             "-column",
-            params.get("opt_column_column")
+            params.get("opt_column_column", None)
         ])
-    if params.get("opt_corrected_areas_area_metric") is not None:
+    if params.get("opt_corrected_areas_area_metric", None) is not None:
         cargs.extend([
             "-corrected-areas",
-            execution.input_file(params.get("opt_corrected_areas_area_metric"))
+            execution.input_file(params.get("opt_corrected_areas_area_metric", None))
         ])
     return cargs
 
@@ -163,7 +141,7 @@ def label_erode_outputs(
     """
     ret = LabelErodeOutputs(
         root=execution.output_file("."),
-        label_out=execution.output_file(params.get("label_out")),
+        label_out=execution.output_file(params.get("label_out", None)),
     )
     return ret
 
@@ -260,7 +238,6 @@ def label_erode(
 __all__ = [
     "LABEL_ERODE_METADATA",
     "LabelErodeOutputs",
-    "LabelErodeParameters",
     "label_erode",
     "label_erode_execute",
     "label_erode_params",

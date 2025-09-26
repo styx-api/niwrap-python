@@ -14,7 +14,20 @@ MRI_COMPUTE_SEG_OVERLAP_METADATA = Metadata(
 
 
 MriComputeSegOverlapParameters = typing.TypedDict('MriComputeSegOverlapParameters', {
-    "@type": typing.Literal["freesurfer.mri_compute_seg_overlap"],
+    "@type": typing.NotRequired[typing.Literal["freesurfer/mri_compute_seg_overlap"]],
+    "segvol1": InputPathType,
+    "segvol2": InputPathType,
+    "log_file": typing.NotRequired[str | None],
+    "mean_log_file": typing.NotRequired[str | None],
+    "std_log_file": typing.NotRequired[str | None],
+    "overall_log_flag": bool,
+    "exclude_cortex_flag": bool,
+    "exclude_wm_flag": bool,
+    "all_labels_flag": bool,
+    "dice_params": typing.NotRequired[str | None],
+})
+MriComputeSegOverlapParametersTagged = typing.TypedDict('MriComputeSegOverlapParametersTagged', {
+    "@type": typing.Literal["freesurfer/mri_compute_seg_overlap"],
     "segvol1": InputPathType,
     "segvol2": InputPathType,
     "log_file": typing.NotRequired[str | None],
@@ -28,40 +41,9 @@ MriComputeSegOverlapParameters = typing.TypedDict('MriComputeSegOverlapParameter
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "freesurfer.mri_compute_seg_overlap": mri_compute_seg_overlap_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-    }.get(t)
-
-
 class MriComputeSegOverlapOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `mri_compute_seg_overlap(...)`.
+    Output object returned when calling `MriComputeSegOverlapParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -78,7 +60,7 @@ def mri_compute_seg_overlap_params(
     exclude_wm_flag: bool = False,
     all_labels_flag: bool = False,
     dice_params: str | None = None,
-) -> MriComputeSegOverlapParameters:
+) -> MriComputeSegOverlapParametersTagged:
     """
     Build parameters.
     
@@ -104,7 +86,7 @@ def mri_compute_seg_overlap_params(
         Parameter dictionary
     """
     params = {
-        "@type": "freesurfer.mri_compute_seg_overlap",
+        "@type": "freesurfer/mri_compute_seg_overlap",
         "segvol1": segvol1,
         "segvol2": segvol2,
         "overall_log_flag": overall_log_flag,
@@ -138,35 +120,35 @@ def mri_compute_seg_overlap_cargs(
     """
     cargs = []
     cargs.append("mri_compute_seg_overlap")
-    cargs.append(execution.input_file(params.get("segvol1")))
-    cargs.append(execution.input_file(params.get("segvol2")))
-    if params.get("log_file") is not None:
+    cargs.append(execution.input_file(params.get("segvol1", None)))
+    cargs.append(execution.input_file(params.get("segvol2", None)))
+    if params.get("log_file", None) is not None:
         cargs.extend([
             "-log",
-            params.get("log_file")
+            params.get("log_file", None)
         ])
-    if params.get("mean_log_file") is not None:
+    if params.get("mean_log_file", None) is not None:
         cargs.extend([
             "-mlog",
-            params.get("mean_log_file")
+            params.get("mean_log_file", None)
         ])
-    if params.get("std_log_file") is not None:
+    if params.get("std_log_file", None) is not None:
         cargs.extend([
             "-slog",
-            params.get("std_log_file")
+            params.get("std_log_file", None)
         ])
-    if params.get("overall_log_flag"):
+    if params.get("overall_log_flag", False):
         cargs.append("-olog")
-    if params.get("exclude_cortex_flag"):
+    if params.get("exclude_cortex_flag", False):
         cargs.append("-cortex")
-    if params.get("exclude_wm_flag"):
+    if params.get("exclude_wm_flag", False):
         cargs.append("-wm")
-    if params.get("all_labels_flag"):
+    if params.get("all_labels_flag", False):
         cargs.append("-all_labels")
-    if params.get("dice_params") is not None:
+    if params.get("dice_params", None) is not None:
         cargs.extend([
             "-dice",
-            params.get("dice_params")
+            params.get("dice_params", None)
         ])
     return cargs
 
@@ -280,7 +262,6 @@ def mri_compute_seg_overlap(
 __all__ = [
     "MRI_COMPUTE_SEG_OVERLAP_METADATA",
     "MriComputeSegOverlapOutputs",
-    "MriComputeSegOverlapParameters",
     "mri_compute_seg_overlap",
     "mri_compute_seg_overlap_execute",
     "mri_compute_seg_overlap_params",

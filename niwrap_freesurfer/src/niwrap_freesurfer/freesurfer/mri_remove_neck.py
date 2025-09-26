@@ -14,7 +14,14 @@ MRI_REMOVE_NECK_METADATA = Metadata(
 
 
 MriRemoveNeckParameters = typing.TypedDict('MriRemoveNeckParameters', {
-    "@type": typing.Literal["freesurfer.mri_remove_neck"],
+    "@type": typing.NotRequired[typing.Literal["freesurfer/mri_remove_neck"]],
+    "input_volume": InputPathType,
+    "transform": InputPathType,
+    "gca": InputPathType,
+    "output_volume": str,
+})
+MriRemoveNeckParametersTagged = typing.TypedDict('MriRemoveNeckParametersTagged', {
+    "@type": typing.Literal["freesurfer/mri_remove_neck"],
     "input_volume": InputPathType,
     "transform": InputPathType,
     "gca": InputPathType,
@@ -22,41 +29,9 @@ MriRemoveNeckParameters = typing.TypedDict('MriRemoveNeckParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "freesurfer.mri_remove_neck": mri_remove_neck_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "freesurfer.mri_remove_neck": mri_remove_neck_outputs,
-    }.get(t)
-
-
 class MriRemoveNeckOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `mri_remove_neck(...)`.
+    Output object returned when calling `MriRemoveNeckParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -69,7 +44,7 @@ def mri_remove_neck_params(
     transform: InputPathType,
     gca: InputPathType,
     output_volume: str,
-) -> MriRemoveNeckParameters:
+) -> MriRemoveNeckParametersTagged:
     """
     Build parameters.
     
@@ -82,7 +57,7 @@ def mri_remove_neck_params(
         Parameter dictionary
     """
     params = {
-        "@type": "freesurfer.mri_remove_neck",
+        "@type": "freesurfer/mri_remove_neck",
         "input_volume": input_volume,
         "transform": transform,
         "gca": gca,
@@ -106,10 +81,10 @@ def mri_remove_neck_cargs(
     """
     cargs = []
     cargs.append("mri_remove_neck")
-    cargs.append(execution.input_file(params.get("input_volume")))
-    cargs.append(execution.input_file(params.get("transform")))
-    cargs.append(execution.input_file(params.get("gca")))
-    cargs.append(params.get("output_volume"))
+    cargs.append(execution.input_file(params.get("input_volume", None)))
+    cargs.append(execution.input_file(params.get("transform", None)))
+    cargs.append(execution.input_file(params.get("gca", None)))
+    cargs.append(params.get("output_volume", None))
     return cargs
 
 
@@ -128,7 +103,7 @@ def mri_remove_neck_outputs(
     """
     ret = MriRemoveNeckOutputs(
         root=execution.output_file("."),
-        output_volume_file=execution.output_file(params.get("output_volume")),
+        output_volume_file=execution.output_file(params.get("output_volume", None)),
     )
     return ret
 
@@ -198,7 +173,6 @@ def mri_remove_neck(
 __all__ = [
     "MRI_REMOVE_NECK_METADATA",
     "MriRemoveNeckOutputs",
-    "MriRemoveNeckParameters",
     "mri_remove_neck",
     "mri_remove_neck_execute",
     "mri_remove_neck_params",

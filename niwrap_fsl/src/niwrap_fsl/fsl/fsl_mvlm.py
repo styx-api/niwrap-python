@@ -14,7 +14,23 @@ FSL_MVLM_METADATA = Metadata(
 
 
 FslMvlmParameters = typing.TypedDict('FslMvlmParameters', {
-    "@type": typing.Literal["fsl.fsl_mvlm"],
+    "@type": typing.NotRequired[typing.Literal["fsl/fsl_mvlm"]],
+    "input_file": InputPathType,
+    "basename_output_files": str,
+    "algorithm": typing.NotRequired[str | None],
+    "design_matrix": typing.NotRequired[InputPathType | None],
+    "mask_image": typing.NotRequired[InputPathType | None],
+    "design_normalization": bool,
+    "variance_normalisation": bool,
+    "demean": bool,
+    "nmf_dim": typing.NotRequired[float | None],
+    "nmf_iterations": typing.NotRequired[float | None],
+    "verbose": bool,
+    "out_data": typing.NotRequired[str | None],
+    "out_vnscales": typing.NotRequired[str | None],
+})
+FslMvlmParametersTagged = typing.TypedDict('FslMvlmParametersTagged', {
+    "@type": typing.Literal["fsl/fsl_mvlm"],
     "input_file": InputPathType,
     "basename_output_files": str,
     "algorithm": typing.NotRequired[str | None],
@@ -31,41 +47,9 @@ FslMvlmParameters = typing.TypedDict('FslMvlmParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "fsl.fsl_mvlm": fsl_mvlm_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "fsl.fsl_mvlm": fsl_mvlm_outputs,
-    }.get(t)
-
-
 class FslMvlmOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `fsl_mvlm(...)`.
+    Output object returned when calling `FslMvlmParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -91,7 +75,7 @@ def fsl_mvlm_params(
     verbose: bool = False,
     out_data: str | None = None,
     out_vnscales: str | None = None,
-) -> FslMvlmParameters:
+) -> FslMvlmParametersTagged:
     """
     Build parameters.
     
@@ -117,7 +101,7 @@ def fsl_mvlm_params(
         Parameter dictionary
     """
     params = {
-        "@type": "fsl.fsl_mvlm",
+        "@type": "fsl/fsl_mvlm",
         "input_file": input_file,
         "basename_output_files": basename_output_files,
         "design_normalization": design_normalization,
@@ -159,54 +143,54 @@ def fsl_mvlm_cargs(
     cargs.append("fsl_mvlm")
     cargs.extend([
         "-i",
-        execution.input_file(params.get("input_file"))
+        execution.input_file(params.get("input_file", None))
     ])
     cargs.extend([
         "-o",
-        params.get("basename_output_files")
+        params.get("basename_output_files", None)
     ])
-    if params.get("algorithm") is not None:
+    if params.get("algorithm", None) is not None:
         cargs.extend([
             "-a",
-            params.get("algorithm")
+            params.get("algorithm", None)
         ])
-    if params.get("design_matrix") is not None:
+    if params.get("design_matrix", None) is not None:
         cargs.extend([
             "-d",
-            execution.input_file(params.get("design_matrix"))
+            execution.input_file(params.get("design_matrix", None))
         ])
-    if params.get("mask_image") is not None:
+    if params.get("mask_image", None) is not None:
         cargs.extend([
             "-m",
-            execution.input_file(params.get("mask_image"))
+            execution.input_file(params.get("mask_image", None))
         ])
-    if params.get("design_normalization"):
+    if params.get("design_normalization", False):
         cargs.append("--des_norm")
-    if params.get("variance_normalisation"):
+    if params.get("variance_normalisation", False):
         cargs.append("--vn")
-    if params.get("demean"):
+    if params.get("demean", False):
         cargs.append("--demean")
-    if params.get("nmf_dim") is not None:
+    if params.get("nmf_dim", None) is not None:
         cargs.extend([
             "--nmf_dim",
-            str(params.get("nmf_dim"))
+            str(params.get("nmf_dim", None))
         ])
-    if params.get("nmf_iterations") is not None:
+    if params.get("nmf_iterations", None) is not None:
         cargs.extend([
             "--nmfitt",
-            str(params.get("nmf_iterations"))
+            str(params.get("nmf_iterations", None))
         ])
-    if params.get("verbose"):
+    if params.get("verbose", False):
         cargs.append("-v")
-    if params.get("out_data") is not None:
+    if params.get("out_data", None) is not None:
         cargs.extend([
             "--out_data",
-            params.get("out_data")
+            params.get("out_data", None)
         ])
-    if params.get("out_vnscales") is not None:
+    if params.get("out_vnscales", None) is not None:
         cargs.extend([
             "--out_vnscales",
-            params.get("out_vnscales")
+            params.get("out_vnscales", None)
         ])
     return cargs
 
@@ -226,9 +210,9 @@ def fsl_mvlm_outputs(
     """
     ret = FslMvlmOutputs(
         root=execution.output_file("."),
-        outfile=execution.output_file(params.get("basename_output_files") + "_out.nii.gz"),
-        outdata=execution.output_file(params.get("out_data") + ".nii.gz") if (params.get("out_data") is not None) else None,
-        vnscales=execution.output_file(params.get("out_vnscales") + ".txt") if (params.get("out_vnscales") is not None) else None,
+        outfile=execution.output_file(params.get("basename_output_files", None) + "_out.nii.gz"),
+        outdata=execution.output_file(params.get("out_data", None) + ".nii.gz") if (params.get("out_data") is not None) else None,
+        vnscales=execution.output_file(params.get("out_vnscales", None) + ".txt") if (params.get("out_vnscales") is not None) else None,
     )
     return ret
 
@@ -331,7 +315,6 @@ def fsl_mvlm(
 __all__ = [
     "FSL_MVLM_METADATA",
     "FslMvlmOutputs",
-    "FslMvlmParameters",
     "fsl_mvlm",
     "fsl_mvlm_execute",
     "fsl_mvlm_params",

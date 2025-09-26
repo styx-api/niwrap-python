@@ -14,47 +14,20 @@ SURFACE_CREATE_SPHERE_METADATA = Metadata(
 
 
 SurfaceCreateSphereParameters = typing.TypedDict('SurfaceCreateSphereParameters', {
-    "@type": typing.Literal["workbench.surface-create-sphere"],
+    "@type": typing.NotRequired[typing.Literal["workbench/surface-create-sphere"]],
+    "num_vertices": int,
+    "sphere_out": str,
+})
+SurfaceCreateSphereParametersTagged = typing.TypedDict('SurfaceCreateSphereParametersTagged', {
+    "@type": typing.Literal["workbench/surface-create-sphere"],
     "num_vertices": int,
     "sphere_out": str,
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "workbench.surface-create-sphere": surface_create_sphere_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "workbench.surface-create-sphere": surface_create_sphere_outputs,
-    }.get(t)
-
-
 class SurfaceCreateSphereOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `surface_create_sphere(...)`.
+    Output object returned when calling `SurfaceCreateSphereParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -65,7 +38,7 @@ class SurfaceCreateSphereOutputs(typing.NamedTuple):
 def surface_create_sphere_params(
     num_vertices: int,
     sphere_out: str,
-) -> SurfaceCreateSphereParameters:
+) -> SurfaceCreateSphereParametersTagged:
     """
     Build parameters.
     
@@ -76,7 +49,7 @@ def surface_create_sphere_params(
         Parameter dictionary
     """
     params = {
-        "@type": "workbench.surface-create-sphere",
+        "@type": "workbench/surface-create-sphere",
         "num_vertices": num_vertices,
         "sphere_out": sphere_out,
     }
@@ -99,8 +72,8 @@ def surface_create_sphere_cargs(
     cargs = []
     cargs.append("wb_command")
     cargs.append("-surface-create-sphere")
-    cargs.append(str(params.get("num_vertices")))
-    cargs.append(params.get("sphere_out"))
+    cargs.append(str(params.get("num_vertices", None)))
+    cargs.append(params.get("sphere_out", None))
     return cargs
 
 
@@ -119,7 +92,7 @@ def surface_create_sphere_outputs(
     """
     ret = SurfaceCreateSphereOutputs(
         root=execution.output_file("."),
-        sphere_out=execution.output_file(params.get("sphere_out")),
+        sphere_out=execution.output_file(params.get("sphere_out", None)),
     )
     return ret
 
@@ -207,7 +180,6 @@ def surface_create_sphere(
 __all__ = [
     "SURFACE_CREATE_SPHERE_METADATA",
     "SurfaceCreateSphereOutputs",
-    "SurfaceCreateSphereParameters",
     "surface_create_sphere",
     "surface_create_sphere_execute",
     "surface_create_sphere_params",

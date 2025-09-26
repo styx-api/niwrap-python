@@ -14,7 +14,16 @@ ROBUSTFOV_METADATA = Metadata(
 
 
 RobustfovParameters = typing.TypedDict('RobustfovParameters', {
-    "@type": typing.Literal["fsl.robustfov"],
+    "@type": typing.NotRequired[typing.Literal["fsl/robustfov"]],
+    "input_file": InputPathType,
+    "output_image": typing.NotRequired[str | None],
+    "brain_size": typing.NotRequired[float | None],
+    "matrix_output": typing.NotRequired[str | None],
+    "debug_flag": bool,
+    "verbose_flag": bool,
+})
+RobustfovParametersTagged = typing.TypedDict('RobustfovParametersTagged', {
+    "@type": typing.Literal["fsl/robustfov"],
     "input_file": InputPathType,
     "output_image": typing.NotRequired[str | None],
     "brain_size": typing.NotRequired[float | None],
@@ -24,41 +33,9 @@ RobustfovParameters = typing.TypedDict('RobustfovParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "fsl.robustfov": robustfov_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "fsl.robustfov": robustfov_outputs,
-    }.get(t)
-
-
 class RobustfovOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `robustfov(...)`.
+    Output object returned when calling `RobustfovParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -75,7 +52,7 @@ def robustfov_params(
     matrix_output: str | None = None,
     debug_flag: bool = False,
     verbose_flag: bool = False,
-) -> RobustfovParameters:
+) -> RobustfovParametersTagged:
     """
     Build parameters.
     
@@ -90,7 +67,7 @@ def robustfov_params(
         Parameter dictionary
     """
     params = {
-        "@type": "fsl.robustfov",
+        "@type": "fsl/robustfov",
         "input_file": input_file,
         "debug_flag": debug_flag,
         "verbose_flag": verbose_flag,
@@ -121,26 +98,26 @@ def robustfov_cargs(
     cargs.append("robustfov")
     cargs.extend([
         "-i",
-        execution.input_file(params.get("input_file"))
+        execution.input_file(params.get("input_file", None))
     ])
-    if params.get("output_image") is not None:
+    if params.get("output_image", None) is not None:
         cargs.extend([
             "-r",
-            params.get("output_image")
+            params.get("output_image", None)
         ])
-    if params.get("brain_size") is not None:
+    if params.get("brain_size", None) is not None:
         cargs.extend([
             "-b",
-            str(params.get("brain_size"))
+            str(params.get("brain_size", None))
         ])
-    if params.get("matrix_output") is not None:
+    if params.get("matrix_output", None) is not None:
         cargs.extend([
             "-m",
-            params.get("matrix_output")
+            params.get("matrix_output", None)
         ])
-    if params.get("debug_flag"):
+    if params.get("debug_flag", False):
         cargs.append("--debug")
-    if params.get("verbose_flag"):
+    if params.get("verbose_flag", False):
         cargs.append("--verbose")
     return cargs
 
@@ -160,8 +137,8 @@ def robustfov_outputs(
     """
     ret = RobustfovOutputs(
         root=execution.output_file("."),
-        output_roi_volume=execution.output_file(params.get("output_image").removesuffix(".nii.gz") + ".nii.gz") if (params.get("output_image") is not None) else None,
-        output_matrix_file=execution.output_file(params.get("matrix_output") + ".txt") if (params.get("matrix_output") is not None) else None,
+        output_roi_volume=execution.output_file(params.get("output_image", None).removesuffix(".nii.gz") + ".nii.gz") if (params.get("output_image") is not None) else None,
+        output_matrix_file=execution.output_file(params.get("matrix_output", None) + ".txt") if (params.get("matrix_output") is not None) else None,
     )
     return ret
 
@@ -237,7 +214,6 @@ def robustfov(
 __all__ = [
     "ROBUSTFOV_METADATA",
     "RobustfovOutputs",
-    "RobustfovParameters",
     "robustfov",
     "robustfov_execute",
     "robustfov_params",

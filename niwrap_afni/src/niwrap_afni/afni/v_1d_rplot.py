@@ -14,7 +14,29 @@ V_1D_RPLOT_METADATA = Metadata(
 
 
 V1dRplotParameters = typing.TypedDict('V1dRplotParameters', {
-    "@type": typing.Literal["afni.1dRplot"],
+    "@type": typing.NotRequired[typing.Literal["afni/1dRplot"]],
+    "input_file": InputPathType,
+    "output_prefix": typing.NotRequired[str | None],
+    "save_size": typing.NotRequired[list[float] | None],
+    "TR": typing.NotRequired[float | None],
+    "title": typing.NotRequired[str | None],
+    "input_type": typing.NotRequired[typing.Literal["VOLREG", "XMAT"] | None],
+    "legend_font_size": typing.NotRequired[float | None],
+    "left_y_margin_text": typing.NotRequired[str | None],
+    "right_y_margin_text": typing.NotRequired[str | None],
+    "x_axis_label": typing.NotRequired[str | None],
+    "y_axis_label": typing.NotRequired[str | None],
+    "x_axis_range": typing.NotRequired[list[float] | None],
+    "y_axis_range": typing.NotRequired[list[float] | None],
+    "plot_char": typing.NotRequired[list[str] | None],
+    "group_labels": typing.NotRequired[list[str] | None],
+    "legend_show": bool,
+    "legend_position": typing.NotRequired[typing.Literal["bottomright", "bottom", "bottomleft", "left", "topleft", "top", "topright", "right", "center"] | None],
+    "save_plot": bool,
+    "column_name_show": bool,
+})
+V1dRplotParametersTagged = typing.TypedDict('V1dRplotParametersTagged', {
+    "@type": typing.Literal["afni/1dRplot"],
     "input_file": InputPathType,
     "output_prefix": typing.NotRequired[str | None],
     "save_size": typing.NotRequired[list[float] | None],
@@ -37,41 +59,9 @@ V1dRplotParameters = typing.TypedDict('V1dRplotParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "afni.1dRplot": v_1d_rplot_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "afni.1dRplot": v_1d_rplot_outputs,
-    }.get(t)
-
-
 class V1dRplotOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `v_1d_rplot(...)`.
+    Output object returned when calling `V1dRplotParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -99,7 +89,7 @@ def v_1d_rplot_params(
     legend_position: typing.Literal["bottomright", "bottom", "bottomleft", "left", "topleft", "top", "topright", "right", "center"] | None = None,
     save_plot: bool = False,
     column_name_show: bool = False,
-) -> V1dRplotParameters:
+) -> V1dRplotParametersTagged:
     """
     Build parameters.
     
@@ -131,7 +121,7 @@ def v_1d_rplot_params(
         Parameter dictionary
     """
     params = {
-        "@type": "afni.1dRplot",
+        "@type": "afni/1dRplot",
         "input_file": input_file,
         "legend_show": legend_show,
         "save_plot": save_plot,
@@ -187,88 +177,88 @@ def v_1d_rplot_cargs(
     cargs.append("1dRplot")
     cargs.extend([
         "-input",
-        execution.input_file(params.get("input_file"))
+        execution.input_file(params.get("input_file", None))
     ])
-    if params.get("output_prefix") is not None:
+    if params.get("output_prefix", None) is not None:
         cargs.extend([
             "-prefix",
-            params.get("output_prefix")
+            params.get("output_prefix", None)
         ])
-    if params.get("save_size") is not None:
+    if params.get("save_size", None) is not None:
         cargs.extend([
             "-save.size",
-            *map(str, params.get("save_size"))
+            *map(str, params.get("save_size", None))
         ])
-    if params.get("TR") is not None:
+    if params.get("TR", None) is not None:
         cargs.extend([
             "-TR",
-            str(params.get("TR"))
+            str(params.get("TR", None))
         ])
-    if params.get("title") is not None:
+    if params.get("title", None) is not None:
         cargs.extend([
             "-title",
-            params.get("title")
+            params.get("title", None)
         ])
-    if params.get("input_type") is not None:
+    if params.get("input_type", None) is not None:
         cargs.extend([
             "-input_type",
-            params.get("input_type")
+            params.get("input_type", None)
         ])
-    if params.get("legend_font_size") is not None:
+    if params.get("legend_font_size", None) is not None:
         cargs.extend([
             "-leg.fontsize",
-            str(params.get("legend_font_size"))
+            str(params.get("legend_font_size", None))
         ])
-    if params.get("left_y_margin_text") is not None:
+    if params.get("left_y_margin_text", None) is not None:
         cargs.extend([
             "-col.text.lym",
-            params.get("left_y_margin_text")
+            params.get("left_y_margin_text", None)
         ])
-    if params.get("right_y_margin_text") is not None:
+    if params.get("right_y_margin_text", None) is not None:
         cargs.extend([
             "-col.text.rym",
-            params.get("right_y_margin_text")
+            params.get("right_y_margin_text", None)
         ])
-    if params.get("x_axis_label") is not None:
+    if params.get("x_axis_label", None) is not None:
         cargs.extend([
             "-xax.label",
-            params.get("x_axis_label")
+            params.get("x_axis_label", None)
         ])
-    if params.get("y_axis_label") is not None:
+    if params.get("y_axis_label", None) is not None:
         cargs.extend([
             "-yax.label",
-            params.get("y_axis_label")
+            params.get("y_axis_label", None)
         ])
-    if params.get("x_axis_range") is not None:
+    if params.get("x_axis_range", None) is not None:
         cargs.extend([
             "-xax.lim",
-            *map(str, params.get("x_axis_range"))
+            *map(str, params.get("x_axis_range", None))
         ])
-    if params.get("y_axis_range") is not None:
+    if params.get("y_axis_range", None) is not None:
         cargs.extend([
             "-yax.lim",
-            *map(str, params.get("y_axis_range"))
+            *map(str, params.get("y_axis_range", None))
         ])
-    if params.get("plot_char") is not None:
+    if params.get("plot_char", None) is not None:
         cargs.extend([
             "-col.plot.char",
-            *params.get("plot_char")
+            *params.get("plot_char", None)
         ])
-    if params.get("group_labels") is not None:
+    if params.get("group_labels", None) is not None:
         cargs.extend([
             "-grp.label",
-            *params.get("group_labels")
+            *params.get("group_labels", None)
         ])
-    if params.get("legend_show"):
+    if params.get("legend_show", False):
         cargs.append("-leg.show")
-    if params.get("legend_position") is not None:
+    if params.get("legend_position", None) is not None:
         cargs.extend([
             "-leg.position",
-            params.get("legend_position")
+            params.get("legend_position", None)
         ])
-    if params.get("save_plot"):
+    if params.get("save_plot", False):
         cargs.append("-save")
-    if params.get("column_name_show"):
+    if params.get("column_name_show", False):
         cargs.append("-col.name.show")
     return cargs
 
@@ -288,7 +278,7 @@ def v_1d_rplot_outputs(
     """
     ret = V1dRplotOutputs(
         root=execution.output_file("."),
-        output_plot=execution.output_file(params.get("output_prefix") + ".jpg") if (params.get("output_prefix") is not None) else None,
+        output_plot=execution.output_file(params.get("output_prefix", None) + ".jpg") if (params.get("output_prefix") is not None) else None,
     )
     return ret
 
@@ -406,7 +396,6 @@ def v_1d_rplot(
 
 __all__ = [
     "V1dRplotOutputs",
-    "V1dRplotParameters",
     "V_1D_RPLOT_METADATA",
     "v_1d_rplot",
     "v_1d_rplot_execute",

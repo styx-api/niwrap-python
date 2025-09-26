@@ -14,7 +14,26 @@ V__SUMA_MAKE_SPEC_FS_METADATA = Metadata(
 
 
 VSumaMakeSpecFsParameters = typing.TypedDict('VSumaMakeSpecFsParameters', {
-    "@type": typing.Literal["afni.@SUMA_Make_Spec_FS"],
+    "@type": typing.NotRequired[typing.Literal["afni/@SUMA_Make_Spec_FS"]],
+    "subject_id": str,
+    "debug": typing.NotRequired[int | None],
+    "fs_setup": bool,
+    "filesystem_path": typing.NotRequired[str | None],
+    "extra_annot_labels": typing.NotRequired[list[str] | None],
+    "extra_fs_dsets": typing.NotRequired[list[str] | None],
+    "make_rank_dsets": bool,
+    "use_mgz": bool,
+    "neuro": bool,
+    "gnifti": bool,
+    "nifti": bool,
+    "inflate": typing.NotRequired[float | None],
+    "set_space": typing.NotRequired[str | None],
+    "ld": typing.NotRequired[float | None],
+    "ldpref": typing.NotRequired[str | None],
+    "no_ld": bool,
+})
+VSumaMakeSpecFsParametersTagged = typing.TypedDict('VSumaMakeSpecFsParametersTagged', {
+    "@type": typing.Literal["afni/@SUMA_Make_Spec_FS"],
     "subject_id": str,
     "debug": typing.NotRequired[int | None],
     "fs_setup": bool,
@@ -34,41 +53,9 @@ VSumaMakeSpecFsParameters = typing.TypedDict('VSumaMakeSpecFsParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "afni.@SUMA_Make_Spec_FS": v__suma_make_spec_fs_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "afni.@SUMA_Make_Spec_FS": v__suma_make_spec_fs_outputs,
-    }.get(t)
-
-
 class VSumaMakeSpecFsOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `v__suma_make_spec_fs(...)`.
+    Output object returned when calling `VSumaMakeSpecFsParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -93,7 +80,7 @@ def v__suma_make_spec_fs_params(
     ld: float | None = None,
     ldpref: str | None = None,
     no_ld: bool = False,
-) -> VSumaMakeSpecFsParameters:
+) -> VSumaMakeSpecFsParametersTagged:
     """
     Build parameters.
     
@@ -124,7 +111,7 @@ def v__suma_make_spec_fs_params(
         Parameter dictionary
     """
     params = {
-        "@type": "afni.@SUMA_Make_Spec_FS",
+        "@type": "afni/@SUMA_Make_Spec_FS",
         "subject_id": subject_id,
         "fs_setup": fs_setup,
         "make_rank_dsets": make_rank_dsets,
@@ -170,61 +157,61 @@ def v__suma_make_spec_fs_cargs(
     cargs.append("@SUMA_Make_Spec_FS")
     cargs.extend([
         "-sid",
-        params.get("subject_id")
+        params.get("subject_id", None)
     ])
-    if params.get("debug") is not None:
+    if params.get("debug", None) is not None:
         cargs.extend([
             "-debug",
-            str(params.get("debug"))
+            str(params.get("debug", None))
         ])
-    if params.get("fs_setup"):
+    if params.get("fs_setup", False):
         cargs.append("-fs_setup")
-    if params.get("filesystem_path") is not None:
+    if params.get("filesystem_path", None) is not None:
         cargs.extend([
             "-fspath",
-            params.get("filesystem_path")
+            params.get("filesystem_path", None)
         ])
-    if params.get("extra_annot_labels") is not None:
+    if params.get("extra_annot_labels", None) is not None:
         cargs.extend([
             "-extra_annot_labels",
-            *params.get("extra_annot_labels")
+            *params.get("extra_annot_labels", None)
         ])
-    if params.get("extra_fs_dsets") is not None:
+    if params.get("extra_fs_dsets", None) is not None:
         cargs.extend([
             "-extra_fs_dsets",
-            *params.get("extra_fs_dsets")
+            *params.get("extra_fs_dsets", None)
         ])
-    if params.get("make_rank_dsets"):
+    if params.get("make_rank_dsets", False):
         cargs.append("-make_rank_dsets")
-    if params.get("use_mgz"):
+    if params.get("use_mgz", False):
         cargs.append("-use_mgz")
-    if params.get("neuro"):
+    if params.get("neuro", False):
         cargs.append("-neuro")
-    if params.get("gnifti"):
+    if params.get("gnifti", False):
         cargs.append("-GNIFTI")
-    if params.get("nifti"):
+    if params.get("nifti", False):
         cargs.append("-NIFTI")
-    if params.get("inflate") is not None:
+    if params.get("inflate", None) is not None:
         cargs.extend([
             "-inflate",
-            str(params.get("inflate"))
+            str(params.get("inflate", None))
         ])
-    if params.get("set_space") is not None:
+    if params.get("set_space", None) is not None:
         cargs.extend([
             "-set_space",
-            params.get("set_space")
+            params.get("set_space", None)
         ])
-    if params.get("ld") is not None:
+    if params.get("ld", None) is not None:
         cargs.extend([
             "-ld",
-            str(params.get("ld"))
+            str(params.get("ld", None))
         ])
-    if params.get("ldpref") is not None:
+    if params.get("ldpref", None) is not None:
         cargs.extend([
             "-ldpref",
-            params.get("ldpref")
+            params.get("ldpref", None)
         ])
-    if params.get("no_ld"):
+    if params.get("no_ld", False):
         cargs.append("-no_ld")
     return cargs
 
@@ -355,7 +342,6 @@ def v__suma_make_spec_fs(
 
 __all__ = [
     "VSumaMakeSpecFsOutputs",
-    "VSumaMakeSpecFsParameters",
     "V__SUMA_MAKE_SPEC_FS_METADATA",
     "v__suma_make_spec_fs",
     "v__suma_make_spec_fs_execute",

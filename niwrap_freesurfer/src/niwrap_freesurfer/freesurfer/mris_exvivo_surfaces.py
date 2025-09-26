@@ -14,7 +14,17 @@ MRIS_EXVIVO_SURFACES_METADATA = Metadata(
 
 
 MrisExvivoSurfacesParameters = typing.TypedDict('MrisExvivoSurfacesParameters', {
-    "@type": typing.Literal["freesurfer.mris_exvivo_surfaces"],
+    "@type": typing.NotRequired[typing.Literal["freesurfer/mris_exvivo_surfaces"]],
+    "subject_name": str,
+    "hemisphere": str,
+    "omit_self_intersection": bool,
+    "create_curvature_area": bool,
+    "average_curvature": typing.NotRequired[float | None],
+    "white_only": bool,
+    "formalin": typing.NotRequired[int | None],
+})
+MrisExvivoSurfacesParametersTagged = typing.TypedDict('MrisExvivoSurfacesParametersTagged', {
+    "@type": typing.Literal["freesurfer/mris_exvivo_surfaces"],
     "subject_name": str,
     "hemisphere": str,
     "omit_self_intersection": bool,
@@ -25,41 +35,9 @@ MrisExvivoSurfacesParameters = typing.TypedDict('MrisExvivoSurfacesParameters', 
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "freesurfer.mris_exvivo_surfaces": mris_exvivo_surfaces_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "freesurfer.mris_exvivo_surfaces": mris_exvivo_surfaces_outputs,
-    }.get(t)
-
-
 class MrisExvivoSurfacesOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `mris_exvivo_surfaces(...)`.
+    Output object returned when calling `MrisExvivoSurfacesParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -81,7 +59,7 @@ def mris_exvivo_surfaces_params(
     average_curvature: float | None = None,
     white_only: bool = False,
     formalin: int | None = None,
-) -> MrisExvivoSurfacesParameters:
+) -> MrisExvivoSurfacesParametersTagged:
     """
     Build parameters.
     
@@ -101,7 +79,7 @@ def mris_exvivo_surfaces_params(
         Parameter dictionary
     """
     params = {
-        "@type": "freesurfer.mris_exvivo_surfaces",
+        "@type": "freesurfer/mris_exvivo_surfaces",
         "subject_name": subject_name,
         "hemisphere": hemisphere,
         "omit_self_intersection": omit_self_intersection,
@@ -130,23 +108,23 @@ def mris_exvivo_surfaces_cargs(
     """
     cargs = []
     cargs.append("mris_exvivo_surfaces")
-    cargs.append(params.get("subject_name"))
-    cargs.append(params.get("hemisphere"))
-    if params.get("omit_self_intersection"):
+    cargs.append(params.get("subject_name", None))
+    cargs.append(params.get("hemisphere", None))
+    if params.get("omit_self_intersection", False):
         cargs.append("-q")
-    if params.get("create_curvature_area"):
+    if params.get("create_curvature_area", False):
         cargs.append("-c")
-    if params.get("average_curvature") is not None:
+    if params.get("average_curvature", None) is not None:
         cargs.extend([
             "-a",
-            str(params.get("average_curvature"))
+            str(params.get("average_curvature", None))
         ])
-    if params.get("white_only"):
+    if params.get("white_only", False):
         cargs.append("-whiteonly")
-    if params.get("formalin") is not None:
+    if params.get("formalin", None) is not None:
         cargs.extend([
             "-formalin",
-            str(params.get("formalin"))
+            str(params.get("formalin", None))
         ])
     return cargs
 
@@ -166,10 +144,10 @@ def mris_exvivo_surfaces_outputs(
     """
     ret = MrisExvivoSurfacesOutputs(
         root=execution.output_file("."),
-        white_surface=execution.output_file(params.get("subject_name") + "_" + params.get("hemisphere") + "_white"),
-        gray_surface=execution.output_file(params.get("subject_name") + "_" + params.get("hemisphere") + "_gray"),
-        curvature_file=execution.output_file(params.get("subject_name") + "_" + params.get("hemisphere") + "_curvature"),
-        layer_iv_surface=execution.output_file(params.get("subject_name") + "_" + params.get("hemisphere") + "_layerIV"),
+        white_surface=execution.output_file(params.get("subject_name", None) + "_" + params.get("hemisphere", None) + "_white"),
+        gray_surface=execution.output_file(params.get("subject_name", None) + "_" + params.get("hemisphere", None) + "_gray"),
+        curvature_file=execution.output_file(params.get("subject_name", None) + "_" + params.get("hemisphere", None) + "_curvature"),
+        layer_iv_surface=execution.output_file(params.get("subject_name", None) + "_" + params.get("hemisphere", None) + "_layerIV"),
     )
     return ret
 
@@ -254,7 +232,6 @@ def mris_exvivo_surfaces(
 __all__ = [
     "MRIS_EXVIVO_SURFACES_METADATA",
     "MrisExvivoSurfacesOutputs",
-    "MrisExvivoSurfacesParameters",
     "mris_exvivo_surfaces",
     "mris_exvivo_surfaces_execute",
     "mris_exvivo_surfaces_params",

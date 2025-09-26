@@ -14,7 +14,25 @@ FIRST_METADATA = Metadata(
 
 
 FirstParameters = typing.TypedDict('FirstParameters', {
-    "@type": typing.Literal["fsl.first"],
+    "@type": typing.NotRequired[typing.Literal["fsl/first"]],
+    "input_file": InputPathType,
+    "output_name": str,
+    "input_model": InputPathType,
+    "flirt_matrix": InputPathType,
+    "verbose": bool,
+    "help": bool,
+    "input_model2": typing.NotRequired[InputPathType | None],
+    "nmodes": typing.NotRequired[float | None],
+    "intref": bool,
+    "multi_image_input": bool,
+    "binary_surface_output": bool,
+    "bmap_name": typing.NotRequired[InputPathType | None],
+    "bvars": typing.NotRequired[InputPathType | None],
+    "shcond": bool,
+    "loadbvars": bool,
+})
+FirstParametersTagged = typing.TypedDict('FirstParametersTagged', {
+    "@type": typing.Literal["fsl/first"],
     "input_file": InputPathType,
     "output_name": str,
     "input_model": InputPathType,
@@ -33,41 +51,9 @@ FirstParameters = typing.TypedDict('FirstParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "fsl.first": first_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "fsl.first": first_outputs,
-    }.get(t)
-
-
 class FirstOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `first(...)`.
+    Output object returned when calling `FirstParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -91,7 +77,7 @@ def first_params(
     bvars: InputPathType | None = None,
     shcond: bool = False,
     loadbvars: bool = False,
-) -> FirstParameters:
+) -> FirstParametersTagged:
     """
     Build parameters.
     
@@ -122,7 +108,7 @@ def first_params(
         Parameter dictionary
     """
     params = {
-        "@type": "fsl.first",
+        "@type": "fsl/first",
         "input_file": input_file,
         "output_name": output_name,
         "input_model": input_model,
@@ -163,53 +149,53 @@ def first_cargs(
     cargs.append("first")
     cargs.extend([
         "-i",
-        execution.input_file(params.get("input_file"))
+        execution.input_file(params.get("input_file", None))
     ])
     cargs.extend([
         "-k",
-        params.get("output_name")
+        params.get("output_name", None)
     ])
     cargs.extend([
         "-m",
-        execution.input_file(params.get("input_model"))
+        execution.input_file(params.get("input_model", None))
     ])
     cargs.extend([
         "-l",
-        execution.input_file(params.get("flirt_matrix"))
+        execution.input_file(params.get("flirt_matrix", None))
     ])
-    if params.get("verbose"):
+    if params.get("verbose", False):
         cargs.append("-v")
-    if params.get("help"):
+    if params.get("help", False):
         cargs.append("-h")
-    if params.get("input_model2") is not None:
+    if params.get("input_model2", None) is not None:
         cargs.extend([
             "-p",
-            execution.input_file(params.get("input_model2"))
+            execution.input_file(params.get("input_model2", None))
         ])
-    if params.get("nmodes") is not None:
+    if params.get("nmodes", None) is not None:
         cargs.extend([
             "-n",
-            str(params.get("nmodes"))
+            str(params.get("nmodes", None))
         ])
-    if params.get("intref"):
+    if params.get("intref", False):
         cargs.append("--intref")
-    if params.get("multi_image_input"):
+    if params.get("multi_image_input", False):
         cargs.append("--multiImageInput")
-    if params.get("binary_surface_output"):
+    if params.get("binary_surface_output", False):
         cargs.append("--binarySurfaceOutput")
-    if params.get("bmap_name") is not None:
+    if params.get("bmap_name", None) is not None:
         cargs.extend([
             "-b",
-            execution.input_file(params.get("bmap_name"))
+            execution.input_file(params.get("bmap_name", None))
         ])
-    if params.get("bvars") is not None:
+    if params.get("bvars", None) is not None:
         cargs.extend([
             "-o",
-            execution.input_file(params.get("bvars"))
+            execution.input_file(params.get("bvars", None))
         ])
-    if params.get("shcond"):
+    if params.get("shcond", False):
         cargs.append("--shcond")
-    if params.get("loadbvars"):
+    if params.get("loadbvars", False):
         cargs.append("--loadbvars")
     return cargs
 
@@ -229,7 +215,7 @@ def first_outputs(
     """
     ret = FirstOutputs(
         root=execution.output_file("."),
-        segmented_output_image=execution.output_file(params.get("output_name") + "_seg.nii.gz"),
+        segmented_output_image=execution.output_file(params.get("output_name", None) + "_seg.nii.gz"),
     )
     return ret
 
@@ -341,7 +327,6 @@ def first(
 __all__ = [
     "FIRST_METADATA",
     "FirstOutputs",
-    "FirstParameters",
     "first",
     "first_execute",
     "first_params",

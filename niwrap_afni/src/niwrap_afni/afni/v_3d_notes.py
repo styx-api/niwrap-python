@@ -14,7 +14,17 @@ V_3D_NOTES_METADATA = Metadata(
 
 
 V3dNotesParameters = typing.TypedDict('V3dNotesParameters', {
-    "@type": typing.Literal["afni.3dNotes"],
+    "@type": typing.NotRequired[typing.Literal["afni/3dNotes"]],
+    "add_note": typing.NotRequired[str | None],
+    "append_history": typing.NotRequired[str | None],
+    "replace_history": typing.NotRequired[str | None],
+    "delete_note": typing.NotRequired[float | None],
+    "print_notes": bool,
+    "help": bool,
+    "dataset": InputPathType,
+})
+V3dNotesParametersTagged = typing.TypedDict('V3dNotesParametersTagged', {
+    "@type": typing.Literal["afni/3dNotes"],
     "add_note": typing.NotRequired[str | None],
     "append_history": typing.NotRequired[str | None],
     "replace_history": typing.NotRequired[str | None],
@@ -25,40 +35,9 @@ V3dNotesParameters = typing.TypedDict('V3dNotesParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "afni.3dNotes": v_3d_notes_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-    }.get(t)
-
-
 class V3dNotesOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `v_3d_notes(...)`.
+    Output object returned when calling `V3dNotesParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -72,7 +51,7 @@ def v_3d_notes_params(
     delete_note: float | None = None,
     print_notes: bool = False,
     help_: bool = False,
-) -> V3dNotesParameters:
+) -> V3dNotesParametersTagged:
     """
     Build parameters.
     
@@ -90,7 +69,7 @@ def v_3d_notes_params(
         Parameter dictionary
     """
     params = {
-        "@type": "afni.3dNotes",
+        "@type": "afni/3dNotes",
         "print_notes": print_notes,
         "help": help_,
         "dataset": dataset,
@@ -121,31 +100,31 @@ def v_3d_notes_cargs(
     """
     cargs = []
     cargs.append("3dNotes")
-    if params.get("add_note") is not None:
+    if params.get("add_note", None) is not None:
         cargs.extend([
             "-a",
-            params.get("add_note")
+            params.get("add_note", None)
         ])
-    if params.get("append_history") is not None:
+    if params.get("append_history", None) is not None:
         cargs.extend([
             "-h",
-            params.get("append_history")
+            params.get("append_history", None)
         ])
-    if params.get("replace_history") is not None:
+    if params.get("replace_history", None) is not None:
         cargs.extend([
             "-HH",
-            params.get("replace_history")
+            params.get("replace_history", None)
         ])
-    if params.get("delete_note") is not None:
+    if params.get("delete_note", None) is not None:
         cargs.extend([
             "-d",
-            str(params.get("delete_note"))
+            str(params.get("delete_note", None))
         ])
-    if params.get("print_notes"):
+    if params.get("print_notes", False):
         cargs.append("-ses")
-    if params.get("help"):
+    if params.get("help", False):
         cargs.append("-help")
-    cargs.append(execution.input_file(params.get("dataset")))
+    cargs.append(execution.input_file(params.get("dataset", None)))
     return cargs
 
 
@@ -243,7 +222,6 @@ def v_3d_notes(
 
 __all__ = [
     "V3dNotesOutputs",
-    "V3dNotesParameters",
     "V_3D_NOTES_METADATA",
     "v_3d_notes",
     "v_3d_notes_execute",

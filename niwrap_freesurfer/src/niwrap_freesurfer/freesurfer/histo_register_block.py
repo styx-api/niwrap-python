@@ -14,7 +14,17 @@ HISTO_REGISTER_BLOCK_METADATA = Metadata(
 
 
 HistoRegisterBlockParameters = typing.TypedDict('HistoRegisterBlockParameters', {
-    "@type": typing.Literal["freesurfer.histo_register_block"],
+    "@type": typing.NotRequired[typing.Literal["freesurfer/histo_register_block"]],
+    "seg_time1": InputPathType,
+    "seg_time2": InputPathType,
+    "transform1": InputPathType,
+    "transform2": InputPathType,
+    "output_file": str,
+    "out_like": typing.NotRequired[InputPathType | None],
+    "invert_transform": bool,
+})
+HistoRegisterBlockParametersTagged = typing.TypedDict('HistoRegisterBlockParametersTagged', {
+    "@type": typing.Literal["freesurfer/histo_register_block"],
     "seg_time1": InputPathType,
     "seg_time2": InputPathType,
     "transform1": InputPathType,
@@ -25,41 +35,9 @@ HistoRegisterBlockParameters = typing.TypedDict('HistoRegisterBlockParameters', 
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "freesurfer.histo_register_block": histo_register_block_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "freesurfer.histo_register_block": histo_register_block_outputs,
-    }.get(t)
-
-
 class HistoRegisterBlockOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `histo_register_block(...)`.
+    Output object returned when calling `HistoRegisterBlockParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -75,7 +53,7 @@ def histo_register_block_params(
     output_file: str,
     out_like: InputPathType | None = None,
     invert_transform: bool = False,
-) -> HistoRegisterBlockParameters:
+) -> HistoRegisterBlockParametersTagged:
     """
     Build parameters.
     
@@ -91,7 +69,7 @@ def histo_register_block_params(
         Parameter dictionary
     """
     params = {
-        "@type": "freesurfer.histo_register_block",
+        "@type": "freesurfer/histo_register_block",
         "seg_time1": seg_time1,
         "seg_time2": seg_time2,
         "transform1": transform1,
@@ -119,17 +97,17 @@ def histo_register_block_cargs(
     """
     cargs = []
     cargs.append("histo_register_block")
-    cargs.append(execution.input_file(params.get("seg_time1")))
-    cargs.append(execution.input_file(params.get("seg_time2")))
-    cargs.append(execution.input_file(params.get("transform1")))
-    cargs.append(execution.input_file(params.get("transform2")))
-    cargs.append(params.get("output_file"))
-    if params.get("out_like") is not None:
+    cargs.append(execution.input_file(params.get("seg_time1", None)))
+    cargs.append(execution.input_file(params.get("seg_time2", None)))
+    cargs.append(execution.input_file(params.get("transform1", None)))
+    cargs.append(execution.input_file(params.get("transform2", None)))
+    cargs.append(params.get("output_file", None))
+    if params.get("out_like", None) is not None:
         cargs.extend([
             "-out_like",
-            execution.input_file(params.get("out_like"))
+            execution.input_file(params.get("out_like", None))
         ])
-    if params.get("invert_transform"):
+    if params.get("invert_transform", False):
         cargs.append("-I")
     return cargs
 
@@ -149,7 +127,7 @@ def histo_register_block_outputs(
     """
     ret = HistoRegisterBlockOutputs(
         root=execution.output_file("."),
-        aligned_output=execution.output_file(params.get("output_file")),
+        aligned_output=execution.output_file(params.get("output_file", None)),
     )
     return ret
 
@@ -228,7 +206,6 @@ def histo_register_block(
 __all__ = [
     "HISTO_REGISTER_BLOCK_METADATA",
     "HistoRegisterBlockOutputs",
-    "HistoRegisterBlockParameters",
     "histo_register_block",
     "histo_register_block_execute",
     "histo_register_block_params",

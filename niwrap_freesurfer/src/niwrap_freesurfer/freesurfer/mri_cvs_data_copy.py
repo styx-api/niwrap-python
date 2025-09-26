@@ -14,7 +14,15 @@ MRI_CVS_DATA_COPY_METADATA = Metadata(
 
 
 MriCvsDataCopyParameters = typing.TypedDict('MriCvsDataCopyParameters', {
-    "@type": typing.Literal["freesurfer.mri_cvs_data_copy"],
+    "@type": typing.NotRequired[typing.Literal["freesurfer/mri_cvs_data_copy"]],
+    "subjid": str,
+    "olddir": str,
+    "newdir": str,
+    "version": bool,
+    "help": bool,
+})
+MriCvsDataCopyParametersTagged = typing.TypedDict('MriCvsDataCopyParametersTagged', {
+    "@type": typing.Literal["freesurfer/mri_cvs_data_copy"],
     "subjid": str,
     "olddir": str,
     "newdir": str,
@@ -23,40 +31,9 @@ MriCvsDataCopyParameters = typing.TypedDict('MriCvsDataCopyParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "freesurfer.mri_cvs_data_copy": mri_cvs_data_copy_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-    }.get(t)
-
-
 class MriCvsDataCopyOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `mri_cvs_data_copy(...)`.
+    Output object returned when calling `MriCvsDataCopyParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -68,7 +45,7 @@ def mri_cvs_data_copy_params(
     newdir: str,
     version: bool = False,
     help_: bool = False,
-) -> MriCvsDataCopyParameters:
+) -> MriCvsDataCopyParametersTagged:
     """
     Build parameters.
     
@@ -84,7 +61,7 @@ def mri_cvs_data_copy_params(
         Parameter dictionary
     """
     params = {
-        "@type": "freesurfer.mri_cvs_data_copy",
+        "@type": "freesurfer/mri_cvs_data_copy",
         "subjid": subjid,
         "olddir": olddir,
         "newdir": newdir,
@@ -111,19 +88,19 @@ def mri_cvs_data_copy_cargs(
     cargs.append("mri_cvs_data_copy")
     cargs.extend([
         "--subjid",
-        params.get("subjid")
+        params.get("subjid", None)
     ])
     cargs.extend([
         "--olddir",
-        params.get("olddir")
+        params.get("olddir", None)
     ])
     cargs.extend([
         "--newdir",
-        params.get("newdir")
+        params.get("newdir", None)
     ])
-    if params.get("version"):
+    if params.get("version", False):
         cargs.append("--version")
-    if params.get("help"):
+    if params.get("help", False):
         cargs.append("--help")
     return cargs
 
@@ -217,7 +194,6 @@ def mri_cvs_data_copy(
 __all__ = [
     "MRI_CVS_DATA_COPY_METADATA",
     "MriCvsDataCopyOutputs",
-    "MriCvsDataCopyParameters",
     "mri_cvs_data_copy",
     "mri_cvs_data_copy_execute",
     "mri_cvs_data_copy_params",

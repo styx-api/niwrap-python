@@ -14,45 +14,18 @@ MRI_AND_METADATA = Metadata(
 
 
 MriAndParameters = typing.TypedDict('MriAndParameters', {
-    "@type": typing.Literal["freesurfer.mri_and"],
+    "@type": typing.NotRequired[typing.Literal["freesurfer/mri_and"]],
+    "input_files": list[InputPathType],
+})
+MriAndParametersTagged = typing.TypedDict('MriAndParametersTagged', {
+    "@type": typing.Literal["freesurfer/mri_and"],
     "input_files": list[InputPathType],
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "freesurfer.mri_and": mri_and_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-    }.get(t)
-
-
 class MriAndOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `mri_and(...)`.
+    Output object returned when calling `MriAndParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -60,7 +33,7 @@ class MriAndOutputs(typing.NamedTuple):
 
 def mri_and_params(
     input_files: list[InputPathType],
-) -> MriAndParameters:
+) -> MriAndParametersTagged:
     """
     Build parameters.
     
@@ -70,7 +43,7 @@ def mri_and_params(
         Parameter dictionary
     """
     params = {
-        "@type": "freesurfer.mri_and",
+        "@type": "freesurfer/mri_and",
         "input_files": input_files,
     }
     return params
@@ -91,7 +64,7 @@ def mri_and_cargs(
     """
     cargs = []
     cargs.append("mri_and")
-    cargs.extend([execution.input_file(f) for f in params.get("input_files")])
+    cargs.extend([execution.input_file(f) for f in params.get("input_files", None)])
     return cargs
 
 
@@ -170,7 +143,6 @@ def mri_and(
 __all__ = [
     "MRI_AND_METADATA",
     "MriAndOutputs",
-    "MriAndParameters",
     "mri_and",
     "mri_and_execute",
     "mri_and_params",

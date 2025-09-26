@@ -14,7 +14,22 @@ V_3DFIM__METADATA = Metadata(
 
 
 V3dfimParameters = typing.TypedDict('V3dfimParameters', {
-    "@type": typing.Literal["afni.3dfim+"],
+    "@type": typing.NotRequired[typing.Literal["afni/3dfim+"]],
+    "infile": InputPathType,
+    "input1dfile": typing.NotRequired[InputPathType | None],
+    "maskfile": typing.NotRequired[InputPathType | None],
+    "first_image": typing.NotRequired[float | None],
+    "last_image": typing.NotRequired[float | None],
+    "baseline_polynomial": typing.NotRequired[float | None],
+    "threshold": typing.NotRequired[float | None],
+    "cdisp_value": typing.NotRequired[float | None],
+    "ort_file": typing.NotRequired[InputPathType | None],
+    "ideal_file": InputPathType,
+    "output_params": typing.NotRequired[list[str] | None],
+    "output_bucket": typing.NotRequired[str | None],
+})
+V3dfimParametersTagged = typing.TypedDict('V3dfimParametersTagged', {
+    "@type": typing.Literal["afni/3dfim+"],
     "infile": InputPathType,
     "input1dfile": typing.NotRequired[InputPathType | None],
     "maskfile": typing.NotRequired[InputPathType | None],
@@ -30,41 +45,9 @@ V3dfimParameters = typing.TypedDict('V3dfimParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "afni.3dfim+": v_3dfim__cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "afni.3dfim+": v_3dfim__outputs,
-    }.get(t)
-
-
 class V3dfimOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `v_3dfim_(...)`.
+    Output object returned when calling `V3dfimParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -91,7 +74,7 @@ def v_3dfim__params(
     ort_file: InputPathType | None = None,
     output_params: list[str] | None = None,
     output_bucket: str | None = None,
-) -> V3dfimParameters:
+) -> V3dfimParametersTagged:
     """
     Build parameters.
     
@@ -123,7 +106,7 @@ def v_3dfim__params(
         Parameter dictionary
     """
     params = {
-        "@type": "afni.3dfim+",
+        "@type": "afni/3dfim+",
         "infile": infile,
         "ideal_file": ideal_file,
     }
@@ -165,60 +148,60 @@ def v_3dfim__cargs(
     """
     cargs = []
     cargs.append("3dfim+")
-    cargs.append(execution.input_file(params.get("infile")))
-    if params.get("input1dfile") is not None:
+    cargs.append(execution.input_file(params.get("infile", None)))
+    if params.get("input1dfile", None) is not None:
         cargs.extend([
             "-input1D",
-            execution.input_file(params.get("input1dfile"))
+            execution.input_file(params.get("input1dfile", None))
         ])
-    if params.get("maskfile") is not None:
+    if params.get("maskfile", None) is not None:
         cargs.extend([
             "-mask",
-            execution.input_file(params.get("maskfile"))
+            execution.input_file(params.get("maskfile", None))
         ])
-    if params.get("first_image") is not None:
+    if params.get("first_image", None) is not None:
         cargs.extend([
             "-nfirst",
-            str(params.get("first_image"))
+            str(params.get("first_image", None))
         ])
-    if params.get("last_image") is not None:
+    if params.get("last_image", None) is not None:
         cargs.extend([
             "-nlast",
-            str(params.get("last_image"))
+            str(params.get("last_image", None))
         ])
-    if params.get("baseline_polynomial") is not None:
+    if params.get("baseline_polynomial", None) is not None:
         cargs.extend([
             "-polort",
-            str(params.get("baseline_polynomial"))
+            str(params.get("baseline_polynomial", None))
         ])
-    if params.get("threshold") is not None:
+    if params.get("threshold", None) is not None:
         cargs.extend([
             "-fim_thr",
-            str(params.get("threshold"))
+            str(params.get("threshold", None))
         ])
-    if params.get("cdisp_value") is not None:
+    if params.get("cdisp_value", None) is not None:
         cargs.extend([
             "-cdisp",
-            str(params.get("cdisp_value"))
+            str(params.get("cdisp_value", None))
         ])
-    if params.get("ort_file") is not None:
+    if params.get("ort_file", None) is not None:
         cargs.extend([
             "-ort_file",
-            execution.input_file(params.get("ort_file"))
+            execution.input_file(params.get("ort_file", None))
         ])
     cargs.extend([
         "-ideal_file",
-        execution.input_file(params.get("ideal_file"))
+        execution.input_file(params.get("ideal_file", None))
     ])
-    if params.get("output_params") is not None:
+    if params.get("output_params", None) is not None:
         cargs.extend([
             "-out",
-            *params.get("output_params")
+            *params.get("output_params", None)
         ])
-    if params.get("output_bucket") is not None:
+    if params.get("output_bucket", None) is not None:
         cargs.extend([
             "-bucket",
-            params.get("output_bucket")
+            params.get("output_bucket", None)
         ])
     return cargs
 
@@ -238,10 +221,10 @@ def v_3dfim__outputs(
     """
     ret = V3dfimOutputs(
         root=execution.output_file("."),
-        outfile_tlrc_head=execution.output_file(params.get("output_bucket") + "+tlrc.HEAD") if (params.get("output_bucket") is not None) else None,
-        outfile_tlrc_brk=execution.output_file(params.get("output_bucket") + "+tlrc.BRIK") if (params.get("output_bucket") is not None) else None,
-        outfile_orig_head=execution.output_file(params.get("output_bucket") + "+orig.HEAD") if (params.get("output_bucket") is not None) else None,
-        outfile_orig_brk=execution.output_file(params.get("output_bucket") + "+orig.BRIK") if (params.get("output_bucket") is not None) else None,
+        outfile_tlrc_head=execution.output_file(params.get("output_bucket", None) + "+tlrc.HEAD") if (params.get("output_bucket") is not None) else None,
+        outfile_tlrc_brk=execution.output_file(params.get("output_bucket", None) + "+tlrc.BRIK") if (params.get("output_bucket") is not None) else None,
+        outfile_orig_head=execution.output_file(params.get("output_bucket", None) + "+orig.HEAD") if (params.get("output_bucket") is not None) else None,
+        outfile_orig_brk=execution.output_file(params.get("output_bucket", None) + "+orig.BRIK") if (params.get("output_bucket") is not None) else None,
     )
     return ret
 
@@ -347,7 +330,6 @@ def v_3dfim_(
 
 __all__ = [
     "V3dfimOutputs",
-    "V3dfimParameters",
     "V_3DFIM__METADATA",
     "v_3dfim_",
     "v_3dfim__execute",

@@ -14,7 +14,29 @@ TIMING_TOOL_PY_METADATA = Metadata(
 
 
 TimingToolPyParameters = typing.TypedDict('TimingToolPyParameters', {
-    "@type": typing.Literal["afni.timing_tool.py"],
+    "@type": typing.NotRequired[typing.Literal["afni/timing_tool.py"]],
+    "timing_file": typing.NotRequired[InputPathType | None],
+    "output_file": typing.NotRequired[str | None],
+    "run_length": typing.NotRequired[list[float] | None],
+    "tr": typing.NotRequired[float | None],
+    "offset": typing.NotRequired[float | None],
+    "extend_file": typing.NotRequired[InputPathType | None],
+    "sort": bool,
+    "scale_data": typing.NotRequired[float | None],
+    "shift_to_run_offset": typing.NotRequired[float | None],
+    "timing_to_1D_file": typing.NotRequired[str | None],
+    "stim_duration": typing.NotRequired[float | None],
+    "multi_timing_files": typing.NotRequired[list[InputPathType] | None],
+    "multi_show_isi_stats": bool,
+    "multi_show_timing": bool,
+    "show_timing": bool,
+    "multi_stim_duration": typing.NotRequired[list[float] | None],
+    "round_times_frac": typing.NotRequired[float | None],
+    "truncate_times": bool,
+    "multi_timing_event_list": typing.NotRequired[str | None],
+})
+TimingToolPyParametersTagged = typing.TypedDict('TimingToolPyParametersTagged', {
+    "@type": typing.Literal["afni/timing_tool.py"],
     "timing_file": typing.NotRequired[InputPathType | None],
     "output_file": typing.NotRequired[str | None],
     "run_length": typing.NotRequired[list[float] | None],
@@ -37,41 +59,9 @@ TimingToolPyParameters = typing.TypedDict('TimingToolPyParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "afni.timing_tool.py": timing_tool_py_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "afni.timing_tool.py": timing_tool_py_outputs,
-    }.get(t)
-
-
 class TimingToolPyOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `timing_tool_py(...)`.
+    Output object returned when calling `TimingToolPyParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -101,7 +91,7 @@ def timing_tool_py_params(
     round_times_frac: float | None = None,
     truncate_times: bool = False,
     multi_timing_event_list: str | None = None,
-) -> TimingToolPyParameters:
+) -> TimingToolPyParametersTagged:
     """
     Build parameters.
     
@@ -133,7 +123,7 @@ def timing_tool_py_params(
         Parameter dictionary
     """
     params = {
-        "@type": "afni.timing_tool.py",
+        "@type": "afni/timing_tool.py",
         "sort": sort,
         "multi_show_isi_stats": multi_show_isi_stats,
         "multi_show_timing": multi_show_timing,
@@ -186,85 +176,85 @@ def timing_tool_py_cargs(
     """
     cargs = []
     cargs.append("timing_tool.py")
-    if params.get("timing_file") is not None:
+    if params.get("timing_file", None) is not None:
         cargs.extend([
             "-timing",
-            execution.input_file(params.get("timing_file"))
+            execution.input_file(params.get("timing_file", None))
         ])
-    if params.get("output_file") is not None:
+    if params.get("output_file", None) is not None:
         cargs.extend([
             "-write_timing",
-            params.get("output_file")
+            params.get("output_file", None)
         ])
-    if params.get("run_length") is not None:
+    if params.get("run_length", None) is not None:
         cargs.extend([
             "-run_len",
-            *map(str, params.get("run_length"))
+            *map(str, params.get("run_length", None))
         ])
-    if params.get("tr") is not None:
+    if params.get("tr", None) is not None:
         cargs.extend([
             "-tr",
-            str(params.get("tr"))
+            str(params.get("tr", None))
         ])
-    if params.get("offset") is not None:
+    if params.get("offset", None) is not None:
         cargs.extend([
             "-add_offset",
-            str(params.get("offset"))
+            str(params.get("offset", None))
         ])
-    if params.get("extend_file") is not None:
+    if params.get("extend_file", None) is not None:
         cargs.extend([
             "-extend",
-            execution.input_file(params.get("extend_file"))
+            execution.input_file(params.get("extend_file", None))
         ])
-    if params.get("sort"):
+    if params.get("sort", False):
         cargs.append("-sort")
-    if params.get("scale_data") is not None:
+    if params.get("scale_data", None) is not None:
         cargs.extend([
             "-scale_data",
-            str(params.get("scale_data"))
+            str(params.get("scale_data", None))
         ])
-    if params.get("shift_to_run_offset") is not None:
+    if params.get("shift_to_run_offset", None) is not None:
         cargs.extend([
             "-shift_to_run_offset",
-            str(params.get("shift_to_run_offset"))
+            str(params.get("shift_to_run_offset", None))
         ])
-    if params.get("timing_to_1D_file") is not None:
+    if params.get("timing_to_1D_file", None) is not None:
         cargs.extend([
             "-timing_to_1D",
-            params.get("timing_to_1D_file")
+            params.get("timing_to_1D_file", None)
         ])
-    if params.get("stim_duration") is not None:
+    if params.get("stim_duration", None) is not None:
         cargs.extend([
             "-stim_dur",
-            str(params.get("stim_duration"))
+            str(params.get("stim_duration", None))
         ])
-    if params.get("multi_timing_files") is not None:
+    if params.get("multi_timing_files", None) is not None:
         cargs.extend([
             "-multi_timing",
-            *[execution.input_file(f) for f in params.get("multi_timing_files")]
+            *[execution.input_file(f) for f in params.get("multi_timing_files", None)]
         ])
-    if params.get("multi_show_isi_stats"):
+    if params.get("multi_show_isi_stats", False):
         cargs.append("-multi_show_isi_stats")
-    if params.get("multi_show_timing"):
+    if params.get("multi_show_timing", False):
         cargs.append("-multi_show_timing_ele")
-    if params.get("show_timing"):
+    if params.get("show_timing", False):
         cargs.append("-show_timing_ele")
-    if params.get("multi_stim_duration") is not None:
+    if params.get("multi_stim_duration", None) is not None:
         cargs.extend([
             "-multi_stim_dur",
-            *map(str, params.get("multi_stim_duration"))
+            *map(str, params.get("multi_stim_duration", None))
         ])
-    if params.get("round_times_frac") is not None:
+    if params.get("round_times_frac", None) is not None:
         cargs.extend([
             "-round_times",
-            str(params.get("round_times_frac"))
+            str(params.get("round_times_frac", None))
         ])
-    if params.get("truncate_times"):
+    if params.get("truncate_times", False):
         cargs.append("-truncate_times")
-    if params.get("multi_timing_event_list") is not None:
+    if params.get("multi_timing_event_list", None) is not None:
         cargs.extend([
             "-multi_timing_to_event_list",
-            params.get("multi_timing_event_list")
+            params.get("multi_timing_event_list", None)
         ])
     return cargs
 
@@ -284,8 +274,8 @@ def timing_tool_py_outputs(
     """
     ret = TimingToolPyOutputs(
         root=execution.output_file("."),
-        output_timing_file=execution.output_file(params.get("output_file")) if (params.get("output_file") is not None) else None,
-        timing_to_1_d_output=execution.output_file(params.get("timing_to_1D_file")) if (params.get("timing_to_1D_file") is not None) else None,
+        output_timing_file=execution.output_file(params.get("output_file", None)) if (params.get("output_file") is not None) else None,
+        timing_to_1_d_output=execution.output_file(params.get("timing_to_1D_file", None)) if (params.get("timing_to_1D_file") is not None) else None,
     )
     return ret
 
@@ -404,7 +394,6 @@ def timing_tool_py(
 __all__ = [
     "TIMING_TOOL_PY_METADATA",
     "TimingToolPyOutputs",
-    "TimingToolPyParameters",
     "timing_tool_py",
     "timing_tool_py_execute",
     "timing_tool_py_params",

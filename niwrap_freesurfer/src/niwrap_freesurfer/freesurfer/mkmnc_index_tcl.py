@@ -14,47 +14,20 @@ MKMNC_INDEX_TCL_METADATA = Metadata(
 
 
 MkmncIndexTclParameters = typing.TypedDict('MkmncIndexTclParameters', {
-    "@type": typing.Literal["freesurfer.mkmnc_index.tcl"],
+    "@type": typing.NotRequired[typing.Literal["freesurfer/mkmnc_index.tcl"]],
+    "infile": InputPathType,
+    "outfile": str,
+})
+MkmncIndexTclParametersTagged = typing.TypedDict('MkmncIndexTclParametersTagged', {
+    "@type": typing.Literal["freesurfer/mkmnc_index.tcl"],
     "infile": InputPathType,
     "outfile": str,
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "freesurfer.mkmnc_index.tcl": mkmnc_index_tcl_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "freesurfer.mkmnc_index.tcl": mkmnc_index_tcl_outputs,
-    }.get(t)
-
-
 class MkmncIndexTclOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `mkmnc_index_tcl(...)`.
+    Output object returned when calling `MkmncIndexTclParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -65,7 +38,7 @@ class MkmncIndexTclOutputs(typing.NamedTuple):
 def mkmnc_index_tcl_params(
     infile: InputPathType,
     outfile: str,
-) -> MkmncIndexTclParameters:
+) -> MkmncIndexTclParametersTagged:
     """
     Build parameters.
     
@@ -76,7 +49,7 @@ def mkmnc_index_tcl_params(
         Parameter dictionary
     """
     params = {
-        "@type": "freesurfer.mkmnc_index.tcl",
+        "@type": "freesurfer/mkmnc_index.tcl",
         "infile": infile,
         "outfile": outfile,
     }
@@ -98,8 +71,8 @@ def mkmnc_index_tcl_cargs(
     """
     cargs = []
     cargs.append("mkmnc_index.tcl")
-    cargs.append(execution.input_file(params.get("infile")))
-    cargs.append(params.get("outfile"))
+    cargs.append(execution.input_file(params.get("infile", None)))
+    cargs.append(params.get("outfile", None))
     return cargs
 
 
@@ -118,7 +91,7 @@ def mkmnc_index_tcl_outputs(
     """
     ret = MkmncIndexTclOutputs(
         root=execution.output_file("."),
-        indexfile=execution.output_file(params.get("outfile")),
+        indexfile=execution.output_file(params.get("outfile", None)),
     )
     return ret
 
@@ -182,7 +155,6 @@ def mkmnc_index_tcl(
 __all__ = [
     "MKMNC_INDEX_TCL_METADATA",
     "MkmncIndexTclOutputs",
-    "MkmncIndexTclParameters",
     "mkmnc_index_tcl",
     "mkmnc_index_tcl_execute",
     "mkmnc_index_tcl_params",

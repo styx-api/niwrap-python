@@ -14,7 +14,27 @@ INIT_USER_DOTFILES_PY_METADATA = Metadata(
 
 
 InitUserDotfilesPyParameters = typing.TypedDict('InitUserDotfilesPyParameters', {
-    "@type": typing.Literal["afni.init_user_dotfiles.py"],
+    "@type": typing.NotRequired[typing.Literal["afni/init_user_dotfiles.py"]],
+    "help": bool,
+    "help_dotfiles_all": bool,
+    "help_dotfiles_mod": bool,
+    "help_shells": bool,
+    "hist": bool,
+    "show_valid_opts": bool,
+    "ver": bool,
+    "dot_files_list": typing.NotRequired[list[str] | None],
+    "dir_bin": typing.NotRequired[str | None],
+    "dir_dot": typing.NotRequired[str | None],
+    "do_updates": typing.NotRequired[list[str] | None],
+    "dry_run": bool,
+    "force": bool,
+    "make_backup": typing.NotRequired[str | None],
+    "shell_list": typing.NotRequired[list[str] | None],
+    "test": bool,
+    "verbosity_level": typing.NotRequired[int | None],
+})
+InitUserDotfilesPyParametersTagged = typing.TypedDict('InitUserDotfilesPyParametersTagged', {
+    "@type": typing.Literal["afni/init_user_dotfiles.py"],
     "help": bool,
     "help_dotfiles_all": bool,
     "help_dotfiles_mod": bool,
@@ -35,40 +55,9 @@ InitUserDotfilesPyParameters = typing.TypedDict('InitUserDotfilesPyParameters', 
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "afni.init_user_dotfiles.py": init_user_dotfiles_py_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-    }.get(t)
-
-
 class InitUserDotfilesPyOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `init_user_dotfiles_py(...)`.
+    Output object returned when calling `InitUserDotfilesPyParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -92,7 +81,7 @@ def init_user_dotfiles_py_params(
     shell_list: list[str] | None = None,
     test: bool = False,
     verbosity_level: int | None = None,
-) -> InitUserDotfilesPyParameters:
+) -> InitUserDotfilesPyParametersTagged:
     """
     Build parameters.
     
@@ -121,7 +110,7 @@ def init_user_dotfiles_py_params(
         Parameter dictionary
     """
     params = {
-        "@type": "afni.init_user_dotfiles.py",
+        "@type": "afni/init_user_dotfiles.py",
         "help": help_,
         "help_dotfiles_all": help_dotfiles_all,
         "help_dotfiles_mod": help_dotfiles_mod,
@@ -165,60 +154,60 @@ def init_user_dotfiles_py_cargs(
     """
     cargs = []
     cargs.append("init_user_dotfiles.py")
-    if params.get("help"):
+    if params.get("help", False):
         cargs.append("-help")
-    if params.get("help_dotfiles_all"):
+    if params.get("help_dotfiles_all", False):
         cargs.append("-help_dotfiles_all")
-    if params.get("help_dotfiles_mod"):
+    if params.get("help_dotfiles_mod", False):
         cargs.append("-help_dotfiles_mod")
-    if params.get("help_shells"):
+    if params.get("help_shells", False):
         cargs.append("-help_shells")
-    if params.get("hist"):
+    if params.get("hist", False):
         cargs.append("-hist")
-    if params.get("show_valid_opts"):
+    if params.get("show_valid_opts", False):
         cargs.append("-show_valid_opts")
-    if params.get("ver"):
+    if params.get("ver", False):
         cargs.append("-ver")
-    if params.get("dot_files_list") is not None:
+    if params.get("dot_files_list", None) is not None:
         cargs.extend([
             "-dflist",
-            *params.get("dot_files_list")
+            *params.get("dot_files_list", None)
         ])
-    if params.get("dir_bin") is not None:
+    if params.get("dir_bin", None) is not None:
         cargs.extend([
             "-dir_bin",
-            params.get("dir_bin")
+            params.get("dir_bin", None)
         ])
-    if params.get("dir_dot") is not None:
+    if params.get("dir_dot", None) is not None:
         cargs.extend([
             "-dir_dot",
-            params.get("dir_dot")
+            params.get("dir_dot", None)
         ])
-    if params.get("do_updates") is not None:
+    if params.get("do_updates", None) is not None:
         cargs.extend([
             "-do_updates",
-            *params.get("do_updates")
+            *params.get("do_updates", None)
         ])
-    if params.get("dry_run"):
+    if params.get("dry_run", False):
         cargs.append("-dry_run")
-    if params.get("force"):
+    if params.get("force", False):
         cargs.append("-force")
-    if params.get("make_backup") is not None:
+    if params.get("make_backup", None) is not None:
         cargs.extend([
             "-make_backup",
-            params.get("make_backup")
+            params.get("make_backup", None)
         ])
-    if params.get("shell_list") is not None:
+    if params.get("shell_list", None) is not None:
         cargs.extend([
             "-shell_list",
-            *params.get("shell_list")
+            *params.get("shell_list", None)
         ])
-    if params.get("test"):
+    if params.get("test", False):
         cargs.append("-test")
-    if params.get("verbosity_level") is not None:
+    if params.get("verbosity_level", None) is not None:
         cargs.extend([
             "-verb",
-            str(params.get("verbosity_level"))
+            str(params.get("verbosity_level", None))
         ])
     return cargs
 
@@ -351,7 +340,6 @@ def init_user_dotfiles_py(
 __all__ = [
     "INIT_USER_DOTFILES_PY_METADATA",
     "InitUserDotfilesPyOutputs",
-    "InitUserDotfilesPyParameters",
     "init_user_dotfiles_py",
     "init_user_dotfiles_py_execute",
     "init_user_dotfiles_py_params",

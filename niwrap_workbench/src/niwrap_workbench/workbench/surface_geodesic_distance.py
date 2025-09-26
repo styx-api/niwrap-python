@@ -14,7 +14,16 @@ SURFACE_GEODESIC_DISTANCE_METADATA = Metadata(
 
 
 SurfaceGeodesicDistanceParameters = typing.TypedDict('SurfaceGeodesicDistanceParameters', {
-    "@type": typing.Literal["workbench.surface-geodesic-distance"],
+    "@type": typing.NotRequired[typing.Literal["workbench/surface-geodesic-distance"]],
+    "surface": InputPathType,
+    "vertex": int,
+    "metric_out": str,
+    "opt_naive": bool,
+    "opt_limit_limit_mm": typing.NotRequired[float | None],
+    "opt_corrected_areas_area_metric": typing.NotRequired[InputPathType | None],
+})
+SurfaceGeodesicDistanceParametersTagged = typing.TypedDict('SurfaceGeodesicDistanceParametersTagged', {
+    "@type": typing.Literal["workbench/surface-geodesic-distance"],
     "surface": InputPathType,
     "vertex": int,
     "metric_out": str,
@@ -24,41 +33,9 @@ SurfaceGeodesicDistanceParameters = typing.TypedDict('SurfaceGeodesicDistancePar
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "workbench.surface-geodesic-distance": surface_geodesic_distance_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "workbench.surface-geodesic-distance": surface_geodesic_distance_outputs,
-    }.get(t)
-
-
 class SurfaceGeodesicDistanceOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `surface_geodesic_distance(...)`.
+    Output object returned when calling `SurfaceGeodesicDistanceParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -73,7 +50,7 @@ def surface_geodesic_distance_params(
     opt_naive: bool = False,
     opt_limit_limit_mm: float | None = None,
     opt_corrected_areas_area_metric: InputPathType | None = None,
-) -> SurfaceGeodesicDistanceParameters:
+) -> SurfaceGeodesicDistanceParametersTagged:
     """
     Build parameters.
     
@@ -91,7 +68,7 @@ def surface_geodesic_distance_params(
         Parameter dictionary
     """
     params = {
-        "@type": "workbench.surface-geodesic-distance",
+        "@type": "workbench/surface-geodesic-distance",
         "surface": surface,
         "vertex": vertex,
         "metric_out": metric_out,
@@ -120,20 +97,20 @@ def surface_geodesic_distance_cargs(
     cargs = []
     cargs.append("wb_command")
     cargs.append("-surface-geodesic-distance")
-    cargs.append(execution.input_file(params.get("surface")))
-    cargs.append(str(params.get("vertex")))
-    cargs.append(params.get("metric_out"))
-    if params.get("opt_naive"):
+    cargs.append(execution.input_file(params.get("surface", None)))
+    cargs.append(str(params.get("vertex", None)))
+    cargs.append(params.get("metric_out", None))
+    if params.get("opt_naive", False):
         cargs.append("-naive")
-    if params.get("opt_limit_limit_mm") is not None:
+    if params.get("opt_limit_limit_mm", None) is not None:
         cargs.extend([
             "-limit",
-            str(params.get("opt_limit_limit_mm"))
+            str(params.get("opt_limit_limit_mm", None))
         ])
-    if params.get("opt_corrected_areas_area_metric") is not None:
+    if params.get("opt_corrected_areas_area_metric", None) is not None:
         cargs.extend([
             "-corrected-areas",
-            execution.input_file(params.get("opt_corrected_areas_area_metric"))
+            execution.input_file(params.get("opt_corrected_areas_area_metric", None))
         ])
     return cargs
 
@@ -153,7 +130,7 @@ def surface_geodesic_distance_outputs(
     """
     ret = SurfaceGeodesicDistanceOutputs(
         root=execution.output_file("."),
-        metric_out=execution.output_file(params.get("metric_out")),
+        metric_out=execution.output_file(params.get("metric_out", None)),
     )
     return ret
 
@@ -264,7 +241,6 @@ def surface_geodesic_distance(
 __all__ = [
     "SURFACE_GEODESIC_DISTANCE_METADATA",
     "SurfaceGeodesicDistanceOutputs",
-    "SurfaceGeodesicDistanceParameters",
     "surface_geodesic_distance",
     "surface_geodesic_distance_execute",
     "surface_geodesic_distance_params",

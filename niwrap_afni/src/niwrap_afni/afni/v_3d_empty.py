@@ -14,7 +14,14 @@ V_3D_EMPTY_METADATA = Metadata(
 
 
 V3dEmptyParameters = typing.TypedDict('V3dEmptyParameters', {
-    "@type": typing.Literal["afni.3dEmpty"],
+    "@type": typing.NotRequired[typing.Literal["afni/3dEmpty"]],
+    "prefix": typing.NotRequired[str | None],
+    "geometry": typing.NotRequired[str | None],
+    "nxyz": typing.NotRequired[list[float] | None],
+    "nt": typing.NotRequired[float | None],
+})
+V3dEmptyParametersTagged = typing.TypedDict('V3dEmptyParametersTagged', {
+    "@type": typing.Literal["afni/3dEmpty"],
     "prefix": typing.NotRequired[str | None],
     "geometry": typing.NotRequired[str | None],
     "nxyz": typing.NotRequired[list[float] | None],
@@ -22,41 +29,9 @@ V3dEmptyParameters = typing.TypedDict('V3dEmptyParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "afni.3dEmpty": v_3d_empty_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "afni.3dEmpty": v_3d_empty_outputs,
-    }.get(t)
-
-
 class V3dEmptyOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `v_3d_empty(...)`.
+    Output object returned when calling `V3dEmptyParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -69,7 +44,7 @@ def v_3d_empty_params(
     geometry: str | None = None,
     nxyz: list[float] | None = None,
     nt_: float | None = None,
-) -> V3dEmptyParameters:
+) -> V3dEmptyParametersTagged:
     """
     Build parameters.
     
@@ -84,7 +59,7 @@ def v_3d_empty_params(
         Parameter dictionary
     """
     params = {
-        "@type": "afni.3dEmpty",
+        "@type": "afni/3dEmpty",
     }
     if prefix is not None:
         params["prefix"] = prefix
@@ -112,25 +87,25 @@ def v_3d_empty_cargs(
     """
     cargs = []
     cargs.append("3dEmpty")
-    if params.get("prefix") is not None:
+    if params.get("prefix", None) is not None:
         cargs.extend([
             "-prefix",
-            params.get("prefix")
+            params.get("prefix", None)
         ])
-    if params.get("geometry") is not None:
+    if params.get("geometry", None) is not None:
         cargs.extend([
             "-geometry",
-            params.get("geometry")
+            params.get("geometry", None)
         ])
-    if params.get("nxyz") is not None:
+    if params.get("nxyz", None) is not None:
         cargs.extend([
             "-nxyz",
-            *map(str, params.get("nxyz"))
+            *map(str, params.get("nxyz", None))
         ])
-    if params.get("nt") is not None:
+    if params.get("nt", None) is not None:
         cargs.extend([
             "-nt",
-            str(params.get("nt"))
+            str(params.get("nt", None))
         ])
     return cargs
 
@@ -150,7 +125,7 @@ def v_3d_empty_outputs(
     """
     ret = V3dEmptyOutputs(
         root=execution.output_file("."),
-        outfile=execution.output_file(params.get("prefix") + ".HEAD") if (params.get("prefix") is not None) else None,
+        outfile=execution.output_file(params.get("prefix", None) + ".HEAD") if (params.get("prefix") is not None) else None,
     )
     return ret
 
@@ -221,7 +196,6 @@ def v_3d_empty(
 
 __all__ = [
     "V3dEmptyOutputs",
-    "V3dEmptyParameters",
     "V_3D_EMPTY_METADATA",
     "v_3d_empty",
     "v_3d_empty_execute",

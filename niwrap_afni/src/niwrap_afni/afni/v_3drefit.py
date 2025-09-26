@@ -14,7 +14,27 @@ V_3DREFIT_METADATA = Metadata(
 
 
 V3drefitParameters = typing.TypedDict('V3drefitParameters', {
-    "@type": typing.Literal["afni.3drefit"],
+    "@type": typing.NotRequired[typing.Literal["afni/3drefit"]],
+    "atrcopy": typing.NotRequired[list[str] | None],
+    "atrfloat": typing.NotRequired[list[str] | None],
+    "atrint": typing.NotRequired[list[str] | None],
+    "atrstring": typing.NotRequired[list[str] | None],
+    "deoblique": bool,
+    "duporigin_file": typing.NotRequired[InputPathType | None],
+    "in_file": InputPathType,
+    "nosaveatr": bool,
+    "saveatr": bool,
+    "space": typing.NotRequired[typing.Literal["TLRC", "MNI", "ORIG"] | None],
+    "xdel": typing.NotRequired[float | None],
+    "xorigin": typing.NotRequired[str | None],
+    "xyzscale": typing.NotRequired[float | None],
+    "ydel": typing.NotRequired[float | None],
+    "yorigin": typing.NotRequired[str | None],
+    "zdel": typing.NotRequired[float | None],
+    "zorigin": typing.NotRequired[str | None],
+})
+V3drefitParametersTagged = typing.TypedDict('V3drefitParametersTagged', {
+    "@type": typing.Literal["afni/3drefit"],
     "atrcopy": typing.NotRequired[list[str] | None],
     "atrfloat": typing.NotRequired[list[str] | None],
     "atrint": typing.NotRequired[list[str] | None],
@@ -35,41 +55,9 @@ V3drefitParameters = typing.TypedDict('V3drefitParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "afni.3drefit": v_3drefit_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "afni.3drefit": v_3drefit_outputs,
-    }.get(t)
-
-
 class V3drefitOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `v_3drefit(...)`.
+    Output object returned when calling `V3drefitParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -95,7 +83,7 @@ def v_3drefit_params(
     yorigin: str | None = None,
     zdel: float | None = None,
     zorigin: str | None = None,
-) -> V3drefitParameters:
+) -> V3drefitParametersTagged:
     """
     Build parameters.
     
@@ -138,7 +126,7 @@ def v_3drefit_params(
         Parameter dictionary
     """
     params = {
-        "@type": "afni.3drefit",
+        "@type": "afni/3drefit",
         "deoblique": deoblique,
         "in_file": in_file,
         "nosaveatr": nosaveatr,
@@ -188,77 +176,77 @@ def v_3drefit_cargs(
     """
     cargs = []
     cargs.append("3drefit")
-    if params.get("atrcopy") is not None:
+    if params.get("atrcopy", None) is not None:
         cargs.extend([
             "-atrcopy",
-            *params.get("atrcopy")
+            *params.get("atrcopy", None)
         ])
-    if params.get("atrfloat") is not None:
+    if params.get("atrfloat", None) is not None:
         cargs.extend([
             "-atrfloat",
-            *params.get("atrfloat")
+            *params.get("atrfloat", None)
         ])
-    if params.get("atrint") is not None:
+    if params.get("atrint", None) is not None:
         cargs.extend([
             "-atrint",
-            *params.get("atrint")
+            *params.get("atrint", None)
         ])
-    if params.get("atrstring") is not None:
+    if params.get("atrstring", None) is not None:
         cargs.extend([
             "-atrstring",
-            *params.get("atrstring")
+            *params.get("atrstring", None)
         ])
-    if params.get("deoblique"):
+    if params.get("deoblique", False):
         cargs.append("-deoblique")
-    if params.get("duporigin_file") is not None:
+    if params.get("duporigin_file", None) is not None:
         cargs.extend([
             "-duporigin",
-            execution.input_file(params.get("duporigin_file"))
+            execution.input_file(params.get("duporigin_file", None))
         ])
-    cargs.append(execution.input_file(params.get("in_file"), mutable=True))
-    if params.get("nosaveatr"):
+    cargs.append(execution.input_file(params.get("in_file", None), mutable=True))
+    if params.get("nosaveatr", False):
         cargs.append("-nosaveatr")
-    if params.get("saveatr"):
+    if params.get("saveatr", False):
         cargs.append("-saveatr")
-    if params.get("space") is not None:
+    if params.get("space", None) is not None:
         cargs.extend([
             "-space",
-            params.get("space")
+            params.get("space", None)
         ])
-    if params.get("xdel") is not None:
+    if params.get("xdel", None) is not None:
         cargs.extend([
             "-xdel",
-            str(params.get("xdel"))
+            str(params.get("xdel", None))
         ])
-    if params.get("xorigin") is not None:
+    if params.get("xorigin", None) is not None:
         cargs.extend([
             "-xorigin",
-            params.get("xorigin")
+            params.get("xorigin", None)
         ])
-    if params.get("xyzscale") is not None:
+    if params.get("xyzscale", None) is not None:
         cargs.extend([
             "-xyzscale",
-            str(params.get("xyzscale"))
+            str(params.get("xyzscale", None))
         ])
-    if params.get("ydel") is not None:
+    if params.get("ydel", None) is not None:
         cargs.extend([
             "-ydel",
-            str(params.get("ydel"))
+            str(params.get("ydel", None))
         ])
-    if params.get("yorigin") is not None:
+    if params.get("yorigin", None) is not None:
         cargs.extend([
             "-yorigin",
-            params.get("yorigin")
+            params.get("yorigin", None)
         ])
-    if params.get("zdel") is not None:
+    if params.get("zdel", None) is not None:
         cargs.extend([
             "-zdel",
-            str(params.get("zdel"))
+            str(params.get("zdel", None))
         ])
-    if params.get("zorigin") is not None:
+    if params.get("zorigin", None) is not None:
         cargs.extend([
             "-zorigin",
-            params.get("zorigin")
+            params.get("zorigin", None)
         ])
     return cargs
 
@@ -403,7 +391,6 @@ def v_3drefit(
 
 __all__ = [
     "V3drefitOutputs",
-    "V3drefitParameters",
     "V_3DREFIT_METADATA",
     "v_3drefit",
     "v_3drefit_execute",

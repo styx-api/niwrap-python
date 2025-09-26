@@ -14,46 +14,18 @@ V__GET_AFNI_VERSION_METADATA = Metadata(
 
 
 VGetAfniVersionParameters = typing.TypedDict('VGetAfniVersionParameters', {
-    "@type": typing.Literal["afni.@get.afni.version"],
+    "@type": typing.NotRequired[typing.Literal["afni/@get.afni.version"]],
+    "version": str,
+})
+VGetAfniVersionParametersTagged = typing.TypedDict('VGetAfniVersionParametersTagged', {
+    "@type": typing.Literal["afni/@get.afni.version"],
     "version": str,
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "afni.@get.afni.version": v__get_afni_version_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "afni.@get.afni.version": v__get_afni_version_outputs,
-    }.get(t)
-
-
 class VGetAfniVersionOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `v__get_afni_version(...)`.
+    Output object returned when calling `VGetAfniVersionParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -64,7 +36,7 @@ class VGetAfniVersionOutputs(typing.NamedTuple):
 
 def v__get_afni_version_params(
     version: str,
-) -> VGetAfniVersionParameters:
+) -> VGetAfniVersionParametersTagged:
     """
     Build parameters.
     
@@ -74,7 +46,7 @@ def v__get_afni_version_params(
         Parameter dictionary
     """
     params = {
-        "@type": "afni.@get.afni.version",
+        "@type": "afni/@get.afni.version",
         "version": version,
     }
     return params
@@ -95,7 +67,7 @@ def v__get_afni_version_cargs(
     """
     cargs = []
     cargs.append("@get.afni.version")
-    cargs.append(params.get("version"))
+    cargs.append(params.get("version", None))
     return cargs
 
 
@@ -114,7 +86,7 @@ def v__get_afni_version_outputs(
     """
     ret = VGetAfniVersionOutputs(
         root=execution.output_file("."),
-        src_dir=execution.output_file("AFNI_" + params.get("version") + "/AFNI/src"),
+        src_dir=execution.output_file("AFNI_" + params.get("version", None) + "/AFNI/src"),
     )
     return ret
 
@@ -174,7 +146,6 @@ def v__get_afni_version(
 
 __all__ = [
     "VGetAfniVersionOutputs",
-    "VGetAfniVersionParameters",
     "V__GET_AFNI_VERSION_METADATA",
     "v__get_afni_version",
     "v__get_afni_version_execute",

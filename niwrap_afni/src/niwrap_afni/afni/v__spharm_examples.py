@@ -14,7 +14,16 @@ V__SPHARM_EXAMPLES_METADATA = Metadata(
 
 
 VSpharmExamplesParameters = typing.TypedDict('VSpharmExamplesParameters', {
-    "@type": typing.Literal["afni.@Spharm.examples"],
+    "@type": typing.NotRequired[typing.Literal["afni/@Spharm.examples"]],
+    "help_web": bool,
+    "help_web_alias": bool,
+    "help_view": bool,
+    "help_view_alias": bool,
+    "all_opts": bool,
+    "help_find": typing.NotRequired[str | None],
+})
+VSpharmExamplesParametersTagged = typing.TypedDict('VSpharmExamplesParametersTagged', {
+    "@type": typing.Literal["afni/@Spharm.examples"],
     "help_web": bool,
     "help_web_alias": bool,
     "help_view": bool,
@@ -24,40 +33,9 @@ VSpharmExamplesParameters = typing.TypedDict('VSpharmExamplesParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "afni.@Spharm.examples": v__spharm_examples_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-    }.get(t)
-
-
 class VSpharmExamplesOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `v__spharm_examples(...)`.
+    Output object returned when calling `VSpharmExamplesParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -70,7 +48,7 @@ def v__spharm_examples_params(
     help_view_alias: bool = False,
     all_opts: bool = False,
     help_find: str | None = None,
-) -> VSpharmExamplesParameters:
+) -> VSpharmExamplesParametersTagged:
     """
     Build parameters.
     
@@ -86,7 +64,7 @@ def v__spharm_examples_params(
         Parameter dictionary
     """
     params = {
-        "@type": "afni.@Spharm.examples",
+        "@type": "afni/@Spharm.examples",
         "help_web": help_web,
         "help_web_alias": help_web_alias,
         "help_view": help_view,
@@ -113,20 +91,20 @@ def v__spharm_examples_cargs(
     """
     cargs = []
     cargs.append("@Spharm.examples")
-    if params.get("help_web"):
+    if params.get("help_web", False):
         cargs.append("-h_web")
-    if params.get("help_web_alias"):
+    if params.get("help_web_alias", False):
         cargs.append("-hweb")
-    if params.get("help_view"):
+    if params.get("help_view", False):
         cargs.append("-h_view")
-    if params.get("help_view_alias"):
+    if params.get("help_view_alias", False):
         cargs.append("-hview")
-    if params.get("all_opts"):
+    if params.get("all_opts", False):
         cargs.append("-all_opts")
-    if params.get("help_find") is not None:
+    if params.get("help_find", None) is not None:
         cargs.extend([
             "-h_find",
-            params.get("help_find")
+            params.get("help_find", None)
         ])
     return cargs
 
@@ -223,7 +201,6 @@ def v__spharm_examples(
 
 __all__ = [
     "VSpharmExamplesOutputs",
-    "VSpharmExamplesParameters",
     "V__SPHARM_EXAMPLES_METADATA",
     "v__spharm_examples",
     "v__spharm_examples_execute",

@@ -14,7 +14,44 @@ FSL_SUB_METADATA = Metadata(
 
 
 FslSubParameters = typing.TypedDict('FslSubParameters', {
-    "@type": typing.Literal["fsl.fsl_sub"],
+    "@type": typing.NotRequired[typing.Literal["fsl/fsl_sub"]],
+    "arch": typing.NotRequired[str | None],
+    "coprocessor": typing.NotRequired[str | None],
+    "coprocessor_multi": typing.NotRequired[float | None],
+    "coprocessor_class": typing.NotRequired[str | None],
+    "coprocessor_class_strict": bool,
+    "coprocessor_toolkit": typing.NotRequired[str | None],
+    "usescript": bool,
+    "jobhold": typing.NotRequired[str | None],
+    "not_requeueable": bool,
+    "array_hold": typing.NotRequired[str | None],
+    "logdir": typing.NotRequired[str | None],
+    "mailoptions": typing.NotRequired[str | None],
+    "mailto": typing.NotRequired[str | None],
+    "novalidation": bool,
+    "name": typing.NotRequired[str | None],
+    "priority": typing.NotRequired[str | None],
+    "queue": typing.NotRequired[str | None],
+    "resource": typing.NotRequired[str | None],
+    "delete_job": typing.NotRequired[str | None],
+    "jobram": typing.NotRequired[float | None],
+    "parallelenv_threads": typing.NotRequired[str | None],
+    "array_task": typing.NotRequired[str | None],
+    "array_native": typing.NotRequired[str | None],
+    "array_limit": typing.NotRequired[float | None],
+    "keep_jobscript": bool,
+    "project": typing.NotRequired[str | None],
+    "noramsplit": bool,
+    "jobtime": typing.NotRequired[float | None],
+    "has_coprocessor": typing.NotRequired[str | None],
+    "has_queues": bool,
+    "show_config": bool,
+    "verbose": bool,
+    "version": bool,
+    "fileisimage": typing.NotRequired[InputPathType | None],
+})
+FslSubParametersTagged = typing.TypedDict('FslSubParametersTagged', {
+    "@type": typing.Literal["fsl/fsl_sub"],
     "arch": typing.NotRequired[str | None],
     "coprocessor": typing.NotRequired[str | None],
     "coprocessor_multi": typing.NotRequired[float | None],
@@ -52,40 +89,9 @@ FslSubParameters = typing.TypedDict('FslSubParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "fsl.fsl_sub": fsl_sub_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-    }.get(t)
-
-
 class FslSubOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `fsl_sub(...)`.
+    Output object returned when calling `FslSubParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -126,7 +132,7 @@ def fsl_sub_params(
     verbose: bool = False,
     version: bool = False,
     fileisimage: InputPathType | None = None,
-) -> FslSubParameters:
+) -> FslSubParametersTagged:
     """
     Build parameters.
     
@@ -182,7 +188,7 @@ def fsl_sub_params(
         Parameter dictionary
     """
     params = {
-        "@type": "fsl.fsl_sub",
+        "@type": "fsl/fsl_sub",
         "coprocessor_class_strict": coprocessor_class_strict,
         "usescript": usescript,
         "not_requeueable": not_requeueable,
@@ -260,145 +266,145 @@ def fsl_sub_cargs(
     """
     cargs = []
     cargs.append("fsl_sub")
-    if params.get("arch") is not None:
+    if params.get("arch", None) is not None:
         cargs.extend([
             "-a",
-            params.get("arch")
+            params.get("arch", None)
         ])
-    if params.get("coprocessor") is not None:
+    if params.get("coprocessor", None) is not None:
         cargs.extend([
             "-c",
-            params.get("coprocessor")
+            params.get("coprocessor", None)
         ])
-    if params.get("coprocessor_multi") is not None:
+    if params.get("coprocessor_multi", None) is not None:
         cargs.extend([
             "--coprocessor_multi",
-            str(params.get("coprocessor_multi"))
+            str(params.get("coprocessor_multi", None))
         ])
-    if params.get("coprocessor_class") is not None:
+    if params.get("coprocessor_class", None) is not None:
         cargs.extend([
             "--coprocessor_class",
-            params.get("coprocessor_class")
+            params.get("coprocessor_class", None)
         ])
-    if params.get("coprocessor_class_strict"):
+    if params.get("coprocessor_class_strict", False):
         cargs.append("--coprocessor_class_strict")
-    if params.get("coprocessor_toolkit") is not None:
+    if params.get("coprocessor_toolkit", None) is not None:
         cargs.extend([
             "--coprocessor_toolkit",
-            params.get("coprocessor_toolkit")
+            params.get("coprocessor_toolkit", None)
         ])
-    if params.get("usescript"):
+    if params.get("usescript", False):
         cargs.append("-F")
-    if params.get("jobhold") is not None:
+    if params.get("jobhold", None) is not None:
         cargs.extend([
             "-j",
-            params.get("jobhold")
+            params.get("jobhold", None)
         ])
-    if params.get("not_requeueable"):
+    if params.get("not_requeueable", False):
         cargs.append("--not_requeueable")
-    if params.get("array_hold") is not None:
+    if params.get("array_hold", None) is not None:
         cargs.extend([
             "--array_hold",
-            params.get("array_hold")
+            params.get("array_hold", None)
         ])
-    if params.get("logdir") is not None:
+    if params.get("logdir", None) is not None:
         cargs.extend([
             "-l",
-            params.get("logdir")
+            params.get("logdir", None)
         ])
-    if params.get("mailoptions") is not None:
+    if params.get("mailoptions", None) is not None:
         cargs.extend([
             "-m",
-            params.get("mailoptions")
+            params.get("mailoptions", None)
         ])
-    if params.get("mailto") is not None:
+    if params.get("mailto", None) is not None:
         cargs.extend([
             "-M",
-            params.get("mailto")
+            params.get("mailto", None)
         ])
-    if params.get("novalidation"):
+    if params.get("novalidation", False):
         cargs.append("-n")
-    if params.get("name") is not None:
+    if params.get("name", None) is not None:
         cargs.extend([
             "-N",
-            params.get("name")
+            params.get("name", None)
         ])
-    if params.get("priority") is not None:
+    if params.get("priority", None) is not None:
         cargs.extend([
             "-p",
-            params.get("priority")
+            params.get("priority", None)
         ])
-    if params.get("queue") is not None:
+    if params.get("queue", None) is not None:
         cargs.extend([
             "-q",
-            params.get("queue")
+            params.get("queue", None)
         ])
-    if params.get("resource") is not None:
+    if params.get("resource", None) is not None:
         cargs.extend([
             "-r",
-            params.get("resource")
+            params.get("resource", None)
         ])
-    if params.get("delete_job") is not None:
+    if params.get("delete_job", None) is not None:
         cargs.extend([
             "--delete_job",
-            params.get("delete_job")
+            params.get("delete_job", None)
         ])
-    if params.get("jobram") is not None:
+    if params.get("jobram", None) is not None:
         cargs.extend([
             "-R",
-            str(params.get("jobram"))
+            str(params.get("jobram", None))
         ])
-    if params.get("parallelenv_threads") is not None:
+    if params.get("parallelenv_threads", None) is not None:
         cargs.extend([
             "-s",
-            params.get("parallelenv_threads")
+            params.get("parallelenv_threads", None)
         ])
-    if params.get("array_task") is not None:
+    if params.get("array_task", None) is not None:
         cargs.extend([
             "-t",
-            params.get("array_task")
+            params.get("array_task", None)
         ])
-    if params.get("array_native") is not None:
+    if params.get("array_native", None) is not None:
         cargs.extend([
             "--array_native",
-            params.get("array_native")
+            params.get("array_native", None)
         ])
-    if params.get("array_limit") is not None:
+    if params.get("array_limit", None) is not None:
         cargs.extend([
             "-x",
-            str(params.get("array_limit"))
+            str(params.get("array_limit", None))
         ])
-    if params.get("keep_jobscript"):
+    if params.get("keep_jobscript", False):
         cargs.append("--keep_jobscript")
-    if params.get("project") is not None:
+    if params.get("project", None) is not None:
         cargs.extend([
             "--project",
-            params.get("project")
+            params.get("project", None)
         ])
-    if params.get("noramsplit"):
+    if params.get("noramsplit", False):
         cargs.append("-S")
-    if params.get("jobtime") is not None:
+    if params.get("jobtime", None) is not None:
         cargs.extend([
             "-T",
-            str(params.get("jobtime"))
+            str(params.get("jobtime", None))
         ])
-    if params.get("has_coprocessor") is not None:
+    if params.get("has_coprocessor", None) is not None:
         cargs.extend([
             "--has_coprocessor",
-            params.get("has_coprocessor")
+            params.get("has_coprocessor", None)
         ])
-    if params.get("has_queues"):
+    if params.get("has_queues", False):
         cargs.append("--has_queues")
-    if params.get("show_config"):
+    if params.get("show_config", False):
         cargs.append("--show_config")
-    if params.get("verbose"):
+    if params.get("verbose", False):
         cargs.append("-v")
-    if params.get("version"):
+    if params.get("version", False):
         cargs.append("-V")
-    if params.get("fileisimage") is not None:
+    if params.get("fileisimage", None) is not None:
         cargs.extend([
             "-z",
-            execution.input_file(params.get("fileisimage"))
+            execution.input_file(params.get("fileisimage", None))
         ])
     return cargs
 
@@ -590,7 +596,6 @@ def fsl_sub(
 __all__ = [
     "FSL_SUB_METADATA",
     "FslSubOutputs",
-    "FslSubParameters",
     "fsl_sub",
     "fsl_sub_execute",
     "fsl_sub_params",

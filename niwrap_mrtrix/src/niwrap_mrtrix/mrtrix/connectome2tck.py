@@ -14,14 +14,41 @@ CONNECTOME2TCK_METADATA = Metadata(
 
 
 Connectome2tckConfigParameters = typing.TypedDict('Connectome2tckConfigParameters', {
-    "@type": typing.Literal["mrtrix.connectome2tck.config"],
+    "@type": typing.NotRequired[typing.Literal["config"]],
+    "key": str,
+    "value": str,
+})
+Connectome2tckConfigParametersTagged = typing.TypedDict('Connectome2tckConfigParametersTagged', {
+    "@type": typing.Literal["config"],
     "key": str,
     "value": str,
 })
 
 
 Connectome2tckParameters = typing.TypedDict('Connectome2tckParameters', {
-    "@type": typing.Literal["mrtrix.connectome2tck"],
+    "@type": typing.NotRequired[typing.Literal["mrtrix/connectome2tck"]],
+    "nodes": typing.NotRequired[list[int] | None],
+    "exclusive": bool,
+    "files": typing.NotRequired[str | None],
+    "exemplars": typing.NotRequired[InputPathType | None],
+    "keep_unassigned": bool,
+    "keep_self": bool,
+    "tck_weights_in": typing.NotRequired[InputPathType | None],
+    "prefix_tck_weights_out": typing.NotRequired[str | None],
+    "info": bool,
+    "quiet": bool,
+    "debug": bool,
+    "force": bool,
+    "nthreads": typing.NotRequired[int | None],
+    "config": typing.NotRequired[list[Connectome2tckConfigParameters] | None],
+    "help": bool,
+    "version": bool,
+    "tracks_in": InputPathType,
+    "assignments_in": InputPathType,
+    "prefix_out": str,
+})
+Connectome2tckParametersTagged = typing.TypedDict('Connectome2tckParametersTagged', {
+    "@type": typing.Literal["mrtrix/connectome2tck"],
     "nodes": typing.NotRequired[list[int] | None],
     "exclusive": bool,
     "files": typing.NotRequired[str | None],
@@ -44,42 +71,10 @@ Connectome2tckParameters = typing.TypedDict('Connectome2tckParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "mrtrix.connectome2tck": connectome2tck_cargs,
-        "mrtrix.connectome2tck.config": connectome2tck_config_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-    }.get(t)
-
-
 def connectome2tck_config_params(
     key: str,
     value: str,
-) -> Connectome2tckConfigParameters:
+) -> Connectome2tckConfigParametersTagged:
     """
     Build parameters.
     
@@ -90,7 +85,7 @@ def connectome2tck_config_params(
         Parameter dictionary
     """
     params = {
-        "@type": "mrtrix.connectome2tck.config",
+        "@type": "config",
         "key": key,
         "value": value,
     }
@@ -112,14 +107,14 @@ def connectome2tck_config_cargs(
     """
     cargs = []
     cargs.append("-config")
-    cargs.append(params.get("key"))
-    cargs.append(params.get("value"))
+    cargs.append(params.get("key", None))
+    cargs.append(params.get("value", None))
     return cargs
 
 
 class Connectome2tckOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `connectome2tck(...)`.
+    Output object returned when calling `Connectome2tckParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -145,7 +140,7 @@ def connectome2tck_params(
     config: list[Connectome2tckConfigParameters] | None = None,
     help_: bool = False,
     version: bool = False,
-) -> Connectome2tckParameters:
+) -> Connectome2tckParametersTagged:
     """
     Build parameters.
     
@@ -191,7 +186,7 @@ def connectome2tck_params(
         Parameter dictionary
     """
     params = {
-        "@type": "mrtrix.connectome2tck",
+        "@type": "mrtrix/connectome2tck",
         "exclusive": exclusive,
         "keep_unassigned": keep_unassigned,
         "keep_self": keep_self,
@@ -237,59 +232,59 @@ def connectome2tck_cargs(
     """
     cargs = []
     cargs.append("connectome2tck")
-    if params.get("nodes") is not None:
+    if params.get("nodes", None) is not None:
         cargs.extend([
             "-nodes",
-            ",".join(map(str, params.get("nodes")))
+            ",".join(map(str, params.get("nodes", None)))
         ])
-    if params.get("exclusive"):
+    if params.get("exclusive", False):
         cargs.append("-exclusive")
-    if params.get("files") is not None:
+    if params.get("files", None) is not None:
         cargs.extend([
             "-files",
-            params.get("files")
+            params.get("files", None)
         ])
-    if params.get("exemplars") is not None:
+    if params.get("exemplars", None) is not None:
         cargs.extend([
             "-exemplars",
-            execution.input_file(params.get("exemplars"))
+            execution.input_file(params.get("exemplars", None))
         ])
-    if params.get("keep_unassigned"):
+    if params.get("keep_unassigned", False):
         cargs.append("-keep_unassigned")
-    if params.get("keep_self"):
+    if params.get("keep_self", False):
         cargs.append("-keep_self")
-    if params.get("tck_weights_in") is not None:
+    if params.get("tck_weights_in", None) is not None:
         cargs.extend([
             "-tck_weights_in",
-            execution.input_file(params.get("tck_weights_in"))
+            execution.input_file(params.get("tck_weights_in", None))
         ])
-    if params.get("prefix_tck_weights_out") is not None:
+    if params.get("prefix_tck_weights_out", None) is not None:
         cargs.extend([
             "-prefix_tck_weights_out",
-            params.get("prefix_tck_weights_out")
+            params.get("prefix_tck_weights_out", None)
         ])
-    if params.get("info"):
+    if params.get("info", False):
         cargs.append("-info")
-    if params.get("quiet"):
+    if params.get("quiet", False):
         cargs.append("-quiet")
-    if params.get("debug"):
+    if params.get("debug", False):
         cargs.append("-debug")
-    if params.get("force"):
+    if params.get("force", False):
         cargs.append("-force")
-    if params.get("nthreads") is not None:
+    if params.get("nthreads", None) is not None:
         cargs.extend([
             "-nthreads",
-            str(params.get("nthreads"))
+            str(params.get("nthreads", None))
         ])
-    if params.get("config") is not None:
-        cargs.extend([a for c in [dyn_cargs(s["@type"])(s, execution) for s in params.get("config")] for a in c])
-    if params.get("help"):
+    if params.get("config", None) is not None:
+        cargs.extend([a for c in [connectome2tck_config_cargs(s, execution) for s in params.get("config", None)] for a in c])
+    if params.get("help", False):
         cargs.append("-help")
-    if params.get("version"):
+    if params.get("version", False):
         cargs.append("-version")
-    cargs.append(execution.input_file(params.get("tracks_in")))
-    cargs.append(execution.input_file(params.get("assignments_in")))
-    cargs.append(params.get("prefix_out"))
+    cargs.append(execution.input_file(params.get("tracks_in", None)))
+    cargs.append(execution.input_file(params.get("assignments_in", None)))
+    cargs.append(params.get("prefix_out", None))
     return cargs
 
 
@@ -465,9 +460,7 @@ def connectome2tck(
 
 __all__ = [
     "CONNECTOME2TCK_METADATA",
-    "Connectome2tckConfigParameters",
     "Connectome2tckOutputs",
-    "Connectome2tckParameters",
     "connectome2tck",
     "connectome2tck_config_params",
     "connectome2tck_execute",

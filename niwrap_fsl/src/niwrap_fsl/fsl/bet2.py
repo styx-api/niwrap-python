@@ -14,7 +14,25 @@ BET2_METADATA = Metadata(
 
 
 Bet2Parameters = typing.TypedDict('Bet2Parameters', {
-    "@type": typing.Literal["fsl.bet2"],
+    "@type": typing.NotRequired[typing.Literal["fsl/bet2"]],
+    "input_fileroot": str,
+    "output_fileroot": str,
+    "fractional_intensity": typing.NotRequired[float | None],
+    "vertical_gradient": typing.NotRequired[float | None],
+    "center_of_gravity": typing.NotRequired[list[float] | None],
+    "outline_flag": bool,
+    "mask_flag": bool,
+    "skull_flag": bool,
+    "no_output_flag": bool,
+    "mesh_flag": bool,
+    "head_radius": typing.NotRequired[float | None],
+    "smooth_factor": typing.NotRequired[float | None],
+    "threshold_flag": bool,
+    "verbose_flag": bool,
+    "help_flag": bool,
+})
+Bet2ParametersTagged = typing.TypedDict('Bet2ParametersTagged', {
+    "@type": typing.Literal["fsl/bet2"],
     "input_fileroot": str,
     "output_fileroot": str,
     "fractional_intensity": typing.NotRequired[float | None],
@@ -33,41 +51,9 @@ Bet2Parameters = typing.TypedDict('Bet2Parameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "fsl.bet2": bet2_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "fsl.bet2": bet2_outputs,
-    }.get(t)
-
-
 class Bet2Outputs(typing.NamedTuple):
     """
-    Output object returned when calling `bet2(...)`.
+    Output object returned when calling `Bet2Parameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -98,7 +84,7 @@ def bet2_params(
     threshold_flag: bool = False,
     verbose_flag: bool = False,
     help_flag: bool = False,
-) -> Bet2Parameters:
+) -> Bet2ParametersTagged:
     """
     Build parameters.
     
@@ -131,7 +117,7 @@ def bet2_params(
         Parameter dictionary
     """
     params = {
-        "@type": "fsl.bet2",
+        "@type": "fsl/bet2",
         "input_fileroot": input_fileroot,
         "output_fileroot": output_fileroot,
         "outline_flag": outline_flag,
@@ -171,48 +157,48 @@ def bet2_cargs(
     """
     cargs = []
     cargs.append("bet2")
-    cargs.append(params.get("input_fileroot"))
-    cargs.append(params.get("output_fileroot"))
-    if params.get("fractional_intensity") is not None:
+    cargs.append(params.get("input_fileroot", None))
+    cargs.append(params.get("output_fileroot", None))
+    if params.get("fractional_intensity", None) is not None:
         cargs.extend([
             "-f",
-            str(params.get("fractional_intensity"))
+            str(params.get("fractional_intensity", None))
         ])
-    if params.get("vertical_gradient") is not None:
+    if params.get("vertical_gradient", None) is not None:
         cargs.extend([
             "-g",
-            str(params.get("vertical_gradient"))
+            str(params.get("vertical_gradient", None))
         ])
-    if params.get("center_of_gravity") is not None:
+    if params.get("center_of_gravity", None) is not None:
         cargs.extend([
             "-c",
-            *map(str, params.get("center_of_gravity"))
+            *map(str, params.get("center_of_gravity", None))
         ])
-    if params.get("outline_flag"):
+    if params.get("outline_flag", False):
         cargs.append("-o")
-    if params.get("mask_flag"):
+    if params.get("mask_flag", False):
         cargs.append("-m")
-    if params.get("skull_flag"):
+    if params.get("skull_flag", False):
         cargs.append("-s")
-    if params.get("no_output_flag"):
+    if params.get("no_output_flag", False):
         cargs.append("-n")
-    if params.get("mesh_flag"):
+    if params.get("mesh_flag", False):
         cargs.append("-e")
-    if params.get("head_radius") is not None:
+    if params.get("head_radius", None) is not None:
         cargs.extend([
             "-r",
-            str(params.get("head_radius"))
+            str(params.get("head_radius", None))
         ])
-    if params.get("smooth_factor") is not None:
+    if params.get("smooth_factor", None) is not None:
         cargs.extend([
             "-w",
-            str(params.get("smooth_factor"))
+            str(params.get("smooth_factor", None))
         ])
-    if params.get("threshold_flag"):
+    if params.get("threshold_flag", False):
         cargs.append("-t")
-    if params.get("verbose_flag"):
+    if params.get("verbose_flag", False):
         cargs.append("-v")
-    if params.get("help_flag"):
+    if params.get("help_flag", False):
         cargs.append("-h")
     return cargs
 
@@ -232,10 +218,10 @@ def bet2_outputs(
     """
     ret = Bet2Outputs(
         root=execution.output_file("."),
-        output_mask=execution.output_file(params.get("output_fileroot") + "_mask.nii.gz"),
-        output_skull=execution.output_file(params.get("output_fileroot") + "_skull.nii.gz"),
-        output_mesh=execution.output_file(params.get("output_fileroot") + "_mesh.vtk"),
-        output_overlay=execution.output_file(params.get("output_fileroot") + "_overlay.nii.gz"),
+        output_mask=execution.output_file(params.get("output_fileroot", None) + "_mask.nii.gz"),
+        output_skull=execution.output_file(params.get("output_fileroot", None) + "_skull.nii.gz"),
+        output_mesh=execution.output_file(params.get("output_fileroot", None) + "_mesh.vtk"),
+        output_overlay=execution.output_file(params.get("output_fileroot", None) + "_overlay.nii.gz"),
     )
     return ret
 
@@ -347,7 +333,6 @@ def bet2(
 __all__ = [
     "BET2_METADATA",
     "Bet2Outputs",
-    "Bet2Parameters",
     "bet2",
     "bet2_execute",
     "bet2_params",

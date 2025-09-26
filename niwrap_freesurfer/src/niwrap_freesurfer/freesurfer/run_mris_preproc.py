@@ -14,46 +14,20 @@ RUN_MRIS_PREPROC_METADATA = Metadata(
 
 
 RunMrisPreprocParameters = typing.TypedDict('RunMrisPreprocParameters', {
-    "@type": typing.Literal["freesurfer.run_mris_preproc"],
+    "@type": typing.NotRequired[typing.Literal["freesurfer/run_mris_preproc"]],
+    "qdec_table": InputPathType,
+    "target_average": typing.NotRequired[str | None],
+})
+RunMrisPreprocParametersTagged = typing.TypedDict('RunMrisPreprocParametersTagged', {
+    "@type": typing.Literal["freesurfer/run_mris_preproc"],
     "qdec_table": InputPathType,
     "target_average": typing.NotRequired[str | None],
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "freesurfer.run_mris_preproc": run_mris_preproc_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-    }.get(t)
-
-
 class RunMrisPreprocOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `run_mris_preproc(...)`.
+    Output object returned when calling `RunMrisPreprocParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -62,7 +36,7 @@ class RunMrisPreprocOutputs(typing.NamedTuple):
 def run_mris_preproc_params(
     qdec_table: InputPathType,
     target_average: str | None = None,
-) -> RunMrisPreprocParameters:
+) -> RunMrisPreprocParametersTagged:
     """
     Build parameters.
     
@@ -73,7 +47,7 @@ def run_mris_preproc_params(
         Parameter dictionary
     """
     params = {
-        "@type": "freesurfer.run_mris_preproc",
+        "@type": "freesurfer/run_mris_preproc",
         "qdec_table": qdec_table,
     }
     if target_average is not None:
@@ -96,9 +70,9 @@ def run_mris_preproc_cargs(
     """
     cargs = []
     cargs.append("run_mris_preproc")
-    cargs.append(execution.input_file(params.get("qdec_table")))
-    if params.get("target_average") is not None:
-        cargs.append(params.get("target_average"))
+    cargs.append(execution.input_file(params.get("qdec_table", None)))
+    if params.get("target_average", None) is not None:
+        cargs.append(params.get("target_average", None))
     return cargs
 
 
@@ -182,7 +156,6 @@ def run_mris_preproc(
 __all__ = [
     "RUN_MRIS_PREPROC_METADATA",
     "RunMrisPreprocOutputs",
-    "RunMrisPreprocParameters",
     "run_mris_preproc",
     "run_mris_preproc_execute",
     "run_mris_preproc_params",

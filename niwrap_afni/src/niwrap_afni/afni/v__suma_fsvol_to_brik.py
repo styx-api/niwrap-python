@@ -14,47 +14,20 @@ V__SUMA_FSVOL_TO_BRIK_METADATA = Metadata(
 
 
 VSumaFsvolToBrikParameters = typing.TypedDict('VSumaFsvolToBrikParameters', {
-    "@type": typing.Literal["afni.@SUMA_FSvolToBRIK"],
+    "@type": typing.NotRequired[typing.Literal["afni/@SUMA_FSvolToBRIK"]],
+    "fs_vol_data": InputPathType,
+    "prefix": str,
+})
+VSumaFsvolToBrikParametersTagged = typing.TypedDict('VSumaFsvolToBrikParametersTagged', {
+    "@type": typing.Literal["afni/@SUMA_FSvolToBRIK"],
     "fs_vol_data": InputPathType,
     "prefix": str,
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "afni.@SUMA_FSvolToBRIK": v__suma_fsvol_to_brik_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "afni.@SUMA_FSvolToBRIK": v__suma_fsvol_to_brik_outputs,
-    }.get(t)
-
-
 class VSumaFsvolToBrikOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `v__suma_fsvol_to_brik(...)`.
+    Output object returned when calling `VSumaFsvolToBrikParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -67,7 +40,7 @@ class VSumaFsvolToBrikOutputs(typing.NamedTuple):
 def v__suma_fsvol_to_brik_params(
     fs_vol_data: InputPathType,
     prefix: str,
-) -> VSumaFsvolToBrikParameters:
+) -> VSumaFsvolToBrikParametersTagged:
     """
     Build parameters.
     
@@ -79,7 +52,7 @@ def v__suma_fsvol_to_brik_params(
         Parameter dictionary
     """
     params = {
-        "@type": "afni.@SUMA_FSvolToBRIK",
+        "@type": "afni/@SUMA_FSvolToBRIK",
         "fs_vol_data": fs_vol_data,
         "prefix": prefix,
     }
@@ -101,8 +74,8 @@ def v__suma_fsvol_to_brik_cargs(
     """
     cargs = []
     cargs.append("@SUMA_FSvolToBRIK")
-    cargs.append(execution.input_file(params.get("fs_vol_data")))
-    cargs.append(params.get("prefix"))
+    cargs.append(execution.input_file(params.get("fs_vol_data", None)))
+    cargs.append(params.get("prefix", None))
     return cargs
 
 
@@ -121,8 +94,8 @@ def v__suma_fsvol_to_brik_outputs(
     """
     ret = VSumaFsvolToBrikOutputs(
         root=execution.output_file("."),
-        out_brik=execution.output_file(params.get("prefix") + ".BRIK"),
-        out_head=execution.output_file(params.get("prefix") + ".HEAD"),
+        out_brik=execution.output_file(params.get("prefix", None) + ".BRIK"),
+        out_head=execution.output_file(params.get("prefix", None) + ".HEAD"),
     )
     return ret
 
@@ -186,7 +159,6 @@ def v__suma_fsvol_to_brik(
 
 __all__ = [
     "VSumaFsvolToBrikOutputs",
-    "VSumaFsvolToBrikParameters",
     "V__SUMA_FSVOL_TO_BRIK_METADATA",
     "v__suma_fsvol_to_brik",
     "v__suma_fsvol_to_brik_execute",

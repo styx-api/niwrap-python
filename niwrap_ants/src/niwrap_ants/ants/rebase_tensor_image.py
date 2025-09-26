@@ -14,7 +14,15 @@ REBASE_TENSOR_IMAGE_METADATA = Metadata(
 
 
 RebaseTensorImageParameters = typing.TypedDict('RebaseTensorImageParameters', {
-    "@type": typing.Literal["ants.RebaseTensorImage"],
+    "@type": typing.NotRequired[typing.Literal["ants/RebaseTensorImage"]],
+    "dimension": int,
+    "infile": InputPathType,
+    "outfile": InputPathType,
+    "method": typing.Literal["PHYSICAL", "LOCAL"],
+    "reference": typing.NotRequired[InputPathType | None],
+})
+RebaseTensorImageParametersTagged = typing.TypedDict('RebaseTensorImageParametersTagged', {
+    "@type": typing.Literal["ants/RebaseTensorImage"],
     "dimension": int,
     "infile": InputPathType,
     "outfile": InputPathType,
@@ -23,41 +31,9 @@ RebaseTensorImageParameters = typing.TypedDict('RebaseTensorImageParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "ants.RebaseTensorImage": rebase_tensor_image_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "ants.RebaseTensorImage": rebase_tensor_image_outputs,
-    }.get(t)
-
-
 class RebaseTensorImageOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `rebase_tensor_image(...)`.
+    Output object returned when calling `RebaseTensorImageParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -71,7 +47,7 @@ def rebase_tensor_image_params(
     outfile: InputPathType,
     method: typing.Literal["PHYSICAL", "LOCAL"],
     reference: InputPathType | None = None,
-) -> RebaseTensorImageParameters:
+) -> RebaseTensorImageParametersTagged:
     """
     Build parameters.
     
@@ -86,7 +62,7 @@ def rebase_tensor_image_params(
         Parameter dictionary
     """
     params = {
-        "@type": "ants.RebaseTensorImage",
+        "@type": "ants/RebaseTensorImage",
         "dimension": dimension,
         "infile": infile,
         "outfile": outfile,
@@ -112,12 +88,12 @@ def rebase_tensor_image_cargs(
     """
     cargs = []
     cargs.append("RebaseTensorImage")
-    cargs.append(str(params.get("dimension")))
-    cargs.append(execution.input_file(params.get("infile")))
-    cargs.append(execution.input_file(params.get("outfile")))
-    cargs.append(params.get("method"))
-    if params.get("reference") is not None:
-        cargs.append(execution.input_file(params.get("reference")))
+    cargs.append(str(params.get("dimension", None)))
+    cargs.append(execution.input_file(params.get("infile", None)))
+    cargs.append(execution.input_file(params.get("outfile", None)))
+    cargs.append(params.get("method", None))
+    if params.get("reference", None) is not None:
+        cargs.append(execution.input_file(params.get("reference", None)))
     return cargs
 
 
@@ -136,7 +112,7 @@ def rebase_tensor_image_outputs(
     """
     ret = RebaseTensorImageOutputs(
         root=execution.output_file("."),
-        rebased_image=execution.output_file(pathlib.Path(params.get("outfile")).name),
+        rebased_image=execution.output_file(pathlib.Path(params.get("outfile", None)).name),
     )
     return ret
 
@@ -210,7 +186,6 @@ def rebase_tensor_image(
 __all__ = [
     "REBASE_TENSOR_IMAGE_METADATA",
     "RebaseTensorImageOutputs",
-    "RebaseTensorImageParameters",
     "rebase_tensor_image",
     "rebase_tensor_image_execute",
     "rebase_tensor_image_params",

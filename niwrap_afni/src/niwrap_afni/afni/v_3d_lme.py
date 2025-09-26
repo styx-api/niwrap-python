@@ -14,7 +14,40 @@ V_3D_LME_METADATA = Metadata(
 
 
 V3dLmeParameters = typing.TypedDict('V3dLmeParameters', {
-    "@type": typing.Literal["afni.3dLME"],
+    "@type": typing.NotRequired[typing.Literal["afni/3dLME"]],
+    "PREFIX": str,
+    "MODEL": str,
+    "DATA_TABLE": str,
+    "BOUNDS": typing.NotRequired[list[float] | None],
+    "CIO_FLAG": bool,
+    "COR_STR": typing.NotRequired[str | None],
+    "CUTOFF": typing.NotRequired[float | None],
+    "DBG_ARGS_FLAG": bool,
+    "JOBS": typing.NotRequired[float | None],
+    "GLT_CODE": typing.NotRequired[str | None],
+    "GLT_LABEL": typing.NotRequired[str | None],
+    "GLF_LABEL": typing.NotRequired[str | None],
+    "GLF_CODE": typing.NotRequired[str | None],
+    "ICC_FLAG": bool,
+    "ICCB_FLAG": bool,
+    "LOG_LIK_FLAG": bool,
+    "LOGIT_FLAG": bool,
+    "ML_FLAG": bool,
+    "QVARS_CENTERS": typing.NotRequired[str | None],
+    "QVARS": typing.NotRequired[str | None],
+    "RANEFF": typing.NotRequired[str | None],
+    "MASK": typing.NotRequired[InputPathType | None],
+    "NUM_GLF": typing.NotRequired[float | None],
+    "NUM_GLT": typing.NotRequired[float | None],
+    "RESID": typing.NotRequired[str | None],
+    "RE": typing.NotRequired[str | None],
+    "REPREFIX": typing.NotRequired[str | None],
+    "RIO_FLAG": bool,
+    "SHOW_OPTIONS_FLAG": bool,
+    "SS_TYPE": typing.NotRequired[float | None],
+})
+V3dLmeParametersTagged = typing.TypedDict('V3dLmeParametersTagged', {
+    "@type": typing.Literal["afni/3dLME"],
     "PREFIX": str,
     "MODEL": str,
     "DATA_TABLE": str,
@@ -48,41 +81,9 @@ V3dLmeParameters = typing.TypedDict('V3dLmeParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "afni.3dLME": v_3d_lme_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "afni.3dLME": v_3d_lme_outputs,
-    }.get(t)
-
-
 class V3dLmeOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `v_3d_lme(...)`.
+    Output object returned when calling `V3dLmeParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -121,7 +122,7 @@ def v_3d_lme_params(
     rio_flag: bool = False,
     show_options_flag: bool = False,
     ss_type: float | None = None,
-) -> V3dLmeParameters:
+) -> V3dLmeParametersTagged:
     """
     Build parameters.
     
@@ -163,7 +164,7 @@ def v_3d_lme_params(
         Parameter dictionary
     """
     params = {
-        "@type": "afni.3dLME",
+        "@type": "afni/3dLME",
         "PREFIX": prefix,
         "MODEL": model,
         "DATA_TABLE": data_table,
@@ -233,123 +234,123 @@ def v_3d_lme_cargs(
     cargs.append("3dLME")
     cargs.extend([
         "-prefix",
-        params.get("PREFIX")
+        params.get("PREFIX", None)
     ])
     cargs.extend([
         "-model",
-        params.get("MODEL")
+        params.get("MODEL", None)
     ])
     cargs.extend([
         "-dataTable",
-        params.get("DATA_TABLE")
+        params.get("DATA_TABLE", None)
     ])
-    if params.get("BOUNDS") is not None:
+    if params.get("BOUNDS", None) is not None:
         cargs.extend([
             "-bounds",
-            *map(str, params.get("BOUNDS"))
+            *map(str, params.get("BOUNDS", None))
         ])
-    if params.get("CIO_FLAG"):
+    if params.get("CIO_FLAG", False):
         cargs.append("-cio")
-    if params.get("COR_STR") is not None:
+    if params.get("COR_STR", None) is not None:
         cargs.extend([
             "-corStr",
-            params.get("COR_STR")
+            params.get("COR_STR", None)
         ])
-    if params.get("CUTOFF") is not None:
+    if params.get("CUTOFF", None) is not None:
         cargs.extend([
             "-cutoff",
-            str(params.get("CUTOFF"))
+            str(params.get("CUTOFF", None))
         ])
-    if params.get("DBG_ARGS_FLAG"):
+    if params.get("DBG_ARGS_FLAG", False):
         cargs.append("-dbgArgs")
-    if params.get("JOBS") is not None:
+    if params.get("JOBS", None) is not None:
         cargs.extend([
             "-jobs",
-            str(params.get("JOBS"))
+            str(params.get("JOBS", None))
         ])
-    if params.get("GLT_CODE") is not None:
+    if params.get("GLT_CODE", None) is not None:
         cargs.extend([
             "-gltCode",
-            params.get("GLT_CODE")
+            params.get("GLT_CODE", None)
         ])
-    if params.get("GLT_LABEL") is not None:
+    if params.get("GLT_LABEL", None) is not None:
         cargs.extend([
             "-gltLabel",
-            params.get("GLT_LABEL")
+            params.get("GLT_LABEL", None)
         ])
-    if params.get("GLF_LABEL") is not None:
+    if params.get("GLF_LABEL", None) is not None:
         cargs.extend([
             "-glfLabel",
-            params.get("GLF_LABEL")
+            params.get("GLF_LABEL", None)
         ])
-    if params.get("GLF_CODE") is not None:
+    if params.get("GLF_CODE", None) is not None:
         cargs.extend([
             "-glfCode",
-            params.get("GLF_CODE")
+            params.get("GLF_CODE", None)
         ])
-    if params.get("ICC_FLAG"):
+    if params.get("ICC_FLAG", False):
         cargs.append("-ICC")
-    if params.get("ICCB_FLAG"):
+    if params.get("ICCB_FLAG", False):
         cargs.append("-ICCb")
-    if params.get("LOG_LIK_FLAG"):
+    if params.get("LOG_LIK_FLAG", False):
         cargs.append("-logLik")
-    if params.get("LOGIT_FLAG"):
+    if params.get("LOGIT_FLAG", False):
         cargs.append("-LOGIT")
-    if params.get("ML_FLAG"):
+    if params.get("ML_FLAG", False):
         cargs.append("-ML")
-    if params.get("QVARS_CENTERS") is not None:
+    if params.get("QVARS_CENTERS", None) is not None:
         cargs.extend([
             "-qVarsCenters",
-            params.get("QVARS_CENTERS")
+            params.get("QVARS_CENTERS", None)
         ])
-    if params.get("QVARS") is not None:
+    if params.get("QVARS", None) is not None:
         cargs.extend([
             "-qVars",
-            params.get("QVARS")
+            params.get("QVARS", None)
         ])
-    if params.get("RANEFF") is not None:
+    if params.get("RANEFF", None) is not None:
         cargs.extend([
             "-ranEff",
-            params.get("RANEFF")
+            params.get("RANEFF", None)
         ])
-    if params.get("MASK") is not None:
+    if params.get("MASK", None) is not None:
         cargs.extend([
             "-mask",
-            execution.input_file(params.get("MASK"))
+            execution.input_file(params.get("MASK", None))
         ])
-    if params.get("NUM_GLF") is not None:
+    if params.get("NUM_GLF", None) is not None:
         cargs.extend([
             "-num_glf",
-            str(params.get("NUM_GLF"))
+            str(params.get("NUM_GLF", None))
         ])
-    if params.get("NUM_GLT") is not None:
+    if params.get("NUM_GLT", None) is not None:
         cargs.extend([
             "-num_glt",
-            str(params.get("NUM_GLT"))
+            str(params.get("NUM_GLT", None))
         ])
-    if params.get("RESID") is not None:
+    if params.get("RESID", None) is not None:
         cargs.extend([
             "-resid",
-            params.get("RESID")
+            params.get("RESID", None)
         ])
-    if params.get("RE") is not None:
+    if params.get("RE", None) is not None:
         cargs.extend([
             "-RE",
-            params.get("RE")
+            params.get("RE", None)
         ])
-    if params.get("REPREFIX") is not None:
+    if params.get("REPREFIX", None) is not None:
         cargs.extend([
             "-REprefix",
-            params.get("REPREFIX")
+            params.get("REPREFIX", None)
         ])
-    if params.get("RIO_FLAG"):
+    if params.get("RIO_FLAG", False):
         cargs.append("-Rio")
-    if params.get("SHOW_OPTIONS_FLAG"):
+    if params.get("SHOW_OPTIONS_FLAG", False):
         cargs.append("-show_allowed_options")
-    if params.get("SS_TYPE") is not None:
+    if params.get("SS_TYPE", None) is not None:
         cargs.extend([
             "-SS_type",
-            str(params.get("SS_TYPE"))
+            str(params.get("SS_TYPE", None))
         ])
     return cargs
 
@@ -369,7 +370,7 @@ def v_3d_lme_outputs(
     """
     ret = V3dLmeOutputs(
         root=execution.output_file("."),
-        output_nifti=execution.output_file(params.get("PREFIX") + ".nii"),
+        output_nifti=execution.output_file(params.get("PREFIX", None) + ".nii"),
     )
     return ret
 
@@ -519,7 +520,6 @@ def v_3d_lme(
 
 __all__ = [
     "V3dLmeOutputs",
-    "V3dLmeParameters",
     "V_3D_LME_METADATA",
     "v_3d_lme",
     "v_3d_lme_execute",

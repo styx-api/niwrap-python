@@ -14,45 +14,18 @@ MORPH_TABLES_RH_METADATA = Metadata(
 
 
 MorphTablesRhParameters = typing.TypedDict('MorphTablesRhParameters', {
-    "@type": typing.Literal["freesurfer.morph_tables-rh"],
+    "@type": typing.NotRequired[typing.Literal["freesurfer/morph_tables-rh"]],
+    "options": typing.NotRequired[str | None],
+})
+MorphTablesRhParametersTagged = typing.TypedDict('MorphTablesRhParametersTagged', {
+    "@type": typing.Literal["freesurfer/morph_tables-rh"],
     "options": typing.NotRequired[str | None],
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "freesurfer.morph_tables-rh": morph_tables_rh_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-    }.get(t)
-
-
 class MorphTablesRhOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `morph_tables_rh(...)`.
+    Output object returned when calling `MorphTablesRhParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -60,7 +33,7 @@ class MorphTablesRhOutputs(typing.NamedTuple):
 
 def morph_tables_rh_params(
     options: str | None = None,
-) -> MorphTablesRhParameters:
+) -> MorphTablesRhParametersTagged:
     """
     Build parameters.
     
@@ -70,7 +43,7 @@ def morph_tables_rh_params(
         Parameter dictionary
     """
     params = {
-        "@type": "freesurfer.morph_tables-rh",
+        "@type": "freesurfer/morph_tables-rh",
     }
     if options is not None:
         params["options"] = options
@@ -92,10 +65,10 @@ def morph_tables_rh_cargs(
     """
     cargs = []
     cargs.append("morph_tables-rh")
-    if params.get("options") is not None:
+    if params.get("options", None) is not None:
         cargs.extend([
             "-rh",
-            params.get("options")
+            params.get("options", None)
         ])
     return cargs
 
@@ -177,7 +150,6 @@ def morph_tables_rh(
 __all__ = [
     "MORPH_TABLES_RH_METADATA",
     "MorphTablesRhOutputs",
-    "MorphTablesRhParameters",
     "morph_tables_rh",
     "morph_tables_rh_execute",
     "morph_tables_rh_params",

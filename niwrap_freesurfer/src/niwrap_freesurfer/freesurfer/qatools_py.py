@@ -14,7 +14,17 @@ QATOOLS_PY_METADATA = Metadata(
 
 
 QatoolsPyParameters = typing.TypedDict('QatoolsPyParameters', {
-    "@type": typing.Literal["freesurfer.qatools.py"],
+    "@type": typing.NotRequired[typing.Literal["freesurfer/qatools.py"]],
+    "subjects_dir": str,
+    "output_dir": str,
+    "subjects": typing.NotRequired[list[str] | None],
+    "screenshots": bool,
+    "fornix": bool,
+    "outlier": bool,
+    "outlier_table": typing.NotRequired[InputPathType | None],
+})
+QatoolsPyParametersTagged = typing.TypedDict('QatoolsPyParametersTagged', {
+    "@type": typing.Literal["freesurfer/qatools.py"],
     "subjects_dir": str,
     "output_dir": str,
     "subjects": typing.NotRequired[list[str] | None],
@@ -25,41 +35,9 @@ QatoolsPyParameters = typing.TypedDict('QatoolsPyParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "freesurfer.qatools.py": qatools_py_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "freesurfer.qatools.py": qatools_py_outputs,
-    }.get(t)
-
-
 class QatoolsPyOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `qatools_py(...)`.
+    Output object returned when calling `QatoolsPyParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -78,7 +56,7 @@ def qatools_py_params(
     fornix: bool = False,
     outlier: bool = False,
     outlier_table: InputPathType | None = None,
-) -> QatoolsPyParameters:
+) -> QatoolsPyParametersTagged:
     """
     Build parameters.
     
@@ -96,7 +74,7 @@ def qatools_py_params(
         Parameter dictionary
     """
     params = {
-        "@type": "freesurfer.qatools.py",
+        "@type": "freesurfer/qatools.py",
         "subjects_dir": subjects_dir,
         "output_dir": output_dir,
         "screenshots": screenshots,
@@ -127,27 +105,27 @@ def qatools_py_cargs(
     cargs.append("qatools.py")
     cargs.extend([
         "--subjects_dir",
-        params.get("subjects_dir")
+        params.get("subjects_dir", None)
     ])
     cargs.extend([
         "--output_dir",
-        params.get("output_dir")
+        params.get("output_dir", None)
     ])
-    if params.get("subjects") is not None:
+    if params.get("subjects", None) is not None:
         cargs.extend([
             "--subjects",
-            *params.get("subjects")
+            *params.get("subjects", None)
         ])
-    if params.get("screenshots"):
+    if params.get("screenshots", False):
         cargs.append("--screenshots")
-    if params.get("fornix"):
+    if params.get("fornix", False):
         cargs.append("--fornix")
-    if params.get("outlier"):
+    if params.get("outlier", False):
         cargs.append("--outlier")
-    if params.get("outlier_table") is not None:
+    if params.get("outlier_table", None) is not None:
         cargs.extend([
             "--outlier-table",
-            execution.input_file(params.get("outlier_table"))
+            execution.input_file(params.get("outlier_table", None))
         ])
     return cargs
 
@@ -167,8 +145,8 @@ def qatools_py_outputs(
     """
     ret = QatoolsPyOutputs(
         root=execution.output_file("."),
-        summary_csv=execution.output_file(params.get("output_dir") + "/summary.csv"),
-        screenshots_output=execution.output_file(params.get("output_dir") + "/screenshots/"),
+        summary_csv=execution.output_file(params.get("output_dir", None) + "/summary.csv"),
+        screenshots_output=execution.output_file(params.get("output_dir", None) + "/screenshots/"),
     )
     return ret
 
@@ -249,7 +227,6 @@ def qatools_py(
 __all__ = [
     "QATOOLS_PY_METADATA",
     "QatoolsPyOutputs",
-    "QatoolsPyParameters",
     "qatools_py",
     "qatools_py_execute",
     "qatools_py_params",

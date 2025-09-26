@@ -14,7 +14,15 @@ V_3D_ROW_FILLIN_METADATA = Metadata(
 
 
 V3dRowFillinParameters = typing.TypedDict('V3dRowFillinParameters', {
-    "@type": typing.Literal["afni.3dRowFillin"],
+    "@type": typing.NotRequired[typing.Literal["afni/3dRowFillin"]],
+    "maxgap": typing.NotRequired[float | None],
+    "dir": typing.NotRequired[str | None],
+    "binary": bool,
+    "prefix": typing.NotRequired[str | None],
+    "input_dataset": InputPathType,
+})
+V3dRowFillinParametersTagged = typing.TypedDict('V3dRowFillinParametersTagged', {
+    "@type": typing.Literal["afni/3dRowFillin"],
     "maxgap": typing.NotRequired[float | None],
     "dir": typing.NotRequired[str | None],
     "binary": bool,
@@ -23,41 +31,9 @@ V3dRowFillinParameters = typing.TypedDict('V3dRowFillinParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "afni.3dRowFillin": v_3d_row_fillin_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "afni.3dRowFillin": v_3d_row_fillin_outputs,
-    }.get(t)
-
-
 class V3dRowFillinOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `v_3d_row_fillin(...)`.
+    Output object returned when calling `V3dRowFillinParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -73,7 +49,7 @@ def v_3d_row_fillin_params(
     dir_: str | None = None,
     binary: bool = False,
     prefix: str | None = None,
-) -> V3dRowFillinParameters:
+) -> V3dRowFillinParametersTagged:
     """
     Build parameters.
     
@@ -89,7 +65,7 @@ def v_3d_row_fillin_params(
         Parameter dictionary
     """
     params = {
-        "@type": "afni.3dRowFillin",
+        "@type": "afni/3dRowFillin",
         "binary": binary,
         "input_dataset": input_dataset,
     }
@@ -117,24 +93,24 @@ def v_3d_row_fillin_cargs(
     """
     cargs = []
     cargs.append("3dRowFillin")
-    if params.get("maxgap") is not None:
+    if params.get("maxgap", None) is not None:
         cargs.extend([
             "-maxgap",
-            str(params.get("maxgap"))
+            str(params.get("maxgap", None))
         ])
-    if params.get("dir") is not None:
+    if params.get("dir", None) is not None:
         cargs.extend([
             "-dir",
-            params.get("dir")
+            params.get("dir", None)
         ])
-    if params.get("binary"):
+    if params.get("binary", False):
         cargs.append("-binary")
-    if params.get("prefix") is not None:
+    if params.get("prefix", None) is not None:
         cargs.extend([
             "-prefix",
-            params.get("prefix")
+            params.get("prefix", None)
         ])
-    cargs.append(execution.input_file(params.get("input_dataset")))
+    cargs.append(execution.input_file(params.get("input_dataset", None)))
     return cargs
 
 
@@ -153,8 +129,8 @@ def v_3d_row_fillin_outputs(
     """
     ret = V3dRowFillinOutputs(
         root=execution.output_file("."),
-        output_brik=execution.output_file(params.get("prefix") + "+orig.BRIK") if (params.get("prefix") is not None) else None,
-        output_head=execution.output_file(params.get("prefix") + "+orig.HEAD") if (params.get("prefix") is not None) else None,
+        output_brik=execution.output_file(params.get("prefix", None) + "+orig.BRIK") if (params.get("prefix") is not None) else None,
+        output_head=execution.output_file(params.get("prefix", None) + "+orig.HEAD") if (params.get("prefix") is not None) else None,
     )
     return ret
 
@@ -228,7 +204,6 @@ def v_3d_row_fillin(
 
 __all__ = [
     "V3dRowFillinOutputs",
-    "V3dRowFillinParameters",
     "V_3D_ROW_FILLIN_METADATA",
     "v_3d_row_fillin",
     "v_3d_row_fillin_execute",

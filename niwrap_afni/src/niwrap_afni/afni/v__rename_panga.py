@@ -14,7 +14,20 @@ V__RENAME_PANGA_METADATA = Metadata(
 
 
 VRenamePangaParameters = typing.TypedDict('VRenamePangaParameters', {
-    "@type": typing.Literal["afni.@RenamePanga"],
+    "@type": typing.NotRequired[typing.Literal["afni/@RenamePanga"]],
+    "dir_number": str,
+    "first_image_number": str,
+    "num_slices": float,
+    "num_reps": float,
+    "output_root": str,
+    "keep_prefix": bool,
+    "interactive": bool,
+    "outliers_check": bool,
+    "slice_pattern": typing.NotRequired[str | None],
+    "output_directory": typing.NotRequired[str | None],
+})
+VRenamePangaParametersTagged = typing.TypedDict('VRenamePangaParametersTagged', {
+    "@type": typing.Literal["afni/@RenamePanga"],
     "dir_number": str,
     "first_image_number": str,
     "num_slices": float,
@@ -28,41 +41,9 @@ VRenamePangaParameters = typing.TypedDict('VRenamePangaParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "afni.@RenamePanga": v__rename_panga_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "afni.@RenamePanga": v__rename_panga_outputs,
-    }.get(t)
-
-
 class VRenamePangaOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `v__rename_panga(...)`.
+    Output object returned when calling `VRenamePangaParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -85,7 +66,7 @@ def v__rename_panga_params(
     outliers_check: bool = False,
     slice_pattern: str | None = None,
     output_directory: str | None = None,
-) -> VRenamePangaParameters:
+) -> VRenamePangaParametersTagged:
     """
     Build parameters.
     
@@ -110,7 +91,7 @@ def v__rename_panga_params(
         Parameter dictionary
     """
     params = {
-        "@type": "afni.@RenamePanga",
+        "@type": "afni/@RenamePanga",
         "dir_number": dir_number,
         "first_image_number": first_image_number,
         "num_slices": num_slices,
@@ -142,26 +123,26 @@ def v__rename_panga_cargs(
     """
     cargs = []
     cargs.append("@RenamePanga")
-    cargs.append(params.get("dir_number"))
-    cargs.append(params.get("first_image_number"))
-    cargs.append(str(params.get("num_slices")))
-    cargs.append(str(params.get("num_reps")))
-    cargs.append(params.get("output_root"))
-    if params.get("keep_prefix"):
+    cargs.append(params.get("dir_number", None))
+    cargs.append(params.get("first_image_number", None))
+    cargs.append(str(params.get("num_slices", None)))
+    cargs.append(str(params.get("num_reps", None)))
+    cargs.append(params.get("output_root", None))
+    if params.get("keep_prefix", False):
         cargs.append("-kp")
-    if params.get("interactive"):
+    if params.get("interactive", False):
         cargs.append("-i")
-    if params.get("outliers_check"):
+    if params.get("outliers_check", False):
         cargs.append("-oc")
-    if params.get("slice_pattern") is not None:
+    if params.get("slice_pattern", None) is not None:
         cargs.extend([
             "-sp",
-            params.get("slice_pattern")
+            params.get("slice_pattern", None)
         ])
-    if params.get("output_directory") is not None:
+    if params.get("output_directory", None) is not None:
         cargs.extend([
             "-od",
-            params.get("output_directory")
+            params.get("output_directory", None)
         ])
     return cargs
 
@@ -181,9 +162,9 @@ def v__rename_panga_outputs(
     """
     ret = VRenamePangaOutputs(
         root=execution.output_file("."),
-        head_file=execution.output_file(params.get("output_directory") + "/" + params.get("output_root") + "_r#.HEAD") if (params.get("output_directory") is not None) else None,
-        brik_file=execution.output_file(params.get("output_directory") + "/" + params.get("output_root") + "_r#.BRIK") if (params.get("output_directory") is not None) else None,
-        log_file=execution.output_file(params.get("output_directory") + "/MAPLOG_Panga") if (params.get("output_directory") is not None) else None,
+        head_file=execution.output_file(params.get("output_directory", None) + "/" + params.get("output_root", None) + "_r#.HEAD") if (params.get("output_directory") is not None) else None,
+        brik_file=execution.output_file(params.get("output_directory", None) + "/" + params.get("output_root", None) + "_r#.BRIK") if (params.get("output_directory") is not None) else None,
+        log_file=execution.output_file(params.get("output_directory", None) + "/MAPLOG_Panga") if (params.get("output_directory") is not None) else None,
     )
     return ret
 
@@ -276,7 +257,6 @@ def v__rename_panga(
 
 __all__ = [
     "VRenamePangaOutputs",
-    "VRenamePangaParameters",
     "V__RENAME_PANGA_METADATA",
     "v__rename_panga",
     "v__rename_panga_execute",

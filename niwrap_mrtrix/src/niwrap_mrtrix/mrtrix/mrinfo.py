@@ -14,41 +14,104 @@ MRINFO_METADATA = Metadata(
 
 
 MrinfoPropertyParameters = typing.TypedDict('MrinfoPropertyParameters', {
-    "@type": typing.Literal["mrtrix.mrinfo.property"],
+    "@type": typing.NotRequired[typing.Literal["property"]],
+    "key": str,
+})
+MrinfoPropertyParametersTagged = typing.TypedDict('MrinfoPropertyParametersTagged', {
+    "@type": typing.Literal["property"],
     "key": str,
 })
 
 
 MrinfoFslgradParameters = typing.TypedDict('MrinfoFslgradParameters', {
-    "@type": typing.Literal["mrtrix.mrinfo.fslgrad"],
+    "@type": typing.NotRequired[typing.Literal["fslgrad"]],
+    "bvecs": InputPathType,
+    "bvals": InputPathType,
+})
+MrinfoFslgradParametersTagged = typing.TypedDict('MrinfoFslgradParametersTagged', {
+    "@type": typing.Literal["fslgrad"],
     "bvecs": InputPathType,
     "bvals": InputPathType,
 })
 
 
 MrinfoExportGradFslParameters = typing.TypedDict('MrinfoExportGradFslParameters', {
-    "@type": typing.Literal["mrtrix.mrinfo.export_grad_fsl"],
+    "@type": typing.NotRequired[typing.Literal["export_grad_fsl"]],
+    "bvecs_path": str,
+    "bvals_path": str,
+})
+MrinfoExportGradFslParametersTagged = typing.TypedDict('MrinfoExportGradFslParametersTagged', {
+    "@type": typing.Literal["export_grad_fsl"],
     "bvecs_path": str,
     "bvals_path": str,
 })
 
 
 MrinfoExportPeEddyParameters = typing.TypedDict('MrinfoExportPeEddyParameters', {
-    "@type": typing.Literal["mrtrix.mrinfo.export_pe_eddy"],
+    "@type": typing.NotRequired[typing.Literal["export_pe_eddy"]],
+    "config": str,
+    "indices": str,
+})
+MrinfoExportPeEddyParametersTagged = typing.TypedDict('MrinfoExportPeEddyParametersTagged', {
+    "@type": typing.Literal["export_pe_eddy"],
     "config": str,
     "indices": str,
 })
 
 
 MrinfoConfigParameters = typing.TypedDict('MrinfoConfigParameters', {
-    "@type": typing.Literal["mrtrix.mrinfo.config"],
+    "@type": typing.NotRequired[typing.Literal["config"]],
+    "key": str,
+    "value": str,
+})
+MrinfoConfigParametersTagged = typing.TypedDict('MrinfoConfigParametersTagged', {
+    "@type": typing.Literal["config"],
     "key": str,
     "value": str,
 })
 
 
 MrinfoParameters = typing.TypedDict('MrinfoParameters', {
-    "@type": typing.Literal["mrtrix.mrinfo"],
+    "@type": typing.NotRequired[typing.Literal["mrtrix/mrinfo"]],
+    "all": bool,
+    "name": bool,
+    "format": bool,
+    "ndim": bool,
+    "size": bool,
+    "spacing": bool,
+    "datatype": bool,
+    "strides": bool,
+    "offset": bool,
+    "multiplier": bool,
+    "transform": bool,
+    "property": typing.NotRequired[list[MrinfoPropertyParameters] | None],
+    "json_keyval": typing.NotRequired[str | None],
+    "json_all": typing.NotRequired[str | None],
+    "grad": typing.NotRequired[InputPathType | None],
+    "fslgrad": typing.NotRequired[MrinfoFslgradParameters | None],
+    "bvalue_scaling": typing.NotRequired[str | None],
+    "export_grad_mrtrix": typing.NotRequired[str | None],
+    "export_grad_fsl": typing.NotRequired[MrinfoExportGradFslParameters | None],
+    "dwgrad": bool,
+    "shell_bvalues": bool,
+    "shell_sizes": bool,
+    "shell_indices": bool,
+    "export_pe_table": typing.NotRequired[str | None],
+    "export_pe_eddy": typing.NotRequired[MrinfoExportPeEddyParameters | None],
+    "petable": bool,
+    "nodelete": bool,
+    "info": bool,
+    "quiet": bool,
+    "debug": bool,
+    "force": bool,
+    "nthreads": typing.NotRequired[int | None],
+    "config": typing.NotRequired[list[MrinfoConfigParameters] | None],
+    "help": bool,
+    "version": bool,
+    "image": list[InputPathType],
+})
+MrinfoParametersTagged = typing.TypedDict('MrinfoParametersTagged', {
+    "@type": typing.Literal["mrtrix/mrinfo"],
     "all": bool,
     "name": bool,
     "format": bool,
@@ -88,48 +151,9 @@ MrinfoParameters = typing.TypedDict('MrinfoParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "mrtrix.mrinfo": mrinfo_cargs,
-        "mrtrix.mrinfo.property": mrinfo_property_cargs,
-        "mrtrix.mrinfo.fslgrad": mrinfo_fslgrad_cargs,
-        "mrtrix.mrinfo.export_grad_fsl": mrinfo_export_grad_fsl_cargs,
-        "mrtrix.mrinfo.export_pe_eddy": mrinfo_export_pe_eddy_cargs,
-        "mrtrix.mrinfo.config": mrinfo_config_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "mrtrix.mrinfo": mrinfo_outputs,
-        "mrtrix.mrinfo.export_grad_fsl": mrinfo_export_grad_fsl_outputs,
-        "mrtrix.mrinfo.export_pe_eddy": mrinfo_export_pe_eddy_outputs,
-    }.get(t)
-
-
 def mrinfo_property_params(
     key: str,
-) -> MrinfoPropertyParameters:
+) -> MrinfoPropertyParametersTagged:
     """
     Build parameters.
     
@@ -140,7 +164,7 @@ def mrinfo_property_params(
         Parameter dictionary
     """
     params = {
-        "@type": "mrtrix.mrinfo.property",
+        "@type": "property",
         "key": key,
     }
     return params
@@ -161,14 +185,14 @@ def mrinfo_property_cargs(
     """
     cargs = []
     cargs.append("-property")
-    cargs.append(params.get("key"))
+    cargs.append(params.get("key", None))
     return cargs
 
 
 def mrinfo_fslgrad_params(
     bvecs: InputPathType,
     bvals: InputPathType,
-) -> MrinfoFslgradParameters:
+) -> MrinfoFslgradParametersTagged:
     """
     Build parameters.
     
@@ -185,7 +209,7 @@ def mrinfo_fslgrad_params(
         Parameter dictionary
     """
     params = {
-        "@type": "mrtrix.mrinfo.fslgrad",
+        "@type": "fslgrad",
         "bvecs": bvecs,
         "bvals": bvals,
     }
@@ -207,8 +231,8 @@ def mrinfo_fslgrad_cargs(
     """
     cargs = []
     cargs.append("-fslgrad")
-    cargs.append(execution.input_file(params.get("bvecs")))
-    cargs.append(execution.input_file(params.get("bvals")))
+    cargs.append(execution.input_file(params.get("bvecs", None)))
+    cargs.append(execution.input_file(params.get("bvals", None)))
     return cargs
 
 
@@ -229,7 +253,7 @@ class MrinfoExportGradFslOutputs(typing.NamedTuple):
 def mrinfo_export_grad_fsl_params(
     bvecs_path: str,
     bvals_path: str,
-) -> MrinfoExportGradFslParameters:
+) -> MrinfoExportGradFslParametersTagged:
     """
     Build parameters.
     
@@ -242,7 +266,7 @@ def mrinfo_export_grad_fsl_params(
         Parameter dictionary
     """
     params = {
-        "@type": "mrtrix.mrinfo.export_grad_fsl",
+        "@type": "export_grad_fsl",
         "bvecs_path": bvecs_path,
         "bvals_path": bvals_path,
     }
@@ -264,8 +288,8 @@ def mrinfo_export_grad_fsl_cargs(
     """
     cargs = []
     cargs.append("-export_grad_fsl")
-    cargs.append(params.get("bvecs_path"))
-    cargs.append(params.get("bvals_path"))
+    cargs.append(params.get("bvecs_path", None))
+    cargs.append(params.get("bvals_path", None))
     return cargs
 
 
@@ -284,8 +308,8 @@ def mrinfo_export_grad_fsl_outputs(
     """
     ret = MrinfoExportGradFslOutputs(
         root=execution.output_file("."),
-        bvecs_path=execution.output_file(params.get("bvecs_path")),
-        bvals_path=execution.output_file(params.get("bvals_path")),
+        bvecs_path=execution.output_file(params.get("bvecs_path", None)),
+        bvals_path=execution.output_file(params.get("bvals_path", None)),
     )
     return ret
 
@@ -307,7 +331,7 @@ class MrinfoExportPeEddyOutputs(typing.NamedTuple):
 def mrinfo_export_pe_eddy_params(
     config: str,
     indices: str,
-) -> MrinfoExportPeEddyParameters:
+) -> MrinfoExportPeEddyParametersTagged:
     """
     Build parameters.
     
@@ -320,7 +344,7 @@ def mrinfo_export_pe_eddy_params(
         Parameter dictionary
     """
     params = {
-        "@type": "mrtrix.mrinfo.export_pe_eddy",
+        "@type": "export_pe_eddy",
         "config": config,
         "indices": indices,
     }
@@ -342,8 +366,8 @@ def mrinfo_export_pe_eddy_cargs(
     """
     cargs = []
     cargs.append("-export_pe_eddy")
-    cargs.append(params.get("config"))
-    cargs.append(params.get("indices"))
+    cargs.append(params.get("config", None))
+    cargs.append(params.get("indices", None))
     return cargs
 
 
@@ -362,8 +386,8 @@ def mrinfo_export_pe_eddy_outputs(
     """
     ret = MrinfoExportPeEddyOutputs(
         root=execution.output_file("."),
-        config=execution.output_file(params.get("config")),
-        indices=execution.output_file(params.get("indices")),
+        config=execution.output_file(params.get("config", None)),
+        indices=execution.output_file(params.get("indices", None)),
     )
     return ret
 
@@ -371,7 +395,7 @@ def mrinfo_export_pe_eddy_outputs(
 def mrinfo_config_params(
     key: str,
     value: str,
-) -> MrinfoConfigParameters:
+) -> MrinfoConfigParametersTagged:
     """
     Build parameters.
     
@@ -382,7 +406,7 @@ def mrinfo_config_params(
         Parameter dictionary
     """
     params = {
-        "@type": "mrtrix.mrinfo.config",
+        "@type": "config",
         "key": key,
         "value": value,
     }
@@ -404,14 +428,14 @@ def mrinfo_config_cargs(
     """
     cargs = []
     cargs.append("-config")
-    cargs.append(params.get("key"))
-    cargs.append(params.get("value"))
+    cargs.append(params.get("key", None))
+    cargs.append(params.get("value", None))
     return cargs
 
 
 class MrinfoOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `mrinfo(...)`.
+    Output object returned when calling `MrinfoParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -466,7 +490,7 @@ def mrinfo_params(
     config: list[MrinfoConfigParameters] | None = None,
     help_: bool = False,
     version: bool = False,
-) -> MrinfoParameters:
+) -> MrinfoParametersTagged:
     """
     Build parameters.
     
@@ -532,7 +556,7 @@ def mrinfo_params(
         Parameter dictionary
     """
     params = {
-        "@type": "mrtrix.mrinfo",
+        "@type": "mrtrix/mrinfo",
         "all": all_,
         "name": name,
         "format": format_,
@@ -600,98 +624,98 @@ def mrinfo_cargs(
     """
     cargs = []
     cargs.append("mrinfo")
-    if params.get("all"):
+    if params.get("all", False):
         cargs.append("-all")
-    if params.get("name"):
+    if params.get("name", False):
         cargs.append("-name")
-    if params.get("format"):
+    if params.get("format", False):
         cargs.append("-format")
-    if params.get("ndim"):
+    if params.get("ndim", False):
         cargs.append("-ndim")
-    if params.get("size"):
+    if params.get("size", False):
         cargs.append("-size")
-    if params.get("spacing"):
+    if params.get("spacing", False):
         cargs.append("-spacing")
-    if params.get("datatype"):
+    if params.get("datatype", False):
         cargs.append("-datatype")
-    if params.get("strides"):
+    if params.get("strides", False):
         cargs.append("-strides")
-    if params.get("offset"):
+    if params.get("offset", False):
         cargs.append("-offset")
-    if params.get("multiplier"):
+    if params.get("multiplier", False):
         cargs.append("-multiplier")
-    if params.get("transform"):
+    if params.get("transform", False):
         cargs.append("-transform")
-    if params.get("property") is not None:
-        cargs.extend([a for c in [dyn_cargs(s["@type"])(s, execution) for s in params.get("property")] for a in c])
-    if params.get("json_keyval") is not None:
+    if params.get("property", None) is not None:
+        cargs.extend([a for c in [mrinfo_property_cargs(s, execution) for s in params.get("property", None)] for a in c])
+    if params.get("json_keyval", None) is not None:
         cargs.extend([
             "-json_keyval",
-            params.get("json_keyval")
+            params.get("json_keyval", None)
         ])
-    if params.get("json_all") is not None:
+    if params.get("json_all", None) is not None:
         cargs.extend([
             "-json_all",
-            params.get("json_all")
+            params.get("json_all", None)
         ])
-    if params.get("grad") is not None:
+    if params.get("grad", None) is not None:
         cargs.extend([
             "-grad",
-            execution.input_file(params.get("grad"))
+            execution.input_file(params.get("grad", None))
         ])
-    if params.get("fslgrad") is not None:
-        cargs.extend(dyn_cargs(params.get("fslgrad")["@type"])(params.get("fslgrad"), execution))
-    if params.get("bvalue_scaling") is not None:
+    if params.get("fslgrad", None) is not None:
+        cargs.extend(mrinfo_fslgrad_cargs(params.get("fslgrad", None), execution))
+    if params.get("bvalue_scaling", None) is not None:
         cargs.extend([
             "-bvalue_scaling",
-            params.get("bvalue_scaling")
+            params.get("bvalue_scaling", None)
         ])
-    if params.get("export_grad_mrtrix") is not None:
+    if params.get("export_grad_mrtrix", None) is not None:
         cargs.extend([
             "-export_grad_mrtrix",
-            params.get("export_grad_mrtrix")
+            params.get("export_grad_mrtrix", None)
         ])
-    if params.get("export_grad_fsl") is not None:
-        cargs.extend(dyn_cargs(params.get("export_grad_fsl")["@type"])(params.get("export_grad_fsl"), execution))
-    if params.get("dwgrad"):
+    if params.get("export_grad_fsl", None) is not None:
+        cargs.extend(mrinfo_export_grad_fsl_cargs(params.get("export_grad_fsl", None), execution))
+    if params.get("dwgrad", False):
         cargs.append("-dwgrad")
-    if params.get("shell_bvalues"):
+    if params.get("shell_bvalues", False):
         cargs.append("-shell_bvalues")
-    if params.get("shell_sizes"):
+    if params.get("shell_sizes", False):
         cargs.append("-shell_sizes")
-    if params.get("shell_indices"):
+    if params.get("shell_indices", False):
         cargs.append("-shell_indices")
-    if params.get("export_pe_table") is not None:
+    if params.get("export_pe_table", None) is not None:
         cargs.extend([
             "-export_pe_table",
-            params.get("export_pe_table")
+            params.get("export_pe_table", None)
         ])
-    if params.get("export_pe_eddy") is not None:
-        cargs.extend(dyn_cargs(params.get("export_pe_eddy")["@type"])(params.get("export_pe_eddy"), execution))
-    if params.get("petable"):
+    if params.get("export_pe_eddy", None) is not None:
+        cargs.extend(mrinfo_export_pe_eddy_cargs(params.get("export_pe_eddy", None), execution))
+    if params.get("petable", False):
         cargs.append("-petable")
-    if params.get("nodelete"):
+    if params.get("nodelete", False):
         cargs.append("-nodelete")
-    if params.get("info"):
+    if params.get("info", False):
         cargs.append("-info")
-    if params.get("quiet"):
+    if params.get("quiet", False):
         cargs.append("-quiet")
-    if params.get("debug"):
+    if params.get("debug", False):
         cargs.append("-debug")
-    if params.get("force"):
+    if params.get("force", False):
         cargs.append("-force")
-    if params.get("nthreads") is not None:
+    if params.get("nthreads", None) is not None:
         cargs.extend([
             "-nthreads",
-            str(params.get("nthreads"))
+            str(params.get("nthreads", None))
         ])
-    if params.get("config") is not None:
-        cargs.extend([a for c in [dyn_cargs(s["@type"])(s, execution) for s in params.get("config")] for a in c])
-    if params.get("help"):
+    if params.get("config", None) is not None:
+        cargs.extend([a for c in [mrinfo_config_cargs(s, execution) for s in params.get("config", None)] for a in c])
+    if params.get("help", False):
         cargs.append("-help")
-    if params.get("version"):
+    if params.get("version", False):
         cargs.append("-version")
-    cargs.extend([execution.input_file(f) for f in params.get("image")])
+    cargs.extend([execution.input_file(f) for f in params.get("image", None)])
     return cargs
 
 
@@ -710,12 +734,12 @@ def mrinfo_outputs(
     """
     ret = MrinfoOutputs(
         root=execution.output_file("."),
-        json_keyval=execution.output_file(params.get("json_keyval")) if (params.get("json_keyval") is not None) else None,
-        json_all=execution.output_file(params.get("json_all")) if (params.get("json_all") is not None) else None,
-        export_grad_mrtrix=execution.output_file(params.get("export_grad_mrtrix")) if (params.get("export_grad_mrtrix") is not None) else None,
-        export_pe_table=execution.output_file(params.get("export_pe_table")) if (params.get("export_pe_table") is not None) else None,
-        export_grad_fsl=dyn_outputs(params.get("export_grad_fsl")["@type"])(params.get("export_grad_fsl"), execution) if params.get("export_grad_fsl") else None,
-        export_pe_eddy=dyn_outputs(params.get("export_pe_eddy")["@type"])(params.get("export_pe_eddy"), execution) if params.get("export_pe_eddy") else None,
+        json_keyval=execution.output_file(params.get("json_keyval", None)) if (params.get("json_keyval") is not None) else None,
+        json_all=execution.output_file(params.get("json_all", None)) if (params.get("json_all") is not None) else None,
+        export_grad_mrtrix=execution.output_file(params.get("export_grad_mrtrix", None)) if (params.get("export_grad_mrtrix") is not None) else None,
+        export_pe_table=execution.output_file(params.get("export_pe_table", None)) if (params.get("export_pe_table") is not None) else None,
+        export_grad_fsl=mrinfo_export_grad_fsl_outputs(params.get("export_grad_fsl"), execution) if params.get("export_grad_fsl") else None,
+        export_pe_eddy=mrinfo_export_pe_eddy_outputs(params.get("export_pe_eddy"), execution) if params.get("export_pe_eddy") else None,
     )
     return ret
 
@@ -975,15 +999,9 @@ def mrinfo(
 
 __all__ = [
     "MRINFO_METADATA",
-    "MrinfoConfigParameters",
     "MrinfoExportGradFslOutputs",
-    "MrinfoExportGradFslParameters",
     "MrinfoExportPeEddyOutputs",
-    "MrinfoExportPeEddyParameters",
-    "MrinfoFslgradParameters",
     "MrinfoOutputs",
-    "MrinfoParameters",
-    "MrinfoPropertyParameters",
     "mrinfo",
     "mrinfo_config_params",
     "mrinfo_execute",

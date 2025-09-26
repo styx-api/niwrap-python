@@ -14,7 +14,19 @@ V_3D_SETUP_GROUP_IN_CORR_METADATA = Metadata(
 
 
 V3dSetupGroupInCorrParameters = typing.TypedDict('V3dSetupGroupInCorrParameters', {
-    "@type": typing.Literal["afni.3dSetupGroupInCorr"],
+    "@type": typing.NotRequired[typing.Literal["afni/3dSetupGroupInCorr"]],
+    "datasets": list[InputPathType],
+    "mask_dataset": typing.NotRequired[InputPathType | None],
+    "prefix": str,
+    "short_flag": bool,
+    "byte_flag": bool,
+    "labels_file": typing.NotRequired[InputPathType | None],
+    "delete_flag": bool,
+    "prep_method": typing.NotRequired[str | None],
+    "lr_pairs": typing.NotRequired[list[str] | None],
+})
+V3dSetupGroupInCorrParametersTagged = typing.TypedDict('V3dSetupGroupInCorrParametersTagged', {
+    "@type": typing.Literal["afni/3dSetupGroupInCorr"],
     "datasets": list[InputPathType],
     "mask_dataset": typing.NotRequired[InputPathType | None],
     "prefix": str,
@@ -27,41 +39,9 @@ V3dSetupGroupInCorrParameters = typing.TypedDict('V3dSetupGroupInCorrParameters'
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "afni.3dSetupGroupInCorr": v_3d_setup_group_in_corr_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "afni.3dSetupGroupInCorr": v_3d_setup_group_in_corr_outputs,
-    }.get(t)
-
-
 class V3dSetupGroupInCorrOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `v_3d_setup_group_in_corr(...)`.
+    Output object returned when calling `V3dSetupGroupInCorrParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -81,7 +61,7 @@ def v_3d_setup_group_in_corr_params(
     delete_flag: bool = False,
     prep_method: str | None = None,
     lr_pairs: list[str] | None = None,
-) -> V3dSetupGroupInCorrParameters:
+) -> V3dSetupGroupInCorrParametersTagged:
     """
     Build parameters.
     
@@ -101,7 +81,7 @@ def v_3d_setup_group_in_corr_params(
         Parameter dictionary
     """
     params = {
-        "@type": "afni.3dSetupGroupInCorr",
+        "@type": "afni/3dSetupGroupInCorr",
         "datasets": datasets,
         "prefix": prefix,
         "short_flag": short_flag,
@@ -134,36 +114,36 @@ def v_3d_setup_group_in_corr_cargs(
     """
     cargs = []
     cargs.append("3dSetupGroupInCorr")
-    cargs.extend([execution.input_file(f) for f in params.get("datasets")])
-    if params.get("mask_dataset") is not None:
+    cargs.extend([execution.input_file(f) for f in params.get("datasets", None)])
+    if params.get("mask_dataset", None) is not None:
         cargs.extend([
             "-mask",
-            execution.input_file(params.get("mask_dataset"))
+            execution.input_file(params.get("mask_dataset", None))
         ])
     cargs.extend([
         "-prefix",
-        params.get("prefix")
+        params.get("prefix", None)
     ])
-    if params.get("short_flag"):
+    if params.get("short_flag", False):
         cargs.append("-short")
-    if params.get("byte_flag"):
+    if params.get("byte_flag", False):
         cargs.append("-byte")
-    if params.get("labels_file") is not None:
+    if params.get("labels_file", None) is not None:
         cargs.extend([
             "-labels",
-            execution.input_file(params.get("labels_file"))
+            execution.input_file(params.get("labels_file", None))
         ])
-    if params.get("delete_flag"):
+    if params.get("delete_flag", False):
         cargs.append("-DELETE")
-    if params.get("prep_method") is not None:
+    if params.get("prep_method", None) is not None:
         cargs.extend([
             "-prep",
-            params.get("prep_method")
+            params.get("prep_method", None)
         ])
-    if params.get("lr_pairs") is not None:
+    if params.get("lr_pairs", None) is not None:
         cargs.extend([
             "-LRpairs",
-            *params.get("lr_pairs")
+            *params.get("lr_pairs", None)
         ])
     return cargs
 
@@ -183,8 +163,8 @@ def v_3d_setup_group_in_corr_outputs(
     """
     ret = V3dSetupGroupInCorrOutputs(
         root=execution.output_file("."),
-        niml_file=execution.output_file(params.get("prefix") + ".grpincorr.niml"),
-        data_file=execution.output_file(params.get("prefix") + ".grpincorr.data"),
+        niml_file=execution.output_file(params.get("prefix", None) + ".grpincorr.niml"),
+        data_file=execution.output_file(params.get("prefix", None) + ".grpincorr.data"),
     )
     return ret
 
@@ -272,7 +252,6 @@ def v_3d_setup_group_in_corr(
 
 __all__ = [
     "V3dSetupGroupInCorrOutputs",
-    "V3dSetupGroupInCorrParameters",
     "V_3D_SETUP_GROUP_IN_CORR_METADATA",
     "v_3d_setup_group_in_corr",
     "v_3d_setup_group_in_corr_execute",

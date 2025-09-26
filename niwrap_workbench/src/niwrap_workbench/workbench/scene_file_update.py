@@ -14,25 +14,50 @@ SCENE_FILE_UPDATE_METADATA = Metadata(
 
 
 SceneFileUpdateCopyMapOnePaletteParameters = typing.TypedDict('SceneFileUpdateCopyMapOnePaletteParameters', {
-    "@type": typing.Literal["workbench.scene-file-update.copy_map_one_palette"],
+    "@type": typing.NotRequired[typing.Literal["copy_map_one_palette"]],
+    "data_file_name_suffix": str,
+})
+SceneFileUpdateCopyMapOnePaletteParametersTagged = typing.TypedDict('SceneFileUpdateCopyMapOnePaletteParametersTagged', {
+    "@type": typing.Literal["copy_map_one_palette"],
     "data_file_name_suffix": str,
 })
 
 
 SceneFileUpdateDataFileAddParameters = typing.TypedDict('SceneFileUpdateDataFileAddParameters', {
-    "@type": typing.Literal["workbench.scene-file-update.data_file_add"],
+    "@type": typing.NotRequired[typing.Literal["data_file_add"]],
+    "name_of_data_file": str,
+})
+SceneFileUpdateDataFileAddParametersTagged = typing.TypedDict('SceneFileUpdateDataFileAddParametersTagged', {
+    "@type": typing.Literal["data_file_add"],
     "name_of_data_file": str,
 })
 
 
 SceneFileUpdateDataFileRemoveParameters = typing.TypedDict('SceneFileUpdateDataFileRemoveParameters', {
-    "@type": typing.Literal["workbench.scene-file-update.data_file_remove"],
+    "@type": typing.NotRequired[typing.Literal["data_file_remove"]],
+    "name_of_data_file": str,
+})
+SceneFileUpdateDataFileRemoveParametersTagged = typing.TypedDict('SceneFileUpdateDataFileRemoveParametersTagged', {
+    "@type": typing.Literal["data_file_remove"],
     "name_of_data_file": str,
 })
 
 
 SceneFileUpdateParameters = typing.TypedDict('SceneFileUpdateParameters', {
-    "@type": typing.Literal["workbench.scene-file-update"],
+    "@type": typing.NotRequired[typing.Literal["workbench/scene-file-update"]],
+    "input_scene_file": str,
+    "output_scene_file": str,
+    "scene_name_or_number": str,
+    "opt_fix_map_palette_settings": bool,
+    "opt_remove_missing_files": bool,
+    "opt_error": bool,
+    "opt_verbose": bool,
+    "copy_map_one_palette": typing.NotRequired[list[SceneFileUpdateCopyMapOnePaletteParameters] | None],
+    "data_file_add": typing.NotRequired[list[SceneFileUpdateDataFileAddParameters] | None],
+    "data_file_remove": typing.NotRequired[list[SceneFileUpdateDataFileRemoveParameters] | None],
+})
+SceneFileUpdateParametersTagged = typing.TypedDict('SceneFileUpdateParametersTagged', {
+    "@type": typing.Literal["workbench/scene-file-update"],
     "input_scene_file": str,
     "output_scene_file": str,
     "scene_name_or_number": str,
@@ -46,43 +71,9 @@ SceneFileUpdateParameters = typing.TypedDict('SceneFileUpdateParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "workbench.scene-file-update": scene_file_update_cargs,
-        "workbench.scene-file-update.copy_map_one_palette": scene_file_update_copy_map_one_palette_cargs,
-        "workbench.scene-file-update.data_file_add": scene_file_update_data_file_add_cargs,
-        "workbench.scene-file-update.data_file_remove": scene_file_update_data_file_remove_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-    }.get(t)
-
-
 def scene_file_update_copy_map_one_palette_params(
     data_file_name_suffix: str,
-) -> SceneFileUpdateCopyMapOnePaletteParameters:
+) -> SceneFileUpdateCopyMapOnePaletteParametersTagged:
     """
     Build parameters.
     
@@ -93,7 +84,7 @@ def scene_file_update_copy_map_one_palette_params(
         Parameter dictionary
     """
     params = {
-        "@type": "workbench.scene-file-update.copy_map_one_palette",
+        "@type": "copy_map_one_palette",
         "data_file_name_suffix": data_file_name_suffix,
     }
     return params
@@ -114,13 +105,13 @@ def scene_file_update_copy_map_one_palette_cargs(
     """
     cargs = []
     cargs.append("-copy-map-one-palette")
-    cargs.append(params.get("data_file_name_suffix"))
+    cargs.append(params.get("data_file_name_suffix", None))
     return cargs
 
 
 def scene_file_update_data_file_add_params(
     name_of_data_file: str,
-) -> SceneFileUpdateDataFileAddParameters:
+) -> SceneFileUpdateDataFileAddParametersTagged:
     """
     Build parameters.
     
@@ -137,7 +128,7 @@ def scene_file_update_data_file_add_params(
         Parameter dictionary
     """
     params = {
-        "@type": "workbench.scene-file-update.data_file_add",
+        "@type": "data_file_add",
         "name_of_data_file": name_of_data_file,
     }
     return params
@@ -158,13 +149,13 @@ def scene_file_update_data_file_add_cargs(
     """
     cargs = []
     cargs.append("-data-file-add")
-    cargs.append(params.get("name_of_data_file"))
+    cargs.append(params.get("name_of_data_file", None))
     return cargs
 
 
 def scene_file_update_data_file_remove_params(
     name_of_data_file: str,
-) -> SceneFileUpdateDataFileRemoveParameters:
+) -> SceneFileUpdateDataFileRemoveParametersTagged:
     """
     Build parameters.
     
@@ -181,7 +172,7 @@ def scene_file_update_data_file_remove_params(
         Parameter dictionary
     """
     params = {
-        "@type": "workbench.scene-file-update.data_file_remove",
+        "@type": "data_file_remove",
         "name_of_data_file": name_of_data_file,
     }
     return params
@@ -202,13 +193,13 @@ def scene_file_update_data_file_remove_cargs(
     """
     cargs = []
     cargs.append("-data-file-remove")
-    cargs.append(params.get("name_of_data_file"))
+    cargs.append(params.get("name_of_data_file", None))
     return cargs
 
 
 class SceneFileUpdateOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `scene_file_update(...)`.
+    Output object returned when calling `SceneFileUpdateParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -225,7 +216,7 @@ def scene_file_update_params(
     copy_map_one_palette: list[SceneFileUpdateCopyMapOnePaletteParameters] | None = None,
     data_file_add: list[SceneFileUpdateDataFileAddParameters] | None = None,
     data_file_remove: list[SceneFileUpdateDataFileRemoveParameters] | None = None,
-) -> SceneFileUpdateParameters:
+) -> SceneFileUpdateParametersTagged:
     """
     Build parameters.
     
@@ -248,7 +239,7 @@ def scene_file_update_params(
         Parameter dictionary
     """
     params = {
-        "@type": "workbench.scene-file-update",
+        "@type": "workbench/scene-file-update",
         "input_scene_file": input_scene_file,
         "output_scene_file": output_scene_file,
         "scene_name_or_number": scene_name_or_number,
@@ -282,23 +273,23 @@ def scene_file_update_cargs(
     cargs = []
     cargs.append("wb_command")
     cargs.append("-scene-file-update")
-    cargs.append(params.get("input_scene_file"))
-    cargs.append(params.get("output_scene_file"))
-    cargs.append(params.get("scene_name_or_number"))
-    if params.get("opt_fix_map_palette_settings"):
+    cargs.append(params.get("input_scene_file", None))
+    cargs.append(params.get("output_scene_file", None))
+    cargs.append(params.get("scene_name_or_number", None))
+    if params.get("opt_fix_map_palette_settings", False):
         cargs.append("-fix-map-palette-settings")
-    if params.get("opt_remove_missing_files"):
+    if params.get("opt_remove_missing_files", False):
         cargs.append("-remove-missing-files")
-    if params.get("opt_error"):
+    if params.get("opt_error", False):
         cargs.append("-error")
-    if params.get("opt_verbose"):
+    if params.get("opt_verbose", False):
         cargs.append("-verbose")
-    if params.get("copy_map_one_palette") is not None:
-        cargs.extend([a for c in [dyn_cargs(s["@type"])(s, execution) for s in params.get("copy_map_one_palette")] for a in c])
-    if params.get("data_file_add") is not None:
-        cargs.extend([a for c in [dyn_cargs(s["@type"])(s, execution) for s in params.get("data_file_add")] for a in c])
-    if params.get("data_file_remove") is not None:
-        cargs.extend([a for c in [dyn_cargs(s["@type"])(s, execution) for s in params.get("data_file_remove")] for a in c])
+    if params.get("copy_map_one_palette", None) is not None:
+        cargs.extend([a for c in [scene_file_update_copy_map_one_palette_cargs(s, execution) for s in params.get("copy_map_one_palette", None)] for a in c])
+    if params.get("data_file_add", None) is not None:
+        cargs.extend([a for c in [scene_file_update_data_file_add_cargs(s, execution) for s in params.get("data_file_add", None)] for a in c])
+    if params.get("data_file_remove", None) is not None:
+        cargs.extend([a for c in [scene_file_update_data_file_remove_cargs(s, execution) for s in params.get("data_file_remove", None)] for a in c])
     return cargs
 
 
@@ -463,11 +454,7 @@ def scene_file_update(
 
 __all__ = [
     "SCENE_FILE_UPDATE_METADATA",
-    "SceneFileUpdateCopyMapOnePaletteParameters",
-    "SceneFileUpdateDataFileAddParameters",
-    "SceneFileUpdateDataFileRemoveParameters",
     "SceneFileUpdateOutputs",
-    "SceneFileUpdateParameters",
     "scene_file_update",
     "scene_file_update_copy_map_one_palette_params",
     "scene_file_update_data_file_add_params",

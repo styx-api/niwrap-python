@@ -14,46 +14,18 @@ V_3D_CONFORMIST_METADATA = Metadata(
 
 
 V3dConformistParameters = typing.TypedDict('V3dConformistParameters', {
-    "@type": typing.Literal["afni.3dConformist"],
+    "@type": typing.NotRequired[typing.Literal["afni/3dConformist"]],
+    "input_files": list[InputPathType],
+})
+V3dConformistParametersTagged = typing.TypedDict('V3dConformistParametersTagged', {
+    "@type": typing.Literal["afni/3dConformist"],
     "input_files": list[InputPathType],
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "afni.3dConformist": v_3d_conformist_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "afni.3dConformist": v_3d_conformist_outputs,
-    }.get(t)
-
-
 class V3dConformistOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `v_3d_conformist(...)`.
+    Output object returned when calling `V3dConformistParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -63,7 +35,7 @@ class V3dConformistOutputs(typing.NamedTuple):
 
 def v_3d_conformist_params(
     input_files: list[InputPathType],
-) -> V3dConformistParameters:
+) -> V3dConformistParametersTagged:
     """
     Build parameters.
     
@@ -73,7 +45,7 @@ def v_3d_conformist_params(
         Parameter dictionary
     """
     params = {
-        "@type": "afni.3dConformist",
+        "@type": "afni/3dConformist",
         "input_files": input_files,
     }
     return params
@@ -94,7 +66,7 @@ def v_3d_conformist_cargs(
     """
     cargs = []
     cargs.append("3dConformist")
-    cargs.extend([execution.input_file(f) for f in params.get("input_files")])
+    cargs.extend([execution.input_file(f) for f in params.get("input_files", None)])
     return cargs
 
 
@@ -175,7 +147,6 @@ def v_3d_conformist(
 
 __all__ = [
     "V3dConformistOutputs",
-    "V3dConformistParameters",
     "V_3D_CONFORMIST_METADATA",
     "v_3d_conformist",
     "v_3d_conformist_execute",

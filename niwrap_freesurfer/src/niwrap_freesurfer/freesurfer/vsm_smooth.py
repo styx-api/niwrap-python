@@ -14,7 +14,14 @@ VSM_SMOOTH_METADATA = Metadata(
 
 
 VsmSmoothParameters = typing.TypedDict('VsmSmoothParameters', {
-    "@type": typing.Literal["freesurfer.vsm-smooth"],
+    "@type": typing.NotRequired[typing.Literal["freesurfer/vsm-smooth"]],
+    "input_file": InputPathType,
+    "output_file": str,
+    "fwhm_value": float,
+    "temp_dir": str,
+})
+VsmSmoothParametersTagged = typing.TypedDict('VsmSmoothParametersTagged', {
+    "@type": typing.Literal["freesurfer/vsm-smooth"],
     "input_file": InputPathType,
     "output_file": str,
     "fwhm_value": float,
@@ -22,41 +29,9 @@ VsmSmoothParameters = typing.TypedDict('VsmSmoothParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "freesurfer.vsm-smooth": vsm_smooth_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "freesurfer.vsm-smooth": vsm_smooth_outputs,
-    }.get(t)
-
-
 class VsmSmoothOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `vsm_smooth(...)`.
+    Output object returned when calling `VsmSmoothParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -69,7 +44,7 @@ def vsm_smooth_params(
     output_file: str,
     fwhm_value: float,
     temp_dir: str,
-) -> VsmSmoothParameters:
+) -> VsmSmoothParametersTagged:
     """
     Build parameters.
     
@@ -82,7 +57,7 @@ def vsm_smooth_params(
         Parameter dictionary
     """
     params = {
-        "@type": "freesurfer.vsm-smooth",
+        "@type": "freesurfer/vsm-smooth",
         "input_file": input_file,
         "output_file": output_file,
         "fwhm_value": fwhm_value,
@@ -108,19 +83,19 @@ def vsm_smooth_cargs(
     cargs.append("vsm-smooth")
     cargs.extend([
         "--i",
-        execution.input_file(params.get("input_file"))
+        execution.input_file(params.get("input_file", None))
     ])
     cargs.extend([
         "--o",
-        params.get("output_file")
+        params.get("output_file", None)
     ])
     cargs.extend([
         "--fwhm",
-        str(params.get("fwhm_value"))
+        str(params.get("fwhm_value", None))
     ])
     cargs.extend([
         "--tmpdir",
-        params.get("temp_dir")
+        params.get("temp_dir", None)
     ])
     return cargs
 
@@ -140,7 +115,7 @@ def vsm_smooth_outputs(
     """
     ret = VsmSmoothOutputs(
         root=execution.output_file("."),
-        output_vsm=execution.output_file(params.get("output_file")),
+        output_vsm=execution.output_file(params.get("output_file", None)),
     )
     return ret
 
@@ -222,7 +197,6 @@ def vsm_smooth(
 __all__ = [
     "VSM_SMOOTH_METADATA",
     "VsmSmoothOutputs",
-    "VsmSmoothParameters",
     "vsm_smooth",
     "vsm_smooth_execute",
     "vsm_smooth_params",

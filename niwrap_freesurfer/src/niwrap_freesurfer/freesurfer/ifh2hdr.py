@@ -14,46 +14,20 @@ IFH2HDR_METADATA = Metadata(
 
 
 Ifh2hdrParameters = typing.TypedDict('Ifh2hdrParameters', {
-    "@type": typing.Literal["freesurfer.ifh2hdr"],
+    "@type": typing.NotRequired[typing.Literal["freesurfer/ifh2hdr"]],
+    "input_file": InputPathType,
+    "range": typing.NotRequired[str | None],
+})
+Ifh2hdrParametersTagged = typing.TypedDict('Ifh2hdrParametersTagged', {
+    "@type": typing.Literal["freesurfer/ifh2hdr"],
     "input_file": InputPathType,
     "range": typing.NotRequired[str | None],
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "freesurfer.ifh2hdr": ifh2hdr_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-    }.get(t)
-
-
 class Ifh2hdrOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `ifh2hdr(...)`.
+    Output object returned when calling `Ifh2hdrParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -62,7 +36,7 @@ class Ifh2hdrOutputs(typing.NamedTuple):
 def ifh2hdr_params(
     input_file: InputPathType,
     range_: str | None = None,
-) -> Ifh2hdrParameters:
+) -> Ifh2hdrParametersTagged:
     """
     Build parameters.
     
@@ -73,7 +47,7 @@ def ifh2hdr_params(
         Parameter dictionary
     """
     params = {
-        "@type": "freesurfer.ifh2hdr",
+        "@type": "freesurfer/ifh2hdr",
         "input_file": input_file,
     }
     if range_ is not None:
@@ -96,11 +70,11 @@ def ifh2hdr_cargs(
     """
     cargs = []
     cargs.append("ifh2hdr")
-    cargs.append(execution.input_file(params.get("input_file")))
-    if params.get("range") is not None:
+    cargs.append(execution.input_file(params.get("input_file", None)))
+    if params.get("range", None) is not None:
         cargs.extend([
             "-r",
-            params.get("range")
+            params.get("range", None)
         ])
     return cargs
 
@@ -185,7 +159,6 @@ def ifh2hdr(
 __all__ = [
     "IFH2HDR_METADATA",
     "Ifh2hdrOutputs",
-    "Ifh2hdrParameters",
     "ifh2hdr",
     "ifh2hdr_execute",
     "ifh2hdr_params",

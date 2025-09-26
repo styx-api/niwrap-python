@@ -14,7 +14,16 @@ V_3D_PVAL_METADATA = Metadata(
 
 
 V3dPvalParameters = typing.TypedDict('V3dPvalParameters', {
-    "@type": typing.Literal["afni.3dPval"],
+    "@type": typing.NotRequired[typing.Literal["afni/3dPval"]],
+    "input_dataset": InputPathType,
+    "zscore": bool,
+    "log2": bool,
+    "log10": bool,
+    "qval": bool,
+    "prefix": typing.NotRequired[str | None],
+})
+V3dPvalParametersTagged = typing.TypedDict('V3dPvalParametersTagged', {
+    "@type": typing.Literal["afni/3dPval"],
     "input_dataset": InputPathType,
     "zscore": bool,
     "log2": bool,
@@ -24,41 +33,9 @@ V3dPvalParameters = typing.TypedDict('V3dPvalParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "afni.3dPval": v_3d_pval_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "afni.3dPval": v_3d_pval_outputs,
-    }.get(t)
-
-
 class V3dPvalOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `v_3d_pval(...)`.
+    Output object returned when calling `V3dPvalParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -74,7 +51,7 @@ def v_3d_pval_params(
     log10: bool = False,
     qval: bool = False,
     prefix: str | None = None,
-) -> V3dPvalParameters:
+) -> V3dPvalParametersTagged:
     """
     Build parameters.
     
@@ -91,7 +68,7 @@ def v_3d_pval_params(
         Parameter dictionary
     """
     params = {
-        "@type": "afni.3dPval",
+        "@type": "afni/3dPval",
         "input_dataset": input_dataset,
         "zscore": zscore,
         "log2": log2,
@@ -118,19 +95,19 @@ def v_3d_pval_cargs(
     """
     cargs = []
     cargs.append("3dPval")
-    cargs.append(execution.input_file(params.get("input_dataset")))
-    if params.get("zscore"):
+    cargs.append(execution.input_file(params.get("input_dataset", None)))
+    if params.get("zscore", False):
         cargs.append("-zscore")
-    if params.get("log2"):
+    if params.get("log2", False):
         cargs.append("-log2")
-    if params.get("log10"):
+    if params.get("log10", False):
         cargs.append("-log10")
-    if params.get("qval"):
+    if params.get("qval", False):
         cargs.append("-qval")
-    if params.get("prefix") is not None:
+    if params.get("prefix", None) is not None:
         cargs.extend([
             "-prefix",
-            params.get("prefix")
+            params.get("prefix", None)
         ])
     return cargs
 
@@ -150,7 +127,7 @@ def v_3d_pval_outputs(
     """
     ret = V3dPvalOutputs(
         root=execution.output_file("."),
-        output_file=execution.output_file(params.get("prefix") + ".nii.gz") if (params.get("prefix") is not None) else None,
+        output_file=execution.output_file(params.get("prefix", None) + ".nii.gz") if (params.get("prefix") is not None) else None,
     )
     return ret
 
@@ -229,7 +206,6 @@ def v_3d_pval(
 
 __all__ = [
     "V3dPvalOutputs",
-    "V3dPvalParameters",
     "V_3D_PVAL_METADATA",
     "v_3d_pval",
     "v_3d_pval_execute",

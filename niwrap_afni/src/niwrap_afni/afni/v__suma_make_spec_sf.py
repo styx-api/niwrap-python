@@ -14,48 +14,22 @@ V__SUMA_MAKE_SPEC_SF_METADATA = Metadata(
 
 
 VSumaMakeSpecSfParameters = typing.TypedDict('VSumaMakeSpecSfParameters', {
-    "@type": typing.Literal["afni.@SUMA_Make_Spec_SF"],
+    "@type": typing.NotRequired[typing.Literal["afni/@SUMA_Make_Spec_SF"]],
+    "debug_level": typing.NotRequired[int | None],
+    "surface_path": typing.NotRequired[str | None],
+    "subject_id": str,
+})
+VSumaMakeSpecSfParametersTagged = typing.TypedDict('VSumaMakeSpecSfParametersTagged', {
+    "@type": typing.Literal["afni/@SUMA_Make_Spec_SF"],
     "debug_level": typing.NotRequired[int | None],
     "surface_path": typing.NotRequired[str | None],
     "subject_id": str,
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "afni.@SUMA_Make_Spec_SF": v__suma_make_spec_sf_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "afni.@SUMA_Make_Spec_SF": v__suma_make_spec_sf_outputs,
-    }.get(t)
-
-
 class VSumaMakeSpecSfOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `v__suma_make_spec_sf(...)`.
+    Output object returned when calling `VSumaMakeSpecSfParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -67,7 +41,7 @@ def v__suma_make_spec_sf_params(
     subject_id: str,
     debug_level: int | None = None,
     surface_path: str | None = None,
-) -> VSumaMakeSpecSfParameters:
+) -> VSumaMakeSpecSfParametersTagged:
     """
     Build parameters.
     
@@ -80,7 +54,7 @@ def v__suma_make_spec_sf_params(
         Parameter dictionary
     """
     params = {
-        "@type": "afni.@SUMA_Make_Spec_SF",
+        "@type": "afni/@SUMA_Make_Spec_SF",
         "subject_id": subject_id,
     }
     if debug_level is not None:
@@ -105,19 +79,19 @@ def v__suma_make_spec_sf_cargs(
     """
     cargs = []
     cargs.append("@SUMA_Make_Spec_SF")
-    if params.get("debug_level") is not None:
+    if params.get("debug_level", None) is not None:
         cargs.extend([
             "-debug",
-            str(params.get("debug_level"))
+            str(params.get("debug_level", None))
         ])
-    if params.get("surface_path") is not None:
+    if params.get("surface_path", None) is not None:
         cargs.extend([
             "-sfpath",
-            params.get("surface_path")
+            params.get("surface_path", None)
         ])
     cargs.extend([
         "-sid",
-        params.get("subject_id")
+        params.get("subject_id", None)
     ])
     return cargs
 
@@ -204,7 +178,6 @@ def v__suma_make_spec_sf(
 
 __all__ = [
     "VSumaMakeSpecSfOutputs",
-    "VSumaMakeSpecSfParameters",
     "V__SUMA_MAKE_SPEC_SF_METADATA",
     "v__suma_make_spec_sf",
     "v__suma_make_spec_sf_execute",

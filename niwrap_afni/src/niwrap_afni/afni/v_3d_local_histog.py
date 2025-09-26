@@ -14,7 +14,20 @@ V_3D_LOCAL_HISTOG_METADATA = Metadata(
 
 
 V3dLocalHistogParameters = typing.TypedDict('V3dLocalHistogParameters', {
-    "@type": typing.Literal["afni.3dLocalHistog"],
+    "@type": typing.NotRequired[typing.Literal["afni/3dLocalHistog"]],
+    "nbhd_option": typing.NotRequired[str | None],
+    "prefix": str,
+    "hsave": typing.NotRequired[str | None],
+    "lab_file": typing.NotRequired[InputPathType | None],
+    "exclude": typing.NotRequired[list[str] | None],
+    "exc_nonlab": bool,
+    "mincount": typing.NotRequired[float | None],
+    "probability": bool,
+    "quiet": bool,
+    "input_datasets": list[InputPathType],
+})
+V3dLocalHistogParametersTagged = typing.TypedDict('V3dLocalHistogParametersTagged', {
+    "@type": typing.Literal["afni/3dLocalHistog"],
     "nbhd_option": typing.NotRequired[str | None],
     "prefix": str,
     "hsave": typing.NotRequired[str | None],
@@ -28,41 +41,9 @@ V3dLocalHistogParameters = typing.TypedDict('V3dLocalHistogParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "afni.3dLocalHistog": v_3d_local_histog_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "afni.3dLocalHistog": v_3d_local_histog_outputs,
-    }.get(t)
-
-
 class V3dLocalHistogOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `v_3d_local_histog(...)`.
+    Output object returned when calling `V3dLocalHistogParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -85,7 +66,7 @@ def v_3d_local_histog_params(
     mincount: float | None = None,
     probability: bool = False,
     quiet: bool = False,
-) -> V3dLocalHistogParameters:
+) -> V3dLocalHistogParametersTagged:
     """
     Build parameters.
     
@@ -111,7 +92,7 @@ def v_3d_local_histog_params(
         Parameter dictionary
     """
     params = {
-        "@type": "afni.3dLocalHistog",
+        "@type": "afni/3dLocalHistog",
         "prefix": prefix,
         "exc_nonlab": exc_nonlab,
         "probability": probability,
@@ -146,42 +127,42 @@ def v_3d_local_histog_cargs(
     """
     cargs = []
     cargs.append("3dLocalHistog")
-    if params.get("nbhd_option") is not None:
+    if params.get("nbhd_option", None) is not None:
         cargs.extend([
             "-nbhd",
-            params.get("nbhd_option")
+            params.get("nbhd_option", None)
         ])
     cargs.extend([
         "-prefix",
-        params.get("prefix")
+        params.get("prefix", None)
     ])
-    if params.get("hsave") is not None:
+    if params.get("hsave", None) is not None:
         cargs.extend([
             "-hsave",
-            params.get("hsave")
+            params.get("hsave", None)
         ])
-    if params.get("lab_file") is not None:
+    if params.get("lab_file", None) is not None:
         cargs.extend([
             "-lab_file",
-            execution.input_file(params.get("lab_file"))
+            execution.input_file(params.get("lab_file", None))
         ])
-    if params.get("exclude") is not None:
+    if params.get("exclude", None) is not None:
         cargs.extend([
             "-exclude",
-            *params.get("exclude")
+            *params.get("exclude", None)
         ])
-    if params.get("exc_nonlab"):
+    if params.get("exc_nonlab", False):
         cargs.append("-excNONLAB")
-    if params.get("mincount") is not None:
+    if params.get("mincount", None) is not None:
         cargs.extend([
             "-mincount",
-            str(params.get("mincount"))
+            str(params.get("mincount", None))
         ])
-    if params.get("probability"):
+    if params.get("probability", False):
         cargs.append("-prob")
-    if params.get("quiet"):
+    if params.get("quiet", False):
         cargs.append("-quiet")
-    cargs.extend([execution.input_file(f) for f in params.get("input_datasets")])
+    cargs.extend([execution.input_file(f) for f in params.get("input_datasets", None)])
     return cargs
 
 
@@ -200,9 +181,9 @@ def v_3d_local_histog_outputs(
     """
     ret = V3dLocalHistogOutputs(
         root=execution.output_file("."),
-        output_dataset_head=execution.output_file(params.get("prefix") + "+orig.HEAD"),
-        output_dataset_brik=execution.output_file(params.get("prefix") + "+orig.BRIK"),
-        histogram_file=execution.output_file(params.get("hsave")) if (params.get("hsave") is not None) else None,
+        output_dataset_head=execution.output_file(params.get("prefix", None) + "+orig.HEAD"),
+        output_dataset_brik=execution.output_file(params.get("prefix", None) + "+orig.BRIK"),
+        histogram_file=execution.output_file(params.get("hsave", None)) if (params.get("hsave") is not None) else None,
     )
     return ret
 
@@ -296,7 +277,6 @@ def v_3d_local_histog(
 
 __all__ = [
     "V3dLocalHistogOutputs",
-    "V3dLocalHistogParameters",
     "V_3D_LOCAL_HISTOG_METADATA",
     "v_3d_local_histog",
     "v_3d_local_histog_execute",

@@ -14,7 +14,28 @@ V_3D_TFITTER_METADATA = Metadata(
 
 
 V3dTfitterParameters = typing.TypedDict('V3dTfitterParameters', {
-    "@type": typing.Literal["afni.3dTfitter"],
+    "@type": typing.NotRequired[typing.Literal["afni/3dTfitter"]],
+    "RHS": str,
+    "LHS": typing.NotRequired[list[str] | None],
+    "polort": typing.NotRequired[float | None],
+    "vthr": typing.NotRequired[float | None],
+    "FALTUNG": typing.NotRequired[list[str] | None],
+    "lsqfit": bool,
+    "l1fit": bool,
+    "l2lasso": typing.NotRequired[list[str] | None],
+    "lasso_centro_block": typing.NotRequired[list[str] | None],
+    "l2sqrtlasso": typing.NotRequired[list[str] | None],
+    "consign": typing.NotRequired[list[str] | None],
+    "consFAL": typing.NotRequired[str | None],
+    "prefix": typing.NotRequired[str | None],
+    "label": typing.NotRequired[list[str] | None],
+    "fitts": typing.NotRequired[str | None],
+    "errsum": typing.NotRequired[str | None],
+    "mask": typing.NotRequired[str | None],
+    "quiet": bool,
+})
+V3dTfitterParametersTagged = typing.TypedDict('V3dTfitterParametersTagged', {
+    "@type": typing.Literal["afni/3dTfitter"],
     "RHS": str,
     "LHS": typing.NotRequired[list[str] | None],
     "polort": typing.NotRequired[float | None],
@@ -36,41 +57,9 @@ V3dTfitterParameters = typing.TypedDict('V3dTfitterParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "afni.3dTfitter": v_3d_tfitter_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "afni.3dTfitter": v_3d_tfitter_outputs,
-    }.get(t)
-
-
 class V3dTfitterOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `v_3d_tfitter(...)`.
+    Output object returned when calling `V3dTfitterParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -101,7 +90,7 @@ def v_3d_tfitter_params(
     errsum: str | None = None,
     mask: str | None = None,
     quiet: bool = False,
-) -> V3dTfitterParameters:
+) -> V3dTfitterParametersTagged:
     """
     Build parameters.
     
@@ -140,7 +129,7 @@ def v_3d_tfitter_params(
         Parameter dictionary
     """
     params = {
-        "@type": "afni.3dTfitter",
+        "@type": "afni/3dTfitter",
         "RHS": rhs,
         "lsqfit": lsqfit,
         "l1fit": l1fit,
@@ -194,83 +183,83 @@ def v_3d_tfitter_cargs(
     cargs.append("3dTfitter")
     cargs.extend([
         "-RHS",
-        params.get("RHS")
+        params.get("RHS", None)
     ])
-    if params.get("LHS") is not None:
+    if params.get("LHS", None) is not None:
         cargs.extend([
             "-LHS",
-            *params.get("LHS")
+            *params.get("LHS", None)
         ])
-    if params.get("polort") is not None:
+    if params.get("polort", None) is not None:
         cargs.extend([
             "-polort",
-            str(params.get("polort"))
+            str(params.get("polort", None))
         ])
-    if params.get("vthr") is not None:
+    if params.get("vthr", None) is not None:
         cargs.extend([
             "-vthr",
-            str(params.get("vthr"))
+            str(params.get("vthr", None))
         ])
-    if params.get("FALTUNG") is not None:
+    if params.get("FALTUNG", None) is not None:
         cargs.extend([
             "-FALTUNG",
-            *params.get("FALTUNG")
+            *params.get("FALTUNG", None)
         ])
-    if params.get("lsqfit"):
+    if params.get("lsqfit", False):
         cargs.append("-lsqfit")
-    if params.get("l1fit"):
+    if params.get("l1fit", False):
         cargs.append("-l1fit")
-    if params.get("l2lasso") is not None:
+    if params.get("l2lasso", None) is not None:
         cargs.extend([
             "-l2lasso",
-            *params.get("l2lasso")
+            *params.get("l2lasso", None)
         ])
-    if params.get("lasso_centro_block") is not None:
+    if params.get("lasso_centro_block", None) is not None:
         cargs.extend([
             "-lasso_centro_block",
-            *params.get("lasso_centro_block")
+            *params.get("lasso_centro_block", None)
         ])
-    if params.get("l2sqrtlasso") is not None:
+    if params.get("l2sqrtlasso", None) is not None:
         cargs.extend([
             "-l2sqrtlasso",
-            *params.get("l2sqrtlasso")
+            *params.get("l2sqrtlasso", None)
         ])
-    if params.get("consign") is not None:
+    if params.get("consign", None) is not None:
         cargs.extend([
             "-consign",
-            *params.get("consign")
+            *params.get("consign", None)
         ])
-    if params.get("consFAL") is not None:
+    if params.get("consFAL", None) is not None:
         cargs.extend([
             "-consFAL",
-            params.get("consFAL")
+            params.get("consFAL", None)
         ])
-    if params.get("prefix") is not None:
+    if params.get("prefix", None) is not None:
         cargs.extend([
             "-prefix",
-            params.get("prefix")
+            params.get("prefix", None)
         ])
-    if params.get("label") is not None:
+    if params.get("label", None) is not None:
         cargs.extend([
             "-label",
-            *params.get("label")
+            *params.get("label", None)
         ])
-    if params.get("fitts") is not None:
+    if params.get("fitts", None) is not None:
         cargs.extend([
             "-fitts",
-            params.get("fitts")
+            params.get("fitts", None)
         ])
-    if params.get("errsum") is not None:
+    if params.get("errsum", None) is not None:
         cargs.extend([
             "-errsum",
-            params.get("errsum")
+            params.get("errsum", None)
         ])
-    if params.get("mask") is not None:
+    if params.get("mask", None) is not None:
         cargs.extend([
             "-mask",
-            params.get("mask")
+            params.get("mask", None)
         ])
-    if params.get("quiet"):
+    if params.get("quiet", False):
         cargs.append("-quiet")
     return cargs
 
@@ -290,9 +279,9 @@ def v_3d_tfitter_outputs(
     """
     ret = V3dTfitterOutputs(
         root=execution.output_file("."),
-        output_prefix=execution.output_file(params.get("prefix") + ".nii.gz") if (params.get("prefix") is not None) else None,
-        fitted_time_series=execution.output_file(params.get("fitts") + ".nii.gz") if (params.get("fitts") is not None) else None,
-        error_sums=execution.output_file(params.get("errsum") + ".nii.gz") if (params.get("errsum") is not None) else None,
+        output_prefix=execution.output_file(params.get("prefix", None) + ".nii.gz") if (params.get("prefix") is not None) else None,
+        fitted_time_series=execution.output_file(params.get("fitts", None) + ".nii.gz") if (params.get("fitts") is not None) else None,
+        error_sums=execution.output_file(params.get("errsum", None) + ".nii.gz") if (params.get("errsum") is not None) else None,
     )
     return ret
 
@@ -427,7 +416,6 @@ def v_3d_tfitter(
 
 __all__ = [
     "V3dTfitterOutputs",
-    "V3dTfitterParameters",
     "V_3D_TFITTER_METADATA",
     "v_3d_tfitter",
     "v_3d_tfitter_execute",

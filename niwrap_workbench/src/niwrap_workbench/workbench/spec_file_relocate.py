@@ -14,46 +14,20 @@ SPEC_FILE_RELOCATE_METADATA = Metadata(
 
 
 SpecFileRelocateParameters = typing.TypedDict('SpecFileRelocateParameters', {
-    "@type": typing.Literal["workbench.spec-file-relocate"],
+    "@type": typing.NotRequired[typing.Literal["workbench/spec-file-relocate"]],
+    "input_spec": str,
+    "output_spec": str,
+})
+SpecFileRelocateParametersTagged = typing.TypedDict('SpecFileRelocateParametersTagged', {
+    "@type": typing.Literal["workbench/spec-file-relocate"],
     "input_spec": str,
     "output_spec": str,
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "workbench.spec-file-relocate": spec_file_relocate_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-    }.get(t)
-
-
 class SpecFileRelocateOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `spec_file_relocate(...)`.
+    Output object returned when calling `SpecFileRelocateParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -62,7 +36,7 @@ class SpecFileRelocateOutputs(typing.NamedTuple):
 def spec_file_relocate_params(
     input_spec: str,
     output_spec: str,
-) -> SpecFileRelocateParameters:
+) -> SpecFileRelocateParametersTagged:
     """
     Build parameters.
     
@@ -73,7 +47,7 @@ def spec_file_relocate_params(
         Parameter dictionary
     """
     params = {
-        "@type": "workbench.spec-file-relocate",
+        "@type": "workbench/spec-file-relocate",
         "input_spec": input_spec,
         "output_spec": output_spec,
     }
@@ -96,8 +70,8 @@ def spec_file_relocate_cargs(
     cargs = []
     cargs.append("wb_command")
     cargs.append("-spec-file-relocate")
-    cargs.append(params.get("input_spec"))
-    cargs.append(params.get("output_spec"))
+    cargs.append(params.get("input_spec", None))
+    cargs.append(params.get("output_spec", None))
     return cargs
 
 
@@ -189,7 +163,6 @@ def spec_file_relocate(
 __all__ = [
     "SPEC_FILE_RELOCATE_METADATA",
     "SpecFileRelocateOutputs",
-    "SpecFileRelocateParameters",
     "spec_file_relocate",
     "spec_file_relocate_execute",
     "spec_file_relocate_params",

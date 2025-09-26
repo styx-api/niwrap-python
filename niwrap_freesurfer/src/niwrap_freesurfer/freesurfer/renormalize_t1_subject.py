@@ -14,45 +14,18 @@ RENORMALIZE_T1_SUBJECT_METADATA = Metadata(
 
 
 RenormalizeT1SubjectParameters = typing.TypedDict('RenormalizeT1SubjectParameters', {
-    "@type": typing.Literal["freesurfer.renormalize_T1_subject"],
+    "@type": typing.NotRequired[typing.Literal["freesurfer/renormalize_T1_subject"]],
+    "subject_dir": str,
+})
+RenormalizeT1SubjectParametersTagged = typing.TypedDict('RenormalizeT1SubjectParametersTagged', {
+    "@type": typing.Literal["freesurfer/renormalize_T1_subject"],
     "subject_dir": str,
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "freesurfer.renormalize_T1_subject": renormalize_t1_subject_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-    }.get(t)
-
-
 class RenormalizeT1SubjectOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `renormalize_t1_subject(...)`.
+    Output object returned when calling `RenormalizeT1SubjectParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -60,7 +33,7 @@ class RenormalizeT1SubjectOutputs(typing.NamedTuple):
 
 def renormalize_t1_subject_params(
     subject_dir: str,
-) -> RenormalizeT1SubjectParameters:
+) -> RenormalizeT1SubjectParametersTagged:
     """
     Build parameters.
     
@@ -71,7 +44,7 @@ def renormalize_t1_subject_params(
         Parameter dictionary
     """
     params = {
-        "@type": "freesurfer.renormalize_T1_subject",
+        "@type": "freesurfer/renormalize_T1_subject",
         "subject_dir": subject_dir,
     }
     return params
@@ -92,7 +65,7 @@ def renormalize_t1_subject_cargs(
     """
     cargs = []
     cargs.append("renormalize_T1_subject")
-    cargs.append(params.get("subject_dir"))
+    cargs.append(params.get("subject_dir", None))
     return cargs
 
 
@@ -172,7 +145,6 @@ def renormalize_t1_subject(
 __all__ = [
     "RENORMALIZE_T1_SUBJECT_METADATA",
     "RenormalizeT1SubjectOutputs",
-    "RenormalizeT1SubjectParameters",
     "renormalize_t1_subject",
     "renormalize_t1_subject_execute",
     "renormalize_t1_subject_params",

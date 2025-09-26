@@ -14,7 +14,26 @@ V_3D_ZIPPER_ZAPPER_METADATA = Metadata(
 
 
 V3dZipperZapperParameters = typing.TypedDict('V3dZipperZapperParameters', {
-    "@type": typing.Literal["afni.3dZipperZapper"],
+    "@type": typing.NotRequired[typing.Literal["afni/3dZipperZapper"]],
+    "input_file": InputPathType,
+    "output_prefix": str,
+    "mask_file": typing.NotRequired[InputPathType | None],
+    "min_slice_nvox": typing.NotRequired[float | None],
+    "min_streak_len": typing.NotRequired[float | None],
+    "do_out_slice_param": bool,
+    "no_out_bad_mask": bool,
+    "no_out_text_vals": bool,
+    "dont_use_streak": bool,
+    "dont_use_drop": bool,
+    "dont_use_corr": bool,
+    "min_streak_val": typing.NotRequired[float | None],
+    "min_drop_frac": typing.NotRequired[float | None],
+    "min_drop_diff": typing.NotRequired[float | None],
+    "min_corr_len": typing.NotRequired[float | None],
+    "min_corr_corr": typing.NotRequired[float | None],
+})
+V3dZipperZapperParametersTagged = typing.TypedDict('V3dZipperZapperParametersTagged', {
+    "@type": typing.Literal["afni/3dZipperZapper"],
     "input_file": InputPathType,
     "output_prefix": str,
     "mask_file": typing.NotRequired[InputPathType | None],
@@ -34,41 +53,9 @@ V3dZipperZapperParameters = typing.TypedDict('V3dZipperZapperParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "afni.3dZipperZapper": v_3d_zipper_zapper_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "afni.3dZipperZapper": v_3d_zipper_zapper_outputs,
-    }.get(t)
-
-
 class V3dZipperZapperOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `v_3d_zipper_zapper(...)`.
+    Output object returned when calling `V3dZipperZapperParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -101,7 +88,7 @@ def v_3d_zipper_zapper_params(
     min_drop_diff: float | None = None,
     min_corr_len: float | None = None,
     min_corr_corr: float | None = None,
-) -> V3dZipperZapperParameters:
+) -> V3dZipperZapperParametersTagged:
     """
     Build parameters.
     
@@ -139,7 +126,7 @@ def v_3d_zipper_zapper_params(
         Parameter dictionary
     """
     params = {
-        "@type": "afni.3dZipperZapper",
+        "@type": "afni/3dZipperZapper",
         "input_file": input_file,
         "output_prefix": output_prefix,
         "do_out_slice_param": do_out_slice_param,
@@ -185,63 +172,63 @@ def v_3d_zipper_zapper_cargs(
     cargs.append("3dZipperZapper")
     cargs.extend([
         "-input",
-        execution.input_file(params.get("input_file"))
+        execution.input_file(params.get("input_file", None))
     ])
     cargs.extend([
         "-prefix",
-        params.get("output_prefix")
+        params.get("output_prefix", None)
     ])
-    if params.get("mask_file") is not None:
+    if params.get("mask_file", None) is not None:
         cargs.extend([
             "-mask",
-            execution.input_file(params.get("mask_file"))
+            execution.input_file(params.get("mask_file", None))
         ])
-    if params.get("min_slice_nvox") is not None:
+    if params.get("min_slice_nvox", None) is not None:
         cargs.extend([
             "-min_slice_nvox",
-            str(params.get("min_slice_nvox"))
+            str(params.get("min_slice_nvox", None))
         ])
-    if params.get("min_streak_len") is not None:
+    if params.get("min_streak_len", None) is not None:
         cargs.extend([
             "-min_streak_len",
-            str(params.get("min_streak_len"))
+            str(params.get("min_streak_len", None))
         ])
-    if params.get("do_out_slice_param"):
+    if params.get("do_out_slice_param", False):
         cargs.append("-do_out_slice_param")
-    if params.get("no_out_bad_mask"):
+    if params.get("no_out_bad_mask", False):
         cargs.append("-no_out_bad_mask")
-    if params.get("no_out_text_vals"):
+    if params.get("no_out_text_vals", False):
         cargs.append("-no_out_text_vals")
-    if params.get("dont_use_streak"):
+    if params.get("dont_use_streak", False):
         cargs.append("-dont_use_streak")
-    if params.get("dont_use_drop"):
+    if params.get("dont_use_drop", False):
         cargs.append("-dont_use_drop")
-    if params.get("dont_use_corr"):
+    if params.get("dont_use_corr", False):
         cargs.append("-dont_use_corr")
-    if params.get("min_streak_val") is not None:
+    if params.get("min_streak_val", None) is not None:
         cargs.extend([
             "-min_streak_val",
-            str(params.get("min_streak_val"))
+            str(params.get("min_streak_val", None))
         ])
-    if params.get("min_drop_frac") is not None:
+    if params.get("min_drop_frac", None) is not None:
         cargs.extend([
             "-min_drop_frac",
-            str(params.get("min_drop_frac"))
+            str(params.get("min_drop_frac", None))
         ])
-    if params.get("min_drop_diff") is not None:
+    if params.get("min_drop_diff", None) is not None:
         cargs.extend([
             "-min_drop_diff",
-            str(params.get("min_drop_diff"))
+            str(params.get("min_drop_diff", None))
         ])
-    if params.get("min_corr_len") is not None:
+    if params.get("min_corr_len", None) is not None:
         cargs.extend([
             "-min_corr_len",
-            str(params.get("min_corr_len"))
+            str(params.get("min_corr_len", None))
         ])
-    if params.get("min_corr_corr") is not None:
+    if params.get("min_corr_corr", None) is not None:
         cargs.extend([
             "-min_corr_corr",
-            str(params.get("min_corr_corr"))
+            str(params.get("min_corr_corr", None))
         ])
     return cargs
 
@@ -261,11 +248,11 @@ def v_3d_zipper_zapper_outputs(
     """
     ret = V3dZipperZapperOutputs(
         root=execution.output_file("."),
-        bad_slice_mask=execution.output_file(params.get("output_prefix") + "_badmask.nii.gz"),
-        bad_volumes_list=execution.output_file(params.get("output_prefix") + "_badvols.1D"),
-        per_volume_params=execution.output_file(params.get("output_prefix") + "_param.1D"),
-        calculated_slices=execution.output_file(params.get("output_prefix") + "_sli.1D"),
-        good_volumes_selector=execution.output_file(params.get("output_prefix") + "_goodvols.txt"),
+        bad_slice_mask=execution.output_file(params.get("output_prefix", None) + "_badmask.nii.gz"),
+        bad_volumes_list=execution.output_file(params.get("output_prefix", None) + "_badvols.1D"),
+        per_volume_params=execution.output_file(params.get("output_prefix", None) + "_param.1D"),
+        calculated_slices=execution.output_file(params.get("output_prefix", None) + "_sli.1D"),
+        good_volumes_selector=execution.output_file(params.get("output_prefix", None) + "_goodvols.txt"),
     )
     return ret
 
@@ -385,7 +372,6 @@ def v_3d_zipper_zapper(
 
 __all__ = [
     "V3dZipperZapperOutputs",
-    "V3dZipperZapperParameters",
     "V_3D_ZIPPER_ZAPPER_METADATA",
     "v_3d_zipper_zapper",
     "v_3d_zipper_zapper_execute",

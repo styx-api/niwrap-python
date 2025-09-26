@@ -14,48 +14,22 @@ QUOTIZE_METADATA = Metadata(
 
 
 QuotizeParameters = typing.TypedDict('QuotizeParameters', {
-    "@type": typing.Literal["afni.quotize"],
+    "@type": typing.NotRequired[typing.Literal["afni/quotize"]],
+    "name": str,
+    "input_file": InputPathType,
+    "output_file": str,
+})
+QuotizeParametersTagged = typing.TypedDict('QuotizeParametersTagged', {
+    "@type": typing.Literal["afni/quotize"],
     "name": str,
     "input_file": InputPathType,
     "output_file": str,
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "afni.quotize": quotize_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "afni.quotize": quotize_outputs,
-    }.get(t)
-
-
 class QuotizeOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `quotize(...)`.
+    Output object returned when calling `QuotizeParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -67,7 +41,7 @@ def quotize_params(
     name: str,
     input_file: InputPathType,
     output_file: str,
-) -> QuotizeParameters:
+) -> QuotizeParametersTagged:
     """
     Build parameters.
     
@@ -79,7 +53,7 @@ def quotize_params(
         Parameter dictionary
     """
     params = {
-        "@type": "afni.quotize",
+        "@type": "afni/quotize",
         "name": name,
         "input_file": input_file,
         "output_file": output_file,
@@ -102,9 +76,9 @@ def quotize_cargs(
     """
     cargs = []
     cargs.append("quotize")
-    cargs.append(params.get("name"))
-    cargs.append(execution.input_file(params.get("input_file")))
-    cargs.append(params.get("output_file"))
+    cargs.append(params.get("name", None))
+    cargs.append(execution.input_file(params.get("input_file", None)))
+    cargs.append(params.get("output_file", None))
     return cargs
 
 
@@ -123,7 +97,7 @@ def quotize_outputs(
     """
     ret = QuotizeOutputs(
         root=execution.output_file("."),
-        array_output=execution.output_file(params.get("output_file")),
+        array_output=execution.output_file(params.get("output_file", None)),
     )
     return ret
 
@@ -192,7 +166,6 @@ def quotize(
 __all__ = [
     "QUOTIZE_METADATA",
     "QuotizeOutputs",
-    "QuotizeParameters",
     "quotize",
     "quotize_execute",
     "quotize_params",

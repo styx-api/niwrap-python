@@ -14,46 +14,20 @@ INFLATE_SUBJECT_LH_METADATA = Metadata(
 
 
 InflateSubjectLhParameters = typing.TypedDict('InflateSubjectLhParameters', {
-    "@type": typing.Literal["freesurfer.inflate_subject-lh"],
+    "@type": typing.NotRequired[typing.Literal["freesurfer/inflate_subject-lh"]],
+    "input_folder": str,
+    "hostname_flag": bool,
+})
+InflateSubjectLhParametersTagged = typing.TypedDict('InflateSubjectLhParametersTagged', {
+    "@type": typing.Literal["freesurfer/inflate_subject-lh"],
     "input_folder": str,
     "hostname_flag": bool,
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "freesurfer.inflate_subject-lh": inflate_subject_lh_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-    }.get(t)
-
-
 class InflateSubjectLhOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `inflate_subject_lh(...)`.
+    Output object returned when calling `InflateSubjectLhParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -62,7 +36,7 @@ class InflateSubjectLhOutputs(typing.NamedTuple):
 def inflate_subject_lh_params(
     input_folder: str,
     hostname_flag: bool = False,
-) -> InflateSubjectLhParameters:
+) -> InflateSubjectLhParametersTagged:
     """
     Build parameters.
     
@@ -73,7 +47,7 @@ def inflate_subject_lh_params(
         Parameter dictionary
     """
     params = {
-        "@type": "freesurfer.inflate_subject-lh",
+        "@type": "freesurfer/inflate_subject-lh",
         "input_folder": input_folder,
         "hostname_flag": hostname_flag,
     }
@@ -97,9 +71,9 @@ def inflate_subject_lh_cargs(
     cargs.append("inflate_subject-lh")
     cargs.extend([
         "-lh",
-        params.get("input_folder")
+        params.get("input_folder", None)
     ])
-    if params.get("hostname_flag"):
+    if params.get("hostname_flag", False):
         cargs.append("hostname")
     return cargs
 
@@ -182,7 +156,6 @@ def inflate_subject_lh(
 __all__ = [
     "INFLATE_SUBJECT_LH_METADATA",
     "InflateSubjectLhOutputs",
-    "InflateSubjectLhParameters",
     "inflate_subject_lh",
     "inflate_subject_lh_execute",
     "inflate_subject_lh_params",

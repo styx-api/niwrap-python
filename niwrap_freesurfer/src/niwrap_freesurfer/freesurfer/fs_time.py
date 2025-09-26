@@ -14,7 +14,15 @@ FS_TIME_METADATA = Metadata(
 
 
 FsTimeParameters = typing.TypedDict('FsTimeParameters', {
-    "@type": typing.Literal["freesurfer.fs_time"],
+    "@type": typing.NotRequired[typing.Literal["freesurfer/fs_time"]],
+    "output_file": typing.NotRequired[str | None],
+    "key": typing.NotRequired[str | None],
+    "load_avg": bool,
+    "command": str,
+    "args": typing.NotRequired[list[str] | None],
+})
+FsTimeParametersTagged = typing.TypedDict('FsTimeParametersTagged', {
+    "@type": typing.Literal["freesurfer/fs_time"],
     "output_file": typing.NotRequired[str | None],
     "key": typing.NotRequired[str | None],
     "load_avg": bool,
@@ -23,41 +31,9 @@ FsTimeParameters = typing.TypedDict('FsTimeParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "freesurfer.fs_time": fs_time_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "freesurfer.fs_time": fs_time_outputs,
-    }.get(t)
-
-
 class FsTimeOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `fs_time(...)`.
+    Output object returned when calling `FsTimeParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -71,7 +47,7 @@ def fs_time_params(
     key: str | None = None,
     load_avg: bool = False,
     args: list[str] | None = None,
-) -> FsTimeParameters:
+) -> FsTimeParametersTagged:
     """
     Build parameters.
     
@@ -85,7 +61,7 @@ def fs_time_params(
         Parameter dictionary
     """
     params = {
-        "@type": "freesurfer.fs_time",
+        "@type": "freesurfer/fs_time",
         "load_avg": load_avg,
         "command": command,
     }
@@ -113,21 +89,21 @@ def fs_time_cargs(
     """
     cargs = []
     cargs.append("fs_time")
-    if params.get("output_file") is not None:
+    if params.get("output_file", None) is not None:
         cargs.extend([
             "-o",
-            params.get("output_file")
+            params.get("output_file", None)
         ])
-    if params.get("key") is not None:
+    if params.get("key", None) is not None:
         cargs.extend([
             "-k",
-            params.get("key")
+            params.get("key", None)
         ])
-    if params.get("load_avg"):
+    if params.get("load_avg", False):
         cargs.append("-l")
-    cargs.append(params.get("command"))
-    if params.get("args") is not None:
-        cargs.extend(params.get("args"))
+    cargs.append(params.get("command", None))
+    if params.get("args", None) is not None:
+        cargs.extend(params.get("args", None))
     return cargs
 
 
@@ -146,7 +122,7 @@ def fs_time_outputs(
     """
     ret = FsTimeOutputs(
         root=execution.output_file("."),
-        resource_output=execution.output_file(params.get("output_file")) if (params.get("output_file") is not None) else None,
+        resource_output=execution.output_file(params.get("output_file", None)) if (params.get("output_file") is not None) else None,
     )
     return ret
 
@@ -221,7 +197,6 @@ def fs_time(
 __all__ = [
     "FS_TIME_METADATA",
     "FsTimeOutputs",
-    "FsTimeParameters",
     "fs_time",
     "fs_time_execute",
     "fs_time_params",

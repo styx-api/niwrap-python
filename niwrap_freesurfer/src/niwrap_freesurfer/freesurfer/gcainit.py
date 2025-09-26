@@ -14,45 +14,18 @@ GCAINIT_METADATA = Metadata(
 
 
 GcainitParameters = typing.TypedDict('GcainitParameters', {
-    "@type": typing.Literal["freesurfer.gcainit"],
+    "@type": typing.NotRequired[typing.Literal["freesurfer/gcainit"]],
+    "gcadir": str,
+})
+GcainitParametersTagged = typing.TypedDict('GcainitParametersTagged', {
+    "@type": typing.Literal["freesurfer/gcainit"],
     "gcadir": str,
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "freesurfer.gcainit": gcainit_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-    }.get(t)
-
-
 class GcainitOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `gcainit(...)`.
+    Output object returned when calling `GcainitParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -60,7 +33,7 @@ class GcainitOutputs(typing.NamedTuple):
 
 def gcainit_params(
     gcadir: str,
-) -> GcainitParameters:
+) -> GcainitParametersTagged:
     """
     Build parameters.
     
@@ -70,7 +43,7 @@ def gcainit_params(
         Parameter dictionary
     """
     params = {
-        "@type": "freesurfer.gcainit",
+        "@type": "freesurfer/gcainit",
         "gcadir": gcadir,
     }
     return params
@@ -93,7 +66,7 @@ def gcainit_cargs(
     cargs.append("gcainit")
     cargs.extend([
         "--g",
-        params.get("gcadir")
+        params.get("gcadir", None)
     ])
     return cargs
 
@@ -173,7 +146,6 @@ def gcainit(
 __all__ = [
     "GCAINIT_METADATA",
     "GcainitOutputs",
-    "GcainitParameters",
     "gcainit",
     "gcainit_execute",
     "gcainit_params",

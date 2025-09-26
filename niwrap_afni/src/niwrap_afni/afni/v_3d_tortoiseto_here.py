@@ -14,7 +14,16 @@ V_3D_TORTOISETO_HERE_METADATA = Metadata(
 
 
 V3dTortoisetoHereParameters = typing.TypedDict('V3dTortoisetoHereParameters', {
-    "@type": typing.Literal["afni.3dTORTOISEtoHere"],
+    "@type": typing.NotRequired[typing.Literal["afni/3dTORTOISEtoHere"]],
+    "dt_tort": InputPathType,
+    "prefix": str,
+    "scale_factor": typing.NotRequired[float | None],
+    "flip_x": bool,
+    "flip_y": bool,
+    "flip_z": bool,
+})
+V3dTortoisetoHereParametersTagged = typing.TypedDict('V3dTortoisetoHereParametersTagged', {
+    "@type": typing.Literal["afni/3dTORTOISEtoHere"],
     "dt_tort": InputPathType,
     "prefix": str,
     "scale_factor": typing.NotRequired[float | None],
@@ -24,41 +33,9 @@ V3dTortoisetoHereParameters = typing.TypedDict('V3dTortoisetoHereParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "afni.3dTORTOISEtoHere": v_3d_tortoiseto_here_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "afni.3dTORTOISEtoHere": v_3d_tortoiseto_here_outputs,
-    }.get(t)
-
-
 class V3dTortoisetoHereOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `v_3d_tortoiseto_here(...)`.
+    Output object returned when calling `V3dTortoisetoHereParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -74,7 +51,7 @@ def v_3d_tortoiseto_here_params(
     flip_x: bool = False,
     flip_y: bool = False,
     flip_z: bool = False,
-) -> V3dTortoisetoHereParameters:
+) -> V3dTortoisetoHereParametersTagged:
     """
     Build parameters.
     
@@ -92,7 +69,7 @@ def v_3d_tortoiseto_here_params(
         Parameter dictionary
     """
     params = {
-        "@type": "afni.3dTORTOISEtoHere",
+        "@type": "afni/3dTORTOISEtoHere",
         "dt_tort": dt_tort,
         "prefix": prefix,
         "flip_x": flip_x,
@@ -121,22 +98,22 @@ def v_3d_tortoiseto_here_cargs(
     cargs.append("3dTORTOISEtoHere")
     cargs.extend([
         "-dt_tort",
-        execution.input_file(params.get("dt_tort"))
+        execution.input_file(params.get("dt_tort", None))
     ])
     cargs.extend([
         "-prefix",
-        params.get("prefix")
+        params.get("prefix", None)
     ])
-    if params.get("scale_factor") is not None:
+    if params.get("scale_factor", None) is not None:
         cargs.extend([
             "-scale_fac",
-            str(params.get("scale_factor"))
+            str(params.get("scale_factor", None))
         ])
-    if params.get("flip_x"):
+    if params.get("flip_x", False):
         cargs.append("-flip_x")
-    if params.get("flip_y"):
+    if params.get("flip_y", False):
         cargs.append("-flip_y")
-    if params.get("flip_z"):
+    if params.get("flip_z", False):
         cargs.append("-flip_z")
     return cargs
 
@@ -156,7 +133,7 @@ def v_3d_tortoiseto_here_outputs(
     """
     ret = V3dTortoisetoHereOutputs(
         root=execution.output_file("."),
-        output_dt_file=execution.output_file(params.get("prefix") + ".nii.gz"),
+        output_dt_file=execution.output_file(params.get("prefix", None) + ".nii.gz"),
     )
     return ret
 
@@ -236,7 +213,6 @@ def v_3d_tortoiseto_here(
 
 __all__ = [
     "V3dTortoisetoHereOutputs",
-    "V3dTortoisetoHereParameters",
     "V_3D_TORTOISETO_HERE_METADATA",
     "v_3d_tortoiseto_here",
     "v_3d_tortoiseto_here_execute",

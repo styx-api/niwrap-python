@@ -14,46 +14,18 @@ MORPH_ONLY_SUBJECT_LH_METADATA = Metadata(
 
 
 MorphOnlySubjectLhParameters = typing.TypedDict('MorphOnlySubjectLhParameters', {
-    "@type": typing.Literal["freesurfer.morph_only_subject-lh"],
+    "@type": typing.NotRequired[typing.Literal["freesurfer/morph_only_subject-lh"]],
+    "subject_dir": str,
+})
+MorphOnlySubjectLhParametersTagged = typing.TypedDict('MorphOnlySubjectLhParametersTagged', {
+    "@type": typing.Literal["freesurfer/morph_only_subject-lh"],
     "subject_dir": str,
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "freesurfer.morph_only_subject-lh": morph_only_subject_lh_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "freesurfer.morph_only_subject-lh": morph_only_subject_lh_outputs,
-    }.get(t)
-
-
 class MorphOnlySubjectLhOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `morph_only_subject_lh(...)`.
+    Output object returned when calling `MorphOnlySubjectLhParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -63,7 +35,7 @@ class MorphOnlySubjectLhOutputs(typing.NamedTuple):
 
 def morph_only_subject_lh_params(
     subject_dir: str,
-) -> MorphOnlySubjectLhParameters:
+) -> MorphOnlySubjectLhParametersTagged:
     """
     Build parameters.
     
@@ -73,7 +45,7 @@ def morph_only_subject_lh_params(
         Parameter dictionary
     """
     params = {
-        "@type": "freesurfer.morph_only_subject-lh",
+        "@type": "freesurfer/morph_only_subject-lh",
         "subject_dir": subject_dir,
     }
     return params
@@ -96,7 +68,7 @@ def morph_only_subject_lh_cargs(
     cargs.append("morph_only_subject-lh")
     cargs.extend([
         "-lh",
-        params.get("subject_dir")
+        params.get("subject_dir", None)
     ])
     return cargs
 
@@ -116,7 +88,7 @@ def morph_only_subject_lh_outputs(
     """
     ret = MorphOnlySubjectLhOutputs(
         root=execution.output_file("."),
-        morph_results=execution.output_file(params.get("subject_dir") + "/morph_results"),
+        morph_results=execution.output_file(params.get("subject_dir", None) + "/morph_results"),
     )
     return ret
 
@@ -177,7 +149,6 @@ def morph_only_subject_lh(
 __all__ = [
     "MORPH_ONLY_SUBJECT_LH_METADATA",
     "MorphOnlySubjectLhOutputs",
-    "MorphOnlySubjectLhParameters",
     "morph_only_subject_lh",
     "morph_only_subject_lh_execute",
     "morph_only_subject_lh_params",

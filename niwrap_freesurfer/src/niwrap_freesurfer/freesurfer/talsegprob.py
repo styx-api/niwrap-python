@@ -14,7 +14,27 @@ TALSEGPROB_METADATA = Metadata(
 
 
 TalsegprobParameters = typing.TypedDict('TalsegprobParameters', {
-    "@type": typing.Literal["freesurfer.talsegprob"],
+    "@type": typing.NotRequired[typing.Literal["freesurfer/talsegprob"]],
+    "subjects_list": typing.NotRequired[list[str] | None],
+    "fsgd_file": typing.NotRequired[InputPathType | None],
+    "segmentation_number": typing.NotRequired[float | None],
+    "second_segmentation_number": typing.NotRequired[float | None],
+    "hippo_flag": bool,
+    "left_hippo_flag": bool,
+    "right_hippo_flag": bool,
+    "segmentation_file": typing.NotRequired[InputPathType | None],
+    "probability_output": typing.NotRequired[str | None],
+    "vote_output": typing.NotRequired[str | None],
+    "concat_output": typing.NotRequired[str | None],
+    "xform_file": typing.NotRequired[InputPathType | None],
+    "subjects_dir": typing.NotRequired[str | None],
+    "tmpdir": typing.NotRequired[str | None],
+    "nocleanup_flag": bool,
+    "version_flag": bool,
+    "echo_flag": bool,
+})
+TalsegprobParametersTagged = typing.TypedDict('TalsegprobParametersTagged', {
+    "@type": typing.Literal["freesurfer/talsegprob"],
     "subjects_list": typing.NotRequired[list[str] | None],
     "fsgd_file": typing.NotRequired[InputPathType | None],
     "segmentation_number": typing.NotRequired[float | None],
@@ -35,41 +55,9 @@ TalsegprobParameters = typing.TypedDict('TalsegprobParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "freesurfer.talsegprob": talsegprob_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "freesurfer.talsegprob": talsegprob_outputs,
-    }.get(t)
-
-
 class TalsegprobOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `talsegprob(...)`.
+    Output object returned when calling `TalsegprobParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -99,7 +87,7 @@ def talsegprob_params(
     nocleanup_flag: bool = False,
     version_flag: bool = False,
     echo_flag: bool = False,
-) -> TalsegprobParameters:
+) -> TalsegprobParametersTagged:
     """
     Build parameters.
     
@@ -126,7 +114,7 @@ def talsegprob_params(
         Parameter dictionary
     """
     params = {
-        "@type": "freesurfer.talsegprob",
+        "@type": "freesurfer/talsegprob",
         "hippo_flag": hippo_flag,
         "left_hippo_flag": left_hippo_flag,
         "right_hippo_flag": right_hippo_flag,
@@ -174,72 +162,72 @@ def talsegprob_cargs(
     """
     cargs = []
     cargs.append("talsegprob")
-    if params.get("subjects_list") is not None:
+    if params.get("subjects_list", None) is not None:
         cargs.extend([
             "--subjects",
-            *params.get("subjects_list")
+            *params.get("subjects_list", None)
         ])
-    if params.get("fsgd_file") is not None:
+    if params.get("fsgd_file", None) is not None:
         cargs.extend([
             "--fsgd",
-            execution.input_file(params.get("fsgd_file"))
+            execution.input_file(params.get("fsgd_file", None))
         ])
-    if params.get("segmentation_number") is not None:
+    if params.get("segmentation_number", None) is not None:
         cargs.extend([
             "--seg",
-            str(params.get("segmentation_number"))
+            str(params.get("segmentation_number", None))
         ])
-    if params.get("second_segmentation_number") is not None:
+    if params.get("second_segmentation_number", None) is not None:
         cargs.extend([
             "<--seg",
-            str(params.get("second_segmentation_number"))
+            str(params.get("second_segmentation_number", None))
         ])
-    if params.get("hippo_flag"):
+    if params.get("hippo_flag", False):
         cargs.append("--hippo")
-    if params.get("left_hippo_flag"):
+    if params.get("left_hippo_flag", False):
         cargs.append("--left-hippo")
-    if params.get("right_hippo_flag"):
+    if params.get("right_hippo_flag", False):
         cargs.append("--right-hippo")
-    if params.get("segmentation_file") is not None:
+    if params.get("segmentation_file", None) is not None:
         cargs.extend([
             "--segmentation",
-            execution.input_file(params.get("segmentation_file"))
+            execution.input_file(params.get("segmentation_file", None))
         ])
-    if params.get("probability_output") is not None:
+    if params.get("probability_output", None) is not None:
         cargs.extend([
             "--p",
-            params.get("probability_output")
+            params.get("probability_output", None)
         ])
-    if params.get("vote_output") is not None:
+    if params.get("vote_output", None) is not None:
         cargs.extend([
             "--vote",
-            params.get("vote_output")
+            params.get("vote_output", None)
         ])
-    if params.get("concat_output") is not None:
+    if params.get("concat_output", None) is not None:
         cargs.extend([
             "--c",
-            params.get("concat_output")
+            params.get("concat_output", None)
         ])
-    if params.get("xform_file") is not None:
+    if params.get("xform_file", None) is not None:
         cargs.extend([
             "--xform",
-            execution.input_file(params.get("xform_file"))
+            execution.input_file(params.get("xform_file", None))
         ])
-    if params.get("subjects_dir") is not None:
+    if params.get("subjects_dir", None) is not None:
         cargs.extend([
             "--sdir",
-            params.get("subjects_dir")
+            params.get("subjects_dir", None)
         ])
-    if params.get("tmpdir") is not None:
+    if params.get("tmpdir", None) is not None:
         cargs.extend([
             "--tmpdir",
-            params.get("tmpdir")
+            params.get("tmpdir", None)
         ])
-    if params.get("nocleanup_flag"):
+    if params.get("nocleanup_flag", False):
         cargs.append("--nocleanup")
-    if params.get("version_flag"):
+    if params.get("version_flag", False):
         cargs.append("--version")
-    if params.get("echo_flag"):
+    if params.get("echo_flag", False):
         cargs.append("--echo")
     return cargs
 
@@ -259,9 +247,9 @@ def talsegprob_outputs(
     """
     ret = TalsegprobOutputs(
         root=execution.output_file("."),
-        probability_output_file=execution.output_file(params.get("probability_output")) if (params.get("probability_output") is not None) else None,
-        vote_output_file=execution.output_file(params.get("vote_output")) if (params.get("vote_output") is not None) else None,
-        concat_output_file=execution.output_file(params.get("concat_output")) if (params.get("concat_output") is not None) else None,
+        probability_output_file=execution.output_file(params.get("probability_output", None)) if (params.get("probability_output") is not None) else None,
+        vote_output_file=execution.output_file(params.get("vote_output", None)) if (params.get("vote_output") is not None) else None,
+        concat_output_file=execution.output_file(params.get("concat_output", None)) if (params.get("concat_output") is not None) else None,
     )
     return ret
 
@@ -373,7 +361,6 @@ def talsegprob(
 __all__ = [
     "TALSEGPROB_METADATA",
     "TalsegprobOutputs",
-    "TalsegprobParameters",
     "talsegprob",
     "talsegprob_execute",
     "talsegprob_params",

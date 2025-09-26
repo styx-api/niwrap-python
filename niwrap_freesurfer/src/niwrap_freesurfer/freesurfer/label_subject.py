@@ -14,47 +14,20 @@ LABEL_SUBJECT_METADATA = Metadata(
 
 
 LabelSubjectParameters = typing.TypedDict('LabelSubjectParameters', {
-    "@type": typing.Literal["freesurfer.label_subject"],
+    "@type": typing.NotRequired[typing.Literal["freesurfer/label_subject"]],
+    "nu_file": typing.NotRequired[InputPathType | None],
+    "orig_dir": typing.NotRequired[str | None],
+})
+LabelSubjectParametersTagged = typing.TypedDict('LabelSubjectParametersTagged', {
+    "@type": typing.Literal["freesurfer/label_subject"],
     "nu_file": typing.NotRequired[InputPathType | None],
     "orig_dir": typing.NotRequired[str | None],
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "freesurfer.label_subject": label_subject_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "freesurfer.label_subject": label_subject_outputs,
-    }.get(t)
-
-
 class LabelSubjectOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `label_subject(...)`.
+    Output object returned when calling `LabelSubjectParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -65,7 +38,7 @@ class LabelSubjectOutputs(typing.NamedTuple):
 def label_subject_params(
     nu_file: InputPathType | None = None,
     orig_dir: str | None = None,
-) -> LabelSubjectParameters:
+) -> LabelSubjectParametersTagged:
     """
     Build parameters.
     
@@ -77,7 +50,7 @@ def label_subject_params(
         Parameter dictionary
     """
     params = {
-        "@type": "freesurfer.label_subject",
+        "@type": "freesurfer/label_subject",
     }
     if nu_file is not None:
         params["nu_file"] = nu_file
@@ -101,10 +74,10 @@ def label_subject_cargs(
     """
     cargs = []
     cargs.append("label_subject")
-    if params.get("nu_file") is not None:
-        cargs.append(execution.input_file(params.get("nu_file")))
-    if params.get("orig_dir") is not None:
-        cargs.append(params.get("orig_dir"))
+    if params.get("nu_file", None) is not None:
+        cargs.append(execution.input_file(params.get("nu_file", None)))
+    if params.get("orig_dir", None) is not None:
+        cargs.append(params.get("orig_dir", None))
     return cargs
 
 
@@ -188,7 +161,6 @@ def label_subject(
 __all__ = [
     "LABEL_SUBJECT_METADATA",
     "LabelSubjectOutputs",
-    "LabelSubjectParameters",
     "label_subject",
     "label_subject_execute",
     "label_subject_params",

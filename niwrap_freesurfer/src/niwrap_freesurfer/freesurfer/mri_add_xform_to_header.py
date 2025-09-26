@@ -14,7 +14,15 @@ MRI_ADD_XFORM_TO_HEADER_METADATA = Metadata(
 
 
 MriAddXformToHeaderParameters = typing.TypedDict('MriAddXformToHeaderParameters', {
-    "@type": typing.Literal["freesurfer.mri_add_xform_to_header"],
+    "@type": typing.NotRequired[typing.Literal["freesurfer/mri_add_xform_to_header"]],
+    "xfm_file": InputPathType,
+    "input_volume": InputPathType,
+    "output_volume": str,
+    "verbose": bool,
+    "copy_name": bool,
+})
+MriAddXformToHeaderParametersTagged = typing.TypedDict('MriAddXformToHeaderParametersTagged', {
+    "@type": typing.Literal["freesurfer/mri_add_xform_to_header"],
     "xfm_file": InputPathType,
     "input_volume": InputPathType,
     "output_volume": str,
@@ -23,41 +31,9 @@ MriAddXformToHeaderParameters = typing.TypedDict('MriAddXformToHeaderParameters'
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "freesurfer.mri_add_xform_to_header": mri_add_xform_to_header_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "freesurfer.mri_add_xform_to_header": mri_add_xform_to_header_outputs,
-    }.get(t)
-
-
 class MriAddXformToHeaderOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `mri_add_xform_to_header(...)`.
+    Output object returned when calling `MriAddXformToHeaderParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -71,7 +47,7 @@ def mri_add_xform_to_header_params(
     output_volume: str,
     verbose: bool = False,
     copy_name: bool = False,
-) -> MriAddXformToHeaderParameters:
+) -> MriAddXformToHeaderParametersTagged:
     """
     Build parameters.
     
@@ -85,7 +61,7 @@ def mri_add_xform_to_header_params(
         Parameter dictionary
     """
     params = {
-        "@type": "freesurfer.mri_add_xform_to_header",
+        "@type": "freesurfer/mri_add_xform_to_header",
         "xfm_file": xfm_file,
         "input_volume": input_volume,
         "output_volume": output_volume,
@@ -110,12 +86,12 @@ def mri_add_xform_to_header_cargs(
     """
     cargs = []
     cargs.append("mri_add_xform_to_header")
-    cargs.append(execution.input_file(params.get("xfm_file")))
-    cargs.append(execution.input_file(params.get("input_volume")))
-    cargs.append(params.get("output_volume"))
-    if params.get("verbose"):
+    cargs.append(execution.input_file(params.get("xfm_file", None)))
+    cargs.append(execution.input_file(params.get("input_volume", None)))
+    cargs.append(params.get("output_volume", None))
+    if params.get("verbose", False):
         cargs.append("-v")
-    if params.get("copy_name"):
+    if params.get("copy_name", False):
         cargs.append("-c")
     return cargs
 
@@ -135,7 +111,7 @@ def mri_add_xform_to_header_outputs(
     """
     ret = MriAddXformToHeaderOutputs(
         root=execution.output_file("."),
-        output_volume_file=execution.output_file(params.get("output_volume")),
+        output_volume_file=execution.output_file(params.get("output_volume", None)),
     )
     return ret
 
@@ -208,7 +184,6 @@ def mri_add_xform_to_header(
 __all__ = [
     "MRI_ADD_XFORM_TO_HEADER_METADATA",
     "MriAddXformToHeaderOutputs",
-    "MriAddXformToHeaderParameters",
     "mri_add_xform_to_header",
     "mri_add_xform_to_header_execute",
     "mri_add_xform_to_header_params",

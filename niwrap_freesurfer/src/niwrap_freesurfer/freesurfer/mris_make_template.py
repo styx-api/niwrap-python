@@ -14,7 +14,25 @@ MRIS_MAKE_TEMPLATE_METADATA = Metadata(
 
 
 MrisMakeTemplateParameters = typing.TypedDict('MrisMakeTemplateParameters', {
-    "@type": typing.Literal["freesurfer.mris_make_template"],
+    "@type": typing.NotRequired[typing.Literal["freesurfer/mris_make_template"]],
+    "hemi": str,
+    "surface_name": str,
+    "subjects": list[str],
+    "output_name": str,
+    "addframe_parameters": typing.NotRequired[list[str] | None],
+    "vector": bool,
+    "norot": bool,
+    "rot": bool,
+    "annot": bool,
+    "overlay_parameters": typing.NotRequired[list[str] | None],
+    "overlay_dir": typing.NotRequired[str | None],
+    "scale": typing.NotRequired[float | None],
+    "surf_dir": typing.NotRequired[str | None],
+    "smooth_iterations": typing.NotRequired[float | None],
+    "subjects_dir": typing.NotRequired[str | None],
+})
+MrisMakeTemplateParametersTagged = typing.TypedDict('MrisMakeTemplateParametersTagged', {
+    "@type": typing.Literal["freesurfer/mris_make_template"],
     "hemi": str,
     "surface_name": str,
     "subjects": list[str],
@@ -33,40 +51,9 @@ MrisMakeTemplateParameters = typing.TypedDict('MrisMakeTemplateParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "freesurfer.mris_make_template": mris_make_template_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-    }.get(t)
-
-
 class MrisMakeTemplateOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `mris_make_template(...)`.
+    Output object returned when calling `MrisMakeTemplateParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -88,7 +75,7 @@ def mris_make_template_params(
     surf_dir: str | None = None,
     smooth_iterations: float | None = None,
     subjects_dir: str | None = None,
-) -> MrisMakeTemplateParameters:
+) -> MrisMakeTemplateParametersTagged:
     """
     Build parameters.
     
@@ -113,7 +100,7 @@ def mris_make_template_params(
         Parameter dictionary
     """
     params = {
-        "@type": "freesurfer.mris_make_template",
+        "@type": "freesurfer/mris_make_template",
         "hemi": hemi,
         "surface_name": surface_name,
         "subjects": subjects,
@@ -155,52 +142,52 @@ def mris_make_template_cargs(
     """
     cargs = []
     cargs.append("mris_make_template")
-    cargs.append(params.get("hemi"))
-    cargs.append(params.get("surface_name"))
-    cargs.extend(params.get("subjects"))
-    cargs.append(params.get("output_name"))
-    if params.get("addframe_parameters") is not None:
+    cargs.append(params.get("hemi", None))
+    cargs.append(params.get("surface_name", None))
+    cargs.extend(params.get("subjects", None))
+    cargs.append(params.get("output_name", None))
+    if params.get("addframe_parameters", None) is not None:
         cargs.extend([
             "-addframe",
-            *params.get("addframe_parameters")
+            *params.get("addframe_parameters", None)
         ])
-    if params.get("vector"):
+    if params.get("vector", False):
         cargs.append("-vector")
-    if params.get("norot"):
+    if params.get("norot", False):
         cargs.append("-norot")
-    if params.get("rot"):
+    if params.get("rot", False):
         cargs.append("-rot")
-    if params.get("annot"):
+    if params.get("annot", False):
         cargs.append("-annot")
-    if params.get("overlay_parameters") is not None:
+    if params.get("overlay_parameters", None) is not None:
         cargs.extend([
             "-overlay",
-            *params.get("overlay_parameters")
+            *params.get("overlay_parameters", None)
         ])
-    if params.get("overlay_dir") is not None:
+    if params.get("overlay_dir", None) is not None:
         cargs.extend([
             "-overlay-dir",
-            params.get("overlay_dir")
+            params.get("overlay_dir", None)
         ])
-    if params.get("scale") is not None:
+    if params.get("scale", None) is not None:
         cargs.extend([
             "-s",
-            str(params.get("scale"))
+            str(params.get("scale", None))
         ])
-    if params.get("surf_dir") is not None:
+    if params.get("surf_dir", None) is not None:
         cargs.extend([
             "-surf_dir",
-            params.get("surf_dir")
+            params.get("surf_dir", None)
         ])
-    if params.get("smooth_iterations") is not None:
+    if params.get("smooth_iterations", None) is not None:
         cargs.extend([
             "-a",
-            str(params.get("smooth_iterations"))
+            str(params.get("smooth_iterations", None))
         ])
-    if params.get("subjects_dir") is not None:
+    if params.get("subjects_dir", None) is not None:
         cargs.extend([
             "-sdir",
-            params.get("subjects_dir")
+            params.get("subjects_dir", None)
         ])
     return cargs
 
@@ -323,7 +310,6 @@ def mris_make_template(
 __all__ = [
     "MRIS_MAKE_TEMPLATE_METADATA",
     "MrisMakeTemplateOutputs",
-    "MrisMakeTemplateParameters",
     "mris_make_template",
     "mris_make_template_execute",
     "mris_make_template_params",

@@ -14,7 +14,30 @@ SURF_INFO_METADATA = Metadata(
 
 
 SurfInfoParameters = typing.TypedDict('SurfInfoParameters', {
-    "@type": typing.Literal["afni.SurfInfo"],
+    "@type": typing.NotRequired[typing.Literal["afni/SurfInfo"]],
+    "surface": InputPathType,
+    "com": bool,
+    "debug_level": typing.NotRequired[float | None],
+    "detail_level": typing.NotRequired[float | None],
+    "n_node": bool,
+    "n_faceset": bool,
+    "n_tri": bool,
+    "quiet": bool,
+    "separator": typing.NotRequired[str | None],
+    "input_surface": typing.NotRequired[str | None],
+    "surface_state": typing.NotRequired[str | None],
+    "surface_volume": typing.NotRequired[InputPathType | None],
+    "spec_file": typing.NotRequired[InputPathType | None],
+    "novolreg": bool,
+    "noxform": bool,
+    "setenv": typing.NotRequired[str | None],
+    "trace": bool,
+    "extreme_trace": bool,
+    "nomall": bool,
+    "yesmall": bool,
+})
+SurfInfoParametersTagged = typing.TypedDict('SurfInfoParametersTagged', {
+    "@type": typing.Literal["afni/SurfInfo"],
     "surface": InputPathType,
     "com": bool,
     "debug_level": typing.NotRequired[float | None],
@@ -38,41 +61,9 @@ SurfInfoParameters = typing.TypedDict('SurfInfoParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "afni.SurfInfo": surf_info_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "afni.SurfInfo": surf_info_outputs,
-    }.get(t)
-
-
 class SurfInfoOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `surf_info(...)`.
+    Output object returned when calling `SurfInfoParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -101,7 +92,7 @@ def surf_info_params(
     extreme_trace: bool = False,
     nomall: bool = False,
     yesmall: bool = False,
-) -> SurfInfoParameters:
+) -> SurfInfoParametersTagged:
     """
     Build parameters.
     
@@ -133,7 +124,7 @@ def surf_info_params(
         Parameter dictionary
     """
     params = {
-        "@type": "afni.SurfInfo",
+        "@type": "afni/SurfInfo",
         "surface": surface,
         "com": com,
         "n_node": n_node,
@@ -181,68 +172,68 @@ def surf_info_cargs(
     """
     cargs = []
     cargs.append("SurfInfo")
-    cargs.append(execution.input_file(params.get("surface")))
-    if params.get("com"):
+    cargs.append(execution.input_file(params.get("surface", None)))
+    if params.get("com", False):
         cargs.append("-COM")
-    if params.get("debug_level") is not None:
+    if params.get("debug_level", None) is not None:
         cargs.extend([
             "-debug",
-            str(params.get("debug_level"))
+            str(params.get("debug_level", None))
         ])
-    if params.get("detail_level") is not None:
+    if params.get("detail_level", None) is not None:
         cargs.extend([
             "-detail",
-            str(params.get("detail_level"))
+            str(params.get("detail_level", None))
         ])
-    if params.get("n_node"):
+    if params.get("n_node", False):
         cargs.append("-N_Node")
-    if params.get("n_faceset"):
+    if params.get("n_faceset", False):
         cargs.append("-N_FaceSet")
-    if params.get("n_tri"):
+    if params.get("n_tri", False):
         cargs.append("-N_Tri")
-    if params.get("quiet"):
+    if params.get("quiet", False):
         cargs.append("-quiet")
-    if params.get("separator") is not None:
+    if params.get("separator", None) is not None:
         cargs.extend([
             "-sep",
-            params.get("separator")
+            params.get("separator", None)
         ])
-    if params.get("input_surface") is not None:
+    if params.get("input_surface", None) is not None:
         cargs.extend([
             "-i_TYPE",
-            params.get("input_surface")
+            params.get("input_surface", None)
         ])
-    if params.get("surface_state") is not None:
+    if params.get("surface_state", None) is not None:
         cargs.extend([
             "-tsn",
-            params.get("surface_state")
+            params.get("surface_state", None)
         ])
-    if params.get("surface_volume") is not None:
+    if params.get("surface_volume", None) is not None:
         cargs.extend([
             "-sv",
-            execution.input_file(params.get("surface_volume"))
+            execution.input_file(params.get("surface_volume", None))
         ])
-    if params.get("spec_file") is not None:
+    if params.get("spec_file", None) is not None:
         cargs.extend([
             "-spec",
-            execution.input_file(params.get("spec_file"))
+            execution.input_file(params.get("spec_file", None))
         ])
-    if params.get("novolreg"):
+    if params.get("novolreg", False):
         cargs.append("-novolreg")
-    if params.get("noxform"):
+    if params.get("noxform", False):
         cargs.append("-noxform")
-    if params.get("setenv") is not None:
+    if params.get("setenv", None) is not None:
         cargs.extend([
             "-setenv",
-            params.get("setenv")
+            params.get("setenv", None)
         ])
-    if params.get("trace"):
+    if params.get("trace", False):
         cargs.append("-trace")
-    if params.get("extreme_trace"):
+    if params.get("extreme_trace", False):
         cargs.append("-TRACE")
-    if params.get("nomall"):
+    if params.get("nomall", False):
         cargs.append("-nomall")
-    if params.get("yesmall"):
+    if params.get("yesmall", False):
         cargs.append("-yesmall")
     return cargs
 
@@ -262,7 +253,7 @@ def surf_info_outputs(
     """
     ret = SurfInfoOutputs(
         root=execution.output_file("."),
-        metrics_output=execution.output_file(pathlib.Path(params.get("surface")).name + "_metrics.txt"),
+        metrics_output=execution.output_file(pathlib.Path(params.get("surface", None)).name + "_metrics.txt"),
     )
     return ret
 
@@ -383,7 +374,6 @@ def surf_info(
 __all__ = [
     "SURF_INFO_METADATA",
     "SurfInfoOutputs",
-    "SurfInfoParameters",
     "surf_info",
     "surf_info_execute",
     "surf_info_params",

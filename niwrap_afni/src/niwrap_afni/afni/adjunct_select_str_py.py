@@ -14,47 +14,22 @@ ADJUNCT_SELECT_STR_PY_METADATA = Metadata(
 
 
 AdjunctSelectStrPyParameters = typing.TypedDict('AdjunctSelectStrPyParameters', {
-    "@type": typing.Literal["afni.adjunct_select_str.py"],
+    "@type": typing.NotRequired[typing.Literal["afni/adjunct_select_str.py"]],
+    "input_file": InputPathType,
+    "num_bricks": float,
+    "output_file": str,
+})
+AdjunctSelectStrPyParametersTagged = typing.TypedDict('AdjunctSelectStrPyParametersTagged', {
+    "@type": typing.Literal["afni/adjunct_select_str.py"],
     "input_file": InputPathType,
     "num_bricks": float,
     "output_file": str,
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "afni.adjunct_select_str.py": adjunct_select_str_py_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-    }.get(t)
-
-
 class AdjunctSelectStrPyOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `adjunct_select_str_py(...)`.
+    Output object returned when calling `AdjunctSelectStrPyParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -64,7 +39,7 @@ def adjunct_select_str_py_params(
     input_file: InputPathType,
     num_bricks: float,
     output_file: str,
-) -> AdjunctSelectStrPyParameters:
+) -> AdjunctSelectStrPyParametersTagged:
     """
     Build parameters.
     
@@ -76,7 +51,7 @@ def adjunct_select_str_py_params(
         Parameter dictionary
     """
     params = {
-        "@type": "afni.adjunct_select_str.py",
+        "@type": "afni/adjunct_select_str.py",
         "input_file": input_file,
         "num_bricks": num_bricks,
         "output_file": output_file,
@@ -99,9 +74,9 @@ def adjunct_select_str_py_cargs(
     """
     cargs = []
     cargs.append("adjunct_select_str.py")
-    cargs.append(execution.input_file(params.get("input_file")))
-    cargs.append(str(params.get("num_bricks")))
-    cargs.append(params.get("output_file"))
+    cargs.append(execution.input_file(params.get("input_file", None)))
+    cargs.append(str(params.get("num_bricks", None)))
+    cargs.append(params.get("output_file", None))
     return cargs
 
 
@@ -186,7 +161,6 @@ def adjunct_select_str_py(
 __all__ = [
     "ADJUNCT_SELECT_STR_PY_METADATA",
     "AdjunctSelectStrPyOutputs",
-    "AdjunctSelectStrPyParameters",
     "adjunct_select_str_py",
     "adjunct_select_str_py_execute",
     "adjunct_select_str_py_params",

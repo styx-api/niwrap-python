@@ -14,7 +14,20 @@ SFA2FIELDSIGN_METADATA = Metadata(
 
 
 Sfa2fieldsignParameters = typing.TypedDict('Sfa2fieldsignParameters', {
-    "@type": typing.Literal["freesurfer.sfa2fieldsign"],
+    "@type": typing.NotRequired[typing.Literal["freesurfer/sfa2fieldsign"]],
+    "sfadir": str,
+    "register_dat": str,
+    "threshold": typing.NotRequired[float | None],
+    "fwhm": typing.NotRequired[float | None],
+    "proj_frac": typing.NotRequired[float | None],
+    "occip": bool,
+    "patch": typing.NotRequired[str | None],
+    "osd": typing.NotRequired[str | None],
+    "lh": bool,
+    "rh": bool,
+})
+Sfa2fieldsignParametersTagged = typing.TypedDict('Sfa2fieldsignParametersTagged', {
+    "@type": typing.Literal["freesurfer/sfa2fieldsign"],
     "sfadir": str,
     "register_dat": str,
     "threshold": typing.NotRequired[float | None],
@@ -28,41 +41,9 @@ Sfa2fieldsignParameters = typing.TypedDict('Sfa2fieldsignParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "freesurfer.sfa2fieldsign": sfa2fieldsign_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "freesurfer.sfa2fieldsign": sfa2fieldsign_outputs,
-    }.get(t)
-
-
 class Sfa2fieldsignOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `sfa2fieldsign(...)`.
+    Output object returned when calling `Sfa2fieldsignParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -97,7 +78,7 @@ def sfa2fieldsign_params(
     osd: str | None = None,
     lh: bool = False,
     rh: bool = False,
-) -> Sfa2fieldsignParameters:
+) -> Sfa2fieldsignParametersTagged:
     """
     Build parameters.
     
@@ -116,7 +97,7 @@ def sfa2fieldsign_params(
         Parameter dictionary
     """
     params = {
-        "@type": "freesurfer.sfa2fieldsign",
+        "@type": "freesurfer/sfa2fieldsign",
         "sfadir": sfadir,
         "register_dat": register_dat,
         "occip": occip,
@@ -153,42 +134,42 @@ def sfa2fieldsign_cargs(
     cargs.append("sfa2fieldsign")
     cargs.extend([
         "--sfa",
-        params.get("sfadir")
+        params.get("sfadir", None)
     ])
     cargs.extend([
         "--reg",
-        params.get("register_dat")
+        params.get("register_dat", None)
     ])
-    if params.get("threshold") is not None:
+    if params.get("threshold", None) is not None:
         cargs.extend([
             "--thresh",
-            str(params.get("threshold"))
+            str(params.get("threshold", None))
         ])
-    if params.get("fwhm") is not None:
+    if params.get("fwhm", None) is not None:
         cargs.extend([
             "--fwhm",
-            str(params.get("fwhm"))
+            str(params.get("fwhm", None))
         ])
-    if params.get("proj_frac") is not None:
+    if params.get("proj_frac", None) is not None:
         cargs.extend([
             "--proj-frac",
-            str(params.get("proj_frac"))
+            str(params.get("proj_frac", None))
         ])
-    if params.get("occip"):
+    if params.get("occip", False):
         cargs.append("--occip")
-    if params.get("patch") is not None:
+    if params.get("patch", None) is not None:
         cargs.extend([
             "--patch",
-            params.get("patch")
+            params.get("patch", None)
         ])
-    if params.get("osd") is not None:
+    if params.get("osd", None) is not None:
         cargs.extend([
             "--osd",
-            params.get("osd")
+            params.get("osd", None)
         ])
-    if params.get("lh"):
+    if params.get("lh", False):
         cargs.append("--lh")
-    if params.get("rh"):
+    if params.get("rh", False):
         cargs.append("--rh")
     return cargs
 
@@ -208,15 +189,15 @@ def sfa2fieldsign_outputs(
     """
     ret = Sfa2fieldsignOutputs(
         root=execution.output_file("."),
-        fsig_bin=execution.output_file(params.get("sfadir") + "/" + params.get("osd") + "/fsig.bin.nii") if (params.get("osd") is not None) else None,
-        eccen_masked=execution.output_file(params.get("sfadir") + "/" + params.get("osd") + "/eccen.masked.nii") if (params.get("osd") is not None) else None,
-        polar_masked=execution.output_file(params.get("sfadir") + "/" + params.get("osd") + "/polar.masked.nii") if (params.get("osd") is not None) else None,
-        left_eccen_masked_mgh=execution.output_file(params.get("sfadir") + "/" + params.get("osd") + "/lh.eccen.masked.mgh") if (params.get("osd") is not None) else None,
-        left_polar_masked_mgh=execution.output_file(params.get("sfadir") + "/" + params.get("osd") + "/lh.polar.masked.mgh") if (params.get("osd") is not None) else None,
-        left_fieldsign_masked_mgh=execution.output_file(params.get("sfadir") + "/" + params.get("osd") + "/lh.fieldsign.masked.mgh") if (params.get("osd") is not None) else None,
-        right_eccen_masked_mgh=execution.output_file(params.get("sfadir") + "/" + params.get("osd") + "/rh.eccen.masked.mgh") if (params.get("osd") is not None) else None,
-        right_polar_masked_mgh=execution.output_file(params.get("sfadir") + "/" + params.get("osd") + "/rh.polar.masked.mgh") if (params.get("osd") is not None) else None,
-        right_fieldsign_masked_mgh=execution.output_file(params.get("sfadir") + "/" + params.get("osd") + "/rh.fieldsign.masked.mgh") if (params.get("osd") is not None) else None,
+        fsig_bin=execution.output_file(params.get("sfadir", None) + "/" + params.get("osd", None) + "/fsig.bin.nii") if (params.get("osd") is not None) else None,
+        eccen_masked=execution.output_file(params.get("sfadir", None) + "/" + params.get("osd", None) + "/eccen.masked.nii") if (params.get("osd") is not None) else None,
+        polar_masked=execution.output_file(params.get("sfadir", None) + "/" + params.get("osd", None) + "/polar.masked.nii") if (params.get("osd") is not None) else None,
+        left_eccen_masked_mgh=execution.output_file(params.get("sfadir", None) + "/" + params.get("osd", None) + "/lh.eccen.masked.mgh") if (params.get("osd") is not None) else None,
+        left_polar_masked_mgh=execution.output_file(params.get("sfadir", None) + "/" + params.get("osd", None) + "/lh.polar.masked.mgh") if (params.get("osd") is not None) else None,
+        left_fieldsign_masked_mgh=execution.output_file(params.get("sfadir", None) + "/" + params.get("osd", None) + "/lh.fieldsign.masked.mgh") if (params.get("osd") is not None) else None,
+        right_eccen_masked_mgh=execution.output_file(params.get("sfadir", None) + "/" + params.get("osd", None) + "/rh.eccen.masked.mgh") if (params.get("osd") is not None) else None,
+        right_polar_masked_mgh=execution.output_file(params.get("sfadir", None) + "/" + params.get("osd", None) + "/rh.polar.masked.mgh") if (params.get("osd") is not None) else None,
+        right_fieldsign_masked_mgh=execution.output_file(params.get("sfadir", None) + "/" + params.get("osd", None) + "/rh.fieldsign.masked.mgh") if (params.get("osd") is not None) else None,
     )
     return ret
 
@@ -306,7 +287,6 @@ def sfa2fieldsign(
 __all__ = [
     "SFA2FIELDSIGN_METADATA",
     "Sfa2fieldsignOutputs",
-    "Sfa2fieldsignParameters",
     "sfa2fieldsign",
     "sfa2fieldsign_execute",
     "sfa2fieldsign_params",

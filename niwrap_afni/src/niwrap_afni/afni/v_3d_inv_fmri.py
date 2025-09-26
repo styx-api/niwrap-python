@@ -14,7 +14,21 @@ V_3D_INV_FMRI_METADATA = Metadata(
 
 
 V3dInvFmriParameters = typing.TypedDict('V3dInvFmriParameters', {
-    "@type": typing.Literal["afni.3dInvFMRI"],
+    "@type": typing.NotRequired[typing.Literal["afni/3dInvFMRI"]],
+    "input_file": InputPathType,
+    "activation_map": InputPathType,
+    "map_weight": typing.NotRequired[InputPathType | None],
+    "mask": typing.NotRequired[InputPathType | None],
+    "baseline_file": typing.NotRequired[list[InputPathType] | None],
+    "polynom_order": typing.NotRequired[float | None],
+    "output_file": typing.NotRequired[str | None],
+    "method": typing.NotRequired[str | None],
+    "alpha": typing.NotRequired[float | None],
+    "smooth_fir": bool,
+    "smooth_median": bool,
+})
+V3dInvFmriParametersTagged = typing.TypedDict('V3dInvFmriParametersTagged', {
+    "@type": typing.Literal["afni/3dInvFMRI"],
     "input_file": InputPathType,
     "activation_map": InputPathType,
     "map_weight": typing.NotRequired[InputPathType | None],
@@ -29,41 +43,9 @@ V3dInvFmriParameters = typing.TypedDict('V3dInvFmriParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "afni.3dInvFMRI": v_3d_inv_fmri_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "afni.3dInvFMRI": v_3d_inv_fmri_outputs,
-    }.get(t)
-
-
 class V3dInvFmriOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `v_3d_inv_fmri(...)`.
+    Output object returned when calling `V3dInvFmriParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -83,7 +65,7 @@ def v_3d_inv_fmri_params(
     alpha: float | None = None,
     smooth_fir: bool = False,
     smooth_median: bool = False,
-) -> V3dInvFmriParameters:
+) -> V3dInvFmriParametersTagged:
     """
     Build parameters.
     
@@ -111,7 +93,7 @@ def v_3d_inv_fmri_params(
         Parameter dictionary
     """
     params = {
-        "@type": "afni.3dInvFMRI",
+        "@type": "afni/3dInvFMRI",
         "input_file": input_file,
         "activation_map": activation_map,
         "smooth_fir": smooth_fir,
@@ -151,50 +133,50 @@ def v_3d_inv_fmri_cargs(
     cargs.append("3dInvFMRI")
     cargs.extend([
         "-data",
-        execution.input_file(params.get("input_file"))
+        execution.input_file(params.get("input_file", None))
     ])
     cargs.extend([
         "-map",
-        execution.input_file(params.get("activation_map"))
+        execution.input_file(params.get("activation_map", None))
     ])
-    if params.get("map_weight") is not None:
+    if params.get("map_weight", None) is not None:
         cargs.extend([
             "-mapwt",
-            execution.input_file(params.get("map_weight"))
+            execution.input_file(params.get("map_weight", None))
         ])
-    if params.get("mask") is not None:
+    if params.get("mask", None) is not None:
         cargs.extend([
             "-mask",
-            execution.input_file(params.get("mask"))
+            execution.input_file(params.get("mask", None))
         ])
-    if params.get("baseline_file") is not None:
+    if params.get("baseline_file", None) is not None:
         cargs.extend([
             "-base",
-            *[execution.input_file(f) for f in params.get("baseline_file")]
+            *[execution.input_file(f) for f in params.get("baseline_file", None)]
         ])
-    if params.get("polynom_order") is not None:
+    if params.get("polynom_order", None) is not None:
         cargs.extend([
             "-polort",
-            str(params.get("polynom_order"))
+            str(params.get("polynom_order", None))
         ])
-    if params.get("output_file") is not None:
+    if params.get("output_file", None) is not None:
         cargs.extend([
             "-out",
-            params.get("output_file")
+            params.get("output_file", None)
         ])
-    if params.get("method") is not None:
+    if params.get("method", None) is not None:
         cargs.extend([
             "-method",
-            params.get("method")
+            params.get("method", None)
         ])
-    if params.get("alpha") is not None:
+    if params.get("alpha", None) is not None:
         cargs.extend([
             "-alpha",
-            str(params.get("alpha"))
+            str(params.get("alpha", None))
         ])
-    if params.get("smooth_fir"):
+    if params.get("smooth_fir", False):
         cargs.append("-fir5")
-    if params.get("smooth_median"):
+    if params.get("smooth_median", False):
         cargs.append("-median5")
     return cargs
 
@@ -214,7 +196,7 @@ def v_3d_inv_fmri_outputs(
     """
     ret = V3dInvFmriOutputs(
         root=execution.output_file("."),
-        outfile=execution.output_file(params.get("output_file")) if (params.get("output_file") is not None) else None,
+        outfile=execution.output_file(params.get("output_file", None)) if (params.get("output_file") is not None) else None,
     )
     return ret
 
@@ -314,7 +296,6 @@ def v_3d_inv_fmri(
 
 __all__ = [
     "V3dInvFmriOutputs",
-    "V3dInvFmriParameters",
     "V_3D_INV_FMRI_METADATA",
     "v_3d_inv_fmri",
     "v_3d_inv_fmri_execute",

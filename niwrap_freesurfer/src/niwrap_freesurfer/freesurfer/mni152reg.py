@@ -14,7 +14,15 @@ MNI152REG_METADATA = Metadata(
 
 
 Mni152regParameters = typing.TypedDict('Mni152regParameters', {
-    "@type": typing.Literal["freesurfer.mni152reg"],
+    "@type": typing.NotRequired[typing.Literal["freesurfer/mni152reg"]],
+    "subject": str,
+    "register_1mm": bool,
+    "output": typing.NotRequired[str | None],
+    "symmetric": bool,
+    "save_volume": bool,
+})
+Mni152regParametersTagged = typing.TypedDict('Mni152regParametersTagged', {
+    "@type": typing.Literal["freesurfer/mni152reg"],
     "subject": str,
     "register_1mm": bool,
     "output": typing.NotRequired[str | None],
@@ -23,41 +31,9 @@ Mni152regParameters = typing.TypedDict('Mni152regParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "freesurfer.mni152reg": mni152reg_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "freesurfer.mni152reg": mni152reg_outputs,
-    }.get(t)
-
-
 class Mni152regOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `mni152reg(...)`.
+    Output object returned when calling `Mni152regParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -73,7 +49,7 @@ def mni152reg_params(
     output: str | None = None,
     symmetric: bool = False,
     save_volume: bool = False,
-) -> Mni152regParameters:
+) -> Mni152regParametersTagged:
     """
     Build parameters.
     
@@ -87,7 +63,7 @@ def mni152reg_params(
         Parameter dictionary
     """
     params = {
-        "@type": "freesurfer.mni152reg",
+        "@type": "freesurfer/mni152reg",
         "subject": subject,
         "register_1mm": register_1mm,
         "symmetric": symmetric,
@@ -115,18 +91,18 @@ def mni152reg_cargs(
     cargs.append("mni152reg")
     cargs.extend([
         "-s",
-        params.get("subject")
+        params.get("subject", None)
     ])
-    if params.get("register_1mm"):
+    if params.get("register_1mm", False):
         cargs.append("--1")
-    if params.get("output") is not None:
+    if params.get("output", None) is not None:
         cargs.extend([
             "--o",
-            params.get("output")
+            params.get("output", None)
         ])
-    if params.get("symmetric"):
+    if params.get("symmetric", False):
         cargs.append("--sym")
-    if params.get("save_volume"):
+    if params.get("save_volume", False):
         cargs.append("--save-vol")
     return cargs
 
@@ -146,8 +122,8 @@ def mni152reg_outputs(
     """
     ret = Mni152regOutputs(
         root=execution.output_file("."),
-        reg_matrix_2mm=execution.output_file("$SUBJECTS_DIR/" + params.get("subject") + "/mri/transforms/reg.mni152.2mm.dat"),
-        reg_matrix_1mm=execution.output_file("$SUBJECTS_DIR/" + params.get("subject") + "/mri/transforms/reg.mni152.1mm.dat"),
+        reg_matrix_2mm=execution.output_file("$SUBJECTS_DIR/" + params.get("subject", None) + "/mri/transforms/reg.mni152.2mm.dat"),
+        reg_matrix_1mm=execution.output_file("$SUBJECTS_DIR/" + params.get("subject", None) + "/mri/transforms/reg.mni152.1mm.dat"),
     )
     return ret
 
@@ -222,7 +198,6 @@ def mni152reg(
 __all__ = [
     "MNI152REG_METADATA",
     "Mni152regOutputs",
-    "Mni152regParameters",
     "mni152reg",
     "mni152reg_execute",
     "mni152reg_params",

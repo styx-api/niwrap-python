@@ -14,7 +14,18 @@ BEDPOSTX_METADATA = Metadata(
 
 
 BedpostxParameters = typing.TypedDict('BedpostxParameters', {
-    "@type": typing.Literal["fsl.bedpostx"],
+    "@type": typing.NotRequired[typing.Literal["fsl/bedpostx"]],
+    "subject_dir": str,
+    "num_fibres": typing.NotRequired[float | None],
+    "ard_weight": typing.NotRequired[float | None],
+    "burnin": typing.NotRequired[float | None],
+    "num_jumps": typing.NotRequired[float | None],
+    "sample_every": typing.NotRequired[float | None],
+    "model_type": typing.NotRequired[float | None],
+    "grad_nonlinear": bool,
+})
+BedpostxParametersTagged = typing.TypedDict('BedpostxParametersTagged', {
+    "@type": typing.Literal["fsl/bedpostx"],
     "subject_dir": str,
     "num_fibres": typing.NotRequired[float | None],
     "ard_weight": typing.NotRequired[float | None],
@@ -26,41 +37,9 @@ BedpostxParameters = typing.TypedDict('BedpostxParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "fsl.bedpostx": bedpostx_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "fsl.bedpostx": bedpostx_outputs,
-    }.get(t)
-
-
 class BedpostxOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `bedpostx(...)`.
+    Output object returned when calling `BedpostxParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -79,7 +58,7 @@ def bedpostx_params(
     sample_every: float | None = None,
     model_type: float | None = None,
     grad_nonlinear: bool = False,
-) -> BedpostxParameters:
+) -> BedpostxParametersTagged:
     """
     Build parameters.
     
@@ -100,7 +79,7 @@ def bedpostx_params(
         Parameter dictionary
     """
     params = {
-        "@type": "fsl.bedpostx",
+        "@type": "fsl/bedpostx",
         "subject_dir": subject_dir,
         "grad_nonlinear": grad_nonlinear,
     }
@@ -134,38 +113,38 @@ def bedpostx_cargs(
     """
     cargs = []
     cargs.append("bedpostx")
-    cargs.append(params.get("subject_dir"))
-    if params.get("num_fibres") is not None:
+    cargs.append(params.get("subject_dir", None))
+    if params.get("num_fibres", None) is not None:
         cargs.extend([
             "-n",
-            str(params.get("num_fibres"))
+            str(params.get("num_fibres", None))
         ])
-    if params.get("ard_weight") is not None:
+    if params.get("ard_weight", None) is not None:
         cargs.extend([
             "-w",
-            str(params.get("ard_weight"))
+            str(params.get("ard_weight", None))
         ])
-    if params.get("burnin") is not None:
+    if params.get("burnin", None) is not None:
         cargs.extend([
             "-b",
-            str(params.get("burnin"))
+            str(params.get("burnin", None))
         ])
-    if params.get("num_jumps") is not None:
+    if params.get("num_jumps", None) is not None:
         cargs.extend([
             "-j",
-            str(params.get("num_jumps"))
+            str(params.get("num_jumps", None))
         ])
-    if params.get("sample_every") is not None:
+    if params.get("sample_every", None) is not None:
         cargs.extend([
             "-s",
-            str(params.get("sample_every"))
+            str(params.get("sample_every", None))
         ])
-    if params.get("model_type") is not None:
+    if params.get("model_type", None) is not None:
         cargs.extend([
             "-model",
-            str(params.get("model_type"))
+            str(params.get("model_type", None))
         ])
-    if params.get("grad_nonlinear"):
+    if params.get("grad_nonlinear", False):
         cargs.append("-g")
     return cargs
 
@@ -185,8 +164,8 @@ def bedpostx_outputs(
     """
     ret = BedpostxOutputs(
         root=execution.output_file("."),
-        xfms_output=execution.output_file(params.get("subject_dir") + "_bedpostx/xfms"),
-        diff_slices_output=execution.output_file(params.get("subject_dir") + "_bedpostx/diff_slices"),
+        xfms_output=execution.output_file(params.get("subject_dir", None) + "_bedpostx/xfms"),
+        diff_slices_output=execution.output_file(params.get("subject_dir", None) + "_bedpostx/diff_slices"),
     )
     return ret
 
@@ -274,7 +253,6 @@ def bedpostx(
 __all__ = [
     "BEDPOSTX_METADATA",
     "BedpostxOutputs",
-    "BedpostxParameters",
     "bedpostx",
     "bedpostx_execute",
     "bedpostx_params",

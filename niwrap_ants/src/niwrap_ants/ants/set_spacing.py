@@ -14,7 +14,14 @@ SET_SPACING_METADATA = Metadata(
 
 
 SetSpacingParameters = typing.TypedDict('SetSpacingParameters', {
-    "@type": typing.Literal["ants.SetSpacing"],
+    "@type": typing.NotRequired[typing.Literal["ants/SetSpacing"]],
+    "dimension": int,
+    "input_file": InputPathType,
+    "output_file": str,
+    "spacing": list[float],
+})
+SetSpacingParametersTagged = typing.TypedDict('SetSpacingParametersTagged', {
+    "@type": typing.Literal["ants/SetSpacing"],
     "dimension": int,
     "input_file": InputPathType,
     "output_file": str,
@@ -22,41 +29,9 @@ SetSpacingParameters = typing.TypedDict('SetSpacingParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "ants.SetSpacing": set_spacing_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "ants.SetSpacing": set_spacing_outputs,
-    }.get(t)
-
-
 class SetSpacingOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `set_spacing(...)`.
+    Output object returned when calling `SetSpacingParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -69,7 +44,7 @@ def set_spacing_params(
     input_file: InputPathType,
     output_file: str,
     spacing: list[float],
-) -> SetSpacingParameters:
+) -> SetSpacingParametersTagged:
     """
     Build parameters.
     
@@ -83,7 +58,7 @@ def set_spacing_params(
         Parameter dictionary
     """
     params = {
-        "@type": "ants.SetSpacing",
+        "@type": "ants/SetSpacing",
         "dimension": dimension,
         "input_file": input_file,
         "output_file": output_file,
@@ -107,10 +82,10 @@ def set_spacing_cargs(
     """
     cargs = []
     cargs.append("SetSpacing")
-    cargs.append(str(params.get("dimension")))
-    cargs.append(execution.input_file(params.get("input_file")))
-    cargs.append(params.get("output_file"))
-    cargs.extend(map(str, params.get("spacing")))
+    cargs.append(str(params.get("dimension", None)))
+    cargs.append(execution.input_file(params.get("input_file", None)))
+    cargs.append(params.get("output_file", None))
+    cargs.extend(map(str, params.get("spacing", None)))
     return cargs
 
 
@@ -129,7 +104,7 @@ def set_spacing_outputs(
     """
     ret = SetSpacingOutputs(
         root=execution.output_file("."),
-        output_image=execution.output_file(params.get("output_file")),
+        output_image=execution.output_file(params.get("output_file", None)),
     )
     return ret
 
@@ -200,7 +175,6 @@ def set_spacing(
 __all__ = [
     "SET_SPACING_METADATA",
     "SetSpacingOutputs",
-    "SetSpacingParameters",
     "set_spacing",
     "set_spacing_execute",
     "set_spacing_params",

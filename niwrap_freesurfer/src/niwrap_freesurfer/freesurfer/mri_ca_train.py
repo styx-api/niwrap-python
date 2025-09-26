@@ -14,7 +14,24 @@ MRI_CA_TRAIN_METADATA = Metadata(
 
 
 MriCaTrainParameters = typing.TypedDict('MriCaTrainParameters', {
-    "@type": typing.Literal["freesurfer.mri_ca_train"],
+    "@type": typing.NotRequired[typing.Literal["freesurfer/mri_ca_train"]],
+    "subjects": list[str],
+    "output_gca": str,
+    "segmentation": str,
+    "transform": typing.NotRequired[str | None],
+    "mask_volume": typing.NotRequired[str | None],
+    "node_spacing": typing.NotRequired[str | None],
+    "prior_spacing": typing.NotRequired[str | None],
+    "input_training": typing.NotRequired[list[str] | None],
+    "symmetrize": bool,
+    "makesym": typing.NotRequired[list[str] | None],
+    "check_symmetry": typing.NotRequired[list[str] | None],
+    "sanity_check": bool,
+    "threads": typing.NotRequired[int | None],
+    "done_file": typing.NotRequired[str | None],
+})
+MriCaTrainParametersTagged = typing.TypedDict('MriCaTrainParametersTagged', {
+    "@type": typing.Literal["freesurfer/mri_ca_train"],
     "subjects": list[str],
     "output_gca": str,
     "segmentation": str,
@@ -32,40 +49,9 @@ MriCaTrainParameters = typing.TypedDict('MriCaTrainParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "freesurfer.mri_ca_train": mri_ca_train_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-    }.get(t)
-
-
 class MriCaTrainOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `mri_ca_train(...)`.
+    Output object returned when calling `MriCaTrainParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -86,7 +72,7 @@ def mri_ca_train_params(
     sanity_check: bool = False,
     threads: int | None = None,
     done_file: str | None = None,
-) -> MriCaTrainParameters:
+) -> MriCaTrainParametersTagged:
     """
     Build parameters.
     
@@ -116,7 +102,7 @@ def mri_ca_train_params(
         Parameter dictionary
     """
     params = {
-        "@type": "freesurfer.mri_ca_train",
+        "@type": "freesurfer/mri_ca_train",
         "subjects": subjects,
         "output_gca": output_gca,
         "segmentation": segmentation,
@@ -159,60 +145,60 @@ def mri_ca_train_cargs(
     """
     cargs = []
     cargs.append("mri_ca_train")
-    cargs.extend(params.get("subjects"))
-    cargs.append(params.get("output_gca"))
+    cargs.extend(params.get("subjects", None))
+    cargs.append(params.get("output_gca", None))
     cargs.extend([
         "-seg",
-        params.get("segmentation")
+        params.get("segmentation", None)
     ])
-    if params.get("transform") is not None:
+    if params.get("transform", None) is not None:
         cargs.extend([
             "-xform",
-            params.get("transform")
+            params.get("transform", None)
         ])
-    if params.get("mask_volume") is not None:
+    if params.get("mask_volume", None) is not None:
         cargs.extend([
             "-mask",
-            params.get("mask_volume")
+            params.get("mask_volume", None)
         ])
-    if params.get("node_spacing") is not None:
+    if params.get("node_spacing", None) is not None:
         cargs.extend([
             "-node_spacing",
-            params.get("node_spacing")
+            params.get("node_spacing", None)
         ])
-    if params.get("prior_spacing") is not None:
+    if params.get("prior_spacing", None) is not None:
         cargs.extend([
             "-prior_spacing",
-            params.get("prior_spacing")
+            params.get("prior_spacing", None)
         ])
-    if params.get("input_training") is not None:
+    if params.get("input_training", None) is not None:
         cargs.extend([
             "-input",
-            *params.get("input_training")
+            *params.get("input_training", None)
         ])
-    if params.get("symmetrize"):
+    if params.get("symmetrize", False):
         cargs.append("-sym")
-    if params.get("makesym") is not None:
+    if params.get("makesym", None) is not None:
         cargs.extend([
             "-makesym",
-            *params.get("makesym")
+            *params.get("makesym", None)
         ])
-    if params.get("check_symmetry") is not None:
+    if params.get("check_symmetry", None) is not None:
         cargs.extend([
             "-checksym",
-            *params.get("check_symmetry")
+            *params.get("check_symmetry", None)
         ])
-    if params.get("sanity_check"):
+    if params.get("sanity_check", False):
         cargs.append("-check")
-    if params.get("threads") is not None:
+    if params.get("threads", None) is not None:
         cargs.extend([
             "-threads",
-            str(params.get("threads"))
+            str(params.get("threads", None))
         ])
-    if params.get("done_file") is not None:
+    if params.get("done_file", None) is not None:
         cargs.extend([
             "-done",
-            params.get("done_file")
+            params.get("done_file", None)
         ])
     return cargs
 
@@ -340,7 +326,6 @@ def mri_ca_train(
 __all__ = [
     "MRI_CA_TRAIN_METADATA",
     "MriCaTrainOutputs",
-    "MriCaTrainParameters",
     "mri_ca_train",
     "mri_ca_train_execute",
     "mri_ca_train_params",

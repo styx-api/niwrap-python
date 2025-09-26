@@ -14,7 +14,15 @@ I_MATH_METADATA = Metadata(
 
 
 IMathParameters = typing.TypedDict('IMathParameters', {
-    "@type": typing.Literal["ants.iMath"],
+    "@type": typing.NotRequired[typing.Literal["ants/iMath"]],
+    "image_dimension": typing.Literal[2, 3, 4],
+    "output_image": str,
+    "operations": str,
+    "image1": InputPathType,
+    "image2": typing.NotRequired[InputPathType | None],
+})
+IMathParametersTagged = typing.TypedDict('IMathParametersTagged', {
+    "@type": typing.Literal["ants/iMath"],
     "image_dimension": typing.Literal[2, 3, 4],
     "output_image": str,
     "operations": str,
@@ -23,41 +31,9 @@ IMathParameters = typing.TypedDict('IMathParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "ants.iMath": i_math_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "ants.iMath": i_math_outputs,
-    }.get(t)
-
-
 class IMathOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `i_math(...)`.
+    Output object returned when calling `IMathParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -71,7 +47,7 @@ def i_math_params(
     operations: str,
     image1: InputPathType,
     image2: InputPathType | None = None,
-) -> IMathParameters:
+) -> IMathParametersTagged:
     """
     Build parameters.
     
@@ -86,7 +62,7 @@ def i_math_params(
         Parameter dictionary
     """
     params = {
-        "@type": "ants.iMath",
+        "@type": "ants/iMath",
         "image_dimension": image_dimension,
         "output_image": output_image,
         "operations": operations,
@@ -112,12 +88,12 @@ def i_math_cargs(
     """
     cargs = []
     cargs.append("iMath")
-    cargs.append(str(params.get("image_dimension")))
-    cargs.append(params.get("output_image"))
-    cargs.append(params.get("operations"))
-    cargs.append(execution.input_file(params.get("image1")))
-    if params.get("image2") is not None:
-        cargs.append(execution.input_file(params.get("image2")))
+    cargs.append(str(params.get("image_dimension", None)))
+    cargs.append(params.get("output_image", None))
+    cargs.append(params.get("operations", None))
+    cargs.append(execution.input_file(params.get("image1", None)))
+    if params.get("image2", None) is not None:
+        cargs.append(execution.input_file(params.get("image2", None)))
     return cargs
 
 
@@ -136,7 +112,7 @@ def i_math_outputs(
     """
     ret = IMathOutputs(
         root=execution.output_file("."),
-        resulting_image=execution.output_file(params.get("output_image")),
+        resulting_image=execution.output_file(params.get("output_image", None)),
     )
     return ret
 
@@ -211,7 +187,6 @@ def i_math(
 
 __all__ = [
     "IMathOutputs",
-    "IMathParameters",
     "I_MATH_METADATA",
     "i_math",
     "i_math_execute",

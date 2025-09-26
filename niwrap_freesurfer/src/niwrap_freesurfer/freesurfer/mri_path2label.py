@@ -14,7 +14,21 @@ MRI_PATH2LABEL_METADATA = Metadata(
 
 
 MriPath2labelParameters = typing.TypedDict('MriPath2labelParameters', {
-    "@type": typing.Literal["freesurfer.mri_path2label"],
+    "@type": typing.NotRequired[typing.Literal["freesurfer/mri_path2label"]],
+    "input_file": str,
+    "output_file": str,
+    "single": bool,
+    "path_to_label": bool,
+    "label_to_path": bool,
+    "connect": typing.NotRequired[list[str] | None],
+    "fill": typing.NotRequired[list[str] | None],
+    "confillx": typing.NotRequired[list[str] | None],
+    "confill": typing.NotRequired[list[str] | None],
+    "source_file": typing.NotRequired[str | None],
+    "dest_file": typing.NotRequired[str | None],
+})
+MriPath2labelParametersTagged = typing.TypedDict('MriPath2labelParametersTagged', {
+    "@type": typing.Literal["freesurfer/mri_path2label"],
     "input_file": str,
     "output_file": str,
     "single": bool,
@@ -29,40 +43,9 @@ MriPath2labelParameters = typing.TypedDict('MriPath2labelParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "freesurfer.mri_path2label": mri_path2label_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-    }.get(t)
-
-
 class MriPath2labelOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `mri_path2label(...)`.
+    Output object returned when calling `MriPath2labelParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -80,7 +63,7 @@ def mri_path2label_params(
     confill: list[str] | None = None,
     source_file: str | None = None,
     dest_file: str | None = None,
-) -> MriPath2labelParameters:
+) -> MriPath2labelParametersTagged:
     """
     Build parameters.
     
@@ -104,7 +87,7 @@ def mri_path2label_params(
         Parameter dictionary
     """
     params = {
-        "@type": "freesurfer.mri_path2label",
+        "@type": "freesurfer/mri_path2label",
         "input_file": input_file,
         "output_file": output_file,
         "single": single,
@@ -141,43 +124,43 @@ def mri_path2label_cargs(
     """
     cargs = []
     cargs.append("mri_path2label")
-    cargs.append(params.get("input_file"))
-    cargs.append(params.get("output_file"))
-    if params.get("single"):
+    cargs.append(params.get("input_file", None))
+    cargs.append(params.get("output_file", None))
+    if params.get("single", False):
         cargs.append("--single")
-    if params.get("path_to_label"):
+    if params.get("path_to_label", False):
         cargs.append("--path2label")
-    if params.get("label_to_path"):
+    if params.get("label_to_path", False):
         cargs.append("--label2path")
-    if params.get("connect") is not None:
+    if params.get("connect", None) is not None:
         cargs.extend([
             "--connect",
-            *params.get("connect")
+            *params.get("connect", None)
         ])
-    if params.get("fill") is not None:
+    if params.get("fill", None) is not None:
         cargs.extend([
             "--fill",
-            *params.get("fill")
+            *params.get("fill", None)
         ])
-    if params.get("confillx") is not None:
+    if params.get("confillx", None) is not None:
         cargs.extend([
             "--confillx",
-            *params.get("confillx")
+            *params.get("confillx", None)
         ])
-    if params.get("confill") is not None:
+    if params.get("confill", None) is not None:
         cargs.extend([
             "--confill",
-            *params.get("confill")
+            *params.get("confill", None)
         ])
-    if params.get("source_file") is not None:
+    if params.get("source_file", None) is not None:
         cargs.extend([
             "--i",
-            params.get("source_file")
+            params.get("source_file", None)
         ])
-    if params.get("dest_file") is not None:
+    if params.get("dest_file", None) is not None:
         cargs.extend([
             "--o",
-            params.get("dest_file")
+            params.get("dest_file", None)
         ])
     return cargs
 
@@ -291,7 +274,6 @@ def mri_path2label(
 __all__ = [
     "MRI_PATH2LABEL_METADATA",
     "MriPath2labelOutputs",
-    "MriPath2labelParameters",
     "mri_path2label",
     "mri_path2label_execute",
     "mri_path2label_params",

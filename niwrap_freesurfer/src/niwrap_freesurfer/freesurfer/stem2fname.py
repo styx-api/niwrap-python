@@ -14,46 +14,18 @@ STEM2FNAME_METADATA = Metadata(
 
 
 Stem2fnameParameters = typing.TypedDict('Stem2fnameParameters', {
-    "@type": typing.Literal["freesurfer.stem2fname"],
+    "@type": typing.NotRequired[typing.Literal["freesurfer/stem2fname"]],
+    "stem": str,
+})
+Stem2fnameParametersTagged = typing.TypedDict('Stem2fnameParametersTagged', {
+    "@type": typing.Literal["freesurfer/stem2fname"],
     "stem": str,
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "freesurfer.stem2fname": stem2fname_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "freesurfer.stem2fname": stem2fname_outputs,
-    }.get(t)
-
-
 class Stem2fnameOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `stem2fname(...)`.
+    Output object returned when calling `Stem2fnameParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -64,7 +36,7 @@ class Stem2fnameOutputs(typing.NamedTuple):
 
 def stem2fname_params(
     stem: str,
-) -> Stem2fnameParameters:
+) -> Stem2fnameParametersTagged:
     """
     Build parameters.
     
@@ -74,7 +46,7 @@ def stem2fname_params(
         Parameter dictionary
     """
     params = {
-        "@type": "freesurfer.stem2fname",
+        "@type": "freesurfer/stem2fname",
         "stem": stem,
     }
     return params
@@ -95,7 +67,7 @@ def stem2fname_cargs(
     """
     cargs = []
     cargs.append("stem2fname")
-    cargs.append(params.get("stem"))
+    cargs.append(params.get("stem", None))
     return cargs
 
 
@@ -114,7 +86,7 @@ def stem2fname_outputs(
     """
     ret = Stem2fnameOutputs(
         root=execution.output_file("."),
-        output_file=execution.output_file(params.get("stem") + ".[FORMAT]"),
+        output_file=execution.output_file(params.get("stem", None) + ".[FORMAT]"),
     )
     return ret
 
@@ -177,7 +149,6 @@ def stem2fname(
 __all__ = [
     "STEM2FNAME_METADATA",
     "Stem2fnameOutputs",
-    "Stem2fnameParameters",
     "stem2fname",
     "stem2fname_execute",
     "stem2fname_params",

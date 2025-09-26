@@ -14,7 +14,15 @@ MRIS_CA_DEFORM_METADATA = Metadata(
 
 
 MrisCaDeformParameters = typing.TypedDict('MrisCaDeformParameters', {
-    "@type": typing.Literal["freesurfer.mris_ca_deform"],
+    "@type": typing.NotRequired[typing.Literal["freesurfer/mris_ca_deform"]],
+    "input_surface": InputPathType,
+    "label_vol": InputPathType,
+    "transform": InputPathType,
+    "intensity_vol": InputPathType,
+    "output_surface": str,
+})
+MrisCaDeformParametersTagged = typing.TypedDict('MrisCaDeformParametersTagged', {
+    "@type": typing.Literal["freesurfer/mris_ca_deform"],
     "input_surface": InputPathType,
     "label_vol": InputPathType,
     "transform": InputPathType,
@@ -23,41 +31,9 @@ MrisCaDeformParameters = typing.TypedDict('MrisCaDeformParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "freesurfer.mris_ca_deform": mris_ca_deform_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "freesurfer.mris_ca_deform": mris_ca_deform_outputs,
-    }.get(t)
-
-
 class MrisCaDeformOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `mris_ca_deform(...)`.
+    Output object returned when calling `MrisCaDeformParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -71,7 +47,7 @@ def mris_ca_deform_params(
     transform: InputPathType,
     intensity_vol: InputPathType,
     output_surface: str,
-) -> MrisCaDeformParameters:
+) -> MrisCaDeformParametersTagged:
     """
     Build parameters.
     
@@ -87,7 +63,7 @@ def mris_ca_deform_params(
         Parameter dictionary
     """
     params = {
-        "@type": "freesurfer.mris_ca_deform",
+        "@type": "freesurfer/mris_ca_deform",
         "input_surface": input_surface,
         "label_vol": label_vol,
         "transform": transform,
@@ -112,11 +88,11 @@ def mris_ca_deform_cargs(
     """
     cargs = []
     cargs.append("mris_ca_deform")
-    cargs.append(execution.input_file(params.get("input_surface")))
-    cargs.append(execution.input_file(params.get("label_vol")))
-    cargs.append(execution.input_file(params.get("transform")))
-    cargs.append(execution.input_file(params.get("intensity_vol")))
-    cargs.append(params.get("output_surface"))
+    cargs.append(execution.input_file(params.get("input_surface", None)))
+    cargs.append(execution.input_file(params.get("label_vol", None)))
+    cargs.append(execution.input_file(params.get("transform", None)))
+    cargs.append(execution.input_file(params.get("intensity_vol", None)))
+    cargs.append(params.get("output_surface", None))
     return cargs
 
 
@@ -135,7 +111,7 @@ def mris_ca_deform_outputs(
     """
     ret = MrisCaDeformOutputs(
         root=execution.output_file("."),
-        deformed_surface=execution.output_file(params.get("output_surface")),
+        deformed_surface=execution.output_file(params.get("output_surface", None)),
     )
     return ret
 
@@ -210,7 +186,6 @@ def mris_ca_deform(
 __all__ = [
     "MRIS_CA_DEFORM_METADATA",
     "MrisCaDeformOutputs",
-    "MrisCaDeformParameters",
     "mris_ca_deform",
     "mris_ca_deform_execute",
     "mris_ca_deform_params",

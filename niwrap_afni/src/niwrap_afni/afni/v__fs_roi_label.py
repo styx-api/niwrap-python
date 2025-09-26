@@ -14,7 +14,19 @@ V__FS_ROI_LABEL_METADATA = Metadata(
 
 
 VFsRoiLabelParameters = typing.TypedDict('VFsRoiLabelParameters', {
-    "@type": typing.Literal["afni.@FS_roi_label"],
+    "@type": typing.NotRequired[typing.Literal["afni/@FS_roi_label"]],
+    "label_int": typing.NotRequired[float | None],
+    "lab_flag": typing.NotRequired[float | None],
+    "rank_int": typing.NotRequired[float | None],
+    "rankmap_file": typing.NotRequired[InputPathType | None],
+    "name": typing.NotRequired[str | None],
+    "labeltable_file": typing.NotRequired[InputPathType | None],
+    "surf_annot_cmap": typing.NotRequired[InputPathType | None],
+    "slab_int": typing.NotRequired[float | None],
+    "sname_name": typing.NotRequired[str | None],
+})
+VFsRoiLabelParametersTagged = typing.TypedDict('VFsRoiLabelParametersTagged', {
+    "@type": typing.Literal["afni/@FS_roi_label"],
     "label_int": typing.NotRequired[float | None],
     "lab_flag": typing.NotRequired[float | None],
     "rank_int": typing.NotRequired[float | None],
@@ -27,40 +39,9 @@ VFsRoiLabelParameters = typing.TypedDict('VFsRoiLabelParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "afni.@FS_roi_label": v__fs_roi_label_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-    }.get(t)
-
-
 class VFsRoiLabelOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `v__fs_roi_label(...)`.
+    Output object returned when calling `VFsRoiLabelParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -76,7 +57,7 @@ def v__fs_roi_label_params(
     surf_annot_cmap: InputPathType | None = None,
     slab_int: float | None = None,
     sname_name: str | None = None,
-) -> VFsRoiLabelParameters:
+) -> VFsRoiLabelParametersTagged:
     """
     Build parameters.
     
@@ -99,7 +80,7 @@ def v__fs_roi_label_params(
         Parameter dictionary
     """
     params = {
-        "@type": "afni.@FS_roi_label",
+        "@type": "afni/@FS_roi_label",
     }
     if label_int is not None:
         params["label_int"] = label_int
@@ -137,47 +118,47 @@ def v__fs_roi_label_cargs(
     """
     cargs = []
     cargs.append("@FS_roi_label")
-    if params.get("label_int") is not None:
-        cargs.append(str(params.get("label_int")))
-    if params.get("lab_flag") is not None:
+    if params.get("label_int", None) is not None:
+        cargs.append(str(params.get("label_int", None)))
+    if params.get("lab_flag", None) is not None:
         cargs.extend([
             "-lab",
-            str(params.get("lab_flag"))
+            str(params.get("lab_flag", None))
         ])
-    if params.get("rank_int") is not None:
+    if params.get("rank_int", None) is not None:
         cargs.extend([
             "-rank",
-            str(params.get("rank_int"))
+            str(params.get("rank_int", None))
         ])
-    if params.get("rankmap_file") is not None:
+    if params.get("rankmap_file", None) is not None:
         cargs.extend([
             "-rankmap",
-            execution.input_file(params.get("rankmap_file"))
+            execution.input_file(params.get("rankmap_file", None))
         ])
-    if params.get("name") is not None:
+    if params.get("name", None) is not None:
         cargs.extend([
             "-name",
-            params.get("name")
+            params.get("name", None)
         ])
-    if params.get("labeltable_file") is not None:
+    if params.get("labeltable_file", None) is not None:
         cargs.extend([
             "-labeltable",
-            execution.input_file(params.get("labeltable_file"))
+            execution.input_file(params.get("labeltable_file", None))
         ])
-    if params.get("surf_annot_cmap") is not None:
+    if params.get("surf_annot_cmap", None) is not None:
         cargs.extend([
             "-surf_annot_cmap",
-            execution.input_file(params.get("surf_annot_cmap"))
+            execution.input_file(params.get("surf_annot_cmap", None))
         ])
-    if params.get("slab_int") is not None:
+    if params.get("slab_int", None) is not None:
         cargs.extend([
             "-slab",
-            str(params.get("slab_int"))
+            str(params.get("slab_int", None))
         ])
-    if params.get("sname_name") is not None:
+    if params.get("sname_name", None) is not None:
         cargs.extend([
             "-sname",
-            params.get("sname_name")
+            params.get("sname_name", None)
         ])
     return cargs
 
@@ -287,7 +268,6 @@ def v__fs_roi_label(
 
 __all__ = [
     "VFsRoiLabelOutputs",
-    "VFsRoiLabelParameters",
     "V__FS_ROI_LABEL_METADATA",
     "v__fs_roi_label",
     "v__fs_roi_label_execute",

@@ -14,7 +14,24 @@ MRI_WARP_CONVERT_METADATA = Metadata(
 
 
 MriWarpConvertParameters = typing.TypedDict('MriWarpConvertParameters', {
-    "@type": typing.Literal["freesurfer.mri_warp_convert"],
+    "@type": typing.NotRequired[typing.Literal["freesurfer/mri_warp_convert"]],
+    "inm3z": typing.NotRequired[InputPathType | None],
+    "infsl": typing.NotRequired[InputPathType | None],
+    "inlps": typing.NotRequired[InputPathType | None],
+    "initk": typing.NotRequired[InputPathType | None],
+    "inras": typing.NotRequired[InputPathType | None],
+    "invox": typing.NotRequired[InputPathType | None],
+    "outm3z": typing.NotRequired[str | None],
+    "outfsl": typing.NotRequired[str | None],
+    "outlps": typing.NotRequired[str | None],
+    "outitk": typing.NotRequired[str | None],
+    "outras": typing.NotRequired[str | None],
+    "outvox": typing.NotRequired[str | None],
+    "insrcgeom": typing.NotRequired[InputPathType | None],
+    "downsample": bool,
+})
+MriWarpConvertParametersTagged = typing.TypedDict('MriWarpConvertParametersTagged', {
+    "@type": typing.Literal["freesurfer/mri_warp_convert"],
     "inm3z": typing.NotRequired[InputPathType | None],
     "infsl": typing.NotRequired[InputPathType | None],
     "inlps": typing.NotRequired[InputPathType | None],
@@ -32,41 +49,9 @@ MriWarpConvertParameters = typing.TypedDict('MriWarpConvertParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "freesurfer.mri_warp_convert": mri_warp_convert_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "freesurfer.mri_warp_convert": mri_warp_convert_outputs,
-    }.get(t)
-
-
 class MriWarpConvertOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `mri_warp_convert(...)`.
+    Output object returned when calling `MriWarpConvertParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -89,7 +74,7 @@ def mri_warp_convert_params(
     outvox: str | None = None,
     insrcgeom: InputPathType | None = None,
     downsample: bool = False,
-) -> MriWarpConvertParameters:
+) -> MriWarpConvertParametersTagged:
     """
     Build parameters.
     
@@ -112,7 +97,7 @@ def mri_warp_convert_params(
         Parameter dictionary
     """
     params = {
-        "@type": "freesurfer.mri_warp_convert",
+        "@type": "freesurfer/mri_warp_convert",
         "downsample": downsample,
     }
     if inm3z is not None:
@@ -159,72 +144,72 @@ def mri_warp_convert_cargs(
     """
     cargs = []
     cargs.append("mri_warp_convert")
-    if params.get("inm3z") is not None:
+    if params.get("inm3z", None) is not None:
         cargs.extend([
             "--inm3z",
-            execution.input_file(params.get("inm3z"))
+            execution.input_file(params.get("inm3z", None))
         ])
-    if params.get("infsl") is not None:
+    if params.get("infsl", None) is not None:
         cargs.extend([
             "--infsl",
-            execution.input_file(params.get("infsl"))
+            execution.input_file(params.get("infsl", None))
         ])
-    if params.get("inlps") is not None:
+    if params.get("inlps", None) is not None:
         cargs.extend([
             "--inlps",
-            execution.input_file(params.get("inlps"))
+            execution.input_file(params.get("inlps", None))
         ])
-    if params.get("initk") is not None:
+    if params.get("initk", None) is not None:
         cargs.extend([
             "--initk",
-            execution.input_file(params.get("initk"))
+            execution.input_file(params.get("initk", None))
         ])
-    if params.get("inras") is not None:
+    if params.get("inras", None) is not None:
         cargs.extend([
             "--inras",
-            execution.input_file(params.get("inras"))
+            execution.input_file(params.get("inras", None))
         ])
-    if params.get("invox") is not None:
+    if params.get("invox", None) is not None:
         cargs.extend([
             "--invox",
-            execution.input_file(params.get("invox"))
+            execution.input_file(params.get("invox", None))
         ])
-    if params.get("outm3z") is not None:
+    if params.get("outm3z", None) is not None:
         cargs.extend([
             "--outm3z",
-            params.get("outm3z")
+            params.get("outm3z", None)
         ])
-    if params.get("outfsl") is not None:
+    if params.get("outfsl", None) is not None:
         cargs.extend([
             "--outfsl",
-            params.get("outfsl")
+            params.get("outfsl", None)
         ])
-    if params.get("outlps") is not None:
+    if params.get("outlps", None) is not None:
         cargs.extend([
             "--outlps",
-            params.get("outlps")
+            params.get("outlps", None)
         ])
-    if params.get("outitk") is not None:
+    if params.get("outitk", None) is not None:
         cargs.extend([
             "--outitk",
-            params.get("outitk")
+            params.get("outitk", None)
         ])
-    if params.get("outras") is not None:
+    if params.get("outras", None) is not None:
         cargs.extend([
             "--outras",
-            params.get("outras")
+            params.get("outras", None)
         ])
-    if params.get("outvox") is not None:
+    if params.get("outvox", None) is not None:
         cargs.extend([
             "--outvox",
-            params.get("outvox")
+            params.get("outvox", None)
         ])
-    if params.get("insrcgeom") is not None:
+    if params.get("insrcgeom", None) is not None:
         cargs.extend([
             "--insrcgeom",
-            execution.input_file(params.get("insrcgeom"))
+            execution.input_file(params.get("insrcgeom", None))
         ])
-    if params.get("downsample"):
+    if params.get("downsample", False):
         cargs.append("--downsample")
     return cargs
 
@@ -244,7 +229,7 @@ def mri_warp_convert_outputs(
     """
     ret = MriWarpConvertOutputs(
         root=execution.output_file("."),
-        outwarp=execution.output_file(params.get("outvox")) if (params.get("outvox") is not None) else None,
+        outwarp=execution.output_file(params.get("outvox", None)) if (params.get("outvox") is not None) else None,
     )
     return ret
 
@@ -344,7 +329,6 @@ def mri_warp_convert(
 __all__ = [
     "MRI_WARP_CONVERT_METADATA",
     "MriWarpConvertOutputs",
-    "MriWarpConvertParameters",
     "mri_warp_convert",
     "mri_warp_convert_execute",
     "mri_warp_convert_params",

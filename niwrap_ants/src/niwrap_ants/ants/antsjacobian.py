@@ -14,7 +14,17 @@ ANTSJACOBIAN_METADATA = Metadata(
 
 
 AntsjacobianParameters = typing.TypedDict('AntsjacobianParameters', {
-    "@type": typing.Literal["ants.ANTSJacobian"],
+    "@type": typing.NotRequired[typing.Literal["ants/ANTSJacobian"]],
+    "imagedim": int,
+    "gwarp": InputPathType,
+    "outfile": str,
+    "uselog": int,
+    "maskfn": InputPathType,
+    "normbytotalbool": int,
+    "projectionvector": typing.NotRequired[str | None],
+})
+AntsjacobianParametersTagged = typing.TypedDict('AntsjacobianParametersTagged', {
+    "@type": typing.Literal["ants/ANTSJacobian"],
     "imagedim": int,
     "gwarp": InputPathType,
     "outfile": str,
@@ -25,41 +35,9 @@ AntsjacobianParameters = typing.TypedDict('AntsjacobianParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "ants.ANTSJacobian": antsjacobian_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "ants.ANTSJacobian": antsjacobian_outputs,
-    }.get(t)
-
-
 class AntsjacobianOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `antsjacobian(...)`.
+    Output object returned when calling `AntsjacobianParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -75,7 +53,7 @@ def antsjacobian_params(
     maskfn: InputPathType,
     normbytotalbool: int,
     projectionvector: str | None = None,
-) -> AntsjacobianParameters:
+) -> AntsjacobianParametersTagged:
     """
     Build parameters.
     
@@ -93,7 +71,7 @@ def antsjacobian_params(
         Parameter dictionary
     """
     params = {
-        "@type": "ants.ANTSJacobian",
+        "@type": "ants/ANTSJacobian",
         "imagedim": imagedim,
         "gwarp": gwarp,
         "outfile": outfile,
@@ -121,14 +99,14 @@ def antsjacobian_cargs(
     """
     cargs = []
     cargs.append("ANTSJacobian")
-    cargs.append(str(params.get("imagedim")))
-    cargs.append(execution.input_file(params.get("gwarp")))
-    cargs.append(params.get("outfile"))
-    cargs.append(str(params.get("uselog")))
-    cargs.append(execution.input_file(params.get("maskfn")))
-    cargs.append(str(params.get("normbytotalbool")))
-    if params.get("projectionvector") is not None:
-        cargs.append(params.get("projectionvector"))
+    cargs.append(str(params.get("imagedim", None)))
+    cargs.append(execution.input_file(params.get("gwarp", None)))
+    cargs.append(params.get("outfile", None))
+    cargs.append(str(params.get("uselog", None)))
+    cargs.append(execution.input_file(params.get("maskfn", None)))
+    cargs.append(str(params.get("normbytotalbool", None)))
+    if params.get("projectionvector", None) is not None:
+        cargs.append(params.get("projectionvector", None))
     return cargs
 
 
@@ -147,7 +125,7 @@ def antsjacobian_outputs(
     """
     ret = AntsjacobianOutputs(
         root=execution.output_file("."),
-        jacobian_output=execution.output_file(params.get("outfile") + "Jacobian.nii.gz"),
+        jacobian_output=execution.output_file(params.get("outfile", None) + "Jacobian.nii.gz"),
     )
     return ret
 
@@ -232,7 +210,6 @@ def antsjacobian(
 __all__ = [
     "ANTSJACOBIAN_METADATA",
     "AntsjacobianOutputs",
-    "AntsjacobianParameters",
     "antsjacobian",
     "antsjacobian_execute",
     "antsjacobian_params",

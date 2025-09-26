@@ -14,7 +14,20 @@ WMEDITS2SURF_METADATA = Metadata(
 
 
 Wmedits2surfParameters = typing.TypedDict('Wmedits2surfParameters', {
-    "@type": typing.Literal["freesurfer.wmedits2surf"],
+    "@type": typing.NotRequired[typing.Literal["freesurfer/wmedits2surf"]],
+    "subject": str,
+    "self": bool,
+    "overwrite": bool,
+    "tmp_dir": typing.NotRequired[str | None],
+    "cleanup": bool,
+    "no_cleanup": bool,
+    "debug": bool,
+    "lh": bool,
+    "rh": bool,
+    "no_surfs": bool,
+})
+Wmedits2surfParametersTagged = typing.TypedDict('Wmedits2surfParametersTagged', {
+    "@type": typing.Literal["freesurfer/wmedits2surf"],
     "subject": str,
     "self": bool,
     "overwrite": bool,
@@ -28,41 +41,9 @@ Wmedits2surfParameters = typing.TypedDict('Wmedits2surfParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "freesurfer.wmedits2surf": wmedits2surf_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "freesurfer.wmedits2surf": wmedits2surf_outputs,
-    }.get(t)
-
-
 class Wmedits2surfOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `wmedits2surf(...)`.
+    Output object returned when calling `Wmedits2surfParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -91,7 +72,7 @@ def wmedits2surf_params(
     lh: bool = False,
     rh: bool = False,
     no_surfs: bool = False,
-) -> Wmedits2surfParameters:
+) -> Wmedits2surfParametersTagged:
     """
     Build parameters.
     
@@ -109,7 +90,7 @@ def wmedits2surf_params(
         Parameter dictionary
     """
     params = {
-        "@type": "freesurfer.wmedits2surf",
+        "@type": "freesurfer/wmedits2surf",
         "subject": subject,
         "self": self,
         "overwrite": overwrite,
@@ -142,28 +123,28 @@ def wmedits2surf_cargs(
     cargs.append("wmedits2surf")
     cargs.extend([
         "--s",
-        params.get("subject")
+        params.get("subject", None)
     ])
-    if params.get("self"):
+    if params.get("self", False):
         cargs.append("--self")
-    if params.get("overwrite"):
+    if params.get("overwrite", False):
         cargs.append("--overwrite")
-    if params.get("tmp_dir") is not None:
+    if params.get("tmp_dir", None) is not None:
         cargs.extend([
             "--tmp",
-            params.get("tmp_dir")
+            params.get("tmp_dir", None)
         ])
-    if params.get("cleanup"):
+    if params.get("cleanup", False):
         cargs.append("--cleanup")
-    if params.get("no_cleanup"):
+    if params.get("no_cleanup", False):
         cargs.append("--no-cleanup")
-    if params.get("debug"):
+    if params.get("debug", False):
         cargs.append("--debug")
-    if params.get("lh"):
+    if params.get("lh", False):
         cargs.append("--lh")
-    if params.get("rh"):
+    if params.get("rh", False):
         cargs.append("--rh")
-    if params.get("no_surfs"):
+    if params.get("no_surfs", False):
         cargs.append("--no-surfs")
     return cargs
 
@@ -277,7 +258,6 @@ def wmedits2surf(
 __all__ = [
     "WMEDITS2SURF_METADATA",
     "Wmedits2surfOutputs",
-    "Wmedits2surfParameters",
     "wmedits2surf",
     "wmedits2surf_execute",
     "wmedits2surf_params",

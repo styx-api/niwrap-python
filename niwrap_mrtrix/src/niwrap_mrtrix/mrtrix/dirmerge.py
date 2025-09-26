@@ -14,14 +14,34 @@ DIRMERGE_METADATA = Metadata(
 
 
 DirmergeConfigParameters = typing.TypedDict('DirmergeConfigParameters', {
-    "@type": typing.Literal["mrtrix.dirmerge.config"],
+    "@type": typing.NotRequired[typing.Literal["config"]],
+    "key": str,
+    "value": str,
+})
+DirmergeConfigParametersTagged = typing.TypedDict('DirmergeConfigParametersTagged', {
+    "@type": typing.Literal["config"],
     "key": str,
     "value": str,
 })
 
 
 DirmergeParameters = typing.TypedDict('DirmergeParameters', {
-    "@type": typing.Literal["mrtrix.dirmerge"],
+    "@type": typing.NotRequired[typing.Literal["mrtrix/dirmerge"]],
+    "unipolar_weight": typing.NotRequired[float | None],
+    "info": bool,
+    "quiet": bool,
+    "debug": bool,
+    "force": bool,
+    "nthreads": typing.NotRequired[int | None],
+    "config": typing.NotRequired[list[DirmergeConfigParameters] | None],
+    "help": bool,
+    "version": bool,
+    "subsets": int,
+    "bvalue_files": list[str],
+    "out": str,
+})
+DirmergeParametersTagged = typing.TypedDict('DirmergeParametersTagged', {
+    "@type": typing.Literal["mrtrix/dirmerge"],
     "unipolar_weight": typing.NotRequired[float | None],
     "info": bool,
     "quiet": bool,
@@ -37,43 +57,10 @@ DirmergeParameters = typing.TypedDict('DirmergeParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "mrtrix.dirmerge": dirmerge_cargs,
-        "mrtrix.dirmerge.config": dirmerge_config_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "mrtrix.dirmerge": dirmerge_outputs,
-    }.get(t)
-
-
 def dirmerge_config_params(
     key: str,
     value: str,
-) -> DirmergeConfigParameters:
+) -> DirmergeConfigParametersTagged:
     """
     Build parameters.
     
@@ -84,7 +71,7 @@ def dirmerge_config_params(
         Parameter dictionary
     """
     params = {
-        "@type": "mrtrix.dirmerge.config",
+        "@type": "config",
         "key": key,
         "value": value,
     }
@@ -106,14 +93,14 @@ def dirmerge_config_cargs(
     """
     cargs = []
     cargs.append("-config")
-    cargs.append(params.get("key"))
-    cargs.append(params.get("value"))
+    cargs.append(params.get("key", None))
+    cargs.append(params.get("value", None))
     return cargs
 
 
 class DirmergeOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `dirmerge(...)`.
+    Output object returned when calling `DirmergeParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -136,7 +123,7 @@ def dirmerge_params(
     config: list[DirmergeConfigParameters] | None = None,
     help_: bool = False,
     version: bool = False,
-) -> DirmergeParameters:
+) -> DirmergeParametersTagged:
     """
     Build parameters.
     
@@ -165,7 +152,7 @@ def dirmerge_params(
         Parameter dictionary
     """
     params = {
-        "@type": "mrtrix.dirmerge",
+        "@type": "mrtrix/dirmerge",
         "info": info,
         "quiet": quiet,
         "debug": debug,
@@ -200,33 +187,33 @@ def dirmerge_cargs(
     """
     cargs = []
     cargs.append("dirmerge")
-    if params.get("unipolar_weight") is not None:
+    if params.get("unipolar_weight", None) is not None:
         cargs.extend([
             "-unipolar_weight",
-            str(params.get("unipolar_weight"))
+            str(params.get("unipolar_weight", None))
         ])
-    if params.get("info"):
+    if params.get("info", False):
         cargs.append("-info")
-    if params.get("quiet"):
+    if params.get("quiet", False):
         cargs.append("-quiet")
-    if params.get("debug"):
+    if params.get("debug", False):
         cargs.append("-debug")
-    if params.get("force"):
+    if params.get("force", False):
         cargs.append("-force")
-    if params.get("nthreads") is not None:
+    if params.get("nthreads", None) is not None:
         cargs.extend([
             "-nthreads",
-            str(params.get("nthreads"))
+            str(params.get("nthreads", None))
         ])
-    if params.get("config") is not None:
-        cargs.extend([a for c in [dyn_cargs(s["@type"])(s, execution) for s in params.get("config")] for a in c])
-    if params.get("help"):
+    if params.get("config", None) is not None:
+        cargs.extend([a for c in [dirmerge_config_cargs(s, execution) for s in params.get("config", None)] for a in c])
+    if params.get("help", False):
         cargs.append("-help")
-    if params.get("version"):
+    if params.get("version", False):
         cargs.append("-version")
-    cargs.append(str(params.get("subsets")))
-    cargs.extend(params.get("bvalue_files"))
-    cargs.append(params.get("out"))
+    cargs.append(str(params.get("subsets", None)))
+    cargs.extend(params.get("bvalue_files", None))
+    cargs.append(params.get("out", None))
     return cargs
 
 
@@ -245,7 +232,7 @@ def dirmerge_outputs(
     """
     ret = DirmergeOutputs(
         root=execution.output_file("."),
-        out=execution.output_file(params.get("out")),
+        out=execution.output_file(params.get("out", None)),
     )
     return ret
 
@@ -360,9 +347,7 @@ def dirmerge(
 
 __all__ = [
     "DIRMERGE_METADATA",
-    "DirmergeConfigParameters",
     "DirmergeOutputs",
-    "DirmergeParameters",
     "dirmerge",
     "dirmerge_config_params",
     "dirmerge_execute",

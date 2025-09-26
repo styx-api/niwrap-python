@@ -14,46 +14,20 @@ V__4_DAVERAGE_METADATA = Metadata(
 
 
 V4DaverageParameters = typing.TypedDict('V4DaverageParameters', {
-    "@type": typing.Literal["afni.@4Daverage"],
+    "@type": typing.NotRequired[typing.Literal["afni/@4Daverage"]],
+    "output_prefix": str,
+    "input_files": list[InputPathType],
+})
+V4DaverageParametersTagged = typing.TypedDict('V4DaverageParametersTagged', {
+    "@type": typing.Literal["afni/@4Daverage"],
     "output_prefix": str,
     "input_files": list[InputPathType],
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "afni.@4Daverage": v__4_daverage_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-    }.get(t)
-
-
 class V4DaverageOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `v__4_daverage(...)`.
+    Output object returned when calling `V4DaverageParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -62,7 +36,7 @@ class V4DaverageOutputs(typing.NamedTuple):
 def v__4_daverage_params(
     output_prefix: str,
     input_files: list[InputPathType],
-) -> V4DaverageParameters:
+) -> V4DaverageParametersTagged:
     """
     Build parameters.
     
@@ -74,7 +48,7 @@ def v__4_daverage_params(
         Parameter dictionary
     """
     params = {
-        "@type": "afni.@4Daverage",
+        "@type": "afni/@4Daverage",
         "output_prefix": output_prefix,
         "input_files": input_files,
     }
@@ -96,8 +70,8 @@ def v__4_daverage_cargs(
     """
     cargs = []
     cargs.append("@4Daverage")
-    cargs.append(params.get("output_prefix"))
-    cargs.extend([execution.input_file(f) for f in params.get("input_files")])
+    cargs.append(params.get("output_prefix", None))
+    cargs.extend([execution.input_file(f) for f in params.get("input_files", None)])
     return cargs
 
 
@@ -179,7 +153,6 @@ def v__4_daverage(
 
 __all__ = [
     "V4DaverageOutputs",
-    "V4DaverageParameters",
     "V__4_DAVERAGE_METADATA",
     "v__4_daverage",
     "v__4_daverage_execute",

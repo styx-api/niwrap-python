@@ -14,7 +14,27 @@ V_3D_TPROJECT_METADATA = Metadata(
 
 
 V3dTprojectParameters = typing.TypedDict('V3dTprojectParameters', {
-    "@type": typing.Literal["afni.3dTproject"],
+    "@type": typing.NotRequired[typing.Literal["afni/3dTproject"]],
+    "TR": typing.NotRequired[float | None],
+    "automask": bool,
+    "bandpass": typing.NotRequired[list[float] | None],
+    "blur": typing.NotRequired[float | None],
+    "cenmode": typing.NotRequired[typing.Literal["kill", "zero", "ntrp"] | None],
+    "censor": typing.NotRequired[InputPathType | None],
+    "censortr": typing.NotRequired[list[str] | None],
+    "concat": typing.NotRequired[InputPathType | None],
+    "dsort": typing.NotRequired[list[InputPathType] | None],
+    "in_file": InputPathType,
+    "mask": typing.NotRequired[InputPathType | None],
+    "noblock": bool,
+    "norm": bool,
+    "ort": typing.NotRequired[InputPathType | None],
+    "polort": typing.NotRequired[int | None],
+    "stopband": typing.NotRequired[list[float] | None],
+    "prefix": str,
+})
+V3dTprojectParametersTagged = typing.TypedDict('V3dTprojectParametersTagged', {
+    "@type": typing.Literal["afni/3dTproject"],
     "TR": typing.NotRequired[float | None],
     "automask": bool,
     "bandpass": typing.NotRequired[list[float] | None],
@@ -35,41 +55,9 @@ V3dTprojectParameters = typing.TypedDict('V3dTprojectParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "afni.3dTproject": v_3d_tproject_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "afni.3dTproject": v_3d_tproject_outputs,
-    }.get(t)
-
-
 class V3dTprojectOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `v_3d_tproject(...)`.
+    Output object returned when calling `V3dTprojectParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -95,7 +83,7 @@ def v_3d_tproject_params(
     ort: InputPathType | None = None,
     polort: int | None = None,
     stopband: list[float] | None = None,
-) -> V3dTprojectParameters:
+) -> V3dTprojectParametersTagged:
     """
     Build parameters.
     
@@ -168,7 +156,7 @@ def v_3d_tproject_params(
         Parameter dictionary
     """
     params = {
-        "@type": "afni.3dTproject",
+        "@type": "afni/3dTproject",
         "automask": automask,
         "in_file": in_file,
         "noblock": noblock,
@@ -217,79 +205,79 @@ def v_3d_tproject_cargs(
     """
     cargs = []
     cargs.append("3dTproject")
-    if params.get("TR") is not None:
+    if params.get("TR", None) is not None:
         cargs.extend([
             "-TR",
-            str(params.get("TR"))
+            str(params.get("TR", None))
         ])
-    if params.get("automask"):
+    if params.get("automask", False):
         cargs.append("-automask")
-    if params.get("bandpass") is not None:
+    if params.get("bandpass", None) is not None:
         cargs.extend([
             "-bandpass",
-            *map(str, params.get("bandpass"))
+            *map(str, params.get("bandpass", None))
         ])
-    if params.get("blur") is not None:
+    if params.get("blur", None) is not None:
         cargs.extend([
             "-blur",
-            str(params.get("blur"))
+            str(params.get("blur", None))
         ])
-    if params.get("cenmode") is not None:
+    if params.get("cenmode", None) is not None:
         cargs.extend([
             "-cenmode",
-            params.get("cenmode")
+            params.get("cenmode", None)
         ])
-    if params.get("censor") is not None:
+    if params.get("censor", None) is not None:
         cargs.extend([
             "-censor",
-            execution.input_file(params.get("censor"))
+            execution.input_file(params.get("censor", None))
         ])
-    if params.get("censortr") is not None:
+    if params.get("censortr", None) is not None:
         cargs.extend([
             "-CENSORTR",
-            *params.get("censortr")
+            *params.get("censortr", None)
         ])
-    if params.get("concat") is not None:
+    if params.get("concat", None) is not None:
         cargs.extend([
             "-concat",
-            execution.input_file(params.get("concat"))
+            execution.input_file(params.get("concat", None))
         ])
-    if params.get("dsort") is not None:
+    if params.get("dsort", None) is not None:
         cargs.extend([
             "-dsort",
-            *[execution.input_file(f) for f in params.get("dsort")]
+            *[execution.input_file(f) for f in params.get("dsort", None)]
         ])
     cargs.extend([
         "-input",
-        execution.input_file(params.get("in_file"))
+        execution.input_file(params.get("in_file", None))
     ])
-    if params.get("mask") is not None:
+    if params.get("mask", None) is not None:
         cargs.extend([
             "-mask",
-            execution.input_file(params.get("mask"))
+            execution.input_file(params.get("mask", None))
         ])
-    if params.get("noblock"):
+    if params.get("noblock", False):
         cargs.append("-noblock")
-    if params.get("norm"):
+    if params.get("norm", False):
         cargs.append("-norm")
-    if params.get("ort") is not None:
+    if params.get("ort", None) is not None:
         cargs.extend([
             "-ort",
-            execution.input_file(params.get("ort"))
+            execution.input_file(params.get("ort", None))
         ])
-    if params.get("polort") is not None:
+    if params.get("polort", None) is not None:
         cargs.extend([
             "-polort",
-            str(params.get("polort"))
+            str(params.get("polort", None))
         ])
-    if params.get("stopband") is not None:
+    if params.get("stopband", None) is not None:
         cargs.extend([
             "-stopband",
-            *map(str, params.get("stopband"))
+            *map(str, params.get("stopband", None))
         ])
     cargs.extend([
         "-prefix",
-        params.get("prefix")
+        params.get("prefix", None)
     ])
     return cargs
 
@@ -309,7 +297,7 @@ def v_3d_tproject_outputs(
     """
     ret = V3dTprojectOutputs(
         root=execution.output_file("."),
-        out_file=execution.output_file(params.get("prefix")),
+        out_file=execution.output_file(params.get("prefix", None)),
     )
     return ret
 
@@ -474,7 +462,6 @@ def v_3d_tproject(
 
 __all__ = [
     "V3dTprojectOutputs",
-    "V3dTprojectParameters",
     "V_3D_TPROJECT_METADATA",
     "v_3d_tproject",
     "v_3d_tproject_execute",

@@ -14,7 +14,15 @@ MRIS_DEFECTS_POINTSET_METADATA = Metadata(
 
 
 MrisDefectsPointsetParameters = typing.TypedDict('MrisDefectsPointsetParameters', {
-    "@type": typing.Literal["freesurfer.mris_defects_pointset"],
+    "@type": typing.NotRequired[typing.Literal["freesurfer/mris_defects_pointset"]],
+    "surface": InputPathType,
+    "defects": InputPathType,
+    "out": str,
+    "label": typing.NotRequired[InputPathType | None],
+    "control": bool,
+})
+MrisDefectsPointsetParametersTagged = typing.TypedDict('MrisDefectsPointsetParametersTagged', {
+    "@type": typing.Literal["freesurfer/mris_defects_pointset"],
     "surface": InputPathType,
     "defects": InputPathType,
     "out": str,
@@ -23,41 +31,9 @@ MrisDefectsPointsetParameters = typing.TypedDict('MrisDefectsPointsetParameters'
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "freesurfer.mris_defects_pointset": mris_defects_pointset_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "freesurfer.mris_defects_pointset": mris_defects_pointset_outputs,
-    }.get(t)
-
-
 class MrisDefectsPointsetOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `mris_defects_pointset(...)`.
+    Output object returned when calling `MrisDefectsPointsetParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -71,7 +47,7 @@ def mris_defects_pointset_params(
     out: str,
     label: InputPathType | None = None,
     control: bool = False,
-) -> MrisDefectsPointsetParameters:
+) -> MrisDefectsPointsetParametersTagged:
     """
     Build parameters.
     
@@ -85,7 +61,7 @@ def mris_defects_pointset_params(
         Parameter dictionary
     """
     params = {
-        "@type": "freesurfer.mris_defects_pointset",
+        "@type": "freesurfer/mris_defects_pointset",
         "surface": surface,
         "defects": defects,
         "out": out,
@@ -113,22 +89,22 @@ def mris_defects_pointset_cargs(
     cargs.append("mris_defects_pointset")
     cargs.extend([
         "--surf",
-        execution.input_file(params.get("surface"))
+        execution.input_file(params.get("surface", None))
     ])
     cargs.extend([
         "--defects",
-        execution.input_file(params.get("defects"))
+        execution.input_file(params.get("defects", None))
     ])
     cargs.extend([
         "--out",
-        params.get("out")
+        params.get("out", None)
     ])
-    if params.get("label") is not None:
+    if params.get("label", None) is not None:
         cargs.extend([
             "--label",
-            execution.input_file(params.get("label"))
+            execution.input_file(params.get("label", None))
         ])
-    if params.get("control"):
+    if params.get("control", False):
         cargs.append("--control")
     return cargs
 
@@ -148,7 +124,7 @@ def mris_defects_pointset_outputs(
     """
     ret = MrisDefectsPointsetOutputs(
         root=execution.output_file("."),
-        pointset_output=execution.output_file(params.get("out")),
+        pointset_output=execution.output_file(params.get("out", None)),
     )
     return ret
 
@@ -223,7 +199,6 @@ def mris_defects_pointset(
 __all__ = [
     "MRIS_DEFECTS_POINTSET_METADATA",
     "MrisDefectsPointsetOutputs",
-    "MrisDefectsPointsetParameters",
     "mris_defects_pointset",
     "mris_defects_pointset_execute",
     "mris_defects_pointset_params",

@@ -14,47 +14,20 @@ VOLUME_REMOVE_ISLANDS_METADATA = Metadata(
 
 
 VolumeRemoveIslandsParameters = typing.TypedDict('VolumeRemoveIslandsParameters', {
-    "@type": typing.Literal["workbench.volume-remove-islands"],
+    "@type": typing.NotRequired[typing.Literal["workbench/volume-remove-islands"]],
+    "volume_in": InputPathType,
+    "volume_out": str,
+})
+VolumeRemoveIslandsParametersTagged = typing.TypedDict('VolumeRemoveIslandsParametersTagged', {
+    "@type": typing.Literal["workbench/volume-remove-islands"],
     "volume_in": InputPathType,
     "volume_out": str,
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "workbench.volume-remove-islands": volume_remove_islands_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "workbench.volume-remove-islands": volume_remove_islands_outputs,
-    }.get(t)
-
-
 class VolumeRemoveIslandsOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `volume_remove_islands(...)`.
+    Output object returned when calling `VolumeRemoveIslandsParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -65,7 +38,7 @@ class VolumeRemoveIslandsOutputs(typing.NamedTuple):
 def volume_remove_islands_params(
     volume_in: InputPathType,
     volume_out: str,
-) -> VolumeRemoveIslandsParameters:
+) -> VolumeRemoveIslandsParametersTagged:
     """
     Build parameters.
     
@@ -76,7 +49,7 @@ def volume_remove_islands_params(
         Parameter dictionary
     """
     params = {
-        "@type": "workbench.volume-remove-islands",
+        "@type": "workbench/volume-remove-islands",
         "volume_in": volume_in,
         "volume_out": volume_out,
     }
@@ -99,8 +72,8 @@ def volume_remove_islands_cargs(
     cargs = []
     cargs.append("wb_command")
     cargs.append("-volume-remove-islands")
-    cargs.append(execution.input_file(params.get("volume_in")))
-    cargs.append(params.get("volume_out"))
+    cargs.append(execution.input_file(params.get("volume_in", None)))
+    cargs.append(params.get("volume_out", None))
     return cargs
 
 
@@ -119,7 +92,7 @@ def volume_remove_islands_outputs(
     """
     ret = VolumeRemoveIslandsOutputs(
         root=execution.output_file("."),
-        volume_out=execution.output_file(params.get("volume_out")),
+        volume_out=execution.output_file(params.get("volume_out", None)),
     )
     return ret
 
@@ -189,7 +162,6 @@ def volume_remove_islands(
 __all__ = [
     "VOLUME_REMOVE_ISLANDS_METADATA",
     "VolumeRemoveIslandsOutputs",
-    "VolumeRemoveIslandsParameters",
     "volume_remove_islands",
     "volume_remove_islands_execute",
     "volume_remove_islands_params",

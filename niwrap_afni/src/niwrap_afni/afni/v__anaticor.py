@@ -14,7 +14,24 @@ V__ANATICOR_METADATA = Metadata(
 
 
 VAnaticorParameters = typing.TypedDict('VAnaticorParameters', {
-    "@type": typing.Literal["afni.@ANATICOR"],
+    "@type": typing.NotRequired[typing.Literal["afni/@ANATICOR"]],
+    "ts": InputPathType,
+    "polort": str,
+    "motion": InputPathType,
+    "aseg": InputPathType,
+    "prefix": str,
+    "radius": typing.NotRequired[float | None],
+    "view": typing.NotRequired[str | None],
+    "nuisance": typing.NotRequired[InputPathType | None],
+    "no_ventricles": bool,
+    "Rsq_WMe": bool,
+    "coverage": bool,
+    "verb": bool,
+    "dirty": bool,
+    "echo": bool,
+})
+VAnaticorParametersTagged = typing.TypedDict('VAnaticorParametersTagged', {
+    "@type": typing.Literal["afni/@ANATICOR"],
     "ts": InputPathType,
     "polort": str,
     "motion": InputPathType,
@@ -32,41 +49,9 @@ VAnaticorParameters = typing.TypedDict('VAnaticorParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "afni.@ANATICOR": v__anaticor_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "afni.@ANATICOR": v__anaticor_outputs,
-    }.get(t)
-
-
 class VAnaticorOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `v__anaticor(...)`.
+    Output object returned when calling `VAnaticorParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -89,7 +74,7 @@ def v__anaticor_params(
     verb: bool = False,
     dirty: bool = False,
     echo: bool = False,
-) -> VAnaticorParameters:
+) -> VAnaticorParametersTagged:
     """
     Build parameters.
     
@@ -120,7 +105,7 @@ def v__anaticor_params(
         Parameter dictionary
     """
     params = {
-        "@type": "afni.@ANATICOR",
+        "@type": "afni/@ANATICOR",
         "ts": ts,
         "polort": polort,
         "motion": motion,
@@ -159,44 +144,44 @@ def v__anaticor_cargs(
     cargs.append("@ANATICOR")
     cargs.extend([
         "-ts",
-        execution.input_file(params.get("ts"))
+        execution.input_file(params.get("ts", None))
     ])
     cargs.extend([
         "-polort",
-        params.get("polort")
+        params.get("polort", None)
     ])
     cargs.extend([
         "-motion",
-        execution.input_file(params.get("motion"))
+        execution.input_file(params.get("motion", None))
     ])
-    cargs.append(execution.input_file(params.get("aseg")))
+    cargs.append(execution.input_file(params.get("aseg", None)))
     cargs.extend([
         "-prefix",
-        params.get("prefix")
+        params.get("prefix", None)
     ])
-    if params.get("radius") is not None:
+    if params.get("radius", None) is not None:
         cargs.extend([
             "-radius",
-            str(params.get("radius"))
+            str(params.get("radius", None))
         ])
-    if params.get("view") is not None:
-        cargs.append(params.get("view"))
-    if params.get("nuisance") is not None:
+    if params.get("view", None) is not None:
+        cargs.append(params.get("view", None))
+    if params.get("nuisance", None) is not None:
         cargs.extend([
             "-nuisance",
-            execution.input_file(params.get("nuisance"))
+            execution.input_file(params.get("nuisance", None))
         ])
-    if params.get("no_ventricles"):
+    if params.get("no_ventricles", False):
         cargs.append("-no_ventricles")
-    if params.get("Rsq_WMe"):
+    if params.get("Rsq_WMe", False):
         cargs.append("-Rsq_WMe")
-    if params.get("coverage"):
+    if params.get("coverage", False):
         cargs.append("-coverage")
-    if params.get("verb"):
+    if params.get("verb", False):
         cargs.append("-verb")
-    if params.get("dirty"):
+    if params.get("dirty", False):
         cargs.append("-dirty")
-    if params.get("echo"):
+    if params.get("echo", False):
         cargs.append("-echo")
     return cargs
 
@@ -216,7 +201,7 @@ def v__anaticor_outputs(
     """
     ret = VAnaticorOutputs(
         root=execution.output_file("."),
-        output_files=execution.output_file(params.get("prefix")),
+        output_files=execution.output_file(params.get("prefix", None)),
     )
     return ret
 
@@ -323,7 +308,6 @@ def v__anaticor(
 
 __all__ = [
     "VAnaticorOutputs",
-    "VAnaticorParameters",
     "V__ANATICOR_METADATA",
     "v__anaticor",
     "v__anaticor_execute",

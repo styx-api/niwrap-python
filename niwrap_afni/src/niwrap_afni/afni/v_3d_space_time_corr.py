@@ -14,7 +14,17 @@ V_3D_SPACE_TIME_CORR_METADATA = Metadata(
 
 
 V3dSpaceTimeCorrParameters = typing.TypedDict('V3dSpaceTimeCorrParameters', {
-    "@type": typing.Literal["afni.3dSpaceTimeCorr"],
+    "@type": typing.NotRequired[typing.Literal["afni/3dSpaceTimeCorr"]],
+    "insetA": InputPathType,
+    "insetB": InputPathType,
+    "prefix": str,
+    "mask": typing.NotRequired[InputPathType | None],
+    "out_Zcorr": bool,
+    "freeze_insetA_ijk": typing.NotRequired[list[float] | None],
+    "freeze_insetA_xyz": typing.NotRequired[list[float] | None],
+})
+V3dSpaceTimeCorrParametersTagged = typing.TypedDict('V3dSpaceTimeCorrParametersTagged', {
+    "@type": typing.Literal["afni/3dSpaceTimeCorr"],
     "insetA": InputPathType,
     "insetB": InputPathType,
     "prefix": str,
@@ -25,41 +35,9 @@ V3dSpaceTimeCorrParameters = typing.TypedDict('V3dSpaceTimeCorrParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "afni.3dSpaceTimeCorr": v_3d_space_time_corr_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "afni.3dSpaceTimeCorr": v_3d_space_time_corr_outputs,
-    }.get(t)
-
-
 class V3dSpaceTimeCorrOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `v_3d_space_time_corr(...)`.
+    Output object returned when calling `V3dSpaceTimeCorrParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -75,7 +53,7 @@ def v_3d_space_time_corr_params(
     out_zcorr: bool = False,
     freeze_inset_a_ijk: list[float] | None = None,
     freeze_inset_a_xyz: list[float] | None = None,
-) -> V3dSpaceTimeCorrParameters:
+) -> V3dSpaceTimeCorrParametersTagged:
     """
     Build parameters.
     
@@ -98,7 +76,7 @@ def v_3d_space_time_corr_params(
         Parameter dictionary
     """
     params = {
-        "@type": "afni.3dSpaceTimeCorr",
+        "@type": "afni/3dSpaceTimeCorr",
         "insetA": inset_a,
         "insetB": inset_b,
         "prefix": prefix,
@@ -130,32 +108,32 @@ def v_3d_space_time_corr_cargs(
     cargs.append("3dSpaceTimeCorr")
     cargs.extend([
         "-insetA",
-        execution.input_file(params.get("insetA"))
+        execution.input_file(params.get("insetA", None))
     ])
     cargs.extend([
         "-insetB",
-        execution.input_file(params.get("insetB"))
+        execution.input_file(params.get("insetB", None))
     ])
     cargs.extend([
         "-prefix",
-        params.get("prefix")
+        params.get("prefix", None)
     ])
-    if params.get("mask") is not None:
+    if params.get("mask", None) is not None:
         cargs.extend([
             "-mask",
-            execution.input_file(params.get("mask"))
+            execution.input_file(params.get("mask", None))
         ])
-    if params.get("out_Zcorr"):
+    if params.get("out_Zcorr", False):
         cargs.append("-out_Zcorr")
-    if params.get("freeze_insetA_ijk") is not None:
+    if params.get("freeze_insetA_ijk", None) is not None:
         cargs.extend([
             "-freeze_insetA_ijk",
-            *map(str, params.get("freeze_insetA_ijk"))
+            *map(str, params.get("freeze_insetA_ijk", None))
         ])
-    if params.get("freeze_insetA_xyz") is not None:
+    if params.get("freeze_insetA_xyz", None) is not None:
         cargs.extend([
             "-freeze_insetA_xyz",
-            *map(str, params.get("freeze_insetA_xyz"))
+            *map(str, params.get("freeze_insetA_xyz", None))
         ])
     return cargs
 
@@ -175,7 +153,7 @@ def v_3d_space_time_corr_outputs(
     """
     ret = V3dSpaceTimeCorrOutputs(
         root=execution.output_file("."),
-        output=execution.output_file(params.get("prefix") + ".nii.gz"),
+        output=execution.output_file(params.get("prefix", None) + ".nii.gz"),
     )
     return ret
 
@@ -262,7 +240,6 @@ def v_3d_space_time_corr(
 
 __all__ = [
     "V3dSpaceTimeCorrOutputs",
-    "V3dSpaceTimeCorrParameters",
     "V_3D_SPACE_TIME_CORR_METADATA",
     "v_3d_space_time_corr",
     "v_3d_space_time_corr_execute",

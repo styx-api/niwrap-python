@@ -14,7 +14,14 @@ LABEL2FLAT_METADATA = Metadata(
 
 
 Label2flatParameters = typing.TypedDict('Label2flatParameters', {
-    "@type": typing.Literal["freesurfer.label2flat"],
+    "@type": typing.NotRequired[typing.Literal["freesurfer/label2flat"]],
+    "subject_name": str,
+    "label_file": InputPathType,
+    "patch_file": InputPathType,
+    "output_file": str,
+})
+Label2flatParametersTagged = typing.TypedDict('Label2flatParametersTagged', {
+    "@type": typing.Literal["freesurfer/label2flat"],
     "subject_name": str,
     "label_file": InputPathType,
     "patch_file": InputPathType,
@@ -22,41 +29,9 @@ Label2flatParameters = typing.TypedDict('Label2flatParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "freesurfer.label2flat": label2flat_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "freesurfer.label2flat": label2flat_outputs,
-    }.get(t)
-
-
 class Label2flatOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `label2flat(...)`.
+    Output object returned when calling `Label2flatParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -69,7 +44,7 @@ def label2flat_params(
     label_file: InputPathType,
     patch_file: InputPathType,
     output_file: str,
-) -> Label2flatParameters:
+) -> Label2flatParametersTagged:
     """
     Build parameters.
     
@@ -82,7 +57,7 @@ def label2flat_params(
         Parameter dictionary
     """
     params = {
-        "@type": "freesurfer.label2flat",
+        "@type": "freesurfer/label2flat",
         "subject_name": subject_name,
         "label_file": label_file,
         "patch_file": patch_file,
@@ -106,10 +81,10 @@ def label2flat_cargs(
     """
     cargs = []
     cargs.append("label2flat")
-    cargs.append(params.get("subject_name"))
-    cargs.append(execution.input_file(params.get("label_file")))
-    cargs.append(execution.input_file(params.get("patch_file")))
-    cargs.append(params.get("output_file"))
+    cargs.append(params.get("subject_name", None))
+    cargs.append(execution.input_file(params.get("label_file", None)))
+    cargs.append(execution.input_file(params.get("patch_file", None)))
+    cargs.append(params.get("output_file", None))
     return cargs
 
 
@@ -128,7 +103,7 @@ def label2flat_outputs(
     """
     ret = Label2flatOutputs(
         root=execution.output_file("."),
-        result_file=execution.output_file(params.get("output_file")),
+        result_file=execution.output_file(params.get("output_file", None)),
     )
     return ret
 
@@ -198,7 +173,6 @@ def label2flat(
 __all__ = [
     "LABEL2FLAT_METADATA",
     "Label2flatOutputs",
-    "Label2flatParameters",
     "label2flat",
     "label2flat_execute",
     "label2flat_params",

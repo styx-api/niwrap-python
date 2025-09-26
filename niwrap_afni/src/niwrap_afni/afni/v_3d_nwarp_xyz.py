@@ -14,7 +14,14 @@ V_3D_NWARP_XYZ_METADATA = Metadata(
 
 
 V3dNwarpXyzParameters = typing.TypedDict('V3dNwarpXyzParameters', {
-    "@type": typing.Literal["afni.3dNwarpXYZ"],
+    "@type": typing.NotRequired[typing.Literal["afni/3dNwarpXYZ"]],
+    "xyzfile": InputPathType,
+    "warp_spec": str,
+    "iwarp": bool,
+    "output_file": str,
+})
+V3dNwarpXyzParametersTagged = typing.TypedDict('V3dNwarpXyzParametersTagged', {
+    "@type": typing.Literal["afni/3dNwarpXYZ"],
     "xyzfile": InputPathType,
     "warp_spec": str,
     "iwarp": bool,
@@ -22,41 +29,9 @@ V3dNwarpXyzParameters = typing.TypedDict('V3dNwarpXyzParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "afni.3dNwarpXYZ": v_3d_nwarp_xyz_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "afni.3dNwarpXYZ": v_3d_nwarp_xyz_outputs,
-    }.get(t)
-
-
 class V3dNwarpXyzOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `v_3d_nwarp_xyz(...)`.
+    Output object returned when calling `V3dNwarpXyzParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -69,7 +44,7 @@ def v_3d_nwarp_xyz_params(
     warp_spec: str,
     output_file: str,
     iwarp: bool = False,
-) -> V3dNwarpXyzParameters:
+) -> V3dNwarpXyzParametersTagged:
     """
     Build parameters.
     
@@ -82,7 +57,7 @@ def v_3d_nwarp_xyz_params(
         Parameter dictionary
     """
     params = {
-        "@type": "afni.3dNwarpXYZ",
+        "@type": "afni/3dNwarpXYZ",
         "xyzfile": xyzfile,
         "warp_spec": warp_spec,
         "iwarp": iwarp,
@@ -106,14 +81,14 @@ def v_3d_nwarp_xyz_cargs(
     """
     cargs = []
     cargs.append("3dNwarpXYZ")
-    cargs.append(execution.input_file(params.get("xyzfile")))
+    cargs.append(execution.input_file(params.get("xyzfile", None)))
     cargs.extend([
         "-nwarp",
-        params.get("warp_spec")
+        params.get("warp_spec", None)
     ])
-    if params.get("iwarp"):
+    if params.get("iwarp", False):
         cargs.append("-iwarp")
-    cargs.append("> " + params.get("output_file"))
+    cargs.append("> " + params.get("output_file", None))
     return cargs
 
 
@@ -132,7 +107,7 @@ def v_3d_nwarp_xyz_outputs(
     """
     ret = V3dNwarpXyzOutputs(
         root=execution.output_file("."),
-        output_file=execution.output_file(params.get("output_file")),
+        output_file=execution.output_file(params.get("output_file", None)),
     )
     return ret
 
@@ -203,7 +178,6 @@ def v_3d_nwarp_xyz(
 
 __all__ = [
     "V3dNwarpXyzOutputs",
-    "V3dNwarpXyzParameters",
     "V_3D_NWARP_XYZ_METADATA",
     "v_3d_nwarp_xyz",
     "v_3d_nwarp_xyz_execute",

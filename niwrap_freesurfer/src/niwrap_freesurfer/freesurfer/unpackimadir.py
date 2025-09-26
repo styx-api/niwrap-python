@@ -14,46 +14,20 @@ UNPACKIMADIR_METADATA = Metadata(
 
 
 UnpackimadirParameters = typing.TypedDict('UnpackimadirParameters', {
-    "@type": typing.Literal["freesurfer.unpackimadir"],
+    "@type": typing.NotRequired[typing.Literal["freesurfer/unpackimadir"]],
+    "source_directory": str,
+    "target_directory": str,
+})
+UnpackimadirParametersTagged = typing.TypedDict('UnpackimadirParametersTagged', {
+    "@type": typing.Literal["freesurfer/unpackimadir"],
     "source_directory": str,
     "target_directory": str,
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "freesurfer.unpackimadir": unpackimadir_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-    }.get(t)
-
-
 class UnpackimadirOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `unpackimadir(...)`.
+    Output object returned when calling `UnpackimadirParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -62,7 +36,7 @@ class UnpackimadirOutputs(typing.NamedTuple):
 def unpackimadir_params(
     source_directory: str,
     target_directory: str,
-) -> UnpackimadirParameters:
+) -> UnpackimadirParametersTagged:
     """
     Build parameters.
     
@@ -74,7 +48,7 @@ def unpackimadir_params(
         Parameter dictionary
     """
     params = {
-        "@type": "freesurfer.unpackimadir",
+        "@type": "freesurfer/unpackimadir",
         "source_directory": source_directory,
         "target_directory": target_directory,
     }
@@ -98,11 +72,11 @@ def unpackimadir_cargs(
     cargs.append("unpackimadir")
     cargs.extend([
         "-src",
-        params.get("source_directory")
+        params.get("source_directory", None)
     ])
     cargs.extend([
         "-targ",
-        params.get("target_directory")
+        params.get("target_directory", None)
     ])
     return cargs
 
@@ -186,7 +160,6 @@ def unpackimadir(
 __all__ = [
     "UNPACKIMADIR_METADATA",
     "UnpackimadirOutputs",
-    "UnpackimadirParameters",
     "unpackimadir",
     "unpackimadir_execute",
     "unpackimadir_params",

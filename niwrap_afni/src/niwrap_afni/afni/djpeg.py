@@ -14,7 +14,17 @@ DJPEG_METADATA = Metadata(
 
 
 DjpegParameters = typing.TypedDict('DjpegParameters', {
-    "@type": typing.Literal["afni.djpeg"],
+    "@type": typing.NotRequired[typing.Literal["afni/djpeg"]],
+    "input_file": InputPathType,
+    "output_file": str,
+    "gray": bool,
+    "fast_dct": bool,
+    "one_pixel_height": bool,
+    "pseudo_pixel_ratio": bool,
+    "crop_region": typing.NotRequired[str | None],
+})
+DjpegParametersTagged = typing.TypedDict('DjpegParametersTagged', {
+    "@type": typing.Literal["afni/djpeg"],
     "input_file": InputPathType,
     "output_file": str,
     "gray": bool,
@@ -25,41 +35,9 @@ DjpegParameters = typing.TypedDict('DjpegParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "afni.djpeg": djpeg_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "afni.djpeg": djpeg_outputs,
-    }.get(t)
-
-
 class DjpegOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `djpeg(...)`.
+    Output object returned when calling `DjpegParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -75,7 +53,7 @@ def djpeg_params(
     one_pixel_height: bool = False,
     pseudo_pixel_ratio: bool = False,
     crop_region: str | None = None,
-) -> DjpegParameters:
+) -> DjpegParametersTagged:
     """
     Build parameters.
     
@@ -91,7 +69,7 @@ def djpeg_params(
         Parameter dictionary
     """
     params = {
-        "@type": "afni.djpeg",
+        "@type": "afni/djpeg",
         "input_file": input_file,
         "output_file": output_file,
         "gray": gray,
@@ -119,20 +97,20 @@ def djpeg_cargs(
     """
     cargs = []
     cargs.append("djpeg")
-    cargs.append(execution.input_file(params.get("input_file")))
-    cargs.append(params.get("output_file"))
-    if params.get("gray"):
+    cargs.append(execution.input_file(params.get("input_file", None)))
+    cargs.append(params.get("output_file", None))
+    if params.get("gray", False):
         cargs.append("-grayscale")
-    if params.get("fast_dct"):
+    if params.get("fast_dct", False):
         cargs.append("-fast")
-    if params.get("one_pixel_height"):
+    if params.get("one_pixel_height", False):
         cargs.append("-onepixel")
-    if params.get("pseudo_pixel_ratio"):
+    if params.get("pseudo_pixel_ratio", False):
         cargs.append("-236")
-    if params.get("crop_region") is not None:
+    if params.get("crop_region", None) is not None:
         cargs.extend([
             "-crop",
-            params.get("crop_region")
+            params.get("crop_region", None)
         ])
     return cargs
 
@@ -152,7 +130,7 @@ def djpeg_outputs(
     """
     ret = DjpegOutputs(
         root=execution.output_file("."),
-        output_image=execution.output_file(params.get("output_file")),
+        output_image=execution.output_file(params.get("output_file", None)),
     )
     return ret
 
@@ -231,7 +209,6 @@ def djpeg(
 __all__ = [
     "DJPEG_METADATA",
     "DjpegOutputs",
-    "DjpegParameters",
     "djpeg",
     "djpeg_execute",
     "djpeg_params",

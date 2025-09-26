@@ -14,7 +14,14 @@ V_3D_AFNITO_NIML_METADATA = Metadata(
 
 
 V3dAfnitoNimlParameters = typing.TypedDict('V3dAfnitoNimlParameters', {
-    "@type": typing.Literal["afni.3dAFNItoNIML"],
+    "@type": typing.NotRequired[typing.Literal["afni/3dAFNItoNIML"]],
+    "dset": InputPathType,
+    "data": bool,
+    "ascii": bool,
+    "tcp": typing.NotRequired[str | None],
+})
+V3dAfnitoNimlParametersTagged = typing.TypedDict('V3dAfnitoNimlParametersTagged', {
+    "@type": typing.Literal["afni/3dAFNItoNIML"],
     "dset": InputPathType,
     "data": bool,
     "ascii": bool,
@@ -22,40 +29,9 @@ V3dAfnitoNimlParameters = typing.TypedDict('V3dAfnitoNimlParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "afni.3dAFNItoNIML": v_3d_afnito_niml_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-    }.get(t)
-
-
 class V3dAfnitoNimlOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `v_3d_afnito_niml(...)`.
+    Output object returned when calling `V3dAfnitoNimlParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -66,7 +42,7 @@ def v_3d_afnito_niml_params(
     data: bool = False,
     ascii_: bool = False,
     tcp: str | None = None,
-) -> V3dAfnitoNimlParameters:
+) -> V3dAfnitoNimlParametersTagged:
     """
     Build parameters.
     
@@ -80,7 +56,7 @@ def v_3d_afnito_niml_params(
         Parameter dictionary
     """
     params = {
-        "@type": "afni.3dAFNItoNIML",
+        "@type": "afni/3dAFNItoNIML",
         "dset": dset,
         "data": data,
         "ascii": ascii_,
@@ -105,15 +81,15 @@ def v_3d_afnito_niml_cargs(
     """
     cargs = []
     cargs.append("3dAFNItoNIML")
-    cargs.append(execution.input_file(params.get("dset")))
-    if params.get("data"):
+    cargs.append(execution.input_file(params.get("dset", None)))
+    if params.get("data", False):
         cargs.append("-data")
-    if params.get("ascii"):
+    if params.get("ascii", False):
         cargs.append("-ascii")
-    if params.get("tcp") is not None:
+    if params.get("tcp", None) is not None:
         cargs.extend([
             "-tcp",
-            params.get("tcp")
+            params.get("tcp", None)
         ])
     return cargs
 
@@ -204,7 +180,6 @@ def v_3d_afnito_niml(
 
 __all__ = [
     "V3dAfnitoNimlOutputs",
-    "V3dAfnitoNimlParameters",
     "V_3D_AFNITO_NIML_METADATA",
     "v_3d_afnito_niml",
     "v_3d_afnito_niml_execute",

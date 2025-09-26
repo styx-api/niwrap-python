@@ -14,7 +14,24 @@ V_3D_ALLINEATE_METADATA = Metadata(
 
 
 V3dAllineateParameters = typing.TypedDict('V3dAllineateParameters', {
-    "@type": typing.Literal["afni.3dAllineate"],
+    "@type": typing.NotRequired[typing.Literal["afni/3dAllineate"]],
+    "source": InputPathType,
+    "base": typing.NotRequired[InputPathType | None],
+    "prefix": str,
+    "param_save": typing.NotRequired[str | None],
+    "param_apply": typing.NotRequired[str | None],
+    "matrix_save": typing.NotRequired[str | None],
+    "matrix_apply": typing.NotRequired[str | None],
+    "cost": typing.NotRequired[str | None],
+    "interp": typing.NotRequired[str | None],
+    "final": typing.NotRequired[str | None],
+    "nmatch": typing.NotRequired[float | None],
+    "nopad": bool,
+    "verbose": bool,
+    "quiet": bool,
+})
+V3dAllineateParametersTagged = typing.TypedDict('V3dAllineateParametersTagged', {
+    "@type": typing.Literal["afni/3dAllineate"],
     "source": InputPathType,
     "base": typing.NotRequired[InputPathType | None],
     "prefix": str,
@@ -32,41 +49,9 @@ V3dAllineateParameters = typing.TypedDict('V3dAllineateParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "afni.3dAllineate": v_3d_allineate_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "afni.3dAllineate": v_3d_allineate_outputs,
-    }.get(t)
-
-
 class V3dAllineateOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `v_3d_allineate(...)`.
+    Output object returned when calling `V3dAllineateParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -95,7 +80,7 @@ def v_3d_allineate_params(
     nopad: bool = False,
     verbose: bool = False,
     quiet: bool = False,
-) -> V3dAllineateParameters:
+) -> V3dAllineateParametersTagged:
     """
     Build parameters.
     
@@ -122,7 +107,7 @@ def v_3d_allineate_params(
         Parameter dictionary
     """
     params = {
-        "@type": "afni.3dAllineate",
+        "@type": "afni/3dAllineate",
         "source": source,
         "prefix": prefix,
         "nopad": nopad,
@@ -165,61 +150,61 @@ def v_3d_allineate_cargs(
     """
     cargs = []
     cargs.append("3dAllineate")
-    cargs.append(execution.input_file(params.get("source")))
-    if params.get("base") is not None:
+    cargs.append(execution.input_file(params.get("source", None)))
+    if params.get("base", None) is not None:
         cargs.extend([
             "-base",
-            execution.input_file(params.get("base"))
+            execution.input_file(params.get("base", None))
         ])
     cargs.extend([
         "-prefix",
-        params.get("prefix")
+        params.get("prefix", None)
     ])
-    if params.get("param_save") is not None:
+    if params.get("param_save", None) is not None:
         cargs.extend([
             "-1Dparam_save",
-            params.get("param_save")
+            params.get("param_save", None)
         ])
-    if params.get("param_apply") is not None:
+    if params.get("param_apply", None) is not None:
         cargs.extend([
             "-1Dparam_apply",
-            params.get("param_apply")
+            params.get("param_apply", None)
         ])
-    if params.get("matrix_save") is not None:
+    if params.get("matrix_save", None) is not None:
         cargs.extend([
             "-1Dmatrix_save",
-            params.get("matrix_save")
+            params.get("matrix_save", None)
         ])
-    if params.get("matrix_apply") is not None:
+    if params.get("matrix_apply", None) is not None:
         cargs.extend([
             "-1Dmatrix_apply",
-            params.get("matrix_apply")
+            params.get("matrix_apply", None)
         ])
-    if params.get("cost") is not None:
+    if params.get("cost", None) is not None:
         cargs.extend([
             "-cost",
-            params.get("cost")
+            params.get("cost", None)
         ])
-    if params.get("interp") is not None:
+    if params.get("interp", None) is not None:
         cargs.extend([
             "-interp",
-            params.get("interp")
+            params.get("interp", None)
         ])
-    if params.get("final") is not None:
+    if params.get("final", None) is not None:
         cargs.extend([
             "-final",
-            params.get("final")
+            params.get("final", None)
         ])
-    if params.get("nmatch") is not None:
+    if params.get("nmatch", None) is not None:
         cargs.extend([
             "-nmatch",
-            str(params.get("nmatch"))
+            str(params.get("nmatch", None))
         ])
-    if params.get("nopad"):
+    if params.get("nopad", False):
         cargs.append("-nopad")
-    if params.get("verbose"):
+    if params.get("verbose", False):
         cargs.append("-verb")
-    if params.get("quiet"):
+    if params.get("quiet", False):
         cargs.append("-quiet")
     return cargs
 
@@ -239,10 +224,10 @@ def v_3d_allineate_outputs(
     """
     ret = V3dAllineateOutputs(
         root=execution.output_file("."),
-        out_brik=execution.output_file(params.get("prefix") + "+orig.BRIK"),
-        out_head=execution.output_file(params.get("prefix") + "+orig.HEAD"),
-        out_param_save=execution.output_file(params.get("param_save")) if (params.get("param_save") is not None) else None,
-        out_matrix_save=execution.output_file(params.get("matrix_save")) if (params.get("matrix_save") is not None) else None,
+        out_brik=execution.output_file(params.get("prefix", None) + "+orig.BRIK"),
+        out_head=execution.output_file(params.get("prefix", None) + "+orig.HEAD"),
+        out_param_save=execution.output_file(params.get("param_save", None)) if (params.get("param_save") is not None) else None,
+        out_matrix_save=execution.output_file(params.get("matrix_save", None)) if (params.get("matrix_save") is not None) else None,
     )
     return ret
 
@@ -347,7 +332,6 @@ def v_3d_allineate(
 
 __all__ = [
     "V3dAllineateOutputs",
-    "V3dAllineateParameters",
     "V_3D_ALLINEATE_METADATA",
     "v_3d_allineate",
     "v_3d_allineate_execute",

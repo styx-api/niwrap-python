@@ -14,7 +14,20 @@ V__AFNI_ENV_METADATA = Metadata(
 
 
 VAfniEnvParameters = typing.TypedDict('VAfniEnvParameters', {
-    "@type": typing.Literal["afni.@AfniEnv"],
+    "@type": typing.NotRequired[typing.Literal["afni/@AfniEnv"]],
+    "set_flag": typing.NotRequired[list[str] | None],
+    "unset_flag": typing.NotRequired[str | None],
+    "get_flag": typing.NotRequired[str | None],
+    "help_flag": bool,
+    "help_web_flag": bool,
+    "help_web_flag_alias": bool,
+    "help_view_flag": bool,
+    "help_view_flag_alias": bool,
+    "all_opts_flag": bool,
+    "help_find_flag": typing.NotRequired[str | None],
+})
+VAfniEnvParametersTagged = typing.TypedDict('VAfniEnvParametersTagged', {
+    "@type": typing.Literal["afni/@AfniEnv"],
     "set_flag": typing.NotRequired[list[str] | None],
     "unset_flag": typing.NotRequired[str | None],
     "get_flag": typing.NotRequired[str | None],
@@ -28,40 +41,9 @@ VAfniEnvParameters = typing.TypedDict('VAfniEnvParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "afni.@AfniEnv": v__afni_env_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-    }.get(t)
-
-
 class VAfniEnvOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `v__afni_env(...)`.
+    Output object returned when calling `VAfniEnvParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -78,7 +60,7 @@ def v__afni_env_params(
     help_view_flag_alias: bool = False,
     all_opts_flag: bool = False,
     help_find_flag: str | None = None,
-) -> VAfniEnvParameters:
+) -> VAfniEnvParametersTagged:
     """
     Build parameters.
     
@@ -98,7 +80,7 @@ def v__afni_env_params(
         Parameter dictionary
     """
     params = {
-        "@type": "afni.@AfniEnv",
+        "@type": "afni/@AfniEnv",
         "help_flag": help_flag,
         "help_web_flag": help_web_flag,
         "help_web_flag_alias": help_web_flag_alias,
@@ -132,37 +114,37 @@ def v__afni_env_cargs(
     """
     cargs = []
     cargs.append("@AfniEnv")
-    if params.get("set_flag") is not None:
+    if params.get("set_flag", None) is not None:
         cargs.extend([
             "-set",
-            *params.get("set_flag")
+            *params.get("set_flag", None)
         ])
-    if params.get("unset_flag") is not None:
+    if params.get("unset_flag", None) is not None:
         cargs.extend([
             "-unset",
-            params.get("unset_flag")
+            params.get("unset_flag", None)
         ])
-    if params.get("get_flag") is not None:
+    if params.get("get_flag", None) is not None:
         cargs.extend([
             "-get",
-            params.get("get_flag")
+            params.get("get_flag", None)
         ])
-    if params.get("help_flag"):
+    if params.get("help_flag", False):
         cargs.append("-help")
-    if params.get("help_web_flag"):
+    if params.get("help_web_flag", False):
         cargs.append("-h_web")
-    if params.get("help_web_flag_alias"):
+    if params.get("help_web_flag_alias", False):
         cargs.append("-hweb")
-    if params.get("help_view_flag"):
+    if params.get("help_view_flag", False):
         cargs.append("-h_view")
-    if params.get("help_view_flag_alias"):
+    if params.get("help_view_flag_alias", False):
         cargs.append("-hview")
-    if params.get("all_opts_flag"):
+    if params.get("all_opts_flag", False):
         cargs.append("-all_opts")
-    if params.get("help_find_flag") is not None:
+    if params.get("help_find_flag", None) is not None:
         cargs.extend([
             "-h_find",
-            params.get("help_find_flag")
+            params.get("help_find_flag", None)
         ])
     return cargs
 
@@ -269,7 +251,6 @@ def v__afni_env(
 
 __all__ = [
     "VAfniEnvOutputs",
-    "VAfniEnvParameters",
     "V__AFNI_ENV_METADATA",
     "v__afni_env",
     "v__afni_env_execute",

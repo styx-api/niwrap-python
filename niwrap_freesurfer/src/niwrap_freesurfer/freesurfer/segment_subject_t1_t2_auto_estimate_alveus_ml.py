@@ -14,7 +14,14 @@ SEGMENT_SUBJECT_T1_T2_AUTO_ESTIMATE_ALVEUS_ML_METADATA = Metadata(
 
 
 SegmentSubjectT1T2AutoEstimateAlveusMlParameters = typing.TypedDict('SegmentSubjectT1T2AutoEstimateAlveusMlParameters', {
-    "@type": typing.Literal["freesurfer.segmentSubjectT1T2_autoEstimateAlveusML"],
+    "@type": typing.NotRequired[typing.Literal["freesurfer/segmentSubjectT1T2_autoEstimateAlveusML"]],
+    "input_t1": InputPathType,
+    "input_t2": InputPathType,
+    "output_directory": str,
+    "other_options": typing.NotRequired[str | None],
+})
+SegmentSubjectT1T2AutoEstimateAlveusMlParametersTagged = typing.TypedDict('SegmentSubjectT1T2AutoEstimateAlveusMlParametersTagged', {
+    "@type": typing.Literal["freesurfer/segmentSubjectT1T2_autoEstimateAlveusML"],
     "input_t1": InputPathType,
     "input_t2": InputPathType,
     "output_directory": str,
@@ -22,41 +29,9 @@ SegmentSubjectT1T2AutoEstimateAlveusMlParameters = typing.TypedDict('SegmentSubj
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "freesurfer.segmentSubjectT1T2_autoEstimateAlveusML": segment_subject_t1_t2_auto_estimate_alveus_ml_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "freesurfer.segmentSubjectT1T2_autoEstimateAlveusML": segment_subject_t1_t2_auto_estimate_alveus_ml_outputs,
-    }.get(t)
-
-
 class SegmentSubjectT1T2AutoEstimateAlveusMlOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `segment_subject_t1_t2_auto_estimate_alveus_ml(...)`.
+    Output object returned when calling `SegmentSubjectT1T2AutoEstimateAlveusMlParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -69,7 +44,7 @@ def segment_subject_t1_t2_auto_estimate_alveus_ml_params(
     input_t2: InputPathType,
     output_directory: str,
     other_options: str | None = None,
-) -> SegmentSubjectT1T2AutoEstimateAlveusMlParameters:
+) -> SegmentSubjectT1T2AutoEstimateAlveusMlParametersTagged:
     """
     Build parameters.
     
@@ -82,7 +57,7 @@ def segment_subject_t1_t2_auto_estimate_alveus_ml_params(
         Parameter dictionary
     """
     params = {
-        "@type": "freesurfer.segmentSubjectT1T2_autoEstimateAlveusML",
+        "@type": "freesurfer/segmentSubjectT1T2_autoEstimateAlveusML",
         "input_t1": input_t1,
         "input_t2": input_t2,
         "output_directory": output_directory,
@@ -107,11 +82,11 @@ def segment_subject_t1_t2_auto_estimate_alveus_ml_cargs(
     """
     cargs = []
     cargs.append("segmentSubjectT1T2_autoEstimateAlveusML")
-    cargs.append(execution.input_file(params.get("input_t1")))
-    cargs.append(execution.input_file(params.get("input_t2")))
-    cargs.append(params.get("output_directory"))
-    if params.get("other_options") is not None:
-        cargs.append(params.get("other_options"))
+    cargs.append(execution.input_file(params.get("input_t1", None)))
+    cargs.append(execution.input_file(params.get("input_t2", None)))
+    cargs.append(params.get("output_directory", None))
+    if params.get("other_options", None) is not None:
+        cargs.append(params.get("other_options", None))
     return cargs
 
 
@@ -130,7 +105,7 @@ def segment_subject_t1_t2_auto_estimate_alveus_ml_outputs(
     """
     ret = SegmentSubjectT1T2AutoEstimateAlveusMlOutputs(
         root=execution.output_file("."),
-        segmentation_result=execution.output_file(params.get("output_directory") + "/segmentation.nii.gz"),
+        segmentation_result=execution.output_file(params.get("output_directory", None) + "/segmentation.nii.gz"),
     )
     return ret
 
@@ -202,7 +177,6 @@ def segment_subject_t1_t2_auto_estimate_alveus_ml(
 __all__ = [
     "SEGMENT_SUBJECT_T1_T2_AUTO_ESTIMATE_ALVEUS_ML_METADATA",
     "SegmentSubjectT1T2AutoEstimateAlveusMlOutputs",
-    "SegmentSubjectT1T2AutoEstimateAlveusMlParameters",
     "segment_subject_t1_t2_auto_estimate_alveus_ml",
     "segment_subject_t1_t2_auto_estimate_alveus_ml_execute",
     "segment_subject_t1_t2_auto_estimate_alveus_ml_params",

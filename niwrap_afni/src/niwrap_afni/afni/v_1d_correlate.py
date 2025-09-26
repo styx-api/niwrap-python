@@ -14,7 +14,19 @@ V_1D_CORRELATE_METADATA = Metadata(
 
 
 V1dCorrelateParameters = typing.TypedDict('V1dCorrelateParameters', {
-    "@type": typing.Literal["afni.1dCorrelate"],
+    "@type": typing.NotRequired[typing.Literal["afni/1dCorrelate"]],
+    "ktaub": bool,
+    "nboot": typing.NotRequired[float | None],
+    "alpha": typing.NotRequired[float | None],
+    "block": bool,
+    "blk": bool,
+    "pearson": bool,
+    "spearman": bool,
+    "quadrant": bool,
+    "input_files": list[InputPathType],
+})
+V1dCorrelateParametersTagged = typing.TypedDict('V1dCorrelateParametersTagged', {
+    "@type": typing.Literal["afni/1dCorrelate"],
     "ktaub": bool,
     "nboot": typing.NotRequired[float | None],
     "alpha": typing.NotRequired[float | None],
@@ -27,40 +39,9 @@ V1dCorrelateParameters = typing.TypedDict('V1dCorrelateParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "afni.1dCorrelate": v_1d_correlate_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-    }.get(t)
-
-
 class V1dCorrelateOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `v_1d_correlate(...)`.
+    Output object returned when calling `V1dCorrelateParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -76,7 +57,7 @@ def v_1d_correlate_params(
     pearson: bool = False,
     spearman: bool = False,
     quadrant: bool = False,
-) -> V1dCorrelateParameters:
+) -> V1dCorrelateParametersTagged:
     """
     Build parameters.
     
@@ -95,7 +76,7 @@ def v_1d_correlate_params(
         Parameter dictionary
     """
     params = {
-        "@type": "afni.1dCorrelate",
+        "@type": "afni/1dCorrelate",
         "ktaub": ktaub,
         "block": block,
         "blk": blk,
@@ -126,29 +107,29 @@ def v_1d_correlate_cargs(
     """
     cargs = []
     cargs.append("1dCorrelate")
-    if params.get("ktaub"):
+    if params.get("ktaub", False):
         cargs.append("-Ktaub")
-    if params.get("nboot") is not None:
+    if params.get("nboot", None) is not None:
         cargs.extend([
             "-nboot",
-            str(params.get("nboot"))
+            str(params.get("nboot", None))
         ])
-    if params.get("alpha") is not None:
+    if params.get("alpha", None) is not None:
         cargs.extend([
             "-alpha",
-            str(params.get("alpha"))
+            str(params.get("alpha", None))
         ])
-    if params.get("block"):
+    if params.get("block", False):
         cargs.append("-block")
-    if params.get("blk"):
+    if params.get("blk", False):
         cargs.append("-blk")
-    if params.get("pearson"):
+    if params.get("pearson", False):
         cargs.append("-Pearson")
-    if params.get("spearman"):
+    if params.get("spearman", False):
         cargs.append("-Spearman")
-    if params.get("quadrant"):
+    if params.get("quadrant", False):
         cargs.append("-Quadrant")
-    cargs.extend([execution.input_file(f) for f in params.get("input_files")])
+    cargs.extend([execution.input_file(f) for f in params.get("input_files", None)])
     return cargs
 
 
@@ -253,7 +234,6 @@ def v_1d_correlate(
 
 __all__ = [
     "V1dCorrelateOutputs",
-    "V1dCorrelateParameters",
     "V_1D_CORRELATE_METADATA",
     "v_1d_correlate",
     "v_1d_correlate_execute",

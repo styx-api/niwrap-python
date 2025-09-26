@@ -14,14 +14,34 @@ VOXEL2MESH_METADATA = Metadata(
 
 
 Voxel2meshConfigParameters = typing.TypedDict('Voxel2meshConfigParameters', {
-    "@type": typing.Literal["mrtrix.voxel2mesh.config"],
+    "@type": typing.NotRequired[typing.Literal["config"]],
+    "key": str,
+    "value": str,
+})
+Voxel2meshConfigParametersTagged = typing.TypedDict('Voxel2meshConfigParametersTagged', {
+    "@type": typing.Literal["config"],
     "key": str,
     "value": str,
 })
 
 
 Voxel2meshParameters = typing.TypedDict('Voxel2meshParameters', {
-    "@type": typing.Literal["mrtrix.voxel2mesh"],
+    "@type": typing.NotRequired[typing.Literal["mrtrix/voxel2mesh"]],
+    "blocky": bool,
+    "threshold": typing.NotRequired[float | None],
+    "info": bool,
+    "quiet": bool,
+    "debug": bool,
+    "force": bool,
+    "nthreads": typing.NotRequired[int | None],
+    "config": typing.NotRequired[list[Voxel2meshConfigParameters] | None],
+    "help": bool,
+    "version": bool,
+    "input": InputPathType,
+    "output": str,
+})
+Voxel2meshParametersTagged = typing.TypedDict('Voxel2meshParametersTagged', {
+    "@type": typing.Literal["mrtrix/voxel2mesh"],
     "blocky": bool,
     "threshold": typing.NotRequired[float | None],
     "info": bool,
@@ -37,43 +57,10 @@ Voxel2meshParameters = typing.TypedDict('Voxel2meshParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "mrtrix.voxel2mesh": voxel2mesh_cargs,
-        "mrtrix.voxel2mesh.config": voxel2mesh_config_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "mrtrix.voxel2mesh": voxel2mesh_outputs,
-    }.get(t)
-
-
 def voxel2mesh_config_params(
     key: str,
     value: str,
-) -> Voxel2meshConfigParameters:
+) -> Voxel2meshConfigParametersTagged:
     """
     Build parameters.
     
@@ -84,7 +71,7 @@ def voxel2mesh_config_params(
         Parameter dictionary
     """
     params = {
-        "@type": "mrtrix.voxel2mesh.config",
+        "@type": "config",
         "key": key,
         "value": value,
     }
@@ -106,14 +93,14 @@ def voxel2mesh_config_cargs(
     """
     cargs = []
     cargs.append("-config")
-    cargs.append(params.get("key"))
-    cargs.append(params.get("value"))
+    cargs.append(params.get("key", None))
+    cargs.append(params.get("value", None))
     return cargs
 
 
 class Voxel2meshOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `voxel2mesh(...)`.
+    Output object returned when calling `Voxel2meshParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -134,7 +121,7 @@ def voxel2mesh_params(
     config: list[Voxel2meshConfigParameters] | None = None,
     help_: bool = False,
     version: bool = False,
-) -> Voxel2meshParameters:
+) -> Voxel2meshParametersTagged:
     """
     Build parameters.
     
@@ -161,7 +148,7 @@ def voxel2mesh_params(
         Parameter dictionary
     """
     params = {
-        "@type": "mrtrix.voxel2mesh",
+        "@type": "mrtrix/voxel2mesh",
         "blocky": blocky,
         "info": info,
         "quiet": quiet,
@@ -196,34 +183,34 @@ def voxel2mesh_cargs(
     """
     cargs = []
     cargs.append("voxel2mesh")
-    if params.get("blocky"):
+    if params.get("blocky", False):
         cargs.append("-blocky")
-    if params.get("threshold") is not None:
+    if params.get("threshold", None) is not None:
         cargs.extend([
             "-threshold",
-            str(params.get("threshold"))
+            str(params.get("threshold", None))
         ])
-    if params.get("info"):
+    if params.get("info", False):
         cargs.append("-info")
-    if params.get("quiet"):
+    if params.get("quiet", False):
         cargs.append("-quiet")
-    if params.get("debug"):
+    if params.get("debug", False):
         cargs.append("-debug")
-    if params.get("force"):
+    if params.get("force", False):
         cargs.append("-force")
-    if params.get("nthreads") is not None:
+    if params.get("nthreads", None) is not None:
         cargs.extend([
             "-nthreads",
-            str(params.get("nthreads"))
+            str(params.get("nthreads", None))
         ])
-    if params.get("config") is not None:
-        cargs.extend([a for c in [dyn_cargs(s["@type"])(s, execution) for s in params.get("config")] for a in c])
-    if params.get("help"):
+    if params.get("config", None) is not None:
+        cargs.extend([a for c in [voxel2mesh_config_cargs(s, execution) for s in params.get("config", None)] for a in c])
+    if params.get("help", False):
         cargs.append("-help")
-    if params.get("version"):
+    if params.get("version", False):
         cargs.append("-version")
-    cargs.append(execution.input_file(params.get("input")))
-    cargs.append(params.get("output"))
+    cargs.append(execution.input_file(params.get("input", None)))
+    cargs.append(params.get("output", None))
     return cargs
 
 
@@ -242,7 +229,7 @@ def voxel2mesh_outputs(
     """
     ret = Voxel2meshOutputs(
         root=execution.output_file("."),
-        output=execution.output_file(params.get("output")),
+        output=execution.output_file(params.get("output", None)),
     )
     return ret
 
@@ -371,9 +358,7 @@ def voxel2mesh(
 
 __all__ = [
     "VOXEL2MESH_METADATA",
-    "Voxel2meshConfigParameters",
     "Voxel2meshOutputs",
-    "Voxel2meshParameters",
     "voxel2mesh",
     "voxel2mesh_config_params",
     "voxel2mesh_execute",

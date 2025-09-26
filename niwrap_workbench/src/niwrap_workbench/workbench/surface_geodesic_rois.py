@@ -14,7 +14,18 @@ SURFACE_GEODESIC_ROIS_METADATA = Metadata(
 
 
 SurfaceGeodesicRoisParameters = typing.TypedDict('SurfaceGeodesicRoisParameters', {
-    "@type": typing.Literal["workbench.surface-geodesic-rois"],
+    "@type": typing.NotRequired[typing.Literal["workbench/surface-geodesic-rois"]],
+    "surface": InputPathType,
+    "limit": float,
+    "vertex_list_file": str,
+    "metric_out": str,
+    "opt_gaussian_sigma": typing.NotRequired[float | None],
+    "opt_overlap_logic_method": typing.NotRequired[str | None],
+    "opt_names_name_list_file": typing.NotRequired[str | None],
+    "opt_corrected_areas_area_metric": typing.NotRequired[InputPathType | None],
+})
+SurfaceGeodesicRoisParametersTagged = typing.TypedDict('SurfaceGeodesicRoisParametersTagged', {
+    "@type": typing.Literal["workbench/surface-geodesic-rois"],
     "surface": InputPathType,
     "limit": float,
     "vertex_list_file": str,
@@ -26,41 +37,9 @@ SurfaceGeodesicRoisParameters = typing.TypedDict('SurfaceGeodesicRoisParameters'
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "workbench.surface-geodesic-rois": surface_geodesic_rois_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "workbench.surface-geodesic-rois": surface_geodesic_rois_outputs,
-    }.get(t)
-
-
 class SurfaceGeodesicRoisOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `surface_geodesic_rois(...)`.
+    Output object returned when calling `SurfaceGeodesicRoisParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -77,7 +56,7 @@ def surface_geodesic_rois_params(
     opt_overlap_logic_method: str | None = None,
     opt_names_name_list_file: str | None = None,
     opt_corrected_areas_area_metric: InputPathType | None = None,
-) -> SurfaceGeodesicRoisParameters:
+) -> SurfaceGeodesicRoisParametersTagged:
     """
     Build parameters.
     
@@ -100,7 +79,7 @@ def surface_geodesic_rois_params(
         Parameter dictionary
     """
     params = {
-        "@type": "workbench.surface-geodesic-rois",
+        "@type": "workbench/surface-geodesic-rois",
         "surface": surface,
         "limit": limit,
         "vertex_list_file": vertex_list_file,
@@ -133,29 +112,29 @@ def surface_geodesic_rois_cargs(
     cargs = []
     cargs.append("wb_command")
     cargs.append("-surface-geodesic-rois")
-    cargs.append(execution.input_file(params.get("surface")))
-    cargs.append(str(params.get("limit")))
-    cargs.append(params.get("vertex_list_file"))
-    cargs.append(params.get("metric_out"))
-    if params.get("opt_gaussian_sigma") is not None:
+    cargs.append(execution.input_file(params.get("surface", None)))
+    cargs.append(str(params.get("limit", None)))
+    cargs.append(params.get("vertex_list_file", None))
+    cargs.append(params.get("metric_out", None))
+    if params.get("opt_gaussian_sigma", None) is not None:
         cargs.extend([
             "-gaussian",
-            str(params.get("opt_gaussian_sigma"))
+            str(params.get("opt_gaussian_sigma", None))
         ])
-    if params.get("opt_overlap_logic_method") is not None:
+    if params.get("opt_overlap_logic_method", None) is not None:
         cargs.extend([
             "-overlap-logic",
-            params.get("opt_overlap_logic_method")
+            params.get("opt_overlap_logic_method", None)
         ])
-    if params.get("opt_names_name_list_file") is not None:
+    if params.get("opt_names_name_list_file", None) is not None:
         cargs.extend([
             "-names",
-            params.get("opt_names_name_list_file")
+            params.get("opt_names_name_list_file", None)
         ])
-    if params.get("opt_corrected_areas_area_metric") is not None:
+    if params.get("opt_corrected_areas_area_metric", None) is not None:
         cargs.extend([
             "-corrected-areas",
-            execution.input_file(params.get("opt_corrected_areas_area_metric"))
+            execution.input_file(params.get("opt_corrected_areas_area_metric", None))
         ])
     return cargs
 
@@ -175,7 +154,7 @@ def surface_geodesic_rois_outputs(
     """
     ret = SurfaceGeodesicRoisOutputs(
         root=execution.output_file("."),
-        metric_out=execution.output_file(params.get("metric_out")),
+        metric_out=execution.output_file(params.get("metric_out", None)),
     )
     return ret
 
@@ -289,7 +268,6 @@ def surface_geodesic_rois(
 __all__ = [
     "SURFACE_GEODESIC_ROIS_METADATA",
     "SurfaceGeodesicRoisOutputs",
-    "SurfaceGeodesicRoisParameters",
     "surface_geodesic_rois",
     "surface_geodesic_rois_execute",
     "surface_geodesic_rois_params",

@@ -14,45 +14,18 @@ SUMA_GLXDINO_METADATA = Metadata(
 
 
 SumaGlxdinoParameters = typing.TypedDict('SumaGlxdinoParameters', {
-    "@type": typing.Literal["afni.SUMA_glxdino"],
+    "@type": typing.NotRequired[typing.Literal["afni/SUMA_glxdino"]],
+    "verbose": bool,
+})
+SumaGlxdinoParametersTagged = typing.TypedDict('SumaGlxdinoParametersTagged', {
+    "@type": typing.Literal["afni/SUMA_glxdino"],
     "verbose": bool,
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "afni.SUMA_glxdino": suma_glxdino_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-    }.get(t)
-
-
 class SumaGlxdinoOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `suma_glxdino(...)`.
+    Output object returned when calling `SumaGlxdinoParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -60,7 +33,7 @@ class SumaGlxdinoOutputs(typing.NamedTuple):
 
 def suma_glxdino_params(
     verbose: bool = False,
-) -> SumaGlxdinoParameters:
+) -> SumaGlxdinoParametersTagged:
     """
     Build parameters.
     
@@ -70,7 +43,7 @@ def suma_glxdino_params(
         Parameter dictionary
     """
     params = {
-        "@type": "afni.SUMA_glxdino",
+        "@type": "afni/SUMA_glxdino",
         "verbose": verbose,
     }
     return params
@@ -91,7 +64,7 @@ def suma_glxdino_cargs(
     """
     cargs = []
     cargs.append("SUMA_glxdino")
-    if params.get("verbose"):
+    if params.get("verbose", False):
         cargs.append("-v")
     return cargs
 
@@ -173,7 +146,6 @@ def suma_glxdino(
 __all__ = [
     "SUMA_GLXDINO_METADATA",
     "SumaGlxdinoOutputs",
-    "SumaGlxdinoParameters",
     "suma_glxdino",
     "suma_glxdino_execute",
     "suma_glxdino_params",

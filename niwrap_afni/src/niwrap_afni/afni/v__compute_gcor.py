@@ -14,7 +14,17 @@ V__COMPUTE_GCOR_METADATA = Metadata(
 
 
 VComputeGcorParameters = typing.TypedDict('VComputeGcorParameters', {
-    "@type": typing.Literal["afni.@compute_gcor"],
+    "@type": typing.NotRequired[typing.Literal["afni/@compute_gcor"]],
+    "input": InputPathType,
+    "mask": typing.NotRequired[InputPathType | None],
+    "corr_vol_prefix": typing.NotRequired[str | None],
+    "initial_trs": typing.NotRequired[float | None],
+    "no_demean": bool,
+    "save_tmp": bool,
+    "verbose": typing.NotRequired[float | None],
+})
+VComputeGcorParametersTagged = typing.TypedDict('VComputeGcorParametersTagged', {
+    "@type": typing.Literal["afni/@compute_gcor"],
     "input": InputPathType,
     "mask": typing.NotRequired[InputPathType | None],
     "corr_vol_prefix": typing.NotRequired[str | None],
@@ -25,41 +35,9 @@ VComputeGcorParameters = typing.TypedDict('VComputeGcorParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "afni.@compute_gcor": v__compute_gcor_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "afni.@compute_gcor": v__compute_gcor_outputs,
-    }.get(t)
-
-
 class VComputeGcorOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `v__compute_gcor(...)`.
+    Output object returned when calling `VComputeGcorParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -77,7 +55,7 @@ def v__compute_gcor_params(
     no_demean: bool = False,
     save_tmp: bool = False,
     verbose: float | None = None,
-) -> VComputeGcorParameters:
+) -> VComputeGcorParametersTagged:
     """
     Build parameters.
     
@@ -93,7 +71,7 @@ def v__compute_gcor_params(
         Parameter dictionary
     """
     params = {
-        "@type": "afni.@compute_gcor",
+        "@type": "afni/@compute_gcor",
         "input": input_,
         "no_demean": no_demean,
         "save_tmp": save_tmp,
@@ -124,27 +102,27 @@ def v__compute_gcor_cargs(
     """
     cargs = []
     cargs.append("@compute_gcor")
-    cargs.append(execution.input_file(params.get("input")))
-    if params.get("mask") is not None:
-        cargs.append(execution.input_file(params.get("mask")))
-    if params.get("corr_vol_prefix") is not None:
+    cargs.append(execution.input_file(params.get("input", None)))
+    if params.get("mask", None) is not None:
+        cargs.append(execution.input_file(params.get("mask", None)))
+    if params.get("corr_vol_prefix", None) is not None:
         cargs.extend([
             "-corr_vol",
-            params.get("corr_vol_prefix")
+            params.get("corr_vol_prefix", None)
         ])
-    if params.get("initial_trs") is not None:
+    if params.get("initial_trs", None) is not None:
         cargs.extend([
             "-nfirst",
-            str(params.get("initial_trs"))
+            str(params.get("initial_trs", None))
         ])
-    if params.get("no_demean"):
+    if params.get("no_demean", False):
         cargs.append("-no_demean")
-    if params.get("save_tmp"):
+    if params.get("save_tmp", False):
         cargs.append("-savetmp")
-    if params.get("verbose") is not None:
+    if params.get("verbose", None) is not None:
         cargs.extend([
             "-verb",
-            str(params.get("verbose"))
+            str(params.get("verbose", None))
         ])
     return cargs
 
@@ -164,8 +142,8 @@ def v__compute_gcor_outputs(
     """
     ret = VComputeGcorOutputs(
         root=execution.output_file("."),
-        corr_vol_brik=execution.output_file(params.get("corr_vol_prefix") + "+tlrc.BRIK") if (params.get("corr_vol_prefix") is not None) else None,
-        corr_vol_head=execution.output_file(params.get("corr_vol_prefix") + "+tlrc.HEAD") if (params.get("corr_vol_prefix") is not None) else None,
+        corr_vol_brik=execution.output_file(params.get("corr_vol_prefix", None) + "+tlrc.BRIK") if (params.get("corr_vol_prefix") is not None) else None,
+        corr_vol_head=execution.output_file(params.get("corr_vol_prefix", None) + "+tlrc.HEAD") if (params.get("corr_vol_prefix") is not None) else None,
     )
     return ret
 
@@ -243,7 +221,6 @@ def v__compute_gcor(
 
 __all__ = [
     "VComputeGcorOutputs",
-    "VComputeGcorParameters",
     "V__COMPUTE_GCOR_METADATA",
     "v__compute_gcor",
     "v__compute_gcor_execute",

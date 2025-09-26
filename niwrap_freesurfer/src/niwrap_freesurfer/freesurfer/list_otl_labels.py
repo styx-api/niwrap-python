@@ -14,45 +14,18 @@ LIST_OTL_LABELS_METADATA = Metadata(
 
 
 ListOtlLabelsParameters = typing.TypedDict('ListOtlLabelsParameters', {
-    "@type": typing.Literal["freesurfer.list_otl_labels"],
+    "@type": typing.NotRequired[typing.Literal["freesurfer/list_otl_labels"]],
+    "input_file": InputPathType,
+})
+ListOtlLabelsParametersTagged = typing.TypedDict('ListOtlLabelsParametersTagged', {
+    "@type": typing.Literal["freesurfer/list_otl_labels"],
     "input_file": InputPathType,
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "freesurfer.list_otl_labels": list_otl_labels_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-    }.get(t)
-
-
 class ListOtlLabelsOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `list_otl_labels(...)`.
+    Output object returned when calling `ListOtlLabelsParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -60,7 +33,7 @@ class ListOtlLabelsOutputs(typing.NamedTuple):
 
 def list_otl_labels_params(
     input_file: InputPathType,
-) -> ListOtlLabelsParameters:
+) -> ListOtlLabelsParametersTagged:
     """
     Build parameters.
     
@@ -70,7 +43,7 @@ def list_otl_labels_params(
         Parameter dictionary
     """
     params = {
-        "@type": "freesurfer.list_otl_labels",
+        "@type": "freesurfer/list_otl_labels",
         "input_file": input_file,
     }
     return params
@@ -93,7 +66,7 @@ def list_otl_labels_cargs(
     cargs.append("list_otl_labels")
     cargs.extend([
         "-i",
-        execution.input_file(params.get("input_file"))
+        execution.input_file(params.get("input_file", None))
     ])
     return cargs
 
@@ -173,7 +146,6 @@ def list_otl_labels(
 __all__ = [
     "LIST_OTL_LABELS_METADATA",
     "ListOtlLabelsOutputs",
-    "ListOtlLabelsParameters",
     "list_otl_labels",
     "list_otl_labels_execute",
     "list_otl_labels_params",

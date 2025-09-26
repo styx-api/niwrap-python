@@ -14,7 +14,16 @@ TABLE2MAP_METADATA = Metadata(
 
 
 Table2mapParameters = typing.TypedDict('Table2mapParameters', {
-    "@type": typing.Literal["freesurfer.table2map"],
+    "@type": typing.NotRequired[typing.Literal["freesurfer/table2map"]],
+    "input_table": InputPathType,
+    "output_map": str,
+    "segmentation": typing.NotRequired[InputPathType | None],
+    "parcellation": typing.NotRequired[InputPathType | None],
+    "columns": typing.NotRequired[list[str] | None],
+    "lookup_table": typing.NotRequired[InputPathType | None],
+})
+Table2mapParametersTagged = typing.TypedDict('Table2mapParametersTagged', {
+    "@type": typing.Literal["freesurfer/table2map"],
     "input_table": InputPathType,
     "output_map": str,
     "segmentation": typing.NotRequired[InputPathType | None],
@@ -24,40 +33,9 @@ Table2mapParameters = typing.TypedDict('Table2mapParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "freesurfer.table2map": table2map_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-    }.get(t)
-
-
 class Table2mapOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `table2map(...)`.
+    Output object returned when calling `Table2mapParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -70,7 +48,7 @@ def table2map_params(
     parcellation: InputPathType | None = None,
     columns: list[str] | None = None,
     lookup_table: InputPathType | None = None,
-) -> Table2mapParameters:
+) -> Table2mapParametersTagged:
     """
     Build parameters.
     
@@ -85,7 +63,7 @@ def table2map_params(
         Parameter dictionary
     """
     params = {
-        "@type": "freesurfer.table2map",
+        "@type": "freesurfer/table2map",
         "input_table": input_table,
         "output_map": output_map,
     }
@@ -117,31 +95,31 @@ def table2map_cargs(
     cargs.append("table2map")
     cargs.extend([
         "-t",
-        execution.input_file(params.get("input_table"))
+        execution.input_file(params.get("input_table", None))
     ])
     cargs.extend([
         "-o",
-        params.get("output_map")
+        params.get("output_map", None)
     ])
-    if params.get("segmentation") is not None:
+    if params.get("segmentation", None) is not None:
         cargs.extend([
             "-s",
-            execution.input_file(params.get("segmentation"))
+            execution.input_file(params.get("segmentation", None))
         ])
-    if params.get("parcellation") is not None:
+    if params.get("parcellation", None) is not None:
         cargs.extend([
             "-p",
-            execution.input_file(params.get("parcellation"))
+            execution.input_file(params.get("parcellation", None))
         ])
-    if params.get("columns") is not None:
+    if params.get("columns", None) is not None:
         cargs.extend([
             "-c",
-            *params.get("columns")
+            *params.get("columns", None)
         ])
-    if params.get("lookup_table") is not None:
+    if params.get("lookup_table", None) is not None:
         cargs.extend([
             "-l",
-            execution.input_file(params.get("lookup_table"))
+            execution.input_file(params.get("lookup_table", None))
         ])
     return cargs
 
@@ -238,7 +216,6 @@ def table2map(
 __all__ = [
     "TABLE2MAP_METADATA",
     "Table2mapOutputs",
-    "Table2mapParameters",
     "table2map",
     "table2map_execute",
     "table2map_params",

@@ -14,7 +14,15 @@ V_3D_ABOVERLAP_METADATA = Metadata(
 
 
 V3dAboverlapParameters = typing.TypedDict('V3dAboverlapParameters', {
-    "@type": typing.Literal["afni.3dABoverlap"],
+    "@type": typing.NotRequired[typing.Literal["afni/3dABoverlap"]],
+    "dataset_a": InputPathType,
+    "dataset_b": InputPathType,
+    "no_automask": bool,
+    "quiet": bool,
+    "verbose": bool,
+})
+V3dAboverlapParametersTagged = typing.TypedDict('V3dAboverlapParametersTagged', {
+    "@type": typing.Literal["afni/3dABoverlap"],
     "dataset_a": InputPathType,
     "dataset_b": InputPathType,
     "no_automask": bool,
@@ -23,40 +31,9 @@ V3dAboverlapParameters = typing.TypedDict('V3dAboverlapParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "afni.3dABoverlap": v_3d_aboverlap_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-    }.get(t)
-
-
 class V3dAboverlapOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `v_3d_aboverlap(...)`.
+    Output object returned when calling `V3dAboverlapParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -68,7 +45,7 @@ def v_3d_aboverlap_params(
     no_automask: bool = False,
     quiet: bool = False,
     verbose: bool = False,
-) -> V3dAboverlapParameters:
+) -> V3dAboverlapParametersTagged:
     """
     Build parameters.
     
@@ -83,7 +60,7 @@ def v_3d_aboverlap_params(
         Parameter dictionary
     """
     params = {
-        "@type": "afni.3dABoverlap",
+        "@type": "afni/3dABoverlap",
         "dataset_a": dataset_a,
         "dataset_b": dataset_b,
         "no_automask": no_automask,
@@ -108,13 +85,13 @@ def v_3d_aboverlap_cargs(
     """
     cargs = []
     cargs.append("3dABoverlap")
-    cargs.append(execution.input_file(params.get("dataset_a")))
-    cargs.append(execution.input_file(params.get("dataset_b")))
-    if params.get("no_automask"):
+    cargs.append(execution.input_file(params.get("dataset_a", None)))
+    cargs.append(execution.input_file(params.get("dataset_b", None)))
+    if params.get("no_automask", False):
         cargs.append("-no_automask")
-    if params.get("quiet"):
+    if params.get("quiet", False):
         cargs.append("-quiet")
-    if params.get("verbose"):
+    if params.get("verbose", False):
         cargs.append("-verb")
     return cargs
 
@@ -208,7 +185,6 @@ def v_3d_aboverlap(
 
 __all__ = [
     "V3dAboverlapOutputs",
-    "V3dAboverlapParameters",
     "V_3D_ABOVERLAP_METADATA",
     "v_3d_aboverlap",
     "v_3d_aboverlap_execute",

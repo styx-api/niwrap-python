@@ -14,7 +14,15 @@ ADJUNCT_MAKE_SCRIPT_AND_RST_PY_METADATA = Metadata(
 
 
 AdjunctMakeScriptAndRstPyParameters = typing.TypedDict('AdjunctMakeScriptAndRstPyParameters', {
-    "@type": typing.Literal["afni.adjunct_make_script_and_rst.py"],
+    "@type": typing.NotRequired[typing.Literal["afni/adjunct_make_script_and_rst.py"]],
+    "input_script": InputPathType,
+    "prefix_rst": str,
+    "prefix_script": str,
+    "reflink": str,
+    "execute_script": bool,
+})
+AdjunctMakeScriptAndRstPyParametersTagged = typing.TypedDict('AdjunctMakeScriptAndRstPyParametersTagged', {
+    "@type": typing.Literal["afni/adjunct_make_script_and_rst.py"],
     "input_script": InputPathType,
     "prefix_rst": str,
     "prefix_script": str,
@@ -23,41 +31,9 @@ AdjunctMakeScriptAndRstPyParameters = typing.TypedDict('AdjunctMakeScriptAndRstP
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "afni.adjunct_make_script_and_rst.py": adjunct_make_script_and_rst_py_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "afni.adjunct_make_script_and_rst.py": adjunct_make_script_and_rst_py_outputs,
-    }.get(t)
-
-
 class AdjunctMakeScriptAndRstPyOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `adjunct_make_script_and_rst_py(...)`.
+    Output object returned when calling `AdjunctMakeScriptAndRstPyParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -75,7 +51,7 @@ def adjunct_make_script_and_rst_py_params(
     prefix_script: str,
     reflink: str,
     execute_script: bool = False,
-) -> AdjunctMakeScriptAndRstPyParameters:
+) -> AdjunctMakeScriptAndRstPyParametersTagged:
     """
     Build parameters.
     
@@ -93,7 +69,7 @@ def adjunct_make_script_and_rst_py_params(
         Parameter dictionary
     """
     params = {
-        "@type": "afni.adjunct_make_script_and_rst.py",
+        "@type": "afni/adjunct_make_script_and_rst.py",
         "input_script": input_script,
         "prefix_rst": prefix_rst,
         "prefix_script": prefix_script,
@@ -120,21 +96,21 @@ def adjunct_make_script_and_rst_py_cargs(
     cargs.append("adjunct_make_script_and_rst.py")
     cargs.extend([
         "-input",
-        execution.input_file(params.get("input_script"))
+        execution.input_file(params.get("input_script", None))
     ])
     cargs.extend([
         "--prefix_rst",
-        params.get("prefix_rst")
+        params.get("prefix_rst", None)
     ])
     cargs.extend([
         "--prefix_script",
-        params.get("prefix_script")
+        params.get("prefix_script", None)
     ])
     cargs.extend([
         "--reflink",
-        params.get("reflink")
+        params.get("reflink", None)
     ])
-    if params.get("execute_script"):
+    if params.get("execute_script", False):
         cargs.append("--execute_script")
     return cargs
 
@@ -154,9 +130,9 @@ def adjunct_make_script_and_rst_py_outputs(
     """
     ret = AdjunctMakeScriptAndRstPyOutputs(
         root=execution.output_file("."),
-        rst_file=execution.output_file(params.get("prefix_rst")),
-        script_file=execution.output_file(params.get("prefix_script")),
-        output_directory=execution.output_file(params.get("prefix_rst") + "/media/" + params.get("reflink")),
+        rst_file=execution.output_file(params.get("prefix_rst", None)),
+        script_file=execution.output_file(params.get("prefix_script", None)),
+        output_directory=execution.output_file(params.get("prefix_rst", None) + "/media/" + params.get("reflink", None)),
     )
     return ret
 
@@ -235,7 +211,6 @@ def adjunct_make_script_and_rst_py(
 __all__ = [
     "ADJUNCT_MAKE_SCRIPT_AND_RST_PY_METADATA",
     "AdjunctMakeScriptAndRstPyOutputs",
-    "AdjunctMakeScriptAndRstPyParameters",
     "adjunct_make_script_and_rst_py",
     "adjunct_make_script_and_rst_py_execute",
     "adjunct_make_script_and_rst_py_params",

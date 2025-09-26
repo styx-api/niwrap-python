@@ -14,48 +14,22 @@ V__CLUST_EXP_CAT_LAB_METADATA = Metadata(
 
 
 VClustExpCatLabParameters = typing.TypedDict('VClustExpCatLabParameters', {
-    "@type": typing.Literal["afni.@ClustExp_CatLab"],
+    "@type": typing.NotRequired[typing.Literal["afni/@ClustExp_CatLab"]],
+    "prefix": str,
+    "input_file": InputPathType,
+    "help": bool,
+})
+VClustExpCatLabParametersTagged = typing.TypedDict('VClustExpCatLabParametersTagged', {
+    "@type": typing.Literal["afni/@ClustExp_CatLab"],
     "prefix": str,
     "input_file": InputPathType,
     "help": bool,
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "afni.@ClustExp_CatLab": v__clust_exp_cat_lab_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "afni.@ClustExp_CatLab": v__clust_exp_cat_lab_outputs,
-    }.get(t)
-
-
 class VClustExpCatLabOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `v__clust_exp_cat_lab(...)`.
+    Output object returned when calling `VClustExpCatLabParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -67,7 +41,7 @@ def v__clust_exp_cat_lab_params(
     prefix: str,
     input_file: InputPathType,
     help_: bool = False,
-) -> VClustExpCatLabParameters:
+) -> VClustExpCatLabParametersTagged:
     """
     Build parameters.
     
@@ -80,7 +54,7 @@ def v__clust_exp_cat_lab_params(
         Parameter dictionary
     """
     params = {
-        "@type": "afni.@ClustExp_CatLab",
+        "@type": "afni/@ClustExp_CatLab",
         "prefix": prefix,
         "input_file": input_file,
         "help": help_,
@@ -105,13 +79,13 @@ def v__clust_exp_cat_lab_cargs(
     cargs.append("@ClustExp_CatLab")
     cargs.extend([
         "-prefix",
-        params.get("prefix")
+        params.get("prefix", None)
     ])
     cargs.extend([
         "-input",
-        execution.input_file(params.get("input_file"))
+        execution.input_file(params.get("input_file", None))
     ])
-    if params.get("help"):
+    if params.get("help", False):
         cargs.append("-help")
     return cargs
 
@@ -131,7 +105,7 @@ def v__clust_exp_cat_lab_outputs(
     """
     ret = VClustExpCatLabOutputs(
         root=execution.output_file("."),
-        output_file=execution.output_file(params.get("prefix") + ".nii.gz"),
+        output_file=execution.output_file(params.get("prefix", None) + ".nii.gz"),
     )
     return ret
 
@@ -198,7 +172,6 @@ def v__clust_exp_cat_lab(
 
 __all__ = [
     "VClustExpCatLabOutputs",
-    "VClustExpCatLabParameters",
     "V__CLUST_EXP_CAT_LAB_METADATA",
     "v__clust_exp_cat_lab",
     "v__clust_exp_cat_lab_execute",

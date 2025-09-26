@@ -14,7 +14,18 @@ SURF_MESH_METADATA = Metadata(
 
 
 SurfMeshParameters = typing.TypedDict('SurfMeshParameters', {
-    "@type": typing.Literal["afni.SurfMesh"],
+    "@type": typing.NotRequired[typing.Literal["afni/SurfMesh"]],
+    "input_surface": str,
+    "output_surface": str,
+    "edge_fraction": float,
+    "surface_volume": typing.NotRequired[InputPathType | None],
+    "one_state": bool,
+    "anatomical_label": bool,
+    "no_volume_registration": bool,
+    "set_env": typing.NotRequired[str | None],
+})
+SurfMeshParametersTagged = typing.TypedDict('SurfMeshParametersTagged', {
+    "@type": typing.Literal["afni/SurfMesh"],
     "input_surface": str,
     "output_surface": str,
     "edge_fraction": float,
@@ -26,41 +37,9 @@ SurfMeshParameters = typing.TypedDict('SurfMeshParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "afni.SurfMesh": surf_mesh_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "afni.SurfMesh": surf_mesh_outputs,
-    }.get(t)
-
-
 class SurfMeshOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `surf_mesh(...)`.
+    Output object returned when calling `SurfMeshParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -77,7 +56,7 @@ def surf_mesh_params(
     anatomical_label: bool = False,
     no_volume_registration: bool = False,
     set_env: str | None = None,
-) -> SurfMeshParameters:
+) -> SurfMeshParametersTagged:
     """
     Build parameters.
     
@@ -95,7 +74,7 @@ def surf_mesh_params(
         Parameter dictionary
     """
     params = {
-        "@type": "afni.SurfMesh",
+        "@type": "afni/SurfMesh",
         "input_surface": input_surface,
         "output_surface": output_surface,
         "edge_fraction": edge_fraction,
@@ -127,31 +106,31 @@ def surf_mesh_cargs(
     cargs.append("SurfMesh")
     cargs.extend([
         "-i_TYPE",
-        params.get("input_surface")
+        params.get("input_surface", None)
     ])
     cargs.extend([
         "-o_TYPE",
-        params.get("output_surface")
+        params.get("output_surface", None)
     ])
     cargs.extend([
         "-edges",
-        str(params.get("edge_fraction"))
+        str(params.get("edge_fraction", None))
     ])
-    if params.get("surface_volume") is not None:
+    if params.get("surface_volume", None) is not None:
         cargs.extend([
             "-sv",
-            execution.input_file(params.get("surface_volume"))
+            execution.input_file(params.get("surface_volume", None))
         ])
-    if params.get("one_state"):
+    if params.get("one_state", False):
         cargs.append("-onestate")
-    if params.get("anatomical_label"):
+    if params.get("anatomical_label", False):
         cargs.append("-anatomical")
-    if params.get("no_volume_registration"):
+    if params.get("no_volume_registration", False):
         cargs.append("-novolreg")
-    if params.get("set_env") is not None:
+    if params.get("set_env", None) is not None:
         cargs.extend([
             "-setenv",
-            params.get("set_env")
+            params.get("set_env", None)
         ])
     return cargs
 
@@ -171,7 +150,7 @@ def surf_mesh_outputs(
     """
     ret = SurfMeshOutputs(
         root=execution.output_file("."),
-        output_surface_file=execution.output_file(params.get("output_surface") + ".surface"),
+        output_surface_file=execution.output_file(params.get("output_surface", None) + ".surface"),
     )
     return ret
 
@@ -254,7 +233,6 @@ def surf_mesh(
 __all__ = [
     "SURF_MESH_METADATA",
     "SurfMeshOutputs",
-    "SurfMeshParameters",
     "surf_mesh",
     "surf_mesh_execute",
     "surf_mesh_params",

@@ -14,7 +14,14 @@ ANTSINTEGRATE_VECTOR_FIELD_METADATA = Metadata(
 
 
 AntsintegrateVectorFieldParameters = typing.TypedDict('AntsintegrateVectorFieldParameters', {
-    "@type": typing.Literal["ants.ANTSIntegrateVectorField"],
+    "@type": typing.NotRequired[typing.Literal["ants/ANTSIntegrateVectorField"]],
+    "vector_field_input": InputPathType,
+    "roi_mask_input": InputPathType,
+    "fibers_output": str,
+    "length_image_output": str,
+})
+AntsintegrateVectorFieldParametersTagged = typing.TypedDict('AntsintegrateVectorFieldParametersTagged', {
+    "@type": typing.Literal["ants/ANTSIntegrateVectorField"],
     "vector_field_input": InputPathType,
     "roi_mask_input": InputPathType,
     "fibers_output": str,
@@ -22,41 +29,9 @@ AntsintegrateVectorFieldParameters = typing.TypedDict('AntsintegrateVectorFieldP
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "ants.ANTSIntegrateVectorField": antsintegrate_vector_field_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "ants.ANTSIntegrateVectorField": antsintegrate_vector_field_outputs,
-    }.get(t)
-
-
 class AntsintegrateVectorFieldOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `antsintegrate_vector_field(...)`.
+    Output object returned when calling `AntsintegrateVectorFieldParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -71,7 +46,7 @@ def antsintegrate_vector_field_params(
     roi_mask_input: InputPathType,
     fibers_output: str,
     length_image_output: str,
-) -> AntsintegrateVectorFieldParameters:
+) -> AntsintegrateVectorFieldParametersTagged:
     """
     Build parameters.
     
@@ -86,7 +61,7 @@ def antsintegrate_vector_field_params(
         Parameter dictionary
     """
     params = {
-        "@type": "ants.ANTSIntegrateVectorField",
+        "@type": "ants/ANTSIntegrateVectorField",
         "vector_field_input": vector_field_input,
         "roi_mask_input": roi_mask_input,
         "fibers_output": fibers_output,
@@ -110,10 +85,10 @@ def antsintegrate_vector_field_cargs(
     """
     cargs = []
     cargs.append("ANTSIntegrateVectorField")
-    cargs.append(execution.input_file(params.get("vector_field_input")))
-    cargs.append(execution.input_file(params.get("roi_mask_input")))
-    cargs.append(params.get("fibers_output"))
-    cargs.append(params.get("length_image_output"))
+    cargs.append(execution.input_file(params.get("vector_field_input", None)))
+    cargs.append(execution.input_file(params.get("roi_mask_input", None)))
+    cargs.append(params.get("fibers_output", None))
+    cargs.append(params.get("length_image_output", None))
     return cargs
 
 
@@ -132,8 +107,8 @@ def antsintegrate_vector_field_outputs(
     """
     ret = AntsintegrateVectorFieldOutputs(
         root=execution.output_file("."),
-        fibers_out_vtk=execution.output_file(params.get("fibers_output")),
-        length_image_out_nii=execution.output_file(params.get("length_image_output")),
+        fibers_out_vtk=execution.output_file(params.get("fibers_output", None)),
+        length_image_out_nii=execution.output_file(params.get("length_image_output", None)),
     )
     return ret
 
@@ -209,7 +184,6 @@ def antsintegrate_vector_field(
 __all__ = [
     "ANTSINTEGRATE_VECTOR_FIELD_METADATA",
     "AntsintegrateVectorFieldOutputs",
-    "AntsintegrateVectorFieldParameters",
     "antsintegrate_vector_field",
     "antsintegrate_vector_field_execute",
     "antsintegrate_vector_field_params",

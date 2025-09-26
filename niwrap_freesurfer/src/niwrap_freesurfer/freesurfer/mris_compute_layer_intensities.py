@@ -14,7 +14,14 @@ MRIS_COMPUTE_LAYER_INTENSITIES_METADATA = Metadata(
 
 
 MrisComputeLayerIntensitiesParameters = typing.TypedDict('MrisComputeLayerIntensitiesParameters', {
-    "@type": typing.Literal["freesurfer.mris_compute_layer_intensities"],
+    "@type": typing.NotRequired[typing.Literal["freesurfer/mris_compute_layer_intensities"]],
+    "input_intensity_volume": InputPathType,
+    "layer_volume_fractions_file": InputPathType,
+    "input_surface": InputPathType,
+    "output_overlay": str,
+})
+MrisComputeLayerIntensitiesParametersTagged = typing.TypedDict('MrisComputeLayerIntensitiesParametersTagged', {
+    "@type": typing.Literal["freesurfer/mris_compute_layer_intensities"],
     "input_intensity_volume": InputPathType,
     "layer_volume_fractions_file": InputPathType,
     "input_surface": InputPathType,
@@ -22,41 +29,9 @@ MrisComputeLayerIntensitiesParameters = typing.TypedDict('MrisComputeLayerIntens
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "freesurfer.mris_compute_layer_intensities": mris_compute_layer_intensities_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "freesurfer.mris_compute_layer_intensities": mris_compute_layer_intensities_outputs,
-    }.get(t)
-
-
 class MrisComputeLayerIntensitiesOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `mris_compute_layer_intensities(...)`.
+    Output object returned when calling `MrisComputeLayerIntensitiesParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -69,7 +44,7 @@ def mris_compute_layer_intensities_params(
     layer_volume_fractions_file: InputPathType,
     input_surface: InputPathType,
     output_overlay: str,
-) -> MrisComputeLayerIntensitiesParameters:
+) -> MrisComputeLayerIntensitiesParametersTagged:
     """
     Build parameters.
     
@@ -82,7 +57,7 @@ def mris_compute_layer_intensities_params(
         Parameter dictionary
     """
     params = {
-        "@type": "freesurfer.mris_compute_layer_intensities",
+        "@type": "freesurfer/mris_compute_layer_intensities",
         "input_intensity_volume": input_intensity_volume,
         "layer_volume_fractions_file": layer_volume_fractions_file,
         "input_surface": input_surface,
@@ -106,10 +81,10 @@ def mris_compute_layer_intensities_cargs(
     """
     cargs = []
     cargs.append("mris_compute_layer_intensities")
-    cargs.append(execution.input_file(params.get("input_intensity_volume")))
-    cargs.append(execution.input_file(params.get("layer_volume_fractions_file")))
-    cargs.append(execution.input_file(params.get("input_surface")))
-    cargs.append(params.get("output_overlay"))
+    cargs.append(execution.input_file(params.get("input_intensity_volume", None)))
+    cargs.append(execution.input_file(params.get("layer_volume_fractions_file", None)))
+    cargs.append(execution.input_file(params.get("input_surface", None)))
+    cargs.append(params.get("output_overlay", None))
     return cargs
 
 
@@ -128,7 +103,7 @@ def mris_compute_layer_intensities_outputs(
     """
     ret = MrisComputeLayerIntensitiesOutputs(
         root=execution.output_file("."),
-        output_overlay_file=execution.output_file(params.get("output_overlay")),
+        output_overlay_file=execution.output_file(params.get("output_overlay", None)),
     )
     return ret
 
@@ -200,7 +175,6 @@ def mris_compute_layer_intensities(
 __all__ = [
     "MRIS_COMPUTE_LAYER_INTENSITIES_METADATA",
     "MrisComputeLayerIntensitiesOutputs",
-    "MrisComputeLayerIntensitiesParameters",
     "mris_compute_layer_intensities",
     "mris_compute_layer_intensities_execute",
     "mris_compute_layer_intensities_params",

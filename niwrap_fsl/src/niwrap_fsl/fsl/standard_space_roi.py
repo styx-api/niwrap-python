@@ -14,7 +14,22 @@ STANDARD_SPACE_ROI_METADATA = Metadata(
 
 
 StandardSpaceRoiParameters = typing.TypedDict('StandardSpaceRoiParameters', {
-    "@type": typing.Literal["fsl.standard_space_roi"],
+    "@type": typing.NotRequired[typing.Literal["fsl/standard_space_roi"]],
+    "infile": InputPathType,
+    "outfile": str,
+    "mask_fov_flag": bool,
+    "mask_mask": typing.NotRequired[InputPathType | None],
+    "mask_none_flag": bool,
+    "roi_fov_flag": bool,
+    "roi_mask": typing.NotRequired[InputPathType | None],
+    "roi_none_flag": bool,
+    "ss_ref": typing.NotRequired[InputPathType | None],
+    "alt_input": typing.NotRequired[InputPathType | None],
+    "debug_flag": bool,
+    "bet_premask_flag": bool,
+})
+StandardSpaceRoiParametersTagged = typing.TypedDict('StandardSpaceRoiParametersTagged', {
+    "@type": typing.Literal["fsl/standard_space_roi"],
     "infile": InputPathType,
     "outfile": str,
     "mask_fov_flag": bool,
@@ -30,41 +45,9 @@ StandardSpaceRoiParameters = typing.TypedDict('StandardSpaceRoiParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "fsl.standard_space_roi": standard_space_roi_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "fsl.standard_space_roi": standard_space_roi_outputs,
-    }.get(t)
-
-
 class StandardSpaceRoiOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `standard_space_roi(...)`.
+    Output object returned when calling `StandardSpaceRoiParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -85,7 +68,7 @@ def standard_space_roi_params(
     alt_input: InputPathType | None = None,
     debug_flag: bool = False,
     bet_premask_flag: bool = False,
-) -> StandardSpaceRoiParameters:
+) -> StandardSpaceRoiParametersTagged:
     """
     Build parameters.
     
@@ -111,7 +94,7 @@ def standard_space_roi_params(
         Parameter dictionary
     """
     params = {
-        "@type": "fsl.standard_space_roi",
+        "@type": "fsl/standard_space_roi",
         "infile": infile,
         "outfile": outfile,
         "mask_fov_flag": mask_fov_flag,
@@ -147,39 +130,39 @@ def standard_space_roi_cargs(
     """
     cargs = []
     cargs.append("standard_space_roi")
-    cargs.append(execution.input_file(params.get("infile")))
-    cargs.append(params.get("outfile"))
-    if params.get("mask_fov_flag"):
+    cargs.append(execution.input_file(params.get("infile", None)))
+    cargs.append(params.get("outfile", None))
+    if params.get("mask_fov_flag", False):
         cargs.append("-maskFOV")
-    if params.get("mask_mask") is not None:
+    if params.get("mask_mask", None) is not None:
         cargs.extend([
             "-maskMASK",
-            execution.input_file(params.get("mask_mask"))
+            execution.input_file(params.get("mask_mask", None))
         ])
-    if params.get("mask_none_flag"):
+    if params.get("mask_none_flag", False):
         cargs.append("-maskNONE")
-    if params.get("roi_fov_flag"):
+    if params.get("roi_fov_flag", False):
         cargs.append("-roiFOV")
-    if params.get("roi_mask") is not None:
+    if params.get("roi_mask", None) is not None:
         cargs.extend([
             "-roiMASK",
-            execution.input_file(params.get("roi_mask"))
+            execution.input_file(params.get("roi_mask", None))
         ])
-    if params.get("roi_none_flag"):
+    if params.get("roi_none_flag", False):
         cargs.append("-roiNONE")
-    if params.get("ss_ref") is not None:
+    if params.get("ss_ref", None) is not None:
         cargs.extend([
             "-ssref",
-            execution.input_file(params.get("ss_ref"))
+            execution.input_file(params.get("ss_ref", None))
         ])
-    if params.get("alt_input") is not None:
+    if params.get("alt_input", None) is not None:
         cargs.extend([
             "-altinput",
-            execution.input_file(params.get("alt_input"))
+            execution.input_file(params.get("alt_input", None))
         ])
-    if params.get("debug_flag"):
+    if params.get("debug_flag", False):
         cargs.append("-d")
-    if params.get("bet_premask_flag"):
+    if params.get("bet_premask_flag", False):
         cargs.append("-b")
     return cargs
 
@@ -199,7 +182,7 @@ def standard_space_roi_outputs(
     """
     ret = StandardSpaceRoiOutputs(
         root=execution.output_file("."),
-        out_image=execution.output_file(params.get("outfile")),
+        out_image=execution.output_file(params.get("outfile", None)),
     )
     return ret
 
@@ -300,7 +283,6 @@ def standard_space_roi(
 __all__ = [
     "STANDARD_SPACE_ROI_METADATA",
     "StandardSpaceRoiOutputs",
-    "StandardSpaceRoiParameters",
     "standard_space_roi",
     "standard_space_roi_execute",
     "standard_space_roi_params",

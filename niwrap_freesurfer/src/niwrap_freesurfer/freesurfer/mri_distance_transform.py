@@ -14,7 +14,15 @@ MRI_DISTANCE_TRANSFORM_METADATA = Metadata(
 
 
 MriDistanceTransformParameters = typing.TypedDict('MriDistanceTransformParameters', {
-    "@type": typing.Literal["freesurfer.mri_distance_transform"],
+    "@type": typing.NotRequired[typing.Literal["freesurfer/mri_distance_transform"]],
+    "input_volume": InputPathType,
+    "label": int,
+    "max_distance": int,
+    "mode": typing.NotRequired[int | None],
+    "output_volume": str,
+})
+MriDistanceTransformParametersTagged = typing.TypedDict('MriDistanceTransformParametersTagged', {
+    "@type": typing.Literal["freesurfer/mri_distance_transform"],
     "input_volume": InputPathType,
     "label": int,
     "max_distance": int,
@@ -23,41 +31,9 @@ MriDistanceTransformParameters = typing.TypedDict('MriDistanceTransformParameter
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "freesurfer.mri_distance_transform": mri_distance_transform_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "freesurfer.mri_distance_transform": mri_distance_transform_outputs,
-    }.get(t)
-
-
 class MriDistanceTransformOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `mri_distance_transform(...)`.
+    Output object returned when calling `MriDistanceTransformParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -71,7 +47,7 @@ def mri_distance_transform_params(
     max_distance: int,
     output_volume: str,
     mode: int | None = None,
-) -> MriDistanceTransformParameters:
+) -> MriDistanceTransformParametersTagged:
     """
     Build parameters.
     
@@ -86,7 +62,7 @@ def mri_distance_transform_params(
         Parameter dictionary
     """
     params = {
-        "@type": "freesurfer.mri_distance_transform",
+        "@type": "freesurfer/mri_distance_transform",
         "input_volume": input_volume,
         "label": label,
         "max_distance": max_distance,
@@ -112,12 +88,12 @@ def mri_distance_transform_cargs(
     """
     cargs = []
     cargs.append("mri_distance_transform")
-    cargs.append(execution.input_file(params.get("input_volume")))
-    cargs.append(str(params.get("label")))
-    cargs.append(str(params.get("max_distance")))
-    if params.get("mode") is not None:
-        cargs.append(str(params.get("mode")))
-    cargs.append(params.get("output_volume"))
+    cargs.append(execution.input_file(params.get("input_volume", None)))
+    cargs.append(str(params.get("label", None)))
+    cargs.append(str(params.get("max_distance", None)))
+    if params.get("mode", None) is not None:
+        cargs.append(str(params.get("mode", None)))
+    cargs.append(params.get("output_volume", None))
     return cargs
 
 
@@ -136,7 +112,7 @@ def mri_distance_transform_outputs(
     """
     ret = MriDistanceTransformOutputs(
         root=execution.output_file("."),
-        output_file=execution.output_file(params.get("output_volume")),
+        output_file=execution.output_file(params.get("output_volume", None)),
     )
     return ret
 
@@ -210,7 +186,6 @@ def mri_distance_transform(
 __all__ = [
     "MRI_DISTANCE_TRANSFORM_METADATA",
     "MriDistanceTransformOutputs",
-    "MriDistanceTransformParameters",
     "mri_distance_transform",
     "mri_distance_transform_execute",
     "mri_distance_transform_params",

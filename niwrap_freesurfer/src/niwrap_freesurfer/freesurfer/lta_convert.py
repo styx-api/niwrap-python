@@ -14,7 +14,31 @@ LTA_CONVERT_METADATA = Metadata(
 
 
 LtaConvertParameters = typing.TypedDict('LtaConvertParameters', {
-    "@type": typing.Literal["freesurfer.lta_convert"],
+    "@type": typing.NotRequired[typing.Literal["freesurfer/lta_convert"]],
+    "in_lta": typing.NotRequired[InputPathType | None],
+    "in_fsl": typing.NotRequired[InputPathType | None],
+    "in_mni": typing.NotRequired[InputPathType | None],
+    "in_reg": typing.NotRequired[InputPathType | None],
+    "in_niftyreg": typing.NotRequired[InputPathType | None],
+    "in_itk": typing.NotRequired[InputPathType | None],
+    "in_vox": typing.NotRequired[InputPathType | None],
+    "out_lta": typing.NotRequired[str | None],
+    "out_fsl": typing.NotRequired[str | None],
+    "out_mni": typing.NotRequired[str | None],
+    "out_reg": typing.NotRequired[str | None],
+    "out_niftyreg": typing.NotRequired[str | None],
+    "out_itk": typing.NotRequired[str | None],
+    "out_vox": typing.NotRequired[str | None],
+    "invert": bool,
+    "ltavox2vox": bool,
+    "ltatkreg": bool,
+    "src_geometry": typing.NotRequired[InputPathType | None],
+    "trg_geometry": typing.NotRequired[InputPathType | None],
+    "trg_conform": bool,
+    "subject_name": typing.NotRequired[str | None],
+})
+LtaConvertParametersTagged = typing.TypedDict('LtaConvertParametersTagged', {
+    "@type": typing.Literal["freesurfer/lta_convert"],
     "in_lta": typing.NotRequired[InputPathType | None],
     "in_fsl": typing.NotRequired[InputPathType | None],
     "in_mni": typing.NotRequired[InputPathType | None],
@@ -39,41 +63,9 @@ LtaConvertParameters = typing.TypedDict('LtaConvertParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "freesurfer.lta_convert": lta_convert_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "freesurfer.lta_convert": lta_convert_outputs,
-    }.get(t)
-
-
 class LtaConvertOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `lta_convert(...)`.
+    Output object returned when calling `LtaConvertParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -103,7 +95,7 @@ def lta_convert_params(
     trg_geometry: InputPathType | None = None,
     trg_conform: bool = False,
     subject_name: str | None = None,
-) -> LtaConvertParameters:
+) -> LtaConvertParametersTagged:
     """
     Build parameters.
     
@@ -135,7 +127,7 @@ def lta_convert_params(
         Parameter dictionary
     """
     params = {
-        "@type": "freesurfer.lta_convert",
+        "@type": "freesurfer/lta_convert",
         "invert": invert,
         "ltavox2vox": ltavox2vox,
         "ltatkreg": ltatkreg,
@@ -193,98 +185,98 @@ def lta_convert_cargs(
     """
     cargs = []
     cargs.append("lta_convert")
-    if params.get("in_lta") is not None:
+    if params.get("in_lta", None) is not None:
         cargs.extend([
             "--inlta",
-            execution.input_file(params.get("in_lta"))
+            execution.input_file(params.get("in_lta", None))
         ])
-    if params.get("in_fsl") is not None:
+    if params.get("in_fsl", None) is not None:
         cargs.extend([
             "--infsl",
-            execution.input_file(params.get("in_fsl"))
+            execution.input_file(params.get("in_fsl", None))
         ])
-    if params.get("in_mni") is not None:
+    if params.get("in_mni", None) is not None:
         cargs.extend([
             "--inmni",
-            execution.input_file(params.get("in_mni"))
+            execution.input_file(params.get("in_mni", None))
         ])
-    if params.get("in_reg") is not None:
+    if params.get("in_reg", None) is not None:
         cargs.extend([
             "--inreg",
-            execution.input_file(params.get("in_reg"))
+            execution.input_file(params.get("in_reg", None))
         ])
-    if params.get("in_niftyreg") is not None:
+    if params.get("in_niftyreg", None) is not None:
         cargs.extend([
             "--inniftyreg",
-            execution.input_file(params.get("in_niftyreg"))
+            execution.input_file(params.get("in_niftyreg", None))
         ])
-    if params.get("in_itk") is not None:
+    if params.get("in_itk", None) is not None:
         cargs.extend([
             "--initk",
-            execution.input_file(params.get("in_itk"))
+            execution.input_file(params.get("in_itk", None))
         ])
-    if params.get("in_vox") is not None:
+    if params.get("in_vox", None) is not None:
         cargs.extend([
             "--invox",
-            execution.input_file(params.get("in_vox"))
+            execution.input_file(params.get("in_vox", None))
         ])
-    if params.get("out_lta") is not None:
+    if params.get("out_lta", None) is not None:
         cargs.extend([
             "--outlta",
-            params.get("out_lta")
+            params.get("out_lta", None)
         ])
-    if params.get("out_fsl") is not None:
+    if params.get("out_fsl", None) is not None:
         cargs.extend([
             "--outfsl",
-            params.get("out_fsl")
+            params.get("out_fsl", None)
         ])
-    if params.get("out_mni") is not None:
+    if params.get("out_mni", None) is not None:
         cargs.extend([
             "--outmni",
-            params.get("out_mni")
+            params.get("out_mni", None)
         ])
-    if params.get("out_reg") is not None:
+    if params.get("out_reg", None) is not None:
         cargs.extend([
             "--outreg",
-            params.get("out_reg")
+            params.get("out_reg", None)
         ])
-    if params.get("out_niftyreg") is not None:
+    if params.get("out_niftyreg", None) is not None:
         cargs.extend([
             "--outniftyreg",
-            params.get("out_niftyreg")
+            params.get("out_niftyreg", None)
         ])
-    if params.get("out_itk") is not None:
+    if params.get("out_itk", None) is not None:
         cargs.extend([
             "--outitk",
-            params.get("out_itk")
+            params.get("out_itk", None)
         ])
-    if params.get("out_vox") is not None:
+    if params.get("out_vox", None) is not None:
         cargs.extend([
             "--outvox",
-            params.get("out_vox")
+            params.get("out_vox", None)
         ])
-    if params.get("invert"):
+    if params.get("invert", False):
         cargs.append("--invert")
-    if params.get("ltavox2vox"):
+    if params.get("ltavox2vox", False):
         cargs.append("--ltavox2vox")
-    if params.get("ltatkreg"):
+    if params.get("ltatkreg", False):
         cargs.append("--ltatkreg")
-    if params.get("src_geometry") is not None:
+    if params.get("src_geometry", None) is not None:
         cargs.extend([
             "--src",
-            execution.input_file(params.get("src_geometry"))
+            execution.input_file(params.get("src_geometry", None))
         ])
-    if params.get("trg_geometry") is not None:
+    if params.get("trg_geometry", None) is not None:
         cargs.extend([
             "--trg",
-            execution.input_file(params.get("trg_geometry"))
+            execution.input_file(params.get("trg_geometry", None))
         ])
-    if params.get("trg_conform"):
+    if params.get("trg_conform", False):
         cargs.append("--trgconform")
-    if params.get("subject_name") is not None:
+    if params.get("subject_name", None) is not None:
         cargs.extend([
             "--subject",
-            params.get("subject_name")
+            params.get("subject_name", None)
         ])
     return cargs
 
@@ -304,7 +296,7 @@ def lta_convert_outputs(
     """
     ret = LtaConvertOutputs(
         root=execution.output_file("."),
-        output_transform_file=execution.output_file(params.get("out_vox")) if (params.get("out_vox") is not None) else None,
+        output_transform_file=execution.output_file(params.get("out_vox", None)) if (params.get("out_vox") is not None) else None,
     )
     return ret
 
@@ -427,7 +419,6 @@ def lta_convert(
 __all__ = [
     "LTA_CONVERT_METADATA",
     "LtaConvertOutputs",
-    "LtaConvertParameters",
     "lta_convert",
     "lta_convert_execute",
     "lta_convert_params",

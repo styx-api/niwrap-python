@@ -14,7 +14,15 @@ V_3D_TRFIX_METADATA = Metadata(
 
 
 V3dTrfixParameters = typing.TypedDict('V3dTrfixParameters', {
-    "@type": typing.Literal["afni.3dTRfix"],
+    "@type": typing.NotRequired[typing.Literal["afni/3dTRfix"]],
+    "input_file": InputPathType,
+    "tr_list": typing.NotRequired[InputPathType | None],
+    "time_list": typing.NotRequired[InputPathType | None],
+    "prefix": str,
+    "output_tr": typing.NotRequired[float | None],
+})
+V3dTrfixParametersTagged = typing.TypedDict('V3dTrfixParametersTagged', {
+    "@type": typing.Literal["afni/3dTRfix"],
     "input_file": InputPathType,
     "tr_list": typing.NotRequired[InputPathType | None],
     "time_list": typing.NotRequired[InputPathType | None],
@@ -23,41 +31,9 @@ V3dTrfixParameters = typing.TypedDict('V3dTrfixParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "afni.3dTRfix": v_3d_trfix_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "afni.3dTRfix": v_3d_trfix_outputs,
-    }.get(t)
-
-
 class V3dTrfixOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `v_3d_trfix(...)`.
+    Output object returned when calling `V3dTrfixParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -73,7 +49,7 @@ def v_3d_trfix_params(
     tr_list: InputPathType | None = None,
     time_list: InputPathType | None = None,
     output_tr: float | None = None,
-) -> V3dTrfixParameters:
+) -> V3dTrfixParametersTagged:
     """
     Build parameters.
     
@@ -87,7 +63,7 @@ def v_3d_trfix_params(
         Parameter dictionary
     """
     params = {
-        "@type": "afni.3dTRfix",
+        "@type": "afni/3dTRfix",
         "input_file": input_file,
         "prefix": prefix,
     }
@@ -117,26 +93,26 @@ def v_3d_trfix_cargs(
     cargs.append("3dTRfix")
     cargs.extend([
         "-input",
-        execution.input_file(params.get("input_file"))
+        execution.input_file(params.get("input_file", None))
     ])
-    if params.get("tr_list") is not None:
+    if params.get("tr_list", None) is not None:
         cargs.extend([
             "-TRlist",
-            execution.input_file(params.get("tr_list"))
+            execution.input_file(params.get("tr_list", None))
         ])
-    if params.get("time_list") is not None:
+    if params.get("time_list", None) is not None:
         cargs.extend([
             "-TIMElist",
-            execution.input_file(params.get("time_list"))
+            execution.input_file(params.get("time_list", None))
         ])
     cargs.extend([
         "-prefix",
-        params.get("prefix")
+        params.get("prefix", None)
     ])
-    if params.get("output_tr") is not None:
+    if params.get("output_tr", None) is not None:
         cargs.extend([
             "-TRout",
-            str(params.get("output_tr"))
+            str(params.get("output_tr", None))
         ])
     return cargs
 
@@ -156,8 +132,8 @@ def v_3d_trfix_outputs(
     """
     ret = V3dTrfixOutputs(
         root=execution.output_file("."),
-        output_file_head=execution.output_file(params.get("prefix") + "+orig.HEAD"),
-        output_file_brik=execution.output_file(params.get("prefix") + "+orig.BRIK"),
+        output_file_head=execution.output_file(params.get("prefix", None) + "+orig.HEAD"),
+        output_file_brik=execution.output_file(params.get("prefix", None) + "+orig.BRIK"),
     )
     return ret
 
@@ -231,7 +207,6 @@ def v_3d_trfix(
 
 __all__ = [
     "V3dTrfixOutputs",
-    "V3dTrfixParameters",
     "V_3D_TRFIX_METADATA",
     "v_3d_trfix",
     "v_3d_trfix_execute",

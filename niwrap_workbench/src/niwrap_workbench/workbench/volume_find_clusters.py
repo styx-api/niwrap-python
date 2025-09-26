@@ -14,7 +14,20 @@ VOLUME_FIND_CLUSTERS_METADATA = Metadata(
 
 
 VolumeFindClustersParameters = typing.TypedDict('VolumeFindClustersParameters', {
-    "@type": typing.Literal["workbench.volume-find-clusters"],
+    "@type": typing.NotRequired[typing.Literal["workbench/volume-find-clusters"]],
+    "volume_in": InputPathType,
+    "value_threshold": float,
+    "minimum_volume": float,
+    "volume_out": str,
+    "opt_less_than": bool,
+    "opt_roi_roi_volume": typing.NotRequired[InputPathType | None],
+    "opt_subvolume_subvol": typing.NotRequired[str | None],
+    "opt_size_ratio_ratio": typing.NotRequired[float | None],
+    "opt_distance_distance": typing.NotRequired[float | None],
+    "opt_start_startval": typing.NotRequired[int | None],
+})
+VolumeFindClustersParametersTagged = typing.TypedDict('VolumeFindClustersParametersTagged', {
+    "@type": typing.Literal["workbench/volume-find-clusters"],
     "volume_in": InputPathType,
     "value_threshold": float,
     "minimum_volume": float,
@@ -28,41 +41,9 @@ VolumeFindClustersParameters = typing.TypedDict('VolumeFindClustersParameters', 
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "workbench.volume-find-clusters": volume_find_clusters_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "workbench.volume-find-clusters": volume_find_clusters_outputs,
-    }.get(t)
-
-
 class VolumeFindClustersOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `volume_find_clusters(...)`.
+    Output object returned when calling `VolumeFindClustersParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -81,7 +62,7 @@ def volume_find_clusters_params(
     opt_size_ratio_ratio: float | None = None,
     opt_distance_distance: float | None = None,
     opt_start_startval: int | None = None,
-) -> VolumeFindClustersParameters:
+) -> VolumeFindClustersParametersTagged:
     """
     Build parameters.
     
@@ -107,7 +88,7 @@ def volume_find_clusters_params(
         Parameter dictionary
     """
     params = {
-        "@type": "workbench.volume-find-clusters",
+        "@type": "workbench/volume-find-clusters",
         "volume_in": volume_in,
         "value_threshold": value_threshold,
         "minimum_volume": minimum_volume,
@@ -143,36 +124,36 @@ def volume_find_clusters_cargs(
     cargs = []
     cargs.append("wb_command")
     cargs.append("-volume-find-clusters")
-    cargs.append(execution.input_file(params.get("volume_in")))
-    cargs.append(str(params.get("value_threshold")))
-    cargs.append(str(params.get("minimum_volume")))
-    cargs.append(params.get("volume_out"))
-    if params.get("opt_less_than"):
+    cargs.append(execution.input_file(params.get("volume_in", None)))
+    cargs.append(str(params.get("value_threshold", None)))
+    cargs.append(str(params.get("minimum_volume", None)))
+    cargs.append(params.get("volume_out", None))
+    if params.get("opt_less_than", False):
         cargs.append("-less-than")
-    if params.get("opt_roi_roi_volume") is not None:
+    if params.get("opt_roi_roi_volume", None) is not None:
         cargs.extend([
             "-roi",
-            execution.input_file(params.get("opt_roi_roi_volume"))
+            execution.input_file(params.get("opt_roi_roi_volume", None))
         ])
-    if params.get("opt_subvolume_subvol") is not None:
+    if params.get("opt_subvolume_subvol", None) is not None:
         cargs.extend([
             "-subvolume",
-            params.get("opt_subvolume_subvol")
+            params.get("opt_subvolume_subvol", None)
         ])
-    if params.get("opt_size_ratio_ratio") is not None:
+    if params.get("opt_size_ratio_ratio", None) is not None:
         cargs.extend([
             "-size-ratio",
-            str(params.get("opt_size_ratio_ratio"))
+            str(params.get("opt_size_ratio_ratio", None))
         ])
-    if params.get("opt_distance_distance") is not None:
+    if params.get("opt_distance_distance", None) is not None:
         cargs.extend([
             "-distance",
-            str(params.get("opt_distance_distance"))
+            str(params.get("opt_distance_distance", None))
         ])
-    if params.get("opt_start_startval") is not None:
+    if params.get("opt_start_startval", None) is not None:
         cargs.extend([
             "-start",
-            str(params.get("opt_start_startval"))
+            str(params.get("opt_start_startval", None))
         ])
     return cargs
 
@@ -192,7 +173,7 @@ def volume_find_clusters_outputs(
     """
     ret = VolumeFindClustersOutputs(
         root=execution.output_file("."),
-        volume_out=execution.output_file(params.get("volume_out")),
+        volume_out=execution.output_file(params.get("volume_out", None)),
     )
     return ret
 
@@ -305,7 +286,6 @@ def volume_find_clusters(
 __all__ = [
     "VOLUME_FIND_CLUSTERS_METADATA",
     "VolumeFindClustersOutputs",
-    "VolumeFindClustersParameters",
     "volume_find_clusters",
     "volume_find_clusters_execute",
     "volume_find_clusters_params",

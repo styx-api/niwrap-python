@@ -14,7 +14,14 @@ V_3D_ACOST_METADATA = Metadata(
 
 
 V3dAcostParameters = typing.TypedDict('V3dAcostParameters', {
-    "@type": typing.Literal["afni.3dAcost"],
+    "@type": typing.NotRequired[typing.Literal["afni/3dAcost"]],
+    "infile": InputPathType,
+    "basefile": InputPathType,
+    "outfile": str,
+    "all_cost": bool,
+})
+V3dAcostParametersTagged = typing.TypedDict('V3dAcostParametersTagged', {
+    "@type": typing.Literal["afni/3dAcost"],
     "infile": InputPathType,
     "basefile": InputPathType,
     "outfile": str,
@@ -22,41 +29,9 @@ V3dAcostParameters = typing.TypedDict('V3dAcostParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "afni.3dAcost": v_3d_acost_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "afni.3dAcost": v_3d_acost_outputs,
-    }.get(t)
-
-
 class V3dAcostOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `v_3d_acost(...)`.
+    Output object returned when calling `V3dAcostParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -71,7 +46,7 @@ def v_3d_acost_params(
     basefile: InputPathType,
     outfile: str,
     all_cost: bool = False,
-) -> V3dAcostParameters:
+) -> V3dAcostParametersTagged:
     """
     Build parameters.
     
@@ -84,7 +59,7 @@ def v_3d_acost_params(
         Parameter dictionary
     """
     params = {
-        "@type": "afni.3dAcost",
+        "@type": "afni/3dAcost",
         "infile": infile,
         "basefile": basefile,
         "outfile": outfile,
@@ -108,16 +83,16 @@ def v_3d_acost_cargs(
     """
     cargs = []
     cargs.append("3dAcost")
-    cargs.append(execution.input_file(params.get("infile")))
+    cargs.append(execution.input_file(params.get("infile", None)))
     cargs.extend([
         "-base",
-        execution.input_file(params.get("basefile"))
+        execution.input_file(params.get("basefile", None))
     ])
     cargs.extend([
         "-prefix",
-        params.get("outfile")
+        params.get("outfile", None)
     ])
-    if params.get("all_cost"):
+    if params.get("all_cost", False):
         cargs.append("-allcostX")
     return cargs
 
@@ -137,8 +112,8 @@ def v_3d_acost_outputs(
     """
     ret = V3dAcostOutputs(
         root=execution.output_file("."),
-        output_head=execution.output_file(params.get("outfile") + "+orig.HEAD"),
-        output_brik=execution.output_file(params.get("outfile") + "+orig.BRIK"),
+        output_head=execution.output_file(params.get("outfile", None) + "+orig.HEAD"),
+        output_brik=execution.output_file(params.get("outfile", None) + "+orig.BRIK"),
     )
     return ret
 
@@ -207,7 +182,6 @@ def v_3d_acost(
 
 __all__ = [
     "V3dAcostOutputs",
-    "V3dAcostParameters",
     "V_3D_ACOST_METADATA",
     "v_3d_acost",
     "v_3d_acost_execute",

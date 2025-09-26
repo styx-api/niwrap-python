@@ -14,7 +14,28 @@ FSL_ANAT_METADATA = Metadata(
 
 
 FslAnatParameters = typing.TypedDict('FslAnatParameters', {
-    "@type": typing.Literal["fsl.fsl_anat"],
+    "@type": typing.NotRequired[typing.Literal["fsl/fsl_anat"]],
+    "structural_image": typing.NotRequired[InputPathType | None],
+    "existing_anat_dir": typing.NotRequired[str | None],
+    "output_dir": typing.NotRequired[str | None],
+    "clobber_flag": bool,
+    "strongbias_flag": bool,
+    "weakbias_flag": bool,
+    "noreorient_flag": bool,
+    "nocrop_flag": bool,
+    "nobias_flag": bool,
+    "noreg_flag": bool,
+    "nononlinreg_flag": bool,
+    "noseg_flag": bool,
+    "nosubcortseg_flag": bool,
+    "bias_smoothing": typing.NotRequired[float | None],
+    "image_type": typing.NotRequired[str | None],
+    "nosearch_flag": bool,
+    "bet_f_param": typing.NotRequired[float | None],
+    "nocleanup_flag": bool,
+})
+FslAnatParametersTagged = typing.TypedDict('FslAnatParametersTagged', {
+    "@type": typing.Literal["fsl/fsl_anat"],
     "structural_image": typing.NotRequired[InputPathType | None],
     "existing_anat_dir": typing.NotRequired[str | None],
     "output_dir": typing.NotRequired[str | None],
@@ -36,41 +57,9 @@ FslAnatParameters = typing.TypedDict('FslAnatParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "fsl.fsl_anat": fsl_anat_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "fsl.fsl_anat": fsl_anat_outputs,
-    }.get(t)
-
-
 class FslAnatOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `fsl_anat(...)`.
+    Output object returned when calling `FslAnatParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -97,7 +86,7 @@ def fsl_anat_params(
     nosearch_flag: bool = False,
     bet_f_param: float | None = None,
     nocleanup_flag: bool = False,
-) -> FslAnatParameters:
+) -> FslAnatParametersTagged:
     """
     Build parameters.
     
@@ -136,7 +125,7 @@ def fsl_anat_params(
         Parameter dictionary
     """
     params = {
-        "@type": "fsl.fsl_anat",
+        "@type": "fsl/fsl_anat",
         "clobber_flag": clobber_flag,
         "strongbias_flag": strongbias_flag,
         "weakbias_flag": weakbias_flag,
@@ -180,59 +169,59 @@ def fsl_anat_cargs(
     """
     cargs = []
     cargs.append("fsl_anat")
-    if params.get("structural_image") is not None:
+    if params.get("structural_image", None) is not None:
         cargs.extend([
             "-i",
-            execution.input_file(params.get("structural_image"))
+            execution.input_file(params.get("structural_image", None))
         ])
-    if params.get("existing_anat_dir") is not None:
+    if params.get("existing_anat_dir", None) is not None:
         cargs.extend([
             "-d",
-            params.get("existing_anat_dir")
+            params.get("existing_anat_dir", None)
         ])
-    if params.get("output_dir") is not None:
+    if params.get("output_dir", None) is not None:
         cargs.extend([
             "-o",
-            params.get("output_dir")
+            params.get("output_dir", None)
         ])
-    if params.get("clobber_flag"):
+    if params.get("clobber_flag", False):
         cargs.append("--clobber")
-    if params.get("strongbias_flag"):
+    if params.get("strongbias_flag", False):
         cargs.append("--strongbias")
-    if params.get("weakbias_flag"):
+    if params.get("weakbias_flag", False):
         cargs.append("--weakbias")
-    if params.get("noreorient_flag"):
+    if params.get("noreorient_flag", False):
         cargs.append("--noreorient")
-    if params.get("nocrop_flag"):
+    if params.get("nocrop_flag", False):
         cargs.append("--nocrop")
-    if params.get("nobias_flag"):
+    if params.get("nobias_flag", False):
         cargs.append("--nobias")
-    if params.get("noreg_flag"):
+    if params.get("noreg_flag", False):
         cargs.append("--noreg")
-    if params.get("nononlinreg_flag"):
+    if params.get("nononlinreg_flag", False):
         cargs.append("--nononlinreg")
-    if params.get("noseg_flag"):
+    if params.get("noseg_flag", False):
         cargs.append("--noseg")
-    if params.get("nosubcortseg_flag"):
+    if params.get("nosubcortseg_flag", False):
         cargs.append("--nosubcortseg")
-    if params.get("bias_smoothing") is not None:
+    if params.get("bias_smoothing", None) is not None:
         cargs.extend([
             "-s",
-            str(params.get("bias_smoothing"))
+            str(params.get("bias_smoothing", None))
         ])
-    if params.get("image_type") is not None:
+    if params.get("image_type", None) is not None:
         cargs.extend([
             "-t",
-            params.get("image_type")
+            params.get("image_type", None)
         ])
-    if params.get("nosearch_flag"):
+    if params.get("nosearch_flag", False):
         cargs.append("--nosearch")
-    if params.get("bet_f_param") is not None:
+    if params.get("bet_f_param", None) is not None:
         cargs.extend([
             "--betfparam",
-            str(params.get("bet_f_param"))
+            str(params.get("bet_f_param", None))
         ])
-    if params.get("nocleanup_flag"):
+    if params.get("nocleanup_flag", False):
         cargs.append("--nocleanup")
     return cargs
 
@@ -252,7 +241,7 @@ def fsl_anat_outputs(
     """
     ret = FslAnatOutputs(
         root=execution.output_file("."),
-        output_anat_dir=execution.output_file(params.get("output_dir") + ".anat") if (params.get("output_dir") is not None) else None,
+        output_anat_dir=execution.output_file(params.get("output_dir", None) + ".anat") if (params.get("output_dir") is not None) else None,
     )
     return ret
 
@@ -376,7 +365,6 @@ def fsl_anat(
 __all__ = [
     "FSL_ANAT_METADATA",
     "FslAnatOutputs",
-    "FslAnatParameters",
     "fsl_anat",
     "fsl_anat_execute",
     "fsl_anat_params",

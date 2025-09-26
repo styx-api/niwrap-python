@@ -14,7 +14,15 @@ MRI_MORPHOLOGY_METADATA = Metadata(
 
 
 MriMorphologyParameters = typing.TypedDict('MriMorphologyParameters', {
-    "@type": typing.Literal["freesurfer.mri_morphology"],
+    "@type": typing.NotRequired[typing.Literal["freesurfer/mri_morphology"]],
+    "input_volume": InputPathType,
+    "operation": typing.Literal["open", "close", "dilate", "erode", "mode", "fill_holes", "erode_bottom", "dilate_thresh", "erode_thresh"],
+    "number_iter": int,
+    "output_volume": str,
+    "label_option": typing.NotRequired[float | None],
+})
+MriMorphologyParametersTagged = typing.TypedDict('MriMorphologyParametersTagged', {
+    "@type": typing.Literal["freesurfer/mri_morphology"],
     "input_volume": InputPathType,
     "operation": typing.Literal["open", "close", "dilate", "erode", "mode", "fill_holes", "erode_bottom", "dilate_thresh", "erode_thresh"],
     "number_iter": int,
@@ -23,41 +31,9 @@ MriMorphologyParameters = typing.TypedDict('MriMorphologyParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "freesurfer.mri_morphology": mri_morphology_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "freesurfer.mri_morphology": mri_morphology_outputs,
-    }.get(t)
-
-
 class MriMorphologyOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `mri_morphology(...)`.
+    Output object returned when calling `MriMorphologyParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -71,7 +47,7 @@ def mri_morphology_params(
     number_iter: int,
     output_volume: str,
     label_option: float | None = None,
-) -> MriMorphologyParameters:
+) -> MriMorphologyParametersTagged:
     """
     Build parameters.
     
@@ -89,7 +65,7 @@ def mri_morphology_params(
         Parameter dictionary
     """
     params = {
-        "@type": "freesurfer.mri_morphology",
+        "@type": "freesurfer/mri_morphology",
         "input_volume": input_volume,
         "operation": operation,
         "number_iter": number_iter,
@@ -115,14 +91,14 @@ def mri_morphology_cargs(
     """
     cargs = []
     cargs.append("mri_morphology")
-    cargs.append(execution.input_file(params.get("input_volume")))
-    cargs.append(params.get("operation"))
-    cargs.append(str(params.get("number_iter")))
-    cargs.append(params.get("output_volume"))
-    if params.get("label_option") is not None:
+    cargs.append(execution.input_file(params.get("input_volume", None)))
+    cargs.append(params.get("operation", None))
+    cargs.append(str(params.get("number_iter", None)))
+    cargs.append(params.get("output_volume", None))
+    if params.get("label_option", None) is not None:
         cargs.extend([
             "-l",
-            str(params.get("label_option"))
+            str(params.get("label_option", None))
         ])
     return cargs
 
@@ -142,7 +118,7 @@ def mri_morphology_outputs(
     """
     ret = MriMorphologyOutputs(
         root=execution.output_file("."),
-        output_file=execution.output_file(params.get("output_volume")),
+        output_file=execution.output_file(params.get("output_volume", None)),
     )
     return ret
 
@@ -219,7 +195,6 @@ def mri_morphology(
 __all__ = [
     "MRI_MORPHOLOGY_METADATA",
     "MriMorphologyOutputs",
-    "MriMorphologyParameters",
     "mri_morphology",
     "mri_morphology_execute",
     "mri_morphology_params",

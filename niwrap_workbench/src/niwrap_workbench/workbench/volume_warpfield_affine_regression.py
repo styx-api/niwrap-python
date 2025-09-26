@@ -14,14 +14,27 @@ VOLUME_WARPFIELD_AFFINE_REGRESSION_METADATA = Metadata(
 
 
 VolumeWarpfieldAffineRegressionFlirtOutParameters = typing.TypedDict('VolumeWarpfieldAffineRegressionFlirtOutParameters', {
-    "@type": typing.Literal["workbench.volume-warpfield-affine-regression.flirt_out"],
+    "@type": typing.NotRequired[typing.Literal["flirt_out"]],
+    "source_volume": str,
+    "target_volume": str,
+})
+VolumeWarpfieldAffineRegressionFlirtOutParametersTagged = typing.TypedDict('VolumeWarpfieldAffineRegressionFlirtOutParametersTagged', {
+    "@type": typing.Literal["flirt_out"],
     "source_volume": str,
     "target_volume": str,
 })
 
 
 VolumeWarpfieldAffineRegressionParameters = typing.TypedDict('VolumeWarpfieldAffineRegressionParameters', {
-    "@type": typing.Literal["workbench.volume-warpfield-affine-regression"],
+    "@type": typing.NotRequired[typing.Literal["workbench/volume-warpfield-affine-regression"]],
+    "warpfield": str,
+    "affine_out": str,
+    "opt_roi_roi_vol": typing.NotRequired[InputPathType | None],
+    "opt_fnirt_source_volume": typing.NotRequired[str | None],
+    "flirt_out": typing.NotRequired[VolumeWarpfieldAffineRegressionFlirtOutParameters | None],
+})
+VolumeWarpfieldAffineRegressionParametersTagged = typing.TypedDict('VolumeWarpfieldAffineRegressionParametersTagged', {
+    "@type": typing.Literal["workbench/volume-warpfield-affine-regression"],
     "warpfield": str,
     "affine_out": str,
     "opt_roi_roi_vol": typing.NotRequired[InputPathType | None],
@@ -30,42 +43,10 @@ VolumeWarpfieldAffineRegressionParameters = typing.TypedDict('VolumeWarpfieldAff
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "workbench.volume-warpfield-affine-regression": volume_warpfield_affine_regression_cargs,
-        "workbench.volume-warpfield-affine-regression.flirt_out": volume_warpfield_affine_regression_flirt_out_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-    }.get(t)
-
-
 def volume_warpfield_affine_regression_flirt_out_params(
     source_volume: str,
     target_volume: str,
-) -> VolumeWarpfieldAffineRegressionFlirtOutParameters:
+) -> VolumeWarpfieldAffineRegressionFlirtOutParametersTagged:
     """
     Build parameters.
     
@@ -77,7 +58,7 @@ def volume_warpfield_affine_regression_flirt_out_params(
         Parameter dictionary
     """
     params = {
-        "@type": "workbench.volume-warpfield-affine-regression.flirt_out",
+        "@type": "flirt_out",
         "source_volume": source_volume,
         "target_volume": target_volume,
     }
@@ -99,14 +80,14 @@ def volume_warpfield_affine_regression_flirt_out_cargs(
     """
     cargs = []
     cargs.append("-flirt-out")
-    cargs.append(params.get("source_volume"))
-    cargs.append(params.get("target_volume"))
+    cargs.append(params.get("source_volume", None))
+    cargs.append(params.get("target_volume", None))
     return cargs
 
 
 class VolumeWarpfieldAffineRegressionOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `volume_warpfield_affine_regression(...)`.
+    Output object returned when calling `VolumeWarpfieldAffineRegressionParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -118,7 +99,7 @@ def volume_warpfield_affine_regression_params(
     opt_roi_roi_vol: InputPathType | None = None,
     opt_fnirt_source_volume: str | None = None,
     flirt_out: VolumeWarpfieldAffineRegressionFlirtOutParameters | None = None,
-) -> VolumeWarpfieldAffineRegressionParameters:
+) -> VolumeWarpfieldAffineRegressionParametersTagged:
     """
     Build parameters.
     
@@ -135,7 +116,7 @@ def volume_warpfield_affine_regression_params(
         Parameter dictionary
     """
     params = {
-        "@type": "workbench.volume-warpfield-affine-regression",
+        "@type": "workbench/volume-warpfield-affine-regression",
         "warpfield": warpfield,
         "affine_out": affine_out,
     }
@@ -164,20 +145,20 @@ def volume_warpfield_affine_regression_cargs(
     cargs = []
     cargs.append("wb_command")
     cargs.append("-volume-warpfield-affine-regression")
-    cargs.append(params.get("warpfield"))
-    cargs.append(params.get("affine_out"))
-    if params.get("opt_roi_roi_vol") is not None:
+    cargs.append(params.get("warpfield", None))
+    cargs.append(params.get("affine_out", None))
+    if params.get("opt_roi_roi_vol", None) is not None:
         cargs.extend([
             "-roi",
-            execution.input_file(params.get("opt_roi_roi_vol"))
+            execution.input_file(params.get("opt_roi_roi_vol", None))
         ])
-    if params.get("opt_fnirt_source_volume") is not None:
+    if params.get("opt_fnirt_source_volume", None) is not None:
         cargs.extend([
             "-fnirt",
-            params.get("opt_fnirt_source_volume")
+            params.get("opt_fnirt_source_volume", None)
         ])
-    if params.get("flirt_out") is not None:
-        cargs.extend(dyn_cargs(params.get("flirt_out")["@type"])(params.get("flirt_out"), execution))
+    if params.get("flirt_out", None) is not None:
+        cargs.extend(volume_warpfield_affine_regression_flirt_out_cargs(params.get("flirt_out", None), execution))
     return cargs
 
 
@@ -288,9 +269,7 @@ def volume_warpfield_affine_regression(
 
 __all__ = [
     "VOLUME_WARPFIELD_AFFINE_REGRESSION_METADATA",
-    "VolumeWarpfieldAffineRegressionFlirtOutParameters",
     "VolumeWarpfieldAffineRegressionOutputs",
-    "VolumeWarpfieldAffineRegressionParameters",
     "volume_warpfield_affine_regression",
     "volume_warpfield_affine_regression_execute",
     "volume_warpfield_affine_regression_flirt_out_params",

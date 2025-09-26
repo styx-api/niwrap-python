@@ -14,47 +14,20 @@ MINC2SEQINFO_METADATA = Metadata(
 
 
 Minc2seqinfoParameters = typing.TypedDict('Minc2seqinfoParameters', {
-    "@type": typing.Literal["freesurfer.minc2seqinfo"],
+    "@type": typing.NotRequired[typing.Literal["freesurfer/minc2seqinfo"]],
+    "mincfile": InputPathType,
+    "seqinfofile": str,
+})
+Minc2seqinfoParametersTagged = typing.TypedDict('Minc2seqinfoParametersTagged', {
+    "@type": typing.Literal["freesurfer/minc2seqinfo"],
     "mincfile": InputPathType,
     "seqinfofile": str,
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "freesurfer.minc2seqinfo": minc2seqinfo_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "freesurfer.minc2seqinfo": minc2seqinfo_outputs,
-    }.get(t)
-
-
 class Minc2seqinfoOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `minc2seqinfo(...)`.
+    Output object returned when calling `Minc2seqinfoParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -65,7 +38,7 @@ class Minc2seqinfoOutputs(typing.NamedTuple):
 def minc2seqinfo_params(
     mincfile: InputPathType,
     seqinfofile: str,
-) -> Minc2seqinfoParameters:
+) -> Minc2seqinfoParametersTagged:
     """
     Build parameters.
     
@@ -76,7 +49,7 @@ def minc2seqinfo_params(
         Parameter dictionary
     """
     params = {
-        "@type": "freesurfer.minc2seqinfo",
+        "@type": "freesurfer/minc2seqinfo",
         "mincfile": mincfile,
         "seqinfofile": seqinfofile,
     }
@@ -98,8 +71,8 @@ def minc2seqinfo_cargs(
     """
     cargs = []
     cargs.append("minc2seqinfo")
-    cargs.append(execution.input_file(params.get("mincfile")))
-    cargs.append(params.get("seqinfofile"))
+    cargs.append(execution.input_file(params.get("mincfile", None)))
+    cargs.append(params.get("seqinfofile", None))
     return cargs
 
 
@@ -118,7 +91,7 @@ def minc2seqinfo_outputs(
     """
     ret = Minc2seqinfoOutputs(
         root=execution.output_file("."),
-        out_seqinfofile=execution.output_file(params.get("seqinfofile")),
+        out_seqinfofile=execution.output_file(params.get("seqinfofile", None)),
     )
     return ret
 
@@ -182,7 +155,6 @@ def minc2seqinfo(
 __all__ = [
     "MINC2SEQINFO_METADATA",
     "Minc2seqinfoOutputs",
-    "Minc2seqinfoParameters",
     "minc2seqinfo",
     "minc2seqinfo_execute",
     "minc2seqinfo_params",

@@ -14,7 +14,14 @@ VOLUME_LABEL_MODIFY_KEYS_METADATA = Metadata(
 
 
 VolumeLabelModifyKeysParameters = typing.TypedDict('VolumeLabelModifyKeysParameters', {
-    "@type": typing.Literal["workbench.volume-label-modify-keys"],
+    "@type": typing.NotRequired[typing.Literal["workbench/volume-label-modify-keys"]],
+    "volume_in": InputPathType,
+    "remap_file": str,
+    "volume_out": str,
+    "opt_subvolume_subvolume": typing.NotRequired[str | None],
+})
+VolumeLabelModifyKeysParametersTagged = typing.TypedDict('VolumeLabelModifyKeysParametersTagged', {
+    "@type": typing.Literal["workbench/volume-label-modify-keys"],
     "volume_in": InputPathType,
     "remap_file": str,
     "volume_out": str,
@@ -22,41 +29,9 @@ VolumeLabelModifyKeysParameters = typing.TypedDict('VolumeLabelModifyKeysParamet
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "workbench.volume-label-modify-keys": volume_label_modify_keys_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "workbench.volume-label-modify-keys": volume_label_modify_keys_outputs,
-    }.get(t)
-
-
 class VolumeLabelModifyKeysOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `volume_label_modify_keys(...)`.
+    Output object returned when calling `VolumeLabelModifyKeysParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -69,7 +44,7 @@ def volume_label_modify_keys_params(
     remap_file: str,
     volume_out: str,
     opt_subvolume_subvolume: str | None = None,
-) -> VolumeLabelModifyKeysParameters:
+) -> VolumeLabelModifyKeysParametersTagged:
     """
     Build parameters.
     
@@ -83,7 +58,7 @@ def volume_label_modify_keys_params(
         Parameter dictionary
     """
     params = {
-        "@type": "workbench.volume-label-modify-keys",
+        "@type": "workbench/volume-label-modify-keys",
         "volume_in": volume_in,
         "remap_file": remap_file,
         "volume_out": volume_out,
@@ -109,13 +84,13 @@ def volume_label_modify_keys_cargs(
     cargs = []
     cargs.append("wb_command")
     cargs.append("-volume-label-modify-keys")
-    cargs.append(execution.input_file(params.get("volume_in")))
-    cargs.append(params.get("remap_file"))
-    cargs.append(params.get("volume_out"))
-    if params.get("opt_subvolume_subvolume") is not None:
+    cargs.append(execution.input_file(params.get("volume_in", None)))
+    cargs.append(params.get("remap_file", None))
+    cargs.append(params.get("volume_out", None))
+    if params.get("opt_subvolume_subvolume", None) is not None:
         cargs.extend([
             "-subvolume",
-            params.get("opt_subvolume_subvolume")
+            params.get("opt_subvolume_subvolume", None)
         ])
     return cargs
 
@@ -135,7 +110,7 @@ def volume_label_modify_keys_outputs(
     """
     ret = VolumeLabelModifyKeysOutputs(
         root=execution.output_file("."),
-        volume_out=execution.output_file(params.get("volume_out")),
+        volume_out=execution.output_file(params.get("volume_out", None)),
     )
     return ret
 
@@ -234,7 +209,6 @@ def volume_label_modify_keys(
 __all__ = [
     "VOLUME_LABEL_MODIFY_KEYS_METADATA",
     "VolumeLabelModifyKeysOutputs",
-    "VolumeLabelModifyKeysParameters",
     "volume_label_modify_keys",
     "volume_label_modify_keys_execute",
     "volume_label_modify_keys_params",

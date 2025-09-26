@@ -14,7 +14,17 @@ V_3DRESAMPLE_METADATA = Metadata(
 
 
 V3dresampleParameters = typing.TypedDict('V3dresampleParameters', {
-    "@type": typing.Literal["afni.3dresample"],
+    "@type": typing.NotRequired[typing.Literal["afni/3dresample"]],
+    "in_file": InputPathType,
+    "master": typing.NotRequired[InputPathType | None],
+    "orientation": typing.NotRequired[typing.Literal["AIL", "AIR", "ASL", "ASR", "PIL", "PIR", "PSL", "PSR", "ALI", "ALS", "ARI", "ARS", "PLI", "PLS", "PRI", "PRS", "IAL", "IAR", "IPL", "IPR", "SAL", "SAR", "SPL", "SPR", "ILA", "ILP", "IRA", "IRP", "SLA", "SLP", "SRA", "SRP", "LAI", "LAS", "LPI", "LPS", "RAI", "RAS", "RPI", "RPS", "LIA", "LIP", "LSA", "LSP", "RIA", "RIP", "RSA", "RSP"] | None],
+    "prefix": str,
+    "outputtype": typing.NotRequired[typing.Literal["NIFTI", "AFNI", "NIFTI_GZ"] | None],
+    "resample_mode": typing.NotRequired[typing.Literal["NN", "Li", "Cu", "Bk"] | None],
+    "voxel_size": typing.NotRequired[list[float] | None],
+})
+V3dresampleParametersTagged = typing.TypedDict('V3dresampleParametersTagged', {
+    "@type": typing.Literal["afni/3dresample"],
     "in_file": InputPathType,
     "master": typing.NotRequired[InputPathType | None],
     "orientation": typing.NotRequired[typing.Literal["AIL", "AIR", "ASL", "ASR", "PIL", "PIR", "PSL", "PSR", "ALI", "ALS", "ARI", "ARS", "PLI", "PLS", "PRI", "PRS", "IAL", "IAR", "IPL", "IPR", "SAL", "SAR", "SPL", "SPR", "ILA", "ILP", "IRA", "IRP", "SLA", "SLP", "SRA", "SRP", "LAI", "LAS", "LPI", "LPS", "RAI", "RAS", "RPI", "RPS", "LIA", "LIP", "LSA", "LSP", "RIA", "RIP", "RSA", "RSP"] | None],
@@ -25,41 +35,9 @@ V3dresampleParameters = typing.TypedDict('V3dresampleParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "afni.3dresample": v_3dresample_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "afni.3dresample": v_3dresample_outputs,
-    }.get(t)
-
-
 class V3dresampleOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `v_3dresample(...)`.
+    Output object returned when calling `V3dresampleParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -75,7 +53,7 @@ def v_3dresample_params(
     outputtype: typing.Literal["NIFTI", "AFNI", "NIFTI_GZ"] | None = None,
     resample_mode: typing.Literal["NN", "Li", "Cu", "Bk"] | None = None,
     voxel_size: list[float] | None = None,
-) -> V3dresampleParameters:
+) -> V3dresampleParametersTagged:
     """
     Build parameters.
     
@@ -93,7 +71,7 @@ def v_3dresample_params(
         Parameter dictionary
     """
     params = {
-        "@type": "afni.3dresample",
+        "@type": "afni/3dresample",
         "in_file": in_file,
         "prefix": prefix,
     }
@@ -127,33 +105,33 @@ def v_3dresample_cargs(
     cargs.append("3dresample")
     cargs.extend([
         "-inset",
-        execution.input_file(params.get("in_file"))
+        execution.input_file(params.get("in_file", None))
     ])
-    if params.get("master") is not None:
+    if params.get("master", None) is not None:
         cargs.extend([
             "-master",
-            execution.input_file(params.get("master"))
+            execution.input_file(params.get("master", None))
         ])
-    if params.get("orientation") is not None:
+    if params.get("orientation", None) is not None:
         cargs.extend([
             "-orient",
-            params.get("orientation")
+            params.get("orientation", None)
         ])
     cargs.extend([
         "-prefix",
-        params.get("prefix")
+        params.get("prefix", None)
     ])
-    if params.get("outputtype") is not None:
-        cargs.append(params.get("outputtype"))
-    if params.get("resample_mode") is not None:
+    if params.get("outputtype", None) is not None:
+        cargs.append(params.get("outputtype", None))
+    if params.get("resample_mode", None) is not None:
         cargs.extend([
             "-rmode",
-            params.get("resample_mode")
+            params.get("resample_mode", None)
         ])
-    if params.get("voxel_size") is not None:
+    if params.get("voxel_size", None) is not None:
         cargs.extend([
             "-dxyz",
-            *map(str, params.get("voxel_size"))
+            *map(str, params.get("voxel_size", None))
         ])
     return cargs
 
@@ -173,7 +151,7 @@ def v_3dresample_outputs(
     """
     ret = V3dresampleOutputs(
         root=execution.output_file("."),
-        out_file=execution.output_file(params.get("prefix")),
+        out_file=execution.output_file(params.get("prefix", None)),
     )
     return ret
 
@@ -253,7 +231,6 @@ def v_3dresample(
 
 __all__ = [
     "V3dresampleOutputs",
-    "V3dresampleParameters",
     "V_3DRESAMPLE_METADATA",
     "v_3dresample",
     "v_3dresample_execute",

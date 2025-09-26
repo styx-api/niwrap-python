@@ -14,7 +14,15 @@ ANTS_REGISTRATION_SY_NQUICK_SH_METADATA = Metadata(
 
 
 AntsRegistrationSyNquickShParameters = typing.TypedDict('AntsRegistrationSyNquickShParameters', {
-    "@type": typing.Literal["ants.antsRegistrationSyNQuick.sh"],
+    "@type": typing.NotRequired[typing.Literal["ants/antsRegistrationSyNQuick.sh"]],
+    "dimensionality": typing.Literal[2, 3],
+    "fixed_image": InputPathType,
+    "moving_image": InputPathType,
+    "output_prefix": str,
+    "transform_type": typing.NotRequired[typing.Literal["s", "b"] | None],
+})
+AntsRegistrationSyNquickShParametersTagged = typing.TypedDict('AntsRegistrationSyNquickShParametersTagged', {
+    "@type": typing.Literal["ants/antsRegistrationSyNQuick.sh"],
     "dimensionality": typing.Literal[2, 3],
     "fixed_image": InputPathType,
     "moving_image": InputPathType,
@@ -23,41 +31,9 @@ AntsRegistrationSyNquickShParameters = typing.TypedDict('AntsRegistrationSyNquic
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "ants.antsRegistrationSyNQuick.sh": ants_registration_sy_nquick_sh_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "ants.antsRegistrationSyNQuick.sh": ants_registration_sy_nquick_sh_outputs,
-    }.get(t)
-
-
 class AntsRegistrationSyNquickShOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `ants_registration_sy_nquick_sh(...)`.
+    Output object returned when calling `AntsRegistrationSyNquickShParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -77,7 +53,7 @@ def ants_registration_sy_nquick_sh_params(
     moving_image: InputPathType,
     output_prefix: str,
     transform_type: typing.Literal["s", "b"] | None = None,
-) -> AntsRegistrationSyNquickShParameters:
+) -> AntsRegistrationSyNquickShParametersTagged:
     """
     Build parameters.
     
@@ -92,7 +68,7 @@ def ants_registration_sy_nquick_sh_params(
         Parameter dictionary
     """
     params = {
-        "@type": "ants.antsRegistrationSyNQuick.sh",
+        "@type": "ants/antsRegistrationSyNQuick.sh",
         "dimensionality": dimensionality,
         "fixed_image": fixed_image,
         "moving_image": moving_image,
@@ -120,22 +96,22 @@ def ants_registration_sy_nquick_sh_cargs(
     cargs.append("antsRegistrationSyNQuick.sh")
     cargs.extend([
         "-d",
-        str(params.get("dimensionality"))
+        str(params.get("dimensionality", None))
     ])
     cargs.extend([
         "-f",
-        execution.input_file(params.get("fixed_image"))
+        execution.input_file(params.get("fixed_image", None))
     ])
     cargs.extend([
         "-m",
-        execution.input_file(params.get("moving_image"))
+        execution.input_file(params.get("moving_image", None))
     ])
     cargs.extend([
         "-o",
-        params.get("output_prefix")
+        params.get("output_prefix", None)
     ])
-    if params.get("transform_type") is not None:
-        cargs.append(params.get("transform_type"))
+    if params.get("transform_type", None) is not None:
+        cargs.append(params.get("transform_type", None))
     return cargs
 
 
@@ -154,10 +130,10 @@ def ants_registration_sy_nquick_sh_outputs(
     """
     ret = AntsRegistrationSyNquickShOutputs(
         root=execution.output_file("."),
-        output_transform=execution.output_file(params.get("output_prefix") + "0GenericAffine.mat"),
-        output_warp=execution.output_file(params.get("output_prefix") + "1Warp.nii.gz"),
-        output_inverse_warp=execution.output_file(params.get("output_prefix") + "1InverseWarp.nii.gz"),
-        output_warped_image=execution.output_file(params.get("output_prefix") + "Warped.nii.gz"),
+        output_transform=execution.output_file(params.get("output_prefix", None) + "0GenericAffine.mat"),
+        output_warp=execution.output_file(params.get("output_prefix", None) + "1Warp.nii.gz"),
+        output_inverse_warp=execution.output_file(params.get("output_prefix", None) + "1InverseWarp.nii.gz"),
+        output_warped_image=execution.output_file(params.get("output_prefix", None) + "Warped.nii.gz"),
     )
     return ret
 
@@ -233,7 +209,6 @@ def ants_registration_sy_nquick_sh(
 __all__ = [
     "ANTS_REGISTRATION_SY_NQUICK_SH_METADATA",
     "AntsRegistrationSyNquickShOutputs",
-    "AntsRegistrationSyNquickShParameters",
     "ants_registration_sy_nquick_sh",
     "ants_registration_sy_nquick_sh_execute",
     "ants_registration_sy_nquick_sh_params",

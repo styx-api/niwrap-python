@@ -14,7 +14,17 @@ MKSUBJDIRS_METADATA = Metadata(
 
 
 MksubjdirsParameters = typing.TypedDict('MksubjdirsParameters', {
-    "@type": typing.Literal["freesurfer.mksubjdirs"],
+    "@type": typing.NotRequired[typing.Literal["freesurfer/mksubjdirs"]],
+    "subj_name": str,
+    "mode": typing.NotRequired[str | None],
+    "parents": bool,
+    "verbose": bool,
+    "selinux_context": bool,
+    "help": bool,
+    "version": bool,
+})
+MksubjdirsParametersTagged = typing.TypedDict('MksubjdirsParametersTagged', {
+    "@type": typing.Literal["freesurfer/mksubjdirs"],
     "subj_name": str,
     "mode": typing.NotRequired[str | None],
     "parents": bool,
@@ -25,40 +35,9 @@ MksubjdirsParameters = typing.TypedDict('MksubjdirsParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "freesurfer.mksubjdirs": mksubjdirs_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-    }.get(t)
-
-
 class MksubjdirsOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `mksubjdirs(...)`.
+    Output object returned when calling `MksubjdirsParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -72,7 +51,7 @@ def mksubjdirs_params(
     selinux_context: bool = False,
     help_: bool = False,
     version: bool = False,
-) -> MksubjdirsParameters:
+) -> MksubjdirsParametersTagged:
     """
     Build parameters.
     
@@ -89,7 +68,7 @@ def mksubjdirs_params(
         Parameter dictionary
     """
     params = {
-        "@type": "freesurfer.mksubjdirs",
+        "@type": "freesurfer/mksubjdirs",
         "subj_name": subj_name,
         "parents": parents,
         "verbose": verbose,
@@ -117,21 +96,21 @@ def mksubjdirs_cargs(
     """
     cargs = []
     cargs.append("mksubjdirs")
-    cargs.append(params.get("subj_name"))
-    if params.get("mode") is not None:
+    cargs.append(params.get("subj_name", None))
+    if params.get("mode", None) is not None:
         cargs.extend([
             "-m",
-            params.get("mode")
+            params.get("mode", None)
         ])
-    if params.get("parents"):
+    if params.get("parents", False):
         cargs.append("-p")
-    if params.get("verbose"):
+    if params.get("verbose", False):
         cargs.append("-v")
-    if params.get("selinux_context"):
+    if params.get("selinux_context", False):
         cargs.append("-Z")
-    if params.get("help"):
+    if params.get("help", False):
         cargs.append("--help")
-    if params.get("version"):
+    if params.get("version", False):
         cargs.append("--version")
     return cargs
 
@@ -230,7 +209,6 @@ def mksubjdirs(
 __all__ = [
     "MKSUBJDIRS_METADATA",
     "MksubjdirsOutputs",
-    "MksubjdirsParameters",
     "mksubjdirs",
     "mksubjdirs_execute",
     "mksubjdirs_params",

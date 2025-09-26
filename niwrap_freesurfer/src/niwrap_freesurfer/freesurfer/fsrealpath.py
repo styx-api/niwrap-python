@@ -14,46 +14,20 @@ FSREALPATH_METADATA = Metadata(
 
 
 FsrealpathParameters = typing.TypedDict('FsrealpathParameters', {
-    "@type": typing.Literal["freesurfer.fsrealpath"],
+    "@type": typing.NotRequired[typing.Literal["freesurfer/fsrealpath"]],
+    "path": str,
+    "help": bool,
+})
+FsrealpathParametersTagged = typing.TypedDict('FsrealpathParametersTagged', {
+    "@type": typing.Literal["freesurfer/fsrealpath"],
     "path": str,
     "help": bool,
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "freesurfer.fsrealpath": fsrealpath_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-    }.get(t)
-
-
 class FsrealpathOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `fsrealpath(...)`.
+    Output object returned when calling `FsrealpathParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -62,7 +36,7 @@ class FsrealpathOutputs(typing.NamedTuple):
 def fsrealpath_params(
     path: str,
     help_: bool = False,
-) -> FsrealpathParameters:
+) -> FsrealpathParametersTagged:
     """
     Build parameters.
     
@@ -73,7 +47,7 @@ def fsrealpath_params(
         Parameter dictionary
     """
     params = {
-        "@type": "freesurfer.fsrealpath",
+        "@type": "freesurfer/fsrealpath",
         "path": path,
         "help": help_,
     }
@@ -95,8 +69,8 @@ def fsrealpath_cargs(
     """
     cargs = []
     cargs.append("fsrealpath")
-    cargs.append(params.get("path"))
-    if params.get("help"):
+    cargs.append(params.get("path", None))
+    if params.get("help", False):
         cargs.append("-h")
     return cargs
 
@@ -179,7 +153,6 @@ def fsrealpath(
 __all__ = [
     "FSREALPATH_METADATA",
     "FsrealpathOutputs",
-    "FsrealpathParameters",
     "fsrealpath",
     "fsrealpath_execute",
     "fsrealpath_params",

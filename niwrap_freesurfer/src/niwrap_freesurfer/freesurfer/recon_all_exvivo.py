@@ -14,47 +14,22 @@ RECON_ALL_EXVIVO_METADATA = Metadata(
 
 
 ReconAllExvivoParameters = typing.TypedDict('ReconAllExvivoParameters', {
-    "@type": typing.Literal["freesurfer.recon-all-exvivo"],
+    "@type": typing.NotRequired[typing.Literal["freesurfer/recon-all-exvivo"]],
+    "subject_id": str,
+    "hemisphere": typing.NotRequired[str | None],
+    "nocerebellum": bool,
+})
+ReconAllExvivoParametersTagged = typing.TypedDict('ReconAllExvivoParametersTagged', {
+    "@type": typing.Literal["freesurfer/recon-all-exvivo"],
     "subject_id": str,
     "hemisphere": typing.NotRequired[str | None],
     "nocerebellum": bool,
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "freesurfer.recon-all-exvivo": recon_all_exvivo_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-    }.get(t)
-
-
 class ReconAllExvivoOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `recon_all_exvivo(...)`.
+    Output object returned when calling `ReconAllExvivoParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -64,7 +39,7 @@ def recon_all_exvivo_params(
     subject_id: str,
     hemisphere: str | None = None,
     nocerebellum: bool = False,
-) -> ReconAllExvivoParameters:
+) -> ReconAllExvivoParametersTagged:
     """
     Build parameters.
     
@@ -76,7 +51,7 @@ def recon_all_exvivo_params(
         Parameter dictionary
     """
     params = {
-        "@type": "freesurfer.recon-all-exvivo",
+        "@type": "freesurfer/recon-all-exvivo",
         "subject_id": subject_id,
         "nocerebellum": nocerebellum,
     }
@@ -102,14 +77,14 @@ def recon_all_exvivo_cargs(
     cargs.append("recon-all-exvivo")
     cargs.extend([
         "-s",
-        params.get("subject_id")
+        params.get("subject_id", None)
     ])
-    if params.get("hemisphere") is not None:
+    if params.get("hemisphere", None) is not None:
         cargs.extend([
             "-[lr]h",
-            params.get("hemisphere")
+            params.get("hemisphere", None)
         ])
-    if params.get("nocerebellum"):
+    if params.get("nocerebellum", False):
         cargs.append("-nocerebellum")
     return cargs
 
@@ -195,7 +170,6 @@ def recon_all_exvivo(
 __all__ = [
     "RECON_ALL_EXVIVO_METADATA",
     "ReconAllExvivoOutputs",
-    "ReconAllExvivoParameters",
     "recon_all_exvivo",
     "recon_all_exvivo_execute",
     "recon_all_exvivo_params",

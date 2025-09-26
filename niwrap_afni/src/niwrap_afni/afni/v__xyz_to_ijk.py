@@ -14,7 +14,15 @@ V__XYZ_TO_IJK_METADATA = Metadata(
 
 
 VXyzToIjkParameters = typing.TypedDict('VXyzToIjkParameters', {
-    "@type": typing.Literal["afni.@xyz_to_ijk"],
+    "@type": typing.NotRequired[typing.Literal["afni/@xyz_to_ijk"]],
+    "inset": InputPathType,
+    "x_coord": float,
+    "y_coord": float,
+    "z_coord": float,
+    "prefix": typing.NotRequired[str | None],
+})
+VXyzToIjkParametersTagged = typing.TypedDict('VXyzToIjkParametersTagged', {
+    "@type": typing.Literal["afni/@xyz_to_ijk"],
     "inset": InputPathType,
     "x_coord": float,
     "y_coord": float,
@@ -23,41 +31,9 @@ VXyzToIjkParameters = typing.TypedDict('VXyzToIjkParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "afni.@xyz_to_ijk": v__xyz_to_ijk_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "afni.@xyz_to_ijk": v__xyz_to_ijk_outputs,
-    }.get(t)
-
-
 class VXyzToIjkOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `v__xyz_to_ijk(...)`.
+    Output object returned when calling `VXyzToIjkParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -71,7 +47,7 @@ def v__xyz_to_ijk_params(
     y_coord: float,
     z_coord: float,
     prefix: str | None = None,
-) -> VXyzToIjkParameters:
+) -> VXyzToIjkParametersTagged:
     """
     Build parameters.
     
@@ -85,7 +61,7 @@ def v__xyz_to_ijk_params(
         Parameter dictionary
     """
     params = {
-        "@type": "afni.@xyz_to_ijk",
+        "@type": "afni/@xyz_to_ijk",
         "inset": inset,
         "x_coord": x_coord,
         "y_coord": y_coord,
@@ -113,18 +89,18 @@ def v__xyz_to_ijk_cargs(
     cargs.append("@xyz_to_ijk")
     cargs.extend([
         "-inset",
-        execution.input_file(params.get("inset"))
+        execution.input_file(params.get("inset", None))
     ])
     cargs.extend([
         "-xyz",
-        str(params.get("x_coord"))
+        str(params.get("x_coord", None))
     ])
-    cargs.append(str(params.get("y_coord")))
-    cargs.append(str(params.get("z_coord")))
-    if params.get("prefix") is not None:
+    cargs.append(str(params.get("y_coord", None)))
+    cargs.append(str(params.get("z_coord", None)))
+    if params.get("prefix", None) is not None:
         cargs.extend([
             "-prefix",
-            params.get("prefix")
+            params.get("prefix", None)
         ])
     return cargs
 
@@ -144,7 +120,7 @@ def v__xyz_to_ijk_outputs(
     """
     ret = VXyzToIjkOutputs(
         root=execution.output_file("."),
-        output_file=execution.output_file(params.get("prefix")) if (params.get("prefix") is not None) else None,
+        output_file=execution.output_file(params.get("prefix", None)) if (params.get("prefix") is not None) else None,
     )
     return ret
 
@@ -218,7 +194,6 @@ def v__xyz_to_ijk(
 
 __all__ = [
     "VXyzToIjkOutputs",
-    "VXyzToIjkParameters",
     "V__XYZ_TO_IJK_METADATA",
     "v__xyz_to_ijk",
     "v__xyz_to_ijk_execute",

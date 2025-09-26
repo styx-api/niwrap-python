@@ -14,7 +14,18 @@ V_3D_DTTO_NOISY_DWI_METADATA = Metadata(
 
 
 V3dDttoNoisyDwiParameters = typing.TypedDict('V3dDttoNoisyDwiParameters', {
-    "@type": typing.Literal["afni.3dDTtoNoisyDWI"],
+    "@type": typing.NotRequired[typing.Literal["afni/3dDTtoNoisyDWI"]],
+    "dt_file": InputPathType,
+    "grad_file": InputPathType,
+    "noise_dwi": float,
+    "noise_b0": typing.NotRequired[float | None],
+    "prefix": str,
+    "mask": typing.NotRequired[InputPathType | None],
+    "bval": typing.NotRequired[float | None],
+    "s0": typing.NotRequired[float | None],
+})
+V3dDttoNoisyDwiParametersTagged = typing.TypedDict('V3dDttoNoisyDwiParametersTagged', {
+    "@type": typing.Literal["afni/3dDTtoNoisyDWI"],
     "dt_file": InputPathType,
     "grad_file": InputPathType,
     "noise_dwi": float,
@@ -26,41 +37,9 @@ V3dDttoNoisyDwiParameters = typing.TypedDict('V3dDttoNoisyDwiParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "afni.3dDTtoNoisyDWI": v_3d_dtto_noisy_dwi_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "afni.3dDTtoNoisyDWI": v_3d_dtto_noisy_dwi_outputs,
-    }.get(t)
-
-
 class V3dDttoNoisyDwiOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `v_3d_dtto_noisy_dwi(...)`.
+    Output object returned when calling `V3dDttoNoisyDwiParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -78,7 +57,7 @@ def v_3d_dtto_noisy_dwi_params(
     mask: InputPathType | None = None,
     bval: float | None = None,
     s0: float | None = None,
-) -> V3dDttoNoisyDwiParameters:
+) -> V3dDttoNoisyDwiParametersTagged:
     """
     Build parameters.
     
@@ -102,7 +81,7 @@ def v_3d_dtto_noisy_dwi_params(
         Parameter dictionary
     """
     params = {
-        "@type": "afni.3dDTtoNoisyDWI",
+        "@type": "afni/3dDTtoNoisyDWI",
         "dt_file": dt_file,
         "grad_file": grad_file,
         "noise_dwi": noise_dwi,
@@ -134,35 +113,35 @@ def v_3d_dtto_noisy_dwi_cargs(
     """
     cargs = []
     cargs.append("3dDTtoNoisyDWI")
-    cargs.append(execution.input_file(params.get("dt_file")))
-    cargs.append(execution.input_file(params.get("grad_file")))
+    cargs.append(execution.input_file(params.get("dt_file", None)))
+    cargs.append(execution.input_file(params.get("grad_file", None)))
     cargs.extend([
         "-noise_DWI",
-        str(params.get("noise_dwi"))
+        str(params.get("noise_dwi", None))
     ])
-    if params.get("noise_b0") is not None:
+    if params.get("noise_b0", None) is not None:
         cargs.extend([
             "-noise_B0",
-            str(params.get("noise_b0"))
+            str(params.get("noise_b0", None))
         ])
     cargs.extend([
         "-prefix",
-        params.get("prefix")
+        params.get("prefix", None)
     ])
-    if params.get("mask") is not None:
+    if params.get("mask", None) is not None:
         cargs.extend([
             "-mask",
-            execution.input_file(params.get("mask"))
+            execution.input_file(params.get("mask", None))
         ])
-    if params.get("bval") is not None:
+    if params.get("bval", None) is not None:
         cargs.extend([
             "-bval",
-            str(params.get("bval"))
+            str(params.get("bval", None))
         ])
-    if params.get("s0") is not None:
+    if params.get("s0", None) is not None:
         cargs.extend([
             "-S0",
-            str(params.get("s0"))
+            str(params.get("s0", None))
         ])
     return cargs
 
@@ -182,7 +161,7 @@ def v_3d_dtto_noisy_dwi_outputs(
     """
     ret = V3dDttoNoisyDwiOutputs(
         root=execution.output_file("."),
-        output_dwi=execution.output_file(params.get("prefix") + "+orig"),
+        output_dwi=execution.output_file(params.get("prefix", None) + "+orig"),
     )
     return ret
 
@@ -274,7 +253,6 @@ def v_3d_dtto_noisy_dwi(
 
 __all__ = [
     "V3dDttoNoisyDwiOutputs",
-    "V3dDttoNoisyDwiParameters",
     "V_3D_DTTO_NOISY_DWI_METADATA",
     "v_3d_dtto_noisy_dwi",
     "v_3d_dtto_noisy_dwi_execute",

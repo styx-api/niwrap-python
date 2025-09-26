@@ -14,7 +14,16 @@ P2DSETSTAT_METADATA = Metadata(
 
 
 P2dsetstatParameters = typing.TypedDict('P2dsetstatParameters', {
-    "@type": typing.Literal["afni.p2dsetstat"],
+    "@type": typing.NotRequired[typing.Literal["afni/p2dsetstat"]],
+    "dataset": str,
+    "pvalue": float,
+    "bisided": bool,
+    "twosided": bool,
+    "onesided": bool,
+    "quiet": bool,
+})
+P2dsetstatParametersTagged = typing.TypedDict('P2dsetstatParametersTagged', {
+    "@type": typing.Literal["afni/p2dsetstat"],
     "dataset": str,
     "pvalue": float,
     "bisided": bool,
@@ -24,41 +33,9 @@ P2dsetstatParameters = typing.TypedDict('P2dsetstatParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "afni.p2dsetstat": p2dsetstat_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "afni.p2dsetstat": p2dsetstat_outputs,
-    }.get(t)
-
-
 class P2dsetstatOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `p2dsetstat(...)`.
+    Output object returned when calling `P2dsetstatParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -73,7 +50,7 @@ def p2dsetstat_params(
     twosided: bool = False,
     onesided: bool = False,
     quiet: bool = False,
-) -> P2dsetstatParameters:
+) -> P2dsetstatParametersTagged:
     """
     Build parameters.
     
@@ -92,7 +69,7 @@ def p2dsetstat_params(
         Parameter dictionary
     """
     params = {
-        "@type": "afni.p2dsetstat",
+        "@type": "afni/p2dsetstat",
         "dataset": dataset,
         "pvalue": pvalue,
         "bisided": bisided,
@@ -120,19 +97,19 @@ def p2dsetstat_cargs(
     cargs.append("p2dsetstat")
     cargs.extend([
         "-inset",
-        params.get("dataset")
+        params.get("dataset", None)
     ])
     cargs.extend([
         "-pval",
-        str(params.get("pvalue"))
+        str(params.get("pvalue", None))
     ])
-    if params.get("bisided"):
+    if params.get("bisided", False):
         cargs.append("-bisided")
-    if params.get("twosided"):
+    if params.get("twosided", False):
         cargs.append("-2sided")
-    if params.get("onesided"):
+    if params.get("onesided", False):
         cargs.append("-1sided")
-    if params.get("quiet"):
+    if params.get("quiet", False):
         cargs.append("-quiet")
     return cargs
 
@@ -234,7 +211,6 @@ def p2dsetstat(
 __all__ = [
     "P2DSETSTAT_METADATA",
     "P2dsetstatOutputs",
-    "P2dsetstatParameters",
     "p2dsetstat",
     "p2dsetstat_execute",
     "p2dsetstat_params",

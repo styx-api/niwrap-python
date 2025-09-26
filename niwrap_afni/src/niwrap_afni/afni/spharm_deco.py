@@ -14,7 +14,20 @@ SPHARM_DECO_METADATA = Metadata(
 
 
 SpharmDecoParameters = typing.TypedDict('SpharmDecoParameters', {
-    "@type": typing.Literal["afni.SpharmDeco"],
+    "@type": typing.NotRequired[typing.Literal["afni/SpharmDeco"]],
+    "i_type_s": InputPathType,
+    "unit_sph_label": str,
+    "order_l": float,
+    "i_type_sd": typing.NotRequired[list[InputPathType] | None],
+    "data_d": typing.NotRequired[InputPathType | None],
+    "bases_prefix": typing.NotRequired[str | None],
+    "prefix": typing.NotRequired[str | None],
+    "o_type_sdr": typing.NotRequired[list[InputPathType] | None],
+    "debug": typing.NotRequired[float | None],
+    "sigma": typing.NotRequired[float | None],
+})
+SpharmDecoParametersTagged = typing.TypedDict('SpharmDecoParametersTagged', {
+    "@type": typing.Literal["afni/SpharmDeco"],
     "i_type_s": InputPathType,
     "unit_sph_label": str,
     "order_l": float,
@@ -28,41 +41,9 @@ SpharmDecoParameters = typing.TypedDict('SpharmDecoParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "afni.SpharmDeco": spharm_deco_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "afni.SpharmDeco": spharm_deco_outputs,
-    }.get(t)
-
-
 class SpharmDecoOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `spharm_deco(...)`.
+    Output object returned when calling `SpharmDecoParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -81,7 +62,7 @@ def spharm_deco_params(
     o_type_sdr: list[InputPathType] | None = None,
     debug: float | None = None,
     sigma: float | None = None,
-) -> SpharmDecoParameters:
+) -> SpharmDecoParametersTagged:
     """
     Build parameters.
     
@@ -105,7 +86,7 @@ def spharm_deco_params(
         Parameter dictionary
     """
     params = {
-        "@type": "afni.SpharmDeco",
+        "@type": "afni/SpharmDeco",
         "i_type_s": i_type_s,
         "unit_sph_label": unit_sph_label,
         "order_l": order_l,
@@ -142,28 +123,28 @@ def spharm_deco_cargs(
     """
     cargs = []
     cargs.append("SpharmDeco")
-    cargs.append(execution.input_file(params.get("i_type_s")))
-    cargs.append(params.get("unit_sph_label"))
-    cargs.append(str(params.get("order_l")))
-    if params.get("i_type_sd") is not None:
-        cargs.extend([execution.input_file(f) for f in params.get("i_type_sd")])
-    if params.get("data_d") is not None:
-        cargs.append(execution.input_file(params.get("data_d")))
-    if params.get("bases_prefix") is not None:
-        cargs.append(params.get("bases_prefix"))
-    if params.get("prefix") is not None:
-        cargs.append(params.get("prefix"))
-    if params.get("o_type_sdr") is not None:
-        cargs.extend([execution.input_file(f) for f in params.get("o_type_sdr")])
-    if params.get("debug") is not None:
+    cargs.append(execution.input_file(params.get("i_type_s", None)))
+    cargs.append(params.get("unit_sph_label", None))
+    cargs.append(str(params.get("order_l", None)))
+    if params.get("i_type_sd", None) is not None:
+        cargs.extend([execution.input_file(f) for f in params.get("i_type_sd", None)])
+    if params.get("data_d", None) is not None:
+        cargs.append(execution.input_file(params.get("data_d", None)))
+    if params.get("bases_prefix", None) is not None:
+        cargs.append(params.get("bases_prefix", None))
+    if params.get("prefix", None) is not None:
+        cargs.append(params.get("prefix", None))
+    if params.get("o_type_sdr", None) is not None:
+        cargs.extend([execution.input_file(f) for f in params.get("o_type_sdr", None)])
+    if params.get("debug", None) is not None:
         cargs.extend([
             "-debug",
-            str(params.get("debug"))
+            str(params.get("debug", None))
         ])
-    if params.get("sigma") is not None:
+    if params.get("sigma", None) is not None:
         cargs.extend([
             "-sigma",
-            str(params.get("sigma"))
+            str(params.get("sigma", None))
         ])
     return cargs
 
@@ -183,7 +164,7 @@ def spharm_deco_outputs(
     """
     ret = SpharmDecoOutputs(
         root=execution.output_file("."),
-        reconstructed_data=execution.output_file(params.get("prefix") + "_reconstructed") if (params.get("prefix") is not None) else None,
+        reconstructed_data=execution.output_file(params.get("prefix", None) + "_reconstructed") if (params.get("prefix") is not None) else None,
     )
     return ret
 
@@ -276,7 +257,6 @@ def spharm_deco(
 __all__ = [
     "SPHARM_DECO_METADATA",
     "SpharmDecoOutputs",
-    "SpharmDecoParameters",
     "spharm_deco",
     "spharm_deco_execute",
     "spharm_deco_params",

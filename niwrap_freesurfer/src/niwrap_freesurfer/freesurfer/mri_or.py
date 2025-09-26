@@ -14,46 +14,20 @@ MRI_OR_METADATA = Metadata(
 
 
 MriOrParameters = typing.TypedDict('MriOrParameters', {
-    "@type": typing.Literal["freesurfer.mri_or"],
+    "@type": typing.NotRequired[typing.Literal["freesurfer/mri_or"]],
+    "original_labels": bool,
+    "input_files": list[InputPathType],
+})
+MriOrParametersTagged = typing.TypedDict('MriOrParametersTagged', {
+    "@type": typing.Literal["freesurfer/mri_or"],
     "original_labels": bool,
     "input_files": list[InputPathType],
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "freesurfer.mri_or": mri_or_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-    }.get(t)
-
-
 class MriOrOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `mri_or(...)`.
+    Output object returned when calling `MriOrParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -62,7 +36,7 @@ class MriOrOutputs(typing.NamedTuple):
 def mri_or_params(
     input_files: list[InputPathType],
     original_labels: bool = False,
-) -> MriOrParameters:
+) -> MriOrParametersTagged:
     """
     Build parameters.
     
@@ -75,7 +49,7 @@ def mri_or_params(
         Parameter dictionary
     """
     params = {
-        "@type": "freesurfer.mri_or",
+        "@type": "freesurfer/mri_or",
         "original_labels": original_labels,
         "input_files": input_files,
     }
@@ -97,9 +71,9 @@ def mri_or_cargs(
     """
     cargs = []
     cargs.append("mri_or")
-    if params.get("original_labels"):
+    if params.get("original_labels", False):
         cargs.append("-o")
-    cargs.extend([execution.input_file(f) for f in params.get("input_files")])
+    cargs.extend([execution.input_file(f) for f in params.get("input_files", None)])
     return cargs
 
 
@@ -183,7 +157,6 @@ def mri_or(
 __all__ = [
     "MRI_OR_METADATA",
     "MriOrOutputs",
-    "MriOrParameters",
     "mri_or",
     "mri_or_execute",
     "mri_or_params",

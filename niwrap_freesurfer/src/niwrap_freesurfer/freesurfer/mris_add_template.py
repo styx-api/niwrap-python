@@ -14,46 +14,18 @@ MRIS_ADD_TEMPLATE_METADATA = Metadata(
 
 
 MrisAddTemplateParameters = typing.TypedDict('MrisAddTemplateParameters', {
-    "@type": typing.Literal["freesurfer.mris_add_template"],
+    "@type": typing.NotRequired[typing.Literal["freesurfer/mris_add_template"]],
+    "placeholder_input": typing.NotRequired[str | None],
+})
+MrisAddTemplateParametersTagged = typing.TypedDict('MrisAddTemplateParametersTagged', {
+    "@type": typing.Literal["freesurfer/mris_add_template"],
     "placeholder_input": typing.NotRequired[str | None],
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "freesurfer.mris_add_template": mris_add_template_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "freesurfer.mris_add_template": mris_add_template_outputs,
-    }.get(t)
-
-
 class MrisAddTemplateOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `mris_add_template(...)`.
+    Output object returned when calling `MrisAddTemplateParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -63,7 +35,7 @@ class MrisAddTemplateOutputs(typing.NamedTuple):
 
 def mris_add_template_params(
     placeholder_input: str | None = None,
-) -> MrisAddTemplateParameters:
+) -> MrisAddTemplateParametersTagged:
     """
     Build parameters.
     
@@ -73,7 +45,7 @@ def mris_add_template_params(
         Parameter dictionary
     """
     params = {
-        "@type": "freesurfer.mris_add_template",
+        "@type": "freesurfer/mris_add_template",
     }
     if placeholder_input is not None:
         params["placeholder_input"] = placeholder_input
@@ -95,8 +67,8 @@ def mris_add_template_cargs(
     """
     cargs = []
     cargs.append("mris_add_template")
-    if params.get("placeholder_input") is not None:
-        cargs.append(params.get("placeholder_input"))
+    if params.get("placeholder_input", None) is not None:
+        cargs.append(params.get("placeholder_input", None))
     return cargs
 
 
@@ -176,7 +148,6 @@ def mris_add_template(
 __all__ = [
     "MRIS_ADD_TEMPLATE_METADATA",
     "MrisAddTemplateOutputs",
-    "MrisAddTemplateParameters",
     "mris_add_template",
     "mris_add_template_execute",
     "mris_add_template_params",

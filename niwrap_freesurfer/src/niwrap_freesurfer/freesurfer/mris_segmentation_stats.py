@@ -14,7 +14,14 @@ MRIS_SEGMENTATION_STATS_METADATA = Metadata(
 
 
 MrisSegmentationStatsParameters = typing.TypedDict('MrisSegmentationStatsParameters', {
-    "@type": typing.Literal["freesurfer.mris_segmentation_stats"],
+    "@type": typing.NotRequired[typing.Literal["freesurfer/mris_segmentation_stats"]],
+    "overlay_name": str,
+    "segmentation_label_name": str,
+    "subjects": list[str],
+    "roc_file": str,
+})
+MrisSegmentationStatsParametersTagged = typing.TypedDict('MrisSegmentationStatsParametersTagged', {
+    "@type": typing.Literal["freesurfer/mris_segmentation_stats"],
     "overlay_name": str,
     "segmentation_label_name": str,
     "subjects": list[str],
@@ -22,41 +29,9 @@ MrisSegmentationStatsParameters = typing.TypedDict('MrisSegmentationStatsParamet
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "freesurfer.mris_segmentation_stats": mris_segmentation_stats_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "freesurfer.mris_segmentation_stats": mris_segmentation_stats_outputs,
-    }.get(t)
-
-
 class MrisSegmentationStatsOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `mris_segmentation_stats(...)`.
+    Output object returned when calling `MrisSegmentationStatsParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -69,7 +44,7 @@ def mris_segmentation_stats_params(
     segmentation_label_name: str,
     subjects: list[str],
     roc_file: str,
-) -> MrisSegmentationStatsParameters:
+) -> MrisSegmentationStatsParametersTagged:
     """
     Build parameters.
     
@@ -82,7 +57,7 @@ def mris_segmentation_stats_params(
         Parameter dictionary
     """
     params = {
-        "@type": "freesurfer.mris_segmentation_stats",
+        "@type": "freesurfer/mris_segmentation_stats",
         "overlay_name": overlay_name,
         "segmentation_label_name": segmentation_label_name,
         "subjects": subjects,
@@ -106,10 +81,10 @@ def mris_segmentation_stats_cargs(
     """
     cargs = []
     cargs.append("mris_segmentation_stats")
-    cargs.append(params.get("overlay_name"))
-    cargs.append(params.get("segmentation_label_name"))
-    cargs.extend(params.get("subjects"))
-    cargs.append(params.get("roc_file"))
+    cargs.append(params.get("overlay_name", None))
+    cargs.append(params.get("segmentation_label_name", None))
+    cargs.extend(params.get("subjects", None))
+    cargs.append(params.get("roc_file", None))
     return cargs
 
 
@@ -128,7 +103,7 @@ def mris_segmentation_stats_outputs(
     """
     ret = MrisSegmentationStatsOutputs(
         root=execution.output_file("."),
-        roc_output_file=execution.output_file(params.get("roc_file")),
+        roc_output_file=execution.output_file(params.get("roc_file", None)),
     )
     return ret
 
@@ -198,7 +173,6 @@ def mris_segmentation_stats(
 __all__ = [
     "MRIS_SEGMENTATION_STATS_METADATA",
     "MrisSegmentationStatsOutputs",
-    "MrisSegmentationStatsParameters",
     "mris_segmentation_stats",
     "mris_segmentation_stats_execute",
     "mris_segmentation_stats_params",

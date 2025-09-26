@@ -14,7 +14,14 @@ CIFTI_PARCEL_MAPPING_TO_LABEL_METADATA = Metadata(
 
 
 CiftiParcelMappingToLabelParameters = typing.TypedDict('CiftiParcelMappingToLabelParameters', {
-    "@type": typing.Literal["workbench.cifti-parcel-mapping-to-label"],
+    "@type": typing.NotRequired[typing.Literal["workbench/cifti-parcel-mapping-to-label"]],
+    "cifti_in": InputPathType,
+    "direction": str,
+    "template_cifti": InputPathType,
+    "dlabel_out": str,
+})
+CiftiParcelMappingToLabelParametersTagged = typing.TypedDict('CiftiParcelMappingToLabelParametersTagged', {
+    "@type": typing.Literal["workbench/cifti-parcel-mapping-to-label"],
     "cifti_in": InputPathType,
     "direction": str,
     "template_cifti": InputPathType,
@@ -22,41 +29,9 @@ CiftiParcelMappingToLabelParameters = typing.TypedDict('CiftiParcelMappingToLabe
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "workbench.cifti-parcel-mapping-to-label": cifti_parcel_mapping_to_label_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "workbench.cifti-parcel-mapping-to-label": cifti_parcel_mapping_to_label_outputs,
-    }.get(t)
-
-
 class CiftiParcelMappingToLabelOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `cifti_parcel_mapping_to_label(...)`.
+    Output object returned when calling `CiftiParcelMappingToLabelParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -69,7 +44,7 @@ def cifti_parcel_mapping_to_label_params(
     direction: str,
     template_cifti: InputPathType,
     dlabel_out: str,
-) -> CiftiParcelMappingToLabelParameters:
+) -> CiftiParcelMappingToLabelParametersTagged:
     """
     Build parameters.
     
@@ -83,7 +58,7 @@ def cifti_parcel_mapping_to_label_params(
         Parameter dictionary
     """
     params = {
-        "@type": "workbench.cifti-parcel-mapping-to-label",
+        "@type": "workbench/cifti-parcel-mapping-to-label",
         "cifti_in": cifti_in,
         "direction": direction,
         "template_cifti": template_cifti,
@@ -108,10 +83,10 @@ def cifti_parcel_mapping_to_label_cargs(
     cargs = []
     cargs.append("wb_command")
     cargs.append("-cifti-parcel-mapping-to-label")
-    cargs.append(execution.input_file(params.get("cifti_in")))
-    cargs.append(params.get("direction"))
-    cargs.append(execution.input_file(params.get("template_cifti")))
-    cargs.append(params.get("dlabel_out"))
+    cargs.append(execution.input_file(params.get("cifti_in", None)))
+    cargs.append(params.get("direction", None))
+    cargs.append(execution.input_file(params.get("template_cifti", None)))
+    cargs.append(params.get("dlabel_out", None))
     return cargs
 
 
@@ -130,7 +105,7 @@ def cifti_parcel_mapping_to_label_outputs(
     """
     ret = CiftiParcelMappingToLabelOutputs(
         root=execution.output_file("."),
-        dlabel_out=execution.output_file(params.get("dlabel_out")),
+        dlabel_out=execution.output_file(params.get("dlabel_out", None)),
     )
     return ret
 
@@ -213,7 +188,6 @@ def cifti_parcel_mapping_to_label(
 __all__ = [
     "CIFTI_PARCEL_MAPPING_TO_LABEL_METADATA",
     "CiftiParcelMappingToLabelOutputs",
-    "CiftiParcelMappingToLabelParameters",
     "cifti_parcel_mapping_to_label",
     "cifti_parcel_mapping_to_label_execute",
     "cifti_parcel_mapping_to_label_params",

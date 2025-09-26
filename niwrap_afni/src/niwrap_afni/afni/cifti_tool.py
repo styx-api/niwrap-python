@@ -14,7 +14,19 @@ CIFTI_TOOL_METADATA = Metadata(
 
 
 CiftiToolParameters = typing.TypedDict('CiftiToolParameters', {
-    "@type": typing.Literal["afni.cifti_tool"],
+    "@type": typing.NotRequired[typing.Literal["afni/cifti_tool"]],
+    "input_file": InputPathType,
+    "as_cext": bool,
+    "disp_cext": bool,
+    "eval_cext": bool,
+    "eval_type": typing.NotRequired[typing.Literal["has_data", "has_bdata", "num_tokens", "show", "show_names", "show_summary", "show_text_data"] | None],
+    "output_file": typing.NotRequired[str | None],
+    "verbose_level": typing.NotRequired[float | None],
+    "verbose_read_level": typing.NotRequired[float | None],
+    "both_verbose_levels": typing.NotRequired[float | None],
+})
+CiftiToolParametersTagged = typing.TypedDict('CiftiToolParametersTagged', {
+    "@type": typing.Literal["afni/cifti_tool"],
     "input_file": InputPathType,
     "as_cext": bool,
     "disp_cext": bool,
@@ -27,41 +39,9 @@ CiftiToolParameters = typing.TypedDict('CiftiToolParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "afni.cifti_tool": cifti_tool_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "afni.cifti_tool": cifti_tool_outputs,
-    }.get(t)
-
-
 class CiftiToolOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `cifti_tool(...)`.
+    Output object returned when calling `CiftiToolParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -79,7 +59,7 @@ def cifti_tool_params(
     verbose_level: float | None = None,
     verbose_read_level: float | None = None,
     both_verbose_levels: float | None = None,
-) -> CiftiToolParameters:
+) -> CiftiToolParametersTagged:
     """
     Build parameters.
     
@@ -97,7 +77,7 @@ def cifti_tool_params(
         Parameter dictionary
     """
     params = {
-        "@type": "afni.cifti_tool",
+        "@type": "afni/cifti_tool",
         "input_file": input_file,
         "as_cext": as_cext,
         "disp_cext": disp_cext,
@@ -133,38 +113,38 @@ def cifti_tool_cargs(
     cargs.append("cifti_tool")
     cargs.extend([
         "-input",
-        execution.input_file(params.get("input_file"))
+        execution.input_file(params.get("input_file", None))
     ])
-    if params.get("as_cext"):
+    if params.get("as_cext", False):
         cargs.append("-as_cext")
-    if params.get("disp_cext"):
+    if params.get("disp_cext", False):
         cargs.append("-disp_cext")
-    if params.get("eval_cext"):
+    if params.get("eval_cext", False):
         cargs.append("-eval_cext")
-    if params.get("eval_type") is not None:
+    if params.get("eval_type", None) is not None:
         cargs.extend([
             "-eval_type",
-            params.get("eval_type")
+            params.get("eval_type", None)
         ])
-    if params.get("output_file") is not None:
+    if params.get("output_file", None) is not None:
         cargs.extend([
             "-output",
-            params.get("output_file")
+            params.get("output_file", None)
         ])
-    if params.get("verbose_level") is not None:
+    if params.get("verbose_level", None) is not None:
         cargs.extend([
             "-verb",
-            str(params.get("verbose_level"))
+            str(params.get("verbose_level", None))
         ])
-    if params.get("verbose_read_level") is not None:
+    if params.get("verbose_read_level", None) is not None:
         cargs.extend([
             "-verb_read",
-            str(params.get("verbose_read_level"))
+            str(params.get("verbose_read_level", None))
         ])
-    if params.get("both_verbose_levels") is not None:
+    if params.get("both_verbose_levels", None) is not None:
         cargs.extend([
             "-vboth",
-            str(params.get("both_verbose_levels"))
+            str(params.get("both_verbose_levels", None))
         ])
     return cargs
 
@@ -184,7 +164,7 @@ def cifti_tool_outputs(
     """
     ret = CiftiToolOutputs(
         root=execution.output_file("."),
-        output_file=execution.output_file(params.get("output_file")) if (params.get("output_file") is not None) else None,
+        output_file=execution.output_file(params.get("output_file", None)) if (params.get("output_file") is not None) else None,
     )
     return ret
 
@@ -269,7 +249,6 @@ def cifti_tool(
 __all__ = [
     "CIFTI_TOOL_METADATA",
     "CiftiToolOutputs",
-    "CiftiToolParameters",
     "cifti_tool",
     "cifti_tool_execute",
     "cifti_tool_params",

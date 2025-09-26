@@ -14,7 +14,44 @@ MRI_BINARIZE_METADATA = Metadata(
 
 
 MriBinarizeParameters = typing.TypedDict('MriBinarizeParameters', {
-    "@type": typing.Literal["freesurfer.mri_binarize"],
+    "@type": typing.NotRequired[typing.Literal["freesurfer/mri_binarize"]],
+    "input_volume": InputPathType,
+    "output_volume": str,
+    "min_threshold": typing.NotRequired[float | None],
+    "max_threshold": typing.NotRequired[float | None],
+    "pct_threshold": typing.NotRequired[float | None],
+    "rmin": typing.NotRequired[float | None],
+    "rmax": typing.NotRequired[float | None],
+    "fdr_threshold": typing.NotRequired[float | None],
+    "match_values": typing.NotRequired[list[float] | None],
+    "replace_values": typing.NotRequired[list[float] | None],
+    "binval": typing.NotRequired[float | None],
+    "binval_not": typing.NotRequired[float | None],
+    "frame": typing.NotRequired[float | None],
+    "merge_volume": typing.NotRequired[InputPathType | None],
+    "mask_volume": typing.NotRequired[InputPathType | None],
+    "mask_threshold": typing.NotRequired[float | None],
+    "surf_name": typing.NotRequired[str | None],
+    "surf_smooth": typing.NotRequired[float | None],
+    "threads": typing.NotRequired[float | None],
+    "ctx_wm_flag": bool,
+    "all_wm_flag": bool,
+    "ventricles_flag": bool,
+    "wm_vcsf_flag": bool,
+    "gm_flag": bool,
+    "subcort_gm_flag": bool,
+    "scm_lh_flag": bool,
+    "scm_rh_flag": bool,
+    "zero_edges_flag": bool,
+    "zero_slice_edges_flag": bool,
+    "dilate_vertex": typing.NotRequired[str | None],
+    "remove_islands_flag": bool,
+    "fill_holes_flag": bool,
+    "noverbose_flag": bool,
+    "debug_flag": bool,
+})
+MriBinarizeParametersTagged = typing.TypedDict('MriBinarizeParametersTagged', {
+    "@type": typing.Literal["freesurfer/mri_binarize"],
     "input_volume": InputPathType,
     "output_volume": str,
     "min_threshold": typing.NotRequired[float | None],
@@ -52,41 +89,9 @@ MriBinarizeParameters = typing.TypedDict('MriBinarizeParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "freesurfer.mri_binarize": mri_binarize_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "freesurfer.mri_binarize": mri_binarize_outputs,
-    }.get(t)
-
-
 class MriBinarizeOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `mri_binarize(...)`.
+    Output object returned when calling `MriBinarizeParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -129,7 +134,7 @@ def mri_binarize_params(
     fill_holes_flag: bool = False,
     noverbose_flag: bool = False,
     debug_flag: bool = False,
-) -> MriBinarizeParameters:
+) -> MriBinarizeParametersTagged:
     """
     Build parameters.
     
@@ -176,7 +181,7 @@ def mri_binarize_params(
         Parameter dictionary
     """
     params = {
-        "@type": "freesurfer.mri_binarize",
+        "@type": "freesurfer/mri_binarize",
         "input_volume": input_volume,
         "output_volume": output_volume,
         "ctx_wm_flag": ctx_wm_flag,
@@ -250,129 +255,129 @@ def mri_binarize_cargs(
     cargs.append("mri_binarize")
     cargs.extend([
         "--i",
-        execution.input_file(params.get("input_volume"))
+        execution.input_file(params.get("input_volume", None))
     ])
     cargs.extend([
         "--o",
-        params.get("output_volume")
+        params.get("output_volume", None)
     ])
-    if params.get("min_threshold") is not None:
+    if params.get("min_threshold", None) is not None:
         cargs.extend([
             "--min",
-            str(params.get("min_threshold"))
+            str(params.get("min_threshold", None))
         ])
-    if params.get("max_threshold") is not None:
+    if params.get("max_threshold", None) is not None:
         cargs.extend([
             "--max",
-            str(params.get("max_threshold"))
+            str(params.get("max_threshold", None))
         ])
-    if params.get("pct_threshold") is not None:
+    if params.get("pct_threshold", None) is not None:
         cargs.extend([
             "--pct",
-            str(params.get("pct_threshold"))
+            str(params.get("pct_threshold", None))
         ])
-    if params.get("rmin") is not None:
+    if params.get("rmin", None) is not None:
         cargs.extend([
             "--rmin",
-            str(params.get("rmin"))
+            str(params.get("rmin", None))
         ])
-    if params.get("rmax") is not None:
+    if params.get("rmax", None) is not None:
         cargs.extend([
             "--rmax",
-            str(params.get("rmax"))
+            str(params.get("rmax", None))
         ])
-    if params.get("fdr_threshold") is not None:
+    if params.get("fdr_threshold", None) is not None:
         cargs.extend([
             "--fdr",
-            str(params.get("fdr_threshold"))
+            str(params.get("fdr_threshold", None))
         ])
-    if params.get("match_values") is not None:
+    if params.get("match_values", None) is not None:
         cargs.extend([
             "--match",
-            *map(str, params.get("match_values"))
+            *map(str, params.get("match_values", None))
         ])
-    if params.get("replace_values") is not None:
+    if params.get("replace_values", None) is not None:
         cargs.extend([
             "--replace",
-            *map(str, params.get("replace_values"))
+            *map(str, params.get("replace_values", None))
         ])
-    if params.get("binval") is not None:
+    if params.get("binval", None) is not None:
         cargs.extend([
             "--binval",
-            str(params.get("binval"))
+            str(params.get("binval", None))
         ])
-    if params.get("binval_not") is not None:
+    if params.get("binval_not", None) is not None:
         cargs.extend([
             "--binvalnot",
-            str(params.get("binval_not"))
+            str(params.get("binval_not", None))
         ])
-    if params.get("frame") is not None:
+    if params.get("frame", None) is not None:
         cargs.extend([
             "--frame",
-            str(params.get("frame"))
+            str(params.get("frame", None))
         ])
-    if params.get("merge_volume") is not None:
+    if params.get("merge_volume", None) is not None:
         cargs.extend([
             "--merge",
-            execution.input_file(params.get("merge_volume"))
+            execution.input_file(params.get("merge_volume", None))
         ])
-    if params.get("mask_volume") is not None:
+    if params.get("mask_volume", None) is not None:
         cargs.extend([
             "--mask",
-            execution.input_file(params.get("mask_volume"))
+            execution.input_file(params.get("mask_volume", None))
         ])
-    if params.get("mask_threshold") is not None:
+    if params.get("mask_threshold", None) is not None:
         cargs.extend([
             "--mask-thresh",
-            str(params.get("mask_threshold"))
+            str(params.get("mask_threshold", None))
         ])
-    if params.get("surf_name") is not None:
+    if params.get("surf_name", None) is not None:
         cargs.extend([
             "--surf",
-            params.get("surf_name")
+            params.get("surf_name", None)
         ])
-    if params.get("surf_smooth") is not None:
+    if params.get("surf_smooth", None) is not None:
         cargs.extend([
             "--surf-smooth",
-            str(params.get("surf_smooth"))
+            str(params.get("surf_smooth", None))
         ])
-    if params.get("threads") is not None:
+    if params.get("threads", None) is not None:
         cargs.extend([
             "--threads",
-            str(params.get("threads"))
+            str(params.get("threads", None))
         ])
-    if params.get("ctx_wm_flag"):
+    if params.get("ctx_wm_flag", False):
         cargs.append("--ctx-wm")
-    if params.get("all_wm_flag"):
+    if params.get("all_wm_flag", False):
         cargs.append("--all-wm")
-    if params.get("ventricles_flag"):
+    if params.get("ventricles_flag", False):
         cargs.append("--ventricles")
-    if params.get("wm_vcsf_flag"):
+    if params.get("wm_vcsf_flag", False):
         cargs.append("--wm+vcsf")
-    if params.get("gm_flag"):
+    if params.get("gm_flag", False):
         cargs.append("--gm")
-    if params.get("subcort_gm_flag"):
+    if params.get("subcort_gm_flag", False):
         cargs.append("--subcort-gm")
-    if params.get("scm_lh_flag"):
+    if params.get("scm_lh_flag", False):
         cargs.append("--scm-lh")
-    if params.get("scm_rh_flag"):
+    if params.get("scm_rh_flag", False):
         cargs.append("--scm-rh")
-    if params.get("zero_edges_flag"):
+    if params.get("zero_edges_flag", False):
         cargs.append("--zero-edges")
-    if params.get("zero_slice_edges_flag"):
+    if params.get("zero_slice_edges_flag", False):
         cargs.append("--zero-slice-edges")
-    if params.get("dilate_vertex") is not None:
+    if params.get("dilate_vertex", None) is not None:
         cargs.extend([
             "--dilate-vertex",
-            params.get("dilate_vertex")
+            params.get("dilate_vertex", None)
         ])
-    if params.get("remove_islands_flag"):
+    if params.get("remove_islands_flag", False):
         cargs.append("--remove-islands")
-    if params.get("fill_holes_flag"):
+    if params.get("fill_holes_flag", False):
         cargs.append("--fill-holes")
-    if params.get("noverbose_flag"):
+    if params.get("noverbose_flag", False):
         cargs.append("--noverbose")
-    if params.get("debug_flag"):
+    if params.get("debug_flag", False):
         cargs.append("--debug")
     return cargs
 
@@ -392,7 +397,7 @@ def mri_binarize_outputs(
     """
     ret = MriBinarizeOutputs(
         root=execution.output_file("."),
-        out_volume=execution.output_file(params.get("output_volume")),
+        out_volume=execution.output_file(params.get("output_volume", None)),
     )
     return ret
 
@@ -558,7 +563,6 @@ def mri_binarize(
 __all__ = [
     "MRI_BINARIZE_METADATA",
     "MriBinarizeOutputs",
-    "MriBinarizeParameters",
     "mri_binarize",
     "mri_binarize_execute",
     "mri_binarize_params",

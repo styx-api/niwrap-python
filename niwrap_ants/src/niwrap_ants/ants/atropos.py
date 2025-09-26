@@ -14,7 +14,29 @@ ATROPOS_METADATA = Metadata(
 
 
 AtroposParameters = typing.TypedDict('AtroposParameters', {
-    "@type": typing.Literal["ants.Atropos"],
+    "@type": typing.NotRequired[typing.Literal["ants/Atropos"]],
+    "image_dimensionality": typing.NotRequired[typing.Literal[2, 3, 4] | None],
+    "intensity_image": str,
+    "bspline": typing.NotRequired[str | None],
+    "initialization": str,
+    "partial_volume_label_set": typing.NotRequired[str | None],
+    "use_partial_volume_likelihoods": typing.NotRequired[typing.Literal[0, 1] | None],
+    "posterior_formulation": typing.NotRequired[str | None],
+    "mask_image": InputPathType,
+    "convergence": str,
+    "likelihood_model": str,
+    "mrf": typing.NotRequired[str | None],
+    "icm": typing.NotRequired[str | None],
+    "use_random_seed": typing.NotRequired[typing.Literal[0, 1] | None],
+    "output": str,
+    "minimize_memory_usage": typing.NotRequired[typing.Literal[0, 1] | None],
+    "winsorize_outliers": typing.NotRequired[str | None],
+    "use_euclidean_distance": typing.NotRequired[typing.Literal[0, 1] | None],
+    "label_propagation": typing.NotRequired[str | None],
+    "verbose": typing.NotRequired[typing.Literal[0, 1] | None],
+})
+AtroposParametersTagged = typing.TypedDict('AtroposParametersTagged', {
+    "@type": typing.Literal["ants/Atropos"],
     "image_dimensionality": typing.NotRequired[typing.Literal[2, 3, 4] | None],
     "intensity_image": str,
     "bspline": typing.NotRequired[str | None],
@@ -37,41 +59,9 @@ AtroposParameters = typing.TypedDict('AtroposParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "ants.Atropos": atropos_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "ants.Atropos": atropos_outputs,
-    }.get(t)
-
-
 class AtroposOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `atropos(...)`.
+    Output object returned when calling `AtroposParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -102,7 +92,7 @@ def atropos_params(
     use_euclidean_distance: typing.Literal[0, 1] | None = None,
     label_propagation: str | None = None,
     verbose: typing.Literal[0, 1] | None = None,
-) -> AtroposParameters:
+) -> AtroposParametersTagged:
     """
     Build parameters.
     
@@ -154,7 +144,7 @@ def atropos_params(
         Parameter dictionary
     """
     params = {
-        "@type": "ants.Atropos",
+        "@type": "ants/Atropos",
         "intensity_image": intensity_image,
         "initialization": initialization,
         "mask_image": mask_image,
@@ -206,94 +196,94 @@ def atropos_cargs(
     """
     cargs = []
     cargs.append("Atropos")
-    if params.get("image_dimensionality") is not None:
+    if params.get("image_dimensionality", None) is not None:
         cargs.extend([
             "--image-dimensionality",
-            str(params.get("image_dimensionality"))
+            str(params.get("image_dimensionality", None))
         ])
     cargs.extend([
         "-a",
-        params.get("intensity_image")
+        params.get("intensity_image", None)
     ])
-    if params.get("bspline") is not None:
+    if params.get("bspline", None) is not None:
         cargs.extend([
             "-b",
-            params.get("bspline")
+            params.get("bspline", None)
         ])
     cargs.extend([
         "-i",
-        params.get("initialization")
+        params.get("initialization", None)
     ])
-    if params.get("partial_volume_label_set") is not None:
+    if params.get("partial_volume_label_set", None) is not None:
         cargs.extend([
             "-s",
-            params.get("partial_volume_label_set")
+            params.get("partial_volume_label_set", None)
         ])
-    if params.get("use_partial_volume_likelihoods") is not None:
+    if params.get("use_partial_volume_likelihoods", None) is not None:
         cargs.extend([
             "--use-partial-volume-likelihoods",
-            str(params.get("use_partial_volume_likelihoods"))
+            str(params.get("use_partial_volume_likelihoods", None))
         ])
-    if params.get("posterior_formulation") is not None:
+    if params.get("posterior_formulation", None) is not None:
         cargs.extend([
             "-p",
-            params.get("posterior_formulation")
+            params.get("posterior_formulation", None)
         ])
     cargs.extend([
         "-x",
-        execution.input_file(params.get("mask_image"))
+        execution.input_file(params.get("mask_image", None))
     ])
     cargs.extend([
         "-c",
-        params.get("convergence")
+        params.get("convergence", None)
     ])
     cargs.extend([
         "-k",
-        params.get("likelihood_model")
+        params.get("likelihood_model", None)
     ])
-    if params.get("mrf") is not None:
+    if params.get("mrf", None) is not None:
         cargs.extend([
             "-m",
-            params.get("mrf")
+            params.get("mrf", None)
         ])
-    if params.get("icm") is not None:
+    if params.get("icm", None) is not None:
         cargs.extend([
             "-g",
-            params.get("icm")
+            params.get("icm", None)
         ])
-    if params.get("use_random_seed") is not None:
+    if params.get("use_random_seed", None) is not None:
         cargs.extend([
             "-r",
-            str(params.get("use_random_seed"))
+            str(params.get("use_random_seed", None))
         ])
     cargs.extend([
         "-o",
-        params.get("output")
+        params.get("output", None)
     ])
-    if params.get("minimize_memory_usage") is not None:
+    if params.get("minimize_memory_usage", None) is not None:
         cargs.extend([
             "-u",
-            str(params.get("minimize_memory_usage"))
+            str(params.get("minimize_memory_usage", None))
         ])
-    if params.get("winsorize_outliers") is not None:
+    if params.get("winsorize_outliers", None) is not None:
         cargs.extend([
             "-w",
-            params.get("winsorize_outliers")
+            params.get("winsorize_outliers", None)
         ])
-    if params.get("use_euclidean_distance") is not None:
+    if params.get("use_euclidean_distance", None) is not None:
         cargs.extend([
             "-e",
-            str(params.get("use_euclidean_distance"))
+            str(params.get("use_euclidean_distance", None))
         ])
-    if params.get("label_propagation") is not None:
+    if params.get("label_propagation", None) is not None:
         cargs.extend([
             "-l",
-            params.get("label_propagation")
+            params.get("label_propagation", None)
         ])
-    if params.get("verbose") is not None:
+    if params.get("verbose", None) is not None:
         cargs.extend([
             "-v",
-            str(params.get("verbose"))
+            str(params.get("verbose", None))
         ])
     return cargs
 
@@ -313,7 +303,7 @@ def atropos_outputs(
     """
     ret = AtroposOutputs(
         root=execution.output_file("."),
-        classified_image=execution.output_file(params.get("output") + "_classified.nii.gz"),
+        classified_image=execution.output_file(params.get("output", None) + "_classified.nii.gz"),
         posterior_probability_images=execution.output_file("[POSTERIOR_PROBABILITY_IMAGE_FILE_NAME_FORMAT]"),
     )
     return ret
@@ -457,7 +447,6 @@ def atropos(
 __all__ = [
     "ATROPOS_METADATA",
     "AtroposOutputs",
-    "AtroposParameters",
     "atropos",
     "atropos_execute",
     "atropos_params",

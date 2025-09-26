@@ -14,47 +14,20 @@ MRI_COMPILE_EDITS_METADATA = Metadata(
 
 
 MriCompileEditsParameters = typing.TypedDict('MriCompileEditsParameters', {
-    "@type": typing.Literal["freesurfer.mri_compile_edits"],
+    "@type": typing.NotRequired[typing.Literal["freesurfer/mri_compile_edits"]],
+    "subject_name": str,
+    "output_volume": str,
+})
+MriCompileEditsParametersTagged = typing.TypedDict('MriCompileEditsParametersTagged', {
+    "@type": typing.Literal["freesurfer/mri_compile_edits"],
     "subject_name": str,
     "output_volume": str,
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "freesurfer.mri_compile_edits": mri_compile_edits_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "freesurfer.mri_compile_edits": mri_compile_edits_outputs,
-    }.get(t)
-
-
 class MriCompileEditsOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `mri_compile_edits(...)`.
+    Output object returned when calling `MriCompileEditsParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -65,7 +38,7 @@ class MriCompileEditsOutputs(typing.NamedTuple):
 def mri_compile_edits_params(
     subject_name: str,
     output_volume: str,
-) -> MriCompileEditsParameters:
+) -> MriCompileEditsParametersTagged:
     """
     Build parameters.
     
@@ -76,7 +49,7 @@ def mri_compile_edits_params(
         Parameter dictionary
     """
     params = {
-        "@type": "freesurfer.mri_compile_edits",
+        "@type": "freesurfer/mri_compile_edits",
         "subject_name": subject_name,
         "output_volume": output_volume,
     }
@@ -98,8 +71,8 @@ def mri_compile_edits_cargs(
     """
     cargs = []
     cargs.append("mri_compile_edits")
-    cargs.append(params.get("subject_name"))
-    cargs.append(params.get("output_volume"))
+    cargs.append(params.get("subject_name", None))
+    cargs.append(params.get("output_volume", None))
     return cargs
 
 
@@ -118,7 +91,7 @@ def mri_compile_edits_outputs(
     """
     ret = MriCompileEditsOutputs(
         root=execution.output_file("."),
-        compiled_edit_volume=execution.output_file(params.get("output_volume")),
+        compiled_edit_volume=execution.output_file(params.get("output_volume", None)),
     )
     return ret
 
@@ -184,7 +157,6 @@ def mri_compile_edits(
 __all__ = [
     "MRI_COMPILE_EDITS_METADATA",
     "MriCompileEditsOutputs",
-    "MriCompileEditsParameters",
     "mri_compile_edits",
     "mri_compile_edits_execute",
     "mri_compile_edits_params",

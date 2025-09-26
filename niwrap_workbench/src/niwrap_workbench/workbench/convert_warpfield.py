@@ -14,14 +14,25 @@ CONVERT_WARPFIELD_METADATA = Metadata(
 
 
 ConvertWarpfieldFromWorldParameters = typing.TypedDict('ConvertWarpfieldFromWorldParameters', {
-    "@type": typing.Literal["workbench.convert-warpfield.from_world"],
+    "@type": typing.NotRequired[typing.Literal["from_world"]],
+    "input": str,
+    "opt_absolute": bool,
+})
+ConvertWarpfieldFromWorldParametersTagged = typing.TypedDict('ConvertWarpfieldFromWorldParametersTagged', {
+    "@type": typing.Literal["from_world"],
     "input": str,
     "opt_absolute": bool,
 })
 
 
 ConvertWarpfieldFromFnirtParameters = typing.TypedDict('ConvertWarpfieldFromFnirtParameters', {
-    "@type": typing.Literal["workbench.convert-warpfield.from_fnirt"],
+    "@type": typing.NotRequired[typing.Literal["from_fnirt"]],
+    "input": str,
+    "source_volume": str,
+    "opt_absolute": bool,
+})
+ConvertWarpfieldFromFnirtParametersTagged = typing.TypedDict('ConvertWarpfieldFromFnirtParametersTagged', {
+    "@type": typing.Literal["from_fnirt"],
     "input": str,
     "source_volume": str,
     "opt_absolute": bool,
@@ -29,14 +40,28 @@ ConvertWarpfieldFromFnirtParameters = typing.TypedDict('ConvertWarpfieldFromFnir
 
 
 ConvertWarpfieldToFnirtParameters = typing.TypedDict('ConvertWarpfieldToFnirtParameters', {
-    "@type": typing.Literal["workbench.convert-warpfield.to_fnirt"],
+    "@type": typing.NotRequired[typing.Literal["to_fnirt"]],
+    "output": str,
+    "source_volume": str,
+})
+ConvertWarpfieldToFnirtParametersTagged = typing.TypedDict('ConvertWarpfieldToFnirtParametersTagged', {
+    "@type": typing.Literal["to_fnirt"],
     "output": str,
     "source_volume": str,
 })
 
 
 ConvertWarpfieldParameters = typing.TypedDict('ConvertWarpfieldParameters', {
-    "@type": typing.Literal["workbench.convert-warpfield"],
+    "@type": typing.NotRequired[typing.Literal["workbench/convert-warpfield"]],
+    "from_world": typing.NotRequired[ConvertWarpfieldFromWorldParameters | None],
+    "opt_from_itk_input": typing.NotRequired[str | None],
+    "from_fnirt": typing.NotRequired[ConvertWarpfieldFromFnirtParameters | None],
+    "opt_to_world_output": typing.NotRequired[str | None],
+    "opt_to_itk_output": typing.NotRequired[str | None],
+    "to_fnirt": typing.NotRequired[list[ConvertWarpfieldToFnirtParameters] | None],
+})
+ConvertWarpfieldParametersTagged = typing.TypedDict('ConvertWarpfieldParametersTagged', {
+    "@type": typing.Literal["workbench/convert-warpfield"],
     "from_world": typing.NotRequired[ConvertWarpfieldFromWorldParameters | None],
     "opt_from_itk_input": typing.NotRequired[str | None],
     "from_fnirt": typing.NotRequired[ConvertWarpfieldFromFnirtParameters | None],
@@ -46,44 +71,10 @@ ConvertWarpfieldParameters = typing.TypedDict('ConvertWarpfieldParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "workbench.convert-warpfield": convert_warpfield_cargs,
-        "workbench.convert-warpfield.from_world": convert_warpfield_from_world_cargs,
-        "workbench.convert-warpfield.from_fnirt": convert_warpfield_from_fnirt_cargs,
-        "workbench.convert-warpfield.to_fnirt": convert_warpfield_to_fnirt_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-    }.get(t)
-
-
 def convert_warpfield_from_world_params(
     input_: str,
     opt_absolute: bool = False,
-) -> ConvertWarpfieldFromWorldParameters:
+) -> ConvertWarpfieldFromWorldParametersTagged:
     """
     Build parameters.
     
@@ -95,7 +86,7 @@ def convert_warpfield_from_world_params(
         Parameter dictionary
     """
     params = {
-        "@type": "workbench.convert-warpfield.from_world",
+        "@type": "from_world",
         "input": input_,
         "opt_absolute": opt_absolute,
     }
@@ -117,8 +108,8 @@ def convert_warpfield_from_world_cargs(
     """
     cargs = []
     cargs.append("-from-world")
-    cargs.append(params.get("input"))
-    if params.get("opt_absolute"):
+    cargs.append(params.get("input", None))
+    if params.get("opt_absolute", False):
         cargs.append("-absolute")
     return cargs
 
@@ -127,7 +118,7 @@ def convert_warpfield_from_fnirt_params(
     input_: str,
     source_volume: str,
     opt_absolute: bool = False,
-) -> ConvertWarpfieldFromFnirtParameters:
+) -> ConvertWarpfieldFromFnirtParametersTagged:
     """
     Build parameters.
     
@@ -141,7 +132,7 @@ def convert_warpfield_from_fnirt_params(
         Parameter dictionary
     """
     params = {
-        "@type": "workbench.convert-warpfield.from_fnirt",
+        "@type": "from_fnirt",
         "input": input_,
         "source_volume": source_volume,
         "opt_absolute": opt_absolute,
@@ -164,9 +155,9 @@ def convert_warpfield_from_fnirt_cargs(
     """
     cargs = []
     cargs.append("-from-fnirt")
-    cargs.append(params.get("input"))
-    cargs.append(params.get("source_volume"))
-    if params.get("opt_absolute"):
+    cargs.append(params.get("input", None))
+    cargs.append(params.get("source_volume", None))
+    if params.get("opt_absolute", False):
         cargs.append("-absolute")
     return cargs
 
@@ -174,7 +165,7 @@ def convert_warpfield_from_fnirt_cargs(
 def convert_warpfield_to_fnirt_params(
     output: str,
     source_volume: str,
-) -> ConvertWarpfieldToFnirtParameters:
+) -> ConvertWarpfieldToFnirtParametersTagged:
     """
     Build parameters.
     
@@ -185,7 +176,7 @@ def convert_warpfield_to_fnirt_params(
         Parameter dictionary
     """
     params = {
-        "@type": "workbench.convert-warpfield.to_fnirt",
+        "@type": "to_fnirt",
         "output": output,
         "source_volume": source_volume,
     }
@@ -207,14 +198,14 @@ def convert_warpfield_to_fnirt_cargs(
     """
     cargs = []
     cargs.append("-to-fnirt")
-    cargs.append(params.get("output"))
-    cargs.append(params.get("source_volume"))
+    cargs.append(params.get("output", None))
+    cargs.append(params.get("source_volume", None))
     return cargs
 
 
 class ConvertWarpfieldOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `convert_warpfield(...)`.
+    Output object returned when calling `ConvertWarpfieldParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -227,7 +218,7 @@ def convert_warpfield_params(
     opt_to_world_output: str | None = None,
     opt_to_itk_output: str | None = None,
     to_fnirt: list[ConvertWarpfieldToFnirtParameters] | None = None,
-) -> ConvertWarpfieldParameters:
+) -> ConvertWarpfieldParametersTagged:
     """
     Build parameters.
     
@@ -244,7 +235,7 @@ def convert_warpfield_params(
         Parameter dictionary
     """
     params = {
-        "@type": "workbench.convert-warpfield",
+        "@type": "workbench/convert-warpfield",
     }
     if from_world is not None:
         params["from_world"] = from_world
@@ -277,27 +268,27 @@ def convert_warpfield_cargs(
     cargs = []
     cargs.append("wb_command")
     cargs.append("-convert-warpfield")
-    if params.get("from_world") is not None:
-        cargs.extend(dyn_cargs(params.get("from_world")["@type"])(params.get("from_world"), execution))
-    if params.get("opt_from_itk_input") is not None:
+    if params.get("from_world", None) is not None:
+        cargs.extend(convert_warpfield_from_world_cargs(params.get("from_world", None), execution))
+    if params.get("opt_from_itk_input", None) is not None:
         cargs.extend([
             "-from-itk",
-            params.get("opt_from_itk_input")
+            params.get("opt_from_itk_input", None)
         ])
-    if params.get("from_fnirt") is not None:
-        cargs.extend(dyn_cargs(params.get("from_fnirt")["@type"])(params.get("from_fnirt"), execution))
-    if params.get("opt_to_world_output") is not None:
+    if params.get("from_fnirt", None) is not None:
+        cargs.extend(convert_warpfield_from_fnirt_cargs(params.get("from_fnirt", None), execution))
+    if params.get("opt_to_world_output", None) is not None:
         cargs.extend([
             "-to-world",
-            params.get("opt_to_world_output")
+            params.get("opt_to_world_output", None)
         ])
-    if params.get("opt_to_itk_output") is not None:
+    if params.get("opt_to_itk_output", None) is not None:
         cargs.extend([
             "-to-itk",
-            params.get("opt_to_itk_output")
+            params.get("opt_to_itk_output", None)
         ])
-    if params.get("to_fnirt") is not None:
-        cargs.extend([a for c in [dyn_cargs(s["@type"])(s, execution) for s in params.get("to_fnirt")] for a in c])
+    if params.get("to_fnirt", None) is not None:
+        cargs.extend([a for c in [convert_warpfield_to_fnirt_cargs(s, execution) for s in params.get("to_fnirt", None)] for a in c])
     return cargs
 
 
@@ -418,11 +409,7 @@ def convert_warpfield(
 
 __all__ = [
     "CONVERT_WARPFIELD_METADATA",
-    "ConvertWarpfieldFromFnirtParameters",
-    "ConvertWarpfieldFromWorldParameters",
     "ConvertWarpfieldOutputs",
-    "ConvertWarpfieldParameters",
-    "ConvertWarpfieldToFnirtParameters",
     "convert_warpfield",
     "convert_warpfield_execute",
     "convert_warpfield_from_fnirt_params",

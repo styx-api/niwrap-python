@@ -14,7 +14,37 @@ V_3D_MEMA_METADATA = Metadata(
 
 
 V3dMemaParameters = typing.TypedDict('V3dMemaParameters', {
-    "@type": typing.Literal["afni.3dMEMA"],
+    "@type": typing.NotRequired[typing.Literal["afni/3dMEMA"]],
+    "prefix": str,
+    "jobs": typing.NotRequired[float | None],
+    "set": list[str],
+    "covariates": typing.NotRequired[InputPathType | None],
+    "covariates_center": typing.NotRequired[str | None],
+    "covariates_model": typing.NotRequired[str | None],
+    "covariates_name": typing.NotRequired[list[str] | None],
+    "groups": typing.NotRequired[list[str] | None],
+    "cio": bool,
+    "HKtest": bool,
+    "mask": typing.NotRequired[InputPathType | None],
+    "max_zeros": typing.NotRequired[float | None],
+    "missing_data": typing.NotRequired[list[str] | None],
+    "model_outliers": bool,
+    "n_nonzero": typing.NotRequired[float | None],
+    "no_HKtest": bool,
+    "no_model_outliers": bool,
+    "no_residual_Z": bool,
+    "residual_Z": bool,
+    "Rio": bool,
+    "equal_variance": bool,
+    "unequal_variance": bool,
+    "verb": typing.NotRequired[float | None],
+    "dbgArgs": bool,
+    "help": bool,
+    "conditions": typing.NotRequired[list[str] | None],
+    "no_tstat": bool,
+})
+V3dMemaParametersTagged = typing.TypedDict('V3dMemaParametersTagged', {
+    "@type": typing.Literal["afni/3dMEMA"],
     "prefix": str,
     "jobs": typing.NotRequired[float | None],
     "set": list[str],
@@ -45,41 +75,9 @@ V3dMemaParameters = typing.TypedDict('V3dMemaParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "afni.3dMEMA": v_3d_mema_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "afni.3dMEMA": v_3d_mema_outputs,
-    }.get(t)
-
-
 class V3dMemaOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `v_3d_mema(...)`.
+    Output object returned when calling `V3dMemaParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -115,7 +113,7 @@ def v_3d_mema_params(
     help_: bool = False,
     conditions: list[str] | None = None,
     no_tstat: bool = False,
-) -> V3dMemaParameters:
+) -> V3dMemaParametersTagged:
     """
     Build parameters.
     
@@ -153,7 +151,7 @@ def v_3d_mema_params(
         Parameter dictionary
     """
     params = {
-        "@type": "afni.3dMEMA",
+        "@type": "afni/3dMEMA",
         "prefix": prefix,
         "set": set_,
         "cio": cio,
@@ -214,97 +212,97 @@ def v_3d_mema_cargs(
     cargs.append("3dMEMA")
     cargs.extend([
         "-prefix",
-        params.get("prefix")
+        params.get("prefix", None)
     ])
-    if params.get("jobs") is not None:
+    if params.get("jobs", None) is not None:
         cargs.extend([
             "-jobs",
-            str(params.get("jobs"))
+            str(params.get("jobs", None))
         ])
     cargs.extend([
         "-set",
-        *params.get("set")
+        *params.get("set", None)
     ])
-    if params.get("covariates") is not None:
+    if params.get("covariates", None) is not None:
         cargs.extend([
             "-covariates",
-            execution.input_file(params.get("covariates"))
+            execution.input_file(params.get("covariates", None))
         ])
-    if params.get("covariates_center") is not None:
+    if params.get("covariates_center", None) is not None:
         cargs.extend([
             "-covariates_center",
-            params.get("covariates_center")
+            params.get("covariates_center", None)
         ])
-    if params.get("covariates_model") is not None:
+    if params.get("covariates_model", None) is not None:
         cargs.extend([
             "-covariates_model",
-            params.get("covariates_model")
+            params.get("covariates_model", None)
         ])
-    if params.get("covariates_name") is not None:
+    if params.get("covariates_name", None) is not None:
         cargs.extend([
             "-covariates_name",
-            *params.get("covariates_name")
+            *params.get("covariates_name", None)
         ])
-    if params.get("groups") is not None:
+    if params.get("groups", None) is not None:
         cargs.extend([
             "-groups",
-            *params.get("groups")
+            *params.get("groups", None)
         ])
-    if params.get("cio"):
+    if params.get("cio", False):
         cargs.append("-cio")
-    if params.get("HKtest"):
+    if params.get("HKtest", False):
         cargs.append("-HKtest")
-    if params.get("mask") is not None:
+    if params.get("mask", None) is not None:
         cargs.extend([
             "-mask",
-            execution.input_file(params.get("mask"))
+            execution.input_file(params.get("mask", None))
         ])
-    if params.get("max_zeros") is not None:
+    if params.get("max_zeros", None) is not None:
         cargs.extend([
             "-max_zeros",
-            str(params.get("max_zeros"))
+            str(params.get("max_zeros", None))
         ])
-    if params.get("missing_data") is not None:
+    if params.get("missing_data", None) is not None:
         cargs.extend([
             "-missing_data",
-            *params.get("missing_data")
+            *params.get("missing_data", None)
         ])
-    if params.get("model_outliers"):
+    if params.get("model_outliers", False):
         cargs.append("-model_outliers")
-    if params.get("n_nonzero") is not None:
+    if params.get("n_nonzero", None) is not None:
         cargs.extend([
             "-n_nonzero",
-            str(params.get("n_nonzero"))
+            str(params.get("n_nonzero", None))
         ])
-    if params.get("no_HKtest"):
+    if params.get("no_HKtest", False):
         cargs.append("-no_HKtest")
-    if params.get("no_model_outliers"):
+    if params.get("no_model_outliers", False):
         cargs.append("-no_model_outliers")
-    if params.get("no_residual_Z"):
+    if params.get("no_residual_Z", False):
         cargs.append("-no_residual_Z")
-    if params.get("residual_Z"):
+    if params.get("residual_Z", False):
         cargs.append("-residual_Z")
-    if params.get("Rio"):
+    if params.get("Rio", False):
         cargs.append("-Rio")
-    if params.get("equal_variance"):
+    if params.get("equal_variance", False):
         cargs.append("-equal_variance")
-    if params.get("unequal_variance"):
+    if params.get("unequal_variance", False):
         cargs.append("-unequal_variance")
-    if params.get("verb") is not None:
+    if params.get("verb", None) is not None:
         cargs.extend([
             "-verb",
-            str(params.get("verb"))
+            str(params.get("verb", None))
         ])
-    if params.get("dbgArgs"):
+    if params.get("dbgArgs", False):
         cargs.append("-dbgArgs")
-    if params.get("help"):
+    if params.get("help", False):
         cargs.append("-help")
-    if params.get("conditions") is not None:
+    if params.get("conditions", None) is not None:
         cargs.extend([
             "-conditions",
-            *params.get("conditions")
+            *params.get("conditions", None)
         ])
-    if params.get("no_tstat"):
+    if params.get("no_tstat", False):
         cargs.append("-no_tstat")
     return cargs
 
@@ -324,7 +322,7 @@ def v_3d_mema_outputs(
     """
     ret = V3dMemaOutputs(
         root=execution.output_file("."),
-        output_file=execution.output_file(params.get("prefix") + ".nii.gz"),
+        output_file=execution.output_file(params.get("prefix", None) + ".nii.gz"),
     )
     return ret
 
@@ -466,7 +464,6 @@ def v_3d_mema(
 
 __all__ = [
     "V3dMemaOutputs",
-    "V3dMemaParameters",
     "V_3D_MEMA_METADATA",
     "v_3d_mema",
     "v_3d_mema_execute",

@@ -14,7 +14,17 @@ TBSS_SKELETON_METADATA = Metadata(
 
 
 TbssSkeletonParameters = typing.TypedDict('TbssSkeletonParameters', {
-    "@type": typing.Literal["fsl.tbss_skeleton"],
+    "@type": typing.NotRequired[typing.Literal["fsl/tbss_skeleton"]],
+    "input_image": InputPathType,
+    "output_image": typing.NotRequired[str | None],
+    "skeleton_params": typing.NotRequired[list[str] | None],
+    "alt_4d": typing.NotRequired[InputPathType | None],
+    "alt_skeleton": typing.NotRequired[InputPathType | None],
+    "debug_flag": bool,
+    "debug2_flag": typing.NotRequired[InputPathType | None],
+})
+TbssSkeletonParametersTagged = typing.TypedDict('TbssSkeletonParametersTagged', {
+    "@type": typing.Literal["fsl/tbss_skeleton"],
     "input_image": InputPathType,
     "output_image": typing.NotRequired[str | None],
     "skeleton_params": typing.NotRequired[list[str] | None],
@@ -25,41 +35,9 @@ TbssSkeletonParameters = typing.TypedDict('TbssSkeletonParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "fsl.tbss_skeleton": tbss_skeleton_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "fsl.tbss_skeleton": tbss_skeleton_outputs,
-    }.get(t)
-
-
 class TbssSkeletonOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `tbss_skeleton(...)`.
+    Output object returned when calling `TbssSkeletonParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -83,7 +61,7 @@ def tbss_skeleton_params(
     alt_skeleton: InputPathType | None = None,
     debug_flag: bool = False,
     debug2_flag: InputPathType | None = None,
-) -> TbssSkeletonParameters:
+) -> TbssSkeletonParametersTagged:
     """
     Build parameters.
     
@@ -101,7 +79,7 @@ def tbss_skeleton_params(
         Parameter dictionary
     """
     params = {
-        "@type": "fsl.tbss_skeleton",
+        "@type": "fsl/tbss_skeleton",
         "input_image": input_image,
         "debug_flag": debug_flag,
     }
@@ -135,34 +113,34 @@ def tbss_skeleton_cargs(
     cargs.append("tbss_skeleton")
     cargs.extend([
         "-i",
-        execution.input_file(params.get("input_image"))
+        execution.input_file(params.get("input_image", None))
     ])
-    if params.get("output_image") is not None:
+    if params.get("output_image", None) is not None:
         cargs.extend([
             "-o",
-            params.get("output_image")
+            params.get("output_image", None)
         ])
-    if params.get("skeleton_params") is not None:
+    if params.get("skeleton_params", None) is not None:
         cargs.extend([
             "-p",
-            *params.get("skeleton_params")
+            *params.get("skeleton_params", None)
         ])
-    if params.get("alt_4d") is not None:
+    if params.get("alt_4d", None) is not None:
         cargs.extend([
             "-a",
-            execution.input_file(params.get("alt_4d"))
+            execution.input_file(params.get("alt_4d", None))
         ])
-    if params.get("alt_skeleton") is not None:
+    if params.get("alt_skeleton", None) is not None:
         cargs.extend([
             "-s",
-            execution.input_file(params.get("alt_skeleton"))
+            execution.input_file(params.get("alt_skeleton", None))
         ])
-    if params.get("debug_flag"):
+    if params.get("debug_flag", False):
         cargs.append("-d")
-    if params.get("debug2_flag") is not None:
+    if params.get("debug2_flag", None) is not None:
         cargs.extend([
             "-D",
-            execution.input_file(params.get("debug2_flag"))
+            execution.input_file(params.get("debug2_flag", None))
         ])
     return cargs
 
@@ -182,11 +160,11 @@ def tbss_skeleton_outputs(
     """
     ret = TbssSkeletonOutputs(
         root=execution.output_file("."),
-        output_image_file=execution.output_file(params.get("output_image")) if (params.get("output_image") is not None) else None,
+        output_image_file=execution.output_file(params.get("output_image", None)) if (params.get("output_image") is not None) else None,
         projected_4d_file=execution.output_file("[PROJECTED_4D]"),
-        alt_4d_file=execution.output_file(pathlib.Path(params.get("alt_4d")).name) if (params.get("alt_4d") is not None) else None,
-        alt_skeleton_file=execution.output_file(pathlib.Path(params.get("alt_skeleton")).name) if (params.get("alt_skeleton") is not None) else None,
-        debug2_image_outputs=execution.output_file(pathlib.Path(params.get("debug2_flag")).name) if (params.get("debug2_flag") is not None) else None,
+        alt_4d_file=execution.output_file(pathlib.Path(params.get("alt_4d", None)).name) if (params.get("alt_4d") is not None) else None,
+        alt_skeleton_file=execution.output_file(pathlib.Path(params.get("alt_skeleton", None)).name) if (params.get("alt_skeleton") is not None) else None,
+        debug2_image_outputs=execution.output_file(pathlib.Path(params.get("debug2_flag", None)).name) if (params.get("debug2_flag") is not None) else None,
     )
     return ret
 
@@ -269,7 +247,6 @@ def tbss_skeleton(
 __all__ = [
     "TBSS_SKELETON_METADATA",
     "TbssSkeletonOutputs",
-    "TbssSkeletonParameters",
     "tbss_skeleton",
     "tbss_skeleton_execute",
     "tbss_skeleton_params",

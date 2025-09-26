@@ -14,13 +14,30 @@ FILE_INFORMATION_METADATA = Metadata(
 
 
 FileInformationOnlyMetadataParameters = typing.TypedDict('FileInformationOnlyMetadataParameters', {
-    "@type": typing.Literal["workbench.file-information.only_metadata"],
+    "@type": typing.NotRequired[typing.Literal["only_metadata"]],
+    "opt_key_key": typing.NotRequired[str | None],
+})
+FileInformationOnlyMetadataParametersTagged = typing.TypedDict('FileInformationOnlyMetadataParametersTagged', {
+    "@type": typing.Literal["only_metadata"],
     "opt_key_key": typing.NotRequired[str | None],
 })
 
 
 FileInformationParameters = typing.TypedDict('FileInformationParameters', {
-    "@type": typing.Literal["workbench.file-information"],
+    "@type": typing.NotRequired[typing.Literal["workbench/file-information"]],
+    "data_file": str,
+    "opt_no_map_info": bool,
+    "opt_only_step_interval": bool,
+    "opt_only_number_of_maps": bool,
+    "opt_only_map_names": bool,
+    "only_metadata": typing.NotRequired[FileInformationOnlyMetadataParameters | None],
+    "opt_only_cifti_xml": bool,
+    "opt_czi": bool,
+    "opt_czi_all_sub_blocks": bool,
+    "opt_czi_xml": bool,
+})
+FileInformationParametersTagged = typing.TypedDict('FileInformationParametersTagged', {
+    "@type": typing.Literal["workbench/file-information"],
     "data_file": str,
     "opt_no_map_info": bool,
     "opt_only_step_interval": bool,
@@ -34,41 +51,9 @@ FileInformationParameters = typing.TypedDict('FileInformationParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "workbench.file-information": file_information_cargs,
-        "workbench.file-information.only_metadata": file_information_only_metadata_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-    }.get(t)
-
-
 def file_information_only_metadata_params(
     opt_key_key: str | None = None,
-) -> FileInformationOnlyMetadataParameters:
+) -> FileInformationOnlyMetadataParametersTagged:
     """
     Build parameters.
     
@@ -79,7 +64,7 @@ def file_information_only_metadata_params(
         Parameter dictionary
     """
     params = {
-        "@type": "workbench.file-information.only_metadata",
+        "@type": "only_metadata",
     }
     if opt_key_key is not None:
         params["opt_key_key"] = opt_key_key
@@ -101,17 +86,17 @@ def file_information_only_metadata_cargs(
     """
     cargs = []
     cargs.append("-only-metadata")
-    if params.get("opt_key_key") is not None:
+    if params.get("opt_key_key", None) is not None:
         cargs.extend([
             "-key",
-            params.get("opt_key_key")
+            params.get("opt_key_key", None)
         ])
     return cargs
 
 
 class FileInformationOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `file_information(...)`.
+    Output object returned when calling `FileInformationParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -128,7 +113,7 @@ def file_information_params(
     opt_czi: bool = False,
     opt_czi_all_sub_blocks: bool = False,
     opt_czi_xml: bool = False,
-) -> FileInformationParameters:
+) -> FileInformationParametersTagged:
     """
     Build parameters.
     
@@ -153,7 +138,7 @@ def file_information_params(
         Parameter dictionary
     """
     params = {
-        "@type": "workbench.file-information",
+        "@type": "workbench/file-information",
         "data_file": data_file,
         "opt_no_map_info": opt_no_map_info,
         "opt_only_step_interval": opt_only_step_interval,
@@ -185,24 +170,24 @@ def file_information_cargs(
     cargs = []
     cargs.append("wb_command")
     cargs.append("-file-information")
-    cargs.append(params.get("data_file"))
-    if params.get("opt_no_map_info"):
+    cargs.append(params.get("data_file", None))
+    if params.get("opt_no_map_info", False):
         cargs.append("-no-map-info")
-    if params.get("opt_only_step_interval"):
+    if params.get("opt_only_step_interval", False):
         cargs.append("-only-step-interval")
-    if params.get("opt_only_number_of_maps"):
+    if params.get("opt_only_number_of_maps", False):
         cargs.append("-only-number-of-maps")
-    if params.get("opt_only_map_names"):
+    if params.get("opt_only_map_names", False):
         cargs.append("-only-map-names")
-    if params.get("only_metadata") is not None:
-        cargs.extend(dyn_cargs(params.get("only_metadata")["@type"])(params.get("only_metadata"), execution))
-    if params.get("opt_only_cifti_xml"):
+    if params.get("only_metadata", None) is not None:
+        cargs.extend(file_information_only_metadata_cargs(params.get("only_metadata", None), execution))
+    if params.get("opt_only_cifti_xml", False):
         cargs.append("-only-cifti-xml")
-    if params.get("opt_czi"):
+    if params.get("opt_czi", False):
         cargs.append("-czi")
-    if params.get("opt_czi_all_sub_blocks"):
+    if params.get("opt_czi_all_sub_blocks", False):
         cargs.append("-czi-all-sub-blocks")
-    if params.get("opt_czi_xml"):
+    if params.get("opt_czi_xml", False):
         cargs.append("-czi-xml")
     return cargs
 
@@ -400,9 +385,7 @@ def file_information(
 
 __all__ = [
     "FILE_INFORMATION_METADATA",
-    "FileInformationOnlyMetadataParameters",
     "FileInformationOutputs",
-    "FileInformationParameters",
     "file_information",
     "file_information_execute",
     "file_information_only_metadata_params",

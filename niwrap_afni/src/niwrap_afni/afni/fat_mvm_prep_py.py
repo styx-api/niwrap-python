@@ -14,7 +14,17 @@ FAT_MVM_PREP_PY_METADATA = Metadata(
 
 
 FatMvmPrepPyParameters = typing.TypedDict('FatMvmPrepPyParameters', {
-    "@type": typing.Literal["afni.fat_mvm_prep.py"],
+    "@type": typing.NotRequired[typing.Literal["afni/fat_mvm_prep.py"]],
+    "prefix": str,
+    "csv_file": InputPathType,
+    "matrix_files": typing.NotRequired[str | None],
+    "list_match": typing.NotRequired[InputPathType | None],
+    "unionize_rois": bool,
+    "na_warn_off": bool,
+    "extern_labels_no": bool,
+})
+FatMvmPrepPyParametersTagged = typing.TypedDict('FatMvmPrepPyParametersTagged', {
+    "@type": typing.Literal["afni/fat_mvm_prep.py"],
     "prefix": str,
     "csv_file": InputPathType,
     "matrix_files": typing.NotRequired[str | None],
@@ -25,41 +35,9 @@ FatMvmPrepPyParameters = typing.TypedDict('FatMvmPrepPyParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "afni.fat_mvm_prep.py": fat_mvm_prep_py_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "afni.fat_mvm_prep.py": fat_mvm_prep_py_outputs,
-    }.get(t)
-
-
 class FatMvmPrepPyOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `fat_mvm_prep_py(...)`.
+    Output object returned when calling `FatMvmPrepPyParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -77,7 +55,7 @@ def fat_mvm_prep_py_params(
     unionize_rois: bool = False,
     na_warn_off: bool = False,
     extern_labels_no: bool = False,
-) -> FatMvmPrepPyParameters:
+) -> FatMvmPrepPyParametersTagged:
     """
     Build parameters.
     
@@ -98,7 +76,7 @@ def fat_mvm_prep_py_params(
         Parameter dictionary
     """
     params = {
-        "@type": "afni.fat_mvm_prep.py",
+        "@type": "afni/fat_mvm_prep.py",
         "prefix": prefix,
         "csv_file": csv_file,
         "unionize_rois": unionize_rois,
@@ -129,27 +107,27 @@ def fat_mvm_prep_py_cargs(
     cargs.append("fat_mvm_prep.py")
     cargs.extend([
         "-p",
-        params.get("prefix")
+        params.get("prefix", None)
     ])
     cargs.extend([
         "-c",
-        execution.input_file(params.get("csv_file"))
+        execution.input_file(params.get("csv_file", None))
     ])
-    if params.get("matrix_files") is not None:
+    if params.get("matrix_files", None) is not None:
         cargs.extend([
             "-m",
-            params.get("matrix_files")
+            params.get("matrix_files", None)
         ])
-    if params.get("list_match") is not None:
+    if params.get("list_match", None) is not None:
         cargs.extend([
             "-l",
-            execution.input_file(params.get("list_match"))
+            execution.input_file(params.get("list_match", None))
         ])
-    if params.get("unionize_rois"):
+    if params.get("unionize_rois", False):
         cargs.append("-u")
-    if params.get("na_warn_off"):
+    if params.get("na_warn_off", False):
         cargs.append("-N")
-    if params.get("extern_labels_no"):
+    if params.get("extern_labels_no", False):
         cargs.append("-E")
     return cargs
 
@@ -169,8 +147,8 @@ def fat_mvm_prep_py_outputs(
     """
     ret = FatMvmPrepPyOutputs(
         root=execution.output_file("."),
-        mvmtbl=execution.output_file(params.get("prefix") + "_MVMtbl.txt"),
-        mvmprep_log=execution.output_file(params.get("prefix") + "_MVMprep.log"),
+        mvmtbl=execution.output_file(params.get("prefix", None) + "_MVMtbl.txt"),
+        mvmprep_log=execution.output_file(params.get("prefix", None) + "_MVMprep.log"),
     )
     return ret
 
@@ -254,7 +232,6 @@ def fat_mvm_prep_py(
 __all__ = [
     "FAT_MVM_PREP_PY_METADATA",
     "FatMvmPrepPyOutputs",
-    "FatMvmPrepPyParameters",
     "fat_mvm_prep_py",
     "fat_mvm_prep_py_execute",
     "fat_mvm_prep_py_params",

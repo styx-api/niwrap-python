@@ -14,47 +14,20 @@ RUN_SEGMENT_SUBJECT_SH_METADATA = Metadata(
 
 
 RunSegmentSubjectShParameters = typing.TypedDict('RunSegmentSubjectShParameters', {
-    "@type": typing.Literal["freesurfer.run_SegmentSubject.sh"],
+    "@type": typing.NotRequired[typing.Literal["freesurfer/run_SegmentSubject.sh"]],
+    "deployedMCRroot": str,
+    "arguments": typing.NotRequired[str | None],
+})
+RunSegmentSubjectShParametersTagged = typing.TypedDict('RunSegmentSubjectShParametersTagged', {
+    "@type": typing.Literal["freesurfer/run_SegmentSubject.sh"],
     "deployedMCRroot": str,
     "arguments": typing.NotRequired[str | None],
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "freesurfer.run_SegmentSubject.sh": run_segment_subject_sh_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "freesurfer.run_SegmentSubject.sh": run_segment_subject_sh_outputs,
-    }.get(t)
-
-
 class RunSegmentSubjectShOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `run_segment_subject_sh(...)`.
+    Output object returned when calling `RunSegmentSubjectShParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -65,7 +38,7 @@ class RunSegmentSubjectShOutputs(typing.NamedTuple):
 def run_segment_subject_sh_params(
     deployed_mcrroot: str,
     arguments: str | None = None,
-) -> RunSegmentSubjectShParameters:
+) -> RunSegmentSubjectShParametersTagged:
     """
     Build parameters.
     
@@ -78,7 +51,7 @@ def run_segment_subject_sh_params(
         Parameter dictionary
     """
     params = {
-        "@type": "freesurfer.run_SegmentSubject.sh",
+        "@type": "freesurfer/run_SegmentSubject.sh",
         "deployedMCRroot": deployed_mcrroot,
     }
     if arguments is not None:
@@ -101,9 +74,9 @@ def run_segment_subject_sh_cargs(
     """
     cargs = []
     cargs.append("run_SegmentSubject.sh")
-    cargs.append(params.get("deployedMCRroot"))
-    if params.get("arguments") is not None:
-        cargs.append(params.get("arguments"))
+    cargs.append(params.get("deployedMCRroot", None))
+    if params.get("arguments", None) is not None:
+        cargs.append(params.get("arguments", None))
     return cargs
 
 
@@ -188,7 +161,6 @@ def run_segment_subject_sh(
 __all__ = [
     "RUN_SEGMENT_SUBJECT_SH_METADATA",
     "RunSegmentSubjectShOutputs",
-    "RunSegmentSubjectShParameters",
     "run_segment_subject_sh",
     "run_segment_subject_sh_execute",
     "run_segment_subject_sh_params",

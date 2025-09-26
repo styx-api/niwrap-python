@@ -14,47 +14,22 @@ MRI_VALIDATE_SKULL_STRIPPED_METADATA = Metadata(
 
 
 MriValidateSkullStrippedParameters = typing.TypedDict('MriValidateSkullStrippedParameters', {
-    "@type": typing.Literal["freesurfer.mri_validate_skull_stripped"],
+    "@type": typing.NotRequired[typing.Literal["freesurfer/mri_validate_skull_stripped"]],
+    "mri_reference": InputPathType,
+    "mri_test": InputPathType,
+    "weight": float,
+})
+MriValidateSkullStrippedParametersTagged = typing.TypedDict('MriValidateSkullStrippedParametersTagged', {
+    "@type": typing.Literal["freesurfer/mri_validate_skull_stripped"],
     "mri_reference": InputPathType,
     "mri_test": InputPathType,
     "weight": float,
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "freesurfer.mri_validate_skull_stripped": mri_validate_skull_stripped_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-    }.get(t)
-
-
 class MriValidateSkullStrippedOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `mri_validate_skull_stripped(...)`.
+    Output object returned when calling `MriValidateSkullStrippedParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -64,7 +39,7 @@ def mri_validate_skull_stripped_params(
     mri_reference: InputPathType,
     mri_test: InputPathType,
     weight: float,
-) -> MriValidateSkullStrippedParameters:
+) -> MriValidateSkullStrippedParametersTagged:
     """
     Build parameters.
     
@@ -76,7 +51,7 @@ def mri_validate_skull_stripped_params(
         Parameter dictionary
     """
     params = {
-        "@type": "freesurfer.mri_validate_skull_stripped",
+        "@type": "freesurfer/mri_validate_skull_stripped",
         "mri_reference": mri_reference,
         "mri_test": mri_test,
         "weight": weight,
@@ -99,9 +74,9 @@ def mri_validate_skull_stripped_cargs(
     """
     cargs = []
     cargs.append("mri_validate_skull_stripped")
-    cargs.append(execution.input_file(params.get("mri_reference")))
-    cargs.append(execution.input_file(params.get("mri_test")))
-    cargs.append(str(params.get("weight")))
+    cargs.append(execution.input_file(params.get("mri_reference", None)))
+    cargs.append(execution.input_file(params.get("mri_test", None)))
+    cargs.append(str(params.get("weight", None)))
     return cargs
 
 
@@ -186,7 +161,6 @@ def mri_validate_skull_stripped(
 __all__ = [
     "MRI_VALIDATE_SKULL_STRIPPED_METADATA",
     "MriValidateSkullStrippedOutputs",
-    "MriValidateSkullStrippedParameters",
     "mri_validate_skull_stripped",
     "mri_validate_skull_stripped_execute",
     "mri_validate_skull_stripped_params",

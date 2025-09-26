@@ -14,7 +14,30 @@ V_3D_NET_CORR_METADATA = Metadata(
 
 
 V3dNetCorrParameters = typing.TypedDict('V3dNetCorrParameters', {
-    "@type": typing.Literal["afni.3dNetCorr"],
+    "@type": typing.NotRequired[typing.Literal["afni/3dNetCorr"]],
+    "prefix": str,
+    "inset": InputPathType,
+    "in_rois": InputPathType,
+    "mask": typing.NotRequired[InputPathType | None],
+    "fish_z": bool,
+    "part_corr": bool,
+    "ts_out": bool,
+    "ts_label": bool,
+    "ts_indiv": bool,
+    "ts_wb_corr": bool,
+    "ts_wb_Z": bool,
+    "weight_ts": typing.NotRequired[InputPathType | None],
+    "weight_corr": typing.NotRequired[InputPathType | None],
+    "ts_wb_strlabel": bool,
+    "nifti": bool,
+    "output_mask_nonnull": bool,
+    "push_thru_many_zeros": bool,
+    "allow_roi_zeros": bool,
+    "automask_off": bool,
+    "ignore_LT": bool,
+})
+V3dNetCorrParametersTagged = typing.TypedDict('V3dNetCorrParametersTagged', {
+    "@type": typing.Literal["afni/3dNetCorr"],
     "prefix": str,
     "inset": InputPathType,
     "in_rois": InputPathType,
@@ -38,41 +61,9 @@ V3dNetCorrParameters = typing.TypedDict('V3dNetCorrParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "afni.3dNetCorr": v_3d_net_corr_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "afni.3dNetCorr": v_3d_net_corr_outputs,
-    }.get(t)
-
-
 class V3dNetCorrOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `v_3d_net_corr(...)`.
+    Output object returned when calling `V3dNetCorrParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -114,7 +105,7 @@ def v_3d_net_corr_params(
     allow_roi_zeros: bool = False,
     automask_off: bool = False,
     ignore_lt: bool = False,
-) -> V3dNetCorrParameters:
+) -> V3dNetCorrParametersTagged:
     """
     Build parameters.
     
@@ -154,7 +145,7 @@ def v_3d_net_corr_params(
         Parameter dictionary
     """
     params = {
-        "@type": "afni.3dNetCorr",
+        "@type": "afni/3dNetCorr",
         "prefix": prefix,
         "inset": inset,
         "in_rois": in_rois,
@@ -197,51 +188,51 @@ def v_3d_net_corr_cargs(
     """
     cargs = []
     cargs.append("3dNetCorr")
-    cargs.append(params.get("prefix"))
-    cargs.append(execution.input_file(params.get("inset")))
-    cargs.append(execution.input_file(params.get("in_rois")))
-    if params.get("mask") is not None:
+    cargs.append(params.get("prefix", None))
+    cargs.append(execution.input_file(params.get("inset", None)))
+    cargs.append(execution.input_file(params.get("in_rois", None)))
+    if params.get("mask", None) is not None:
         cargs.extend([
             "-mask",
-            execution.input_file(params.get("mask"))
+            execution.input_file(params.get("mask", None))
         ])
-    if params.get("fish_z"):
+    if params.get("fish_z", False):
         cargs.append("-fish_z")
-    if params.get("part_corr"):
+    if params.get("part_corr", False):
         cargs.append("-part_corr")
-    if params.get("ts_out"):
+    if params.get("ts_out", False):
         cargs.append("-ts_out")
-    if params.get("ts_label"):
+    if params.get("ts_label", False):
         cargs.append("-ts_label")
-    if params.get("ts_indiv"):
+    if params.get("ts_indiv", False):
         cargs.append("-ts_indiv")
-    if params.get("ts_wb_corr"):
+    if params.get("ts_wb_corr", False):
         cargs.append("-ts_wb_corr")
-    if params.get("ts_wb_Z"):
+    if params.get("ts_wb_Z", False):
         cargs.append("-ts_wb_Z")
-    if params.get("weight_ts") is not None:
+    if params.get("weight_ts", None) is not None:
         cargs.extend([
             "-weight_ts",
-            execution.input_file(params.get("weight_ts"))
+            execution.input_file(params.get("weight_ts", None))
         ])
-    if params.get("weight_corr") is not None:
+    if params.get("weight_corr", None) is not None:
         cargs.extend([
             "-weight_corr",
-            execution.input_file(params.get("weight_corr"))
+            execution.input_file(params.get("weight_corr", None))
         ])
-    if params.get("ts_wb_strlabel"):
+    if params.get("ts_wb_strlabel", False):
         cargs.append("-ts_wb_strlabel")
-    if params.get("nifti"):
+    if params.get("nifti", False):
         cargs.append("-nifti")
-    if params.get("output_mask_nonnull"):
+    if params.get("output_mask_nonnull", False):
         cargs.append("-output_mask_nonnull")
-    if params.get("push_thru_many_zeros"):
+    if params.get("push_thru_many_zeros", False):
         cargs.append("-push_thru_many_zeros")
-    if params.get("allow_roi_zeros"):
+    if params.get("allow_roi_zeros", False):
         cargs.append("-allow_roi_zeros")
-    if params.get("automask_off"):
+    if params.get("automask_off", False):
         cargs.append("-automask_off")
-    if params.get("ignore_LT"):
+    if params.get("ignore_LT", False):
         cargs.append("-ignore_LT")
     return cargs
 
@@ -261,12 +252,12 @@ def v_3d_net_corr_outputs(
     """
     ret = V3dNetCorrOutputs(
         root=execution.output_file("."),
-        output_netcc=execution.output_file(params.get("prefix") + "_000.netcc"),
-        output_netts=execution.output_file(params.get("prefix") + "_000.netts"),
-        output_niml=execution.output_file(params.get("prefix") + "_000.niml.dset"),
-        output_roidat=execution.output_file(params.get("prefix") + ".roidat"),
-        output_mask_nnull=execution.output_file(params.get("prefix") + "_mask_nnull"),
-        output_indiv=execution.output_file(params.get("prefix") + "_000_INDIV"),
+        output_netcc=execution.output_file(params.get("prefix", None) + "_000.netcc"),
+        output_netts=execution.output_file(params.get("prefix", None) + "_000.netts"),
+        output_niml=execution.output_file(params.get("prefix", None) + "_000.niml.dset"),
+        output_roidat=execution.output_file(params.get("prefix", None) + ".roidat"),
+        output_mask_nnull=execution.output_file(params.get("prefix", None) + "_mask_nnull"),
+        output_indiv=execution.output_file(params.get("prefix", None) + "_000_INDIV"),
         output_binary_mask_nnull=execution.output_file("PREFIX_mask_nnull"),
     )
     return ret
@@ -395,7 +386,6 @@ def v_3d_net_corr(
 
 __all__ = [
     "V3dNetCorrOutputs",
-    "V3dNetCorrParameters",
     "V_3D_NET_CORR_METADATA",
     "v_3d_net_corr",
     "v_3d_net_corr_execute",

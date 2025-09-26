@@ -14,7 +14,30 @@ V__RADIAL_CORRELATE_METADATA = Metadata(
 
 
 VRadialCorrelateParameters = typing.TypedDict('VRadialCorrelateParameters', {
-    "@type": typing.Literal["afni.@radial_correlate"],
+    "@type": typing.NotRequired[typing.Literal["afni/@radial_correlate"]],
+    "input_files": list[InputPathType],
+    "results_dir": typing.NotRequired[str | None],
+    "do_corr": typing.NotRequired[str | None],
+    "do_clust": typing.NotRequired[str | None],
+    "mask_dset": typing.NotRequired[InputPathType | None],
+    "cthresh": typing.NotRequired[float | None],
+    "frac_limit": typing.NotRequired[float | None],
+    "sphere_rad": typing.NotRequired[float | None],
+    "use_3dmerge": typing.NotRequired[str | None],
+    "percentile": typing.NotRequired[float | None],
+    "min_thr": typing.NotRequired[float | None],
+    "nfirst": typing.NotRequired[float | None],
+    "ver": bool,
+    "verbose": bool,
+    "help": bool,
+    "hist": bool,
+    "corr_mask": typing.NotRequired[str | None],
+    "do_clean": typing.NotRequired[str | None],
+    "polort": typing.NotRequired[float | None],
+    "merge_frad": typing.NotRequired[float | None],
+})
+VRadialCorrelateParametersTagged = typing.TypedDict('VRadialCorrelateParametersTagged', {
+    "@type": typing.Literal["afni/@radial_correlate"],
     "input_files": list[InputPathType],
     "results_dir": typing.NotRequired[str | None],
     "do_corr": typing.NotRequired[str | None],
@@ -38,41 +61,9 @@ VRadialCorrelateParameters = typing.TypedDict('VRadialCorrelateParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "afni.@radial_correlate": v__radial_correlate_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "afni.@radial_correlate": v__radial_correlate_outputs,
-    }.get(t)
-
-
 class VRadialCorrelateOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `v__radial_correlate(...)`.
+    Output object returned when calling `VRadialCorrelateParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -101,7 +92,7 @@ def v__radial_correlate_params(
     do_clean: str | None = None,
     polort: float | None = None,
     merge_frad: float | None = None,
-) -> VRadialCorrelateParameters:
+) -> VRadialCorrelateParametersTagged:
     """
     Build parameters.
     
@@ -130,7 +121,7 @@ def v__radial_correlate_params(
         Parameter dictionary
     """
     params = {
-        "@type": "afni.@radial_correlate",
+        "@type": "afni/@radial_correlate",
         "input_files": input_files,
         "ver": ver,
         "verbose": verbose,
@@ -185,89 +176,89 @@ def v__radial_correlate_cargs(
     """
     cargs = []
     cargs.append("@radial_correlate")
-    cargs.extend([execution.input_file(f) for f in params.get("input_files")])
-    if params.get("results_dir") is not None:
+    cargs.extend([execution.input_file(f) for f in params.get("input_files", None)])
+    if params.get("results_dir", None) is not None:
         cargs.extend([
             "-rdir",
-            params.get("results_dir")
+            params.get("results_dir", None)
         ])
-    if params.get("do_corr") is not None:
+    if params.get("do_corr", None) is not None:
         cargs.extend([
             "-do_corr",
-            params.get("do_corr")
+            params.get("do_corr", None)
         ])
-    if params.get("do_clust") is not None:
+    if params.get("do_clust", None) is not None:
         cargs.extend([
             "-do_clust",
-            params.get("do_clust")
+            params.get("do_clust", None)
         ])
-    if params.get("mask_dset") is not None:
+    if params.get("mask_dset", None) is not None:
         cargs.extend([
             "-mask",
-            execution.input_file(params.get("mask_dset"))
+            execution.input_file(params.get("mask_dset", None))
         ])
-    if params.get("cthresh") is not None:
+    if params.get("cthresh", None) is not None:
         cargs.extend([
             "-cthresh",
-            str(params.get("cthresh"))
+            str(params.get("cthresh", None))
         ])
-    if params.get("frac_limit") is not None:
+    if params.get("frac_limit", None) is not None:
         cargs.extend([
             "-frac_limit",
-            str(params.get("frac_limit"))
+            str(params.get("frac_limit", None))
         ])
-    if params.get("sphere_rad") is not None:
+    if params.get("sphere_rad", None) is not None:
         cargs.extend([
             "-sphere_rad",
-            str(params.get("sphere_rad"))
+            str(params.get("sphere_rad", None))
         ])
-    if params.get("use_3dmerge") is not None:
+    if params.get("use_3dmerge", None) is not None:
         cargs.extend([
             "-use_3dmerge",
-            params.get("use_3dmerge")
+            params.get("use_3dmerge", None)
         ])
-    if params.get("percentile") is not None:
+    if params.get("percentile", None) is not None:
         cargs.extend([
             "-percentile",
-            str(params.get("percentile"))
+            str(params.get("percentile", None))
         ])
-    if params.get("min_thr") is not None:
+    if params.get("min_thr", None) is not None:
         cargs.extend([
             "-min_thr",
-            str(params.get("min_thr"))
+            str(params.get("min_thr", None))
         ])
-    if params.get("nfirst") is not None:
+    if params.get("nfirst", None) is not None:
         cargs.extend([
             "-nfirst",
-            str(params.get("nfirst"))
+            str(params.get("nfirst", None))
         ])
-    if params.get("ver"):
+    if params.get("ver", False):
         cargs.append("-ver")
-    if params.get("verbose"):
+    if params.get("verbose", False):
         cargs.append("-verb")
-    if params.get("help"):
+    if params.get("help", False):
         cargs.append("-help")
-    if params.get("hist"):
+    if params.get("hist", False):
         cargs.append("-hist")
-    if params.get("corr_mask") is not None:
+    if params.get("corr_mask", None) is not None:
         cargs.extend([
             "-corr_mask",
-            params.get("corr_mask")
+            params.get("corr_mask", None)
         ])
-    if params.get("do_clean") is not None:
+    if params.get("do_clean", None) is not None:
         cargs.extend([
             "-do_clean",
-            params.get("do_clean")
+            params.get("do_clean", None)
         ])
-    if params.get("polort") is not None:
+    if params.get("polort", None) is not None:
         cargs.extend([
             "-polort",
-            str(params.get("polort"))
+            str(params.get("polort", None))
         ])
-    if params.get("merge_frad") is not None:
+    if params.get("merge_frad", None) is not None:
         cargs.extend([
             "-merge_frad",
-            str(params.get("merge_frad"))
+            str(params.get("merge_frad", None))
         ])
     return cargs
 
@@ -287,7 +278,7 @@ def v__radial_correlate_outputs(
     """
     ret = VRadialCorrelateOutputs(
         root=execution.output_file("."),
-        corr_volumes=execution.output_file(params.get("results_dir") + "/correlation_volumes") if (params.get("results_dir") is not None) else None,
+        corr_volumes=execution.output_file(params.get("results_dir", None) + "/correlation_volumes") if (params.get("results_dir") is not None) else None,
     )
     return ret
 
@@ -404,7 +395,6 @@ def v__radial_correlate(
 
 __all__ = [
     "VRadialCorrelateOutputs",
-    "VRadialCorrelateParameters",
     "V__RADIAL_CORRELATE_METADATA",
     "v__radial_correlate",
     "v__radial_correlate_execute",

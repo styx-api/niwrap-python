@@ -14,48 +14,22 @@ V__NOISY_SKULL_STRIP_METADATA = Metadata(
 
 
 VNoisySkullStripParameters = typing.TypedDict('VNoisySkullStripParameters', {
-    "@type": typing.Literal["afni.@NoisySkullStrip"],
+    "@type": typing.NotRequired[typing.Literal["afni/@NoisySkullStrip"]],
+    "input_file": InputPathType,
+    "keep_tmp": bool,
+    "3dskullstrip_opts": typing.NotRequired[str | None],
+})
+VNoisySkullStripParametersTagged = typing.TypedDict('VNoisySkullStripParametersTagged', {
+    "@type": typing.Literal["afni/@NoisySkullStrip"],
     "input_file": InputPathType,
     "keep_tmp": bool,
     "3dskullstrip_opts": typing.NotRequired[str | None],
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "afni.@NoisySkullStrip": v__noisy_skull_strip_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "afni.@NoisySkullStrip": v__noisy_skull_strip_outputs,
-    }.get(t)
-
-
 class VNoisySkullStripOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `v__noisy_skull_strip(...)`.
+    Output object returned when calling `VNoisySkullStripParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -73,7 +47,7 @@ def v__noisy_skull_strip_params(
     input_file: InputPathType,
     keep_tmp: bool = False,
     v_3dskullstrip_opts: str | None = None,
-) -> VNoisySkullStripParameters:
+) -> VNoisySkullStripParametersTagged:
     """
     Build parameters.
     
@@ -86,7 +60,7 @@ def v__noisy_skull_strip_params(
         Parameter dictionary
     """
     params = {
-        "@type": "afni.@NoisySkullStrip",
+        "@type": "afni/@NoisySkullStrip",
         "input_file": input_file,
         "keep_tmp": keep_tmp,
     }
@@ -112,14 +86,14 @@ def v__noisy_skull_strip_cargs(
     cargs.append("@NoisySkullStrip")
     cargs.extend([
         "-input",
-        execution.input_file(params.get("input_file"))
+        execution.input_file(params.get("input_file", None))
     ])
-    if params.get("keep_tmp"):
+    if params.get("keep_tmp", False):
         cargs.append("-keep_tmp")
-    if params.get("3dskullstrip_opts") is not None:
+    if params.get("3dskullstrip_opts", None) is not None:
         cargs.extend([
             "-3dSkullStrip_opts",
-            params.get("3dskullstrip_opts")
+            params.get("3dskullstrip_opts", None)
         ])
     return cargs
 
@@ -139,10 +113,10 @@ def v__noisy_skull_strip_outputs(
     """
     ret = VNoisySkullStripOutputs(
         root=execution.output_file("."),
-        anat_ns=execution.output_file(pathlib.Path(params.get("input_file")).name + ".ns"),
-        anat_air=execution.output_file(pathlib.Path(params.get("input_file")).name + ".air"),
-        anat_skl=execution.output_file(pathlib.Path(params.get("input_file")).name + ".skl"),
-        anat_lsp=execution.output_file(pathlib.Path(params.get("input_file")).name + ".lsp"),
+        anat_ns=execution.output_file(pathlib.Path(params.get("input_file", None)).name + ".ns"),
+        anat_air=execution.output_file(pathlib.Path(params.get("input_file", None)).name + ".air"),
+        anat_skl=execution.output_file(pathlib.Path(params.get("input_file", None)).name + ".skl"),
+        anat_lsp=execution.output_file(pathlib.Path(params.get("input_file", None)).name + ".lsp"),
     )
     return ret
 
@@ -209,7 +183,6 @@ def v__noisy_skull_strip(
 
 __all__ = [
     "VNoisySkullStripOutputs",
-    "VNoisySkullStripParameters",
     "V__NOISY_SKULL_STRIP_METADATA",
     "v__noisy_skull_strip",
     "v__noisy_skull_strip_execute",

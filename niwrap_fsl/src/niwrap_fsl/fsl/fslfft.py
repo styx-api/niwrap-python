@@ -14,48 +14,22 @@ FSLFFT_METADATA = Metadata(
 
 
 FslfftParameters = typing.TypedDict('FslfftParameters', {
-    "@type": typing.Literal["fsl.fslfft"],
+    "@type": typing.NotRequired[typing.Literal["fsl/fslfft"]],
+    "input_volume": InputPathType,
+    "output_volume": str,
+    "inverse_flag": bool,
+})
+FslfftParametersTagged = typing.TypedDict('FslfftParametersTagged', {
+    "@type": typing.Literal["fsl/fslfft"],
     "input_volume": InputPathType,
     "output_volume": str,
     "inverse_flag": bool,
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "fsl.fslfft": fslfft_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "fsl.fslfft": fslfft_outputs,
-    }.get(t)
-
-
 class FslfftOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `fslfft(...)`.
+    Output object returned when calling `FslfftParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -67,7 +41,7 @@ def fslfft_params(
     input_volume: InputPathType,
     output_volume: str,
     inverse_flag: bool = False,
-) -> FslfftParameters:
+) -> FslfftParametersTagged:
     """
     Build parameters.
     
@@ -79,7 +53,7 @@ def fslfft_params(
         Parameter dictionary
     """
     params = {
-        "@type": "fsl.fslfft",
+        "@type": "fsl/fslfft",
         "input_volume": input_volume,
         "output_volume": output_volume,
         "inverse_flag": inverse_flag,
@@ -102,9 +76,9 @@ def fslfft_cargs(
     """
     cargs = []
     cargs.append("fslfft")
-    cargs.append(execution.input_file(params.get("input_volume")))
-    cargs.append(params.get("output_volume"))
-    if params.get("inverse_flag"):
+    cargs.append(execution.input_file(params.get("input_volume", None)))
+    cargs.append(params.get("output_volume", None))
+    if params.get("inverse_flag", False):
         cargs.append("-inv")
     return cargs
 
@@ -124,7 +98,7 @@ def fslfft_outputs(
     """
     ret = FslfftOutputs(
         root=execution.output_file("."),
-        output_file=execution.output_file(params.get("output_volume") + ".nii.gz"),
+        output_file=execution.output_file(params.get("output_volume", None) + ".nii.gz"),
     )
     return ret
 
@@ -193,7 +167,6 @@ def fslfft(
 __all__ = [
     "FSLFFT_METADATA",
     "FslfftOutputs",
-    "FslfftParameters",
     "fslfft",
     "fslfft_execute",
     "fslfft_params",

@@ -14,48 +14,22 @@ MRIS_GRADIENT_METADATA = Metadata(
 
 
 MrisGradientParameters = typing.TypedDict('MrisGradientParameters', {
-    "@type": typing.Literal["freesurfer.mris_gradient"],
+    "@type": typing.NotRequired[typing.Literal["freesurfer/mris_gradient"]],
+    "input_surface": InputPathType,
+    "input_vector_field": InputPathType,
+    "output_gradient_file": str,
+})
+MrisGradientParametersTagged = typing.TypedDict('MrisGradientParametersTagged', {
+    "@type": typing.Literal["freesurfer/mris_gradient"],
     "input_surface": InputPathType,
     "input_vector_field": InputPathType,
     "output_gradient_file": str,
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "freesurfer.mris_gradient": mris_gradient_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "freesurfer.mris_gradient": mris_gradient_outputs,
-    }.get(t)
-
-
 class MrisGradientOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `mris_gradient(...)`.
+    Output object returned when calling `MrisGradientParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -67,7 +41,7 @@ def mris_gradient_params(
     input_surface: InputPathType,
     input_vector_field: InputPathType,
     output_gradient_file: str,
-) -> MrisGradientParameters:
+) -> MrisGradientParametersTagged:
     """
     Build parameters.
     
@@ -80,7 +54,7 @@ def mris_gradient_params(
         Parameter dictionary
     """
     params = {
-        "@type": "freesurfer.mris_gradient",
+        "@type": "freesurfer/mris_gradient",
         "input_surface": input_surface,
         "input_vector_field": input_vector_field,
         "output_gradient_file": output_gradient_file,
@@ -103,9 +77,9 @@ def mris_gradient_cargs(
     """
     cargs = []
     cargs.append("mris_gradient")
-    cargs.append(execution.input_file(params.get("input_surface")))
-    cargs.append(execution.input_file(params.get("input_vector_field")))
-    cargs.append(params.get("output_gradient_file"))
+    cargs.append(execution.input_file(params.get("input_surface", None)))
+    cargs.append(execution.input_file(params.get("input_vector_field", None)))
+    cargs.append(params.get("output_gradient_file", None))
     return cargs
 
 
@@ -124,7 +98,7 @@ def mris_gradient_outputs(
     """
     ret = MrisGradientOutputs(
         root=execution.output_file("."),
-        output_gradient=execution.output_file(params.get("output_gradient_file")),
+        output_gradient=execution.output_file(params.get("output_gradient_file", None)),
     )
     return ret
 
@@ -194,7 +168,6 @@ def mris_gradient(
 __all__ = [
     "MRIS_GRADIENT_METADATA",
     "MrisGradientOutputs",
-    "MrisGradientParameters",
     "mris_gradient",
     "mris_gradient_execute",
     "mris_gradient_params",

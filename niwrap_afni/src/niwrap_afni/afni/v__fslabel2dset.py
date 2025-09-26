@@ -14,7 +14,15 @@ V__FSLABEL2DSET_METADATA = Metadata(
 
 
 VFslabel2dsetParameters = typing.TypedDict('VFslabel2dsetParameters', {
-    "@type": typing.Literal["afni.@FSlabel2dset"],
+    "@type": typing.NotRequired[typing.Literal["afni/@FSlabel2dset"]],
+    "fs_label_file": InputPathType,
+    "val": typing.NotRequired[float | None],
+    "help": bool,
+    "echo": bool,
+    "keep_tmp": bool,
+})
+VFslabel2dsetParametersTagged = typing.TypedDict('VFslabel2dsetParametersTagged', {
+    "@type": typing.Literal["afni/@FSlabel2dset"],
     "fs_label_file": InputPathType,
     "val": typing.NotRequired[float | None],
     "help": bool,
@@ -23,40 +31,9 @@ VFslabel2dsetParameters = typing.TypedDict('VFslabel2dsetParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "afni.@FSlabel2dset": v__fslabel2dset_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-    }.get(t)
-
-
 class VFslabel2dsetOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `v__fslabel2dset(...)`.
+    Output object returned when calling `VFslabel2dsetParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -68,7 +45,7 @@ def v__fslabel2dset_params(
     help_: bool = False,
     echo: bool = False,
     keep_tmp: bool = False,
-) -> VFslabel2dsetParameters:
+) -> VFslabel2dsetParametersTagged:
     """
     Build parameters.
     
@@ -82,7 +59,7 @@ def v__fslabel2dset_params(
         Parameter dictionary
     """
     params = {
-        "@type": "afni.@FSlabel2dset",
+        "@type": "afni/@FSlabel2dset",
         "fs_label_file": fs_label_file,
         "help": help_,
         "echo": echo,
@@ -110,18 +87,18 @@ def v__fslabel2dset_cargs(
     cargs.append("@FSlabel2dset")
     cargs.extend([
         "-fs",
-        execution.input_file(params.get("fs_label_file"))
+        execution.input_file(params.get("fs_label_file", None))
     ])
-    if params.get("val") is not None:
+    if params.get("val", None) is not None:
         cargs.extend([
             "-val",
-            str(params.get("val"))
+            str(params.get("val", None))
         ])
-    if params.get("help"):
+    if params.get("help", False):
         cargs.append("-help")
-    if params.get("echo"):
+    if params.get("echo", False):
         cargs.append("-echo")
-    if params.get("keep_tmp"):
+    if params.get("keep_tmp", False):
         cargs.append("-keep_tmp")
     return cargs
 
@@ -214,7 +191,6 @@ def v__fslabel2dset(
 
 __all__ = [
     "VFslabel2dsetOutputs",
-    "VFslabel2dsetParameters",
     "V__FSLABEL2DSET_METADATA",
     "v__fslabel2dset",
     "v__fslabel2dset_execute",

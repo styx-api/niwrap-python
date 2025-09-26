@@ -14,7 +14,15 @@ SURFACE_CORTEX_LAYER_METADATA = Metadata(
 
 
 SurfaceCortexLayerParameters = typing.TypedDict('SurfaceCortexLayerParameters', {
-    "@type": typing.Literal["workbench.surface-cortex-layer"],
+    "@type": typing.NotRequired[typing.Literal["workbench/surface-cortex-layer"]],
+    "white_surface": InputPathType,
+    "pial_surface": InputPathType,
+    "location": float,
+    "out_surface": str,
+    "opt_placement_out_placement_metric": typing.NotRequired[str | None],
+})
+SurfaceCortexLayerParametersTagged = typing.TypedDict('SurfaceCortexLayerParametersTagged', {
+    "@type": typing.Literal["workbench/surface-cortex-layer"],
     "white_surface": InputPathType,
     "pial_surface": InputPathType,
     "location": float,
@@ -23,41 +31,9 @@ SurfaceCortexLayerParameters = typing.TypedDict('SurfaceCortexLayerParameters', 
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "workbench.surface-cortex-layer": surface_cortex_layer_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "workbench.surface-cortex-layer": surface_cortex_layer_outputs,
-    }.get(t)
-
-
 class SurfaceCortexLayerOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `surface_cortex_layer(...)`.
+    Output object returned when calling `SurfaceCortexLayerParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -74,7 +50,7 @@ def surface_cortex_layer_params(
     location: float,
     out_surface: str,
     opt_placement_out_placement_metric: str | None = None,
-) -> SurfaceCortexLayerParameters:
+) -> SurfaceCortexLayerParametersTagged:
     """
     Build parameters.
     
@@ -89,7 +65,7 @@ def surface_cortex_layer_params(
         Parameter dictionary
     """
     params = {
-        "@type": "workbench.surface-cortex-layer",
+        "@type": "workbench/surface-cortex-layer",
         "white_surface": white_surface,
         "pial_surface": pial_surface,
         "location": location,
@@ -116,14 +92,14 @@ def surface_cortex_layer_cargs(
     cargs = []
     cargs.append("wb_command")
     cargs.append("-surface-cortex-layer")
-    cargs.append(execution.input_file(params.get("white_surface")))
-    cargs.append(execution.input_file(params.get("pial_surface")))
-    cargs.append(str(params.get("location")))
-    cargs.append(params.get("out_surface"))
-    if params.get("opt_placement_out_placement_metric") is not None:
+    cargs.append(execution.input_file(params.get("white_surface", None)))
+    cargs.append(execution.input_file(params.get("pial_surface", None)))
+    cargs.append(str(params.get("location", None)))
+    cargs.append(params.get("out_surface", None))
+    if params.get("opt_placement_out_placement_metric", None) is not None:
         cargs.extend([
             "-placement-out",
-            params.get("opt_placement_out_placement_metric")
+            params.get("opt_placement_out_placement_metric", None)
         ])
     return cargs
 
@@ -143,8 +119,8 @@ def surface_cortex_layer_outputs(
     """
     ret = SurfaceCortexLayerOutputs(
         root=execution.output_file("."),
-        out_surface=execution.output_file(params.get("out_surface")),
-        opt_placement_out_placement_metric=execution.output_file(params.get("opt_placement_out_placement_metric")) if (params.get("opt_placement_out_placement_metric") is not None) else None,
+        out_surface=execution.output_file(params.get("out_surface", None)),
+        opt_placement_out_placement_metric=execution.output_file(params.get("opt_placement_out_placement_metric", None)) if (params.get("opt_placement_out_placement_metric") is not None) else None,
     )
     return ret
 
@@ -232,7 +208,6 @@ def surface_cortex_layer(
 __all__ = [
     "SURFACE_CORTEX_LAYER_METADATA",
     "SurfaceCortexLayerOutputs",
-    "SurfaceCortexLayerParameters",
     "surface_cortex_layer",
     "surface_cortex_layer_execute",
     "surface_cortex_layer_params",

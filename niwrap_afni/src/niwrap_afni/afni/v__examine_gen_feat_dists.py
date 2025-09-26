@@ -14,7 +14,19 @@ V__EXAMINE_GEN_FEAT_DISTS_METADATA = Metadata(
 
 
 VExamineGenFeatDistsParameters = typing.TypedDict('VExamineGenFeatDistsParameters', {
-    "@type": typing.Literal["afni.@ExamineGenFeatDists"],
+    "@type": typing.NotRequired[typing.Literal["afni/@ExamineGenFeatDists"]],
+    "features_dir": str,
+    "wildcards": typing.NotRequired[list[str] | None],
+    "output_suffix": typing.NotRequired[str | None],
+    "exclude_features": typing.NotRequired[list[str] | None],
+    "exclude_classes": typing.NotRequired[list[str] | None],
+    "output_dir": typing.NotRequired[str | None],
+    "panels_horizontal": typing.NotRequired[float | None],
+    "echo": bool,
+    "help": bool,
+})
+VExamineGenFeatDistsParametersTagged = typing.TypedDict('VExamineGenFeatDistsParametersTagged', {
+    "@type": typing.Literal["afni/@ExamineGenFeatDists"],
     "features_dir": str,
     "wildcards": typing.NotRequired[list[str] | None],
     "output_suffix": typing.NotRequired[str | None],
@@ -27,40 +39,9 @@ VExamineGenFeatDistsParameters = typing.TypedDict('VExamineGenFeatDistsParameter
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "afni.@ExamineGenFeatDists": v__examine_gen_feat_dists_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-    }.get(t)
-
-
 class VExamineGenFeatDistsOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `v__examine_gen_feat_dists(...)`.
+    Output object returned when calling `VExamineGenFeatDistsParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -76,7 +57,7 @@ def v__examine_gen_feat_dists_params(
     panels_horizontal: float | None = None,
     echo: bool = False,
     help_: bool = False,
-) -> VExamineGenFeatDistsParameters:
+) -> VExamineGenFeatDistsParametersTagged:
     """
     Build parameters.
     
@@ -97,7 +78,7 @@ def v__examine_gen_feat_dists_params(
         Parameter dictionary
     """
     params = {
-        "@type": "afni.@ExamineGenFeatDists",
+        "@type": "afni/@ExamineGenFeatDists",
         "features_dir": features_dir,
         "echo": echo,
         "help": help_,
@@ -134,41 +115,41 @@ def v__examine_gen_feat_dists_cargs(
     cargs.append("@ExamineGenFeatDists")
     cargs.extend([
         "-fdir",
-        params.get("features_dir")
+        params.get("features_dir", None)
     ])
-    if params.get("wildcards") is not None:
+    if params.get("wildcards", None) is not None:
         cargs.extend([
             "-fwild",
-            *params.get("wildcards")
+            *params.get("wildcards", None)
         ])
-    if params.get("output_suffix") is not None:
+    if params.get("output_suffix", None) is not None:
         cargs.extend([
             "-suffix",
-            params.get("output_suffix")
+            params.get("output_suffix", None)
         ])
-    if params.get("exclude_features") is not None:
+    if params.get("exclude_features", None) is not None:
         cargs.extend([
             "-exfeat",
-            *params.get("exclude_features")
+            *params.get("exclude_features", None)
         ])
-    if params.get("exclude_classes") is not None:
+    if params.get("exclude_classes", None) is not None:
         cargs.extend([
             "-exclass",
-            *params.get("exclude_classes")
+            *params.get("exclude_classes", None)
         ])
-    if params.get("output_dir") is not None:
+    if params.get("output_dir", None) is not None:
         cargs.extend([
             "-odir",
-            params.get("output_dir")
+            params.get("output_dir", None)
         ])
-    if params.get("panels_horizontal") is not None:
+    if params.get("panels_horizontal", None) is not None:
         cargs.extend([
             "-nx",
-            str(params.get("panels_horizontal"))
+            str(params.get("panels_horizontal", None))
         ])
-    if params.get("echo"):
+    if params.get("echo", False):
         cargs.append("-echo")
-    if params.get("help"):
+    if params.get("help", False):
         cargs.append("-help")
     return cargs
 
@@ -274,7 +255,6 @@ def v__examine_gen_feat_dists(
 
 __all__ = [
     "VExamineGenFeatDistsOutputs",
-    "VExamineGenFeatDistsParameters",
     "V__EXAMINE_GEN_FEAT_DISTS_METADATA",
     "v__examine_gen_feat_dists",
     "v__examine_gen_feat_dists_execute",

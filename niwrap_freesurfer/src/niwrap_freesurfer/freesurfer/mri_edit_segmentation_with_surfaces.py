@@ -14,7 +14,19 @@ MRI_EDIT_SEGMENTATION_WITH_SURFACES_METADATA = Metadata(
 
 
 MriEditSegmentationWithSurfacesParameters = typing.TypedDict('MriEditSegmentationWithSurfacesParameters', {
-    "@type": typing.Literal["freesurfer.mri_edit_segmentation_with_surfaces"],
+    "@type": typing.NotRequired[typing.Literal["freesurfer/mri_edit_segmentation_with_surfaces"]],
+    "aseg_name": InputPathType,
+    "surface_dir": str,
+    "norm_volume": InputPathType,
+    "output_volume": str,
+    "label_file": typing.NotRequired[InputPathType | None],
+    "hypo_flag": typing.NotRequired[typing.Literal["1", "0"] | None],
+    "cerebellum_flag": typing.NotRequired[typing.Literal["1", "0"] | None],
+    "cortex_flag": typing.NotRequired[typing.Literal["1", "0"] | None],
+    "annotation_file": typing.NotRequired[InputPathType | None],
+})
+MriEditSegmentationWithSurfacesParametersTagged = typing.TypedDict('MriEditSegmentationWithSurfacesParametersTagged', {
+    "@type": typing.Literal["freesurfer/mri_edit_segmentation_with_surfaces"],
     "aseg_name": InputPathType,
     "surface_dir": str,
     "norm_volume": InputPathType,
@@ -27,41 +39,9 @@ MriEditSegmentationWithSurfacesParameters = typing.TypedDict('MriEditSegmentatio
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "freesurfer.mri_edit_segmentation_with_surfaces": mri_edit_segmentation_with_surfaces_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "freesurfer.mri_edit_segmentation_with_surfaces": mri_edit_segmentation_with_surfaces_outputs,
-    }.get(t)
-
-
 class MriEditSegmentationWithSurfacesOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `mri_edit_segmentation_with_surfaces(...)`.
+    Output object returned when calling `MriEditSegmentationWithSurfacesParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -79,7 +59,7 @@ def mri_edit_segmentation_with_surfaces_params(
     cerebellum_flag: typing.Literal["1", "0"] | None = None,
     cortex_flag: typing.Literal["1", "0"] | None = None,
     annotation_file: InputPathType | None = None,
-) -> MriEditSegmentationWithSurfacesParameters:
+) -> MriEditSegmentationWithSurfacesParametersTagged:
     """
     Build parameters.
     
@@ -98,7 +78,7 @@ def mri_edit_segmentation_with_surfaces_params(
         Parameter dictionary
     """
     params = {
-        "@type": "freesurfer.mri_edit_segmentation_with_surfaces",
+        "@type": "freesurfer/mri_edit_segmentation_with_surfaces",
         "aseg_name": aseg_name,
         "surface_dir": surface_dir,
         "norm_volume": norm_volume,
@@ -132,34 +112,34 @@ def mri_edit_segmentation_with_surfaces_cargs(
     """
     cargs = []
     cargs.append("mri_edit_segmentation_with_surfaces")
-    cargs.append(execution.input_file(params.get("aseg_name")))
-    cargs.append(params.get("surface_dir"))
-    cargs.append(execution.input_file(params.get("norm_volume")))
-    cargs.append(params.get("output_volume"))
-    if params.get("label_file") is not None:
+    cargs.append(execution.input_file(params.get("aseg_name", None)))
+    cargs.append(params.get("surface_dir", None))
+    cargs.append(execution.input_file(params.get("norm_volume", None)))
+    cargs.append(params.get("output_volume", None))
+    if params.get("label_file", None) is not None:
         cargs.extend([
             "-l",
-            execution.input_file(params.get("label_file"))
+            execution.input_file(params.get("label_file", None))
         ])
-    if params.get("hypo_flag") is not None:
+    if params.get("hypo_flag", None) is not None:
         cargs.extend([
             "-hypo",
-            params.get("hypo_flag")
+            params.get("hypo_flag", None)
         ])
-    if params.get("cerebellum_flag") is not None:
+    if params.get("cerebellum_flag", None) is not None:
         cargs.extend([
             "-cerebellum",
-            params.get("cerebellum_flag")
+            params.get("cerebellum_flag", None)
         ])
-    if params.get("cortex_flag") is not None:
+    if params.get("cortex_flag", None) is not None:
         cargs.extend([
             "-cortex",
-            params.get("cortex_flag")
+            params.get("cortex_flag", None)
         ])
-    if params.get("annotation_file") is not None:
+    if params.get("annotation_file", None) is not None:
         cargs.extend([
             "-a",
-            execution.input_file(params.get("annotation_file"))
+            execution.input_file(params.get("annotation_file", None))
         ])
     return cargs
 
@@ -179,7 +159,7 @@ def mri_edit_segmentation_with_surfaces_outputs(
     """
     ret = MriEditSegmentationWithSurfacesOutputs(
         root=execution.output_file("."),
-        output_volume_file=execution.output_file(params.get("output_volume")),
+        output_volume_file=execution.output_file(params.get("output_volume", None)),
     )
     return ret
 
@@ -265,7 +245,6 @@ def mri_edit_segmentation_with_surfaces(
 __all__ = [
     "MRI_EDIT_SEGMENTATION_WITH_SURFACES_METADATA",
     "MriEditSegmentationWithSurfacesOutputs",
-    "MriEditSegmentationWithSurfacesParameters",
     "mri_edit_segmentation_with_surfaces",
     "mri_edit_segmentation_with_surfaces_execute",
     "mri_edit_segmentation_with_surfaces_params",

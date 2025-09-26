@@ -14,7 +14,26 @@ REG_FEAT2ANAT_METADATA = Metadata(
 
 
 RegFeat2anatParameters = typing.TypedDict('RegFeat2anatParameters', {
-    "@type": typing.Literal["freesurfer.reg-feat2anat"],
+    "@type": typing.NotRequired[typing.Literal["freesurfer/reg-feat2anat"]],
+    "feat_dir": str,
+    "subject_id": str,
+    "overwrite_exf2std": bool,
+    "manual": bool,
+    "manxfm_type": typing.NotRequired[str | None],
+    "dof": typing.NotRequired[int | None],
+    "bins": typing.NotRequired[int | None],
+    "cost": typing.NotRequired[str | None],
+    "max_angle": typing.NotRequired[float | None],
+    "bet": bool,
+    "title": typing.NotRequired[str | None],
+    "no_bbr": bool,
+    "spm": bool,
+    "no_inorm": bool,
+    "fmov": typing.NotRequired[str | None],
+    "debug": bool,
+})
+RegFeat2anatParametersTagged = typing.TypedDict('RegFeat2anatParametersTagged', {
+    "@type": typing.Literal["freesurfer/reg-feat2anat"],
     "feat_dir": str,
     "subject_id": str,
     "overwrite_exf2std": bool,
@@ -34,41 +53,9 @@ RegFeat2anatParameters = typing.TypedDict('RegFeat2anatParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "freesurfer.reg-feat2anat": reg_feat2anat_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "freesurfer.reg-feat2anat": reg_feat2anat_outputs,
-    }.get(t)
-
-
 class RegFeat2anatOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `reg_feat2anat(...)`.
+    Output object returned when calling `RegFeat2anatParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -107,7 +94,7 @@ def reg_feat2anat_params(
     no_inorm: bool = False,
     fmov: str | None = None,
     debug: bool = False,
-) -> RegFeat2anatParameters:
+) -> RegFeat2anatParametersTagged:
     """
     Build parameters.
     
@@ -133,7 +120,7 @@ def reg_feat2anat_params(
         Parameter dictionary
     """
     params = {
-        "@type": "freesurfer.reg-feat2anat",
+        "@type": "freesurfer/reg-feat2anat",
         "feat_dir": feat_dir,
         "subject_id": subject_id,
         "overwrite_exf2std": overwrite_exf2std,
@@ -178,60 +165,60 @@ def reg_feat2anat_cargs(
     cargs.append("reg-feat2anat")
     cargs.extend([
         "--feat",
-        params.get("feat_dir")
+        params.get("feat_dir", None)
     ])
     cargs.extend([
         "--subject",
-        params.get("subject_id")
+        params.get("subject_id", None)
     ])
-    if params.get("overwrite_exf2std"):
+    if params.get("overwrite_exf2std", False):
         cargs.append("--overwrite-exf2std")
-    if params.get("manual"):
+    if params.get("manual", False):
         cargs.append("--manual")
-    if params.get("manxfm_type") is not None:
+    if params.get("manxfm_type", None) is not None:
         cargs.extend([
             "--manxfm",
-            params.get("manxfm_type")
+            params.get("manxfm_type", None)
         ])
-    if params.get("dof") is not None:
+    if params.get("dof", None) is not None:
         cargs.extend([
             "--dof",
-            str(params.get("dof"))
+            str(params.get("dof", None))
         ])
-    if params.get("bins") is not None:
+    if params.get("bins", None) is not None:
         cargs.extend([
             "--bins",
-            str(params.get("bins"))
+            str(params.get("bins", None))
         ])
-    if params.get("cost") is not None:
+    if params.get("cost", None) is not None:
         cargs.extend([
             "--cost",
-            params.get("cost")
+            params.get("cost", None)
         ])
-    if params.get("max_angle") is not None:
+    if params.get("max_angle", None) is not None:
         cargs.extend([
             "--maxangle",
-            str(params.get("max_angle"))
+            str(params.get("max_angle", None))
         ])
-    if params.get("bet"):
+    if params.get("bet", False):
         cargs.append("--bet")
-    if params.get("title") is not None:
+    if params.get("title", None) is not None:
         cargs.extend([
             "--title",
-            params.get("title")
+            params.get("title", None)
         ])
-    if params.get("no_bbr"):
+    if params.get("no_bbr", False):
         cargs.append("--no-bbr")
-    if params.get("spm"):
+    if params.get("spm", False):
         cargs.append("--spm")
-    if params.get("no_inorm"):
+    if params.get("no_inorm", False):
         cargs.append("--no-inorm")
-    if params.get("fmov") is not None:
+    if params.get("fmov", None) is not None:
         cargs.extend([
             "--fmov",
-            params.get("fmov")
+            params.get("fmov", None)
         ])
-    if params.get("debug"):
+    if params.get("debug", False):
         cargs.append("--debug")
     return cargs
 
@@ -365,7 +352,6 @@ def reg_feat2anat(
 __all__ = [
     "REG_FEAT2ANAT_METADATA",
     "RegFeat2anatOutputs",
-    "RegFeat2anatParameters",
     "reg_feat2anat",
     "reg_feat2anat_execute",
     "reg_feat2anat_params",

@@ -14,7 +14,37 @@ ANTS_MULTIVARIATE_TEMPLATE_CONSTRUCTION2_SH_METADATA = Metadata(
 
 
 AntsMultivariateTemplateConstruction2ShParameters = typing.TypedDict('AntsMultivariateTemplateConstruction2ShParameters', {
-    "@type": typing.Literal["ants.antsMultivariateTemplateConstruction2.sh"],
+    "@type": typing.NotRequired[typing.Literal["ants/antsMultivariateTemplateConstruction2.sh"]],
+    "dimension": typing.Literal[2, 3, 4],
+    "output_prefix": typing.NotRequired[str | None],
+    "image_statistic": typing.NotRequired[typing.Literal[0, 1, 2] | None],
+    "sharpening": typing.NotRequired[typing.Literal[0, 1, 2] | None],
+    "backup_images": typing.NotRequired[typing.Literal[0, 1] | None],
+    "parallel_control": typing.NotRequired[typing.Literal[0, 1, 2, 3, 4, 5] | None],
+    "single_precision": typing.NotRequired[typing.Literal[0, 1] | None],
+    "gradient_step": typing.NotRequired[float | None],
+    "iterations": typing.NotRequired[int | None],
+    "cpu_cores": typing.NotRequired[int | None],
+    "num_modalities": typing.NotRequired[int | None],
+    "modality_weights": typing.NotRequired[str | None],
+    "max_iterations": typing.NotRequired[str | None],
+    "shrink_factors": typing.NotRequired[str | None],
+    "smoothing_kernels": typing.NotRequired[str | None],
+    "n4_bias_correction": typing.NotRequired[typing.Literal[0, 1] | None],
+    "prepend_commands": typing.NotRequired[str | None],
+    "rigid_registration": typing.NotRequired[typing.Literal[0, 1] | None],
+    "linear_registration": typing.NotRequired[typing.Literal[0, 1] | None],
+    "similarity_metric": typing.NotRequired[str | None],
+    "transformation_type": typing.NotRequired[str | None],
+    "walltime": typing.NotRequired[str | None],
+    "memory_limit": typing.NotRequired[str | None],
+    "xgrid_args": typing.NotRequired[str | None],
+    "update_template": typing.NotRequired[typing.Literal[0, 1] | None],
+    "target_volume": typing.NotRequired[list[InputPathType] | None],
+    "input_images": list[InputPathType],
+})
+AntsMultivariateTemplateConstruction2ShParametersTagged = typing.TypedDict('AntsMultivariateTemplateConstruction2ShParametersTagged', {
+    "@type": typing.Literal["ants/antsMultivariateTemplateConstruction2.sh"],
     "dimension": typing.Literal[2, 3, 4],
     "output_prefix": typing.NotRequired[str | None],
     "image_statistic": typing.NotRequired[typing.Literal[0, 1, 2] | None],
@@ -45,41 +75,9 @@ AntsMultivariateTemplateConstruction2ShParameters = typing.TypedDict('AntsMultiv
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "ants.antsMultivariateTemplateConstruction2.sh": ants_multivariate_template_construction2_sh_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "ants.antsMultivariateTemplateConstruction2.sh": ants_multivariate_template_construction2_sh_outputs,
-    }.get(t)
-
-
 class AntsMultivariateTemplateConstruction2ShOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `ants_multivariate_template_construction2_sh(...)`.
+    Output object returned when calling `AntsMultivariateTemplateConstruction2ShParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -116,7 +114,7 @@ def ants_multivariate_template_construction2_sh_params(
     xgrid_args: str | None = None,
     update_template: typing.Literal[0, 1] | None = None,
     target_volume: list[InputPathType] | None = None,
-) -> AntsMultivariateTemplateConstruction2ShParameters:
+) -> AntsMultivariateTemplateConstruction2ShParametersTagged:
     """
     Build parameters.
     
@@ -219,7 +217,7 @@ def ants_multivariate_template_construction2_sh_params(
         Parameter dictionary
     """
     params = {
-        "@type": "ants.antsMultivariateTemplateConstruction2.sh",
+        "@type": "ants/antsMultivariateTemplateConstruction2.sh",
         "dimension": dimension,
         "input_images": input_images,
     }
@@ -293,134 +291,134 @@ def ants_multivariate_template_construction2_sh_cargs(
     cargs.append("antsMultivariateTemplateConstruction2.sh")
     cargs.extend([
         "-d",
-        str(params.get("dimension"))
+        str(params.get("dimension", None))
     ])
-    if params.get("output_prefix") is not None:
+    if params.get("output_prefix", None) is not None:
         cargs.extend([
             "-o",
-            params.get("output_prefix")
+            params.get("output_prefix", None)
         ])
-    if params.get("image_statistic") is not None:
+    if params.get("image_statistic", None) is not None:
         cargs.extend([
             "-a",
-            str(params.get("image_statistic"))
+            str(params.get("image_statistic", None))
         ])
-    if params.get("sharpening") is not None:
+    if params.get("sharpening", None) is not None:
         cargs.extend([
             "-A",
-            str(params.get("sharpening"))
+            str(params.get("sharpening", None))
         ])
-    if params.get("backup_images") is not None:
+    if params.get("backup_images", None) is not None:
         cargs.extend([
             "-b",
-            str(params.get("backup_images"))
+            str(params.get("backup_images", None))
         ])
-    if params.get("parallel_control") is not None:
+    if params.get("parallel_control", None) is not None:
         cargs.extend([
             "-c",
-            str(params.get("parallel_control"))
+            str(params.get("parallel_control", None))
         ])
-    if params.get("single_precision") is not None:
+    if params.get("single_precision", None) is not None:
         cargs.extend([
             "-e",
-            str(params.get("single_precision"))
+            str(params.get("single_precision", None))
         ])
-    if params.get("gradient_step") is not None:
+    if params.get("gradient_step", None) is not None:
         cargs.extend([
             "-g",
-            str(params.get("gradient_step"))
+            str(params.get("gradient_step", None))
         ])
-    if params.get("iterations") is not None:
+    if params.get("iterations", None) is not None:
         cargs.extend([
             "-i",
-            str(params.get("iterations"))
+            str(params.get("iterations", None))
         ])
-    if params.get("cpu_cores") is not None:
+    if params.get("cpu_cores", None) is not None:
         cargs.extend([
             "-j",
-            str(params.get("cpu_cores"))
+            str(params.get("cpu_cores", None))
         ])
-    if params.get("num_modalities") is not None:
+    if params.get("num_modalities", None) is not None:
         cargs.extend([
             "-k",
-            str(params.get("num_modalities"))
+            str(params.get("num_modalities", None))
         ])
-    if params.get("modality_weights") is not None:
+    if params.get("modality_weights", None) is not None:
         cargs.extend([
             "-w",
-            params.get("modality_weights")
+            params.get("modality_weights", None)
         ])
-    if params.get("max_iterations") is not None:
+    if params.get("max_iterations", None) is not None:
         cargs.extend([
             "-q",
-            params.get("max_iterations")
+            params.get("max_iterations", None)
         ])
-    if params.get("shrink_factors") is not None:
+    if params.get("shrink_factors", None) is not None:
         cargs.extend([
             "-f",
-            params.get("shrink_factors")
+            params.get("shrink_factors", None)
         ])
-    if params.get("smoothing_kernels") is not None:
+    if params.get("smoothing_kernels", None) is not None:
         cargs.extend([
             "-s",
-            params.get("smoothing_kernels")
+            params.get("smoothing_kernels", None)
         ])
-    if params.get("n4_bias_correction") is not None:
+    if params.get("n4_bias_correction", None) is not None:
         cargs.extend([
             "-n",
-            str(params.get("n4_bias_correction"))
+            str(params.get("n4_bias_correction", None))
         ])
-    if params.get("prepend_commands") is not None:
+    if params.get("prepend_commands", None) is not None:
         cargs.extend([
             "-p",
-            params.get("prepend_commands")
+            params.get("prepend_commands", None)
         ])
-    if params.get("rigid_registration") is not None:
+    if params.get("rigid_registration", None) is not None:
         cargs.extend([
             "-r",
-            str(params.get("rigid_registration"))
+            str(params.get("rigid_registration", None))
         ])
-    if params.get("linear_registration") is not None:
+    if params.get("linear_registration", None) is not None:
         cargs.extend([
             "-l",
-            str(params.get("linear_registration"))
+            str(params.get("linear_registration", None))
         ])
-    if params.get("similarity_metric") is not None:
+    if params.get("similarity_metric", None) is not None:
         cargs.extend([
             "-m",
-            params.get("similarity_metric")
+            params.get("similarity_metric", None)
         ])
-    if params.get("transformation_type") is not None:
+    if params.get("transformation_type", None) is not None:
         cargs.extend([
             "-t",
-            params.get("transformation_type")
+            params.get("transformation_type", None)
         ])
-    if params.get("walltime") is not None:
+    if params.get("walltime", None) is not None:
         cargs.extend([
             "-u",
-            params.get("walltime")
+            params.get("walltime", None)
         ])
-    if params.get("memory_limit") is not None:
+    if params.get("memory_limit", None) is not None:
         cargs.extend([
             "-v",
-            params.get("memory_limit")
+            params.get("memory_limit", None)
         ])
-    if params.get("xgrid_args") is not None:
+    if params.get("xgrid_args", None) is not None:
         cargs.extend([
             "-x",
-            params.get("xgrid_args")
+            params.get("xgrid_args", None)
         ])
-    if params.get("update_template") is not None:
+    if params.get("update_template", None) is not None:
         cargs.extend([
             "-y",
-            str(params.get("update_template"))
+            str(params.get("update_template", None))
         ])
-    if params.get("target_volume") is not None:
+    if params.get("target_volume", None) is not None:
         cargs.extend([
             "-z",
-            *[execution.input_file(f) for f in params.get("target_volume")]
+            *[execution.input_file(f) for f in params.get("target_volume", None)]
         ])
-    cargs.extend([execution.input_file(f) for f in params.get("input_images")])
+    cargs.extend([execution.input_file(f) for f in params.get("input_images", None)])
     return cargs
 
 
@@ -649,7 +647,6 @@ def ants_multivariate_template_construction2_sh(
 __all__ = [
     "ANTS_MULTIVARIATE_TEMPLATE_CONSTRUCTION2_SH_METADATA",
     "AntsMultivariateTemplateConstruction2ShOutputs",
-    "AntsMultivariateTemplateConstruction2ShParameters",
     "ants_multivariate_template_construction2_sh",
     "ants_multivariate_template_construction2_sh_execute",
     "ants_multivariate_template_construction2_sh_params",

@@ -14,7 +14,33 @@ MRIS_INFO_METADATA = Metadata(
 
 
 MrisInfoParameters = typing.TypedDict('MrisInfoParameters', {
-    "@type": typing.Literal["freesurfer.mris_info"],
+    "@type": typing.NotRequired[typing.Literal["freesurfer/mris_info"]],
+    "surfacefile": InputPathType,
+    "outfile": typing.NotRequired[InputPathType | None],
+    "subject_hemi_surfname": typing.NotRequired[str | None],
+    "talairach_xfm_flag": bool,
+    "rescale_flag": bool,
+    "patchfile": typing.NotRequired[InputPathType | None],
+    "vertex_number": typing.NotRequired[float | None],
+    "extended_vertex_number": typing.NotRequired[float | None],
+    "curvfile": typing.NotRequired[InputPathType | None],
+    "annotfile": typing.NotRequired[InputPathType | None],
+    "area_stats_flag": bool,
+    "edge_stats_id": typing.NotRequired[str | None],
+    "edge_number": typing.NotRequired[float | None],
+    "vtxno": typing.NotRequired[str | None],
+    "matrix_format": typing.NotRequired[str | None],
+    "quality_stats_flag": bool,
+    "intersections_flag": bool,
+    "mask_file": typing.NotRequired[InputPathType | None],
+    "label_file": typing.NotRequired[InputPathType | None],
+    "edge_file": typing.NotRequired[InputPathType | None],
+    "nogifti_flag": bool,
+    "version_flag": bool,
+    "help_flag": bool,
+})
+MrisInfoParametersTagged = typing.TypedDict('MrisInfoParametersTagged', {
+    "@type": typing.Literal["freesurfer/mris_info"],
     "surfacefile": InputPathType,
     "outfile": typing.NotRequired[InputPathType | None],
     "subject_hemi_surfname": typing.NotRequired[str | None],
@@ -41,41 +67,9 @@ MrisInfoParameters = typing.TypedDict('MrisInfoParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "freesurfer.mris_info": mris_info_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "freesurfer.mris_info": mris_info_outputs,
-    }.get(t)
-
-
 class MrisInfoOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `mris_info(...)`.
+    Output object returned when calling `MrisInfoParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -109,7 +103,7 @@ def mris_info_params(
     nogifti_flag: bool = False,
     version_flag: bool = False,
     help_flag: bool = False,
-) -> MrisInfoParameters:
+) -> MrisInfoParametersTagged:
     """
     Build parameters.
     
@@ -146,7 +140,7 @@ def mris_info_params(
         Parameter dictionary
     """
     params = {
-        "@type": "freesurfer.mris_info",
+        "@type": "freesurfer/mris_info",
         "surfacefile": surfacefile,
         "talairach_xfm_flag": talairach_xfm_flag,
         "rescale_flag": rescale_flag,
@@ -203,92 +197,92 @@ def mris_info_cargs(
     """
     cargs = []
     cargs.append("mris_info")
-    cargs.append(execution.input_file(params.get("surfacefile")))
-    if params.get("outfile") is not None:
+    cargs.append(execution.input_file(params.get("surfacefile", None)))
+    if params.get("outfile", None) is not None:
         cargs.extend([
             "--o",
-            execution.input_file(params.get("outfile"))
+            execution.input_file(params.get("outfile", None))
         ])
-    if params.get("subject_hemi_surfname") is not None:
+    if params.get("subject_hemi_surfname", None) is not None:
         cargs.extend([
             "--s",
-            params.get("subject_hemi_surfname")
+            params.get("subject_hemi_surfname", None)
         ])
-    if params.get("talairach_xfm_flag"):
+    if params.get("talairach_xfm_flag", False):
         cargs.append("--t")
-    if params.get("rescale_flag"):
+    if params.get("rescale_flag", False):
         cargs.append("--r")
-    if params.get("patchfile") is not None:
+    if params.get("patchfile", None) is not None:
         cargs.extend([
             "--patch",
-            execution.input_file(params.get("patchfile"))
+            execution.input_file(params.get("patchfile", None))
         ])
-    if params.get("vertex_number") is not None:
+    if params.get("vertex_number", None) is not None:
         cargs.extend([
             "--v",
-            str(params.get("vertex_number"))
+            str(params.get("vertex_number", None))
         ])
-    if params.get("extended_vertex_number") is not None:
+    if params.get("extended_vertex_number", None) is not None:
         cargs.extend([
             "--vx",
-            str(params.get("extended_vertex_number"))
+            str(params.get("extended_vertex_number", None))
         ])
-    if params.get("curvfile") is not None:
+    if params.get("curvfile", None) is not None:
         cargs.extend([
             "--c",
-            execution.input_file(params.get("curvfile"))
+            execution.input_file(params.get("curvfile", None))
         ])
-    if params.get("annotfile") is not None:
+    if params.get("annotfile", None) is not None:
         cargs.extend([
             "--a",
-            execution.input_file(params.get("annotfile"))
+            execution.input_file(params.get("annotfile", None))
         ])
-    if params.get("area_stats_flag"):
+    if params.get("area_stats_flag", False):
         cargs.append("--area-stats")
-    if params.get("edge_stats_id") is not None:
+    if params.get("edge_stats_id", None) is not None:
         cargs.extend([
             "--edge-stats",
-            params.get("edge_stats_id")
+            params.get("edge_stats_id", None)
         ])
-    if params.get("edge_number") is not None:
+    if params.get("edge_number", None) is not None:
         cargs.extend([
             "--ex",
-            str(params.get("edge_number"))
+            str(params.get("edge_number", None))
         ])
-    if params.get("vtxno") is not None:
+    if params.get("vtxno", None) is not None:
         cargs.extend([
             "--v-matlab",
-            params.get("vtxno")
+            params.get("vtxno", None)
         ])
-    if params.get("matrix_format") is not None:
+    if params.get("matrix_format", None) is not None:
         cargs.extend([
             "--mtx-fmt",
-            params.get("matrix_format")
+            params.get("matrix_format", None)
         ])
-    if params.get("quality_stats_flag"):
+    if params.get("quality_stats_flag", False):
         cargs.append("--quality")
-    if params.get("intersections_flag"):
+    if params.get("intersections_flag", False):
         cargs.append("--intersections")
-    if params.get("mask_file") is not None:
+    if params.get("mask_file", None) is not None:
         cargs.extend([
             "--mask",
-            execution.input_file(params.get("mask_file"))
+            execution.input_file(params.get("mask_file", None))
         ])
-    if params.get("label_file") is not None:
+    if params.get("label_file", None) is not None:
         cargs.extend([
             "--label",
-            execution.input_file(params.get("label_file"))
+            execution.input_file(params.get("label_file", None))
         ])
-    if params.get("edge_file") is not None:
+    if params.get("edge_file", None) is not None:
         cargs.extend([
             "--edge-file",
-            execution.input_file(params.get("edge_file"))
+            execution.input_file(params.get("edge_file", None))
         ])
-    if params.get("nogifti_flag"):
+    if params.get("nogifti_flag", False):
         cargs.append("--nogifti-disp-image")
-    if params.get("version_flag"):
+    if params.get("version_flag", False):
         cargs.append("--version")
-    if params.get("help_flag"):
+    if params.get("help_flag", False):
         cargs.append("--help")
     return cargs
 
@@ -308,8 +302,8 @@ def mris_info_outputs(
     """
     ret = MrisInfoOutputs(
         root=execution.output_file("."),
-        output_file=execution.output_file(pathlib.Path(params.get("outfile")).name) if (params.get("outfile") is not None) else None,
-        output_edge_file=execution.output_file(pathlib.Path(params.get("edge_file")).name) if (params.get("edge_file") is not None) else None,
+        output_file=execution.output_file(pathlib.Path(params.get("outfile", None)).name) if (params.get("outfile") is not None) else None,
+        output_edge_file=execution.output_file(pathlib.Path(params.get("edge_file", None)).name) if (params.get("edge_file") is not None) else None,
     )
     return ret
 
@@ -441,7 +435,6 @@ def mris_info(
 __all__ = [
     "MRIS_INFO_METADATA",
     "MrisInfoOutputs",
-    "MrisInfoParameters",
     "mris_info",
     "mris_info_execute",
     "mris_info_params",

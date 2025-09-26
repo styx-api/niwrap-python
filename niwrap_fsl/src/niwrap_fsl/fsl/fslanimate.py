@@ -14,48 +14,22 @@ FSLANIMATE_METADATA = Metadata(
 
 
 FslanimateParameters = typing.TypedDict('FslanimateParameters', {
-    "@type": typing.Literal["fsl.fslanimate"],
+    "@type": typing.NotRequired[typing.Literal["fsl/fslanimate"]],
+    "input_file": InputPathType,
+    "output_file": str,
+    "tmp_dir": typing.NotRequired[str | None],
+})
+FslanimateParametersTagged = typing.TypedDict('FslanimateParametersTagged', {
+    "@type": typing.Literal["fsl/fslanimate"],
     "input_file": InputPathType,
     "output_file": str,
     "tmp_dir": typing.NotRequired[str | None],
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "fsl.fslanimate": fslanimate_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "fsl.fslanimate": fslanimate_outputs,
-    }.get(t)
-
-
 class FslanimateOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `fslanimate(...)`.
+    Output object returned when calling `FslanimateParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -67,7 +41,7 @@ def fslanimate_params(
     input_file: InputPathType,
     output_file: str,
     tmp_dir: str | None = None,
-) -> FslanimateParameters:
+) -> FslanimateParametersTagged:
     """
     Build parameters.
     
@@ -79,7 +53,7 @@ def fslanimate_params(
         Parameter dictionary
     """
     params = {
-        "@type": "fsl.fslanimate",
+        "@type": "fsl/fslanimate",
         "input_file": input_file,
         "output_file": output_file,
     }
@@ -103,10 +77,10 @@ def fslanimate_cargs(
     """
     cargs = []
     cargs.append("fslanimate")
-    cargs.append(execution.input_file(params.get("input_file")))
-    cargs.append(params.get("output_file"))
-    if params.get("tmp_dir") is not None:
-        cargs.append(params.get("tmp_dir"))
+    cargs.append(execution.input_file(params.get("input_file", None)))
+    cargs.append(params.get("output_file", None))
+    if params.get("tmp_dir", None) is not None:
+        cargs.append(params.get("tmp_dir", None))
     return cargs
 
 
@@ -125,7 +99,7 @@ def fslanimate_outputs(
     """
     ret = FslanimateOutputs(
         root=execution.output_file("."),
-        output_animation=execution.output_file(params.get("output_file")),
+        output_animation=execution.output_file(params.get("output_file", None)),
     )
     return ret
 
@@ -192,7 +166,6 @@ def fslanimate(
 __all__ = [
     "FSLANIMATE_METADATA",
     "FslanimateOutputs",
-    "FslanimateParameters",
     "fslanimate",
     "fslanimate_execute",
     "fslanimate_params",

@@ -14,48 +14,22 @@ SURFACE_WEDGE_VOLUME_METADATA = Metadata(
 
 
 SurfaceWedgeVolumeParameters = typing.TypedDict('SurfaceWedgeVolumeParameters', {
-    "@type": typing.Literal["workbench.surface-wedge-volume"],
+    "@type": typing.NotRequired[typing.Literal["workbench/surface-wedge-volume"]],
+    "inner_surface": InputPathType,
+    "outer_surface": InputPathType,
+    "metric": str,
+})
+SurfaceWedgeVolumeParametersTagged = typing.TypedDict('SurfaceWedgeVolumeParametersTagged', {
+    "@type": typing.Literal["workbench/surface-wedge-volume"],
     "inner_surface": InputPathType,
     "outer_surface": InputPathType,
     "metric": str,
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "workbench.surface-wedge-volume": surface_wedge_volume_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "workbench.surface-wedge-volume": surface_wedge_volume_outputs,
-    }.get(t)
-
-
 class SurfaceWedgeVolumeOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `surface_wedge_volume(...)`.
+    Output object returned when calling `SurfaceWedgeVolumeParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -67,7 +41,7 @@ def surface_wedge_volume_params(
     inner_surface: InputPathType,
     outer_surface: InputPathType,
     metric: str,
-) -> SurfaceWedgeVolumeParameters:
+) -> SurfaceWedgeVolumeParametersTagged:
     """
     Build parameters.
     
@@ -79,7 +53,7 @@ def surface_wedge_volume_params(
         Parameter dictionary
     """
     params = {
-        "@type": "workbench.surface-wedge-volume",
+        "@type": "workbench/surface-wedge-volume",
         "inner_surface": inner_surface,
         "outer_surface": outer_surface,
         "metric": metric,
@@ -103,9 +77,9 @@ def surface_wedge_volume_cargs(
     cargs = []
     cargs.append("wb_command")
     cargs.append("-surface-wedge-volume")
-    cargs.append(execution.input_file(params.get("inner_surface")))
-    cargs.append(execution.input_file(params.get("outer_surface")))
-    cargs.append(params.get("metric"))
+    cargs.append(execution.input_file(params.get("inner_surface", None)))
+    cargs.append(execution.input_file(params.get("outer_surface", None)))
+    cargs.append(params.get("metric", None))
     return cargs
 
 
@@ -124,7 +98,7 @@ def surface_wedge_volume_outputs(
     """
     ret = SurfaceWedgeVolumeOutputs(
         root=execution.output_file("."),
-        metric=execution.output_file(params.get("metric")),
+        metric=execution.output_file(params.get("metric", None)),
     )
     return ret
 
@@ -199,7 +173,6 @@ def surface_wedge_volume(
 __all__ = [
     "SURFACE_WEDGE_VOLUME_METADATA",
     "SurfaceWedgeVolumeOutputs",
-    "SurfaceWedgeVolumeParameters",
     "surface_wedge_volume",
     "surface_wedge_volume_execute",
     "surface_wedge_volume_params",

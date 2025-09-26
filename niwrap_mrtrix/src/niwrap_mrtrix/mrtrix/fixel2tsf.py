@@ -14,14 +14,34 @@ FIXEL2TSF_METADATA = Metadata(
 
 
 Fixel2tsfConfigParameters = typing.TypedDict('Fixel2tsfConfigParameters', {
-    "@type": typing.Literal["mrtrix.fixel2tsf.config"],
+    "@type": typing.NotRequired[typing.Literal["config"]],
+    "key": str,
+    "value": str,
+})
+Fixel2tsfConfigParametersTagged = typing.TypedDict('Fixel2tsfConfigParametersTagged', {
+    "@type": typing.Literal["config"],
     "key": str,
     "value": str,
 })
 
 
 Fixel2tsfParameters = typing.TypedDict('Fixel2tsfParameters', {
-    "@type": typing.Literal["mrtrix.fixel2tsf"],
+    "@type": typing.NotRequired[typing.Literal["mrtrix/fixel2tsf"]],
+    "angle": typing.NotRequired[float | None],
+    "info": bool,
+    "quiet": bool,
+    "debug": bool,
+    "force": bool,
+    "nthreads": typing.NotRequired[int | None],
+    "config": typing.NotRequired[list[Fixel2tsfConfigParameters] | None],
+    "help": bool,
+    "version": bool,
+    "fixel_in": InputPathType,
+    "tracks": InputPathType,
+    "tsf": str,
+})
+Fixel2tsfParametersTagged = typing.TypedDict('Fixel2tsfParametersTagged', {
+    "@type": typing.Literal["mrtrix/fixel2tsf"],
     "angle": typing.NotRequired[float | None],
     "info": bool,
     "quiet": bool,
@@ -37,43 +57,10 @@ Fixel2tsfParameters = typing.TypedDict('Fixel2tsfParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "mrtrix.fixel2tsf": fixel2tsf_cargs,
-        "mrtrix.fixel2tsf.config": fixel2tsf_config_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "mrtrix.fixel2tsf": fixel2tsf_outputs,
-    }.get(t)
-
-
 def fixel2tsf_config_params(
     key: str,
     value: str,
-) -> Fixel2tsfConfigParameters:
+) -> Fixel2tsfConfigParametersTagged:
     """
     Build parameters.
     
@@ -84,7 +71,7 @@ def fixel2tsf_config_params(
         Parameter dictionary
     """
     params = {
-        "@type": "mrtrix.fixel2tsf.config",
+        "@type": "config",
         "key": key,
         "value": value,
     }
@@ -106,14 +93,14 @@ def fixel2tsf_config_cargs(
     """
     cargs = []
     cargs.append("-config")
-    cargs.append(params.get("key"))
-    cargs.append(params.get("value"))
+    cargs.append(params.get("key", None))
+    cargs.append(params.get("value", None))
     return cargs
 
 
 class Fixel2tsfOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `fixel2tsf(...)`.
+    Output object returned when calling `Fixel2tsfParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -134,7 +121,7 @@ def fixel2tsf_params(
     config: list[Fixel2tsfConfigParameters] | None = None,
     help_: bool = False,
     version: bool = False,
-) -> Fixel2tsfParameters:
+) -> Fixel2tsfParametersTagged:
     """
     Build parameters.
     
@@ -160,7 +147,7 @@ def fixel2tsf_params(
         Parameter dictionary
     """
     params = {
-        "@type": "mrtrix.fixel2tsf",
+        "@type": "mrtrix/fixel2tsf",
         "info": info,
         "quiet": quiet,
         "debug": debug,
@@ -195,33 +182,33 @@ def fixel2tsf_cargs(
     """
     cargs = []
     cargs.append("fixel2tsf")
-    if params.get("angle") is not None:
+    if params.get("angle", None) is not None:
         cargs.extend([
             "-angle",
-            str(params.get("angle"))
+            str(params.get("angle", None))
         ])
-    if params.get("info"):
+    if params.get("info", False):
         cargs.append("-info")
-    if params.get("quiet"):
+    if params.get("quiet", False):
         cargs.append("-quiet")
-    if params.get("debug"):
+    if params.get("debug", False):
         cargs.append("-debug")
-    if params.get("force"):
+    if params.get("force", False):
         cargs.append("-force")
-    if params.get("nthreads") is not None:
+    if params.get("nthreads", None) is not None:
         cargs.extend([
             "-nthreads",
-            str(params.get("nthreads"))
+            str(params.get("nthreads", None))
         ])
-    if params.get("config") is not None:
-        cargs.extend([a for c in [dyn_cargs(s["@type"])(s, execution) for s in params.get("config")] for a in c])
-    if params.get("help"):
+    if params.get("config", None) is not None:
+        cargs.extend([a for c in [fixel2tsf_config_cargs(s, execution) for s in params.get("config", None)] for a in c])
+    if params.get("help", False):
         cargs.append("-help")
-    if params.get("version"):
+    if params.get("version", False):
         cargs.append("-version")
-    cargs.append(execution.input_file(params.get("fixel_in")))
-    cargs.append(execution.input_file(params.get("tracks")))
-    cargs.append(params.get("tsf"))
+    cargs.append(execution.input_file(params.get("fixel_in", None)))
+    cargs.append(execution.input_file(params.get("tracks", None)))
+    cargs.append(params.get("tsf", None))
     return cargs
 
 
@@ -240,7 +227,7 @@ def fixel2tsf_outputs(
     """
     ret = Fixel2tsfOutputs(
         root=execution.output_file("."),
-        tsf=execution.output_file(params.get("tsf")),
+        tsf=execution.output_file(params.get("tsf", None)),
     )
     return ret
 
@@ -352,9 +339,7 @@ def fixel2tsf(
 
 __all__ = [
     "FIXEL2TSF_METADATA",
-    "Fixel2tsfConfigParameters",
     "Fixel2tsfOutputs",
-    "Fixel2tsfParameters",
     "fixel2tsf",
     "fixel2tsf_config_params",
     "fixel2tsf_execute",

@@ -14,7 +14,33 @@ FILM_GLS_METADATA = Metadata(
 
 
 FilmGlsParameters = typing.TypedDict('FilmGlsParameters', {
-    "@type": typing.Literal["fsl.film_gls"],
+    "@type": typing.NotRequired[typing.Literal["fsl/film_gls"]],
+    "infile": InputPathType,
+    "ac_flag": bool,
+    "threshold": typing.NotRequired[float | None],
+    "ar_flag": bool,
+    "noest_flag": bool,
+    "outputPW_flag": bool,
+    "pava_flag": bool,
+    "sa_flag": bool,
+    "verbose_flag": bool,
+    "results_dir": typing.NotRequired[str | None],
+    "mode": typing.NotRequired[str | None],
+    "input_surface": typing.NotRequired[InputPathType | None],
+    "mean_func_file": typing.NotRequired[InputPathType | None],
+    "min_timepoint_file": typing.NotRequired[InputPathType | None],
+    "paradigm_file": typing.NotRequired[InputPathType | None],
+    "t_contrasts_file": typing.NotRequired[InputPathType | None],
+    "f_contrasts_file": typing.NotRequired[InputPathType | None],
+    "epith": typing.NotRequired[float | None],
+    "ms": typing.NotRequired[float | None],
+    "tukey": typing.NotRequired[float | None],
+    "mt": typing.NotRequired[float | None],
+    "ven": typing.NotRequired[list[str] | None],
+    "vef": typing.NotRequired[list[InputPathType] | None],
+})
+FilmGlsParametersTagged = typing.TypedDict('FilmGlsParametersTagged', {
+    "@type": typing.Literal["fsl/film_gls"],
     "infile": InputPathType,
     "ac_flag": bool,
     "threshold": typing.NotRequired[float | None],
@@ -41,41 +67,9 @@ FilmGlsParameters = typing.TypedDict('FilmGlsParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "fsl.film_gls": film_gls_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "fsl.film_gls": film_gls_outputs,
-    }.get(t)
-
-
 class FilmGlsOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `film_gls(...)`.
+    Output object returned when calling `FilmGlsParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -111,7 +105,7 @@ def film_gls_params(
     mt: float | None = None,
     ven: list[str] | None = None,
     vef: list[InputPathType] | None = None,
-) -> FilmGlsParameters:
+) -> FilmGlsParametersTagged:
     """
     Build parameters.
     
@@ -156,7 +150,7 @@ def film_gls_params(
         Parameter dictionary
     """
     params = {
-        "@type": "fsl.film_gls",
+        "@type": "fsl/film_gls",
         "infile": infile,
         "ac_flag": ac_flag,
         "ar_flag": ar_flag,
@@ -214,95 +208,95 @@ def film_gls_cargs(
     """
     cargs = []
     cargs.append("film_gls")
-    cargs.append(execution.input_file(params.get("infile")))
-    if params.get("ac_flag"):
+    cargs.append(execution.input_file(params.get("infile", None)))
+    if params.get("ac_flag", False):
         cargs.append("--ac")
-    if params.get("threshold") is not None:
+    if params.get("threshold", None) is not None:
         cargs.extend([
             "--thr",
-            str(params.get("threshold"))
+            str(params.get("threshold", None))
         ])
-    if params.get("ar_flag"):
+    if params.get("ar_flag", False):
         cargs.append("--ar")
-    if params.get("noest_flag"):
+    if params.get("noest_flag", False):
         cargs.append("--noest")
-    if params.get("outputPW_flag"):
+    if params.get("outputPW_flag", False):
         cargs.append("--outputPWdata")
-    if params.get("pava_flag"):
+    if params.get("pava_flag", False):
         cargs.append("--pava")
-    if params.get("sa_flag"):
+    if params.get("sa_flag", False):
         cargs.append("--sa")
-    if params.get("verbose_flag"):
+    if params.get("verbose_flag", False):
         cargs.append("-v")
-    if params.get("results_dir") is not None:
+    if params.get("results_dir", None) is not None:
         cargs.extend([
             "--rn",
-            params.get("results_dir")
+            params.get("results_dir", None)
         ])
-    if params.get("mode") is not None:
+    if params.get("mode", None) is not None:
         cargs.extend([
             "--mode",
-            params.get("mode")
+            params.get("mode", None)
         ])
-    if params.get("input_surface") is not None:
+    if params.get("input_surface", None) is not None:
         cargs.extend([
             "--in2",
-            execution.input_file(params.get("input_surface"))
+            execution.input_file(params.get("input_surface", None))
         ])
-    if params.get("mean_func_file") is not None:
+    if params.get("mean_func_file", None) is not None:
         cargs.extend([
             "--mf",
-            execution.input_file(params.get("mean_func_file"))
+            execution.input_file(params.get("mean_func_file", None))
         ])
-    if params.get("min_timepoint_file") is not None:
+    if params.get("min_timepoint_file", None) is not None:
         cargs.extend([
             "--mft",
-            execution.input_file(params.get("min_timepoint_file"))
+            execution.input_file(params.get("min_timepoint_file", None))
         ])
-    if params.get("paradigm_file") is not None:
+    if params.get("paradigm_file", None) is not None:
         cargs.extend([
             "--pd",
-            execution.input_file(params.get("paradigm_file"))
+            execution.input_file(params.get("paradigm_file", None))
         ])
-    if params.get("t_contrasts_file") is not None:
+    if params.get("t_contrasts_file", None) is not None:
         cargs.extend([
             "--con",
-            execution.input_file(params.get("t_contrasts_file"))
+            execution.input_file(params.get("t_contrasts_file", None))
         ])
-    if params.get("f_contrasts_file") is not None:
+    if params.get("f_contrasts_file", None) is not None:
         cargs.extend([
             "--fcon",
-            execution.input_file(params.get("f_contrasts_file"))
+            execution.input_file(params.get("f_contrasts_file", None))
         ])
-    if params.get("epith") is not None:
+    if params.get("epith", None) is not None:
         cargs.extend([
             "--epith",
-            str(params.get("epith"))
+            str(params.get("epith", None))
         ])
-    if params.get("ms") is not None:
+    if params.get("ms", None) is not None:
         cargs.extend([
             "--ms",
-            str(params.get("ms"))
+            str(params.get("ms", None))
         ])
-    if params.get("tukey") is not None:
+    if params.get("tukey", None) is not None:
         cargs.extend([
             "--tukey",
-            str(params.get("tukey"))
+            str(params.get("tukey", None))
         ])
-    if params.get("mt") is not None:
+    if params.get("mt", None) is not None:
         cargs.extend([
             "--mt",
-            str(params.get("mt"))
+            str(params.get("mt", None))
         ])
-    if params.get("ven") is not None:
+    if params.get("ven", None) is not None:
         cargs.extend([
             "--ven",
-            *params.get("ven")
+            *params.get("ven", None)
         ])
-    if params.get("vef") is not None:
+    if params.get("vef", None) is not None:
         cargs.extend([
             "--vef",
-            *[execution.input_file(f) for f in params.get("vef")]
+            *[execution.input_file(f) for f in params.get("vef", None)]
         ])
     return cargs
 
@@ -464,7 +458,6 @@ def film_gls(
 __all__ = [
     "FILM_GLS_METADATA",
     "FilmGlsOutputs",
-    "FilmGlsParameters",
     "film_gls",
     "film_gls_execute",
     "film_gls_params",

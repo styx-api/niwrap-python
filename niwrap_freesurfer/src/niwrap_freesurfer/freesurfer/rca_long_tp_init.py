@@ -14,7 +14,16 @@ RCA_LONG_TP_INIT_METADATA = Metadata(
 
 
 RcaLongTpInitParameters = typing.TypedDict('RcaLongTpInitParameters', {
-    "@type": typing.Literal["freesurfer.rca-long-tp-init"],
+    "@type": typing.NotRequired[typing.Literal["freesurfer/rca-long-tp-init"]],
+    "timepoint": str,
+    "base": str,
+    "use_long_base_ctrl_vol": bool,
+    "hemisphere": typing.NotRequired[typing.Literal["lh", "rh"] | None],
+    "expert_opts": typing.NotRequired[InputPathType | None],
+    "subject": typing.NotRequired[str | None],
+})
+RcaLongTpInitParametersTagged = typing.TypedDict('RcaLongTpInitParametersTagged', {
+    "@type": typing.Literal["freesurfer/rca-long-tp-init"],
     "timepoint": str,
     "base": str,
     "use_long_base_ctrl_vol": bool,
@@ -24,40 +33,9 @@ RcaLongTpInitParameters = typing.TypedDict('RcaLongTpInitParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "freesurfer.rca-long-tp-init": rca_long_tp_init_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-    }.get(t)
-
-
 class RcaLongTpInitOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `rca_long_tp_init(...)`.
+    Output object returned when calling `RcaLongTpInitParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -70,7 +48,7 @@ def rca_long_tp_init_params(
     hemisphere: typing.Literal["lh", "rh"] | None = None,
     expert_opts: InputPathType | None = None,
     subject: str | None = None,
-) -> RcaLongTpInitParameters:
+) -> RcaLongTpInitParametersTagged:
     """
     Build parameters.
     
@@ -85,7 +63,7 @@ def rca_long_tp_init_params(
         Parameter dictionary
     """
     params = {
-        "@type": "freesurfer.rca-long-tp-init",
+        "@type": "freesurfer/rca-long-tp-init",
         "timepoint": timepoint,
         "base": base,
         "use_long_base_ctrl_vol": use_long_base_ctrl_vol,
@@ -116,25 +94,25 @@ def rca_long_tp_init_cargs(
     cargs.append("rca-long-tp-init")
     cargs.extend([
         "-long",
-        params.get("timepoint")
+        params.get("timepoint", None)
     ])
-    cargs.append(params.get("base"))
-    if params.get("use_long_base_ctrl_vol"):
+    cargs.append(params.get("base", None))
+    if params.get("use_long_base_ctrl_vol", False):
         cargs.append("-uselongbasectrlvol")
-    if params.get("hemisphere") is not None:
+    if params.get("hemisphere", None) is not None:
         cargs.extend([
             "-hemi",
-            params.get("hemisphere")
+            params.get("hemisphere", None)
         ])
-    if params.get("expert_opts") is not None:
+    if params.get("expert_opts", None) is not None:
         cargs.extend([
             "-expert",
-            execution.input_file(params.get("expert_opts"))
+            execution.input_file(params.get("expert_opts", None))
         ])
-    if params.get("subject") is not None:
+    if params.get("subject", None) is not None:
         cargs.extend([
             "-s",
-            params.get("subject")
+            params.get("subject", None)
         ])
     return cargs
 
@@ -229,7 +207,6 @@ def rca_long_tp_init(
 __all__ = [
     "RCA_LONG_TP_INIT_METADATA",
     "RcaLongTpInitOutputs",
-    "RcaLongTpInitParameters",
     "rca_long_tp_init",
     "rca_long_tp_init_execute",
     "rca_long_tp_init_params",

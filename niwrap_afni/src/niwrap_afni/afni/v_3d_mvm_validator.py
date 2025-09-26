@@ -14,46 +14,20 @@ V_3D_MVM_VALIDATOR_METADATA = Metadata(
 
 
 V3dMvmValidatorParameters = typing.TypedDict('V3dMvmValidatorParameters', {
-    "@type": typing.Literal["afni.3dMVM_validator"],
+    "@type": typing.NotRequired[typing.Literal["afni/3dMVM_validator"]],
+    "datatable": InputPathType,
+    "shinyfolder": typing.NotRequired[str | None],
+})
+V3dMvmValidatorParametersTagged = typing.TypedDict('V3dMvmValidatorParametersTagged', {
+    "@type": typing.Literal["afni/3dMVM_validator"],
     "datatable": InputPathType,
     "shinyfolder": typing.NotRequired[str | None],
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "afni.3dMVM_validator": v_3d_mvm_validator_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-    }.get(t)
-
-
 class V3dMvmValidatorOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `v_3d_mvm_validator(...)`.
+    Output object returned when calling `V3dMvmValidatorParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -62,7 +36,7 @@ class V3dMvmValidatorOutputs(typing.NamedTuple):
 def v_3d_mvm_validator_params(
     datatable: InputPathType,
     shinyfolder: str | None = None,
-) -> V3dMvmValidatorParameters:
+) -> V3dMvmValidatorParametersTagged:
     """
     Build parameters.
     
@@ -74,7 +48,7 @@ def v_3d_mvm_validator_params(
         Parameter dictionary
     """
     params = {
-        "@type": "afni.3dMVM_validator",
+        "@type": "afni/3dMVM_validator",
         "datatable": datatable,
     }
     if shinyfolder is not None:
@@ -97,11 +71,11 @@ def v_3d_mvm_validator_cargs(
     """
     cargs = []
     cargs.append("3dMVM_validator")
-    cargs.append(execution.input_file(params.get("datatable")))
-    if params.get("shinyfolder") is not None:
+    cargs.append(execution.input_file(params.get("datatable", None)))
+    if params.get("shinyfolder", None) is not None:
         cargs.extend([
             "-ShinyFolder",
-            params.get("shinyfolder")
+            params.get("shinyfolder", None)
         ])
     return cargs
 
@@ -184,7 +158,6 @@ def v_3d_mvm_validator(
 
 __all__ = [
     "V3dMvmValidatorOutputs",
-    "V3dMvmValidatorParameters",
     "V_3D_MVM_VALIDATOR_METADATA",
     "v_3d_mvm_validator",
     "v_3d_mvm_validator_execute",

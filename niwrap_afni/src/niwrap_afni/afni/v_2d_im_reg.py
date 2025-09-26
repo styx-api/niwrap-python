@@ -14,7 +14,22 @@ V_2D_IM_REG_METADATA = Metadata(
 
 
 V2dImRegParameters = typing.TypedDict('V2dImRegParameters', {
-    "@type": typing.Literal["afni.2dImReg"],
+    "@type": typing.NotRequired[typing.Literal["afni/2dImReg"]],
+    "input_file": InputPathType,
+    "base_file": typing.NotRequired[InputPathType | None],
+    "base": typing.NotRequired[float | None],
+    "nofine": bool,
+    "fine_blur": typing.NotRequired[float | None],
+    "fine_dxy": typing.NotRequired[float | None],
+    "fine_dphi": typing.NotRequired[float | None],
+    "prefix": str,
+    "dprefix": typing.NotRequired[str | None],
+    "dmm": bool,
+    "rprefix": typing.NotRequired[str | None],
+    "debug": bool,
+})
+V2dImRegParametersTagged = typing.TypedDict('V2dImRegParametersTagged', {
+    "@type": typing.Literal["afni/2dImReg"],
     "input_file": InputPathType,
     "base_file": typing.NotRequired[InputPathType | None],
     "base": typing.NotRequired[float | None],
@@ -30,41 +45,9 @@ V2dImRegParameters = typing.TypedDict('V2dImRegParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "afni.2dImReg": v_2d_im_reg_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "afni.2dImReg": v_2d_im_reg_outputs,
-    }.get(t)
-
-
 class V2dImRegOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `v_2d_im_reg(...)`.
+    Output object returned when calling `V2dImRegParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -95,7 +78,7 @@ def v_2d_im_reg_params(
     dmm: bool = False,
     rprefix: str | None = None,
     debug: bool = False,
-) -> V2dImRegParameters:
+) -> V2dImRegParametersTagged:
     """
     Build parameters.
     
@@ -123,7 +106,7 @@ def v_2d_im_reg_params(
         Parameter dictionary
     """
     params = {
-        "@type": "afni.2dImReg",
+        "@type": "afni/2dImReg",
         "input_file": input_file,
         "nofine": nofine,
         "prefix": prefix,
@@ -162,27 +145,27 @@ def v_2d_im_reg_cargs(
     """
     cargs = []
     cargs.append("2dImReg")
-    cargs.append(execution.input_file(params.get("input_file")))
-    if params.get("base_file") is not None:
-        cargs.append(execution.input_file(params.get("base_file")))
-    if params.get("base") is not None:
-        cargs.append(str(params.get("base")))
-    if params.get("nofine"):
+    cargs.append(execution.input_file(params.get("input_file", None)))
+    if params.get("base_file", None) is not None:
+        cargs.append(execution.input_file(params.get("base_file", None)))
+    if params.get("base", None) is not None:
+        cargs.append(str(params.get("base", None)))
+    if params.get("nofine", False):
         cargs.append("-nofine")
-    if params.get("fine_blur") is not None:
-        cargs.append(str(params.get("fine_blur")))
-    if params.get("fine_dxy") is not None:
-        cargs.append(str(params.get("fine_dxy")))
-    if params.get("fine_dphi") is not None:
-        cargs.append(str(params.get("fine_dphi")))
-    cargs.append(params.get("prefix"))
-    if params.get("dprefix") is not None:
-        cargs.append(params.get("dprefix"))
-    if params.get("dmm"):
+    if params.get("fine_blur", None) is not None:
+        cargs.append(str(params.get("fine_blur", None)))
+    if params.get("fine_dxy", None) is not None:
+        cargs.append(str(params.get("fine_dxy", None)))
+    if params.get("fine_dphi", None) is not None:
+        cargs.append(str(params.get("fine_dphi", None)))
+    cargs.append(params.get("prefix", None))
+    if params.get("dprefix", None) is not None:
+        cargs.append(params.get("dprefix", None))
+    if params.get("dmm", False):
         cargs.append("-dmm")
-    if params.get("rprefix") is not None:
-        cargs.append(params.get("rprefix"))
-    if params.get("debug"):
+    if params.get("rprefix", None) is not None:
+        cargs.append(params.get("rprefix", None))
+    if params.get("debug", False):
         cargs.append("-debug")
     return cargs
 
@@ -202,12 +185,12 @@ def v_2d_im_reg_outputs(
     """
     ret = V2dImRegOutputs(
         root=execution.output_file("."),
-        output_dataset=execution.output_file(params.get("prefix") + ".nii"),
-        dx_file=execution.output_file(params.get("dprefix") + ".dx") if (params.get("dprefix") is not None) else None,
-        dy_file=execution.output_file(params.get("dprefix") + ".dy") if (params.get("dprefix") is not None) else None,
-        psi_file=execution.output_file(params.get("dprefix") + ".psi") if (params.get("dprefix") is not None) else None,
-        oldrms_file=execution.output_file(params.get("rprefix") + ".oldrms") if (params.get("rprefix") is not None) else None,
-        newrms_file=execution.output_file(params.get("rprefix") + ".newrms") if (params.get("rprefix") is not None) else None,
+        output_dataset=execution.output_file(params.get("prefix", None) + ".nii"),
+        dx_file=execution.output_file(params.get("dprefix", None) + ".dx") if (params.get("dprefix") is not None) else None,
+        dy_file=execution.output_file(params.get("dprefix", None) + ".dy") if (params.get("dprefix") is not None) else None,
+        psi_file=execution.output_file(params.get("dprefix", None) + ".psi") if (params.get("dprefix") is not None) else None,
+        oldrms_file=execution.output_file(params.get("rprefix", None) + ".oldrms") if (params.get("rprefix") is not None) else None,
+        newrms_file=execution.output_file(params.get("rprefix", None) + ".newrms") if (params.get("rprefix") is not None) else None,
     )
     return ret
 
@@ -309,7 +292,6 @@ def v_2d_im_reg(
 
 __all__ = [
     "V2dImRegOutputs",
-    "V2dImRegParameters",
     "V_2D_IM_REG_METADATA",
     "v_2d_im_reg",
     "v_2d_im_reg_execute",

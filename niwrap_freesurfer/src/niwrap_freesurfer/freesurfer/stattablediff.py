@@ -14,7 +14,22 @@ STATTABLEDIFF_METADATA = Metadata(
 
 
 StattablediffParameters = typing.TypedDict('StattablediffParameters', {
-    "@type": typing.Literal["freesurfer.stattablediff"],
+    "@type": typing.NotRequired[typing.Literal["freesurfer/stattablediff"]],
+    "t1": InputPathType,
+    "t2": InputPathType,
+    "output": str,
+    "percent_diff": bool,
+    "percent_diff_t1": bool,
+    "percent_diff_t2": bool,
+    "multiply": typing.NotRequired[float | None],
+    "divide": typing.NotRequired[float | None],
+    "common": bool,
+    "remove_exvivo": bool,
+    "diff_subjects": bool,
+    "noreplace53": bool,
+})
+StattablediffParametersTagged = typing.TypedDict('StattablediffParametersTagged', {
+    "@type": typing.Literal["freesurfer/stattablediff"],
     "t1": InputPathType,
     "t2": InputPathType,
     "output": str,
@@ -30,41 +45,9 @@ StattablediffParameters = typing.TypedDict('StattablediffParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "freesurfer.stattablediff": stattablediff_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "freesurfer.stattablediff": stattablediff_outputs,
-    }.get(t)
-
-
 class StattablediffOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `stattablediff(...)`.
+    Output object returned when calling `StattablediffParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -85,7 +68,7 @@ def stattablediff_params(
     remove_exvivo: bool = False,
     diff_subjects: bool = False,
     noreplace53: bool = False,
-) -> StattablediffParameters:
+) -> StattablediffParametersTagged:
     """
     Build parameters.
     
@@ -106,7 +89,7 @@ def stattablediff_params(
         Parameter dictionary
     """
     params = {
-        "@type": "freesurfer.stattablediff",
+        "@type": "freesurfer/stattablediff",
         "t1": t1,
         "t2": t2,
         "output": output,
@@ -140,32 +123,32 @@ def stattablediff_cargs(
     """
     cargs = []
     cargs.append("stattablediff")
-    cargs.append(execution.input_file(params.get("t1")))
-    cargs.append(execution.input_file(params.get("t2")))
-    cargs.append(params.get("output"))
-    if params.get("percent_diff"):
+    cargs.append(execution.input_file(params.get("t1", None)))
+    cargs.append(execution.input_file(params.get("t2", None)))
+    cargs.append(params.get("output", None))
+    if params.get("percent_diff", False):
         cargs.append("--percent")
-    if params.get("percent_diff_t1"):
+    if params.get("percent_diff_t1", False):
         cargs.append("--percent1")
-    if params.get("percent_diff_t2"):
+    if params.get("percent_diff_t2", False):
         cargs.append("--percent2")
-    if params.get("multiply") is not None:
+    if params.get("multiply", None) is not None:
         cargs.extend([
             "--mul",
-            str(params.get("multiply"))
+            str(params.get("multiply", None))
         ])
-    if params.get("divide") is not None:
+    if params.get("divide", None) is not None:
         cargs.extend([
             "--div",
-            str(params.get("divide"))
+            str(params.get("divide", None))
         ])
-    if params.get("common"):
+    if params.get("common", False):
         cargs.append("--common")
-    if params.get("remove_exvivo"):
+    if params.get("remove_exvivo", False):
         cargs.append("--rm-exvivo")
-    if params.get("diff_subjects"):
+    if params.get("diff_subjects", False):
         cargs.append("--diff-subjs")
-    if params.get("noreplace53"):
+    if params.get("noreplace53", False):
         cargs.append("--noreplace53")
     return cargs
 
@@ -185,7 +168,7 @@ def stattablediff_outputs(
     """
     ret = StattablediffOutputs(
         root=execution.output_file("."),
-        output_diff_table=execution.output_file(params.get("output")),
+        output_diff_table=execution.output_file(params.get("output", None)),
     )
     return ret
 
@@ -279,7 +262,6 @@ def stattablediff(
 __all__ = [
     "STATTABLEDIFF_METADATA",
     "StattablediffOutputs",
-    "StattablediffParameters",
     "stattablediff",
     "stattablediff_execute",
     "stattablediff_params",

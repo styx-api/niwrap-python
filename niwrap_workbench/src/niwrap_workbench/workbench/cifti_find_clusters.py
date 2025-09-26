@@ -14,42 +14,86 @@ CIFTI_FIND_CLUSTERS_METADATA = Metadata(
 
 
 CiftiFindClustersLeftSurfaceParameters = typing.TypedDict('CiftiFindClustersLeftSurfaceParameters', {
-    "@type": typing.Literal["workbench.cifti-find-clusters.left_surface"],
+    "@type": typing.NotRequired[typing.Literal["left_surface"]],
+    "surface": InputPathType,
+    "opt_corrected_areas_area_metric": typing.NotRequired[InputPathType | None],
+})
+CiftiFindClustersLeftSurfaceParametersTagged = typing.TypedDict('CiftiFindClustersLeftSurfaceParametersTagged', {
+    "@type": typing.Literal["left_surface"],
     "surface": InputPathType,
     "opt_corrected_areas_area_metric": typing.NotRequired[InputPathType | None],
 })
 
 
 CiftiFindClustersRightSurfaceParameters = typing.TypedDict('CiftiFindClustersRightSurfaceParameters', {
-    "@type": typing.Literal["workbench.cifti-find-clusters.right_surface"],
+    "@type": typing.NotRequired[typing.Literal["right_surface"]],
+    "surface": InputPathType,
+    "opt_corrected_areas_area_metric": typing.NotRequired[InputPathType | None],
+})
+CiftiFindClustersRightSurfaceParametersTagged = typing.TypedDict('CiftiFindClustersRightSurfaceParametersTagged', {
+    "@type": typing.Literal["right_surface"],
     "surface": InputPathType,
     "opt_corrected_areas_area_metric": typing.NotRequired[InputPathType | None],
 })
 
 
 CiftiFindClustersCerebellumSurfaceParameters = typing.TypedDict('CiftiFindClustersCerebellumSurfaceParameters', {
-    "@type": typing.Literal["workbench.cifti-find-clusters.cerebellum_surface"],
+    "@type": typing.NotRequired[typing.Literal["cerebellum_surface"]],
+    "surface": InputPathType,
+    "opt_corrected_areas_area_metric": typing.NotRequired[InputPathType | None],
+})
+CiftiFindClustersCerebellumSurfaceParametersTagged = typing.TypedDict('CiftiFindClustersCerebellumSurfaceParametersTagged', {
+    "@type": typing.Literal["cerebellum_surface"],
     "surface": InputPathType,
     "opt_corrected_areas_area_metric": typing.NotRequired[InputPathType | None],
 })
 
 
 CiftiFindClustersSizeRatioParameters = typing.TypedDict('CiftiFindClustersSizeRatioParameters', {
-    "@type": typing.Literal["workbench.cifti-find-clusters.size_ratio"],
+    "@type": typing.NotRequired[typing.Literal["size_ratio"]],
+    "surface_ratio": float,
+    "volume_ratio": float,
+})
+CiftiFindClustersSizeRatioParametersTagged = typing.TypedDict('CiftiFindClustersSizeRatioParametersTagged', {
+    "@type": typing.Literal["size_ratio"],
     "surface_ratio": float,
     "volume_ratio": float,
 })
 
 
 CiftiFindClustersDistanceParameters = typing.TypedDict('CiftiFindClustersDistanceParameters', {
-    "@type": typing.Literal["workbench.cifti-find-clusters.distance"],
+    "@type": typing.NotRequired[typing.Literal["distance"]],
+    "surface_distance": float,
+    "volume_distance": float,
+})
+CiftiFindClustersDistanceParametersTagged = typing.TypedDict('CiftiFindClustersDistanceParametersTagged', {
+    "@type": typing.Literal["distance"],
     "surface_distance": float,
     "volume_distance": float,
 })
 
 
 CiftiFindClustersParameters = typing.TypedDict('CiftiFindClustersParameters', {
-    "@type": typing.Literal["workbench.cifti-find-clusters"],
+    "@type": typing.NotRequired[typing.Literal["workbench/cifti-find-clusters"]],
+    "cifti": InputPathType,
+    "surface_value_threshold": float,
+    "surface_minimum_area": float,
+    "volume_value_threshold": float,
+    "volume_minimum_size": float,
+    "direction": str,
+    "cifti_out": str,
+    "opt_less_than": bool,
+    "left_surface": typing.NotRequired[CiftiFindClustersLeftSurfaceParameters | None],
+    "right_surface": typing.NotRequired[CiftiFindClustersRightSurfaceParameters | None],
+    "cerebellum_surface": typing.NotRequired[CiftiFindClustersCerebellumSurfaceParameters | None],
+    "opt_cifti_roi_roi_cifti": typing.NotRequired[InputPathType | None],
+    "opt_merged_volume": bool,
+    "size_ratio": typing.NotRequired[CiftiFindClustersSizeRatioParameters | None],
+    "distance": typing.NotRequired[CiftiFindClustersDistanceParameters | None],
+    "opt_start_startval": typing.NotRequired[int | None],
+})
+CiftiFindClustersParametersTagged = typing.TypedDict('CiftiFindClustersParametersTagged', {
+    "@type": typing.Literal["workbench/cifti-find-clusters"],
     "cifti": InputPathType,
     "surface_value_threshold": float,
     "surface_minimum_area": float,
@@ -69,47 +113,10 @@ CiftiFindClustersParameters = typing.TypedDict('CiftiFindClustersParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "workbench.cifti-find-clusters": cifti_find_clusters_cargs,
-        "workbench.cifti-find-clusters.left_surface": cifti_find_clusters_left_surface_cargs,
-        "workbench.cifti-find-clusters.right_surface": cifti_find_clusters_right_surface_cargs,
-        "workbench.cifti-find-clusters.cerebellum_surface": cifti_find_clusters_cerebellum_surface_cargs,
-        "workbench.cifti-find-clusters.size_ratio": cifti_find_clusters_size_ratio_cargs,
-        "workbench.cifti-find-clusters.distance": cifti_find_clusters_distance_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "workbench.cifti-find-clusters": cifti_find_clusters_outputs,
-    }.get(t)
-
-
 def cifti_find_clusters_left_surface_params(
     surface: InputPathType,
     opt_corrected_areas_area_metric: InputPathType | None = None,
-) -> CiftiFindClustersLeftSurfaceParameters:
+) -> CiftiFindClustersLeftSurfaceParametersTagged:
     """
     Build parameters.
     
@@ -122,7 +129,7 @@ def cifti_find_clusters_left_surface_params(
         Parameter dictionary
     """
     params = {
-        "@type": "workbench.cifti-find-clusters.left_surface",
+        "@type": "left_surface",
         "surface": surface,
     }
     if opt_corrected_areas_area_metric is not None:
@@ -145,11 +152,11 @@ def cifti_find_clusters_left_surface_cargs(
     """
     cargs = []
     cargs.append("-left-surface")
-    cargs.append(execution.input_file(params.get("surface")))
-    if params.get("opt_corrected_areas_area_metric") is not None:
+    cargs.append(execution.input_file(params.get("surface", None)))
+    if params.get("opt_corrected_areas_area_metric", None) is not None:
         cargs.extend([
             "-corrected-areas",
-            execution.input_file(params.get("opt_corrected_areas_area_metric"))
+            execution.input_file(params.get("opt_corrected_areas_area_metric", None))
         ])
     return cargs
 
@@ -157,7 +164,7 @@ def cifti_find_clusters_left_surface_cargs(
 def cifti_find_clusters_right_surface_params(
     surface: InputPathType,
     opt_corrected_areas_area_metric: InputPathType | None = None,
-) -> CiftiFindClustersRightSurfaceParameters:
+) -> CiftiFindClustersRightSurfaceParametersTagged:
     """
     Build parameters.
     
@@ -170,7 +177,7 @@ def cifti_find_clusters_right_surface_params(
         Parameter dictionary
     """
     params = {
-        "@type": "workbench.cifti-find-clusters.right_surface",
+        "@type": "right_surface",
         "surface": surface,
     }
     if opt_corrected_areas_area_metric is not None:
@@ -193,11 +200,11 @@ def cifti_find_clusters_right_surface_cargs(
     """
     cargs = []
     cargs.append("-right-surface")
-    cargs.append(execution.input_file(params.get("surface")))
-    if params.get("opt_corrected_areas_area_metric") is not None:
+    cargs.append(execution.input_file(params.get("surface", None)))
+    if params.get("opt_corrected_areas_area_metric", None) is not None:
         cargs.extend([
             "-corrected-areas",
-            execution.input_file(params.get("opt_corrected_areas_area_metric"))
+            execution.input_file(params.get("opt_corrected_areas_area_metric", None))
         ])
     return cargs
 
@@ -205,7 +212,7 @@ def cifti_find_clusters_right_surface_cargs(
 def cifti_find_clusters_cerebellum_surface_params(
     surface: InputPathType,
     opt_corrected_areas_area_metric: InputPathType | None = None,
-) -> CiftiFindClustersCerebellumSurfaceParameters:
+) -> CiftiFindClustersCerebellumSurfaceParametersTagged:
     """
     Build parameters.
     
@@ -218,7 +225,7 @@ def cifti_find_clusters_cerebellum_surface_params(
         Parameter dictionary
     """
     params = {
-        "@type": "workbench.cifti-find-clusters.cerebellum_surface",
+        "@type": "cerebellum_surface",
         "surface": surface,
     }
     if opt_corrected_areas_area_metric is not None:
@@ -241,11 +248,11 @@ def cifti_find_clusters_cerebellum_surface_cargs(
     """
     cargs = []
     cargs.append("-cerebellum-surface")
-    cargs.append(execution.input_file(params.get("surface")))
-    if params.get("opt_corrected_areas_area_metric") is not None:
+    cargs.append(execution.input_file(params.get("surface", None)))
+    if params.get("opt_corrected_areas_area_metric", None) is not None:
         cargs.extend([
             "-corrected-areas",
-            execution.input_file(params.get("opt_corrected_areas_area_metric"))
+            execution.input_file(params.get("opt_corrected_areas_area_metric", None))
         ])
     return cargs
 
@@ -253,7 +260,7 @@ def cifti_find_clusters_cerebellum_surface_cargs(
 def cifti_find_clusters_size_ratio_params(
     surface_ratio: float,
     volume_ratio: float,
-) -> CiftiFindClustersSizeRatioParameters:
+) -> CiftiFindClustersSizeRatioParametersTagged:
     """
     Build parameters.
     
@@ -264,7 +271,7 @@ def cifti_find_clusters_size_ratio_params(
         Parameter dictionary
     """
     params = {
-        "@type": "workbench.cifti-find-clusters.size_ratio",
+        "@type": "size_ratio",
         "surface_ratio": surface_ratio,
         "volume_ratio": volume_ratio,
     }
@@ -286,15 +293,15 @@ def cifti_find_clusters_size_ratio_cargs(
     """
     cargs = []
     cargs.append("-size-ratio")
-    cargs.append(str(params.get("surface_ratio")))
-    cargs.append(str(params.get("volume_ratio")))
+    cargs.append(str(params.get("surface_ratio", None)))
+    cargs.append(str(params.get("volume_ratio", None)))
     return cargs
 
 
 def cifti_find_clusters_distance_params(
     surface_distance: float,
     volume_distance: float,
-) -> CiftiFindClustersDistanceParameters:
+) -> CiftiFindClustersDistanceParametersTagged:
     """
     Build parameters.
     
@@ -307,7 +314,7 @@ def cifti_find_clusters_distance_params(
         Parameter dictionary
     """
     params = {
-        "@type": "workbench.cifti-find-clusters.distance",
+        "@type": "distance",
         "surface_distance": surface_distance,
         "volume_distance": volume_distance,
     }
@@ -329,14 +336,14 @@ def cifti_find_clusters_distance_cargs(
     """
     cargs = []
     cargs.append("-distance")
-    cargs.append(str(params.get("surface_distance")))
-    cargs.append(str(params.get("volume_distance")))
+    cargs.append(str(params.get("surface_distance", None)))
+    cargs.append(str(params.get("volume_distance", None)))
     return cargs
 
 
 class CiftiFindClustersOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `cifti_find_clusters(...)`.
+    Output object returned when calling `CiftiFindClustersParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -361,7 +368,7 @@ def cifti_find_clusters_params(
     size_ratio: CiftiFindClustersSizeRatioParameters | None = None,
     distance: CiftiFindClustersDistanceParameters | None = None,
     opt_start_startval: int | None = None,
-) -> CiftiFindClustersParameters:
+) -> CiftiFindClustersParametersTagged:
     """
     Build parameters.
     
@@ -393,7 +400,7 @@ def cifti_find_clusters_params(
         Parameter dictionary
     """
     params = {
-        "@type": "workbench.cifti-find-clusters",
+        "@type": "workbench/cifti-find-clusters",
         "cifti": cifti,
         "surface_value_threshold": surface_value_threshold,
         "surface_minimum_area": surface_minimum_area,
@@ -437,36 +444,36 @@ def cifti_find_clusters_cargs(
     cargs = []
     cargs.append("wb_command")
     cargs.append("-cifti-find-clusters")
-    cargs.append(execution.input_file(params.get("cifti")))
-    cargs.append(str(params.get("surface_value_threshold")))
-    cargs.append(str(params.get("surface_minimum_area")))
-    cargs.append(str(params.get("volume_value_threshold")))
-    cargs.append(str(params.get("volume_minimum_size")))
-    cargs.append(params.get("direction"))
-    cargs.append(params.get("cifti_out"))
-    if params.get("opt_less_than"):
+    cargs.append(execution.input_file(params.get("cifti", None)))
+    cargs.append(str(params.get("surface_value_threshold", None)))
+    cargs.append(str(params.get("surface_minimum_area", None)))
+    cargs.append(str(params.get("volume_value_threshold", None)))
+    cargs.append(str(params.get("volume_minimum_size", None)))
+    cargs.append(params.get("direction", None))
+    cargs.append(params.get("cifti_out", None))
+    if params.get("opt_less_than", False):
         cargs.append("-less-than")
-    if params.get("left_surface") is not None:
-        cargs.extend(dyn_cargs(params.get("left_surface")["@type"])(params.get("left_surface"), execution))
-    if params.get("right_surface") is not None:
-        cargs.extend(dyn_cargs(params.get("right_surface")["@type"])(params.get("right_surface"), execution))
-    if params.get("cerebellum_surface") is not None:
-        cargs.extend(dyn_cargs(params.get("cerebellum_surface")["@type"])(params.get("cerebellum_surface"), execution))
-    if params.get("opt_cifti_roi_roi_cifti") is not None:
+    if params.get("left_surface", None) is not None:
+        cargs.extend(cifti_find_clusters_left_surface_cargs(params.get("left_surface", None), execution))
+    if params.get("right_surface", None) is not None:
+        cargs.extend(cifti_find_clusters_right_surface_cargs(params.get("right_surface", None), execution))
+    if params.get("cerebellum_surface", None) is not None:
+        cargs.extend(cifti_find_clusters_cerebellum_surface_cargs(params.get("cerebellum_surface", None), execution))
+    if params.get("opt_cifti_roi_roi_cifti", None) is not None:
         cargs.extend([
             "-cifti-roi",
-            execution.input_file(params.get("opt_cifti_roi_roi_cifti"))
+            execution.input_file(params.get("opt_cifti_roi_roi_cifti", None))
         ])
-    if params.get("opt_merged_volume"):
+    if params.get("opt_merged_volume", False):
         cargs.append("-merged-volume")
-    if params.get("size_ratio") is not None:
-        cargs.extend(dyn_cargs(params.get("size_ratio")["@type"])(params.get("size_ratio"), execution))
-    if params.get("distance") is not None:
-        cargs.extend(dyn_cargs(params.get("distance")["@type"])(params.get("distance"), execution))
-    if params.get("opt_start_startval") is not None:
+    if params.get("size_ratio", None) is not None:
+        cargs.extend(cifti_find_clusters_size_ratio_cargs(params.get("size_ratio", None), execution))
+    if params.get("distance", None) is not None:
+        cargs.extend(cifti_find_clusters_distance_cargs(params.get("distance", None), execution))
+    if params.get("opt_start_startval", None) is not None:
         cargs.extend([
             "-start",
-            str(params.get("opt_start_startval"))
+            str(params.get("opt_start_startval", None))
         ])
     return cargs
 
@@ -486,7 +493,7 @@ def cifti_find_clusters_outputs(
     """
     ret = CiftiFindClustersOutputs(
         root=execution.output_file("."),
-        cifti_out=execution.output_file(params.get("cifti_out")),
+        cifti_out=execution.output_file(params.get("cifti_out", None)),
     )
     return ret
 
@@ -618,13 +625,7 @@ def cifti_find_clusters(
 
 __all__ = [
     "CIFTI_FIND_CLUSTERS_METADATA",
-    "CiftiFindClustersCerebellumSurfaceParameters",
-    "CiftiFindClustersDistanceParameters",
-    "CiftiFindClustersLeftSurfaceParameters",
     "CiftiFindClustersOutputs",
-    "CiftiFindClustersParameters",
-    "CiftiFindClustersRightSurfaceParameters",
-    "CiftiFindClustersSizeRatioParameters",
     "cifti_find_clusters",
     "cifti_find_clusters_cerebellum_surface_params",
     "cifti_find_clusters_distance_params",

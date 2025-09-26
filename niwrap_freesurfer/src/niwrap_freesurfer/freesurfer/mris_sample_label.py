@@ -14,48 +14,22 @@ MRIS_SAMPLE_LABEL_METADATA = Metadata(
 
 
 MrisSampleLabelParameters = typing.TypedDict('MrisSampleLabelParameters', {
-    "@type": typing.Literal["freesurfer.mris_sample_label"],
+    "@type": typing.NotRequired[typing.Literal["freesurfer/mris_sample_label"]],
+    "input_label_file": InputPathType,
+    "input_surface_file": InputPathType,
+    "output_label_file": str,
+})
+MrisSampleLabelParametersTagged = typing.TypedDict('MrisSampleLabelParametersTagged', {
+    "@type": typing.Literal["freesurfer/mris_sample_label"],
     "input_label_file": InputPathType,
     "input_surface_file": InputPathType,
     "output_label_file": str,
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "freesurfer.mris_sample_label": mris_sample_label_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "freesurfer.mris_sample_label": mris_sample_label_outputs,
-    }.get(t)
-
-
 class MrisSampleLabelOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `mris_sample_label(...)`.
+    Output object returned when calling `MrisSampleLabelParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -67,7 +41,7 @@ def mris_sample_label_params(
     input_label_file: InputPathType,
     input_surface_file: InputPathType,
     output_label_file: str,
-) -> MrisSampleLabelParameters:
+) -> MrisSampleLabelParametersTagged:
     """
     Build parameters.
     
@@ -79,7 +53,7 @@ def mris_sample_label_params(
         Parameter dictionary
     """
     params = {
-        "@type": "freesurfer.mris_sample_label",
+        "@type": "freesurfer/mris_sample_label",
         "input_label_file": input_label_file,
         "input_surface_file": input_surface_file,
         "output_label_file": output_label_file,
@@ -102,9 +76,9 @@ def mris_sample_label_cargs(
     """
     cargs = []
     cargs.append("mris_sample_label")
-    cargs.append(execution.input_file(params.get("input_label_file")))
-    cargs.append(execution.input_file(params.get("input_surface_file")))
-    cargs.append(params.get("output_label_file"))
+    cargs.append(execution.input_file(params.get("input_label_file", None)))
+    cargs.append(execution.input_file(params.get("input_surface_file", None)))
+    cargs.append(params.get("output_label_file", None))
     return cargs
 
 
@@ -123,7 +97,7 @@ def mris_sample_label_outputs(
     """
     ret = MrisSampleLabelOutputs(
         root=execution.output_file("."),
-        output_label_file=execution.output_file(params.get("output_label_file")),
+        output_label_file=execution.output_file(params.get("output_label_file", None)),
     )
     return ret
 
@@ -190,7 +164,6 @@ def mris_sample_label(
 __all__ = [
     "MRIS_SAMPLE_LABEL_METADATA",
     "MrisSampleLabelOutputs",
-    "MrisSampleLabelParameters",
     "mris_sample_label",
     "mris_sample_label_execute",
     "mris_sample_label_params",

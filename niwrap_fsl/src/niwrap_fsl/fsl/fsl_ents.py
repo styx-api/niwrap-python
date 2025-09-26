@@ -14,7 +14,15 @@ FSL_ENTS_METADATA = Metadata(
 
 
 FslEntsParameters = typing.TypedDict('FslEntsParameters', {
-    "@type": typing.Literal["fsl.fsl_ents"],
+    "@type": typing.NotRequired[typing.Literal["fsl/fsl_ents"]],
+    "icadir": str,
+    "components": list[str],
+    "outfile": typing.NotRequired[InputPathType | None],
+    "overwrite": bool,
+    "conffile": typing.NotRequired[list[InputPathType] | None],
+})
+FslEntsParametersTagged = typing.TypedDict('FslEntsParametersTagged', {
+    "@type": typing.Literal["fsl/fsl_ents"],
     "icadir": str,
     "components": list[str],
     "outfile": typing.NotRequired[InputPathType | None],
@@ -23,41 +31,9 @@ FslEntsParameters = typing.TypedDict('FslEntsParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "fsl.fsl_ents": fsl_ents_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "fsl.fsl_ents": fsl_ents_outputs,
-    }.get(t)
-
-
 class FslEntsOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `fsl_ents(...)`.
+    Output object returned when calling `FslEntsParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -71,7 +47,7 @@ def fsl_ents_params(
     outfile: InputPathType | None = None,
     overwrite: bool = False,
     conffile: list[InputPathType] | None = None,
-) -> FslEntsParameters:
+) -> FslEntsParametersTagged:
     """
     Build parameters.
     
@@ -86,7 +62,7 @@ def fsl_ents_params(
         Parameter dictionary
     """
     params = {
-        "@type": "fsl.fsl_ents",
+        "@type": "fsl/fsl_ents",
         "icadir": icadir,
         "components": components,
         "overwrite": overwrite,
@@ -113,19 +89,19 @@ def fsl_ents_cargs(
     """
     cargs = []
     cargs.append("fsl_ents")
-    cargs.append(params.get("icadir"))
-    cargs.extend(params.get("components"))
-    if params.get("outfile") is not None:
+    cargs.append(params.get("icadir", None))
+    cargs.extend(params.get("components", None))
+    if params.get("outfile", None) is not None:
         cargs.extend([
             "-o",
-            execution.input_file(params.get("outfile"))
+            execution.input_file(params.get("outfile", None))
         ])
-    if params.get("overwrite"):
+    if params.get("overwrite", False):
         cargs.append("-ow")
-    if params.get("conffile") is not None:
+    if params.get("conffile", None) is not None:
         cargs.extend([
             "-c",
-            *[execution.input_file(f) for f in params.get("conffile")]
+            *[execution.input_file(f) for f in params.get("conffile", None)]
         ])
     return cargs
 
@@ -145,7 +121,7 @@ def fsl_ents_outputs(
     """
     ret = FslEntsOutputs(
         root=execution.output_file("."),
-        out_time_series=execution.output_file(pathlib.Path(params.get("outfile")).name) if (params.get("outfile") is not None) else None,
+        out_time_series=execution.output_file(pathlib.Path(params.get("outfile", None)).name) if (params.get("outfile") is not None) else None,
     )
     return ret
 
@@ -219,7 +195,6 @@ def fsl_ents(
 __all__ = [
     "FSL_ENTS_METADATA",
     "FslEntsOutputs",
-    "FslEntsParameters",
     "fsl_ents",
     "fsl_ents_execute",
     "fsl_ents_params",

@@ -14,7 +14,23 @@ EPI_REG_METADATA = Metadata(
 
 
 EpiRegParameters = typing.TypedDict('EpiRegParameters', {
-    "@type": typing.Literal["fsl.epi_reg"],
+    "@type": typing.NotRequired[typing.Literal["fsl/epi_reg"]],
+    "epi": InputPathType,
+    "t1_head": InputPathType,
+    "t1_brain": InputPathType,
+    "out_base_name": str,
+    "echospacing": typing.NotRequired[float | None],
+    "fmap": typing.NotRequired[InputPathType | None],
+    "fmapmag": typing.NotRequired[InputPathType | None],
+    "fmapmagbrain": typing.NotRequired[InputPathType | None],
+    "no_clean": bool,
+    "no_fmapreg": bool,
+    "pedir": typing.NotRequired[typing.Literal["x", "y", "z", "-x", "-y", "-z"] | None],
+    "weight_image": typing.NotRequired[InputPathType | None],
+    "wmseg": typing.NotRequired[InputPathType | None],
+})
+EpiRegParametersTagged = typing.TypedDict('EpiRegParametersTagged', {
+    "@type": typing.Literal["fsl/epi_reg"],
     "epi": InputPathType,
     "t1_head": InputPathType,
     "t1_brain": InputPathType,
@@ -31,41 +47,9 @@ EpiRegParameters = typing.TypedDict('EpiRegParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "fsl.epi_reg": epi_reg_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "fsl.epi_reg": epi_reg_outputs,
-    }.get(t)
-
-
 class EpiRegOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `epi_reg(...)`.
+    Output object returned when calling `EpiRegParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -113,7 +97,7 @@ def epi_reg_params(
     pedir: typing.Literal["x", "y", "z", "-x", "-y", "-z"] | None = None,
     weight_image: InputPathType | None = None,
     wmseg: InputPathType | None = None,
-) -> EpiRegParameters:
+) -> EpiRegParametersTagged:
     """
     Build parameters.
     
@@ -139,7 +123,7 @@ def epi_reg_params(
         Parameter dictionary
     """
     params = {
-        "@type": "fsl.epi_reg",
+        "@type": "fsl/epi_reg",
         "epi": epi,
         "t1_head": t1_head,
         "t1_brain": t1_brain,
@@ -179,28 +163,28 @@ def epi_reg_cargs(
     """
     cargs = []
     cargs.append("epi_reg")
-    cargs.append("--epi=" + execution.input_file(params.get("epi")))
-    cargs.append("--t1=" + execution.input_file(params.get("t1_head")))
-    cargs.append("--t1brain=" + execution.input_file(params.get("t1_brain")))
-    cargs.append("--out=" + params.get("out_base_name"))
-    if params.get("echospacing") is not None:
-        cargs.append("--echospacing=" + str(params.get("echospacing")))
-    if params.get("fmap") is not None:
-        cargs.append("--fmap=" + execution.input_file(params.get("fmap")))
-    if params.get("fmapmag") is not None:
-        cargs.append("--fmapmag=" + execution.input_file(params.get("fmapmag")))
-    if params.get("fmapmagbrain") is not None:
-        cargs.append("--fmapmagbrain=" + execution.input_file(params.get("fmapmagbrain")))
-    if params.get("no_clean"):
+    cargs.append("--epi=" + execution.input_file(params.get("epi", None)))
+    cargs.append("--t1=" + execution.input_file(params.get("t1_head", None)))
+    cargs.append("--t1brain=" + execution.input_file(params.get("t1_brain", None)))
+    cargs.append("--out=" + params.get("out_base_name", None))
+    if params.get("echospacing", None) is not None:
+        cargs.append("--echospacing=" + str(params.get("echospacing", None)))
+    if params.get("fmap", None) is not None:
+        cargs.append("--fmap=" + execution.input_file(params.get("fmap", None)))
+    if params.get("fmapmag", None) is not None:
+        cargs.append("--fmapmag=" + execution.input_file(params.get("fmapmag", None)))
+    if params.get("fmapmagbrain", None) is not None:
+        cargs.append("--fmapmagbrain=" + execution.input_file(params.get("fmapmagbrain", None)))
+    if params.get("no_clean", False):
         cargs.append("--noclean")
-    if params.get("no_fmapreg"):
+    if params.get("no_fmapreg", False):
         cargs.append("--nofmapreg")
-    if params.get("pedir") is not None:
-        cargs.append("--pedir=" + params.get("pedir"))
-    if params.get("weight_image") is not None:
-        cargs.append("--weight=" + execution.input_file(params.get("weight_image")))
-    if params.get("wmseg") is not None:
-        cargs.append("--wmseg=" + execution.input_file(params.get("wmseg")))
+    if params.get("pedir", None) is not None:
+        cargs.append("--pedir=" + params.get("pedir", None))
+    if params.get("weight_image", None) is not None:
+        cargs.append("--weight=" + execution.input_file(params.get("weight_image", None)))
+    if params.get("wmseg", None) is not None:
+        cargs.append("--wmseg=" + execution.input_file(params.get("wmseg", None)))
     return cargs
 
 
@@ -228,11 +212,11 @@ def epi_reg_outputs(
         fmapmag_str=execution.output_file("fmapmag_str.nii.gz"),
         fullwarp=execution.output_file("fullwarp.nii.gz"),
         out_1vol=execution.output_file("out_1vol.nii.gz"),
-        out_file=execution.output_file(params.get("out_base_name") + ".nii.gz"),
-        seg=execution.output_file(params.get("out_base_name") + "_fast_seg.nii.gz"),
+        out_file=execution.output_file(params.get("out_base_name", None) + ".nii.gz"),
+        seg=execution.output_file(params.get("out_base_name", None) + "_fast_seg.nii.gz"),
         shiftmap=execution.output_file("shiftmap.nii.gz"),
-        wmedge=execution.output_file(params.get("out_base_name") + "_fast_wmedge.nii.gz"),
-        wmseg_outfile=execution.output_file(params.get("out_base_name") + "_fast_wmseg.nii.gz"),
+        wmedge=execution.output_file(params.get("out_base_name", None) + "_fast_wmedge.nii.gz"),
+        wmseg_outfile=execution.output_file(params.get("out_base_name", None) + "_fast_wmseg.nii.gz"),
     )
     return ret
 
@@ -335,7 +319,6 @@ def epi_reg(
 __all__ = [
     "EPI_REG_METADATA",
     "EpiRegOutputs",
-    "EpiRegParameters",
     "epi_reg",
     "epi_reg_execute",
     "epi_reg_params",

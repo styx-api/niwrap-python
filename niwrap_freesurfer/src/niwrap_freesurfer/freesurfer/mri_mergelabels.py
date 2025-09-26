@@ -14,48 +14,22 @@ MRI_MERGELABELS_METADATA = Metadata(
 
 
 MriMergelabelsParameters = typing.TypedDict('MriMergelabelsParameters', {
-    "@type": typing.Literal["freesurfer.mri_mergelabels"],
+    "@type": typing.NotRequired[typing.Literal["freesurfer/mri_mergelabels"]],
+    "input_labels": list[InputPathType],
+    "output_label": str,
+    "input_directory": typing.NotRequired[str | None],
+})
+MriMergelabelsParametersTagged = typing.TypedDict('MriMergelabelsParametersTagged', {
+    "@type": typing.Literal["freesurfer/mri_mergelabels"],
     "input_labels": list[InputPathType],
     "output_label": str,
     "input_directory": typing.NotRequired[str | None],
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "freesurfer.mri_mergelabels": mri_mergelabels_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "freesurfer.mri_mergelabels": mri_mergelabels_outputs,
-    }.get(t)
-
-
 class MriMergelabelsOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `mri_mergelabels(...)`.
+    Output object returned when calling `MriMergelabelsParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -67,7 +41,7 @@ def mri_mergelabels_params(
     input_labels: list[InputPathType],
     output_label: str,
     input_directory: str | None = None,
-) -> MriMergelabelsParameters:
+) -> MriMergelabelsParametersTagged:
     """
     Build parameters.
     
@@ -79,7 +53,7 @@ def mri_mergelabels_params(
         Parameter dictionary
     """
     params = {
-        "@type": "freesurfer.mri_mergelabels",
+        "@type": "freesurfer/mri_mergelabels",
         "input_labels": input_labels,
         "output_label": output_label,
     }
@@ -105,16 +79,16 @@ def mri_mergelabels_cargs(
     cargs.append("mri_mergelabels")
     cargs.extend([
         "-i",
-        *[execution.input_file(f) for f in params.get("input_labels")]
+        *[execution.input_file(f) for f in params.get("input_labels", None)]
     ])
     cargs.extend([
         "-o",
-        params.get("output_label")
+        params.get("output_label", None)
     ])
-    if params.get("input_directory") is not None:
+    if params.get("input_directory", None) is not None:
         cargs.extend([
             "-d",
-            params.get("input_directory")
+            params.get("input_directory", None)
         ])
     return cargs
 
@@ -134,7 +108,7 @@ def mri_mergelabels_outputs(
     """
     ret = MriMergelabelsOutputs(
         root=execution.output_file("."),
-        merged_label_file=execution.output_file(params.get("output_label")),
+        merged_label_file=execution.output_file(params.get("output_label", None)),
     )
     return ret
 
@@ -201,7 +175,6 @@ def mri_mergelabels(
 __all__ = [
     "MRI_MERGELABELS_METADATA",
     "MriMergelabelsOutputs",
-    "MriMergelabelsParameters",
     "mri_mergelabels",
     "mri_mergelabels_execute",
     "mri_mergelabels_params",

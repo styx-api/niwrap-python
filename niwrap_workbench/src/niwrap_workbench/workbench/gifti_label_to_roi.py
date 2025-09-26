@@ -14,7 +14,15 @@ GIFTI_LABEL_TO_ROI_METADATA = Metadata(
 
 
 GiftiLabelToRoiParameters = typing.TypedDict('GiftiLabelToRoiParameters', {
-    "@type": typing.Literal["workbench.gifti-label-to-roi"],
+    "@type": typing.NotRequired[typing.Literal["workbench/gifti-label-to-roi"]],
+    "label_in": InputPathType,
+    "metric_out": str,
+    "opt_name_label_name": typing.NotRequired[str | None],
+    "opt_key_label_key": typing.NotRequired[int | None],
+    "opt_map_map": typing.NotRequired[str | None],
+})
+GiftiLabelToRoiParametersTagged = typing.TypedDict('GiftiLabelToRoiParametersTagged', {
+    "@type": typing.Literal["workbench/gifti-label-to-roi"],
     "label_in": InputPathType,
     "metric_out": str,
     "opt_name_label_name": typing.NotRequired[str | None],
@@ -23,41 +31,9 @@ GiftiLabelToRoiParameters = typing.TypedDict('GiftiLabelToRoiParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "workbench.gifti-label-to-roi": gifti_label_to_roi_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "workbench.gifti-label-to-roi": gifti_label_to_roi_outputs,
-    }.get(t)
-
-
 class GiftiLabelToRoiOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `gifti_label_to_roi(...)`.
+    Output object returned when calling `GiftiLabelToRoiParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -71,7 +47,7 @@ def gifti_label_to_roi_params(
     opt_name_label_name: str | None = None,
     opt_key_label_key: int | None = None,
     opt_map_map: str | None = None,
-) -> GiftiLabelToRoiParameters:
+) -> GiftiLabelToRoiParametersTagged:
     """
     Build parameters.
     
@@ -87,7 +63,7 @@ def gifti_label_to_roi_params(
         Parameter dictionary
     """
     params = {
-        "@type": "workbench.gifti-label-to-roi",
+        "@type": "workbench/gifti-label-to-roi",
         "label_in": label_in,
         "metric_out": metric_out,
     }
@@ -116,22 +92,22 @@ def gifti_label_to_roi_cargs(
     cargs = []
     cargs.append("wb_command")
     cargs.append("-gifti-label-to-roi")
-    cargs.append(execution.input_file(params.get("label_in")))
-    cargs.append(params.get("metric_out"))
-    if params.get("opt_name_label_name") is not None:
+    cargs.append(execution.input_file(params.get("label_in", None)))
+    cargs.append(params.get("metric_out", None))
+    if params.get("opt_name_label_name", None) is not None:
         cargs.extend([
             "-name",
-            params.get("opt_name_label_name")
+            params.get("opt_name_label_name", None)
         ])
-    if params.get("opt_key_label_key") is not None:
+    if params.get("opt_key_label_key", None) is not None:
         cargs.extend([
             "-key",
-            str(params.get("opt_key_label_key"))
+            str(params.get("opt_key_label_key", None))
         ])
-    if params.get("opt_map_map") is not None:
+    if params.get("opt_map_map", None) is not None:
         cargs.extend([
             "-map",
-            params.get("opt_map_map")
+            params.get("opt_map_map", None)
         ])
     return cargs
 
@@ -151,7 +127,7 @@ def gifti_label_to_roi_outputs(
     """
     ret = GiftiLabelToRoiOutputs(
         root=execution.output_file("."),
-        metric_out=execution.output_file(params.get("metric_out")),
+        metric_out=execution.output_file(params.get("metric_out", None)),
     )
     return ret
 
@@ -236,7 +212,6 @@ def gifti_label_to_roi(
 __all__ = [
     "GIFTI_LABEL_TO_ROI_METADATA",
     "GiftiLabelToRoiOutputs",
-    "GiftiLabelToRoiParameters",
     "gifti_label_to_roi",
     "gifti_label_to_roi_execute",
     "gifti_label_to_roi_params",

@@ -14,7 +14,29 @@ V_3D_MEAN_METADATA = Metadata(
 
 
 V3dMeanParameters = typing.TypedDict('V3dMeanParameters', {
-    "@type": typing.Literal["afni.3dMean"],
+    "@type": typing.NotRequired[typing.Literal["afni/3dMean"]],
+    "input_files": list[InputPathType],
+    "verbose": bool,
+    "prefix": typing.NotRequired[str | None],
+    "datum": typing.NotRequired[str | None],
+    "fscale": bool,
+    "gscale": bool,
+    "nscale": bool,
+    "non_zero": bool,
+    "stdev": bool,
+    "sqr": bool,
+    "sum": bool,
+    "count": bool,
+    "max": bool,
+    "min": bool,
+    "absmax": bool,
+    "signed_absmax": bool,
+    "mask_inter": bool,
+    "mask_union": bool,
+    "weightset": typing.NotRequired[InputPathType | None],
+})
+V3dMeanParametersTagged = typing.TypedDict('V3dMeanParametersTagged', {
+    "@type": typing.Literal["afni/3dMean"],
     "input_files": list[InputPathType],
     "verbose": bool,
     "prefix": typing.NotRequired[str | None],
@@ -37,41 +59,9 @@ V3dMeanParameters = typing.TypedDict('V3dMeanParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "afni.3dMean": v_3d_mean_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "afni.3dMean": v_3d_mean_outputs,
-    }.get(t)
-
-
 class V3dMeanOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `v_3d_mean(...)`.
+    Output object returned when calling `V3dMeanParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -99,7 +89,7 @@ def v_3d_mean_params(
     mask_inter: bool = False,
     mask_union: bool = False,
     weightset: InputPathType | None = None,
-) -> V3dMeanParameters:
+) -> V3dMeanParametersTagged:
     """
     Build parameters.
     
@@ -133,7 +123,7 @@ def v_3d_mean_params(
         Parameter dictionary
     """
     params = {
-        "@type": "afni.3dMean",
+        "@type": "afni/3dMean",
         "input_files": input_files,
         "verbose": verbose,
         "fscale": fscale,
@@ -175,51 +165,51 @@ def v_3d_mean_cargs(
     """
     cargs = []
     cargs.append("3dMean")
-    cargs.extend([execution.input_file(f) for f in params.get("input_files")])
-    if params.get("verbose"):
+    cargs.extend([execution.input_file(f) for f in params.get("input_files", None)])
+    if params.get("verbose", False):
         cargs.append("-verbose")
-    if params.get("prefix") is not None:
+    if params.get("prefix", None) is not None:
         cargs.extend([
             "-prefix",
-            params.get("prefix")
+            params.get("prefix", None)
         ])
-    if params.get("datum") is not None:
+    if params.get("datum", None) is not None:
         cargs.extend([
             "-datum",
-            params.get("datum")
+            params.get("datum", None)
         ])
-    if params.get("fscale"):
+    if params.get("fscale", False):
         cargs.append("-fscale")
-    if params.get("gscale"):
+    if params.get("gscale", False):
         cargs.append("-gscale")
-    if params.get("nscale"):
+    if params.get("nscale", False):
         cargs.append("-nscale")
-    if params.get("non_zero"):
+    if params.get("non_zero", False):
         cargs.append("-non_zero")
-    if params.get("stdev"):
+    if params.get("stdev", False):
         cargs.append("-sd")
-    if params.get("sqr"):
+    if params.get("sqr", False):
         cargs.append("-sqr")
-    if params.get("sum"):
+    if params.get("sum", False):
         cargs.append("-sum")
-    if params.get("count"):
+    if params.get("count", False):
         cargs.append("-count")
-    if params.get("max"):
+    if params.get("max", False):
         cargs.append("-max")
-    if params.get("min"):
+    if params.get("min", False):
         cargs.append("-min")
-    if params.get("absmax"):
+    if params.get("absmax", False):
         cargs.append("-absmax")
-    if params.get("signed_absmax"):
+    if params.get("signed_absmax", False):
         cargs.append("-signed_absmax")
-    if params.get("mask_inter"):
+    if params.get("mask_inter", False):
         cargs.append("-mask_inter")
-    if params.get("mask_union"):
+    if params.get("mask_union", False):
         cargs.append("-mask_union")
-    if params.get("weightset") is not None:
+    if params.get("weightset", None) is not None:
         cargs.extend([
             "-weightset",
-            execution.input_file(params.get("weightset"))
+            execution.input_file(params.get("weightset", None))
         ])
     return cargs
 
@@ -239,7 +229,7 @@ def v_3d_mean_outputs(
     """
     ret = V3dMeanOutputs(
         root=execution.output_file("."),
-        output_file=execution.output_file(params.get("prefix")) if (params.get("prefix") is not None) else None,
+        output_file=execution.output_file(params.get("prefix", None)) if (params.get("prefix") is not None) else None,
     )
     return ret
 
@@ -361,7 +351,6 @@ def v_3d_mean(
 
 __all__ = [
     "V3dMeanOutputs",
-    "V3dMeanParameters",
     "V_3D_MEAN_METADATA",
     "v_3d_mean",
     "v_3d_mean_execute",

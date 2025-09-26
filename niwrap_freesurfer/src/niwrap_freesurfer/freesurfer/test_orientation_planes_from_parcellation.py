@@ -14,47 +14,22 @@ TEST_ORIENTATION_PLANES_FROM_PARCELLATION_METADATA = Metadata(
 
 
 TestOrientationPlanesFromParcellationParameters = typing.TypedDict('TestOrientationPlanesFromParcellationParameters', {
-    "@type": typing.Literal["freesurfer.testOrientationPlanesFromParcellation"],
+    "@type": typing.NotRequired[typing.Literal["freesurfer/testOrientationPlanesFromParcellation"]],
+    "input_file": InputPathType,
+    "output_file": str,
+    "bb_flag": bool,
+})
+TestOrientationPlanesFromParcellationParametersTagged = typing.TypedDict('TestOrientationPlanesFromParcellationParametersTagged', {
+    "@type": typing.Literal["freesurfer/testOrientationPlanesFromParcellation"],
     "input_file": InputPathType,
     "output_file": str,
     "bb_flag": bool,
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "freesurfer.testOrientationPlanesFromParcellation": test_orientation_planes_from_parcellation_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-    }.get(t)
-
-
 class TestOrientationPlanesFromParcellationOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `test_orientation_planes_from_parcellation(...)`.
+    Output object returned when calling `TestOrientationPlanesFromParcellationParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -64,7 +39,7 @@ def test_orientation_planes_from_parcellation_params(
     input_file: InputPathType,
     output_file: str,
     bb_flag: bool = False,
-) -> TestOrientationPlanesFromParcellationParameters:
+) -> TestOrientationPlanesFromParcellationParametersTagged:
     """
     Build parameters.
     
@@ -76,7 +51,7 @@ def test_orientation_planes_from_parcellation_params(
         Parameter dictionary
     """
     params = {
-        "@type": "freesurfer.testOrientationPlanesFromParcellation",
+        "@type": "freesurfer/testOrientationPlanesFromParcellation",
         "input_file": input_file,
         "output_file": output_file,
         "bb_flag": bb_flag,
@@ -101,13 +76,13 @@ def test_orientation_planes_from_parcellation_cargs(
     cargs.append("testOrientationPlanesFromParcellation")
     cargs.extend([
         "-i",
-        execution.input_file(params.get("input_file"))
+        execution.input_file(params.get("input_file", None))
     ])
     cargs.extend([
         "-o",
-        params.get("output_file")
+        params.get("output_file", None)
     ])
-    if params.get("bb_flag"):
+    if params.get("bb_flag", False):
         cargs.append("-bb")
     return cargs
 
@@ -193,7 +168,6 @@ def test_orientation_planes_from_parcellation(
 __all__ = [
     "TEST_ORIENTATION_PLANES_FROM_PARCELLATION_METADATA",
     "TestOrientationPlanesFromParcellationOutputs",
-    "TestOrientationPlanesFromParcellationParameters",
     "test_orientation_planes_from_parcellation",
     "test_orientation_planes_from_parcellation_execute",
     "test_orientation_planes_from_parcellation_params",

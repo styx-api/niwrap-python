@@ -14,7 +14,17 @@ MRIS_REMESH_METADATA = Metadata(
 
 
 MrisRemeshParameters = typing.TypedDict('MrisRemeshParameters', {
-    "@type": typing.Literal["freesurfer.mris_remesh"],
+    "@type": typing.NotRequired[typing.Literal["freesurfer/mris_remesh"]],
+    "input": InputPathType,
+    "output": str,
+    "edge_length": typing.NotRequired[float | None],
+    "num_vertices": typing.NotRequired[float | None],
+    "face_area": typing.NotRequired[float | None],
+    "remesh": bool,
+    "iterations": typing.NotRequired[float | None],
+})
+MrisRemeshParametersTagged = typing.TypedDict('MrisRemeshParametersTagged', {
+    "@type": typing.Literal["freesurfer/mris_remesh"],
     "input": InputPathType,
     "output": str,
     "edge_length": typing.NotRequired[float | None],
@@ -25,41 +35,9 @@ MrisRemeshParameters = typing.TypedDict('MrisRemeshParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "freesurfer.mris_remesh": mris_remesh_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "freesurfer.mris_remesh": mris_remesh_outputs,
-    }.get(t)
-
-
 class MrisRemeshOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `mris_remesh(...)`.
+    Output object returned when calling `MrisRemeshParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -75,7 +53,7 @@ def mris_remesh_params(
     face_area: float | None = None,
     remesh: bool = False,
     iterations: float | None = None,
-) -> MrisRemeshParameters:
+) -> MrisRemeshParametersTagged:
     """
     Build parameters.
     
@@ -92,7 +70,7 @@ def mris_remesh_params(
         Parameter dictionary
     """
     params = {
-        "@type": "freesurfer.mris_remesh",
+        "@type": "freesurfer/mris_remesh",
         "input": input_,
         "output": output,
         "remesh": remesh,
@@ -125,33 +103,33 @@ def mris_remesh_cargs(
     cargs.append("mris_remesh")
     cargs.extend([
         "-i",
-        execution.input_file(params.get("input"))
+        execution.input_file(params.get("input", None))
     ])
     cargs.extend([
         "-o",
-        params.get("output")
+        params.get("output", None)
     ])
-    if params.get("edge_length") is not None:
+    if params.get("edge_length", None) is not None:
         cargs.extend([
             "--edge-len",
-            str(params.get("edge_length"))
+            str(params.get("edge_length", None))
         ])
-    if params.get("num_vertices") is not None:
+    if params.get("num_vertices", None) is not None:
         cargs.extend([
             "--nvert",
-            str(params.get("num_vertices"))
+            str(params.get("num_vertices", None))
         ])
-    if params.get("face_area") is not None:
+    if params.get("face_area", None) is not None:
         cargs.extend([
             "--desired-face-area",
-            str(params.get("face_area"))
+            str(params.get("face_area", None))
         ])
-    if params.get("remesh"):
+    if params.get("remesh", False):
         cargs.append("--remesh")
-    if params.get("iterations") is not None:
+    if params.get("iterations", None) is not None:
         cargs.extend([
             "--iters",
-            str(params.get("iterations"))
+            str(params.get("iterations", None))
         ])
     return cargs
 
@@ -171,7 +149,7 @@ def mris_remesh_outputs(
     """
     ret = MrisRemeshOutputs(
         root=execution.output_file("."),
-        remeshed_output=execution.output_file(params.get("output")),
+        remeshed_output=execution.output_file(params.get("output", None)),
     )
     return ret
 
@@ -253,7 +231,6 @@ def mris_remesh(
 __all__ = [
     "MRIS_REMESH_METADATA",
     "MrisRemeshOutputs",
-    "MrisRemeshParameters",
     "mris_remesh",
     "mris_remesh_execute",
     "mris_remesh_params",

@@ -14,7 +14,14 @@ V_3D_TSPLIT4_D_METADATA = Metadata(
 
 
 V3dTsplit4DParameters = typing.TypedDict('V3dTsplit4DParameters', {
-    "@type": typing.Literal["afni.3dTsplit4D"],
+    "@type": typing.NotRequired[typing.Literal["afni/3dTsplit4D"]],
+    "prefix": str,
+    "infile": InputPathType,
+    "keep_datum": bool,
+    "digits": typing.NotRequired[float | None],
+})
+V3dTsplit4DParametersTagged = typing.TypedDict('V3dTsplit4DParametersTagged', {
+    "@type": typing.Literal["afni/3dTsplit4D"],
     "prefix": str,
     "infile": InputPathType,
     "keep_datum": bool,
@@ -22,40 +29,9 @@ V3dTsplit4DParameters = typing.TypedDict('V3dTsplit4DParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "afni.3dTsplit4D": v_3d_tsplit4_d_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-    }.get(t)
-
-
 class V3dTsplit4DOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `v_3d_tsplit4_d(...)`.
+    Output object returned when calling `V3dTsplit4DParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -66,7 +42,7 @@ def v_3d_tsplit4_d_params(
     infile: InputPathType,
     keep_datum: bool = False,
     digits: float | None = None,
-) -> V3dTsplit4DParameters:
+) -> V3dTsplit4DParametersTagged:
     """
     Build parameters.
     
@@ -79,7 +55,7 @@ def v_3d_tsplit4_d_params(
         Parameter dictionary
     """
     params = {
-        "@type": "afni.3dTsplit4D",
+        "@type": "afni/3dTsplit4D",
         "prefix": prefix,
         "infile": infile,
         "keep_datum": keep_datum,
@@ -106,15 +82,15 @@ def v_3d_tsplit4_d_cargs(
     cargs.append("3dTsplit4D")
     cargs.extend([
         "-prefix",
-        params.get("prefix")
+        params.get("prefix", None)
     ])
-    cargs.append(execution.input_file(params.get("infile")))
-    if params.get("keep_datum"):
+    cargs.append(execution.input_file(params.get("infile", None)))
+    if params.get("keep_datum", False):
         cargs.append("-keep_datum")
-    if params.get("digits") is not None:
+    if params.get("digits", None) is not None:
         cargs.extend([
             "-digits",
-            str(params.get("digits"))
+            str(params.get("digits", None))
         ])
     return cargs
 
@@ -202,7 +178,6 @@ def v_3d_tsplit4_d(
 
 __all__ = [
     "V3dTsplit4DOutputs",
-    "V3dTsplit4DParameters",
     "V_3D_TSPLIT4_D_METADATA",
     "v_3d_tsplit4_d",
     "v_3d_tsplit4_d_execute",

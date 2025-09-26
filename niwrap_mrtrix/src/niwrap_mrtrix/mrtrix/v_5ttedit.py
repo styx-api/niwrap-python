@@ -14,14 +14,38 @@ V_5TTEDIT_METADATA = Metadata(
 
 
 V5tteditConfigParameters = typing.TypedDict('V5tteditConfigParameters', {
-    "@type": typing.Literal["mrtrix.5ttedit.config"],
+    "@type": typing.NotRequired[typing.Literal["config"]],
+    "key": str,
+    "value": str,
+})
+V5tteditConfigParametersTagged = typing.TypedDict('V5tteditConfigParametersTagged', {
+    "@type": typing.Literal["config"],
     "key": str,
     "value": str,
 })
 
 
 V5tteditParameters = typing.TypedDict('V5tteditParameters', {
-    "@type": typing.Literal["mrtrix.5ttedit"],
+    "@type": typing.NotRequired[typing.Literal["mrtrix/5ttedit"]],
+    "cgm": typing.NotRequired[InputPathType | None],
+    "sgm": typing.NotRequired[InputPathType | None],
+    "wm": typing.NotRequired[InputPathType | None],
+    "csf": typing.NotRequired[InputPathType | None],
+    "path": typing.NotRequired[InputPathType | None],
+    "none": typing.NotRequired[InputPathType | None],
+    "info": bool,
+    "quiet": bool,
+    "debug": bool,
+    "force": bool,
+    "nthreads": typing.NotRequired[int | None],
+    "config": typing.NotRequired[list[V5tteditConfigParameters] | None],
+    "help": bool,
+    "version": bool,
+    "input": InputPathType,
+    "output": str,
+})
+V5tteditParametersTagged = typing.TypedDict('V5tteditParametersTagged', {
+    "@type": typing.Literal["mrtrix/5ttedit"],
     "cgm": typing.NotRequired[InputPathType | None],
     "sgm": typing.NotRequired[InputPathType | None],
     "wm": typing.NotRequired[InputPathType | None],
@@ -41,43 +65,10 @@ V5tteditParameters = typing.TypedDict('V5tteditParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "mrtrix.5ttedit": v_5ttedit_cargs,
-        "mrtrix.5ttedit.config": v_5ttedit_config_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "mrtrix.5ttedit": v_5ttedit_outputs,
-    }.get(t)
-
-
 def v_5ttedit_config_params(
     key: str,
     value: str,
-) -> V5tteditConfigParameters:
+) -> V5tteditConfigParametersTagged:
     """
     Build parameters.
     
@@ -88,7 +79,7 @@ def v_5ttedit_config_params(
         Parameter dictionary
     """
     params = {
-        "@type": "mrtrix.5ttedit.config",
+        "@type": "config",
         "key": key,
         "value": value,
     }
@@ -110,14 +101,14 @@ def v_5ttedit_config_cargs(
     """
     cargs = []
     cargs.append("-config")
-    cargs.append(params.get("key"))
-    cargs.append(params.get("value"))
+    cargs.append(params.get("key", None))
+    cargs.append(params.get("value", None))
     return cargs
 
 
 class V5tteditOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `v_5ttedit(...)`.
+    Output object returned when calling `V5tteditParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -142,7 +133,7 @@ def v_5ttedit_params(
     config: list[V5tteditConfigParameters] | None = None,
     help_: bool = False,
     version: bool = False,
-) -> V5tteditParameters:
+) -> V5tteditParametersTagged:
     """
     Build parameters.
     
@@ -175,7 +166,7 @@ def v_5ttedit_params(
         Parameter dictionary
     """
     params = {
-        "@type": "mrtrix.5ttedit",
+        "@type": "mrtrix/5ttedit",
         "info": info,
         "quiet": quiet,
         "debug": debug,
@@ -219,57 +210,57 @@ def v_5ttedit_cargs(
     """
     cargs = []
     cargs.append("5ttedit")
-    if params.get("cgm") is not None:
+    if params.get("cgm", None) is not None:
         cargs.extend([
             "-cgm",
-            execution.input_file(params.get("cgm"))
+            execution.input_file(params.get("cgm", None))
         ])
-    if params.get("sgm") is not None:
+    if params.get("sgm", None) is not None:
         cargs.extend([
             "-sgm",
-            execution.input_file(params.get("sgm"))
+            execution.input_file(params.get("sgm", None))
         ])
-    if params.get("wm") is not None:
+    if params.get("wm", None) is not None:
         cargs.extend([
             "-wm",
-            execution.input_file(params.get("wm"))
+            execution.input_file(params.get("wm", None))
         ])
-    if params.get("csf") is not None:
+    if params.get("csf", None) is not None:
         cargs.extend([
             "-csf",
-            execution.input_file(params.get("csf"))
+            execution.input_file(params.get("csf", None))
         ])
-    if params.get("path") is not None:
+    if params.get("path", None) is not None:
         cargs.extend([
             "-path",
-            execution.input_file(params.get("path"))
+            execution.input_file(params.get("path", None))
         ])
-    if params.get("none") is not None:
+    if params.get("none", None) is not None:
         cargs.extend([
             "-none",
-            execution.input_file(params.get("none"))
+            execution.input_file(params.get("none", None))
         ])
-    if params.get("info"):
+    if params.get("info", False):
         cargs.append("-info")
-    if params.get("quiet"):
+    if params.get("quiet", False):
         cargs.append("-quiet")
-    if params.get("debug"):
+    if params.get("debug", False):
         cargs.append("-debug")
-    if params.get("force"):
+    if params.get("force", False):
         cargs.append("-force")
-    if params.get("nthreads") is not None:
+    if params.get("nthreads", None) is not None:
         cargs.extend([
             "-nthreads",
-            str(params.get("nthreads"))
+            str(params.get("nthreads", None))
         ])
-    if params.get("config") is not None:
-        cargs.extend([a for c in [dyn_cargs(s["@type"])(s, execution) for s in params.get("config")] for a in c])
-    if params.get("help"):
+    if params.get("config", None) is not None:
+        cargs.extend([a for c in [v_5ttedit_config_cargs(s, execution) for s in params.get("config", None)] for a in c])
+    if params.get("help", False):
         cargs.append("-help")
-    if params.get("version"):
+    if params.get("version", False):
         cargs.append("-version")
-    cargs.append(execution.input_file(params.get("input")))
-    cargs.append(params.get("output"))
+    cargs.append(execution.input_file(params.get("input", None)))
+    cargs.append(params.get("output", None))
     return cargs
 
 
@@ -288,7 +279,7 @@ def v_5ttedit_outputs(
     """
     ret = V5tteditOutputs(
         root=execution.output_file("."),
-        output=execution.output_file(params.get("output")),
+        output=execution.output_file(params.get("output", None)),
     )
     return ret
 
@@ -414,9 +405,7 @@ def v_5ttedit(
 
 
 __all__ = [
-    "V5tteditConfigParameters",
     "V5tteditOutputs",
-    "V5tteditParameters",
     "V_5TTEDIT_METADATA",
     "v_5ttedit",
     "v_5ttedit_config_params",

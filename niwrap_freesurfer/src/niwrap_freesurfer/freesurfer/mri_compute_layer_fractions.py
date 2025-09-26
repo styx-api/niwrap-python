@@ -14,7 +14,24 @@ MRI_COMPUTE_LAYER_FRACTIONS_METADATA = Metadata(
 
 
 MriComputeLayerFractionsParameters = typing.TypedDict('MriComputeLayerFractionsParameters', {
-    "@type": typing.Literal["freesurfer.mri_compute_layer_fractions"],
+    "@type": typing.NotRequired[typing.Literal["freesurfer/mri_compute_layer_fractions"]],
+    "reg_file": InputPathType,
+    "input_volume": InputPathType,
+    "output_stem": str,
+    "output_directory": typing.NotRequired[str | None],
+    "aseg_file": typing.NotRequired[InputPathType | None],
+    "target_volume": typing.NotRequired[InputPathType | None],
+    "hemi_flag": bool,
+    "fs_names_flag": bool,
+    "subject_id": typing.NotRequired[str | None],
+    "n_layers": typing.NotRequired[float | None],
+    "synth_flag": bool,
+    "thickness": typing.NotRequired[float | None],
+    "random_file": typing.NotRequired[InputPathType | None],
+    "identity_file": typing.NotRequired[str | None],
+})
+MriComputeLayerFractionsParametersTagged = typing.TypedDict('MriComputeLayerFractionsParametersTagged', {
+    "@type": typing.Literal["freesurfer/mri_compute_layer_fractions"],
     "reg_file": InputPathType,
     "input_volume": InputPathType,
     "output_stem": str,
@@ -32,41 +49,9 @@ MriComputeLayerFractionsParameters = typing.TypedDict('MriComputeLayerFractionsP
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "freesurfer.mri_compute_layer_fractions": mri_compute_layer_fractions_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "freesurfer.mri_compute_layer_fractions": mri_compute_layer_fractions_outputs,
-    }.get(t)
-
-
 class MriComputeLayerFractionsOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `mri_compute_layer_fractions(...)`.
+    Output object returned when calling `MriComputeLayerFractionsParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -91,7 +76,7 @@ def mri_compute_layer_fractions_params(
     thickness: float | None = None,
     random_file: InputPathType | None = None,
     identity_file: str | None = None,
-) -> MriComputeLayerFractionsParameters:
+) -> MriComputeLayerFractionsParametersTagged:
     """
     Build parameters.
     
@@ -115,7 +100,7 @@ def mri_compute_layer_fractions_params(
         Parameter dictionary
     """
     params = {
-        "@type": "freesurfer.mri_compute_layer_fractions",
+        "@type": "freesurfer/mri_compute_layer_fractions",
         "reg_file": reg_file,
         "input_volume": input_volume,
         "output_stem": output_stem,
@@ -157,49 +142,49 @@ def mri_compute_layer_fractions_cargs(
     """
     cargs = []
     cargs.append("mri_compute_layer_fractions")
-    cargs.append(execution.input_file(params.get("reg_file")))
-    cargs.append(execution.input_file(params.get("input_volume")))
-    cargs.append(params.get("output_stem"))
-    if params.get("output_directory") is not None:
+    cargs.append(execution.input_file(params.get("reg_file", None)))
+    cargs.append(execution.input_file(params.get("input_volume", None)))
+    cargs.append(params.get("output_stem", None))
+    if params.get("output_directory", None) is not None:
         cargs.extend([
             "-SDIR",
-            params.get("output_directory")
+            params.get("output_directory", None)
         ])
-    if params.get("aseg_file") is not None:
+    if params.get("aseg_file", None) is not None:
         cargs.extend([
             "-a",
-            execution.input_file(params.get("aseg_file"))
+            execution.input_file(params.get("aseg_file", None))
         ])
-    if params.get("target_volume") is not None:
-        cargs.append(execution.input_file(params.get("target_volume")))
-    if params.get("hemi_flag"):
+    if params.get("target_volume", None) is not None:
+        cargs.append(execution.input_file(params.get("target_volume", None)))
+    if params.get("hemi_flag", False):
         cargs.append("-hemi")
-    if params.get("fs_names_flag"):
+    if params.get("fs_names_flag", False):
         cargs.append("-FS_names")
-    if params.get("subject_id") is not None:
+    if params.get("subject_id", None) is not None:
         cargs.extend([
             "-s",
-            params.get("subject_id")
+            params.get("subject_id", None)
         ])
-    if params.get("n_layers") is not None:
+    if params.get("n_layers", None) is not None:
         cargs.extend([
             "-nlayers",
-            str(params.get("n_layers"))
+            str(params.get("n_layers", None))
         ])
-    if params.get("synth_flag"):
+    if params.get("synth_flag", False):
         cargs.append("-synth")
-    if params.get("thickness") is not None:
+    if params.get("thickness", None) is not None:
         cargs.extend([
             "-r",
-            str(params.get("thickness"))
+            str(params.get("thickness", None))
         ])
-    if params.get("random_file") is not None:
+    if params.get("random_file", None) is not None:
         cargs.extend([
             "-n",
-            execution.input_file(params.get("random_file"))
+            execution.input_file(params.get("random_file", None))
         ])
-    if params.get("identity_file") is not None:
-        cargs.append(params.get("identity_file"))
+    if params.get("identity_file", None) is not None:
+        cargs.append(params.get("identity_file", None))
     return cargs
 
 
@@ -218,8 +203,8 @@ def mri_compute_layer_fractions_outputs(
     """
     ret = MriComputeLayerFractionsOutputs(
         root=execution.output_file("."),
-        layer_fractions_output=execution.output_file(params.get("output_stem") + "_layer_fractions.mgz"),
-        synth_output=execution.output_file(params.get("output_stem") + "_synth.mgz"),
+        layer_fractions_output=execution.output_file(params.get("output_stem", None) + "_layer_fractions.mgz"),
+        synth_output=execution.output_file(params.get("output_stem", None) + "_synth.mgz"),
     )
     return ret
 
@@ -322,7 +307,6 @@ def mri_compute_layer_fractions(
 __all__ = [
     "MRI_COMPUTE_LAYER_FRACTIONS_METADATA",
     "MriComputeLayerFractionsOutputs",
-    "MriComputeLayerFractionsParameters",
     "mri_compute_layer_fractions",
     "mri_compute_layer_fractions_execute",
     "mri_compute_layer_fractions_params",

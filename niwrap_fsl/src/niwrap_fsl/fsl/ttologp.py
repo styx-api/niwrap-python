@@ -14,7 +14,15 @@ TTOLOGP_METADATA = Metadata(
 
 
 TtologpParameters = typing.TypedDict('TtologpParameters', {
-    "@type": typing.Literal["fsl.ttologp"],
+    "@type": typing.NotRequired[typing.Literal["fsl/ttologp"]],
+    "varsfile": InputPathType,
+    "cbsfile": InputPathType,
+    "dof": str,
+    "outputvol": typing.NotRequired[str | None],
+    "help_flag": bool,
+})
+TtologpParametersTagged = typing.TypedDict('TtologpParametersTagged', {
+    "@type": typing.Literal["fsl/ttologp"],
     "varsfile": InputPathType,
     "cbsfile": InputPathType,
     "dof": str,
@@ -23,41 +31,9 @@ TtologpParameters = typing.TypedDict('TtologpParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "fsl.ttologp": ttologp_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "fsl.ttologp": ttologp_outputs,
-    }.get(t)
-
-
 class TtologpOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `ttologp(...)`.
+    Output object returned when calling `TtologpParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -71,7 +47,7 @@ def ttologp_params(
     dof: str,
     outputvol: str | None = None,
     help_flag: bool = False,
-) -> TtologpParameters:
+) -> TtologpParametersTagged:
     """
     Build parameters.
     
@@ -85,7 +61,7 @@ def ttologp_params(
         Parameter dictionary
     """
     params = {
-        "@type": "fsl.ttologp",
+        "@type": "fsl/ttologp",
         "varsfile": varsfile,
         "cbsfile": cbsfile,
         "dof": dof,
@@ -111,15 +87,15 @@ def ttologp_cargs(
     """
     cargs = []
     cargs.append("ttologp")
-    cargs.append(execution.input_file(params.get("varsfile")))
-    cargs.append(execution.input_file(params.get("cbsfile")))
-    cargs.append(params.get("dof"))
-    if params.get("outputvol") is not None:
+    cargs.append(execution.input_file(params.get("varsfile", None)))
+    cargs.append(execution.input_file(params.get("cbsfile", None)))
+    cargs.append(params.get("dof", None))
+    if params.get("outputvol", None) is not None:
         cargs.extend([
             "-logpout",
-            params.get("outputvol")
+            params.get("outputvol", None)
         ])
-    if params.get("help_flag"):
+    if params.get("help_flag", False):
         cargs.append("-help")
     return cargs
 
@@ -139,7 +115,7 @@ def ttologp_outputs(
     """
     ret = TtologpOutputs(
         root=execution.output_file("."),
-        output_logpvol=execution.output_file(params.get("outputvol") + ".nii.gz") if (params.get("outputvol") is not None) else None,
+        output_logpvol=execution.output_file(params.get("outputvol", None) + ".nii.gz") if (params.get("outputvol") is not None) else None,
     )
     return ret
 
@@ -212,7 +188,6 @@ def ttologp(
 __all__ = [
     "TTOLOGP_METADATA",
     "TtologpOutputs",
-    "TtologpParameters",
     "ttologp",
     "ttologp_execute",
     "ttologp_params",

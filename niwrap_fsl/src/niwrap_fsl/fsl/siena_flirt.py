@@ -14,47 +14,20 @@ SIENA_FLIRT_METADATA = Metadata(
 
 
 SienaFlirtParameters = typing.TypedDict('SienaFlirtParameters', {
-    "@type": typing.Literal["fsl.siena_flirt"],
+    "@type": typing.NotRequired[typing.Literal["fsl/siena_flirt"]],
+    "input1_fileroot": str,
+    "input2_fileroot": str,
+})
+SienaFlirtParametersTagged = typing.TypedDict('SienaFlirtParametersTagged', {
+    "@type": typing.Literal["fsl/siena_flirt"],
     "input1_fileroot": str,
     "input2_fileroot": str,
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "fsl.siena_flirt": siena_flirt_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "fsl.siena_flirt": siena_flirt_outputs,
-    }.get(t)
-
-
 class SienaFlirtOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `siena_flirt(...)`.
+    Output object returned when calling `SienaFlirtParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -67,7 +40,7 @@ class SienaFlirtOutputs(typing.NamedTuple):
 def siena_flirt_params(
     input1_fileroot: str,
     input2_fileroot: str,
-) -> SienaFlirtParameters:
+) -> SienaFlirtParametersTagged:
     """
     Build parameters.
     
@@ -80,7 +53,7 @@ def siena_flirt_params(
         Parameter dictionary
     """
     params = {
-        "@type": "fsl.siena_flirt",
+        "@type": "fsl/siena_flirt",
         "input1_fileroot": input1_fileroot,
         "input2_fileroot": input2_fileroot,
     }
@@ -102,8 +75,8 @@ def siena_flirt_cargs(
     """
     cargs = []
     cargs.append("siena_flirt")
-    cargs.append(params.get("input1_fileroot"))
-    cargs.append(params.get("input2_fileroot"))
+    cargs.append(params.get("input1_fileroot", None))
+    cargs.append(params.get("input2_fileroot", None))
     return cargs
 
 
@@ -122,8 +95,8 @@ def siena_flirt_outputs(
     """
     ret = SienaFlirtOutputs(
         root=execution.output_file("."),
-        output_transform_matrix=execution.output_file(params.get("input1_fileroot") + "_to_" + params.get("input2_fileroot") + "_flirt.mat"),
-        output_registered_image=execution.output_file(params.get("input1_fileroot") + "_to_" + params.get("input2_fileroot") + "_flirt.nii.gz"),
+        output_transform_matrix=execution.output_file(params.get("input1_fileroot", None) + "_to_" + params.get("input2_fileroot", None) + "_flirt.mat"),
+        output_registered_image=execution.output_file(params.get("input1_fileroot", None) + "_to_" + params.get("input2_fileroot", None) + "_flirt.nii.gz"),
     )
     return ret
 
@@ -189,7 +162,6 @@ def siena_flirt(
 __all__ = [
     "SIENA_FLIRT_METADATA",
     "SienaFlirtOutputs",
-    "SienaFlirtParameters",
     "siena_flirt",
     "siena_flirt_execute",
     "siena_flirt_params",

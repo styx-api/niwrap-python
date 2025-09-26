@@ -14,7 +14,15 @@ DMRI_STATS_AC_METADATA = Metadata(
 
 
 DmriStatsAcParameters = typing.TypedDict('DmriStatsAcParameters', {
-    "@type": typing.Literal["freesurfer.dmri_stats_ac"],
+    "@type": typing.NotRequired[typing.Literal["freesurfer/dmri_stats_ac"]],
+    "anatomicuts_folder": str,
+    "num_clusters": int,
+    "correspondence_file": str,
+    "measures": list[str],
+    "output_file": str,
+})
+DmriStatsAcParametersTagged = typing.TypedDict('DmriStatsAcParametersTagged', {
+    "@type": typing.Literal["freesurfer/dmri_stats_ac"],
     "anatomicuts_folder": str,
     "num_clusters": int,
     "correspondence_file": str,
@@ -23,41 +31,9 @@ DmriStatsAcParameters = typing.TypedDict('DmriStatsAcParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "freesurfer.dmri_stats_ac": dmri_stats_ac_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "freesurfer.dmri_stats_ac": dmri_stats_ac_outputs,
-    }.get(t)
-
-
 class DmriStatsAcOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `dmri_stats_ac(...)`.
+    Output object returned when calling `DmriStatsAcParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -71,7 +47,7 @@ def dmri_stats_ac_params(
     correspondence_file: str,
     measures: list[str],
     output_file: str,
-) -> DmriStatsAcParameters:
+) -> DmriStatsAcParametersTagged:
     """
     Build parameters.
     
@@ -85,7 +61,7 @@ def dmri_stats_ac_params(
         Parameter dictionary
     """
     params = {
-        "@type": "freesurfer.dmri_stats_ac",
+        "@type": "freesurfer/dmri_stats_ac",
         "anatomicuts_folder": anatomicuts_folder,
         "num_clusters": num_clusters,
         "correspondence_file": correspondence_file,
@@ -112,23 +88,23 @@ def dmri_stats_ac_cargs(
     cargs.append("dmri_stats_ac")
     cargs.extend([
         "-i",
-        params.get("anatomicuts_folder")
+        params.get("anatomicuts_folder", None)
     ])
     cargs.extend([
         "-n",
-        str(params.get("num_clusters"))
+        str(params.get("num_clusters", None))
     ])
     cargs.extend([
         "-c",
-        params.get("correspondence_file")
+        params.get("correspondence_file", None)
     ])
     cargs.extend([
         "-m",
-        *params.get("measures")
+        *params.get("measures", None)
     ])
     cargs.extend([
         "-o",
-        params.get("output_file")
+        params.get("output_file", None)
     ])
     return cargs
 
@@ -148,7 +124,7 @@ def dmri_stats_ac_outputs(
     """
     ret = DmriStatsAcOutputs(
         root=execution.output_file("."),
-        output_file=execution.output_file(params.get("output_file")),
+        output_file=execution.output_file(params.get("output_file", None)),
     )
     return ret
 
@@ -221,7 +197,6 @@ def dmri_stats_ac(
 __all__ = [
     "DMRI_STATS_AC_METADATA",
     "DmriStatsAcOutputs",
-    "DmriStatsAcParameters",
     "dmri_stats_ac",
     "dmri_stats_ac_execute",
     "dmri_stats_ac_params",

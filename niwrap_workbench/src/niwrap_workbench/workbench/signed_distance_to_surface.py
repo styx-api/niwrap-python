@@ -14,7 +14,14 @@ SIGNED_DISTANCE_TO_SURFACE_METADATA = Metadata(
 
 
 SignedDistanceToSurfaceParameters = typing.TypedDict('SignedDistanceToSurfaceParameters', {
-    "@type": typing.Literal["workbench.signed-distance-to-surface"],
+    "@type": typing.NotRequired[typing.Literal["workbench/signed-distance-to-surface"]],
+    "surface_comp": InputPathType,
+    "surface_ref": InputPathType,
+    "metric": str,
+    "opt_winding_method": typing.NotRequired[str | None],
+})
+SignedDistanceToSurfaceParametersTagged = typing.TypedDict('SignedDistanceToSurfaceParametersTagged', {
+    "@type": typing.Literal["workbench/signed-distance-to-surface"],
     "surface_comp": InputPathType,
     "surface_ref": InputPathType,
     "metric": str,
@@ -22,41 +29,9 @@ SignedDistanceToSurfaceParameters = typing.TypedDict('SignedDistanceToSurfacePar
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "workbench.signed-distance-to-surface": signed_distance_to_surface_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "workbench.signed-distance-to-surface": signed_distance_to_surface_outputs,
-    }.get(t)
-
-
 class SignedDistanceToSurfaceOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `signed_distance_to_surface(...)`.
+    Output object returned when calling `SignedDistanceToSurfaceParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -69,7 +44,7 @@ def signed_distance_to_surface_params(
     surface_ref: InputPathType,
     metric: str,
     opt_winding_method: str | None = None,
-) -> SignedDistanceToSurfaceParameters:
+) -> SignedDistanceToSurfaceParametersTagged:
     """
     Build parameters.
     
@@ -84,7 +59,7 @@ def signed_distance_to_surface_params(
         Parameter dictionary
     """
     params = {
-        "@type": "workbench.signed-distance-to-surface",
+        "@type": "workbench/signed-distance-to-surface",
         "surface_comp": surface_comp,
         "surface_ref": surface_ref,
         "metric": metric,
@@ -110,13 +85,13 @@ def signed_distance_to_surface_cargs(
     cargs = []
     cargs.append("wb_command")
     cargs.append("-signed-distance-to-surface")
-    cargs.append(execution.input_file(params.get("surface_comp")))
-    cargs.append(execution.input_file(params.get("surface_ref")))
-    cargs.append(params.get("metric"))
-    if params.get("opt_winding_method") is not None:
+    cargs.append(execution.input_file(params.get("surface_comp", None)))
+    cargs.append(execution.input_file(params.get("surface_ref", None)))
+    cargs.append(params.get("metric", None))
+    if params.get("opt_winding_method", None) is not None:
         cargs.extend([
             "-winding",
-            params.get("opt_winding_method")
+            params.get("opt_winding_method", None)
         ])
     return cargs
 
@@ -136,7 +111,7 @@ def signed_distance_to_surface_outputs(
     """
     ret = SignedDistanceToSurfaceOutputs(
         root=execution.output_file("."),
-        metric=execution.output_file(params.get("metric")),
+        metric=execution.output_file(params.get("metric", None)),
     )
     return ret
 
@@ -244,7 +219,6 @@ def signed_distance_to_surface(
 __all__ = [
     "SIGNED_DISTANCE_TO_SURFACE_METADATA",
     "SignedDistanceToSurfaceOutputs",
-    "SignedDistanceToSurfaceParameters",
     "signed_distance_to_surface",
     "signed_distance_to_surface_execute",
     "signed_distance_to_surface_params",

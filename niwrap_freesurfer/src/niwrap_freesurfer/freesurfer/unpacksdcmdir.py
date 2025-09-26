@@ -14,47 +14,20 @@ UNPACKSDCMDIR_METADATA = Metadata(
 
 
 UnpacksdcmdirParameters = typing.TypedDict('UnpacksdcmdirParameters', {
-    "@type": typing.Literal["freesurfer.unpacksdcmdir"],
+    "@type": typing.NotRequired[typing.Literal["freesurfer/unpacksdcmdir"]],
+    "input_directory": str,
+    "output_directory": str,
+})
+UnpacksdcmdirParametersTagged = typing.TypedDict('UnpacksdcmdirParametersTagged', {
+    "@type": typing.Literal["freesurfer/unpacksdcmdir"],
     "input_directory": str,
     "output_directory": str,
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "freesurfer.unpacksdcmdir": unpacksdcmdir_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "freesurfer.unpacksdcmdir": unpacksdcmdir_outputs,
-    }.get(t)
-
-
 class UnpacksdcmdirOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `unpacksdcmdir(...)`.
+    Output object returned when calling `UnpacksdcmdirParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -65,7 +38,7 @@ class UnpacksdcmdirOutputs(typing.NamedTuple):
 def unpacksdcmdir_params(
     input_directory: str,
     output_directory: str,
-) -> UnpacksdcmdirParameters:
+) -> UnpacksdcmdirParametersTagged:
     """
     Build parameters.
     
@@ -77,7 +50,7 @@ def unpacksdcmdir_params(
         Parameter dictionary
     """
     params = {
-        "@type": "freesurfer.unpacksdcmdir",
+        "@type": "freesurfer/unpacksdcmdir",
         "input_directory": input_directory,
         "output_directory": output_directory,
     }
@@ -99,8 +72,8 @@ def unpacksdcmdir_cargs(
     """
     cargs = []
     cargs.append("unpacksdcmdir")
-    cargs.append(params.get("input_directory"))
-    cargs.append(params.get("output_directory"))
+    cargs.append(params.get("input_directory", None))
+    cargs.append(params.get("output_directory", None))
     return cargs
 
 
@@ -119,7 +92,7 @@ def unpacksdcmdir_outputs(
     """
     ret = UnpacksdcmdirOutputs(
         root=execution.output_file("."),
-        unpacked_data=execution.output_file(params.get("output_directory") + "/unpacked_data"),
+        unpacked_data=execution.output_file(params.get("output_directory", None) + "/unpacked_data"),
     )
     return ret
 
@@ -188,7 +161,6 @@ def unpacksdcmdir(
 __all__ = [
     "UNPACKSDCMDIR_METADATA",
     "UnpacksdcmdirOutputs",
-    "UnpacksdcmdirParameters",
     "unpacksdcmdir",
     "unpacksdcmdir_execute",
     "unpacksdcmdir_params",

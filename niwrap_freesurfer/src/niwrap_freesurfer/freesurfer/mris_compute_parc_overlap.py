@@ -14,7 +14,26 @@ MRIS_COMPUTE_PARC_OVERLAP_METADATA = Metadata(
 
 
 MrisComputeParcOverlapParameters = typing.TypedDict('MrisComputeParcOverlapParameters', {
-    "@type": typing.Literal["freesurfer.mris_compute_parc_overlap"],
+    "@type": typing.NotRequired[typing.Literal["freesurfer/mris_compute_parc_overlap"]],
+    "subject": str,
+    "hemi": str,
+    "annot1": typing.NotRequired[InputPathType | None],
+    "annot2": typing.NotRequired[InputPathType | None],
+    "label1": typing.NotRequired[InputPathType | None],
+    "label2": typing.NotRequired[InputPathType | None],
+    "subj_dir": typing.NotRequired[str | None],
+    "log_file": typing.NotRequired[str | None],
+    "label_list": typing.NotRequired[InputPathType | None],
+    "nocheck_label1_xyz": bool,
+    "nocheck_label2_xyz": bool,
+    "nocheck_label_xyz": bool,
+    "use_label1_xyz": bool,
+    "use_label2_xyz": bool,
+    "use_label_xyz": bool,
+    "debug_overlap": bool,
+})
+MrisComputeParcOverlapParametersTagged = typing.TypedDict('MrisComputeParcOverlapParametersTagged', {
+    "@type": typing.Literal["freesurfer/mris_compute_parc_overlap"],
     "subject": str,
     "hemi": str,
     "annot1": typing.NotRequired[InputPathType | None],
@@ -34,40 +53,9 @@ MrisComputeParcOverlapParameters = typing.TypedDict('MrisComputeParcOverlapParam
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "freesurfer.mris_compute_parc_overlap": mris_compute_parc_overlap_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-    }.get(t)
-
-
 class MrisComputeParcOverlapOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `mris_compute_parc_overlap(...)`.
+    Output object returned when calling `MrisComputeParcOverlapParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -90,7 +78,7 @@ def mris_compute_parc_overlap_params(
     use_label2_xyz: bool = False,
     use_label_xyz: bool = False,
     debug_overlap: bool = False,
-) -> MrisComputeParcOverlapParameters:
+) -> MrisComputeParcOverlapParametersTagged:
     """
     Build parameters.
     
@@ -117,7 +105,7 @@ def mris_compute_parc_overlap_params(
         Parameter dictionary
     """
     params = {
-        "@type": "freesurfer.mris_compute_parc_overlap",
+        "@type": "freesurfer/mris_compute_parc_overlap",
         "subject": subject,
         "hemi": hemi,
         "nocheck_label1_xyz": nocheck_label1_xyz,
@@ -162,60 +150,60 @@ def mris_compute_parc_overlap_cargs(
     cargs.append("mris_compute_parc_overlap")
     cargs.extend([
         "--s",
-        params.get("subject")
+        params.get("subject", None)
     ])
     cargs.extend([
         "--hemi",
-        params.get("hemi")
+        params.get("hemi", None)
     ])
-    if params.get("annot1") is not None:
+    if params.get("annot1", None) is not None:
         cargs.extend([
             "--annot1",
-            execution.input_file(params.get("annot1"))
+            execution.input_file(params.get("annot1", None))
         ])
-    if params.get("annot2") is not None:
+    if params.get("annot2", None) is not None:
         cargs.extend([
             "--annot2",
-            execution.input_file(params.get("annot2"))
+            execution.input_file(params.get("annot2", None))
         ])
-    if params.get("label1") is not None:
+    if params.get("label1", None) is not None:
         cargs.extend([
             "--label1",
-            execution.input_file(params.get("label1"))
+            execution.input_file(params.get("label1", None))
         ])
-    if params.get("label2") is not None:
+    if params.get("label2", None) is not None:
         cargs.extend([
             "--label2",
-            execution.input_file(params.get("label2"))
+            execution.input_file(params.get("label2", None))
         ])
-    if params.get("subj_dir") is not None:
+    if params.get("subj_dir", None) is not None:
         cargs.extend([
             "--sd",
-            params.get("subj_dir")
+            params.get("subj_dir", None)
         ])
-    if params.get("log_file") is not None:
+    if params.get("log_file", None) is not None:
         cargs.extend([
             "--log",
-            params.get("log_file")
+            params.get("log_file", None)
         ])
-    if params.get("label_list") is not None:
+    if params.get("label_list", None) is not None:
         cargs.extend([
             "--label-list",
-            execution.input_file(params.get("label_list"))
+            execution.input_file(params.get("label_list", None))
         ])
-    if params.get("nocheck_label1_xyz"):
+    if params.get("nocheck_label1_xyz", False):
         cargs.append("--nocheck-label1-xyz")
-    if params.get("nocheck_label2_xyz"):
+    if params.get("nocheck_label2_xyz", False):
         cargs.append("--nocheck-label2-xyz")
-    if params.get("nocheck_label_xyz"):
+    if params.get("nocheck_label_xyz", False):
         cargs.append("--nocheck-label-xyz")
-    if params.get("use_label1_xyz"):
+    if params.get("use_label1_xyz", False):
         cargs.append("--use-label1-xyz")
-    if params.get("use_label2_xyz"):
+    if params.get("use_label2_xyz", False):
         cargs.append("--use-label2-xyz")
-    if params.get("use_label_xyz"):
+    if params.get("use_label_xyz", False):
         cargs.append("--use-label-xyz")
-    if params.get("debug_overlap"):
+    if params.get("debug_overlap", False):
         cargs.append("--debug-overlap")
     return cargs
 
@@ -344,7 +332,6 @@ def mris_compute_parc_overlap(
 __all__ = [
     "MRIS_COMPUTE_PARC_OVERLAP_METADATA",
     "MrisComputeParcOverlapOutputs",
-    "MrisComputeParcOverlapParameters",
     "mris_compute_parc_overlap",
     "mris_compute_parc_overlap_execute",
     "mris_compute_parc_overlap_params",

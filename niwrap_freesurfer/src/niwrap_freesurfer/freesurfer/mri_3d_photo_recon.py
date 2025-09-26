@@ -14,7 +14,24 @@ MRI_3D_PHOTO_RECON_METADATA = Metadata(
 
 
 Mri3dPhotoReconParameters = typing.TypedDict('Mri3dPhotoReconParameters', {
-    "@type": typing.Literal["freesurfer.mri_3d_photo_recon"],
+    "@type": typing.NotRequired[typing.Literal["freesurfer/mri_3d_photo_recon"]],
+    "input_photo_dir": list[InputPathType],
+    "input_segmentation_dir": list[InputPathType],
+    "slice_thickness": float,
+    "photo_resolution": float,
+    "output_directory": str,
+    "ref_mask": typing.NotRequired[InputPathType | None],
+    "ref_surface": typing.NotRequired[InputPathType | None],
+    "ref_soft_mask": typing.NotRequired[InputPathType | None],
+    "mesh_reorient_with_indices": typing.NotRequired[str | None],
+    "photos_posterior_side": bool,
+    "order_posterior_to_anterior": bool,
+    "allow_z_stretch": bool,
+    "rigid_only_for_photos": bool,
+    "gpu_index": typing.NotRequired[float | None],
+})
+Mri3dPhotoReconParametersTagged = typing.TypedDict('Mri3dPhotoReconParametersTagged', {
+    "@type": typing.Literal["freesurfer/mri_3d_photo_recon"],
     "input_photo_dir": list[InputPathType],
     "input_segmentation_dir": list[InputPathType],
     "slice_thickness": float,
@@ -32,41 +49,9 @@ Mri3dPhotoReconParameters = typing.TypedDict('Mri3dPhotoReconParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "freesurfer.mri_3d_photo_recon": mri_3d_photo_recon_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "freesurfer.mri_3d_photo_recon": mri_3d_photo_recon_outputs,
-    }.get(t)
-
-
 class Mri3dPhotoReconOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `mri_3d_photo_recon(...)`.
+    Output object returned when calling `Mri3dPhotoReconParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -91,7 +76,7 @@ def mri_3d_photo_recon_params(
     allow_z_stretch: bool = False,
     rigid_only_for_photos: bool = False,
     gpu_index: float | None = None,
-) -> Mri3dPhotoReconParameters:
+) -> Mri3dPhotoReconParametersTagged:
     """
     Build parameters.
     
@@ -123,7 +108,7 @@ def mri_3d_photo_recon_params(
         Parameter dictionary
     """
     params = {
-        "@type": "freesurfer.mri_3d_photo_recon",
+        "@type": "freesurfer/mri_3d_photo_recon",
         "input_photo_dir": input_photo_dir,
         "input_segmentation_dir": input_segmentation_dir,
         "slice_thickness": slice_thickness,
@@ -164,56 +149,56 @@ def mri_3d_photo_recon_cargs(
     cargs.append("mri_3d_photo_recon")
     cargs.extend([
         "--input_photo_dir",
-        *[execution.input_file(f) for f in params.get("input_photo_dir")]
+        *[execution.input_file(f) for f in params.get("input_photo_dir", None)]
     ])
     cargs.extend([
         "--input_segmentation_dir",
-        *[execution.input_file(f) for f in params.get("input_segmentation_dir")]
+        *[execution.input_file(f) for f in params.get("input_segmentation_dir", None)]
     ])
     cargs.extend([
         "--slice_thickness",
-        str(params.get("slice_thickness"))
+        str(params.get("slice_thickness", None))
     ])
     cargs.extend([
         "--photo_resolution",
-        str(params.get("photo_resolution"))
+        str(params.get("photo_resolution", None))
     ])
     cargs.extend([
         "--output_directory",
-        params.get("output_directory")
+        params.get("output_directory", None)
     ])
-    if params.get("ref_mask") is not None:
+    if params.get("ref_mask", None) is not None:
         cargs.extend([
             "--ref_mask",
-            execution.input_file(params.get("ref_mask"))
+            execution.input_file(params.get("ref_mask", None))
         ])
-    if params.get("ref_surface") is not None:
+    if params.get("ref_surface", None) is not None:
         cargs.extend([
             "--ref_surface",
-            execution.input_file(params.get("ref_surface"))
+            execution.input_file(params.get("ref_surface", None))
         ])
-    if params.get("ref_soft_mask") is not None:
+    if params.get("ref_soft_mask", None) is not None:
         cargs.extend([
             "--ref_soft_mask",
-            execution.input_file(params.get("ref_soft_mask"))
+            execution.input_file(params.get("ref_soft_mask", None))
         ])
-    if params.get("mesh_reorient_with_indices") is not None:
+    if params.get("mesh_reorient_with_indices", None) is not None:
         cargs.extend([
             "--mesh_reorient_with_indices",
-            params.get("mesh_reorient_with_indices")
+            params.get("mesh_reorient_with_indices", None)
         ])
-    if params.get("photos_posterior_side"):
+    if params.get("photos_posterior_side", False):
         cargs.append("--photos_of_posterior_side")
-    if params.get("order_posterior_to_anterior"):
+    if params.get("order_posterior_to_anterior", False):
         cargs.append("--order_posterior_to_anterior")
-    if params.get("allow_z_stretch"):
+    if params.get("allow_z_stretch", False):
         cargs.append("--allow_z_stretch")
-    if params.get("rigid_only_for_photos"):
+    if params.get("rigid_only_for_photos", False):
         cargs.append("--rigid_only_for_photos")
-    if params.get("gpu_index") is not None:
+    if params.get("gpu_index", None) is not None:
         cargs.extend([
             "--gpu",
-            str(params.get("gpu_index"))
+            str(params.get("gpu_index", None))
         ])
     return cargs
 
@@ -233,8 +218,8 @@ def mri_3d_photo_recon_outputs(
     """
     ret = Mri3dPhotoReconOutputs(
         root=execution.output_file("."),
-        reconstructed_volume=execution.output_file(params.get("output_directory") + "/reconstructed_volume.nii.gz"),
-        reference_data=execution.output_file(params.get("output_directory") + "/reference_data.nii.gz"),
+        reconstructed_volume=execution.output_file(params.get("output_directory", None) + "/reconstructed_volume.nii.gz"),
+        reference_data=execution.output_file(params.get("output_directory", None) + "/reference_data.nii.gz"),
     )
     return ret
 
@@ -343,7 +328,6 @@ def mri_3d_photo_recon(
 __all__ = [
     "MRI_3D_PHOTO_RECON_METADATA",
     "Mri3dPhotoReconOutputs",
-    "Mri3dPhotoReconParameters",
     "mri_3d_photo_recon",
     "mri_3d_photo_recon_execute",
     "mri_3d_photo_recon_params",

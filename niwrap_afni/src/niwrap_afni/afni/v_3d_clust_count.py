@@ -14,7 +14,14 @@ V_3D_CLUST_COUNT_METADATA = Metadata(
 
 
 V3dClustCountParameters = typing.TypedDict('V3dClustCountParameters', {
-    "@type": typing.Literal["afni.3dClustCount"],
+    "@type": typing.NotRequired[typing.Literal["afni/3dClustCount"]],
+    "datasets": list[InputPathType],
+    "prefix": typing.NotRequired[str | None],
+    "final": bool,
+    "quiet": bool,
+})
+V3dClustCountParametersTagged = typing.TypedDict('V3dClustCountParametersTagged', {
+    "@type": typing.Literal["afni/3dClustCount"],
     "datasets": list[InputPathType],
     "prefix": typing.NotRequired[str | None],
     "final": bool,
@@ -22,41 +29,9 @@ V3dClustCountParameters = typing.TypedDict('V3dClustCountParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "afni.3dClustCount": v_3d_clust_count_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "afni.3dClustCount": v_3d_clust_count_outputs,
-    }.get(t)
-
-
 class V3dClustCountOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `v_3d_clust_count(...)`.
+    Output object returned when calling `V3dClustCountParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -73,7 +48,7 @@ def v_3d_clust_count_params(
     prefix: str | None = None,
     final: bool = False,
     quiet: bool = False,
-) -> V3dClustCountParameters:
+) -> V3dClustCountParametersTagged:
     """
     Build parameters.
     
@@ -93,7 +68,7 @@ def v_3d_clust_count_params(
         Parameter dictionary
     """
     params = {
-        "@type": "afni.3dClustCount",
+        "@type": "afni/3dClustCount",
         "datasets": datasets,
         "final": final,
         "quiet": quiet,
@@ -118,15 +93,15 @@ def v_3d_clust_count_cargs(
     """
     cargs = []
     cargs.append("3dClustCount")
-    cargs.extend([execution.input_file(f) for f in params.get("datasets")])
-    if params.get("prefix") is not None:
+    cargs.extend([execution.input_file(f) for f in params.get("datasets", None)])
+    if params.get("prefix", None) is not None:
         cargs.extend([
             "-prefix",
-            params.get("prefix")
+            params.get("prefix", None)
         ])
-    if params.get("final"):
+    if params.get("final", False):
         cargs.append("-final")
-    if params.get("quiet"):
+    if params.get("quiet", False):
         cargs.append("-quiet")
     return cargs
 
@@ -146,9 +121,9 @@ def v_3d_clust_count_outputs(
     """
     ret = V3dClustCountOutputs(
         root=execution.output_file("."),
-        clustcount_niml=execution.output_file(params.get("prefix") + ".clustcount.niml") if (params.get("prefix") is not None) else None,
-        clustcount_1_d=execution.output_file(params.get("prefix") + ".1D") if (params.get("prefix") is not None) else None,
-        final_clustcount_niml=execution.output_file(params.get("prefix") + ".niml") if (params.get("prefix") is not None) else None,
+        clustcount_niml=execution.output_file(params.get("prefix", None) + ".clustcount.niml") if (params.get("prefix") is not None) else None,
+        clustcount_1_d=execution.output_file(params.get("prefix", None) + ".1D") if (params.get("prefix") is not None) else None,
+        final_clustcount_niml=execution.output_file(params.get("prefix", None) + ".niml") if (params.get("prefix") is not None) else None,
     )
     return ret
 
@@ -226,7 +201,6 @@ def v_3d_clust_count(
 
 __all__ = [
     "V3dClustCountOutputs",
-    "V3dClustCountParameters",
     "V_3D_CLUST_COUNT_METADATA",
     "v_3d_clust_count",
     "v_3d_clust_count_execute",

@@ -14,7 +14,14 @@ FSLINTERLEAVE_METADATA = Metadata(
 
 
 FslinterleaveParameters = typing.TypedDict('FslinterleaveParameters', {
-    "@type": typing.Literal["fsl.fslinterleave"],
+    "@type": typing.NotRequired[typing.Literal["fsl/fslinterleave"]],
+    "infile1": InputPathType,
+    "infile2": InputPathType,
+    "outfile": str,
+    "reverse_slice_order_flag": bool,
+})
+FslinterleaveParametersTagged = typing.TypedDict('FslinterleaveParametersTagged', {
+    "@type": typing.Literal["fsl/fslinterleave"],
     "infile1": InputPathType,
     "infile2": InputPathType,
     "outfile": str,
@@ -22,41 +29,9 @@ FslinterleaveParameters = typing.TypedDict('FslinterleaveParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "fsl.fslinterleave": fslinterleave_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "fsl.fslinterleave": fslinterleave_outputs,
-    }.get(t)
-
-
 class FslinterleaveOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `fslinterleave(...)`.
+    Output object returned when calling `FslinterleaveParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -69,7 +44,7 @@ def fslinterleave_params(
     infile2: InputPathType,
     outfile: str,
     reverse_slice_order_flag: bool = False,
-) -> FslinterleaveParameters:
+) -> FslinterleaveParametersTagged:
     """
     Build parameters.
     
@@ -82,7 +57,7 @@ def fslinterleave_params(
         Parameter dictionary
     """
     params = {
-        "@type": "fsl.fslinterleave",
+        "@type": "fsl/fslinterleave",
         "infile1": infile1,
         "infile2": infile2,
         "outfile": outfile,
@@ -106,10 +81,10 @@ def fslinterleave_cargs(
     """
     cargs = []
     cargs.append("fslinterleave")
-    cargs.append(execution.input_file(params.get("infile1")))
-    cargs.append(execution.input_file(params.get("infile2")))
-    cargs.append(params.get("outfile"))
-    if params.get("reverse_slice_order_flag"):
+    cargs.append(execution.input_file(params.get("infile1", None)))
+    cargs.append(execution.input_file(params.get("infile2", None)))
+    cargs.append(params.get("outfile", None))
+    if params.get("reverse_slice_order_flag", False):
         cargs.append("-i")
     return cargs
 
@@ -129,7 +104,7 @@ def fslinterleave_outputs(
     """
     ret = FslinterleaveOutputs(
         root=execution.output_file("."),
-        interleaved_output=execution.output_file(params.get("outfile") + ".nii.gz"),
+        interleaved_output=execution.output_file(params.get("outfile", None) + ".nii.gz"),
     )
     return ret
 
@@ -199,7 +174,6 @@ def fslinterleave(
 __all__ = [
     "FSLINTERLEAVE_METADATA",
     "FslinterleaveOutputs",
-    "FslinterleaveParameters",
     "fslinterleave",
     "fslinterleave_execute",
     "fslinterleave_params",

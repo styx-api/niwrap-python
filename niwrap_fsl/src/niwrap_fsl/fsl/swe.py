@@ -14,7 +14,44 @@ SWE_METADATA = Metadata(
 
 
 SweParameters = typing.TypedDict('SweParameters', {
-    "@type": typing.Literal["fsl.swe"],
+    "@type": typing.NotRequired[typing.Literal["fsl/swe"]],
+    "input_file": InputPathType,
+    "output_root": str,
+    "design_mat": InputPathType,
+    "design_con": InputPathType,
+    "design_sub": InputPathType,
+    "mask": typing.NotRequired[InputPathType | None],
+    "fcon": typing.NotRequired[InputPathType | None],
+    "modified": bool,
+    "wild_bootstrap": bool,
+    "logp": bool,
+    "nboot": typing.NotRequired[float | None],
+    "corrp": bool,
+    "fonly": bool,
+    "tfce": bool,
+    "tfce_2d": bool,
+    "cluster_t": typing.NotRequired[float | None],
+    "cluster_t_mass": typing.NotRequired[float | None],
+    "cluster_f": typing.NotRequired[float | None],
+    "cluster_f_mass": typing.NotRequired[float | None],
+    "quiet": bool,
+    "raw": bool,
+    "equiv": bool,
+    "dof": bool,
+    "uncorr_p": bool,
+    "null_dist": bool,
+    "no_rc_mask": bool,
+    "seed": typing.NotRequired[float | None],
+    "tfce_h": typing.NotRequired[float | None],
+    "tfce_d": typing.NotRequired[float | None],
+    "tfce_e": typing.NotRequired[float | None],
+    "tfce_c": typing.NotRequired[float | None],
+    "voxelwise_ev": typing.NotRequired[list[float] | None],
+    "voxelwise_evs": typing.NotRequired[list[InputPathType] | None],
+    "glm_output": bool,
+})
+SweParametersTagged = typing.TypedDict('SweParametersTagged', {
+    "@type": typing.Literal["fsl/swe"],
     "input_file": InputPathType,
     "output_root": str,
     "design_mat": InputPathType,
@@ -52,41 +89,9 @@ SweParameters = typing.TypedDict('SweParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "fsl.swe": swe_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "fsl.swe": swe_outputs,
-    }.get(t)
-
-
 class SweOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `swe(...)`.
+    Output object returned when calling `SweParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -143,7 +148,7 @@ def swe_params(
     voxelwise_ev: list[float] | None = None,
     voxelwise_evs: list[InputPathType] | None = None,
     glm_output: bool = False,
-) -> SweParameters:
+) -> SweParametersTagged:
     """
     Build parameters.
     
@@ -198,7 +203,7 @@ def swe_params(
         Parameter dictionary
     """
     params = {
-        "@type": "fsl.swe",
+        "@type": "fsl/swe",
         "input_file": input_file,
         "output_root": output_root,
         "design_mat": design_mat,
@@ -268,123 +273,123 @@ def swe_cargs(
     cargs.append("swe")
     cargs.extend([
         "-i",
-        execution.input_file(params.get("input_file"))
+        execution.input_file(params.get("input_file", None))
     ])
     cargs.extend([
         "-o",
-        params.get("output_root")
+        params.get("output_root", None)
     ])
     cargs.extend([
         "-d",
-        execution.input_file(params.get("design_mat"))
+        execution.input_file(params.get("design_mat", None))
     ])
     cargs.extend([
         "-t",
-        execution.input_file(params.get("design_con"))
+        execution.input_file(params.get("design_con", None))
     ])
     cargs.extend([
         "-s",
-        execution.input_file(params.get("design_sub"))
+        execution.input_file(params.get("design_sub", None))
     ])
-    if params.get("mask") is not None:
+    if params.get("mask", None) is not None:
         cargs.extend([
             "-m",
-            execution.input_file(params.get("mask"))
+            execution.input_file(params.get("mask", None))
         ])
-    if params.get("fcon") is not None:
+    if params.get("fcon", None) is not None:
         cargs.extend([
             "-f",
-            execution.input_file(params.get("fcon"))
+            execution.input_file(params.get("fcon", None))
         ])
-    if params.get("modified"):
+    if params.get("modified", False):
         cargs.append("--modified")
-    if params.get("wild_bootstrap"):
+    if params.get("wild_bootstrap", False):
         cargs.append("--wb")
-    if params.get("logp"):
+    if params.get("logp", False):
         cargs.append("--logp")
-    if params.get("nboot") is not None:
+    if params.get("nboot", None) is not None:
         cargs.extend([
             "-n",
-            str(params.get("nboot"))
+            str(params.get("nboot", None))
         ])
-    if params.get("corrp"):
+    if params.get("corrp", False):
         cargs.append("-x")
-    if params.get("fonly"):
+    if params.get("fonly", False):
         cargs.append("--fonly")
-    if params.get("tfce"):
+    if params.get("tfce", False):
         cargs.append("-T")
-    if params.get("tfce_2d"):
+    if params.get("tfce_2d", False):
         cargs.append("--T2")
-    if params.get("cluster_t") is not None:
+    if params.get("cluster_t", None) is not None:
         cargs.extend([
             "-c",
-            str(params.get("cluster_t"))
+            str(params.get("cluster_t", None))
         ])
-    if params.get("cluster_t_mass") is not None:
+    if params.get("cluster_t_mass", None) is not None:
         cargs.extend([
             "-C",
-            str(params.get("cluster_t_mass"))
+            str(params.get("cluster_t_mass", None))
         ])
-    if params.get("cluster_f") is not None:
+    if params.get("cluster_f", None) is not None:
         cargs.extend([
             "-F",
-            str(params.get("cluster_f"))
+            str(params.get("cluster_f", None))
         ])
-    if params.get("cluster_f_mass") is not None:
+    if params.get("cluster_f_mass", None) is not None:
         cargs.extend([
             "-S",
-            str(params.get("cluster_f_mass"))
+            str(params.get("cluster_f_mass", None))
         ])
-    if params.get("quiet"):
+    if params.get("quiet", False):
         cargs.append("--quiet")
-    if params.get("raw"):
+    if params.get("raw", False):
         cargs.append("-R")
-    if params.get("equiv"):
+    if params.get("equiv", False):
         cargs.append("-E")
-    if params.get("dof"):
+    if params.get("dof", False):
         cargs.append("-D")
-    if params.get("uncorr_p"):
+    if params.get("uncorr_p", False):
         cargs.append("--uncorrp")
-    if params.get("null_dist"):
+    if params.get("null_dist", False):
         cargs.append("-N")
-    if params.get("no_rc_mask"):
+    if params.get("no_rc_mask", False):
         cargs.append("--norcmask")
-    if params.get("seed") is not None:
+    if params.get("seed", None) is not None:
         cargs.extend([
             "--seed",
-            str(params.get("seed"))
+            str(params.get("seed", None))
         ])
-    if params.get("tfce_h") is not None:
+    if params.get("tfce_h", None) is not None:
         cargs.extend([
             "--tfce_H",
-            str(params.get("tfce_h"))
+            str(params.get("tfce_h", None))
         ])
-    if params.get("tfce_d") is not None:
+    if params.get("tfce_d", None) is not None:
         cargs.extend([
             "--tfce_D",
-            str(params.get("tfce_d"))
+            str(params.get("tfce_d", None))
         ])
-    if params.get("tfce_e") is not None:
+    if params.get("tfce_e", None) is not None:
         cargs.extend([
             "--tfce_E",
-            str(params.get("tfce_e"))
+            str(params.get("tfce_e", None))
         ])
-    if params.get("tfce_c") is not None:
+    if params.get("tfce_c", None) is not None:
         cargs.extend([
             "--tfce_C",
-            str(params.get("tfce_c"))
+            str(params.get("tfce_c", None))
         ])
-    if params.get("voxelwise_ev") is not None:
+    if params.get("voxelwise_ev", None) is not None:
         cargs.extend([
             "--vxl",
-            *map(str, params.get("voxelwise_ev"))
+            *map(str, params.get("voxelwise_ev", None))
         ])
-    if params.get("voxelwise_evs") is not None:
+    if params.get("voxelwise_evs", None) is not None:
         cargs.extend([
             "--vxf",
-            *[execution.input_file(f) for f in params.get("voxelwise_evs")]
+            *[execution.input_file(f) for f in params.get("voxelwise_evs", None)]
         ])
-    if params.get("glm_output"):
+    if params.get("glm_output", False):
         cargs.append("--glm_output")
     return cargs
 
@@ -404,14 +409,14 @@ def swe_outputs(
     """
     ret = SweOutputs(
         root=execution.output_file("."),
-        logp_img=execution.output_file(params.get("output_root") + "_logp.nii.gz"),
-        corrp_img=execution.output_file(params.get("output_root") + "_corrp.nii.gz"),
-        raw_img=execution.output_file(params.get("output_root") + "_raw.nii.gz"),
-        equiv_img=execution.output_file(params.get("output_root") + "_equiv.nii.gz"),
-        dof_img=execution.output_file(params.get("output_root") + "_dof.nii.gz"),
-        uncorrp_img=execution.output_file(params.get("output_root") + "_uncorrp.nii.gz"),
-        null_dist_file=execution.output_file(params.get("output_root") + "_null_dist.txt"),
-        glm_output_file=execution.output_file(params.get("output_root") + "_glm.nii.gz"),
+        logp_img=execution.output_file(params.get("output_root", None) + "_logp.nii.gz"),
+        corrp_img=execution.output_file(params.get("output_root", None) + "_corrp.nii.gz"),
+        raw_img=execution.output_file(params.get("output_root", None) + "_raw.nii.gz"),
+        equiv_img=execution.output_file(params.get("output_root", None) + "_equiv.nii.gz"),
+        dof_img=execution.output_file(params.get("output_root", None) + "_dof.nii.gz"),
+        uncorrp_img=execution.output_file(params.get("output_root", None) + "_uncorrp.nii.gz"),
+        null_dist_file=execution.output_file(params.get("output_root", None) + "_null_dist.txt"),
+        glm_output_file=execution.output_file(params.get("output_root", None) + "_glm.nii.gz"),
     )
     return ret
 
@@ -583,7 +588,6 @@ def swe(
 __all__ = [
     "SWE_METADATA",
     "SweOutputs",
-    "SweParameters",
     "swe",
     "swe_execute",
     "swe_params",

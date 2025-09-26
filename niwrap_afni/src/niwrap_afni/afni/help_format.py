@@ -14,46 +14,18 @@ HELP_FORMAT_METADATA = Metadata(
 
 
 HelpFormatParameters = typing.TypedDict('HelpFormatParameters', {
-    "@type": typing.Literal["afni.help_format"],
+    "@type": typing.NotRequired[typing.Literal["afni/help_format"]],
+    "stdin": str,
+})
+HelpFormatParametersTagged = typing.TypedDict('HelpFormatParametersTagged', {
+    "@type": typing.Literal["afni/help_format"],
     "stdin": str,
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "afni.help_format": help_format_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "afni.help_format": help_format_outputs,
-    }.get(t)
-
-
 class HelpFormatOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `help_format(...)`.
+    Output object returned when calling `HelpFormatParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -63,7 +35,7 @@ class HelpFormatOutputs(typing.NamedTuple):
 
 def help_format_params(
     stdin: str,
-) -> HelpFormatParameters:
+) -> HelpFormatParametersTagged:
     """
     Build parameters.
     
@@ -73,7 +45,7 @@ def help_format_params(
         Parameter dictionary
     """
     params = {
-        "@type": "afni.help_format",
+        "@type": "afni/help_format",
         "stdin": stdin,
     }
     return params
@@ -94,7 +66,7 @@ def help_format_cargs(
     """
     cargs = []
     cargs.append("help_format")
-    cargs.append(params.get("stdin"))
+    cargs.append(params.get("stdin", None))
     return cargs
 
 
@@ -174,7 +146,6 @@ def help_format(
 __all__ = [
     "HELP_FORMAT_METADATA",
     "HelpFormatOutputs",
-    "HelpFormatParameters",
     "help_format",
     "help_format_execute",
     "help_format_params",

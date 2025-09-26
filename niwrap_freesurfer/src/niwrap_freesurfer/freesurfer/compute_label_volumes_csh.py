@@ -14,14 +14,27 @@ COMPUTE_LABEL_VOLUMES_CSH_METADATA = Metadata(
 
 
 ComputeLabelVolumesCshLabelLParameters = typing.TypedDict('ComputeLabelVolumesCshLabelLParameters', {
-    "@type": typing.Literal["freesurfer.compute_label_volumes.csh.label_L"],
+    "@type": typing.NotRequired[typing.Literal["label_L"]],
+    "upper_L": typing.NotRequired[str | None],
+    "lower_L": typing.NotRequired[str | None],
+})
+ComputeLabelVolumesCshLabelLParametersTagged = typing.TypedDict('ComputeLabelVolumesCshLabelLParametersTagged', {
+    "@type": typing.Literal["label_L"],
     "upper_L": typing.NotRequired[str | None],
     "lower_L": typing.NotRequired[str | None],
 })
 
 
 ComputeLabelVolumesCshParameters = typing.TypedDict('ComputeLabelVolumesCshParameters', {
-    "@type": typing.Literal["freesurfer.compute_label_volumes.csh"],
+    "@type": typing.NotRequired[typing.Literal["freesurfer/compute_label_volumes.csh"]],
+    "label_vol": InputPathType,
+    "output_file": str,
+    "label_L": typing.NotRequired[ComputeLabelVolumesCshLabelLParameters | None],
+    "version": bool,
+    "help": bool,
+})
+ComputeLabelVolumesCshParametersTagged = typing.TypedDict('ComputeLabelVolumesCshParametersTagged', {
+    "@type": typing.Literal["freesurfer/compute_label_volumes.csh"],
     "label_vol": InputPathType,
     "output_file": str,
     "label_L": typing.NotRequired[ComputeLabelVolumesCshLabelLParameters | None],
@@ -30,43 +43,10 @@ ComputeLabelVolumesCshParameters = typing.TypedDict('ComputeLabelVolumesCshParam
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "freesurfer.compute_label_volumes.csh": compute_label_volumes_csh_cargs,
-        "freesurfer.compute_label_volumes.csh.label_L": compute_label_volumes_csh_label_l_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "freesurfer.compute_label_volumes.csh": compute_label_volumes_csh_outputs,
-    }.get(t)
-
-
 def compute_label_volumes_csh_label_l_params(
     upper_l: str | None = None,
     lower_l: str | None = None,
-) -> ComputeLabelVolumesCshLabelLParameters:
+) -> ComputeLabelVolumesCshLabelLParametersTagged:
     """
     Build parameters.
     
@@ -77,7 +57,7 @@ def compute_label_volumes_csh_label_l_params(
         Parameter dictionary
     """
     params = {
-        "@type": "freesurfer.compute_label_volumes.csh.label_L",
+        "@type": "label_L",
     }
     if upper_l is not None:
         params["upper_L"] = upper_l
@@ -100,22 +80,22 @@ def compute_label_volumes_csh_label_l_cargs(
         Command-line arguments.
     """
     cargs = []
-    if params.get("upper_L") is not None:
+    if params.get("upper_L", None) is not None:
         cargs.extend([
             "--L",
-            params.get("upper_L")
+            params.get("upper_L", None)
         ])
-    if params.get("lower_L") is not None:
+    if params.get("lower_L", None) is not None:
         cargs.extend([
             "--l",
-            params.get("lower_L")
+            params.get("lower_L", None)
         ])
     return cargs
 
 
 class ComputeLabelVolumesCshOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `compute_label_volumes_csh(...)`.
+    Output object returned when calling `ComputeLabelVolumesCshParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -129,7 +109,7 @@ def compute_label_volumes_csh_params(
     label_l: ComputeLabelVolumesCshLabelLParameters | None = None,
     version: bool = False,
     help_: bool = False,
-) -> ComputeLabelVolumesCshParameters:
+) -> ComputeLabelVolumesCshParametersTagged:
     """
     Build parameters.
     
@@ -143,7 +123,7 @@ def compute_label_volumes_csh_params(
         Parameter dictionary
     """
     params = {
-        "@type": "freesurfer.compute_label_volumes.csh",
+        "@type": "freesurfer/compute_label_volumes.csh",
         "label_vol": label_vol,
         "output_file": output_file,
         "version": version,
@@ -171,17 +151,17 @@ def compute_label_volumes_csh_cargs(
     cargs.append("compute_label_volumes.csh")
     cargs.extend([
         "--vol",
-        execution.input_file(params.get("label_vol"))
+        execution.input_file(params.get("label_vol", None))
     ])
     cargs.extend([
         "--out",
-        params.get("output_file")
+        params.get("output_file", None)
     ])
-    if params.get("label_L") is not None:
-        cargs.extend(dyn_cargs(params.get("label_L")["@type"])(params.get("label_L"), execution))
-    if params.get("version"):
+    if params.get("label_L", None) is not None:
+        cargs.extend(compute_label_volumes_csh_label_l_cargs(params.get("label_L", None), execution))
+    if params.get("version", False):
         cargs.append("--version")
-    if params.get("help"):
+    if params.get("help", False):
         cargs.append("--help")
     return cargs
 
@@ -201,7 +181,7 @@ def compute_label_volumes_csh_outputs(
     """
     ret = ComputeLabelVolumesCshOutputs(
         root=execution.output_file("."),
-        result_file=execution.output_file(params.get("output_file")),
+        result_file=execution.output_file(params.get("output_file", None)),
     )
     return ret
 
@@ -275,9 +255,7 @@ def compute_label_volumes_csh(
 
 __all__ = [
     "COMPUTE_LABEL_VOLUMES_CSH_METADATA",
-    "ComputeLabelVolumesCshLabelLParameters",
     "ComputeLabelVolumesCshOutputs",
-    "ComputeLabelVolumesCshParameters",
     "compute_label_volumes_csh",
     "compute_label_volumes_csh_execute",
     "compute_label_volumes_csh_label_l_params",

@@ -14,14 +14,33 @@ TSFSMOOTH_METADATA = Metadata(
 
 
 TsfsmoothConfigParameters = typing.TypedDict('TsfsmoothConfigParameters', {
-    "@type": typing.Literal["mrtrix.tsfsmooth.config"],
+    "@type": typing.NotRequired[typing.Literal["config"]],
+    "key": str,
+    "value": str,
+})
+TsfsmoothConfigParametersTagged = typing.TypedDict('TsfsmoothConfigParametersTagged', {
+    "@type": typing.Literal["config"],
     "key": str,
     "value": str,
 })
 
 
 TsfsmoothParameters = typing.TypedDict('TsfsmoothParameters', {
-    "@type": typing.Literal["mrtrix.tsfsmooth"],
+    "@type": typing.NotRequired[typing.Literal["mrtrix/tsfsmooth"]],
+    "stdev": typing.NotRequired[float | None],
+    "info": bool,
+    "quiet": bool,
+    "debug": bool,
+    "force": bool,
+    "nthreads": typing.NotRequired[int | None],
+    "config": typing.NotRequired[list[TsfsmoothConfigParameters] | None],
+    "help": bool,
+    "version": bool,
+    "input": InputPathType,
+    "output": str,
+})
+TsfsmoothParametersTagged = typing.TypedDict('TsfsmoothParametersTagged', {
+    "@type": typing.Literal["mrtrix/tsfsmooth"],
     "stdev": typing.NotRequired[float | None],
     "info": bool,
     "quiet": bool,
@@ -36,43 +55,10 @@ TsfsmoothParameters = typing.TypedDict('TsfsmoothParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "mrtrix.tsfsmooth": tsfsmooth_cargs,
-        "mrtrix.tsfsmooth.config": tsfsmooth_config_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "mrtrix.tsfsmooth": tsfsmooth_outputs,
-    }.get(t)
-
-
 def tsfsmooth_config_params(
     key: str,
     value: str,
-) -> TsfsmoothConfigParameters:
+) -> TsfsmoothConfigParametersTagged:
     """
     Build parameters.
     
@@ -83,7 +69,7 @@ def tsfsmooth_config_params(
         Parameter dictionary
     """
     params = {
-        "@type": "mrtrix.tsfsmooth.config",
+        "@type": "config",
         "key": key,
         "value": value,
     }
@@ -105,14 +91,14 @@ def tsfsmooth_config_cargs(
     """
     cargs = []
     cargs.append("-config")
-    cargs.append(params.get("key"))
-    cargs.append(params.get("value"))
+    cargs.append(params.get("key", None))
+    cargs.append(params.get("value", None))
     return cargs
 
 
 class TsfsmoothOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `tsfsmooth(...)`.
+    Output object returned when calling `TsfsmoothParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -132,7 +118,7 @@ def tsfsmooth_params(
     config: list[TsfsmoothConfigParameters] | None = None,
     help_: bool = False,
     version: bool = False,
-) -> TsfsmoothParameters:
+) -> TsfsmoothParametersTagged:
     """
     Build parameters.
     
@@ -157,7 +143,7 @@ def tsfsmooth_params(
         Parameter dictionary
     """
     params = {
-        "@type": "mrtrix.tsfsmooth",
+        "@type": "mrtrix/tsfsmooth",
         "info": info,
         "quiet": quiet,
         "debug": debug,
@@ -191,32 +177,32 @@ def tsfsmooth_cargs(
     """
     cargs = []
     cargs.append("tsfsmooth")
-    if params.get("stdev") is not None:
+    if params.get("stdev", None) is not None:
         cargs.extend([
             "-stdev",
-            str(params.get("stdev"))
+            str(params.get("stdev", None))
         ])
-    if params.get("info"):
+    if params.get("info", False):
         cargs.append("-info")
-    if params.get("quiet"):
+    if params.get("quiet", False):
         cargs.append("-quiet")
-    if params.get("debug"):
+    if params.get("debug", False):
         cargs.append("-debug")
-    if params.get("force"):
+    if params.get("force", False):
         cargs.append("-force")
-    if params.get("nthreads") is not None:
+    if params.get("nthreads", None) is not None:
         cargs.extend([
             "-nthreads",
-            str(params.get("nthreads"))
+            str(params.get("nthreads", None))
         ])
-    if params.get("config") is not None:
-        cargs.extend([a for c in [dyn_cargs(s["@type"])(s, execution) for s in params.get("config")] for a in c])
-    if params.get("help"):
+    if params.get("config", None) is not None:
+        cargs.extend([a for c in [tsfsmooth_config_cargs(s, execution) for s in params.get("config", None)] for a in c])
+    if params.get("help", False):
         cargs.append("-help")
-    if params.get("version"):
+    if params.get("version", False):
         cargs.append("-version")
-    cargs.append(execution.input_file(params.get("input")))
-    cargs.append(params.get("output"))
+    cargs.append(execution.input_file(params.get("input", None)))
+    cargs.append(params.get("output", None))
     return cargs
 
 
@@ -235,7 +221,7 @@ def tsfsmooth_outputs(
     """
     ret = TsfsmoothOutputs(
         root=execution.output_file("."),
-        output=execution.output_file(params.get("output")),
+        output=execution.output_file(params.get("output", None)),
     )
     return ret
 
@@ -342,9 +328,7 @@ def tsfsmooth(
 
 __all__ = [
     "TSFSMOOTH_METADATA",
-    "TsfsmoothConfigParameters",
     "TsfsmoothOutputs",
-    "TsfsmoothParameters",
     "tsfsmooth",
     "tsfsmooth_config_params",
     "tsfsmooth_execute",

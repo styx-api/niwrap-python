@@ -14,45 +14,18 @@ MS_REFINE_SUBJECT_METADATA = Metadata(
 
 
 MsRefineSubjectParameters = typing.TypedDict('MsRefineSubjectParameters', {
-    "@type": typing.Literal["freesurfer.ms_refine_subject"],
+    "@type": typing.NotRequired[typing.Literal["freesurfer/ms_refine_subject"]],
+    "subjects_dir": str,
+})
+MsRefineSubjectParametersTagged = typing.TypedDict('MsRefineSubjectParametersTagged', {
+    "@type": typing.Literal["freesurfer/ms_refine_subject"],
     "subjects_dir": str,
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "freesurfer.ms_refine_subject": ms_refine_subject_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-    }.get(t)
-
-
 class MsRefineSubjectOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `ms_refine_subject(...)`.
+    Output object returned when calling `MsRefineSubjectParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -60,7 +33,7 @@ class MsRefineSubjectOutputs(typing.NamedTuple):
 
 def ms_refine_subject_params(
     subjects_dir: str,
-) -> MsRefineSubjectParameters:
+) -> MsRefineSubjectParametersTagged:
     """
     Build parameters.
     
@@ -71,7 +44,7 @@ def ms_refine_subject_params(
         Parameter dictionary
     """
     params = {
-        "@type": "freesurfer.ms_refine_subject",
+        "@type": "freesurfer/ms_refine_subject",
         "subjects_dir": subjects_dir,
     }
     return params
@@ -92,7 +65,7 @@ def ms_refine_subject_cargs(
     """
     cargs = []
     cargs.append("ms_refine_subject")
-    cargs.append(params.get("subjects_dir"))
+    cargs.append(params.get("subjects_dir", None))
     return cargs
 
 
@@ -172,7 +145,6 @@ def ms_refine_subject(
 __all__ = [
     "MS_REFINE_SUBJECT_METADATA",
     "MsRefineSubjectOutputs",
-    "MsRefineSubjectParameters",
     "ms_refine_subject",
     "ms_refine_subject_execute",
     "ms_refine_subject_params",

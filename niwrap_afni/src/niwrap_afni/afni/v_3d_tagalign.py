@@ -14,7 +14,25 @@ V_3D_TAGALIGN_METADATA = Metadata(
 
 
 V3dTagalignParameters = typing.TypedDict('V3dTagalignParameters', {
-    "@type": typing.Literal["afni.3dTagalign"],
+    "@type": typing.NotRequired[typing.Literal["afni/3dTagalign"]],
+    "input_dataset": InputPathType,
+    "master_dataset": InputPathType,
+    "tagset_file": typing.NotRequired[InputPathType | None],
+    "no_keep_tags": bool,
+    "matvec_file": typing.NotRequired[str | None],
+    "rotate": bool,
+    "affine": bool,
+    "rotscl": bool,
+    "prefix": typing.NotRequired[str | None],
+    "verbose": bool,
+    "dummy": bool,
+    "linear_interpolation": bool,
+    "cubic_interpolation": bool,
+    "nearest_neighbor_interpolation": bool,
+    "quintic_interpolation": bool,
+})
+V3dTagalignParametersTagged = typing.TypedDict('V3dTagalignParametersTagged', {
+    "@type": typing.Literal["afni/3dTagalign"],
     "input_dataset": InputPathType,
     "master_dataset": InputPathType,
     "tagset_file": typing.NotRequired[InputPathType | None],
@@ -33,41 +51,9 @@ V3dTagalignParameters = typing.TypedDict('V3dTagalignParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "afni.3dTagalign": v_3d_tagalign_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "afni.3dTagalign": v_3d_tagalign_outputs,
-    }.get(t)
-
-
 class V3dTagalignOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `v_3d_tagalign(...)`.
+    Output object returned when calling `V3dTagalignParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -95,7 +81,7 @@ def v_3d_tagalign_params(
     cubic_interpolation: bool = False,
     nearest_neighbor_interpolation: bool = False,
     quintic_interpolation: bool = False,
-) -> V3dTagalignParameters:
+) -> V3dTagalignParametersTagged:
     """
     Build parameters.
     
@@ -128,7 +114,7 @@ def v_3d_tagalign_params(
         Parameter dictionary
     """
     params = {
-        "@type": "afni.3dTagalign",
+        "@type": "afni/3dTagalign",
         "input_dataset": input_dataset,
         "master_dataset": master_dataset,
         "no_keep_tags": no_keep_tags,
@@ -166,45 +152,45 @@ def v_3d_tagalign_cargs(
     """
     cargs = []
     cargs.append("3dTagalign")
-    cargs.append(execution.input_file(params.get("input_dataset")))
+    cargs.append(execution.input_file(params.get("input_dataset", None)))
     cargs.extend([
         "-master",
-        execution.input_file(params.get("master_dataset"))
+        execution.input_file(params.get("master_dataset", None))
     ])
-    if params.get("tagset_file") is not None:
+    if params.get("tagset_file", None) is not None:
         cargs.extend([
             "-tagset",
-            execution.input_file(params.get("tagset_file"))
+            execution.input_file(params.get("tagset_file", None))
         ])
-    if params.get("no_keep_tags"):
+    if params.get("no_keep_tags", False):
         cargs.append("-nokeeptags")
-    if params.get("matvec_file") is not None:
+    if params.get("matvec_file", None) is not None:
         cargs.extend([
             "-matvec",
-            params.get("matvec_file")
+            params.get("matvec_file", None)
         ])
-    if params.get("rotate"):
+    if params.get("rotate", False):
         cargs.append("-rotate")
-    if params.get("affine"):
+    if params.get("affine", False):
         cargs.append("-affine")
-    if params.get("rotscl"):
+    if params.get("rotscl", False):
         cargs.append("-rotscl")
-    if params.get("prefix") is not None:
+    if params.get("prefix", None) is not None:
         cargs.extend([
             "-prefix",
-            params.get("prefix")
+            params.get("prefix", None)
         ])
-    if params.get("verbose"):
+    if params.get("verbose", False):
         cargs.append("-verb")
-    if params.get("dummy"):
+    if params.get("dummy", False):
         cargs.append("-dummy")
-    if params.get("linear_interpolation"):
+    if params.get("linear_interpolation", False):
         cargs.append("-linear")
-    if params.get("cubic_interpolation"):
+    if params.get("cubic_interpolation", False):
         cargs.append("-cubic")
-    if params.get("nearest_neighbor_interpolation"):
+    if params.get("nearest_neighbor_interpolation", False):
         cargs.append("-NN")
-    if params.get("quintic_interpolation"):
+    if params.get("quintic_interpolation", False):
         cargs.append("-quintic")
     return cargs
 
@@ -224,9 +210,9 @@ def v_3d_tagalign_outputs(
     """
     ret = V3dTagalignOutputs(
         root=execution.output_file("."),
-        output_dataset_head=execution.output_file(params.get("prefix") + "+orig.HEAD") if (params.get("prefix") is not None) else None,
-        output_dataset_brick=execution.output_file(params.get("prefix") + "+orig.BRIK") if (params.get("prefix") is not None) else None,
-        output_matvec_file=execution.output_file(params.get("matvec_file")) if (params.get("matvec_file") is not None) else None,
+        output_dataset_head=execution.output_file(params.get("prefix", None) + "+orig.HEAD") if (params.get("prefix") is not None) else None,
+        output_dataset_brick=execution.output_file(params.get("prefix", None) + "+orig.BRIK") if (params.get("prefix") is not None) else None,
+        output_matvec_file=execution.output_file(params.get("matvec_file", None)) if (params.get("matvec_file") is not None) else None,
     )
     return ret
 
@@ -339,7 +325,6 @@ def v_3d_tagalign(
 
 __all__ = [
     "V3dTagalignOutputs",
-    "V3dTagalignParameters",
     "V_3D_TAGALIGN_METADATA",
     "v_3d_tagalign",
     "v_3d_tagalign_execute",

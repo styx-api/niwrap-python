@@ -14,7 +14,20 @@ SLICETIMER_METADATA = Metadata(
 
 
 SlicetimerParameters = typing.TypedDict('SlicetimerParameters', {
-    "@type": typing.Literal["fsl.slicetimer"],
+    "@type": typing.NotRequired[typing.Literal["fsl/slicetimer"]],
+    "infile": InputPathType,
+    "outfile": typing.NotRequired[InputPathType | None],
+    "verbose_flag": bool,
+    "down_flag": bool,
+    "tr_value": typing.NotRequired[float | None],
+    "direction": typing.NotRequired[str | None],
+    "odd_flag": bool,
+    "tcustom_file": typing.NotRequired[InputPathType | None],
+    "tglobal_value": typing.NotRequired[float | None],
+    "ocustom_file": typing.NotRequired[InputPathType | None],
+})
+SlicetimerParametersTagged = typing.TypedDict('SlicetimerParametersTagged', {
+    "@type": typing.Literal["fsl/slicetimer"],
     "infile": InputPathType,
     "outfile": typing.NotRequired[InputPathType | None],
     "verbose_flag": bool,
@@ -28,41 +41,9 @@ SlicetimerParameters = typing.TypedDict('SlicetimerParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "fsl.slicetimer": slicetimer_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "fsl.slicetimer": slicetimer_outputs,
-    }.get(t)
-
-
 class SlicetimerOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `slicetimer(...)`.
+    Output object returned when calling `SlicetimerParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -81,7 +62,7 @@ def slicetimer_params(
     tcustom_file: InputPathType | None = None,
     tglobal_value: float | None = None,
     ocustom_file: InputPathType | None = None,
-) -> SlicetimerParameters:
+) -> SlicetimerParametersTagged:
     """
     Build parameters.
     
@@ -103,7 +84,7 @@ def slicetimer_params(
         Parameter dictionary
     """
     params = {
-        "@type": "fsl.slicetimer",
+        "@type": "fsl/slicetimer",
         "infile": infile,
         "verbose_flag": verbose_flag,
         "down_flag": down_flag,
@@ -141,43 +122,43 @@ def slicetimer_cargs(
     cargs.append("slicetimer")
     cargs.extend([
         "-i",
-        execution.input_file(params.get("infile"))
+        execution.input_file(params.get("infile", None))
     ])
-    if params.get("outfile") is not None:
+    if params.get("outfile", None) is not None:
         cargs.extend([
             "-o",
-            execution.input_file(params.get("outfile"))
+            execution.input_file(params.get("outfile", None))
         ])
-    if params.get("verbose_flag"):
+    if params.get("verbose_flag", False):
         cargs.append("-v")
-    if params.get("down_flag"):
+    if params.get("down_flag", False):
         cargs.append("--down")
-    if params.get("tr_value") is not None:
+    if params.get("tr_value", None) is not None:
         cargs.extend([
             "-r",
-            str(params.get("tr_value"))
+            str(params.get("tr_value", None))
         ])
-    if params.get("direction") is not None:
+    if params.get("direction", None) is not None:
         cargs.extend([
             "-d",
-            params.get("direction")
+            params.get("direction", None)
         ])
-    if params.get("odd_flag"):
+    if params.get("odd_flag", False):
         cargs.append("--odd")
-    if params.get("tcustom_file") is not None:
+    if params.get("tcustom_file", None) is not None:
         cargs.extend([
             "--tcustom",
-            execution.input_file(params.get("tcustom_file"))
+            execution.input_file(params.get("tcustom_file", None))
         ])
-    if params.get("tglobal_value") is not None:
+    if params.get("tglobal_value", None) is not None:
         cargs.extend([
             "--tglobal",
-            str(params.get("tglobal_value"))
+            str(params.get("tglobal_value", None))
         ])
-    if params.get("ocustom_file") is not None:
+    if params.get("ocustom_file", None) is not None:
         cargs.extend([
             "--ocustom",
-            execution.input_file(params.get("ocustom_file"))
+            execution.input_file(params.get("ocustom_file", None))
         ])
     return cargs
 
@@ -197,7 +178,7 @@ def slicetimer_outputs(
     """
     ret = SlicetimerOutputs(
         root=execution.output_file("."),
-        output_timeseries=execution.output_file(pathlib.Path(params.get("outfile")).name) if (params.get("outfile") is not None) else None,
+        output_timeseries=execution.output_file(pathlib.Path(params.get("outfile", None)).name) if (params.get("outfile") is not None) else None,
     )
     return ret
 
@@ -288,7 +269,6 @@ def slicetimer(
 __all__ = [
     "SLICETIMER_METADATA",
     "SlicetimerOutputs",
-    "SlicetimerParameters",
     "slicetimer",
     "slicetimer_execute",
     "slicetimer_params",

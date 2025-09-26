@@ -14,7 +14,15 @@ ADJUNCT_SUMA_FS_ROI_INFO_METADATA = Metadata(
 
 
 AdjunctSumaFsRoiInfoParameters = typing.TypedDict('AdjunctSumaFsRoiInfoParameters', {
-    "@type": typing.Literal["afni.adjunct_suma_fs_roi_info"],
+    "@type": typing.NotRequired[typing.Literal["afni/adjunct_suma_fs_roi_info"]],
+    "subject_id": str,
+    "suma_directory": str,
+    "help": bool,
+    "hview": bool,
+    "version": bool,
+})
+AdjunctSumaFsRoiInfoParametersTagged = typing.TypedDict('AdjunctSumaFsRoiInfoParametersTagged', {
+    "@type": typing.Literal["afni/adjunct_suma_fs_roi_info"],
     "subject_id": str,
     "suma_directory": str,
     "help": bool,
@@ -23,41 +31,9 @@ AdjunctSumaFsRoiInfoParameters = typing.TypedDict('AdjunctSumaFsRoiInfoParameter
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "afni.adjunct_suma_fs_roi_info": adjunct_suma_fs_roi_info_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "afni.adjunct_suma_fs_roi_info": adjunct_suma_fs_roi_info_outputs,
-    }.get(t)
-
-
 class AdjunctSumaFsRoiInfoOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `adjunct_suma_fs_roi_info(...)`.
+    Output object returned when calling `AdjunctSumaFsRoiInfoParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -77,7 +53,7 @@ def adjunct_suma_fs_roi_info_params(
     help_: bool = False,
     hview: bool = False,
     version: bool = False,
-) -> AdjunctSumaFsRoiInfoParameters:
+) -> AdjunctSumaFsRoiInfoParametersTagged:
     """
     Build parameters.
     
@@ -91,7 +67,7 @@ def adjunct_suma_fs_roi_info_params(
         Parameter dictionary
     """
     params = {
-        "@type": "afni.adjunct_suma_fs_roi_info",
+        "@type": "afni/adjunct_suma_fs_roi_info",
         "subject_id": subject_id,
         "suma_directory": suma_directory,
         "help": help_,
@@ -118,17 +94,17 @@ def adjunct_suma_fs_roi_info_cargs(
     cargs.append("adjunct_suma_fs_roi_info")
     cargs.extend([
         "-sid",
-        params.get("subject_id")
+        params.get("subject_id", None)
     ])
     cargs.extend([
         "-suma_dir",
-        params.get("suma_directory")
+        params.get("suma_directory", None)
     ])
-    if params.get("help"):
+    if params.get("help", False):
         cargs.append("-help")
-    if params.get("hview"):
+    if params.get("hview", False):
         cargs.append("-hview")
-    if params.get("version"):
+    if params.get("version", False):
         cargs.append("-ver")
     return cargs
 
@@ -226,7 +202,6 @@ def adjunct_suma_fs_roi_info(
 __all__ = [
     "ADJUNCT_SUMA_FS_ROI_INFO_METADATA",
     "AdjunctSumaFsRoiInfoOutputs",
-    "AdjunctSumaFsRoiInfoParameters",
     "adjunct_suma_fs_roi_info",
     "adjunct_suma_fs_roi_info_execute",
     "adjunct_suma_fs_roi_info_params",

@@ -14,47 +14,22 @@ UPDATE_NEEDED_METADATA = Metadata(
 
 
 UpdateNeededParameters = typing.TypedDict('UpdateNeededParameters', {
-    "@type": typing.Literal["freesurfer.UpdateNeeded"],
+    "@type": typing.NotRequired[typing.Literal["freesurfer/UpdateNeeded"]],
+    "target_file": InputPathType,
+    "source_file": InputPathType,
+    "additional_source_files": typing.NotRequired[list[InputPathType] | None],
+})
+UpdateNeededParametersTagged = typing.TypedDict('UpdateNeededParametersTagged', {
+    "@type": typing.Literal["freesurfer/UpdateNeeded"],
     "target_file": InputPathType,
     "source_file": InputPathType,
     "additional_source_files": typing.NotRequired[list[InputPathType] | None],
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "freesurfer.UpdateNeeded": update_needed_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-    }.get(t)
-
-
 class UpdateNeededOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `update_needed(...)`.
+    Output object returned when calling `UpdateNeededParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -64,7 +39,7 @@ def update_needed_params(
     target_file: InputPathType,
     source_file: InputPathType,
     additional_source_files: list[InputPathType] | None = None,
-) -> UpdateNeededParameters:
+) -> UpdateNeededParametersTagged:
     """
     Build parameters.
     
@@ -77,7 +52,7 @@ def update_needed_params(
         Parameter dictionary
     """
     params = {
-        "@type": "freesurfer.UpdateNeeded",
+        "@type": "freesurfer/UpdateNeeded",
         "target_file": target_file,
         "source_file": source_file,
     }
@@ -101,10 +76,10 @@ def update_needed_cargs(
     """
     cargs = []
     cargs.append("UpdateNeeded")
-    cargs.append(execution.input_file(params.get("target_file")))
-    cargs.append(execution.input_file(params.get("source_file")))
-    if params.get("additional_source_files") is not None:
-        cargs.extend([execution.input_file(f) for f in params.get("additional_source_files")])
+    cargs.append(execution.input_file(params.get("target_file", None)))
+    cargs.append(execution.input_file(params.get("source_file", None)))
+    if params.get("additional_source_files", None) is not None:
+        cargs.extend([execution.input_file(f) for f in params.get("additional_source_files", None)])
     return cargs
 
 
@@ -192,7 +167,6 @@ def update_needed(
 __all__ = [
     "UPDATE_NEEDED_METADATA",
     "UpdateNeededOutputs",
-    "UpdateNeededParameters",
     "update_needed",
     "update_needed_execute",
     "update_needed_params",

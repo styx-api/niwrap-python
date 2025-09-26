@@ -14,7 +14,40 @@ FSLREGISTER_METADATA = Metadata(
 
 
 FslregisterParameters = typing.TypedDict('FslregisterParameters', {
-    "@type": typing.Literal["freesurfer.fslregister"],
+    "@type": typing.NotRequired[typing.Literal["freesurfer/fslregister"]],
+    "subjid": str,
+    "mov_vol": str,
+    "reg_file": str,
+    "fsl_matrix": typing.NotRequired[str | None],
+    "init_fsl_matrix": typing.NotRequired[str | None],
+    "no_init_xfm": bool,
+    "niters": typing.NotRequired[float | None],
+    "dof": typing.NotRequired[float | None],
+    "bins": typing.NotRequired[float | None],
+    "cost": typing.NotRequired[str | None],
+    "max_angle": typing.NotRequired[float | None],
+    "no_new_schedule": bool,
+    "no_allow_swap": bool,
+    "no_trans": bool,
+    "bet_mov": bool,
+    "bet_fvalue": typing.NotRequired[float | None],
+    "bet_func": bool,
+    "bet_ref": bool,
+    "frame": typing.NotRequired[float | None],
+    "mid_frame": bool,
+    "freesurfer_volume": typing.NotRequired[str | None],
+    "template_output": typing.NotRequired[str | None],
+    "output_volume": typing.NotRequired[str | None],
+    "verbose": typing.NotRequired[float | None],
+    "tmp_dir": typing.NotRequired[str | None],
+    "no_cleanup": bool,
+    "no_log": bool,
+    "version": bool,
+    "help": bool,
+    "lta_format": typing.NotRequired[str | None],
+})
+FslregisterParametersTagged = typing.TypedDict('FslregisterParametersTagged', {
+    "@type": typing.Literal["freesurfer/fslregister"],
     "subjid": str,
     "mov_vol": str,
     "reg_file": str,
@@ -48,41 +81,9 @@ FslregisterParameters = typing.TypedDict('FslregisterParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "freesurfer.fslregister": fslregister_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "freesurfer.fslregister": fslregister_outputs,
-    }.get(t)
-
-
 class FslregisterOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `fslregister(...)`.
+    Output object returned when calling `FslregisterParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -129,7 +130,7 @@ def fslregister_params(
     version: bool = False,
     help_: bool = False,
     lta_format: str | None = None,
-) -> FslregisterParameters:
+) -> FslregisterParametersTagged:
     """
     Build parameters.
     
@@ -169,7 +170,7 @@ def fslregister_params(
         Parameter dictionary
     """
     params = {
-        "@type": "freesurfer.fslregister",
+        "@type": "freesurfer/fslregister",
         "subjid": subjid,
         "mov_vol": mov_vol,
         "reg_file": reg_file,
@@ -236,114 +237,114 @@ def fslregister_cargs(
     cargs.append("fslregister")
     cargs.extend([
         "--s",
-        params.get("subjid")
+        params.get("subjid", None)
     ])
     cargs.extend([
         "--mov",
-        params.get("mov_vol")
+        params.get("mov_vol", None)
     ])
     cargs.extend([
         "--reg",
-        params.get("reg_file")
+        params.get("reg_file", None)
     ])
-    if params.get("fsl_matrix") is not None:
+    if params.get("fsl_matrix", None) is not None:
         cargs.extend([
             "--fslmat",
-            params.get("fsl_matrix")
+            params.get("fsl_matrix", None)
         ])
-    if params.get("init_fsl_matrix") is not None:
+    if params.get("init_fsl_matrix", None) is not None:
         cargs.extend([
             "--initfslmat",
-            params.get("init_fsl_matrix")
+            params.get("init_fsl_matrix", None)
         ])
-    if params.get("no_init_xfm"):
+    if params.get("no_init_xfm", False):
         cargs.append("--noinitxfm")
-    if params.get("niters") is not None:
+    if params.get("niters", None) is not None:
         cargs.extend([
             "--niters",
-            str(params.get("niters"))
+            str(params.get("niters", None))
         ])
-    if params.get("dof") is not None:
+    if params.get("dof", None) is not None:
         cargs.extend([
             "--dof",
-            str(params.get("dof"))
+            str(params.get("dof", None))
         ])
-    if params.get("bins") is not None:
+    if params.get("bins", None) is not None:
         cargs.extend([
             "--bins",
-            str(params.get("bins"))
+            str(params.get("bins", None))
         ])
-    if params.get("cost") is not None:
+    if params.get("cost", None) is not None:
         cargs.extend([
             "--cost",
-            params.get("cost")
+            params.get("cost", None)
         ])
-    if params.get("max_angle") is not None:
+    if params.get("max_angle", None) is not None:
         cargs.extend([
             "--maxangle",
-            str(params.get("max_angle"))
+            str(params.get("max_angle", None))
         ])
-    if params.get("no_new_schedule"):
+    if params.get("no_new_schedule", False):
         cargs.append("--no-new-schedule")
-    if params.get("no_allow_swap"):
+    if params.get("no_allow_swap", False):
         cargs.append("--no-allow-swap")
-    if params.get("no_trans"):
+    if params.get("no_trans", False):
         cargs.append("--no-trans")
-    if params.get("bet_mov"):
+    if params.get("bet_mov", False):
         cargs.append("--betmov")
-    if params.get("bet_fvalue") is not None:
+    if params.get("bet_fvalue", None) is not None:
         cargs.extend([
             "--betfvalue",
-            str(params.get("bet_fvalue"))
+            str(params.get("bet_fvalue", None))
         ])
-    if params.get("bet_func"):
+    if params.get("bet_func", False):
         cargs.append("--betfunc")
-    if params.get("bet_ref"):
+    if params.get("bet_ref", False):
         cargs.append("--betref")
-    if params.get("frame") is not None:
+    if params.get("frame", None) is not None:
         cargs.extend([
             "--frame",
-            str(params.get("frame"))
+            str(params.get("frame", None))
         ])
-    if params.get("mid_frame"):
+    if params.get("mid_frame", False):
         cargs.append("--mid-frame")
-    if params.get("freesurfer_volume") is not None:
+    if params.get("freesurfer_volume", None) is not None:
         cargs.extend([
             "--fsvol",
-            params.get("freesurfer_volume")
+            params.get("freesurfer_volume", None)
         ])
-    if params.get("template_output") is not None:
+    if params.get("template_output", None) is not None:
         cargs.extend([
             "--template-out",
-            params.get("template_output")
+            params.get("template_output", None)
         ])
-    if params.get("output_volume") is not None:
+    if params.get("output_volume", None) is not None:
         cargs.extend([
             "--out",
-            params.get("output_volume")
+            params.get("output_volume", None)
         ])
-    if params.get("verbose") is not None:
+    if params.get("verbose", None) is not None:
         cargs.extend([
             "--verbose",
-            str(params.get("verbose"))
+            str(params.get("verbose", None))
         ])
-    if params.get("tmp_dir") is not None:
+    if params.get("tmp_dir", None) is not None:
         cargs.extend([
             "--tmp",
-            params.get("tmp_dir")
+            params.get("tmp_dir", None)
         ])
-    if params.get("no_cleanup"):
+    if params.get("no_cleanup", False):
         cargs.append("--nocleanup")
-    if params.get("no_log"):
+    if params.get("no_log", False):
         cargs.append("--nolog")
-    if params.get("version"):
+    if params.get("version", False):
         cargs.append("--version")
-    if params.get("help"):
+    if params.get("help", False):
         cargs.append("--help")
-    if params.get("lta_format") is not None:
+    if params.get("lta_format", None) is not None:
         cargs.extend([
             "--lta",
-            params.get("lta_format")
+            params.get("lta_format", None)
         ])
     return cargs
 
@@ -363,11 +364,11 @@ def fslregister_outputs(
     """
     ret = FslregisterOutputs(
         root=execution.output_file("."),
-        output_reg_file=execution.output_file(params.get("reg_file")),
-        output_resliced_volume=execution.output_file(params.get("output_volume")) if (params.get("output_volume") is not None) else None,
-        output_fsl_matrix=execution.output_file(params.get("fsl_matrix")) if (params.get("fsl_matrix") is not None) else None,
-        lta_output=execution.output_file(params.get("lta_format")) if (params.get("lta_format") is not None) else None,
-        output_template=execution.output_file(params.get("template_output")) if (params.get("template_output") is not None) else None,
+        output_reg_file=execution.output_file(params.get("reg_file", None)),
+        output_resliced_volume=execution.output_file(params.get("output_volume", None)) if (params.get("output_volume") is not None) else None,
+        output_fsl_matrix=execution.output_file(params.get("fsl_matrix", None)) if (params.get("fsl_matrix") is not None) else None,
+        lta_output=execution.output_file(params.get("lta_format", None)) if (params.get("lta_format") is not None) else None,
+        output_template=execution.output_file(params.get("template_output", None)) if (params.get("template_output") is not None) else None,
     )
     return ret
 
@@ -518,7 +519,6 @@ def fslregister(
 __all__ = [
     "FSLREGISTER_METADATA",
     "FslregisterOutputs",
-    "FslregisterParameters",
     "fslregister",
     "fslregister_execute",
     "fslregister_params",

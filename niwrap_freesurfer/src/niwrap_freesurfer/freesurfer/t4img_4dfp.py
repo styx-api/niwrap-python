@@ -14,48 +14,22 @@ T4IMG_4DFP_METADATA = Metadata(
 
 
 T4img4dfpParameters = typing.TypedDict('T4img4dfpParameters', {
-    "@type": typing.Literal["freesurfer.t4img_4dfp"],
+    "@type": typing.NotRequired[typing.Literal["freesurfer/t4img_4dfp"]],
+    "t4file": InputPathType,
+    "imgfile": InputPathType,
+    "outfile": typing.NotRequired[str | None],
+})
+T4img4dfpParametersTagged = typing.TypedDict('T4img4dfpParametersTagged', {
+    "@type": typing.Literal["freesurfer/t4img_4dfp"],
     "t4file": InputPathType,
     "imgfile": InputPathType,
     "outfile": typing.NotRequired[str | None],
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "freesurfer.t4img_4dfp": t4img_4dfp_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "freesurfer.t4img_4dfp": t4img_4dfp_outputs,
-    }.get(t)
-
-
 class T4img4dfpOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `t4img_4dfp(...)`.
+    Output object returned when calling `T4img4dfpParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -67,7 +41,7 @@ def t4img_4dfp_params(
     t4file: InputPathType,
     imgfile: InputPathType,
     outfile: str | None = None,
-) -> T4img4dfpParameters:
+) -> T4img4dfpParametersTagged:
     """
     Build parameters.
     
@@ -80,7 +54,7 @@ def t4img_4dfp_params(
         Parameter dictionary
     """
     params = {
-        "@type": "freesurfer.t4img_4dfp",
+        "@type": "freesurfer/t4img_4dfp",
         "t4file": t4file,
         "imgfile": imgfile,
     }
@@ -104,10 +78,10 @@ def t4img_4dfp_cargs(
     """
     cargs = []
     cargs.append("t4img_4dfp")
-    cargs.append(execution.input_file(params.get("t4file")))
-    cargs.append(execution.input_file(params.get("imgfile")))
-    if params.get("outfile") is not None:
-        cargs.append(params.get("outfile"))
+    cargs.append(execution.input_file(params.get("t4file", None)))
+    cargs.append(execution.input_file(params.get("imgfile", None)))
+    if params.get("outfile", None) is not None:
+        cargs.append(params.get("outfile", None))
     return cargs
 
 
@@ -126,7 +100,7 @@ def t4img_4dfp_outputs(
     """
     ret = T4img4dfpOutputs(
         root=execution.output_file("."),
-        transformed_image=execution.output_file(params.get("outfile") + ".4dfp.img") if (params.get("outfile") is not None) else None,
+        transformed_image=execution.output_file(params.get("outfile", None) + ".4dfp.img") if (params.get("outfile") is not None) else None,
     )
     return ret
 
@@ -194,7 +168,6 @@ def t4img_4dfp(
 __all__ = [
     "T4IMG_4DFP_METADATA",
     "T4img4dfpOutputs",
-    "T4img4dfpParameters",
     "t4img_4dfp",
     "t4img_4dfp_execute",
     "t4img_4dfp_params",

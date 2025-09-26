@@ -14,7 +14,26 @@ V_1D_SEM_METADATA = Metadata(
 
 
 V1dSemParameters = typing.TypedDict('V1dSemParameters', {
-    "@type": typing.Literal["afni.1dSEM"],
+    "@type": typing.NotRequired[typing.Literal["afni/1dSEM"]],
+    "theta": InputPathType,
+    "correlation_matrix": InputPathType,
+    "residual_variance": InputPathType,
+    "degrees_of_freedom": float,
+    "max_iterations": typing.NotRequired[int | None],
+    "number_random_trials": typing.NotRequired[int | None],
+    "limits": typing.NotRequired[list[float] | None],
+    "calculate_cost": bool,
+    "verbose": typing.NotRequired[int | None],
+    "tree_growth": bool,
+    "model_search": bool,
+    "max_paths": typing.NotRequired[int | None],
+    "stop_cost": typing.NotRequired[float | None],
+    "forest_growth": bool,
+    "grow_all": bool,
+    "leafpicker": bool,
+})
+V1dSemParametersTagged = typing.TypedDict('V1dSemParametersTagged', {
+    "@type": typing.Literal["afni/1dSEM"],
     "theta": InputPathType,
     "correlation_matrix": InputPathType,
     "residual_variance": InputPathType,
@@ -34,41 +53,9 @@ V1dSemParameters = typing.TypedDict('V1dSemParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "afni.1dSEM": v_1d_sem_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "afni.1dSEM": v_1d_sem_outputs,
-    }.get(t)
-
-
 class V1dSemOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `v_1d_sem(...)`.
+    Output object returned when calling `V1dSemParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -93,7 +80,7 @@ def v_1d_sem_params(
     forest_growth: bool = False,
     grow_all: bool = False,
     leafpicker: bool = False,
-) -> V1dSemParameters:
+) -> V1dSemParametersTagged:
     """
     Build parameters.
     
@@ -130,7 +117,7 @@ def v_1d_sem_params(
         Parameter dictionary
     """
     params = {
-        "@type": "afni.1dSEM",
+        "@type": "afni/1dSEM",
         "theta": theta,
         "correlation_matrix": correlation_matrix,
         "residual_variance": residual_variance,
@@ -174,61 +161,61 @@ def v_1d_sem_cargs(
     cargs.append("1dSEM")
     cargs.extend([
         "-theta",
-        execution.input_file(params.get("theta"))
+        execution.input_file(params.get("theta", None))
     ])
     cargs.extend([
         "-C",
-        execution.input_file(params.get("correlation_matrix"))
+        execution.input_file(params.get("correlation_matrix", None))
     ])
     cargs.extend([
         "-psi",
-        execution.input_file(params.get("residual_variance"))
+        execution.input_file(params.get("residual_variance", None))
     ])
     cargs.extend([
         "-DF",
-        str(params.get("degrees_of_freedom"))
+        str(params.get("degrees_of_freedom", None))
     ])
-    if params.get("max_iterations") is not None:
+    if params.get("max_iterations", None) is not None:
         cargs.extend([
             "-max_iter",
-            str(params.get("max_iterations"))
+            str(params.get("max_iterations", None))
         ])
-    if params.get("number_random_trials") is not None:
+    if params.get("number_random_trials", None) is not None:
         cargs.extend([
             "-nrand",
-            str(params.get("number_random_trials"))
+            str(params.get("number_random_trials", None))
         ])
-    if params.get("limits") is not None:
+    if params.get("limits", None) is not None:
         cargs.extend([
             "-limits",
-            *map(str, params.get("limits"))
+            *map(str, params.get("limits", None))
         ])
-    if params.get("calculate_cost"):
+    if params.get("calculate_cost", False):
         cargs.append("-calccost")
-    if params.get("verbose") is not None:
+    if params.get("verbose", None) is not None:
         cargs.extend([
             "-verbose",
-            str(params.get("verbose"))
+            str(params.get("verbose", None))
         ])
-    if params.get("tree_growth"):
+    if params.get("tree_growth", False):
         cargs.append("-tree_growth")
-    if params.get("model_search"):
+    if params.get("model_search", False):
         cargs.append("-model_search")
-    if params.get("max_paths") is not None:
+    if params.get("max_paths", None) is not None:
         cargs.extend([
             "-max_paths",
-            str(params.get("max_paths"))
+            str(params.get("max_paths", None))
         ])
-    if params.get("stop_cost") is not None:
+    if params.get("stop_cost", None) is not None:
         cargs.extend([
             "-stop_cost",
-            str(params.get("stop_cost"))
+            str(params.get("stop_cost", None))
         ])
-    if params.get("forest_growth"):
+    if params.get("forest_growth", False):
         cargs.append("-forest_growth")
-    if params.get("grow_all"):
+    if params.get("grow_all", False):
         cargs.append("-grow_all")
-    if params.get("leafpicker"):
+    if params.get("leafpicker", False):
         cargs.append("-leafpicker")
     return cargs
 
@@ -367,7 +354,6 @@ def v_1d_sem(
 
 __all__ = [
     "V1dSemOutputs",
-    "V1dSemParameters",
     "V_1D_SEM_METADATA",
     "v_1d_sem",
     "v_1d_sem_execute",

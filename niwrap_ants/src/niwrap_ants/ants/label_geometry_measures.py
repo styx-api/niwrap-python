@@ -14,7 +14,14 @@ LABEL_GEOMETRY_MEASURES_METADATA = Metadata(
 
 
 LabelGeometryMeasuresParameters = typing.TypedDict('LabelGeometryMeasuresParameters', {
-    "@type": typing.Literal["ants.LabelGeometryMeasures"],
+    "@type": typing.NotRequired[typing.Literal["ants/LabelGeometryMeasures"]],
+    "image_dimension": int,
+    "label_image": InputPathType,
+    "intensity_image": typing.NotRequired[str | None],
+    "csv_file": typing.NotRequired[InputPathType | None],
+})
+LabelGeometryMeasuresParametersTagged = typing.TypedDict('LabelGeometryMeasuresParametersTagged', {
+    "@type": typing.Literal["ants/LabelGeometryMeasures"],
     "image_dimension": int,
     "label_image": InputPathType,
     "intensity_image": typing.NotRequired[str | None],
@@ -22,41 +29,9 @@ LabelGeometryMeasuresParameters = typing.TypedDict('LabelGeometryMeasuresParamet
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "ants.LabelGeometryMeasures": label_geometry_measures_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "ants.LabelGeometryMeasures": label_geometry_measures_outputs,
-    }.get(t)
-
-
 class LabelGeometryMeasuresOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `label_geometry_measures(...)`.
+    Output object returned when calling `LabelGeometryMeasuresParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -69,7 +44,7 @@ def label_geometry_measures_params(
     label_image: InputPathType,
     intensity_image: str | None = None,
     csv_file: InputPathType | None = None,
-) -> LabelGeometryMeasuresParameters:
+) -> LabelGeometryMeasuresParametersTagged:
     """
     Build parameters.
     
@@ -85,7 +60,7 @@ def label_geometry_measures_params(
         Parameter dictionary
     """
     params = {
-        "@type": "ants.LabelGeometryMeasures",
+        "@type": "ants/LabelGeometryMeasures",
         "image_dimension": image_dimension,
         "label_image": label_image,
     }
@@ -111,12 +86,12 @@ def label_geometry_measures_cargs(
     """
     cargs = []
     cargs.append("LabelGeometryMeasures")
-    cargs.append(str(params.get("image_dimension")))
-    cargs.append(execution.input_file(params.get("label_image")))
-    if params.get("intensity_image") is not None:
-        cargs.append(params.get("intensity_image"))
-    if params.get("csv_file") is not None:
-        cargs.append(execution.input_file(params.get("csv_file")))
+    cargs.append(str(params.get("image_dimension", None)))
+    cargs.append(execution.input_file(params.get("label_image", None)))
+    if params.get("intensity_image", None) is not None:
+        cargs.append(params.get("intensity_image", None))
+    if params.get("csv_file", None) is not None:
+        cargs.append(execution.input_file(params.get("csv_file", None)))
     return cargs
 
 
@@ -135,7 +110,7 @@ def label_geometry_measures_outputs(
     """
     ret = LabelGeometryMeasuresOutputs(
         root=execution.output_file("."),
-        output_csv=execution.output_file(pathlib.Path(params.get("csv_file")).name) if (params.get("csv_file") is not None) else None,
+        output_csv=execution.output_file(pathlib.Path(params.get("csv_file", None)).name) if (params.get("csv_file") is not None) else None,
     )
     return ret
 
@@ -210,7 +185,6 @@ def label_geometry_measures(
 __all__ = [
     "LABEL_GEOMETRY_MEASURES_METADATA",
     "LabelGeometryMeasuresOutputs",
-    "LabelGeometryMeasuresParameters",
     "label_geometry_measures",
     "label_geometry_measures_execute",
     "label_geometry_measures_params",

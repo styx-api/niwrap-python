@@ -14,7 +14,14 @@ V_3D_AFNITO3_D_METADATA = Metadata(
 
 
 V3dAfnito3DParameters = typing.TypedDict('V3dAfnito3DParameters', {
-    "@type": typing.Literal["afni.3dAFNIto3D"],
+    "@type": typing.NotRequired[typing.Literal["afni/3dAFNIto3D"]],
+    "dataset": InputPathType,
+    "prefix": typing.NotRequired[str | None],
+    "binary": bool,
+    "text": bool,
+})
+V3dAfnito3DParametersTagged = typing.TypedDict('V3dAfnito3DParametersTagged', {
+    "@type": typing.Literal["afni/3dAFNIto3D"],
     "dataset": InputPathType,
     "prefix": typing.NotRequired[str | None],
     "binary": bool,
@@ -22,41 +29,9 @@ V3dAfnito3DParameters = typing.TypedDict('V3dAfnito3DParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "afni.3dAFNIto3D": v_3d_afnito3_d_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "afni.3dAFNIto3D": v_3d_afnito3_d_outputs,
-    }.get(t)
-
-
 class V3dAfnito3DOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `v_3d_afnito3_d(...)`.
+    Output object returned when calling `V3dAfnito3DParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -69,7 +44,7 @@ def v_3d_afnito3_d_params(
     prefix: str | None = None,
     binary: bool = False,
     text: bool = False,
-) -> V3dAfnito3DParameters:
+) -> V3dAfnito3DParametersTagged:
     """
     Build parameters.
     
@@ -82,7 +57,7 @@ def v_3d_afnito3_d_params(
         Parameter dictionary
     """
     params = {
-        "@type": "afni.3dAFNIto3D",
+        "@type": "afni/3dAFNIto3D",
         "dataset": dataset,
         "binary": binary,
         "text": text,
@@ -107,15 +82,15 @@ def v_3d_afnito3_d_cargs(
     """
     cargs = []
     cargs.append("3dAFNIto3D")
-    cargs.append(execution.input_file(params.get("dataset")))
-    if params.get("prefix") is not None:
+    cargs.append(execution.input_file(params.get("dataset", None)))
+    if params.get("prefix", None) is not None:
         cargs.extend([
             "-prefix",
-            params.get("prefix")
+            params.get("prefix", None)
         ])
-    if params.get("binary"):
+    if params.get("binary", False):
         cargs.append("-bin")
-    if params.get("text"):
+    if params.get("text", False):
         cargs.append("-txt")
     return cargs
 
@@ -135,7 +110,7 @@ def v_3d_afnito3_d_outputs(
     """
     ret = V3dAfnito3DOutputs(
         root=execution.output_file("."),
-        outfile=execution.output_file(params.get("prefix") + ".3D") if (params.get("prefix") is not None) else None,
+        outfile=execution.output_file(params.get("prefix", None) + ".3D") if (params.get("prefix") is not None) else None,
     )
     return ret
 
@@ -204,7 +179,6 @@ def v_3d_afnito3_d(
 
 __all__ = [
     "V3dAfnito3DOutputs",
-    "V3dAfnito3DParameters",
     "V_3D_AFNITO3_D_METADATA",
     "v_3d_afnito3_d",
     "v_3d_afnito3_d_execute",

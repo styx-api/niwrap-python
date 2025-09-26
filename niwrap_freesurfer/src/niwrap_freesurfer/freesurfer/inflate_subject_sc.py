@@ -14,48 +14,22 @@ INFLATE_SUBJECT_SC_METADATA = Metadata(
 
 
 InflateSubjectScParameters = typing.TypedDict('InflateSubjectScParameters', {
-    "@type": typing.Literal["freesurfer.inflate_subject_sc"],
+    "@type": typing.NotRequired[typing.Literal["freesurfer/inflate_subject_sc"]],
+    "subject_dir": str,
+    "verbose": bool,
+    "debug": bool,
+})
+InflateSubjectScParametersTagged = typing.TypedDict('InflateSubjectScParametersTagged', {
+    "@type": typing.Literal["freesurfer/inflate_subject_sc"],
     "subject_dir": str,
     "verbose": bool,
     "debug": bool,
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "freesurfer.inflate_subject_sc": inflate_subject_sc_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "freesurfer.inflate_subject_sc": inflate_subject_sc_outputs,
-    }.get(t)
-
-
 class InflateSubjectScOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `inflate_subject_sc(...)`.
+    Output object returned when calling `InflateSubjectScParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -67,7 +41,7 @@ def inflate_subject_sc_params(
     subject_dir: str,
     verbose: bool = False,
     debug: bool = False,
-) -> InflateSubjectScParameters:
+) -> InflateSubjectScParametersTagged:
     """
     Build parameters.
     
@@ -79,7 +53,7 @@ def inflate_subject_sc_params(
         Parameter dictionary
     """
     params = {
-        "@type": "freesurfer.inflate_subject_sc",
+        "@type": "freesurfer/inflate_subject_sc",
         "subject_dir": subject_dir,
         "verbose": verbose,
         "debug": debug,
@@ -102,10 +76,10 @@ def inflate_subject_sc_cargs(
     """
     cargs = []
     cargs.append("inflate_subject_sc")
-    cargs.append(params.get("subject_dir"))
-    if params.get("verbose"):
+    cargs.append(params.get("subject_dir", None))
+    if params.get("verbose", False):
         cargs.append("--verbose")
-    if params.get("debug"):
+    if params.get("debug", False):
         cargs.append("--debug")
     return cargs
 
@@ -125,7 +99,7 @@ def inflate_subject_sc_outputs(
     """
     ret = InflateSubjectScOutputs(
         root=execution.output_file("."),
-        inflated_output=execution.output_file(params.get("subject_dir") + "/inflated_output"),
+        inflated_output=execution.output_file(params.get("subject_dir", None) + "/inflated_output"),
     )
     return ret
 
@@ -194,7 +168,6 @@ def inflate_subject_sc(
 __all__ = [
     "INFLATE_SUBJECT_SC_METADATA",
     "InflateSubjectScOutputs",
-    "InflateSubjectScParameters",
     "inflate_subject_sc",
     "inflate_subject_sc_execute",
     "inflate_subject_sc_params",

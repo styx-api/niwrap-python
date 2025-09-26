@@ -14,7 +14,14 @@ TKSURFER_METADATA = Metadata(
 
 
 TksurferParameters = typing.TypedDict('TksurferParameters', {
-    "@type": typing.Literal["freesurfer.tksurfer"],
+    "@type": typing.NotRequired[typing.Literal["freesurfer/tksurfer"]],
+    "subject_id": str,
+    "hemisphere": str,
+    "surface_name": str,
+    "options": typing.NotRequired[str | None],
+})
+TksurferParametersTagged = typing.TypedDict('TksurferParametersTagged', {
+    "@type": typing.Literal["freesurfer/tksurfer"],
     "subject_id": str,
     "hemisphere": str,
     "surface_name": str,
@@ -22,40 +29,9 @@ TksurferParameters = typing.TypedDict('TksurferParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "freesurfer.tksurfer": tksurfer_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-    }.get(t)
-
-
 class TksurferOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `tksurfer(...)`.
+    Output object returned when calling `TksurferParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -66,7 +42,7 @@ def tksurfer_params(
     hemisphere: str,
     surface_name: str,
     options: str | None = None,
-) -> TksurferParameters:
+) -> TksurferParametersTagged:
     """
     Build parameters.
     
@@ -79,7 +55,7 @@ def tksurfer_params(
         Parameter dictionary
     """
     params = {
-        "@type": "freesurfer.tksurfer",
+        "@type": "freesurfer/tksurfer",
         "subject_id": subject_id,
         "hemisphere": hemisphere,
         "surface_name": surface_name,
@@ -104,11 +80,11 @@ def tksurfer_cargs(
     """
     cargs = []
     cargs.append("tksurfer")
-    cargs.append(params.get("subject_id"))
-    cargs.append(params.get("hemisphere"))
-    cargs.append(params.get("surface_name"))
-    if params.get("options") is not None:
-        cargs.append(params.get("options"))
+    cargs.append(params.get("subject_id", None))
+    cargs.append(params.get("hemisphere", None))
+    cargs.append(params.get("surface_name", None))
+    if params.get("options", None) is not None:
+        cargs.append(params.get("options", None))
     return cargs
 
 
@@ -196,7 +172,6 @@ def tksurfer(
 __all__ = [
     "TKSURFER_METADATA",
     "TksurferOutputs",
-    "TksurferParameters",
     "tksurfer",
     "tksurfer_execute",
     "tksurfer_params",

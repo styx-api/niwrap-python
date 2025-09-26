@@ -14,47 +14,22 @@ MRIS_INIT_GLOBAL_TRACTOGRAPHY_METADATA = Metadata(
 
 
 MrisInitGlobalTractographyParameters = typing.TypedDict('MrisInitGlobalTractographyParameters', {
-    "@type": typing.Literal["freesurfer.mris_init_global_tractography"],
+    "@type": typing.NotRequired[typing.Literal["freesurfer/mris_init_global_tractography"]],
+    "subject": str,
+    "parcellation": str,
+    "output_volume": str,
+})
+MrisInitGlobalTractographyParametersTagged = typing.TypedDict('MrisInitGlobalTractographyParametersTagged', {
+    "@type": typing.Literal["freesurfer/mris_init_global_tractography"],
     "subject": str,
     "parcellation": str,
     "output_volume": str,
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "freesurfer.mris_init_global_tractography": mris_init_global_tractography_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-    }.get(t)
-
-
 class MrisInitGlobalTractographyOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `mris_init_global_tractography(...)`.
+    Output object returned when calling `MrisInitGlobalTractographyParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -64,7 +39,7 @@ def mris_init_global_tractography_params(
     subject: str,
     parcellation: str,
     output_volume: str,
-) -> MrisInitGlobalTractographyParameters:
+) -> MrisInitGlobalTractographyParametersTagged:
     """
     Build parameters.
     
@@ -76,7 +51,7 @@ def mris_init_global_tractography_params(
         Parameter dictionary
     """
     params = {
-        "@type": "freesurfer.mris_init_global_tractography",
+        "@type": "freesurfer/mris_init_global_tractography",
         "subject": subject,
         "parcellation": parcellation,
         "output_volume": output_volume,
@@ -99,9 +74,9 @@ def mris_init_global_tractography_cargs(
     """
     cargs = []
     cargs.append("mris_init_global_tractography")
-    cargs.append(params.get("subject"))
-    cargs.append(params.get("parcellation"))
-    cargs.append(params.get("output_volume"))
+    cargs.append(params.get("subject", None))
+    cargs.append(params.get("parcellation", None))
+    cargs.append(params.get("output_volume", None))
     return cargs
 
 
@@ -186,7 +161,6 @@ def mris_init_global_tractography(
 __all__ = [
     "MRIS_INIT_GLOBAL_TRACTOGRAPHY_METADATA",
     "MrisInitGlobalTractographyOutputs",
-    "MrisInitGlobalTractographyParameters",
     "mris_init_global_tractography",
     "mris_init_global_tractography_execute",
     "mris_init_global_tractography_params",

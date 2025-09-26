@@ -14,21 +14,47 @@ DWI2MASK_METADATA = Metadata(
 
 
 Dwi2maskFslgradParameters = typing.TypedDict('Dwi2maskFslgradParameters', {
-    "@type": typing.Literal["mrtrix.dwi2mask.fslgrad"],
+    "@type": typing.NotRequired[typing.Literal["fslgrad"]],
+    "bvecs": InputPathType,
+    "bvals": InputPathType,
+})
+Dwi2maskFslgradParametersTagged = typing.TypedDict('Dwi2maskFslgradParametersTagged', {
+    "@type": typing.Literal["fslgrad"],
     "bvecs": InputPathType,
     "bvals": InputPathType,
 })
 
 
 Dwi2maskConfigParameters = typing.TypedDict('Dwi2maskConfigParameters', {
-    "@type": typing.Literal["mrtrix.dwi2mask.config"],
+    "@type": typing.NotRequired[typing.Literal["config"]],
+    "key": str,
+    "value": str,
+})
+Dwi2maskConfigParametersTagged = typing.TypedDict('Dwi2maskConfigParametersTagged', {
+    "@type": typing.Literal["config"],
     "key": str,
     "value": str,
 })
 
 
 Dwi2maskParameters = typing.TypedDict('Dwi2maskParameters', {
-    "@type": typing.Literal["mrtrix.dwi2mask"],
+    "@type": typing.NotRequired[typing.Literal["mrtrix/dwi2mask"]],
+    "clean_scale": typing.NotRequired[int | None],
+    "grad": typing.NotRequired[InputPathType | None],
+    "fslgrad": typing.NotRequired[Dwi2maskFslgradParameters | None],
+    "info": bool,
+    "quiet": bool,
+    "debug": bool,
+    "force": bool,
+    "nthreads": typing.NotRequired[int | None],
+    "config": typing.NotRequired[list[Dwi2maskConfigParameters] | None],
+    "help": bool,
+    "version": bool,
+    "input": InputPathType,
+    "output": str,
+})
+Dwi2maskParametersTagged = typing.TypedDict('Dwi2maskParametersTagged', {
+    "@type": typing.Literal["mrtrix/dwi2mask"],
     "clean_scale": typing.NotRequired[int | None],
     "grad": typing.NotRequired[InputPathType | None],
     "fslgrad": typing.NotRequired[Dwi2maskFslgradParameters | None],
@@ -45,44 +71,10 @@ Dwi2maskParameters = typing.TypedDict('Dwi2maskParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "mrtrix.dwi2mask": dwi2mask_cargs,
-        "mrtrix.dwi2mask.fslgrad": dwi2mask_fslgrad_cargs,
-        "mrtrix.dwi2mask.config": dwi2mask_config_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "mrtrix.dwi2mask": dwi2mask_outputs,
-    }.get(t)
-
-
 def dwi2mask_fslgrad_params(
     bvecs: InputPathType,
     bvals: InputPathType,
-) -> Dwi2maskFslgradParameters:
+) -> Dwi2maskFslgradParametersTagged:
     """
     Build parameters.
     
@@ -99,7 +91,7 @@ def dwi2mask_fslgrad_params(
         Parameter dictionary
     """
     params = {
-        "@type": "mrtrix.dwi2mask.fslgrad",
+        "@type": "fslgrad",
         "bvecs": bvecs,
         "bvals": bvals,
     }
@@ -121,15 +113,15 @@ def dwi2mask_fslgrad_cargs(
     """
     cargs = []
     cargs.append("-fslgrad")
-    cargs.append(execution.input_file(params.get("bvecs")))
-    cargs.append(execution.input_file(params.get("bvals")))
+    cargs.append(execution.input_file(params.get("bvecs", None)))
+    cargs.append(execution.input_file(params.get("bvals", None)))
     return cargs
 
 
 def dwi2mask_config_params(
     key: str,
     value: str,
-) -> Dwi2maskConfigParameters:
+) -> Dwi2maskConfigParametersTagged:
     """
     Build parameters.
     
@@ -140,7 +132,7 @@ def dwi2mask_config_params(
         Parameter dictionary
     """
     params = {
-        "@type": "mrtrix.dwi2mask.config",
+        "@type": "config",
         "key": key,
         "value": value,
     }
@@ -162,14 +154,14 @@ def dwi2mask_config_cargs(
     """
     cargs = []
     cargs.append("-config")
-    cargs.append(params.get("key"))
-    cargs.append(params.get("value"))
+    cargs.append(params.get("key", None))
+    cargs.append(params.get("value", None))
     return cargs
 
 
 class Dwi2maskOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `dwi2mask(...)`.
+    Output object returned when calling `Dwi2maskParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -191,7 +183,7 @@ def dwi2mask_params(
     config: list[Dwi2maskConfigParameters] | None = None,
     help_: bool = False,
     version: bool = False,
-) -> Dwi2maskParameters:
+) -> Dwi2maskParametersTagged:
     """
     Build parameters.
     
@@ -228,7 +220,7 @@ def dwi2mask_params(
         Parameter dictionary
     """
     params = {
-        "@type": "mrtrix.dwi2mask",
+        "@type": "mrtrix/dwi2mask",
         "info": info,
         "quiet": quiet,
         "debug": debug,
@@ -266,39 +258,39 @@ def dwi2mask_cargs(
     """
     cargs = []
     cargs.append("dwi2mask")
-    if params.get("clean_scale") is not None:
+    if params.get("clean_scale", None) is not None:
         cargs.extend([
             "-clean_scale",
-            str(params.get("clean_scale"))
+            str(params.get("clean_scale", None))
         ])
-    if params.get("grad") is not None:
+    if params.get("grad", None) is not None:
         cargs.extend([
             "-grad",
-            execution.input_file(params.get("grad"))
+            execution.input_file(params.get("grad", None))
         ])
-    if params.get("fslgrad") is not None:
-        cargs.extend(dyn_cargs(params.get("fslgrad")["@type"])(params.get("fslgrad"), execution))
-    if params.get("info"):
+    if params.get("fslgrad", None) is not None:
+        cargs.extend(dwi2mask_fslgrad_cargs(params.get("fslgrad", None), execution))
+    if params.get("info", False):
         cargs.append("-info")
-    if params.get("quiet"):
+    if params.get("quiet", False):
         cargs.append("-quiet")
-    if params.get("debug"):
+    if params.get("debug", False):
         cargs.append("-debug")
-    if params.get("force"):
+    if params.get("force", False):
         cargs.append("-force")
-    if params.get("nthreads") is not None:
+    if params.get("nthreads", None) is not None:
         cargs.extend([
             "-nthreads",
-            str(params.get("nthreads"))
+            str(params.get("nthreads", None))
         ])
-    if params.get("config") is not None:
-        cargs.extend([a for c in [dyn_cargs(s["@type"])(s, execution) for s in params.get("config")] for a in c])
-    if params.get("help"):
+    if params.get("config", None) is not None:
+        cargs.extend([a for c in [dwi2mask_config_cargs(s, execution) for s in params.get("config", None)] for a in c])
+    if params.get("help", False):
         cargs.append("-help")
-    if params.get("version"):
+    if params.get("version", False):
         cargs.append("-version")
-    cargs.append(execution.input_file(params.get("input")))
-    cargs.append(params.get("output"))
+    cargs.append(execution.input_file(params.get("input", None)))
+    cargs.append(params.get("output", None))
     return cargs
 
 
@@ -317,7 +309,7 @@ def dwi2mask_outputs(
     """
     ret = Dwi2maskOutputs(
         root=execution.output_file("."),
-        output=execution.output_file(params.get("output")),
+        output=execution.output_file(params.get("output", None)),
     )
     return ret
 
@@ -456,10 +448,7 @@ def dwi2mask(
 
 __all__ = [
     "DWI2MASK_METADATA",
-    "Dwi2maskConfigParameters",
-    "Dwi2maskFslgradParameters",
     "Dwi2maskOutputs",
-    "Dwi2maskParameters",
     "dwi2mask",
     "dwi2mask_config_params",
     "dwi2mask_execute",

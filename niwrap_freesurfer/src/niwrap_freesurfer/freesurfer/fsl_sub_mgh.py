@@ -14,7 +14,23 @@ FSL_SUB_MGH_METADATA = Metadata(
 
 
 FslSubMghParameters = typing.TypedDict('FslSubMghParameters', {
-    "@type": typing.Literal["freesurfer.fsl_sub_mgh"],
+    "@type": typing.NotRequired[typing.Literal["freesurfer/fsl_sub_mgh"]],
+    "estimated_time": typing.NotRequired[int | None],
+    "queue_name": typing.NotRequired[str | None],
+    "architecture": typing.NotRequired[str | None],
+    "job_priority": typing.NotRequired[int | None],
+    "email_address": typing.NotRequired[str | None],
+    "hold_job": typing.NotRequired[str | None],
+    "task_file": typing.NotRequired[InputPathType | None],
+    "job_name": typing.NotRequired[str | None],
+    "log_dir": typing.NotRequired[str | None],
+    "mail_options": typing.NotRequired[str | None],
+    "flags_in_scripts": bool,
+    "verbose": bool,
+    "shell_path": typing.NotRequired[str | None],
+})
+FslSubMghParametersTagged = typing.TypedDict('FslSubMghParametersTagged', {
+    "@type": typing.Literal["freesurfer/fsl_sub_mgh"],
     "estimated_time": typing.NotRequired[int | None],
     "queue_name": typing.NotRequired[str | None],
     "architecture": typing.NotRequired[str | None],
@@ -31,40 +47,9 @@ FslSubMghParameters = typing.TypedDict('FslSubMghParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "freesurfer.fsl_sub_mgh": fsl_sub_mgh_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-    }.get(t)
-
-
 class FslSubMghOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `fsl_sub_mgh(...)`.
+    Output object returned when calling `FslSubMghParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -84,7 +69,7 @@ def fsl_sub_mgh_params(
     flags_in_scripts: bool = False,
     verbose: bool = False,
     shell_path: str | None = None,
-) -> FslSubMghParameters:
+) -> FslSubMghParametersTagged:
     """
     Build parameters.
     
@@ -110,7 +95,7 @@ def fsl_sub_mgh_params(
         Parameter dictionary
     """
     params = {
-        "@type": "freesurfer.fsl_sub_mgh",
+        "@type": "freesurfer/fsl_sub_mgh",
         "flags_in_scripts": flags_in_scripts,
         "verbose": verbose,
     }
@@ -154,64 +139,64 @@ def fsl_sub_mgh_cargs(
     """
     cargs = []
     cargs.append("fsl_sub_mgh")
-    if params.get("estimated_time") is not None:
+    if params.get("estimated_time", None) is not None:
         cargs.extend([
             "-T",
-            str(params.get("estimated_time"))
+            str(params.get("estimated_time", None))
         ])
-    if params.get("queue_name") is not None:
+    if params.get("queue_name", None) is not None:
         cargs.extend([
             "-q",
-            params.get("queue_name")
+            params.get("queue_name", None)
         ])
-    if params.get("architecture") is not None:
+    if params.get("architecture", None) is not None:
         cargs.extend([
             "-a",
-            params.get("architecture")
+            params.get("architecture", None)
         ])
-    if params.get("job_priority") is not None:
+    if params.get("job_priority", None) is not None:
         cargs.extend([
             "-p",
-            str(params.get("job_priority"))
+            str(params.get("job_priority", None))
         ])
-    if params.get("email_address") is not None:
+    if params.get("email_address", None) is not None:
         cargs.extend([
             "-M",
-            params.get("email_address")
+            params.get("email_address", None)
         ])
-    if params.get("hold_job") is not None:
+    if params.get("hold_job", None) is not None:
         cargs.extend([
             "-j",
-            params.get("hold_job")
+            params.get("hold_job", None)
         ])
-    if params.get("task_file") is not None:
+    if params.get("task_file", None) is not None:
         cargs.extend([
             "-t",
-            execution.input_file(params.get("task_file"))
+            execution.input_file(params.get("task_file", None))
         ])
-    if params.get("job_name") is not None:
+    if params.get("job_name", None) is not None:
         cargs.extend([
             "-N",
-            params.get("job_name")
+            params.get("job_name", None)
         ])
-    if params.get("log_dir") is not None:
+    if params.get("log_dir", None) is not None:
         cargs.extend([
             "-l",
-            params.get("log_dir")
+            params.get("log_dir", None)
         ])
-    if params.get("mail_options") is not None:
+    if params.get("mail_options", None) is not None:
         cargs.extend([
             "-m",
-            params.get("mail_options")
+            params.get("mail_options", None)
         ])
-    if params.get("flags_in_scripts"):
+    if params.get("flags_in_scripts", False):
         cargs.append("-F")
-    if params.get("verbose"):
+    if params.get("verbose", False):
         cargs.append("-v")
-    if params.get("shell_path") is not None:
+    if params.get("shell_path", None) is not None:
         cargs.extend([
             "-s",
-            params.get("shell_path")
+            params.get("shell_path", None)
         ])
     return cargs
 
@@ -333,7 +318,6 @@ def fsl_sub_mgh(
 __all__ = [
     "FSL_SUB_MGH_METADATA",
     "FslSubMghOutputs",
-    "FslSubMghParameters",
     "fsl_sub_mgh",
     "fsl_sub_mgh_execute",
     "fsl_sub_mgh_params",

@@ -14,47 +14,20 @@ IS_LTA_METADATA = Metadata(
 
 
 IsLtaParameters = typing.TypedDict('IsLtaParameters', {
-    "@type": typing.Literal["freesurfer.IsLTA"],
+    "@type": typing.NotRequired[typing.Literal["freesurfer/IsLTA"]],
+    "candidate_file": InputPathType,
+    "outfile": str,
+})
+IsLtaParametersTagged = typing.TypedDict('IsLtaParametersTagged', {
+    "@type": typing.Literal["freesurfer/IsLTA"],
     "candidate_file": InputPathType,
     "outfile": str,
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "freesurfer.IsLTA": is_lta_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "freesurfer.IsLTA": is_lta_outputs,
-    }.get(t)
-
-
 class IsLtaOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `is_lta(...)`.
+    Output object returned when calling `IsLtaParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -65,7 +38,7 @@ class IsLtaOutputs(typing.NamedTuple):
 def is_lta_params(
     candidate_file: InputPathType,
     outfile: str,
-) -> IsLtaParameters:
+) -> IsLtaParametersTagged:
     """
     Build parameters.
     
@@ -76,7 +49,7 @@ def is_lta_params(
         Parameter dictionary
     """
     params = {
-        "@type": "freesurfer.IsLTA",
+        "@type": "freesurfer/IsLTA",
         "candidate_file": candidate_file,
         "outfile": outfile,
     }
@@ -100,11 +73,11 @@ def is_lta_cargs(
     cargs.append("IsLTA")
     cargs.extend([
         "--r",
-        execution.input_file(params.get("candidate_file"))
+        execution.input_file(params.get("candidate_file", None))
     ])
     cargs.extend([
         "--o",
-        params.get("outfile")
+        params.get("outfile", None)
     ])
     return cargs
 
@@ -124,7 +97,7 @@ def is_lta_outputs(
     """
     ret = IsLtaOutputs(
         root=execution.output_file("."),
-        output_file=execution.output_file(params.get("outfile")),
+        output_file=execution.output_file(params.get("outfile", None)),
     )
     return ret
 
@@ -190,7 +163,6 @@ def is_lta(
 __all__ = [
     "IS_LTA_METADATA",
     "IsLtaOutputs",
-    "IsLtaParameters",
     "is_lta",
     "is_lta_execute",
     "is_lta_params",

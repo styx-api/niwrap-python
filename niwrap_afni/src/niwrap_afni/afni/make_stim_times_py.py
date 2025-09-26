@@ -14,7 +14,22 @@ MAKE_STIM_TIMES_PY_METADATA = Metadata(
 
 
 MakeStimTimesPyParameters = typing.TypedDict('MakeStimTimesPyParameters', {
-    "@type": typing.Literal["afni.make_stim_times.py"],
+    "@type": typing.NotRequired[typing.Literal["afni/make_stim_times.py"]],
+    "files": list[InputPathType],
+    "prefix": str,
+    "tr": float,
+    "nruns": float,
+    "nt": float,
+    "run_trs": typing.NotRequired[list[float] | None],
+    "offset": typing.NotRequired[float | None],
+    "labels": typing.NotRequired[list[str] | None],
+    "no_consec_events": bool,
+    "amplitudes": bool,
+    "show_valid_opts": bool,
+    "verbose": typing.NotRequired[float | None],
+})
+MakeStimTimesPyParametersTagged = typing.TypedDict('MakeStimTimesPyParametersTagged', {
+    "@type": typing.Literal["afni/make_stim_times.py"],
     "files": list[InputPathType],
     "prefix": str,
     "tr": float,
@@ -30,41 +45,9 @@ MakeStimTimesPyParameters = typing.TypedDict('MakeStimTimesPyParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "afni.make_stim_times.py": make_stim_times_py_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "afni.make_stim_times.py": make_stim_times_py_outputs,
-    }.get(t)
-
-
 class MakeStimTimesPyOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `make_stim_times_py(...)`.
+    Output object returned when calling `MakeStimTimesPyParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -89,7 +72,7 @@ def make_stim_times_py_params(
     amplitudes: bool = False,
     show_valid_opts: bool = False,
     verbose: float | None = None,
-) -> MakeStimTimesPyParameters:
+) -> MakeStimTimesPyParametersTagged:
     """
     Build parameters.
     
@@ -110,7 +93,7 @@ def make_stim_times_py_params(
         Parameter dictionary
     """
     params = {
-        "@type": "afni.make_stim_times.py",
+        "@type": "afni/make_stim_times.py",
         "files": files,
         "prefix": prefix,
         "tr": tr,
@@ -146,45 +129,45 @@ def make_stim_times_py_cargs(
     """
     cargs = []
     cargs.append("make_stim_times.py")
-    cargs.extend([execution.input_file(f) for f in params.get("files")])
+    cargs.extend([execution.input_file(f) for f in params.get("files", None)])
     cargs.extend([
         "-prefix",
-        params.get("prefix")
+        params.get("prefix", None)
     ])
     cargs.extend([
         "-tr",
-        str(params.get("tr"))
+        str(params.get("tr", None))
     ])
     cargs.extend([
         "-nruns",
-        str(params.get("nruns"))
+        str(params.get("nruns", None))
     ])
     cargs.extend([
         "-nt",
-        str(params.get("nt"))
+        str(params.get("nt", None))
     ])
-    if params.get("run_trs") is not None:
-        cargs.extend(map(str, params.get("run_trs")))
-    if params.get("offset") is not None:
+    if params.get("run_trs", None) is not None:
+        cargs.extend(map(str, params.get("run_trs", None)))
+    if params.get("offset", None) is not None:
         cargs.extend([
             "-offset",
-            str(params.get("offset"))
+            str(params.get("offset", None))
         ])
-    if params.get("labels") is not None:
+    if params.get("labels", None) is not None:
         cargs.extend([
             "-labels",
-            *params.get("labels")
+            *params.get("labels", None)
         ])
-    if params.get("no_consec_events"):
+    if params.get("no_consec_events", False):
         cargs.append("-no_consec")
-    if params.get("amplitudes"):
+    if params.get("amplitudes", False):
         cargs.append("-amplitudes")
-    if params.get("show_valid_opts"):
+    if params.get("show_valid_opts", False):
         cargs.append("-show_valid_opts")
-    if params.get("verbose") is not None:
+    if params.get("verbose", None) is not None:
         cargs.extend([
             "-verb",
-            str(params.get("verbose"))
+            str(params.get("verbose", None))
         ])
     return cargs
 
@@ -204,9 +187,9 @@ def make_stim_times_py_outputs(
     """
     ret = MakeStimTimesPyOutputs(
         root=execution.output_file("."),
-        out_stim_times_01=execution.output_file(params.get("prefix") + ".01.1D"),
-        out_stim_times_02=execution.output_file(params.get("prefix") + ".02.1D"),
-        out_stim_times_03=execution.output_file(params.get("prefix") + ".03.1D"),
+        out_stim_times_01=execution.output_file(params.get("prefix", None) + ".01.1D"),
+        out_stim_times_02=execution.output_file(params.get("prefix", None) + ".02.1D"),
+        out_stim_times_03=execution.output_file(params.get("prefix", None) + ".03.1D"),
     )
     return ret
 
@@ -302,7 +285,6 @@ def make_stim_times_py(
 __all__ = [
     "MAKE_STIM_TIMES_PY_METADATA",
     "MakeStimTimesPyOutputs",
-    "MakeStimTimesPyParameters",
     "make_stim_times_py",
     "make_stim_times_py_execute",
     "make_stim_times_py_params",

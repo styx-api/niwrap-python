@@ -14,7 +14,18 @@ V__QUIET_TALKERS_METADATA = Metadata(
 
 
 VQuietTalkersParameters = typing.TypedDict('VQuietTalkersParameters', {
-    "@type": typing.Literal["afni.@Quiet_Talkers"],
+    "@type": typing.NotRequired[typing.Literal["afni/@Quiet_Talkers"]],
+    "sudo": bool,
+    "prog": typing.NotRequired[list[str] | None],
+    "npb_val": typing.NotRequired[list[float] | None],
+    "npb_range": typing.NotRequired[list[float] | None],
+    "pif_key": typing.NotRequired[str | None],
+    "no_npb": bool,
+    "list": bool,
+    "quiet": bool,
+})
+VQuietTalkersParametersTagged = typing.TypedDict('VQuietTalkersParametersTagged', {
+    "@type": typing.Literal["afni/@Quiet_Talkers"],
     "sudo": bool,
     "prog": typing.NotRequired[list[str] | None],
     "npb_val": typing.NotRequired[list[float] | None],
@@ -26,40 +37,9 @@ VQuietTalkersParameters = typing.TypedDict('VQuietTalkersParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "afni.@Quiet_Talkers": v__quiet_talkers_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-    }.get(t)
-
-
 class VQuietTalkersOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `v__quiet_talkers(...)`.
+    Output object returned when calling `VQuietTalkersParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -74,7 +54,7 @@ def v__quiet_talkers_params(
     no_npb: bool = False,
     list_: bool = False,
     quiet: bool = False,
-) -> VQuietTalkersParameters:
+) -> VQuietTalkersParametersTagged:
     """
     Build parameters.
     
@@ -93,7 +73,7 @@ def v__quiet_talkers_params(
         Parameter dictionary
     """
     params = {
-        "@type": "afni.@Quiet_Talkers",
+        "@type": "afni/@Quiet_Talkers",
         "sudo": sudo,
         "no_npb": no_npb,
         "list": list_,
@@ -125,33 +105,33 @@ def v__quiet_talkers_cargs(
     """
     cargs = []
     cargs.append("@Quiet_Talkers")
-    if params.get("sudo"):
+    if params.get("sudo", False):
         cargs.append("-sudo")
-    if params.get("prog") is not None:
+    if params.get("prog", None) is not None:
         cargs.extend([
             "-prog",
-            *params.get("prog")
+            *params.get("prog", None)
         ])
-    if params.get("npb_val") is not None:
+    if params.get("npb_val", None) is not None:
         cargs.extend([
             "-npb_val",
-            *map(str, params.get("npb_val"))
+            *map(str, params.get("npb_val", None))
         ])
-    if params.get("npb_range") is not None:
+    if params.get("npb_range", None) is not None:
         cargs.extend([
             "-npb_range",
-            *map(str, params.get("npb_range"))
+            *map(str, params.get("npb_range", None))
         ])
-    if params.get("pif_key") is not None:
+    if params.get("pif_key", None) is not None:
         cargs.extend([
             "-pif",
-            params.get("pif_key")
+            params.get("pif_key", None)
         ])
-    if params.get("no_npb"):
+    if params.get("no_npb", False):
         cargs.append("-no_npb")
-    if params.get("list"):
+    if params.get("list", False):
         cargs.append("-list")
-    if params.get("quiet"):
+    if params.get("quiet", False):
         cargs.append("-quiet")
     return cargs
 
@@ -253,7 +233,6 @@ def v__quiet_talkers(
 
 __all__ = [
     "VQuietTalkersOutputs",
-    "VQuietTalkersParameters",
     "V__QUIET_TALKERS_METADATA",
     "v__quiet_talkers",
     "v__quiet_talkers_execute",

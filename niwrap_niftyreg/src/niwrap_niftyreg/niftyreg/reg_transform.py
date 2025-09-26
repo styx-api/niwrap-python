@@ -14,7 +14,38 @@ REG_TRANSFORM_METADATA = Metadata(
 
 
 RegTransformParameters = typing.TypedDict('RegTransformParameters', {
-    "@type": typing.Literal["niftyreg.reg_transform"],
+    "@type": typing.NotRequired[typing.Literal["niftyreg/reg_transform"]],
+    "reference_image": InputPathType,
+    "cpp2def_input": typing.NotRequired[InputPathType | None],
+    "cpp2def_output": typing.NotRequired[str | None],
+    "comp1_cpp2": typing.NotRequired[InputPathType | None],
+    "comp1_cpp1": typing.NotRequired[InputPathType | None],
+    "comp1_output": typing.NotRequired[str | None],
+    "comp2_cpp": typing.NotRequired[InputPathType | None],
+    "comp2_def": typing.NotRequired[InputPathType | None],
+    "comp2_output": typing.NotRequired[str | None],
+    "comp3_def2": typing.NotRequired[InputPathType | None],
+    "comp3_def1": typing.NotRequired[InputPathType | None],
+    "comp3_output": typing.NotRequired[str | None],
+    "def2disp_input": typing.NotRequired[InputPathType | None],
+    "def2disp_output": typing.NotRequired[str | None],
+    "disp2def_input": typing.NotRequired[InputPathType | None],
+    "disp2def_output": typing.NotRequired[str | None],
+    "upd_sform_image": typing.NotRequired[InputPathType | None],
+    "upd_sform_affine": typing.NotRequired[InputPathType | None],
+    "upd_sform_output": typing.NotRequired[str | None],
+    "aff2def_affine": typing.NotRequired[InputPathType | None],
+    "aff2def_target": typing.NotRequired[InputPathType | None],
+    "aff2def_cpp_or_def": typing.NotRequired[InputPathType | None],
+    "aff2def_output": typing.NotRequired[str | None],
+    "inv_affine_input": typing.NotRequired[InputPathType | None],
+    "inv_affine_output": typing.NotRequired[str | None],
+    "comp_aff_1st": typing.NotRequired[InputPathType | None],
+    "comp_aff_2nd": typing.NotRequired[InputPathType | None],
+    "comp_aff_output": typing.NotRequired[str | None],
+})
+RegTransformParametersTagged = typing.TypedDict('RegTransformParametersTagged', {
+    "@type": typing.Literal["niftyreg/reg_transform"],
     "reference_image": InputPathType,
     "cpp2def_input": typing.NotRequired[InputPathType | None],
     "cpp2def_output": typing.NotRequired[str | None],
@@ -46,41 +77,9 @@ RegTransformParameters = typing.TypedDict('RegTransformParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "niftyreg.reg_transform": reg_transform_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "niftyreg.reg_transform": reg_transform_outputs,
-    }.get(t)
-
-
 class RegTransformOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `reg_transform(...)`.
+    Output object returned when calling `RegTransformParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -141,7 +140,7 @@ def reg_transform_params(
     comp_aff_1st: InputPathType | None = None,
     comp_aff_2nd: InputPathType | None = None,
     comp_aff_output: str | None = None,
-) -> RegTransformParameters:
+) -> RegTransformParametersTagged:
     """
     Build parameters.
     
@@ -194,7 +193,7 @@ def reg_transform_params(
         Parameter dictionary
     """
     params = {
-        "@type": "niftyreg.reg_transform",
+        "@type": "niftyreg/reg_transform",
         "reference_image": reference_image,
     }
     if cpp2def_input is not None:
@@ -271,92 +270,92 @@ def reg_transform_cargs(
     cargs.append("reg_transform")
     cargs.extend([
         "-ref",
-        execution.input_file(params.get("reference_image"))
+        execution.input_file(params.get("reference_image", None))
     ])
-    if params.get("cpp2def_input") is not None:
+    if params.get("cpp2def_input", None) is not None:
         cargs.extend([
             "-cpp2def",
-            execution.input_file(params.get("cpp2def_input"))
+            execution.input_file(params.get("cpp2def_input", None))
         ])
-    if params.get("cpp2def_output") is not None:
-        cargs.append(params.get("cpp2def_output"))
-    if params.get("comp1_cpp2") is not None:
+    if params.get("cpp2def_output", None) is not None:
+        cargs.append(params.get("cpp2def_output", None))
+    if params.get("comp1_cpp2", None) is not None:
         cargs.extend([
             "-comp1",
-            execution.input_file(params.get("comp1_cpp2"))
+            execution.input_file(params.get("comp1_cpp2", None))
         ])
-    if params.get("comp1_cpp1") is not None:
-        cargs.append(execution.input_file(params.get("comp1_cpp1")))
-    if params.get("comp1_output") is not None:
-        cargs.append(params.get("comp1_output"))
-    if params.get("comp2_cpp") is not None:
+    if params.get("comp1_cpp1", None) is not None:
+        cargs.append(execution.input_file(params.get("comp1_cpp1", None)))
+    if params.get("comp1_output", None) is not None:
+        cargs.append(params.get("comp1_output", None))
+    if params.get("comp2_cpp", None) is not None:
         cargs.extend([
             "-comp2",
-            execution.input_file(params.get("comp2_cpp"))
+            execution.input_file(params.get("comp2_cpp", None))
         ])
-    if params.get("comp2_def") is not None:
-        cargs.append(execution.input_file(params.get("comp2_def")))
-    if params.get("comp2_output") is not None:
-        cargs.append(params.get("comp2_output"))
-    if params.get("comp3_def2") is not None:
+    if params.get("comp2_def", None) is not None:
+        cargs.append(execution.input_file(params.get("comp2_def", None)))
+    if params.get("comp2_output", None) is not None:
+        cargs.append(params.get("comp2_output", None))
+    if params.get("comp3_def2", None) is not None:
         cargs.extend([
             "-comp3",
-            execution.input_file(params.get("comp3_def2"))
+            execution.input_file(params.get("comp3_def2", None))
         ])
-    if params.get("comp3_def1") is not None:
-        cargs.append(execution.input_file(params.get("comp3_def1")))
-    if params.get("comp3_output") is not None:
-        cargs.append(params.get("comp3_output"))
-    if params.get("def2disp_input") is not None:
+    if params.get("comp3_def1", None) is not None:
+        cargs.append(execution.input_file(params.get("comp3_def1", None)))
+    if params.get("comp3_output", None) is not None:
+        cargs.append(params.get("comp3_output", None))
+    if params.get("def2disp_input", None) is not None:
         cargs.extend([
             "-def2disp",
-            execution.input_file(params.get("def2disp_input"))
+            execution.input_file(params.get("def2disp_input", None))
         ])
-    if params.get("def2disp_output") is not None:
-        cargs.append(params.get("def2disp_output"))
-    if params.get("disp2def_input") is not None:
+    if params.get("def2disp_output", None) is not None:
+        cargs.append(params.get("def2disp_output", None))
+    if params.get("disp2def_input", None) is not None:
         cargs.extend([
             "-disp2def",
-            execution.input_file(params.get("disp2def_input"))
+            execution.input_file(params.get("disp2def_input", None))
         ])
-    if params.get("disp2def_output") is not None:
-        cargs.append(params.get("disp2def_output"))
-    if params.get("upd_sform_image") is not None:
+    if params.get("disp2def_output", None) is not None:
+        cargs.append(params.get("disp2def_output", None))
+    if params.get("upd_sform_image", None) is not None:
         cargs.extend([
             "-updSform",
-            execution.input_file(params.get("upd_sform_image"))
+            execution.input_file(params.get("upd_sform_image", None))
         ])
-    if params.get("upd_sform_affine") is not None:
-        cargs.append(execution.input_file(params.get("upd_sform_affine")))
-    if params.get("upd_sform_output") is not None:
-        cargs.append(params.get("upd_sform_output"))
-    if params.get("aff2def_affine") is not None:
+    if params.get("upd_sform_affine", None) is not None:
+        cargs.append(execution.input_file(params.get("upd_sform_affine", None)))
+    if params.get("upd_sform_output", None) is not None:
+        cargs.append(params.get("upd_sform_output", None))
+    if params.get("aff2def_affine", None) is not None:
         cargs.extend([
             "-aff2def",
-            execution.input_file(params.get("aff2def_affine"))
+            execution.input_file(params.get("aff2def_affine", None))
         ])
-    if params.get("aff2def_target") is not None:
-        cargs.append(execution.input_file(params.get("aff2def_target")))
-    if params.get("aff2def_cpp_or_def") is not None:
-        cargs.append(execution.input_file(params.get("aff2def_cpp_or_def")))
-    if params.get("aff2def_output") is not None:
-        cargs.append(params.get("aff2def_output"))
-    if params.get("inv_affine_input") is not None:
+    if params.get("aff2def_target", None) is not None:
+        cargs.append(execution.input_file(params.get("aff2def_target", None)))
+    if params.get("aff2def_cpp_or_def", None) is not None:
+        cargs.append(execution.input_file(params.get("aff2def_cpp_or_def", None)))
+    if params.get("aff2def_output", None) is not None:
+        cargs.append(params.get("aff2def_output", None))
+    if params.get("inv_affine_input", None) is not None:
         cargs.extend([
             "-invAffine",
-            execution.input_file(params.get("inv_affine_input"))
+            execution.input_file(params.get("inv_affine_input", None))
         ])
-    if params.get("inv_affine_output") is not None:
-        cargs.append(params.get("inv_affine_output"))
-    if params.get("comp_aff_1st") is not None:
+    if params.get("inv_affine_output", None) is not None:
+        cargs.append(params.get("inv_affine_output", None))
+    if params.get("comp_aff_1st", None) is not None:
         cargs.extend([
             "-compAff",
-            execution.input_file(params.get("comp_aff_1st"))
+            execution.input_file(params.get("comp_aff_1st", None))
         ])
-    if params.get("comp_aff_2nd") is not None:
-        cargs.append(execution.input_file(params.get("comp_aff_2nd")))
-    if params.get("comp_aff_output") is not None:
-        cargs.append(params.get("comp_aff_output"))
+    if params.get("comp_aff_2nd", None) is not None:
+        cargs.append(execution.input_file(params.get("comp_aff_2nd", None)))
+    if params.get("comp_aff_output", None) is not None:
+        cargs.append(params.get("comp_aff_output", None))
     return cargs
 
 
@@ -375,16 +374,16 @@ def reg_transform_outputs(
     """
     ret = RegTransformOutputs(
         root=execution.output_file("."),
-        cpp2def_output_file=execution.output_file(params.get("cpp2def_output")) if (params.get("cpp2def_output") is not None) else None,
-        comp1_output_file=execution.output_file(params.get("comp1_output")) if (params.get("comp1_output") is not None) else None,
-        comp2_output_file=execution.output_file(params.get("comp2_output")) if (params.get("comp2_output") is not None) else None,
-        comp3_output_file=execution.output_file(params.get("comp3_output")) if (params.get("comp3_output") is not None) else None,
-        def2disp_output_file=execution.output_file(params.get("def2disp_output")) if (params.get("def2disp_output") is not None) else None,
-        disp2def_output_file=execution.output_file(params.get("disp2def_output")) if (params.get("disp2def_output") is not None) else None,
-        upd_sform_output_file=execution.output_file(params.get("upd_sform_output")) if (params.get("upd_sform_output") is not None) else None,
-        aff2def_output_file=execution.output_file(params.get("aff2def_output")) if (params.get("aff2def_output") is not None) else None,
-        inv_affine_output_file=execution.output_file(params.get("inv_affine_output")) if (params.get("inv_affine_output") is not None) else None,
-        comp_aff_output_file=execution.output_file(params.get("comp_aff_output")) if (params.get("comp_aff_output") is not None) else None,
+        cpp2def_output_file=execution.output_file(params.get("cpp2def_output", None)) if (params.get("cpp2def_output") is not None) else None,
+        comp1_output_file=execution.output_file(params.get("comp1_output", None)) if (params.get("comp1_output") is not None) else None,
+        comp2_output_file=execution.output_file(params.get("comp2_output", None)) if (params.get("comp2_output") is not None) else None,
+        comp3_output_file=execution.output_file(params.get("comp3_output", None)) if (params.get("comp3_output") is not None) else None,
+        def2disp_output_file=execution.output_file(params.get("def2disp_output", None)) if (params.get("def2disp_output") is not None) else None,
+        disp2def_output_file=execution.output_file(params.get("disp2def_output", None)) if (params.get("disp2def_output") is not None) else None,
+        upd_sform_output_file=execution.output_file(params.get("upd_sform_output", None)) if (params.get("upd_sform_output") is not None) else None,
+        aff2def_output_file=execution.output_file(params.get("aff2def_output", None)) if (params.get("aff2def_output") is not None) else None,
+        inv_affine_output_file=execution.output_file(params.get("inv_affine_output", None)) if (params.get("inv_affine_output") is not None) else None,
+        comp_aff_output_file=execution.output_file(params.get("comp_aff_output", None)) if (params.get("comp_aff_output") is not None) else None,
     )
     return ret
 
@@ -546,7 +545,6 @@ def reg_transform(
 __all__ = [
     "REG_TRANSFORM_METADATA",
     "RegTransformOutputs",
-    "RegTransformParameters",
     "reg_transform",
     "reg_transform_execute",
     "reg_transform_params",

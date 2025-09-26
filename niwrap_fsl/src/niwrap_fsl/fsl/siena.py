@@ -14,7 +14,23 @@ SIENA_METADATA = Metadata(
 
 
 SienaParameters = typing.TypedDict('SienaParameters', {
-    "@type": typing.Literal["fsl.siena"],
+    "@type": typing.NotRequired[typing.Literal["fsl/siena"]],
+    "input1": InputPathType,
+    "input2": InputPathType,
+    "output_dir": typing.NotRequired[str | None],
+    "debug_flag": bool,
+    "bet_options": typing.NotRequired[str | None],
+    "two_class_seg_flag": bool,
+    "t2_weighted_flag": bool,
+    "standard_space_mask_flag": bool,
+    "upper_ignore": typing.NotRequired[float | None],
+    "lower_ignore": typing.NotRequired[float | None],
+    "sienadiff_options": typing.NotRequired[str | None],
+    "ventricle_analysis_flag": bool,
+    "ventricle_mask": typing.NotRequired[InputPathType | None],
+})
+SienaParametersTagged = typing.TypedDict('SienaParametersTagged', {
+    "@type": typing.Literal["fsl/siena"],
     "input1": InputPathType,
     "input2": InputPathType,
     "output_dir": typing.NotRequired[str | None],
@@ -31,41 +47,9 @@ SienaParameters = typing.TypedDict('SienaParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "fsl.siena": siena_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "fsl.siena": siena_outputs,
-    }.get(t)
-
-
 class SienaOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `siena(...)`.
+    Output object returned when calling `SienaParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -89,7 +73,7 @@ def siena_params(
     sienadiff_options: str | None = None,
     ventricle_analysis_flag: bool = False,
     ventricle_mask: InputPathType | None = None,
-) -> SienaParameters:
+) -> SienaParametersTagged:
     """
     Build parameters.
     
@@ -117,7 +101,7 @@ def siena_params(
         Parameter dictionary
     """
     params = {
-        "@type": "fsl.siena",
+        "@type": "fsl/siena",
         "input1": input1,
         "input2": input2,
         "debug_flag": debug_flag,
@@ -156,47 +140,47 @@ def siena_cargs(
     """
     cargs = []
     cargs.append("siena")
-    cargs.append(execution.input_file(params.get("input1")))
-    cargs.append(execution.input_file(params.get("input2")))
-    if params.get("output_dir") is not None:
+    cargs.append(execution.input_file(params.get("input1", None)))
+    cargs.append(execution.input_file(params.get("input2", None)))
+    if params.get("output_dir", None) is not None:
         cargs.extend([
             "-o",
-            params.get("output_dir")
+            params.get("output_dir", None)
         ])
-    if params.get("debug_flag"):
+    if params.get("debug_flag", False):
         cargs.append("-d")
-    if params.get("bet_options") is not None:
+    if params.get("bet_options", None) is not None:
         cargs.extend([
             "-B",
-            params.get("bet_options")
+            params.get("bet_options", None)
         ])
-    if params.get("two_class_seg_flag"):
+    if params.get("two_class_seg_flag", False):
         cargs.append("-2")
-    if params.get("t2_weighted_flag"):
+    if params.get("t2_weighted_flag", False):
         cargs.append("-t2")
-    if params.get("standard_space_mask_flag"):
+    if params.get("standard_space_mask_flag", False):
         cargs.append("-m")
-    if params.get("upper_ignore") is not None:
+    if params.get("upper_ignore", None) is not None:
         cargs.extend([
             "-t",
-            str(params.get("upper_ignore"))
+            str(params.get("upper_ignore", None))
         ])
-    if params.get("lower_ignore") is not None:
+    if params.get("lower_ignore", None) is not None:
         cargs.extend([
             "-b",
-            str(params.get("lower_ignore"))
+            str(params.get("lower_ignore", None))
         ])
-    if params.get("sienadiff_options") is not None:
+    if params.get("sienadiff_options", None) is not None:
         cargs.extend([
             "-S",
-            params.get("sienadiff_options")
+            params.get("sienadiff_options", None)
         ])
-    if params.get("ventricle_analysis_flag"):
+    if params.get("ventricle_analysis_flag", False):
         cargs.append("-V")
-    if params.get("ventricle_mask") is not None:
+    if params.get("ventricle_mask", None) is not None:
         cargs.extend([
             "-v",
-            execution.input_file(params.get("ventricle_mask"))
+            execution.input_file(params.get("ventricle_mask", None))
         ])
     return cargs
 
@@ -216,8 +200,8 @@ def siena_outputs(
     """
     ret = SienaOutputs(
         root=execution.output_file("."),
-        output_report=execution.output_file(params.get("output_dir") + "/report.html") if (params.get("output_dir") is not None) else None,
-        ventricle_analysis_report=execution.output_file(params.get("output_dir") + "/report_vent.html") if (params.get("output_dir") is not None) else None,
+        output_report=execution.output_file(params.get("output_dir", None) + "/report.html") if (params.get("output_dir") is not None) else None,
+        ventricle_analysis_report=execution.output_file(params.get("output_dir", None) + "/report_vent.html") if (params.get("output_dir") is not None) else None,
     )
     return ret
 
@@ -322,7 +306,6 @@ def siena(
 __all__ = [
     "SIENA_METADATA",
     "SienaOutputs",
-    "SienaParameters",
     "siena",
     "siena_execute",
     "siena_params",

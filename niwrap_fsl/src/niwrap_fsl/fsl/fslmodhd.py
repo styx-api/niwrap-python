@@ -14,47 +14,22 @@ FSLMODHD_METADATA = Metadata(
 
 
 FslmodhdParameters = typing.TypedDict('FslmodhdParameters', {
-    "@type": typing.Literal["fsl.fslmodhd"],
+    "@type": typing.NotRequired[typing.Literal["fsl/fslmodhd"]],
+    "image": InputPathType,
+    "keyword": str,
+    "value": str,
+})
+FslmodhdParametersTagged = typing.TypedDict('FslmodhdParametersTagged', {
+    "@type": typing.Literal["fsl/fslmodhd"],
     "image": InputPathType,
     "keyword": str,
     "value": str,
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "fsl.fslmodhd": fslmodhd_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-    }.get(t)
-
-
 class FslmodhdOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `fslmodhd(...)`.
+    Output object returned when calling `FslmodhdParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -64,7 +39,7 @@ def fslmodhd_params(
     image: InputPathType,
     keyword_: str,
     value: str,
-) -> FslmodhdParameters:
+) -> FslmodhdParametersTagged:
     """
     Build parameters.
     
@@ -76,7 +51,7 @@ def fslmodhd_params(
         Parameter dictionary
     """
     params = {
-        "@type": "fsl.fslmodhd",
+        "@type": "fsl/fslmodhd",
         "image": image,
         "keyword": keyword_,
         "value": value,
@@ -99,9 +74,9 @@ def fslmodhd_cargs(
     """
     cargs = []
     cargs.append("fslmodhd")
-    cargs.append(execution.input_file(params.get("image")))
-    cargs.append(params.get("keyword"))
-    cargs.append(params.get("value"))
+    cargs.append(execution.input_file(params.get("image", None)))
+    cargs.append(params.get("keyword", None))
+    cargs.append(params.get("value", None))
     return cargs
 
 
@@ -186,7 +161,6 @@ def fslmodhd(
 __all__ = [
     "FSLMODHD_METADATA",
     "FslmodhdOutputs",
-    "FslmodhdParameters",
     "fslmodhd",
     "fslmodhd_execute",
     "fslmodhd_params",

@@ -14,7 +14,32 @@ WAVER_METADATA = Metadata(
 
 
 WaverParameters = typing.TypedDict('WaverParameters', {
-    "@type": typing.Literal["afni.waver"],
+    "@type": typing.NotRequired[typing.Literal["afni/waver"]],
+    "wav": bool,
+    "gam": bool,
+    "expr": typing.NotRequired[str | None],
+    "file_opt": typing.NotRequired[str | None],
+    "delay_time": typing.NotRequired[float | None],
+    "rise_time": typing.NotRequired[float | None],
+    "fall_time": typing.NotRequired[float | None],
+    "undershoot": typing.NotRequired[float | None],
+    "restore_time": typing.NotRequired[float | None],
+    "gamb": typing.NotRequired[float | None],
+    "gamc": typing.NotRequired[float | None],
+    "gamd": typing.NotRequired[float | None],
+    "peak": typing.NotRequired[float | None],
+    "dt": typing.NotRequired[float | None],
+    "tr": typing.NotRequired[float | None],
+    "xyout": bool,
+    "input_file": typing.NotRequired[InputPathType | None],
+    "inline_data": typing.NotRequired[str | None],
+    "tstim_data": typing.NotRequired[str | None],
+    "when_data": typing.NotRequired[str | None],
+    "numout": typing.NotRequired[int | None],
+    "ver_flag": bool,
+})
+WaverParametersTagged = typing.TypedDict('WaverParametersTagged', {
+    "@type": typing.Literal["afni/waver"],
     "wav": bool,
     "gam": bool,
     "expr": typing.NotRequired[str | None],
@@ -40,41 +65,9 @@ WaverParameters = typing.TypedDict('WaverParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "afni.waver": waver_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "afni.waver": waver_outputs,
-    }.get(t)
-
-
 class WaverOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `waver(...)`.
+    Output object returned when calling `WaverParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -105,7 +98,7 @@ def waver_params(
     when_data: str | None = None,
     numout: int | None = None,
     ver_flag: bool = False,
-) -> WaverParameters:
+) -> WaverParametersTagged:
     """
     Build parameters.
     
@@ -146,7 +139,7 @@ def waver_params(
         Parameter dictionary
     """
     params = {
-        "@type": "afni.waver",
+        "@type": "afni/waver",
         "wav": wav,
         "gam": gam,
         "xyout": xyout,
@@ -206,103 +199,103 @@ def waver_cargs(
     """
     cargs = []
     cargs.append("waver")
-    if params.get("wav"):
+    if params.get("wav", False):
         cargs.append("-WAV")
-    if params.get("gam"):
+    if params.get("gam", False):
         cargs.append("-GAM")
-    if params.get("expr") is not None:
+    if params.get("expr", None) is not None:
         cargs.extend([
             "-EXPR",
-            params.get("expr")
+            params.get("expr", None)
         ])
-    if params.get("file_opt") is not None:
+    if params.get("file_opt", None) is not None:
         cargs.extend([
             "-FILE",
-            params.get("file_opt")
+            params.get("file_opt", None)
         ])
-    if params.get("delay_time") is not None:
+    if params.get("delay_time", None) is not None:
         cargs.extend([
             "-delaytime",
-            str(params.get("delay_time"))
+            str(params.get("delay_time", None))
         ])
-    if params.get("rise_time") is not None:
+    if params.get("rise_time", None) is not None:
         cargs.extend([
             "-risetime",
-            str(params.get("rise_time"))
+            str(params.get("rise_time", None))
         ])
-    if params.get("fall_time") is not None:
+    if params.get("fall_time", None) is not None:
         cargs.extend([
             "-falltime",
-            str(params.get("fall_time"))
+            str(params.get("fall_time", None))
         ])
-    if params.get("undershoot") is not None:
+    if params.get("undershoot", None) is not None:
         cargs.extend([
             "-undershoot",
-            str(params.get("undershoot"))
+            str(params.get("undershoot", None))
         ])
-    if params.get("restore_time") is not None:
+    if params.get("restore_time", None) is not None:
         cargs.extend([
             "-restoretime",
-            str(params.get("restore_time"))
+            str(params.get("restore_time", None))
         ])
-    if params.get("gamb") is not None:
+    if params.get("gamb", None) is not None:
         cargs.extend([
             "-gamb",
-            str(params.get("gamb"))
+            str(params.get("gamb", None))
         ])
-    if params.get("gamc") is not None:
+    if params.get("gamc", None) is not None:
         cargs.extend([
             "-gamc",
-            str(params.get("gamc"))
+            str(params.get("gamc", None))
         ])
-    if params.get("gamd") is not None:
+    if params.get("gamd", None) is not None:
         cargs.extend([
             "-gamd",
-            str(params.get("gamd"))
+            str(params.get("gamd", None))
         ])
-    if params.get("peak") is not None:
+    if params.get("peak", None) is not None:
         cargs.extend([
             "-peak",
-            str(params.get("peak"))
+            str(params.get("peak", None))
         ])
-    if params.get("dt") is not None:
+    if params.get("dt", None) is not None:
         cargs.extend([
             "-dt",
-            str(params.get("dt"))
+            str(params.get("dt", None))
         ])
-    if params.get("tr") is not None:
+    if params.get("tr", None) is not None:
         cargs.extend([
             "-TR",
-            str(params.get("tr"))
+            str(params.get("tr", None))
         ])
-    if params.get("xyout"):
+    if params.get("xyout", False):
         cargs.append("-xyout")
-    if params.get("input_file") is not None:
+    if params.get("input_file", None) is not None:
         cargs.extend([
             "-input",
-            execution.input_file(params.get("input_file"))
+            execution.input_file(params.get("input_file", None))
         ])
-    if params.get("inline_data") is not None:
+    if params.get("inline_data", None) is not None:
         cargs.extend([
             "-inline",
-            params.get("inline_data")
+            params.get("inline_data", None)
         ])
-    if params.get("tstim_data") is not None:
+    if params.get("tstim_data", None) is not None:
         cargs.extend([
             "-tstim",
-            params.get("tstim_data")
+            params.get("tstim_data", None)
         ])
-    if params.get("when_data") is not None:
+    if params.get("when_data", None) is not None:
         cargs.extend([
             "-when",
-            params.get("when_data")
+            params.get("when_data", None)
         ])
-    if params.get("numout") is not None:
+    if params.get("numout", None) is not None:
         cargs.extend([
             "-numout",
-            str(params.get("numout"))
+            str(params.get("numout", None))
         ])
-    if params.get("ver_flag"):
+    if params.get("ver_flag", False):
         cargs.append("-ver")
     return cargs
 
@@ -456,7 +449,6 @@ def waver(
 __all__ = [
     "WAVER_METADATA",
     "WaverOutputs",
-    "WaverParameters",
     "waver",
     "waver_execute",
     "waver_params",

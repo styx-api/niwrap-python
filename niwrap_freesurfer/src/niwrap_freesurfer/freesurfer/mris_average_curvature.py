@@ -14,7 +14,17 @@ MRIS_AVERAGE_CURVATURE_METADATA = Metadata(
 
 
 MrisAverageCurvatureParameters = typing.TypedDict('MrisAverageCurvatureParameters', {
-    "@type": typing.Literal["freesurfer.mris_average_curvature"],
+    "@type": typing.NotRequired[typing.Literal["freesurfer/mris_average_curvature"]],
+    "input_curvature_file": InputPathType,
+    "hemi": str,
+    "surface": str,
+    "subjects": list[str],
+    "output_curvature_file": str,
+    "summary_stats_flag": bool,
+    "output_surface_flag": bool,
+})
+MrisAverageCurvatureParametersTagged = typing.TypedDict('MrisAverageCurvatureParametersTagged', {
+    "@type": typing.Literal["freesurfer/mris_average_curvature"],
     "input_curvature_file": InputPathType,
     "hemi": str,
     "surface": str,
@@ -25,40 +35,9 @@ MrisAverageCurvatureParameters = typing.TypedDict('MrisAverageCurvatureParameter
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "freesurfer.mris_average_curvature": mris_average_curvature_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-    }.get(t)
-
-
 class MrisAverageCurvatureOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `mris_average_curvature(...)`.
+    Output object returned when calling `MrisAverageCurvatureParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -72,7 +51,7 @@ def mris_average_curvature_params(
     output_curvature_file: str,
     summary_stats_flag: bool = False,
     output_surface_flag: bool = False,
-) -> MrisAverageCurvatureParameters:
+) -> MrisAverageCurvatureParametersTagged:
     """
     Build parameters.
     
@@ -90,7 +69,7 @@ def mris_average_curvature_params(
         Parameter dictionary
     """
     params = {
-        "@type": "freesurfer.mris_average_curvature",
+        "@type": "freesurfer/mris_average_curvature",
         "input_curvature_file": input_curvature_file,
         "hemi": hemi,
         "surface": surface,
@@ -117,14 +96,14 @@ def mris_average_curvature_cargs(
     """
     cargs = []
     cargs.append("mris_average_curvature")
-    cargs.append(execution.input_file(params.get("input_curvature_file")))
-    cargs.append(params.get("hemi"))
-    cargs.append(params.get("surface"))
-    cargs.extend(params.get("subjects"))
-    cargs.append(params.get("output_curvature_file"))
-    if params.get("summary_stats_flag"):
+    cargs.append(execution.input_file(params.get("input_curvature_file", None)))
+    cargs.append(params.get("hemi", None))
+    cargs.append(params.get("surface", None))
+    cargs.extend(params.get("subjects", None))
+    cargs.append(params.get("output_curvature_file", None))
+    if params.get("summary_stats_flag", False):
         cargs.append("-s")
-    if params.get("output_surface_flag"):
+    if params.get("output_surface_flag", False):
         cargs.append("-o")
     return cargs
 
@@ -228,7 +207,6 @@ def mris_average_curvature(
 __all__ = [
     "MRIS_AVERAGE_CURVATURE_METADATA",
     "MrisAverageCurvatureOutputs",
-    "MrisAverageCurvatureParameters",
     "mris_average_curvature",
     "mris_average_curvature_execute",
     "mris_average_curvature_params",

@@ -14,7 +14,14 @@ SET_STRUCTURE_METADATA = Metadata(
 
 
 SetStructureParameters = typing.TypedDict('SetStructureParameters', {
-    "@type": typing.Literal["workbench.set-structure"],
+    "@type": typing.NotRequired[typing.Literal["workbench/set-structure"]],
+    "data_file": str,
+    "structure": str,
+    "opt_surface_type_type": typing.NotRequired[str | None],
+    "opt_surface_secondary_type_secondary_type": typing.NotRequired[str | None],
+})
+SetStructureParametersTagged = typing.TypedDict('SetStructureParametersTagged', {
+    "@type": typing.Literal["workbench/set-structure"],
     "data_file": str,
     "structure": str,
     "opt_surface_type_type": typing.NotRequired[str | None],
@@ -22,40 +29,9 @@ SetStructureParameters = typing.TypedDict('SetStructureParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "workbench.set-structure": set_structure_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-    }.get(t)
-
-
 class SetStructureOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `set_structure(...)`.
+    Output object returned when calling `SetStructureParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -66,7 +42,7 @@ def set_structure_params(
     structure: str,
     opt_surface_type_type: str | None = None,
     opt_surface_secondary_type_secondary_type: str | None = None,
-) -> SetStructureParameters:
+) -> SetStructureParametersTagged:
     """
     Build parameters.
     
@@ -82,7 +58,7 @@ def set_structure_params(
         Parameter dictionary
     """
     params = {
-        "@type": "workbench.set-structure",
+        "@type": "workbench/set-structure",
         "data_file": data_file,
         "structure": structure,
     }
@@ -109,17 +85,17 @@ def set_structure_cargs(
     cargs = []
     cargs.append("wb_command")
     cargs.append("-set-structure")
-    cargs.append(params.get("data_file"))
-    cargs.append(params.get("structure"))
-    if params.get("opt_surface_type_type") is not None:
+    cargs.append(params.get("data_file", None))
+    cargs.append(params.get("structure", None))
+    if params.get("opt_surface_type_type", None) is not None:
         cargs.extend([
             "-surface-type",
-            params.get("opt_surface_type_type")
+            params.get("opt_surface_type_type", None)
         ])
-    if params.get("opt_surface_secondary_type_secondary_type") is not None:
+    if params.get("opt_surface_secondary_type_secondary_type", None) is not None:
         cargs.extend([
             "-surface-secondary-type",
-            params.get("opt_surface_secondary_type_secondary_type")
+            params.get("opt_surface_secondary_type_secondary_type", None)
         ])
     return cargs
 
@@ -327,7 +303,6 @@ def set_structure(
 __all__ = [
     "SET_STRUCTURE_METADATA",
     "SetStructureOutputs",
-    "SetStructureParameters",
     "set_structure",
     "set_structure_execute",
     "set_structure_params",

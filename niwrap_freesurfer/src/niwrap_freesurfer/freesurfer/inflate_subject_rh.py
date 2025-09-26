@@ -14,45 +14,18 @@ INFLATE_SUBJECT_RH_METADATA = Metadata(
 
 
 InflateSubjectRhParameters = typing.TypedDict('InflateSubjectRhParameters', {
-    "@type": typing.Literal["freesurfer.inflate_subject-rh"],
+    "@type": typing.NotRequired[typing.Literal["freesurfer/inflate_subject-rh"]],
+    "arguments": typing.NotRequired[str | None],
+})
+InflateSubjectRhParametersTagged = typing.TypedDict('InflateSubjectRhParametersTagged', {
+    "@type": typing.Literal["freesurfer/inflate_subject-rh"],
     "arguments": typing.NotRequired[str | None],
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "freesurfer.inflate_subject-rh": inflate_subject_rh_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-    }.get(t)
-
-
 class InflateSubjectRhOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `inflate_subject_rh(...)`.
+    Output object returned when calling `InflateSubjectRhParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -60,7 +33,7 @@ class InflateSubjectRhOutputs(typing.NamedTuple):
 
 def inflate_subject_rh_params(
     arguments: str | None = None,
-) -> InflateSubjectRhParameters:
+) -> InflateSubjectRhParametersTagged:
     """
     Build parameters.
     
@@ -71,7 +44,7 @@ def inflate_subject_rh_params(
         Parameter dictionary
     """
     params = {
-        "@type": "freesurfer.inflate_subject-rh",
+        "@type": "freesurfer/inflate_subject-rh",
     }
     if arguments is not None:
         params["arguments"] = arguments
@@ -93,10 +66,10 @@ def inflate_subject_rh_cargs(
     """
     cargs = []
     cargs.append("inflate_subject-rh")
-    if params.get("arguments") is not None:
+    if params.get("arguments", None) is not None:
         cargs.extend([
             "-rh",
-            params.get("arguments")
+            params.get("arguments", None)
         ])
     return cargs
 
@@ -179,7 +152,6 @@ def inflate_subject_rh(
 __all__ = [
     "INFLATE_SUBJECT_RH_METADATA",
     "InflateSubjectRhOutputs",
-    "InflateSubjectRhParameters",
     "inflate_subject_rh",
     "inflate_subject_rh_execute",
     "inflate_subject_rh_params",

@@ -14,72 +14,57 @@ VOLUME_MERGE_METADATA = Metadata(
 
 
 VolumeMergeUpToParameters = typing.TypedDict('VolumeMergeUpToParameters', {
-    "@type": typing.Literal["workbench.volume-merge.volume.subvolume.up_to"],
+    "@type": typing.NotRequired[typing.Literal["up_to"]],
+    "last_subvol": str,
+    "opt_reverse": bool,
+})
+VolumeMergeUpToParametersTagged = typing.TypedDict('VolumeMergeUpToParametersTagged', {
+    "@type": typing.Literal["up_to"],
     "last_subvol": str,
     "opt_reverse": bool,
 })
 
 
 VolumeMergeSubvolumeParameters = typing.TypedDict('VolumeMergeSubvolumeParameters', {
-    "@type": typing.Literal["workbench.volume-merge.volume.subvolume"],
+    "@type": typing.NotRequired[typing.Literal["subvolume"]],
+    "subvol": str,
+    "up_to": typing.NotRequired[VolumeMergeUpToParameters | None],
+})
+VolumeMergeSubvolumeParametersTagged = typing.TypedDict('VolumeMergeSubvolumeParametersTagged', {
+    "@type": typing.Literal["subvolume"],
     "subvol": str,
     "up_to": typing.NotRequired[VolumeMergeUpToParameters | None],
 })
 
 
 VolumeMergeVolumeParameters = typing.TypedDict('VolumeMergeVolumeParameters', {
-    "@type": typing.Literal["workbench.volume-merge.volume"],
+    "@type": typing.NotRequired[typing.Literal["volume"]],
+    "volume_in": InputPathType,
+    "subvolume": typing.NotRequired[list[VolumeMergeSubvolumeParameters] | None],
+})
+VolumeMergeVolumeParametersTagged = typing.TypedDict('VolumeMergeVolumeParametersTagged', {
+    "@type": typing.Literal["volume"],
     "volume_in": InputPathType,
     "subvolume": typing.NotRequired[list[VolumeMergeSubvolumeParameters] | None],
 })
 
 
 VolumeMergeParameters = typing.TypedDict('VolumeMergeParameters', {
-    "@type": typing.Literal["workbench.volume-merge"],
+    "@type": typing.NotRequired[typing.Literal["workbench/volume-merge"]],
+    "volume_out": str,
+    "volume": typing.NotRequired[list[VolumeMergeVolumeParameters] | None],
+})
+VolumeMergeParametersTagged = typing.TypedDict('VolumeMergeParametersTagged', {
+    "@type": typing.Literal["workbench/volume-merge"],
     "volume_out": str,
     "volume": typing.NotRequired[list[VolumeMergeVolumeParameters] | None],
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "workbench.volume-merge": volume_merge_cargs,
-        "workbench.volume-merge.volume": volume_merge_volume_cargs,
-        "workbench.volume-merge.volume.subvolume": volume_merge_subvolume_cargs,
-        "workbench.volume-merge.volume.subvolume.up_to": volume_merge_up_to_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "workbench.volume-merge": volume_merge_outputs,
-    }.get(t)
-
-
 def volume_merge_up_to_params(
     last_subvol: str,
     opt_reverse: bool = False,
-) -> VolumeMergeUpToParameters:
+) -> VolumeMergeUpToParametersTagged:
     """
     Build parameters.
     
@@ -90,7 +75,7 @@ def volume_merge_up_to_params(
         Parameter dictionary
     """
     params = {
-        "@type": "workbench.volume-merge.volume.subvolume.up_to",
+        "@type": "up_to",
         "last_subvol": last_subvol,
         "opt_reverse": opt_reverse,
     }
@@ -112,8 +97,8 @@ def volume_merge_up_to_cargs(
     """
     cargs = []
     cargs.append("-up-to")
-    cargs.append(params.get("last_subvol"))
-    if params.get("opt_reverse"):
+    cargs.append(params.get("last_subvol", None))
+    if params.get("opt_reverse", False):
         cargs.append("-reverse")
     return cargs
 
@@ -121,7 +106,7 @@ def volume_merge_up_to_cargs(
 def volume_merge_subvolume_params(
     subvol: str,
     up_to: VolumeMergeUpToParameters | None = None,
-) -> VolumeMergeSubvolumeParameters:
+) -> VolumeMergeSubvolumeParametersTagged:
     """
     Build parameters.
     
@@ -132,7 +117,7 @@ def volume_merge_subvolume_params(
         Parameter dictionary
     """
     params = {
-        "@type": "workbench.volume-merge.volume.subvolume",
+        "@type": "subvolume",
         "subvol": subvol,
     }
     if up_to is not None:
@@ -155,16 +140,16 @@ def volume_merge_subvolume_cargs(
     """
     cargs = []
     cargs.append("-subvolume")
-    cargs.append(params.get("subvol"))
-    if params.get("up_to") is not None:
-        cargs.extend(dyn_cargs(params.get("up_to")["@type"])(params.get("up_to"), execution))
+    cargs.append(params.get("subvol", None))
+    if params.get("up_to", None) is not None:
+        cargs.extend(volume_merge_up_to_cargs(params.get("up_to", None), execution))
     return cargs
 
 
 def volume_merge_volume_params(
     volume_in: InputPathType,
     subvolume: list[VolumeMergeSubvolumeParameters] | None = None,
-) -> VolumeMergeVolumeParameters:
+) -> VolumeMergeVolumeParametersTagged:
     """
     Build parameters.
     
@@ -175,7 +160,7 @@ def volume_merge_volume_params(
         Parameter dictionary
     """
     params = {
-        "@type": "workbench.volume-merge.volume",
+        "@type": "volume",
         "volume_in": volume_in,
     }
     if subvolume is not None:
@@ -198,15 +183,15 @@ def volume_merge_volume_cargs(
     """
     cargs = []
     cargs.append("-volume")
-    cargs.append(execution.input_file(params.get("volume_in")))
-    if params.get("subvolume") is not None:
-        cargs.extend([a for c in [dyn_cargs(s["@type"])(s, execution) for s in params.get("subvolume")] for a in c])
+    cargs.append(execution.input_file(params.get("volume_in", None)))
+    if params.get("subvolume", None) is not None:
+        cargs.extend([a for c in [volume_merge_subvolume_cargs(s, execution) for s in params.get("subvolume", None)] for a in c])
     return cargs
 
 
 class VolumeMergeOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `volume_merge(...)`.
+    Output object returned when calling `VolumeMergeParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -217,7 +202,7 @@ class VolumeMergeOutputs(typing.NamedTuple):
 def volume_merge_params(
     volume_out: str,
     volume: list[VolumeMergeVolumeParameters] | None = None,
-) -> VolumeMergeParameters:
+) -> VolumeMergeParametersTagged:
     """
     Build parameters.
     
@@ -228,7 +213,7 @@ def volume_merge_params(
         Parameter dictionary
     """
     params = {
-        "@type": "workbench.volume-merge",
+        "@type": "workbench/volume-merge",
         "volume_out": volume_out,
     }
     if volume is not None:
@@ -252,9 +237,9 @@ def volume_merge_cargs(
     cargs = []
     cargs.append("wb_command")
     cargs.append("-volume-merge")
-    cargs.append(params.get("volume_out"))
-    if params.get("volume") is not None:
-        cargs.extend([a for c in [dyn_cargs(s["@type"])(s, execution) for s in params.get("volume")] for a in c])
+    cargs.append(params.get("volume_out", None))
+    if params.get("volume", None) is not None:
+        cargs.extend([a for c in [volume_merge_volume_cargs(s, execution) for s in params.get("volume", None)] for a in c])
     return cargs
 
 
@@ -273,7 +258,7 @@ def volume_merge_outputs(
     """
     ret = VolumeMergeOutputs(
         root=execution.output_file("."),
-        volume_out=execution.output_file(params.get("volume_out")),
+        volume_out=execution.output_file(params.get("volume_out", None)),
     )
     return ret
 
@@ -357,10 +342,6 @@ def volume_merge(
 __all__ = [
     "VOLUME_MERGE_METADATA",
     "VolumeMergeOutputs",
-    "VolumeMergeParameters",
-    "VolumeMergeSubvolumeParameters",
-    "VolumeMergeUpToParameters",
-    "VolumeMergeVolumeParameters",
     "volume_merge",
     "volume_merge_execute",
     "volume_merge_params",

@@ -14,7 +14,19 @@ V_3D_STAT_CLUST_METADATA = Metadata(
 
 
 V3dStatClustParameters = typing.TypedDict('V3dStatClustParameters', {
-    "@type": typing.Literal["afni.3dStatClust"],
+    "@type": typing.NotRequired[typing.Literal["afni/3dStatClust"]],
+    "prefix": typing.NotRequired[str | None],
+    "session_dir": typing.NotRequired[str | None],
+    "verbose": bool,
+    "dist_euc": bool,
+    "dist_ind": bool,
+    "dist_cor": bool,
+    "thresh": str,
+    "nclust": float,
+    "datasets": list[str],
+})
+V3dStatClustParametersTagged = typing.TypedDict('V3dStatClustParametersTagged', {
+    "@type": typing.Literal["afni/3dStatClust"],
     "prefix": typing.NotRequired[str | None],
     "session_dir": typing.NotRequired[str | None],
     "verbose": bool,
@@ -27,41 +39,9 @@ V3dStatClustParameters = typing.TypedDict('V3dStatClustParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "afni.3dStatClust": v_3d_stat_clust_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "afni.3dStatClust": v_3d_stat_clust_outputs,
-    }.get(t)
-
-
 class V3dStatClustOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `v_3d_stat_clust(...)`.
+    Output object returned when calling `V3dStatClustParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -81,7 +61,7 @@ def v_3d_stat_clust_params(
     dist_euc: bool = False,
     dist_ind: bool = False,
     dist_cor: bool = False,
-) -> V3dStatClustParameters:
+) -> V3dStatClustParametersTagged:
     """
     Build parameters.
     
@@ -103,7 +83,7 @@ def v_3d_stat_clust_params(
         Parameter dictionary
     """
     params = {
-        "@type": "afni.3dStatClust",
+        "@type": "afni/3dStatClust",
         "verbose": verbose,
         "dist_euc": dist_euc,
         "dist_ind": dist_ind,
@@ -134,33 +114,33 @@ def v_3d_stat_clust_cargs(
     """
     cargs = []
     cargs.append("3dStatClust")
-    if params.get("prefix") is not None:
+    if params.get("prefix", None) is not None:
         cargs.extend([
             "-prefix",
-            params.get("prefix")
+            params.get("prefix", None)
         ])
-    if params.get("session_dir") is not None:
+    if params.get("session_dir", None) is not None:
         cargs.extend([
             "-session",
-            params.get("session_dir")
+            params.get("session_dir", None)
         ])
-    if params.get("verbose"):
+    if params.get("verbose", False):
         cargs.append("-verb")
-    if params.get("dist_euc"):
+    if params.get("dist_euc", False):
         cargs.append("-dist_euc")
-    if params.get("dist_ind"):
+    if params.get("dist_ind", False):
         cargs.append("-dist_ind")
-    if params.get("dist_cor"):
+    if params.get("dist_cor", False):
         cargs.append("-dist_cor")
     cargs.extend([
         "-thresh",
-        params.get("thresh")
+        params.get("thresh", None)
     ])
     cargs.extend([
         "-nclust",
-        str(params.get("nclust"))
+        str(params.get("nclust", None))
     ])
-    cargs.extend(params.get("datasets"))
+    cargs.extend(params.get("datasets", None))
     return cargs
 
 
@@ -179,8 +159,8 @@ def v_3d_stat_clust_outputs(
     """
     ret = V3dStatClustOutputs(
         root=execution.output_file("."),
-        output_head=execution.output_file(params.get("prefix") + "+orig.HEAD") if (params.get("prefix") is not None) else None,
-        output_brick=execution.output_file(params.get("prefix") + "+orig.BRIK") if (params.get("prefix") is not None) else None,
+        output_head=execution.output_file(params.get("prefix", None) + "+orig.HEAD") if (params.get("prefix") is not None) else None,
+        output_brick=execution.output_file(params.get("prefix", None) + "+orig.BRIK") if (params.get("prefix") is not None) else None,
     )
     return ret
 
@@ -272,7 +252,6 @@ def v_3d_stat_clust(
 
 __all__ = [
     "V3dStatClustOutputs",
-    "V3dStatClustParameters",
     "V_3D_STAT_CLUST_METADATA",
     "v_3d_stat_clust",
     "v_3d_stat_clust_execute",

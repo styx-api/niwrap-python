@@ -14,47 +14,20 @@ V__CENTER_DISTANCE_METADATA = Metadata(
 
 
 VCenterDistanceParameters = typing.TypedDict('VCenterDistanceParameters', {
-    "@type": typing.Literal["afni.@Center_Distance"],
+    "@type": typing.NotRequired[typing.Literal["afni/@Center_Distance"]],
+    "dset1": InputPathType,
+    "dset2": InputPathType,
+})
+VCenterDistanceParametersTagged = typing.TypedDict('VCenterDistanceParametersTagged', {
+    "@type": typing.Literal["afni/@Center_Distance"],
     "dset1": InputPathType,
     "dset2": InputPathType,
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "afni.@Center_Distance": v__center_distance_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "afni.@Center_Distance": v__center_distance_outputs,
-    }.get(t)
-
-
 class VCenterDistanceOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `v__center_distance(...)`.
+    Output object returned when calling `VCenterDistanceParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -65,7 +38,7 @@ class VCenterDistanceOutputs(typing.NamedTuple):
 def v__center_distance_params(
     dset1: InputPathType,
     dset2: InputPathType,
-) -> VCenterDistanceParameters:
+) -> VCenterDistanceParametersTagged:
     """
     Build parameters.
     
@@ -76,7 +49,7 @@ def v__center_distance_params(
         Parameter dictionary
     """
     params = {
-        "@type": "afni.@Center_Distance",
+        "@type": "afni/@Center_Distance",
         "dset1": dset1,
         "dset2": dset2,
     }
@@ -100,9 +73,9 @@ def v__center_distance_cargs(
     cargs.append("@Center_Distance")
     cargs.extend([
         "-dset",
-        execution.input_file(params.get("dset1"))
+        execution.input_file(params.get("dset1", None))
     ])
-    cargs.append(execution.input_file(params.get("dset2")))
+    cargs.append(execution.input_file(params.get("dset2", None)))
     return cargs
 
 
@@ -184,7 +157,6 @@ def v__center_distance(
 
 __all__ = [
     "VCenterDistanceOutputs",
-    "VCenterDistanceParameters",
     "V__CENTER_DISTANCE_METADATA",
     "v__center_distance",
     "v__center_distance_execute",

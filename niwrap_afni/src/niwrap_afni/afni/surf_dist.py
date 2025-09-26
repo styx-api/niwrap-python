@@ -14,7 +14,18 @@ SURF_DIST_METADATA = Metadata(
 
 
 SurfDistParameters = typing.TypedDict('SurfDistParameters', {
-    "@type": typing.Literal["afni.SurfDist"],
+    "@type": typing.NotRequired[typing.Literal["afni/SurfDist"]],
+    "surface": InputPathType,
+    "nodepairs": InputPathType,
+    "node_path_do": typing.NotRequired[str | None],
+    "euclidean": bool,
+    "euclidian": bool,
+    "graph": bool,
+    "from_node": typing.NotRequired[str | None],
+    "to_nodes": typing.NotRequired[InputPathType | None],
+})
+SurfDistParametersTagged = typing.TypedDict('SurfDistParametersTagged', {
+    "@type": typing.Literal["afni/SurfDist"],
     "surface": InputPathType,
     "nodepairs": InputPathType,
     "node_path_do": typing.NotRequired[str | None],
@@ -26,41 +37,9 @@ SurfDistParameters = typing.TypedDict('SurfDistParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "afni.SurfDist": surf_dist_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "afni.SurfDist": surf_dist_outputs,
-    }.get(t)
-
-
 class SurfDistOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `surf_dist(...)`.
+    Output object returned when calling `SurfDistParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -77,7 +56,7 @@ def surf_dist_params(
     graph: bool = False,
     from_node: str | None = None,
     to_nodes: InputPathType | None = None,
-) -> SurfDistParameters:
+) -> SurfDistParametersTagged:
     """
     Build parameters.
     
@@ -96,7 +75,7 @@ def surf_dist_params(
         Parameter dictionary
     """
     params = {
-        "@type": "afni.SurfDist",
+        "@type": "afni/SurfDist",
         "surface": surface,
         "nodepairs": nodepairs,
         "euclidean": euclidean,
@@ -127,28 +106,28 @@ def surf_dist_cargs(
     """
     cargs = []
     cargs.append("SurfDist")
-    cargs.append(execution.input_file(params.get("surface")))
-    cargs.append(execution.input_file(params.get("nodepairs")))
-    if params.get("node_path_do") is not None:
+    cargs.append(execution.input_file(params.get("surface", None)))
+    cargs.append(execution.input_file(params.get("nodepairs", None)))
+    if params.get("node_path_do", None) is not None:
         cargs.extend([
             "-node_path_do",
-            params.get("node_path_do")
+            params.get("node_path_do", None)
         ])
-    if params.get("euclidean"):
+    if params.get("euclidean", False):
         cargs.append("-Euclidean")
-    if params.get("euclidian"):
+    if params.get("euclidian", False):
         cargs.append("-Euclidian")
-    if params.get("graph"):
+    if params.get("graph", False):
         cargs.append("-graph")
-    if params.get("from_node") is not None:
+    if params.get("from_node", None) is not None:
         cargs.extend([
             "-from_node",
-            params.get("from_node")
+            params.get("from_node", None)
         ])
-    if params.get("to_nodes") is not None:
+    if params.get("to_nodes", None) is not None:
         cargs.extend([
             "-input",
-            execution.input_file(params.get("to_nodes"))
+            execution.input_file(params.get("to_nodes", None))
         ])
     return cargs
 
@@ -252,7 +231,6 @@ def surf_dist(
 __all__ = [
     "SURF_DIST_METADATA",
     "SurfDistOutputs",
-    "SurfDistParameters",
     "surf_dist",
     "surf_dist_execute",
     "surf_dist_params",

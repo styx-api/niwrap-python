@@ -14,1088 +14,1810 @@ C4D_METADATA = Metadata(
 
 
 C4dAccumParameters = typing.TypedDict('C4dAccumParameters', {
-    "@type": typing.Literal["c3d.c4d.accum"],
+    "@type": typing.NotRequired[typing.Literal["accum"]],
+    "accum": str,
+})
+C4dAccumParametersTagged = typing.TypedDict('C4dAccumParametersTagged', {
+    "@type": typing.Literal["accum"],
     "accum": str,
 })
 
 
 C4dAcosParameters = typing.TypedDict('C4dAcosParameters', {
-    "@type": typing.Literal["c3d.c4d.acos"],
+    "@type": typing.NotRequired[typing.Literal["acos"]],
+    "acos": str,
+})
+C4dAcosParametersTagged = typing.TypedDict('C4dAcosParametersTagged', {
+    "@type": typing.Literal["acos"],
     "acos": str,
 })
 
 
 C4dAddParameters = typing.TypedDict('C4dAddParameters', {
-    "@type": typing.Literal["c3d.c4d.add"],
+    "@type": typing.NotRequired[typing.Literal["add"]],
+    "add": str,
+})
+C4dAddParametersTagged = typing.TypedDict('C4dAddParametersTagged', {
+    "@type": typing.Literal["add"],
     "add": str,
 })
 
 
 C4dAlignLandmarksParameters = typing.TypedDict('C4dAlignLandmarksParameters', {
-    "@type": typing.Literal["c3d.c4d.align_landmarks"],
+    "@type": typing.NotRequired[typing.Literal["align_landmarks"]],
+    "align_landmarks": str,
+})
+C4dAlignLandmarksParametersTagged = typing.TypedDict('C4dAlignLandmarksParametersTagged', {
+    "@type": typing.Literal["align_landmarks"],
     "align_landmarks": str,
 })
 
 
 C4dAnisotropicDiffusionParameters = typing.TypedDict('C4dAnisotropicDiffusionParameters', {
-    "@type": typing.Literal["c3d.c4d.anisotropic_diffusion"],
+    "@type": typing.NotRequired[typing.Literal["anisotropic_diffusion"]],
+    "anisotropic_diffusion": str,
+})
+C4dAnisotropicDiffusionParametersTagged = typing.TypedDict('C4dAnisotropicDiffusionParametersTagged', {
+    "@type": typing.Literal["anisotropic_diffusion"],
     "anisotropic_diffusion": str,
 })
 
 
 C4dAntialiasParameters = typing.TypedDict('C4dAntialiasParameters', {
-    "@type": typing.Literal["c3d.c4d.antialias"],
+    "@type": typing.NotRequired[typing.Literal["antialias"]],
+    "antialias": str,
+})
+C4dAntialiasParametersTagged = typing.TypedDict('C4dAntialiasParametersTagged', {
+    "@type": typing.Literal["antialias"],
     "antialias": str,
 })
 
 
 C4dSetParameters = typing.TypedDict('C4dSetParameters', {
-    "@type": typing.Literal["c3d.c4d.set"],
+    "@type": typing.NotRequired[typing.Literal["set"]],
+    "set": str,
+})
+C4dSetParametersTagged = typing.TypedDict('C4dSetParametersTagged', {
+    "@type": typing.Literal["set"],
     "set": str,
 })
 
 
 C4dAsinParameters = typing.TypedDict('C4dAsinParameters', {
-    "@type": typing.Literal["c3d.c4d.asin"],
+    "@type": typing.NotRequired[typing.Literal["asin"]],
+    "asin": str,
+})
+C4dAsinParametersTagged = typing.TypedDict('C4dAsinParametersTagged', {
+    "@type": typing.Literal["asin"],
     "asin": str,
 })
 
 
 C4dAtan2Parameters = typing.TypedDict('C4dAtan2Parameters', {
-    "@type": typing.Literal["c3d.c4d.atan2"],
+    "@type": typing.NotRequired[typing.Literal["atan2"]],
+    "atan2": str,
+})
+C4dAtan2ParametersTagged = typing.TypedDict('C4dAtan2ParametersTagged', {
+    "@type": typing.Literal["atan2"],
     "atan2": str,
 })
 
 
 C4dBackgroundParameters = typing.TypedDict('C4dBackgroundParameters', {
-    "@type": typing.Literal["c3d.c4d.background"],
+    "@type": typing.NotRequired[typing.Literal["background"]],
+    "background": str,
+})
+C4dBackgroundParametersTagged = typing.TypedDict('C4dBackgroundParametersTagged', {
+    "@type": typing.Literal["background"],
     "background": str,
 })
 
 
 C4dN4BiasCorrectionParameters = typing.TypedDict('C4dN4BiasCorrectionParameters', {
-    "@type": typing.Literal["c3d.c4d.n4_bias_correction"],
+    "@type": typing.NotRequired[typing.Literal["n4_bias_correction"]],
+    "n4_bias_correction": str,
+})
+C4dN4BiasCorrectionParametersTagged = typing.TypedDict('C4dN4BiasCorrectionParametersTagged', {
+    "@type": typing.Literal["n4_bias_correction"],
     "n4_bias_correction": str,
 })
 
 
 C4dBinarizeParameters = typing.TypedDict('C4dBinarizeParameters', {
-    "@type": typing.Literal["c3d.c4d.binarize"],
+    "@type": typing.NotRequired[typing.Literal["binarize"]],
+    "binarize": str,
+})
+C4dBinarizeParametersTagged = typing.TypedDict('C4dBinarizeParametersTagged', {
+    "@type": typing.Literal["binarize"],
     "binarize": str,
 })
 
 
 C4dCannyParameters = typing.TypedDict('C4dCannyParameters', {
-    "@type": typing.Literal["c3d.c4d.canny"],
+    "@type": typing.NotRequired[typing.Literal["canny"]],
+    "canny": str,
+})
+C4dCannyParametersTagged = typing.TypedDict('C4dCannyParametersTagged', {
+    "@type": typing.Literal["canny"],
     "canny": str,
 })
 
 
 C4dCeilParameters = typing.TypedDict('C4dCeilParameters', {
-    "@type": typing.Literal["c3d.c4d.ceil"],
+    "@type": typing.NotRequired[typing.Literal["ceil"]],
+    "ceil": str,
+})
+C4dCeilParametersTagged = typing.TypedDict('C4dCeilParametersTagged', {
+    "@type": typing.Literal["ceil"],
     "ceil": str,
 })
 
 
 C4dCentroidParameters = typing.TypedDict('C4dCentroidParameters', {
-    "@type": typing.Literal["c3d.c4d.centroid"],
+    "@type": typing.NotRequired[typing.Literal["centroid"]],
+    "centroid": str,
+})
+C4dCentroidParametersTagged = typing.TypedDict('C4dCentroidParametersTagged', {
+    "@type": typing.Literal["centroid"],
     "centroid": str,
 })
 
 
 C4dCentroidMarkParameters = typing.TypedDict('C4dCentroidMarkParameters', {
-    "@type": typing.Literal["c3d.c4d.centroid_mark"],
+    "@type": typing.NotRequired[typing.Literal["centroid_mark"]],
+    "centroid_mark": str,
+})
+C4dCentroidMarkParametersTagged = typing.TypedDict('C4dCentroidMarkParametersTagged', {
+    "@type": typing.Literal["centroid_mark"],
     "centroid_mark": str,
 })
 
 
 C4dConnectedComponentsParameters = typing.TypedDict('C4dConnectedComponentsParameters', {
-    "@type": typing.Literal["c3d.c4d.connected_components"],
+    "@type": typing.NotRequired[typing.Literal["connected_components"]],
+    "connected_components": str,
+})
+C4dConnectedComponentsParametersTagged = typing.TypedDict('C4dConnectedComponentsParametersTagged', {
+    "@type": typing.Literal["connected_components"],
     "connected_components": str,
 })
 
 
 C4dClearParameters = typing.TypedDict('C4dClearParameters', {
-    "@type": typing.Literal["c3d.c4d.clear"],
+    "@type": typing.NotRequired[typing.Literal["clear"]],
+    "clear": str,
+})
+C4dClearParametersTagged = typing.TypedDict('C4dClearParametersTagged', {
+    "@type": typing.Literal["clear"],
     "clear": str,
 })
 
 
 C4dClipParameters = typing.TypedDict('C4dClipParameters', {
-    "@type": typing.Literal["c3d.c4d.clip"],
+    "@type": typing.NotRequired[typing.Literal["clip"]],
+    "clip": str,
+})
+C4dClipParametersTagged = typing.TypedDict('C4dClipParametersTagged', {
+    "@type": typing.Literal["clip"],
     "clip": str,
 })
 
 
 C4dColorMapParameters = typing.TypedDict('C4dColorMapParameters', {
-    "@type": typing.Literal["c3d.c4d.color_map"],
+    "@type": typing.NotRequired[typing.Literal["color_map"]],
+    "color_map": str,
+})
+C4dColorMapParametersTagged = typing.TypedDict('C4dColorMapParametersTagged', {
+    "@type": typing.Literal["color_map"],
     "color_map": str,
 })
 
 
 C4dCompressParameters = typing.TypedDict('C4dCompressParameters', {
-    "@type": typing.Literal["c3d.c4d.compress"],
+    "@type": typing.NotRequired[typing.Literal["compress"]],
+    "compress": str,
+})
+C4dCompressParametersTagged = typing.TypedDict('C4dCompressParametersTagged', {
+    "@type": typing.Literal["compress"],
     "compress": str,
 })
 
 
 C4dNoCompressParameters = typing.TypedDict('C4dNoCompressParameters', {
-    "@type": typing.Literal["c3d.c4d.no_compress"],
+    "@type": typing.NotRequired[typing.Literal["no_compress"]],
+    "no_compress": str,
+})
+C4dNoCompressParametersTagged = typing.TypedDict('C4dNoCompressParametersTagged', {
+    "@type": typing.Literal["no_compress"],
     "no_compress": str,
 })
 
 
 C4dConvParameters = typing.TypedDict('C4dConvParameters', {
-    "@type": typing.Literal["c3d.c4d.conv"],
+    "@type": typing.NotRequired[typing.Literal["conv"]],
+    "conv": str,
+})
+C4dConvParametersTagged = typing.TypedDict('C4dConvParametersTagged', {
+    "@type": typing.Literal["conv"],
     "conv": str,
 })
 
 
 C4dCoordinateMapVoxelParameters = typing.TypedDict('C4dCoordinateMapVoxelParameters', {
-    "@type": typing.Literal["c3d.c4d.coordinate_map_voxel"],
+    "@type": typing.NotRequired[typing.Literal["coordinate_map_voxel"]],
+    "coordinate_map_voxel": str,
+})
+C4dCoordinateMapVoxelParametersTagged = typing.TypedDict('C4dCoordinateMapVoxelParametersTagged', {
+    "@type": typing.Literal["coordinate_map_voxel"],
     "coordinate_map_voxel": str,
 })
 
 
 C4dCoordinateMapPhysicalParameters = typing.TypedDict('C4dCoordinateMapPhysicalParameters', {
-    "@type": typing.Literal["c3d.c4d.coordinate_map_physical"],
+    "@type": typing.NotRequired[typing.Literal["coordinate_map_physical"]],
+    "coordinate_map_physical": str,
+})
+C4dCoordinateMapPhysicalParametersTagged = typing.TypedDict('C4dCoordinateMapPhysicalParametersTagged', {
+    "@type": typing.Literal["coordinate_map_physical"],
     "coordinate_map_physical": str,
 })
 
 
 C4dCopyTransformParameters = typing.TypedDict('C4dCopyTransformParameters', {
-    "@type": typing.Literal["c3d.c4d.copy_transform"],
+    "@type": typing.NotRequired[typing.Literal["copy_transform"]],
+    "copy_transform": str,
+})
+C4dCopyTransformParametersTagged = typing.TypedDict('C4dCopyTransformParametersTagged', {
+    "@type": typing.Literal["copy_transform"],
     "copy_transform": str,
 })
 
 
 C4dCosParameters = typing.TypedDict('C4dCosParameters', {
-    "@type": typing.Literal["c3d.c4d.cos"],
+    "@type": typing.NotRequired[typing.Literal["cos"]],
+    "cos": str,
+})
+C4dCosParametersTagged = typing.TypedDict('C4dCosParametersTagged', {
+    "@type": typing.Literal["cos"],
     "cos": str,
 })
 
 
 C4dCreateParameters = typing.TypedDict('C4dCreateParameters', {
-    "@type": typing.Literal["c3d.c4d.create"],
+    "@type": typing.NotRequired[typing.Literal["create"]],
+    "create": str,
+})
+C4dCreateParametersTagged = typing.TypedDict('C4dCreateParametersTagged', {
+    "@type": typing.Literal["create"],
     "create": str,
 })
 
 
 C4dDicomSeriesListParameters = typing.TypedDict('C4dDicomSeriesListParameters', {
-    "@type": typing.Literal["c3d.c4d.dicom_series_list"],
+    "@type": typing.NotRequired[typing.Literal["dicom_series_list"]],
+    "dicom_series_list": str,
+})
+C4dDicomSeriesListParametersTagged = typing.TypedDict('C4dDicomSeriesListParametersTagged', {
+    "@type": typing.Literal["dicom_series_list"],
     "dicom_series_list": str,
 })
 
 
 C4dDicomSeriesReadParameters = typing.TypedDict('C4dDicomSeriesReadParameters', {
-    "@type": typing.Literal["c3d.c4d.dicom_series_read"],
+    "@type": typing.NotRequired[typing.Literal["dicom_series_read"]],
+    "dicom_series_read": str,
+})
+C4dDicomSeriesReadParametersTagged = typing.TypedDict('C4dDicomSeriesReadParametersTagged', {
+    "@type": typing.Literal["dicom_series_read"],
     "dicom_series_read": str,
 })
 
 
 C4dDilateParameters = typing.TypedDict('C4dDilateParameters', {
-    "@type": typing.Literal["c3d.c4d.dilate"],
+    "@type": typing.NotRequired[typing.Literal["dilate"]],
+    "dilate": str,
+})
+C4dDilateParametersTagged = typing.TypedDict('C4dDilateParametersTagged', {
+    "@type": typing.Literal["dilate"],
     "dilate": str,
 })
 
 
 C4dDivideParameters = typing.TypedDict('C4dDivideParameters', {
-    "@type": typing.Literal["c3d.c4d.divide"],
+    "@type": typing.NotRequired[typing.Literal["divide"]],
+    "divide": str,
+})
+C4dDivideParametersTagged = typing.TypedDict('C4dDivideParametersTagged', {
+    "@type": typing.Literal["divide"],
     "divide": str,
 })
 
 
 C4dDuplicateParameters = typing.TypedDict('C4dDuplicateParameters', {
-    "@type": typing.Literal["c3d.c4d.duplicate"],
+    "@type": typing.NotRequired[typing.Literal["duplicate"]],
+    "duplicate": str,
+})
+C4dDuplicateParametersTagged = typing.TypedDict('C4dDuplicateParametersTagged', {
+    "@type": typing.Literal["duplicate"],
     "duplicate": str,
 })
 
 
 C4dEndaccumParameters = typing.TypedDict('C4dEndaccumParameters', {
-    "@type": typing.Literal["c3d.c4d.endaccum"],
+    "@type": typing.NotRequired[typing.Literal["endaccum"]],
+    "endaccum": str,
+})
+C4dEndaccumParametersTagged = typing.TypedDict('C4dEndaccumParametersTagged', {
+    "@type": typing.Literal["endaccum"],
     "endaccum": str,
 })
 
 
 C4dEndforParameters = typing.TypedDict('C4dEndforParameters', {
-    "@type": typing.Literal["c3d.c4d.endfor"],
+    "@type": typing.NotRequired[typing.Literal["endfor"]],
+    "endfor": str,
+})
+C4dEndforParametersTagged = typing.TypedDict('C4dEndforParametersTagged', {
+    "@type": typing.Literal["endfor"],
     "endfor": str,
 })
 
 
 C4dErodeParameters = typing.TypedDict('C4dErodeParameters', {
-    "@type": typing.Literal["c3d.c4d.erode"],
+    "@type": typing.NotRequired[typing.Literal["erode"]],
+    "erode": str,
+})
+C4dErodeParametersTagged = typing.TypedDict('C4dErodeParametersTagged', {
+    "@type": typing.Literal["erode"],
     "erode": str,
 })
 
 
 C4dErfParameters = typing.TypedDict('C4dErfParameters', {
-    "@type": typing.Literal["c3d.c4d.erf"],
+    "@type": typing.NotRequired[typing.Literal["erf"]],
+    "erf": str,
+})
+C4dErfParametersTagged = typing.TypedDict('C4dErfParametersTagged', {
+    "@type": typing.Literal["erf"],
     "erf": str,
 })
 
 
 C4dExpParameters = typing.TypedDict('C4dExpParameters', {
-    "@type": typing.Literal["c3d.c4d.exp"],
+    "@type": typing.NotRequired[typing.Literal["exp"]],
+    "exp": str,
+})
+C4dExpParametersTagged = typing.TypedDict('C4dExpParametersTagged', {
+    "@type": typing.Literal["exp"],
     "exp": str,
 })
 
 
 C4dExportPatchesParameters = typing.TypedDict('C4dExportPatchesParameters', {
-    "@type": typing.Literal["c3d.c4d.export_patches"],
+    "@type": typing.NotRequired[typing.Literal["export_patches"]],
+    "export_patches": str,
+})
+C4dExportPatchesParametersTagged = typing.TypedDict('C4dExportPatchesParametersTagged', {
+    "@type": typing.Literal["export_patches"],
     "export_patches": str,
 })
 
 
 C4dExportPatchesAugParameters = typing.TypedDict('C4dExportPatchesAugParameters', {
-    "@type": typing.Literal["c3d.c4d.export_patches_aug"],
+    "@type": typing.NotRequired[typing.Literal["export_patches_aug"]],
+    "export_patches_aug": str,
+})
+C4dExportPatchesAugParametersTagged = typing.TypedDict('C4dExportPatchesAugParametersTagged', {
+    "@type": typing.Literal["export_patches_aug"],
     "export_patches_aug": str,
 })
 
 
 C4dExtrudeSegParameters = typing.TypedDict('C4dExtrudeSegParameters', {
-    "@type": typing.Literal["c3d.c4d.extrude_seg"],
+    "@type": typing.NotRequired[typing.Literal["extrude_seg"]],
+    "extrude_seg": str,
+})
+C4dExtrudeSegParametersTagged = typing.TypedDict('C4dExtrudeSegParametersTagged', {
+    "@type": typing.Literal["extrude_seg"],
     "extrude_seg": str,
 })
 
 
 C4dFillBackgroundWithNoiseParameters = typing.TypedDict('C4dFillBackgroundWithNoiseParameters', {
-    "@type": typing.Literal["c3d.c4d.fill_background_with_noise"],
+    "@type": typing.NotRequired[typing.Literal["fill_background_with_noise"]],
+    "fill_background_with_noise": str,
+})
+C4dFillBackgroundWithNoiseParametersTagged = typing.TypedDict('C4dFillBackgroundWithNoiseParametersTagged', {
+    "@type": typing.Literal["fill_background_with_noise"],
     "fill_background_with_noise": str,
 })
 
 
 C4dFftParameters = typing.TypedDict('C4dFftParameters', {
-    "@type": typing.Literal["c3d.c4d.fft"],
+    "@type": typing.NotRequired[typing.Literal["fft"]],
+    "fft": str,
+})
+C4dFftParametersTagged = typing.TypedDict('C4dFftParametersTagged', {
+    "@type": typing.Literal["fft"],
     "fft": str,
 })
 
 
 C4dFlipParameters = typing.TypedDict('C4dFlipParameters', {
-    "@type": typing.Literal["c3d.c4d.flip"],
+    "@type": typing.NotRequired[typing.Literal["flip"]],
+    "flip": str,
+})
+C4dFlipParametersTagged = typing.TypedDict('C4dFlipParametersTagged', {
+    "@type": typing.Literal["flip"],
     "flip": str,
 })
 
 
 C4dFloorParameters = typing.TypedDict('C4dFloorParameters', {
-    "@type": typing.Literal["c3d.c4d.floor"],
+    "@type": typing.NotRequired[typing.Literal["floor"]],
+    "floor": str,
+})
+C4dFloorParametersTagged = typing.TypedDict('C4dFloorParametersTagged', {
+    "@type": typing.Literal["floor"],
     "floor": str,
 })
 
 
 C4dForeachParameters = typing.TypedDict('C4dForeachParameters', {
-    "@type": typing.Literal["c3d.c4d.foreach"],
+    "@type": typing.NotRequired[typing.Literal["foreach"]],
+    "foreach": str,
+})
+C4dForeachParametersTagged = typing.TypedDict('C4dForeachParametersTagged', {
+    "@type": typing.Literal["foreach"],
     "foreach": str,
 })
 
 
 C4dForeachCompParameters = typing.TypedDict('C4dForeachCompParameters', {
-    "@type": typing.Literal["c3d.c4d.foreach_comp"],
+    "@type": typing.NotRequired[typing.Literal["foreach_comp"]],
+    "foreach_comp": str,
+})
+C4dForeachCompParametersTagged = typing.TypedDict('C4dForeachCompParametersTagged', {
+    "@type": typing.Literal["foreach_comp"],
     "foreach_comp": str,
 })
 
 
 C4dGlmParameters = typing.TypedDict('C4dGlmParameters', {
-    "@type": typing.Literal["c3d.c4d.glm"],
+    "@type": typing.NotRequired[typing.Literal["glm"]],
+    "glm": str,
+})
+C4dGlmParametersTagged = typing.TypedDict('C4dGlmParametersTagged', {
+    "@type": typing.Literal["glm"],
     "glm": str,
 })
 
 
 C4dGradientParameters = typing.TypedDict('C4dGradientParameters', {
-    "@type": typing.Literal["c3d.c4d.gradient"],
+    "@type": typing.NotRequired[typing.Literal["gradient"]],
+    "gradient": str,
+})
+C4dGradientParametersTagged = typing.TypedDict('C4dGradientParametersTagged', {
+    "@type": typing.Literal["gradient"],
     "gradient": str,
 })
 
 
 C4dHelpParameters = typing.TypedDict('C4dHelpParameters', {
-    "@type": typing.Literal["c3d.c4d._help"],
+    "@type": typing.NotRequired[typing.Literal["_help"]],
+    "_help": str,
+})
+C4dHelpParametersTagged = typing.TypedDict('C4dHelpParametersTagged', {
+    "@type": typing.Literal["_help"],
     "_help": str,
 })
 
 
 C4dHolefillParameters = typing.TypedDict('C4dHolefillParameters', {
-    "@type": typing.Literal["c3d.c4d.holefill"],
+    "@type": typing.NotRequired[typing.Literal["holefill"]],
+    "holefill": str,
+})
+C4dHolefillParametersTagged = typing.TypedDict('C4dHolefillParametersTagged', {
+    "@type": typing.Literal["holefill"],
     "holefill": str,
 })
 
 
 C4dHessianEigenvaluesParameters = typing.TypedDict('C4dHessianEigenvaluesParameters', {
-    "@type": typing.Literal["c3d.c4d.hessian_eigenvalues"],
+    "@type": typing.NotRequired[typing.Literal["hessian_eigenvalues"]],
+    "hessian_eigenvalues": str,
+})
+C4dHessianEigenvaluesParametersTagged = typing.TypedDict('C4dHessianEigenvaluesParametersTagged', {
+    "@type": typing.Literal["hessian_eigenvalues"],
     "hessian_eigenvalues": str,
 })
 
 
 C4dHessianObjectnessParameters = typing.TypedDict('C4dHessianObjectnessParameters', {
-    "@type": typing.Literal["c3d.c4d.hessian_objectness"],
+    "@type": typing.NotRequired[typing.Literal["hessian_objectness"]],
+    "hessian_objectness": str,
+})
+C4dHessianObjectnessParametersTagged = typing.TypedDict('C4dHessianObjectnessParametersTagged', {
+    "@type": typing.Literal["hessian_objectness"],
     "hessian_objectness": str,
 })
 
 
 C4dHistogramMatchParameters = typing.TypedDict('C4dHistogramMatchParameters', {
-    "@type": typing.Literal["c3d.c4d.histogram_match"],
+    "@type": typing.NotRequired[typing.Literal["histogram_match"]],
+    "histogram_match": str,
+})
+C4dHistogramMatchParametersTagged = typing.TypedDict('C4dHistogramMatchParametersTagged', {
+    "@type": typing.Literal["histogram_match"],
     "histogram_match": str,
 })
 
 
 C4dInfoParameters = typing.TypedDict('C4dInfoParameters', {
-    "@type": typing.Literal["c3d.c4d.info"],
+    "@type": typing.NotRequired[typing.Literal["info"]],
+    "info": str,
+})
+C4dInfoParametersTagged = typing.TypedDict('C4dInfoParametersTagged', {
+    "@type": typing.Literal["info"],
     "info": str,
 })
 
 
 C4dInfoFullParameters = typing.TypedDict('C4dInfoFullParameters', {
-    "@type": typing.Literal["c3d.c4d.info_full"],
+    "@type": typing.NotRequired[typing.Literal["info_full"]],
+    "info_full": str,
+})
+C4dInfoFullParametersTagged = typing.TypedDict('C4dInfoFullParametersTagged', {
+    "@type": typing.Literal["info_full"],
     "info_full": str,
 })
 
 
 C4dInsertParameters = typing.TypedDict('C4dInsertParameters', {
-    "@type": typing.Literal["c3d.c4d.insert"],
+    "@type": typing.NotRequired[typing.Literal["insert"]],
+    "insert": str,
+})
+C4dInsertParametersTagged = typing.TypedDict('C4dInsertParametersTagged', {
+    "@type": typing.Literal["insert"],
     "insert": str,
 })
 
 
 C4dInterpolationParameters = typing.TypedDict('C4dInterpolationParameters', {
-    "@type": typing.Literal["c3d.c4d.interpolation"],
+    "@type": typing.NotRequired[typing.Literal["interpolation"]],
+    "interpolation": str,
+})
+C4dInterpolationParametersTagged = typing.TypedDict('C4dInterpolationParametersTagged', {
+    "@type": typing.Literal["interpolation"],
     "interpolation": str,
 })
 
 
 C4dIterationsParameters = typing.TypedDict('C4dIterationsParameters', {
-    "@type": typing.Literal["c3d.c4d.iterations"],
+    "@type": typing.NotRequired[typing.Literal["iterations"]],
+    "iterations": str,
+})
+C4dIterationsParametersTagged = typing.TypedDict('C4dIterationsParametersTagged', {
+    "@type": typing.Literal["iterations"],
     "iterations": str,
 })
 
 
 C4dLabelOverlapParameters = typing.TypedDict('C4dLabelOverlapParameters', {
-    "@type": typing.Literal["c3d.c4d.label_overlap"],
+    "@type": typing.NotRequired[typing.Literal["label_overlap"]],
+    "label_overlap": str,
+})
+C4dLabelOverlapParametersTagged = typing.TypedDict('C4dLabelOverlapParametersTagged', {
+    "@type": typing.Literal["label_overlap"],
     "label_overlap": str,
 })
 
 
 C4dLabelStatisticsParameters = typing.TypedDict('C4dLabelStatisticsParameters', {
-    "@type": typing.Literal["c3d.c4d.label_statistics"],
+    "@type": typing.NotRequired[typing.Literal["label_statistics"]],
+    "label_statistics": str,
+})
+C4dLabelStatisticsParametersTagged = typing.TypedDict('C4dLabelStatisticsParametersTagged', {
+    "@type": typing.Literal["label_statistics"],
     "label_statistics": str,
 })
 
 
 C4dLandmarksToSpheresParameters = typing.TypedDict('C4dLandmarksToSpheresParameters', {
-    "@type": typing.Literal["c3d.c4d.landmarks_to_spheres"],
+    "@type": typing.NotRequired[typing.Literal["landmarks_to_spheres"]],
+    "landmarks_to_spheres": str,
+})
+C4dLandmarksToSpheresParametersTagged = typing.TypedDict('C4dLandmarksToSpheresParametersTagged', {
+    "@type": typing.Literal["landmarks_to_spheres"],
     "landmarks_to_spheres": str,
 })
 
 
 C4dLaplacianParameters = typing.TypedDict('C4dLaplacianParameters', {
-    "@type": typing.Literal["c3d.c4d.laplacian"],
+    "@type": typing.NotRequired[typing.Literal["laplacian"]],
+    "laplacian": str,
+})
+C4dLaplacianParametersTagged = typing.TypedDict('C4dLaplacianParametersTagged', {
+    "@type": typing.Literal["laplacian"],
     "laplacian": str,
 })
 
 
 C4dLevelsetParameters = typing.TypedDict('C4dLevelsetParameters', {
-    "@type": typing.Literal["c3d.c4d.levelset"],
+    "@type": typing.NotRequired[typing.Literal["levelset"]],
+    "levelset": str,
+})
+C4dLevelsetParametersTagged = typing.TypedDict('C4dLevelsetParametersTagged', {
+    "@type": typing.Literal["levelset"],
     "levelset": str,
 })
 
 
 C4dLevelsetCurvatureParameters = typing.TypedDict('C4dLevelsetCurvatureParameters', {
-    "@type": typing.Literal["c3d.c4d.levelset_curvature"],
+    "@type": typing.NotRequired[typing.Literal["levelset_curvature"]],
+    "levelset_curvature": str,
+})
+C4dLevelsetCurvatureParametersTagged = typing.TypedDict('C4dLevelsetCurvatureParametersTagged', {
+    "@type": typing.Literal["levelset_curvature"],
     "levelset_curvature": str,
 })
 
 
 C4dLevelsetAdvectionParameters = typing.TypedDict('C4dLevelsetAdvectionParameters', {
-    "@type": typing.Literal["c3d.c4d.levelset_advection"],
+    "@type": typing.NotRequired[typing.Literal["levelset_advection"]],
+    "levelset_advection": str,
+})
+C4dLevelsetAdvectionParametersTagged = typing.TypedDict('C4dLevelsetAdvectionParametersTagged', {
+    "@type": typing.Literal["levelset_advection"],
     "levelset_advection": str,
 })
 
 
 C4dLogParameters = typing.TypedDict('C4dLogParameters', {
-    "@type": typing.Literal["c3d.c4d.log"],
+    "@type": typing.NotRequired[typing.Literal["log"]],
+    "log": str,
+})
+C4dLogParametersTagged = typing.TypedDict('C4dLogParametersTagged', {
+    "@type": typing.Literal["log"],
     "log": str,
 })
 
 
 C4dLog10Parameters = typing.TypedDict('C4dLog10Parameters', {
-    "@type": typing.Literal["c3d.c4d.log10"],
+    "@type": typing.NotRequired[typing.Literal["log10"]],
+    "log10": str,
+})
+C4dLog10ParametersTagged = typing.TypedDict('C4dLog10ParametersTagged', {
+    "@type": typing.Literal["log10"],
     "log10": str,
 })
 
 
 C4dManualParameters = typing.TypedDict('C4dManualParameters', {
-    "@type": typing.Literal["c3d.c4d.manual"],
+    "@type": typing.NotRequired[typing.Literal["manual"]],
+    "manual": str,
+})
+C4dManualParametersTagged = typing.TypedDict('C4dManualParametersTagged', {
+    "@type": typing.Literal["manual"],
     "manual": str,
 })
 
 
 C4dMatchBoundingBoxParameters = typing.TypedDict('C4dMatchBoundingBoxParameters', {
-    "@type": typing.Literal["c3d.c4d.match_bounding_box"],
+    "@type": typing.NotRequired[typing.Literal["match_bounding_box"]],
+    "match_bounding_box": str,
+})
+C4dMatchBoundingBoxParametersTagged = typing.TypedDict('C4dMatchBoundingBoxParametersTagged', {
+    "@type": typing.Literal["match_bounding_box"],
     "match_bounding_box": str,
 })
 
 
 C4dMaximumParameters = typing.TypedDict('C4dMaximumParameters', {
-    "@type": typing.Literal["c3d.c4d.maximum"],
+    "@type": typing.NotRequired[typing.Literal["maximum"]],
+    "maximum": str,
+})
+C4dMaximumParametersTagged = typing.TypedDict('C4dMaximumParametersTagged', {
+    "@type": typing.Literal["maximum"],
     "maximum": str,
 })
 
 
 C4dMulticomponentSplitParameters = typing.TypedDict('C4dMulticomponentSplitParameters', {
-    "@type": typing.Literal["c3d.c4d.multicomponent_split"],
+    "@type": typing.NotRequired[typing.Literal["multicomponent_split"]],
+    "multicomponent_split": str,
+})
+C4dMulticomponentSplitParametersTagged = typing.TypedDict('C4dMulticomponentSplitParametersTagged', {
+    "@type": typing.Literal["multicomponent_split"],
     "multicomponent_split": str,
 })
 
 
 C4dMeanParameters = typing.TypedDict('C4dMeanParameters', {
-    "@type": typing.Literal["c3d.c4d.mean"],
+    "@type": typing.NotRequired[typing.Literal["mean"]],
+    "mean": str,
+})
+C4dMeanParametersTagged = typing.TypedDict('C4dMeanParametersTagged', {
+    "@type": typing.Literal["mean"],
     "mean": str,
 })
 
 
 C4dMedianFilterParameters = typing.TypedDict('C4dMedianFilterParameters', {
-    "@type": typing.Literal["c3d.c4d.median_filter"],
+    "@type": typing.NotRequired[typing.Literal["median_filter"]],
+    "median_filter": str,
+})
+C4dMedianFilterParametersTagged = typing.TypedDict('C4dMedianFilterParametersTagged', {
+    "@type": typing.Literal["median_filter"],
     "median_filter": str,
 })
 
 
 C4dMergeParameters = typing.TypedDict('C4dMergeParameters', {
-    "@type": typing.Literal["c3d.c4d.merge"],
+    "@type": typing.NotRequired[typing.Literal["merge"]],
+    "merge": str,
+})
+C4dMergeParametersTagged = typing.TypedDict('C4dMergeParametersTagged', {
+    "@type": typing.Literal["merge"],
     "merge": str,
 })
 
 
 C4dMeanFilterParameters = typing.TypedDict('C4dMeanFilterParameters', {
-    "@type": typing.Literal["c3d.c4d.mean_filter"],
+    "@type": typing.NotRequired[typing.Literal["mean_filter"]],
+    "mean_filter": str,
+})
+C4dMeanFilterParametersTagged = typing.TypedDict('C4dMeanFilterParametersTagged', {
+    "@type": typing.Literal["mean_filter"],
     "mean_filter": str,
 })
 
 
 C4dMutualInfoParameters = typing.TypedDict('C4dMutualInfoParameters', {
-    "@type": typing.Literal["c3d.c4d.mutual_info"],
+    "@type": typing.NotRequired[typing.Literal["mutual_info"]],
+    "mutual_info": str,
+})
+C4dMutualInfoParametersTagged = typing.TypedDict('C4dMutualInfoParametersTagged', {
+    "@type": typing.Literal["mutual_info"],
     "mutual_info": str,
 })
 
 
 C4dMinimumParameters = typing.TypedDict('C4dMinimumParameters', {
-    "@type": typing.Literal["c3d.c4d.minimum"],
+    "@type": typing.NotRequired[typing.Literal["minimum"]],
+    "minimum": str,
+})
+C4dMinimumParametersTagged = typing.TypedDict('C4dMinimumParametersTagged', {
+    "@type": typing.Literal["minimum"],
     "minimum": str,
 })
 
 
 C4dMixtureModelParameters = typing.TypedDict('C4dMixtureModelParameters', {
-    "@type": typing.Literal["c3d.c4d.mixture_model"],
+    "@type": typing.NotRequired[typing.Literal["mixture_model"]],
+    "mixture_model": str,
+})
+C4dMixtureModelParametersTagged = typing.TypedDict('C4dMixtureModelParametersTagged', {
+    "@type": typing.Literal["mixture_model"],
     "mixture_model": str,
 })
 
 
 C4dMomentsParameters = typing.TypedDict('C4dMomentsParameters', {
-    "@type": typing.Literal["c3d.c4d.moments"],
+    "@type": typing.NotRequired[typing.Literal["moments"]],
+    "moments": str,
+})
+C4dMomentsParametersTagged = typing.TypedDict('C4dMomentsParametersTagged', {
+    "@type": typing.Literal["moments"],
     "moments": str,
 })
 
 
 C4dMattesMutualInfoParameters = typing.TypedDict('C4dMattesMutualInfoParameters', {
-    "@type": typing.Literal["c3d.c4d.mattes_mutual_info"],
+    "@type": typing.NotRequired[typing.Literal["mattes_mutual_info"]],
+    "mattes_mutual_info": str,
+})
+C4dMattesMutualInfoParametersTagged = typing.TypedDict('C4dMattesMutualInfoParametersTagged', {
+    "@type": typing.Literal["mattes_mutual_info"],
     "mattes_mutual_info": str,
 })
 
 
 C4dMeanSquareParameters = typing.TypedDict('C4dMeanSquareParameters', {
-    "@type": typing.Literal["c3d.c4d.mean_square"],
+    "@type": typing.NotRequired[typing.Literal["mean_square"]],
+    "mean_square": str,
+})
+C4dMeanSquareParametersTagged = typing.TypedDict('C4dMeanSquareParametersTagged', {
+    "@type": typing.Literal["mean_square"],
     "mean_square": str,
 })
 
 
 C4dMultiplyParameters = typing.TypedDict('C4dMultiplyParameters', {
-    "@type": typing.Literal["c3d.c4d.multiply"],
+    "@type": typing.NotRequired[typing.Literal["multiply"]],
+    "multiply": str,
+})
+C4dMultiplyParametersTagged = typing.TypedDict('C4dMultiplyParametersTagged', {
+    "@type": typing.Literal["multiply"],
     "multiply": str,
 })
 
 
 C4dNormalizedCrossCorrelationParameters = typing.TypedDict('C4dNormalizedCrossCorrelationParameters', {
-    "@type": typing.Literal["c3d.c4d.normalized_cross_correlation"],
+    "@type": typing.NotRequired[typing.Literal["normalized_cross_correlation"]],
+    "normalized_cross_correlation": str,
+})
+C4dNormalizedCrossCorrelationParametersTagged = typing.TypedDict('C4dNormalizedCrossCorrelationParametersTagged', {
+    "@type": typing.Literal["normalized_cross_correlation"],
     "normalized_cross_correlation": str,
 })
 
 
 C4dNormalizedCorrelationParameters = typing.TypedDict('C4dNormalizedCorrelationParameters', {
-    "@type": typing.Literal["c3d.c4d.normalized_correlation"],
+    "@type": typing.NotRequired[typing.Literal["normalized_correlation"]],
+    "normalized_correlation": str,
+})
+C4dNormalizedCorrelationParametersTagged = typing.TypedDict('C4dNormalizedCorrelationParametersTagged', {
+    "@type": typing.Literal["normalized_correlation"],
     "normalized_correlation": str,
 })
 
 
 C4dNormalizedMutualInfoParameters = typing.TypedDict('C4dNormalizedMutualInfoParameters', {
-    "@type": typing.Literal["c3d.c4d.normalized_mutual_info"],
+    "@type": typing.NotRequired[typing.Literal["normalized_mutual_info"]],
+    "normalized_mutual_info": str,
+})
+C4dNormalizedMutualInfoParametersTagged = typing.TypedDict('C4dNormalizedMutualInfoParametersTagged', {
+    "@type": typing.Literal["normalized_mutual_info"],
     "normalized_mutual_info": str,
 })
 
 
 C4dNoiseGaussianParameters = typing.TypedDict('C4dNoiseGaussianParameters', {
-    "@type": typing.Literal["c3d.c4d.noise_gaussian"],
+    "@type": typing.NotRequired[typing.Literal["noise_gaussian"]],
+    "noise_gaussian": str,
+})
+C4dNoiseGaussianParametersTagged = typing.TypedDict('C4dNoiseGaussianParametersTagged', {
+    "@type": typing.Literal["noise_gaussian"],
     "noise_gaussian": str,
 })
 
 
 C4dNoisePoissonParameters = typing.TypedDict('C4dNoisePoissonParameters', {
-    "@type": typing.Literal["c3d.c4d.noise_poisson"],
+    "@type": typing.NotRequired[typing.Literal["noise_poisson"]],
+    "noise_poisson": str,
+})
+C4dNoisePoissonParametersTagged = typing.TypedDict('C4dNoisePoissonParametersTagged', {
+    "@type": typing.Literal["noise_poisson"],
     "noise_poisson": str,
 })
 
 
 C4dNoiseSpeckleParameters = typing.TypedDict('C4dNoiseSpeckleParameters', {
-    "@type": typing.Literal["c3d.c4d.noise_speckle"],
+    "@type": typing.NotRequired[typing.Literal["noise_speckle"]],
+    "noise_speckle": str,
+})
+C4dNoiseSpeckleParametersTagged = typing.TypedDict('C4dNoiseSpeckleParametersTagged', {
+    "@type": typing.Literal["noise_speckle"],
     "noise_speckle": str,
 })
 
 
 C4dNoiseSaltPepperParameters = typing.TypedDict('C4dNoiseSaltPepperParameters', {
-    "@type": typing.Literal["c3d.c4d.noise_salt_pepper"],
+    "@type": typing.NotRequired[typing.Literal["noise_salt_pepper"]],
+    "noise_salt_pepper": str,
+})
+C4dNoiseSaltPepperParametersTagged = typing.TypedDict('C4dNoiseSaltPepperParametersTagged', {
+    "@type": typing.Literal["noise_salt_pepper"],
     "noise_salt_pepper": str,
 })
 
 
 C4dNoMulticomponentSplitParameters = typing.TypedDict('C4dNoMulticomponentSplitParameters', {
-    "@type": typing.Literal["c3d.c4d.no_multicomponent_split"],
+    "@type": typing.NotRequired[typing.Literal["no_multicomponent_split"]],
+    "no_multicomponent_split": str,
+})
+C4dNoMulticomponentSplitParametersTagged = typing.TypedDict('C4dNoMulticomponentSplitParametersTagged', {
+    "@type": typing.Literal["no_multicomponent_split"],
     "no_multicomponent_split": str,
 })
 
 
 C4dNormalizeLocalWindowParameters = typing.TypedDict('C4dNormalizeLocalWindowParameters', {
-    "@type": typing.Literal["c3d.c4d.normalize_local_window"],
+    "@type": typing.NotRequired[typing.Literal["normalize_local_window"]],
+    "normalize_local_window": str,
+})
+C4dNormalizeLocalWindowParametersTagged = typing.TypedDict('C4dNormalizeLocalWindowParametersTagged', {
+    "@type": typing.Literal["normalize_local_window"],
     "normalize_local_window": str,
 })
 
 
 C4dNormpdfParameters = typing.TypedDict('C4dNormpdfParameters', {
-    "@type": typing.Literal["c3d.c4d.normpdf"],
+    "@type": typing.NotRequired[typing.Literal["normpdf"]],
+    "normpdf": str,
+})
+C4dNormpdfParametersTagged = typing.TypedDict('C4dNormpdfParametersTagged', {
+    "@type": typing.Literal["normpdf"],
     "normpdf": str,
 })
 
 
 C4dNoroundParameters = typing.TypedDict('C4dNoroundParameters', {
-    "@type": typing.Literal["c3d.c4d.noround"],
+    "@type": typing.NotRequired[typing.Literal["noround"]],
+    "noround": str,
+})
+C4dNoroundParametersTagged = typing.TypedDict('C4dNoroundParametersTagged', {
+    "@type": typing.Literal["noround"],
     "noround": str,
 })
 
 
 C4dNospmParameters = typing.TypedDict('C4dNospmParameters', {
-    "@type": typing.Literal["c3d.c4d.nospm"],
+    "@type": typing.NotRequired[typing.Literal["nospm"]],
+    "nospm": str,
+})
+C4dNospmParametersTagged = typing.TypedDict('C4dNospmParametersTagged', {
+    "@type": typing.Literal["nospm"],
     "nospm": str,
 })
 
 
 C4dOutputParameters = typing.TypedDict('C4dOutputParameters', {
-    "@type": typing.Literal["c3d.c4d.output"],
+    "@type": typing.NotRequired[typing.Literal["output"]],
+    "output": str,
+})
+C4dOutputParametersTagged = typing.TypedDict('C4dOutputParametersTagged', {
+    "@type": typing.Literal["output"],
     "output": str,
 })
 
 
 C4dOutputMulticomponentParameters = typing.TypedDict('C4dOutputMulticomponentParameters', {
-    "@type": typing.Literal["c3d.c4d.output_multicomponent"],
+    "@type": typing.NotRequired[typing.Literal["output_multicomponent"]],
+    "output_multicomponent": str,
+})
+C4dOutputMulticomponentParametersTagged = typing.TypedDict('C4dOutputMulticomponentParametersTagged', {
+    "@type": typing.Literal["output_multicomponent"],
     "output_multicomponent": str,
 })
 
 
 C4dOutputMultipleMulticomponentParameters = typing.TypedDict('C4dOutputMultipleMulticomponentParameters', {
-    "@type": typing.Literal["c3d.c4d.output_multiple_multicomponent"],
+    "@type": typing.NotRequired[typing.Literal["output_multiple_multicomponent"]],
+    "output_multiple_multicomponent": str,
+})
+C4dOutputMultipleMulticomponentParametersTagged = typing.TypedDict('C4dOutputMultipleMulticomponentParametersTagged', {
+    "@type": typing.Literal["output_multiple_multicomponent"],
     "output_multiple_multicomponent": str,
 })
 
 
 C4dOrientParameters = typing.TypedDict('C4dOrientParameters', {
-    "@type": typing.Literal["c3d.c4d.orient"],
+    "@type": typing.NotRequired[typing.Literal["orient"]],
+    "orient": str,
+})
+C4dOrientParametersTagged = typing.TypedDict('C4dOrientParametersTagged', {
+    "@type": typing.Literal["orient"],
     "orient": str,
 })
 
 
 C4dOutputMultipleParameters = typing.TypedDict('C4dOutputMultipleParameters', {
-    "@type": typing.Literal["c3d.c4d.output_multiple"],
+    "@type": typing.NotRequired[typing.Literal["output_multiple"]],
+    "output_multiple": str,
+})
+C4dOutputMultipleParametersTagged = typing.TypedDict('C4dOutputMultipleParametersTagged', {
+    "@type": typing.Literal["output_multiple"],
     "output_multiple": str,
 })
 
 
 C4dOrient1Parameters = typing.TypedDict('C4dOrient1Parameters', {
-    "@type": typing.Literal["c3d.c4d.orient"],
+    "@type": typing.NotRequired[typing.Literal["orient_1"]],
+    "orient": str,
+})
+C4dOrient1ParametersTagged = typing.TypedDict('C4dOrient1ParametersTagged', {
+    "@type": typing.Literal["orient_1"],
     "orient": str,
 })
 
 
 C4dOriginParameters = typing.TypedDict('C4dOriginParameters', {
-    "@type": typing.Literal["c3d.c4d.origin"],
+    "@type": typing.NotRequired[typing.Literal["origin"]],
+    "origin": str,
+})
+C4dOriginParametersTagged = typing.TypedDict('C4dOriginParametersTagged', {
+    "@type": typing.Literal["origin"],
     "origin": str,
 })
 
 
 C4dOriginVoxelParameters = typing.TypedDict('C4dOriginVoxelParameters', {
-    "@type": typing.Literal["c3d.c4d.origin_voxel"],
+    "@type": typing.NotRequired[typing.Literal["origin_voxel"]],
+    "origin_voxel": str,
+})
+C4dOriginVoxelParametersTagged = typing.TypedDict('C4dOriginVoxelParametersTagged', {
+    "@type": typing.Literal["origin_voxel"],
     "origin_voxel": str,
 })
 
 
 C4dOriginVoxelCoordParameters = typing.TypedDict('C4dOriginVoxelCoordParameters', {
-    "@type": typing.Literal["c3d.c4d.origin_voxel_coord"],
+    "@type": typing.NotRequired[typing.Literal["origin_voxel_coord"]],
+    "origin_voxel_coord": str,
+})
+C4dOriginVoxelCoordParametersTagged = typing.TypedDict('C4dOriginVoxelCoordParametersTagged', {
+    "@type": typing.Literal["origin_voxel_coord"],
     "origin_voxel_coord": str,
 })
 
 
 C4dOverlapParameters = typing.TypedDict('C4dOverlapParameters', {
-    "@type": typing.Literal["c3d.c4d.overlap"],
+    "@type": typing.NotRequired[typing.Literal["overlap"]],
+    "overlap": str,
+})
+C4dOverlapParametersTagged = typing.TypedDict('C4dOverlapParametersTagged', {
+    "@type": typing.Literal["overlap"],
     "overlap": str,
 })
 
 
 C4dOverlayLabelImageParameters = typing.TypedDict('C4dOverlayLabelImageParameters', {
-    "@type": typing.Literal["c3d.c4d.overlay_label_image"],
+    "@type": typing.NotRequired[typing.Literal["overlay_label_image"]],
+    "overlay_label_image": str,
+})
+C4dOverlayLabelImageParametersTagged = typing.TypedDict('C4dOverlayLabelImageParametersTagged', {
+    "@type": typing.Literal["overlay_label_image"],
     "overlay_label_image": str,
 })
 
 
 C4dPadParameters = typing.TypedDict('C4dPadParameters', {
-    "@type": typing.Literal["c3d.c4d.pad"],
+    "@type": typing.NotRequired[typing.Literal["pad"]],
+    "pad": str,
+})
+C4dPadParametersTagged = typing.TypedDict('C4dPadParametersTagged', {
+    "@type": typing.Literal["pad"],
     "pad": str,
 })
 
 
 C4dPadToParameters = typing.TypedDict('C4dPadToParameters', {
-    "@type": typing.Literal["c3d.c4d.pad_to"],
+    "@type": typing.NotRequired[typing.Literal["pad_to"]],
+    "pad_to": str,
+})
+C4dPadToParametersTagged = typing.TypedDict('C4dPadToParametersTagged', {
+    "@type": typing.Literal["pad_to"],
     "pad_to": str,
 })
 
 
 C4dPcaParameters = typing.TypedDict('C4dPcaParameters', {
-    "@type": typing.Literal["c3d.c4d.pca"],
+    "@type": typing.NotRequired[typing.Literal["pca"]],
+    "pca": str,
+})
+C4dPcaParametersTagged = typing.TypedDict('C4dPcaParametersTagged', {
+    "@type": typing.Literal["pca"],
     "pca": str,
 })
 
 
 C4dPercentIntensityModeParameters = typing.TypedDict('C4dPercentIntensityModeParameters', {
-    "@type": typing.Literal["c3d.c4d.percent_intensity_mode"],
+    "@type": typing.NotRequired[typing.Literal["percent_intensity_mode"]],
+    "percent_intensity_mode": str,
+})
+C4dPercentIntensityModeParametersTagged = typing.TypedDict('C4dPercentIntensityModeParametersTagged', {
+    "@type": typing.Literal["percent_intensity_mode"],
     "percent_intensity_mode": str,
 })
 
 
 C4dPixelParameters = typing.TypedDict('C4dPixelParameters', {
-    "@type": typing.Literal["c3d.c4d.pixel"],
+    "@type": typing.NotRequired[typing.Literal["pixel"]],
+    "pixel": str,
+})
+C4dPixelParametersTagged = typing.TypedDict('C4dPixelParametersTagged', {
+    "@type": typing.Literal["pixel"],
     "pixel": str,
 })
 
 
 C4dPopParameters = typing.TypedDict('C4dPopParameters', {
-    "@type": typing.Literal["c3d.c4d.pop"],
+    "@type": typing.NotRequired[typing.Literal["pop"]],
+    "pop": str,
+})
+C4dPopParametersTagged = typing.TypedDict('C4dPopParametersTagged', {
+    "@type": typing.Literal["pop"],
     "pop": str,
 })
 
 
 C4dPopasParameters = typing.TypedDict('C4dPopasParameters', {
-    "@type": typing.Literal["c3d.c4d.popas"],
+    "@type": typing.NotRequired[typing.Literal["popas"]],
+    "popas": str,
+})
+C4dPopasParametersTagged = typing.TypedDict('C4dPopasParametersTagged', {
+    "@type": typing.Literal["popas"],
     "popas": str,
 })
 
 
 C4dProbeParameters = typing.TypedDict('C4dProbeParameters', {
-    "@type": typing.Literal["c3d.c4d.probe"],
+    "@type": typing.NotRequired[typing.Literal["probe"]],
+    "probe": str,
+})
+C4dProbeParametersTagged = typing.TypedDict('C4dProbeParametersTagged', {
+    "@type": typing.Literal["probe"],
     "probe": str,
 })
 
 
 C4dPushParameters = typing.TypedDict('C4dPushParameters', {
-    "@type": typing.Literal["c3d.c4d.push"],
+    "@type": typing.NotRequired[typing.Literal["push"]],
+    "push": str,
+})
+C4dPushParametersTagged = typing.TypedDict('C4dPushParametersTagged', {
+    "@type": typing.Literal["push"],
     "push": str,
 })
 
 
 C4dRankParameters = typing.TypedDict('C4dRankParameters', {
-    "@type": typing.Literal["c3d.c4d.rank"],
+    "@type": typing.NotRequired[typing.Literal["rank"]],
+    "rank": str,
+})
+C4dRankParametersTagged = typing.TypedDict('C4dRankParametersTagged', {
+    "@type": typing.Literal["rank"],
     "rank": str,
 })
 
 
 C4dReciprocalParameters = typing.TypedDict('C4dReciprocalParameters', {
-    "@type": typing.Literal["c3d.c4d.reciprocal"],
+    "@type": typing.NotRequired[typing.Literal["reciprocal"]],
+    "reciprocal": str,
+})
+C4dReciprocalParametersTagged = typing.TypedDict('C4dReciprocalParametersTagged', {
+    "@type": typing.Literal["reciprocal"],
     "reciprocal": str,
 })
 
 
 C4dRegionParameters = typing.TypedDict('C4dRegionParameters', {
-    "@type": typing.Literal["c3d.c4d.region"],
+    "@type": typing.NotRequired[typing.Literal["region"]],
+    "region": str,
+})
+C4dRegionParametersTagged = typing.TypedDict('C4dRegionParametersTagged', {
+    "@type": typing.Literal["region"],
     "region": str,
 })
 
 
 C4dReorderParameters = typing.TypedDict('C4dReorderParameters', {
-    "@type": typing.Literal["c3d.c4d.reorder"],
+    "@type": typing.NotRequired[typing.Literal["reorder"]],
+    "reorder": str,
+})
+C4dReorderParametersTagged = typing.TypedDict('C4dReorderParametersTagged', {
+    "@type": typing.Literal["reorder"],
     "reorder": str,
 })
 
 
 C4dRetainLabelsParameters = typing.TypedDict('C4dRetainLabelsParameters', {
-    "@type": typing.Literal["c3d.c4d.retain_labels"],
+    "@type": typing.NotRequired[typing.Literal["retain_labels"]],
+    "retain_labels": str,
+})
+C4dRetainLabelsParametersTagged = typing.TypedDict('C4dRetainLabelsParametersTagged', {
+    "@type": typing.Literal["retain_labels"],
     "retain_labels": str,
 })
 
 
 C4dRfApplyParameters = typing.TypedDict('C4dRfApplyParameters', {
-    "@type": typing.Literal["c3d.c4d.rf_apply"],
+    "@type": typing.NotRequired[typing.Literal["rf_apply"]],
+    "rf_apply": str,
+})
+C4dRfApplyParametersTagged = typing.TypedDict('C4dRfApplyParametersTagged', {
+    "@type": typing.Literal["rf_apply"],
     "rf_apply": str,
 })
 
 
 C4dRfTrainParameters = typing.TypedDict('C4dRfTrainParameters', {
-    "@type": typing.Literal["c3d.c4d.rf_train"],
+    "@type": typing.NotRequired[typing.Literal["rf_train"]],
+    "rf_train": str,
+})
+C4dRfTrainParametersTagged = typing.TypedDict('C4dRfTrainParametersTagged', {
+    "@type": typing.Literal["rf_train"],
     "rf_train": str,
 })
 
 
 C4dRfParamPatchParameters = typing.TypedDict('C4dRfParamPatchParameters', {
-    "@type": typing.Literal["c3d.c4d.rf_param_patch"],
+    "@type": typing.NotRequired[typing.Literal["rf_param_patch"]],
+    "rf_param_patch": str,
+})
+C4dRfParamPatchParametersTagged = typing.TypedDict('C4dRfParamPatchParametersTagged', {
+    "@type": typing.Literal["rf_param_patch"],
     "rf_param_patch": str,
 })
 
 
 C4dRfParamUsexyzParameters = typing.TypedDict('C4dRfParamUsexyzParameters', {
-    "@type": typing.Literal["c3d.c4d.rf_param_usexyz"],
+    "@type": typing.NotRequired[typing.Literal["rf_param_usexyz"]],
+    "rf_param_usexyz": str,
+})
+C4dRfParamUsexyzParametersTagged = typing.TypedDict('C4dRfParamUsexyzParametersTagged', {
+    "@type": typing.Literal["rf_param_usexyz"],
     "rf_param_usexyz": str,
 })
 
 
 C4dRfParamNousexyzParameters = typing.TypedDict('C4dRfParamNousexyzParameters', {
-    "@type": typing.Literal["c3d.c4d.rf_param_nousexyz"],
+    "@type": typing.NotRequired[typing.Literal["rf_param_nousexyz"]],
+    "rf_param_nousexyz": str,
+})
+C4dRfParamNousexyzParametersTagged = typing.TypedDict('C4dRfParamNousexyzParametersTagged', {
+    "@type": typing.Literal["rf_param_nousexyz"],
     "rf_param_nousexyz": str,
 })
 
 
 C4dRfParamNtreesParameters = typing.TypedDict('C4dRfParamNtreesParameters', {
-    "@type": typing.Literal["c3d.c4d.rf_param_ntrees"],
+    "@type": typing.NotRequired[typing.Literal["rf_param_ntrees"]],
+    "rf_param_ntrees": str,
+})
+C4dRfParamNtreesParametersTagged = typing.TypedDict('C4dRfParamNtreesParametersTagged', {
+    "@type": typing.Literal["rf_param_ntrees"],
     "rf_param_ntrees": str,
 })
 
 
 C4dRfParamTreedepthParameters = typing.TypedDict('C4dRfParamTreedepthParameters', {
-    "@type": typing.Literal["c3d.c4d.rf_param_treedepth"],
+    "@type": typing.NotRequired[typing.Literal["rf_param_treedepth"]],
+    "rf_param_treedepth": str,
+})
+C4dRfParamTreedepthParametersTagged = typing.TypedDict('C4dRfParamTreedepthParametersTagged', {
+    "@type": typing.Literal["rf_param_treedepth"],
     "rf_param_treedepth": str,
 })
 
 
 C4dSetSformParameters = typing.TypedDict('C4dSetSformParameters', {
-    "@type": typing.Literal["c3d.c4d.set_sform"],
+    "@type": typing.NotRequired[typing.Literal["set_sform"]],
+    "set_sform": str,
+})
+C4dSetSformParametersTagged = typing.TypedDict('C4dSetSformParametersTagged', {
+    "@type": typing.Literal["set_sform"],
     "set_sform": str,
 })
 
 
 C4dReplaceParameters = typing.TypedDict('C4dReplaceParameters', {
-    "@type": typing.Literal["c3d.c4d.replace"],
+    "@type": typing.NotRequired[typing.Literal["replace"]],
+    "replace": str,
+})
+C4dReplaceParametersTagged = typing.TypedDict('C4dReplaceParametersTagged', {
+    "@type": typing.Literal["replace"],
     "replace": str,
 })
 
 
 C4dResampleParameters = typing.TypedDict('C4dResampleParameters', {
-    "@type": typing.Literal["c3d.c4d.resample"],
+    "@type": typing.NotRequired[typing.Literal["resample"]],
+    "resample": str,
+})
+C4dResampleParametersTagged = typing.TypedDict('C4dResampleParametersTagged', {
+    "@type": typing.Literal["resample"],
     "resample": str,
 })
 
 
 C4dResampleIsoParameters = typing.TypedDict('C4dResampleIsoParameters', {
-    "@type": typing.Literal["c3d.c4d.resample_iso"],
+    "@type": typing.NotRequired[typing.Literal["resample_iso"]],
+    "resample_iso": str,
+})
+C4dResampleIsoParametersTagged = typing.TypedDict('C4dResampleIsoParametersTagged', {
+    "@type": typing.Literal["resample_iso"],
     "resample_iso": str,
 })
 
 
 C4dResampleMmParameters = typing.TypedDict('C4dResampleMmParameters', {
-    "@type": typing.Literal["c3d.c4d.resample_mm"],
+    "@type": typing.NotRequired[typing.Literal["resample_mm"]],
+    "resample_mm": str,
+})
+C4dResampleMmParametersTagged = typing.TypedDict('C4dResampleMmParametersTagged', {
+    "@type": typing.Literal["resample_mm"],
     "resample_mm": str,
 })
 
 
 C4dResliceItkParameters = typing.TypedDict('C4dResliceItkParameters', {
-    "@type": typing.Literal["c3d.c4d.reslice_itk"],
+    "@type": typing.NotRequired[typing.Literal["reslice_itk"]],
+    "reslice_itk": str,
+})
+C4dResliceItkParametersTagged = typing.TypedDict('C4dResliceItkParametersTagged', {
+    "@type": typing.Literal["reslice_itk"],
     "reslice_itk": str,
 })
 
 
 C4dResliceMatrixParameters = typing.TypedDict('C4dResliceMatrixParameters', {
-    "@type": typing.Literal["c3d.c4d.reslice_matrix"],
+    "@type": typing.NotRequired[typing.Literal["reslice_matrix"]],
+    "reslice_matrix": str,
+})
+C4dResliceMatrixParametersTagged = typing.TypedDict('C4dResliceMatrixParametersTagged', {
+    "@type": typing.Literal["reslice_matrix"],
     "reslice_matrix": str,
 })
 
 
 C4dResliceIdentityParameters = typing.TypedDict('C4dResliceIdentityParameters', {
-    "@type": typing.Literal["c3d.c4d.reslice_identity"],
+    "@type": typing.NotRequired[typing.Literal["reslice_identity"]],
+    "reslice_identity": str,
+})
+C4dResliceIdentityParametersTagged = typing.TypedDict('C4dResliceIdentityParametersTagged', {
+    "@type": typing.Literal["reslice_identity"],
     "reslice_identity": str,
 })
 
 
 C4dRgb2hsvParameters = typing.TypedDict('C4dRgb2hsvParameters', {
-    "@type": typing.Literal["c3d.c4d.rgb2hsv"],
+    "@type": typing.NotRequired[typing.Literal["rgb2hsv"]],
+    "rgb2hsv": str,
+})
+C4dRgb2hsvParametersTagged = typing.TypedDict('C4dRgb2hsvParametersTagged', {
+    "@type": typing.Literal["rgb2hsv"],
     "rgb2hsv": str,
 })
 
 
 C4dRmsParameters = typing.TypedDict('C4dRmsParameters', {
-    "@type": typing.Literal["c3d.c4d.rms"],
+    "@type": typing.NotRequired[typing.Literal["rms"]],
+    "rms": str,
+})
+C4dRmsParametersTagged = typing.TypedDict('C4dRmsParametersTagged', {
+    "@type": typing.Literal["rms"],
     "rms": str,
 })
 
 
 C4dRoundParameters = typing.TypedDict('C4dRoundParameters', {
-    "@type": typing.Literal["c3d.c4d.round"],
+    "@type": typing.NotRequired[typing.Literal["round"]],
+    "round": str,
+})
+C4dRoundParametersTagged = typing.TypedDict('C4dRoundParametersTagged', {
+    "@type": typing.Literal["round"],
     "round": str,
 })
 
 
 C4dScaleParameters = typing.TypedDict('C4dScaleParameters', {
-    "@type": typing.Literal["c3d.c4d.scale"],
+    "@type": typing.NotRequired[typing.Literal["scale"]],
+    "scale": str,
+})
+C4dScaleParametersTagged = typing.TypedDict('C4dScaleParametersTagged', {
+    "@type": typing.Literal["scale"],
     "scale": str,
 })
 
 
 C4dSetSform1Parameters = typing.TypedDict('C4dSetSform1Parameters', {
-    "@type": typing.Literal["c3d.c4d.set_sform"],
+    "@type": typing.NotRequired[typing.Literal["set_sform_1"]],
+    "set_sform": str,
+})
+C4dSetSform1ParametersTagged = typing.TypedDict('C4dSetSform1ParametersTagged', {
+    "@type": typing.Literal["set_sform_1"],
     "set_sform": str,
 })
 
 
 C4dSinParameters = typing.TypedDict('C4dSinParameters', {
-    "@type": typing.Literal["c3d.c4d.sin"],
+    "@type": typing.NotRequired[typing.Literal["sin"]],
+    "sin": str,
+})
+C4dSinParametersTagged = typing.TypedDict('C4dSinParametersTagged', {
+    "@type": typing.Literal["sin"],
     "sin": str,
 })
 
 
 C4dSliceParameters = typing.TypedDict('C4dSliceParameters', {
-    "@type": typing.Literal["c3d.c4d.slice"],
+    "@type": typing.NotRequired[typing.Literal["slice"]],
+    "slice": str,
+})
+C4dSliceParametersTagged = typing.TypedDict('C4dSliceParametersTagged', {
+    "@type": typing.Literal["slice"],
     "slice": str,
 })
 
 
 C4dSliceAllParameters = typing.TypedDict('C4dSliceAllParameters', {
-    "@type": typing.Literal["c3d.c4d.slice_all"],
+    "@type": typing.NotRequired[typing.Literal["slice_all"]],
+    "slice_all": str,
+})
+C4dSliceAllParametersTagged = typing.TypedDict('C4dSliceAllParametersTagged', {
+    "@type": typing.Literal["slice_all"],
     "slice_all": str,
 })
 
 
 C4dSharpenParameters = typing.TypedDict('C4dSharpenParameters', {
-    "@type": typing.Literal["c3d.c4d.sharpen"],
+    "@type": typing.NotRequired[typing.Literal["sharpen"]],
+    "sharpen": str,
+})
+C4dSharpenParametersTagged = typing.TypedDict('C4dSharpenParametersTagged', {
+    "@type": typing.Literal["sharpen"],
     "sharpen": str,
 })
 
 
 C4dShiftParameters = typing.TypedDict('C4dShiftParameters', {
-    "@type": typing.Literal["c3d.c4d.shift"],
+    "@type": typing.NotRequired[typing.Literal["shift"]],
+    "shift": str,
+})
+C4dShiftParametersTagged = typing.TypedDict('C4dShiftParametersTagged', {
+    "@type": typing.Literal["shift"],
     "shift": str,
 })
 
 
 C4dSignedDistanceTransformParameters = typing.TypedDict('C4dSignedDistanceTransformParameters', {
-    "@type": typing.Literal["c3d.c4d.signed_distance_transform"],
+    "@type": typing.NotRequired[typing.Literal["signed_distance_transform"]],
+    "signed_distance_transform": str,
+})
+C4dSignedDistanceTransformParametersTagged = typing.TypedDict('C4dSignedDistanceTransformParametersTagged', {
+    "@type": typing.Literal["signed_distance_transform"],
     "signed_distance_transform": str,
 })
 
 
 C4dSmoothParameters = typing.TypedDict('C4dSmoothParameters', {
-    "@type": typing.Literal["c3d.c4d.smooth"],
+    "@type": typing.NotRequired[typing.Literal["smooth"]],
+    "smooth": str,
+})
+C4dSmoothParametersTagged = typing.TypedDict('C4dSmoothParametersTagged', {
+    "@type": typing.Literal["smooth"],
     "smooth": str,
 })
 
 
 C4dSmoothFastParameters = typing.TypedDict('C4dSmoothFastParameters', {
-    "@type": typing.Literal["c3d.c4d.smooth_fast"],
+    "@type": typing.NotRequired[typing.Literal["smooth_fast"]],
+    "smooth_fast": str,
+})
+C4dSmoothFastParametersTagged = typing.TypedDict('C4dSmoothFastParametersTagged', {
+    "@type": typing.Literal["smooth_fast"],
     "smooth_fast": str,
 })
 
 
 C4dSpacingParameters = typing.TypedDict('C4dSpacingParameters', {
-    "@type": typing.Literal["c3d.c4d.spacing"],
+    "@type": typing.NotRequired[typing.Literal["spacing"]],
+    "spacing": str,
+})
+C4dSpacingParametersTagged = typing.TypedDict('C4dSpacingParametersTagged', {
+    "@type": typing.Literal["spacing"],
     "spacing": str,
 })
 
 
 C4dSplitParameters = typing.TypedDict('C4dSplitParameters', {
-    "@type": typing.Literal["c3d.c4d.split"],
+    "@type": typing.NotRequired[typing.Literal["split"]],
+    "split": str,
+})
+C4dSplitParametersTagged = typing.TypedDict('C4dSplitParametersTagged', {
+    "@type": typing.Literal["split"],
     "split": str,
 })
 
 
 C4dSqrtParameters = typing.TypedDict('C4dSqrtParameters', {
-    "@type": typing.Literal["c3d.c4d.sqrt"],
+    "@type": typing.NotRequired[typing.Literal["sqrt"]],
+    "sqrt": str,
+})
+C4dSqrtParametersTagged = typing.TypedDict('C4dSqrtParametersTagged', {
+    "@type": typing.Literal["sqrt"],
     "sqrt": str,
 })
 
 
 C4dStapleParameters = typing.TypedDict('C4dStapleParameters', {
-    "@type": typing.Literal["c3d.c4d.staple"],
+    "@type": typing.NotRequired[typing.Literal["staple"]],
+    "staple": str,
+})
+C4dStapleParametersTagged = typing.TypedDict('C4dStapleParametersTagged', {
+    "@type": typing.Literal["staple"],
     "staple": str,
 })
 
 
 C4dStructureTensorEigenvaluesParameters = typing.TypedDict('C4dStructureTensorEigenvaluesParameters', {
-    "@type": typing.Literal["c3d.c4d.structure_tensor_eigenvalues"],
+    "@type": typing.NotRequired[typing.Literal["structure_tensor_eigenvalues"]],
+    "structure_tensor_eigenvalues": str,
+})
+C4dStructureTensorEigenvaluesParametersTagged = typing.TypedDict('C4dStructureTensorEigenvaluesParametersTagged', {
+    "@type": typing.Literal["structure_tensor_eigenvalues"],
     "structure_tensor_eigenvalues": str,
 })
 
 
 C4dSpmParameters = typing.TypedDict('C4dSpmParameters', {
-    "@type": typing.Literal["c3d.c4d.spm"],
+    "@type": typing.NotRequired[typing.Literal["spm"]],
+    "spm": str,
+})
+C4dSpmParametersTagged = typing.TypedDict('C4dSpmParametersTagged', {
+    "@type": typing.Literal["spm"],
     "spm": str,
 })
 
 
 C4dSubtractParameters = typing.TypedDict('C4dSubtractParameters', {
-    "@type": typing.Literal["c3d.c4d.subtract"],
+    "@type": typing.NotRequired[typing.Literal["subtract"]],
+    "subtract": str,
+})
+C4dSubtractParametersTagged = typing.TypedDict('C4dSubtractParametersTagged', {
+    "@type": typing.Literal["subtract"],
     "subtract": str,
 })
 
 
 C4dSupervoxelParameters = typing.TypedDict('C4dSupervoxelParameters', {
-    "@type": typing.Literal["c3d.c4d.supervoxel"],
+    "@type": typing.NotRequired[typing.Literal["supervoxel"]],
+    "supervoxel": str,
+})
+C4dSupervoxelParametersTagged = typing.TypedDict('C4dSupervoxelParametersTagged', {
+    "@type": typing.Literal["supervoxel"],
     "supervoxel": str,
 })
 
 
 C4dStretchParameters = typing.TypedDict('C4dStretchParameters', {
-    "@type": typing.Literal["c3d.c4d.stretch"],
+    "@type": typing.NotRequired[typing.Literal["stretch"]],
+    "stretch": str,
+})
+C4dStretchParametersTagged = typing.TypedDict('C4dStretchParametersTagged', {
+    "@type": typing.Literal["stretch"],
     "stretch": str,
 })
 
 
 C4dSwapdimParameters = typing.TypedDict('C4dSwapdimParameters', {
-    "@type": typing.Literal["c3d.c4d.swapdim"],
+    "@type": typing.NotRequired[typing.Literal["swapdim"]],
+    "swapdim": str,
+})
+C4dSwapdimParametersTagged = typing.TypedDict('C4dSwapdimParametersTagged', {
+    "@type": typing.Literal["swapdim"],
     "swapdim": str,
 })
 
 
 C4dTestImageParameters = typing.TypedDict('C4dTestImageParameters', {
-    "@type": typing.Literal["c3d.c4d.test_image"],
+    "@type": typing.NotRequired[typing.Literal["test_image"]],
+    "test_image": str,
+})
+C4dTestImageParametersTagged = typing.TypedDict('C4dTestImageParametersTagged', {
+    "@type": typing.Literal["test_image"],
     "test_image": str,
 })
 
 
 C4dTestProbeParameters = typing.TypedDict('C4dTestProbeParameters', {
-    "@type": typing.Literal["c3d.c4d.test_probe"],
+    "@type": typing.NotRequired[typing.Literal["test_probe"]],
+    "test_probe": str,
+})
+C4dTestProbeParametersTagged = typing.TypedDict('C4dTestProbeParametersTagged', {
+    "@type": typing.Literal["test_probe"],
     "test_probe": str,
 })
 
 
 C4dThresholdParameters = typing.TypedDict('C4dThresholdParameters', {
-    "@type": typing.Literal["c3d.c4d.threshold"],
+    "@type": typing.NotRequired[typing.Literal["threshold"]],
+    "threshold": str,
+})
+C4dThresholdParametersTagged = typing.TypedDict('C4dThresholdParametersTagged', {
+    "@type": typing.Literal["threshold"],
     "threshold": str,
 })
 
 
 C4dTileParameters = typing.TypedDict('C4dTileParameters', {
-    "@type": typing.Literal["c3d.c4d.tile"],
+    "@type": typing.NotRequired[typing.Literal["tile"]],
+    "tile": str,
+})
+C4dTileParametersTagged = typing.TypedDict('C4dTileParametersTagged', {
+    "@type": typing.Literal["tile"],
     "tile": str,
 })
 
 
 C4dTrimParameters = typing.TypedDict('C4dTrimParameters', {
-    "@type": typing.Literal["c3d.c4d.trim"],
+    "@type": typing.NotRequired[typing.Literal["trim"]],
+    "trim": str,
+})
+C4dTrimParametersTagged = typing.TypedDict('C4dTrimParametersTagged', {
+    "@type": typing.Literal["trim"],
     "trim": str,
 })
 
 
 C4dTrimToSizeParameters = typing.TypedDict('C4dTrimToSizeParameters', {
-    "@type": typing.Literal["c3d.c4d.trim_to_size"],
+    "@type": typing.NotRequired[typing.Literal["trim_to_size"]],
+    "trim_to_size": str,
+})
+C4dTrimToSizeParametersTagged = typing.TypedDict('C4dTrimToSizeParametersTagged', {
+    "@type": typing.Literal["trim_to_size"],
     "trim_to_size": str,
 })
 
 
 C4dTypeParameters = typing.TypedDict('C4dTypeParameters', {
-    "@type": typing.Literal["c3d.c4d.type"],
+    "@type": typing.NotRequired[typing.Literal["type"]],
+    "type": str,
+})
+C4dTypeParametersTagged = typing.TypedDict('C4dTypeParametersTagged', {
+    "@type": typing.Literal["type"],
     "type": str,
 })
 
 
 C4dVerboseParameters = typing.TypedDict('C4dVerboseParameters', {
-    "@type": typing.Literal["c3d.c4d.verbose"],
+    "@type": typing.NotRequired[typing.Literal["verbose"]],
+    "verbose": str,
+})
+C4dVerboseParametersTagged = typing.TypedDict('C4dVerboseParametersTagged', {
+    "@type": typing.Literal["verbose"],
     "verbose": str,
 })
 
 
 C4dNoverboseParameters = typing.TypedDict('C4dNoverboseParameters', {
-    "@type": typing.Literal["c3d.c4d.noverbose"],
+    "@type": typing.NotRequired[typing.Literal["noverbose"]],
+    "noverbose": str,
+})
+C4dNoverboseParametersTagged = typing.TypedDict('C4dNoverboseParametersTagged', {
+    "@type": typing.Literal["noverbose"],
     "noverbose": str,
 })
 
 
 C4dVersionParameters = typing.TypedDict('C4dVersionParameters', {
-    "@type": typing.Literal["c3d.c4d.version"],
+    "@type": typing.NotRequired[typing.Literal["version"]],
+    "version": str,
+})
+C4dVersionParametersTagged = typing.TypedDict('C4dVersionParametersTagged', {
+    "@type": typing.Literal["version"],
     "version": str,
 })
 
 
 C4dVoteParameters = typing.TypedDict('C4dVoteParameters', {
-    "@type": typing.Literal["c3d.c4d.vote"],
+    "@type": typing.NotRequired[typing.Literal["vote"]],
+    "vote": str,
+})
+C4dVoteParametersTagged = typing.TypedDict('C4dVoteParametersTagged', {
+    "@type": typing.Literal["vote"],
     "vote": str,
 })
 
 
 C4dVoteMrfParameters = typing.TypedDict('C4dVoteMrfParameters', {
-    "@type": typing.Literal["c3d.c4d.vote_mrf"],
+    "@type": typing.NotRequired[typing.Literal["vote_mrf"]],
+    "vote_mrf": str,
+})
+C4dVoteMrfParametersTagged = typing.TypedDict('C4dVoteMrfParametersTagged', {
+    "@type": typing.Literal["vote_mrf"],
     "vote_mrf": str,
 })
 
 
 C4dVoteLabelParameters = typing.TypedDict('C4dVoteLabelParameters', {
-    "@type": typing.Literal["c3d.c4d.vote_label"],
+    "@type": typing.NotRequired[typing.Literal["vote_label"]],
+    "vote_label": str,
+})
+C4dVoteLabelParametersTagged = typing.TypedDict('C4dVoteLabelParametersTagged', {
+    "@type": typing.Literal["vote_label"],
     "vote_label": str,
 })
 
 
 C4dVoxelSumParameters = typing.TypedDict('C4dVoxelSumParameters', {
-    "@type": typing.Literal["c3d.c4d.voxel_sum"],
+    "@type": typing.NotRequired[typing.Literal["voxel_sum"]],
+    "voxel_sum": str,
+})
+C4dVoxelSumParametersTagged = typing.TypedDict('C4dVoxelSumParametersTagged', {
+    "@type": typing.Literal["voxel_sum"],
     "voxel_sum": str,
 })
 
 
 C4dVoxelIntegralParameters = typing.TypedDict('C4dVoxelIntegralParameters', {
-    "@type": typing.Literal["c3d.c4d.voxel_integral"],
+    "@type": typing.NotRequired[typing.Literal["voxel_integral"]],
+    "voxel_integral": str,
+})
+C4dVoxelIntegralParametersTagged = typing.TypedDict('C4dVoxelIntegralParametersTagged', {
+    "@type": typing.Literal["voxel_integral"],
     "voxel_integral": str,
 })
 
 
 C4dVoxelwiseRegressionParameters = typing.TypedDict('C4dVoxelwiseRegressionParameters', {
-    "@type": typing.Literal["c3d.c4d.voxelwise_regression"],
+    "@type": typing.NotRequired[typing.Literal["voxelwise_regression"]],
+    "voxelwise_regression": str,
+})
+C4dVoxelwiseRegressionParametersTagged = typing.TypedDict('C4dVoxelwiseRegressionParametersTagged', {
+    "@type": typing.Literal["voxelwise_regression"],
     "voxelwise_regression": str,
 })
 
 
 C4dWarpParameters = typing.TypedDict('C4dWarpParameters', {
-    "@type": typing.Literal["c3d.c4d.warp"],
+    "@type": typing.NotRequired[typing.Literal["warp"]],
+    "warp": str,
+})
+C4dWarpParametersTagged = typing.TypedDict('C4dWarpParametersTagged', {
+    "@type": typing.Literal["warp"],
     "warp": str,
 })
 
 
 C4dWarpLabelParameters = typing.TypedDict('C4dWarpLabelParameters', {
-    "@type": typing.Literal["c3d.c4d.warp_label"],
+    "@type": typing.NotRequired[typing.Literal["warp_label"]],
+    "warp_label": str,
+})
+C4dWarpLabelParametersTagged = typing.TypedDict('C4dWarpLabelParametersTagged', {
+    "@type": typing.Literal["warp_label"],
     "warp_label": str,
 })
 
 
 C4dWrapParameters = typing.TypedDict('C4dWrapParameters', {
-    "@type": typing.Literal["c3d.c4d.wrap"],
+    "@type": typing.NotRequired[typing.Literal["wrap"]],
+    "wrap": str,
+})
+C4dWrapParametersTagged = typing.TypedDict('C4dWrapParametersTagged', {
+    "@type": typing.Literal["wrap"],
     "wrap": str,
 })
 
 
 C4dWeightedSumParameters = typing.TypedDict('C4dWeightedSumParameters', {
-    "@type": typing.Literal["c3d.c4d.weighted_sum"],
+    "@type": typing.NotRequired[typing.Literal["weighted_sum"]],
+    "weighted_sum": str,
+})
+C4dWeightedSumParametersTagged = typing.TypedDict('C4dWeightedSumParametersTagged', {
+    "@type": typing.Literal["weighted_sum"],
     "weighted_sum": str,
 })
 
 
 C4dWeightedSumVoxelwiseParameters = typing.TypedDict('C4dWeightedSumVoxelwiseParameters', {
-    "@type": typing.Literal["c3d.c4d.weighted_sum_voxelwise"],
+    "@type": typing.NotRequired[typing.Literal["weighted_sum_voxelwise"]],
+    "weighted_sum_voxelwise": str,
+})
+C4dWeightedSumVoxelwiseParametersTagged = typing.TypedDict('C4dWeightedSumVoxelwiseParametersTagged', {
+    "@type": typing.Literal["weighted_sum_voxelwise"],
     "weighted_sum_voxelwise": str,
 })
 
 
 C4dParameters = typing.TypedDict('C4dParameters', {
-    "@type": typing.Literal["c3d.c4d"],
+    "@type": typing.NotRequired[typing.Literal["c3d/c4d"]],
     "input": list[InputPathType],
-    "operations": list[typing.Union[C4dAccumParameters, C4dAcosParameters, C4dAddParameters, C4dAlignLandmarksParameters, C4dAnisotropicDiffusionParameters, C4dAntialiasParameters, C4dSetParameters, C4dAsinParameters, C4dAtan2Parameters, C4dBackgroundParameters, C4dN4BiasCorrectionParameters, C4dBinarizeParameters, C4dCannyParameters, C4dCeilParameters, C4dCentroidParameters, C4dCentroidMarkParameters, C4dConnectedComponentsParameters, C4dClearParameters, C4dClipParameters, C4dColorMapParameters, C4dCompressParameters, C4dNoCompressParameters, C4dConvParameters, C4dCoordinateMapVoxelParameters, C4dCoordinateMapPhysicalParameters, C4dCopyTransformParameters, C4dCosParameters, C4dCreateParameters, C4dDicomSeriesListParameters, C4dDicomSeriesReadParameters, C4dDilateParameters, C4dDivideParameters, C4dDuplicateParameters, C4dEndaccumParameters, C4dEndforParameters, C4dErodeParameters, C4dErfParameters, C4dExpParameters, C4dExportPatchesParameters, C4dExportPatchesAugParameters, C4dExtrudeSegParameters, C4dFillBackgroundWithNoiseParameters, C4dFftParameters, C4dFlipParameters, C4dFloorParameters, C4dForeachParameters, C4dForeachCompParameters, C4dGlmParameters, C4dGradientParameters, C4dHelpParameters, C4dHolefillParameters, C4dHessianEigenvaluesParameters, C4dHessianObjectnessParameters, C4dHistogramMatchParameters, C4dInfoParameters, C4dInfoFullParameters, C4dInsertParameters, C4dInterpolationParameters, C4dIterationsParameters, C4dLabelOverlapParameters, C4dLabelStatisticsParameters, C4dLandmarksToSpheresParameters, C4dLaplacianParameters, C4dLevelsetParameters, C4dLevelsetCurvatureParameters, C4dLevelsetAdvectionParameters, C4dLogParameters, C4dLog10Parameters, C4dManualParameters, C4dMatchBoundingBoxParameters, C4dMaximumParameters, C4dMulticomponentSplitParameters, C4dMeanParameters, C4dMedianFilterParameters, C4dMergeParameters, C4dMeanFilterParameters, C4dMutualInfoParameters, C4dMinimumParameters, C4dMixtureModelParameters, C4dMomentsParameters, C4dMattesMutualInfoParameters, C4dMeanSquareParameters, C4dMultiplyParameters, C4dNormalizedCrossCorrelationParameters, C4dNormalizedCorrelationParameters, C4dNormalizedMutualInfoParameters, C4dNoiseGaussianParameters, C4dNoisePoissonParameters, C4dNoiseSpeckleParameters, C4dNoiseSaltPepperParameters, C4dNoMulticomponentSplitParameters, C4dNormalizeLocalWindowParameters, C4dNormpdfParameters, C4dNoroundParameters, C4dNospmParameters, C4dOutputParameters, C4dOutputMulticomponentParameters, C4dOutputMultipleMulticomponentParameters, C4dOrientParameters, C4dOutputMultipleParameters, C4dOrient1Parameters, C4dOriginParameters, C4dOriginVoxelParameters, C4dOriginVoxelCoordParameters, C4dOverlapParameters, C4dOverlayLabelImageParameters, C4dPadParameters, C4dPadToParameters, C4dPcaParameters, C4dPercentIntensityModeParameters, C4dPixelParameters, C4dPopParameters, C4dPopasParameters, C4dProbeParameters, C4dPushParameters, C4dRankParameters, C4dReciprocalParameters, C4dRegionParameters, C4dReorderParameters, C4dRetainLabelsParameters, C4dRfApplyParameters, C4dRfTrainParameters, C4dRfParamPatchParameters, C4dRfParamUsexyzParameters, C4dRfParamNousexyzParameters, C4dRfParamNtreesParameters, C4dRfParamTreedepthParameters, C4dSetSformParameters, C4dReplaceParameters, C4dResampleParameters, C4dResampleIsoParameters, C4dResampleMmParameters, C4dResliceItkParameters, C4dResliceMatrixParameters, C4dResliceIdentityParameters, C4dRgb2hsvParameters, C4dRmsParameters, C4dRoundParameters, C4dScaleParameters, C4dSetSform1Parameters, C4dSinParameters, C4dSliceParameters, C4dSliceAllParameters, C4dSharpenParameters, C4dShiftParameters, C4dSignedDistanceTransformParameters, C4dSmoothParameters, C4dSmoothFastParameters, C4dSpacingParameters, C4dSplitParameters, C4dSqrtParameters, C4dStapleParameters, C4dStructureTensorEigenvaluesParameters, C4dSpmParameters, C4dSubtractParameters, C4dSupervoxelParameters, C4dStretchParameters, C4dSwapdimParameters, C4dTestImageParameters, C4dTestProbeParameters, C4dThresholdParameters, C4dTileParameters, C4dTrimParameters, C4dTrimToSizeParameters, C4dTypeParameters, C4dVerboseParameters, C4dNoverboseParameters, C4dVersionParameters, C4dVoteParameters, C4dVoteMrfParameters, C4dVoteLabelParameters, C4dVoxelSumParameters, C4dVoxelIntegralParameters, C4dVoxelwiseRegressionParameters, C4dWarpParameters, C4dWarpLabelParameters, C4dWrapParameters, C4dWeightedSumParameters, C4dWeightedSumVoxelwiseParameters]],
+    "operations": list[typing.Union[C4dAccumParametersTagged, C4dAcosParametersTagged, C4dAddParametersTagged, C4dAlignLandmarksParametersTagged, C4dAnisotropicDiffusionParametersTagged, C4dAntialiasParametersTagged, C4dSetParametersTagged, C4dAsinParametersTagged, C4dAtan2ParametersTagged, C4dBackgroundParametersTagged, C4dN4BiasCorrectionParametersTagged, C4dBinarizeParametersTagged, C4dCannyParametersTagged, C4dCeilParametersTagged, C4dCentroidParametersTagged, C4dCentroidMarkParametersTagged, C4dConnectedComponentsParametersTagged, C4dClearParametersTagged, C4dClipParametersTagged, C4dColorMapParametersTagged, C4dCompressParametersTagged, C4dNoCompressParametersTagged, C4dConvParametersTagged, C4dCoordinateMapVoxelParametersTagged, C4dCoordinateMapPhysicalParametersTagged, C4dCopyTransformParametersTagged, C4dCosParametersTagged, C4dCreateParametersTagged, C4dDicomSeriesListParametersTagged, C4dDicomSeriesReadParametersTagged, C4dDilateParametersTagged, C4dDivideParametersTagged, C4dDuplicateParametersTagged, C4dEndaccumParametersTagged, C4dEndforParametersTagged, C4dErodeParametersTagged, C4dErfParametersTagged, C4dExpParametersTagged, C4dExportPatchesParametersTagged, C4dExportPatchesAugParametersTagged, C4dExtrudeSegParametersTagged, C4dFillBackgroundWithNoiseParametersTagged, C4dFftParametersTagged, C4dFlipParametersTagged, C4dFloorParametersTagged, C4dForeachParametersTagged, C4dForeachCompParametersTagged, C4dGlmParametersTagged, C4dGradientParametersTagged, C4dHelpParametersTagged, C4dHolefillParametersTagged, C4dHessianEigenvaluesParametersTagged, C4dHessianObjectnessParametersTagged, C4dHistogramMatchParametersTagged, C4dInfoParametersTagged, C4dInfoFullParametersTagged, C4dInsertParametersTagged, C4dInterpolationParametersTagged, C4dIterationsParametersTagged, C4dLabelOverlapParametersTagged, C4dLabelStatisticsParametersTagged, C4dLandmarksToSpheresParametersTagged, C4dLaplacianParametersTagged, C4dLevelsetParametersTagged, C4dLevelsetCurvatureParametersTagged, C4dLevelsetAdvectionParametersTagged, C4dLogParametersTagged, C4dLog10ParametersTagged, C4dManualParametersTagged, C4dMatchBoundingBoxParametersTagged, C4dMaximumParametersTagged, C4dMulticomponentSplitParametersTagged, C4dMeanParametersTagged, C4dMedianFilterParametersTagged, C4dMergeParametersTagged, C4dMeanFilterParametersTagged, C4dMutualInfoParametersTagged, C4dMinimumParametersTagged, C4dMixtureModelParametersTagged, C4dMomentsParametersTagged, C4dMattesMutualInfoParametersTagged, C4dMeanSquareParametersTagged, C4dMultiplyParametersTagged, C4dNormalizedCrossCorrelationParametersTagged, C4dNormalizedCorrelationParametersTagged, C4dNormalizedMutualInfoParametersTagged, C4dNoiseGaussianParametersTagged, C4dNoisePoissonParametersTagged, C4dNoiseSpeckleParametersTagged, C4dNoiseSaltPepperParametersTagged, C4dNoMulticomponentSplitParametersTagged, C4dNormalizeLocalWindowParametersTagged, C4dNormpdfParametersTagged, C4dNoroundParametersTagged, C4dNospmParametersTagged, C4dOutputParametersTagged, C4dOutputMulticomponentParametersTagged, C4dOutputMultipleMulticomponentParametersTagged, C4dOrientParametersTagged, C4dOutputMultipleParametersTagged, C4dOrient1ParametersTagged, C4dOriginParametersTagged, C4dOriginVoxelParametersTagged, C4dOriginVoxelCoordParametersTagged, C4dOverlapParametersTagged, C4dOverlayLabelImageParametersTagged, C4dPadParametersTagged, C4dPadToParametersTagged, C4dPcaParametersTagged, C4dPercentIntensityModeParametersTagged, C4dPixelParametersTagged, C4dPopParametersTagged, C4dPopasParametersTagged, C4dProbeParametersTagged, C4dPushParametersTagged, C4dRankParametersTagged, C4dReciprocalParametersTagged, C4dRegionParametersTagged, C4dReorderParametersTagged, C4dRetainLabelsParametersTagged, C4dRfApplyParametersTagged, C4dRfTrainParametersTagged, C4dRfParamPatchParametersTagged, C4dRfParamUsexyzParametersTagged, C4dRfParamNousexyzParametersTagged, C4dRfParamNtreesParametersTagged, C4dRfParamTreedepthParametersTagged, C4dSetSformParametersTagged, C4dReplaceParametersTagged, C4dResampleParametersTagged, C4dResampleIsoParametersTagged, C4dResampleMmParametersTagged, C4dResliceItkParametersTagged, C4dResliceMatrixParametersTagged, C4dResliceIdentityParametersTagged, C4dRgb2hsvParametersTagged, C4dRmsParametersTagged, C4dRoundParametersTagged, C4dScaleParametersTagged, C4dSetSform1ParametersTagged, C4dSinParametersTagged, C4dSliceParametersTagged, C4dSliceAllParametersTagged, C4dSharpenParametersTagged, C4dShiftParametersTagged, C4dSignedDistanceTransformParametersTagged, C4dSmoothParametersTagged, C4dSmoothFastParametersTagged, C4dSpacingParametersTagged, C4dSplitParametersTagged, C4dSqrtParametersTagged, C4dStapleParametersTagged, C4dStructureTensorEigenvaluesParametersTagged, C4dSpmParametersTagged, C4dSubtractParametersTagged, C4dSupervoxelParametersTagged, C4dStretchParametersTagged, C4dSwapdimParametersTagged, C4dTestImageParametersTagged, C4dTestProbeParametersTagged, C4dThresholdParametersTagged, C4dTileParametersTagged, C4dTrimParametersTagged, C4dTrimToSizeParametersTagged, C4dTypeParametersTagged, C4dVerboseParametersTagged, C4dNoverboseParametersTagged, C4dVersionParametersTagged, C4dVoteParametersTagged, C4dVoteMrfParametersTagged, C4dVoteLabelParametersTagged, C4dVoxelSumParametersTagged, C4dVoxelIntegralParametersTagged, C4dVoxelwiseRegressionParametersTagged, C4dWarpParametersTagged, C4dWarpLabelParametersTagged, C4dWrapParametersTagged, C4dWeightedSumParametersTagged, C4dWeightedSumVoxelwiseParametersTagged]],
+    "output": str,
+})
+C4dParametersTagged = typing.TypedDict('C4dParametersTagged', {
+    "@type": typing.Literal["c3d/c4d"],
+    "input": list[InputPathType],
+    "operations": list[typing.Union[C4dAccumParametersTagged, C4dAcosParametersTagged, C4dAddParametersTagged, C4dAlignLandmarksParametersTagged, C4dAnisotropicDiffusionParametersTagged, C4dAntialiasParametersTagged, C4dSetParametersTagged, C4dAsinParametersTagged, C4dAtan2ParametersTagged, C4dBackgroundParametersTagged, C4dN4BiasCorrectionParametersTagged, C4dBinarizeParametersTagged, C4dCannyParametersTagged, C4dCeilParametersTagged, C4dCentroidParametersTagged, C4dCentroidMarkParametersTagged, C4dConnectedComponentsParametersTagged, C4dClearParametersTagged, C4dClipParametersTagged, C4dColorMapParametersTagged, C4dCompressParametersTagged, C4dNoCompressParametersTagged, C4dConvParametersTagged, C4dCoordinateMapVoxelParametersTagged, C4dCoordinateMapPhysicalParametersTagged, C4dCopyTransformParametersTagged, C4dCosParametersTagged, C4dCreateParametersTagged, C4dDicomSeriesListParametersTagged, C4dDicomSeriesReadParametersTagged, C4dDilateParametersTagged, C4dDivideParametersTagged, C4dDuplicateParametersTagged, C4dEndaccumParametersTagged, C4dEndforParametersTagged, C4dErodeParametersTagged, C4dErfParametersTagged, C4dExpParametersTagged, C4dExportPatchesParametersTagged, C4dExportPatchesAugParametersTagged, C4dExtrudeSegParametersTagged, C4dFillBackgroundWithNoiseParametersTagged, C4dFftParametersTagged, C4dFlipParametersTagged, C4dFloorParametersTagged, C4dForeachParametersTagged, C4dForeachCompParametersTagged, C4dGlmParametersTagged, C4dGradientParametersTagged, C4dHelpParametersTagged, C4dHolefillParametersTagged, C4dHessianEigenvaluesParametersTagged, C4dHessianObjectnessParametersTagged, C4dHistogramMatchParametersTagged, C4dInfoParametersTagged, C4dInfoFullParametersTagged, C4dInsertParametersTagged, C4dInterpolationParametersTagged, C4dIterationsParametersTagged, C4dLabelOverlapParametersTagged, C4dLabelStatisticsParametersTagged, C4dLandmarksToSpheresParametersTagged, C4dLaplacianParametersTagged, C4dLevelsetParametersTagged, C4dLevelsetCurvatureParametersTagged, C4dLevelsetAdvectionParametersTagged, C4dLogParametersTagged, C4dLog10ParametersTagged, C4dManualParametersTagged, C4dMatchBoundingBoxParametersTagged, C4dMaximumParametersTagged, C4dMulticomponentSplitParametersTagged, C4dMeanParametersTagged, C4dMedianFilterParametersTagged, C4dMergeParametersTagged, C4dMeanFilterParametersTagged, C4dMutualInfoParametersTagged, C4dMinimumParametersTagged, C4dMixtureModelParametersTagged, C4dMomentsParametersTagged, C4dMattesMutualInfoParametersTagged, C4dMeanSquareParametersTagged, C4dMultiplyParametersTagged, C4dNormalizedCrossCorrelationParametersTagged, C4dNormalizedCorrelationParametersTagged, C4dNormalizedMutualInfoParametersTagged, C4dNoiseGaussianParametersTagged, C4dNoisePoissonParametersTagged, C4dNoiseSpeckleParametersTagged, C4dNoiseSaltPepperParametersTagged, C4dNoMulticomponentSplitParametersTagged, C4dNormalizeLocalWindowParametersTagged, C4dNormpdfParametersTagged, C4dNoroundParametersTagged, C4dNospmParametersTagged, C4dOutputParametersTagged, C4dOutputMulticomponentParametersTagged, C4dOutputMultipleMulticomponentParametersTagged, C4dOrientParametersTagged, C4dOutputMultipleParametersTagged, C4dOrient1ParametersTagged, C4dOriginParametersTagged, C4dOriginVoxelParametersTagged, C4dOriginVoxelCoordParametersTagged, C4dOverlapParametersTagged, C4dOverlayLabelImageParametersTagged, C4dPadParametersTagged, C4dPadToParametersTagged, C4dPcaParametersTagged, C4dPercentIntensityModeParametersTagged, C4dPixelParametersTagged, C4dPopParametersTagged, C4dPopasParametersTagged, C4dProbeParametersTagged, C4dPushParametersTagged, C4dRankParametersTagged, C4dReciprocalParametersTagged, C4dRegionParametersTagged, C4dReorderParametersTagged, C4dRetainLabelsParametersTagged, C4dRfApplyParametersTagged, C4dRfTrainParametersTagged, C4dRfParamPatchParametersTagged, C4dRfParamUsexyzParametersTagged, C4dRfParamNousexyzParametersTagged, C4dRfParamNtreesParametersTagged, C4dRfParamTreedepthParametersTagged, C4dSetSformParametersTagged, C4dReplaceParametersTagged, C4dResampleParametersTagged, C4dResampleIsoParametersTagged, C4dResampleMmParametersTagged, C4dResliceItkParametersTagged, C4dResliceMatrixParametersTagged, C4dResliceIdentityParametersTagged, C4dRgb2hsvParametersTagged, C4dRmsParametersTagged, C4dRoundParametersTagged, C4dScaleParametersTagged, C4dSetSform1ParametersTagged, C4dSinParametersTagged, C4dSliceParametersTagged, C4dSliceAllParametersTagged, C4dSharpenParametersTagged, C4dShiftParametersTagged, C4dSignedDistanceTransformParametersTagged, C4dSmoothParametersTagged, C4dSmoothFastParametersTagged, C4dSpacingParametersTagged, C4dSplitParametersTagged, C4dSqrtParametersTagged, C4dStapleParametersTagged, C4dStructureTensorEigenvaluesParametersTagged, C4dSpmParametersTagged, C4dSubtractParametersTagged, C4dSupervoxelParametersTagged, C4dStretchParametersTagged, C4dSwapdimParametersTagged, C4dTestImageParametersTagged, C4dTestProbeParametersTagged, C4dThresholdParametersTagged, C4dTileParametersTagged, C4dTrimParametersTagged, C4dTrimToSizeParametersTagged, C4dTypeParametersTagged, C4dVerboseParametersTagged, C4dNoverboseParametersTagged, C4dVersionParametersTagged, C4dVoteParametersTagged, C4dVoteMrfParametersTagged, C4dVoteLabelParametersTagged, C4dVoxelSumParametersTagged, C4dVoxelIntegralParametersTagged, C4dVoxelwiseRegressionParametersTagged, C4dWarpParametersTagged, C4dWarpLabelParametersTagged, C4dWrapParametersTagged, C4dWeightedSumParametersTagged, C4dWeightedSumVoxelwiseParametersTagged]],
     "output": str,
 })
 
 
-def dyn_cargs(
+def c4d_operations_cargs_dyn_fn(
     t: str,
 ) -> typing.Any:
     """
@@ -1107,190 +1829,189 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "c3d.c4d": c4d_cargs,
-        "c3d.c4d.accum": c4d_accum_cargs,
-        "c3d.c4d.acos": c4d_acos_cargs,
-        "c3d.c4d.add": c4d_add_cargs,
-        "c3d.c4d.align_landmarks": c4d_align_landmarks_cargs,
-        "c3d.c4d.anisotropic_diffusion": c4d_anisotropic_diffusion_cargs,
-        "c3d.c4d.antialias": c4d_antialias_cargs,
-        "c3d.c4d.set": c4d_set_cargs,
-        "c3d.c4d.asin": c4d_asin_cargs,
-        "c3d.c4d.atan2": c4d_atan2_cargs,
-        "c3d.c4d.background": c4d_background_cargs,
-        "c3d.c4d.n4_bias_correction": c4d_n4_bias_correction_cargs,
-        "c3d.c4d.binarize": c4d_binarize_cargs,
-        "c3d.c4d.canny": c4d_canny_cargs,
-        "c3d.c4d.ceil": c4d_ceil_cargs,
-        "c3d.c4d.centroid": c4d_centroid_cargs,
-        "c3d.c4d.centroid_mark": c4d_centroid_mark_cargs,
-        "c3d.c4d.connected_components": c4d_connected_components_cargs,
-        "c3d.c4d.clear": c4d_clear_cargs,
-        "c3d.c4d.clip": c4d_clip_cargs,
-        "c3d.c4d.color_map": c4d_color_map_cargs,
-        "c3d.c4d.compress": c4d_compress_cargs,
-        "c3d.c4d.no_compress": c4d_no_compress_cargs,
-        "c3d.c4d.conv": c4d_conv_cargs,
-        "c3d.c4d.coordinate_map_voxel": c4d_coordinate_map_voxel_cargs,
-        "c3d.c4d.coordinate_map_physical": c4d_coordinate_map_physical_cargs,
-        "c3d.c4d.copy_transform": c4d_copy_transform_cargs,
-        "c3d.c4d.cos": c4d_cos_cargs,
-        "c3d.c4d.create": c4d_create_cargs,
-        "c3d.c4d.dicom_series_list": c4d_dicom_series_list_cargs,
-        "c3d.c4d.dicom_series_read": c4d_dicom_series_read_cargs,
-        "c3d.c4d.dilate": c4d_dilate_cargs,
-        "c3d.c4d.divide": c4d_divide_cargs,
-        "c3d.c4d.duplicate": c4d_duplicate_cargs,
-        "c3d.c4d.endaccum": c4d_endaccum_cargs,
-        "c3d.c4d.endfor": c4d_endfor_cargs,
-        "c3d.c4d.erode": c4d_erode_cargs,
-        "c3d.c4d.erf": c4d_erf_cargs,
-        "c3d.c4d.exp": c4d_exp_cargs,
-        "c3d.c4d.export_patches": c4d_export_patches_cargs,
-        "c3d.c4d.export_patches_aug": c4d_export_patches_aug_cargs,
-        "c3d.c4d.extrude_seg": c4d_extrude_seg_cargs,
-        "c3d.c4d.fill_background_with_noise": c4d_fill_background_with_noise_cargs,
-        "c3d.c4d.fft": c4d_fft_cargs,
-        "c3d.c4d.flip": c4d_flip_cargs,
-        "c3d.c4d.floor": c4d_floor_cargs,
-        "c3d.c4d.foreach": c4d_foreach_cargs,
-        "c3d.c4d.foreach_comp": c4d_foreach_comp_cargs,
-        "c3d.c4d.glm": c4d_glm_cargs,
-        "c3d.c4d.gradient": c4d_gradient_cargs,
-        "c3d.c4d._help": c4d__help_cargs,
-        "c3d.c4d.holefill": c4d_holefill_cargs,
-        "c3d.c4d.hessian_eigenvalues": c4d_hessian_eigenvalues_cargs,
-        "c3d.c4d.hessian_objectness": c4d_hessian_objectness_cargs,
-        "c3d.c4d.histogram_match": c4d_histogram_match_cargs,
-        "c3d.c4d.info": c4d_info_cargs,
-        "c3d.c4d.info_full": c4d_info_full_cargs,
-        "c3d.c4d.insert": c4d_insert_cargs,
-        "c3d.c4d.interpolation": c4d_interpolation_cargs,
-        "c3d.c4d.iterations": c4d_iterations_cargs,
-        "c3d.c4d.label_overlap": c4d_label_overlap_cargs,
-        "c3d.c4d.label_statistics": c4d_label_statistics_cargs,
-        "c3d.c4d.landmarks_to_spheres": c4d_landmarks_to_spheres_cargs,
-        "c3d.c4d.laplacian": c4d_laplacian_cargs,
-        "c3d.c4d.levelset": c4d_levelset_cargs,
-        "c3d.c4d.levelset_curvature": c4d_levelset_curvature_cargs,
-        "c3d.c4d.levelset_advection": c4d_levelset_advection_cargs,
-        "c3d.c4d.log": c4d_log_cargs,
-        "c3d.c4d.log10": c4d_log10_cargs,
-        "c3d.c4d.manual": c4d_manual_cargs,
-        "c3d.c4d.match_bounding_box": c4d_match_bounding_box_cargs,
-        "c3d.c4d.maximum": c4d_maximum_cargs,
-        "c3d.c4d.multicomponent_split": c4d_multicomponent_split_cargs,
-        "c3d.c4d.mean": c4d_mean_cargs,
-        "c3d.c4d.median_filter": c4d_median_filter_cargs,
-        "c3d.c4d.merge": c4d_merge_cargs,
-        "c3d.c4d.mean_filter": c4d_mean_filter_cargs,
-        "c3d.c4d.mutual_info": c4d_mutual_info_cargs,
-        "c3d.c4d.minimum": c4d_minimum_cargs,
-        "c3d.c4d.mixture_model": c4d_mixture_model_cargs,
-        "c3d.c4d.moments": c4d_moments_cargs,
-        "c3d.c4d.mattes_mutual_info": c4d_mattes_mutual_info_cargs,
-        "c3d.c4d.mean_square": c4d_mean_square_cargs,
-        "c3d.c4d.multiply": c4d_multiply_cargs,
-        "c3d.c4d.normalized_cross_correlation": c4d_normalized_cross_correlation_cargs,
-        "c3d.c4d.normalized_correlation": c4d_normalized_correlation_cargs,
-        "c3d.c4d.normalized_mutual_info": c4d_normalized_mutual_info_cargs,
-        "c3d.c4d.noise_gaussian": c4d_noise_gaussian_cargs,
-        "c3d.c4d.noise_poisson": c4d_noise_poisson_cargs,
-        "c3d.c4d.noise_speckle": c4d_noise_speckle_cargs,
-        "c3d.c4d.noise_salt_pepper": c4d_noise_salt_pepper_cargs,
-        "c3d.c4d.no_multicomponent_split": c4d_no_multicomponent_split_cargs,
-        "c3d.c4d.normalize_local_window": c4d_normalize_local_window_cargs,
-        "c3d.c4d.normpdf": c4d_normpdf_cargs,
-        "c3d.c4d.noround": c4d_noround_cargs,
-        "c3d.c4d.nospm": c4d_nospm_cargs,
-        "c3d.c4d.output": c4d_output_cargs,
-        "c3d.c4d.output_multicomponent": c4d_output_multicomponent_cargs,
-        "c3d.c4d.output_multiple_multicomponent": c4d_output_multiple_multicomponent_cargs,
-        "c3d.c4d.orient": c4d_orient_cargs,
-        "c3d.c4d.output_multiple": c4d_output_multiple_cargs,
-        "c3d.c4d.orient": c4d_orient_1_cargs,
-        "c3d.c4d.origin": c4d_origin_cargs,
-        "c3d.c4d.origin_voxel": c4d_origin_voxel_cargs,
-        "c3d.c4d.origin_voxel_coord": c4d_origin_voxel_coord_cargs,
-        "c3d.c4d.overlap": c4d_overlap_cargs,
-        "c3d.c4d.overlay_label_image": c4d_overlay_label_image_cargs,
-        "c3d.c4d.pad": c4d_pad_cargs,
-        "c3d.c4d.pad_to": c4d_pad_to_cargs,
-        "c3d.c4d.pca": c4d_pca_cargs,
-        "c3d.c4d.percent_intensity_mode": c4d_percent_intensity_mode_cargs,
-        "c3d.c4d.pixel": c4d_pixel_cargs,
-        "c3d.c4d.pop": c4d_pop_cargs,
-        "c3d.c4d.popas": c4d_popas_cargs,
-        "c3d.c4d.probe": c4d_probe_cargs,
-        "c3d.c4d.push": c4d_push_cargs,
-        "c3d.c4d.rank": c4d_rank_cargs,
-        "c3d.c4d.reciprocal": c4d_reciprocal_cargs,
-        "c3d.c4d.region": c4d_region_cargs,
-        "c3d.c4d.reorder": c4d_reorder_cargs,
-        "c3d.c4d.retain_labels": c4d_retain_labels_cargs,
-        "c3d.c4d.rf_apply": c4d_rf_apply_cargs,
-        "c3d.c4d.rf_train": c4d_rf_train_cargs,
-        "c3d.c4d.rf_param_patch": c4d_rf_param_patch_cargs,
-        "c3d.c4d.rf_param_usexyz": c4d_rf_param_usexyz_cargs,
-        "c3d.c4d.rf_param_nousexyz": c4d_rf_param_nousexyz_cargs,
-        "c3d.c4d.rf_param_ntrees": c4d_rf_param_ntrees_cargs,
-        "c3d.c4d.rf_param_treedepth": c4d_rf_param_treedepth_cargs,
-        "c3d.c4d.set_sform": c4d_set_sform_cargs,
-        "c3d.c4d.replace": c4d_replace_cargs,
-        "c3d.c4d.resample": c4d_resample_cargs,
-        "c3d.c4d.resample_iso": c4d_resample_iso_cargs,
-        "c3d.c4d.resample_mm": c4d_resample_mm_cargs,
-        "c3d.c4d.reslice_itk": c4d_reslice_itk_cargs,
-        "c3d.c4d.reslice_matrix": c4d_reslice_matrix_cargs,
-        "c3d.c4d.reslice_identity": c4d_reslice_identity_cargs,
-        "c3d.c4d.rgb2hsv": c4d_rgb2hsv_cargs,
-        "c3d.c4d.rms": c4d_rms_cargs,
-        "c3d.c4d.round": c4d_round_cargs,
-        "c3d.c4d.scale": c4d_scale_cargs,
-        "c3d.c4d.set_sform": c4d_set_sform_1_cargs,
-        "c3d.c4d.sin": c4d_sin_cargs,
-        "c3d.c4d.slice": c4d_slice_cargs,
-        "c3d.c4d.slice_all": c4d_slice_all_cargs,
-        "c3d.c4d.sharpen": c4d_sharpen_cargs,
-        "c3d.c4d.shift": c4d_shift_cargs,
-        "c3d.c4d.signed_distance_transform": c4d_signed_distance_transform_cargs,
-        "c3d.c4d.smooth": c4d_smooth_cargs,
-        "c3d.c4d.smooth_fast": c4d_smooth_fast_cargs,
-        "c3d.c4d.spacing": c4d_spacing_cargs,
-        "c3d.c4d.split": c4d_split_cargs,
-        "c3d.c4d.sqrt": c4d_sqrt_cargs,
-        "c3d.c4d.staple": c4d_staple_cargs,
-        "c3d.c4d.structure_tensor_eigenvalues": c4d_structure_tensor_eigenvalues_cargs,
-        "c3d.c4d.spm": c4d_spm_cargs,
-        "c3d.c4d.subtract": c4d_subtract_cargs,
-        "c3d.c4d.supervoxel": c4d_supervoxel_cargs,
-        "c3d.c4d.stretch": c4d_stretch_cargs,
-        "c3d.c4d.swapdim": c4d_swapdim_cargs,
-        "c3d.c4d.test_image": c4d_test_image_cargs,
-        "c3d.c4d.test_probe": c4d_test_probe_cargs,
-        "c3d.c4d.threshold": c4d_threshold_cargs,
-        "c3d.c4d.tile": c4d_tile_cargs,
-        "c3d.c4d.trim": c4d_trim_cargs,
-        "c3d.c4d.trim_to_size": c4d_trim_to_size_cargs,
-        "c3d.c4d.type": c4d_type_cargs,
-        "c3d.c4d.verbose": c4d_verbose_cargs,
-        "c3d.c4d.noverbose": c4d_noverbose_cargs,
-        "c3d.c4d.version": c4d_version_cargs,
-        "c3d.c4d.vote": c4d_vote_cargs,
-        "c3d.c4d.vote_mrf": c4d_vote_mrf_cargs,
-        "c3d.c4d.vote_label": c4d_vote_label_cargs,
-        "c3d.c4d.voxel_sum": c4d_voxel_sum_cargs,
-        "c3d.c4d.voxel_integral": c4d_voxel_integral_cargs,
-        "c3d.c4d.voxelwise_regression": c4d_voxelwise_regression_cargs,
-        "c3d.c4d.warp": c4d_warp_cargs,
-        "c3d.c4d.warp_label": c4d_warp_label_cargs,
-        "c3d.c4d.wrap": c4d_wrap_cargs,
-        "c3d.c4d.weighted_sum": c4d_weighted_sum_cargs,
-        "c3d.c4d.weighted_sum_voxelwise": c4d_weighted_sum_voxelwise_cargs,
+        "accum": c4d_accum_cargs,
+        "acos": c4d_acos_cargs,
+        "add": c4d_add_cargs,
+        "align_landmarks": c4d_align_landmarks_cargs,
+        "anisotropic_diffusion": c4d_anisotropic_diffusion_cargs,
+        "antialias": c4d_antialias_cargs,
+        "set": c4d_set_cargs,
+        "asin": c4d_asin_cargs,
+        "atan2": c4d_atan2_cargs,
+        "background": c4d_background_cargs,
+        "n4_bias_correction": c4d_n4_bias_correction_cargs,
+        "binarize": c4d_binarize_cargs,
+        "canny": c4d_canny_cargs,
+        "ceil": c4d_ceil_cargs,
+        "centroid": c4d_centroid_cargs,
+        "centroid_mark": c4d_centroid_mark_cargs,
+        "connected_components": c4d_connected_components_cargs,
+        "clear": c4d_clear_cargs,
+        "clip": c4d_clip_cargs,
+        "color_map": c4d_color_map_cargs,
+        "compress": c4d_compress_cargs,
+        "no_compress": c4d_no_compress_cargs,
+        "conv": c4d_conv_cargs,
+        "coordinate_map_voxel": c4d_coordinate_map_voxel_cargs,
+        "coordinate_map_physical": c4d_coordinate_map_physical_cargs,
+        "copy_transform": c4d_copy_transform_cargs,
+        "cos": c4d_cos_cargs,
+        "create": c4d_create_cargs,
+        "dicom_series_list": c4d_dicom_series_list_cargs,
+        "dicom_series_read": c4d_dicom_series_read_cargs,
+        "dilate": c4d_dilate_cargs,
+        "divide": c4d_divide_cargs,
+        "duplicate": c4d_duplicate_cargs,
+        "endaccum": c4d_endaccum_cargs,
+        "endfor": c4d_endfor_cargs,
+        "erode": c4d_erode_cargs,
+        "erf": c4d_erf_cargs,
+        "exp": c4d_exp_cargs,
+        "export_patches": c4d_export_patches_cargs,
+        "export_patches_aug": c4d_export_patches_aug_cargs,
+        "extrude_seg": c4d_extrude_seg_cargs,
+        "fill_background_with_noise": c4d_fill_background_with_noise_cargs,
+        "fft": c4d_fft_cargs,
+        "flip": c4d_flip_cargs,
+        "floor": c4d_floor_cargs,
+        "foreach": c4d_foreach_cargs,
+        "foreach_comp": c4d_foreach_comp_cargs,
+        "glm": c4d_glm_cargs,
+        "gradient": c4d_gradient_cargs,
+        "_help": c4d__help_cargs,
+        "holefill": c4d_holefill_cargs,
+        "hessian_eigenvalues": c4d_hessian_eigenvalues_cargs,
+        "hessian_objectness": c4d_hessian_objectness_cargs,
+        "histogram_match": c4d_histogram_match_cargs,
+        "info": c4d_info_cargs,
+        "info_full": c4d_info_full_cargs,
+        "insert": c4d_insert_cargs,
+        "interpolation": c4d_interpolation_cargs,
+        "iterations": c4d_iterations_cargs,
+        "label_overlap": c4d_label_overlap_cargs,
+        "label_statistics": c4d_label_statistics_cargs,
+        "landmarks_to_spheres": c4d_landmarks_to_spheres_cargs,
+        "laplacian": c4d_laplacian_cargs,
+        "levelset": c4d_levelset_cargs,
+        "levelset_curvature": c4d_levelset_curvature_cargs,
+        "levelset_advection": c4d_levelset_advection_cargs,
+        "log": c4d_log_cargs,
+        "log10": c4d_log10_cargs,
+        "manual": c4d_manual_cargs,
+        "match_bounding_box": c4d_match_bounding_box_cargs,
+        "maximum": c4d_maximum_cargs,
+        "multicomponent_split": c4d_multicomponent_split_cargs,
+        "mean": c4d_mean_cargs,
+        "median_filter": c4d_median_filter_cargs,
+        "merge": c4d_merge_cargs,
+        "mean_filter": c4d_mean_filter_cargs,
+        "mutual_info": c4d_mutual_info_cargs,
+        "minimum": c4d_minimum_cargs,
+        "mixture_model": c4d_mixture_model_cargs,
+        "moments": c4d_moments_cargs,
+        "mattes_mutual_info": c4d_mattes_mutual_info_cargs,
+        "mean_square": c4d_mean_square_cargs,
+        "multiply": c4d_multiply_cargs,
+        "normalized_cross_correlation": c4d_normalized_cross_correlation_cargs,
+        "normalized_correlation": c4d_normalized_correlation_cargs,
+        "normalized_mutual_info": c4d_normalized_mutual_info_cargs,
+        "noise_gaussian": c4d_noise_gaussian_cargs,
+        "noise_poisson": c4d_noise_poisson_cargs,
+        "noise_speckle": c4d_noise_speckle_cargs,
+        "noise_salt_pepper": c4d_noise_salt_pepper_cargs,
+        "no_multicomponent_split": c4d_no_multicomponent_split_cargs,
+        "normalize_local_window": c4d_normalize_local_window_cargs,
+        "normpdf": c4d_normpdf_cargs,
+        "noround": c4d_noround_cargs,
+        "nospm": c4d_nospm_cargs,
+        "output": c4d_output_cargs,
+        "output_multicomponent": c4d_output_multicomponent_cargs,
+        "output_multiple_multicomponent": c4d_output_multiple_multicomponent_cargs,
+        "orient": c4d_orient_cargs,
+        "output_multiple": c4d_output_multiple_cargs,
+        "orient_1": c4d_orient_1_cargs,
+        "origin": c4d_origin_cargs,
+        "origin_voxel": c4d_origin_voxel_cargs,
+        "origin_voxel_coord": c4d_origin_voxel_coord_cargs,
+        "overlap": c4d_overlap_cargs,
+        "overlay_label_image": c4d_overlay_label_image_cargs,
+        "pad": c4d_pad_cargs,
+        "pad_to": c4d_pad_to_cargs,
+        "pca": c4d_pca_cargs,
+        "percent_intensity_mode": c4d_percent_intensity_mode_cargs,
+        "pixel": c4d_pixel_cargs,
+        "pop": c4d_pop_cargs,
+        "popas": c4d_popas_cargs,
+        "probe": c4d_probe_cargs,
+        "push": c4d_push_cargs,
+        "rank": c4d_rank_cargs,
+        "reciprocal": c4d_reciprocal_cargs,
+        "region": c4d_region_cargs,
+        "reorder": c4d_reorder_cargs,
+        "retain_labels": c4d_retain_labels_cargs,
+        "rf_apply": c4d_rf_apply_cargs,
+        "rf_train": c4d_rf_train_cargs,
+        "rf_param_patch": c4d_rf_param_patch_cargs,
+        "rf_param_usexyz": c4d_rf_param_usexyz_cargs,
+        "rf_param_nousexyz": c4d_rf_param_nousexyz_cargs,
+        "rf_param_ntrees": c4d_rf_param_ntrees_cargs,
+        "rf_param_treedepth": c4d_rf_param_treedepth_cargs,
+        "set_sform": c4d_set_sform_cargs,
+        "replace": c4d_replace_cargs,
+        "resample": c4d_resample_cargs,
+        "resample_iso": c4d_resample_iso_cargs,
+        "resample_mm": c4d_resample_mm_cargs,
+        "reslice_itk": c4d_reslice_itk_cargs,
+        "reslice_matrix": c4d_reslice_matrix_cargs,
+        "reslice_identity": c4d_reslice_identity_cargs,
+        "rgb2hsv": c4d_rgb2hsv_cargs,
+        "rms": c4d_rms_cargs,
+        "round": c4d_round_cargs,
+        "scale": c4d_scale_cargs,
+        "set_sform_1": c4d_set_sform_1_cargs,
+        "sin": c4d_sin_cargs,
+        "slice": c4d_slice_cargs,
+        "slice_all": c4d_slice_all_cargs,
+        "sharpen": c4d_sharpen_cargs,
+        "shift": c4d_shift_cargs,
+        "signed_distance_transform": c4d_signed_distance_transform_cargs,
+        "smooth": c4d_smooth_cargs,
+        "smooth_fast": c4d_smooth_fast_cargs,
+        "spacing": c4d_spacing_cargs,
+        "split": c4d_split_cargs,
+        "sqrt": c4d_sqrt_cargs,
+        "staple": c4d_staple_cargs,
+        "structure_tensor_eigenvalues": c4d_structure_tensor_eigenvalues_cargs,
+        "spm": c4d_spm_cargs,
+        "subtract": c4d_subtract_cargs,
+        "supervoxel": c4d_supervoxel_cargs,
+        "stretch": c4d_stretch_cargs,
+        "swapdim": c4d_swapdim_cargs,
+        "test_image": c4d_test_image_cargs,
+        "test_probe": c4d_test_probe_cargs,
+        "threshold": c4d_threshold_cargs,
+        "tile": c4d_tile_cargs,
+        "trim": c4d_trim_cargs,
+        "trim_to_size": c4d_trim_to_size_cargs,
+        "type": c4d_type_cargs,
+        "verbose": c4d_verbose_cargs,
+        "noverbose": c4d_noverbose_cargs,
+        "version": c4d_version_cargs,
+        "vote": c4d_vote_cargs,
+        "vote_mrf": c4d_vote_mrf_cargs,
+        "vote_label": c4d_vote_label_cargs,
+        "voxel_sum": c4d_voxel_sum_cargs,
+        "voxel_integral": c4d_voxel_integral_cargs,
+        "voxelwise_regression": c4d_voxelwise_regression_cargs,
+        "warp": c4d_warp_cargs,
+        "warp_label": c4d_warp_label_cargs,
+        "wrap": c4d_wrap_cargs,
+        "weighted_sum": c4d_weighted_sum_cargs,
+        "weighted_sum_voxelwise": c4d_weighted_sum_voxelwise_cargs,
     }.get(t)
 
 
-def dyn_outputs(
+def c4d_operations_outputs_dyn_fn(
     t: str,
 ) -> typing.Any:
     """
@@ -1302,14 +2023,13 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "c3d.c4d": c4d_outputs,
-        "c3d.c4d.output": c4d_output_outputs,
+        "output": c4d_output_outputs,
     }.get(t)
 
 
 def c4d_accum_params(
     accum: str,
-) -> C4dAccumParameters:
+) -> C4dAccumParametersTagged:
     """
     Build parameters.
     
@@ -1330,7 +2050,7 @@ def c4d_accum_params(
         Parameter dictionary
     """
     params = {
-        "@type": "c3d.c4d.accum",
+        "@type": "accum",
         "accum": accum,
     }
     return params
@@ -1352,14 +2072,14 @@ def c4d_accum_cargs(
     cargs = []
     cargs.extend([
         "-accum",
-        params.get("accum")
+        params.get("accum", None)
     ])
     return cargs
 
 
 def c4d_acos_params(
     acos: str,
-) -> C4dAcosParameters:
+) -> C4dAcosParametersTagged:
     """
     Build parameters.
     
@@ -1369,7 +2089,7 @@ def c4d_acos_params(
         Parameter dictionary
     """
     params = {
-        "@type": "c3d.c4d.acos",
+        "@type": "acos",
         "acos": acos,
     }
     return params
@@ -1391,14 +2111,14 @@ def c4d_acos_cargs(
     cargs = []
     cargs.extend([
         "-acos",
-        params.get("acos")
+        params.get("acos", None)
     ])
     return cargs
 
 
 def c4d_add_params(
     add: str,
-) -> C4dAddParameters:
+) -> C4dAddParametersTagged:
     """
     Build parameters.
     
@@ -1424,7 +2144,7 @@ def c4d_add_params(
         Parameter dictionary
     """
     params = {
-        "@type": "c3d.c4d.add",
+        "@type": "add",
         "add": add,
     }
     return params
@@ -1446,14 +2166,14 @@ def c4d_add_cargs(
     cargs = []
     cargs.extend([
         "-add",
-        params.get("add")
+        params.get("add", None)
     ])
     return cargs
 
 
 def c4d_align_landmarks_params(
     align_landmarks: str,
-) -> C4dAlignLandmarksParameters:
+) -> C4dAlignLandmarksParametersTagged:
     """
     Build parameters.
     
@@ -1482,7 +2202,7 @@ def c4d_align_landmarks_params(
         Parameter dictionary
     """
     params = {
-        "@type": "c3d.c4d.align_landmarks",
+        "@type": "align_landmarks",
         "align_landmarks": align_landmarks,
     }
     return params
@@ -1504,14 +2224,14 @@ def c4d_align_landmarks_cargs(
     cargs = []
     cargs.extend([
         "-align-landmarks",
-        params.get("align_landmarks")
+        params.get("align_landmarks", None)
     ])
     return cargs
 
 
 def c4d_anisotropic_diffusion_params(
     anisotropic_diffusion: str,
-) -> C4dAnisotropicDiffusionParameters:
+) -> C4dAnisotropicDiffusionParametersTagged:
     """
     Build parameters.
     
@@ -1537,7 +2257,7 @@ def c4d_anisotropic_diffusion_params(
         Parameter dictionary
     """
     params = {
-        "@type": "c3d.c4d.anisotropic_diffusion",
+        "@type": "anisotropic_diffusion",
         "anisotropic_diffusion": anisotropic_diffusion,
     }
     return params
@@ -1559,14 +2279,14 @@ def c4d_anisotropic_diffusion_cargs(
     cargs = []
     cargs.extend([
         "-anisotropic-diffusion",
-        params.get("anisotropic_diffusion")
+        params.get("anisotropic_diffusion", None)
     ])
     return cargs
 
 
 def c4d_antialias_params(
     antialias: str,
-) -> C4dAntialiasParameters:
+) -> C4dAntialiasParametersTagged:
     """
     Build parameters.
     
@@ -1576,7 +2296,7 @@ def c4d_antialias_params(
         Parameter dictionary
     """
     params = {
-        "@type": "c3d.c4d.antialias",
+        "@type": "antialias",
         "antialias": antialias,
     }
     return params
@@ -1598,14 +2318,14 @@ def c4d_antialias_cargs(
     cargs = []
     cargs.extend([
         "-antialias",
-        params.get("antialias")
+        params.get("antialias", None)
     ])
     return cargs
 
 
 def c4d_set_params(
     set_: str,
-) -> C4dSetParameters:
+) -> C4dSetParametersTagged:
     """
     Build parameters.
     
@@ -1628,7 +2348,7 @@ def c4d_set_params(
         Parameter dictionary
     """
     params = {
-        "@type": "c3d.c4d.set",
+        "@type": "set",
         "set": set_,
     }
     return params
@@ -1650,14 +2370,14 @@ def c4d_set_cargs(
     cargs = []
     cargs.extend([
         "-as",
-        params.get("set")
+        params.get("set", None)
     ])
     return cargs
 
 
 def c4d_asin_params(
     asin: str,
-) -> C4dAsinParameters:
+) -> C4dAsinParametersTagged:
     """
     Build parameters.
     
@@ -1667,7 +2387,7 @@ def c4d_asin_params(
         Parameter dictionary
     """
     params = {
-        "@type": "c3d.c4d.asin",
+        "@type": "asin",
         "asin": asin,
     }
     return params
@@ -1689,14 +2409,14 @@ def c4d_asin_cargs(
     cargs = []
     cargs.extend([
         "-asin",
-        params.get("asin")
+        params.get("asin", None)
     ])
     return cargs
 
 
 def c4d_atan2_params(
     atan2: str,
-) -> C4dAtan2Parameters:
+) -> C4dAtan2ParametersTagged:
     """
     Build parameters.
     
@@ -1714,7 +2434,7 @@ def c4d_atan2_params(
         Parameter dictionary
     """
     params = {
-        "@type": "c3d.c4d.atan2",
+        "@type": "atan2",
         "atan2": atan2,
     }
     return params
@@ -1736,14 +2456,14 @@ def c4d_atan2_cargs(
     cargs = []
     cargs.extend([
         "-atan2",
-        params.get("atan2")
+        params.get("atan2", None)
     ])
     return cargs
 
 
 def c4d_background_params(
     background: str,
-) -> C4dBackgroundParameters:
+) -> C4dBackgroundParametersTagged:
     """
     Build parameters.
     
@@ -1759,7 +2479,7 @@ def c4d_background_params(
         Parameter dictionary
     """
     params = {
-        "@type": "c3d.c4d.background",
+        "@type": "background",
         "background": background,
     }
     return params
@@ -1781,14 +2501,14 @@ def c4d_background_cargs(
     cargs = []
     cargs.extend([
         "-background",
-        params.get("background")
+        params.get("background", None)
     ])
     return cargs
 
 
 def c4d_n4_bias_correction_params(
     n4_bias_correction: str,
-) -> C4dN4BiasCorrectionParameters:
+) -> C4dN4BiasCorrectionParametersTagged:
     """
     Build parameters.
     
@@ -1806,7 +2526,7 @@ def c4d_n4_bias_correction_params(
         Parameter dictionary
     """
     params = {
-        "@type": "c3d.c4d.n4_bias_correction",
+        "@type": "n4_bias_correction",
         "n4_bias_correction": n4_bias_correction,
     }
     return params
@@ -1828,14 +2548,14 @@ def c4d_n4_bias_correction_cargs(
     cargs = []
     cargs.extend([
         "-biascorr",
-        params.get("n4_bias_correction")
+        params.get("n4_bias_correction", None)
     ])
     return cargs
 
 
 def c4d_binarize_params(
     binarize: str,
-) -> C4dBinarizeParameters:
+) -> C4dBinarizeParametersTagged:
     """
     Build parameters.
     
@@ -1856,7 +2576,7 @@ def c4d_binarize_params(
         Parameter dictionary
     """
     params = {
-        "@type": "c3d.c4d.binarize",
+        "@type": "binarize",
         "binarize": binarize,
     }
     return params
@@ -1878,14 +2598,14 @@ def c4d_binarize_cargs(
     cargs = []
     cargs.extend([
         "-binarize",
-        params.get("binarize")
+        params.get("binarize", None)
     ])
     return cargs
 
 
 def c4d_canny_params(
     canny: str,
-) -> C4dCannyParameters:
+) -> C4dCannyParametersTagged:
     """
     Build parameters.
     
@@ -1903,7 +2623,7 @@ def c4d_canny_params(
         Parameter dictionary
     """
     params = {
-        "@type": "c3d.c4d.canny",
+        "@type": "canny",
         "canny": canny,
     }
     return params
@@ -1925,14 +2645,14 @@ def c4d_canny_cargs(
     cargs = []
     cargs.extend([
         "-canny",
-        params.get("canny")
+        params.get("canny", None)
     ])
     return cargs
 
 
 def c4d_ceil_params(
     ceil: str,
-) -> C4dCeilParameters:
+) -> C4dCeilParametersTagged:
     """
     Build parameters.
     
@@ -1949,7 +2669,7 @@ def c4d_ceil_params(
         Parameter dictionary
     """
     params = {
-        "@type": "c3d.c4d.ceil",
+        "@type": "ceil",
         "ceil": ceil,
     }
     return params
@@ -1971,14 +2691,14 @@ def c4d_ceil_cargs(
     cargs = []
     cargs.extend([
         "-ceil",
-        params.get("ceil")
+        params.get("ceil", None)
     ])
     return cargs
 
 
 def c4d_centroid_params(
     centroid: str,
-) -> C4dCentroidParameters:
+) -> C4dCentroidParametersTagged:
     """
     Build parameters.
     
@@ -2001,7 +2721,7 @@ def c4d_centroid_params(
         Parameter dictionary
     """
     params = {
-        "@type": "c3d.c4d.centroid",
+        "@type": "centroid",
         "centroid": centroid,
     }
     return params
@@ -2023,14 +2743,14 @@ def c4d_centroid_cargs(
     cargs = []
     cargs.extend([
         "-centroid",
-        params.get("centroid")
+        params.get("centroid", None)
     ])
     return cargs
 
 
 def c4d_centroid_mark_params(
     centroid_mark: str,
-) -> C4dCentroidMarkParameters:
+) -> C4dCentroidMarkParametersTagged:
     """
     Build parameters.
     
@@ -2053,7 +2773,7 @@ def c4d_centroid_mark_params(
         Parameter dictionary
     """
     params = {
-        "@type": "c3d.c4d.centroid_mark",
+        "@type": "centroid_mark",
         "centroid_mark": centroid_mark,
     }
     return params
@@ -2075,14 +2795,14 @@ def c4d_centroid_mark_cargs(
     cargs = []
     cargs.extend([
         "-centroid-mark",
-        params.get("centroid_mark")
+        params.get("centroid_mark", None)
     ])
     return cargs
 
 
 def c4d_connected_components_params(
     connected_components: str,
-) -> C4dConnectedComponentsParameters:
+) -> C4dConnectedComponentsParametersTagged:
     """
     Build parameters.
     
@@ -2105,7 +2825,7 @@ def c4d_connected_components_params(
         Parameter dictionary
     """
     params = {
-        "@type": "c3d.c4d.connected_components",
+        "@type": "connected_components",
         "connected_components": connected_components,
     }
     return params
@@ -2127,14 +2847,14 @@ def c4d_connected_components_cargs(
     cargs = []
     cargs.extend([
         "-connected-components",
-        params.get("connected_components")
+        params.get("connected_components", None)
     ])
     return cargs
 
 
 def c4d_clear_params(
     clear_: str,
-) -> C4dClearParameters:
+) -> C4dClearParametersTagged:
     """
     Build parameters.
     
@@ -2149,7 +2869,7 @@ def c4d_clear_params(
         Parameter dictionary
     """
     params = {
-        "@type": "c3d.c4d.clear",
+        "@type": "clear",
         "clear": clear_,
     }
     return params
@@ -2171,14 +2891,14 @@ def c4d_clear_cargs(
     cargs = []
     cargs.extend([
         "-clear",
-        params.get("clear")
+        params.get("clear", None)
     ])
     return cargs
 
 
 def c4d_clip_params(
     clip: str,
-) -> C4dClipParameters:
+) -> C4dClipParametersTagged:
     """
     Build parameters.
     
@@ -2201,7 +2921,7 @@ def c4d_clip_params(
         Parameter dictionary
     """
     params = {
-        "@type": "c3d.c4d.clip",
+        "@type": "clip",
         "clip": clip,
     }
     return params
@@ -2223,14 +2943,14 @@ def c4d_clip_cargs(
     cargs = []
     cargs.extend([
         "-clip",
-        params.get("clip")
+        params.get("clip", None)
     ])
     return cargs
 
 
 def c4d_color_map_params(
     color_map: str,
-) -> C4dColorMapParameters:
+) -> C4dColorMapParametersTagged:
     """
     Build parameters.
     
@@ -2265,7 +2985,7 @@ def c4d_color_map_params(
         Parameter dictionary
     """
     params = {
-        "@type": "c3d.c4d.color_map",
+        "@type": "color_map",
         "color_map": color_map,
     }
     return params
@@ -2287,14 +3007,14 @@ def c4d_color_map_cargs(
     cargs = []
     cargs.extend([
         "-colormap",
-        params.get("color_map")
+        params.get("color_map", None)
     ])
     return cargs
 
 
 def c4d_compress_params(
     compress: str,
-) -> C4dCompressParameters:
+) -> C4dCompressParametersTagged:
     """
     Build parameters.
     
@@ -2317,7 +3037,7 @@ def c4d_compress_params(
         Parameter dictionary
     """
     params = {
-        "@type": "c3d.c4d.compress",
+        "@type": "compress",
         "compress": compress,
     }
     return params
@@ -2339,14 +3059,14 @@ def c4d_compress_cargs(
     cargs = []
     cargs.extend([
         "-compress",
-        params.get("compress")
+        params.get("compress", None)
     ])
     return cargs
 
 
 def c4d_no_compress_params(
     no_compress: str,
-) -> C4dNoCompressParameters:
+) -> C4dNoCompressParametersTagged:
     """
     Build parameters.
     
@@ -2369,7 +3089,7 @@ def c4d_no_compress_params(
         Parameter dictionary
     """
     params = {
-        "@type": "c3d.c4d.no_compress",
+        "@type": "no_compress",
         "no_compress": no_compress,
     }
     return params
@@ -2391,14 +3111,14 @@ def c4d_no_compress_cargs(
     cargs = []
     cargs.extend([
         "-no-compress",
-        params.get("no_compress")
+        params.get("no_compress", None)
     ])
     return cargs
 
 
 def c4d_conv_params(
     conv: str,
-) -> C4dConvParameters:
+) -> C4dConvParametersTagged:
     """
     Build parameters.
     
@@ -2420,7 +3140,7 @@ def c4d_conv_params(
         Parameter dictionary
     """
     params = {
-        "@type": "c3d.c4d.conv",
+        "@type": "conv",
         "conv": conv,
     }
     return params
@@ -2442,14 +3162,14 @@ def c4d_conv_cargs(
     cargs = []
     cargs.extend([
         "-conv",
-        params.get("conv")
+        params.get("conv", None)
     ])
     return cargs
 
 
 def c4d_coordinate_map_voxel_params(
     coordinate_map_voxel: str,
-) -> C4dCoordinateMapVoxelParameters:
+) -> C4dCoordinateMapVoxelParametersTagged:
     """
     Build parameters.
     
@@ -2477,7 +3197,7 @@ def c4d_coordinate_map_voxel_params(
         Parameter dictionary
     """
     params = {
-        "@type": "c3d.c4d.coordinate_map_voxel",
+        "@type": "coordinate_map_voxel",
         "coordinate_map_voxel": coordinate_map_voxel,
     }
     return params
@@ -2499,14 +3219,14 @@ def c4d_coordinate_map_voxel_cargs(
     cargs = []
     cargs.extend([
         "-coordinate-map-voxel",
-        params.get("coordinate_map_voxel")
+        params.get("coordinate_map_voxel", None)
     ])
     return cargs
 
 
 def c4d_coordinate_map_physical_params(
     coordinate_map_physical: str,
-) -> C4dCoordinateMapPhysicalParameters:
+) -> C4dCoordinateMapPhysicalParametersTagged:
     """
     Build parameters.
     
@@ -2523,7 +3243,7 @@ def c4d_coordinate_map_physical_params(
         Parameter dictionary
     """
     params = {
-        "@type": "c3d.c4d.coordinate_map_physical",
+        "@type": "coordinate_map_physical",
         "coordinate_map_physical": coordinate_map_physical,
     }
     return params
@@ -2545,14 +3265,14 @@ def c4d_coordinate_map_physical_cargs(
     cargs = []
     cargs.extend([
         "-coordinate-map-physical",
-        params.get("coordinate_map_physical")
+        params.get("coordinate_map_physical", None)
     ])
     return cargs
 
 
 def c4d_copy_transform_params(
     copy_transform: str,
-) -> C4dCopyTransformParameters:
+) -> C4dCopyTransformParametersTagged:
     """
     Build parameters.
     
@@ -2573,7 +3293,7 @@ def c4d_copy_transform_params(
         Parameter dictionary
     """
     params = {
-        "@type": "c3d.c4d.copy_transform",
+        "@type": "copy_transform",
         "copy_transform": copy_transform,
     }
     return params
@@ -2595,14 +3315,14 @@ def c4d_copy_transform_cargs(
     cargs = []
     cargs.extend([
         "-copy-transform",
-        params.get("copy_transform")
+        params.get("copy_transform", None)
     ])
     return cargs
 
 
 def c4d_cos_params(
     cos: str,
-) -> C4dCosParameters:
+) -> C4dCosParametersTagged:
     """
     Build parameters.
     
@@ -2612,7 +3332,7 @@ def c4d_cos_params(
         Parameter dictionary
     """
     params = {
-        "@type": "c3d.c4d.cos",
+        "@type": "cos",
         "cos": cos,
     }
     return params
@@ -2634,14 +3354,14 @@ def c4d_cos_cargs(
     cargs = []
     cargs.extend([
         "-cos",
-        params.get("cos")
+        params.get("cos", None)
     ])
     return cargs
 
 
 def c4d_create_params(
     create: str,
-) -> C4dCreateParameters:
+) -> C4dCreateParametersTagged:
     """
     Build parameters.
     
@@ -2663,7 +3383,7 @@ def c4d_create_params(
         Parameter dictionary
     """
     params = {
-        "@type": "c3d.c4d.create",
+        "@type": "create",
         "create": create,
     }
     return params
@@ -2685,14 +3405,14 @@ def c4d_create_cargs(
     cargs = []
     cargs.extend([
         "-create",
-        params.get("create")
+        params.get("create", None)
     ])
     return cargs
 
 
 def c4d_dicom_series_list_params(
     dicom_series_list: str,
-) -> C4dDicomSeriesListParameters:
+) -> C4dDicomSeriesListParametersTagged:
     """
     Build parameters.
     
@@ -2708,7 +3428,7 @@ def c4d_dicom_series_list_params(
         Parameter dictionary
     """
     params = {
-        "@type": "c3d.c4d.dicom_series_list",
+        "@type": "dicom_series_list",
         "dicom_series_list": dicom_series_list,
     }
     return params
@@ -2730,14 +3450,14 @@ def c4d_dicom_series_list_cargs(
     cargs = []
     cargs.extend([
         "-dicom-series-list",
-        params.get("dicom_series_list")
+        params.get("dicom_series_list", None)
     ])
     return cargs
 
 
 def c4d_dicom_series_read_params(
     dicom_series_read: str,
-) -> C4dDicomSeriesReadParameters:
+) -> C4dDicomSeriesReadParametersTagged:
     """
     Build parameters.
     
@@ -2755,7 +3475,7 @@ def c4d_dicom_series_read_params(
         Parameter dictionary
     """
     params = {
-        "@type": "c3d.c4d.dicom_series_read",
+        "@type": "dicom_series_read",
         "dicom_series_read": dicom_series_read,
     }
     return params
@@ -2777,14 +3497,14 @@ def c4d_dicom_series_read_cargs(
     cargs = []
     cargs.extend([
         "-dicom-series-read",
-        params.get("dicom_series_read")
+        params.get("dicom_series_read", None)
     ])
     return cargs
 
 
 def c4d_dilate_params(
     dilate: str,
-) -> C4dDilateParameters:
+) -> C4dDilateParametersTagged:
     """
     Build parameters.
     
@@ -2803,7 +3523,7 @@ def c4d_dilate_params(
         Parameter dictionary
     """
     params = {
-        "@type": "c3d.c4d.dilate",
+        "@type": "dilate",
         "dilate": dilate,
     }
     return params
@@ -2825,14 +3545,14 @@ def c4d_dilate_cargs(
     cargs = []
     cargs.extend([
         "-dilate",
-        params.get("dilate")
+        params.get("dilate", None)
     ])
     return cargs
 
 
 def c4d_divide_params(
     divide: str,
-) -> C4dDivideParameters:
+) -> C4dDivideParametersTagged:
     """
     Build parameters.
     
@@ -2855,7 +3575,7 @@ def c4d_divide_params(
         Parameter dictionary
     """
     params = {
-        "@type": "c3d.c4d.divide",
+        "@type": "divide",
         "divide": divide,
     }
     return params
@@ -2877,14 +3597,14 @@ def c4d_divide_cargs(
     cargs = []
     cargs.extend([
         "-divide",
-        params.get("divide")
+        params.get("divide", None)
     ])
     return cargs
 
 
 def c4d_duplicate_params(
     duplicate: str,
-) -> C4dDuplicateParameters:
+) -> C4dDuplicateParametersTagged:
     """
     Build parameters.
     
@@ -2905,7 +3625,7 @@ def c4d_duplicate_params(
         Parameter dictionary
     """
     params = {
-        "@type": "c3d.c4d.duplicate",
+        "@type": "duplicate",
         "duplicate": duplicate,
     }
     return params
@@ -2927,14 +3647,14 @@ def c4d_duplicate_cargs(
     cargs = []
     cargs.extend([
         "-dup",
-        params.get("duplicate")
+        params.get("duplicate", None)
     ])
     return cargs
 
 
 def c4d_endaccum_params(
     endaccum: str,
-) -> C4dEndaccumParameters:
+) -> C4dEndaccumParametersTagged:
     """
     Build parameters.
     
@@ -2955,7 +3675,7 @@ def c4d_endaccum_params(
         Parameter dictionary
     """
     params = {
-        "@type": "c3d.c4d.endaccum",
+        "@type": "endaccum",
         "endaccum": endaccum,
     }
     return params
@@ -2977,14 +3697,14 @@ def c4d_endaccum_cargs(
     cargs = []
     cargs.extend([
         "-endaccum",
-        params.get("endaccum")
+        params.get("endaccum", None)
     ])
     return cargs
 
 
 def c4d_endfor_params(
     endfor: str,
-) -> C4dEndforParameters:
+) -> C4dEndforParametersTagged:
     """
     Build parameters.
     
@@ -3003,7 +3723,7 @@ def c4d_endfor_params(
         Parameter dictionary
     """
     params = {
-        "@type": "c3d.c4d.endfor",
+        "@type": "endfor",
         "endfor": endfor,
     }
     return params
@@ -3025,14 +3745,14 @@ def c4d_endfor_cargs(
     cargs = []
     cargs.extend([
         "-endfor",
-        params.get("endfor")
+        params.get("endfor", None)
     ])
     return cargs
 
 
 def c4d_erode_params(
     erode: str,
-) -> C4dErodeParameters:
+) -> C4dErodeParametersTagged:
     """
     Build parameters.
     
@@ -3051,7 +3771,7 @@ def c4d_erode_params(
         Parameter dictionary
     """
     params = {
-        "@type": "c3d.c4d.erode",
+        "@type": "erode",
         "erode": erode,
     }
     return params
@@ -3073,14 +3793,14 @@ def c4d_erode_cargs(
     cargs = []
     cargs.extend([
         "-erode",
-        params.get("erode")
+        params.get("erode", None)
     ])
     return cargs
 
 
 def c4d_erf_params(
     erf: str,
-) -> C4dErfParameters:
+) -> C4dErfParametersTagged:
     """
     Build parameters.
     
@@ -3097,7 +3817,7 @@ def c4d_erf_params(
         Parameter dictionary
     """
     params = {
-        "@type": "c3d.c4d.erf",
+        "@type": "erf",
         "erf": erf,
     }
     return params
@@ -3119,14 +3839,14 @@ def c4d_erf_cargs(
     cargs = []
     cargs.extend([
         "-erf",
-        params.get("erf")
+        params.get("erf", None)
     ])
     return cargs
 
 
 def c4d_exp_params(
     exp: str,
-) -> C4dExpParameters:
+) -> C4dExpParametersTagged:
     """
     Build parameters.
     
@@ -3142,7 +3862,7 @@ def c4d_exp_params(
         Parameter dictionary
     """
     params = {
-        "@type": "c3d.c4d.exp",
+        "@type": "exp",
         "exp": exp,
     }
     return params
@@ -3164,14 +3884,14 @@ def c4d_exp_cargs(
     cargs = []
     cargs.extend([
         "-exp",
-        params.get("exp")
+        params.get("exp", None)
     ])
     return cargs
 
 
 def c4d_export_patches_params(
     export_patches: str,
-) -> C4dExportPatchesParameters:
+) -> C4dExportPatchesParametersTagged:
     """
     Build parameters.
     
@@ -3228,7 +3948,7 @@ def c4d_export_patches_params(
         Parameter dictionary
     """
     params = {
-        "@type": "c3d.c4d.export_patches",
+        "@type": "export_patches",
         "export_patches": export_patches,
     }
     return params
@@ -3250,14 +3970,14 @@ def c4d_export_patches_cargs(
     cargs = []
     cargs.extend([
         "-export-patches",
-        params.get("export_patches")
+        params.get("export_patches", None)
     ])
     return cargs
 
 
 def c4d_export_patches_aug_params(
     export_patches_aug: str,
-) -> C4dExportPatchesAugParameters:
+) -> C4dExportPatchesAugParametersTagged:
     """
     Build parameters.
     
@@ -3281,7 +4001,7 @@ def c4d_export_patches_aug_params(
         Parameter dictionary
     """
     params = {
-        "@type": "c3d.c4d.export_patches_aug",
+        "@type": "export_patches_aug",
         "export_patches_aug": export_patches_aug,
     }
     return params
@@ -3303,14 +4023,14 @@ def c4d_export_patches_aug_cargs(
     cargs = []
     cargs.extend([
         "-export-patches-aug",
-        params.get("export_patches_aug")
+        params.get("export_patches_aug", None)
     ])
     return cargs
 
 
 def c4d_extrude_seg_params(
     extrude_seg: str,
-) -> C4dExtrudeSegParameters:
+) -> C4dExtrudeSegParametersTagged:
     """
     Build parameters.
     
@@ -3320,7 +4040,7 @@ def c4d_extrude_seg_params(
         Parameter dictionary
     """
     params = {
-        "@type": "c3d.c4d.extrude_seg",
+        "@type": "extrude_seg",
         "extrude_seg": extrude_seg,
     }
     return params
@@ -3342,14 +4062,14 @@ def c4d_extrude_seg_cargs(
     cargs = []
     cargs.extend([
         "-extrude-seg",
-        params.get("extrude_seg")
+        params.get("extrude_seg", None)
     ])
     return cargs
 
 
 def c4d_fill_background_with_noise_params(
     fill_background_with_noise: str,
-) -> C4dFillBackgroundWithNoiseParameters:
+) -> C4dFillBackgroundWithNoiseParametersTagged:
     """
     Build parameters.
     
@@ -3359,7 +4079,7 @@ def c4d_fill_background_with_noise_params(
         Parameter dictionary
     """
     params = {
-        "@type": "c3d.c4d.fill_background_with_noise",
+        "@type": "fill_background_with_noise",
         "fill_background_with_noise": fill_background_with_noise,
     }
     return params
@@ -3381,14 +4101,14 @@ def c4d_fill_background_with_noise_cargs(
     cargs = []
     cargs.extend([
         "-fill-background-with-noise",
-        params.get("fill_background_with_noise")
+        params.get("fill_background_with_noise", None)
     ])
     return cargs
 
 
 def c4d_fft_params(
     fft: str,
-) -> C4dFftParameters:
+) -> C4dFftParametersTagged:
     """
     Build parameters.
     
@@ -3407,7 +4127,7 @@ def c4d_fft_params(
         Parameter dictionary
     """
     params = {
-        "@type": "c3d.c4d.fft",
+        "@type": "fft",
         "fft": fft,
     }
     return params
@@ -3429,14 +4149,14 @@ def c4d_fft_cargs(
     cargs = []
     cargs.extend([
         "-fft",
-        params.get("fft")
+        params.get("fft", None)
     ])
     return cargs
 
 
 def c4d_flip_params(
     flip: str,
-) -> C4dFlipParameters:
+) -> C4dFlipParametersTagged:
     """
     Build parameters.
     
@@ -3454,7 +4174,7 @@ def c4d_flip_params(
         Parameter dictionary
     """
     params = {
-        "@type": "c3d.c4d.flip",
+        "@type": "flip",
         "flip": flip,
     }
     return params
@@ -3476,14 +4196,14 @@ def c4d_flip_cargs(
     cargs = []
     cargs.extend([
         "-flip",
-        params.get("flip")
+        params.get("flip", None)
     ])
     return cargs
 
 
 def c4d_floor_params(
     floor: str,
-) -> C4dFloorParameters:
+) -> C4dFloorParametersTagged:
     """
     Build parameters.
     
@@ -3504,7 +4224,7 @@ def c4d_floor_params(
         Parameter dictionary
     """
     params = {
-        "@type": "c3d.c4d.floor",
+        "@type": "floor",
         "floor": floor,
     }
     return params
@@ -3526,14 +4246,14 @@ def c4d_floor_cargs(
     cargs = []
     cargs.extend([
         "-floor",
-        params.get("floor")
+        params.get("floor", None)
     ])
     return cargs
 
 
 def c4d_foreach_params(
     foreach: str,
-) -> C4dForeachParameters:
+) -> C4dForeachParametersTagged:
     """
     Build parameters.
     
@@ -3552,7 +4272,7 @@ def c4d_foreach_params(
         Parameter dictionary
     """
     params = {
-        "@type": "c3d.c4d.foreach",
+        "@type": "foreach",
         "foreach": foreach,
     }
     return params
@@ -3574,14 +4294,14 @@ def c4d_foreach_cargs(
     cargs = []
     cargs.extend([
         "-foreach",
-        params.get("foreach")
+        params.get("foreach", None)
     ])
     return cargs
 
 
 def c4d_foreach_comp_params(
     foreach_comp: str,
-) -> C4dForeachCompParameters:
+) -> C4dForeachCompParametersTagged:
     """
     Build parameters.
     
@@ -3607,7 +4327,7 @@ def c4d_foreach_comp_params(
         Parameter dictionary
     """
     params = {
-        "@type": "c3d.c4d.foreach_comp",
+        "@type": "foreach_comp",
         "foreach_comp": foreach_comp,
     }
     return params
@@ -3629,14 +4349,14 @@ def c4d_foreach_comp_cargs(
     cargs = []
     cargs.extend([
         "-foreach-comp",
-        params.get("foreach_comp")
+        params.get("foreach_comp", None)
     ])
     return cargs
 
 
 def c4d_glm_params(
     glm: str,
-) -> C4dGlmParameters:
+) -> C4dGlmParametersTagged:
     """
     Build parameters.
     
@@ -3672,7 +4392,7 @@ def c4d_glm_params(
         Parameter dictionary
     """
     params = {
-        "@type": "c3d.c4d.glm",
+        "@type": "glm",
         "glm": glm,
     }
     return params
@@ -3694,14 +4414,14 @@ def c4d_glm_cargs(
     cargs = []
     cargs.extend([
         "-glm",
-        params.get("glm")
+        params.get("glm", None)
     ])
     return cargs
 
 
 def c4d_gradient_params(
     gradient: str,
-) -> C4dGradientParameters:
+) -> C4dGradientParametersTagged:
     """
     Build parameters.
     
@@ -3723,7 +4443,7 @@ def c4d_gradient_params(
         Parameter dictionary
     """
     params = {
-        "@type": "c3d.c4d.gradient",
+        "@type": "gradient",
         "gradient": gradient,
     }
     return params
@@ -3745,14 +4465,14 @@ def c4d_gradient_cargs(
     cargs = []
     cargs.extend([
         "-grad",
-        params.get("gradient")
+        params.get("gradient", None)
     ])
     return cargs
 
 
 def c4d__help_params(
     v__help: str,
-) -> C4dHelpParameters:
+) -> C4dHelpParametersTagged:
     """
     Build parameters.
     
@@ -3774,7 +4494,7 @@ def c4d__help_params(
         Parameter dictionary
     """
     params = {
-        "@type": "c3d.c4d._help",
+        "@type": "_help",
         "_help": v__help,
     }
     return params
@@ -3796,14 +4516,14 @@ def c4d__help_cargs(
     cargs = []
     cargs.extend([
         "-h",
-        params.get("_help")
+        params.get("_help", None)
     ])
     return cargs
 
 
 def c4d_holefill_params(
     holefill: str,
-) -> C4dHolefillParameters:
+) -> C4dHolefillParametersTagged:
     """
     Build parameters.
     
@@ -3829,7 +4549,7 @@ def c4d_holefill_params(
         Parameter dictionary
     """
     params = {
-        "@type": "c3d.c4d.holefill",
+        "@type": "holefill",
         "holefill": holefill,
     }
     return params
@@ -3851,14 +4571,14 @@ def c4d_holefill_cargs(
     cargs = []
     cargs.extend([
         "-hf",
-        params.get("holefill")
+        params.get("holefill", None)
     ])
     return cargs
 
 
 def c4d_hessian_eigenvalues_params(
     hessian_eigenvalues: str,
-) -> C4dHessianEigenvaluesParameters:
+) -> C4dHessianEigenvaluesParametersTagged:
     """
     Build parameters.
     
@@ -3880,7 +4600,7 @@ def c4d_hessian_eigenvalues_params(
         Parameter dictionary
     """
     params = {
-        "@type": "c3d.c4d.hessian_eigenvalues",
+        "@type": "hessian_eigenvalues",
         "hessian_eigenvalues": hessian_eigenvalues,
     }
     return params
@@ -3902,14 +4622,14 @@ def c4d_hessian_eigenvalues_cargs(
     cargs = []
     cargs.extend([
         "-hesseig",
-        params.get("hessian_eigenvalues")
+        params.get("hessian_eigenvalues", None)
     ])
     return cargs
 
 
 def c4d_hessian_objectness_params(
     hessian_objectness: str,
-) -> C4dHessianObjectnessParameters:
+) -> C4dHessianObjectnessParametersTagged:
     """
     Build parameters.
     
@@ -3939,7 +4659,7 @@ def c4d_hessian_objectness_params(
         Parameter dictionary
     """
     params = {
-        "@type": "c3d.c4d.hessian_objectness",
+        "@type": "hessian_objectness",
         "hessian_objectness": hessian_objectness,
     }
     return params
@@ -3961,14 +4681,14 @@ def c4d_hessian_objectness_cargs(
     cargs = []
     cargs.extend([
         "-hessobj",
-        params.get("hessian_objectness")
+        params.get("hessian_objectness", None)
     ])
     return cargs
 
 
 def c4d_histogram_match_params(
     histogram_match: str,
-) -> C4dHistogramMatchParameters:
+) -> C4dHistogramMatchParametersTagged:
     """
     Build parameters.
     
@@ -3978,7 +4698,7 @@ def c4d_histogram_match_params(
         Parameter dictionary
     """
     params = {
-        "@type": "c3d.c4d.histogram_match",
+        "@type": "histogram_match",
         "histogram_match": histogram_match,
     }
     return params
@@ -4000,14 +4720,14 @@ def c4d_histogram_match_cargs(
     cargs = []
     cargs.extend([
         "-histmatch",
-        params.get("histogram_match")
+        params.get("histogram_match", None)
     ])
     return cargs
 
 
 def c4d_info_params(
     info: str,
-) -> C4dInfoParameters:
+) -> C4dInfoParametersTagged:
     """
     Build parameters.
     
@@ -4029,7 +4749,7 @@ def c4d_info_params(
         Parameter dictionary
     """
     params = {
-        "@type": "c3d.c4d.info",
+        "@type": "info",
         "info": info,
     }
     return params
@@ -4051,14 +4771,14 @@ def c4d_info_cargs(
     cargs = []
     cargs.extend([
         "-info",
-        params.get("info")
+        params.get("info", None)
     ])
     return cargs
 
 
 def c4d_info_full_params(
     info_full: str,
-) -> C4dInfoFullParameters:
+) -> C4dInfoFullParametersTagged:
     """
     Build parameters.
     
@@ -4075,7 +4795,7 @@ def c4d_info_full_params(
         Parameter dictionary
     """
     params = {
-        "@type": "c3d.c4d.info_full",
+        "@type": "info_full",
         "info_full": info_full,
     }
     return params
@@ -4097,14 +4817,14 @@ def c4d_info_full_cargs(
     cargs = []
     cargs.extend([
         "-info-full",
-        params.get("info_full")
+        params.get("info_full", None)
     ])
     return cargs
 
 
 def c4d_insert_params(
     insert: str,
-) -> C4dInsertParameters:
+) -> C4dInsertParametersTagged:
     """
     Build parameters.
     
@@ -4122,7 +4842,7 @@ def c4d_insert_params(
         Parameter dictionary
     """
     params = {
-        "@type": "c3d.c4d.insert",
+        "@type": "insert",
         "insert": insert,
     }
     return params
@@ -4144,14 +4864,14 @@ def c4d_insert_cargs(
     cargs = []
     cargs.extend([
         "-insert",
-        params.get("insert")
+        params.get("insert", None)
     ])
     return cargs
 
 
 def c4d_interpolation_params(
     interpolation: str,
-) -> C4dInterpolationParameters:
+) -> C4dInterpolationParametersTagged:
     """
     Build parameters.
     
@@ -4178,7 +4898,7 @@ def c4d_interpolation_params(
         Parameter dictionary
     """
     params = {
-        "@type": "c3d.c4d.interpolation",
+        "@type": "interpolation",
         "interpolation": interpolation,
     }
     return params
@@ -4200,14 +4920,14 @@ def c4d_interpolation_cargs(
     cargs = []
     cargs.extend([
         "-interpolation",
-        params.get("interpolation")
+        params.get("interpolation", None)
     ])
     return cargs
 
 
 def c4d_iterations_params(
     iterations: str,
-) -> C4dIterationsParameters:
+) -> C4dIterationsParametersTagged:
     """
     Build parameters.
     
@@ -4217,7 +4937,7 @@ def c4d_iterations_params(
         Parameter dictionary
     """
     params = {
-        "@type": "c3d.c4d.iterations",
+        "@type": "iterations",
         "iterations": iterations,
     }
     return params
@@ -4239,14 +4959,14 @@ def c4d_iterations_cargs(
     cargs = []
     cargs.extend([
         "-iterations",
-        params.get("iterations")
+        params.get("iterations", None)
     ])
     return cargs
 
 
 def c4d_label_overlap_params(
     label_overlap: str,
-) -> C4dLabelOverlapParameters:
+) -> C4dLabelOverlapParametersTagged:
     """
     Build parameters.
     
@@ -4256,7 +4976,7 @@ def c4d_label_overlap_params(
         Parameter dictionary
     """
     params = {
-        "@type": "c3d.c4d.label_overlap",
+        "@type": "label_overlap",
         "label_overlap": label_overlap,
     }
     return params
@@ -4278,14 +4998,14 @@ def c4d_label_overlap_cargs(
     cargs = []
     cargs.extend([
         "-label-overlap",
-        params.get("label_overlap")
+        params.get("label_overlap", None)
     ])
     return cargs
 
 
 def c4d_label_statistics_params(
     label_statistics: str,
-) -> C4dLabelStatisticsParameters:
+) -> C4dLabelStatisticsParametersTagged:
     """
     Build parameters.
     
@@ -4314,7 +5034,7 @@ def c4d_label_statistics_params(
         Parameter dictionary
     """
     params = {
-        "@type": "c3d.c4d.label_statistics",
+        "@type": "label_statistics",
         "label_statistics": label_statistics,
     }
     return params
@@ -4336,14 +5056,14 @@ def c4d_label_statistics_cargs(
     cargs = []
     cargs.extend([
         "-label-statistics",
-        params.get("label_statistics")
+        params.get("label_statistics", None)
     ])
     return cargs
 
 
 def c4d_landmarks_to_spheres_params(
     landmarks_to_spheres: str,
-) -> C4dLandmarksToSpheresParameters:
+) -> C4dLandmarksToSpheresParametersTagged:
     """
     Build parameters.
     
@@ -4353,7 +5073,7 @@ def c4d_landmarks_to_spheres_params(
         Parameter dictionary
     """
     params = {
-        "@type": "c3d.c4d.landmarks_to_spheres",
+        "@type": "landmarks_to_spheres",
         "landmarks_to_spheres": landmarks_to_spheres,
     }
     return params
@@ -4375,14 +5095,14 @@ def c4d_landmarks_to_spheres_cargs(
     cargs = []
     cargs.extend([
         "-landmarks-to-spheres",
-        params.get("landmarks_to_spheres")
+        params.get("landmarks_to_spheres", None)
     ])
     return cargs
 
 
 def c4d_laplacian_params(
     laplacian: str,
-) -> C4dLaplacianParameters:
+) -> C4dLaplacianParametersTagged:
     """
     Build parameters.
     
@@ -4401,7 +5121,7 @@ def c4d_laplacian_params(
         Parameter dictionary
     """
     params = {
-        "@type": "c3d.c4d.laplacian",
+        "@type": "laplacian",
         "laplacian": laplacian,
     }
     return params
@@ -4423,14 +5143,14 @@ def c4d_laplacian_cargs(
     cargs = []
     cargs.extend([
         "-laplacian",
-        params.get("laplacian")
+        params.get("laplacian", None)
     ])
     return cargs
 
 
 def c4d_levelset_params(
     levelset: str,
-) -> C4dLevelsetParameters:
+) -> C4dLevelsetParametersTagged:
     """
     Build parameters.
     
@@ -4479,7 +5199,7 @@ def c4d_levelset_params(
         Parameter dictionary
     """
     params = {
-        "@type": "c3d.c4d.levelset",
+        "@type": "levelset",
         "levelset": levelset,
     }
     return params
@@ -4501,14 +5221,14 @@ def c4d_levelset_cargs(
     cargs = []
     cargs.extend([
         "-levelset",
-        params.get("levelset")
+        params.get("levelset", None)
     ])
     return cargs
 
 
 def c4d_levelset_curvature_params(
     levelset_curvature: str,
-) -> C4dLevelsetCurvatureParameters:
+) -> C4dLevelsetCurvatureParametersTagged:
     """
     Build parameters.
     
@@ -4518,7 +5238,7 @@ def c4d_levelset_curvature_params(
         Parameter dictionary
     """
     params = {
-        "@type": "c3d.c4d.levelset_curvature",
+        "@type": "levelset_curvature",
         "levelset_curvature": levelset_curvature,
     }
     return params
@@ -4540,14 +5260,14 @@ def c4d_levelset_curvature_cargs(
     cargs = []
     cargs.extend([
         "-levelset-curvature",
-        params.get("levelset_curvature")
+        params.get("levelset_curvature", None)
     ])
     return cargs
 
 
 def c4d_levelset_advection_params(
     levelset_advection: str,
-) -> C4dLevelsetAdvectionParameters:
+) -> C4dLevelsetAdvectionParametersTagged:
     """
     Build parameters.
     
@@ -4557,7 +5277,7 @@ def c4d_levelset_advection_params(
         Parameter dictionary
     """
     params = {
-        "@type": "c3d.c4d.levelset_advection",
+        "@type": "levelset_advection",
         "levelset_advection": levelset_advection,
     }
     return params
@@ -4579,14 +5299,14 @@ def c4d_levelset_advection_cargs(
     cargs = []
     cargs.extend([
         "-levelset-advection",
-        params.get("levelset_advection")
+        params.get("levelset_advection", None)
     ])
     return cargs
 
 
 def c4d_log_params(
     log: str,
-) -> C4dLogParameters:
+) -> C4dLogParametersTagged:
     """
     Build parameters.
     
@@ -4601,7 +5321,7 @@ def c4d_log_params(
         Parameter dictionary
     """
     params = {
-        "@type": "c3d.c4d.log",
+        "@type": "log",
         "log": log,
     }
     return params
@@ -4623,14 +5343,14 @@ def c4d_log_cargs(
     cargs = []
     cargs.extend([
         "-ln",
-        params.get("log")
+        params.get("log", None)
     ])
     return cargs
 
 
 def c4d_log10_params(
     log10: str,
-) -> C4dLog10Parameters:
+) -> C4dLog10ParametersTagged:
     """
     Build parameters.
     
@@ -4645,7 +5365,7 @@ def c4d_log10_params(
         Parameter dictionary
     """
     params = {
-        "@type": "c3d.c4d.log10",
+        "@type": "log10",
         "log10": log10,
     }
     return params
@@ -4667,14 +5387,14 @@ def c4d_log10_cargs(
     cargs = []
     cargs.extend([
         "-log10",
-        params.get("log10")
+        params.get("log10", None)
     ])
     return cargs
 
 
 def c4d_manual_params(
     manual: str,
-) -> C4dManualParameters:
+) -> C4dManualParametersTagged:
     """
     Build parameters.
     
@@ -4684,7 +5404,7 @@ def c4d_manual_params(
         Parameter dictionary
     """
     params = {
-        "@type": "c3d.c4d.manual",
+        "@type": "manual",
         "manual": manual,
     }
     return params
@@ -4706,14 +5426,14 @@ def c4d_manual_cargs(
     cargs = []
     cargs.extend([
         "-manual",
-        params.get("manual")
+        params.get("manual", None)
     ])
     return cargs
 
 
 def c4d_match_bounding_box_params(
     match_bounding_box: str,
-) -> C4dMatchBoundingBoxParameters:
+) -> C4dMatchBoundingBoxParametersTagged:
     """
     Build parameters.
     
@@ -4734,7 +5454,7 @@ def c4d_match_bounding_box_params(
         Parameter dictionary
     """
     params = {
-        "@type": "c3d.c4d.match_bounding_box",
+        "@type": "match_bounding_box",
         "match_bounding_box": match_bounding_box,
     }
     return params
@@ -4756,14 +5476,14 @@ def c4d_match_bounding_box_cargs(
     cargs = []
     cargs.extend([
         "-match-bounding-box",
-        params.get("match_bounding_box")
+        params.get("match_bounding_box", None)
     ])
     return cargs
 
 
 def c4d_maximum_params(
     maximum: str,
-) -> C4dMaximumParameters:
+) -> C4dMaximumParametersTagged:
     """
     Build parameters.
     
@@ -4782,7 +5502,7 @@ def c4d_maximum_params(
         Parameter dictionary
     """
     params = {
-        "@type": "c3d.c4d.maximum",
+        "@type": "maximum",
         "maximum": maximum,
     }
     return params
@@ -4804,14 +5524,14 @@ def c4d_maximum_cargs(
     cargs = []
     cargs.extend([
         "-maximum",
-        params.get("maximum")
+        params.get("maximum", None)
     ])
     return cargs
 
 
 def c4d_multicomponent_split_params(
     multicomponent_split: str,
-) -> C4dMulticomponentSplitParameters:
+) -> C4dMulticomponentSplitParametersTagged:
     """
     Build parameters.
     
@@ -4838,7 +5558,7 @@ def c4d_multicomponent_split_params(
         Parameter dictionary
     """
     params = {
-        "@type": "c3d.c4d.multicomponent_split",
+        "@type": "multicomponent_split",
         "multicomponent_split": multicomponent_split,
     }
     return params
@@ -4860,14 +5580,14 @@ def c4d_multicomponent_split_cargs(
     cargs = []
     cargs.extend([
         "-mcs",
-        params.get("multicomponent_split")
+        params.get("multicomponent_split", None)
     ])
     return cargs
 
 
 def c4d_mean_params(
     mean: str,
-) -> C4dMeanParameters:
+) -> C4dMeanParametersTagged:
     """
     Build parameters.
     
@@ -4884,7 +5604,7 @@ def c4d_mean_params(
         Parameter dictionary
     """
     params = {
-        "@type": "c3d.c4d.mean",
+        "@type": "mean",
         "mean": mean,
     }
     return params
@@ -4906,14 +5626,14 @@ def c4d_mean_cargs(
     cargs = []
     cargs.extend([
         "-mean",
-        params.get("mean")
+        params.get("mean", None)
     ])
     return cargs
 
 
 def c4d_median_filter_params(
     median_filter: str,
-) -> C4dMedianFilterParameters:
+) -> C4dMedianFilterParametersTagged:
     """
     Build parameters.
     
@@ -4932,7 +5652,7 @@ def c4d_median_filter_params(
         Parameter dictionary
     """
     params = {
-        "@type": "c3d.c4d.median_filter",
+        "@type": "median_filter",
         "median_filter": median_filter,
     }
     return params
@@ -4954,14 +5674,14 @@ def c4d_median_filter_cargs(
     cargs = []
     cargs.extend([
         "-median",
-        params.get("median_filter")
+        params.get("median_filter", None)
     ])
     return cargs
 
 
 def c4d_merge_params(
     merge: str,
-) -> C4dMergeParameters:
+) -> C4dMergeParametersTagged:
     """
     Build parameters.
     
@@ -4977,7 +5697,7 @@ def c4d_merge_params(
         Parameter dictionary
     """
     params = {
-        "@type": "c3d.c4d.merge",
+        "@type": "merge",
         "merge": merge,
     }
     return params
@@ -4999,14 +5719,14 @@ def c4d_merge_cargs(
     cargs = []
     cargs.extend([
         "-merge",
-        params.get("merge")
+        params.get("merge", None)
     ])
     return cargs
 
 
 def c4d_mean_filter_params(
     mean_filter: str,
-) -> C4dMeanFilterParameters:
+) -> C4dMeanFilterParametersTagged:
     """
     Build parameters.
     
@@ -5025,7 +5745,7 @@ def c4d_mean_filter_params(
         Parameter dictionary
     """
     params = {
-        "@type": "c3d.c4d.mean_filter",
+        "@type": "mean_filter",
         "mean_filter": mean_filter,
     }
     return params
@@ -5047,14 +5767,14 @@ def c4d_mean_filter_cargs(
     cargs = []
     cargs.extend([
         "-mf",
-        params.get("mean_filter")
+        params.get("mean_filter", None)
     ])
     return cargs
 
 
 def c4d_mutual_info_params(
     mutual_info: str,
-) -> C4dMutualInfoParameters:
+) -> C4dMutualInfoParametersTagged:
     """
     Build parameters.
     
@@ -5073,7 +5793,7 @@ def c4d_mutual_info_params(
         Parameter dictionary
     """
     params = {
-        "@type": "c3d.c4d.mutual_info",
+        "@type": "mutual_info",
         "mutual_info": mutual_info,
     }
     return params
@@ -5095,14 +5815,14 @@ def c4d_mutual_info_cargs(
     cargs = []
     cargs.extend([
         "-mi",
-        params.get("mutual_info")
+        params.get("mutual_info", None)
     ])
     return cargs
 
 
 def c4d_minimum_params(
     minimum: str,
-) -> C4dMinimumParameters:
+) -> C4dMinimumParametersTagged:
     """
     Build parameters.
     
@@ -5121,7 +5841,7 @@ def c4d_minimum_params(
         Parameter dictionary
     """
     params = {
-        "@type": "c3d.c4d.minimum",
+        "@type": "minimum",
         "minimum": minimum,
     }
     return params
@@ -5143,14 +5863,14 @@ def c4d_minimum_cargs(
     cargs = []
     cargs.extend([
         "-minimum",
-        params.get("minimum")
+        params.get("minimum", None)
     ])
     return cargs
 
 
 def c4d_mixture_model_params(
     mixture_model: str,
-) -> C4dMixtureModelParameters:
+) -> C4dMixtureModelParametersTagged:
     """
     Build parameters.
     
@@ -5160,7 +5880,7 @@ def c4d_mixture_model_params(
         Parameter dictionary
     """
     params = {
-        "@type": "c3d.c4d.mixture_model",
+        "@type": "mixture_model",
         "mixture_model": mixture_model,
     }
     return params
@@ -5182,14 +5902,14 @@ def c4d_mixture_model_cargs(
     cargs = []
     cargs.extend([
         "-mixture",
-        params.get("mixture_model")
+        params.get("mixture_model", None)
     ])
     return cargs
 
 
 def c4d_moments_params(
     moments: str,
-) -> C4dMomentsParameters:
+) -> C4dMomentsParametersTagged:
     """
     Build parameters.
     
@@ -5199,7 +5919,7 @@ def c4d_moments_params(
         Parameter dictionary
     """
     params = {
-        "@type": "c3d.c4d.moments",
+        "@type": "moments",
         "moments": moments,
     }
     return params
@@ -5221,14 +5941,14 @@ def c4d_moments_cargs(
     cargs = []
     cargs.extend([
         "-moments",
-        params.get("moments")
+        params.get("moments", None)
     ])
     return cargs
 
 
 def c4d_mattes_mutual_info_params(
     mattes_mutual_info: str,
-) -> C4dMattesMutualInfoParameters:
+) -> C4dMattesMutualInfoParametersTagged:
     """
     Build parameters.
     
@@ -5238,7 +5958,7 @@ def c4d_mattes_mutual_info_params(
         Parameter dictionary
     """
     params = {
-        "@type": "c3d.c4d.mattes_mutual_info",
+        "@type": "mattes_mutual_info",
         "mattes_mutual_info": mattes_mutual_info,
     }
     return params
@@ -5260,14 +5980,14 @@ def c4d_mattes_mutual_info_cargs(
     cargs = []
     cargs.extend([
         "-mmi",
-        params.get("mattes_mutual_info")
+        params.get("mattes_mutual_info", None)
     ])
     return cargs
 
 
 def c4d_mean_square_params(
     mean_square: str,
-) -> C4dMeanSquareParameters:
+) -> C4dMeanSquareParametersTagged:
     """
     Build parameters.
     
@@ -5304,7 +6024,7 @@ def c4d_mean_square_params(
         Parameter dictionary
     """
     params = {
-        "@type": "c3d.c4d.mean_square",
+        "@type": "mean_square",
         "mean_square": mean_square,
     }
     return params
@@ -5326,14 +6046,14 @@ def c4d_mean_square_cargs(
     cargs = []
     cargs.extend([
         "-msq",
-        params.get("mean_square")
+        params.get("mean_square", None)
     ])
     return cargs
 
 
 def c4d_multiply_params(
     multiply: str,
-) -> C4dMultiplyParameters:
+) -> C4dMultiplyParametersTagged:
     """
     Build parameters.
     
@@ -5360,7 +6080,7 @@ def c4d_multiply_params(
         Parameter dictionary
     """
     params = {
-        "@type": "c3d.c4d.multiply",
+        "@type": "multiply",
         "multiply": multiply,
     }
     return params
@@ -5382,14 +6102,14 @@ def c4d_multiply_cargs(
     cargs = []
     cargs.extend([
         "-multiply",
-        params.get("multiply")
+        params.get("multiply", None)
     ])
     return cargs
 
 
 def c4d_normalized_cross_correlation_params(
     normalized_cross_correlation: str,
-) -> C4dNormalizedCrossCorrelationParameters:
+) -> C4dNormalizedCrossCorrelationParametersTagged:
     """
     Build parameters.
     
@@ -5408,7 +6128,7 @@ def c4d_normalized_cross_correlation_params(
         Parameter dictionary
     """
     params = {
-        "@type": "c3d.c4d.normalized_cross_correlation",
+        "@type": "normalized_cross_correlation",
         "normalized_cross_correlation": normalized_cross_correlation,
     }
     return params
@@ -5430,14 +6150,14 @@ def c4d_normalized_cross_correlation_cargs(
     cargs = []
     cargs.extend([
         "-ncc",
-        params.get("normalized_cross_correlation")
+        params.get("normalized_cross_correlation", None)
     ])
     return cargs
 
 
 def c4d_normalized_correlation_params(
     normalized_correlation: str,
-) -> C4dNormalizedCorrelationParameters:
+) -> C4dNormalizedCorrelationParametersTagged:
     """
     Build parameters.
     
@@ -5453,7 +6173,7 @@ def c4d_normalized_correlation_params(
         Parameter dictionary
     """
     params = {
-        "@type": "c3d.c4d.normalized_correlation",
+        "@type": "normalized_correlation",
         "normalized_correlation": normalized_correlation,
     }
     return params
@@ -5475,14 +6195,14 @@ def c4d_normalized_correlation_cargs(
     cargs = []
     cargs.extend([
         "-ncor",
-        params.get("normalized_correlation")
+        params.get("normalized_correlation", None)
     ])
     return cargs
 
 
 def c4d_normalized_mutual_info_params(
     normalized_mutual_info: str,
-) -> C4dNormalizedMutualInfoParameters:
+) -> C4dNormalizedMutualInfoParametersTagged:
     """
     Build parameters.
     
@@ -5498,7 +6218,7 @@ def c4d_normalized_mutual_info_params(
         Parameter dictionary
     """
     params = {
-        "@type": "c3d.c4d.normalized_mutual_info",
+        "@type": "normalized_mutual_info",
         "normalized_mutual_info": normalized_mutual_info,
     }
     return params
@@ -5520,14 +6240,14 @@ def c4d_normalized_mutual_info_cargs(
     cargs = []
     cargs.extend([
         "-nmi",
-        params.get("normalized_mutual_info")
+        params.get("normalized_mutual_info", None)
     ])
     return cargs
 
 
 def c4d_noise_gaussian_params(
     noise_gaussian: str,
-) -> C4dNoiseGaussianParameters:
+) -> C4dNoiseGaussianParametersTagged:
     """
     Build parameters.
     
@@ -5545,7 +6265,7 @@ def c4d_noise_gaussian_params(
         Parameter dictionary
     """
     params = {
-        "@type": "c3d.c4d.noise_gaussian",
+        "@type": "noise_gaussian",
         "noise_gaussian": noise_gaussian,
     }
     return params
@@ -5567,14 +6287,14 @@ def c4d_noise_gaussian_cargs(
     cargs = []
     cargs.extend([
         "-noise-gaussian",
-        params.get("noise_gaussian")
+        params.get("noise_gaussian", None)
     ])
     return cargs
 
 
 def c4d_noise_poisson_params(
     noise_poisson: str,
-) -> C4dNoisePoissonParameters:
+) -> C4dNoisePoissonParametersTagged:
     """
     Build parameters.
     
@@ -5590,7 +6310,7 @@ def c4d_noise_poisson_params(
         Parameter dictionary
     """
     params = {
-        "@type": "c3d.c4d.noise_poisson",
+        "@type": "noise_poisson",
         "noise_poisson": noise_poisson,
     }
     return params
@@ -5612,14 +6332,14 @@ def c4d_noise_poisson_cargs(
     cargs = []
     cargs.extend([
         "-noise-poisson",
-        params.get("noise_poisson")
+        params.get("noise_poisson", None)
     ])
     return cargs
 
 
 def c4d_noise_speckle_params(
     noise_speckle: str,
-) -> C4dNoiseSpeckleParameters:
+) -> C4dNoiseSpeckleParametersTagged:
     """
     Build parameters.
     
@@ -5636,7 +6356,7 @@ def c4d_noise_speckle_params(
         Parameter dictionary
     """
     params = {
-        "@type": "c3d.c4d.noise_speckle",
+        "@type": "noise_speckle",
         "noise_speckle": noise_speckle,
     }
     return params
@@ -5658,14 +6378,14 @@ def c4d_noise_speckle_cargs(
     cargs = []
     cargs.extend([
         "-noise-speckle",
-        params.get("noise_speckle")
+        params.get("noise_speckle", None)
     ])
     return cargs
 
 
 def c4d_noise_salt_pepper_params(
     noise_salt_pepper: str,
-) -> C4dNoiseSaltPepperParameters:
+) -> C4dNoiseSaltPepperParametersTagged:
     """
     Build parameters.
     
@@ -5682,7 +6402,7 @@ def c4d_noise_salt_pepper_params(
         Parameter dictionary
     """
     params = {
-        "@type": "c3d.c4d.noise_salt_pepper",
+        "@type": "noise_salt_pepper",
         "noise_salt_pepper": noise_salt_pepper,
     }
     return params
@@ -5704,14 +6424,14 @@ def c4d_noise_salt_pepper_cargs(
     cargs = []
     cargs.extend([
         "-noise-salt-pepper",
-        params.get("noise_salt_pepper")
+        params.get("noise_salt_pepper", None)
     ])
     return cargs
 
 
 def c4d_no_multicomponent_split_params(
     no_multicomponent_split: str,
-) -> C4dNoMulticomponentSplitParameters:
+) -> C4dNoMulticomponentSplitParametersTagged:
     """
     Build parameters.
     
@@ -5726,7 +6446,7 @@ def c4d_no_multicomponent_split_params(
         Parameter dictionary
     """
     params = {
-        "@type": "c3d.c4d.no_multicomponent_split",
+        "@type": "no_multicomponent_split",
         "no_multicomponent_split": no_multicomponent_split,
     }
     return params
@@ -5748,14 +6468,14 @@ def c4d_no_multicomponent_split_cargs(
     cargs = []
     cargs.extend([
         "-nomcs",
-        params.get("no_multicomponent_split")
+        params.get("no_multicomponent_split", None)
     ])
     return cargs
 
 
 def c4d_normalize_local_window_params(
     normalize_local_window: str,
-) -> C4dNormalizeLocalWindowParameters:
+) -> C4dNormalizeLocalWindowParametersTagged:
     """
     Build parameters.
     
@@ -5776,7 +6496,7 @@ def c4d_normalize_local_window_params(
         Parameter dictionary
     """
     params = {
-        "@type": "c3d.c4d.normalize_local_window",
+        "@type": "normalize_local_window",
         "normalize_local_window": normalize_local_window,
     }
     return params
@@ -5798,14 +6518,14 @@ def c4d_normalize_local_window_cargs(
     cargs = []
     cargs.extend([
         "-nlw",
-        params.get("normalize_local_window")
+        params.get("normalize_local_window", None)
     ])
     return cargs
 
 
 def c4d_normpdf_params(
     normpdf: str,
-) -> C4dNormpdfParameters:
+) -> C4dNormpdfParametersTagged:
     """
     Build parameters.
     
@@ -5815,7 +6535,7 @@ def c4d_normpdf_params(
         Parameter dictionary
     """
     params = {
-        "@type": "c3d.c4d.normpdf",
+        "@type": "normpdf",
         "normpdf": normpdf,
     }
     return params
@@ -5837,14 +6557,14 @@ def c4d_normpdf_cargs(
     cargs = []
     cargs.extend([
         "-normpdf",
-        params.get("normpdf")
+        params.get("normpdf", None)
     ])
     return cargs
 
 
 def c4d_noround_params(
     noround: str,
-) -> C4dNoroundParameters:
+) -> C4dNoroundParametersTagged:
     """
     Build parameters.
     
@@ -5864,7 +6584,7 @@ def c4d_noround_params(
         Parameter dictionary
     """
     params = {
-        "@type": "c3d.c4d.noround",
+        "@type": "noround",
         "noround": noround,
     }
     return params
@@ -5886,14 +6606,14 @@ def c4d_noround_cargs(
     cargs = []
     cargs.extend([
         "-noround",
-        params.get("noround")
+        params.get("noround", None)
     ])
     return cargs
 
 
 def c4d_nospm_params(
     nospm: str,
-) -> C4dNospmParameters:
+) -> C4dNospmParametersTagged:
     """
     Build parameters.
     
@@ -5914,7 +6634,7 @@ def c4d_nospm_params(
         Parameter dictionary
     """
     params = {
-        "@type": "c3d.c4d.nospm",
+        "@type": "nospm",
         "nospm": nospm,
     }
     return params
@@ -5936,7 +6656,7 @@ def c4d_nospm_cargs(
     cargs = []
     cargs.extend([
         "-nospm",
-        params.get("nospm")
+        params.get("nospm", None)
     ])
     return cargs
 
@@ -5953,7 +6673,7 @@ class C4dOutputOutputs(typing.NamedTuple):
 
 def c4d_output_params(
     output: str,
-) -> C4dOutputParameters:
+) -> C4dOutputParametersTagged:
     """
     Build parameters.
     
@@ -5978,7 +6698,7 @@ def c4d_output_params(
         Parameter dictionary
     """
     params = {
-        "@type": "c3d.c4d.output",
+        "@type": "output",
         "output": output,
     }
     return params
@@ -6000,7 +6720,7 @@ def c4d_output_cargs(
     cargs = []
     cargs.extend([
         "-o",
-        params.get("output")
+        params.get("output", None)
     ])
     return cargs
 
@@ -6020,14 +6740,14 @@ def c4d_output_outputs(
     """
     ret = C4dOutputOutputs(
         root=execution.output_file("."),
-        output=execution.output_file(params.get("output")),
+        output=execution.output_file(params.get("output", None)),
     )
     return ret
 
 
 def c4d_output_multicomponent_params(
     output_multicomponent: str,
-) -> C4dOutputMulticomponentParameters:
+) -> C4dOutputMulticomponentParametersTagged:
     """
     Build parameters.
     
@@ -6054,7 +6774,7 @@ def c4d_output_multicomponent_params(
         Parameter dictionary
     """
     params = {
-        "@type": "c3d.c4d.output_multicomponent",
+        "@type": "output_multicomponent",
         "output_multicomponent": output_multicomponent,
     }
     return params
@@ -6076,14 +6796,14 @@ def c4d_output_multicomponent_cargs(
     cargs = []
     cargs.extend([
         "-omc",
-        params.get("output_multicomponent")
+        params.get("output_multicomponent", None)
     ])
     return cargs
 
 
 def c4d_output_multiple_multicomponent_params(
     output_multiple_multicomponent: str,
-) -> C4dOutputMultipleMulticomponentParameters:
+) -> C4dOutputMultipleMulticomponentParametersTagged:
     """
     Build parameters.
     
@@ -6121,7 +6841,7 @@ def c4d_output_multiple_multicomponent_params(
         Parameter dictionary
     """
     params = {
-        "@type": "c3d.c4d.output_multiple_multicomponent",
+        "@type": "output_multiple_multicomponent",
         "output_multiple_multicomponent": output_multiple_multicomponent,
     }
     return params
@@ -6143,14 +6863,14 @@ def c4d_output_multiple_multicomponent_cargs(
     cargs = []
     cargs.extend([
         "-oomc",
-        params.get("output_multiple_multicomponent")
+        params.get("output_multiple_multicomponent", None)
     ])
     return cargs
 
 
 def c4d_orient_params(
     orient: str,
-) -> C4dOrientParameters:
+) -> C4dOrientParametersTagged:
     """
     Build parameters.
     
@@ -6184,7 +6904,7 @@ def c4d_orient_params(
         Parameter dictionary
     """
     params = {
-        "@type": "c3d.c4d.orient",
+        "@type": "orient",
         "orient": orient,
     }
     return params
@@ -6206,14 +6926,14 @@ def c4d_orient_cargs(
     cargs = []
     cargs.extend([
         "-orient",
-        params.get("orient")
+        params.get("orient", None)
     ])
     return cargs
 
 
 def c4d_output_multiple_params(
     output_multiple: str,
-) -> C4dOutputMultipleParameters:
+) -> C4dOutputMultipleParametersTagged:
     """
     Build parameters.
     
@@ -6247,7 +6967,7 @@ def c4d_output_multiple_params(
         Parameter dictionary
     """
     params = {
-        "@type": "c3d.c4d.output_multiple",
+        "@type": "output_multiple",
         "output_multiple": output_multiple,
     }
     return params
@@ -6269,14 +6989,14 @@ def c4d_output_multiple_cargs(
     cargs = []
     cargs.extend([
         "-oo",
-        params.get("output_multiple")
+        params.get("output_multiple", None)
     ])
     return cargs
 
 
 def c4d_orient_1_params(
     orient: str,
-) -> C4dOrient1Parameters:
+) -> C4dOrient1ParametersTagged:
     """
     Build parameters.
     
@@ -6310,7 +7030,7 @@ def c4d_orient_1_params(
         Parameter dictionary
     """
     params = {
-        "@type": "c3d.c4d.orient",
+        "@type": "orient_1",
         "orient": orient,
     }
     return params
@@ -6332,14 +7052,14 @@ def c4d_orient_1_cargs(
     cargs = []
     cargs.extend([
         "-orient",
-        params.get("orient")
+        params.get("orient", None)
     ])
     return cargs
 
 
 def c4d_origin_params(
     origin: str,
-) -> C4dOriginParameters:
+) -> C4dOriginParametersTagged:
     """
     Build parameters.
     
@@ -6357,7 +7077,7 @@ def c4d_origin_params(
         Parameter dictionary
     """
     params = {
-        "@type": "c3d.c4d.origin",
+        "@type": "origin",
         "origin": origin,
     }
     return params
@@ -6379,14 +7099,14 @@ def c4d_origin_cargs(
     cargs = []
     cargs.extend([
         "-origin",
-        params.get("origin")
+        params.get("origin", None)
     ])
     return cargs
 
 
 def c4d_origin_voxel_params(
     origin_voxel: str,
-) -> C4dOriginVoxelParameters:
+) -> C4dOriginVoxelParametersTagged:
     """
     Build parameters.
     
@@ -6406,7 +7126,7 @@ def c4d_origin_voxel_params(
         Parameter dictionary
     """
     params = {
-        "@type": "c3d.c4d.origin_voxel",
+        "@type": "origin_voxel",
         "origin_voxel": origin_voxel,
     }
     return params
@@ -6428,14 +7148,14 @@ def c4d_origin_voxel_cargs(
     cargs = []
     cargs.extend([
         "-origin-voxel",
-        params.get("origin_voxel")
+        params.get("origin_voxel", None)
     ])
     return cargs
 
 
 def c4d_origin_voxel_coord_params(
     origin_voxel_coord: str,
-) -> C4dOriginVoxelCoordParameters:
+) -> C4dOriginVoxelCoordParametersTagged:
     """
     Build parameters.
     
@@ -6455,7 +7175,7 @@ def c4d_origin_voxel_coord_params(
         Parameter dictionary
     """
     params = {
-        "@type": "c3d.c4d.origin_voxel_coord",
+        "@type": "origin_voxel_coord",
         "origin_voxel_coord": origin_voxel_coord,
     }
     return params
@@ -6477,14 +7197,14 @@ def c4d_origin_voxel_coord_cargs(
     cargs = []
     cargs.extend([
         "-origin-voxel-coord",
-        params.get("origin_voxel_coord")
+        params.get("origin_voxel_coord", None)
     ])
     return cargs
 
 
 def c4d_overlap_params(
     overlap: str,
-) -> C4dOverlapParameters:
+) -> C4dOverlapParametersTagged:
     """
     Build parameters.
     
@@ -6524,7 +7244,7 @@ def c4d_overlap_params(
         Parameter dictionary
     """
     params = {
-        "@type": "c3d.c4d.overlap",
+        "@type": "overlap",
         "overlap": overlap,
     }
     return params
@@ -6546,14 +7266,14 @@ def c4d_overlap_cargs(
     cargs = []
     cargs.extend([
         "-overlap",
-        params.get("overlap")
+        params.get("overlap", None)
     ])
     return cargs
 
 
 def c4d_overlay_label_image_params(
     overlay_label_image: str,
-) -> C4dOverlayLabelImageParameters:
+) -> C4dOverlayLabelImageParametersTagged:
     """
     Build parameters.
     
@@ -6603,7 +7323,7 @@ def c4d_overlay_label_image_params(
         Parameter dictionary
     """
     params = {
-        "@type": "c3d.c4d.overlay_label_image",
+        "@type": "overlay_label_image",
         "overlay_label_image": overlay_label_image,
     }
     return params
@@ -6625,14 +7345,14 @@ def c4d_overlay_label_image_cargs(
     cargs = []
     cargs.extend([
         "-overlay-label-image",
-        params.get("overlay_label_image")
+        params.get("overlay_label_image", None)
     ])
     return cargs
 
 
 def c4d_pad_params(
     pad: str,
-) -> C4dPadParameters:
+) -> C4dPadParametersTagged:
     """
     Build parameters.
     
@@ -6669,7 +7389,7 @@ def c4d_pad_params(
         Parameter dictionary
     """
     params = {
-        "@type": "c3d.c4d.pad",
+        "@type": "pad",
         "pad": pad,
     }
     return params
@@ -6691,14 +7411,14 @@ def c4d_pad_cargs(
     cargs = []
     cargs.extend([
         "-pad",
-        params.get("pad")
+        params.get("pad", None)
     ])
     return cargs
 
 
 def c4d_pad_to_params(
     pad_to: str,
-) -> C4dPadToParameters:
+) -> C4dPadToParametersTagged:
     """
     Build parameters.
     
@@ -6708,7 +7428,7 @@ def c4d_pad_to_params(
         Parameter dictionary
     """
     params = {
-        "@type": "c3d.c4d.pad_to",
+        "@type": "pad_to",
         "pad_to": pad_to,
     }
     return params
@@ -6730,14 +7450,14 @@ def c4d_pad_to_cargs(
     cargs = []
     cargs.extend([
         "-padto",
-        params.get("pad_to")
+        params.get("pad_to", None)
     ])
     return cargs
 
 
 def c4d_pca_params(
     pca: str,
-) -> C4dPcaParameters:
+) -> C4dPcaParametersTagged:
     """
     Build parameters.
     
@@ -6761,7 +7481,7 @@ def c4d_pca_params(
         Parameter dictionary
     """
     params = {
-        "@type": "c3d.c4d.pca",
+        "@type": "pca",
         "pca": pca,
     }
     return params
@@ -6783,14 +7503,14 @@ def c4d_pca_cargs(
     cargs = []
     cargs.extend([
         "-pca",
-        params.get("pca")
+        params.get("pca", None)
     ])
     return cargs
 
 
 def c4d_percent_intensity_mode_params(
     percent_intensity_mode: str,
-) -> C4dPercentIntensityModeParameters:
+) -> C4dPercentIntensityModeParametersTagged:
     """
     Build parameters.
     
@@ -6826,7 +7546,7 @@ def c4d_percent_intensity_mode_params(
         Parameter dictionary
     """
     params = {
-        "@type": "c3d.c4d.percent_intensity_mode",
+        "@type": "percent_intensity_mode",
         "percent_intensity_mode": percent_intensity_mode,
     }
     return params
@@ -6848,14 +7568,14 @@ def c4d_percent_intensity_mode_cargs(
     cargs = []
     cargs.extend([
         "-percent-intensity-mode",
-        params.get("percent_intensity_mode")
+        params.get("percent_intensity_mode", None)
     ])
     return cargs
 
 
 def c4d_pixel_params(
     pixel: str,
-) -> C4dPixelParameters:
+) -> C4dPixelParametersTagged:
     """
     Build parameters.
     
@@ -6865,7 +7585,7 @@ def c4d_pixel_params(
         Parameter dictionary
     """
     params = {
-        "@type": "c3d.c4d.pixel",
+        "@type": "pixel",
         "pixel": pixel,
     }
     return params
@@ -6887,14 +7607,14 @@ def c4d_pixel_cargs(
     cargs = []
     cargs.extend([
         "-pixel",
-        params.get("pixel")
+        params.get("pixel", None)
     ])
     return cargs
 
 
 def c4d_pop_params(
     pop_: str,
-) -> C4dPopParameters:
+) -> C4dPopParametersTagged:
     """
     Build parameters.
     
@@ -6909,7 +7629,7 @@ def c4d_pop_params(
         Parameter dictionary
     """
     params = {
-        "@type": "c3d.c4d.pop",
+        "@type": "pop",
         "pop": pop_,
     }
     return params
@@ -6931,14 +7651,14 @@ def c4d_pop_cargs(
     cargs = []
     cargs.extend([
         "-pop",
-        params.get("pop")
+        params.get("pop", None)
     ])
     return cargs
 
 
 def c4d_popas_params(
     popas: str,
-) -> C4dPopasParameters:
+) -> C4dPopasParametersTagged:
     """
     Build parameters.
     
@@ -6954,7 +7674,7 @@ def c4d_popas_params(
         Parameter dictionary
     """
     params = {
-        "@type": "c3d.c4d.popas",
+        "@type": "popas",
         "popas": popas,
     }
     return params
@@ -6976,14 +7696,14 @@ def c4d_popas_cargs(
     cargs = []
     cargs.extend([
         "-popas",
-        params.get("popas")
+        params.get("popas", None)
     ])
     return cargs
 
 
 def c4d_probe_params(
     probe: str,
-) -> C4dProbeParameters:
+) -> C4dProbeParametersTagged:
     """
     Build parameters.
     
@@ -7003,7 +7723,7 @@ def c4d_probe_params(
         Parameter dictionary
     """
     params = {
-        "@type": "c3d.c4d.probe",
+        "@type": "probe",
         "probe": probe,
     }
     return params
@@ -7025,14 +7745,14 @@ def c4d_probe_cargs(
     cargs = []
     cargs.extend([
         "-probe",
-        params.get("probe")
+        params.get("probe", None)
     ])
     return cargs
 
 
 def c4d_push_params(
     push: str,
-) -> C4dPushParameters:
+) -> C4dPushParametersTagged:
     """
     Build parameters.
     
@@ -7054,7 +7774,7 @@ def c4d_push_params(
         Parameter dictionary
     """
     params = {
-        "@type": "c3d.c4d.push",
+        "@type": "push",
         "push": push,
     }
     return params
@@ -7076,14 +7796,14 @@ def c4d_push_cargs(
     cargs = []
     cargs.extend([
         "-push",
-        params.get("push")
+        params.get("push", None)
     ])
     return cargs
 
 
 def c4d_rank_params(
     rank: str,
-) -> C4dRankParameters:
+) -> C4dRankParametersTagged:
     """
     Build parameters.
     
@@ -7103,7 +7823,7 @@ def c4d_rank_params(
         Parameter dictionary
     """
     params = {
-        "@type": "c3d.c4d.rank",
+        "@type": "rank",
         "rank": rank,
     }
     return params
@@ -7125,14 +7845,14 @@ def c4d_rank_cargs(
     cargs = []
     cargs.extend([
         "-rank",
-        params.get("rank")
+        params.get("rank", None)
     ])
     return cargs
 
 
 def c4d_reciprocal_params(
     reciprocal: str,
-) -> C4dReciprocalParameters:
+) -> C4dReciprocalParametersTagged:
     """
     Build parameters.
     
@@ -7149,7 +7869,7 @@ def c4d_reciprocal_params(
         Parameter dictionary
     """
     params = {
-        "@type": "c3d.c4d.reciprocal",
+        "@type": "reciprocal",
         "reciprocal": reciprocal,
     }
     return params
@@ -7171,14 +7891,14 @@ def c4d_reciprocal_cargs(
     cargs = []
     cargs.extend([
         "-reciprocal",
-        params.get("reciprocal")
+        params.get("reciprocal", None)
     ])
     return cargs
 
 
 def c4d_region_params(
     region: str,
-) -> C4dRegionParameters:
+) -> C4dRegionParametersTagged:
     """
     Build parameters.
     
@@ -7197,7 +7917,7 @@ def c4d_region_params(
         Parameter dictionary
     """
     params = {
-        "@type": "c3d.c4d.region",
+        "@type": "region",
         "region": region,
     }
     return params
@@ -7219,14 +7939,14 @@ def c4d_region_cargs(
     cargs = []
     cargs.extend([
         "-region",
-        params.get("region")
+        params.get("region", None)
     ])
     return cargs
 
 
 def c4d_reorder_params(
     reorder: str,
-) -> C4dReorderParameters:
+) -> C4dReorderParametersTagged:
     """
     Build parameters.
     
@@ -7268,7 +7988,7 @@ def c4d_reorder_params(
         Parameter dictionary
     """
     params = {
-        "@type": "c3d.c4d.reorder",
+        "@type": "reorder",
         "reorder": reorder,
     }
     return params
@@ -7290,14 +8010,14 @@ def c4d_reorder_cargs(
     cargs = []
     cargs.extend([
         "-reorder",
-        params.get("reorder")
+        params.get("reorder", None)
     ])
     return cargs
 
 
 def c4d_retain_labels_params(
     retain_labels: str,
-) -> C4dRetainLabelsParameters:
+) -> C4dRetainLabelsParametersTagged:
     """
     Build parameters.
     
@@ -7315,7 +8035,7 @@ def c4d_retain_labels_params(
         Parameter dictionary
     """
     params = {
-        "@type": "c3d.c4d.retain_labels",
+        "@type": "retain_labels",
         "retain_labels": retain_labels,
     }
     return params
@@ -7337,14 +8057,14 @@ def c4d_retain_labels_cargs(
     cargs = []
     cargs.extend([
         "-retain-labels",
-        params.get("retain_labels")
+        params.get("retain_labels", None)
     ])
     return cargs
 
 
 def c4d_rf_apply_params(
     rf_apply: str,
-) -> C4dRfApplyParameters:
+) -> C4dRfApplyParametersTagged:
     """
     Build parameters.
     
@@ -7363,7 +8083,7 @@ def c4d_rf_apply_params(
         Parameter dictionary
     """
     params = {
-        "@type": "c3d.c4d.rf_apply",
+        "@type": "rf_apply",
         "rf_apply": rf_apply,
     }
     return params
@@ -7385,14 +8105,14 @@ def c4d_rf_apply_cargs(
     cargs = []
     cargs.extend([
         "-rf-apply",
-        params.get("rf_apply")
+        params.get("rf_apply", None)
     ])
     return cargs
 
 
 def c4d_rf_train_params(
     rf_train: str,
-) -> C4dRfTrainParameters:
+) -> C4dRfTrainParametersTagged:
     """
     Build parameters.
     
@@ -7451,7 +8171,7 @@ def c4d_rf_train_params(
         Parameter dictionary
     """
     params = {
-        "@type": "c3d.c4d.rf_train",
+        "@type": "rf_train",
         "rf_train": rf_train,
     }
     return params
@@ -7473,14 +8193,14 @@ def c4d_rf_train_cargs(
     cargs = []
     cargs.extend([
         "-rf-train",
-        params.get("rf_train")
+        params.get("rf_train", None)
     ])
     return cargs
 
 
 def c4d_rf_param_patch_params(
     rf_param_patch: str,
-) -> C4dRfParamPatchParameters:
+) -> C4dRfParamPatchParametersTagged:
     """
     Build parameters.
     
@@ -7503,7 +8223,7 @@ def c4d_rf_param_patch_params(
         Parameter dictionary
     """
     params = {
-        "@type": "c3d.c4d.rf_param_patch",
+        "@type": "rf_param_patch",
         "rf_param_patch": rf_param_patch,
     }
     return params
@@ -7525,14 +8245,14 @@ def c4d_rf_param_patch_cargs(
     cargs = []
     cargs.extend([
         "-rf-param-patch",
-        params.get("rf_param_patch")
+        params.get("rf_param_patch", None)
     ])
     return cargs
 
 
 def c4d_rf_param_usexyz_params(
     rf_param_usexyz: str,
-) -> C4dRfParamUsexyzParameters:
+) -> C4dRfParamUsexyzParametersTagged:
     """
     Build parameters.
     
@@ -7548,7 +8268,7 @@ def c4d_rf_param_usexyz_params(
         Parameter dictionary
     """
     params = {
-        "@type": "c3d.c4d.rf_param_usexyz",
+        "@type": "rf_param_usexyz",
         "rf_param_usexyz": rf_param_usexyz,
     }
     return params
@@ -7570,14 +8290,14 @@ def c4d_rf_param_usexyz_cargs(
     cargs = []
     cargs.extend([
         "-rf-param-usexyz",
-        params.get("rf_param_usexyz")
+        params.get("rf_param_usexyz", None)
     ])
     return cargs
 
 
 def c4d_rf_param_nousexyz_params(
     rf_param_nousexyz: str,
-) -> C4dRfParamNousexyzParameters:
+) -> C4dRfParamNousexyzParametersTagged:
     """
     Build parameters.
     
@@ -7587,7 +8307,7 @@ def c4d_rf_param_nousexyz_params(
         Parameter dictionary
     """
     params = {
-        "@type": "c3d.c4d.rf_param_nousexyz",
+        "@type": "rf_param_nousexyz",
         "rf_param_nousexyz": rf_param_nousexyz,
     }
     return params
@@ -7609,14 +8329,14 @@ def c4d_rf_param_nousexyz_cargs(
     cargs = []
     cargs.extend([
         "-rf-param-nousexyz",
-        params.get("rf_param_nousexyz")
+        params.get("rf_param_nousexyz", None)
     ])
     return cargs
 
 
 def c4d_rf_param_ntrees_params(
     rf_param_ntrees: str,
-) -> C4dRfParamNtreesParameters:
+) -> C4dRfParamNtreesParametersTagged:
     """
     Build parameters.
     
@@ -7631,7 +8351,7 @@ def c4d_rf_param_ntrees_params(
         Parameter dictionary
     """
     params = {
-        "@type": "c3d.c4d.rf_param_ntrees",
+        "@type": "rf_param_ntrees",
         "rf_param_ntrees": rf_param_ntrees,
     }
     return params
@@ -7653,14 +8373,14 @@ def c4d_rf_param_ntrees_cargs(
     cargs = []
     cargs.extend([
         "-rf-param-ntrees",
-        params.get("rf_param_ntrees")
+        params.get("rf_param_ntrees", None)
     ])
     return cargs
 
 
 def c4d_rf_param_treedepth_params(
     rf_param_treedepth: str,
-) -> C4dRfParamTreedepthParameters:
+) -> C4dRfParamTreedepthParametersTagged:
     """
     Build parameters.
     
@@ -7675,7 +8395,7 @@ def c4d_rf_param_treedepth_params(
         Parameter dictionary
     """
     params = {
-        "@type": "c3d.c4d.rf_param_treedepth",
+        "@type": "rf_param_treedepth",
         "rf_param_treedepth": rf_param_treedepth,
     }
     return params
@@ -7697,14 +8417,14 @@ def c4d_rf_param_treedepth_cargs(
     cargs = []
     cargs.extend([
         "-rf-param-treedepth",
-        params.get("rf_param_treedepth")
+        params.get("rf_param_treedepth", None)
     ])
     return cargs
 
 
 def c4d_set_sform_params(
     set_sform: str,
-) -> C4dSetSformParameters:
+) -> C4dSetSformParametersTagged:
     """
     Build parameters.
     
@@ -7719,7 +8439,7 @@ def c4d_set_sform_params(
         Parameter dictionary
     """
     params = {
-        "@type": "c3d.c4d.set_sform",
+        "@type": "set_sform",
         "set_sform": set_sform,
     }
     return params
@@ -7741,14 +8461,14 @@ def c4d_set_sform_cargs(
     cargs = []
     cargs.extend([
         "-set-sform",
-        params.get("set_sform")
+        params.get("set_sform", None)
     ])
     return cargs
 
 
 def c4d_replace_params(
     replace: str,
-) -> C4dReplaceParameters:
+) -> C4dReplaceParametersTagged:
     """
     Build parameters.
     
@@ -7765,7 +8485,7 @@ def c4d_replace_params(
         Parameter dictionary
     """
     params = {
-        "@type": "c3d.c4d.replace",
+        "@type": "replace",
         "replace": replace,
     }
     return params
@@ -7787,14 +8507,14 @@ def c4d_replace_cargs(
     cargs = []
     cargs.extend([
         "-replace",
-        params.get("replace")
+        params.get("replace", None)
     ])
     return cargs
 
 
 def c4d_resample_params(
     resample: str,
-) -> C4dResampleParameters:
+) -> C4dResampleParametersTagged:
     """
     Build parameters.
     
@@ -7818,7 +8538,7 @@ def c4d_resample_params(
         Parameter dictionary
     """
     params = {
-        "@type": "c3d.c4d.resample",
+        "@type": "resample",
         "resample": resample,
     }
     return params
@@ -7840,14 +8560,14 @@ def c4d_resample_cargs(
     cargs = []
     cargs.extend([
         "-resample",
-        params.get("resample")
+        params.get("resample", None)
     ])
     return cargs
 
 
 def c4d_resample_iso_params(
     resample_iso: str,
-) -> C4dResampleIsoParameters:
+) -> C4dResampleIsoParametersTagged:
     """
     Build parameters.
     
@@ -7870,7 +8590,7 @@ def c4d_resample_iso_params(
         Parameter dictionary
     """
     params = {
-        "@type": "c3d.c4d.resample_iso",
+        "@type": "resample_iso",
         "resample_iso": resample_iso,
     }
     return params
@@ -7892,14 +8612,14 @@ def c4d_resample_iso_cargs(
     cargs = []
     cargs.extend([
         "-resample-iso",
-        params.get("resample_iso")
+        params.get("resample_iso", None)
     ])
     return cargs
 
 
 def c4d_resample_mm_params(
     resample_mm: str,
-) -> C4dResampleMmParameters:
+) -> C4dResampleMmParametersTagged:
     """
     Build parameters.
     
@@ -7918,7 +8638,7 @@ def c4d_resample_mm_params(
         Parameter dictionary
     """
     params = {
-        "@type": "c3d.c4d.resample_mm",
+        "@type": "resample_mm",
         "resample_mm": resample_mm,
     }
     return params
@@ -7940,14 +8660,14 @@ def c4d_resample_mm_cargs(
     cargs = []
     cargs.extend([
         "-resample-mm",
-        params.get("resample_mm")
+        params.get("resample_mm", None)
     ])
     return cargs
 
 
 def c4d_reslice_itk_params(
     reslice_itk: str,
-) -> C4dResliceItkParameters:
+) -> C4dResliceItkParametersTagged:
     """
     Build parameters.
     
@@ -7962,7 +8682,7 @@ def c4d_reslice_itk_params(
         Parameter dictionary
     """
     params = {
-        "@type": "c3d.c4d.reslice_itk",
+        "@type": "reslice_itk",
         "reslice_itk": reslice_itk,
     }
     return params
@@ -7984,14 +8704,14 @@ def c4d_reslice_itk_cargs(
     cargs = []
     cargs.extend([
         "-reslice-itk",
-        params.get("reslice_itk")
+        params.get("reslice_itk", None)
     ])
     return cargs
 
 
 def c4d_reslice_matrix_params(
     reslice_matrix: str,
-) -> C4dResliceMatrixParameters:
+) -> C4dResliceMatrixParametersTagged:
     """
     Build parameters.
     
@@ -8001,7 +8721,7 @@ def c4d_reslice_matrix_params(
         Parameter dictionary
     """
     params = {
-        "@type": "c3d.c4d.reslice_matrix",
+        "@type": "reslice_matrix",
         "reslice_matrix": reslice_matrix,
     }
     return params
@@ -8023,14 +8743,14 @@ def c4d_reslice_matrix_cargs(
     cargs = []
     cargs.extend([
         "-reslice-matrix",
-        params.get("reslice_matrix")
+        params.get("reslice_matrix", None)
     ])
     return cargs
 
 
 def c4d_reslice_identity_params(
     reslice_identity: str,
-) -> C4dResliceIdentityParameters:
+) -> C4dResliceIdentityParametersTagged:
     """
     Build parameters.
     
@@ -8052,7 +8772,7 @@ def c4d_reslice_identity_params(
         Parameter dictionary
     """
     params = {
-        "@type": "c3d.c4d.reslice_identity",
+        "@type": "reslice_identity",
         "reslice_identity": reslice_identity,
     }
     return params
@@ -8074,14 +8794,14 @@ def c4d_reslice_identity_cargs(
     cargs = []
     cargs.extend([
         "-reslice-identity",
-        params.get("reslice_identity")
+        params.get("reslice_identity", None)
     ])
     return cargs
 
 
 def c4d_rgb2hsv_params(
     rgb2hsv: str,
-) -> C4dRgb2hsvParameters:
+) -> C4dRgb2hsvParametersTagged:
     """
     Build parameters.
     
@@ -8100,7 +8820,7 @@ def c4d_rgb2hsv_params(
         Parameter dictionary
     """
     params = {
-        "@type": "c3d.c4d.rgb2hsv",
+        "@type": "rgb2hsv",
         "rgb2hsv": rgb2hsv,
     }
     return params
@@ -8122,14 +8842,14 @@ def c4d_rgb2hsv_cargs(
     cargs = []
     cargs.extend([
         "-rgb2hsv",
-        params.get("rgb2hsv")
+        params.get("rgb2hsv", None)
     ])
     return cargs
 
 
 def c4d_rms_params(
     rms: str,
-) -> C4dRmsParameters:
+) -> C4dRmsParametersTagged:
     """
     Build parameters.
     
@@ -8155,7 +8875,7 @@ def c4d_rms_params(
         Parameter dictionary
     """
     params = {
-        "@type": "c3d.c4d.rms",
+        "@type": "rms",
         "rms": rms,
     }
     return params
@@ -8177,14 +8897,14 @@ def c4d_rms_cargs(
     cargs = []
     cargs.extend([
         "-rms",
-        params.get("rms")
+        params.get("rms", None)
     ])
     return cargs
 
 
 def c4d_round_params(
     round_: str,
-) -> C4dRoundParameters:
+) -> C4dRoundParametersTagged:
     """
     Build parameters.
     
@@ -8204,7 +8924,7 @@ def c4d_round_params(
         Parameter dictionary
     """
     params = {
-        "@type": "c3d.c4d.round",
+        "@type": "round",
         "round": round_,
     }
     return params
@@ -8226,14 +8946,14 @@ def c4d_round_cargs(
     cargs = []
     cargs.extend([
         "-round",
-        params.get("round")
+        params.get("round", None)
     ])
     return cargs
 
 
 def c4d_scale_params(
     scale: str,
-) -> C4dScaleParameters:
+) -> C4dScaleParametersTagged:
     """
     Build parameters.
     
@@ -8250,7 +8970,7 @@ def c4d_scale_params(
         Parameter dictionary
     """
     params = {
-        "@type": "c3d.c4d.scale",
+        "@type": "scale",
         "scale": scale,
     }
     return params
@@ -8272,14 +8992,14 @@ def c4d_scale_cargs(
     cargs = []
     cargs.extend([
         "-scale",
-        params.get("scale")
+        params.get("scale", None)
     ])
     return cargs
 
 
 def c4d_set_sform_1_params(
     set_sform: str,
-) -> C4dSetSform1Parameters:
+) -> C4dSetSform1ParametersTagged:
     """
     Build parameters.
     
@@ -8294,7 +9014,7 @@ def c4d_set_sform_1_params(
         Parameter dictionary
     """
     params = {
-        "@type": "c3d.c4d.set_sform",
+        "@type": "set_sform_1",
         "set_sform": set_sform,
     }
     return params
@@ -8316,14 +9036,14 @@ def c4d_set_sform_1_cargs(
     cargs = []
     cargs.extend([
         "-set-sform",
-        params.get("set_sform")
+        params.get("set_sform", None)
     ])
     return cargs
 
 
 def c4d_sin_params(
     sin: str,
-) -> C4dSinParameters:
+) -> C4dSinParametersTagged:
     """
     Build parameters.
     
@@ -8338,7 +9058,7 @@ def c4d_sin_params(
         Parameter dictionary
     """
     params = {
-        "@type": "c3d.c4d.sin",
+        "@type": "sin",
         "sin": sin,
     }
     return params
@@ -8360,14 +9080,14 @@ def c4d_sin_cargs(
     cargs = []
     cargs.extend([
         "-sin",
-        params.get("sin")
+        params.get("sin", None)
     ])
     return cargs
 
 
 def c4d_slice_params(
     slice_: str,
-) -> C4dSliceParameters:
+) -> C4dSliceParametersTagged:
     """
     Build parameters.
     
@@ -8402,7 +9122,7 @@ def c4d_slice_params(
         Parameter dictionary
     """
     params = {
-        "@type": "c3d.c4d.slice",
+        "@type": "slice",
         "slice": slice_,
     }
     return params
@@ -8424,14 +9144,14 @@ def c4d_slice_cargs(
     cargs = []
     cargs.extend([
         "-slice",
-        params.get("slice")
+        params.get("slice", None)
     ])
     return cargs
 
 
 def c4d_slice_all_params(
     slice_all: str,
-) -> C4dSliceAllParameters:
+) -> C4dSliceAllParametersTagged:
     """
     Build parameters.
     
@@ -8451,7 +9171,7 @@ def c4d_slice_all_params(
         Parameter dictionary
     """
     params = {
-        "@type": "c3d.c4d.slice_all",
+        "@type": "slice_all",
         "slice_all": slice_all,
     }
     return params
@@ -8473,14 +9193,14 @@ def c4d_slice_all_cargs(
     cargs = []
     cargs.extend([
         "-slice-all",
-        params.get("slice_all")
+        params.get("slice_all", None)
     ])
     return cargs
 
 
 def c4d_sharpen_params(
     sharpen: str,
-) -> C4dSharpenParameters:
+) -> C4dSharpenParametersTagged:
     """
     Build parameters.
     
@@ -8497,7 +9217,7 @@ def c4d_sharpen_params(
         Parameter dictionary
     """
     params = {
-        "@type": "c3d.c4d.sharpen",
+        "@type": "sharpen",
         "sharpen": sharpen,
     }
     return params
@@ -8519,14 +9239,14 @@ def c4d_sharpen_cargs(
     cargs = []
     cargs.extend([
         "-sharpen",
-        params.get("sharpen")
+        params.get("sharpen", None)
     ])
     return cargs
 
 
 def c4d_shift_params(
     shift: str,
-) -> C4dShiftParameters:
+) -> C4dShiftParametersTagged:
     """
     Build parameters.
     
@@ -8542,7 +9262,7 @@ def c4d_shift_params(
         Parameter dictionary
     """
     params = {
-        "@type": "c3d.c4d.shift",
+        "@type": "shift",
         "shift": shift,
     }
     return params
@@ -8564,14 +9284,14 @@ def c4d_shift_cargs(
     cargs = []
     cargs.extend([
         "-shift",
-        params.get("shift")
+        params.get("shift", None)
     ])
     return cargs
 
 
 def c4d_signed_distance_transform_params(
     signed_distance_transform: str,
-) -> C4dSignedDistanceTransformParameters:
+) -> C4dSignedDistanceTransformParametersTagged:
     """
     Build parameters.
     
@@ -8593,7 +9313,7 @@ def c4d_signed_distance_transform_params(
         Parameter dictionary
     """
     params = {
-        "@type": "c3d.c4d.signed_distance_transform",
+        "@type": "signed_distance_transform",
         "signed_distance_transform": signed_distance_transform,
     }
     return params
@@ -8615,14 +9335,14 @@ def c4d_signed_distance_transform_cargs(
     cargs = []
     cargs.extend([
         "-signed-distance-transform",
-        params.get("signed_distance_transform")
+        params.get("signed_distance_transform", None)
     ])
     return cargs
 
 
 def c4d_smooth_params(
     smooth: str,
-) -> C4dSmoothParameters:
+) -> C4dSmoothParametersTagged:
     """
     Build parameters.
     
@@ -8640,7 +9360,7 @@ def c4d_smooth_params(
         Parameter dictionary
     """
     params = {
-        "@type": "c3d.c4d.smooth",
+        "@type": "smooth",
         "smooth": smooth,
     }
     return params
@@ -8662,14 +9382,14 @@ def c4d_smooth_cargs(
     cargs = []
     cargs.extend([
         "-smooth",
-        params.get("smooth")
+        params.get("smooth", None)
     ])
     return cargs
 
 
 def c4d_smooth_fast_params(
     smooth_fast: str,
-) -> C4dSmoothFastParameters:
+) -> C4dSmoothFastParametersTagged:
     """
     Build parameters.
     
@@ -8688,7 +9408,7 @@ def c4d_smooth_fast_params(
         Parameter dictionary
     """
     params = {
-        "@type": "c3d.c4d.smooth_fast",
+        "@type": "smooth_fast",
         "smooth_fast": smooth_fast,
     }
     return params
@@ -8710,14 +9430,14 @@ def c4d_smooth_fast_cargs(
     cargs = []
     cargs.extend([
         "-smooth-fast",
-        params.get("smooth_fast")
+        params.get("smooth_fast", None)
     ])
     return cargs
 
 
 def c4d_spacing_params(
     spacing: str,
-) -> C4dSpacingParameters:
+) -> C4dSpacingParametersTagged:
     """
     Build parameters.
     
@@ -8736,7 +9456,7 @@ def c4d_spacing_params(
         Parameter dictionary
     """
     params = {
-        "@type": "c3d.c4d.spacing",
+        "@type": "spacing",
         "spacing": spacing,
     }
     return params
@@ -8758,14 +9478,14 @@ def c4d_spacing_cargs(
     cargs = []
     cargs.extend([
         "-spacing",
-        params.get("spacing")
+        params.get("spacing", None)
     ])
     return cargs
 
 
 def c4d_split_params(
     split: str,
-) -> C4dSplitParameters:
+) -> C4dSplitParametersTagged:
     """
     Build parameters.
     
@@ -8796,7 +9516,7 @@ def c4d_split_params(
         Parameter dictionary
     """
     params = {
-        "@type": "c3d.c4d.split",
+        "@type": "split",
         "split": split,
     }
     return params
@@ -8818,14 +9538,14 @@ def c4d_split_cargs(
     cargs = []
     cargs.extend([
         "-split",
-        params.get("split")
+        params.get("split", None)
     ])
     return cargs
 
 
 def c4d_sqrt_params(
     sqrt: str,
-) -> C4dSqrtParameters:
+) -> C4dSqrtParametersTagged:
     """
     Build parameters.
     
@@ -8841,7 +9561,7 @@ def c4d_sqrt_params(
         Parameter dictionary
     """
     params = {
-        "@type": "c3d.c4d.sqrt",
+        "@type": "sqrt",
         "sqrt": sqrt,
     }
     return params
@@ -8863,14 +9583,14 @@ def c4d_sqrt_cargs(
     cargs = []
     cargs.extend([
         "-sqrt",
-        params.get("sqrt")
+        params.get("sqrt", None)
     ])
     return cargs
 
 
 def c4d_staple_params(
     staple: str,
-) -> C4dStapleParameters:
+) -> C4dStapleParametersTagged:
     """
     Build parameters.
     
@@ -8905,7 +9625,7 @@ def c4d_staple_params(
         Parameter dictionary
     """
     params = {
-        "@type": "c3d.c4d.staple",
+        "@type": "staple",
         "staple": staple,
     }
     return params
@@ -8927,14 +9647,14 @@ def c4d_staple_cargs(
     cargs = []
     cargs.extend([
         "-staple",
-        params.get("staple")
+        params.get("staple", None)
     ])
     return cargs
 
 
 def c4d_structure_tensor_eigenvalues_params(
     structure_tensor_eigenvalues: str,
-) -> C4dStructureTensorEigenvaluesParameters:
+) -> C4dStructureTensorEigenvaluesParametersTagged:
     """
     Build parameters.
     
@@ -8956,7 +9676,7 @@ def c4d_structure_tensor_eigenvalues_params(
         Parameter dictionary
     """
     params = {
-        "@type": "c3d.c4d.structure_tensor_eigenvalues",
+        "@type": "structure_tensor_eigenvalues",
         "structure_tensor_eigenvalues": structure_tensor_eigenvalues,
     }
     return params
@@ -8978,14 +9698,14 @@ def c4d_structure_tensor_eigenvalues_cargs(
     cargs = []
     cargs.extend([
         "-steig",
-        params.get("structure_tensor_eigenvalues")
+        params.get("structure_tensor_eigenvalues", None)
     ])
     return cargs
 
 
 def c4d_spm_params(
     spm: str,
-) -> C4dSpmParameters:
+) -> C4dSpmParametersTagged:
     """
     Build parameters.
     
@@ -9006,7 +9726,7 @@ def c4d_spm_params(
         Parameter dictionary
     """
     params = {
-        "@type": "c3d.c4d.spm",
+        "@type": "spm",
         "spm": spm,
     }
     return params
@@ -9028,14 +9748,14 @@ def c4d_spm_cargs(
     cargs = []
     cargs.extend([
         "-spm",
-        params.get("spm")
+        params.get("spm", None)
     ])
     return cargs
 
 
 def c4d_subtract_params(
     subtract: str,
-) -> C4dSubtractParameters:
+) -> C4dSubtractParametersTagged:
     """
     Build parameters.
     
@@ -9045,7 +9765,7 @@ def c4d_subtract_params(
         Parameter dictionary
     """
     params = {
-        "@type": "c3d.c4d.subtract",
+        "@type": "subtract",
         "subtract": subtract,
     }
     return params
@@ -9067,14 +9787,14 @@ def c4d_subtract_cargs(
     cargs = []
     cargs.extend([
         "-subtract",
-        params.get("subtract")
+        params.get("subtract", None)
     ])
     return cargs
 
 
 def c4d_supervoxel_params(
     supervoxel: str,
-) -> C4dSupervoxelParameters:
+) -> C4dSupervoxelParametersTagged:
     """
     Build parameters.
     
@@ -9084,7 +9804,7 @@ def c4d_supervoxel_params(
         Parameter dictionary
     """
     params = {
-        "@type": "c3d.c4d.supervoxel",
+        "@type": "supervoxel",
         "supervoxel": supervoxel,
     }
     return params
@@ -9106,14 +9826,14 @@ def c4d_supervoxel_cargs(
     cargs = []
     cargs.extend([
         "-supervoxel",
-        params.get("supervoxel")
+        params.get("supervoxel", None)
     ])
     return cargs
 
 
 def c4d_stretch_params(
     stretch: str,
-) -> C4dStretchParameters:
+) -> C4dStretchParametersTagged:
     """
     Build parameters.
     
@@ -9133,7 +9853,7 @@ def c4d_stretch_params(
         Parameter dictionary
     """
     params = {
-        "@type": "c3d.c4d.stretch",
+        "@type": "stretch",
         "stretch": stretch,
     }
     return params
@@ -9155,14 +9875,14 @@ def c4d_stretch_cargs(
     cargs = []
     cargs.extend([
         "-stretch",
-        params.get("stretch")
+        params.get("stretch", None)
     ])
     return cargs
 
 
 def c4d_swapdim_params(
     swapdim: str,
-) -> C4dSwapdimParameters:
+) -> C4dSwapdimParametersTagged:
     """
     Build parameters.
     
@@ -9191,7 +9911,7 @@ def c4d_swapdim_params(
         Parameter dictionary
     """
     params = {
-        "@type": "c3d.c4d.swapdim",
+        "@type": "swapdim",
         "swapdim": swapdim,
     }
     return params
@@ -9213,14 +9933,14 @@ def c4d_swapdim_cargs(
     cargs = []
     cargs.extend([
         "-swapdim",
-        params.get("swapdim")
+        params.get("swapdim", None)
     ])
     return cargs
 
 
 def c4d_test_image_params(
     test_image: str,
-) -> C4dTestImageParameters:
+) -> C4dTestImageParametersTagged:
     """
     Build parameters.
     
@@ -9254,7 +9974,7 @@ def c4d_test_image_params(
         Parameter dictionary
     """
     params = {
-        "@type": "c3d.c4d.test_image",
+        "@type": "test_image",
         "test_image": test_image,
     }
     return params
@@ -9276,14 +9996,14 @@ def c4d_test_image_cargs(
     cargs = []
     cargs.extend([
         "-test-image",
-        params.get("test_image")
+        params.get("test_image", None)
     ])
     return cargs
 
 
 def c4d_test_probe_params(
     test_probe: str,
-) -> C4dTestProbeParameters:
+) -> C4dTestProbeParametersTagged:
     """
     Build parameters.
     
@@ -9317,7 +10037,7 @@ def c4d_test_probe_params(
         Parameter dictionary
     """
     params = {
-        "@type": "c3d.c4d.test_probe",
+        "@type": "test_probe",
         "test_probe": test_probe,
     }
     return params
@@ -9339,14 +10059,14 @@ def c4d_test_probe_cargs(
     cargs = []
     cargs.extend([
         "-test-probe",
-        params.get("test_probe")
+        params.get("test_probe", None)
     ])
     return cargs
 
 
 def c4d_threshold_params(
     threshold: str,
-) -> C4dThresholdParameters:
+) -> C4dThresholdParametersTagged:
     """
     Build parameters.
     
@@ -9368,7 +10088,7 @@ def c4d_threshold_params(
         Parameter dictionary
     """
     params = {
-        "@type": "c3d.c4d.threshold",
+        "@type": "threshold",
         "threshold": threshold,
     }
     return params
@@ -9390,14 +10110,14 @@ def c4d_threshold_cargs(
     cargs = []
     cargs.extend([
         "-threshold",
-        params.get("threshold")
+        params.get("threshold", None)
     ])
     return cargs
 
 
 def c4d_tile_params(
     tile: str,
-) -> C4dTileParameters:
+) -> C4dTileParametersTagged:
     """
     Build parameters.
     
@@ -9426,7 +10146,7 @@ def c4d_tile_params(
         Parameter dictionary
     """
     params = {
-        "@type": "c3d.c4d.tile",
+        "@type": "tile",
         "tile": tile,
     }
     return params
@@ -9448,14 +10168,14 @@ def c4d_tile_cargs(
     cargs = []
     cargs.extend([
         "-tile",
-        params.get("tile")
+        params.get("tile", None)
     ])
     return cargs
 
 
 def c4d_trim_params(
     trim: str,
-) -> C4dTrimParameters:
+) -> C4dTrimParametersTagged:
     """
     Build parameters.
     
@@ -9477,7 +10197,7 @@ def c4d_trim_params(
         Parameter dictionary
     """
     params = {
-        "@type": "c3d.c4d.trim",
+        "@type": "trim",
         "trim": trim,
     }
     return params
@@ -9499,14 +10219,14 @@ def c4d_trim_cargs(
     cargs = []
     cargs.extend([
         "-trim",
-        params.get("trim")
+        params.get("trim", None)
     ])
     return cargs
 
 
 def c4d_trim_to_size_params(
     trim_to_size: str,
-) -> C4dTrimToSizeParameters:
+) -> C4dTrimToSizeParametersTagged:
     """
     Build parameters.
     
@@ -9527,7 +10247,7 @@ def c4d_trim_to_size_params(
         Parameter dictionary
     """
     params = {
-        "@type": "c3d.c4d.trim_to_size",
+        "@type": "trim_to_size",
         "trim_to_size": trim_to_size,
     }
     return params
@@ -9549,14 +10269,14 @@ def c4d_trim_to_size_cargs(
     cargs = []
     cargs.extend([
         "-trim-to-size",
-        params.get("trim_to_size")
+        params.get("trim_to_size", None)
     ])
     return cargs
 
 
 def c4d_type_params(
     type_: str,
-) -> C4dTypeParameters:
+) -> C4dTypeParametersTagged:
     """
     Build parameters.
     
@@ -9578,7 +10298,7 @@ def c4d_type_params(
         Parameter dictionary
     """
     params = {
-        "@type": "c3d.c4d.type",
+        "@type": "type",
         "type": type_,
     }
     return params
@@ -9600,14 +10320,14 @@ def c4d_type_cargs(
     cargs = []
     cargs.extend([
         "-type",
-        params.get("type")
+        params.get("type", None)
     ])
     return cargs
 
 
 def c4d_verbose_params(
     verbose: str,
-) -> C4dVerboseParameters:
+) -> C4dVerboseParametersTagged:
     """
     Build parameters.
     
@@ -9624,7 +10344,7 @@ def c4d_verbose_params(
         Parameter dictionary
     """
     params = {
-        "@type": "c3d.c4d.verbose",
+        "@type": "verbose",
         "verbose": verbose,
     }
     return params
@@ -9646,14 +10366,14 @@ def c4d_verbose_cargs(
     cargs = []
     cargs.extend([
         "-verbose",
-        params.get("verbose")
+        params.get("verbose", None)
     ])
     return cargs
 
 
 def c4d_noverbose_params(
     noverbose: str,
-) -> C4dNoverboseParameters:
+) -> C4dNoverboseParametersTagged:
     """
     Build parameters.
     
@@ -9663,7 +10383,7 @@ def c4d_noverbose_params(
         Parameter dictionary
     """
     params = {
-        "@type": "c3d.c4d.noverbose",
+        "@type": "noverbose",
         "noverbose": noverbose,
     }
     return params
@@ -9685,14 +10405,14 @@ def c4d_noverbose_cargs(
     cargs = []
     cargs.extend([
         "-noverbose",
-        params.get("noverbose")
+        params.get("noverbose", None)
     ])
     return cargs
 
 
 def c4d_version_params(
     version: str,
-) -> C4dVersionParameters:
+) -> C4dVersionParametersTagged:
     """
     Build parameters.
     
@@ -9702,7 +10422,7 @@ def c4d_version_params(
         Parameter dictionary
     """
     params = {
-        "@type": "c3d.c4d.version",
+        "@type": "version",
         "version": version,
     }
     return params
@@ -9724,14 +10444,14 @@ def c4d_version_cargs(
     cargs = []
     cargs.extend([
         "-version",
-        params.get("version")
+        params.get("version", None)
     ])
     return cargs
 
 
 def c4d_vote_params(
     vote: str,
-) -> C4dVoteParameters:
+) -> C4dVoteParametersTagged:
     """
     Build parameters.
     
@@ -9759,7 +10479,7 @@ def c4d_vote_params(
         Parameter dictionary
     """
     params = {
-        "@type": "c3d.c4d.vote",
+        "@type": "vote",
         "vote": vote,
     }
     return params
@@ -9781,14 +10501,14 @@ def c4d_vote_cargs(
     cargs = []
     cargs.extend([
         "-vote",
-        params.get("vote")
+        params.get("vote", None)
     ])
     return cargs
 
 
 def c4d_vote_mrf_params(
     vote_mrf: str,
-) -> C4dVoteMrfParameters:
+) -> C4dVoteMrfParametersTagged:
     """
     Build parameters.
     
@@ -9872,7 +10592,7 @@ def c4d_vote_mrf_params(
         Parameter dictionary
     """
     params = {
-        "@type": "c3d.c4d.vote_mrf",
+        "@type": "vote_mrf",
         "vote_mrf": vote_mrf,
     }
     return params
@@ -9894,14 +10614,14 @@ def c4d_vote_mrf_cargs(
     cargs = []
     cargs.extend([
         "-vote-mrf",
-        params.get("vote_mrf")
+        params.get("vote_mrf", None)
     ])
     return cargs
 
 
 def c4d_vote_label_params(
     vote_label: str,
-) -> C4dVoteLabelParameters:
+) -> C4dVoteLabelParametersTagged:
     """
     Build parameters.
     
@@ -9911,7 +10631,7 @@ def c4d_vote_label_params(
         Parameter dictionary
     """
     params = {
-        "@type": "c3d.c4d.vote_label",
+        "@type": "vote_label",
         "vote_label": vote_label,
     }
     return params
@@ -9933,14 +10653,14 @@ def c4d_vote_label_cargs(
     cargs = []
     cargs.extend([
         "-vote-label",
-        params.get("vote_label")
+        params.get("vote_label", None)
     ])
     return cargs
 
 
 def c4d_voxel_sum_params(
     voxel_sum: str,
-) -> C4dVoxelSumParameters:
+) -> C4dVoxelSumParametersTagged:
     """
     Build parameters.
     
@@ -9957,7 +10677,7 @@ def c4d_voxel_sum_params(
         Parameter dictionary
     """
     params = {
-        "@type": "c3d.c4d.voxel_sum",
+        "@type": "voxel_sum",
         "voxel_sum": voxel_sum,
     }
     return params
@@ -9979,14 +10699,14 @@ def c4d_voxel_sum_cargs(
     cargs = []
     cargs.extend([
         "-voxel-sum",
-        params.get("voxel_sum")
+        params.get("voxel_sum", None)
     ])
     return cargs
 
 
 def c4d_voxel_integral_params(
     voxel_integral: str,
-) -> C4dVoxelIntegralParameters:
+) -> C4dVoxelIntegralParametersTagged:
     """
     Build parameters.
     
@@ -10006,7 +10726,7 @@ def c4d_voxel_integral_params(
         Parameter dictionary
     """
     params = {
-        "@type": "c3d.c4d.voxel_integral",
+        "@type": "voxel_integral",
         "voxel_integral": voxel_integral,
     }
     return params
@@ -10028,14 +10748,14 @@ def c4d_voxel_integral_cargs(
     cargs = []
     cargs.extend([
         "-voxel-integral",
-        params.get("voxel_integral")
+        params.get("voxel_integral", None)
     ])
     return cargs
 
 
 def c4d_voxelwise_regression_params(
     voxelwise_regression: str,
-) -> C4dVoxelwiseRegressionParameters:
+) -> C4dVoxelwiseRegressionParametersTagged:
     """
     Build parameters.
     
@@ -10062,7 +10782,7 @@ def c4d_voxelwise_regression_params(
         Parameter dictionary
     """
     params = {
-        "@type": "c3d.c4d.voxelwise_regression",
+        "@type": "voxelwise_regression",
         "voxelwise_regression": voxelwise_regression,
     }
     return params
@@ -10084,14 +10804,14 @@ def c4d_voxelwise_regression_cargs(
     cargs = []
     cargs.extend([
         "-voxelwise-regression",
-        params.get("voxelwise_regression")
+        params.get("voxelwise_regression", None)
     ])
     return cargs
 
 
 def c4d_warp_params(
     warp: str,
-) -> C4dWarpParameters:
+) -> C4dWarpParametersTagged:
     """
     Build parameters.
     
@@ -10101,7 +10821,7 @@ def c4d_warp_params(
         Parameter dictionary
     """
     params = {
-        "@type": "c3d.c4d.warp",
+        "@type": "warp",
         "warp": warp,
     }
     return params
@@ -10123,14 +10843,14 @@ def c4d_warp_cargs(
     cargs = []
     cargs.extend([
         "-warp",
-        params.get("warp")
+        params.get("warp", None)
     ])
     return cargs
 
 
 def c4d_warp_label_params(
     warp_label: str,
-) -> C4dWarpLabelParameters:
+) -> C4dWarpLabelParametersTagged:
     """
     Build parameters.
     
@@ -10140,7 +10860,7 @@ def c4d_warp_label_params(
         Parameter dictionary
     """
     params = {
-        "@type": "c3d.c4d.warp_label",
+        "@type": "warp_label",
         "warp_label": warp_label,
     }
     return params
@@ -10162,14 +10882,14 @@ def c4d_warp_label_cargs(
     cargs = []
     cargs.extend([
         "-warp-label",
-        params.get("warp_label")
+        params.get("warp_label", None)
     ])
     return cargs
 
 
 def c4d_wrap_params(
     wrap: str,
-) -> C4dWrapParameters:
+) -> C4dWrapParametersTagged:
     """
     Build parameters.
     
@@ -10197,7 +10917,7 @@ def c4d_wrap_params(
         Parameter dictionary
     """
     params = {
-        "@type": "c3d.c4d.wrap",
+        "@type": "wrap",
         "wrap": wrap,
     }
     return params
@@ -10219,14 +10939,14 @@ def c4d_wrap_cargs(
     cargs = []
     cargs.extend([
         "-wrap",
-        params.get("wrap")
+        params.get("wrap", None)
     ])
     return cargs
 
 
 def c4d_weighted_sum_params(
     weighted_sum: str,
-) -> C4dWeightedSumParameters:
+) -> C4dWeightedSumParametersTagged:
     """
     Build parameters.
     
@@ -10249,7 +10969,7 @@ def c4d_weighted_sum_params(
         Parameter dictionary
     """
     params = {
-        "@type": "c3d.c4d.weighted_sum",
+        "@type": "weighted_sum",
         "weighted_sum": weighted_sum,
     }
     return params
@@ -10271,14 +10991,14 @@ def c4d_weighted_sum_cargs(
     cargs = []
     cargs.extend([
         "-weighted-sum",
-        params.get("weighted_sum")
+        params.get("weighted_sum", None)
     ])
     return cargs
 
 
 def c4d_weighted_sum_voxelwise_params(
     weighted_sum_voxelwise: str,
-) -> C4dWeightedSumVoxelwiseParameters:
+) -> C4dWeightedSumVoxelwiseParametersTagged:
     """
     Build parameters.
     
@@ -10304,7 +11024,7 @@ def c4d_weighted_sum_voxelwise_params(
         Parameter dictionary
     """
     params = {
-        "@type": "c3d.c4d.weighted_sum_voxelwise",
+        "@type": "weighted_sum_voxelwise",
         "weighted_sum_voxelwise": weighted_sum_voxelwise,
     }
     return params
@@ -10326,14 +11046,14 @@ def c4d_weighted_sum_voxelwise_cargs(
     cargs = []
     cargs.extend([
         "-weighted-sum-voxelwise",
-        params.get("weighted_sum_voxelwise")
+        params.get("weighted_sum_voxelwise", None)
     ])
     return cargs
 
 
 class C4dOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `c4d(...)`.
+    Output object returned when calling `C4dParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -10344,9 +11064,9 @@ class C4dOutputs(typing.NamedTuple):
 
 def c4d_params(
     input_: list[InputPathType],
-    operations: list[typing.Union[C4dAccumParameters, C4dAcosParameters, C4dAddParameters, C4dAlignLandmarksParameters, C4dAnisotropicDiffusionParameters, C4dAntialiasParameters, C4dSetParameters, C4dAsinParameters, C4dAtan2Parameters, C4dBackgroundParameters, C4dN4BiasCorrectionParameters, C4dBinarizeParameters, C4dCannyParameters, C4dCeilParameters, C4dCentroidParameters, C4dCentroidMarkParameters, C4dConnectedComponentsParameters, C4dClearParameters, C4dClipParameters, C4dColorMapParameters, C4dCompressParameters, C4dNoCompressParameters, C4dConvParameters, C4dCoordinateMapVoxelParameters, C4dCoordinateMapPhysicalParameters, C4dCopyTransformParameters, C4dCosParameters, C4dCreateParameters, C4dDicomSeriesListParameters, C4dDicomSeriesReadParameters, C4dDilateParameters, C4dDivideParameters, C4dDuplicateParameters, C4dEndaccumParameters, C4dEndforParameters, C4dErodeParameters, C4dErfParameters, C4dExpParameters, C4dExportPatchesParameters, C4dExportPatchesAugParameters, C4dExtrudeSegParameters, C4dFillBackgroundWithNoiseParameters, C4dFftParameters, C4dFlipParameters, C4dFloorParameters, C4dForeachParameters, C4dForeachCompParameters, C4dGlmParameters, C4dGradientParameters, C4dHelpParameters, C4dHolefillParameters, C4dHessianEigenvaluesParameters, C4dHessianObjectnessParameters, C4dHistogramMatchParameters, C4dInfoParameters, C4dInfoFullParameters, C4dInsertParameters, C4dInterpolationParameters, C4dIterationsParameters, C4dLabelOverlapParameters, C4dLabelStatisticsParameters, C4dLandmarksToSpheresParameters, C4dLaplacianParameters, C4dLevelsetParameters, C4dLevelsetCurvatureParameters, C4dLevelsetAdvectionParameters, C4dLogParameters, C4dLog10Parameters, C4dManualParameters, C4dMatchBoundingBoxParameters, C4dMaximumParameters, C4dMulticomponentSplitParameters, C4dMeanParameters, C4dMedianFilterParameters, C4dMergeParameters, C4dMeanFilterParameters, C4dMutualInfoParameters, C4dMinimumParameters, C4dMixtureModelParameters, C4dMomentsParameters, C4dMattesMutualInfoParameters, C4dMeanSquareParameters, C4dMultiplyParameters, C4dNormalizedCrossCorrelationParameters, C4dNormalizedCorrelationParameters, C4dNormalizedMutualInfoParameters, C4dNoiseGaussianParameters, C4dNoisePoissonParameters, C4dNoiseSpeckleParameters, C4dNoiseSaltPepperParameters, C4dNoMulticomponentSplitParameters, C4dNormalizeLocalWindowParameters, C4dNormpdfParameters, C4dNoroundParameters, C4dNospmParameters, C4dOutputParameters, C4dOutputMulticomponentParameters, C4dOutputMultipleMulticomponentParameters, C4dOrientParameters, C4dOutputMultipleParameters, C4dOrient1Parameters, C4dOriginParameters, C4dOriginVoxelParameters, C4dOriginVoxelCoordParameters, C4dOverlapParameters, C4dOverlayLabelImageParameters, C4dPadParameters, C4dPadToParameters, C4dPcaParameters, C4dPercentIntensityModeParameters, C4dPixelParameters, C4dPopParameters, C4dPopasParameters, C4dProbeParameters, C4dPushParameters, C4dRankParameters, C4dReciprocalParameters, C4dRegionParameters, C4dReorderParameters, C4dRetainLabelsParameters, C4dRfApplyParameters, C4dRfTrainParameters, C4dRfParamPatchParameters, C4dRfParamUsexyzParameters, C4dRfParamNousexyzParameters, C4dRfParamNtreesParameters, C4dRfParamTreedepthParameters, C4dSetSformParameters, C4dReplaceParameters, C4dResampleParameters, C4dResampleIsoParameters, C4dResampleMmParameters, C4dResliceItkParameters, C4dResliceMatrixParameters, C4dResliceIdentityParameters, C4dRgb2hsvParameters, C4dRmsParameters, C4dRoundParameters, C4dScaleParameters, C4dSetSform1Parameters, C4dSinParameters, C4dSliceParameters, C4dSliceAllParameters, C4dSharpenParameters, C4dShiftParameters, C4dSignedDistanceTransformParameters, C4dSmoothParameters, C4dSmoothFastParameters, C4dSpacingParameters, C4dSplitParameters, C4dSqrtParameters, C4dStapleParameters, C4dStructureTensorEigenvaluesParameters, C4dSpmParameters, C4dSubtractParameters, C4dSupervoxelParameters, C4dStretchParameters, C4dSwapdimParameters, C4dTestImageParameters, C4dTestProbeParameters, C4dThresholdParameters, C4dTileParameters, C4dTrimParameters, C4dTrimToSizeParameters, C4dTypeParameters, C4dVerboseParameters, C4dNoverboseParameters, C4dVersionParameters, C4dVoteParameters, C4dVoteMrfParameters, C4dVoteLabelParameters, C4dVoxelSumParameters, C4dVoxelIntegralParameters, C4dVoxelwiseRegressionParameters, C4dWarpParameters, C4dWarpLabelParameters, C4dWrapParameters, C4dWeightedSumParameters, C4dWeightedSumVoxelwiseParameters]],
+    operations: list[typing.Union[C4dAccumParametersTagged, C4dAcosParametersTagged, C4dAddParametersTagged, C4dAlignLandmarksParametersTagged, C4dAnisotropicDiffusionParametersTagged, C4dAntialiasParametersTagged, C4dSetParametersTagged, C4dAsinParametersTagged, C4dAtan2ParametersTagged, C4dBackgroundParametersTagged, C4dN4BiasCorrectionParametersTagged, C4dBinarizeParametersTagged, C4dCannyParametersTagged, C4dCeilParametersTagged, C4dCentroidParametersTagged, C4dCentroidMarkParametersTagged, C4dConnectedComponentsParametersTagged, C4dClearParametersTagged, C4dClipParametersTagged, C4dColorMapParametersTagged, C4dCompressParametersTagged, C4dNoCompressParametersTagged, C4dConvParametersTagged, C4dCoordinateMapVoxelParametersTagged, C4dCoordinateMapPhysicalParametersTagged, C4dCopyTransformParametersTagged, C4dCosParametersTagged, C4dCreateParametersTagged, C4dDicomSeriesListParametersTagged, C4dDicomSeriesReadParametersTagged, C4dDilateParametersTagged, C4dDivideParametersTagged, C4dDuplicateParametersTagged, C4dEndaccumParametersTagged, C4dEndforParametersTagged, C4dErodeParametersTagged, C4dErfParametersTagged, C4dExpParametersTagged, C4dExportPatchesParametersTagged, C4dExportPatchesAugParametersTagged, C4dExtrudeSegParametersTagged, C4dFillBackgroundWithNoiseParametersTagged, C4dFftParametersTagged, C4dFlipParametersTagged, C4dFloorParametersTagged, C4dForeachParametersTagged, C4dForeachCompParametersTagged, C4dGlmParametersTagged, C4dGradientParametersTagged, C4dHelpParametersTagged, C4dHolefillParametersTagged, C4dHessianEigenvaluesParametersTagged, C4dHessianObjectnessParametersTagged, C4dHistogramMatchParametersTagged, C4dInfoParametersTagged, C4dInfoFullParametersTagged, C4dInsertParametersTagged, C4dInterpolationParametersTagged, C4dIterationsParametersTagged, C4dLabelOverlapParametersTagged, C4dLabelStatisticsParametersTagged, C4dLandmarksToSpheresParametersTagged, C4dLaplacianParametersTagged, C4dLevelsetParametersTagged, C4dLevelsetCurvatureParametersTagged, C4dLevelsetAdvectionParametersTagged, C4dLogParametersTagged, C4dLog10ParametersTagged, C4dManualParametersTagged, C4dMatchBoundingBoxParametersTagged, C4dMaximumParametersTagged, C4dMulticomponentSplitParametersTagged, C4dMeanParametersTagged, C4dMedianFilterParametersTagged, C4dMergeParametersTagged, C4dMeanFilterParametersTagged, C4dMutualInfoParametersTagged, C4dMinimumParametersTagged, C4dMixtureModelParametersTagged, C4dMomentsParametersTagged, C4dMattesMutualInfoParametersTagged, C4dMeanSquareParametersTagged, C4dMultiplyParametersTagged, C4dNormalizedCrossCorrelationParametersTagged, C4dNormalizedCorrelationParametersTagged, C4dNormalizedMutualInfoParametersTagged, C4dNoiseGaussianParametersTagged, C4dNoisePoissonParametersTagged, C4dNoiseSpeckleParametersTagged, C4dNoiseSaltPepperParametersTagged, C4dNoMulticomponentSplitParametersTagged, C4dNormalizeLocalWindowParametersTagged, C4dNormpdfParametersTagged, C4dNoroundParametersTagged, C4dNospmParametersTagged, C4dOutputParametersTagged, C4dOutputMulticomponentParametersTagged, C4dOutputMultipleMulticomponentParametersTagged, C4dOrientParametersTagged, C4dOutputMultipleParametersTagged, C4dOrient1ParametersTagged, C4dOriginParametersTagged, C4dOriginVoxelParametersTagged, C4dOriginVoxelCoordParametersTagged, C4dOverlapParametersTagged, C4dOverlayLabelImageParametersTagged, C4dPadParametersTagged, C4dPadToParametersTagged, C4dPcaParametersTagged, C4dPercentIntensityModeParametersTagged, C4dPixelParametersTagged, C4dPopParametersTagged, C4dPopasParametersTagged, C4dProbeParametersTagged, C4dPushParametersTagged, C4dRankParametersTagged, C4dReciprocalParametersTagged, C4dRegionParametersTagged, C4dReorderParametersTagged, C4dRetainLabelsParametersTagged, C4dRfApplyParametersTagged, C4dRfTrainParametersTagged, C4dRfParamPatchParametersTagged, C4dRfParamUsexyzParametersTagged, C4dRfParamNousexyzParametersTagged, C4dRfParamNtreesParametersTagged, C4dRfParamTreedepthParametersTagged, C4dSetSformParametersTagged, C4dReplaceParametersTagged, C4dResampleParametersTagged, C4dResampleIsoParametersTagged, C4dResampleMmParametersTagged, C4dResliceItkParametersTagged, C4dResliceMatrixParametersTagged, C4dResliceIdentityParametersTagged, C4dRgb2hsvParametersTagged, C4dRmsParametersTagged, C4dRoundParametersTagged, C4dScaleParametersTagged, C4dSetSform1ParametersTagged, C4dSinParametersTagged, C4dSliceParametersTagged, C4dSliceAllParametersTagged, C4dSharpenParametersTagged, C4dShiftParametersTagged, C4dSignedDistanceTransformParametersTagged, C4dSmoothParametersTagged, C4dSmoothFastParametersTagged, C4dSpacingParametersTagged, C4dSplitParametersTagged, C4dSqrtParametersTagged, C4dStapleParametersTagged, C4dStructureTensorEigenvaluesParametersTagged, C4dSpmParametersTagged, C4dSubtractParametersTagged, C4dSupervoxelParametersTagged, C4dStretchParametersTagged, C4dSwapdimParametersTagged, C4dTestImageParametersTagged, C4dTestProbeParametersTagged, C4dThresholdParametersTagged, C4dTileParametersTagged, C4dTrimParametersTagged, C4dTrimToSizeParametersTagged, C4dTypeParametersTagged, C4dVerboseParametersTagged, C4dNoverboseParametersTagged, C4dVersionParametersTagged, C4dVoteParametersTagged, C4dVoteMrfParametersTagged, C4dVoteLabelParametersTagged, C4dVoxelSumParametersTagged, C4dVoxelIntegralParametersTagged, C4dVoxelwiseRegressionParametersTagged, C4dWarpParametersTagged, C4dWarpLabelParametersTagged, C4dWrapParametersTagged, C4dWeightedSumParametersTagged, C4dWeightedSumVoxelwiseParametersTagged]],
     output: str,
-) -> C4dParameters:
+) -> C4dParametersTagged:
     """
     Build parameters.
     
@@ -10358,7 +11078,7 @@ def c4d_params(
         Parameter dictionary
     """
     params = {
-        "@type": "c3d.c4d",
+        "@type": "c3d/c4d",
         "input": input_,
         "operations": operations,
         "output": output,
@@ -10381,11 +11101,11 @@ def c4d_cargs(
     """
     cargs = []
     cargs.append("c4d")
-    cargs.append(" ".join([execution.input_file(f) for f in params.get("input")]))
-    cargs.extend([a for c in [dyn_cargs(s["@type"])(s, execution) for s in params.get("operations")] for a in c])
+    cargs.append(" ".join([execution.input_file(f) for f in params.get("input", None)]))
+    cargs.extend([a for c in [c4d_operations_cargs_dyn_fn(s["@type"])(s, execution) for s in params.get("operations", None)] for a in c])
     cargs.extend([
         "-o",
-        params.get("output")
+        params.get("output", None)
     ])
     return cargs
 
@@ -10405,7 +11125,7 @@ def c4d_outputs(
     """
     ret = C4dOutputs(
         root=execution.output_file("."),
-        operations=[dyn_outputs(i["@type"])(i, execution) if dyn_outputs(i["@type"]) else None for i in params.get("operations")],
+        operations=[c4d_operations_outputs_dyn_fn(i["@type"])(i, execution) if c4d_operations_outputs_dyn_fn(i["@type"]) else None for i in params.get("operations")],
     )
     return ret
 
@@ -10440,7 +11160,7 @@ def c4d_execute(
 
 def c4d(
     input_: list[InputPathType],
-    operations: list[typing.Union[C4dAccumParameters, C4dAcosParameters, C4dAddParameters, C4dAlignLandmarksParameters, C4dAnisotropicDiffusionParameters, C4dAntialiasParameters, C4dSetParameters, C4dAsinParameters, C4dAtan2Parameters, C4dBackgroundParameters, C4dN4BiasCorrectionParameters, C4dBinarizeParameters, C4dCannyParameters, C4dCeilParameters, C4dCentroidParameters, C4dCentroidMarkParameters, C4dConnectedComponentsParameters, C4dClearParameters, C4dClipParameters, C4dColorMapParameters, C4dCompressParameters, C4dNoCompressParameters, C4dConvParameters, C4dCoordinateMapVoxelParameters, C4dCoordinateMapPhysicalParameters, C4dCopyTransformParameters, C4dCosParameters, C4dCreateParameters, C4dDicomSeriesListParameters, C4dDicomSeriesReadParameters, C4dDilateParameters, C4dDivideParameters, C4dDuplicateParameters, C4dEndaccumParameters, C4dEndforParameters, C4dErodeParameters, C4dErfParameters, C4dExpParameters, C4dExportPatchesParameters, C4dExportPatchesAugParameters, C4dExtrudeSegParameters, C4dFillBackgroundWithNoiseParameters, C4dFftParameters, C4dFlipParameters, C4dFloorParameters, C4dForeachParameters, C4dForeachCompParameters, C4dGlmParameters, C4dGradientParameters, C4dHelpParameters, C4dHolefillParameters, C4dHessianEigenvaluesParameters, C4dHessianObjectnessParameters, C4dHistogramMatchParameters, C4dInfoParameters, C4dInfoFullParameters, C4dInsertParameters, C4dInterpolationParameters, C4dIterationsParameters, C4dLabelOverlapParameters, C4dLabelStatisticsParameters, C4dLandmarksToSpheresParameters, C4dLaplacianParameters, C4dLevelsetParameters, C4dLevelsetCurvatureParameters, C4dLevelsetAdvectionParameters, C4dLogParameters, C4dLog10Parameters, C4dManualParameters, C4dMatchBoundingBoxParameters, C4dMaximumParameters, C4dMulticomponentSplitParameters, C4dMeanParameters, C4dMedianFilterParameters, C4dMergeParameters, C4dMeanFilterParameters, C4dMutualInfoParameters, C4dMinimumParameters, C4dMixtureModelParameters, C4dMomentsParameters, C4dMattesMutualInfoParameters, C4dMeanSquareParameters, C4dMultiplyParameters, C4dNormalizedCrossCorrelationParameters, C4dNormalizedCorrelationParameters, C4dNormalizedMutualInfoParameters, C4dNoiseGaussianParameters, C4dNoisePoissonParameters, C4dNoiseSpeckleParameters, C4dNoiseSaltPepperParameters, C4dNoMulticomponentSplitParameters, C4dNormalizeLocalWindowParameters, C4dNormpdfParameters, C4dNoroundParameters, C4dNospmParameters, C4dOutputParameters, C4dOutputMulticomponentParameters, C4dOutputMultipleMulticomponentParameters, C4dOrientParameters, C4dOutputMultipleParameters, C4dOrient1Parameters, C4dOriginParameters, C4dOriginVoxelParameters, C4dOriginVoxelCoordParameters, C4dOverlapParameters, C4dOverlayLabelImageParameters, C4dPadParameters, C4dPadToParameters, C4dPcaParameters, C4dPercentIntensityModeParameters, C4dPixelParameters, C4dPopParameters, C4dPopasParameters, C4dProbeParameters, C4dPushParameters, C4dRankParameters, C4dReciprocalParameters, C4dRegionParameters, C4dReorderParameters, C4dRetainLabelsParameters, C4dRfApplyParameters, C4dRfTrainParameters, C4dRfParamPatchParameters, C4dRfParamUsexyzParameters, C4dRfParamNousexyzParameters, C4dRfParamNtreesParameters, C4dRfParamTreedepthParameters, C4dSetSformParameters, C4dReplaceParameters, C4dResampleParameters, C4dResampleIsoParameters, C4dResampleMmParameters, C4dResliceItkParameters, C4dResliceMatrixParameters, C4dResliceIdentityParameters, C4dRgb2hsvParameters, C4dRmsParameters, C4dRoundParameters, C4dScaleParameters, C4dSetSform1Parameters, C4dSinParameters, C4dSliceParameters, C4dSliceAllParameters, C4dSharpenParameters, C4dShiftParameters, C4dSignedDistanceTransformParameters, C4dSmoothParameters, C4dSmoothFastParameters, C4dSpacingParameters, C4dSplitParameters, C4dSqrtParameters, C4dStapleParameters, C4dStructureTensorEigenvaluesParameters, C4dSpmParameters, C4dSubtractParameters, C4dSupervoxelParameters, C4dStretchParameters, C4dSwapdimParameters, C4dTestImageParameters, C4dTestProbeParameters, C4dThresholdParameters, C4dTileParameters, C4dTrimParameters, C4dTrimToSizeParameters, C4dTypeParameters, C4dVerboseParameters, C4dNoverboseParameters, C4dVersionParameters, C4dVoteParameters, C4dVoteMrfParameters, C4dVoteLabelParameters, C4dVoxelSumParameters, C4dVoxelIntegralParameters, C4dVoxelwiseRegressionParameters, C4dWarpParameters, C4dWarpLabelParameters, C4dWrapParameters, C4dWeightedSumParameters, C4dWeightedSumVoxelwiseParameters]],
+    operations: list[typing.Union[C4dAccumParametersTagged, C4dAcosParametersTagged, C4dAddParametersTagged, C4dAlignLandmarksParametersTagged, C4dAnisotropicDiffusionParametersTagged, C4dAntialiasParametersTagged, C4dSetParametersTagged, C4dAsinParametersTagged, C4dAtan2ParametersTagged, C4dBackgroundParametersTagged, C4dN4BiasCorrectionParametersTagged, C4dBinarizeParametersTagged, C4dCannyParametersTagged, C4dCeilParametersTagged, C4dCentroidParametersTagged, C4dCentroidMarkParametersTagged, C4dConnectedComponentsParametersTagged, C4dClearParametersTagged, C4dClipParametersTagged, C4dColorMapParametersTagged, C4dCompressParametersTagged, C4dNoCompressParametersTagged, C4dConvParametersTagged, C4dCoordinateMapVoxelParametersTagged, C4dCoordinateMapPhysicalParametersTagged, C4dCopyTransformParametersTagged, C4dCosParametersTagged, C4dCreateParametersTagged, C4dDicomSeriesListParametersTagged, C4dDicomSeriesReadParametersTagged, C4dDilateParametersTagged, C4dDivideParametersTagged, C4dDuplicateParametersTagged, C4dEndaccumParametersTagged, C4dEndforParametersTagged, C4dErodeParametersTagged, C4dErfParametersTagged, C4dExpParametersTagged, C4dExportPatchesParametersTagged, C4dExportPatchesAugParametersTagged, C4dExtrudeSegParametersTagged, C4dFillBackgroundWithNoiseParametersTagged, C4dFftParametersTagged, C4dFlipParametersTagged, C4dFloorParametersTagged, C4dForeachParametersTagged, C4dForeachCompParametersTagged, C4dGlmParametersTagged, C4dGradientParametersTagged, C4dHelpParametersTagged, C4dHolefillParametersTagged, C4dHessianEigenvaluesParametersTagged, C4dHessianObjectnessParametersTagged, C4dHistogramMatchParametersTagged, C4dInfoParametersTagged, C4dInfoFullParametersTagged, C4dInsertParametersTagged, C4dInterpolationParametersTagged, C4dIterationsParametersTagged, C4dLabelOverlapParametersTagged, C4dLabelStatisticsParametersTagged, C4dLandmarksToSpheresParametersTagged, C4dLaplacianParametersTagged, C4dLevelsetParametersTagged, C4dLevelsetCurvatureParametersTagged, C4dLevelsetAdvectionParametersTagged, C4dLogParametersTagged, C4dLog10ParametersTagged, C4dManualParametersTagged, C4dMatchBoundingBoxParametersTagged, C4dMaximumParametersTagged, C4dMulticomponentSplitParametersTagged, C4dMeanParametersTagged, C4dMedianFilterParametersTagged, C4dMergeParametersTagged, C4dMeanFilterParametersTagged, C4dMutualInfoParametersTagged, C4dMinimumParametersTagged, C4dMixtureModelParametersTagged, C4dMomentsParametersTagged, C4dMattesMutualInfoParametersTagged, C4dMeanSquareParametersTagged, C4dMultiplyParametersTagged, C4dNormalizedCrossCorrelationParametersTagged, C4dNormalizedCorrelationParametersTagged, C4dNormalizedMutualInfoParametersTagged, C4dNoiseGaussianParametersTagged, C4dNoisePoissonParametersTagged, C4dNoiseSpeckleParametersTagged, C4dNoiseSaltPepperParametersTagged, C4dNoMulticomponentSplitParametersTagged, C4dNormalizeLocalWindowParametersTagged, C4dNormpdfParametersTagged, C4dNoroundParametersTagged, C4dNospmParametersTagged, C4dOutputParametersTagged, C4dOutputMulticomponentParametersTagged, C4dOutputMultipleMulticomponentParametersTagged, C4dOrientParametersTagged, C4dOutputMultipleParametersTagged, C4dOrient1ParametersTagged, C4dOriginParametersTagged, C4dOriginVoxelParametersTagged, C4dOriginVoxelCoordParametersTagged, C4dOverlapParametersTagged, C4dOverlayLabelImageParametersTagged, C4dPadParametersTagged, C4dPadToParametersTagged, C4dPcaParametersTagged, C4dPercentIntensityModeParametersTagged, C4dPixelParametersTagged, C4dPopParametersTagged, C4dPopasParametersTagged, C4dProbeParametersTagged, C4dPushParametersTagged, C4dRankParametersTagged, C4dReciprocalParametersTagged, C4dRegionParametersTagged, C4dReorderParametersTagged, C4dRetainLabelsParametersTagged, C4dRfApplyParametersTagged, C4dRfTrainParametersTagged, C4dRfParamPatchParametersTagged, C4dRfParamUsexyzParametersTagged, C4dRfParamNousexyzParametersTagged, C4dRfParamNtreesParametersTagged, C4dRfParamTreedepthParametersTagged, C4dSetSformParametersTagged, C4dReplaceParametersTagged, C4dResampleParametersTagged, C4dResampleIsoParametersTagged, C4dResampleMmParametersTagged, C4dResliceItkParametersTagged, C4dResliceMatrixParametersTagged, C4dResliceIdentityParametersTagged, C4dRgb2hsvParametersTagged, C4dRmsParametersTagged, C4dRoundParametersTagged, C4dScaleParametersTagged, C4dSetSform1ParametersTagged, C4dSinParametersTagged, C4dSliceParametersTagged, C4dSliceAllParametersTagged, C4dSharpenParametersTagged, C4dShiftParametersTagged, C4dSignedDistanceTransformParametersTagged, C4dSmoothParametersTagged, C4dSmoothFastParametersTagged, C4dSpacingParametersTagged, C4dSplitParametersTagged, C4dSqrtParametersTagged, C4dStapleParametersTagged, C4dStructureTensorEigenvaluesParametersTagged, C4dSpmParametersTagged, C4dSubtractParametersTagged, C4dSupervoxelParametersTagged, C4dStretchParametersTagged, C4dSwapdimParametersTagged, C4dTestImageParametersTagged, C4dTestProbeParametersTagged, C4dThresholdParametersTagged, C4dTileParametersTagged, C4dTrimParametersTagged, C4dTrimToSizeParametersTagged, C4dTypeParametersTagged, C4dVerboseParametersTagged, C4dNoverboseParametersTagged, C4dVersionParametersTagged, C4dVoteParametersTagged, C4dVoteMrfParametersTagged, C4dVoteLabelParametersTagged, C4dVoxelSumParametersTagged, C4dVoxelIntegralParametersTagged, C4dVoxelwiseRegressionParametersTagged, C4dWarpParametersTagged, C4dWarpLabelParametersTagged, C4dWrapParametersTagged, C4dWeightedSumParametersTagged, C4dWeightedSumVoxelwiseParametersTagged]],
     output: str,
     runner: Runner | None = None,
 ) -> C4dOutputs:
@@ -10471,188 +11191,8 @@ def c4d(
 
 __all__ = [
     "C4D_METADATA",
-    "C4dAccumParameters",
-    "C4dAcosParameters",
-    "C4dAddParameters",
-    "C4dAlignLandmarksParameters",
-    "C4dAnisotropicDiffusionParameters",
-    "C4dAntialiasParameters",
-    "C4dAsinParameters",
-    "C4dAtan2Parameters",
-    "C4dBackgroundParameters",
-    "C4dBinarizeParameters",
-    "C4dCannyParameters",
-    "C4dCeilParameters",
-    "C4dCentroidMarkParameters",
-    "C4dCentroidParameters",
-    "C4dClearParameters",
-    "C4dClipParameters",
-    "C4dColorMapParameters",
-    "C4dCompressParameters",
-    "C4dConnectedComponentsParameters",
-    "C4dConvParameters",
-    "C4dCoordinateMapPhysicalParameters",
-    "C4dCoordinateMapVoxelParameters",
-    "C4dCopyTransformParameters",
-    "C4dCosParameters",
-    "C4dCreateParameters",
-    "C4dDicomSeriesListParameters",
-    "C4dDicomSeriesReadParameters",
-    "C4dDilateParameters",
-    "C4dDivideParameters",
-    "C4dDuplicateParameters",
-    "C4dEndaccumParameters",
-    "C4dEndforParameters",
-    "C4dErfParameters",
-    "C4dErodeParameters",
-    "C4dExpParameters",
-    "C4dExportPatchesAugParameters",
-    "C4dExportPatchesParameters",
-    "C4dExtrudeSegParameters",
-    "C4dFftParameters",
-    "C4dFillBackgroundWithNoiseParameters",
-    "C4dFlipParameters",
-    "C4dFloorParameters",
-    "C4dForeachCompParameters",
-    "C4dForeachParameters",
-    "C4dGlmParameters",
-    "C4dGradientParameters",
-    "C4dHelpParameters",
-    "C4dHessianEigenvaluesParameters",
-    "C4dHessianObjectnessParameters",
-    "C4dHistogramMatchParameters",
-    "C4dHolefillParameters",
-    "C4dInfoFullParameters",
-    "C4dInfoParameters",
-    "C4dInsertParameters",
-    "C4dInterpolationParameters",
-    "C4dIterationsParameters",
-    "C4dLabelOverlapParameters",
-    "C4dLabelStatisticsParameters",
-    "C4dLandmarksToSpheresParameters",
-    "C4dLaplacianParameters",
-    "C4dLevelsetAdvectionParameters",
-    "C4dLevelsetCurvatureParameters",
-    "C4dLevelsetParameters",
-    "C4dLog10Parameters",
-    "C4dLogParameters",
-    "C4dManualParameters",
-    "C4dMatchBoundingBoxParameters",
-    "C4dMattesMutualInfoParameters",
-    "C4dMaximumParameters",
-    "C4dMeanFilterParameters",
-    "C4dMeanParameters",
-    "C4dMeanSquareParameters",
-    "C4dMedianFilterParameters",
-    "C4dMergeParameters",
-    "C4dMinimumParameters",
-    "C4dMixtureModelParameters",
-    "C4dMomentsParameters",
-    "C4dMulticomponentSplitParameters",
-    "C4dMultiplyParameters",
-    "C4dMutualInfoParameters",
-    "C4dN4BiasCorrectionParameters",
-    "C4dNoCompressParameters",
-    "C4dNoMulticomponentSplitParameters",
-    "C4dNoiseGaussianParameters",
-    "C4dNoisePoissonParameters",
-    "C4dNoiseSaltPepperParameters",
-    "C4dNoiseSpeckleParameters",
-    "C4dNormalizeLocalWindowParameters",
-    "C4dNormalizedCorrelationParameters",
-    "C4dNormalizedCrossCorrelationParameters",
-    "C4dNormalizedMutualInfoParameters",
-    "C4dNormpdfParameters",
-    "C4dNoroundParameters",
-    "C4dNospmParameters",
-    "C4dNoverboseParameters",
-    "C4dOrient1Parameters",
-    "C4dOrientParameters",
-    "C4dOriginParameters",
-    "C4dOriginVoxelCoordParameters",
-    "C4dOriginVoxelParameters",
-    "C4dOutputMulticomponentParameters",
-    "C4dOutputMultipleMulticomponentParameters",
-    "C4dOutputMultipleParameters",
     "C4dOutputOutputs",
-    "C4dOutputParameters",
     "C4dOutputs",
-    "C4dOverlapParameters",
-    "C4dOverlayLabelImageParameters",
-    "C4dPadParameters",
-    "C4dPadToParameters",
-    "C4dParameters",
-    "C4dPcaParameters",
-    "C4dPercentIntensityModeParameters",
-    "C4dPixelParameters",
-    "C4dPopParameters",
-    "C4dPopasParameters",
-    "C4dProbeParameters",
-    "C4dPushParameters",
-    "C4dRankParameters",
-    "C4dReciprocalParameters",
-    "C4dRegionParameters",
-    "C4dReorderParameters",
-    "C4dReplaceParameters",
-    "C4dResampleIsoParameters",
-    "C4dResampleMmParameters",
-    "C4dResampleParameters",
-    "C4dResliceIdentityParameters",
-    "C4dResliceItkParameters",
-    "C4dResliceMatrixParameters",
-    "C4dRetainLabelsParameters",
-    "C4dRfApplyParameters",
-    "C4dRfParamNousexyzParameters",
-    "C4dRfParamNtreesParameters",
-    "C4dRfParamPatchParameters",
-    "C4dRfParamTreedepthParameters",
-    "C4dRfParamUsexyzParameters",
-    "C4dRfTrainParameters",
-    "C4dRgb2hsvParameters",
-    "C4dRmsParameters",
-    "C4dRoundParameters",
-    "C4dScaleParameters",
-    "C4dSetParameters",
-    "C4dSetSform1Parameters",
-    "C4dSetSformParameters",
-    "C4dSharpenParameters",
-    "C4dShiftParameters",
-    "C4dSignedDistanceTransformParameters",
-    "C4dSinParameters",
-    "C4dSliceAllParameters",
-    "C4dSliceParameters",
-    "C4dSmoothFastParameters",
-    "C4dSmoothParameters",
-    "C4dSpacingParameters",
-    "C4dSplitParameters",
-    "C4dSpmParameters",
-    "C4dSqrtParameters",
-    "C4dStapleParameters",
-    "C4dStretchParameters",
-    "C4dStructureTensorEigenvaluesParameters",
-    "C4dSubtractParameters",
-    "C4dSupervoxelParameters",
-    "C4dSwapdimParameters",
-    "C4dTestImageParameters",
-    "C4dTestProbeParameters",
-    "C4dThresholdParameters",
-    "C4dTileParameters",
-    "C4dTrimParameters",
-    "C4dTrimToSizeParameters",
-    "C4dTypeParameters",
-    "C4dVerboseParameters",
-    "C4dVersionParameters",
-    "C4dVoteLabelParameters",
-    "C4dVoteMrfParameters",
-    "C4dVoteParameters",
-    "C4dVoxelIntegralParameters",
-    "C4dVoxelSumParameters",
-    "C4dVoxelwiseRegressionParameters",
-    "C4dWarpLabelParameters",
-    "C4dWarpParameters",
-    "C4dWeightedSumParameters",
-    "C4dWeightedSumVoxelwiseParameters",
-    "C4dWrapParameters",
     "c4d",
     "c4d__help_params",
     "c4d_accum_params",

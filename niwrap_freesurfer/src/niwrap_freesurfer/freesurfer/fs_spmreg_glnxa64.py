@@ -14,47 +14,20 @@ FS_SPMREG_GLNXA64_METADATA = Metadata(
 
 
 FsSpmregGlnxa64Parameters = typing.TypedDict('FsSpmregGlnxa64Parameters', {
-    "@type": typing.Literal["freesurfer.fs_spmreg.glnxa64"],
+    "@type": typing.NotRequired[typing.Literal["freesurfer/fs_spmreg.glnxa64"]],
+    "input_volume": InputPathType,
+    "output_matrix": str,
+})
+FsSpmregGlnxa64ParametersTagged = typing.TypedDict('FsSpmregGlnxa64ParametersTagged', {
+    "@type": typing.Literal["freesurfer/fs_spmreg.glnxa64"],
     "input_volume": InputPathType,
     "output_matrix": str,
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "freesurfer.fs_spmreg.glnxa64": fs_spmreg_glnxa64_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "freesurfer.fs_spmreg.glnxa64": fs_spmreg_glnxa64_outputs,
-    }.get(t)
-
-
 class FsSpmregGlnxa64Outputs(typing.NamedTuple):
     """
-    Output object returned when calling `fs_spmreg_glnxa64(...)`.
+    Output object returned when calling `FsSpmregGlnxa64Parameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -65,7 +38,7 @@ class FsSpmregGlnxa64Outputs(typing.NamedTuple):
 def fs_spmreg_glnxa64_params(
     input_volume: InputPathType,
     output_matrix: str = "output.mat",
-) -> FsSpmregGlnxa64Parameters:
+) -> FsSpmregGlnxa64ParametersTagged:
     """
     Build parameters.
     
@@ -76,7 +49,7 @@ def fs_spmreg_glnxa64_params(
         Parameter dictionary
     """
     params = {
-        "@type": "freesurfer.fs_spmreg.glnxa64",
+        "@type": "freesurfer/fs_spmreg.glnxa64",
         "input_volume": input_volume,
         "output_matrix": output_matrix,
     }
@@ -98,8 +71,8 @@ def fs_spmreg_glnxa64_cargs(
     """
     cargs = []
     cargs.append("fs_spmreg.glnxa64")
-    cargs.append(execution.input_file(params.get("input_volume")))
-    cargs.append(params.get("output_matrix"))
+    cargs.append(execution.input_file(params.get("input_volume", None)))
+    cargs.append(params.get("output_matrix", "output.mat"))
     return cargs
 
 
@@ -118,7 +91,7 @@ def fs_spmreg_glnxa64_outputs(
     """
     ret = FsSpmregGlnxa64Outputs(
         root=execution.output_file("."),
-        output_matrix_file=execution.output_file(params.get("output_matrix")),
+        output_matrix_file=execution.output_file(params.get("output_matrix", "output.mat")),
     )
     return ret
 
@@ -182,7 +155,6 @@ def fs_spmreg_glnxa64(
 __all__ = [
     "FS_SPMREG_GLNXA64_METADATA",
     "FsSpmregGlnxa64Outputs",
-    "FsSpmregGlnxa64Parameters",
     "fs_spmreg_glnxa64",
     "fs_spmreg_glnxa64_execute",
     "fs_spmreg_glnxa64_params",

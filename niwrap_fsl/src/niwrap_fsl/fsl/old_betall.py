@@ -14,47 +14,20 @@ OLD_BETALL_METADATA = Metadata(
 
 
 OldBetallParameters = typing.TypedDict('OldBetallParameters', {
-    "@type": typing.Literal["fsl.old_betall"],
+    "@type": typing.NotRequired[typing.Literal["fsl/old_betall"]],
+    "t1_filerout": str,
+    "t2_filerout": str,
+})
+OldBetallParametersTagged = typing.TypedDict('OldBetallParametersTagged', {
+    "@type": typing.Literal["fsl/old_betall"],
     "t1_filerout": str,
     "t2_filerout": str,
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "fsl.old_betall": old_betall_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "fsl.old_betall": old_betall_outputs,
-    }.get(t)
-
-
 class OldBetallOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `old_betall(...)`.
+    Output object returned when calling `OldBetallParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -67,7 +40,7 @@ class OldBetallOutputs(typing.NamedTuple):
 def old_betall_params(
     t1_filerout: str,
     t2_filerout: str,
-) -> OldBetallParameters:
+) -> OldBetallParametersTagged:
     """
     Build parameters.
     
@@ -78,7 +51,7 @@ def old_betall_params(
         Parameter dictionary
     """
     params = {
-        "@type": "fsl.old_betall",
+        "@type": "fsl/old_betall",
         "t1_filerout": t1_filerout,
         "t2_filerout": t2_filerout,
     }
@@ -100,8 +73,8 @@ def old_betall_cargs(
     """
     cargs = []
     cargs.append("old_betall")
-    cargs.append(params.get("t1_filerout"))
-    cargs.append(params.get("t2_filerout"))
+    cargs.append(params.get("t1_filerout", None))
+    cargs.append(params.get("t2_filerout", None))
     return cargs
 
 
@@ -120,8 +93,8 @@ def old_betall_outputs(
     """
     ret = OldBetallOutputs(
         root=execution.output_file("."),
-        output_t1=execution.output_file(params.get("t1_filerout")),
-        output_t2=execution.output_file(params.get("t2_filerout")),
+        output_t1=execution.output_file(params.get("t1_filerout", None)),
+        output_t2=execution.output_file(params.get("t2_filerout", None)),
     )
     return ret
 
@@ -185,7 +158,6 @@ def old_betall(
 __all__ = [
     "OLD_BETALL_METADATA",
     "OldBetallOutputs",
-    "OldBetallParameters",
     "old_betall",
     "old_betall_execute",
     "old_betall_params",

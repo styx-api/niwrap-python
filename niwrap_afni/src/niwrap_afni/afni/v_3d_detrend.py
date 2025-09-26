@@ -14,47 +14,20 @@ V_3D_DETREND_METADATA = Metadata(
 
 
 V3dDetrendParameters = typing.TypedDict('V3dDetrendParameters', {
-    "@type": typing.Literal["afni.3dDetrend"],
+    "@type": typing.NotRequired[typing.Literal["afni/3dDetrend"]],
+    "in_file": InputPathType,
+    "outputtype": typing.NotRequired[typing.Literal["NIFTI", "AFNI", "NIFTI_GZ"] | None],
+})
+V3dDetrendParametersTagged = typing.TypedDict('V3dDetrendParametersTagged', {
+    "@type": typing.Literal["afni/3dDetrend"],
     "in_file": InputPathType,
     "outputtype": typing.NotRequired[typing.Literal["NIFTI", "AFNI", "NIFTI_GZ"] | None],
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "afni.3dDetrend": v_3d_detrend_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "afni.3dDetrend": v_3d_detrend_outputs,
-    }.get(t)
-
-
 class V3dDetrendOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `v_3d_detrend(...)`.
+    Output object returned when calling `V3dDetrendParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -67,7 +40,7 @@ class V3dDetrendOutputs(typing.NamedTuple):
 def v_3d_detrend_params(
     in_file: InputPathType,
     outputtype: typing.Literal["NIFTI", "AFNI", "NIFTI_GZ"] | None = None,
-) -> V3dDetrendParameters:
+) -> V3dDetrendParametersTagged:
     """
     Build parameters.
     
@@ -78,7 +51,7 @@ def v_3d_detrend_params(
         Parameter dictionary
     """
     params = {
-        "@type": "afni.3dDetrend",
+        "@type": "afni/3dDetrend",
         "in_file": in_file,
     }
     if outputtype is not None:
@@ -101,9 +74,9 @@ def v_3d_detrend_cargs(
     """
     cargs = []
     cargs.append("3dDetrend")
-    cargs.append(execution.input_file(params.get("in_file")))
-    if params.get("outputtype") is not None:
-        cargs.append(params.get("outputtype"))
+    cargs.append(execution.input_file(params.get("in_file", None)))
+    if params.get("outputtype", None) is not None:
+        cargs.append(params.get("outputtype", None))
     return cargs
 
 
@@ -122,7 +95,7 @@ def v_3d_detrend_outputs(
     """
     ret = V3dDetrendOutputs(
         root=execution.output_file("."),
-        out_file=execution.output_file(pathlib.Path(params.get("in_file")).name + "_detrend"),
+        out_file=execution.output_file(pathlib.Path(params.get("in_file", None)).name + "_detrend"),
         out_file_=execution.output_file("out_file"),
     )
     return ret
@@ -188,7 +161,6 @@ def v_3d_detrend(
 
 __all__ = [
     "V3dDetrendOutputs",
-    "V3dDetrendParameters",
     "V_3D_DETREND_METADATA",
     "v_3d_detrend",
     "v_3d_detrend_execute",

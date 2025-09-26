@@ -14,7 +14,21 @@ V_3D_RPROG_DEMO_METADATA = Metadata(
 
 
 V3dRprogDemoParameters = typing.TypedDict('V3dRprogDemoParameters', {
-    "@type": typing.Literal["afni.3dRprogDemo"],
+    "@type": typing.NotRequired[typing.Literal["afni/3dRprogDemo"]],
+    "input_dsets": list[InputPathType],
+    "mask": typing.NotRequired[InputPathType | None],
+    "scale": float,
+    "prefix": str,
+    "help_aspx": bool,
+    "help_raw": bool,
+    "help_spx": bool,
+    "help_txt": bool,
+    "help": bool,
+    "show_allowed_options": bool,
+    "verbosity_level": typing.NotRequired[float | None],
+})
+V3dRprogDemoParametersTagged = typing.TypedDict('V3dRprogDemoParametersTagged', {
+    "@type": typing.Literal["afni/3dRprogDemo"],
     "input_dsets": list[InputPathType],
     "mask": typing.NotRequired[InputPathType | None],
     "scale": float,
@@ -29,41 +43,9 @@ V3dRprogDemoParameters = typing.TypedDict('V3dRprogDemoParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "afni.3dRprogDemo": v_3d_rprog_demo_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "afni.3dRprogDemo": v_3d_rprog_demo_outputs,
-    }.get(t)
-
-
 class V3dRprogDemoOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `v_3d_rprog_demo(...)`.
+    Output object returned when calling `V3dRprogDemoParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -83,7 +65,7 @@ def v_3d_rprog_demo_params(
     help_: bool = False,
     show_allowed_options: bool = False,
     verbosity_level: float | None = None,
-) -> V3dRprogDemoParameters:
+) -> V3dRprogDemoParametersTagged:
     """
     Build parameters.
     
@@ -104,7 +86,7 @@ def v_3d_rprog_demo_params(
         Parameter dictionary
     """
     params = {
-        "@type": "afni.3dRprogDemo",
+        "@type": "afni/3dRprogDemo",
         "input_dsets": input_dsets,
         "scale": scale,
         "prefix": prefix,
@@ -137,36 +119,36 @@ def v_3d_rprog_demo_cargs(
     """
     cargs = []
     cargs.append("3dRprogDemo")
-    cargs.extend([execution.input_file(f) for f in params.get("input_dsets")])
-    if params.get("mask") is not None:
+    cargs.extend([execution.input_file(f) for f in params.get("input_dsets", None)])
+    if params.get("mask", None) is not None:
         cargs.extend([
             "-mask",
-            execution.input_file(params.get("mask"))
+            execution.input_file(params.get("mask", None))
         ])
     cargs.extend([
         "-scale",
-        str(params.get("scale"))
+        str(params.get("scale", None))
     ])
     cargs.extend([
         "-prefix",
-        params.get("prefix")
+        params.get("prefix", None)
     ])
-    if params.get("help_aspx"):
+    if params.get("help_aspx", False):
         cargs.append("-h_aspx")
-    if params.get("help_raw"):
+    if params.get("help_raw", False):
         cargs.append("-h_raw")
-    if params.get("help_spx"):
+    if params.get("help_spx", False):
         cargs.append("-h_spx")
-    if params.get("help_txt"):
+    if params.get("help_txt", False):
         cargs.append("-h_txt")
-    if params.get("help"):
+    if params.get("help", False):
         cargs.append("-help")
-    if params.get("show_allowed_options"):
+    if params.get("show_allowed_options", False):
         cargs.append("-show_allowed_options")
-    if params.get("verbosity_level") is not None:
+    if params.get("verbosity_level", None) is not None:
         cargs.extend([
             "-verb",
-            str(params.get("verbosity_level"))
+            str(params.get("verbosity_level", None))
         ])
     return cargs
 
@@ -186,7 +168,7 @@ def v_3d_rprog_demo_outputs(
     """
     ret = V3dRprogDemoOutputs(
         root=execution.output_file("."),
-        output_file=execution.output_file(params.get("prefix") + ".nii"),
+        output_file=execution.output_file(params.get("prefix", None) + ".nii"),
     )
     return ret
 
@@ -279,7 +261,6 @@ def v_3d_rprog_demo(
 
 __all__ = [
     "V3dRprogDemoOutputs",
-    "V3dRprogDemoParameters",
     "V_3D_RPROG_DEMO_METADATA",
     "v_3d_rprog_demo",
     "v_3d_rprog_demo_execute",

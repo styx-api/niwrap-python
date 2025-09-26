@@ -14,7 +14,19 @@ V_3D_LFCD_METADATA = Metadata(
 
 
 V3dLfcdParameters = typing.TypedDict('V3dLfcdParameters', {
-    "@type": typing.Literal["afni.3dLFCD"],
+    "@type": typing.NotRequired[typing.Literal["afni/3dLFCD"]],
+    "in_file": InputPathType,
+    "autoclip": bool,
+    "automask": bool,
+    "mask": typing.NotRequired[InputPathType | None],
+    "num_threads": typing.NotRequired[int | None],
+    "out_file": typing.NotRequired[str | None],
+    "outputtype": typing.NotRequired[typing.Literal["NIFTI", "AFNI", "NIFTI_GZ"] | None],
+    "polort": typing.NotRequired[int | None],
+    "thresh": typing.NotRequired[float | None],
+})
+V3dLfcdParametersTagged = typing.TypedDict('V3dLfcdParametersTagged', {
+    "@type": typing.Literal["afni/3dLFCD"],
     "in_file": InputPathType,
     "autoclip": bool,
     "automask": bool,
@@ -27,41 +39,9 @@ V3dLfcdParameters = typing.TypedDict('V3dLfcdParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "afni.3dLFCD": v_3d_lfcd_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "afni.3dLFCD": v_3d_lfcd_outputs,
-    }.get(t)
-
-
 class V3dLfcdOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `v_3d_lfcd(...)`.
+    Output object returned when calling `V3dLfcdParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -79,7 +59,7 @@ def v_3d_lfcd_params(
     outputtype: typing.Literal["NIFTI", "AFNI", "NIFTI_GZ"] | None = None,
     polort: int | None = None,
     thresh: float | None = None,
-) -> V3dLfcdParameters:
+) -> V3dLfcdParametersTagged:
     """
     Build parameters.
     
@@ -97,7 +77,7 @@ def v_3d_lfcd_params(
         Parameter dictionary
     """
     params = {
-        "@type": "afni.3dLFCD",
+        "@type": "afni/3dLFCD",
         "in_file": in_file,
         "autoclip": autoclip,
         "automask": automask,
@@ -132,34 +112,34 @@ def v_3d_lfcd_cargs(
     """
     cargs = []
     cargs.append("3dLFCD")
-    cargs.append(execution.input_file(params.get("in_file")))
-    if params.get("autoclip"):
+    cargs.append(execution.input_file(params.get("in_file", None)))
+    if params.get("autoclip", False):
         cargs.append("-autoclip")
-    if params.get("automask"):
+    if params.get("automask", False):
         cargs.append("-automask")
-    if params.get("mask") is not None:
+    if params.get("mask", None) is not None:
         cargs.extend([
             "-mask",
-            execution.input_file(params.get("mask"))
+            execution.input_file(params.get("mask", None))
         ])
-    if params.get("num_threads") is not None:
-        cargs.append(str(params.get("num_threads")))
-    if params.get("out_file") is not None:
+    if params.get("num_threads", None) is not None:
+        cargs.append(str(params.get("num_threads", None)))
+    if params.get("out_file", None) is not None:
         cargs.extend([
             "-prefix",
-            params.get("out_file")
+            params.get("out_file", None)
         ])
-    if params.get("outputtype") is not None:
-        cargs.append(params.get("outputtype"))
-    if params.get("polort") is not None:
+    if params.get("outputtype", None) is not None:
+        cargs.append(params.get("outputtype", None))
+    if params.get("polort", None) is not None:
         cargs.extend([
             "-polort",
-            str(params.get("polort"))
+            str(params.get("polort", None))
         ])
-    if params.get("thresh") is not None:
+    if params.get("thresh", None) is not None:
         cargs.extend([
             "-thresh",
-            str(params.get("thresh"))
+            str(params.get("thresh", None))
         ])
     return cargs
 
@@ -179,7 +159,7 @@ def v_3d_lfcd_outputs(
     """
     ret = V3dLfcdOutputs(
         root=execution.output_file("."),
-        out_file=execution.output_file(pathlib.Path(params.get("in_file")).name + "_afni"),
+        out_file=execution.output_file(pathlib.Path(params.get("in_file", None)).name + "_afni"),
     )
     return ret
 
@@ -265,7 +245,6 @@ def v_3d_lfcd(
 
 __all__ = [
     "V3dLfcdOutputs",
-    "V3dLfcdParameters",
     "V_3D_LFCD_METADATA",
     "v_3d_lfcd",
     "v_3d_lfcd_execute",

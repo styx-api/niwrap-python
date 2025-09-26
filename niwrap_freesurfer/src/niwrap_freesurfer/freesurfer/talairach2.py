@@ -14,46 +14,20 @@ TALAIRACH2_METADATA = Metadata(
 
 
 Talairach2Parameters = typing.TypedDict('Talairach2Parameters', {
-    "@type": typing.Literal["freesurfer.talairach2"],
+    "@type": typing.NotRequired[typing.Literal["freesurfer/talairach2"]],
+    "subject_id": str,
+    "mgz_flag": typing.NotRequired[str | None],
+})
+Talairach2ParametersTagged = typing.TypedDict('Talairach2ParametersTagged', {
+    "@type": typing.Literal["freesurfer/talairach2"],
     "subject_id": str,
     "mgz_flag": typing.NotRequired[str | None],
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "freesurfer.talairach2": talairach2_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-    }.get(t)
-
-
 class Talairach2Outputs(typing.NamedTuple):
     """
-    Output object returned when calling `talairach2(...)`.
+    Output object returned when calling `Talairach2Parameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -62,7 +36,7 @@ class Talairach2Outputs(typing.NamedTuple):
 def talairach2_params(
     subject_id: str,
     mgz_flag: str | None = None,
-) -> Talairach2Parameters:
+) -> Talairach2ParametersTagged:
     """
     Build parameters.
     
@@ -73,7 +47,7 @@ def talairach2_params(
         Parameter dictionary
     """
     params = {
-        "@type": "freesurfer.talairach2",
+        "@type": "freesurfer/talairach2",
         "subject_id": subject_id,
     }
     if mgz_flag is not None:
@@ -96,9 +70,9 @@ def talairach2_cargs(
     """
     cargs = []
     cargs.append("talairach2")
-    cargs.append(params.get("subject_id"))
-    if params.get("mgz_flag") is not None:
-        cargs.append(params.get("mgz_flag"))
+    cargs.append(params.get("subject_id", None))
+    if params.get("mgz_flag", None) is not None:
+        cargs.append(params.get("mgz_flag", None))
     return cargs
 
 
@@ -180,7 +154,6 @@ def talairach2(
 __all__ = [
     "TALAIRACH2_METADATA",
     "Talairach2Outputs",
-    "Talairach2Parameters",
     "talairach2",
     "talairach2_execute",
     "talairach2_params",

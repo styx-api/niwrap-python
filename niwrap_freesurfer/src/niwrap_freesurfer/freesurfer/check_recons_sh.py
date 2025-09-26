@@ -14,45 +14,18 @@ CHECK_RECONS_SH_METADATA = Metadata(
 
 
 CheckReconsShParameters = typing.TypedDict('CheckReconsShParameters', {
-    "@type": typing.Literal["freesurfer.check_recons.sh"],
+    "@type": typing.NotRequired[typing.Literal["freesurfer/check_recons.sh"]],
+    "subject_directory": typing.NotRequired[str | None],
+})
+CheckReconsShParametersTagged = typing.TypedDict('CheckReconsShParametersTagged', {
+    "@type": typing.Literal["freesurfer/check_recons.sh"],
     "subject_directory": typing.NotRequired[str | None],
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "freesurfer.check_recons.sh": check_recons_sh_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-    }.get(t)
-
-
 class CheckReconsShOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `check_recons_sh(...)`.
+    Output object returned when calling `CheckReconsShParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -60,7 +33,7 @@ class CheckReconsShOutputs(typing.NamedTuple):
 
 def check_recons_sh_params(
     subject_directory: str | None = None,
-) -> CheckReconsShParameters:
+) -> CheckReconsShParametersTagged:
     """
     Build parameters.
     
@@ -71,7 +44,7 @@ def check_recons_sh_params(
         Parameter dictionary
     """
     params = {
-        "@type": "freesurfer.check_recons.sh",
+        "@type": "freesurfer/check_recons.sh",
     }
     if subject_directory is not None:
         params["subject_directory"] = subject_directory
@@ -93,8 +66,8 @@ def check_recons_sh_cargs(
     """
     cargs = []
     cargs.append("check_recons.sh")
-    if params.get("subject_directory") is not None:
-        cargs.append(params.get("subject_directory"))
+    if params.get("subject_directory", None) is not None:
+        cargs.append(params.get("subject_directory", None))
     return cargs
 
 
@@ -176,7 +149,6 @@ def check_recons_sh(
 __all__ = [
     "CHECK_RECONS_SH_METADATA",
     "CheckReconsShOutputs",
-    "CheckReconsShParameters",
     "check_recons_sh",
     "check_recons_sh_execute",
     "check_recons_sh_params",

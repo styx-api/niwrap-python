@@ -14,7 +14,20 @@ BEDPOSTX_GPU_METADATA = Metadata(
 
 
 BedpostxGpuParameters = typing.TypedDict('BedpostxGpuParameters', {
-    "@type": typing.Literal["fsl.bedpostx_gpu"],
+    "@type": typing.NotRequired[typing.Literal["fsl/bedpostx_gpu"]],
+    "subject_dir": str,
+    "gpu_queue": typing.NotRequired[str | None],
+    "num_jobs": typing.NotRequired[float | None],
+    "num_fibers": typing.NotRequired[float | None],
+    "ard_weight": typing.NotRequired[float | None],
+    "burnin_period": typing.NotRequired[float | None],
+    "num_jumps": typing.NotRequired[float | None],
+    "sample_every": typing.NotRequired[float | None],
+    "deconv_model": typing.NotRequired[float | None],
+    "grad_nonlinear": bool,
+})
+BedpostxGpuParametersTagged = typing.TypedDict('BedpostxGpuParametersTagged', {
+    "@type": typing.Literal["fsl/bedpostx_gpu"],
     "subject_dir": str,
     "gpu_queue": typing.NotRequired[str | None],
     "num_jobs": typing.NotRequired[float | None],
@@ -28,40 +41,9 @@ BedpostxGpuParameters = typing.TypedDict('BedpostxGpuParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "fsl.bedpostx_gpu": bedpostx_gpu_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-    }.get(t)
-
-
 class BedpostxGpuOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `bedpostx_gpu(...)`.
+    Output object returned when calling `BedpostxGpuParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -78,7 +60,7 @@ def bedpostx_gpu_params(
     sample_every: float | None = None,
     deconv_model: float | None = None,
     grad_nonlinear: bool = False,
-) -> BedpostxGpuParameters:
+) -> BedpostxGpuParametersTagged:
     """
     Build parameters.
     
@@ -102,7 +84,7 @@ def bedpostx_gpu_params(
         Parameter dictionary
     """
     params = {
-        "@type": "fsl.bedpostx_gpu",
+        "@type": "fsl/bedpostx_gpu",
         "subject_dir": subject_dir,
         "grad_nonlinear": grad_nonlinear,
     }
@@ -140,48 +122,48 @@ def bedpostx_gpu_cargs(
     """
     cargs = []
     cargs.append("bedpostx_gpu")
-    cargs.append(params.get("subject_dir"))
-    if params.get("gpu_queue") is not None:
+    cargs.append(params.get("subject_dir", None))
+    if params.get("gpu_queue", None) is not None:
         cargs.extend([
             "-Q",
-            params.get("gpu_queue")
+            params.get("gpu_queue", None)
         ])
-    if params.get("num_jobs") is not None:
+    if params.get("num_jobs", None) is not None:
         cargs.extend([
             "-NJOBS",
-            str(params.get("num_jobs"))
+            str(params.get("num_jobs", None))
         ])
-    if params.get("num_fibers") is not None:
+    if params.get("num_fibers", None) is not None:
         cargs.extend([
             "-n",
-            str(params.get("num_fibers"))
+            str(params.get("num_fibers", None))
         ])
-    if params.get("ard_weight") is not None:
+    if params.get("ard_weight", None) is not None:
         cargs.extend([
             "-w",
-            str(params.get("ard_weight"))
+            str(params.get("ard_weight", None))
         ])
-    if params.get("burnin_period") is not None:
+    if params.get("burnin_period", None) is not None:
         cargs.extend([
             "-b",
-            str(params.get("burnin_period"))
+            str(params.get("burnin_period", None))
         ])
-    if params.get("num_jumps") is not None:
+    if params.get("num_jumps", None) is not None:
         cargs.extend([
             "-j",
-            str(params.get("num_jumps"))
+            str(params.get("num_jumps", None))
         ])
-    if params.get("sample_every") is not None:
+    if params.get("sample_every", None) is not None:
         cargs.extend([
             "-s",
-            str(params.get("sample_every"))
+            str(params.get("sample_every", None))
         ])
-    if params.get("deconv_model") is not None:
+    if params.get("deconv_model", None) is not None:
         cargs.extend([
             "-model",
-            str(params.get("deconv_model"))
+            str(params.get("deconv_model", None))
         ])
-    if params.get("grad_nonlinear"):
+    if params.get("grad_nonlinear", False):
         cargs.append("-g")
     return cargs
 
@@ -293,7 +275,6 @@ def bedpostx_gpu(
 __all__ = [
     "BEDPOSTX_GPU_METADATA",
     "BedpostxGpuOutputs",
-    "BedpostxGpuParameters",
     "bedpostx_gpu",
     "bedpostx_gpu_execute",
     "bedpostx_gpu_params",

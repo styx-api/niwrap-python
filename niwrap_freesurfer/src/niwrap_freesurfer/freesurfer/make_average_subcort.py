@@ -14,47 +14,20 @@ MAKE_AVERAGE_SUBCORT_METADATA = Metadata(
 
 
 MakeAverageSubcortParameters = typing.TypedDict('MakeAverageSubcortParameters', {
-    "@type": typing.Literal["freesurfer.make_average_subcort"],
+    "@type": typing.NotRequired[typing.Literal["freesurfer/make_average_subcort"]],
+    "subjects": list[str],
+    "output_volume": str,
+})
+MakeAverageSubcortParametersTagged = typing.TypedDict('MakeAverageSubcortParametersTagged', {
+    "@type": typing.Literal["freesurfer/make_average_subcort"],
     "subjects": list[str],
     "output_volume": str,
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "freesurfer.make_average_subcort": make_average_subcort_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "freesurfer.make_average_subcort": make_average_subcort_outputs,
-    }.get(t)
-
-
 class MakeAverageSubcortOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `make_average_subcort(...)`.
+    Output object returned when calling `MakeAverageSubcortParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -65,7 +38,7 @@ class MakeAverageSubcortOutputs(typing.NamedTuple):
 def make_average_subcort_params(
     subjects: list[str],
     output_volume: str,
-) -> MakeAverageSubcortParameters:
+) -> MakeAverageSubcortParametersTagged:
     """
     Build parameters.
     
@@ -76,7 +49,7 @@ def make_average_subcort_params(
         Parameter dictionary
     """
     params = {
-        "@type": "freesurfer.make_average_subcort",
+        "@type": "freesurfer/make_average_subcort",
         "subjects": subjects,
         "output_volume": output_volume,
     }
@@ -98,10 +71,10 @@ def make_average_subcort_cargs(
     """
     cargs = []
     cargs.append("make_average_subcort")
-    cargs.extend(params.get("subjects"))
+    cargs.extend(params.get("subjects", None))
     cargs.extend([
         "--o",
-        params.get("output_volume")
+        params.get("output_volume", None)
     ])
     return cargs
 
@@ -121,7 +94,7 @@ def make_average_subcort_outputs(
     """
     ret = MakeAverageSubcortOutputs(
         root=execution.output_file("."),
-        output_mask_file=execution.output_file(params.get("output_volume")),
+        output_mask_file=execution.output_file(params.get("output_volume", None)),
     )
     return ret
 
@@ -189,7 +162,6 @@ def make_average_subcort(
 __all__ = [
     "MAKE_AVERAGE_SUBCORT_METADATA",
     "MakeAverageSubcortOutputs",
-    "MakeAverageSubcortParameters",
     "make_average_subcort",
     "make_average_subcort_execute",
     "make_average_subcort_params",

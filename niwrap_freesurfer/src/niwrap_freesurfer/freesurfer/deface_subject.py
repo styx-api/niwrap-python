@@ -14,7 +14,14 @@ DEFACE_SUBJECT_METADATA = Metadata(
 
 
 DefaceSubjectParameters = typing.TypedDict('DefaceSubjectParameters', {
-    "@type": typing.Literal["freesurfer.deface_subject"],
+    "@type": typing.NotRequired[typing.Literal["freesurfer/deface_subject"]],
+    "subjects_dir": str,
+    "subject_id": str,
+    "volume_input": InputPathType,
+    "volume_output": str,
+})
+DefaceSubjectParametersTagged = typing.TypedDict('DefaceSubjectParametersTagged', {
+    "@type": typing.Literal["freesurfer/deface_subject"],
     "subjects_dir": str,
     "subject_id": str,
     "volume_input": InputPathType,
@@ -22,41 +29,9 @@ DefaceSubjectParameters = typing.TypedDict('DefaceSubjectParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "freesurfer.deface_subject": deface_subject_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "freesurfer.deface_subject": deface_subject_outputs,
-    }.get(t)
-
-
 class DefaceSubjectOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `deface_subject(...)`.
+    Output object returned when calling `DefaceSubjectParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -69,7 +44,7 @@ def deface_subject_params(
     subject_id: str,
     volume_input: InputPathType,
     volume_output: str,
-) -> DefaceSubjectParameters:
+) -> DefaceSubjectParametersTagged:
     """
     Build parameters.
     
@@ -82,7 +57,7 @@ def deface_subject_params(
         Parameter dictionary
     """
     params = {
-        "@type": "freesurfer.deface_subject",
+        "@type": "freesurfer/deface_subject",
         "subjects_dir": subjects_dir,
         "subject_id": subject_id,
         "volume_input": volume_input,
@@ -108,19 +83,19 @@ def deface_subject_cargs(
     cargs.append("deface_subject")
     cargs.extend([
         "-sdir",
-        params.get("subjects_dir")
+        params.get("subjects_dir", None)
     ])
     cargs.extend([
         "-id",
-        params.get("subject_id")
+        params.get("subject_id", None)
     ])
     cargs.extend([
         "-i",
-        execution.input_file(params.get("volume_input"))
+        execution.input_file(params.get("volume_input", None))
     ])
     cargs.extend([
         "-o",
-        params.get("volume_output")
+        params.get("volume_output", None)
     ])
     return cargs
 
@@ -140,7 +115,7 @@ def deface_subject_outputs(
     """
     ret = DefaceSubjectOutputs(
         root=execution.output_file("."),
-        output_volume=execution.output_file(params.get("volume_output")),
+        output_volume=execution.output_file(params.get("volume_output", None)),
     )
     return ret
 
@@ -210,7 +185,6 @@ def deface_subject(
 __all__ = [
     "DEFACE_SUBJECT_METADATA",
     "DefaceSubjectOutputs",
-    "DefaceSubjectParameters",
     "deface_subject",
     "deface_subject_execute",
     "deface_subject_params",

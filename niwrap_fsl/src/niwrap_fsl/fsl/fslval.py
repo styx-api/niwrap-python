@@ -14,47 +14,20 @@ FSLVAL_METADATA = Metadata(
 
 
 FslvalParameters = typing.TypedDict('FslvalParameters', {
-    "@type": typing.Literal["fsl.fslval"],
+    "@type": typing.NotRequired[typing.Literal["fsl/fslval"]],
+    "input_file": InputPathType,
+    "keyword": str,
+})
+FslvalParametersTagged = typing.TypedDict('FslvalParametersTagged', {
+    "@type": typing.Literal["fsl/fslval"],
     "input_file": InputPathType,
     "keyword": str,
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "fsl.fslval": fslval_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "fsl.fslval": fslval_outputs,
-    }.get(t)
-
-
 class FslvalOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `fslval(...)`.
+    Output object returned when calling `FslvalParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -65,7 +38,7 @@ class FslvalOutputs(typing.NamedTuple):
 def fslval_params(
     input_file: InputPathType,
     keyword_: str,
-) -> FslvalParameters:
+) -> FslvalParametersTagged:
     """
     Build parameters.
     
@@ -76,7 +49,7 @@ def fslval_params(
         Parameter dictionary
     """
     params = {
-        "@type": "fsl.fslval",
+        "@type": "fsl/fslval",
         "input_file": input_file,
         "keyword": keyword_,
     }
@@ -98,8 +71,8 @@ def fslval_cargs(
     """
     cargs = []
     cargs.append("fslval")
-    cargs.append(execution.input_file(params.get("input_file")))
-    cargs.append(params.get("keyword"))
+    cargs.append(execution.input_file(params.get("input_file", None)))
+    cargs.append(params.get("keyword", None))
     return cargs
 
 
@@ -182,7 +155,6 @@ def fslval(
 __all__ = [
     "FSLVAL_METADATA",
     "FslvalOutputs",
-    "FslvalParameters",
     "fslval",
     "fslval_execute",
     "fslval_params",

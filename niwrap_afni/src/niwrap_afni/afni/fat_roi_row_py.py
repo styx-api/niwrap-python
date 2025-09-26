@@ -14,7 +14,14 @@ FAT_ROI_ROW_PY_METADATA = Metadata(
 
 
 FatRoiRowPyParameters = typing.TypedDict('FatRoiRowPyParameters', {
-    "@type": typing.Literal["afni.fat_roi_row.py"],
+    "@type": typing.NotRequired[typing.Literal["afni/fat_roi_row.py"]],
+    "roi": str,
+    "matrix_files": typing.NotRequired[str | None],
+    "list_file": typing.NotRequired[InputPathType | None],
+    "extern_labs_no": bool,
+})
+FatRoiRowPyParametersTagged = typing.TypedDict('FatRoiRowPyParametersTagged', {
+    "@type": typing.Literal["afni/fat_roi_row.py"],
     "roi": str,
     "matrix_files": typing.NotRequired[str | None],
     "list_file": typing.NotRequired[InputPathType | None],
@@ -22,41 +29,9 @@ FatRoiRowPyParameters = typing.TypedDict('FatRoiRowPyParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "afni.fat_roi_row.py": fat_roi_row_py_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "afni.fat_roi_row.py": fat_roi_row_py_outputs,
-    }.get(t)
-
-
 class FatRoiRowPyOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `fat_roi_row_py(...)`.
+    Output object returned when calling `FatRoiRowPyParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -69,7 +44,7 @@ def fat_roi_row_py_params(
     matrix_files: str | None = None,
     list_file: InputPathType | None = None,
     extern_labs_no: bool = False,
-) -> FatRoiRowPyParameters:
+) -> FatRoiRowPyParametersTagged:
     """
     Build parameters.
     
@@ -89,7 +64,7 @@ def fat_roi_row_py_params(
         Parameter dictionary
     """
     params = {
-        "@type": "afni.fat_roi_row.py",
+        "@type": "afni/fat_roi_row.py",
         "roi": roi,
         "extern_labs_no": extern_labs_no,
     }
@@ -117,19 +92,19 @@ def fat_roi_row_py_cargs(
     cargs.append("fat_roi_row.py")
     cargs.extend([
         "-r",
-        params.get("roi")
+        params.get("roi", None)
     ])
-    if params.get("matrix_files") is not None:
+    if params.get("matrix_files", None) is not None:
         cargs.extend([
             "-m",
-            params.get("matrix_files")
+            params.get("matrix_files", None)
         ])
-    if params.get("list_file") is not None:
+    if params.get("list_file", None) is not None:
         cargs.extend([
             "-l",
-            execution.input_file(params.get("list_file"))
+            execution.input_file(params.get("list_file", None))
         ])
-    if params.get("extern_labs_no"):
+    if params.get("extern_labs_no", False):
         cargs.append("-E")
     return cargs
 
@@ -149,7 +124,7 @@ def fat_roi_row_py_outputs(
     """
     ret = FatRoiRowPyOutputs(
         root=execution.output_file("."),
-        output_file=execution.output_file(params.get("roi") + "_selected.row"),
+        output_file=execution.output_file(params.get("roi", None) + "_selected.row"),
     )
     return ret
 
@@ -228,7 +203,6 @@ def fat_roi_row_py(
 __all__ = [
     "FAT_ROI_ROW_PY_METADATA",
     "FatRoiRowPyOutputs",
-    "FatRoiRowPyParameters",
     "fat_roi_row_py",
     "fat_roi_row_py_execute",
     "fat_roi_row_py_params",

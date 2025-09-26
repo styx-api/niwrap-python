@@ -14,7 +14,17 @@ V_3D_DFT_METADATA = Metadata(
 
 
 V3dDftParameters = typing.TypedDict('V3dDftParameters', {
-    "@type": typing.Literal["afni.3dDFT"],
+    "@type": typing.NotRequired[typing.Literal["afni/3dDFT"]],
+    "infile": InputPathType,
+    "prefix": str,
+    "abs_output": bool,
+    "nfft": typing.NotRequired[float | None],
+    "detrend": bool,
+    "taper": typing.NotRequired[float | None],
+    "inverse": bool,
+})
+V3dDftParametersTagged = typing.TypedDict('V3dDftParametersTagged', {
+    "@type": typing.Literal["afni/3dDFT"],
     "infile": InputPathType,
     "prefix": str,
     "abs_output": bool,
@@ -25,41 +35,9 @@ V3dDftParameters = typing.TypedDict('V3dDftParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "afni.3dDFT": v_3d_dft_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "afni.3dDFT": v_3d_dft_outputs,
-    }.get(t)
-
-
 class V3dDftOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `v_3d_dft(...)`.
+    Output object returned when calling `V3dDftParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -77,7 +55,7 @@ def v_3d_dft_params(
     detrend: bool = False,
     taper: float | None = None,
     inverse: bool = False,
-) -> V3dDftParameters:
+) -> V3dDftParametersTagged:
     """
     Build parameters.
     
@@ -93,7 +71,7 @@ def v_3d_dft_params(
         Parameter dictionary
     """
     params = {
-        "@type": "afni.3dDFT",
+        "@type": "afni/3dDFT",
         "infile": infile,
         "prefix": prefix,
         "abs_output": abs_output,
@@ -122,26 +100,26 @@ def v_3d_dft_cargs(
     """
     cargs = []
     cargs.append("3dDFT")
-    cargs.append(execution.input_file(params.get("infile")))
+    cargs.append(execution.input_file(params.get("infile", None)))
     cargs.extend([
         "-prefix",
-        params.get("prefix")
+        params.get("prefix", None)
     ])
-    if params.get("abs_output"):
+    if params.get("abs_output", False):
         cargs.append("-abs")
-    if params.get("nfft") is not None:
+    if params.get("nfft", None) is not None:
         cargs.extend([
             "-nfft",
-            str(params.get("nfft"))
+            str(params.get("nfft", None))
         ])
-    if params.get("detrend"):
+    if params.get("detrend", False):
         cargs.append("-detrend")
-    if params.get("taper") is not None:
+    if params.get("taper", None) is not None:
         cargs.extend([
             "-taper",
-            str(params.get("taper"))
+            str(params.get("taper", None))
         ])
-    if params.get("inverse"):
+    if params.get("inverse", False):
         cargs.append("-inverse")
     return cargs
 
@@ -161,8 +139,8 @@ def v_3d_dft_outputs(
     """
     ret = V3dDftOutputs(
         root=execution.output_file("."),
-        outfile=execution.output_file(params.get("prefix") + "+orig.BRIK"),
-        outheader=execution.output_file(params.get("prefix") + "+orig.HEAD"),
+        outfile=execution.output_file(params.get("prefix", None) + "+orig.BRIK"),
+        outheader=execution.output_file(params.get("prefix", None) + "+orig.HEAD"),
     )
     return ret
 
@@ -242,7 +220,6 @@ def v_3d_dft(
 
 __all__ = [
     "V3dDftOutputs",
-    "V3dDftParameters",
     "V_3D_DFT_METADATA",
     "v_3d_dft",
     "v_3d_dft_execute",

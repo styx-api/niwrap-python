@@ -14,7 +14,15 @@ MRI_BRAINVOL_STATS_METADATA = Metadata(
 
 
 MriBrainvolStatsParameters = typing.TypedDict('MriBrainvolStatsParameters', {
-    "@type": typing.Literal["freesurfer.mri_brainvol_stats"],
+    "@type": typing.NotRequired[typing.Literal["freesurfer/mri_brainvol_stats"]],
+    "subject_id": str,
+    "xml_string": typing.NotRequired[str | None],
+    "no_surface": bool,
+    "include_segmentation": bool,
+    "output_file": typing.NotRequired[str | None],
+})
+MriBrainvolStatsParametersTagged = typing.TypedDict('MriBrainvolStatsParametersTagged', {
+    "@type": typing.Literal["freesurfer/mri_brainvol_stats"],
     "subject_id": str,
     "xml_string": typing.NotRequired[str | None],
     "no_surface": bool,
@@ -23,41 +31,9 @@ MriBrainvolStatsParameters = typing.TypedDict('MriBrainvolStatsParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "freesurfer.mri_brainvol_stats": mri_brainvol_stats_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "freesurfer.mri_brainvol_stats": mri_brainvol_stats_outputs,
-    }.get(t)
-
-
 class MriBrainvolStatsOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `mri_brainvol_stats(...)`.
+    Output object returned when calling `MriBrainvolStatsParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -71,7 +47,7 @@ def mri_brainvol_stats_params(
     no_surface: bool = False,
     include_segmentation: bool = False,
     output_file: str | None = None,
-) -> MriBrainvolStatsParameters:
+) -> MriBrainvolStatsParametersTagged:
     """
     Build parameters.
     
@@ -89,7 +65,7 @@ def mri_brainvol_stats_params(
         Parameter dictionary
     """
     params = {
-        "@type": "freesurfer.mri_brainvol_stats",
+        "@type": "freesurfer/mri_brainvol_stats",
         "subject_id": subject_id,
         "no_surface": no_surface,
         "include_segmentation": include_segmentation,
@@ -118,21 +94,21 @@ def mri_brainvol_stats_cargs(
     cargs.append("mri_brainvol_stats")
     cargs.extend([
         "--subject",
-        params.get("subject_id")
+        params.get("subject_id", None)
     ])
-    if params.get("xml_string") is not None:
+    if params.get("xml_string", None) is not None:
         cargs.extend([
             "--xml",
-            params.get("xml_string")
+            params.get("xml_string", None)
         ])
-    if params.get("no_surface"):
+    if params.get("no_surface", False):
         cargs.append("--no-surface")
-    if params.get("include_segmentation"):
+    if params.get("include_segmentation", False):
         cargs.append("--seg")
-    if params.get("output_file") is not None:
+    if params.get("output_file", None) is not None:
         cargs.extend([
             "--out",
-            params.get("output_file")
+            params.get("output_file", None)
         ])
     return cargs
 
@@ -152,7 +128,7 @@ def mri_brainvol_stats_outputs(
     """
     ret = MriBrainvolStatsOutputs(
         root=execution.output_file("."),
-        brain_vol_stats_output=execution.output_file(params.get("output_file")) if (params.get("output_file") is not None) else None,
+        brain_vol_stats_output=execution.output_file(params.get("output_file", None)) if (params.get("output_file") is not None) else None,
     )
     return ret
 
@@ -229,7 +205,6 @@ def mri_brainvol_stats(
 __all__ = [
     "MRI_BRAINVOL_STATS_METADATA",
     "MriBrainvolStatsOutputs",
-    "MriBrainvolStatsParameters",
     "mri_brainvol_stats",
     "mri_brainvol_stats_execute",
     "mri_brainvol_stats_params",

@@ -14,7 +14,23 @@ MRIS_SURFACE_STATS_METADATA = Metadata(
 
 
 MrisSurfaceStatsParameters = typing.TypedDict('MrisSurfaceStatsParameters', {
-    "@type": typing.Literal["freesurfer.mris_surface_stats"],
+    "@type": typing.NotRequired[typing.Literal["freesurfer/mris_surface_stats"]],
+    "nsmooth": typing.NotRequired[float | None],
+    "surf_name": InputPathType,
+    "mask_name": typing.NotRequired[InputPathType | None],
+    "out_name": str,
+    "mean": typing.NotRequired[str | None],
+    "absmean": typing.NotRequired[str | None],
+    "absstd": typing.NotRequired[str | None],
+    "zscore": typing.NotRequired[str | None],
+    "first_group_size": typing.NotRequired[float | None],
+    "src_type": typing.NotRequired[str | None],
+    "trg_type": typing.NotRequired[str | None],
+    "debug": typing.NotRequired[float | None],
+    "data_files": list[InputPathType],
+})
+MrisSurfaceStatsParametersTagged = typing.TypedDict('MrisSurfaceStatsParametersTagged', {
+    "@type": typing.Literal["freesurfer/mris_surface_stats"],
     "nsmooth": typing.NotRequired[float | None],
     "surf_name": InputPathType,
     "mask_name": typing.NotRequired[InputPathType | None],
@@ -31,41 +47,9 @@ MrisSurfaceStatsParameters = typing.TypedDict('MrisSurfaceStatsParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "freesurfer.mris_surface_stats": mris_surface_stats_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "freesurfer.mris_surface_stats": mris_surface_stats_outputs,
-    }.get(t)
-
-
 class MrisSurfaceStatsOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `mris_surface_stats(...)`.
+    Output object returned when calling `MrisSurfaceStatsParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -95,7 +79,7 @@ def mris_surface_stats_params(
     src_type: str | None = None,
     trg_type: str | None = None,
     debug: float | None = None,
-) -> MrisSurfaceStatsParameters:
+) -> MrisSurfaceStatsParametersTagged:
     """
     Build parameters.
     
@@ -119,7 +103,7 @@ def mris_surface_stats_params(
         Parameter dictionary
     """
     params = {
-        "@type": "freesurfer.mris_surface_stats",
+        "@type": "freesurfer/mris_surface_stats",
         "surf_name": surf_name,
         "out_name": out_name,
         "data_files": data_files,
@@ -162,65 +146,65 @@ def mris_surface_stats_cargs(
     """
     cargs = []
     cargs.append("mris_surface_stats")
-    if params.get("nsmooth") is not None:
+    if params.get("nsmooth", None) is not None:
         cargs.extend([
             "-nsmooth",
-            str(params.get("nsmooth"))
+            str(params.get("nsmooth", None))
         ])
     cargs.extend([
         "-surf_name",
-        execution.input_file(params.get("surf_name"))
+        execution.input_file(params.get("surf_name", None))
     ])
-    if params.get("mask_name") is not None:
+    if params.get("mask_name", None) is not None:
         cargs.extend([
             "-mask_name",
-            execution.input_file(params.get("mask_name"))
+            execution.input_file(params.get("mask_name", None))
         ])
     cargs.extend([
         "-out_name",
-        params.get("out_name")
+        params.get("out_name", None)
     ])
-    if params.get("mean") is not None:
+    if params.get("mean", None) is not None:
         cargs.extend([
             "-mean",
-            params.get("mean")
+            params.get("mean", None)
         ])
-    if params.get("absmean") is not None:
+    if params.get("absmean", None) is not None:
         cargs.extend([
             "-absmean",
-            params.get("absmean")
+            params.get("absmean", None)
         ])
-    if params.get("absstd") is not None:
+    if params.get("absstd", None) is not None:
         cargs.extend([
             "-absstd",
-            params.get("absstd")
+            params.get("absstd", None)
         ])
-    if params.get("zscore") is not None:
+    if params.get("zscore", None) is not None:
         cargs.extend([
             "-zscore",
-            params.get("zscore")
+            params.get("zscore", None)
         ])
-    if params.get("first_group_size") is not None:
+    if params.get("first_group_size", None) is not None:
         cargs.extend([
             "-first_group_size",
-            str(params.get("first_group_size"))
+            str(params.get("first_group_size", None))
         ])
-    if params.get("src_type") is not None:
+    if params.get("src_type", None) is not None:
         cargs.extend([
             "-src_type",
-            params.get("src_type")
+            params.get("src_type", None)
         ])
-    if params.get("trg_type") is not None:
+    if params.get("trg_type", None) is not None:
         cargs.extend([
             "-trg_type",
-            params.get("trg_type")
+            params.get("trg_type", None)
         ])
-    if params.get("debug") is not None:
+    if params.get("debug", None) is not None:
         cargs.extend([
             "-debug",
-            str(params.get("debug"))
+            str(params.get("debug", None))
         ])
-    cargs.extend([execution.input_file(f) for f in params.get("data_files")])
+    cargs.extend([execution.input_file(f) for f in params.get("data_files", None)])
     return cargs
 
 
@@ -239,11 +223,11 @@ def mris_surface_stats_outputs(
     """
     ret = MrisSurfaceStatsOutputs(
         root=execution.output_file("."),
-        std_output=execution.output_file(params.get("out_name")),
-        mean_output=execution.output_file(params.get("mean")) if (params.get("mean") is not None) else None,
-        absmean_output=execution.output_file(params.get("absmean")) if (params.get("absmean") is not None) else None,
-        absstd_output=execution.output_file(params.get("absstd")) if (params.get("absstd") is not None) else None,
-        zscore_output=execution.output_file(params.get("zscore")) if (params.get("zscore") is not None) else None,
+        std_output=execution.output_file(params.get("out_name", None)),
+        mean_output=execution.output_file(params.get("mean", None)) if (params.get("mean") is not None) else None,
+        absmean_output=execution.output_file(params.get("absmean", None)) if (params.get("absmean") is not None) else None,
+        absstd_output=execution.output_file(params.get("absstd", None)) if (params.get("absstd") is not None) else None,
+        zscore_output=execution.output_file(params.get("zscore", None)) if (params.get("zscore") is not None) else None,
     )
     return ret
 
@@ -344,7 +328,6 @@ def mris_surface_stats(
 __all__ = [
     "MRIS_SURFACE_STATS_METADATA",
     "MrisSurfaceStatsOutputs",
-    "MrisSurfaceStatsParameters",
     "mris_surface_stats",
     "mris_surface_stats_execute",
     "mris_surface_stats_params",

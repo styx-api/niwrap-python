@@ -14,47 +14,20 @@ CONVERT_TO_JPG_METADATA = Metadata(
 
 
 ConvertToJpgParameters = typing.TypedDict('ConvertToJpgParameters', {
-    "@type": typing.Literal["ants.ConvertToJpg"],
+    "@type": typing.NotRequired[typing.Literal["ants/ConvertToJpg"]],
+    "infile": InputPathType,
+    "outfile": str,
+})
+ConvertToJpgParametersTagged = typing.TypedDict('ConvertToJpgParametersTagged', {
+    "@type": typing.Literal["ants/ConvertToJpg"],
     "infile": InputPathType,
     "outfile": str,
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "ants.ConvertToJpg": convert_to_jpg_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "ants.ConvertToJpg": convert_to_jpg_outputs,
-    }.get(t)
-
-
 class ConvertToJpgOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `convert_to_jpg(...)`.
+    Output object returned when calling `ConvertToJpgParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -65,7 +38,7 @@ class ConvertToJpgOutputs(typing.NamedTuple):
 def convert_to_jpg_params(
     infile: InputPathType,
     outfile: str,
-) -> ConvertToJpgParameters:
+) -> ConvertToJpgParametersTagged:
     """
     Build parameters.
     
@@ -76,7 +49,7 @@ def convert_to_jpg_params(
         Parameter dictionary
     """
     params = {
-        "@type": "ants.ConvertToJpg",
+        "@type": "ants/ConvertToJpg",
         "infile": infile,
         "outfile": outfile,
     }
@@ -98,8 +71,8 @@ def convert_to_jpg_cargs(
     """
     cargs = []
     cargs.append("ConvertToJpg")
-    cargs.append(execution.input_file(params.get("infile")))
-    cargs.append(params.get("outfile"))
+    cargs.append(execution.input_file(params.get("infile", None)))
+    cargs.append(params.get("outfile", None))
     return cargs
 
 
@@ -118,7 +91,7 @@ def convert_to_jpg_outputs(
     """
     ret = ConvertToJpgOutputs(
         root=execution.output_file("."),
-        output_jpg=execution.output_file(params.get("outfile")),
+        output_jpg=execution.output_file(params.get("outfile", None)),
     )
     return ret
 
@@ -182,7 +155,6 @@ def convert_to_jpg(
 __all__ = [
     "CONVERT_TO_JPG_METADATA",
     "ConvertToJpgOutputs",
-    "ConvertToJpgParameters",
     "convert_to_jpg",
     "convert_to_jpg_execute",
     "convert_to_jpg_params",

@@ -14,7 +14,16 @@ MAP_ALL_LABELS_METADATA = Metadata(
 
 
 MapAllLabelsParameters = typing.TypedDict('MapAllLabelsParameters', {
-    "@type": typing.Literal["freesurfer.map_all_labels"],
+    "@type": typing.NotRequired[typing.Literal["freesurfer/map_all_labels"]],
+    "which": str,
+    "fname": str,
+    "hemi": str,
+    "spherical_surf": str,
+    "subjects": list[str],
+    "output": str,
+})
+MapAllLabelsParametersTagged = typing.TypedDict('MapAllLabelsParametersTagged', {
+    "@type": typing.Literal["freesurfer/map_all_labels"],
     "which": str,
     "fname": str,
     "hemi": str,
@@ -24,41 +33,9 @@ MapAllLabelsParameters = typing.TypedDict('MapAllLabelsParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "freesurfer.map_all_labels": map_all_labels_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "freesurfer.map_all_labels": map_all_labels_outputs,
-    }.get(t)
-
-
 class MapAllLabelsOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `map_all_labels(...)`.
+    Output object returned when calling `MapAllLabelsParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -73,7 +50,7 @@ def map_all_labels_params(
     spherical_surf: str,
     subjects: list[str],
     output: str,
-) -> MapAllLabelsParameters:
+) -> MapAllLabelsParametersTagged:
     """
     Build parameters.
     
@@ -88,7 +65,7 @@ def map_all_labels_params(
         Parameter dictionary
     """
     params = {
-        "@type": "freesurfer.map_all_labels",
+        "@type": "freesurfer/map_all_labels",
         "which": which,
         "fname": fname,
         "hemi": hemi,
@@ -114,12 +91,12 @@ def map_all_labels_cargs(
     """
     cargs = []
     cargs.append("map_all_labels")
-    cargs.append(params.get("which"))
-    cargs.append(params.get("fname"))
-    cargs.append(params.get("hemi"))
-    cargs.append(params.get("spherical_surf"))
-    cargs.extend(params.get("subjects"))
-    cargs.append(params.get("output"))
+    cargs.append(params.get("which", None))
+    cargs.append(params.get("fname", None))
+    cargs.append(params.get("hemi", None))
+    cargs.append(params.get("spherical_surf", None))
+    cargs.extend(params.get("subjects", None))
+    cargs.append(params.get("output", None))
     return cargs
 
 
@@ -138,7 +115,7 @@ def map_all_labels_outputs(
     """
     ret = MapAllLabelsOutputs(
         root=execution.output_file("."),
-        output_file=execution.output_file(params.get("output")),
+        output_file=execution.output_file(params.get("output", None)),
     )
     return ret
 
@@ -214,7 +191,6 @@ def map_all_labels(
 __all__ = [
     "MAP_ALL_LABELS_METADATA",
     "MapAllLabelsOutputs",
-    "MapAllLabelsParameters",
     "map_all_labels",
     "map_all_labels_execute",
     "map_all_labels_params",

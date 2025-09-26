@@ -14,7 +14,34 @@ FSL_GLM_METADATA = Metadata(
 
 
 FslGlmParameters = typing.TypedDict('FslGlmParameters', {
-    "@type": typing.Literal["fsl.fsl_glm"],
+    "@type": typing.NotRequired[typing.Literal["fsl/fsl_glm"]],
+    "input_file": InputPathType,
+    "design_matrix": InputPathType,
+    "output_file": typing.NotRequired[str | None],
+    "contrasts": typing.NotRequired[InputPathType | None],
+    "mask_file": typing.NotRequired[InputPathType | None],
+    "dof": typing.NotRequired[float | None],
+    "design_norm_flag": bool,
+    "data_norm_flag": bool,
+    "vn_flag": bool,
+    "demean_flag": bool,
+    "output_copes": typing.NotRequired[str | None],
+    "output_zstats": typing.NotRequired[str | None],
+    "output_tstats": typing.NotRequired[str | None],
+    "output_pvals": typing.NotRequired[str | None],
+    "output_fvals": typing.NotRequired[str | None],
+    "output_pfvals": typing.NotRequired[str | None],
+    "output_residuals": typing.NotRequired[str | None],
+    "output_varcb": typing.NotRequired[str | None],
+    "output_sigsq": typing.NotRequired[str | None],
+    "output_data": typing.NotRequired[str | None],
+    "output_vnscales": typing.NotRequired[str | None],
+    "vx_text": typing.NotRequired[list[str] | None],
+    "vx_images": typing.NotRequired[list[InputPathType] | None],
+    "help_flag": bool,
+})
+FslGlmParametersTagged = typing.TypedDict('FslGlmParametersTagged', {
+    "@type": typing.Literal["fsl/fsl_glm"],
     "input_file": InputPathType,
     "design_matrix": InputPathType,
     "output_file": typing.NotRequired[str | None],
@@ -42,41 +69,9 @@ FslGlmParameters = typing.TypedDict('FslGlmParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "fsl.fsl_glm": fsl_glm_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "fsl.fsl_glm": fsl_glm_outputs,
-    }.get(t)
-
-
 class FslGlmOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `fsl_glm(...)`.
+    Output object returned when calling `FslGlmParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -132,7 +127,7 @@ def fsl_glm_params(
     vx_text: list[str] | None = None,
     vx_images: list[InputPathType] | None = None,
     help_flag: bool = False,
-) -> FslGlmParameters:
+) -> FslGlmParametersTagged:
     """
     Build parameters.
     
@@ -174,7 +169,7 @@ def fsl_glm_params(
         Parameter dictionary
     """
     params = {
-        "@type": "fsl.fsl_glm",
+        "@type": "fsl/fsl_glm",
         "input_file": input_file,
         "design_matrix": design_matrix,
         "design_norm_flag": design_norm_flag,
@@ -237,106 +232,106 @@ def fsl_glm_cargs(
     cargs.append("fsl_glm")
     cargs.extend([
         "-i",
-        execution.input_file(params.get("input_file"))
+        execution.input_file(params.get("input_file", None))
     ])
     cargs.extend([
         "-d",
-        execution.input_file(params.get("design_matrix"))
+        execution.input_file(params.get("design_matrix", None))
     ])
-    if params.get("output_file") is not None:
+    if params.get("output_file", None) is not None:
         cargs.extend([
             "-o",
-            params.get("output_file")
+            params.get("output_file", None)
         ])
-    if params.get("contrasts") is not None:
+    if params.get("contrasts", None) is not None:
         cargs.extend([
             "-c",
-            execution.input_file(params.get("contrasts"))
+            execution.input_file(params.get("contrasts", None))
         ])
-    if params.get("mask_file") is not None:
+    if params.get("mask_file", None) is not None:
         cargs.extend([
             "-m",
-            execution.input_file(params.get("mask_file"))
+            execution.input_file(params.get("mask_file", None))
         ])
-    if params.get("dof") is not None:
+    if params.get("dof", None) is not None:
         cargs.extend([
             "--dof",
-            str(params.get("dof"))
+            str(params.get("dof", None))
         ])
-    if params.get("design_norm_flag"):
+    if params.get("design_norm_flag", False):
         cargs.append("--des_norm")
-    if params.get("data_norm_flag"):
+    if params.get("data_norm_flag", False):
         cargs.append("--dat_norm")
-    if params.get("vn_flag"):
+    if params.get("vn_flag", False):
         cargs.append("--vn")
-    if params.get("demean_flag"):
+    if params.get("demean_flag", False):
         cargs.append("--demean")
-    if params.get("output_copes") is not None:
+    if params.get("output_copes", None) is not None:
         cargs.extend([
             "--out_cope",
-            params.get("output_copes")
+            params.get("output_copes", None)
         ])
-    if params.get("output_zstats") is not None:
+    if params.get("output_zstats", None) is not None:
         cargs.extend([
             "--out_z",
-            params.get("output_zstats")
+            params.get("output_zstats", None)
         ])
-    if params.get("output_tstats") is not None:
+    if params.get("output_tstats", None) is not None:
         cargs.extend([
             "--out_t",
-            params.get("output_tstats")
+            params.get("output_tstats", None)
         ])
-    if params.get("output_pvals") is not None:
+    if params.get("output_pvals", None) is not None:
         cargs.extend([
             "--out_p",
-            params.get("output_pvals")
+            params.get("output_pvals", None)
         ])
-    if params.get("output_fvals") is not None:
+    if params.get("output_fvals", None) is not None:
         cargs.extend([
             "--out_f",
-            params.get("output_fvals")
+            params.get("output_fvals", None)
         ])
-    if params.get("output_pfvals") is not None:
+    if params.get("output_pfvals", None) is not None:
         cargs.extend([
             "--out_pf",
-            params.get("output_pfvals")
+            params.get("output_pfvals", None)
         ])
-    if params.get("output_residuals") is not None:
+    if params.get("output_residuals", None) is not None:
         cargs.extend([
             "--out_res",
-            params.get("output_residuals")
+            params.get("output_residuals", None)
         ])
-    if params.get("output_varcb") is not None:
+    if params.get("output_varcb", None) is not None:
         cargs.extend([
             "--out_varcb",
-            params.get("output_varcb")
+            params.get("output_varcb", None)
         ])
-    if params.get("output_sigsq") is not None:
+    if params.get("output_sigsq", None) is not None:
         cargs.extend([
             "--out_sigsq",
-            params.get("output_sigsq")
+            params.get("output_sigsq", None)
         ])
-    if params.get("output_data") is not None:
+    if params.get("output_data", None) is not None:
         cargs.extend([
             "--out_data",
-            params.get("output_data")
+            params.get("output_data", None)
         ])
-    if params.get("output_vnscales") is not None:
+    if params.get("output_vnscales", None) is not None:
         cargs.extend([
             "--out_vnscales",
-            params.get("output_vnscales")
+            params.get("output_vnscales", None)
         ])
-    if params.get("vx_text") is not None:
+    if params.get("vx_text", None) is not None:
         cargs.extend([
             "--vxt",
-            *params.get("vx_text")
+            *params.get("vx_text", None)
         ])
-    if params.get("vx_images") is not None:
+    if params.get("vx_images", None) is not None:
         cargs.extend([
             "--vxf",
-            *[execution.input_file(f) for f in params.get("vx_images")]
+            *[execution.input_file(f) for f in params.get("vx_images", None)]
         ])
-    if params.get("help_flag"):
+    if params.get("help_flag", False):
         cargs.append("-h")
     return cargs
 
@@ -356,18 +351,18 @@ def fsl_glm_outputs(
     """
     ret = FslGlmOutputs(
         root=execution.output_file("."),
-        output_file_out=execution.output_file(params.get("output_file") + ".nii.gz") if (params.get("output_file") is not None) else None,
-        output_copes_out=execution.output_file(params.get("output_copes") + ".nii.gz") if (params.get("output_copes") is not None) else None,
-        output_zstats_out=execution.output_file(params.get("output_zstats") + ".nii.gz") if (params.get("output_zstats") is not None) else None,
-        output_tstats_out=execution.output_file(params.get("output_tstats") + ".nii.gz") if (params.get("output_tstats") is not None) else None,
-        output_pvals_out=execution.output_file(params.get("output_pvals") + ".nii.gz") if (params.get("output_pvals") is not None) else None,
-        output_fvals_out=execution.output_file(params.get("output_fvals") + ".nii.gz") if (params.get("output_fvals") is not None) else None,
-        output_pfvals_out=execution.output_file(params.get("output_pfvals") + ".nii.gz") if (params.get("output_pfvals") is not None) else None,
-        output_residuals_out=execution.output_file(params.get("output_residuals") + ".nii.gz") if (params.get("output_residuals") is not None) else None,
-        output_varcb_out=execution.output_file(params.get("output_varcb") + ".nii.gz") if (params.get("output_varcb") is not None) else None,
-        output_sigsq_out=execution.output_file(params.get("output_sigsq") + ".nii.gz") if (params.get("output_sigsq") is not None) else None,
-        output_data_out=execution.output_file(params.get("output_data") + ".nii.gz") if (params.get("output_data") is not None) else None,
-        output_vnscales_out=execution.output_file(params.get("output_vnscales") + ".nii.gz") if (params.get("output_vnscales") is not None) else None,
+        output_file_out=execution.output_file(params.get("output_file", None) + ".nii.gz") if (params.get("output_file") is not None) else None,
+        output_copes_out=execution.output_file(params.get("output_copes", None) + ".nii.gz") if (params.get("output_copes") is not None) else None,
+        output_zstats_out=execution.output_file(params.get("output_zstats", None) + ".nii.gz") if (params.get("output_zstats") is not None) else None,
+        output_tstats_out=execution.output_file(params.get("output_tstats", None) + ".nii.gz") if (params.get("output_tstats") is not None) else None,
+        output_pvals_out=execution.output_file(params.get("output_pvals", None) + ".nii.gz") if (params.get("output_pvals") is not None) else None,
+        output_fvals_out=execution.output_file(params.get("output_fvals", None) + ".nii.gz") if (params.get("output_fvals") is not None) else None,
+        output_pfvals_out=execution.output_file(params.get("output_pfvals", None) + ".nii.gz") if (params.get("output_pfvals") is not None) else None,
+        output_residuals_out=execution.output_file(params.get("output_residuals", None) + ".nii.gz") if (params.get("output_residuals") is not None) else None,
+        output_varcb_out=execution.output_file(params.get("output_varcb", None) + ".nii.gz") if (params.get("output_varcb") is not None) else None,
+        output_sigsq_out=execution.output_file(params.get("output_sigsq", None) + ".nii.gz") if (params.get("output_sigsq") is not None) else None,
+        output_data_out=execution.output_file(params.get("output_data", None) + ".nii.gz") if (params.get("output_data") is not None) else None,
+        output_vnscales_out=execution.output_file(params.get("output_vnscales", None) + ".nii.gz") if (params.get("output_vnscales") is not None) else None,
     )
     return ret
 
@@ -508,7 +503,6 @@ def fsl_glm(
 __all__ = [
     "FSL_GLM_METADATA",
     "FslGlmOutputs",
-    "FslGlmParameters",
     "fsl_glm",
     "fsl_glm_execute",
     "fsl_glm_params",

@@ -14,7 +14,35 @@ MRI_COMPUTE_VOLUME_FRACTIONS_METADATA = Metadata(
 
 
 MriComputeVolumeFractionsParameters = typing.TypedDict('MriComputeVolumeFractionsParameters', {
-    "@type": typing.Literal["freesurfer.mri_compute_volume_fractions"],
+    "@type": typing.NotRequired[typing.Literal["freesurfer/mri_compute_volume_fractions"]],
+    "output_stem": str,
+    "registration_file": typing.NotRequired[InputPathType | None],
+    "regheader": typing.NotRequired[str | None],
+    "usf": typing.NotRequired[float | None],
+    "resolution": typing.NotRequired[float | None],
+    "resmm": typing.NotRequired[float | None],
+    "segmentation_file": typing.NotRequired[InputPathType | None],
+    "wsurf": typing.NotRequired[str | None],
+    "psurf": typing.NotRequired[str | None],
+    "no_aseg": bool,
+    "stackfile": typing.NotRequired[str | None],
+    "gmfile": typing.NotRequired[str | None],
+    "no_fill_csf": bool,
+    "dilation": typing.NotRequired[float | None],
+    "out_seg": typing.NotRequired[str | None],
+    "ttseg": typing.NotRequired[str | None],
+    "ttseg_ctab": typing.NotRequired[str | None],
+    "mgz_format": bool,
+    "mgh_format": bool,
+    "nii_format": bool,
+    "nii_gz_format": bool,
+    "ttype_head": bool,
+    "vg_thresh": typing.NotRequired[float | None],
+    "debug": bool,
+    "checkopts": bool,
+})
+MriComputeVolumeFractionsParametersTagged = typing.TypedDict('MriComputeVolumeFractionsParametersTagged', {
+    "@type": typing.Literal["freesurfer/mri_compute_volume_fractions"],
     "output_stem": str,
     "registration_file": typing.NotRequired[InputPathType | None],
     "regheader": typing.NotRequired[str | None],
@@ -43,41 +71,9 @@ MriComputeVolumeFractionsParameters = typing.TypedDict('MriComputeVolumeFraction
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "freesurfer.mri_compute_volume_fractions": mri_compute_volume_fractions_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "freesurfer.mri_compute_volume_fractions": mri_compute_volume_fractions_outputs,
-    }.get(t)
-
-
 class MriComputeVolumeFractionsOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `mri_compute_volume_fractions(...)`.
+    Output object returned when calling `MriComputeVolumeFractionsParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -117,7 +113,7 @@ def mri_compute_volume_fractions_params(
     vg_thresh: float | None = None,
     debug: bool = False,
     checkopts: bool = False,
-) -> MriComputeVolumeFractionsParameters:
+) -> MriComputeVolumeFractionsParametersTagged:
     """
     Build parameters.
     
@@ -160,7 +156,7 @@ def mri_compute_volume_fractions_params(
         Parameter dictionary
     """
     params = {
-        "@type": "freesurfer.mri_compute_volume_fractions",
+        "@type": "freesurfer/mri_compute_volume_fractions",
         "output_stem": output_stem,
         "no_aseg": no_aseg,
         "no_fill_csf": no_fill_csf,
@@ -222,100 +218,100 @@ def mri_compute_volume_fractions_cargs(
     cargs.append("mri_compute_volume_fractions")
     cargs.extend([
         "--o",
-        params.get("output_stem")
+        params.get("output_stem", None)
     ])
-    if params.get("registration_file") is not None:
+    if params.get("registration_file", None) is not None:
         cargs.extend([
             "--reg",
-            execution.input_file(params.get("registration_file"))
+            execution.input_file(params.get("registration_file", None))
         ])
-    if params.get("regheader") is not None:
+    if params.get("regheader", None) is not None:
         cargs.extend([
             "--regheader",
-            params.get("regheader")
+            params.get("regheader", None)
         ])
-    if params.get("usf") is not None:
+    if params.get("usf", None) is not None:
         cargs.extend([
             "--usf",
-            str(params.get("usf"))
+            str(params.get("usf", None))
         ])
-    if params.get("resolution") is not None:
+    if params.get("resolution", None) is not None:
         cargs.extend([
             "--r",
-            str(params.get("resolution"))
+            str(params.get("resolution", None))
         ])
-    if params.get("resmm") is not None:
+    if params.get("resmm", None) is not None:
         cargs.extend([
             "--resmm",
-            str(params.get("resmm"))
+            str(params.get("resmm", None))
         ])
-    if params.get("segmentation_file") is not None:
+    if params.get("segmentation_file", None) is not None:
         cargs.extend([
             "--seg",
-            execution.input_file(params.get("segmentation_file"))
+            execution.input_file(params.get("segmentation_file", None))
         ])
-    if params.get("wsurf") is not None:
+    if params.get("wsurf", None) is not None:
         cargs.extend([
             "--wsurf",
-            params.get("wsurf")
+            params.get("wsurf", None)
         ])
-    if params.get("psurf") is not None:
+    if params.get("psurf", None) is not None:
         cargs.extend([
             "--psurf",
-            params.get("psurf")
+            params.get("psurf", None)
         ])
-    if params.get("no_aseg"):
+    if params.get("no_aseg", False):
         cargs.append("--no-aseg")
-    if params.get("stackfile") is not None:
+    if params.get("stackfile", None) is not None:
         cargs.extend([
             "--stack",
-            params.get("stackfile")
+            params.get("stackfile", None)
         ])
-    if params.get("gmfile") is not None:
+    if params.get("gmfile", None) is not None:
         cargs.extend([
             "--gm",
-            params.get("gmfile")
+            params.get("gmfile", None)
         ])
-    if params.get("no_fill_csf"):
+    if params.get("no_fill_csf", False):
         cargs.append("--no-fill-csf")
-    if params.get("dilation") is not None:
+    if params.get("dilation", None) is not None:
         cargs.extend([
             "--dil",
-            str(params.get("dilation"))
+            str(params.get("dilation", None))
         ])
-    if params.get("out_seg") is not None:
+    if params.get("out_seg", None) is not None:
         cargs.extend([
             "--out-seg",
-            params.get("out_seg")
+            params.get("out_seg", None)
         ])
-    if params.get("ttseg") is not None:
+    if params.get("ttseg", None) is not None:
         cargs.extend([
             "--ttseg",
-            params.get("ttseg")
+            params.get("ttseg", None)
         ])
-    if params.get("ttseg_ctab") is not None:
+    if params.get("ttseg_ctab", None) is not None:
         cargs.extend([
             "--ttseg-ctab",
-            params.get("ttseg_ctab")
+            params.get("ttseg_ctab", None)
         ])
-    if params.get("mgz_format"):
+    if params.get("mgz_format", False):
         cargs.append("--mgz")
-    if params.get("mgh_format"):
+    if params.get("mgh_format", False):
         cargs.append("--mgh")
-    if params.get("nii_format"):
+    if params.get("nii_format", False):
         cargs.append("--nii")
-    if params.get("nii_gz_format"):
+    if params.get("nii_gz_format", False):
         cargs.append("--nii.gz")
-    if params.get("ttype_head"):
+    if params.get("ttype_head", False):
         cargs.append("--ttype+head")
-    if params.get("vg_thresh") is not None:
+    if params.get("vg_thresh", None) is not None:
         cargs.extend([
             "--vg-thresh",
-            str(params.get("vg_thresh"))
+            str(params.get("vg_thresh", None))
         ])
-    if params.get("debug"):
+    if params.get("debug", False):
         cargs.append("--debug")
-    if params.get("checkopts"):
+    if params.get("checkopts", False):
         cargs.append("--checkopts")
     return cargs
 
@@ -335,10 +331,10 @@ def mri_compute_volume_fractions_outputs(
     """
     ret = MriComputeVolumeFractionsOutputs(
         root=execution.output_file("."),
-        output_cortex=execution.output_file(params.get("output_stem") + ".cortex.mgz"),
-        output_subcort_gm=execution.output_file(params.get("output_stem") + ".subcort_gm.mgz"),
-        output_wm=execution.output_file(params.get("output_stem") + ".wm.mgz"),
-        output_csf=execution.output_file(params.get("output_stem") + ".csf.mgz"),
+        output_cortex=execution.output_file(params.get("output_stem", None) + ".cortex.mgz"),
+        output_subcort_gm=execution.output_file(params.get("output_stem", None) + ".subcort_gm.mgz"),
+        output_wm=execution.output_file(params.get("output_stem", None) + ".wm.mgz"),
+        output_csf=execution.output_file(params.get("output_stem", None) + ".csf.mgz"),
     )
     return ret
 
@@ -480,7 +476,6 @@ def mri_compute_volume_fractions(
 __all__ = [
     "MRI_COMPUTE_VOLUME_FRACTIONS_METADATA",
     "MriComputeVolumeFractionsOutputs",
-    "MriComputeVolumeFractionsParameters",
     "mri_compute_volume_fractions",
     "mri_compute_volume_fractions_execute",
     "mri_compute_volume_fractions_params",

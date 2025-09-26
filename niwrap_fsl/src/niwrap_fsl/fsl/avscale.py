@@ -14,7 +14,14 @@ AVSCALE_METADATA = Metadata(
 
 
 AvscaleParameters = typing.TypedDict('AvscaleParameters', {
-    "@type": typing.Literal["fsl.avscale"],
+    "@type": typing.NotRequired[typing.Literal["fsl/avscale"]],
+    "allparams_flag": bool,
+    "inverteddies_flag": bool,
+    "matrix_file": InputPathType,
+    "non_reference_volume": typing.NotRequired[InputPathType | None],
+})
+AvscaleParametersTagged = typing.TypedDict('AvscaleParametersTagged', {
+    "@type": typing.Literal["fsl/avscale"],
     "allparams_flag": bool,
     "inverteddies_flag": bool,
     "matrix_file": InputPathType,
@@ -22,40 +29,9 @@ AvscaleParameters = typing.TypedDict('AvscaleParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "fsl.avscale": avscale_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-    }.get(t)
-
-
 class AvscaleOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `avscale(...)`.
+    Output object returned when calling `AvscaleParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -68,7 +44,7 @@ def avscale_params(
     allparams_flag: bool = False,
     inverteddies_flag: bool = False,
     non_reference_volume: InputPathType | None = None,
-) -> AvscaleParameters:
+) -> AvscaleParametersTagged:
     """
     Build parameters.
     
@@ -81,7 +57,7 @@ def avscale_params(
         Parameter dictionary
     """
     params = {
-        "@type": "fsl.avscale",
+        "@type": "fsl/avscale",
         "allparams_flag": allparams_flag,
         "inverteddies_flag": inverteddies_flag,
         "matrix_file": matrix_file,
@@ -106,13 +82,13 @@ def avscale_cargs(
     """
     cargs = []
     cargs.append("avscale")
-    if params.get("allparams_flag"):
+    if params.get("allparams_flag", False):
         cargs.append("--allparams")
-    if params.get("inverteddies_flag"):
+    if params.get("inverteddies_flag", False):
         cargs.append("--inverteddies")
-    cargs.append(execution.input_file(params.get("matrix_file")))
-    if params.get("non_reference_volume") is not None:
-        cargs.append(execution.input_file(params.get("non_reference_volume")))
+    cargs.append(execution.input_file(params.get("matrix_file", None)))
+    if params.get("non_reference_volume", None) is not None:
+        cargs.append(execution.input_file(params.get("non_reference_volume", None)))
     return cargs
 
 
@@ -201,7 +177,6 @@ def avscale(
 __all__ = [
     "AVSCALE_METADATA",
     "AvscaleOutputs",
-    "AvscaleParameters",
     "avscale",
     "avscale_execute",
     "avscale_params",

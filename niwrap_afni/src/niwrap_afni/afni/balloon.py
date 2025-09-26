@@ -14,7 +14,16 @@ BALLOON_METADATA = Metadata(
 
 
 BalloonParameters = typing.TypedDict('BalloonParameters', {
-    "@type": typing.Literal["afni.balloon"],
+    "@type": typing.NotRequired[typing.Literal["afni/balloon"]],
+    "tr": float,
+    "num_scans": int,
+    "event_times": InputPathType,
+    "t_rise": typing.NotRequired[list[float] | None],
+    "t_fall": typing.NotRequired[list[float] | None],
+    "t_sustain": typing.NotRequired[list[float] | None],
+})
+BalloonParametersTagged = typing.TypedDict('BalloonParametersTagged', {
+    "@type": typing.Literal["afni/balloon"],
     "tr": float,
     "num_scans": int,
     "event_times": InputPathType,
@@ -24,40 +33,9 @@ BalloonParameters = typing.TypedDict('BalloonParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "afni.balloon": balloon_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-    }.get(t)
-
-
 class BalloonOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `balloon(...)`.
+    Output object returned when calling `BalloonParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -70,7 +48,7 @@ def balloon_params(
     t_rise: list[float] | None = None,
     t_fall: list[float] | None = None,
     t_sustain: list[float] | None = None,
-) -> BalloonParameters:
+) -> BalloonParametersTagged:
     """
     Build parameters.
     
@@ -92,7 +70,7 @@ def balloon_params(
         Parameter dictionary
     """
     params = {
-        "@type": "afni.balloon",
+        "@type": "afni/balloon",
         "tr": tr,
         "num_scans": num_scans,
         "event_times": event_times,
@@ -121,15 +99,15 @@ def balloon_cargs(
     """
     cargs = []
     cargs.append("balloon")
-    cargs.append(str(params.get("tr")))
-    cargs.append(str(params.get("num_scans")))
-    cargs.append(execution.input_file(params.get("event_times")))
-    if params.get("t_rise") is not None:
-        cargs.extend(map(str, params.get("t_rise")))
-    if params.get("t_fall") is not None:
-        cargs.extend(map(str, params.get("t_fall")))
-    if params.get("t_sustain") is not None:
-        cargs.extend(map(str, params.get("t_sustain")))
+    cargs.append(str(params.get("tr", None)))
+    cargs.append(str(params.get("num_scans", None)))
+    cargs.append(execution.input_file(params.get("event_times", None)))
+    if params.get("t_rise", None) is not None:
+        cargs.extend(map(str, params.get("t_rise", None)))
+    if params.get("t_fall", None) is not None:
+        cargs.extend(map(str, params.get("t_fall", None)))
+    if params.get("t_sustain", None) is not None:
+        cargs.extend(map(str, params.get("t_sustain", None)))
     return cargs
 
 
@@ -232,7 +210,6 @@ def balloon(
 __all__ = [
     "BALLOON_METADATA",
     "BalloonOutputs",
-    "BalloonParameters",
     "balloon",
     "balloon_execute",
     "balloon_params",

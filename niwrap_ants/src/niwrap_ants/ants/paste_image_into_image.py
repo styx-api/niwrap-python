@@ -14,7 +14,18 @@ PASTE_IMAGE_INTO_IMAGE_METADATA = Metadata(
 
 
 PasteImageIntoImageParameters = typing.TypedDict('PasteImageIntoImageParameters', {
-    "@type": typing.Literal["ants.PasteImageIntoImage"],
+    "@type": typing.NotRequired[typing.Literal["ants/PasteImageIntoImage"]],
+    "image_dimension": int,
+    "input_canvas_image": InputPathType,
+    "input_image": InputPathType,
+    "output_image": str,
+    "start_index": str,
+    "background_label": typing.NotRequired[int | None],
+    "paint_over_non_background_voxels": typing.NotRequired[typing.Literal[0, 1, 2] | None],
+    "conflict_label": typing.NotRequired[int | None],
+})
+PasteImageIntoImageParametersTagged = typing.TypedDict('PasteImageIntoImageParametersTagged', {
+    "@type": typing.Literal["ants/PasteImageIntoImage"],
     "image_dimension": int,
     "input_canvas_image": InputPathType,
     "input_image": InputPathType,
@@ -26,41 +37,9 @@ PasteImageIntoImageParameters = typing.TypedDict('PasteImageIntoImageParameters'
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "ants.PasteImageIntoImage": paste_image_into_image_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "ants.PasteImageIntoImage": paste_image_into_image_outputs,
-    }.get(t)
-
-
 class PasteImageIntoImageOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `paste_image_into_image(...)`.
+    Output object returned when calling `PasteImageIntoImageParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -77,7 +56,7 @@ def paste_image_into_image_params(
     background_label: int | None = None,
     paint_over_non_background_voxels: typing.Literal[0, 1, 2] | None = None,
     conflict_label: int | None = None,
-) -> PasteImageIntoImageParameters:
+) -> PasteImageIntoImageParametersTagged:
     """
     Build parameters.
     
@@ -100,7 +79,7 @@ def paste_image_into_image_params(
         Parameter dictionary
     """
     params = {
-        "@type": "ants.PasteImageIntoImage",
+        "@type": "ants/PasteImageIntoImage",
         "image_dimension": image_dimension,
         "input_canvas_image": input_canvas_image,
         "input_image": input_image,
@@ -131,17 +110,17 @@ def paste_image_into_image_cargs(
     """
     cargs = []
     cargs.append("PasteImageIntoImage")
-    cargs.append(str(params.get("image_dimension")))
-    cargs.append(execution.input_file(params.get("input_canvas_image")))
-    cargs.append(execution.input_file(params.get("input_image")))
-    cargs.append(params.get("output_image"))
-    cargs.append(params.get("start_index"))
-    if params.get("background_label") is not None:
-        cargs.append(str(params.get("background_label")))
-    if params.get("paint_over_non_background_voxels") is not None:
-        cargs.append(str(params.get("paint_over_non_background_voxels")))
-    if params.get("conflict_label") is not None:
-        cargs.append(str(params.get("conflict_label")))
+    cargs.append(str(params.get("image_dimension", None)))
+    cargs.append(execution.input_file(params.get("input_canvas_image", None)))
+    cargs.append(execution.input_file(params.get("input_image", None)))
+    cargs.append(params.get("output_image", None))
+    cargs.append(params.get("start_index", None))
+    if params.get("background_label", None) is not None:
+        cargs.append(str(params.get("background_label", None)))
+    if params.get("paint_over_non_background_voxels", None) is not None:
+        cargs.append(str(params.get("paint_over_non_background_voxels", None)))
+    if params.get("conflict_label", None) is not None:
+        cargs.append(str(params.get("conflict_label", None)))
     return cargs
 
 
@@ -160,7 +139,7 @@ def paste_image_into_image_outputs(
     """
     ret = PasteImageIntoImageOutputs(
         root=execution.output_file("."),
-        output_image_file=execution.output_file(params.get("output_image")),
+        output_image_file=execution.output_file(params.get("output_image", None)),
     )
     return ret
 
@@ -250,7 +229,6 @@ def paste_image_into_image(
 __all__ = [
     "PASTE_IMAGE_INTO_IMAGE_METADATA",
     "PasteImageIntoImageOutputs",
-    "PasteImageIntoImageParameters",
     "paste_image_into_image",
     "paste_image_into_image_execute",
     "paste_image_into_image_params",

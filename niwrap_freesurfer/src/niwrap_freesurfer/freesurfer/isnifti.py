@@ -14,45 +14,18 @@ ISNIFTI_METADATA = Metadata(
 
 
 IsniftiParameters = typing.TypedDict('IsniftiParameters', {
-    "@type": typing.Literal["freesurfer.isnifti"],
+    "@type": typing.NotRequired[typing.Literal["freesurfer/isnifti"]],
+    "infile": InputPathType,
+})
+IsniftiParametersTagged = typing.TypedDict('IsniftiParametersTagged', {
+    "@type": typing.Literal["freesurfer/isnifti"],
     "infile": InputPathType,
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "freesurfer.isnifti": isnifti_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-    }.get(t)
-
-
 class IsniftiOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `isnifti(...)`.
+    Output object returned when calling `IsniftiParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -60,7 +33,7 @@ class IsniftiOutputs(typing.NamedTuple):
 
 def isnifti_params(
     infile: InputPathType,
-) -> IsniftiParameters:
+) -> IsniftiParametersTagged:
     """
     Build parameters.
     
@@ -70,7 +43,7 @@ def isnifti_params(
         Parameter dictionary
     """
     params = {
-        "@type": "freesurfer.isnifti",
+        "@type": "freesurfer/isnifti",
         "infile": infile,
     }
     return params
@@ -91,7 +64,7 @@ def isnifti_cargs(
     """
     cargs = []
     cargs.append("isnifti")
-    cargs.append(execution.input_file(params.get("infile")))
+    cargs.append(execution.input_file(params.get("infile", None)))
     return cargs
 
 
@@ -170,7 +143,6 @@ def isnifti(
 __all__ = [
     "ISNIFTI_METADATA",
     "IsniftiOutputs",
-    "IsniftiParameters",
     "isnifti",
     "isnifti_execute",
     "isnifti_params",

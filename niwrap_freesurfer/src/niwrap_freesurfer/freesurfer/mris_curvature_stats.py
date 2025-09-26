@@ -14,7 +14,47 @@ MRIS_CURVATURE_STATS_METADATA = Metadata(
 
 
 MrisCurvatureStatsParameters = typing.TypedDict('MrisCurvatureStatsParameters', {
-    "@type": typing.Literal["freesurfer.mris_curvature_stats"],
+    "@type": typing.NotRequired[typing.Literal["freesurfer/mris_curvature_stats"]],
+    "subject_name": str,
+    "hemisphere": str,
+    "curvature_files": typing.NotRequired[list[InputPathType] | None],
+    "number_of_averages": typing.NotRequired[float | None],
+    "principal_curvatures": bool,
+    "discrete_method": bool,
+    "continuous_method": bool,
+    "signed_principals": bool,
+    "vertex_area_weigh": bool,
+    "vertex_area_normalize": bool,
+    "vertex_area_weigh_frac": bool,
+    "vertex_area_normalize_frac": bool,
+    "post_scale": typing.NotRequired[float | None],
+    "write_curvature_files": bool,
+    "shape_index": bool,
+    "output_file_stem": typing.NotRequired[str | None],
+    "histogram_bins": typing.NotRequired[float | None],
+    "percentage_histogram_bins": typing.NotRequired[float | None],
+    "bin_size": typing.NotRequired[float | None],
+    "bin_start_curvature": typing.NotRequired[float | None],
+    "bin_end_curvature": typing.NotRequired[float | None],
+    "label_file": typing.NotRequired[InputPathType | None],
+    "regional_percentages": bool,
+    "high_pass_filter": typing.NotRequired[float | None],
+    "low_pass_filter": typing.NotRequired[float | None],
+    "high_pass_filter_gaussian": typing.NotRequired[float | None],
+    "low_pass_filter_gaussian": typing.NotRequired[float | None],
+    "filter_label": typing.NotRequired[InputPathType | None],
+    "min_max_info": bool,
+    "normalize_curvature": bool,
+    "summary_condition": typing.NotRequired[str | None],
+    "min_curvature_scale": typing.NotRequired[float | None],
+    "max_curvature_scale": typing.NotRequired[float | None],
+    "scale_factor": typing.NotRequired[float | None],
+    "version": bool,
+    "set_zero_vertex": typing.NotRequired[float | None],
+    "max_ulps": typing.NotRequired[float | None],
+})
+MrisCurvatureStatsParametersTagged = typing.TypedDict('MrisCurvatureStatsParametersTagged', {
+    "@type": typing.Literal["freesurfer/mris_curvature_stats"],
     "subject_name": str,
     "hemisphere": str,
     "curvature_files": typing.NotRequired[list[InputPathType] | None],
@@ -55,40 +95,9 @@ MrisCurvatureStatsParameters = typing.TypedDict('MrisCurvatureStatsParameters', 
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "freesurfer.mris_curvature_stats": mris_curvature_stats_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-    }.get(t)
-
-
 class MrisCurvatureStatsOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `mris_curvature_stats(...)`.
+    Output object returned when calling `MrisCurvatureStatsParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -132,7 +141,7 @@ def mris_curvature_stats_params(
     version: bool = False,
     set_zero_vertex: float | None = None,
     max_ulps: float | None = None,
-) -> MrisCurvatureStatsParameters:
+) -> MrisCurvatureStatsParametersTagged:
     """
     Build parameters.
     
@@ -189,7 +198,7 @@ def mris_curvature_stats_params(
         Parameter dictionary
     """
     params = {
-        "@type": "freesurfer.mris_curvature_stats",
+        "@type": "freesurfer/mris_curvature_stats",
         "subject_name": subject_name,
         "hemisphere": hemisphere,
         "principal_curvatures": principal_curvatures,
@@ -267,137 +276,137 @@ def mris_curvature_stats_cargs(
     """
     cargs = []
     cargs.append("mris_curvature_stats")
-    cargs.append(params.get("subject_name"))
-    cargs.append(params.get("hemisphere"))
-    if params.get("curvature_files") is not None:
-        cargs.extend([execution.input_file(f) for f in params.get("curvature_files")])
-    if params.get("number_of_averages") is not None:
+    cargs.append(params.get("subject_name", None))
+    cargs.append(params.get("hemisphere", None))
+    if params.get("curvature_files", None) is not None:
+        cargs.extend([execution.input_file(f) for f in params.get("curvature_files", None)])
+    if params.get("number_of_averages", None) is not None:
         cargs.extend([
             "-a",
-            str(params.get("number_of_averages"))
+            str(params.get("number_of_averages", None))
         ])
-    if params.get("principal_curvatures"):
+    if params.get("principal_curvatures", False):
         cargs.append("-G")
-    if params.get("discrete_method"):
+    if params.get("discrete_method", False):
         cargs.append("--discrete")
-    if params.get("continuous_method"):
+    if params.get("continuous_method", False):
         cargs.append("--continuous")
-    if params.get("signed_principals"):
+    if params.get("signed_principals", False):
         cargs.append("--signedPrincipals")
-    if params.get("vertex_area_weigh"):
+    if params.get("vertex_area_weigh", False):
         cargs.append("--vertexAreaWeigh")
-    if params.get("vertex_area_normalize"):
+    if params.get("vertex_area_normalize", False):
         cargs.append("--vertexAreaNormalize")
-    if params.get("vertex_area_weigh_frac"):
+    if params.get("vertex_area_weigh_frac", False):
         cargs.append("--vertexAreaWeighFrac")
-    if params.get("vertex_area_normalize_frac"):
+    if params.get("vertex_area_normalize_frac", False):
         cargs.append("--vertexAreaNormalizeFrac")
-    if params.get("post_scale") is not None:
+    if params.get("post_scale", None) is not None:
         cargs.extend([
             "--postScale",
-            str(params.get("post_scale"))
+            str(params.get("post_scale", None))
         ])
-    if params.get("write_curvature_files"):
+    if params.get("write_curvature_files", False):
         cargs.append("--writeCurvatureFiles")
-    if params.get("shape_index"):
+    if params.get("shape_index", False):
         cargs.append("--shapeIndex")
-    if params.get("output_file_stem") is not None:
+    if params.get("output_file_stem", None) is not None:
         cargs.extend([
             "-o",
-            params.get("output_file_stem")
+            params.get("output_file_stem", None)
         ])
-    if params.get("histogram_bins") is not None:
+    if params.get("histogram_bins", None) is not None:
         cargs.extend([
             "-h",
-            str(params.get("histogram_bins"))
+            str(params.get("histogram_bins", None))
         ])
-    if params.get("percentage_histogram_bins") is not None:
+    if params.get("percentage_histogram_bins", None) is not None:
         cargs.extend([
             "-p",
-            str(params.get("percentage_histogram_bins"))
+            str(params.get("percentage_histogram_bins", None))
         ])
-    if params.get("bin_size") is not None:
+    if params.get("bin_size", None) is not None:
         cargs.extend([
             "-b",
-            str(params.get("bin_size"))
+            str(params.get("bin_size", None))
         ])
-    if params.get("bin_start_curvature") is not None:
+    if params.get("bin_start_curvature", None) is not None:
         cargs.extend([
             "-i",
-            str(params.get("bin_start_curvature"))
+            str(params.get("bin_start_curvature", None))
         ])
-    if params.get("bin_end_curvature") is not None:
+    if params.get("bin_end_curvature", None) is not None:
         cargs.extend([
             "-j",
-            str(params.get("bin_end_curvature"))
+            str(params.get("bin_end_curvature", None))
         ])
-    if params.get("label_file") is not None:
+    if params.get("label_file", None) is not None:
         cargs.extend([
             "-l",
-            execution.input_file(params.get("label_file"))
+            execution.input_file(params.get("label_file", None))
         ])
-    if params.get("regional_percentages"):
+    if params.get("regional_percentages", False):
         cargs.append("--regionalPercentages")
-    if params.get("high_pass_filter") is not None:
+    if params.get("high_pass_filter", None) is not None:
         cargs.extend([
             "--highPassFilter",
-            str(params.get("high_pass_filter"))
+            str(params.get("high_pass_filter", None))
         ])
-    if params.get("low_pass_filter") is not None:
+    if params.get("low_pass_filter", None) is not None:
         cargs.extend([
             "--lowPassFilter",
-            str(params.get("low_pass_filter"))
+            str(params.get("low_pass_filter", None))
         ])
-    if params.get("high_pass_filter_gaussian") is not None:
+    if params.get("high_pass_filter_gaussian", None) is not None:
         cargs.extend([
             "--highPassFilterGaussian",
-            str(params.get("high_pass_filter_gaussian"))
+            str(params.get("high_pass_filter_gaussian", None))
         ])
-    if params.get("low_pass_filter_gaussian") is not None:
+    if params.get("low_pass_filter_gaussian", None) is not None:
         cargs.extend([
             "--lowPassFilterGaussian",
-            str(params.get("low_pass_filter_gaussian"))
+            str(params.get("low_pass_filter_gaussian", None))
         ])
-    if params.get("filter_label") is not None:
+    if params.get("filter_label", None) is not None:
         cargs.extend([
             "--filterLabel",
-            execution.input_file(params.get("filter_label"))
+            execution.input_file(params.get("filter_label", None))
         ])
-    if params.get("min_max_info"):
+    if params.get("min_max_info", False):
         cargs.append("-m")
-    if params.get("normalize_curvature"):
+    if params.get("normalize_curvature", False):
         cargs.append("-n")
-    if params.get("summary_condition") is not None:
+    if params.get("summary_condition", None) is not None:
         cargs.extend([
             "-s",
-            params.get("summary_condition")
+            params.get("summary_condition", None)
         ])
-    if params.get("min_curvature_scale") is not None:
+    if params.get("min_curvature_scale", None) is not None:
         cargs.extend([
             "-d",
-            str(params.get("min_curvature_scale"))
+            str(params.get("min_curvature_scale", None))
         ])
-    if params.get("max_curvature_scale") is not None:
+    if params.get("max_curvature_scale", None) is not None:
         cargs.extend([
             "-e",
-            str(params.get("max_curvature_scale"))
+            str(params.get("max_curvature_scale", None))
         ])
-    if params.get("scale_factor") is not None:
+    if params.get("scale_factor", None) is not None:
         cargs.extend([
             "-c",
-            str(params.get("scale_factor"))
+            str(params.get("scale_factor", None))
         ])
-    if params.get("version"):
+    if params.get("version", False):
         cargs.append("-version")
-    if params.get("set_zero_vertex") is not None:
+    if params.get("set_zero_vertex", None) is not None:
         cargs.extend([
             "-z",
-            str(params.get("set_zero_vertex"))
+            str(params.get("set_zero_vertex", None))
         ])
-    if params.get("max_ulps") is not None:
+    if params.get("max_ulps", None) is not None:
         cargs.extend([
             "-q",
-            str(params.get("max_ulps"))
+            str(params.get("max_ulps", None))
         ])
     return cargs
 
@@ -596,7 +605,6 @@ def mris_curvature_stats(
 __all__ = [
     "MRIS_CURVATURE_STATS_METADATA",
     "MrisCurvatureStatsOutputs",
-    "MrisCurvatureStatsParameters",
     "mris_curvature_stats",
     "mris_curvature_stats_execute",
     "mris_curvature_stats_params",

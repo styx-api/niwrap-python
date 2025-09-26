@@ -14,7 +14,30 @@ PNM_EVS_METADATA = Metadata(
 
 
 PnmEvsParameters = typing.TypedDict('PnmEvsParameters', {
-    "@type": typing.Literal["fsl.pnm_evs"],
+    "@type": typing.NotRequired[typing.Literal["fsl/pnm_evs"]],
+    "input_file": InputPathType,
+    "output_file": str,
+    "tr_value": float,
+    "cardiac_file": typing.NotRequired[InputPathType | None],
+    "respiratory_file": typing.NotRequired[InputPathType | None],
+    "order_cardiac": typing.NotRequired[float | None],
+    "order_respiratory": typing.NotRequired[float | None],
+    "order_mult_cardiac": typing.NotRequired[float | None],
+    "order_mult_respiratory": typing.NotRequired[float | None],
+    "csf_mask": typing.NotRequired[InputPathType | None],
+    "rvt_file": typing.NotRequired[InputPathType | None],
+    "heartrate_file": typing.NotRequired[InputPathType | None],
+    "rvt_smooth": typing.NotRequired[float | None],
+    "heartrate_smooth": typing.NotRequired[float | None],
+    "slice_direction": typing.NotRequired[str | None],
+    "slice_order": typing.NotRequired[str | None],
+    "slice_timing_file": typing.NotRequired[InputPathType | None],
+    "debug_flag": bool,
+    "verbose_flag": bool,
+    "help_flag": bool,
+})
+PnmEvsParametersTagged = typing.TypedDict('PnmEvsParametersTagged', {
+    "@type": typing.Literal["fsl/pnm_evs"],
     "input_file": InputPathType,
     "output_file": str,
     "tr_value": float,
@@ -38,41 +61,9 @@ PnmEvsParameters = typing.TypedDict('PnmEvsParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "fsl.pnm_evs": pnm_evs_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "fsl.pnm_evs": pnm_evs_outputs,
-    }.get(t)
-
-
 class PnmEvsOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `pnm_evs(...)`.
+    Output object returned when calling `PnmEvsParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -101,7 +92,7 @@ def pnm_evs_params(
     debug_flag: bool = False,
     verbose_flag: bool = False,
     help_flag: bool = False,
-) -> PnmEvsParameters:
+) -> PnmEvsParametersTagged:
     """
     Build parameters.
     
@@ -139,7 +130,7 @@ def pnm_evs_params(
         Parameter dictionary
     """
     params = {
-        "@type": "fsl.pnm_evs",
+        "@type": "fsl/pnm_evs",
         "input_file": input_file,
         "output_file": output_file,
         "tr_value": tr_value,
@@ -195,91 +186,91 @@ def pnm_evs_cargs(
     cargs.append("pnm_evs")
     cargs.extend([
         "--in",
-        execution.input_file(params.get("input_file"))
+        execution.input_file(params.get("input_file", None))
     ])
     cargs.extend([
         "--out",
-        params.get("output_file")
+        params.get("output_file", None)
     ])
     cargs.extend([
         "--tr",
-        str(params.get("tr_value"))
+        str(params.get("tr_value", None))
     ])
-    if params.get("cardiac_file") is not None:
+    if params.get("cardiac_file", None) is not None:
         cargs.extend([
             "--cardiac",
-            execution.input_file(params.get("cardiac_file"))
+            execution.input_file(params.get("cardiac_file", None))
         ])
-    if params.get("respiratory_file") is not None:
+    if params.get("respiratory_file", None) is not None:
         cargs.extend([
             "--respiratory",
-            execution.input_file(params.get("respiratory_file"))
+            execution.input_file(params.get("respiratory_file", None))
         ])
-    if params.get("order_cardiac") is not None:
+    if params.get("order_cardiac", None) is not None:
         cargs.extend([
             "--oc",
-            str(params.get("order_cardiac"))
+            str(params.get("order_cardiac", None))
         ])
-    if params.get("order_respiratory") is not None:
+    if params.get("order_respiratory", None) is not None:
         cargs.extend([
             "--or",
-            str(params.get("order_respiratory"))
+            str(params.get("order_respiratory", None))
         ])
-    if params.get("order_mult_cardiac") is not None:
+    if params.get("order_mult_cardiac", None) is not None:
         cargs.extend([
             "--multc",
-            str(params.get("order_mult_cardiac"))
+            str(params.get("order_mult_cardiac", None))
         ])
-    if params.get("order_mult_respiratory") is not None:
+    if params.get("order_mult_respiratory", None) is not None:
         cargs.extend([
             "--multr",
-            str(params.get("order_mult_respiratory"))
+            str(params.get("order_mult_respiratory", None))
         ])
-    if params.get("csf_mask") is not None:
+    if params.get("csf_mask", None) is not None:
         cargs.extend([
             "--csfmask",
-            execution.input_file(params.get("csf_mask"))
+            execution.input_file(params.get("csf_mask", None))
         ])
-    if params.get("rvt_file") is not None:
+    if params.get("rvt_file", None) is not None:
         cargs.extend([
             "--rvt",
-            execution.input_file(params.get("rvt_file"))
+            execution.input_file(params.get("rvt_file", None))
         ])
-    if params.get("heartrate_file") is not None:
+    if params.get("heartrate_file", None) is not None:
         cargs.extend([
             "--heartrate",
-            execution.input_file(params.get("heartrate_file"))
+            execution.input_file(params.get("heartrate_file", None))
         ])
-    if params.get("rvt_smooth") is not None:
+    if params.get("rvt_smooth", None) is not None:
         cargs.extend([
             "--rvtsmooth",
-            str(params.get("rvt_smooth"))
+            str(params.get("rvt_smooth", None))
         ])
-    if params.get("heartrate_smooth") is not None:
+    if params.get("heartrate_smooth", None) is not None:
         cargs.extend([
             "--heartratesmooth",
-            str(params.get("heartrate_smooth"))
+            str(params.get("heartrate_smooth", None))
         ])
-    if params.get("slice_direction") is not None:
+    if params.get("slice_direction", None) is not None:
         cargs.extend([
             "--slicedir",
-            params.get("slice_direction")
+            params.get("slice_direction", None)
         ])
-    if params.get("slice_order") is not None:
+    if params.get("slice_order", None) is not None:
         cargs.extend([
             "--sliceorder",
-            params.get("slice_order")
+            params.get("slice_order", None)
         ])
-    if params.get("slice_timing_file") is not None:
+    if params.get("slice_timing_file", None) is not None:
         cargs.extend([
             "--slicetiming",
-            execution.input_file(params.get("slice_timing_file"))
+            execution.input_file(params.get("slice_timing_file", None))
         ])
-    if params.get("debug_flag"):
+    if params.get("debug_flag", False):
         cargs.append("--debug")
-    if params.get("verbose_flag"):
+    if params.get("verbose_flag", False):
         cargs.append("--verbose")
-    if params.get("help_flag"):
+    if params.get("help_flag", False):
         cargs.append("--help")
     return cargs
 
@@ -299,7 +290,7 @@ def pnm_evs_outputs(
     """
     ret = PnmEvsOutputs(
         root=execution.output_file("."),
-        output_file=execution.output_file(params.get("output_file")),
+        output_file=execution.output_file(params.get("output_file", None)),
     )
     return ret
 
@@ -426,7 +417,6 @@ def pnm_evs(
 __all__ = [
     "PNM_EVS_METADATA",
     "PnmEvsOutputs",
-    "PnmEvsParameters",
     "pnm_evs",
     "pnm_evs_execute",
     "pnm_evs_params",

@@ -14,7 +14,15 @@ ADJUNCT_TORT_PLOT_DP_ALIGN_METADATA = Metadata(
 
 
 AdjunctTortPlotDpAlignParameters = typing.TypedDict('AdjunctTortPlotDpAlignParameters', {
-    "@type": typing.Literal["afni.adjunct_tort_plot_dp_align"],
+    "@type": typing.NotRequired[typing.Literal["afni/adjunct_tort_plot_dp_align"]],
+    "input_file": InputPathType,
+    "output_prefix": str,
+    "enorm_max": typing.NotRequired[float | None],
+    "enorm_hline": typing.NotRequired[float | None],
+    "no_svg": bool,
+})
+AdjunctTortPlotDpAlignParametersTagged = typing.TypedDict('AdjunctTortPlotDpAlignParametersTagged', {
+    "@type": typing.Literal["afni/adjunct_tort_plot_dp_align"],
     "input_file": InputPathType,
     "output_prefix": str,
     "enorm_max": typing.NotRequired[float | None],
@@ -23,41 +31,9 @@ AdjunctTortPlotDpAlignParameters = typing.TypedDict('AdjunctTortPlotDpAlignParam
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "afni.adjunct_tort_plot_dp_align": adjunct_tort_plot_dp_align_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "afni.adjunct_tort_plot_dp_align": adjunct_tort_plot_dp_align_outputs,
-    }.get(t)
-
-
 class AdjunctTortPlotDpAlignOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `adjunct_tort_plot_dp_align(...)`.
+    Output object returned when calling `AdjunctTortPlotDpAlignParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -79,7 +55,7 @@ def adjunct_tort_plot_dp_align_params(
     enorm_max: float | None = None,
     enorm_hline: float | None = None,
     no_svg: bool = False,
-) -> AdjunctTortPlotDpAlignParameters:
+) -> AdjunctTortPlotDpAlignParametersTagged:
     """
     Build parameters.
     
@@ -98,7 +74,7 @@ def adjunct_tort_plot_dp_align_params(
         Parameter dictionary
     """
     params = {
-        "@type": "afni.adjunct_tort_plot_dp_align",
+        "@type": "afni/adjunct_tort_plot_dp_align",
         "input_file": input_file,
         "output_prefix": output_prefix,
         "no_svg": no_svg,
@@ -127,23 +103,23 @@ def adjunct_tort_plot_dp_align_cargs(
     cargs.append("adjunct_tort_plot_dp_align")
     cargs.extend([
         "-input",
-        execution.input_file(params.get("input_file"))
+        execution.input_file(params.get("input_file", None))
     ])
     cargs.extend([
         "-prefix",
-        params.get("output_prefix")
+        params.get("output_prefix", None)
     ])
-    if params.get("enorm_max") is not None:
+    if params.get("enorm_max", None) is not None:
         cargs.extend([
             "-enorm_max",
-            str(params.get("enorm_max"))
+            str(params.get("enorm_max", None))
         ])
-    if params.get("enorm_hline") is not None:
+    if params.get("enorm_hline", None) is not None:
         cargs.extend([
             "-enorm_hline",
-            str(params.get("enorm_hline"))
+            str(params.get("enorm_hline", None))
         ])
-    if params.get("no_svg"):
+    if params.get("no_svg", False):
         cargs.append("-no_svg")
     return cargs
 
@@ -163,10 +139,10 @@ def adjunct_tort_plot_dp_align_outputs(
     """
     ret = AdjunctTortPlotDpAlignOutputs(
         root=execution.output_file("."),
-        align_params=execution.output_file(params.get("output_prefix") + "_align.1D"),
-        enorm_file=execution.output_file(params.get("output_prefix") + "_enorm.1D"),
-        plot_jpg=execution.output_file(params.get("output_prefix") + ".jpg"),
-        plot_svg=execution.output_file(params.get("output_prefix") + ".svg"),
+        align_params=execution.output_file(params.get("output_prefix", None) + "_align.1D"),
+        enorm_file=execution.output_file(params.get("output_prefix", None) + "_enorm.1D"),
+        plot_jpg=execution.output_file(params.get("output_prefix", None) + ".jpg"),
+        plot_svg=execution.output_file(params.get("output_prefix", None) + ".svg"),
     )
     return ret
 
@@ -246,7 +222,6 @@ def adjunct_tort_plot_dp_align(
 __all__ = [
     "ADJUNCT_TORT_PLOT_DP_ALIGN_METADATA",
     "AdjunctTortPlotDpAlignOutputs",
-    "AdjunctTortPlotDpAlignParameters",
     "adjunct_tort_plot_dp_align",
     "adjunct_tort_plot_dp_align_execute",
     "adjunct_tort_plot_dp_align_params",

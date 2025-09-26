@@ -14,7 +14,18 @@ STAT_NORMALIZE_METADATA = Metadata(
 
 
 StatNormalizeParameters = typing.TypedDict('StatNormalizeParameters', {
-    "@type": typing.Literal["freesurfer.stat_normalize"],
+    "@type": typing.NotRequired[typing.Literal["freesurfer/stat_normalize"]],
+    "input_sv_prefix": str,
+    "output_sv_prefix": str,
+    "resolution": typing.NotRequired[float | None],
+    "field_of_view": typing.NotRequired[float | None],
+    "sph_avg": typing.NotRequired[str | None],
+    "xfm_file": typing.NotRequired[str | None],
+    "fix_xfm_flag": bool,
+    "float2int_option": typing.NotRequired[str | None],
+})
+StatNormalizeParametersTagged = typing.TypedDict('StatNormalizeParametersTagged', {
+    "@type": typing.Literal["freesurfer/stat_normalize"],
     "input_sv_prefix": str,
     "output_sv_prefix": str,
     "resolution": typing.NotRequired[float | None],
@@ -26,40 +37,9 @@ StatNormalizeParameters = typing.TypedDict('StatNormalizeParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "freesurfer.stat_normalize": stat_normalize_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-    }.get(t)
-
-
 class StatNormalizeOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `stat_normalize(...)`.
+    Output object returned when calling `StatNormalizeParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -74,7 +54,7 @@ def stat_normalize_params(
     xfm_file: str | None = None,
     fix_xfm_flag: bool = False,
     float2int_option: str | None = None,
-) -> StatNormalizeParameters:
+) -> StatNormalizeParametersTagged:
     """
     Build parameters.
     
@@ -93,7 +73,7 @@ def stat_normalize_params(
         Parameter dictionary
     """
     params = {
-        "@type": "freesurfer.stat_normalize",
+        "@type": "freesurfer/stat_normalize",
         "input_sv_prefix": input_sv_prefix,
         "output_sv_prefix": output_sv_prefix,
         "fix_xfm_flag": fix_xfm_flag,
@@ -126,34 +106,34 @@ def stat_normalize_cargs(
     """
     cargs = []
     cargs.append("stat_normalize")
-    cargs.append(params.get("input_sv_prefix"))
-    cargs.append(params.get("output_sv_prefix"))
-    if params.get("resolution") is not None:
+    cargs.append(params.get("input_sv_prefix", None))
+    cargs.append(params.get("output_sv_prefix", None))
+    if params.get("resolution", None) is not None:
         cargs.extend([
             "-r",
-            str(params.get("resolution"))
+            str(params.get("resolution", None))
         ])
-    if params.get("field_of_view") is not None:
+    if params.get("field_of_view", None) is not None:
         cargs.extend([
             "-f",
-            str(params.get("field_of_view"))
+            str(params.get("field_of_view", None))
         ])
-    if params.get("sph_avg") is not None:
+    if params.get("sph_avg", None) is not None:
         cargs.extend([
             "-S",
-            params.get("sph_avg")
+            params.get("sph_avg", None)
         ])
-    if params.get("xfm_file") is not None:
+    if params.get("xfm_file", None) is not None:
         cargs.extend([
             "-x",
-            params.get("xfm_file")
+            params.get("xfm_file", None)
         ])
-    if params.get("fix_xfm_flag"):
+    if params.get("fix_xfm_flag", False):
         cargs.append("-i")
-    if params.get("float2int_option") is not None:
+    if params.get("float2int_option", None) is not None:
         cargs.extend([
             "-c",
-            params.get("float2int_option")
+            params.get("float2int_option", None)
         ])
     return cargs
 
@@ -258,7 +238,6 @@ def stat_normalize(
 __all__ = [
     "STAT_NORMALIZE_METADATA",
     "StatNormalizeOutputs",
-    "StatNormalizeParameters",
     "stat_normalize",
     "stat_normalize_execute",
     "stat_normalize_params",

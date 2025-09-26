@@ -14,7 +14,54 @@ SAMSEG_METADATA = Metadata(
 
 
 SamsegParameters = typing.TypedDict('SamsegParameters', {
-    "@type": typing.Literal["freesurfer.samseg"],
+    "@type": typing.NotRequired[typing.Literal["freesurfer/samseg"]],
+    "input_files": list[InputPathType],
+    "t1w_files": typing.NotRequired[list[InputPathType] | None],
+    "t2w_files": typing.NotRequired[list[InputPathType] | None],
+    "flair_files": typing.NotRequired[list[InputPathType] | None],
+    "other_modality_files": typing.NotRequired[list[InputPathType] | None],
+    "output_directory": str,
+    "options_file": typing.NotRequired[InputPathType | None],
+    "dissection_photo_mode": typing.NotRequired[str | None],
+    "save_history": bool,
+    "subject": typing.NotRequired[str | None],
+    "save_posteriors": bool,
+    "save_probabilities": bool,
+    "no_save_warp": bool,
+    "mrf": bool,
+    "no_mrf": bool,
+    "threads": typing.NotRequired[float | None],
+    "atlas_directory": typing.NotRequired[str | None],
+    "gmm_file": typing.NotRequired[InputPathType | None],
+    "no_block_coordinate_descent": bool,
+    "logdomain_costandgradient_calculator": bool,
+    "no_logdomain_costandgradient_calculator": bool,
+    "recon": bool,
+    "fill": bool,
+    "normalization2": bool,
+    "use_t2w": bool,
+    "use_flair": bool,
+    "hires": bool,
+    "subjects_directory": typing.NotRequired[str | None],
+    "pallidum_separate": bool,
+    "stiffness": typing.NotRequired[float | None],
+    "lesion": bool,
+    "lesion_mask_pattern": typing.NotRequired[list[float] | None],
+    "bias_field_smoothing_kernel": typing.NotRequired[float | None],
+    "registration_file": typing.NotRequired[InputPathType | None],
+    "regmat_file": typing.NotRequired[InputPathType | None],
+    "init_lta": typing.NotRequired[InputPathType | None],
+    "reg_only": bool,
+    "ssdd_directory": typing.NotRequired[str | None],
+    "save_mesh": bool,
+    "max_iters": typing.NotRequired[float | None],
+    "dice_file": typing.NotRequired[InputPathType | None],
+    "ignore_unknown": bool,
+    "smooth_wm_cortex": typing.NotRequired[float | None],
+    "profile_file": typing.NotRequired[InputPathType | None],
+})
+SamsegParametersTagged = typing.TypedDict('SamsegParametersTagged', {
+    "@type": typing.Literal["freesurfer/samseg"],
     "input_files": list[InputPathType],
     "t1w_files": typing.NotRequired[list[InputPathType] | None],
     "t2w_files": typing.NotRequired[list[InputPathType] | None],
@@ -62,41 +109,9 @@ SamsegParameters = typing.TypedDict('SamsegParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "freesurfer.samseg": samseg_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "freesurfer.samseg": samseg_outputs,
-    }.get(t)
-
-
 class SamsegOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `samseg(...)`.
+    Output object returned when calling `SamsegParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -155,7 +170,7 @@ def samseg_params(
     ignore_unknown: bool = False,
     smooth_wm_cortex: float | None = None,
     profile_file: InputPathType | None = None,
-) -> SamsegParameters:
+) -> SamsegParametersTagged:
     """
     Build parameters.
     
@@ -222,7 +237,7 @@ def samseg_params(
         Parameter dictionary
     """
     params = {
-        "@type": "freesurfer.samseg",
+        "@type": "freesurfer/samseg",
         "input_files": input_files,
         "output_directory": output_directory,
         "save_history": save_history,
@@ -310,161 +325,161 @@ def samseg_cargs(
     cargs.append("samseg")
     cargs.extend([
         "--i",
-        *[execution.input_file(f) for f in params.get("input_files")]
+        *[execution.input_file(f) for f in params.get("input_files", None)]
     ])
-    if params.get("t1w_files") is not None:
+    if params.get("t1w_files", None) is not None:
         cargs.extend([
             "--t1w",
-            *[execution.input_file(f) for f in params.get("t1w_files")]
+            *[execution.input_file(f) for f in params.get("t1w_files", None)]
         ])
-    if params.get("t2w_files") is not None:
+    if params.get("t2w_files", None) is not None:
         cargs.extend([
             "--t2w",
-            *[execution.input_file(f) for f in params.get("t2w_files")]
+            *[execution.input_file(f) for f in params.get("t2w_files", None)]
         ])
-    if params.get("flair_files") is not None:
+    if params.get("flair_files", None) is not None:
         cargs.extend([
             "--flair",
-            *[execution.input_file(f) for f in params.get("flair_files")]
+            *[execution.input_file(f) for f in params.get("flair_files", None)]
         ])
-    if params.get("other_modality_files") is not None:
+    if params.get("other_modality_files", None) is not None:
         cargs.extend([
             "--mode",
-            *[execution.input_file(f) for f in params.get("other_modality_files")]
+            *[execution.input_file(f) for f in params.get("other_modality_files", None)]
         ])
     cargs.extend([
         "--o",
-        params.get("output_directory")
+        params.get("output_directory", None)
     ])
-    if params.get("options_file") is not None:
+    if params.get("options_file", None) is not None:
         cargs.extend([
             "--options",
-            execution.input_file(params.get("options_file"))
+            execution.input_file(params.get("options_file", None))
         ])
-    if params.get("dissection_photo_mode") is not None:
+    if params.get("dissection_photo_mode", None) is not None:
         cargs.extend([
             "--dissection-photo",
-            params.get("dissection_photo_mode")
+            params.get("dissection_photo_mode", None)
         ])
-    if params.get("save_history"):
+    if params.get("save_history", False):
         cargs.append("--history")
-    if params.get("subject") is not None:
+    if params.get("subject", None) is not None:
         cargs.extend([
             "--s",
-            params.get("subject")
+            params.get("subject", None)
         ])
-    if params.get("save_posteriors"):
+    if params.get("save_posteriors", False):
         cargs.append("--save-posteriors")
-    if params.get("save_probabilities"):
+    if params.get("save_probabilities", False):
         cargs.append("--save-probabilities")
-    if params.get("no_save_warp"):
+    if params.get("no_save_warp", False):
         cargs.append("--no-save-warp")
-    if params.get("mrf"):
+    if params.get("mrf", False):
         cargs.append("--mrf")
-    if params.get("no_mrf"):
+    if params.get("no_mrf", False):
         cargs.append("--no-mrf")
-    if params.get("threads") is not None:
+    if params.get("threads", None) is not None:
         cargs.extend([
             "--threads",
-            str(params.get("threads"))
+            str(params.get("threads", None))
         ])
-    if params.get("atlas_directory") is not None:
+    if params.get("atlas_directory", None) is not None:
         cargs.extend([
             "--atlas",
-            params.get("atlas_directory")
+            params.get("atlas_directory", None)
         ])
-    if params.get("gmm_file") is not None:
+    if params.get("gmm_file", None) is not None:
         cargs.extend([
             "--gmm",
-            execution.input_file(params.get("gmm_file"))
+            execution.input_file(params.get("gmm_file", None))
         ])
-    if params.get("no_block_coordinate_descent"):
+    if params.get("no_block_coordinate_descent", False):
         cargs.append("--no-block-coordinate-descent")
-    if params.get("logdomain_costandgradient_calculator"):
+    if params.get("logdomain_costandgradient_calculator", False):
         cargs.append("--logdomain-costandgradient-calculator")
-    if params.get("no_logdomain_costandgradient_calculator"):
+    if params.get("no_logdomain_costandgradient_calculator", False):
         cargs.append("--no-logdomain-costandgradient-calculator")
-    if params.get("recon"):
+    if params.get("recon", False):
         cargs.append("--recon")
-    if params.get("fill"):
+    if params.get("fill", False):
         cargs.append("--fill")
-    if params.get("normalization2"):
+    if params.get("normalization2", False):
         cargs.append("--normalization2")
-    if params.get("use_t2w"):
+    if params.get("use_t2w", False):
         cargs.append("--use-t2w")
-    if params.get("use_flair"):
+    if params.get("use_flair", False):
         cargs.append("--use-flair")
-    if params.get("hires"):
+    if params.get("hires", False):
         cargs.append("--hires")
-    if params.get("subjects_directory") is not None:
+    if params.get("subjects_directory", None) is not None:
         cargs.extend([
             "--sd",
-            params.get("subjects_directory")
+            params.get("subjects_directory", None)
         ])
-    if params.get("pallidum_separate"):
+    if params.get("pallidum_separate", False):
         cargs.append("--pallidum-separate")
-    if params.get("stiffness") is not None:
+    if params.get("stiffness", None) is not None:
         cargs.extend([
             "--stiffness",
-            str(params.get("stiffness"))
+            str(params.get("stiffness", None))
         ])
-    if params.get("lesion"):
+    if params.get("lesion", False):
         cargs.append("--lesion")
-    if params.get("lesion_mask_pattern") is not None:
+    if params.get("lesion_mask_pattern", None) is not None:
         cargs.extend([
             "--lesion-mask-pattern",
-            *map(str, params.get("lesion_mask_pattern"))
+            *map(str, params.get("lesion_mask_pattern", None))
         ])
-    if params.get("bias_field_smoothing_kernel") is not None:
+    if params.get("bias_field_smoothing_kernel", None) is not None:
         cargs.extend([
             "--bias-field-smoothing-kernel",
-            str(params.get("bias_field_smoothing_kernel"))
+            str(params.get("bias_field_smoothing_kernel", None))
         ])
-    if params.get("registration_file") is not None:
+    if params.get("registration_file", None) is not None:
         cargs.extend([
             "--reg",
-            execution.input_file(params.get("registration_file"))
+            execution.input_file(params.get("registration_file", None))
         ])
-    if params.get("regmat_file") is not None:
+    if params.get("regmat_file", None) is not None:
         cargs.extend([
             "--regmat",
-            execution.input_file(params.get("regmat_file"))
+            execution.input_file(params.get("regmat_file", None))
         ])
-    if params.get("init_lta") is not None:
+    if params.get("init_lta", None) is not None:
         cargs.extend([
             "--initlta",
-            execution.input_file(params.get("init_lta"))
+            execution.input_file(params.get("init_lta", None))
         ])
-    if params.get("reg_only"):
+    if params.get("reg_only", False):
         cargs.append("--reg-only")
-    if params.get("ssdd_directory") is not None:
+    if params.get("ssdd_directory", None) is not None:
         cargs.extend([
             "--ssdd",
-            params.get("ssdd_directory")
+            params.get("ssdd_directory", None)
         ])
-    if params.get("save_mesh"):
+    if params.get("save_mesh", False):
         cargs.append("--save-mesh")
-    if params.get("max_iters") is not None:
+    if params.get("max_iters", None) is not None:
         cargs.extend([
             "--max-iters",
-            str(params.get("max_iters"))
+            str(params.get("max_iters", None))
         ])
-    if params.get("dice_file") is not None:
+    if params.get("dice_file", None) is not None:
         cargs.extend([
             "--dice",
-            execution.input_file(params.get("dice_file"))
+            execution.input_file(params.get("dice_file", None))
         ])
-    if params.get("ignore_unknown"):
+    if params.get("ignore_unknown", False):
         cargs.append("--ignore-unknown")
-    if params.get("smooth_wm_cortex") is not None:
+    if params.get("smooth_wm_cortex", None) is not None:
         cargs.extend([
             "--smooth-wm-cortex",
-            str(params.get("smooth_wm_cortex"))
+            str(params.get("smooth_wm_cortex", None))
         ])
-    if params.get("profile_file") is not None:
+    if params.get("profile_file", None) is not None:
         cargs.extend([
             "--profile",
-            execution.input_file(params.get("profile_file"))
+            execution.input_file(params.get("profile_file", None))
         ])
     return cargs
 
@@ -484,10 +499,10 @@ def samseg_outputs(
     """
     ret = SamsegOutputs(
         root=execution.output_file("."),
-        segmentation_output=execution.output_file(params.get("output_directory") + "/seg.mgz"),
-        posteriors_output=execution.output_file(params.get("output_directory") + "/posteriors.mgz"),
-        probabilities_output=execution.output_file(params.get("output_directory") + "/probabilities.mgz"),
-        mesh_output=execution.output_file(params.get("output_directory") + "/mesh.stl"),
+        segmentation_output=execution.output_file(params.get("output_directory", None) + "/seg.mgz"),
+        posteriors_output=execution.output_file(params.get("output_directory", None) + "/posteriors.mgz"),
+        probabilities_output=execution.output_file(params.get("output_directory", None) + "/probabilities.mgz"),
+        mesh_output=execution.output_file(params.get("output_directory", None) + "/mesh.stl"),
     )
     return ret
 
@@ -693,7 +708,6 @@ def samseg(
 __all__ = [
     "SAMSEG_METADATA",
     "SamsegOutputs",
-    "SamsegParameters",
     "samseg",
     "samseg_execute",
     "samseg_params",

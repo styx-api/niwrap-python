@@ -14,7 +14,25 @@ V_3D_REMLFIT_METADATA = Metadata(
 
 
 V3dRemlfitParameters = typing.TypedDict('V3dRemlfitParameters', {
-    "@type": typing.Literal["afni.3dREMLfit"],
+    "@type": typing.NotRequired[typing.Literal["afni/3dREMLfit"]],
+    "input_file": InputPathType,
+    "regression_matrix": InputPathType,
+    "baseline_files": typing.NotRequired[list[str] | None],
+    "sort_nods": bool,
+    "temp_storage": bool,
+    "mask": typing.NotRequired[InputPathType | None],
+    "output_prefix": typing.NotRequired[str | None],
+    "no_fdr_curve": bool,
+    "go_for_it": bool,
+    "max_a_param": typing.NotRequired[float | None],
+    "max_b_param": typing.NotRequired[float | None],
+    "grid_param": typing.NotRequired[float | None],
+    "negative_corr": bool,
+    "quiet": bool,
+    "verbose": bool,
+})
+V3dRemlfitParametersTagged = typing.TypedDict('V3dRemlfitParametersTagged', {
+    "@type": typing.Literal["afni/3dREMLfit"],
     "input_file": InputPathType,
     "regression_matrix": InputPathType,
     "baseline_files": typing.NotRequired[list[str] | None],
@@ -33,41 +51,9 @@ V3dRemlfitParameters = typing.TypedDict('V3dRemlfitParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "afni.3dREMLfit": v_3d_remlfit_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "afni.3dREMLfit": v_3d_remlfit_outputs,
-    }.get(t)
-
-
 class V3dRemlfitOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `v_3d_remlfit(...)`.
+    Output object returned when calling `V3dRemlfitParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -101,7 +87,7 @@ def v_3d_remlfit_params(
     negative_corr: bool = False,
     quiet: bool = False,
     verbose: bool = False,
-) -> V3dRemlfitParameters:
+) -> V3dRemlfitParametersTagged:
     """
     Build parameters.
     
@@ -132,7 +118,7 @@ def v_3d_remlfit_params(
         Parameter dictionary
     """
     params = {
-        "@type": "afni.3dREMLfit",
+        "@type": "afni/3dREMLfit",
         "input_file": input_file,
         "regression_matrix": regression_matrix,
         "sort_nods": sort_nods,
@@ -175,55 +161,55 @@ def v_3d_remlfit_cargs(
     cargs.append("3dREMLfit")
     cargs.extend([
         "-input",
-        execution.input_file(params.get("input_file"))
+        execution.input_file(params.get("input_file", None))
     ])
     cargs.extend([
         "-matrix",
-        execution.input_file(params.get("regression_matrix"))
+        execution.input_file(params.get("regression_matrix", None))
     ])
-    if params.get("baseline_files") is not None:
+    if params.get("baseline_files", None) is not None:
         cargs.extend([
             "-addbase",
-            *params.get("baseline_files")
+            *params.get("baseline_files", None)
         ])
-    if params.get("sort_nods"):
+    if params.get("sort_nods", False):
         cargs.append("-dsort_nods")
-    if params.get("temp_storage"):
+    if params.get("temp_storage", False):
         cargs.append("-usetemp")
-    if params.get("mask") is not None:
+    if params.get("mask", None) is not None:
         cargs.extend([
             "-mask",
-            execution.input_file(params.get("mask"))
+            execution.input_file(params.get("mask", None))
         ])
-    if params.get("output_prefix") is not None:
+    if params.get("output_prefix", None) is not None:
         cargs.extend([
             "-Rvar",
-            params.get("output_prefix")
+            params.get("output_prefix", None)
         ])
-    if params.get("no_fdr_curve"):
+    if params.get("no_fdr_curve", False):
         cargs.append("-noFDR")
-    if params.get("go_for_it"):
+    if params.get("go_for_it", False):
         cargs.append("-GOFORIT")
-    if params.get("max_a_param") is not None:
+    if params.get("max_a_param", None) is not None:
         cargs.extend([
             "-MAXa",
-            str(params.get("max_a_param"))
+            str(params.get("max_a_param", None))
         ])
-    if params.get("max_b_param") is not None:
+    if params.get("max_b_param", None) is not None:
         cargs.extend([
             "-MAXb",
-            str(params.get("max_b_param"))
+            str(params.get("max_b_param", None))
         ])
-    if params.get("grid_param") is not None:
+    if params.get("grid_param", None) is not None:
         cargs.extend([
             "-Grid",
-            str(params.get("grid_param"))
+            str(params.get("grid_param", None))
         ])
-    if params.get("negative_corr"):
+    if params.get("negative_corr", False):
         cargs.append("-NEGcor")
-    if params.get("quiet"):
+    if params.get("quiet", False):
         cargs.append("quiet")
-    if params.get("verbose"):
+    if params.get("verbose", False):
         cargs.append("-verb")
     return cargs
 
@@ -243,12 +229,12 @@ def v_3d_remlfit_outputs(
     """
     ret = V3dRemlfitOutputs(
         root=execution.output_file("."),
-        outfile=execution.output_file(params.get("output_prefix") + ".nii.gz") if (params.get("output_prefix") is not None) else None,
-        rvar_file=execution.output_file(params.get("output_prefix") + "_Rvar.nii.gz") if (params.get("output_prefix") is not None) else None,
-        rbeta_file=execution.output_file(params.get("output_prefix") + "_Rbeta.nii.gz") if (params.get("output_prefix") is not None) else None,
-        rbuck_file=execution.output_file(params.get("output_prefix") + "_Rbuck.nii.gz") if (params.get("output_prefix") is not None) else None,
-        rfitts_file=execution.output_file(params.get("output_prefix") + "_Rfitts.nii.gz") if (params.get("output_prefix") is not None) else None,
-        rerrts_file=execution.output_file(params.get("output_prefix") + "_Rerrts.nii.gz") if (params.get("output_prefix") is not None) else None,
+        outfile=execution.output_file(params.get("output_prefix", None) + ".nii.gz") if (params.get("output_prefix") is not None) else None,
+        rvar_file=execution.output_file(params.get("output_prefix", None) + "_Rvar.nii.gz") if (params.get("output_prefix") is not None) else None,
+        rbeta_file=execution.output_file(params.get("output_prefix", None) + "_Rbeta.nii.gz") if (params.get("output_prefix") is not None) else None,
+        rbuck_file=execution.output_file(params.get("output_prefix", None) + "_Rbuck.nii.gz") if (params.get("output_prefix") is not None) else None,
+        rfitts_file=execution.output_file(params.get("output_prefix", None) + "_Rfitts.nii.gz") if (params.get("output_prefix") is not None) else None,
+        rerrts_file=execution.output_file(params.get("output_prefix", None) + "_Rerrts.nii.gz") if (params.get("output_prefix") is not None) else None,
     )
     return ret
 
@@ -359,7 +345,6 @@ def v_3d_remlfit(
 
 __all__ = [
     "V3dRemlfitOutputs",
-    "V3dRemlfitParameters",
     "V_3D_REMLFIT_METADATA",
     "v_3d_remlfit",
     "v_3d_remlfit_execute",

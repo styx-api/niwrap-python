@@ -14,7 +14,123 @@ V_3DINFO_METADATA = Metadata(
 
 
 V3dinfoParameters = typing.TypedDict('V3dinfoParameters', {
-    "@type": typing.Literal["afni.3dinfo"],
+    "@type": typing.NotRequired[typing.Literal["afni/3dinfo"]],
+    "orient": bool,
+    "Lextent": bool,
+    "Rextent": bool,
+    "Aextent": bool,
+    "Pextent": bool,
+    "Iextent": bool,
+    "Sextent": bool,
+    "all_names": bool,
+    "verb": bool,
+    "very_verbose": bool,
+    "short": bool,
+    "no_hist": bool,
+    "h": bool,
+    "help": bool,
+    "extreme_help": bool,
+    "h_view": bool,
+    "h_web": bool,
+    "h_find": typing.NotRequired[str | None],
+    "h_raw": bool,
+    "h_spx": bool,
+    "h_aspx": bool,
+    "all_opts": bool,
+    "label2index": typing.NotRequired[str | None],
+    "niml_hdr": bool,
+    "subbrick_info": bool,
+    "exists": bool,
+    "id": bool,
+    "is_atlas": bool,
+    "is_atlas_or_labeltable": bool,
+    "is_nifti": bool,
+    "dset_extension": bool,
+    "storage_mode": bool,
+    "space": bool,
+    "gen_space": bool,
+    "av_space": bool,
+    "nifti_code": bool,
+    "is_oblique": bool,
+    "handedness": bool,
+    "obliquity": bool,
+    "prefix": bool,
+    "prefix_noext": bool,
+    "ni": bool,
+    "nj": bool,
+    "nk": bool,
+    "nijk": bool,
+    "nv": bool,
+    "nt": bool,
+    "n4": bool,
+    "nvi": bool,
+    "nti": bool,
+    "ntimes": bool,
+    "max_node": bool,
+    "di": bool,
+    "dj": bool,
+    "dk": bool,
+    "d3": bool,
+    "adi": bool,
+    "adj": bool,
+    "adk": bool,
+    "ad3": bool,
+    "voxvol": bool,
+    "oi": bool,
+    "oj": bool,
+    "ok": bool,
+    "o3": bool,
+    "dcx": bool,
+    "dcy": bool,
+    "dcz": bool,
+    "dc3": bool,
+    "tr": bool,
+    "dmin": bool,
+    "dmax": bool,
+    "dminus": bool,
+    "dmaxus": bool,
+    "smode": bool,
+    "header_name": bool,
+    "brick_name": bool,
+    "iname": bool,
+    "extent": bool,
+    "fac": bool,
+    "label": bool,
+    "datum": bool,
+    "min": bool,
+    "max": bool,
+    "minus": bool,
+    "maxus": bool,
+    "labeltable": bool,
+    "labeltable_as_atlas_points": bool,
+    "atlas_points": bool,
+    "history": bool,
+    "slice_timing": bool,
+    "header_line": bool,
+    "hdr": bool,
+    "sb_delim": typing.NotRequired[str | None],
+    "NA_flag": typing.NotRequired[str | None],
+    "atr_delim": typing.NotRequired[str | None],
+    "aform_real": bool,
+    "aform_real_oneline": bool,
+    "aform_real_refit_ori": bool,
+    "is_aform_real_orth": bool,
+    "aform_orth": bool,
+    "perm_to_orient": typing.NotRequired[str | None],
+    "same_grid": bool,
+    "same_dim": bool,
+    "same_delta": bool,
+    "same_orient": bool,
+    "same_center": bool,
+    "same_obl": bool,
+    "same_all_grid": bool,
+    "val_diff": bool,
+    "sval_diff": bool,
+    "monog_pairs": bool,
+    "dataset": list[InputPathType],
+})
+V3dinfoParametersTagged = typing.TypedDict('V3dinfoParametersTagged', {
+    "@type": typing.Literal["afni/3dinfo"],
     "orient": bool,
     "Lextent": bool,
     "Rextent": bool,
@@ -131,40 +247,9 @@ V3dinfoParameters = typing.TypedDict('V3dinfoParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "afni.3dinfo": v_3dinfo_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-    }.get(t)
-
-
 class V3dinfoOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `v_3dinfo(...)`.
+    Output object returned when calling `V3dinfoParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -286,7 +371,7 @@ def v_3dinfo_params(
     val_diff: bool = False,
     sval_diff: bool = False,
     monog_pairs: bool = False,
-) -> V3dinfoParameters:
+) -> V3dinfoParametersTagged:
     """
     Build parameters.
     
@@ -440,7 +525,7 @@ def v_3dinfo_params(
         Parameter dictionary
     """
     params = {
-        "@type": "afni.3dinfo",
+        "@type": "afni/3dinfo",
         "orient": orient,
         "Lextent": lextent,
         "Rextent": rextent,
@@ -579,249 +664,249 @@ def v_3dinfo_cargs(
     """
     cargs = []
     cargs.append("3dinfo")
-    if params.get("orient"):
+    if params.get("orient", False):
         cargs.append("-orient")
-    if params.get("Lextent"):
+    if params.get("Lextent", False):
         cargs.append("-Lextent")
-    if params.get("Rextent"):
+    if params.get("Rextent", False):
         cargs.append("-Rextent")
-    if params.get("Aextent"):
+    if params.get("Aextent", False):
         cargs.append("-Aextent")
-    if params.get("Pextent"):
+    if params.get("Pextent", False):
         cargs.append("-Pextent")
-    if params.get("Iextent"):
+    if params.get("Iextent", False):
         cargs.append("-Iextent")
-    if params.get("Sextent"):
+    if params.get("Sextent", False):
         cargs.append("-Sextent")
-    if params.get("all_names"):
+    if params.get("all_names", False):
         cargs.append("-all_names")
-    if params.get("verb"):
+    if params.get("verb", False):
         cargs.append("-verb")
-    if params.get("very_verbose"):
+    if params.get("very_verbose", False):
         cargs.append("-VERB")
-    if params.get("short"):
+    if params.get("short", False):
         cargs.append("-short")
-    if params.get("no_hist"):
+    if params.get("no_hist", False):
         cargs.append("-no_hist")
-    if params.get("h"):
+    if params.get("h", False):
         cargs.append("-h")
-    if params.get("help"):
+    if params.get("help", False):
         cargs.append("-help")
-    if params.get("extreme_help"):
+    if params.get("extreme_help", False):
         cargs.append("-HELP")
-    if params.get("h_view"):
+    if params.get("h_view", False):
         cargs.append("-h_view")
-    if params.get("h_web"):
+    if params.get("h_web", False):
         cargs.append("-h_web")
-    if params.get("h_find") is not None:
+    if params.get("h_find", None) is not None:
         cargs.extend([
             "-h_find",
-            params.get("h_find")
+            params.get("h_find", None)
         ])
-    if params.get("h_raw"):
+    if params.get("h_raw", False):
         cargs.append("-h_raw")
-    if params.get("h_spx"):
+    if params.get("h_spx", False):
         cargs.append("-h_spx")
-    if params.get("h_aspx"):
+    if params.get("h_aspx", False):
         cargs.append("-h_aspx")
-    if params.get("all_opts"):
+    if params.get("all_opts", False):
         cargs.append("-all_opts")
-    if params.get("label2index") is not None:
+    if params.get("label2index", None) is not None:
         cargs.extend([
             "-label2index",
-            params.get("label2index")
+            params.get("label2index", None)
         ])
-    if params.get("niml_hdr"):
+    if params.get("niml_hdr", False):
         cargs.append("-niml_hdr")
-    if params.get("subbrick_info"):
+    if params.get("subbrick_info", False):
         cargs.append("-subbrick_info")
-    if params.get("exists"):
+    if params.get("exists", False):
         cargs.append("-exists")
-    if params.get("id"):
+    if params.get("id", False):
         cargs.append("-id")
-    if params.get("is_atlas"):
+    if params.get("is_atlas", False):
         cargs.append("-is_atlas")
-    if params.get("is_atlas_or_labeltable"):
+    if params.get("is_atlas_or_labeltable", False):
         cargs.append("-is_atlas_or_labeltable")
-    if params.get("is_nifti"):
+    if params.get("is_nifti", False):
         cargs.append("-is_nifti")
-    if params.get("dset_extension"):
+    if params.get("dset_extension", False):
         cargs.append("-dset_extension")
-    if params.get("storage_mode"):
+    if params.get("storage_mode", False):
         cargs.append("-storage_mode")
-    if params.get("space"):
+    if params.get("space", False):
         cargs.append("-space")
-    if params.get("gen_space"):
+    if params.get("gen_space", False):
         cargs.append("-gen_space")
-    if params.get("av_space"):
+    if params.get("av_space", False):
         cargs.append("-av_space")
-    if params.get("nifti_code"):
+    if params.get("nifti_code", False):
         cargs.append("-nifti_code")
-    if params.get("is_oblique"):
+    if params.get("is_oblique", False):
         cargs.append("-is_oblique")
-    if params.get("handedness"):
+    if params.get("handedness", False):
         cargs.append("-handedness")
-    if params.get("obliquity"):
+    if params.get("obliquity", False):
         cargs.append("-obliquity")
-    if params.get("prefix"):
+    if params.get("prefix", False):
         cargs.append("-prefix")
-    if params.get("prefix_noext"):
+    if params.get("prefix_noext", False):
         cargs.append("-prefix_noext")
-    if params.get("ni"):
+    if params.get("ni", False):
         cargs.append("-ni")
-    if params.get("nj"):
+    if params.get("nj", False):
         cargs.append("-nj")
-    if params.get("nk"):
+    if params.get("nk", False):
         cargs.append("-nk")
-    if params.get("nijk"):
+    if params.get("nijk", False):
         cargs.append("-nijk")
-    if params.get("nv"):
+    if params.get("nv", False):
         cargs.append("-nv")
-    if params.get("nt"):
+    if params.get("nt", False):
         cargs.append("-nt")
-    if params.get("n4"):
+    if params.get("n4", False):
         cargs.append("-n4")
-    if params.get("nvi"):
+    if params.get("nvi", False):
         cargs.append("-nvi")
-    if params.get("nti"):
+    if params.get("nti", False):
         cargs.append("-nti")
-    if params.get("ntimes"):
+    if params.get("ntimes", False):
         cargs.append("-ntimes")
-    if params.get("max_node"):
+    if params.get("max_node", False):
         cargs.append("-max_node")
-    if params.get("di"):
+    if params.get("di", False):
         cargs.append("-di")
-    if params.get("dj"):
+    if params.get("dj", False):
         cargs.append("-dj")
-    if params.get("dk"):
+    if params.get("dk", False):
         cargs.append("-dk")
-    if params.get("d3"):
+    if params.get("d3", False):
         cargs.append("-d3")
-    if params.get("adi"):
+    if params.get("adi", False):
         cargs.append("-adi")
-    if params.get("adj"):
+    if params.get("adj", False):
         cargs.append("-adj")
-    if params.get("adk"):
+    if params.get("adk", False):
         cargs.append("-adk")
-    if params.get("ad3"):
+    if params.get("ad3", False):
         cargs.append("-ad3")
-    if params.get("voxvol"):
+    if params.get("voxvol", False):
         cargs.append("-voxvol")
-    if params.get("oi"):
+    if params.get("oi", False):
         cargs.append("-oi")
-    if params.get("oj"):
+    if params.get("oj", False):
         cargs.append("-oj")
-    if params.get("ok"):
+    if params.get("ok", False):
         cargs.append("-ok")
-    if params.get("o3"):
+    if params.get("o3", False):
         cargs.append("-o3")
-    if params.get("dcx"):
+    if params.get("dcx", False):
         cargs.append("-dcx")
-    if params.get("dcy"):
+    if params.get("dcy", False):
         cargs.append("-dcy")
-    if params.get("dcz"):
+    if params.get("dcz", False):
         cargs.append("-dcz")
-    if params.get("dc3"):
+    if params.get("dc3", False):
         cargs.append("-dc3")
-    if params.get("tr"):
+    if params.get("tr", False):
         cargs.append("-tr")
-    if params.get("dmin"):
+    if params.get("dmin", False):
         cargs.append("-dmin")
-    if params.get("dmax"):
+    if params.get("dmax", False):
         cargs.append("-dmax")
-    if params.get("dminus"):
+    if params.get("dminus", False):
         cargs.append("-dminus")
-    if params.get("dmaxus"):
+    if params.get("dmaxus", False):
         cargs.append("-dmaxus")
-    if params.get("smode"):
+    if params.get("smode", False):
         cargs.append("-smode")
-    if params.get("header_name"):
+    if params.get("header_name", False):
         cargs.append("-header_name")
-    if params.get("brick_name"):
+    if params.get("brick_name", False):
         cargs.append("-brick_name")
-    if params.get("iname"):
+    if params.get("iname", False):
         cargs.append("-iname")
-    if params.get("extent"):
+    if params.get("extent", False):
         cargs.append("-extent")
-    if params.get("fac"):
+    if params.get("fac", False):
         cargs.append("-fac")
-    if params.get("label"):
+    if params.get("label", False):
         cargs.append("-label")
-    if params.get("datum"):
+    if params.get("datum", False):
         cargs.append("-datum")
-    if params.get("min"):
+    if params.get("min", False):
         cargs.append("-min")
-    if params.get("max"):
+    if params.get("max", False):
         cargs.append("-max")
-    if params.get("minus"):
+    if params.get("minus", False):
         cargs.append("-minus")
-    if params.get("maxus"):
+    if params.get("maxus", False):
         cargs.append("-maxus")
-    if params.get("labeltable"):
+    if params.get("labeltable", False):
         cargs.append("-labeltable")
-    if params.get("labeltable_as_atlas_points"):
+    if params.get("labeltable_as_atlas_points", False):
         cargs.append("-labeltable_as_atlas_points")
-    if params.get("atlas_points"):
+    if params.get("atlas_points", False):
         cargs.append("-atlas_points")
-    if params.get("history"):
+    if params.get("history", False):
         cargs.append("-history")
-    if params.get("slice_timing"):
+    if params.get("slice_timing", False):
         cargs.append("-slice_timing")
-    if params.get("header_line"):
+    if params.get("header_line", False):
         cargs.append("-header_line")
-    if params.get("hdr"):
+    if params.get("hdr", False):
         cargs.append("-hdr")
-    if params.get("sb_delim") is not None:
+    if params.get("sb_delim", None) is not None:
         cargs.extend([
             "-sb_delim",
-            params.get("sb_delim")
+            params.get("sb_delim", None)
         ])
-    if params.get("NA_flag") is not None:
+    if params.get("NA_flag", None) is not None:
         cargs.extend([
             "-NA_flag",
-            params.get("NA_flag")
+            params.get("NA_flag", None)
         ])
-    if params.get("atr_delim") is not None:
+    if params.get("atr_delim", None) is not None:
         cargs.extend([
             "-atr_delim",
-            params.get("atr_delim")
+            params.get("atr_delim", None)
         ])
-    if params.get("aform_real"):
+    if params.get("aform_real", False):
         cargs.append("-aform_real")
-    if params.get("aform_real_oneline"):
+    if params.get("aform_real_oneline", False):
         cargs.append("-aform_real_oneline")
-    if params.get("aform_real_refit_ori"):
+    if params.get("aform_real_refit_ori", False):
         cargs.append("-aform_real_refit_ori")
-    if params.get("is_aform_real_orth"):
+    if params.get("is_aform_real_orth", False):
         cargs.append("-is_aform_real_orth")
-    if params.get("aform_orth"):
+    if params.get("aform_orth", False):
         cargs.append("-aform_orth")
-    if params.get("perm_to_orient") is not None:
+    if params.get("perm_to_orient", None) is not None:
         cargs.extend([
             "-perm_to_orient",
-            params.get("perm_to_orient")
+            params.get("perm_to_orient", None)
         ])
-    if params.get("same_grid"):
+    if params.get("same_grid", False):
         cargs.append("-same_grid")
-    if params.get("same_dim"):
+    if params.get("same_dim", False):
         cargs.append("-same_dim")
-    if params.get("same_delta"):
+    if params.get("same_delta", False):
         cargs.append("-same_delta")
-    if params.get("same_orient"):
+    if params.get("same_orient", False):
         cargs.append("-same_orient")
-    if params.get("same_center"):
+    if params.get("same_center", False):
         cargs.append("-same_center")
-    if params.get("same_obl"):
+    if params.get("same_obl", False):
         cargs.append("-same_obl")
-    if params.get("same_all_grid"):
+    if params.get("same_all_grid", False):
         cargs.append("-same_all_grid")
-    if params.get("val_diff"):
+    if params.get("val_diff", False):
         cargs.append("-val_diff")
-    if params.get("sval_diff"):
+    if params.get("sval_diff", False):
         cargs.append("-sval_diff")
-    if params.get("monog_pairs"):
+    if params.get("monog_pairs", False):
         cargs.append("-monog_pairs")
-    cargs.extend([execution.input_file(f) for f in params.get("dataset")])
+    cargs.extend([execution.input_file(f) for f in params.get("dataset", None)])
     return cargs
 
 
@@ -1268,7 +1353,6 @@ def v_3dinfo(
 
 __all__ = [
     "V3dinfoOutputs",
-    "V3dinfoParameters",
     "V_3DINFO_METADATA",
     "v_3dinfo",
     "v_3dinfo_execute",

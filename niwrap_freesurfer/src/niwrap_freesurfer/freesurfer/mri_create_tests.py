@@ -14,7 +14,29 @@ MRI_CREATE_TESTS_METADATA = Metadata(
 
 
 MriCreateTestsParameters = typing.TypedDict('MriCreateTestsParameters', {
-    "@type": typing.Literal["freesurfer.mri_create_tests"],
+    "@type": typing.NotRequired[typing.Literal["freesurfer/mri_create_tests"]],
+    "input_file": InputPathType,
+    "out_src": str,
+    "out_target": str,
+    "input_target": typing.NotRequired[InputPathType | None],
+    "lta_in": typing.NotRequired[str | None],
+    "mask": typing.NotRequired[InputPathType | None],
+    "noise": typing.NotRequired[float | None],
+    "outlier": typing.NotRequired[float | None],
+    "outlier_box": typing.NotRequired[float | None],
+    "translation_flag": bool,
+    "transdist": typing.NotRequired[float | None],
+    "rotation_flag": bool,
+    "maxdeg": typing.NotRequired[float | None],
+    "intensity_flag": bool,
+    "iscale": typing.NotRequired[float | None],
+    "lta_out": typing.NotRequired[str | None],
+    "lta_outs": typing.NotRequired[str | None],
+    "lta_outt": typing.NotRequired[str | None],
+    "iscale_out": typing.NotRequired[str | None],
+})
+MriCreateTestsParametersTagged = typing.TypedDict('MriCreateTestsParametersTagged', {
+    "@type": typing.Literal["freesurfer/mri_create_tests"],
     "input_file": InputPathType,
     "out_src": str,
     "out_target": str,
@@ -37,40 +59,9 @@ MriCreateTestsParameters = typing.TypedDict('MriCreateTestsParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "freesurfer.mri_create_tests": mri_create_tests_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-    }.get(t)
-
-
 class MriCreateTestsOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `mri_create_tests(...)`.
+    Output object returned when calling `MriCreateTestsParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -96,7 +87,7 @@ def mri_create_tests_params(
     lta_outs: str | None = None,
     lta_outt: str | None = None,
     iscale_out: str | None = None,
-) -> MriCreateTestsParameters:
+) -> MriCreateTestsParametersTagged:
     """
     Build parameters.
     
@@ -127,7 +118,7 @@ def mri_create_tests_params(
         Parameter dictionary
     """
     params = {
-        "@type": "freesurfer.mri_create_tests",
+        "@type": "freesurfer/mri_create_tests",
         "input_file": input_file,
         "out_src": out_src,
         "out_target": out_target,
@@ -181,86 +172,86 @@ def mri_create_tests_cargs(
     cargs.append("mri_create_tests")
     cargs.extend([
         "--in",
-        execution.input_file(params.get("input_file"))
+        execution.input_file(params.get("input_file", None))
     ])
     cargs.extend([
         "--outs",
-        params.get("out_src")
+        params.get("out_src", None)
     ])
     cargs.extend([
         "--outt",
-        params.get("out_target")
+        params.get("out_target", None)
     ])
-    if params.get("input_target") is not None:
+    if params.get("input_target", None) is not None:
         cargs.extend([
             "--int",
-            execution.input_file(params.get("input_target"))
+            execution.input_file(params.get("input_target", None))
         ])
-    if params.get("lta_in") is not None:
+    if params.get("lta_in", None) is not None:
         cargs.extend([
             "--lta-in",
-            params.get("lta_in")
+            params.get("lta_in", None)
         ])
-    if params.get("mask") is not None:
+    if params.get("mask", None) is not None:
         cargs.extend([
             "--mask",
-            execution.input_file(params.get("mask"))
+            execution.input_file(params.get("mask", None))
         ])
-    if params.get("noise") is not None:
+    if params.get("noise", None) is not None:
         cargs.extend([
             "--noise",
-            str(params.get("noise"))
+            str(params.get("noise", None))
         ])
-    if params.get("outlier") is not None:
+    if params.get("outlier", None) is not None:
         cargs.extend([
             "--outlier",
-            str(params.get("outlier"))
+            str(params.get("outlier", None))
         ])
-    if params.get("outlier_box") is not None:
+    if params.get("outlier_box", None) is not None:
         cargs.extend([
             "--outlier-box",
-            str(params.get("outlier_box"))
+            str(params.get("outlier_box", None))
         ])
-    if params.get("translation_flag"):
+    if params.get("translation_flag", False):
         cargs.append("--translation")
-    if params.get("transdist") is not None:
+    if params.get("transdist", None) is not None:
         cargs.extend([
             "--transdist",
-            str(params.get("transdist"))
+            str(params.get("transdist", None))
         ])
-    if params.get("rotation_flag"):
+    if params.get("rotation_flag", False):
         cargs.append("--rotation")
-    if params.get("maxdeg") is not None:
+    if params.get("maxdeg", None) is not None:
         cargs.extend([
             "--maxdeg",
-            str(params.get("maxdeg"))
+            str(params.get("maxdeg", None))
         ])
-    if params.get("intensity_flag"):
+    if params.get("intensity_flag", False):
         cargs.append("--intensity")
-    if params.get("iscale") is not None:
+    if params.get("iscale", None) is not None:
         cargs.extend([
             "--iscale",
-            str(params.get("iscale"))
+            str(params.get("iscale", None))
         ])
-    if params.get("lta_out") is not None:
+    if params.get("lta_out", None) is not None:
         cargs.extend([
             "--lta-out",
-            params.get("lta_out")
+            params.get("lta_out", None)
         ])
-    if params.get("lta_outs") is not None:
+    if params.get("lta_outs", None) is not None:
         cargs.extend([
             "--lta-outs",
-            params.get("lta_outs")
+            params.get("lta_outs", None)
         ])
-    if params.get("lta_outt") is not None:
+    if params.get("lta_outt", None) is not None:
         cargs.extend([
             "--lta-outt",
-            params.get("lta_outt")
+            params.get("lta_outt", None)
         ])
-    if params.get("iscale_out") is not None:
+    if params.get("iscale_out", None) is not None:
         cargs.extend([
             "--iscale-out",
-            params.get("iscale_out")
+            params.get("iscale_out", None)
         ])
     return cargs
 
@@ -399,7 +390,6 @@ def mri_create_tests(
 __all__ = [
     "MRI_CREATE_TESTS_METADATA",
     "MriCreateTestsOutputs",
-    "MriCreateTestsParameters",
     "mri_create_tests",
     "mri_create_tests_execute",
     "mri_create_tests_params",

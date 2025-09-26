@@ -14,7 +14,15 @@ ANTS_MOTION_CORR_DIFFUSION_DIRECTION_METADATA = Metadata(
 
 
 AntsMotionCorrDiffusionDirectionParameters = typing.TypedDict('AntsMotionCorrDiffusionDirectionParameters', {
-    "@type": typing.Literal["ants.antsMotionCorrDiffusionDirection"],
+    "@type": typing.NotRequired[typing.Literal["ants/antsMotionCorrDiffusionDirection"]],
+    "scheme": InputPathType,
+    "bvec": InputPathType,
+    "physical": InputPathType,
+    "moco": InputPathType,
+    "output": str,
+})
+AntsMotionCorrDiffusionDirectionParametersTagged = typing.TypedDict('AntsMotionCorrDiffusionDirectionParametersTagged', {
+    "@type": typing.Literal["ants/antsMotionCorrDiffusionDirection"],
     "scheme": InputPathType,
     "bvec": InputPathType,
     "physical": InputPathType,
@@ -23,41 +31,9 @@ AntsMotionCorrDiffusionDirectionParameters = typing.TypedDict('AntsMotionCorrDif
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "ants.antsMotionCorrDiffusionDirection": ants_motion_corr_diffusion_direction_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "ants.antsMotionCorrDiffusionDirection": ants_motion_corr_diffusion_direction_outputs,
-    }.get(t)
-
-
 class AntsMotionCorrDiffusionDirectionOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `ants_motion_corr_diffusion_direction(...)`.
+    Output object returned when calling `AntsMotionCorrDiffusionDirectionParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -71,7 +47,7 @@ def ants_motion_corr_diffusion_direction_params(
     physical: InputPathType,
     moco: InputPathType,
     output: str,
-) -> AntsMotionCorrDiffusionDirectionParameters:
+) -> AntsMotionCorrDiffusionDirectionParametersTagged:
     """
     Build parameters.
     
@@ -85,7 +61,7 @@ def ants_motion_corr_diffusion_direction_params(
         Parameter dictionary
     """
     params = {
-        "@type": "ants.antsMotionCorrDiffusionDirection",
+        "@type": "ants/antsMotionCorrDiffusionDirection",
         "scheme": scheme,
         "bvec": bvec,
         "physical": physical,
@@ -112,23 +88,23 @@ def ants_motion_corr_diffusion_direction_cargs(
     cargs.append("antsMotionCorrDiffusionDirection")
     cargs.extend([
         "-s",
-        execution.input_file(params.get("scheme"))
+        execution.input_file(params.get("scheme", None))
     ])
     cargs.extend([
         "-b",
-        execution.input_file(params.get("bvec"))
+        execution.input_file(params.get("bvec", None))
     ])
     cargs.extend([
         "-p",
-        execution.input_file(params.get("physical"))
+        execution.input_file(params.get("physical", None))
     ])
     cargs.extend([
         "-m",
-        execution.input_file(params.get("moco"))
+        execution.input_file(params.get("moco", None))
     ])
     cargs.extend([
         "-o",
-        params.get("output")
+        params.get("output", None)
     ])
     return cargs
 
@@ -148,7 +124,7 @@ def ants_motion_corr_diffusion_direction_outputs(
     """
     ret = AntsMotionCorrDiffusionDirectionOutputs(
         root=execution.output_file("."),
-        corrected_scheme=execution.output_file(params.get("output")),
+        corrected_scheme=execution.output_file(params.get("output", None)),
     )
     return ret
 
@@ -221,7 +197,6 @@ def ants_motion_corr_diffusion_direction(
 __all__ = [
     "ANTS_MOTION_CORR_DIFFUSION_DIRECTION_METADATA",
     "AntsMotionCorrDiffusionDirectionOutputs",
-    "AntsMotionCorrDiffusionDirectionParameters",
     "ants_motion_corr_diffusion_direction",
     "ants_motion_corr_diffusion_direction_execute",
     "ants_motion_corr_diffusion_direction_params",

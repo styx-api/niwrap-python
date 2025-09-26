@@ -14,7 +14,29 @@ VOL2SUBFIELD_METADATA = Metadata(
 
 
 Vol2subfieldParameters = typing.TypedDict('Vol2subfieldParameters', {
-    "@type": typing.Literal["freesurfer.vol2subfield"],
+    "@type": typing.NotRequired[typing.Literal["freesurfer/vol2subfield"]],
+    "input_volume": InputPathType,
+    "subfield_volume": InputPathType,
+    "registration_file": InputPathType,
+    "output_volume": typing.NotRequired[str | None],
+    "output_registration": typing.NotRequired[str | None],
+    "stats_output": typing.NotRequired[str | None],
+    "avgwf_output": typing.NotRequired[str | None],
+    "avgwfvol_output": typing.NotRequired[str | None],
+    "color_table": typing.NotRequired[InputPathType | None],
+    "interpolation_nearest": bool,
+    "interpolation_trilin": bool,
+    "interpolation_cubic": bool,
+    "tmp_directory": typing.NotRequired[str | None],
+    "preset_subfield_lh_hippoamyg": bool,
+    "preset_subfield_rh_hippoamyg": bool,
+    "preset_subfield_lh_hbt": bool,
+    "preset_subfield_rh_hbt": bool,
+    "preset_subfield_thalamus": bool,
+    "preset_subfield_brainstem": bool,
+})
+Vol2subfieldParametersTagged = typing.TypedDict('Vol2subfieldParametersTagged', {
+    "@type": typing.Literal["freesurfer/vol2subfield"],
     "input_volume": InputPathType,
     "subfield_volume": InputPathType,
     "registration_file": InputPathType,
@@ -37,41 +59,9 @@ Vol2subfieldParameters = typing.TypedDict('Vol2subfieldParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "freesurfer.vol2subfield": vol2subfield_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "freesurfer.vol2subfield": vol2subfield_outputs,
-    }.get(t)
-
-
 class Vol2subfieldOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `vol2subfield(...)`.
+    Output object returned when calling `Vol2subfieldParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -107,7 +97,7 @@ def vol2subfield_params(
     preset_subfield_rh_hbt: bool = False,
     preset_subfield_thalamus: bool = False,
     preset_subfield_brainstem: bool = False,
-) -> Vol2subfieldParameters:
+) -> Vol2subfieldParametersTagged:
     """
     Build parameters.
     
@@ -140,7 +130,7 @@ def vol2subfield_params(
         Parameter dictionary
     """
     params = {
-        "@type": "freesurfer.vol2subfield",
+        "@type": "freesurfer/vol2subfield",
         "input_volume": input_volume,
         "subfield_volume": subfield_volume,
         "registration_file": registration_file,
@@ -188,68 +178,68 @@ def vol2subfield_cargs(
     cargs.append("vol2subfield")
     cargs.extend([
         "--i",
-        execution.input_file(params.get("input_volume"))
+        execution.input_file(params.get("input_volume", None))
     ])
     cargs.extend([
         "--sf",
-        execution.input_file(params.get("subfield_volume"))
+        execution.input_file(params.get("subfield_volume", None))
     ])
     cargs.extend([
         "--reg",
-        execution.input_file(params.get("registration_file"))
+        execution.input_file(params.get("registration_file", None))
     ])
-    if params.get("output_volume") is not None:
+    if params.get("output_volume", None) is not None:
         cargs.extend([
             "--o",
-            params.get("output_volume")
+            params.get("output_volume", None)
         ])
-    if params.get("output_registration") is not None:
+    if params.get("output_registration", None) is not None:
         cargs.extend([
             "--outreg",
-            params.get("output_registration")
+            params.get("output_registration", None)
         ])
-    if params.get("stats_output") is not None:
+    if params.get("stats_output", None) is not None:
         cargs.extend([
             "--stats",
-            params.get("stats_output")
+            params.get("stats_output", None)
         ])
-    if params.get("avgwf_output") is not None:
+    if params.get("avgwf_output", None) is not None:
         cargs.extend([
             "--avgwf",
-            params.get("avgwf_output")
+            params.get("avgwf_output", None)
         ])
-    if params.get("avgwfvol_output") is not None:
+    if params.get("avgwfvol_output", None) is not None:
         cargs.extend([
             "--avgwfvol",
-            params.get("avgwfvol_output")
+            params.get("avgwfvol_output", None)
         ])
-    if params.get("color_table") is not None:
+    if params.get("color_table", None) is not None:
         cargs.extend([
             "--ctab",
-            execution.input_file(params.get("color_table"))
+            execution.input_file(params.get("color_table", None))
         ])
-    if params.get("interpolation_nearest"):
+    if params.get("interpolation_nearest", False):
         cargs.append("--nearest")
-    if params.get("interpolation_trilin"):
+    if params.get("interpolation_trilin", False):
         cargs.append("--trilin")
-    if params.get("interpolation_cubic"):
+    if params.get("interpolation_cubic", False):
         cargs.append("--cubic")
-    if params.get("tmp_directory") is not None:
+    if params.get("tmp_directory", None) is not None:
         cargs.extend([
             "--tmp",
-            params.get("tmp_directory")
+            params.get("tmp_directory", None)
         ])
-    if params.get("preset_subfield_lh_hippoamyg"):
+    if params.get("preset_subfield_lh_hippoamyg", False):
         cargs.append("--lh.hippoamyg")
-    if params.get("preset_subfield_rh_hippoamyg"):
+    if params.get("preset_subfield_rh_hippoamyg", False):
         cargs.append("--rh.hippoamyg")
-    if params.get("preset_subfield_lh_hbt"):
+    if params.get("preset_subfield_lh_hbt", False):
         cargs.append("--lh.hbt")
-    if params.get("preset_subfield_rh_hbt"):
+    if params.get("preset_subfield_rh_hbt", False):
         cargs.append("--rh.hbt")
-    if params.get("preset_subfield_thalamus"):
+    if params.get("preset_subfield_thalamus", False):
         cargs.append("--thalamus")
-    if params.get("preset_subfield_brainstem"):
+    if params.get("preset_subfield_brainstem", False):
         cargs.append("--brainstem")
     return cargs
 
@@ -269,11 +259,11 @@ def vol2subfield_outputs(
     """
     ret = Vol2subfieldOutputs(
         root=execution.output_file("."),
-        mapped_output_volume=execution.output_file(params.get("output_volume")) if (params.get("output_volume") is not None) else None,
-        output_registration_file=execution.output_file(params.get("output_registration")) if (params.get("output_registration") is not None) else None,
-        segmentation_stats_file=execution.output_file(params.get("stats_output")) if (params.get("stats_output") is not None) else None,
-        average_waveform_file=execution.output_file(params.get("avgwf_output")) if (params.get("avgwf_output") is not None) else None,
-        average_waveform_volume_file=execution.output_file(params.get("avgwfvol_output")) if (params.get("avgwfvol_output") is not None) else None,
+        mapped_output_volume=execution.output_file(params.get("output_volume", None)) if (params.get("output_volume") is not None) else None,
+        output_registration_file=execution.output_file(params.get("output_registration", None)) if (params.get("output_registration") is not None) else None,
+        segmentation_stats_file=execution.output_file(params.get("stats_output", None)) if (params.get("stats_output") is not None) else None,
+        average_waveform_file=execution.output_file(params.get("avgwf_output", None)) if (params.get("avgwf_output") is not None) else None,
+        average_waveform_volume_file=execution.output_file(params.get("avgwfvol_output", None)) if (params.get("avgwfvol_output") is not None) else None,
     )
     return ret
 
@@ -395,7 +385,6 @@ def vol2subfield(
 __all__ = [
     "VOL2SUBFIELD_METADATA",
     "Vol2subfieldOutputs",
-    "Vol2subfieldParameters",
     "vol2subfield",
     "vol2subfield_execute",
     "vol2subfield_params",

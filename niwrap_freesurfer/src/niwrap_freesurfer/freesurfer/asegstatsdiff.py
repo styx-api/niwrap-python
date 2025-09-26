@@ -14,48 +14,22 @@ ASEGSTATSDIFF_METADATA = Metadata(
 
 
 AsegstatsdiffParameters = typing.TypedDict('AsegstatsdiffParameters', {
-    "@type": typing.Literal["freesurfer.asegstatsdiff"],
+    "@type": typing.NotRequired[typing.Literal["freesurfer/asegstatsdiff"]],
+    "subject1": str,
+    "subject2": str,
+    "outdir": typing.NotRequired[str | None],
+})
+AsegstatsdiffParametersTagged = typing.TypedDict('AsegstatsdiffParametersTagged', {
+    "@type": typing.Literal["freesurfer/asegstatsdiff"],
     "subject1": str,
     "subject2": str,
     "outdir": typing.NotRequired[str | None],
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "freesurfer.asegstatsdiff": asegstatsdiff_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "freesurfer.asegstatsdiff": asegstatsdiff_outputs,
-    }.get(t)
-
-
 class AsegstatsdiffOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `asegstatsdiff(...)`.
+    Output object returned when calling `AsegstatsdiffParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -67,7 +41,7 @@ def asegstatsdiff_params(
     subject1: str,
     subject2: str,
     outdir: str | None = None,
-) -> AsegstatsdiffParameters:
+) -> AsegstatsdiffParametersTagged:
     """
     Build parameters.
     
@@ -80,7 +54,7 @@ def asegstatsdiff_params(
         Parameter dictionary
     """
     params = {
-        "@type": "freesurfer.asegstatsdiff",
+        "@type": "freesurfer/asegstatsdiff",
         "subject1": subject1,
         "subject2": subject2,
     }
@@ -104,9 +78,9 @@ def asegstatsdiff_cargs(
     """
     cargs = []
     cargs.append("asegstatsdiff")
-    cargs.append(params.get("subject1"))
-    if params.get("outdir") is not None:
-        cargs.append(params.get("subject2") + params.get("outdir"))
+    cargs.append(params.get("subject1", None))
+    if params.get("outdir", None) is not None:
+        cargs.append(params.get("subject2", None) + params.get("outdir", None))
     return cargs
 
 
@@ -125,7 +99,7 @@ def asegstatsdiff_outputs(
     """
     ret = AsegstatsdiffOutputs(
         root=execution.output_file("."),
-        asegstats_output=execution.output_file(params.get("outdir") + "/asegstats.txt") if (params.get("outdir") is not None) else None,
+        asegstats_output=execution.output_file(params.get("outdir", None) + "/asegstats.txt") if (params.get("outdir") is not None) else None,
     )
     return ret
 
@@ -195,7 +169,6 @@ def asegstatsdiff(
 __all__ = [
     "ASEGSTATSDIFF_METADATA",
     "AsegstatsdiffOutputs",
-    "AsegstatsdiffParameters",
     "asegstatsdiff",
     "asegstatsdiff_execute",
     "asegstatsdiff_params",

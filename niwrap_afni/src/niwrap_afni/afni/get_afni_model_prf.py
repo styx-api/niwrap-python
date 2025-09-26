@@ -14,7 +14,14 @@ GET_AFNI_MODEL_PRF_METADATA = Metadata(
 
 
 GetAfniModelPrfParameters = typing.TypedDict('GetAfniModelPrfParameters', {
-    "@type": typing.Literal["afni.get_afni_model_PRF"],
+    "@type": typing.NotRequired[typing.Literal["afni/get_afni_model_PRF"]],
+    "amplitude": float,
+    "x_coord": float,
+    "y_coord": float,
+    "sigma": float,
+})
+GetAfniModelPrfParametersTagged = typing.TypedDict('GetAfniModelPrfParametersTagged', {
+    "@type": typing.Literal["afni/get_afni_model_PRF"],
     "amplitude": float,
     "x_coord": float,
     "y_coord": float,
@@ -22,40 +29,9 @@ GetAfniModelPrfParameters = typing.TypedDict('GetAfniModelPrfParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "afni.get_afni_model_PRF": get_afni_model_prf_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-    }.get(t)
-
-
 class GetAfniModelPrfOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `get_afni_model_prf(...)`.
+    Output object returned when calling `GetAfniModelPrfParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -66,7 +42,7 @@ def get_afni_model_prf_params(
     x_coord: float,
     y_coord: float,
     sigma: float,
-) -> GetAfniModelPrfParameters:
+) -> GetAfniModelPrfParametersTagged:
     """
     Build parameters.
     
@@ -79,7 +55,7 @@ def get_afni_model_prf_params(
         Parameter dictionary
     """
     params = {
-        "@type": "afni.get_afni_model_PRF",
+        "@type": "afni/get_afni_model_PRF",
         "amplitude": amplitude,
         "x_coord": x_coord,
         "y_coord": y_coord,
@@ -103,10 +79,10 @@ def get_afni_model_prf_cargs(
     """
     cargs = []
     cargs.append("get_afni_model_PRF")
-    cargs.append(str(params.get("amplitude")))
-    cargs.append(str(params.get("x_coord")))
-    cargs.append(str(params.get("y_coord")))
-    cargs.append(str(params.get("sigma")))
+    cargs.append(str(params.get("amplitude", None)))
+    cargs.append(str(params.get("x_coord", None)))
+    cargs.append(str(params.get("y_coord", None)))
+    cargs.append(str(params.get("sigma", None)))
     return cargs
 
 
@@ -194,7 +170,6 @@ def get_afni_model_prf(
 __all__ = [
     "GET_AFNI_MODEL_PRF_METADATA",
     "GetAfniModelPrfOutputs",
-    "GetAfniModelPrfParameters",
     "get_afni_model_prf",
     "get_afni_model_prf_execute",
     "get_afni_model_prf_params",

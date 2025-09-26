@@ -14,7 +14,18 @@ ABIDS_JSON_INFO_PY_METADATA = Metadata(
 
 
 AbidsJsonInfoPyParameters = typing.TypedDict('AbidsJsonInfoPyParameters', {
-    "@type": typing.Literal["afni.abids_json_info.py"],
+    "@type": typing.NotRequired[typing.Literal["afni/abids_json_info.py"]],
+    "json_files": list[InputPathType],
+    "tr_flag": bool,
+    "te_flag": bool,
+    "te_sec_flag": bool,
+    "match_nii_flag": bool,
+    "field_list": typing.NotRequired[list[str] | None],
+    "list_fields_flag": bool,
+    "help_flag": bool,
+})
+AbidsJsonInfoPyParametersTagged = typing.TypedDict('AbidsJsonInfoPyParametersTagged', {
+    "@type": typing.Literal["afni/abids_json_info.py"],
     "json_files": list[InputPathType],
     "tr_flag": bool,
     "te_flag": bool,
@@ -26,40 +37,9 @@ AbidsJsonInfoPyParameters = typing.TypedDict('AbidsJsonInfoPyParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "afni.abids_json_info.py": abids_json_info_py_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-    }.get(t)
-
-
 class AbidsJsonInfoPyOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `abids_json_info_py(...)`.
+    Output object returned when calling `AbidsJsonInfoPyParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -74,7 +54,7 @@ def abids_json_info_py_params(
     field_list: list[str] | None = None,
     list_fields_flag: bool = False,
     help_flag: bool = False,
-) -> AbidsJsonInfoPyParameters:
+) -> AbidsJsonInfoPyParametersTagged:
     """
     Build parameters.
     
@@ -95,7 +75,7 @@ def abids_json_info_py_params(
         Parameter dictionary
     """
     params = {
-        "@type": "afni.abids_json_info.py",
+        "@type": "afni/abids_json_info.py",
         "json_files": json_files,
         "tr_flag": tr_flag,
         "te_flag": te_flag,
@@ -124,23 +104,23 @@ def abids_json_info_py_cargs(
     """
     cargs = []
     cargs.append("abids_json_info.py")
-    cargs.extend([execution.input_file(f) for f in params.get("json_files")])
-    if params.get("tr_flag"):
+    cargs.extend([execution.input_file(f) for f in params.get("json_files", None)])
+    if params.get("tr_flag", False):
         cargs.append("-TR")
-    if params.get("te_flag"):
+    if params.get("te_flag", False):
         cargs.append("-TE")
-    if params.get("te_sec_flag"):
+    if params.get("te_sec_flag", False):
         cargs.append("-TE_sec")
-    if params.get("match_nii_flag"):
+    if params.get("match_nii_flag", False):
         cargs.append("-match_nii")
-    if params.get("field_list") is not None:
+    if params.get("field_list", None) is not None:
         cargs.extend([
             "-field",
-            *params.get("field_list")
+            *params.get("field_list", None)
         ])
-    if params.get("list_fields_flag"):
+    if params.get("list_fields_flag", False):
         cargs.append("-list_fields")
-    if params.get("help_flag"):
+    if params.get("help_flag", False):
         cargs.append("-help")
     return cargs
 
@@ -245,7 +225,6 @@ def abids_json_info_py(
 __all__ = [
     "ABIDS_JSON_INFO_PY_METADATA",
     "AbidsJsonInfoPyOutputs",
-    "AbidsJsonInfoPyParameters",
     "abids_json_info_py",
     "abids_json_info_py_execute",
     "abids_json_info_py_params",

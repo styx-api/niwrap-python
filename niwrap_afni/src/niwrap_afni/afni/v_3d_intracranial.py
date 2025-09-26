@@ -14,7 +14,19 @@ V_3D_INTRACRANIAL_METADATA = Metadata(
 
 
 V3dIntracranialParameters = typing.TypedDict('V3dIntracranialParameters', {
-    "@type": typing.Literal["afni.3dIntracranial"],
+    "@type": typing.NotRequired[typing.Literal["afni/3dIntracranial"]],
+    "infile": InputPathType,
+    "prefix": str,
+    "min_val": typing.NotRequired[float | None],
+    "max_val": typing.NotRequired[float | None],
+    "min_conn": typing.NotRequired[float | None],
+    "max_conn": typing.NotRequired[float | None],
+    "no_smooth": bool,
+    "mask": bool,
+    "quiet": bool,
+})
+V3dIntracranialParametersTagged = typing.TypedDict('V3dIntracranialParametersTagged', {
+    "@type": typing.Literal["afni/3dIntracranial"],
     "infile": InputPathType,
     "prefix": str,
     "min_val": typing.NotRequired[float | None],
@@ -27,41 +39,9 @@ V3dIntracranialParameters = typing.TypedDict('V3dIntracranialParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "afni.3dIntracranial": v_3d_intracranial_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "afni.3dIntracranial": v_3d_intracranial_outputs,
-    }.get(t)
-
-
 class V3dIntracranialOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `v_3d_intracranial(...)`.
+    Output object returned when calling `V3dIntracranialParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -79,7 +59,7 @@ def v_3d_intracranial_params(
     no_smooth: bool = False,
     mask: bool = False,
     quiet: bool = False,
-) -> V3dIntracranialParameters:
+) -> V3dIntracranialParametersTagged:
     """
     Build parameters.
     
@@ -100,7 +80,7 @@ def v_3d_intracranial_params(
         Parameter dictionary
     """
     params = {
-        "@type": "afni.3dIntracranial",
+        "@type": "afni/3dIntracranial",
         "infile": infile,
         "prefix": prefix,
         "no_smooth": no_smooth,
@@ -135,37 +115,37 @@ def v_3d_intracranial_cargs(
     cargs.append("3dIntracranial")
     cargs.extend([
         "-anat",
-        execution.input_file(params.get("infile"))
+        execution.input_file(params.get("infile", None))
     ])
     cargs.extend([
         "-prefix",
-        params.get("prefix")
+        params.get("prefix", None)
     ])
-    if params.get("min_val") is not None:
+    if params.get("min_val", None) is not None:
         cargs.extend([
             "-min_val",
-            str(params.get("min_val"))
+            str(params.get("min_val", None))
         ])
-    if params.get("max_val") is not None:
+    if params.get("max_val", None) is not None:
         cargs.extend([
             "-max_val",
-            str(params.get("max_val"))
+            str(params.get("max_val", None))
         ])
-    if params.get("min_conn") is not None:
+    if params.get("min_conn", None) is not None:
         cargs.extend([
             "-min_conn",
-            str(params.get("min_conn"))
+            str(params.get("min_conn", None))
         ])
-    if params.get("max_conn") is not None:
+    if params.get("max_conn", None) is not None:
         cargs.extend([
             "-max_conn",
-            str(params.get("max_conn"))
+            str(params.get("max_conn", None))
         ])
-    if params.get("no_smooth"):
+    if params.get("no_smooth", False):
         cargs.append("-nosmooth")
-    if params.get("mask"):
+    if params.get("mask", False):
         cargs.append("-mask")
-    if params.get("quiet"):
+    if params.get("quiet", False):
         cargs.append("-quiet")
     return cargs
 
@@ -185,7 +165,7 @@ def v_3d_intracranial_outputs(
     """
     ret = V3dIntracranialOutputs(
         root=execution.output_file("."),
-        segmented_image=execution.output_file(params.get("prefix") + "+orig"),
+        segmented_image=execution.output_file(params.get("prefix", None) + "+orig"),
     )
     return ret
 
@@ -272,7 +252,6 @@ def v_3d_intracranial(
 
 __all__ = [
     "V3dIntracranialOutputs",
-    "V3dIntracranialParameters",
     "V_3D_INTRACRANIAL_METADATA",
     "v_3d_intracranial",
     "v_3d_intracranial_execute",

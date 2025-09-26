@@ -14,7 +14,14 @@ BETA2SXA_METADATA = Metadata(
 
 
 Beta2sxaParameters = typing.TypedDict('Beta2sxaParameters', {
-    "@type": typing.Literal["freesurfer.beta2sxa"],
+    "@type": typing.NotRequired[typing.Literal["freesurfer/beta2sxa"]],
+    "beta_files": list[InputPathType],
+    "number_of_conditions": float,
+    "number_of_per_subjects": float,
+    "sxa_output": typing.NotRequired[str | None],
+})
+Beta2sxaParametersTagged = typing.TypedDict('Beta2sxaParametersTagged', {
+    "@type": typing.Literal["freesurfer/beta2sxa"],
     "beta_files": list[InputPathType],
     "number_of_conditions": float,
     "number_of_per_subjects": float,
@@ -22,41 +29,9 @@ Beta2sxaParameters = typing.TypedDict('Beta2sxaParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "freesurfer.beta2sxa": beta2sxa_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "freesurfer.beta2sxa": beta2sxa_outputs,
-    }.get(t)
-
-
 class Beta2sxaOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `beta2sxa(...)`.
+    Output object returned when calling `Beta2sxaParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -69,7 +44,7 @@ def beta2sxa_params(
     number_of_conditions: float,
     number_of_per_subjects: float,
     sxa_output: str | None = None,
-) -> Beta2sxaParameters:
+) -> Beta2sxaParametersTagged:
     """
     Build parameters.
     
@@ -82,7 +57,7 @@ def beta2sxa_params(
         Parameter dictionary
     """
     params = {
-        "@type": "freesurfer.beta2sxa",
+        "@type": "freesurfer/beta2sxa",
         "beta_files": beta_files,
         "number_of_conditions": number_of_conditions,
         "number_of_per_subjects": number_of_per_subjects,
@@ -109,20 +84,20 @@ def beta2sxa_cargs(
     cargs.append("beta2sxa")
     cargs.extend([
         "--b",
-        *[execution.input_file(f) for f in params.get("beta_files")]
+        *[execution.input_file(f) for f in params.get("beta_files", None)]
     ])
     cargs.extend([
         "--nc",
-        str(params.get("number_of_conditions"))
+        str(params.get("number_of_conditions", None))
     ])
     cargs.extend([
         "--nper",
-        str(params.get("number_of_per_subjects"))
+        str(params.get("number_of_per_subjects", None))
     ])
-    if params.get("sxa_output") is not None:
+    if params.get("sxa_output", None) is not None:
         cargs.extend([
             "--o",
-            params.get("sxa_output")
+            params.get("sxa_output", None)
         ])
     return cargs
 
@@ -214,7 +189,6 @@ def beta2sxa(
 __all__ = [
     "BETA2SXA_METADATA",
     "Beta2sxaOutputs",
-    "Beta2sxaParameters",
     "beta2sxa",
     "beta2sxa_execute",
     "beta2sxa_params",

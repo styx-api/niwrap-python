@@ -14,7 +14,28 @@ MRIS_VOLMASK_METADATA = Metadata(
 
 
 MrisVolmaskParameters = typing.TypedDict('MrisVolmaskParameters', {
-    "@type": typing.Literal["freesurfer.mris_volmask"],
+    "@type": typing.NotRequired[typing.Literal["freesurfer/mris_volmask"]],
+    "cap_distance": typing.NotRequired[float | None],
+    "label_background": typing.NotRequired[float | None],
+    "label_left_white": typing.NotRequired[float | None],
+    "label_left_ribbon": typing.NotRequired[float | None],
+    "label_right_white": typing.NotRequired[float | None],
+    "label_right_ribbon": typing.NotRequired[float | None],
+    "surf_white": typing.NotRequired[str | None],
+    "surf_pial": typing.NotRequired[str | None],
+    "aseg_name": typing.NotRequired[str | None],
+    "out_root": typing.NotRequired[str | None],
+    "subjects_dir": typing.NotRequired[str | None],
+    "save_distance": bool,
+    "lh_only": bool,
+    "rh_only": bool,
+    "parallel": bool,
+    "edit_aseg": bool,
+    "save_ribbon": bool,
+    "io": str,
+})
+MrisVolmaskParametersTagged = typing.TypedDict('MrisVolmaskParametersTagged', {
+    "@type": typing.Literal["freesurfer/mris_volmask"],
     "cap_distance": typing.NotRequired[float | None],
     "label_background": typing.NotRequired[float | None],
     "label_left_white": typing.NotRequired[float | None],
@@ -36,40 +57,9 @@ MrisVolmaskParameters = typing.TypedDict('MrisVolmaskParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "freesurfer.mris_volmask": mris_volmask_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-    }.get(t)
-
-
 class MrisVolmaskOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `mris_volmask(...)`.
+    Output object returned when calling `MrisVolmaskParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -94,7 +84,7 @@ def mris_volmask_params(
     parallel: bool = False,
     edit_aseg: bool = False,
     save_ribbon: bool = False,
-) -> MrisVolmaskParameters:
+) -> MrisVolmaskParametersTagged:
     """
     Build parameters.
     
@@ -132,7 +122,7 @@ def mris_volmask_params(
         Parameter dictionary
     """
     params = {
-        "@type": "freesurfer.mris_volmask",
+        "@type": "freesurfer/mris_volmask",
         "save_distance": save_distance,
         "lh_only": lh_only,
         "rh_only": rh_only,
@@ -181,74 +171,74 @@ def mris_volmask_cargs(
     """
     cargs = []
     cargs.append("mris_volmask")
-    if params.get("cap_distance") is not None:
+    if params.get("cap_distance", None) is not None:
         cargs.extend([
             "--cap_distance",
-            str(params.get("cap_distance"))
+            str(params.get("cap_distance", None))
         ])
-    if params.get("label_background") is not None:
+    if params.get("label_background", None) is not None:
         cargs.extend([
             "--label_background",
-            str(params.get("label_background"))
+            str(params.get("label_background", None))
         ])
-    if params.get("label_left_white") is not None:
+    if params.get("label_left_white", None) is not None:
         cargs.extend([
             "--label_left_white",
-            str(params.get("label_left_white"))
+            str(params.get("label_left_white", None))
         ])
-    if params.get("label_left_ribbon") is not None:
+    if params.get("label_left_ribbon", None) is not None:
         cargs.extend([
             "--label_left_ribbon",
-            str(params.get("label_left_ribbon"))
+            str(params.get("label_left_ribbon", None))
         ])
-    if params.get("label_right_white") is not None:
+    if params.get("label_right_white", None) is not None:
         cargs.extend([
             "--label_right_white",
-            str(params.get("label_right_white"))
+            str(params.get("label_right_white", None))
         ])
-    if params.get("label_right_ribbon") is not None:
+    if params.get("label_right_ribbon", None) is not None:
         cargs.extend([
             "--label_right_ribbon",
-            str(params.get("label_right_ribbon"))
+            str(params.get("label_right_ribbon", None))
         ])
-    if params.get("surf_white") is not None:
+    if params.get("surf_white", None) is not None:
         cargs.extend([
             "--surf_white",
-            params.get("surf_white")
+            params.get("surf_white", None)
         ])
-    if params.get("surf_pial") is not None:
+    if params.get("surf_pial", None) is not None:
         cargs.extend([
             "--surf_pial",
-            params.get("surf_pial")
+            params.get("surf_pial", None)
         ])
-    if params.get("aseg_name") is not None:
+    if params.get("aseg_name", None) is not None:
         cargs.extend([
             "--aseg_name",
-            params.get("aseg_name")
+            params.get("aseg_name", None)
         ])
-    if params.get("out_root") is not None:
+    if params.get("out_root", None) is not None:
         cargs.extend([
             "--out_root",
-            params.get("out_root")
+            params.get("out_root", None)
         ])
-    if params.get("subjects_dir") is not None:
+    if params.get("subjects_dir", None) is not None:
         cargs.extend([
             "--sd",
-            params.get("subjects_dir")
+            params.get("subjects_dir", None)
         ])
-    if params.get("save_distance"):
+    if params.get("save_distance", False):
         cargs.append("--save_distance")
-    if params.get("lh_only"):
+    if params.get("lh_only", False):
         cargs.append("--lh-only")
-    if params.get("rh_only"):
+    if params.get("rh_only", False):
         cargs.append("--rh-only")
-    if params.get("parallel"):
+    if params.get("parallel", False):
         cargs.append("--parallel")
-    if params.get("edit_aseg"):
+    if params.get("edit_aseg", False):
         cargs.append("--edit_aseg")
-    if params.get("save_ribbon"):
+    if params.get("save_ribbon", False):
         cargs.append("--save_ribbon")
-    cargs.append(params.get("io"))
+    cargs.append(params.get("io", None))
     return cargs
 
 
@@ -393,7 +383,6 @@ def mris_volmask(
 __all__ = [
     "MRIS_VOLMASK_METADATA",
     "MrisVolmaskOutputs",
-    "MrisVolmaskParameters",
     "mris_volmask",
     "mris_volmask_execute",
     "mris_volmask_params",

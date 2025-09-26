@@ -14,7 +14,24 @@ CCOPS_METADATA = Metadata(
 
 
 CcopsParameters = typing.TypedDict('CcopsParameters', {
-    "@type": typing.Literal["fsl.ccops"],
+    "@type": typing.NotRequired[typing.Literal["fsl/ccops"]],
+    "basename": str,
+    "infile": typing.NotRequired[InputPathType | None],
+    "tract_dir": typing.NotRequired[str | None],
+    "exclusion_mask": typing.NotRequired[InputPathType | None],
+    "reorder_seedspace": bool,
+    "reorder_tractspace": bool,
+    "tract_reord": bool,
+    "connexity_constraint": typing.NotRequired[float | None],
+    "binarise_val": typing.NotRequired[float | None],
+    "matrix_power": typing.NotRequired[float | None],
+    "brain_mask": typing.NotRequired[InputPathType | None],
+    "scheme": typing.NotRequired[str | None],
+    "nclusters": typing.NotRequired[float | None],
+    "help": bool,
+})
+CcopsParametersTagged = typing.TypedDict('CcopsParametersTagged', {
+    "@type": typing.Literal["fsl/ccops"],
     "basename": str,
     "infile": typing.NotRequired[InputPathType | None],
     "tract_dir": typing.NotRequired[str | None],
@@ -32,41 +49,9 @@ CcopsParameters = typing.TypedDict('CcopsParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "fsl.ccops": ccops_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "fsl.ccops": ccops_outputs,
-    }.get(t)
-
-
 class CcopsOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `ccops(...)`.
+    Output object returned when calling `CcopsParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -89,7 +74,7 @@ def ccops_params(
     scheme: str | None = None,
     nclusters: float | None = None,
     help_: bool = False,
-) -> CcopsParameters:
+) -> CcopsParametersTagged:
     """
     Build parameters.
     
@@ -115,7 +100,7 @@ def ccops_params(
         Parameter dictionary
     """
     params = {
-        "@type": "fsl.ccops",
+        "@type": "fsl/ccops",
         "basename": basename,
         "reorder_seedspace": reorder_seedspace,
         "reorder_tractspace": reorder_tractspace,
@@ -160,60 +145,60 @@ def ccops_cargs(
     cargs.append("ccops")
     cargs.extend([
         "--basename",
-        params.get("basename")
+        params.get("basename", None)
     ])
-    if params.get("infile") is not None:
+    if params.get("infile", None) is not None:
         cargs.extend([
             "--in",
-            execution.input_file(params.get("infile"))
+            execution.input_file(params.get("infile", None))
         ])
-    if params.get("tract_dir") is not None:
+    if params.get("tract_dir", None) is not None:
         cargs.extend([
             "--dir",
-            params.get("tract_dir")
+            params.get("tract_dir", None)
         ])
-    if params.get("exclusion_mask") is not None:
+    if params.get("exclusion_mask", None) is not None:
         cargs.extend([
             "-x",
-            execution.input_file(params.get("exclusion_mask"))
+            execution.input_file(params.get("exclusion_mask", None))
         ])
-    if params.get("reorder_seedspace"):
+    if params.get("reorder_seedspace", False):
         cargs.append("--r1")
-    if params.get("reorder_tractspace"):
+    if params.get("reorder_tractspace", False):
         cargs.append("--r2")
-    if params.get("tract_reord"):
+    if params.get("tract_reord", False):
         cargs.append("--tractreord")
-    if params.get("connexity_constraint") is not None:
+    if params.get("connexity_constraint", None) is not None:
         cargs.extend([
             "--con",
-            str(params.get("connexity_constraint"))
+            str(params.get("connexity_constraint", None))
         ])
-    if params.get("binarise_val") is not None:
+    if params.get("binarise_val", None) is not None:
         cargs.extend([
             "--bin",
-            str(params.get("binarise_val"))
+            str(params.get("binarise_val", None))
         ])
-    if params.get("matrix_power") is not None:
+    if params.get("matrix_power", None) is not None:
         cargs.extend([
             "--power",
-            str(params.get("matrix_power"))
+            str(params.get("matrix_power", None))
         ])
-    if params.get("brain_mask") is not None:
+    if params.get("brain_mask", None) is not None:
         cargs.extend([
             "--mask",
-            execution.input_file(params.get("brain_mask"))
+            execution.input_file(params.get("brain_mask", None))
         ])
-    if params.get("scheme") is not None:
+    if params.get("scheme", None) is not None:
         cargs.extend([
             "--scheme",
-            params.get("scheme")
+            params.get("scheme", None)
         ])
-    if params.get("nclusters") is not None:
+    if params.get("nclusters", None) is not None:
         cargs.extend([
             "--nclusters",
-            str(params.get("nclusters"))
+            str(params.get("nclusters", None))
         ])
-    if params.get("help"):
+    if params.get("help", False):
         cargs.append("--help")
     return cargs
 
@@ -233,7 +218,7 @@ def ccops_outputs(
     """
     ret = CcopsOutputs(
         root=execution.output_file("."),
-        outfile=execution.output_file(params.get("basename") + "_output.nii.gz"),
+        outfile=execution.output_file(params.get("basename", None) + "_output.nii.gz"),
     )
     return ret
 
@@ -336,7 +321,6 @@ def ccops(
 __all__ = [
     "CCOPS_METADATA",
     "CcopsOutputs",
-    "CcopsParameters",
     "ccops",
     "ccops_execute",
     "ccops_params",

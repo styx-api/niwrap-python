@@ -14,7 +14,15 @@ PRINT_UNIQUE_LABELS_CSH_METADATA = Metadata(
 
 
 PrintUniqueLabelsCshParameters = typing.TypedDict('PrintUniqueLabelsCshParameters', {
-    "@type": typing.Literal["freesurfer.print_unique_labels.csh"],
+    "@type": typing.NotRequired[typing.Literal["freesurfer/print_unique_labels.csh"]],
+    "label_volume": InputPathType,
+    "output_file": typing.NotRequired[str | None],
+    "list_only": bool,
+    "version": bool,
+    "help": bool,
+})
+PrintUniqueLabelsCshParametersTagged = typing.TypedDict('PrintUniqueLabelsCshParametersTagged', {
+    "@type": typing.Literal["freesurfer/print_unique_labels.csh"],
     "label_volume": InputPathType,
     "output_file": typing.NotRequired[str | None],
     "list_only": bool,
@@ -23,41 +31,9 @@ PrintUniqueLabelsCshParameters = typing.TypedDict('PrintUniqueLabelsCshParameter
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "freesurfer.print_unique_labels.csh": print_unique_labels_csh_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "freesurfer.print_unique_labels.csh": print_unique_labels_csh_outputs,
-    }.get(t)
-
-
 class PrintUniqueLabelsCshOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `print_unique_labels_csh(...)`.
+    Output object returned when calling `PrintUniqueLabelsCshParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -71,7 +47,7 @@ def print_unique_labels_csh_params(
     list_only: bool = False,
     version: bool = False,
     help_: bool = False,
-) -> PrintUniqueLabelsCshParameters:
+) -> PrintUniqueLabelsCshParametersTagged:
     """
     Build parameters.
     
@@ -85,7 +61,7 @@ def print_unique_labels_csh_params(
         Parameter dictionary
     """
     params = {
-        "@type": "freesurfer.print_unique_labels.csh",
+        "@type": "freesurfer/print_unique_labels.csh",
         "label_volume": label_volume,
         "list_only": list_only,
         "version": version,
@@ -113,18 +89,18 @@ def print_unique_labels_csh_cargs(
     cargs.append("print_unique_labels.csh")
     cargs.extend([
         "--vol",
-        execution.input_file(params.get("label_volume"))
+        execution.input_file(params.get("label_volume", None))
     ])
-    if params.get("output_file") is not None:
+    if params.get("output_file", None) is not None:
         cargs.extend([
             "--out",
-            params.get("output_file")
+            params.get("output_file", None)
         ])
-    if params.get("list_only"):
+    if params.get("list_only", False):
         cargs.append("--list")
-    if params.get("version"):
+    if params.get("version", False):
         cargs.append("--version")
-    if params.get("help"):
+    if params.get("help", False):
         cargs.append("--help")
     return cargs
 
@@ -144,7 +120,7 @@ def print_unique_labels_csh_outputs(
     """
     ret = PrintUniqueLabelsCshOutputs(
         root=execution.output_file("."),
-        results_file=execution.output_file(params.get("output_file")) if (params.get("output_file") is not None) else None,
+        results_file=execution.output_file(params.get("output_file", None)) if (params.get("output_file") is not None) else None,
     )
     return ret
 
@@ -217,7 +193,6 @@ def print_unique_labels_csh(
 __all__ = [
     "PRINT_UNIQUE_LABELS_CSH_METADATA",
     "PrintUniqueLabelsCshOutputs",
-    "PrintUniqueLabelsCshParameters",
     "print_unique_labels_csh",
     "print_unique_labels_csh_execute",
     "print_unique_labels_csh_params",

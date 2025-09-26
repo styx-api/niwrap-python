@@ -14,7 +14,18 @@ SWAP_VOXELWISE_METADATA = Metadata(
 
 
 SwapVoxelwiseParameters = typing.TypedDict('SwapVoxelwiseParameters', {
-    "@type": typing.Literal["fsl.swap_voxelwise"],
+    "@type": typing.NotRequired[typing.Literal["fsl/swap_voxelwise"]],
+    "vectors_file_list": InputPathType,
+    "scalars_file_list": typing.NotRequired[InputPathType | None],
+    "mask": InputPathType,
+    "output_base_name": typing.NotRequired[str | None],
+    "reorder_mode": typing.NotRequired[str | None],
+    "init_mask": typing.NotRequired[InputPathType | None],
+    "crossing_thresh": typing.NotRequired[float | None],
+    "verbose_flag": bool,
+})
+SwapVoxelwiseParametersTagged = typing.TypedDict('SwapVoxelwiseParametersTagged', {
+    "@type": typing.Literal["fsl/swap_voxelwise"],
     "vectors_file_list": InputPathType,
     "scalars_file_list": typing.NotRequired[InputPathType | None],
     "mask": InputPathType,
@@ -26,41 +37,9 @@ SwapVoxelwiseParameters = typing.TypedDict('SwapVoxelwiseParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "fsl.swap_voxelwise": swap_voxelwise_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "fsl.swap_voxelwise": swap_voxelwise_outputs,
-    }.get(t)
-
-
 class SwapVoxelwiseOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `swap_voxelwise(...)`.
+    Output object returned when calling `SwapVoxelwiseParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -77,7 +56,7 @@ def swap_voxelwise_params(
     init_mask: InputPathType | None = None,
     crossing_thresh: float | None = None,
     verbose_flag: bool = False,
-) -> SwapVoxelwiseParameters:
+) -> SwapVoxelwiseParametersTagged:
     """
     Build parameters.
     
@@ -96,7 +75,7 @@ def swap_voxelwise_params(
         Parameter dictionary
     """
     params = {
-        "@type": "fsl.swap_voxelwise",
+        "@type": "fsl/swap_voxelwise",
         "vectors_file_list": vectors_file_list,
         "mask": mask,
         "verbose_flag": verbose_flag,
@@ -131,38 +110,38 @@ def swap_voxelwise_cargs(
     cargs.append("swap_voxelwise")
     cargs.extend([
         "-v",
-        execution.input_file(params.get("vectors_file_list"))
+        execution.input_file(params.get("vectors_file_list", None))
     ])
-    if params.get("scalars_file_list") is not None:
+    if params.get("scalars_file_list", None) is not None:
         cargs.extend([
             "-s",
-            execution.input_file(params.get("scalars_file_list"))
+            execution.input_file(params.get("scalars_file_list", None))
         ])
     cargs.extend([
         "-m",
-        execution.input_file(params.get("mask"))
+        execution.input_file(params.get("mask", None))
     ])
-    if params.get("output_base_name") is not None:
+    if params.get("output_base_name", None) is not None:
         cargs.extend([
             "-b",
-            params.get("output_base_name")
+            params.get("output_base_name", None)
         ])
-    if params.get("reorder_mode") is not None:
+    if params.get("reorder_mode", None) is not None:
         cargs.extend([
             "--mode",
-            params.get("reorder_mode")
+            params.get("reorder_mode", None)
         ])
-    if params.get("init_mask") is not None:
+    if params.get("init_mask", None) is not None:
         cargs.extend([
             "--initmask",
-            execution.input_file(params.get("init_mask"))
+            execution.input_file(params.get("init_mask", None))
         ])
-    if params.get("crossing_thresh") is not None:
+    if params.get("crossing_thresh", None) is not None:
         cargs.extend([
             "--xthresh",
-            str(params.get("crossing_thresh"))
+            str(params.get("crossing_thresh", None))
         ])
-    if params.get("verbose_flag"):
+    if params.get("verbose_flag", False):
         cargs.append("-V")
     return cargs
 
@@ -182,7 +161,7 @@ def swap_voxelwise_outputs(
     """
     ret = SwapVoxelwiseOutputs(
         root=execution.output_file("."),
-        reordered_output=execution.output_file(params.get("output_base_name") + ".nii.gz") if (params.get("output_base_name") is not None) else None,
+        reordered_output=execution.output_file(params.get("output_base_name", None) + ".nii.gz") if (params.get("output_base_name") is not None) else None,
     )
     return ret
 
@@ -266,7 +245,6 @@ def swap_voxelwise(
 __all__ = [
     "SWAP_VOXELWISE_METADATA",
     "SwapVoxelwiseOutputs",
-    "SwapVoxelwiseParameters",
     "swap_voxelwise",
     "swap_voxelwise_execute",
     "swap_voxelwise_params",

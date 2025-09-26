@@ -14,7 +14,17 @@ POINTFLIRT_METADATA = Metadata(
 
 
 PointflirtParameters = typing.TypedDict('PointflirtParameters', {
-    "@type": typing.Literal["fsl.pointflirt"],
+    "@type": typing.NotRequired[typing.Literal["fsl/pointflirt"]],
+    "invol_coords": InputPathType,
+    "refvol_coords": InputPathType,
+    "out_matrix": typing.NotRequired[str | None],
+    "use_vox": bool,
+    "vol_input": typing.NotRequired[InputPathType | None],
+    "vol_ref": typing.NotRequired[InputPathType | None],
+    "verbose_flag": bool,
+})
+PointflirtParametersTagged = typing.TypedDict('PointflirtParametersTagged', {
+    "@type": typing.Literal["fsl/pointflirt"],
     "invol_coords": InputPathType,
     "refvol_coords": InputPathType,
     "out_matrix": typing.NotRequired[str | None],
@@ -25,41 +35,9 @@ PointflirtParameters = typing.TypedDict('PointflirtParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "fsl.pointflirt": pointflirt_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "fsl.pointflirt": pointflirt_outputs,
-    }.get(t)
-
-
 class PointflirtOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `pointflirt(...)`.
+    Output object returned when calling `PointflirtParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -75,7 +53,7 @@ def pointflirt_params(
     vol_input: InputPathType | None = None,
     vol_ref: InputPathType | None = None,
     verbose_flag: bool = False,
-) -> PointflirtParameters:
+) -> PointflirtParametersTagged:
     """
     Build parameters.
     
@@ -91,7 +69,7 @@ def pointflirt_params(
         Parameter dictionary
     """
     params = {
-        "@type": "fsl.pointflirt",
+        "@type": "fsl/pointflirt",
         "invol_coords": invol_coords,
         "refvol_coords": refvol_coords,
         "use_vox": use_vox,
@@ -123,30 +101,30 @@ def pointflirt_cargs(
     cargs.append("pointflirt")
     cargs.extend([
         "-i",
-        execution.input_file(params.get("invol_coords"))
+        execution.input_file(params.get("invol_coords", None))
     ])
     cargs.extend([
         "-r",
-        execution.input_file(params.get("refvol_coords"))
+        execution.input_file(params.get("refvol_coords", None))
     ])
-    if params.get("out_matrix") is not None:
+    if params.get("out_matrix", None) is not None:
         cargs.extend([
             "-o",
-            params.get("out_matrix")
+            params.get("out_matrix", None)
         ])
-    if params.get("use_vox"):
+    if params.get("use_vox", False):
         cargs.append("--vox")
-    if params.get("vol_input") is not None:
+    if params.get("vol_input", None) is not None:
         cargs.extend([
             "--invol",
-            execution.input_file(params.get("vol_input"))
+            execution.input_file(params.get("vol_input", None))
         ])
-    if params.get("vol_ref") is not None:
+    if params.get("vol_ref", None) is not None:
         cargs.extend([
             "--refvol",
-            execution.input_file(params.get("vol_ref"))
+            execution.input_file(params.get("vol_ref", None))
         ])
-    if params.get("verbose_flag"):
+    if params.get("verbose_flag", False):
         cargs.append("-v")
     return cargs
 
@@ -166,7 +144,7 @@ def pointflirt_outputs(
     """
     ret = PointflirtOutputs(
         root=execution.output_file("."),
-        output_matrix_file=execution.output_file(params.get("out_matrix")) if (params.get("out_matrix") is not None) else None,
+        output_matrix_file=execution.output_file(params.get("out_matrix", None)) if (params.get("out_matrix") is not None) else None,
     )
     return ret
 
@@ -247,7 +225,6 @@ def pointflirt(
 __all__ = [
     "POINTFLIRT_METADATA",
     "PointflirtOutputs",
-    "PointflirtParameters",
     "pointflirt",
     "pointflirt_execute",
     "pointflirt_params",

@@ -14,7 +14,34 @@ V_3DDELAY_METADATA = Metadata(
 
 
 V3ddelayParameters = typing.TypedDict('V3ddelayParameters', {
-    "@type": typing.Literal["afni.3ddelay"],
+    "@type": typing.NotRequired[typing.Literal["afni/3ddelay"]],
+    "input_file": InputPathType,
+    "reference_file": InputPathType,
+    "sampling_freq": float,
+    "stim_period": float,
+    "prefix": typing.NotRequired[str | None],
+    "polort": typing.NotRequired[float | None],
+    "nodtrnd": bool,
+    "units_seconds": bool,
+    "units_degrees": bool,
+    "units_radians": bool,
+    "phzwrp": bool,
+    "nophzwrp": bool,
+    "phzreverse": bool,
+    "phzscale": typing.NotRequired[float | None],
+    "bias": bool,
+    "nobias": bool,
+    "dsamp": bool,
+    "nodsamp": bool,
+    "mask": typing.NotRequired[InputPathType | None],
+    "nfirst": typing.NotRequired[float | None],
+    "nlast": typing.NotRequired[float | None],
+    "co": typing.NotRequired[float | None],
+    "asc": typing.NotRequired[str | None],
+    "ascts": typing.NotRequired[str | None],
+})
+V3ddelayParametersTagged = typing.TypedDict('V3ddelayParametersTagged', {
+    "@type": typing.Literal["afni/3ddelay"],
     "input_file": InputPathType,
     "reference_file": InputPathType,
     "sampling_freq": float,
@@ -42,41 +69,9 @@ V3ddelayParameters = typing.TypedDict('V3ddelayParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "afni.3ddelay": v_3ddelay_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "afni.3ddelay": v_3ddelay_outputs,
-    }.get(t)
-
-
 class V3ddelayOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `v_3ddelay(...)`.
+    Output object returned when calling `V3ddelayParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -115,7 +110,7 @@ def v_3ddelay_params(
     co: float | None = None,
     asc: str | None = None,
     ascts: str | None = None,
-) -> V3ddelayParameters:
+) -> V3ddelayParametersTagged:
     """
     Build parameters.
     
@@ -153,7 +148,7 @@ def v_3ddelay_params(
         Parameter dictionary
     """
     params = {
-        "@type": "afni.3ddelay",
+        "@type": "afni/3ddelay",
         "input_file": input_file,
         "reference_file": reference_file,
         "sampling_freq": sampling_freq,
@@ -206,82 +201,82 @@ def v_3ddelay_cargs(
     """
     cargs = []
     cargs.append("3ddelay")
-    cargs.append(execution.input_file(params.get("input_file")))
-    cargs.append(execution.input_file(params.get("reference_file")))
+    cargs.append(execution.input_file(params.get("input_file", None)))
+    cargs.append(execution.input_file(params.get("reference_file", None)))
     cargs.extend([
         "-fs",
-        str(params.get("sampling_freq"))
+        str(params.get("sampling_freq", None))
     ])
     cargs.extend([
         "-T",
-        str(params.get("stim_period"))
+        str(params.get("stim_period", None))
     ])
-    if params.get("prefix") is not None:
+    if params.get("prefix", None) is not None:
         cargs.extend([
             "-prefix",
-            params.get("prefix")
+            params.get("prefix", None)
         ])
-    if params.get("polort") is not None:
+    if params.get("polort", None) is not None:
         cargs.extend([
             "-polort",
-            str(params.get("polort"))
+            str(params.get("polort", None))
         ])
-    if params.get("nodtrnd"):
+    if params.get("nodtrnd", False):
         cargs.append("-nodtrnd")
-    if params.get("units_seconds"):
+    if params.get("units_seconds", False):
         cargs.append("-uS")
-    if params.get("units_degrees"):
+    if params.get("units_degrees", False):
         cargs.append("-uD")
-    if params.get("units_radians"):
+    if params.get("units_radians", False):
         cargs.append("-uR")
-    if params.get("phzwrp"):
+    if params.get("phzwrp", False):
         cargs.append("-phzwrp")
-    if params.get("nophzwrp"):
+    if params.get("nophzwrp", False):
         cargs.append("-nophzwrp")
-    if params.get("phzreverse"):
+    if params.get("phzreverse", False):
         cargs.append("-phzreverse")
-    if params.get("phzscale") is not None:
+    if params.get("phzscale", None) is not None:
         cargs.extend([
             "-phzscale",
-            str(params.get("phzscale"))
+            str(params.get("phzscale", None))
         ])
-    if params.get("bias"):
+    if params.get("bias", False):
         cargs.append("-bias")
-    if params.get("nobias"):
+    if params.get("nobias", False):
         cargs.append("-nobias")
-    if params.get("dsamp"):
+    if params.get("dsamp", False):
         cargs.append("-dsamp")
-    if params.get("nodsamp"):
+    if params.get("nodsamp", False):
         cargs.append("-nodsamp")
-    if params.get("mask") is not None:
+    if params.get("mask", None) is not None:
         cargs.extend([
             "-mask",
-            execution.input_file(params.get("mask"))
+            execution.input_file(params.get("mask", None))
         ])
-    if params.get("nfirst") is not None:
+    if params.get("nfirst", None) is not None:
         cargs.extend([
             "-nfirst",
-            str(params.get("nfirst"))
+            str(params.get("nfirst", None))
         ])
-    if params.get("nlast") is not None:
+    if params.get("nlast", None) is not None:
         cargs.extend([
             "-nlast",
-            str(params.get("nlast"))
+            str(params.get("nlast", None))
         ])
-    if params.get("co") is not None:
+    if params.get("co", None) is not None:
         cargs.extend([
             "-co",
-            str(params.get("co"))
+            str(params.get("co", None))
         ])
-    if params.get("asc") is not None:
+    if params.get("asc", None) is not None:
         cargs.extend([
             "-asc",
-            params.get("asc")
+            params.get("asc", None)
         ])
-    if params.get("ascts") is not None:
+    if params.get("ascts", None) is not None:
         cargs.extend([
             "-ascts",
-            params.get("ascts")
+            params.get("ascts", None)
         ])
     return cargs
 
@@ -301,10 +296,10 @@ def v_3ddelay_outputs(
     """
     ret = V3ddelayOutputs(
         root=execution.output_file("."),
-        output_brick=execution.output_file(params.get("prefix") + ".DEL+orig.BRIK") if (params.get("prefix") is not None) else None,
-        output_asc=execution.output_file(params.get("prefix") + ".ASC") if (params.get("prefix") is not None) else None,
-        output_asc_log=execution.output_file(params.get("prefix") + ".ASC.log") if (params.get("prefix") is not None) else None,
-        output_asc_ts=execution.output_file(params.get("prefix") + ".ASC.ts") if (params.get("prefix") is not None) else None,
+        output_brick=execution.output_file(params.get("prefix", None) + ".DEL+orig.BRIK") if (params.get("prefix") is not None) else None,
+        output_asc=execution.output_file(params.get("prefix", None) + ".ASC") if (params.get("prefix") is not None) else None,
+        output_asc_log=execution.output_file(params.get("prefix", None) + ".ASC.log") if (params.get("prefix") is not None) else None,
+        output_asc_ts=execution.output_file(params.get("prefix", None) + ".ASC.ts") if (params.get("prefix") is not None) else None,
     )
     return ret
 
@@ -440,7 +435,6 @@ def v_3ddelay(
 
 __all__ = [
     "V3ddelayOutputs",
-    "V3ddelayParameters",
     "V_3DDELAY_METADATA",
     "v_3ddelay",
     "v_3ddelay_execute",

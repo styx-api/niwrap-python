@@ -14,48 +14,22 @@ SURFACE_CURVATURE_METADATA = Metadata(
 
 
 SurfaceCurvatureParameters = typing.TypedDict('SurfaceCurvatureParameters', {
-    "@type": typing.Literal["workbench.surface-curvature"],
+    "@type": typing.NotRequired[typing.Literal["workbench/surface-curvature"]],
+    "surface": InputPathType,
+    "opt_mean_mean_out": typing.NotRequired[str | None],
+    "opt_gauss_gauss_out": typing.NotRequired[str | None],
+})
+SurfaceCurvatureParametersTagged = typing.TypedDict('SurfaceCurvatureParametersTagged', {
+    "@type": typing.Literal["workbench/surface-curvature"],
     "surface": InputPathType,
     "opt_mean_mean_out": typing.NotRequired[str | None],
     "opt_gauss_gauss_out": typing.NotRequired[str | None],
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "workbench.surface-curvature": surface_curvature_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "workbench.surface-curvature": surface_curvature_outputs,
-    }.get(t)
-
-
 class SurfaceCurvatureOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `surface_curvature(...)`.
+    Output object returned when calling `SurfaceCurvatureParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -69,7 +43,7 @@ def surface_curvature_params(
     surface: InputPathType,
     opt_mean_mean_out: str | None = None,
     opt_gauss_gauss_out: str | None = None,
-) -> SurfaceCurvatureParameters:
+) -> SurfaceCurvatureParametersTagged:
     """
     Build parameters.
     
@@ -82,7 +56,7 @@ def surface_curvature_params(
         Parameter dictionary
     """
     params = {
-        "@type": "workbench.surface-curvature",
+        "@type": "workbench/surface-curvature",
         "surface": surface,
     }
     if opt_mean_mean_out is not None:
@@ -108,16 +82,16 @@ def surface_curvature_cargs(
     cargs = []
     cargs.append("wb_command")
     cargs.append("-surface-curvature")
-    cargs.append(execution.input_file(params.get("surface")))
-    if params.get("opt_mean_mean_out") is not None:
+    cargs.append(execution.input_file(params.get("surface", None)))
+    if params.get("opt_mean_mean_out", None) is not None:
         cargs.extend([
             "-mean",
-            params.get("opt_mean_mean_out")
+            params.get("opt_mean_mean_out", None)
         ])
-    if params.get("opt_gauss_gauss_out") is not None:
+    if params.get("opt_gauss_gauss_out", None) is not None:
         cargs.extend([
             "-gauss",
-            params.get("opt_gauss_gauss_out")
+            params.get("opt_gauss_gauss_out", None)
         ])
     return cargs
 
@@ -137,8 +111,8 @@ def surface_curvature_outputs(
     """
     ret = SurfaceCurvatureOutputs(
         root=execution.output_file("."),
-        opt_mean_mean_out=execution.output_file(params.get("opt_mean_mean_out")) if (params.get("opt_mean_mean_out") is not None) else None,
-        opt_gauss_gauss_out=execution.output_file(params.get("opt_gauss_gauss_out")) if (params.get("opt_gauss_gauss_out") is not None) else None,
+        opt_mean_mean_out=execution.output_file(params.get("opt_mean_mean_out", None)) if (params.get("opt_mean_mean_out") is not None) else None,
+        opt_gauss_gauss_out=execution.output_file(params.get("opt_gauss_gauss_out", None)) if (params.get("opt_gauss_gauss_out") is not None) else None,
     )
     return ret
 
@@ -214,7 +188,6 @@ def surface_curvature(
 __all__ = [
     "SURFACE_CURVATURE_METADATA",
     "SurfaceCurvatureOutputs",
-    "SurfaceCurvatureParameters",
     "surface_curvature",
     "surface_curvature_execute",
     "surface_curvature_params",

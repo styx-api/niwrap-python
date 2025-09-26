@@ -14,7 +14,21 @@ SLOW_SURF_CLUSTSIM_PY_METADATA = Metadata(
 
 
 SlowSurfClustsimPyParameters = typing.TypedDict('SlowSurfClustsimPyParameters', {
-    "@type": typing.Literal["afni.slow_surf_clustsim.py"],
+    "@type": typing.NotRequired[typing.Literal["afni/slow_surf_clustsim.py"]],
+    "on_surface": typing.NotRequired[str | None],
+    "save_script": typing.NotRequired[str | None],
+    "print_script": bool,
+    "uvar": typing.NotRequired[list[str] | None],
+    "verbosity": typing.NotRequired[float | None],
+    "help": bool,
+    "hist": bool,
+    "show_default_cvars": bool,
+    "show_default_uvars": bool,
+    "show_valid_opts": bool,
+    "version": bool,
+})
+SlowSurfClustsimPyParametersTagged = typing.TypedDict('SlowSurfClustsimPyParametersTagged', {
+    "@type": typing.Literal["afni/slow_surf_clustsim.py"],
     "on_surface": typing.NotRequired[str | None],
     "save_script": typing.NotRequired[str | None],
     "print_script": bool,
@@ -29,40 +43,9 @@ SlowSurfClustsimPyParameters = typing.TypedDict('SlowSurfClustsimPyParameters', 
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "afni.slow_surf_clustsim.py": slow_surf_clustsim_py_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-    }.get(t)
-
-
 class SlowSurfClustsimPyOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `slow_surf_clustsim_py(...)`.
+    Output object returned when calling `SlowSurfClustsimPyParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -80,7 +63,7 @@ def slow_surf_clustsim_py_params(
     show_default_uvars: bool = False,
     show_valid_opts: bool = False,
     version: bool = False,
-) -> SlowSurfClustsimPyParameters:
+) -> SlowSurfClustsimPyParametersTagged:
     """
     Build parameters.
     
@@ -103,7 +86,7 @@ def slow_surf_clustsim_py_params(
         Parameter dictionary
     """
     params = {
-        "@type": "afni.slow_surf_clustsim.py",
+        "@type": "afni/slow_surf_clustsim.py",
         "print_script": print_script,
         "help": help_,
         "hist": hist,
@@ -138,39 +121,39 @@ def slow_surf_clustsim_py_cargs(
     """
     cargs = []
     cargs.append("slow_surf_clustsim.py")
-    if params.get("on_surface") is not None:
+    if params.get("on_surface", None) is not None:
         cargs.extend([
             "-on_surface",
-            params.get("on_surface")
+            params.get("on_surface", None)
         ])
-    if params.get("save_script") is not None:
+    if params.get("save_script", None) is not None:
         cargs.extend([
             "-save_script",
-            params.get("save_script")
+            params.get("save_script", None)
         ])
-    if params.get("print_script"):
+    if params.get("print_script", False):
         cargs.append("-print_script")
-    if params.get("uvar") is not None:
+    if params.get("uvar", None) is not None:
         cargs.extend([
             "-uvar",
-            *params.get("uvar")
+            *params.get("uvar", None)
         ])
-    if params.get("verbosity") is not None:
+    if params.get("verbosity", None) is not None:
         cargs.extend([
             "-verb",
-            str(params.get("verbosity"))
+            str(params.get("verbosity", None))
         ])
-    if params.get("help"):
+    if params.get("help", False):
         cargs.append("-help")
-    if params.get("hist"):
+    if params.get("hist", False):
         cargs.append("-hist")
-    if params.get("show_default_cvars"):
+    if params.get("show_default_cvars", False):
         cargs.append("-show_default_cvars")
-    if params.get("show_default_uvars"):
+    if params.get("show_default_uvars", False):
         cargs.append("-show_default_uvars")
-    if params.get("show_valid_opts"):
+    if params.get("show_valid_opts", False):
         cargs.append("-show_valid_opts")
-    if params.get("version"):
+    if params.get("version", False):
         cargs.append("-ver")
     return cargs
 
@@ -283,7 +266,6 @@ def slow_surf_clustsim_py(
 __all__ = [
     "SLOW_SURF_CLUSTSIM_PY_METADATA",
     "SlowSurfClustsimPyOutputs",
-    "SlowSurfClustsimPyParameters",
     "slow_surf_clustsim_py",
     "slow_surf_clustsim_py_execute",
     "slow_surf_clustsim_py_params",

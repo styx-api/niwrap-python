@@ -14,46 +14,20 @@ TBSS_3_POSTREG_METADATA = Metadata(
 
 
 Tbss3PostregParameters = typing.TypedDict('Tbss3PostregParameters', {
-    "@type": typing.Literal["fsl.tbss_3_postreg"],
+    "@type": typing.NotRequired[typing.Literal["fsl/tbss_3_postreg"]],
+    "derive_mean_from_study": bool,
+    "use_fmrib58": bool,
+})
+Tbss3PostregParametersTagged = typing.TypedDict('Tbss3PostregParametersTagged', {
+    "@type": typing.Literal["fsl/tbss_3_postreg"],
     "derive_mean_from_study": bool,
     "use_fmrib58": bool,
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "fsl.tbss_3_postreg": tbss_3_postreg_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-    }.get(t)
-
-
 class Tbss3PostregOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `tbss_3_postreg(...)`.
+    Output object returned when calling `Tbss3PostregParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -62,7 +36,7 @@ class Tbss3PostregOutputs(typing.NamedTuple):
 def tbss_3_postreg_params(
     derive_mean_from_study: bool = False,
     use_fmrib58: bool = False,
-) -> Tbss3PostregParameters:
+) -> Tbss3PostregParametersTagged:
     """
     Build parameters.
     
@@ -75,7 +49,7 @@ def tbss_3_postreg_params(
         Parameter dictionary
     """
     params = {
-        "@type": "fsl.tbss_3_postreg",
+        "@type": "fsl/tbss_3_postreg",
         "derive_mean_from_study": derive_mean_from_study,
         "use_fmrib58": use_fmrib58,
     }
@@ -97,9 +71,9 @@ def tbss_3_postreg_cargs(
     """
     cargs = []
     cargs.append("tbss_3_postreg")
-    if params.get("derive_mean_from_study"):
+    if params.get("derive_mean_from_study", False):
         cargs.append("-S")
-    if params.get("use_fmrib58"):
+    if params.get("use_fmrib58", False):
         cargs.append("-T")
     return cargs
 
@@ -184,7 +158,6 @@ def tbss_3_postreg(
 __all__ = [
     "TBSS_3_POSTREG_METADATA",
     "Tbss3PostregOutputs",
-    "Tbss3PostregParameters",
     "tbss_3_postreg",
     "tbss_3_postreg_execute",
     "tbss_3_postreg_params",

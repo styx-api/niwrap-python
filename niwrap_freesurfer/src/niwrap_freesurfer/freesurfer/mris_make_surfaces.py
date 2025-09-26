@@ -14,7 +14,63 @@ MRIS_MAKE_SURFACES_METADATA = Metadata(
 
 
 MrisMakeSurfacesParameters = typing.TypedDict('MrisMakeSurfacesParameters', {
-    "@type": typing.Literal["freesurfer.mris_make_surfaces"],
+    "@type": typing.NotRequired[typing.Literal["freesurfer/mris_make_surfaces"]],
+    "subject_name": str,
+    "hemisphere": str,
+    "white": typing.NotRequired[str | None],
+    "pial": typing.NotRequired[str | None],
+    "whiteonly": bool,
+    "nowhite": bool,
+    "orig_white": typing.NotRequired[str | None],
+    "orig_pial": typing.NotRequired[str | None],
+    "q": bool,
+    "max_gray_scale": typing.NotRequired[float | None],
+    "c": bool,
+    "cortex": typing.NotRequired[float | None],
+    "w": typing.NotRequired[float | None],
+    "first_wm_peak": bool,
+    "a_avgs": typing.NotRequired[float | None],
+    "pa_avgs": typing.NotRequired[float | None],
+    "wa_avgs": typing.NotRequired[float | None],
+    "t1_vol": typing.NotRequired[str | None],
+    "w_vol": typing.NotRequired[str | None],
+    "long": bool,
+    "dura_thresh": typing.NotRequired[float | None],
+    "sdir": typing.NotRequired[str | None],
+    "erase_cerebellum": bool,
+    "wm_weight": typing.NotRequired[float | None],
+    "nsigma_above": typing.NotRequired[float | None],
+    "nsigma_below": typing.NotRequired[float | None],
+    "t2_min_inside": typing.NotRequired[float | None],
+    "t2_max_inside": typing.NotRequired[float | None],
+    "t2_outside_min": typing.NotRequired[float | None],
+    "t2_outside_max": typing.NotRequired[float | None],
+    "min_peak_pct": typing.NotRequired[float | None],
+    "border_vals_hires": bool,
+    "no_unitize": bool,
+    "intensity": typing.NotRequired[float | None],
+    "curv": typing.NotRequired[float | None],
+    "tspring": typing.NotRequired[float | None],
+    "nspring": typing.NotRequired[float | None],
+    "repulse": typing.NotRequired[float | None],
+    "save_target": bool,
+    "save_res": bool,
+    "v_vertexno": typing.NotRequired[float | None],
+    "diag_vertex": typing.NotRequired[float | None],
+    "rip": typing.NotRequired[str | None],
+    "sigma_white": typing.NotRequired[str | None],
+    "sigma_pial": typing.NotRequired[str | None],
+    "output": typing.NotRequired[str | None],
+    "min_border_white": typing.NotRequired[float | None],
+    "max_border_white": typing.NotRequired[float | None],
+    "min_gray_white_border": typing.NotRequired[float | None],
+    "max_gray": typing.NotRequired[float | None],
+    "max_gray_csf_border": typing.NotRequired[float | None],
+    "min_gray_csf_border": typing.NotRequired[float | None],
+    "max_csf": typing.NotRequired[float | None],
+})
+MrisMakeSurfacesParametersTagged = typing.TypedDict('MrisMakeSurfacesParametersTagged', {
+    "@type": typing.Literal["freesurfer/mris_make_surfaces"],
     "subject_name": str,
     "hemisphere": str,
     "white": typing.NotRequired[str | None],
@@ -71,40 +127,9 @@ MrisMakeSurfacesParameters = typing.TypedDict('MrisMakeSurfacesParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "freesurfer.mris_make_surfaces": mris_make_surfaces_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-    }.get(t)
-
-
 class MrisMakeSurfacesOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `mris_make_surfaces(...)`.
+    Output object returned when calling `MrisMakeSurfacesParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -164,7 +189,7 @@ def mris_make_surfaces_params(
     max_gray_csf_border: float | None = None,
     min_gray_csf_border: float | None = None,
     max_csf: float | None = None,
-) -> MrisMakeSurfacesParameters:
+) -> MrisMakeSurfacesParametersTagged:
     """
     Build parameters.
     
@@ -244,7 +269,7 @@ def mris_make_surfaces_params(
         Parameter dictionary
     """
     params = {
-        "@type": "freesurfer.mris_make_surfaces",
+        "@type": "freesurfer/mris_make_surfaces",
         "subject_name": subject_name,
         "hemisphere": hemisphere,
         "whiteonly": whiteonly,
@@ -357,229 +382,229 @@ def mris_make_surfaces_cargs(
     """
     cargs = []
     cargs.append("mris_make_surfaces")
-    cargs.append(params.get("subject_name"))
-    cargs.append(params.get("hemisphere"))
-    if params.get("white") is not None:
+    cargs.append(params.get("subject_name", None))
+    cargs.append(params.get("hemisphere", None))
+    if params.get("white", None) is not None:
         cargs.extend([
             "-white",
-            params.get("white")
+            params.get("white", None)
         ])
-    if params.get("pial") is not None:
+    if params.get("pial", None) is not None:
         cargs.extend([
             "-pial",
-            params.get("pial")
+            params.get("pial", None)
         ])
-    if params.get("whiteonly"):
+    if params.get("whiteonly", False):
         cargs.append("-whiteonly")
-    if params.get("nowhite"):
+    if params.get("nowhite", False):
         cargs.append("-nowhite")
-    if params.get("orig_white") is not None:
+    if params.get("orig_white", None) is not None:
         cargs.extend([
             "-orig_white",
-            params.get("orig_white")
+            params.get("orig_white", None)
         ])
-    if params.get("orig_pial") is not None:
+    if params.get("orig_pial", None) is not None:
         cargs.extend([
             "-orig_pial",
-            params.get("orig_pial")
+            params.get("orig_pial", None)
         ])
-    if params.get("q"):
+    if params.get("q", False):
         cargs.append("-q")
-    if params.get("max_gray_scale") is not None:
+    if params.get("max_gray_scale", None) is not None:
         cargs.extend([
             "-max_gray_scale",
-            str(params.get("max_gray_scale"))
+            str(params.get("max_gray_scale", None))
         ])
-    if params.get("c"):
+    if params.get("c", False):
         cargs.append("-c")
-    if params.get("cortex") is not None:
+    if params.get("cortex", None) is not None:
         cargs.extend([
             "-cortex",
-            str(params.get("cortex"))
+            str(params.get("cortex", None))
         ])
-    if params.get("w") is not None:
+    if params.get("w", None) is not None:
         cargs.extend([
             "-w",
-            str(params.get("w"))
+            str(params.get("w", None))
         ])
-    if params.get("first_wm_peak"):
+    if params.get("first_wm_peak", False):
         cargs.append("-first_wm_peak")
-    if params.get("a_avgs") is not None:
+    if params.get("a_avgs", None) is not None:
         cargs.extend([
             "-a",
-            str(params.get("a_avgs"))
+            str(params.get("a_avgs", None))
         ])
-    if params.get("pa_avgs") is not None:
+    if params.get("pa_avgs", None) is not None:
         cargs.extend([
             "-pa",
-            str(params.get("pa_avgs"))
+            str(params.get("pa_avgs", None))
         ])
-    if params.get("wa_avgs") is not None:
+    if params.get("wa_avgs", None) is not None:
         cargs.extend([
             "-wa",
-            str(params.get("wa_avgs"))
+            str(params.get("wa_avgs", None))
         ])
-    if params.get("t1_vol") is not None:
+    if params.get("t1_vol", None) is not None:
         cargs.extend([
             "-T1",
-            params.get("t1_vol")
+            params.get("t1_vol", None)
         ])
-    if params.get("w_vol") is not None:
+    if params.get("w_vol", None) is not None:
         cargs.extend([
             "-wvol",
-            params.get("w_vol")
+            params.get("w_vol", None)
         ])
-    if params.get("long"):
+    if params.get("long", False):
         cargs.append("-long")
-    if params.get("dura_thresh") is not None:
+    if params.get("dura_thresh", None) is not None:
         cargs.extend([
             "-dura_thresh",
-            str(params.get("dura_thresh"))
+            str(params.get("dura_thresh", None))
         ])
-    if params.get("sdir") is not None:
+    if params.get("sdir", None) is not None:
         cargs.extend([
             "-SDIR",
-            params.get("sdir")
+            params.get("sdir", None)
         ])
-    if params.get("erase_cerebellum"):
+    if params.get("erase_cerebellum", False):
         cargs.append("-erase_cerebellum")
-    if params.get("wm_weight") is not None:
+    if params.get("wm_weight", None) is not None:
         cargs.extend([
             "-wm_weight",
-            str(params.get("wm_weight"))
+            str(params.get("wm_weight", None))
         ])
-    if params.get("nsigma_above") is not None:
+    if params.get("nsigma_above", None) is not None:
         cargs.extend([
             "-nsigma_above",
-            str(params.get("nsigma_above"))
+            str(params.get("nsigma_above", None))
         ])
-    if params.get("nsigma_below") is not None:
+    if params.get("nsigma_below", None) is not None:
         cargs.extend([
             "-nsigma_below",
-            str(params.get("nsigma_below"))
+            str(params.get("nsigma_below", None))
         ])
-    if params.get("t2_min_inside") is not None:
+    if params.get("t2_min_inside", None) is not None:
         cargs.extend([
             "-T2_min_inside",
-            str(params.get("t2_min_inside"))
+            str(params.get("t2_min_inside", None))
         ])
-    if params.get("t2_max_inside") is not None:
+    if params.get("t2_max_inside", None) is not None:
         cargs.extend([
             "-T2_max_inside",
-            str(params.get("t2_max_inside"))
+            str(params.get("t2_max_inside", None))
         ])
-    if params.get("t2_outside_min") is not None:
+    if params.get("t2_outside_min", None) is not None:
         cargs.extend([
             "-T2_outside_min",
-            str(params.get("t2_outside_min"))
+            str(params.get("t2_outside_min", None))
         ])
-    if params.get("t2_outside_max") is not None:
+    if params.get("t2_outside_max", None) is not None:
         cargs.extend([
             "-T2_outside_max",
-            str(params.get("t2_outside_max"))
+            str(params.get("t2_outside_max", None))
         ])
-    if params.get("min_peak_pct") is not None:
+    if params.get("min_peak_pct", None) is not None:
         cargs.extend([
             "-min_peak_pct",
-            str(params.get("min_peak_pct"))
+            str(params.get("min_peak_pct", None))
         ])
-    if params.get("border_vals_hires"):
+    if params.get("border_vals_hires", False):
         cargs.append("-border-vals-hires")
-    if params.get("no_unitize"):
+    if params.get("no_unitize", False):
         cargs.append("-no-unitize")
-    if params.get("intensity") is not None:
+    if params.get("intensity", None) is not None:
         cargs.extend([
             "-intensity",
-            str(params.get("intensity"))
+            str(params.get("intensity", None))
         ])
-    if params.get("curv") is not None:
+    if params.get("curv", None) is not None:
         cargs.extend([
             "-curv",
-            str(params.get("curv"))
+            str(params.get("curv", None))
         ])
-    if params.get("tspring") is not None:
+    if params.get("tspring", None) is not None:
         cargs.extend([
             "-tspring",
-            str(params.get("tspring"))
+            str(params.get("tspring", None))
         ])
-    if params.get("nspring") is not None:
+    if params.get("nspring", None) is not None:
         cargs.extend([
             "-nspring",
-            str(params.get("nspring"))
+            str(params.get("nspring", None))
         ])
-    if params.get("repulse") is not None:
+    if params.get("repulse", None) is not None:
         cargs.extend([
             "-repulse",
-            str(params.get("repulse"))
+            str(params.get("repulse", None))
         ])
-    if params.get("save_target"):
+    if params.get("save_target", False):
         cargs.append("-save-target")
-    if params.get("save_res"):
+    if params.get("save_res", False):
         cargs.append("-save-res")
-    if params.get("v_vertexno") is not None:
+    if params.get("v_vertexno", None) is not None:
         cargs.extend([
             "-v",
-            str(params.get("v_vertexno"))
+            str(params.get("v_vertexno", None))
         ])
-    if params.get("diag_vertex") is not None:
+    if params.get("diag_vertex", None) is not None:
         cargs.extend([
             "-diag-vertex",
-            str(params.get("diag_vertex"))
+            str(params.get("diag_vertex", None))
         ])
-    if params.get("rip") is not None:
+    if params.get("rip", None) is not None:
         cargs.extend([
             "-rip",
-            params.get("rip")
+            params.get("rip", None)
         ])
-    if params.get("sigma_white") is not None:
+    if params.get("sigma_white", None) is not None:
         cargs.extend([
             "-sigma-white",
-            params.get("sigma_white")
+            params.get("sigma_white", None)
         ])
-    if params.get("sigma_pial") is not None:
+    if params.get("sigma_pial", None) is not None:
         cargs.extend([
             "-sigma-pial",
-            params.get("sigma_pial")
+            params.get("sigma_pial", None)
         ])
-    if params.get("output") is not None:
+    if params.get("output", None) is not None:
         cargs.extend([
             "-output",
-            params.get("output")
+            params.get("output", None)
         ])
-    if params.get("min_border_white") is not None:
+    if params.get("min_border_white", None) is not None:
         cargs.extend([
             "-min_border_white",
-            str(params.get("min_border_white"))
+            str(params.get("min_border_white", None))
         ])
-    if params.get("max_border_white") is not None:
+    if params.get("max_border_white", None) is not None:
         cargs.extend([
             "-max_border_white",
-            str(params.get("max_border_white"))
+            str(params.get("max_border_white", None))
         ])
-    if params.get("min_gray_white_border") is not None:
+    if params.get("min_gray_white_border", None) is not None:
         cargs.extend([
             "-min_gray_at_white_border",
-            str(params.get("min_gray_white_border"))
+            str(params.get("min_gray_white_border", None))
         ])
-    if params.get("max_gray") is not None:
+    if params.get("max_gray", None) is not None:
         cargs.extend([
             "-max_gray",
-            str(params.get("max_gray"))
+            str(params.get("max_gray", None))
         ])
-    if params.get("max_gray_csf_border") is not None:
+    if params.get("max_gray_csf_border", None) is not None:
         cargs.extend([
             "-max_gray_at_csf_border",
-            str(params.get("max_gray_csf_border"))
+            str(params.get("max_gray_csf_border", None))
         ])
-    if params.get("min_gray_csf_border") is not None:
+    if params.get("min_gray_csf_border", None) is not None:
         cargs.extend([
             "-min_gray_at_csf_border",
-            str(params.get("min_gray_csf_border"))
+            str(params.get("min_gray_csf_border", None))
         ])
-    if params.get("max_csf") is not None:
+    if params.get("max_csf", None) is not None:
         cargs.extend([
             "-max_csf",
-            str(params.get("max_csf"))
+            str(params.get("max_csf", None))
         ])
     return cargs
 
@@ -837,7 +862,6 @@ def mris_make_surfaces(
 __all__ = [
     "MRIS_MAKE_SURFACES_METADATA",
     "MrisMakeSurfacesOutputs",
-    "MrisMakeSurfacesParameters",
     "mris_make_surfaces",
     "mris_make_surfaces_execute",
     "mris_make_surfaces_params",

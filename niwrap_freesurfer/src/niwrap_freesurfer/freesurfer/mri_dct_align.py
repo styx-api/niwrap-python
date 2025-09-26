@@ -14,48 +14,22 @@ MRI_DCT_ALIGN_METADATA = Metadata(
 
 
 MriDctAlignParameters = typing.TypedDict('MriDctAlignParameters', {
-    "@type": typing.Literal["freesurfer.mri_dct_align"],
+    "@type": typing.NotRequired[typing.Literal["freesurfer/mri_dct_align"]],
+    "source": InputPathType,
+    "destination": InputPathType,
+    "output_xform": str,
+})
+MriDctAlignParametersTagged = typing.TypedDict('MriDctAlignParametersTagged', {
+    "@type": typing.Literal["freesurfer/mri_dct_align"],
     "source": InputPathType,
     "destination": InputPathType,
     "output_xform": str,
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "freesurfer.mri_dct_align": mri_dct_align_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "freesurfer.mri_dct_align": mri_dct_align_outputs,
-    }.get(t)
-
-
 class MriDctAlignOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `mri_dct_align(...)`.
+    Output object returned when calling `MriDctAlignParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -67,7 +41,7 @@ def mri_dct_align_params(
     source: InputPathType,
     destination: InputPathType,
     output_xform: str,
-) -> MriDctAlignParameters:
+) -> MriDctAlignParametersTagged:
     """
     Build parameters.
     
@@ -79,7 +53,7 @@ def mri_dct_align_params(
         Parameter dictionary
     """
     params = {
-        "@type": "freesurfer.mri_dct_align",
+        "@type": "freesurfer/mri_dct_align",
         "source": source,
         "destination": destination,
         "output_xform": output_xform,
@@ -102,9 +76,9 @@ def mri_dct_align_cargs(
     """
     cargs = []
     cargs.append("mri_dct_align")
-    cargs.append(execution.input_file(params.get("source")))
-    cargs.append(execution.input_file(params.get("destination")))
-    cargs.append(params.get("output_xform"))
+    cargs.append(execution.input_file(params.get("source", None)))
+    cargs.append(execution.input_file(params.get("destination", None)))
+    cargs.append(params.get("output_xform", None))
     return cargs
 
 
@@ -123,7 +97,7 @@ def mri_dct_align_outputs(
     """
     ret = MriDctAlignOutputs(
         root=execution.output_file("."),
-        output_xform_file=execution.output_file(params.get("output_xform")),
+        output_xform_file=execution.output_file(params.get("output_xform", None)),
     )
     return ret
 
@@ -190,7 +164,6 @@ def mri_dct_align(
 __all__ = [
     "MRI_DCT_ALIGN_METADATA",
     "MriDctAlignOutputs",
-    "MriDctAlignParameters",
     "mri_dct_align",
     "mri_dct_align_execute",
     "mri_dct_align_params",

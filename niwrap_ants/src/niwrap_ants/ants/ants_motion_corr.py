@@ -14,7 +14,26 @@ ANTS_MOTION_CORR_METADATA = Metadata(
 
 
 AntsMotionCorrParameters = typing.TypedDict('AntsMotionCorrParameters', {
-    "@type": typing.Literal["ants.antsMotionCorr"],
+    "@type": typing.NotRequired[typing.Literal["ants/antsMotionCorr"]],
+    "dimensionality": typing.NotRequired[typing.Literal[2, 3] | None],
+    "n_images": typing.NotRequired[int | None],
+    "metric": typing.NotRequired[str | None],
+    "use_fixed_reference_image": typing.NotRequired[typing.Literal[0, 1] | None],
+    "use_scales_estimator": bool,
+    "transform": typing.NotRequired[str | None],
+    "iterations": typing.NotRequired[str | None],
+    "smoothing_sigmas": typing.NotRequired[str | None],
+    "shrink_factors": typing.NotRequired[str | None],
+    "output": typing.NotRequired[str | None],
+    "average_image": bool,
+    "write_displacement": bool,
+    "use_histogram_matching": typing.NotRequired[typing.Literal[0, 1] | None],
+    "random_seed": typing.NotRequired[int | None],
+    "interpolation": typing.NotRequired[typing.Literal["Linear", "NearestNeighbor", "BSpline", "BlackmanWindowedSinc", "CosineWindowedSinc", "WelchWindowedSinc", "HammingWindowedSinc", "LanczosWindowedSinc"] | None],
+    "verbose": typing.NotRequired[typing.Literal[0, 1] | None],
+})
+AntsMotionCorrParametersTagged = typing.TypedDict('AntsMotionCorrParametersTagged', {
+    "@type": typing.Literal["ants/antsMotionCorr"],
     "dimensionality": typing.NotRequired[typing.Literal[2, 3] | None],
     "n_images": typing.NotRequired[int | None],
     "metric": typing.NotRequired[str | None],
@@ -34,41 +53,9 @@ AntsMotionCorrParameters = typing.TypedDict('AntsMotionCorrParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "ants.antsMotionCorr": ants_motion_corr_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "ants.antsMotionCorr": ants_motion_corr_outputs,
-    }.get(t)
-
-
 class AntsMotionCorrOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `ants_motion_corr(...)`.
+    Output object returned when calling `AntsMotionCorrParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -97,7 +84,7 @@ def ants_motion_corr_params(
     random_seed: int | None = None,
     interpolation: typing.Literal["Linear", "NearestNeighbor", "BSpline", "BlackmanWindowedSinc", "CosineWindowedSinc", "WelchWindowedSinc", "HammingWindowedSinc", "LanczosWindowedSinc"] | None = None,
     verbose: typing.Literal[0, 1] | None = None,
-) -> AntsMotionCorrParameters:
+) -> AntsMotionCorrParametersTagged:
     """
     Build parameters.
     
@@ -138,7 +125,7 @@ def ants_motion_corr_params(
         Parameter dictionary
     """
     params = {
-        "@type": "ants.antsMotionCorr",
+        "@type": "ants/antsMotionCorr",
         "use_scales_estimator": use_scales_estimator,
         "average_image": average_image,
         "write_displacement": write_displacement,
@@ -187,76 +174,76 @@ def ants_motion_corr_cargs(
     """
     cargs = []
     cargs.append("antsMotionCorr")
-    if params.get("dimensionality") is not None:
+    if params.get("dimensionality", None) is not None:
         cargs.extend([
             "--dimensionality",
-            str(params.get("dimensionality"))
+            str(params.get("dimensionality", None))
         ])
-    if params.get("n_images") is not None:
+    if params.get("n_images", None) is not None:
         cargs.extend([
             "--n-images",
-            str(params.get("n_images"))
+            str(params.get("n_images", None))
         ])
-    if params.get("metric") is not None:
+    if params.get("metric", None) is not None:
         cargs.extend([
             "--metric",
-            params.get("metric")
+            params.get("metric", None)
         ])
-    if params.get("use_fixed_reference_image") is not None:
+    if params.get("use_fixed_reference_image", None) is not None:
         cargs.extend([
             "--useFixedReferenceImage",
-            str(params.get("use_fixed_reference_image"))
+            str(params.get("use_fixed_reference_image", None))
         ])
-    if params.get("use_scales_estimator"):
+    if params.get("use_scales_estimator", False):
         cargs.append("--useScalesEstimator")
-    if params.get("transform") is not None:
+    if params.get("transform", None) is not None:
         cargs.extend([
             "--transform",
-            params.get("transform")
+            params.get("transform", None)
         ])
-    if params.get("iterations") is not None:
+    if params.get("iterations", None) is not None:
         cargs.extend([
             "--iterations",
-            params.get("iterations")
+            params.get("iterations", None)
         ])
-    if params.get("smoothing_sigmas") is not None:
+    if params.get("smoothing_sigmas", None) is not None:
         cargs.extend([
             "--smoothingSigmas",
-            params.get("smoothing_sigmas")
+            params.get("smoothing_sigmas", None)
         ])
-    if params.get("shrink_factors") is not None:
+    if params.get("shrink_factors", None) is not None:
         cargs.extend([
             "--shrinkFactors",
-            params.get("shrink_factors")
+            params.get("shrink_factors", None)
         ])
-    if params.get("output") is not None:
+    if params.get("output", None) is not None:
         cargs.extend([
             "--output",
-            params.get("output")
+            params.get("output", None)
         ])
-    if params.get("average_image"):
+    if params.get("average_image", False):
         cargs.append("--average-image")
-    if params.get("write_displacement"):
+    if params.get("write_displacement", False):
         cargs.append("--write-displacement")
-    if params.get("use_histogram_matching") is not None:
+    if params.get("use_histogram_matching", None) is not None:
         cargs.extend([
             "--use-histogram-matching",
-            str(params.get("use_histogram_matching"))
+            str(params.get("use_histogram_matching", None))
         ])
-    if params.get("random_seed") is not None:
+    if params.get("random_seed", None) is not None:
         cargs.extend([
             "--random-seed",
-            str(params.get("random_seed"))
+            str(params.get("random_seed", None))
         ])
-    if params.get("interpolation") is not None:
+    if params.get("interpolation", None) is not None:
         cargs.extend([
             "--interpolation",
-            params.get("interpolation")
+            params.get("interpolation", None)
         ])
-    if params.get("verbose") is not None:
+    if params.get("verbose", None) is not None:
         cargs.extend([
             "--verbose",
-            str(params.get("verbose"))
+            str(params.get("verbose", None))
         ])
     return cargs
 
@@ -402,7 +389,6 @@ def ants_motion_corr(
 __all__ = [
     "ANTS_MOTION_CORR_METADATA",
     "AntsMotionCorrOutputs",
-    "AntsMotionCorrParameters",
     "ants_motion_corr",
     "ants_motion_corr_execute",
     "ants_motion_corr_params",

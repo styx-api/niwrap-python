@@ -14,7 +14,20 @@ V__FAST_ROI_METADATA = Metadata(
 
 
 VFastRoiParameters = typing.TypedDict('VFastRoiParameters', {
-    "@type": typing.Literal["afni.@fast_roi"],
+    "@type": typing.NotRequired[typing.Literal["afni/@fast_roi"]],
+    "region": list[str],
+    "drawn_roi": typing.NotRequired[InputPathType | None],
+    "anat": InputPathType,
+    "anat_ns": typing.NotRequired[InputPathType | None],
+    "base": InputPathType,
+    "roi_grid": InputPathType,
+    "prefix": str,
+    "time": bool,
+    "twopass": bool,
+    "help": bool,
+})
+VFastRoiParametersTagged = typing.TypedDict('VFastRoiParametersTagged', {
+    "@type": typing.Literal["afni/@fast_roi"],
     "region": list[str],
     "drawn_roi": typing.NotRequired[InputPathType | None],
     "anat": InputPathType,
@@ -28,41 +41,9 @@ VFastRoiParameters = typing.TypedDict('VFastRoiParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "afni.@fast_roi": v__fast_roi_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "afni.@fast_roi": v__fast_roi_outputs,
-    }.get(t)
-
-
 class VFastRoiOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `v__fast_roi(...)`.
+    Output object returned when calling `VFastRoiParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -81,7 +62,7 @@ def v__fast_roi_params(
     time_: bool = False,
     twopass: bool = False,
     help_: bool = False,
-) -> VFastRoiParameters:
+) -> VFastRoiParametersTagged:
     """
     Build parameters.
     
@@ -106,7 +87,7 @@ def v__fast_roi_params(
         Parameter dictionary
     """
     params = {
-        "@type": "afni.@fast_roi",
+        "@type": "afni/@fast_roi",
         "region": region,
         "anat": anat,
         "base": base,
@@ -140,39 +121,39 @@ def v__fast_roi_cargs(
     cargs.append("@fast_roi")
     cargs.extend([
         "-region",
-        *params.get("region")
+        *params.get("region", None)
     ])
-    if params.get("drawn_roi") is not None:
+    if params.get("drawn_roi", None) is not None:
         cargs.extend([
             "-drawn_roi",
-            execution.input_file(params.get("drawn_roi"))
+            execution.input_file(params.get("drawn_roi", None))
         ])
     cargs.extend([
         "-anat",
-        execution.input_file(params.get("anat"))
+        execution.input_file(params.get("anat", None))
     ])
-    if params.get("anat_ns") is not None:
+    if params.get("anat_ns", None) is not None:
         cargs.extend([
             "-anat_ns",
-            execution.input_file(params.get("anat_ns"))
+            execution.input_file(params.get("anat_ns", None))
         ])
     cargs.extend([
         "-base",
-        execution.input_file(params.get("base"))
+        execution.input_file(params.get("base", None))
     ])
     cargs.extend([
         "-roi_grid",
-        execution.input_file(params.get("roi_grid"))
+        execution.input_file(params.get("roi_grid", None))
     ])
     cargs.extend([
         "-prefix",
-        params.get("prefix")
+        params.get("prefix", None)
     ])
-    if params.get("time"):
+    if params.get("time", False):
         cargs.append("--time")
-    if params.get("twopass"):
+    if params.get("twopass", False):
         cargs.append("--twopass")
-    if params.get("help"):
+    if params.get("help", False):
         cargs.append("--help")
     return cargs
 
@@ -192,7 +173,7 @@ def v__fast_roi_outputs(
     """
     ret = VFastRoiOutputs(
         root=execution.output_file("."),
-        roi_output=execution.output_file("ROI." + params.get("prefix") + "+orig"),
+        roi_output=execution.output_file("ROI." + params.get("prefix", None) + "+orig"),
     )
     return ret
 
@@ -287,7 +268,6 @@ def v__fast_roi(
 
 __all__ = [
     "VFastRoiOutputs",
-    "VFastRoiParameters",
     "V__FAST_ROI_METADATA",
     "v__fast_roi",
     "v__fast_roi_execute",

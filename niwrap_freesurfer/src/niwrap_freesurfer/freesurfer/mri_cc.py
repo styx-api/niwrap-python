@@ -14,7 +14,22 @@ MRI_CC_METADATA = Metadata(
 
 
 MriCcParameters = typing.TypedDict('MriCcParameters', {
-    "@type": typing.Literal["freesurfer.mri_cc"],
+    "@type": typing.NotRequired[typing.Literal["freesurfer/mri_cc"]],
+    "subject_name": str,
+    "output_file": typing.NotRequired[str | None],
+    "aseg_file": typing.NotRequired[InputPathType | None],
+    "norm_file": typing.NotRequired[InputPathType | None],
+    "sdir": typing.NotRequired[str | None],
+    "rotation_lta": typing.NotRequired[InputPathType | None],
+    "force_flag": bool,
+    "include_fornix": bool,
+    "compartments": typing.NotRequired[float | None],
+    "thickness": typing.NotRequired[float | None],
+    "skip_voxels": typing.NotRequired[float | None],
+    "max_rotation": typing.NotRequired[float | None],
+})
+MriCcParametersTagged = typing.TypedDict('MriCcParametersTagged', {
+    "@type": typing.Literal["freesurfer/mri_cc"],
     "subject_name": str,
     "output_file": typing.NotRequired[str | None],
     "aseg_file": typing.NotRequired[InputPathType | None],
@@ -30,41 +45,9 @@ MriCcParameters = typing.TypedDict('MriCcParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "freesurfer.mri_cc": mri_cc_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "freesurfer.mri_cc": mri_cc_outputs,
-    }.get(t)
-
-
 class MriCcOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `mri_cc(...)`.
+    Output object returned when calling `MriCcParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -85,7 +68,7 @@ def mri_cc_params(
     thickness: float | None = None,
     skip_voxels: float | None = None,
     max_rotation: float | None = None,
-) -> MriCcParameters:
+) -> MriCcParametersTagged:
     """
     Build parameters.
     
@@ -106,7 +89,7 @@ def mri_cc_params(
         Parameter dictionary
     """
     params = {
-        "@type": "freesurfer.mri_cc",
+        "@type": "freesurfer/mri_cc",
         "subject_name": subject_name,
         "force_flag": force_flag,
         "include_fornix": include_fornix,
@@ -147,55 +130,55 @@ def mri_cc_cargs(
     """
     cargs = []
     cargs.append("mri_cc")
-    cargs.append(params.get("subject_name"))
-    if params.get("output_file") is not None:
+    cargs.append(params.get("subject_name", None))
+    if params.get("output_file", None) is not None:
         cargs.extend([
             "-o",
-            params.get("output_file")
+            params.get("output_file", None)
         ])
-    if params.get("aseg_file") is not None:
+    if params.get("aseg_file", None) is not None:
         cargs.extend([
             "-aseg",
-            execution.input_file(params.get("aseg_file"))
+            execution.input_file(params.get("aseg_file", None))
         ])
-    if params.get("norm_file") is not None:
+    if params.get("norm_file", None) is not None:
         cargs.extend([
             "-norm",
-            execution.input_file(params.get("norm_file"))
+            execution.input_file(params.get("norm_file", None))
         ])
-    if params.get("sdir") is not None:
+    if params.get("sdir", None) is not None:
         cargs.extend([
             "-sdir",
-            params.get("sdir")
+            params.get("sdir", None)
         ])
-    if params.get("rotation_lta") is not None:
+    if params.get("rotation_lta", None) is not None:
         cargs.extend([
             "-lta",
-            execution.input_file(params.get("rotation_lta"))
+            execution.input_file(params.get("rotation_lta", None))
         ])
-    if params.get("force_flag"):
+    if params.get("force_flag", False):
         cargs.append("-force")
-    if params.get("include_fornix"):
+    if params.get("include_fornix", False):
         cargs.append("-f")
-    if params.get("compartments") is not None:
+    if params.get("compartments", None) is not None:
         cargs.extend([
             "-d",
-            str(params.get("compartments"))
+            str(params.get("compartments", None))
         ])
-    if params.get("thickness") is not None:
+    if params.get("thickness", None) is not None:
         cargs.extend([
             "-t",
-            str(params.get("thickness"))
+            str(params.get("thickness", None))
         ])
-    if params.get("skip_voxels") is not None:
+    if params.get("skip_voxels", None) is not None:
         cargs.extend([
             "-s",
-            str(params.get("skip_voxels"))
+            str(params.get("skip_voxels", None))
         ])
-    if params.get("max_rotation") is not None:
+    if params.get("max_rotation", None) is not None:
         cargs.extend([
             "-m",
-            str(params.get("max_rotation"))
+            str(params.get("max_rotation", None))
         ])
     return cargs
 
@@ -215,7 +198,7 @@ def mri_cc_outputs(
     """
     ret = MriCcOutputs(
         root=execution.output_file("."),
-        output_volume=execution.output_file("SDIR/mri/" + params.get("output_file")) if (params.get("output_file") is not None) else None,
+        output_volume=execution.output_file("SDIR/mri/" + params.get("output_file", None)) if (params.get("output_file") is not None) else None,
     )
     return ret
 
@@ -311,7 +294,6 @@ def mri_cc(
 __all__ = [
     "MRI_CC_METADATA",
     "MriCcOutputs",
-    "MriCcParameters",
     "mri_cc",
     "mri_cc_execute",
     "mri_cc_params",

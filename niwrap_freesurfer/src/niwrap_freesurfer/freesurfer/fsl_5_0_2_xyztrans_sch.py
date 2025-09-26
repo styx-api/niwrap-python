@@ -14,47 +14,22 @@ FSL_5_0_2_XYZTRANS_SCH_METADATA = Metadata(
 
 
 Fsl502XyztransSchParameters = typing.TypedDict('Fsl502XyztransSchParameters', {
-    "@type": typing.Literal["freesurfer.fsl.5.0.2.xyztrans.sch"],
+    "@type": typing.NotRequired[typing.Literal["freesurfer/fsl.5.0.2.xyztrans.sch"]],
+    "term_option": typing.NotRequired[str | None],
+    "version_flag": bool,
+    "no_scrollback_flag": bool,
+})
+Fsl502XyztransSchParametersTagged = typing.TypedDict('Fsl502XyztransSchParametersTagged', {
+    "@type": typing.Literal["freesurfer/fsl.5.0.2.xyztrans.sch"],
     "term_option": typing.NotRequired[str | None],
     "version_flag": bool,
     "no_scrollback_flag": bool,
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "freesurfer.fsl.5.0.2.xyztrans.sch": fsl_5_0_2_xyztrans_sch_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-    }.get(t)
-
-
 class Fsl502XyztransSchOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `fsl_5_0_2_xyztrans_sch(...)`.
+    Output object returned when calling `Fsl502XyztransSchParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -64,7 +39,7 @@ def fsl_5_0_2_xyztrans_sch_params(
     term_option: str | None = None,
     version_flag: bool = False,
     no_scrollback_flag: bool = False,
-) -> Fsl502XyztransSchParameters:
+) -> Fsl502XyztransSchParametersTagged:
     """
     Build parameters.
     
@@ -76,7 +51,7 @@ def fsl_5_0_2_xyztrans_sch_params(
         Parameter dictionary
     """
     params = {
-        "@type": "freesurfer.fsl.5.0.2.xyztrans.sch",
+        "@type": "freesurfer/fsl.5.0.2.xyztrans.sch",
         "version_flag": version_flag,
         "no_scrollback_flag": no_scrollback_flag,
     }
@@ -100,14 +75,14 @@ def fsl_5_0_2_xyztrans_sch_cargs(
     """
     cargs = []
     cargs.append("fsl.5.0.2.xyztrans.sch")
-    if params.get("term_option") is not None:
+    if params.get("term_option", None) is not None:
         cargs.extend([
             "-T",
-            params.get("term_option")
+            params.get("term_option", None)
         ])
-    if params.get("version_flag"):
+    if params.get("version_flag", False):
         cargs.append("-V")
-    if params.get("no_scrollback_flag"):
+    if params.get("no_scrollback_flag", False):
         cargs.append("-x")
     return cargs
 
@@ -195,7 +170,6 @@ def fsl_5_0_2_xyztrans_sch(
 __all__ = [
     "FSL_5_0_2_XYZTRANS_SCH_METADATA",
     "Fsl502XyztransSchOutputs",
-    "Fsl502XyztransSchParameters",
     "fsl_5_0_2_xyztrans_sch",
     "fsl_5_0_2_xyztrans_sch_execute",
     "fsl_5_0_2_xyztrans_sch_params",

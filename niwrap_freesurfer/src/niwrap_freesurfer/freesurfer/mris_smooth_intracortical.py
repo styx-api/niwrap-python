@@ -14,7 +14,20 @@ MRIS_SMOOTH_INTRACORTICAL_METADATA = Metadata(
 
 
 MrisSmoothIntracorticalParameters = typing.TypedDict('MrisSmoothIntracorticalParameters', {
-    "@type": typing.Literal["freesurfer.mris_smooth_intracortical"],
+    "@type": typing.NotRequired[typing.Literal["freesurfer/mris_smooth_intracortical"]],
+    "surf_dir": str,
+    "surf_name": str,
+    "overlay_dir": str,
+    "overlay_name": str,
+    "output_dir": typing.NotRequired[str | None],
+    "output_name": typing.NotRequired[str | None],
+    "tan_size": typing.NotRequired[int | None],
+    "rad_size": typing.NotRequired[float | None],
+    "rad_start": typing.NotRequired[float | None],
+    "tan_weights": typing.NotRequired[str | None],
+})
+MrisSmoothIntracorticalParametersTagged = typing.TypedDict('MrisSmoothIntracorticalParametersTagged', {
+    "@type": typing.Literal["freesurfer/mris_smooth_intracortical"],
     "surf_dir": str,
     "surf_name": str,
     "overlay_dir": str,
@@ -28,41 +41,9 @@ MrisSmoothIntracorticalParameters = typing.TypedDict('MrisSmoothIntracorticalPar
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "freesurfer.mris_smooth_intracortical": mris_smooth_intracortical_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "freesurfer.mris_smooth_intracortical": mris_smooth_intracortical_outputs,
-    }.get(t)
-
-
 class MrisSmoothIntracorticalOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `mris_smooth_intracortical(...)`.
+    Output object returned when calling `MrisSmoothIntracorticalParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -81,7 +62,7 @@ def mris_smooth_intracortical_params(
     rad_size: float | None = None,
     rad_start: float | None = None,
     tan_weights: str | None = None,
-) -> MrisSmoothIntracorticalParameters:
+) -> MrisSmoothIntracorticalParametersTagged:
     """
     Build parameters.
     
@@ -106,7 +87,7 @@ def mris_smooth_intracortical_params(
         Parameter dictionary
     """
     params = {
-        "@type": "freesurfer.mris_smooth_intracortical",
+        "@type": "freesurfer/mris_smooth_intracortical",
         "surf_dir": surf_dir,
         "surf_name": surf_name,
         "overlay_dir": overlay_dir,
@@ -144,49 +125,49 @@ def mris_smooth_intracortical_cargs(
     cargs.append("mris_smooth_intracortical")
     cargs.extend([
         "--surf_dir",
-        params.get("surf_dir")
+        params.get("surf_dir", None)
     ])
     cargs.extend([
         "--surf_name",
-        params.get("surf_name")
+        params.get("surf_name", None)
     ])
     cargs.extend([
         "--overlay_dir",
-        params.get("overlay_dir")
+        params.get("overlay_dir", None)
     ])
     cargs.extend([
         "--overlay_name",
-        params.get("overlay_name")
+        params.get("overlay_name", None)
     ])
-    if params.get("output_dir") is not None:
+    if params.get("output_dir", None) is not None:
         cargs.extend([
             "--output_dir",
-            "[" + params.get("output_dir") + "]"
+            "[" + params.get("output_dir", None) + "]"
         ])
-    if params.get("output_name") is not None:
+    if params.get("output_name", None) is not None:
         cargs.extend([
             "--output_name",
-            "[" + params.get("output_name") + "]"
+            "[" + params.get("output_name", None) + "]"
         ])
-    if params.get("tan_size") is not None:
+    if params.get("tan_size", None) is not None:
         cargs.extend([
             "--tan-size",
-            "[" + str(params.get("tan_size")) + "]"
+            "[" + str(params.get("tan_size", None)) + "]"
         ])
-    if params.get("rad_size") is not None:
+    if params.get("rad_size", None) is not None:
         cargs.extend([
             "--rad-size",
-            "[" + str(params.get("rad_size")) + "]"
+            "[" + str(params.get("rad_size", None)) + "]"
         ])
-    if params.get("rad_start") is not None:
+    if params.get("rad_start", None) is not None:
         cargs.extend([
             "--rad-start",
-            "[" + str(params.get("rad_start")) + "]"
+            "[" + str(params.get("rad_start", None)) + "]"
         ])
-    if params.get("tan_weights") is not None:
+    if params.get("tan_weights", None) is not None:
         cargs.extend([
             "--tan-weights",
-            "[" + params.get("tan_weights") + "]"
+            "[" + params.get("tan_weights", None) + "]"
         ])
     return cargs
 
@@ -206,7 +187,7 @@ def mris_smooth_intracortical_outputs(
     """
     ret = MrisSmoothIntracorticalOutputs(
         root=execution.output_file("."),
-        output_overlay=execution.output_file(params.get("output_dir") + "/" + params.get("output_name")) if (params.get("output_dir") is not None and params.get("output_name") is not None) else None,
+        output_overlay=execution.output_file(params.get("output_dir", None) + "/" + params.get("output_name", None)) if (params.get("output_dir") is not None and params.get("output_name") is not None) else None,
     )
     return ret
 
@@ -302,7 +283,6 @@ def mris_smooth_intracortical(
 __all__ = [
     "MRIS_SMOOTH_INTRACORTICAL_METADATA",
     "MrisSmoothIntracorticalOutputs",
-    "MrisSmoothIntracorticalParameters",
     "mris_smooth_intracortical",
     "mris_smooth_intracortical_execute",
     "mris_smooth_intracortical_params",

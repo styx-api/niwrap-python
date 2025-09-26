@@ -14,27 +14,53 @@ VOLUME_WEIGHTED_STATS_METADATA = Metadata(
 
 
 VolumeWeightedStatsWeightVolumeParameters = typing.TypedDict('VolumeWeightedStatsWeightVolumeParameters', {
-    "@type": typing.Literal["workbench.volume-weighted-stats.weight_volume"],
+    "@type": typing.NotRequired[typing.Literal["weight_volume"]],
+    "weight_volume": InputPathType,
+    "opt_match_maps": bool,
+})
+VolumeWeightedStatsWeightVolumeParametersTagged = typing.TypedDict('VolumeWeightedStatsWeightVolumeParametersTagged', {
+    "@type": typing.Literal["weight_volume"],
     "weight_volume": InputPathType,
     "opt_match_maps": bool,
 })
 
 
 VolumeWeightedStatsRoiParameters = typing.TypedDict('VolumeWeightedStatsRoiParameters', {
-    "@type": typing.Literal["workbench.volume-weighted-stats.roi"],
+    "@type": typing.NotRequired[typing.Literal["roi"]],
+    "roi_volume": InputPathType,
+    "opt_match_maps": bool,
+})
+VolumeWeightedStatsRoiParametersTagged = typing.TypedDict('VolumeWeightedStatsRoiParametersTagged', {
+    "@type": typing.Literal["roi"],
     "roi_volume": InputPathType,
     "opt_match_maps": bool,
 })
 
 
 VolumeWeightedStatsStdevParameters = typing.TypedDict('VolumeWeightedStatsStdevParameters', {
-    "@type": typing.Literal["workbench.volume-weighted-stats.stdev"],
+    "@type": typing.NotRequired[typing.Literal["stdev"]],
+    "opt_sample": bool,
+})
+VolumeWeightedStatsStdevParametersTagged = typing.TypedDict('VolumeWeightedStatsStdevParametersTagged', {
+    "@type": typing.Literal["stdev"],
     "opt_sample": bool,
 })
 
 
 VolumeWeightedStatsParameters = typing.TypedDict('VolumeWeightedStatsParameters', {
-    "@type": typing.Literal["workbench.volume-weighted-stats"],
+    "@type": typing.NotRequired[typing.Literal["workbench/volume-weighted-stats"]],
+    "volume_in": InputPathType,
+    "weight_volume": typing.NotRequired[VolumeWeightedStatsWeightVolumeParameters | None],
+    "opt_subvolume_subvolume": typing.NotRequired[str | None],
+    "roi": typing.NotRequired[VolumeWeightedStatsRoiParameters | None],
+    "opt_mean": bool,
+    "stdev": typing.NotRequired[VolumeWeightedStatsStdevParameters | None],
+    "opt_percentile_percent": typing.NotRequired[float | None],
+    "opt_sum": bool,
+    "opt_show_map_name": bool,
+})
+VolumeWeightedStatsParametersTagged = typing.TypedDict('VolumeWeightedStatsParametersTagged', {
+    "@type": typing.Literal["workbench/volume-weighted-stats"],
     "volume_in": InputPathType,
     "weight_volume": typing.NotRequired[VolumeWeightedStatsWeightVolumeParameters | None],
     "opt_subvolume_subvolume": typing.NotRequired[str | None],
@@ -47,44 +73,10 @@ VolumeWeightedStatsParameters = typing.TypedDict('VolumeWeightedStatsParameters'
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "workbench.volume-weighted-stats": volume_weighted_stats_cargs,
-        "workbench.volume-weighted-stats.weight_volume": volume_weighted_stats_weight_volume_cargs,
-        "workbench.volume-weighted-stats.roi": volume_weighted_stats_roi_cargs,
-        "workbench.volume-weighted-stats.stdev": volume_weighted_stats_stdev_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-    }.get(t)
-
-
 def volume_weighted_stats_weight_volume_params(
     weight_volume: InputPathType,
     opt_match_maps: bool = False,
-) -> VolumeWeightedStatsWeightVolumeParameters:
+) -> VolumeWeightedStatsWeightVolumeParametersTagged:
     """
     Build parameters.
     
@@ -96,7 +88,7 @@ def volume_weighted_stats_weight_volume_params(
         Parameter dictionary
     """
     params = {
-        "@type": "workbench.volume-weighted-stats.weight_volume",
+        "@type": "weight_volume",
         "weight_volume": weight_volume,
         "opt_match_maps": opt_match_maps,
     }
@@ -118,8 +110,8 @@ def volume_weighted_stats_weight_volume_cargs(
     """
     cargs = []
     cargs.append("-weight-volume")
-    cargs.append(execution.input_file(params.get("weight_volume")))
-    if params.get("opt_match_maps"):
+    cargs.append(execution.input_file(params.get("weight_volume", None)))
+    if params.get("opt_match_maps", False):
         cargs.append("-match-maps")
     return cargs
 
@@ -127,7 +119,7 @@ def volume_weighted_stats_weight_volume_cargs(
 def volume_weighted_stats_roi_params(
     roi_volume: InputPathType,
     opt_match_maps: bool = False,
-) -> VolumeWeightedStatsRoiParameters:
+) -> VolumeWeightedStatsRoiParametersTagged:
     """
     Build parameters.
     
@@ -139,7 +131,7 @@ def volume_weighted_stats_roi_params(
         Parameter dictionary
     """
     params = {
-        "@type": "workbench.volume-weighted-stats.roi",
+        "@type": "roi",
         "roi_volume": roi_volume,
         "opt_match_maps": opt_match_maps,
     }
@@ -161,15 +153,15 @@ def volume_weighted_stats_roi_cargs(
     """
     cargs = []
     cargs.append("-roi")
-    cargs.append(execution.input_file(params.get("roi_volume")))
-    if params.get("opt_match_maps"):
+    cargs.append(execution.input_file(params.get("roi_volume", None)))
+    if params.get("opt_match_maps", False):
         cargs.append("-match-maps")
     return cargs
 
 
 def volume_weighted_stats_stdev_params(
     opt_sample: bool = False,
-) -> VolumeWeightedStatsStdevParameters:
+) -> VolumeWeightedStatsStdevParametersTagged:
     """
     Build parameters.
     
@@ -179,7 +171,7 @@ def volume_weighted_stats_stdev_params(
         Parameter dictionary
     """
     params = {
-        "@type": "workbench.volume-weighted-stats.stdev",
+        "@type": "stdev",
         "opt_sample": opt_sample,
     }
     return params
@@ -200,14 +192,14 @@ def volume_weighted_stats_stdev_cargs(
     """
     cargs = []
     cargs.append("-stdev")
-    if params.get("opt_sample"):
+    if params.get("opt_sample", False):
         cargs.append("-sample")
     return cargs
 
 
 class VolumeWeightedStatsOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `volume_weighted_stats(...)`.
+    Output object returned when calling `VolumeWeightedStatsParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -223,7 +215,7 @@ def volume_weighted_stats_params(
     opt_percentile_percent: float | None = None,
     opt_sum: bool = False,
     opt_show_map_name: bool = False,
-) -> VolumeWeightedStatsParameters:
+) -> VolumeWeightedStatsParametersTagged:
     """
     Build parameters.
     
@@ -243,7 +235,7 @@ def volume_weighted_stats_params(
         Parameter dictionary
     """
     params = {
-        "@type": "workbench.volume-weighted-stats",
+        "@type": "workbench/volume-weighted-stats",
         "volume_in": volume_in,
         "opt_mean": opt_mean,
         "opt_sum": opt_sum,
@@ -278,28 +270,28 @@ def volume_weighted_stats_cargs(
     cargs = []
     cargs.append("wb_command")
     cargs.append("-volume-weighted-stats")
-    cargs.append(execution.input_file(params.get("volume_in")))
-    if params.get("weight_volume") is not None:
-        cargs.extend(dyn_cargs(params.get("weight_volume")["@type"])(params.get("weight_volume"), execution))
-    if params.get("opt_subvolume_subvolume") is not None:
+    cargs.append(execution.input_file(params.get("volume_in", None)))
+    if params.get("weight_volume", None) is not None:
+        cargs.extend(volume_weighted_stats_weight_volume_cargs(params.get("weight_volume", None), execution))
+    if params.get("opt_subvolume_subvolume", None) is not None:
         cargs.extend([
             "-subvolume",
-            params.get("opt_subvolume_subvolume")
+            params.get("opt_subvolume_subvolume", None)
         ])
-    if params.get("roi") is not None:
-        cargs.extend(dyn_cargs(params.get("roi")["@type"])(params.get("roi"), execution))
-    if params.get("opt_mean"):
+    if params.get("roi", None) is not None:
+        cargs.extend(volume_weighted_stats_roi_cargs(params.get("roi", None), execution))
+    if params.get("opt_mean", False):
         cargs.append("-mean")
-    if params.get("stdev") is not None:
-        cargs.extend(dyn_cargs(params.get("stdev")["@type"])(params.get("stdev"), execution))
-    if params.get("opt_percentile_percent") is not None:
+    if params.get("stdev", None) is not None:
+        cargs.extend(volume_weighted_stats_stdev_cargs(params.get("stdev", None), execution))
+    if params.get("opt_percentile_percent", None) is not None:
         cargs.extend([
             "-percentile",
-            str(params.get("opt_percentile_percent"))
+            str(params.get("opt_percentile_percent", None))
         ])
-    if params.get("opt_sum"):
+    if params.get("opt_sum", False):
         cargs.append("-sum")
-    if params.get("opt_show_map_name"):
+    if params.get("opt_show_map_name", False):
         cargs.append("-show-map-name")
     return cargs
 
@@ -427,10 +419,6 @@ def volume_weighted_stats(
 __all__ = [
     "VOLUME_WEIGHTED_STATS_METADATA",
     "VolumeWeightedStatsOutputs",
-    "VolumeWeightedStatsParameters",
-    "VolumeWeightedStatsRoiParameters",
-    "VolumeWeightedStatsStdevParameters",
-    "VolumeWeightedStatsWeightVolumeParameters",
     "volume_weighted_stats",
     "volume_weighted_stats_execute",
     "volume_weighted_stats_params",

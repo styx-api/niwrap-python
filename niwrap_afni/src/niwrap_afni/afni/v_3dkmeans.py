@@ -14,7 +14,29 @@ V_3DKMEANS_METADATA = Metadata(
 
 
 V3dkmeansParameters = typing.TypedDict('V3dkmeansParameters', {
-    "@type": typing.Literal["afni.3dkmeans"],
+    "@type": typing.NotRequired[typing.Literal["afni/3dkmeans"]],
+    "version": bool,
+    "input": list[InputPathType],
+    "mask": typing.NotRequired[InputPathType | None],
+    "mask_range": typing.NotRequired[list[float] | None],
+    "cmask": typing.NotRequired[str | None],
+    "jobname": typing.NotRequired[str | None],
+    "prefix": typing.NotRequired[str | None],
+    "distance_measure": typing.NotRequired[float | None],
+    "num_clusters": typing.NotRequired[float | None],
+    "remap_method": typing.NotRequired[str | None],
+    "labeltable": typing.NotRequired[InputPathType | None],
+    "clabels": typing.NotRequired[list[str] | None],
+    "clust_init": typing.NotRequired[InputPathType | None],
+    "num_repeats": typing.NotRequired[float | None],
+    "rsigs": typing.NotRequired[InputPathType | None],
+    "verbose": bool,
+    "write_dists": bool,
+    "voxdbg": typing.NotRequired[list[float] | None],
+    "seed": typing.NotRequired[float | None],
+})
+V3dkmeansParametersTagged = typing.TypedDict('V3dkmeansParametersTagged', {
+    "@type": typing.Literal["afni/3dkmeans"],
     "version": bool,
     "input": list[InputPathType],
     "mask": typing.NotRequired[InputPathType | None],
@@ -37,41 +59,9 @@ V3dkmeansParameters = typing.TypedDict('V3dkmeansParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "afni.3dkmeans": v_3dkmeans_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "afni.3dkmeans": v_3dkmeans_outputs,
-    }.get(t)
-
-
 class V3dkmeansOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `v_3dkmeans(...)`.
+    Output object returned when calling `V3dkmeansParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -111,7 +101,7 @@ def v_3dkmeans_params(
     write_dists: bool = False,
     voxdbg: list[float] | None = None,
     seed: float | None = None,
-) -> V3dkmeansParameters:
+) -> V3dkmeansParametersTagged:
     """
     Build parameters.
     
@@ -154,7 +144,7 @@ def v_3dkmeans_params(
         Parameter dictionary
     """
     params = {
-        "@type": "afni.3dkmeans",
+        "@type": "afni/3dkmeans",
         "version": version,
         "input": input_,
         "verbose": verbose,
@@ -208,90 +198,90 @@ def v_3dkmeans_cargs(
     """
     cargs = []
     cargs.append("3dkmeans")
-    if params.get("version"):
+    if params.get("version", False):
         cargs.append("--version")
     cargs.extend([
         "-f",
-        *[execution.input_file(f) for f in params.get("input")]
+        *[execution.input_file(f) for f in params.get("input", None)]
     ])
-    if params.get("mask") is not None:
+    if params.get("mask", None) is not None:
         cargs.extend([
             "-mask",
-            execution.input_file(params.get("mask"))
+            execution.input_file(params.get("mask", None))
         ])
-    if params.get("mask_range") is not None:
+    if params.get("mask_range", None) is not None:
         cargs.extend([
             "-mrange",
-            *map(str, params.get("mask_range"))
+            *map(str, params.get("mask_range", None))
         ])
-    if params.get("cmask") is not None:
+    if params.get("cmask", None) is not None:
         cargs.extend([
             "-cmask",
-            params.get("cmask")
+            params.get("cmask", None)
         ])
-    if params.get("jobname") is not None:
+    if params.get("jobname", None) is not None:
         cargs.extend([
             "-u",
-            params.get("jobname")
+            params.get("jobname", None)
         ])
-    if params.get("prefix") is not None:
+    if params.get("prefix", None) is not None:
         cargs.extend([
             "-prefix",
-            params.get("prefix")
+            params.get("prefix", None)
         ])
-    if params.get("distance_measure") is not None:
+    if params.get("distance_measure", None) is not None:
         cargs.extend([
             "-g",
-            str(params.get("distance_measure"))
+            str(params.get("distance_measure", None))
         ])
-    if params.get("num_clusters") is not None:
+    if params.get("num_clusters", None) is not None:
         cargs.extend([
             "-k",
-            str(params.get("num_clusters"))
+            str(params.get("num_clusters", None))
         ])
-    if params.get("remap_method") is not None:
+    if params.get("remap_method", None) is not None:
         cargs.extend([
             "-remap",
-            params.get("remap_method")
+            params.get("remap_method", None)
         ])
-    if params.get("labeltable") is not None:
+    if params.get("labeltable", None) is not None:
         cargs.extend([
             "-labeltable",
-            execution.input_file(params.get("labeltable"))
+            execution.input_file(params.get("labeltable", None))
         ])
-    if params.get("clabels") is not None:
+    if params.get("clabels", None) is not None:
         cargs.extend([
             "-clabels",
-            *params.get("clabels")
+            *params.get("clabels", None)
         ])
-    if params.get("clust_init") is not None:
+    if params.get("clust_init", None) is not None:
         cargs.extend([
             "-clust_init",
-            execution.input_file(params.get("clust_init"))
+            execution.input_file(params.get("clust_init", None))
         ])
-    if params.get("num_repeats") is not None:
+    if params.get("num_repeats", None) is not None:
         cargs.extend([
             "-r",
-            str(params.get("num_repeats"))
+            str(params.get("num_repeats", None))
         ])
-    if params.get("rsigs") is not None:
+    if params.get("rsigs", None) is not None:
         cargs.extend([
             "-rsigs",
-            execution.input_file(params.get("rsigs"))
+            execution.input_file(params.get("rsigs", None))
         ])
-    if params.get("verbose"):
+    if params.get("verbose", False):
         cargs.append("-verb")
-    if params.get("write_dists"):
+    if params.get("write_dists", False):
         cargs.append("-write_dists")
-    if params.get("voxdbg") is not None:
+    if params.get("voxdbg", None) is not None:
         cargs.extend([
             "-voxdbg",
-            *map(str, params.get("voxdbg"))
+            *map(str, params.get("voxdbg", None))
         ])
-    if params.get("seed") is not None:
+    if params.get("seed", None) is not None:
         cargs.extend([
             "-seed",
-            str(params.get("seed"))
+            str(params.get("seed", None))
         ])
     return cargs
 
@@ -311,8 +301,8 @@ def v_3dkmeans_outputs(
     """
     ret = V3dkmeansOutputs(
         root=execution.output_file("."),
-        cluster_membership=execution.output_file(params.get("jobname") + "_membership.nii.gz") if (params.get("jobname") is not None) else None,
-        cluster_distance=execution.output_file(params.get("jobname") + "_distance.nii.gz") if (params.get("jobname") is not None) else None,
+        cluster_membership=execution.output_file(params.get("jobname", None) + "_membership.nii.gz") if (params.get("jobname") is not None) else None,
+        cluster_distance=execution.output_file(params.get("jobname", None) + "_distance.nii.gz") if (params.get("jobname") is not None) else None,
         distances_text_file=execution.output_file("FILE.dis.1D"),
         centroids_text_file=execution.output_file("FILE.cen.1D"),
         within_cluster_sum_text_file=execution.output_file("FILE.info1.1D"),
@@ -446,7 +436,6 @@ def v_3dkmeans(
 
 __all__ = [
     "V3dkmeansOutputs",
-    "V3dkmeansParameters",
     "V_3DKMEANS_METADATA",
     "v_3dkmeans",
     "v_3dkmeans_execute",

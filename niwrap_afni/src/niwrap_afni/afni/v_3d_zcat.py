@@ -14,7 +14,17 @@ V_3D_ZCAT_METADATA = Metadata(
 
 
 V3dZcatParameters = typing.TypedDict('V3dZcatParameters', {
-    "@type": typing.Literal["afni.3dZcat"],
+    "@type": typing.NotRequired[typing.Literal["afni/3dZcat"]],
+    "prefix": typing.NotRequired[str | None],
+    "datum": typing.NotRequired[typing.Literal["byte", "short", "float"] | None],
+    "fscale": bool,
+    "nscale": bool,
+    "verb": bool,
+    "frugal": bool,
+    "input_files": list[InputPathType],
+})
+V3dZcatParametersTagged = typing.TypedDict('V3dZcatParametersTagged', {
+    "@type": typing.Literal["afni/3dZcat"],
     "prefix": typing.NotRequired[str | None],
     "datum": typing.NotRequired[typing.Literal["byte", "short", "float"] | None],
     "fscale": bool,
@@ -25,41 +35,9 @@ V3dZcatParameters = typing.TypedDict('V3dZcatParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "afni.3dZcat": v_3d_zcat_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "afni.3dZcat": v_3d_zcat_outputs,
-    }.get(t)
-
-
 class V3dZcatOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `v_3d_zcat(...)`.
+    Output object returned when calling `V3dZcatParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -77,7 +55,7 @@ def v_3d_zcat_params(
     nscale: bool = False,
     verb: bool = False,
     frugal: bool = False,
-) -> V3dZcatParameters:
+) -> V3dZcatParametersTagged:
     """
     Build parameters.
     
@@ -102,7 +80,7 @@ def v_3d_zcat_params(
         Parameter dictionary
     """
     params = {
-        "@type": "afni.3dZcat",
+        "@type": "afni/3dZcat",
         "fscale": fscale,
         "nscale": nscale,
         "verb": verb,
@@ -131,25 +109,25 @@ def v_3d_zcat_cargs(
     """
     cargs = []
     cargs.append("3dZcat")
-    if params.get("prefix") is not None:
+    if params.get("prefix", None) is not None:
         cargs.extend([
             "-prefix",
-            params.get("prefix")
+            params.get("prefix", None)
         ])
-    if params.get("datum") is not None:
+    if params.get("datum", None) is not None:
         cargs.extend([
             "-datum",
-            params.get("datum")
+            params.get("datum", None)
         ])
-    if params.get("fscale"):
+    if params.get("fscale", False):
         cargs.append("-fscale")
-    if params.get("nscale"):
+    if params.get("nscale", False):
         cargs.append("-nscale")
-    if params.get("verb"):
+    if params.get("verb", False):
         cargs.append("-verb")
-    if params.get("frugal"):
+    if params.get("frugal", False):
         cargs.append("-frugal")
-    cargs.extend([execution.input_file(f) for f in params.get("input_files")])
+    cargs.extend([execution.input_file(f) for f in params.get("input_files", None)])
     return cargs
 
 
@@ -168,8 +146,8 @@ def v_3d_zcat_outputs(
     """
     ret = V3dZcatOutputs(
         root=execution.output_file("."),
-        out_head=execution.output_file(params.get("prefix") + "+orig.HEAD") if (params.get("prefix") is not None) else None,
-        out_brik=execution.output_file(params.get("prefix") + "+orig.BRIK") if (params.get("prefix") is not None) else None,
+        out_head=execution.output_file(params.get("prefix", None) + "+orig.HEAD") if (params.get("prefix") is not None) else None,
+        out_brik=execution.output_file(params.get("prefix", None) + "+orig.BRIK") if (params.get("prefix") is not None) else None,
     )
     return ret
 
@@ -256,7 +234,6 @@ def v_3d_zcat(
 
 __all__ = [
     "V3dZcatOutputs",
-    "V3dZcatParameters",
     "V_3D_ZCAT_METADATA",
     "v_3d_zcat",
     "v_3d_zcat_execute",

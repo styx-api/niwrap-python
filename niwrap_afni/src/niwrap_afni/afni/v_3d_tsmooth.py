@@ -14,7 +14,24 @@ V_3D_TSMOOTH_METADATA = Metadata(
 
 
 V3dTsmoothParameters = typing.TypedDict('V3dTsmoothParameters', {
-    "@type": typing.Literal["afni.3dTsmooth"],
+    "@type": typing.NotRequired[typing.Literal["afni/3dTsmooth"]],
+    "input_dataset": InputPathType,
+    "prefix": typing.NotRequired[str | None],
+    "datum_type": typing.NotRequired[str | None],
+    "lin_filter": bool,
+    "med_filter": bool,
+    "osf_filter": bool,
+    "lin_filter_custom": typing.NotRequired[float | None],
+    "hamming": typing.NotRequired[int | None],
+    "blackman": typing.NotRequired[int | None],
+    "custom_filter": typing.NotRequired[InputPathType | None],
+    "extend": bool,
+    "zero": bool,
+    "trend": bool,
+    "adaptive": typing.NotRequired[int | None],
+})
+V3dTsmoothParametersTagged = typing.TypedDict('V3dTsmoothParametersTagged', {
+    "@type": typing.Literal["afni/3dTsmooth"],
     "input_dataset": InputPathType,
     "prefix": typing.NotRequired[str | None],
     "datum_type": typing.NotRequired[str | None],
@@ -32,41 +49,9 @@ V3dTsmoothParameters = typing.TypedDict('V3dTsmoothParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "afni.3dTsmooth": v_3d_tsmooth_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "afni.3dTsmooth": v_3d_tsmooth_outputs,
-    }.get(t)
-
-
 class V3dTsmoothOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `v_3d_tsmooth(...)`.
+    Output object returned when calling `V3dTsmoothParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -89,7 +74,7 @@ def v_3d_tsmooth_params(
     zero: bool = False,
     trend: bool = False,
     adaptive: int | None = None,
-) -> V3dTsmoothParameters:
+) -> V3dTsmoothParametersTagged:
     """
     Build parameters.
     
@@ -116,7 +101,7 @@ def v_3d_tsmooth_params(
         Parameter dictionary
     """
     params = {
-        "@type": "afni.3dTsmooth",
+        "@type": "afni/3dTsmooth",
         "input_dataset": input_dataset,
         "lin_filter": lin_filter,
         "med_filter": med_filter,
@@ -157,53 +142,53 @@ def v_3d_tsmooth_cargs(
     """
     cargs = []
     cargs.append("3dTsmooth")
-    cargs.append(execution.input_file(params.get("input_dataset")))
-    if params.get("prefix") is not None:
+    cargs.append(execution.input_file(params.get("input_dataset", None)))
+    if params.get("prefix", None) is not None:
         cargs.extend([
             "-prefix",
-            params.get("prefix")
+            params.get("prefix", None)
         ])
-    if params.get("datum_type") is not None:
+    if params.get("datum_type", None) is not None:
         cargs.extend([
             "-datum",
-            params.get("datum_type")
+            params.get("datum_type", None)
         ])
-    if params.get("lin_filter"):
+    if params.get("lin_filter", False):
         cargs.append("-lin")
-    if params.get("med_filter"):
+    if params.get("med_filter", False):
         cargs.append("-med")
-    if params.get("osf_filter"):
+    if params.get("osf_filter", False):
         cargs.append("-osf")
-    if params.get("lin_filter_custom") is not None:
+    if params.get("lin_filter_custom", None) is not None:
         cargs.extend([
             "-3lin",
-            str(params.get("lin_filter_custom"))
+            str(params.get("lin_filter_custom", None))
         ])
-    if params.get("hamming") is not None:
+    if params.get("hamming", None) is not None:
         cargs.extend([
             "-hamming",
-            str(params.get("hamming"))
+            str(params.get("hamming", None))
         ])
-    if params.get("blackman") is not None:
+    if params.get("blackman", None) is not None:
         cargs.extend([
             "-blackman",
-            str(params.get("blackman"))
+            str(params.get("blackman", None))
         ])
-    if params.get("custom_filter") is not None:
+    if params.get("custom_filter", None) is not None:
         cargs.extend([
             "-custom",
-            execution.input_file(params.get("custom_filter"))
+            execution.input_file(params.get("custom_filter", None))
         ])
-    if params.get("extend"):
+    if params.get("extend", False):
         cargs.append("-EXTEND")
-    if params.get("zero"):
+    if params.get("zero", False):
         cargs.append("-ZERO")
-    if params.get("trend"):
+    if params.get("trend", False):
         cargs.append("-TREND")
-    if params.get("adaptive") is not None:
+    if params.get("adaptive", None) is not None:
         cargs.extend([
             "-adaptive",
-            str(params.get("adaptive"))
+            str(params.get("adaptive", None))
         ])
     return cargs
 
@@ -223,7 +208,7 @@ def v_3d_tsmooth_outputs(
     """
     ret = V3dTsmoothOutputs(
         root=execution.output_file("."),
-        output_dataset=execution.output_file(params.get("prefix") + ".nii.gz") if (params.get("prefix") is not None) else None,
+        output_dataset=execution.output_file(params.get("prefix", None) + ".nii.gz") if (params.get("prefix") is not None) else None,
     )
     return ret
 
@@ -328,7 +313,6 @@ def v_3d_tsmooth(
 
 __all__ = [
     "V3dTsmoothOutputs",
-    "V3dTsmoothParameters",
     "V_3D_TSMOOTH_METADATA",
     "v_3d_tsmooth",
     "v_3d_tsmooth_execute",

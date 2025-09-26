@@ -14,7 +14,27 @@ HALFCOSBASIS_METADATA = Metadata(
 
 
 HalfcosbasisParameters = typing.TypedDict('HalfcosbasisParameters', {
-    "@type": typing.Literal["fsl.halfcosbasis"],
+    "@type": typing.NotRequired[typing.Literal["fsl/halfcosbasis"]],
+    "hrf_param_file": InputPathType,
+    "hrf_param_file_hf": InputPathType,
+    "verbose_flag": bool,
+    "debug_level": typing.NotRequired[float | None],
+    "debug_level_debug": typing.NotRequired[float | None],
+    "debug_level_debuglevel": typing.NotRequired[float | None],
+    "timing_on_flag": bool,
+    "log_dir": typing.NotRequired[str | None],
+    "log_dir_ld": typing.NotRequired[str | None],
+    "log_dir_logdir": typing.NotRequired[str | None],
+    "num_hrf_samples": typing.NotRequired[float | None],
+    "num_hrf_basis_funcs": typing.NotRequired[float | None],
+    "num_secs": typing.NotRequired[float | None],
+    "num_secs_nsecs": typing.NotRequired[float | None],
+    "temp_res": typing.NotRequired[float | None],
+    "help_flag": bool,
+    "help_flag_long": bool,
+})
+HalfcosbasisParametersTagged = typing.TypedDict('HalfcosbasisParametersTagged', {
+    "@type": typing.Literal["fsl/halfcosbasis"],
     "hrf_param_file": InputPathType,
     "hrf_param_file_hf": InputPathType,
     "verbose_flag": bool,
@@ -35,40 +55,9 @@ HalfcosbasisParameters = typing.TypedDict('HalfcosbasisParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "fsl.halfcosbasis": halfcosbasis_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-    }.get(t)
-
-
 class HalfcosbasisOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `halfcosbasis(...)`.
+    Output object returned when calling `HalfcosbasisParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -92,7 +81,7 @@ def halfcosbasis_params(
     temp_res: float | None = None,
     help_flag: bool = False,
     help_flag_long: bool = False,
-) -> HalfcosbasisParameters:
+) -> HalfcosbasisParametersTagged:
     """
     Build parameters.
     
@@ -119,7 +108,7 @@ def halfcosbasis_params(
         Parameter dictionary
     """
     params = {
-        "@type": "fsl.halfcosbasis",
+        "@type": "fsl/halfcosbasis",
         "hrf_param_file": hrf_param_file,
         "hrf_param_file_hf": hrf_param_file_hf,
         "verbose_flag": verbose_flag,
@@ -169,74 +158,74 @@ def halfcosbasis_cargs(
     cargs.append("halfcosbasis")
     cargs.extend([
         "--hcprf",
-        execution.input_file(params.get("hrf_param_file"))
+        execution.input_file(params.get("hrf_param_file", None))
     ])
     cargs.extend([
         "--hf",
-        execution.input_file(params.get("hrf_param_file_hf"))
+        execution.input_file(params.get("hrf_param_file_hf", None))
     ])
-    if params.get("verbose_flag"):
+    if params.get("verbose_flag", False):
         cargs.append("-V")
-    if params.get("debug_level") is not None:
+    if params.get("debug_level", None) is not None:
         cargs.extend([
             "--db",
-            str(params.get("debug_level"))
+            str(params.get("debug_level", None))
         ])
-    if params.get("debug_level_debug") is not None:
+    if params.get("debug_level_debug", None) is not None:
         cargs.extend([
             "--debug",
-            str(params.get("debug_level_debug"))
+            str(params.get("debug_level_debug", None))
         ])
-    if params.get("debug_level_debuglevel") is not None:
+    if params.get("debug_level_debuglevel", None) is not None:
         cargs.extend([
             "--debuglevel",
-            str(params.get("debug_level_debuglevel"))
+            str(params.get("debug_level_debuglevel", None))
         ])
-    if params.get("timing_on_flag"):
+    if params.get("timing_on_flag", False):
         cargs.append("--to")
-    if params.get("log_dir") is not None:
+    if params.get("log_dir", None) is not None:
         cargs.extend([
             "-l",
-            params.get("log_dir")
+            params.get("log_dir", None)
         ])
-    if params.get("log_dir_ld") is not None:
+    if params.get("log_dir_ld", None) is not None:
         cargs.extend([
             "--ld",
-            params.get("log_dir_ld")
+            params.get("log_dir_ld", None)
         ])
-    if params.get("log_dir_logdir") is not None:
+    if params.get("log_dir_logdir", None) is not None:
         cargs.extend([
             "--logdir",
-            params.get("log_dir_logdir")
+            params.get("log_dir_logdir", None)
         ])
-    if params.get("num_hrf_samples") is not None:
+    if params.get("num_hrf_samples", None) is not None:
         cargs.extend([
             "--nhs",
-            str(params.get("num_hrf_samples"))
+            str(params.get("num_hrf_samples", None))
         ])
-    if params.get("num_hrf_basis_funcs") is not None:
+    if params.get("num_hrf_basis_funcs", None) is not None:
         cargs.extend([
             "--nbfs",
-            str(params.get("num_hrf_basis_funcs"))
+            str(params.get("num_hrf_basis_funcs", None))
         ])
-    if params.get("num_secs") is not None:
+    if params.get("num_secs", None) is not None:
         cargs.extend([
             "--ns",
-            str(params.get("num_secs"))
+            str(params.get("num_secs", None))
         ])
-    if params.get("num_secs_nsecs") is not None:
+    if params.get("num_secs_nsecs", None) is not None:
         cargs.extend([
             "--nsecs",
-            str(params.get("num_secs_nsecs"))
+            str(params.get("num_secs_nsecs", None))
         ])
-    if params.get("temp_res") is not None:
+    if params.get("temp_res", None) is not None:
         cargs.extend([
             "--res",
-            str(params.get("temp_res"))
+            str(params.get("temp_res", None))
         ])
-    if params.get("help_flag"):
+    if params.get("help_flag", False):
         cargs.append("-h")
-    if params.get("help_flag_long"):
+    if params.get("help_flag_long", False):
         cargs.append("--help")
     return cargs
 
@@ -365,7 +354,6 @@ def halfcosbasis(
 __all__ = [
     "HALFCOSBASIS_METADATA",
     "HalfcosbasisOutputs",
-    "HalfcosbasisParameters",
     "halfcosbasis",
     "halfcosbasis_execute",
     "halfcosbasis_params",

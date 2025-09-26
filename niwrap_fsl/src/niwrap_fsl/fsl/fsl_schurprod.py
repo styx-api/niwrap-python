@@ -14,7 +14,18 @@ FSL_SCHURPROD_METADATA = Metadata(
 
 
 FslSchurprodParameters = typing.TypedDict('FslSchurprodParameters', {
-    "@type": typing.Literal["fsl.fsl_schurprod"],
+    "@type": typing.NotRequired[typing.Literal["fsl/fsl_schurprod"]],
+    "input_file": InputPathType,
+    "design_file": InputPathType,
+    "output_file": str,
+    "regression_flag": bool,
+    "index": typing.NotRequired[float | None],
+    "mask_file": typing.NotRequired[InputPathType | None],
+    "verbose_flag": bool,
+    "help_flag": bool,
+})
+FslSchurprodParametersTagged = typing.TypedDict('FslSchurprodParametersTagged', {
+    "@type": typing.Literal["fsl/fsl_schurprod"],
     "input_file": InputPathType,
     "design_file": InputPathType,
     "output_file": str,
@@ -26,41 +37,9 @@ FslSchurprodParameters = typing.TypedDict('FslSchurprodParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "fsl.fsl_schurprod": fsl_schurprod_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "fsl.fsl_schurprod": fsl_schurprod_outputs,
-    }.get(t)
-
-
 class FslSchurprodOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `fsl_schurprod(...)`.
+    Output object returned when calling `FslSchurprodParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -77,7 +56,7 @@ def fsl_schurprod_params(
     mask_file: InputPathType | None = None,
     verbose_flag: bool = False,
     help_flag: bool = False,
-) -> FslSchurprodParameters:
+) -> FslSchurprodParametersTagged:
     """
     Build parameters.
     
@@ -95,7 +74,7 @@ def fsl_schurprod_params(
         Parameter dictionary
     """
     params = {
-        "@type": "fsl.fsl_schurprod",
+        "@type": "fsl/fsl_schurprod",
         "input_file": input_file,
         "design_file": design_file,
         "output_file": output_file,
@@ -127,31 +106,31 @@ def fsl_schurprod_cargs(
     cargs.append("fsl_schurprod")
     cargs.extend([
         "-i",
-        execution.input_file(params.get("input_file"))
+        execution.input_file(params.get("input_file", None))
     ])
     cargs.extend([
         "-d",
-        execution.input_file(params.get("design_file"))
+        execution.input_file(params.get("design_file", None))
     ])
     cargs.extend([
         "-o",
-        params.get("output_file")
+        params.get("output_file", None)
     ])
-    if params.get("regression_flag"):
+    if params.get("regression_flag", False):
         cargs.append("-r")
-    if params.get("index") is not None:
+    if params.get("index", None) is not None:
         cargs.extend([
             "-i",
-            str(params.get("index"))
+            str(params.get("index", None))
         ])
-    if params.get("mask_file") is not None:
+    if params.get("mask_file", None) is not None:
         cargs.extend([
             "-m",
-            execution.input_file(params.get("mask_file"))
+            execution.input_file(params.get("mask_file", None))
         ])
-    if params.get("verbose_flag"):
+    if params.get("verbose_flag", False):
         cargs.append("-v")
-    if params.get("help_flag"):
+    if params.get("help_flag", False):
         cargs.append("-h")
     return cargs
 
@@ -171,7 +150,7 @@ def fsl_schurprod_outputs(
     """
     ret = FslSchurprodOutputs(
         root=execution.output_file("."),
-        output_matrix_product=execution.output_file(params.get("output_file") + ".nii.gz"),
+        output_matrix_product=execution.output_file(params.get("output_file", None) + ".nii.gz"),
     )
     return ret
 
@@ -256,7 +235,6 @@ def fsl_schurprod(
 __all__ = [
     "FSL_SCHURPROD_METADATA",
     "FslSchurprodOutputs",
-    "FslSchurprodParameters",
     "fsl_schurprod",
     "fsl_schurprod_execute",
     "fsl_schurprod_params",

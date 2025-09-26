@@ -14,7 +14,21 @@ MRI_NORMALIZE_TP2_METADATA = Metadata(
 
 
 MriNormalizeTp2Parameters = typing.TypedDict('MriNormalizeTp2Parameters', {
-    "@type": typing.Literal["freesurfer.mri_normalize_tp2"],
+    "@type": typing.NotRequired[typing.Literal["freesurfer/mri_normalize_tp2"]],
+    "input_vol": InputPathType,
+    "normalized_vol": str,
+    "t1_volume": typing.NotRequired[InputPathType | None],
+    "mask1": typing.NotRequired[InputPathType | None],
+    "mask2": typing.NotRequired[InputPathType | None],
+    "threshold": typing.NotRequired[float | None],
+    "ctrl": typing.NotRequired[InputPathType | None],
+    "xform": typing.NotRequired[InputPathType | None],
+    "invert_flag": bool,
+    "lta_src": typing.NotRequired[InputPathType | None],
+    "lta_dst": typing.NotRequired[InputPathType | None],
+})
+MriNormalizeTp2ParametersTagged = typing.TypedDict('MriNormalizeTp2ParametersTagged', {
+    "@type": typing.Literal["freesurfer/mri_normalize_tp2"],
     "input_vol": InputPathType,
     "normalized_vol": str,
     "t1_volume": typing.NotRequired[InputPathType | None],
@@ -29,41 +43,9 @@ MriNormalizeTp2Parameters = typing.TypedDict('MriNormalizeTp2Parameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "freesurfer.mri_normalize_tp2": mri_normalize_tp2_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "freesurfer.mri_normalize_tp2": mri_normalize_tp2_outputs,
-    }.get(t)
-
-
 class MriNormalizeTp2Outputs(typing.NamedTuple):
     """
-    Output object returned when calling `mri_normalize_tp2(...)`.
+    Output object returned when calling `MriNormalizeTp2Parameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -83,7 +65,7 @@ def mri_normalize_tp2_params(
     invert_flag: bool = False,
     lta_src: InputPathType | None = None,
     lta_dst: InputPathType | None = None,
-) -> MriNormalizeTp2Parameters:
+) -> MriNormalizeTp2ParametersTagged:
     """
     Build parameters.
     
@@ -103,7 +85,7 @@ def mri_normalize_tp2_params(
         Parameter dictionary
     """
     params = {
-        "@type": "freesurfer.mri_normalize_tp2",
+        "@type": "freesurfer/mri_normalize_tp2",
         "input_vol": input_vol,
         "normalized_vol": normalized_vol,
         "invert_flag": invert_flag,
@@ -142,49 +124,49 @@ def mri_normalize_tp2_cargs(
     """
     cargs = []
     cargs.append("mri_normalize_tp2")
-    cargs.append(execution.input_file(params.get("input_vol")))
-    cargs.append(params.get("normalized_vol"))
-    if params.get("t1_volume") is not None:
+    cargs.append(execution.input_file(params.get("input_vol", None)))
+    cargs.append(params.get("normalized_vol", None))
+    if params.get("t1_volume", None) is not None:
         cargs.extend([
             "-T1",
-            execution.input_file(params.get("t1_volume"))
+            execution.input_file(params.get("t1_volume", None))
         ])
-    if params.get("mask1") is not None:
+    if params.get("mask1", None) is not None:
         cargs.extend([
             "-mask1",
-            execution.input_file(params.get("mask1"))
+            execution.input_file(params.get("mask1", None))
         ])
-    if params.get("mask2") is not None:
+    if params.get("mask2", None) is not None:
         cargs.extend([
             "-mask2",
-            execution.input_file(params.get("mask2"))
+            execution.input_file(params.get("mask2", None))
         ])
-    if params.get("threshold") is not None:
+    if params.get("threshold", None) is not None:
         cargs.extend([
             "-threshold",
-            str(params.get("threshold"))
+            str(params.get("threshold", None))
         ])
-    if params.get("ctrl") is not None:
+    if params.get("ctrl", None) is not None:
         cargs.extend([
             "-ctrl",
-            execution.input_file(params.get("ctrl"))
+            execution.input_file(params.get("ctrl", None))
         ])
-    if params.get("xform") is not None:
+    if params.get("xform", None) is not None:
         cargs.extend([
             "-xform",
-            execution.input_file(params.get("xform"))
+            execution.input_file(params.get("xform", None))
         ])
-    if params.get("invert_flag"):
+    if params.get("invert_flag", False):
         cargs.append("-invert")
-    if params.get("lta_src") is not None:
+    if params.get("lta_src", None) is not None:
         cargs.extend([
             "-lta_src",
-            execution.input_file(params.get("lta_src"))
+            execution.input_file(params.get("lta_src", None))
         ])
-    if params.get("lta_dst") is not None:
+    if params.get("lta_dst", None) is not None:
         cargs.extend([
             "-lta_dst",
-            execution.input_file(params.get("lta_dst"))
+            execution.input_file(params.get("lta_dst", None))
         ])
     return cargs
 
@@ -204,7 +186,7 @@ def mri_normalize_tp2_outputs(
     """
     ret = MriNormalizeTp2Outputs(
         root=execution.output_file("."),
-        output_normalized_vol=execution.output_file(params.get("normalized_vol")),
+        output_normalized_vol=execution.output_file(params.get("normalized_vol", None)),
     )
     return ret
 
@@ -297,7 +279,6 @@ def mri_normalize_tp2(
 __all__ = [
     "MRI_NORMALIZE_TP2_METADATA",
     "MriNormalizeTp2Outputs",
-    "MriNormalizeTp2Parameters",
     "mri_normalize_tp2",
     "mri_normalize_tp2_execute",
     "mri_normalize_tp2_params",

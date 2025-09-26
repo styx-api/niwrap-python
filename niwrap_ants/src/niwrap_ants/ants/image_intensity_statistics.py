@@ -14,48 +14,22 @@ IMAGE_INTENSITY_STATISTICS_METADATA = Metadata(
 
 
 ImageIntensityStatisticsParameters = typing.TypedDict('ImageIntensityStatisticsParameters', {
-    "@type": typing.Literal["ants.ImageIntensityStatistics"],
+    "@type": typing.NotRequired[typing.Literal["ants/ImageIntensityStatistics"]],
+    "image_dimension": int,
+    "input_image": InputPathType,
+    "label_image": typing.NotRequired[InputPathType | None],
+})
+ImageIntensityStatisticsParametersTagged = typing.TypedDict('ImageIntensityStatisticsParametersTagged', {
+    "@type": typing.Literal["ants/ImageIntensityStatistics"],
     "image_dimension": int,
     "input_image": InputPathType,
     "label_image": typing.NotRequired[InputPathType | None],
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "ants.ImageIntensityStatistics": image_intensity_statistics_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "ants.ImageIntensityStatistics": image_intensity_statistics_outputs,
-    }.get(t)
-
-
 class ImageIntensityStatisticsOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `image_intensity_statistics(...)`.
+    Output object returned when calling `ImageIntensityStatisticsParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -67,7 +41,7 @@ def image_intensity_statistics_params(
     image_dimension: int,
     input_image: InputPathType,
     label_image: InputPathType | None = None,
-) -> ImageIntensityStatisticsParameters:
+) -> ImageIntensityStatisticsParametersTagged:
     """
     Build parameters.
     
@@ -80,7 +54,7 @@ def image_intensity_statistics_params(
         Parameter dictionary
     """
     params = {
-        "@type": "ants.ImageIntensityStatistics",
+        "@type": "ants/ImageIntensityStatistics",
         "image_dimension": image_dimension,
         "input_image": input_image,
     }
@@ -104,10 +78,10 @@ def image_intensity_statistics_cargs(
     """
     cargs = []
     cargs.append("ImageIntensityStatistics")
-    cargs.append(str(params.get("image_dimension")))
-    cargs.append(execution.input_file(params.get("input_image")))
-    if params.get("label_image") is not None:
-        cargs.append(execution.input_file(params.get("label_image")))
+    cargs.append(str(params.get("image_dimension", None)))
+    cargs.append(execution.input_file(params.get("input_image", None)))
+    if params.get("label_image", None) is not None:
+        cargs.append(execution.input_file(params.get("label_image", None)))
     return cargs
 
 
@@ -196,7 +170,6 @@ def image_intensity_statistics(
 __all__ = [
     "IMAGE_INTENSITY_STATISTICS_METADATA",
     "ImageIntensityStatisticsOutputs",
-    "ImageIntensityStatisticsParameters",
     "image_intensity_statistics",
     "image_intensity_statistics_execute",
     "image_intensity_statistics_params",

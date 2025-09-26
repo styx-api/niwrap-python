@@ -14,7 +14,36 @@ MRIS_FIX_TOPOLOGY_METADATA = Metadata(
 
 
 MrisFixTopologyParameters = typing.TypedDict('MrisFixTopologyParameters', {
-    "@type": typing.Literal["freesurfer.mris_fix_topology"],
+    "@type": typing.NotRequired[typing.Literal["freesurfer/mris_fix_topology"]],
+    "subject_name": str,
+    "hemisphere": str,
+    "orig_name": typing.NotRequired[str | None],
+    "sphere_name": typing.NotRequired[str | None],
+    "inflated_name": typing.NotRequired[str | None],
+    "output_name": typing.NotRequired[str | None],
+    "defect_base_name": typing.NotRequired[str | None],
+    "write_fixed_inflated": bool,
+    "verbose": bool,
+    "verbose_low": bool,
+    "warnings": bool,
+    "errors": bool,
+    "movies": bool,
+    "intersect": bool,
+    "mappings": bool,
+    "correct_defect": typing.NotRequired[float | None],
+    "niters": typing.NotRequired[float | None],
+    "genetic": bool,
+    "optimize": bool,
+    "random": typing.NotRequired[float | None],
+    "seed": typing.NotRequired[float | None],
+    "diag": bool,
+    "mgz": bool,
+    "smooth": typing.NotRequired[float | None],
+    "diagnostic_level": typing.NotRequired[float | None],
+    "threads": typing.NotRequired[float | None],
+})
+MrisFixTopologyParametersTagged = typing.TypedDict('MrisFixTopologyParametersTagged', {
+    "@type": typing.Literal["freesurfer/mris_fix_topology"],
     "subject_name": str,
     "hemisphere": str,
     "orig_name": typing.NotRequired[str | None],
@@ -44,40 +73,9 @@ MrisFixTopologyParameters = typing.TypedDict('MrisFixTopologyParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "freesurfer.mris_fix_topology": mris_fix_topology_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-    }.get(t)
-
-
 class MrisFixTopologyOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `mris_fix_topology(...)`.
+    Output object returned when calling `MrisFixTopologyParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -110,7 +108,7 @@ def mris_fix_topology_params(
     smooth: float | None = None,
     diagnostic_level: float | None = None,
     threads: float | None = None,
-) -> MrisFixTopologyParameters:
+) -> MrisFixTopologyParametersTagged:
     """
     Build parameters.
     
@@ -145,7 +143,7 @@ def mris_fix_topology_params(
         Parameter dictionary
     """
     params = {
-        "@type": "freesurfer.mris_fix_topology",
+        "@type": "freesurfer/mris_fix_topology",
         "subject_name": subject_name,
         "hemisphere": hemisphere,
         "write_fixed_inflated": write_fixed_inflated,
@@ -203,91 +201,91 @@ def mris_fix_topology_cargs(
     """
     cargs = []
     cargs.append("mris_fix_topology")
-    cargs.append(params.get("subject_name"))
-    cargs.append(params.get("hemisphere"))
-    if params.get("orig_name") is not None:
+    cargs.append(params.get("subject_name", None))
+    cargs.append(params.get("hemisphere", None))
+    if params.get("orig_name", None) is not None:
         cargs.extend([
             "-orig",
-            params.get("orig_name")
+            params.get("orig_name", None)
         ])
-    if params.get("sphere_name") is not None:
+    if params.get("sphere_name", None) is not None:
         cargs.extend([
             "-sphere",
-            params.get("sphere_name")
+            params.get("sphere_name", None)
         ])
-    if params.get("inflated_name") is not None:
+    if params.get("inflated_name", None) is not None:
         cargs.extend([
             "-inflated",
-            params.get("inflated_name")
+            params.get("inflated_name", None)
         ])
-    if params.get("output_name") is not None:
+    if params.get("output_name", None) is not None:
         cargs.extend([
             "-out",
-            params.get("output_name")
+            params.get("output_name", None)
         ])
-    if params.get("defect_base_name") is not None:
+    if params.get("defect_base_name", None) is not None:
         cargs.extend([
             "-defect",
-            params.get("defect_base_name")
+            params.get("defect_base_name", None)
         ])
-    if params.get("write_fixed_inflated"):
+    if params.get("write_fixed_inflated", False):
         cargs.append("-wi")
-    if params.get("verbose"):
+    if params.get("verbose", False):
         cargs.append("-verbose")
-    if params.get("verbose_low"):
+    if params.get("verbose_low", False):
         cargs.append("-verbose_low")
-    if params.get("warnings"):
+    if params.get("warnings", False):
         cargs.append("-warnings")
-    if params.get("errors"):
+    if params.get("errors", False):
         cargs.append("-errors")
-    if params.get("movies"):
+    if params.get("movies", False):
         cargs.append("-movies")
-    if params.get("intersect"):
+    if params.get("intersect", False):
         cargs.append("-intersect")
-    if params.get("mappings"):
+    if params.get("mappings", False):
         cargs.append("-mappings")
-    if params.get("correct_defect") is not None:
+    if params.get("correct_defect", None) is not None:
         cargs.extend([
             "-correct_defect",
-            str(params.get("correct_defect"))
+            str(params.get("correct_defect", None))
         ])
-    if params.get("niters") is not None:
+    if params.get("niters", None) is not None:
         cargs.extend([
             "-niters",
-            str(params.get("niters"))
+            str(params.get("niters", None))
         ])
-    if params.get("genetic"):
+    if params.get("genetic", False):
         cargs.append("-genetic")
-    if params.get("optimize"):
+    if params.get("optimize", False):
         cargs.append("-optimize")
-    if params.get("random") is not None:
+    if params.get("random", None) is not None:
         cargs.extend([
             "-random",
-            str(params.get("random"))
+            str(params.get("random", None))
         ])
-    if params.get("seed") is not None:
+    if params.get("seed", None) is not None:
         cargs.extend([
             "-seed",
-            str(params.get("seed"))
+            str(params.get("seed", None))
         ])
-    if params.get("diag"):
+    if params.get("diag", False):
         cargs.append("-diag")
-    if params.get("mgz"):
+    if params.get("mgz", False):
         cargs.append("-mgz")
-    if params.get("smooth") is not None:
+    if params.get("smooth", None) is not None:
         cargs.extend([
             "-s",
-            str(params.get("smooth"))
+            str(params.get("smooth", None))
         ])
-    if params.get("diagnostic_level") is not None:
+    if params.get("diagnostic_level", None) is not None:
         cargs.extend([
             "-v",
-            str(params.get("diagnostic_level"))
+            str(params.get("diagnostic_level", None))
         ])
-    if params.get("threads") is not None:
+    if params.get("threads", None) is not None:
         cargs.extend([
             "-threads",
-            str(params.get("threads"))
+            str(params.get("threads", None))
         ])
     return cargs
 
@@ -444,7 +442,6 @@ def mris_fix_topology(
 __all__ = [
     "MRIS_FIX_TOPOLOGY_METADATA",
     "MrisFixTopologyOutputs",
-    "MrisFixTopologyParameters",
     "mris_fix_topology",
     "mris_fix_topology_execute",
     "mris_fix_topology_params",

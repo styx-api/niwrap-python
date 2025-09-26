@@ -14,46 +14,20 @@ FSLHD_METADATA = Metadata(
 
 
 FslhdParameters = typing.TypedDict('FslhdParameters', {
-    "@type": typing.Literal["fsl.fslhd"],
+    "@type": typing.NotRequired[typing.Literal["fsl/fslhd"]],
+    "xml_flag": bool,
+    "input_file": InputPathType,
+})
+FslhdParametersTagged = typing.TypedDict('FslhdParametersTagged', {
+    "@type": typing.Literal["fsl/fslhd"],
     "xml_flag": bool,
     "input_file": InputPathType,
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "fsl.fslhd": fslhd_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-    }.get(t)
-
-
 class FslhdOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `fslhd(...)`.
+    Output object returned when calling `FslhdParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -62,7 +36,7 @@ class FslhdOutputs(typing.NamedTuple):
 def fslhd_params(
     input_file: InputPathType,
     xml_flag: bool = False,
-) -> FslhdParameters:
+) -> FslhdParametersTagged:
     """
     Build parameters.
     
@@ -73,7 +47,7 @@ def fslhd_params(
         Parameter dictionary
     """
     params = {
-        "@type": "fsl.fslhd",
+        "@type": "fsl/fslhd",
         "xml_flag": xml_flag,
         "input_file": input_file,
     }
@@ -95,9 +69,9 @@ def fslhd_cargs(
     """
     cargs = []
     cargs.append("fslhd")
-    if params.get("xml_flag"):
+    if params.get("xml_flag", False):
         cargs.append("-x")
-    cargs.append(execution.input_file(params.get("input_file")))
+    cargs.append(execution.input_file(params.get("input_file", None)))
     return cargs
 
 
@@ -179,7 +153,6 @@ def fslhd(
 __all__ = [
     "FSLHD_METADATA",
     "FslhdOutputs",
-    "FslhdParameters",
     "fslhd",
     "fslhd_execute",
     "fslhd_params",

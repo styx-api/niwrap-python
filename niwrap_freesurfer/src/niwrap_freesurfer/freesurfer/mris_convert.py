@@ -14,7 +14,48 @@ MRIS_CONVERT_METADATA = Metadata(
 
 
 MrisConvertParameters = typing.TypedDict('MrisConvertParameters', {
-    "@type": typing.Literal["freesurfer.mris_convert"],
+    "@type": typing.NotRequired[typing.Literal["freesurfer/mris_convert"]],
+    "input_file": InputPathType,
+    "second_input_file": typing.NotRequired[InputPathType | None],
+    "output_file": str,
+    "patch": bool,
+    "curv_overlay_files": typing.NotRequired[list[str] | None],
+    "functional_data_file": typing.NotRequired[InputPathType | None],
+    "orig_positions": typing.NotRequired[str | None],
+    "scale": typing.NotRequired[float | None],
+    "rescale": bool,
+    "talairach_xfm": typing.NotRequired[str | None],
+    "normals": bool,
+    "neighbors": bool,
+    "xyz": bool,
+    "annotation_file": typing.NotRequired[InputPathType | None],
+    "parcstats_file": typing.NotRequired[InputPathType | None],
+    "gifti_dataarray_num": typing.NotRequired[float | None],
+    "label_file": typing.NotRequired[InputPathType | None],
+    "label_stats_file": typing.NotRequired[str | None],
+    "combine_surfs": bool,
+    "merge_gifti": bool,
+    "split_gifti": bool,
+    "gifti_outdir": typing.NotRequired[str | None],
+    "delete_cmds": bool,
+    "center": bool,
+    "vol_geom": typing.NotRequired[str | None],
+    "remove_vol_geom": bool,
+    "to_surf": typing.NotRequired[str | None],
+    "to_scanner": bool,
+    "to_tkr": bool,
+    "userealras": bool,
+    "usesurfras": bool,
+    "upsample": typing.NotRequired[str | None],
+    "volume": typing.NotRequired[str | None],
+    "area": typing.NotRequired[str | None],
+    "angle": typing.NotRequired[str | None],
+    "label_to_mask": typing.NotRequired[str | None],
+    "cras_add": bool,
+    "cras_subtract": bool,
+})
+MrisConvertParametersTagged = typing.TypedDict('MrisConvertParametersTagged', {
+    "@type": typing.Literal["freesurfer/mris_convert"],
     "input_file": InputPathType,
     "second_input_file": typing.NotRequired[InputPathType | None],
     "output_file": str,
@@ -56,41 +97,9 @@ MrisConvertParameters = typing.TypedDict('MrisConvertParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "freesurfer.mris_convert": mris_convert_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "freesurfer.mris_convert": mris_convert_outputs,
-    }.get(t)
-
-
 class MrisConvertOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `mris_convert(...)`.
+    Output object returned when calling `MrisConvertParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -137,7 +146,7 @@ def mris_convert_params(
     label_to_mask: str | None = None,
     cras_add: bool = False,
     cras_subtract: bool = False,
-) -> MrisConvertParameters:
+) -> MrisConvertParametersTagged:
     """
     Build parameters.
     
@@ -192,7 +201,7 @@ def mris_convert_params(
         Parameter dictionary
     """
     params = {
-        "@type": "freesurfer.mris_convert",
+        "@type": "freesurfer/mris_convert",
         "input_file": input_file,
         "output_file": output_file,
         "patch": patch,
@@ -269,133 +278,133 @@ def mris_convert_cargs(
     """
     cargs = []
     cargs.append("mris_convert")
-    cargs.append(execution.input_file(params.get("input_file")))
-    if params.get("second_input_file") is not None:
-        cargs.append(execution.input_file(params.get("second_input_file")))
-    cargs.append(params.get("output_file"))
-    if params.get("patch"):
+    cargs.append(execution.input_file(params.get("input_file", None)))
+    if params.get("second_input_file", None) is not None:
+        cargs.append(execution.input_file(params.get("second_input_file", None)))
+    cargs.append(params.get("output_file", None))
+    if params.get("patch", False):
         cargs.append("-p")
-    if params.get("curv_overlay_files") is not None:
+    if params.get("curv_overlay_files", None) is not None:
         cargs.extend([
             "-c",
-            *params.get("curv_overlay_files")
+            *params.get("curv_overlay_files", None)
         ])
-    if params.get("functional_data_file") is not None:
+    if params.get("functional_data_file", None) is not None:
         cargs.extend([
             "-f",
-            execution.input_file(params.get("functional_data_file"))
+            execution.input_file(params.get("functional_data_file", None))
         ])
-    if params.get("orig_positions") is not None:
+    if params.get("orig_positions", None) is not None:
         cargs.extend([
             "-o",
-            params.get("orig_positions")
+            params.get("orig_positions", None)
         ])
-    if params.get("scale") is not None:
+    if params.get("scale", None) is not None:
         cargs.extend([
             "-s",
-            str(params.get("scale"))
+            str(params.get("scale", None))
         ])
-    if params.get("rescale"):
+    if params.get("rescale", False):
         cargs.append("-r")
-    if params.get("talairach_xfm") is not None:
+    if params.get("talairach_xfm", None) is not None:
         cargs.extend([
             "-t",
-            params.get("talairach_xfm")
+            params.get("talairach_xfm", None)
         ])
-    if params.get("normals"):
+    if params.get("normals", False):
         cargs.append("-n")
-    if params.get("neighbors"):
+    if params.get("neighbors", False):
         cargs.append("-v")
-    if params.get("xyz"):
+    if params.get("xyz", False):
         cargs.append("-a")
-    if params.get("annotation_file") is not None:
+    if params.get("annotation_file", None) is not None:
         cargs.extend([
             "--annot",
-            execution.input_file(params.get("annotation_file"))
+            execution.input_file(params.get("annotation_file", None))
         ])
-    if params.get("parcstats_file") is not None:
+    if params.get("parcstats_file", None) is not None:
         cargs.extend([
             "--parcstats",
-            execution.input_file(params.get("parcstats_file"))
+            execution.input_file(params.get("parcstats_file", None))
         ])
-    if params.get("gifti_dataarray_num") is not None:
+    if params.get("gifti_dataarray_num", None) is not None:
         cargs.extend([
             "--da_num",
-            str(params.get("gifti_dataarray_num"))
+            str(params.get("gifti_dataarray_num", None))
         ])
-    if params.get("label_file") is not None:
+    if params.get("label_file", None) is not None:
         cargs.extend([
             "--label",
-            execution.input_file(params.get("label_file"))
+            execution.input_file(params.get("label_file", None))
         ])
-    if params.get("label_stats_file") is not None:
+    if params.get("label_stats_file", None) is not None:
         cargs.extend([
             "--labelstats",
-            params.get("label_stats_file")
+            params.get("label_stats_file", None)
         ])
-    if params.get("combine_surfs"):
+    if params.get("combine_surfs", False):
         cargs.append("--combinesurfs")
-    if params.get("merge_gifti"):
+    if params.get("merge_gifti", False):
         cargs.append("--mergegifti")
-    if params.get("split_gifti"):
+    if params.get("split_gifti", False):
         cargs.append("--splitgifti")
-    if params.get("gifti_outdir") is not None:
+    if params.get("gifti_outdir", None) is not None:
         cargs.extend([
             "--giftioutdir",
-            params.get("gifti_outdir")
+            params.get("gifti_outdir", None)
         ])
-    if params.get("delete_cmds"):
+    if params.get("delete_cmds", False):
         cargs.append("--delete-cmds")
-    if params.get("center"):
+    if params.get("center", False):
         cargs.append("--center")
-    if params.get("vol_geom") is not None:
+    if params.get("vol_geom", None) is not None:
         cargs.extend([
             "--vol-geom",
-            params.get("vol_geom")
+            params.get("vol_geom", None)
         ])
-    if params.get("remove_vol_geom"):
+    if params.get("remove_vol_geom", False):
         cargs.append("--remove-vol-geom")
-    if params.get("to_surf") is not None:
+    if params.get("to_surf", None) is not None:
         cargs.extend([
             "--to-surf",
-            params.get("to_surf")
+            params.get("to_surf", None)
         ])
-    if params.get("to_scanner"):
+    if params.get("to_scanner", False):
         cargs.append("--to-scanner")
-    if params.get("to_tkr"):
+    if params.get("to_tkr", False):
         cargs.append("--to-tkr")
-    if params.get("userealras"):
+    if params.get("userealras", False):
         cargs.append("--userealras")
-    if params.get("usesurfras"):
+    if params.get("usesurfras", False):
         cargs.append("--usesurfras")
-    if params.get("upsample") is not None:
+    if params.get("upsample", None) is not None:
         cargs.extend([
             "--upsample",
-            params.get("upsample")
+            params.get("upsample", None)
         ])
-    if params.get("volume") is not None:
+    if params.get("volume", None) is not None:
         cargs.extend([
             "--volume",
-            params.get("volume")
+            params.get("volume", None)
         ])
-    if params.get("area") is not None:
+    if params.get("area", None) is not None:
         cargs.extend([
             "--area",
-            params.get("area")
+            params.get("area", None)
         ])
-    if params.get("angle") is not None:
+    if params.get("angle", None) is not None:
         cargs.extend([
             "--angle",
-            params.get("angle")
+            params.get("angle", None)
         ])
-    if params.get("label_to_mask") is not None:
+    if params.get("label_to_mask", None) is not None:
         cargs.extend([
             "--label2mask",
-            params.get("label_to_mask")
+            params.get("label_to_mask", None)
         ])
-    if params.get("cras_add"):
+    if params.get("cras_add", False):
         cargs.append("--cras_add")
-    if params.get("cras_subtract"):
+    if params.get("cras_subtract", False):
         cargs.append("--cras_subtract")
     return cargs
 
@@ -415,7 +424,7 @@ def mris_convert_outputs(
     """
     ret = MrisConvertOutputs(
         root=execution.output_file("."),
-        converted_surface=execution.output_file(params.get("output_file")),
+        converted_surface=execution.output_file(params.get("output_file", None)),
     )
     return ret
 
@@ -595,7 +604,6 @@ def mris_convert(
 __all__ = [
     "MRIS_CONVERT_METADATA",
     "MrisConvertOutputs",
-    "MrisConvertParameters",
     "mris_convert",
     "mris_convert_execute",
     "mris_convert_params",

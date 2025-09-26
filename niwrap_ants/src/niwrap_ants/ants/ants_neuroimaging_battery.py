@@ -14,7 +14,29 @@ ANTS_NEUROIMAGING_BATTERY_METADATA = Metadata(
 
 
 AntsNeuroimagingBatteryParameters = typing.TypedDict('AntsNeuroimagingBatteryParameters', {
-    "@type": typing.Literal["ants.antsNeuroimagingBattery"],
+    "@type": typing.NotRequired[typing.Literal["ants/antsNeuroimagingBattery"]],
+    "input_directory": str,
+    "output_directory": str,
+    "output_name": str,
+    "anatomical_image": InputPathType,
+    "anatomical_mask": InputPathType,
+    "template": typing.NotRequired[InputPathType | None],
+    "template_transform_name": typing.NotRequired[str | None],
+    "template_labels": typing.NotRequired[InputPathType | None],
+    "dti_flag": typing.NotRequired[str | None],
+    "pcasl_flag": typing.NotRequired[str | None],
+    "pasl_flag": typing.NotRequired[str | None],
+    "pasl_m0_flag": typing.NotRequired[str | None],
+    "bold_flag": typing.NotRequired[str | None],
+    "rsbold_flag": typing.NotRequired[str | None],
+    "mt_flag": typing.NotRequired[str | None],
+    "no_mt_flag": typing.NotRequired[str | None],
+    "temp_directory": typing.NotRequired[str | None],
+    "help": bool,
+    "info_only": bool,
+})
+AntsNeuroimagingBatteryParametersTagged = typing.TypedDict('AntsNeuroimagingBatteryParametersTagged', {
+    "@type": typing.Literal["ants/antsNeuroimagingBattery"],
     "input_directory": str,
     "output_directory": str,
     "output_name": str,
@@ -37,41 +59,9 @@ AntsNeuroimagingBatteryParameters = typing.TypedDict('AntsNeuroimagingBatteryPar
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "ants.antsNeuroimagingBattery": ants_neuroimaging_battery_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "ants.antsNeuroimagingBattery": ants_neuroimaging_battery_outputs,
-    }.get(t)
-
-
 class AntsNeuroimagingBatteryOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `ants_neuroimaging_battery(...)`.
+    Output object returned when calling `AntsNeuroimagingBatteryParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -99,7 +89,7 @@ def ants_neuroimaging_battery_params(
     temp_directory: str | None = None,
     help_: bool = False,
     info_only: bool = False,
-) -> AntsNeuroimagingBatteryParameters:
+) -> AntsNeuroimagingBatteryParametersTagged:
     """
     Build parameters.
     
@@ -131,7 +121,7 @@ def ants_neuroimaging_battery_params(
         Parameter dictionary
     """
     params = {
-        "@type": "ants.antsNeuroimagingBattery",
+        "@type": "ants/antsNeuroimagingBattery",
         "input_directory": input_directory,
         "output_directory": output_directory,
         "output_name": output_name,
@@ -184,87 +174,87 @@ def ants_neuroimaging_battery_cargs(
     cargs.append("antsNeuroimagingBattery")
     cargs.extend([
         "--input-directory",
-        params.get("input_directory")
+        params.get("input_directory", None)
     ])
     cargs.extend([
         "--output-directory",
-        params.get("output_directory")
+        params.get("output_directory", None)
     ])
     cargs.extend([
         "--output-name",
-        params.get("output_name")
+        params.get("output_name", None)
     ])
     cargs.extend([
         "--anatomical",
-        execution.input_file(params.get("anatomical_image"))
+        execution.input_file(params.get("anatomical_image", None))
     ])
     cargs.extend([
         "--anatomical-mask",
-        execution.input_file(params.get("anatomical_mask"))
+        execution.input_file(params.get("anatomical_mask", None))
     ])
-    if params.get("template") is not None:
+    if params.get("template", None) is not None:
         cargs.extend([
             "--template",
-            execution.input_file(params.get("template"))
+            execution.input_file(params.get("template", None))
         ])
-    if params.get("template_transform_name") is not None:
+    if params.get("template_transform_name", None) is not None:
         cargs.extend([
             "--template-transform-name",
-            params.get("template_transform_name")
+            params.get("template_transform_name", None)
         ])
-    if params.get("template_labels") is not None:
+    if params.get("template_labels", None) is not None:
         cargs.extend([
             "--template-labels",
-            execution.input_file(params.get("template_labels"))
+            execution.input_file(params.get("template_labels", None))
         ])
-    if params.get("dti_flag") is not None:
+    if params.get("dti_flag", None) is not None:
         cargs.extend([
             "--dti-flag",
-            params.get("dti_flag")
+            params.get("dti_flag", None)
         ])
-    if params.get("pcasl_flag") is not None:
+    if params.get("pcasl_flag", None) is not None:
         cargs.extend([
             "--pcasl-flag",
-            params.get("pcasl_flag")
+            params.get("pcasl_flag", None)
         ])
-    if params.get("pasl_flag") is not None:
+    if params.get("pasl_flag", None) is not None:
         cargs.extend([
             "--pasl-flag",
-            params.get("pasl_flag")
+            params.get("pasl_flag", None)
         ])
-    if params.get("pasl_m0_flag") is not None:
+    if params.get("pasl_m0_flag", None) is not None:
         cargs.extend([
             "--pasl-m0-flag",
-            params.get("pasl_m0_flag")
+            params.get("pasl_m0_flag", None)
         ])
-    if params.get("bold_flag") is not None:
+    if params.get("bold_flag", None) is not None:
         cargs.extend([
             "--bold-flag",
-            params.get("bold_flag")
+            params.get("bold_flag", None)
         ])
-    if params.get("rsbold_flag") is not None:
+    if params.get("rsbold_flag", None) is not None:
         cargs.extend([
             "--rsbold-flag",
-            params.get("rsbold_flag")
+            params.get("rsbold_flag", None)
         ])
-    if params.get("mt_flag") is not None:
+    if params.get("mt_flag", None) is not None:
         cargs.extend([
             "--mt-flag",
-            params.get("mt_flag")
+            params.get("mt_flag", None)
         ])
-    if params.get("no_mt_flag") is not None:
+    if params.get("no_mt_flag", None) is not None:
         cargs.extend([
             "--no-mt-flag",
-            params.get("no_mt_flag")
+            params.get("no_mt_flag", None)
         ])
-    if params.get("temp_directory") is not None:
+    if params.get("temp_directory", None) is not None:
         cargs.extend([
             "--temp-directory",
-            params.get("temp_directory")
+            params.get("temp_directory", None)
         ])
-    if params.get("help"):
+    if params.get("help", False):
         cargs.append("--help")
-    if params.get("info_only"):
+    if params.get("info_only", False):
         cargs.append("--info-only")
     return cargs
 
@@ -284,7 +274,7 @@ def ants_neuroimaging_battery_outputs(
     """
     ret = AntsNeuroimagingBatteryOutputs(
         root=execution.output_file("."),
-        output_directory=execution.output_file(params.get("output_directory")),
+        output_directory=execution.output_file(params.get("output_directory", None)),
     )
     return ret
 
@@ -405,7 +395,6 @@ def ants_neuroimaging_battery(
 __all__ = [
     "ANTS_NEUROIMAGING_BATTERY_METADATA",
     "AntsNeuroimagingBatteryOutputs",
-    "AntsNeuroimagingBatteryParameters",
     "ants_neuroimaging_battery",
     "ants_neuroimaging_battery_execute",
     "ants_neuroimaging_battery_params",

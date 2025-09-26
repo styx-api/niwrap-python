@@ -14,7 +14,17 @@ V_3DFRACTIONIZE_METADATA = Metadata(
 
 
 V3dfractionizeParameters = typing.TypedDict('V3dfractionizeParameters', {
-    "@type": typing.Literal["afni.3dfractionize"],
+    "@type": typing.NotRequired[typing.Literal["afni/3dfractionize"]],
+    "template": InputPathType,
+    "input": InputPathType,
+    "prefix": typing.NotRequired[str | None],
+    "clip": typing.NotRequired[float | None],
+    "warp": typing.NotRequired[InputPathType | None],
+    "preserve": bool,
+    "vote": bool,
+})
+V3dfractionizeParametersTagged = typing.TypedDict('V3dfractionizeParametersTagged', {
+    "@type": typing.Literal["afni/3dfractionize"],
     "template": InputPathType,
     "input": InputPathType,
     "prefix": typing.NotRequired[str | None],
@@ -25,41 +35,9 @@ V3dfractionizeParameters = typing.TypedDict('V3dfractionizeParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "afni.3dfractionize": v_3dfractionize_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "afni.3dfractionize": v_3dfractionize_outputs,
-    }.get(t)
-
-
 class V3dfractionizeOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `v_3dfractionize(...)`.
+    Output object returned when calling `V3dfractionizeParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -75,7 +53,7 @@ def v_3dfractionize_params(
     warp: InputPathType | None = None,
     preserve: bool = False,
     vote: bool = False,
-) -> V3dfractionizeParameters:
+) -> V3dfractionizeParametersTagged:
     """
     Build parameters.
     
@@ -97,7 +75,7 @@ def v_3dfractionize_params(
         Parameter dictionary
     """
     params = {
-        "@type": "afni.3dfractionize",
+        "@type": "afni/3dfractionize",
         "template": template,
         "input": input_,
         "preserve": preserve,
@@ -129,30 +107,30 @@ def v_3dfractionize_cargs(
     cargs.append("3dfractionize")
     cargs.extend([
         "-template",
-        execution.input_file(params.get("template"))
+        execution.input_file(params.get("template", None))
     ])
     cargs.extend([
         "-input",
-        execution.input_file(params.get("input"))
+        execution.input_file(params.get("input", None))
     ])
-    if params.get("prefix") is not None:
+    if params.get("prefix", None) is not None:
         cargs.extend([
             "-prefix",
-            params.get("prefix")
+            params.get("prefix", None)
         ])
-    if params.get("clip") is not None:
+    if params.get("clip", None) is not None:
         cargs.extend([
             "-clip",
-            str(params.get("clip"))
+            str(params.get("clip", None))
         ])
-    if params.get("warp") is not None:
+    if params.get("warp", None) is not None:
         cargs.extend([
             "-warp",
-            execution.input_file(params.get("warp"))
+            execution.input_file(params.get("warp", None))
         ])
-    if params.get("preserve"):
+    if params.get("preserve", False):
         cargs.append("-preserve")
-    if params.get("vote"):
+    if params.get("vote", False):
         cargs.append("-vote")
     return cargs
 
@@ -172,7 +150,7 @@ def v_3dfractionize_outputs(
     """
     ret = V3dfractionizeOutputs(
         root=execution.output_file("."),
-        output=execution.output_file(params.get("prefix")) if (params.get("prefix") is not None) else None,
+        output=execution.output_file(params.get("prefix", None)) if (params.get("prefix") is not None) else None,
     )
     return ret
 
@@ -258,7 +236,6 @@ def v_3dfractionize(
 
 __all__ = [
     "V3dfractionizeOutputs",
-    "V3dfractionizeParameters",
     "V_3DFRACTIONIZE_METADATA",
     "v_3dfractionize",
     "v_3dfractionize_execute",

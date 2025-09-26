@@ -14,7 +14,23 @@ V_3D_DEPTH_MAP_METADATA = Metadata(
 
 
 V3dDepthMapParameters = typing.TypedDict('V3dDepthMapParameters', {
-    "@type": typing.Literal["afni.3dDepthMap"],
+    "@type": typing.NotRequired[typing.Literal["afni/3dDepthMap"]],
+    "input_dataset": InputPathType,
+    "output_prefix": str,
+    "mask": typing.NotRequired[InputPathType | None],
+    "dist_squared": bool,
+    "ignore_voxdims": bool,
+    "rimify": typing.NotRequired[float | None],
+    "zeros_are_zero": bool,
+    "zeros_are_neg": bool,
+    "nz_are_neg": bool,
+    "bounds_are_not_zero": bool,
+    "only2D": typing.NotRequired[str | None],
+    "binary_only": bool,
+    "verbosity": typing.NotRequired[float | None],
+})
+V3dDepthMapParametersTagged = typing.TypedDict('V3dDepthMapParametersTagged', {
+    "@type": typing.Literal["afni/3dDepthMap"],
     "input_dataset": InputPathType,
     "output_prefix": str,
     "mask": typing.NotRequired[InputPathType | None],
@@ -31,41 +47,9 @@ V3dDepthMapParameters = typing.TypedDict('V3dDepthMapParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "afni.3dDepthMap": v_3d_depth_map_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "afni.3dDepthMap": v_3d_depth_map_outputs,
-    }.get(t)
-
-
 class V3dDepthMapOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `v_3d_depth_map(...)`.
+    Output object returned when calling `V3dDepthMapParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -87,7 +71,7 @@ def v_3d_depth_map_params(
     only2_d: str | None = None,
     binary_only: bool = False,
     verbosity: float | None = None,
-) -> V3dDepthMapParameters:
+) -> V3dDepthMapParametersTagged:
     """
     Build parameters.
     
@@ -113,7 +97,7 @@ def v_3d_depth_map_params(
         Parameter dictionary
     """
     params = {
-        "@type": "afni.3dDepthMap",
+        "@type": "afni/3dDepthMap",
         "input_dataset": input_dataset,
         "output_prefix": output_prefix,
         "dist_squared": dist_squared,
@@ -152,45 +136,45 @@ def v_3d_depth_map_cargs(
     cargs.append("3dDepthMap")
     cargs.extend([
         "-input",
-        execution.input_file(params.get("input_dataset"))
+        execution.input_file(params.get("input_dataset", None))
     ])
     cargs.extend([
         "-prefix",
-        params.get("output_prefix")
+        params.get("output_prefix", None)
     ])
-    if params.get("mask") is not None:
+    if params.get("mask", None) is not None:
         cargs.extend([
             "-mask",
-            execution.input_file(params.get("mask"))
+            execution.input_file(params.get("mask", None))
         ])
-    if params.get("dist_squared"):
+    if params.get("dist_squared", False):
         cargs.append("-dist_sq")
-    if params.get("ignore_voxdims"):
+    if params.get("ignore_voxdims", False):
         cargs.append("-ignore_voxdims")
-    if params.get("rimify") is not None:
+    if params.get("rimify", None) is not None:
         cargs.extend([
             "-rimify",
-            str(params.get("rimify"))
+            str(params.get("rimify", None))
         ])
-    if params.get("zeros_are_zero"):
+    if params.get("zeros_are_zero", False):
         cargs.append("-zeros_are_zero")
-    if params.get("zeros_are_neg"):
+    if params.get("zeros_are_neg", False):
         cargs.append("-zeros_are_neg")
-    if params.get("nz_are_neg"):
+    if params.get("nz_are_neg", False):
         cargs.append("-nz_are_neg")
-    if params.get("bounds_are_not_zero"):
+    if params.get("bounds_are_not_zero", False):
         cargs.append("-bounds_are_not_zero")
-    if params.get("only2D") is not None:
+    if params.get("only2D", None) is not None:
         cargs.extend([
             "-only2D",
-            params.get("only2D")
+            params.get("only2D", None)
         ])
-    if params.get("binary_only"):
+    if params.get("binary_only", False):
         cargs.append("-binary_only")
-    if params.get("verbosity") is not None:
+    if params.get("verbosity", None) is not None:
         cargs.extend([
             "-verb",
-            str(params.get("verbosity"))
+            str(params.get("verbosity", None))
         ])
     return cargs
 
@@ -210,7 +194,7 @@ def v_3d_depth_map_outputs(
     """
     ret = V3dDepthMapOutputs(
         root=execution.output_file("."),
-        output_file=execution.output_file(params.get("output_prefix") + ".nii.gz"),
+        output_file=execution.output_file(params.get("output_prefix", None) + ".nii.gz"),
     )
     return ret
 
@@ -314,7 +298,6 @@ def v_3d_depth_map(
 
 __all__ = [
     "V3dDepthMapOutputs",
-    "V3dDepthMapParameters",
     "V_3D_DEPTH_MAP_METADATA",
     "v_3d_depth_map",
     "v_3d_depth_map_execute",

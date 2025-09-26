@@ -14,7 +14,17 @@ SWI_PREPROCESS_METADATA = Metadata(
 
 
 SwiPreprocessParameters = typing.TypedDict('SwiPreprocessParameters', {
-    "@type": typing.Literal["freesurfer.swi_preprocess"],
+    "@type": typing.NotRequired[typing.Literal["freesurfer/swi_preprocess"]],
+    "scanner": typing.Literal["ge", "siemens", "philips"],
+    "ge_file": typing.NotRequired[InputPathType | None],
+    "philips_file": typing.NotRequired[InputPathType | None],
+    "siemens_magnitude": typing.NotRequired[InputPathType | None],
+    "siemens_phase": typing.NotRequired[InputPathType | None],
+    "out_magnitude": str,
+    "out_phase": str,
+})
+SwiPreprocessParametersTagged = typing.TypedDict('SwiPreprocessParametersTagged', {
+    "@type": typing.Literal["freesurfer/swi_preprocess"],
     "scanner": typing.Literal["ge", "siemens", "philips"],
     "ge_file": typing.NotRequired[InputPathType | None],
     "philips_file": typing.NotRequired[InputPathType | None],
@@ -25,41 +35,9 @@ SwiPreprocessParameters = typing.TypedDict('SwiPreprocessParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "freesurfer.swi_preprocess": swi_preprocess_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "freesurfer.swi_preprocess": swi_preprocess_outputs,
-    }.get(t)
-
-
 class SwiPreprocessOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `swi_preprocess(...)`.
+    Output object returned when calling `SwiPreprocessParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -77,7 +55,7 @@ def swi_preprocess_params(
     philips_file: InputPathType | None = None,
     siemens_magnitude: InputPathType | None = None,
     siemens_phase: InputPathType | None = None,
-) -> SwiPreprocessParameters:
+) -> SwiPreprocessParametersTagged:
     """
     Build parameters.
     
@@ -99,7 +77,7 @@ def swi_preprocess_params(
         Parameter dictionary
     """
     params = {
-        "@type": "freesurfer.swi_preprocess",
+        "@type": "freesurfer/swi_preprocess",
         "scanner": scanner,
         "out_magnitude": out_magnitude,
         "out_phase": out_phase,
@@ -132,35 +110,35 @@ def swi_preprocess_cargs(
     cargs.append("swi_preprocess")
     cargs.extend([
         "--scanner",
-        params.get("scanner")
+        params.get("scanner", None)
     ])
-    if params.get("ge_file") is not None:
+    if params.get("ge_file", None) is not None:
         cargs.extend([
             "--ge_file",
-            execution.input_file(params.get("ge_file"))
+            execution.input_file(params.get("ge_file", None))
         ])
-    if params.get("philips_file") is not None:
+    if params.get("philips_file", None) is not None:
         cargs.extend([
             "--philips_file",
-            execution.input_file(params.get("philips_file"))
+            execution.input_file(params.get("philips_file", None))
         ])
-    if params.get("siemens_magnitude") is not None:
+    if params.get("siemens_magnitude", None) is not None:
         cargs.extend([
             "--siemens_mag",
-            execution.input_file(params.get("siemens_magnitude"))
+            execution.input_file(params.get("siemens_magnitude", None))
         ])
-    if params.get("siemens_phase") is not None:
+    if params.get("siemens_phase", None) is not None:
         cargs.extend([
             "--siemens_phase",
-            execution.input_file(params.get("siemens_phase"))
+            execution.input_file(params.get("siemens_phase", None))
         ])
     cargs.extend([
         "--out_magnitude",
-        params.get("out_magnitude")
+        params.get("out_magnitude", None)
     ])
     cargs.extend([
         "--out_phase",
-        params.get("out_phase")
+        params.get("out_phase", None)
     ])
     return cargs
 
@@ -180,8 +158,8 @@ def swi_preprocess_outputs(
     """
     ret = SwiPreprocessOutputs(
         root=execution.output_file("."),
-        output_magnitude_file=execution.output_file(params.get("out_magnitude")),
-        output_phase_file=execution.output_file(params.get("out_phase")),
+        output_magnitude_file=execution.output_file(params.get("out_magnitude", None)),
+        output_phase_file=execution.output_file(params.get("out_phase", None)),
     )
     return ret
 
@@ -268,7 +246,6 @@ def swi_preprocess(
 __all__ = [
     "SWI_PREPROCESS_METADATA",
     "SwiPreprocessOutputs",
-    "SwiPreprocessParameters",
     "swi_preprocess",
     "swi_preprocess_execute",
     "swi_preprocess_params",

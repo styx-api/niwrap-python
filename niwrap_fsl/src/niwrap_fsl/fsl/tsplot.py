@@ -14,7 +14,19 @@ TSPLOT_METADATA = Metadata(
 
 
 TsplotParameters = typing.TypedDict('TsplotParameters', {
-    "@type": typing.Literal["fsl.tsplot"],
+    "@type": typing.NotRequired[typing.Literal["fsl/tsplot"]],
+    "input_directory": str,
+    "main_filtered_data": typing.NotRequired[InputPathType | None],
+    "coordinates": typing.NotRequired[list[float] | None],
+    "coordinates_output": typing.NotRequired[list[float] | None],
+    "mask": typing.NotRequired[InputPathType | None],
+    "output_directory": typing.NotRequired[str | None],
+    "no_weight_flag": bool,
+    "prewhiten_flag": bool,
+    "no_raw_flag": bool,
+})
+TsplotParametersTagged = typing.TypedDict('TsplotParametersTagged', {
+    "@type": typing.Literal["fsl/tsplot"],
     "input_directory": str,
     "main_filtered_data": typing.NotRequired[InputPathType | None],
     "coordinates": typing.NotRequired[list[float] | None],
@@ -27,41 +39,9 @@ TsplotParameters = typing.TypedDict('TsplotParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "fsl.tsplot": tsplot_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "fsl.tsplot": tsplot_outputs,
-    }.get(t)
-
-
 class TsplotOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `tsplot(...)`.
+    Output object returned when calling `TsplotParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -79,7 +59,7 @@ def tsplot_params(
     no_weight_flag: bool = False,
     prewhiten_flag: bool = False,
     no_raw_flag: bool = False,
-) -> TsplotParameters:
+) -> TsplotParametersTagged:
     """
     Build parameters.
     
@@ -100,7 +80,7 @@ def tsplot_params(
         Parameter dictionary
     """
     params = {
-        "@type": "fsl.tsplot",
+        "@type": "fsl/tsplot",
         "input_directory": input_directory,
         "no_weight_flag": no_weight_flag,
         "prewhiten_flag": prewhiten_flag,
@@ -134,37 +114,37 @@ def tsplot_cargs(
     """
     cargs = []
     cargs.append("tsplot")
-    cargs.append(params.get("input_directory"))
-    if params.get("main_filtered_data") is not None:
+    cargs.append(params.get("input_directory", None))
+    if params.get("main_filtered_data", None) is not None:
         cargs.extend([
             "-f",
-            execution.input_file(params.get("main_filtered_data"))
+            execution.input_file(params.get("main_filtered_data", None))
         ])
-    if params.get("coordinates") is not None:
+    if params.get("coordinates", None) is not None:
         cargs.extend([
             "-c",
-            *map(str, params.get("coordinates"))
+            *map(str, params.get("coordinates", None))
         ])
-    if params.get("coordinates_output") is not None:
+    if params.get("coordinates_output", None) is not None:
         cargs.extend([
             "-C",
-            *map(str, params.get("coordinates_output"))
+            *map(str, params.get("coordinates_output", None))
         ])
-    if params.get("mask") is not None:
+    if params.get("mask", None) is not None:
         cargs.extend([
             "-m",
-            execution.input_file(params.get("mask"))
+            execution.input_file(params.get("mask", None))
         ])
-    if params.get("output_directory") is not None:
+    if params.get("output_directory", None) is not None:
         cargs.extend([
             "-o",
-            params.get("output_directory")
+            params.get("output_directory", None)
         ])
-    if params.get("no_weight_flag"):
+    if params.get("no_weight_flag", False):
         cargs.append("-n")
-    if params.get("prewhiten_flag"):
+    if params.get("prewhiten_flag", False):
         cargs.append("-p")
-    if params.get("no_raw_flag"):
+    if params.get("no_raw_flag", False):
         cargs.append("-d")
     return cargs
 
@@ -184,7 +164,7 @@ def tsplot_outputs(
     """
     ret = TsplotOutputs(
         root=execution.output_file("."),
-        timeseries_output=execution.output_file(params.get("output_directory") + "/timeseries.txt") if (params.get("output_directory") is not None) else None,
+        timeseries_output=execution.output_file(params.get("output_directory", None) + "/timeseries.txt") if (params.get("output_directory") is not None) else None,
     )
     return ret
 
@@ -272,7 +252,6 @@ def tsplot(
 __all__ = [
     "TSPLOT_METADATA",
     "TsplotOutputs",
-    "TsplotParameters",
     "tsplot",
     "tsplot_execute",
     "tsplot_params",

@@ -14,7 +14,22 @@ MRI_VOL2LABEL_METADATA = Metadata(
 
 
 MriVol2labelParameters = typing.TypedDict('MriVol2labelParameters', {
-    "@type": typing.Literal["freesurfer.mri_vol2label"],
+    "@type": typing.NotRequired[typing.Literal["freesurfer/mri_vol2label"]],
+    "input": InputPathType,
+    "label_id": typing.NotRequired[float | None],
+    "threshold": typing.NotRequired[float | None],
+    "label_file": str,
+    "vol_file": typing.NotRequired[str | None],
+    "surf_subject_hemi": typing.NotRequired[str | None],
+    "surf_path": typing.NotRequired[str | None],
+    "opt_params": typing.NotRequired[str | None],
+    "remove_holes": bool,
+    "dilations": typing.NotRequired[float | None],
+    "erosions": typing.NotRequired[float | None],
+    "help": bool,
+})
+MriVol2labelParametersTagged = typing.TypedDict('MriVol2labelParametersTagged', {
+    "@type": typing.Literal["freesurfer/mri_vol2label"],
     "input": InputPathType,
     "label_id": typing.NotRequired[float | None],
     "threshold": typing.NotRequired[float | None],
@@ -30,41 +45,9 @@ MriVol2labelParameters = typing.TypedDict('MriVol2labelParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "freesurfer.mri_vol2label": mri_vol2label_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "freesurfer.mri_vol2label": mri_vol2label_outputs,
-    }.get(t)
-
-
 class MriVol2labelOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `mri_vol2label(...)`.
+    Output object returned when calling `MriVol2labelParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -87,7 +70,7 @@ def mri_vol2label_params(
     dilations: float | None = None,
     erosions: float | None = None,
     help_: bool = False,
-) -> MriVol2labelParameters:
+) -> MriVol2labelParametersTagged:
     """
     Build parameters.
     
@@ -111,7 +94,7 @@ def mri_vol2label_params(
         Parameter dictionary
     """
     params = {
-        "@type": "freesurfer.mri_vol2label",
+        "@type": "freesurfer/mri_vol2label",
         "input": input_,
         "label_file": label_file,
         "remove_holes": remove_holes,
@@ -153,55 +136,55 @@ def mri_vol2label_cargs(
     cargs.append("mri_vol2label")
     cargs.extend([
         "--i",
-        execution.input_file(params.get("input"))
+        execution.input_file(params.get("input", None))
     ])
-    if params.get("label_id") is not None:
+    if params.get("label_id", None) is not None:
         cargs.extend([
             "--id",
-            str(params.get("label_id"))
+            str(params.get("label_id", None))
         ])
-    if params.get("threshold") is not None:
+    if params.get("threshold", None) is not None:
         cargs.extend([
             "--thresh",
-            str(params.get("threshold"))
+            str(params.get("threshold", None))
         ])
     cargs.extend([
         "--l",
-        params.get("label_file")
+        params.get("label_file", None)
     ])
-    if params.get("vol_file") is not None:
+    if params.get("vol_file", None) is not None:
         cargs.extend([
             "--v",
-            params.get("vol_file")
+            params.get("vol_file", None)
         ])
-    if params.get("surf_subject_hemi") is not None:
+    if params.get("surf_subject_hemi", None) is not None:
         cargs.extend([
             "--surf",
-            params.get("surf_subject_hemi")
+            params.get("surf_subject_hemi", None)
         ])
-    if params.get("surf_path") is not None:
+    if params.get("surf_path", None) is not None:
         cargs.extend([
             "--surf-path",
-            params.get("surf_path")
+            params.get("surf_path", None)
         ])
-    if params.get("opt_params") is not None:
+    if params.get("opt_params", None) is not None:
         cargs.extend([
             "--opt",
-            params.get("opt_params")
+            params.get("opt_params", None)
         ])
-    if params.get("remove_holes"):
+    if params.get("remove_holes", False):
         cargs.append("--remove-holes-islands")
-    if params.get("dilations") is not None:
+    if params.get("dilations", None) is not None:
         cargs.extend([
             "--dilate",
-            str(params.get("dilations"))
+            str(params.get("dilations", None))
         ])
-    if params.get("erosions") is not None:
+    if params.get("erosions", None) is not None:
         cargs.extend([
             "--erode",
-            str(params.get("erosions"))
+            str(params.get("erosions", None))
         ])
-    if params.get("help"):
+    if params.get("help", False):
         cargs.append("--help")
     return cargs
 
@@ -221,8 +204,8 @@ def mri_vol2label_outputs(
     """
     ret = MriVol2labelOutputs(
         root=execution.output_file("."),
-        output_label_file=execution.output_file(params.get("label_file")),
-        output_volume_file=execution.output_file(params.get("vol_file")) if (params.get("vol_file") is not None) else None,
+        output_label_file=execution.output_file(params.get("label_file", None)),
+        output_volume_file=execution.output_file(params.get("vol_file", None)) if (params.get("vol_file") is not None) else None,
     )
     return ret
 
@@ -321,7 +304,6 @@ def mri_vol2label(
 __all__ = [
     "MRI_VOL2LABEL_METADATA",
     "MriVol2labelOutputs",
-    "MriVol2labelParameters",
     "mri_vol2label",
     "mri_vol2label_execute",
     "mri_vol2label_params",

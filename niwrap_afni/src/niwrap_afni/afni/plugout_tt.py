@@ -14,7 +14,22 @@ PLUGOUT_TT_METADATA = Metadata(
 
 
 PlugoutTtParameters = typing.TypedDict('PlugoutTtParameters', {
-    "@type": typing.Literal["afni.plugout_tt"],
+    "@type": typing.NotRequired[typing.Literal["afni/plugout_tt"]],
+    "host": typing.NotRequired[str | None],
+    "ijk_option": bool,
+    "verbose": bool,
+    "port": typing.NotRequired[float | None],
+    "name": typing.NotRequired[str | None],
+    "port_offset": typing.NotRequired[float | None],
+    "port_offset_quiet": typing.NotRequired[float | None],
+    "port_bloc": typing.NotRequired[float | None],
+    "max_port_bloc": bool,
+    "max_port_bloc_quiet": bool,
+    "num_assigned_ports": bool,
+    "num_assigned_ports_quiet": bool,
+})
+PlugoutTtParametersTagged = typing.TypedDict('PlugoutTtParametersTagged', {
+    "@type": typing.Literal["afni/plugout_tt"],
     "host": typing.NotRequired[str | None],
     "ijk_option": bool,
     "verbose": bool,
@@ -30,40 +45,9 @@ PlugoutTtParameters = typing.TypedDict('PlugoutTtParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "afni.plugout_tt": plugout_tt_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-    }.get(t)
-
-
 class PlugoutTtOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `plugout_tt(...)`.
+    Output object returned when calling `PlugoutTtParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -82,7 +66,7 @@ def plugout_tt_params(
     max_port_bloc_quiet: bool = False,
     num_assigned_ports: bool = False,
     num_assigned_ports_quiet: bool = False,
-) -> PlugoutTtParameters:
+) -> PlugoutTtParametersTagged:
     """
     Build parameters.
     
@@ -117,7 +101,7 @@ def plugout_tt_params(
         Parameter dictionary
     """
     params = {
-        "@type": "afni.plugout_tt",
+        "@type": "afni/plugout_tt",
         "ijk_option": ijk_option,
         "verbose": verbose,
         "max_port_bloc": max_port_bloc,
@@ -155,47 +139,47 @@ def plugout_tt_cargs(
     """
     cargs = []
     cargs.append("plugout_tt")
-    if params.get("host") is not None:
+    if params.get("host", None) is not None:
         cargs.extend([
             "-host",
-            params.get("host")
+            params.get("host", None)
         ])
-    if params.get("ijk_option"):
+    if params.get("ijk_option", False):
         cargs.append("-ijk")
-    if params.get("verbose"):
+    if params.get("verbose", False):
         cargs.append("-v")
-    if params.get("port") is not None:
+    if params.get("port", None) is not None:
         cargs.extend([
             "-port",
-            str(params.get("port"))
+            str(params.get("port", None))
         ])
-    if params.get("name") is not None:
+    if params.get("name", None) is not None:
         cargs.extend([
             "-name",
-            params.get("name")
+            params.get("name", None)
         ])
-    if params.get("port_offset") is not None:
+    if params.get("port_offset", None) is not None:
         cargs.extend([
             "-np",
-            str(params.get("port_offset"))
+            str(params.get("port_offset", None))
         ])
-    if params.get("port_offset_quiet") is not None:
+    if params.get("port_offset_quiet", None) is not None:
         cargs.extend([
             "-npq",
-            str(params.get("port_offset_quiet"))
+            str(params.get("port_offset_quiet", None))
         ])
-    if params.get("port_bloc") is not None:
+    if params.get("port_bloc", None) is not None:
         cargs.extend([
             "-npb",
-            str(params.get("port_bloc"))
+            str(params.get("port_bloc", None))
         ])
-    if params.get("max_port_bloc"):
+    if params.get("max_port_bloc", False):
         cargs.append("-max_port_bloc")
-    if params.get("max_port_bloc_quiet"):
+    if params.get("max_port_bloc_quiet", False):
         cargs.append("-max_port_bloc_quiet")
-    if params.get("num_assigned_ports"):
+    if params.get("num_assigned_ports", False):
         cargs.append("-num_assigned_ports")
-    if params.get("num_assigned_ports_quiet"):
+    if params.get("num_assigned_ports_quiet", False):
         cargs.append("-num_assigned_ports_quiet")
     return cargs
 
@@ -324,7 +308,6 @@ def plugout_tt(
 __all__ = [
     "PLUGOUT_TT_METADATA",
     "PlugoutTtOutputs",
-    "PlugoutTtParameters",
     "plugout_tt",
     "plugout_tt_execute",
     "plugout_tt_params",

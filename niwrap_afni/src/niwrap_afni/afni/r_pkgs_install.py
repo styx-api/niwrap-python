@@ -14,7 +14,15 @@ R_PKGS_INSTALL_METADATA = Metadata(
 
 
 RPkgsInstallParameters = typing.TypedDict('RPkgsInstallParameters', {
-    "@type": typing.Literal["afni.rPkgsInstall"],
+    "@type": typing.NotRequired[typing.Literal["afni/rPkgsInstall"]],
+    "packages": str,
+    "download_site": typing.NotRequired[str | None],
+    "check": bool,
+    "update": bool,
+    "remove": bool,
+})
+RPkgsInstallParametersTagged = typing.TypedDict('RPkgsInstallParametersTagged', {
+    "@type": typing.Literal["afni/rPkgsInstall"],
     "packages": str,
     "download_site": typing.NotRequired[str | None],
     "check": bool,
@@ -23,41 +31,9 @@ RPkgsInstallParameters = typing.TypedDict('RPkgsInstallParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "afni.rPkgsInstall": r_pkgs_install_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "afni.rPkgsInstall": r_pkgs_install_outputs,
-    }.get(t)
-
-
 class RPkgsInstallOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `r_pkgs_install(...)`.
+    Output object returned when calling `RPkgsInstallParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -71,7 +47,7 @@ def r_pkgs_install_params(
     check: bool = False,
     update_: bool = False,
     remove: bool = False,
-) -> RPkgsInstallParameters:
+) -> RPkgsInstallParametersTagged:
     """
     Build parameters.
     
@@ -89,7 +65,7 @@ def r_pkgs_install_params(
         Parameter dictionary
     """
     params = {
-        "@type": "afni.rPkgsInstall",
+        "@type": "afni/rPkgsInstall",
         "packages": packages,
         "check": check,
         "update": update_,
@@ -117,18 +93,18 @@ def r_pkgs_install_cargs(
     cargs.append("rPkgsInstall")
     cargs.extend([
         "-pkgs",
-        params.get("packages")
+        params.get("packages", None)
     ])
-    if params.get("download_site") is not None:
+    if params.get("download_site", None) is not None:
         cargs.extend([
             "-site",
-            params.get("download_site")
+            params.get("download_site", None)
         ])
-    if params.get("check"):
+    if params.get("check", False):
         cargs.append("-check")
-    if params.get("update"):
+    if params.get("update", False):
         cargs.append("-update")
-    if params.get("remove"):
+    if params.get("remove", False):
         cargs.append("-remove")
     return cargs
 
@@ -148,7 +124,7 @@ def r_pkgs_install_outputs(
     """
     ret = RPkgsInstallOutputs(
         root=execution.output_file("."),
-        output_packages=execution.output_file(params.get("packages")),
+        output_packages=execution.output_file(params.get("packages", None)),
     )
     return ret
 
@@ -224,7 +200,6 @@ def r_pkgs_install(
 
 __all__ = [
     "RPkgsInstallOutputs",
-    "RPkgsInstallParameters",
     "R_PKGS_INSTALL_METADATA",
     "r_pkgs_install",
     "r_pkgs_install_execute",

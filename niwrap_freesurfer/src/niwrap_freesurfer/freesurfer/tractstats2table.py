@@ -14,7 +14,19 @@ TRACTSTATS2TABLE_METADATA = Metadata(
 
 
 Tractstats2tableParameters = typing.TypedDict('Tractstats2tableParameters', {
-    "@type": typing.Literal["freesurfer.tractstats2table"],
+    "@type": typing.NotRequired[typing.Literal["freesurfer/tractstats2table"]],
+    "inputs": typing.NotRequired[list[str] | None],
+    "load_pathstats_from_file": typing.NotRequired[InputPathType | None],
+    "overall": bool,
+    "byvoxel": bool,
+    "byvoxel_measure": typing.NotRequired[typing.Literal["AD", "RD", "MD", "FA"] | None],
+    "tablefile": InputPathType,
+    "delimiter": typing.NotRequired[typing.Literal["tab", "comma", "space", "semicolon"] | None],
+    "transpose": bool,
+    "debug": bool,
+})
+Tractstats2tableParametersTagged = typing.TypedDict('Tractstats2tableParametersTagged', {
+    "@type": typing.Literal["freesurfer/tractstats2table"],
     "inputs": typing.NotRequired[list[str] | None],
     "load_pathstats_from_file": typing.NotRequired[InputPathType | None],
     "overall": bool,
@@ -27,41 +39,9 @@ Tractstats2tableParameters = typing.TypedDict('Tractstats2tableParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "freesurfer.tractstats2table": tractstats2table_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "freesurfer.tractstats2table": tractstats2table_outputs,
-    }.get(t)
-
-
 class Tractstats2tableOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `tractstats2table(...)`.
+    Output object returned when calling `Tractstats2tableParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -79,7 +59,7 @@ def tractstats2table_params(
     delimiter: typing.Literal["tab", "comma", "space", "semicolon"] | None = None,
     transpose: bool = False,
     debug: bool = False,
-) -> Tractstats2tableParameters:
+) -> Tractstats2tableParametersTagged:
     """
     Build parameters.
     
@@ -101,7 +81,7 @@ def tractstats2table_params(
         Parameter dictionary
     """
     params = {
-        "@type": "freesurfer.tractstats2table",
+        "@type": "freesurfer/tractstats2table",
         "overall": overall,
         "byvoxel": byvoxel,
         "tablefile": tablefile,
@@ -134,37 +114,37 @@ def tractstats2table_cargs(
     """
     cargs = []
     cargs.append("tractstats2table")
-    if params.get("inputs") is not None:
+    if params.get("inputs", None) is not None:
         cargs.extend([
             "--inputs",
-            *params.get("inputs")
+            *params.get("inputs", None)
         ])
-    if params.get("load_pathstats_from_file") is not None:
+    if params.get("load_pathstats_from_file", None) is not None:
         cargs.extend([
             "--load-pathstats-from-file",
-            execution.input_file(params.get("load_pathstats_from_file"))
+            execution.input_file(params.get("load_pathstats_from_file", None))
         ])
-    if params.get("overall"):
+    if params.get("overall", False):
         cargs.append("-o")
-    if params.get("byvoxel"):
+    if params.get("byvoxel", False):
         cargs.append("-b")
-    if params.get("byvoxel_measure") is not None:
+    if params.get("byvoxel_measure", None) is not None:
         cargs.extend([
             "--byvoxel-measure",
-            params.get("byvoxel_measure")
+            params.get("byvoxel_measure", None)
         ])
     cargs.extend([
         "-t",
-        execution.input_file(params.get("tablefile"))
+        execution.input_file(params.get("tablefile", None))
     ])
-    if params.get("delimiter") is not None:
+    if params.get("delimiter", None) is not None:
         cargs.extend([
             "-d",
-            params.get("delimiter")
+            params.get("delimiter", None)
         ])
-    if params.get("transpose"):
+    if params.get("transpose", False):
         cargs.append("--transpose")
-    if params.get("debug"):
+    if params.get("debug", False):
         cargs.append("-v")
     return cargs
 
@@ -184,7 +164,7 @@ def tractstats2table_outputs(
     """
     ret = Tractstats2tableOutputs(
         root=execution.output_file("."),
-        output_tablefile=execution.output_file(pathlib.Path(params.get("tablefile")).name),
+        output_tablefile=execution.output_file(pathlib.Path(params.get("tablefile", None)).name),
     )
     return ret
 
@@ -275,7 +255,6 @@ def tractstats2table(
 __all__ = [
     "TRACTSTATS2TABLE_METADATA",
     "Tractstats2tableOutputs",
-    "Tractstats2tableParameters",
     "tractstats2table",
     "tractstats2table_execute",
     "tractstats2table_params",

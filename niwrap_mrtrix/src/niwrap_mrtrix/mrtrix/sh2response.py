@@ -14,14 +14,36 @@ SH2RESPONSE_METADATA = Metadata(
 
 
 Sh2responseConfigParameters = typing.TypedDict('Sh2responseConfigParameters', {
-    "@type": typing.Literal["mrtrix.sh2response.config"],
+    "@type": typing.NotRequired[typing.Literal["config"]],
+    "key": str,
+    "value": str,
+})
+Sh2responseConfigParametersTagged = typing.TypedDict('Sh2responseConfigParametersTagged', {
+    "@type": typing.Literal["config"],
     "key": str,
     "value": str,
 })
 
 
 Sh2responseParameters = typing.TypedDict('Sh2responseParameters', {
-    "@type": typing.Literal["mrtrix.sh2response"],
+    "@type": typing.NotRequired[typing.Literal["mrtrix/sh2response"]],
+    "lmax": typing.NotRequired[int | None],
+    "dump": typing.NotRequired[str | None],
+    "info": bool,
+    "quiet": bool,
+    "debug": bool,
+    "force": bool,
+    "nthreads": typing.NotRequired[int | None],
+    "config": typing.NotRequired[list[Sh2responseConfigParameters] | None],
+    "help": bool,
+    "version": bool,
+    "SH": InputPathType,
+    "mask": InputPathType,
+    "directions": InputPathType,
+    "response": str,
+})
+Sh2responseParametersTagged = typing.TypedDict('Sh2responseParametersTagged', {
+    "@type": typing.Literal["mrtrix/sh2response"],
     "lmax": typing.NotRequired[int | None],
     "dump": typing.NotRequired[str | None],
     "info": bool,
@@ -39,43 +61,10 @@ Sh2responseParameters = typing.TypedDict('Sh2responseParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "mrtrix.sh2response": sh2response_cargs,
-        "mrtrix.sh2response.config": sh2response_config_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "mrtrix.sh2response": sh2response_outputs,
-    }.get(t)
-
-
 def sh2response_config_params(
     key: str,
     value: str,
-) -> Sh2responseConfigParameters:
+) -> Sh2responseConfigParametersTagged:
     """
     Build parameters.
     
@@ -86,7 +75,7 @@ def sh2response_config_params(
         Parameter dictionary
     """
     params = {
-        "@type": "mrtrix.sh2response.config",
+        "@type": "config",
         "key": key,
         "value": value,
     }
@@ -108,14 +97,14 @@ def sh2response_config_cargs(
     """
     cargs = []
     cargs.append("-config")
-    cargs.append(params.get("key"))
-    cargs.append(params.get("value"))
+    cargs.append(params.get("key", None))
+    cargs.append(params.get("value", None))
     return cargs
 
 
 class Sh2responseOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `sh2response(...)`.
+    Output object returned when calling `Sh2responseParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -141,7 +130,7 @@ def sh2response_params(
     config: list[Sh2responseConfigParameters] | None = None,
     help_: bool = False,
     version: bool = False,
-) -> Sh2responseParameters:
+) -> Sh2responseParametersTagged:
     """
     Build parameters.
     
@@ -173,7 +162,7 @@ def sh2response_params(
         Parameter dictionary
     """
     params = {
-        "@type": "mrtrix.sh2response",
+        "@type": "mrtrix/sh2response",
         "info": info,
         "quiet": quiet,
         "debug": debug,
@@ -211,39 +200,39 @@ def sh2response_cargs(
     """
     cargs = []
     cargs.append("sh2response")
-    if params.get("lmax") is not None:
+    if params.get("lmax", None) is not None:
         cargs.extend([
             "-lmax",
-            str(params.get("lmax"))
+            str(params.get("lmax", None))
         ])
-    if params.get("dump") is not None:
+    if params.get("dump", None) is not None:
         cargs.extend([
             "-dump",
-            params.get("dump")
+            params.get("dump", None)
         ])
-    if params.get("info"):
+    if params.get("info", False):
         cargs.append("-info")
-    if params.get("quiet"):
+    if params.get("quiet", False):
         cargs.append("-quiet")
-    if params.get("debug"):
+    if params.get("debug", False):
         cargs.append("-debug")
-    if params.get("force"):
+    if params.get("force", False):
         cargs.append("-force")
-    if params.get("nthreads") is not None:
+    if params.get("nthreads", None) is not None:
         cargs.extend([
             "-nthreads",
-            str(params.get("nthreads"))
+            str(params.get("nthreads", None))
         ])
-    if params.get("config") is not None:
-        cargs.extend([a for c in [dyn_cargs(s["@type"])(s, execution) for s in params.get("config")] for a in c])
-    if params.get("help"):
+    if params.get("config", None) is not None:
+        cargs.extend([a for c in [sh2response_config_cargs(s, execution) for s in params.get("config", None)] for a in c])
+    if params.get("help", False):
         cargs.append("-help")
-    if params.get("version"):
+    if params.get("version", False):
         cargs.append("-version")
-    cargs.append(execution.input_file(params.get("SH")))
-    cargs.append(execution.input_file(params.get("mask")))
-    cargs.append(execution.input_file(params.get("directions")))
-    cargs.append(params.get("response"))
+    cargs.append(execution.input_file(params.get("SH", None)))
+    cargs.append(execution.input_file(params.get("mask", None)))
+    cargs.append(execution.input_file(params.get("directions", None)))
+    cargs.append(params.get("response", None))
     return cargs
 
 
@@ -262,8 +251,8 @@ def sh2response_outputs(
     """
     ret = Sh2responseOutputs(
         root=execution.output_file("."),
-        response=execution.output_file(params.get("response")),
-        dump=execution.output_file(params.get("dump")) if (params.get("dump") is not None) else None,
+        response=execution.output_file(params.get("response", None)),
+        dump=execution.output_file(params.get("dump", None)) if (params.get("dump") is not None) else None,
     )
     return ret
 
@@ -389,9 +378,7 @@ def sh2response(
 
 __all__ = [
     "SH2RESPONSE_METADATA",
-    "Sh2responseConfigParameters",
     "Sh2responseOutputs",
-    "Sh2responseParameters",
     "sh2response",
     "sh2response_config_params",
     "sh2response_execute",

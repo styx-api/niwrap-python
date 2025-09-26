@@ -14,14 +14,45 @@ ANTS_ATROPOS_N4_SH_METADATA = Metadata(
 
 
 AntsAtroposN4ShSegmentationPriorsParameters = typing.TypedDict('AntsAtroposN4ShSegmentationPriorsParameters', {
-    "@type": typing.Literal["ants.antsAtroposN4.sh.segmentation_priors"],
+    "@type": typing.NotRequired[typing.Literal["segmentation_priors"]],
+    "segmentation_priors_pattern": typing.NotRequired[str | None],
+    "segmentation_priors_folder": typing.NotRequired[InputPathType | None],
+})
+AntsAtroposN4ShSegmentationPriorsParametersTagged = typing.TypedDict('AntsAtroposN4ShSegmentationPriorsParametersTagged', {
+    "@type": typing.Literal["segmentation_priors"],
     "segmentation_priors_pattern": typing.NotRequired[str | None],
     "segmentation_priors_folder": typing.NotRequired[InputPathType | None],
 })
 
 
 AntsAtroposN4ShParameters = typing.TypedDict('AntsAtroposN4ShParameters', {
-    "@type": typing.Literal["ants.antsAtroposN4.sh"],
+    "@type": typing.NotRequired[typing.Literal["ants/antsAtroposN4.sh"]],
+    "image_dimension": typing.Literal[2, 3],
+    "input_image": InputPathType,
+    "mask_image": InputPathType,
+    "number_of_classes": int,
+    "output_prefix": str,
+    "max_n4_atropos_iterations": typing.NotRequired[int | None],
+    "max_atropos_iterations": typing.NotRequired[int | None],
+    "segmentation_priors": AntsAtroposN4ShSegmentationPriorsParameters,
+    "mrf": typing.NotRequired[str | None],
+    "denoise_anatomical_images": typing.NotRequired[typing.Literal[0, 1] | None],
+    "posterior_formulation": typing.NotRequired[typing.Literal["Socrates[ 1 ]", "Aristotle[ 1 ]"] | None],
+    "label_propagation": typing.NotRequired[str | None],
+    "posterior_label_for_n4_weight_mask": typing.NotRequired[str | None],
+    "image_file_suffix": typing.NotRequired[str | None],
+    "keep_temporary_files": typing.NotRequired[typing.Literal[0, 1] | None],
+    "use_random_seeding": typing.NotRequired[typing.Literal[0, 1] | None],
+    "atropos_segmentation_prior_weight": typing.NotRequired[float | None],
+    "n4_convergence": typing.NotRequired[str | None],
+    "n4_shrink_factor": typing.NotRequired[int | None],
+    "n4_bspline_params": typing.NotRequired[str | None],
+    "atropos_segmentation_icm": typing.NotRequired[str | None],
+    "atropos_segmentation_use_euclidean_distance": typing.NotRequired[typing.Literal[0, 1] | None],
+    "test_debug_mode": typing.NotRequired[int | None],
+})
+AntsAtroposN4ShParametersTagged = typing.TypedDict('AntsAtroposN4ShParametersTagged', {
+    "@type": typing.Literal["ants/antsAtroposN4.sh"],
     "image_dimension": typing.Literal[2, 3],
     "input_image": InputPathType,
     "mask_image": InputPathType,
@@ -48,43 +79,10 @@ AntsAtroposN4ShParameters = typing.TypedDict('AntsAtroposN4ShParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "ants.antsAtroposN4.sh": ants_atropos_n4_sh_cargs,
-        "ants.antsAtroposN4.sh.segmentation_priors": ants_atropos_n4_sh_segmentation_priors_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "ants.antsAtroposN4.sh": ants_atropos_n4_sh_outputs,
-    }.get(t)
-
-
 def ants_atropos_n4_sh_segmentation_priors_params(
     segmentation_priors_pattern: str | None = None,
     segmentation_priors_folder: InputPathType | None = None,
-) -> AntsAtroposN4ShSegmentationPriorsParameters:
+) -> AntsAtroposN4ShSegmentationPriorsParametersTagged:
     """
     Build parameters.
     
@@ -98,7 +96,7 @@ def ants_atropos_n4_sh_segmentation_priors_params(
         Parameter dictionary
     """
     params = {
-        "@type": "ants.antsAtroposN4.sh.segmentation_priors",
+        "@type": "segmentation_priors",
     }
     if segmentation_priors_pattern is not None:
         params["segmentation_priors_pattern"] = segmentation_priors_pattern
@@ -121,14 +119,14 @@ def ants_atropos_n4_sh_segmentation_priors_cargs(
         Command-line arguments.
     """
     cargs = []
-    if params.get("segmentation_priors_pattern") is not None or params.get("segmentation_priors_folder") is not None:
-        cargs.append((params.get("segmentation_priors_pattern") if (params.get("segmentation_priors_pattern") is not None) else "") + "/" + (execution.input_file(params.get("segmentation_priors_folder")) if (params.get("segmentation_priors_folder") is not None) else ""))
+    if params.get("segmentation_priors_pattern", None) is not None or params.get("segmentation_priors_folder", None) is not None:
+        cargs.append((params.get("segmentation_priors_pattern", None) if (params.get("segmentation_priors_pattern", None) is not None) else "") + "/" + (execution.input_file(params.get("segmentation_priors_folder", None)) if (params.get("segmentation_priors_folder", None) is not None) else ""))
     return cargs
 
 
 class AntsAtroposN4ShOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `ants_atropos_n4_sh(...)`.
+    Output object returned when calling `AntsAtroposN4ShParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -164,7 +162,7 @@ def ants_atropos_n4_sh_params(
     atropos_segmentation_icm: str | None = None,
     atropos_segmentation_use_euclidean_distance: typing.Literal[0, 1] | None = None,
     test_debug_mode: int | None = None,
-) -> AntsAtroposN4ShParameters:
+) -> AntsAtroposN4ShParametersTagged:
     """
     Build parameters.
     
@@ -234,7 +232,7 @@ def ants_atropos_n4_sh_params(
         Parameter dictionary
     """
     params = {
-        "@type": "ants.antsAtroposN4.sh",
+        "@type": "ants/antsAtroposN4.sh",
         "image_dimension": image_dimension,
         "input_image": input_image,
         "mask_image": mask_image,
@@ -296,112 +294,112 @@ def ants_atropos_n4_sh_cargs(
     cargs.append("antsAtroposN4.sh")
     cargs.extend([
         "-d",
-        str(params.get("image_dimension"))
+        str(params.get("image_dimension", None))
     ])
     cargs.extend([
         "-a",
-        execution.input_file(params.get("input_image"))
+        execution.input_file(params.get("input_image", None))
     ])
     cargs.extend([
         "-x",
-        execution.input_file(params.get("mask_image"))
+        execution.input_file(params.get("mask_image", None))
     ])
     cargs.extend([
         "-c",
-        str(params.get("number_of_classes"))
+        str(params.get("number_of_classes", None))
     ])
     cargs.extend([
         "-o",
-        params.get("output_prefix")
+        params.get("output_prefix", None)
     ])
-    if params.get("max_n4_atropos_iterations") is not None:
+    if params.get("max_n4_atropos_iterations", None) is not None:
         cargs.extend([
             "-m",
-            str(params.get("max_n4_atropos_iterations"))
+            str(params.get("max_n4_atropos_iterations", None))
         ])
-    if params.get("max_atropos_iterations") is not None:
+    if params.get("max_atropos_iterations", None) is not None:
         cargs.extend([
             "-n",
-            str(params.get("max_atropos_iterations"))
+            str(params.get("max_atropos_iterations", None))
         ])
     cargs.extend([
         "-p",
-        *dyn_cargs(params.get("segmentation_priors")["@type"])(params.get("segmentation_priors"), execution)
+        *ants_atropos_n4_sh_segmentation_priors_cargs(params.get("segmentation_priors", None), execution)
     ])
-    if params.get("mrf") is not None:
+    if params.get("mrf", None) is not None:
         cargs.extend([
             "-r",
-            params.get("mrf")
+            params.get("mrf", None)
         ])
-    if params.get("denoise_anatomical_images") is not None:
+    if params.get("denoise_anatomical_images", None) is not None:
         cargs.extend([
             "-g",
-            str(params.get("denoise_anatomical_images"))
+            str(params.get("denoise_anatomical_images", None))
         ])
-    if params.get("posterior_formulation") is not None:
+    if params.get("posterior_formulation", None) is not None:
         cargs.extend([
             "-b",
-            params.get("posterior_formulation")
+            params.get("posterior_formulation", None)
         ])
-    if params.get("label_propagation") is not None:
+    if params.get("label_propagation", None) is not None:
         cargs.extend([
             "-l",
-            params.get("label_propagation")
+            params.get("label_propagation", None)
         ])
-    if params.get("posterior_label_for_n4_weight_mask") is not None:
+    if params.get("posterior_label_for_n4_weight_mask", None) is not None:
         cargs.extend([
             "-y",
-            params.get("posterior_label_for_n4_weight_mask")
+            params.get("posterior_label_for_n4_weight_mask", None)
         ])
-    if params.get("image_file_suffix") is not None:
+    if params.get("image_file_suffix", None) is not None:
         cargs.extend([
             "-s",
-            params.get("image_file_suffix")
+            params.get("image_file_suffix", None)
         ])
-    if params.get("keep_temporary_files") is not None:
+    if params.get("keep_temporary_files", None) is not None:
         cargs.extend([
             "-k",
-            str(params.get("keep_temporary_files"))
+            str(params.get("keep_temporary_files", None))
         ])
-    if params.get("use_random_seeding") is not None:
+    if params.get("use_random_seeding", None) is not None:
         cargs.extend([
             "-u",
-            str(params.get("use_random_seeding"))
+            str(params.get("use_random_seeding", None))
         ])
-    if params.get("atropos_segmentation_prior_weight") is not None:
+    if params.get("atropos_segmentation_prior_weight", None) is not None:
         cargs.extend([
             "-w",
-            str(params.get("atropos_segmentation_prior_weight"))
+            str(params.get("atropos_segmentation_prior_weight", None))
         ])
-    if params.get("n4_convergence") is not None:
+    if params.get("n4_convergence", None) is not None:
         cargs.extend([
             "-e",
-            params.get("n4_convergence")
+            params.get("n4_convergence", None)
         ])
-    if params.get("n4_shrink_factor") is not None:
+    if params.get("n4_shrink_factor", None) is not None:
         cargs.extend([
             "-f",
-            str(params.get("n4_shrink_factor"))
+            str(params.get("n4_shrink_factor", None))
         ])
-    if params.get("n4_bspline_params") is not None:
+    if params.get("n4_bspline_params", None) is not None:
         cargs.extend([
             "-q",
-            params.get("n4_bspline_params")
+            params.get("n4_bspline_params", None)
         ])
-    if params.get("atropos_segmentation_icm") is not None:
+    if params.get("atropos_segmentation_icm", None) is not None:
         cargs.extend([
             "-i",
-            params.get("atropos_segmentation_icm")
+            params.get("atropos_segmentation_icm", None)
         ])
-    if params.get("atropos_segmentation_use_euclidean_distance") is not None:
+    if params.get("atropos_segmentation_use_euclidean_distance", None) is not None:
         cargs.extend([
             "-j",
-            str(params.get("atropos_segmentation_use_euclidean_distance"))
+            str(params.get("atropos_segmentation_use_euclidean_distance", None))
         ])
-    if params.get("test_debug_mode") is not None:
+    if params.get("test_debug_mode", None) is not None:
         cargs.extend([
             "-z",
-            str(params.get("test_debug_mode"))
+            str(params.get("test_debug_mode", None))
         ])
     return cargs
 
@@ -421,9 +419,9 @@ def ants_atropos_n4_sh_outputs(
     """
     ret = AntsAtroposN4ShOutputs(
         root=execution.output_file("."),
-        n4_corrected=execution.output_file(params.get("output_prefix") + "N4Corrected.[OUTPUT_SUFFIX]"),
-        segmentation=execution.output_file(params.get("output_prefix") + "Segmentation.[OUTPUT_SUFFIX]"),
-        segmentation_posteriors=execution.output_file(params.get("output_prefix") + "SegmentationPosteriors.[OUTPUT_SUFFIX]"),
+        n4_corrected=execution.output_file(params.get("output_prefix", None) + "N4Corrected.[OUTPUT_SUFFIX]"),
+        segmentation=execution.output_file(params.get("output_prefix", None) + "Segmentation.[OUTPUT_SUFFIX]"),
+        segmentation_posteriors=execution.output_file(params.get("output_prefix", None) + "SegmentationPosteriors.[OUTPUT_SUFFIX]"),
     )
     return ret
 
@@ -590,8 +588,6 @@ def ants_atropos_n4_sh(
 __all__ = [
     "ANTS_ATROPOS_N4_SH_METADATA",
     "AntsAtroposN4ShOutputs",
-    "AntsAtroposN4ShParameters",
-    "AntsAtroposN4ShSegmentationPriorsParameters",
     "ants_atropos_n4_sh",
     "ants_atropos_n4_sh_execute",
     "ants_atropos_n4_sh_params",

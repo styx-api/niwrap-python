@@ -14,45 +14,18 @@ CREATE_LUT_METADATA = Metadata(
 
 
 CreateLutParameters = typing.TypedDict('CreateLutParameters', {
-    "@type": typing.Literal["fsl.create_lut"],
+    "@type": typing.NotRequired[typing.Literal["fsl/create_lut"]],
+    "output_file_root": str,
+})
+CreateLutParametersTagged = typing.TypedDict('CreateLutParametersTagged', {
+    "@type": typing.Literal["fsl/create_lut"],
     "output_file_root": str,
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "fsl.create_lut": create_lut_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-    }.get(t)
-
-
 class CreateLutOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `create_lut(...)`.
+    Output object returned when calling `CreateLutParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -60,7 +33,7 @@ class CreateLutOutputs(typing.NamedTuple):
 
 def create_lut_params(
     output_file_root: str,
-) -> CreateLutParameters:
+) -> CreateLutParametersTagged:
     """
     Build parameters.
     
@@ -70,7 +43,7 @@ def create_lut_params(
         Parameter dictionary
     """
     params = {
-        "@type": "fsl.create_lut",
+        "@type": "fsl/create_lut",
         "output_file_root": output_file_root,
     }
     return params
@@ -91,7 +64,7 @@ def create_lut_cargs(
     """
     cargs = []
     cargs.append("create_lut")
-    cargs.append(params.get("output_file_root"))
+    cargs.append(params.get("output_file_root", None))
     return cargs
 
 
@@ -170,7 +143,6 @@ def create_lut(
 __all__ = [
     "CREATE_LUT_METADATA",
     "CreateLutOutputs",
-    "CreateLutParameters",
     "create_lut",
     "create_lut_execute",
     "create_lut_params",

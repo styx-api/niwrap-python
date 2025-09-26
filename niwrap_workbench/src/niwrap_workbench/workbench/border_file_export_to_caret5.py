@@ -14,54 +14,32 @@ BORDER_FILE_EXPORT_TO_CARET5_METADATA = Metadata(
 
 
 BorderFileExportToCaret5SurfaceParameters = typing.TypedDict('BorderFileExportToCaret5SurfaceParameters', {
-    "@type": typing.Literal["workbench.border-file-export-to-caret5.surface"],
+    "@type": typing.NotRequired[typing.Literal["surface"]],
+    "surface_in": InputPathType,
+})
+BorderFileExportToCaret5SurfaceParametersTagged = typing.TypedDict('BorderFileExportToCaret5SurfaceParametersTagged', {
+    "@type": typing.Literal["surface"],
     "surface_in": InputPathType,
 })
 
 
 BorderFileExportToCaret5Parameters = typing.TypedDict('BorderFileExportToCaret5Parameters', {
-    "@type": typing.Literal["workbench.border-file-export-to-caret5"],
+    "@type": typing.NotRequired[typing.Literal["workbench/border-file-export-to-caret5"]],
+    "border_file": str,
+    "output_file_prefix": str,
+    "surface": typing.NotRequired[list[BorderFileExportToCaret5SurfaceParameters] | None],
+})
+BorderFileExportToCaret5ParametersTagged = typing.TypedDict('BorderFileExportToCaret5ParametersTagged', {
+    "@type": typing.Literal["workbench/border-file-export-to-caret5"],
     "border_file": str,
     "output_file_prefix": str,
     "surface": typing.NotRequired[list[BorderFileExportToCaret5SurfaceParameters] | None],
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "workbench.border-file-export-to-caret5": border_file_export_to_caret5_cargs,
-        "workbench.border-file-export-to-caret5.surface": border_file_export_to_caret5_surface_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-    }.get(t)
-
-
 def border_file_export_to_caret5_surface_params(
     surface_in: InputPathType,
-) -> BorderFileExportToCaret5SurfaceParameters:
+) -> BorderFileExportToCaret5SurfaceParametersTagged:
     """
     Build parameters.
     
@@ -71,7 +49,7 @@ def border_file_export_to_caret5_surface_params(
         Parameter dictionary
     """
     params = {
-        "@type": "workbench.border-file-export-to-caret5.surface",
+        "@type": "surface",
         "surface_in": surface_in,
     }
     return params
@@ -92,13 +70,13 @@ def border_file_export_to_caret5_surface_cargs(
     """
     cargs = []
     cargs.append("-surface")
-    cargs.append(execution.input_file(params.get("surface_in")))
+    cargs.append(execution.input_file(params.get("surface_in", None)))
     return cargs
 
 
 class BorderFileExportToCaret5Outputs(typing.NamedTuple):
     """
-    Output object returned when calling `border_file_export_to_caret5(...)`.
+    Output object returned when calling `BorderFileExportToCaret5Parameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -108,7 +86,7 @@ def border_file_export_to_caret5_params(
     border_file: str,
     output_file_prefix: str,
     surface: list[BorderFileExportToCaret5SurfaceParameters] | None = None,
-) -> BorderFileExportToCaret5Parameters:
+) -> BorderFileExportToCaret5ParametersTagged:
     """
     Build parameters.
     
@@ -121,7 +99,7 @@ def border_file_export_to_caret5_params(
         Parameter dictionary
     """
     params = {
-        "@type": "workbench.border-file-export-to-caret5",
+        "@type": "workbench/border-file-export-to-caret5",
         "border_file": border_file,
         "output_file_prefix": output_file_prefix,
     }
@@ -146,10 +124,10 @@ def border_file_export_to_caret5_cargs(
     cargs = []
     cargs.append("wb_command")
     cargs.append("-border-file-export-to-caret5")
-    cargs.append(params.get("border_file"))
-    cargs.append(params.get("output_file_prefix"))
-    if params.get("surface") is not None:
-        cargs.extend([a for c in [dyn_cargs(s["@type"])(s, execution) for s in params.get("surface")] for a in c])
+    cargs.append(params.get("border_file", None))
+    cargs.append(params.get("output_file_prefix", None))
+    if params.get("surface", None) is not None:
+        cargs.extend([a for c in [border_file_export_to_caret5_surface_cargs(s, execution) for s in params.get("surface", None)] for a in c])
     return cargs
 
 
@@ -285,8 +263,6 @@ def border_file_export_to_caret5(
 __all__ = [
     "BORDER_FILE_EXPORT_TO_CARET5_METADATA",
     "BorderFileExportToCaret5Outputs",
-    "BorderFileExportToCaret5Parameters",
-    "BorderFileExportToCaret5SurfaceParameters",
     "border_file_export_to_caret5",
     "border_file_export_to_caret5_execute",
     "border_file_export_to_caret5_params",

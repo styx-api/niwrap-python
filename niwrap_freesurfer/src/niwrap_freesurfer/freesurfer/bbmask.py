@@ -14,7 +14,16 @@ BBMASK_METADATA = Metadata(
 
 
 BbmaskParameters = typing.TypedDict('BbmaskParameters', {
-    "@type": typing.Literal["freesurfer.bbmask"],
+    "@type": typing.NotRequired[typing.Literal["freesurfer/bbmask"]],
+    "mask": list[InputPathType],
+    "src_volumes": typing.NotRequired[list[InputPathType] | None],
+    "npad": typing.NotRequired[float | None],
+    "registration": typing.NotRequired[list[InputPathType] | None],
+    "regheader": typing.NotRequired[InputPathType | None],
+    "sub2src": typing.NotRequired[InputPathType | None],
+})
+BbmaskParametersTagged = typing.TypedDict('BbmaskParametersTagged', {
+    "@type": typing.Literal["freesurfer/bbmask"],
     "mask": list[InputPathType],
     "src_volumes": typing.NotRequired[list[InputPathType] | None],
     "npad": typing.NotRequired[float | None],
@@ -24,41 +33,9 @@ BbmaskParameters = typing.TypedDict('BbmaskParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "freesurfer.bbmask": bbmask_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "freesurfer.bbmask": bbmask_outputs,
-    }.get(t)
-
-
 class BbmaskOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `bbmask(...)`.
+    Output object returned when calling `BbmaskParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -81,7 +58,7 @@ def bbmask_params(
     registration: list[InputPathType] | None = None,
     regheader: InputPathType | None = None,
     sub2src: InputPathType | None = None,
-) -> BbmaskParameters:
+) -> BbmaskParametersTagged:
     """
     Build parameters.
     
@@ -97,7 +74,7 @@ def bbmask_params(
         Parameter dictionary
     """
     params = {
-        "@type": "freesurfer.bbmask",
+        "@type": "freesurfer/bbmask",
         "mask": mask,
     }
     if src_volumes is not None:
@@ -130,32 +107,32 @@ def bbmask_cargs(
     cargs.append("bbmask")
     cargs.extend([
         "--mask",
-        *[execution.input_file(f) for f in params.get("mask")]
+        *[execution.input_file(f) for f in params.get("mask", None)]
     ])
-    if params.get("src_volumes") is not None:
+    if params.get("src_volumes", None) is not None:
         cargs.extend([
             "--src",
-            *[execution.input_file(f) for f in params.get("src_volumes")]
+            *[execution.input_file(f) for f in params.get("src_volumes", None)]
         ])
-    if params.get("npad") is not None:
+    if params.get("npad", None) is not None:
         cargs.extend([
             "--npad",
-            str(params.get("npad"))
+            str(params.get("npad", None))
         ])
-    if params.get("registration") is not None:
+    if params.get("registration", None) is not None:
         cargs.extend([
             "--reg",
-            *[execution.input_file(f) for f in params.get("registration")]
+            *[execution.input_file(f) for f in params.get("registration", None)]
         ])
-    if params.get("regheader") is not None:
+    if params.get("regheader", None) is not None:
         cargs.extend([
             "--regheader",
-            execution.input_file(params.get("regheader"))
+            execution.input_file(params.get("regheader", None))
         ])
-    if params.get("sub2src") is not None:
+    if params.get("sub2src", None) is not None:
         cargs.extend([
             "--sub2src",
-            execution.input_file(params.get("sub2src"))
+            execution.input_file(params.get("sub2src", None))
         ])
     return cargs
 
@@ -258,7 +235,6 @@ def bbmask(
 __all__ = [
     "BBMASK_METADATA",
     "BbmaskOutputs",
-    "BbmaskParameters",
     "bbmask",
     "bbmask_execute",
     "bbmask_params",

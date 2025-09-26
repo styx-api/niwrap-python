@@ -14,7 +14,14 @@ METRIC_MATH_METADATA = Metadata(
 
 
 MetricMathVarParameters = typing.TypedDict('MetricMathVarParameters', {
-    "@type": typing.Literal["workbench.metric-math.var"],
+    "@type": typing.NotRequired[typing.Literal["var"]],
+    "name": str,
+    "metric": InputPathType,
+    "opt_column_column": typing.NotRequired[str | None],
+    "opt_repeat": bool,
+})
+MetricMathVarParametersTagged = typing.TypedDict('MetricMathVarParametersTagged', {
+    "@type": typing.Literal["var"],
     "name": str,
     "metric": InputPathType,
     "opt_column_column": typing.NotRequired[str | None],
@@ -23,7 +30,14 @@ MetricMathVarParameters = typing.TypedDict('MetricMathVarParameters', {
 
 
 MetricMathParameters = typing.TypedDict('MetricMathParameters', {
-    "@type": typing.Literal["workbench.metric-math"],
+    "@type": typing.NotRequired[typing.Literal["workbench/metric-math"]],
+    "expression": str,
+    "metric_out": str,
+    "opt_fixnan_replace": typing.NotRequired[float | None],
+    "var": typing.NotRequired[list[MetricMathVarParameters] | None],
+})
+MetricMathParametersTagged = typing.TypedDict('MetricMathParametersTagged', {
+    "@type": typing.Literal["workbench/metric-math"],
     "expression": str,
     "metric_out": str,
     "opt_fixnan_replace": typing.NotRequired[float | None],
@@ -31,45 +45,12 @@ MetricMathParameters = typing.TypedDict('MetricMathParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "workbench.metric-math": metric_math_cargs,
-        "workbench.metric-math.var": metric_math_var_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "workbench.metric-math": metric_math_outputs,
-    }.get(t)
-
-
 def metric_math_var_params(
     name: str,
     metric: InputPathType,
     opt_column_column: str | None = None,
     opt_repeat: bool = False,
-) -> MetricMathVarParameters:
+) -> MetricMathVarParametersTagged:
     """
     Build parameters.
     
@@ -82,7 +63,7 @@ def metric_math_var_params(
         Parameter dictionary
     """
     params = {
-        "@type": "workbench.metric-math.var",
+        "@type": "var",
         "name": name,
         "metric": metric,
         "opt_repeat": opt_repeat,
@@ -107,21 +88,21 @@ def metric_math_var_cargs(
     """
     cargs = []
     cargs.append("-var")
-    cargs.append(params.get("name"))
-    cargs.append(execution.input_file(params.get("metric")))
-    if params.get("opt_column_column") is not None:
+    cargs.append(params.get("name", None))
+    cargs.append(execution.input_file(params.get("metric", None)))
+    if params.get("opt_column_column", None) is not None:
         cargs.extend([
             "-column",
-            params.get("opt_column_column")
+            params.get("opt_column_column", None)
         ])
-    if params.get("opt_repeat"):
+    if params.get("opt_repeat", False):
         cargs.append("-repeat")
     return cargs
 
 
 class MetricMathOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `metric_math(...)`.
+    Output object returned when calling `MetricMathParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -134,7 +115,7 @@ def metric_math_params(
     metric_out: str,
     opt_fixnan_replace: float | None = None,
     var: list[MetricMathVarParameters] | None = None,
-) -> MetricMathParameters:
+) -> MetricMathParametersTagged:
     """
     Build parameters.
     
@@ -148,7 +129,7 @@ def metric_math_params(
         Parameter dictionary
     """
     params = {
-        "@type": "workbench.metric-math",
+        "@type": "workbench/metric-math",
         "expression": expression,
         "metric_out": metric_out,
     }
@@ -175,15 +156,15 @@ def metric_math_cargs(
     cargs = []
     cargs.append("wb_command")
     cargs.append("-metric-math")
-    cargs.append(params.get("expression"))
-    cargs.append(params.get("metric_out"))
-    if params.get("opt_fixnan_replace") is not None:
+    cargs.append(params.get("expression", None))
+    cargs.append(params.get("metric_out", None))
+    if params.get("opt_fixnan_replace", None) is not None:
         cargs.extend([
             "-fixnan",
-            str(params.get("opt_fixnan_replace"))
+            str(params.get("opt_fixnan_replace", None))
         ])
-    if params.get("var") is not None:
-        cargs.extend([a for c in [dyn_cargs(s["@type"])(s, execution) for s in params.get("var")] for a in c])
+    if params.get("var", None) is not None:
+        cargs.extend([a for c in [metric_math_var_cargs(s, execution) for s in params.get("var", None)] for a in c])
     return cargs
 
 
@@ -202,7 +183,7 @@ def metric_math_outputs(
     """
     ret = MetricMathOutputs(
         root=execution.output_file("."),
-        metric_out=execution.output_file(params.get("metric_out")),
+        metric_out=execution.output_file(params.get("metric_out", None)),
     )
     return ret
 
@@ -413,8 +394,6 @@ def metric_math(
 __all__ = [
     "METRIC_MATH_METADATA",
     "MetricMathOutputs",
-    "MetricMathParameters",
-    "MetricMathVarParameters",
     "metric_math",
     "metric_math_execute",
     "metric_math_params",

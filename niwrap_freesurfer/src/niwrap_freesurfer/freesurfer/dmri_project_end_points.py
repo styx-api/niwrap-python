@@ -14,7 +14,16 @@ DMRI_PROJECT_END_POINTS_METADATA = Metadata(
 
 
 DmriProjectEndPointsParameters = typing.TypedDict('DmriProjectEndPointsParameters', {
-    "@type": typing.Literal["freesurfer.dmri_projectEndPoints"],
+    "@type": typing.NotRequired[typing.Literal["freesurfer/dmri_projectEndPoints"]],
+    "streamline_file": InputPathType,
+    "left_surface_file": InputPathType,
+    "right_surface_file": InputPathType,
+    "left_overlay_file": str,
+    "right_overlay_file": str,
+    "reference_image": InputPathType,
+})
+DmriProjectEndPointsParametersTagged = typing.TypedDict('DmriProjectEndPointsParametersTagged', {
+    "@type": typing.Literal["freesurfer/dmri_projectEndPoints"],
     "streamline_file": InputPathType,
     "left_surface_file": InputPathType,
     "right_surface_file": InputPathType,
@@ -24,41 +33,9 @@ DmriProjectEndPointsParameters = typing.TypedDict('DmriProjectEndPointsParameter
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "freesurfer.dmri_projectEndPoints": dmri_project_end_points_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "freesurfer.dmri_projectEndPoints": dmri_project_end_points_outputs,
-    }.get(t)
-
-
 class DmriProjectEndPointsOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `dmri_project_end_points(...)`.
+    Output object returned when calling `DmriProjectEndPointsParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -75,7 +52,7 @@ def dmri_project_end_points_params(
     left_overlay_file: str,
     right_overlay_file: str,
     reference_image: InputPathType,
-) -> DmriProjectEndPointsParameters:
+) -> DmriProjectEndPointsParametersTagged:
     """
     Build parameters.
     
@@ -92,7 +69,7 @@ def dmri_project_end_points_params(
         Parameter dictionary
     """
     params = {
-        "@type": "freesurfer.dmri_projectEndPoints",
+        "@type": "freesurfer/dmri_projectEndPoints",
         "streamline_file": streamline_file,
         "left_surface_file": left_surface_file,
         "right_surface_file": right_surface_file,
@@ -120,27 +97,27 @@ def dmri_project_end_points_cargs(
     cargs.append("dmri_projectEndPoints")
     cargs.extend([
         "-i",
-        execution.input_file(params.get("streamline_file"))
+        execution.input_file(params.get("streamline_file", None))
     ])
     cargs.extend([
         "-sl",
-        execution.input_file(params.get("left_surface_file"))
+        execution.input_file(params.get("left_surface_file", None))
     ])
     cargs.extend([
         "-sr",
-        execution.input_file(params.get("right_surface_file"))
+        execution.input_file(params.get("right_surface_file", None))
     ])
     cargs.extend([
         "-ol",
-        params.get("left_overlay_file")
+        params.get("left_overlay_file", None)
     ])
     cargs.extend([
         "-or",
-        params.get("right_overlay_file")
+        params.get("right_overlay_file", None)
     ])
     cargs.extend([
         "-ri",
-        execution.input_file(params.get("reference_image"))
+        execution.input_file(params.get("reference_image", None))
     ])
     return cargs
 
@@ -160,8 +137,8 @@ def dmri_project_end_points_outputs(
     """
     ret = DmriProjectEndPointsOutputs(
         root=execution.output_file("."),
-        out_left_overlay=execution.output_file(params.get("left_overlay_file")),
-        out_right_overlay=execution.output_file(params.get("right_overlay_file")),
+        out_left_overlay=execution.output_file(params.get("left_overlay_file", None)),
+        out_right_overlay=execution.output_file(params.get("right_overlay_file", None)),
     )
     return ret
 
@@ -241,7 +218,6 @@ def dmri_project_end_points(
 __all__ = [
     "DMRI_PROJECT_END_POINTS_METADATA",
     "DmriProjectEndPointsOutputs",
-    "DmriProjectEndPointsParameters",
     "dmri_project_end_points",
     "dmri_project_end_points_execute",
     "dmri_project_end_points_params",

@@ -14,7 +14,30 @@ V_3D_QWARP_METADATA = Metadata(
 
 
 V3dQwarpParameters = typing.TypedDict('V3dQwarpParameters', {
-    "@type": typing.Literal["afni.3dQwarp"],
+    "@type": typing.NotRequired[typing.Literal["afni/3dQwarp"]],
+    "base_dataset": InputPathType,
+    "source_dataset": InputPathType,
+    "prefix": str,
+    "no_warp": bool,
+    "inverse_warp": bool,
+    "no_dataset": bool,
+    "a_warp": bool,
+    "pcl": bool,
+    "pear": bool,
+    "hel": bool,
+    "mi": bool,
+    "nmi": bool,
+    "lpc": bool,
+    "lpa": bool,
+    "noneg": bool,
+    "nopenalty": bool,
+    "minpatch": typing.NotRequired[float | None],
+    "maxlev": typing.NotRequired[float | None],
+    "verbose": bool,
+    "quiet": bool,
+})
+V3dQwarpParametersTagged = typing.TypedDict('V3dQwarpParametersTagged', {
+    "@type": typing.Literal["afni/3dQwarp"],
     "base_dataset": InputPathType,
     "source_dataset": InputPathType,
     "prefix": str,
@@ -38,41 +61,9 @@ V3dQwarpParameters = typing.TypedDict('V3dQwarpParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "afni.3dQwarp": v_3d_qwarp_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "afni.3dQwarp": v_3d_qwarp_outputs,
-    }.get(t)
-
-
 class V3dQwarpOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `v_3d_qwarp(...)`.
+    Output object returned when calling `V3dQwarpParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -105,7 +96,7 @@ def v_3d_qwarp_params(
     maxlev: float | None = None,
     verbose: bool = False,
     quiet: bool = False,
-) -> V3dQwarpParameters:
+) -> V3dQwarpParametersTagged:
     """
     Build parameters.
     
@@ -134,7 +125,7 @@ def v_3d_qwarp_params(
         Parameter dictionary
     """
     params = {
-        "@type": "afni.3dQwarp",
+        "@type": "afni/3dQwarp",
         "base_dataset": base_dataset,
         "source_dataset": source_dataset,
         "prefix": prefix,
@@ -176,48 +167,48 @@ def v_3d_qwarp_cargs(
     """
     cargs = []
     cargs.append("3dQwarp")
-    cargs.append(execution.input_file(params.get("base_dataset")))
-    cargs.append(execution.input_file(params.get("source_dataset")))
-    cargs.append(params.get("prefix"))
-    if params.get("no_warp"):
+    cargs.append(execution.input_file(params.get("base_dataset", None)))
+    cargs.append(execution.input_file(params.get("source_dataset", None)))
+    cargs.append(params.get("prefix", None))
+    if params.get("no_warp", False):
         cargs.append("-nowarp")
-    if params.get("inverse_warp"):
+    if params.get("inverse_warp", False):
         cargs.append("-iwarp")
-    if params.get("no_dataset"):
+    if params.get("no_dataset", False):
         cargs.append("-nodset")
-    if params.get("a_warp"):
+    if params.get("a_warp", False):
         cargs.append("-awarp")
-    if params.get("pcl"):
+    if params.get("pcl", False):
         cargs.append("-pcl")
-    if params.get("pear"):
+    if params.get("pear", False):
         cargs.append("-pear")
-    if params.get("hel"):
+    if params.get("hel", False):
         cargs.append("-hel")
-    if params.get("mi"):
+    if params.get("mi", False):
         cargs.append("-mi")
-    if params.get("nmi"):
+    if params.get("nmi", False):
         cargs.append("-nmi")
-    if params.get("lpc"):
+    if params.get("lpc", False):
         cargs.append("-lpc")
-    if params.get("lpa"):
+    if params.get("lpa", False):
         cargs.append("-lpa")
-    if params.get("noneg"):
+    if params.get("noneg", False):
         cargs.append("-noneg")
-    if params.get("nopenalty"):
+    if params.get("nopenalty", False):
         cargs.append("-nopenalty")
-    if params.get("minpatch") is not None:
+    if params.get("minpatch", None) is not None:
         cargs.extend([
             "-minpatch",
-            str(params.get("minpatch"))
+            str(params.get("minpatch", None))
         ])
-    if params.get("maxlev") is not None:
+    if params.get("maxlev", None) is not None:
         cargs.extend([
             "-maxlev",
-            str(params.get("maxlev"))
+            str(params.get("maxlev", None))
         ])
-    if params.get("verbose"):
+    if params.get("verbose", False):
         cargs.append("-verb")
-    if params.get("quiet"):
+    if params.get("quiet", False):
         cargs.append("-quiet")
     return cargs
 
@@ -358,7 +349,6 @@ def v_3d_qwarp(
 
 __all__ = [
     "V3dQwarpOutputs",
-    "V3dQwarpParameters",
     "V_3D_QWARP_METADATA",
     "v_3d_qwarp",
     "v_3d_qwarp_execute",

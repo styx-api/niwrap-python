@@ -14,46 +14,18 @@ RENORMALIZE_SUBJECT_KEEP_EDITTING_METADATA = Metadata(
 
 
 RenormalizeSubjectKeepEdittingParameters = typing.TypedDict('RenormalizeSubjectKeepEdittingParameters', {
-    "@type": typing.Literal["freesurfer.renormalize_subject_keep_editting"],
+    "@type": typing.NotRequired[typing.Literal["freesurfer/renormalize_subject_keep_editting"]],
+    "placeholder_input": typing.NotRequired[str | None],
+})
+RenormalizeSubjectKeepEdittingParametersTagged = typing.TypedDict('RenormalizeSubjectKeepEdittingParametersTagged', {
+    "@type": typing.Literal["freesurfer/renormalize_subject_keep_editting"],
     "placeholder_input": typing.NotRequired[str | None],
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "freesurfer.renormalize_subject_keep_editting": renormalize_subject_keep_editting_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "freesurfer.renormalize_subject_keep_editting": renormalize_subject_keep_editting_outputs,
-    }.get(t)
-
-
 class RenormalizeSubjectKeepEdittingOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `renormalize_subject_keep_editting(...)`.
+    Output object returned when calling `RenormalizeSubjectKeepEdittingParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -63,7 +35,7 @@ class RenormalizeSubjectKeepEdittingOutputs(typing.NamedTuple):
 
 def renormalize_subject_keep_editting_params(
     placeholder_input: str | None = None,
-) -> RenormalizeSubjectKeepEdittingParameters:
+) -> RenormalizeSubjectKeepEdittingParametersTagged:
     """
     Build parameters.
     
@@ -74,7 +46,7 @@ def renormalize_subject_keep_editting_params(
         Parameter dictionary
     """
     params = {
-        "@type": "freesurfer.renormalize_subject_keep_editting",
+        "@type": "freesurfer/renormalize_subject_keep_editting",
     }
     if placeholder_input is not None:
         params["placeholder_input"] = placeholder_input
@@ -96,8 +68,8 @@ def renormalize_subject_keep_editting_cargs(
     """
     cargs = []
     cargs.append("renormalize_subject_keep_editting")
-    if params.get("placeholder_input") is not None:
-        cargs.append(params.get("placeholder_input"))
+    if params.get("placeholder_input", None) is not None:
+        cargs.append(params.get("placeholder_input", None))
     return cargs
 
 
@@ -180,7 +152,6 @@ def renormalize_subject_keep_editting(
 __all__ = [
     "RENORMALIZE_SUBJECT_KEEP_EDITTING_METADATA",
     "RenormalizeSubjectKeepEdittingOutputs",
-    "RenormalizeSubjectKeepEdittingParameters",
     "renormalize_subject_keep_editting",
     "renormalize_subject_keep_editting_execute",
     "renormalize_subject_keep_editting_params",

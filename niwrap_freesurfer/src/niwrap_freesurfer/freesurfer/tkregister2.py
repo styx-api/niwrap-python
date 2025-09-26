@@ -14,7 +14,18 @@ TKREGISTER2_METADATA = Metadata(
 
 
 Tkregister2Parameters = typing.TypedDict('Tkregister2Parameters', {
-    "@type": typing.Literal["freesurfer.tkregister2"],
+    "@type": typing.NotRequired[typing.Literal["freesurfer/tkregister2"]],
+    "fixed_volume": InputPathType,
+    "moving_volume": InputPathType,
+    "reg_file": InputPathType,
+    "noedit": bool,
+    "lta": bool,
+    "surf_reg": bool,
+    "reg_only": bool,
+    "help": bool,
+})
+Tkregister2ParametersTagged = typing.TypedDict('Tkregister2ParametersTagged', {
+    "@type": typing.Literal["freesurfer/tkregister2"],
     "fixed_volume": InputPathType,
     "moving_volume": InputPathType,
     "reg_file": InputPathType,
@@ -26,41 +37,9 @@ Tkregister2Parameters = typing.TypedDict('Tkregister2Parameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "freesurfer.tkregister2": tkregister2_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "freesurfer.tkregister2": tkregister2_outputs,
-    }.get(t)
-
-
 class Tkregister2Outputs(typing.NamedTuple):
     """
-    Output object returned when calling `tkregister2(...)`.
+    Output object returned when calling `Tkregister2Parameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -77,7 +56,7 @@ def tkregister2_params(
     surf_reg: bool = False,
     reg_only: bool = False,
     help_: bool = False,
-) -> Tkregister2Parameters:
+) -> Tkregister2ParametersTagged:
     """
     Build parameters.
     
@@ -94,7 +73,7 @@ def tkregister2_params(
         Parameter dictionary
     """
     params = {
-        "@type": "freesurfer.tkregister2",
+        "@type": "freesurfer/tkregister2",
         "fixed_volume": fixed_volume,
         "moving_volume": moving_volume,
         "reg_file": reg_file,
@@ -122,18 +101,18 @@ def tkregister2_cargs(
     """
     cargs = []
     cargs.append("tkregister2")
-    cargs.append(execution.input_file(params.get("fixed_volume")))
-    cargs.append(execution.input_file(params.get("moving_volume")))
-    cargs.append(execution.input_file(params.get("reg_file")))
-    if params.get("noedit"):
+    cargs.append(execution.input_file(params.get("fixed_volume", None)))
+    cargs.append(execution.input_file(params.get("moving_volume", None)))
+    cargs.append(execution.input_file(params.get("reg_file", None)))
+    if params.get("noedit", False):
         cargs.append("--noedit")
-    if params.get("lta"):
+    if params.get("lta", False):
         cargs.append("--lta")
-    if params.get("surf_reg"):
+    if params.get("surf_reg", False):
         cargs.append("--surf")
-    if params.get("reg_only"):
+    if params.get("reg_only", False):
         cargs.append("--regonly")
-    if params.get("help"):
+    if params.get("help", False):
         cargs.append("--help")
     return cargs
 
@@ -153,7 +132,7 @@ def tkregister2_outputs(
     """
     ret = Tkregister2Outputs(
         root=execution.output_file("."),
-        output_reg_file=execution.output_file(pathlib.Path(params.get("reg_file")).name),
+        output_reg_file=execution.output_file(pathlib.Path(params.get("reg_file", None)).name),
     )
     return ret
 
@@ -235,7 +214,6 @@ def tkregister2(
 __all__ = [
     "TKREGISTER2_METADATA",
     "Tkregister2Outputs",
-    "Tkregister2Parameters",
     "tkregister2",
     "tkregister2_execute",
     "tkregister2_params",

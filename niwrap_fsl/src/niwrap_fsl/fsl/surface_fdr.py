@@ -14,46 +14,18 @@ SURFACE_FDR_METADATA = Metadata(
 
 
 SurfaceFdrParameters = typing.TypedDict('SurfaceFdrParameters', {
-    "@type": typing.Literal["fsl.surface_fdr"],
+    "@type": typing.NotRequired[typing.Literal["fsl/surface_fdr"]],
+    "input_vtk": InputPathType,
+})
+SurfaceFdrParametersTagged = typing.TypedDict('SurfaceFdrParametersTagged', {
+    "@type": typing.Literal["fsl/surface_fdr"],
     "input_vtk": InputPathType,
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "fsl.surface_fdr": surface_fdr_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "fsl.surface_fdr": surface_fdr_outputs,
-    }.get(t)
-
-
 class SurfaceFdrOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `surface_fdr(...)`.
+    Output object returned when calling `SurfaceFdrParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -65,7 +37,7 @@ class SurfaceFdrOutputs(typing.NamedTuple):
 
 def surface_fdr_params(
     input_vtk: InputPathType,
-) -> SurfaceFdrParameters:
+) -> SurfaceFdrParametersTagged:
     """
     Build parameters.
     
@@ -75,7 +47,7 @@ def surface_fdr_params(
         Parameter dictionary
     """
     params = {
-        "@type": "fsl.surface_fdr",
+        "@type": "fsl/surface_fdr",
         "input_vtk": input_vtk,
     }
     return params
@@ -96,7 +68,7 @@ def surface_fdr_cargs(
     """
     cargs = []
     cargs.append("surface_fdr")
-    cargs.append(execution.input_file(params.get("input_vtk")))
+    cargs.append(execution.input_file(params.get("input_vtk", None)))
     return cargs
 
 
@@ -115,8 +87,8 @@ def surface_fdr_outputs(
     """
     ret = SurfaceFdrOutputs(
         root=execution.output_file("."),
-        pvals_vtk=execution.output_file(pathlib.Path(params.get("input_vtk")).name + "_pvals.vtk"),
-        fthresh_vtk=execution.output_file(pathlib.Path(params.get("input_vtk")).name + "_Fthresh.vtk"),
+        pvals_vtk=execution.output_file(pathlib.Path(params.get("input_vtk", None)).name + "_pvals.vtk"),
+        fthresh_vtk=execution.output_file(pathlib.Path(params.get("input_vtk", None)).name + "_Fthresh.vtk"),
     )
     return ret
 
@@ -177,7 +149,6 @@ def surface_fdr(
 __all__ = [
     "SURFACE_FDR_METADATA",
     "SurfaceFdrOutputs",
-    "SurfaceFdrParameters",
     "surface_fdr",
     "surface_fdr_execute",
     "surface_fdr_params",

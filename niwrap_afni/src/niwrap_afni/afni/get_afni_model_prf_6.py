@@ -14,7 +14,17 @@ GET_AFNI_MODEL_PRF_6_METADATA = Metadata(
 
 
 GetAfniModelPrf6Parameters = typing.TypedDict('GetAfniModelPrf6Parameters', {
-    "@type": typing.Literal["afni.get_afni_model_PRF_6"],
+    "@type": typing.NotRequired[typing.Literal["afni/get_afni_model_PRF_6"]],
+    "NT": float,
+    "AMP": float,
+    "X": float,
+    "Y": float,
+    "SIGMA": float,
+    "SIGRAT": float,
+    "THETA": float,
+})
+GetAfniModelPrf6ParametersTagged = typing.TypedDict('GetAfniModelPrf6ParametersTagged', {
+    "@type": typing.Literal["afni/get_afni_model_PRF_6"],
     "NT": float,
     "AMP": float,
     "X": float,
@@ -25,40 +35,9 @@ GetAfniModelPrf6Parameters = typing.TypedDict('GetAfniModelPrf6Parameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "afni.get_afni_model_PRF_6": get_afni_model_prf_6_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-    }.get(t)
-
-
 class GetAfniModelPrf6Outputs(typing.NamedTuple):
     """
-    Output object returned when calling `get_afni_model_prf_6(...)`.
+    Output object returned when calling `GetAfniModelPrf6Parameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -72,7 +51,7 @@ def get_afni_model_prf_6_params(
     sigma: float,
     sigrat: float,
     theta: float,
-) -> GetAfniModelPrf6Parameters:
+) -> GetAfniModelPrf6ParametersTagged:
     """
     Build parameters.
     
@@ -89,7 +68,7 @@ def get_afni_model_prf_6_params(
         Parameter dictionary
     """
     params = {
-        "@type": "afni.get_afni_model_PRF_6",
+        "@type": "afni/get_afni_model_PRF_6",
         "NT": nt_,
         "AMP": amp,
         "X": x,
@@ -116,13 +95,13 @@ def get_afni_model_prf_6_cargs(
     """
     cargs = []
     cargs.append("get_afni_model_PRF_6")
-    cargs.append(str(params.get("NT")))
-    cargs.append(str(params.get("AMP")))
-    cargs.append(str(params.get("X")))
-    cargs.append(str(params.get("Y")))
-    cargs.append(str(params.get("SIGMA")))
-    cargs.append(str(params.get("SIGRAT")))
-    cargs.append(str(params.get("THETA")))
+    cargs.append(str(params.get("NT", None)))
+    cargs.append(str(params.get("AMP", None)))
+    cargs.append(str(params.get("X", None)))
+    cargs.append(str(params.get("Y", None)))
+    cargs.append(str(params.get("SIGMA", None)))
+    cargs.append(str(params.get("SIGRAT", None)))
+    cargs.append(str(params.get("THETA", None)))
     return cargs
 
 
@@ -220,7 +199,6 @@ def get_afni_model_prf_6(
 __all__ = [
     "GET_AFNI_MODEL_PRF_6_METADATA",
     "GetAfniModelPrf6Outputs",
-    "GetAfniModelPrf6Parameters",
     "get_afni_model_prf_6",
     "get_afni_model_prf_6_execute",
     "get_afni_model_prf_6_params",

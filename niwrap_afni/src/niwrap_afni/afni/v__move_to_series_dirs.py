@@ -14,7 +14,18 @@ V__MOVE_TO_SERIES_DIRS_METADATA = Metadata(
 
 
 VMoveToSeriesDirsParameters = typing.TypedDict('VMoveToSeriesDirsParameters', {
-    "@type": typing.Literal["afni.@move.to.series.dirs"],
+    "@type": typing.NotRequired[typing.Literal["afni/@move.to.series.dirs"]],
+    "action": typing.NotRequired[typing.Literal["copy", "move"] | None],
+    "dprefix": typing.NotRequired[str | None],
+    "tag": typing.NotRequired[str | None],
+    "test": bool,
+    "help": bool,
+    "hist": bool,
+    "ver": bool,
+    "dicom_files": list[InputPathType],
+})
+VMoveToSeriesDirsParametersTagged = typing.TypedDict('VMoveToSeriesDirsParametersTagged', {
+    "@type": typing.Literal["afni/@move.to.series.dirs"],
     "action": typing.NotRequired[typing.Literal["copy", "move"] | None],
     "dprefix": typing.NotRequired[str | None],
     "tag": typing.NotRequired[str | None],
@@ -26,40 +37,9 @@ VMoveToSeriesDirsParameters = typing.TypedDict('VMoveToSeriesDirsParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "afni.@move.to.series.dirs": v__move_to_series_dirs_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-    }.get(t)
-
-
 class VMoveToSeriesDirsOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `v__move_to_series_dirs(...)`.
+    Output object returned when calling `VMoveToSeriesDirsParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -74,7 +54,7 @@ def v__move_to_series_dirs_params(
     help_: bool = False,
     hist: bool = False,
     ver: bool = False,
-) -> VMoveToSeriesDirsParameters:
+) -> VMoveToSeriesDirsParametersTagged:
     """
     Build parameters.
     
@@ -94,7 +74,7 @@ def v__move_to_series_dirs_params(
         Parameter dictionary
     """
     params = {
-        "@type": "afni.@move.to.series.dirs",
+        "@type": "afni/@move.to.series.dirs",
         "test": test,
         "help": help_,
         "hist": hist,
@@ -125,30 +105,30 @@ def v__move_to_series_dirs_cargs(
     """
     cargs = []
     cargs.append("@move.to.series.dirs")
-    if params.get("action") is not None:
+    if params.get("action", None) is not None:
         cargs.extend([
             "-action",
-            params.get("action")
+            params.get("action", None)
         ])
-    if params.get("dprefix") is not None:
+    if params.get("dprefix", None) is not None:
         cargs.extend([
             "-dprefix",
-            params.get("dprefix")
+            params.get("dprefix", None)
         ])
-    if params.get("tag") is not None:
+    if params.get("tag", None) is not None:
         cargs.extend([
             "-tag",
-            params.get("tag")
+            params.get("tag", None)
         ])
-    if params.get("test"):
+    if params.get("test", False):
         cargs.append("-test")
-    if params.get("help"):
+    if params.get("help", False):
         cargs.append("-help")
-    if params.get("hist"):
+    if params.get("hist", False):
         cargs.append("-hist")
-    if params.get("ver"):
+    if params.get("ver", False):
         cargs.append("-ver")
-    cargs.extend([execution.input_file(f) for f in params.get("dicom_files")])
+    cargs.extend([execution.input_file(f) for f in params.get("dicom_files", None)])
     return cargs
 
 
@@ -252,7 +232,6 @@ def v__move_to_series_dirs(
 
 __all__ = [
     "VMoveToSeriesDirsOutputs",
-    "VMoveToSeriesDirsParameters",
     "V__MOVE_TO_SERIES_DIRS_METADATA",
     "v__move_to_series_dirs",
     "v__move_to_series_dirs_execute",

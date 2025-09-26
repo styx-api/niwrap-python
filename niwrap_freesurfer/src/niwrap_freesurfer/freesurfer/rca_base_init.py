@@ -14,47 +14,22 @@ RCA_BASE_INIT_METADATA = Metadata(
 
 
 RcaBaseInitParameters = typing.TypedDict('RcaBaseInitParameters', {
-    "@type": typing.Literal["freesurfer.rca-base-init"],
+    "@type": typing.NotRequired[typing.Literal["freesurfer/rca-base-init"]],
+    "log_file": typing.NotRequired[str | None],
+    "status_file": typing.NotRequired[str | None],
+    "cmd_file": typing.NotRequired[str | None],
+})
+RcaBaseInitParametersTagged = typing.TypedDict('RcaBaseInitParametersTagged', {
+    "@type": typing.Literal["freesurfer/rca-base-init"],
     "log_file": typing.NotRequired[str | None],
     "status_file": typing.NotRequired[str | None],
     "cmd_file": typing.NotRequired[str | None],
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "freesurfer.rca-base-init": rca_base_init_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-    }.get(t)
-
-
 class RcaBaseInitOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `rca_base_init(...)`.
+    Output object returned when calling `RcaBaseInitParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -64,7 +39,7 @@ def rca_base_init_params(
     log_file: str | None = None,
     status_file: str | None = None,
     cmd_file: str | None = None,
-) -> RcaBaseInitParameters:
+) -> RcaBaseInitParametersTagged:
     """
     Build parameters.
     
@@ -76,7 +51,7 @@ def rca_base_init_params(
         Parameter dictionary
     """
     params = {
-        "@type": "freesurfer.rca-base-init",
+        "@type": "freesurfer/rca-base-init",
     }
     if log_file is not None:
         params["log_file"] = log_file
@@ -102,15 +77,15 @@ def rca_base_init_cargs(
     """
     cargs = []
     cargs.append("rca-base-init")
-    if params.get("log_file") is not None:
+    if params.get("log_file", None) is not None:
         cargs.extend([
             "-init",
-            params.get("log_file")
+            params.get("log_file", None)
         ])
-    if params.get("status_file") is not None:
-        cargs.append(params.get("status_file"))
-    if params.get("cmd_file") is not None:
-        cargs.append(params.get("cmd_file"))
+    if params.get("status_file", None) is not None:
+        cargs.append(params.get("status_file", None))
+    if params.get("cmd_file", None) is not None:
+        cargs.append(params.get("cmd_file", None))
     return cargs
 
 
@@ -195,7 +170,6 @@ def rca_base_init(
 __all__ = [
     "RCA_BASE_INIT_METADATA",
     "RcaBaseInitOutputs",
-    "RcaBaseInitParameters",
     "rca_base_init",
     "rca_base_init_execute",
     "rca_base_init_params",

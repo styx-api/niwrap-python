@@ -14,7 +14,15 @@ TEXTURE_COOCCURRENCE_FEATURES_METADATA = Metadata(
 
 
 TextureCooccurrenceFeaturesParameters = typing.TypedDict('TextureCooccurrenceFeaturesParameters', {
-    "@type": typing.Literal["ants.TextureCooccurrenceFeatures"],
+    "@type": typing.NotRequired[typing.Literal["ants/TextureCooccurrenceFeatures"]],
+    "image_dimension": int,
+    "input_image": InputPathType,
+    "number_of_bins_per_axis": typing.NotRequired[int | None],
+    "mask_image": typing.NotRequired[InputPathType | None],
+    "mask_label": typing.NotRequired[int | None],
+})
+TextureCooccurrenceFeaturesParametersTagged = typing.TypedDict('TextureCooccurrenceFeaturesParametersTagged', {
+    "@type": typing.Literal["ants/TextureCooccurrenceFeatures"],
     "image_dimension": int,
     "input_image": InputPathType,
     "number_of_bins_per_axis": typing.NotRequired[int | None],
@@ -23,41 +31,9 @@ TextureCooccurrenceFeaturesParameters = typing.TypedDict('TextureCooccurrenceFea
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "ants.TextureCooccurrenceFeatures": texture_cooccurrence_features_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "ants.TextureCooccurrenceFeatures": texture_cooccurrence_features_outputs,
-    }.get(t)
-
-
 class TextureCooccurrenceFeaturesOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `texture_cooccurrence_features(...)`.
+    Output object returned when calling `TextureCooccurrenceFeaturesParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -72,7 +48,7 @@ def texture_cooccurrence_features_params(
     number_of_bins_per_axis: int | None = None,
     mask_image: InputPathType | None = None,
     mask_label: int | None = None,
-) -> TextureCooccurrenceFeaturesParameters:
+) -> TextureCooccurrenceFeaturesParametersTagged:
     """
     Build parameters.
     
@@ -91,7 +67,7 @@ def texture_cooccurrence_features_params(
         Parameter dictionary
     """
     params = {
-        "@type": "ants.TextureCooccurrenceFeatures",
+        "@type": "ants/TextureCooccurrenceFeatures",
         "image_dimension": image_dimension,
         "input_image": input_image,
     }
@@ -119,14 +95,14 @@ def texture_cooccurrence_features_cargs(
     """
     cargs = []
     cargs.append("TextureCooccurrenceFeatures")
-    cargs.append(str(params.get("image_dimension")))
-    cargs.append(execution.input_file(params.get("input_image")))
-    if params.get("number_of_bins_per_axis") is not None:
-        cargs.append(str(params.get("number_of_bins_per_axis")))
-    if params.get("mask_image") is not None:
-        cargs.append(execution.input_file(params.get("mask_image")))
-    if params.get("mask_label") is not None:
-        cargs.append(str(params.get("mask_label")))
+    cargs.append(str(params.get("image_dimension", None)))
+    cargs.append(execution.input_file(params.get("input_image", None)))
+    if params.get("number_of_bins_per_axis", None) is not None:
+        cargs.append(str(params.get("number_of_bins_per_axis", None)))
+    if params.get("mask_image", None) is not None:
+        cargs.append(execution.input_file(params.get("mask_image", None)))
+    if params.get("mask_label", None) is not None:
+        cargs.append(str(params.get("mask_label", None)))
     return cargs
 
 
@@ -145,7 +121,7 @@ def texture_cooccurrence_features_outputs(
     """
     ret = TextureCooccurrenceFeaturesOutputs(
         root=execution.output_file("."),
-        features_output=execution.output_file(pathlib.Path(params.get("input_image")).name + "_features.txt"),
+        features_output=execution.output_file(pathlib.Path(params.get("input_image", None)).name + "_features.txt"),
     )
     return ret
 
@@ -227,7 +203,6 @@ def texture_cooccurrence_features(
 __all__ = [
     "TEXTURE_COOCCURRENCE_FEATURES_METADATA",
     "TextureCooccurrenceFeaturesOutputs",
-    "TextureCooccurrenceFeaturesParameters",
     "texture_cooccurrence_features",
     "texture_cooccurrence_features_execute",
     "texture_cooccurrence_features_params",

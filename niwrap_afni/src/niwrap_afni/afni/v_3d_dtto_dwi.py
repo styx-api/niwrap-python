@@ -14,7 +14,18 @@ V_3D_DTTO_DWI_METADATA = Metadata(
 
 
 V3dDttoDwiParameters = typing.TypedDict('V3dDttoDwiParameters', {
-    "@type": typing.Literal["afni.3dDTtoDWI"],
+    "@type": typing.NotRequired[typing.Literal["afni/3dDTtoDWI"]],
+    "gradient_file": InputPathType,
+    "i0_dataset": InputPathType,
+    "dt_dataset": InputPathType,
+    "prefix": typing.NotRequired[str | None],
+    "automask": bool,
+    "datum_type": typing.NotRequired[str | None],
+    "scale_out_1000": bool,
+    "help": bool,
+})
+V3dDttoDwiParametersTagged = typing.TypedDict('V3dDttoDwiParametersTagged', {
+    "@type": typing.Literal["afni/3dDTtoDWI"],
     "gradient_file": InputPathType,
     "i0_dataset": InputPathType,
     "dt_dataset": InputPathType,
@@ -26,41 +37,9 @@ V3dDttoDwiParameters = typing.TypedDict('V3dDttoDwiParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "afni.3dDTtoDWI": v_3d_dtto_dwi_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "afni.3dDTtoDWI": v_3d_dtto_dwi_outputs,
-    }.get(t)
-
-
 class V3dDttoDwiOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `v_3d_dtto_dwi(...)`.
+    Output object returned when calling `V3dDttoDwiParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -77,7 +56,7 @@ def v_3d_dtto_dwi_params(
     datum_type: str | None = None,
     scale_out_1000: bool = False,
     help_: bool = False,
-) -> V3dDttoDwiParameters:
+) -> V3dDttoDwiParametersTagged:
     """
     Build parameters.
     
@@ -97,7 +76,7 @@ def v_3d_dtto_dwi_params(
         Parameter dictionary
     """
     params = {
-        "@type": "afni.3dDTtoDWI",
+        "@type": "afni/3dDTtoDWI",
         "gradient_file": gradient_file,
         "i0_dataset": i0_dataset,
         "dt_dataset": dt_dataset,
@@ -127,24 +106,24 @@ def v_3d_dtto_dwi_cargs(
     """
     cargs = []
     cargs.append("3dDTtoDWI")
-    cargs.append(execution.input_file(params.get("gradient_file")))
-    cargs.append(execution.input_file(params.get("i0_dataset")))
-    cargs.append(execution.input_file(params.get("dt_dataset")))
-    if params.get("prefix") is not None:
+    cargs.append(execution.input_file(params.get("gradient_file", None)))
+    cargs.append(execution.input_file(params.get("i0_dataset", None)))
+    cargs.append(execution.input_file(params.get("dt_dataset", None)))
+    if params.get("prefix", None) is not None:
         cargs.extend([
             "-prefix",
-            params.get("prefix")
+            params.get("prefix", None)
         ])
-    if params.get("automask"):
+    if params.get("automask", False):
         cargs.append("-automask")
-    if params.get("datum_type") is not None:
+    if params.get("datum_type", None) is not None:
         cargs.extend([
             "-datum",
-            params.get("datum_type")
+            params.get("datum_type", None)
         ])
-    if params.get("scale_out_1000"):
+    if params.get("scale_out_1000", False):
         cargs.append("-scale_out_1000")
-    if params.get("help"):
+    if params.get("help", False):
         cargs.append("-help")
     return cargs
 
@@ -164,7 +143,7 @@ def v_3d_dtto_dwi_outputs(
     """
     ret = V3dDttoDwiOutputs(
         root=execution.output_file("."),
-        output_dwi=execution.output_file(params.get("prefix") + ".HEAD") if (params.get("prefix") is not None) else None,
+        output_dwi=execution.output_file(params.get("prefix", None) + ".HEAD") if (params.get("prefix") is not None) else None,
     )
     return ret
 
@@ -250,7 +229,6 @@ def v_3d_dtto_dwi(
 
 __all__ = [
     "V3dDttoDwiOutputs",
-    "V3dDttoDwiParameters",
     "V_3D_DTTO_DWI_METADATA",
     "v_3d_dtto_dwi",
     "v_3d_dtto_dwi_execute",

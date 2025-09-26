@@ -14,7 +14,31 @@ MRI_MASK_METADATA = Metadata(
 
 
 MriMaskParameters = typing.TypedDict('MriMaskParameters', {
-    "@type": typing.Literal["freesurfer.mri_mask"],
+    "@type": typing.NotRequired[typing.Literal["freesurfer/mri_mask"]],
+    "input_volume": InputPathType,
+    "mask_volume": InputPathType,
+    "output_volume": str,
+    "xform": typing.NotRequired[str | None],
+    "lta_src": typing.NotRequired[str | None],
+    "lta_dst": typing.NotRequired[str | None],
+    "threshold": typing.NotRequired[float | None],
+    "npad": typing.NotRequired[float | None],
+    "npad_vector": typing.NotRequired[list[float] | None],
+    "npad_multi_vector": typing.NotRequired[list[float] | None],
+    "abs": bool,
+    "invert": bool,
+    "no_invert": bool,
+    "rh_labels": bool,
+    "lh_labels": bool,
+    "dilate": typing.NotRequired[float | None],
+    "no_cerebellum": bool,
+    "oval_value": typing.NotRequired[float | None],
+    "transfer_value": typing.NotRequired[float | None],
+    "keep_mask_deletion_edits": bool,
+    "samseg": bool,
+})
+MriMaskParametersTagged = typing.TypedDict('MriMaskParametersTagged', {
+    "@type": typing.Literal["freesurfer/mri_mask"],
     "input_volume": InputPathType,
     "mask_volume": InputPathType,
     "output_volume": str,
@@ -39,41 +63,9 @@ MriMaskParameters = typing.TypedDict('MriMaskParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "freesurfer.mri_mask": mri_mask_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "freesurfer.mri_mask": mri_mask_outputs,
-    }.get(t)
-
-
 class MriMaskOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `mri_mask(...)`.
+    Output object returned when calling `MriMaskParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -103,7 +95,7 @@ def mri_mask_params(
     transfer_value: float | None = None,
     keep_mask_deletion_edits: bool = False,
     samseg: bool = False,
-) -> MriMaskParameters:
+) -> MriMaskParametersTagged:
     """
     Build parameters.
     
@@ -146,7 +138,7 @@ def mri_mask_params(
         Parameter dictionary
     """
     params = {
-        "@type": "freesurfer.mri_mask",
+        "@type": "freesurfer/mri_mask",
         "input_volume": input_volume,
         "mask_volume": mask_volume,
         "output_volume": output_volume,
@@ -197,74 +189,74 @@ def mri_mask_cargs(
     """
     cargs = []
     cargs.append("mri_mask")
-    cargs.append(execution.input_file(params.get("input_volume")))
-    cargs.append(execution.input_file(params.get("mask_volume")))
-    cargs.append(params.get("output_volume"))
-    if params.get("xform") is not None:
+    cargs.append(execution.input_file(params.get("input_volume", None)))
+    cargs.append(execution.input_file(params.get("mask_volume", None)))
+    cargs.append(params.get("output_volume", None))
+    if params.get("xform", None) is not None:
         cargs.extend([
             "-xform",
-            params.get("xform")
+            params.get("xform", None)
         ])
-    if params.get("lta_src") is not None:
+    if params.get("lta_src", None) is not None:
         cargs.extend([
             "-lta_src",
-            params.get("lta_src")
+            params.get("lta_src", None)
         ])
-    if params.get("lta_dst") is not None:
+    if params.get("lta_dst", None) is not None:
         cargs.extend([
             "-lta_dst",
-            params.get("lta_dst")
+            params.get("lta_dst", None)
         ])
-    if params.get("threshold") is not None:
+    if params.get("threshold", None) is not None:
         cargs.extend([
             "-T",
-            str(params.get("threshold"))
+            str(params.get("threshold", None))
         ])
-    if params.get("npad") is not None:
+    if params.get("npad", None) is not None:
         cargs.extend([
             "-bb",
-            str(params.get("npad"))
+            str(params.get("npad", None))
         ])
-    if params.get("npad_vector") is not None:
+    if params.get("npad_vector", None) is not None:
         cargs.extend([
             "-bbm",
-            *map(str, params.get("npad_vector"))
+            *map(str, params.get("npad_vector", None))
         ])
-    if params.get("npad_multi_vector") is not None:
+    if params.get("npad_multi_vector", None) is not None:
         cargs.extend([
             "-bbmm",
-            *map(str, params.get("npad_multi_vector"))
+            *map(str, params.get("npad_multi_vector", None))
         ])
-    if params.get("abs"):
+    if params.get("abs", False):
         cargs.append("-abs")
-    if params.get("invert"):
+    if params.get("invert", False):
         cargs.append("-invert")
-    if params.get("no_invert"):
+    if params.get("no_invert", False):
         cargs.append("-no-invert")
-    if params.get("rh_labels"):
+    if params.get("rh_labels", False):
         cargs.append("-rh")
-    if params.get("lh_labels"):
+    if params.get("lh_labels", False):
         cargs.append("-lh")
-    if params.get("dilate") is not None:
+    if params.get("dilate", None) is not None:
         cargs.extend([
             "-dilate",
-            str(params.get("dilate"))
+            str(params.get("dilate", None))
         ])
-    if params.get("no_cerebellum"):
+    if params.get("no_cerebellum", False):
         cargs.append("-no_cerebellum")
-    if params.get("oval_value") is not None:
+    if params.get("oval_value", None) is not None:
         cargs.extend([
             "-oval",
-            str(params.get("oval_value"))
+            str(params.get("oval_value", None))
         ])
-    if params.get("transfer_value") is not None:
+    if params.get("transfer_value", None) is not None:
         cargs.extend([
             "-transfer",
-            str(params.get("transfer_value"))
+            str(params.get("transfer_value", None))
         ])
-    if params.get("keep_mask_deletion_edits"):
+    if params.get("keep_mask_deletion_edits", False):
         cargs.append("-keep_mask_deletion_edits")
-    if params.get("samseg"):
+    if params.get("samseg", False):
         cargs.append("-samseg")
     return cargs
 
@@ -284,7 +276,7 @@ def mri_mask_outputs(
     """
     ret = MriMaskOutputs(
         root=execution.output_file("."),
-        output_file=execution.output_file(params.get("output_volume")),
+        output_file=execution.output_file(params.get("output_volume", None)),
     )
     return ret
 
@@ -418,7 +410,6 @@ def mri_mask(
 __all__ = [
     "MRI_MASK_METADATA",
     "MriMaskOutputs",
-    "MriMaskParameters",
     "mri_mask",
     "mri_mask_execute",
     "mri_mask_params",

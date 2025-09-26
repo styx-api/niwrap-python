@@ -14,7 +14,15 @@ V__GRAYPLOT_METADATA = Metadata(
 
 
 VGrayplotParameters = typing.TypedDict('VGrayplotParameters', {
-    "@type": typing.Literal["afni.@grayplot"],
+    "@type": typing.NotRequired[typing.Literal["afni/@grayplot"]],
+    "dirname": str,
+    "pvorder": bool,
+    "peelorder": bool,
+    "ijkorder": bool,
+    "allorder": bool,
+})
+VGrayplotParametersTagged = typing.TypedDict('VGrayplotParametersTagged', {
+    "@type": typing.Literal["afni/@grayplot"],
     "dirname": str,
     "pvorder": bool,
     "peelorder": bool,
@@ -23,41 +31,9 @@ VGrayplotParameters = typing.TypedDict('VGrayplotParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "afni.@grayplot": v__grayplot_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "afni.@grayplot": v__grayplot_outputs,
-    }.get(t)
-
-
 class VGrayplotOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `v__grayplot(...)`.
+    Output object returned when calling `VGrayplotParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -71,7 +47,7 @@ def v__grayplot_params(
     peelorder: bool = False,
     ijkorder: bool = False,
     allorder: bool = False,
-) -> VGrayplotParameters:
+) -> VGrayplotParametersTagged:
     """
     Build parameters.
     
@@ -88,7 +64,7 @@ def v__grayplot_params(
         Parameter dictionary
     """
     params = {
-        "@type": "afni.@grayplot",
+        "@type": "afni/@grayplot",
         "dirname": dirname,
         "pvorder": pvorder,
         "peelorder": peelorder,
@@ -113,14 +89,14 @@ def v__grayplot_cargs(
     """
     cargs = []
     cargs.append("@grayplot")
-    cargs.append(params.get("dirname"))
-    if params.get("pvorder"):
+    cargs.append(params.get("dirname", None))
+    if params.get("pvorder", False):
         cargs.append("-pvorder")
-    if params.get("peelorder"):
+    if params.get("peelorder", False):
         cargs.append("-peelorder")
-    if params.get("ijkorder"):
+    if params.get("ijkorder", False):
         cargs.append("-ijkorder")
-    if params.get("allorder"):
+    if params.get("allorder", False):
         cargs.append("-ALLorder")
     return cargs
 
@@ -219,7 +195,6 @@ def v__grayplot(
 
 __all__ = [
     "VGrayplotOutputs",
-    "VGrayplotParameters",
     "V__GRAYPLOT_METADATA",
     "v__grayplot",
     "v__grayplot_execute",

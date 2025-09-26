@@ -14,7 +14,14 @@ CAT_MATVEC_METADATA = Metadata(
 
 
 CatMatvecParameters = typing.TypedDict('CatMatvecParameters', {
-    "@type": typing.Literal["afni.cat_matvec"],
+    "@type": typing.NotRequired[typing.Literal["afni/cat_matvec"]],
+    "matrix_format": bool,
+    "oneline_format": bool,
+    "four_by_four_format": bool,
+    "matvec_spec": list[str],
+})
+CatMatvecParametersTagged = typing.TypedDict('CatMatvecParametersTagged', {
+    "@type": typing.Literal["afni/cat_matvec"],
     "matrix_format": bool,
     "oneline_format": bool,
     "four_by_four_format": bool,
@@ -22,40 +29,9 @@ CatMatvecParameters = typing.TypedDict('CatMatvecParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "afni.cat_matvec": cat_matvec_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-    }.get(t)
-
-
 class CatMatvecOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `cat_matvec(...)`.
+    Output object returned when calling `CatMatvecParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -66,7 +42,7 @@ def cat_matvec_params(
     matrix_format: bool = False,
     oneline_format: bool = False,
     four_by_four_format: bool = False,
-) -> CatMatvecParameters:
+) -> CatMatvecParametersTagged:
     """
     Build parameters.
     
@@ -83,7 +59,7 @@ def cat_matvec_params(
         Parameter dictionary
     """
     params = {
-        "@type": "afni.cat_matvec",
+        "@type": "afni/cat_matvec",
         "matrix_format": matrix_format,
         "oneline_format": oneline_format,
         "four_by_four_format": four_by_four_format,
@@ -107,13 +83,13 @@ def cat_matvec_cargs(
     """
     cargs = []
     cargs.append("cat_matvec")
-    if params.get("matrix_format"):
+    if params.get("matrix_format", False):
         cargs.append("-MATRIX")
-    if params.get("oneline_format"):
+    if params.get("oneline_format", False):
         cargs.append("-ONELINE")
-    if params.get("four_by_four_format"):
+    if params.get("four_by_four_format", False):
         cargs.append("-4x4")
-    cargs.extend(params.get("matvec_spec"))
+    cargs.extend(params.get("matvec_spec", None))
     return cargs
 
 
@@ -205,7 +181,6 @@ def cat_matvec(
 __all__ = [
     "CAT_MATVEC_METADATA",
     "CatMatvecOutputs",
-    "CatMatvecParameters",
     "cat_matvec",
     "cat_matvec_execute",
     "cat_matvec_params",

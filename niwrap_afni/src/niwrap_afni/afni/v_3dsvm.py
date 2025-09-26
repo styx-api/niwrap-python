@@ -14,7 +14,37 @@ V_3DSVM_METADATA = Metadata(
 
 
 V3dsvmParameters = typing.TypedDict('V3dsvmParameters', {
-    "@type": typing.Literal["afni.3dsvm"],
+    "@type": typing.NotRequired[typing.Literal["afni/3dsvm"]],
+    "train_vol": typing.NotRequired[InputPathType | None],
+    "train_labels": typing.NotRequired[InputPathType | None],
+    "mask": typing.NotRequired[InputPathType | None],
+    "no_model_mask": bool,
+    "model": str,
+    "alpha": typing.NotRequired[str | None],
+    "bucket": typing.NotRequired[str | None],
+    "type": typing.NotRequired[typing.Literal["classification", "regression"] | None],
+    "c_value": typing.NotRequired[float | None],
+    "epsilon": typing.NotRequired[float | None],
+    "kernel": typing.NotRequired[typing.Literal["linear", "polynomial", "rbf", "sigmoid"] | None],
+    "d_value": typing.NotRequired[float | None],
+    "gamma": typing.NotRequired[float | None],
+    "s_value": typing.NotRequired[float | None],
+    "r_value": typing.NotRequired[float | None],
+    "max_iterations": typing.NotRequired[float | None],
+    "wout": bool,
+    "test_vol": typing.NotRequired[InputPathType | None],
+    "predictions": typing.NotRequired[str | None],
+    "classout": bool,
+    "nopred_censored": bool,
+    "nodetrend": bool,
+    "nopred_scale": bool,
+    "test_labels": typing.NotRequired[InputPathType | None],
+    "multiclass": typing.NotRequired[typing.Literal["DAG", "vote"] | None],
+    "help": bool,
+    "version": bool,
+})
+V3dsvmParametersTagged = typing.TypedDict('V3dsvmParametersTagged', {
+    "@type": typing.Literal["afni/3dsvm"],
     "train_vol": typing.NotRequired[InputPathType | None],
     "train_labels": typing.NotRequired[InputPathType | None],
     "mask": typing.NotRequired[InputPathType | None],
@@ -45,41 +75,9 @@ V3dsvmParameters = typing.TypedDict('V3dsvmParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "afni.3dsvm": v_3dsvm_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "afni.3dsvm": v_3dsvm_outputs,
-    }.get(t)
-
-
 class V3dsvmOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `v_3dsvm(...)`.
+    Output object returned when calling `V3dsvmParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -121,7 +119,7 @@ def v_3dsvm_params(
     multiclass: typing.Literal["DAG", "vote"] | None = None,
     help_: bool = False,
     version: bool = False,
-) -> V3dsvmParameters:
+) -> V3dsvmParametersTagged:
     """
     Build parameters.
     
@@ -169,7 +167,7 @@ def v_3dsvm_params(
         Parameter dictionary
     """
     params = {
-        "@type": "afni.3dsvm",
+        "@type": "afni/3dsvm",
         "no_model_mask": no_model_mask,
         "model": model,
         "wout": wout,
@@ -234,115 +232,115 @@ def v_3dsvm_cargs(
     """
     cargs = []
     cargs.append("3dsvm")
-    if params.get("train_vol") is not None:
+    if params.get("train_vol", None) is not None:
         cargs.extend([
             "-trainvol",
-            execution.input_file(params.get("train_vol"))
+            execution.input_file(params.get("train_vol", None))
         ])
-    if params.get("train_labels") is not None:
+    if params.get("train_labels", None) is not None:
         cargs.extend([
             "-trainlabels",
-            execution.input_file(params.get("train_labels"))
+            execution.input_file(params.get("train_labels", None))
         ])
-    if params.get("mask") is not None:
+    if params.get("mask", None) is not None:
         cargs.extend([
             "-mask",
-            execution.input_file(params.get("mask"))
+            execution.input_file(params.get("mask", None))
         ])
-    if params.get("no_model_mask"):
+    if params.get("no_model_mask", False):
         cargs.append("-nomodelmask")
     cargs.extend([
         "-model",
-        params.get("model")
+        params.get("model", None)
     ])
-    if params.get("alpha") is not None:
+    if params.get("alpha", None) is not None:
         cargs.extend([
             "-alpha",
-            params.get("alpha")
+            params.get("alpha", None)
         ])
-    if params.get("bucket") is not None:
+    if params.get("bucket", None) is not None:
         cargs.extend([
             "-bucket",
-            params.get("bucket")
+            params.get("bucket", None)
         ])
-    if params.get("type") is not None:
+    if params.get("type", None) is not None:
         cargs.extend([
             "-type",
-            params.get("type")
+            params.get("type", None)
         ])
-    if params.get("c_value") is not None:
+    if params.get("c_value", None) is not None:
         cargs.extend([
             "-c",
-            str(params.get("c_value"))
+            str(params.get("c_value", None))
         ])
-    if params.get("epsilon") is not None:
+    if params.get("epsilon", None) is not None:
         cargs.extend([
             "-e",
-            str(params.get("epsilon"))
+            str(params.get("epsilon", None))
         ])
-    if params.get("kernel") is not None:
+    if params.get("kernel", None) is not None:
         cargs.extend([
             "-kernel",
-            params.get("kernel")
+            params.get("kernel", None)
         ])
-    if params.get("d_value") is not None:
+    if params.get("d_value", None) is not None:
         cargs.extend([
             "-d",
-            str(params.get("d_value"))
+            str(params.get("d_value", None))
         ])
-    if params.get("gamma") is not None:
+    if params.get("gamma", None) is not None:
         cargs.extend([
             "-g",
-            str(params.get("gamma"))
+            str(params.get("gamma", None))
         ])
-    if params.get("s_value") is not None:
+    if params.get("s_value", None) is not None:
         cargs.extend([
             "-s",
-            str(params.get("s_value"))
+            str(params.get("s_value", None))
         ])
-    if params.get("r_value") is not None:
+    if params.get("r_value", None) is not None:
         cargs.extend([
             "-r",
-            str(params.get("r_value"))
+            str(params.get("r_value", None))
         ])
-    if params.get("max_iterations") is not None:
+    if params.get("max_iterations", None) is not None:
         cargs.extend([
             "-max_iterations",
-            str(params.get("max_iterations"))
+            str(params.get("max_iterations", None))
         ])
-    if params.get("wout"):
+    if params.get("wout", False):
         cargs.append("-wout")
-    if params.get("test_vol") is not None:
+    if params.get("test_vol", None) is not None:
         cargs.extend([
             "-testvol",
-            execution.input_file(params.get("test_vol"))
+            execution.input_file(params.get("test_vol", None))
         ])
-    if params.get("predictions") is not None:
+    if params.get("predictions", None) is not None:
         cargs.extend([
             "-predictions",
-            params.get("predictions")
+            params.get("predictions", None)
         ])
-    if params.get("classout"):
+    if params.get("classout", False):
         cargs.append("-classout")
-    if params.get("nopred_censored"):
+    if params.get("nopred_censored", False):
         cargs.append("-nopredcensored")
-    if params.get("nodetrend"):
+    if params.get("nodetrend", False):
         cargs.append("-nodetrend")
-    if params.get("nopred_scale"):
+    if params.get("nopred_scale", False):
         cargs.append("-nopredscale")
-    if params.get("test_labels") is not None:
+    if params.get("test_labels", None) is not None:
         cargs.extend([
             "-testlabels",
-            execution.input_file(params.get("test_labels"))
+            execution.input_file(params.get("test_labels", None))
         ])
-    if params.get("multiclass") is not None:
+    if params.get("multiclass", None) is not None:
         cargs.extend([
             "-multiclass",
-            params.get("multiclass")
+            params.get("multiclass", None)
         ])
-    if params.get("help"):
+    if params.get("help", False):
         cargs.append("-help")
-    if params.get("version"):
+    if params.get("version", False):
         cargs.append("-version")
     return cargs
 
@@ -515,7 +513,6 @@ def v_3dsvm(
 
 __all__ = [
     "V3dsvmOutputs",
-    "V3dsvmParameters",
     "V_3DSVM_METADATA",
     "v_3dsvm",
     "v_3dsvm_execute",

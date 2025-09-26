@@ -14,7 +14,15 @@ THICKDIFFMAP_METADATA = Metadata(
 
 
 ThickdiffmapParameters = typing.TypedDict('ThickdiffmapParameters', {
-    "@type": typing.Literal["freesurfer.thickdiffmap"],
+    "@type": typing.NotRequired[typing.Literal["freesurfer/thickdiffmap"]],
+    "subjscan1": InputPathType,
+    "subjscan2": InputPathType,
+    "commonsubj": str,
+    "hemi": str,
+    "steps": typing.NotRequired[list[str] | None],
+})
+ThickdiffmapParametersTagged = typing.TypedDict('ThickdiffmapParametersTagged', {
+    "@type": typing.Literal["freesurfer/thickdiffmap"],
     "subjscan1": InputPathType,
     "subjscan2": InputPathType,
     "commonsubj": str,
@@ -23,40 +31,9 @@ ThickdiffmapParameters = typing.TypedDict('ThickdiffmapParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "freesurfer.thickdiffmap": thickdiffmap_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-    }.get(t)
-
-
 class ThickdiffmapOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `thickdiffmap(...)`.
+    Output object returned when calling `ThickdiffmapParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -68,7 +45,7 @@ def thickdiffmap_params(
     commonsubj: str,
     hemi: str,
     steps: list[str] | None = None,
-) -> ThickdiffmapParameters:
+) -> ThickdiffmapParametersTagged:
     """
     Build parameters.
     
@@ -82,7 +59,7 @@ def thickdiffmap_params(
         Parameter dictionary
     """
     params = {
-        "@type": "freesurfer.thickdiffmap",
+        "@type": "freesurfer/thickdiffmap",
         "subjscan1": subjscan1,
         "subjscan2": subjscan2,
         "commonsubj": commonsubj,
@@ -108,12 +85,12 @@ def thickdiffmap_cargs(
     """
     cargs = []
     cargs.append("thickdiffmap")
-    cargs.append(execution.input_file(params.get("subjscan1")))
-    cargs.append(execution.input_file(params.get("subjscan2")))
-    cargs.append(params.get("commonsubj"))
-    cargs.append(params.get("hemi"))
-    if params.get("steps") is not None:
-        cargs.extend(params.get("steps"))
+    cargs.append(execution.input_file(params.get("subjscan1", None)))
+    cargs.append(execution.input_file(params.get("subjscan2", None)))
+    cargs.append(params.get("commonsubj", None))
+    cargs.append(params.get("hemi", None))
+    if params.get("steps", None) is not None:
+        cargs.extend(params.get("steps", None))
     return cargs
 
 
@@ -204,7 +181,6 @@ def thickdiffmap(
 __all__ = [
     "THICKDIFFMAP_METADATA",
     "ThickdiffmapOutputs",
-    "ThickdiffmapParameters",
     "thickdiffmap",
     "thickdiffmap_execute",
     "thickdiffmap_params",

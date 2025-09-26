@@ -14,14 +14,35 @@ LABELCONVERT_METADATA = Metadata(
 
 
 LabelconvertConfigParameters = typing.TypedDict('LabelconvertConfigParameters', {
-    "@type": typing.Literal["mrtrix.labelconvert.config"],
+    "@type": typing.NotRequired[typing.Literal["config"]],
+    "key": str,
+    "value": str,
+})
+LabelconvertConfigParametersTagged = typing.TypedDict('LabelconvertConfigParametersTagged', {
+    "@type": typing.Literal["config"],
     "key": str,
     "value": str,
 })
 
 
 LabelconvertParameters = typing.TypedDict('LabelconvertParameters', {
-    "@type": typing.Literal["mrtrix.labelconvert"],
+    "@type": typing.NotRequired[typing.Literal["mrtrix/labelconvert"]],
+    "spine": typing.NotRequired[InputPathType | None],
+    "info": bool,
+    "quiet": bool,
+    "debug": bool,
+    "force": bool,
+    "nthreads": typing.NotRequired[int | None],
+    "config": typing.NotRequired[list[LabelconvertConfigParameters] | None],
+    "help": bool,
+    "version": bool,
+    "path_in": InputPathType,
+    "lut_in": InputPathType,
+    "lut_out": InputPathType,
+    "image_out": str,
+})
+LabelconvertParametersTagged = typing.TypedDict('LabelconvertParametersTagged', {
+    "@type": typing.Literal["mrtrix/labelconvert"],
     "spine": typing.NotRequired[InputPathType | None],
     "info": bool,
     "quiet": bool,
@@ -38,43 +59,10 @@ LabelconvertParameters = typing.TypedDict('LabelconvertParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "mrtrix.labelconvert": labelconvert_cargs,
-        "mrtrix.labelconvert.config": labelconvert_config_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "mrtrix.labelconvert": labelconvert_outputs,
-    }.get(t)
-
-
 def labelconvert_config_params(
     key: str,
     value: str,
-) -> LabelconvertConfigParameters:
+) -> LabelconvertConfigParametersTagged:
     """
     Build parameters.
     
@@ -85,7 +73,7 @@ def labelconvert_config_params(
         Parameter dictionary
     """
     params = {
-        "@type": "mrtrix.labelconvert.config",
+        "@type": "config",
         "key": key,
         "value": value,
     }
@@ -107,14 +95,14 @@ def labelconvert_config_cargs(
     """
     cargs = []
     cargs.append("-config")
-    cargs.append(params.get("key"))
-    cargs.append(params.get("value"))
+    cargs.append(params.get("key", None))
+    cargs.append(params.get("value", None))
     return cargs
 
 
 class LabelconvertOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `labelconvert(...)`.
+    Output object returned when calling `LabelconvertParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -136,7 +124,7 @@ def labelconvert_params(
     config: list[LabelconvertConfigParameters] | None = None,
     help_: bool = False,
     version: bool = False,
-) -> LabelconvertParameters:
+) -> LabelconvertParametersTagged:
     """
     Build parameters.
     
@@ -164,7 +152,7 @@ def labelconvert_params(
         Parameter dictionary
     """
     params = {
-        "@type": "mrtrix.labelconvert",
+        "@type": "mrtrix/labelconvert",
         "info": info,
         "quiet": quiet,
         "debug": debug,
@@ -200,34 +188,34 @@ def labelconvert_cargs(
     """
     cargs = []
     cargs.append("labelconvert")
-    if params.get("spine") is not None:
+    if params.get("spine", None) is not None:
         cargs.extend([
             "-spine",
-            execution.input_file(params.get("spine"))
+            execution.input_file(params.get("spine", None))
         ])
-    if params.get("info"):
+    if params.get("info", False):
         cargs.append("-info")
-    if params.get("quiet"):
+    if params.get("quiet", False):
         cargs.append("-quiet")
-    if params.get("debug"):
+    if params.get("debug", False):
         cargs.append("-debug")
-    if params.get("force"):
+    if params.get("force", False):
         cargs.append("-force")
-    if params.get("nthreads") is not None:
+    if params.get("nthreads", None) is not None:
         cargs.extend([
             "-nthreads",
-            str(params.get("nthreads"))
+            str(params.get("nthreads", None))
         ])
-    if params.get("config") is not None:
-        cargs.extend([a for c in [dyn_cargs(s["@type"])(s, execution) for s in params.get("config")] for a in c])
-    if params.get("help"):
+    if params.get("config", None) is not None:
+        cargs.extend([a for c in [labelconvert_config_cargs(s, execution) for s in params.get("config", None)] for a in c])
+    if params.get("help", False):
         cargs.append("-help")
-    if params.get("version"):
+    if params.get("version", False):
         cargs.append("-version")
-    cargs.append(execution.input_file(params.get("path_in")))
-    cargs.append(execution.input_file(params.get("lut_in")))
-    cargs.append(execution.input_file(params.get("lut_out")))
-    cargs.append(params.get("image_out"))
+    cargs.append(execution.input_file(params.get("path_in", None)))
+    cargs.append(execution.input_file(params.get("lut_in", None)))
+    cargs.append(execution.input_file(params.get("lut_out", None)))
+    cargs.append(params.get("image_out", None))
     return cargs
 
 
@@ -246,7 +234,7 @@ def labelconvert_outputs(
     """
     ret = LabelconvertOutputs(
         root=execution.output_file("."),
-        image_out=execution.output_file(params.get("image_out")),
+        image_out=execution.output_file(params.get("image_out", None)),
     )
     return ret
 
@@ -372,9 +360,7 @@ def labelconvert(
 
 __all__ = [
     "LABELCONVERT_METADATA",
-    "LabelconvertConfigParameters",
     "LabelconvertOutputs",
-    "LabelconvertParameters",
     "labelconvert",
     "labelconvert_config_params",
     "labelconvert_execute",

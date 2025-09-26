@@ -14,7 +14,19 @@ DIMON_METADATA = Metadata(
 
 
 DimonParameters = typing.TypedDict('DimonParameters', {
-    "@type": typing.Literal["afni.Dimon"],
+    "@type": typing.NotRequired[typing.Literal["afni/Dimon"]],
+    "infile_prefix": str,
+    "infile_pattern": typing.NotRequired[str | None],
+    "infile_list": typing.NotRequired[InputPathType | None],
+    "rt_cmd": typing.NotRequired[str | None],
+    "host": typing.NotRequired[str | None],
+    "drive_afni": typing.NotRequired[str | None],
+    "drive_wait": typing.NotRequired[str | None],
+    "te_list": typing.NotRequired[str | None],
+    "sort_method": typing.NotRequired[str | None],
+})
+DimonParametersTagged = typing.TypedDict('DimonParametersTagged', {
+    "@type": typing.Literal["afni/Dimon"],
     "infile_prefix": str,
     "infile_pattern": typing.NotRequired[str | None],
     "infile_list": typing.NotRequired[InputPathType | None],
@@ -27,41 +39,9 @@ DimonParameters = typing.TypedDict('DimonParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "afni.Dimon": dimon_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "afni.Dimon": dimon_outputs,
-    }.get(t)
-
-
 class DimonOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `dimon(...)`.
+    Output object returned when calling `DimonParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -79,7 +59,7 @@ def dimon_params(
     drive_wait: str | None = None,
     te_list: str | None = None,
     sort_method: str | None = None,
-) -> DimonParameters:
+) -> DimonParametersTagged:
     """
     Build parameters.
     
@@ -97,7 +77,7 @@ def dimon_params(
         Parameter dictionary
     """
     params = {
-        "@type": "afni.Dimon",
+        "@type": "afni/Dimon",
         "infile_prefix": infile_prefix,
     }
     if infile_pattern is not None:
@@ -136,47 +116,47 @@ def dimon_cargs(
     cargs.append("Dimon")
     cargs.extend([
         "-infile_prefix",
-        params.get("infile_prefix")
+        params.get("infile_prefix", None)
     ])
-    if params.get("infile_pattern") is not None:
+    if params.get("infile_pattern", None) is not None:
         cargs.extend([
             "-infile_pattern",
-            params.get("infile_pattern")
+            params.get("infile_pattern", None)
         ])
-    if params.get("infile_list") is not None:
+    if params.get("infile_list", None) is not None:
         cargs.extend([
             "-infile_list",
-            execution.input_file(params.get("infile_list"))
+            execution.input_file(params.get("infile_list", None))
         ])
-    if params.get("rt_cmd") is not None:
+    if params.get("rt_cmd", None) is not None:
         cargs.extend([
             "-rt_cmd",
-            params.get("rt_cmd")
+            params.get("rt_cmd", None)
         ])
-    if params.get("host") is not None:
+    if params.get("host", None) is not None:
         cargs.extend([
             "-host",
-            params.get("host")
+            params.get("host", None)
         ])
-    if params.get("drive_afni") is not None:
+    if params.get("drive_afni", None) is not None:
         cargs.extend([
             "-drive_afni",
-            params.get("drive_afni")
+            params.get("drive_afni", None)
         ])
-    if params.get("drive_wait") is not None:
+    if params.get("drive_wait", None) is not None:
         cargs.extend([
             "-drive_wait",
-            params.get("drive_wait")
+            params.get("drive_wait", None)
         ])
-    if params.get("te_list") is not None:
+    if params.get("te_list", None) is not None:
         cargs.extend([
             "-te_list",
-            params.get("te_list")
+            params.get("te_list", None)
         ])
-    if params.get("sort_method") is not None:
+    if params.get("sort_method", None) is not None:
         cargs.extend([
             "-sort_method",
-            params.get("sort_method")
+            params.get("sort_method", None)
         ])
     return cargs
 
@@ -196,7 +176,7 @@ def dimon_outputs(
     """
     ret = DimonOutputs(
         root=execution.output_file("."),
-        sorted_files_details=execution.output_file(pathlib.Path(params.get("infile_list")).name + "_details") if (params.get("infile_list") is not None) else None,
+        sorted_files_details=execution.output_file(pathlib.Path(params.get("infile_list", None)).name + "_details") if (params.get("infile_list") is not None) else None,
     )
     return ret
 
@@ -281,7 +261,6 @@ def dimon(
 __all__ = [
     "DIMON_METADATA",
     "DimonOutputs",
-    "DimonParameters",
     "dimon",
     "dimon_execute",
     "dimon_params",

@@ -14,7 +14,25 @@ ANTS_BRAIN_EXTRACTION_SH_METADATA = Metadata(
 
 
 AntsBrainExtractionShParameters = typing.TypedDict('AntsBrainExtractionShParameters', {
-    "@type": typing.Literal["ants.antsBrainExtraction.sh"],
+    "@type": typing.NotRequired[typing.Literal["ants/antsBrainExtraction.sh"]],
+    "image_dimension": int,
+    "anatomical_image": InputPathType,
+    "template": InputPathType,
+    "probability_mask": InputPathType,
+    "tissue_classification": typing.NotRequired[str | None],
+    "brain_extraction_registration_mask": typing.NotRequired[InputPathType | None],
+    "keep_temporary_files": bool,
+    "single_floating_point_precision": bool,
+    "initial_moving_transform": typing.NotRequired[InputPathType | None],
+    "rotation_search_params": typing.NotRequired[str | None],
+    "image_file_suffix": typing.NotRequired[str | None],
+    "translation_search_params": typing.NotRequired[str | None],
+    "random_seeding": bool,
+    "debug_mode": bool,
+    "output_prefix": typing.NotRequired[str | None],
+})
+AntsBrainExtractionShParametersTagged = typing.TypedDict('AntsBrainExtractionShParametersTagged', {
+    "@type": typing.Literal["ants/antsBrainExtraction.sh"],
     "image_dimension": int,
     "anatomical_image": InputPathType,
     "template": InputPathType,
@@ -33,41 +51,9 @@ AntsBrainExtractionShParameters = typing.TypedDict('AntsBrainExtractionShParamet
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "ants.antsBrainExtraction.sh": ants_brain_extraction_sh_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "ants.antsBrainExtraction.sh": ants_brain_extraction_sh_outputs,
-    }.get(t)
-
-
 class AntsBrainExtractionShOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `ants_brain_extraction_sh(...)`.
+    Output object returned when calling `AntsBrainExtractionShParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -95,7 +81,7 @@ def ants_brain_extraction_sh_params(
     random_seeding: bool = False,
     debug_mode: bool = False,
     output_prefix: str | None = None,
-) -> AntsBrainExtractionShParameters:
+) -> AntsBrainExtractionShParametersTagged:
     """
     Build parameters.
     
@@ -119,7 +105,7 @@ def ants_brain_extraction_sh_params(
         Parameter dictionary
     """
     params = {
-        "@type": "ants.antsBrainExtraction.sh",
+        "@type": "ants/antsBrainExtraction.sh",
         "image_dimension": image_dimension,
         "anatomical_image": anatomical_image,
         "template": template,
@@ -163,62 +149,62 @@ def ants_brain_extraction_sh_cargs(
     cargs.append("antsBrainExtraction.sh")
     cargs.extend([
         "-d",
-        str(params.get("image_dimension"))
+        str(params.get("image_dimension", 3))
     ])
     cargs.extend([
         "-a",
-        execution.input_file(params.get("anatomical_image"))
+        execution.input_file(params.get("anatomical_image", None))
     ])
     cargs.extend([
         "-e",
-        execution.input_file(params.get("template"))
+        execution.input_file(params.get("template", None))
     ])
     cargs.extend([
         "-m",
-        execution.input_file(params.get("probability_mask"))
+        execution.input_file(params.get("probability_mask", None))
     ])
-    if params.get("tissue_classification") is not None:
+    if params.get("tissue_classification", None) is not None:
         cargs.extend([
             "-c",
-            params.get("tissue_classification")
+            params.get("tissue_classification", None)
         ])
-    if params.get("brain_extraction_registration_mask") is not None:
+    if params.get("brain_extraction_registration_mask", None) is not None:
         cargs.extend([
             "-f",
-            execution.input_file(params.get("brain_extraction_registration_mask"))
+            execution.input_file(params.get("brain_extraction_registration_mask", None))
         ])
-    if params.get("keep_temporary_files"):
+    if params.get("keep_temporary_files", False):
         cargs.append("-k")
-    if params.get("single_floating_point_precision"):
+    if params.get("single_floating_point_precision", False):
         cargs.append("-q")
-    if params.get("initial_moving_transform") is not None:
+    if params.get("initial_moving_transform", None) is not None:
         cargs.extend([
             "-r",
-            execution.input_file(params.get("initial_moving_transform"))
+            execution.input_file(params.get("initial_moving_transform", None))
         ])
-    if params.get("rotation_search_params") is not None:
+    if params.get("rotation_search_params", None) is not None:
         cargs.extend([
             "-R",
-            params.get("rotation_search_params")
+            params.get("rotation_search_params", None)
         ])
-    if params.get("image_file_suffix") is not None:
+    if params.get("image_file_suffix", None) is not None:
         cargs.extend([
             "-s",
-            params.get("image_file_suffix")
+            params.get("image_file_suffix", None)
         ])
-    if params.get("translation_search_params") is not None:
+    if params.get("translation_search_params", None) is not None:
         cargs.extend([
             "-T",
-            params.get("translation_search_params")
+            params.get("translation_search_params", None)
         ])
-    if params.get("random_seeding"):
+    if params.get("random_seeding", False):
         cargs.append("-u")
-    if params.get("debug_mode"):
+    if params.get("debug_mode", False):
         cargs.append("-z")
-    if params.get("output_prefix") is not None:
+    if params.get("output_prefix", None) is not None:
         cargs.extend([
             "-o",
-            params.get("output_prefix")
+            params.get("output_prefix", None)
         ])
     return cargs
 
@@ -343,7 +329,6 @@ def ants_brain_extraction_sh(
 __all__ = [
     "ANTS_BRAIN_EXTRACTION_SH_METADATA",
     "AntsBrainExtractionShOutputs",
-    "AntsBrainExtractionShParameters",
     "ants_brain_extraction_sh",
     "ants_brain_extraction_sh_execute",
     "ants_brain_extraction_sh_params",

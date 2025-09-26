@@ -14,7 +14,18 @@ SIENA_DIFF_METADATA = Metadata(
 
 
 SienaDiffParameters = typing.TypedDict('SienaDiffParameters', {
-    "@type": typing.Literal["fsl.siena_diff"],
+    "@type": typing.NotRequired[typing.Literal["fsl/siena_diff"]],
+    "input1_basename": str,
+    "input2_basename": str,
+    "debug_flag": bool,
+    "no_seg_flag": bool,
+    "self_corr_factor": typing.NotRequired[float | None],
+    "ignore_z_flow_flag": bool,
+    "apply_std_mask_flag": bool,
+    "segment_options": typing.NotRequired[str | None],
+})
+SienaDiffParametersTagged = typing.TypedDict('SienaDiffParametersTagged', {
+    "@type": typing.Literal["fsl/siena_diff"],
     "input1_basename": str,
     "input2_basename": str,
     "debug_flag": bool,
@@ -26,40 +37,9 @@ SienaDiffParameters = typing.TypedDict('SienaDiffParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "fsl.siena_diff": siena_diff_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-    }.get(t)
-
-
 class SienaDiffOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `siena_diff(...)`.
+    Output object returned when calling `SienaDiffParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -74,7 +54,7 @@ def siena_diff_params(
     ignore_z_flow_flag: bool = False,
     apply_std_mask_flag: bool = False,
     segment_options: str | None = None,
-) -> SienaDiffParameters:
+) -> SienaDiffParametersTagged:
     """
     Build parameters.
     
@@ -96,7 +76,7 @@ def siena_diff_params(
         Parameter dictionary
     """
     params = {
-        "@type": "fsl.siena_diff",
+        "@type": "fsl/siena_diff",
         "input1_basename": input1_basename,
         "input2_basename": input2_basename,
         "debug_flag": debug_flag,
@@ -126,25 +106,25 @@ def siena_diff_cargs(
     """
     cargs = []
     cargs.append("siena_diff")
-    cargs.append(params.get("input1_basename"))
-    cargs.append(params.get("input2_basename"))
-    if params.get("debug_flag"):
+    cargs.append(params.get("input1_basename", None))
+    cargs.append(params.get("input2_basename", None))
+    if params.get("debug_flag", False):
         cargs.append("-d")
-    if params.get("no_seg_flag"):
+    if params.get("no_seg_flag", False):
         cargs.append("-2")
-    if params.get("self_corr_factor") is not None:
+    if params.get("self_corr_factor", None) is not None:
         cargs.extend([
             "-c",
-            str(params.get("self_corr_factor"))
+            str(params.get("self_corr_factor", None))
         ])
-    if params.get("ignore_z_flow_flag"):
+    if params.get("ignore_z_flow_flag", False):
         cargs.append("-i")
-    if params.get("apply_std_mask_flag"):
+    if params.get("apply_std_mask_flag", False):
         cargs.append("-m")
-    if params.get("segment_options") is not None:
+    if params.get("segment_options", None) is not None:
         cargs.extend([
             "-s",
-            params.get("segment_options")
+            params.get("segment_options", None)
         ])
     return cargs
 
@@ -250,7 +230,6 @@ def siena_diff(
 __all__ = [
     "SIENA_DIFF_METADATA",
     "SienaDiffOutputs",
-    "SienaDiffParameters",
     "siena_diff",
     "siena_diff_execute",
     "siena_diff_params",

@@ -14,46 +14,18 @@ IM2NIML_METADATA = Metadata(
 
 
 Im2nimlParameters = typing.TypedDict('Im2nimlParameters', {
-    "@type": typing.Literal["afni.im2niml"],
+    "@type": typing.NotRequired[typing.Literal["afni/im2niml"]],
+    "input_files": list[InputPathType],
+})
+Im2nimlParametersTagged = typing.TypedDict('Im2nimlParametersTagged', {
+    "@type": typing.Literal["afni/im2niml"],
     "input_files": list[InputPathType],
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "afni.im2niml": im2niml_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "afni.im2niml": im2niml_outputs,
-    }.get(t)
-
-
 class Im2nimlOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `im2niml(...)`.
+    Output object returned when calling `Im2nimlParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -63,7 +35,7 @@ class Im2nimlOutputs(typing.NamedTuple):
 
 def im2niml_params(
     input_files: list[InputPathType],
-) -> Im2nimlParameters:
+) -> Im2nimlParametersTagged:
     """
     Build parameters.
     
@@ -73,7 +45,7 @@ def im2niml_params(
         Parameter dictionary
     """
     params = {
-        "@type": "afni.im2niml",
+        "@type": "afni/im2niml",
         "input_files": input_files,
     }
     return params
@@ -94,7 +66,7 @@ def im2niml_cargs(
     """
     cargs = []
     cargs.append("im2niml")
-    cargs.extend([execution.input_file(f) for f in params.get("input_files")])
+    cargs.extend([execution.input_file(f) for f in params.get("input_files", None)])
     return cargs
 
 
@@ -176,7 +148,6 @@ def im2niml(
 __all__ = [
     "IM2NIML_METADATA",
     "Im2nimlOutputs",
-    "Im2nimlParameters",
     "im2niml",
     "im2niml_execute",
     "im2niml_params",

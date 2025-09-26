@@ -14,28 +14,49 @@ CIFTI_REPLACE_STRUCTURE_METADATA = Metadata(
 
 
 CiftiReplaceStructureVolumeAllParameters = typing.TypedDict('CiftiReplaceStructureVolumeAllParameters', {
-    "@type": typing.Literal["workbench.cifti-replace-structure.volume_all"],
+    "@type": typing.NotRequired[typing.Literal["volume_all"]],
+    "volume": InputPathType,
+    "opt_from_cropped": bool,
+})
+CiftiReplaceStructureVolumeAllParametersTagged = typing.TypedDict('CiftiReplaceStructureVolumeAllParametersTagged', {
+    "@type": typing.Literal["volume_all"],
     "volume": InputPathType,
     "opt_from_cropped": bool,
 })
 
 
 CiftiReplaceStructureLabelParameters = typing.TypedDict('CiftiReplaceStructureLabelParameters', {
-    "@type": typing.Literal["workbench.cifti-replace-structure.label"],
+    "@type": typing.NotRequired[typing.Literal["label"]],
+    "structure": str,
+    "label": InputPathType,
+})
+CiftiReplaceStructureLabelParametersTagged = typing.TypedDict('CiftiReplaceStructureLabelParametersTagged', {
+    "@type": typing.Literal["label"],
     "structure": str,
     "label": InputPathType,
 })
 
 
 CiftiReplaceStructureMetricParameters = typing.TypedDict('CiftiReplaceStructureMetricParameters', {
-    "@type": typing.Literal["workbench.cifti-replace-structure.metric"],
+    "@type": typing.NotRequired[typing.Literal["metric"]],
+    "structure": str,
+    "metric": InputPathType,
+})
+CiftiReplaceStructureMetricParametersTagged = typing.TypedDict('CiftiReplaceStructureMetricParametersTagged', {
+    "@type": typing.Literal["metric"],
     "structure": str,
     "metric": InputPathType,
 })
 
 
 CiftiReplaceStructureVolumeParameters = typing.TypedDict('CiftiReplaceStructureVolumeParameters', {
-    "@type": typing.Literal["workbench.cifti-replace-structure.volume"],
+    "@type": typing.NotRequired[typing.Literal["volume"]],
+    "structure": str,
+    "volume": InputPathType,
+    "opt_from_cropped": bool,
+})
+CiftiReplaceStructureVolumeParametersTagged = typing.TypedDict('CiftiReplaceStructureVolumeParametersTagged', {
+    "@type": typing.Literal["volume"],
     "structure": str,
     "volume": InputPathType,
     "opt_from_cropped": bool,
@@ -43,7 +64,18 @@ CiftiReplaceStructureVolumeParameters = typing.TypedDict('CiftiReplaceStructureV
 
 
 CiftiReplaceStructureParameters = typing.TypedDict('CiftiReplaceStructureParameters', {
-    "@type": typing.Literal["workbench.cifti-replace-structure"],
+    "@type": typing.NotRequired[typing.Literal["workbench/cifti-replace-structure"]],
+    "cifti": str,
+    "direction": str,
+    "volume_all": typing.NotRequired[CiftiReplaceStructureVolumeAllParameters | None],
+    "opt_discard_unused_labels": bool,
+    "opt_label_collision_action": typing.NotRequired[str | None],
+    "label": typing.NotRequired[list[CiftiReplaceStructureLabelParameters] | None],
+    "metric": typing.NotRequired[list[CiftiReplaceStructureMetricParameters] | None],
+    "volume": typing.NotRequired[list[CiftiReplaceStructureVolumeParameters] | None],
+})
+CiftiReplaceStructureParametersTagged = typing.TypedDict('CiftiReplaceStructureParametersTagged', {
+    "@type": typing.Literal["workbench/cifti-replace-structure"],
     "cifti": str,
     "direction": str,
     "volume_all": typing.NotRequired[CiftiReplaceStructureVolumeAllParameters | None],
@@ -55,45 +87,10 @@ CiftiReplaceStructureParameters = typing.TypedDict('CiftiReplaceStructureParamet
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "workbench.cifti-replace-structure": cifti_replace_structure_cargs,
-        "workbench.cifti-replace-structure.volume_all": cifti_replace_structure_volume_all_cargs,
-        "workbench.cifti-replace-structure.label": cifti_replace_structure_label_cargs,
-        "workbench.cifti-replace-structure.metric": cifti_replace_structure_metric_cargs,
-        "workbench.cifti-replace-structure.volume": cifti_replace_structure_volume_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-    }.get(t)
-
-
 def cifti_replace_structure_volume_all_params(
     volume: InputPathType,
     opt_from_cropped: bool = False,
-) -> CiftiReplaceStructureVolumeAllParameters:
+) -> CiftiReplaceStructureVolumeAllParametersTagged:
     """
     Build parameters.
     
@@ -104,7 +101,7 @@ def cifti_replace_structure_volume_all_params(
         Parameter dictionary
     """
     params = {
-        "@type": "workbench.cifti-replace-structure.volume_all",
+        "@type": "volume_all",
         "volume": volume,
         "opt_from_cropped": opt_from_cropped,
     }
@@ -126,8 +123,8 @@ def cifti_replace_structure_volume_all_cargs(
     """
     cargs = []
     cargs.append("-volume-all")
-    cargs.append(execution.input_file(params.get("volume")))
-    if params.get("opt_from_cropped"):
+    cargs.append(execution.input_file(params.get("volume", None)))
+    if params.get("opt_from_cropped", False):
         cargs.append("-from-cropped")
     return cargs
 
@@ -135,7 +132,7 @@ def cifti_replace_structure_volume_all_cargs(
 def cifti_replace_structure_label_params(
     structure: str,
     label: InputPathType,
-) -> CiftiReplaceStructureLabelParameters:
+) -> CiftiReplaceStructureLabelParametersTagged:
     """
     Build parameters.
     
@@ -146,7 +143,7 @@ def cifti_replace_structure_label_params(
         Parameter dictionary
     """
     params = {
-        "@type": "workbench.cifti-replace-structure.label",
+        "@type": "label",
         "structure": structure,
         "label": label,
     }
@@ -168,15 +165,15 @@ def cifti_replace_structure_label_cargs(
     """
     cargs = []
     cargs.append("-label")
-    cargs.append(params.get("structure"))
-    cargs.append(execution.input_file(params.get("label")))
+    cargs.append(params.get("structure", None))
+    cargs.append(execution.input_file(params.get("label", None)))
     return cargs
 
 
 def cifti_replace_structure_metric_params(
     structure: str,
     metric: InputPathType,
-) -> CiftiReplaceStructureMetricParameters:
+) -> CiftiReplaceStructureMetricParametersTagged:
     """
     Build parameters.
     
@@ -187,7 +184,7 @@ def cifti_replace_structure_metric_params(
         Parameter dictionary
     """
     params = {
-        "@type": "workbench.cifti-replace-structure.metric",
+        "@type": "metric",
         "structure": structure,
         "metric": metric,
     }
@@ -209,8 +206,8 @@ def cifti_replace_structure_metric_cargs(
     """
     cargs = []
     cargs.append("-metric")
-    cargs.append(params.get("structure"))
-    cargs.append(execution.input_file(params.get("metric")))
+    cargs.append(params.get("structure", None))
+    cargs.append(execution.input_file(params.get("metric", None)))
     return cargs
 
 
@@ -218,7 +215,7 @@ def cifti_replace_structure_volume_params(
     structure: str,
     volume: InputPathType,
     opt_from_cropped: bool = False,
-) -> CiftiReplaceStructureVolumeParameters:
+) -> CiftiReplaceStructureVolumeParametersTagged:
     """
     Build parameters.
     
@@ -230,7 +227,7 @@ def cifti_replace_structure_volume_params(
         Parameter dictionary
     """
     params = {
-        "@type": "workbench.cifti-replace-structure.volume",
+        "@type": "volume",
         "structure": structure,
         "volume": volume,
         "opt_from_cropped": opt_from_cropped,
@@ -253,16 +250,16 @@ def cifti_replace_structure_volume_cargs(
     """
     cargs = []
     cargs.append("-volume")
-    cargs.append(params.get("structure"))
-    cargs.append(execution.input_file(params.get("volume")))
-    if params.get("opt_from_cropped"):
+    cargs.append(params.get("structure", None))
+    cargs.append(execution.input_file(params.get("volume", None)))
+    if params.get("opt_from_cropped", False):
         cargs.append("-from-cropped")
     return cargs
 
 
 class CiftiReplaceStructureOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `cifti_replace_structure(...)`.
+    Output object returned when calling `CiftiReplaceStructureParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -277,7 +274,7 @@ def cifti_replace_structure_params(
     label: list[CiftiReplaceStructureLabelParameters] | None = None,
     metric: list[CiftiReplaceStructureMetricParameters] | None = None,
     volume: list[CiftiReplaceStructureVolumeParameters] | None = None,
-) -> CiftiReplaceStructureParameters:
+) -> CiftiReplaceStructureParametersTagged:
     """
     Build parameters.
     
@@ -297,7 +294,7 @@ def cifti_replace_structure_params(
         Parameter dictionary
     """
     params = {
-        "@type": "workbench.cifti-replace-structure",
+        "@type": "workbench/cifti-replace-structure",
         "cifti": cifti,
         "direction": direction,
         "opt_discard_unused_labels": opt_discard_unused_labels,
@@ -331,23 +328,23 @@ def cifti_replace_structure_cargs(
     cargs = []
     cargs.append("wb_command")
     cargs.append("-cifti-replace-structure")
-    cargs.append(params.get("cifti"))
-    cargs.append(params.get("direction"))
-    if params.get("volume_all") is not None:
-        cargs.extend(dyn_cargs(params.get("volume_all")["@type"])(params.get("volume_all"), execution))
-    if params.get("opt_discard_unused_labels"):
+    cargs.append(params.get("cifti", None))
+    cargs.append(params.get("direction", None))
+    if params.get("volume_all", None) is not None:
+        cargs.extend(cifti_replace_structure_volume_all_cargs(params.get("volume_all", None), execution))
+    if params.get("opt_discard_unused_labels", False):
         cargs.append("-discard-unused-labels")
-    if params.get("opt_label_collision_action") is not None:
+    if params.get("opt_label_collision_action", None) is not None:
         cargs.extend([
             "-label-collision",
-            params.get("opt_label_collision_action")
+            params.get("opt_label_collision_action", None)
         ])
-    if params.get("label") is not None:
-        cargs.extend([a for c in [dyn_cargs(s["@type"])(s, execution) for s in params.get("label")] for a in c])
-    if params.get("metric") is not None:
-        cargs.extend([a for c in [dyn_cargs(s["@type"])(s, execution) for s in params.get("metric")] for a in c])
-    if params.get("volume") is not None:
-        cargs.extend([a for c in [dyn_cargs(s["@type"])(s, execution) for s in params.get("volume")] for a in c])
+    if params.get("label", None) is not None:
+        cargs.extend([a for c in [cifti_replace_structure_label_cargs(s, execution) for s in params.get("label", None)] for a in c])
+    if params.get("metric", None) is not None:
+        cargs.extend([a for c in [cifti_replace_structure_metric_cargs(s, execution) for s in params.get("metric", None)] for a in c])
+    if params.get("volume", None) is not None:
+        cargs.extend([a for c in [cifti_replace_structure_volume_cargs(s, execution) for s in params.get("volume", None)] for a in c])
     return cargs
 
 
@@ -541,12 +538,7 @@ def cifti_replace_structure(
 
 __all__ = [
     "CIFTI_REPLACE_STRUCTURE_METADATA",
-    "CiftiReplaceStructureLabelParameters",
-    "CiftiReplaceStructureMetricParameters",
     "CiftiReplaceStructureOutputs",
-    "CiftiReplaceStructureParameters",
-    "CiftiReplaceStructureVolumeAllParameters",
-    "CiftiReplaceStructureVolumeParameters",
     "cifti_replace_structure",
     "cifti_replace_structure_execute",
     "cifti_replace_structure_label_params",

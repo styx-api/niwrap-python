@@ -14,7 +14,24 @@ GEN_SS_REVIEW_TABLE_PY_METADATA = Metadata(
 
 
 GenSsReviewTablePyParameters = typing.TypedDict('GenSsReviewTablePyParameters', {
-    "@type": typing.Literal["afni.gen_ss_review_table.py"],
+    "@type": typing.NotRequired[typing.Literal["afni/gen_ss_review_table.py"]],
+    "infiles": list[InputPathType],
+    "write_table": typing.NotRequired[InputPathType | None],
+    "write_outliers": typing.NotRequired[InputPathType | None],
+    "overwrite": bool,
+    "empty_is_outlier": bool,
+    "outlier_sep": typing.NotRequired[str | None],
+    "separator": typing.NotRequired[str | None],
+    "showlabs": bool,
+    "show_infiles": bool,
+    "show_keepers": bool,
+    "report_outliers": typing.NotRequired[list[str] | None],
+    "report_outliers_fill_style": typing.NotRequired[str | None],
+    "show_missing": bool,
+    "verbosity": typing.NotRequired[int | None],
+})
+GenSsReviewTablePyParametersTagged = typing.TypedDict('GenSsReviewTablePyParametersTagged', {
+    "@type": typing.Literal["afni/gen_ss_review_table.py"],
     "infiles": list[InputPathType],
     "write_table": typing.NotRequired[InputPathType | None],
     "write_outliers": typing.NotRequired[InputPathType | None],
@@ -32,41 +49,9 @@ GenSsReviewTablePyParameters = typing.TypedDict('GenSsReviewTablePyParameters', 
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "afni.gen_ss_review_table.py": gen_ss_review_table_py_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "afni.gen_ss_review_table.py": gen_ss_review_table_py_outputs,
-    }.get(t)
-
-
 class GenSsReviewTablePyOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `gen_ss_review_table_py(...)`.
+    Output object returned when calling `GenSsReviewTablePyParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -91,7 +76,7 @@ def gen_ss_review_table_py_params(
     report_outliers_fill_style: str | None = None,
     show_missing: bool = False,
     verbosity: int | None = None,
-) -> GenSsReviewTablePyParameters:
+) -> GenSsReviewTablePyParametersTagged:
     """
     Build parameters.
     
@@ -114,7 +99,7 @@ def gen_ss_review_table_py_params(
         Parameter dictionary
     """
     params = {
-        "@type": "afni.gen_ss_review_table.py",
+        "@type": "afni/gen_ss_review_table.py",
         "infiles": infiles,
         "overwrite": overwrite,
         "empty_is_outlier": empty_is_outlier,
@@ -155,53 +140,53 @@ def gen_ss_review_table_py_cargs(
     """
     cargs = []
     cargs.append("gen_ss_review_table.py")
-    cargs.extend([execution.input_file(f) for f in params.get("infiles")])
-    if params.get("write_table") is not None:
+    cargs.extend([execution.input_file(f) for f in params.get("infiles", None)])
+    if params.get("write_table", None) is not None:
         cargs.extend([
             "-write_table",
-            execution.input_file(params.get("write_table"))
+            execution.input_file(params.get("write_table", None))
         ])
-    if params.get("write_outliers") is not None:
+    if params.get("write_outliers", None) is not None:
         cargs.extend([
             "-write_outliers",
-            execution.input_file(params.get("write_outliers"))
+            execution.input_file(params.get("write_outliers", None))
         ])
-    if params.get("overwrite"):
+    if params.get("overwrite", False):
         cargs.append("-overwrite")
-    if params.get("empty_is_outlier"):
+    if params.get("empty_is_outlier", False):
         cargs.append("-empty_is_outlier")
-    if params.get("outlier_sep") is not None:
+    if params.get("outlier_sep", None) is not None:
         cargs.extend([
             "-outlier_sep",
-            params.get("outlier_sep")
+            params.get("outlier_sep", None)
         ])
-    if params.get("separator") is not None:
+    if params.get("separator", None) is not None:
         cargs.extend([
             "-separator",
-            params.get("separator")
+            params.get("separator", None)
         ])
-    if params.get("showlabs"):
+    if params.get("showlabs", False):
         cargs.append("-showlabs")
-    if params.get("show_infiles"):
+    if params.get("show_infiles", False):
         cargs.append("-show_infiles")
-    if params.get("show_keepers"):
+    if params.get("show_keepers", False):
         cargs.append("-show_keepers")
-    if params.get("report_outliers") is not None:
+    if params.get("report_outliers", None) is not None:
         cargs.extend([
             "-report_outliers",
-            *params.get("report_outliers")
+            *params.get("report_outliers", None)
         ])
-    if params.get("report_outliers_fill_style") is not None:
+    if params.get("report_outliers_fill_style", None) is not None:
         cargs.extend([
             "-report_outliers_fill_style",
-            params.get("report_outliers_fill_style")
+            params.get("report_outliers_fill_style", None)
         ])
-    if params.get("show_missing"):
+    if params.get("show_missing", False):
         cargs.append("-show_missing")
-    if params.get("verbosity") is not None:
+    if params.get("verbosity", None) is not None:
         cargs.extend([
             "-verb",
-            str(params.get("verbosity"))
+            str(params.get("verbosity", None))
         ])
     return cargs
 
@@ -221,8 +206,8 @@ def gen_ss_review_table_py_outputs(
     """
     ret = GenSsReviewTablePyOutputs(
         root=execution.output_file("."),
-        output_table=execution.output_file(pathlib.Path(params.get("write_table")).name) if (params.get("write_table") is not None) else None,
-        output_outliers=execution.output_file(pathlib.Path(params.get("write_outliers")).name) if (params.get("write_outliers") is not None) else None,
+        output_table=execution.output_file(pathlib.Path(params.get("write_table", None)).name) if (params.get("write_table") is not None) else None,
+        output_outliers=execution.output_file(pathlib.Path(params.get("write_outliers", None)).name) if (params.get("write_outliers") is not None) else None,
     )
     return ret
 
@@ -322,7 +307,6 @@ def gen_ss_review_table_py(
 __all__ = [
     "GEN_SS_REVIEW_TABLE_PY_METADATA",
     "GenSsReviewTablePyOutputs",
-    "GenSsReviewTablePyParameters",
     "gen_ss_review_table_py",
     "gen_ss_review_table_py_execute",
     "gen_ss_review_table_py_params",

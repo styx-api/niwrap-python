@@ -14,7 +14,23 @@ V__DJUNCT_SSW_INTERMED_EDGE_IMGS_METADATA = Metadata(
 
 
 VDjunctSswIntermedEdgeImgsParameters = typing.TypedDict('VDjunctSswIntermedEdgeImgsParameters', {
-    "@type": typing.Literal["afni.@djunct_ssw_intermed_edge_imgs"],
+    "@type": typing.NotRequired[typing.Literal["afni/@djunct_ssw_intermed_edge_imgs"]],
+    "prefix": str,
+    "ulay": InputPathType,
+    "olay": InputPathType,
+    "box_focus_slices": typing.NotRequired[str | None],
+    "montgap": typing.NotRequired[str | None],
+    "cbar": typing.NotRequired[str | None],
+    "ulay_range": typing.NotRequired[str | None],
+    "montx": typing.NotRequired[str | None],
+    "monty": typing.NotRequired[str | None],
+    "help_view": bool,
+    "help": bool,
+    "version": bool,
+    "no_clean": bool,
+})
+VDjunctSswIntermedEdgeImgsParametersTagged = typing.TypedDict('VDjunctSswIntermedEdgeImgsParametersTagged', {
+    "@type": typing.Literal["afni/@djunct_ssw_intermed_edge_imgs"],
     "prefix": str,
     "ulay": InputPathType,
     "olay": InputPathType,
@@ -31,40 +47,9 @@ VDjunctSswIntermedEdgeImgsParameters = typing.TypedDict('VDjunctSswIntermedEdgeI
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "afni.@djunct_ssw_intermed_edge_imgs": v__djunct_ssw_intermed_edge_imgs_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-    }.get(t)
-
-
 class VDjunctSswIntermedEdgeImgsOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `v__djunct_ssw_intermed_edge_imgs(...)`.
+    Output object returned when calling `VDjunctSswIntermedEdgeImgsParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -84,7 +69,7 @@ def v__djunct_ssw_intermed_edge_imgs_params(
     help_: bool = False,
     version: bool = False,
     no_clean: bool = False,
-) -> VDjunctSswIntermedEdgeImgsParameters:
+) -> VDjunctSswIntermedEdgeImgsParametersTagged:
     """
     Build parameters.
     
@@ -106,7 +91,7 @@ def v__djunct_ssw_intermed_edge_imgs_params(
         Parameter dictionary
     """
     params = {
-        "@type": "afni.@djunct_ssw_intermed_edge_imgs",
+        "@type": "afni/@djunct_ssw_intermed_edge_imgs",
         "prefix": prefix,
         "ulay": ulay,
         "olay": olay,
@@ -147,53 +132,53 @@ def v__djunct_ssw_intermed_edge_imgs_cargs(
     cargs.append("@djunct_ssw_intermed_edge_imgs")
     cargs.extend([
         "-prefix",
-        params.get("prefix")
+        params.get("prefix", None)
     ])
     cargs.extend([
         "-ulay",
-        execution.input_file(params.get("ulay"))
+        execution.input_file(params.get("ulay", None))
     ])
     cargs.extend([
         "-olay",
-        execution.input_file(params.get("olay"))
+        execution.input_file(params.get("olay", None))
     ])
-    if params.get("box_focus_slices") is not None:
+    if params.get("box_focus_slices", None) is not None:
         cargs.extend([
             "-box_focus_slices",
-            params.get("box_focus_slices")
+            params.get("box_focus_slices", None)
         ])
-    if params.get("montgap") is not None:
+    if params.get("montgap", None) is not None:
         cargs.extend([
             "-montgap",
-            params.get("montgap")
+            params.get("montgap", None)
         ])
-    if params.get("cbar") is not None:
+    if params.get("cbar", None) is not None:
         cargs.extend([
             "-cbar",
-            params.get("cbar")
+            params.get("cbar", None)
         ])
-    if params.get("ulay_range") is not None:
+    if params.get("ulay_range", None) is not None:
         cargs.extend([
             "-ulay_range",
-            params.get("ulay_range")
+            params.get("ulay_range", None)
         ])
-    if params.get("montx") is not None:
+    if params.get("montx", None) is not None:
         cargs.extend([
             "-montx",
-            params.get("montx")
+            params.get("montx", None)
         ])
-    if params.get("monty") is not None:
+    if params.get("monty", None) is not None:
         cargs.extend([
             "-monty",
-            params.get("monty")
+            params.get("monty", None)
         ])
-    if params.get("help_view"):
+    if params.get("help_view", False):
         cargs.append("-hview")
-    if params.get("help"):
+    if params.get("help", False):
         cargs.append("-help")
-    if params.get("version"):
+    if params.get("version", False):
         cargs.append("-ver")
-    if params.get("no_clean"):
+    if params.get("no_clean", False):
         cargs.append("-no_clean")
     return cargs
 
@@ -310,7 +295,6 @@ def v__djunct_ssw_intermed_edge_imgs(
 
 __all__ = [
     "VDjunctSswIntermedEdgeImgsOutputs",
-    "VDjunctSswIntermedEdgeImgsParameters",
     "V__DJUNCT_SSW_INTERMED_EDGE_IMGS_METADATA",
     "v__djunct_ssw_intermed_edge_imgs",
     "v__djunct_ssw_intermed_edge_imgs_execute",

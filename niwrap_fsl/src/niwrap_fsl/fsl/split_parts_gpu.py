@@ -14,7 +14,18 @@ SPLIT_PARTS_GPU_METADATA = Metadata(
 
 
 SplitPartsGpuParameters = typing.TypedDict('SplitPartsGpuParameters', {
-    "@type": typing.Literal["fsl.split_parts_gpu"],
+    "@type": typing.NotRequired[typing.Literal["fsl/split_parts_gpu"]],
+    "datafile": InputPathType,
+    "maskfile": InputPathType,
+    "bvals_file": InputPathType,
+    "bvecs_file": InputPathType,
+    "grad_file": typing.NotRequired[str | None],
+    "use_grad_file": int,
+    "total_num_parts": int,
+    "output_directory": str,
+})
+SplitPartsGpuParametersTagged = typing.TypedDict('SplitPartsGpuParametersTagged', {
+    "@type": typing.Literal["fsl/split_parts_gpu"],
     "datafile": InputPathType,
     "maskfile": InputPathType,
     "bvals_file": InputPathType,
@@ -26,40 +37,9 @@ SplitPartsGpuParameters = typing.TypedDict('SplitPartsGpuParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "fsl.split_parts_gpu": split_parts_gpu_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-    }.get(t)
-
-
 class SplitPartsGpuOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `split_parts_gpu(...)`.
+    Output object returned when calling `SplitPartsGpuParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -74,7 +54,7 @@ def split_parts_gpu_params(
     total_num_parts: int,
     output_directory: str,
     grad_file: str | None = None,
-) -> SplitPartsGpuParameters:
+) -> SplitPartsGpuParametersTagged:
     """
     Build parameters.
     
@@ -91,7 +71,7 @@ def split_parts_gpu_params(
         Parameter dictionary
     """
     params = {
-        "@type": "fsl.split_parts_gpu",
+        "@type": "fsl/split_parts_gpu",
         "datafile": datafile,
         "maskfile": maskfile,
         "bvals_file": bvals_file,
@@ -120,15 +100,15 @@ def split_parts_gpu_cargs(
     """
     cargs = []
     cargs.append("split_parts_gpu")
-    cargs.append(execution.input_file(params.get("datafile")))
-    cargs.append(execution.input_file(params.get("maskfile")))
-    cargs.append(execution.input_file(params.get("bvals_file")))
-    cargs.append(execution.input_file(params.get("bvecs_file")))
-    if params.get("grad_file") is not None:
-        cargs.append(params.get("grad_file"))
-    cargs.append(str(params.get("use_grad_file")))
-    cargs.append(str(params.get("total_num_parts")))
-    cargs.append(params.get("output_directory"))
+    cargs.append(execution.input_file(params.get("datafile", None)))
+    cargs.append(execution.input_file(params.get("maskfile", None)))
+    cargs.append(execution.input_file(params.get("bvals_file", None)))
+    cargs.append(execution.input_file(params.get("bvecs_file", None)))
+    if params.get("grad_file", None) is not None:
+        cargs.append(params.get("grad_file", None))
+    cargs.append(str(params.get("use_grad_file", None)))
+    cargs.append(str(params.get("total_num_parts", None)))
+    cargs.append(params.get("output_directory", None))
     return cargs
 
 
@@ -228,7 +208,6 @@ def split_parts_gpu(
 __all__ = [
     "SPLIT_PARTS_GPU_METADATA",
     "SplitPartsGpuOutputs",
-    "SplitPartsGpuParameters",
     "split_parts_gpu",
     "split_parts_gpu_execute",
     "split_parts_gpu_params",

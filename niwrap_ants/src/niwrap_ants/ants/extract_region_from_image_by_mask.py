@@ -14,7 +14,16 @@ EXTRACT_REGION_FROM_IMAGE_BY_MASK_METADATA = Metadata(
 
 
 ExtractRegionFromImageByMaskParameters = typing.TypedDict('ExtractRegionFromImageByMaskParameters', {
-    "@type": typing.Literal["ants.ExtractRegionFromImageByMask"],
+    "@type": typing.NotRequired[typing.Literal["ants/ExtractRegionFromImageByMask"]],
+    "image_dimension": int,
+    "input_image": InputPathType,
+    "output_image": InputPathType,
+    "label_mask_image": InputPathType,
+    "label": typing.NotRequired[int | None],
+    "pad_radius": typing.NotRequired[int | None],
+})
+ExtractRegionFromImageByMaskParametersTagged = typing.TypedDict('ExtractRegionFromImageByMaskParametersTagged', {
+    "@type": typing.Literal["ants/ExtractRegionFromImageByMask"],
     "image_dimension": int,
     "input_image": InputPathType,
     "output_image": InputPathType,
@@ -24,40 +33,9 @@ ExtractRegionFromImageByMaskParameters = typing.TypedDict('ExtractRegionFromImag
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "ants.ExtractRegionFromImageByMask": extract_region_from_image_by_mask_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-    }.get(t)
-
-
 class ExtractRegionFromImageByMaskOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `extract_region_from_image_by_mask(...)`.
+    Output object returned when calling `ExtractRegionFromImageByMaskParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -70,7 +48,7 @@ def extract_region_from_image_by_mask_params(
     label_mask_image: InputPathType,
     label: int | None = None,
     pad_radius: int | None = None,
-) -> ExtractRegionFromImageByMaskParameters:
+) -> ExtractRegionFromImageByMaskParametersTagged:
     """
     Build parameters.
     
@@ -87,7 +65,7 @@ def extract_region_from_image_by_mask_params(
         Parameter dictionary
     """
     params = {
-        "@type": "ants.ExtractRegionFromImageByMask",
+        "@type": "ants/ExtractRegionFromImageByMask",
         "image_dimension": image_dimension,
         "input_image": input_image,
         "output_image": output_image,
@@ -115,14 +93,14 @@ def extract_region_from_image_by_mask_cargs(
     """
     cargs = []
     cargs.append("ExtractRegionFromImageByMask")
-    cargs.append(str(params.get("image_dimension")))
-    cargs.append(execution.input_file(params.get("input_image")))
-    cargs.append(execution.input_file(params.get("output_image")))
-    cargs.append(execution.input_file(params.get("label_mask_image")))
-    if params.get("label") is not None:
-        cargs.append(str(params.get("label")))
-    if params.get("pad_radius") is not None:
-        cargs.append(str(params.get("pad_radius")))
+    cargs.append(str(params.get("image_dimension", None)))
+    cargs.append(execution.input_file(params.get("input_image", None)))
+    cargs.append(execution.input_file(params.get("output_image", None)))
+    cargs.append(execution.input_file(params.get("label_mask_image", None)))
+    if params.get("label", None) is not None:
+        cargs.append(str(params.get("label", None)))
+    if params.get("pad_radius", None) is not None:
+        cargs.append(str(params.get("pad_radius", None)))
     return cargs
 
 
@@ -220,7 +198,6 @@ def extract_region_from_image_by_mask(
 __all__ = [
     "EXTRACT_REGION_FROM_IMAGE_BY_MASK_METADATA",
     "ExtractRegionFromImageByMaskOutputs",
-    "ExtractRegionFromImageByMaskParameters",
     "extract_region_from_image_by_mask",
     "extract_region_from_image_by_mask_execute",
     "extract_region_from_image_by_mask_params",

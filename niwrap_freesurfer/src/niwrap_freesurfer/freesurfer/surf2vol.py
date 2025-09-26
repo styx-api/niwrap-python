@@ -14,7 +14,27 @@ SURF2VOL_METADATA = Metadata(
 
 
 Surf2volParameters = typing.TypedDict('Surf2volParameters', {
-    "@type": typing.Literal["freesurfer.surf2vol"],
+    "@type": typing.NotRequired[typing.Literal["freesurfer/surf2vol"]],
+    "fixed_surface": InputPathType,
+    "moving_surface": InputPathType,
+    "fixed_mri": InputPathType,
+    "moving_mri": InputPathType,
+    "output_file": typing.NotRequired[str | None],
+    "output_field": typing.NotRequired[str | None],
+    "output_affine": typing.NotRequired[str | None],
+    "output_surf": typing.NotRequired[str | None],
+    "output_surf_affine": typing.NotRequired[str | None],
+    "output_mesh": typing.NotRequired[str | None],
+    "spacing_x": typing.NotRequired[float | None],
+    "spacing_y": typing.NotRequired[float | None],
+    "spacing_z": typing.NotRequired[float | None],
+    "poisson_ratio": typing.NotRequired[float | None],
+    "dirty_factor": typing.NotRequired[float | None],
+    "debug_output": bool,
+    "cache_transform": typing.NotRequired[str | None],
+})
+Surf2volParametersTagged = typing.TypedDict('Surf2volParametersTagged', {
+    "@type": typing.Literal["freesurfer/surf2vol"],
     "fixed_surface": InputPathType,
     "moving_surface": InputPathType,
     "fixed_mri": InputPathType,
@@ -35,41 +55,9 @@ Surf2volParameters = typing.TypedDict('Surf2volParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "freesurfer.surf2vol": surf2vol_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "freesurfer.surf2vol": surf2vol_outputs,
-    }.get(t)
-
-
 class Surf2volOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `surf2vol(...)`.
+    Output object returned when calling `Surf2volParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -97,7 +85,7 @@ def surf2vol_params(
     dirty_factor: float | None = None,
     debug_output: bool = False,
     cache_transform: str | None = None,
-) -> Surf2volParameters:
+) -> Surf2volParametersTagged:
     """
     Build parameters.
     
@@ -127,7 +115,7 @@ def surf2vol_params(
         Parameter dictionary
     """
     params = {
-        "@type": "freesurfer.surf2vol",
+        "@type": "freesurfer/surf2vol",
         "fixed_surface": fixed_surface,
         "moving_surface": moving_surface,
         "fixed_mri": fixed_mri,
@@ -178,81 +166,81 @@ def surf2vol_cargs(
     cargs.append("surf2vol")
     cargs.extend([
         "-fixed_surf",
-        execution.input_file(params.get("fixed_surface"))
+        execution.input_file(params.get("fixed_surface", None))
     ])
     cargs.extend([
         "-moving_surf",
-        execution.input_file(params.get("moving_surface"))
+        execution.input_file(params.get("moving_surface", None))
     ])
     cargs.extend([
         "-fixed_mri",
-        execution.input_file(params.get("fixed_mri"))
+        execution.input_file(params.get("fixed_mri", None))
     ])
     cargs.extend([
         "-moving_mri",
-        execution.input_file(params.get("moving_mri"))
+        execution.input_file(params.get("moving_mri", None))
     ])
-    if params.get("output_file") is not None:
+    if params.get("output_file", None) is not None:
         cargs.extend([
             "-out",
-            params.get("output_file")
+            params.get("output_file", None)
         ])
-    if params.get("output_field") is not None:
+    if params.get("output_field", None) is not None:
         cargs.extend([
             "-out_field",
-            params.get("output_field")
+            params.get("output_field", None)
         ])
-    if params.get("output_affine") is not None:
+    if params.get("output_affine", None) is not None:
         cargs.extend([
             "-out_affine",
-            params.get("output_affine")
+            params.get("output_affine", None)
         ])
-    if params.get("output_surf") is not None:
+    if params.get("output_surf", None) is not None:
         cargs.extend([
             "-out_surf",
-            params.get("output_surf")
+            params.get("output_surf", None)
         ])
-    if params.get("output_surf_affine") is not None:
+    if params.get("output_surf_affine", None) is not None:
         cargs.extend([
             "-out_surf_affine",
-            params.get("output_surf_affine")
+            params.get("output_surf_affine", None)
         ])
-    if params.get("output_mesh") is not None:
+    if params.get("output_mesh", None) is not None:
         cargs.extend([
             "-out_mesh",
-            params.get("output_mesh")
+            params.get("output_mesh", None)
         ])
-    if params.get("spacing_x") is not None:
+    if params.get("spacing_x", None) is not None:
         cargs.extend([
             "-spacing_x",
-            str(params.get("spacing_x"))
+            str(params.get("spacing_x", None))
         ])
-    if params.get("spacing_y") is not None:
+    if params.get("spacing_y", None) is not None:
         cargs.extend([
             "-spacing_y",
-            str(params.get("spacing_y"))
+            str(params.get("spacing_y", None))
         ])
-    if params.get("spacing_z") is not None:
+    if params.get("spacing_z", None) is not None:
         cargs.extend([
             "-spacing_z",
-            str(params.get("spacing_z"))
+            str(params.get("spacing_z", None))
         ])
-    if params.get("poisson_ratio") is not None:
+    if params.get("poisson_ratio", None) is not None:
         cargs.extend([
             "-poisson",
-            str(params.get("poisson_ratio"))
+            str(params.get("poisson_ratio", None))
         ])
-    if params.get("dirty_factor") is not None:
+    if params.get("dirty_factor", None) is not None:
         cargs.extend([
             "-dirty",
-            str(params.get("dirty_factor"))
+            str(params.get("dirty_factor", None))
         ])
-    if params.get("debug_output"):
+    if params.get("debug_output", False):
         cargs.append("-dbg_output")
-    if params.get("cache_transform") is not None:
+    if params.get("cache_transform", None) is not None:
         cargs.extend([
             "-cache_transform",
-            params.get("cache_transform")
+            params.get("cache_transform", None)
         ])
     return cargs
 
@@ -272,8 +260,8 @@ def surf2vol_outputs(
     """
     ret = Surf2volOutputs(
         root=execution.output_file("."),
-        output_file=execution.output_file(params.get("output_file")) if (params.get("output_file") is not None) else None,
-        output_field=execution.output_file(params.get("output_field")) if (params.get("output_field") is not None) else None,
+        output_file=execution.output_file(params.get("output_file", None)) if (params.get("output_file") is not None) else None,
+        output_field=execution.output_file(params.get("output_field", None)) if (params.get("output_field") is not None) else None,
     )
     return ret
 
@@ -386,7 +374,6 @@ def surf2vol(
 __all__ = [
     "SURF2VOL_METADATA",
     "Surf2volOutputs",
-    "Surf2volParameters",
     "surf2vol",
     "surf2vol_execute",
     "surf2vol_params",

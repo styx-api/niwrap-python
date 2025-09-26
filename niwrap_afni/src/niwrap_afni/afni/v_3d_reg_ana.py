@@ -14,7 +14,25 @@ V_3D_REG_ANA_METADATA = Metadata(
 
 
 V3dRegAnaParameters = typing.TypedDict('V3dRegAnaParameters', {
-    "@type": typing.Literal["afni.3dRegAna"],
+    "@type": typing.NotRequired[typing.Literal["afni/3dRegAna"]],
+    "rows": float,
+    "cols": float,
+    "xydata": list[str],
+    "model": str,
+    "diskspace": bool,
+    "workmem": typing.NotRequired[float | None],
+    "rmsmin": typing.NotRequired[float | None],
+    "fdisp": typing.NotRequired[float | None],
+    "flof": typing.NotRequired[float | None],
+    "fcoef": typing.NotRequired[list[str] | None],
+    "rcoef": typing.NotRequired[list[str] | None],
+    "tcoef": typing.NotRequired[list[str] | None],
+    "bucket": typing.NotRequired[str | None],
+    "brick": typing.NotRequired[list[str] | None],
+    "datum": typing.NotRequired[str | None],
+})
+V3dRegAnaParametersTagged = typing.TypedDict('V3dRegAnaParametersTagged', {
+    "@type": typing.Literal["afni/3dRegAna"],
     "rows": float,
     "cols": float,
     "xydata": list[str],
@@ -33,41 +51,9 @@ V3dRegAnaParameters = typing.TypedDict('V3dRegAnaParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "afni.3dRegAna": v_3d_reg_ana_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "afni.3dRegAna": v_3d_reg_ana_outputs,
-    }.get(t)
-
-
 class V3dRegAnaOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `v_3d_reg_ana(...)`.
+    Output object returned when calling `V3dRegAnaParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -99,7 +85,7 @@ def v_3d_reg_ana_params(
     bucket: str | None = None,
     brick: list[str] | None = None,
     datum: str | None = None,
-) -> V3dRegAnaParameters:
+) -> V3dRegAnaParametersTagged:
     """
     Build parameters.
     
@@ -130,7 +116,7 @@ def v_3d_reg_ana_params(
         Parameter dictionary
     """
     params = {
-        "@type": "afni.3dRegAna",
+        "@type": "afni/3dRegAna",
         "rows": rows,
         "cols": cols,
         "xydata": xydata,
@@ -177,71 +163,71 @@ def v_3d_reg_ana_cargs(
     cargs.append("3dRegAna")
     cargs.extend([
         "-rows",
-        str(params.get("rows"))
+        str(params.get("rows", None))
     ])
     cargs.extend([
         "-cols",
-        str(params.get("cols"))
+        str(params.get("cols", None))
     ])
     cargs.extend([
         "-xydata",
-        *params.get("xydata")
+        *params.get("xydata", None)
     ])
     cargs.extend([
         "-model",
-        params.get("model")
+        params.get("model", None)
     ])
-    if params.get("diskspace"):
+    if params.get("diskspace", False):
         cargs.append("-diskspace")
-    if params.get("workmem") is not None:
+    if params.get("workmem", None) is not None:
         cargs.extend([
             "-workmem",
-            str(params.get("workmem"))
+            str(params.get("workmem", None))
         ])
-    if params.get("rmsmin") is not None:
+    if params.get("rmsmin", None) is not None:
         cargs.extend([
             "-rmsmin",
-            str(params.get("rmsmin"))
+            str(params.get("rmsmin", None))
         ])
-    if params.get("fdisp") is not None:
+    if params.get("fdisp", None) is not None:
         cargs.extend([
             "-fdisp",
-            str(params.get("fdisp"))
+            str(params.get("fdisp", None))
         ])
-    if params.get("flof") is not None:
+    if params.get("flof", None) is not None:
         cargs.extend([
             "-flof",
-            str(params.get("flof"))
+            str(params.get("flof", None))
         ])
-    if params.get("fcoef") is not None:
+    if params.get("fcoef", None) is not None:
         cargs.extend([
             "-fcoef",
-            *params.get("fcoef")
+            *params.get("fcoef", None)
         ])
-    if params.get("rcoef") is not None:
+    if params.get("rcoef", None) is not None:
         cargs.extend([
             "-rcoef",
-            *params.get("rcoef")
+            *params.get("rcoef", None)
         ])
-    if params.get("tcoef") is not None:
+    if params.get("tcoef", None) is not None:
         cargs.extend([
             "-tcoef",
-            *params.get("tcoef")
+            *params.get("tcoef", None)
         ])
-    if params.get("bucket") is not None:
+    if params.get("bucket", None) is not None:
         cargs.extend([
             "-bucket",
-            params.get("bucket")
+            params.get("bucket", None)
         ])
-    if params.get("brick") is not None:
+    if params.get("brick", None) is not None:
         cargs.extend([
             "-brick",
-            *params.get("brick")
+            *params.get("brick", None)
         ])
-    if params.get("datum") is not None:
+    if params.get("datum", None) is not None:
         cargs.extend([
             "-datum",
-            params.get("datum")
+            params.get("datum", None)
         ])
     return cargs
 
@@ -374,7 +360,6 @@ def v_3d_reg_ana(
 
 __all__ = [
     "V3dRegAnaOutputs",
-    "V3dRegAnaParameters",
     "V_3D_REG_ANA_METADATA",
     "v_3d_reg_ana",
     "v_3d_reg_ana_execute",

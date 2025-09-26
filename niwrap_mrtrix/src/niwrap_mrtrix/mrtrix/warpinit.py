@@ -14,14 +14,32 @@ WARPINIT_METADATA = Metadata(
 
 
 WarpinitConfigParameters = typing.TypedDict('WarpinitConfigParameters', {
-    "@type": typing.Literal["mrtrix.warpinit.config"],
+    "@type": typing.NotRequired[typing.Literal["config"]],
+    "key": str,
+    "value": str,
+})
+WarpinitConfigParametersTagged = typing.TypedDict('WarpinitConfigParametersTagged', {
+    "@type": typing.Literal["config"],
     "key": str,
     "value": str,
 })
 
 
 WarpinitParameters = typing.TypedDict('WarpinitParameters', {
-    "@type": typing.Literal["mrtrix.warpinit"],
+    "@type": typing.NotRequired[typing.Literal["mrtrix/warpinit"]],
+    "info": bool,
+    "quiet": bool,
+    "debug": bool,
+    "force": bool,
+    "nthreads": typing.NotRequired[int | None],
+    "config": typing.NotRequired[list[WarpinitConfigParameters] | None],
+    "help": bool,
+    "version": bool,
+    "template": InputPathType,
+    "warp": str,
+})
+WarpinitParametersTagged = typing.TypedDict('WarpinitParametersTagged', {
+    "@type": typing.Literal["mrtrix/warpinit"],
     "info": bool,
     "quiet": bool,
     "debug": bool,
@@ -35,43 +53,10 @@ WarpinitParameters = typing.TypedDict('WarpinitParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "mrtrix.warpinit": warpinit_cargs,
-        "mrtrix.warpinit.config": warpinit_config_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "mrtrix.warpinit": warpinit_outputs,
-    }.get(t)
-
-
 def warpinit_config_params(
     key: str,
     value: str,
-) -> WarpinitConfigParameters:
+) -> WarpinitConfigParametersTagged:
     """
     Build parameters.
     
@@ -82,7 +67,7 @@ def warpinit_config_params(
         Parameter dictionary
     """
     params = {
-        "@type": "mrtrix.warpinit.config",
+        "@type": "config",
         "key": key,
         "value": value,
     }
@@ -104,14 +89,14 @@ def warpinit_config_cargs(
     """
     cargs = []
     cargs.append("-config")
-    cargs.append(params.get("key"))
-    cargs.append(params.get("value"))
+    cargs.append(params.get("key", None))
+    cargs.append(params.get("value", None))
     return cargs
 
 
 class WarpinitOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `warpinit(...)`.
+    Output object returned when calling `WarpinitParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -130,7 +115,7 @@ def warpinit_params(
     config: list[WarpinitConfigParameters] | None = None,
     help_: bool = False,
     version: bool = False,
-) -> WarpinitParameters:
+) -> WarpinitParametersTagged:
     """
     Build parameters.
     
@@ -153,7 +138,7 @@ def warpinit_params(
         Parameter dictionary
     """
     params = {
-        "@type": "mrtrix.warpinit",
+        "@type": "mrtrix/warpinit",
         "info": info,
         "quiet": quiet,
         "debug": debug,
@@ -185,27 +170,27 @@ def warpinit_cargs(
     """
     cargs = []
     cargs.append("warpinit")
-    if params.get("info"):
+    if params.get("info", False):
         cargs.append("-info")
-    if params.get("quiet"):
+    if params.get("quiet", False):
         cargs.append("-quiet")
-    if params.get("debug"):
+    if params.get("debug", False):
         cargs.append("-debug")
-    if params.get("force"):
+    if params.get("force", False):
         cargs.append("-force")
-    if params.get("nthreads") is not None:
+    if params.get("nthreads", None) is not None:
         cargs.extend([
             "-nthreads",
-            str(params.get("nthreads"))
+            str(params.get("nthreads", None))
         ])
-    if params.get("config") is not None:
-        cargs.extend([a for c in [dyn_cargs(s["@type"])(s, execution) for s in params.get("config")] for a in c])
-    if params.get("help"):
+    if params.get("config", None) is not None:
+        cargs.extend([a for c in [warpinit_config_cargs(s, execution) for s in params.get("config", None)] for a in c])
+    if params.get("help", False):
         cargs.append("-help")
-    if params.get("version"):
+    if params.get("version", False):
         cargs.append("-version")
-    cargs.append(execution.input_file(params.get("template")))
-    cargs.append(params.get("warp"))
+    cargs.append(execution.input_file(params.get("template", None)))
+    cargs.append(params.get("warp", None))
     return cargs
 
 
@@ -224,7 +209,7 @@ def warpinit_outputs(
     """
     ret = WarpinitOutputs(
         root=execution.output_file("."),
-        warp=execution.output_file(params.get("warp")),
+        warp=execution.output_file(params.get("warp", None)),
     )
     return ret
 
@@ -351,9 +336,7 @@ def warpinit(
 
 __all__ = [
     "WARPINIT_METADATA",
-    "WarpinitConfigParameters",
     "WarpinitOutputs",
-    "WarpinitParameters",
     "warpinit",
     "warpinit_config_params",
     "warpinit_execute",

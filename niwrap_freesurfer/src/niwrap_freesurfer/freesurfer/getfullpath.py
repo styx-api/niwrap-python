@@ -14,45 +14,18 @@ GETFULLPATH_METADATA = Metadata(
 
 
 GetfullpathParameters = typing.TypedDict('GetfullpathParameters', {
-    "@type": typing.Literal["freesurfer.getfullpath"],
+    "@type": typing.NotRequired[typing.Literal["freesurfer/getfullpath"]],
+    "filename": str,
+})
+GetfullpathParametersTagged = typing.TypedDict('GetfullpathParametersTagged', {
+    "@type": typing.Literal["freesurfer/getfullpath"],
     "filename": str,
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "freesurfer.getfullpath": getfullpath_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-    }.get(t)
-
-
 class GetfullpathOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `getfullpath(...)`.
+    Output object returned when calling `GetfullpathParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -60,7 +33,7 @@ class GetfullpathOutputs(typing.NamedTuple):
 
 def getfullpath_params(
     filename: str,
-) -> GetfullpathParameters:
+) -> GetfullpathParametersTagged:
     """
     Build parameters.
     
@@ -70,7 +43,7 @@ def getfullpath_params(
         Parameter dictionary
     """
     params = {
-        "@type": "freesurfer.getfullpath",
+        "@type": "freesurfer/getfullpath",
         "filename": filename,
     }
     return params
@@ -91,7 +64,7 @@ def getfullpath_cargs(
     """
     cargs = []
     cargs.append("getfullpath")
-    cargs.append(params.get("filename"))
+    cargs.append(params.get("filename", None))
     return cargs
 
 
@@ -170,7 +143,6 @@ def getfullpath(
 __all__ = [
     "GETFULLPATH_METADATA",
     "GetfullpathOutputs",
-    "GetfullpathParameters",
     "getfullpath",
     "getfullpath_execute",
     "getfullpath_params",

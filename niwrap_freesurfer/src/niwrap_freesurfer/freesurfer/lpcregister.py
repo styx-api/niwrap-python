@@ -14,7 +14,23 @@ LPCREGISTER_METADATA = Metadata(
 
 
 LpcregisterParameters = typing.TypedDict('LpcregisterParameters', {
-    "@type": typing.Literal["freesurfer.lpcregister"],
+    "@type": typing.NotRequired[typing.Literal["freesurfer/lpcregister"]],
+    "subject_id": str,
+    "mov_volume": str,
+    "reg_file": str,
+    "dof_9": bool,
+    "dof_12": bool,
+    "frame_number": typing.NotRequired[float | None],
+    "mid_frame": bool,
+    "fsvol": typing.NotRequired[str | None],
+    "output_volume": typing.NotRequired[str | None],
+    "tmp_dir": typing.NotRequired[str | None],
+    "no_cleanup": bool,
+    "version": bool,
+    "help": bool,
+})
+LpcregisterParametersTagged = typing.TypedDict('LpcregisterParametersTagged', {
+    "@type": typing.Literal["freesurfer/lpcregister"],
     "subject_id": str,
     "mov_volume": str,
     "reg_file": str,
@@ -31,41 +47,9 @@ LpcregisterParameters = typing.TypedDict('LpcregisterParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "freesurfer.lpcregister": lpcregister_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "freesurfer.lpcregister": lpcregister_outputs,
-    }.get(t)
-
-
 class LpcregisterOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `lpcregister(...)`.
+    Output object returned when calling `LpcregisterParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -89,7 +73,7 @@ def lpcregister_params(
     no_cleanup: bool = False,
     version: bool = False,
     help_: bool = False,
-) -> LpcregisterParameters:
+) -> LpcregisterParametersTagged:
     """
     Build parameters.
     
@@ -118,7 +102,7 @@ def lpcregister_params(
         Parameter dictionary
     """
     params = {
-        "@type": "freesurfer.lpcregister",
+        "@type": "freesurfer/lpcregister",
         "subject_id": subject_id,
         "mov_volume": mov_volume,
         "reg_file": reg_file,
@@ -157,47 +141,47 @@ def lpcregister_cargs(
     cargs.append("lpcregister")
     cargs.extend([
         "--s",
-        params.get("subject_id")
+        params.get("subject_id", None)
     ])
     cargs.extend([
         "--mov",
-        params.get("mov_volume")
+        params.get("mov_volume", None)
     ])
     cargs.extend([
         "--reg",
-        params.get("reg_file")
+        params.get("reg_file", None)
     ])
-    if params.get("dof_9"):
+    if params.get("dof_9", False):
         cargs.append("--9")
-    if params.get("dof_12"):
+    if params.get("dof_12", False):
         cargs.append("--12")
-    if params.get("frame_number") is not None:
+    if params.get("frame_number", None) is not None:
         cargs.extend([
             "--frame",
-            str(params.get("frame_number"))
+            str(params.get("frame_number", None))
         ])
-    if params.get("mid_frame"):
+    if params.get("mid_frame", False):
         cargs.append("--mid-frame")
-    if params.get("fsvol") is not None:
+    if params.get("fsvol", None) is not None:
         cargs.extend([
             "--fsvol",
-            params.get("fsvol")
+            params.get("fsvol", None)
         ])
-    if params.get("output_volume") is not None:
+    if params.get("output_volume", None) is not None:
         cargs.extend([
             "--o",
-            params.get("output_volume")
+            params.get("output_volume", None)
         ])
-    if params.get("tmp_dir") is not None:
+    if params.get("tmp_dir", None) is not None:
         cargs.extend([
             "--tmp",
-            params.get("tmp_dir")
+            params.get("tmp_dir", None)
         ])
-    if params.get("no_cleanup"):
+    if params.get("no_cleanup", False):
         cargs.append("--nocleanup")
-    if params.get("version"):
+    if params.get("version", False):
         cargs.append("--version")
-    if params.get("help"):
+    if params.get("help", False):
         cargs.append("--help")
     return cargs
 
@@ -218,7 +202,7 @@ def lpcregister_outputs(
     ret = LpcregisterOutputs(
         root=execution.output_file("."),
         output_reg_file=execution.output_file("register.dat"),
-        resampled_volume=execution.output_file(params.get("output_volume")) if (params.get("output_volume") is not None) else None,
+        resampled_volume=execution.output_file(params.get("output_volume", None)) if (params.get("output_volume") is not None) else None,
     )
     return ret
 
@@ -326,7 +310,6 @@ def lpcregister(
 __all__ = [
     "LPCREGISTER_METADATA",
     "LpcregisterOutputs",
-    "LpcregisterParameters",
     "lpcregister",
     "lpcregister_execute",
     "lpcregister_params",

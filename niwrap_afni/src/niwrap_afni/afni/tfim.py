@@ -14,7 +14,17 @@ TFIM_METADATA = Metadata(
 
 
 TfimParameters = typing.TypedDict('TfimParameters', {
-    "@type": typing.Literal["afni.tfim"],
+    "@type": typing.NotRequired[typing.Literal["afni/tfim"]],
+    "prefix": typing.NotRequired[str | None],
+    "pthresh": typing.NotRequired[float | None],
+    "eqcorr": typing.NotRequired[float | None],
+    "paired": bool,
+    "set1_images": list[InputPathType],
+    "set2_images": list[InputPathType],
+    "base1_value": typing.NotRequired[float | None],
+})
+TfimParametersTagged = typing.TypedDict('TfimParametersTagged', {
+    "@type": typing.Literal["afni/tfim"],
     "prefix": typing.NotRequired[str | None],
     "pthresh": typing.NotRequired[float | None],
     "eqcorr": typing.NotRequired[float | None],
@@ -25,41 +35,9 @@ TfimParameters = typing.TypedDict('TfimParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "afni.tfim": tfim_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "afni.tfim": tfim_outputs,
-    }.get(t)
-
-
 class TfimOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `tfim(...)`.
+    Output object returned when calling `TfimParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -79,7 +57,7 @@ def tfim_params(
     eqcorr: float | None = None,
     paired: bool = False,
     base1_value: float | None = None,
-) -> TfimParameters:
+) -> TfimParametersTagged:
     """
     Build parameters.
     
@@ -100,7 +78,7 @@ def tfim_params(
         Parameter dictionary
     """
     params = {
-        "@type": "afni.tfim",
+        "@type": "afni/tfim",
         "paired": paired,
         "set1_images": set1_images,
         "set2_images": set2_images,
@@ -131,35 +109,35 @@ def tfim_cargs(
     """
     cargs = []
     cargs.append("tfim")
-    if params.get("prefix") is not None:
+    if params.get("prefix", None) is not None:
         cargs.extend([
             "-prefix",
-            params.get("prefix")
+            params.get("prefix", None)
         ])
-    if params.get("pthresh") is not None:
+    if params.get("pthresh", None) is not None:
         cargs.extend([
             "-pthresh",
-            str(params.get("pthresh"))
+            str(params.get("pthresh", None))
         ])
-    if params.get("eqcorr") is not None:
+    if params.get("eqcorr", None) is not None:
         cargs.extend([
             "-eqcorr",
-            str(params.get("eqcorr"))
+            str(params.get("eqcorr", None))
         ])
-    if params.get("paired"):
+    if params.get("paired", False):
         cargs.append("-paired")
     cargs.extend([
         "-set1",
-        *[execution.input_file(f) for f in params.get("set1_images")]
+        *[execution.input_file(f) for f in params.get("set1_images", None)]
     ])
     cargs.extend([
         "-set2",
-        *[execution.input_file(f) for f in params.get("set2_images")]
+        *[execution.input_file(f) for f in params.get("set2_images", None)]
     ])
-    if params.get("base1_value") is not None:
+    if params.get("base1_value", None) is not None:
         cargs.extend([
             "-base1",
-            str(params.get("base1_value"))
+            str(params.get("base1_value", None))
         ])
     return cargs
 
@@ -179,9 +157,9 @@ def tfim_outputs(
     """
     ret = TfimOutputs(
         root=execution.output_file("."),
-        diff_output=execution.output_file(params.get("prefix") + ".diff") if (params.get("prefix") is not None) else None,
-        tspm_output=execution.output_file(params.get("prefix") + ".tspm") if (params.get("prefix") is not None) else None,
-        corr_output=execution.output_file(params.get("prefix") + ".corr") if (params.get("prefix") is not None) else None,
+        diff_output=execution.output_file(params.get("prefix", None) + ".diff") if (params.get("prefix") is not None) else None,
+        tspm_output=execution.output_file(params.get("prefix", None) + ".tspm") if (params.get("prefix") is not None) else None,
+        corr_output=execution.output_file(params.get("prefix", None) + ".corr") if (params.get("prefix") is not None) else None,
     )
     return ret
 
@@ -265,7 +243,6 @@ def tfim(
 __all__ = [
     "TFIM_METADATA",
     "TfimOutputs",
-    "TfimParameters",
     "tfim",
     "tfim_execute",
     "tfim_params",

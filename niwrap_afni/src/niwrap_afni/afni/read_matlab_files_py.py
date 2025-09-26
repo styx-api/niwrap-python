@@ -14,7 +14,16 @@ READ_MATLAB_FILES_PY_METADATA = Metadata(
 
 
 ReadMatlabFilesPyParameters = typing.TypedDict('ReadMatlabFilesPyParameters', {
-    "@type": typing.Literal["afni.read_matlab_files.py"],
+    "@type": typing.NotRequired[typing.Literal["afni/read_matlab_files.py"]],
+    "infiles": list[str],
+    "prefix": typing.NotRequired[str | None],
+    "overwrite": bool,
+    "help": bool,
+    "history": bool,
+    "version": bool,
+})
+ReadMatlabFilesPyParametersTagged = typing.TypedDict('ReadMatlabFilesPyParametersTagged', {
+    "@type": typing.Literal["afni/read_matlab_files.py"],
     "infiles": list[str],
     "prefix": typing.NotRequired[str | None],
     "overwrite": bool,
@@ -24,41 +33,9 @@ ReadMatlabFilesPyParameters = typing.TypedDict('ReadMatlabFilesPyParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "afni.read_matlab_files.py": read_matlab_files_py_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "afni.read_matlab_files.py": read_matlab_files_py_outputs,
-    }.get(t)
-
-
 class ReadMatlabFilesPyOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `read_matlab_files_py(...)`.
+    Output object returned when calling `ReadMatlabFilesPyParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -73,7 +50,7 @@ def read_matlab_files_py_params(
     help_: bool = False,
     history: bool = False,
     version: bool = False,
-) -> ReadMatlabFilesPyParameters:
+) -> ReadMatlabFilesPyParametersTagged:
     """
     Build parameters.
     
@@ -88,7 +65,7 @@ def read_matlab_files_py_params(
         Parameter dictionary
     """
     params = {
-        "@type": "afni.read_matlab_files.py",
+        "@type": "afni/read_matlab_files.py",
         "infiles": infiles,
         "overwrite": overwrite,
         "help": help_,
@@ -115,19 +92,19 @@ def read_matlab_files_py_cargs(
     """
     cargs = []
     cargs.append("read_matlab_files.py")
-    cargs.extend(params.get("infiles"))
-    if params.get("prefix") is not None:
+    cargs.extend(params.get("infiles", None))
+    if params.get("prefix", None) is not None:
         cargs.extend([
             "-prefix",
-            params.get("prefix")
+            params.get("prefix", None)
         ])
-    if params.get("overwrite"):
+    if params.get("overwrite", False):
         cargs.append("-overwrite")
-    if params.get("help"):
+    if params.get("help", False):
         cargs.append("-help")
-    if params.get("history"):
+    if params.get("history", False):
         cargs.append("-hist")
-    if params.get("version"):
+    if params.get("version", False):
         cargs.append("-ver")
     return cargs
 
@@ -147,7 +124,7 @@ def read_matlab_files_py_outputs(
     """
     ret = ReadMatlabFilesPyOutputs(
         root=execution.output_file("."),
-        converted_1d_file=execution.output_file(params.get("prefix") + ".[INDEX].[KEY].1D") if (params.get("prefix") is not None) else None,
+        converted_1d_file=execution.output_file(params.get("prefix", None) + ".[INDEX].[KEY].1D") if (params.get("prefix") is not None) else None,
     )
     return ret
 
@@ -223,7 +200,6 @@ def read_matlab_files_py(
 __all__ = [
     "READ_MATLAB_FILES_PY_METADATA",
     "ReadMatlabFilesPyOutputs",
-    "ReadMatlabFilesPyParameters",
     "read_matlab_files_py",
     "read_matlab_files_py_execute",
     "read_matlab_files_py_params",

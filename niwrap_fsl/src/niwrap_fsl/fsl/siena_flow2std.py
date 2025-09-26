@@ -14,7 +14,14 @@ SIENA_FLOW2STD_METADATA = Metadata(
 
 
 SienaFlow2stdParameters = typing.TypedDict('SienaFlow2stdParameters', {
-    "@type": typing.Literal["fsl.siena_flow2std"],
+    "@type": typing.NotRequired[typing.Literal["fsl/siena_flow2std"]],
+    "fileroot1": str,
+    "fileroot2": str,
+    "sigma": typing.NotRequired[float | None],
+    "debug_flag": bool,
+})
+SienaFlow2stdParametersTagged = typing.TypedDict('SienaFlow2stdParametersTagged', {
+    "@type": typing.Literal["fsl/siena_flow2std"],
     "fileroot1": str,
     "fileroot2": str,
     "sigma": typing.NotRequired[float | None],
@@ -22,40 +29,9 @@ SienaFlow2stdParameters = typing.TypedDict('SienaFlow2stdParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "fsl.siena_flow2std": siena_flow2std_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-    }.get(t)
-
-
 class SienaFlow2stdOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `siena_flow2std(...)`.
+    Output object returned when calling `SienaFlow2stdParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -66,7 +42,7 @@ def siena_flow2std_params(
     fileroot2: str,
     sigma: float | None = None,
     debug_flag: bool = False,
-) -> SienaFlow2stdParameters:
+) -> SienaFlow2stdParametersTagged:
     """
     Build parameters.
     
@@ -80,7 +56,7 @@ def siena_flow2std_params(
         Parameter dictionary
     """
     params = {
-        "@type": "fsl.siena_flow2std",
+        "@type": "fsl/siena_flow2std",
         "fileroot1": fileroot1,
         "fileroot2": fileroot2,
         "debug_flag": debug_flag,
@@ -105,14 +81,14 @@ def siena_flow2std_cargs(
     """
     cargs = []
     cargs.append("siena_flow2std")
-    cargs.append(params.get("fileroot1"))
-    cargs.append(params.get("fileroot2"))
-    if params.get("sigma") is not None:
+    cargs.append(params.get("fileroot1", None))
+    cargs.append(params.get("fileroot2", None))
+    if params.get("sigma", None) is not None:
         cargs.extend([
             "-s",
-            str(params.get("sigma"))
+            str(params.get("sigma", None))
         ])
-    if params.get("debug_flag"):
+    if params.get("debug_flag", False):
         cargs.append("-d")
     return cargs
 
@@ -202,7 +178,6 @@ def siena_flow2std(
 __all__ = [
     "SIENA_FLOW2STD_METADATA",
     "SienaFlow2stdOutputs",
-    "SienaFlow2stdParameters",
     "siena_flow2std",
     "siena_flow2std_execute",
     "siena_flow2std_params",

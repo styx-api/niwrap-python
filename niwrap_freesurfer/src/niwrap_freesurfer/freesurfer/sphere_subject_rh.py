@@ -14,45 +14,18 @@ SPHERE_SUBJECT_RH_METADATA = Metadata(
 
 
 SphereSubjectRhParameters = typing.TypedDict('SphereSubjectRhParameters', {
-    "@type": typing.Literal["freesurfer.sphere_subject-rh"],
+    "@type": typing.NotRequired[typing.Literal["freesurfer/sphere_subject-rh"]],
+    "license_file": InputPathType,
+})
+SphereSubjectRhParametersTagged = typing.TypedDict('SphereSubjectRhParametersTagged', {
+    "@type": typing.Literal["freesurfer/sphere_subject-rh"],
     "license_file": InputPathType,
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "freesurfer.sphere_subject-rh": sphere_subject_rh_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-    }.get(t)
-
-
 class SphereSubjectRhOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `sphere_subject_rh(...)`.
+    Output object returned when calling `SphereSubjectRhParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -60,7 +33,7 @@ class SphereSubjectRhOutputs(typing.NamedTuple):
 
 def sphere_subject_rh_params(
     license_file: InputPathType,
-) -> SphereSubjectRhParameters:
+) -> SphereSubjectRhParametersTagged:
     """
     Build parameters.
     
@@ -71,7 +44,7 @@ def sphere_subject_rh_params(
         Parameter dictionary
     """
     params = {
-        "@type": "freesurfer.sphere_subject-rh",
+        "@type": "freesurfer/sphere_subject-rh",
         "license_file": license_file,
     }
     return params
@@ -94,7 +67,7 @@ def sphere_subject_rh_cargs(
     cargs.append("sphere_subject-rh")
     cargs.extend([
         "-rh",
-        execution.input_file(params.get("license_file"))
+        execution.input_file(params.get("license_file", None))
     ])
     return cargs
 
@@ -175,7 +148,6 @@ def sphere_subject_rh(
 __all__ = [
     "SPHERE_SUBJECT_RH_METADATA",
     "SphereSubjectRhOutputs",
-    "SphereSubjectRhParameters",
     "sphere_subject_rh",
     "sphere_subject_rh_execute",
     "sphere_subject_rh_params",

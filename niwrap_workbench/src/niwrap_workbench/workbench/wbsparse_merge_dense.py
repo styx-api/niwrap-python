@@ -14,54 +14,32 @@ WBSPARSE_MERGE_DENSE_METADATA = Metadata(
 
 
 WbsparseMergeDenseWbsparseParameters = typing.TypedDict('WbsparseMergeDenseWbsparseParameters', {
-    "@type": typing.Literal["workbench.wbsparse-merge-dense.wbsparse"],
+    "@type": typing.NotRequired[typing.Literal["wbsparse"]],
+    "wbsparse_in": str,
+})
+WbsparseMergeDenseWbsparseParametersTagged = typing.TypedDict('WbsparseMergeDenseWbsparseParametersTagged', {
+    "@type": typing.Literal["wbsparse"],
     "wbsparse_in": str,
 })
 
 
 WbsparseMergeDenseParameters = typing.TypedDict('WbsparseMergeDenseParameters', {
-    "@type": typing.Literal["workbench.wbsparse-merge-dense"],
+    "@type": typing.NotRequired[typing.Literal["workbench/wbsparse-merge-dense"]],
+    "direction": str,
+    "wbsparse_out": str,
+    "wbsparse": typing.NotRequired[list[WbsparseMergeDenseWbsparseParameters] | None],
+})
+WbsparseMergeDenseParametersTagged = typing.TypedDict('WbsparseMergeDenseParametersTagged', {
+    "@type": typing.Literal["workbench/wbsparse-merge-dense"],
     "direction": str,
     "wbsparse_out": str,
     "wbsparse": typing.NotRequired[list[WbsparseMergeDenseWbsparseParameters] | None],
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "workbench.wbsparse-merge-dense": wbsparse_merge_dense_cargs,
-        "workbench.wbsparse-merge-dense.wbsparse": wbsparse_merge_dense_wbsparse_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-    }.get(t)
-
-
 def wbsparse_merge_dense_wbsparse_params(
     wbsparse_in: str,
-) -> WbsparseMergeDenseWbsparseParameters:
+) -> WbsparseMergeDenseWbsparseParametersTagged:
     """
     Build parameters.
     
@@ -71,7 +49,7 @@ def wbsparse_merge_dense_wbsparse_params(
         Parameter dictionary
     """
     params = {
-        "@type": "workbench.wbsparse-merge-dense.wbsparse",
+        "@type": "wbsparse",
         "wbsparse_in": wbsparse_in,
     }
     return params
@@ -92,13 +70,13 @@ def wbsparse_merge_dense_wbsparse_cargs(
     """
     cargs = []
     cargs.append("-wbsparse")
-    cargs.append(params.get("wbsparse_in"))
+    cargs.append(params.get("wbsparse_in", None))
     return cargs
 
 
 class WbsparseMergeDenseOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `wbsparse_merge_dense(...)`.
+    Output object returned when calling `WbsparseMergeDenseParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -108,7 +86,7 @@ def wbsparse_merge_dense_params(
     direction: str,
     wbsparse_out: str,
     wbsparse: list[WbsparseMergeDenseWbsparseParameters] | None = None,
-) -> WbsparseMergeDenseParameters:
+) -> WbsparseMergeDenseParametersTagged:
     """
     Build parameters.
     
@@ -120,7 +98,7 @@ def wbsparse_merge_dense_params(
         Parameter dictionary
     """
     params = {
-        "@type": "workbench.wbsparse-merge-dense",
+        "@type": "workbench/wbsparse-merge-dense",
         "direction": direction,
         "wbsparse_out": wbsparse_out,
     }
@@ -145,10 +123,10 @@ def wbsparse_merge_dense_cargs(
     cargs = []
     cargs.append("wb_command")
     cargs.append("-wbsparse-merge-dense")
-    cargs.append(params.get("direction"))
-    cargs.append(params.get("wbsparse_out"))
-    if params.get("wbsparse") is not None:
-        cargs.extend([a for c in [dyn_cargs(s["@type"])(s, execution) for s in params.get("wbsparse")] for a in c])
+    cargs.append(params.get("direction", None))
+    cargs.append(params.get("wbsparse_out", None))
+    if params.get("wbsparse", None) is not None:
+        cargs.extend([a for c in [wbsparse_merge_dense_wbsparse_cargs(s, execution) for s in params.get("wbsparse", None)] for a in c])
     return cargs
 
 
@@ -241,8 +219,6 @@ def wbsparse_merge_dense(
 __all__ = [
     "WBSPARSE_MERGE_DENSE_METADATA",
     "WbsparseMergeDenseOutputs",
-    "WbsparseMergeDenseParameters",
-    "WbsparseMergeDenseWbsparseParameters",
     "wbsparse_merge_dense",
     "wbsparse_merge_dense_execute",
     "wbsparse_merge_dense_params",

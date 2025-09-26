@@ -14,7 +14,16 @@ V_3D_TWOTO_COMPLEX_METADATA = Metadata(
 
 
 V3dTwotoComplexParameters = typing.TypedDict('V3dTwotoComplexParameters', {
-    "@type": typing.Literal["afni.3dTwotoComplex"],
+    "@type": typing.NotRequired[typing.Literal["afni/3dTwotoComplex"]],
+    "dataset1": InputPathType,
+    "dataset2": typing.NotRequired[InputPathType | None],
+    "prefix": typing.NotRequired[str | None],
+    "ri": bool,
+    "mp": bool,
+    "mask": typing.NotRequired[InputPathType | None],
+})
+V3dTwotoComplexParametersTagged = typing.TypedDict('V3dTwotoComplexParametersTagged', {
+    "@type": typing.Literal["afni/3dTwotoComplex"],
     "dataset1": InputPathType,
     "dataset2": typing.NotRequired[InputPathType | None],
     "prefix": typing.NotRequired[str | None],
@@ -24,41 +33,9 @@ V3dTwotoComplexParameters = typing.TypedDict('V3dTwotoComplexParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "afni.3dTwotoComplex": v_3d_twoto_complex_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "afni.3dTwotoComplex": v_3d_twoto_complex_outputs,
-    }.get(t)
-
-
 class V3dTwotoComplexOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `v_3d_twoto_complex(...)`.
+    Output object returned when calling `V3dTwotoComplexParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -75,7 +52,7 @@ def v_3d_twoto_complex_params(
     ri: bool = False,
     mp: bool = False,
     mask: InputPathType | None = None,
-) -> V3dTwotoComplexParameters:
+) -> V3dTwotoComplexParametersTagged:
     """
     Build parameters.
     
@@ -94,7 +71,7 @@ def v_3d_twoto_complex_params(
         Parameter dictionary
     """
     params = {
-        "@type": "afni.3dTwotoComplex",
+        "@type": "afni/3dTwotoComplex",
         "dataset1": dataset1,
         "ri": ri,
         "mp": mp,
@@ -123,22 +100,22 @@ def v_3d_twoto_complex_cargs(
     """
     cargs = []
     cargs.append("3dTwotoComplex")
-    cargs.append(execution.input_file(params.get("dataset1")))
-    if params.get("dataset2") is not None:
-        cargs.append(execution.input_file(params.get("dataset2")))
-    if params.get("prefix") is not None:
+    cargs.append(execution.input_file(params.get("dataset1", None)))
+    if params.get("dataset2", None) is not None:
+        cargs.append(execution.input_file(params.get("dataset2", None)))
+    if params.get("prefix", None) is not None:
         cargs.extend([
             "-prefix",
-            params.get("prefix")
+            params.get("prefix", None)
         ])
-    if params.get("ri"):
+    if params.get("ri", False):
         cargs.append("-RI")
-    if params.get("mp"):
+    if params.get("mp", False):
         cargs.append("-MP")
-    if params.get("mask") is not None:
+    if params.get("mask", None) is not None:
         cargs.extend([
             "-mask",
-            execution.input_file(params.get("mask"))
+            execution.input_file(params.get("mask", None))
         ])
     return cargs
 
@@ -158,8 +135,8 @@ def v_3d_twoto_complex_outputs(
     """
     ret = V3dTwotoComplexOutputs(
         root=execution.output_file("."),
-        out_brick=execution.output_file(params.get("prefix") + "+orig.BRIK") if (params.get("prefix") is not None) else None,
-        out_head=execution.output_file(params.get("prefix") + "+orig.HEAD") if (params.get("prefix") is not None) else None,
+        out_brick=execution.output_file(params.get("prefix", None) + "+orig.BRIK") if (params.get("prefix") is not None) else None,
+        out_head=execution.output_file(params.get("prefix", None) + "+orig.HEAD") if (params.get("prefix") is not None) else None,
     )
     return ret
 
@@ -238,7 +215,6 @@ def v_3d_twoto_complex(
 
 __all__ = [
     "V3dTwotoComplexOutputs",
-    "V3dTwotoComplexParameters",
     "V_3D_TWOTO_COMPLEX_METADATA",
     "v_3d_twoto_complex",
     "v_3d_twoto_complex_execute",

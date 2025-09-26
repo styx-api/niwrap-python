@@ -14,48 +14,22 @@ MAKE_HEMI_MASK_METADATA = Metadata(
 
 
 MakeHemiMaskParameters = typing.TypedDict('MakeHemiMaskParameters', {
-    "@type": typing.Literal["freesurfer.make_hemi_mask"],
+    "@type": typing.NotRequired[typing.Literal["freesurfer/make_hemi_mask"]],
+    "hemi": str,
+    "input_file": InputPathType,
+    "output_file": str,
+})
+MakeHemiMaskParametersTagged = typing.TypedDict('MakeHemiMaskParametersTagged', {
+    "@type": typing.Literal["freesurfer/make_hemi_mask"],
     "hemi": str,
     "input_file": InputPathType,
     "output_file": str,
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "freesurfer.make_hemi_mask": make_hemi_mask_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "freesurfer.make_hemi_mask": make_hemi_mask_outputs,
-    }.get(t)
-
-
 class MakeHemiMaskOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `make_hemi_mask(...)`.
+    Output object returned when calling `MakeHemiMaskParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -67,7 +41,7 @@ def make_hemi_mask_params(
     hemi: str,
     input_file: InputPathType,
     output_file: str,
-) -> MakeHemiMaskParameters:
+) -> MakeHemiMaskParametersTagged:
     """
     Build parameters.
     
@@ -80,7 +54,7 @@ def make_hemi_mask_params(
         Parameter dictionary
     """
     params = {
-        "@type": "freesurfer.make_hemi_mask",
+        "@type": "freesurfer/make_hemi_mask",
         "hemi": hemi,
         "input_file": input_file,
         "output_file": output_file,
@@ -103,9 +77,9 @@ def make_hemi_mask_cargs(
     """
     cargs = []
     cargs.append("make_hemi_mask")
-    cargs.append(params.get("hemi"))
-    cargs.append(execution.input_file(params.get("input_file")))
-    cargs.append(params.get("output_file"))
+    cargs.append(params.get("hemi", None))
+    cargs.append(execution.input_file(params.get("input_file", None)))
+    cargs.append(params.get("output_file", None))
     return cargs
 
 
@@ -124,7 +98,7 @@ def make_hemi_mask_outputs(
     """
     ret = MakeHemiMaskOutputs(
         root=execution.output_file("."),
-        outfile=execution.output_file(params.get("output_file")),
+        outfile=execution.output_file(params.get("output_file", None)),
     )
     return ret
 
@@ -194,7 +168,6 @@ def make_hemi_mask(
 __all__ = [
     "MAKE_HEMI_MASK_METADATA",
     "MakeHemiMaskOutputs",
-    "MakeHemiMaskParameters",
     "make_hemi_mask",
     "make_hemi_mask_execute",
     "make_hemi_mask_params",

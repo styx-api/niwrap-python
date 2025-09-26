@@ -14,7 +14,18 @@ V__SCALE_VOLUME_METADATA = Metadata(
 
 
 VScaleVolumeParameters = typing.TypedDict('VScaleVolumeParameters', {
-    "@type": typing.Literal["afni.@ScaleVolume"],
+    "@type": typing.NotRequired[typing.Literal["afni/@ScaleVolume"]],
+    "input_dset": InputPathType,
+    "prefix": str,
+    "val_clip": typing.NotRequired[list[float] | None],
+    "perc_clip": typing.NotRequired[list[float] | None],
+    "scale_by_mean": bool,
+    "scale_by_median": bool,
+    "norm": bool,
+    "mask": typing.NotRequired[InputPathType | None],
+})
+VScaleVolumeParametersTagged = typing.TypedDict('VScaleVolumeParametersTagged', {
+    "@type": typing.Literal["afni/@ScaleVolume"],
     "input_dset": InputPathType,
     "prefix": str,
     "val_clip": typing.NotRequired[list[float] | None],
@@ -26,41 +37,9 @@ VScaleVolumeParameters = typing.TypedDict('VScaleVolumeParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "afni.@ScaleVolume": v__scale_volume_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "afni.@ScaleVolume": v__scale_volume_outputs,
-    }.get(t)
-
-
 class VScaleVolumeOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `v__scale_volume(...)`.
+    Output object returned when calling `VScaleVolumeParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -77,7 +56,7 @@ def v__scale_volume_params(
     scale_by_median: bool = False,
     norm: bool = False,
     mask: InputPathType | None = None,
-) -> VScaleVolumeParameters:
+) -> VScaleVolumeParametersTagged:
     """
     Build parameters.
     
@@ -95,7 +74,7 @@ def v__scale_volume_params(
         Parameter dictionary
     """
     params = {
-        "@type": "afni.@ScaleVolume",
+        "@type": "afni/@ScaleVolume",
         "input_dset": input_dset,
         "prefix": prefix,
         "scale_by_mean": scale_by_mean,
@@ -126,28 +105,28 @@ def v__scale_volume_cargs(
     """
     cargs = []
     cargs.append("@ScaleVolume")
-    cargs.append(execution.input_file(params.get("input_dset")))
-    cargs.append(params.get("prefix"))
-    if params.get("val_clip") is not None:
+    cargs.append(execution.input_file(params.get("input_dset", None)))
+    cargs.append(params.get("prefix", None))
+    if params.get("val_clip", None) is not None:
         cargs.extend([
             "-val_clip",
-            *map(str, params.get("val_clip"))
+            *map(str, params.get("val_clip", None))
         ])
-    if params.get("perc_clip") is not None:
+    if params.get("perc_clip", None) is not None:
         cargs.extend([
             "-perc_clip",
-            *map(str, params.get("perc_clip"))
+            *map(str, params.get("perc_clip", None))
         ])
-    if params.get("scale_by_mean"):
+    if params.get("scale_by_mean", False):
         cargs.append("-scale_by_mean")
-    if params.get("scale_by_median"):
+    if params.get("scale_by_median", False):
         cargs.append("-scale_by_median")
-    if params.get("norm"):
+    if params.get("norm", False):
         cargs.append("-norm")
-    if params.get("mask") is not None:
+    if params.get("mask", None) is not None:
         cargs.extend([
             "-mask",
-            execution.input_file(params.get("mask"))
+            execution.input_file(params.get("mask", None))
         ])
     return cargs
 
@@ -167,7 +146,7 @@ def v__scale_volume_outputs(
     """
     ret = VScaleVolumeOutputs(
         root=execution.output_file("."),
-        output_file=execution.output_file(params.get("prefix") + "_scaled"),
+        output_file=execution.output_file(params.get("prefix", None) + "_scaled"),
     )
     return ret
 
@@ -249,7 +228,6 @@ def v__scale_volume(
 
 __all__ = [
     "VScaleVolumeOutputs",
-    "VScaleVolumeParameters",
     "V__SCALE_VOLUME_METADATA",
     "v__scale_volume",
     "v__scale_volume_execute",

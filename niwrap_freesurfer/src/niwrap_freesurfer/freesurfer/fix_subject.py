@@ -14,45 +14,18 @@ FIX_SUBJECT_METADATA = Metadata(
 
 
 FixSubjectParameters = typing.TypedDict('FixSubjectParameters', {
-    "@type": typing.Literal["freesurfer.fix_subject"],
+    "@type": typing.NotRequired[typing.Literal["freesurfer/fix_subject"]],
+    "arguments": typing.NotRequired[str | None],
+})
+FixSubjectParametersTagged = typing.TypedDict('FixSubjectParametersTagged', {
+    "@type": typing.Literal["freesurfer/fix_subject"],
     "arguments": typing.NotRequired[str | None],
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "freesurfer.fix_subject": fix_subject_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-    }.get(t)
-
-
 class FixSubjectOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `fix_subject(...)`.
+    Output object returned when calling `FixSubjectParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -60,7 +33,7 @@ class FixSubjectOutputs(typing.NamedTuple):
 
 def fix_subject_params(
     arguments: str | None = None,
-) -> FixSubjectParameters:
+) -> FixSubjectParametersTagged:
     """
     Build parameters.
     
@@ -71,7 +44,7 @@ def fix_subject_params(
         Parameter dictionary
     """
     params = {
-        "@type": "freesurfer.fix_subject",
+        "@type": "freesurfer/fix_subject",
     }
     if arguments is not None:
         params["arguments"] = arguments
@@ -93,8 +66,8 @@ def fix_subject_cargs(
     """
     cargs = []
     cargs.append("fix_subject")
-    if params.get("arguments") is not None:
-        cargs.append(params.get("arguments"))
+    if params.get("arguments", None) is not None:
+        cargs.append(params.get("arguments", None))
     return cargs
 
 
@@ -176,7 +149,6 @@ def fix_subject(
 __all__ = [
     "FIX_SUBJECT_METADATA",
     "FixSubjectOutputs",
-    "FixSubjectParameters",
     "fix_subject",
     "fix_subject_execute",
     "fix_subject_params",

@@ -14,7 +14,21 @@ FSREAD_ANNOT_METADATA = Metadata(
 
 
 FsreadAnnotParameters = typing.TypedDict('FsreadAnnotParameters', {
-    "@type": typing.Literal["afni.FSread_annot"],
+    "@type": typing.NotRequired[typing.Literal["afni/FSread_annot"]],
+    "infile": InputPathType,
+    "hemi": typing.NotRequired[str | None],
+    "fscmap": typing.NotRequired[InputPathType | None],
+    "fscmap_range": typing.NotRequired[list[float] | None],
+    "fsversion": typing.NotRequired[str | None],
+    "col_1d": typing.NotRequired[str | None],
+    "roi_1d": typing.NotRequired[str | None],
+    "cmap_1d": typing.NotRequired[str | None],
+    "show_fscmap": bool,
+    "dset": typing.NotRequired[str | None],
+    "help": bool,
+})
+FsreadAnnotParametersTagged = typing.TypedDict('FsreadAnnotParametersTagged', {
+    "@type": typing.Literal["afni/FSread_annot"],
     "infile": InputPathType,
     "hemi": typing.NotRequired[str | None],
     "fscmap": typing.NotRequired[InputPathType | None],
@@ -29,41 +43,9 @@ FsreadAnnotParameters = typing.TypedDict('FsreadAnnotParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "afni.FSread_annot": fsread_annot_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "afni.FSread_annot": fsread_annot_outputs,
-    }.get(t)
-
-
 class FsreadAnnotOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `fsread_annot(...)`.
+    Output object returned when calling `FsreadAnnotParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -89,7 +71,7 @@ def fsread_annot_params(
     show_fscmap: bool = False,
     dset: str | None = None,
     help_: bool = False,
-) -> FsreadAnnotParameters:
+) -> FsreadAnnotParametersTagged:
     """
     Build parameters.
     
@@ -114,7 +96,7 @@ def fsread_annot_params(
         Parameter dictionary
     """
     params = {
-        "@type": "afni.FSread_annot",
+        "@type": "afni/FSread_annot",
         "infile": infile,
         "show_fscmap": show_fscmap,
         "help": help_,
@@ -155,51 +137,51 @@ def fsread_annot_cargs(
     cargs.append("FSread_annot")
     cargs.extend([
         "-input",
-        execution.input_file(params.get("infile"))
+        execution.input_file(params.get("infile", None))
     ])
-    if params.get("hemi") is not None:
+    if params.get("hemi", None) is not None:
         cargs.extend([
             "-hemi",
-            params.get("hemi")
+            params.get("hemi", None)
         ])
-    if params.get("fscmap") is not None:
+    if params.get("fscmap", None) is not None:
         cargs.extend([
             "-FScmap",
-            execution.input_file(params.get("fscmap"))
+            execution.input_file(params.get("fscmap", None))
         ])
-    if params.get("fscmap_range") is not None:
+    if params.get("fscmap_range", None) is not None:
         cargs.extend([
             "-FScmaprange",
-            *map(str, params.get("fscmap_range"))
+            *map(str, params.get("fscmap_range", None))
         ])
-    if params.get("fsversion") is not None:
+    if params.get("fsversion", None) is not None:
         cargs.extend([
             "-FSversion",
-            params.get("fsversion")
+            params.get("fsversion", None)
         ])
-    if params.get("col_1d") is not None:
+    if params.get("col_1d", None) is not None:
         cargs.extend([
             "-col_1D",
-            params.get("col_1d")
+            params.get("col_1d", None)
         ])
-    if params.get("roi_1d") is not None:
+    if params.get("roi_1d", None) is not None:
         cargs.extend([
             "-roi_1D",
-            params.get("roi_1d")
+            params.get("roi_1d", None)
         ])
-    if params.get("cmap_1d") is not None:
+    if params.get("cmap_1d", None) is not None:
         cargs.extend([
             "-cmap_1D",
-            params.get("cmap_1d")
+            params.get("cmap_1d", None)
         ])
-    if params.get("show_fscmap"):
+    if params.get("show_fscmap", False):
         cargs.append("-show_FScmap")
-    if params.get("dset") is not None:
+    if params.get("dset", None) is not None:
         cargs.extend([
             "-dset",
-            params.get("dset")
+            params.get("dset", None)
         ])
-    if params.get("help"):
+    if params.get("help", False):
         cargs.append("-help")
     return cargs
 
@@ -320,7 +302,6 @@ def fsread_annot(
 __all__ = [
     "FSREAD_ANNOT_METADATA",
     "FsreadAnnotOutputs",
-    "FsreadAnnotParameters",
     "fsread_annot",
     "fsread_annot_execute",
     "fsread_annot_params",

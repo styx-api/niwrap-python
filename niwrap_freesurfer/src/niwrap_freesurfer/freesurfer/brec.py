@@ -14,46 +14,20 @@ BREC_METADATA = Metadata(
 
 
 BrecParameters = typing.TypedDict('BrecParameters', {
-    "@type": typing.Literal["freesurfer.brec"],
+    "@type": typing.NotRequired[typing.Literal["freesurfer/brec"]],
+    "my_file": str,
+    "depth_limit": bool,
+})
+BrecParametersTagged = typing.TypedDict('BrecParametersTagged', {
+    "@type": typing.Literal["freesurfer/brec"],
     "my_file": str,
     "depth_limit": bool,
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "freesurfer.brec": brec_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-    }.get(t)
-
-
 class BrecOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `brec(...)`.
+    Output object returned when calling `BrecParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -62,7 +36,7 @@ class BrecOutputs(typing.NamedTuple):
 def brec_params(
     my_file: str,
     depth_limit: bool = False,
-) -> BrecParameters:
+) -> BrecParametersTagged:
     """
     Build parameters.
     
@@ -73,7 +47,7 @@ def brec_params(
         Parameter dictionary
     """
     params = {
-        "@type": "freesurfer.brec",
+        "@type": "freesurfer/brec",
         "my_file": my_file,
         "depth_limit": depth_limit,
     }
@@ -95,8 +69,8 @@ def brec_cargs(
     """
     cargs = []
     cargs.append("brec")
-    cargs.append(params.get("my_file"))
-    if params.get("depth_limit"):
+    cargs.append(params.get("my_file", None))
+    if params.get("depth_limit", False):
         cargs.append("-depth_limit")
     return cargs
 
@@ -179,7 +153,6 @@ def brec(
 __all__ = [
     "BREC_METADATA",
     "BrecOutputs",
-    "BrecParameters",
     "brec",
     "brec_execute",
     "brec_params",

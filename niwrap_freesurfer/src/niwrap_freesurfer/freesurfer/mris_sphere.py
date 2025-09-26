@@ -14,48 +14,22 @@ MRIS_SPHERE_METADATA = Metadata(
 
 
 MrisSphereParameters = typing.TypedDict('MrisSphereParameters', {
-    "@type": typing.Literal["freesurfer.mris_sphere"],
+    "@type": typing.NotRequired[typing.Literal["freesurfer/mris_sphere"]],
+    "surface_file": InputPathType,
+    "patch_file": InputPathType,
+    "output_patch": str,
+})
+MrisSphereParametersTagged = typing.TypedDict('MrisSphereParametersTagged', {
+    "@type": typing.Literal["freesurfer/mris_sphere"],
     "surface_file": InputPathType,
     "patch_file": InputPathType,
     "output_patch": str,
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "freesurfer.mris_sphere": mris_sphere_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "freesurfer.mris_sphere": mris_sphere_outputs,
-    }.get(t)
-
-
 class MrisSphereOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `mris_sphere(...)`.
+    Output object returned when calling `MrisSphereParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -67,7 +41,7 @@ def mris_sphere_params(
     surface_file: InputPathType,
     patch_file: InputPathType,
     output_patch: str,
-) -> MrisSphereParameters:
+) -> MrisSphereParametersTagged:
     """
     Build parameters.
     
@@ -79,7 +53,7 @@ def mris_sphere_params(
         Parameter dictionary
     """
     params = {
-        "@type": "freesurfer.mris_sphere",
+        "@type": "freesurfer/mris_sphere",
         "surface_file": surface_file,
         "patch_file": patch_file,
         "output_patch": output_patch,
@@ -102,9 +76,9 @@ def mris_sphere_cargs(
     """
     cargs = []
     cargs.append("mris_sphere")
-    cargs.append(execution.input_file(params.get("surface_file")))
-    cargs.append(execution.input_file(params.get("patch_file")))
-    cargs.append(params.get("output_patch"))
+    cargs.append(execution.input_file(params.get("surface_file", None)))
+    cargs.append(execution.input_file(params.get("patch_file", None)))
+    cargs.append(params.get("output_patch", None))
     return cargs
 
 
@@ -123,7 +97,7 @@ def mris_sphere_outputs(
     """
     ret = MrisSphereOutputs(
         root=execution.output_file("."),
-        output_patch_file=execution.output_file(params.get("output_patch")),
+        output_patch_file=execution.output_file(params.get("output_patch", None)),
     )
     return ret
 
@@ -190,7 +164,6 @@ def mris_sphere(
 __all__ = [
     "MRIS_SPHERE_METADATA",
     "MrisSphereOutputs",
-    "MrisSphereParameters",
     "mris_sphere",
     "mris_sphere_execute",
     "mris_sphere_params",

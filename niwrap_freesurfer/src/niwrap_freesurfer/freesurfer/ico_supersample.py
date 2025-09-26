@@ -14,48 +14,22 @@ ICO_SUPERSAMPLE_METADATA = Metadata(
 
 
 IcoSupersampleParameters = typing.TypedDict('IcoSupersampleParameters', {
-    "@type": typing.Literal["freesurfer.ico_supersample"],
+    "@type": typing.NotRequired[typing.Literal["freesurfer/ico_supersample"]],
+    "refine": bool,
+    "radius": typing.NotRequired[float | None],
+    "projection_point": typing.NotRequired[list[float] | None],
+})
+IcoSupersampleParametersTagged = typing.TypedDict('IcoSupersampleParametersTagged', {
+    "@type": typing.Literal["freesurfer/ico_supersample"],
     "refine": bool,
     "radius": typing.NotRequired[float | None],
     "projection_point": typing.NotRequired[list[float] | None],
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "freesurfer.ico_supersample": ico_supersample_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "freesurfer.ico_supersample": ico_supersample_outputs,
-    }.get(t)
-
-
 class IcoSupersampleOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `ico_supersample(...)`.
+    Output object returned when calling `IcoSupersampleParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -67,7 +41,7 @@ def ico_supersample_params(
     refine: bool = False,
     radius: float | None = None,
     projection_point: list[float] | None = None,
-) -> IcoSupersampleParameters:
+) -> IcoSupersampleParametersTagged:
     """
     Build parameters.
     
@@ -80,7 +54,7 @@ def ico_supersample_params(
         Parameter dictionary
     """
     params = {
-        "@type": "freesurfer.ico_supersample",
+        "@type": "freesurfer/ico_supersample",
         "refine": refine,
     }
     if radius is not None:
@@ -105,12 +79,12 @@ def ico_supersample_cargs(
     """
     cargs = []
     cargs.append("ico_supersample")
-    if params.get("refine"):
+    if params.get("refine", False):
         cargs.append("-y")
-    if params.get("radius") is not None:
-        cargs.append(str(params.get("radius")))
-    if params.get("projection_point") is not None:
-        cargs.extend(map(str, params.get("projection_point")))
+    if params.get("radius", None) is not None:
+        cargs.append(str(params.get("radius", None)))
+    if params.get("projection_point", None) is not None:
+        cargs.extend(map(str, params.get("projection_point", None)))
     return cargs
 
 
@@ -197,7 +171,6 @@ def ico_supersample(
 __all__ = [
     "ICO_SUPERSAMPLE_METADATA",
     "IcoSupersampleOutputs",
-    "IcoSupersampleParameters",
     "ico_supersample",
     "ico_supersample_execute",
     "ico_supersample_params",

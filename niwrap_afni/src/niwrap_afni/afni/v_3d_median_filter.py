@@ -14,7 +14,16 @@ V_3D_MEDIAN_FILTER_METADATA = Metadata(
 
 
 V3dMedianFilterParameters = typing.TypedDict('V3dMedianFilterParameters', {
-    "@type": typing.Literal["afni.3dMedianFilter"],
+    "@type": typing.NotRequired[typing.Literal["afni/3dMedianFilter"]],
+    "irad": typing.NotRequired[float | None],
+    "iter": typing.NotRequired[float | None],
+    "verbose": bool,
+    "prefix": typing.NotRequired[str | None],
+    "automask": bool,
+    "dataset": InputPathType,
+})
+V3dMedianFilterParametersTagged = typing.TypedDict('V3dMedianFilterParametersTagged', {
+    "@type": typing.Literal["afni/3dMedianFilter"],
     "irad": typing.NotRequired[float | None],
     "iter": typing.NotRequired[float | None],
     "verbose": bool,
@@ -24,41 +33,9 @@ V3dMedianFilterParameters = typing.TypedDict('V3dMedianFilterParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "afni.3dMedianFilter": v_3d_median_filter_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "afni.3dMedianFilter": v_3d_median_filter_outputs,
-    }.get(t)
-
-
 class V3dMedianFilterOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `v_3d_median_filter(...)`.
+    Output object returned when calling `V3dMedianFilterParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -75,7 +52,7 @@ def v_3d_median_filter_params(
     verbose: bool = False,
     prefix: str | None = None,
     automask: bool = False,
-) -> V3dMedianFilterParameters:
+) -> V3dMedianFilterParametersTagged:
     """
     Build parameters.
     
@@ -90,7 +67,7 @@ def v_3d_median_filter_params(
         Parameter dictionary
     """
     params = {
-        "@type": "afni.3dMedianFilter",
+        "@type": "afni/3dMedianFilter",
         "verbose": verbose,
         "automask": automask,
         "dataset": dataset,
@@ -119,26 +96,26 @@ def v_3d_median_filter_cargs(
     """
     cargs = []
     cargs.append("3dMedianFilter")
-    if params.get("irad") is not None:
+    if params.get("irad", None) is not None:
         cargs.extend([
             "-irad",
-            str(params.get("irad"))
+            str(params.get("irad", None))
         ])
-    if params.get("iter") is not None:
+    if params.get("iter", None) is not None:
         cargs.extend([
             "-iter",
-            str(params.get("iter"))
+            str(params.get("iter", None))
         ])
-    if params.get("verbose"):
+    if params.get("verbose", False):
         cargs.append("-verb")
-    if params.get("prefix") is not None:
+    if params.get("prefix", None) is not None:
         cargs.extend([
             "-prefix",
-            params.get("prefix")
+            params.get("prefix", None)
         ])
-    if params.get("automask"):
+    if params.get("automask", False):
         cargs.append("-automask")
-    cargs.append(execution.input_file(params.get("dataset")))
+    cargs.append(execution.input_file(params.get("dataset", None)))
     return cargs
 
 
@@ -157,8 +134,8 @@ def v_3d_median_filter_outputs(
     """
     ret = V3dMedianFilterOutputs(
         root=execution.output_file("."),
-        output_brik=execution.output_file(params.get("prefix") + "+tlrc.BRIK") if (params.get("prefix") is not None) else None,
-        output_head=execution.output_file(params.get("prefix") + "+tlrc.HEAD") if (params.get("prefix") is not None) else None,
+        output_brik=execution.output_file(params.get("prefix", None) + "+tlrc.BRIK") if (params.get("prefix") is not None) else None,
+        output_head=execution.output_file(params.get("prefix", None) + "+tlrc.HEAD") if (params.get("prefix") is not None) else None,
     )
     return ret
 
@@ -235,7 +212,6 @@ def v_3d_median_filter(
 
 __all__ = [
     "V3dMedianFilterOutputs",
-    "V3dMedianFilterParameters",
     "V_3D_MEDIAN_FILTER_METADATA",
     "v_3d_median_filter",
     "v_3d_median_filter_execute",

@@ -14,1088 +14,1810 @@ C3D_METADATA = Metadata(
 
 
 C3dAccumParameters = typing.TypedDict('C3dAccumParameters', {
-    "@type": typing.Literal["c3d.c3d.accum"],
+    "@type": typing.NotRequired[typing.Literal["accum"]],
+    "accum": str,
+})
+C3dAccumParametersTagged = typing.TypedDict('C3dAccumParametersTagged', {
+    "@type": typing.Literal["accum"],
     "accum": str,
 })
 
 
 C3dAcosParameters = typing.TypedDict('C3dAcosParameters', {
-    "@type": typing.Literal["c3d.c3d.acos"],
+    "@type": typing.NotRequired[typing.Literal["acos"]],
+    "acos": str,
+})
+C3dAcosParametersTagged = typing.TypedDict('C3dAcosParametersTagged', {
+    "@type": typing.Literal["acos"],
     "acos": str,
 })
 
 
 C3dAddParameters = typing.TypedDict('C3dAddParameters', {
-    "@type": typing.Literal["c3d.c3d.add"],
+    "@type": typing.NotRequired[typing.Literal["add"]],
+    "add": str,
+})
+C3dAddParametersTagged = typing.TypedDict('C3dAddParametersTagged', {
+    "@type": typing.Literal["add"],
     "add": str,
 })
 
 
 C3dAlignLandmarksParameters = typing.TypedDict('C3dAlignLandmarksParameters', {
-    "@type": typing.Literal["c3d.c3d.align_landmarks"],
+    "@type": typing.NotRequired[typing.Literal["align_landmarks"]],
+    "align_landmarks": str,
+})
+C3dAlignLandmarksParametersTagged = typing.TypedDict('C3dAlignLandmarksParametersTagged', {
+    "@type": typing.Literal["align_landmarks"],
     "align_landmarks": str,
 })
 
 
 C3dAnisotropicDiffusionParameters = typing.TypedDict('C3dAnisotropicDiffusionParameters', {
-    "@type": typing.Literal["c3d.c3d.anisotropic_diffusion"],
+    "@type": typing.NotRequired[typing.Literal["anisotropic_diffusion"]],
+    "anisotropic_diffusion": str,
+})
+C3dAnisotropicDiffusionParametersTagged = typing.TypedDict('C3dAnisotropicDiffusionParametersTagged', {
+    "@type": typing.Literal["anisotropic_diffusion"],
     "anisotropic_diffusion": str,
 })
 
 
 C3dAntialiasParameters = typing.TypedDict('C3dAntialiasParameters', {
-    "@type": typing.Literal["c3d.c3d.antialias"],
+    "@type": typing.NotRequired[typing.Literal["antialias"]],
+    "antialias": str,
+})
+C3dAntialiasParametersTagged = typing.TypedDict('C3dAntialiasParametersTagged', {
+    "@type": typing.Literal["antialias"],
     "antialias": str,
 })
 
 
 C3dSetParameters = typing.TypedDict('C3dSetParameters', {
-    "@type": typing.Literal["c3d.c3d.set"],
+    "@type": typing.NotRequired[typing.Literal["set"]],
+    "set": str,
+})
+C3dSetParametersTagged = typing.TypedDict('C3dSetParametersTagged', {
+    "@type": typing.Literal["set"],
     "set": str,
 })
 
 
 C3dAsinParameters = typing.TypedDict('C3dAsinParameters', {
-    "@type": typing.Literal["c3d.c3d.asin"],
+    "@type": typing.NotRequired[typing.Literal["asin"]],
+    "asin": str,
+})
+C3dAsinParametersTagged = typing.TypedDict('C3dAsinParametersTagged', {
+    "@type": typing.Literal["asin"],
     "asin": str,
 })
 
 
 C3dAtan2Parameters = typing.TypedDict('C3dAtan2Parameters', {
-    "@type": typing.Literal["c3d.c3d.atan2"],
+    "@type": typing.NotRequired[typing.Literal["atan2"]],
+    "atan2": str,
+})
+C3dAtan2ParametersTagged = typing.TypedDict('C3dAtan2ParametersTagged', {
+    "@type": typing.Literal["atan2"],
     "atan2": str,
 })
 
 
 C3dBackgroundParameters = typing.TypedDict('C3dBackgroundParameters', {
-    "@type": typing.Literal["c3d.c3d.background"],
+    "@type": typing.NotRequired[typing.Literal["background"]],
+    "background": str,
+})
+C3dBackgroundParametersTagged = typing.TypedDict('C3dBackgroundParametersTagged', {
+    "@type": typing.Literal["background"],
     "background": str,
 })
 
 
 C3dN4BiasCorrectionParameters = typing.TypedDict('C3dN4BiasCorrectionParameters', {
-    "@type": typing.Literal["c3d.c3d.n4_bias_correction"],
+    "@type": typing.NotRequired[typing.Literal["n4_bias_correction"]],
+    "n4_bias_correction": str,
+})
+C3dN4BiasCorrectionParametersTagged = typing.TypedDict('C3dN4BiasCorrectionParametersTagged', {
+    "@type": typing.Literal["n4_bias_correction"],
     "n4_bias_correction": str,
 })
 
 
 C3dBinarizeParameters = typing.TypedDict('C3dBinarizeParameters', {
-    "@type": typing.Literal["c3d.c3d.binarize"],
+    "@type": typing.NotRequired[typing.Literal["binarize"]],
+    "binarize": str,
+})
+C3dBinarizeParametersTagged = typing.TypedDict('C3dBinarizeParametersTagged', {
+    "@type": typing.Literal["binarize"],
     "binarize": str,
 })
 
 
 C3dCannyParameters = typing.TypedDict('C3dCannyParameters', {
-    "@type": typing.Literal["c3d.c3d.canny"],
+    "@type": typing.NotRequired[typing.Literal["canny"]],
+    "canny": str,
+})
+C3dCannyParametersTagged = typing.TypedDict('C3dCannyParametersTagged', {
+    "@type": typing.Literal["canny"],
     "canny": str,
 })
 
 
 C3dCeilParameters = typing.TypedDict('C3dCeilParameters', {
-    "@type": typing.Literal["c3d.c3d.ceil"],
+    "@type": typing.NotRequired[typing.Literal["ceil"]],
+    "ceil": str,
+})
+C3dCeilParametersTagged = typing.TypedDict('C3dCeilParametersTagged', {
+    "@type": typing.Literal["ceil"],
     "ceil": str,
 })
 
 
 C3dCentroidParameters = typing.TypedDict('C3dCentroidParameters', {
-    "@type": typing.Literal["c3d.c3d.centroid"],
+    "@type": typing.NotRequired[typing.Literal["centroid"]],
+    "centroid": str,
+})
+C3dCentroidParametersTagged = typing.TypedDict('C3dCentroidParametersTagged', {
+    "@type": typing.Literal["centroid"],
     "centroid": str,
 })
 
 
 C3dCentroidMarkParameters = typing.TypedDict('C3dCentroidMarkParameters', {
-    "@type": typing.Literal["c3d.c3d.centroid_mark"],
+    "@type": typing.NotRequired[typing.Literal["centroid_mark"]],
+    "centroid_mark": str,
+})
+C3dCentroidMarkParametersTagged = typing.TypedDict('C3dCentroidMarkParametersTagged', {
+    "@type": typing.Literal["centroid_mark"],
     "centroid_mark": str,
 })
 
 
 C3dConnectedComponentsParameters = typing.TypedDict('C3dConnectedComponentsParameters', {
-    "@type": typing.Literal["c3d.c3d.connected_components"],
+    "@type": typing.NotRequired[typing.Literal["connected_components"]],
+    "connected_components": str,
+})
+C3dConnectedComponentsParametersTagged = typing.TypedDict('C3dConnectedComponentsParametersTagged', {
+    "@type": typing.Literal["connected_components"],
     "connected_components": str,
 })
 
 
 C3dClearParameters = typing.TypedDict('C3dClearParameters', {
-    "@type": typing.Literal["c3d.c3d.clear"],
+    "@type": typing.NotRequired[typing.Literal["clear"]],
+    "clear": str,
+})
+C3dClearParametersTagged = typing.TypedDict('C3dClearParametersTagged', {
+    "@type": typing.Literal["clear"],
     "clear": str,
 })
 
 
 C3dClipParameters = typing.TypedDict('C3dClipParameters', {
-    "@type": typing.Literal["c3d.c3d.clip"],
+    "@type": typing.NotRequired[typing.Literal["clip"]],
+    "clip": str,
+})
+C3dClipParametersTagged = typing.TypedDict('C3dClipParametersTagged', {
+    "@type": typing.Literal["clip"],
     "clip": str,
 })
 
 
 C3dColorMapParameters = typing.TypedDict('C3dColorMapParameters', {
-    "@type": typing.Literal["c3d.c3d.color_map"],
+    "@type": typing.NotRequired[typing.Literal["color_map"]],
+    "color_map": str,
+})
+C3dColorMapParametersTagged = typing.TypedDict('C3dColorMapParametersTagged', {
+    "@type": typing.Literal["color_map"],
     "color_map": str,
 })
 
 
 C3dCompressParameters = typing.TypedDict('C3dCompressParameters', {
-    "@type": typing.Literal["c3d.c3d.compress"],
+    "@type": typing.NotRequired[typing.Literal["compress"]],
+    "compress": str,
+})
+C3dCompressParametersTagged = typing.TypedDict('C3dCompressParametersTagged', {
+    "@type": typing.Literal["compress"],
     "compress": str,
 })
 
 
 C3dNoCompressParameters = typing.TypedDict('C3dNoCompressParameters', {
-    "@type": typing.Literal["c3d.c3d.no_compress"],
+    "@type": typing.NotRequired[typing.Literal["no_compress"]],
+    "no_compress": str,
+})
+C3dNoCompressParametersTagged = typing.TypedDict('C3dNoCompressParametersTagged', {
+    "@type": typing.Literal["no_compress"],
     "no_compress": str,
 })
 
 
 C3dConvParameters = typing.TypedDict('C3dConvParameters', {
-    "@type": typing.Literal["c3d.c3d.conv"],
+    "@type": typing.NotRequired[typing.Literal["conv"]],
+    "conv": str,
+})
+C3dConvParametersTagged = typing.TypedDict('C3dConvParametersTagged', {
+    "@type": typing.Literal["conv"],
     "conv": str,
 })
 
 
 C3dCoordinateMapVoxelParameters = typing.TypedDict('C3dCoordinateMapVoxelParameters', {
-    "@type": typing.Literal["c3d.c3d.coordinate_map_voxel"],
+    "@type": typing.NotRequired[typing.Literal["coordinate_map_voxel"]],
+    "coordinate_map_voxel": str,
+})
+C3dCoordinateMapVoxelParametersTagged = typing.TypedDict('C3dCoordinateMapVoxelParametersTagged', {
+    "@type": typing.Literal["coordinate_map_voxel"],
     "coordinate_map_voxel": str,
 })
 
 
 C3dCoordinateMapPhysicalParameters = typing.TypedDict('C3dCoordinateMapPhysicalParameters', {
-    "@type": typing.Literal["c3d.c3d.coordinate_map_physical"],
+    "@type": typing.NotRequired[typing.Literal["coordinate_map_physical"]],
+    "coordinate_map_physical": str,
+})
+C3dCoordinateMapPhysicalParametersTagged = typing.TypedDict('C3dCoordinateMapPhysicalParametersTagged', {
+    "@type": typing.Literal["coordinate_map_physical"],
     "coordinate_map_physical": str,
 })
 
 
 C3dCopyTransformParameters = typing.TypedDict('C3dCopyTransformParameters', {
-    "@type": typing.Literal["c3d.c3d.copy_transform"],
+    "@type": typing.NotRequired[typing.Literal["copy_transform"]],
+    "copy_transform": str,
+})
+C3dCopyTransformParametersTagged = typing.TypedDict('C3dCopyTransformParametersTagged', {
+    "@type": typing.Literal["copy_transform"],
     "copy_transform": str,
 })
 
 
 C3dCosParameters = typing.TypedDict('C3dCosParameters', {
-    "@type": typing.Literal["c3d.c3d.cos"],
+    "@type": typing.NotRequired[typing.Literal["cos"]],
+    "cos": str,
+})
+C3dCosParametersTagged = typing.TypedDict('C3dCosParametersTagged', {
+    "@type": typing.Literal["cos"],
     "cos": str,
 })
 
 
 C3dCreateParameters = typing.TypedDict('C3dCreateParameters', {
-    "@type": typing.Literal["c3d.c3d.create"],
+    "@type": typing.NotRequired[typing.Literal["create"]],
+    "create": str,
+})
+C3dCreateParametersTagged = typing.TypedDict('C3dCreateParametersTagged', {
+    "@type": typing.Literal["create"],
     "create": str,
 })
 
 
 C3dDicomSeriesListParameters = typing.TypedDict('C3dDicomSeriesListParameters', {
-    "@type": typing.Literal["c3d.c3d.dicom_series_list"],
+    "@type": typing.NotRequired[typing.Literal["dicom_series_list"]],
+    "dicom_series_list": str,
+})
+C3dDicomSeriesListParametersTagged = typing.TypedDict('C3dDicomSeriesListParametersTagged', {
+    "@type": typing.Literal["dicom_series_list"],
     "dicom_series_list": str,
 })
 
 
 C3dDicomSeriesReadParameters = typing.TypedDict('C3dDicomSeriesReadParameters', {
-    "@type": typing.Literal["c3d.c3d.dicom_series_read"],
+    "@type": typing.NotRequired[typing.Literal["dicom_series_read"]],
+    "dicom_series_read": str,
+})
+C3dDicomSeriesReadParametersTagged = typing.TypedDict('C3dDicomSeriesReadParametersTagged', {
+    "@type": typing.Literal["dicom_series_read"],
     "dicom_series_read": str,
 })
 
 
 C3dDilateParameters = typing.TypedDict('C3dDilateParameters', {
-    "@type": typing.Literal["c3d.c3d.dilate"],
+    "@type": typing.NotRequired[typing.Literal["dilate"]],
+    "dilate": str,
+})
+C3dDilateParametersTagged = typing.TypedDict('C3dDilateParametersTagged', {
+    "@type": typing.Literal["dilate"],
     "dilate": str,
 })
 
 
 C3dDivideParameters = typing.TypedDict('C3dDivideParameters', {
-    "@type": typing.Literal["c3d.c3d.divide"],
+    "@type": typing.NotRequired[typing.Literal["divide"]],
+    "divide": str,
+})
+C3dDivideParametersTagged = typing.TypedDict('C3dDivideParametersTagged', {
+    "@type": typing.Literal["divide"],
     "divide": str,
 })
 
 
 C3dDuplicateParameters = typing.TypedDict('C3dDuplicateParameters', {
-    "@type": typing.Literal["c3d.c3d.duplicate"],
+    "@type": typing.NotRequired[typing.Literal["duplicate"]],
+    "duplicate": str,
+})
+C3dDuplicateParametersTagged = typing.TypedDict('C3dDuplicateParametersTagged', {
+    "@type": typing.Literal["duplicate"],
     "duplicate": str,
 })
 
 
 C3dEndaccumParameters = typing.TypedDict('C3dEndaccumParameters', {
-    "@type": typing.Literal["c3d.c3d.endaccum"],
+    "@type": typing.NotRequired[typing.Literal["endaccum"]],
+    "endaccum": str,
+})
+C3dEndaccumParametersTagged = typing.TypedDict('C3dEndaccumParametersTagged', {
+    "@type": typing.Literal["endaccum"],
     "endaccum": str,
 })
 
 
 C3dEndforParameters = typing.TypedDict('C3dEndforParameters', {
-    "@type": typing.Literal["c3d.c3d.endfor"],
+    "@type": typing.NotRequired[typing.Literal["endfor"]],
+    "endfor": str,
+})
+C3dEndforParametersTagged = typing.TypedDict('C3dEndforParametersTagged', {
+    "@type": typing.Literal["endfor"],
     "endfor": str,
 })
 
 
 C3dErodeParameters = typing.TypedDict('C3dErodeParameters', {
-    "@type": typing.Literal["c3d.c3d.erode"],
+    "@type": typing.NotRequired[typing.Literal["erode"]],
+    "erode": str,
+})
+C3dErodeParametersTagged = typing.TypedDict('C3dErodeParametersTagged', {
+    "@type": typing.Literal["erode"],
     "erode": str,
 })
 
 
 C3dErfParameters = typing.TypedDict('C3dErfParameters', {
-    "@type": typing.Literal["c3d.c3d.erf"],
+    "@type": typing.NotRequired[typing.Literal["erf"]],
+    "erf": str,
+})
+C3dErfParametersTagged = typing.TypedDict('C3dErfParametersTagged', {
+    "@type": typing.Literal["erf"],
     "erf": str,
 })
 
 
 C3dExpParameters = typing.TypedDict('C3dExpParameters', {
-    "@type": typing.Literal["c3d.c3d.exp"],
+    "@type": typing.NotRequired[typing.Literal["exp"]],
+    "exp": str,
+})
+C3dExpParametersTagged = typing.TypedDict('C3dExpParametersTagged', {
+    "@type": typing.Literal["exp"],
     "exp": str,
 })
 
 
 C3dExportPatchesParameters = typing.TypedDict('C3dExportPatchesParameters', {
-    "@type": typing.Literal["c3d.c3d.export_patches"],
+    "@type": typing.NotRequired[typing.Literal["export_patches"]],
+    "export_patches": str,
+})
+C3dExportPatchesParametersTagged = typing.TypedDict('C3dExportPatchesParametersTagged', {
+    "@type": typing.Literal["export_patches"],
     "export_patches": str,
 })
 
 
 C3dExportPatchesAugParameters = typing.TypedDict('C3dExportPatchesAugParameters', {
-    "@type": typing.Literal["c3d.c3d.export_patches_aug"],
+    "@type": typing.NotRequired[typing.Literal["export_patches_aug"]],
+    "export_patches_aug": str,
+})
+C3dExportPatchesAugParametersTagged = typing.TypedDict('C3dExportPatchesAugParametersTagged', {
+    "@type": typing.Literal["export_patches_aug"],
     "export_patches_aug": str,
 })
 
 
 C3dExtrudeSegParameters = typing.TypedDict('C3dExtrudeSegParameters', {
-    "@type": typing.Literal["c3d.c3d.extrude_seg"],
+    "@type": typing.NotRequired[typing.Literal["extrude_seg"]],
+    "extrude_seg": str,
+})
+C3dExtrudeSegParametersTagged = typing.TypedDict('C3dExtrudeSegParametersTagged', {
+    "@type": typing.Literal["extrude_seg"],
     "extrude_seg": str,
 })
 
 
 C3dFillBackgroundWithNoiseParameters = typing.TypedDict('C3dFillBackgroundWithNoiseParameters', {
-    "@type": typing.Literal["c3d.c3d.fill_background_with_noise"],
+    "@type": typing.NotRequired[typing.Literal["fill_background_with_noise"]],
+    "fill_background_with_noise": str,
+})
+C3dFillBackgroundWithNoiseParametersTagged = typing.TypedDict('C3dFillBackgroundWithNoiseParametersTagged', {
+    "@type": typing.Literal["fill_background_with_noise"],
     "fill_background_with_noise": str,
 })
 
 
 C3dFftParameters = typing.TypedDict('C3dFftParameters', {
-    "@type": typing.Literal["c3d.c3d.fft"],
+    "@type": typing.NotRequired[typing.Literal["fft"]],
+    "fft": str,
+})
+C3dFftParametersTagged = typing.TypedDict('C3dFftParametersTagged', {
+    "@type": typing.Literal["fft"],
     "fft": str,
 })
 
 
 C3dFlipParameters = typing.TypedDict('C3dFlipParameters', {
-    "@type": typing.Literal["c3d.c3d.flip"],
+    "@type": typing.NotRequired[typing.Literal["flip"]],
+    "flip": str,
+})
+C3dFlipParametersTagged = typing.TypedDict('C3dFlipParametersTagged', {
+    "@type": typing.Literal["flip"],
     "flip": str,
 })
 
 
 C3dFloorParameters = typing.TypedDict('C3dFloorParameters', {
-    "@type": typing.Literal["c3d.c3d.floor"],
+    "@type": typing.NotRequired[typing.Literal["floor"]],
+    "floor": str,
+})
+C3dFloorParametersTagged = typing.TypedDict('C3dFloorParametersTagged', {
+    "@type": typing.Literal["floor"],
     "floor": str,
 })
 
 
 C3dForeachParameters = typing.TypedDict('C3dForeachParameters', {
-    "@type": typing.Literal["c3d.c3d.foreach"],
+    "@type": typing.NotRequired[typing.Literal["foreach"]],
+    "foreach": str,
+})
+C3dForeachParametersTagged = typing.TypedDict('C3dForeachParametersTagged', {
+    "@type": typing.Literal["foreach"],
     "foreach": str,
 })
 
 
 C3dForeachCompParameters = typing.TypedDict('C3dForeachCompParameters', {
-    "@type": typing.Literal["c3d.c3d.foreach_comp"],
+    "@type": typing.NotRequired[typing.Literal["foreach_comp"]],
+    "foreach_comp": str,
+})
+C3dForeachCompParametersTagged = typing.TypedDict('C3dForeachCompParametersTagged', {
+    "@type": typing.Literal["foreach_comp"],
     "foreach_comp": str,
 })
 
 
 C3dGlmParameters = typing.TypedDict('C3dGlmParameters', {
-    "@type": typing.Literal["c3d.c3d.glm"],
+    "@type": typing.NotRequired[typing.Literal["glm"]],
+    "glm": str,
+})
+C3dGlmParametersTagged = typing.TypedDict('C3dGlmParametersTagged', {
+    "@type": typing.Literal["glm"],
     "glm": str,
 })
 
 
 C3dGradientParameters = typing.TypedDict('C3dGradientParameters', {
-    "@type": typing.Literal["c3d.c3d.gradient"],
+    "@type": typing.NotRequired[typing.Literal["gradient"]],
+    "gradient": str,
+})
+C3dGradientParametersTagged = typing.TypedDict('C3dGradientParametersTagged', {
+    "@type": typing.Literal["gradient"],
     "gradient": str,
 })
 
 
 C3dHelpParameters = typing.TypedDict('C3dHelpParameters', {
-    "@type": typing.Literal["c3d.c3d._help"],
+    "@type": typing.NotRequired[typing.Literal["_help"]],
+    "_help": str,
+})
+C3dHelpParametersTagged = typing.TypedDict('C3dHelpParametersTagged', {
+    "@type": typing.Literal["_help"],
     "_help": str,
 })
 
 
 C3dHolefillParameters = typing.TypedDict('C3dHolefillParameters', {
-    "@type": typing.Literal["c3d.c3d.holefill"],
+    "@type": typing.NotRequired[typing.Literal["holefill"]],
+    "holefill": str,
+})
+C3dHolefillParametersTagged = typing.TypedDict('C3dHolefillParametersTagged', {
+    "@type": typing.Literal["holefill"],
     "holefill": str,
 })
 
 
 C3dHessianEigenvaluesParameters = typing.TypedDict('C3dHessianEigenvaluesParameters', {
-    "@type": typing.Literal["c3d.c3d.hessian_eigenvalues"],
+    "@type": typing.NotRequired[typing.Literal["hessian_eigenvalues"]],
+    "hessian_eigenvalues": str,
+})
+C3dHessianEigenvaluesParametersTagged = typing.TypedDict('C3dHessianEigenvaluesParametersTagged', {
+    "@type": typing.Literal["hessian_eigenvalues"],
     "hessian_eigenvalues": str,
 })
 
 
 C3dHessianObjectnessParameters = typing.TypedDict('C3dHessianObjectnessParameters', {
-    "@type": typing.Literal["c3d.c3d.hessian_objectness"],
+    "@type": typing.NotRequired[typing.Literal["hessian_objectness"]],
+    "hessian_objectness": str,
+})
+C3dHessianObjectnessParametersTagged = typing.TypedDict('C3dHessianObjectnessParametersTagged', {
+    "@type": typing.Literal["hessian_objectness"],
     "hessian_objectness": str,
 })
 
 
 C3dHistogramMatchParameters = typing.TypedDict('C3dHistogramMatchParameters', {
-    "@type": typing.Literal["c3d.c3d.histogram_match"],
+    "@type": typing.NotRequired[typing.Literal["histogram_match"]],
+    "histogram_match": str,
+})
+C3dHistogramMatchParametersTagged = typing.TypedDict('C3dHistogramMatchParametersTagged', {
+    "@type": typing.Literal["histogram_match"],
     "histogram_match": str,
 })
 
 
 C3dInfoParameters = typing.TypedDict('C3dInfoParameters', {
-    "@type": typing.Literal["c3d.c3d.info"],
+    "@type": typing.NotRequired[typing.Literal["info"]],
+    "info": str,
+})
+C3dInfoParametersTagged = typing.TypedDict('C3dInfoParametersTagged', {
+    "@type": typing.Literal["info"],
     "info": str,
 })
 
 
 C3dInfoFullParameters = typing.TypedDict('C3dInfoFullParameters', {
-    "@type": typing.Literal["c3d.c3d.info_full"],
+    "@type": typing.NotRequired[typing.Literal["info_full"]],
+    "info_full": str,
+})
+C3dInfoFullParametersTagged = typing.TypedDict('C3dInfoFullParametersTagged', {
+    "@type": typing.Literal["info_full"],
     "info_full": str,
 })
 
 
 C3dInsertParameters = typing.TypedDict('C3dInsertParameters', {
-    "@type": typing.Literal["c3d.c3d.insert"],
+    "@type": typing.NotRequired[typing.Literal["insert"]],
+    "insert": str,
+})
+C3dInsertParametersTagged = typing.TypedDict('C3dInsertParametersTagged', {
+    "@type": typing.Literal["insert"],
     "insert": str,
 })
 
 
 C3dInterpolationParameters = typing.TypedDict('C3dInterpolationParameters', {
-    "@type": typing.Literal["c3d.c3d.interpolation"],
+    "@type": typing.NotRequired[typing.Literal["interpolation"]],
+    "interpolation": str,
+})
+C3dInterpolationParametersTagged = typing.TypedDict('C3dInterpolationParametersTagged', {
+    "@type": typing.Literal["interpolation"],
     "interpolation": str,
 })
 
 
 C3dIterationsParameters = typing.TypedDict('C3dIterationsParameters', {
-    "@type": typing.Literal["c3d.c3d.iterations"],
+    "@type": typing.NotRequired[typing.Literal["iterations"]],
+    "iterations": str,
+})
+C3dIterationsParametersTagged = typing.TypedDict('C3dIterationsParametersTagged', {
+    "@type": typing.Literal["iterations"],
     "iterations": str,
 })
 
 
 C3dLabelOverlapParameters = typing.TypedDict('C3dLabelOverlapParameters', {
-    "@type": typing.Literal["c3d.c3d.label_overlap"],
+    "@type": typing.NotRequired[typing.Literal["label_overlap"]],
+    "label_overlap": str,
+})
+C3dLabelOverlapParametersTagged = typing.TypedDict('C3dLabelOverlapParametersTagged', {
+    "@type": typing.Literal["label_overlap"],
     "label_overlap": str,
 })
 
 
 C3dLabelStatisticsParameters = typing.TypedDict('C3dLabelStatisticsParameters', {
-    "@type": typing.Literal["c3d.c3d.label_statistics"],
+    "@type": typing.NotRequired[typing.Literal["label_statistics"]],
+    "label_statistics": str,
+})
+C3dLabelStatisticsParametersTagged = typing.TypedDict('C3dLabelStatisticsParametersTagged', {
+    "@type": typing.Literal["label_statistics"],
     "label_statistics": str,
 })
 
 
 C3dLandmarksToSpheresParameters = typing.TypedDict('C3dLandmarksToSpheresParameters', {
-    "@type": typing.Literal["c3d.c3d.landmarks_to_spheres"],
+    "@type": typing.NotRequired[typing.Literal["landmarks_to_spheres"]],
+    "landmarks_to_spheres": str,
+})
+C3dLandmarksToSpheresParametersTagged = typing.TypedDict('C3dLandmarksToSpheresParametersTagged', {
+    "@type": typing.Literal["landmarks_to_spheres"],
     "landmarks_to_spheres": str,
 })
 
 
 C3dLaplacianParameters = typing.TypedDict('C3dLaplacianParameters', {
-    "@type": typing.Literal["c3d.c3d.laplacian"],
+    "@type": typing.NotRequired[typing.Literal["laplacian"]],
+    "laplacian": str,
+})
+C3dLaplacianParametersTagged = typing.TypedDict('C3dLaplacianParametersTagged', {
+    "@type": typing.Literal["laplacian"],
     "laplacian": str,
 })
 
 
 C3dLevelsetParameters = typing.TypedDict('C3dLevelsetParameters', {
-    "@type": typing.Literal["c3d.c3d.levelset"],
+    "@type": typing.NotRequired[typing.Literal["levelset"]],
+    "levelset": str,
+})
+C3dLevelsetParametersTagged = typing.TypedDict('C3dLevelsetParametersTagged', {
+    "@type": typing.Literal["levelset"],
     "levelset": str,
 })
 
 
 C3dLevelsetCurvatureParameters = typing.TypedDict('C3dLevelsetCurvatureParameters', {
-    "@type": typing.Literal["c3d.c3d.levelset_curvature"],
+    "@type": typing.NotRequired[typing.Literal["levelset_curvature"]],
+    "levelset_curvature": str,
+})
+C3dLevelsetCurvatureParametersTagged = typing.TypedDict('C3dLevelsetCurvatureParametersTagged', {
+    "@type": typing.Literal["levelset_curvature"],
     "levelset_curvature": str,
 })
 
 
 C3dLevelsetAdvectionParameters = typing.TypedDict('C3dLevelsetAdvectionParameters', {
-    "@type": typing.Literal["c3d.c3d.levelset_advection"],
+    "@type": typing.NotRequired[typing.Literal["levelset_advection"]],
+    "levelset_advection": str,
+})
+C3dLevelsetAdvectionParametersTagged = typing.TypedDict('C3dLevelsetAdvectionParametersTagged', {
+    "@type": typing.Literal["levelset_advection"],
     "levelset_advection": str,
 })
 
 
 C3dLogParameters = typing.TypedDict('C3dLogParameters', {
-    "@type": typing.Literal["c3d.c3d.log"],
+    "@type": typing.NotRequired[typing.Literal["log"]],
+    "log": str,
+})
+C3dLogParametersTagged = typing.TypedDict('C3dLogParametersTagged', {
+    "@type": typing.Literal["log"],
     "log": str,
 })
 
 
 C3dLog10Parameters = typing.TypedDict('C3dLog10Parameters', {
-    "@type": typing.Literal["c3d.c3d.log10"],
+    "@type": typing.NotRequired[typing.Literal["log10"]],
+    "log10": str,
+})
+C3dLog10ParametersTagged = typing.TypedDict('C3dLog10ParametersTagged', {
+    "@type": typing.Literal["log10"],
     "log10": str,
 })
 
 
 C3dManualParameters = typing.TypedDict('C3dManualParameters', {
-    "@type": typing.Literal["c3d.c3d.manual"],
+    "@type": typing.NotRequired[typing.Literal["manual"]],
+    "manual": str,
+})
+C3dManualParametersTagged = typing.TypedDict('C3dManualParametersTagged', {
+    "@type": typing.Literal["manual"],
     "manual": str,
 })
 
 
 C3dMatchBoundingBoxParameters = typing.TypedDict('C3dMatchBoundingBoxParameters', {
-    "@type": typing.Literal["c3d.c3d.match_bounding_box"],
+    "@type": typing.NotRequired[typing.Literal["match_bounding_box"]],
+    "match_bounding_box": str,
+})
+C3dMatchBoundingBoxParametersTagged = typing.TypedDict('C3dMatchBoundingBoxParametersTagged', {
+    "@type": typing.Literal["match_bounding_box"],
     "match_bounding_box": str,
 })
 
 
 C3dMaximumParameters = typing.TypedDict('C3dMaximumParameters', {
-    "@type": typing.Literal["c3d.c3d.maximum"],
+    "@type": typing.NotRequired[typing.Literal["maximum"]],
+    "maximum": str,
+})
+C3dMaximumParametersTagged = typing.TypedDict('C3dMaximumParametersTagged', {
+    "@type": typing.Literal["maximum"],
     "maximum": str,
 })
 
 
 C3dMulticomponentSplitParameters = typing.TypedDict('C3dMulticomponentSplitParameters', {
-    "@type": typing.Literal["c3d.c3d.multicomponent_split"],
+    "@type": typing.NotRequired[typing.Literal["multicomponent_split"]],
+    "multicomponent_split": str,
+})
+C3dMulticomponentSplitParametersTagged = typing.TypedDict('C3dMulticomponentSplitParametersTagged', {
+    "@type": typing.Literal["multicomponent_split"],
     "multicomponent_split": str,
 })
 
 
 C3dMeanParameters = typing.TypedDict('C3dMeanParameters', {
-    "@type": typing.Literal["c3d.c3d.mean"],
+    "@type": typing.NotRequired[typing.Literal["mean"]],
+    "mean": str,
+})
+C3dMeanParametersTagged = typing.TypedDict('C3dMeanParametersTagged', {
+    "@type": typing.Literal["mean"],
     "mean": str,
 })
 
 
 C3dMedianFilterParameters = typing.TypedDict('C3dMedianFilterParameters', {
-    "@type": typing.Literal["c3d.c3d.median_filter"],
+    "@type": typing.NotRequired[typing.Literal["median_filter"]],
+    "median_filter": str,
+})
+C3dMedianFilterParametersTagged = typing.TypedDict('C3dMedianFilterParametersTagged', {
+    "@type": typing.Literal["median_filter"],
     "median_filter": str,
 })
 
 
 C3dMergeParameters = typing.TypedDict('C3dMergeParameters', {
-    "@type": typing.Literal["c3d.c3d.merge"],
+    "@type": typing.NotRequired[typing.Literal["merge"]],
+    "merge": str,
+})
+C3dMergeParametersTagged = typing.TypedDict('C3dMergeParametersTagged', {
+    "@type": typing.Literal["merge"],
     "merge": str,
 })
 
 
 C3dMeanFilterParameters = typing.TypedDict('C3dMeanFilterParameters', {
-    "@type": typing.Literal["c3d.c3d.mean_filter"],
+    "@type": typing.NotRequired[typing.Literal["mean_filter"]],
+    "mean_filter": str,
+})
+C3dMeanFilterParametersTagged = typing.TypedDict('C3dMeanFilterParametersTagged', {
+    "@type": typing.Literal["mean_filter"],
     "mean_filter": str,
 })
 
 
 C3dMutualInfoParameters = typing.TypedDict('C3dMutualInfoParameters', {
-    "@type": typing.Literal["c3d.c3d.mutual_info"],
+    "@type": typing.NotRequired[typing.Literal["mutual_info"]],
+    "mutual_info": str,
+})
+C3dMutualInfoParametersTagged = typing.TypedDict('C3dMutualInfoParametersTagged', {
+    "@type": typing.Literal["mutual_info"],
     "mutual_info": str,
 })
 
 
 C3dMinimumParameters = typing.TypedDict('C3dMinimumParameters', {
-    "@type": typing.Literal["c3d.c3d.minimum"],
+    "@type": typing.NotRequired[typing.Literal["minimum"]],
+    "minimum": str,
+})
+C3dMinimumParametersTagged = typing.TypedDict('C3dMinimumParametersTagged', {
+    "@type": typing.Literal["minimum"],
     "minimum": str,
 })
 
 
 C3dMixtureModelParameters = typing.TypedDict('C3dMixtureModelParameters', {
-    "@type": typing.Literal["c3d.c3d.mixture_model"],
+    "@type": typing.NotRequired[typing.Literal["mixture_model"]],
+    "mixture_model": str,
+})
+C3dMixtureModelParametersTagged = typing.TypedDict('C3dMixtureModelParametersTagged', {
+    "@type": typing.Literal["mixture_model"],
     "mixture_model": str,
 })
 
 
 C3dMomentsParameters = typing.TypedDict('C3dMomentsParameters', {
-    "@type": typing.Literal["c3d.c3d.moments"],
+    "@type": typing.NotRequired[typing.Literal["moments"]],
+    "moments": str,
+})
+C3dMomentsParametersTagged = typing.TypedDict('C3dMomentsParametersTagged', {
+    "@type": typing.Literal["moments"],
     "moments": str,
 })
 
 
 C3dMattesMutualInfoParameters = typing.TypedDict('C3dMattesMutualInfoParameters', {
-    "@type": typing.Literal["c3d.c3d.mattes_mutual_info"],
+    "@type": typing.NotRequired[typing.Literal["mattes_mutual_info"]],
+    "mattes_mutual_info": str,
+})
+C3dMattesMutualInfoParametersTagged = typing.TypedDict('C3dMattesMutualInfoParametersTagged', {
+    "@type": typing.Literal["mattes_mutual_info"],
     "mattes_mutual_info": str,
 })
 
 
 C3dMeanSquareParameters = typing.TypedDict('C3dMeanSquareParameters', {
-    "@type": typing.Literal["c3d.c3d.mean_square"],
+    "@type": typing.NotRequired[typing.Literal["mean_square"]],
+    "mean_square": str,
+})
+C3dMeanSquareParametersTagged = typing.TypedDict('C3dMeanSquareParametersTagged', {
+    "@type": typing.Literal["mean_square"],
     "mean_square": str,
 })
 
 
 C3dMultiplyParameters = typing.TypedDict('C3dMultiplyParameters', {
-    "@type": typing.Literal["c3d.c3d.multiply"],
+    "@type": typing.NotRequired[typing.Literal["multiply"]],
+    "multiply": str,
+})
+C3dMultiplyParametersTagged = typing.TypedDict('C3dMultiplyParametersTagged', {
+    "@type": typing.Literal["multiply"],
     "multiply": str,
 })
 
 
 C3dNormalizedCrossCorrelationParameters = typing.TypedDict('C3dNormalizedCrossCorrelationParameters', {
-    "@type": typing.Literal["c3d.c3d.normalized_cross_correlation"],
+    "@type": typing.NotRequired[typing.Literal["normalized_cross_correlation"]],
+    "normalized_cross_correlation": str,
+})
+C3dNormalizedCrossCorrelationParametersTagged = typing.TypedDict('C3dNormalizedCrossCorrelationParametersTagged', {
+    "@type": typing.Literal["normalized_cross_correlation"],
     "normalized_cross_correlation": str,
 })
 
 
 C3dNormalizedCorrelationParameters = typing.TypedDict('C3dNormalizedCorrelationParameters', {
-    "@type": typing.Literal["c3d.c3d.normalized_correlation"],
+    "@type": typing.NotRequired[typing.Literal["normalized_correlation"]],
+    "normalized_correlation": str,
+})
+C3dNormalizedCorrelationParametersTagged = typing.TypedDict('C3dNormalizedCorrelationParametersTagged', {
+    "@type": typing.Literal["normalized_correlation"],
     "normalized_correlation": str,
 })
 
 
 C3dNormalizedMutualInfoParameters = typing.TypedDict('C3dNormalizedMutualInfoParameters', {
-    "@type": typing.Literal["c3d.c3d.normalized_mutual_info"],
+    "@type": typing.NotRequired[typing.Literal["normalized_mutual_info"]],
+    "normalized_mutual_info": str,
+})
+C3dNormalizedMutualInfoParametersTagged = typing.TypedDict('C3dNormalizedMutualInfoParametersTagged', {
+    "@type": typing.Literal["normalized_mutual_info"],
     "normalized_mutual_info": str,
 })
 
 
 C3dNoiseGaussianParameters = typing.TypedDict('C3dNoiseGaussianParameters', {
-    "@type": typing.Literal["c3d.c3d.noise_gaussian"],
+    "@type": typing.NotRequired[typing.Literal["noise_gaussian"]],
+    "noise_gaussian": str,
+})
+C3dNoiseGaussianParametersTagged = typing.TypedDict('C3dNoiseGaussianParametersTagged', {
+    "@type": typing.Literal["noise_gaussian"],
     "noise_gaussian": str,
 })
 
 
 C3dNoisePoissonParameters = typing.TypedDict('C3dNoisePoissonParameters', {
-    "@type": typing.Literal["c3d.c3d.noise_poisson"],
+    "@type": typing.NotRequired[typing.Literal["noise_poisson"]],
+    "noise_poisson": str,
+})
+C3dNoisePoissonParametersTagged = typing.TypedDict('C3dNoisePoissonParametersTagged', {
+    "@type": typing.Literal["noise_poisson"],
     "noise_poisson": str,
 })
 
 
 C3dNoiseSpeckleParameters = typing.TypedDict('C3dNoiseSpeckleParameters', {
-    "@type": typing.Literal["c3d.c3d.noise_speckle"],
+    "@type": typing.NotRequired[typing.Literal["noise_speckle"]],
+    "noise_speckle": str,
+})
+C3dNoiseSpeckleParametersTagged = typing.TypedDict('C3dNoiseSpeckleParametersTagged', {
+    "@type": typing.Literal["noise_speckle"],
     "noise_speckle": str,
 })
 
 
 C3dNoiseSaltPepperParameters = typing.TypedDict('C3dNoiseSaltPepperParameters', {
-    "@type": typing.Literal["c3d.c3d.noise_salt_pepper"],
+    "@type": typing.NotRequired[typing.Literal["noise_salt_pepper"]],
+    "noise_salt_pepper": str,
+})
+C3dNoiseSaltPepperParametersTagged = typing.TypedDict('C3dNoiseSaltPepperParametersTagged', {
+    "@type": typing.Literal["noise_salt_pepper"],
     "noise_salt_pepper": str,
 })
 
 
 C3dNoMulticomponentSplitParameters = typing.TypedDict('C3dNoMulticomponentSplitParameters', {
-    "@type": typing.Literal["c3d.c3d.no_multicomponent_split"],
+    "@type": typing.NotRequired[typing.Literal["no_multicomponent_split"]],
+    "no_multicomponent_split": str,
+})
+C3dNoMulticomponentSplitParametersTagged = typing.TypedDict('C3dNoMulticomponentSplitParametersTagged', {
+    "@type": typing.Literal["no_multicomponent_split"],
     "no_multicomponent_split": str,
 })
 
 
 C3dNormalizeLocalWindowParameters = typing.TypedDict('C3dNormalizeLocalWindowParameters', {
-    "@type": typing.Literal["c3d.c3d.normalize_local_window"],
+    "@type": typing.NotRequired[typing.Literal["normalize_local_window"]],
+    "normalize_local_window": str,
+})
+C3dNormalizeLocalWindowParametersTagged = typing.TypedDict('C3dNormalizeLocalWindowParametersTagged', {
+    "@type": typing.Literal["normalize_local_window"],
     "normalize_local_window": str,
 })
 
 
 C3dNormpdfParameters = typing.TypedDict('C3dNormpdfParameters', {
-    "@type": typing.Literal["c3d.c3d.normpdf"],
+    "@type": typing.NotRequired[typing.Literal["normpdf"]],
+    "normpdf": str,
+})
+C3dNormpdfParametersTagged = typing.TypedDict('C3dNormpdfParametersTagged', {
+    "@type": typing.Literal["normpdf"],
     "normpdf": str,
 })
 
 
 C3dNoroundParameters = typing.TypedDict('C3dNoroundParameters', {
-    "@type": typing.Literal["c3d.c3d.noround"],
+    "@type": typing.NotRequired[typing.Literal["noround"]],
+    "noround": str,
+})
+C3dNoroundParametersTagged = typing.TypedDict('C3dNoroundParametersTagged', {
+    "@type": typing.Literal["noround"],
     "noround": str,
 })
 
 
 C3dNospmParameters = typing.TypedDict('C3dNospmParameters', {
-    "@type": typing.Literal["c3d.c3d.nospm"],
+    "@type": typing.NotRequired[typing.Literal["nospm"]],
+    "nospm": str,
+})
+C3dNospmParametersTagged = typing.TypedDict('C3dNospmParametersTagged', {
+    "@type": typing.Literal["nospm"],
     "nospm": str,
 })
 
 
 C3dOutputParameters = typing.TypedDict('C3dOutputParameters', {
-    "@type": typing.Literal["c3d.c3d.output"],
+    "@type": typing.NotRequired[typing.Literal["output"]],
+    "output": str,
+})
+C3dOutputParametersTagged = typing.TypedDict('C3dOutputParametersTagged', {
+    "@type": typing.Literal["output"],
     "output": str,
 })
 
 
 C3dOutputMulticomponentParameters = typing.TypedDict('C3dOutputMulticomponentParameters', {
-    "@type": typing.Literal["c3d.c3d.output_multicomponent"],
+    "@type": typing.NotRequired[typing.Literal["output_multicomponent"]],
+    "output_multicomponent": str,
+})
+C3dOutputMulticomponentParametersTagged = typing.TypedDict('C3dOutputMulticomponentParametersTagged', {
+    "@type": typing.Literal["output_multicomponent"],
     "output_multicomponent": str,
 })
 
 
 C3dOutputMultipleMulticomponentParameters = typing.TypedDict('C3dOutputMultipleMulticomponentParameters', {
-    "@type": typing.Literal["c3d.c3d.output_multiple_multicomponent"],
+    "@type": typing.NotRequired[typing.Literal["output_multiple_multicomponent"]],
+    "output_multiple_multicomponent": str,
+})
+C3dOutputMultipleMulticomponentParametersTagged = typing.TypedDict('C3dOutputMultipleMulticomponentParametersTagged', {
+    "@type": typing.Literal["output_multiple_multicomponent"],
     "output_multiple_multicomponent": str,
 })
 
 
 C3dOrientParameters = typing.TypedDict('C3dOrientParameters', {
-    "@type": typing.Literal["c3d.c3d.orient"],
+    "@type": typing.NotRequired[typing.Literal["orient"]],
+    "orient": str,
+})
+C3dOrientParametersTagged = typing.TypedDict('C3dOrientParametersTagged', {
+    "@type": typing.Literal["orient"],
     "orient": str,
 })
 
 
 C3dOutputMultipleParameters = typing.TypedDict('C3dOutputMultipleParameters', {
-    "@type": typing.Literal["c3d.c3d.output_multiple"],
+    "@type": typing.NotRequired[typing.Literal["output_multiple"]],
+    "output_multiple": str,
+})
+C3dOutputMultipleParametersTagged = typing.TypedDict('C3dOutputMultipleParametersTagged', {
+    "@type": typing.Literal["output_multiple"],
     "output_multiple": str,
 })
 
 
 C3dOrient1Parameters = typing.TypedDict('C3dOrient1Parameters', {
-    "@type": typing.Literal["c3d.c3d.orient"],
+    "@type": typing.NotRequired[typing.Literal["orient_1"]],
+    "orient": str,
+})
+C3dOrient1ParametersTagged = typing.TypedDict('C3dOrient1ParametersTagged', {
+    "@type": typing.Literal["orient_1"],
     "orient": str,
 })
 
 
 C3dOriginParameters = typing.TypedDict('C3dOriginParameters', {
-    "@type": typing.Literal["c3d.c3d.origin"],
+    "@type": typing.NotRequired[typing.Literal["origin"]],
+    "origin": str,
+})
+C3dOriginParametersTagged = typing.TypedDict('C3dOriginParametersTagged', {
+    "@type": typing.Literal["origin"],
     "origin": str,
 })
 
 
 C3dOriginVoxelParameters = typing.TypedDict('C3dOriginVoxelParameters', {
-    "@type": typing.Literal["c3d.c3d.origin_voxel"],
+    "@type": typing.NotRequired[typing.Literal["origin_voxel"]],
+    "origin_voxel": str,
+})
+C3dOriginVoxelParametersTagged = typing.TypedDict('C3dOriginVoxelParametersTagged', {
+    "@type": typing.Literal["origin_voxel"],
     "origin_voxel": str,
 })
 
 
 C3dOriginVoxelCoordParameters = typing.TypedDict('C3dOriginVoxelCoordParameters', {
-    "@type": typing.Literal["c3d.c3d.origin_voxel_coord"],
+    "@type": typing.NotRequired[typing.Literal["origin_voxel_coord"]],
+    "origin_voxel_coord": str,
+})
+C3dOriginVoxelCoordParametersTagged = typing.TypedDict('C3dOriginVoxelCoordParametersTagged', {
+    "@type": typing.Literal["origin_voxel_coord"],
     "origin_voxel_coord": str,
 })
 
 
 C3dOverlapParameters = typing.TypedDict('C3dOverlapParameters', {
-    "@type": typing.Literal["c3d.c3d.overlap"],
+    "@type": typing.NotRequired[typing.Literal["overlap"]],
+    "overlap": str,
+})
+C3dOverlapParametersTagged = typing.TypedDict('C3dOverlapParametersTagged', {
+    "@type": typing.Literal["overlap"],
     "overlap": str,
 })
 
 
 C3dOverlayLabelImageParameters = typing.TypedDict('C3dOverlayLabelImageParameters', {
-    "@type": typing.Literal["c3d.c3d.overlay_label_image"],
+    "@type": typing.NotRequired[typing.Literal["overlay_label_image"]],
+    "overlay_label_image": str,
+})
+C3dOverlayLabelImageParametersTagged = typing.TypedDict('C3dOverlayLabelImageParametersTagged', {
+    "@type": typing.Literal["overlay_label_image"],
     "overlay_label_image": str,
 })
 
 
 C3dPadParameters = typing.TypedDict('C3dPadParameters', {
-    "@type": typing.Literal["c3d.c3d.pad"],
+    "@type": typing.NotRequired[typing.Literal["pad"]],
+    "pad": str,
+})
+C3dPadParametersTagged = typing.TypedDict('C3dPadParametersTagged', {
+    "@type": typing.Literal["pad"],
     "pad": str,
 })
 
 
 C3dPadToParameters = typing.TypedDict('C3dPadToParameters', {
-    "@type": typing.Literal["c3d.c3d.pad_to"],
+    "@type": typing.NotRequired[typing.Literal["pad_to"]],
+    "pad_to": str,
+})
+C3dPadToParametersTagged = typing.TypedDict('C3dPadToParametersTagged', {
+    "@type": typing.Literal["pad_to"],
     "pad_to": str,
 })
 
 
 C3dPcaParameters = typing.TypedDict('C3dPcaParameters', {
-    "@type": typing.Literal["c3d.c3d.pca"],
+    "@type": typing.NotRequired[typing.Literal["pca"]],
+    "pca": str,
+})
+C3dPcaParametersTagged = typing.TypedDict('C3dPcaParametersTagged', {
+    "@type": typing.Literal["pca"],
     "pca": str,
 })
 
 
 C3dPercentIntensityModeParameters = typing.TypedDict('C3dPercentIntensityModeParameters', {
-    "@type": typing.Literal["c3d.c3d.percent_intensity_mode"],
+    "@type": typing.NotRequired[typing.Literal["percent_intensity_mode"]],
+    "percent_intensity_mode": str,
+})
+C3dPercentIntensityModeParametersTagged = typing.TypedDict('C3dPercentIntensityModeParametersTagged', {
+    "@type": typing.Literal["percent_intensity_mode"],
     "percent_intensity_mode": str,
 })
 
 
 C3dPixelParameters = typing.TypedDict('C3dPixelParameters', {
-    "@type": typing.Literal["c3d.c3d.pixel"],
+    "@type": typing.NotRequired[typing.Literal["pixel"]],
+    "pixel": str,
+})
+C3dPixelParametersTagged = typing.TypedDict('C3dPixelParametersTagged', {
+    "@type": typing.Literal["pixel"],
     "pixel": str,
 })
 
 
 C3dPopParameters = typing.TypedDict('C3dPopParameters', {
-    "@type": typing.Literal["c3d.c3d.pop"],
+    "@type": typing.NotRequired[typing.Literal["pop"]],
+    "pop": str,
+})
+C3dPopParametersTagged = typing.TypedDict('C3dPopParametersTagged', {
+    "@type": typing.Literal["pop"],
     "pop": str,
 })
 
 
 C3dPopasParameters = typing.TypedDict('C3dPopasParameters', {
-    "@type": typing.Literal["c3d.c3d.popas"],
+    "@type": typing.NotRequired[typing.Literal["popas"]],
+    "popas": str,
+})
+C3dPopasParametersTagged = typing.TypedDict('C3dPopasParametersTagged', {
+    "@type": typing.Literal["popas"],
     "popas": str,
 })
 
 
 C3dProbeParameters = typing.TypedDict('C3dProbeParameters', {
-    "@type": typing.Literal["c3d.c3d.probe"],
+    "@type": typing.NotRequired[typing.Literal["probe"]],
+    "probe": str,
+})
+C3dProbeParametersTagged = typing.TypedDict('C3dProbeParametersTagged', {
+    "@type": typing.Literal["probe"],
     "probe": str,
 })
 
 
 C3dPushParameters = typing.TypedDict('C3dPushParameters', {
-    "@type": typing.Literal["c3d.c3d.push"],
+    "@type": typing.NotRequired[typing.Literal["push"]],
+    "push": str,
+})
+C3dPushParametersTagged = typing.TypedDict('C3dPushParametersTagged', {
+    "@type": typing.Literal["push"],
     "push": str,
 })
 
 
 C3dRankParameters = typing.TypedDict('C3dRankParameters', {
-    "@type": typing.Literal["c3d.c3d.rank"],
+    "@type": typing.NotRequired[typing.Literal["rank"]],
+    "rank": str,
+})
+C3dRankParametersTagged = typing.TypedDict('C3dRankParametersTagged', {
+    "@type": typing.Literal["rank"],
     "rank": str,
 })
 
 
 C3dReciprocalParameters = typing.TypedDict('C3dReciprocalParameters', {
-    "@type": typing.Literal["c3d.c3d.reciprocal"],
+    "@type": typing.NotRequired[typing.Literal["reciprocal"]],
+    "reciprocal": str,
+})
+C3dReciprocalParametersTagged = typing.TypedDict('C3dReciprocalParametersTagged', {
+    "@type": typing.Literal["reciprocal"],
     "reciprocal": str,
 })
 
 
 C3dRegionParameters = typing.TypedDict('C3dRegionParameters', {
-    "@type": typing.Literal["c3d.c3d.region"],
+    "@type": typing.NotRequired[typing.Literal["region"]],
+    "region": str,
+})
+C3dRegionParametersTagged = typing.TypedDict('C3dRegionParametersTagged', {
+    "@type": typing.Literal["region"],
     "region": str,
 })
 
 
 C3dReorderParameters = typing.TypedDict('C3dReorderParameters', {
-    "@type": typing.Literal["c3d.c3d.reorder"],
+    "@type": typing.NotRequired[typing.Literal["reorder"]],
+    "reorder": str,
+})
+C3dReorderParametersTagged = typing.TypedDict('C3dReorderParametersTagged', {
+    "@type": typing.Literal["reorder"],
     "reorder": str,
 })
 
 
 C3dRetainLabelsParameters = typing.TypedDict('C3dRetainLabelsParameters', {
-    "@type": typing.Literal["c3d.c3d.retain_labels"],
+    "@type": typing.NotRequired[typing.Literal["retain_labels"]],
+    "retain_labels": str,
+})
+C3dRetainLabelsParametersTagged = typing.TypedDict('C3dRetainLabelsParametersTagged', {
+    "@type": typing.Literal["retain_labels"],
     "retain_labels": str,
 })
 
 
 C3dRfApplyParameters = typing.TypedDict('C3dRfApplyParameters', {
-    "@type": typing.Literal["c3d.c3d.rf_apply"],
+    "@type": typing.NotRequired[typing.Literal["rf_apply"]],
+    "rf_apply": str,
+})
+C3dRfApplyParametersTagged = typing.TypedDict('C3dRfApplyParametersTagged', {
+    "@type": typing.Literal["rf_apply"],
     "rf_apply": str,
 })
 
 
 C3dRfTrainParameters = typing.TypedDict('C3dRfTrainParameters', {
-    "@type": typing.Literal["c3d.c3d.rf_train"],
+    "@type": typing.NotRequired[typing.Literal["rf_train"]],
+    "rf_train": str,
+})
+C3dRfTrainParametersTagged = typing.TypedDict('C3dRfTrainParametersTagged', {
+    "@type": typing.Literal["rf_train"],
     "rf_train": str,
 })
 
 
 C3dRfParamPatchParameters = typing.TypedDict('C3dRfParamPatchParameters', {
-    "@type": typing.Literal["c3d.c3d.rf_param_patch"],
+    "@type": typing.NotRequired[typing.Literal["rf_param_patch"]],
+    "rf_param_patch": str,
+})
+C3dRfParamPatchParametersTagged = typing.TypedDict('C3dRfParamPatchParametersTagged', {
+    "@type": typing.Literal["rf_param_patch"],
     "rf_param_patch": str,
 })
 
 
 C3dRfParamUsexyzParameters = typing.TypedDict('C3dRfParamUsexyzParameters', {
-    "@type": typing.Literal["c3d.c3d.rf_param_usexyz"],
+    "@type": typing.NotRequired[typing.Literal["rf_param_usexyz"]],
+    "rf_param_usexyz": str,
+})
+C3dRfParamUsexyzParametersTagged = typing.TypedDict('C3dRfParamUsexyzParametersTagged', {
+    "@type": typing.Literal["rf_param_usexyz"],
     "rf_param_usexyz": str,
 })
 
 
 C3dRfParamNousexyzParameters = typing.TypedDict('C3dRfParamNousexyzParameters', {
-    "@type": typing.Literal["c3d.c3d.rf_param_nousexyz"],
+    "@type": typing.NotRequired[typing.Literal["rf_param_nousexyz"]],
+    "rf_param_nousexyz": str,
+})
+C3dRfParamNousexyzParametersTagged = typing.TypedDict('C3dRfParamNousexyzParametersTagged', {
+    "@type": typing.Literal["rf_param_nousexyz"],
     "rf_param_nousexyz": str,
 })
 
 
 C3dRfParamNtreesParameters = typing.TypedDict('C3dRfParamNtreesParameters', {
-    "@type": typing.Literal["c3d.c3d.rf_param_ntrees"],
+    "@type": typing.NotRequired[typing.Literal["rf_param_ntrees"]],
+    "rf_param_ntrees": str,
+})
+C3dRfParamNtreesParametersTagged = typing.TypedDict('C3dRfParamNtreesParametersTagged', {
+    "@type": typing.Literal["rf_param_ntrees"],
     "rf_param_ntrees": str,
 })
 
 
 C3dRfParamTreedepthParameters = typing.TypedDict('C3dRfParamTreedepthParameters', {
-    "@type": typing.Literal["c3d.c3d.rf_param_treedepth"],
+    "@type": typing.NotRequired[typing.Literal["rf_param_treedepth"]],
+    "rf_param_treedepth": str,
+})
+C3dRfParamTreedepthParametersTagged = typing.TypedDict('C3dRfParamTreedepthParametersTagged', {
+    "@type": typing.Literal["rf_param_treedepth"],
     "rf_param_treedepth": str,
 })
 
 
 C3dSetSformParameters = typing.TypedDict('C3dSetSformParameters', {
-    "@type": typing.Literal["c3d.c3d.set_sform"],
+    "@type": typing.NotRequired[typing.Literal["set_sform"]],
+    "set_sform": str,
+})
+C3dSetSformParametersTagged = typing.TypedDict('C3dSetSformParametersTagged', {
+    "@type": typing.Literal["set_sform"],
     "set_sform": str,
 })
 
 
 C3dReplaceParameters = typing.TypedDict('C3dReplaceParameters', {
-    "@type": typing.Literal["c3d.c3d.replace"],
+    "@type": typing.NotRequired[typing.Literal["replace"]],
+    "replace": str,
+})
+C3dReplaceParametersTagged = typing.TypedDict('C3dReplaceParametersTagged', {
+    "@type": typing.Literal["replace"],
     "replace": str,
 })
 
 
 C3dResampleParameters = typing.TypedDict('C3dResampleParameters', {
-    "@type": typing.Literal["c3d.c3d.resample"],
+    "@type": typing.NotRequired[typing.Literal["resample"]],
+    "resample": str,
+})
+C3dResampleParametersTagged = typing.TypedDict('C3dResampleParametersTagged', {
+    "@type": typing.Literal["resample"],
     "resample": str,
 })
 
 
 C3dResampleIsoParameters = typing.TypedDict('C3dResampleIsoParameters', {
-    "@type": typing.Literal["c3d.c3d.resample_iso"],
+    "@type": typing.NotRequired[typing.Literal["resample_iso"]],
+    "resample_iso": str,
+})
+C3dResampleIsoParametersTagged = typing.TypedDict('C3dResampleIsoParametersTagged', {
+    "@type": typing.Literal["resample_iso"],
     "resample_iso": str,
 })
 
 
 C3dResampleMmParameters = typing.TypedDict('C3dResampleMmParameters', {
-    "@type": typing.Literal["c3d.c3d.resample_mm"],
+    "@type": typing.NotRequired[typing.Literal["resample_mm"]],
+    "resample_mm": str,
+})
+C3dResampleMmParametersTagged = typing.TypedDict('C3dResampleMmParametersTagged', {
+    "@type": typing.Literal["resample_mm"],
     "resample_mm": str,
 })
 
 
 C3dResliceItkParameters = typing.TypedDict('C3dResliceItkParameters', {
-    "@type": typing.Literal["c3d.c3d.reslice_itk"],
+    "@type": typing.NotRequired[typing.Literal["reslice_itk"]],
+    "reslice_itk": str,
+})
+C3dResliceItkParametersTagged = typing.TypedDict('C3dResliceItkParametersTagged', {
+    "@type": typing.Literal["reslice_itk"],
     "reslice_itk": str,
 })
 
 
 C3dResliceMatrixParameters = typing.TypedDict('C3dResliceMatrixParameters', {
-    "@type": typing.Literal["c3d.c3d.reslice_matrix"],
+    "@type": typing.NotRequired[typing.Literal["reslice_matrix"]],
+    "reslice_matrix": str,
+})
+C3dResliceMatrixParametersTagged = typing.TypedDict('C3dResliceMatrixParametersTagged', {
+    "@type": typing.Literal["reslice_matrix"],
     "reslice_matrix": str,
 })
 
 
 C3dResliceIdentityParameters = typing.TypedDict('C3dResliceIdentityParameters', {
-    "@type": typing.Literal["c3d.c3d.reslice_identity"],
+    "@type": typing.NotRequired[typing.Literal["reslice_identity"]],
+    "reslice_identity": str,
+})
+C3dResliceIdentityParametersTagged = typing.TypedDict('C3dResliceIdentityParametersTagged', {
+    "@type": typing.Literal["reslice_identity"],
     "reslice_identity": str,
 })
 
 
 C3dRgb2hsvParameters = typing.TypedDict('C3dRgb2hsvParameters', {
-    "@type": typing.Literal["c3d.c3d.rgb2hsv"],
+    "@type": typing.NotRequired[typing.Literal["rgb2hsv"]],
+    "rgb2hsv": str,
+})
+C3dRgb2hsvParametersTagged = typing.TypedDict('C3dRgb2hsvParametersTagged', {
+    "@type": typing.Literal["rgb2hsv"],
     "rgb2hsv": str,
 })
 
 
 C3dRmsParameters = typing.TypedDict('C3dRmsParameters', {
-    "@type": typing.Literal["c3d.c3d.rms"],
+    "@type": typing.NotRequired[typing.Literal["rms"]],
+    "rms": str,
+})
+C3dRmsParametersTagged = typing.TypedDict('C3dRmsParametersTagged', {
+    "@type": typing.Literal["rms"],
     "rms": str,
 })
 
 
 C3dRoundParameters = typing.TypedDict('C3dRoundParameters', {
-    "@type": typing.Literal["c3d.c3d.round"],
+    "@type": typing.NotRequired[typing.Literal["round"]],
+    "round": str,
+})
+C3dRoundParametersTagged = typing.TypedDict('C3dRoundParametersTagged', {
+    "@type": typing.Literal["round"],
     "round": str,
 })
 
 
 C3dScaleParameters = typing.TypedDict('C3dScaleParameters', {
-    "@type": typing.Literal["c3d.c3d.scale"],
+    "@type": typing.NotRequired[typing.Literal["scale"]],
+    "scale": str,
+})
+C3dScaleParametersTagged = typing.TypedDict('C3dScaleParametersTagged', {
+    "@type": typing.Literal["scale"],
     "scale": str,
 })
 
 
 C3dSetSform1Parameters = typing.TypedDict('C3dSetSform1Parameters', {
-    "@type": typing.Literal["c3d.c3d.set_sform"],
+    "@type": typing.NotRequired[typing.Literal["set_sform_1"]],
+    "set_sform": str,
+})
+C3dSetSform1ParametersTagged = typing.TypedDict('C3dSetSform1ParametersTagged', {
+    "@type": typing.Literal["set_sform_1"],
     "set_sform": str,
 })
 
 
 C3dSinParameters = typing.TypedDict('C3dSinParameters', {
-    "@type": typing.Literal["c3d.c3d.sin"],
+    "@type": typing.NotRequired[typing.Literal["sin"]],
+    "sin": str,
+})
+C3dSinParametersTagged = typing.TypedDict('C3dSinParametersTagged', {
+    "@type": typing.Literal["sin"],
     "sin": str,
 })
 
 
 C3dSliceParameters = typing.TypedDict('C3dSliceParameters', {
-    "@type": typing.Literal["c3d.c3d.slice"],
+    "@type": typing.NotRequired[typing.Literal["slice"]],
+    "slice": str,
+})
+C3dSliceParametersTagged = typing.TypedDict('C3dSliceParametersTagged', {
+    "@type": typing.Literal["slice"],
     "slice": str,
 })
 
 
 C3dSliceAllParameters = typing.TypedDict('C3dSliceAllParameters', {
-    "@type": typing.Literal["c3d.c3d.slice_all"],
+    "@type": typing.NotRequired[typing.Literal["slice_all"]],
+    "slice_all": str,
+})
+C3dSliceAllParametersTagged = typing.TypedDict('C3dSliceAllParametersTagged', {
+    "@type": typing.Literal["slice_all"],
     "slice_all": str,
 })
 
 
 C3dSharpenParameters = typing.TypedDict('C3dSharpenParameters', {
-    "@type": typing.Literal["c3d.c3d.sharpen"],
+    "@type": typing.NotRequired[typing.Literal["sharpen"]],
+    "sharpen": str,
+})
+C3dSharpenParametersTagged = typing.TypedDict('C3dSharpenParametersTagged', {
+    "@type": typing.Literal["sharpen"],
     "sharpen": str,
 })
 
 
 C3dShiftParameters = typing.TypedDict('C3dShiftParameters', {
-    "@type": typing.Literal["c3d.c3d.shift"],
+    "@type": typing.NotRequired[typing.Literal["shift"]],
+    "shift": str,
+})
+C3dShiftParametersTagged = typing.TypedDict('C3dShiftParametersTagged', {
+    "@type": typing.Literal["shift"],
     "shift": str,
 })
 
 
 C3dSignedDistanceTransformParameters = typing.TypedDict('C3dSignedDistanceTransformParameters', {
-    "@type": typing.Literal["c3d.c3d.signed_distance_transform"],
+    "@type": typing.NotRequired[typing.Literal["signed_distance_transform"]],
+    "signed_distance_transform": str,
+})
+C3dSignedDistanceTransformParametersTagged = typing.TypedDict('C3dSignedDistanceTransformParametersTagged', {
+    "@type": typing.Literal["signed_distance_transform"],
     "signed_distance_transform": str,
 })
 
 
 C3dSmoothParameters = typing.TypedDict('C3dSmoothParameters', {
-    "@type": typing.Literal["c3d.c3d.smooth"],
+    "@type": typing.NotRequired[typing.Literal["smooth"]],
+    "smooth": str,
+})
+C3dSmoothParametersTagged = typing.TypedDict('C3dSmoothParametersTagged', {
+    "@type": typing.Literal["smooth"],
     "smooth": str,
 })
 
 
 C3dSmoothFastParameters = typing.TypedDict('C3dSmoothFastParameters', {
-    "@type": typing.Literal["c3d.c3d.smooth_fast"],
+    "@type": typing.NotRequired[typing.Literal["smooth_fast"]],
+    "smooth_fast": str,
+})
+C3dSmoothFastParametersTagged = typing.TypedDict('C3dSmoothFastParametersTagged', {
+    "@type": typing.Literal["smooth_fast"],
     "smooth_fast": str,
 })
 
 
 C3dSpacingParameters = typing.TypedDict('C3dSpacingParameters', {
-    "@type": typing.Literal["c3d.c3d.spacing"],
+    "@type": typing.NotRequired[typing.Literal["spacing"]],
+    "spacing": str,
+})
+C3dSpacingParametersTagged = typing.TypedDict('C3dSpacingParametersTagged', {
+    "@type": typing.Literal["spacing"],
     "spacing": str,
 })
 
 
 C3dSplitParameters = typing.TypedDict('C3dSplitParameters', {
-    "@type": typing.Literal["c3d.c3d.split"],
+    "@type": typing.NotRequired[typing.Literal["split"]],
+    "split": str,
+})
+C3dSplitParametersTagged = typing.TypedDict('C3dSplitParametersTagged', {
+    "@type": typing.Literal["split"],
     "split": str,
 })
 
 
 C3dSqrtParameters = typing.TypedDict('C3dSqrtParameters', {
-    "@type": typing.Literal["c3d.c3d.sqrt"],
+    "@type": typing.NotRequired[typing.Literal["sqrt"]],
+    "sqrt": str,
+})
+C3dSqrtParametersTagged = typing.TypedDict('C3dSqrtParametersTagged', {
+    "@type": typing.Literal["sqrt"],
     "sqrt": str,
 })
 
 
 C3dStapleParameters = typing.TypedDict('C3dStapleParameters', {
-    "@type": typing.Literal["c3d.c3d.staple"],
+    "@type": typing.NotRequired[typing.Literal["staple"]],
+    "staple": str,
+})
+C3dStapleParametersTagged = typing.TypedDict('C3dStapleParametersTagged', {
+    "@type": typing.Literal["staple"],
     "staple": str,
 })
 
 
 C3dStructureTensorEigenvaluesParameters = typing.TypedDict('C3dStructureTensorEigenvaluesParameters', {
-    "@type": typing.Literal["c3d.c3d.structure_tensor_eigenvalues"],
+    "@type": typing.NotRequired[typing.Literal["structure_tensor_eigenvalues"]],
+    "structure_tensor_eigenvalues": str,
+})
+C3dStructureTensorEigenvaluesParametersTagged = typing.TypedDict('C3dStructureTensorEigenvaluesParametersTagged', {
+    "@type": typing.Literal["structure_tensor_eigenvalues"],
     "structure_tensor_eigenvalues": str,
 })
 
 
 C3dSpmParameters = typing.TypedDict('C3dSpmParameters', {
-    "@type": typing.Literal["c3d.c3d.spm"],
+    "@type": typing.NotRequired[typing.Literal["spm"]],
+    "spm": str,
+})
+C3dSpmParametersTagged = typing.TypedDict('C3dSpmParametersTagged', {
+    "@type": typing.Literal["spm"],
     "spm": str,
 })
 
 
 C3dSubtractParameters = typing.TypedDict('C3dSubtractParameters', {
-    "@type": typing.Literal["c3d.c3d.subtract"],
+    "@type": typing.NotRequired[typing.Literal["subtract"]],
+    "subtract": str,
+})
+C3dSubtractParametersTagged = typing.TypedDict('C3dSubtractParametersTagged', {
+    "@type": typing.Literal["subtract"],
     "subtract": str,
 })
 
 
 C3dSupervoxelParameters = typing.TypedDict('C3dSupervoxelParameters', {
-    "@type": typing.Literal["c3d.c3d.supervoxel"],
+    "@type": typing.NotRequired[typing.Literal["supervoxel"]],
+    "supervoxel": str,
+})
+C3dSupervoxelParametersTagged = typing.TypedDict('C3dSupervoxelParametersTagged', {
+    "@type": typing.Literal["supervoxel"],
     "supervoxel": str,
 })
 
 
 C3dStretchParameters = typing.TypedDict('C3dStretchParameters', {
-    "@type": typing.Literal["c3d.c3d.stretch"],
+    "@type": typing.NotRequired[typing.Literal["stretch"]],
+    "stretch": str,
+})
+C3dStretchParametersTagged = typing.TypedDict('C3dStretchParametersTagged', {
+    "@type": typing.Literal["stretch"],
     "stretch": str,
 })
 
 
 C3dSwapdimParameters = typing.TypedDict('C3dSwapdimParameters', {
-    "@type": typing.Literal["c3d.c3d.swapdim"],
+    "@type": typing.NotRequired[typing.Literal["swapdim"]],
+    "swapdim": str,
+})
+C3dSwapdimParametersTagged = typing.TypedDict('C3dSwapdimParametersTagged', {
+    "@type": typing.Literal["swapdim"],
     "swapdim": str,
 })
 
 
 C3dTestImageParameters = typing.TypedDict('C3dTestImageParameters', {
-    "@type": typing.Literal["c3d.c3d.test_image"],
+    "@type": typing.NotRequired[typing.Literal["test_image"]],
+    "test_image": str,
+})
+C3dTestImageParametersTagged = typing.TypedDict('C3dTestImageParametersTagged', {
+    "@type": typing.Literal["test_image"],
     "test_image": str,
 })
 
 
 C3dTestProbeParameters = typing.TypedDict('C3dTestProbeParameters', {
-    "@type": typing.Literal["c3d.c3d.test_probe"],
+    "@type": typing.NotRequired[typing.Literal["test_probe"]],
+    "test_probe": str,
+})
+C3dTestProbeParametersTagged = typing.TypedDict('C3dTestProbeParametersTagged', {
+    "@type": typing.Literal["test_probe"],
     "test_probe": str,
 })
 
 
 C3dThresholdParameters = typing.TypedDict('C3dThresholdParameters', {
-    "@type": typing.Literal["c3d.c3d.threshold"],
+    "@type": typing.NotRequired[typing.Literal["threshold"]],
+    "threshold": str,
+})
+C3dThresholdParametersTagged = typing.TypedDict('C3dThresholdParametersTagged', {
+    "@type": typing.Literal["threshold"],
     "threshold": str,
 })
 
 
 C3dTileParameters = typing.TypedDict('C3dTileParameters', {
-    "@type": typing.Literal["c3d.c3d.tile"],
+    "@type": typing.NotRequired[typing.Literal["tile"]],
+    "tile": str,
+})
+C3dTileParametersTagged = typing.TypedDict('C3dTileParametersTagged', {
+    "@type": typing.Literal["tile"],
     "tile": str,
 })
 
 
 C3dTrimParameters = typing.TypedDict('C3dTrimParameters', {
-    "@type": typing.Literal["c3d.c3d.trim"],
+    "@type": typing.NotRequired[typing.Literal["trim"]],
+    "trim": str,
+})
+C3dTrimParametersTagged = typing.TypedDict('C3dTrimParametersTagged', {
+    "@type": typing.Literal["trim"],
     "trim": str,
 })
 
 
 C3dTrimToSizeParameters = typing.TypedDict('C3dTrimToSizeParameters', {
-    "@type": typing.Literal["c3d.c3d.trim_to_size"],
+    "@type": typing.NotRequired[typing.Literal["trim_to_size"]],
+    "trim_to_size": str,
+})
+C3dTrimToSizeParametersTagged = typing.TypedDict('C3dTrimToSizeParametersTagged', {
+    "@type": typing.Literal["trim_to_size"],
     "trim_to_size": str,
 })
 
 
 C3dTypeParameters = typing.TypedDict('C3dTypeParameters', {
-    "@type": typing.Literal["c3d.c3d.type"],
+    "@type": typing.NotRequired[typing.Literal["type"]],
+    "type": str,
+})
+C3dTypeParametersTagged = typing.TypedDict('C3dTypeParametersTagged', {
+    "@type": typing.Literal["type"],
     "type": str,
 })
 
 
 C3dVerboseParameters = typing.TypedDict('C3dVerboseParameters', {
-    "@type": typing.Literal["c3d.c3d.verbose"],
+    "@type": typing.NotRequired[typing.Literal["verbose"]],
+    "verbose": str,
+})
+C3dVerboseParametersTagged = typing.TypedDict('C3dVerboseParametersTagged', {
+    "@type": typing.Literal["verbose"],
     "verbose": str,
 })
 
 
 C3dNoverboseParameters = typing.TypedDict('C3dNoverboseParameters', {
-    "@type": typing.Literal["c3d.c3d.noverbose"],
+    "@type": typing.NotRequired[typing.Literal["noverbose"]],
+    "noverbose": str,
+})
+C3dNoverboseParametersTagged = typing.TypedDict('C3dNoverboseParametersTagged', {
+    "@type": typing.Literal["noverbose"],
     "noverbose": str,
 })
 
 
 C3dVersionParameters = typing.TypedDict('C3dVersionParameters', {
-    "@type": typing.Literal["c3d.c3d.version"],
+    "@type": typing.NotRequired[typing.Literal["version"]],
+    "version": str,
+})
+C3dVersionParametersTagged = typing.TypedDict('C3dVersionParametersTagged', {
+    "@type": typing.Literal["version"],
     "version": str,
 })
 
 
 C3dVoteParameters = typing.TypedDict('C3dVoteParameters', {
-    "@type": typing.Literal["c3d.c3d.vote"],
+    "@type": typing.NotRequired[typing.Literal["vote"]],
+    "vote": str,
+})
+C3dVoteParametersTagged = typing.TypedDict('C3dVoteParametersTagged', {
+    "@type": typing.Literal["vote"],
     "vote": str,
 })
 
 
 C3dVoteMrfParameters = typing.TypedDict('C3dVoteMrfParameters', {
-    "@type": typing.Literal["c3d.c3d.vote_mrf"],
+    "@type": typing.NotRequired[typing.Literal["vote_mrf"]],
+    "vote_mrf": str,
+})
+C3dVoteMrfParametersTagged = typing.TypedDict('C3dVoteMrfParametersTagged', {
+    "@type": typing.Literal["vote_mrf"],
     "vote_mrf": str,
 })
 
 
 C3dVoteLabelParameters = typing.TypedDict('C3dVoteLabelParameters', {
-    "@type": typing.Literal["c3d.c3d.vote_label"],
+    "@type": typing.NotRequired[typing.Literal["vote_label"]],
+    "vote_label": str,
+})
+C3dVoteLabelParametersTagged = typing.TypedDict('C3dVoteLabelParametersTagged', {
+    "@type": typing.Literal["vote_label"],
     "vote_label": str,
 })
 
 
 C3dVoxelSumParameters = typing.TypedDict('C3dVoxelSumParameters', {
-    "@type": typing.Literal["c3d.c3d.voxel_sum"],
+    "@type": typing.NotRequired[typing.Literal["voxel_sum"]],
+    "voxel_sum": str,
+})
+C3dVoxelSumParametersTagged = typing.TypedDict('C3dVoxelSumParametersTagged', {
+    "@type": typing.Literal["voxel_sum"],
     "voxel_sum": str,
 })
 
 
 C3dVoxelIntegralParameters = typing.TypedDict('C3dVoxelIntegralParameters', {
-    "@type": typing.Literal["c3d.c3d.voxel_integral"],
+    "@type": typing.NotRequired[typing.Literal["voxel_integral"]],
+    "voxel_integral": str,
+})
+C3dVoxelIntegralParametersTagged = typing.TypedDict('C3dVoxelIntegralParametersTagged', {
+    "@type": typing.Literal["voxel_integral"],
     "voxel_integral": str,
 })
 
 
 C3dVoxelwiseRegressionParameters = typing.TypedDict('C3dVoxelwiseRegressionParameters', {
-    "@type": typing.Literal["c3d.c3d.voxelwise_regression"],
+    "@type": typing.NotRequired[typing.Literal["voxelwise_regression"]],
+    "voxelwise_regression": str,
+})
+C3dVoxelwiseRegressionParametersTagged = typing.TypedDict('C3dVoxelwiseRegressionParametersTagged', {
+    "@type": typing.Literal["voxelwise_regression"],
     "voxelwise_regression": str,
 })
 
 
 C3dWarpParameters = typing.TypedDict('C3dWarpParameters', {
-    "@type": typing.Literal["c3d.c3d.warp"],
+    "@type": typing.NotRequired[typing.Literal["warp"]],
+    "warp": str,
+})
+C3dWarpParametersTagged = typing.TypedDict('C3dWarpParametersTagged', {
+    "@type": typing.Literal["warp"],
     "warp": str,
 })
 
 
 C3dWarpLabelParameters = typing.TypedDict('C3dWarpLabelParameters', {
-    "@type": typing.Literal["c3d.c3d.warp_label"],
+    "@type": typing.NotRequired[typing.Literal["warp_label"]],
+    "warp_label": str,
+})
+C3dWarpLabelParametersTagged = typing.TypedDict('C3dWarpLabelParametersTagged', {
+    "@type": typing.Literal["warp_label"],
     "warp_label": str,
 })
 
 
 C3dWrapParameters = typing.TypedDict('C3dWrapParameters', {
-    "@type": typing.Literal["c3d.c3d.wrap"],
+    "@type": typing.NotRequired[typing.Literal["wrap"]],
+    "wrap": str,
+})
+C3dWrapParametersTagged = typing.TypedDict('C3dWrapParametersTagged', {
+    "@type": typing.Literal["wrap"],
     "wrap": str,
 })
 
 
 C3dWeightedSumParameters = typing.TypedDict('C3dWeightedSumParameters', {
-    "@type": typing.Literal["c3d.c3d.weighted_sum"],
+    "@type": typing.NotRequired[typing.Literal["weighted_sum"]],
+    "weighted_sum": str,
+})
+C3dWeightedSumParametersTagged = typing.TypedDict('C3dWeightedSumParametersTagged', {
+    "@type": typing.Literal["weighted_sum"],
     "weighted_sum": str,
 })
 
 
 C3dWeightedSumVoxelwiseParameters = typing.TypedDict('C3dWeightedSumVoxelwiseParameters', {
-    "@type": typing.Literal["c3d.c3d.weighted_sum_voxelwise"],
+    "@type": typing.NotRequired[typing.Literal["weighted_sum_voxelwise"]],
+    "weighted_sum_voxelwise": str,
+})
+C3dWeightedSumVoxelwiseParametersTagged = typing.TypedDict('C3dWeightedSumVoxelwiseParametersTagged', {
+    "@type": typing.Literal["weighted_sum_voxelwise"],
     "weighted_sum_voxelwise": str,
 })
 
 
 C3dParameters = typing.TypedDict('C3dParameters', {
-    "@type": typing.Literal["c3d.c3d"],
+    "@type": typing.NotRequired[typing.Literal["c3d/c3d"]],
     "input": list[InputPathType],
-    "operations": list[typing.Union[C3dAccumParameters, C3dAcosParameters, C3dAddParameters, C3dAlignLandmarksParameters, C3dAnisotropicDiffusionParameters, C3dAntialiasParameters, C3dSetParameters, C3dAsinParameters, C3dAtan2Parameters, C3dBackgroundParameters, C3dN4BiasCorrectionParameters, C3dBinarizeParameters, C3dCannyParameters, C3dCeilParameters, C3dCentroidParameters, C3dCentroidMarkParameters, C3dConnectedComponentsParameters, C3dClearParameters, C3dClipParameters, C3dColorMapParameters, C3dCompressParameters, C3dNoCompressParameters, C3dConvParameters, C3dCoordinateMapVoxelParameters, C3dCoordinateMapPhysicalParameters, C3dCopyTransformParameters, C3dCosParameters, C3dCreateParameters, C3dDicomSeriesListParameters, C3dDicomSeriesReadParameters, C3dDilateParameters, C3dDivideParameters, C3dDuplicateParameters, C3dEndaccumParameters, C3dEndforParameters, C3dErodeParameters, C3dErfParameters, C3dExpParameters, C3dExportPatchesParameters, C3dExportPatchesAugParameters, C3dExtrudeSegParameters, C3dFillBackgroundWithNoiseParameters, C3dFftParameters, C3dFlipParameters, C3dFloorParameters, C3dForeachParameters, C3dForeachCompParameters, C3dGlmParameters, C3dGradientParameters, C3dHelpParameters, C3dHolefillParameters, C3dHessianEigenvaluesParameters, C3dHessianObjectnessParameters, C3dHistogramMatchParameters, C3dInfoParameters, C3dInfoFullParameters, C3dInsertParameters, C3dInterpolationParameters, C3dIterationsParameters, C3dLabelOverlapParameters, C3dLabelStatisticsParameters, C3dLandmarksToSpheresParameters, C3dLaplacianParameters, C3dLevelsetParameters, C3dLevelsetCurvatureParameters, C3dLevelsetAdvectionParameters, C3dLogParameters, C3dLog10Parameters, C3dManualParameters, C3dMatchBoundingBoxParameters, C3dMaximumParameters, C3dMulticomponentSplitParameters, C3dMeanParameters, C3dMedianFilterParameters, C3dMergeParameters, C3dMeanFilterParameters, C3dMutualInfoParameters, C3dMinimumParameters, C3dMixtureModelParameters, C3dMomentsParameters, C3dMattesMutualInfoParameters, C3dMeanSquareParameters, C3dMultiplyParameters, C3dNormalizedCrossCorrelationParameters, C3dNormalizedCorrelationParameters, C3dNormalizedMutualInfoParameters, C3dNoiseGaussianParameters, C3dNoisePoissonParameters, C3dNoiseSpeckleParameters, C3dNoiseSaltPepperParameters, C3dNoMulticomponentSplitParameters, C3dNormalizeLocalWindowParameters, C3dNormpdfParameters, C3dNoroundParameters, C3dNospmParameters, C3dOutputParameters, C3dOutputMulticomponentParameters, C3dOutputMultipleMulticomponentParameters, C3dOrientParameters, C3dOutputMultipleParameters, C3dOrient1Parameters, C3dOriginParameters, C3dOriginVoxelParameters, C3dOriginVoxelCoordParameters, C3dOverlapParameters, C3dOverlayLabelImageParameters, C3dPadParameters, C3dPadToParameters, C3dPcaParameters, C3dPercentIntensityModeParameters, C3dPixelParameters, C3dPopParameters, C3dPopasParameters, C3dProbeParameters, C3dPushParameters, C3dRankParameters, C3dReciprocalParameters, C3dRegionParameters, C3dReorderParameters, C3dRetainLabelsParameters, C3dRfApplyParameters, C3dRfTrainParameters, C3dRfParamPatchParameters, C3dRfParamUsexyzParameters, C3dRfParamNousexyzParameters, C3dRfParamNtreesParameters, C3dRfParamTreedepthParameters, C3dSetSformParameters, C3dReplaceParameters, C3dResampleParameters, C3dResampleIsoParameters, C3dResampleMmParameters, C3dResliceItkParameters, C3dResliceMatrixParameters, C3dResliceIdentityParameters, C3dRgb2hsvParameters, C3dRmsParameters, C3dRoundParameters, C3dScaleParameters, C3dSetSform1Parameters, C3dSinParameters, C3dSliceParameters, C3dSliceAllParameters, C3dSharpenParameters, C3dShiftParameters, C3dSignedDistanceTransformParameters, C3dSmoothParameters, C3dSmoothFastParameters, C3dSpacingParameters, C3dSplitParameters, C3dSqrtParameters, C3dStapleParameters, C3dStructureTensorEigenvaluesParameters, C3dSpmParameters, C3dSubtractParameters, C3dSupervoxelParameters, C3dStretchParameters, C3dSwapdimParameters, C3dTestImageParameters, C3dTestProbeParameters, C3dThresholdParameters, C3dTileParameters, C3dTrimParameters, C3dTrimToSizeParameters, C3dTypeParameters, C3dVerboseParameters, C3dNoverboseParameters, C3dVersionParameters, C3dVoteParameters, C3dVoteMrfParameters, C3dVoteLabelParameters, C3dVoxelSumParameters, C3dVoxelIntegralParameters, C3dVoxelwiseRegressionParameters, C3dWarpParameters, C3dWarpLabelParameters, C3dWrapParameters, C3dWeightedSumParameters, C3dWeightedSumVoxelwiseParameters]],
+    "operations": list[typing.Union[C3dAccumParametersTagged, C3dAcosParametersTagged, C3dAddParametersTagged, C3dAlignLandmarksParametersTagged, C3dAnisotropicDiffusionParametersTagged, C3dAntialiasParametersTagged, C3dSetParametersTagged, C3dAsinParametersTagged, C3dAtan2ParametersTagged, C3dBackgroundParametersTagged, C3dN4BiasCorrectionParametersTagged, C3dBinarizeParametersTagged, C3dCannyParametersTagged, C3dCeilParametersTagged, C3dCentroidParametersTagged, C3dCentroidMarkParametersTagged, C3dConnectedComponentsParametersTagged, C3dClearParametersTagged, C3dClipParametersTagged, C3dColorMapParametersTagged, C3dCompressParametersTagged, C3dNoCompressParametersTagged, C3dConvParametersTagged, C3dCoordinateMapVoxelParametersTagged, C3dCoordinateMapPhysicalParametersTagged, C3dCopyTransformParametersTagged, C3dCosParametersTagged, C3dCreateParametersTagged, C3dDicomSeriesListParametersTagged, C3dDicomSeriesReadParametersTagged, C3dDilateParametersTagged, C3dDivideParametersTagged, C3dDuplicateParametersTagged, C3dEndaccumParametersTagged, C3dEndforParametersTagged, C3dErodeParametersTagged, C3dErfParametersTagged, C3dExpParametersTagged, C3dExportPatchesParametersTagged, C3dExportPatchesAugParametersTagged, C3dExtrudeSegParametersTagged, C3dFillBackgroundWithNoiseParametersTagged, C3dFftParametersTagged, C3dFlipParametersTagged, C3dFloorParametersTagged, C3dForeachParametersTagged, C3dForeachCompParametersTagged, C3dGlmParametersTagged, C3dGradientParametersTagged, C3dHelpParametersTagged, C3dHolefillParametersTagged, C3dHessianEigenvaluesParametersTagged, C3dHessianObjectnessParametersTagged, C3dHistogramMatchParametersTagged, C3dInfoParametersTagged, C3dInfoFullParametersTagged, C3dInsertParametersTagged, C3dInterpolationParametersTagged, C3dIterationsParametersTagged, C3dLabelOverlapParametersTagged, C3dLabelStatisticsParametersTagged, C3dLandmarksToSpheresParametersTagged, C3dLaplacianParametersTagged, C3dLevelsetParametersTagged, C3dLevelsetCurvatureParametersTagged, C3dLevelsetAdvectionParametersTagged, C3dLogParametersTagged, C3dLog10ParametersTagged, C3dManualParametersTagged, C3dMatchBoundingBoxParametersTagged, C3dMaximumParametersTagged, C3dMulticomponentSplitParametersTagged, C3dMeanParametersTagged, C3dMedianFilterParametersTagged, C3dMergeParametersTagged, C3dMeanFilterParametersTagged, C3dMutualInfoParametersTagged, C3dMinimumParametersTagged, C3dMixtureModelParametersTagged, C3dMomentsParametersTagged, C3dMattesMutualInfoParametersTagged, C3dMeanSquareParametersTagged, C3dMultiplyParametersTagged, C3dNormalizedCrossCorrelationParametersTagged, C3dNormalizedCorrelationParametersTagged, C3dNormalizedMutualInfoParametersTagged, C3dNoiseGaussianParametersTagged, C3dNoisePoissonParametersTagged, C3dNoiseSpeckleParametersTagged, C3dNoiseSaltPepperParametersTagged, C3dNoMulticomponentSplitParametersTagged, C3dNormalizeLocalWindowParametersTagged, C3dNormpdfParametersTagged, C3dNoroundParametersTagged, C3dNospmParametersTagged, C3dOutputParametersTagged, C3dOutputMulticomponentParametersTagged, C3dOutputMultipleMulticomponentParametersTagged, C3dOrientParametersTagged, C3dOutputMultipleParametersTagged, C3dOrient1ParametersTagged, C3dOriginParametersTagged, C3dOriginVoxelParametersTagged, C3dOriginVoxelCoordParametersTagged, C3dOverlapParametersTagged, C3dOverlayLabelImageParametersTagged, C3dPadParametersTagged, C3dPadToParametersTagged, C3dPcaParametersTagged, C3dPercentIntensityModeParametersTagged, C3dPixelParametersTagged, C3dPopParametersTagged, C3dPopasParametersTagged, C3dProbeParametersTagged, C3dPushParametersTagged, C3dRankParametersTagged, C3dReciprocalParametersTagged, C3dRegionParametersTagged, C3dReorderParametersTagged, C3dRetainLabelsParametersTagged, C3dRfApplyParametersTagged, C3dRfTrainParametersTagged, C3dRfParamPatchParametersTagged, C3dRfParamUsexyzParametersTagged, C3dRfParamNousexyzParametersTagged, C3dRfParamNtreesParametersTagged, C3dRfParamTreedepthParametersTagged, C3dSetSformParametersTagged, C3dReplaceParametersTagged, C3dResampleParametersTagged, C3dResampleIsoParametersTagged, C3dResampleMmParametersTagged, C3dResliceItkParametersTagged, C3dResliceMatrixParametersTagged, C3dResliceIdentityParametersTagged, C3dRgb2hsvParametersTagged, C3dRmsParametersTagged, C3dRoundParametersTagged, C3dScaleParametersTagged, C3dSetSform1ParametersTagged, C3dSinParametersTagged, C3dSliceParametersTagged, C3dSliceAllParametersTagged, C3dSharpenParametersTagged, C3dShiftParametersTagged, C3dSignedDistanceTransformParametersTagged, C3dSmoothParametersTagged, C3dSmoothFastParametersTagged, C3dSpacingParametersTagged, C3dSplitParametersTagged, C3dSqrtParametersTagged, C3dStapleParametersTagged, C3dStructureTensorEigenvaluesParametersTagged, C3dSpmParametersTagged, C3dSubtractParametersTagged, C3dSupervoxelParametersTagged, C3dStretchParametersTagged, C3dSwapdimParametersTagged, C3dTestImageParametersTagged, C3dTestProbeParametersTagged, C3dThresholdParametersTagged, C3dTileParametersTagged, C3dTrimParametersTagged, C3dTrimToSizeParametersTagged, C3dTypeParametersTagged, C3dVerboseParametersTagged, C3dNoverboseParametersTagged, C3dVersionParametersTagged, C3dVoteParametersTagged, C3dVoteMrfParametersTagged, C3dVoteLabelParametersTagged, C3dVoxelSumParametersTagged, C3dVoxelIntegralParametersTagged, C3dVoxelwiseRegressionParametersTagged, C3dWarpParametersTagged, C3dWarpLabelParametersTagged, C3dWrapParametersTagged, C3dWeightedSumParametersTagged, C3dWeightedSumVoxelwiseParametersTagged]],
+    "output": str,
+})
+C3dParametersTagged = typing.TypedDict('C3dParametersTagged', {
+    "@type": typing.Literal["c3d/c3d"],
+    "input": list[InputPathType],
+    "operations": list[typing.Union[C3dAccumParametersTagged, C3dAcosParametersTagged, C3dAddParametersTagged, C3dAlignLandmarksParametersTagged, C3dAnisotropicDiffusionParametersTagged, C3dAntialiasParametersTagged, C3dSetParametersTagged, C3dAsinParametersTagged, C3dAtan2ParametersTagged, C3dBackgroundParametersTagged, C3dN4BiasCorrectionParametersTagged, C3dBinarizeParametersTagged, C3dCannyParametersTagged, C3dCeilParametersTagged, C3dCentroidParametersTagged, C3dCentroidMarkParametersTagged, C3dConnectedComponentsParametersTagged, C3dClearParametersTagged, C3dClipParametersTagged, C3dColorMapParametersTagged, C3dCompressParametersTagged, C3dNoCompressParametersTagged, C3dConvParametersTagged, C3dCoordinateMapVoxelParametersTagged, C3dCoordinateMapPhysicalParametersTagged, C3dCopyTransformParametersTagged, C3dCosParametersTagged, C3dCreateParametersTagged, C3dDicomSeriesListParametersTagged, C3dDicomSeriesReadParametersTagged, C3dDilateParametersTagged, C3dDivideParametersTagged, C3dDuplicateParametersTagged, C3dEndaccumParametersTagged, C3dEndforParametersTagged, C3dErodeParametersTagged, C3dErfParametersTagged, C3dExpParametersTagged, C3dExportPatchesParametersTagged, C3dExportPatchesAugParametersTagged, C3dExtrudeSegParametersTagged, C3dFillBackgroundWithNoiseParametersTagged, C3dFftParametersTagged, C3dFlipParametersTagged, C3dFloorParametersTagged, C3dForeachParametersTagged, C3dForeachCompParametersTagged, C3dGlmParametersTagged, C3dGradientParametersTagged, C3dHelpParametersTagged, C3dHolefillParametersTagged, C3dHessianEigenvaluesParametersTagged, C3dHessianObjectnessParametersTagged, C3dHistogramMatchParametersTagged, C3dInfoParametersTagged, C3dInfoFullParametersTagged, C3dInsertParametersTagged, C3dInterpolationParametersTagged, C3dIterationsParametersTagged, C3dLabelOverlapParametersTagged, C3dLabelStatisticsParametersTagged, C3dLandmarksToSpheresParametersTagged, C3dLaplacianParametersTagged, C3dLevelsetParametersTagged, C3dLevelsetCurvatureParametersTagged, C3dLevelsetAdvectionParametersTagged, C3dLogParametersTagged, C3dLog10ParametersTagged, C3dManualParametersTagged, C3dMatchBoundingBoxParametersTagged, C3dMaximumParametersTagged, C3dMulticomponentSplitParametersTagged, C3dMeanParametersTagged, C3dMedianFilterParametersTagged, C3dMergeParametersTagged, C3dMeanFilterParametersTagged, C3dMutualInfoParametersTagged, C3dMinimumParametersTagged, C3dMixtureModelParametersTagged, C3dMomentsParametersTagged, C3dMattesMutualInfoParametersTagged, C3dMeanSquareParametersTagged, C3dMultiplyParametersTagged, C3dNormalizedCrossCorrelationParametersTagged, C3dNormalizedCorrelationParametersTagged, C3dNormalizedMutualInfoParametersTagged, C3dNoiseGaussianParametersTagged, C3dNoisePoissonParametersTagged, C3dNoiseSpeckleParametersTagged, C3dNoiseSaltPepperParametersTagged, C3dNoMulticomponentSplitParametersTagged, C3dNormalizeLocalWindowParametersTagged, C3dNormpdfParametersTagged, C3dNoroundParametersTagged, C3dNospmParametersTagged, C3dOutputParametersTagged, C3dOutputMulticomponentParametersTagged, C3dOutputMultipleMulticomponentParametersTagged, C3dOrientParametersTagged, C3dOutputMultipleParametersTagged, C3dOrient1ParametersTagged, C3dOriginParametersTagged, C3dOriginVoxelParametersTagged, C3dOriginVoxelCoordParametersTagged, C3dOverlapParametersTagged, C3dOverlayLabelImageParametersTagged, C3dPadParametersTagged, C3dPadToParametersTagged, C3dPcaParametersTagged, C3dPercentIntensityModeParametersTagged, C3dPixelParametersTagged, C3dPopParametersTagged, C3dPopasParametersTagged, C3dProbeParametersTagged, C3dPushParametersTagged, C3dRankParametersTagged, C3dReciprocalParametersTagged, C3dRegionParametersTagged, C3dReorderParametersTagged, C3dRetainLabelsParametersTagged, C3dRfApplyParametersTagged, C3dRfTrainParametersTagged, C3dRfParamPatchParametersTagged, C3dRfParamUsexyzParametersTagged, C3dRfParamNousexyzParametersTagged, C3dRfParamNtreesParametersTagged, C3dRfParamTreedepthParametersTagged, C3dSetSformParametersTagged, C3dReplaceParametersTagged, C3dResampleParametersTagged, C3dResampleIsoParametersTagged, C3dResampleMmParametersTagged, C3dResliceItkParametersTagged, C3dResliceMatrixParametersTagged, C3dResliceIdentityParametersTagged, C3dRgb2hsvParametersTagged, C3dRmsParametersTagged, C3dRoundParametersTagged, C3dScaleParametersTagged, C3dSetSform1ParametersTagged, C3dSinParametersTagged, C3dSliceParametersTagged, C3dSliceAllParametersTagged, C3dSharpenParametersTagged, C3dShiftParametersTagged, C3dSignedDistanceTransformParametersTagged, C3dSmoothParametersTagged, C3dSmoothFastParametersTagged, C3dSpacingParametersTagged, C3dSplitParametersTagged, C3dSqrtParametersTagged, C3dStapleParametersTagged, C3dStructureTensorEigenvaluesParametersTagged, C3dSpmParametersTagged, C3dSubtractParametersTagged, C3dSupervoxelParametersTagged, C3dStretchParametersTagged, C3dSwapdimParametersTagged, C3dTestImageParametersTagged, C3dTestProbeParametersTagged, C3dThresholdParametersTagged, C3dTileParametersTagged, C3dTrimParametersTagged, C3dTrimToSizeParametersTagged, C3dTypeParametersTagged, C3dVerboseParametersTagged, C3dNoverboseParametersTagged, C3dVersionParametersTagged, C3dVoteParametersTagged, C3dVoteMrfParametersTagged, C3dVoteLabelParametersTagged, C3dVoxelSumParametersTagged, C3dVoxelIntegralParametersTagged, C3dVoxelwiseRegressionParametersTagged, C3dWarpParametersTagged, C3dWarpLabelParametersTagged, C3dWrapParametersTagged, C3dWeightedSumParametersTagged, C3dWeightedSumVoxelwiseParametersTagged]],
     "output": str,
 })
 
 
-def dyn_cargs(
+def c3d_operations_cargs_dyn_fn(
     t: str,
 ) -> typing.Any:
     """
@@ -1107,190 +1829,189 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "c3d.c3d": c3d_cargs,
-        "c3d.c3d.accum": c3d_accum_cargs,
-        "c3d.c3d.acos": c3d_acos_cargs,
-        "c3d.c3d.add": c3d_add_cargs,
-        "c3d.c3d.align_landmarks": c3d_align_landmarks_cargs,
-        "c3d.c3d.anisotropic_diffusion": c3d_anisotropic_diffusion_cargs,
-        "c3d.c3d.antialias": c3d_antialias_cargs,
-        "c3d.c3d.set": c3d_set_cargs,
-        "c3d.c3d.asin": c3d_asin_cargs,
-        "c3d.c3d.atan2": c3d_atan2_cargs,
-        "c3d.c3d.background": c3d_background_cargs,
-        "c3d.c3d.n4_bias_correction": c3d_n4_bias_correction_cargs,
-        "c3d.c3d.binarize": c3d_binarize_cargs,
-        "c3d.c3d.canny": c3d_canny_cargs,
-        "c3d.c3d.ceil": c3d_ceil_cargs,
-        "c3d.c3d.centroid": c3d_centroid_cargs,
-        "c3d.c3d.centroid_mark": c3d_centroid_mark_cargs,
-        "c3d.c3d.connected_components": c3d_connected_components_cargs,
-        "c3d.c3d.clear": c3d_clear_cargs,
-        "c3d.c3d.clip": c3d_clip_cargs,
-        "c3d.c3d.color_map": c3d_color_map_cargs,
-        "c3d.c3d.compress": c3d_compress_cargs,
-        "c3d.c3d.no_compress": c3d_no_compress_cargs,
-        "c3d.c3d.conv": c3d_conv_cargs,
-        "c3d.c3d.coordinate_map_voxel": c3d_coordinate_map_voxel_cargs,
-        "c3d.c3d.coordinate_map_physical": c3d_coordinate_map_physical_cargs,
-        "c3d.c3d.copy_transform": c3d_copy_transform_cargs,
-        "c3d.c3d.cos": c3d_cos_cargs,
-        "c3d.c3d.create": c3d_create_cargs,
-        "c3d.c3d.dicom_series_list": c3d_dicom_series_list_cargs,
-        "c3d.c3d.dicom_series_read": c3d_dicom_series_read_cargs,
-        "c3d.c3d.dilate": c3d_dilate_cargs,
-        "c3d.c3d.divide": c3d_divide_cargs,
-        "c3d.c3d.duplicate": c3d_duplicate_cargs,
-        "c3d.c3d.endaccum": c3d_endaccum_cargs,
-        "c3d.c3d.endfor": c3d_endfor_cargs,
-        "c3d.c3d.erode": c3d_erode_cargs,
-        "c3d.c3d.erf": c3d_erf_cargs,
-        "c3d.c3d.exp": c3d_exp_cargs,
-        "c3d.c3d.export_patches": c3d_export_patches_cargs,
-        "c3d.c3d.export_patches_aug": c3d_export_patches_aug_cargs,
-        "c3d.c3d.extrude_seg": c3d_extrude_seg_cargs,
-        "c3d.c3d.fill_background_with_noise": c3d_fill_background_with_noise_cargs,
-        "c3d.c3d.fft": c3d_fft_cargs,
-        "c3d.c3d.flip": c3d_flip_cargs,
-        "c3d.c3d.floor": c3d_floor_cargs,
-        "c3d.c3d.foreach": c3d_foreach_cargs,
-        "c3d.c3d.foreach_comp": c3d_foreach_comp_cargs,
-        "c3d.c3d.glm": c3d_glm_cargs,
-        "c3d.c3d.gradient": c3d_gradient_cargs,
-        "c3d.c3d._help": c3d__help_cargs,
-        "c3d.c3d.holefill": c3d_holefill_cargs,
-        "c3d.c3d.hessian_eigenvalues": c3d_hessian_eigenvalues_cargs,
-        "c3d.c3d.hessian_objectness": c3d_hessian_objectness_cargs,
-        "c3d.c3d.histogram_match": c3d_histogram_match_cargs,
-        "c3d.c3d.info": c3d_info_cargs,
-        "c3d.c3d.info_full": c3d_info_full_cargs,
-        "c3d.c3d.insert": c3d_insert_cargs,
-        "c3d.c3d.interpolation": c3d_interpolation_cargs,
-        "c3d.c3d.iterations": c3d_iterations_cargs,
-        "c3d.c3d.label_overlap": c3d_label_overlap_cargs,
-        "c3d.c3d.label_statistics": c3d_label_statistics_cargs,
-        "c3d.c3d.landmarks_to_spheres": c3d_landmarks_to_spheres_cargs,
-        "c3d.c3d.laplacian": c3d_laplacian_cargs,
-        "c3d.c3d.levelset": c3d_levelset_cargs,
-        "c3d.c3d.levelset_curvature": c3d_levelset_curvature_cargs,
-        "c3d.c3d.levelset_advection": c3d_levelset_advection_cargs,
-        "c3d.c3d.log": c3d_log_cargs,
-        "c3d.c3d.log10": c3d_log10_cargs,
-        "c3d.c3d.manual": c3d_manual_cargs,
-        "c3d.c3d.match_bounding_box": c3d_match_bounding_box_cargs,
-        "c3d.c3d.maximum": c3d_maximum_cargs,
-        "c3d.c3d.multicomponent_split": c3d_multicomponent_split_cargs,
-        "c3d.c3d.mean": c3d_mean_cargs,
-        "c3d.c3d.median_filter": c3d_median_filter_cargs,
-        "c3d.c3d.merge": c3d_merge_cargs,
-        "c3d.c3d.mean_filter": c3d_mean_filter_cargs,
-        "c3d.c3d.mutual_info": c3d_mutual_info_cargs,
-        "c3d.c3d.minimum": c3d_minimum_cargs,
-        "c3d.c3d.mixture_model": c3d_mixture_model_cargs,
-        "c3d.c3d.moments": c3d_moments_cargs,
-        "c3d.c3d.mattes_mutual_info": c3d_mattes_mutual_info_cargs,
-        "c3d.c3d.mean_square": c3d_mean_square_cargs,
-        "c3d.c3d.multiply": c3d_multiply_cargs,
-        "c3d.c3d.normalized_cross_correlation": c3d_normalized_cross_correlation_cargs,
-        "c3d.c3d.normalized_correlation": c3d_normalized_correlation_cargs,
-        "c3d.c3d.normalized_mutual_info": c3d_normalized_mutual_info_cargs,
-        "c3d.c3d.noise_gaussian": c3d_noise_gaussian_cargs,
-        "c3d.c3d.noise_poisson": c3d_noise_poisson_cargs,
-        "c3d.c3d.noise_speckle": c3d_noise_speckle_cargs,
-        "c3d.c3d.noise_salt_pepper": c3d_noise_salt_pepper_cargs,
-        "c3d.c3d.no_multicomponent_split": c3d_no_multicomponent_split_cargs,
-        "c3d.c3d.normalize_local_window": c3d_normalize_local_window_cargs,
-        "c3d.c3d.normpdf": c3d_normpdf_cargs,
-        "c3d.c3d.noround": c3d_noround_cargs,
-        "c3d.c3d.nospm": c3d_nospm_cargs,
-        "c3d.c3d.output": c3d_output_cargs,
-        "c3d.c3d.output_multicomponent": c3d_output_multicomponent_cargs,
-        "c3d.c3d.output_multiple_multicomponent": c3d_output_multiple_multicomponent_cargs,
-        "c3d.c3d.orient": c3d_orient_cargs,
-        "c3d.c3d.output_multiple": c3d_output_multiple_cargs,
-        "c3d.c3d.orient": c3d_orient_1_cargs,
-        "c3d.c3d.origin": c3d_origin_cargs,
-        "c3d.c3d.origin_voxel": c3d_origin_voxel_cargs,
-        "c3d.c3d.origin_voxel_coord": c3d_origin_voxel_coord_cargs,
-        "c3d.c3d.overlap": c3d_overlap_cargs,
-        "c3d.c3d.overlay_label_image": c3d_overlay_label_image_cargs,
-        "c3d.c3d.pad": c3d_pad_cargs,
-        "c3d.c3d.pad_to": c3d_pad_to_cargs,
-        "c3d.c3d.pca": c3d_pca_cargs,
-        "c3d.c3d.percent_intensity_mode": c3d_percent_intensity_mode_cargs,
-        "c3d.c3d.pixel": c3d_pixel_cargs,
-        "c3d.c3d.pop": c3d_pop_cargs,
-        "c3d.c3d.popas": c3d_popas_cargs,
-        "c3d.c3d.probe": c3d_probe_cargs,
-        "c3d.c3d.push": c3d_push_cargs,
-        "c3d.c3d.rank": c3d_rank_cargs,
-        "c3d.c3d.reciprocal": c3d_reciprocal_cargs,
-        "c3d.c3d.region": c3d_region_cargs,
-        "c3d.c3d.reorder": c3d_reorder_cargs,
-        "c3d.c3d.retain_labels": c3d_retain_labels_cargs,
-        "c3d.c3d.rf_apply": c3d_rf_apply_cargs,
-        "c3d.c3d.rf_train": c3d_rf_train_cargs,
-        "c3d.c3d.rf_param_patch": c3d_rf_param_patch_cargs,
-        "c3d.c3d.rf_param_usexyz": c3d_rf_param_usexyz_cargs,
-        "c3d.c3d.rf_param_nousexyz": c3d_rf_param_nousexyz_cargs,
-        "c3d.c3d.rf_param_ntrees": c3d_rf_param_ntrees_cargs,
-        "c3d.c3d.rf_param_treedepth": c3d_rf_param_treedepth_cargs,
-        "c3d.c3d.set_sform": c3d_set_sform_cargs,
-        "c3d.c3d.replace": c3d_replace_cargs,
-        "c3d.c3d.resample": c3d_resample_cargs,
-        "c3d.c3d.resample_iso": c3d_resample_iso_cargs,
-        "c3d.c3d.resample_mm": c3d_resample_mm_cargs,
-        "c3d.c3d.reslice_itk": c3d_reslice_itk_cargs,
-        "c3d.c3d.reslice_matrix": c3d_reslice_matrix_cargs,
-        "c3d.c3d.reslice_identity": c3d_reslice_identity_cargs,
-        "c3d.c3d.rgb2hsv": c3d_rgb2hsv_cargs,
-        "c3d.c3d.rms": c3d_rms_cargs,
-        "c3d.c3d.round": c3d_round_cargs,
-        "c3d.c3d.scale": c3d_scale_cargs,
-        "c3d.c3d.set_sform": c3d_set_sform_1_cargs,
-        "c3d.c3d.sin": c3d_sin_cargs,
-        "c3d.c3d.slice": c3d_slice_cargs,
-        "c3d.c3d.slice_all": c3d_slice_all_cargs,
-        "c3d.c3d.sharpen": c3d_sharpen_cargs,
-        "c3d.c3d.shift": c3d_shift_cargs,
-        "c3d.c3d.signed_distance_transform": c3d_signed_distance_transform_cargs,
-        "c3d.c3d.smooth": c3d_smooth_cargs,
-        "c3d.c3d.smooth_fast": c3d_smooth_fast_cargs,
-        "c3d.c3d.spacing": c3d_spacing_cargs,
-        "c3d.c3d.split": c3d_split_cargs,
-        "c3d.c3d.sqrt": c3d_sqrt_cargs,
-        "c3d.c3d.staple": c3d_staple_cargs,
-        "c3d.c3d.structure_tensor_eigenvalues": c3d_structure_tensor_eigenvalues_cargs,
-        "c3d.c3d.spm": c3d_spm_cargs,
-        "c3d.c3d.subtract": c3d_subtract_cargs,
-        "c3d.c3d.supervoxel": c3d_supervoxel_cargs,
-        "c3d.c3d.stretch": c3d_stretch_cargs,
-        "c3d.c3d.swapdim": c3d_swapdim_cargs,
-        "c3d.c3d.test_image": c3d_test_image_cargs,
-        "c3d.c3d.test_probe": c3d_test_probe_cargs,
-        "c3d.c3d.threshold": c3d_threshold_cargs,
-        "c3d.c3d.tile": c3d_tile_cargs,
-        "c3d.c3d.trim": c3d_trim_cargs,
-        "c3d.c3d.trim_to_size": c3d_trim_to_size_cargs,
-        "c3d.c3d.type": c3d_type_cargs,
-        "c3d.c3d.verbose": c3d_verbose_cargs,
-        "c3d.c3d.noverbose": c3d_noverbose_cargs,
-        "c3d.c3d.version": c3d_version_cargs,
-        "c3d.c3d.vote": c3d_vote_cargs,
-        "c3d.c3d.vote_mrf": c3d_vote_mrf_cargs,
-        "c3d.c3d.vote_label": c3d_vote_label_cargs,
-        "c3d.c3d.voxel_sum": c3d_voxel_sum_cargs,
-        "c3d.c3d.voxel_integral": c3d_voxel_integral_cargs,
-        "c3d.c3d.voxelwise_regression": c3d_voxelwise_regression_cargs,
-        "c3d.c3d.warp": c3d_warp_cargs,
-        "c3d.c3d.warp_label": c3d_warp_label_cargs,
-        "c3d.c3d.wrap": c3d_wrap_cargs,
-        "c3d.c3d.weighted_sum": c3d_weighted_sum_cargs,
-        "c3d.c3d.weighted_sum_voxelwise": c3d_weighted_sum_voxelwise_cargs,
+        "accum": c3d_accum_cargs,
+        "acos": c3d_acos_cargs,
+        "add": c3d_add_cargs,
+        "align_landmarks": c3d_align_landmarks_cargs,
+        "anisotropic_diffusion": c3d_anisotropic_diffusion_cargs,
+        "antialias": c3d_antialias_cargs,
+        "set": c3d_set_cargs,
+        "asin": c3d_asin_cargs,
+        "atan2": c3d_atan2_cargs,
+        "background": c3d_background_cargs,
+        "n4_bias_correction": c3d_n4_bias_correction_cargs,
+        "binarize": c3d_binarize_cargs,
+        "canny": c3d_canny_cargs,
+        "ceil": c3d_ceil_cargs,
+        "centroid": c3d_centroid_cargs,
+        "centroid_mark": c3d_centroid_mark_cargs,
+        "connected_components": c3d_connected_components_cargs,
+        "clear": c3d_clear_cargs,
+        "clip": c3d_clip_cargs,
+        "color_map": c3d_color_map_cargs,
+        "compress": c3d_compress_cargs,
+        "no_compress": c3d_no_compress_cargs,
+        "conv": c3d_conv_cargs,
+        "coordinate_map_voxel": c3d_coordinate_map_voxel_cargs,
+        "coordinate_map_physical": c3d_coordinate_map_physical_cargs,
+        "copy_transform": c3d_copy_transform_cargs,
+        "cos": c3d_cos_cargs,
+        "create": c3d_create_cargs,
+        "dicom_series_list": c3d_dicom_series_list_cargs,
+        "dicom_series_read": c3d_dicom_series_read_cargs,
+        "dilate": c3d_dilate_cargs,
+        "divide": c3d_divide_cargs,
+        "duplicate": c3d_duplicate_cargs,
+        "endaccum": c3d_endaccum_cargs,
+        "endfor": c3d_endfor_cargs,
+        "erode": c3d_erode_cargs,
+        "erf": c3d_erf_cargs,
+        "exp": c3d_exp_cargs,
+        "export_patches": c3d_export_patches_cargs,
+        "export_patches_aug": c3d_export_patches_aug_cargs,
+        "extrude_seg": c3d_extrude_seg_cargs,
+        "fill_background_with_noise": c3d_fill_background_with_noise_cargs,
+        "fft": c3d_fft_cargs,
+        "flip": c3d_flip_cargs,
+        "floor": c3d_floor_cargs,
+        "foreach": c3d_foreach_cargs,
+        "foreach_comp": c3d_foreach_comp_cargs,
+        "glm": c3d_glm_cargs,
+        "gradient": c3d_gradient_cargs,
+        "_help": c3d__help_cargs,
+        "holefill": c3d_holefill_cargs,
+        "hessian_eigenvalues": c3d_hessian_eigenvalues_cargs,
+        "hessian_objectness": c3d_hessian_objectness_cargs,
+        "histogram_match": c3d_histogram_match_cargs,
+        "info": c3d_info_cargs,
+        "info_full": c3d_info_full_cargs,
+        "insert": c3d_insert_cargs,
+        "interpolation": c3d_interpolation_cargs,
+        "iterations": c3d_iterations_cargs,
+        "label_overlap": c3d_label_overlap_cargs,
+        "label_statistics": c3d_label_statistics_cargs,
+        "landmarks_to_spheres": c3d_landmarks_to_spheres_cargs,
+        "laplacian": c3d_laplacian_cargs,
+        "levelset": c3d_levelset_cargs,
+        "levelset_curvature": c3d_levelset_curvature_cargs,
+        "levelset_advection": c3d_levelset_advection_cargs,
+        "log": c3d_log_cargs,
+        "log10": c3d_log10_cargs,
+        "manual": c3d_manual_cargs,
+        "match_bounding_box": c3d_match_bounding_box_cargs,
+        "maximum": c3d_maximum_cargs,
+        "multicomponent_split": c3d_multicomponent_split_cargs,
+        "mean": c3d_mean_cargs,
+        "median_filter": c3d_median_filter_cargs,
+        "merge": c3d_merge_cargs,
+        "mean_filter": c3d_mean_filter_cargs,
+        "mutual_info": c3d_mutual_info_cargs,
+        "minimum": c3d_minimum_cargs,
+        "mixture_model": c3d_mixture_model_cargs,
+        "moments": c3d_moments_cargs,
+        "mattes_mutual_info": c3d_mattes_mutual_info_cargs,
+        "mean_square": c3d_mean_square_cargs,
+        "multiply": c3d_multiply_cargs,
+        "normalized_cross_correlation": c3d_normalized_cross_correlation_cargs,
+        "normalized_correlation": c3d_normalized_correlation_cargs,
+        "normalized_mutual_info": c3d_normalized_mutual_info_cargs,
+        "noise_gaussian": c3d_noise_gaussian_cargs,
+        "noise_poisson": c3d_noise_poisson_cargs,
+        "noise_speckle": c3d_noise_speckle_cargs,
+        "noise_salt_pepper": c3d_noise_salt_pepper_cargs,
+        "no_multicomponent_split": c3d_no_multicomponent_split_cargs,
+        "normalize_local_window": c3d_normalize_local_window_cargs,
+        "normpdf": c3d_normpdf_cargs,
+        "noround": c3d_noround_cargs,
+        "nospm": c3d_nospm_cargs,
+        "output": c3d_output_cargs,
+        "output_multicomponent": c3d_output_multicomponent_cargs,
+        "output_multiple_multicomponent": c3d_output_multiple_multicomponent_cargs,
+        "orient": c3d_orient_cargs,
+        "output_multiple": c3d_output_multiple_cargs,
+        "orient_1": c3d_orient_1_cargs,
+        "origin": c3d_origin_cargs,
+        "origin_voxel": c3d_origin_voxel_cargs,
+        "origin_voxel_coord": c3d_origin_voxel_coord_cargs,
+        "overlap": c3d_overlap_cargs,
+        "overlay_label_image": c3d_overlay_label_image_cargs,
+        "pad": c3d_pad_cargs,
+        "pad_to": c3d_pad_to_cargs,
+        "pca": c3d_pca_cargs,
+        "percent_intensity_mode": c3d_percent_intensity_mode_cargs,
+        "pixel": c3d_pixel_cargs,
+        "pop": c3d_pop_cargs,
+        "popas": c3d_popas_cargs,
+        "probe": c3d_probe_cargs,
+        "push": c3d_push_cargs,
+        "rank": c3d_rank_cargs,
+        "reciprocal": c3d_reciprocal_cargs,
+        "region": c3d_region_cargs,
+        "reorder": c3d_reorder_cargs,
+        "retain_labels": c3d_retain_labels_cargs,
+        "rf_apply": c3d_rf_apply_cargs,
+        "rf_train": c3d_rf_train_cargs,
+        "rf_param_patch": c3d_rf_param_patch_cargs,
+        "rf_param_usexyz": c3d_rf_param_usexyz_cargs,
+        "rf_param_nousexyz": c3d_rf_param_nousexyz_cargs,
+        "rf_param_ntrees": c3d_rf_param_ntrees_cargs,
+        "rf_param_treedepth": c3d_rf_param_treedepth_cargs,
+        "set_sform": c3d_set_sform_cargs,
+        "replace": c3d_replace_cargs,
+        "resample": c3d_resample_cargs,
+        "resample_iso": c3d_resample_iso_cargs,
+        "resample_mm": c3d_resample_mm_cargs,
+        "reslice_itk": c3d_reslice_itk_cargs,
+        "reslice_matrix": c3d_reslice_matrix_cargs,
+        "reslice_identity": c3d_reslice_identity_cargs,
+        "rgb2hsv": c3d_rgb2hsv_cargs,
+        "rms": c3d_rms_cargs,
+        "round": c3d_round_cargs,
+        "scale": c3d_scale_cargs,
+        "set_sform_1": c3d_set_sform_1_cargs,
+        "sin": c3d_sin_cargs,
+        "slice": c3d_slice_cargs,
+        "slice_all": c3d_slice_all_cargs,
+        "sharpen": c3d_sharpen_cargs,
+        "shift": c3d_shift_cargs,
+        "signed_distance_transform": c3d_signed_distance_transform_cargs,
+        "smooth": c3d_smooth_cargs,
+        "smooth_fast": c3d_smooth_fast_cargs,
+        "spacing": c3d_spacing_cargs,
+        "split": c3d_split_cargs,
+        "sqrt": c3d_sqrt_cargs,
+        "staple": c3d_staple_cargs,
+        "structure_tensor_eigenvalues": c3d_structure_tensor_eigenvalues_cargs,
+        "spm": c3d_spm_cargs,
+        "subtract": c3d_subtract_cargs,
+        "supervoxel": c3d_supervoxel_cargs,
+        "stretch": c3d_stretch_cargs,
+        "swapdim": c3d_swapdim_cargs,
+        "test_image": c3d_test_image_cargs,
+        "test_probe": c3d_test_probe_cargs,
+        "threshold": c3d_threshold_cargs,
+        "tile": c3d_tile_cargs,
+        "trim": c3d_trim_cargs,
+        "trim_to_size": c3d_trim_to_size_cargs,
+        "type": c3d_type_cargs,
+        "verbose": c3d_verbose_cargs,
+        "noverbose": c3d_noverbose_cargs,
+        "version": c3d_version_cargs,
+        "vote": c3d_vote_cargs,
+        "vote_mrf": c3d_vote_mrf_cargs,
+        "vote_label": c3d_vote_label_cargs,
+        "voxel_sum": c3d_voxel_sum_cargs,
+        "voxel_integral": c3d_voxel_integral_cargs,
+        "voxelwise_regression": c3d_voxelwise_regression_cargs,
+        "warp": c3d_warp_cargs,
+        "warp_label": c3d_warp_label_cargs,
+        "wrap": c3d_wrap_cargs,
+        "weighted_sum": c3d_weighted_sum_cargs,
+        "weighted_sum_voxelwise": c3d_weighted_sum_voxelwise_cargs,
     }.get(t)
 
 
-def dyn_outputs(
+def c3d_operations_outputs_dyn_fn(
     t: str,
 ) -> typing.Any:
     """
@@ -1302,14 +2023,13 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "c3d.c3d": c3d_outputs,
-        "c3d.c3d.output": c3d_output_outputs,
+        "output": c3d_output_outputs,
     }.get(t)
 
 
 def c3d_accum_params(
     accum: str,
-) -> C3dAccumParameters:
+) -> C3dAccumParametersTagged:
     """
     Build parameters.
     
@@ -1330,7 +2050,7 @@ def c3d_accum_params(
         Parameter dictionary
     """
     params = {
-        "@type": "c3d.c3d.accum",
+        "@type": "accum",
         "accum": accum,
     }
     return params
@@ -1352,14 +2072,14 @@ def c3d_accum_cargs(
     cargs = []
     cargs.extend([
         "-accum",
-        params.get("accum")
+        params.get("accum", None)
     ])
     return cargs
 
 
 def c3d_acos_params(
     acos: str,
-) -> C3dAcosParameters:
+) -> C3dAcosParametersTagged:
     """
     Build parameters.
     
@@ -1369,7 +2089,7 @@ def c3d_acos_params(
         Parameter dictionary
     """
     params = {
-        "@type": "c3d.c3d.acos",
+        "@type": "acos",
         "acos": acos,
     }
     return params
@@ -1391,14 +2111,14 @@ def c3d_acos_cargs(
     cargs = []
     cargs.extend([
         "-acos",
-        params.get("acos")
+        params.get("acos", None)
     ])
     return cargs
 
 
 def c3d_add_params(
     add: str,
-) -> C3dAddParameters:
+) -> C3dAddParametersTagged:
     """
     Build parameters.
     
@@ -1424,7 +2144,7 @@ def c3d_add_params(
         Parameter dictionary
     """
     params = {
-        "@type": "c3d.c3d.add",
+        "@type": "add",
         "add": add,
     }
     return params
@@ -1446,14 +2166,14 @@ def c3d_add_cargs(
     cargs = []
     cargs.extend([
         "-add",
-        params.get("add")
+        params.get("add", None)
     ])
     return cargs
 
 
 def c3d_align_landmarks_params(
     align_landmarks: str,
-) -> C3dAlignLandmarksParameters:
+) -> C3dAlignLandmarksParametersTagged:
     """
     Build parameters.
     
@@ -1482,7 +2202,7 @@ def c3d_align_landmarks_params(
         Parameter dictionary
     """
     params = {
-        "@type": "c3d.c3d.align_landmarks",
+        "@type": "align_landmarks",
         "align_landmarks": align_landmarks,
     }
     return params
@@ -1504,14 +2224,14 @@ def c3d_align_landmarks_cargs(
     cargs = []
     cargs.extend([
         "-align-landmarks",
-        params.get("align_landmarks")
+        params.get("align_landmarks", None)
     ])
     return cargs
 
 
 def c3d_anisotropic_diffusion_params(
     anisotropic_diffusion: str,
-) -> C3dAnisotropicDiffusionParameters:
+) -> C3dAnisotropicDiffusionParametersTagged:
     """
     Build parameters.
     
@@ -1537,7 +2257,7 @@ def c3d_anisotropic_diffusion_params(
         Parameter dictionary
     """
     params = {
-        "@type": "c3d.c3d.anisotropic_diffusion",
+        "@type": "anisotropic_diffusion",
         "anisotropic_diffusion": anisotropic_diffusion,
     }
     return params
@@ -1559,14 +2279,14 @@ def c3d_anisotropic_diffusion_cargs(
     cargs = []
     cargs.extend([
         "-anisotropic-diffusion",
-        params.get("anisotropic_diffusion")
+        params.get("anisotropic_diffusion", None)
     ])
     return cargs
 
 
 def c3d_antialias_params(
     antialias: str,
-) -> C3dAntialiasParameters:
+) -> C3dAntialiasParametersTagged:
     """
     Build parameters.
     
@@ -1576,7 +2296,7 @@ def c3d_antialias_params(
         Parameter dictionary
     """
     params = {
-        "@type": "c3d.c3d.antialias",
+        "@type": "antialias",
         "antialias": antialias,
     }
     return params
@@ -1598,14 +2318,14 @@ def c3d_antialias_cargs(
     cargs = []
     cargs.extend([
         "-antialias",
-        params.get("antialias")
+        params.get("antialias", None)
     ])
     return cargs
 
 
 def c3d_set_params(
     set_: str,
-) -> C3dSetParameters:
+) -> C3dSetParametersTagged:
     """
     Build parameters.
     
@@ -1628,7 +2348,7 @@ def c3d_set_params(
         Parameter dictionary
     """
     params = {
-        "@type": "c3d.c3d.set",
+        "@type": "set",
         "set": set_,
     }
     return params
@@ -1650,14 +2370,14 @@ def c3d_set_cargs(
     cargs = []
     cargs.extend([
         "-as",
-        params.get("set")
+        params.get("set", None)
     ])
     return cargs
 
 
 def c3d_asin_params(
     asin: str,
-) -> C3dAsinParameters:
+) -> C3dAsinParametersTagged:
     """
     Build parameters.
     
@@ -1667,7 +2387,7 @@ def c3d_asin_params(
         Parameter dictionary
     """
     params = {
-        "@type": "c3d.c3d.asin",
+        "@type": "asin",
         "asin": asin,
     }
     return params
@@ -1689,14 +2409,14 @@ def c3d_asin_cargs(
     cargs = []
     cargs.extend([
         "-asin",
-        params.get("asin")
+        params.get("asin", None)
     ])
     return cargs
 
 
 def c3d_atan2_params(
     atan2: str,
-) -> C3dAtan2Parameters:
+) -> C3dAtan2ParametersTagged:
     """
     Build parameters.
     
@@ -1714,7 +2434,7 @@ def c3d_atan2_params(
         Parameter dictionary
     """
     params = {
-        "@type": "c3d.c3d.atan2",
+        "@type": "atan2",
         "atan2": atan2,
     }
     return params
@@ -1736,14 +2456,14 @@ def c3d_atan2_cargs(
     cargs = []
     cargs.extend([
         "-atan2",
-        params.get("atan2")
+        params.get("atan2", None)
     ])
     return cargs
 
 
 def c3d_background_params(
     background: str,
-) -> C3dBackgroundParameters:
+) -> C3dBackgroundParametersTagged:
     """
     Build parameters.
     
@@ -1759,7 +2479,7 @@ def c3d_background_params(
         Parameter dictionary
     """
     params = {
-        "@type": "c3d.c3d.background",
+        "@type": "background",
         "background": background,
     }
     return params
@@ -1781,14 +2501,14 @@ def c3d_background_cargs(
     cargs = []
     cargs.extend([
         "-background",
-        params.get("background")
+        params.get("background", None)
     ])
     return cargs
 
 
 def c3d_n4_bias_correction_params(
     n4_bias_correction: str,
-) -> C3dN4BiasCorrectionParameters:
+) -> C3dN4BiasCorrectionParametersTagged:
     """
     Build parameters.
     
@@ -1806,7 +2526,7 @@ def c3d_n4_bias_correction_params(
         Parameter dictionary
     """
     params = {
-        "@type": "c3d.c3d.n4_bias_correction",
+        "@type": "n4_bias_correction",
         "n4_bias_correction": n4_bias_correction,
     }
     return params
@@ -1828,14 +2548,14 @@ def c3d_n4_bias_correction_cargs(
     cargs = []
     cargs.extend([
         "-biascorr",
-        params.get("n4_bias_correction")
+        params.get("n4_bias_correction", None)
     ])
     return cargs
 
 
 def c3d_binarize_params(
     binarize: str,
-) -> C3dBinarizeParameters:
+) -> C3dBinarizeParametersTagged:
     """
     Build parameters.
     
@@ -1856,7 +2576,7 @@ def c3d_binarize_params(
         Parameter dictionary
     """
     params = {
-        "@type": "c3d.c3d.binarize",
+        "@type": "binarize",
         "binarize": binarize,
     }
     return params
@@ -1878,14 +2598,14 @@ def c3d_binarize_cargs(
     cargs = []
     cargs.extend([
         "-binarize",
-        params.get("binarize")
+        params.get("binarize", None)
     ])
     return cargs
 
 
 def c3d_canny_params(
     canny: str,
-) -> C3dCannyParameters:
+) -> C3dCannyParametersTagged:
     """
     Build parameters.
     
@@ -1903,7 +2623,7 @@ def c3d_canny_params(
         Parameter dictionary
     """
     params = {
-        "@type": "c3d.c3d.canny",
+        "@type": "canny",
         "canny": canny,
     }
     return params
@@ -1925,14 +2645,14 @@ def c3d_canny_cargs(
     cargs = []
     cargs.extend([
         "-canny",
-        params.get("canny")
+        params.get("canny", None)
     ])
     return cargs
 
 
 def c3d_ceil_params(
     ceil: str,
-) -> C3dCeilParameters:
+) -> C3dCeilParametersTagged:
     """
     Build parameters.
     
@@ -1949,7 +2669,7 @@ def c3d_ceil_params(
         Parameter dictionary
     """
     params = {
-        "@type": "c3d.c3d.ceil",
+        "@type": "ceil",
         "ceil": ceil,
     }
     return params
@@ -1971,14 +2691,14 @@ def c3d_ceil_cargs(
     cargs = []
     cargs.extend([
         "-ceil",
-        params.get("ceil")
+        params.get("ceil", None)
     ])
     return cargs
 
 
 def c3d_centroid_params(
     centroid: str,
-) -> C3dCentroidParameters:
+) -> C3dCentroidParametersTagged:
     """
     Build parameters.
     
@@ -2001,7 +2721,7 @@ def c3d_centroid_params(
         Parameter dictionary
     """
     params = {
-        "@type": "c3d.c3d.centroid",
+        "@type": "centroid",
         "centroid": centroid,
     }
     return params
@@ -2023,14 +2743,14 @@ def c3d_centroid_cargs(
     cargs = []
     cargs.extend([
         "-centroid",
-        params.get("centroid")
+        params.get("centroid", None)
     ])
     return cargs
 
 
 def c3d_centroid_mark_params(
     centroid_mark: str,
-) -> C3dCentroidMarkParameters:
+) -> C3dCentroidMarkParametersTagged:
     """
     Build parameters.
     
@@ -2053,7 +2773,7 @@ def c3d_centroid_mark_params(
         Parameter dictionary
     """
     params = {
-        "@type": "c3d.c3d.centroid_mark",
+        "@type": "centroid_mark",
         "centroid_mark": centroid_mark,
     }
     return params
@@ -2075,14 +2795,14 @@ def c3d_centroid_mark_cargs(
     cargs = []
     cargs.extend([
         "-centroid-mark",
-        params.get("centroid_mark")
+        params.get("centroid_mark", None)
     ])
     return cargs
 
 
 def c3d_connected_components_params(
     connected_components: str,
-) -> C3dConnectedComponentsParameters:
+) -> C3dConnectedComponentsParametersTagged:
     """
     Build parameters.
     
@@ -2105,7 +2825,7 @@ def c3d_connected_components_params(
         Parameter dictionary
     """
     params = {
-        "@type": "c3d.c3d.connected_components",
+        "@type": "connected_components",
         "connected_components": connected_components,
     }
     return params
@@ -2127,14 +2847,14 @@ def c3d_connected_components_cargs(
     cargs = []
     cargs.extend([
         "-connected-components",
-        params.get("connected_components")
+        params.get("connected_components", None)
     ])
     return cargs
 
 
 def c3d_clear_params(
     clear_: str,
-) -> C3dClearParameters:
+) -> C3dClearParametersTagged:
     """
     Build parameters.
     
@@ -2149,7 +2869,7 @@ def c3d_clear_params(
         Parameter dictionary
     """
     params = {
-        "@type": "c3d.c3d.clear",
+        "@type": "clear",
         "clear": clear_,
     }
     return params
@@ -2171,14 +2891,14 @@ def c3d_clear_cargs(
     cargs = []
     cargs.extend([
         "-clear",
-        params.get("clear")
+        params.get("clear", None)
     ])
     return cargs
 
 
 def c3d_clip_params(
     clip: str,
-) -> C3dClipParameters:
+) -> C3dClipParametersTagged:
     """
     Build parameters.
     
@@ -2201,7 +2921,7 @@ def c3d_clip_params(
         Parameter dictionary
     """
     params = {
-        "@type": "c3d.c3d.clip",
+        "@type": "clip",
         "clip": clip,
     }
     return params
@@ -2223,14 +2943,14 @@ def c3d_clip_cargs(
     cargs = []
     cargs.extend([
         "-clip",
-        params.get("clip")
+        params.get("clip", None)
     ])
     return cargs
 
 
 def c3d_color_map_params(
     color_map: str,
-) -> C3dColorMapParameters:
+) -> C3dColorMapParametersTagged:
     """
     Build parameters.
     
@@ -2265,7 +2985,7 @@ def c3d_color_map_params(
         Parameter dictionary
     """
     params = {
-        "@type": "c3d.c3d.color_map",
+        "@type": "color_map",
         "color_map": color_map,
     }
     return params
@@ -2287,14 +3007,14 @@ def c3d_color_map_cargs(
     cargs = []
     cargs.extend([
         "-colormap",
-        params.get("color_map")
+        params.get("color_map", None)
     ])
     return cargs
 
 
 def c3d_compress_params(
     compress: str,
-) -> C3dCompressParameters:
+) -> C3dCompressParametersTagged:
     """
     Build parameters.
     
@@ -2317,7 +3037,7 @@ def c3d_compress_params(
         Parameter dictionary
     """
     params = {
-        "@type": "c3d.c3d.compress",
+        "@type": "compress",
         "compress": compress,
     }
     return params
@@ -2339,14 +3059,14 @@ def c3d_compress_cargs(
     cargs = []
     cargs.extend([
         "-compress",
-        params.get("compress")
+        params.get("compress", None)
     ])
     return cargs
 
 
 def c3d_no_compress_params(
     no_compress: str,
-) -> C3dNoCompressParameters:
+) -> C3dNoCompressParametersTagged:
     """
     Build parameters.
     
@@ -2369,7 +3089,7 @@ def c3d_no_compress_params(
         Parameter dictionary
     """
     params = {
-        "@type": "c3d.c3d.no_compress",
+        "@type": "no_compress",
         "no_compress": no_compress,
     }
     return params
@@ -2391,14 +3111,14 @@ def c3d_no_compress_cargs(
     cargs = []
     cargs.extend([
         "-no-compress",
-        params.get("no_compress")
+        params.get("no_compress", None)
     ])
     return cargs
 
 
 def c3d_conv_params(
     conv: str,
-) -> C3dConvParameters:
+) -> C3dConvParametersTagged:
     """
     Build parameters.
     
@@ -2420,7 +3140,7 @@ def c3d_conv_params(
         Parameter dictionary
     """
     params = {
-        "@type": "c3d.c3d.conv",
+        "@type": "conv",
         "conv": conv,
     }
     return params
@@ -2442,14 +3162,14 @@ def c3d_conv_cargs(
     cargs = []
     cargs.extend([
         "-conv",
-        params.get("conv")
+        params.get("conv", None)
     ])
     return cargs
 
 
 def c3d_coordinate_map_voxel_params(
     coordinate_map_voxel: str,
-) -> C3dCoordinateMapVoxelParameters:
+) -> C3dCoordinateMapVoxelParametersTagged:
     """
     Build parameters.
     
@@ -2477,7 +3197,7 @@ def c3d_coordinate_map_voxel_params(
         Parameter dictionary
     """
     params = {
-        "@type": "c3d.c3d.coordinate_map_voxel",
+        "@type": "coordinate_map_voxel",
         "coordinate_map_voxel": coordinate_map_voxel,
     }
     return params
@@ -2499,14 +3219,14 @@ def c3d_coordinate_map_voxel_cargs(
     cargs = []
     cargs.extend([
         "-coordinate-map-voxel",
-        params.get("coordinate_map_voxel")
+        params.get("coordinate_map_voxel", None)
     ])
     return cargs
 
 
 def c3d_coordinate_map_physical_params(
     coordinate_map_physical: str,
-) -> C3dCoordinateMapPhysicalParameters:
+) -> C3dCoordinateMapPhysicalParametersTagged:
     """
     Build parameters.
     
@@ -2523,7 +3243,7 @@ def c3d_coordinate_map_physical_params(
         Parameter dictionary
     """
     params = {
-        "@type": "c3d.c3d.coordinate_map_physical",
+        "@type": "coordinate_map_physical",
         "coordinate_map_physical": coordinate_map_physical,
     }
     return params
@@ -2545,14 +3265,14 @@ def c3d_coordinate_map_physical_cargs(
     cargs = []
     cargs.extend([
         "-coordinate-map-physical",
-        params.get("coordinate_map_physical")
+        params.get("coordinate_map_physical", None)
     ])
     return cargs
 
 
 def c3d_copy_transform_params(
     copy_transform: str,
-) -> C3dCopyTransformParameters:
+) -> C3dCopyTransformParametersTagged:
     """
     Build parameters.
     
@@ -2573,7 +3293,7 @@ def c3d_copy_transform_params(
         Parameter dictionary
     """
     params = {
-        "@type": "c3d.c3d.copy_transform",
+        "@type": "copy_transform",
         "copy_transform": copy_transform,
     }
     return params
@@ -2595,14 +3315,14 @@ def c3d_copy_transform_cargs(
     cargs = []
     cargs.extend([
         "-copy-transform",
-        params.get("copy_transform")
+        params.get("copy_transform", None)
     ])
     return cargs
 
 
 def c3d_cos_params(
     cos: str,
-) -> C3dCosParameters:
+) -> C3dCosParametersTagged:
     """
     Build parameters.
     
@@ -2612,7 +3332,7 @@ def c3d_cos_params(
         Parameter dictionary
     """
     params = {
-        "@type": "c3d.c3d.cos",
+        "@type": "cos",
         "cos": cos,
     }
     return params
@@ -2634,14 +3354,14 @@ def c3d_cos_cargs(
     cargs = []
     cargs.extend([
         "-cos",
-        params.get("cos")
+        params.get("cos", None)
     ])
     return cargs
 
 
 def c3d_create_params(
     create: str,
-) -> C3dCreateParameters:
+) -> C3dCreateParametersTagged:
     """
     Build parameters.
     
@@ -2663,7 +3383,7 @@ def c3d_create_params(
         Parameter dictionary
     """
     params = {
-        "@type": "c3d.c3d.create",
+        "@type": "create",
         "create": create,
     }
     return params
@@ -2685,14 +3405,14 @@ def c3d_create_cargs(
     cargs = []
     cargs.extend([
         "-create",
-        params.get("create")
+        params.get("create", None)
     ])
     return cargs
 
 
 def c3d_dicom_series_list_params(
     dicom_series_list: str,
-) -> C3dDicomSeriesListParameters:
+) -> C3dDicomSeriesListParametersTagged:
     """
     Build parameters.
     
@@ -2708,7 +3428,7 @@ def c3d_dicom_series_list_params(
         Parameter dictionary
     """
     params = {
-        "@type": "c3d.c3d.dicom_series_list",
+        "@type": "dicom_series_list",
         "dicom_series_list": dicom_series_list,
     }
     return params
@@ -2730,14 +3450,14 @@ def c3d_dicom_series_list_cargs(
     cargs = []
     cargs.extend([
         "-dicom-series-list",
-        params.get("dicom_series_list")
+        params.get("dicom_series_list", None)
     ])
     return cargs
 
 
 def c3d_dicom_series_read_params(
     dicom_series_read: str,
-) -> C3dDicomSeriesReadParameters:
+) -> C3dDicomSeriesReadParametersTagged:
     """
     Build parameters.
     
@@ -2755,7 +3475,7 @@ def c3d_dicom_series_read_params(
         Parameter dictionary
     """
     params = {
-        "@type": "c3d.c3d.dicom_series_read",
+        "@type": "dicom_series_read",
         "dicom_series_read": dicom_series_read,
     }
     return params
@@ -2777,14 +3497,14 @@ def c3d_dicom_series_read_cargs(
     cargs = []
     cargs.extend([
         "-dicom-series-read",
-        params.get("dicom_series_read")
+        params.get("dicom_series_read", None)
     ])
     return cargs
 
 
 def c3d_dilate_params(
     dilate: str,
-) -> C3dDilateParameters:
+) -> C3dDilateParametersTagged:
     """
     Build parameters.
     
@@ -2803,7 +3523,7 @@ def c3d_dilate_params(
         Parameter dictionary
     """
     params = {
-        "@type": "c3d.c3d.dilate",
+        "@type": "dilate",
         "dilate": dilate,
     }
     return params
@@ -2825,14 +3545,14 @@ def c3d_dilate_cargs(
     cargs = []
     cargs.extend([
         "-dilate",
-        params.get("dilate")
+        params.get("dilate", None)
     ])
     return cargs
 
 
 def c3d_divide_params(
     divide: str,
-) -> C3dDivideParameters:
+) -> C3dDivideParametersTagged:
     """
     Build parameters.
     
@@ -2855,7 +3575,7 @@ def c3d_divide_params(
         Parameter dictionary
     """
     params = {
-        "@type": "c3d.c3d.divide",
+        "@type": "divide",
         "divide": divide,
     }
     return params
@@ -2877,14 +3597,14 @@ def c3d_divide_cargs(
     cargs = []
     cargs.extend([
         "-divide",
-        params.get("divide")
+        params.get("divide", None)
     ])
     return cargs
 
 
 def c3d_duplicate_params(
     duplicate: str,
-) -> C3dDuplicateParameters:
+) -> C3dDuplicateParametersTagged:
     """
     Build parameters.
     
@@ -2905,7 +3625,7 @@ def c3d_duplicate_params(
         Parameter dictionary
     """
     params = {
-        "@type": "c3d.c3d.duplicate",
+        "@type": "duplicate",
         "duplicate": duplicate,
     }
     return params
@@ -2927,14 +3647,14 @@ def c3d_duplicate_cargs(
     cargs = []
     cargs.extend([
         "-dup",
-        params.get("duplicate")
+        params.get("duplicate", None)
     ])
     return cargs
 
 
 def c3d_endaccum_params(
     endaccum: str,
-) -> C3dEndaccumParameters:
+) -> C3dEndaccumParametersTagged:
     """
     Build parameters.
     
@@ -2955,7 +3675,7 @@ def c3d_endaccum_params(
         Parameter dictionary
     """
     params = {
-        "@type": "c3d.c3d.endaccum",
+        "@type": "endaccum",
         "endaccum": endaccum,
     }
     return params
@@ -2977,14 +3697,14 @@ def c3d_endaccum_cargs(
     cargs = []
     cargs.extend([
         "-endaccum",
-        params.get("endaccum")
+        params.get("endaccum", None)
     ])
     return cargs
 
 
 def c3d_endfor_params(
     endfor: str,
-) -> C3dEndforParameters:
+) -> C3dEndforParametersTagged:
     """
     Build parameters.
     
@@ -3003,7 +3723,7 @@ def c3d_endfor_params(
         Parameter dictionary
     """
     params = {
-        "@type": "c3d.c3d.endfor",
+        "@type": "endfor",
         "endfor": endfor,
     }
     return params
@@ -3025,14 +3745,14 @@ def c3d_endfor_cargs(
     cargs = []
     cargs.extend([
         "-endfor",
-        params.get("endfor")
+        params.get("endfor", None)
     ])
     return cargs
 
 
 def c3d_erode_params(
     erode: str,
-) -> C3dErodeParameters:
+) -> C3dErodeParametersTagged:
     """
     Build parameters.
     
@@ -3051,7 +3771,7 @@ def c3d_erode_params(
         Parameter dictionary
     """
     params = {
-        "@type": "c3d.c3d.erode",
+        "@type": "erode",
         "erode": erode,
     }
     return params
@@ -3073,14 +3793,14 @@ def c3d_erode_cargs(
     cargs = []
     cargs.extend([
         "-erode",
-        params.get("erode")
+        params.get("erode", None)
     ])
     return cargs
 
 
 def c3d_erf_params(
     erf: str,
-) -> C3dErfParameters:
+) -> C3dErfParametersTagged:
     """
     Build parameters.
     
@@ -3097,7 +3817,7 @@ def c3d_erf_params(
         Parameter dictionary
     """
     params = {
-        "@type": "c3d.c3d.erf",
+        "@type": "erf",
         "erf": erf,
     }
     return params
@@ -3119,14 +3839,14 @@ def c3d_erf_cargs(
     cargs = []
     cargs.extend([
         "-erf",
-        params.get("erf")
+        params.get("erf", None)
     ])
     return cargs
 
 
 def c3d_exp_params(
     exp: str,
-) -> C3dExpParameters:
+) -> C3dExpParametersTagged:
     """
     Build parameters.
     
@@ -3142,7 +3862,7 @@ def c3d_exp_params(
         Parameter dictionary
     """
     params = {
-        "@type": "c3d.c3d.exp",
+        "@type": "exp",
         "exp": exp,
     }
     return params
@@ -3164,14 +3884,14 @@ def c3d_exp_cargs(
     cargs = []
     cargs.extend([
         "-exp",
-        params.get("exp")
+        params.get("exp", None)
     ])
     return cargs
 
 
 def c3d_export_patches_params(
     export_patches: str,
-) -> C3dExportPatchesParameters:
+) -> C3dExportPatchesParametersTagged:
     """
     Build parameters.
     
@@ -3228,7 +3948,7 @@ def c3d_export_patches_params(
         Parameter dictionary
     """
     params = {
-        "@type": "c3d.c3d.export_patches",
+        "@type": "export_patches",
         "export_patches": export_patches,
     }
     return params
@@ -3250,14 +3970,14 @@ def c3d_export_patches_cargs(
     cargs = []
     cargs.extend([
         "-export-patches",
-        params.get("export_patches")
+        params.get("export_patches", None)
     ])
     return cargs
 
 
 def c3d_export_patches_aug_params(
     export_patches_aug: str,
-) -> C3dExportPatchesAugParameters:
+) -> C3dExportPatchesAugParametersTagged:
     """
     Build parameters.
     
@@ -3281,7 +4001,7 @@ def c3d_export_patches_aug_params(
         Parameter dictionary
     """
     params = {
-        "@type": "c3d.c3d.export_patches_aug",
+        "@type": "export_patches_aug",
         "export_patches_aug": export_patches_aug,
     }
     return params
@@ -3303,14 +4023,14 @@ def c3d_export_patches_aug_cargs(
     cargs = []
     cargs.extend([
         "-export-patches-aug",
-        params.get("export_patches_aug")
+        params.get("export_patches_aug", None)
     ])
     return cargs
 
 
 def c3d_extrude_seg_params(
     extrude_seg: str,
-) -> C3dExtrudeSegParameters:
+) -> C3dExtrudeSegParametersTagged:
     """
     Build parameters.
     
@@ -3320,7 +4040,7 @@ def c3d_extrude_seg_params(
         Parameter dictionary
     """
     params = {
-        "@type": "c3d.c3d.extrude_seg",
+        "@type": "extrude_seg",
         "extrude_seg": extrude_seg,
     }
     return params
@@ -3342,14 +4062,14 @@ def c3d_extrude_seg_cargs(
     cargs = []
     cargs.extend([
         "-extrude-seg",
-        params.get("extrude_seg")
+        params.get("extrude_seg", None)
     ])
     return cargs
 
 
 def c3d_fill_background_with_noise_params(
     fill_background_with_noise: str,
-) -> C3dFillBackgroundWithNoiseParameters:
+) -> C3dFillBackgroundWithNoiseParametersTagged:
     """
     Build parameters.
     
@@ -3359,7 +4079,7 @@ def c3d_fill_background_with_noise_params(
         Parameter dictionary
     """
     params = {
-        "@type": "c3d.c3d.fill_background_with_noise",
+        "@type": "fill_background_with_noise",
         "fill_background_with_noise": fill_background_with_noise,
     }
     return params
@@ -3381,14 +4101,14 @@ def c3d_fill_background_with_noise_cargs(
     cargs = []
     cargs.extend([
         "-fill-background-with-noise",
-        params.get("fill_background_with_noise")
+        params.get("fill_background_with_noise", None)
     ])
     return cargs
 
 
 def c3d_fft_params(
     fft: str,
-) -> C3dFftParameters:
+) -> C3dFftParametersTagged:
     """
     Build parameters.
     
@@ -3407,7 +4127,7 @@ def c3d_fft_params(
         Parameter dictionary
     """
     params = {
-        "@type": "c3d.c3d.fft",
+        "@type": "fft",
         "fft": fft,
     }
     return params
@@ -3429,14 +4149,14 @@ def c3d_fft_cargs(
     cargs = []
     cargs.extend([
         "-fft",
-        params.get("fft")
+        params.get("fft", None)
     ])
     return cargs
 
 
 def c3d_flip_params(
     flip: str,
-) -> C3dFlipParameters:
+) -> C3dFlipParametersTagged:
     """
     Build parameters.
     
@@ -3454,7 +4174,7 @@ def c3d_flip_params(
         Parameter dictionary
     """
     params = {
-        "@type": "c3d.c3d.flip",
+        "@type": "flip",
         "flip": flip,
     }
     return params
@@ -3476,14 +4196,14 @@ def c3d_flip_cargs(
     cargs = []
     cargs.extend([
         "-flip",
-        params.get("flip")
+        params.get("flip", None)
     ])
     return cargs
 
 
 def c3d_floor_params(
     floor: str,
-) -> C3dFloorParameters:
+) -> C3dFloorParametersTagged:
     """
     Build parameters.
     
@@ -3504,7 +4224,7 @@ def c3d_floor_params(
         Parameter dictionary
     """
     params = {
-        "@type": "c3d.c3d.floor",
+        "@type": "floor",
         "floor": floor,
     }
     return params
@@ -3526,14 +4246,14 @@ def c3d_floor_cargs(
     cargs = []
     cargs.extend([
         "-floor",
-        params.get("floor")
+        params.get("floor", None)
     ])
     return cargs
 
 
 def c3d_foreach_params(
     foreach: str,
-) -> C3dForeachParameters:
+) -> C3dForeachParametersTagged:
     """
     Build parameters.
     
@@ -3552,7 +4272,7 @@ def c3d_foreach_params(
         Parameter dictionary
     """
     params = {
-        "@type": "c3d.c3d.foreach",
+        "@type": "foreach",
         "foreach": foreach,
     }
     return params
@@ -3574,14 +4294,14 @@ def c3d_foreach_cargs(
     cargs = []
     cargs.extend([
         "-foreach",
-        params.get("foreach")
+        params.get("foreach", None)
     ])
     return cargs
 
 
 def c3d_foreach_comp_params(
     foreach_comp: str,
-) -> C3dForeachCompParameters:
+) -> C3dForeachCompParametersTagged:
     """
     Build parameters.
     
@@ -3607,7 +4327,7 @@ def c3d_foreach_comp_params(
         Parameter dictionary
     """
     params = {
-        "@type": "c3d.c3d.foreach_comp",
+        "@type": "foreach_comp",
         "foreach_comp": foreach_comp,
     }
     return params
@@ -3629,14 +4349,14 @@ def c3d_foreach_comp_cargs(
     cargs = []
     cargs.extend([
         "-foreach-comp",
-        params.get("foreach_comp")
+        params.get("foreach_comp", None)
     ])
     return cargs
 
 
 def c3d_glm_params(
     glm: str,
-) -> C3dGlmParameters:
+) -> C3dGlmParametersTagged:
     """
     Build parameters.
     
@@ -3672,7 +4392,7 @@ def c3d_glm_params(
         Parameter dictionary
     """
     params = {
-        "@type": "c3d.c3d.glm",
+        "@type": "glm",
         "glm": glm,
     }
     return params
@@ -3694,14 +4414,14 @@ def c3d_glm_cargs(
     cargs = []
     cargs.extend([
         "-glm",
-        params.get("glm")
+        params.get("glm", None)
     ])
     return cargs
 
 
 def c3d_gradient_params(
     gradient: str,
-) -> C3dGradientParameters:
+) -> C3dGradientParametersTagged:
     """
     Build parameters.
     
@@ -3723,7 +4443,7 @@ def c3d_gradient_params(
         Parameter dictionary
     """
     params = {
-        "@type": "c3d.c3d.gradient",
+        "@type": "gradient",
         "gradient": gradient,
     }
     return params
@@ -3745,14 +4465,14 @@ def c3d_gradient_cargs(
     cargs = []
     cargs.extend([
         "-grad",
-        params.get("gradient")
+        params.get("gradient", None)
     ])
     return cargs
 
 
 def c3d__help_params(
     v__help: str,
-) -> C3dHelpParameters:
+) -> C3dHelpParametersTagged:
     """
     Build parameters.
     
@@ -3774,7 +4494,7 @@ def c3d__help_params(
         Parameter dictionary
     """
     params = {
-        "@type": "c3d.c3d._help",
+        "@type": "_help",
         "_help": v__help,
     }
     return params
@@ -3796,14 +4516,14 @@ def c3d__help_cargs(
     cargs = []
     cargs.extend([
         "-h",
-        params.get("_help")
+        params.get("_help", None)
     ])
     return cargs
 
 
 def c3d_holefill_params(
     holefill: str,
-) -> C3dHolefillParameters:
+) -> C3dHolefillParametersTagged:
     """
     Build parameters.
     
@@ -3829,7 +4549,7 @@ def c3d_holefill_params(
         Parameter dictionary
     """
     params = {
-        "@type": "c3d.c3d.holefill",
+        "@type": "holefill",
         "holefill": holefill,
     }
     return params
@@ -3851,14 +4571,14 @@ def c3d_holefill_cargs(
     cargs = []
     cargs.extend([
         "-hf",
-        params.get("holefill")
+        params.get("holefill", None)
     ])
     return cargs
 
 
 def c3d_hessian_eigenvalues_params(
     hessian_eigenvalues: str,
-) -> C3dHessianEigenvaluesParameters:
+) -> C3dHessianEigenvaluesParametersTagged:
     """
     Build parameters.
     
@@ -3880,7 +4600,7 @@ def c3d_hessian_eigenvalues_params(
         Parameter dictionary
     """
     params = {
-        "@type": "c3d.c3d.hessian_eigenvalues",
+        "@type": "hessian_eigenvalues",
         "hessian_eigenvalues": hessian_eigenvalues,
     }
     return params
@@ -3902,14 +4622,14 @@ def c3d_hessian_eigenvalues_cargs(
     cargs = []
     cargs.extend([
         "-hesseig",
-        params.get("hessian_eigenvalues")
+        params.get("hessian_eigenvalues", None)
     ])
     return cargs
 
 
 def c3d_hessian_objectness_params(
     hessian_objectness: str,
-) -> C3dHessianObjectnessParameters:
+) -> C3dHessianObjectnessParametersTagged:
     """
     Build parameters.
     
@@ -3939,7 +4659,7 @@ def c3d_hessian_objectness_params(
         Parameter dictionary
     """
     params = {
-        "@type": "c3d.c3d.hessian_objectness",
+        "@type": "hessian_objectness",
         "hessian_objectness": hessian_objectness,
     }
     return params
@@ -3961,14 +4681,14 @@ def c3d_hessian_objectness_cargs(
     cargs = []
     cargs.extend([
         "-hessobj",
-        params.get("hessian_objectness")
+        params.get("hessian_objectness", None)
     ])
     return cargs
 
 
 def c3d_histogram_match_params(
     histogram_match: str,
-) -> C3dHistogramMatchParameters:
+) -> C3dHistogramMatchParametersTagged:
     """
     Build parameters.
     
@@ -3978,7 +4698,7 @@ def c3d_histogram_match_params(
         Parameter dictionary
     """
     params = {
-        "@type": "c3d.c3d.histogram_match",
+        "@type": "histogram_match",
         "histogram_match": histogram_match,
     }
     return params
@@ -4000,14 +4720,14 @@ def c3d_histogram_match_cargs(
     cargs = []
     cargs.extend([
         "-histmatch",
-        params.get("histogram_match")
+        params.get("histogram_match", None)
     ])
     return cargs
 
 
 def c3d_info_params(
     info: str,
-) -> C3dInfoParameters:
+) -> C3dInfoParametersTagged:
     """
     Build parameters.
     
@@ -4029,7 +4749,7 @@ def c3d_info_params(
         Parameter dictionary
     """
     params = {
-        "@type": "c3d.c3d.info",
+        "@type": "info",
         "info": info,
     }
     return params
@@ -4051,14 +4771,14 @@ def c3d_info_cargs(
     cargs = []
     cargs.extend([
         "-info",
-        params.get("info")
+        params.get("info", None)
     ])
     return cargs
 
 
 def c3d_info_full_params(
     info_full: str,
-) -> C3dInfoFullParameters:
+) -> C3dInfoFullParametersTagged:
     """
     Build parameters.
     
@@ -4075,7 +4795,7 @@ def c3d_info_full_params(
         Parameter dictionary
     """
     params = {
-        "@type": "c3d.c3d.info_full",
+        "@type": "info_full",
         "info_full": info_full,
     }
     return params
@@ -4097,14 +4817,14 @@ def c3d_info_full_cargs(
     cargs = []
     cargs.extend([
         "-info-full",
-        params.get("info_full")
+        params.get("info_full", None)
     ])
     return cargs
 
 
 def c3d_insert_params(
     insert: str,
-) -> C3dInsertParameters:
+) -> C3dInsertParametersTagged:
     """
     Build parameters.
     
@@ -4122,7 +4842,7 @@ def c3d_insert_params(
         Parameter dictionary
     """
     params = {
-        "@type": "c3d.c3d.insert",
+        "@type": "insert",
         "insert": insert,
     }
     return params
@@ -4144,14 +4864,14 @@ def c3d_insert_cargs(
     cargs = []
     cargs.extend([
         "-insert",
-        params.get("insert")
+        params.get("insert", None)
     ])
     return cargs
 
 
 def c3d_interpolation_params(
     interpolation: str,
-) -> C3dInterpolationParameters:
+) -> C3dInterpolationParametersTagged:
     """
     Build parameters.
     
@@ -4178,7 +4898,7 @@ def c3d_interpolation_params(
         Parameter dictionary
     """
     params = {
-        "@type": "c3d.c3d.interpolation",
+        "@type": "interpolation",
         "interpolation": interpolation,
     }
     return params
@@ -4200,14 +4920,14 @@ def c3d_interpolation_cargs(
     cargs = []
     cargs.extend([
         "-interpolation",
-        params.get("interpolation")
+        params.get("interpolation", None)
     ])
     return cargs
 
 
 def c3d_iterations_params(
     iterations: str,
-) -> C3dIterationsParameters:
+) -> C3dIterationsParametersTagged:
     """
     Build parameters.
     
@@ -4217,7 +4937,7 @@ def c3d_iterations_params(
         Parameter dictionary
     """
     params = {
-        "@type": "c3d.c3d.iterations",
+        "@type": "iterations",
         "iterations": iterations,
     }
     return params
@@ -4239,14 +4959,14 @@ def c3d_iterations_cargs(
     cargs = []
     cargs.extend([
         "-iterations",
-        params.get("iterations")
+        params.get("iterations", None)
     ])
     return cargs
 
 
 def c3d_label_overlap_params(
     label_overlap: str,
-) -> C3dLabelOverlapParameters:
+) -> C3dLabelOverlapParametersTagged:
     """
     Build parameters.
     
@@ -4256,7 +4976,7 @@ def c3d_label_overlap_params(
         Parameter dictionary
     """
     params = {
-        "@type": "c3d.c3d.label_overlap",
+        "@type": "label_overlap",
         "label_overlap": label_overlap,
     }
     return params
@@ -4278,14 +4998,14 @@ def c3d_label_overlap_cargs(
     cargs = []
     cargs.extend([
         "-label-overlap",
-        params.get("label_overlap")
+        params.get("label_overlap", None)
     ])
     return cargs
 
 
 def c3d_label_statistics_params(
     label_statistics: str,
-) -> C3dLabelStatisticsParameters:
+) -> C3dLabelStatisticsParametersTagged:
     """
     Build parameters.
     
@@ -4314,7 +5034,7 @@ def c3d_label_statistics_params(
         Parameter dictionary
     """
     params = {
-        "@type": "c3d.c3d.label_statistics",
+        "@type": "label_statistics",
         "label_statistics": label_statistics,
     }
     return params
@@ -4336,14 +5056,14 @@ def c3d_label_statistics_cargs(
     cargs = []
     cargs.extend([
         "-label-statistics",
-        params.get("label_statistics")
+        params.get("label_statistics", None)
     ])
     return cargs
 
 
 def c3d_landmarks_to_spheres_params(
     landmarks_to_spheres: str,
-) -> C3dLandmarksToSpheresParameters:
+) -> C3dLandmarksToSpheresParametersTagged:
     """
     Build parameters.
     
@@ -4353,7 +5073,7 @@ def c3d_landmarks_to_spheres_params(
         Parameter dictionary
     """
     params = {
-        "@type": "c3d.c3d.landmarks_to_spheres",
+        "@type": "landmarks_to_spheres",
         "landmarks_to_spheres": landmarks_to_spheres,
     }
     return params
@@ -4375,14 +5095,14 @@ def c3d_landmarks_to_spheres_cargs(
     cargs = []
     cargs.extend([
         "-landmarks-to-spheres",
-        params.get("landmarks_to_spheres")
+        params.get("landmarks_to_spheres", None)
     ])
     return cargs
 
 
 def c3d_laplacian_params(
     laplacian: str,
-) -> C3dLaplacianParameters:
+) -> C3dLaplacianParametersTagged:
     """
     Build parameters.
     
@@ -4401,7 +5121,7 @@ def c3d_laplacian_params(
         Parameter dictionary
     """
     params = {
-        "@type": "c3d.c3d.laplacian",
+        "@type": "laplacian",
         "laplacian": laplacian,
     }
     return params
@@ -4423,14 +5143,14 @@ def c3d_laplacian_cargs(
     cargs = []
     cargs.extend([
         "-laplacian",
-        params.get("laplacian")
+        params.get("laplacian", None)
     ])
     return cargs
 
 
 def c3d_levelset_params(
     levelset: str,
-) -> C3dLevelsetParameters:
+) -> C3dLevelsetParametersTagged:
     """
     Build parameters.
     
@@ -4479,7 +5199,7 @@ def c3d_levelset_params(
         Parameter dictionary
     """
     params = {
-        "@type": "c3d.c3d.levelset",
+        "@type": "levelset",
         "levelset": levelset,
     }
     return params
@@ -4501,14 +5221,14 @@ def c3d_levelset_cargs(
     cargs = []
     cargs.extend([
         "-levelset",
-        params.get("levelset")
+        params.get("levelset", None)
     ])
     return cargs
 
 
 def c3d_levelset_curvature_params(
     levelset_curvature: str,
-) -> C3dLevelsetCurvatureParameters:
+) -> C3dLevelsetCurvatureParametersTagged:
     """
     Build parameters.
     
@@ -4518,7 +5238,7 @@ def c3d_levelset_curvature_params(
         Parameter dictionary
     """
     params = {
-        "@type": "c3d.c3d.levelset_curvature",
+        "@type": "levelset_curvature",
         "levelset_curvature": levelset_curvature,
     }
     return params
@@ -4540,14 +5260,14 @@ def c3d_levelset_curvature_cargs(
     cargs = []
     cargs.extend([
         "-levelset-curvature",
-        params.get("levelset_curvature")
+        params.get("levelset_curvature", None)
     ])
     return cargs
 
 
 def c3d_levelset_advection_params(
     levelset_advection: str,
-) -> C3dLevelsetAdvectionParameters:
+) -> C3dLevelsetAdvectionParametersTagged:
     """
     Build parameters.
     
@@ -4557,7 +5277,7 @@ def c3d_levelset_advection_params(
         Parameter dictionary
     """
     params = {
-        "@type": "c3d.c3d.levelset_advection",
+        "@type": "levelset_advection",
         "levelset_advection": levelset_advection,
     }
     return params
@@ -4579,14 +5299,14 @@ def c3d_levelset_advection_cargs(
     cargs = []
     cargs.extend([
         "-levelset-advection",
-        params.get("levelset_advection")
+        params.get("levelset_advection", None)
     ])
     return cargs
 
 
 def c3d_log_params(
     log: str,
-) -> C3dLogParameters:
+) -> C3dLogParametersTagged:
     """
     Build parameters.
     
@@ -4601,7 +5321,7 @@ def c3d_log_params(
         Parameter dictionary
     """
     params = {
-        "@type": "c3d.c3d.log",
+        "@type": "log",
         "log": log,
     }
     return params
@@ -4623,14 +5343,14 @@ def c3d_log_cargs(
     cargs = []
     cargs.extend([
         "-ln",
-        params.get("log")
+        params.get("log", None)
     ])
     return cargs
 
 
 def c3d_log10_params(
     log10: str,
-) -> C3dLog10Parameters:
+) -> C3dLog10ParametersTagged:
     """
     Build parameters.
     
@@ -4645,7 +5365,7 @@ def c3d_log10_params(
         Parameter dictionary
     """
     params = {
-        "@type": "c3d.c3d.log10",
+        "@type": "log10",
         "log10": log10,
     }
     return params
@@ -4667,14 +5387,14 @@ def c3d_log10_cargs(
     cargs = []
     cargs.extend([
         "-log10",
-        params.get("log10")
+        params.get("log10", None)
     ])
     return cargs
 
 
 def c3d_manual_params(
     manual: str,
-) -> C3dManualParameters:
+) -> C3dManualParametersTagged:
     """
     Build parameters.
     
@@ -4684,7 +5404,7 @@ def c3d_manual_params(
         Parameter dictionary
     """
     params = {
-        "@type": "c3d.c3d.manual",
+        "@type": "manual",
         "manual": manual,
     }
     return params
@@ -4706,14 +5426,14 @@ def c3d_manual_cargs(
     cargs = []
     cargs.extend([
         "-manual",
-        params.get("manual")
+        params.get("manual", None)
     ])
     return cargs
 
 
 def c3d_match_bounding_box_params(
     match_bounding_box: str,
-) -> C3dMatchBoundingBoxParameters:
+) -> C3dMatchBoundingBoxParametersTagged:
     """
     Build parameters.
     
@@ -4734,7 +5454,7 @@ def c3d_match_bounding_box_params(
         Parameter dictionary
     """
     params = {
-        "@type": "c3d.c3d.match_bounding_box",
+        "@type": "match_bounding_box",
         "match_bounding_box": match_bounding_box,
     }
     return params
@@ -4756,14 +5476,14 @@ def c3d_match_bounding_box_cargs(
     cargs = []
     cargs.extend([
         "-match-bounding-box",
-        params.get("match_bounding_box")
+        params.get("match_bounding_box", None)
     ])
     return cargs
 
 
 def c3d_maximum_params(
     maximum: str,
-) -> C3dMaximumParameters:
+) -> C3dMaximumParametersTagged:
     """
     Build parameters.
     
@@ -4782,7 +5502,7 @@ def c3d_maximum_params(
         Parameter dictionary
     """
     params = {
-        "@type": "c3d.c3d.maximum",
+        "@type": "maximum",
         "maximum": maximum,
     }
     return params
@@ -4804,14 +5524,14 @@ def c3d_maximum_cargs(
     cargs = []
     cargs.extend([
         "-maximum",
-        params.get("maximum")
+        params.get("maximum", None)
     ])
     return cargs
 
 
 def c3d_multicomponent_split_params(
     multicomponent_split: str,
-) -> C3dMulticomponentSplitParameters:
+) -> C3dMulticomponentSplitParametersTagged:
     """
     Build parameters.
     
@@ -4838,7 +5558,7 @@ def c3d_multicomponent_split_params(
         Parameter dictionary
     """
     params = {
-        "@type": "c3d.c3d.multicomponent_split",
+        "@type": "multicomponent_split",
         "multicomponent_split": multicomponent_split,
     }
     return params
@@ -4860,14 +5580,14 @@ def c3d_multicomponent_split_cargs(
     cargs = []
     cargs.extend([
         "-mcs",
-        params.get("multicomponent_split")
+        params.get("multicomponent_split", None)
     ])
     return cargs
 
 
 def c3d_mean_params(
     mean: str,
-) -> C3dMeanParameters:
+) -> C3dMeanParametersTagged:
     """
     Build parameters.
     
@@ -4884,7 +5604,7 @@ def c3d_mean_params(
         Parameter dictionary
     """
     params = {
-        "@type": "c3d.c3d.mean",
+        "@type": "mean",
         "mean": mean,
     }
     return params
@@ -4906,14 +5626,14 @@ def c3d_mean_cargs(
     cargs = []
     cargs.extend([
         "-mean",
-        params.get("mean")
+        params.get("mean", None)
     ])
     return cargs
 
 
 def c3d_median_filter_params(
     median_filter: str,
-) -> C3dMedianFilterParameters:
+) -> C3dMedianFilterParametersTagged:
     """
     Build parameters.
     
@@ -4932,7 +5652,7 @@ def c3d_median_filter_params(
         Parameter dictionary
     """
     params = {
-        "@type": "c3d.c3d.median_filter",
+        "@type": "median_filter",
         "median_filter": median_filter,
     }
     return params
@@ -4954,14 +5674,14 @@ def c3d_median_filter_cargs(
     cargs = []
     cargs.extend([
         "-median",
-        params.get("median_filter")
+        params.get("median_filter", None)
     ])
     return cargs
 
 
 def c3d_merge_params(
     merge: str,
-) -> C3dMergeParameters:
+) -> C3dMergeParametersTagged:
     """
     Build parameters.
     
@@ -4977,7 +5697,7 @@ def c3d_merge_params(
         Parameter dictionary
     """
     params = {
-        "@type": "c3d.c3d.merge",
+        "@type": "merge",
         "merge": merge,
     }
     return params
@@ -4999,14 +5719,14 @@ def c3d_merge_cargs(
     cargs = []
     cargs.extend([
         "-merge",
-        params.get("merge")
+        params.get("merge", None)
     ])
     return cargs
 
 
 def c3d_mean_filter_params(
     mean_filter: str,
-) -> C3dMeanFilterParameters:
+) -> C3dMeanFilterParametersTagged:
     """
     Build parameters.
     
@@ -5025,7 +5745,7 @@ def c3d_mean_filter_params(
         Parameter dictionary
     """
     params = {
-        "@type": "c3d.c3d.mean_filter",
+        "@type": "mean_filter",
         "mean_filter": mean_filter,
     }
     return params
@@ -5047,14 +5767,14 @@ def c3d_mean_filter_cargs(
     cargs = []
     cargs.extend([
         "-mf",
-        params.get("mean_filter")
+        params.get("mean_filter", None)
     ])
     return cargs
 
 
 def c3d_mutual_info_params(
     mutual_info: str,
-) -> C3dMutualInfoParameters:
+) -> C3dMutualInfoParametersTagged:
     """
     Build parameters.
     
@@ -5073,7 +5793,7 @@ def c3d_mutual_info_params(
         Parameter dictionary
     """
     params = {
-        "@type": "c3d.c3d.mutual_info",
+        "@type": "mutual_info",
         "mutual_info": mutual_info,
     }
     return params
@@ -5095,14 +5815,14 @@ def c3d_mutual_info_cargs(
     cargs = []
     cargs.extend([
         "-mi",
-        params.get("mutual_info")
+        params.get("mutual_info", None)
     ])
     return cargs
 
 
 def c3d_minimum_params(
     minimum: str,
-) -> C3dMinimumParameters:
+) -> C3dMinimumParametersTagged:
     """
     Build parameters.
     
@@ -5121,7 +5841,7 @@ def c3d_minimum_params(
         Parameter dictionary
     """
     params = {
-        "@type": "c3d.c3d.minimum",
+        "@type": "minimum",
         "minimum": minimum,
     }
     return params
@@ -5143,14 +5863,14 @@ def c3d_minimum_cargs(
     cargs = []
     cargs.extend([
         "-minimum",
-        params.get("minimum")
+        params.get("minimum", None)
     ])
     return cargs
 
 
 def c3d_mixture_model_params(
     mixture_model: str,
-) -> C3dMixtureModelParameters:
+) -> C3dMixtureModelParametersTagged:
     """
     Build parameters.
     
@@ -5160,7 +5880,7 @@ def c3d_mixture_model_params(
         Parameter dictionary
     """
     params = {
-        "@type": "c3d.c3d.mixture_model",
+        "@type": "mixture_model",
         "mixture_model": mixture_model,
     }
     return params
@@ -5182,14 +5902,14 @@ def c3d_mixture_model_cargs(
     cargs = []
     cargs.extend([
         "-mixture",
-        params.get("mixture_model")
+        params.get("mixture_model", None)
     ])
     return cargs
 
 
 def c3d_moments_params(
     moments: str,
-) -> C3dMomentsParameters:
+) -> C3dMomentsParametersTagged:
     """
     Build parameters.
     
@@ -5199,7 +5919,7 @@ def c3d_moments_params(
         Parameter dictionary
     """
     params = {
-        "@type": "c3d.c3d.moments",
+        "@type": "moments",
         "moments": moments,
     }
     return params
@@ -5221,14 +5941,14 @@ def c3d_moments_cargs(
     cargs = []
     cargs.extend([
         "-moments",
-        params.get("moments")
+        params.get("moments", None)
     ])
     return cargs
 
 
 def c3d_mattes_mutual_info_params(
     mattes_mutual_info: str,
-) -> C3dMattesMutualInfoParameters:
+) -> C3dMattesMutualInfoParametersTagged:
     """
     Build parameters.
     
@@ -5238,7 +5958,7 @@ def c3d_mattes_mutual_info_params(
         Parameter dictionary
     """
     params = {
-        "@type": "c3d.c3d.mattes_mutual_info",
+        "@type": "mattes_mutual_info",
         "mattes_mutual_info": mattes_mutual_info,
     }
     return params
@@ -5260,14 +5980,14 @@ def c3d_mattes_mutual_info_cargs(
     cargs = []
     cargs.extend([
         "-mmi",
-        params.get("mattes_mutual_info")
+        params.get("mattes_mutual_info", None)
     ])
     return cargs
 
 
 def c3d_mean_square_params(
     mean_square: str,
-) -> C3dMeanSquareParameters:
+) -> C3dMeanSquareParametersTagged:
     """
     Build parameters.
     
@@ -5304,7 +6024,7 @@ def c3d_mean_square_params(
         Parameter dictionary
     """
     params = {
-        "@type": "c3d.c3d.mean_square",
+        "@type": "mean_square",
         "mean_square": mean_square,
     }
     return params
@@ -5326,14 +6046,14 @@ def c3d_mean_square_cargs(
     cargs = []
     cargs.extend([
         "-msq",
-        params.get("mean_square")
+        params.get("mean_square", None)
     ])
     return cargs
 
 
 def c3d_multiply_params(
     multiply: str,
-) -> C3dMultiplyParameters:
+) -> C3dMultiplyParametersTagged:
     """
     Build parameters.
     
@@ -5360,7 +6080,7 @@ def c3d_multiply_params(
         Parameter dictionary
     """
     params = {
-        "@type": "c3d.c3d.multiply",
+        "@type": "multiply",
         "multiply": multiply,
     }
     return params
@@ -5382,14 +6102,14 @@ def c3d_multiply_cargs(
     cargs = []
     cargs.extend([
         "-multiply",
-        params.get("multiply")
+        params.get("multiply", None)
     ])
     return cargs
 
 
 def c3d_normalized_cross_correlation_params(
     normalized_cross_correlation: str,
-) -> C3dNormalizedCrossCorrelationParameters:
+) -> C3dNormalizedCrossCorrelationParametersTagged:
     """
     Build parameters.
     
@@ -5408,7 +6128,7 @@ def c3d_normalized_cross_correlation_params(
         Parameter dictionary
     """
     params = {
-        "@type": "c3d.c3d.normalized_cross_correlation",
+        "@type": "normalized_cross_correlation",
         "normalized_cross_correlation": normalized_cross_correlation,
     }
     return params
@@ -5430,14 +6150,14 @@ def c3d_normalized_cross_correlation_cargs(
     cargs = []
     cargs.extend([
         "-ncc",
-        params.get("normalized_cross_correlation")
+        params.get("normalized_cross_correlation", None)
     ])
     return cargs
 
 
 def c3d_normalized_correlation_params(
     normalized_correlation: str,
-) -> C3dNormalizedCorrelationParameters:
+) -> C3dNormalizedCorrelationParametersTagged:
     """
     Build parameters.
     
@@ -5453,7 +6173,7 @@ def c3d_normalized_correlation_params(
         Parameter dictionary
     """
     params = {
-        "@type": "c3d.c3d.normalized_correlation",
+        "@type": "normalized_correlation",
         "normalized_correlation": normalized_correlation,
     }
     return params
@@ -5475,14 +6195,14 @@ def c3d_normalized_correlation_cargs(
     cargs = []
     cargs.extend([
         "-ncor",
-        params.get("normalized_correlation")
+        params.get("normalized_correlation", None)
     ])
     return cargs
 
 
 def c3d_normalized_mutual_info_params(
     normalized_mutual_info: str,
-) -> C3dNormalizedMutualInfoParameters:
+) -> C3dNormalizedMutualInfoParametersTagged:
     """
     Build parameters.
     
@@ -5498,7 +6218,7 @@ def c3d_normalized_mutual_info_params(
         Parameter dictionary
     """
     params = {
-        "@type": "c3d.c3d.normalized_mutual_info",
+        "@type": "normalized_mutual_info",
         "normalized_mutual_info": normalized_mutual_info,
     }
     return params
@@ -5520,14 +6240,14 @@ def c3d_normalized_mutual_info_cargs(
     cargs = []
     cargs.extend([
         "-nmi",
-        params.get("normalized_mutual_info")
+        params.get("normalized_mutual_info", None)
     ])
     return cargs
 
 
 def c3d_noise_gaussian_params(
     noise_gaussian: str,
-) -> C3dNoiseGaussianParameters:
+) -> C3dNoiseGaussianParametersTagged:
     """
     Build parameters.
     
@@ -5545,7 +6265,7 @@ def c3d_noise_gaussian_params(
         Parameter dictionary
     """
     params = {
-        "@type": "c3d.c3d.noise_gaussian",
+        "@type": "noise_gaussian",
         "noise_gaussian": noise_gaussian,
     }
     return params
@@ -5567,14 +6287,14 @@ def c3d_noise_gaussian_cargs(
     cargs = []
     cargs.extend([
         "-noise-gaussian",
-        params.get("noise_gaussian")
+        params.get("noise_gaussian", None)
     ])
     return cargs
 
 
 def c3d_noise_poisson_params(
     noise_poisson: str,
-) -> C3dNoisePoissonParameters:
+) -> C3dNoisePoissonParametersTagged:
     """
     Build parameters.
     
@@ -5590,7 +6310,7 @@ def c3d_noise_poisson_params(
         Parameter dictionary
     """
     params = {
-        "@type": "c3d.c3d.noise_poisson",
+        "@type": "noise_poisson",
         "noise_poisson": noise_poisson,
     }
     return params
@@ -5612,14 +6332,14 @@ def c3d_noise_poisson_cargs(
     cargs = []
     cargs.extend([
         "-noise-poisson",
-        params.get("noise_poisson")
+        params.get("noise_poisson", None)
     ])
     return cargs
 
 
 def c3d_noise_speckle_params(
     noise_speckle: str,
-) -> C3dNoiseSpeckleParameters:
+) -> C3dNoiseSpeckleParametersTagged:
     """
     Build parameters.
     
@@ -5636,7 +6356,7 @@ def c3d_noise_speckle_params(
         Parameter dictionary
     """
     params = {
-        "@type": "c3d.c3d.noise_speckle",
+        "@type": "noise_speckle",
         "noise_speckle": noise_speckle,
     }
     return params
@@ -5658,14 +6378,14 @@ def c3d_noise_speckle_cargs(
     cargs = []
     cargs.extend([
         "-noise-speckle",
-        params.get("noise_speckle")
+        params.get("noise_speckle", None)
     ])
     return cargs
 
 
 def c3d_noise_salt_pepper_params(
     noise_salt_pepper: str,
-) -> C3dNoiseSaltPepperParameters:
+) -> C3dNoiseSaltPepperParametersTagged:
     """
     Build parameters.
     
@@ -5682,7 +6402,7 @@ def c3d_noise_salt_pepper_params(
         Parameter dictionary
     """
     params = {
-        "@type": "c3d.c3d.noise_salt_pepper",
+        "@type": "noise_salt_pepper",
         "noise_salt_pepper": noise_salt_pepper,
     }
     return params
@@ -5704,14 +6424,14 @@ def c3d_noise_salt_pepper_cargs(
     cargs = []
     cargs.extend([
         "-noise-salt-pepper",
-        params.get("noise_salt_pepper")
+        params.get("noise_salt_pepper", None)
     ])
     return cargs
 
 
 def c3d_no_multicomponent_split_params(
     no_multicomponent_split: str,
-) -> C3dNoMulticomponentSplitParameters:
+) -> C3dNoMulticomponentSplitParametersTagged:
     """
     Build parameters.
     
@@ -5726,7 +6446,7 @@ def c3d_no_multicomponent_split_params(
         Parameter dictionary
     """
     params = {
-        "@type": "c3d.c3d.no_multicomponent_split",
+        "@type": "no_multicomponent_split",
         "no_multicomponent_split": no_multicomponent_split,
     }
     return params
@@ -5748,14 +6468,14 @@ def c3d_no_multicomponent_split_cargs(
     cargs = []
     cargs.extend([
         "-nomcs",
-        params.get("no_multicomponent_split")
+        params.get("no_multicomponent_split", None)
     ])
     return cargs
 
 
 def c3d_normalize_local_window_params(
     normalize_local_window: str,
-) -> C3dNormalizeLocalWindowParameters:
+) -> C3dNormalizeLocalWindowParametersTagged:
     """
     Build parameters.
     
@@ -5776,7 +6496,7 @@ def c3d_normalize_local_window_params(
         Parameter dictionary
     """
     params = {
-        "@type": "c3d.c3d.normalize_local_window",
+        "@type": "normalize_local_window",
         "normalize_local_window": normalize_local_window,
     }
     return params
@@ -5798,14 +6518,14 @@ def c3d_normalize_local_window_cargs(
     cargs = []
     cargs.extend([
         "-nlw",
-        params.get("normalize_local_window")
+        params.get("normalize_local_window", None)
     ])
     return cargs
 
 
 def c3d_normpdf_params(
     normpdf: str,
-) -> C3dNormpdfParameters:
+) -> C3dNormpdfParametersTagged:
     """
     Build parameters.
     
@@ -5815,7 +6535,7 @@ def c3d_normpdf_params(
         Parameter dictionary
     """
     params = {
-        "@type": "c3d.c3d.normpdf",
+        "@type": "normpdf",
         "normpdf": normpdf,
     }
     return params
@@ -5837,14 +6557,14 @@ def c3d_normpdf_cargs(
     cargs = []
     cargs.extend([
         "-normpdf",
-        params.get("normpdf")
+        params.get("normpdf", None)
     ])
     return cargs
 
 
 def c3d_noround_params(
     noround: str,
-) -> C3dNoroundParameters:
+) -> C3dNoroundParametersTagged:
     """
     Build parameters.
     
@@ -5864,7 +6584,7 @@ def c3d_noround_params(
         Parameter dictionary
     """
     params = {
-        "@type": "c3d.c3d.noround",
+        "@type": "noround",
         "noround": noround,
     }
     return params
@@ -5886,14 +6606,14 @@ def c3d_noround_cargs(
     cargs = []
     cargs.extend([
         "-noround",
-        params.get("noround")
+        params.get("noround", None)
     ])
     return cargs
 
 
 def c3d_nospm_params(
     nospm: str,
-) -> C3dNospmParameters:
+) -> C3dNospmParametersTagged:
     """
     Build parameters.
     
@@ -5914,7 +6634,7 @@ def c3d_nospm_params(
         Parameter dictionary
     """
     params = {
-        "@type": "c3d.c3d.nospm",
+        "@type": "nospm",
         "nospm": nospm,
     }
     return params
@@ -5936,7 +6656,7 @@ def c3d_nospm_cargs(
     cargs = []
     cargs.extend([
         "-nospm",
-        params.get("nospm")
+        params.get("nospm", None)
     ])
     return cargs
 
@@ -5953,7 +6673,7 @@ class C3dOutputOutputs(typing.NamedTuple):
 
 def c3d_output_params(
     output: str,
-) -> C3dOutputParameters:
+) -> C3dOutputParametersTagged:
     """
     Build parameters.
     
@@ -5978,7 +6698,7 @@ def c3d_output_params(
         Parameter dictionary
     """
     params = {
-        "@type": "c3d.c3d.output",
+        "@type": "output",
         "output": output,
     }
     return params
@@ -6000,7 +6720,7 @@ def c3d_output_cargs(
     cargs = []
     cargs.extend([
         "-o",
-        params.get("output")
+        params.get("output", None)
     ])
     return cargs
 
@@ -6020,14 +6740,14 @@ def c3d_output_outputs(
     """
     ret = C3dOutputOutputs(
         root=execution.output_file("."),
-        output=execution.output_file(params.get("output")),
+        output=execution.output_file(params.get("output", None)),
     )
     return ret
 
 
 def c3d_output_multicomponent_params(
     output_multicomponent: str,
-) -> C3dOutputMulticomponentParameters:
+) -> C3dOutputMulticomponentParametersTagged:
     """
     Build parameters.
     
@@ -6054,7 +6774,7 @@ def c3d_output_multicomponent_params(
         Parameter dictionary
     """
     params = {
-        "@type": "c3d.c3d.output_multicomponent",
+        "@type": "output_multicomponent",
         "output_multicomponent": output_multicomponent,
     }
     return params
@@ -6076,14 +6796,14 @@ def c3d_output_multicomponent_cargs(
     cargs = []
     cargs.extend([
         "-omc",
-        params.get("output_multicomponent")
+        params.get("output_multicomponent", None)
     ])
     return cargs
 
 
 def c3d_output_multiple_multicomponent_params(
     output_multiple_multicomponent: str,
-) -> C3dOutputMultipleMulticomponentParameters:
+) -> C3dOutputMultipleMulticomponentParametersTagged:
     """
     Build parameters.
     
@@ -6121,7 +6841,7 @@ def c3d_output_multiple_multicomponent_params(
         Parameter dictionary
     """
     params = {
-        "@type": "c3d.c3d.output_multiple_multicomponent",
+        "@type": "output_multiple_multicomponent",
         "output_multiple_multicomponent": output_multiple_multicomponent,
     }
     return params
@@ -6143,14 +6863,14 @@ def c3d_output_multiple_multicomponent_cargs(
     cargs = []
     cargs.extend([
         "-oomc",
-        params.get("output_multiple_multicomponent")
+        params.get("output_multiple_multicomponent", None)
     ])
     return cargs
 
 
 def c3d_orient_params(
     orient: str,
-) -> C3dOrientParameters:
+) -> C3dOrientParametersTagged:
     """
     Build parameters.
     
@@ -6184,7 +6904,7 @@ def c3d_orient_params(
         Parameter dictionary
     """
     params = {
-        "@type": "c3d.c3d.orient",
+        "@type": "orient",
         "orient": orient,
     }
     return params
@@ -6206,14 +6926,14 @@ def c3d_orient_cargs(
     cargs = []
     cargs.extend([
         "-orient",
-        params.get("orient")
+        params.get("orient", None)
     ])
     return cargs
 
 
 def c3d_output_multiple_params(
     output_multiple: str,
-) -> C3dOutputMultipleParameters:
+) -> C3dOutputMultipleParametersTagged:
     """
     Build parameters.
     
@@ -6247,7 +6967,7 @@ def c3d_output_multiple_params(
         Parameter dictionary
     """
     params = {
-        "@type": "c3d.c3d.output_multiple",
+        "@type": "output_multiple",
         "output_multiple": output_multiple,
     }
     return params
@@ -6269,14 +6989,14 @@ def c3d_output_multiple_cargs(
     cargs = []
     cargs.extend([
         "-oo",
-        params.get("output_multiple")
+        params.get("output_multiple", None)
     ])
     return cargs
 
 
 def c3d_orient_1_params(
     orient: str,
-) -> C3dOrient1Parameters:
+) -> C3dOrient1ParametersTagged:
     """
     Build parameters.
     
@@ -6310,7 +7030,7 @@ def c3d_orient_1_params(
         Parameter dictionary
     """
     params = {
-        "@type": "c3d.c3d.orient",
+        "@type": "orient_1",
         "orient": orient,
     }
     return params
@@ -6332,14 +7052,14 @@ def c3d_orient_1_cargs(
     cargs = []
     cargs.extend([
         "-orient",
-        params.get("orient")
+        params.get("orient", None)
     ])
     return cargs
 
 
 def c3d_origin_params(
     origin: str,
-) -> C3dOriginParameters:
+) -> C3dOriginParametersTagged:
     """
     Build parameters.
     
@@ -6357,7 +7077,7 @@ def c3d_origin_params(
         Parameter dictionary
     """
     params = {
-        "@type": "c3d.c3d.origin",
+        "@type": "origin",
         "origin": origin,
     }
     return params
@@ -6379,14 +7099,14 @@ def c3d_origin_cargs(
     cargs = []
     cargs.extend([
         "-origin",
-        params.get("origin")
+        params.get("origin", None)
     ])
     return cargs
 
 
 def c3d_origin_voxel_params(
     origin_voxel: str,
-) -> C3dOriginVoxelParameters:
+) -> C3dOriginVoxelParametersTagged:
     """
     Build parameters.
     
@@ -6406,7 +7126,7 @@ def c3d_origin_voxel_params(
         Parameter dictionary
     """
     params = {
-        "@type": "c3d.c3d.origin_voxel",
+        "@type": "origin_voxel",
         "origin_voxel": origin_voxel,
     }
     return params
@@ -6428,14 +7148,14 @@ def c3d_origin_voxel_cargs(
     cargs = []
     cargs.extend([
         "-origin-voxel",
-        params.get("origin_voxel")
+        params.get("origin_voxel", None)
     ])
     return cargs
 
 
 def c3d_origin_voxel_coord_params(
     origin_voxel_coord: str,
-) -> C3dOriginVoxelCoordParameters:
+) -> C3dOriginVoxelCoordParametersTagged:
     """
     Build parameters.
     
@@ -6455,7 +7175,7 @@ def c3d_origin_voxel_coord_params(
         Parameter dictionary
     """
     params = {
-        "@type": "c3d.c3d.origin_voxel_coord",
+        "@type": "origin_voxel_coord",
         "origin_voxel_coord": origin_voxel_coord,
     }
     return params
@@ -6477,14 +7197,14 @@ def c3d_origin_voxel_coord_cargs(
     cargs = []
     cargs.extend([
         "-origin-voxel-coord",
-        params.get("origin_voxel_coord")
+        params.get("origin_voxel_coord", None)
     ])
     return cargs
 
 
 def c3d_overlap_params(
     overlap: str,
-) -> C3dOverlapParameters:
+) -> C3dOverlapParametersTagged:
     """
     Build parameters.
     
@@ -6524,7 +7244,7 @@ def c3d_overlap_params(
         Parameter dictionary
     """
     params = {
-        "@type": "c3d.c3d.overlap",
+        "@type": "overlap",
         "overlap": overlap,
     }
     return params
@@ -6546,14 +7266,14 @@ def c3d_overlap_cargs(
     cargs = []
     cargs.extend([
         "-overlap",
-        params.get("overlap")
+        params.get("overlap", None)
     ])
     return cargs
 
 
 def c3d_overlay_label_image_params(
     overlay_label_image: str,
-) -> C3dOverlayLabelImageParameters:
+) -> C3dOverlayLabelImageParametersTagged:
     """
     Build parameters.
     
@@ -6603,7 +7323,7 @@ def c3d_overlay_label_image_params(
         Parameter dictionary
     """
     params = {
-        "@type": "c3d.c3d.overlay_label_image",
+        "@type": "overlay_label_image",
         "overlay_label_image": overlay_label_image,
     }
     return params
@@ -6625,14 +7345,14 @@ def c3d_overlay_label_image_cargs(
     cargs = []
     cargs.extend([
         "-overlay-label-image",
-        params.get("overlay_label_image")
+        params.get("overlay_label_image", None)
     ])
     return cargs
 
 
 def c3d_pad_params(
     pad: str,
-) -> C3dPadParameters:
+) -> C3dPadParametersTagged:
     """
     Build parameters.
     
@@ -6669,7 +7389,7 @@ def c3d_pad_params(
         Parameter dictionary
     """
     params = {
-        "@type": "c3d.c3d.pad",
+        "@type": "pad",
         "pad": pad,
     }
     return params
@@ -6691,14 +7411,14 @@ def c3d_pad_cargs(
     cargs = []
     cargs.extend([
         "-pad",
-        params.get("pad")
+        params.get("pad", None)
     ])
     return cargs
 
 
 def c3d_pad_to_params(
     pad_to: str,
-) -> C3dPadToParameters:
+) -> C3dPadToParametersTagged:
     """
     Build parameters.
     
@@ -6708,7 +7428,7 @@ def c3d_pad_to_params(
         Parameter dictionary
     """
     params = {
-        "@type": "c3d.c3d.pad_to",
+        "@type": "pad_to",
         "pad_to": pad_to,
     }
     return params
@@ -6730,14 +7450,14 @@ def c3d_pad_to_cargs(
     cargs = []
     cargs.extend([
         "-padto",
-        params.get("pad_to")
+        params.get("pad_to", None)
     ])
     return cargs
 
 
 def c3d_pca_params(
     pca: str,
-) -> C3dPcaParameters:
+) -> C3dPcaParametersTagged:
     """
     Build parameters.
     
@@ -6761,7 +7481,7 @@ def c3d_pca_params(
         Parameter dictionary
     """
     params = {
-        "@type": "c3d.c3d.pca",
+        "@type": "pca",
         "pca": pca,
     }
     return params
@@ -6783,14 +7503,14 @@ def c3d_pca_cargs(
     cargs = []
     cargs.extend([
         "-pca",
-        params.get("pca")
+        params.get("pca", None)
     ])
     return cargs
 
 
 def c3d_percent_intensity_mode_params(
     percent_intensity_mode: str,
-) -> C3dPercentIntensityModeParameters:
+) -> C3dPercentIntensityModeParametersTagged:
     """
     Build parameters.
     
@@ -6826,7 +7546,7 @@ def c3d_percent_intensity_mode_params(
         Parameter dictionary
     """
     params = {
-        "@type": "c3d.c3d.percent_intensity_mode",
+        "@type": "percent_intensity_mode",
         "percent_intensity_mode": percent_intensity_mode,
     }
     return params
@@ -6848,14 +7568,14 @@ def c3d_percent_intensity_mode_cargs(
     cargs = []
     cargs.extend([
         "-percent-intensity-mode",
-        params.get("percent_intensity_mode")
+        params.get("percent_intensity_mode", None)
     ])
     return cargs
 
 
 def c3d_pixel_params(
     pixel: str,
-) -> C3dPixelParameters:
+) -> C3dPixelParametersTagged:
     """
     Build parameters.
     
@@ -6865,7 +7585,7 @@ def c3d_pixel_params(
         Parameter dictionary
     """
     params = {
-        "@type": "c3d.c3d.pixel",
+        "@type": "pixel",
         "pixel": pixel,
     }
     return params
@@ -6887,14 +7607,14 @@ def c3d_pixel_cargs(
     cargs = []
     cargs.extend([
         "-pixel",
-        params.get("pixel")
+        params.get("pixel", None)
     ])
     return cargs
 
 
 def c3d_pop_params(
     pop_: str,
-) -> C3dPopParameters:
+) -> C3dPopParametersTagged:
     """
     Build parameters.
     
@@ -6909,7 +7629,7 @@ def c3d_pop_params(
         Parameter dictionary
     """
     params = {
-        "@type": "c3d.c3d.pop",
+        "@type": "pop",
         "pop": pop_,
     }
     return params
@@ -6931,14 +7651,14 @@ def c3d_pop_cargs(
     cargs = []
     cargs.extend([
         "-pop",
-        params.get("pop")
+        params.get("pop", None)
     ])
     return cargs
 
 
 def c3d_popas_params(
     popas: str,
-) -> C3dPopasParameters:
+) -> C3dPopasParametersTagged:
     """
     Build parameters.
     
@@ -6954,7 +7674,7 @@ def c3d_popas_params(
         Parameter dictionary
     """
     params = {
-        "@type": "c3d.c3d.popas",
+        "@type": "popas",
         "popas": popas,
     }
     return params
@@ -6976,14 +7696,14 @@ def c3d_popas_cargs(
     cargs = []
     cargs.extend([
         "-popas",
-        params.get("popas")
+        params.get("popas", None)
     ])
     return cargs
 
 
 def c3d_probe_params(
     probe: str,
-) -> C3dProbeParameters:
+) -> C3dProbeParametersTagged:
     """
     Build parameters.
     
@@ -7003,7 +7723,7 @@ def c3d_probe_params(
         Parameter dictionary
     """
     params = {
-        "@type": "c3d.c3d.probe",
+        "@type": "probe",
         "probe": probe,
     }
     return params
@@ -7025,14 +7745,14 @@ def c3d_probe_cargs(
     cargs = []
     cargs.extend([
         "-probe",
-        params.get("probe")
+        params.get("probe", None)
     ])
     return cargs
 
 
 def c3d_push_params(
     push: str,
-) -> C3dPushParameters:
+) -> C3dPushParametersTagged:
     """
     Build parameters.
     
@@ -7054,7 +7774,7 @@ def c3d_push_params(
         Parameter dictionary
     """
     params = {
-        "@type": "c3d.c3d.push",
+        "@type": "push",
         "push": push,
     }
     return params
@@ -7076,14 +7796,14 @@ def c3d_push_cargs(
     cargs = []
     cargs.extend([
         "-push",
-        params.get("push")
+        params.get("push", None)
     ])
     return cargs
 
 
 def c3d_rank_params(
     rank: str,
-) -> C3dRankParameters:
+) -> C3dRankParametersTagged:
     """
     Build parameters.
     
@@ -7103,7 +7823,7 @@ def c3d_rank_params(
         Parameter dictionary
     """
     params = {
-        "@type": "c3d.c3d.rank",
+        "@type": "rank",
         "rank": rank,
     }
     return params
@@ -7125,14 +7845,14 @@ def c3d_rank_cargs(
     cargs = []
     cargs.extend([
         "-rank",
-        params.get("rank")
+        params.get("rank", None)
     ])
     return cargs
 
 
 def c3d_reciprocal_params(
     reciprocal: str,
-) -> C3dReciprocalParameters:
+) -> C3dReciprocalParametersTagged:
     """
     Build parameters.
     
@@ -7149,7 +7869,7 @@ def c3d_reciprocal_params(
         Parameter dictionary
     """
     params = {
-        "@type": "c3d.c3d.reciprocal",
+        "@type": "reciprocal",
         "reciprocal": reciprocal,
     }
     return params
@@ -7171,14 +7891,14 @@ def c3d_reciprocal_cargs(
     cargs = []
     cargs.extend([
         "-reciprocal",
-        params.get("reciprocal")
+        params.get("reciprocal", None)
     ])
     return cargs
 
 
 def c3d_region_params(
     region: str,
-) -> C3dRegionParameters:
+) -> C3dRegionParametersTagged:
     """
     Build parameters.
     
@@ -7197,7 +7917,7 @@ def c3d_region_params(
         Parameter dictionary
     """
     params = {
-        "@type": "c3d.c3d.region",
+        "@type": "region",
         "region": region,
     }
     return params
@@ -7219,14 +7939,14 @@ def c3d_region_cargs(
     cargs = []
     cargs.extend([
         "-region",
-        params.get("region")
+        params.get("region", None)
     ])
     return cargs
 
 
 def c3d_reorder_params(
     reorder: str,
-) -> C3dReorderParameters:
+) -> C3dReorderParametersTagged:
     """
     Build parameters.
     
@@ -7268,7 +7988,7 @@ def c3d_reorder_params(
         Parameter dictionary
     """
     params = {
-        "@type": "c3d.c3d.reorder",
+        "@type": "reorder",
         "reorder": reorder,
     }
     return params
@@ -7290,14 +8010,14 @@ def c3d_reorder_cargs(
     cargs = []
     cargs.extend([
         "-reorder",
-        params.get("reorder")
+        params.get("reorder", None)
     ])
     return cargs
 
 
 def c3d_retain_labels_params(
     retain_labels: str,
-) -> C3dRetainLabelsParameters:
+) -> C3dRetainLabelsParametersTagged:
     """
     Build parameters.
     
@@ -7315,7 +8035,7 @@ def c3d_retain_labels_params(
         Parameter dictionary
     """
     params = {
-        "@type": "c3d.c3d.retain_labels",
+        "@type": "retain_labels",
         "retain_labels": retain_labels,
     }
     return params
@@ -7337,14 +8057,14 @@ def c3d_retain_labels_cargs(
     cargs = []
     cargs.extend([
         "-retain-labels",
-        params.get("retain_labels")
+        params.get("retain_labels", None)
     ])
     return cargs
 
 
 def c3d_rf_apply_params(
     rf_apply: str,
-) -> C3dRfApplyParameters:
+) -> C3dRfApplyParametersTagged:
     """
     Build parameters.
     
@@ -7363,7 +8083,7 @@ def c3d_rf_apply_params(
         Parameter dictionary
     """
     params = {
-        "@type": "c3d.c3d.rf_apply",
+        "@type": "rf_apply",
         "rf_apply": rf_apply,
     }
     return params
@@ -7385,14 +8105,14 @@ def c3d_rf_apply_cargs(
     cargs = []
     cargs.extend([
         "-rf-apply",
-        params.get("rf_apply")
+        params.get("rf_apply", None)
     ])
     return cargs
 
 
 def c3d_rf_train_params(
     rf_train: str,
-) -> C3dRfTrainParameters:
+) -> C3dRfTrainParametersTagged:
     """
     Build parameters.
     
@@ -7451,7 +8171,7 @@ def c3d_rf_train_params(
         Parameter dictionary
     """
     params = {
-        "@type": "c3d.c3d.rf_train",
+        "@type": "rf_train",
         "rf_train": rf_train,
     }
     return params
@@ -7473,14 +8193,14 @@ def c3d_rf_train_cargs(
     cargs = []
     cargs.extend([
         "-rf-train",
-        params.get("rf_train")
+        params.get("rf_train", None)
     ])
     return cargs
 
 
 def c3d_rf_param_patch_params(
     rf_param_patch: str,
-) -> C3dRfParamPatchParameters:
+) -> C3dRfParamPatchParametersTagged:
     """
     Build parameters.
     
@@ -7503,7 +8223,7 @@ def c3d_rf_param_patch_params(
         Parameter dictionary
     """
     params = {
-        "@type": "c3d.c3d.rf_param_patch",
+        "@type": "rf_param_patch",
         "rf_param_patch": rf_param_patch,
     }
     return params
@@ -7525,14 +8245,14 @@ def c3d_rf_param_patch_cargs(
     cargs = []
     cargs.extend([
         "-rf-param-patch",
-        params.get("rf_param_patch")
+        params.get("rf_param_patch", None)
     ])
     return cargs
 
 
 def c3d_rf_param_usexyz_params(
     rf_param_usexyz: str,
-) -> C3dRfParamUsexyzParameters:
+) -> C3dRfParamUsexyzParametersTagged:
     """
     Build parameters.
     
@@ -7548,7 +8268,7 @@ def c3d_rf_param_usexyz_params(
         Parameter dictionary
     """
     params = {
-        "@type": "c3d.c3d.rf_param_usexyz",
+        "@type": "rf_param_usexyz",
         "rf_param_usexyz": rf_param_usexyz,
     }
     return params
@@ -7570,14 +8290,14 @@ def c3d_rf_param_usexyz_cargs(
     cargs = []
     cargs.extend([
         "-rf-param-usexyz",
-        params.get("rf_param_usexyz")
+        params.get("rf_param_usexyz", None)
     ])
     return cargs
 
 
 def c3d_rf_param_nousexyz_params(
     rf_param_nousexyz: str,
-) -> C3dRfParamNousexyzParameters:
+) -> C3dRfParamNousexyzParametersTagged:
     """
     Build parameters.
     
@@ -7587,7 +8307,7 @@ def c3d_rf_param_nousexyz_params(
         Parameter dictionary
     """
     params = {
-        "@type": "c3d.c3d.rf_param_nousexyz",
+        "@type": "rf_param_nousexyz",
         "rf_param_nousexyz": rf_param_nousexyz,
     }
     return params
@@ -7609,14 +8329,14 @@ def c3d_rf_param_nousexyz_cargs(
     cargs = []
     cargs.extend([
         "-rf-param-nousexyz",
-        params.get("rf_param_nousexyz")
+        params.get("rf_param_nousexyz", None)
     ])
     return cargs
 
 
 def c3d_rf_param_ntrees_params(
     rf_param_ntrees: str,
-) -> C3dRfParamNtreesParameters:
+) -> C3dRfParamNtreesParametersTagged:
     """
     Build parameters.
     
@@ -7631,7 +8351,7 @@ def c3d_rf_param_ntrees_params(
         Parameter dictionary
     """
     params = {
-        "@type": "c3d.c3d.rf_param_ntrees",
+        "@type": "rf_param_ntrees",
         "rf_param_ntrees": rf_param_ntrees,
     }
     return params
@@ -7653,14 +8373,14 @@ def c3d_rf_param_ntrees_cargs(
     cargs = []
     cargs.extend([
         "-rf-param-ntrees",
-        params.get("rf_param_ntrees")
+        params.get("rf_param_ntrees", None)
     ])
     return cargs
 
 
 def c3d_rf_param_treedepth_params(
     rf_param_treedepth: str,
-) -> C3dRfParamTreedepthParameters:
+) -> C3dRfParamTreedepthParametersTagged:
     """
     Build parameters.
     
@@ -7675,7 +8395,7 @@ def c3d_rf_param_treedepth_params(
         Parameter dictionary
     """
     params = {
-        "@type": "c3d.c3d.rf_param_treedepth",
+        "@type": "rf_param_treedepth",
         "rf_param_treedepth": rf_param_treedepth,
     }
     return params
@@ -7697,14 +8417,14 @@ def c3d_rf_param_treedepth_cargs(
     cargs = []
     cargs.extend([
         "-rf-param-treedepth",
-        params.get("rf_param_treedepth")
+        params.get("rf_param_treedepth", None)
     ])
     return cargs
 
 
 def c3d_set_sform_params(
     set_sform: str,
-) -> C3dSetSformParameters:
+) -> C3dSetSformParametersTagged:
     """
     Build parameters.
     
@@ -7719,7 +8439,7 @@ def c3d_set_sform_params(
         Parameter dictionary
     """
     params = {
-        "@type": "c3d.c3d.set_sform",
+        "@type": "set_sform",
         "set_sform": set_sform,
     }
     return params
@@ -7741,14 +8461,14 @@ def c3d_set_sform_cargs(
     cargs = []
     cargs.extend([
         "-set-sform",
-        params.get("set_sform")
+        params.get("set_sform", None)
     ])
     return cargs
 
 
 def c3d_replace_params(
     replace: str,
-) -> C3dReplaceParameters:
+) -> C3dReplaceParametersTagged:
     """
     Build parameters.
     
@@ -7765,7 +8485,7 @@ def c3d_replace_params(
         Parameter dictionary
     """
     params = {
-        "@type": "c3d.c3d.replace",
+        "@type": "replace",
         "replace": replace,
     }
     return params
@@ -7787,14 +8507,14 @@ def c3d_replace_cargs(
     cargs = []
     cargs.extend([
         "-replace",
-        params.get("replace")
+        params.get("replace", None)
     ])
     return cargs
 
 
 def c3d_resample_params(
     resample: str,
-) -> C3dResampleParameters:
+) -> C3dResampleParametersTagged:
     """
     Build parameters.
     
@@ -7818,7 +8538,7 @@ def c3d_resample_params(
         Parameter dictionary
     """
     params = {
-        "@type": "c3d.c3d.resample",
+        "@type": "resample",
         "resample": resample,
     }
     return params
@@ -7840,14 +8560,14 @@ def c3d_resample_cargs(
     cargs = []
     cargs.extend([
         "-resample",
-        params.get("resample")
+        params.get("resample", None)
     ])
     return cargs
 
 
 def c3d_resample_iso_params(
     resample_iso: str,
-) -> C3dResampleIsoParameters:
+) -> C3dResampleIsoParametersTagged:
     """
     Build parameters.
     
@@ -7870,7 +8590,7 @@ def c3d_resample_iso_params(
         Parameter dictionary
     """
     params = {
-        "@type": "c3d.c3d.resample_iso",
+        "@type": "resample_iso",
         "resample_iso": resample_iso,
     }
     return params
@@ -7892,14 +8612,14 @@ def c3d_resample_iso_cargs(
     cargs = []
     cargs.extend([
         "-resample-iso",
-        params.get("resample_iso")
+        params.get("resample_iso", None)
     ])
     return cargs
 
 
 def c3d_resample_mm_params(
     resample_mm: str,
-) -> C3dResampleMmParameters:
+) -> C3dResampleMmParametersTagged:
     """
     Build parameters.
     
@@ -7918,7 +8638,7 @@ def c3d_resample_mm_params(
         Parameter dictionary
     """
     params = {
-        "@type": "c3d.c3d.resample_mm",
+        "@type": "resample_mm",
         "resample_mm": resample_mm,
     }
     return params
@@ -7940,14 +8660,14 @@ def c3d_resample_mm_cargs(
     cargs = []
     cargs.extend([
         "-resample-mm",
-        params.get("resample_mm")
+        params.get("resample_mm", None)
     ])
     return cargs
 
 
 def c3d_reslice_itk_params(
     reslice_itk: str,
-) -> C3dResliceItkParameters:
+) -> C3dResliceItkParametersTagged:
     """
     Build parameters.
     
@@ -7962,7 +8682,7 @@ def c3d_reslice_itk_params(
         Parameter dictionary
     """
     params = {
-        "@type": "c3d.c3d.reslice_itk",
+        "@type": "reslice_itk",
         "reslice_itk": reslice_itk,
     }
     return params
@@ -7984,14 +8704,14 @@ def c3d_reslice_itk_cargs(
     cargs = []
     cargs.extend([
         "-reslice-itk",
-        params.get("reslice_itk")
+        params.get("reslice_itk", None)
     ])
     return cargs
 
 
 def c3d_reslice_matrix_params(
     reslice_matrix: str,
-) -> C3dResliceMatrixParameters:
+) -> C3dResliceMatrixParametersTagged:
     """
     Build parameters.
     
@@ -8001,7 +8721,7 @@ def c3d_reslice_matrix_params(
         Parameter dictionary
     """
     params = {
-        "@type": "c3d.c3d.reslice_matrix",
+        "@type": "reslice_matrix",
         "reslice_matrix": reslice_matrix,
     }
     return params
@@ -8023,14 +8743,14 @@ def c3d_reslice_matrix_cargs(
     cargs = []
     cargs.extend([
         "-reslice-matrix",
-        params.get("reslice_matrix")
+        params.get("reslice_matrix", None)
     ])
     return cargs
 
 
 def c3d_reslice_identity_params(
     reslice_identity: str,
-) -> C3dResliceIdentityParameters:
+) -> C3dResliceIdentityParametersTagged:
     """
     Build parameters.
     
@@ -8052,7 +8772,7 @@ def c3d_reslice_identity_params(
         Parameter dictionary
     """
     params = {
-        "@type": "c3d.c3d.reslice_identity",
+        "@type": "reslice_identity",
         "reslice_identity": reslice_identity,
     }
     return params
@@ -8074,14 +8794,14 @@ def c3d_reslice_identity_cargs(
     cargs = []
     cargs.extend([
         "-reslice-identity",
-        params.get("reslice_identity")
+        params.get("reslice_identity", None)
     ])
     return cargs
 
 
 def c3d_rgb2hsv_params(
     rgb2hsv: str,
-) -> C3dRgb2hsvParameters:
+) -> C3dRgb2hsvParametersTagged:
     """
     Build parameters.
     
@@ -8100,7 +8820,7 @@ def c3d_rgb2hsv_params(
         Parameter dictionary
     """
     params = {
-        "@type": "c3d.c3d.rgb2hsv",
+        "@type": "rgb2hsv",
         "rgb2hsv": rgb2hsv,
     }
     return params
@@ -8122,14 +8842,14 @@ def c3d_rgb2hsv_cargs(
     cargs = []
     cargs.extend([
         "-rgb2hsv",
-        params.get("rgb2hsv")
+        params.get("rgb2hsv", None)
     ])
     return cargs
 
 
 def c3d_rms_params(
     rms: str,
-) -> C3dRmsParameters:
+) -> C3dRmsParametersTagged:
     """
     Build parameters.
     
@@ -8155,7 +8875,7 @@ def c3d_rms_params(
         Parameter dictionary
     """
     params = {
-        "@type": "c3d.c3d.rms",
+        "@type": "rms",
         "rms": rms,
     }
     return params
@@ -8177,14 +8897,14 @@ def c3d_rms_cargs(
     cargs = []
     cargs.extend([
         "-rms",
-        params.get("rms")
+        params.get("rms", None)
     ])
     return cargs
 
 
 def c3d_round_params(
     round_: str,
-) -> C3dRoundParameters:
+) -> C3dRoundParametersTagged:
     """
     Build parameters.
     
@@ -8204,7 +8924,7 @@ def c3d_round_params(
         Parameter dictionary
     """
     params = {
-        "@type": "c3d.c3d.round",
+        "@type": "round",
         "round": round_,
     }
     return params
@@ -8226,14 +8946,14 @@ def c3d_round_cargs(
     cargs = []
     cargs.extend([
         "-round",
-        params.get("round")
+        params.get("round", None)
     ])
     return cargs
 
 
 def c3d_scale_params(
     scale: str,
-) -> C3dScaleParameters:
+) -> C3dScaleParametersTagged:
     """
     Build parameters.
     
@@ -8250,7 +8970,7 @@ def c3d_scale_params(
         Parameter dictionary
     """
     params = {
-        "@type": "c3d.c3d.scale",
+        "@type": "scale",
         "scale": scale,
     }
     return params
@@ -8272,14 +8992,14 @@ def c3d_scale_cargs(
     cargs = []
     cargs.extend([
         "-scale",
-        params.get("scale")
+        params.get("scale", None)
     ])
     return cargs
 
 
 def c3d_set_sform_1_params(
     set_sform: str,
-) -> C3dSetSform1Parameters:
+) -> C3dSetSform1ParametersTagged:
     """
     Build parameters.
     
@@ -8294,7 +9014,7 @@ def c3d_set_sform_1_params(
         Parameter dictionary
     """
     params = {
-        "@type": "c3d.c3d.set_sform",
+        "@type": "set_sform_1",
         "set_sform": set_sform,
     }
     return params
@@ -8316,14 +9036,14 @@ def c3d_set_sform_1_cargs(
     cargs = []
     cargs.extend([
         "-set-sform",
-        params.get("set_sform")
+        params.get("set_sform", None)
     ])
     return cargs
 
 
 def c3d_sin_params(
     sin: str,
-) -> C3dSinParameters:
+) -> C3dSinParametersTagged:
     """
     Build parameters.
     
@@ -8338,7 +9058,7 @@ def c3d_sin_params(
         Parameter dictionary
     """
     params = {
-        "@type": "c3d.c3d.sin",
+        "@type": "sin",
         "sin": sin,
     }
     return params
@@ -8360,14 +9080,14 @@ def c3d_sin_cargs(
     cargs = []
     cargs.extend([
         "-sin",
-        params.get("sin")
+        params.get("sin", None)
     ])
     return cargs
 
 
 def c3d_slice_params(
     slice_: str,
-) -> C3dSliceParameters:
+) -> C3dSliceParametersTagged:
     """
     Build parameters.
     
@@ -8402,7 +9122,7 @@ def c3d_slice_params(
         Parameter dictionary
     """
     params = {
-        "@type": "c3d.c3d.slice",
+        "@type": "slice",
         "slice": slice_,
     }
     return params
@@ -8424,14 +9144,14 @@ def c3d_slice_cargs(
     cargs = []
     cargs.extend([
         "-slice",
-        params.get("slice")
+        params.get("slice", None)
     ])
     return cargs
 
 
 def c3d_slice_all_params(
     slice_all: str,
-) -> C3dSliceAllParameters:
+) -> C3dSliceAllParametersTagged:
     """
     Build parameters.
     
@@ -8451,7 +9171,7 @@ def c3d_slice_all_params(
         Parameter dictionary
     """
     params = {
-        "@type": "c3d.c3d.slice_all",
+        "@type": "slice_all",
         "slice_all": slice_all,
     }
     return params
@@ -8473,14 +9193,14 @@ def c3d_slice_all_cargs(
     cargs = []
     cargs.extend([
         "-slice-all",
-        params.get("slice_all")
+        params.get("slice_all", None)
     ])
     return cargs
 
 
 def c3d_sharpen_params(
     sharpen: str,
-) -> C3dSharpenParameters:
+) -> C3dSharpenParametersTagged:
     """
     Build parameters.
     
@@ -8497,7 +9217,7 @@ def c3d_sharpen_params(
         Parameter dictionary
     """
     params = {
-        "@type": "c3d.c3d.sharpen",
+        "@type": "sharpen",
         "sharpen": sharpen,
     }
     return params
@@ -8519,14 +9239,14 @@ def c3d_sharpen_cargs(
     cargs = []
     cargs.extend([
         "-sharpen",
-        params.get("sharpen")
+        params.get("sharpen", None)
     ])
     return cargs
 
 
 def c3d_shift_params(
     shift: str,
-) -> C3dShiftParameters:
+) -> C3dShiftParametersTagged:
     """
     Build parameters.
     
@@ -8542,7 +9262,7 @@ def c3d_shift_params(
         Parameter dictionary
     """
     params = {
-        "@type": "c3d.c3d.shift",
+        "@type": "shift",
         "shift": shift,
     }
     return params
@@ -8564,14 +9284,14 @@ def c3d_shift_cargs(
     cargs = []
     cargs.extend([
         "-shift",
-        params.get("shift")
+        params.get("shift", None)
     ])
     return cargs
 
 
 def c3d_signed_distance_transform_params(
     signed_distance_transform: str,
-) -> C3dSignedDistanceTransformParameters:
+) -> C3dSignedDistanceTransformParametersTagged:
     """
     Build parameters.
     
@@ -8593,7 +9313,7 @@ def c3d_signed_distance_transform_params(
         Parameter dictionary
     """
     params = {
-        "@type": "c3d.c3d.signed_distance_transform",
+        "@type": "signed_distance_transform",
         "signed_distance_transform": signed_distance_transform,
     }
     return params
@@ -8615,14 +9335,14 @@ def c3d_signed_distance_transform_cargs(
     cargs = []
     cargs.extend([
         "-signed-distance-transform",
-        params.get("signed_distance_transform")
+        params.get("signed_distance_transform", None)
     ])
     return cargs
 
 
 def c3d_smooth_params(
     smooth: str,
-) -> C3dSmoothParameters:
+) -> C3dSmoothParametersTagged:
     """
     Build parameters.
     
@@ -8640,7 +9360,7 @@ def c3d_smooth_params(
         Parameter dictionary
     """
     params = {
-        "@type": "c3d.c3d.smooth",
+        "@type": "smooth",
         "smooth": smooth,
     }
     return params
@@ -8662,14 +9382,14 @@ def c3d_smooth_cargs(
     cargs = []
     cargs.extend([
         "-smooth",
-        params.get("smooth")
+        params.get("smooth", None)
     ])
     return cargs
 
 
 def c3d_smooth_fast_params(
     smooth_fast: str,
-) -> C3dSmoothFastParameters:
+) -> C3dSmoothFastParametersTagged:
     """
     Build parameters.
     
@@ -8688,7 +9408,7 @@ def c3d_smooth_fast_params(
         Parameter dictionary
     """
     params = {
-        "@type": "c3d.c3d.smooth_fast",
+        "@type": "smooth_fast",
         "smooth_fast": smooth_fast,
     }
     return params
@@ -8710,14 +9430,14 @@ def c3d_smooth_fast_cargs(
     cargs = []
     cargs.extend([
         "-smooth-fast",
-        params.get("smooth_fast")
+        params.get("smooth_fast", None)
     ])
     return cargs
 
 
 def c3d_spacing_params(
     spacing: str,
-) -> C3dSpacingParameters:
+) -> C3dSpacingParametersTagged:
     """
     Build parameters.
     
@@ -8736,7 +9456,7 @@ def c3d_spacing_params(
         Parameter dictionary
     """
     params = {
-        "@type": "c3d.c3d.spacing",
+        "@type": "spacing",
         "spacing": spacing,
     }
     return params
@@ -8758,14 +9478,14 @@ def c3d_spacing_cargs(
     cargs = []
     cargs.extend([
         "-spacing",
-        params.get("spacing")
+        params.get("spacing", None)
     ])
     return cargs
 
 
 def c3d_split_params(
     split: str,
-) -> C3dSplitParameters:
+) -> C3dSplitParametersTagged:
     """
     Build parameters.
     
@@ -8796,7 +9516,7 @@ def c3d_split_params(
         Parameter dictionary
     """
     params = {
-        "@type": "c3d.c3d.split",
+        "@type": "split",
         "split": split,
     }
     return params
@@ -8818,14 +9538,14 @@ def c3d_split_cargs(
     cargs = []
     cargs.extend([
         "-split",
-        params.get("split")
+        params.get("split", None)
     ])
     return cargs
 
 
 def c3d_sqrt_params(
     sqrt: str,
-) -> C3dSqrtParameters:
+) -> C3dSqrtParametersTagged:
     """
     Build parameters.
     
@@ -8841,7 +9561,7 @@ def c3d_sqrt_params(
         Parameter dictionary
     """
     params = {
-        "@type": "c3d.c3d.sqrt",
+        "@type": "sqrt",
         "sqrt": sqrt,
     }
     return params
@@ -8863,14 +9583,14 @@ def c3d_sqrt_cargs(
     cargs = []
     cargs.extend([
         "-sqrt",
-        params.get("sqrt")
+        params.get("sqrt", None)
     ])
     return cargs
 
 
 def c3d_staple_params(
     staple: str,
-) -> C3dStapleParameters:
+) -> C3dStapleParametersTagged:
     """
     Build parameters.
     
@@ -8905,7 +9625,7 @@ def c3d_staple_params(
         Parameter dictionary
     """
     params = {
-        "@type": "c3d.c3d.staple",
+        "@type": "staple",
         "staple": staple,
     }
     return params
@@ -8927,14 +9647,14 @@ def c3d_staple_cargs(
     cargs = []
     cargs.extend([
         "-staple",
-        params.get("staple")
+        params.get("staple", None)
     ])
     return cargs
 
 
 def c3d_structure_tensor_eigenvalues_params(
     structure_tensor_eigenvalues: str,
-) -> C3dStructureTensorEigenvaluesParameters:
+) -> C3dStructureTensorEigenvaluesParametersTagged:
     """
     Build parameters.
     
@@ -8956,7 +9676,7 @@ def c3d_structure_tensor_eigenvalues_params(
         Parameter dictionary
     """
     params = {
-        "@type": "c3d.c3d.structure_tensor_eigenvalues",
+        "@type": "structure_tensor_eigenvalues",
         "structure_tensor_eigenvalues": structure_tensor_eigenvalues,
     }
     return params
@@ -8978,14 +9698,14 @@ def c3d_structure_tensor_eigenvalues_cargs(
     cargs = []
     cargs.extend([
         "-steig",
-        params.get("structure_tensor_eigenvalues")
+        params.get("structure_tensor_eigenvalues", None)
     ])
     return cargs
 
 
 def c3d_spm_params(
     spm: str,
-) -> C3dSpmParameters:
+) -> C3dSpmParametersTagged:
     """
     Build parameters.
     
@@ -9006,7 +9726,7 @@ def c3d_spm_params(
         Parameter dictionary
     """
     params = {
-        "@type": "c3d.c3d.spm",
+        "@type": "spm",
         "spm": spm,
     }
     return params
@@ -9028,14 +9748,14 @@ def c3d_spm_cargs(
     cargs = []
     cargs.extend([
         "-spm",
-        params.get("spm")
+        params.get("spm", None)
     ])
     return cargs
 
 
 def c3d_subtract_params(
     subtract: str,
-) -> C3dSubtractParameters:
+) -> C3dSubtractParametersTagged:
     """
     Build parameters.
     
@@ -9045,7 +9765,7 @@ def c3d_subtract_params(
         Parameter dictionary
     """
     params = {
-        "@type": "c3d.c3d.subtract",
+        "@type": "subtract",
         "subtract": subtract,
     }
     return params
@@ -9067,14 +9787,14 @@ def c3d_subtract_cargs(
     cargs = []
     cargs.extend([
         "-subtract",
-        params.get("subtract")
+        params.get("subtract", None)
     ])
     return cargs
 
 
 def c3d_supervoxel_params(
     supervoxel: str,
-) -> C3dSupervoxelParameters:
+) -> C3dSupervoxelParametersTagged:
     """
     Build parameters.
     
@@ -9084,7 +9804,7 @@ def c3d_supervoxel_params(
         Parameter dictionary
     """
     params = {
-        "@type": "c3d.c3d.supervoxel",
+        "@type": "supervoxel",
         "supervoxel": supervoxel,
     }
     return params
@@ -9106,14 +9826,14 @@ def c3d_supervoxel_cargs(
     cargs = []
     cargs.extend([
         "-supervoxel",
-        params.get("supervoxel")
+        params.get("supervoxel", None)
     ])
     return cargs
 
 
 def c3d_stretch_params(
     stretch: str,
-) -> C3dStretchParameters:
+) -> C3dStretchParametersTagged:
     """
     Build parameters.
     
@@ -9133,7 +9853,7 @@ def c3d_stretch_params(
         Parameter dictionary
     """
     params = {
-        "@type": "c3d.c3d.stretch",
+        "@type": "stretch",
         "stretch": stretch,
     }
     return params
@@ -9155,14 +9875,14 @@ def c3d_stretch_cargs(
     cargs = []
     cargs.extend([
         "-stretch",
-        params.get("stretch")
+        params.get("stretch", None)
     ])
     return cargs
 
 
 def c3d_swapdim_params(
     swapdim: str,
-) -> C3dSwapdimParameters:
+) -> C3dSwapdimParametersTagged:
     """
     Build parameters.
     
@@ -9191,7 +9911,7 @@ def c3d_swapdim_params(
         Parameter dictionary
     """
     params = {
-        "@type": "c3d.c3d.swapdim",
+        "@type": "swapdim",
         "swapdim": swapdim,
     }
     return params
@@ -9213,14 +9933,14 @@ def c3d_swapdim_cargs(
     cargs = []
     cargs.extend([
         "-swapdim",
-        params.get("swapdim")
+        params.get("swapdim", None)
     ])
     return cargs
 
 
 def c3d_test_image_params(
     test_image: str,
-) -> C3dTestImageParameters:
+) -> C3dTestImageParametersTagged:
     """
     Build parameters.
     
@@ -9254,7 +9974,7 @@ def c3d_test_image_params(
         Parameter dictionary
     """
     params = {
-        "@type": "c3d.c3d.test_image",
+        "@type": "test_image",
         "test_image": test_image,
     }
     return params
@@ -9276,14 +9996,14 @@ def c3d_test_image_cargs(
     cargs = []
     cargs.extend([
         "-test-image",
-        params.get("test_image")
+        params.get("test_image", None)
     ])
     return cargs
 
 
 def c3d_test_probe_params(
     test_probe: str,
-) -> C3dTestProbeParameters:
+) -> C3dTestProbeParametersTagged:
     """
     Build parameters.
     
@@ -9317,7 +10037,7 @@ def c3d_test_probe_params(
         Parameter dictionary
     """
     params = {
-        "@type": "c3d.c3d.test_probe",
+        "@type": "test_probe",
         "test_probe": test_probe,
     }
     return params
@@ -9339,14 +10059,14 @@ def c3d_test_probe_cargs(
     cargs = []
     cargs.extend([
         "-test-probe",
-        params.get("test_probe")
+        params.get("test_probe", None)
     ])
     return cargs
 
 
 def c3d_threshold_params(
     threshold: str,
-) -> C3dThresholdParameters:
+) -> C3dThresholdParametersTagged:
     """
     Build parameters.
     
@@ -9368,7 +10088,7 @@ def c3d_threshold_params(
         Parameter dictionary
     """
     params = {
-        "@type": "c3d.c3d.threshold",
+        "@type": "threshold",
         "threshold": threshold,
     }
     return params
@@ -9390,14 +10110,14 @@ def c3d_threshold_cargs(
     cargs = []
     cargs.extend([
         "-threshold",
-        params.get("threshold")
+        params.get("threshold", None)
     ])
     return cargs
 
 
 def c3d_tile_params(
     tile: str,
-) -> C3dTileParameters:
+) -> C3dTileParametersTagged:
     """
     Build parameters.
     
@@ -9426,7 +10146,7 @@ def c3d_tile_params(
         Parameter dictionary
     """
     params = {
-        "@type": "c3d.c3d.tile",
+        "@type": "tile",
         "tile": tile,
     }
     return params
@@ -9448,14 +10168,14 @@ def c3d_tile_cargs(
     cargs = []
     cargs.extend([
         "-tile",
-        params.get("tile")
+        params.get("tile", None)
     ])
     return cargs
 
 
 def c3d_trim_params(
     trim: str,
-) -> C3dTrimParameters:
+) -> C3dTrimParametersTagged:
     """
     Build parameters.
     
@@ -9477,7 +10197,7 @@ def c3d_trim_params(
         Parameter dictionary
     """
     params = {
-        "@type": "c3d.c3d.trim",
+        "@type": "trim",
         "trim": trim,
     }
     return params
@@ -9499,14 +10219,14 @@ def c3d_trim_cargs(
     cargs = []
     cargs.extend([
         "-trim",
-        params.get("trim")
+        params.get("trim", None)
     ])
     return cargs
 
 
 def c3d_trim_to_size_params(
     trim_to_size: str,
-) -> C3dTrimToSizeParameters:
+) -> C3dTrimToSizeParametersTagged:
     """
     Build parameters.
     
@@ -9527,7 +10247,7 @@ def c3d_trim_to_size_params(
         Parameter dictionary
     """
     params = {
-        "@type": "c3d.c3d.trim_to_size",
+        "@type": "trim_to_size",
         "trim_to_size": trim_to_size,
     }
     return params
@@ -9549,14 +10269,14 @@ def c3d_trim_to_size_cargs(
     cargs = []
     cargs.extend([
         "-trim-to-size",
-        params.get("trim_to_size")
+        params.get("trim_to_size", None)
     ])
     return cargs
 
 
 def c3d_type_params(
     type_: str,
-) -> C3dTypeParameters:
+) -> C3dTypeParametersTagged:
     """
     Build parameters.
     
@@ -9578,7 +10298,7 @@ def c3d_type_params(
         Parameter dictionary
     """
     params = {
-        "@type": "c3d.c3d.type",
+        "@type": "type",
         "type": type_,
     }
     return params
@@ -9600,14 +10320,14 @@ def c3d_type_cargs(
     cargs = []
     cargs.extend([
         "-type",
-        params.get("type")
+        params.get("type", None)
     ])
     return cargs
 
 
 def c3d_verbose_params(
     verbose: str,
-) -> C3dVerboseParameters:
+) -> C3dVerboseParametersTagged:
     """
     Build parameters.
     
@@ -9624,7 +10344,7 @@ def c3d_verbose_params(
         Parameter dictionary
     """
     params = {
-        "@type": "c3d.c3d.verbose",
+        "@type": "verbose",
         "verbose": verbose,
     }
     return params
@@ -9646,14 +10366,14 @@ def c3d_verbose_cargs(
     cargs = []
     cargs.extend([
         "-verbose",
-        params.get("verbose")
+        params.get("verbose", None)
     ])
     return cargs
 
 
 def c3d_noverbose_params(
     noverbose: str,
-) -> C3dNoverboseParameters:
+) -> C3dNoverboseParametersTagged:
     """
     Build parameters.
     
@@ -9663,7 +10383,7 @@ def c3d_noverbose_params(
         Parameter dictionary
     """
     params = {
-        "@type": "c3d.c3d.noverbose",
+        "@type": "noverbose",
         "noverbose": noverbose,
     }
     return params
@@ -9685,14 +10405,14 @@ def c3d_noverbose_cargs(
     cargs = []
     cargs.extend([
         "-noverbose",
-        params.get("noverbose")
+        params.get("noverbose", None)
     ])
     return cargs
 
 
 def c3d_version_params(
     version: str,
-) -> C3dVersionParameters:
+) -> C3dVersionParametersTagged:
     """
     Build parameters.
     
@@ -9702,7 +10422,7 @@ def c3d_version_params(
         Parameter dictionary
     """
     params = {
-        "@type": "c3d.c3d.version",
+        "@type": "version",
         "version": version,
     }
     return params
@@ -9724,14 +10444,14 @@ def c3d_version_cargs(
     cargs = []
     cargs.extend([
         "-version",
-        params.get("version")
+        params.get("version", None)
     ])
     return cargs
 
 
 def c3d_vote_params(
     vote: str,
-) -> C3dVoteParameters:
+) -> C3dVoteParametersTagged:
     """
     Build parameters.
     
@@ -9759,7 +10479,7 @@ def c3d_vote_params(
         Parameter dictionary
     """
     params = {
-        "@type": "c3d.c3d.vote",
+        "@type": "vote",
         "vote": vote,
     }
     return params
@@ -9781,14 +10501,14 @@ def c3d_vote_cargs(
     cargs = []
     cargs.extend([
         "-vote",
-        params.get("vote")
+        params.get("vote", None)
     ])
     return cargs
 
 
 def c3d_vote_mrf_params(
     vote_mrf: str,
-) -> C3dVoteMrfParameters:
+) -> C3dVoteMrfParametersTagged:
     """
     Build parameters.
     
@@ -9872,7 +10592,7 @@ def c3d_vote_mrf_params(
         Parameter dictionary
     """
     params = {
-        "@type": "c3d.c3d.vote_mrf",
+        "@type": "vote_mrf",
         "vote_mrf": vote_mrf,
     }
     return params
@@ -9894,14 +10614,14 @@ def c3d_vote_mrf_cargs(
     cargs = []
     cargs.extend([
         "-vote-mrf",
-        params.get("vote_mrf")
+        params.get("vote_mrf", None)
     ])
     return cargs
 
 
 def c3d_vote_label_params(
     vote_label: str,
-) -> C3dVoteLabelParameters:
+) -> C3dVoteLabelParametersTagged:
     """
     Build parameters.
     
@@ -9911,7 +10631,7 @@ def c3d_vote_label_params(
         Parameter dictionary
     """
     params = {
-        "@type": "c3d.c3d.vote_label",
+        "@type": "vote_label",
         "vote_label": vote_label,
     }
     return params
@@ -9933,14 +10653,14 @@ def c3d_vote_label_cargs(
     cargs = []
     cargs.extend([
         "-vote-label",
-        params.get("vote_label")
+        params.get("vote_label", None)
     ])
     return cargs
 
 
 def c3d_voxel_sum_params(
     voxel_sum: str,
-) -> C3dVoxelSumParameters:
+) -> C3dVoxelSumParametersTagged:
     """
     Build parameters.
     
@@ -9957,7 +10677,7 @@ def c3d_voxel_sum_params(
         Parameter dictionary
     """
     params = {
-        "@type": "c3d.c3d.voxel_sum",
+        "@type": "voxel_sum",
         "voxel_sum": voxel_sum,
     }
     return params
@@ -9979,14 +10699,14 @@ def c3d_voxel_sum_cargs(
     cargs = []
     cargs.extend([
         "-voxel-sum",
-        params.get("voxel_sum")
+        params.get("voxel_sum", None)
     ])
     return cargs
 
 
 def c3d_voxel_integral_params(
     voxel_integral: str,
-) -> C3dVoxelIntegralParameters:
+) -> C3dVoxelIntegralParametersTagged:
     """
     Build parameters.
     
@@ -10006,7 +10726,7 @@ def c3d_voxel_integral_params(
         Parameter dictionary
     """
     params = {
-        "@type": "c3d.c3d.voxel_integral",
+        "@type": "voxel_integral",
         "voxel_integral": voxel_integral,
     }
     return params
@@ -10028,14 +10748,14 @@ def c3d_voxel_integral_cargs(
     cargs = []
     cargs.extend([
         "-voxel-integral",
-        params.get("voxel_integral")
+        params.get("voxel_integral", None)
     ])
     return cargs
 
 
 def c3d_voxelwise_regression_params(
     voxelwise_regression: str,
-) -> C3dVoxelwiseRegressionParameters:
+) -> C3dVoxelwiseRegressionParametersTagged:
     """
     Build parameters.
     
@@ -10062,7 +10782,7 @@ def c3d_voxelwise_regression_params(
         Parameter dictionary
     """
     params = {
-        "@type": "c3d.c3d.voxelwise_regression",
+        "@type": "voxelwise_regression",
         "voxelwise_regression": voxelwise_regression,
     }
     return params
@@ -10084,14 +10804,14 @@ def c3d_voxelwise_regression_cargs(
     cargs = []
     cargs.extend([
         "-voxelwise-regression",
-        params.get("voxelwise_regression")
+        params.get("voxelwise_regression", None)
     ])
     return cargs
 
 
 def c3d_warp_params(
     warp: str,
-) -> C3dWarpParameters:
+) -> C3dWarpParametersTagged:
     """
     Build parameters.
     
@@ -10101,7 +10821,7 @@ def c3d_warp_params(
         Parameter dictionary
     """
     params = {
-        "@type": "c3d.c3d.warp",
+        "@type": "warp",
         "warp": warp,
     }
     return params
@@ -10123,14 +10843,14 @@ def c3d_warp_cargs(
     cargs = []
     cargs.extend([
         "-warp",
-        params.get("warp")
+        params.get("warp", None)
     ])
     return cargs
 
 
 def c3d_warp_label_params(
     warp_label: str,
-) -> C3dWarpLabelParameters:
+) -> C3dWarpLabelParametersTagged:
     """
     Build parameters.
     
@@ -10140,7 +10860,7 @@ def c3d_warp_label_params(
         Parameter dictionary
     """
     params = {
-        "@type": "c3d.c3d.warp_label",
+        "@type": "warp_label",
         "warp_label": warp_label,
     }
     return params
@@ -10162,14 +10882,14 @@ def c3d_warp_label_cargs(
     cargs = []
     cargs.extend([
         "-warp-label",
-        params.get("warp_label")
+        params.get("warp_label", None)
     ])
     return cargs
 
 
 def c3d_wrap_params(
     wrap: str,
-) -> C3dWrapParameters:
+) -> C3dWrapParametersTagged:
     """
     Build parameters.
     
@@ -10197,7 +10917,7 @@ def c3d_wrap_params(
         Parameter dictionary
     """
     params = {
-        "@type": "c3d.c3d.wrap",
+        "@type": "wrap",
         "wrap": wrap,
     }
     return params
@@ -10219,14 +10939,14 @@ def c3d_wrap_cargs(
     cargs = []
     cargs.extend([
         "-wrap",
-        params.get("wrap")
+        params.get("wrap", None)
     ])
     return cargs
 
 
 def c3d_weighted_sum_params(
     weighted_sum: str,
-) -> C3dWeightedSumParameters:
+) -> C3dWeightedSumParametersTagged:
     """
     Build parameters.
     
@@ -10249,7 +10969,7 @@ def c3d_weighted_sum_params(
         Parameter dictionary
     """
     params = {
-        "@type": "c3d.c3d.weighted_sum",
+        "@type": "weighted_sum",
         "weighted_sum": weighted_sum,
     }
     return params
@@ -10271,14 +10991,14 @@ def c3d_weighted_sum_cargs(
     cargs = []
     cargs.extend([
         "-weighted-sum",
-        params.get("weighted_sum")
+        params.get("weighted_sum", None)
     ])
     return cargs
 
 
 def c3d_weighted_sum_voxelwise_params(
     weighted_sum_voxelwise: str,
-) -> C3dWeightedSumVoxelwiseParameters:
+) -> C3dWeightedSumVoxelwiseParametersTagged:
     """
     Build parameters.
     
@@ -10304,7 +11024,7 @@ def c3d_weighted_sum_voxelwise_params(
         Parameter dictionary
     """
     params = {
-        "@type": "c3d.c3d.weighted_sum_voxelwise",
+        "@type": "weighted_sum_voxelwise",
         "weighted_sum_voxelwise": weighted_sum_voxelwise,
     }
     return params
@@ -10326,14 +11046,14 @@ def c3d_weighted_sum_voxelwise_cargs(
     cargs = []
     cargs.extend([
         "-weighted-sum-voxelwise",
-        params.get("weighted_sum_voxelwise")
+        params.get("weighted_sum_voxelwise", None)
     ])
     return cargs
 
 
 class C3dOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `c3d_(...)`.
+    Output object returned when calling `C3dParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -10344,9 +11064,9 @@ class C3dOutputs(typing.NamedTuple):
 
 def c3d_params(
     input_: list[InputPathType],
-    operations: list[typing.Union[C3dAccumParameters, C3dAcosParameters, C3dAddParameters, C3dAlignLandmarksParameters, C3dAnisotropicDiffusionParameters, C3dAntialiasParameters, C3dSetParameters, C3dAsinParameters, C3dAtan2Parameters, C3dBackgroundParameters, C3dN4BiasCorrectionParameters, C3dBinarizeParameters, C3dCannyParameters, C3dCeilParameters, C3dCentroidParameters, C3dCentroidMarkParameters, C3dConnectedComponentsParameters, C3dClearParameters, C3dClipParameters, C3dColorMapParameters, C3dCompressParameters, C3dNoCompressParameters, C3dConvParameters, C3dCoordinateMapVoxelParameters, C3dCoordinateMapPhysicalParameters, C3dCopyTransformParameters, C3dCosParameters, C3dCreateParameters, C3dDicomSeriesListParameters, C3dDicomSeriesReadParameters, C3dDilateParameters, C3dDivideParameters, C3dDuplicateParameters, C3dEndaccumParameters, C3dEndforParameters, C3dErodeParameters, C3dErfParameters, C3dExpParameters, C3dExportPatchesParameters, C3dExportPatchesAugParameters, C3dExtrudeSegParameters, C3dFillBackgroundWithNoiseParameters, C3dFftParameters, C3dFlipParameters, C3dFloorParameters, C3dForeachParameters, C3dForeachCompParameters, C3dGlmParameters, C3dGradientParameters, C3dHelpParameters, C3dHolefillParameters, C3dHessianEigenvaluesParameters, C3dHessianObjectnessParameters, C3dHistogramMatchParameters, C3dInfoParameters, C3dInfoFullParameters, C3dInsertParameters, C3dInterpolationParameters, C3dIterationsParameters, C3dLabelOverlapParameters, C3dLabelStatisticsParameters, C3dLandmarksToSpheresParameters, C3dLaplacianParameters, C3dLevelsetParameters, C3dLevelsetCurvatureParameters, C3dLevelsetAdvectionParameters, C3dLogParameters, C3dLog10Parameters, C3dManualParameters, C3dMatchBoundingBoxParameters, C3dMaximumParameters, C3dMulticomponentSplitParameters, C3dMeanParameters, C3dMedianFilterParameters, C3dMergeParameters, C3dMeanFilterParameters, C3dMutualInfoParameters, C3dMinimumParameters, C3dMixtureModelParameters, C3dMomentsParameters, C3dMattesMutualInfoParameters, C3dMeanSquareParameters, C3dMultiplyParameters, C3dNormalizedCrossCorrelationParameters, C3dNormalizedCorrelationParameters, C3dNormalizedMutualInfoParameters, C3dNoiseGaussianParameters, C3dNoisePoissonParameters, C3dNoiseSpeckleParameters, C3dNoiseSaltPepperParameters, C3dNoMulticomponentSplitParameters, C3dNormalizeLocalWindowParameters, C3dNormpdfParameters, C3dNoroundParameters, C3dNospmParameters, C3dOutputParameters, C3dOutputMulticomponentParameters, C3dOutputMultipleMulticomponentParameters, C3dOrientParameters, C3dOutputMultipleParameters, C3dOrient1Parameters, C3dOriginParameters, C3dOriginVoxelParameters, C3dOriginVoxelCoordParameters, C3dOverlapParameters, C3dOverlayLabelImageParameters, C3dPadParameters, C3dPadToParameters, C3dPcaParameters, C3dPercentIntensityModeParameters, C3dPixelParameters, C3dPopParameters, C3dPopasParameters, C3dProbeParameters, C3dPushParameters, C3dRankParameters, C3dReciprocalParameters, C3dRegionParameters, C3dReorderParameters, C3dRetainLabelsParameters, C3dRfApplyParameters, C3dRfTrainParameters, C3dRfParamPatchParameters, C3dRfParamUsexyzParameters, C3dRfParamNousexyzParameters, C3dRfParamNtreesParameters, C3dRfParamTreedepthParameters, C3dSetSformParameters, C3dReplaceParameters, C3dResampleParameters, C3dResampleIsoParameters, C3dResampleMmParameters, C3dResliceItkParameters, C3dResliceMatrixParameters, C3dResliceIdentityParameters, C3dRgb2hsvParameters, C3dRmsParameters, C3dRoundParameters, C3dScaleParameters, C3dSetSform1Parameters, C3dSinParameters, C3dSliceParameters, C3dSliceAllParameters, C3dSharpenParameters, C3dShiftParameters, C3dSignedDistanceTransformParameters, C3dSmoothParameters, C3dSmoothFastParameters, C3dSpacingParameters, C3dSplitParameters, C3dSqrtParameters, C3dStapleParameters, C3dStructureTensorEigenvaluesParameters, C3dSpmParameters, C3dSubtractParameters, C3dSupervoxelParameters, C3dStretchParameters, C3dSwapdimParameters, C3dTestImageParameters, C3dTestProbeParameters, C3dThresholdParameters, C3dTileParameters, C3dTrimParameters, C3dTrimToSizeParameters, C3dTypeParameters, C3dVerboseParameters, C3dNoverboseParameters, C3dVersionParameters, C3dVoteParameters, C3dVoteMrfParameters, C3dVoteLabelParameters, C3dVoxelSumParameters, C3dVoxelIntegralParameters, C3dVoxelwiseRegressionParameters, C3dWarpParameters, C3dWarpLabelParameters, C3dWrapParameters, C3dWeightedSumParameters, C3dWeightedSumVoxelwiseParameters]],
+    operations: list[typing.Union[C3dAccumParametersTagged, C3dAcosParametersTagged, C3dAddParametersTagged, C3dAlignLandmarksParametersTagged, C3dAnisotropicDiffusionParametersTagged, C3dAntialiasParametersTagged, C3dSetParametersTagged, C3dAsinParametersTagged, C3dAtan2ParametersTagged, C3dBackgroundParametersTagged, C3dN4BiasCorrectionParametersTagged, C3dBinarizeParametersTagged, C3dCannyParametersTagged, C3dCeilParametersTagged, C3dCentroidParametersTagged, C3dCentroidMarkParametersTagged, C3dConnectedComponentsParametersTagged, C3dClearParametersTagged, C3dClipParametersTagged, C3dColorMapParametersTagged, C3dCompressParametersTagged, C3dNoCompressParametersTagged, C3dConvParametersTagged, C3dCoordinateMapVoxelParametersTagged, C3dCoordinateMapPhysicalParametersTagged, C3dCopyTransformParametersTagged, C3dCosParametersTagged, C3dCreateParametersTagged, C3dDicomSeriesListParametersTagged, C3dDicomSeriesReadParametersTagged, C3dDilateParametersTagged, C3dDivideParametersTagged, C3dDuplicateParametersTagged, C3dEndaccumParametersTagged, C3dEndforParametersTagged, C3dErodeParametersTagged, C3dErfParametersTagged, C3dExpParametersTagged, C3dExportPatchesParametersTagged, C3dExportPatchesAugParametersTagged, C3dExtrudeSegParametersTagged, C3dFillBackgroundWithNoiseParametersTagged, C3dFftParametersTagged, C3dFlipParametersTagged, C3dFloorParametersTagged, C3dForeachParametersTagged, C3dForeachCompParametersTagged, C3dGlmParametersTagged, C3dGradientParametersTagged, C3dHelpParametersTagged, C3dHolefillParametersTagged, C3dHessianEigenvaluesParametersTagged, C3dHessianObjectnessParametersTagged, C3dHistogramMatchParametersTagged, C3dInfoParametersTagged, C3dInfoFullParametersTagged, C3dInsertParametersTagged, C3dInterpolationParametersTagged, C3dIterationsParametersTagged, C3dLabelOverlapParametersTagged, C3dLabelStatisticsParametersTagged, C3dLandmarksToSpheresParametersTagged, C3dLaplacianParametersTagged, C3dLevelsetParametersTagged, C3dLevelsetCurvatureParametersTagged, C3dLevelsetAdvectionParametersTagged, C3dLogParametersTagged, C3dLog10ParametersTagged, C3dManualParametersTagged, C3dMatchBoundingBoxParametersTagged, C3dMaximumParametersTagged, C3dMulticomponentSplitParametersTagged, C3dMeanParametersTagged, C3dMedianFilterParametersTagged, C3dMergeParametersTagged, C3dMeanFilterParametersTagged, C3dMutualInfoParametersTagged, C3dMinimumParametersTagged, C3dMixtureModelParametersTagged, C3dMomentsParametersTagged, C3dMattesMutualInfoParametersTagged, C3dMeanSquareParametersTagged, C3dMultiplyParametersTagged, C3dNormalizedCrossCorrelationParametersTagged, C3dNormalizedCorrelationParametersTagged, C3dNormalizedMutualInfoParametersTagged, C3dNoiseGaussianParametersTagged, C3dNoisePoissonParametersTagged, C3dNoiseSpeckleParametersTagged, C3dNoiseSaltPepperParametersTagged, C3dNoMulticomponentSplitParametersTagged, C3dNormalizeLocalWindowParametersTagged, C3dNormpdfParametersTagged, C3dNoroundParametersTagged, C3dNospmParametersTagged, C3dOutputParametersTagged, C3dOutputMulticomponentParametersTagged, C3dOutputMultipleMulticomponentParametersTagged, C3dOrientParametersTagged, C3dOutputMultipleParametersTagged, C3dOrient1ParametersTagged, C3dOriginParametersTagged, C3dOriginVoxelParametersTagged, C3dOriginVoxelCoordParametersTagged, C3dOverlapParametersTagged, C3dOverlayLabelImageParametersTagged, C3dPadParametersTagged, C3dPadToParametersTagged, C3dPcaParametersTagged, C3dPercentIntensityModeParametersTagged, C3dPixelParametersTagged, C3dPopParametersTagged, C3dPopasParametersTagged, C3dProbeParametersTagged, C3dPushParametersTagged, C3dRankParametersTagged, C3dReciprocalParametersTagged, C3dRegionParametersTagged, C3dReorderParametersTagged, C3dRetainLabelsParametersTagged, C3dRfApplyParametersTagged, C3dRfTrainParametersTagged, C3dRfParamPatchParametersTagged, C3dRfParamUsexyzParametersTagged, C3dRfParamNousexyzParametersTagged, C3dRfParamNtreesParametersTagged, C3dRfParamTreedepthParametersTagged, C3dSetSformParametersTagged, C3dReplaceParametersTagged, C3dResampleParametersTagged, C3dResampleIsoParametersTagged, C3dResampleMmParametersTagged, C3dResliceItkParametersTagged, C3dResliceMatrixParametersTagged, C3dResliceIdentityParametersTagged, C3dRgb2hsvParametersTagged, C3dRmsParametersTagged, C3dRoundParametersTagged, C3dScaleParametersTagged, C3dSetSform1ParametersTagged, C3dSinParametersTagged, C3dSliceParametersTagged, C3dSliceAllParametersTagged, C3dSharpenParametersTagged, C3dShiftParametersTagged, C3dSignedDistanceTransformParametersTagged, C3dSmoothParametersTagged, C3dSmoothFastParametersTagged, C3dSpacingParametersTagged, C3dSplitParametersTagged, C3dSqrtParametersTagged, C3dStapleParametersTagged, C3dStructureTensorEigenvaluesParametersTagged, C3dSpmParametersTagged, C3dSubtractParametersTagged, C3dSupervoxelParametersTagged, C3dStretchParametersTagged, C3dSwapdimParametersTagged, C3dTestImageParametersTagged, C3dTestProbeParametersTagged, C3dThresholdParametersTagged, C3dTileParametersTagged, C3dTrimParametersTagged, C3dTrimToSizeParametersTagged, C3dTypeParametersTagged, C3dVerboseParametersTagged, C3dNoverboseParametersTagged, C3dVersionParametersTagged, C3dVoteParametersTagged, C3dVoteMrfParametersTagged, C3dVoteLabelParametersTagged, C3dVoxelSumParametersTagged, C3dVoxelIntegralParametersTagged, C3dVoxelwiseRegressionParametersTagged, C3dWarpParametersTagged, C3dWarpLabelParametersTagged, C3dWrapParametersTagged, C3dWeightedSumParametersTagged, C3dWeightedSumVoxelwiseParametersTagged]],
     output: str,
-) -> C3dParameters:
+) -> C3dParametersTagged:
     """
     Build parameters.
     
@@ -10358,7 +11078,7 @@ def c3d_params(
         Parameter dictionary
     """
     params = {
-        "@type": "c3d.c3d",
+        "@type": "c3d/c3d",
         "input": input_,
         "operations": operations,
         "output": output,
@@ -10381,11 +11101,11 @@ def c3d_cargs(
     """
     cargs = []
     cargs.append("c3d")
-    cargs.append(" ".join([execution.input_file(f) for f in params.get("input")]))
-    cargs.extend([a for c in [dyn_cargs(s["@type"])(s, execution) for s in params.get("operations")] for a in c])
+    cargs.append(" ".join([execution.input_file(f) for f in params.get("input", None)]))
+    cargs.extend([a for c in [c3d_operations_cargs_dyn_fn(s["@type"])(s, execution) for s in params.get("operations", None)] for a in c])
     cargs.extend([
         "-o",
-        params.get("output")
+        params.get("output", None)
     ])
     return cargs
 
@@ -10405,7 +11125,7 @@ def c3d_outputs(
     """
     ret = C3dOutputs(
         root=execution.output_file("."),
-        operations=[dyn_outputs(i["@type"])(i, execution) if dyn_outputs(i["@type"]) else None for i in params.get("operations")],
+        operations=[c3d_operations_outputs_dyn_fn(i["@type"])(i, execution) if c3d_operations_outputs_dyn_fn(i["@type"]) else None for i in params.get("operations")],
     )
     return ret
 
@@ -10440,7 +11160,7 @@ def c3d_execute(
 
 def c3d_(
     input_: list[InputPathType],
-    operations: list[typing.Union[C3dAccumParameters, C3dAcosParameters, C3dAddParameters, C3dAlignLandmarksParameters, C3dAnisotropicDiffusionParameters, C3dAntialiasParameters, C3dSetParameters, C3dAsinParameters, C3dAtan2Parameters, C3dBackgroundParameters, C3dN4BiasCorrectionParameters, C3dBinarizeParameters, C3dCannyParameters, C3dCeilParameters, C3dCentroidParameters, C3dCentroidMarkParameters, C3dConnectedComponentsParameters, C3dClearParameters, C3dClipParameters, C3dColorMapParameters, C3dCompressParameters, C3dNoCompressParameters, C3dConvParameters, C3dCoordinateMapVoxelParameters, C3dCoordinateMapPhysicalParameters, C3dCopyTransformParameters, C3dCosParameters, C3dCreateParameters, C3dDicomSeriesListParameters, C3dDicomSeriesReadParameters, C3dDilateParameters, C3dDivideParameters, C3dDuplicateParameters, C3dEndaccumParameters, C3dEndforParameters, C3dErodeParameters, C3dErfParameters, C3dExpParameters, C3dExportPatchesParameters, C3dExportPatchesAugParameters, C3dExtrudeSegParameters, C3dFillBackgroundWithNoiseParameters, C3dFftParameters, C3dFlipParameters, C3dFloorParameters, C3dForeachParameters, C3dForeachCompParameters, C3dGlmParameters, C3dGradientParameters, C3dHelpParameters, C3dHolefillParameters, C3dHessianEigenvaluesParameters, C3dHessianObjectnessParameters, C3dHistogramMatchParameters, C3dInfoParameters, C3dInfoFullParameters, C3dInsertParameters, C3dInterpolationParameters, C3dIterationsParameters, C3dLabelOverlapParameters, C3dLabelStatisticsParameters, C3dLandmarksToSpheresParameters, C3dLaplacianParameters, C3dLevelsetParameters, C3dLevelsetCurvatureParameters, C3dLevelsetAdvectionParameters, C3dLogParameters, C3dLog10Parameters, C3dManualParameters, C3dMatchBoundingBoxParameters, C3dMaximumParameters, C3dMulticomponentSplitParameters, C3dMeanParameters, C3dMedianFilterParameters, C3dMergeParameters, C3dMeanFilterParameters, C3dMutualInfoParameters, C3dMinimumParameters, C3dMixtureModelParameters, C3dMomentsParameters, C3dMattesMutualInfoParameters, C3dMeanSquareParameters, C3dMultiplyParameters, C3dNormalizedCrossCorrelationParameters, C3dNormalizedCorrelationParameters, C3dNormalizedMutualInfoParameters, C3dNoiseGaussianParameters, C3dNoisePoissonParameters, C3dNoiseSpeckleParameters, C3dNoiseSaltPepperParameters, C3dNoMulticomponentSplitParameters, C3dNormalizeLocalWindowParameters, C3dNormpdfParameters, C3dNoroundParameters, C3dNospmParameters, C3dOutputParameters, C3dOutputMulticomponentParameters, C3dOutputMultipleMulticomponentParameters, C3dOrientParameters, C3dOutputMultipleParameters, C3dOrient1Parameters, C3dOriginParameters, C3dOriginVoxelParameters, C3dOriginVoxelCoordParameters, C3dOverlapParameters, C3dOverlayLabelImageParameters, C3dPadParameters, C3dPadToParameters, C3dPcaParameters, C3dPercentIntensityModeParameters, C3dPixelParameters, C3dPopParameters, C3dPopasParameters, C3dProbeParameters, C3dPushParameters, C3dRankParameters, C3dReciprocalParameters, C3dRegionParameters, C3dReorderParameters, C3dRetainLabelsParameters, C3dRfApplyParameters, C3dRfTrainParameters, C3dRfParamPatchParameters, C3dRfParamUsexyzParameters, C3dRfParamNousexyzParameters, C3dRfParamNtreesParameters, C3dRfParamTreedepthParameters, C3dSetSformParameters, C3dReplaceParameters, C3dResampleParameters, C3dResampleIsoParameters, C3dResampleMmParameters, C3dResliceItkParameters, C3dResliceMatrixParameters, C3dResliceIdentityParameters, C3dRgb2hsvParameters, C3dRmsParameters, C3dRoundParameters, C3dScaleParameters, C3dSetSform1Parameters, C3dSinParameters, C3dSliceParameters, C3dSliceAllParameters, C3dSharpenParameters, C3dShiftParameters, C3dSignedDistanceTransformParameters, C3dSmoothParameters, C3dSmoothFastParameters, C3dSpacingParameters, C3dSplitParameters, C3dSqrtParameters, C3dStapleParameters, C3dStructureTensorEigenvaluesParameters, C3dSpmParameters, C3dSubtractParameters, C3dSupervoxelParameters, C3dStretchParameters, C3dSwapdimParameters, C3dTestImageParameters, C3dTestProbeParameters, C3dThresholdParameters, C3dTileParameters, C3dTrimParameters, C3dTrimToSizeParameters, C3dTypeParameters, C3dVerboseParameters, C3dNoverboseParameters, C3dVersionParameters, C3dVoteParameters, C3dVoteMrfParameters, C3dVoteLabelParameters, C3dVoxelSumParameters, C3dVoxelIntegralParameters, C3dVoxelwiseRegressionParameters, C3dWarpParameters, C3dWarpLabelParameters, C3dWrapParameters, C3dWeightedSumParameters, C3dWeightedSumVoxelwiseParameters]],
+    operations: list[typing.Union[C3dAccumParametersTagged, C3dAcosParametersTagged, C3dAddParametersTagged, C3dAlignLandmarksParametersTagged, C3dAnisotropicDiffusionParametersTagged, C3dAntialiasParametersTagged, C3dSetParametersTagged, C3dAsinParametersTagged, C3dAtan2ParametersTagged, C3dBackgroundParametersTagged, C3dN4BiasCorrectionParametersTagged, C3dBinarizeParametersTagged, C3dCannyParametersTagged, C3dCeilParametersTagged, C3dCentroidParametersTagged, C3dCentroidMarkParametersTagged, C3dConnectedComponentsParametersTagged, C3dClearParametersTagged, C3dClipParametersTagged, C3dColorMapParametersTagged, C3dCompressParametersTagged, C3dNoCompressParametersTagged, C3dConvParametersTagged, C3dCoordinateMapVoxelParametersTagged, C3dCoordinateMapPhysicalParametersTagged, C3dCopyTransformParametersTagged, C3dCosParametersTagged, C3dCreateParametersTagged, C3dDicomSeriesListParametersTagged, C3dDicomSeriesReadParametersTagged, C3dDilateParametersTagged, C3dDivideParametersTagged, C3dDuplicateParametersTagged, C3dEndaccumParametersTagged, C3dEndforParametersTagged, C3dErodeParametersTagged, C3dErfParametersTagged, C3dExpParametersTagged, C3dExportPatchesParametersTagged, C3dExportPatchesAugParametersTagged, C3dExtrudeSegParametersTagged, C3dFillBackgroundWithNoiseParametersTagged, C3dFftParametersTagged, C3dFlipParametersTagged, C3dFloorParametersTagged, C3dForeachParametersTagged, C3dForeachCompParametersTagged, C3dGlmParametersTagged, C3dGradientParametersTagged, C3dHelpParametersTagged, C3dHolefillParametersTagged, C3dHessianEigenvaluesParametersTagged, C3dHessianObjectnessParametersTagged, C3dHistogramMatchParametersTagged, C3dInfoParametersTagged, C3dInfoFullParametersTagged, C3dInsertParametersTagged, C3dInterpolationParametersTagged, C3dIterationsParametersTagged, C3dLabelOverlapParametersTagged, C3dLabelStatisticsParametersTagged, C3dLandmarksToSpheresParametersTagged, C3dLaplacianParametersTagged, C3dLevelsetParametersTagged, C3dLevelsetCurvatureParametersTagged, C3dLevelsetAdvectionParametersTagged, C3dLogParametersTagged, C3dLog10ParametersTagged, C3dManualParametersTagged, C3dMatchBoundingBoxParametersTagged, C3dMaximumParametersTagged, C3dMulticomponentSplitParametersTagged, C3dMeanParametersTagged, C3dMedianFilterParametersTagged, C3dMergeParametersTagged, C3dMeanFilterParametersTagged, C3dMutualInfoParametersTagged, C3dMinimumParametersTagged, C3dMixtureModelParametersTagged, C3dMomentsParametersTagged, C3dMattesMutualInfoParametersTagged, C3dMeanSquareParametersTagged, C3dMultiplyParametersTagged, C3dNormalizedCrossCorrelationParametersTagged, C3dNormalizedCorrelationParametersTagged, C3dNormalizedMutualInfoParametersTagged, C3dNoiseGaussianParametersTagged, C3dNoisePoissonParametersTagged, C3dNoiseSpeckleParametersTagged, C3dNoiseSaltPepperParametersTagged, C3dNoMulticomponentSplitParametersTagged, C3dNormalizeLocalWindowParametersTagged, C3dNormpdfParametersTagged, C3dNoroundParametersTagged, C3dNospmParametersTagged, C3dOutputParametersTagged, C3dOutputMulticomponentParametersTagged, C3dOutputMultipleMulticomponentParametersTagged, C3dOrientParametersTagged, C3dOutputMultipleParametersTagged, C3dOrient1ParametersTagged, C3dOriginParametersTagged, C3dOriginVoxelParametersTagged, C3dOriginVoxelCoordParametersTagged, C3dOverlapParametersTagged, C3dOverlayLabelImageParametersTagged, C3dPadParametersTagged, C3dPadToParametersTagged, C3dPcaParametersTagged, C3dPercentIntensityModeParametersTagged, C3dPixelParametersTagged, C3dPopParametersTagged, C3dPopasParametersTagged, C3dProbeParametersTagged, C3dPushParametersTagged, C3dRankParametersTagged, C3dReciprocalParametersTagged, C3dRegionParametersTagged, C3dReorderParametersTagged, C3dRetainLabelsParametersTagged, C3dRfApplyParametersTagged, C3dRfTrainParametersTagged, C3dRfParamPatchParametersTagged, C3dRfParamUsexyzParametersTagged, C3dRfParamNousexyzParametersTagged, C3dRfParamNtreesParametersTagged, C3dRfParamTreedepthParametersTagged, C3dSetSformParametersTagged, C3dReplaceParametersTagged, C3dResampleParametersTagged, C3dResampleIsoParametersTagged, C3dResampleMmParametersTagged, C3dResliceItkParametersTagged, C3dResliceMatrixParametersTagged, C3dResliceIdentityParametersTagged, C3dRgb2hsvParametersTagged, C3dRmsParametersTagged, C3dRoundParametersTagged, C3dScaleParametersTagged, C3dSetSform1ParametersTagged, C3dSinParametersTagged, C3dSliceParametersTagged, C3dSliceAllParametersTagged, C3dSharpenParametersTagged, C3dShiftParametersTagged, C3dSignedDistanceTransformParametersTagged, C3dSmoothParametersTagged, C3dSmoothFastParametersTagged, C3dSpacingParametersTagged, C3dSplitParametersTagged, C3dSqrtParametersTagged, C3dStapleParametersTagged, C3dStructureTensorEigenvaluesParametersTagged, C3dSpmParametersTagged, C3dSubtractParametersTagged, C3dSupervoxelParametersTagged, C3dStretchParametersTagged, C3dSwapdimParametersTagged, C3dTestImageParametersTagged, C3dTestProbeParametersTagged, C3dThresholdParametersTagged, C3dTileParametersTagged, C3dTrimParametersTagged, C3dTrimToSizeParametersTagged, C3dTypeParametersTagged, C3dVerboseParametersTagged, C3dNoverboseParametersTagged, C3dVersionParametersTagged, C3dVoteParametersTagged, C3dVoteMrfParametersTagged, C3dVoteLabelParametersTagged, C3dVoxelSumParametersTagged, C3dVoxelIntegralParametersTagged, C3dVoxelwiseRegressionParametersTagged, C3dWarpParametersTagged, C3dWarpLabelParametersTagged, C3dWrapParametersTagged, C3dWeightedSumParametersTagged, C3dWeightedSumVoxelwiseParametersTagged]],
     output: str,
     runner: Runner | None = None,
 ) -> C3dOutputs:
@@ -10471,188 +11191,8 @@ def c3d_(
 
 __all__ = [
     "C3D_METADATA",
-    "C3dAccumParameters",
-    "C3dAcosParameters",
-    "C3dAddParameters",
-    "C3dAlignLandmarksParameters",
-    "C3dAnisotropicDiffusionParameters",
-    "C3dAntialiasParameters",
-    "C3dAsinParameters",
-    "C3dAtan2Parameters",
-    "C3dBackgroundParameters",
-    "C3dBinarizeParameters",
-    "C3dCannyParameters",
-    "C3dCeilParameters",
-    "C3dCentroidMarkParameters",
-    "C3dCentroidParameters",
-    "C3dClearParameters",
-    "C3dClipParameters",
-    "C3dColorMapParameters",
-    "C3dCompressParameters",
-    "C3dConnectedComponentsParameters",
-    "C3dConvParameters",
-    "C3dCoordinateMapPhysicalParameters",
-    "C3dCoordinateMapVoxelParameters",
-    "C3dCopyTransformParameters",
-    "C3dCosParameters",
-    "C3dCreateParameters",
-    "C3dDicomSeriesListParameters",
-    "C3dDicomSeriesReadParameters",
-    "C3dDilateParameters",
-    "C3dDivideParameters",
-    "C3dDuplicateParameters",
-    "C3dEndaccumParameters",
-    "C3dEndforParameters",
-    "C3dErfParameters",
-    "C3dErodeParameters",
-    "C3dExpParameters",
-    "C3dExportPatchesAugParameters",
-    "C3dExportPatchesParameters",
-    "C3dExtrudeSegParameters",
-    "C3dFftParameters",
-    "C3dFillBackgroundWithNoiseParameters",
-    "C3dFlipParameters",
-    "C3dFloorParameters",
-    "C3dForeachCompParameters",
-    "C3dForeachParameters",
-    "C3dGlmParameters",
-    "C3dGradientParameters",
-    "C3dHelpParameters",
-    "C3dHessianEigenvaluesParameters",
-    "C3dHessianObjectnessParameters",
-    "C3dHistogramMatchParameters",
-    "C3dHolefillParameters",
-    "C3dInfoFullParameters",
-    "C3dInfoParameters",
-    "C3dInsertParameters",
-    "C3dInterpolationParameters",
-    "C3dIterationsParameters",
-    "C3dLabelOverlapParameters",
-    "C3dLabelStatisticsParameters",
-    "C3dLandmarksToSpheresParameters",
-    "C3dLaplacianParameters",
-    "C3dLevelsetAdvectionParameters",
-    "C3dLevelsetCurvatureParameters",
-    "C3dLevelsetParameters",
-    "C3dLog10Parameters",
-    "C3dLogParameters",
-    "C3dManualParameters",
-    "C3dMatchBoundingBoxParameters",
-    "C3dMattesMutualInfoParameters",
-    "C3dMaximumParameters",
-    "C3dMeanFilterParameters",
-    "C3dMeanParameters",
-    "C3dMeanSquareParameters",
-    "C3dMedianFilterParameters",
-    "C3dMergeParameters",
-    "C3dMinimumParameters",
-    "C3dMixtureModelParameters",
-    "C3dMomentsParameters",
-    "C3dMulticomponentSplitParameters",
-    "C3dMultiplyParameters",
-    "C3dMutualInfoParameters",
-    "C3dN4BiasCorrectionParameters",
-    "C3dNoCompressParameters",
-    "C3dNoMulticomponentSplitParameters",
-    "C3dNoiseGaussianParameters",
-    "C3dNoisePoissonParameters",
-    "C3dNoiseSaltPepperParameters",
-    "C3dNoiseSpeckleParameters",
-    "C3dNormalizeLocalWindowParameters",
-    "C3dNormalizedCorrelationParameters",
-    "C3dNormalizedCrossCorrelationParameters",
-    "C3dNormalizedMutualInfoParameters",
-    "C3dNormpdfParameters",
-    "C3dNoroundParameters",
-    "C3dNospmParameters",
-    "C3dNoverboseParameters",
-    "C3dOrient1Parameters",
-    "C3dOrientParameters",
-    "C3dOriginParameters",
-    "C3dOriginVoxelCoordParameters",
-    "C3dOriginVoxelParameters",
-    "C3dOutputMulticomponentParameters",
-    "C3dOutputMultipleMulticomponentParameters",
-    "C3dOutputMultipleParameters",
     "C3dOutputOutputs",
-    "C3dOutputParameters",
     "C3dOutputs",
-    "C3dOverlapParameters",
-    "C3dOverlayLabelImageParameters",
-    "C3dPadParameters",
-    "C3dPadToParameters",
-    "C3dParameters",
-    "C3dPcaParameters",
-    "C3dPercentIntensityModeParameters",
-    "C3dPixelParameters",
-    "C3dPopParameters",
-    "C3dPopasParameters",
-    "C3dProbeParameters",
-    "C3dPushParameters",
-    "C3dRankParameters",
-    "C3dReciprocalParameters",
-    "C3dRegionParameters",
-    "C3dReorderParameters",
-    "C3dReplaceParameters",
-    "C3dResampleIsoParameters",
-    "C3dResampleMmParameters",
-    "C3dResampleParameters",
-    "C3dResliceIdentityParameters",
-    "C3dResliceItkParameters",
-    "C3dResliceMatrixParameters",
-    "C3dRetainLabelsParameters",
-    "C3dRfApplyParameters",
-    "C3dRfParamNousexyzParameters",
-    "C3dRfParamNtreesParameters",
-    "C3dRfParamPatchParameters",
-    "C3dRfParamTreedepthParameters",
-    "C3dRfParamUsexyzParameters",
-    "C3dRfTrainParameters",
-    "C3dRgb2hsvParameters",
-    "C3dRmsParameters",
-    "C3dRoundParameters",
-    "C3dScaleParameters",
-    "C3dSetParameters",
-    "C3dSetSform1Parameters",
-    "C3dSetSformParameters",
-    "C3dSharpenParameters",
-    "C3dShiftParameters",
-    "C3dSignedDistanceTransformParameters",
-    "C3dSinParameters",
-    "C3dSliceAllParameters",
-    "C3dSliceParameters",
-    "C3dSmoothFastParameters",
-    "C3dSmoothParameters",
-    "C3dSpacingParameters",
-    "C3dSplitParameters",
-    "C3dSpmParameters",
-    "C3dSqrtParameters",
-    "C3dStapleParameters",
-    "C3dStretchParameters",
-    "C3dStructureTensorEigenvaluesParameters",
-    "C3dSubtractParameters",
-    "C3dSupervoxelParameters",
-    "C3dSwapdimParameters",
-    "C3dTestImageParameters",
-    "C3dTestProbeParameters",
-    "C3dThresholdParameters",
-    "C3dTileParameters",
-    "C3dTrimParameters",
-    "C3dTrimToSizeParameters",
-    "C3dTypeParameters",
-    "C3dVerboseParameters",
-    "C3dVersionParameters",
-    "C3dVoteLabelParameters",
-    "C3dVoteMrfParameters",
-    "C3dVoteParameters",
-    "C3dVoxelIntegralParameters",
-    "C3dVoxelSumParameters",
-    "C3dVoxelwiseRegressionParameters",
-    "C3dWarpLabelParameters",
-    "C3dWarpParameters",
-    "C3dWeightedSumParameters",
-    "C3dWeightedSumVoxelwiseParameters",
-    "C3dWrapParameters",
     "c3d_",
     "c3d__help_params",
     "c3d_accum_params",

@@ -14,7 +14,18 @@ V_3D_LOMB_SCARGLE_METADATA = Metadata(
 
 
 V3dLombScargleParameters = typing.TypedDict('V3dLombScargleParameters', {
-    "@type": typing.Literal["afni.3dLombScargle"],
+    "@type": typing.NotRequired[typing.Literal["afni/3dLombScargle"]],
+    "prefix": str,
+    "inset": InputPathType,
+    "censor_1d": typing.NotRequired[InputPathType | None],
+    "censor_string": typing.NotRequired[str | None],
+    "mask_file": typing.NotRequired[InputPathType | None],
+    "out_pow_spec": bool,
+    "nyquist_multiplier": typing.NotRequired[int | None],
+    "nifti": bool,
+})
+V3dLombScargleParametersTagged = typing.TypedDict('V3dLombScargleParametersTagged', {
+    "@type": typing.Literal["afni/3dLombScargle"],
     "prefix": str,
     "inset": InputPathType,
     "censor_1d": typing.NotRequired[InputPathType | None],
@@ -26,41 +37,9 @@ V3dLombScargleParameters = typing.TypedDict('V3dLombScargleParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "afni.3dLombScargle": v_3d_lomb_scargle_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "afni.3dLombScargle": v_3d_lomb_scargle_outputs,
-    }.get(t)
-
-
 class V3dLombScargleOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `v_3d_lomb_scargle(...)`.
+    Output object returned when calling `V3dLombScargleParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -85,7 +64,7 @@ def v_3d_lomb_scargle_params(
     out_pow_spec: bool = False,
     nyquist_multiplier: int | None = None,
     nifti: bool = False,
-) -> V3dLombScargleParameters:
+) -> V3dLombScargleParametersTagged:
     """
     Build parameters.
     
@@ -119,7 +98,7 @@ def v_3d_lomb_scargle_params(
         Parameter dictionary
     """
     params = {
-        "@type": "afni.3dLombScargle",
+        "@type": "afni/3dLombScargle",
         "prefix": prefix,
         "inset": inset,
         "out_pow_spec": out_pow_spec,
@@ -153,35 +132,35 @@ def v_3d_lomb_scargle_cargs(
     cargs.append("3dLombScargle")
     cargs.extend([
         "-prefix",
-        params.get("prefix")
+        params.get("prefix", None)
     ])
     cargs.extend([
         "-inset",
-        execution.input_file(params.get("inset"))
+        execution.input_file(params.get("inset", None))
     ])
-    if params.get("censor_1d") is not None:
+    if params.get("censor_1d", None) is not None:
         cargs.extend([
             "-censor_1D",
-            execution.input_file(params.get("censor_1d"))
+            execution.input_file(params.get("censor_1d", None))
         ])
-    if params.get("censor_string") is not None:
+    if params.get("censor_string", None) is not None:
         cargs.extend([
             "-censor_str",
-            params.get("censor_string")
+            params.get("censor_string", None)
         ])
-    if params.get("mask_file") is not None:
+    if params.get("mask_file", None) is not None:
         cargs.extend([
             "-mask",
-            execution.input_file(params.get("mask_file"))
+            execution.input_file(params.get("mask_file", None))
         ])
-    if params.get("out_pow_spec"):
+    if params.get("out_pow_spec", False):
         cargs.append("-out_pow_spec")
-    if params.get("nyquist_multiplier") is not None:
+    if params.get("nyquist_multiplier", None) is not None:
         cargs.extend([
             "-nyq_mult",
-            str(params.get("nyquist_multiplier"))
+            str(params.get("nyquist_multiplier", None))
         ])
-    if params.get("nifti"):
+    if params.get("nifti", False):
         cargs.append("-nifti")
     return cargs
 
@@ -201,10 +180,10 @@ def v_3d_lomb_scargle_outputs(
     """
     ret = V3dLombScargleOutputs(
         root=execution.output_file("."),
-        time_points=execution.output_file(params.get("prefix") + "_time.1D"),
-        frequency_points=execution.output_file(params.get("prefix") + "_freq.1D"),
-        amplitude_spectrum=execution.output_file(params.get("prefix") + "_amp+orig"),
-        power_spectrum=execution.output_file(params.get("prefix") + "_pow+orig"),
+        time_points=execution.output_file(params.get("prefix", None) + "_time.1D"),
+        frequency_points=execution.output_file(params.get("prefix", None) + "_freq.1D"),
+        amplitude_spectrum=execution.output_file(params.get("prefix", None) + "_amp+orig"),
+        power_spectrum=execution.output_file(params.get("prefix", None) + "_pow+orig"),
     )
     return ret
 
@@ -304,7 +283,6 @@ def v_3d_lomb_scargle(
 
 __all__ = [
     "V3dLombScargleOutputs",
-    "V3dLombScargleParameters",
     "V_3D_LOMB_SCARGLE_METADATA",
     "v_3d_lomb_scargle",
     "v_3d_lomb_scargle_execute",

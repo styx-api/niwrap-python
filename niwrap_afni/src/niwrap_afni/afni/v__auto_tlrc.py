@@ -14,7 +14,49 @@ V__AUTO_TLRC_METADATA = Metadata(
 
 
 VAutoTlrcParameters = typing.TypedDict('VAutoTlrcParameters', {
-    "@type": typing.Literal["afni.@auto_tlrc"],
+    "@type": typing.NotRequired[typing.Literal["afni/@auto_tlrc"]],
+    "base_template": InputPathType,
+    "input_anat": InputPathType,
+    "no_ss": bool,
+    "warp_orig_vol": bool,
+    "dxyz": typing.NotRequired[float | None],
+    "dx": typing.NotRequired[float | None],
+    "dy": typing.NotRequired[float | None],
+    "dz": typing.NotRequired[float | None],
+    "pad_base": typing.NotRequired[float | None],
+    "keep_tmp": bool,
+    "clean": bool,
+    "xform": typing.NotRequired[str | None],
+    "no_avoid_eyes": bool,
+    "ncr": bool,
+    "onepass": bool,
+    "twopass": bool,
+    "maxite": typing.NotRequired[float | None],
+    "not_OK_maxite": bool,
+    "inweight": bool,
+    "rigid_equiv": bool,
+    "init_xform": typing.NotRequired[str | None],
+    "no_pre": bool,
+    "out_space": typing.NotRequired[str | None],
+    "3dAllineate": bool,
+    "3dAlcost": typing.NotRequired[str | None],
+    "overwrite": bool,
+    "apar": InputPathType,
+    "input_dataset": InputPathType,
+    "pad_input": typing.NotRequired[float | None],
+    "onewarp": bool,
+    "twowarp": bool,
+    "rmode": typing.NotRequired[str | None],
+    "prefix": typing.NotRequired[str | None],
+    "suffix": typing.NotRequired[str | None],
+    "keep_view": bool,
+    "base_copy": typing.NotRequired[str | None],
+    "base_list": bool,
+    "use_gz": bool,
+    "verb": bool,
+})
+VAutoTlrcParametersTagged = typing.TypedDict('VAutoTlrcParametersTagged', {
+    "@type": typing.Literal["afni/@auto_tlrc"],
     "base_template": InputPathType,
     "input_anat": InputPathType,
     "no_ss": bool,
@@ -57,41 +99,9 @@ VAutoTlrcParameters = typing.TypedDict('VAutoTlrcParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "afni.@auto_tlrc": v__auto_tlrc_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "afni.@auto_tlrc": v__auto_tlrc_outputs,
-    }.get(t)
-
-
 class VAutoTlrcOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `v__auto_tlrc(...)`.
+    Output object returned when calling `VAutoTlrcParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -141,7 +151,7 @@ def v__auto_tlrc_params(
     base_list: bool = False,
     use_gz: bool = False,
     verb: bool = False,
-) -> VAutoTlrcParameters:
+) -> VAutoTlrcParametersTagged:
     """
     Build parameters.
     
@@ -213,7 +223,7 @@ def v__auto_tlrc_params(
         Parameter dictionary
     """
     params = {
-        "@type": "afni.@auto_tlrc",
+        "@type": "afni/@auto_tlrc",
         "base_template": base_template,
         "input_anat": input_anat,
         "no_ss": no_ss,
@@ -289,134 +299,134 @@ def v__auto_tlrc_cargs(
     cargs.append("@auto_tlrc")
     cargs.extend([
         "-base",
-        execution.input_file(params.get("base_template"))
+        execution.input_file(params.get("base_template", None))
     ])
     cargs.extend([
         "-input",
-        execution.input_file(params.get("input_anat"))
+        execution.input_file(params.get("input_anat", None))
     ])
-    if params.get("no_ss"):
+    if params.get("no_ss", False):
         cargs.append("-no_ss")
-    if params.get("warp_orig_vol"):
+    if params.get("warp_orig_vol", False):
         cargs.append("-warp_orig_vol")
-    if params.get("dxyz") is not None:
+    if params.get("dxyz", None) is not None:
         cargs.extend([
             "-dxyz",
-            str(params.get("dxyz"))
+            str(params.get("dxyz", None))
         ])
-    if params.get("dx") is not None:
+    if params.get("dx", None) is not None:
         cargs.extend([
             "-dx",
-            str(params.get("dx"))
+            str(params.get("dx", None))
         ])
-    if params.get("dy") is not None:
+    if params.get("dy", None) is not None:
         cargs.extend([
             "-dy",
-            str(params.get("dy"))
+            str(params.get("dy", None))
         ])
-    if params.get("dz") is not None:
+    if params.get("dz", None) is not None:
         cargs.extend([
             "-dz",
-            str(params.get("dz"))
+            str(params.get("dz", None))
         ])
-    if params.get("pad_base") is not None:
+    if params.get("pad_base", None) is not None:
         cargs.extend([
             "-pad_base",
-            str(params.get("pad_base"))
+            str(params.get("pad_base", None))
         ])
-    if params.get("keep_tmp"):
+    if params.get("keep_tmp", False):
         cargs.append("-keep_tmp")
-    if params.get("clean"):
+    if params.get("clean", False):
         cargs.append("-clean")
-    if params.get("xform") is not None:
+    if params.get("xform", None) is not None:
         cargs.extend([
             "-xform",
-            params.get("xform")
+            params.get("xform", None)
         ])
-    if params.get("no_avoid_eyes"):
+    if params.get("no_avoid_eyes", False):
         cargs.append("-no_avoid_eyes")
-    if params.get("ncr"):
+    if params.get("ncr", False):
         cargs.append("-ncr")
-    if params.get("onepass"):
+    if params.get("onepass", False):
         cargs.append("-onepass")
-    if params.get("twopass"):
+    if params.get("twopass", False):
         cargs.append("-twopass")
-    if params.get("maxite") is not None:
+    if params.get("maxite", None) is not None:
         cargs.extend([
             "-maxite",
-            str(params.get("maxite"))
+            str(params.get("maxite", None))
         ])
-    if params.get("not_OK_maxite"):
+    if params.get("not_OK_maxite", False):
         cargs.append("-not_OK_maxite")
-    if params.get("inweight"):
+    if params.get("inweight", False):
         cargs.append("-inweight")
-    if params.get("rigid_equiv"):
+    if params.get("rigid_equiv", False):
         cargs.append("-rigid_equiv")
-    if params.get("init_xform") is not None:
+    if params.get("init_xform", None) is not None:
         cargs.extend([
             "-init_xform",
-            params.get("init_xform")
+            params.get("init_xform", None)
         ])
-    if params.get("no_pre"):
+    if params.get("no_pre", False):
         cargs.append("-no_pre")
-    if params.get("out_space") is not None:
+    if params.get("out_space", None) is not None:
         cargs.extend([
             "-out_space",
-            params.get("out_space")
+            params.get("out_space", None)
         ])
-    if params.get("3dAllineate"):
+    if params.get("3dAllineate", False):
         cargs.append("-3dAllineate")
-    if params.get("3dAlcost") is not None:
+    if params.get("3dAlcost", None) is not None:
         cargs.extend([
             "-3dAlcost",
-            params.get("3dAlcost")
+            params.get("3dAlcost", None)
         ])
-    if params.get("overwrite"):
+    if params.get("overwrite", False):
         cargs.append("-overwrite")
     cargs.extend([
         "-apar",
-        execution.input_file(params.get("apar"))
+        execution.input_file(params.get("apar", None))
     ])
     cargs.extend([
         "-input",
-        execution.input_file(params.get("input_dataset"))
+        execution.input_file(params.get("input_dataset", None))
     ])
-    if params.get("pad_input") is not None:
+    if params.get("pad_input", None) is not None:
         cargs.extend([
             "-pad_input",
-            str(params.get("pad_input"))
+            str(params.get("pad_input", None))
         ])
-    if params.get("onewarp"):
+    if params.get("onewarp", False):
         cargs.append("-onewarp")
-    if params.get("twowarp"):
+    if params.get("twowarp", False):
         cargs.append("-twowarp")
-    if params.get("rmode") is not None:
+    if params.get("rmode", None) is not None:
         cargs.extend([
             "-rmode",
-            params.get("rmode")
+            params.get("rmode", None)
         ])
-    if params.get("prefix") is not None:
+    if params.get("prefix", None) is not None:
         cargs.extend([
             "-prefix",
-            params.get("prefix")
+            params.get("prefix", None)
         ])
-    if params.get("suffix") is not None:
+    if params.get("suffix", None) is not None:
         cargs.extend([
             "-suffix",
-            params.get("suffix")
+            params.get("suffix", None)
         ])
-    if params.get("keep_view"):
+    if params.get("keep_view", False):
         cargs.append("-keep_view")
-    if params.get("base_copy") is not None:
+    if params.get("base_copy", None) is not None:
         cargs.extend([
             "-base_copy",
-            params.get("base_copy")
+            params.get("base_copy", None)
         ])
-    if params.get("base_list"):
+    if params.get("base_list", False):
         cargs.append("-base_list")
-    if params.get("use_gz"):
+    if params.get("use_gz", False):
         cargs.append("-use_gz")
-    if params.get("verb"):
+    if params.get("verb", False):
         cargs.append("-verb")
     return cargs
 
@@ -436,8 +446,8 @@ def v__auto_tlrc_outputs(
     """
     ret = VAutoTlrcOutputs(
         root=execution.output_file("."),
-        output_dataset=execution.output_file(params.get("prefix") + ".nii.gz") if (params.get("prefix") is not None) else None,
-        transform_file=execution.output_file(params.get("prefix") + ".Xat.1D") if (params.get("prefix") is not None) else None,
+        output_dataset=execution.output_file(params.get("prefix", None) + ".nii.gz") if (params.get("prefix") is not None) else None,
+        transform_file=execution.output_file(params.get("prefix", None) + ".Xat.1D") if (params.get("prefix") is not None) else None,
     )
     return ret
 
@@ -639,7 +649,6 @@ def v__auto_tlrc(
 
 __all__ = [
     "VAutoTlrcOutputs",
-    "VAutoTlrcParameters",
     "V__AUTO_TLRC_METADATA",
     "v__auto_tlrc",
     "v__auto_tlrc_execute",

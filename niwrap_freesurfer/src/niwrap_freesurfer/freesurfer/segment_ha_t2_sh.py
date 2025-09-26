@@ -14,47 +14,20 @@ SEGMENT_HA_T2_SH_METADATA = Metadata(
 
 
 SegmentHaT2ShParameters = typing.TypedDict('SegmentHaT2ShParameters', {
-    "@type": typing.Literal["freesurfer.segmentHA_T2.sh"],
+    "@type": typing.NotRequired[typing.Literal["freesurfer/segmentHA_T2.sh"]],
+    "input_image": InputPathType,
+    "output_directory": str,
+})
+SegmentHaT2ShParametersTagged = typing.TypedDict('SegmentHaT2ShParametersTagged', {
+    "@type": typing.Literal["freesurfer/segmentHA_T2.sh"],
     "input_image": InputPathType,
     "output_directory": str,
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "freesurfer.segmentHA_T2.sh": segment_ha_t2_sh_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "freesurfer.segmentHA_T2.sh": segment_ha_t2_sh_outputs,
-    }.get(t)
-
-
 class SegmentHaT2ShOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `segment_ha_t2_sh(...)`.
+    Output object returned when calling `SegmentHaT2ShParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -67,7 +40,7 @@ class SegmentHaT2ShOutputs(typing.NamedTuple):
 def segment_ha_t2_sh_params(
     input_image: InputPathType,
     output_directory: str,
-) -> SegmentHaT2ShParameters:
+) -> SegmentHaT2ShParametersTagged:
     """
     Build parameters.
     
@@ -78,7 +51,7 @@ def segment_ha_t2_sh_params(
         Parameter dictionary
     """
     params = {
-        "@type": "freesurfer.segmentHA_T2.sh",
+        "@type": "freesurfer/segmentHA_T2.sh",
         "input_image": input_image,
         "output_directory": output_directory,
     }
@@ -100,8 +73,8 @@ def segment_ha_t2_sh_cargs(
     """
     cargs = []
     cargs.append("segmentHA_T2.sh")
-    cargs.append(execution.input_file(params.get("input_image")))
-    cargs.append(params.get("output_directory"))
+    cargs.append(execution.input_file(params.get("input_image", None)))
+    cargs.append(params.get("output_directory", None))
     return cargs
 
 
@@ -120,8 +93,8 @@ def segment_ha_t2_sh_outputs(
     """
     ret = SegmentHaT2ShOutputs(
         root=execution.output_file("."),
-        left_hemisphere_labels=execution.output_file(params.get("output_directory") + "/lh.hippoAmygLabels-T2.v21.mgz"),
-        right_hemisphere_labels=execution.output_file(params.get("output_directory") + "/rh.hippoAmygLabels-T2.v21.mgz"),
+        left_hemisphere_labels=execution.output_file(params.get("output_directory", None) + "/lh.hippoAmygLabels-T2.v21.mgz"),
+        right_hemisphere_labels=execution.output_file(params.get("output_directory", None) + "/rh.hippoAmygLabels-T2.v21.mgz"),
     )
     return ret
 
@@ -187,7 +160,6 @@ def segment_ha_t2_sh(
 __all__ = [
     "SEGMENT_HA_T2_SH_METADATA",
     "SegmentHaT2ShOutputs",
-    "SegmentHaT2ShParameters",
     "segment_ha_t2_sh",
     "segment_ha_t2_sh_execute",
     "segment_ha_t2_sh_params",

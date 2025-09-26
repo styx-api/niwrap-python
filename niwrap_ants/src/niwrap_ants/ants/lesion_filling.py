@@ -14,7 +14,14 @@ LESION_FILLING_METADATA = Metadata(
 
 
 LesionFillingParameters = typing.TypedDict('LesionFillingParameters', {
-    "@type": typing.Literal["ants.LesionFilling"],
+    "@type": typing.NotRequired[typing.Literal["ants/LesionFilling"]],
+    "image_dimension": int,
+    "t1_image": InputPathType,
+    "lesion_mask": InputPathType,
+    "output_lesion_filled": str,
+})
+LesionFillingParametersTagged = typing.TypedDict('LesionFillingParametersTagged', {
+    "@type": typing.Literal["ants/LesionFilling"],
     "image_dimension": int,
     "t1_image": InputPathType,
     "lesion_mask": InputPathType,
@@ -22,41 +29,9 @@ LesionFillingParameters = typing.TypedDict('LesionFillingParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "ants.LesionFilling": lesion_filling_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "ants.LesionFilling": lesion_filling_outputs,
-    }.get(t)
-
-
 class LesionFillingOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `lesion_filling(...)`.
+    Output object returned when calling `LesionFillingParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -69,7 +44,7 @@ def lesion_filling_params(
     t1_image: InputPathType,
     lesion_mask: InputPathType,
     output_lesion_filled: str,
-) -> LesionFillingParameters:
+) -> LesionFillingParametersTagged:
     """
     Build parameters.
     
@@ -82,7 +57,7 @@ def lesion_filling_params(
         Parameter dictionary
     """
     params = {
-        "@type": "ants.LesionFilling",
+        "@type": "ants/LesionFilling",
         "image_dimension": image_dimension,
         "t1_image": t1_image,
         "lesion_mask": lesion_mask,
@@ -106,10 +81,10 @@ def lesion_filling_cargs(
     """
     cargs = []
     cargs.append("LesionFilling")
-    cargs.append(str(params.get("image_dimension")))
-    cargs.append(execution.input_file(params.get("t1_image")))
-    cargs.append(execution.input_file(params.get("lesion_mask")))
-    cargs.append(params.get("output_lesion_filled"))
+    cargs.append(str(params.get("image_dimension", None)))
+    cargs.append(execution.input_file(params.get("t1_image", None)))
+    cargs.append(execution.input_file(params.get("lesion_mask", None)))
+    cargs.append(params.get("output_lesion_filled", None))
     return cargs
 
 
@@ -128,7 +103,7 @@ def lesion_filling_outputs(
     """
     ret = LesionFillingOutputs(
         root=execution.output_file("."),
-        lesion_filled_output=execution.output_file(params.get("output_lesion_filled")),
+        lesion_filled_output=execution.output_file(params.get("output_lesion_filled", None)),
     )
     return ret
 
@@ -198,7 +173,6 @@ def lesion_filling(
 __all__ = [
     "LESION_FILLING_METADATA",
     "LesionFillingOutputs",
-    "LesionFillingParameters",
     "lesion_filling",
     "lesion_filling_execute",
     "lesion_filling_params",

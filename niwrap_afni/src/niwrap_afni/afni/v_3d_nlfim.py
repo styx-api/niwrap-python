@@ -14,7 +14,47 @@ V_3D_NLFIM_METADATA = Metadata(
 
 
 V3dNlfimParameters = typing.TypedDict('V3dNlfimParameters', {
-    "@type": typing.Literal["afni.3dNLfim"],
+    "@type": typing.NotRequired[typing.Literal["afni/3dNLfim"]],
+    "input_file": InputPathType,
+    "signal_model": str,
+    "noise_model": str,
+    "mask": typing.NotRequired[InputPathType | None],
+    "ignore": typing.NotRequired[int | None],
+    "intr": typing.NotRequired[int | None],
+    "tr": typing.NotRequired[int | None],
+    "time_file": typing.NotRequired[InputPathType | None],
+    "sconstr": typing.NotRequired[str | None],
+    "nconstr": typing.NotRequired[str | None],
+    "nabs": bool,
+    "nrand": typing.NotRequired[int | None],
+    "nbest": typing.NotRequired[int | None],
+    "rmsmin": typing.NotRequired[float | None],
+    "fdisp": typing.NotRequired[float | None],
+    "progress": typing.NotRequired[int | None],
+    "voxel_count": bool,
+    "simplex": bool,
+    "powell": bool,
+    "both": bool,
+    "freg": typing.NotRequired[str | None],
+    "frsqr": typing.NotRequired[str | None],
+    "fsmax": typing.NotRequired[str | None],
+    "ftmax": typing.NotRequired[str | None],
+    "fpsmax": typing.NotRequired[str | None],
+    "farea": typing.NotRequired[str | None],
+    "fparea": typing.NotRequired[str | None],
+    "fscoef": typing.NotRequired[str | None],
+    "fncoef": typing.NotRequired[str | None],
+    "tscoef": typing.NotRequired[str | None],
+    "tncoef": typing.NotRequired[str | None],
+    "bucket": typing.NotRequired[str | None],
+    "brick": typing.NotRequired[str | None],
+    "nofdr": bool,
+    "sfit": typing.NotRequired[str | None],
+    "snfit": typing.NotRequired[str | None],
+    "jobs": typing.NotRequired[int | None],
+})
+V3dNlfimParametersTagged = typing.TypedDict('V3dNlfimParametersTagged', {
+    "@type": typing.Literal["afni/3dNLfim"],
     "input_file": InputPathType,
     "signal_model": str,
     "noise_model": str,
@@ -55,41 +95,9 @@ V3dNlfimParameters = typing.TypedDict('V3dNlfimParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "afni.3dNLfim": v_3d_nlfim_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "afni.3dNLfim": v_3d_nlfim_outputs,
-    }.get(t)
-
-
 class V3dNlfimOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `v_3d_nlfim(...)`.
+    Output object returned when calling `V3dNlfimParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -161,7 +169,7 @@ def v_3d_nlfim_params(
     sfit: str | None = None,
     snfit: str | None = None,
     jobs: int | None = None,
-) -> V3dNlfimParameters:
+) -> V3dNlfimParametersTagged:
     """
     Build parameters.
     
@@ -227,7 +235,7 @@ def v_3d_nlfim_params(
         Parameter dictionary
     """
     params = {
-        "@type": "afni.3dNLfim",
+        "@type": "afni/3dNLfim",
         "input_file": input_file,
         "signal_model": signal_model,
         "noise_model": noise_model,
@@ -314,167 +322,167 @@ def v_3d_nlfim_cargs(
     cargs.append("3dNLfim")
     cargs.extend([
         "-input",
-        execution.input_file(params.get("input_file"))
+        execution.input_file(params.get("input_file", None))
     ])
     cargs.extend([
         "-signal",
-        params.get("signal_model")
+        params.get("signal_model", None)
     ])
     cargs.extend([
         "-noise",
-        params.get("noise_model")
+        params.get("noise_model", None)
     ])
-    if params.get("mask") is not None:
+    if params.get("mask", None) is not None:
         cargs.extend([
             "-mask",
-            execution.input_file(params.get("mask"))
+            execution.input_file(params.get("mask", None))
         ])
-    if params.get("ignore") is not None:
+    if params.get("ignore", None) is not None:
         cargs.extend([
             "-ignore",
-            str(params.get("ignore"))
+            str(params.get("ignore", None))
         ])
-    if params.get("intr") is not None:
+    if params.get("intr", None) is not None:
         cargs.extend([
             "-inTR",
-            str(params.get("intr"))
+            str(params.get("intr", None))
         ])
-    if params.get("tr") is not None:
+    if params.get("tr", None) is not None:
         cargs.extend([
             "-TR",
-            str(params.get("tr"))
+            str(params.get("tr", None))
         ])
-    if params.get("time_file") is not None:
+    if params.get("time_file", None) is not None:
         cargs.extend([
             "-time",
-            execution.input_file(params.get("time_file"))
+            execution.input_file(params.get("time_file", None))
         ])
-    if params.get("sconstr") is not None:
+    if params.get("sconstr", None) is not None:
         cargs.extend([
             "-sconstr",
-            params.get("sconstr")
+            params.get("sconstr", None)
         ])
-    if params.get("nconstr") is not None:
+    if params.get("nconstr", None) is not None:
         cargs.extend([
             "-nconstr",
-            params.get("nconstr")
+            params.get("nconstr", None)
         ])
-    if params.get("nabs"):
+    if params.get("nabs", False):
         cargs.append("-nabs")
-    if params.get("nrand") is not None:
+    if params.get("nrand", None) is not None:
         cargs.extend([
             "-nrand",
-            str(params.get("nrand"))
+            str(params.get("nrand", None))
         ])
-    if params.get("nbest") is not None:
+    if params.get("nbest", None) is not None:
         cargs.extend([
             "-nbest",
-            str(params.get("nbest"))
+            str(params.get("nbest", None))
         ])
-    if params.get("rmsmin") is not None:
+    if params.get("rmsmin", None) is not None:
         cargs.extend([
             "-rmsmin",
-            str(params.get("rmsmin"))
+            str(params.get("rmsmin", None))
         ])
-    if params.get("fdisp") is not None:
+    if params.get("fdisp", None) is not None:
         cargs.extend([
             "-fdisp",
-            str(params.get("fdisp"))
+            str(params.get("fdisp", None))
         ])
-    if params.get("progress") is not None:
+    if params.get("progress", None) is not None:
         cargs.extend([
             "-progress",
-            str(params.get("progress"))
+            str(params.get("progress", None))
         ])
-    if params.get("voxel_count"):
+    if params.get("voxel_count", False):
         cargs.append("-voxel_count")
-    if params.get("simplex"):
+    if params.get("simplex", False):
         cargs.append("-SIMPLEX")
-    if params.get("powell"):
+    if params.get("powell", False):
         cargs.append("-POWELL")
-    if params.get("both"):
+    if params.get("both", False):
         cargs.append("-BOTH")
-    if params.get("freg") is not None:
+    if params.get("freg", None) is not None:
         cargs.extend([
             "-freg",
-            params.get("freg")
+            params.get("freg", None)
         ])
-    if params.get("frsqr") is not None:
+    if params.get("frsqr", None) is not None:
         cargs.extend([
             "-frsqr",
-            params.get("frsqr")
+            params.get("frsqr", None)
         ])
-    if params.get("fsmax") is not None:
+    if params.get("fsmax", None) is not None:
         cargs.extend([
             "-fsmax",
-            params.get("fsmax")
+            params.get("fsmax", None)
         ])
-    if params.get("ftmax") is not None:
+    if params.get("ftmax", None) is not None:
         cargs.extend([
             "-ftmax",
-            params.get("ftmax")
+            params.get("ftmax", None)
         ])
-    if params.get("fpsmax") is not None:
+    if params.get("fpsmax", None) is not None:
         cargs.extend([
             "-fpsmax",
-            params.get("fpsmax")
+            params.get("fpsmax", None)
         ])
-    if params.get("farea") is not None:
+    if params.get("farea", None) is not None:
         cargs.extend([
             "-farea",
-            params.get("farea")
+            params.get("farea", None)
         ])
-    if params.get("fparea") is not None:
+    if params.get("fparea", None) is not None:
         cargs.extend([
             "-fparea",
-            params.get("fparea")
+            params.get("fparea", None)
         ])
-    if params.get("fscoef") is not None:
+    if params.get("fscoef", None) is not None:
         cargs.extend([
             "-fscoef",
-            params.get("fscoef")
+            params.get("fscoef", None)
         ])
-    if params.get("fncoef") is not None:
+    if params.get("fncoef", None) is not None:
         cargs.extend([
             "-fncoef",
-            params.get("fncoef")
+            params.get("fncoef", None)
         ])
-    if params.get("tscoef") is not None:
+    if params.get("tscoef", None) is not None:
         cargs.extend([
             "-tscoef",
-            params.get("tscoef")
+            params.get("tscoef", None)
         ])
-    if params.get("tncoef") is not None:
+    if params.get("tncoef", None) is not None:
         cargs.extend([
             "-tncoef",
-            params.get("tncoef")
+            params.get("tncoef", None)
         ])
-    if params.get("bucket") is not None:
+    if params.get("bucket", None) is not None:
         cargs.extend([
             "-bucket",
-            params.get("bucket")
+            params.get("bucket", None)
         ])
-    if params.get("brick") is not None:
+    if params.get("brick", None) is not None:
         cargs.extend([
             "-brick",
-            params.get("brick")
+            params.get("brick", None)
         ])
-    if params.get("nofdr"):
+    if params.get("nofdr", False):
         cargs.append("-noFDR")
-    if params.get("sfit") is not None:
+    if params.get("sfit", None) is not None:
         cargs.extend([
             "-sfit",
-            params.get("sfit")
+            params.get("sfit", None)
         ])
-    if params.get("snfit") is not None:
+    if params.get("snfit", None) is not None:
         cargs.extend([
             "-snfit",
-            params.get("snfit")
+            params.get("snfit", None)
         ])
-    if params.get("jobs") is not None:
+    if params.get("jobs", None) is not None:
         cargs.extend([
             "-jobs",
-            str(params.get("jobs"))
+            str(params.get("jobs", None))
         ])
     return cargs
 
@@ -494,20 +502,20 @@ def v_3d_nlfim_outputs(
     """
     ret = V3dNlfimOutputs(
         root=execution.output_file("."),
-        freg_outfile=execution.output_file(params.get("freg") + ".fift") if (params.get("freg") is not None) else None,
-        frsqr_outfile=execution.output_file(params.get("frsqr") + ".fift") if (params.get("frsqr") is not None) else None,
-        fsmax_outfile=execution.output_file(params.get("fsmax") + ".fift") if (params.get("fsmax") is not None) else None,
-        ftmax_outfile=execution.output_file(params.get("ftmax") + ".fift") if (params.get("ftmax") is not None) else None,
-        fpsmax_outfile=execution.output_file(params.get("fpsmax") + ".fift") if (params.get("fpsmax") is not None) else None,
-        farea_outfile=execution.output_file(params.get("farea") + ".fift") if (params.get("farea") is not None) else None,
-        fparea_outfile=execution.output_file(params.get("fparea") + ".fift") if (params.get("fparea") is not None) else None,
-        fscoef_outfile=execution.output_file(params.get("fscoef") + ".fift") if (params.get("fscoef") is not None) else None,
-        fncoef_outfile=execution.output_file(params.get("fncoef") + ".fift") if (params.get("fncoef") is not None) else None,
-        tscoef_outfile=execution.output_file(params.get("tscoef") + ".fitt") if (params.get("tscoef") is not None) else None,
-        tncoef_outfile=execution.output_file(params.get("tncoef") + ".fitt") if (params.get("tncoef") is not None) else None,
-        bucket_outfile=execution.output_file(params.get("bucket") + ".bucket") if (params.get("bucket") is not None) else None,
-        sfit_outfile=execution.output_file(params.get("sfit") + ".sfit") if (params.get("sfit") is not None) else None,
-        snfit_outfile=execution.output_file(params.get("snfit") + ".snfit") if (params.get("snfit") is not None) else None,
+        freg_outfile=execution.output_file(params.get("freg", None) + ".fift") if (params.get("freg") is not None) else None,
+        frsqr_outfile=execution.output_file(params.get("frsqr", None) + ".fift") if (params.get("frsqr") is not None) else None,
+        fsmax_outfile=execution.output_file(params.get("fsmax", None) + ".fift") if (params.get("fsmax") is not None) else None,
+        ftmax_outfile=execution.output_file(params.get("ftmax", None) + ".fift") if (params.get("ftmax") is not None) else None,
+        fpsmax_outfile=execution.output_file(params.get("fpsmax", None) + ".fift") if (params.get("fpsmax") is not None) else None,
+        farea_outfile=execution.output_file(params.get("farea", None) + ".fift") if (params.get("farea") is not None) else None,
+        fparea_outfile=execution.output_file(params.get("fparea", None) + ".fift") if (params.get("fparea") is not None) else None,
+        fscoef_outfile=execution.output_file(params.get("fscoef", None) + ".fift") if (params.get("fscoef") is not None) else None,
+        fncoef_outfile=execution.output_file(params.get("fncoef", None) + ".fift") if (params.get("fncoef") is not None) else None,
+        tscoef_outfile=execution.output_file(params.get("tscoef", None) + ".fitt") if (params.get("tscoef") is not None) else None,
+        tncoef_outfile=execution.output_file(params.get("tncoef", None) + ".fitt") if (params.get("tncoef") is not None) else None,
+        bucket_outfile=execution.output_file(params.get("bucket", None) + ".bucket") if (params.get("bucket") is not None) else None,
+        sfit_outfile=execution.output_file(params.get("sfit", None) + ".sfit") if (params.get("sfit") is not None) else None,
+        snfit_outfile=execution.output_file(params.get("snfit", None) + ".snfit") if (params.get("snfit") is not None) else None,
     )
     return ret
 
@@ -695,7 +703,6 @@ def v_3d_nlfim(
 
 __all__ = [
     "V3dNlfimOutputs",
-    "V3dNlfimParameters",
     "V_3D_NLFIM_METADATA",
     "v_3d_nlfim",
     "v_3d_nlfim_execute",

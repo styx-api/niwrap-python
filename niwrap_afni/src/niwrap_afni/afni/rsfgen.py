@@ -14,7 +14,23 @@ RSFGEN_METADATA = Metadata(
 
 
 RsfgenParameters = typing.TypedDict('RsfgenParameters', {
-    "@type": typing.Literal["afni.RSFgen"],
+    "@type": typing.NotRequired[typing.Literal["afni/RSFgen"]],
+    "length": int,
+    "num_experimental_conditions": int,
+    "block_length": typing.NotRequired[str | None],
+    "random_seed": typing.NotRequired[float | None],
+    "suppress_output_flag": bool,
+    "single_file_flag": bool,
+    "single_column_flag": bool,
+    "output_prefix": typing.NotRequired[str | None],
+    "num_reps": typing.NotRequired[str | None],
+    "permutation_seed": typing.NotRequired[float | None],
+    "markov_file": typing.NotRequired[InputPathType | None],
+    "prob_zero": typing.NotRequired[float | None],
+    "input_table": typing.NotRequired[InputPathType | None],
+})
+RsfgenParametersTagged = typing.TypedDict('RsfgenParametersTagged', {
+    "@type": typing.Literal["afni/RSFgen"],
     "length": int,
     "num_experimental_conditions": int,
     "block_length": typing.NotRequired[str | None],
@@ -31,41 +47,9 @@ RsfgenParameters = typing.TypedDict('RsfgenParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "afni.RSFgen": rsfgen_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "afni.RSFgen": rsfgen_outputs,
-    }.get(t)
-
-
 class RsfgenOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `rsfgen(...)`.
+    Output object returned when calling `RsfgenParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -88,7 +72,7 @@ def rsfgen_params(
     markov_file: InputPathType | None = None,
     prob_zero: float | None = None,
     input_table: InputPathType | None = None,
-) -> RsfgenParameters:
+) -> RsfgenParametersTagged:
     """
     Build parameters.
     
@@ -114,7 +98,7 @@ def rsfgen_params(
         Parameter dictionary
     """
     params = {
-        "@type": "afni.RSFgen",
+        "@type": "afni/RSFgen",
         "length": length,
         "num_experimental_conditions": num_experimental_conditions,
         "suppress_output_flag": suppress_output_flag,
@@ -157,57 +141,57 @@ def rsfgen_cargs(
     cargs.append("RSFgen")
     cargs.extend([
         "-nt",
-        str(params.get("length"))
+        str(params.get("length", None))
     ])
     cargs.extend([
         "-num_stimts",
-        str(params.get("num_experimental_conditions"))
+        str(params.get("num_experimental_conditions", None))
     ])
-    if params.get("block_length") is not None:
+    if params.get("block_length", None) is not None:
         cargs.extend([
             "-nblock",
-            params.get("block_length")
+            params.get("block_length", None)
         ])
-    if params.get("random_seed") is not None:
+    if params.get("random_seed", None) is not None:
         cargs.extend([
             "-seed",
-            str(params.get("random_seed"))
+            str(params.get("random_seed", None))
         ])
-    if params.get("suppress_output_flag"):
+    if params.get("suppress_output_flag", False):
         cargs.append("-quiet")
-    if params.get("single_file_flag"):
+    if params.get("single_file_flag", False):
         cargs.append("-one_file")
-    if params.get("single_column_flag"):
+    if params.get("single_column_flag", False):
         cargs.append("-one_col")
-    if params.get("output_prefix") is not None:
+    if params.get("output_prefix", None) is not None:
         cargs.extend([
             "-prefix",
-            params.get("output_prefix")
+            params.get("output_prefix", None)
         ])
-    if params.get("num_reps") is not None:
+    if params.get("num_reps", None) is not None:
         cargs.extend([
             "-nreps",
-            params.get("num_reps")
+            params.get("num_reps", None)
         ])
-    if params.get("permutation_seed") is not None:
+    if params.get("permutation_seed", None) is not None:
         cargs.extend([
             "-pseed",
-            str(params.get("permutation_seed"))
+            str(params.get("permutation_seed", None))
         ])
-    if params.get("markov_file") is not None:
+    if params.get("markov_file", None) is not None:
         cargs.extend([
             "-markov",
-            execution.input_file(params.get("markov_file"))
+            execution.input_file(params.get("markov_file", None))
         ])
-    if params.get("prob_zero") is not None:
+    if params.get("prob_zero", None) is not None:
         cargs.extend([
             "-pzero",
-            str(params.get("prob_zero"))
+            str(params.get("prob_zero", None))
         ])
-    if params.get("input_table") is not None:
+    if params.get("input_table", None) is not None:
         cargs.extend([
             "-table",
-            execution.input_file(params.get("input_table"))
+            execution.input_file(params.get("input_table", None))
         ])
     return cargs
 
@@ -227,7 +211,7 @@ def rsfgen_outputs(
     """
     ret = RsfgenOutputs(
         root=execution.output_file("."),
-        output_files=execution.output_file(params.get("output_prefix") + "1.1D") if (params.get("output_prefix") is not None) else None,
+        output_files=execution.output_file(params.get("output_prefix", None) + "1.1D") if (params.get("output_prefix") is not None) else None,
     )
     return ret
 
@@ -328,7 +312,6 @@ def rsfgen(
 __all__ = [
     "RSFGEN_METADATA",
     "RsfgenOutputs",
-    "RsfgenParameters",
     "rsfgen",
     "rsfgen_execute",
     "rsfgen_params",

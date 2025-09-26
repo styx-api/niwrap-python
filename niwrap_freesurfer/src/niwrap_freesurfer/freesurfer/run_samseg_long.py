@@ -14,7 +14,32 @@ RUN_SAMSEG_LONG_METADATA = Metadata(
 
 
 RunSamsegLongParameters = typing.TypedDict('RunSamsegLongParameters', {
-    "@type": typing.Literal["freesurfer.run_samseg_long"],
+    "@type": typing.NotRequired[typing.Literal["freesurfer/run_samseg_long"]],
+    "timepoint": list[InputPathType],
+    "output": str,
+    "lesion": bool,
+    "threshold": typing.NotRequired[float | None],
+    "samples": typing.NotRequired[float | None],
+    "burnin": typing.NotRequired[float | None],
+    "lesion_mask_structure": typing.NotRequired[str | None],
+    "lesion_mask_pattern": typing.NotRequired[list[float] | None],
+    "mode": typing.NotRequired[list[str] | None],
+    "atlas": typing.NotRequired[str | None],
+    "deformation_hyperprior": typing.NotRequired[float | None],
+    "gmm_hyperprior": typing.NotRequired[float | None],
+    "save_warp": bool,
+    "save_mesh": bool,
+    "save_posteriors": typing.NotRequired[list[str] | None],
+    "pallidum_separate": bool,
+    "threads": typing.NotRequired[float | None],
+    "tp_to_base_transform": typing.NotRequired[list[InputPathType] | None],
+    "force_different_resolutions": bool,
+    "history": bool,
+    "showfigs": bool,
+    "movie": bool,
+})
+RunSamsegLongParametersTagged = typing.TypedDict('RunSamsegLongParametersTagged', {
+    "@type": typing.Literal["freesurfer/run_samseg_long"],
     "timepoint": list[InputPathType],
     "output": str,
     "lesion": bool,
@@ -40,40 +65,9 @@ RunSamsegLongParameters = typing.TypedDict('RunSamsegLongParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "freesurfer.run_samseg_long": run_samseg_long_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-    }.get(t)
-
-
 class RunSamsegLongOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `run_samseg_long(...)`.
+    Output object returned when calling `RunSamsegLongParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -102,7 +96,7 @@ def run_samseg_long_params(
     history: bool = False,
     showfigs: bool = False,
     movie: bool = False,
-) -> RunSamsegLongParameters:
+) -> RunSamsegLongParametersTagged:
     """
     Build parameters.
     
@@ -141,7 +135,7 @@ def run_samseg_long_params(
         Parameter dictionary
     """
     params = {
-        "@type": "freesurfer.run_samseg_long",
+        "@type": "freesurfer/run_samseg_long",
         "timepoint": timepoint,
         "output": output,
         "lesion": lesion,
@@ -197,87 +191,87 @@ def run_samseg_long_cargs(
     cargs.append("run_samseg_long")
     cargs.extend([
         "-t",
-        *[execution.input_file(f) for f in params.get("timepoint")]
+        *[execution.input_file(f) for f in params.get("timepoint", None)]
     ])
     cargs.extend([
         "-o",
-        params.get("output")
+        params.get("output", None)
     ])
-    if params.get("lesion"):
+    if params.get("lesion", False):
         cargs.append("--lesion")
-    if params.get("threshold") is not None:
+    if params.get("threshold", None) is not None:
         cargs.extend([
             "--threshold",
-            str(params.get("threshold"))
+            str(params.get("threshold", None))
         ])
-    if params.get("samples") is not None:
+    if params.get("samples", None) is not None:
         cargs.extend([
             "--samples",
-            str(params.get("samples"))
+            str(params.get("samples", None))
         ])
-    if params.get("burnin") is not None:
+    if params.get("burnin", None) is not None:
         cargs.extend([
             "--burnin",
-            str(params.get("burnin"))
+            str(params.get("burnin", None))
         ])
-    if params.get("lesion_mask_structure") is not None:
+    if params.get("lesion_mask_structure", None) is not None:
         cargs.extend([
             "--lesion-mask-structure",
-            params.get("lesion_mask_structure")
+            params.get("lesion_mask_structure", None)
         ])
-    if params.get("lesion_mask_pattern") is not None:
+    if params.get("lesion_mask_pattern", None) is not None:
         cargs.extend([
             "--lesion-mask-pattern",
-            *map(str, params.get("lesion_mask_pattern"))
+            *map(str, params.get("lesion_mask_pattern", None))
         ])
-    if params.get("mode") is not None:
+    if params.get("mode", None) is not None:
         cargs.extend([
             "-m",
-            *params.get("mode")
+            *params.get("mode", None)
         ])
-    if params.get("atlas") is not None:
+    if params.get("atlas", None) is not None:
         cargs.extend([
             "-a",
-            params.get("atlas")
+            params.get("atlas", None)
         ])
-    if params.get("deformation_hyperprior") is not None:
+    if params.get("deformation_hyperprior", None) is not None:
         cargs.extend([
             "--deformation-hyperprior",
-            str(params.get("deformation_hyperprior"))
+            str(params.get("deformation_hyperprior", None))
         ])
-    if params.get("gmm_hyperprior") is not None:
+    if params.get("gmm_hyperprior", None) is not None:
         cargs.extend([
             "--gmm-hyperprior",
-            str(params.get("gmm_hyperprior"))
+            str(params.get("gmm_hyperprior", None))
         ])
-    if params.get("save_warp"):
+    if params.get("save_warp", False):
         cargs.append("--save-warp")
-    if params.get("save_mesh"):
+    if params.get("save_mesh", False):
         cargs.append("--save-mesh")
-    if params.get("save_posteriors") is not None:
+    if params.get("save_posteriors", None) is not None:
         cargs.extend([
             "--save-posteriors",
-            *params.get("save_posteriors")
+            *params.get("save_posteriors", None)
         ])
-    if params.get("pallidum_separate"):
+    if params.get("pallidum_separate", False):
         cargs.append("--pallidum-separate")
-    if params.get("threads") is not None:
+    if params.get("threads", None) is not None:
         cargs.extend([
             "--threads",
-            str(params.get("threads"))
+            str(params.get("threads", None))
         ])
-    if params.get("tp_to_base_transform") is not None:
+    if params.get("tp_to_base_transform", None) is not None:
         cargs.extend([
             "--tp-to-base-transform",
-            *[execution.input_file(f) for f in params.get("tp_to_base_transform")]
+            *[execution.input_file(f) for f in params.get("tp_to_base_transform", None)]
         ])
-    if params.get("force_different_resolutions"):
+    if params.get("force_different_resolutions", False):
         cargs.append("--force-different-resolutions")
-    if params.get("history"):
+    if params.get("history", False):
         cargs.append("--history")
-    if params.get("showfigs"):
+    if params.get("showfigs", False):
         cargs.append("--showfigs")
-    if params.get("movie"):
+    if params.get("movie", False):
         cargs.append("--movie")
     return cargs
 
@@ -428,7 +422,6 @@ def run_samseg_long(
 __all__ = [
     "RUN_SAMSEG_LONG_METADATA",
     "RunSamsegLongOutputs",
-    "RunSamsegLongParameters",
     "run_samseg_long",
     "run_samseg_long_execute",
     "run_samseg_long_params",

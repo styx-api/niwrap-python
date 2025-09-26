@@ -14,7 +14,40 @@ PRELUDE_METADATA = Metadata(
 
 
 PreludeParameters = typing.TypedDict('PreludeParameters', {
-    "@type": typing.Literal["fsl.prelude"],
+    "@type": typing.NotRequired[typing.Literal["fsl/prelude"]],
+    "output_unwrap": str,
+    "output_unwrap_alias": InputPathType,
+    "complex_phase": typing.NotRequired[InputPathType | None],
+    "complex_phase_alias": typing.NotRequired[InputPathType | None],
+    "absolute_volume": typing.NotRequired[InputPathType | None],
+    "absolute_volume_alias": typing.NotRequired[InputPathType | None],
+    "phase_volume": typing.NotRequired[InputPathType | None],
+    "phase_volume_alias": typing.NotRequired[InputPathType | None],
+    "num_phase_split": typing.NotRequired[float | None],
+    "label_slices": bool,
+    "slice_processing": bool,
+    "slice_processing_alias": bool,
+    "force_3d": bool,
+    "force_3d_alias": bool,
+    "threshold": typing.NotRequired[float | None],
+    "threshold_alias": typing.NotRequired[float | None],
+    "mask_volume": typing.NotRequired[InputPathType | None],
+    "mask_volume_alias": typing.NotRequired[InputPathType | None],
+    "start_image": typing.NotRequired[float | None],
+    "end_image": typing.NotRequired[float | None],
+    "save_mask": typing.NotRequired[InputPathType | None],
+    "save_raw_phase": typing.NotRequired[InputPathType | None],
+    "save_raw_phase_alias": typing.NotRequired[InputPathType | None],
+    "save_labels": typing.NotRequired[InputPathType | None],
+    "save_labels_alias": typing.NotRequired[InputPathType | None],
+    "remove_ramps": bool,
+    "verbose": bool,
+    "verbose_alias": bool,
+    "help": bool,
+    "help_alias": bool,
+})
+PreludeParametersTagged = typing.TypedDict('PreludeParametersTagged', {
+    "@type": typing.Literal["fsl/prelude"],
     "output_unwrap": str,
     "output_unwrap_alias": InputPathType,
     "complex_phase": typing.NotRequired[InputPathType | None],
@@ -48,41 +81,9 @@ PreludeParameters = typing.TypedDict('PreludeParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "fsl.prelude": prelude_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "fsl.prelude": prelude_outputs,
-    }.get(t)
-
-
 class PreludeOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `prelude(...)`.
+    Output object returned when calling `PreludeParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -127,7 +128,7 @@ def prelude_params(
     verbose_alias: bool = False,
     help_: bool = False,
     help_alias: bool = False,
-) -> PreludeParameters:
+) -> PreludeParametersTagged:
     """
     Build parameters.
     
@@ -166,7 +167,7 @@ def prelude_params(
         Parameter dictionary
     """
     params = {
-        "@type": "fsl.prelude",
+        "@type": "fsl/prelude",
         "output_unwrap": output_unwrap,
         "output_unwrap_alias": output_unwrap_alias,
         "label_slices": label_slices,
@@ -236,121 +237,121 @@ def prelude_cargs(
     cargs.append("prelude")
     cargs.extend([
         "-o",
-        params.get("output_unwrap")
+        params.get("output_unwrap", None)
     ])
     cargs.extend([
         "-u",
-        execution.input_file(params.get("output_unwrap_alias"))
+        execution.input_file(params.get("output_unwrap_alias", None))
     ])
-    if params.get("complex_phase") is not None:
+    if params.get("complex_phase", None) is not None:
         cargs.extend([
             "-c",
-            execution.input_file(params.get("complex_phase"))
+            execution.input_file(params.get("complex_phase", None))
         ])
-    if params.get("complex_phase_alias") is not None:
+    if params.get("complex_phase_alias", None) is not None:
         cargs.extend([
             "--complex",
-            execution.input_file(params.get("complex_phase_alias"))
+            execution.input_file(params.get("complex_phase_alias", None))
         ])
-    if params.get("absolute_volume") is not None:
+    if params.get("absolute_volume", None) is not None:
         cargs.extend([
             "-a",
-            execution.input_file(params.get("absolute_volume"))
+            execution.input_file(params.get("absolute_volume", None))
         ])
-    if params.get("absolute_volume_alias") is not None:
+    if params.get("absolute_volume_alias", None) is not None:
         cargs.extend([
             "--abs",
-            execution.input_file(params.get("absolute_volume_alias"))
+            execution.input_file(params.get("absolute_volume_alias", None))
         ])
-    if params.get("phase_volume") is not None:
+    if params.get("phase_volume", None) is not None:
         cargs.extend([
             "-p",
-            execution.input_file(params.get("phase_volume"))
+            execution.input_file(params.get("phase_volume", None))
         ])
-    if params.get("phase_volume_alias") is not None:
+    if params.get("phase_volume_alias", None) is not None:
         cargs.extend([
             "--phase",
-            execution.input_file(params.get("phase_volume_alias"))
+            execution.input_file(params.get("phase_volume_alias", None))
         ])
-    if params.get("num_phase_split") is not None:
+    if params.get("num_phase_split", None) is not None:
         cargs.extend([
             "-n",
-            str(params.get("num_phase_split"))
+            str(params.get("num_phase_split", None))
         ])
-    if params.get("label_slices"):
+    if params.get("label_slices", False):
         cargs.append("--labelslices")
-    if params.get("slice_processing"):
+    if params.get("slice_processing", False):
         cargs.append("-s")
-    if params.get("slice_processing_alias"):
+    if params.get("slice_processing_alias", False):
         cargs.append("--slices")
-    if params.get("force_3d"):
+    if params.get("force_3d", False):
         cargs.append("-f")
-    if params.get("force_3d_alias"):
+    if params.get("force_3d_alias", False):
         cargs.append("--force3D")
-    if params.get("threshold") is not None:
+    if params.get("threshold", None) is not None:
         cargs.extend([
             "-t",
-            str(params.get("threshold"))
+            str(params.get("threshold", None))
         ])
-    if params.get("threshold_alias") is not None:
+    if params.get("threshold_alias", None) is not None:
         cargs.extend([
             "--thresh",
-            str(params.get("threshold_alias"))
+            str(params.get("threshold_alias", None))
         ])
-    if params.get("mask_volume") is not None:
+    if params.get("mask_volume", None) is not None:
         cargs.extend([
             "-m",
-            execution.input_file(params.get("mask_volume"))
+            execution.input_file(params.get("mask_volume", None))
         ])
-    if params.get("mask_volume_alias") is not None:
+    if params.get("mask_volume_alias", None) is not None:
         cargs.extend([
             "--mask",
-            execution.input_file(params.get("mask_volume_alias"))
+            execution.input_file(params.get("mask_volume_alias", None))
         ])
-    if params.get("start_image") is not None:
+    if params.get("start_image", None) is not None:
         cargs.extend([
             "--start",
-            str(params.get("start_image"))
+            str(params.get("start_image", None))
         ])
-    if params.get("end_image") is not None:
+    if params.get("end_image", None) is not None:
         cargs.extend([
             "--end",
-            str(params.get("end_image"))
+            str(params.get("end_image", None))
         ])
-    if params.get("save_mask") is not None:
+    if params.get("save_mask", None) is not None:
         cargs.extend([
             "--savemask",
-            execution.input_file(params.get("save_mask"))
+            execution.input_file(params.get("save_mask", None))
         ])
-    if params.get("save_raw_phase") is not None:
+    if params.get("save_raw_phase", None) is not None:
         cargs.extend([
             "-r",
-            execution.input_file(params.get("save_raw_phase"))
+            execution.input_file(params.get("save_raw_phase", None))
         ])
-    if params.get("save_raw_phase_alias") is not None:
+    if params.get("save_raw_phase_alias", None) is not None:
         cargs.extend([
             "--rawphase",
-            execution.input_file(params.get("save_raw_phase_alias"))
+            execution.input_file(params.get("save_raw_phase_alias", None))
         ])
-    if params.get("save_labels") is not None:
+    if params.get("save_labels", None) is not None:
         cargs.extend([
             "-l",
-            execution.input_file(params.get("save_labels"))
+            execution.input_file(params.get("save_labels", None))
         ])
-    if params.get("save_labels_alias") is not None:
+    if params.get("save_labels_alias", None) is not None:
         cargs.extend([
             "--labels",
-            execution.input_file(params.get("save_labels_alias"))
+            execution.input_file(params.get("save_labels_alias", None))
         ])
-    if params.get("remove_ramps"):
+    if params.get("remove_ramps", False):
         cargs.append("--removeramps")
-    if params.get("verbose"):
+    if params.get("verbose", False):
         cargs.append("-v")
-    if params.get("verbose_alias"):
+    if params.get("verbose_alias", False):
         cargs.append("--verbose")
-    if params.get("help"):
+    if params.get("help", False):
         cargs.append("-h")
-    if params.get("help_alias"):
+    if params.get("help_alias", False):
         cargs.append("--help")
     return cargs
 
@@ -370,10 +371,10 @@ def prelude_outputs(
     """
     ret = PreludeOutputs(
         root=execution.output_file("."),
-        unwrapped_phase_output=execution.output_file(params.get("output_unwrap") + ".nii.gz"),
-        saved_mask_volume=execution.output_file(pathlib.Path(params.get("save_mask")).name + ".nii.gz") if (params.get("save_mask") is not None) else None,
-        saved_raw_phase_output=execution.output_file(pathlib.Path(params.get("save_raw_phase")).name + ".nii.gz") if (params.get("save_raw_phase") is not None) else None,
-        saved_area_labels_output=execution.output_file(pathlib.Path(params.get("save_labels")).name + ".nii.gz") if (params.get("save_labels") is not None) else None,
+        unwrapped_phase_output=execution.output_file(params.get("output_unwrap", None) + ".nii.gz"),
+        saved_mask_volume=execution.output_file(pathlib.Path(params.get("save_mask", None)).name + ".nii.gz") if (params.get("save_mask") is not None) else None,
+        saved_raw_phase_output=execution.output_file(pathlib.Path(params.get("save_raw_phase", None)).name + ".nii.gz") if (params.get("save_raw_phase") is not None) else None,
+        saved_area_labels_output=execution.output_file(pathlib.Path(params.get("save_labels", None)).name + ".nii.gz") if (params.get("save_labels") is not None) else None,
     )
     return ret
 
@@ -521,7 +522,6 @@ def prelude(
 __all__ = [
     "PRELUDE_METADATA",
     "PreludeOutputs",
-    "PreludeParameters",
     "prelude",
     "prelude_execute",
     "prelude_params",

@@ -14,7 +14,24 @@ MRIS_INTENSITY_PROFILE_METADATA = Metadata(
 
 
 MrisIntensityProfileParameters = typing.TypedDict('MrisIntensityProfileParameters', {
-    "@type": typing.Literal["freesurfer.mris_intensity_profile"],
+    "@type": typing.NotRequired[typing.Literal["freesurfer/mris_intensity_profile"]],
+    "subject_name": str,
+    "hemi": str,
+    "volume": InputPathType,
+    "output_file": str,
+    "write_surf": typing.NotRequired[str | None],
+    "sdir": typing.NotRequired[str | None],
+    "white": typing.NotRequired[str | None],
+    "pial": typing.NotRequired[str | None],
+    "normalize_flag": bool,
+    "mean": typing.NotRequired[str | None],
+    "xform": typing.NotRequired[InputPathType | None],
+    "src": typing.NotRequired[InputPathType | None],
+    "dst": typing.NotRequired[InputPathType | None],
+    "invert_flag": bool,
+})
+MrisIntensityProfileParametersTagged = typing.TypedDict('MrisIntensityProfileParametersTagged', {
+    "@type": typing.Literal["freesurfer/mris_intensity_profile"],
     "subject_name": str,
     "hemi": str,
     "volume": InputPathType,
@@ -32,41 +49,9 @@ MrisIntensityProfileParameters = typing.TypedDict('MrisIntensityProfileParameter
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "freesurfer.mris_intensity_profile": mris_intensity_profile_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "freesurfer.mris_intensity_profile": mris_intensity_profile_outputs,
-    }.get(t)
-
-
 class MrisIntensityProfileOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `mris_intensity_profile(...)`.
+    Output object returned when calling `MrisIntensityProfileParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -91,7 +76,7 @@ def mris_intensity_profile_params(
     src: InputPathType | None = None,
     dst: InputPathType | None = None,
     invert_flag: bool = False,
-) -> MrisIntensityProfileParameters:
+) -> MrisIntensityProfileParametersTagged:
     """
     Build parameters.
     
@@ -117,7 +102,7 @@ def mris_intensity_profile_params(
         Parameter dictionary
     """
     params = {
-        "@type": "freesurfer.mris_intensity_profile",
+        "@type": "freesurfer/mris_intensity_profile",
         "subject_name": subject_name,
         "hemi": hemi,
         "volume": volume,
@@ -159,53 +144,53 @@ def mris_intensity_profile_cargs(
     """
     cargs = []
     cargs.append("mris_intensity_profile")
-    cargs.append(params.get("subject_name"))
-    cargs.append(params.get("hemi"))
-    cargs.append(execution.input_file(params.get("volume")))
-    cargs.append(params.get("output_file"))
-    if params.get("write_surf") is not None:
+    cargs.append(params.get("subject_name", None))
+    cargs.append(params.get("hemi", None))
+    cargs.append(execution.input_file(params.get("volume", None)))
+    cargs.append(params.get("output_file", None))
+    if params.get("write_surf", None) is not None:
         cargs.extend([
             "-write_surf",
-            params.get("write_surf")
+            params.get("write_surf", None)
         ])
-    if params.get("sdir") is not None:
+    if params.get("sdir", None) is not None:
         cargs.extend([
             "-sdir",
-            params.get("sdir")
+            params.get("sdir", None)
         ])
-    if params.get("white") is not None:
+    if params.get("white", None) is not None:
         cargs.extend([
             "-white",
-            params.get("white")
+            params.get("white", None)
         ])
-    if params.get("pial") is not None:
+    if params.get("pial", None) is not None:
         cargs.extend([
             "-pial",
-            params.get("pial")
+            params.get("pial", None)
         ])
-    if params.get("normalize_flag"):
+    if params.get("normalize_flag", False):
         cargs.append("-normalize")
-    if params.get("mean") is not None:
+    if params.get("mean", None) is not None:
         cargs.extend([
             "-mean",
-            params.get("mean")
+            params.get("mean", None)
         ])
-    if params.get("xform") is not None:
+    if params.get("xform", None) is not None:
         cargs.extend([
             "-xform",
-            execution.input_file(params.get("xform"))
+            execution.input_file(params.get("xform", None))
         ])
-    if params.get("src") is not None:
+    if params.get("src", None) is not None:
         cargs.extend([
             "-src",
-            execution.input_file(params.get("src"))
+            execution.input_file(params.get("src", None))
         ])
-    if params.get("dst") is not None:
+    if params.get("dst", None) is not None:
         cargs.extend([
             "-dst",
-            execution.input_file(params.get("dst"))
+            execution.input_file(params.get("dst", None))
         ])
-    if params.get("invert_flag"):
+    if params.get("invert_flag", False):
         cargs.append("-invert")
     return cargs
 
@@ -225,8 +210,8 @@ def mris_intensity_profile_outputs(
     """
     ret = MrisIntensityProfileOutputs(
         root=execution.output_file("."),
-        output_curvature_file=execution.output_file(params.get("output_file")),
-        output_mean_profile_integral=execution.output_file(params.get("mean")) if (params.get("mean") is not None) else None,
+        output_curvature_file=execution.output_file(params.get("output_file", None)),
+        output_mean_profile_integral=execution.output_file(params.get("mean", None)) if (params.get("mean") is not None) else None,
     )
     return ret
 
@@ -331,7 +316,6 @@ def mris_intensity_profile(
 __all__ = [
     "MRIS_INTENSITY_PROFILE_METADATA",
     "MrisIntensityProfileOutputs",
-    "MrisIntensityProfileParameters",
     "mris_intensity_profile",
     "mris_intensity_profile_execute",
     "mris_intensity_profile_params",

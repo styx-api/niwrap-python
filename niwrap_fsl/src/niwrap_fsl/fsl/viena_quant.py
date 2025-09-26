@@ -14,48 +14,22 @@ VIENA_QUANT_METADATA = Metadata(
 
 
 VienaQuantParameters = typing.TypedDict('VienaQuantParameters', {
-    "@type": typing.Literal["fsl.viena_quant"],
+    "@type": typing.NotRequired[typing.Literal["fsl/viena_quant"]],
+    "input1": InputPathType,
+    "input2": InputPathType,
+    "ventricle_mask": InputPathType,
+})
+VienaQuantParametersTagged = typing.TypedDict('VienaQuantParametersTagged', {
+    "@type": typing.Literal["fsl/viena_quant"],
     "input1": InputPathType,
     "input2": InputPathType,
     "ventricle_mask": InputPathType,
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "fsl.viena_quant": viena_quant_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "fsl.viena_quant": viena_quant_outputs,
-    }.get(t)
-
-
 class VienaQuantOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `viena_quant(...)`.
+    Output object returned when calling `VienaQuantParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -67,7 +41,7 @@ def viena_quant_params(
     input1: InputPathType,
     input2: InputPathType,
     ventricle_mask: InputPathType,
-) -> VienaQuantParameters:
+) -> VienaQuantParametersTagged:
     """
     Build parameters.
     
@@ -79,7 +53,7 @@ def viena_quant_params(
         Parameter dictionary
     """
     params = {
-        "@type": "fsl.viena_quant",
+        "@type": "fsl/viena_quant",
         "input1": input1,
         "input2": input2,
         "ventricle_mask": ventricle_mask,
@@ -102,9 +76,9 @@ def viena_quant_cargs(
     """
     cargs = []
     cargs.append("viena_quant")
-    cargs.append(execution.input_file(params.get("input1")))
-    cargs.append(execution.input_file(params.get("input2")))
-    cargs.append(execution.input_file(params.get("ventricle_mask")))
+    cargs.append(execution.input_file(params.get("input1", None)))
+    cargs.append(execution.input_file(params.get("input2", None)))
+    cargs.append(execution.input_file(params.get("ventricle_mask", None)))
     return cargs
 
 
@@ -190,7 +164,6 @@ def viena_quant(
 __all__ = [
     "VIENA_QUANT_METADATA",
     "VienaQuantOutputs",
-    "VienaQuantParameters",
     "viena_quant",
     "viena_quant_execute",
     "viena_quant_params",

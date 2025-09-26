@@ -14,7 +14,19 @@ V_3D_SPAT_NORM_METADATA = Metadata(
 
 
 V3dSpatNormParameters = typing.TypedDict('V3dSpatNormParameters', {
-    "@type": typing.Literal["afni.3dSpatNorm"],
+    "@type": typing.NotRequired[typing.Literal["afni/3dSpatNorm"]],
+    "dataset": InputPathType,
+    "prefix": typing.NotRequired[str | None],
+    "orig_space": bool,
+    "verbose": bool,
+    "monkey": bool,
+    "marmot": bool,
+    "rat": bool,
+    "human": bool,
+    "bottom_cuts": typing.NotRequired[str | None],
+})
+V3dSpatNormParametersTagged = typing.TypedDict('V3dSpatNormParametersTagged', {
+    "@type": typing.Literal["afni/3dSpatNorm"],
     "dataset": InputPathType,
     "prefix": typing.NotRequired[str | None],
     "orig_space": bool,
@@ -27,41 +39,9 @@ V3dSpatNormParameters = typing.TypedDict('V3dSpatNormParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "afni.3dSpatNorm": v_3d_spat_norm_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "afni.3dSpatNorm": v_3d_spat_norm_outputs,
-    }.get(t)
-
-
 class V3dSpatNormOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `v_3d_spat_norm(...)`.
+    Output object returned when calling `V3dSpatNormParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -81,7 +61,7 @@ def v_3d_spat_norm_params(
     rat: bool = False,
     human: bool = False,
     bottom_cuts: str | None = None,
-) -> V3dSpatNormParameters:
+) -> V3dSpatNormParametersTagged:
     """
     Build parameters.
     
@@ -102,7 +82,7 @@ def v_3d_spat_norm_params(
         Parameter dictionary
     """
     params = {
-        "@type": "afni.3dSpatNorm",
+        "@type": "afni/3dSpatNorm",
         "dataset": dataset,
         "orig_space": orig_space,
         "verbose": verbose,
@@ -133,28 +113,28 @@ def v_3d_spat_norm_cargs(
     """
     cargs = []
     cargs.append("3dSpatNorm")
-    cargs.append(execution.input_file(params.get("dataset")))
-    if params.get("prefix") is not None:
+    cargs.append(execution.input_file(params.get("dataset", None)))
+    if params.get("prefix", None) is not None:
         cargs.extend([
             "-prefix",
-            params.get("prefix")
+            params.get("prefix", None)
         ])
-    if params.get("orig_space"):
+    if params.get("orig_space", False):
         cargs.append("-orig_space")
-    if params.get("verbose"):
+    if params.get("verbose", False):
         cargs.append("-verb")
-    if params.get("monkey"):
+    if params.get("monkey", False):
         cargs.append("-monkey")
-    if params.get("marmot"):
+    if params.get("marmot", False):
         cargs.append("-marmost")
-    if params.get("rat"):
+    if params.get("rat", False):
         cargs.append("-rat")
-    if params.get("human"):
+    if params.get("human", False):
         cargs.append("-human")
-    if params.get("bottom_cuts") is not None:
+    if params.get("bottom_cuts", None) is not None:
         cargs.extend([
             "-bottom_cuts",
-            params.get("bottom_cuts")
+            params.get("bottom_cuts", None)
         ])
     return cargs
 
@@ -174,8 +154,8 @@ def v_3d_spat_norm_outputs(
     """
     ret = V3dSpatNormOutputs(
         root=execution.output_file("."),
-        out_head=execution.output_file(params.get("prefix") + "+orig.HEAD") if (params.get("prefix") is not None) else None,
-        out_brik=execution.output_file(params.get("prefix") + "+orig.BRIK") if (params.get("prefix") is not None) else None,
+        out_head=execution.output_file(params.get("prefix", None) + "+orig.HEAD") if (params.get("prefix") is not None) else None,
+        out_brik=execution.output_file(params.get("prefix", None) + "+orig.BRIK") if (params.get("prefix") is not None) else None,
     )
     return ret
 
@@ -262,7 +242,6 @@ def v_3d_spat_norm(
 
 __all__ = [
     "V3dSpatNormOutputs",
-    "V3dSpatNormParameters",
     "V_3D_SPAT_NORM_METADATA",
     "v_3d_spat_norm",
     "v_3d_spat_norm_execute",

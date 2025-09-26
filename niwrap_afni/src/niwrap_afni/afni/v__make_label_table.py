@@ -14,7 +14,45 @@ V__MAKE_LABEL_TABLE_METADATA = Metadata(
 
 
 VMakeLabelTableParameters = typing.TypedDict('VMakeLabelTableParameters', {
-    "@type": typing.Literal["afni.@MakeLabelTable"],
+    "@type": typing.NotRequired[typing.Literal["afni/@MakeLabelTable"]],
+    "labeltable": str,
+    "atlas_pointlist": typing.NotRequired[str | None],
+    "lab_r": typing.NotRequired[list[str] | None],
+    "lab_v": typing.NotRequired[list[str] | None],
+    "lab_file_delim": typing.NotRequired[str | None],
+    "lab_file": typing.NotRequired[list[str] | None],
+    "dset": typing.NotRequired[InputPathType | None],
+    "longnames": typing.NotRequired[float | None],
+    "last_longname_col": typing.NotRequired[float | None],
+    "centers": bool,
+    "centertype": typing.NotRequired[str | None],
+    "centermask": typing.NotRequired[str | None],
+    "skip_novoxels": bool,
+    "all_labels": bool,
+    "all_keys": bool,
+    "lkeys": typing.NotRequired[str | None],
+    "rkeys": typing.NotRequired[str | None],
+    "klabel": typing.NotRequired[str | None],
+    "match_label": typing.NotRequired[str | None],
+    "labeltable_of_dset": typing.NotRequired[InputPathType | None],
+    "word_label_match": bool,
+    "quiet_death": bool,
+    "lt_to_atlas_pl": typing.NotRequired[str | None],
+    "dset_lt_to_atlas_pl": typing.NotRequired[list[InputPathType] | None],
+    "lt_to_csv": typing.NotRequired[InputPathType | None],
+    "atlasize_labeled_dset": typing.NotRequired[InputPathType | None],
+    "atlas_file": typing.NotRequired[str | None],
+    "atlas_name": typing.NotRequired[str | None],
+    "atlas_description": typing.NotRequired[str | None],
+    "replace": bool,
+    "add_atlas_dset": typing.NotRequired[InputPathType | None],
+    "h_web": bool,
+    "h_view": bool,
+    "all_opts": bool,
+    "h_find": typing.NotRequired[str | None],
+})
+VMakeLabelTableParametersTagged = typing.TypedDict('VMakeLabelTableParametersTagged', {
+    "@type": typing.Literal["afni/@MakeLabelTable"],
     "labeltable": str,
     "atlas_pointlist": typing.NotRequired[str | None],
     "lab_r": typing.NotRequired[list[str] | None],
@@ -53,41 +91,9 @@ VMakeLabelTableParameters = typing.TypedDict('VMakeLabelTableParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "afni.@MakeLabelTable": v__make_label_table_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "afni.@MakeLabelTable": v__make_label_table_outputs,
-    }.get(t)
-
-
 class VMakeLabelTableOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `v__make_label_table(...)`.
+    Output object returned when calling `VMakeLabelTableParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -137,7 +143,7 @@ def v__make_label_table_params(
     h_view: bool = False,
     all_opts: bool = False,
     h_find: str | None = None,
-) -> VMakeLabelTableParameters:
+) -> VMakeLabelTableParametersTagged:
     """
     Build parameters.
     
@@ -186,7 +192,7 @@ def v__make_label_table_params(
         Parameter dictionary
     """
     params = {
-        "@type": "afni.@MakeLabelTable",
+        "@type": "afni/@MakeLabelTable",
         "labeltable": labeltable,
         "centers": centers,
         "skip_novoxels": skip_novoxels,
@@ -267,147 +273,147 @@ def v__make_label_table_cargs(
     cargs.append("@MakeLabelTable")
     cargs.extend([
         "-labeltable",
-        params.get("labeltable")
+        params.get("labeltable", None)
     ])
-    if params.get("atlas_pointlist") is not None:
+    if params.get("atlas_pointlist", None) is not None:
         cargs.extend([
             "-atlas_pointlist",
-            params.get("atlas_pointlist")
+            params.get("atlas_pointlist", None)
         ])
-    if params.get("lab_r") is not None:
+    if params.get("lab_r", None) is not None:
         cargs.extend([
             "-lab_r",
-            *params.get("lab_r")
+            *params.get("lab_r", None)
         ])
-    if params.get("lab_v") is not None:
+    if params.get("lab_v", None) is not None:
         cargs.extend([
             "-lab_v",
-            *params.get("lab_v")
+            *params.get("lab_v", None)
         ])
-    if params.get("lab_file_delim") is not None:
+    if params.get("lab_file_delim", None) is not None:
         cargs.extend([
             "-lab_file_delim",
-            params.get("lab_file_delim")
+            params.get("lab_file_delim", None)
         ])
-    if params.get("lab_file") is not None:
+    if params.get("lab_file", None) is not None:
         cargs.extend([
             "-lab_file",
-            *params.get("lab_file")
+            *params.get("lab_file", None)
         ])
-    if params.get("dset") is not None:
+    if params.get("dset", None) is not None:
         cargs.extend([
             "-dset",
-            execution.input_file(params.get("dset"))
+            execution.input_file(params.get("dset", None))
         ])
-    if params.get("longnames") is not None:
+    if params.get("longnames", None) is not None:
         cargs.extend([
             "-longnames",
-            str(params.get("longnames"))
+            str(params.get("longnames", None))
         ])
-    if params.get("last_longname_col") is not None:
+    if params.get("last_longname_col", None) is not None:
         cargs.extend([
             "-last_longname_col",
-            str(params.get("last_longname_col"))
+            str(params.get("last_longname_col", None))
         ])
-    if params.get("centers"):
+    if params.get("centers", False):
         cargs.append("-centers")
-    if params.get("centertype") is not None:
+    if params.get("centertype", None) is not None:
         cargs.extend([
             "-centertype",
-            params.get("centertype")
+            params.get("centertype", None)
         ])
-    if params.get("centermask") is not None:
+    if params.get("centermask", None) is not None:
         cargs.extend([
             "-centermask",
-            params.get("centermask")
+            params.get("centermask", None)
         ])
-    if params.get("skip_novoxels"):
+    if params.get("skip_novoxels", False):
         cargs.append("-skip_novoxels")
-    if params.get("all_labels"):
+    if params.get("all_labels", False):
         cargs.append("-all_labels")
-    if params.get("all_keys"):
+    if params.get("all_keys", False):
         cargs.append("-all_keys")
-    if params.get("lkeys") is not None:
+    if params.get("lkeys", None) is not None:
         cargs.extend([
             "-lkeys",
-            params.get("lkeys")
+            params.get("lkeys", None)
         ])
-    if params.get("rkeys") is not None:
+    if params.get("rkeys", None) is not None:
         cargs.extend([
             "-rkeys",
-            params.get("rkeys")
+            params.get("rkeys", None)
         ])
-    if params.get("klabel") is not None:
+    if params.get("klabel", None) is not None:
         cargs.extend([
             "-klabel",
-            params.get("klabel")
+            params.get("klabel", None)
         ])
-    if params.get("match_label") is not None:
+    if params.get("match_label", None) is not None:
         cargs.extend([
             "-match_label",
-            params.get("match_label")
+            params.get("match_label", None)
         ])
-    if params.get("labeltable_of_dset") is not None:
+    if params.get("labeltable_of_dset", None) is not None:
         cargs.extend([
             "-labeltable_of_dset",
-            execution.input_file(params.get("labeltable_of_dset"))
+            execution.input_file(params.get("labeltable_of_dset", None))
         ])
-    if params.get("word_label_match"):
+    if params.get("word_label_match", False):
         cargs.append("-word_label_match")
-    if params.get("quiet_death"):
+    if params.get("quiet_death", False):
         cargs.append("-quiet_death")
-    if params.get("lt_to_atlas_pl") is not None:
+    if params.get("lt_to_atlas_pl", None) is not None:
         cargs.extend([
             "-LT_to_atlas_PL",
-            params.get("lt_to_atlas_pl")
+            params.get("lt_to_atlas_pl", None)
         ])
-    if params.get("dset_lt_to_atlas_pl") is not None:
+    if params.get("dset_lt_to_atlas_pl", None) is not None:
         cargs.extend([
             "-dset_LT_to_atlas_PL",
-            *[execution.input_file(f) for f in params.get("dset_lt_to_atlas_pl")]
+            *[execution.input_file(f) for f in params.get("dset_lt_to_atlas_pl", None)]
         ])
-    if params.get("lt_to_csv") is not None:
+    if params.get("lt_to_csv", None) is not None:
         cargs.extend([
             "-LT_to_CSV",
-            execution.input_file(params.get("lt_to_csv"))
+            execution.input_file(params.get("lt_to_csv", None))
         ])
-    if params.get("atlasize_labeled_dset") is not None:
+    if params.get("atlasize_labeled_dset", None) is not None:
         cargs.extend([
             "-atlasize_labeled_dset",
-            execution.input_file(params.get("atlasize_labeled_dset"))
+            execution.input_file(params.get("atlasize_labeled_dset", None))
         ])
-    if params.get("atlas_file") is not None:
+    if params.get("atlas_file", None) is not None:
         cargs.extend([
             "-atlas_file",
-            params.get("atlas_file")
+            params.get("atlas_file", None)
         ])
-    if params.get("atlas_name") is not None:
+    if params.get("atlas_name", None) is not None:
         cargs.extend([
             "-atlas_name",
-            params.get("atlas_name")
+            params.get("atlas_name", None)
         ])
-    if params.get("atlas_description") is not None:
+    if params.get("atlas_description", None) is not None:
         cargs.extend([
             "-atlas_description",
-            params.get("atlas_description")
+            params.get("atlas_description", None)
         ])
-    if params.get("replace"):
+    if params.get("replace", False):
         cargs.append("-replace")
-    if params.get("add_atlas_dset") is not None:
+    if params.get("add_atlas_dset", None) is not None:
         cargs.extend([
             "-add_atlas_dset",
-            execution.input_file(params.get("add_atlas_dset"))
+            execution.input_file(params.get("add_atlas_dset", None))
         ])
-    if params.get("h_web"):
+    if params.get("h_web", False):
         cargs.append("-h_web")
-    if params.get("h_view"):
+    if params.get("h_view", False):
         cargs.append("-h_view")
-    if params.get("all_opts"):
+    if params.get("all_opts", False):
         cargs.append("-all_opts")
-    if params.get("h_find") is not None:
+    if params.get("h_find", None) is not None:
         cargs.extend([
             "-h_find",
-            params.get("h_find")
+            params.get("h_find", None)
         ])
     return cargs
 
@@ -427,10 +433,10 @@ def v__make_label_table_outputs(
     """
     ret = VMakeLabelTableOutputs(
         root=execution.output_file("."),
-        output_labeltable=execution.output_file(params.get("labeltable") + ".niml.lt"),
-        output_atlas_pointlist=execution.output_file(params.get("atlas_pointlist") + ".niml.atlas") if (params.get("atlas_pointlist") is not None) else None,
-        output_csv=execution.output_file(pathlib.Path(params.get("lt_to_csv")).name + ".csv") if (params.get("lt_to_csv") is not None) else None,
-        output_niml_atlas=execution.output_file(pathlib.Path(params.get("atlasize_labeled_dset")).name + ".niml") if (params.get("atlasize_labeled_dset") is not None) else None,
+        output_labeltable=execution.output_file(params.get("labeltable", None) + ".niml.lt"),
+        output_atlas_pointlist=execution.output_file(params.get("atlas_pointlist", None) + ".niml.atlas") if (params.get("atlas_pointlist") is not None) else None,
+        output_csv=execution.output_file(pathlib.Path(params.get("lt_to_csv", None)).name + ".csv") if (params.get("lt_to_csv") is not None) else None,
+        output_niml_atlas=execution.output_file(pathlib.Path(params.get("atlasize_labeled_dset", None)).name + ".niml") if (params.get("atlasize_labeled_dset") is not None) else None,
     )
     return ret
 
@@ -597,7 +603,6 @@ def v__make_label_table(
 
 __all__ = [
     "VMakeLabelTableOutputs",
-    "VMakeLabelTableParameters",
     "V__MAKE_LABEL_TABLE_METADATA",
     "v__make_label_table",
     "v__make_label_table_execute",

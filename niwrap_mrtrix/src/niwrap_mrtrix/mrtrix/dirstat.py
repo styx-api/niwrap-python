@@ -14,21 +14,47 @@ DIRSTAT_METADATA = Metadata(
 
 
 DirstatFslgradParameters = typing.TypedDict('DirstatFslgradParameters', {
-    "@type": typing.Literal["mrtrix.dirstat.fslgrad"],
+    "@type": typing.NotRequired[typing.Literal["fslgrad"]],
+    "bvecs": InputPathType,
+    "bvals": InputPathType,
+})
+DirstatFslgradParametersTagged = typing.TypedDict('DirstatFslgradParametersTagged', {
+    "@type": typing.Literal["fslgrad"],
     "bvecs": InputPathType,
     "bvals": InputPathType,
 })
 
 
 DirstatConfigParameters = typing.TypedDict('DirstatConfigParameters', {
-    "@type": typing.Literal["mrtrix.dirstat.config"],
+    "@type": typing.NotRequired[typing.Literal["config"]],
+    "key": str,
+    "value": str,
+})
+DirstatConfigParametersTagged = typing.TypedDict('DirstatConfigParametersTagged', {
+    "@type": typing.Literal["config"],
     "key": str,
     "value": str,
 })
 
 
 DirstatParameters = typing.TypedDict('DirstatParameters', {
-    "@type": typing.Literal["mrtrix.dirstat"],
+    "@type": typing.NotRequired[typing.Literal["mrtrix/dirstat"]],
+    "output": typing.NotRequired[str | None],
+    "shells": typing.NotRequired[list[float] | None],
+    "grad": typing.NotRequired[InputPathType | None],
+    "fslgrad": typing.NotRequired[DirstatFslgradParameters | None],
+    "info": bool,
+    "quiet": bool,
+    "debug": bool,
+    "force": bool,
+    "nthreads": typing.NotRequired[int | None],
+    "config": typing.NotRequired[list[DirstatConfigParameters] | None],
+    "help": bool,
+    "version": bool,
+    "dirs": InputPathType,
+})
+DirstatParametersTagged = typing.TypedDict('DirstatParametersTagged', {
+    "@type": typing.Literal["mrtrix/dirstat"],
     "output": typing.NotRequired[str | None],
     "shells": typing.NotRequired[list[float] | None],
     "grad": typing.NotRequired[InputPathType | None],
@@ -45,43 +71,10 @@ DirstatParameters = typing.TypedDict('DirstatParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "mrtrix.dirstat": dirstat_cargs,
-        "mrtrix.dirstat.fslgrad": dirstat_fslgrad_cargs,
-        "mrtrix.dirstat.config": dirstat_config_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-    }.get(t)
-
-
 def dirstat_fslgrad_params(
     bvecs: InputPathType,
     bvals: InputPathType,
-) -> DirstatFslgradParameters:
+) -> DirstatFslgradParametersTagged:
     """
     Build parameters.
     
@@ -98,7 +91,7 @@ def dirstat_fslgrad_params(
         Parameter dictionary
     """
     params = {
-        "@type": "mrtrix.dirstat.fslgrad",
+        "@type": "fslgrad",
         "bvecs": bvecs,
         "bvals": bvals,
     }
@@ -120,15 +113,15 @@ def dirstat_fslgrad_cargs(
     """
     cargs = []
     cargs.append("-fslgrad")
-    cargs.append(execution.input_file(params.get("bvecs")))
-    cargs.append(execution.input_file(params.get("bvals")))
+    cargs.append(execution.input_file(params.get("bvecs", None)))
+    cargs.append(execution.input_file(params.get("bvals", None)))
     return cargs
 
 
 def dirstat_config_params(
     key: str,
     value: str,
-) -> DirstatConfigParameters:
+) -> DirstatConfigParametersTagged:
     """
     Build parameters.
     
@@ -139,7 +132,7 @@ def dirstat_config_params(
         Parameter dictionary
     """
     params = {
-        "@type": "mrtrix.dirstat.config",
+        "@type": "config",
         "key": key,
         "value": value,
     }
@@ -161,14 +154,14 @@ def dirstat_config_cargs(
     """
     cargs = []
     cargs.append("-config")
-    cargs.append(params.get("key"))
-    cargs.append(params.get("value"))
+    cargs.append(params.get("key", None))
+    cargs.append(params.get("value", None))
     return cargs
 
 
 class DirstatOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `dirstat(...)`.
+    Output object returned when calling `DirstatParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -188,7 +181,7 @@ def dirstat_params(
     config: list[DirstatConfigParameters] | None = None,
     help_: bool = False,
     version: bool = False,
-) -> DirstatParameters:
+) -> DirstatParametersTagged:
     """
     Build parameters.
     
@@ -233,7 +226,7 @@ def dirstat_params(
         Parameter dictionary
     """
     params = {
-        "@type": "mrtrix.dirstat",
+        "@type": "mrtrix/dirstat",
         "info": info,
         "quiet": quiet,
         "debug": debug,
@@ -272,43 +265,43 @@ def dirstat_cargs(
     """
     cargs = []
     cargs.append("dirstat")
-    if params.get("output") is not None:
+    if params.get("output", None) is not None:
         cargs.extend([
             "-output",
-            params.get("output")
+            params.get("output", None)
         ])
-    if params.get("shells") is not None:
+    if params.get("shells", None) is not None:
         cargs.extend([
             "-shells",
-            ",".join(map(str, params.get("shells")))
+            ",".join(map(str, params.get("shells", None)))
         ])
-    if params.get("grad") is not None:
+    if params.get("grad", None) is not None:
         cargs.extend([
             "-grad",
-            execution.input_file(params.get("grad"))
+            execution.input_file(params.get("grad", None))
         ])
-    if params.get("fslgrad") is not None:
-        cargs.extend(dyn_cargs(params.get("fslgrad")["@type"])(params.get("fslgrad"), execution))
-    if params.get("info"):
+    if params.get("fslgrad", None) is not None:
+        cargs.extend(dirstat_fslgrad_cargs(params.get("fslgrad", None), execution))
+    if params.get("info", False):
         cargs.append("-info")
-    if params.get("quiet"):
+    if params.get("quiet", False):
         cargs.append("-quiet")
-    if params.get("debug"):
+    if params.get("debug", False):
         cargs.append("-debug")
-    if params.get("force"):
+    if params.get("force", False):
         cargs.append("-force")
-    if params.get("nthreads") is not None:
+    if params.get("nthreads", None) is not None:
         cargs.extend([
             "-nthreads",
-            str(params.get("nthreads"))
+            str(params.get("nthreads", None))
         ])
-    if params.get("config") is not None:
-        cargs.extend([a for c in [dyn_cargs(s["@type"])(s, execution) for s in params.get("config")] for a in c])
-    if params.get("help"):
+    if params.get("config", None) is not None:
+        cargs.extend([a for c in [dirstat_config_cargs(s, execution) for s in params.get("config", None)] for a in c])
+    if params.get("help", False):
         cargs.append("-help")
-    if params.get("version"):
+    if params.get("version", False):
         cargs.append("-version")
-    cargs.append(execution.input_file(params.get("dirs")))
+    cargs.append(execution.input_file(params.get("dirs", None)))
     return cargs
 
 
@@ -523,10 +516,7 @@ def dirstat(
 
 __all__ = [
     "DIRSTAT_METADATA",
-    "DirstatConfigParameters",
-    "DirstatFslgradParameters",
     "DirstatOutputs",
-    "DirstatParameters",
     "dirstat",
     "dirstat_config_params",
     "dirstat_execute",

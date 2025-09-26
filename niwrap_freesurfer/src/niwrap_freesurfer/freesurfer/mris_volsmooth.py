@@ -14,7 +14,23 @@ MRIS_VOLSMOOTH_METADATA = Metadata(
 
 
 MrisVolsmoothParameters = typing.TypedDict('MrisVolsmoothParameters', {
-    "@type": typing.Literal["freesurfer.mris_volsmooth"],
+    "@type": typing.NotRequired[typing.Literal["freesurfer/mris_volsmooth"]],
+    "input_volume": InputPathType,
+    "output_volume": str,
+    "registration": InputPathType,
+    "projfrac": typing.NotRequired[float | None],
+    "projfrac_avg": typing.NotRequired[str | None],
+    "fill_ribbon": bool,
+    "surf_out": typing.NotRequired[str | None],
+    "fwhm": typing.NotRequired[float | None],
+    "niters": typing.NotRequired[float | None],
+    "vol_fwhm": typing.NotRequired[float | None],
+    "log": typing.NotRequired[str | None],
+    "nocleanup": bool,
+    "debug": bool,
+})
+MrisVolsmoothParametersTagged = typing.TypedDict('MrisVolsmoothParametersTagged', {
+    "@type": typing.Literal["freesurfer/mris_volsmooth"],
     "input_volume": InputPathType,
     "output_volume": str,
     "registration": InputPathType,
@@ -31,41 +47,9 @@ MrisVolsmoothParameters = typing.TypedDict('MrisVolsmoothParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "freesurfer.mris_volsmooth": mris_volsmooth_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "freesurfer.mris_volsmooth": mris_volsmooth_outputs,
-    }.get(t)
-
-
 class MrisVolsmoothOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `mris_volsmooth(...)`.
+    Output object returned when calling `MrisVolsmoothParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -91,7 +75,7 @@ def mris_volsmooth_params(
     log: str | None = None,
     nocleanup: bool = False,
     debug: bool = False,
-) -> MrisVolsmoothParameters:
+) -> MrisVolsmoothParametersTagged:
     """
     Build parameters.
     
@@ -118,7 +102,7 @@ def mris_volsmooth_params(
         Parameter dictionary
     """
     params = {
-        "@type": "freesurfer.mris_volsmooth",
+        "@type": "freesurfer/mris_volsmooth",
         "input_volume": input_volume,
         "output_volume": output_volume,
         "registration": registration,
@@ -160,56 +144,56 @@ def mris_volsmooth_cargs(
     cargs.append("mris_volsmooth")
     cargs.extend([
         "-i",
-        execution.input_file(params.get("input_volume"))
+        execution.input_file(params.get("input_volume", None))
     ])
     cargs.extend([
         "-o",
-        params.get("output_volume")
+        params.get("output_volume", None)
     ])
     cargs.extend([
         "-reg",
-        execution.input_file(params.get("registration"))
+        execution.input_file(params.get("registration", None))
     ])
-    if params.get("projfrac") is not None:
+    if params.get("projfrac", None) is not None:
         cargs.extend([
             "--projfrac",
-            str(params.get("projfrac"))
+            str(params.get("projfrac", None))
         ])
-    if params.get("projfrac_avg") is not None:
+    if params.get("projfrac_avg", None) is not None:
         cargs.extend([
             "--projfrac-avg",
-            params.get("projfrac_avg")
+            params.get("projfrac_avg", None)
         ])
-    if params.get("fill_ribbon"):
+    if params.get("fill_ribbon", False):
         cargs.append("--fill-ribbon")
-    if params.get("surf_out") is not None:
+    if params.get("surf_out", None) is not None:
         cargs.extend([
             "--surf-out",
-            params.get("surf_out")
+            params.get("surf_out", None)
         ])
-    if params.get("fwhm") is not None:
+    if params.get("fwhm", None) is not None:
         cargs.extend([
             "--fwhm",
-            str(params.get("fwhm"))
+            str(params.get("fwhm", None))
         ])
-    if params.get("niters") is not None:
+    if params.get("niters", None) is not None:
         cargs.extend([
             "--niters",
-            str(params.get("niters"))
+            str(params.get("niters", None))
         ])
-    if params.get("vol_fwhm") is not None:
+    if params.get("vol_fwhm", None) is not None:
         cargs.extend([
             "--vol-fwhm",
-            str(params.get("vol_fwhm"))
+            str(params.get("vol_fwhm", None))
         ])
-    if params.get("log") is not None:
+    if params.get("log", None) is not None:
         cargs.extend([
             "--log",
-            params.get("log")
+            params.get("log", None)
         ])
-    if params.get("nocleanup"):
+    if params.get("nocleanup", False):
         cargs.append("--nocleanup")
-    if params.get("debug"):
+    if params.get("debug", False):
         cargs.append("--debug")
     return cargs
 
@@ -229,9 +213,9 @@ def mris_volsmooth_outputs(
     """
     ret = MrisVolsmoothOutputs(
         root=execution.output_file("."),
-        outvol_file=execution.output_file(params.get("output_volume") + ".mgh"),
-        lh_surface_output=execution.output_file(params.get("surf_out") + ".lh.mgh") if (params.get("surf_out") is not None) else None,
-        rh_surface_output=execution.output_file(params.get("surf_out") + ".rh.mgh") if (params.get("surf_out") is not None) else None,
+        outvol_file=execution.output_file(params.get("output_volume", None) + ".mgh"),
+        lh_surface_output=execution.output_file(params.get("surf_out", None) + ".lh.mgh") if (params.get("surf_out") is not None) else None,
+        rh_surface_output=execution.output_file(params.get("surf_out", None) + ".rh.mgh") if (params.get("surf_out") is not None) else None,
     )
     return ret
 
@@ -337,7 +321,6 @@ def mris_volsmooth(
 __all__ = [
     "MRIS_VOLSMOOTH_METADATA",
     "MrisVolsmoothOutputs",
-    "MrisVolsmoothParameters",
     "mris_volsmooth",
     "mris_volsmooth_execute",
     "mris_volsmooth_params",

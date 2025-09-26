@@ -14,7 +14,33 @@ TOPUP_METADATA = Metadata(
 
 
 TopupParameters = typing.TypedDict('TopupParameters', {
-    "@type": typing.Literal["fsl.topup"],
+    "@type": typing.NotRequired[typing.Literal["fsl/topup"]],
+    "imain": InputPathType,
+    "datain": InputPathType,
+    "out": typing.NotRequired[str | None],
+    "fout": typing.NotRequired[str | None],
+    "iout": typing.NotRequired[str | None],
+    "logout": typing.NotRequired[str | None],
+    "warpres": typing.NotRequired[float | None],
+    "subsamp": typing.NotRequired[float | None],
+    "fwhm": typing.NotRequired[float | None],
+    "config": typing.NotRequired[InputPathType | None],
+    "miter": typing.NotRequired[float | None],
+    "lambda": typing.NotRequired[float | None],
+    "ssqlambda": bool,
+    "regmod": typing.NotRequired[typing.Literal["membrane_energy", "bending_energy"] | None],
+    "estmov": bool,
+    "minmet": typing.NotRequired[typing.Literal[0, 1] | None],
+    "splineorder": typing.NotRequired[typing.Literal[2, 3] | None],
+    "numprec": typing.NotRequired[typing.Literal["double", "float"] | None],
+    "interp": typing.NotRequired[typing.Literal["linear", "spline"] | None],
+    "scale": bool,
+    "regrid": bool,
+    "nthr": typing.NotRequired[float | None],
+    "verbose": bool,
+})
+TopupParametersTagged = typing.TypedDict('TopupParametersTagged', {
+    "@type": typing.Literal["fsl/topup"],
     "imain": InputPathType,
     "datain": InputPathType,
     "out": typing.NotRequired[str | None],
@@ -41,41 +67,9 @@ TopupParameters = typing.TypedDict('TopupParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "fsl.topup": topup_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "fsl.topup": topup_outputs,
-    }.get(t)
-
-
 class TopupOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `topup(...)`.
+    Output object returned when calling `TopupParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -115,7 +109,7 @@ def topup_params(
     regrid: bool = False,
     nthr: float | None = None,
     verbose: bool = False,
-) -> TopupParameters:
+) -> TopupParametersTagged:
     """
     Build parameters.
     
@@ -157,7 +151,7 @@ def topup_params(
         Parameter dictionary
     """
     params = {
-        "@type": "fsl.topup",
+        "@type": "fsl/topup",
         "imain": imain,
         "datain": datain,
         "ssqlambda": ssqlambda,
@@ -216,49 +210,49 @@ def topup_cargs(
     """
     cargs = []
     cargs.append("topup")
-    cargs.append("--imain=" + execution.input_file(params.get("imain")))
-    cargs.append("--datain=" + execution.input_file(params.get("datain")))
-    if params.get("out") is not None:
-        cargs.append("--out=" + params.get("out"))
-    if params.get("fout") is not None:
-        cargs.append("--fout=" + params.get("fout"))
-    if params.get("iout") is not None:
-        cargs.append("--iout=" + params.get("iout"))
-    if params.get("logout") is not None:
-        cargs.append("--logout=" + params.get("logout"))
-    if params.get("warpres") is not None:
-        cargs.append("--warpres=" + str(params.get("warpres")))
-    if params.get("subsamp") is not None:
-        cargs.append("--subsamp=" + str(params.get("subsamp")))
-    if params.get("fwhm") is not None:
-        cargs.append("--fwhm=" + str(params.get("fwhm")))
-    if params.get("config") is not None:
-        cargs.append("--config=" + execution.input_file(params.get("config")))
-    if params.get("miter") is not None:
-        cargs.append("--miter=" + str(params.get("miter")))
-    if params.get("lambda") is not None:
-        cargs.append("--lambda=" + str(params.get("lambda")))
-    if params.get("ssqlambda"):
+    cargs.append("--imain=" + execution.input_file(params.get("imain", None)))
+    cargs.append("--datain=" + execution.input_file(params.get("datain", None)))
+    if params.get("out", None) is not None:
+        cargs.append("--out=" + params.get("out", None))
+    if params.get("fout", None) is not None:
+        cargs.append("--fout=" + params.get("fout", None))
+    if params.get("iout", None) is not None:
+        cargs.append("--iout=" + params.get("iout", None))
+    if params.get("logout", None) is not None:
+        cargs.append("--logout=" + params.get("logout", None))
+    if params.get("warpres", None) is not None:
+        cargs.append("--warpres=" + str(params.get("warpres", None)))
+    if params.get("subsamp", None) is not None:
+        cargs.append("--subsamp=" + str(params.get("subsamp", None)))
+    if params.get("fwhm", None) is not None:
+        cargs.append("--fwhm=" + str(params.get("fwhm", None)))
+    if params.get("config", None) is not None:
+        cargs.append("--config=" + execution.input_file(params.get("config", None)))
+    if params.get("miter", None) is not None:
+        cargs.append("--miter=" + str(params.get("miter", None)))
+    if params.get("lambda", None) is not None:
+        cargs.append("--lambda=" + str(params.get("lambda", None)))
+    if params.get("ssqlambda", False):
         cargs.append("--ssqlambda")
-    if params.get("regmod") is not None:
-        cargs.append("--regmod=" + params.get("regmod"))
-    if params.get("estmov"):
+    if params.get("regmod", None) is not None:
+        cargs.append("--regmod=" + params.get("regmod", None))
+    if params.get("estmov", False):
         cargs.append("--estmov")
-    if params.get("minmet") is not None:
-        cargs.append("--minmet=" + str(params.get("minmet")))
-    if params.get("splineorder") is not None:
-        cargs.append("--splineorder=" + str(params.get("splineorder")))
-    if params.get("numprec") is not None:
-        cargs.append("--numprec=" + params.get("numprec"))
-    if params.get("interp") is not None:
-        cargs.append("--interp=" + params.get("interp"))
-    if params.get("scale"):
+    if params.get("minmet", None) is not None:
+        cargs.append("--minmet=" + str(params.get("minmet", None)))
+    if params.get("splineorder", None) is not None:
+        cargs.append("--splineorder=" + str(params.get("splineorder", None)))
+    if params.get("numprec", None) is not None:
+        cargs.append("--numprec=" + params.get("numprec", None))
+    if params.get("interp", None) is not None:
+        cargs.append("--interp=" + params.get("interp", None))
+    if params.get("scale", False):
         cargs.append("--scale")
-    if params.get("regrid"):
+    if params.get("regrid", False):
         cargs.append("--regrid")
-    if params.get("nthr") is not None:
-        cargs.append("--nthr=" + str(params.get("nthr")))
-    if params.get("verbose"):
+    if params.get("nthr", None) is not None:
+        cargs.append("--nthr=" + str(params.get("nthr", None)))
+    if params.get("verbose", False):
         cargs.append("--verbose")
     return cargs
 
@@ -278,11 +272,11 @@ def topup_outputs(
     """
     ret = TopupOutputs(
         root=execution.output_file("."),
-        fieldcoef=execution.output_file(params.get("out") + "_fieldcoef.nii.gz") if (params.get("out") is not None) else None,
-        movpar=execution.output_file(params.get("out") + "_movpar.txt") if (params.get("out") is not None) else None,
-        fout=execution.output_file(params.get("fout")) if (params.get("fout") is not None) else None,
-        iout=execution.output_file(params.get("iout")) if (params.get("iout") is not None) else None,
-        logout=execution.output_file(params.get("logout")) if (params.get("logout") is not None) else None,
+        fieldcoef=execution.output_file(params.get("out", None) + "_fieldcoef.nii.gz") if (params.get("out") is not None) else None,
+        movpar=execution.output_file(params.get("out", None) + "_movpar.txt") if (params.get("out") is not None) else None,
+        fout=execution.output_file(params.get("fout", None)) if (params.get("fout") is not None) else None,
+        iout=execution.output_file(params.get("iout", None)) if (params.get("iout") is not None) else None,
+        logout=execution.output_file(params.get("logout", None)) if (params.get("logout") is not None) else None,
     )
     return ret
 
@@ -421,7 +415,6 @@ def topup(
 __all__ = [
     "TOPUP_METADATA",
     "TopupOutputs",
-    "TopupParameters",
     "topup",
     "topup_execute",
     "topup_params",

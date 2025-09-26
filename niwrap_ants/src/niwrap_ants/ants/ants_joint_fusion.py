@@ -14,7 +14,24 @@ ANTS_JOINT_FUSION_METADATA = Metadata(
 
 
 AntsJointFusionParameters = typing.TypedDict('AntsJointFusionParameters', {
-    "@type": typing.Literal["ants.antsJointFusion"],
+    "@type": typing.NotRequired[typing.Literal["ants/antsJointFusion"]],
+    "image_dimensionality": typing.NotRequired[typing.Literal[2, 3, 4] | None],
+    "target_image": list[InputPathType],
+    "atlas_image": list[InputPathType],
+    "atlas_segmentation": InputPathType,
+    "alpha": typing.NotRequired[float | None],
+    "beta": typing.NotRequired[float | None],
+    "constrain_nonnegative": typing.NotRequired[typing.Literal[0, 1] | None],
+    "patch_radius": typing.NotRequired[str | None],
+    "patch_metric": typing.NotRequired[typing.Literal["PC", "MSQ"] | None],
+    "search_radius": typing.NotRequired[str | None],
+    "exclusion_image": typing.NotRequired[InputPathType | None],
+    "mask_image": typing.NotRequired[InputPathType | None],
+    "output": str,
+    "verbose": typing.NotRequired[typing.Literal[0, 1] | None],
+})
+AntsJointFusionParametersTagged = typing.TypedDict('AntsJointFusionParametersTagged', {
+    "@type": typing.Literal["ants/antsJointFusion"],
     "image_dimensionality": typing.NotRequired[typing.Literal[2, 3, 4] | None],
     "target_image": list[InputPathType],
     "atlas_image": list[InputPathType],
@@ -32,41 +49,9 @@ AntsJointFusionParameters = typing.TypedDict('AntsJointFusionParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "ants.antsJointFusion": ants_joint_fusion_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "ants.antsJointFusion": ants_joint_fusion_outputs,
-    }.get(t)
-
-
 class AntsJointFusionOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `ants_joint_fusion(...)`.
+    Output object returned when calling `AntsJointFusionParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -95,7 +80,7 @@ def ants_joint_fusion_params(
     exclusion_image: InputPathType | None = None,
     mask_image: InputPathType | None = None,
     verbose: typing.Literal[0, 1] | None = None,
-) -> AntsJointFusionParameters:
+) -> AntsJointFusionParametersTagged:
     """
     Build parameters.
     
@@ -133,7 +118,7 @@ def ants_joint_fusion_params(
         Parameter dictionary
     """
     params = {
-        "@type": "ants.antsJointFusion",
+        "@type": "ants/antsJointFusion",
         "target_image": target_image,
         "atlas_image": atlas_image,
         "atlas_segmentation": atlas_segmentation,
@@ -177,71 +162,71 @@ def ants_joint_fusion_cargs(
     """
     cargs = []
     cargs.append("antsJointFusion")
-    if params.get("image_dimensionality") is not None:
+    if params.get("image_dimensionality", None) is not None:
         cargs.extend([
             "--image-dimensionality",
-            str(params.get("image_dimensionality"))
+            str(params.get("image_dimensionality", None))
         ])
     cargs.extend([
         "--target-image",
-        *[execution.input_file(f) for f in params.get("target_image")]
+        *[execution.input_file(f) for f in params.get("target_image", None)]
     ])
     cargs.extend([
         "--atlas-image",
-        *[execution.input_file(f) for f in params.get("atlas_image")]
+        *[execution.input_file(f) for f in params.get("atlas_image", None)]
     ])
     cargs.extend([
         "--atlas-segmentation",
-        execution.input_file(params.get("atlas_segmentation"))
+        execution.input_file(params.get("atlas_segmentation", None))
     ])
-    if params.get("alpha") is not None:
+    if params.get("alpha", None) is not None:
         cargs.extend([
             "--alpha",
-            str(params.get("alpha"))
+            str(params.get("alpha", None))
         ])
-    if params.get("beta") is not None:
+    if params.get("beta", None) is not None:
         cargs.extend([
             "--beta",
-            str(params.get("beta"))
+            str(params.get("beta", None))
         ])
-    if params.get("constrain_nonnegative") is not None:
+    if params.get("constrain_nonnegative", None) is not None:
         cargs.extend([
             "--constrain-nonnegative",
-            str(params.get("constrain_nonnegative"))
+            str(params.get("constrain_nonnegative", None))
         ])
-    if params.get("patch_radius") is not None:
+    if params.get("patch_radius", None) is not None:
         cargs.extend([
             "--patch-radius",
-            params.get("patch_radius")
+            params.get("patch_radius", None)
         ])
-    if params.get("patch_metric") is not None:
+    if params.get("patch_metric", None) is not None:
         cargs.extend([
             "--patch-metric",
-            params.get("patch_metric")
+            params.get("patch_metric", None)
         ])
-    if params.get("search_radius") is not None:
+    if params.get("search_radius", None) is not None:
         cargs.extend([
             "--search-radius",
-            params.get("search_radius")
+            params.get("search_radius", None)
         ])
-    if params.get("exclusion_image") is not None:
+    if params.get("exclusion_image", None) is not None:
         cargs.extend([
             "--exclusion-image",
-            execution.input_file(params.get("exclusion_image"))
+            execution.input_file(params.get("exclusion_image", None))
         ])
-    if params.get("mask_image") is not None:
+    if params.get("mask_image", None) is not None:
         cargs.extend([
             "--mask-image",
-            execution.input_file(params.get("mask_image"))
+            execution.input_file(params.get("mask_image", None))
         ])
     cargs.extend([
         "--output",
-        params.get("output")
+        params.get("output", None)
     ])
-    if params.get("verbose") is not None:
+    if params.get("verbose", None) is not None:
         cargs.extend([
             "--verbose",
-            str(params.get("verbose"))
+            str(params.get("verbose", None))
         ])
     return cargs
 
@@ -385,7 +370,6 @@ def ants_joint_fusion(
 __all__ = [
     "ANTS_JOINT_FUSION_METADATA",
     "AntsJointFusionOutputs",
-    "AntsJointFusionParameters",
     "ants_joint_fusion",
     "ants_joint_fusion_execute",
     "ants_joint_fusion_params",

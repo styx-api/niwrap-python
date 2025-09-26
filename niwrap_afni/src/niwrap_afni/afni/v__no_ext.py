@@ -14,47 +14,20 @@ V__NO_EXT_METADATA = Metadata(
 
 
 VNoExtParameters = typing.TypedDict('VNoExtParameters', {
-    "@type": typing.Literal["afni.@NoExt"],
+    "@type": typing.NotRequired[typing.Literal["afni/@NoExt"]],
+    "inputfile": str,
+    "extensions": typing.NotRequired[list[str] | None],
+})
+VNoExtParametersTagged = typing.TypedDict('VNoExtParametersTagged', {
+    "@type": typing.Literal["afni/@NoExt"],
     "inputfile": str,
     "extensions": typing.NotRequired[list[str] | None],
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "afni.@NoExt": v__no_ext_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "afni.@NoExt": v__no_ext_outputs,
-    }.get(t)
-
-
 class VNoExtOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `v__no_ext(...)`.
+    Output object returned when calling `VNoExtParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -65,7 +38,7 @@ class VNoExtOutputs(typing.NamedTuple):
 def v__no_ext_params(
     inputfile: str,
     extensions: list[str] | None = None,
-) -> VNoExtParameters:
+) -> VNoExtParametersTagged:
     """
     Build parameters.
     
@@ -76,7 +49,7 @@ def v__no_ext_params(
         Parameter dictionary
     """
     params = {
-        "@type": "afni.@NoExt",
+        "@type": "afni/@NoExt",
         "inputfile": inputfile,
     }
     if extensions is not None:
@@ -99,9 +72,9 @@ def v__no_ext_cargs(
     """
     cargs = []
     cargs.append("@NoExt")
-    cargs.append(params.get("inputfile"))
-    if params.get("extensions") is not None:
-        cargs.extend(params.get("extensions"))
+    cargs.append(params.get("inputfile", None))
+    if params.get("extensions", None) is not None:
+        cargs.extend(params.get("extensions", None))
     return cargs
 
 
@@ -183,7 +156,6 @@ def v__no_ext(
 
 __all__ = [
     "VNoExtOutputs",
-    "VNoExtParameters",
     "V__NO_EXT_METADATA",
     "v__no_ext",
     "v__no_ext_execute",

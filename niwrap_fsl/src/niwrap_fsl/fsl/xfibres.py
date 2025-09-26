@@ -14,7 +14,37 @@ XFIBRES_METADATA = Metadata(
 
 
 XfibresParameters = typing.TypedDict('XfibresParameters', {
-    "@type": typing.Literal["fsl.xfibres"],
+    "@type": typing.NotRequired[typing.Literal["fsl/xfibres"]],
+    "datafile": InputPathType,
+    "maskfile": InputPathType,
+    "bvecs": InputPathType,
+    "bvals": InputPathType,
+    "logdir": typing.NotRequired[str | None],
+    "forcedir": bool,
+    "max_fibres": typing.NotRequired[float | None],
+    "model": typing.NotRequired[float | None],
+    "fudge": typing.NotRequired[str | None],
+    "num_jumps": typing.NotRequired[float | None],
+    "num_burnin": typing.NotRequired[float | None],
+    "burnin_noard": typing.NotRequired[float | None],
+    "sampleevery": typing.NotRequired[float | None],
+    "updateproposal": typing.NotRequired[float | None],
+    "seed": typing.NotRequired[str | None],
+    "noard": bool,
+    "allard": bool,
+    "nospat": bool,
+    "nonlinear": bool,
+    "cnonlinear": bool,
+    "rician": bool,
+    "add_f0": bool,
+    "ard_f0": bool,
+    "rmean": typing.NotRequired[float | None],
+    "rstd": typing.NotRequired[float | None],
+    "verbose_flag": bool,
+    "help_flag": bool,
+})
+XfibresParametersTagged = typing.TypedDict('XfibresParametersTagged', {
+    "@type": typing.Literal["fsl/xfibres"],
     "datafile": InputPathType,
     "maskfile": InputPathType,
     "bvecs": InputPathType,
@@ -45,41 +75,9 @@ XfibresParameters = typing.TypedDict('XfibresParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "fsl.xfibres": xfibres_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "fsl.xfibres": xfibres_outputs,
-    }.get(t)
-
-
 class XfibresOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `xfibres(...)`.
+    Output object returned when calling `XfibresParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -115,7 +113,7 @@ def xfibres_params(
     rstd: float | None = None,
     verbose_flag: bool = False,
     help_flag: bool = False,
-) -> XfibresParameters:
+) -> XfibresParametersTagged:
     """
     Build parameters.
     
@@ -156,7 +154,7 @@ def xfibres_params(
         Parameter dictionary
     """
     params = {
-        "@type": "fsl.xfibres",
+        "@type": "fsl/xfibres",
         "datafile": datafile,
         "maskfile": maskfile,
         "bvecs": bvecs,
@@ -217,101 +215,101 @@ def xfibres_cargs(
     cargs.append("xfibres")
     cargs.extend([
         "-k",
-        execution.input_file(params.get("datafile"))
+        execution.input_file(params.get("datafile", None))
     ])
     cargs.extend([
         "-m",
-        execution.input_file(params.get("maskfile"))
+        execution.input_file(params.get("maskfile", None))
     ])
     cargs.extend([
         "-r",
-        execution.input_file(params.get("bvecs"))
+        execution.input_file(params.get("bvecs", None))
     ])
     cargs.extend([
         "-b",
-        execution.input_file(params.get("bvals"))
+        execution.input_file(params.get("bvals", None))
     ])
-    if params.get("logdir") is not None:
+    if params.get("logdir", None) is not None:
         cargs.extend([
             "--ld",
-            params.get("logdir")
+            params.get("logdir", None)
         ])
-    if params.get("forcedir"):
+    if params.get("forcedir", False):
         cargs.append("--forcedir")
-    if params.get("max_fibres") is not None:
+    if params.get("max_fibres", None) is not None:
         cargs.extend([
             "--nf",
-            str(params.get("max_fibres"))
+            str(params.get("max_fibres", None))
         ])
-    if params.get("model") is not None:
+    if params.get("model", None) is not None:
         cargs.extend([
             "--model",
-            str(params.get("model"))
+            str(params.get("model", None))
         ])
-    if params.get("fudge") is not None:
+    if params.get("fudge", None) is not None:
         cargs.extend([
             "--fudge",
-            params.get("fudge")
+            params.get("fudge", None)
         ])
-    if params.get("num_jumps") is not None:
+    if params.get("num_jumps", None) is not None:
         cargs.extend([
             "--nj",
-            str(params.get("num_jumps"))
+            str(params.get("num_jumps", None))
         ])
-    if params.get("num_burnin") is not None:
+    if params.get("num_burnin", None) is not None:
         cargs.extend([
             "--bi",
-            str(params.get("num_burnin"))
+            str(params.get("num_burnin", None))
         ])
-    if params.get("burnin_noard") is not None:
+    if params.get("burnin_noard", None) is not None:
         cargs.extend([
             "--bn",
-            str(params.get("burnin_noard"))
+            str(params.get("burnin_noard", None))
         ])
-    if params.get("sampleevery") is not None:
+    if params.get("sampleevery", None) is not None:
         cargs.extend([
             "--se",
-            str(params.get("sampleevery"))
+            str(params.get("sampleevery", None))
         ])
-    if params.get("updateproposal") is not None:
+    if params.get("updateproposal", None) is not None:
         cargs.extend([
             "--upe",
-            str(params.get("updateproposal"))
+            str(params.get("updateproposal", None))
         ])
-    if params.get("seed") is not None:
+    if params.get("seed", None) is not None:
         cargs.extend([
             "--seed",
-            params.get("seed")
+            params.get("seed", None)
         ])
-    if params.get("noard"):
+    if params.get("noard", False):
         cargs.append("--noard")
-    if params.get("allard"):
+    if params.get("allard", False):
         cargs.append("--allard")
-    if params.get("nospat"):
+    if params.get("nospat", False):
         cargs.append("--nospat")
-    if params.get("nonlinear"):
+    if params.get("nonlinear", False):
         cargs.append("--nonlinear")
-    if params.get("cnonlinear"):
+    if params.get("cnonlinear", False):
         cargs.append("--cnonlinear")
-    if params.get("rician"):
+    if params.get("rician", False):
         cargs.append("--rician")
-    if params.get("add_f0"):
+    if params.get("add_f0", False):
         cargs.append("--f0")
-    if params.get("ard_f0"):
+    if params.get("ard_f0", False):
         cargs.append("--ardf0")
-    if params.get("rmean") is not None:
+    if params.get("rmean", None) is not None:
         cargs.extend([
             "--Rmean",
-            str(params.get("rmean"))
+            str(params.get("rmean", None))
         ])
-    if params.get("rstd") is not None:
+    if params.get("rstd", None) is not None:
         cargs.extend([
             "--Rstd",
-            str(params.get("rstd"))
+            str(params.get("rstd", None))
         ])
-    if params.get("verbose_flag"):
+    if params.get("verbose_flag", False):
         cargs.append("-V")
-    if params.get("help_flag"):
+    if params.get("help_flag", False):
         cargs.append("-h")
     return cargs
 
@@ -475,7 +473,6 @@ def xfibres(
 __all__ = [
     "XFIBRES_METADATA",
     "XfibresOutputs",
-    "XfibresParameters",
     "xfibres",
     "xfibres_execute",
     "xfibres_params",

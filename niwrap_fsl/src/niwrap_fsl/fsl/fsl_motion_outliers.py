@@ -14,7 +14,25 @@ FSL_MOTION_OUTLIERS_METADATA = Metadata(
 
 
 FslMotionOutliersParameters = typing.TypedDict('FslMotionOutliersParameters', {
-    "@type": typing.Literal["fsl.fsl_motion_outliers"],
+    "@type": typing.NotRequired[typing.Literal["fsl/fsl_motion_outliers"]],
+    "input_4d_image": InputPathType,
+    "output_confound_file": str,
+    "mask_image": typing.NotRequired[InputPathType | None],
+    "save_metric_file": typing.NotRequired[str | None],
+    "save_metric_plot": typing.NotRequired[str | None],
+    "temp_path": typing.NotRequired[str | None],
+    "refrms_flag": bool,
+    "dvars_flag": bool,
+    "refmse_flag": bool,
+    "fd_flag": bool,
+    "fdrms_flag": bool,
+    "abs_thresh": typing.NotRequired[float | None],
+    "no_moco_flag": bool,
+    "dummy_scans": typing.NotRequired[float | None],
+    "verbose_flag": bool,
+})
+FslMotionOutliersParametersTagged = typing.TypedDict('FslMotionOutliersParametersTagged', {
+    "@type": typing.Literal["fsl/fsl_motion_outliers"],
     "input_4d_image": InputPathType,
     "output_confound_file": str,
     "mask_image": typing.NotRequired[InputPathType | None],
@@ -33,41 +51,9 @@ FslMotionOutliersParameters = typing.TypedDict('FslMotionOutliersParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "fsl.fsl_motion_outliers": fsl_motion_outliers_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "fsl.fsl_motion_outliers": fsl_motion_outliers_outputs,
-    }.get(t)
-
-
 class FslMotionOutliersOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `fsl_motion_outliers(...)`.
+    Output object returned when calling `FslMotionOutliersParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -95,7 +81,7 @@ def fsl_motion_outliers_params(
     no_moco_flag: bool = False,
     dummy_scans: float | None = None,
     verbose_flag: bool = False,
-) -> FslMotionOutliersParameters:
+) -> FslMotionOutliersParametersTagged:
     """
     Build parameters.
     
@@ -125,7 +111,7 @@ def fsl_motion_outliers_params(
         Parameter dictionary
     """
     params = {
-        "@type": "fsl.fsl_motion_outliers",
+        "@type": "fsl/fsl_motion_outliers",
         "input_4d_image": input_4d_image,
         "output_confound_file": output_confound_file,
         "refrms_flag": refrms_flag,
@@ -168,55 +154,55 @@ def fsl_motion_outliers_cargs(
     cargs.append("fsl_motion_outliers")
     cargs.extend([
         "-i",
-        execution.input_file(params.get("input_4d_image"))
+        execution.input_file(params.get("input_4d_image", None))
     ])
     cargs.extend([
         "-o",
-        params.get("output_confound_file")
+        params.get("output_confound_file", None)
     ])
-    if params.get("mask_image") is not None:
+    if params.get("mask_image", None) is not None:
         cargs.extend([
             "-m",
-            execution.input_file(params.get("mask_image"))
+            execution.input_file(params.get("mask_image", None))
         ])
-    if params.get("save_metric_file") is not None:
+    if params.get("save_metric_file", None) is not None:
         cargs.extend([
             "-s",
-            params.get("save_metric_file")
+            params.get("save_metric_file", None)
         ])
-    if params.get("save_metric_plot") is not None:
+    if params.get("save_metric_plot", None) is not None:
         cargs.extend([
             "-p",
-            params.get("save_metric_plot")
+            params.get("save_metric_plot", None)
         ])
-    if params.get("temp_path") is not None:
+    if params.get("temp_path", None) is not None:
         cargs.extend([
             "-t",
-            params.get("temp_path")
+            params.get("temp_path", None)
         ])
-    if params.get("refrms_flag"):
+    if params.get("refrms_flag", False):
         cargs.append("--refrms")
-    if params.get("dvars_flag"):
+    if params.get("dvars_flag", False):
         cargs.append("--dvars")
-    if params.get("refmse_flag"):
+    if params.get("refmse_flag", False):
         cargs.append("--refmse")
-    if params.get("fd_flag"):
+    if params.get("fd_flag", False):
         cargs.append("--fd")
-    if params.get("fdrms_flag"):
+    if params.get("fdrms_flag", False):
         cargs.append("--fdrms")
-    if params.get("abs_thresh") is not None:
+    if params.get("abs_thresh", None) is not None:
         cargs.extend([
             "--thresh",
-            str(params.get("abs_thresh"))
+            str(params.get("abs_thresh", None))
         ])
-    if params.get("no_moco_flag"):
+    if params.get("no_moco_flag", False):
         cargs.append("--nomoco")
-    if params.get("dummy_scans") is not None:
+    if params.get("dummy_scans", None) is not None:
         cargs.extend([
             "--dummy",
-            str(params.get("dummy_scans"))
+            str(params.get("dummy_scans", None))
         ])
-    if params.get("verbose_flag"):
+    if params.get("verbose_flag", False):
         cargs.append("-v")
     return cargs
 
@@ -236,9 +222,9 @@ def fsl_motion_outliers_outputs(
     """
     ret = FslMotionOutliersOutputs(
         root=execution.output_file("."),
-        output_confound_file=execution.output_file(params.get("output_confound_file")),
-        metric_text_file=execution.output_file(params.get("save_metric_file")) if (params.get("save_metric_file") is not None) else None,
-        metric_plot_file=execution.output_file(params.get("save_metric_plot")) if (params.get("save_metric_plot") is not None) else None,
+        output_confound_file=execution.output_file(params.get("output_confound_file", None)),
+        metric_text_file=execution.output_file(params.get("save_metric_file", None)) if (params.get("save_metric_file") is not None) else None,
+        metric_plot_file=execution.output_file(params.get("save_metric_plot", None)) if (params.get("save_metric_plot") is not None) else None,
     )
     return ret
 
@@ -347,7 +333,6 @@ def fsl_motion_outliers(
 __all__ = [
     "FSL_MOTION_OUTLIERS_METADATA",
     "FslMotionOutliersOutputs",
-    "FslMotionOutliersParameters",
     "fsl_motion_outliers",
     "fsl_motion_outliers_execute",
     "fsl_motion_outliers_params",

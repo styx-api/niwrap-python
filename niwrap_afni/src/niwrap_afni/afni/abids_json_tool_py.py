@@ -14,7 +14,23 @@ ABIDS_JSON_TOOL_PY_METADATA = Metadata(
 
 
 AbidsJsonToolPyParameters = typing.TypedDict('AbidsJsonToolPyParameters', {
-    "@type": typing.Literal["afni.abids_json_tool.py"],
+    "@type": typing.NotRequired[typing.Literal["afni/abids_json_tool.py"]],
+    "input_file": InputPathType,
+    "prefix": str,
+    "txt2json": bool,
+    "json2txt": bool,
+    "add_json": typing.NotRequired[list[str] | None],
+    "del_json": typing.NotRequired[str | None],
+    "force_add": bool,
+    "overwrite": bool,
+    "help": bool,
+    "delimiter_major": typing.NotRequired[str | None],
+    "delimiter_minor": typing.NotRequired[str | None],
+    "literal_keys": bool,
+    "values_stay_str": bool,
+})
+AbidsJsonToolPyParametersTagged = typing.TypedDict('AbidsJsonToolPyParametersTagged', {
+    "@type": typing.Literal["afni/abids_json_tool.py"],
     "input_file": InputPathType,
     "prefix": str,
     "txt2json": bool,
@@ -31,40 +47,9 @@ AbidsJsonToolPyParameters = typing.TypedDict('AbidsJsonToolPyParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "afni.abids_json_tool.py": abids_json_tool_py_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-    }.get(t)
-
-
 class AbidsJsonToolPyOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `abids_json_tool_py(...)`.
+    Output object returned when calling `AbidsJsonToolPyParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -84,7 +69,7 @@ def abids_json_tool_py_params(
     delimiter_minor: str | None = None,
     literal_keys: bool = False,
     values_stay_str: bool = False,
-) -> AbidsJsonToolPyParameters:
+) -> AbidsJsonToolPyParametersTagged:
     """
     Build parameters.
     
@@ -113,7 +98,7 @@ def abids_json_tool_py_params(
         Parameter dictionary
     """
     params = {
-        "@type": "afni.abids_json_tool.py",
+        "@type": "afni/abids_json_tool.py",
         "input_file": input_file,
         "prefix": prefix,
         "txt2json": txt2json,
@@ -152,45 +137,45 @@ def abids_json_tool_py_cargs(
     cargs.append("abids_json_tool.py")
     cargs.extend([
         "-input",
-        execution.input_file(params.get("input_file"))
+        execution.input_file(params.get("input_file", None))
     ])
     cargs.extend([
         "-prefix",
-        params.get("prefix")
+        params.get("prefix", None)
     ])
-    if params.get("txt2json"):
+    if params.get("txt2json", False):
         cargs.append("-txt2json")
-    if params.get("json2txt"):
+    if params.get("json2txt", False):
         cargs.append("-json2txt")
-    if params.get("add_json") is not None:
+    if params.get("add_json", None) is not None:
         cargs.extend([
             "-add_json",
-            *params.get("add_json")
+            *params.get("add_json", None)
         ])
-    if params.get("del_json") is not None:
+    if params.get("del_json", None) is not None:
         cargs.extend([
             "-del_json",
-            params.get("del_json")
+            params.get("del_json", None)
         ])
-    if params.get("force_add"):
+    if params.get("force_add", False):
         cargs.append("-f")
-    if params.get("overwrite"):
+    if params.get("overwrite", False):
         cargs.append("-overwrite")
-    if params.get("help"):
+    if params.get("help", False):
         cargs.append("-help")
-    if params.get("delimiter_major") is not None:
+    if params.get("delimiter_major", None) is not None:
         cargs.extend([
             "-delimiter_major",
-            params.get("delimiter_major")
+            params.get("delimiter_major", None)
         ])
-    if params.get("delimiter_minor") is not None:
+    if params.get("delimiter_minor", None) is not None:
         cargs.extend([
             "-delimiter_minor",
-            params.get("delimiter_minor")
+            params.get("delimiter_minor", None)
         ])
-    if params.get("literal_keys"):
+    if params.get("literal_keys", False):
         cargs.append("-literal_keys")
-    if params.get("values_stay_str"):
+    if params.get("values_stay_str", False):
         cargs.append("-values_stay_str")
     return cargs
 
@@ -313,7 +298,6 @@ def abids_json_tool_py(
 __all__ = [
     "ABIDS_JSON_TOOL_PY_METADATA",
     "AbidsJsonToolPyOutputs",
-    "AbidsJsonToolPyParameters",
     "abids_json_tool_py",
     "abids_json_tool_py_execute",
     "abids_json_tool_py_params",

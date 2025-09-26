@@ -14,7 +14,16 @@ V_3D_ERRTS_CORMAT_METADATA = Metadata(
 
 
 V3dErrtsCormatParameters = typing.TypedDict('V3dErrtsCormatParameters', {
-    "@type": typing.Literal["afni.3dErrtsCormat"],
+    "@type": typing.NotRequired[typing.Literal["afni/3dErrtsCormat"]],
+    "dset": InputPathType,
+    "concat": typing.NotRequired[str | None],
+    "input": typing.NotRequired[InputPathType | None],
+    "mask": typing.NotRequired[InputPathType | None],
+    "maxlag": typing.NotRequired[float | None],
+    "polort": typing.NotRequired[float | None],
+})
+V3dErrtsCormatParametersTagged = typing.TypedDict('V3dErrtsCormatParametersTagged', {
+    "@type": typing.Literal["afni/3dErrtsCormat"],
     "dset": InputPathType,
     "concat": typing.NotRequired[str | None],
     "input": typing.NotRequired[InputPathType | None],
@@ -24,41 +33,9 @@ V3dErrtsCormatParameters = typing.TypedDict('V3dErrtsCormatParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "afni.3dErrtsCormat": v_3d_errts_cormat_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "afni.3dErrtsCormat": v_3d_errts_cormat_outputs,
-    }.get(t)
-
-
 class V3dErrtsCormatOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `v_3d_errts_cormat(...)`.
+    Output object returned when calling `V3dErrtsCormatParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -73,7 +50,7 @@ def v_3d_errts_cormat_params(
     mask: InputPathType | None = None,
     maxlag: float | None = None,
     polort: float | None = None,
-) -> V3dErrtsCormatParameters:
+) -> V3dErrtsCormatParametersTagged:
     """
     Build parameters.
     
@@ -88,7 +65,7 @@ def v_3d_errts_cormat_params(
         Parameter dictionary
     """
     params = {
-        "@type": "afni.3dErrtsCormat",
+        "@type": "afni/3dErrtsCormat",
         "dset": dset,
     }
     if concat is not None:
@@ -119,31 +96,31 @@ def v_3d_errts_cormat_cargs(
     """
     cargs = []
     cargs.append("3dErrtsCormat")
-    cargs.append(execution.input_file(params.get("dset")))
-    if params.get("concat") is not None:
+    cargs.append(execution.input_file(params.get("dset", None)))
+    if params.get("concat", None) is not None:
         cargs.extend([
             "-concat",
-            params.get("concat")
+            params.get("concat", None)
         ])
-    if params.get("input") is not None:
+    if params.get("input", None) is not None:
         cargs.extend([
             "-input",
-            execution.input_file(params.get("input"))
+            execution.input_file(params.get("input", None))
         ])
-    if params.get("mask") is not None:
+    if params.get("mask", None) is not None:
         cargs.extend([
             "-mask",
-            execution.input_file(params.get("mask"))
+            execution.input_file(params.get("mask", None))
         ])
-    if params.get("maxlag") is not None:
+    if params.get("maxlag", None) is not None:
         cargs.extend([
             "-maxlag",
-            str(params.get("maxlag"))
+            str(params.get("maxlag", None))
         ])
-    if params.get("polort") is not None:
+    if params.get("polort", None) is not None:
         cargs.extend([
             "-polort",
-            str(params.get("polort"))
+            str(params.get("polort", None))
         ])
     return cargs
 
@@ -240,7 +217,6 @@ def v_3d_errts_cormat(
 
 __all__ = [
     "V3dErrtsCormatOutputs",
-    "V3dErrtsCormatParameters",
     "V_3D_ERRTS_CORMAT_METADATA",
     "v_3d_errts_cormat",
     "v_3d_errts_cormat_execute",

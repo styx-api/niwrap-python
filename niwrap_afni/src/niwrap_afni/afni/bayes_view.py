@@ -14,47 +14,22 @@ BAYES_VIEW_METADATA = Metadata(
 
 
 BayesViewParameters = typing.TypedDict('BayesViewParameters', {
-    "@type": typing.Literal["afni.bayes_view"],
+    "@type": typing.NotRequired[typing.Literal["afni/bayes_view"]],
+    "input_folder": str,
+    "help": bool,
+    "shiny_folder": typing.NotRequired[str | None],
+})
+BayesViewParametersTagged = typing.TypedDict('BayesViewParametersTagged', {
+    "@type": typing.Literal["afni/bayes_view"],
     "input_folder": str,
     "help": bool,
     "shiny_folder": typing.NotRequired[str | None],
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "afni.bayes_view": bayes_view_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-    }.get(t)
-
-
 class BayesViewOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `bayes_view(...)`.
+    Output object returned when calling `BayesViewParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -64,7 +39,7 @@ def bayes_view_params(
     input_folder: str,
     help_: bool = False,
     shiny_folder: str | None = None,
-) -> BayesViewParameters:
+) -> BayesViewParametersTagged:
     """
     Build parameters.
     
@@ -76,7 +51,7 @@ def bayes_view_params(
         Parameter dictionary
     """
     params = {
-        "@type": "afni.bayes_view",
+        "@type": "afni/bayes_view",
         "input_folder": input_folder,
         "help": help_,
     }
@@ -100,13 +75,13 @@ def bayes_view_cargs(
     """
     cargs = []
     cargs.append("bayes_view")
-    cargs.append(params.get("input_folder"))
-    if params.get("help"):
+    cargs.append(params.get("input_folder", None))
+    if params.get("help", False):
         cargs.append("-help")
-    if params.get("shiny_folder") is not None:
+    if params.get("shiny_folder", None) is not None:
         cargs.extend([
             "-ShinyFolder",
-            params.get("shiny_folder")
+            params.get("shiny_folder", None)
         ])
     return cargs
 
@@ -194,7 +169,6 @@ def bayes_view(
 __all__ = [
     "BAYES_VIEW_METADATA",
     "BayesViewOutputs",
-    "BayesViewParameters",
     "bayes_view",
     "bayes_view_execute",
     "bayes_view_params",

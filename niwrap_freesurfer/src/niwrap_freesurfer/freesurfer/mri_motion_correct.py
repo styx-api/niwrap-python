@@ -14,47 +14,20 @@ MRI_MOTION_CORRECT_METADATA = Metadata(
 
 
 MriMotionCorrectParameters = typing.TypedDict('MriMotionCorrectParameters', {
-    "@type": typing.Literal["freesurfer.mri_motion_correct"],
+    "@type": typing.NotRequired[typing.Literal["freesurfer/mri_motion_correct"]],
+    "outfile": str,
+    "infiles": list[InputPathType],
+})
+MriMotionCorrectParametersTagged = typing.TypedDict('MriMotionCorrectParametersTagged', {
+    "@type": typing.Literal["freesurfer/mri_motion_correct"],
     "outfile": str,
     "infiles": list[InputPathType],
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "freesurfer.mri_motion_correct": mri_motion_correct_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "freesurfer.mri_motion_correct": mri_motion_correct_outputs,
-    }.get(t)
-
-
 class MriMotionCorrectOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `mri_motion_correct(...)`.
+    Output object returned when calling `MriMotionCorrectParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -65,7 +38,7 @@ class MriMotionCorrectOutputs(typing.NamedTuple):
 def mri_motion_correct_params(
     outfile: str,
     infiles: list[InputPathType],
-) -> MriMotionCorrectParameters:
+) -> MriMotionCorrectParametersTagged:
     """
     Build parameters.
     
@@ -76,7 +49,7 @@ def mri_motion_correct_params(
         Parameter dictionary
     """
     params = {
-        "@type": "freesurfer.mri_motion_correct",
+        "@type": "freesurfer/mri_motion_correct",
         "outfile": outfile,
         "infiles": infiles,
     }
@@ -98,8 +71,8 @@ def mri_motion_correct_cargs(
     """
     cargs = []
     cargs.append("mri_motion_correct")
-    cargs.append(params.get("outfile"))
-    cargs.extend([execution.input_file(f) for f in params.get("infiles")])
+    cargs.append(params.get("outfile", None))
+    cargs.extend([execution.input_file(f) for f in params.get("infiles", None)])
     return cargs
 
 
@@ -118,7 +91,7 @@ def mri_motion_correct_outputs(
     """
     ret = MriMotionCorrectOutputs(
         root=execution.output_file("."),
-        corrected_outfile=execution.output_file(params.get("outfile")),
+        corrected_outfile=execution.output_file(params.get("outfile", None)),
     )
     return ret
 
@@ -182,7 +155,6 @@ def mri_motion_correct(
 __all__ = [
     "MRI_MOTION_CORRECT_METADATA",
     "MriMotionCorrectOutputs",
-    "MriMotionCorrectParameters",
     "mri_motion_correct",
     "mri_motion_correct_execute",
     "mri_motion_correct_params",

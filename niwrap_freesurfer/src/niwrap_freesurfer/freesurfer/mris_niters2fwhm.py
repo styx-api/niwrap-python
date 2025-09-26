@@ -14,7 +14,19 @@ MRIS_NITERS2FWHM_METADATA = Metadata(
 
 
 MrisNiters2fwhmParameters = typing.TypedDict('MrisNiters2fwhmParameters', {
-    "@type": typing.Literal["freesurfer.mris_niters2fwhm"],
+    "@type": typing.NotRequired[typing.Literal["freesurfer/mris_niters2fwhm"]],
+    "subject": str,
+    "hemi": str,
+    "surf": str,
+    "dof": float,
+    "niters": float,
+    "debug": bool,
+    "checkopts": bool,
+    "help": bool,
+    "version": bool,
+})
+MrisNiters2fwhmParametersTagged = typing.TypedDict('MrisNiters2fwhmParametersTagged', {
+    "@type": typing.Literal["freesurfer/mris_niters2fwhm"],
     "subject": str,
     "hemi": str,
     "surf": str,
@@ -27,40 +39,9 @@ MrisNiters2fwhmParameters = typing.TypedDict('MrisNiters2fwhmParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "freesurfer.mris_niters2fwhm": mris_niters2fwhm_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-    }.get(t)
-
-
 class MrisNiters2fwhmOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `mris_niters2fwhm(...)`.
+    Output object returned when calling `MrisNiters2fwhmParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -76,7 +57,7 @@ def mris_niters2fwhm_params(
     checkopts: bool = False,
     help_: bool = False,
     version: bool = False,
-) -> MrisNiters2fwhmParameters:
+) -> MrisNiters2fwhmParametersTagged:
     """
     Build parameters.
     
@@ -94,7 +75,7 @@ def mris_niters2fwhm_params(
         Parameter dictionary
     """
     params = {
-        "@type": "freesurfer.mris_niters2fwhm",
+        "@type": "freesurfer/mris_niters2fwhm",
         "subject": subject,
         "hemi": hemi,
         "surf": surf,
@@ -125,31 +106,31 @@ def mris_niters2fwhm_cargs(
     cargs.append("mris_niters2fwhm")
     cargs.extend([
         "--s",
-        params.get("subject")
+        params.get("subject", None)
     ])
     cargs.extend([
         "--h",
-        params.get("hemi")
+        params.get("hemi", None)
     ])
     cargs.extend([
         "--surf",
-        params.get("surf")
+        params.get("surf", None)
     ])
     cargs.extend([
         "--dof",
-        str(params.get("dof"))
+        str(params.get("dof", None))
     ])
     cargs.extend([
         "--niters",
-        str(params.get("niters"))
+        str(params.get("niters", None))
     ])
-    if params.get("debug"):
+    if params.get("debug", False):
         cargs.append("--debug")
-    if params.get("checkopts"):
+    if params.get("checkopts", False):
         cargs.append("--checkopts")
-    if params.get("help"):
+    if params.get("help", False):
         cargs.append("--help")
-    if params.get("version"):
+    if params.get("version", False):
         cargs.append("--version")
     return cargs
 
@@ -255,7 +236,6 @@ def mris_niters2fwhm(
 __all__ = [
     "MRIS_NITERS2FWHM_METADATA",
     "MrisNiters2fwhmOutputs",
-    "MrisNiters2fwhmParameters",
     "mris_niters2fwhm",
     "mris_niters2fwhm_execute",
     "mris_niters2fwhm_params",

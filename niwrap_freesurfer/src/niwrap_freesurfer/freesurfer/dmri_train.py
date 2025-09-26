@@ -14,7 +14,38 @@ DMRI_TRAIN_METADATA = Metadata(
 
 
 DmriTrainParameters = typing.TypedDict('DmriTrainParameters', {
-    "@type": typing.Literal["freesurfer.dmri_train"],
+    "@type": typing.NotRequired[typing.Literal["freesurfer/dmri_train"]],
+    "slist": InputPathType,
+    "trk_files": list[InputPathType],
+    "rois": typing.NotRequired[list[InputPathType] | None],
+    "seg": InputPathType,
+    "cmask": InputPathType,
+    "lmask": list[float],
+    "bmask_training": list[InputPathType],
+    "outtrk": list[InputPathType],
+    "bmask_test": list[InputPathType],
+    "fa": typing.NotRequired[list[InputPathType] | None],
+    "reg": typing.NotRequired[InputPathType | None],
+    "regnl": typing.NotRequired[InputPathType | None],
+    "refnl": typing.NotRequired[InputPathType | None],
+    "basereg": typing.NotRequired[list[InputPathType] | None],
+    "baseref": typing.NotRequired[list[InputPathType] | None],
+    "ncpts": list[float],
+    "max_streamlines": float,
+    "xstr": bool,
+    "aprior": bool,
+    "sprior": bool,
+    "trunc": bool,
+    "out_files": list[str],
+    "outdir": typing.NotRequired[str | None],
+    "cptdir": typing.NotRequired[str | None],
+    "debug": bool,
+    "checkopts": bool,
+    "help": bool,
+    "version": bool,
+})
+DmriTrainParametersTagged = typing.TypedDict('DmriTrainParametersTagged', {
+    "@type": typing.Literal["freesurfer/dmri_train"],
     "slist": InputPathType,
     "trk_files": list[InputPathType],
     "rois": typing.NotRequired[list[InputPathType] | None],
@@ -46,40 +77,9 @@ DmriTrainParameters = typing.TypedDict('DmriTrainParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "freesurfer.dmri_train": dmri_train_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-    }.get(t)
-
-
 class DmriTrainOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `dmri_train(...)`.
+    Output object returned when calling `DmriTrainParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -114,7 +114,7 @@ def dmri_train_params(
     checkopts: bool = False,
     help_: bool = False,
     version: bool = False,
-) -> DmriTrainParameters:
+) -> DmriTrainParametersTagged:
     """
     Build parameters.
     
@@ -152,7 +152,7 @@ def dmri_train_params(
         Parameter dictionary
     """
     params = {
-        "@type": "freesurfer.dmri_train",
+        "@type": "freesurfer/dmri_train",
         "slist": slist,
         "trk_files": trk_files,
         "seg": seg,
@@ -211,108 +211,108 @@ def dmri_train_cargs(
     cargs.append("dmri_train")
     cargs.extend([
         "--slist",
-        execution.input_file(params.get("slist"))
+        execution.input_file(params.get("slist", None))
     ])
     cargs.extend([
         "--trk",
-        *[execution.input_file(f) for f in params.get("trk_files")]
+        *[execution.input_file(f) for f in params.get("trk_files", None)]
     ])
-    if params.get("rois") is not None:
+    if params.get("rois", None) is not None:
         cargs.extend([
             "--rois",
-            *[execution.input_file(f) for f in params.get("rois")]
+            *[execution.input_file(f) for f in params.get("rois", None)]
         ])
     cargs.extend([
         "--seg",
-        execution.input_file(params.get("seg"))
+        execution.input_file(params.get("seg", None))
     ])
     cargs.extend([
         "--cmask",
-        execution.input_file(params.get("cmask"))
+        execution.input_file(params.get("cmask", None))
     ])
     cargs.extend([
         "--lmask",
-        *map(str, params.get("lmask"))
+        *map(str, params.get("lmask", None))
     ])
     cargs.extend([
         "--bmask",
-        *[execution.input_file(f) for f in params.get("bmask_training")]
+        *[execution.input_file(f) for f in params.get("bmask_training", None)]
     ])
     cargs.extend([
         "--outtrk",
-        *[execution.input_file(f) for f in params.get("outtrk")]
+        *[execution.input_file(f) for f in params.get("outtrk", None)]
     ])
     cargs.extend([
         "--bmask",
-        *[execution.input_file(f) for f in params.get("bmask_test")]
+        *[execution.input_file(f) for f in params.get("bmask_test", None)]
     ])
-    if params.get("fa") is not None:
+    if params.get("fa", None) is not None:
         cargs.extend([
             "--fa",
-            *[execution.input_file(f) for f in params.get("fa")]
+            *[execution.input_file(f) for f in params.get("fa", None)]
         ])
-    if params.get("reg") is not None:
+    if params.get("reg", None) is not None:
         cargs.extend([
             "--reg",
-            execution.input_file(params.get("reg"))
+            execution.input_file(params.get("reg", None))
         ])
-    if params.get("regnl") is not None:
+    if params.get("regnl", None) is not None:
         cargs.extend([
             "--regnl",
-            execution.input_file(params.get("regnl"))
+            execution.input_file(params.get("regnl", None))
         ])
-    if params.get("refnl") is not None:
+    if params.get("refnl", None) is not None:
         cargs.extend([
             "--refnl",
-            execution.input_file(params.get("refnl"))
+            execution.input_file(params.get("refnl", None))
         ])
-    if params.get("basereg") is not None:
+    if params.get("basereg", None) is not None:
         cargs.extend([
             "--basereg",
-            *[execution.input_file(f) for f in params.get("basereg")]
+            *[execution.input_file(f) for f in params.get("basereg", None)]
         ])
-    if params.get("baseref") is not None:
+    if params.get("baseref", None) is not None:
         cargs.extend([
             "--baseref",
-            *[execution.input_file(f) for f in params.get("baseref")]
+            *[execution.input_file(f) for f in params.get("baseref", None)]
         ])
     cargs.extend([
         "--ncpts",
-        *map(str, params.get("ncpts"))
+        *map(str, params.get("ncpts", None))
     ])
     cargs.extend([
         "--max",
-        str(params.get("max_streamlines"))
+        str(params.get("max_streamlines", None))
     ])
-    if params.get("xstr"):
+    if params.get("xstr", False):
         cargs.append("--xstr")
-    if params.get("aprior"):
+    if params.get("aprior", False):
         cargs.append("--aprior")
-    if params.get("sprior"):
+    if params.get("sprior", False):
         cargs.append("--sprior")
-    if params.get("trunc"):
+    if params.get("trunc", False):
         cargs.append("--trunc")
     cargs.extend([
         "--out",
-        *params.get("out_files")
+        *params.get("out_files", None)
     ])
-    if params.get("outdir") is not None:
+    if params.get("outdir", None) is not None:
         cargs.extend([
             "--outdir",
-            params.get("outdir")
+            params.get("outdir", None)
         ])
-    if params.get("cptdir") is not None:
+    if params.get("cptdir", None) is not None:
         cargs.extend([
             "--cptdir",
-            params.get("cptdir")
+            params.get("cptdir", None)
         ])
-    if params.get("debug"):
+    if params.get("debug", False):
         cargs.append("--debug")
-    if params.get("checkopts"):
+    if params.get("checkopts", False):
         cargs.append("--checkopts")
-    if params.get("help"):
+    if params.get("help", False):
         cargs.append("--help")
-    if params.get("version"):
+    if params.get("version", False):
         cargs.append("--version")
     return cargs
 
@@ -474,7 +474,6 @@ def dmri_train(
 __all__ = [
     "DMRI_TRAIN_METADATA",
     "DmriTrainOutputs",
-    "DmriTrainParameters",
     "dmri_train",
     "dmri_train_execute",
     "dmri_train_params",

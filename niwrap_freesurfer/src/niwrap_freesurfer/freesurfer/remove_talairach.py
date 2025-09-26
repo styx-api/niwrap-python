@@ -14,47 +14,20 @@ REMOVE_TALAIRACH_METADATA = Metadata(
 
 
 RemoveTalairachParameters = typing.TypedDict('RemoveTalairachParameters', {
-    "@type": typing.Literal["freesurfer.remove_talairach"],
+    "@type": typing.NotRequired[typing.Literal["freesurfer/remove_talairach"]],
+    "input_file": InputPathType,
+    "output_file": str,
+})
+RemoveTalairachParametersTagged = typing.TypedDict('RemoveTalairachParametersTagged', {
+    "@type": typing.Literal["freesurfer/remove_talairach"],
     "input_file": InputPathType,
     "output_file": str,
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "freesurfer.remove_talairach": remove_talairach_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "freesurfer.remove_talairach": remove_talairach_outputs,
-    }.get(t)
-
-
 class RemoveTalairachOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `remove_talairach(...)`.
+    Output object returned when calling `RemoveTalairachParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -65,7 +38,7 @@ class RemoveTalairachOutputs(typing.NamedTuple):
 def remove_talairach_params(
     input_file: InputPathType,
     output_file: str,
-) -> RemoveTalairachParameters:
+) -> RemoveTalairachParametersTagged:
     """
     Build parameters.
     
@@ -78,7 +51,7 @@ def remove_talairach_params(
         Parameter dictionary
     """
     params = {
-        "@type": "freesurfer.remove_talairach",
+        "@type": "freesurfer/remove_talairach",
         "input_file": input_file,
         "output_file": output_file,
     }
@@ -100,8 +73,8 @@ def remove_talairach_cargs(
     """
     cargs = []
     cargs.append("remove_talairach")
-    cargs.append(execution.input_file(params.get("input_file")))
-    cargs.append(params.get("output_file"))
+    cargs.append(execution.input_file(params.get("input_file", None)))
+    cargs.append(params.get("output_file", None))
     return cargs
 
 
@@ -120,7 +93,7 @@ def remove_talairach_outputs(
     """
     ret = RemoveTalairachOutputs(
         root=execution.output_file("."),
-        output_volume=execution.output_file(params.get("output_file")),
+        output_volume=execution.output_file(params.get("output_file", None)),
     )
     return ret
 
@@ -186,7 +159,6 @@ def remove_talairach(
 __all__ = [
     "REMOVE_TALAIRACH_METADATA",
     "RemoveTalairachOutputs",
-    "RemoveTalairachParameters",
     "remove_talairach",
     "remove_talairach_execute",
     "remove_talairach_params",

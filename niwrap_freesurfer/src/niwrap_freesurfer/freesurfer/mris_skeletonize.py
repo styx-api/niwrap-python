@@ -14,7 +14,25 @@ MRIS_SKELETONIZE_METADATA = Metadata(
 
 
 MrisSkeletonizeParameters = typing.TypedDict('MrisSkeletonizeParameters', {
-    "@type": typing.Literal["freesurfer.mris_skeletonize"],
+    "@type": typing.NotRequired[typing.Literal["freesurfer/mris_skeletonize"]],
+    "surface": str,
+    "surfvals": str,
+    "mask": str,
+    "k1": bool,
+    "curv_nonmaxsup": bool,
+    "gyrus": bool,
+    "sulcus": bool,
+    "outdir": typing.NotRequired[str | None],
+    "sphere": typing.NotRequired[str | None],
+    "pointset": typing.NotRequired[str | None],
+    "label": typing.NotRequired[str | None],
+    "nbrsize": typing.NotRequired[float | None],
+    "threshold": typing.NotRequired[float | None],
+    "cluster": typing.NotRequired[float | None],
+    "fwhm": typing.NotRequired[float | None],
+})
+MrisSkeletonizeParametersTagged = typing.TypedDict('MrisSkeletonizeParametersTagged', {
+    "@type": typing.Literal["freesurfer/mris_skeletonize"],
     "surface": str,
     "surfvals": str,
     "mask": str,
@@ -33,41 +51,9 @@ MrisSkeletonizeParameters = typing.TypedDict('MrisSkeletonizeParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "freesurfer.mris_skeletonize": mris_skeletonize_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "freesurfer.mris_skeletonize": mris_skeletonize_outputs,
-    }.get(t)
-
-
 class MrisSkeletonizeOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `mris_skeletonize(...)`.
+    Output object returned when calling `MrisSkeletonizeParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -95,7 +81,7 @@ def mris_skeletonize_params(
     threshold: float | None = None,
     cluster: float | None = None,
     fwhm: float | None = None,
-) -> MrisSkeletonizeParameters:
+) -> MrisSkeletonizeParametersTagged:
     """
     Build parameters.
     
@@ -122,7 +108,7 @@ def mris_skeletonize_params(
         Parameter dictionary
     """
     params = {
-        "@type": "freesurfer.mris_skeletonize",
+        "@type": "freesurfer/mris_skeletonize",
         "surface": surface,
         "surfvals": surfvals,
         "mask": mask,
@@ -167,63 +153,63 @@ def mris_skeletonize_cargs(
     cargs.append("mris_skeletonize")
     cargs.extend([
         "--surf",
-        params.get("surface")
+        params.get("surface", None)
     ])
     cargs.extend([
         "--surfvals",
-        params.get("surfvals")
+        params.get("surfvals", None)
     ])
     cargs.extend([
         "--mask",
-        params.get("mask")
+        params.get("mask", None)
     ])
-    if params.get("k1"):
+    if params.get("k1", False):
         cargs.append("--k1")
-    if params.get("curv_nonmaxsup"):
+    if params.get("curv_nonmaxsup", False):
         cargs.append("--curv-nonmaxsup")
-    if params.get("gyrus"):
+    if params.get("gyrus", False):
         cargs.append("--gyrus")
-    if params.get("sulcus"):
+    if params.get("sulcus", False):
         cargs.append("--sulcus")
-    if params.get("outdir") is not None:
+    if params.get("outdir", None) is not None:
         cargs.extend([
             "--outdir",
-            params.get("outdir")
+            params.get("outdir", None)
         ])
-    if params.get("sphere") is not None:
+    if params.get("sphere", None) is not None:
         cargs.extend([
             "--sphere",
-            params.get("sphere")
+            params.get("sphere", None)
         ])
-    if params.get("pointset") is not None:
+    if params.get("pointset", None) is not None:
         cargs.extend([
             "--ps",
-            params.get("pointset")
+            params.get("pointset", None)
         ])
-    if params.get("label") is not None:
+    if params.get("label", None) is not None:
         cargs.extend([
             "--label",
-            params.get("label")
+            params.get("label", None)
         ])
-    if params.get("nbrsize") is not None:
+    if params.get("nbrsize", None) is not None:
         cargs.extend([
             "--nbrsize",
-            str(params.get("nbrsize"))
+            str(params.get("nbrsize", None))
         ])
-    if params.get("threshold") is not None:
+    if params.get("threshold", None) is not None:
         cargs.extend([
             "--threshold",
-            str(params.get("threshold"))
+            str(params.get("threshold", None))
         ])
-    if params.get("cluster") is not None:
+    if params.get("cluster", None) is not None:
         cargs.extend([
             "--cluster",
-            str(params.get("cluster"))
+            str(params.get("cluster", None))
         ])
-    if params.get("fwhm") is not None:
+    if params.get("fwhm", None) is not None:
         cargs.extend([
             "--fwhm",
-            str(params.get("fwhm"))
+            str(params.get("fwhm", None))
         ])
     return cargs
 
@@ -243,9 +229,9 @@ def mris_skeletonize_outputs(
     """
     ret = MrisSkeletonizeOutputs(
         root=execution.output_file("."),
-        skeleton_output=execution.output_file(params.get("outdir") + "/skeleton.mgz") if (params.get("outdir") is not None) else None,
-        pointset_output=execution.output_file(params.get("outdir") + "/PointSet.json") if (params.get("outdir") is not None) else None,
-        skeleton_label=execution.output_file(params.get("outdir") + "/skeleton_label.mgz") if (params.get("outdir") is not None) else None,
+        skeleton_output=execution.output_file(params.get("outdir", None) + "/skeleton.mgz") if (params.get("outdir") is not None) else None,
+        pointset_output=execution.output_file(params.get("outdir", None) + "/PointSet.json") if (params.get("outdir") is not None) else None,
+        skeleton_label=execution.output_file(params.get("outdir", None) + "/skeleton_label.mgz") if (params.get("outdir") is not None) else None,
     )
     return ret
 
@@ -351,7 +337,6 @@ def mris_skeletonize(
 __all__ = [
     "MRIS_SKELETONIZE_METADATA",
     "MrisSkeletonizeOutputs",
-    "MrisSkeletonizeParameters",
     "mris_skeletonize",
     "mris_skeletonize_execute",
     "mris_skeletonize_params",

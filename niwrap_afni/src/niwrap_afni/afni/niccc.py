@@ -14,7 +14,22 @@ NICCC_METADATA = Metadata(
 
 
 NicccParameters = typing.TypedDict('NicccParameters', {
-    "@type": typing.Literal["afni.niccc"],
+    "@type": typing.NotRequired[typing.Literal["afni/niccc"]],
+    "streamspec": str,
+    "duplicate": bool,
+    "nodata": bool,
+    "attribute": typing.NotRequired[str | None],
+    "match": typing.NotRequired[str | None],
+    "file": bool,
+    "string": bool,
+    "stdout": bool,
+    "hash": bool,
+    "quiet": bool,
+    "find_attr": typing.NotRequired[list[str] | None],
+    "skip_attr": typing.NotRequired[list[str] | None],
+})
+NicccParametersTagged = typing.TypedDict('NicccParametersTagged', {
+    "@type": typing.Literal["afni/niccc"],
     "streamspec": str,
     "duplicate": bool,
     "nodata": bool,
@@ -30,41 +45,9 @@ NicccParameters = typing.TypedDict('NicccParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "afni.niccc": niccc_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "afni.niccc": niccc_outputs,
-    }.get(t)
-
-
 class NicccOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `niccc(...)`.
+    Output object returned when calling `NicccParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -85,7 +68,7 @@ def niccc_params(
     quiet: bool = False,
     find_attr: list[str] | None = None,
     skip_attr: list[str] | None = None,
-) -> NicccParameters:
+) -> NicccParametersTagged:
     """
     Build parameters.
     
@@ -113,7 +96,7 @@ def niccc_params(
         Parameter dictionary
     """
     params = {
-        "@type": "afni.niccc",
+        "@type": "afni/niccc",
         "streamspec": streamspec,
         "duplicate": duplicate,
         "nodata": nodata,
@@ -149,40 +132,40 @@ def niccc_cargs(
     """
     cargs = []
     cargs.append("niccc")
-    cargs.append(params.get("streamspec"))
-    if params.get("duplicate"):
+    cargs.append(params.get("streamspec", None))
+    if params.get("duplicate", False):
         cargs.append("-dup")
-    if params.get("nodata"):
+    if params.get("nodata", False):
         cargs.append("-nodata")
-    if params.get("attribute") is not None:
+    if params.get("attribute", None) is not None:
         cargs.extend([
             "-attribute",
-            params.get("attribute")
+            params.get("attribute", None)
         ])
-    if params.get("match") is not None:
+    if params.get("match", None) is not None:
         cargs.extend([
             "-match",
-            params.get("match")
+            params.get("match", None)
         ])
-    if params.get("file"):
+    if params.get("file", False):
         cargs.append("-f")
-    if params.get("string"):
+    if params.get("string", False):
         cargs.append("-s")
-    if params.get("stdout"):
+    if params.get("stdout", False):
         cargs.append("-stdout")
-    if params.get("hash"):
+    if params.get("hash", False):
         cargs.append("-#")
-    if params.get("quiet"):
+    if params.get("quiet", False):
         cargs.append("-quiet")
-    if params.get("find_attr") is not None:
+    if params.get("find_attr", None) is not None:
         cargs.extend([
             "-find_nel_with_attr",
-            *params.get("find_attr")
+            *params.get("find_attr", None)
         ])
-    if params.get("skip_attr") is not None:
+    if params.get("skip_attr", None) is not None:
         cargs.extend([
             "-skip_nel_with_attr",
-            *params.get("skip_attr")
+            *params.get("skip_attr", None)
         ])
     return cargs
 
@@ -305,7 +288,6 @@ def niccc(
 __all__ = [
     "NICCC_METADATA",
     "NicccOutputs",
-    "NicccParameters",
     "niccc",
     "niccc_execute",
     "niccc_params",

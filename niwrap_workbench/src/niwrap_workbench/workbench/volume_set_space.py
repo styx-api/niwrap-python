@@ -14,7 +14,17 @@ VOLUME_SET_SPACE_METADATA = Metadata(
 
 
 VolumeSetSpacePlumbParameters = typing.TypedDict('VolumeSetSpacePlumbParameters', {
-    "@type": typing.Literal["workbench.volume-set-space.plumb"],
+    "@type": typing.NotRequired[typing.Literal["plumb"]],
+    "axis_order": str,
+    "x_spacing": float,
+    "y_spacing": float,
+    "z_spacing": float,
+    "x_offset": float,
+    "y_offset": float,
+    "z_offset": float,
+})
+VolumeSetSpacePlumbParametersTagged = typing.TypedDict('VolumeSetSpacePlumbParametersTagged', {
+    "@type": typing.Literal["plumb"],
     "axis_order": str,
     "x_spacing": float,
     "y_spacing": float,
@@ -26,7 +36,22 @@ VolumeSetSpacePlumbParameters = typing.TypedDict('VolumeSetSpacePlumbParameters'
 
 
 VolumeSetSpaceSformParameters = typing.TypedDict('VolumeSetSpaceSformParameters', {
-    "@type": typing.Literal["workbench.volume-set-space.sform"],
+    "@type": typing.NotRequired[typing.Literal["sform"]],
+    "xi_spacing": float,
+    "xj_spacing": float,
+    "xk_spacing": float,
+    "x_offset": float,
+    "yi_spacing": float,
+    "yj_spacing": float,
+    "yk_spacing": float,
+    "y_offset": float,
+    "zi_spacing": float,
+    "zj_spacing": float,
+    "zk_spacing": float,
+    "z_offset": float,
+})
+VolumeSetSpaceSformParametersTagged = typing.TypedDict('VolumeSetSpaceSformParametersTagged', {
+    "@type": typing.Literal["sform"],
     "xi_spacing": float,
     "xj_spacing": float,
     "xk_spacing": float,
@@ -43,54 +68,33 @@ VolumeSetSpaceSformParameters = typing.TypedDict('VolumeSetSpaceSformParameters'
 
 
 VolumeSetSpaceFileParameters = typing.TypedDict('VolumeSetSpaceFileParameters', {
-    "@type": typing.Literal["workbench.volume-set-space.file"],
+    "@type": typing.NotRequired[typing.Literal["file"]],
+    "volume_ref": str,
+    "opt_ignore_dims": bool,
+})
+VolumeSetSpaceFileParametersTagged = typing.TypedDict('VolumeSetSpaceFileParametersTagged', {
+    "@type": typing.Literal["file"],
     "volume_ref": str,
     "opt_ignore_dims": bool,
 })
 
 
 VolumeSetSpaceParameters = typing.TypedDict('VolumeSetSpaceParameters', {
-    "@type": typing.Literal["workbench.volume-set-space"],
+    "@type": typing.NotRequired[typing.Literal["workbench/volume-set-space"]],
     "volume_in": InputPathType,
     "volume_out": str,
     "plumb": typing.NotRequired[VolumeSetSpacePlumbParameters | None],
     "sform": typing.NotRequired[VolumeSetSpaceSformParameters | None],
     "file": typing.NotRequired[VolumeSetSpaceFileParameters | None],
 })
-
-
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "workbench.volume-set-space": volume_set_space_cargs,
-        "workbench.volume-set-space.plumb": volume_set_space_plumb_cargs,
-        "workbench.volume-set-space.sform": volume_set_space_sform_cargs,
-        "workbench.volume-set-space.file": volume_set_space_file_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-    }.get(t)
+VolumeSetSpaceParametersTagged = typing.TypedDict('VolumeSetSpaceParametersTagged', {
+    "@type": typing.Literal["workbench/volume-set-space"],
+    "volume_in": InputPathType,
+    "volume_out": str,
+    "plumb": typing.NotRequired[VolumeSetSpacePlumbParameters | None],
+    "sform": typing.NotRequired[VolumeSetSpaceSformParameters | None],
+    "file": typing.NotRequired[VolumeSetSpaceFileParameters | None],
+})
 
 
 def volume_set_space_plumb_params(
@@ -101,7 +105,7 @@ def volume_set_space_plumb_params(
     x_offset: float,
     y_offset: float,
     z_offset: float,
-) -> VolumeSetSpacePlumbParameters:
+) -> VolumeSetSpacePlumbParametersTagged:
     """
     Build parameters.
     
@@ -118,7 +122,7 @@ def volume_set_space_plumb_params(
         Parameter dictionary
     """
     params = {
-        "@type": "workbench.volume-set-space.plumb",
+        "@type": "plumb",
         "axis_order": axis_order,
         "x_spacing": x_spacing,
         "y_spacing": y_spacing,
@@ -145,13 +149,13 @@ def volume_set_space_plumb_cargs(
     """
     cargs = []
     cargs.append("-plumb")
-    cargs.append(params.get("axis_order"))
-    cargs.append(str(params.get("x_spacing")))
-    cargs.append(str(params.get("y_spacing")))
-    cargs.append(str(params.get("z_spacing")))
-    cargs.append(str(params.get("x_offset")))
-    cargs.append(str(params.get("y_offset")))
-    cargs.append(str(params.get("z_offset")))
+    cargs.append(params.get("axis_order", None))
+    cargs.append(str(params.get("x_spacing", None)))
+    cargs.append(str(params.get("y_spacing", None)))
+    cargs.append(str(params.get("z_spacing", None)))
+    cargs.append(str(params.get("x_offset", None)))
+    cargs.append(str(params.get("y_offset", None)))
+    cargs.append(str(params.get("z_offset", None)))
     return cargs
 
 
@@ -168,7 +172,7 @@ def volume_set_space_sform_params(
     zj_spacing: float,
     zk_spacing: float,
     z_offset: float,
-) -> VolumeSetSpaceSformParameters:
+) -> VolumeSetSpaceSformParametersTagged:
     """
     Build parameters.
     
@@ -189,7 +193,7 @@ def volume_set_space_sform_params(
         Parameter dictionary
     """
     params = {
-        "@type": "workbench.volume-set-space.sform",
+        "@type": "sform",
         "xi_spacing": xi_spacing,
         "xj_spacing": xj_spacing,
         "xk_spacing": xk_spacing,
@@ -221,25 +225,25 @@ def volume_set_space_sform_cargs(
     """
     cargs = []
     cargs.append("-sform")
-    cargs.append(str(params.get("xi_spacing")))
-    cargs.append(str(params.get("xj_spacing")))
-    cargs.append(str(params.get("xk_spacing")))
-    cargs.append(str(params.get("x_offset")))
-    cargs.append(str(params.get("yi_spacing")))
-    cargs.append(str(params.get("yj_spacing")))
-    cargs.append(str(params.get("yk_spacing")))
-    cargs.append(str(params.get("y_offset")))
-    cargs.append(str(params.get("zi_spacing")))
-    cargs.append(str(params.get("zj_spacing")))
-    cargs.append(str(params.get("zk_spacing")))
-    cargs.append(str(params.get("z_offset")))
+    cargs.append(str(params.get("xi_spacing", None)))
+    cargs.append(str(params.get("xj_spacing", None)))
+    cargs.append(str(params.get("xk_spacing", None)))
+    cargs.append(str(params.get("x_offset", None)))
+    cargs.append(str(params.get("yi_spacing", None)))
+    cargs.append(str(params.get("yj_spacing", None)))
+    cargs.append(str(params.get("yk_spacing", None)))
+    cargs.append(str(params.get("y_offset", None)))
+    cargs.append(str(params.get("zi_spacing", None)))
+    cargs.append(str(params.get("zj_spacing", None)))
+    cargs.append(str(params.get("zk_spacing", None)))
+    cargs.append(str(params.get("z_offset", None)))
     return cargs
 
 
 def volume_set_space_file_params(
     volume_ref: str,
     opt_ignore_dims: bool = False,
-) -> VolumeSetSpaceFileParameters:
+) -> VolumeSetSpaceFileParametersTagged:
     """
     Build parameters.
     
@@ -251,7 +255,7 @@ def volume_set_space_file_params(
         Parameter dictionary
     """
     params = {
-        "@type": "workbench.volume-set-space.file",
+        "@type": "file",
         "volume_ref": volume_ref,
         "opt_ignore_dims": opt_ignore_dims,
     }
@@ -273,15 +277,15 @@ def volume_set_space_file_cargs(
     """
     cargs = []
     cargs.append("-file")
-    cargs.append(params.get("volume_ref"))
-    if params.get("opt_ignore_dims"):
+    cargs.append(params.get("volume_ref", None))
+    if params.get("opt_ignore_dims", False):
         cargs.append("-ignore-dims")
     return cargs
 
 
 class VolumeSetSpaceOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `volume_set_space(...)`.
+    Output object returned when calling `VolumeSetSpaceParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -293,7 +297,7 @@ def volume_set_space_params(
     plumb: VolumeSetSpacePlumbParameters | None = None,
     sform: VolumeSetSpaceSformParameters | None = None,
     file: VolumeSetSpaceFileParameters | None = None,
-) -> VolumeSetSpaceParameters:
+) -> VolumeSetSpaceParametersTagged:
     """
     Build parameters.
     
@@ -307,7 +311,7 @@ def volume_set_space_params(
         Parameter dictionary
     """
     params = {
-        "@type": "workbench.volume-set-space",
+        "@type": "workbench/volume-set-space",
         "volume_in": volume_in,
         "volume_out": volume_out,
     }
@@ -336,14 +340,14 @@ def volume_set_space_cargs(
     cargs = []
     cargs.append("wb_command")
     cargs.append("-volume-set-space")
-    cargs.append(execution.input_file(params.get("volume_in")))
-    cargs.append(params.get("volume_out"))
-    if params.get("plumb") is not None:
-        cargs.extend(dyn_cargs(params.get("plumb")["@type"])(params.get("plumb"), execution))
-    if params.get("sform") is not None:
-        cargs.extend(dyn_cargs(params.get("sform")["@type"])(params.get("sform"), execution))
-    if params.get("file") is not None:
-        cargs.extend(dyn_cargs(params.get("file")["@type"])(params.get("file"), execution))
+    cargs.append(execution.input_file(params.get("volume_in", None)))
+    cargs.append(params.get("volume_out", None))
+    if params.get("plumb", None) is not None:
+        cargs.extend(volume_set_space_plumb_cargs(params.get("plumb", None), execution))
+    if params.get("sform", None) is not None:
+        cargs.extend(volume_set_space_sform_cargs(params.get("sform", None), execution))
+    if params.get("file", None) is not None:
+        cargs.extend(volume_set_space_file_cargs(params.get("file", None), execution))
     return cargs
 
 
@@ -443,11 +447,7 @@ def volume_set_space(
 
 __all__ = [
     "VOLUME_SET_SPACE_METADATA",
-    "VolumeSetSpaceFileParameters",
     "VolumeSetSpaceOutputs",
-    "VolumeSetSpaceParameters",
-    "VolumeSetSpacePlumbParameters",
-    "VolumeSetSpaceSformParameters",
     "volume_set_space",
     "volume_set_space_execute",
     "volume_set_space_file_params",

@@ -14,46 +14,20 @@ IMMV_METADATA = Metadata(
 
 
 ImmvParameters = typing.TypedDict('ImmvParameters', {
-    "@type": typing.Literal["fsl.immv"],
+    "@type": typing.NotRequired[typing.Literal["fsl/immv"]],
+    "source_files": list[InputPathType],
+    "destination": str,
+})
+ImmvParametersTagged = typing.TypedDict('ImmvParametersTagged', {
+    "@type": typing.Literal["fsl/immv"],
     "source_files": list[InputPathType],
     "destination": str,
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "fsl.immv": immv_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-    }.get(t)
-
-
 class ImmvOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `immv(...)`.
+    Output object returned when calling `ImmvParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -62,7 +36,7 @@ class ImmvOutputs(typing.NamedTuple):
 def immv_params(
     source_files: list[InputPathType],
     destination: str,
-) -> ImmvParameters:
+) -> ImmvParametersTagged:
     """
     Build parameters.
     
@@ -74,7 +48,7 @@ def immv_params(
         Parameter dictionary
     """
     params = {
-        "@type": "fsl.immv",
+        "@type": "fsl/immv",
         "source_files": source_files,
         "destination": destination,
     }
@@ -96,8 +70,8 @@ def immv_cargs(
     """
     cargs = []
     cargs.append("immv")
-    cargs.extend([execution.input_file(f) for f in params.get("source_files")])
-    cargs.append(params.get("destination"))
+    cargs.extend([execution.input_file(f) for f in params.get("source_files", None)])
+    cargs.append(params.get("destination", None))
     return cargs
 
 
@@ -180,7 +154,6 @@ def immv(
 __all__ = [
     "IMMV_METADATA",
     "ImmvOutputs",
-    "ImmvParameters",
     "immv",
     "immv_execute",
     "immv_params",

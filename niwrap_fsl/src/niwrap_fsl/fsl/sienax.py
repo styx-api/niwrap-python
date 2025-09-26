@@ -14,7 +14,21 @@ SIENAX_METADATA = Metadata(
 
 
 SienaxParameters = typing.TypedDict('SienaxParameters', {
-    "@type": typing.Literal["fsl.sienax"],
+    "@type": typing.NotRequired[typing.Literal["fsl/sienax"]],
+    "infile": InputPathType,
+    "output_dir": typing.NotRequired[str | None],
+    "debug_flag": bool,
+    "bet_options": typing.NotRequired[str | None],
+    "twoclass_segment_flag": bool,
+    "t2_flag": bool,
+    "top_threshold": typing.NotRequired[float | None],
+    "bottom_threshold": typing.NotRequired[float | None],
+    "regional_flag": bool,
+    "lesion_mask": typing.NotRequired[InputPathType | None],
+    "fast_options": typing.NotRequired[str | None],
+})
+SienaxParametersTagged = typing.TypedDict('SienaxParametersTagged', {
+    "@type": typing.Literal["fsl/sienax"],
     "infile": InputPathType,
     "output_dir": typing.NotRequired[str | None],
     "debug_flag": bool,
@@ -29,41 +43,9 @@ SienaxParameters = typing.TypedDict('SienaxParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "fsl.sienax": sienax_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "fsl.sienax": sienax_outputs,
-    }.get(t)
-
-
 class SienaxOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `sienax(...)`.
+    Output object returned when calling `SienaxParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -85,7 +67,7 @@ def sienax_params(
     regional_flag: bool = False,
     lesion_mask: InputPathType | None = None,
     fast_options: str | None = None,
-) -> SienaxParameters:
+) -> SienaxParametersTagged:
     """
     Build parameters.
     
@@ -111,7 +93,7 @@ def sienax_params(
         Parameter dictionary
     """
     params = {
-        "@type": "fsl.sienax",
+        "@type": "fsl/sienax",
         "infile": infile,
         "debug_flag": debug_flag,
         "twoclass_segment_flag": twoclass_segment_flag,
@@ -148,44 +130,44 @@ def sienax_cargs(
     """
     cargs = []
     cargs.append("sienax")
-    cargs.append(execution.input_file(params.get("infile")))
-    if params.get("output_dir") is not None:
+    cargs.append(execution.input_file(params.get("infile", None)))
+    if params.get("output_dir", None) is not None:
         cargs.extend([
             "-o",
-            params.get("output_dir")
+            params.get("output_dir", None)
         ])
-    if params.get("debug_flag"):
+    if params.get("debug_flag", False):
         cargs.append("-d")
-    if params.get("bet_options") is not None:
+    if params.get("bet_options", None) is not None:
         cargs.extend([
             "-B",
-            params.get("bet_options")
+            params.get("bet_options", None)
         ])
-    if params.get("twoclass_segment_flag"):
+    if params.get("twoclass_segment_flag", False):
         cargs.append("-2")
-    if params.get("t2_flag"):
+    if params.get("t2_flag", False):
         cargs.append("-t2")
-    if params.get("top_threshold") is not None:
+    if params.get("top_threshold", None) is not None:
         cargs.extend([
             "-t",
-            str(params.get("top_threshold"))
+            str(params.get("top_threshold", None))
         ])
-    if params.get("bottom_threshold") is not None:
+    if params.get("bottom_threshold", None) is not None:
         cargs.extend([
             "-b",
-            str(params.get("bottom_threshold"))
+            str(params.get("bottom_threshold", None))
         ])
-    if params.get("regional_flag"):
+    if params.get("regional_flag", False):
         cargs.append("-r")
-    if params.get("lesion_mask") is not None:
+    if params.get("lesion_mask", None) is not None:
         cargs.extend([
             "-lm",
-            execution.input_file(params.get("lesion_mask"))
+            execution.input_file(params.get("lesion_mask", None))
         ])
-    if params.get("fast_options") is not None:
+    if params.get("fast_options", None) is not None:
         cargs.extend([
             "-S",
-            params.get("fast_options")
+            params.get("fast_options", None)
         ])
     return cargs
 
@@ -205,8 +187,8 @@ def sienax_outputs(
     """
     ret = SienaxOutputs(
         root=execution.output_file("."),
-        segmentation_output=execution.output_file(params.get("output_dir") + "/segmentation.nii.gz") if (params.get("output_dir") is not None) else None,
-        report_output=execution.output_file(params.get("output_dir") + "/report.txt") if (params.get("output_dir") is not None) else None,
+        segmentation_output=execution.output_file(params.get("output_dir", None) + "/segmentation.nii.gz") if (params.get("output_dir") is not None) else None,
+        report_output=execution.output_file(params.get("output_dir", None) + "/report.txt") if (params.get("output_dir") is not None) else None,
     )
     return ret
 
@@ -305,7 +287,6 @@ def sienax(
 __all__ = [
     "SIENAX_METADATA",
     "SienaxOutputs",
-    "SienaxParameters",
     "sienax",
     "sienax_execute",
     "sienax_params",

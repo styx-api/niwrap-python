@@ -14,7 +14,17 @@ LABEL_DILATE_METADATA = Metadata(
 
 
 LabelDilateParameters = typing.TypedDict('LabelDilateParameters', {
-    "@type": typing.Literal["workbench.label-dilate"],
+    "@type": typing.NotRequired[typing.Literal["workbench/label-dilate"]],
+    "label": InputPathType,
+    "surface": InputPathType,
+    "dilate_dist": float,
+    "label_out": str,
+    "opt_bad_vertex_roi_roi_metric": typing.NotRequired[InputPathType | None],
+    "opt_column_column": typing.NotRequired[str | None],
+    "opt_corrected_areas_area_metric": typing.NotRequired[InputPathType | None],
+})
+LabelDilateParametersTagged = typing.TypedDict('LabelDilateParametersTagged', {
+    "@type": typing.Literal["workbench/label-dilate"],
     "label": InputPathType,
     "surface": InputPathType,
     "dilate_dist": float,
@@ -25,41 +35,9 @@ LabelDilateParameters = typing.TypedDict('LabelDilateParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "workbench.label-dilate": label_dilate_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "workbench.label-dilate": label_dilate_outputs,
-    }.get(t)
-
-
 class LabelDilateOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `label_dilate(...)`.
+    Output object returned when calling `LabelDilateParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -75,7 +53,7 @@ def label_dilate_params(
     opt_bad_vertex_roi_roi_metric: InputPathType | None = None,
     opt_column_column: str | None = None,
     opt_corrected_areas_area_metric: InputPathType | None = None,
-) -> LabelDilateParameters:
+) -> LabelDilateParametersTagged:
     """
     Build parameters.
     
@@ -96,7 +74,7 @@ def label_dilate_params(
         Parameter dictionary
     """
     params = {
-        "@type": "workbench.label-dilate",
+        "@type": "workbench/label-dilate",
         "label": label,
         "surface": surface,
         "dilate_dist": dilate_dist,
@@ -127,24 +105,24 @@ def label_dilate_cargs(
     cargs = []
     cargs.append("wb_command")
     cargs.append("-label-dilate")
-    cargs.append(execution.input_file(params.get("label")))
-    cargs.append(execution.input_file(params.get("surface")))
-    cargs.append(str(params.get("dilate_dist")))
-    cargs.append(params.get("label_out"))
-    if params.get("opt_bad_vertex_roi_roi_metric") is not None:
+    cargs.append(execution.input_file(params.get("label", None)))
+    cargs.append(execution.input_file(params.get("surface", None)))
+    cargs.append(str(params.get("dilate_dist", None)))
+    cargs.append(params.get("label_out", None))
+    if params.get("opt_bad_vertex_roi_roi_metric", None) is not None:
         cargs.extend([
             "-bad-vertex-roi",
-            execution.input_file(params.get("opt_bad_vertex_roi_roi_metric"))
+            execution.input_file(params.get("opt_bad_vertex_roi_roi_metric", None))
         ])
-    if params.get("opt_column_column") is not None:
+    if params.get("opt_column_column", None) is not None:
         cargs.extend([
             "-column",
-            params.get("opt_column_column")
+            params.get("opt_column_column", None)
         ])
-    if params.get("opt_corrected_areas_area_metric") is not None:
+    if params.get("opt_corrected_areas_area_metric", None) is not None:
         cargs.extend([
             "-corrected-areas",
-            execution.input_file(params.get("opt_corrected_areas_area_metric"))
+            execution.input_file(params.get("opt_corrected_areas_area_metric", None))
         ])
     return cargs
 
@@ -164,7 +142,7 @@ def label_dilate_outputs(
     """
     ret = LabelDilateOutputs(
         root=execution.output_file("."),
-        label_out=execution.output_file(params.get("label_out")),
+        label_out=execution.output_file(params.get("label_out", None)),
     )
     return ret
 
@@ -260,7 +238,6 @@ def label_dilate(
 __all__ = [
     "LABEL_DILATE_METADATA",
     "LabelDilateOutputs",
-    "LabelDilateParameters",
     "label_dilate",
     "label_dilate_execute",
     "label_dilate_params",

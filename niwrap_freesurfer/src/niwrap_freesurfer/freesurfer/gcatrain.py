@@ -14,7 +14,29 @@ GCATRAIN_METADATA = Metadata(
 
 
 GcatrainParameters = typing.TypedDict('GcatrainParameters', {
-    "@type": typing.Literal["freesurfer.gcatrain"],
+    "@type": typing.NotRequired[typing.Literal["freesurfer/gcatrain"]],
+    "gcadir": str,
+    "subjectlistfile": InputPathType,
+    "init_subject_transform": list[str],
+    "seg_file": InputPathType,
+    "source_subjects_dir": str,
+    "num_iters": typing.NotRequired[float | None],
+    "num_threads": typing.NotRequired[float | None],
+    "exclude_file": typing.NotRequired[InputPathType | None],
+    "exclude_subject": typing.NotRequired[str | None],
+    "symmetric_atlas": bool,
+    "color_table": typing.NotRequired[InputPathType | None],
+    "no_submit": bool,
+    "mail_flag": bool,
+    "no_strict": bool,
+    "gcareg_iters": bool,
+    "prep_only": bool,
+    "nu10_flag": bool,
+    "nu12_flag": bool,
+    "no_emreg": bool,
+})
+GcatrainParametersTagged = typing.TypedDict('GcatrainParametersTagged', {
+    "@type": typing.Literal["freesurfer/gcatrain"],
     "gcadir": str,
     "subjectlistfile": InputPathType,
     "init_subject_transform": list[str],
@@ -37,40 +59,9 @@ GcatrainParameters = typing.TypedDict('GcatrainParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "freesurfer.gcatrain": gcatrain_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-    }.get(t)
-
-
 class GcatrainOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `gcatrain(...)`.
+    Output object returned when calling `GcatrainParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -96,7 +87,7 @@ def gcatrain_params(
     nu10_flag: bool = False,
     nu12_flag: bool = False,
     no_emreg: bool = False,
-) -> GcatrainParameters:
+) -> GcatrainParametersTagged:
     """
     Build parameters.
     
@@ -125,7 +116,7 @@ def gcatrain_params(
         Parameter dictionary
     """
     params = {
-        "@type": "freesurfer.gcatrain",
+        "@type": "freesurfer/gcatrain",
         "gcadir": gcadir,
         "subjectlistfile": subjectlistfile,
         "init_subject_transform": init_subject_transform,
@@ -171,66 +162,66 @@ def gcatrain_cargs(
     cargs.append("gcatrain")
     cargs.extend([
         "--g",
-        params.get("gcadir")
+        params.get("gcadir", None)
     ])
     cargs.extend([
         "--f",
-        execution.input_file(params.get("subjectlistfile"))
+        execution.input_file(params.get("subjectlistfile", None))
     ])
     cargs.extend([
         "--init",
-        *params.get("init_subject_transform")
+        *params.get("init_subject_transform", None)
     ])
     cargs.extend([
         "--seg",
-        execution.input_file(params.get("seg_file"))
+        execution.input_file(params.get("seg_file", None))
     ])
     cargs.extend([
         "--sd",
-        params.get("source_subjects_dir")
+        params.get("source_subjects_dir", None)
     ])
-    if params.get("num_iters") is not None:
+    if params.get("num_iters", None) is not None:
         cargs.extend([
             "--niters",
-            str(params.get("num_iters"))
+            str(params.get("num_iters", None))
         ])
-    if params.get("num_threads") is not None:
+    if params.get("num_threads", None) is not None:
         cargs.extend([
             "--nthreads",
-            str(params.get("num_threads"))
+            str(params.get("num_threads", None))
         ])
-    if params.get("exclude_file") is not None:
+    if params.get("exclude_file", None) is not None:
         cargs.extend([
             "--x",
-            execution.input_file(params.get("exclude_file"))
+            execution.input_file(params.get("exclude_file", None))
         ])
-    if params.get("exclude_subject") is not None:
+    if params.get("exclude_subject", None) is not None:
         cargs.extend([
             "--xs",
-            params.get("exclude_subject")
+            params.get("exclude_subject", None)
         ])
-    if params.get("symmetric_atlas"):
+    if params.get("symmetric_atlas", False):
         cargs.append("--sym")
-    if params.get("color_table") is not None:
+    if params.get("color_table", None) is not None:
         cargs.extend([
             "--ctab",
-            execution.input_file(params.get("color_table"))
+            execution.input_file(params.get("color_table", None))
         ])
-    if params.get("no_submit"):
+    if params.get("no_submit", False):
         cargs.append("--no-submit")
-    if params.get("mail_flag"):
+    if params.get("mail_flag", False):
         cargs.append("--pb-m")
-    if params.get("no_strict"):
+    if params.get("no_strict", False):
         cargs.append("--no-strict")
-    if params.get("gcareg_iters"):
+    if params.get("gcareg_iters", False):
         cargs.append("--gcareg-iters")
-    if params.get("prep_only"):
+    if params.get("prep_only", False):
         cargs.append("--prep-only")
-    if params.get("nu10_flag"):
+    if params.get("nu10_flag", False):
         cargs.append("--nu10")
-    if params.get("nu12_flag"):
+    if params.get("nu12_flag", False):
         cargs.append("--nu12")
-    if params.get("no_emreg"):
+    if params.get("no_emreg", False):
         cargs.append("--no-emreg")
     return cargs
 
@@ -367,7 +358,6 @@ def gcatrain(
 __all__ = [
     "GCATRAIN_METADATA",
     "GcatrainOutputs",
-    "GcatrainParameters",
     "gcatrain",
     "gcatrain_execute",
     "gcatrain_params",

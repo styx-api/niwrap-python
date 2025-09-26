@@ -14,7 +14,34 @@ ASEGSTATS2TABLE_METADATA = Metadata(
 
 
 Asegstats2tableParameters = typing.TypedDict('Asegstats2tableParameters', {
-    "@type": typing.Literal["freesurfer.asegstats2table"],
+    "@type": typing.NotRequired[typing.Literal["freesurfer/asegstats2table"]],
+    "subjects": typing.NotRequired[list[str] | None],
+    "inputs": typing.NotRequired[list[str] | None],
+    "tablefile": str,
+    "subjectsfile": typing.NotRequired[InputPathType | None],
+    "qdec": typing.NotRequired[InputPathType | None],
+    "qdec_long": typing.NotRequired[InputPathType | None],
+    "fsgd": typing.NotRequired[InputPathType | None],
+    "maxsegno": typing.NotRequired[list[str] | None],
+    "segids_from_file": typing.NotRequired[InputPathType | None],
+    "segno_include": typing.NotRequired[list[str] | None],
+    "segno_exclude": typing.NotRequired[list[str] | None],
+    "measure": typing.NotRequired[str | None],
+    "delimiter": typing.NotRequired[str | None],
+    "statsfile": typing.NotRequired[str | None],
+    "subdir": typing.NotRequired[str | None],
+    "scale": typing.NotRequired[float | None],
+    "write_etiv": bool,
+    "debug": bool,
+    "transpose_flag": bool,
+    "common_segs_flag": bool,
+    "all_segs_flag": bool,
+    "no_vol_extras_flag": bool,
+    "skip_missing_flag": bool,
+    "replace53_flag": bool,
+})
+Asegstats2tableParametersTagged = typing.TypedDict('Asegstats2tableParametersTagged', {
+    "@type": typing.Literal["freesurfer/asegstats2table"],
     "subjects": typing.NotRequired[list[str] | None],
     "inputs": typing.NotRequired[list[str] | None],
     "tablefile": str,
@@ -42,41 +69,9 @@ Asegstats2tableParameters = typing.TypedDict('Asegstats2tableParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "freesurfer.asegstats2table": asegstats2table_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "freesurfer.asegstats2table": asegstats2table_outputs,
-    }.get(t)
-
-
 class Asegstats2tableOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `asegstats2table(...)`.
+    Output object returned when calling `Asegstats2tableParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -109,7 +104,7 @@ def asegstats2table_params(
     no_vol_extras_flag: bool = False,
     skip_missing_flag: bool = False,
     replace53_flag: bool = False,
-) -> Asegstats2tableParameters:
+) -> Asegstats2tableParametersTagged:
     """
     Build parameters.
     
@@ -152,7 +147,7 @@ def asegstats2table_params(
         Parameter dictionary
     """
     params = {
-        "@type": "freesurfer.asegstats2table",
+        "@type": "freesurfer/asegstats2table",
         "tablefile": tablefile,
         "write_etiv": write_etiv,
         "debug": debug,
@@ -211,100 +206,100 @@ def asegstats2table_cargs(
     """
     cargs = []
     cargs.append("asegstats2table")
-    if params.get("subjects") is not None:
+    if params.get("subjects", None) is not None:
         cargs.extend([
             "--subjects",
-            *params.get("subjects")
+            *params.get("subjects", None)
         ])
-    if params.get("inputs") is not None:
+    if params.get("inputs", None) is not None:
         cargs.extend([
             "--inputs",
-            *params.get("inputs")
+            *params.get("inputs", None)
         ])
     cargs.extend([
         "--tablefile",
-        params.get("tablefile")
+        params.get("tablefile", None)
     ])
-    if params.get("subjectsfile") is not None:
+    if params.get("subjectsfile", None) is not None:
         cargs.extend([
             "--subjectsfile",
-            execution.input_file(params.get("subjectsfile"))
+            execution.input_file(params.get("subjectsfile", None))
         ])
-    if params.get("qdec") is not None:
+    if params.get("qdec", None) is not None:
         cargs.extend([
             "--qdec",
-            execution.input_file(params.get("qdec"))
+            execution.input_file(params.get("qdec", None))
         ])
-    if params.get("qdec_long") is not None:
+    if params.get("qdec_long", None) is not None:
         cargs.extend([
             "--qdec-long",
-            execution.input_file(params.get("qdec_long"))
+            execution.input_file(params.get("qdec_long", None))
         ])
-    if params.get("fsgd") is not None:
+    if params.get("fsgd", None) is not None:
         cargs.extend([
             "--fsgd",
-            execution.input_file(params.get("fsgd"))
+            execution.input_file(params.get("fsgd", None))
         ])
-    if params.get("maxsegno") is not None:
+    if params.get("maxsegno", None) is not None:
         cargs.extend([
             "--maxsegno",
-            *params.get("maxsegno")
+            *params.get("maxsegno", None)
         ])
-    if params.get("segids_from_file") is not None:
+    if params.get("segids_from_file", None) is not None:
         cargs.extend([
             "--segids-from-file",
-            execution.input_file(params.get("segids_from_file"))
+            execution.input_file(params.get("segids_from_file", None))
         ])
-    if params.get("segno_include") is not None:
+    if params.get("segno_include", None) is not None:
         cargs.extend([
             "--segno",
-            *params.get("segno_include")
+            *params.get("segno_include", None)
         ])
-    if params.get("segno_exclude") is not None:
+    if params.get("segno_exclude", None) is not None:
         cargs.extend([
             "--no-segno",
-            *params.get("segno_exclude")
+            *params.get("segno_exclude", None)
         ])
-    if params.get("measure") is not None:
+    if params.get("measure", None) is not None:
         cargs.extend([
             "--meas",
-            params.get("measure")
+            params.get("measure", None)
         ])
-    if params.get("delimiter") is not None:
+    if params.get("delimiter", None) is not None:
         cargs.extend([
             "--delimiter",
-            params.get("delimiter")
+            params.get("delimiter", None)
         ])
-    if params.get("statsfile") is not None:
+    if params.get("statsfile", None) is not None:
         cargs.extend([
             "--statsfile",
-            params.get("statsfile")
+            params.get("statsfile", None)
         ])
-    if params.get("subdir") is not None:
+    if params.get("subdir", None) is not None:
         cargs.extend([
             "--subdir",
-            params.get("subdir")
+            params.get("subdir", None)
         ])
-    if params.get("scale") is not None:
+    if params.get("scale", None) is not None:
         cargs.extend([
             "--scale",
-            str(params.get("scale"))
+            str(params.get("scale", None))
         ])
-    if params.get("write_etiv"):
+    if params.get("write_etiv", False):
         cargs.append("--etiv")
-    if params.get("debug"):
+    if params.get("debug", False):
         cargs.append("--debug")
-    if params.get("transpose_flag"):
+    if params.get("transpose_flag", False):
         cargs.append("--transpose")
-    if params.get("common_segs_flag"):
+    if params.get("common_segs_flag", False):
         cargs.append("--common-segs")
-    if params.get("all_segs_flag"):
+    if params.get("all_segs_flag", False):
         cargs.append("--all-segs")
-    if params.get("no_vol_extras_flag"):
+    if params.get("no_vol_extras_flag", False):
         cargs.append("--no-vol-extras")
-    if params.get("skip_missing_flag"):
+    if params.get("skip_missing_flag", False):
         cargs.append("--skip")
-    if params.get("replace53_flag"):
+    if params.get("replace53_flag", False):
         cargs.append("--replace53")
     return cargs
 
@@ -324,7 +319,7 @@ def asegstats2table_outputs(
     """
     ret = Asegstats2tableOutputs(
         root=execution.output_file("."),
-        output_table=execution.output_file(params.get("tablefile")),
+        output_table=execution.output_file(params.get("tablefile", None)),
     )
     return ret
 
@@ -466,7 +461,6 @@ def asegstats2table(
 __all__ = [
     "ASEGSTATS2TABLE_METADATA",
     "Asegstats2tableOutputs",
-    "Asegstats2tableParameters",
     "asegstats2table",
     "asegstats2table_execute",
     "asegstats2table_params",

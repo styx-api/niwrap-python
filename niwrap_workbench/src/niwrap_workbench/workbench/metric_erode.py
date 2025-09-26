@@ -14,7 +14,17 @@ METRIC_ERODE_METADATA = Metadata(
 
 
 MetricErodeParameters = typing.TypedDict('MetricErodeParameters', {
-    "@type": typing.Literal["workbench.metric-erode"],
+    "@type": typing.NotRequired[typing.Literal["workbench/metric-erode"]],
+    "metric": InputPathType,
+    "surface": InputPathType,
+    "distance": float,
+    "metric_out": str,
+    "opt_roi_roi_metric": typing.NotRequired[InputPathType | None],
+    "opt_column_column": typing.NotRequired[str | None],
+    "opt_corrected_areas_area_metric": typing.NotRequired[InputPathType | None],
+})
+MetricErodeParametersTagged = typing.TypedDict('MetricErodeParametersTagged', {
+    "@type": typing.Literal["workbench/metric-erode"],
     "metric": InputPathType,
     "surface": InputPathType,
     "distance": float,
@@ -25,41 +35,9 @@ MetricErodeParameters = typing.TypedDict('MetricErodeParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "workbench.metric-erode": metric_erode_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "workbench.metric-erode": metric_erode_outputs,
-    }.get(t)
-
-
 class MetricErodeOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `metric_erode(...)`.
+    Output object returned when calling `MetricErodeParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -75,7 +53,7 @@ def metric_erode_params(
     opt_roi_roi_metric: InputPathType | None = None,
     opt_column_column: str | None = None,
     opt_corrected_areas_area_metric: InputPathType | None = None,
-) -> MetricErodeParameters:
+) -> MetricErodeParametersTagged:
     """
     Build parameters.
     
@@ -95,7 +73,7 @@ def metric_erode_params(
         Parameter dictionary
     """
     params = {
-        "@type": "workbench.metric-erode",
+        "@type": "workbench/metric-erode",
         "metric": metric,
         "surface": surface,
         "distance": distance,
@@ -126,24 +104,24 @@ def metric_erode_cargs(
     cargs = []
     cargs.append("wb_command")
     cargs.append("-metric-erode")
-    cargs.append(execution.input_file(params.get("metric")))
-    cargs.append(execution.input_file(params.get("surface")))
-    cargs.append(str(params.get("distance")))
-    cargs.append(params.get("metric_out"))
-    if params.get("opt_roi_roi_metric") is not None:
+    cargs.append(execution.input_file(params.get("metric", None)))
+    cargs.append(execution.input_file(params.get("surface", None)))
+    cargs.append(str(params.get("distance", None)))
+    cargs.append(params.get("metric_out", None))
+    if params.get("opt_roi_roi_metric", None) is not None:
         cargs.extend([
             "-roi",
-            execution.input_file(params.get("opt_roi_roi_metric"))
+            execution.input_file(params.get("opt_roi_roi_metric", None))
         ])
-    if params.get("opt_column_column") is not None:
+    if params.get("opt_column_column", None) is not None:
         cargs.extend([
             "-column",
-            params.get("opt_column_column")
+            params.get("opt_column_column", None)
         ])
-    if params.get("opt_corrected_areas_area_metric") is not None:
+    if params.get("opt_corrected_areas_area_metric", None) is not None:
         cargs.extend([
             "-corrected-areas",
-            execution.input_file(params.get("opt_corrected_areas_area_metric"))
+            execution.input_file(params.get("opt_corrected_areas_area_metric", None))
         ])
     return cargs
 
@@ -163,7 +141,7 @@ def metric_erode_outputs(
     """
     ret = MetricErodeOutputs(
         root=execution.output_file("."),
-        metric_out=execution.output_file(params.get("metric_out")),
+        metric_out=execution.output_file(params.get("metric_out", None)),
     )
     return ret
 
@@ -260,7 +238,6 @@ def metric_erode(
 __all__ = [
     "METRIC_ERODE_METADATA",
     "MetricErodeOutputs",
-    "MetricErodeParameters",
     "metric_erode",
     "metric_erode_execute",
     "metric_erode_params",

@@ -14,14 +14,37 @@ MRHISTOGRAM_METADATA = Metadata(
 
 
 MrhistogramConfigParameters = typing.TypedDict('MrhistogramConfigParameters', {
-    "@type": typing.Literal["mrtrix.mrhistogram.config"],
+    "@type": typing.NotRequired[typing.Literal["config"]],
+    "key": str,
+    "value": str,
+})
+MrhistogramConfigParametersTagged = typing.TypedDict('MrhistogramConfigParametersTagged', {
+    "@type": typing.Literal["config"],
     "key": str,
     "value": str,
 })
 
 
 MrhistogramParameters = typing.TypedDict('MrhistogramParameters', {
-    "@type": typing.Literal["mrtrix.mrhistogram"],
+    "@type": typing.NotRequired[typing.Literal["mrtrix/mrhistogram"]],
+    "bins": typing.NotRequired[int | None],
+    "template": typing.NotRequired[InputPathType | None],
+    "mask": typing.NotRequired[InputPathType | None],
+    "ignorezero": bool,
+    "allvolumes": bool,
+    "info": bool,
+    "quiet": bool,
+    "debug": bool,
+    "force": bool,
+    "nthreads": typing.NotRequired[int | None],
+    "config": typing.NotRequired[list[MrhistogramConfigParameters] | None],
+    "help": bool,
+    "version": bool,
+    "image": InputPathType,
+    "hist": str,
+})
+MrhistogramParametersTagged = typing.TypedDict('MrhistogramParametersTagged', {
+    "@type": typing.Literal["mrtrix/mrhistogram"],
     "bins": typing.NotRequired[int | None],
     "template": typing.NotRequired[InputPathType | None],
     "mask": typing.NotRequired[InputPathType | None],
@@ -40,43 +63,10 @@ MrhistogramParameters = typing.TypedDict('MrhistogramParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "mrtrix.mrhistogram": mrhistogram_cargs,
-        "mrtrix.mrhistogram.config": mrhistogram_config_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "mrtrix.mrhistogram": mrhistogram_outputs,
-    }.get(t)
-
-
 def mrhistogram_config_params(
     key: str,
     value: str,
-) -> MrhistogramConfigParameters:
+) -> MrhistogramConfigParametersTagged:
     """
     Build parameters.
     
@@ -87,7 +77,7 @@ def mrhistogram_config_params(
         Parameter dictionary
     """
     params = {
-        "@type": "mrtrix.mrhistogram.config",
+        "@type": "config",
         "key": key,
         "value": value,
     }
@@ -109,14 +99,14 @@ def mrhistogram_config_cargs(
     """
     cargs = []
     cargs.append("-config")
-    cargs.append(params.get("key"))
-    cargs.append(params.get("value"))
+    cargs.append(params.get("key", None))
+    cargs.append(params.get("value", None))
     return cargs
 
 
 class MrhistogramOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `mrhistogram(...)`.
+    Output object returned when calling `MrhistogramParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -140,7 +130,7 @@ def mrhistogram_params(
     config: list[MrhistogramConfigParameters] | None = None,
     help_: bool = False,
     version: bool = False,
-) -> MrhistogramParameters:
+) -> MrhistogramParametersTagged:
     """
     Build parameters.
     
@@ -170,7 +160,7 @@ def mrhistogram_params(
         Parameter dictionary
     """
     params = {
-        "@type": "mrtrix.mrhistogram",
+        "@type": "mrtrix/mrhistogram",
         "ignorezero": ignorezero,
         "allvolumes": allvolumes,
         "info": info,
@@ -210,46 +200,46 @@ def mrhistogram_cargs(
     """
     cargs = []
     cargs.append("mrhistogram")
-    if params.get("bins") is not None:
+    if params.get("bins", None) is not None:
         cargs.extend([
             "-bins",
-            str(params.get("bins"))
+            str(params.get("bins", None))
         ])
-    if params.get("template") is not None:
+    if params.get("template", None) is not None:
         cargs.extend([
             "-template",
-            execution.input_file(params.get("template"))
+            execution.input_file(params.get("template", None))
         ])
-    if params.get("mask") is not None:
+    if params.get("mask", None) is not None:
         cargs.extend([
             "-mask",
-            execution.input_file(params.get("mask"))
+            execution.input_file(params.get("mask", None))
         ])
-    if params.get("ignorezero"):
+    if params.get("ignorezero", False):
         cargs.append("-ignorezero")
-    if params.get("allvolumes"):
+    if params.get("allvolumes", False):
         cargs.append("-allvolumes")
-    if params.get("info"):
+    if params.get("info", False):
         cargs.append("-info")
-    if params.get("quiet"):
+    if params.get("quiet", False):
         cargs.append("-quiet")
-    if params.get("debug"):
+    if params.get("debug", False):
         cargs.append("-debug")
-    if params.get("force"):
+    if params.get("force", False):
         cargs.append("-force")
-    if params.get("nthreads") is not None:
+    if params.get("nthreads", None) is not None:
         cargs.extend([
             "-nthreads",
-            str(params.get("nthreads"))
+            str(params.get("nthreads", None))
         ])
-    if params.get("config") is not None:
-        cargs.extend([a for c in [dyn_cargs(s["@type"])(s, execution) for s in params.get("config")] for a in c])
-    if params.get("help"):
+    if params.get("config", None) is not None:
+        cargs.extend([a for c in [mrhistogram_config_cargs(s, execution) for s in params.get("config", None)] for a in c])
+    if params.get("help", False):
         cargs.append("-help")
-    if params.get("version"):
+    if params.get("version", False):
         cargs.append("-version")
-    cargs.append(execution.input_file(params.get("image")))
-    cargs.append(params.get("hist"))
+    cargs.append(execution.input_file(params.get("image", None)))
+    cargs.append(params.get("hist", None))
     return cargs
 
 
@@ -268,7 +258,7 @@ def mrhistogram_outputs(
     """
     ret = MrhistogramOutputs(
         root=execution.output_file("."),
-        hist=execution.output_file(params.get("hist")),
+        hist=execution.output_file(params.get("hist", None)),
     )
     return ret
 
@@ -388,9 +378,7 @@ def mrhistogram(
 
 __all__ = [
     "MRHISTOGRAM_METADATA",
-    "MrhistogramConfigParameters",
     "MrhistogramOutputs",
-    "MrhistogramParameters",
     "mrhistogram",
     "mrhistogram_config_params",
     "mrhistogram_execute",

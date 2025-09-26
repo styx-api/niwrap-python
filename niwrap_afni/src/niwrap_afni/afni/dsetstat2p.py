@@ -14,7 +14,16 @@ DSETSTAT2P_METADATA = Metadata(
 
 
 Dsetstat2pParameters = typing.TypedDict('Dsetstat2pParameters', {
-    "@type": typing.Literal["afni.dsetstat2p"],
+    "@type": typing.NotRequired[typing.Literal["afni/dsetstat2p"]],
+    "dataset": str,
+    "statval": float,
+    "bisided": bool,
+    "two_sided": bool,
+    "one_sided": bool,
+    "quiet": bool,
+})
+Dsetstat2pParametersTagged = typing.TypedDict('Dsetstat2pParametersTagged', {
+    "@type": typing.Literal["afni/dsetstat2p"],
     "dataset": str,
     "statval": float,
     "bisided": bool,
@@ -24,41 +33,9 @@ Dsetstat2pParameters = typing.TypedDict('Dsetstat2pParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "afni.dsetstat2p": dsetstat2p_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "afni.dsetstat2p": dsetstat2p_outputs,
-    }.get(t)
-
-
 class Dsetstat2pOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `dsetstat2p(...)`.
+    Output object returned when calling `Dsetstat2pParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -73,7 +50,7 @@ def dsetstat2p_params(
     two_sided: bool = False,
     one_sided: bool = False,
     quiet: bool = False,
-) -> Dsetstat2pParameters:
+) -> Dsetstat2pParametersTagged:
     """
     Build parameters.
     
@@ -96,7 +73,7 @@ def dsetstat2p_params(
         Parameter dictionary
     """
     params = {
-        "@type": "afni.dsetstat2p",
+        "@type": "afni/dsetstat2p",
         "dataset": dataset,
         "statval": statval,
         "bisided": bisided,
@@ -122,15 +99,15 @@ def dsetstat2p_cargs(
     """
     cargs = []
     cargs.append("dsetstat2p")
-    cargs.append(params.get("dataset"))
-    cargs.append(str(params.get("statval")))
-    if params.get("bisided"):
+    cargs.append(params.get("dataset", None))
+    cargs.append(str(params.get("statval", None)))
+    if params.get("bisided", False):
         cargs.append("-bisided")
-    if params.get("two_sided"):
+    if params.get("two_sided", False):
         cargs.append("-2sided")
-    if params.get("one_sided"):
+    if params.get("one_sided", False):
         cargs.append("-1sided")
-    if params.get("quiet"):
+    if params.get("quiet", False):
         cargs.append("-quiet")
     return cargs
 
@@ -234,7 +211,6 @@ def dsetstat2p(
 __all__ = [
     "DSETSTAT2P_METADATA",
     "Dsetstat2pOutputs",
-    "Dsetstat2pParameters",
     "dsetstat2p",
     "dsetstat2p_execute",
     "dsetstat2p_params",

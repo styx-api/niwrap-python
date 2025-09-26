@@ -14,26 +14,39 @@ FIXEL2PEAKS_METADATA = Metadata(
 
 
 Fixel2peaksConfigParameters = typing.TypedDict('Fixel2peaksConfigParameters', {
-    "@type": typing.Literal["mrtrix.fixel2peaks.config"],
+    "@type": typing.NotRequired[typing.Literal["config"]],
+    "key": str,
+    "value": str,
+})
+Fixel2peaksConfigParametersTagged = typing.TypedDict('Fixel2peaksConfigParametersTagged', {
+    "@type": typing.Literal["config"],
     "key": str,
     "value": str,
 })
 
 
 Fixel2peaksVariousStringParameters = typing.TypedDict('Fixel2peaksVariousStringParameters', {
-    "@type": typing.Literal["mrtrix.fixel2peaks.VariousString"],
+    "@type": typing.NotRequired[typing.Literal["VariousString"]],
+    "obj": str,
+})
+Fixel2peaksVariousStringParametersTagged = typing.TypedDict('Fixel2peaksVariousStringParametersTagged', {
+    "@type": typing.Literal["VariousString"],
     "obj": str,
 })
 
 
 Fixel2peaksVariousFileParameters = typing.TypedDict('Fixel2peaksVariousFileParameters', {
-    "@type": typing.Literal["mrtrix.fixel2peaks.VariousFile"],
+    "@type": typing.NotRequired[typing.Literal["VariousFile"]],
+    "obj": InputPathType,
+})
+Fixel2peaksVariousFileParametersTagged = typing.TypedDict('Fixel2peaksVariousFileParametersTagged', {
+    "@type": typing.Literal["VariousFile"],
     "obj": InputPathType,
 })
 
 
 Fixel2peaksParameters = typing.TypedDict('Fixel2peaksParameters', {
-    "@type": typing.Literal["mrtrix.fixel2peaks"],
+    "@type": typing.NotRequired[typing.Literal["mrtrix/fixel2peaks"]],
     "number": typing.NotRequired[int | None],
     "nan": bool,
     "info": bool,
@@ -44,12 +57,27 @@ Fixel2peaksParameters = typing.TypedDict('Fixel2peaksParameters', {
     "config": typing.NotRequired[list[Fixel2peaksConfigParameters] | None],
     "help": bool,
     "version": bool,
-    "in": typing.Union[Fixel2peaksVariousStringParameters, Fixel2peaksVariousFileParameters],
+    "in": typing.Union[Fixel2peaksVariousStringParametersTagged, Fixel2peaksVariousFileParametersTagged],
+    "out": str,
+})
+Fixel2peaksParametersTagged = typing.TypedDict('Fixel2peaksParametersTagged', {
+    "@type": typing.Literal["mrtrix/fixel2peaks"],
+    "number": typing.NotRequired[int | None],
+    "nan": bool,
+    "info": bool,
+    "quiet": bool,
+    "debug": bool,
+    "force": bool,
+    "nthreads": typing.NotRequired[int | None],
+    "config": typing.NotRequired[list[Fixel2peaksConfigParameters] | None],
+    "help": bool,
+    "version": bool,
+    "in": typing.Union[Fixel2peaksVariousStringParametersTagged, Fixel2peaksVariousFileParametersTagged],
     "out": str,
 })
 
 
-def dyn_cargs(
+def fixel2peaks_in_cargs_dyn_fn(
     t: str,
 ) -> typing.Any:
     """
@@ -61,14 +89,12 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "mrtrix.fixel2peaks": fixel2peaks_cargs,
-        "mrtrix.fixel2peaks.config": fixel2peaks_config_cargs,
-        "mrtrix.fixel2peaks.VariousString": fixel2peaks_various_string_cargs,
-        "mrtrix.fixel2peaks.VariousFile": fixel2peaks_various_file_cargs,
+        "VariousString": fixel2peaks_various_string_cargs,
+        "VariousFile": fixel2peaks_various_file_cargs,
     }.get(t)
 
 
-def dyn_outputs(
+def fixel2peaks_in_outputs_dyn_fn(
     t: str,
 ) -> typing.Any:
     """
@@ -80,14 +106,13 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "mrtrix.fixel2peaks": fixel2peaks_outputs,
     }.get(t)
 
 
 def fixel2peaks_config_params(
     key: str,
     value: str,
-) -> Fixel2peaksConfigParameters:
+) -> Fixel2peaksConfigParametersTagged:
     """
     Build parameters.
     
@@ -98,7 +123,7 @@ def fixel2peaks_config_params(
         Parameter dictionary
     """
     params = {
-        "@type": "mrtrix.fixel2peaks.config",
+        "@type": "config",
         "key": key,
         "value": value,
     }
@@ -120,14 +145,14 @@ def fixel2peaks_config_cargs(
     """
     cargs = []
     cargs.append("-config")
-    cargs.append(params.get("key"))
-    cargs.append(params.get("value"))
+    cargs.append(params.get("key", None))
+    cargs.append(params.get("value", None))
     return cargs
 
 
 def fixel2peaks_various_string_params(
     obj: str,
-) -> Fixel2peaksVariousStringParameters:
+) -> Fixel2peaksVariousStringParametersTagged:
     """
     Build parameters.
     
@@ -137,7 +162,7 @@ def fixel2peaks_various_string_params(
         Parameter dictionary
     """
     params = {
-        "@type": "mrtrix.fixel2peaks.VariousString",
+        "@type": "VariousString",
         "obj": obj,
     }
     return params
@@ -157,13 +182,13 @@ def fixel2peaks_various_string_cargs(
         Command-line arguments.
     """
     cargs = []
-    cargs.append(params.get("obj"))
+    cargs.append(params.get("obj", None))
     return cargs
 
 
 def fixel2peaks_various_file_params(
     obj: InputPathType,
-) -> Fixel2peaksVariousFileParameters:
+) -> Fixel2peaksVariousFileParametersTagged:
     """
     Build parameters.
     
@@ -173,7 +198,7 @@ def fixel2peaks_various_file_params(
         Parameter dictionary
     """
     params = {
-        "@type": "mrtrix.fixel2peaks.VariousFile",
+        "@type": "VariousFile",
         "obj": obj,
     }
     return params
@@ -193,13 +218,13 @@ def fixel2peaks_various_file_cargs(
         Command-line arguments.
     """
     cargs = []
-    cargs.append(execution.input_file(params.get("obj")))
+    cargs.append(execution.input_file(params.get("obj", None)))
     return cargs
 
 
 class Fixel2peaksOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `fixel2peaks(...)`.
+    Output object returned when calling `Fixel2peaksParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -208,7 +233,7 @@ class Fixel2peaksOutputs(typing.NamedTuple):
 
 
 def fixel2peaks_params(
-    in_: typing.Union[Fixel2peaksVariousStringParameters, Fixel2peaksVariousFileParameters],
+    in_: typing.Union[Fixel2peaksVariousStringParametersTagged, Fixel2peaksVariousFileParametersTagged],
     out: str,
     number: int | None = None,
     nan: bool = False,
@@ -220,7 +245,7 @@ def fixel2peaks_params(
     config: list[Fixel2peaksConfigParameters] | None = None,
     help_: bool = False,
     version: bool = False,
-) -> Fixel2peaksParameters:
+) -> Fixel2peaksParametersTagged:
     """
     Build parameters.
     
@@ -246,7 +271,7 @@ def fixel2peaks_params(
         Parameter dictionary
     """
     params = {
-        "@type": "mrtrix.fixel2peaks",
+        "@type": "mrtrix/fixel2peaks",
         "nan": nan,
         "info": info,
         "quiet": quiet,
@@ -281,34 +306,34 @@ def fixel2peaks_cargs(
     """
     cargs = []
     cargs.append("fixel2peaks")
-    if params.get("number") is not None:
+    if params.get("number", None) is not None:
         cargs.extend([
             "-number",
-            str(params.get("number"))
+            str(params.get("number", None))
         ])
-    if params.get("nan"):
+    if params.get("nan", False):
         cargs.append("-nan")
-    if params.get("info"):
+    if params.get("info", False):
         cargs.append("-info")
-    if params.get("quiet"):
+    if params.get("quiet", False):
         cargs.append("-quiet")
-    if params.get("debug"):
+    if params.get("debug", False):
         cargs.append("-debug")
-    if params.get("force"):
+    if params.get("force", False):
         cargs.append("-force")
-    if params.get("nthreads") is not None:
+    if params.get("nthreads", None) is not None:
         cargs.extend([
             "-nthreads",
-            str(params.get("nthreads"))
+            str(params.get("nthreads", None))
         ])
-    if params.get("config") is not None:
-        cargs.extend([a for c in [dyn_cargs(s["@type"])(s, execution) for s in params.get("config")] for a in c])
-    if params.get("help"):
+    if params.get("config", None) is not None:
+        cargs.extend([a for c in [fixel2peaks_config_cargs(s, execution) for s in params.get("config", None)] for a in c])
+    if params.get("help", False):
         cargs.append("-help")
-    if params.get("version"):
+    if params.get("version", False):
         cargs.append("-version")
-    cargs.extend(dyn_cargs(params.get("in")["@type"])(params.get("in"), execution))
-    cargs.append(params.get("out"))
+    cargs.extend(fixel2peaks_in_cargs_dyn_fn(params.get("in", None)["@type"])(params.get("in", None), execution))
+    cargs.append(params.get("out", None))
     return cargs
 
 
@@ -327,7 +352,7 @@ def fixel2peaks_outputs(
     """
     ret = Fixel2peaksOutputs(
         root=execution.output_file("."),
-        out=execution.output_file(params.get("out")),
+        out=execution.output_file(params.get("out", None)),
     )
     return ret
 
@@ -370,7 +395,7 @@ def fixel2peaks_execute(
 
 
 def fixel2peaks(
-    in_: typing.Union[Fixel2peaksVariousStringParameters, Fixel2peaksVariousFileParameters],
+    in_: typing.Union[Fixel2peaksVariousStringParametersTagged, Fixel2peaksVariousFileParametersTagged],
     out: str,
     number: int | None = None,
     nan: bool = False,
@@ -443,11 +468,7 @@ def fixel2peaks(
 
 __all__ = [
     "FIXEL2PEAKS_METADATA",
-    "Fixel2peaksConfigParameters",
     "Fixel2peaksOutputs",
-    "Fixel2peaksParameters",
-    "Fixel2peaksVariousFileParameters",
-    "Fixel2peaksVariousStringParameters",
     "fixel2peaks",
     "fixel2peaks_config_params",
     "fixel2peaks_execute",

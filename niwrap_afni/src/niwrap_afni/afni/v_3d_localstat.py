@@ -14,7 +14,30 @@ V_3D_LOCALSTAT_METADATA = Metadata(
 
 
 V3dLocalstatParameters = typing.TypedDict('V3dLocalstatParameters', {
-    "@type": typing.Literal["afni.3dLocalstat"],
+    "@type": typing.NotRequired[typing.Literal["afni/3dLocalstat"]],
+    "dataset": InputPathType,
+    "nbhd": str,
+    "stat": typing.NotRequired[list[str] | None],
+    "mask": typing.NotRequired[InputPathType | None],
+    "automask": bool,
+    "use_nonmask": bool,
+    "prefix": typing.NotRequired[str | None],
+    "datum": typing.NotRequired[str | None],
+    "label_ext": typing.NotRequired[str | None],
+    "reduce_grid": typing.NotRequired[list[float] | None],
+    "reduce_restore_grid": typing.NotRequired[list[float] | None],
+    "reduce_max_vox": typing.NotRequired[float | None],
+    "grid_rmode": typing.NotRequired[str | None],
+    "quiet": bool,
+    "verbose": bool,
+    "proceed_small_N": bool,
+    "fillvalue": typing.NotRequired[float | None],
+    "unfillvalue": typing.NotRequired[float | None],
+    "maskvalue": typing.NotRequired[float | None],
+    "maskvalue2": typing.NotRequired[float | None],
+})
+V3dLocalstatParametersTagged = typing.TypedDict('V3dLocalstatParametersTagged', {
+    "@type": typing.Literal["afni/3dLocalstat"],
     "dataset": InputPathType,
     "nbhd": str,
     "stat": typing.NotRequired[list[str] | None],
@@ -38,41 +61,9 @@ V3dLocalstatParameters = typing.TypedDict('V3dLocalstatParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "afni.3dLocalstat": v_3d_localstat_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "afni.3dLocalstat": v_3d_localstat_outputs,
-    }.get(t)
-
-
 class V3dLocalstatOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `v_3d_localstat(...)`.
+    Output object returned when calling `V3dLocalstatParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -101,7 +92,7 @@ def v_3d_localstat_params(
     unfillvalue: float | None = None,
     maskvalue: float | None = None,
     maskvalue2: float | None = None,
-) -> V3dLocalstatParameters:
+) -> V3dLocalstatParametersTagged:
     """
     Build parameters.
     
@@ -142,7 +133,7 @@ def v_3d_localstat_params(
         Parameter dictionary
     """
     params = {
-        "@type": "afni.3dLocalstat",
+        "@type": "afni/3dLocalstat",
         "dataset": dataset,
         "nbhd": nbhd,
         "automask": automask,
@@ -195,85 +186,85 @@ def v_3d_localstat_cargs(
     """
     cargs = []
     cargs.append("3dLocalstat")
-    cargs.append(execution.input_file(params.get("dataset")))
+    cargs.append(execution.input_file(params.get("dataset", None)))
     cargs.extend([
         "-nbhd",
-        params.get("nbhd")
+        params.get("nbhd", None)
     ])
-    if params.get("stat") is not None:
+    if params.get("stat", None) is not None:
         cargs.extend([
             "-stat",
-            *params.get("stat")
+            *params.get("stat", None)
         ])
-    if params.get("mask") is not None:
+    if params.get("mask", None) is not None:
         cargs.extend([
             "-mask",
-            execution.input_file(params.get("mask"))
+            execution.input_file(params.get("mask", None))
         ])
-    if params.get("automask"):
+    if params.get("automask", False):
         cargs.append("-automask")
-    if params.get("use_nonmask"):
+    if params.get("use_nonmask", False):
         cargs.append("-use_nonmask")
-    if params.get("prefix") is not None:
+    if params.get("prefix", None) is not None:
         cargs.extend([
             "-prefix",
-            params.get("prefix")
+            params.get("prefix", None)
         ])
-    if params.get("datum") is not None:
+    if params.get("datum", None) is not None:
         cargs.extend([
             "-datum",
-            params.get("datum")
+            params.get("datum", None)
         ])
-    if params.get("label_ext") is not None:
+    if params.get("label_ext", None) is not None:
         cargs.extend([
             "-label_ext",
-            params.get("label_ext")
+            params.get("label_ext", None)
         ])
-    if params.get("reduce_grid") is not None:
+    if params.get("reduce_grid", None) is not None:
         cargs.extend([
             "-reduce_grid",
-            *map(str, params.get("reduce_grid"))
+            *map(str, params.get("reduce_grid", None))
         ])
-    if params.get("reduce_restore_grid") is not None:
+    if params.get("reduce_restore_grid", None) is not None:
         cargs.extend([
             "-reduce_restore_grid",
-            *map(str, params.get("reduce_restore_grid"))
+            *map(str, params.get("reduce_restore_grid", None))
         ])
-    if params.get("reduce_max_vox") is not None:
+    if params.get("reduce_max_vox", None) is not None:
         cargs.extend([
             "-reduce_max_vox",
-            str(params.get("reduce_max_vox"))
+            str(params.get("reduce_max_vox", None))
         ])
-    if params.get("grid_rmode") is not None:
+    if params.get("grid_rmode", None) is not None:
         cargs.extend([
             "-grid_rmode",
-            params.get("grid_rmode")
+            params.get("grid_rmode", None)
         ])
-    if params.get("quiet"):
+    if params.get("quiet", False):
         cargs.append("-quiet")
-    if params.get("verbose"):
+    if params.get("verbose", False):
         cargs.append("-verb")
-    if params.get("proceed_small_N"):
+    if params.get("proceed_small_N", False):
         cargs.append("-proceed_small_N")
-    if params.get("fillvalue") is not None:
+    if params.get("fillvalue", None) is not None:
         cargs.extend([
             "-fillvalue",
-            str(params.get("fillvalue"))
+            str(params.get("fillvalue", None))
         ])
-    if params.get("unfillvalue") is not None:
+    if params.get("unfillvalue", None) is not None:
         cargs.extend([
             "-unfillvalue",
-            str(params.get("unfillvalue"))
+            str(params.get("unfillvalue", None))
         ])
-    if params.get("maskvalue") is not None:
+    if params.get("maskvalue", None) is not None:
         cargs.extend([
             "-maskvalue",
-            str(params.get("maskvalue"))
+            str(params.get("maskvalue", None))
         ])
-    if params.get("maskvalue2") is not None:
+    if params.get("maskvalue2", None) is not None:
         cargs.extend([
             "-maskvalue2",
-            str(params.get("maskvalue2"))
+            str(params.get("maskvalue2", None))
         ])
     return cargs
 
@@ -293,7 +284,7 @@ def v_3d_localstat_outputs(
     """
     ret = V3dLocalstatOutputs(
         root=execution.output_file("."),
-        outfile=execution.output_file(params.get("prefix") + ".nii.gz") if (params.get("prefix") is not None) else None,
+        outfile=execution.output_file(params.get("prefix", None) + ".nii.gz") if (params.get("prefix") is not None) else None,
     )
     return ret
 
@@ -424,7 +415,6 @@ def v_3d_localstat(
 
 __all__ = [
     "V3dLocalstatOutputs",
-    "V3dLocalstatParameters",
     "V_3D_LOCALSTAT_METADATA",
     "v_3d_localstat",
     "v_3d_localstat_execute",

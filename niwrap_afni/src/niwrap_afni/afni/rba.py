@@ -14,7 +14,36 @@ RBA_METADATA = Metadata(
 
 
 RbaParameters = typing.TypedDict('RbaParameters', {
-    "@type": typing.Literal["afni.RBA"],
+    "@type": typing.NotRequired[typing.Literal["afni/RBA"]],
+    "prefix": str,
+    "dataTable": InputPathType,
+    "chains": typing.NotRequired[float | None],
+    "iterations": typing.NotRequired[float | None],
+    "model": typing.NotRequired[str | None],
+    "eoi": typing.NotRequired[str | None],
+    "wcp": typing.NotRequired[float | None],
+    "tstat": typing.NotRequired[str | None],
+    "stdz": typing.NotRequired[str | None],
+    "cVars": typing.NotRequired[str | None],
+    "qVars": typing.NotRequired[str | None],
+    "distROI": typing.NotRequired[str | None],
+    "distSubj": typing.NotRequired[str | None],
+    "distY": typing.NotRequired[str | None],
+    "ridgePlot": typing.NotRequired[str | None],
+    "roi": typing.NotRequired[str | None],
+    "subj": typing.NotRequired[str | None],
+    "scale": typing.NotRequired[float | None],
+    "se": typing.NotRequired[str | None],
+    "pdp": typing.NotRequired[str | None],
+    "mean": typing.NotRequired[str | None],
+    "sigma": typing.NotRequired[str | None],
+    "debug": bool,
+    "verbose": typing.NotRequired[float | None],
+    "md": bool,
+    "r2z": bool,
+})
+RbaParametersTagged = typing.TypedDict('RbaParametersTagged', {
+    "@type": typing.Literal["afni/RBA"],
     "prefix": str,
     "dataTable": InputPathType,
     "chains": typing.NotRequired[float | None],
@@ -44,41 +73,9 @@ RbaParameters = typing.TypedDict('RbaParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "afni.RBA": rba_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "afni.RBA": rba_outputs,
-    }.get(t)
-
-
 class RbaOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `rba(...)`.
+    Output object returned when calling `RbaParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -116,7 +113,7 @@ def rba_params(
     verbose: float | None = None,
     md: bool = False,
     r2z: bool = False,
-) -> RbaParameters:
+) -> RbaParametersTagged:
     """
     Build parameters.
     
@@ -158,7 +155,7 @@ def rba_params(
         Parameter dictionary
     """
     params = {
-        "@type": "afni.RBA",
+        "@type": "afni/RBA",
         "prefix": prefix,
         "dataTable": data_table,
         "debug": debug,
@@ -227,122 +224,122 @@ def rba_cargs(
     cargs.append("RBA")
     cargs.extend([
         "-prefix",
-        params.get("prefix")
+        params.get("prefix", None)
     ])
     cargs.extend([
         "-dataTable",
-        execution.input_file(params.get("dataTable"))
+        execution.input_file(params.get("dataTable", None))
     ])
-    if params.get("chains") is not None:
+    if params.get("chains", None) is not None:
         cargs.extend([
             "-chains",
-            str(params.get("chains"))
+            str(params.get("chains", None))
         ])
-    if params.get("iterations") is not None:
+    if params.get("iterations", None) is not None:
         cargs.extend([
             "-iterations",
-            str(params.get("iterations"))
+            str(params.get("iterations", None))
         ])
-    if params.get("model") is not None:
+    if params.get("model", None) is not None:
         cargs.extend([
             "-model",
-            params.get("model")
+            params.get("model", None)
         ])
-    if params.get("eoi") is not None:
+    if params.get("eoi", None) is not None:
         cargs.extend([
             "-EOI",
-            params.get("eoi")
+            params.get("eoi", None)
         ])
-    if params.get("wcp") is not None:
+    if params.get("wcp", None) is not None:
         cargs.extend([
             "-WCP",
-            str(params.get("wcp"))
+            str(params.get("wcp", None))
         ])
-    if params.get("tstat") is not None:
+    if params.get("tstat", None) is not None:
         cargs.extend([
             "-tstat",
-            params.get("tstat")
+            params.get("tstat", None)
         ])
-    if params.get("stdz") is not None:
+    if params.get("stdz", None) is not None:
         cargs.extend([
             "-stdz",
-            params.get("stdz")
+            params.get("stdz", None)
         ])
-    if params.get("cVars") is not None:
+    if params.get("cVars", None) is not None:
         cargs.extend([
             "-cVars",
-            params.get("cVars")
+            params.get("cVars", None)
         ])
-    if params.get("qVars") is not None:
+    if params.get("qVars", None) is not None:
         cargs.extend([
             "-qVars",
-            params.get("qVars")
+            params.get("qVars", None)
         ])
-    if params.get("distROI") is not None:
+    if params.get("distROI", None) is not None:
         cargs.extend([
             "-distROI",
-            params.get("distROI")
+            params.get("distROI", None)
         ])
-    if params.get("distSubj") is not None:
+    if params.get("distSubj", None) is not None:
         cargs.extend([
             "-distSubj",
-            params.get("distSubj")
+            params.get("distSubj", None)
         ])
-    if params.get("distY") is not None:
+    if params.get("distY", None) is not None:
         cargs.extend([
             "-distY",
-            params.get("distY")
+            params.get("distY", None)
         ])
-    if params.get("ridgePlot") is not None:
+    if params.get("ridgePlot", None) is not None:
         cargs.extend([
             "-ridgePlot",
-            params.get("ridgePlot")
+            params.get("ridgePlot", None)
         ])
-    if params.get("roi") is not None:
+    if params.get("roi", None) is not None:
         cargs.extend([
             "-ROI",
-            params.get("roi")
+            params.get("roi", None)
         ])
-    if params.get("subj") is not None:
+    if params.get("subj", None) is not None:
         cargs.extend([
             "-Subj",
-            params.get("subj")
+            params.get("subj", None)
         ])
-    if params.get("scale") is not None:
+    if params.get("scale", None) is not None:
         cargs.extend([
             "-scale",
-            str(params.get("scale"))
+            str(params.get("scale", None))
         ])
-    if params.get("se") is not None:
+    if params.get("se", None) is not None:
         cargs.extend([
             "-se",
-            params.get("se")
+            params.get("se", None)
         ])
-    if params.get("pdp") is not None:
+    if params.get("pdp", None) is not None:
         cargs.extend([
             "-PDP",
-            params.get("pdp")
+            params.get("pdp", None)
         ])
-    if params.get("mean") is not None:
+    if params.get("mean", None) is not None:
         cargs.extend([
             "-mean",
-            params.get("mean")
+            params.get("mean", None)
         ])
-    if params.get("sigma") is not None:
+    if params.get("sigma", None) is not None:
         cargs.extend([
             "-sigma",
-            params.get("sigma")
+            params.get("sigma", None)
         ])
-    if params.get("debug"):
+    if params.get("debug", False):
         cargs.append("-dbgArgs")
-    if params.get("verbose") is not None:
+    if params.get("verbose", None) is not None:
         cargs.extend([
             "-verb",
-            str(params.get("verbose"))
+            str(params.get("verbose", None))
         ])
-    if params.get("md"):
+    if params.get("md", False):
         cargs.append("-MD")
-    if params.get("r2z"):
+    if params.get("r2z", False):
         cargs.append("-r2z")
     return cargs
 
@@ -362,8 +359,8 @@ def rba_outputs(
     """
     ret = RbaOutputs(
         root=execution.output_file("."),
-        output_txt=execution.output_file(params.get("prefix") + ".txt"),
-        output_rdata=execution.output_file(params.get("prefix") + ".RData"),
+        output_txt=execution.output_file(params.get("prefix", None) + ".txt"),
+        output_rdata=execution.output_file(params.get("prefix", None) + ".RData"),
     )
     return ret
 
@@ -506,7 +503,6 @@ def rba(
 __all__ = [
     "RBA_METADATA",
     "RbaOutputs",
-    "RbaParameters",
     "rba",
     "rba_execute",
     "rba_params",

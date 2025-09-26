@@ -14,7 +14,37 @@ LONG_STATS_SLOPES_METADATA = Metadata(
 
 
 LongStatsSlopesParameters = typing.TypedDict('LongStatsSlopesParameters', {
-    "@type": typing.Literal["freesurfer.long_stats_slopes"],
+    "@type": typing.NotRequired[typing.Literal["freesurfer/long_stats_slopes"]],
+    "qdec_table": InputPathType,
+    "stats_file": InputPathType,
+    "measure": str,
+    "subjects_dir": str,
+    "do_avg": bool,
+    "do_rate": bool,
+    "do_pc1fit": bool,
+    "do_pc1": bool,
+    "do_spc": bool,
+    "do_stack": bool,
+    "resid": typing.NotRequired[float | None],
+    "time_var": typing.NotRequired[str | None],
+    "generic_time": bool,
+    "cross_sectional": bool,
+    "out_avg": typing.NotRequired[str | None],
+    "out_rate": typing.NotRequired[str | None],
+    "out_pc1fit": typing.NotRequired[str | None],
+    "out_pc1": typing.NotRequired[str | None],
+    "out_spc": typing.NotRequired[str | None],
+    "out_resid": typing.NotRequired[str | None],
+    "out_stack": typing.NotRequired[str | None],
+    "stack_avg": typing.NotRequired[str | None],
+    "stack_rate": typing.NotRequired[str | None],
+    "stack_pc1fit": typing.NotRequired[str | None],
+    "stack_pc1": typing.NotRequired[str | None],
+    "stack_spc": typing.NotRequired[str | None],
+    "stack_resid": typing.NotRequired[str | None],
+})
+LongStatsSlopesParametersTagged = typing.TypedDict('LongStatsSlopesParametersTagged', {
+    "@type": typing.Literal["freesurfer/long_stats_slopes"],
     "qdec_table": InputPathType,
     "stats_file": InputPathType,
     "measure": str,
@@ -45,40 +75,9 @@ LongStatsSlopesParameters = typing.TypedDict('LongStatsSlopesParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "freesurfer.long_stats_slopes": long_stats_slopes_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-    }.get(t)
-
-
 class LongStatsSlopesOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `long_stats_slopes(...)`.
+    Output object returned when calling `LongStatsSlopesParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -112,7 +111,7 @@ def long_stats_slopes_params(
     stack_pc1: str | None = None,
     stack_spc: str | None = None,
     stack_resid: str | None = None,
-) -> LongStatsSlopesParameters:
+) -> LongStatsSlopesParametersTagged:
     """
     Build parameters.
     
@@ -159,7 +158,7 @@ def long_stats_slopes_params(
         Parameter dictionary
     """
     params = {
-        "@type": "freesurfer.long_stats_slopes",
+        "@type": "freesurfer/long_stats_slopes",
         "qdec_table": qdec_table,
         "stats_file": stats_file,
         "measure": measure,
@@ -223,110 +222,110 @@ def long_stats_slopes_cargs(
     cargs.append("long_stats_slopes")
     cargs.extend([
         "--qdec",
-        execution.input_file(params.get("qdec_table"))
+        execution.input_file(params.get("qdec_table", None))
     ])
     cargs.extend([
         "--stats",
-        execution.input_file(params.get("stats_file"))
+        execution.input_file(params.get("stats_file", None))
     ])
     cargs.extend([
         "--meas",
-        params.get("measure")
+        params.get("measure", None)
     ])
     cargs.extend([
         "--sd",
-        params.get("subjects_dir")
+        params.get("subjects_dir", None)
     ])
-    if params.get("do_avg"):
+    if params.get("do_avg", False):
         cargs.append("--do-avg")
-    if params.get("do_rate"):
+    if params.get("do_rate", False):
         cargs.append("--do-rate")
-    if params.get("do_pc1fit"):
+    if params.get("do_pc1fit", False):
         cargs.append("--do-pc1fit")
-    if params.get("do_pc1"):
+    if params.get("do_pc1", False):
         cargs.append("--do-pc1")
-    if params.get("do_spc"):
+    if params.get("do_spc", False):
         cargs.append("--do-spc")
-    if params.get("do_stack"):
+    if params.get("do_stack", False):
         cargs.append("--do-stack")
-    if params.get("resid") is not None:
+    if params.get("resid", None) is not None:
         cargs.extend([
             "--resid",
-            str(params.get("resid"))
+            str(params.get("resid", None))
         ])
-    if params.get("time_var") is not None:
+    if params.get("time_var", None) is not None:
         cargs.extend([
             "--time",
-            params.get("time_var")
+            params.get("time_var", None)
         ])
-    if params.get("generic_time"):
+    if params.get("generic_time", False):
         cargs.append("--generic-time")
-    if params.get("cross_sectional"):
+    if params.get("cross_sectional", False):
         cargs.append("--cross")
-    if params.get("out_avg") is not None:
+    if params.get("out_avg", None) is not None:
         cargs.extend([
             "--out-avg",
-            params.get("out_avg")
+            params.get("out_avg", None)
         ])
-    if params.get("out_rate") is not None:
+    if params.get("out_rate", None) is not None:
         cargs.extend([
             "--out-rate",
-            params.get("out_rate")
+            params.get("out_rate", None)
         ])
-    if params.get("out_pc1fit") is not None:
+    if params.get("out_pc1fit", None) is not None:
         cargs.extend([
             "--out-pc1fit",
-            params.get("out_pc1fit")
+            params.get("out_pc1fit", None)
         ])
-    if params.get("out_pc1") is not None:
+    if params.get("out_pc1", None) is not None:
         cargs.extend([
             "--out-pc1",
-            params.get("out_pc1")
+            params.get("out_pc1", None)
         ])
-    if params.get("out_spc") is not None:
+    if params.get("out_spc", None) is not None:
         cargs.extend([
             "--out-spc",
-            params.get("out_spc")
+            params.get("out_spc", None)
         ])
-    if params.get("out_resid") is not None:
+    if params.get("out_resid", None) is not None:
         cargs.extend([
             "--out-resid",
-            params.get("out_resid")
+            params.get("out_resid", None)
         ])
-    if params.get("out_stack") is not None:
+    if params.get("out_stack", None) is not None:
         cargs.extend([
             "--out-stack",
-            params.get("out_stack")
+            params.get("out_stack", None)
         ])
-    if params.get("stack_avg") is not None:
+    if params.get("stack_avg", None) is not None:
         cargs.extend([
             "--stack-avg",
-            params.get("stack_avg")
+            params.get("stack_avg", None)
         ])
-    if params.get("stack_rate") is not None:
+    if params.get("stack_rate", None) is not None:
         cargs.extend([
             "--stack-rate",
-            params.get("stack_rate")
+            params.get("stack_rate", None)
         ])
-    if params.get("stack_pc1fit") is not None:
+    if params.get("stack_pc1fit", None) is not None:
         cargs.extend([
             "--stack-pc1fit",
-            params.get("stack_pc1fit")
+            params.get("stack_pc1fit", None)
         ])
-    if params.get("stack_pc1") is not None:
+    if params.get("stack_pc1", None) is not None:
         cargs.extend([
             "--stack-pc1",
-            params.get("stack_pc1")
+            params.get("stack_pc1", None)
         ])
-    if params.get("stack_spc") is not None:
+    if params.get("stack_spc", None) is not None:
         cargs.extend([
             "--stack-spc",
-            params.get("stack_spc")
+            params.get("stack_spc", None)
         ])
-    if params.get("stack_resid") is not None:
+    if params.get("stack_resid", None) is not None:
         cargs.extend([
             "--stack-resid",
-            params.get("stack_resid")
+            params.get("stack_resid", None)
         ])
     return cargs
 
@@ -499,7 +498,6 @@ def long_stats_slopes(
 __all__ = [
     "LONG_STATS_SLOPES_METADATA",
     "LongStatsSlopesOutputs",
-    "LongStatsSlopesParameters",
     "long_stats_slopes",
     "long_stats_slopes_execute",
     "long_stats_slopes_params",

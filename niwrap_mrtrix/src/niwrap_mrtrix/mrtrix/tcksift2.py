@@ -14,14 +14,56 @@ TCKSIFT2_METADATA = Metadata(
 
 
 Tcksift2ConfigParameters = typing.TypedDict('Tcksift2ConfigParameters', {
-    "@type": typing.Literal["mrtrix.tcksift2.config"],
+    "@type": typing.NotRequired[typing.Literal["config"]],
+    "key": str,
+    "value": str,
+})
+Tcksift2ConfigParametersTagged = typing.TypedDict('Tcksift2ConfigParametersTagged', {
+    "@type": typing.Literal["config"],
     "key": str,
     "value": str,
 })
 
 
 Tcksift2Parameters = typing.TypedDict('Tcksift2Parameters', {
-    "@type": typing.Literal["mrtrix.tcksift2"],
+    "@type": typing.NotRequired[typing.Literal["mrtrix/tcksift2"]],
+    "proc_mask": typing.NotRequired[InputPathType | None],
+    "act": typing.NotRequired[InputPathType | None],
+    "fd_scale_gm": bool,
+    "no_dilate_lut": bool,
+    "make_null_lobes": bool,
+    "remove_untracked": bool,
+    "fd_thresh": typing.NotRequired[float | None],
+    "csv": typing.NotRequired[str | None],
+    "out_mu": typing.NotRequired[str | None],
+    "output_debug": bool,
+    "out_coeffs": typing.NotRequired[str | None],
+    "reg_tikhonov": typing.NotRequired[float | None],
+    "reg_tv": typing.NotRequired[float | None],
+    "min_td_frac": typing.NotRequired[float | None],
+    "min_iters": typing.NotRequired[int | None],
+    "max_iters": typing.NotRequired[int | None],
+    "min_factor": typing.NotRequired[float | None],
+    "min_coeff": typing.NotRequired[float | None],
+    "max_factor": typing.NotRequired[float | None],
+    "max_coeff": typing.NotRequired[float | None],
+    "max_coeff_step": typing.NotRequired[float | None],
+    "min_cf_decrease": typing.NotRequired[float | None],
+    "linear": bool,
+    "info": bool,
+    "quiet": bool,
+    "debug": bool,
+    "force": bool,
+    "nthreads": typing.NotRequired[int | None],
+    "config": typing.NotRequired[list[Tcksift2ConfigParameters] | None],
+    "help": bool,
+    "version": bool,
+    "in_tracks": InputPathType,
+    "in_fod": InputPathType,
+    "out_weights": str,
+})
+Tcksift2ParametersTagged = typing.TypedDict('Tcksift2ParametersTagged', {
+    "@type": typing.Literal["mrtrix/tcksift2"],
     "proc_mask": typing.NotRequired[InputPathType | None],
     "act": typing.NotRequired[InputPathType | None],
     "fd_scale_gm": bool,
@@ -59,43 +101,10 @@ Tcksift2Parameters = typing.TypedDict('Tcksift2Parameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "mrtrix.tcksift2": tcksift2_cargs,
-        "mrtrix.tcksift2.config": tcksift2_config_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "mrtrix.tcksift2": tcksift2_outputs,
-    }.get(t)
-
-
 def tcksift2_config_params(
     key: str,
     value: str,
-) -> Tcksift2ConfigParameters:
+) -> Tcksift2ConfigParametersTagged:
     """
     Build parameters.
     
@@ -106,7 +115,7 @@ def tcksift2_config_params(
         Parameter dictionary
     """
     params = {
-        "@type": "mrtrix.tcksift2.config",
+        "@type": "config",
         "key": key,
         "value": value,
     }
@@ -128,14 +137,14 @@ def tcksift2_config_cargs(
     """
     cargs = []
     cargs.append("-config")
-    cargs.append(params.get("key"))
-    cargs.append(params.get("value"))
+    cargs.append(params.get("key", None))
+    cargs.append(params.get("value", None))
     return cargs
 
 
 class Tcksift2Outputs(typing.NamedTuple):
     """
-    Output object returned when calling `tcksift2(...)`.
+    Output object returned when calling `Tcksift2Parameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -186,7 +195,7 @@ def tcksift2_params(
     config: list[Tcksift2ConfigParameters] | None = None,
     help_: bool = False,
     version: bool = False,
-) -> Tcksift2Parameters:
+) -> Tcksift2ParametersTagged:
     """
     Build parameters.
     
@@ -277,7 +286,7 @@ def tcksift2_params(
         Parameter dictionary
     """
     params = {
-        "@type": "mrtrix.tcksift2",
+        "@type": "mrtrix/tcksift2",
         "fd_scale_gm": fd_scale_gm,
         "no_dilate_lut": no_dilate_lut,
         "make_null_lobes": make_null_lobes,
@@ -350,125 +359,125 @@ def tcksift2_cargs(
     """
     cargs = []
     cargs.append("tcksift2")
-    if params.get("proc_mask") is not None:
+    if params.get("proc_mask", None) is not None:
         cargs.extend([
             "-proc_mask",
-            execution.input_file(params.get("proc_mask"))
+            execution.input_file(params.get("proc_mask", None))
         ])
-    if params.get("act") is not None:
+    if params.get("act", None) is not None:
         cargs.extend([
             "-act",
-            execution.input_file(params.get("act"))
+            execution.input_file(params.get("act", None))
         ])
-    if params.get("fd_scale_gm"):
+    if params.get("fd_scale_gm", False):
         cargs.append("-fd_scale_gm")
-    if params.get("no_dilate_lut"):
+    if params.get("no_dilate_lut", False):
         cargs.append("-no_dilate_lut")
-    if params.get("make_null_lobes"):
+    if params.get("make_null_lobes", False):
         cargs.append("-make_null_lobes")
-    if params.get("remove_untracked"):
+    if params.get("remove_untracked", False):
         cargs.append("-remove_untracked")
-    if params.get("fd_thresh") is not None:
+    if params.get("fd_thresh", None) is not None:
         cargs.extend([
             "-fd_thresh",
-            str(params.get("fd_thresh"))
+            str(params.get("fd_thresh", None))
         ])
-    if params.get("csv") is not None:
+    if params.get("csv", None) is not None:
         cargs.extend([
             "-csv",
-            params.get("csv")
+            params.get("csv", None)
         ])
-    if params.get("out_mu") is not None:
+    if params.get("out_mu", None) is not None:
         cargs.extend([
             "-out_mu",
-            params.get("out_mu")
+            params.get("out_mu", None)
         ])
-    if params.get("output_debug"):
+    if params.get("output_debug", False):
         cargs.append("-output_debug")
-    if params.get("out_coeffs") is not None:
+    if params.get("out_coeffs", None) is not None:
         cargs.extend([
             "-out_coeffs",
-            params.get("out_coeffs")
+            params.get("out_coeffs", None)
         ])
-    if params.get("reg_tikhonov") is not None:
+    if params.get("reg_tikhonov", None) is not None:
         cargs.extend([
             "-reg_tikhonov",
-            str(params.get("reg_tikhonov"))
+            str(params.get("reg_tikhonov", None))
         ])
-    if params.get("reg_tv") is not None:
+    if params.get("reg_tv", None) is not None:
         cargs.extend([
             "-reg_tv",
-            str(params.get("reg_tv"))
+            str(params.get("reg_tv", None))
         ])
-    if params.get("min_td_frac") is not None:
+    if params.get("min_td_frac", None) is not None:
         cargs.extend([
             "-min_td_frac",
-            str(params.get("min_td_frac"))
+            str(params.get("min_td_frac", None))
         ])
-    if params.get("min_iters") is not None:
+    if params.get("min_iters", None) is not None:
         cargs.extend([
             "-min_iters",
-            str(params.get("min_iters"))
+            str(params.get("min_iters", None))
         ])
-    if params.get("max_iters") is not None:
+    if params.get("max_iters", None) is not None:
         cargs.extend([
             "-max_iters",
-            str(params.get("max_iters"))
+            str(params.get("max_iters", None))
         ])
-    if params.get("min_factor") is not None:
+    if params.get("min_factor", None) is not None:
         cargs.extend([
             "-min_factor",
-            str(params.get("min_factor"))
+            str(params.get("min_factor", None))
         ])
-    if params.get("min_coeff") is not None:
+    if params.get("min_coeff", None) is not None:
         cargs.extend([
             "-min_coeff",
-            str(params.get("min_coeff"))
+            str(params.get("min_coeff", None))
         ])
-    if params.get("max_factor") is not None:
+    if params.get("max_factor", None) is not None:
         cargs.extend([
             "-max_factor",
-            str(params.get("max_factor"))
+            str(params.get("max_factor", None))
         ])
-    if params.get("max_coeff") is not None:
+    if params.get("max_coeff", None) is not None:
         cargs.extend([
             "-max_coeff",
-            str(params.get("max_coeff"))
+            str(params.get("max_coeff", None))
         ])
-    if params.get("max_coeff_step") is not None:
+    if params.get("max_coeff_step", None) is not None:
         cargs.extend([
             "-max_coeff_step",
-            str(params.get("max_coeff_step"))
+            str(params.get("max_coeff_step", None))
         ])
-    if params.get("min_cf_decrease") is not None:
+    if params.get("min_cf_decrease", None) is not None:
         cargs.extend([
             "-min_cf_decrease",
-            str(params.get("min_cf_decrease"))
+            str(params.get("min_cf_decrease", None))
         ])
-    if params.get("linear"):
+    if params.get("linear", False):
         cargs.append("-linear")
-    if params.get("info"):
+    if params.get("info", False):
         cargs.append("-info")
-    if params.get("quiet"):
+    if params.get("quiet", False):
         cargs.append("-quiet")
-    if params.get("debug"):
+    if params.get("debug", False):
         cargs.append("-debug")
-    if params.get("force"):
+    if params.get("force", False):
         cargs.append("-force")
-    if params.get("nthreads") is not None:
+    if params.get("nthreads", None) is not None:
         cargs.extend([
             "-nthreads",
-            str(params.get("nthreads"))
+            str(params.get("nthreads", None))
         ])
-    if params.get("config") is not None:
-        cargs.extend([a for c in [dyn_cargs(s["@type"])(s, execution) for s in params.get("config")] for a in c])
-    if params.get("help"):
+    if params.get("config", None) is not None:
+        cargs.extend([a for c in [tcksift2_config_cargs(s, execution) for s in params.get("config", None)] for a in c])
+    if params.get("help", False):
         cargs.append("-help")
-    if params.get("version"):
+    if params.get("version", False):
         cargs.append("-version")
-    cargs.append(execution.input_file(params.get("in_tracks")))
-    cargs.append(execution.input_file(params.get("in_fod")))
-    cargs.append(params.get("out_weights"))
+    cargs.append(execution.input_file(params.get("in_tracks", None)))
+    cargs.append(execution.input_file(params.get("in_fod", None)))
+    cargs.append(params.get("out_weights", None))
     return cargs
 
 
@@ -487,10 +496,10 @@ def tcksift2_outputs(
     """
     ret = Tcksift2Outputs(
         root=execution.output_file("."),
-        out_weights=execution.output_file(params.get("out_weights")),
-        csv_=execution.output_file(params.get("csv")) if (params.get("csv") is not None) else None,
-        out_mu=execution.output_file(params.get("out_mu")) if (params.get("out_mu") is not None) else None,
-        out_coeffs=execution.output_file(params.get("out_coeffs")) if (params.get("out_coeffs") is not None) else None,
+        out_weights=execution.output_file(params.get("out_weights", None)),
+        csv_=execution.output_file(params.get("csv", None)) if (params.get("csv") is not None) else None,
+        out_mu=execution.output_file(params.get("out_mu", None)) if (params.get("out_mu") is not None) else None,
+        out_coeffs=execution.output_file(params.get("out_coeffs", None)) if (params.get("out_coeffs") is not None) else None,
     )
     return ret
 
@@ -725,9 +734,7 @@ def tcksift2(
 
 __all__ = [
     "TCKSIFT2_METADATA",
-    "Tcksift2ConfigParameters",
     "Tcksift2Outputs",
-    "Tcksift2Parameters",
     "tcksift2",
     "tcksift2_config_params",
     "tcksift2_execute",

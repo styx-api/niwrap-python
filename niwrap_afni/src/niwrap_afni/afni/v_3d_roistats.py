@@ -14,7 +14,24 @@ V_3D_ROISTATS_METADATA = Metadata(
 
 
 V3dRoistatsParameters = typing.TypedDict('V3dRoistatsParameters', {
-    "@type": typing.Literal["afni.3dROIstats"],
+    "@type": typing.NotRequired[typing.Literal["afni/3dROIstats"]],
+    "in_file": InputPathType,
+    "mask": typing.NotRequired[InputPathType | None],
+    "debug": bool,
+    "format1D": bool,
+    "format1DR": bool,
+    "mask_f2short": bool,
+    "mask_file": typing.NotRequired[InputPathType | None],
+    "nobriklab": bool,
+    "nomeanout": bool,
+    "num_roi": typing.NotRequired[int | None],
+    "quiet": bool,
+    "roisel": typing.NotRequired[InputPathType | None],
+    "stat": typing.NotRequired[list[InputPathType] | None],
+    "zerofill": typing.NotRequired[str | None],
+})
+V3dRoistatsParametersTagged = typing.TypedDict('V3dRoistatsParametersTagged', {
+    "@type": typing.Literal["afni/3dROIstats"],
     "in_file": InputPathType,
     "mask": typing.NotRequired[InputPathType | None],
     "debug": bool,
@@ -32,40 +49,9 @@ V3dRoistatsParameters = typing.TypedDict('V3dRoistatsParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "afni.3dROIstats": v_3d_roistats_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-    }.get(t)
-
-
 class V3dRoistatsOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `v_3d_roistats(...)`.
+    Output object returned when calling `V3dRoistatsParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -93,7 +79,7 @@ def v_3d_roistats_params(
     roisel: InputPathType | None = None,
     stat_: list[InputPathType] | None = None,
     zerofill: str | None = None,
-) -> V3dRoistatsParameters:
+) -> V3dRoistatsParametersTagged:
     """
     Build parameters.
     
@@ -146,7 +132,7 @@ def v_3d_roistats_params(
         Parameter dictionary
     """
     params = {
-        "@type": "afni.3dROIstats",
+        "@type": "afni/3dROIstats",
         "in_file": in_file,
         "debug": debug,
         "format1D": format1_d,
@@ -186,47 +172,47 @@ def v_3d_roistats_cargs(
     """
     cargs = []
     cargs.append("3dROIstats")
-    cargs.append(execution.input_file(params.get("in_file")))
-    if params.get("mask") is not None:
+    cargs.append(execution.input_file(params.get("in_file", None)))
+    if params.get("mask", None) is not None:
         cargs.extend([
             "-mask",
-            execution.input_file(params.get("mask"))
+            execution.input_file(params.get("mask", None))
         ])
-    if params.get("debug"):
+    if params.get("debug", False):
         cargs.append("-debug")
-    if params.get("format1D"):
+    if params.get("format1D", False):
         cargs.append("-1Dformat")
-    if params.get("format1DR"):
+    if params.get("format1DR", False):
         cargs.append("-1DRformat")
-    if params.get("mask_f2short"):
+    if params.get("mask_f2short", False):
         cargs.append("-mask_f2short")
-    if params.get("mask_file") is not None:
+    if params.get("mask_file", None) is not None:
         cargs.extend([
             "-mask",
-            execution.input_file(params.get("mask_file"))
+            execution.input_file(params.get("mask_file", None))
         ])
-    if params.get("nobriklab"):
+    if params.get("nobriklab", False):
         cargs.append("-nobriklab")
-    if params.get("nomeanout"):
+    if params.get("nomeanout", False):
         cargs.append("-nomeanout")
-    if params.get("num_roi") is not None:
+    if params.get("num_roi", None) is not None:
         cargs.extend([
             "-numroi",
-            str(params.get("num_roi"))
+            str(params.get("num_roi", None))
         ])
-    if params.get("quiet"):
+    if params.get("quiet", False):
         cargs.append("-quiet")
-    if params.get("roisel") is not None:
+    if params.get("roisel", None) is not None:
         cargs.extend([
             "-roisel",
-            execution.input_file(params.get("roisel"))
+            execution.input_file(params.get("roisel", None))
         ])
-    if params.get("stat") is not None:
-        cargs.extend([execution.input_file(f) for f in params.get("stat")])
-    if params.get("zerofill") is not None:
+    if params.get("stat", None) is not None:
+        cargs.extend([execution.input_file(f) for f in params.get("stat", None)])
+    if params.get("zerofill", None) is not None:
         cargs.extend([
             "-zerofill",
-            params.get("zerofill")
+            params.get("zerofill", None)
         ])
     return cargs
 
@@ -375,7 +361,6 @@ def v_3d_roistats(
 
 __all__ = [
     "V3dRoistatsOutputs",
-    "V3dRoistatsParameters",
     "V_3D_ROISTATS_METADATA",
     "v_3d_roistats",
     "v_3d_roistats_execute",

@@ -14,45 +14,18 @@ V__NO_POUND_METADATA = Metadata(
 
 
 VNoPoundParameters = typing.TypedDict('VNoPoundParameters', {
-    "@type": typing.Literal["afni.@NoPound"],
+    "@type": typing.NotRequired[typing.Literal["afni/@NoPound"]],
+    "afni_files": list[str],
+})
+VNoPoundParametersTagged = typing.TypedDict('VNoPoundParametersTagged', {
+    "@type": typing.Literal["afni/@NoPound"],
     "afni_files": list[str],
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "afni.@NoPound": v__no_pound_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-    }.get(t)
-
-
 class VNoPoundOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `v__no_pound(...)`.
+    Output object returned when calling `VNoPoundParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -60,7 +33,7 @@ class VNoPoundOutputs(typing.NamedTuple):
 
 def v__no_pound_params(
     afni_files: list[str],
-) -> VNoPoundParameters:
+) -> VNoPoundParametersTagged:
     """
     Build parameters.
     
@@ -71,7 +44,7 @@ def v__no_pound_params(
         Parameter dictionary
     """
     params = {
-        "@type": "afni.@NoPound",
+        "@type": "afni/@NoPound",
         "afni_files": afni_files,
     }
     return params
@@ -92,7 +65,7 @@ def v__no_pound_cargs(
     """
     cargs = []
     cargs.append("@NoPound")
-    cargs.extend(params.get("afni_files"))
+    cargs.extend(params.get("afni_files", None))
     return cargs
 
 
@@ -171,7 +144,6 @@ def v__no_pound(
 
 __all__ = [
     "VNoPoundOutputs",
-    "VNoPoundParameters",
     "V__NO_POUND_METADATA",
     "v__no_pound",
     "v__no_pound_execute",

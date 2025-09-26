@@ -14,7 +14,21 @@ V_3D_MULTI_THRESH_METADATA = Metadata(
 
 
 V3dMultiThreshParameters = typing.TypedDict('V3dMultiThreshParameters', {
-    "@type": typing.Literal["afni.3dMultiThresh"],
+    "@type": typing.NotRequired[typing.Literal["afni/3dMultiThresh"]],
+    "mthresh_file": InputPathType,
+    "input_file": InputPathType,
+    "index": typing.NotRequired[float | None],
+    "signed_flag": typing.NotRequired[str | None],
+    "positive_sign_flag": bool,
+    "negative_sign_flag": bool,
+    "prefix": typing.NotRequired[str | None],
+    "mask_only_flag": bool,
+    "all_mask": typing.NotRequired[str | None],
+    "no_zero_flag": bool,
+    "quiet_flag": bool,
+})
+V3dMultiThreshParametersTagged = typing.TypedDict('V3dMultiThreshParametersTagged', {
+    "@type": typing.Literal["afni/3dMultiThresh"],
     "mthresh_file": InputPathType,
     "input_file": InputPathType,
     "index": typing.NotRequired[float | None],
@@ -29,41 +43,9 @@ V3dMultiThreshParameters = typing.TypedDict('V3dMultiThreshParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "afni.3dMultiThresh": v_3d_multi_thresh_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "afni.3dMultiThresh": v_3d_multi_thresh_outputs,
-    }.get(t)
-
-
 class V3dMultiThreshOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `v_3d_multi_thresh(...)`.
+    Output object returned when calling `V3dMultiThreshParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -88,7 +70,7 @@ def v_3d_multi_thresh_params(
     all_mask: str | None = None,
     no_zero_flag: bool = False,
     quiet_flag: bool = False,
-) -> V3dMultiThreshParameters:
+) -> V3dMultiThreshParametersTagged:
     """
     Build parameters.
     
@@ -114,7 +96,7 @@ def v_3d_multi_thresh_params(
         Parameter dictionary
     """
     params = {
-        "@type": "afni.3dMultiThresh",
+        "@type": "afni/3dMultiThresh",
         "mthresh_file": mthresh_file,
         "input_file": input_file,
         "positive_sign_flag": positive_sign_flag,
@@ -151,41 +133,41 @@ def v_3d_multi_thresh_cargs(
     cargs.append("3dMultiThresh")
     cargs.extend([
         "-mthresh",
-        execution.input_file(params.get("mthresh_file"))
+        execution.input_file(params.get("mthresh_file", None))
     ])
     cargs.extend([
         "-input",
-        execution.input_file(params.get("input_file"))
+        execution.input_file(params.get("input_file", None))
     ])
-    if params.get("index") is not None:
+    if params.get("index", None) is not None:
         cargs.extend([
             "-1tindex",
-            str(params.get("index"))
+            str(params.get("index", None))
         ])
-    if params.get("signed_flag") is not None:
+    if params.get("signed_flag", None) is not None:
         cargs.extend([
             "-signed",
-            params.get("signed_flag")
+            params.get("signed_flag", None)
         ])
-    if params.get("positive_sign_flag"):
+    if params.get("positive_sign_flag", False):
         cargs.append("-pos")
-    if params.get("negative_sign_flag"):
+    if params.get("negative_sign_flag", False):
         cargs.append("-neg")
-    if params.get("prefix") is not None:
+    if params.get("prefix", None) is not None:
         cargs.extend([
             "-prefix",
-            params.get("prefix")
+            params.get("prefix", None)
         ])
-    if params.get("mask_only_flag"):
+    if params.get("mask_only_flag", False):
         cargs.append("-maskonly")
-    if params.get("all_mask") is not None:
+    if params.get("all_mask", None) is not None:
         cargs.extend([
             "-allmask",
-            params.get("all_mask")
+            params.get("all_mask", None)
         ])
-    if params.get("no_zero_flag"):
+    if params.get("no_zero_flag", False):
         cargs.append("-nozero")
-    if params.get("quiet_flag"):
+    if params.get("quiet_flag", False):
         cargs.append("-quiet")
     return cargs
 
@@ -205,9 +187,9 @@ def v_3d_multi_thresh_outputs(
     """
     ret = V3dMultiThreshOutputs(
         root=execution.output_file("."),
-        output_file=execution.output_file(params.get("prefix") + ".nii.gz") if (params.get("prefix") is not None) else None,
-        mask_output=execution.output_file(params.get("prefix") + "_mask.nii.gz") if (params.get("prefix") is not None) else None,
-        all_mask_output=execution.output_file(params.get("all_mask") + ".nii.gz") if (params.get("all_mask") is not None) else None,
+        output_file=execution.output_file(params.get("prefix", None) + ".nii.gz") if (params.get("prefix") is not None) else None,
+        mask_output=execution.output_file(params.get("prefix", None) + "_mask.nii.gz") if (params.get("prefix") is not None) else None,
+        all_mask_output=execution.output_file(params.get("all_mask", None) + ".nii.gz") if (params.get("all_mask") is not None) else None,
     )
     return ret
 
@@ -303,7 +285,6 @@ def v_3d_multi_thresh(
 
 __all__ = [
     "V3dMultiThreshOutputs",
-    "V3dMultiThreshParameters",
     "V_3D_MULTI_THRESH_METADATA",
     "v_3d_multi_thresh",
     "v_3d_multi_thresh_execute",

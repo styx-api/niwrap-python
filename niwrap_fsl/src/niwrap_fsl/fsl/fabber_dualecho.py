@@ -14,7 +14,45 @@ FABBER_DUALECHO_METADATA = Metadata(
 
 
 FabberDualechoParameters = typing.TypedDict('FabberDualechoParameters', {
-    "@type": typing.Literal["fsl.fabber_dualecho"],
+    "@type": typing.NotRequired[typing.Literal["fsl/fabber_dualecho"]],
+    "output_directory": str,
+    "method": str,
+    "model": str,
+    "data": InputPathType,
+    "data_order": typing.NotRequired[str | None],
+    "mask_file": typing.NotRequired[InputPathType | None],
+    "mt_list": typing.NotRequired[float | None],
+    "supp_data": typing.NotRequired[InputPathType | None],
+    "options_file": typing.NotRequired[InputPathType | None],
+    "help_flag": bool,
+    "list_methods_flag": bool,
+    "list_models_flag": bool,
+    "list_params_flag": bool,
+    "desc_params_flag": bool,
+    "list_outputs_flag": bool,
+    "evaluate": typing.NotRequired[str | None],
+    "evaluate_params": typing.NotRequired[str | None],
+    "evaluate_nt": typing.NotRequired[float | None],
+    "simple_output_flag": bool,
+    "overwrite_flag": bool,
+    "link_to_latest_flag": bool,
+    "load_models": typing.NotRequired[InputPathType | None],
+    "dump_param_names_flag": bool,
+    "save_model_fit_flag": bool,
+    "save_residuals_flag": bool,
+    "save_model_extras_flag": bool,
+    "save_mvn_flag": bool,
+    "save_mean_flag": bool,
+    "save_std_flag": bool,
+    "save_var_flag": bool,
+    "save_zstat_flag": bool,
+    "save_noise_mean_flag": bool,
+    "save_noise_std_flag": bool,
+    "save_free_energy_flag": bool,
+    "debug_flag": bool,
+})
+FabberDualechoParametersTagged = typing.TypedDict('FabberDualechoParametersTagged', {
+    "@type": typing.Literal["fsl/fabber_dualecho"],
     "output_directory": str,
     "method": str,
     "model": str,
@@ -53,41 +91,9 @@ FabberDualechoParameters = typing.TypedDict('FabberDualechoParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "fsl.fabber_dualecho": fabber_dualecho_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "fsl.fabber_dualecho": fabber_dualecho_outputs,
-    }.get(t)
-
-
 class FabberDualechoOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `fabber_dualecho(...)`.
+    Output object returned when calling `FabberDualechoParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -131,7 +137,7 @@ def fabber_dualecho_params(
     save_noise_std_flag: bool = False,
     save_free_energy_flag: bool = False,
     debug_flag: bool = False,
-) -> FabberDualechoParameters:
+) -> FabberDualechoParametersTagged:
     """
     Build parameters.
     
@@ -198,7 +204,7 @@ def fabber_dualecho_params(
         Parameter dictionary
     """
     params = {
-        "@type": "fsl.fabber_dualecho",
+        "@type": "fsl/fabber_dualecho",
         "output_directory": output_directory,
         "method": method,
         "model": model,
@@ -262,107 +268,107 @@ def fabber_dualecho_cargs(
     """
     cargs = []
     cargs.append("fabber_dualecho")
-    cargs.append(params.get("output_directory"))
+    cargs.append(params.get("output_directory", None))
     cargs.extend([
         "--method",
-        params.get("method")
+        params.get("method", None)
     ])
     cargs.extend([
         "--model",
-        params.get("model")
+        params.get("model", None)
     ])
     cargs.extend([
         "--data",
-        execution.input_file(params.get("data"))
+        execution.input_file(params.get("data", None))
     ])
-    if params.get("data_order") is not None:
+    if params.get("data_order", None) is not None:
         cargs.extend([
             "--data-order",
-            params.get("data_order")
+            params.get("data_order", None)
         ])
-    if params.get("mask_file") is not None:
+    if params.get("mask_file", None) is not None:
         cargs.extend([
             "--mask",
-            execution.input_file(params.get("mask_file"))
+            execution.input_file(params.get("mask_file", None))
         ])
-    if params.get("mt_list") is not None:
+    if params.get("mt_list", None) is not None:
         cargs.extend([
             "--mt<n>",
-            str(params.get("mt_list"))
+            str(params.get("mt_list", None))
         ])
-    if params.get("supp_data") is not None:
+    if params.get("supp_data", None) is not None:
         cargs.extend([
             "--suppdata",
-            execution.input_file(params.get("supp_data"))
+            execution.input_file(params.get("supp_data", None))
         ])
-    if params.get("options_file") is not None:
+    if params.get("options_file", None) is not None:
         cargs.extend([
             "--optfile",
-            execution.input_file(params.get("options_file"))
+            execution.input_file(params.get("options_file", None))
         ])
-    if params.get("help_flag"):
+    if params.get("help_flag", False):
         cargs.append("--help")
-    if params.get("list_methods_flag"):
+    if params.get("list_methods_flag", False):
         cargs.append("--listmethods")
-    if params.get("list_models_flag"):
+    if params.get("list_models_flag", False):
         cargs.append("--listmodels")
-    if params.get("list_params_flag"):
+    if params.get("list_params_flag", False):
         cargs.append("--listparams")
-    if params.get("desc_params_flag"):
+    if params.get("desc_params_flag", False):
         cargs.append("--descparams")
-    if params.get("list_outputs_flag"):
+    if params.get("list_outputs_flag", False):
         cargs.append("--listoutputs")
-    if params.get("evaluate") is not None:
+    if params.get("evaluate", None) is not None:
         cargs.extend([
             "--evaluate",
-            params.get("evaluate")
+            params.get("evaluate", None)
         ])
-    if params.get("evaluate_params") is not None:
+    if params.get("evaluate_params", None) is not None:
         cargs.extend([
             "--evaluate-params",
-            params.get("evaluate_params")
+            params.get("evaluate_params", None)
         ])
-    if params.get("evaluate_nt") is not None:
+    if params.get("evaluate_nt", None) is not None:
         cargs.extend([
             "--evaluate-nt",
-            str(params.get("evaluate_nt"))
+            str(params.get("evaluate_nt", None))
         ])
-    if params.get("simple_output_flag"):
+    if params.get("simple_output_flag", False):
         cargs.append("--simple-output")
-    if params.get("overwrite_flag"):
+    if params.get("overwrite_flag", False):
         cargs.append("--overwrite")
-    if params.get("link_to_latest_flag"):
+    if params.get("link_to_latest_flag", False):
         cargs.append("--link-to-latest")
-    if params.get("load_models") is not None:
+    if params.get("load_models", None) is not None:
         cargs.extend([
             "--loadmodels",
-            execution.input_file(params.get("load_models"))
+            execution.input_file(params.get("load_models", None))
         ])
-    if params.get("dump_param_names_flag"):
+    if params.get("dump_param_names_flag", False):
         cargs.append("--dump-param-names")
-    if params.get("save_model_fit_flag"):
+    if params.get("save_model_fit_flag", False):
         cargs.append("--save-model-fit")
-    if params.get("save_residuals_flag"):
+    if params.get("save_residuals_flag", False):
         cargs.append("--save-residuals")
-    if params.get("save_model_extras_flag"):
+    if params.get("save_model_extras_flag", False):
         cargs.append("--save-model-extras")
-    if params.get("save_mvn_flag"):
+    if params.get("save_mvn_flag", False):
         cargs.append("--save-mvn")
-    if params.get("save_mean_flag"):
+    if params.get("save_mean_flag", False):
         cargs.append("--save-mean")
-    if params.get("save_std_flag"):
+    if params.get("save_std_flag", False):
         cargs.append("--save-std")
-    if params.get("save_var_flag"):
+    if params.get("save_var_flag", False):
         cargs.append("--save-var")
-    if params.get("save_zstat_flag"):
+    if params.get("save_zstat_flag", False):
         cargs.append("--save-zstat")
-    if params.get("save_noise_mean_flag"):
+    if params.get("save_noise_mean_flag", False):
         cargs.append("--save-noise-mean")
-    if params.get("save_noise_std_flag"):
+    if params.get("save_noise_std_flag", False):
         cargs.append("--save-noise-std")
-    if params.get("save_free_energy_flag"):
+    if params.get("save_free_energy_flag", False):
         cargs.append("--save-free-energy")
-    if params.get("debug_flag"):
+    if params.get("debug_flag", False):
         cargs.append("--debug")
     return cargs
 
@@ -382,7 +388,7 @@ def fabber_dualecho_outputs(
     """
     ret = FabberDualechoOutputs(
         root=execution.output_file("."),
-        output_directory=execution.output_file(params.get("output_directory")),
+        output_directory=execution.output_file(params.get("output_directory", None)),
     )
     return ret
 
@@ -568,7 +574,6 @@ def fabber_dualecho(
 __all__ = [
     "FABBER_DUALECHO_METADATA",
     "FabberDualechoOutputs",
-    "FabberDualechoParameters",
     "fabber_dualecho",
     "fabber_dualecho_execute",
     "fabber_dualecho_params",

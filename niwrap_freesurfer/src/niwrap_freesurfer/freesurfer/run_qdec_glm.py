@@ -14,45 +14,18 @@ RUN_QDEC_GLM_METADATA = Metadata(
 
 
 RunQdecGlmParameters = typing.TypedDict('RunQdecGlmParameters', {
-    "@type": typing.Literal["freesurfer.run-qdec-glm"],
+    "@type": typing.NotRequired[typing.Literal["freesurfer/run-qdec-glm"]],
+    "qdec_directory": str,
+})
+RunQdecGlmParametersTagged = typing.TypedDict('RunQdecGlmParametersTagged', {
+    "@type": typing.Literal["freesurfer/run-qdec-glm"],
     "qdec_directory": str,
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "freesurfer.run-qdec-glm": run_qdec_glm_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-    }.get(t)
-
-
 class RunQdecGlmOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `run_qdec_glm(...)`.
+    Output object returned when calling `RunQdecGlmParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -60,7 +33,7 @@ class RunQdecGlmOutputs(typing.NamedTuple):
 
 def run_qdec_glm_params(
     qdec_directory: str,
-) -> RunQdecGlmParameters:
+) -> RunQdecGlmParametersTagged:
     """
     Build parameters.
     
@@ -70,7 +43,7 @@ def run_qdec_glm_params(
         Parameter dictionary
     """
     params = {
-        "@type": "freesurfer.run-qdec-glm",
+        "@type": "freesurfer/run-qdec-glm",
         "qdec_directory": qdec_directory,
     }
     return params
@@ -93,7 +66,7 @@ def run_qdec_glm_cargs(
     cargs.append("run-qdec-glm")
     cargs.extend([
         "-glm",
-        params.get("qdec_directory")
+        params.get("qdec_directory", None)
     ])
     return cargs
 
@@ -173,7 +146,6 @@ def run_qdec_glm(
 __all__ = [
     "RUN_QDEC_GLM_METADATA",
     "RunQdecGlmOutputs",
-    "RunQdecGlmParameters",
     "run_qdec_glm",
     "run_qdec_glm_execute",
     "run_qdec_glm_params",

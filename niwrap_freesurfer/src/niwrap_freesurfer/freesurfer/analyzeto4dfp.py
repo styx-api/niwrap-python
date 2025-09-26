@@ -14,7 +14,17 @@ ANALYZETO4DFP_METADATA = Metadata(
 
 
 Analyzeto4dfpParameters = typing.TypedDict('Analyzeto4dfpParameters', {
-    "@type": typing.Literal["freesurfer.analyzeto4dfp"],
+    "@type": typing.NotRequired[typing.Literal["freesurfer/analyzeto4dfp"]],
+    "analyze_image": InputPathType,
+    "rois_scale": bool,
+    "flip_x": bool,
+    "flip_y": bool,
+    "flip_z": bool,
+    "endian": typing.NotRequired[str | None],
+    "orientation": typing.NotRequired[int | None],
+})
+Analyzeto4dfpParametersTagged = typing.TypedDict('Analyzeto4dfpParametersTagged', {
+    "@type": typing.Literal["freesurfer/analyzeto4dfp"],
     "analyze_image": InputPathType,
     "rois_scale": bool,
     "flip_x": bool,
@@ -25,40 +35,9 @@ Analyzeto4dfpParameters = typing.TypedDict('Analyzeto4dfpParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "freesurfer.analyzeto4dfp": analyzeto4dfp_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-    }.get(t)
-
-
 class Analyzeto4dfpOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `analyzeto4dfp(...)`.
+    Output object returned when calling `Analyzeto4dfpParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -72,7 +51,7 @@ def analyzeto4dfp_params(
     flip_z: bool = False,
     endian: str | None = None,
     orientation: int | None = None,
-) -> Analyzeto4dfpParameters:
+) -> Analyzeto4dfpParametersTagged:
     """
     Build parameters.
     
@@ -88,7 +67,7 @@ def analyzeto4dfp_params(
         Parameter dictionary
     """
     params = {
-        "@type": "freesurfer.analyzeto4dfp",
+        "@type": "freesurfer/analyzeto4dfp",
         "analyze_image": analyze_image,
         "rois_scale": rois_scale,
         "flip_x": flip_x,
@@ -117,24 +96,24 @@ def analyzeto4dfp_cargs(
     """
     cargs = []
     cargs.append("analyzeto4dfp")
-    cargs.append(execution.input_file(params.get("analyze_image")))
-    if params.get("rois_scale"):
+    cargs.append(execution.input_file(params.get("analyze_image", None)))
+    if params.get("rois_scale", False):
         cargs.append("-s")
-    if params.get("flip_x"):
+    if params.get("flip_x", False):
         cargs.append("-x")
-    if params.get("flip_y"):
+    if params.get("flip_y", False):
         cargs.append("-y")
-    if params.get("flip_z"):
+    if params.get("flip_z", False):
         cargs.append("-z")
-    if params.get("endian") is not None:
+    if params.get("endian", None) is not None:
         cargs.extend([
             "-@",
-            params.get("endian")
+            params.get("endian", None)
         ])
-    if params.get("orientation") is not None:
+    if params.get("orientation", None) is not None:
         cargs.extend([
             "-O",
-            str(params.get("orientation"))
+            str(params.get("orientation", None))
         ])
     return cargs
 
@@ -232,7 +211,6 @@ def analyzeto4dfp(
 __all__ = [
     "ANALYZETO4DFP_METADATA",
     "Analyzeto4dfpOutputs",
-    "Analyzeto4dfpParameters",
     "analyzeto4dfp",
     "analyzeto4dfp_execute",
     "analyzeto4dfp_params",

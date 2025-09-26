@@ -14,7 +14,18 @@ FDRVAL_METADATA = Metadata(
 
 
 FdrvalParameters = typing.TypedDict('FdrvalParameters', {
-    "@type": typing.Literal["afni.fdrval"],
+    "@type": typing.NotRequired[typing.Literal["afni/fdrval"]],
+    "dset": InputPathType,
+    "sub": float,
+    "val_list": list[float],
+    "pval": bool,
+    "ponly": bool,
+    "qonly": bool,
+    "qinput": bool,
+    "inverse": bool,
+})
+FdrvalParametersTagged = typing.TypedDict('FdrvalParametersTagged', {
+    "@type": typing.Literal["afni/fdrval"],
     "dset": InputPathType,
     "sub": float,
     "val_list": list[float],
@@ -26,41 +37,9 @@ FdrvalParameters = typing.TypedDict('FdrvalParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "afni.fdrval": fdrval_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "afni.fdrval": fdrval_outputs,
-    }.get(t)
-
-
 class FdrvalOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `fdrval(...)`.
+    Output object returned when calling `FdrvalParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -77,7 +56,7 @@ def fdrval_params(
     qonly: bool = False,
     qinput: bool = False,
     inverse: bool = False,
-) -> FdrvalParameters:
+) -> FdrvalParametersTagged:
     """
     Build parameters.
     
@@ -96,7 +75,7 @@ def fdrval_params(
         Parameter dictionary
     """
     params = {
-        "@type": "afni.fdrval",
+        "@type": "afni/fdrval",
         "dset": dset,
         "sub": sub,
         "val_list": val_list,
@@ -124,18 +103,18 @@ def fdrval_cargs(
     """
     cargs = []
     cargs.append("fdrval")
-    cargs.append(execution.input_file(params.get("dset")))
-    cargs.append(str(params.get("sub")))
-    cargs.extend(map(str, params.get("val_list")))
-    if params.get("pval"):
+    cargs.append(execution.input_file(params.get("dset", None)))
+    cargs.append(str(params.get("sub", None)))
+    cargs.extend(map(str, params.get("val_list", None)))
+    if params.get("pval", False):
         cargs.append("-pval")
-    if params.get("ponly"):
+    if params.get("ponly", False):
         cargs.append("-ponly")
-    if params.get("qonly"):
+    if params.get("qonly", False):
         cargs.append("-qonly")
-    if params.get("qinput"):
+    if params.get("qinput", False):
         cargs.append("-qinput")
-    if params.get("inverse"):
+    if params.get("inverse", False):
         cargs.append("-inverse")
     return cargs
 
@@ -239,7 +218,6 @@ def fdrval(
 __all__ = [
     "FDRVAL_METADATA",
     "FdrvalOutputs",
-    "FdrvalParameters",
     "fdrval",
     "fdrval_execute",
     "fdrval_params",

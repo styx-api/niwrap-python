@@ -14,46 +14,18 @@ V__IS_OBLIQUE_METADATA = Metadata(
 
 
 VIsObliqueParameters = typing.TypedDict('VIsObliqueParameters', {
-    "@type": typing.Literal["afni.@isOblique"],
+    "@type": typing.NotRequired[typing.Literal["afni/@isOblique"]],
+    "infile": InputPathType,
+})
+VIsObliqueParametersTagged = typing.TypedDict('VIsObliqueParametersTagged', {
+    "@type": typing.Literal["afni/@isOblique"],
     "infile": InputPathType,
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "afni.@isOblique": v__is_oblique_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "afni.@isOblique": v__is_oblique_outputs,
-    }.get(t)
-
-
 class VIsObliqueOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `v__is_oblique(...)`.
+    Output object returned when calling `VIsObliqueParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -63,7 +35,7 @@ class VIsObliqueOutputs(typing.NamedTuple):
 
 def v__is_oblique_params(
     infile: InputPathType,
-) -> VIsObliqueParameters:
+) -> VIsObliqueParametersTagged:
     """
     Build parameters.
     
@@ -73,7 +45,7 @@ def v__is_oblique_params(
         Parameter dictionary
     """
     params = {
-        "@type": "afni.@isOblique",
+        "@type": "afni/@isOblique",
         "infile": infile,
     }
     return params
@@ -94,7 +66,7 @@ def v__is_oblique_cargs(
     """
     cargs = []
     cargs.append("@isOblique")
-    cargs.append(execution.input_file(params.get("infile")))
+    cargs.append(execution.input_file(params.get("infile", None)))
     return cargs
 
 
@@ -173,7 +145,6 @@ def v__is_oblique(
 
 __all__ = [
     "VIsObliqueOutputs",
-    "VIsObliqueParameters",
     "V__IS_OBLIQUE_METADATA",
     "v__is_oblique",
     "v__is_oblique_execute",

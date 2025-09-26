@@ -14,48 +14,22 @@ DEFECT_SEG_METADATA = Metadata(
 
 
 DefectSegParameters = typing.TypedDict('DefectSegParameters', {
-    "@type": typing.Literal["freesurfer.defect-seg"],
+    "@type": typing.NotRequired[typing.Literal["freesurfer/defect-seg"]],
+    "subject": str,
+    "lh_only": bool,
+    "rh_only": bool,
+})
+DefectSegParametersTagged = typing.TypedDict('DefectSegParametersTagged', {
+    "@type": typing.Literal["freesurfer/defect-seg"],
     "subject": str,
     "lh_only": bool,
     "rh_only": bool,
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "freesurfer.defect-seg": defect_seg_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "freesurfer.defect-seg": defect_seg_outputs,
-    }.get(t)
-
-
 class DefectSegOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `defect_seg(...)`.
+    Output object returned when calling `DefectSegParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -93,7 +67,7 @@ def defect_seg_params(
     subject: str,
     lh_only: bool = False,
     rh_only: bool = False,
-) -> DefectSegParameters:
+) -> DefectSegParametersTagged:
     """
     Build parameters.
     
@@ -105,7 +79,7 @@ def defect_seg_params(
         Parameter dictionary
     """
     params = {
-        "@type": "freesurfer.defect-seg",
+        "@type": "freesurfer/defect-seg",
         "subject": subject,
         "lh_only": lh_only,
         "rh_only": rh_only,
@@ -130,11 +104,11 @@ def defect_seg_cargs(
     cargs.append("defect-seg")
     cargs.extend([
         "--s",
-        params.get("subject")
+        params.get("subject", None)
     ])
-    if params.get("lh_only"):
+    if params.get("lh_only", False):
         cargs.append("--lh-only")
-    if params.get("rh_only"):
+    if params.get("rh_only", False):
         cargs.append("--rh-only")
     return cargs
 
@@ -237,7 +211,6 @@ def defect_seg(
 __all__ = [
     "DEFECT_SEG_METADATA",
     "DefectSegOutputs",
-    "DefectSegParameters",
     "defect_seg",
     "defect_seg_execute",
     "defect_seg_params",

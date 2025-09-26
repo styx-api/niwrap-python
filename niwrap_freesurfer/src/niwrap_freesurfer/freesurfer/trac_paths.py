@@ -14,7 +14,23 @@ TRAC_PATHS_METADATA = Metadata(
 
 
 TracPathsParameters = typing.TypedDict('TracPathsParameters', {
-    "@type": typing.Literal["freesurfer.trac-paths"],
+    "@type": typing.NotRequired[typing.Literal["freesurfer/trac-paths"]],
+    "dmrirc_file": InputPathType,
+    "log_file": typing.NotRequired[str | None],
+    "no_log": bool,
+    "cmd_file": typing.NotRequired[str | None],
+    "no_cmd": bool,
+    "no_isrunning": bool,
+    "umask": typing.NotRequired[str | None],
+    "group_id": typing.NotRequired[str | None],
+    "allow_core_dump": bool,
+    "debug": bool,
+    "dontrun": bool,
+    "version": bool,
+    "help": bool,
+})
+TracPathsParametersTagged = typing.TypedDict('TracPathsParametersTagged', {
+    "@type": typing.Literal["freesurfer/trac-paths"],
     "dmrirc_file": InputPathType,
     "log_file": typing.NotRequired[str | None],
     "no_log": bool,
@@ -31,40 +47,9 @@ TracPathsParameters = typing.TypedDict('TracPathsParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "freesurfer.trac-paths": trac_paths_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-    }.get(t)
-
-
 class TracPathsOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `trac_paths(...)`.
+    Output object returned when calling `TracPathsParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -84,7 +69,7 @@ def trac_paths_params(
     dontrun: bool = False,
     version: bool = False,
     help_: bool = False,
-) -> TracPathsParameters:
+) -> TracPathsParametersTagged:
     """
     Build parameters.
     
@@ -109,7 +94,7 @@ def trac_paths_params(
         Parameter dictionary
     """
     params = {
-        "@type": "freesurfer.trac-paths",
+        "@type": "freesurfer/trac-paths",
         "dmrirc_file": dmrirc_file,
         "no_log": no_log,
         "no_cmd": no_cmd,
@@ -148,43 +133,43 @@ def trac_paths_cargs(
     cargs.append("trac-paths")
     cargs.extend([
         "-c",
-        execution.input_file(params.get("dmrirc_file"))
+        execution.input_file(params.get("dmrirc_file", None))
     ])
-    if params.get("log_file") is not None:
+    if params.get("log_file", None) is not None:
         cargs.extend([
             "-log",
-            params.get("log_file")
+            params.get("log_file", None)
         ])
-    if params.get("no_log"):
+    if params.get("no_log", False):
         cargs.append("-nolog")
-    if params.get("cmd_file") is not None:
+    if params.get("cmd_file", None) is not None:
         cargs.extend([
             "-cmd",
-            params.get("cmd_file")
+            params.get("cmd_file", None)
         ])
-    if params.get("no_cmd"):
+    if params.get("no_cmd", False):
         cargs.append("-nocmd")
-    if params.get("no_isrunning"):
+    if params.get("no_isrunning", False):
         cargs.append("-no-isrunning")
-    if params.get("umask") is not None:
+    if params.get("umask", None) is not None:
         cargs.extend([
             "-umask",
-            params.get("umask")
+            params.get("umask", None)
         ])
-    if params.get("group_id") is not None:
+    if params.get("group_id", None) is not None:
         cargs.extend([
             "-grp",
-            params.get("group_id")
+            params.get("group_id", None)
         ])
-    if params.get("allow_core_dump"):
+    if params.get("allow_core_dump", False):
         cargs.append("-allowcoredump")
-    if params.get("debug"):
+    if params.get("debug", False):
         cargs.append("-debug")
-    if params.get("dontrun"):
+    if params.get("dontrun", False):
         cargs.append("-dontrun")
-    if params.get("version"):
+    if params.get("version", False):
         cargs.append("-version")
-    if params.get("help"):
+    if params.get("help", False):
         cargs.append("-help")
     return cargs
 
@@ -303,7 +288,6 @@ def trac_paths(
 __all__ = [
     "TRAC_PATHS_METADATA",
     "TracPathsOutputs",
-    "TracPathsParameters",
     "trac_paths",
     "trac_paths_execute",
     "trac_paths_params",

@@ -14,7 +14,29 @@ DMRI_PATHSTATS_METADATA = Metadata(
 
 
 DmriPathstatsParameters = typing.TypedDict('DmriPathstatsParameters', {
-    "@type": typing.Literal["freesurfer.dmri_pathstats"],
+    "@type": typing.NotRequired[typing.Literal["freesurfer/dmri_pathstats"]],
+    "intrk": InputPathType,
+    "rois": typing.NotRequired[list[InputPathType] | None],
+    "intrc": InputPathType,
+    "meas": typing.NotRequired[list[InputPathType] | None],
+    "measname": typing.NotRequired[list[str] | None],
+    "dtbase": typing.NotRequired[str | None],
+    "path": typing.NotRequired[str | None],
+    "subj": typing.NotRequired[str | None],
+    "out": typing.NotRequired[str | None],
+    "outvox": typing.NotRequired[str | None],
+    "median": typing.NotRequired[InputPathType | None],
+    "ends": typing.NotRequired[str | None],
+    "ref": typing.NotRequired[InputPathType | None],
+    "pthr": typing.NotRequired[float | None],
+    "fthr": typing.NotRequired[float | None],
+    "debug": bool,
+    "checkopts": bool,
+    "help": bool,
+    "version": bool,
+})
+DmriPathstatsParametersTagged = typing.TypedDict('DmriPathstatsParametersTagged', {
+    "@type": typing.Literal["freesurfer/dmri_pathstats"],
     "intrk": InputPathType,
     "rois": typing.NotRequired[list[InputPathType] | None],
     "intrc": InputPathType,
@@ -37,41 +59,9 @@ DmriPathstatsParameters = typing.TypedDict('DmriPathstatsParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "freesurfer.dmri_pathstats": dmri_pathstats_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "freesurfer.dmri_pathstats": dmri_pathstats_outputs,
-    }.get(t)
-
-
 class DmriPathstatsOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `dmri_pathstats(...)`.
+    Output object returned when calling `DmriPathstatsParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -103,7 +93,7 @@ def dmri_pathstats_params(
     checkopts: bool = False,
     help_: bool = False,
     version: bool = False,
-) -> DmriPathstatsParameters:
+) -> DmriPathstatsParametersTagged:
     """
     Build parameters.
     
@@ -133,7 +123,7 @@ def dmri_pathstats_params(
         Parameter dictionary
     """
     params = {
-        "@type": "freesurfer.dmri_pathstats",
+        "@type": "freesurfer/dmri_pathstats",
         "intrk": intrk,
         "intrc": intrc,
         "debug": debug,
@@ -187,84 +177,84 @@ def dmri_pathstats_cargs(
     cargs.append("dmri_pathstats")
     cargs.extend([
         "--intrk",
-        execution.input_file(params.get("intrk"))
+        execution.input_file(params.get("intrk", None))
     ])
-    if params.get("rois") is not None:
+    if params.get("rois", None) is not None:
         cargs.extend([
             "--rois",
-            *[execution.input_file(f) for f in params.get("rois")]
+            *[execution.input_file(f) for f in params.get("rois", None)]
         ])
     cargs.extend([
         "--intrc",
-        execution.input_file(params.get("intrc"))
+        execution.input_file(params.get("intrc", None))
     ])
-    if params.get("meas") is not None:
+    if params.get("meas", None) is not None:
         cargs.extend([
             "--meas",
-            *[execution.input_file(f) for f in params.get("meas")]
+            *[execution.input_file(f) for f in params.get("meas", None)]
         ])
-    if params.get("measname") is not None:
+    if params.get("measname", None) is not None:
         cargs.extend([
             "--measname",
-            *params.get("measname")
+            *params.get("measname", None)
         ])
-    if params.get("dtbase") is not None:
+    if params.get("dtbase", None) is not None:
         cargs.extend([
             "--dtbase",
-            params.get("dtbase")
+            params.get("dtbase", None)
         ])
-    if params.get("path") is not None:
+    if params.get("path", None) is not None:
         cargs.extend([
             "--path",
-            params.get("path")
+            params.get("path", None)
         ])
-    if params.get("subj") is not None:
+    if params.get("subj", None) is not None:
         cargs.extend([
             "--subj",
-            params.get("subj")
+            params.get("subj", None)
         ])
-    if params.get("out") is not None:
+    if params.get("out", None) is not None:
         cargs.extend([
             "--out",
-            params.get("out")
+            params.get("out", None)
         ])
-    if params.get("outvox") is not None:
+    if params.get("outvox", None) is not None:
         cargs.extend([
             "--outvox",
-            params.get("outvox")
+            params.get("outvox", None)
         ])
-    if params.get("median") is not None:
+    if params.get("median", None) is not None:
         cargs.extend([
             "--median",
-            execution.input_file(params.get("median"))
+            execution.input_file(params.get("median", None))
         ])
-    if params.get("ends") is not None:
+    if params.get("ends", None) is not None:
         cargs.extend([
             "--ends",
-            params.get("ends")
+            params.get("ends", None)
         ])
-    if params.get("ref") is not None:
+    if params.get("ref", None) is not None:
         cargs.extend([
             "--ref",
-            execution.input_file(params.get("ref"))
+            execution.input_file(params.get("ref", None))
         ])
-    if params.get("pthr") is not None:
+    if params.get("pthr", None) is not None:
         cargs.extend([
             "--pthr",
-            str(params.get("pthr"))
+            str(params.get("pthr", None))
         ])
-    if params.get("fthr") is not None:
+    if params.get("fthr", None) is not None:
         cargs.extend([
             "--fthr",
-            str(params.get("fthr"))
+            str(params.get("fthr", None))
         ])
-    if params.get("debug"):
+    if params.get("debug", False):
         cargs.append("--debug")
-    if params.get("checkopts"):
+    if params.get("checkopts", False):
         cargs.append("--checkopts")
-    if params.get("help"):
+    if params.get("help", False):
         cargs.append("--help")
-    if params.get("version"):
+    if params.get("version", False):
         cargs.append("--version")
     return cargs
 
@@ -284,9 +274,9 @@ def dmri_pathstats_outputs(
     """
     ret = DmriPathstatsOutputs(
         root=execution.output_file("."),
-        out_file=execution.output_file(params.get("out")) if (params.get("out") is not None) else None,
-        out_vox_file=execution.output_file(params.get("outvox")) if (params.get("outvox") is not None) else None,
-        median_file=execution.output_file(pathlib.Path(params.get("median")).name) if (params.get("median") is not None) else None,
+        out_file=execution.output_file(params.get("out", None)) if (params.get("out") is not None) else None,
+        out_vox_file=execution.output_file(params.get("outvox", None)) if (params.get("outvox") is not None) else None,
+        median_file=execution.output_file(pathlib.Path(params.get("median", None)).name) if (params.get("median") is not None) else None,
     )
     return ret
 
@@ -405,7 +395,6 @@ def dmri_pathstats(
 __all__ = [
     "DMRI_PATHSTATS_METADATA",
     "DmriPathstatsOutputs",
-    "DmriPathstatsParameters",
     "dmri_pathstats",
     "dmri_pathstats_execute",
     "dmri_pathstats_params",

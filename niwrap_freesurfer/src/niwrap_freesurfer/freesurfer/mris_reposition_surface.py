@@ -14,7 +14,17 @@ MRIS_REPOSITION_SURFACE_METADATA = Metadata(
 
 
 MrisRepositionSurfaceParameters = typing.TypedDict('MrisRepositionSurfaceParameters', {
-    "@type": typing.Literal["freesurfer.mris_reposition_surface"],
+    "@type": typing.NotRequired[typing.Literal["freesurfer/mris_reposition_surface"]],
+    "surf": InputPathType,
+    "volume": InputPathType,
+    "points": InputPathType,
+    "output": str,
+    "size": typing.NotRequired[float | None],
+    "sigma": typing.NotRequired[float | None],
+    "iterations": typing.NotRequired[float | None],
+})
+MrisRepositionSurfaceParametersTagged = typing.TypedDict('MrisRepositionSurfaceParametersTagged', {
+    "@type": typing.Literal["freesurfer/mris_reposition_surface"],
     "surf": InputPathType,
     "volume": InputPathType,
     "points": InputPathType,
@@ -25,41 +35,9 @@ MrisRepositionSurfaceParameters = typing.TypedDict('MrisRepositionSurfaceParamet
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "freesurfer.mris_reposition_surface": mris_reposition_surface_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "freesurfer.mris_reposition_surface": mris_reposition_surface_outputs,
-    }.get(t)
-
-
 class MrisRepositionSurfaceOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `mris_reposition_surface(...)`.
+    Output object returned when calling `MrisRepositionSurfaceParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -75,7 +53,7 @@ def mris_reposition_surface_params(
     size: float | None = None,
     sigma: float | None = None,
     iterations: float | None = None,
-) -> MrisRepositionSurfaceParameters:
+) -> MrisRepositionSurfaceParametersTagged:
     """
     Build parameters.
     
@@ -91,7 +69,7 @@ def mris_reposition_surface_params(
         Parameter dictionary
     """
     params = {
-        "@type": "freesurfer.mris_reposition_surface",
+        "@type": "freesurfer/mris_reposition_surface",
         "surf": surf,
         "volume": volume,
         "points": points,
@@ -123,34 +101,34 @@ def mris_reposition_surface_cargs(
     cargs.append("mris_reposition_surface")
     cargs.extend([
         "-s",
-        execution.input_file(params.get("surf"))
+        execution.input_file(params.get("surf", None))
     ])
     cargs.extend([
         "-v",
-        execution.input_file(params.get("volume"))
+        execution.input_file(params.get("volume", None))
     ])
     cargs.extend([
         "-p",
-        execution.input_file(params.get("points"))
+        execution.input_file(params.get("points", None))
     ])
     cargs.extend([
         "-o",
-        params.get("output")
+        params.get("output", None)
     ])
-    if params.get("size") is not None:
+    if params.get("size", None) is not None:
         cargs.extend([
             "-z",
-            str(params.get("size"))
+            str(params.get("size", None))
         ])
-    if params.get("sigma") is not None:
+    if params.get("sigma", None) is not None:
         cargs.extend([
             "-g",
-            str(params.get("sigma"))
+            str(params.get("sigma", None))
         ])
-    if params.get("iterations") is not None:
+    if params.get("iterations", None) is not None:
         cargs.extend([
             "-i",
-            str(params.get("iterations"))
+            str(params.get("iterations", None))
         ])
     return cargs
 
@@ -170,7 +148,7 @@ def mris_reposition_surface_outputs(
     """
     ret = MrisRepositionSurfaceOutputs(
         root=execution.output_file("."),
-        output_surface=execution.output_file(params.get("output")),
+        output_surface=execution.output_file(params.get("output", None)),
     )
     return ret
 
@@ -249,7 +227,6 @@ def mris_reposition_surface(
 __all__ = [
     "MRIS_REPOSITION_SURFACE_METADATA",
     "MrisRepositionSurfaceOutputs",
-    "MrisRepositionSurfaceParameters",
     "mris_reposition_surface",
     "mris_reposition_surface_execute",
     "mris_reposition_surface_params",

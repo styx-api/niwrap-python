@@ -14,46 +14,18 @@ V__AFNI_ORIENT_SIGN_METADATA = Metadata(
 
 
 VAfniOrientSignParameters = typing.TypedDict('VAfniOrientSignParameters', {
-    "@type": typing.Literal["afni.@AfniOrientSign"],
+    "@type": typing.NotRequired[typing.Literal["afni/@AfniOrientSign"]],
+    "infile": InputPathType,
+})
+VAfniOrientSignParametersTagged = typing.TypedDict('VAfniOrientSignParametersTagged', {
+    "@type": typing.Literal["afni/@AfniOrientSign"],
     "infile": InputPathType,
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "afni.@AfniOrientSign": v__afni_orient_sign_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "afni.@AfniOrientSign": v__afni_orient_sign_outputs,
-    }.get(t)
-
-
 class VAfniOrientSignOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `v__afni_orient_sign(...)`.
+    Output object returned when calling `VAfniOrientSignParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -63,7 +35,7 @@ class VAfniOrientSignOutputs(typing.NamedTuple):
 
 def v__afni_orient_sign_params(
     infile: InputPathType,
-) -> VAfniOrientSignParameters:
+) -> VAfniOrientSignParametersTagged:
     """
     Build parameters.
     
@@ -73,7 +45,7 @@ def v__afni_orient_sign_params(
         Parameter dictionary
     """
     params = {
-        "@type": "afni.@AfniOrientSign",
+        "@type": "afni/@AfniOrientSign",
         "infile": infile,
     }
     return params
@@ -96,7 +68,7 @@ def v__afni_orient_sign_cargs(
     cargs.append("@AfniOrientSign")
     cargs.extend([
         "-orient",
-        execution.input_file(params.get("infile"))
+        execution.input_file(params.get("infile", None))
     ])
     return cargs
 
@@ -116,7 +88,7 @@ def v__afni_orient_sign_outputs(
     """
     ret = VAfniOrientSignOutputs(
         root=execution.output_file("."),
-        outfile=execution.output_file(pathlib.Path(params.get("infile")).name + "_orient.txt"),
+        outfile=execution.output_file(pathlib.Path(params.get("infile", None)).name + "_orient.txt"),
     )
     return ret
 
@@ -176,7 +148,6 @@ def v__afni_orient_sign(
 
 __all__ = [
     "VAfniOrientSignOutputs",
-    "VAfniOrientSignParameters",
     "V__AFNI_ORIENT_SIGN_METADATA",
     "v__afni_orient_sign",
     "v__afni_orient_sign_execute",

@@ -14,7 +14,14 @@ FSLADD_METADATA = Metadata(
 
 
 FsladdParameters = typing.TypedDict('FsladdParameters', {
-    "@type": typing.Literal["fsl.fsladd"],
+    "@type": typing.NotRequired[typing.Literal["fsl/fsladd"]],
+    "output_file": str,
+    "mean_flag": bool,
+    "scale_flag": bool,
+    "volume_list": list[InputPathType],
+})
+FsladdParametersTagged = typing.TypedDict('FsladdParametersTagged', {
+    "@type": typing.Literal["fsl/fsladd"],
     "output_file": str,
     "mean_flag": bool,
     "scale_flag": bool,
@@ -22,41 +29,9 @@ FsladdParameters = typing.TypedDict('FsladdParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "fsl.fsladd": fsladd_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "fsl.fsladd": fsladd_outputs,
-    }.get(t)
-
-
 class FsladdOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `fsladd(...)`.
+    Output object returned when calling `FsladdParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -69,7 +44,7 @@ def fsladd_params(
     volume_list: list[InputPathType],
     mean_flag: bool = False,
     scale_flag: bool = False,
-) -> FsladdParameters:
+) -> FsladdParametersTagged:
     """
     Build parameters.
     
@@ -82,7 +57,7 @@ def fsladd_params(
         Parameter dictionary
     """
     params = {
-        "@type": "fsl.fsladd",
+        "@type": "fsl/fsladd",
         "output_file": output_file,
         "mean_flag": mean_flag,
         "scale_flag": scale_flag,
@@ -106,12 +81,12 @@ def fsladd_cargs(
     """
     cargs = []
     cargs.append("fsladd")
-    cargs.append(params.get("output_file"))
-    if params.get("mean_flag"):
+    cargs.append(params.get("output_file", None))
+    if params.get("mean_flag", False):
         cargs.append("-m")
-    if params.get("scale_flag"):
+    if params.get("scale_flag", False):
         cargs.append("-s")
-    cargs.extend([execution.input_file(f) for f in params.get("volume_list")])
+    cargs.extend([execution.input_file(f) for f in params.get("volume_list", None)])
     return cargs
 
 
@@ -130,7 +105,7 @@ def fsladd_outputs(
     """
     ret = FsladdOutputs(
         root=execution.output_file("."),
-        resulting_output=execution.output_file(params.get("output_file")),
+        resulting_output=execution.output_file(params.get("output_file", None)),
     )
     return ret
 
@@ -200,7 +175,6 @@ def fsladd(
 __all__ = [
     "FSLADD_METADATA",
     "FsladdOutputs",
-    "FsladdParameters",
     "fsladd",
     "fsladd_execute",
     "fsladd_params",

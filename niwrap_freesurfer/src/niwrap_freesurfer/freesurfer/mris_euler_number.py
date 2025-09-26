@@ -14,47 +14,20 @@ MRIS_EULER_NUMBER_METADATA = Metadata(
 
 
 MrisEulerNumberParameters = typing.TypedDict('MrisEulerNumberParameters', {
-    "@type": typing.Literal["freesurfer.mris_euler_number"],
+    "@type": typing.NotRequired[typing.Literal["freesurfer/mris_euler_number"]],
+    "input_surface": InputPathType,
+    "output_file": typing.NotRequired[str | None],
+})
+MrisEulerNumberParametersTagged = typing.TypedDict('MrisEulerNumberParametersTagged', {
+    "@type": typing.Literal["freesurfer/mris_euler_number"],
     "input_surface": InputPathType,
     "output_file": typing.NotRequired[str | None],
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "freesurfer.mris_euler_number": mris_euler_number_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "freesurfer.mris_euler_number": mris_euler_number_outputs,
-    }.get(t)
-
-
 class MrisEulerNumberOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `mris_euler_number(...)`.
+    Output object returned when calling `MrisEulerNumberParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -65,7 +38,7 @@ class MrisEulerNumberOutputs(typing.NamedTuple):
 def mris_euler_number_params(
     input_surface: InputPathType,
     output_file: str | None = None,
-) -> MrisEulerNumberParameters:
+) -> MrisEulerNumberParametersTagged:
     """
     Build parameters.
     
@@ -76,7 +49,7 @@ def mris_euler_number_params(
         Parameter dictionary
     """
     params = {
-        "@type": "freesurfer.mris_euler_number",
+        "@type": "freesurfer/mris_euler_number",
         "input_surface": input_surface,
     }
     if output_file is not None:
@@ -99,11 +72,11 @@ def mris_euler_number_cargs(
     """
     cargs = []
     cargs.append("mris_euler_number")
-    cargs.append(execution.input_file(params.get("input_surface")))
-    if params.get("output_file") is not None:
+    cargs.append(execution.input_file(params.get("input_surface", None)))
+    if params.get("output_file", None) is not None:
         cargs.extend([
             "-o",
-            params.get("output_file")
+            params.get("output_file", None)
         ])
     return cargs
 
@@ -123,7 +96,7 @@ def mris_euler_number_outputs(
     """
     ret = MrisEulerNumberOutputs(
         root=execution.output_file("."),
-        outfile=execution.output_file(params.get("output_file")) if (params.get("output_file") is not None) else None,
+        outfile=execution.output_file(params.get("output_file", None)) if (params.get("output_file") is not None) else None,
     )
     return ret
 
@@ -187,7 +160,6 @@ def mris_euler_number(
 __all__ = [
     "MRIS_EULER_NUMBER_METADATA",
     "MrisEulerNumberOutputs",
-    "MrisEulerNumberParameters",
     "mris_euler_number",
     "mris_euler_number_execute",
     "mris_euler_number_params",

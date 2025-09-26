@@ -14,7 +14,29 @@ MRIS_CA_LABEL_METADATA = Metadata(
 
 
 MrisCaLabelParameters = typing.TypedDict('MrisCaLabelParameters', {
-    "@type": typing.Literal["freesurfer.mris_ca_label"],
+    "@type": typing.NotRequired[typing.Literal["freesurfer/mris_ca_label"]],
+    "subject": str,
+    "hemi": str,
+    "canonsurf": InputPathType,
+    "classifier": InputPathType,
+    "outputfile": str,
+    "seed": typing.NotRequired[float | None],
+    "sdir": typing.NotRequired[str | None],
+    "orig": typing.NotRequired[str | None],
+    "long_flag": bool,
+    "r": typing.NotRequired[InputPathType | None],
+    "novar_flag": bool,
+    "nbrs": typing.NotRequired[float | None],
+    "f": typing.NotRequired[float | None],
+    "t": typing.NotRequired[InputPathType | None],
+    "p": typing.NotRequired[str | None],
+    "v": typing.NotRequired[float | None],
+    "w": typing.NotRequired[str | None],
+    "help_flag": bool,
+    "version_flag": bool,
+})
+MrisCaLabelParametersTagged = typing.TypedDict('MrisCaLabelParametersTagged', {
+    "@type": typing.Literal["freesurfer/mris_ca_label"],
     "subject": str,
     "hemi": str,
     "canonsurf": InputPathType,
@@ -37,41 +59,9 @@ MrisCaLabelParameters = typing.TypedDict('MrisCaLabelParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "freesurfer.mris_ca_label": mris_ca_label_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "freesurfer.mris_ca_label": mris_ca_label_outputs,
-    }.get(t)
-
-
 class MrisCaLabelOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `mris_ca_label(...)`.
+    Output object returned when calling `MrisCaLabelParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -99,7 +89,7 @@ def mris_ca_label_params(
     w: str | None = None,
     help_flag: bool = False,
     version_flag: bool = False,
-) -> MrisCaLabelParameters:
+) -> MrisCaLabelParametersTagged:
     """
     Build parameters.
     
@@ -133,7 +123,7 @@ def mris_ca_label_params(
         Parameter dictionary
     """
     params = {
-        "@type": "freesurfer.mris_ca_label",
+        "@type": "freesurfer/mris_ca_label",
         "subject": subject,
         "hemi": hemi,
         "canonsurf": canonsurf,
@@ -182,68 +172,68 @@ def mris_ca_label_cargs(
     """
     cargs = []
     cargs.append("mris_ca_label")
-    cargs.append(params.get("subject"))
-    cargs.append(params.get("hemi"))
-    cargs.append(execution.input_file(params.get("canonsurf")))
-    cargs.append(execution.input_file(params.get("classifier")))
-    cargs.append(params.get("outputfile"))
-    if params.get("seed") is not None:
+    cargs.append(params.get("subject", None))
+    cargs.append(params.get("hemi", None))
+    cargs.append(execution.input_file(params.get("canonsurf", None)))
+    cargs.append(execution.input_file(params.get("classifier", None)))
+    cargs.append(params.get("outputfile", None))
+    if params.get("seed", None) is not None:
         cargs.extend([
             "-seed",
-            str(params.get("seed"))
+            str(params.get("seed", None))
         ])
-    if params.get("sdir") is not None:
+    if params.get("sdir", None) is not None:
         cargs.extend([
             "-sdir",
-            params.get("sdir")
+            params.get("sdir", None)
         ])
-    if params.get("orig") is not None:
+    if params.get("orig", None) is not None:
         cargs.extend([
             "-orig",
-            params.get("orig")
+            params.get("orig", None)
         ])
-    if params.get("long_flag"):
+    if params.get("long_flag", False):
         cargs.append("-long")
-    if params.get("r") is not None:
+    if params.get("r", None) is not None:
         cargs.extend([
             "-r",
-            execution.input_file(params.get("r"))
+            execution.input_file(params.get("r", None))
         ])
-    if params.get("novar_flag"):
+    if params.get("novar_flag", False):
         cargs.append("-novar")
-    if params.get("nbrs") is not None:
+    if params.get("nbrs", None) is not None:
         cargs.extend([
             "-nbrs",
-            str(params.get("nbrs"))
+            str(params.get("nbrs", None))
         ])
-    if params.get("f") is not None:
+    if params.get("f", None) is not None:
         cargs.extend([
             "-f",
-            str(params.get("f"))
+            str(params.get("f", None))
         ])
-    if params.get("t") is not None:
+    if params.get("t", None) is not None:
         cargs.extend([
             "-t",
-            execution.input_file(params.get("t"))
+            execution.input_file(params.get("t", None))
         ])
-    if params.get("p") is not None:
+    if params.get("p", None) is not None:
         cargs.extend([
             "-p",
-            params.get("p")
+            params.get("p", None)
         ])
-    if params.get("v") is not None:
+    if params.get("v", None) is not None:
         cargs.extend([
             "-v",
-            str(params.get("v"))
+            str(params.get("v", None))
         ])
-    if params.get("w") is not None:
+    if params.get("w", None) is not None:
         cargs.extend([
             "-w",
-            params.get("w")
+            params.get("w", None)
         ])
-    if params.get("help_flag"):
+    if params.get("help_flag", False):
         cargs.append("--help")
-    if params.get("version_flag"):
+    if params.get("version_flag", False):
         cargs.append("--version")
     return cargs
 
@@ -263,7 +253,7 @@ def mris_ca_label_outputs(
     """
     ret = MrisCaLabelOutputs(
         root=execution.output_file("."),
-        labeled_surface=execution.output_file(params.get("outputfile")),
+        labeled_surface=execution.output_file(params.get("outputfile", None)),
     )
     return ret
 
@@ -386,7 +376,6 @@ def mris_ca_label(
 __all__ = [
     "MRIS_CA_LABEL_METADATA",
     "MrisCaLabelOutputs",
-    "MrisCaLabelParameters",
     "mris_ca_label",
     "mris_ca_label_execute",
     "mris_ca_label_params",

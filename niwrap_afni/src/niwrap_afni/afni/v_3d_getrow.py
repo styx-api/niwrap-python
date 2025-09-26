@@ -14,7 +14,15 @@ V_3D_GETROW_METADATA = Metadata(
 
 
 V3dGetrowParameters = typing.TypedDict('V3dGetrowParameters', {
-    "@type": typing.Literal["afni.3dGetrow"],
+    "@type": typing.NotRequired[typing.Literal["afni/3dGetrow"]],
+    "xrow": typing.NotRequired[list[int] | None],
+    "yrow": typing.NotRequired[list[int] | None],
+    "zrow": typing.NotRequired[list[int] | None],
+    "input_file": typing.NotRequired[InputPathType | None],
+    "output_file": typing.NotRequired[str | None],
+})
+V3dGetrowParametersTagged = typing.TypedDict('V3dGetrowParametersTagged', {
+    "@type": typing.Literal["afni/3dGetrow"],
     "xrow": typing.NotRequired[list[int] | None],
     "yrow": typing.NotRequired[list[int] | None],
     "zrow": typing.NotRequired[list[int] | None],
@@ -23,41 +31,9 @@ V3dGetrowParameters = typing.TypedDict('V3dGetrowParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "afni.3dGetrow": v_3d_getrow_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "afni.3dGetrow": v_3d_getrow_outputs,
-    }.get(t)
-
-
 class V3dGetrowOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `v_3d_getrow(...)`.
+    Output object returned when calling `V3dGetrowParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -71,7 +47,7 @@ def v_3d_getrow_params(
     zrow: list[int] | None = None,
     input_file: InputPathType | None = None,
     output_file: str | None = None,
-) -> V3dGetrowParameters:
+) -> V3dGetrowParametersTagged:
     """
     Build parameters.
     
@@ -90,7 +66,7 @@ def v_3d_getrow_params(
         Parameter dictionary
     """
     params = {
-        "@type": "afni.3dGetrow",
+        "@type": "afni/3dGetrow",
     }
     if xrow is not None:
         params["xrow"] = xrow
@@ -120,30 +96,30 @@ def v_3d_getrow_cargs(
     """
     cargs = []
     cargs.append("3dGetrow")
-    if params.get("xrow") is not None:
+    if params.get("xrow", None) is not None:
         cargs.extend([
             "-xrow",
-            *map(str, params.get("xrow"))
+            *map(str, params.get("xrow", None))
         ])
-    if params.get("yrow") is not None:
+    if params.get("yrow", None) is not None:
         cargs.extend([
             "-yrow",
-            *map(str, params.get("yrow"))
+            *map(str, params.get("yrow", None))
         ])
-    if params.get("zrow") is not None:
+    if params.get("zrow", None) is not None:
         cargs.extend([
             "-zrow",
-            *map(str, params.get("zrow"))
+            *map(str, params.get("zrow", None))
         ])
-    if params.get("input_file") is not None:
+    if params.get("input_file", None) is not None:
         cargs.extend([
             "-input",
-            execution.input_file(params.get("input_file"))
+            execution.input_file(params.get("input_file", None))
         ])
-    if params.get("output_file") is not None:
+    if params.get("output_file", None) is not None:
         cargs.extend([
             "-output",
-            params.get("output_file")
+            params.get("output_file", None)
         ])
     return cargs
 
@@ -163,7 +139,7 @@ def v_3d_getrow_outputs(
     """
     ret = V3dGetrowOutputs(
         root=execution.output_file("."),
-        out_file=execution.output_file(params.get("output_file") + ".1D") if (params.get("output_file") is not None) else None,
+        out_file=execution.output_file(params.get("output_file", None) + ".1D") if (params.get("output_file") is not None) else None,
     )
     return ret
 
@@ -240,7 +216,6 @@ def v_3d_getrow(
 
 __all__ = [
     "V3dGetrowOutputs",
-    "V3dGetrowParameters",
     "V_3D_GETROW_METADATA",
     "v_3d_getrow",
     "v_3d_getrow_execute",

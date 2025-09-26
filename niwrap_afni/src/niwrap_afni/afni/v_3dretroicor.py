@@ -14,7 +14,19 @@ V_3DRETROICOR_METADATA = Metadata(
 
 
 V3dretroicorParameters = typing.TypedDict('V3dretroicorParameters', {
-    "@type": typing.Literal["afni.3dretroicor"],
+    "@type": typing.NotRequired[typing.Literal["afni/3dretroicor"]],
+    "ignore": typing.NotRequired[float | None],
+    "prefix": typing.NotRequired[str | None],
+    "card": typing.NotRequired[InputPathType | None],
+    "cardphase": typing.NotRequired[str | None],
+    "threshold": typing.NotRequired[float | None],
+    "resp": typing.NotRequired[InputPathType | None],
+    "respphase": typing.NotRequired[str | None],
+    "order": typing.NotRequired[float | None],
+    "dataset": InputPathType,
+})
+V3dretroicorParametersTagged = typing.TypedDict('V3dretroicorParametersTagged', {
+    "@type": typing.Literal["afni/3dretroicor"],
     "ignore": typing.NotRequired[float | None],
     "prefix": typing.NotRequired[str | None],
     "card": typing.NotRequired[InputPathType | None],
@@ -27,41 +39,9 @@ V3dretroicorParameters = typing.TypedDict('V3dretroicorParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "afni.3dretroicor": v_3dretroicor_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "afni.3dretroicor": v_3dretroicor_outputs,
-    }.get(t)
-
-
 class V3dretroicorOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `v_3dretroicor(...)`.
+    Output object returned when calling `V3dretroicorParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -83,7 +63,7 @@ def v_3dretroicor_params(
     resp: InputPathType | None = None,
     respphase: str | None = None,
     order: float | None = None,
-) -> V3dretroicorParameters:
+) -> V3dretroicorParametersTagged:
     """
     Build parameters.
     
@@ -105,7 +85,7 @@ def v_3dretroicor_params(
         Parameter dictionary
     """
     params = {
-        "@type": "afni.3dretroicor",
+        "@type": "afni/3dretroicor",
         "dataset": dataset,
     }
     if ignore is not None:
@@ -142,47 +122,47 @@ def v_3dretroicor_cargs(
     """
     cargs = []
     cargs.append("3dretroicor")
-    if params.get("ignore") is not None:
+    if params.get("ignore", None) is not None:
         cargs.extend([
             "-ignore",
-            str(params.get("ignore"))
+            str(params.get("ignore", None))
         ])
-    if params.get("prefix") is not None:
+    if params.get("prefix", None) is not None:
         cargs.extend([
             "-prefix",
-            params.get("prefix")
+            params.get("prefix", None)
         ])
-    if params.get("card") is not None:
+    if params.get("card", None) is not None:
         cargs.extend([
             "-card",
-            execution.input_file(params.get("card"))
+            execution.input_file(params.get("card", None))
         ])
-    if params.get("cardphase") is not None:
+    if params.get("cardphase", None) is not None:
         cargs.extend([
             "-cardphase",
-            params.get("cardphase")
+            params.get("cardphase", None)
         ])
-    if params.get("threshold") is not None:
+    if params.get("threshold", None) is not None:
         cargs.extend([
             "-threshold",
-            str(params.get("threshold"))
+            str(params.get("threshold", None))
         ])
-    if params.get("resp") is not None:
+    if params.get("resp", None) is not None:
         cargs.extend([
             "-resp",
-            execution.input_file(params.get("resp"))
+            execution.input_file(params.get("resp", None))
         ])
-    if params.get("respphase") is not None:
+    if params.get("respphase", None) is not None:
         cargs.extend([
             "-respphase",
-            params.get("respphase")
+            params.get("respphase", None)
         ])
-    if params.get("order") is not None:
+    if params.get("order", None) is not None:
         cargs.extend([
             "-order",
-            str(params.get("order"))
+            str(params.get("order", None))
         ])
-    cargs.append(execution.input_file(params.get("dataset")))
+    cargs.append(execution.input_file(params.get("dataset", None)))
     return cargs
 
 
@@ -201,9 +181,9 @@ def v_3dretroicor_outputs(
     """
     ret = V3dretroicorOutputs(
         root=execution.output_file("."),
-        corrected_dataset=execution.output_file(params.get("prefix") + ".nii.gz") if (params.get("prefix") is not None) else None,
-        output_cardiac_phase=execution.output_file(params.get("cardphase")) if (params.get("cardphase") is not None) else None,
-        output_resp_phase=execution.output_file(params.get("respphase")) if (params.get("respphase") is not None) else None,
+        corrected_dataset=execution.output_file(params.get("prefix", None) + ".nii.gz") if (params.get("prefix") is not None) else None,
+        output_cardiac_phase=execution.output_file(params.get("cardphase", None)) if (params.get("cardphase") is not None) else None,
+        output_resp_phase=execution.output_file(params.get("respphase", None)) if (params.get("respphase") is not None) else None,
     )
     return ret
 
@@ -293,7 +273,6 @@ def v_3dretroicor(
 
 __all__ = [
     "V3dretroicorOutputs",
-    "V3dretroicorParameters",
     "V_3DRETROICOR_METADATA",
     "v_3dretroicor",
     "v_3dretroicor_execute",

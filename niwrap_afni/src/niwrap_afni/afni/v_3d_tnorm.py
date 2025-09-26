@@ -14,7 +14,18 @@ V_3D_TNORM_METADATA = Metadata(
 
 
 V3dTnormParameters = typing.TypedDict('V3dTnormParameters', {
-    "@type": typing.Literal["afni.3dTnorm"],
+    "@type": typing.NotRequired[typing.Literal["afni/3dTnorm"]],
+    "prefix": typing.NotRequired[str | None],
+    "norm2": bool,
+    "normR": bool,
+    "norm1": bool,
+    "normx": bool,
+    "polort": typing.NotRequired[float | None],
+    "L1fit": bool,
+    "input_dataset": InputPathType,
+})
+V3dTnormParametersTagged = typing.TypedDict('V3dTnormParametersTagged', {
+    "@type": typing.Literal["afni/3dTnorm"],
     "prefix": typing.NotRequired[str | None],
     "norm2": bool,
     "normR": bool,
@@ -26,41 +37,9 @@ V3dTnormParameters = typing.TypedDict('V3dTnormParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "afni.3dTnorm": v_3d_tnorm_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "afni.3dTnorm": v_3d_tnorm_outputs,
-    }.get(t)
-
-
 class V3dTnormOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `v_3d_tnorm(...)`.
+    Output object returned when calling `V3dTnormParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -77,7 +56,7 @@ def v_3d_tnorm_params(
     normx: bool = False,
     polort: float | None = None,
     l1fit: bool = False,
-) -> V3dTnormParameters:
+) -> V3dTnormParametersTagged:
     """
     Build parameters.
     
@@ -94,7 +73,7 @@ def v_3d_tnorm_params(
         Parameter dictionary
     """
     params = {
-        "@type": "afni.3dTnorm",
+        "@type": "afni/3dTnorm",
         "norm2": norm2,
         "normR": norm_r,
         "norm1": norm1,
@@ -124,27 +103,27 @@ def v_3d_tnorm_cargs(
     """
     cargs = []
     cargs.append("3dTnorm")
-    if params.get("prefix") is not None:
+    if params.get("prefix", None) is not None:
         cargs.extend([
             "-prefix",
-            params.get("prefix")
+            params.get("prefix", None)
         ])
-    if params.get("norm2"):
+    if params.get("norm2", False):
         cargs.append("-norm2")
-    if params.get("normR"):
+    if params.get("normR", False):
         cargs.append("-normR")
-    if params.get("norm1"):
+    if params.get("norm1", False):
         cargs.append("-norm1")
-    if params.get("normx"):
+    if params.get("normx", False):
         cargs.append("-normx")
-    if params.get("polort") is not None:
+    if params.get("polort", None) is not None:
         cargs.extend([
             "-polort",
-            str(params.get("polort"))
+            str(params.get("polort", None))
         ])
-    if params.get("L1fit"):
+    if params.get("L1fit", False):
         cargs.append("-L1fit")
-    cargs.append(execution.input_file(params.get("input_dataset")))
+    cargs.append(execution.input_file(params.get("input_dataset", None)))
     return cargs
 
 
@@ -163,7 +142,7 @@ def v_3d_tnorm_outputs(
     """
     ret = V3dTnormOutputs(
         root=execution.output_file("."),
-        output_dataset=execution.output_file(params.get("prefix") + ".nii") if (params.get("prefix") is not None) else None,
+        output_dataset=execution.output_file(params.get("prefix", None) + ".nii") if (params.get("prefix") is not None) else None,
     )
     return ret
 
@@ -244,7 +223,6 @@ def v_3d_tnorm(
 
 __all__ = [
     "V3dTnormOutputs",
-    "V3dTnormParameters",
     "V_3D_TNORM_METADATA",
     "v_3d_tnorm",
     "v_3d_tnorm_execute",

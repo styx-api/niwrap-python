@@ -14,7 +14,15 @@ TALAIRACH_AFD_METADATA = Metadata(
 
 
 TalairachAfdParameters = typing.TypedDict('TalairachAfdParameters', {
-    "@type": typing.Literal["freesurfer.talairach_afd"],
+    "@type": typing.NotRequired[typing.Literal["freesurfer/talairach_afd"]],
+    "subject_name": typing.NotRequired[str | None],
+    "xfm_file": typing.NotRequired[InputPathType | None],
+    "p_value_threshold": typing.NotRequired[float | None],
+    "afd_directory": typing.NotRequired[str | None],
+    "verbose": bool,
+})
+TalairachAfdParametersTagged = typing.TypedDict('TalairachAfdParametersTagged', {
+    "@type": typing.Literal["freesurfer/talairach_afd"],
     "subject_name": typing.NotRequired[str | None],
     "xfm_file": typing.NotRequired[InputPathType | None],
     "p_value_threshold": typing.NotRequired[float | None],
@@ -23,40 +31,9 @@ TalairachAfdParameters = typing.TypedDict('TalairachAfdParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "freesurfer.talairach_afd": talairach_afd_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-    }.get(t)
-
-
 class TalairachAfdOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `talairach_afd(...)`.
+    Output object returned when calling `TalairachAfdParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -68,7 +45,7 @@ def talairach_afd_params(
     p_value_threshold: float | None = None,
     afd_directory: str | None = None,
     verbose: bool = False,
-) -> TalairachAfdParameters:
+) -> TalairachAfdParametersTagged:
     """
     Build parameters.
     
@@ -83,7 +60,7 @@ def talairach_afd_params(
         Parameter dictionary
     """
     params = {
-        "@type": "freesurfer.talairach_afd",
+        "@type": "freesurfer/talairach_afd",
         "verbose": verbose,
     }
     if subject_name is not None:
@@ -112,27 +89,27 @@ def talairach_afd_cargs(
     """
     cargs = []
     cargs.append("talairach_afd")
-    if params.get("subject_name") is not None:
+    if params.get("subject_name", None) is not None:
         cargs.extend([
             "-subj",
-            params.get("subject_name")
+            params.get("subject_name", None)
         ])
-    if params.get("xfm_file") is not None:
+    if params.get("xfm_file", None) is not None:
         cargs.extend([
             "-xfm",
-            execution.input_file(params.get("xfm_file"))
+            execution.input_file(params.get("xfm_file", None))
         ])
-    if params.get("p_value_threshold") is not None:
+    if params.get("p_value_threshold", None) is not None:
         cargs.extend([
             "-T",
-            str(params.get("p_value_threshold"))
+            str(params.get("p_value_threshold", None))
         ])
-    if params.get("afd_directory") is not None:
+    if params.get("afd_directory", None) is not None:
         cargs.extend([
             "-afd",
-            params.get("afd_directory")
+            params.get("afd_directory", None)
         ])
-    if params.get("verbose"):
+    if params.get("verbose", False):
         cargs.append("-V")
     return cargs
 
@@ -225,7 +202,6 @@ def talairach_afd(
 __all__ = [
     "TALAIRACH_AFD_METADATA",
     "TalairachAfdOutputs",
-    "TalairachAfdParameters",
     "talairach_afd",
     "talairach_afd_execute",
     "talairach_afd_params",

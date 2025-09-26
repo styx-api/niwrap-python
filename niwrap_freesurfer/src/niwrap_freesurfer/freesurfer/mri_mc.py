@@ -14,7 +14,14 @@ MRI_MC_METADATA = Metadata(
 
 
 MriMcParameters = typing.TypedDict('MriMcParameters', {
-    "@type": typing.Literal["freesurfer.mri_mc"],
+    "@type": typing.NotRequired[typing.Literal["freesurfer/mri_mc"]],
+    "input_volume": InputPathType,
+    "label_value": float,
+    "output_surface": str,
+    "connectivity": typing.NotRequired[float | None],
+})
+MriMcParametersTagged = typing.TypedDict('MriMcParametersTagged', {
+    "@type": typing.Literal["freesurfer/mri_mc"],
     "input_volume": InputPathType,
     "label_value": float,
     "output_surface": str,
@@ -22,41 +29,9 @@ MriMcParameters = typing.TypedDict('MriMcParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "freesurfer.mri_mc": mri_mc_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "freesurfer.mri_mc": mri_mc_outputs,
-    }.get(t)
-
-
 class MriMcOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `mri_mc(...)`.
+    Output object returned when calling `MriMcParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -69,7 +44,7 @@ def mri_mc_params(
     label_value: float,
     output_surface: str,
     connectivity: float | None = None,
-) -> MriMcParameters:
+) -> MriMcParametersTagged:
     """
     Build parameters.
     
@@ -84,7 +59,7 @@ def mri_mc_params(
         Parameter dictionary
     """
     params = {
-        "@type": "freesurfer.mri_mc",
+        "@type": "freesurfer/mri_mc",
         "input_volume": input_volume,
         "label_value": label_value,
         "output_surface": output_surface,
@@ -109,10 +84,10 @@ def mri_mc_cargs(
     """
     cargs = []
     cargs.append("mri_mc")
-    cargs.append(execution.input_file(params.get("input_volume")))
-    cargs.append(str(params.get("label_value")))
-    if params.get("connectivity") is not None:
-        cargs.append(params.get("output_surface") + str(params.get("connectivity")))
+    cargs.append(execution.input_file(params.get("input_volume", None)))
+    cargs.append(str(params.get("label_value", None)))
+    if params.get("connectivity", None) is not None:
+        cargs.append(params.get("output_surface", None) + str(params.get("connectivity", None)))
     return cargs
 
 
@@ -131,7 +106,7 @@ def mri_mc_outputs(
     """
     ret = MriMcOutputs(
         root=execution.output_file("."),
-        extracted_surface=execution.output_file(params.get("output_surface")),
+        extracted_surface=execution.output_file(params.get("output_surface", None)),
     )
     return ret
 
@@ -203,7 +178,6 @@ def mri_mc(
 __all__ = [
     "MRI_MC_METADATA",
     "MriMcOutputs",
-    "MriMcParameters",
     "mri_mc",
     "mri_mc_execute",
     "mri_mc_params",

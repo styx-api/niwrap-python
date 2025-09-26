@@ -14,48 +14,22 @@ V_3DTO_XDATASET_METADATA = Metadata(
 
 
 V3dtoXdatasetParameters = typing.TypedDict('V3dtoXdatasetParameters', {
-    "@type": typing.Literal["afni.3dtoXdataset"],
+    "@type": typing.NotRequired[typing.Literal["afni/3dtoXdataset"]],
+    "prefix": str,
+    "mask": InputPathType,
+    "input_files": list[InputPathType],
+})
+V3dtoXdatasetParametersTagged = typing.TypedDict('V3dtoXdatasetParametersTagged', {
+    "@type": typing.Literal["afni/3dtoXdataset"],
     "prefix": str,
     "mask": InputPathType,
     "input_files": list[InputPathType],
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "afni.3dtoXdataset": v_3dto_xdataset_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "afni.3dtoXdataset": v_3dto_xdataset_outputs,
-    }.get(t)
-
-
 class V3dtoXdatasetOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `v_3dto_xdataset(...)`.
+    Output object returned when calling `V3dtoXdatasetParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -67,7 +41,7 @@ def v_3dto_xdataset_params(
     prefix: str,
     mask: InputPathType,
     input_files: list[InputPathType],
-) -> V3dtoXdatasetParameters:
+) -> V3dtoXdatasetParametersTagged:
     """
     Build parameters.
     
@@ -79,7 +53,7 @@ def v_3dto_xdataset_params(
         Parameter dictionary
     """
     params = {
-        "@type": "afni.3dtoXdataset",
+        "@type": "afni/3dtoXdataset",
         "prefix": prefix,
         "mask": mask,
         "input_files": input_files,
@@ -104,10 +78,10 @@ def v_3dto_xdataset_cargs(
     cargs.append("3dtoXdataset")
     cargs.extend([
         "-prefix",
-        params.get("prefix")
+        params.get("prefix", None)
     ])
-    cargs.append(execution.input_file(params.get("mask")))
-    cargs.extend([execution.input_file(f) for f in params.get("input_files")])
+    cargs.append(execution.input_file(params.get("mask", None)))
+    cargs.extend([execution.input_file(f) for f in params.get("input_files", None)])
     return cargs
 
 
@@ -126,7 +100,7 @@ def v_3dto_xdataset_outputs(
     """
     ret = V3dtoXdatasetOutputs(
         root=execution.output_file("."),
-        output_sdat=execution.output_file(params.get("prefix") + ".sdat"),
+        output_sdat=execution.output_file(params.get("prefix", None) + ".sdat"),
     )
     return ret
 
@@ -192,7 +166,6 @@ def v_3dto_xdataset(
 
 __all__ = [
     "V3dtoXdatasetOutputs",
-    "V3dtoXdatasetParameters",
     "V_3DTO_XDATASET_METADATA",
     "v_3dto_xdataset",
     "v_3dto_xdataset_execute",

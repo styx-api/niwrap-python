@@ -14,7 +14,20 @@ V__COMPUTE_OC_WEIGHTS_METADATA = Metadata(
 
 
 VComputeOcWeightsParameters = typing.TypedDict('VComputeOcWeightsParameters', {
-    "@type": typing.Literal["afni.@compute_OC_weights"],
+    "@type": typing.NotRequired[typing.Literal["afni/@compute_OC_weights"]],
+    "echo_times": typing.NotRequired[str | None],
+    "echo_times_file": typing.NotRequired[InputPathType | None],
+    "echo_dsets": list[str],
+    "prefix": typing.NotRequired[str | None],
+    "def_to_equal": typing.NotRequired[str | None],
+    "oc_method": typing.NotRequired[str | None],
+    "sum_weight_tolerance": typing.NotRequired[float | None],
+    "t2_star_limit": typing.NotRequired[float | None],
+    "work_dir": typing.NotRequired[str | None],
+    "verbosity": bool,
+})
+VComputeOcWeightsParametersTagged = typing.TypedDict('VComputeOcWeightsParametersTagged', {
+    "@type": typing.Literal["afni/@compute_OC_weights"],
     "echo_times": typing.NotRequired[str | None],
     "echo_times_file": typing.NotRequired[InputPathType | None],
     "echo_dsets": list[str],
@@ -28,41 +41,9 @@ VComputeOcWeightsParameters = typing.TypedDict('VComputeOcWeightsParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "afni.@compute_OC_weights": v__compute_oc_weights_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "afni.@compute_OC_weights": v__compute_oc_weights_outputs,
-    }.get(t)
-
-
 class VComputeOcWeightsOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `v__compute_oc_weights(...)`.
+    Output object returned when calling `VComputeOcWeightsParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -81,7 +62,7 @@ def v__compute_oc_weights_params(
     t2_star_limit: float | None = None,
     work_dir: str | None = None,
     verbosity: bool = False,
-) -> VComputeOcWeightsParameters:
+) -> VComputeOcWeightsParametersTagged:
     """
     Build parameters.
     
@@ -105,7 +86,7 @@ def v__compute_oc_weights_params(
         Parameter dictionary
     """
     params = {
-        "@type": "afni.@compute_OC_weights",
+        "@type": "afni/@compute_OC_weights",
         "echo_dsets": echo_dsets,
         "verbosity": verbosity,
     }
@@ -143,51 +124,51 @@ def v__compute_oc_weights_cargs(
     """
     cargs = []
     cargs.append("@compute_OC_weights")
-    if params.get("echo_times") is not None:
+    if params.get("echo_times", None) is not None:
         cargs.extend([
             "-echo_times",
-            params.get("echo_times")
+            params.get("echo_times", None)
         ])
-    if params.get("echo_times_file") is not None:
+    if params.get("echo_times_file", None) is not None:
         cargs.extend([
             "-echo_times_file",
-            execution.input_file(params.get("echo_times_file"))
+            execution.input_file(params.get("echo_times_file", None))
         ])
     cargs.extend([
         "-echo_dsets",
-        *params.get("echo_dsets")
+        *params.get("echo_dsets", None)
     ])
-    if params.get("prefix") is not None:
+    if params.get("prefix", None) is not None:
         cargs.extend([
             "-prefix",
-            params.get("prefix")
+            params.get("prefix", None)
         ])
-    if params.get("def_to_equal") is not None:
+    if params.get("def_to_equal", None) is not None:
         cargs.extend([
             "-def_to_equal",
-            params.get("def_to_equal")
+            params.get("def_to_equal", None)
         ])
-    if params.get("oc_method") is not None:
+    if params.get("oc_method", None) is not None:
         cargs.extend([
             "-oc_method",
-            params.get("oc_method")
+            params.get("oc_method", None)
         ])
-    if params.get("sum_weight_tolerance") is not None:
+    if params.get("sum_weight_tolerance", None) is not None:
         cargs.extend([
             "-sum_weight_tolerance",
-            str(params.get("sum_weight_tolerance"))
+            str(params.get("sum_weight_tolerance", None))
         ])
-    if params.get("t2_star_limit") is not None:
+    if params.get("t2_star_limit", None) is not None:
         cargs.extend([
             "-t2_star_limit",
-            str(params.get("t2_star_limit"))
+            str(params.get("t2_star_limit", None))
         ])
-    if params.get("work_dir") is not None:
+    if params.get("work_dir", None) is not None:
         cargs.extend([
             "-work_dir",
-            params.get("work_dir")
+            params.get("work_dir", None)
         ])
-    if params.get("verbosity"):
+    if params.get("verbosity", False):
         cargs.append("-verb")
     return cargs
 
@@ -207,7 +188,7 @@ def v__compute_oc_weights_outputs(
     """
     ret = VComputeOcWeightsOutputs(
         root=execution.output_file("."),
-        output_oc_weights=execution.output_file(params.get("prefix") + "+tlrc.HEAD") if (params.get("prefix") is not None) else None,
+        output_oc_weights=execution.output_file(params.get("prefix", None) + "+tlrc.HEAD") if (params.get("prefix") is not None) else None,
     )
     return ret
 
@@ -299,7 +280,6 @@ def v__compute_oc_weights(
 
 __all__ = [
     "VComputeOcWeightsOutputs",
-    "VComputeOcWeightsParameters",
     "V__COMPUTE_OC_WEIGHTS_METADATA",
     "v__compute_oc_weights",
     "v__compute_oc_weights_execute",

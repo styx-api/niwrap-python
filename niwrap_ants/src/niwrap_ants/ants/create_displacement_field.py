@@ -14,7 +14,14 @@ CREATE_DISPLACEMENT_FIELD_METADATA = Metadata(
 
 
 CreateDisplacementFieldParameters = typing.TypedDict('CreateDisplacementFieldParameters', {
-    "@type": typing.Literal["ants.CreateDisplacementField"],
+    "@type": typing.NotRequired[typing.Literal["ants/CreateDisplacementField"]],
+    "image_dimension": int,
+    "enforce_zero_boundary_flag": typing.Literal[0, 1],
+    "component_images": list[InputPathType],
+    "output_image": str,
+})
+CreateDisplacementFieldParametersTagged = typing.TypedDict('CreateDisplacementFieldParametersTagged', {
+    "@type": typing.Literal["ants/CreateDisplacementField"],
     "image_dimension": int,
     "enforce_zero_boundary_flag": typing.Literal[0, 1],
     "component_images": list[InputPathType],
@@ -22,41 +29,9 @@ CreateDisplacementFieldParameters = typing.TypedDict('CreateDisplacementFieldPar
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "ants.CreateDisplacementField": create_displacement_field_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "ants.CreateDisplacementField": create_displacement_field_outputs,
-    }.get(t)
-
-
 class CreateDisplacementFieldOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `create_displacement_field(...)`.
+    Output object returned when calling `CreateDisplacementFieldParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -70,7 +45,7 @@ def create_displacement_field_params(
     enforce_zero_boundary_flag: typing.Literal[0, 1],
     component_images: list[InputPathType],
     output_image: str,
-) -> CreateDisplacementFieldParameters:
+) -> CreateDisplacementFieldParametersTagged:
     """
     Build parameters.
     
@@ -88,7 +63,7 @@ def create_displacement_field_params(
         Parameter dictionary
     """
     params = {
-        "@type": "ants.CreateDisplacementField",
+        "@type": "ants/CreateDisplacementField",
         "image_dimension": image_dimension,
         "enforce_zero_boundary_flag": enforce_zero_boundary_flag,
         "component_images": component_images,
@@ -112,10 +87,10 @@ def create_displacement_field_cargs(
     """
     cargs = []
     cargs.append("CreateDisplacementField")
-    cargs.append(str(params.get("image_dimension")))
-    cargs.append(str(params.get("enforce_zero_boundary_flag")))
-    cargs.extend([execution.input_file(f) for f in params.get("component_images")])
-    cargs.append(params.get("output_image"))
+    cargs.append(str(params.get("image_dimension", None)))
+    cargs.append(str(params.get("enforce_zero_boundary_flag", None)))
+    cargs.extend([execution.input_file(f) for f in params.get("component_images", None)])
+    cargs.append(params.get("output_image", None))
     return cargs
 
 
@@ -134,7 +109,7 @@ def create_displacement_field_outputs(
     """
     ret = CreateDisplacementFieldOutputs(
         root=execution.output_file("."),
-        output_displacement_field=execution.output_file(params.get("output_image")),
+        output_displacement_field=execution.output_file(params.get("output_image", None)),
     )
     return ret
 
@@ -221,7 +196,6 @@ def create_displacement_field(
 __all__ = [
     "CREATE_DISPLACEMENT_FIELD_METADATA",
     "CreateDisplacementFieldOutputs",
-    "CreateDisplacementFieldParameters",
     "create_displacement_field",
     "create_displacement_field_execute",
     "create_displacement_field_params",

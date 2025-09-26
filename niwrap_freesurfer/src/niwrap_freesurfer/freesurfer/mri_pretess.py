@@ -14,7 +14,19 @@ MRI_PRETESS_METADATA = Metadata(
 
 
 MriPretessParameters = typing.TypedDict('MriPretessParameters', {
-    "@type": typing.Literal["freesurfer.mri_pretess"],
+    "@type": typing.NotRequired[typing.Literal["freesurfer/mri_pretess"]],
+    "filledvol": InputPathType,
+    "labelstring": str,
+    "normvol": InputPathType,
+    "newfilledvol": str,
+    "debug_voxel": typing.NotRequired[list[float] | None],
+    "nocorners": bool,
+    "write": bool,
+    "keep": bool,
+    "test": bool,
+})
+MriPretessParametersTagged = typing.TypedDict('MriPretessParametersTagged', {
+    "@type": typing.Literal["freesurfer/mri_pretess"],
     "filledvol": InputPathType,
     "labelstring": str,
     "normvol": InputPathType,
@@ -27,41 +39,9 @@ MriPretessParameters = typing.TypedDict('MriPretessParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "freesurfer.mri_pretess": mri_pretess_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "freesurfer.mri_pretess": mri_pretess_outputs,
-    }.get(t)
-
-
 class MriPretessOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `mri_pretess(...)`.
+    Output object returned when calling `MriPretessParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -79,7 +59,7 @@ def mri_pretess_params(
     write: bool = False,
     keep: bool = False,
     test: bool = False,
-) -> MriPretessParameters:
+) -> MriPretessParametersTagged:
     """
     Build parameters.
     
@@ -98,7 +78,7 @@ def mri_pretess_params(
         Parameter dictionary
     """
     params = {
-        "@type": "freesurfer.mri_pretess",
+        "@type": "freesurfer/mri_pretess",
         "filledvol": filledvol,
         "labelstring": labelstring,
         "normvol": normvol,
@@ -128,22 +108,22 @@ def mri_pretess_cargs(
     """
     cargs = []
     cargs.append("mri_pretess")
-    cargs.append(execution.input_file(params.get("filledvol")))
-    cargs.append(params.get("labelstring"))
-    cargs.append(execution.input_file(params.get("normvol")))
-    cargs.append(params.get("newfilledvol"))
-    if params.get("debug_voxel") is not None:
+    cargs.append(execution.input_file(params.get("filledvol", None)))
+    cargs.append(params.get("labelstring", None))
+    cargs.append(execution.input_file(params.get("normvol", None)))
+    cargs.append(params.get("newfilledvol", None))
+    if params.get("debug_voxel", None) is not None:
         cargs.extend([
             "-debug_voxel",
-            *map(str, params.get("debug_voxel"))
+            *map(str, params.get("debug_voxel", None))
         ])
-    if params.get("nocorners"):
+    if params.get("nocorners", False):
         cargs.append("-nocorners")
-    if params.get("write"):
+    if params.get("write", False):
         cargs.append("-w")
-    if params.get("keep"):
+    if params.get("keep", False):
         cargs.append("-keep")
-    if params.get("test"):
+    if params.get("test", False):
         cargs.append("-test")
     return cargs
 
@@ -163,7 +143,7 @@ def mri_pretess_outputs(
     """
     ret = MriPretessOutputs(
         root=execution.output_file("."),
-        out_newfilledvol=execution.output_file(params.get("newfilledvol")),
+        out_newfilledvol=execution.output_file(params.get("newfilledvol", None)),
     )
     return ret
 
@@ -251,7 +231,6 @@ def mri_pretess(
 __all__ = [
     "MRI_PRETESS_METADATA",
     "MriPretessOutputs",
-    "MriPretessParameters",
     "mri_pretess",
     "mri_pretess_execute",
     "mri_pretess_params",

@@ -14,45 +14,18 @@ FS_PRINT_HELP_METADATA = Metadata(
 
 
 FsPrintHelpParameters = typing.TypedDict('FsPrintHelpParameters', {
-    "@type": typing.Literal["freesurfer.fsPrintHelp"],
+    "@type": typing.NotRequired[typing.Literal["freesurfer/fsPrintHelp"]],
+    "arguments": typing.NotRequired[str | None],
+})
+FsPrintHelpParametersTagged = typing.TypedDict('FsPrintHelpParametersTagged', {
+    "@type": typing.Literal["freesurfer/fsPrintHelp"],
     "arguments": typing.NotRequired[str | None],
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "freesurfer.fsPrintHelp": fs_print_help_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-    }.get(t)
-
-
 class FsPrintHelpOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `fs_print_help(...)`.
+    Output object returned when calling `FsPrintHelpParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -60,7 +33,7 @@ class FsPrintHelpOutputs(typing.NamedTuple):
 
 def fs_print_help_params(
     arguments: str | None = None,
-) -> FsPrintHelpParameters:
+) -> FsPrintHelpParametersTagged:
     """
     Build parameters.
     
@@ -70,7 +43,7 @@ def fs_print_help_params(
         Parameter dictionary
     """
     params = {
-        "@type": "freesurfer.fsPrintHelp",
+        "@type": "freesurfer/fsPrintHelp",
     }
     if arguments is not None:
         params["arguments"] = arguments
@@ -92,8 +65,8 @@ def fs_print_help_cargs(
     """
     cargs = []
     cargs.append("fsPrintHelp")
-    if params.get("arguments") is not None:
-        cargs.append(params.get("arguments"))
+    if params.get("arguments", None) is not None:
+        cargs.append(params.get("arguments", None))
     return cargs
 
 
@@ -174,7 +147,6 @@ def fs_print_help(
 __all__ = [
     "FS_PRINT_HELP_METADATA",
     "FsPrintHelpOutputs",
-    "FsPrintHelpParameters",
     "fs_print_help",
     "fs_print_help_execute",
     "fs_print_help_params",

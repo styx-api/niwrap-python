@@ -14,7 +14,14 @@ MRI_CA_TISSUE_PARMS_METADATA = Metadata(
 
 
 MriCaTissueParmsParameters = typing.TypedDict('MriCaTissueParmsParameters', {
-    "@type": typing.Literal["freesurfer.mri_ca_tissue_parms"],
+    "@type": typing.NotRequired[typing.Literal["freesurfer/mri_ca_tissue_parms"]],
+    "subjects": list[str],
+    "output_file": str,
+    "spacing_flag": bool,
+    "gradient_flag": bool,
+})
+MriCaTissueParmsParametersTagged = typing.TypedDict('MriCaTissueParmsParametersTagged', {
+    "@type": typing.Literal["freesurfer/mri_ca_tissue_parms"],
     "subjects": list[str],
     "output_file": str,
     "spacing_flag": bool,
@@ -22,41 +29,9 @@ MriCaTissueParmsParameters = typing.TypedDict('MriCaTissueParmsParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "freesurfer.mri_ca_tissue_parms": mri_ca_tissue_parms_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "freesurfer.mri_ca_tissue_parms": mri_ca_tissue_parms_outputs,
-    }.get(t)
-
-
 class MriCaTissueParmsOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `mri_ca_tissue_parms(...)`.
+    Output object returned when calling `MriCaTissueParmsParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -69,7 +44,7 @@ def mri_ca_tissue_parms_params(
     output_file: str,
     spacing_flag: bool = False,
     gradient_flag: bool = False,
-) -> MriCaTissueParmsParameters:
+) -> MriCaTissueParmsParametersTagged:
     """
     Build parameters.
     
@@ -82,7 +57,7 @@ def mri_ca_tissue_parms_params(
         Parameter dictionary
     """
     params = {
-        "@type": "freesurfer.mri_ca_tissue_parms",
+        "@type": "freesurfer/mri_ca_tissue_parms",
         "subjects": subjects,
         "output_file": output_file,
         "spacing_flag": spacing_flag,
@@ -106,11 +81,11 @@ def mri_ca_tissue_parms_cargs(
     """
     cargs = []
     cargs.append("mri_ca_tissue_parms")
-    cargs.extend(params.get("subjects"))
-    cargs.append(params.get("output_file"))
-    if params.get("spacing_flag"):
+    cargs.extend(params.get("subjects", None))
+    cargs.append(params.get("output_file", None))
+    if params.get("spacing_flag", False):
         cargs.append("-spacing")
-    if params.get("gradient_flag"):
+    if params.get("gradient_flag", False):
         cargs.append("-gradient")
     return cargs
 
@@ -130,7 +105,7 @@ def mri_ca_tissue_parms_outputs(
     """
     ret = MriCaTissueParmsOutputs(
         root=execution.output_file("."),
-        output_file=execution.output_file(params.get("output_file")),
+        output_file=execution.output_file(params.get("output_file", None)),
     )
     return ret
 
@@ -200,7 +175,6 @@ def mri_ca_tissue_parms(
 __all__ = [
     "MRI_CA_TISSUE_PARMS_METADATA",
     "MriCaTissueParmsOutputs",
-    "MriCaTissueParmsParameters",
     "mri_ca_tissue_parms",
     "mri_ca_tissue_parms_execute",
     "mri_ca_tissue_parms_params",

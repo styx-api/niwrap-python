@@ -14,46 +14,20 @@ TBSS_X_METADATA = Metadata(
 
 
 TbssXParameters = typing.TypedDict('TbssXParameters', {
-    "@type": typing.Literal["fsl.tbss_x"],
+    "@type": typing.NotRequired[typing.Literal["fsl/tbss_x"]],
+    "scalar_dirs": list[str],
+    "vector_dirs": list[str],
+})
+TbssXParametersTagged = typing.TypedDict('TbssXParametersTagged', {
+    "@type": typing.Literal["fsl/tbss_x"],
     "scalar_dirs": list[str],
     "vector_dirs": list[str],
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "fsl.tbss_x": tbss_x_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-    }.get(t)
-
-
 class TbssXOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `tbss_x(...)`.
+    Output object returned when calling `TbssXParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -62,7 +36,7 @@ class TbssXOutputs(typing.NamedTuple):
 def tbss_x_params(
     scalar_dirs: list[str],
     vector_dirs: list[str],
-) -> TbssXParameters:
+) -> TbssXParametersTagged:
     """
     Build parameters.
     
@@ -73,7 +47,7 @@ def tbss_x_params(
         Parameter dictionary
     """
     params = {
-        "@type": "fsl.tbss_x",
+        "@type": "fsl/tbss_x",
         "scalar_dirs": scalar_dirs,
         "vector_dirs": vector_dirs,
     }
@@ -95,8 +69,8 @@ def tbss_x_cargs(
     """
     cargs = []
     cargs.append("tbss_x")
-    cargs.extend(params.get("scalar_dirs"))
-    cargs.extend(params.get("vector_dirs"))
+    cargs.extend(params.get("scalar_dirs", None))
+    cargs.extend(params.get("vector_dirs", None))
     return cargs
 
 
@@ -178,7 +152,6 @@ def tbss_x(
 __all__ = [
     "TBSS_X_METADATA",
     "TbssXOutputs",
-    "TbssXParameters",
     "tbss_x",
     "tbss_x_execute",
     "tbss_x_params",

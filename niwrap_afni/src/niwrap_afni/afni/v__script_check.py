@@ -14,48 +14,22 @@ V__SCRIPT_CHECK_METADATA = Metadata(
 
 
 VScriptCheckParameters = typing.TypedDict('VScriptCheckParameters', {
-    "@type": typing.Literal["afni.@ScriptCheck"],
+    "@type": typing.NotRequired[typing.Literal["afni/@ScriptCheck"]],
+    "clean": bool,
+    "suffix": typing.NotRequired[str | None],
+    "scripts": list[InputPathType],
+})
+VScriptCheckParametersTagged = typing.TypedDict('VScriptCheckParametersTagged', {
+    "@type": typing.Literal["afni/@ScriptCheck"],
     "clean": bool,
     "suffix": typing.NotRequired[str | None],
     "scripts": list[InputPathType],
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "afni.@ScriptCheck": v__script_check_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "afni.@ScriptCheck": v__script_check_outputs,
-    }.get(t)
-
-
 class VScriptCheckOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `v__script_check(...)`.
+    Output object returned when calling `VScriptCheckParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -69,7 +43,7 @@ def v__script_check_params(
     scripts: list[InputPathType],
     clean: bool = False,
     suffix: str | None = None,
-) -> VScriptCheckParameters:
+) -> VScriptCheckParametersTagged:
     """
     Build parameters.
     
@@ -81,7 +55,7 @@ def v__script_check_params(
         Parameter dictionary
     """
     params = {
-        "@type": "afni.@ScriptCheck",
+        "@type": "afni/@ScriptCheck",
         "clean": clean,
         "scripts": scripts,
     }
@@ -105,14 +79,14 @@ def v__script_check_cargs(
     """
     cargs = []
     cargs.append("@ScriptCheck")
-    if params.get("clean"):
+    if params.get("clean", False):
         cargs.append("-clean")
-    if params.get("suffix") is not None:
+    if params.get("suffix", None) is not None:
         cargs.extend([
             "-suffix",
-            params.get("suffix")
+            params.get("suffix", None)
         ])
-    cargs.extend([execution.input_file(f) for f in params.get("scripts")])
+    cargs.extend([execution.input_file(f) for f in params.get("scripts", None)])
     return cargs
 
 
@@ -198,7 +172,6 @@ def v__script_check(
 
 __all__ = [
     "VScriptCheckOutputs",
-    "VScriptCheckParameters",
     "V__SCRIPT_CHECK_METADATA",
     "v__script_check",
     "v__script_check_execute",

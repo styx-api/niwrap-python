@@ -14,47 +14,20 @@ SURFACE_COORDINATES_TO_METRIC_METADATA = Metadata(
 
 
 SurfaceCoordinatesToMetricParameters = typing.TypedDict('SurfaceCoordinatesToMetricParameters', {
-    "@type": typing.Literal["workbench.surface-coordinates-to-metric"],
+    "@type": typing.NotRequired[typing.Literal["workbench/surface-coordinates-to-metric"]],
+    "surface": InputPathType,
+    "metric_out": str,
+})
+SurfaceCoordinatesToMetricParametersTagged = typing.TypedDict('SurfaceCoordinatesToMetricParametersTagged', {
+    "@type": typing.Literal["workbench/surface-coordinates-to-metric"],
     "surface": InputPathType,
     "metric_out": str,
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "workbench.surface-coordinates-to-metric": surface_coordinates_to_metric_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "workbench.surface-coordinates-to-metric": surface_coordinates_to_metric_outputs,
-    }.get(t)
-
-
 class SurfaceCoordinatesToMetricOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `surface_coordinates_to_metric(...)`.
+    Output object returned when calling `SurfaceCoordinatesToMetricParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -65,7 +38,7 @@ class SurfaceCoordinatesToMetricOutputs(typing.NamedTuple):
 def surface_coordinates_to_metric_params(
     surface: InputPathType,
     metric_out: str,
-) -> SurfaceCoordinatesToMetricParameters:
+) -> SurfaceCoordinatesToMetricParametersTagged:
     """
     Build parameters.
     
@@ -76,7 +49,7 @@ def surface_coordinates_to_metric_params(
         Parameter dictionary
     """
     params = {
-        "@type": "workbench.surface-coordinates-to-metric",
+        "@type": "workbench/surface-coordinates-to-metric",
         "surface": surface,
         "metric_out": metric_out,
     }
@@ -99,8 +72,8 @@ def surface_coordinates_to_metric_cargs(
     cargs = []
     cargs.append("wb_command")
     cargs.append("-surface-coordinates-to-metric")
-    cargs.append(execution.input_file(params.get("surface")))
-    cargs.append(params.get("metric_out"))
+    cargs.append(execution.input_file(params.get("surface", None)))
+    cargs.append(params.get("metric_out", None))
     return cargs
 
 
@@ -119,7 +92,7 @@ def surface_coordinates_to_metric_outputs(
     """
     ret = SurfaceCoordinatesToMetricOutputs(
         root=execution.output_file("."),
-        metric_out=execution.output_file(params.get("metric_out")),
+        metric_out=execution.output_file(params.get("metric_out", None)),
     )
     return ret
 
@@ -187,7 +160,6 @@ def surface_coordinates_to_metric(
 __all__ = [
     "SURFACE_COORDINATES_TO_METRIC_METADATA",
     "SurfaceCoordinatesToMetricOutputs",
-    "SurfaceCoordinatesToMetricParameters",
     "surface_coordinates_to_metric",
     "surface_coordinates_to_metric_execute",
     "surface_coordinates_to_metric_params",

@@ -14,48 +14,22 @@ ANTS_DENOISE_IMAGE_FS_METADATA = Metadata(
 
 
 AntsDenoiseImageFsParameters = typing.TypedDict('AntsDenoiseImageFsParameters', {
-    "@type": typing.Literal["freesurfer.AntsDenoiseImageFs"],
+    "@type": typing.NotRequired[typing.Literal["freesurfer/AntsDenoiseImageFs"]],
+    "input_image": InputPathType,
+    "output_image": str,
+    "rician_flag": bool,
+})
+AntsDenoiseImageFsParametersTagged = typing.TypedDict('AntsDenoiseImageFsParametersTagged', {
+    "@type": typing.Literal["freesurfer/AntsDenoiseImageFs"],
     "input_image": InputPathType,
     "output_image": str,
     "rician_flag": bool,
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "freesurfer.AntsDenoiseImageFs": ants_denoise_image_fs_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "freesurfer.AntsDenoiseImageFs": ants_denoise_image_fs_outputs,
-    }.get(t)
-
-
 class AntsDenoiseImageFsOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `ants_denoise_image_fs(...)`.
+    Output object returned when calling `AntsDenoiseImageFsParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -67,7 +41,7 @@ def ants_denoise_image_fs_params(
     input_image: InputPathType,
     output_image: str = "output.nii",
     rician_flag: bool = False,
-) -> AntsDenoiseImageFsParameters:
+) -> AntsDenoiseImageFsParametersTagged:
     """
     Build parameters.
     
@@ -79,7 +53,7 @@ def ants_denoise_image_fs_params(
         Parameter dictionary
     """
     params = {
-        "@type": "freesurfer.AntsDenoiseImageFs",
+        "@type": "freesurfer/AntsDenoiseImageFs",
         "input_image": input_image,
         "output_image": output_image,
         "rician_flag": rician_flag,
@@ -104,13 +78,13 @@ def ants_denoise_image_fs_cargs(
     cargs.append("AntsDenoiseImageFs")
     cargs.extend([
         "-i",
-        execution.input_file(params.get("input_image"))
+        execution.input_file(params.get("input_image", None))
     ])
     cargs.extend([
         "-o",
-        params.get("output_image")
+        params.get("output_image", "output.nii")
     ])
-    if params.get("rician_flag"):
+    if params.get("rician_flag", False):
         cargs.append("--rician")
     return cargs
 
@@ -130,7 +104,7 @@ def ants_denoise_image_fs_outputs(
     """
     ret = AntsDenoiseImageFsOutputs(
         root=execution.output_file("."),
-        denoised_output=execution.output_file(params.get("output_image")),
+        denoised_output=execution.output_file(params.get("output_image", "output.nii")),
     )
     return ret
 
@@ -199,7 +173,6 @@ def ants_denoise_image_fs(
 __all__ = [
     "ANTS_DENOISE_IMAGE_FS_METADATA",
     "AntsDenoiseImageFsOutputs",
-    "AntsDenoiseImageFsParameters",
     "ants_denoise_image_fs",
     "ants_denoise_image_fs_execute",
     "ants_denoise_image_fs_params",

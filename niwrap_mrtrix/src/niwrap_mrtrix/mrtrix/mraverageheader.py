@@ -14,14 +14,36 @@ MRAVERAGEHEADER_METADATA = Metadata(
 
 
 MraverageheaderConfigParameters = typing.TypedDict('MraverageheaderConfigParameters', {
-    "@type": typing.Literal["mrtrix.mraverageheader.config"],
+    "@type": typing.NotRequired[typing.Literal["config"]],
+    "key": str,
+    "value": str,
+})
+MraverageheaderConfigParametersTagged = typing.TypedDict('MraverageheaderConfigParametersTagged', {
+    "@type": typing.Literal["config"],
     "key": str,
     "value": str,
 })
 
 
 MraverageheaderParameters = typing.TypedDict('MraverageheaderParameters', {
-    "@type": typing.Literal["mrtrix.mraverageheader"],
+    "@type": typing.NotRequired[typing.Literal["mrtrix/mraverageheader"]],
+    "padding": typing.NotRequired[float | None],
+    "resolution": typing.NotRequired[str | None],
+    "fill": bool,
+    "datatype": typing.NotRequired[str | None],
+    "info": bool,
+    "quiet": bool,
+    "debug": bool,
+    "force": bool,
+    "nthreads": typing.NotRequired[int | None],
+    "config": typing.NotRequired[list[MraverageheaderConfigParameters] | None],
+    "help": bool,
+    "version": bool,
+    "input": list[InputPathType],
+    "output": str,
+})
+MraverageheaderParametersTagged = typing.TypedDict('MraverageheaderParametersTagged', {
+    "@type": typing.Literal["mrtrix/mraverageheader"],
     "padding": typing.NotRequired[float | None],
     "resolution": typing.NotRequired[str | None],
     "fill": bool,
@@ -39,43 +61,10 @@ MraverageheaderParameters = typing.TypedDict('MraverageheaderParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "mrtrix.mraverageheader": mraverageheader_cargs,
-        "mrtrix.mraverageheader.config": mraverageheader_config_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "mrtrix.mraverageheader": mraverageheader_outputs,
-    }.get(t)
-
-
 def mraverageheader_config_params(
     key: str,
     value: str,
-) -> MraverageheaderConfigParameters:
+) -> MraverageheaderConfigParametersTagged:
     """
     Build parameters.
     
@@ -86,7 +75,7 @@ def mraverageheader_config_params(
         Parameter dictionary
     """
     params = {
-        "@type": "mrtrix.mraverageheader.config",
+        "@type": "config",
         "key": key,
         "value": value,
     }
@@ -108,14 +97,14 @@ def mraverageheader_config_cargs(
     """
     cargs = []
     cargs.append("-config")
-    cargs.append(params.get("key"))
-    cargs.append(params.get("value"))
+    cargs.append(params.get("key", None))
+    cargs.append(params.get("value", None))
     return cargs
 
 
 class MraverageheaderOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `mraverageheader(...)`.
+    Output object returned when calling `MraverageheaderParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -138,7 +127,7 @@ def mraverageheader_params(
     config: list[MraverageheaderConfigParameters] | None = None,
     help_: bool = False,
     version: bool = False,
-) -> MraverageheaderParameters:
+) -> MraverageheaderParametersTagged:
     """
     Build parameters.
     
@@ -173,7 +162,7 @@ def mraverageheader_params(
         Parameter dictionary
     """
     params = {
-        "@type": "mrtrix.mraverageheader",
+        "@type": "mrtrix/mraverageheader",
         "fill": fill,
         "info": info,
         "quiet": quiet,
@@ -212,44 +201,44 @@ def mraverageheader_cargs(
     """
     cargs = []
     cargs.append("mraverageheader")
-    if params.get("padding") is not None:
+    if params.get("padding", None) is not None:
         cargs.extend([
             "-padding",
-            str(params.get("padding"))
+            str(params.get("padding", None))
         ])
-    if params.get("resolution") is not None:
+    if params.get("resolution", None) is not None:
         cargs.extend([
             "-resolution",
-            params.get("resolution")
+            params.get("resolution", None)
         ])
-    if params.get("fill"):
+    if params.get("fill", False):
         cargs.append("-fill")
-    if params.get("datatype") is not None:
+    if params.get("datatype", None) is not None:
         cargs.extend([
             "-datatype",
-            params.get("datatype")
+            params.get("datatype", None)
         ])
-    if params.get("info"):
+    if params.get("info", False):
         cargs.append("-info")
-    if params.get("quiet"):
+    if params.get("quiet", False):
         cargs.append("-quiet")
-    if params.get("debug"):
+    if params.get("debug", False):
         cargs.append("-debug")
-    if params.get("force"):
+    if params.get("force", False):
         cargs.append("-force")
-    if params.get("nthreads") is not None:
+    if params.get("nthreads", None) is not None:
         cargs.extend([
             "-nthreads",
-            str(params.get("nthreads"))
+            str(params.get("nthreads", None))
         ])
-    if params.get("config") is not None:
-        cargs.extend([a for c in [dyn_cargs(s["@type"])(s, execution) for s in params.get("config")] for a in c])
-    if params.get("help"):
+    if params.get("config", None) is not None:
+        cargs.extend([a for c in [mraverageheader_config_cargs(s, execution) for s in params.get("config", None)] for a in c])
+    if params.get("help", False):
         cargs.append("-help")
-    if params.get("version"):
+    if params.get("version", False):
         cargs.append("-version")
-    cargs.extend([execution.input_file(f) for f in params.get("input")])
-    cargs.append(params.get("output"))
+    cargs.extend([execution.input_file(f) for f in params.get("input", None)])
+    cargs.append(params.get("output", None))
     return cargs
 
 
@@ -268,7 +257,7 @@ def mraverageheader_outputs(
     """
     ret = MraverageheaderOutputs(
         root=execution.output_file("."),
-        output=execution.output_file(params.get("output")),
+        output=execution.output_file(params.get("output", None)),
     )
     return ret
 
@@ -391,9 +380,7 @@ def mraverageheader(
 
 __all__ = [
     "MRAVERAGEHEADER_METADATA",
-    "MraverageheaderConfigParameters",
     "MraverageheaderOutputs",
-    "MraverageheaderParameters",
     "mraverageheader",
     "mraverageheader_config_params",
     "mraverageheader_execute",

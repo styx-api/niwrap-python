@@ -14,7 +14,14 @@ ANTS_ALIGN_ORIGIN_METADATA = Metadata(
 
 
 AntsAlignOriginParameters = typing.TypedDict('AntsAlignOriginParameters', {
-    "@type": typing.Literal["ants.antsAlignOrigin"],
+    "@type": typing.NotRequired[typing.Literal["ants/antsAlignOrigin"]],
+    "dimensionality": typing.NotRequired[typing.Literal[2, 3] | None],
+    "input": InputPathType,
+    "reference_image": InputPathType,
+    "output": str,
+})
+AntsAlignOriginParametersTagged = typing.TypedDict('AntsAlignOriginParametersTagged', {
+    "@type": typing.Literal["ants/antsAlignOrigin"],
     "dimensionality": typing.NotRequired[typing.Literal[2, 3] | None],
     "input": InputPathType,
     "reference_image": InputPathType,
@@ -22,41 +29,9 @@ AntsAlignOriginParameters = typing.TypedDict('AntsAlignOriginParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "ants.antsAlignOrigin": ants_align_origin_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "ants.antsAlignOrigin": ants_align_origin_outputs,
-    }.get(t)
-
-
 class AntsAlignOriginOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `ants_align_origin(...)`.
+    Output object returned when calling `AntsAlignOriginParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -69,7 +44,7 @@ def ants_align_origin_params(
     reference_image: InputPathType,
     output: str,
     dimensionality: typing.Literal[2, 3] | None = None,
-) -> AntsAlignOriginParameters:
+) -> AntsAlignOriginParametersTagged:
     """
     Build parameters.
     
@@ -89,7 +64,7 @@ def ants_align_origin_params(
         Parameter dictionary
     """
     params = {
-        "@type": "ants.antsAlignOrigin",
+        "@type": "ants/antsAlignOrigin",
         "input": input_,
         "reference_image": reference_image,
         "output": output,
@@ -114,22 +89,22 @@ def ants_align_origin_cargs(
     """
     cargs = []
     cargs.append("antsAlignOrigin")
-    if params.get("dimensionality") is not None:
+    if params.get("dimensionality", None) is not None:
         cargs.extend([
             "--dimensionality",
-            str(params.get("dimensionality"))
+            str(params.get("dimensionality", None))
         ])
     cargs.extend([
         "--input",
-        execution.input_file(params.get("input"))
+        execution.input_file(params.get("input", None))
     ])
     cargs.extend([
         "--reference-image",
-        execution.input_file(params.get("reference_image"))
+        execution.input_file(params.get("reference_image", None))
     ])
     cargs.extend([
         "--output",
-        params.get("output")
+        params.get("output", None)
     ])
     return cargs
 
@@ -149,7 +124,7 @@ def ants_align_origin_outputs(
     """
     ret = AntsAlignOriginOutputs(
         root=execution.output_file("."),
-        aligned_image=execution.output_file(params.get("output")),
+        aligned_image=execution.output_file(params.get("output", None)),
     )
     return ret
 
@@ -228,7 +203,6 @@ def ants_align_origin(
 __all__ = [
     "ANTS_ALIGN_ORIGIN_METADATA",
     "AntsAlignOriginOutputs",
-    "AntsAlignOriginParameters",
     "ants_align_origin",
     "ants_align_origin_execute",
     "ants_align_origin_params",

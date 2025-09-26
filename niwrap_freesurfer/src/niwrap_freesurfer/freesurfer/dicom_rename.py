@@ -14,7 +14,14 @@ DICOM_RENAME_METADATA = Metadata(
 
 
 DicomRenameParameters = typing.TypedDict('DicomRenameParameters', {
-    "@type": typing.Literal["freesurfer.dicom-rename"],
+    "@type": typing.NotRequired[typing.Literal["freesurfer/dicom-rename"]],
+    "input_files": list[InputPathType],
+    "output_base": str,
+    "version": bool,
+    "help": bool,
+})
+DicomRenameParametersTagged = typing.TypedDict('DicomRenameParametersTagged', {
+    "@type": typing.Literal["freesurfer/dicom-rename"],
     "input_files": list[InputPathType],
     "output_base": str,
     "version": bool,
@@ -22,41 +29,9 @@ DicomRenameParameters = typing.TypedDict('DicomRenameParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "freesurfer.dicom-rename": dicom_rename_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "freesurfer.dicom-rename": dicom_rename_outputs,
-    }.get(t)
-
-
 class DicomRenameOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `dicom_rename(...)`.
+    Output object returned when calling `DicomRenameParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -69,7 +44,7 @@ def dicom_rename_params(
     output_base: str,
     version: bool = False,
     help_: bool = False,
-) -> DicomRenameParameters:
+) -> DicomRenameParametersTagged:
     """
     Build parameters.
     
@@ -83,7 +58,7 @@ def dicom_rename_params(
         Parameter dictionary
     """
     params = {
-        "@type": "freesurfer.dicom-rename",
+        "@type": "freesurfer/dicom-rename",
         "input_files": input_files,
         "output_base": output_base,
         "version": version,
@@ -109,15 +84,15 @@ def dicom_rename_cargs(
     cargs.append("dicom-rename")
     cargs.extend([
         "-rename",
-        *[execution.input_file(f) for f in params.get("input_files")]
+        *[execution.input_file(f) for f in params.get("input_files", None)]
     ])
     cargs.extend([
         "--o",
-        params.get("output_base")
+        params.get("output_base", None)
     ])
-    if params.get("version"):
+    if params.get("version", False):
         cargs.append("--version")
-    if params.get("help"):
+    if params.get("help", False):
         cargs.append("--help")
     return cargs
 
@@ -137,7 +112,7 @@ def dicom_rename_outputs(
     """
     ret = DicomRenameOutputs(
         root=execution.output_file("."),
-        renamed_dicom=execution.output_file(params.get("output_base") + "-SSS-IIIII.dcm"),
+        renamed_dicom=execution.output_file(params.get("output_base", None) + "-SSS-IIIII.dcm"),
     )
     return ret
 
@@ -208,7 +183,6 @@ def dicom_rename(
 __all__ = [
     "DICOM_RENAME_METADATA",
     "DicomRenameOutputs",
-    "DicomRenameParameters",
     "dicom_rename",
     "dicom_rename_execute",
     "dicom_rename_params",

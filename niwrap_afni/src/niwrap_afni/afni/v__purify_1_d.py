@@ -14,47 +14,22 @@ V__PURIFY_1_D_METADATA = Metadata(
 
 
 VPurify1DParameters = typing.TypedDict('VPurify1DParameters', {
-    "@type": typing.Literal["afni.@Purify_1D"],
+    "@type": typing.NotRequired[typing.Literal["afni/@Purify_1D"]],
+    "sub_brick": typing.NotRequired[str | None],
+    "suffix": typing.NotRequired[str | None],
+    "input_files": list[InputPathType],
+})
+VPurify1DParametersTagged = typing.TypedDict('VPurify1DParametersTagged', {
+    "@type": typing.Literal["afni/@Purify_1D"],
     "sub_brick": typing.NotRequired[str | None],
     "suffix": typing.NotRequired[str | None],
     "input_files": list[InputPathType],
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "afni.@Purify_1D": v__purify_1_d_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-    }.get(t)
-
-
 class VPurify1DOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `v__purify_1_d(...)`.
+    Output object returned when calling `VPurify1DParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -64,7 +39,7 @@ def v__purify_1_d_params(
     input_files: list[InputPathType],
     sub_brick: str | None = None,
     suffix: str | None = None,
-) -> VPurify1DParameters:
+) -> VPurify1DParametersTagged:
     """
     Build parameters.
     
@@ -78,7 +53,7 @@ def v__purify_1_d_params(
         Parameter dictionary
     """
     params = {
-        "@type": "afni.@Purify_1D",
+        "@type": "afni/@Purify_1D",
         "input_files": input_files,
     }
     if sub_brick is not None:
@@ -103,17 +78,17 @@ def v__purify_1_d_cargs(
     """
     cargs = []
     cargs.append("@Purify_1D")
-    if params.get("sub_brick") is not None:
+    if params.get("sub_brick", None) is not None:
         cargs.extend([
             "-sub",
-            params.get("sub_brick")
+            params.get("sub_brick", None)
         ])
-    if params.get("suffix") is not None:
+    if params.get("suffix", None) is not None:
         cargs.extend([
             "-suf",
-            params.get("suffix")
+            params.get("suffix", None)
         ])
-    cargs.extend([execution.input_file(f) for f in params.get("input_files")])
+    cargs.extend([execution.input_file(f) for f in params.get("input_files", None)])
     return cargs
 
 
@@ -199,7 +174,6 @@ def v__purify_1_d(
 
 __all__ = [
     "VPurify1DOutputs",
-    "VPurify1DParameters",
     "V__PURIFY_1_D_METADATA",
     "v__purify_1_d",
     "v__purify_1_d_execute",

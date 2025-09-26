@@ -14,7 +14,16 @@ V_3D_TCAT_METADATA = Metadata(
 
 
 V3dTcatParameters = typing.TypedDict('V3dTcatParameters', {
-    "@type": typing.Literal["afni.3dTcat"],
+    "@type": typing.NotRequired[typing.Literal["afni/3dTcat"]],
+    "rlt": typing.NotRequired[typing.Literal["", "+", "++"] | None],
+    "in_files": InputPathType,
+    "out_file": typing.NotRequired[str | None],
+    "outputtype": typing.NotRequired[typing.Literal["NIFTI", "AFNI", "NIFTI_GZ"] | None],
+    "num_threads": typing.NotRequired[int | None],
+    "verbose": bool,
+})
+V3dTcatParametersTagged = typing.TypedDict('V3dTcatParametersTagged', {
+    "@type": typing.Literal["afni/3dTcat"],
     "rlt": typing.NotRequired[typing.Literal["", "+", "++"] | None],
     "in_files": InputPathType,
     "out_file": typing.NotRequired[str | None],
@@ -24,41 +33,9 @@ V3dTcatParameters = typing.TypedDict('V3dTcatParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "afni.3dTcat": v_3d_tcat_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "afni.3dTcat": v_3d_tcat_outputs,
-    }.get(t)
-
-
 class V3dTcatOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `v_3d_tcat(...)`.
+    Output object returned when calling `V3dTcatParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -73,7 +50,7 @@ def v_3d_tcat_params(
     outputtype: typing.Literal["NIFTI", "AFNI", "NIFTI_GZ"] | None = None,
     num_threads: int | None = None,
     verbose: bool = False,
-) -> V3dTcatParameters:
+) -> V3dTcatParametersTagged:
     """
     Build parameters.
     
@@ -92,7 +69,7 @@ def v_3d_tcat_params(
         Parameter dictionary
     """
     params = {
-        "@type": "afni.3dTcat",
+        "@type": "afni/3dTcat",
         "in_files": in_files,
         "verbose": verbose,
     }
@@ -122,21 +99,21 @@ def v_3d_tcat_cargs(
     """
     cargs = []
     cargs.append("3dTcat")
-    if params.get("rlt") is not None:
+    if params.get("rlt", None) is not None:
         cargs.extend([
             "-rlt",
-            params.get("rlt") + execution.input_file(params.get("in_files"))
+            params.get("rlt", None) + execution.input_file(params.get("in_files", None))
         ])
-    if params.get("out_file") is not None:
+    if params.get("out_file", None) is not None:
         cargs.extend([
             "-prefix",
-            params.get("out_file")
+            params.get("out_file", None)
         ])
-    if params.get("outputtype") is not None:
-        cargs.append(params.get("outputtype"))
-    if params.get("num_threads") is not None:
-        cargs.append(str(params.get("num_threads")))
-    if params.get("verbose"):
+    if params.get("outputtype", None) is not None:
+        cargs.append(params.get("outputtype", None))
+    if params.get("num_threads", None) is not None:
+        cargs.append(str(params.get("num_threads", None)))
+    if params.get("verbose", False):
         cargs.append("-verb")
     return cargs
 
@@ -156,7 +133,7 @@ def v_3d_tcat_outputs(
     """
     ret = V3dTcatOutputs(
         root=execution.output_file("."),
-        out_file=execution.output_file(pathlib.Path(params.get("in_files")).name + "_tcat"),
+        out_file=execution.output_file(pathlib.Path(params.get("in_files", None)).name + "_tcat"),
     )
     return ret
 
@@ -239,7 +216,6 @@ def v_3d_tcat(
 
 __all__ = [
     "V3dTcatOutputs",
-    "V3dTcatParameters",
     "V_3D_TCAT_METADATA",
     "v_3d_tcat",
     "v_3d_tcat_execute",

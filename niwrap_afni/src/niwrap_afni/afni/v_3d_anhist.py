@@ -14,7 +14,18 @@ V_3D_ANHIST_METADATA = Metadata(
 
 
 V3dAnhistParameters = typing.TypedDict('V3dAnhistParameters', {
-    "@type": typing.Literal["afni.3dAnhist"],
+    "@type": typing.NotRequired[typing.Literal["afni/3dAnhist"]],
+    "dataset": InputPathType,
+    "quiet": bool,
+    "dump_histogram": bool,
+    "no_scurve": bool,
+    "winsorize": typing.NotRequired[str | None],
+    "top_2peaks": bool,
+    "label": typing.NotRequired[str | None],
+    "filename": typing.NotRequired[str | None],
+})
+V3dAnhistParametersTagged = typing.TypedDict('V3dAnhistParametersTagged', {
+    "@type": typing.Literal["afni/3dAnhist"],
     "dataset": InputPathType,
     "quiet": bool,
     "dump_histogram": bool,
@@ -26,41 +37,9 @@ V3dAnhistParameters = typing.TypedDict('V3dAnhistParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "afni.3dAnhist": v_3d_anhist_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "afni.3dAnhist": v_3d_anhist_outputs,
-    }.get(t)
-
-
 class V3dAnhistOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `v_3d_anhist(...)`.
+    Output object returned when calling `V3dAnhistParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -79,7 +58,7 @@ def v_3d_anhist_params(
     top_2peaks: bool = False,
     label: str | None = None,
     filename: str | None = None,
-) -> V3dAnhistParameters:
+) -> V3dAnhistParametersTagged:
     """
     Build parameters.
     
@@ -99,7 +78,7 @@ def v_3d_anhist_params(
         Parameter dictionary
     """
     params = {
-        "@type": "afni.3dAnhist",
+        "@type": "afni/3dAnhist",
         "dataset": dataset,
         "quiet": quiet,
         "dump_histogram": dump_histogram,
@@ -130,29 +109,29 @@ def v_3d_anhist_cargs(
     """
     cargs = []
     cargs.append("3dAnhist")
-    cargs.append(execution.input_file(params.get("dataset")))
-    if params.get("quiet"):
+    cargs.append(execution.input_file(params.get("dataset", None)))
+    if params.get("quiet", False):
         cargs.append("-q")
-    if params.get("dump_histogram"):
+    if params.get("dump_histogram", False):
         cargs.append("-h")
-    if params.get("no_scurve"):
+    if params.get("no_scurve", False):
         cargs.append("-F")
-    if params.get("winsorize") is not None:
+    if params.get("winsorize", None) is not None:
         cargs.extend([
             "-w",
-            params.get("winsorize")
+            params.get("winsorize", None)
         ])
-    if params.get("top_2peaks"):
+    if params.get("top_2peaks", False):
         cargs.append("-2")
-    if params.get("label") is not None:
+    if params.get("label", None) is not None:
         cargs.extend([
             "-label",
-            params.get("label")
+            params.get("label", None)
         ])
-    if params.get("filename") is not None:
+    if params.get("filename", None) is not None:
         cargs.extend([
             "-fname",
-            params.get("filename")
+            params.get("filename", None)
         ])
     return cargs
 
@@ -259,7 +238,6 @@ def v_3d_anhist(
 
 __all__ = [
     "V3dAnhistOutputs",
-    "V3dAnhistParameters",
     "V_3D_ANHIST_METADATA",
     "v_3d_anhist",
     "v_3d_anhist_execute",

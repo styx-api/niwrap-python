@@ -14,7 +14,13 @@ FOCI_CREATE_METADATA = Metadata(
 
 
 FociCreateClassParameters = typing.TypedDict('FociCreateClassParameters', {
-    "@type": typing.Literal["workbench.foci-create.class"],
+    "@type": typing.NotRequired[typing.Literal["class"]],
+    "class_name": str,
+    "foci_list_file": str,
+    "surface": InputPathType,
+})
+FociCreateClassParametersTagged = typing.TypedDict('FociCreateClassParametersTagged', {
+    "@type": typing.Literal["class"],
     "class_name": str,
     "foci_list_file": str,
     "surface": InputPathType,
@@ -22,50 +28,22 @@ FociCreateClassParameters = typing.TypedDict('FociCreateClassParameters', {
 
 
 FociCreateParameters = typing.TypedDict('FociCreateParameters', {
-    "@type": typing.Literal["workbench.foci-create"],
+    "@type": typing.NotRequired[typing.Literal["workbench/foci-create"]],
     "output": str,
     "class": typing.NotRequired[list[FociCreateClassParameters] | None],
 })
-
-
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "workbench.foci-create": foci_create_cargs,
-        "workbench.foci-create.class": foci_create_class_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "workbench.foci-create": foci_create_outputs,
-    }.get(t)
+FociCreateParametersTagged = typing.TypedDict('FociCreateParametersTagged', {
+    "@type": typing.Literal["workbench/foci-create"],
+    "output": str,
+    "class": typing.NotRequired[list[FociCreateClassParameters] | None],
+})
 
 
 def foci_create_class_params(
     class_name: str,
     foci_list_file: str,
     surface: InputPathType,
-) -> FociCreateClassParameters:
+) -> FociCreateClassParametersTagged:
     """
     Build parameters.
     
@@ -78,7 +56,7 @@ def foci_create_class_params(
         Parameter dictionary
     """
     params = {
-        "@type": "workbench.foci-create.class",
+        "@type": "class",
         "class_name": class_name,
         "foci_list_file": foci_list_file,
         "surface": surface,
@@ -101,15 +79,15 @@ def foci_create_class_cargs(
     """
     cargs = []
     cargs.append("-class")
-    cargs.append(params.get("class_name"))
-    cargs.append(params.get("foci_list_file"))
-    cargs.append(execution.input_file(params.get("surface")))
+    cargs.append(params.get("class_name", None))
+    cargs.append(params.get("foci_list_file", None))
+    cargs.append(execution.input_file(params.get("surface", None)))
     return cargs
 
 
 class FociCreateOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `foci_create(...)`.
+    Output object returned when calling `FociCreateParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -120,7 +98,7 @@ class FociCreateOutputs(typing.NamedTuple):
 def foci_create_params(
     output: str,
     class_: list[FociCreateClassParameters] | None = None,
-) -> FociCreateParameters:
+) -> FociCreateParametersTagged:
     """
     Build parameters.
     
@@ -131,7 +109,7 @@ def foci_create_params(
         Parameter dictionary
     """
     params = {
-        "@type": "workbench.foci-create",
+        "@type": "workbench/foci-create",
         "output": output,
     }
     if class_ is not None:
@@ -155,9 +133,9 @@ def foci_create_cargs(
     cargs = []
     cargs.append("wb_command")
     cargs.append("-foci-create")
-    cargs.append(params.get("output"))
-    if params.get("class") is not None:
-        cargs.extend([a for c in [dyn_cargs(s["@type"])(s, execution) for s in params.get("class")] for a in c])
+    cargs.append(params.get("output", None))
+    if params.get("class", None) is not None:
+        cargs.extend([a for c in [foci_create_class_cargs(s, execution) for s in params.get("class", None)] for a in c])
     return cargs
 
 
@@ -176,7 +154,7 @@ def foci_create_outputs(
     """
     ret = FociCreateOutputs(
         root=execution.output_file("."),
-        output=execution.output_file(params.get("output")),
+        output=execution.output_file(params.get("output", None)),
     )
     return ret
 
@@ -277,9 +255,7 @@ def foci_create(
 
 __all__ = [
     "FOCI_CREATE_METADATA",
-    "FociCreateClassParameters",
     "FociCreateOutputs",
-    "FociCreateParameters",
     "foci_create",
     "foci_create_class_params",
     "foci_create_execute",

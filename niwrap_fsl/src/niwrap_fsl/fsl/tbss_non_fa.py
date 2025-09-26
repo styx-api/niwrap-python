@@ -14,7 +14,19 @@ TBSS_NON_FA_METADATA = Metadata(
 
 
 TbssNonFaParameters = typing.TypedDict('TbssNonFaParameters', {
-    "@type": typing.Literal["fsl.tbss_non_FA"],
+    "@type": typing.NotRequired[typing.Literal["fsl/tbss_non_FA"]],
+    "concat_auto": bool,
+    "output_file": str,
+    "input_files": list[InputPathType],
+    "concat_x": bool,
+    "concat_y": bool,
+    "concat_z": bool,
+    "concat_t": bool,
+    "concat_tr": typing.NotRequired[float | None],
+    "volume_number": typing.NotRequired[float | None],
+})
+TbssNonFaParametersTagged = typing.TypedDict('TbssNonFaParametersTagged', {
+    "@type": typing.Literal["fsl/tbss_non_FA"],
     "concat_auto": bool,
     "output_file": str,
     "input_files": list[InputPathType],
@@ -27,41 +39,9 @@ TbssNonFaParameters = typing.TypedDict('TbssNonFaParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "fsl.tbss_non_FA": tbss_non_fa_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "fsl.tbss_non_FA": tbss_non_fa_outputs,
-    }.get(t)
-
-
 class TbssNonFaOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `tbss_non_fa(...)`.
+    Output object returned when calling `TbssNonFaParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -79,7 +59,7 @@ def tbss_non_fa_params(
     concat_t: bool = False,
     concat_tr: float | None = None,
     volume_number: float | None = None,
-) -> TbssNonFaParameters:
+) -> TbssNonFaParametersTagged:
     """
     Build parameters.
     
@@ -100,7 +80,7 @@ def tbss_non_fa_params(
         Parameter dictionary
     """
     params = {
-        "@type": "fsl.tbss_non_FA",
+        "@type": "fsl/tbss_non_FA",
         "concat_auto": concat_auto,
         "output_file": output_file,
         "input_files": input_files,
@@ -131,27 +111,27 @@ def tbss_non_fa_cargs(
     """
     cargs = []
     cargs.append("tbss_non_FA")
-    if params.get("concat_auto"):
+    if params.get("concat_auto", False):
         cargs.append("-a")
-    cargs.append(params.get("output_file"))
-    cargs.extend([execution.input_file(f) for f in params.get("input_files")])
-    if params.get("concat_x"):
+    cargs.append(params.get("output_file", None))
+    cargs.extend([execution.input_file(f) for f in params.get("input_files", None)])
+    if params.get("concat_x", False):
         cargs.append("-x")
-    if params.get("concat_y"):
+    if params.get("concat_y", False):
         cargs.append("-y")
-    if params.get("concat_z"):
+    if params.get("concat_z", False):
         cargs.append("-z")
-    if params.get("concat_t"):
+    if params.get("concat_t", False):
         cargs.append("-t")
-    if params.get("concat_tr") is not None:
+    if params.get("concat_tr", None) is not None:
         cargs.extend([
             "-tr",
-            str(params.get("concat_tr"))
+            str(params.get("concat_tr", None))
         ])
-    if params.get("volume_number") is not None:
+    if params.get("volume_number", None) is not None:
         cargs.extend([
             "-n",
-            str(params.get("volume_number"))
+            str(params.get("volume_number", None))
         ])
     return cargs
 
@@ -171,7 +151,7 @@ def tbss_non_fa_outputs(
     """
     ret = TbssNonFaOutputs(
         root=execution.output_file("."),
-        merged_output=execution.output_file(params.get("output_file")),
+        merged_output=execution.output_file(params.get("output_file", None)),
     )
     return ret
 
@@ -259,7 +239,6 @@ def tbss_non_fa(
 __all__ = [
     "TBSS_NON_FA_METADATA",
     "TbssNonFaOutputs",
-    "TbssNonFaParameters",
     "tbss_non_fa",
     "tbss_non_fa_execute",
     "tbss_non_fa_params",

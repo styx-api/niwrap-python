@@ -14,14 +14,34 @@ TSFTHRESHOLD_METADATA = Metadata(
 
 
 TsfthresholdConfigParameters = typing.TypedDict('TsfthresholdConfigParameters', {
-    "@type": typing.Literal["mrtrix.tsfthreshold.config"],
+    "@type": typing.NotRequired[typing.Literal["config"]],
+    "key": str,
+    "value": str,
+})
+TsfthresholdConfigParametersTagged = typing.TypedDict('TsfthresholdConfigParametersTagged', {
+    "@type": typing.Literal["config"],
     "key": str,
     "value": str,
 })
 
 
 TsfthresholdParameters = typing.TypedDict('TsfthresholdParameters', {
-    "@type": typing.Literal["mrtrix.tsfthreshold"],
+    "@type": typing.NotRequired[typing.Literal["mrtrix/tsfthreshold"]],
+    "invert": bool,
+    "info": bool,
+    "quiet": bool,
+    "debug": bool,
+    "force": bool,
+    "nthreads": typing.NotRequired[int | None],
+    "config": typing.NotRequired[list[TsfthresholdConfigParameters] | None],
+    "help": bool,
+    "version": bool,
+    "input": InputPathType,
+    "T": float,
+    "output": str,
+})
+TsfthresholdParametersTagged = typing.TypedDict('TsfthresholdParametersTagged', {
+    "@type": typing.Literal["mrtrix/tsfthreshold"],
     "invert": bool,
     "info": bool,
     "quiet": bool,
@@ -37,43 +57,10 @@ TsfthresholdParameters = typing.TypedDict('TsfthresholdParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "mrtrix.tsfthreshold": tsfthreshold_cargs,
-        "mrtrix.tsfthreshold.config": tsfthreshold_config_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "mrtrix.tsfthreshold": tsfthreshold_outputs,
-    }.get(t)
-
-
 def tsfthreshold_config_params(
     key: str,
     value: str,
-) -> TsfthresholdConfigParameters:
+) -> TsfthresholdConfigParametersTagged:
     """
     Build parameters.
     
@@ -84,7 +71,7 @@ def tsfthreshold_config_params(
         Parameter dictionary
     """
     params = {
-        "@type": "mrtrix.tsfthreshold.config",
+        "@type": "config",
         "key": key,
         "value": value,
     }
@@ -106,14 +93,14 @@ def tsfthreshold_config_cargs(
     """
     cargs = []
     cargs.append("-config")
-    cargs.append(params.get("key"))
-    cargs.append(params.get("value"))
+    cargs.append(params.get("key", None))
+    cargs.append(params.get("value", None))
     return cargs
 
 
 class TsfthresholdOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `tsfthreshold(...)`.
+    Output object returned when calling `TsfthresholdParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -134,7 +121,7 @@ def tsfthreshold_params(
     config: list[TsfthresholdConfigParameters] | None = None,
     help_: bool = False,
     version: bool = False,
-) -> TsfthresholdParameters:
+) -> TsfthresholdParametersTagged:
     """
     Build parameters.
     
@@ -159,7 +146,7 @@ def tsfthreshold_params(
         Parameter dictionary
     """
     params = {
-        "@type": "mrtrix.tsfthreshold",
+        "@type": "mrtrix/tsfthreshold",
         "invert": invert,
         "info": info,
         "quiet": quiet,
@@ -193,30 +180,30 @@ def tsfthreshold_cargs(
     """
     cargs = []
     cargs.append("tsfthreshold")
-    if params.get("invert"):
+    if params.get("invert", False):
         cargs.append("-invert")
-    if params.get("info"):
+    if params.get("info", False):
         cargs.append("-info")
-    if params.get("quiet"):
+    if params.get("quiet", False):
         cargs.append("-quiet")
-    if params.get("debug"):
+    if params.get("debug", False):
         cargs.append("-debug")
-    if params.get("force"):
+    if params.get("force", False):
         cargs.append("-force")
-    if params.get("nthreads") is not None:
+    if params.get("nthreads", None) is not None:
         cargs.extend([
             "-nthreads",
-            str(params.get("nthreads"))
+            str(params.get("nthreads", None))
         ])
-    if params.get("config") is not None:
-        cargs.extend([a for c in [dyn_cargs(s["@type"])(s, execution) for s in params.get("config")] for a in c])
-    if params.get("help"):
+    if params.get("config", None) is not None:
+        cargs.extend([a for c in [tsfthreshold_config_cargs(s, execution) for s in params.get("config", None)] for a in c])
+    if params.get("help", False):
         cargs.append("-help")
-    if params.get("version"):
+    if params.get("version", False):
         cargs.append("-version")
-    cargs.append(execution.input_file(params.get("input")))
-    cargs.append(str(params.get("T")))
-    cargs.append(params.get("output"))
+    cargs.append(execution.input_file(params.get("input", None)))
+    cargs.append(str(params.get("T", None)))
+    cargs.append(params.get("output", None))
     return cargs
 
 
@@ -235,7 +222,7 @@ def tsfthreshold_outputs(
     """
     ret = TsfthresholdOutputs(
         root=execution.output_file("."),
-        output=execution.output_file(params.get("output")),
+        output=execution.output_file(params.get("output", None)),
     )
     return ret
 
@@ -344,9 +331,7 @@ def tsfthreshold(
 
 __all__ = [
     "TSFTHRESHOLD_METADATA",
-    "TsfthresholdConfigParameters",
     "TsfthresholdOutputs",
-    "TsfthresholdParameters",
     "tsfthreshold",
     "tsfthreshold_config_params",
     "tsfthreshold_execute",

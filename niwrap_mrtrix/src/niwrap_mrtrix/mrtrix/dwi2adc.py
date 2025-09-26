@@ -14,21 +14,46 @@ DWI2ADC_METADATA = Metadata(
 
 
 Dwi2adcFslgradParameters = typing.TypedDict('Dwi2adcFslgradParameters', {
-    "@type": typing.Literal["mrtrix.dwi2adc.fslgrad"],
+    "@type": typing.NotRequired[typing.Literal["fslgrad"]],
+    "bvecs": InputPathType,
+    "bvals": InputPathType,
+})
+Dwi2adcFslgradParametersTagged = typing.TypedDict('Dwi2adcFslgradParametersTagged', {
+    "@type": typing.Literal["fslgrad"],
     "bvecs": InputPathType,
     "bvals": InputPathType,
 })
 
 
 Dwi2adcConfigParameters = typing.TypedDict('Dwi2adcConfigParameters', {
-    "@type": typing.Literal["mrtrix.dwi2adc.config"],
+    "@type": typing.NotRequired[typing.Literal["config"]],
+    "key": str,
+    "value": str,
+})
+Dwi2adcConfigParametersTagged = typing.TypedDict('Dwi2adcConfigParametersTagged', {
+    "@type": typing.Literal["config"],
     "key": str,
     "value": str,
 })
 
 
 Dwi2adcParameters = typing.TypedDict('Dwi2adcParameters', {
-    "@type": typing.Literal["mrtrix.dwi2adc"],
+    "@type": typing.NotRequired[typing.Literal["mrtrix/dwi2adc"]],
+    "grad": typing.NotRequired[InputPathType | None],
+    "fslgrad": typing.NotRequired[Dwi2adcFslgradParameters | None],
+    "info": bool,
+    "quiet": bool,
+    "debug": bool,
+    "force": bool,
+    "nthreads": typing.NotRequired[int | None],
+    "config": typing.NotRequired[list[Dwi2adcConfigParameters] | None],
+    "help": bool,
+    "version": bool,
+    "input": InputPathType,
+    "output": str,
+})
+Dwi2adcParametersTagged = typing.TypedDict('Dwi2adcParametersTagged', {
+    "@type": typing.Literal["mrtrix/dwi2adc"],
     "grad": typing.NotRequired[InputPathType | None],
     "fslgrad": typing.NotRequired[Dwi2adcFslgradParameters | None],
     "info": bool,
@@ -44,44 +69,10 @@ Dwi2adcParameters = typing.TypedDict('Dwi2adcParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "mrtrix.dwi2adc": dwi2adc_cargs,
-        "mrtrix.dwi2adc.fslgrad": dwi2adc_fslgrad_cargs,
-        "mrtrix.dwi2adc.config": dwi2adc_config_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "mrtrix.dwi2adc": dwi2adc_outputs,
-    }.get(t)
-
-
 def dwi2adc_fslgrad_params(
     bvecs: InputPathType,
     bvals: InputPathType,
-) -> Dwi2adcFslgradParameters:
+) -> Dwi2adcFslgradParametersTagged:
     """
     Build parameters.
     
@@ -98,7 +89,7 @@ def dwi2adc_fslgrad_params(
         Parameter dictionary
     """
     params = {
-        "@type": "mrtrix.dwi2adc.fslgrad",
+        "@type": "fslgrad",
         "bvecs": bvecs,
         "bvals": bvals,
     }
@@ -120,15 +111,15 @@ def dwi2adc_fslgrad_cargs(
     """
     cargs = []
     cargs.append("-fslgrad")
-    cargs.append(execution.input_file(params.get("bvecs")))
-    cargs.append(execution.input_file(params.get("bvals")))
+    cargs.append(execution.input_file(params.get("bvecs", None)))
+    cargs.append(execution.input_file(params.get("bvals", None)))
     return cargs
 
 
 def dwi2adc_config_params(
     key: str,
     value: str,
-) -> Dwi2adcConfigParameters:
+) -> Dwi2adcConfigParametersTagged:
     """
     Build parameters.
     
@@ -139,7 +130,7 @@ def dwi2adc_config_params(
         Parameter dictionary
     """
     params = {
-        "@type": "mrtrix.dwi2adc.config",
+        "@type": "config",
         "key": key,
         "value": value,
     }
@@ -161,14 +152,14 @@ def dwi2adc_config_cargs(
     """
     cargs = []
     cargs.append("-config")
-    cargs.append(params.get("key"))
-    cargs.append(params.get("value"))
+    cargs.append(params.get("key", None))
+    cargs.append(params.get("value", None))
     return cargs
 
 
 class Dwi2adcOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `dwi2adc(...)`.
+    Output object returned when calling `Dwi2adcParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -189,7 +180,7 @@ def dwi2adc_params(
     config: list[Dwi2adcConfigParameters] | None = None,
     help_: bool = False,
     version: bool = False,
-) -> Dwi2adcParameters:
+) -> Dwi2adcParametersTagged:
     """
     Build parameters.
     
@@ -222,7 +213,7 @@ def dwi2adc_params(
         Parameter dictionary
     """
     params = {
-        "@type": "mrtrix.dwi2adc",
+        "@type": "mrtrix/dwi2adc",
         "info": info,
         "quiet": quiet,
         "debug": debug,
@@ -258,34 +249,34 @@ def dwi2adc_cargs(
     """
     cargs = []
     cargs.append("dwi2adc")
-    if params.get("grad") is not None:
+    if params.get("grad", None) is not None:
         cargs.extend([
             "-grad",
-            execution.input_file(params.get("grad"))
+            execution.input_file(params.get("grad", None))
         ])
-    if params.get("fslgrad") is not None:
-        cargs.extend(dyn_cargs(params.get("fslgrad")["@type"])(params.get("fslgrad"), execution))
-    if params.get("info"):
+    if params.get("fslgrad", None) is not None:
+        cargs.extend(dwi2adc_fslgrad_cargs(params.get("fslgrad", None), execution))
+    if params.get("info", False):
         cargs.append("-info")
-    if params.get("quiet"):
+    if params.get("quiet", False):
         cargs.append("-quiet")
-    if params.get("debug"):
+    if params.get("debug", False):
         cargs.append("-debug")
-    if params.get("force"):
+    if params.get("force", False):
         cargs.append("-force")
-    if params.get("nthreads") is not None:
+    if params.get("nthreads", None) is not None:
         cargs.extend([
             "-nthreads",
-            str(params.get("nthreads"))
+            str(params.get("nthreads", None))
         ])
-    if params.get("config") is not None:
-        cargs.extend([a for c in [dyn_cargs(s["@type"])(s, execution) for s in params.get("config")] for a in c])
-    if params.get("help"):
+    if params.get("config", None) is not None:
+        cargs.extend([a for c in [dwi2adc_config_cargs(s, execution) for s in params.get("config", None)] for a in c])
+    if params.get("help", False):
         cargs.append("-help")
-    if params.get("version"):
+    if params.get("version", False):
         cargs.append("-version")
-    cargs.append(execution.input_file(params.get("input")))
-    cargs.append(params.get("output"))
+    cargs.append(execution.input_file(params.get("input", None)))
+    cargs.append(params.get("output", None))
     return cargs
 
 
@@ -304,7 +295,7 @@ def dwi2adc_outputs(
     """
     ret = Dwi2adcOutputs(
         root=execution.output_file("."),
-        output=execution.output_file(params.get("output")),
+        output=execution.output_file(params.get("output", None)),
     )
     return ret
 
@@ -421,10 +412,7 @@ def dwi2adc(
 
 __all__ = [
     "DWI2ADC_METADATA",
-    "Dwi2adcConfigParameters",
-    "Dwi2adcFslgradParameters",
     "Dwi2adcOutputs",
-    "Dwi2adcParameters",
     "dwi2adc",
     "dwi2adc_config_params",
     "dwi2adc_execute",

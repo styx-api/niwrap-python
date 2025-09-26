@@ -14,7 +14,40 @@ V_3D_BRICK_STAT_METADATA = Metadata(
 
 
 V3dBrickStatParameters = typing.TypedDict('V3dBrickStatParameters', {
-    "@type": typing.Literal["afni.3dBrickStat"],
+    "@type": typing.NotRequired[typing.Literal["afni/3dBrickStat"]],
+    "dataset": str,
+    "quick": bool,
+    "slow": bool,
+    "min": bool,
+    "max": bool,
+    "mean": bool,
+    "sum": bool,
+    "var": bool,
+    "stdev": bool,
+    "count": bool,
+    "volume": bool,
+    "positive": bool,
+    "negative": bool,
+    "zero": bool,
+    "non_positive": bool,
+    "non_negative": bool,
+    "non_zero": bool,
+    "absolute": bool,
+    "nan": bool,
+    "nonan": bool,
+    "mask": typing.NotRequired[str | None],
+    "mrange": typing.NotRequired[list[float] | None],
+    "mvalue": typing.NotRequired[float | None],
+    "automask": bool,
+    "percentile": typing.NotRequired[list[float] | None],
+    "perclist": typing.NotRequired[list[float] | None],
+    "median": bool,
+    "perc_quiet": bool,
+    "ver": bool,
+    "help": bool,
+})
+V3dBrickStatParametersTagged = typing.TypedDict('V3dBrickStatParametersTagged', {
+    "@type": typing.Literal["afni/3dBrickStat"],
     "dataset": str,
     "quick": bool,
     "slow": bool,
@@ -48,41 +81,9 @@ V3dBrickStatParameters = typing.TypedDict('V3dBrickStatParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "afni.3dBrickStat": v_3d_brick_stat_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "afni.3dBrickStat": v_3d_brick_stat_outputs,
-    }.get(t)
-
-
 class V3dBrickStatOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `v_3d_brick_stat(...)`.
+    Output object returned when calling `V3dBrickStatParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -121,7 +122,7 @@ def v_3d_brick_stat_params(
     perc_quiet: bool = False,
     ver: bool = False,
     help_: bool = False,
-) -> V3dBrickStatParameters:
+) -> V3dBrickStatParametersTagged:
     """
     Build parameters.
     
@@ -163,7 +164,7 @@ def v_3d_brick_stat_params(
         Parameter dictionary
     """
     params = {
-        "@type": "afni.3dBrickStat",
+        "@type": "afni/3dBrickStat",
         "dataset": dataset,
         "quick": quick,
         "slow": slow,
@@ -218,79 +219,79 @@ def v_3d_brick_stat_cargs(
     """
     cargs = []
     cargs.append("3dBrickStat")
-    cargs.append(params.get("dataset"))
-    if params.get("quick"):
+    cargs.append(params.get("dataset", None))
+    if params.get("quick", False):
         cargs.append("-quick")
-    if params.get("slow"):
+    if params.get("slow", False):
         cargs.append("-slow")
-    if params.get("min"):
+    if params.get("min", False):
         cargs.append("-min")
-    if params.get("max"):
+    if params.get("max", False):
         cargs.append("-max")
-    if params.get("mean"):
+    if params.get("mean", False):
         cargs.append("-mean")
-    if params.get("sum"):
+    if params.get("sum", False):
         cargs.append("-sum")
-    if params.get("var"):
+    if params.get("var", False):
         cargs.append("-var")
-    if params.get("stdev"):
+    if params.get("stdev", False):
         cargs.append("-stdev")
-    if params.get("count"):
+    if params.get("count", False):
         cargs.append("-count")
-    if params.get("volume"):
+    if params.get("volume", False):
         cargs.append("-volume")
-    if params.get("positive"):
+    if params.get("positive", False):
         cargs.append("-positive")
-    if params.get("negative"):
+    if params.get("negative", False):
         cargs.append("-negative")
-    if params.get("zero"):
+    if params.get("zero", False):
         cargs.append("-zero")
-    if params.get("non_positive"):
+    if params.get("non_positive", False):
         cargs.append("-non-positive")
-    if params.get("non_negative"):
+    if params.get("non_negative", False):
         cargs.append("-non-negative")
-    if params.get("non_zero"):
+    if params.get("non_zero", False):
         cargs.append("-non-zero")
-    if params.get("absolute"):
+    if params.get("absolute", False):
         cargs.append("-absolute")
-    if params.get("nan"):
+    if params.get("nan", False):
         cargs.append("-nan")
-    if params.get("nonan"):
+    if params.get("nonan", False):
         cargs.append("-nonan")
-    if params.get("mask") is not None:
+    if params.get("mask", None) is not None:
         cargs.extend([
             "-mask",
-            params.get("mask")
+            params.get("mask", None)
         ])
-    if params.get("mrange") is not None:
+    if params.get("mrange", None) is not None:
         cargs.extend([
             "-mrange",
-            *map(str, params.get("mrange"))
+            *map(str, params.get("mrange", None))
         ])
-    if params.get("mvalue") is not None:
+    if params.get("mvalue", None) is not None:
         cargs.extend([
             "-mvalue",
-            str(params.get("mvalue"))
+            str(params.get("mvalue", None))
         ])
-    if params.get("automask"):
+    if params.get("automask", False):
         cargs.append("-automask")
-    if params.get("percentile") is not None:
+    if params.get("percentile", None) is not None:
         cargs.extend([
             "-percentile",
-            *map(str, params.get("percentile"))
+            *map(str, params.get("percentile", None))
         ])
-    if params.get("perclist") is not None:
+    if params.get("perclist", None) is not None:
         cargs.extend([
             "-perclist",
-            *map(str, params.get("perclist"))
+            *map(str, params.get("perclist", None))
         ])
-    if params.get("median"):
+    if params.get("median", False):
         cargs.append("-median")
-    if params.get("perc_quiet"):
+    if params.get("perc_quiet", False):
         cargs.append("-perc_quiet")
-    if params.get("ver"):
+    if params.get("ver", False):
         cargs.append("-ver")
-    if params.get("help"):
+    if params.get("help", False):
         cargs.append("-help")
     return cargs
 
@@ -460,7 +461,6 @@ def v_3d_brick_stat(
 
 __all__ = [
     "V3dBrickStatOutputs",
-    "V3dBrickStatParameters",
     "V_3D_BRICK_STAT_METADATA",
     "v_3d_brick_stat",
     "v_3d_brick_stat_execute",

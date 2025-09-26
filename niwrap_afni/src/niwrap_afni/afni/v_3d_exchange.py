@@ -14,7 +14,15 @@ V_3D_EXCHANGE_METADATA = Metadata(
 
 
 V3dExchangeParameters = typing.TypedDict('V3dExchangeParameters', {
-    "@type": typing.Literal["afni.3dExchange"],
+    "@type": typing.NotRequired[typing.Literal["afni/3dExchange"]],
+    "prefix": str,
+    "infile": InputPathType,
+    "mapfile": InputPathType,
+    "version": bool,
+    "help": bool,
+})
+V3dExchangeParametersTagged = typing.TypedDict('V3dExchangeParametersTagged', {
+    "@type": typing.Literal["afni/3dExchange"],
     "prefix": str,
     "infile": InputPathType,
     "mapfile": InputPathType,
@@ -23,41 +31,9 @@ V3dExchangeParameters = typing.TypedDict('V3dExchangeParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "afni.3dExchange": v_3d_exchange_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "afni.3dExchange": v_3d_exchange_outputs,
-    }.get(t)
-
-
 class V3dExchangeOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `v_3d_exchange(...)`.
+    Output object returned when calling `V3dExchangeParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -73,7 +49,7 @@ def v_3d_exchange_params(
     mapfile: InputPathType,
     version: bool = False,
     help_: bool = False,
-) -> V3dExchangeParameters:
+) -> V3dExchangeParametersTagged:
     """
     Build parameters.
     
@@ -89,7 +65,7 @@ def v_3d_exchange_params(
         Parameter dictionary
     """
     params = {
-        "@type": "afni.3dExchange",
+        "@type": "afni/3dExchange",
         "prefix": prefix,
         "infile": infile,
         "mapfile": mapfile,
@@ -116,19 +92,19 @@ def v_3d_exchange_cargs(
     cargs.append("3dExchange")
     cargs.extend([
         "-prefix",
-        params.get("prefix")
+        params.get("prefix", None)
     ])
     cargs.extend([
         "-input",
-        execution.input_file(params.get("infile"))
+        execution.input_file(params.get("infile", None))
     ])
     cargs.extend([
         "-map",
-        execution.input_file(params.get("mapfile"))
+        execution.input_file(params.get("mapfile", None))
     ])
-    if params.get("version"):
+    if params.get("version", False):
         cargs.append("-ver")
-    if params.get("help"):
+    if params.get("help", False):
         cargs.append("-help")
     return cargs
 
@@ -148,8 +124,8 @@ def v_3d_exchange_outputs(
     """
     ret = V3dExchangeOutputs(
         root=execution.output_file("."),
-        output_head=execution.output_file(params.get("prefix") + "+orig.HEAD"),
-        output_brik=execution.output_file(params.get("prefix") + "+orig.BRIK"),
+        output_head=execution.output_file(params.get("prefix", None) + "+orig.HEAD"),
+        output_brik=execution.output_file(params.get("prefix", None) + "+orig.BRIK"),
     )
     return ret
 
@@ -223,7 +199,6 @@ def v_3d_exchange(
 
 __all__ = [
     "V3dExchangeOutputs",
-    "V3dExchangeParameters",
     "V_3D_EXCHANGE_METADATA",
     "v_3d_exchange",
     "v_3d_exchange_execute",

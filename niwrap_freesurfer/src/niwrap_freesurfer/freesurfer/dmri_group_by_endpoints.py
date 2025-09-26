@@ -14,47 +14,22 @@ DMRI_GROUP_BY_ENDPOINTS_METADATA = Metadata(
 
 
 DmriGroupByEndpointsParameters = typing.TypedDict('DmriGroupByEndpointsParameters', {
-    "@type": typing.Literal["freesurfer.dmri_groupByEndpoints"],
+    "@type": typing.NotRequired[typing.Literal["freesurfer/dmri_groupByEndpoints"]],
+    "streamline_file": InputPathType,
+    "image_file": InputPathType,
+    "output_directory": str,
+})
+DmriGroupByEndpointsParametersTagged = typing.TypedDict('DmriGroupByEndpointsParametersTagged', {
+    "@type": typing.Literal["freesurfer/dmri_groupByEndpoints"],
     "streamline_file": InputPathType,
     "image_file": InputPathType,
     "output_directory": str,
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "freesurfer.dmri_groupByEndpoints": dmri_group_by_endpoints_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-    }.get(t)
-
-
 class DmriGroupByEndpointsOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `dmri_group_by_endpoints(...)`.
+    Output object returned when calling `DmriGroupByEndpointsParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -64,7 +39,7 @@ def dmri_group_by_endpoints_params(
     streamline_file: InputPathType,
     image_file: InputPathType,
     output_directory: str,
-) -> DmriGroupByEndpointsParameters:
+) -> DmriGroupByEndpointsParametersTagged:
     """
     Build parameters.
     
@@ -76,7 +51,7 @@ def dmri_group_by_endpoints_params(
         Parameter dictionary
     """
     params = {
-        "@type": "freesurfer.dmri_groupByEndpoints",
+        "@type": "freesurfer/dmri_groupByEndpoints",
         "streamline_file": streamline_file,
         "image_file": image_file,
         "output_directory": output_directory,
@@ -101,15 +76,15 @@ def dmri_group_by_endpoints_cargs(
     cargs.append("dmri_groupByEndpoints")
     cargs.extend([
         "-s",
-        execution.input_file(params.get("streamline_file"))
+        execution.input_file(params.get("streamline_file", None))
     ])
     cargs.extend([
         "-i",
-        execution.input_file(params.get("image_file"))
+        execution.input_file(params.get("image_file", None))
     ])
     cargs.extend([
         "-d",
-        params.get("output_directory")
+        params.get("output_directory", None)
     ])
     return cargs
 
@@ -195,7 +170,6 @@ def dmri_group_by_endpoints(
 __all__ = [
     "DMRI_GROUP_BY_ENDPOINTS_METADATA",
     "DmriGroupByEndpointsOutputs",
-    "DmriGroupByEndpointsParameters",
     "dmri_group_by_endpoints",
     "dmri_group_by_endpoints_execute",
     "dmri_group_by_endpoints_params",

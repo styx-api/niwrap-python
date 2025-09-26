@@ -14,7 +14,23 @@ V_3D_AUTO_TCORRELATE_METADATA = Metadata(
 
 
 V3dAutoTcorrelateParameters = typing.TypedDict('V3dAutoTcorrelateParameters', {
-    "@type": typing.Literal["afni.3dAutoTcorrelate"],
+    "@type": typing.NotRequired[typing.Literal["afni/3dAutoTcorrelate"]],
+    "input_dataset": InputPathType,
+    "pearson": bool,
+    "eta2": bool,
+    "polort": typing.NotRequired[int | None],
+    "autoclip": bool,
+    "automask": bool,
+    "mask": typing.NotRequired[InputPathType | None],
+    "mask_only_targets": bool,
+    "mask_source": typing.NotRequired[InputPathType | None],
+    "prefix": typing.NotRequired[str | None],
+    "out1d": typing.NotRequired[str | None],
+    "time": bool,
+    "mmap": bool,
+})
+V3dAutoTcorrelateParametersTagged = typing.TypedDict('V3dAutoTcorrelateParametersTagged', {
+    "@type": typing.Literal["afni/3dAutoTcorrelate"],
     "input_dataset": InputPathType,
     "pearson": bool,
     "eta2": bool,
@@ -31,41 +47,9 @@ V3dAutoTcorrelateParameters = typing.TypedDict('V3dAutoTcorrelateParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "afni.3dAutoTcorrelate": v_3d_auto_tcorrelate_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "afni.3dAutoTcorrelate": v_3d_auto_tcorrelate_outputs,
-    }.get(t)
-
-
 class V3dAutoTcorrelateOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `v_3d_auto_tcorrelate(...)`.
+    Output object returned when calling `V3dAutoTcorrelateParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -91,7 +75,7 @@ def v_3d_auto_tcorrelate_params(
     out1d: str | None = None,
     time_: bool = False,
     mmap_: bool = False,
-) -> V3dAutoTcorrelateParameters:
+) -> V3dAutoTcorrelateParametersTagged:
     """
     Build parameters.
     
@@ -114,7 +98,7 @@ def v_3d_auto_tcorrelate_params(
         Parameter dictionary
     """
     params = {
-        "@type": "afni.3dAutoTcorrelate",
+        "@type": "afni/3dAutoTcorrelate",
         "input_dataset": input_dataset,
         "pearson": pearson,
         "eta2": eta2,
@@ -152,45 +136,45 @@ def v_3d_auto_tcorrelate_cargs(
     """
     cargs = []
     cargs.append("3dAutoTcorrelate")
-    cargs.append(execution.input_file(params.get("input_dataset")))
-    if params.get("pearson"):
+    cargs.append(execution.input_file(params.get("input_dataset", None)))
+    if params.get("pearson", False):
         cargs.append("-pearson")
-    if params.get("eta2"):
+    if params.get("eta2", False):
         cargs.append("-eta2")
-    if params.get("polort") is not None:
+    if params.get("polort", None) is not None:
         cargs.extend([
             "-polort",
-            str(params.get("polort"))
+            str(params.get("polort", None))
         ])
-    if params.get("autoclip"):
+    if params.get("autoclip", False):
         cargs.append("-autoclip")
-    if params.get("automask"):
+    if params.get("automask", False):
         cargs.append("-automask")
-    if params.get("mask") is not None:
+    if params.get("mask", None) is not None:
         cargs.extend([
             "-mask",
-            execution.input_file(params.get("mask"))
+            execution.input_file(params.get("mask", None))
         ])
-    if params.get("mask_only_targets"):
+    if params.get("mask_only_targets", False):
         cargs.append("-mask_only_targets")
-    if params.get("mask_source") is not None:
+    if params.get("mask_source", None) is not None:
         cargs.extend([
             "-mask_source",
-            execution.input_file(params.get("mask_source"))
+            execution.input_file(params.get("mask_source", None))
         ])
-    if params.get("prefix") is not None:
+    if params.get("prefix", None) is not None:
         cargs.extend([
             "-prefix",
-            params.get("prefix")
+            params.get("prefix", None)
         ])
-    if params.get("out1d") is not None:
+    if params.get("out1d", None) is not None:
         cargs.extend([
             "-out1D",
-            params.get("out1d")
+            params.get("out1d", None)
         ])
-    if params.get("time"):
+    if params.get("time", False):
         cargs.append("-time")
-    if params.get("mmap"):
+    if params.get("mmap", False):
         cargs.append("-mmap")
     return cargs
 
@@ -210,9 +194,9 @@ def v_3d_auto_tcorrelate_outputs(
     """
     ret = V3dAutoTcorrelateOutputs(
         root=execution.output_file("."),
-        output_brick=execution.output_file(params.get("prefix") + ".BRIK") if (params.get("prefix") is not None) else None,
-        output_head=execution.output_file(params.get("prefix") + ".HEAD") if (params.get("prefix") is not None) else None,
-        out1d_file=execution.output_file(params.get("out1d")) if (params.get("out1d") is not None) else None,
+        output_brick=execution.output_file(params.get("prefix", None) + ".BRIK") if (params.get("prefix") is not None) else None,
+        output_head=execution.output_file(params.get("prefix", None) + ".HEAD") if (params.get("prefix") is not None) else None,
+        out1d_file=execution.output_file(params.get("out1d", None)) if (params.get("out1d") is not None) else None,
     )
     return ret
 
@@ -311,7 +295,6 @@ def v_3d_auto_tcorrelate(
 
 __all__ = [
     "V3dAutoTcorrelateOutputs",
-    "V3dAutoTcorrelateParameters",
     "V_3D_AUTO_TCORRELATE_METADATA",
     "v_3d_auto_tcorrelate",
     "v_3d_auto_tcorrelate_execute",

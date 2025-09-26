@@ -14,47 +14,20 @@ FS_TEMP_DIR_METADATA = Metadata(
 
 
 FsTempDirParameters = typing.TypedDict('FsTempDirParameters', {
-    "@type": typing.Literal["freesurfer.fs_temp_dir"],
+    "@type": typing.NotRequired[typing.Literal["freesurfer/fs_temp_dir"]],
+    "base_directory": typing.NotRequired[str | None],
+    "scratch": bool,
+})
+FsTempDirParametersTagged = typing.TypedDict('FsTempDirParametersTagged', {
+    "@type": typing.Literal["freesurfer/fs_temp_dir"],
     "base_directory": typing.NotRequired[str | None],
     "scratch": bool,
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "freesurfer.fs_temp_dir": fs_temp_dir_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "freesurfer.fs_temp_dir": fs_temp_dir_outputs,
-    }.get(t)
-
-
 class FsTempDirOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `fs_temp_dir(...)`.
+    Output object returned when calling `FsTempDirParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -65,7 +38,7 @@ class FsTempDirOutputs(typing.NamedTuple):
 def fs_temp_dir_params(
     base_directory: str | None = None,
     scratch: bool = False,
-) -> FsTempDirParameters:
+) -> FsTempDirParametersTagged:
     """
     Build parameters.
     
@@ -77,7 +50,7 @@ def fs_temp_dir_params(
         Parameter dictionary
     """
     params = {
-        "@type": "freesurfer.fs_temp_dir",
+        "@type": "freesurfer/fs_temp_dir",
         "scratch": scratch,
     }
     if base_directory is not None:
@@ -100,12 +73,12 @@ def fs_temp_dir_cargs(
     """
     cargs = []
     cargs.append("fs_temp_dir")
-    if params.get("base_directory") is not None:
+    if params.get("base_directory", None) is not None:
         cargs.extend([
             "-b",
-            params.get("base_directory")
+            params.get("base_directory", None)
         ])
-    if params.get("scratch"):
+    if params.get("scratch", False):
         cargs.append("--scratch")
     return cargs
 
@@ -190,7 +163,6 @@ def fs_temp_dir(
 __all__ = [
     "FS_TEMP_DIR_METADATA",
     "FsTempDirOutputs",
-    "FsTempDirParameters",
     "fs_temp_dir",
     "fs_temp_dir_execute",
     "fs_temp_dir_params",

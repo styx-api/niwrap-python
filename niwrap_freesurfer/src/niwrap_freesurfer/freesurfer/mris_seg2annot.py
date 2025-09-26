@@ -14,7 +14,21 @@ MRIS_SEG2ANNOT_METADATA = Metadata(
 
 
 MrisSeg2annotParameters = typing.TypedDict('MrisSeg2annotParameters', {
-    "@type": typing.Literal["freesurfer.mris_seg2annot"],
+    "@type": typing.NotRequired[typing.Literal["freesurfer/mris_seg2annot"]],
+    "surfseg": InputPathType,
+    "colortable": typing.NotRequired[InputPathType | None],
+    "auto_ctab": typing.NotRequired[str | None],
+    "subject": str,
+    "hemi": str,
+    "output_annotation": str,
+    "surf": typing.NotRequired[str | None],
+    "debug": bool,
+    "debug_vertex": typing.NotRequired[float | None],
+    "checkopts": bool,
+    "version": bool,
+})
+MrisSeg2annotParametersTagged = typing.TypedDict('MrisSeg2annotParametersTagged', {
+    "@type": typing.Literal["freesurfer/mris_seg2annot"],
     "surfseg": InputPathType,
     "colortable": typing.NotRequired[InputPathType | None],
     "auto_ctab": typing.NotRequired[str | None],
@@ -29,41 +43,9 @@ MrisSeg2annotParameters = typing.TypedDict('MrisSeg2annotParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "freesurfer.mris_seg2annot": mris_seg2annot_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "freesurfer.mris_seg2annot": mris_seg2annot_outputs,
-    }.get(t)
-
-
 class MrisSeg2annotOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `mris_seg2annot(...)`.
+    Output object returned when calling `MrisSeg2annotParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -83,7 +65,7 @@ def mris_seg2annot_params(
     debug_vertex: float | None = None,
     checkopts: bool = False,
     version: bool = False,
-) -> MrisSeg2annotParameters:
+) -> MrisSeg2annotParametersTagged:
     """
     Build parameters.
     
@@ -105,7 +87,7 @@ def mris_seg2annot_params(
         Parameter dictionary
     """
     params = {
-        "@type": "freesurfer.mris_seg2annot",
+        "@type": "freesurfer/mris_seg2annot",
         "surfseg": surfseg,
         "subject": subject,
         "hemi": hemi,
@@ -142,45 +124,45 @@ def mris_seg2annot_cargs(
     cargs.append("mris_seg2annot")
     cargs.extend([
         "--seg",
-        execution.input_file(params.get("surfseg"))
+        execution.input_file(params.get("surfseg", None))
     ])
-    if params.get("colortable") is not None:
+    if params.get("colortable", None) is not None:
         cargs.extend([
             "--ctab",
-            execution.input_file(params.get("colortable"))
+            execution.input_file(params.get("colortable", None))
         ])
-    if params.get("auto_ctab") is not None:
+    if params.get("auto_ctab", None) is not None:
         cargs.extend([
             "--ctab-auto",
-            params.get("auto_ctab")
+            params.get("auto_ctab", None)
         ])
     cargs.extend([
         "--s",
-        params.get("subject")
+        params.get("subject", None)
     ])
     cargs.extend([
         "--h",
-        params.get("hemi")
+        params.get("hemi", None)
     ])
     cargs.extend([
         "--o",
-        params.get("output_annotation")
+        params.get("output_annotation", None)
     ])
-    if params.get("surf") is not None:
+    if params.get("surf", None) is not None:
         cargs.extend([
             "--surf",
-            params.get("surf")
+            params.get("surf", None)
         ])
-    if params.get("debug"):
+    if params.get("debug", False):
         cargs.append("--debug")
-    if params.get("debug_vertex") is not None:
+    if params.get("debug_vertex", None) is not None:
         cargs.extend([
             "--debug-vertex",
-            str(params.get("debug_vertex"))
+            str(params.get("debug_vertex", None))
         ])
-    if params.get("checkopts"):
+    if params.get("checkopts", False):
         cargs.append("--checkopts")
-    if params.get("version"):
+    if params.get("version", False):
         cargs.append("--version")
     return cargs
 
@@ -200,7 +182,7 @@ def mris_seg2annot_outputs(
     """
     ret = MrisSeg2annotOutputs(
         root=execution.output_file("."),
-        annotation_file=execution.output_file(params.get("output_annotation")),
+        annotation_file=execution.output_file(params.get("output_annotation", None)),
     )
     return ret
 
@@ -293,7 +275,6 @@ def mris_seg2annot(
 __all__ = [
     "MRIS_SEG2ANNOT_METADATA",
     "MrisSeg2annotOutputs",
-    "MrisSeg2annotParameters",
     "mris_seg2annot",
     "mris_seg2annot_execute",
     "mris_seg2annot_params",

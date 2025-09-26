@@ -14,7 +14,14 @@ MEANVAL_METADATA = Metadata(
 
 
 MeanvalParameters = typing.TypedDict('MeanvalParameters', {
-    "@type": typing.Literal["freesurfer.meanval"],
+    "@type": typing.NotRequired[typing.Literal["freesurfer/meanval"]],
+    "input_file": InputPathType,
+    "mask_file": InputPathType,
+    "output_file": str,
+    "avgwf_flag": bool,
+})
+MeanvalParametersTagged = typing.TypedDict('MeanvalParametersTagged', {
+    "@type": typing.Literal["freesurfer/meanval"],
     "input_file": InputPathType,
     "mask_file": InputPathType,
     "output_file": str,
@@ -22,41 +29,9 @@ MeanvalParameters = typing.TypedDict('MeanvalParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "freesurfer.meanval": meanval_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "freesurfer.meanval": meanval_outputs,
-    }.get(t)
-
-
 class MeanvalOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `meanval(...)`.
+    Output object returned when calling `MeanvalParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -69,7 +44,7 @@ def meanval_params(
     mask_file: InputPathType,
     output_file: str,
     avgwf_flag: bool = False,
-) -> MeanvalParameters:
+) -> MeanvalParametersTagged:
     """
     Build parameters.
     
@@ -82,7 +57,7 @@ def meanval_params(
         Parameter dictionary
     """
     params = {
-        "@type": "freesurfer.meanval",
+        "@type": "freesurfer/meanval",
         "input_file": input_file,
         "mask_file": mask_file,
         "output_file": output_file,
@@ -108,17 +83,17 @@ def meanval_cargs(
     cargs.append("meanval")
     cargs.extend([
         "--i",
-        execution.input_file(params.get("input_file"))
+        execution.input_file(params.get("input_file", None))
     ])
     cargs.extend([
         "--m",
-        execution.input_file(params.get("mask_file"))
+        execution.input_file(params.get("mask_file", None))
     ])
     cargs.extend([
         "--o",
-        params.get("output_file")
+        params.get("output_file", None)
     ])
-    if params.get("avgwf_flag"):
+    if params.get("avgwf_flag", False):
         cargs.append("--avgwf")
     return cargs
 
@@ -138,7 +113,7 @@ def meanval_outputs(
     """
     ret = MeanvalOutputs(
         root=execution.output_file("."),
-        mean_output_file=execution.output_file(params.get("output_file")),
+        mean_output_file=execution.output_file(params.get("output_file", None)),
     )
     return ret
 
@@ -208,7 +183,6 @@ def meanval(
 __all__ = [
     "MEANVAL_METADATA",
     "MeanvalOutputs",
-    "MeanvalParameters",
     "meanval",
     "meanval_execute",
     "meanval_params",

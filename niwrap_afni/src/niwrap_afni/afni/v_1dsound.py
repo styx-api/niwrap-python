@@ -14,7 +14,21 @@ V_1DSOUND_METADATA = Metadata(
 
 
 V1dsoundParameters = typing.TypedDict('V1dsoundParameters', {
-    "@type": typing.Literal["afni.1dsound"],
+    "@type": typing.NotRequired[typing.Literal["afni/1dsound"]],
+    "tsfile": InputPathType,
+    "prefix": typing.NotRequired[str | None],
+    "encoding_16PCM": bool,
+    "encoding_8PCM": bool,
+    "encoding_8ulaw": bool,
+    "tper_option": typing.NotRequired[float | None],
+    "fm_option": bool,
+    "notes_option": bool,
+    "notewave_option": typing.NotRequired[str | None],
+    "despike_option": bool,
+    "play_option": bool,
+})
+V1dsoundParametersTagged = typing.TypedDict('V1dsoundParametersTagged', {
+    "@type": typing.Literal["afni/1dsound"],
     "tsfile": InputPathType,
     "prefix": typing.NotRequired[str | None],
     "encoding_16PCM": bool,
@@ -29,41 +43,9 @@ V1dsoundParameters = typing.TypedDict('V1dsoundParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "afni.1dsound": v_1dsound_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "afni.1dsound": v_1dsound_outputs,
-    }.get(t)
-
-
 class V1dsoundOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `v_1dsound(...)`.
+    Output object returned when calling `V1dsoundParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -83,7 +65,7 @@ def v_1dsound_params(
     notewave_option: str | None = None,
     despike_option: bool = False,
     play_option: bool = False,
-) -> V1dsoundParameters:
+) -> V1dsoundParametersTagged:
     """
     Build parameters.
     
@@ -110,7 +92,7 @@ def v_1dsound_params(
         Parameter dictionary
     """
     params = {
-        "@type": "afni.1dsound",
+        "@type": "afni/1dsound",
         "tsfile": tsfile,
         "encoding_16PCM": encoding_16_pcm,
         "encoding_8PCM": encoding_8_pcm,
@@ -144,35 +126,35 @@ def v_1dsound_cargs(
     """
     cargs = []
     cargs.append("1dsound")
-    cargs.append(execution.input_file(params.get("tsfile")))
-    if params.get("prefix") is not None:
+    cargs.append(execution.input_file(params.get("tsfile", None)))
+    if params.get("prefix", None) is not None:
         cargs.extend([
             "-prefix",
-            params.get("prefix")
+            params.get("prefix", None)
         ])
-    if params.get("encoding_16PCM"):
+    if params.get("encoding_16PCM", False):
         cargs.append("-16PCM")
-    if params.get("encoding_8PCM"):
+    if params.get("encoding_8PCM", False):
         cargs.append("-8PCM")
-    if params.get("encoding_8ulaw"):
+    if params.get("encoding_8ulaw", False):
         cargs.append("-8ulaw")
-    if params.get("tper_option") is not None:
+    if params.get("tper_option", None) is not None:
         cargs.extend([
             "-tper",
-            str(params.get("tper_option"))
+            str(params.get("tper_option", None))
         ])
-    if params.get("fm_option"):
+    if params.get("fm_option", False):
         cargs.append("-FM")
-    if params.get("notes_option"):
+    if params.get("notes_option", False):
         cargs.append("-notes")
-    if params.get("notewave_option") is not None:
+    if params.get("notewave_option", None) is not None:
         cargs.extend([
             "-notewave",
-            params.get("notewave_option")
+            params.get("notewave_option", None)
         ])
-    if params.get("despike_option"):
+    if params.get("despike_option", False):
         cargs.append("-despike")
-    if params.get("play_option"):
+    if params.get("play_option", False):
         cargs.append("-play")
     return cargs
 
@@ -192,7 +174,7 @@ def v_1dsound_outputs(
     """
     ret = V1dsoundOutputs(
         root=execution.output_file("."),
-        output_file=execution.output_file(params.get("prefix") + ".au") if (params.get("prefix") is not None) else None,
+        output_file=execution.output_file(params.get("prefix", None) + ".au") if (params.get("prefix") is not None) else None,
     )
     return ret
 
@@ -289,7 +271,6 @@ def v_1dsound(
 
 __all__ = [
     "V1dsoundOutputs",
-    "V1dsoundParameters",
     "V_1DSOUND_METADATA",
     "v_1dsound",
     "v_1dsound_execute",

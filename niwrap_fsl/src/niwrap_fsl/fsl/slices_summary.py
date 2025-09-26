@@ -14,7 +14,20 @@ SLICES_SUMMARY_METADATA = Metadata(
 
 
 SlicesSummaryParameters = typing.TypedDict('SlicesSummaryParameters', {
-    "@type": typing.Literal["fsl.slices_summary"],
+    "@type": typing.NotRequired[typing.Literal["fsl/slices_summary"]],
+    "4d_input_file": InputPathType,
+    "threshold": float,
+    "background_image": InputPathType,
+    "pictures_sum": str,
+    "single_slice_flag": bool,
+    "darker_background_flag": bool,
+    "dumb_rule_flag": bool,
+    "pictures_sum_second": str,
+    "output_png": str,
+    "timepoints": str,
+})
+SlicesSummaryParametersTagged = typing.TypedDict('SlicesSummaryParametersTagged', {
+    "@type": typing.Literal["fsl/slices_summary"],
     "4d_input_file": InputPathType,
     "threshold": float,
     "background_image": InputPathType,
@@ -28,41 +41,9 @@ SlicesSummaryParameters = typing.TypedDict('SlicesSummaryParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "fsl.slices_summary": slices_summary_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "fsl.slices_summary": slices_summary_outputs,
-    }.get(t)
-
-
 class SlicesSummaryOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `slices_summary(...)`.
+    Output object returned when calling `SlicesSummaryParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -83,7 +64,7 @@ def slices_summary_params(
     single_slice_flag: bool = False,
     darker_background_flag: bool = False,
     dumb_rule_flag: bool = False,
-) -> SlicesSummaryParameters:
+) -> SlicesSummaryParametersTagged:
     """
     Build parameters.
     
@@ -105,7 +86,7 @@ def slices_summary_params(
         Parameter dictionary
     """
     params = {
-        "@type": "fsl.slices_summary",
+        "@type": "fsl/slices_summary",
         "4d_input_file": v_4d_input_file,
         "threshold": threshold,
         "background_image": background_image,
@@ -135,19 +116,19 @@ def slices_summary_cargs(
     """
     cargs = []
     cargs.append("slices_summary")
-    cargs.append(execution.input_file(params.get("4d_input_file")))
-    cargs.append(str(params.get("threshold")))
-    cargs.append(execution.input_file(params.get("background_image")))
-    cargs.append(params.get("pictures_sum"))
-    if params.get("single_slice_flag"):
+    cargs.append(execution.input_file(params.get("4d_input_file", None)))
+    cargs.append(str(params.get("threshold", None)))
+    cargs.append(execution.input_file(params.get("background_image", None)))
+    cargs.append(params.get("pictures_sum", None))
+    if params.get("single_slice_flag", False):
         cargs.append("-1")
-    if params.get("darker_background_flag"):
+    if params.get("darker_background_flag", False):
         cargs.append("-d")
-    if params.get("dumb_rule_flag"):
+    if params.get("dumb_rule_flag", False):
         cargs.append("-c")
-    cargs.append(params.get("pictures_sum_second"))
-    cargs.append(params.get("output_png"))
-    cargs.append(params.get("timepoints"))
+    cargs.append(params.get("pictures_sum_second", None))
+    cargs.append(params.get("output_png", None))
+    cargs.append(params.get("timepoints", None))
     return cargs
 
 
@@ -166,8 +147,8 @@ def slices_summary_outputs(
     """
     ret = SlicesSummaryOutputs(
         root=execution.output_file("."),
-        summary_images_directory=execution.output_file(params.get("pictures_sum_second")),
-        combined_summary_image=execution.output_file(params.get("output_png")),
+        summary_images_directory=execution.output_file(params.get("pictures_sum_second", None)),
+        combined_summary_image=execution.output_file(params.get("output_png", None)),
     )
     return ret
 
@@ -258,7 +239,6 @@ def slices_summary(
 __all__ = [
     "SLICES_SUMMARY_METADATA",
     "SlicesSummaryOutputs",
-    "SlicesSummaryParameters",
     "slices_summary",
     "slices_summary_execute",
     "slices_summary_params",

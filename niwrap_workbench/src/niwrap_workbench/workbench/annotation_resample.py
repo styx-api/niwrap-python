@@ -14,56 +14,35 @@ ANNOTATION_RESAMPLE_METADATA = Metadata(
 
 
 AnnotationResampleSurfacePairParameters = typing.TypedDict('AnnotationResampleSurfacePairParameters', {
-    "@type": typing.Literal["workbench.annotation-resample.surface_pair"],
+    "@type": typing.NotRequired[typing.Literal["surface_pair"]],
+    "source_surface": InputPathType,
+    "target_surface": InputPathType,
+})
+AnnotationResampleSurfacePairParametersTagged = typing.TypedDict('AnnotationResampleSurfacePairParametersTagged', {
+    "@type": typing.Literal["surface_pair"],
     "source_surface": InputPathType,
     "target_surface": InputPathType,
 })
 
 
 AnnotationResampleParameters = typing.TypedDict('AnnotationResampleParameters', {
-    "@type": typing.Literal["workbench.annotation-resample"],
+    "@type": typing.NotRequired[typing.Literal["workbench/annotation-resample"]],
+    "annotation_in": InputPathType,
+    "annotation_out": str,
+    "surface_pair": typing.NotRequired[list[AnnotationResampleSurfacePairParameters] | None],
+})
+AnnotationResampleParametersTagged = typing.TypedDict('AnnotationResampleParametersTagged', {
+    "@type": typing.Literal["workbench/annotation-resample"],
     "annotation_in": InputPathType,
     "annotation_out": str,
     "surface_pair": typing.NotRequired[list[AnnotationResampleSurfacePairParameters] | None],
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "workbench.annotation-resample": annotation_resample_cargs,
-        "workbench.annotation-resample.surface_pair": annotation_resample_surface_pair_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-    }.get(t)
-
-
 def annotation_resample_surface_pair_params(
     source_surface: InputPathType,
     target_surface: InputPathType,
-) -> AnnotationResampleSurfacePairParameters:
+) -> AnnotationResampleSurfacePairParametersTagged:
     """
     Build parameters.
     
@@ -76,7 +55,7 @@ def annotation_resample_surface_pair_params(
         Parameter dictionary
     """
     params = {
-        "@type": "workbench.annotation-resample.surface_pair",
+        "@type": "surface_pair",
         "source_surface": source_surface,
         "target_surface": target_surface,
     }
@@ -98,14 +77,14 @@ def annotation_resample_surface_pair_cargs(
     """
     cargs = []
     cargs.append("-surface-pair")
-    cargs.append(execution.input_file(params.get("source_surface")))
-    cargs.append(execution.input_file(params.get("target_surface")))
+    cargs.append(execution.input_file(params.get("source_surface", None)))
+    cargs.append(execution.input_file(params.get("target_surface", None)))
     return cargs
 
 
 class AnnotationResampleOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `annotation_resample(...)`.
+    Output object returned when calling `AnnotationResampleParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -115,7 +94,7 @@ def annotation_resample_params(
     annotation_in: InputPathType,
     annotation_out: str,
     surface_pair: list[AnnotationResampleSurfacePairParameters] | None = None,
-) -> AnnotationResampleParameters:
+) -> AnnotationResampleParametersTagged:
     """
     Build parameters.
     
@@ -128,7 +107,7 @@ def annotation_resample_params(
         Parameter dictionary
     """
     params = {
-        "@type": "workbench.annotation-resample",
+        "@type": "workbench/annotation-resample",
         "annotation_in": annotation_in,
         "annotation_out": annotation_out,
     }
@@ -153,10 +132,10 @@ def annotation_resample_cargs(
     cargs = []
     cargs.append("wb_command")
     cargs.append("-annotation-resample")
-    cargs.append(execution.input_file(params.get("annotation_in")))
-    cargs.append(params.get("annotation_out"))
-    if params.get("surface_pair") is not None:
-        cargs.extend([a for c in [dyn_cargs(s["@type"])(s, execution) for s in params.get("surface_pair")] for a in c])
+    cargs.append(execution.input_file(params.get("annotation_in", None)))
+    cargs.append(params.get("annotation_out", None))
+    if params.get("surface_pair", None) is not None:
+        cargs.extend([a for c in [annotation_resample_surface_pair_cargs(s, execution) for s in params.get("surface_pair", None)] for a in c])
     return cargs
 
 
@@ -254,8 +233,6 @@ def annotation_resample(
 __all__ = [
     "ANNOTATION_RESAMPLE_METADATA",
     "AnnotationResampleOutputs",
-    "AnnotationResampleParameters",
-    "AnnotationResampleSurfacePairParameters",
     "annotation_resample",
     "annotation_resample_execute",
     "annotation_resample_params",

@@ -14,7 +14,17 @@ V_1DGRAYPLOT_METADATA = Metadata(
 
 
 V1dgrayplotParameters = typing.TypedDict('V1dgrayplotParameters', {
-    "@type": typing.Literal["afni.1dgrayplot"],
+    "@type": typing.NotRequired[typing.Literal["afni/1dgrayplot"]],
+    "tsfile": InputPathType,
+    "install": bool,
+    "ignore": typing.NotRequired[float | None],
+    "flip": bool,
+    "sep": bool,
+    "use": typing.NotRequired[float | None],
+    "ps": bool,
+})
+V1dgrayplotParametersTagged = typing.TypedDict('V1dgrayplotParametersTagged', {
+    "@type": typing.Literal["afni/1dgrayplot"],
     "tsfile": InputPathType,
     "install": bool,
     "ignore": typing.NotRequired[float | None],
@@ -25,40 +35,9 @@ V1dgrayplotParameters = typing.TypedDict('V1dgrayplotParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "afni.1dgrayplot": v_1dgrayplot_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-    }.get(t)
-
-
 class V1dgrayplotOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `v_1dgrayplot(...)`.
+    Output object returned when calling `V1dgrayplotParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -72,7 +51,7 @@ def v_1dgrayplot_params(
     sep: bool = False,
     use: float | None = None,
     ps: bool = False,
-) -> V1dgrayplotParameters:
+) -> V1dgrayplotParametersTagged:
     """
     Build parameters.
     
@@ -90,7 +69,7 @@ def v_1dgrayplot_params(
         Parameter dictionary
     """
     params = {
-        "@type": "afni.1dgrayplot",
+        "@type": "afni/1dgrayplot",
         "tsfile": tsfile,
         "install": install,
         "flip": flip,
@@ -119,24 +98,24 @@ def v_1dgrayplot_cargs(
     """
     cargs = []
     cargs.append("1dgrayplot")
-    cargs.append(execution.input_file(params.get("tsfile")))
-    if params.get("install"):
+    cargs.append(execution.input_file(params.get("tsfile", None)))
+    if params.get("install", False):
         cargs.append("-install")
-    if params.get("ignore") is not None:
+    if params.get("ignore", None) is not None:
         cargs.extend([
             "-ignore",
-            str(params.get("ignore"))
+            str(params.get("ignore", None))
         ])
-    if params.get("flip"):
+    if params.get("flip", False):
         cargs.append("-flip")
-    if params.get("sep"):
+    if params.get("sep", False):
         cargs.append("-sep")
-    if params.get("use") is not None:
+    if params.get("use", None) is not None:
         cargs.extend([
             "-use",
-            str(params.get("use"))
+            str(params.get("use", None))
         ])
-    if params.get("ps"):
+    if params.get("ps", False):
         cargs.append("-ps")
     return cargs
 
@@ -237,7 +216,6 @@ def v_1dgrayplot(
 
 __all__ = [
     "V1dgrayplotOutputs",
-    "V1dgrayplotParameters",
     "V_1DGRAYPLOT_METADATA",
     "v_1dgrayplot",
     "v_1dgrayplot_execute",

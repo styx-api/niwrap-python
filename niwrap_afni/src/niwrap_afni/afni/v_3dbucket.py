@@ -14,7 +14,20 @@ V_3DBUCKET_METADATA = Metadata(
 
 
 V3dbucketParameters = typing.TypedDict('V3dbucketParameters', {
-    "@type": typing.Literal["afni.3dbucket"],
+    "@type": typing.NotRequired[typing.Literal["afni/3dbucket"]],
+    "prefix": typing.NotRequired[str | None],
+    "output": typing.NotRequired[str | None],
+    "session": typing.NotRequired[str | None],
+    "glueto": typing.NotRequired[str | None],
+    "aglueto": typing.NotRequired[str | None],
+    "dry": bool,
+    "verbose": bool,
+    "fbuc": bool,
+    "abuc": bool,
+    "input_files": list[str],
+})
+V3dbucketParametersTagged = typing.TypedDict('V3dbucketParametersTagged', {
+    "@type": typing.Literal["afni/3dbucket"],
     "prefix": typing.NotRequired[str | None],
     "output": typing.NotRequired[str | None],
     "session": typing.NotRequired[str | None],
@@ -28,40 +41,9 @@ V3dbucketParameters = typing.TypedDict('V3dbucketParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "afni.3dbucket": v_3dbucket_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-    }.get(t)
-
-
 class V3dbucketOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `v_3dbucket(...)`.
+    Output object returned when calling `V3dbucketParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -78,7 +60,7 @@ def v_3dbucket_params(
     verbose: bool = False,
     fbuc: bool = False,
     abuc: bool = False,
-) -> V3dbucketParameters:
+) -> V3dbucketParametersTagged:
     """
     Build parameters.
     
@@ -100,7 +82,7 @@ def v_3dbucket_params(
         Parameter dictionary
     """
     params = {
-        "@type": "afni.3dbucket",
+        "@type": "afni/3dbucket",
         "dry": dry,
         "verbose": verbose,
         "fbuc": fbuc,
@@ -135,40 +117,40 @@ def v_3dbucket_cargs(
     """
     cargs = []
     cargs.append("3dbucket")
-    if params.get("prefix") is not None:
+    if params.get("prefix", None) is not None:
         cargs.extend([
             "-prefix",
-            params.get("prefix")
+            params.get("prefix", None)
         ])
-    if params.get("output") is not None:
+    if params.get("output", None) is not None:
         cargs.extend([
             "-output",
-            params.get("output")
+            params.get("output", None)
         ])
-    if params.get("session") is not None:
+    if params.get("session", None) is not None:
         cargs.extend([
             "-session",
-            params.get("session")
+            params.get("session", None)
         ])
-    if params.get("glueto") is not None:
+    if params.get("glueto", None) is not None:
         cargs.extend([
             "-glueto",
-            params.get("glueto")
+            params.get("glueto", None)
         ])
-    if params.get("aglueto") is not None:
+    if params.get("aglueto", None) is not None:
         cargs.extend([
             "-aglueto",
-            params.get("aglueto")
+            params.get("aglueto", None)
         ])
-    if params.get("dry"):
+    if params.get("dry", False):
         cargs.append("-dry")
-    if params.get("verbose"):
+    if params.get("verbose", False):
         cargs.append("-verb")
-    if params.get("fbuc"):
+    if params.get("fbuc", False):
         cargs.append("-fbuc")
-    if params.get("abuc"):
+    if params.get("abuc", False):
         cargs.append("-abuc")
-    cargs.extend(params.get("input_files"))
+    cargs.extend(params.get("input_files", None))
     return cargs
 
 
@@ -276,7 +258,6 @@ def v_3dbucket(
 
 __all__ = [
     "V3dbucketOutputs",
-    "V3dbucketParameters",
     "V_3DBUCKET_METADATA",
     "v_3dbucket",
     "v_3dbucket_execute",

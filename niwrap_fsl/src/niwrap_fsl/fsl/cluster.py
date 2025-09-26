@@ -14,7 +14,44 @@ CLUSTER_METADATA = Metadata(
 
 
 ClusterParameters = typing.TypedDict('ClusterParameters', {
-    "@type": typing.Literal["fsl.cluster"],
+    "@type": typing.NotRequired[typing.Literal["fsl/cluster"]],
+    "connectivity": typing.NotRequired[int | None],
+    "cope_file": typing.NotRequired[InputPathType | None],
+    "dlh": typing.NotRequired[float | None],
+    "find_min": bool,
+    "fractional": bool,
+    "in_file": InputPathType,
+    "minclustersize": bool,
+    "no_table": bool,
+    "num_maxima": typing.NotRequired[int | None],
+    "out_index_file": str,
+    "out_index_file_2": typing.NotRequired[InputPathType | None],
+    "out_localmax_txt_file": str,
+    "out_localmax_txt_file_2": typing.NotRequired[InputPathType | None],
+    "out_localmax_vol_file": str,
+    "out_localmax_vol_file_2": typing.NotRequired[InputPathType | None],
+    "out_max_file": str,
+    "out_max_file_2": typing.NotRequired[InputPathType | None],
+    "out_mean_file": str,
+    "out_mean_file_2": typing.NotRequired[InputPathType | None],
+    "out_pval_file": str,
+    "out_pval_file_2": typing.NotRequired[InputPathType | None],
+    "out_size_file": str,
+    "out_size_file_2": typing.NotRequired[InputPathType | None],
+    "out_threshold_file": str,
+    "out_threshold_file_2": typing.NotRequired[InputPathType | None],
+    "output_type": typing.NotRequired[typing.Literal["NIFTI", "NIFTI_PAIR", "NIFTI_GZ", "NIFTI_PAIR_GZ"] | None],
+    "peak_distance": typing.NotRequired[float | None],
+    "pthreshold": typing.NotRequired[float | None],
+    "std_space_file": typing.NotRequired[InputPathType | None],
+    "threshold": float,
+    "use_mm": bool,
+    "volume": typing.NotRequired[int | None],
+    "warpfield_file": typing.NotRequired[InputPathType | None],
+    "xfm_file": typing.NotRequired[InputPathType | None],
+})
+ClusterParametersTagged = typing.TypedDict('ClusterParametersTagged', {
+    "@type": typing.Literal["fsl/cluster"],
     "connectivity": typing.NotRequired[int | None],
     "cope_file": typing.NotRequired[InputPathType | None],
     "dlh": typing.NotRequired[float | None],
@@ -52,41 +89,9 @@ ClusterParameters = typing.TypedDict('ClusterParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "fsl.cluster": cluster_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "fsl.cluster": cluster_outputs,
-    }.get(t)
-
-
 class ClusterOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `cluster(...)`.
+    Output object returned when calling `ClusterParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -143,7 +148,7 @@ def cluster_params(
     volume: int | None = None,
     warpfield_file: InputPathType | None = None,
     xfm_file: InputPathType | None = None,
-) -> ClusterParameters:
+) -> ClusterParametersTagged:
     """
     Build parameters.
     
@@ -195,7 +200,7 @@ def cluster_params(
         Parameter dictionary
     """
     params = {
-        "@type": "fsl.cluster",
+        "@type": "fsl/cluster",
         "find_min": find_min,
         "fractional": fractional,
         "in_file": in_file,
@@ -268,64 +273,64 @@ def cluster_cargs(
     """
     cargs = []
     cargs.append("cluster")
-    if params.get("connectivity") is not None:
-        cargs.append("--connectivity=" + str(params.get("connectivity")))
-    if params.get("cope_file") is not None:
-        cargs.append("--cope=" + execution.input_file(params.get("cope_file")))
-    if params.get("dlh") is not None:
-        cargs.append("--dlh=" + str(params.get("dlh")))
-    if params.get("find_min"):
+    if params.get("connectivity", None) is not None:
+        cargs.append("--connectivity=" + str(params.get("connectivity", None)))
+    if params.get("cope_file", None) is not None:
+        cargs.append("--cope=" + execution.input_file(params.get("cope_file", None)))
+    if params.get("dlh", None) is not None:
+        cargs.append("--dlh=" + str(params.get("dlh", None)))
+    if params.get("find_min", False):
         cargs.append("--min")
-    if params.get("fractional"):
+    if params.get("fractional", False):
         cargs.append("--fractional")
-    cargs.append("--in=" + execution.input_file(params.get("in_file")))
-    if params.get("minclustersize"):
+    cargs.append("--in=" + execution.input_file(params.get("in_file", None)))
+    if params.get("minclustersize", False):
         cargs.append("--minclustersize")
-    if params.get("no_table"):
+    if params.get("no_table", False):
         cargs.append("--no_table")
-    if params.get("num_maxima") is not None:
-        cargs.append("--num=" + str(params.get("num_maxima")))
-    cargs.append("--oindex=" + params.get("out_index_file"))
-    if params.get("out_index_file_2") is not None:
-        cargs.append("--oindex=" + execution.input_file(params.get("out_index_file_2")))
-    cargs.append("--olmax=" + params.get("out_localmax_txt_file"))
-    if params.get("out_localmax_txt_file_2") is not None:
-        cargs.append("--olmax=" + execution.input_file(params.get("out_localmax_txt_file_2")))
-    cargs.append("--olmaxim=" + params.get("out_localmax_vol_file"))
-    if params.get("out_localmax_vol_file_2") is not None:
-        cargs.append("--olmaxim=" + execution.input_file(params.get("out_localmax_vol_file_2")))
-    cargs.append("--omax=" + params.get("out_max_file"))
-    if params.get("out_max_file_2") is not None:
-        cargs.append("--omax=" + execution.input_file(params.get("out_max_file_2")))
-    cargs.append("--omean=" + params.get("out_mean_file"))
-    if params.get("out_mean_file_2") is not None:
-        cargs.append("--omean=" + execution.input_file(params.get("out_mean_file_2")))
-    cargs.append("--opvals=" + params.get("out_pval_file"))
-    if params.get("out_pval_file_2") is not None:
-        cargs.append("--opvals=" + execution.input_file(params.get("out_pval_file_2")))
-    cargs.append("--osize=" + params.get("out_size_file"))
-    if params.get("out_size_file_2") is not None:
-        cargs.append("--osize=" + execution.input_file(params.get("out_size_file_2")))
-    cargs.append("--othresh=" + params.get("out_threshold_file"))
-    if params.get("out_threshold_file_2") is not None:
-        cargs.append("--othresh=" + execution.input_file(params.get("out_threshold_file_2")))
-    if params.get("output_type") is not None:
-        cargs.append(params.get("output_type"))
-    if params.get("peak_distance") is not None:
-        cargs.append("--peakdist=" + str(params.get("peak_distance")))
-    if params.get("pthreshold") is not None:
-        cargs.append("--pthresh=" + str(params.get("pthreshold")))
-    if params.get("std_space_file") is not None:
-        cargs.append("--stdvol=" + execution.input_file(params.get("std_space_file")))
-    cargs.append("--thresh=" + str(params.get("threshold")))
-    if params.get("use_mm"):
+    if params.get("num_maxima", None) is not None:
+        cargs.append("--num=" + str(params.get("num_maxima", None)))
+    cargs.append("--oindex=" + params.get("out_index_file", None))
+    if params.get("out_index_file_2", None) is not None:
+        cargs.append("--oindex=" + execution.input_file(params.get("out_index_file_2", None)))
+    cargs.append("--olmax=" + params.get("out_localmax_txt_file", None))
+    if params.get("out_localmax_txt_file_2", None) is not None:
+        cargs.append("--olmax=" + execution.input_file(params.get("out_localmax_txt_file_2", None)))
+    cargs.append("--olmaxim=" + params.get("out_localmax_vol_file", None))
+    if params.get("out_localmax_vol_file_2", None) is not None:
+        cargs.append("--olmaxim=" + execution.input_file(params.get("out_localmax_vol_file_2", None)))
+    cargs.append("--omax=" + params.get("out_max_file", None))
+    if params.get("out_max_file_2", None) is not None:
+        cargs.append("--omax=" + execution.input_file(params.get("out_max_file_2", None)))
+    cargs.append("--omean=" + params.get("out_mean_file", None))
+    if params.get("out_mean_file_2", None) is not None:
+        cargs.append("--omean=" + execution.input_file(params.get("out_mean_file_2", None)))
+    cargs.append("--opvals=" + params.get("out_pval_file", None))
+    if params.get("out_pval_file_2", None) is not None:
+        cargs.append("--opvals=" + execution.input_file(params.get("out_pval_file_2", None)))
+    cargs.append("--osize=" + params.get("out_size_file", None))
+    if params.get("out_size_file_2", None) is not None:
+        cargs.append("--osize=" + execution.input_file(params.get("out_size_file_2", None)))
+    cargs.append("--othresh=" + params.get("out_threshold_file", None))
+    if params.get("out_threshold_file_2", None) is not None:
+        cargs.append("--othresh=" + execution.input_file(params.get("out_threshold_file_2", None)))
+    if params.get("output_type", None) is not None:
+        cargs.append(params.get("output_type", None))
+    if params.get("peak_distance", None) is not None:
+        cargs.append("--peakdist=" + str(params.get("peak_distance", None)))
+    if params.get("pthreshold", None) is not None:
+        cargs.append("--pthresh=" + str(params.get("pthreshold", None)))
+    if params.get("std_space_file", None) is not None:
+        cargs.append("--stdvol=" + execution.input_file(params.get("std_space_file", None)))
+    cargs.append("--thresh=" + str(params.get("threshold", None)))
+    if params.get("use_mm", False):
         cargs.append("--mm")
-    if params.get("volume") is not None:
-        cargs.append("--volume=" + str(params.get("volume")))
-    if params.get("warpfield_file") is not None:
-        cargs.append("--warpvol=" + execution.input_file(params.get("warpfield_file")))
-    if params.get("xfm_file") is not None:
-        cargs.append("--xfm=" + execution.input_file(params.get("xfm_file")))
+    if params.get("volume", None) is not None:
+        cargs.append("--volume=" + str(params.get("volume", None)))
+    if params.get("warpfield_file", None) is not None:
+        cargs.append("--warpvol=" + execution.input_file(params.get("warpfield_file", None)))
+    if params.get("xfm_file", None) is not None:
+        cargs.append("--xfm=" + execution.input_file(params.get("xfm_file", None)))
     return cargs
 
 
@@ -520,7 +525,6 @@ def cluster(
 __all__ = [
     "CLUSTER_METADATA",
     "ClusterOutputs",
-    "ClusterParameters",
     "cluster",
     "cluster_execute",
     "cluster_params",

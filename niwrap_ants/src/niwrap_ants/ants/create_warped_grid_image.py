@@ -14,7 +14,16 @@ CREATE_WARPED_GRID_IMAGE_METADATA = Metadata(
 
 
 CreateWarpedGridImageParameters = typing.TypedDict('CreateWarpedGridImageParameters', {
-    "@type": typing.Literal["ants.CreateWarpedGridImage"],
+    "@type": typing.NotRequired[typing.Literal["ants/CreateWarpedGridImage"]],
+    "image_dimension": int,
+    "deformation_field": InputPathType,
+    "output_image": str,
+    "directions": typing.NotRequired[str | None],
+    "grid_spacing": typing.NotRequired[str | None],
+    "grid_sigma": typing.NotRequired[str | None],
+})
+CreateWarpedGridImageParametersTagged = typing.TypedDict('CreateWarpedGridImageParametersTagged', {
+    "@type": typing.Literal["ants/CreateWarpedGridImage"],
     "image_dimension": int,
     "deformation_field": InputPathType,
     "output_image": str,
@@ -24,41 +33,9 @@ CreateWarpedGridImageParameters = typing.TypedDict('CreateWarpedGridImageParamet
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "ants.CreateWarpedGridImage": create_warped_grid_image_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "ants.CreateWarpedGridImage": create_warped_grid_image_outputs,
-    }.get(t)
-
-
 class CreateWarpedGridImageOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `create_warped_grid_image(...)`.
+    Output object returned when calling `CreateWarpedGridImageParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -73,7 +50,7 @@ def create_warped_grid_image_params(
     directions: str | None = None,
     grid_spacing: str | None = None,
     grid_sigma: str | None = None,
-) -> CreateWarpedGridImageParameters:
+) -> CreateWarpedGridImageParametersTagged:
     """
     Build parameters.
     
@@ -88,7 +65,7 @@ def create_warped_grid_image_params(
         Parameter dictionary
     """
     params = {
-        "@type": "ants.CreateWarpedGridImage",
+        "@type": "ants/CreateWarpedGridImage",
         "image_dimension": image_dimension,
         "deformation_field": deformation_field,
         "output_image": output_image,
@@ -117,15 +94,15 @@ def create_warped_grid_image_cargs(
     """
     cargs = []
     cargs.append("CreateWarpedGridImage")
-    cargs.append(str(params.get("image_dimension")))
-    cargs.append(execution.input_file(params.get("deformation_field")))
-    cargs.append(params.get("output_image"))
-    if params.get("directions") is not None:
-        cargs.append(params.get("directions"))
-    if params.get("grid_spacing") is not None:
-        cargs.append(params.get("grid_spacing"))
-    if params.get("grid_sigma") is not None:
-        cargs.append(params.get("grid_sigma"))
+    cargs.append(str(params.get("image_dimension", None)))
+    cargs.append(execution.input_file(params.get("deformation_field", None)))
+    cargs.append(params.get("output_image", None))
+    if params.get("directions", None) is not None:
+        cargs.append(params.get("directions", None))
+    if params.get("grid_spacing", None) is not None:
+        cargs.append(params.get("grid_spacing", None))
+    if params.get("grid_sigma", None) is not None:
+        cargs.append(params.get("grid_sigma", None))
     return cargs
 
 
@@ -144,7 +121,7 @@ def create_warped_grid_image_outputs(
     """
     ret = CreateWarpedGridImageOutputs(
         root=execution.output_file("."),
-        warped_grid_image=execution.output_file(params.get("output_image")),
+        warped_grid_image=execution.output_file(params.get("output_image", None)),
     )
     return ret
 
@@ -220,7 +197,6 @@ def create_warped_grid_image(
 __all__ = [
     "CREATE_WARPED_GRID_IMAGE_METADATA",
     "CreateWarpedGridImageOutputs",
-    "CreateWarpedGridImageParameters",
     "create_warped_grid_image",
     "create_warped_grid_image_execute",
     "create_warped_grid_image_params",

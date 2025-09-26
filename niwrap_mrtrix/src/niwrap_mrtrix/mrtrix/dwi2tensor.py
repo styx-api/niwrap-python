@@ -14,21 +14,52 @@ DWI2TENSOR_METADATA = Metadata(
 
 
 Dwi2tensorFslgradParameters = typing.TypedDict('Dwi2tensorFslgradParameters', {
-    "@type": typing.Literal["mrtrix.dwi2tensor.fslgrad"],
+    "@type": typing.NotRequired[typing.Literal["fslgrad"]],
+    "bvecs": InputPathType,
+    "bvals": InputPathType,
+})
+Dwi2tensorFslgradParametersTagged = typing.TypedDict('Dwi2tensorFslgradParametersTagged', {
+    "@type": typing.Literal["fslgrad"],
     "bvecs": InputPathType,
     "bvals": InputPathType,
 })
 
 
 Dwi2tensorConfigParameters = typing.TypedDict('Dwi2tensorConfigParameters', {
-    "@type": typing.Literal["mrtrix.dwi2tensor.config"],
+    "@type": typing.NotRequired[typing.Literal["config"]],
+    "key": str,
+    "value": str,
+})
+Dwi2tensorConfigParametersTagged = typing.TypedDict('Dwi2tensorConfigParametersTagged', {
+    "@type": typing.Literal["config"],
     "key": str,
     "value": str,
 })
 
 
 Dwi2tensorParameters = typing.TypedDict('Dwi2tensorParameters', {
-    "@type": typing.Literal["mrtrix.dwi2tensor"],
+    "@type": typing.NotRequired[typing.Literal["mrtrix/dwi2tensor"]],
+    "ols": bool,
+    "mask": typing.NotRequired[InputPathType | None],
+    "b0": typing.NotRequired[str | None],
+    "dkt": typing.NotRequired[str | None],
+    "iter": typing.NotRequired[int | None],
+    "predicted_signal": typing.NotRequired[str | None],
+    "grad": typing.NotRequired[InputPathType | None],
+    "fslgrad": typing.NotRequired[Dwi2tensorFslgradParameters | None],
+    "info": bool,
+    "quiet": bool,
+    "debug": bool,
+    "force": bool,
+    "nthreads": typing.NotRequired[int | None],
+    "config": typing.NotRequired[list[Dwi2tensorConfigParameters] | None],
+    "help": bool,
+    "version": bool,
+    "dwi": InputPathType,
+    "dt": str,
+})
+Dwi2tensorParametersTagged = typing.TypedDict('Dwi2tensorParametersTagged', {
+    "@type": typing.Literal["mrtrix/dwi2tensor"],
     "ols": bool,
     "mask": typing.NotRequired[InputPathType | None],
     "b0": typing.NotRequired[str | None],
@@ -50,44 +81,10 @@ Dwi2tensorParameters = typing.TypedDict('Dwi2tensorParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "mrtrix.dwi2tensor": dwi2tensor_cargs,
-        "mrtrix.dwi2tensor.fslgrad": dwi2tensor_fslgrad_cargs,
-        "mrtrix.dwi2tensor.config": dwi2tensor_config_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "mrtrix.dwi2tensor": dwi2tensor_outputs,
-    }.get(t)
-
-
 def dwi2tensor_fslgrad_params(
     bvecs: InputPathType,
     bvals: InputPathType,
-) -> Dwi2tensorFslgradParameters:
+) -> Dwi2tensorFslgradParametersTagged:
     """
     Build parameters.
     
@@ -104,7 +101,7 @@ def dwi2tensor_fslgrad_params(
         Parameter dictionary
     """
     params = {
-        "@type": "mrtrix.dwi2tensor.fslgrad",
+        "@type": "fslgrad",
         "bvecs": bvecs,
         "bvals": bvals,
     }
@@ -126,15 +123,15 @@ def dwi2tensor_fslgrad_cargs(
     """
     cargs = []
     cargs.append("-fslgrad")
-    cargs.append(execution.input_file(params.get("bvecs")))
-    cargs.append(execution.input_file(params.get("bvals")))
+    cargs.append(execution.input_file(params.get("bvecs", None)))
+    cargs.append(execution.input_file(params.get("bvals", None)))
     return cargs
 
 
 def dwi2tensor_config_params(
     key: str,
     value: str,
-) -> Dwi2tensorConfigParameters:
+) -> Dwi2tensorConfigParametersTagged:
     """
     Build parameters.
     
@@ -145,7 +142,7 @@ def dwi2tensor_config_params(
         Parameter dictionary
     """
     params = {
-        "@type": "mrtrix.dwi2tensor.config",
+        "@type": "config",
         "key": key,
         "value": value,
     }
@@ -167,14 +164,14 @@ def dwi2tensor_config_cargs(
     """
     cargs = []
     cargs.append("-config")
-    cargs.append(params.get("key"))
-    cargs.append(params.get("value"))
+    cargs.append(params.get("key", None))
+    cargs.append(params.get("value", None))
     return cargs
 
 
 class Dwi2tensorOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `dwi2tensor(...)`.
+    Output object returned when calling `Dwi2tensorParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -207,7 +204,7 @@ def dwi2tensor_params(
     config: list[Dwi2tensorConfigParameters] | None = None,
     help_: bool = False,
     version: bool = False,
-) -> Dwi2tensorParameters:
+) -> Dwi2tensorParametersTagged:
     """
     Build parameters.
     
@@ -249,7 +246,7 @@ def dwi2tensor_params(
         Parameter dictionary
     """
     params = {
-        "@type": "mrtrix.dwi2tensor",
+        "@type": "mrtrix/dwi2tensor",
         "ols": ols,
         "info": info,
         "quiet": quiet,
@@ -296,61 +293,61 @@ def dwi2tensor_cargs(
     """
     cargs = []
     cargs.append("dwi2tensor")
-    if params.get("ols"):
+    if params.get("ols", False):
         cargs.append("-ols")
-    if params.get("mask") is not None:
+    if params.get("mask", None) is not None:
         cargs.extend([
             "-mask",
-            execution.input_file(params.get("mask"))
+            execution.input_file(params.get("mask", None))
         ])
-    if params.get("b0") is not None:
+    if params.get("b0", None) is not None:
         cargs.extend([
             "-b0",
-            params.get("b0")
+            params.get("b0", None)
         ])
-    if params.get("dkt") is not None:
+    if params.get("dkt", None) is not None:
         cargs.extend([
             "-dkt",
-            params.get("dkt")
+            params.get("dkt", None)
         ])
-    if params.get("iter") is not None:
+    if params.get("iter", None) is not None:
         cargs.extend([
             "-iter",
-            str(params.get("iter"))
+            str(params.get("iter", None))
         ])
-    if params.get("predicted_signal") is not None:
+    if params.get("predicted_signal", None) is not None:
         cargs.extend([
             "-predicted_signal",
-            params.get("predicted_signal")
+            params.get("predicted_signal", None)
         ])
-    if params.get("grad") is not None:
+    if params.get("grad", None) is not None:
         cargs.extend([
             "-grad",
-            execution.input_file(params.get("grad"))
+            execution.input_file(params.get("grad", None))
         ])
-    if params.get("fslgrad") is not None:
-        cargs.extend(dyn_cargs(params.get("fslgrad")["@type"])(params.get("fslgrad"), execution))
-    if params.get("info"):
+    if params.get("fslgrad", None) is not None:
+        cargs.extend(dwi2tensor_fslgrad_cargs(params.get("fslgrad", None), execution))
+    if params.get("info", False):
         cargs.append("-info")
-    if params.get("quiet"):
+    if params.get("quiet", False):
         cargs.append("-quiet")
-    if params.get("debug"):
+    if params.get("debug", False):
         cargs.append("-debug")
-    if params.get("force"):
+    if params.get("force", False):
         cargs.append("-force")
-    if params.get("nthreads") is not None:
+    if params.get("nthreads", None) is not None:
         cargs.extend([
             "-nthreads",
-            str(params.get("nthreads"))
+            str(params.get("nthreads", None))
         ])
-    if params.get("config") is not None:
-        cargs.extend([a for c in [dyn_cargs(s["@type"])(s, execution) for s in params.get("config")] for a in c])
-    if params.get("help"):
+    if params.get("config", None) is not None:
+        cargs.extend([a for c in [dwi2tensor_config_cargs(s, execution) for s in params.get("config", None)] for a in c])
+    if params.get("help", False):
         cargs.append("-help")
-    if params.get("version"):
+    if params.get("version", False):
         cargs.append("-version")
-    cargs.append(execution.input_file(params.get("dwi")))
-    cargs.append(params.get("dt"))
+    cargs.append(execution.input_file(params.get("dwi", None)))
+    cargs.append(params.get("dt", None))
     return cargs
 
 
@@ -369,10 +366,10 @@ def dwi2tensor_outputs(
     """
     ret = Dwi2tensorOutputs(
         root=execution.output_file("."),
-        dt=execution.output_file(params.get("dt")),
-        b0=execution.output_file(params.get("b0")) if (params.get("b0") is not None) else None,
-        dkt=execution.output_file(params.get("dkt")) if (params.get("dkt") is not None) else None,
-        predicted_signal=execution.output_file(params.get("predicted_signal")) if (params.get("predicted_signal") is not None) else None,
+        dt=execution.output_file(params.get("dt", None)),
+        b0=execution.output_file(params.get("b0", None)) if (params.get("b0") is not None) else None,
+        dkt=execution.output_file(params.get("dkt", None)) if (params.get("dkt") is not None) else None,
+        predicted_signal=execution.output_file(params.get("predicted_signal", None)) if (params.get("predicted_signal") is not None) else None,
     )
     return ret
 
@@ -580,10 +577,7 @@ def dwi2tensor(
 
 __all__ = [
     "DWI2TENSOR_METADATA",
-    "Dwi2tensorConfigParameters",
-    "Dwi2tensorFslgradParameters",
     "Dwi2tensorOutputs",
-    "Dwi2tensorParameters",
     "dwi2tensor",
     "dwi2tensor_config_params",
     "dwi2tensor_execute",

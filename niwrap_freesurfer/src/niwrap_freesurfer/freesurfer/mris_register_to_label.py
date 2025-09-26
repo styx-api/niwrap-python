@@ -14,7 +14,22 @@ MRIS_REGISTER_TO_LABEL_METADATA = Metadata(
 
 
 MrisRegisterToLabelParameters = typing.TypedDict('MrisRegisterToLabelParameters', {
-    "@type": typing.Literal["freesurfer.mris_register_to_label"],
+    "@type": typing.NotRequired[typing.Literal["freesurfer/mris_register_to_label"]],
+    "surface": InputPathType,
+    "regfile": InputPathType,
+    "mri_reg": InputPathType,
+    "mov_volume": InputPathType,
+    "resolution": float,
+    "max_rot": typing.NotRequired[float | None],
+    "max_trans": typing.NotRequired[float | None],
+    "subject": typing.NotRequired[str | None],
+    "label": typing.NotRequired[str | None],
+    "out_reg": typing.NotRequired[str | None],
+    "downsample": typing.NotRequired[float | None],
+    "cost_file": typing.NotRequired[InputPathType | None],
+})
+MrisRegisterToLabelParametersTagged = typing.TypedDict('MrisRegisterToLabelParametersTagged', {
+    "@type": typing.Literal["freesurfer/mris_register_to_label"],
     "surface": InputPathType,
     "regfile": InputPathType,
     "mri_reg": InputPathType,
@@ -30,40 +45,9 @@ MrisRegisterToLabelParameters = typing.TypedDict('MrisRegisterToLabelParameters'
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "freesurfer.mris_register_to_label": mris_register_to_label_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-    }.get(t)
-
-
 class MrisRegisterToLabelOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `mris_register_to_label(...)`.
+    Output object returned when calling `MrisRegisterToLabelParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -82,7 +66,7 @@ def mris_register_to_label_params(
     out_reg: str | None = None,
     downsample: float | None = None,
     cost_file: InputPathType | None = None,
-) -> MrisRegisterToLabelParameters:
+) -> MrisRegisterToLabelParametersTagged:
     """
     Build parameters.
     
@@ -103,7 +87,7 @@ def mris_register_to_label_params(
         Parameter dictionary
     """
     params = {
-        "@type": "freesurfer.mris_register_to_label",
+        "@type": "freesurfer/mris_register_to_label",
         "surface": surface,
         "regfile": regfile,
         "mri_reg": mri_reg,
@@ -144,58 +128,58 @@ def mris_register_to_label_cargs(
     cargs.append("mris_register_to_label")
     cargs.extend([
         "--surf",
-        execution.input_file(params.get("surface"))
+        execution.input_file(params.get("surface", None))
     ])
     cargs.extend([
         "--reg",
-        execution.input_file(params.get("regfile"))
+        execution.input_file(params.get("regfile", None))
     ])
     cargs.extend([
         "--mri_reg",
-        execution.input_file(params.get("mri_reg"))
+        execution.input_file(params.get("mri_reg", None))
     ])
     cargs.extend([
         "--mov",
-        execution.input_file(params.get("mov_volume"))
+        execution.input_file(params.get("mov_volume", None))
     ])
     cargs.extend([
         "--res",
-        str(params.get("resolution"))
+        str(params.get("resolution", None))
     ])
-    if params.get("max_rot") is not None:
+    if params.get("max_rot", None) is not None:
         cargs.extend([
             "--max_rot",
-            str(params.get("max_rot"))
+            str(params.get("max_rot", None))
         ])
-    if params.get("max_trans") is not None:
+    if params.get("max_trans", None) is not None:
         cargs.extend([
             "--max_trans",
-            str(params.get("max_trans"))
+            str(params.get("max_trans", None))
         ])
-    if params.get("subject") is not None:
+    if params.get("subject", None) is not None:
         cargs.extend([
             "--s",
-            params.get("subject")
+            params.get("subject", None)
         ])
-    if params.get("label") is not None:
+    if params.get("label", None) is not None:
         cargs.extend([
             "--label",
-            params.get("label")
+            params.get("label", None)
         ])
-    if params.get("out_reg") is not None:
+    if params.get("out_reg", None) is not None:
         cargs.extend([
             "--out-reg",
-            params.get("out_reg")
+            params.get("out_reg", None)
         ])
-    if params.get("downsample") is not None:
+    if params.get("downsample", None) is not None:
         cargs.extend([
             "--downsample",
-            str(params.get("downsample"))
+            str(params.get("downsample", None))
         ])
-    if params.get("cost_file") is not None:
+    if params.get("cost_file", None) is not None:
         cargs.extend([
             "--cost",
-            execution.input_file(params.get("cost_file"))
+            execution.input_file(params.get("cost_file", None))
         ])
     return cargs
 
@@ -308,7 +292,6 @@ def mris_register_to_label(
 __all__ = [
     "MRIS_REGISTER_TO_LABEL_METADATA",
     "MrisRegisterToLabelOutputs",
-    "MrisRegisterToLabelParameters",
     "mris_register_to_label",
     "mris_register_to_label_execute",
     "mris_register_to_label_params",

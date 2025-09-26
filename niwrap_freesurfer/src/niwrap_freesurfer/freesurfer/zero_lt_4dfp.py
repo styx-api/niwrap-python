@@ -14,7 +14,14 @@ ZERO_LT_4DFP_METADATA = Metadata(
 
 
 ZeroLt4dfpParameters = typing.TypedDict('ZeroLt4dfpParameters', {
-    "@type": typing.Literal["freesurfer.zero_lt_4dfp"],
+    "@type": typing.NotRequired[typing.Literal["freesurfer/zero_lt_4dfp"]],
+    "flt_value": float,
+    "file_4dfp": InputPathType,
+    "outroot": typing.NotRequired[str | None],
+    "endianness": typing.NotRequired[str | None],
+})
+ZeroLt4dfpParametersTagged = typing.TypedDict('ZeroLt4dfpParametersTagged', {
+    "@type": typing.Literal["freesurfer/zero_lt_4dfp"],
     "flt_value": float,
     "file_4dfp": InputPathType,
     "outroot": typing.NotRequired[str | None],
@@ -22,41 +29,9 @@ ZeroLt4dfpParameters = typing.TypedDict('ZeroLt4dfpParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "freesurfer.zero_lt_4dfp": zero_lt_4dfp_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "freesurfer.zero_lt_4dfp": zero_lt_4dfp_outputs,
-    }.get(t)
-
-
 class ZeroLt4dfpOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `zero_lt_4dfp(...)`.
+    Output object returned when calling `ZeroLt4dfpParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -69,7 +44,7 @@ def zero_lt_4dfp_params(
     file_4dfp: InputPathType,
     outroot: str | None = None,
     endianness: str | None = None,
-) -> ZeroLt4dfpParameters:
+) -> ZeroLt4dfpParametersTagged:
     """
     Build parameters.
     
@@ -85,7 +60,7 @@ def zero_lt_4dfp_params(
         Parameter dictionary
     """
     params = {
-        "@type": "freesurfer.zero_lt_4dfp",
+        "@type": "freesurfer/zero_lt_4dfp",
         "flt_value": flt_value,
         "file_4dfp": file_4dfp,
     }
@@ -111,14 +86,14 @@ def zero_lt_4dfp_cargs(
     """
     cargs = []
     cargs.append("zero_lt_4dfp")
-    cargs.append(str(params.get("flt_value")))
-    cargs.append(execution.input_file(params.get("file_4dfp")))
-    if params.get("outroot") is not None:
-        cargs.append(params.get("outroot"))
-    if params.get("endianness") is not None:
+    cargs.append(str(params.get("flt_value", None)))
+    cargs.append(execution.input_file(params.get("file_4dfp", None)))
+    if params.get("outroot", None) is not None:
+        cargs.append(params.get("outroot", None))
+    if params.get("endianness", None) is not None:
         cargs.extend([
             "-@",
-            params.get("endianness")
+            params.get("endianness", None)
         ])
     return cargs
 
@@ -138,7 +113,7 @@ def zero_lt_4dfp_outputs(
     """
     ret = ZeroLt4dfpOutputs(
         root=execution.output_file("."),
-        output_4dfp=execution.output_file(params.get("outroot") + ".4dfp") if (params.get("outroot") is not None) else None,
+        output_4dfp=execution.output_file(params.get("outroot", None) + ".4dfp") if (params.get("outroot") is not None) else None,
     )
     return ret
 
@@ -213,7 +188,6 @@ def zero_lt_4dfp(
 __all__ = [
     "ZERO_LT_4DFP_METADATA",
     "ZeroLt4dfpOutputs",
-    "ZeroLt4dfpParameters",
     "zero_lt_4dfp",
     "zero_lt_4dfp_execute",
     "zero_lt_4dfp_params",

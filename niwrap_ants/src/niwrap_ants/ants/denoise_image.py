@@ -14,20 +14,29 @@ DENOISE_IMAGE_METADATA = Metadata(
 
 
 DenoiseImageCorrectedOutputParameters = typing.TypedDict('DenoiseImageCorrectedOutputParameters', {
-    "@type": typing.Literal["ants.DenoiseImage.correctedOutput"],
+    "@type": typing.NotRequired[typing.Literal["correctedOutput"]],
+    "correctedOutputFileName": str,
+})
+DenoiseImageCorrectedOutputParametersTagged = typing.TypedDict('DenoiseImageCorrectedOutputParametersTagged', {
+    "@type": typing.Literal["correctedOutput"],
     "correctedOutputFileName": str,
 })
 
 
 DenoiseImageCorrectedOutputNoiseParameters = typing.TypedDict('DenoiseImageCorrectedOutputNoiseParameters', {
-    "@type": typing.Literal["ants.DenoiseImage.correctedOutputNoise"],
+    "@type": typing.NotRequired[typing.Literal["correctedOutputNoise"]],
+    "correctedOutputFileName": str,
+    "noiseFile": typing.NotRequired[str | None],
+})
+DenoiseImageCorrectedOutputNoiseParametersTagged = typing.TypedDict('DenoiseImageCorrectedOutputNoiseParametersTagged', {
+    "@type": typing.Literal["correctedOutputNoise"],
     "correctedOutputFileName": str,
     "noiseFile": typing.NotRequired[str | None],
 })
 
 
 DenoiseImageParameters = typing.TypedDict('DenoiseImageParameters', {
-    "@type": typing.Literal["ants.DenoiseImage"],
+    "@type": typing.NotRequired[typing.Literal["ants/DenoiseImage"]],
     "image_dimensionality": typing.NotRequired[typing.Literal[2, 3, 4] | None],
     "noise_model": typing.NotRequired[typing.Literal["Gaussian", "Rician"] | None],
     "shrink_factor": typing.NotRequired[int | None],
@@ -36,11 +45,23 @@ DenoiseImageParameters = typing.TypedDict('DenoiseImageParameters', {
     "search_radius": typing.NotRequired[str | None],
     "verbose": typing.NotRequired[typing.Literal[0, 1] | None],
     "input_image": InputPathType,
-    "output": typing.Union[DenoiseImageCorrectedOutputParameters, DenoiseImageCorrectedOutputNoiseParameters],
+    "output": typing.Union[DenoiseImageCorrectedOutputParametersTagged, DenoiseImageCorrectedOutputNoiseParametersTagged],
+})
+DenoiseImageParametersTagged = typing.TypedDict('DenoiseImageParametersTagged', {
+    "@type": typing.Literal["ants/DenoiseImage"],
+    "image_dimensionality": typing.NotRequired[typing.Literal[2, 3, 4] | None],
+    "noise_model": typing.NotRequired[typing.Literal["Gaussian", "Rician"] | None],
+    "shrink_factor": typing.NotRequired[int | None],
+    "mask_image": typing.NotRequired[InputPathType | None],
+    "patch_radius": typing.NotRequired[str | None],
+    "search_radius": typing.NotRequired[str | None],
+    "verbose": typing.NotRequired[typing.Literal[0, 1] | None],
+    "input_image": InputPathType,
+    "output": typing.Union[DenoiseImageCorrectedOutputParametersTagged, DenoiseImageCorrectedOutputNoiseParametersTagged],
 })
 
 
-def dyn_cargs(
+def denoise_image_output_cargs_dyn_fn(
     t: str,
 ) -> typing.Any:
     """
@@ -52,13 +73,12 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "ants.DenoiseImage": denoise_image_cargs,
-        "ants.DenoiseImage.correctedOutput": denoise_image_corrected_output_cargs,
-        "ants.DenoiseImage.correctedOutputNoise": denoise_image_corrected_output_noise_cargs,
+        "correctedOutput": denoise_image_corrected_output_cargs,
+        "correctedOutputNoise": denoise_image_corrected_output_noise_cargs,
     }.get(t)
 
 
-def dyn_outputs(
+def denoise_image_output_outputs_dyn_fn(
     t: str,
 ) -> typing.Any:
     """
@@ -70,9 +90,8 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "ants.DenoiseImage": denoise_image_outputs,
-        "ants.DenoiseImage.correctedOutput": denoise_image_corrected_output_outputs,
-        "ants.DenoiseImage.correctedOutputNoise": denoise_image_corrected_output_noise_outputs,
+        "correctedOutput": denoise_image_corrected_output_outputs,
+        "correctedOutputNoise": denoise_image_corrected_output_noise_outputs,
     }.get(t)
 
 
@@ -88,7 +107,7 @@ class DenoiseImageCorrectedOutputOutputs(typing.NamedTuple):
 
 def denoise_image_corrected_output_params(
     corrected_output_file_name: str,
-) -> DenoiseImageCorrectedOutputParameters:
+) -> DenoiseImageCorrectedOutputParametersTagged:
     """
     Build parameters.
     
@@ -98,7 +117,7 @@ def denoise_image_corrected_output_params(
         Parameter dictionary
     """
     params = {
-        "@type": "ants.DenoiseImage.correctedOutput",
+        "@type": "correctedOutput",
         "correctedOutputFileName": corrected_output_file_name,
     }
     return params
@@ -118,7 +137,7 @@ def denoise_image_corrected_output_cargs(
         Command-line arguments.
     """
     cargs = []
-    cargs.append(params.get("correctedOutputFileName"))
+    cargs.append(params.get("correctedOutputFileName", None))
     return cargs
 
 
@@ -137,7 +156,7 @@ def denoise_image_corrected_output_outputs(
     """
     ret = DenoiseImageCorrectedOutputOutputs(
         root=execution.output_file("."),
-        output_image_outfile=execution.output_file(params.get("correctedOutputFileName")),
+        output_image_outfile=execution.output_file(params.get("correctedOutputFileName", None)),
     )
     return ret
 
@@ -157,7 +176,7 @@ class DenoiseImageCorrectedOutputNoiseOutputs(typing.NamedTuple):
 def denoise_image_corrected_output_noise_params(
     corrected_output_file_name: str,
     noise_file: str | None = None,
-) -> DenoiseImageCorrectedOutputNoiseParameters:
+) -> DenoiseImageCorrectedOutputNoiseParametersTagged:
     """
     Build parameters.
     
@@ -168,7 +187,7 @@ def denoise_image_corrected_output_noise_params(
         Parameter dictionary
     """
     params = {
-        "@type": "ants.DenoiseImage.correctedOutputNoise",
+        "@type": "correctedOutputNoise",
         "correctedOutputFileName": corrected_output_file_name,
     }
     if noise_file is not None:
@@ -190,8 +209,8 @@ def denoise_image_corrected_output_noise_cargs(
         Command-line arguments.
     """
     cargs = []
-    if params.get("noiseFile") is not None:
-        cargs.append("[" + params.get("correctedOutputFileName") + "," + params.get("noiseFile") + "]")
+    if params.get("noiseFile", None) is not None:
+        cargs.append("[" + params.get("correctedOutputFileName", None) + "," + params.get("noiseFile", None) + "]")
     return cargs
 
 
@@ -210,15 +229,15 @@ def denoise_image_corrected_output_noise_outputs(
     """
     ret = DenoiseImageCorrectedOutputNoiseOutputs(
         root=execution.output_file("."),
-        output_image_outfile=execution.output_file(params.get("correctedOutputFileName")),
-        output_bias_image=execution.output_file(params.get("noiseFile")) if (params.get("noiseFile") is not None) else None,
+        output_image_outfile=execution.output_file(params.get("correctedOutputFileName", None)),
+        output_bias_image=execution.output_file(params.get("noiseFile", None)) if (params.get("noiseFile") is not None) else None,
     )
     return ret
 
 
 class DenoiseImageOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `denoise_image(...)`.
+    Output object returned when calling `DenoiseImageParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -229,7 +248,7 @@ class DenoiseImageOutputs(typing.NamedTuple):
 
 def denoise_image_params(
     input_image: InputPathType,
-    output: typing.Union[DenoiseImageCorrectedOutputParameters, DenoiseImageCorrectedOutputNoiseParameters],
+    output: typing.Union[DenoiseImageCorrectedOutputParametersTagged, DenoiseImageCorrectedOutputNoiseParametersTagged],
     image_dimensionality: typing.Literal[2, 3, 4] | None = None,
     noise_model: typing.Literal["Gaussian", "Rician"] | None = None,
     shrink_factor: int | None = None,
@@ -237,7 +256,7 @@ def denoise_image_params(
     patch_radius: str | None = None,
     search_radius: str | None = None,
     verbose: typing.Literal[0, 1] | None = None,
-) -> DenoiseImageParameters:
+) -> DenoiseImageParametersTagged:
     """
     Build parameters.
     
@@ -266,7 +285,7 @@ def denoise_image_params(
         Parameter dictionary
     """
     params = {
-        "@type": "ants.DenoiseImage",
+        "@type": "ants/DenoiseImage",
         "input_image": input_image,
         "output": output,
     }
@@ -302,48 +321,48 @@ def denoise_image_cargs(
     """
     cargs = []
     cargs.append("DenoiseImage")
-    if params.get("image_dimensionality") is not None:
+    if params.get("image_dimensionality", None) is not None:
         cargs.extend([
             "--image-dimensionality",
-            str(params.get("image_dimensionality"))
+            str(params.get("image_dimensionality", None))
         ])
-    if params.get("noise_model") is not None:
+    if params.get("noise_model", None) is not None:
         cargs.extend([
             "--noise-model",
-            params.get("noise_model")
+            params.get("noise_model", None)
         ])
-    if params.get("shrink_factor") is not None:
+    if params.get("shrink_factor", None) is not None:
         cargs.extend([
             "--shrink-factor",
-            str(params.get("shrink_factor"))
+            str(params.get("shrink_factor", None))
         ])
-    if params.get("mask_image") is not None:
+    if params.get("mask_image", None) is not None:
         cargs.extend([
             "--mask-image",
-            execution.input_file(params.get("mask_image"))
+            execution.input_file(params.get("mask_image", None))
         ])
-    if params.get("patch_radius") is not None:
+    if params.get("patch_radius", None) is not None:
         cargs.extend([
             "--patch-radius",
-            params.get("patch_radius")
+            params.get("patch_radius", None)
         ])
-    if params.get("search_radius") is not None:
+    if params.get("search_radius", None) is not None:
         cargs.extend([
             "--search-radius",
-            params.get("search_radius")
+            params.get("search_radius", None)
         ])
-    if params.get("verbose") is not None:
+    if params.get("verbose", None) is not None:
         cargs.extend([
             "--verbose",
-            str(params.get("verbose"))
+            str(params.get("verbose", None))
         ])
     cargs.extend([
         "--input-image",
-        execution.input_file(params.get("input_image"))
+        execution.input_file(params.get("input_image", None))
     ])
     cargs.extend([
         "--output",
-        *dyn_cargs(params.get("output")["@type"])(params.get("output"), execution)
+        *denoise_image_output_cargs_dyn_fn(params.get("output", None)["@type"])(params.get("output", None), execution)
     ])
     return cargs
 
@@ -363,7 +382,7 @@ def denoise_image_outputs(
     """
     ret = DenoiseImageOutputs(
         root=execution.output_file("."),
-        output=dyn_outputs(params.get("output")["@type"])(params.get("output"), execution),
+        output=denoise_image_output_outputs_dyn_fn(params.get("output")["@type"])(params.get("output"), execution),
     )
     return ret
 
@@ -401,7 +420,7 @@ def denoise_image_execute(
 
 def denoise_image(
     input_image: InputPathType,
-    output: typing.Union[DenoiseImageCorrectedOutputParameters, DenoiseImageCorrectedOutputNoiseParameters],
+    output: typing.Union[DenoiseImageCorrectedOutputParametersTagged, DenoiseImageCorrectedOutputNoiseParametersTagged],
     image_dimensionality: typing.Literal[2, 3, 4] | None = None,
     noise_model: typing.Literal["Gaussian", "Rician"] | None = None,
     shrink_factor: int | None = None,
@@ -465,11 +484,8 @@ def denoise_image(
 __all__ = [
     "DENOISE_IMAGE_METADATA",
     "DenoiseImageCorrectedOutputNoiseOutputs",
-    "DenoiseImageCorrectedOutputNoiseParameters",
     "DenoiseImageCorrectedOutputOutputs",
-    "DenoiseImageCorrectedOutputParameters",
     "DenoiseImageOutputs",
-    "DenoiseImageParameters",
     "denoise_image",
     "denoise_image_corrected_output_noise_params",
     "denoise_image_corrected_output_params",

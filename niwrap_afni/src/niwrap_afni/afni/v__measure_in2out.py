@@ -14,7 +14,22 @@ V__MEASURE_IN2OUT_METADATA = Metadata(
 
 
 VMeasureIn2outParameters = typing.TypedDict('VMeasureIn2outParameters', {
-    "@type": typing.Literal["afni.@measure_in2out"],
+    "@type": typing.NotRequired[typing.Literal["afni/@measure_in2out"]],
+    "maskset": InputPathType,
+    "surfset": InputPathType,
+    "outdir": str,
+    "resample": typing.NotRequired[str | None],
+    "increment": typing.NotRequired[float | None],
+    "surfsmooth": typing.NotRequired[float | None],
+    "maxthick": typing.NotRequired[float | None],
+    "depthsearch": typing.NotRequired[float | None],
+    "maskinoutvals": typing.NotRequired[list[float] | None],
+    "keep_temp_files": bool,
+    "surfsmooth_method": typing.NotRequired[str | None],
+    "fs_cort_dir": typing.NotRequired[str | None],
+})
+VMeasureIn2outParametersTagged = typing.TypedDict('VMeasureIn2outParametersTagged', {
+    "@type": typing.Literal["afni/@measure_in2out"],
     "maskset": InputPathType,
     "surfset": InputPathType,
     "outdir": str,
@@ -30,41 +45,9 @@ VMeasureIn2outParameters = typing.TypedDict('VMeasureIn2outParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "afni.@measure_in2out": v__measure_in2out_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "afni.@measure_in2out": v__measure_in2out_outputs,
-    }.get(t)
-
-
 class VMeasureIn2outOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `v__measure_in2out(...)`.
+    Output object returned when calling `VMeasureIn2outParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -99,7 +82,7 @@ def v__measure_in2out_params(
     keep_temp_files: bool = False,
     surfsmooth_method: str | None = None,
     fs_cort_dir: str | None = None,
-) -> VMeasureIn2outParameters:
+) -> VMeasureIn2outParametersTagged:
     """
     Build parameters.
     
@@ -130,7 +113,7 @@ def v__measure_in2out_params(
         Parameter dictionary
     """
     params = {
-        "@type": "afni.@measure_in2out",
+        "@type": "afni/@measure_in2out",
         "maskset": maskset,
         "surfset": surfset,
         "outdir": outdir,
@@ -172,57 +155,57 @@ def v__measure_in2out_cargs(
     cargs.append("@measure_in2out")
     cargs.extend([
         "-maskset",
-        execution.input_file(params.get("maskset"))
+        execution.input_file(params.get("maskset", None))
     ])
     cargs.extend([
         "-surfset",
-        execution.input_file(params.get("surfset"))
+        execution.input_file(params.get("surfset", None))
     ])
     cargs.extend([
         "-outdir",
-        params.get("outdir")
+        params.get("outdir", None)
     ])
-    if params.get("resample") is not None:
+    if params.get("resample", None) is not None:
         cargs.extend([
             "-resample",
-            params.get("resample")
+            params.get("resample", None)
         ])
-    if params.get("increment") is not None:
+    if params.get("increment", None) is not None:
         cargs.extend([
             "-increment",
-            str(params.get("increment"))
+            str(params.get("increment", None))
         ])
-    if params.get("surfsmooth") is not None:
+    if params.get("surfsmooth", None) is not None:
         cargs.extend([
             "-surfsmooth",
-            str(params.get("surfsmooth"))
+            str(params.get("surfsmooth", None))
         ])
-    if params.get("maxthick") is not None:
+    if params.get("maxthick", None) is not None:
         cargs.extend([
             "-maxthick",
-            str(params.get("maxthick"))
+            str(params.get("maxthick", None))
         ])
-    if params.get("depthsearch") is not None:
+    if params.get("depthsearch", None) is not None:
         cargs.extend([
             "-depthsearch",
-            str(params.get("depthsearch"))
+            str(params.get("depthsearch", None))
         ])
-    if params.get("maskinoutvals") is not None:
+    if params.get("maskinoutvals", None) is not None:
         cargs.extend([
             "-maskinoutvals",
-            *map(str, params.get("maskinoutvals"))
+            *map(str, params.get("maskinoutvals", None))
         ])
-    if params.get("keep_temp_files"):
+    if params.get("keep_temp_files", False):
         cargs.append("-keep_temp_files")
-    if params.get("surfsmooth_method") is not None:
+    if params.get("surfsmooth_method", None) is not None:
         cargs.extend([
             "-surfsmooth_method",
-            params.get("surfsmooth_method")
+            params.get("surfsmooth_method", None)
         ])
-    if params.get("fs_cort_dir") is not None:
+    if params.get("fs_cort_dir", None) is not None:
         cargs.extend([
             "-fs_cort_dir",
-            params.get("fs_cort_dir")
+            params.get("fs_cort_dir", None)
         ])
     return cargs
 
@@ -352,7 +335,6 @@ def v__measure_in2out(
 
 __all__ = [
     "VMeasureIn2outOutputs",
-    "VMeasureIn2outParameters",
     "V__MEASURE_IN2OUT_METADATA",
     "v__measure_in2out",
     "v__measure_in2out_execute",

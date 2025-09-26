@@ -14,7 +14,16 @@ V_3D_AMP_TO_RSFC_METADATA = Metadata(
 
 
 V3dAmpToRsfcParameters = typing.TypedDict('V3dAmpToRsfcParameters', {
-    "@type": typing.Literal["afni.3dAmpToRSFC"],
+    "@type": typing.NotRequired[typing.Literal["afni/3dAmpToRSFC"]],
+    "in_amp": typing.NotRequired[InputPathType | None],
+    "in_pow": typing.NotRequired[InputPathType | None],
+    "prefix": str,
+    "band": list[float],
+    "mask": typing.NotRequired[InputPathType | None],
+    "nifti": bool,
+})
+V3dAmpToRsfcParametersTagged = typing.TypedDict('V3dAmpToRsfcParametersTagged', {
+    "@type": typing.Literal["afni/3dAmpToRSFC"],
     "in_amp": typing.NotRequired[InputPathType | None],
     "in_pow": typing.NotRequired[InputPathType | None],
     "prefix": str,
@@ -24,41 +33,9 @@ V3dAmpToRsfcParameters = typing.TypedDict('V3dAmpToRsfcParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "afni.3dAmpToRSFC": v_3d_amp_to_rsfc_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "afni.3dAmpToRSFC": v_3d_amp_to_rsfc_outputs,
-    }.get(t)
-
-
 class V3dAmpToRsfcOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `v_3d_amp_to_rsfc(...)`.
+    Output object returned when calling `V3dAmpToRsfcParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -85,7 +62,7 @@ def v_3d_amp_to_rsfc_params(
     in_pow: InputPathType | None = None,
     mask: InputPathType | None = None,
     nifti: bool = False,
-) -> V3dAmpToRsfcParameters:
+) -> V3dAmpToRsfcParametersTagged:
     """
     Build parameters.
     
@@ -104,7 +81,7 @@ def v_3d_amp_to_rsfc_params(
         Parameter dictionary
     """
     params = {
-        "@type": "afni.3dAmpToRSFC",
+        "@type": "afni/3dAmpToRSFC",
         "prefix": prefix,
         "band": band,
         "nifti": nifti,
@@ -133,30 +110,30 @@ def v_3d_amp_to_rsfc_cargs(
     """
     cargs = []
     cargs.append("3dAmpToRSFC")
-    if params.get("in_amp") is not None:
+    if params.get("in_amp", None) is not None:
         cargs.extend([
             "-in_amp",
-            execution.input_file(params.get("in_amp"))
+            execution.input_file(params.get("in_amp", None))
         ])
-    if params.get("in_pow") is not None:
+    if params.get("in_pow", None) is not None:
         cargs.extend([
             "-in_pow",
-            execution.input_file(params.get("in_pow"))
+            execution.input_file(params.get("in_pow", None))
         ])
     cargs.extend([
         "-prefix",
-        params.get("prefix")
+        params.get("prefix", None)
     ])
     cargs.extend([
         "-band",
-        *map(str, params.get("band"))
+        *map(str, params.get("band", None))
     ])
-    if params.get("mask") is not None:
+    if params.get("mask", None) is not None:
         cargs.extend([
             "-mask",
-            execution.input_file(params.get("mask"))
+            execution.input_file(params.get("mask", None))
         ])
-    if params.get("nifti"):
+    if params.get("nifti", False):
         cargs.append("-nifti")
     return cargs
 
@@ -176,12 +153,12 @@ def v_3d_amp_to_rsfc_outputs(
     """
     ret = V3dAmpToRsfcOutputs(
         root=execution.output_file("."),
-        output_alff=execution.output_file(params.get("prefix") + "_ALFF"),
-        output_malff=execution.output_file(params.get("prefix") + "_MALFF"),
-        output_falff=execution.output_file(params.get("prefix") + "_FALFF"),
-        output_rsfa=execution.output_file(params.get("prefix") + "_RSFA"),
-        output_mrsfa=execution.output_file(params.get("prefix") + "_MRSFA"),
-        output_frsfa=execution.output_file(params.get("prefix") + "_FRSFA"),
+        output_alff=execution.output_file(params.get("prefix", None) + "_ALFF"),
+        output_malff=execution.output_file(params.get("prefix", None) + "_MALFF"),
+        output_falff=execution.output_file(params.get("prefix", None) + "_FALFF"),
+        output_rsfa=execution.output_file(params.get("prefix", None) + "_RSFA"),
+        output_mrsfa=execution.output_file(params.get("prefix", None) + "_MRSFA"),
+        output_frsfa=execution.output_file(params.get("prefix", None) + "_FRSFA"),
     )
     return ret
 
@@ -260,7 +237,6 @@ def v_3d_amp_to_rsfc(
 
 __all__ = [
     "V3dAmpToRsfcOutputs",
-    "V3dAmpToRsfcParameters",
     "V_3D_AMP_TO_RSFC_METADATA",
     "v_3d_amp_to_rsfc",
     "v_3d_amp_to_rsfc_execute",

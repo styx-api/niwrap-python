@@ -14,7 +14,43 @@ POPP_METADATA = Metadata(
 
 
 PoppParameters = typing.TypedDict('PoppParameters', {
-    "@type": typing.Literal["fsl.popp"],
+    "@type": typing.NotRequired[typing.Literal["fsl/popp"]],
+    "input_file": InputPathType,
+    "output_basename": str,
+    "sampling_rate": typing.NotRequired[float | None],
+    "tr_value": typing.NotRequired[float | None],
+    "resp_column": typing.NotRequired[float | None],
+    "cardiac_column": typing.NotRequired[float | None],
+    "trigger_column": typing.NotRequired[float | None],
+    "rvt_flag": bool,
+    "heart_rate_flag": bool,
+    "pulseox_trigger_flag": bool,
+    "smooth_card": typing.NotRequired[float | None],
+    "smooth_resp": typing.NotRequired[float | None],
+    "high_freq_cutoff": typing.NotRequired[float | None],
+    "low_freq_cutoff": typing.NotRequired[float | None],
+    "init_thresh_c": typing.NotRequired[float | None],
+    "n_thresh_c": typing.NotRequired[float | None],
+    "init_thresh_r": typing.NotRequired[float | None],
+    "n_thresh_r": typing.NotRequired[float | None],
+    "invert_resp_flag": bool,
+    "invert_cardiac_flag": bool,
+    "noclean1_flag": bool,
+    "noclean2_flag": bool,
+    "load_card_phase": typing.NotRequired[InputPathType | None],
+    "load_resp_phase": typing.NotRequired[InputPathType | None],
+    "vol_file": typing.NotRequired[InputPathType | None],
+    "start_sample": typing.NotRequired[float | None],
+    "resp_add": typing.NotRequired[str | None],
+    "resp_del": typing.NotRequired[str | None],
+    "card_add": typing.NotRequired[str | None],
+    "card_del": typing.NotRequired[str | None],
+    "verbose_flag": bool,
+    "debug_flag": bool,
+    "help_flag": bool,
+})
+PoppParametersTagged = typing.TypedDict('PoppParametersTagged', {
+    "@type": typing.Literal["fsl/popp"],
     "input_file": InputPathType,
     "output_basename": str,
     "sampling_rate": typing.NotRequired[float | None],
@@ -51,41 +87,9 @@ PoppParameters = typing.TypedDict('PoppParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "fsl.popp": popp_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "fsl.popp": popp_outputs,
-    }.get(t)
-
-
 class PoppOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `popp(...)`.
+    Output object returned when calling `PoppParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -133,7 +137,7 @@ def popp_params(
     verbose_flag: bool = False,
     debug_flag: bool = False,
     help_flag: bool = False,
-) -> PoppParameters:
+) -> PoppParametersTagged:
     """
     Build parameters.
     
@@ -185,7 +189,7 @@ def popp_params(
         Parameter dictionary
     """
     params = {
-        "@type": "fsl.popp",
+        "@type": "fsl/popp",
         "input_file": input_file,
         "output_basename": output_basename,
         "rvt_flag": rvt_flag,
@@ -261,136 +265,136 @@ def popp_cargs(
     cargs.append("popp")
     cargs.extend([
         "-i",
-        execution.input_file(params.get("input_file"))
+        execution.input_file(params.get("input_file", None))
     ])
     cargs.extend([
         "-o",
-        params.get("output_basename")
+        params.get("output_basename", None)
     ])
-    if params.get("sampling_rate") is not None:
+    if params.get("sampling_rate", None) is not None:
         cargs.extend([
             "-s",
-            str(params.get("sampling_rate"))
+            str(params.get("sampling_rate", None))
         ])
-    if params.get("tr_value") is not None:
+    if params.get("tr_value", None) is not None:
         cargs.extend([
             "--tr",
-            str(params.get("tr_value"))
+            str(params.get("tr_value", None))
         ])
-    if params.get("resp_column") is not None:
+    if params.get("resp_column", None) is not None:
         cargs.extend([
             "--resp",
-            str(params.get("resp_column"))
+            str(params.get("resp_column", None))
         ])
-    if params.get("cardiac_column") is not None:
+    if params.get("cardiac_column", None) is not None:
         cargs.extend([
             "--cardiac",
-            str(params.get("cardiac_column"))
+            str(params.get("cardiac_column", None))
         ])
-    if params.get("trigger_column") is not None:
+    if params.get("trigger_column", None) is not None:
         cargs.extend([
             "--trigger",
-            str(params.get("trigger_column"))
+            str(params.get("trigger_column", None))
         ])
-    if params.get("rvt_flag"):
+    if params.get("rvt_flag", False):
         cargs.append("--rvt")
-    if params.get("heart_rate_flag"):
+    if params.get("heart_rate_flag", False):
         cargs.append("--heartrate")
-    if params.get("pulseox_trigger_flag"):
+    if params.get("pulseox_trigger_flag", False):
         cargs.append("--pulseox_trigger")
-    if params.get("smooth_card") is not None:
+    if params.get("smooth_card", None) is not None:
         cargs.extend([
             "--smoothcard",
-            str(params.get("smooth_card"))
+            str(params.get("smooth_card", None))
         ])
-    if params.get("smooth_resp") is not None:
+    if params.get("smooth_resp", None) is not None:
         cargs.extend([
             "--smoothresp",
-            str(params.get("smooth_resp"))
+            str(params.get("smooth_resp", None))
         ])
-    if params.get("high_freq_cutoff") is not None:
+    if params.get("high_freq_cutoff", None) is not None:
         cargs.extend([
             "--highfreqcutoff",
-            str(params.get("high_freq_cutoff"))
+            str(params.get("high_freq_cutoff", None))
         ])
-    if params.get("low_freq_cutoff") is not None:
+    if params.get("low_freq_cutoff", None) is not None:
         cargs.extend([
             "--lowfreqcutoff",
-            str(params.get("low_freq_cutoff"))
+            str(params.get("low_freq_cutoff", None))
         ])
-    if params.get("init_thresh_c") is not None:
+    if params.get("init_thresh_c", None) is not None:
         cargs.extend([
             "--initthreshc",
-            str(params.get("init_thresh_c"))
+            str(params.get("init_thresh_c", None))
         ])
-    if params.get("n_thresh_c") is not None:
+    if params.get("n_thresh_c", None) is not None:
         cargs.extend([
             "--nthreshc",
-            str(params.get("n_thresh_c"))
+            str(params.get("n_thresh_c", None))
         ])
-    if params.get("init_thresh_r") is not None:
+    if params.get("init_thresh_r", None) is not None:
         cargs.extend([
             "--initthreshr",
-            str(params.get("init_thresh_r"))
+            str(params.get("init_thresh_r", None))
         ])
-    if params.get("n_thresh_r") is not None:
+    if params.get("n_thresh_r", None) is not None:
         cargs.extend([
             "--nthreshr",
-            str(params.get("n_thresh_r"))
+            str(params.get("n_thresh_r", None))
         ])
-    if params.get("invert_resp_flag"):
+    if params.get("invert_resp_flag", False):
         cargs.append("--invertresp")
-    if params.get("invert_cardiac_flag"):
+    if params.get("invert_cardiac_flag", False):
         cargs.append("--invertcardiac")
-    if params.get("noclean1_flag"):
+    if params.get("noclean1_flag", False):
         cargs.append("--noclean1")
-    if params.get("noclean2_flag"):
+    if params.get("noclean2_flag", False):
         cargs.append("--noclean2")
-    if params.get("load_card_phase") is not None:
+    if params.get("load_card_phase", None) is not None:
         cargs.extend([
             "--loadcardphase",
-            execution.input_file(params.get("load_card_phase"))
+            execution.input_file(params.get("load_card_phase", None))
         ])
-    if params.get("load_resp_phase") is not None:
+    if params.get("load_resp_phase", None) is not None:
         cargs.extend([
             "--loadrespphase",
-            execution.input_file(params.get("load_resp_phase"))
+            execution.input_file(params.get("load_resp_phase", None))
         ])
-    if params.get("vol_file") is not None:
+    if params.get("vol_file", None) is not None:
         cargs.extend([
             "--vol",
-            execution.input_file(params.get("vol_file"))
+            execution.input_file(params.get("vol_file", None))
         ])
-    if params.get("start_sample") is not None:
+    if params.get("start_sample", None) is not None:
         cargs.extend([
             "--startingsample",
-            str(params.get("start_sample"))
+            str(params.get("start_sample", None))
         ])
-    if params.get("resp_add") is not None:
+    if params.get("resp_add", None) is not None:
         cargs.extend([
             "--respadd",
-            params.get("resp_add")
+            params.get("resp_add", None)
         ])
-    if params.get("resp_del") is not None:
+    if params.get("resp_del", None) is not None:
         cargs.extend([
             "--respdel",
-            params.get("resp_del")
+            params.get("resp_del", None)
         ])
-    if params.get("card_add") is not None:
+    if params.get("card_add", None) is not None:
         cargs.extend([
             "--cardadd",
-            params.get("card_add")
+            params.get("card_add", None)
         ])
-    if params.get("card_del") is not None:
+    if params.get("card_del", None) is not None:
         cargs.extend([
             "--carddel",
-            params.get("card_del")
+            params.get("card_del", None)
         ])
-    if params.get("verbose_flag"):
+    if params.get("verbose_flag", False):
         cargs.append("-v")
-    if params.get("debug_flag"):
+    if params.get("debug_flag", False):
         cargs.append("--debug")
-    if params.get("help_flag"):
+    if params.get("help_flag", False):
         cargs.append("-h")
     return cargs
 
@@ -410,10 +414,10 @@ def popp_outputs(
     """
     ret = PoppOutputs(
         root=execution.output_file("."),
-        processed_data_output=execution.output_file(params.get("output_basename") + "_processed.txt"),
-        timing_output=execution.output_file(params.get("output_basename") + "_timing.txt"),
-        rvt_data_output=execution.output_file(params.get("output_basename") + "_rvt.txt"),
-        heartrate_data_output=execution.output_file(params.get("output_basename") + "_heartrate.txt"),
+        processed_data_output=execution.output_file(params.get("output_basename", None) + "_processed.txt"),
+        timing_output=execution.output_file(params.get("output_basename", None) + "_timing.txt"),
+        rvt_data_output=execution.output_file(params.get("output_basename", None) + "_rvt.txt"),
+        heartrate_data_output=execution.output_file(params.get("output_basename", None) + "_heartrate.txt"),
     )
     return ret
 
@@ -580,7 +584,6 @@ def popp(
 __all__ = [
     "POPP_METADATA",
     "PoppOutputs",
-    "PoppParameters",
     "popp",
     "popp_execute",
     "popp_params",

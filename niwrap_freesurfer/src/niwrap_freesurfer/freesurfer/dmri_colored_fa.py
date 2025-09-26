@@ -14,47 +14,20 @@ DMRI_COLORED_FA_METADATA = Metadata(
 
 
 DmriColoredFaParameters = typing.TypedDict('DmriColoredFaParameters', {
-    "@type": typing.Literal["freesurfer.dmri_coloredFA"],
+    "@type": typing.NotRequired[typing.Literal["freesurfer/dmri_coloredFA"]],
+    "input_volume": InputPathType,
+    "output_volume": str,
+})
+DmriColoredFaParametersTagged = typing.TypedDict('DmriColoredFaParametersTagged', {
+    "@type": typing.Literal["freesurfer/dmri_coloredFA"],
     "input_volume": InputPathType,
     "output_volume": str,
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "freesurfer.dmri_coloredFA": dmri_colored_fa_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "freesurfer.dmri_coloredFA": dmri_colored_fa_outputs,
-    }.get(t)
-
-
 class DmriColoredFaOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `dmri_colored_fa(...)`.
+    Output object returned when calling `DmriColoredFaParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -65,7 +38,7 @@ class DmriColoredFaOutputs(typing.NamedTuple):
 def dmri_colored_fa_params(
     input_volume: InputPathType,
     output_volume: str = "colored_FA",
-) -> DmriColoredFaParameters:
+) -> DmriColoredFaParametersTagged:
     """
     Build parameters.
     
@@ -76,7 +49,7 @@ def dmri_colored_fa_params(
         Parameter dictionary
     """
     params = {
-        "@type": "freesurfer.dmri_coloredFA",
+        "@type": "freesurfer/dmri_coloredFA",
         "input_volume": input_volume,
         "output_volume": output_volume,
     }
@@ -98,8 +71,8 @@ def dmri_colored_fa_cargs(
     """
     cargs = []
     cargs.append("dmri_coloredFA")
-    cargs.append(execution.input_file(params.get("input_volume")))
-    cargs.append(params.get("output_volume"))
+    cargs.append(execution.input_file(params.get("input_volume", None)))
+    cargs.append(params.get("output_volume", "colored_FA"))
     return cargs
 
 
@@ -118,7 +91,7 @@ def dmri_colored_fa_outputs(
     """
     ret = DmriColoredFaOutputs(
         root=execution.output_file("."),
-        output_colored_fa=execution.output_file(params.get("output_volume") + ".nii.gz"),
+        output_colored_fa=execution.output_file(params.get("output_volume", "colored_FA") + ".nii.gz"),
     )
     return ret
 
@@ -182,7 +155,6 @@ def dmri_colored_fa(
 __all__ = [
     "DMRI_COLORED_FA_METADATA",
     "DmriColoredFaOutputs",
-    "DmriColoredFaParameters",
     "dmri_colored_fa",
     "dmri_colored_fa_execute",
     "dmri_colored_fa_params",

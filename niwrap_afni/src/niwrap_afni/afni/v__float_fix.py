@@ -14,45 +14,18 @@ V__FLOAT_FIX_METADATA = Metadata(
 
 
 VFloatFixParameters = typing.TypedDict('VFloatFixParameters', {
-    "@type": typing.Literal["afni.@float_fix"],
+    "@type": typing.NotRequired[typing.Literal["afni/@float_fix"]],
+    "input_files": list[InputPathType],
+})
+VFloatFixParametersTagged = typing.TypedDict('VFloatFixParametersTagged', {
+    "@type": typing.Literal["afni/@float_fix"],
     "input_files": list[InputPathType],
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "afni.@float_fix": v__float_fix_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-    }.get(t)
-
-
 class VFloatFixOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `v__float_fix(...)`.
+    Output object returned when calling `VFloatFixParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -60,7 +33,7 @@ class VFloatFixOutputs(typing.NamedTuple):
 
 def v__float_fix_params(
     input_files: list[InputPathType],
-) -> VFloatFixParameters:
+) -> VFloatFixParametersTagged:
     """
     Build parameters.
     
@@ -71,7 +44,7 @@ def v__float_fix_params(
         Parameter dictionary
     """
     params = {
-        "@type": "afni.@float_fix",
+        "@type": "afni/@float_fix",
         "input_files": input_files,
     }
     return params
@@ -92,7 +65,7 @@ def v__float_fix_cargs(
     """
     cargs = []
     cargs.append("@float_fix")
-    cargs.extend([execution.input_file(f) for f in params.get("input_files")])
+    cargs.extend([execution.input_file(f) for f in params.get("input_files", None)])
     return cargs
 
 
@@ -173,7 +146,6 @@ def v__float_fix(
 
 __all__ = [
     "VFloatFixOutputs",
-    "VFloatFixParameters",
     "V__FLOAT_FIX_METADATA",
     "v__float_fix",
     "v__float_fix_execute",

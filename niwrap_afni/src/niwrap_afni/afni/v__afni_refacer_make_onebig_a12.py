@@ -14,46 +14,18 @@ V__AFNI_REFACER_MAKE_ONEBIG_A12_METADATA = Metadata(
 
 
 VAfniRefacerMakeOnebigA12Parameters = typing.TypedDict('VAfniRefacerMakeOnebigA12Parameters', {
-    "@type": typing.Literal["afni.@afni_refacer_make_onebigA12"],
+    "@type": typing.NotRequired[typing.Literal["afni/@afni_refacer_make_onebigA12"]],
+    "t1w_dataset": InputPathType,
+})
+VAfniRefacerMakeOnebigA12ParametersTagged = typing.TypedDict('VAfniRefacerMakeOnebigA12ParametersTagged', {
+    "@type": typing.Literal["afni/@afni_refacer_make_onebigA12"],
     "t1w_dataset": InputPathType,
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "afni.@afni_refacer_make_onebigA12": v__afni_refacer_make_onebig_a12_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "afni.@afni_refacer_make_onebigA12": v__afni_refacer_make_onebig_a12_outputs,
-    }.get(t)
-
-
 class VAfniRefacerMakeOnebigA12Outputs(typing.NamedTuple):
     """
-    Output object returned when calling `v__afni_refacer_make_onebig_a12(...)`.
+    Output object returned when calling `VAfniRefacerMakeOnebigA12Parameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -63,7 +35,7 @@ class VAfniRefacerMakeOnebigA12Outputs(typing.NamedTuple):
 
 def v__afni_refacer_make_onebig_a12_params(
     t1w_dataset: InputPathType,
-) -> VAfniRefacerMakeOnebigA12Parameters:
+) -> VAfniRefacerMakeOnebigA12ParametersTagged:
     """
     Build parameters.
     
@@ -73,7 +45,7 @@ def v__afni_refacer_make_onebig_a12_params(
         Parameter dictionary
     """
     params = {
-        "@type": "afni.@afni_refacer_make_onebigA12",
+        "@type": "afni/@afni_refacer_make_onebigA12",
         "t1w_dataset": t1w_dataset,
     }
     return params
@@ -94,7 +66,7 @@ def v__afni_refacer_make_onebig_a12_cargs(
     """
     cargs = []
     cargs.append("@afni_refacer_make_onebigA12")
-    cargs.append(execution.input_file(params.get("t1w_dataset")))
+    cargs.append(execution.input_file(params.get("t1w_dataset", None)))
     return cargs
 
 
@@ -113,7 +85,7 @@ def v__afni_refacer_make_onebig_a12_outputs(
     """
     ret = VAfniRefacerMakeOnebigA12Outputs(
         root=execution.output_file("."),
-        aligned_output=execution.output_file(pathlib.Path(params.get("t1w_dataset")).name + "_aligned_to_MNI.nii.gz"),
+        aligned_output=execution.output_file(pathlib.Path(params.get("t1w_dataset", None)).name + "_aligned_to_MNI.nii.gz"),
     )
     return ret
 
@@ -175,7 +147,6 @@ def v__afni_refacer_make_onebig_a12(
 
 __all__ = [
     "VAfniRefacerMakeOnebigA12Outputs",
-    "VAfniRefacerMakeOnebigA12Parameters",
     "V__AFNI_REFACER_MAKE_ONEBIG_A12_METADATA",
     "v__afni_refacer_make_onebig_a12",
     "v__afni_refacer_make_onebig_a12_execute",

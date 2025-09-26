@@ -14,47 +14,22 @@ V__AFNI_RUN_ME_METADATA = Metadata(
 
 
 VAfniRunMeParameters = typing.TypedDict('VAfniRunMeParameters', {
-    "@type": typing.Literal["afni.@afni.run.me"],
+    "@type": typing.NotRequired[typing.Literal["afni/@afni.run.me"]],
+    "go": bool,
+    "curl": bool,
+    "help": bool,
+})
+VAfniRunMeParametersTagged = typing.TypedDict('VAfniRunMeParametersTagged', {
+    "@type": typing.Literal["afni/@afni.run.me"],
     "go": bool,
     "curl": bool,
     "help": bool,
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "afni.@afni.run.me": v__afni_run_me_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-    }.get(t)
-
-
 class VAfniRunMeOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `v__afni_run_me(...)`.
+    Output object returned when calling `VAfniRunMeParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -64,7 +39,7 @@ def v__afni_run_me_params(
     go: bool = False,
     curl: bool = False,
     help_: bool = False,
-) -> VAfniRunMeParameters:
+) -> VAfniRunMeParametersTagged:
     """
     Build parameters.
     
@@ -76,7 +51,7 @@ def v__afni_run_me_params(
         Parameter dictionary
     """
     params = {
-        "@type": "afni.@afni.run.me",
+        "@type": "afni/@afni.run.me",
         "go": go,
         "curl": curl,
         "help": help_,
@@ -99,11 +74,11 @@ def v__afni_run_me_cargs(
     """
     cargs = []
     cargs.append("@afni.run.me")
-    if params.get("go"):
+    if params.get("go", False):
         cargs.append("-go")
-    if params.get("curl"):
+    if params.get("curl", False):
         cargs.append("-curl")
-    if params.get("help"):
+    if params.get("help", False):
         cargs.append("-help")
     return cargs
 
@@ -188,7 +163,6 @@ def v__afni_run_me(
 
 __all__ = [
     "VAfniRunMeOutputs",
-    "VAfniRunMeParameters",
     "V__AFNI_RUN_ME_METADATA",
     "v__afni_run_me",
     "v__afni_run_me_execute",

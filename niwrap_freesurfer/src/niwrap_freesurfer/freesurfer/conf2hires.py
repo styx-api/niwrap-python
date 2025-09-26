@@ -14,7 +14,31 @@ CONF2HIRES_METADATA = Metadata(
 
 
 Conf2hiresParameters = typing.TypedDict('Conf2hiresParameters', {
-    "@type": typing.Literal["freesurfer.conf2hires"],
+    "@type": typing.NotRequired[typing.Literal["freesurfer/conf2hires"]],
+    "subject": str,
+    "t2": bool,
+    "no_t2": bool,
+    "mm_norm_sigma": typing.NotRequired[float | None],
+    "flair": bool,
+    "no_flair": bool,
+    "threads": typing.NotRequired[float | None],
+    "copy_bias_from_conf": bool,
+    "norm_opts_rca": bool,
+    "cubic": bool,
+    "trilin": bool,
+    "dev": bool,
+    "no_dev": bool,
+    "bbr_con": typing.NotRequired[str | None],
+    "bbr_t1": bool,
+    "bbr_t2": bool,
+    "first_peak_d1": bool,
+    "first_peak_d2": bool,
+    "stopmask": typing.NotRequired[str | None],
+    "expert": typing.NotRequired[str | None],
+    "force_update": bool,
+})
+Conf2hiresParametersTagged = typing.TypedDict('Conf2hiresParametersTagged', {
+    "@type": typing.Literal["freesurfer/conf2hires"],
     "subject": str,
     "t2": bool,
     "no_t2": bool,
@@ -39,40 +63,9 @@ Conf2hiresParameters = typing.TypedDict('Conf2hiresParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "freesurfer.conf2hires": conf2hires_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-    }.get(t)
-
-
 class Conf2hiresOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `conf2hires(...)`.
+    Output object returned when calling `Conf2hiresParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -100,7 +93,7 @@ def conf2hires_params(
     stopmask: str | None = None,
     expert: str | None = None,
     force_update: bool = False,
-) -> Conf2hiresParameters:
+) -> Conf2hiresParametersTagged:
     """
     Build parameters.
     
@@ -135,7 +128,7 @@ def conf2hires_params(
         Parameter dictionary
     """
     params = {
-        "@type": "freesurfer.conf2hires",
+        "@type": "freesurfer/conf2hires",
         "subject": subject,
         "t2": t2,
         "no_t2": no_t2,
@@ -183,62 +176,62 @@ def conf2hires_cargs(
     cargs.append("conf2hires")
     cargs.extend([
         "--s",
-        params.get("subject")
+        params.get("subject", None)
     ])
-    if params.get("t2"):
+    if params.get("t2", False):
         cargs.append("--t2")
-    if params.get("no_t2"):
+    if params.get("no_t2", False):
         cargs.append("--no-t2")
-    if params.get("mm_norm_sigma") is not None:
+    if params.get("mm_norm_sigma", None) is not None:
         cargs.extend([
             "--mm-norm-sigma",
-            str(params.get("mm_norm_sigma"))
+            str(params.get("mm_norm_sigma", None))
         ])
-    if params.get("flair"):
+    if params.get("flair", False):
         cargs.append("--flair")
-    if params.get("no_flair"):
+    if params.get("no_flair", False):
         cargs.append("--no-flair")
-    if params.get("threads") is not None:
+    if params.get("threads", None) is not None:
         cargs.extend([
             "--threads",
-            str(params.get("threads"))
+            str(params.get("threads", None))
         ])
-    if params.get("copy_bias_from_conf"):
+    if params.get("copy_bias_from_conf", False):
         cargs.append("--copy-bias-from-conf")
-    if params.get("norm_opts_rca"):
+    if params.get("norm_opts_rca", False):
         cargs.append("--norm-opts-rca")
-    if params.get("cubic"):
+    if params.get("cubic", False):
         cargs.append("--cubic")
-    if params.get("trilin"):
+    if params.get("trilin", False):
         cargs.append("--trilin")
-    if params.get("dev"):
+    if params.get("dev", False):
         cargs.append("--dev")
-    if params.get("no_dev"):
+    if params.get("no_dev", False):
         cargs.append("--no-dev")
-    if params.get("bbr_con") is not None:
+    if params.get("bbr_con", None) is not None:
         cargs.extend([
             "--bbr-con",
-            params.get("bbr_con")
+            params.get("bbr_con", None)
         ])
-    if params.get("bbr_t1"):
+    if params.get("bbr_t1", False):
         cargs.append("--bbr-t1")
-    if params.get("bbr_t2"):
+    if params.get("bbr_t2", False):
         cargs.append("--bbr-t2")
-    if params.get("first_peak_d1"):
+    if params.get("first_peak_d1", False):
         cargs.append("--first-peak-d1")
-    if params.get("first_peak_d2"):
+    if params.get("first_peak_d2", False):
         cargs.append("--first-peak-d2")
-    if params.get("stopmask") is not None:
+    if params.get("stopmask", None) is not None:
         cargs.extend([
             "--stopmask",
-            params.get("stopmask")
+            params.get("stopmask", None)
         ])
-    if params.get("expert") is not None:
+    if params.get("expert", None) is not None:
         cargs.extend([
             "--expert",
-            params.get("expert")
+            params.get("expert", None)
         ])
-    if params.get("force_update"):
+    if params.get("force_update", False):
         cargs.append("--force-update")
     return cargs
 
@@ -385,7 +378,6 @@ def conf2hires(
 __all__ = [
     "CONF2HIRES_METADATA",
     "Conf2hiresOutputs",
-    "Conf2hiresParameters",
     "conf2hires",
     "conf2hires_execute",
     "conf2hires_params",

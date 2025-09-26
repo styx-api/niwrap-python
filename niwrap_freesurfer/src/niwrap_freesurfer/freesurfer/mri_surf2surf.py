@@ -14,7 +14,66 @@ MRI_SURF2SURF_METADATA = Metadata(
 
 
 MriSurf2surfParameters = typing.TypedDict('MriSurf2surfParameters', {
-    "@type": typing.Literal["freesurfer.mri_surf2surf"],
+    "@type": typing.NotRequired[typing.Literal["freesurfer/mri_surf2surf"]],
+    "src_subject": str,
+    "sval_path": typing.NotRequired[InputPathType | None],
+    "sval_xyz": typing.NotRequired[str | None],
+    "projfrac": typing.NotRequired[list[str] | None],
+    "projabs": typing.NotRequired[list[str] | None],
+    "sval_tal_xyz": typing.NotRequired[str | None],
+    "sval_area": typing.NotRequired[str | None],
+    "sval_annot": typing.NotRequired[InputPathType | None],
+    "sval_nxyz": typing.NotRequired[str | None],
+    "patch": typing.NotRequired[list[str] | None],
+    "sfmt": typing.NotRequired[str | None],
+    "reg": typing.NotRequired[list[str] | None],
+    "reg_inv": typing.NotRequired[list[str] | None],
+    "srcicoorder": typing.NotRequired[int | None],
+    "trg_subject": str,
+    "trgicoorder": typing.NotRequired[int | None],
+    "tval_path": typing.NotRequired[str | None],
+    "tval_xyz": typing.NotRequired[str | None],
+    "tfmt": typing.NotRequired[str | None],
+    "trg_dist": typing.NotRequired[str | None],
+    "s": typing.NotRequired[str | None],
+    "hemi": typing.NotRequired[str | None],
+    "src_hemi": typing.NotRequired[str | None],
+    "trg_hemi": typing.NotRequired[str | None],
+    "dual_hemi": bool,
+    "jac": bool,
+    "surfreg": typing.NotRequired[str | None],
+    "src_surfreg": typing.NotRequired[str | None],
+    "trg_surfreg": typing.NotRequired[str | None],
+    "mapmethod": typing.NotRequired[str | None],
+    "frame": typing.NotRequired[int | None],
+    "fwhm_src": typing.NotRequired[float | None],
+    "fwhm_trg": typing.NotRequired[float | None],
+    "nsmooth_in": typing.NotRequired[int | None],
+    "nsmooth_out": typing.NotRequired[int | None],
+    "cortex": bool,
+    "no_cortex": bool,
+    "label_src": typing.NotRequired[InputPathType | None],
+    "label_trg": typing.NotRequired[InputPathType | None],
+    "mul": typing.NotRequired[float | None],
+    "div": typing.NotRequired[float | None],
+    "reshape": bool,
+    "reshape_factor": typing.NotRequired[int | None],
+    "reshape3d": bool,
+    "split": bool,
+    "synth": bool,
+    "ones": bool,
+    "normvar": bool,
+    "seed": typing.NotRequired[int | None],
+    "prune": bool,
+    "no_prune": bool,
+    "proj_surf": typing.NotRequired[list[str] | None],
+    "proj_norm": typing.NotRequired[list[str] | None],
+    "reg_diff": typing.NotRequired[str | None],
+    "rms": typing.NotRequired[InputPathType | None],
+    "rms_mask": typing.NotRequired[InputPathType | None],
+})
+MriSurf2surfParametersTagged = typing.TypedDict('MriSurf2surfParametersTagged', {
+    "@type": typing.Literal["freesurfer/mri_surf2surf"],
     "src_subject": str,
     "sval_path": typing.NotRequired[InputPathType | None],
     "sval_xyz": typing.NotRequired[str | None],
@@ -74,41 +133,9 @@ MriSurf2surfParameters = typing.TypedDict('MriSurf2surfParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "freesurfer.mri_surf2surf": mri_surf2surf_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "freesurfer.mri_surf2surf": mri_surf2surf_outputs,
-    }.get(t)
-
-
 class MriSurf2surfOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `mri_surf2surf(...)`.
+    Output object returned when calling `MriSurf2surfParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -175,7 +202,7 @@ def mri_surf2surf_params(
     reg_diff: str | None = None,
     rms: InputPathType | None = None,
     rms_mask: InputPathType | None = None,
-) -> MriSurf2surfParameters:
+) -> MriSurf2surfParametersTagged:
     """
     Build parameters.
     
@@ -245,7 +272,7 @@ def mri_surf2surf_params(
         Parameter dictionary
     """
     params = {
-        "@type": "freesurfer.mri_surf2surf",
+        "@type": "freesurfer/mri_surf2surf",
         "src_subject": src_subject,
         "trg_subject": trg_subject,
         "dual_hemi": dual_hemi,
@@ -365,245 +392,245 @@ def mri_surf2surf_cargs(
     cargs.append("mri_surf2surf")
     cargs.extend([
         "--srcsubject",
-        params.get("src_subject")
+        params.get("src_subject", None)
     ])
-    if params.get("sval_path") is not None:
+    if params.get("sval_path", None) is not None:
         cargs.extend([
             "--sval",
-            execution.input_file(params.get("sval_path"))
+            execution.input_file(params.get("sval_path", None))
         ])
-    if params.get("sval_xyz") is not None:
+    if params.get("sval_xyz", None) is not None:
         cargs.extend([
             "--sval-xyz",
-            params.get("sval_xyz")
+            params.get("sval_xyz", None)
         ])
-    if params.get("projfrac") is not None:
+    if params.get("projfrac", None) is not None:
         cargs.extend([
             "--projfrac",
-            *params.get("projfrac")
+            *params.get("projfrac", None)
         ])
-    if params.get("projabs") is not None:
+    if params.get("projabs", None) is not None:
         cargs.extend([
             "--projabs",
-            *params.get("projabs")
+            *params.get("projabs", None)
         ])
-    if params.get("sval_tal_xyz") is not None:
+    if params.get("sval_tal_xyz", None) is not None:
         cargs.extend([
             "--sval-tal-xyz",
-            params.get("sval_tal_xyz")
+            params.get("sval_tal_xyz", None)
         ])
-    if params.get("sval_area") is not None:
+    if params.get("sval_area", None) is not None:
         cargs.extend([
             "--sval-area",
-            params.get("sval_area")
+            params.get("sval_area", None)
         ])
-    if params.get("sval_annot") is not None:
+    if params.get("sval_annot", None) is not None:
         cargs.extend([
             "--sval-annot",
-            execution.input_file(params.get("sval_annot"))
+            execution.input_file(params.get("sval_annot", None))
         ])
-    if params.get("sval_nxyz") is not None:
+    if params.get("sval_nxyz", None) is not None:
         cargs.extend([
             "--sval-nxyz",
-            params.get("sval_nxyz")
+            params.get("sval_nxyz", None)
         ])
-    if params.get("patch") is not None:
+    if params.get("patch", None) is not None:
         cargs.extend([
             "--patch",
-            *params.get("patch")
+            *params.get("patch", None)
         ])
-    if params.get("sfmt") is not None:
+    if params.get("sfmt", None) is not None:
         cargs.extend([
             "--sfmt",
-            params.get("sfmt")
+            params.get("sfmt", None)
         ])
-    if params.get("reg") is not None:
+    if params.get("reg", None) is not None:
         cargs.extend([
             "--reg",
-            *params.get("reg")
+            *params.get("reg", None)
         ])
-    if params.get("reg_inv") is not None:
+    if params.get("reg_inv", None) is not None:
         cargs.extend([
             "--reg-inv",
-            *params.get("reg_inv")
+            *params.get("reg_inv", None)
         ])
-    if params.get("srcicoorder") is not None:
+    if params.get("srcicoorder", None) is not None:
         cargs.extend([
             "--srcicoorder",
-            str(params.get("srcicoorder"))
+            str(params.get("srcicoorder", None))
         ])
     cargs.extend([
         "--trgsubject",
-        params.get("trg_subject")
+        params.get("trg_subject", None)
     ])
-    if params.get("trgicoorder") is not None:
+    if params.get("trgicoorder", None) is not None:
         cargs.extend([
             "--trgicoorder",
-            str(params.get("trgicoorder"))
+            str(params.get("trgicoorder", None))
         ])
-    if params.get("tval_path") is not None:
+    if params.get("tval_path", None) is not None:
         cargs.extend([
             "--tval",
-            params.get("tval_path")
+            params.get("tval_path", None)
         ])
-    if params.get("tval_xyz") is not None:
+    if params.get("tval_xyz", None) is not None:
         cargs.extend([
             "--tval-xyz",
-            params.get("tval_xyz")
+            params.get("tval_xyz", None)
         ])
-    if params.get("tfmt") is not None:
+    if params.get("tfmt", None) is not None:
         cargs.extend([
             "--tfmt",
-            params.get("tfmt")
+            params.get("tfmt", None)
         ])
-    if params.get("trg_dist") is not None:
+    if params.get("trg_dist", None) is not None:
         cargs.extend([
             "--trgdist",
-            params.get("trg_dist")
+            params.get("trg_dist", None)
         ])
-    if params.get("s") is not None:
+    if params.get("s", None) is not None:
         cargs.extend([
             "--s",
-            params.get("s")
+            params.get("s", None)
         ])
-    if params.get("hemi") is not None:
+    if params.get("hemi", None) is not None:
         cargs.extend([
             "--hemi",
-            params.get("hemi")
+            params.get("hemi", None)
         ])
-    if params.get("src_hemi") is not None:
+    if params.get("src_hemi", None) is not None:
         cargs.extend([
             "--srchemi",
-            params.get("src_hemi")
+            params.get("src_hemi", None)
         ])
-    if params.get("trg_hemi") is not None:
+    if params.get("trg_hemi", None) is not None:
         cargs.extend([
             "--trghemi",
-            params.get("trg_hemi")
+            params.get("trg_hemi", None)
         ])
-    if params.get("dual_hemi"):
+    if params.get("dual_hemi", False):
         cargs.append("--dual-hemi")
-    if params.get("jac"):
+    if params.get("jac", False):
         cargs.append("--jac")
-    if params.get("surfreg") is not None:
+    if params.get("surfreg", None) is not None:
         cargs.extend([
             "--surfreg",
-            params.get("surfreg")
+            params.get("surfreg", None)
         ])
-    if params.get("src_surfreg") is not None:
+    if params.get("src_surfreg", None) is not None:
         cargs.extend([
             "--srcsurfreg",
-            params.get("src_surfreg")
+            params.get("src_surfreg", None)
         ])
-    if params.get("trg_surfreg") is not None:
+    if params.get("trg_surfreg", None) is not None:
         cargs.extend([
             "--trgsurfreg",
-            params.get("trg_surfreg")
+            params.get("trg_surfreg", None)
         ])
-    if params.get("mapmethod") is not None:
+    if params.get("mapmethod", None) is not None:
         cargs.extend([
             "--mapmethod",
-            params.get("mapmethod")
+            params.get("mapmethod", None)
         ])
-    if params.get("frame") is not None:
+    if params.get("frame", None) is not None:
         cargs.extend([
             "--frame",
-            str(params.get("frame"))
+            str(params.get("frame", None))
         ])
-    if params.get("fwhm_src") is not None:
+    if params.get("fwhm_src", None) is not None:
         cargs.extend([
             "--fwhm-src",
-            str(params.get("fwhm_src"))
+            str(params.get("fwhm_src", None))
         ])
-    if params.get("fwhm_trg") is not None:
+    if params.get("fwhm_trg", None) is not None:
         cargs.extend([
             "--fwhm-trg",
-            str(params.get("fwhm_trg"))
+            str(params.get("fwhm_trg", None))
         ])
-    if params.get("nsmooth_in") is not None:
+    if params.get("nsmooth_in", None) is not None:
         cargs.extend([
             "--nsmooth-in",
-            str(params.get("nsmooth_in"))
+            str(params.get("nsmooth_in", None))
         ])
-    if params.get("nsmooth_out") is not None:
+    if params.get("nsmooth_out", None) is not None:
         cargs.extend([
             "--nsmooth-out",
-            str(params.get("nsmooth_out"))
+            str(params.get("nsmooth_out", None))
         ])
-    if params.get("cortex"):
+    if params.get("cortex", False):
         cargs.append("--cortex")
-    if params.get("no_cortex"):
+    if params.get("no_cortex", False):
         cargs.append("--no-cortex")
-    if params.get("label_src") is not None:
+    if params.get("label_src", None) is not None:
         cargs.extend([
             "--label-src",
-            execution.input_file(params.get("label_src"))
+            execution.input_file(params.get("label_src", None))
         ])
-    if params.get("label_trg") is not None:
+    if params.get("label_trg", None) is not None:
         cargs.extend([
             "--label-trg",
-            execution.input_file(params.get("label_trg"))
+            execution.input_file(params.get("label_trg", None))
         ])
-    if params.get("mul") is not None:
+    if params.get("mul", None) is not None:
         cargs.extend([
             "--mul",
-            str(params.get("mul"))
+            str(params.get("mul", None))
         ])
-    if params.get("div") is not None:
+    if params.get("div", None) is not None:
         cargs.extend([
             "--div",
-            str(params.get("div"))
+            str(params.get("div", None))
         ])
-    if params.get("reshape"):
+    if params.get("reshape", False):
         cargs.append("--reshape")
-    if params.get("reshape_factor") is not None:
+    if params.get("reshape_factor", None) is not None:
         cargs.extend([
             "--reshape-factor",
-            str(params.get("reshape_factor"))
+            str(params.get("reshape_factor", None))
         ])
-    if params.get("reshape3d"):
+    if params.get("reshape3d", False):
         cargs.append("--reshape3d")
-    if params.get("split"):
+    if params.get("split", False):
         cargs.append("--split")
-    if params.get("synth"):
+    if params.get("synth", False):
         cargs.append("--synth")
-    if params.get("ones"):
+    if params.get("ones", False):
         cargs.append("--ones")
-    if params.get("normvar"):
+    if params.get("normvar", False):
         cargs.append("--normvar")
-    if params.get("seed") is not None:
+    if params.get("seed", None) is not None:
         cargs.extend([
             "--seed",
-            str(params.get("seed"))
+            str(params.get("seed", None))
         ])
-    if params.get("prune"):
+    if params.get("prune", False):
         cargs.append("--prune")
-    if params.get("no_prune"):
+    if params.get("no_prune", False):
         cargs.append("--no-prune")
-    if params.get("proj_surf") is not None:
+    if params.get("proj_surf", None) is not None:
         cargs.extend([
             "--proj-surf",
-            *params.get("proj_surf")
+            *params.get("proj_surf", None)
         ])
-    if params.get("proj_norm") is not None:
+    if params.get("proj_norm", None) is not None:
         cargs.extend([
             "--proj-norm",
-            *params.get("proj_norm")
+            *params.get("proj_norm", None)
         ])
-    if params.get("reg_diff") is not None:
+    if params.get("reg_diff", None) is not None:
         cargs.extend([
             "--reg-diff",
-            params.get("reg_diff")
+            params.get("reg_diff", None)
         ])
-    if params.get("rms") is not None:
+    if params.get("rms", None) is not None:
         cargs.extend([
             "--rms",
-            execution.input_file(params.get("rms"))
+            execution.input_file(params.get("rms", None))
         ])
-    if params.get("rms_mask") is not None:
+    if params.get("rms_mask", None) is not None:
         cargs.extend([
             "--rms-mask",
-            execution.input_file(params.get("rms_mask"))
+            execution.input_file(params.get("rms_mask", None))
         ])
     return cargs
 
@@ -623,8 +650,8 @@ def mri_surf2surf_outputs(
     """
     ret = MriSurf2surfOutputs(
         root=execution.output_file("."),
-        output_values=execution.output_file(params.get("tval_path")) if (params.get("tval_path") is not None) else None,
-        trg_distances=execution.output_file(params.get("trg_dist")) if (params.get("trg_dist") is not None) else None,
+        output_values=execution.output_file(params.get("tval_path", None)) if (params.get("tval_path") is not None) else None,
+        trg_distances=execution.output_file(params.get("trg_dist", None)) if (params.get("trg_dist") is not None) else None,
     )
     return ret
 
@@ -855,7 +882,6 @@ def mri_surf2surf(
 __all__ = [
     "MRI_SURF2SURF_METADATA",
     "MriSurf2surfOutputs",
-    "MriSurf2surfParameters",
     "mri_surf2surf",
     "mri_surf2surf_execute",
     "mri_surf2surf_params",

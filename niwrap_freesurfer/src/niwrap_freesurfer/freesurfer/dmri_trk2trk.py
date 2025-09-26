@@ -14,7 +14,37 @@ DMRI_TRK2TRK_METADATA = Metadata(
 
 
 DmriTrk2trkParameters = typing.TypedDict('DmriTrk2trkParameters', {
-    "@type": typing.Literal["freesurfer.dmri_trk2trk"],
+    "@type": typing.NotRequired[typing.Literal["freesurfer/dmri_trk2trk"]],
+    "in_trk": list[InputPathType],
+    "in_asc": typing.NotRequired[list[InputPathType] | None],
+    "in_dir": typing.NotRequired[str | None],
+    "out_trk": typing.NotRequired[str | None],
+    "out_asc": typing.NotRequired[str | None],
+    "out_vol": typing.NotRequired[str | None],
+    "out_dir": typing.NotRequired[str | None],
+    "in_ref": typing.NotRequired[InputPathType | None],
+    "out_ref": typing.NotRequired[InputPathType | None],
+    "reg_file": typing.NotRequired[InputPathType | None],
+    "regnl_file": typing.NotRequired[InputPathType | None],
+    "inv_flag": bool,
+    "fill_flag": bool,
+    "overlay": typing.NotRequired[list[InputPathType] | None],
+    "inclusion_mask": typing.NotRequired[list[InputPathType] | None],
+    "exclusion_mask": typing.NotRequired[list[InputPathType] | None],
+    "terminal_inclusion_mask": typing.NotRequired[list[InputPathType] | None],
+    "terminal_exclusion_mask": typing.NotRequired[list[InputPathType] | None],
+    "length_min": typing.NotRequired[float | None],
+    "length_max": typing.NotRequired[float | None],
+    "mean_flag": bool,
+    "nearmean_flag": bool,
+    "nth_streamline": typing.NotRequired[float | None],
+    "every_nth_streamline": typing.NotRequired[float | None],
+    "smooth_flag": bool,
+    "debug_flag": bool,
+    "check_opts": bool,
+})
+DmriTrk2trkParametersTagged = typing.TypedDict('DmriTrk2trkParametersTagged', {
+    "@type": typing.Literal["freesurfer/dmri_trk2trk"],
     "in_trk": list[InputPathType],
     "in_asc": typing.NotRequired[list[InputPathType] | None],
     "in_dir": typing.NotRequired[str | None],
@@ -45,41 +75,9 @@ DmriTrk2trkParameters = typing.TypedDict('DmriTrk2trkParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "freesurfer.dmri_trk2trk": dmri_trk2trk_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "freesurfer.dmri_trk2trk": dmri_trk2trk_outputs,
-    }.get(t)
-
-
 class DmriTrk2trkOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `dmri_trk2trk(...)`.
+    Output object returned when calling `DmriTrk2trkParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -119,7 +117,7 @@ def dmri_trk2trk_params(
     smooth_flag: bool = False,
     debug_flag: bool = False,
     check_opts: bool = False,
-) -> DmriTrk2trkParameters:
+) -> DmriTrk2trkParametersTagged:
     """
     Build parameters.
     
@@ -161,7 +159,7 @@ def dmri_trk2trk_params(
         Parameter dictionary
     """
     params = {
-        "@type": "freesurfer.dmri_trk2trk",
+        "@type": "freesurfer/dmri_trk2trk",
         "in_trk": in_trk,
         "inv_flag": inv_flag,
         "fill_flag": fill_flag,
@@ -229,116 +227,116 @@ def dmri_trk2trk_cargs(
     cargs.append("dmri_trk2trk")
     cargs.extend([
         "--in",
-        *[execution.input_file(f) for f in params.get("in_trk")]
+        *[execution.input_file(f) for f in params.get("in_trk", None)]
     ])
-    if params.get("in_asc") is not None:
+    if params.get("in_asc", None) is not None:
         cargs.extend([
             "--inasc",
-            *[execution.input_file(f) for f in params.get("in_asc")]
+            *[execution.input_file(f) for f in params.get("in_asc", None)]
         ])
-    if params.get("in_dir") is not None:
+    if params.get("in_dir", None) is not None:
         cargs.extend([
             "--indir",
-            params.get("in_dir")
+            params.get("in_dir", None)
         ])
-    if params.get("out_trk") is not None:
+    if params.get("out_trk", None) is not None:
         cargs.extend([
             "--out",
-            params.get("out_trk")
+            params.get("out_trk", None)
         ])
-    if params.get("out_asc") is not None:
+    if params.get("out_asc", None) is not None:
         cargs.extend([
             "--outasc",
-            params.get("out_asc")
+            params.get("out_asc", None)
         ])
-    if params.get("out_vol") is not None:
+    if params.get("out_vol", None) is not None:
         cargs.extend([
             "--outvol",
-            params.get("out_vol")
+            params.get("out_vol", None)
         ])
-    if params.get("out_dir") is not None:
+    if params.get("out_dir", None) is not None:
         cargs.extend([
             "--outdir",
-            params.get("out_dir")
+            params.get("out_dir", None)
         ])
-    if params.get("in_ref") is not None:
+    if params.get("in_ref", None) is not None:
         cargs.extend([
             "--inref",
-            execution.input_file(params.get("in_ref"))
+            execution.input_file(params.get("in_ref", None))
         ])
-    if params.get("out_ref") is not None:
+    if params.get("out_ref", None) is not None:
         cargs.extend([
             "--outref",
-            execution.input_file(params.get("out_ref"))
+            execution.input_file(params.get("out_ref", None))
         ])
-    if params.get("reg_file") is not None:
+    if params.get("reg_file", None) is not None:
         cargs.extend([
             "--reg",
-            execution.input_file(params.get("reg_file"))
+            execution.input_file(params.get("reg_file", None))
         ])
-    if params.get("regnl_file") is not None:
+    if params.get("regnl_file", None) is not None:
         cargs.extend([
             "--regnl",
-            execution.input_file(params.get("regnl_file"))
+            execution.input_file(params.get("regnl_file", None))
         ])
-    if params.get("inv_flag"):
+    if params.get("inv_flag", False):
         cargs.append("--inv")
-    if params.get("fill_flag"):
+    if params.get("fill_flag", False):
         cargs.append("--fill")
-    if params.get("overlay") is not None:
+    if params.get("overlay", None) is not None:
         cargs.extend([
             "--over",
-            *[execution.input_file(f) for f in params.get("overlay")]
+            *[execution.input_file(f) for f in params.get("overlay", None)]
         ])
-    if params.get("inclusion_mask") is not None:
+    if params.get("inclusion_mask", None) is not None:
         cargs.extend([
             "--imask",
-            *[execution.input_file(f) for f in params.get("inclusion_mask")]
+            *[execution.input_file(f) for f in params.get("inclusion_mask", None)]
         ])
-    if params.get("exclusion_mask") is not None:
+    if params.get("exclusion_mask", None) is not None:
         cargs.extend([
             "--emask",
-            *[execution.input_file(f) for f in params.get("exclusion_mask")]
+            *[execution.input_file(f) for f in params.get("exclusion_mask", None)]
         ])
-    if params.get("terminal_inclusion_mask") is not None:
+    if params.get("terminal_inclusion_mask", None) is not None:
         cargs.extend([
             "--itmask",
-            *[execution.input_file(f) for f in params.get("terminal_inclusion_mask")]
+            *[execution.input_file(f) for f in params.get("terminal_inclusion_mask", None)]
         ])
-    if params.get("terminal_exclusion_mask") is not None:
+    if params.get("terminal_exclusion_mask", None) is not None:
         cargs.extend([
             "--etmask",
-            *[execution.input_file(f) for f in params.get("terminal_exclusion_mask")]
+            *[execution.input_file(f) for f in params.get("terminal_exclusion_mask", None)]
         ])
-    if params.get("length_min") is not None:
+    if params.get("length_min", None) is not None:
         cargs.extend([
             "--lmin",
-            str(params.get("length_min"))
+            str(params.get("length_min", None))
         ])
-    if params.get("length_max") is not None:
+    if params.get("length_max", None) is not None:
         cargs.extend([
             "--lmax",
-            str(params.get("length_max"))
+            str(params.get("length_max", None))
         ])
-    if params.get("mean_flag"):
+    if params.get("mean_flag", False):
         cargs.append("--mean")
-    if params.get("nearmean_flag"):
+    if params.get("nearmean_flag", False):
         cargs.append("--nearmean")
-    if params.get("nth_streamline") is not None:
+    if params.get("nth_streamline", None) is not None:
         cargs.extend([
             "--nth",
-            str(params.get("nth_streamline"))
+            str(params.get("nth_streamline", None))
         ])
-    if params.get("every_nth_streamline") is not None:
+    if params.get("every_nth_streamline", None) is not None:
         cargs.extend([
             "--every",
-            str(params.get("every_nth_streamline"))
+            str(params.get("every_nth_streamline", None))
         ])
-    if params.get("smooth_flag"):
+    if params.get("smooth_flag", False):
         cargs.append("--smooth")
-    if params.get("debug_flag"):
+    if params.get("debug_flag", False):
         cargs.append("--debug")
-    if params.get("check_opts"):
+    if params.get("check_opts", False):
         cargs.append("--checkopts")
     return cargs
 
@@ -358,9 +356,9 @@ def dmri_trk2trk_outputs(
     """
     ret = DmriTrk2trkOutputs(
         root=execution.output_file("."),
-        out_trk_file=execution.output_file(params.get("out_trk")) if (params.get("out_trk") is not None) else None,
-        out_asc_file=execution.output_file(params.get("out_asc")) if (params.get("out_asc") is not None) else None,
-        out_vol_file=execution.output_file(params.get("out_vol")) if (params.get("out_vol") is not None) else None,
+        out_trk_file=execution.output_file(params.get("out_trk", None)) if (params.get("out_trk") is not None) else None,
+        out_asc_file=execution.output_file(params.get("out_asc", None)) if (params.get("out_asc") is not None) else None,
+        out_vol_file=execution.output_file(params.get("out_vol", None)) if (params.get("out_vol") is not None) else None,
     )
     return ret
 
@@ -505,7 +503,6 @@ def dmri_trk2trk(
 __all__ = [
     "DMRI_TRK2TRK_METADATA",
     "DmriTrk2trkOutputs",
-    "DmriTrk2trkParameters",
     "dmri_trk2trk",
     "dmri_trk2trk_execute",
     "dmri_trk2trk_params",

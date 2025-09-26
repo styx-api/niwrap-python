@@ -14,7 +14,30 @@ MAKE_FOLDING_ATLAS_METADATA = Metadata(
 
 
 MakeFoldingAtlasParameters = typing.TypedDict('MakeFoldingAtlasParameters', {
-    "@type": typing.Literal["freesurfer.make_folding_atlas"],
+    "@type": typing.NotRequired[typing.Literal["freesurfer/make_folding_atlas"]],
+    "subjlistfile": typing.NotRequired[InputPathType | None],
+    "fsgdfile": typing.NotRequired[InputPathType | None],
+    "subjects": typing.NotRequired[list[str] | None],
+    "output_base": typing.NotRequired[str | None],
+    "max_iterations": typing.NotRequired[float | None],
+    "xhemi": bool,
+    "init_surf_reg": typing.NotRequired[str | None],
+    "init_subject": typing.NotRequired[str | None],
+    "no_annot_template": bool,
+    "left_hemisphere": bool,
+    "right_hemisphere": bool,
+    "lhrh": bool,
+    "ico_order": typing.NotRequired[float | None],
+    "no_vol_on_last": bool,
+    "vol": bool,
+    "init": bool,
+    "short_sleep": bool,
+    "no_template_only": bool,
+    "threads": typing.NotRequired[float | None],
+    "slurm_account": typing.NotRequired[str | None],
+})
+MakeFoldingAtlasParametersTagged = typing.TypedDict('MakeFoldingAtlasParametersTagged', {
+    "@type": typing.Literal["freesurfer/make_folding_atlas"],
     "subjlistfile": typing.NotRequired[InputPathType | None],
     "fsgdfile": typing.NotRequired[InputPathType | None],
     "subjects": typing.NotRequired[list[str] | None],
@@ -38,40 +61,9 @@ MakeFoldingAtlasParameters = typing.TypedDict('MakeFoldingAtlasParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "freesurfer.make_folding_atlas": make_folding_atlas_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-    }.get(t)
-
-
 class MakeFoldingAtlasOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `make_folding_atlas(...)`.
+    Output object returned when calling `MakeFoldingAtlasParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -98,7 +90,7 @@ def make_folding_atlas_params(
     no_template_only: bool = False,
     threads: float | None = None,
     slurm_account: str | None = None,
-) -> MakeFoldingAtlasParameters:
+) -> MakeFoldingAtlasParametersTagged:
     """
     Build parameters.
     
@@ -132,7 +124,7 @@ def make_folding_atlas_params(
         Parameter dictionary
     """
     params = {
-        "@type": "freesurfer.make_folding_atlas",
+        "@type": "freesurfer/make_folding_atlas",
         "xhemi": xhemi,
         "no_annot_template": no_annot_template,
         "left_hemisphere": left_hemisphere,
@@ -182,75 +174,75 @@ def make_folding_atlas_cargs(
     """
     cargs = []
     cargs.append("make_folding_atlas")
-    if params.get("subjlistfile") is not None:
+    if params.get("subjlistfile", None) is not None:
         cargs.extend([
             "--f",
-            execution.input_file(params.get("subjlistfile"))
+            execution.input_file(params.get("subjlistfile", None))
         ])
-    if params.get("fsgdfile") is not None:
+    if params.get("fsgdfile", None) is not None:
         cargs.extend([
             "--fsgd",
-            execution.input_file(params.get("fsgdfile"))
+            execution.input_file(params.get("fsgdfile", None))
         ])
-    if params.get("subjects") is not None:
+    if params.get("subjects", None) is not None:
         cargs.extend([
             "--s",
-            *params.get("subjects")
+            *params.get("subjects", None)
         ])
-    if params.get("output_base") is not None:
+    if params.get("output_base", None) is not None:
         cargs.extend([
             "--b",
-            params.get("output_base")
+            params.get("output_base", None)
         ])
-    if params.get("max_iterations") is not None:
+    if params.get("max_iterations", None) is not None:
         cargs.extend([
             "--nmax",
-            str(params.get("max_iterations"))
+            str(params.get("max_iterations", None))
         ])
-    if params.get("xhemi"):
+    if params.get("xhemi", False):
         cargs.append("--xhemi")
-    if params.get("init_surf_reg") is not None:
+    if params.get("init_surf_reg", None) is not None:
         cargs.extend([
             "--init-surf-reg",
-            params.get("init_surf_reg")
+            params.get("init_surf_reg", None)
         ])
-    if params.get("init_subject") is not None:
+    if params.get("init_subject", None) is not None:
         cargs.extend([
             "--init-subject",
-            params.get("init_subject")
+            params.get("init_subject", None)
         ])
-    if params.get("no_annot_template"):
+    if params.get("no_annot_template", False):
         cargs.append("--no-annot-template")
-    if params.get("left_hemisphere"):
+    if params.get("left_hemisphere", False):
         cargs.append("--lh")
-    if params.get("right_hemisphere"):
+    if params.get("right_hemisphere", False):
         cargs.append("--rh")
-    if params.get("lhrh"):
+    if params.get("lhrh", False):
         cargs.append("--lhrh")
-    if params.get("ico_order") is not None:
+    if params.get("ico_order", None) is not None:
         cargs.extend([
             "--ico",
-            str(params.get("ico_order"))
+            str(params.get("ico_order", None))
         ])
-    if params.get("no_vol_on_last"):
+    if params.get("no_vol_on_last", False):
         cargs.append("--no-vol-on-last")
-    if params.get("vol"):
+    if params.get("vol", False):
         cargs.append("--vol")
-    if params.get("init"):
+    if params.get("init", False):
         cargs.append("--init")
-    if params.get("short_sleep"):
+    if params.get("short_sleep", False):
         cargs.append("--short-sleep")
-    if params.get("no_template_only"):
+    if params.get("no_template_only", False):
         cargs.append("--no-template-only")
-    if params.get("threads") is not None:
+    if params.get("threads", None) is not None:
         cargs.extend([
             "--threads",
-            str(params.get("threads"))
+            str(params.get("threads", None))
         ])
-    if params.get("slurm_account") is not None:
+    if params.get("slurm_account", None) is not None:
         cargs.extend([
             "--account",
-            params.get("slurm_account")
+            params.get("slurm_account", None)
         ])
     return cargs
 
@@ -392,7 +384,6 @@ def make_folding_atlas(
 __all__ = [
     "MAKE_FOLDING_ATLAS_METADATA",
     "MakeFoldingAtlasOutputs",
-    "MakeFoldingAtlasParameters",
     "make_folding_atlas",
     "make_folding_atlas_execute",
     "make_folding_atlas_params",

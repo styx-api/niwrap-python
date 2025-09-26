@@ -14,7 +14,43 @@ AUTO_WARP_PY_METADATA = Metadata(
 
 
 AutoWarpPyParameters = typing.TypedDict('AutoWarpPyParameters', {
-    "@type": typing.Literal["afni.auto_warp.py"],
+    "@type": typing.NotRequired[typing.Literal["afni/auto_warp.py"]],
+    "base": InputPathType,
+    "input": InputPathType,
+    "skull_strip_input": bool,
+    "qblur": typing.NotRequired[str | None],
+    "qworkhard": typing.NotRequired[str | None],
+    "qw_opts": typing.NotRequired[str | None],
+    "keep_rm_files": bool,
+    "prep_only": bool,
+    "help": bool,
+    "hview": bool,
+    "limited_help": bool,
+    "option_help": bool,
+    "version": bool,
+    "ver": bool,
+    "verb": bool,
+    "save_script": bool,
+    "skip_affine": bool,
+    "skull_strip_base": bool,
+    "ex_mode": typing.NotRequired[str | None],
+    "overwrite": bool,
+    "suffix": typing.NotRequired[str | None],
+    "child_anat": typing.NotRequired[str | None],
+    "warp_dxyz": typing.NotRequired[float | None],
+    "affine_dxyz": typing.NotRequired[float | None],
+    "affine_input_xmat": typing.NotRequired[str | None],
+    "smooth_anat": bool,
+    "smooth_base": bool,
+    "unifize_input": bool,
+    "output_dir": typing.NotRequired[str | None],
+    "followers": typing.NotRequired[str | None],
+    "affine_followers_xmat": typing.NotRequired[str | None],
+    "skullstrip_opts": typing.NotRequired[str | None],
+    "at_opts": typing.NotRequired[str | None],
+})
+AutoWarpPyParametersTagged = typing.TypedDict('AutoWarpPyParametersTagged', {
+    "@type": typing.Literal["afni/auto_warp.py"],
     "base": InputPathType,
     "input": InputPathType,
     "skull_strip_input": bool,
@@ -51,40 +87,9 @@ AutoWarpPyParameters = typing.TypedDict('AutoWarpPyParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "afni.auto_warp.py": auto_warp_py_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-    }.get(t)
-
-
 class AutoWarpPyOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `auto_warp_py(...)`.
+    Output object returned when calling `AutoWarpPyParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -124,7 +129,7 @@ def auto_warp_py_params(
     affine_followers_xmat: str | None = None,
     skullstrip_opts: str | None = None,
     at_opts: str | None = None,
-) -> AutoWarpPyParameters:
+) -> AutoWarpPyParametersTagged:
     """
     Build parameters.
     
@@ -169,7 +174,7 @@ def auto_warp_py_params(
         Parameter dictionary
     """
     params = {
-        "@type": "afni.auto_warp.py",
+        "@type": "afni/auto_warp.py",
         "base": base,
         "input": input_,
         "skull_strip_input": skull_strip_input,
@@ -238,115 +243,115 @@ def auto_warp_py_cargs(
     cargs.append("auto_warp.py")
     cargs.extend([
         "-base",
-        execution.input_file(params.get("base"))
+        execution.input_file(params.get("base", None))
     ])
     cargs.extend([
         "-input",
-        execution.input_file(params.get("input"))
+        execution.input_file(params.get("input", None))
     ])
-    if params.get("skull_strip_input"):
+    if params.get("skull_strip_input", False):
         cargs.append("-skull_strip_input")
-    if params.get("qblur") is not None:
+    if params.get("qblur", None) is not None:
         cargs.extend([
             "-qblur",
-            params.get("qblur")
+            params.get("qblur", None)
         ])
-    if params.get("qworkhard") is not None:
+    if params.get("qworkhard", None) is not None:
         cargs.extend([
             "-qworkhard",
-            params.get("qworkhard")
+            params.get("qworkhard", None)
         ])
-    if params.get("qw_opts") is not None:
+    if params.get("qw_opts", None) is not None:
         cargs.extend([
             "-qw_opts",
-            params.get("qw_opts")
+            params.get("qw_opts", None)
         ])
-    if params.get("keep_rm_files"):
+    if params.get("keep_rm_files", False):
         cargs.append("-keep_rm_files")
-    if params.get("prep_only"):
+    if params.get("prep_only", False):
         cargs.append("-prep_only")
-    if params.get("help"):
+    if params.get("help", False):
         cargs.append("-help")
-    if params.get("hview"):
+    if params.get("hview", False):
         cargs.append("-hview")
-    if params.get("limited_help"):
+    if params.get("limited_help", False):
         cargs.append("-limited_help")
-    if params.get("option_help"):
+    if params.get("option_help", False):
         cargs.append("-option_help")
-    if params.get("version"):
+    if params.get("version", False):
         cargs.append("-version")
-    if params.get("ver"):
+    if params.get("ver", False):
         cargs.append("-ver")
-    if params.get("verb"):
+    if params.get("verb", False):
         cargs.append("-verb")
-    if params.get("save_script"):
+    if params.get("save_script", False):
         cargs.append("-save_script")
-    if params.get("skip_affine"):
+    if params.get("skip_affine", False):
         cargs.append("-skip_affine")
-    if params.get("skull_strip_base"):
+    if params.get("skull_strip_base", False):
         cargs.append("-skull_strip_base")
-    if params.get("ex_mode") is not None:
+    if params.get("ex_mode", None) is not None:
         cargs.extend([
             "-ex_mode",
-            params.get("ex_mode")
+            params.get("ex_mode", None)
         ])
-    if params.get("overwrite"):
+    if params.get("overwrite", False):
         cargs.append("-overwrite")
-    if params.get("suffix") is not None:
+    if params.get("suffix", None) is not None:
         cargs.extend([
             "-suffix",
-            params.get("suffix")
+            params.get("suffix", None)
         ])
-    if params.get("child_anat") is not None:
+    if params.get("child_anat", None) is not None:
         cargs.extend([
             "-child_anat",
-            params.get("child_anat")
+            params.get("child_anat", None)
         ])
-    if params.get("warp_dxyz") is not None:
+    if params.get("warp_dxyz", None) is not None:
         cargs.extend([
             "-warp_dxyz",
-            str(params.get("warp_dxyz"))
+            str(params.get("warp_dxyz", None))
         ])
-    if params.get("affine_dxyz") is not None:
+    if params.get("affine_dxyz", None) is not None:
         cargs.extend([
             "-affine_dxyz",
-            str(params.get("affine_dxyz"))
+            str(params.get("affine_dxyz", None))
         ])
-    if params.get("affine_input_xmat") is not None:
+    if params.get("affine_input_xmat", None) is not None:
         cargs.extend([
             "-affine_input_xmat",
-            params.get("affine_input_xmat")
+            params.get("affine_input_xmat", None)
         ])
-    if params.get("smooth_anat"):
+    if params.get("smooth_anat", False):
         cargs.append("-smooth_anat")
-    if params.get("smooth_base"):
+    if params.get("smooth_base", False):
         cargs.append("-smooth_base")
-    if params.get("unifize_input"):
+    if params.get("unifize_input", False):
         cargs.append("-unifize_input")
-    if params.get("output_dir") is not None:
+    if params.get("output_dir", None) is not None:
         cargs.extend([
             "-output_dir",
-            params.get("output_dir")
+            params.get("output_dir", None)
         ])
-    if params.get("followers") is not None:
+    if params.get("followers", None) is not None:
         cargs.extend([
             "-followers",
-            params.get("followers")
+            params.get("followers", None)
         ])
-    if params.get("affine_followers_xmat") is not None:
+    if params.get("affine_followers_xmat", None) is not None:
         cargs.extend([
             "-affine_followers_xmat",
-            params.get("affine_followers_xmat")
+            params.get("affine_followers_xmat", None)
         ])
-    if params.get("skullstrip_opts") is not None:
+    if params.get("skullstrip_opts", None) is not None:
         cargs.extend([
             "-skullstrip_opts",
-            params.get("skullstrip_opts")
+            params.get("skullstrip_opts", None)
         ])
-    if params.get("at_opts") is not None:
+    if params.get("at_opts", None) is not None:
         cargs.extend([
             "-at_opts",
-            params.get("at_opts")
+            params.get("at_opts", None)
         ])
     return cargs
 
@@ -525,7 +530,6 @@ def auto_warp_py(
 __all__ = [
     "AUTO_WARP_PY_METADATA",
     "AutoWarpPyOutputs",
-    "AutoWarpPyParameters",
     "auto_warp_py",
     "auto_warp_py_execute",
     "auto_warp_py_params",

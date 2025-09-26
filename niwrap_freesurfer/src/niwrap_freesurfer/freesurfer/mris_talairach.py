@@ -14,45 +14,18 @@ MRIS_TALAIRACH_METADATA = Metadata(
 
 
 MrisTalairachParameters = typing.TypedDict('MrisTalairachParameters', {
-    "@type": typing.Literal["freesurfer.mris_talairach"],
+    "@type": typing.NotRequired[typing.Literal["freesurfer/mris_talairach"]],
+    "input_image": InputPathType,
+})
+MrisTalairachParametersTagged = typing.TypedDict('MrisTalairachParametersTagged', {
+    "@type": typing.Literal["freesurfer/mris_talairach"],
     "input_image": InputPathType,
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "freesurfer.mris_talairach": mris_talairach_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-    }.get(t)
-
-
 class MrisTalairachOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `mris_talairach(...)`.
+    Output object returned when calling `MrisTalairachParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -60,7 +33,7 @@ class MrisTalairachOutputs(typing.NamedTuple):
 
 def mris_talairach_params(
     input_image: InputPathType,
-) -> MrisTalairachParameters:
+) -> MrisTalairachParametersTagged:
     """
     Build parameters.
     
@@ -70,7 +43,7 @@ def mris_talairach_params(
         Parameter dictionary
     """
     params = {
-        "@type": "freesurfer.mris_talairach",
+        "@type": "freesurfer/mris_talairach",
         "input_image": input_image,
     }
     return params
@@ -91,7 +64,7 @@ def mris_talairach_cargs(
     """
     cargs = []
     cargs.append("mris_talairach")
-    cargs.append(execution.input_file(params.get("input_image")))
+    cargs.append(execution.input_file(params.get("input_image", None)))
     return cargs
 
 
@@ -170,7 +143,6 @@ def mris_talairach(
 __all__ = [
     "MRIS_TALAIRACH_METADATA",
     "MrisTalairachOutputs",
-    "MrisTalairachParameters",
     "mris_talairach",
     "mris_talairach_execute",
     "mris_talairach_params",

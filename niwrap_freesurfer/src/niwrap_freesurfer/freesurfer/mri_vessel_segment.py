@@ -14,7 +14,15 @@ MRI_VESSEL_SEGMENT_METADATA = Metadata(
 
 
 MriVesselSegmentParameters = typing.TypedDict('MriVesselSegmentParameters', {
-    "@type": typing.Literal["freesurfer.mri_vessel_segment"],
+    "@type": typing.NotRequired[typing.Literal["freesurfer/mri_vessel_segment"]],
+    "t1_image": InputPathType,
+    "t2_image": InputPathType,
+    "aseg_file": InputPathType,
+    "output_file": str,
+    "shape_flag": bool,
+})
+MriVesselSegmentParametersTagged = typing.TypedDict('MriVesselSegmentParametersTagged', {
+    "@type": typing.Literal["freesurfer/mri_vessel_segment"],
     "t1_image": InputPathType,
     "t2_image": InputPathType,
     "aseg_file": InputPathType,
@@ -23,41 +31,9 @@ MriVesselSegmentParameters = typing.TypedDict('MriVesselSegmentParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "freesurfer.mri_vessel_segment": mri_vessel_segment_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "freesurfer.mri_vessel_segment": mri_vessel_segment_outputs,
-    }.get(t)
-
-
 class MriVesselSegmentOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `mri_vessel_segment(...)`.
+    Output object returned when calling `MriVesselSegmentParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -71,7 +47,7 @@ def mri_vessel_segment_params(
     aseg_file: InputPathType,
     output_file: str,
     shape_flag: bool = False,
-) -> MriVesselSegmentParameters:
+) -> MriVesselSegmentParametersTagged:
     """
     Build parameters.
     
@@ -85,7 +61,7 @@ def mri_vessel_segment_params(
         Parameter dictionary
     """
     params = {
-        "@type": "freesurfer.mri_vessel_segment",
+        "@type": "freesurfer/mri_vessel_segment",
         "t1_image": t1_image,
         "t2_image": t2_image,
         "aseg_file": aseg_file,
@@ -112,21 +88,21 @@ def mri_vessel_segment_cargs(
     cargs.append("mri_vessel_segment")
     cargs.extend([
         "-t1",
-        execution.input_file(params.get("t1_image"))
+        execution.input_file(params.get("t1_image", None))
     ])
     cargs.extend([
         "-t2",
-        execution.input_file(params.get("t2_image"))
+        execution.input_file(params.get("t2_image", None))
     ])
     cargs.extend([
         "-aseg",
-        execution.input_file(params.get("aseg_file"))
+        execution.input_file(params.get("aseg_file", None))
     ])
     cargs.extend([
         "-o",
-        params.get("output_file")
+        params.get("output_file", None)
     ])
-    if params.get("shape_flag"):
+    if params.get("shape_flag", False):
         cargs.append("--shape")
     return cargs
 
@@ -146,7 +122,7 @@ def mri_vessel_segment_outputs(
     """
     ret = MriVesselSegmentOutputs(
         root=execution.output_file("."),
-        segmented_output=execution.output_file(params.get("output_file")),
+        segmented_output=execution.output_file(params.get("output_file", None)),
     )
     return ret
 
@@ -219,7 +195,6 @@ def mri_vessel_segment(
 __all__ = [
     "MRI_VESSEL_SEGMENT_METADATA",
     "MriVesselSegmentOutputs",
-    "MriVesselSegmentParameters",
     "mri_vessel_segment",
     "mri_vessel_segment_execute",
     "mri_vessel_segment_params",

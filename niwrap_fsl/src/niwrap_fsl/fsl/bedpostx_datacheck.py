@@ -14,45 +14,18 @@ BEDPOSTX_DATACHECK_METADATA = Metadata(
 
 
 BedpostxDatacheckParameters = typing.TypedDict('BedpostxDatacheckParameters', {
-    "@type": typing.Literal["fsl.bedpostx_datacheck"],
+    "@type": typing.NotRequired[typing.Literal["fsl/bedpostx_datacheck"]],
+    "data_dir": str,
+})
+BedpostxDatacheckParametersTagged = typing.TypedDict('BedpostxDatacheckParametersTagged', {
+    "@type": typing.Literal["fsl/bedpostx_datacheck"],
     "data_dir": str,
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "fsl.bedpostx_datacheck": bedpostx_datacheck_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-    }.get(t)
-
-
 class BedpostxDatacheckOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `bedpostx_datacheck(...)`.
+    Output object returned when calling `BedpostxDatacheckParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -60,7 +33,7 @@ class BedpostxDatacheckOutputs(typing.NamedTuple):
 
 def bedpostx_datacheck_params(
     data_dir: str,
-) -> BedpostxDatacheckParameters:
+) -> BedpostxDatacheckParametersTagged:
     """
     Build parameters.
     
@@ -70,7 +43,7 @@ def bedpostx_datacheck_params(
         Parameter dictionary
     """
     params = {
-        "@type": "fsl.bedpostx_datacheck",
+        "@type": "fsl/bedpostx_datacheck",
         "data_dir": data_dir,
     }
     return params
@@ -91,7 +64,7 @@ def bedpostx_datacheck_cargs(
     """
     cargs = []
     cargs.append("bedpostx_datacheck")
-    cargs.append(params.get("data_dir"))
+    cargs.append(params.get("data_dir", None))
     return cargs
 
 
@@ -170,7 +143,6 @@ def bedpostx_datacheck(
 __all__ = [
     "BEDPOSTX_DATACHECK_METADATA",
     "BedpostxDatacheckOutputs",
-    "BedpostxDatacheckParameters",
     "bedpostx_datacheck",
     "bedpostx_datacheck_execute",
     "bedpostx_datacheck_params",

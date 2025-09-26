@@ -14,7 +14,14 @@ FLOAT_SCAN_METADATA = Metadata(
 
 
 FloatScanParameters = typing.TypedDict('FloatScanParameters', {
-    "@type": typing.Literal["afni.float_scan"],
+    "@type": typing.NotRequired[typing.Literal["afni/float_scan"]],
+    "fix_illegal_values": bool,
+    "verbose_mode": bool,
+    "skip_count": typing.NotRequired[int | None],
+    "input_file": InputPathType,
+})
+FloatScanParametersTagged = typing.TypedDict('FloatScanParametersTagged', {
+    "@type": typing.Literal["afni/float_scan"],
     "fix_illegal_values": bool,
     "verbose_mode": bool,
     "skip_count": typing.NotRequired[int | None],
@@ -22,41 +29,9 @@ FloatScanParameters = typing.TypedDict('FloatScanParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "afni.float_scan": float_scan_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "afni.float_scan": float_scan_outputs,
-    }.get(t)
-
-
 class FloatScanOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `float_scan(...)`.
+    Output object returned when calling `FloatScanParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -69,7 +44,7 @@ def float_scan_params(
     fix_illegal_values: bool = False,
     verbose_mode: bool = False,
     skip_count: int | None = None,
-) -> FloatScanParameters:
+) -> FloatScanParametersTagged:
     """
     Build parameters.
     
@@ -84,7 +59,7 @@ def float_scan_params(
         Parameter dictionary
     """
     params = {
-        "@type": "afni.float_scan",
+        "@type": "afni/float_scan",
         "fix_illegal_values": fix_illegal_values,
         "verbose_mode": verbose_mode,
         "input_file": input_file,
@@ -109,16 +84,16 @@ def float_scan_cargs(
     """
     cargs = []
     cargs.append("float_scan")
-    if params.get("fix_illegal_values"):
+    if params.get("fix_illegal_values", False):
         cargs.append("-fix")
-    if params.get("verbose_mode"):
+    if params.get("verbose_mode", False):
         cargs.append("-v")
-    if params.get("skip_count") is not None:
+    if params.get("skip_count", None) is not None:
         cargs.extend([
             "-skip",
-            str(params.get("skip_count"))
+            str(params.get("skip_count", None))
         ])
-    cargs.append(execution.input_file(params.get("input_file")))
+    cargs.append(execution.input_file(params.get("input_file", None)))
     return cargs
 
 
@@ -211,7 +186,6 @@ def float_scan(
 __all__ = [
     "FLOAT_SCAN_METADATA",
     "FloatScanOutputs",
-    "FloatScanParameters",
     "float_scan",
     "float_scan_execute",
     "float_scan_params",

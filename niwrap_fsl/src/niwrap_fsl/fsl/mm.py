@@ -14,7 +14,27 @@ MM_METADATA = Metadata(
 
 
 MmParameters = typing.TypedDict('MmParameters', {
-    "@type": typing.Literal["fsl.mm"],
+    "@type": typing.NotRequired[typing.Literal["fsl/mm"]],
+    "spatial_data_file": InputPathType,
+    "mask_file": InputPathType,
+    "verbose_flag": bool,
+    "debug_level": typing.NotRequired[str | None],
+    "timing_flag": bool,
+    "example_epi_file": typing.NotRequired[InputPathType | None],
+    "log_directory": typing.NotRequired[str | None],
+    "nonspatial_flag": bool,
+    "fix_mrf_precision_flag": bool,
+    "mrf_prec_start": typing.NotRequired[float | None],
+    "mrf_prec_multiplier": typing.NotRequired[float | None],
+    "init_multiplier": typing.NotRequired[float | None],
+    "no_update_theta_flag": bool,
+    "zfstat_flag": bool,
+    "phi": typing.NotRequired[float | None],
+    "niters": typing.NotRequired[float | None],
+    "threshold": typing.NotRequired[float | None],
+})
+MmParametersTagged = typing.TypedDict('MmParametersTagged', {
+    "@type": typing.Literal["fsl/mm"],
     "spatial_data_file": InputPathType,
     "mask_file": InputPathType,
     "verbose_flag": bool,
@@ -35,40 +55,9 @@ MmParameters = typing.TypedDict('MmParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "fsl.mm": mm_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-    }.get(t)
-
-
 class MmOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `mm(...)`.
+    Output object returned when calling `MmParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -92,7 +81,7 @@ def mm_params(
     phi: float | None = None,
     niters: float | None = None,
     threshold: float | None = None,
-) -> MmParameters:
+) -> MmParametersTagged:
     """
     Build parameters.
     
@@ -121,7 +110,7 @@ def mm_params(
         Parameter dictionary
     """
     params = {
-        "@type": "fsl.mm",
+        "@type": "fsl/mm",
         "spatial_data_file": spatial_data_file,
         "mask_file": mask_file,
         "verbose_flag": verbose_flag,
@@ -169,68 +158,68 @@ def mm_cargs(
     cargs.append("mm")
     cargs.extend([
         "--sdf",
-        execution.input_file(params.get("spatial_data_file"))
+        execution.input_file(params.get("spatial_data_file", None))
     ])
     cargs.extend([
         "-m",
-        execution.input_file(params.get("mask_file"))
+        execution.input_file(params.get("mask_file", None))
     ])
-    if params.get("verbose_flag"):
+    if params.get("verbose_flag", False):
         cargs.append("--verbose")
-    if params.get("debug_level") is not None:
+    if params.get("debug_level", None) is not None:
         cargs.extend([
             "--debug",
-            params.get("debug_level")
+            params.get("debug_level", None)
         ])
-    if params.get("timing_flag"):
+    if params.get("timing_flag", False):
         cargs.append("--timingon")
-    if params.get("example_epi_file") is not None:
+    if params.get("example_epi_file", None) is not None:
         cargs.extend([
             "--edf",
-            execution.input_file(params.get("example_epi_file"))
+            execution.input_file(params.get("example_epi_file", None))
         ])
-    if params.get("log_directory") is not None:
+    if params.get("log_directory", None) is not None:
         cargs.extend([
             "--logdir",
-            params.get("log_directory")
+            params.get("log_directory", None)
         ])
-    if params.get("nonspatial_flag"):
+    if params.get("nonspatial_flag", False):
         cargs.append("--ns")
-    if params.get("fix_mrf_precision_flag"):
+    if params.get("fix_mrf_precision_flag", False):
         cargs.append("--fmp")
-    if params.get("mrf_prec_start") is not None:
+    if params.get("mrf_prec_start", None) is not None:
         cargs.extend([
             "--mps",
-            str(params.get("mrf_prec_start"))
+            str(params.get("mrf_prec_start", None))
         ])
-    if params.get("mrf_prec_multiplier") is not None:
+    if params.get("mrf_prec_multiplier", None) is not None:
         cargs.extend([
             "--mpm",
-            str(params.get("mrf_prec_multiplier"))
+            str(params.get("mrf_prec_multiplier", None))
         ])
-    if params.get("init_multiplier") is not None:
+    if params.get("init_multiplier", None) is not None:
         cargs.extend([
             "--im",
-            str(params.get("init_multiplier"))
+            str(params.get("init_multiplier", None))
         ])
-    if params.get("no_update_theta_flag"):
+    if params.get("no_update_theta_flag", False):
         cargs.append("--nut")
-    if params.get("zfstat_flag"):
+    if params.get("zfstat_flag", False):
         cargs.append("--zfstatmode")
-    if params.get("phi") is not None:
+    if params.get("phi", None) is not None:
         cargs.extend([
             "--phi",
-            str(params.get("phi"))
+            str(params.get("phi", None))
         ])
-    if params.get("niters") is not None:
+    if params.get("niters", None) is not None:
         cargs.extend([
             "--ni",
-            str(params.get("niters"))
+            str(params.get("niters", None))
         ])
-    if params.get("threshold") is not None:
+    if params.get("threshold", None) is not None:
         cargs.extend([
             "--th",
-            str(params.get("threshold"))
+            str(params.get("threshold", None))
         ])
     return cargs
 
@@ -361,7 +350,6 @@ def mm(
 __all__ = [
     "MM_METADATA",
     "MmOutputs",
-    "MmParameters",
     "mm",
     "mm_execute",
     "mm_params",

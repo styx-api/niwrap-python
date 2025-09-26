@@ -14,7 +14,14 @@ SIMPLE_SYN_REGISTRATION_METADATA = Metadata(
 
 
 SimpleSynRegistrationParameters = typing.TypedDict('SimpleSynRegistrationParameters', {
-    "@type": typing.Literal["ants.simpleSynRegistration"],
+    "@type": typing.NotRequired[typing.Literal["ants/simpleSynRegistration"]],
+    "fixed_image": InputPathType,
+    "moving_image": InputPathType,
+    "initial_transform": str,
+    "output_prefix": str,
+})
+SimpleSynRegistrationParametersTagged = typing.TypedDict('SimpleSynRegistrationParametersTagged', {
+    "@type": typing.Literal["ants/simpleSynRegistration"],
     "fixed_image": InputPathType,
     "moving_image": InputPathType,
     "initial_transform": str,
@@ -22,41 +29,9 @@ SimpleSynRegistrationParameters = typing.TypedDict('SimpleSynRegistrationParamet
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "ants.simpleSynRegistration": simple_syn_registration_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "ants.simpleSynRegistration": simple_syn_registration_outputs,
-    }.get(t)
-
-
 class SimpleSynRegistrationOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `simple_syn_registration(...)`.
+    Output object returned when calling `SimpleSynRegistrationParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -71,7 +46,7 @@ def simple_syn_registration_params(
     moving_image: InputPathType,
     initial_transform: str,
     output_prefix: str,
-) -> SimpleSynRegistrationParameters:
+) -> SimpleSynRegistrationParametersTagged:
     """
     Build parameters.
     
@@ -84,7 +59,7 @@ def simple_syn_registration_params(
         Parameter dictionary
     """
     params = {
-        "@type": "ants.simpleSynRegistration",
+        "@type": "ants/simpleSynRegistration",
         "fixed_image": fixed_image,
         "moving_image": moving_image,
         "initial_transform": initial_transform,
@@ -108,10 +83,10 @@ def simple_syn_registration_cargs(
     """
     cargs = []
     cargs.append("simpleSynRegistration")
-    cargs.append(execution.input_file(params.get("fixed_image")))
-    cargs.append(execution.input_file(params.get("moving_image")))
-    cargs.append(params.get("initial_transform"))
-    cargs.append(params.get("output_prefix"))
+    cargs.append(execution.input_file(params.get("fixed_image", None)))
+    cargs.append(execution.input_file(params.get("moving_image", None)))
+    cargs.append(params.get("initial_transform", None))
+    cargs.append(params.get("output_prefix", None))
     return cargs
 
 
@@ -130,8 +105,8 @@ def simple_syn_registration_outputs(
     """
     ret = SimpleSynRegistrationOutputs(
         root=execution.output_file("."),
-        registered_image=execution.output_file(params.get("output_prefix") + "Registered.nii.gz"),
-        transform_matrix=execution.output_file(params.get("output_prefix") + "Transform.mat"),
+        registered_image=execution.output_file(params.get("output_prefix", None) + "Registered.nii.gz"),
+        transform_matrix=execution.output_file(params.get("output_prefix", None) + "Transform.mat"),
     )
     return ret
 
@@ -201,7 +176,6 @@ def simple_syn_registration(
 __all__ = [
     "SIMPLE_SYN_REGISTRATION_METADATA",
     "SimpleSynRegistrationOutputs",
-    "SimpleSynRegistrationParameters",
     "simple_syn_registration",
     "simple_syn_registration_execute",
     "simple_syn_registration_params",

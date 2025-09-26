@@ -14,7 +14,14 @@ MRIS_BA_SEGMENT_METADATA = Metadata(
 
 
 MrisBaSegmentParameters = typing.TypedDict('MrisBaSegmentParameters', {
-    "@type": typing.Literal["freesurfer.mris_BA_segment"],
+    "@type": typing.NotRequired[typing.Literal["freesurfer/mris_BA_segment"]],
+    "surface": InputPathType,
+    "profiles": InputPathType,
+    "prior_label": InputPathType,
+    "output_label": str,
+})
+MrisBaSegmentParametersTagged = typing.TypedDict('MrisBaSegmentParametersTagged', {
+    "@type": typing.Literal["freesurfer/mris_BA_segment"],
     "surface": InputPathType,
     "profiles": InputPathType,
     "prior_label": InputPathType,
@@ -22,41 +29,9 @@ MrisBaSegmentParameters = typing.TypedDict('MrisBaSegmentParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "freesurfer.mris_BA_segment": mris_ba_segment_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "freesurfer.mris_BA_segment": mris_ba_segment_outputs,
-    }.get(t)
-
-
 class MrisBaSegmentOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `mris_ba_segment(...)`.
+    Output object returned when calling `MrisBaSegmentParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -69,7 +44,7 @@ def mris_ba_segment_params(
     profiles: InputPathType,
     prior_label: InputPathType,
     output_label: str,
-) -> MrisBaSegmentParameters:
+) -> MrisBaSegmentParametersTagged:
     """
     Build parameters.
     
@@ -82,7 +57,7 @@ def mris_ba_segment_params(
         Parameter dictionary
     """
     params = {
-        "@type": "freesurfer.mris_BA_segment",
+        "@type": "freesurfer/mris_BA_segment",
         "surface": surface,
         "profiles": profiles,
         "prior_label": prior_label,
@@ -106,10 +81,10 @@ def mris_ba_segment_cargs(
     """
     cargs = []
     cargs.append("mris_BA_segment")
-    cargs.append(execution.input_file(params.get("surface")))
-    cargs.append(execution.input_file(params.get("profiles")))
-    cargs.append(execution.input_file(params.get("prior_label")))
-    cargs.append(params.get("output_label"))
+    cargs.append(execution.input_file(params.get("surface", None)))
+    cargs.append(execution.input_file(params.get("profiles", None)))
+    cargs.append(execution.input_file(params.get("prior_label", None)))
+    cargs.append(params.get("output_label", None))
     return cargs
 
 
@@ -128,7 +103,7 @@ def mris_ba_segment_outputs(
     """
     ret = MrisBaSegmentOutputs(
         root=execution.output_file("."),
-        output_label_file=execution.output_file(params.get("output_label")),
+        output_label_file=execution.output_file(params.get("output_label", None)),
     )
     return ret
 
@@ -200,7 +175,6 @@ def mris_ba_segment(
 __all__ = [
     "MRIS_BA_SEGMENT_METADATA",
     "MrisBaSegmentOutputs",
-    "MrisBaSegmentParameters",
     "mris_ba_segment",
     "mris_ba_segment_execute",
     "mris_ba_segment_params",

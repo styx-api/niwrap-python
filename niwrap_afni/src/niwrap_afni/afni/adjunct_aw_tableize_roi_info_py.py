@@ -14,7 +14,16 @@ ADJUNCT_AW_TABLEIZE_ROI_INFO_PY_METADATA = Metadata(
 
 
 AdjunctAwTableizeRoiInfoPyParameters = typing.TypedDict('AdjunctAwTableizeRoiInfoPyParameters', {
-    "@type": typing.Literal["afni.adjunct_aw_tableize_roi_info.py"],
+    "@type": typing.NotRequired[typing.Literal["afni/adjunct_aw_tableize_roi_info.py"]],
+    "output_file": str,
+    "warped_atlas": InputPathType,
+    "warped_mask": InputPathType,
+    "reference_atlas": InputPathType,
+    "reference_mask": InputPathType,
+    "modesmooth_value": float,
+})
+AdjunctAwTableizeRoiInfoPyParametersTagged = typing.TypedDict('AdjunctAwTableizeRoiInfoPyParametersTagged', {
+    "@type": typing.Literal["afni/adjunct_aw_tableize_roi_info.py"],
     "output_file": str,
     "warped_atlas": InputPathType,
     "warped_mask": InputPathType,
@@ -24,41 +33,9 @@ AdjunctAwTableizeRoiInfoPyParameters = typing.TypedDict('AdjunctAwTableizeRoiInf
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "afni.adjunct_aw_tableize_roi_info.py": adjunct_aw_tableize_roi_info_py_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "afni.adjunct_aw_tableize_roi_info.py": adjunct_aw_tableize_roi_info_py_outputs,
-    }.get(t)
-
-
 class AdjunctAwTableizeRoiInfoPyOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `adjunct_aw_tableize_roi_info_py(...)`.
+    Output object returned when calling `AdjunctAwTableizeRoiInfoPyParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -73,7 +50,7 @@ def adjunct_aw_tableize_roi_info_py_params(
     reference_atlas: InputPathType,
     reference_mask: InputPathType,
     modesmooth_value: float,
-) -> AdjunctAwTableizeRoiInfoPyParameters:
+) -> AdjunctAwTableizeRoiInfoPyParametersTagged:
     """
     Build parameters.
     
@@ -91,7 +68,7 @@ def adjunct_aw_tableize_roi_info_py_params(
         Parameter dictionary
     """
     params = {
-        "@type": "afni.adjunct_aw_tableize_roi_info.py",
+        "@type": "afni/adjunct_aw_tableize_roi_info.py",
         "output_file": output_file,
         "warped_atlas": warped_atlas,
         "warped_mask": warped_mask,
@@ -117,12 +94,12 @@ def adjunct_aw_tableize_roi_info_py_cargs(
     """
     cargs = []
     cargs.append("adjunct_aw_tableize_roi_info.py")
-    cargs.append(params.get("output_file"))
-    cargs.append(execution.input_file(params.get("warped_atlas")))
-    cargs.append(execution.input_file(params.get("warped_mask")))
-    cargs.append(execution.input_file(params.get("reference_atlas")))
-    cargs.append(execution.input_file(params.get("reference_mask")))
-    cargs.append(str(params.get("modesmooth_value")))
+    cargs.append(params.get("output_file", None))
+    cargs.append(execution.input_file(params.get("warped_atlas", None)))
+    cargs.append(execution.input_file(params.get("warped_mask", None)))
+    cargs.append(execution.input_file(params.get("reference_atlas", None)))
+    cargs.append(execution.input_file(params.get("reference_mask", None)))
+    cargs.append(str(params.get("modesmooth_value", None)))
     return cargs
 
 
@@ -141,7 +118,7 @@ def adjunct_aw_tableize_roi_info_py_outputs(
     """
     ret = AdjunctAwTableizeRoiInfoPyOutputs(
         root=execution.output_file("."),
-        outfile=execution.output_file(params.get("output_file")),
+        outfile=execution.output_file(params.get("output_file", None)),
     )
     return ret
 
@@ -222,7 +199,6 @@ def adjunct_aw_tableize_roi_info_py(
 __all__ = [
     "ADJUNCT_AW_TABLEIZE_ROI_INFO_PY_METADATA",
     "AdjunctAwTableizeRoiInfoPyOutputs",
-    "AdjunctAwTableizeRoiInfoPyParameters",
     "adjunct_aw_tableize_roi_info_py",
     "adjunct_aw_tableize_roi_info_py_execute",
     "adjunct_aw_tableize_roi_info_py_params",

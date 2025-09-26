@@ -14,119 +14,244 @@ TCKGEN_METADATA = Metadata(
 
 
 TckgenSeedImageParameters = typing.TypedDict('TckgenSeedImageParameters', {
-    "@type": typing.Literal["mrtrix.tckgen.seed_image"],
+    "@type": typing.NotRequired[typing.Literal["seed_image"]],
+    "image": InputPathType,
+})
+TckgenSeedImageParametersTagged = typing.TypedDict('TckgenSeedImageParametersTagged', {
+    "@type": typing.Literal["seed_image"],
     "image": InputPathType,
 })
 
 
 TckgenSeedSphereParameters = typing.TypedDict('TckgenSeedSphereParameters', {
-    "@type": typing.Literal["mrtrix.tckgen.seed_sphere"],
+    "@type": typing.NotRequired[typing.Literal["seed_sphere"]],
+    "spec": list[float],
+})
+TckgenSeedSphereParametersTagged = typing.TypedDict('TckgenSeedSphereParametersTagged', {
+    "@type": typing.Literal["seed_sphere"],
     "spec": list[float],
 })
 
 
 TckgenSeedRandomPerVoxelParameters = typing.TypedDict('TckgenSeedRandomPerVoxelParameters', {
-    "@type": typing.Literal["mrtrix.tckgen.seed_random_per_voxel"],
+    "@type": typing.NotRequired[typing.Literal["seed_random_per_voxel"]],
+    "image": InputPathType,
+    "num_per_voxel": int,
+})
+TckgenSeedRandomPerVoxelParametersTagged = typing.TypedDict('TckgenSeedRandomPerVoxelParametersTagged', {
+    "@type": typing.Literal["seed_random_per_voxel"],
     "image": InputPathType,
     "num_per_voxel": int,
 })
 
 
 TckgenSeedGridPerVoxelParameters = typing.TypedDict('TckgenSeedGridPerVoxelParameters', {
-    "@type": typing.Literal["mrtrix.tckgen.seed_grid_per_voxel"],
+    "@type": typing.NotRequired[typing.Literal["seed_grid_per_voxel"]],
+    "image": InputPathType,
+    "grid_size": int,
+})
+TckgenSeedGridPerVoxelParametersTagged = typing.TypedDict('TckgenSeedGridPerVoxelParametersTagged', {
+    "@type": typing.Literal["seed_grid_per_voxel"],
     "image": InputPathType,
     "grid_size": int,
 })
 
 
 TckgenSeedRejectionParameters = typing.TypedDict('TckgenSeedRejectionParameters', {
-    "@type": typing.Literal["mrtrix.tckgen.seed_rejection"],
+    "@type": typing.NotRequired[typing.Literal["seed_rejection"]],
+    "image": InputPathType,
+})
+TckgenSeedRejectionParametersTagged = typing.TypedDict('TckgenSeedRejectionParametersTagged', {
+    "@type": typing.Literal["seed_rejection"],
     "image": InputPathType,
 })
 
 
 TckgenSeedGmwmiParameters = typing.TypedDict('TckgenSeedGmwmiParameters', {
-    "@type": typing.Literal["mrtrix.tckgen.seed_gmwmi"],
+    "@type": typing.NotRequired[typing.Literal["seed_gmwmi"]],
+    "image": InputPathType,
+})
+TckgenSeedGmwmiParametersTagged = typing.TypedDict('TckgenSeedGmwmiParametersTagged', {
+    "@type": typing.Literal["seed_gmwmi"],
     "image": InputPathType,
 })
 
 
 TckgenVariousStringParameters = typing.TypedDict('TckgenVariousStringParameters', {
-    "@type": typing.Literal["mrtrix.tckgen.include.VariousString"],
+    "@type": typing.NotRequired[typing.Literal["VariousString"]],
+    "obj": str,
+})
+TckgenVariousStringParametersTagged = typing.TypedDict('TckgenVariousStringParametersTagged', {
+    "@type": typing.Literal["VariousString"],
     "obj": str,
 })
 
 
 TckgenVariousFileParameters = typing.TypedDict('TckgenVariousFileParameters', {
-    "@type": typing.Literal["mrtrix.tckgen.include.VariousFile"],
+    "@type": typing.NotRequired[typing.Literal["VariousFile"]],
+    "obj": InputPathType,
+})
+TckgenVariousFileParametersTagged = typing.TypedDict('TckgenVariousFileParametersTagged', {
+    "@type": typing.Literal["VariousFile"],
     "obj": InputPathType,
 })
 
 
 TckgenIncludeParameters = typing.TypedDict('TckgenIncludeParameters', {
-    "@type": typing.Literal["mrtrix.tckgen.include"],
-    "spec": typing.Union[TckgenVariousStringParameters, TckgenVariousFileParameters],
+    "@type": typing.NotRequired[typing.Literal["include"]],
+    "spec": typing.Union[TckgenVariousStringParametersTagged, TckgenVariousFileParametersTagged],
+})
+TckgenIncludeParametersTagged = typing.TypedDict('TckgenIncludeParametersTagged', {
+    "@type": typing.Literal["include"],
+    "spec": typing.Union[TckgenVariousStringParametersTagged, TckgenVariousFileParametersTagged],
 })
 
 
 TckgenIncludeOrderedParameters = typing.TypedDict('TckgenIncludeOrderedParameters', {
-    "@type": typing.Literal["mrtrix.tckgen.include_ordered"],
+    "@type": typing.NotRequired[typing.Literal["include_ordered"]],
+    "image": str,
+})
+TckgenIncludeOrderedParametersTagged = typing.TypedDict('TckgenIncludeOrderedParametersTagged', {
+    "@type": typing.Literal["include_ordered"],
     "image": str,
 })
 
 
 TckgenVariousString1Parameters = typing.TypedDict('TckgenVariousString1Parameters', {
-    "@type": typing.Literal["mrtrix.tckgen.exclude.VariousString"],
+    "@type": typing.NotRequired[typing.Literal["VariousString_1"]],
+    "obj": str,
+})
+TckgenVariousString1ParametersTagged = typing.TypedDict('TckgenVariousString1ParametersTagged', {
+    "@type": typing.Literal["VariousString_1"],
     "obj": str,
 })
 
 
 TckgenVariousFile1Parameters = typing.TypedDict('TckgenVariousFile1Parameters', {
-    "@type": typing.Literal["mrtrix.tckgen.exclude.VariousFile"],
+    "@type": typing.NotRequired[typing.Literal["VariousFile_1"]],
+    "obj": InputPathType,
+})
+TckgenVariousFile1ParametersTagged = typing.TypedDict('TckgenVariousFile1ParametersTagged', {
+    "@type": typing.Literal["VariousFile_1"],
     "obj": InputPathType,
 })
 
 
 TckgenExcludeParameters = typing.TypedDict('TckgenExcludeParameters', {
-    "@type": typing.Literal["mrtrix.tckgen.exclude"],
-    "spec": typing.Union[TckgenVariousString1Parameters, TckgenVariousFile1Parameters],
+    "@type": typing.NotRequired[typing.Literal["exclude"]],
+    "spec": typing.Union[TckgenVariousString1ParametersTagged, TckgenVariousFile1ParametersTagged],
+})
+TckgenExcludeParametersTagged = typing.TypedDict('TckgenExcludeParametersTagged', {
+    "@type": typing.Literal["exclude"],
+    "spec": typing.Union[TckgenVariousString1ParametersTagged, TckgenVariousFile1ParametersTagged],
 })
 
 
 TckgenVariousString2Parameters = typing.TypedDict('TckgenVariousString2Parameters', {
-    "@type": typing.Literal["mrtrix.tckgen.mask.VariousString"],
+    "@type": typing.NotRequired[typing.Literal["VariousString_2"]],
+    "obj": str,
+})
+TckgenVariousString2ParametersTagged = typing.TypedDict('TckgenVariousString2ParametersTagged', {
+    "@type": typing.Literal["VariousString_2"],
     "obj": str,
 })
 
 
 TckgenVariousFile2Parameters = typing.TypedDict('TckgenVariousFile2Parameters', {
-    "@type": typing.Literal["mrtrix.tckgen.mask.VariousFile"],
+    "@type": typing.NotRequired[typing.Literal["VariousFile_2"]],
+    "obj": InputPathType,
+})
+TckgenVariousFile2ParametersTagged = typing.TypedDict('TckgenVariousFile2ParametersTagged', {
+    "@type": typing.Literal["VariousFile_2"],
     "obj": InputPathType,
 })
 
 
 TckgenMaskParameters = typing.TypedDict('TckgenMaskParameters', {
-    "@type": typing.Literal["mrtrix.tckgen.mask"],
-    "spec": typing.Union[TckgenVariousString2Parameters, TckgenVariousFile2Parameters],
+    "@type": typing.NotRequired[typing.Literal["mask"]],
+    "spec": typing.Union[TckgenVariousString2ParametersTagged, TckgenVariousFile2ParametersTagged],
+})
+TckgenMaskParametersTagged = typing.TypedDict('TckgenMaskParametersTagged', {
+    "@type": typing.Literal["mask"],
+    "spec": typing.Union[TckgenVariousString2ParametersTagged, TckgenVariousFile2ParametersTagged],
 })
 
 
 TckgenFslgradParameters = typing.TypedDict('TckgenFslgradParameters', {
-    "@type": typing.Literal["mrtrix.tckgen.fslgrad"],
+    "@type": typing.NotRequired[typing.Literal["fslgrad"]],
+    "bvecs": InputPathType,
+    "bvals": InputPathType,
+})
+TckgenFslgradParametersTagged = typing.TypedDict('TckgenFslgradParametersTagged', {
+    "@type": typing.Literal["fslgrad"],
     "bvecs": InputPathType,
     "bvals": InputPathType,
 })
 
 
 TckgenConfigParameters = typing.TypedDict('TckgenConfigParameters', {
-    "@type": typing.Literal["mrtrix.tckgen.config"],
+    "@type": typing.NotRequired[typing.Literal["config"]],
+    "key": str,
+    "value": str,
+})
+TckgenConfigParametersTagged = typing.TypedDict('TckgenConfigParametersTagged', {
+    "@type": typing.Literal["config"],
     "key": str,
     "value": str,
 })
 
 
 TckgenParameters = typing.TypedDict('TckgenParameters', {
-    "@type": typing.Literal["mrtrix.tckgen"],
+    "@type": typing.NotRequired[typing.Literal["mrtrix/tckgen"]],
+    "algorithm": typing.NotRequired[str | None],
+    "select": typing.NotRequired[int | None],
+    "step": typing.NotRequired[float | None],
+    "angle": typing.NotRequired[float | None],
+    "minlength": typing.NotRequired[float | None],
+    "maxlength": typing.NotRequired[float | None],
+    "cutoff": typing.NotRequired[float | None],
+    "trials": typing.NotRequired[int | None],
+    "noprecomputed": bool,
+    "rk4": bool,
+    "stop": bool,
+    "downsample": typing.NotRequired[int | None],
+    "seed_image": typing.NotRequired[list[TckgenSeedImageParameters] | None],
+    "seed_sphere": typing.NotRequired[list[TckgenSeedSphereParameters] | None],
+    "seed_random_per_voxel": typing.NotRequired[list[TckgenSeedRandomPerVoxelParameters] | None],
+    "seed_grid_per_voxel": typing.NotRequired[list[TckgenSeedGridPerVoxelParameters] | None],
+    "seed_rejection": typing.NotRequired[list[TckgenSeedRejectionParameters] | None],
+    "seed_gmwmi": typing.NotRequired[list[TckgenSeedGmwmiParameters] | None],
+    "seed_dynamic": typing.NotRequired[InputPathType | None],
+    "seeds": typing.NotRequired[int | None],
+    "max_attempts_per_seed": typing.NotRequired[int | None],
+    "seed_cutoff": typing.NotRequired[float | None],
+    "seed_unidirectional": bool,
+    "seed_direction": typing.NotRequired[list[float] | None],
+    "output_seeds": typing.NotRequired[str | None],
+    "include": typing.NotRequired[list[TckgenIncludeParameters] | None],
+    "include_ordered": typing.NotRequired[list[TckgenIncludeOrderedParameters] | None],
+    "exclude": typing.NotRequired[list[TckgenExcludeParameters] | None],
+    "mask": typing.NotRequired[list[TckgenMaskParameters] | None],
+    "act": typing.NotRequired[InputPathType | None],
+    "backtrack": bool,
+    "crop_at_gmwmi": bool,
+    "power": typing.NotRequired[float | None],
+    "samples": typing.NotRequired[int | None],
+    "grad": typing.NotRequired[InputPathType | None],
+    "fslgrad": typing.NotRequired[TckgenFslgradParameters | None],
+    "info": bool,
+    "quiet": bool,
+    "debug": bool,
+    "force": bool,
+    "nthreads": typing.NotRequired[int | None],
+    "config": typing.NotRequired[list[TckgenConfigParameters] | None],
+    "help": bool,
+    "version": bool,
+    "source": InputPathType,
+    "tracks": str,
+})
+TckgenParametersTagged = typing.TypedDict('TckgenParametersTagged', {
+    "@type": typing.Literal["mrtrix/tckgen"],
     "algorithm": typing.NotRequired[str | None],
     "select": typing.NotRequired[int | None],
     "step": typing.NotRequired[float | None],
@@ -176,7 +301,7 @@ TckgenParameters = typing.TypedDict('TckgenParameters', {
 })
 
 
-def dyn_cargs(
+def tckgen_spec_cargs_dyn_fn(
     t: str,
 ) -> typing.Any:
     """
@@ -188,29 +313,12 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "mrtrix.tckgen": tckgen_cargs,
-        "mrtrix.tckgen.seed_image": tckgen_seed_image_cargs,
-        "mrtrix.tckgen.seed_sphere": tckgen_seed_sphere_cargs,
-        "mrtrix.tckgen.seed_random_per_voxel": tckgen_seed_random_per_voxel_cargs,
-        "mrtrix.tckgen.seed_grid_per_voxel": tckgen_seed_grid_per_voxel_cargs,
-        "mrtrix.tckgen.seed_rejection": tckgen_seed_rejection_cargs,
-        "mrtrix.tckgen.seed_gmwmi": tckgen_seed_gmwmi_cargs,
-        "mrtrix.tckgen.include": tckgen_include_cargs,
-        "mrtrix.tckgen.include.VariousString": tckgen_various_string_cargs,
-        "mrtrix.tckgen.include.VariousFile": tckgen_various_file_cargs,
-        "mrtrix.tckgen.include_ordered": tckgen_include_ordered_cargs,
-        "mrtrix.tckgen.exclude": tckgen_exclude_cargs,
-        "mrtrix.tckgen.exclude.VariousString": tckgen_various_string_1_cargs,
-        "mrtrix.tckgen.exclude.VariousFile": tckgen_various_file_1_cargs,
-        "mrtrix.tckgen.mask": tckgen_mask_cargs,
-        "mrtrix.tckgen.mask.VariousString": tckgen_various_string_2_cargs,
-        "mrtrix.tckgen.mask.VariousFile": tckgen_various_file_2_cargs,
-        "mrtrix.tckgen.fslgrad": tckgen_fslgrad_cargs,
-        "mrtrix.tckgen.config": tckgen_config_cargs,
+        "VariousString": tckgen_various_string_cargs,
+        "VariousFile": tckgen_various_file_cargs,
     }.get(t)
 
 
-def dyn_outputs(
+def tckgen_spec_outputs_dyn_fn(
     t: str,
 ) -> typing.Any:
     """
@@ -222,13 +330,76 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "mrtrix.tckgen": tckgen_outputs,
+    }.get(t)
+
+
+def tckgen_spec_cargs_dyn_fn_(
+    t: str,
+) -> typing.Any:
+    """
+    Get build cargs function by command type.
+    
+    Args:
+        t: Command type.
+    Returns:
+        Build cargs function.
+    """
+    return {
+        "VariousString_1": tckgen_various_string_1_cargs,
+        "VariousFile_1": tckgen_various_file_1_cargs,
+    }.get(t)
+
+
+def tckgen_spec_outputs_dyn_fn_(
+    t: str,
+) -> typing.Any:
+    """
+    Get build outputs function by command type.
+    
+    Args:
+        t: Command type.
+    Returns:
+        Build outputs function.
+    """
+    return {
+    }.get(t)
+
+
+def tckgen_spec_cargs_dyn_fn_2(
+    t: str,
+) -> typing.Any:
+    """
+    Get build cargs function by command type.
+    
+    Args:
+        t: Command type.
+    Returns:
+        Build cargs function.
+    """
+    return {
+        "VariousString_2": tckgen_various_string_2_cargs,
+        "VariousFile_2": tckgen_various_file_2_cargs,
+    }.get(t)
+
+
+def tckgen_spec_outputs_dyn_fn_2(
+    t: str,
+) -> typing.Any:
+    """
+    Get build outputs function by command type.
+    
+    Args:
+        t: Command type.
+    Returns:
+        Build outputs function.
+    """
+    return {
     }.get(t)
 
 
 def tckgen_seed_image_params(
     image: InputPathType,
-) -> TckgenSeedImageParameters:
+) -> TckgenSeedImageParametersTagged:
     """
     Build parameters.
     
@@ -238,7 +409,7 @@ def tckgen_seed_image_params(
         Parameter dictionary
     """
     params = {
-        "@type": "mrtrix.tckgen.seed_image",
+        "@type": "seed_image",
         "image": image,
     }
     return params
@@ -259,13 +430,13 @@ def tckgen_seed_image_cargs(
     """
     cargs = []
     cargs.append("-seed_image")
-    cargs.append(execution.input_file(params.get("image")))
+    cargs.append(execution.input_file(params.get("image", None)))
     return cargs
 
 
 def tckgen_seed_sphere_params(
     spec: list[float],
-) -> TckgenSeedSphereParameters:
+) -> TckgenSeedSphereParametersTagged:
     """
     Build parameters.
     
@@ -276,7 +447,7 @@ def tckgen_seed_sphere_params(
         Parameter dictionary
     """
     params = {
-        "@type": "mrtrix.tckgen.seed_sphere",
+        "@type": "seed_sphere",
         "spec": spec,
     }
     return params
@@ -297,14 +468,14 @@ def tckgen_seed_sphere_cargs(
     """
     cargs = []
     cargs.append("-seed_sphere")
-    cargs.append(",".join(map(str, params.get("spec"))))
+    cargs.append(",".join(map(str, params.get("spec", None))))
     return cargs
 
 
 def tckgen_seed_random_per_voxel_params(
     image: InputPathType,
     num_per_voxel: int,
-) -> TckgenSeedRandomPerVoxelParameters:
+) -> TckgenSeedRandomPerVoxelParametersTagged:
     """
     Build parameters.
     
@@ -317,7 +488,7 @@ def tckgen_seed_random_per_voxel_params(
         Parameter dictionary
     """
     params = {
-        "@type": "mrtrix.tckgen.seed_random_per_voxel",
+        "@type": "seed_random_per_voxel",
         "image": image,
         "num_per_voxel": num_per_voxel,
     }
@@ -339,15 +510,15 @@ def tckgen_seed_random_per_voxel_cargs(
     """
     cargs = []
     cargs.append("-seed_random_per_voxel")
-    cargs.append(execution.input_file(params.get("image")))
-    cargs.append(str(params.get("num_per_voxel")))
+    cargs.append(execution.input_file(params.get("image", None)))
+    cargs.append(str(params.get("num_per_voxel", None)))
     return cargs
 
 
 def tckgen_seed_grid_per_voxel_params(
     image: InputPathType,
     grid_size: int,
-) -> TckgenSeedGridPerVoxelParameters:
+) -> TckgenSeedGridPerVoxelParametersTagged:
     """
     Build parameters.
     
@@ -362,7 +533,7 @@ def tckgen_seed_grid_per_voxel_params(
         Parameter dictionary
     """
     params = {
-        "@type": "mrtrix.tckgen.seed_grid_per_voxel",
+        "@type": "seed_grid_per_voxel",
         "image": image,
         "grid_size": grid_size,
     }
@@ -384,14 +555,14 @@ def tckgen_seed_grid_per_voxel_cargs(
     """
     cargs = []
     cargs.append("-seed_grid_per_voxel")
-    cargs.append(execution.input_file(params.get("image")))
-    cargs.append(str(params.get("grid_size")))
+    cargs.append(execution.input_file(params.get("image", None)))
+    cargs.append(str(params.get("grid_size", None)))
     return cargs
 
 
 def tckgen_seed_rejection_params(
     image: InputPathType,
-) -> TckgenSeedRejectionParameters:
+) -> TckgenSeedRejectionParametersTagged:
     """
     Build parameters.
     
@@ -402,7 +573,7 @@ def tckgen_seed_rejection_params(
         Parameter dictionary
     """
     params = {
-        "@type": "mrtrix.tckgen.seed_rejection",
+        "@type": "seed_rejection",
         "image": image,
     }
     return params
@@ -423,13 +594,13 @@ def tckgen_seed_rejection_cargs(
     """
     cargs = []
     cargs.append("-seed_rejection")
-    cargs.append(execution.input_file(params.get("image")))
+    cargs.append(execution.input_file(params.get("image", None)))
     return cargs
 
 
 def tckgen_seed_gmwmi_params(
     image: InputPathType,
-) -> TckgenSeedGmwmiParameters:
+) -> TckgenSeedGmwmiParametersTagged:
     """
     Build parameters.
     
@@ -442,7 +613,7 @@ def tckgen_seed_gmwmi_params(
         Parameter dictionary
     """
     params = {
-        "@type": "mrtrix.tckgen.seed_gmwmi",
+        "@type": "seed_gmwmi",
         "image": image,
     }
     return params
@@ -463,13 +634,13 @@ def tckgen_seed_gmwmi_cargs(
     """
     cargs = []
     cargs.append("-seed_gmwmi")
-    cargs.append(execution.input_file(params.get("image")))
+    cargs.append(execution.input_file(params.get("image", None)))
     return cargs
 
 
 def tckgen_various_string_params(
     obj: str,
-) -> TckgenVariousStringParameters:
+) -> TckgenVariousStringParametersTagged:
     """
     Build parameters.
     
@@ -479,7 +650,7 @@ def tckgen_various_string_params(
         Parameter dictionary
     """
     params = {
-        "@type": "mrtrix.tckgen.include.VariousString",
+        "@type": "VariousString",
         "obj": obj,
     }
     return params
@@ -499,13 +670,13 @@ def tckgen_various_string_cargs(
         Command-line arguments.
     """
     cargs = []
-    cargs.append(params.get("obj"))
+    cargs.append(params.get("obj", None))
     return cargs
 
 
 def tckgen_various_file_params(
     obj: InputPathType,
-) -> TckgenVariousFileParameters:
+) -> TckgenVariousFileParametersTagged:
     """
     Build parameters.
     
@@ -515,7 +686,7 @@ def tckgen_various_file_params(
         Parameter dictionary
     """
     params = {
-        "@type": "mrtrix.tckgen.include.VariousFile",
+        "@type": "VariousFile",
         "obj": obj,
     }
     return params
@@ -535,13 +706,13 @@ def tckgen_various_file_cargs(
         Command-line arguments.
     """
     cargs = []
-    cargs.append(execution.input_file(params.get("obj")))
+    cargs.append(execution.input_file(params.get("obj", None)))
     return cargs
 
 
 def tckgen_include_params(
-    spec: typing.Union[TckgenVariousStringParameters, TckgenVariousFileParameters],
-) -> TckgenIncludeParameters:
+    spec: typing.Union[TckgenVariousStringParametersTagged, TckgenVariousFileParametersTagged],
+) -> TckgenIncludeParametersTagged:
     """
     Build parameters.
     
@@ -553,7 +724,7 @@ def tckgen_include_params(
         Parameter dictionary
     """
     params = {
-        "@type": "mrtrix.tckgen.include",
+        "@type": "include",
         "spec": spec,
     }
     return params
@@ -574,13 +745,13 @@ def tckgen_include_cargs(
     """
     cargs = []
     cargs.append("-include")
-    cargs.extend(dyn_cargs(params.get("spec")["@type"])(params.get("spec"), execution))
+    cargs.extend(tckgen_spec_cargs_dyn_fn(params.get("spec", None)["@type"])(params.get("spec", None), execution))
     return cargs
 
 
 def tckgen_include_ordered_params(
     image: str,
-) -> TckgenIncludeOrderedParameters:
+) -> TckgenIncludeOrderedParametersTagged:
     """
     Build parameters.
     
@@ -593,7 +764,7 @@ def tckgen_include_ordered_params(
         Parameter dictionary
     """
     params = {
-        "@type": "mrtrix.tckgen.include_ordered",
+        "@type": "include_ordered",
         "image": image,
     }
     return params
@@ -614,13 +785,13 @@ def tckgen_include_ordered_cargs(
     """
     cargs = []
     cargs.append("-include_ordered")
-    cargs.append(params.get("image"))
+    cargs.append(params.get("image", None))
     return cargs
 
 
 def tckgen_various_string_1_params(
     obj: str,
-) -> TckgenVariousString1Parameters:
+) -> TckgenVariousString1ParametersTagged:
     """
     Build parameters.
     
@@ -630,7 +801,7 @@ def tckgen_various_string_1_params(
         Parameter dictionary
     """
     params = {
-        "@type": "mrtrix.tckgen.exclude.VariousString",
+        "@type": "VariousString_1",
         "obj": obj,
     }
     return params
@@ -650,13 +821,13 @@ def tckgen_various_string_1_cargs(
         Command-line arguments.
     """
     cargs = []
-    cargs.append(params.get("obj"))
+    cargs.append(params.get("obj", None))
     return cargs
 
 
 def tckgen_various_file_1_params(
     obj: InputPathType,
-) -> TckgenVariousFile1Parameters:
+) -> TckgenVariousFile1ParametersTagged:
     """
     Build parameters.
     
@@ -666,7 +837,7 @@ def tckgen_various_file_1_params(
         Parameter dictionary
     """
     params = {
-        "@type": "mrtrix.tckgen.exclude.VariousFile",
+        "@type": "VariousFile_1",
         "obj": obj,
     }
     return params
@@ -686,13 +857,13 @@ def tckgen_various_file_1_cargs(
         Command-line arguments.
     """
     cargs = []
-    cargs.append(execution.input_file(params.get("obj")))
+    cargs.append(execution.input_file(params.get("obj", None)))
     return cargs
 
 
 def tckgen_exclude_params(
-    spec: typing.Union[TckgenVariousString1Parameters, TckgenVariousFile1Parameters],
-) -> TckgenExcludeParameters:
+    spec: typing.Union[TckgenVariousString1ParametersTagged, TckgenVariousFile1ParametersTagged],
+) -> TckgenExcludeParametersTagged:
     """
     Build parameters.
     
@@ -704,7 +875,7 @@ def tckgen_exclude_params(
         Parameter dictionary
     """
     params = {
-        "@type": "mrtrix.tckgen.exclude",
+        "@type": "exclude",
         "spec": spec,
     }
     return params
@@ -725,13 +896,13 @@ def tckgen_exclude_cargs(
     """
     cargs = []
     cargs.append("-exclude")
-    cargs.extend(dyn_cargs(params.get("spec")["@type"])(params.get("spec"), execution))
+    cargs.extend(tckgen_spec_cargs_dyn_fn_(params.get("spec", None)["@type"])(params.get("spec", None), execution))
     return cargs
 
 
 def tckgen_various_string_2_params(
     obj: str,
-) -> TckgenVariousString2Parameters:
+) -> TckgenVariousString2ParametersTagged:
     """
     Build parameters.
     
@@ -741,7 +912,7 @@ def tckgen_various_string_2_params(
         Parameter dictionary
     """
     params = {
-        "@type": "mrtrix.tckgen.mask.VariousString",
+        "@type": "VariousString_2",
         "obj": obj,
     }
     return params
@@ -761,13 +932,13 @@ def tckgen_various_string_2_cargs(
         Command-line arguments.
     """
     cargs = []
-    cargs.append(params.get("obj"))
+    cargs.append(params.get("obj", None))
     return cargs
 
 
 def tckgen_various_file_2_params(
     obj: InputPathType,
-) -> TckgenVariousFile2Parameters:
+) -> TckgenVariousFile2ParametersTagged:
     """
     Build parameters.
     
@@ -777,7 +948,7 @@ def tckgen_various_file_2_params(
         Parameter dictionary
     """
     params = {
-        "@type": "mrtrix.tckgen.mask.VariousFile",
+        "@type": "VariousFile_2",
         "obj": obj,
     }
     return params
@@ -797,13 +968,13 @@ def tckgen_various_file_2_cargs(
         Command-line arguments.
     """
     cargs = []
-    cargs.append(execution.input_file(params.get("obj")))
+    cargs.append(execution.input_file(params.get("obj", None)))
     return cargs
 
 
 def tckgen_mask_params(
-    spec: typing.Union[TckgenVariousString2Parameters, TckgenVariousFile2Parameters],
-) -> TckgenMaskParameters:
+    spec: typing.Union[TckgenVariousString2ParametersTagged, TckgenVariousFile2ParametersTagged],
+) -> TckgenMaskParametersTagged:
     """
     Build parameters.
     
@@ -815,7 +986,7 @@ def tckgen_mask_params(
         Parameter dictionary
     """
     params = {
-        "@type": "mrtrix.tckgen.mask",
+        "@type": "mask",
         "spec": spec,
     }
     return params
@@ -836,14 +1007,14 @@ def tckgen_mask_cargs(
     """
     cargs = []
     cargs.append("-mask")
-    cargs.extend(dyn_cargs(params.get("spec")["@type"])(params.get("spec"), execution))
+    cargs.extend(tckgen_spec_cargs_dyn_fn_2(params.get("spec", None)["@type"])(params.get("spec", None), execution))
     return cargs
 
 
 def tckgen_fslgrad_params(
     bvecs: InputPathType,
     bvals: InputPathType,
-) -> TckgenFslgradParameters:
+) -> TckgenFslgradParametersTagged:
     """
     Build parameters.
     
@@ -860,7 +1031,7 @@ def tckgen_fslgrad_params(
         Parameter dictionary
     """
     params = {
-        "@type": "mrtrix.tckgen.fslgrad",
+        "@type": "fslgrad",
         "bvecs": bvecs,
         "bvals": bvals,
     }
@@ -882,15 +1053,15 @@ def tckgen_fslgrad_cargs(
     """
     cargs = []
     cargs.append("-fslgrad")
-    cargs.append(execution.input_file(params.get("bvecs")))
-    cargs.append(execution.input_file(params.get("bvals")))
+    cargs.append(execution.input_file(params.get("bvecs", None)))
+    cargs.append(execution.input_file(params.get("bvals", None)))
     return cargs
 
 
 def tckgen_config_params(
     key: str,
     value: str,
-) -> TckgenConfigParameters:
+) -> TckgenConfigParametersTagged:
     """
     Build parameters.
     
@@ -901,7 +1072,7 @@ def tckgen_config_params(
         Parameter dictionary
     """
     params = {
-        "@type": "mrtrix.tckgen.config",
+        "@type": "config",
         "key": key,
         "value": value,
     }
@@ -923,14 +1094,14 @@ def tckgen_config_cargs(
     """
     cargs = []
     cargs.append("-config")
-    cargs.append(params.get("key"))
-    cargs.append(params.get("value"))
+    cargs.append(params.get("key", None))
+    cargs.append(params.get("value", None))
     return cargs
 
 
 class TckgenOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `tckgen(...)`.
+    Output object returned when calling `TckgenParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -987,7 +1158,7 @@ def tckgen_params(
     config: list[TckgenConfigParameters] | None = None,
     help_: bool = False,
     version: bool = False,
-) -> TckgenParameters:
+) -> TckgenParametersTagged:
     """
     Build parameters.
     
@@ -1128,7 +1299,7 @@ def tckgen_params(
         Parameter dictionary
     """
     params = {
-        "@type": "mrtrix.tckgen",
+        "@type": "mrtrix/tckgen",
         "noprecomputed": noprecomputed,
         "rk4": rk4,
         "stop": stop,
@@ -1226,156 +1397,156 @@ def tckgen_cargs(
     """
     cargs = []
     cargs.append("tckgen")
-    if params.get("algorithm") is not None:
+    if params.get("algorithm", None) is not None:
         cargs.extend([
             "-algorithm",
-            params.get("algorithm")
+            params.get("algorithm", None)
         ])
-    if params.get("select") is not None:
+    if params.get("select", None) is not None:
         cargs.extend([
             "-select",
-            str(params.get("select"))
+            str(params.get("select", None))
         ])
-    if params.get("step") is not None:
+    if params.get("step", None) is not None:
         cargs.extend([
             "-step",
-            str(params.get("step"))
+            str(params.get("step", None))
         ])
-    if params.get("angle") is not None:
+    if params.get("angle", None) is not None:
         cargs.extend([
             "-angle",
-            str(params.get("angle"))
+            str(params.get("angle", None))
         ])
-    if params.get("minlength") is not None:
+    if params.get("minlength", None) is not None:
         cargs.extend([
             "-minlength",
-            str(params.get("minlength"))
+            str(params.get("minlength", None))
         ])
-    if params.get("maxlength") is not None:
+    if params.get("maxlength", None) is not None:
         cargs.extend([
             "-maxlength",
-            str(params.get("maxlength"))
+            str(params.get("maxlength", None))
         ])
-    if params.get("cutoff") is not None:
+    if params.get("cutoff", None) is not None:
         cargs.extend([
             "-cutoff",
-            str(params.get("cutoff"))
+            str(params.get("cutoff", None))
         ])
-    if params.get("trials") is not None:
+    if params.get("trials", None) is not None:
         cargs.extend([
             "-trials",
-            str(params.get("trials"))
+            str(params.get("trials", None))
         ])
-    if params.get("noprecomputed"):
+    if params.get("noprecomputed", False):
         cargs.append("-noprecomputed")
-    if params.get("rk4"):
+    if params.get("rk4", False):
         cargs.append("-rk4")
-    if params.get("stop"):
+    if params.get("stop", False):
         cargs.append("-stop")
-    if params.get("downsample") is not None:
+    if params.get("downsample", None) is not None:
         cargs.extend([
             "-downsample",
-            str(params.get("downsample"))
+            str(params.get("downsample", None))
         ])
-    if params.get("seed_image") is not None:
-        cargs.extend([a for c in [dyn_cargs(s["@type"])(s, execution) for s in params.get("seed_image")] for a in c])
-    if params.get("seed_sphere") is not None:
-        cargs.extend([a for c in [dyn_cargs(s["@type"])(s, execution) for s in params.get("seed_sphere")] for a in c])
-    if params.get("seed_random_per_voxel") is not None:
-        cargs.extend([a for c in [dyn_cargs(s["@type"])(s, execution) for s in params.get("seed_random_per_voxel")] for a in c])
-    if params.get("seed_grid_per_voxel") is not None:
-        cargs.extend([a for c in [dyn_cargs(s["@type"])(s, execution) for s in params.get("seed_grid_per_voxel")] for a in c])
-    if params.get("seed_rejection") is not None:
-        cargs.extend([a for c in [dyn_cargs(s["@type"])(s, execution) for s in params.get("seed_rejection")] for a in c])
-    if params.get("seed_gmwmi") is not None:
-        cargs.extend([a for c in [dyn_cargs(s["@type"])(s, execution) for s in params.get("seed_gmwmi")] for a in c])
-    if params.get("seed_dynamic") is not None:
+    if params.get("seed_image", None) is not None:
+        cargs.extend([a for c in [tckgen_seed_image_cargs(s, execution) for s in params.get("seed_image", None)] for a in c])
+    if params.get("seed_sphere", None) is not None:
+        cargs.extend([a for c in [tckgen_seed_sphere_cargs(s, execution) for s in params.get("seed_sphere", None)] for a in c])
+    if params.get("seed_random_per_voxel", None) is not None:
+        cargs.extend([a for c in [tckgen_seed_random_per_voxel_cargs(s, execution) for s in params.get("seed_random_per_voxel", None)] for a in c])
+    if params.get("seed_grid_per_voxel", None) is not None:
+        cargs.extend([a for c in [tckgen_seed_grid_per_voxel_cargs(s, execution) for s in params.get("seed_grid_per_voxel", None)] for a in c])
+    if params.get("seed_rejection", None) is not None:
+        cargs.extend([a for c in [tckgen_seed_rejection_cargs(s, execution) for s in params.get("seed_rejection", None)] for a in c])
+    if params.get("seed_gmwmi", None) is not None:
+        cargs.extend([a for c in [tckgen_seed_gmwmi_cargs(s, execution) for s in params.get("seed_gmwmi", None)] for a in c])
+    if params.get("seed_dynamic", None) is not None:
         cargs.extend([
             "-seed_dynamic",
-            execution.input_file(params.get("seed_dynamic"))
+            execution.input_file(params.get("seed_dynamic", None))
         ])
-    if params.get("seeds") is not None:
+    if params.get("seeds", None) is not None:
         cargs.extend([
             "-seeds",
-            str(params.get("seeds"))
+            str(params.get("seeds", None))
         ])
-    if params.get("max_attempts_per_seed") is not None:
+    if params.get("max_attempts_per_seed", None) is not None:
         cargs.extend([
             "-max_attempts_per_seed",
-            str(params.get("max_attempts_per_seed"))
+            str(params.get("max_attempts_per_seed", None))
         ])
-    if params.get("seed_cutoff") is not None:
+    if params.get("seed_cutoff", None) is not None:
         cargs.extend([
             "-seed_cutoff",
-            str(params.get("seed_cutoff"))
+            str(params.get("seed_cutoff", None))
         ])
-    if params.get("seed_unidirectional"):
+    if params.get("seed_unidirectional", False):
         cargs.append("-seed_unidirectional")
-    if params.get("seed_direction") is not None:
+    if params.get("seed_direction", None) is not None:
         cargs.extend([
             "-seed_direction",
-            ",".join(map(str, params.get("seed_direction")))
+            ",".join(map(str, params.get("seed_direction", None)))
         ])
-    if params.get("output_seeds") is not None:
+    if params.get("output_seeds", None) is not None:
         cargs.extend([
             "-output_seeds",
-            params.get("output_seeds")
+            params.get("output_seeds", None)
         ])
-    if params.get("include") is not None:
-        cargs.extend([a for c in [dyn_cargs(s["@type"])(s, execution) for s in params.get("include")] for a in c])
-    if params.get("include_ordered") is not None:
-        cargs.extend([a for c in [dyn_cargs(s["@type"])(s, execution) for s in params.get("include_ordered")] for a in c])
-    if params.get("exclude") is not None:
-        cargs.extend([a for c in [dyn_cargs(s["@type"])(s, execution) for s in params.get("exclude")] for a in c])
-    if params.get("mask") is not None:
-        cargs.extend([a for c in [dyn_cargs(s["@type"])(s, execution) for s in params.get("mask")] for a in c])
-    if params.get("act") is not None:
+    if params.get("include", None) is not None:
+        cargs.extend([a for c in [tckgen_include_cargs(s, execution) for s in params.get("include", None)] for a in c])
+    if params.get("include_ordered", None) is not None:
+        cargs.extend([a for c in [tckgen_include_ordered_cargs(s, execution) for s in params.get("include_ordered", None)] for a in c])
+    if params.get("exclude", None) is not None:
+        cargs.extend([a for c in [tckgen_exclude_cargs(s, execution) for s in params.get("exclude", None)] for a in c])
+    if params.get("mask", None) is not None:
+        cargs.extend([a for c in [tckgen_mask_cargs(s, execution) for s in params.get("mask", None)] for a in c])
+    if params.get("act", None) is not None:
         cargs.extend([
             "-act",
-            execution.input_file(params.get("act"))
+            execution.input_file(params.get("act", None))
         ])
-    if params.get("backtrack"):
+    if params.get("backtrack", False):
         cargs.append("-backtrack")
-    if params.get("crop_at_gmwmi"):
+    if params.get("crop_at_gmwmi", False):
         cargs.append("-crop_at_gmwmi")
-    if params.get("power") is not None:
+    if params.get("power", None) is not None:
         cargs.extend([
             "-power",
-            str(params.get("power"))
+            str(params.get("power", None))
         ])
-    if params.get("samples") is not None:
+    if params.get("samples", None) is not None:
         cargs.extend([
             "-samples",
-            str(params.get("samples"))
+            str(params.get("samples", None))
         ])
-    if params.get("grad") is not None:
+    if params.get("grad", None) is not None:
         cargs.extend([
             "-grad",
-            execution.input_file(params.get("grad"))
+            execution.input_file(params.get("grad", None))
         ])
-    if params.get("fslgrad") is not None:
-        cargs.extend(dyn_cargs(params.get("fslgrad")["@type"])(params.get("fslgrad"), execution))
-    if params.get("info"):
+    if params.get("fslgrad", None) is not None:
+        cargs.extend(tckgen_fslgrad_cargs(params.get("fslgrad", None), execution))
+    if params.get("info", False):
         cargs.append("-info")
-    if params.get("quiet"):
+    if params.get("quiet", False):
         cargs.append("-quiet")
-    if params.get("debug"):
+    if params.get("debug", False):
         cargs.append("-debug")
-    if params.get("force"):
+    if params.get("force", False):
         cargs.append("-force")
-    if params.get("nthreads") is not None:
+    if params.get("nthreads", None) is not None:
         cargs.extend([
             "-nthreads",
-            str(params.get("nthreads"))
+            str(params.get("nthreads", None))
         ])
-    if params.get("config") is not None:
-        cargs.extend([a for c in [dyn_cargs(s["@type"])(s, execution) for s in params.get("config")] for a in c])
-    if params.get("help"):
+    if params.get("config", None) is not None:
+        cargs.extend([a for c in [tckgen_config_cargs(s, execution) for s in params.get("config", None)] for a in c])
+    if params.get("help", False):
         cargs.append("-help")
-    if params.get("version"):
+    if params.get("version", False):
         cargs.append("-version")
-    cargs.append(execution.input_file(params.get("source")))
-    cargs.append(params.get("tracks"))
+    cargs.append(execution.input_file(params.get("source", None)))
+    cargs.append(params.get("tracks", None))
     return cargs
 
 
@@ -1394,8 +1565,8 @@ def tckgen_outputs(
     """
     ret = TckgenOutputs(
         root=execution.output_file("."),
-        tracks=execution.output_file(params.get("tracks")),
-        output_seeds=execution.output_file(params.get("output_seeds")) if (params.get("output_seeds") is not None) else None,
+        tracks=execution.output_file(params.get("tracks", None)),
+        output_seeds=execution.output_file(params.get("output_seeds", None)) if (params.get("output_seeds") is not None) else None,
     )
     return ret
 
@@ -1944,26 +2115,7 @@ def tckgen(
 
 __all__ = [
     "TCKGEN_METADATA",
-    "TckgenConfigParameters",
-    "TckgenExcludeParameters",
-    "TckgenFslgradParameters",
-    "TckgenIncludeOrderedParameters",
-    "TckgenIncludeParameters",
-    "TckgenMaskParameters",
     "TckgenOutputs",
-    "TckgenParameters",
-    "TckgenSeedGmwmiParameters",
-    "TckgenSeedGridPerVoxelParameters",
-    "TckgenSeedImageParameters",
-    "TckgenSeedRandomPerVoxelParameters",
-    "TckgenSeedRejectionParameters",
-    "TckgenSeedSphereParameters",
-    "TckgenVariousFile1Parameters",
-    "TckgenVariousFile2Parameters",
-    "TckgenVariousFileParameters",
-    "TckgenVariousString1Parameters",
-    "TckgenVariousString2Parameters",
-    "TckgenVariousStringParameters",
     "tckgen",
     "tckgen_config_params",
     "tckgen_exclude_params",

@@ -14,7 +14,19 @@ SEGMENT_SUBREGIONS_METADATA = Metadata(
 
 
 SegmentSubregionsParameters = typing.TypedDict('SegmentSubregionsParameters', {
-    "@type": typing.Literal["freesurfer.segment_subregions"],
+    "@type": typing.NotRequired[typing.Literal["freesurfer/segment_subregions"]],
+    "structure": str,
+    "cross": typing.NotRequired[str | None],
+    "long_base": typing.NotRequired[str | None],
+    "sd": typing.NotRequired[str | None],
+    "suffix": typing.NotRequired[str | None],
+    "temp_dir": typing.NotRequired[str | None],
+    "out_dir": typing.NotRequired[str | None],
+    "debug": bool,
+    "threads": typing.NotRequired[float | None],
+})
+SegmentSubregionsParametersTagged = typing.TypedDict('SegmentSubregionsParametersTagged', {
+    "@type": typing.Literal["freesurfer/segment_subregions"],
     "structure": str,
     "cross": typing.NotRequired[str | None],
     "long_base": typing.NotRequired[str | None],
@@ -27,40 +39,9 @@ SegmentSubregionsParameters = typing.TypedDict('SegmentSubregionsParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "freesurfer.segment_subregions": segment_subregions_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-    }.get(t)
-
-
 class SegmentSubregionsOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `segment_subregions(...)`.
+    Output object returned when calling `SegmentSubregionsParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -76,7 +57,7 @@ def segment_subregions_params(
     out_dir: str | None = None,
     debug: bool = False,
     threads: float | None = None,
-) -> SegmentSubregionsParameters:
+) -> SegmentSubregionsParametersTagged:
     """
     Build parameters.
     
@@ -99,7 +80,7 @@ def segment_subregions_params(
         Parameter dictionary
     """
     params = {
-        "@type": "freesurfer.segment_subregions",
+        "@type": "freesurfer/segment_subregions",
         "structure": structure,
         "debug": debug,
     }
@@ -135,43 +116,43 @@ def segment_subregions_cargs(
     """
     cargs = []
     cargs.append("segment_subregions")
-    cargs.append(params.get("structure"))
-    if params.get("cross") is not None:
+    cargs.append(params.get("structure", None))
+    if params.get("cross", None) is not None:
         cargs.extend([
             "--cross",
-            params.get("cross")
+            params.get("cross", None)
         ])
-    if params.get("long_base") is not None:
+    if params.get("long_base", None) is not None:
         cargs.extend([
             "--long-base",
-            params.get("long_base")
+            params.get("long_base", None)
         ])
-    if params.get("sd") is not None:
+    if params.get("sd", None) is not None:
         cargs.extend([
             "--sd",
-            params.get("sd")
+            params.get("sd", None)
         ])
-    if params.get("suffix") is not None:
+    if params.get("suffix", None) is not None:
         cargs.extend([
             "--suffix",
-            params.get("suffix")
+            params.get("suffix", None)
         ])
-    if params.get("temp_dir") is not None:
+    if params.get("temp_dir", None) is not None:
         cargs.extend([
             "--temp-dir",
-            params.get("temp_dir")
+            params.get("temp_dir", None)
         ])
-    if params.get("out_dir") is not None:
+    if params.get("out_dir", None) is not None:
         cargs.extend([
             "--out-dir",
-            params.get("out_dir")
+            params.get("out_dir", None)
         ])
-    if params.get("debug"):
+    if params.get("debug", False):
         cargs.append("--debug")
-    if params.get("threads") is not None:
+    if params.get("threads", None) is not None:
         cargs.extend([
             "--threads",
-            str(params.get("threads"))
+            str(params.get("threads", None))
         ])
     return cargs
 
@@ -282,7 +263,6 @@ def segment_subregions(
 __all__ = [
     "SEGMENT_SUBREGIONS_METADATA",
     "SegmentSubregionsOutputs",
-    "SegmentSubregionsParameters",
     "segment_subregions",
     "segment_subregions_execute",
     "segment_subregions_params",

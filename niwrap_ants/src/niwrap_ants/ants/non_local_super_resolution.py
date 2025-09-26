@@ -14,7 +14,22 @@ NON_LOCAL_SUPER_RESOLUTION_METADATA = Metadata(
 
 
 NonLocalSuperResolutionParameters = typing.TypedDict('NonLocalSuperResolutionParameters', {
-    "@type": typing.Literal["ants.NonLocalSuperResolution"],
+    "@type": typing.NotRequired[typing.Literal["ants/NonLocalSuperResolution"]],
+    "image_dimensionality": typing.NotRequired[typing.Literal[2, 3, 4] | None],
+    "input_image": InputPathType,
+    "interpolated_image": typing.NotRequired[InputPathType | None],
+    "reference_image": typing.NotRequired[InputPathType | None],
+    "patch_radius": typing.NotRequired[typing.Literal["1", "1x1x1"] | None],
+    "search_radius": typing.NotRequired[typing.Literal["3", "3x3x3"] | None],
+    "intensity_difference_sigma": typing.NotRequired[float | None],
+    "patch_similarity_sigma": typing.NotRequired[float | None],
+    "scale_levels": typing.NotRequired[str | None],
+    "interpolation": typing.NotRequired[typing.Literal["Linear", "NearestNeighbor", "Gaussian", "BSpline", "CosineWindowedSinc", "WelchWindowedSinc", "HammingWindowedSinc", "LanczosWindowedSinc"] | None],
+    "output": str,
+    "verbose": typing.NotRequired[typing.Literal[0, 1] | None],
+})
+NonLocalSuperResolutionParametersTagged = typing.TypedDict('NonLocalSuperResolutionParametersTagged', {
+    "@type": typing.Literal["ants/NonLocalSuperResolution"],
     "image_dimensionality": typing.NotRequired[typing.Literal[2, 3, 4] | None],
     "input_image": InputPathType,
     "interpolated_image": typing.NotRequired[InputPathType | None],
@@ -30,41 +45,9 @@ NonLocalSuperResolutionParameters = typing.TypedDict('NonLocalSuperResolutionPar
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "ants.NonLocalSuperResolution": non_local_super_resolution_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "ants.NonLocalSuperResolution": non_local_super_resolution_outputs,
-    }.get(t)
-
-
 class NonLocalSuperResolutionOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `non_local_super_resolution(...)`.
+    Output object returned when calling `NonLocalSuperResolutionParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -85,7 +68,7 @@ def non_local_super_resolution_params(
     scale_levels: str | None = None,
     interpolation: typing.Literal["Linear", "NearestNeighbor", "Gaussian", "BSpline", "CosineWindowedSinc", "WelchWindowedSinc", "HammingWindowedSinc", "LanczosWindowedSinc"] | None = None,
     verbose: typing.Literal[0, 1] | None = None,
-) -> NonLocalSuperResolutionParameters:
+) -> NonLocalSuperResolutionParametersTagged:
     """
     Build parameters.
     
@@ -113,7 +96,7 @@ def non_local_super_resolution_params(
         Parameter dictionary
     """
     params = {
-        "@type": "ants.NonLocalSuperResolution",
+        "@type": "ants/NonLocalSuperResolution",
         "input_image": input_image,
         "output": output,
     }
@@ -155,63 +138,63 @@ def non_local_super_resolution_cargs(
     """
     cargs = []
     cargs.append("NonLocalSuperResolution")
-    if params.get("image_dimensionality") is not None:
+    if params.get("image_dimensionality", None) is not None:
         cargs.extend([
             "-d",
-            str(params.get("image_dimensionality"))
+            str(params.get("image_dimensionality", None))
         ])
     cargs.extend([
         "-i",
-        execution.input_file(params.get("input_image"))
+        execution.input_file(params.get("input_image", None))
     ])
-    if params.get("interpolated_image") is not None:
+    if params.get("interpolated_image", None) is not None:
         cargs.extend([
             "-j",
-            execution.input_file(params.get("interpolated_image"))
+            execution.input_file(params.get("interpolated_image", None))
         ])
-    if params.get("reference_image") is not None:
+    if params.get("reference_image", None) is not None:
         cargs.extend([
             "-k",
-            execution.input_file(params.get("reference_image"))
+            execution.input_file(params.get("reference_image", None))
         ])
-    if params.get("patch_radius") is not None:
+    if params.get("patch_radius", None) is not None:
         cargs.extend([
             "-p",
-            params.get("patch_radius")
+            params.get("patch_radius", None)
         ])
-    if params.get("search_radius") is not None:
+    if params.get("search_radius", None) is not None:
         cargs.extend([
             "-r",
-            params.get("search_radius")
+            params.get("search_radius", None)
         ])
-    if params.get("intensity_difference_sigma") is not None:
+    if params.get("intensity_difference_sigma", None) is not None:
         cargs.extend([
             "-g",
-            str(params.get("intensity_difference_sigma"))
+            str(params.get("intensity_difference_sigma", None))
         ])
-    if params.get("patch_similarity_sigma") is not None:
+    if params.get("patch_similarity_sigma", None) is not None:
         cargs.extend([
             "-t",
-            str(params.get("patch_similarity_sigma"))
+            str(params.get("patch_similarity_sigma", None))
         ])
-    if params.get("scale_levels") is not None:
+    if params.get("scale_levels", None) is not None:
         cargs.extend([
             "-s",
-            params.get("scale_levels")
+            params.get("scale_levels", None)
         ])
-    if params.get("interpolation") is not None:
+    if params.get("interpolation", None) is not None:
         cargs.extend([
             "-n",
-            params.get("interpolation")
+            params.get("interpolation", None)
         ])
     cargs.extend([
         "-o",
-        params.get("output")
+        params.get("output", None)
     ])
-    if params.get("verbose") is not None:
+    if params.get("verbose", None) is not None:
         cargs.extend([
             "-v",
-            str(params.get("verbose"))
+            str(params.get("verbose", None))
         ])
     return cargs
 
@@ -231,7 +214,7 @@ def non_local_super_resolution_outputs(
     """
     ret = NonLocalSuperResolutionOutputs(
         root=execution.output_file("."),
-        superresoluted_output=execution.output_file(params.get("output")),
+        superresoluted_output=execution.output_file(params.get("output", None)),
     )
     return ret
 
@@ -334,7 +317,6 @@ def non_local_super_resolution(
 __all__ = [
     "NON_LOCAL_SUPER_RESOLUTION_METADATA",
     "NonLocalSuperResolutionOutputs",
-    "NonLocalSuperResolutionParameters",
     "non_local_super_resolution",
     "non_local_super_resolution_execute",
     "non_local_super_resolution_params",

@@ -14,7 +14,22 @@ CREATE_TILED_MOSAIC_METADATA = Metadata(
 
 
 CreateTiledMosaicParameters = typing.TypedDict('CreateTiledMosaicParameters', {
-    "@type": typing.Literal["ants.CreateTiledMosaic"],
+    "@type": typing.NotRequired[typing.Literal["ants/CreateTiledMosaic"]],
+    "input_image": InputPathType,
+    "rgb_image": typing.NotRequired[InputPathType | None],
+    "mask_image": typing.NotRequired[InputPathType | None],
+    "alpha": typing.NotRequired[float | None],
+    "functional_overlay": typing.NotRequired[str | None],
+    "output": str,
+    "tile_geometry": typing.NotRequired[str | None],
+    "direction": typing.NotRequired[typing.Literal["0", "1", "2", "x", "y", "z"] | None],
+    "pad_or_crop": typing.NotRequired[str | None],
+    "slices": typing.NotRequired[str | None],
+    "flip_slice": typing.NotRequired[str | None],
+    "permute_axes": typing.NotRequired[typing.Literal[0, 1] | None],
+})
+CreateTiledMosaicParametersTagged = typing.TypedDict('CreateTiledMosaicParametersTagged', {
+    "@type": typing.Literal["ants/CreateTiledMosaic"],
     "input_image": InputPathType,
     "rgb_image": typing.NotRequired[InputPathType | None],
     "mask_image": typing.NotRequired[InputPathType | None],
@@ -30,41 +45,9 @@ CreateTiledMosaicParameters = typing.TypedDict('CreateTiledMosaicParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "ants.CreateTiledMosaic": create_tiled_mosaic_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "ants.CreateTiledMosaic": create_tiled_mosaic_outputs,
-    }.get(t)
-
-
 class CreateTiledMosaicOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `create_tiled_mosaic(...)`.
+    Output object returned when calling `CreateTiledMosaicParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -85,7 +68,7 @@ def create_tiled_mosaic_params(
     slices: str | None = None,
     flip_slice: str | None = None,
     permute_axes: typing.Literal[0, 1] | None = None,
-) -> CreateTiledMosaicParameters:
+) -> CreateTiledMosaicParametersTagged:
     """
     Build parameters.
     
@@ -122,7 +105,7 @@ def create_tiled_mosaic_params(
         Parameter dictionary
     """
     params = {
-        "@type": "ants.CreateTiledMosaic",
+        "@type": "ants/CreateTiledMosaic",
         "input_image": input_image,
         "output": output,
     }
@@ -166,61 +149,61 @@ def create_tiled_mosaic_cargs(
     cargs.append("CreateTiledMosaic")
     cargs.extend([
         "-i",
-        execution.input_file(params.get("input_image"))
+        execution.input_file(params.get("input_image", None))
     ])
-    if params.get("rgb_image") is not None:
+    if params.get("rgb_image", None) is not None:
         cargs.extend([
             "-r",
-            execution.input_file(params.get("rgb_image"))
+            execution.input_file(params.get("rgb_image", None))
         ])
-    if params.get("mask_image") is not None:
+    if params.get("mask_image", None) is not None:
         cargs.extend([
             "-x",
-            execution.input_file(params.get("mask_image"))
+            execution.input_file(params.get("mask_image", None))
         ])
-    if params.get("alpha") is not None:
+    if params.get("alpha", None) is not None:
         cargs.extend([
             "-a",
-            str(params.get("alpha"))
+            str(params.get("alpha", None))
         ])
-    if params.get("functional_overlay") is not None:
+    if params.get("functional_overlay", None) is not None:
         cargs.extend([
             "-e",
-            params.get("functional_overlay")
+            params.get("functional_overlay", None)
         ])
     cargs.extend([
         "-o",
-        params.get("output")
+        params.get("output", None)
     ])
-    if params.get("tile_geometry") is not None:
+    if params.get("tile_geometry", None) is not None:
         cargs.extend([
             "-t",
-            params.get("tile_geometry")
+            params.get("tile_geometry", None)
         ])
-    if params.get("direction") is not None:
+    if params.get("direction", None) is not None:
         cargs.extend([
             "-d",
-            params.get("direction")
+            params.get("direction", None)
         ])
-    if params.get("pad_or_crop") is not None:
+    if params.get("pad_or_crop", None) is not None:
         cargs.extend([
             "-p",
-            params.get("pad_or_crop")
+            params.get("pad_or_crop", None)
         ])
-    if params.get("slices") is not None:
+    if params.get("slices", None) is not None:
         cargs.extend([
             "-s",
-            params.get("slices")
+            params.get("slices", None)
         ])
-    if params.get("flip_slice") is not None:
+    if params.get("flip_slice", None) is not None:
         cargs.extend([
             "-f",
-            params.get("flip_slice")
+            params.get("flip_slice", None)
         ])
-    if params.get("permute_axes") is not None:
+    if params.get("permute_axes", None) is not None:
         cargs.extend([
             "-g",
-            str(params.get("permute_axes"))
+            str(params.get("permute_axes", None))
         ])
     return cargs
 
@@ -240,7 +223,7 @@ def create_tiled_mosaic_outputs(
     """
     ret = CreateTiledMosaicOutputs(
         root=execution.output_file("."),
-        tiled_mosaic_image=execution.output_file(params.get("output")),
+        tiled_mosaic_image=execution.output_file(params.get("output", None)),
     )
     return ret
 
@@ -350,7 +333,6 @@ def create_tiled_mosaic(
 __all__ = [
     "CREATE_TILED_MOSAIC_METADATA",
     "CreateTiledMosaicOutputs",
-    "CreateTiledMosaicParameters",
     "create_tiled_mosaic",
     "create_tiled_mosaic_execute",
     "create_tiled_mosaic_params",

@@ -14,7 +14,22 @@ TRAIN_GCS_ATLAS_METADATA = Metadata(
 
 
 TrainGcsAtlasParameters = typing.TypedDict('TrainGcsAtlasParameters', {
-    "@type": typing.Literal["freesurfer.train-gcs-atlas"],
+    "@type": typing.NotRequired[typing.Literal["freesurfer/train-gcs-atlas"]],
+    "manual_parcellation": typing.NotRequired[str | None],
+    "subjlist_file": typing.NotRequired[InputPathType | None],
+    "left_hemi": bool,
+    "right_hemi": bool,
+    "hemi_spec": typing.NotRequired[str | None],
+    "output_gcs": str,
+    "surf_reg": typing.NotRequired[InputPathType | None],
+    "color_table": typing.NotRequired[InputPathType | None],
+    "exclude_subject": typing.NotRequired[str | None],
+    "jackknife_flag": bool,
+    "aseg_filename": typing.NotRequired[str | None],
+    "threads": typing.NotRequired[float | None],
+})
+TrainGcsAtlasParametersTagged = typing.TypedDict('TrainGcsAtlasParametersTagged', {
+    "@type": typing.Literal["freesurfer/train-gcs-atlas"],
     "manual_parcellation": typing.NotRequired[str | None],
     "subjlist_file": typing.NotRequired[InputPathType | None],
     "left_hemi": bool,
@@ -30,41 +45,9 @@ TrainGcsAtlasParameters = typing.TypedDict('TrainGcsAtlasParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "freesurfer.train-gcs-atlas": train_gcs_atlas_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "freesurfer.train-gcs-atlas": train_gcs_atlas_outputs,
-    }.get(t)
-
-
 class TrainGcsAtlasOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `train_gcs_atlas(...)`.
+    Output object returned when calling `TrainGcsAtlasParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -85,7 +68,7 @@ def train_gcs_atlas_params(
     jackknife_flag: bool = False,
     aseg_filename: str | None = None,
     threads: float | None = None,
-) -> TrainGcsAtlasParameters:
+) -> TrainGcsAtlasParametersTagged:
     """
     Build parameters.
     
@@ -106,7 +89,7 @@ def train_gcs_atlas_params(
         Parameter dictionary
     """
     params = {
-        "@type": "freesurfer.train-gcs-atlas",
+        "@type": "freesurfer/train-gcs-atlas",
         "left_hemi": left_hemi,
         "right_hemi": right_hemi,
         "output_gcs": output_gcs,
@@ -146,55 +129,55 @@ def train_gcs_atlas_cargs(
     """
     cargs = []
     cargs.append("train-gcs-atlas")
-    if params.get("manual_parcellation") is not None:
+    if params.get("manual_parcellation", None) is not None:
         cargs.extend([
             "--man",
-            params.get("manual_parcellation")
+            params.get("manual_parcellation", None)
         ])
-    if params.get("subjlist_file") is not None:
+    if params.get("subjlist_file", None) is not None:
         cargs.extend([
             "--f",
-            execution.input_file(params.get("subjlist_file"))
+            execution.input_file(params.get("subjlist_file", None))
         ])
-    if params.get("left_hemi"):
+    if params.get("left_hemi", False):
         cargs.append("--lh")
-    if params.get("right_hemi"):
+    if params.get("right_hemi", False):
         cargs.append("--rh")
-    if params.get("hemi_spec") is not None:
+    if params.get("hemi_spec", None) is not None:
         cargs.extend([
             "--hemi",
-            params.get("hemi_spec")
+            params.get("hemi_spec", None)
         ])
     cargs.extend([
         "--o",
-        params.get("output_gcs")
+        params.get("output_gcs", None)
     ])
-    if params.get("surf_reg") is not None:
+    if params.get("surf_reg", None) is not None:
         cargs.extend([
             "--reg",
-            execution.input_file(params.get("surf_reg"))
+            execution.input_file(params.get("surf_reg", None))
         ])
-    if params.get("color_table") is not None:
+    if params.get("color_table", None) is not None:
         cargs.extend([
             "--ctab",
-            execution.input_file(params.get("color_table"))
+            execution.input_file(params.get("color_table", None))
         ])
-    if params.get("exclude_subject") is not None:
+    if params.get("exclude_subject", None) is not None:
         cargs.extend([
             "--x",
-            params.get("exclude_subject")
+            params.get("exclude_subject", None)
         ])
-    if params.get("jackknife_flag"):
+    if params.get("jackknife_flag", False):
         cargs.append("--jackknife")
-    if params.get("aseg_filename") is not None:
+    if params.get("aseg_filename", None) is not None:
         cargs.extend([
             "--aseg",
-            params.get("aseg_filename")
+            params.get("aseg_filename", None)
         ])
-    if params.get("threads") is not None:
+    if params.get("threads", None) is not None:
         cargs.extend([
             "--threads",
-            str(params.get("threads"))
+            str(params.get("threads", None))
         ])
     return cargs
 
@@ -214,7 +197,7 @@ def train_gcs_atlas_outputs(
     """
     ret = TrainGcsAtlasOutputs(
         root=execution.output_file("."),
-        output_gcs_file=execution.output_file(params.get("output_gcs")),
+        output_gcs_file=execution.output_file(params.get("output_gcs", None)),
     )
     return ret
 
@@ -310,7 +293,6 @@ def train_gcs_atlas(
 __all__ = [
     "TRAIN_GCS_ATLAS_METADATA",
     "TrainGcsAtlasOutputs",
-    "TrainGcsAtlasParameters",
     "train_gcs_atlas",
     "train_gcs_atlas_execute",
     "train_gcs_atlas_params",

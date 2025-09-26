@@ -14,7 +14,20 @@ MRI_EASYREG_METADATA = Metadata(
 
 
 MriEasyregParameters = typing.TypedDict('MriEasyregParameters', {
-    "@type": typing.Literal["freesurfer.mri_easyreg"],
+    "@type": typing.NotRequired[typing.Literal["freesurfer/mri_easyreg"]],
+    "reference_image": InputPathType,
+    "reference_segmentation": typing.NotRequired[InputPathType | None],
+    "floating_image": InputPathType,
+    "floating_segmentation": typing.NotRequired[InputPathType | None],
+    "registered_reference": typing.NotRequired[InputPathType | None],
+    "registered_floating": typing.NotRequired[InputPathType | None],
+    "forward_field": typing.NotRequired[InputPathType | None],
+    "inverse_field": typing.NotRequired[InputPathType | None],
+    "affine_only": bool,
+    "threads": typing.NotRequired[float | None],
+})
+MriEasyregParametersTagged = typing.TypedDict('MriEasyregParametersTagged', {
+    "@type": typing.Literal["freesurfer/mri_easyreg"],
     "reference_image": InputPathType,
     "reference_segmentation": typing.NotRequired[InputPathType | None],
     "floating_image": InputPathType,
@@ -28,41 +41,9 @@ MriEasyregParameters = typing.TypedDict('MriEasyregParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "freesurfer.mri_easyreg": mri_easyreg_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "freesurfer.mri_easyreg": mri_easyreg_outputs,
-    }.get(t)
-
-
 class MriEasyregOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `mri_easyreg(...)`.
+    Output object returned when calling `MriEasyregParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -87,7 +68,7 @@ def mri_easyreg_params(
     inverse_field: InputPathType | None = None,
     affine_only: bool = False,
     threads: float | None = None,
-) -> MriEasyregParameters:
+) -> MriEasyregParametersTagged:
     """
     Build parameters.
     
@@ -110,7 +91,7 @@ def mri_easyreg_params(
         Parameter dictionary
     """
     params = {
-        "@type": "freesurfer.mri_easyreg",
+        "@type": "freesurfer/mri_easyreg",
         "reference_image": reference_image,
         "floating_image": floating_image,
         "affine_only": affine_only,
@@ -149,48 +130,48 @@ def mri_easyreg_cargs(
     cargs.append("mri_easyreg")
     cargs.extend([
         "--ref",
-        execution.input_file(params.get("reference_image"))
+        execution.input_file(params.get("reference_image", None))
     ])
-    if params.get("reference_segmentation") is not None:
+    if params.get("reference_segmentation", None) is not None:
         cargs.extend([
             "--ref_seg",
-            execution.input_file(params.get("reference_segmentation"))
+            execution.input_file(params.get("reference_segmentation", None))
         ])
     cargs.extend([
         "--flo",
-        execution.input_file(params.get("floating_image"))
+        execution.input_file(params.get("floating_image", None))
     ])
-    if params.get("floating_segmentation") is not None:
+    if params.get("floating_segmentation", None) is not None:
         cargs.extend([
             "--flo_seg",
-            execution.input_file(params.get("floating_segmentation"))
+            execution.input_file(params.get("floating_segmentation", None))
         ])
-    if params.get("registered_reference") is not None:
+    if params.get("registered_reference", None) is not None:
         cargs.extend([
             "--ref_reg",
-            execution.input_file(params.get("registered_reference"))
+            execution.input_file(params.get("registered_reference", None))
         ])
-    if params.get("registered_floating") is not None:
+    if params.get("registered_floating", None) is not None:
         cargs.extend([
             "--flo_reg",
-            execution.input_file(params.get("registered_floating"))
+            execution.input_file(params.get("registered_floating", None))
         ])
-    if params.get("forward_field") is not None:
+    if params.get("forward_field", None) is not None:
         cargs.extend([
             "--fwd_field",
-            execution.input_file(params.get("forward_field"))
+            execution.input_file(params.get("forward_field", None))
         ])
-    if params.get("inverse_field") is not None:
+    if params.get("inverse_field", None) is not None:
         cargs.extend([
             "--bak_field",
-            execution.input_file(params.get("inverse_field"))
+            execution.input_file(params.get("inverse_field", None))
         ])
-    if params.get("affine_only"):
+    if params.get("affine_only", False):
         cargs.append("--affine_only")
-    if params.get("threads") is not None:
+    if params.get("threads", None) is not None:
         cargs.extend([
             "--threads",
-            str(params.get("threads"))
+            str(params.get("threads", None))
         ])
     return cargs
 
@@ -305,7 +286,6 @@ def mri_easyreg(
 __all__ = [
     "MRI_EASYREG_METADATA",
     "MriEasyregOutputs",
-    "MriEasyregParameters",
     "mri_easyreg",
     "mri_easyreg_execute",
     "mri_easyreg_params",

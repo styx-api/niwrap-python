@@ -14,7 +14,21 @@ VECREG_METADATA = Metadata(
 
 
 VecregParameters = typing.TypedDict('VecregParameters', {
-    "@type": typing.Literal["fsl.vecreg"],
+    "@type": typing.NotRequired[typing.Literal["fsl/vecreg"]],
+    "input_file": InputPathType,
+    "output_file": str,
+    "reference_volume": InputPathType,
+    "transform_file": typing.NotRequired[InputPathType | None],
+    "verbose_flag": bool,
+    "help_flag": bool,
+    "secondary_affine": typing.NotRequired[InputPathType | None],
+    "secondary_warp": typing.NotRequired[InputPathType | None],
+    "interp_method": typing.NotRequired[str | None],
+    "brain_mask": typing.NotRequired[InputPathType | None],
+    "ref_brain_mask": typing.NotRequired[InputPathType | None],
+})
+VecregParametersTagged = typing.TypedDict('VecregParametersTagged', {
+    "@type": typing.Literal["fsl/vecreg"],
     "input_file": InputPathType,
     "output_file": str,
     "reference_volume": InputPathType,
@@ -29,41 +43,9 @@ VecregParameters = typing.TypedDict('VecregParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "fsl.vecreg": vecreg_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "fsl.vecreg": vecreg_outputs,
-    }.get(t)
-
-
 class VecregOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `vecreg(...)`.
+    Output object returned when calling `VecregParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -83,7 +65,7 @@ def vecreg_params(
     interp_method: str | None = None,
     brain_mask: InputPathType | None = None,
     ref_brain_mask: InputPathType | None = None,
-) -> VecregParameters:
+) -> VecregParametersTagged:
     """
     Build parameters.
     
@@ -107,7 +89,7 @@ def vecreg_params(
         Parameter dictionary
     """
     params = {
-        "@type": "fsl.vecreg",
+        "@type": "fsl/vecreg",
         "input_file": input_file,
         "output_file": output_file,
         "reference_volume": reference_volume,
@@ -146,49 +128,49 @@ def vecreg_cargs(
     cargs.append("vecreg")
     cargs.extend([
         "-i",
-        execution.input_file(params.get("input_file"))
+        execution.input_file(params.get("input_file", None))
     ])
     cargs.extend([
         "-o",
-        params.get("output_file")
+        params.get("output_file", None)
     ])
     cargs.extend([
         "-r",
-        execution.input_file(params.get("reference_volume"))
+        execution.input_file(params.get("reference_volume", None))
     ])
-    if params.get("transform_file") is not None:
+    if params.get("transform_file", None) is not None:
         cargs.extend([
             "-t",
-            execution.input_file(params.get("transform_file"))
+            execution.input_file(params.get("transform_file", None))
         ])
-    if params.get("verbose_flag"):
+    if params.get("verbose_flag", False):
         cargs.append("-v")
-    if params.get("help_flag"):
+    if params.get("help_flag", False):
         cargs.append("-h")
-    if params.get("secondary_affine") is not None:
+    if params.get("secondary_affine", None) is not None:
         cargs.extend([
             "--rotmat",
-            execution.input_file(params.get("secondary_affine"))
+            execution.input_file(params.get("secondary_affine", None))
         ])
-    if params.get("secondary_warp") is not None:
+    if params.get("secondary_warp", None) is not None:
         cargs.extend([
             "--rotwarp",
-            execution.input_file(params.get("secondary_warp"))
+            execution.input_file(params.get("secondary_warp", None))
         ])
-    if params.get("interp_method") is not None:
+    if params.get("interp_method", None) is not None:
         cargs.extend([
             "--interp",
-            params.get("interp_method")
+            params.get("interp_method", None)
         ])
-    if params.get("brain_mask") is not None:
+    if params.get("brain_mask", None) is not None:
         cargs.extend([
             "-m",
-            execution.input_file(params.get("brain_mask"))
+            execution.input_file(params.get("brain_mask", None))
         ])
-    if params.get("ref_brain_mask") is not None:
+    if params.get("ref_brain_mask", None) is not None:
         cargs.extend([
             "--refmask",
-            execution.input_file(params.get("ref_brain_mask"))
+            execution.input_file(params.get("ref_brain_mask", None))
         ])
     return cargs
 
@@ -208,7 +190,7 @@ def vecreg_outputs(
     """
     ret = VecregOutputs(
         root=execution.output_file("."),
-        registered_output=execution.output_file(params.get("output_file")),
+        registered_output=execution.output_file(params.get("output_file", None)),
     )
     return ret
 
@@ -303,7 +285,6 @@ def vecreg(
 __all__ = [
     "VECREG_METADATA",
     "VecregOutputs",
-    "VecregParameters",
     "vecreg",
     "vecreg_execute",
     "vecreg_params",

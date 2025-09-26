@@ -14,46 +14,18 @@ FEAT_METADATA = Metadata(
 
 
 FeatParameters = typing.TypedDict('FeatParameters', {
-    "@type": typing.Literal["fsl.feat"],
+    "@type": typing.NotRequired[typing.Literal["fsl/feat"]],
+    "design_file": InputPathType,
+})
+FeatParametersTagged = typing.TypedDict('FeatParametersTagged', {
+    "@type": typing.Literal["fsl/feat"],
     "design_file": InputPathType,
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "fsl.feat": feat_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "fsl.feat": feat_outputs,
-    }.get(t)
-
-
 class FeatOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `feat(...)`.
+    Output object returned when calling `FeatParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -63,7 +35,7 @@ class FeatOutputs(typing.NamedTuple):
 
 def feat_params(
     design_file: InputPathType,
-) -> FeatParameters:
+) -> FeatParametersTagged:
     """
     Build parameters.
     
@@ -73,7 +45,7 @@ def feat_params(
         Parameter dictionary
     """
     params = {
-        "@type": "fsl.feat",
+        "@type": "fsl/feat",
         "design_file": design_file,
     }
     return params
@@ -94,7 +66,7 @@ def feat_cargs(
     """
     cargs = []
     cargs.append("feat")
-    cargs.append(execution.input_file(params.get("design_file")))
+    cargs.append(execution.input_file(params.get("design_file", None)))
     return cargs
 
 
@@ -174,7 +146,6 @@ def feat(
 __all__ = [
     "FEAT_METADATA",
     "FeatOutputs",
-    "FeatParameters",
     "feat",
     "feat_execute",
     "feat_params",

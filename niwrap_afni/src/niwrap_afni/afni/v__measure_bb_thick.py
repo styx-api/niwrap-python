@@ -14,7 +14,22 @@ V__MEASURE_BB_THICK_METADATA = Metadata(
 
 
 VMeasureBbThickParameters = typing.TypedDict('VMeasureBbThickParameters', {
-    "@type": typing.Literal["afni.@measure_bb_thick"],
+    "@type": typing.NotRequired[typing.Literal["afni/@measure_bb_thick"]],
+    "maskset": InputPathType,
+    "surfset": InputPathType,
+    "outdir": typing.NotRequired[str | None],
+    "resample": typing.NotRequired[str | None],
+    "increment": typing.NotRequired[float | None],
+    "surfsmooth": typing.NotRequired[float | None],
+    "smoothmm": typing.NotRequired[float | None],
+    "maxthick": typing.NotRequired[float | None],
+    "depth_search": typing.NotRequired[float | None],
+    "keep_temp_files": bool,
+    "balls_only": bool,
+    "surfsmooth_method": typing.NotRequired[str | None],
+})
+VMeasureBbThickParametersTagged = typing.TypedDict('VMeasureBbThickParametersTagged', {
+    "@type": typing.Literal["afni/@measure_bb_thick"],
     "maskset": InputPathType,
     "surfset": InputPathType,
     "outdir": typing.NotRequired[str | None],
@@ -30,41 +45,9 @@ VMeasureBbThickParameters = typing.TypedDict('VMeasureBbThickParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "afni.@measure_bb_thick": v__measure_bb_thick_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "afni.@measure_bb_thick": v__measure_bb_thick_outputs,
-    }.get(t)
-
-
 class VMeasureBbThickOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `v__measure_bb_thick(...)`.
+    Output object returned when calling `VMeasureBbThickParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -101,7 +84,7 @@ def v__measure_bb_thick_params(
     keep_temp_files: bool = False,
     balls_only: bool = False,
     surfsmooth_method: str | None = None,
-) -> VMeasureBbThickParameters:
+) -> VMeasureBbThickParametersTagged:
     """
     Build parameters.
     
@@ -130,7 +113,7 @@ def v__measure_bb_thick_params(
         Parameter dictionary
     """
     params = {
-        "@type": "afni.@measure_bb_thick",
+        "@type": "afni/@measure_bb_thick",
         "maskset": maskset,
         "surfset": surfset,
         "keep_temp_files": keep_temp_files,
@@ -172,55 +155,55 @@ def v__measure_bb_thick_cargs(
     cargs.append("@measure_bb_thick")
     cargs.extend([
         "-maskset",
-        execution.input_file(params.get("maskset"))
+        execution.input_file(params.get("maskset", None))
     ])
     cargs.extend([
         "-surfset",
-        execution.input_file(params.get("surfset"))
+        execution.input_file(params.get("surfset", None))
     ])
-    if params.get("outdir") is not None:
+    if params.get("outdir", None) is not None:
         cargs.extend([
             "-outdir",
-            params.get("outdir")
+            params.get("outdir", None)
         ])
-    if params.get("resample") is not None:
+    if params.get("resample", None) is not None:
         cargs.extend([
             "-resample",
-            params.get("resample")
+            params.get("resample", None)
         ])
-    if params.get("increment") is not None:
+    if params.get("increment", None) is not None:
         cargs.extend([
             "-increment",
-            str(params.get("increment"))
+            str(params.get("increment", None))
         ])
-    if params.get("surfsmooth") is not None:
+    if params.get("surfsmooth", None) is not None:
         cargs.extend([
             "-surfsmooth",
-            str(params.get("surfsmooth"))
+            str(params.get("surfsmooth", None))
         ])
-    if params.get("smoothmm") is not None:
+    if params.get("smoothmm", None) is not None:
         cargs.extend([
             "-smoothmm",
-            str(params.get("smoothmm"))
+            str(params.get("smoothmm", None))
         ])
-    if params.get("maxthick") is not None:
+    if params.get("maxthick", None) is not None:
         cargs.extend([
             "-maxthick",
-            str(params.get("maxthick"))
+            str(params.get("maxthick", None))
         ])
-    if params.get("depth_search") is not None:
+    if params.get("depth_search", None) is not None:
         cargs.extend([
             "-depthsearch",
-            str(params.get("depth_search"))
+            str(params.get("depth_search", None))
         ])
-    if params.get("keep_temp_files"):
+    if params.get("keep_temp_files", False):
         cargs.append("-keep_temp_files")
-    if params.get("balls_only"):
+    if params.get("balls_only", False):
         cargs.append("-balls_only")
-    if params.get("surfsmooth_method") is not None:
+    if params.get("surfsmooth_method", None) is not None:
         cargs.extend([
             "-surfsmooth_method",
-            params.get("surfsmooth_method")
+            params.get("surfsmooth_method", None)
         ])
     return cargs
 
@@ -240,15 +223,15 @@ def v__measure_bb_thick_outputs(
     """
     ret = VMeasureBbThickOutputs(
         root=execution.output_file("."),
-        maxfill=execution.output_file(params.get("outdir") + "/maxfill.nii.gz") if (params.get("outdir") is not None) else None,
-        bb_thick=execution.output_file(params.get("outdir") + "/bb_thick.nii.gz") if (params.get("outdir") is not None) else None,
-        bb_thick_smooth=execution.output_file(params.get("outdir") + "/bb_thick_smooth.nii.gz") if (params.get("outdir") is not None) else None,
-        bb_thick_niml=execution.output_file(params.get("outdir") + "/bb_thick.niml.dset") if (params.get("outdir") is not None) else None,
-        bb_thick_smooth_niml=execution.output_file(params.get("outdir") + "/bb_thick_smooth.niml.dset") if (params.get("outdir") is not None) else None,
-        maskset_output=execution.output_file(params.get("outdir") + "/maskset.nii.gz") if (params.get("outdir") is not None) else None,
-        maskset_resampled=execution.output_file(params.get("outdir") + "/maskset_rs.nii.gz") if (params.get("outdir") is not None) else None,
-        anat_surface=execution.output_file(params.get("outdir") + "/anat.gii") if (params.get("outdir") is not None) else None,
-        quick_spec=execution.output_file(params.get("outdir") + "/quick.spec") if (params.get("outdir") is not None) else None,
+        maxfill=execution.output_file(params.get("outdir", None) + "/maxfill.nii.gz") if (params.get("outdir") is not None) else None,
+        bb_thick=execution.output_file(params.get("outdir", None) + "/bb_thick.nii.gz") if (params.get("outdir") is not None) else None,
+        bb_thick_smooth=execution.output_file(params.get("outdir", None) + "/bb_thick_smooth.nii.gz") if (params.get("outdir") is not None) else None,
+        bb_thick_niml=execution.output_file(params.get("outdir", None) + "/bb_thick.niml.dset") if (params.get("outdir") is not None) else None,
+        bb_thick_smooth_niml=execution.output_file(params.get("outdir", None) + "/bb_thick_smooth.niml.dset") if (params.get("outdir") is not None) else None,
+        maskset_output=execution.output_file(params.get("outdir", None) + "/maskset.nii.gz") if (params.get("outdir") is not None) else None,
+        maskset_resampled=execution.output_file(params.get("outdir", None) + "/maskset_rs.nii.gz") if (params.get("outdir") is not None) else None,
+        anat_surface=execution.output_file(params.get("outdir", None) + "/anat.gii") if (params.get("outdir") is not None) else None,
+        quick_spec=execution.output_file(params.get("outdir", None) + "/quick.spec") if (params.get("outdir") is not None) else None,
     )
     return ret
 
@@ -349,7 +332,6 @@ def v__measure_bb_thick(
 
 __all__ = [
     "VMeasureBbThickOutputs",
-    "VMeasureBbThickParameters",
     "V__MEASURE_BB_THICK_METADATA",
     "v__measure_bb_thick",
     "v__measure_bb_thick_execute",

@@ -14,7 +14,18 @@ QUICKSPEC_SL_METADATA = Metadata(
 
 
 QuickspecSlParameters = typing.TypedDict('QuickspecSlParameters', {
-    "@type": typing.Literal["afni.quickspecSL"],
+    "@type": typing.NotRequired[typing.Literal["afni/quickspecSL"]],
+    "surf_A": InputPathType,
+    "surf_B": InputPathType,
+    "surf_intermed_pref": typing.NotRequired[str | None],
+    "infl_surf_A": typing.NotRequired[InputPathType | None],
+    "infl_surf_B": typing.NotRequired[InputPathType | None],
+    "infl_surf_intermed_pref": typing.NotRequired[str | None],
+    "both_lr_flag": bool,
+    "out_spec": typing.NotRequired[str | None],
+})
+QuickspecSlParametersTagged = typing.TypedDict('QuickspecSlParametersTagged', {
+    "@type": typing.Literal["afni/quickspecSL"],
     "surf_A": InputPathType,
     "surf_B": InputPathType,
     "surf_intermed_pref": typing.NotRequired[str | None],
@@ -26,41 +37,9 @@ QuickspecSlParameters = typing.TypedDict('QuickspecSlParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "afni.quickspecSL": quickspec_sl_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "afni.quickspecSL": quickspec_sl_outputs,
-    }.get(t)
-
-
 class QuickspecSlOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `quickspec_sl(...)`.
+    Output object returned when calling `QuickspecSlParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -77,7 +56,7 @@ def quickspec_sl_params(
     infl_surf_intermed_pref: str | None = None,
     both_lr_flag: bool = False,
     out_spec: str | None = None,
-) -> QuickspecSlParameters:
+) -> QuickspecSlParametersTagged:
     """
     Build parameters.
     
@@ -101,7 +80,7 @@ def quickspec_sl_params(
         Parameter dictionary
     """
     params = {
-        "@type": "afni.quickspecSL",
+        "@type": "afni/quickspecSL",
         "surf_A": surf_a,
         "surf_B": surf_b,
         "both_lr_flag": both_lr_flag,
@@ -136,38 +115,38 @@ def quickspec_sl_cargs(
     cargs.append("quickspecSL")
     cargs.extend([
         "-surf_A",
-        execution.input_file(params.get("surf_A"))
+        execution.input_file(params.get("surf_A", None))
     ])
     cargs.extend([
         "-surf_B",
-        execution.input_file(params.get("surf_B"))
+        execution.input_file(params.get("surf_B", None))
     ])
-    if params.get("surf_intermed_pref") is not None:
+    if params.get("surf_intermed_pref", None) is not None:
         cargs.extend([
             "-surf_intermed_pref",
-            params.get("surf_intermed_pref")
+            params.get("surf_intermed_pref", None)
         ])
-    if params.get("infl_surf_A") is not None:
+    if params.get("infl_surf_A", None) is not None:
         cargs.extend([
             "-infl_surf_A",
-            execution.input_file(params.get("infl_surf_A"))
+            execution.input_file(params.get("infl_surf_A", None))
         ])
-    if params.get("infl_surf_B") is not None:
+    if params.get("infl_surf_B", None) is not None:
         cargs.extend([
             "-infl_surf_B",
-            execution.input_file(params.get("infl_surf_B"))
+            execution.input_file(params.get("infl_surf_B", None))
         ])
-    if params.get("infl_surf_intermed_pref") is not None:
+    if params.get("infl_surf_intermed_pref", None) is not None:
         cargs.extend([
             "-infl_surf_intermed_pref",
-            params.get("infl_surf_intermed_pref")
+            params.get("infl_surf_intermed_pref", None)
         ])
-    if params.get("both_lr_flag"):
+    if params.get("both_lr_flag", False):
         cargs.append("-both_lr")
-    if params.get("out_spec") is not None:
+    if params.get("out_spec", None) is not None:
         cargs.extend([
             "-out_spec",
-            params.get("out_spec")
+            params.get("out_spec", None)
         ])
     return cargs
 
@@ -187,7 +166,7 @@ def quickspec_sl_outputs(
     """
     ret = QuickspecSlOutputs(
         root=execution.output_file("."),
-        output_spec_file=execution.output_file(params.get("out_spec")) if (params.get("out_spec") is not None) else None,
+        output_spec_file=execution.output_file(params.get("out_spec", None)) if (params.get("out_spec") is not None) else None,
     )
     return ret
 
@@ -280,7 +259,6 @@ def quickspec_sl(
 __all__ = [
     "QUICKSPEC_SL_METADATA",
     "QuickspecSlOutputs",
-    "QuickspecSlParameters",
     "quickspec_sl",
     "quickspec_sl_execute",
     "quickspec_sl_params",

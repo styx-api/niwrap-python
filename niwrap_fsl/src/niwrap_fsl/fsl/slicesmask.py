@@ -14,48 +14,22 @@ SLICESMASK_METADATA = Metadata(
 
 
 SlicesmaskParameters = typing.TypedDict('SlicesmaskParameters', {
-    "@type": typing.Literal["fsl.slicesmask"],
+    "@type": typing.NotRequired[typing.Literal["fsl/slicesmask"]],
+    "image": InputPathType,
+    "mask": InputPathType,
+    "output": str,
+})
+SlicesmaskParametersTagged = typing.TypedDict('SlicesmaskParametersTagged', {
+    "@type": typing.Literal["fsl/slicesmask"],
     "image": InputPathType,
     "mask": InputPathType,
     "output": str,
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "fsl.slicesmask": slicesmask_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "fsl.slicesmask": slicesmask_outputs,
-    }.get(t)
-
-
 class SlicesmaskOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `slicesmask(...)`.
+    Output object returned when calling `SlicesmaskParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -67,7 +41,7 @@ def slicesmask_params(
     image: InputPathType,
     mask: InputPathType,
     output: str,
-) -> SlicesmaskParameters:
+) -> SlicesmaskParametersTagged:
     """
     Build parameters.
     
@@ -79,7 +53,7 @@ def slicesmask_params(
         Parameter dictionary
     """
     params = {
-        "@type": "fsl.slicesmask",
+        "@type": "fsl/slicesmask",
         "image": image,
         "mask": mask,
         "output": output,
@@ -102,9 +76,9 @@ def slicesmask_cargs(
     """
     cargs = []
     cargs.append("slicesmask")
-    cargs.append(execution.input_file(params.get("image")))
-    cargs.append(execution.input_file(params.get("mask")))
-    cargs.append(params.get("output"))
+    cargs.append(execution.input_file(params.get("image", None)))
+    cargs.append(execution.input_file(params.get("mask", None)))
+    cargs.append(params.get("output", None))
     return cargs
 
 
@@ -123,7 +97,7 @@ def slicesmask_outputs(
     """
     ret = SlicesmaskOutputs(
         root=execution.output_file("."),
-        masked_output=execution.output_file(params.get("output")),
+        masked_output=execution.output_file(params.get("output", None)),
     )
     return ret
 
@@ -190,7 +164,6 @@ def slicesmask(
 __all__ = [
     "SLICESMASK_METADATA",
     "SlicesmaskOutputs",
-    "SlicesmaskParameters",
     "slicesmask",
     "slicesmask_execute",
     "slicesmask_params",

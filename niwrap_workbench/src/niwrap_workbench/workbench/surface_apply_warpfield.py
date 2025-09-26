@@ -14,7 +14,14 @@ SURFACE_APPLY_WARPFIELD_METADATA = Metadata(
 
 
 SurfaceApplyWarpfieldParameters = typing.TypedDict('SurfaceApplyWarpfieldParameters', {
-    "@type": typing.Literal["workbench.surface-apply-warpfield"],
+    "@type": typing.NotRequired[typing.Literal["workbench/surface-apply-warpfield"]],
+    "in_surf": InputPathType,
+    "warpfield": str,
+    "out_surf": str,
+    "opt_fnirt_forward_warp": typing.NotRequired[str | None],
+})
+SurfaceApplyWarpfieldParametersTagged = typing.TypedDict('SurfaceApplyWarpfieldParametersTagged', {
+    "@type": typing.Literal["workbench/surface-apply-warpfield"],
     "in_surf": InputPathType,
     "warpfield": str,
     "out_surf": str,
@@ -22,41 +29,9 @@ SurfaceApplyWarpfieldParameters = typing.TypedDict('SurfaceApplyWarpfieldParamet
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "workbench.surface-apply-warpfield": surface_apply_warpfield_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "workbench.surface-apply-warpfield": surface_apply_warpfield_outputs,
-    }.get(t)
-
-
 class SurfaceApplyWarpfieldOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `surface_apply_warpfield(...)`.
+    Output object returned when calling `SurfaceApplyWarpfieldParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -69,7 +44,7 @@ def surface_apply_warpfield_params(
     warpfield: str,
     out_surf: str,
     opt_fnirt_forward_warp: str | None = None,
-) -> SurfaceApplyWarpfieldParameters:
+) -> SurfaceApplyWarpfieldParametersTagged:
     """
     Build parameters.
     
@@ -83,7 +58,7 @@ def surface_apply_warpfield_params(
         Parameter dictionary
     """
     params = {
-        "@type": "workbench.surface-apply-warpfield",
+        "@type": "workbench/surface-apply-warpfield",
         "in_surf": in_surf,
         "warpfield": warpfield,
         "out_surf": out_surf,
@@ -109,13 +84,13 @@ def surface_apply_warpfield_cargs(
     cargs = []
     cargs.append("wb_command")
     cargs.append("-surface-apply-warpfield")
-    cargs.append(execution.input_file(params.get("in_surf")))
-    cargs.append(params.get("warpfield"))
-    cargs.append(params.get("out_surf"))
-    if params.get("opt_fnirt_forward_warp") is not None:
+    cargs.append(execution.input_file(params.get("in_surf", None)))
+    cargs.append(params.get("warpfield", None))
+    cargs.append(params.get("out_surf", None))
+    if params.get("opt_fnirt_forward_warp", None) is not None:
         cargs.extend([
             "-fnirt",
-            params.get("opt_fnirt_forward_warp")
+            params.get("opt_fnirt_forward_warp", None)
         ])
     return cargs
 
@@ -135,7 +110,7 @@ def surface_apply_warpfield_outputs(
     """
     ret = SurfaceApplyWarpfieldOutputs(
         root=execution.output_file("."),
-        out_surf=execution.output_file(params.get("out_surf")),
+        out_surf=execution.output_file(params.get("out_surf", None)),
     )
     return ret
 
@@ -222,7 +197,6 @@ def surface_apply_warpfield(
 __all__ = [
     "SURFACE_APPLY_WARPFIELD_METADATA",
     "SurfaceApplyWarpfieldOutputs",
-    "SurfaceApplyWarpfieldParameters",
     "surface_apply_warpfield",
     "surface_apply_warpfield_execute",
     "surface_apply_warpfield_params",

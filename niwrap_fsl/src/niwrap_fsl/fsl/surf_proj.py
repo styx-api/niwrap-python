@@ -14,7 +14,20 @@ SURF_PROJ_METADATA = Metadata(
 
 
 SurfProjParameters = typing.TypedDict('SurfProjParameters', {
-    "@type": typing.Literal["fsl.surf_proj"],
+    "@type": typing.NotRequired[typing.Literal["fsl/surf_proj"]],
+    "data": InputPathType,
+    "surface": InputPathType,
+    "output_file": str,
+    "surface_reference": typing.NotRequired[InputPathType | None],
+    "transform": typing.NotRequired[InputPathType | None],
+    "meshspace": typing.NotRequired[str | None],
+    "step_size": typing.NotRequired[float | None],
+    "direction": typing.NotRequired[float | None],
+    "operation": typing.NotRequired[str | None],
+    "surface_output": typing.NotRequired[str | None],
+})
+SurfProjParametersTagged = typing.TypedDict('SurfProjParametersTagged', {
+    "@type": typing.Literal["fsl/surf_proj"],
     "data": InputPathType,
     "surface": InputPathType,
     "output_file": str,
@@ -28,41 +41,9 @@ SurfProjParameters = typing.TypedDict('SurfProjParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "fsl.surf_proj": surf_proj_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "fsl.surf_proj": surf_proj_outputs,
-    }.get(t)
-
-
 class SurfProjOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `surf_proj(...)`.
+    Output object returned when calling `SurfProjParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -83,7 +64,7 @@ def surf_proj_params(
     direction: float | None = None,
     operation: str | None = None,
     surface_output: str | None = None,
-) -> SurfProjParameters:
+) -> SurfProjParametersTagged:
     """
     Build parameters.
     
@@ -104,7 +85,7 @@ def surf_proj_params(
         Parameter dictionary
     """
     params = {
-        "@type": "fsl.surf_proj",
+        "@type": "fsl/surf_proj",
         "data": data,
         "surface": surface,
         "output_file": output_file,
@@ -143,50 +124,50 @@ def surf_proj_cargs(
     cargs.append("surf_proj")
     cargs.extend([
         "-data",
-        execution.input_file(params.get("data"))
+        execution.input_file(params.get("data", None))
     ])
     cargs.extend([
         "-surf",
-        execution.input_file(params.get("surface"))
+        execution.input_file(params.get("surface", None))
     ])
     cargs.extend([
         "-out",
-        params.get("output_file")
+        params.get("output_file", None)
     ])
-    if params.get("surface_reference") is not None:
+    if params.get("surface_reference", None) is not None:
         cargs.extend([
             "--meshref",
-            execution.input_file(params.get("surface_reference"))
+            execution.input_file(params.get("surface_reference", None))
         ])
-    if params.get("transform") is not None:
+    if params.get("transform", None) is not None:
         cargs.extend([
             "--xfm",
-            execution.input_file(params.get("transform"))
+            execution.input_file(params.get("transform", None))
         ])
-    if params.get("meshspace") is not None:
+    if params.get("meshspace", None) is not None:
         cargs.extend([
             "--meshspace",
-            params.get("meshspace")
+            params.get("meshspace", None)
         ])
-    if params.get("step_size") is not None:
+    if params.get("step_size", None) is not None:
         cargs.extend([
             "--step",
-            str(params.get("step_size"))
+            str(params.get("step_size", None))
         ])
-    if params.get("direction") is not None:
+    if params.get("direction", None) is not None:
         cargs.extend([
             "--direction",
-            str(params.get("direction"))
+            str(params.get("direction", None))
         ])
-    if params.get("operation") is not None:
+    if params.get("operation", None) is not None:
         cargs.extend([
             "--operation",
-            params.get("operation")
+            params.get("operation", None)
         ])
-    if params.get("surface_output") is not None:
+    if params.get("surface_output", None) is not None:
         cargs.extend([
             "--surfout",
-            params.get("surface_output")
+            params.get("surface_output", None)
         ])
     return cargs
 
@@ -206,8 +187,8 @@ def surf_proj_outputs(
     """
     ret = SurfProjOutputs(
         root=execution.output_file("."),
-        projected_output=execution.output_file(params.get("output_file")),
-        output_surface=execution.output_file(params.get("surface_output")) if (params.get("surface_output") is not None) else None,
+        projected_output=execution.output_file(params.get("output_file", None)),
+        output_surface=execution.output_file(params.get("surface_output", None)) if (params.get("surface_output") is not None) else None,
     )
     return ret
 
@@ -297,7 +278,6 @@ def surf_proj(
 __all__ = [
     "SURF_PROJ_METADATA",
     "SurfProjOutputs",
-    "SurfProjParameters",
     "surf_proj",
     "surf_proj_execute",
     "surf_proj_params",

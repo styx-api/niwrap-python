@@ -14,48 +14,22 @@ CONNECTED_COMPONENTS_METADATA = Metadata(
 
 
 ConnectedComponentsParameters = typing.TypedDict('ConnectedComponentsParameters', {
-    "@type": typing.Literal["freesurfer.connected_components"],
+    "@type": typing.NotRequired[typing.Literal["freesurfer/connected_components"]],
+    "input_image": InputPathType,
+    "output_image": str,
+    "threshold": typing.NotRequired[float | None],
+})
+ConnectedComponentsParametersTagged = typing.TypedDict('ConnectedComponentsParametersTagged', {
+    "@type": typing.Literal["freesurfer/connected_components"],
     "input_image": InputPathType,
     "output_image": str,
     "threshold": typing.NotRequired[float | None],
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "freesurfer.connected_components": connected_components_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "freesurfer.connected_components": connected_components_outputs,
-    }.get(t)
-
-
 class ConnectedComponentsOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `connected_components(...)`.
+    Output object returned when calling `ConnectedComponentsParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -67,7 +41,7 @@ def connected_components_params(
     input_image: InputPathType,
     output_image: str = "output_labelled_image",
     threshold: float | None = None,
-) -> ConnectedComponentsParameters:
+) -> ConnectedComponentsParametersTagged:
     """
     Build parameters.
     
@@ -79,7 +53,7 @@ def connected_components_params(
         Parameter dictionary
     """
     params = {
-        "@type": "freesurfer.connected_components",
+        "@type": "freesurfer/connected_components",
         "input_image": input_image,
         "output_image": output_image,
     }
@@ -103,15 +77,15 @@ def connected_components_cargs(
     """
     cargs = []
     cargs.append("connected_components")
-    cargs.append(execution.input_file(params.get("input_image")))
+    cargs.append(execution.input_file(params.get("input_image", None)))
     cargs.extend([
         "-o",
-        params.get("output_image")
+        params.get("output_image", "output_labelled_image")
     ])
-    if params.get("threshold") is not None:
+    if params.get("threshold", None) is not None:
         cargs.extend([
             "-t",
-            str(params.get("threshold"))
+            str(params.get("threshold", None))
         ])
     return cargs
 
@@ -131,7 +105,7 @@ def connected_components_outputs(
     """
     ret = ConnectedComponentsOutputs(
         root=execution.output_file("."),
-        output_labelled_image_file=execution.output_file(params.get("output_image") + ".nii.gz"),
+        output_labelled_image_file=execution.output_file(params.get("output_image", "output_labelled_image") + ".nii.gz"),
     )
     return ret
 
@@ -198,7 +172,6 @@ def connected_components(
 __all__ = [
     "CONNECTED_COMPONENTS_METADATA",
     "ConnectedComponentsOutputs",
-    "ConnectedComponentsParameters",
     "connected_components",
     "connected_components_execute",
     "connected_components_params",

@@ -14,7 +14,23 @@ T4IMGS_4DFP_METADATA = Metadata(
 
 
 T4imgs4dfpParameters = typing.TypedDict('T4imgs4dfpParameters', {
-    "@type": typing.Literal["freesurfer.t4imgs_4dfp"],
+    "@type": typing.NotRequired[typing.Literal["freesurfer/t4imgs_4dfp"]],
+    "sqrt_normalize": bool,
+    "cubic_spline": bool,
+    "output_nan": bool,
+    "convert_t4": bool,
+    "nearest_neighbor": bool,
+    "output_111_space": bool,
+    "output_222_space": bool,
+    "output_333n_space": typing.NotRequired[str | None],
+    "duplicate_dimensions": typing.NotRequired[str | None],
+    "big_endian": bool,
+    "little_endian": bool,
+    "input_images": list[InputPathType],
+    "output_image": str,
+})
+T4imgs4dfpParametersTagged = typing.TypedDict('T4imgs4dfpParametersTagged', {
+    "@type": typing.Literal["freesurfer/t4imgs_4dfp"],
     "sqrt_normalize": bool,
     "cubic_spline": bool,
     "output_nan": bool,
@@ -31,41 +47,9 @@ T4imgs4dfpParameters = typing.TypedDict('T4imgs4dfpParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "freesurfer.t4imgs_4dfp": t4imgs_4dfp_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "freesurfer.t4imgs_4dfp": t4imgs_4dfp_outputs,
-    }.get(t)
-
-
 class T4imgs4dfpOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `t4imgs_4dfp(...)`.
+    Output object returned when calling `T4imgs4dfpParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -87,7 +71,7 @@ def t4imgs_4dfp_params(
     duplicate_dimensions: str | None = None,
     big_endian: bool = False,
     little_endian: bool = False,
-) -> T4imgs4dfpParameters:
+) -> T4imgs4dfpParametersTagged:
     """
     Build parameters.
     
@@ -109,7 +93,7 @@ def t4imgs_4dfp_params(
         Parameter dictionary
     """
     params = {
-        "@type": "freesurfer.t4imgs_4dfp",
+        "@type": "freesurfer/t4imgs_4dfp",
         "sqrt_normalize": sqrt_normalize,
         "cubic_spline": cubic_spline,
         "output_nan": output_nan,
@@ -144,36 +128,36 @@ def t4imgs_4dfp_cargs(
     """
     cargs = []
     cargs.append("t4imgs_4dfp")
-    if params.get("sqrt_normalize"):
+    if params.get("sqrt_normalize", False):
         cargs.append("-z")
-    if params.get("cubic_spline"):
+    if params.get("cubic_spline", False):
         cargs.append("-s")
-    if params.get("output_nan"):
+    if params.get("output_nan", False):
         cargs.append("-N")
-    if params.get("convert_t4"):
+    if params.get("convert_t4", False):
         cargs.append("-B")
-    if params.get("nearest_neighbor"):
+    if params.get("nearest_neighbor", False):
         cargs.append("-n")
-    if params.get("output_111_space"):
+    if params.get("output_111_space", False):
         cargs.append("-O111")
-    if params.get("output_222_space"):
+    if params.get("output_222_space", False):
         cargs.append("-O222")
-    if params.get("output_333n_space") is not None:
+    if params.get("output_333n_space", None) is not None:
         cargs.extend([
             "-O333.n",
-            params.get("output_333n_space")
+            params.get("output_333n_space", None)
         ])
-    if params.get("duplicate_dimensions") is not None:
+    if params.get("duplicate_dimensions", None) is not None:
         cargs.extend([
             "-O",
-            params.get("duplicate_dimensions")
+            params.get("duplicate_dimensions", None)
         ])
-    if params.get("big_endian"):
+    if params.get("big_endian", False):
         cargs.append("-@b")
-    if params.get("little_endian"):
+    if params.get("little_endian", False):
         cargs.append("-@l")
-    cargs.extend([execution.input_file(f) for f in params.get("input_images")])
-    cargs.append(params.get("output_image"))
+    cargs.extend([execution.input_file(f) for f in params.get("input_images", None)])
+    cargs.append(params.get("output_image", None))
     return cargs
 
 
@@ -192,7 +176,7 @@ def t4imgs_4dfp_outputs(
     """
     ret = T4imgs4dfpOutputs(
         root=execution.output_file("."),
-        transformed_image=execution.output_file(params.get("output_image") + ".4dfp.img"),
+        transformed_image=execution.output_file(params.get("output_image", None) + ".4dfp.img"),
     )
     return ret
 
@@ -289,7 +273,6 @@ def t4imgs_4dfp(
 __all__ = [
     "T4IMGS_4DFP_METADATA",
     "T4imgs4dfpOutputs",
-    "T4imgs4dfpParameters",
     "t4imgs_4dfp",
     "t4imgs_4dfp_execute",
     "t4imgs_4dfp_params",

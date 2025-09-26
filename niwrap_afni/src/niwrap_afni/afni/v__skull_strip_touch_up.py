@@ -14,7 +14,16 @@ V__SKULL_STRIP_TOUCH_UP_METADATA = Metadata(
 
 
 VSkullStripTouchUpParameters = typing.TypedDict('VSkullStripTouchUpParameters', {
-    "@type": typing.Literal["afni.@SkullStrip_TouchUp"],
+    "@type": typing.NotRequired[typing.Literal["afni/@SkullStrip_TouchUp"]],
+    "prefix": str,
+    "brain_dataset": InputPathType,
+    "head_dataset": InputPathType,
+    "mask_out": bool,
+    "orig_dim": bool,
+    "help": bool,
+})
+VSkullStripTouchUpParametersTagged = typing.TypedDict('VSkullStripTouchUpParametersTagged', {
+    "@type": typing.Literal["afni/@SkullStrip_TouchUp"],
     "prefix": str,
     "brain_dataset": InputPathType,
     "head_dataset": InputPathType,
@@ -24,41 +33,9 @@ VSkullStripTouchUpParameters = typing.TypedDict('VSkullStripTouchUpParameters', 
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "afni.@SkullStrip_TouchUp": v__skull_strip_touch_up_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "afni.@SkullStrip_TouchUp": v__skull_strip_touch_up_outputs,
-    }.get(t)
-
-
 class VSkullStripTouchUpOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `v__skull_strip_touch_up(...)`.
+    Output object returned when calling `VSkullStripTouchUpParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -75,7 +52,7 @@ def v__skull_strip_touch_up_params(
     mask_out: bool = False,
     orig_dim: bool = False,
     help_: bool = False,
-) -> VSkullStripTouchUpParameters:
+) -> VSkullStripTouchUpParametersTagged:
     """
     Build parameters.
     
@@ -90,7 +67,7 @@ def v__skull_strip_touch_up_params(
         Parameter dictionary
     """
     params = {
-        "@type": "afni.@SkullStrip_TouchUp",
+        "@type": "afni/@SkullStrip_TouchUp",
         "prefix": prefix,
         "brain_dataset": brain_dataset,
         "head_dataset": head_dataset,
@@ -118,21 +95,21 @@ def v__skull_strip_touch_up_cargs(
     cargs.append("@SkullStrip_TouchUp")
     cargs.extend([
         "-prefix",
-        params.get("prefix")
+        params.get("prefix", None)
     ])
     cargs.extend([
         "-brain",
-        execution.input_file(params.get("brain_dataset"))
+        execution.input_file(params.get("brain_dataset", None))
     ])
     cargs.extend([
         "-head",
-        execution.input_file(params.get("head_dataset"))
+        execution.input_file(params.get("head_dataset", None))
     ])
-    if params.get("mask_out"):
+    if params.get("mask_out", False):
         cargs.append("-mask_out")
-    if params.get("orig_dim"):
+    if params.get("orig_dim", False):
         cargs.append("-orig_dim")
-    if params.get("help"):
+    if params.get("help", False):
         cargs.append("-help")
     return cargs
 
@@ -152,8 +129,8 @@ def v__skull_strip_touch_up_outputs(
     """
     ret = VSkullStripTouchUpOutputs(
         root=execution.output_file("."),
-        output_folder=execution.output_file(params.get("prefix") + "_SS_touch_up"),
-        output_mask=execution.output_file(params.get("prefix") + "_mask.nii.gz"),
+        output_folder=execution.output_file(params.get("prefix", None) + "_SS_touch_up"),
+        output_mask=execution.output_file(params.get("prefix", None) + "_mask.nii.gz"),
     )
     return ret
 
@@ -230,7 +207,6 @@ def v__skull_strip_touch_up(
 
 __all__ = [
     "VSkullStripTouchUpOutputs",
-    "VSkullStripTouchUpParameters",
     "V__SKULL_STRIP_TOUCH_UP_METADATA",
     "v__skull_strip_touch_up",
     "v__skull_strip_touch_up_execute",

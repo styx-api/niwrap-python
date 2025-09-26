@@ -14,7 +14,27 @@ ALIGN_EPI_ANAT_PY_METADATA = Metadata(
 
 
 AlignEpiAnatPyParameters = typing.TypedDict('AlignEpiAnatPyParameters', {
-    "@type": typing.Literal["afni.align_epi_anat.py"],
+    "@type": typing.NotRequired[typing.Literal["afni/align_epi_anat.py"]],
+    "epi": InputPathType,
+    "anat": InputPathType,
+    "epi_base": str,
+    "anat2epi": bool,
+    "epi2anat": bool,
+    "suffix": typing.NotRequired[str | None],
+    "AddEdge": bool,
+    "big_move": bool,
+    "giant_move": bool,
+    "ginormous_move": bool,
+    "keep_rm_files": bool,
+    "prep_only": bool,
+    "ana_has_skull": typing.NotRequired[typing.Literal["yes", "no"] | None],
+    "epi_strip": typing.NotRequired[typing.Literal["3dSkullStrip", "3dAutomask", "None"] | None],
+    "volreg_method": typing.NotRequired[typing.Literal["3dvolreg", "3dWarpDrive", "3dAllineate"] | None],
+    "ex_mode": typing.NotRequired[typing.Literal["quiet", "echo", "dry_run", "script"] | None],
+    "overwrite": bool,
+})
+AlignEpiAnatPyParametersTagged = typing.TypedDict('AlignEpiAnatPyParametersTagged', {
+    "@type": typing.Literal["afni/align_epi_anat.py"],
     "epi": InputPathType,
     "anat": InputPathType,
     "epi_base": str,
@@ -35,41 +55,9 @@ AlignEpiAnatPyParameters = typing.TypedDict('AlignEpiAnatPyParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "afni.align_epi_anat.py": align_epi_anat_py_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "afni.align_epi_anat.py": align_epi_anat_py_outputs,
-    }.get(t)
-
-
 class AlignEpiAnatPyOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `align_epi_anat_py(...)`.
+    Output object returned when calling `AlignEpiAnatPyParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -97,7 +85,7 @@ def align_epi_anat_py_params(
     volreg_method: typing.Literal["3dvolreg", "3dWarpDrive", "3dAllineate"] | None = None,
     ex_mode: typing.Literal["quiet", "echo", "dry_run", "script"] | None = None,
     overwrite: bool = False,
-) -> AlignEpiAnatPyParameters:
+) -> AlignEpiAnatPyParametersTagged:
     """
     Build parameters.
     
@@ -126,7 +114,7 @@ def align_epi_anat_py_params(
         Parameter dictionary
     """
     params = {
-        "@type": "afni.align_epi_anat.py",
+        "@type": "afni/align_epi_anat.py",
         "epi": epi,
         "anat": anat,
         "epi_base": epi_base,
@@ -170,58 +158,58 @@ def align_epi_anat_py_cargs(
     cargs.append("align_epi_anat.py")
     cargs.extend([
         "-epi",
-        execution.input_file(params.get("epi"))
+        execution.input_file(params.get("epi", None))
     ])
     cargs.extend([
         "-anat",
-        execution.input_file(params.get("anat"))
+        execution.input_file(params.get("anat", None))
     ])
     cargs.extend([
         "-epi_base",
-        params.get("epi_base")
+        params.get("epi_base", None)
     ])
-    if params.get("anat2epi"):
+    if params.get("anat2epi", False):
         cargs.append("-anat2epi")
-    if params.get("epi2anat"):
+    if params.get("epi2anat", False):
         cargs.append("-epi2anat")
-    if params.get("suffix") is not None:
+    if params.get("suffix", None) is not None:
         cargs.extend([
             "-suffix",
-            params.get("suffix")
+            params.get("suffix", None)
         ])
-    if params.get("AddEdge"):
+    if params.get("AddEdge", False):
         cargs.append("-AddEdge")
-    if params.get("big_move"):
+    if params.get("big_move", False):
         cargs.append("-big_move")
-    if params.get("giant_move"):
+    if params.get("giant_move", False):
         cargs.append("-giant_move")
-    if params.get("ginormous_move"):
+    if params.get("ginormous_move", False):
         cargs.append("-ginormous_move")
-    if params.get("keep_rm_files"):
+    if params.get("keep_rm_files", False):
         cargs.append("-keep_rm_files")
-    if params.get("prep_only"):
+    if params.get("prep_only", False):
         cargs.append("-prep_only")
-    if params.get("ana_has_skull") is not None:
+    if params.get("ana_has_skull", None) is not None:
         cargs.extend([
             "-anat_has_skull",
-            params.get("ana_has_skull")
+            params.get("ana_has_skull", None)
         ])
-    if params.get("epi_strip") is not None:
+    if params.get("epi_strip", None) is not None:
         cargs.extend([
             "-epi_strip",
-            params.get("epi_strip")
+            params.get("epi_strip", None)
         ])
-    if params.get("volreg_method") is not None:
+    if params.get("volreg_method", None) is not None:
         cargs.extend([
             "-volreg_method",
-            params.get("volreg_method")
+            params.get("volreg_method", None)
         ])
-    if params.get("ex_mode") is not None:
+    if params.get("ex_mode", None) is not None:
         cargs.extend([
             "-ex_mode",
-            params.get("ex_mode")
+            params.get("ex_mode", None)
         ])
-    if params.get("overwrite"):
+    if params.get("overwrite", False):
         cargs.append("-overwrite")
     return cargs
 
@@ -241,8 +229,8 @@ def align_epi_anat_py_outputs(
     """
     ret = AlignEpiAnatPyOutputs(
         root=execution.output_file("."),
-        anat_aligned=execution.output_file(pathlib.Path(params.get("anat")).name + "+orig"),
-        epi_aligned=execution.output_file(pathlib.Path(params.get("epi")).name + "+orig"),
+        anat_aligned=execution.output_file(pathlib.Path(params.get("anat", None)).name + "+orig"),
+        epi_aligned=execution.output_file(pathlib.Path(params.get("epi", None)).name + "+orig"),
     )
     return ret
 
@@ -354,7 +342,6 @@ def align_epi_anat_py(
 __all__ = [
     "ALIGN_EPI_ANAT_PY_METADATA",
     "AlignEpiAnatPyOutputs",
-    "AlignEpiAnatPyParameters",
     "align_epi_anat_py",
     "align_epi_anat_py_execute",
     "align_epi_anat_py_params",

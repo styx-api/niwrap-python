@@ -14,47 +14,22 @@ MRI_LINEAR_ALIGN_METADATA = Metadata(
 
 
 MriLinearAlignParameters = typing.TypedDict('MriLinearAlignParameters', {
-    "@type": typing.Literal["freesurfer.mri_linear_align"],
+    "@type": typing.NotRequired[typing.Literal["freesurfer/mri_linear_align"]],
+    "source": InputPathType,
+    "target": InputPathType,
+    "output_xform": str,
+})
+MriLinearAlignParametersTagged = typing.TypedDict('MriLinearAlignParametersTagged', {
+    "@type": typing.Literal["freesurfer/mri_linear_align"],
     "source": InputPathType,
     "target": InputPathType,
     "output_xform": str,
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "freesurfer.mri_linear_align": mri_linear_align_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-    }.get(t)
-
-
 class MriLinearAlignOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `mri_linear_align(...)`.
+    Output object returned when calling `MriLinearAlignParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -64,7 +39,7 @@ def mri_linear_align_params(
     source: InputPathType,
     target: InputPathType,
     output_xform: str,
-) -> MriLinearAlignParameters:
+) -> MriLinearAlignParametersTagged:
     """
     Build parameters.
     
@@ -76,7 +51,7 @@ def mri_linear_align_params(
         Parameter dictionary
     """
     params = {
-        "@type": "freesurfer.mri_linear_align",
+        "@type": "freesurfer/mri_linear_align",
         "source": source,
         "target": target,
         "output_xform": output_xform,
@@ -99,9 +74,9 @@ def mri_linear_align_cargs(
     """
     cargs = []
     cargs.append("mri_linear_align")
-    cargs.append(execution.input_file(params.get("source")))
-    cargs.append(execution.input_file(params.get("target")))
-    cargs.append(params.get("output_xform"))
+    cargs.append(execution.input_file(params.get("source", None)))
+    cargs.append(execution.input_file(params.get("target", None)))
+    cargs.append(params.get("output_xform", None))
     return cargs
 
 
@@ -186,7 +161,6 @@ def mri_linear_align(
 __all__ = [
     "MRI_LINEAR_ALIGN_METADATA",
     "MriLinearAlignOutputs",
-    "MriLinearAlignParameters",
     "mri_linear_align",
     "mri_linear_align_execute",
     "mri_linear_align_params",

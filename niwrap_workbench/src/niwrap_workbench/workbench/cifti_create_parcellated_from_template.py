@@ -14,13 +14,25 @@ CIFTI_CREATE_PARCELLATED_FROM_TEMPLATE_METADATA = Metadata(
 
 
 CiftiCreateParcellatedFromTemplateCiftiParameters = typing.TypedDict('CiftiCreateParcellatedFromTemplateCiftiParameters', {
-    "@type": typing.Literal["workbench.cifti-create-parcellated-from-template.cifti"],
+    "@type": typing.NotRequired[typing.Literal["cifti"]],
+    "cifti_in": InputPathType,
+})
+CiftiCreateParcellatedFromTemplateCiftiParametersTagged = typing.TypedDict('CiftiCreateParcellatedFromTemplateCiftiParametersTagged', {
+    "@type": typing.Literal["cifti"],
     "cifti_in": InputPathType,
 })
 
 
 CiftiCreateParcellatedFromTemplateParameters = typing.TypedDict('CiftiCreateParcellatedFromTemplateParameters', {
-    "@type": typing.Literal["workbench.cifti-create-parcellated-from-template"],
+    "@type": typing.NotRequired[typing.Literal["workbench/cifti-create-parcellated-from-template"]],
+    "cifti_template": InputPathType,
+    "modify_direction": str,
+    "cifti_out": str,
+    "opt_fill_value_value": typing.NotRequired[float | None],
+    "cifti": typing.NotRequired[list[CiftiCreateParcellatedFromTemplateCiftiParameters] | None],
+})
+CiftiCreateParcellatedFromTemplateParametersTagged = typing.TypedDict('CiftiCreateParcellatedFromTemplateParametersTagged', {
+    "@type": typing.Literal["workbench/cifti-create-parcellated-from-template"],
     "cifti_template": InputPathType,
     "modify_direction": str,
     "cifti_out": str,
@@ -29,42 +41,9 @@ CiftiCreateParcellatedFromTemplateParameters = typing.TypedDict('CiftiCreateParc
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "workbench.cifti-create-parcellated-from-template": cifti_create_parcellated_from_template_cargs,
-        "workbench.cifti-create-parcellated-from-template.cifti": cifti_create_parcellated_from_template_cifti_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "workbench.cifti-create-parcellated-from-template": cifti_create_parcellated_from_template_outputs,
-    }.get(t)
-
-
 def cifti_create_parcellated_from_template_cifti_params(
     cifti_in: InputPathType,
-) -> CiftiCreateParcellatedFromTemplateCiftiParameters:
+) -> CiftiCreateParcellatedFromTemplateCiftiParametersTagged:
     """
     Build parameters.
     
@@ -74,7 +53,7 @@ def cifti_create_parcellated_from_template_cifti_params(
         Parameter dictionary
     """
     params = {
-        "@type": "workbench.cifti-create-parcellated-from-template.cifti",
+        "@type": "cifti",
         "cifti_in": cifti_in,
     }
     return params
@@ -95,13 +74,13 @@ def cifti_create_parcellated_from_template_cifti_cargs(
     """
     cargs = []
     cargs.append("-cifti")
-    cargs.append(execution.input_file(params.get("cifti_in")))
+    cargs.append(execution.input_file(params.get("cifti_in", None)))
     return cargs
 
 
 class CiftiCreateParcellatedFromTemplateOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `cifti_create_parcellated_from_template(...)`.
+    Output object returned when calling `CiftiCreateParcellatedFromTemplateParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -115,7 +94,7 @@ def cifti_create_parcellated_from_template_params(
     cifti_out: str,
     opt_fill_value_value: float | None = None,
     cifti: list[CiftiCreateParcellatedFromTemplateCiftiParameters] | None = None,
-) -> CiftiCreateParcellatedFromTemplateParameters:
+) -> CiftiCreateParcellatedFromTemplateParametersTagged:
     """
     Build parameters.
     
@@ -132,7 +111,7 @@ def cifti_create_parcellated_from_template_params(
         Parameter dictionary
     """
     params = {
-        "@type": "workbench.cifti-create-parcellated-from-template",
+        "@type": "workbench/cifti-create-parcellated-from-template",
         "cifti_template": cifti_template,
         "modify_direction": modify_direction,
         "cifti_out": cifti_out,
@@ -160,16 +139,16 @@ def cifti_create_parcellated_from_template_cargs(
     cargs = []
     cargs.append("wb_command")
     cargs.append("-cifti-create-parcellated-from-template")
-    cargs.append(execution.input_file(params.get("cifti_template")))
-    cargs.append(params.get("modify_direction"))
-    cargs.append(params.get("cifti_out"))
-    if params.get("opt_fill_value_value") is not None:
+    cargs.append(execution.input_file(params.get("cifti_template", None)))
+    cargs.append(params.get("modify_direction", None))
+    cargs.append(params.get("cifti_out", None))
+    if params.get("opt_fill_value_value", None) is not None:
         cargs.extend([
             "-fill-value",
-            str(params.get("opt_fill_value_value"))
+            str(params.get("opt_fill_value_value", None))
         ])
-    if params.get("cifti") is not None:
-        cargs.extend([a for c in [dyn_cargs(s["@type"])(s, execution) for s in params.get("cifti")] for a in c])
+    if params.get("cifti", None) is not None:
+        cargs.extend([a for c in [cifti_create_parcellated_from_template_cifti_cargs(s, execution) for s in params.get("cifti", None)] for a in c])
     return cargs
 
 
@@ -188,7 +167,7 @@ def cifti_create_parcellated_from_template_outputs(
     """
     ret = CiftiCreateParcellatedFromTemplateOutputs(
         root=execution.output_file("."),
-        cifti_out=execution.output_file(params.get("cifti_out")),
+        cifti_out=execution.output_file(params.get("cifti_out", None)),
     )
     return ret
 
@@ -275,9 +254,7 @@ def cifti_create_parcellated_from_template(
 
 __all__ = [
     "CIFTI_CREATE_PARCELLATED_FROM_TEMPLATE_METADATA",
-    "CiftiCreateParcellatedFromTemplateCiftiParameters",
     "CiftiCreateParcellatedFromTemplateOutputs",
-    "CiftiCreateParcellatedFromTemplateParameters",
     "cifti_create_parcellated_from_template",
     "cifti_create_parcellated_from_template_cifti_params",
     "cifti_create_parcellated_from_template_execute",

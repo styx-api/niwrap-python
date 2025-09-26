@@ -14,7 +14,18 @@ METRIC_VECTOR_OPERATION_METADATA = Metadata(
 
 
 MetricVectorOperationParameters = typing.TypedDict('MetricVectorOperationParameters', {
-    "@type": typing.Literal["workbench.metric-vector-operation"],
+    "@type": typing.NotRequired[typing.Literal["workbench/metric-vector-operation"]],
+    "vectors_a": InputPathType,
+    "vectors_b": InputPathType,
+    "operation": str,
+    "metric_out": str,
+    "opt_normalize_a": bool,
+    "opt_normalize_b": bool,
+    "opt_normalize_output": bool,
+    "opt_magnitude": bool,
+})
+MetricVectorOperationParametersTagged = typing.TypedDict('MetricVectorOperationParametersTagged', {
+    "@type": typing.Literal["workbench/metric-vector-operation"],
     "vectors_a": InputPathType,
     "vectors_b": InputPathType,
     "operation": str,
@@ -26,41 +37,9 @@ MetricVectorOperationParameters = typing.TypedDict('MetricVectorOperationParamet
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "workbench.metric-vector-operation": metric_vector_operation_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "workbench.metric-vector-operation": metric_vector_operation_outputs,
-    }.get(t)
-
-
 class MetricVectorOperationOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `metric_vector_operation(...)`.
+    Output object returned when calling `MetricVectorOperationParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -77,7 +56,7 @@ def metric_vector_operation_params(
     opt_normalize_b: bool = False,
     opt_normalize_output: bool = False,
     opt_magnitude: bool = False,
-) -> MetricVectorOperationParameters:
+) -> MetricVectorOperationParametersTagged:
     """
     Build parameters.
     
@@ -96,7 +75,7 @@ def metric_vector_operation_params(
         Parameter dictionary
     """
     params = {
-        "@type": "workbench.metric-vector-operation",
+        "@type": "workbench/metric-vector-operation",
         "vectors_a": vectors_a,
         "vectors_b": vectors_b,
         "operation": operation,
@@ -125,17 +104,17 @@ def metric_vector_operation_cargs(
     cargs = []
     cargs.append("wb_command")
     cargs.append("-metric-vector-operation")
-    cargs.append(execution.input_file(params.get("vectors_a")))
-    cargs.append(execution.input_file(params.get("vectors_b")))
-    cargs.append(params.get("operation"))
-    cargs.append(params.get("metric_out"))
-    if params.get("opt_normalize_a"):
+    cargs.append(execution.input_file(params.get("vectors_a", None)))
+    cargs.append(execution.input_file(params.get("vectors_b", None)))
+    cargs.append(params.get("operation", None))
+    cargs.append(params.get("metric_out", None))
+    if params.get("opt_normalize_a", False):
         cargs.append("-normalize-a")
-    if params.get("opt_normalize_b"):
+    if params.get("opt_normalize_b", False):
         cargs.append("-normalize-b")
-    if params.get("opt_normalize_output"):
+    if params.get("opt_normalize_output", False):
         cargs.append("-normalize-output")
-    if params.get("opt_magnitude"):
+    if params.get("opt_magnitude", False):
         cargs.append("-magnitude")
     return cargs
 
@@ -155,7 +134,7 @@ def metric_vector_operation_outputs(
     """
     ret = MetricVectorOperationOutputs(
         root=execution.output_file("."),
-        metric_out=execution.output_file(params.get("metric_out")),
+        metric_out=execution.output_file(params.get("metric_out", None)),
     )
     return ret
 
@@ -263,7 +242,6 @@ def metric_vector_operation(
 __all__ = [
     "METRIC_VECTOR_OPERATION_METADATA",
     "MetricVectorOperationOutputs",
-    "MetricVectorOperationParameters",
     "metric_vector_operation",
     "metric_vector_operation_execute",
     "metric_vector_operation_params",

@@ -14,47 +14,22 @@ MRI_POLV_METADATA = Metadata(
 
 
 MriPolvParameters = typing.TypedDict('MriPolvParameters', {
-    "@type": typing.Literal["freesurfer.mri_polv"],
+    "@type": typing.NotRequired[typing.Literal["freesurfer/mri_polv"]],
+    "window_size": typing.NotRequired[float | None],
+    "input_image": InputPathType,
+    "output_image": InputPathType,
+})
+MriPolvParametersTagged = typing.TypedDict('MriPolvParametersTagged', {
+    "@type": typing.Literal["freesurfer/mri_polv"],
     "window_size": typing.NotRequired[float | None],
     "input_image": InputPathType,
     "output_image": InputPathType,
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "freesurfer.mri_polv": mri_polv_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-    }.get(t)
-
-
 class MriPolvOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `mri_polv(...)`.
+    Output object returned when calling `MriPolvParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -64,7 +39,7 @@ def mri_polv_params(
     input_image: InputPathType,
     output_image: InputPathType,
     window_size: float | None = None,
-) -> MriPolvParameters:
+) -> MriPolvParametersTagged:
     """
     Build parameters.
     
@@ -78,7 +53,7 @@ def mri_polv_params(
         Parameter dictionary
     """
     params = {
-        "@type": "freesurfer.mri_polv",
+        "@type": "freesurfer/mri_polv",
         "input_image": input_image,
         "output_image": output_image,
     }
@@ -102,13 +77,13 @@ def mri_polv_cargs(
     """
     cargs = []
     cargs.append("mri_polv")
-    if params.get("window_size") is not None:
+    if params.get("window_size", None) is not None:
         cargs.extend([
             "-w",
-            str(params.get("window_size"))
+            str(params.get("window_size", None))
         ])
-    cargs.append(execution.input_file(params.get("input_image")))
-    cargs.append(execution.input_file(params.get("output_image")))
+    cargs.append(execution.input_file(params.get("input_image", None)))
+    cargs.append(execution.input_file(params.get("output_image", None)))
     return cargs
 
 
@@ -197,7 +172,6 @@ def mri_polv(
 __all__ = [
     "MRI_POLV_METADATA",
     "MriPolvOutputs",
-    "MriPolvParameters",
     "mri_polv",
     "mri_polv_execute",
     "mri_polv_params",

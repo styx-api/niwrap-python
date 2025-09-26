@@ -14,7 +14,14 @@ SETLABELSTAT_METADATA = Metadata(
 
 
 SetlabelstatParameters = typing.TypedDict('SetlabelstatParameters', {
-    "@type": typing.Literal["freesurfer.setlabelstat"],
+    "@type": typing.NotRequired[typing.Literal["freesurfer/setlabelstat"]],
+    "inlabelfile": InputPathType,
+    "outlabelfile": InputPathType,
+    "statval": float,
+    "help": bool,
+})
+SetlabelstatParametersTagged = typing.TypedDict('SetlabelstatParametersTagged', {
+    "@type": typing.Literal["freesurfer/setlabelstat"],
     "inlabelfile": InputPathType,
     "outlabelfile": InputPathType,
     "statval": float,
@@ -22,41 +29,9 @@ SetlabelstatParameters = typing.TypedDict('SetlabelstatParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "freesurfer.setlabelstat": setlabelstat_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "freesurfer.setlabelstat": setlabelstat_outputs,
-    }.get(t)
-
-
 class SetlabelstatOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `setlabelstat(...)`.
+    Output object returned when calling `SetlabelstatParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -69,7 +44,7 @@ def setlabelstat_params(
     outlabelfile: InputPathType,
     statval: float,
     help_: bool = False,
-) -> SetlabelstatParameters:
+) -> SetlabelstatParametersTagged:
     """
     Build parameters.
     
@@ -82,7 +57,7 @@ def setlabelstat_params(
         Parameter dictionary
     """
     params = {
-        "@type": "freesurfer.setlabelstat",
+        "@type": "freesurfer/setlabelstat",
         "inlabelfile": inlabelfile,
         "outlabelfile": outlabelfile,
         "statval": statval,
@@ -108,17 +83,17 @@ def setlabelstat_cargs(
     cargs.append("setlabelstat")
     cargs.extend([
         "-i",
-        execution.input_file(params.get("inlabelfile"))
+        execution.input_file(params.get("inlabelfile", None))
     ])
     cargs.extend([
         "-o",
-        execution.input_file(params.get("outlabelfile"))
+        execution.input_file(params.get("outlabelfile", None))
     ])
     cargs.extend([
         "-s",
-        str(params.get("statval"))
+        str(params.get("statval", None))
     ])
-    if params.get("help"):
+    if params.get("help", False):
         cargs.append("-help")
     return cargs
 
@@ -138,7 +113,7 @@ def setlabelstat_outputs(
     """
     ret = SetlabelstatOutputs(
         root=execution.output_file("."),
-        output_label_file=execution.output_file(pathlib.Path(params.get("outlabelfile")).name),
+        output_label_file=execution.output_file(pathlib.Path(params.get("outlabelfile", None)).name),
     )
     return ret
 
@@ -210,7 +185,6 @@ def setlabelstat(
 __all__ = [
     "SETLABELSTAT_METADATA",
     "SetlabelstatOutputs",
-    "SetlabelstatParameters",
     "setlabelstat",
     "setlabelstat_execute",
     "setlabelstat_params",

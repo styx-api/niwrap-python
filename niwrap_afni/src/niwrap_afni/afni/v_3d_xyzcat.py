@@ -14,7 +14,14 @@ V_3D_XYZCAT_METADATA = Metadata(
 
 
 V3dXyzcatParameters = typing.TypedDict('V3dXyzcatParameters', {
-    "@type": typing.Literal["afni.3dXYZcat"],
+    "@type": typing.NotRequired[typing.Literal["afni/3dXYZcat"]],
+    "direction": typing.NotRequired[str | None],
+    "prefix": typing.NotRequired[str | None],
+    "verbose": bool,
+    "datasets": list[InputPathType],
+})
+V3dXyzcatParametersTagged = typing.TypedDict('V3dXyzcatParametersTagged', {
+    "@type": typing.Literal["afni/3dXYZcat"],
     "direction": typing.NotRequired[str | None],
     "prefix": typing.NotRequired[str | None],
     "verbose": bool,
@@ -22,41 +29,9 @@ V3dXyzcatParameters = typing.TypedDict('V3dXyzcatParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "afni.3dXYZcat": v_3d_xyzcat_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "afni.3dXYZcat": v_3d_xyzcat_outputs,
-    }.get(t)
-
-
 class V3dXyzcatOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `v_3d_xyzcat(...)`.
+    Output object returned when calling `V3dXyzcatParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -71,7 +46,7 @@ def v_3d_xyzcat_params(
     direction: str | None = None,
     prefix: str | None = None,
     verbose: bool = False,
-) -> V3dXyzcatParameters:
+) -> V3dXyzcatParametersTagged:
     """
     Build parameters.
     
@@ -85,7 +60,7 @@ def v_3d_xyzcat_params(
         Parameter dictionary
     """
     params = {
-        "@type": "afni.3dXYZcat",
+        "@type": "afni/3dXYZcat",
         "verbose": verbose,
         "datasets": datasets,
     }
@@ -111,19 +86,19 @@ def v_3d_xyzcat_cargs(
     """
     cargs = []
     cargs.append("3dXYZcat")
-    if params.get("direction") is not None:
+    if params.get("direction", None) is not None:
         cargs.extend([
             "-dir",
-            params.get("direction")
+            params.get("direction", None)
         ])
-    if params.get("prefix") is not None:
+    if params.get("prefix", None) is not None:
         cargs.extend([
             "-prefix",
-            params.get("prefix")
+            params.get("prefix", None)
         ])
-    if params.get("verbose"):
+    if params.get("verbose", False):
         cargs.append("-verb")
-    cargs.extend([execution.input_file(f) for f in params.get("datasets")])
+    cargs.extend([execution.input_file(f) for f in params.get("datasets", None)])
     return cargs
 
 
@@ -142,8 +117,8 @@ def v_3d_xyzcat_outputs(
     """
     ret = V3dXyzcatOutputs(
         root=execution.output_file("."),
-        output_brainfile=execution.output_file(params.get("prefix") + "+orig.BRIK") if (params.get("prefix") is not None) else None,
-        output_headerfile=execution.output_file(params.get("prefix") + "+orig.HEAD") if (params.get("prefix") is not None) else None,
+        output_brainfile=execution.output_file(params.get("prefix", None) + "+orig.BRIK") if (params.get("prefix") is not None) else None,
+        output_headerfile=execution.output_file(params.get("prefix", None) + "+orig.HEAD") if (params.get("prefix") is not None) else None,
     )
     return ret
 
@@ -213,7 +188,6 @@ def v_3d_xyzcat(
 
 __all__ = [
     "V3dXyzcatOutputs",
-    "V3dXyzcatParameters",
     "V_3D_XYZCAT_METADATA",
     "v_3d_xyzcat",
     "v_3d_xyzcat_execute",

@@ -14,7 +14,16 @@ MRI_PAINT_METADATA = Metadata(
 
 
 MriPaintParameters = typing.TypedDict('MriPaintParameters', {
-    "@type": typing.Literal["freesurfer.mri_paint"],
+    "@type": typing.NotRequired[typing.Literal["freesurfer/mri_paint"]],
+    "input_volume": InputPathType,
+    "input_surface": InputPathType,
+    "registration_file": InputPathType,
+    "output_float_file": str,
+    "image_offset": typing.NotRequired[float | None],
+    "paint_surf_coords": bool,
+})
+MriPaintParametersTagged = typing.TypedDict('MriPaintParametersTagged', {
+    "@type": typing.Literal["freesurfer/mri_paint"],
     "input_volume": InputPathType,
     "input_surface": InputPathType,
     "registration_file": InputPathType,
@@ -24,41 +33,9 @@ MriPaintParameters = typing.TypedDict('MriPaintParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "freesurfer.mri_paint": mri_paint_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "freesurfer.mri_paint": mri_paint_outputs,
-    }.get(t)
-
-
 class MriPaintOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `mri_paint(...)`.
+    Output object returned when calling `MriPaintParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -73,7 +50,7 @@ def mri_paint_params(
     output_float_file: str,
     image_offset: float | None = None,
     paint_surf_coords: bool = False,
-) -> MriPaintParameters:
+) -> MriPaintParametersTagged:
     """
     Build parameters.
     
@@ -88,7 +65,7 @@ def mri_paint_params(
         Parameter dictionary
     """
     params = {
-        "@type": "freesurfer.mri_paint",
+        "@type": "freesurfer/mri_paint",
         "input_volume": input_volume,
         "input_surface": input_surface,
         "registration_file": registration_file,
@@ -115,16 +92,16 @@ def mri_paint_cargs(
     """
     cargs = []
     cargs.append("mri_paint")
-    cargs.append(execution.input_file(params.get("input_volume")))
-    cargs.append(execution.input_file(params.get("input_surface")))
-    cargs.append(execution.input_file(params.get("registration_file")))
-    cargs.append(params.get("output_float_file"))
-    if params.get("image_offset") is not None:
+    cargs.append(execution.input_file(params.get("input_volume", None)))
+    cargs.append(execution.input_file(params.get("input_surface", None)))
+    cargs.append(execution.input_file(params.get("registration_file", None)))
+    cargs.append(params.get("output_float_file", None))
+    if params.get("image_offset", None) is not None:
         cargs.extend([
             "-imageoffset",
-            str(params.get("image_offset"))
+            str(params.get("image_offset", None))
         ])
-    if params.get("paint_surf_coords"):
+    if params.get("paint_surf_coords", False):
         cargs.append("-S")
     return cargs
 
@@ -144,7 +121,7 @@ def mri_paint_outputs(
     """
     ret = MriPaintOutputs(
         root=execution.output_file("."),
-        output_float=execution.output_file(params.get("output_float_file")),
+        output_float=execution.output_file(params.get("output_float_file", None)),
     )
     return ret
 
@@ -220,7 +197,6 @@ def mri_paint(
 __all__ = [
     "MRI_PAINT_METADATA",
     "MriPaintOutputs",
-    "MriPaintParameters",
     "mri_paint",
     "mri_paint_execute",
     "mri_paint_params",

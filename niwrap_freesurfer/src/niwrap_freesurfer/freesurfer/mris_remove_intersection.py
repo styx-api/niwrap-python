@@ -14,7 +14,15 @@ MRIS_REMOVE_INTERSECTION_METADATA = Metadata(
 
 
 MrisRemoveIntersectionParameters = typing.TypedDict('MrisRemoveIntersectionParameters', {
-    "@type": typing.Literal["freesurfer.mris_remove_intersection"],
+    "@type": typing.NotRequired[typing.Literal["freesurfer/mris_remove_intersection"]],
+    "surface_in_file": InputPathType,
+    "corrected_surface_out_file": str,
+    "fill_holes": bool,
+    "map_option": typing.NotRequired[InputPathType | None],
+    "projdistmm": typing.NotRequired[float | None],
+})
+MrisRemoveIntersectionParametersTagged = typing.TypedDict('MrisRemoveIntersectionParametersTagged', {
+    "@type": typing.Literal["freesurfer/mris_remove_intersection"],
     "surface_in_file": InputPathType,
     "corrected_surface_out_file": str,
     "fill_holes": bool,
@@ -23,41 +31,9 @@ MrisRemoveIntersectionParameters = typing.TypedDict('MrisRemoveIntersectionParam
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "freesurfer.mris_remove_intersection": mris_remove_intersection_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "freesurfer.mris_remove_intersection": mris_remove_intersection_outputs,
-    }.get(t)
-
-
 class MrisRemoveIntersectionOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `mris_remove_intersection(...)`.
+    Output object returned when calling `MrisRemoveIntersectionParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -73,7 +49,7 @@ def mris_remove_intersection_params(
     fill_holes: bool = False,
     map_option: InputPathType | None = None,
     projdistmm: float | None = None,
-) -> MrisRemoveIntersectionParameters:
+) -> MrisRemoveIntersectionParametersTagged:
     """
     Build parameters.
     
@@ -88,7 +64,7 @@ def mris_remove_intersection_params(
         Parameter dictionary
     """
     params = {
-        "@type": "freesurfer.mris_remove_intersection",
+        "@type": "freesurfer/mris_remove_intersection",
         "surface_in_file": surface_in_file,
         "corrected_surface_out_file": corrected_surface_out_file,
         "fill_holes": fill_holes,
@@ -115,17 +91,17 @@ def mris_remove_intersection_cargs(
     """
     cargs = []
     cargs.append("mris_remove_intersection")
-    cargs.append(execution.input_file(params.get("surface_in_file")))
-    cargs.append(params.get("corrected_surface_out_file"))
-    if params.get("fill_holes"):
+    cargs.append(execution.input_file(params.get("surface_in_file", None)))
+    cargs.append(params.get("corrected_surface_out_file", None))
+    if params.get("fill_holes", False):
         cargs.append("-fill-holes")
-    if params.get("map_option") is not None:
+    if params.get("map_option", None) is not None:
         cargs.extend([
             "-map",
-            execution.input_file(params.get("map_option"))
+            execution.input_file(params.get("map_option", None))
         ])
-    if params.get("projdistmm") is not None:
-        cargs.append(str(params.get("projdistmm")))
+    if params.get("projdistmm", None) is not None:
+        cargs.append(str(params.get("projdistmm", None)))
     return cargs
 
 
@@ -144,8 +120,8 @@ def mris_remove_intersection_outputs(
     """
     ret = MrisRemoveIntersectionOutputs(
         root=execution.output_file("."),
-        out_corrected_surface=execution.output_file(params.get("corrected_surface_out_file")),
-        out_map_file=execution.output_file(pathlib.Path(params.get("map_option")).name) if (params.get("map_option") is not None) else None,
+        out_corrected_surface=execution.output_file(params.get("corrected_surface_out_file", None)),
+        out_map_file=execution.output_file(pathlib.Path(params.get("map_option", None)).name) if (params.get("map_option") is not None) else None,
     )
     return ret
 
@@ -219,7 +195,6 @@ def mris_remove_intersection(
 __all__ = [
     "MRIS_REMOVE_INTERSECTION_METADATA",
     "MrisRemoveIntersectionOutputs",
-    "MrisRemoveIntersectionParameters",
     "mris_remove_intersection",
     "mris_remove_intersection_execute",
     "mris_remove_intersection_params",

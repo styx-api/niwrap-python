@@ -14,7 +14,20 @@ LABEL2PATCH_METADATA = Metadata(
 
 
 Label2patchParameters = typing.TypedDict('Label2patchParameters', {
-    "@type": typing.Literal["freesurfer.label2patch"],
+    "@type": typing.NotRequired[typing.Literal["freesurfer/label2patch"]],
+    "subject_name": str,
+    "hemisphere": str,
+    "label_file": InputPathType,
+    "output_patch": str,
+    "dilate": typing.NotRequired[float | None],
+    "erode": typing.NotRequired[float | None],
+    "close": typing.NotRequired[float | None],
+    "subjects_dir": typing.NotRequired[str | None],
+    "surface_name": typing.NotRequired[str | None],
+    "write_surface": bool,
+})
+Label2patchParametersTagged = typing.TypedDict('Label2patchParametersTagged', {
+    "@type": typing.Literal["freesurfer/label2patch"],
     "subject_name": str,
     "hemisphere": str,
     "label_file": InputPathType,
@@ -28,40 +41,9 @@ Label2patchParameters = typing.TypedDict('Label2patchParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "freesurfer.label2patch": label2patch_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-    }.get(t)
-
-
 class Label2patchOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `label2patch(...)`.
+    Output object returned when calling `Label2patchParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -78,7 +60,7 @@ def label2patch_params(
     subjects_dir: str | None = None,
     surface_name: str | None = None,
     write_surface: bool = False,
-) -> Label2patchParameters:
+) -> Label2patchParametersTagged:
     """
     Build parameters.
     
@@ -99,7 +81,7 @@ def label2patch_params(
         Parameter dictionary
     """
     params = {
-        "@type": "freesurfer.label2patch",
+        "@type": "freesurfer/label2patch",
         "subject_name": subject_name,
         "hemisphere": hemisphere,
         "label_file": label_file,
@@ -134,36 +116,36 @@ def label2patch_cargs(
     """
     cargs = []
     cargs.append("label2patch")
-    cargs.append(params.get("subject_name"))
-    cargs.append(params.get("hemisphere"))
-    cargs.append(execution.input_file(params.get("label_file")))
-    cargs.append(params.get("output_patch"))
-    if params.get("dilate") is not None:
+    cargs.append(params.get("subject_name", None))
+    cargs.append(params.get("hemisphere", None))
+    cargs.append(execution.input_file(params.get("label_file", None)))
+    cargs.append(params.get("output_patch", None))
+    if params.get("dilate", None) is not None:
         cargs.extend([
             "-dilate",
-            str(params.get("dilate"))
+            str(params.get("dilate", None))
         ])
-    if params.get("erode") is not None:
+    if params.get("erode", None) is not None:
         cargs.extend([
             "-erode",
-            str(params.get("erode"))
+            str(params.get("erode", None))
         ])
-    if params.get("close") is not None:
+    if params.get("close", None) is not None:
         cargs.extend([
             "-close",
-            str(params.get("close"))
+            str(params.get("close", None))
         ])
-    if params.get("subjects_dir") is not None:
+    if params.get("subjects_dir", None) is not None:
         cargs.extend([
             "-sdir",
-            params.get("subjects_dir")
+            params.get("subjects_dir", None)
         ])
-    if params.get("surface_name") is not None:
+    if params.get("surface_name", None) is not None:
         cargs.extend([
             "-surf",
-            params.get("surface_name")
+            params.get("surface_name", None)
         ])
-    if params.get("write_surface"):
+    if params.get("write_surface", False):
         cargs.append("-writesurf")
     return cargs
 
@@ -272,7 +254,6 @@ def label2patch(
 __all__ = [
     "LABEL2PATCH_METADATA",
     "Label2patchOutputs",
-    "Label2patchParameters",
     "label2patch",
     "label2patch_execute",
     "label2patch_params",

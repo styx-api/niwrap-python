@@ -14,47 +14,20 @@ VENTFIX_METADATA = Metadata(
 
 
 VentfixParameters = typing.TypedDict('VentfixParameters', {
-    "@type": typing.Literal["freesurfer.ventfix"],
+    "@type": typing.NotRequired[typing.Literal["freesurfer/ventfix"]],
+    "subject_dir": str,
+    "option1": typing.NotRequired[str | None],
+})
+VentfixParametersTagged = typing.TypedDict('VentfixParametersTagged', {
+    "@type": typing.Literal["freesurfer/ventfix"],
     "subject_dir": str,
     "option1": typing.NotRequired[str | None],
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "freesurfer.ventfix": ventfix_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "freesurfer.ventfix": ventfix_outputs,
-    }.get(t)
-
-
 class VentfixOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `ventfix(...)`.
+    Output object returned when calling `VentfixParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -65,7 +38,7 @@ class VentfixOutputs(typing.NamedTuple):
 def ventfix_params(
     subject_dir: str,
     option1: str | None = None,
-) -> VentfixParameters:
+) -> VentfixParametersTagged:
     """
     Build parameters.
     
@@ -76,7 +49,7 @@ def ventfix_params(
         Parameter dictionary
     """
     params = {
-        "@type": "freesurfer.ventfix",
+        "@type": "freesurfer/ventfix",
         "subject_dir": subject_dir,
     }
     if option1 is not None:
@@ -99,11 +72,11 @@ def ventfix_cargs(
     """
     cargs = []
     cargs.append("ventfix")
-    cargs.append(params.get("subject_dir"))
-    if params.get("option1") is not None:
+    cargs.append(params.get("subject_dir", None))
+    if params.get("option1", None) is not None:
         cargs.extend([
             "--option1",
-            params.get("option1")
+            params.get("option1", None)
         ])
     return cargs
 
@@ -123,7 +96,7 @@ def ventfix_outputs(
     """
     ret = VentfixOutputs(
         root=execution.output_file("."),
-        fixed_ventricles=execution.output_file(params.get("subject_dir") + "/fixed_ventricles.nii.gz"),
+        fixed_ventricles=execution.output_file(params.get("subject_dir", None) + "/fixed_ventricles.nii.gz"),
     )
     return ret
 
@@ -187,7 +160,6 @@ def ventfix(
 __all__ = [
     "VENTFIX_METADATA",
     "VentfixOutputs",
-    "VentfixParameters",
     "ventfix",
     "ventfix_execute",
     "ventfix_params",

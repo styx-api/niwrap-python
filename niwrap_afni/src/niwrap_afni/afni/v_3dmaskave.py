@@ -14,7 +14,15 @@ V_3DMASKAVE_METADATA = Metadata(
 
 
 V3dmaskaveParameters = typing.TypedDict('V3dmaskaveParameters', {
-    "@type": typing.Literal["afni.3dmaskave"],
+    "@type": typing.NotRequired[typing.Literal["afni/3dmaskave"]],
+    "in_file": InputPathType,
+    "mask": typing.NotRequired[InputPathType | None],
+    "num_threads": typing.NotRequired[int | None],
+    "outputtype": typing.NotRequired[typing.Literal["NIFTI", "AFNI", "NIFTI_GZ"] | None],
+    "quiet": bool,
+})
+V3dmaskaveParametersTagged = typing.TypedDict('V3dmaskaveParametersTagged', {
+    "@type": typing.Literal["afni/3dmaskave"],
     "in_file": InputPathType,
     "mask": typing.NotRequired[InputPathType | None],
     "num_threads": typing.NotRequired[int | None],
@@ -23,41 +31,9 @@ V3dmaskaveParameters = typing.TypedDict('V3dmaskaveParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "afni.3dmaskave": v_3dmaskave_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "afni.3dmaskave": v_3dmaskave_outputs,
-    }.get(t)
-
-
 class V3dmaskaveOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `v_3dmaskave(...)`.
+    Output object returned when calling `V3dmaskaveParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -73,7 +49,7 @@ def v_3dmaskave_params(
     num_threads: int | None = None,
     outputtype: typing.Literal["NIFTI", "AFNI", "NIFTI_GZ"] | None = None,
     quiet: bool = False,
-) -> V3dmaskaveParameters:
+) -> V3dmaskaveParametersTagged:
     """
     Build parameters.
     
@@ -87,7 +63,7 @@ def v_3dmaskave_params(
         Parameter dictionary
     """
     params = {
-        "@type": "afni.3dmaskave",
+        "@type": "afni/3dmaskave",
         "in_file": in_file,
         "quiet": quiet,
     }
@@ -115,17 +91,17 @@ def v_3dmaskave_cargs(
     """
     cargs = []
     cargs.append("3dmaskave")
-    cargs.append(execution.input_file(params.get("in_file")))
-    if params.get("mask") is not None:
+    cargs.append(execution.input_file(params.get("in_file", None)))
+    if params.get("mask", None) is not None:
         cargs.extend([
             "-mask",
-            execution.input_file(params.get("mask"))
+            execution.input_file(params.get("mask", None))
         ])
-    if params.get("num_threads") is not None:
-        cargs.append(str(params.get("num_threads")))
-    if params.get("outputtype") is not None:
-        cargs.append(params.get("outputtype"))
-    if params.get("quiet"):
+    if params.get("num_threads", None) is not None:
+        cargs.append(str(params.get("num_threads", None)))
+    if params.get("outputtype", None) is not None:
+        cargs.append(params.get("outputtype", None))
+    if params.get("quiet", False):
         cargs.append("-quiet")
     return cargs
 
@@ -145,7 +121,7 @@ def v_3dmaskave_outputs(
     """
     ret = V3dmaskaveOutputs(
         root=execution.output_file("."),
-        out_file=execution.output_file(pathlib.Path(params.get("in_file")).name + "_maskave.1D"),
+        out_file=execution.output_file(pathlib.Path(params.get("in_file", None)).name + "_maskave.1D"),
         out_file_=execution.output_file("out_file"),
     )
     return ret
@@ -220,7 +196,6 @@ def v_3dmaskave(
 
 __all__ = [
     "V3dmaskaveOutputs",
-    "V3dmaskaveParameters",
     "V_3DMASKAVE_METADATA",
     "v_3dmaskave",
     "v_3dmaskave_execute",

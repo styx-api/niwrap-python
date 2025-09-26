@@ -14,7 +14,42 @@ RUN_SAMSEG_METADATA = Metadata(
 
 
 RunSamsegParameters = typing.TypedDict('RunSamsegParameters', {
-    "@type": typing.Literal["freesurfer.run_samseg"],
+    "@type": typing.NotRequired[typing.Literal["freesurfer/run_samseg"]],
+    "output_dir": str,
+    "input_files": list[InputPathType],
+    "input_mode": typing.NotRequired[list[str] | None],
+    "threads": typing.NotRequired[float | None],
+    "reg_only": bool,
+    "reg_file": typing.NotRequired[InputPathType | None],
+    "init_reg_file": typing.NotRequired[InputPathType | None],
+    "atlas_dir": typing.NotRequired[str | None],
+    "gmm_file": typing.NotRequired[InputPathType | None],
+    "ignore_unknown": bool,
+    "options_file": typing.NotRequired[InputPathType | None],
+    "pallidum_separate": bool,
+    "mesh_stiffness": typing.NotRequired[float | None],
+    "smooth_wm_cortex_priors": typing.NotRequired[float | None],
+    "bias_field_smoothing_kernel": typing.NotRequired[float | None],
+    "lesion": bool,
+    "threshold": typing.NotRequired[float | None],
+    "samples": typing.NotRequired[float | None],
+    "burnin": typing.NotRequired[float | None],
+    "lesion_pseudo_samples": typing.NotRequired[list[float] | None],
+    "lesion_rho": typing.NotRequired[float | None],
+    "lesion_mask_structure": typing.NotRequired[str | None],
+    "lesion_mask_pattern": typing.NotRequired[list[float] | None],
+    "random_seed": typing.NotRequired[float | None],
+    "dissection_photo": typing.NotRequired[str | None],
+    "history": bool,
+    "save_posteriors": typing.NotRequired[list[str] | None],
+    "save_probabilities": bool,
+    "showfigs": bool,
+    "save_mesh": bool,
+    "save_warp": bool,
+    "movie": bool,
+})
+RunSamsegParametersTagged = typing.TypedDict('RunSamsegParametersTagged', {
+    "@type": typing.Literal["freesurfer/run_samseg"],
     "output_dir": str,
     "input_files": list[InputPathType],
     "input_mode": typing.NotRequired[list[str] | None],
@@ -50,40 +85,9 @@ RunSamsegParameters = typing.TypedDict('RunSamsegParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "freesurfer.run_samseg": run_samseg_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-    }.get(t)
-
-
 class RunSamsegOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `run_samseg(...)`.
+    Output object returned when calling `RunSamsegParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -122,7 +126,7 @@ def run_samseg_params(
     save_mesh: bool = False,
     save_warp: bool = False,
     movie: bool = False,
-) -> RunSamsegParameters:
+) -> RunSamsegParametersTagged:
     """
     Build parameters.
     
@@ -166,7 +170,7 @@ def run_samseg_params(
         Parameter dictionary
     """
     params = {
-        "@type": "freesurfer.run_samseg",
+        "@type": "freesurfer/run_samseg",
         "output_dir": output_dir,
         "input_files": input_files,
         "reg_only": reg_only,
@@ -240,131 +244,131 @@ def run_samseg_cargs(
     cargs.append("run_samseg")
     cargs.extend([
         "-o",
-        params.get("output_dir")
+        params.get("output_dir", None)
     ])
     cargs.extend([
         "-i",
-        *[execution.input_file(f) for f in params.get("input_files")]
+        *[execution.input_file(f) for f in params.get("input_files", None)]
     ])
-    if params.get("input_mode") is not None:
+    if params.get("input_mode", None) is not None:
         cargs.extend([
             "-m",
-            *params.get("input_mode")
+            *params.get("input_mode", None)
         ])
-    if params.get("threads") is not None:
+    if params.get("threads", None) is not None:
         cargs.extend([
             "--threads",
-            str(params.get("threads"))
+            str(params.get("threads", None))
         ])
-    if params.get("reg_only"):
+    if params.get("reg_only", False):
         cargs.append("--reg-only")
-    if params.get("reg_file") is not None:
+    if params.get("reg_file", None) is not None:
         cargs.extend([
             "-r",
-            execution.input_file(params.get("reg_file"))
+            execution.input_file(params.get("reg_file", None))
         ])
-    if params.get("init_reg_file") is not None:
+    if params.get("init_reg_file", None) is not None:
         cargs.extend([
             "--init-reg",
-            execution.input_file(params.get("init_reg_file"))
+            execution.input_file(params.get("init_reg_file", None))
         ])
-    if params.get("atlas_dir") is not None:
+    if params.get("atlas_dir", None) is not None:
         cargs.extend([
             "-a",
-            params.get("atlas_dir")
+            params.get("atlas_dir", None)
         ])
-    if params.get("gmm_file") is not None:
+    if params.get("gmm_file", None) is not None:
         cargs.extend([
             "--gmm",
-            execution.input_file(params.get("gmm_file"))
+            execution.input_file(params.get("gmm_file", None))
         ])
-    if params.get("ignore_unknown"):
+    if params.get("ignore_unknown", False):
         cargs.append("--ignore-unknown")
-    if params.get("options_file") is not None:
+    if params.get("options_file", None) is not None:
         cargs.extend([
             "--options",
-            execution.input_file(params.get("options_file"))
+            execution.input_file(params.get("options_file", None))
         ])
-    if params.get("pallidum_separate"):
+    if params.get("pallidum_separate", False):
         cargs.append("--pallidum-separate")
-    if params.get("mesh_stiffness") is not None:
+    if params.get("mesh_stiffness", None) is not None:
         cargs.extend([
             "--mesh-stiffness",
-            str(params.get("mesh_stiffness"))
+            str(params.get("mesh_stiffness", None))
         ])
-    if params.get("smooth_wm_cortex_priors") is not None:
+    if params.get("smooth_wm_cortex_priors", None) is not None:
         cargs.extend([
             "--smooth-wm-cortex-priors",
-            str(params.get("smooth_wm_cortex_priors"))
+            str(params.get("smooth_wm_cortex_priors", None))
         ])
-    if params.get("bias_field_smoothing_kernel") is not None:
+    if params.get("bias_field_smoothing_kernel", None) is not None:
         cargs.extend([
             "--bias-field-smoothing-kernel",
-            str(params.get("bias_field_smoothing_kernel"))
+            str(params.get("bias_field_smoothing_kernel", None))
         ])
-    if params.get("lesion"):
+    if params.get("lesion", False):
         cargs.append("--lesion")
-    if params.get("threshold") is not None:
+    if params.get("threshold", None) is not None:
         cargs.extend([
             "--threshold",
-            str(params.get("threshold"))
+            str(params.get("threshold", None))
         ])
-    if params.get("samples") is not None:
+    if params.get("samples", None) is not None:
         cargs.extend([
             "--samples",
-            str(params.get("samples"))
+            str(params.get("samples", None))
         ])
-    if params.get("burnin") is not None:
+    if params.get("burnin", None) is not None:
         cargs.extend([
             "--burnin",
-            str(params.get("burnin"))
+            str(params.get("burnin", None))
         ])
-    if params.get("lesion_pseudo_samples") is not None:
+    if params.get("lesion_pseudo_samples", None) is not None:
         cargs.extend([
             "--lesion-pseudo-samples",
-            *map(str, params.get("lesion_pseudo_samples"))
+            *map(str, params.get("lesion_pseudo_samples", None))
         ])
-    if params.get("lesion_rho") is not None:
+    if params.get("lesion_rho", None) is not None:
         cargs.extend([
             "--lesion-rho",
-            str(params.get("lesion_rho"))
+            str(params.get("lesion_rho", None))
         ])
-    if params.get("lesion_mask_structure") is not None:
+    if params.get("lesion_mask_structure", None) is not None:
         cargs.extend([
             "--lesion-mask-structure",
-            params.get("lesion_mask_structure")
+            params.get("lesion_mask_structure", None)
         ])
-    if params.get("lesion_mask_pattern") is not None:
+    if params.get("lesion_mask_pattern", None) is not None:
         cargs.extend([
             "--lesion-mask-pattern",
-            *map(str, params.get("lesion_mask_pattern"))
+            *map(str, params.get("lesion_mask_pattern", None))
         ])
-    if params.get("random_seed") is not None:
+    if params.get("random_seed", None) is not None:
         cargs.extend([
             "--random-seed",
-            str(params.get("random_seed"))
+            str(params.get("random_seed", None))
         ])
-    if params.get("dissection_photo") is not None:
+    if params.get("dissection_photo", None) is not None:
         cargs.extend([
             "--dissection-photo",
-            params.get("dissection_photo")
+            params.get("dissection_photo", None)
         ])
-    if params.get("history"):
+    if params.get("history", False):
         cargs.append("--history")
-    if params.get("save_posteriors") is not None:
+    if params.get("save_posteriors", None) is not None:
         cargs.extend([
             "--save-posteriors",
-            *params.get("save_posteriors")
+            *params.get("save_posteriors", None)
         ])
-    if params.get("save_probabilities"):
+    if params.get("save_probabilities", False):
         cargs.append("--save-probabilities")
-    if params.get("showfigs"):
+    if params.get("showfigs", False):
         cargs.append("--showfigs")
-    if params.get("save_mesh"):
+    if params.get("save_mesh", False):
         cargs.append("--save-mesh")
-    if params.get("save_warp"):
+    if params.get("save_warp", False):
         cargs.append("--save-warp")
-    if params.get("movie"):
+    if params.get("movie", False):
         cargs.append("--movie")
     return cargs
 
@@ -542,7 +546,6 @@ def run_samseg(
 __all__ = [
     "RUN_SAMSEG_METADATA",
     "RunSamsegOutputs",
-    "RunSamsegParameters",
     "run_samseg",
     "run_samseg_execute",
     "run_samseg_params",

@@ -14,7 +14,28 @@ GCA_APPLY_METADATA = Metadata(
 
 
 GcaApplyParameters = typing.TypedDict('GcaApplyParameters', {
-    "@type": typing.Literal["freesurfer.gca-apply"],
+    "@type": typing.NotRequired[typing.Literal["freesurfer/gca-apply"]],
+    "gcafile": InputPathType,
+    "subject": str,
+    "nthreads": typing.NotRequired[float | None],
+    "base": typing.NotRequired[str | None],
+    "no_segstats": bool,
+    "subjects_dir": typing.NotRequired[str | None],
+    "dice_seg": typing.NotRequired[str | None],
+    "dice_file": typing.NotRequired[str | None],
+    "lta": typing.NotRequired[InputPathType | None],
+    "norm": typing.NotRequired[InputPathType | None],
+    "input_mgz": typing.NotRequired[InputPathType | None],
+    "brainmask": typing.NotRequired[InputPathType | None],
+    "output_dir": typing.NotRequired[str | None],
+    "no_v6labopts": bool,
+    "m3z_file": typing.NotRequired[InputPathType | None],
+    "gca_rb_2016": bool,
+    "force_update": bool,
+    "gcareg_iters": typing.NotRequired[float | None],
+})
+GcaApplyParametersTagged = typing.TypedDict('GcaApplyParametersTagged', {
+    "@type": typing.Literal["freesurfer/gca-apply"],
     "gcafile": InputPathType,
     "subject": str,
     "nthreads": typing.NotRequired[float | None],
@@ -36,41 +57,9 @@ GcaApplyParameters = typing.TypedDict('GcaApplyParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "freesurfer.gca-apply": gca_apply_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "freesurfer.gca-apply": gca_apply_outputs,
-    }.get(t)
-
-
 class GcaApplyOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `gca_apply(...)`.
+    Output object returned when calling `GcaApplyParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -105,7 +94,7 @@ def gca_apply_params(
     gca_rb_2016: bool = False,
     force_update: bool = False,
     gcareg_iters: float | None = None,
-) -> GcaApplyParameters:
+) -> GcaApplyParametersTagged:
     """
     Build parameters.
     
@@ -133,7 +122,7 @@ def gca_apply_params(
         Parameter dictionary
     """
     params = {
-        "@type": "freesurfer.gca-apply",
+        "@type": "freesurfer/gca-apply",
         "gcafile": gcafile,
         "subject": subject,
         "no_segstats": no_segstats,
@@ -185,73 +174,73 @@ def gca_apply_cargs(
     cargs.append("gca-apply")
     cargs.extend([
         "-apply",
-        execution.input_file(params.get("gcafile"))
+        execution.input_file(params.get("gcafile", None))
     ])
-    cargs.append(params.get("subject"))
-    if params.get("nthreads") is not None:
+    cargs.append(params.get("subject", None))
+    if params.get("nthreads", None) is not None:
         cargs.extend([
             "--nthreads",
-            str(params.get("nthreads"))
+            str(params.get("nthreads", None))
         ])
-    if params.get("base") is not None:
+    if params.get("base", None) is not None:
         cargs.extend([
             "--base",
-            params.get("base")
+            params.get("base", None)
         ])
-    if params.get("no_segstats"):
+    if params.get("no_segstats", False):
         cargs.append("--no-segstats")
-    if params.get("subjects_dir") is not None:
+    if params.get("subjects_dir", None) is not None:
         cargs.extend([
             "--sd",
-            params.get("subjects_dir")
+            params.get("subjects_dir", None)
         ])
-    if params.get("dice_seg") is not None:
+    if params.get("dice_seg", None) is not None:
         cargs.extend([
             "--dice",
-            params.get("dice_seg")
+            params.get("dice_seg", None)
         ])
-    if params.get("dice_file") is not None:
-        cargs.append(params.get("dice_file"))
-    if params.get("lta") is not None:
+    if params.get("dice_file", None) is not None:
+        cargs.append(params.get("dice_file", None))
+    if params.get("lta", None) is not None:
         cargs.extend([
             "--lta",
-            execution.input_file(params.get("lta"))
+            execution.input_file(params.get("lta", None))
         ])
-    if params.get("norm") is not None:
+    if params.get("norm", None) is not None:
         cargs.extend([
             "--norm",
-            execution.input_file(params.get("norm"))
+            execution.input_file(params.get("norm", None))
         ])
-    if params.get("input_mgz") is not None:
+    if params.get("input_mgz", None) is not None:
         cargs.extend([
             "--input",
-            execution.input_file(params.get("input_mgz"))
+            execution.input_file(params.get("input_mgz", None))
         ])
-    if params.get("brainmask") is not None:
+    if params.get("brainmask", None) is not None:
         cargs.extend([
             "--brainmask",
-            execution.input_file(params.get("brainmask"))
+            execution.input_file(params.get("brainmask", None))
         ])
-    if params.get("output_dir") is not None:
+    if params.get("output_dir", None) is not None:
         cargs.extend([
             "--o",
-            params.get("output_dir")
+            params.get("output_dir", None)
         ])
-    if params.get("no_v6labopts"):
+    if params.get("no_v6labopts", False):
         cargs.append("--no-v6labopts")
-    if params.get("m3z_file") is not None:
+    if params.get("m3z_file", None) is not None:
         cargs.extend([
             "--m3z",
-            execution.input_file(params.get("m3z_file"))
+            execution.input_file(params.get("m3z_file", None))
         ])
-    if params.get("gca_rb_2016"):
+    if params.get("gca_rb_2016", False):
         cargs.append("--gca-rb-2016")
-    if params.get("force_update"):
+    if params.get("force_update", False):
         cargs.append("--force-update")
-    if params.get("gcareg_iters") is not None:
+    if params.get("gcareg_iters", None) is not None:
         cargs.extend([
             "--gcareg-iters",
-            str(params.get("gcareg_iters"))
+            str(params.get("gcareg_iters", None))
         ])
     return cargs
 
@@ -271,11 +260,11 @@ def gca_apply_outputs(
     """
     ret = GcaApplyOutputs(
         root=execution.output_file("."),
-        output_lta=execution.output_file(params.get("base") + ".lta") if (params.get("base") is not None) else None,
-        output_m3z=execution.output_file(params.get("base") + ".m3z") if (params.get("base") is not None) else None,
-        normalized_gca=execution.output_file("norm." + params.get("base") + ".mgz") if (params.get("base") is not None) else None,
-        segmented_gca=execution.output_file(params.get("base") + ".aseg.mgz") if (params.get("base") is not None) else None,
-        stats_output=execution.output_file(params.get("base") + ".stats") if (params.get("base") is not None) else None,
+        output_lta=execution.output_file(params.get("base", None) + ".lta") if (params.get("base") is not None) else None,
+        output_m3z=execution.output_file(params.get("base", None) + ".m3z") if (params.get("base") is not None) else None,
+        normalized_gca=execution.output_file("norm." + params.get("base", None) + ".mgz") if (params.get("base") is not None) else None,
+        segmented_gca=execution.output_file(params.get("base", None) + ".aseg.mgz") if (params.get("base") is not None) else None,
+        stats_output=execution.output_file(params.get("base", None) + ".stats") if (params.get("base") is not None) else None,
     )
     return ret
 
@@ -392,7 +381,6 @@ def gca_apply(
 __all__ = [
     "GCA_APPLY_METADATA",
     "GcaApplyOutputs",
-    "GcaApplyParameters",
     "gca_apply",
     "gca_apply_execute",
     "gca_apply_params",

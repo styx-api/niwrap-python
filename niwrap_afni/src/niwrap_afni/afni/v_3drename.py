@@ -14,46 +14,20 @@ V_3DRENAME_METADATA = Metadata(
 
 
 V3drenameParameters = typing.TypedDict('V3drenameParameters', {
-    "@type": typing.Literal["afni.3drename"],
+    "@type": typing.NotRequired[typing.Literal["afni/3drename"]],
+    "old_prefix": str,
+    "new_prefix": str,
+})
+V3drenameParametersTagged = typing.TypedDict('V3drenameParametersTagged', {
+    "@type": typing.Literal["afni/3drename"],
     "old_prefix": str,
     "new_prefix": str,
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "afni.3drename": v_3drename_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-    }.get(t)
-
-
 class V3drenameOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `v_3drename(...)`.
+    Output object returned when calling `V3drenameParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -62,7 +36,7 @@ class V3drenameOutputs(typing.NamedTuple):
 def v_3drename_params(
     old_prefix: str,
     new_prefix: str,
-) -> V3drenameParameters:
+) -> V3drenameParametersTagged:
     """
     Build parameters.
     
@@ -73,7 +47,7 @@ def v_3drename_params(
         Parameter dictionary
     """
     params = {
-        "@type": "afni.3drename",
+        "@type": "afni/3drename",
         "old_prefix": old_prefix,
         "new_prefix": new_prefix,
     }
@@ -95,8 +69,8 @@ def v_3drename_cargs(
     """
     cargs = []
     cargs.append("3drename")
-    cargs.append(params.get("old_prefix"))
-    cargs.append(params.get("new_prefix"))
+    cargs.append(params.get("old_prefix", None))
+    cargs.append(params.get("new_prefix", None))
     return cargs
 
 
@@ -177,7 +151,6 @@ def v_3drename(
 
 __all__ = [
     "V3drenameOutputs",
-    "V3drenameParameters",
     "V_3DRENAME_METADATA",
     "v_3drename",
     "v_3drename_execute",

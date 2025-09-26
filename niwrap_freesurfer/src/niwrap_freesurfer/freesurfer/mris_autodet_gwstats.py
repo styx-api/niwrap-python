@@ -14,7 +14,25 @@ MRIS_AUTODET_GWSTATS_METADATA = Metadata(
 
 
 MrisAutodetGwstatsParameters = typing.TypedDict('MrisAutodetGwstatsParameters', {
-    "@type": typing.Literal["freesurfer.mris_autodet_gwstats"],
+    "@type": typing.NotRequired[typing.Literal["freesurfer/mris_autodet_gwstats"]],
+    "output_file": str,
+    "t1w_volume": InputPathType,
+    "wm_volume": InputPathType,
+    "surf": InputPathType,
+    "lhsurf": typing.NotRequired[InputPathType | None],
+    "rhsurf": typing.NotRequired[InputPathType | None],
+    "subject": str,
+    "subjects_dir": str,
+    "min_border_white": typing.NotRequired[float | None],
+    "max_border_white": typing.NotRequired[float | None],
+    "min_gray_at_white_border": typing.NotRequired[float | None],
+    "max_gray": typing.NotRequired[float | None],
+    "max_gray_at_csf_border": typing.NotRequired[float | None],
+    "min_gray_at_csf_border": typing.NotRequired[float | None],
+    "max_csf": typing.NotRequired[float | None],
+})
+MrisAutodetGwstatsParametersTagged = typing.TypedDict('MrisAutodetGwstatsParametersTagged', {
+    "@type": typing.Literal["freesurfer/mris_autodet_gwstats"],
     "output_file": str,
     "t1w_volume": InputPathType,
     "wm_volume": InputPathType,
@@ -33,41 +51,9 @@ MrisAutodetGwstatsParameters = typing.TypedDict('MrisAutodetGwstatsParameters', 
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "freesurfer.mris_autodet_gwstats": mris_autodet_gwstats_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "freesurfer.mris_autodet_gwstats": mris_autodet_gwstats_outputs,
-    }.get(t)
-
-
 class MrisAutodetGwstatsOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `mris_autodet_gwstats(...)`.
+    Output object returned when calling `MrisAutodetGwstatsParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -91,7 +77,7 @@ def mris_autodet_gwstats_params(
     max_gray_at_csf_border: float | None = None,
     min_gray_at_csf_border: float | None = None,
     max_csf: float | None = None,
-) -> MrisAutodetGwstatsParameters:
+) -> MrisAutodetGwstatsParametersTagged:
     """
     Build parameters.
     
@@ -116,7 +102,7 @@ def mris_autodet_gwstats_params(
         Parameter dictionary
     """
     params = {
-        "@type": "freesurfer.mris_autodet_gwstats",
+        "@type": "freesurfer/mris_autodet_gwstats",
         "output_file": output_file,
         "t1w_volume": t1w_volume,
         "wm_volume": wm_volume,
@@ -162,72 +148,72 @@ def mris_autodet_gwstats_cargs(
     cargs.append("mris_autodet_gwstats")
     cargs.extend([
         "--o",
-        params.get("output_file")
+        params.get("output_file", None)
     ])
     cargs.extend([
         "--i",
-        execution.input_file(params.get("t1w_volume"))
+        execution.input_file(params.get("t1w_volume", None))
     ])
     cargs.extend([
         "--wm",
-        execution.input_file(params.get("wm_volume"))
+        execution.input_file(params.get("wm_volume", None))
     ])
     cargs.extend([
         "--surf",
-        execution.input_file(params.get("surf"))
+        execution.input_file(params.get("surf", None))
     ])
-    if params.get("lhsurf") is not None:
+    if params.get("lhsurf", None) is not None:
         cargs.extend([
             "--lh-surf",
-            execution.input_file(params.get("lhsurf"))
+            execution.input_file(params.get("lhsurf", None))
         ])
-    if params.get("rhsurf") is not None:
+    if params.get("rhsurf", None) is not None:
         cargs.extend([
             "--rh-surf",
-            execution.input_file(params.get("rhsurf"))
+            execution.input_file(params.get("rhsurf", None))
         ])
     cargs.extend([
         "--s",
-        params.get("subject")
+        params.get("subject", None)
     ])
     cargs.extend([
         "--sd",
-        params.get("subjects_dir")
+        params.get("subjects_dir", None)
     ])
-    if params.get("min_border_white") is not None:
+    if params.get("min_border_white", None) is not None:
         cargs.extend([
             "--min_border_white",
-            str(params.get("min_border_white"))
+            str(params.get("min_border_white", None))
         ])
-    if params.get("max_border_white") is not None:
+    if params.get("max_border_white", None) is not None:
         cargs.extend([
             "--max_border_white",
-            str(params.get("max_border_white"))
+            str(params.get("max_border_white", None))
         ])
-    if params.get("min_gray_at_white_border") is not None:
+    if params.get("min_gray_at_white_border", None) is not None:
         cargs.extend([
             "--min_gray_at_white_border",
-            str(params.get("min_gray_at_white_border"))
+            str(params.get("min_gray_at_white_border", None))
         ])
-    if params.get("max_gray") is not None:
+    if params.get("max_gray", None) is not None:
         cargs.extend([
             "--max_gray",
-            str(params.get("max_gray"))
+            str(params.get("max_gray", None))
         ])
-    if params.get("max_gray_at_csf_border") is not None:
+    if params.get("max_gray_at_csf_border", None) is not None:
         cargs.extend([
             "--max_gray_at_csf_border",
-            str(params.get("max_gray_at_csf_border"))
+            str(params.get("max_gray_at_csf_border", None))
         ])
-    if params.get("min_gray_at_csf_border") is not None:
+    if params.get("min_gray_at_csf_border", None) is not None:
         cargs.extend([
             "--min_gray_at_csf_border",
-            str(params.get("min_gray_at_csf_border"))
+            str(params.get("min_gray_at_csf_border", None))
         ])
-    if params.get("max_csf") is not None:
+    if params.get("max_csf", None) is not None:
         cargs.extend([
             "--max_csf",
-            str(params.get("max_csf"))
+            str(params.get("max_csf", None))
         ])
     return cargs
 
@@ -247,7 +233,7 @@ def mris_autodet_gwstats_outputs(
     """
     ret = MrisAutodetGwstatsOutputs(
         root=execution.output_file("."),
-        output_file=execution.output_file(params.get("output_file")),
+        output_file=execution.output_file(params.get("output_file", None)),
     )
     return ret
 
@@ -353,7 +339,6 @@ def mris_autodet_gwstats(
 __all__ = [
     "MRIS_AUTODET_GWSTATS_METADATA",
     "MrisAutodetGwstatsOutputs",
-    "MrisAutodetGwstatsParameters",
     "mris_autodet_gwstats",
     "mris_autodet_gwstats_execute",
     "mris_autodet_gwstats_params",

@@ -14,7 +14,15 @@ SLICES_METADATA = Metadata(
 
 
 SlicesParameters = typing.TypedDict('SlicesParameters', {
-    "@type": typing.Literal["fsl.slices"],
+    "@type": typing.NotRequired[typing.Literal["fsl/slices"]],
+    "primary_input": InputPathType,
+    "secondary_input": typing.NotRequired[InputPathType | None],
+    "scale_factor": typing.NotRequired[float | None],
+    "intensity_range": typing.NotRequired[list[float] | None],
+    "output_gif": typing.NotRequired[str | None],
+})
+SlicesParametersTagged = typing.TypedDict('SlicesParametersTagged', {
+    "@type": typing.Literal["fsl/slices"],
     "primary_input": InputPathType,
     "secondary_input": typing.NotRequired[InputPathType | None],
     "scale_factor": typing.NotRequired[float | None],
@@ -23,40 +31,9 @@ SlicesParameters = typing.TypedDict('SlicesParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "fsl.slices": slices_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-    }.get(t)
-
-
 class SlicesOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `slices(...)`.
+    Output object returned when calling `SlicesParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -68,7 +45,7 @@ def slices_params(
     scale_factor: float | None = None,
     intensity_range: list[float] | None = None,
     output_gif: str | None = None,
-) -> SlicesParameters:
+) -> SlicesParametersTagged:
     """
     Build parameters.
     
@@ -83,7 +60,7 @@ def slices_params(
         Parameter dictionary
     """
     params = {
-        "@type": "fsl.slices",
+        "@type": "fsl/slices",
         "primary_input": primary_input,
     }
     if secondary_input is not None:
@@ -112,23 +89,23 @@ def slices_cargs(
     """
     cargs = []
     cargs.append("slices")
-    cargs.append(execution.input_file(params.get("primary_input")))
-    if params.get("secondary_input") is not None:
-        cargs.append(execution.input_file(params.get("secondary_input")))
-    if params.get("scale_factor") is not None:
+    cargs.append(execution.input_file(params.get("primary_input", None)))
+    if params.get("secondary_input", None) is not None:
+        cargs.append(execution.input_file(params.get("secondary_input", None)))
+    if params.get("scale_factor", None) is not None:
         cargs.extend([
             "-s",
-            str(params.get("scale_factor"))
+            str(params.get("scale_factor", None))
         ])
-    if params.get("intensity_range") is not None:
+    if params.get("intensity_range", None) is not None:
         cargs.extend([
             "-i",
-            *map(str, params.get("intensity_range"))
+            *map(str, params.get("intensity_range", None))
         ])
-    if params.get("output_gif") is not None:
+    if params.get("output_gif", None) is not None:
         cargs.extend([
             "-o",
-            params.get("output_gif")
+            params.get("output_gif", None)
         ])
     return cargs
 
@@ -223,7 +200,6 @@ def slices(
 __all__ = [
     "SLICES_METADATA",
     "SlicesOutputs",
-    "SlicesParameters",
     "slices",
     "slices_execute",
     "slices_params",

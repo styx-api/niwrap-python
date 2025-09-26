@@ -14,7 +14,24 @@ V__ALIGN_CENTERS_METADATA = Metadata(
 
 
 VAlignCentersParameters = typing.TypedDict('VAlignCentersParameters', {
-    "@type": typing.Literal["afni.@Align_Centers"],
+    "@type": typing.NotRequired[typing.Literal["afni/@Align_Centers"]],
+    "base": InputPathType,
+    "dset": InputPathType,
+    "children": typing.NotRequired[list[InputPathType] | None],
+    "echo": bool,
+    "overwrite": bool,
+    "prefix": typing.NotRequired[str | None],
+    "matrix_only": bool,
+    "matrix_only_no_dset": bool,
+    "no_cp": bool,
+    "center_grid": bool,
+    "center_cm": bool,
+    "center_cm_no_amask": bool,
+    "shift_xform": typing.NotRequired[InputPathType | None],
+    "shift_xform_inv": typing.NotRequired[InputPathType | None],
+})
+VAlignCentersParametersTagged = typing.TypedDict('VAlignCentersParametersTagged', {
+    "@type": typing.Literal["afni/@Align_Centers"],
     "base": InputPathType,
     "dset": InputPathType,
     "children": typing.NotRequired[list[InputPathType] | None],
@@ -32,41 +49,9 @@ VAlignCentersParameters = typing.TypedDict('VAlignCentersParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "afni.@Align_Centers": v__align_centers_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "afni.@Align_Centers": v__align_centers_outputs,
-    }.get(t)
-
-
 class VAlignCentersOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `v__align_centers(...)`.
+    Output object returned when calling `VAlignCentersParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -93,7 +78,7 @@ def v__align_centers_params(
     center_cm_no_amask: bool = False,
     shift_xform: InputPathType | None = None,
     shift_xform_inv: InputPathType | None = None,
-) -> VAlignCentersParameters:
+) -> VAlignCentersParametersTagged:
     """
     Build parameters.
     
@@ -120,7 +105,7 @@ def v__align_centers_params(
         Parameter dictionary
     """
     params = {
-        "@type": "afni.@Align_Centers",
+        "@type": "afni/@Align_Centers",
         "base": base,
         "dset": dset,
         "echo": echo,
@@ -158,43 +143,43 @@ def v__align_centers_cargs(
     """
     cargs = []
     cargs.append("@Align_Centers")
-    cargs.append(execution.input_file(params.get("base")))
-    cargs.append(execution.input_file(params.get("dset")))
-    if params.get("children") is not None:
+    cargs.append(execution.input_file(params.get("base", None)))
+    cargs.append(execution.input_file(params.get("dset", None)))
+    if params.get("children", None) is not None:
         cargs.extend([
             "-child",
-            *[execution.input_file(f) for f in params.get("children")]
+            *[execution.input_file(f) for f in params.get("children", None)]
         ])
-    if params.get("echo"):
+    if params.get("echo", False):
         cargs.append("-echo")
-    if params.get("overwrite"):
+    if params.get("overwrite", False):
         cargs.append("-overwrite")
-    if params.get("prefix") is not None:
+    if params.get("prefix", None) is not None:
         cargs.extend([
             "-prefix",
-            params.get("prefix")
+            params.get("prefix", None)
         ])
-    if params.get("matrix_only"):
+    if params.get("matrix_only", False):
         cargs.append("-1Dmat_only")
-    if params.get("matrix_only_no_dset"):
+    if params.get("matrix_only_no_dset", False):
         cargs.append("-1Dmat_only_nodset")
-    if params.get("no_cp"):
+    if params.get("no_cp", False):
         cargs.append("-no_cp")
-    if params.get("center_grid"):
+    if params.get("center_grid", False):
         cargs.append("-grid")
-    if params.get("center_cm"):
+    if params.get("center_cm", False):
         cargs.append("-cm")
-    if params.get("center_cm_no_amask"):
+    if params.get("center_cm_no_amask", False):
         cargs.append("-cm_no_amask")
-    if params.get("shift_xform") is not None:
+    if params.get("shift_xform", None) is not None:
         cargs.extend([
             "-shift_xform",
-            execution.input_file(params.get("shift_xform"))
+            execution.input_file(params.get("shift_xform", None))
         ])
-    if params.get("shift_xform_inv") is not None:
+    if params.get("shift_xform_inv", None) is not None:
         cargs.extend([
             "-shift_xform_inv",
-            execution.input_file(params.get("shift_xform_inv"))
+            execution.input_file(params.get("shift_xform_inv", None))
         ])
     return cargs
 
@@ -214,9 +199,9 @@ def v__align_centers_outputs(
     """
     ret = VAlignCentersOutputs(
         root=execution.output_file("."),
-        transform_matrix=execution.output_file(pathlib.Path(params.get("dset")).name + "_shft.1D"),
-        shifted_dset=execution.output_file(params.get("prefix") + "_shft+orig.BRIK") if (params.get("prefix") is not None) else None,
-        shifted_child_dsets=execution.output_file(params.get("prefix") + "_child_shft+orig.BRIK") if (params.get("prefix") is not None) else None,
+        transform_matrix=execution.output_file(pathlib.Path(params.get("dset", None)).name + "_shft.1D"),
+        shifted_dset=execution.output_file(params.get("prefix", None) + "_shft+orig.BRIK") if (params.get("prefix") is not None) else None,
+        shifted_child_dsets=execution.output_file(params.get("prefix", None) + "_child_shft+orig.BRIK") if (params.get("prefix") is not None) else None,
     )
     return ret
 
@@ -321,7 +306,6 @@ def v__align_centers(
 
 __all__ = [
     "VAlignCentersOutputs",
-    "VAlignCentersParameters",
     "V__ALIGN_CENTERS_METADATA",
     "v__align_centers",
     "v__align_centers_execute",

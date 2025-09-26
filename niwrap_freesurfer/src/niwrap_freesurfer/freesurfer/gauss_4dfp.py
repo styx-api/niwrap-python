@@ -14,7 +14,16 @@ GAUSS_4DFP_METADATA = Metadata(
 
 
 Gauss4dfpParameters = typing.TypedDict('Gauss4dfpParameters', {
-    "@type": typing.Literal["freesurfer.gauss_4dfp"],
+    "@type": typing.NotRequired[typing.Literal["freesurfer/gauss_4dfp"]],
+    "input_file": str,
+    "f_half": float,
+    "output_root": typing.NotRequired[str | None],
+    "endian_flag": typing.NotRequired[str | None],
+    "wrap_flag": bool,
+    "differentiate_flag": bool,
+})
+Gauss4dfpParametersTagged = typing.TypedDict('Gauss4dfpParametersTagged', {
+    "@type": typing.Literal["freesurfer/gauss_4dfp"],
     "input_file": str,
     "f_half": float,
     "output_root": typing.NotRequired[str | None],
@@ -24,41 +33,9 @@ Gauss4dfpParameters = typing.TypedDict('Gauss4dfpParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "freesurfer.gauss_4dfp": gauss_4dfp_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "freesurfer.gauss_4dfp": gauss_4dfp_outputs,
-    }.get(t)
-
-
 class Gauss4dfpOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `gauss_4dfp(...)`.
+    Output object returned when calling `Gauss4dfpParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -73,7 +50,7 @@ def gauss_4dfp_params(
     endian_flag: str | None = None,
     wrap_flag: bool = False,
     differentiate_flag: bool = False,
-) -> Gauss4dfpParameters:
+) -> Gauss4dfpParametersTagged:
     """
     Build parameters.
     
@@ -91,7 +68,7 @@ def gauss_4dfp_params(
         Parameter dictionary
     """
     params = {
-        "@type": "freesurfer.gauss_4dfp",
+        "@type": "freesurfer/gauss_4dfp",
         "input_file": input_file,
         "f_half": f_half,
         "wrap_flag": wrap_flag,
@@ -119,18 +96,18 @@ def gauss_4dfp_cargs(
     """
     cargs = []
     cargs.append("gauss_4dfp")
-    cargs.append(params.get("input_file"))
-    cargs.append(str(params.get("f_half")))
-    if params.get("output_root") is not None:
-        cargs.append(params.get("output_root"))
-    if params.get("endian_flag") is not None:
+    cargs.append(params.get("input_file", None))
+    cargs.append(str(params.get("f_half", None)))
+    if params.get("output_root", None) is not None:
+        cargs.append(params.get("output_root", None))
+    if params.get("endian_flag", None) is not None:
         cargs.extend([
             "-@",
-            params.get("endian_flag")
+            params.get("endian_flag", None)
         ])
-    if params.get("wrap_flag"):
+    if params.get("wrap_flag", False):
         cargs.append("-w")
-    if params.get("differentiate_flag"):
+    if params.get("differentiate_flag", False):
         cargs.append("-d")
     return cargs
 
@@ -150,7 +127,7 @@ def gauss_4dfp_outputs(
     """
     ret = Gauss4dfpOutputs(
         root=execution.output_file("."),
-        output_file=execution.output_file(params.get("output_root") + ".4dfp.ifh") if (params.get("output_root") is not None) else None,
+        output_file=execution.output_file(params.get("output_root", None) + ".4dfp.ifh") if (params.get("output_root") is not None) else None,
     )
     return ret
 
@@ -229,7 +206,6 @@ def gauss_4dfp(
 __all__ = [
     "GAUSS_4DFP_METADATA",
     "Gauss4dfpOutputs",
-    "Gauss4dfpParameters",
     "gauss_4dfp",
     "gauss_4dfp_execute",
     "gauss_4dfp_params",

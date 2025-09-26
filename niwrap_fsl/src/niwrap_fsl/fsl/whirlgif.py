@@ -14,7 +14,16 @@ WHIRLGIF_METADATA = Metadata(
 
 
 WhirlgifParameters = typing.TypedDict('WhirlgifParameters', {
-    "@type": typing.Literal["fsl.whirlgif"],
+    "@type": typing.NotRequired[typing.Literal["fsl/whirlgif"]],
+    "outfile": typing.NotRequired[InputPathType | None],
+    "loop_count": typing.NotRequired[int | None],
+    "delay_time": typing.NotRequired[int | None],
+    "disp_flag": typing.NotRequired[typing.Literal["none", "back", "prev", "not"] | None],
+    "list_file": typing.NotRequired[InputPathType | None],
+    "input_files": list[InputPathType],
+})
+WhirlgifParametersTagged = typing.TypedDict('WhirlgifParametersTagged', {
+    "@type": typing.Literal["fsl/whirlgif"],
     "outfile": typing.NotRequired[InputPathType | None],
     "loop_count": typing.NotRequired[int | None],
     "delay_time": typing.NotRequired[int | None],
@@ -24,41 +33,9 @@ WhirlgifParameters = typing.TypedDict('WhirlgifParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "fsl.whirlgif": whirlgif_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "fsl.whirlgif": whirlgif_outputs,
-    }.get(t)
-
-
 class WhirlgifOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `whirlgif(...)`.
+    Output object returned when calling `WhirlgifParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -73,7 +50,7 @@ def whirlgif_params(
     delay_time: int | None = None,
     disp_flag: typing.Literal["none", "back", "prev", "not"] | None = None,
     list_file: InputPathType | None = None,
-) -> WhirlgifParameters:
+) -> WhirlgifParametersTagged:
     """
     Build parameters.
     
@@ -89,7 +66,7 @@ def whirlgif_params(
         Parameter dictionary
     """
     params = {
-        "@type": "fsl.whirlgif",
+        "@type": "fsl/whirlgif",
         "input_files": input_files,
     }
     if outfile is not None:
@@ -120,32 +97,32 @@ def whirlgif_cargs(
     """
     cargs = []
     cargs.append("whirlgif")
-    if params.get("outfile") is not None:
+    if params.get("outfile", None) is not None:
         cargs.extend([
             "-o",
-            execution.input_file(params.get("outfile"))
+            execution.input_file(params.get("outfile", None))
         ])
-    if params.get("loop_count") is not None:
+    if params.get("loop_count", None) is not None:
         cargs.extend([
             "-loop",
-            str(params.get("loop_count"))
+            str(params.get("loop_count", None))
         ])
-    if params.get("delay_time") is not None:
+    if params.get("delay_time", None) is not None:
         cargs.extend([
             "-time",
-            str(params.get("delay_time"))
+            str(params.get("delay_time", None))
         ])
-    if params.get("disp_flag") is not None:
+    if params.get("disp_flag", None) is not None:
         cargs.extend([
             "-disp",
-            params.get("disp_flag")
+            params.get("disp_flag", None)
         ])
-    if params.get("list_file") is not None:
+    if params.get("list_file", None) is not None:
         cargs.extend([
             "-i",
-            execution.input_file(params.get("list_file"))
+            execution.input_file(params.get("list_file", None))
         ])
-    cargs.extend([execution.input_file(f) for f in params.get("input_files")])
+    cargs.extend([execution.input_file(f) for f in params.get("input_files", None)])
     return cargs
 
 
@@ -164,7 +141,7 @@ def whirlgif_outputs(
     """
     ret = WhirlgifOutputs(
         root=execution.output_file("."),
-        output_file=execution.output_file(pathlib.Path(params.get("outfile")).name) if (params.get("outfile") is not None) else None,
+        output_file=execution.output_file(pathlib.Path(params.get("outfile", None)).name) if (params.get("outfile") is not None) else None,
     )
     return ret
 
@@ -241,7 +218,6 @@ def whirlgif(
 __all__ = [
     "WHIRLGIF_METADATA",
     "WhirlgifOutputs",
-    "WhirlgifParameters",
     "whirlgif",
     "whirlgif_execute",
     "whirlgif_params",

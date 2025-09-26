@@ -14,7 +14,18 @@ V_3D_TQUAL_METADATA = Metadata(
 
 
 V3dTqualParameters = typing.TypedDict('V3dTqualParameters', {
-    "@type": typing.Literal["afni.3dTqual"],
+    "@type": typing.NotRequired[typing.Literal["afni/3dTqual"]],
+    "dataset": InputPathType,
+    "spearman": bool,
+    "quadrant": bool,
+    "autoclip": bool,
+    "automask": bool,
+    "clip": typing.NotRequired[float | None],
+    "mask": typing.NotRequired[InputPathType | None],
+    "range": bool,
+})
+V3dTqualParametersTagged = typing.TypedDict('V3dTqualParametersTagged', {
+    "@type": typing.Literal["afni/3dTqual"],
     "dataset": InputPathType,
     "spearman": bool,
     "quadrant": bool,
@@ -26,41 +37,9 @@ V3dTqualParameters = typing.TypedDict('V3dTqualParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "afni.3dTqual": v_3d_tqual_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "afni.3dTqual": v_3d_tqual_outputs,
-    }.get(t)
-
-
 class V3dTqualOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `v_3d_tqual(...)`.
+    Output object returned when calling `V3dTqualParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -77,7 +56,7 @@ def v_3d_tqual_params(
     clip: float | None = None,
     mask: InputPathType | None = None,
     range_: bool = False,
-) -> V3dTqualParameters:
+) -> V3dTqualParametersTagged:
     """
     Build parameters.
     
@@ -101,7 +80,7 @@ def v_3d_tqual_params(
         Parameter dictionary
     """
     params = {
-        "@type": "afni.3dTqual",
+        "@type": "afni/3dTqual",
         "dataset": dataset,
         "spearman": spearman,
         "quadrant": quadrant,
@@ -131,26 +110,26 @@ def v_3d_tqual_cargs(
     """
     cargs = []
     cargs.append("3dTqual")
-    cargs.append(execution.input_file(params.get("dataset")))
-    if params.get("spearman"):
+    cargs.append(execution.input_file(params.get("dataset", None)))
+    if params.get("spearman", False):
         cargs.append("-spearman")
-    if params.get("quadrant"):
+    if params.get("quadrant", False):
         cargs.append("-quadrant")
-    if params.get("autoclip"):
+    if params.get("autoclip", False):
         cargs.append("-autoclip")
-    if params.get("automask"):
+    if params.get("automask", False):
         cargs.append("-automask")
-    if params.get("clip") is not None:
+    if params.get("clip", None) is not None:
         cargs.extend([
             "-clip",
-            str(params.get("clip"))
+            str(params.get("clip", None))
         ])
-    if params.get("mask") is not None:
+    if params.get("mask", None) is not None:
         cargs.extend([
             "-mask",
-            execution.input_file(params.get("mask"))
+            execution.input_file(params.get("mask", None))
         ])
-    if params.get("range"):
+    if params.get("range", False):
         cargs.append("-range")
     return cargs
 
@@ -258,7 +237,6 @@ def v_3d_tqual(
 
 __all__ = [
     "V3dTqualOutputs",
-    "V3dTqualParameters",
     "V_3D_TQUAL_METADATA",
     "v_3d_tqual",
     "v_3d_tqual_execute",

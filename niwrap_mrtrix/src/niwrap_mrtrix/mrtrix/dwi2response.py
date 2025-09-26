@@ -14,7 +14,20 @@ DWI2RESPONSE_METADATA = Metadata(
 
 
 Dwi2responseDhollanderParameters = typing.TypedDict('Dwi2responseDhollanderParameters', {
-    "@type": typing.Literal["mrtrix.dwi2response.dhollander"],
+    "@type": typing.NotRequired[typing.Literal["dhollander"]],
+    "input": InputPathType,
+    "out_sfwm": str,
+    "out_gm": str,
+    "out_csf": str,
+    "erode": typing.NotRequired[int | None],
+    "fa": typing.NotRequired[float | None],
+    "sfwm": typing.NotRequired[float | None],
+    "gm": typing.NotRequired[float | None],
+    "csf": typing.NotRequired[float | None],
+    "wm_algo": typing.NotRequired[typing.Literal["fa", "tax", "tournier"] | None],
+})
+Dwi2responseDhollanderParametersTagged = typing.TypedDict('Dwi2responseDhollanderParametersTagged', {
+    "@type": typing.Literal["dhollander"],
     "input": InputPathType,
     "out_sfwm": str,
     "out_gm": str,
@@ -29,7 +42,15 @@ Dwi2responseDhollanderParameters = typing.TypedDict('Dwi2responseDhollanderParam
 
 
 Dwi2responseFaParameters = typing.TypedDict('Dwi2responseFaParameters', {
-    "@type": typing.Literal["mrtrix.dwi2response.fa"],
+    "@type": typing.NotRequired[typing.Literal["fa"]],
+    "input": InputPathType,
+    "output": str,
+    "erode": typing.NotRequired[int | None],
+    "number": typing.NotRequired[int | None],
+    "threshold": typing.NotRequired[float | None],
+})
+Dwi2responseFaParametersTagged = typing.TypedDict('Dwi2responseFaParametersTagged', {
+    "@type": typing.Literal["fa"],
     "input": InputPathType,
     "output": str,
     "erode": typing.NotRequired[int | None],
@@ -39,7 +60,14 @@ Dwi2responseFaParameters = typing.TypedDict('Dwi2responseFaParameters', {
 
 
 Dwi2responseManualParameters = typing.TypedDict('Dwi2responseManualParameters', {
-    "@type": typing.Literal["mrtrix.dwi2response.manual"],
+    "@type": typing.NotRequired[typing.Literal["manual"]],
+    "input": InputPathType,
+    "in_voxels": InputPathType,
+    "output": str,
+    "dirs": typing.NotRequired[InputPathType | None],
+})
+Dwi2responseManualParametersTagged = typing.TypedDict('Dwi2responseManualParametersTagged', {
+    "@type": typing.Literal["manual"],
     "input": InputPathType,
     "in_voxels": InputPathType,
     "output": str,
@@ -48,7 +76,20 @@ Dwi2responseManualParameters = typing.TypedDict('Dwi2responseManualParameters', 
 
 
 Dwi2responseMsmt5ttParameters = typing.TypedDict('Dwi2responseMsmt5ttParameters', {
-    "@type": typing.Literal["mrtrix.dwi2response.msmt_5tt"],
+    "@type": typing.NotRequired[typing.Literal["msmt_5tt"]],
+    "input": InputPathType,
+    "in_5tt": InputPathType,
+    "out_wm": str,
+    "out_gm": str,
+    "out_csf": str,
+    "dirs": typing.NotRequired[InputPathType | None],
+    "fa": typing.NotRequired[float | None],
+    "pvf": typing.NotRequired[float | None],
+    "wm_algo": typing.NotRequired[typing.Literal["fa", "tax", "tournier"] | None],
+    "sfwm_fa_threshold": typing.NotRequired[float | None],
+})
+Dwi2responseMsmt5ttParametersTagged = typing.TypedDict('Dwi2responseMsmt5ttParametersTagged', {
+    "@type": typing.Literal["msmt_5tt"],
     "input": InputPathType,
     "in_5tt": InputPathType,
     "out_wm": str,
@@ -63,7 +104,15 @@ Dwi2responseMsmt5ttParameters = typing.TypedDict('Dwi2responseMsmt5ttParameters'
 
 
 Dwi2responseTaxParameters = typing.TypedDict('Dwi2responseTaxParameters', {
-    "@type": typing.Literal["mrtrix.dwi2response.tax"],
+    "@type": typing.NotRequired[typing.Literal["tax"]],
+    "input": InputPathType,
+    "output": str,
+    "peak_ratio": typing.NotRequired[float | None],
+    "max_iters": typing.NotRequired[int | None],
+    "convergence": typing.NotRequired[float | None],
+})
+Dwi2responseTaxParametersTagged = typing.TypedDict('Dwi2responseTaxParametersTagged', {
+    "@type": typing.Literal["tax"],
     "input": InputPathType,
     "output": str,
     "peak_ratio": typing.NotRequired[float | None],
@@ -73,7 +122,16 @@ Dwi2responseTaxParameters = typing.TypedDict('Dwi2responseTaxParameters', {
 
 
 Dwi2responseTournierParameters = typing.TypedDict('Dwi2responseTournierParameters', {
-    "@type": typing.Literal["mrtrix.dwi2response.tournier"],
+    "@type": typing.NotRequired[typing.Literal["tournier"]],
+    "input": InputPathType,
+    "output": str,
+    "number": typing.NotRequired[int | None],
+    "iter_voxels": typing.NotRequired[int | None],
+    "dilate": typing.NotRequired[int | None],
+    "max_iters": typing.NotRequired[int | None],
+})
+Dwi2responseTournierParametersTagged = typing.TypedDict('Dwi2responseTournierParametersTagged', {
+    "@type": typing.Literal["tournier"],
     "input": InputPathType,
     "output": str,
     "number": typing.NotRequired[int | None],
@@ -84,22 +142,53 @@ Dwi2responseTournierParameters = typing.TypedDict('Dwi2responseTournierParameter
 
 
 Dwi2responseFslgradParameters = typing.TypedDict('Dwi2responseFslgradParameters', {
-    "@type": typing.Literal["mrtrix.dwi2response.fslgrad"],
+    "@type": typing.NotRequired[typing.Literal["fslgrad"]],
+    "bvecs": InputPathType,
+    "bvals": InputPathType,
+})
+Dwi2responseFslgradParametersTagged = typing.TypedDict('Dwi2responseFslgradParametersTagged', {
+    "@type": typing.Literal["fslgrad"],
     "bvecs": InputPathType,
     "bvals": InputPathType,
 })
 
 
 Dwi2responseConfigParameters = typing.TypedDict('Dwi2responseConfigParameters', {
-    "@type": typing.Literal["mrtrix.dwi2response.config"],
+    "@type": typing.NotRequired[typing.Literal["config"]],
+    "key": str,
+    "value": str,
+})
+Dwi2responseConfigParametersTagged = typing.TypedDict('Dwi2responseConfigParametersTagged', {
+    "@type": typing.Literal["config"],
     "key": str,
     "value": str,
 })
 
 
 Dwi2responseParameters = typing.TypedDict('Dwi2responseParameters', {
-    "@type": typing.Literal["mrtrix.dwi2response"],
-    "algorithm": typing.Union[Dwi2responseDhollanderParameters, Dwi2responseFaParameters, Dwi2responseManualParameters, Dwi2responseMsmt5ttParameters, Dwi2responseTaxParameters, Dwi2responseTournierParameters],
+    "@type": typing.NotRequired[typing.Literal["mrtrix/dwi2response"]],
+    "algorithm": typing.Union[Dwi2responseDhollanderParametersTagged, Dwi2responseFaParametersTagged, Dwi2responseManualParametersTagged, Dwi2responseMsmt5ttParametersTagged, Dwi2responseTaxParametersTagged, Dwi2responseTournierParametersTagged],
+    "grad": typing.NotRequired[InputPathType | None],
+    "fslgrad": typing.NotRequired[Dwi2responseFslgradParameters | None],
+    "mask": typing.NotRequired[InputPathType | None],
+    "voxels": typing.NotRequired[str | None],
+    "shells": typing.NotRequired[list[int] | None],
+    "lmax": typing.NotRequired[list[int] | None],
+    "nocleanup": bool,
+    "scratch": typing.NotRequired[str | None],
+    "continue": typing.NotRequired[str | None],
+    "info": bool,
+    "quiet": bool,
+    "debug": bool,
+    "force": bool,
+    "nthreads": typing.NotRequired[int | None],
+    "config": typing.NotRequired[list[Dwi2responseConfigParameters] | None],
+    "help": bool,
+    "version": bool,
+})
+Dwi2responseParametersTagged = typing.TypedDict('Dwi2responseParametersTagged', {
+    "@type": typing.Literal["mrtrix/dwi2response"],
+    "algorithm": typing.Union[Dwi2responseDhollanderParametersTagged, Dwi2responseFaParametersTagged, Dwi2responseManualParametersTagged, Dwi2responseMsmt5ttParametersTagged, Dwi2responseTaxParametersTagged, Dwi2responseTournierParametersTagged],
     "grad": typing.NotRequired[InputPathType | None],
     "fslgrad": typing.NotRequired[Dwi2responseFslgradParameters | None],
     "mask": typing.NotRequired[InputPathType | None],
@@ -120,7 +209,7 @@ Dwi2responseParameters = typing.TypedDict('Dwi2responseParameters', {
 })
 
 
-def dyn_cargs(
+def dwi2response_algorithm_cargs_dyn_fn(
     t: str,
 ) -> typing.Any:
     """
@@ -132,19 +221,16 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "mrtrix.dwi2response": dwi2response_cargs,
-        "mrtrix.dwi2response.dhollander": dwi2response_dhollander_cargs,
-        "mrtrix.dwi2response.fa": dwi2response_fa_cargs,
-        "mrtrix.dwi2response.manual": dwi2response_manual_cargs,
-        "mrtrix.dwi2response.msmt_5tt": dwi2response_msmt_5tt_cargs,
-        "mrtrix.dwi2response.tax": dwi2response_tax_cargs,
-        "mrtrix.dwi2response.tournier": dwi2response_tournier_cargs,
-        "mrtrix.dwi2response.fslgrad": dwi2response_fslgrad_cargs,
-        "mrtrix.dwi2response.config": dwi2response_config_cargs,
+        "dhollander": dwi2response_dhollander_cargs,
+        "fa": dwi2response_fa_cargs,
+        "manual": dwi2response_manual_cargs,
+        "msmt_5tt": dwi2response_msmt_5tt_cargs,
+        "tax": dwi2response_tax_cargs,
+        "tournier": dwi2response_tournier_cargs,
     }.get(t)
 
 
-def dyn_outputs(
+def dwi2response_algorithm_outputs_dyn_fn(
     t: str,
 ) -> typing.Any:
     """
@@ -156,13 +242,12 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "mrtrix.dwi2response": dwi2response_outputs,
-        "mrtrix.dwi2response.dhollander": dwi2response_dhollander_outputs,
-        "mrtrix.dwi2response.fa": dwi2response_fa_outputs,
-        "mrtrix.dwi2response.manual": dwi2response_manual_outputs,
-        "mrtrix.dwi2response.msmt_5tt": dwi2response_msmt_5tt_outputs,
-        "mrtrix.dwi2response.tax": dwi2response_tax_outputs,
-        "mrtrix.dwi2response.tournier": dwi2response_tournier_outputs,
+        "dhollander": dwi2response_dhollander_outputs,
+        "fa": dwi2response_fa_outputs,
+        "manual": dwi2response_manual_outputs,
+        "msmt_5tt": dwi2response_msmt_5tt_outputs,
+        "tax": dwi2response_tax_outputs,
+        "tournier": dwi2response_tournier_outputs,
     }.get(t)
 
 
@@ -191,7 +276,7 @@ def dwi2response_dhollander_params(
     gm: float | None = None,
     csf: float | None = None,
     wm_algo: typing.Literal["fa", "tax", "tournier"] | None = None,
-) -> Dwi2responseDhollanderParameters:
+) -> Dwi2responseDhollanderParametersTagged:
     """
     Build parameters.
     
@@ -216,7 +301,7 @@ def dwi2response_dhollander_params(
         Parameter dictionary
     """
     params = {
-        "@type": "mrtrix.dwi2response.dhollander",
+        "@type": "dhollander",
         "input": input_,
         "out_sfwm": out_sfwm,
         "out_gm": out_gm,
@@ -252,39 +337,39 @@ def dwi2response_dhollander_cargs(
     """
     cargs = []
     cargs.append("dhollander")
-    cargs.append(execution.input_file(params.get("input")))
-    cargs.append(params.get("out_sfwm"))
-    cargs.append(params.get("out_gm"))
-    cargs.append(params.get("out_csf"))
-    if params.get("erode") is not None:
+    cargs.append(execution.input_file(params.get("input", None)))
+    cargs.append(params.get("out_sfwm", None))
+    cargs.append(params.get("out_gm", None))
+    cargs.append(params.get("out_csf", None))
+    if params.get("erode", None) is not None:
         cargs.extend([
             "-erode",
-            str(params.get("erode"))
+            str(params.get("erode", None))
         ])
-    if params.get("fa") is not None:
+    if params.get("fa", None) is not None:
         cargs.extend([
             "-fa",
-            str(params.get("fa"))
+            str(params.get("fa", None))
         ])
-    if params.get("sfwm") is not None:
+    if params.get("sfwm", None) is not None:
         cargs.extend([
             "-sfwm",
-            str(params.get("sfwm"))
+            str(params.get("sfwm", None))
         ])
-    if params.get("gm") is not None:
+    if params.get("gm", None) is not None:
         cargs.extend([
             "-gm",
-            str(params.get("gm"))
+            str(params.get("gm", None))
         ])
-    if params.get("csf") is not None:
+    if params.get("csf", None) is not None:
         cargs.extend([
             "-csf",
-            str(params.get("csf"))
+            str(params.get("csf", None))
         ])
-    if params.get("wm_algo") is not None:
+    if params.get("wm_algo", None) is not None:
         cargs.extend([
             "-wm_algo",
-            params.get("wm_algo")
+            params.get("wm_algo", None)
         ])
     return cargs
 
@@ -304,9 +389,9 @@ def dwi2response_dhollander_outputs(
     """
     ret = Dwi2responseDhollanderOutputs(
         root=execution.output_file("."),
-        out_sfwm=execution.output_file(params.get("out_sfwm")),
-        out_gm=execution.output_file(params.get("out_gm")),
-        out_csf=execution.output_file(params.get("out_csf")),
+        out_sfwm=execution.output_file(params.get("out_sfwm", None)),
+        out_gm=execution.output_file(params.get("out_gm", None)),
+        out_csf=execution.output_file(params.get("out_csf", None)),
     )
     return ret
 
@@ -327,7 +412,7 @@ def dwi2response_fa_params(
     erode: int | None = None,
     number: int | None = None,
     threshold: float | None = None,
-) -> Dwi2responseFaParameters:
+) -> Dwi2responseFaParametersTagged:
     """
     Build parameters.
     
@@ -343,7 +428,7 @@ def dwi2response_fa_params(
         Parameter dictionary
     """
     params = {
-        "@type": "mrtrix.dwi2response.fa",
+        "@type": "fa",
         "input": input_,
         "output": output,
     }
@@ -371,22 +456,22 @@ def dwi2response_fa_cargs(
     """
     cargs = []
     cargs.append("fa")
-    cargs.append(execution.input_file(params.get("input")))
-    cargs.append(params.get("output"))
-    if params.get("erode") is not None:
+    cargs.append(execution.input_file(params.get("input", None)))
+    cargs.append(params.get("output", None))
+    if params.get("erode", None) is not None:
         cargs.extend([
             "-erode",
-            str(params.get("erode"))
+            str(params.get("erode", None))
         ])
-    if params.get("number") is not None:
+    if params.get("number", None) is not None:
         cargs.extend([
             "-number",
-            str(params.get("number"))
+            str(params.get("number", None))
         ])
-    if params.get("threshold") is not None:
+    if params.get("threshold", None) is not None:
         cargs.extend([
             "-threshold",
-            str(params.get("threshold"))
+            str(params.get("threshold", None))
         ])
     return cargs
 
@@ -406,7 +491,7 @@ def dwi2response_fa_outputs(
     """
     ret = Dwi2responseFaOutputs(
         root=execution.output_file("."),
-        output=execution.output_file(params.get("output")),
+        output=execution.output_file(params.get("output", None)),
     )
     return ret
 
@@ -426,7 +511,7 @@ def dwi2response_manual_params(
     in_voxels: InputPathType,
     output: str,
     dirs: InputPathType | None = None,
-) -> Dwi2responseManualParameters:
+) -> Dwi2responseManualParametersTagged:
     """
     Build parameters.
     
@@ -440,7 +525,7 @@ def dwi2response_manual_params(
         Parameter dictionary
     """
     params = {
-        "@type": "mrtrix.dwi2response.manual",
+        "@type": "manual",
         "input": input_,
         "in_voxels": in_voxels,
         "output": output,
@@ -465,13 +550,13 @@ def dwi2response_manual_cargs(
     """
     cargs = []
     cargs.append("manual")
-    cargs.append(execution.input_file(params.get("input")))
-    cargs.append(execution.input_file(params.get("in_voxels")))
-    cargs.append(params.get("output"))
-    if params.get("dirs") is not None:
+    cargs.append(execution.input_file(params.get("input", None)))
+    cargs.append(execution.input_file(params.get("in_voxels", None)))
+    cargs.append(params.get("output", None))
+    if params.get("dirs", None) is not None:
         cargs.extend([
             "-dirs",
-            execution.input_file(params.get("dirs"))
+            execution.input_file(params.get("dirs", None))
         ])
     return cargs
 
@@ -491,7 +576,7 @@ def dwi2response_manual_outputs(
     """
     ret = Dwi2responseManualOutputs(
         root=execution.output_file("."),
-        output=execution.output_file(params.get("output")),
+        output=execution.output_file(params.get("output", None)),
     )
     return ret
 
@@ -521,7 +606,7 @@ def dwi2response_msmt_5tt_params(
     pvf: float | None = None,
     wm_algo: typing.Literal["fa", "tax", "tournier"] | None = None,
     sfwm_fa_threshold: float | None = None,
-) -> Dwi2responseMsmt5ttParameters:
+) -> Dwi2responseMsmt5ttParametersTagged:
     """
     Build parameters.
     
@@ -546,7 +631,7 @@ def dwi2response_msmt_5tt_params(
         Parameter dictionary
     """
     params = {
-        "@type": "mrtrix.dwi2response.msmt_5tt",
+        "@type": "msmt_5tt",
         "input": input_,
         "in_5tt": in_5tt,
         "out_wm": out_wm,
@@ -581,35 +666,35 @@ def dwi2response_msmt_5tt_cargs(
     """
     cargs = []
     cargs.append("msmt_5tt")
-    cargs.append(execution.input_file(params.get("input")))
-    cargs.append(execution.input_file(params.get("in_5tt")))
-    cargs.append(params.get("out_wm"))
-    cargs.append(params.get("out_gm"))
-    cargs.append(params.get("out_csf"))
-    if params.get("dirs") is not None:
+    cargs.append(execution.input_file(params.get("input", None)))
+    cargs.append(execution.input_file(params.get("in_5tt", None)))
+    cargs.append(params.get("out_wm", None))
+    cargs.append(params.get("out_gm", None))
+    cargs.append(params.get("out_csf", None))
+    if params.get("dirs", None) is not None:
         cargs.extend([
             "-dirs",
-            execution.input_file(params.get("dirs"))
+            execution.input_file(params.get("dirs", None))
         ])
-    if params.get("fa") is not None:
+    if params.get("fa", None) is not None:
         cargs.extend([
             "-fa",
-            str(params.get("fa"))
+            str(params.get("fa", None))
         ])
-    if params.get("pvf") is not None:
+    if params.get("pvf", None) is not None:
         cargs.extend([
             "-pvf",
-            str(params.get("pvf"))
+            str(params.get("pvf", None))
         ])
-    if params.get("wm_algo") is not None:
+    if params.get("wm_algo", None) is not None:
         cargs.extend([
             "-wm_algo",
-            params.get("wm_algo")
+            params.get("wm_algo", None)
         ])
-    if params.get("sfwm_fa_threshold") is not None:
+    if params.get("sfwm_fa_threshold", None) is not None:
         cargs.extend([
             "-sfwm_fa_threshold",
-            str(params.get("sfwm_fa_threshold"))
+            str(params.get("sfwm_fa_threshold", None))
         ])
     return cargs
 
@@ -629,9 +714,9 @@ def dwi2response_msmt_5tt_outputs(
     """
     ret = Dwi2responseMsmt5ttOutputs(
         root=execution.output_file("."),
-        out_wm=execution.output_file(params.get("out_wm")),
-        out_gm=execution.output_file(params.get("out_gm")),
-        out_csf=execution.output_file(params.get("out_csf")),
+        out_wm=execution.output_file(params.get("out_wm", None)),
+        out_gm=execution.output_file(params.get("out_gm", None)),
+        out_csf=execution.output_file(params.get("out_csf", None)),
     )
     return ret
 
@@ -652,7 +737,7 @@ def dwi2response_tax_params(
     peak_ratio: float | None = None,
     max_iters: int | None = None,
     convergence: float | None = None,
-) -> Dwi2responseTaxParameters:
+) -> Dwi2responseTaxParametersTagged:
     """
     Build parameters.
     
@@ -667,7 +752,7 @@ def dwi2response_tax_params(
         Parameter dictionary
     """
     params = {
-        "@type": "mrtrix.dwi2response.tax",
+        "@type": "tax",
         "input": input_,
         "output": output,
     }
@@ -695,22 +780,22 @@ def dwi2response_tax_cargs(
     """
     cargs = []
     cargs.append("tax")
-    cargs.append(execution.input_file(params.get("input")))
-    cargs.append(params.get("output"))
-    if params.get("peak_ratio") is not None:
+    cargs.append(execution.input_file(params.get("input", None)))
+    cargs.append(params.get("output", None))
+    if params.get("peak_ratio", None) is not None:
         cargs.extend([
             "-peak_ratio",
-            str(params.get("peak_ratio"))
+            str(params.get("peak_ratio", None))
         ])
-    if params.get("max_iters") is not None:
+    if params.get("max_iters", None) is not None:
         cargs.extend([
             "-max_iters",
-            str(params.get("max_iters"))
+            str(params.get("max_iters", None))
         ])
-    if params.get("convergence") is not None:
+    if params.get("convergence", None) is not None:
         cargs.extend([
             "-convergence",
-            str(params.get("convergence"))
+            str(params.get("convergence", None))
         ])
     return cargs
 
@@ -730,7 +815,7 @@ def dwi2response_tax_outputs(
     """
     ret = Dwi2responseTaxOutputs(
         root=execution.output_file("."),
-        output=execution.output_file(params.get("output")),
+        output=execution.output_file(params.get("output", None)),
     )
     return ret
 
@@ -752,7 +837,7 @@ def dwi2response_tournier_params(
     iter_voxels: int | None = None,
     dilate: int | None = None,
     max_iters: int | None = None,
-) -> Dwi2responseTournierParameters:
+) -> Dwi2responseTournierParametersTagged:
     """
     Build parameters.
     
@@ -770,7 +855,7 @@ def dwi2response_tournier_params(
         Parameter dictionary
     """
     params = {
-        "@type": "mrtrix.dwi2response.tournier",
+        "@type": "tournier",
         "input": input_,
         "output": output,
     }
@@ -800,27 +885,27 @@ def dwi2response_tournier_cargs(
     """
     cargs = []
     cargs.append("tournier")
-    cargs.append(execution.input_file(params.get("input")))
-    cargs.append(params.get("output"))
-    if params.get("number") is not None:
+    cargs.append(execution.input_file(params.get("input", None)))
+    cargs.append(params.get("output", None))
+    if params.get("number", None) is not None:
         cargs.extend([
             "-number",
-            str(params.get("number"))
+            str(params.get("number", None))
         ])
-    if params.get("iter_voxels") is not None:
+    if params.get("iter_voxels", None) is not None:
         cargs.extend([
             "-iter_voxels",
-            str(params.get("iter_voxels"))
+            str(params.get("iter_voxels", None))
         ])
-    if params.get("dilate") is not None:
+    if params.get("dilate", None) is not None:
         cargs.extend([
             "-dilate",
-            str(params.get("dilate"))
+            str(params.get("dilate", None))
         ])
-    if params.get("max_iters") is not None:
+    if params.get("max_iters", None) is not None:
         cargs.extend([
             "-max_iters",
-            str(params.get("max_iters"))
+            str(params.get("max_iters", None))
         ])
     return cargs
 
@@ -840,7 +925,7 @@ def dwi2response_tournier_outputs(
     """
     ret = Dwi2responseTournierOutputs(
         root=execution.output_file("."),
-        output=execution.output_file(params.get("output")),
+        output=execution.output_file(params.get("output", None)),
     )
     return ret
 
@@ -848,7 +933,7 @@ def dwi2response_tournier_outputs(
 def dwi2response_fslgrad_params(
     bvecs: InputPathType,
     bvals: InputPathType,
-) -> Dwi2responseFslgradParameters:
+) -> Dwi2responseFslgradParametersTagged:
     """
     Build parameters.
     
@@ -865,7 +950,7 @@ def dwi2response_fslgrad_params(
         Parameter dictionary
     """
     params = {
-        "@type": "mrtrix.dwi2response.fslgrad",
+        "@type": "fslgrad",
         "bvecs": bvecs,
         "bvals": bvals,
     }
@@ -887,15 +972,15 @@ def dwi2response_fslgrad_cargs(
     """
     cargs = []
     cargs.append("-fslgrad")
-    cargs.append(execution.input_file(params.get("bvecs")))
-    cargs.append(execution.input_file(params.get("bvals")))
+    cargs.append(execution.input_file(params.get("bvecs", None)))
+    cargs.append(execution.input_file(params.get("bvals", None)))
     return cargs
 
 
 def dwi2response_config_params(
     key: str,
     value: str,
-) -> Dwi2responseConfigParameters:
+) -> Dwi2responseConfigParametersTagged:
     """
     Build parameters.
     
@@ -906,7 +991,7 @@ def dwi2response_config_params(
         Parameter dictionary
     """
     params = {
-        "@type": "mrtrix.dwi2response.config",
+        "@type": "config",
         "key": key,
         "value": value,
     }
@@ -928,14 +1013,14 @@ def dwi2response_config_cargs(
     """
     cargs = []
     cargs.append("-config")
-    cargs.append(params.get("key"))
-    cargs.append(params.get("value"))
+    cargs.append(params.get("key", None))
+    cargs.append(params.get("value", None))
     return cargs
 
 
 class Dwi2responseOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `dwi2response(...)`.
+    Output object returned when calling `Dwi2responseParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -947,7 +1032,7 @@ class Dwi2responseOutputs(typing.NamedTuple):
 
 
 def dwi2response_params(
-    algorithm: typing.Union[Dwi2responseDhollanderParameters, Dwi2responseFaParameters, Dwi2responseManualParameters, Dwi2responseMsmt5ttParameters, Dwi2responseTaxParameters, Dwi2responseTournierParameters],
+    algorithm: typing.Union[Dwi2responseDhollanderParametersTagged, Dwi2responseFaParametersTagged, Dwi2responseManualParametersTagged, Dwi2responseMsmt5ttParametersTagged, Dwi2responseTaxParametersTagged, Dwi2responseTournierParametersTagged],
     grad: InputPathType | None = None,
     fslgrad: Dwi2responseFslgradParameters | None = None,
     mask: InputPathType | None = None,
@@ -965,7 +1050,7 @@ def dwi2response_params(
     config: list[Dwi2responseConfigParameters] | None = None,
     help_: bool = False,
     version: bool = False,
-) -> Dwi2responseParameters:
+) -> Dwi2responseParametersTagged:
     """
     Build parameters.
     
@@ -1006,7 +1091,7 @@ def dwi2response_params(
         Parameter dictionary
     """
     params = {
-        "@type": "mrtrix.dwi2response",
+        "@type": "mrtrix/dwi2response",
         "algorithm": algorithm,
         "nocleanup": nocleanup,
         "info": info,
@@ -1054,64 +1139,64 @@ def dwi2response_cargs(
     """
     cargs = []
     cargs.append("dwi2response")
-    cargs.extend(dyn_cargs(params.get("algorithm")["@type"])(params.get("algorithm"), execution))
-    if params.get("grad") is not None:
+    cargs.extend(dwi2response_algorithm_cargs_dyn_fn(params.get("algorithm", None)["@type"])(params.get("algorithm", None), execution))
+    if params.get("grad", None) is not None:
         cargs.extend([
             "-grad",
-            execution.input_file(params.get("grad"))
+            execution.input_file(params.get("grad", None))
         ])
-    if params.get("fslgrad") is not None:
-        cargs.extend(dyn_cargs(params.get("fslgrad")["@type"])(params.get("fslgrad"), execution))
-    if params.get("mask") is not None:
+    if params.get("fslgrad", None) is not None:
+        cargs.extend(dwi2response_fslgrad_cargs(params.get("fslgrad", None), execution))
+    if params.get("mask", None) is not None:
         cargs.extend([
             "-mask",
-            execution.input_file(params.get("mask"))
+            execution.input_file(params.get("mask", None))
         ])
-    if params.get("voxels") is not None:
+    if params.get("voxels", None) is not None:
         cargs.extend([
             "-voxels",
-            params.get("voxels")
+            params.get("voxels", None)
         ])
-    if params.get("shells") is not None:
+    if params.get("shells", None) is not None:
         cargs.extend([
             "-shells",
-            ",".join(map(str, params.get("shells")))
+            ",".join(map(str, params.get("shells", None)))
         ])
-    if params.get("lmax") is not None:
+    if params.get("lmax", None) is not None:
         cargs.extend([
             "-lmax",
-            ",".join(map(str, params.get("lmax")))
+            ",".join(map(str, params.get("lmax", None)))
         ])
-    if params.get("nocleanup"):
+    if params.get("nocleanup", False):
         cargs.append("-nocleanup")
-    if params.get("scratch") is not None:
+    if params.get("scratch", None) is not None:
         cargs.extend([
             "-scratch",
-            params.get("scratch")
+            params.get("scratch", None)
         ])
-    if params.get("continue") is not None:
+    if params.get("continue", None) is not None:
         cargs.extend([
             "-continue",
-            params.get("continue")
+            params.get("continue", None)
         ])
-    if params.get("info"):
+    if params.get("info", False):
         cargs.append("-info")
-    if params.get("quiet"):
+    if params.get("quiet", False):
         cargs.append("-quiet")
-    if params.get("debug"):
+    if params.get("debug", False):
         cargs.append("-debug")
-    if params.get("force"):
+    if params.get("force", False):
         cargs.append("-force")
-    if params.get("nthreads") is not None:
+    if params.get("nthreads", None) is not None:
         cargs.extend([
             "-nthreads",
-            str(params.get("nthreads"))
+            str(params.get("nthreads", None))
         ])
-    if params.get("config") is not None:
-        cargs.extend([a for c in [dyn_cargs(s["@type"])(s, execution) for s in params.get("config")] for a in c])
-    if params.get("help"):
+    if params.get("config", None) is not None:
+        cargs.extend([a for c in [dwi2response_config_cargs(s, execution) for s in params.get("config", None)] for a in c])
+    if params.get("help", False):
         cargs.append("-help")
-    if params.get("version"):
+    if params.get("version", False):
         cargs.append("-version")
     return cargs
 
@@ -1131,7 +1216,7 @@ def dwi2response_outputs(
     """
     ret = Dwi2responseOutputs(
         root=execution.output_file("."),
-        algorithm=dyn_outputs(params.get("algorithm")["@type"])(params.get("algorithm"), execution),
+        algorithm=dwi2response_algorithm_outputs_dyn_fn(params.get("algorithm")["@type"])(params.get("algorithm"), execution),
     )
     return ret
 
@@ -1172,7 +1257,7 @@ def dwi2response_execute(
 
 
 def dwi2response(
-    algorithm: typing.Union[Dwi2responseDhollanderParameters, Dwi2responseFaParameters, Dwi2responseManualParameters, Dwi2responseMsmt5ttParameters, Dwi2responseTaxParameters, Dwi2responseTournierParameters],
+    algorithm: typing.Union[Dwi2responseDhollanderParametersTagged, Dwi2responseFaParametersTagged, Dwi2responseManualParametersTagged, Dwi2responseMsmt5ttParametersTagged, Dwi2responseTaxParametersTagged, Dwi2responseTournierParametersTagged],
     grad: InputPathType | None = None,
     fslgrad: Dwi2responseFslgradParameters | None = None,
     mask: InputPathType | None = None,
@@ -1270,22 +1355,13 @@ def dwi2response(
 
 __all__ = [
     "DWI2RESPONSE_METADATA",
-    "Dwi2responseConfigParameters",
     "Dwi2responseDhollanderOutputs",
-    "Dwi2responseDhollanderParameters",
     "Dwi2responseFaOutputs",
-    "Dwi2responseFaParameters",
-    "Dwi2responseFslgradParameters",
     "Dwi2responseManualOutputs",
-    "Dwi2responseManualParameters",
     "Dwi2responseMsmt5ttOutputs",
-    "Dwi2responseMsmt5ttParameters",
     "Dwi2responseOutputs",
-    "Dwi2responseParameters",
     "Dwi2responseTaxOutputs",
-    "Dwi2responseTaxParameters",
     "Dwi2responseTournierOutputs",
-    "Dwi2responseTournierParameters",
     "dwi2response",
     "dwi2response_config_params",
     "dwi2response_dhollander_params",

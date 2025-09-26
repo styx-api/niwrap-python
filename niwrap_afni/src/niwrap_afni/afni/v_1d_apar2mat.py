@@ -14,7 +14,22 @@ V_1D_APAR2MAT_METADATA = Metadata(
 
 
 V1dApar2matParameters = typing.TypedDict('V1dApar2matParameters', {
-    "@type": typing.Literal["afni.1dApar2mat"],
+    "@type": typing.NotRequired[typing.Literal["afni/1dApar2mat"]],
+    "x_shift": float,
+    "y_shift": float,
+    "z_shift": float,
+    "z_angle": float,
+    "x_angle": float,
+    "y_angle": float,
+    "x_scale": float,
+    "y_scale": float,
+    "z_scale": float,
+    "y_x_shear": float,
+    "z_x_shear": float,
+    "z_y_shear": float,
+})
+V1dApar2matParametersTagged = typing.TypedDict('V1dApar2matParametersTagged', {
+    "@type": typing.Literal["afni/1dApar2mat"],
     "x_shift": float,
     "y_shift": float,
     "z_shift": float,
@@ -30,40 +45,9 @@ V1dApar2matParameters = typing.TypedDict('V1dApar2matParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "afni.1dApar2mat": v_1d_apar2mat_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-    }.get(t)
-
-
 class V1dApar2matOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `v_1d_apar2mat(...)`.
+    Output object returned when calling `V1dApar2matParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -82,7 +66,7 @@ def v_1d_apar2mat_params(
     y_x_shear: float,
     z_x_shear: float,
     z_y_shear: float,
-) -> V1dApar2matParameters:
+) -> V1dApar2matParametersTagged:
     """
     Build parameters.
     
@@ -103,7 +87,7 @@ def v_1d_apar2mat_params(
         Parameter dictionary
     """
     params = {
-        "@type": "afni.1dApar2mat",
+        "@type": "afni/1dApar2mat",
         "x_shift": x_shift,
         "y_shift": y_shift,
         "z_shift": z_shift,
@@ -135,18 +119,18 @@ def v_1d_apar2mat_cargs(
     """
     cargs = []
     cargs.append("1dApar2mat")
-    cargs.append(str(params.get("x_shift")))
-    cargs.append(str(params.get("y_shift")))
-    cargs.append(str(params.get("z_shift")))
-    cargs.append(str(params.get("z_angle")))
-    cargs.append(str(params.get("x_angle")))
-    cargs.append(str(params.get("y_angle")))
-    cargs.append(str(params.get("x_scale")))
-    cargs.append(str(params.get("y_scale")))
-    cargs.append(str(params.get("z_scale")))
-    cargs.append(str(params.get("y_x_shear")))
-    cargs.append(str(params.get("z_x_shear")))
-    cargs.append(str(params.get("z_y_shear")))
+    cargs.append(str(params.get("x_shift", None)))
+    cargs.append(str(params.get("y_shift", None)))
+    cargs.append(str(params.get("z_shift", None)))
+    cargs.append(str(params.get("z_angle", None)))
+    cargs.append(str(params.get("x_angle", None)))
+    cargs.append(str(params.get("y_angle", None)))
+    cargs.append(str(params.get("x_scale", None)))
+    cargs.append(str(params.get("y_scale", None)))
+    cargs.append(str(params.get("z_scale", None)))
+    cargs.append(str(params.get("y_x_shear", None)))
+    cargs.append(str(params.get("z_x_shear", None)))
+    cargs.append(str(params.get("z_y_shear", None)))
     return cargs
 
 
@@ -259,7 +243,6 @@ def v_1d_apar2mat(
 
 __all__ = [
     "V1dApar2matOutputs",
-    "V1dApar2matParameters",
     "V_1D_APAR2MAT_METADATA",
     "v_1d_apar2mat",
     "v_1d_apar2mat_execute",

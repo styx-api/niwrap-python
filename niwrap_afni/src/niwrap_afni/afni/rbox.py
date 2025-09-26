@@ -14,7 +14,31 @@ RBOX_METADATA = Metadata(
 
 
 RboxParameters = typing.TypedDict('RboxParameters', {
-    "@type": typing.Literal["afni.rbox"],
+    "@type": typing.NotRequired[typing.Literal["afni/rbox"]],
+    "number_points": str,
+    "dimension": typing.NotRequired[str | None],
+    "unit_cube": bool,
+    "unit_diamond": bool,
+    "spiral": bool,
+    "regular_polygon": bool,
+    "cospherical_points": bool,
+    "simplex_points": bool,
+    "simplex_plus_points": bool,
+    "add_point": typing.NotRequired[list[str] | None],
+    "lens_distribution": typing.NotRequired[str | None],
+    "random_within": bool,
+    "random_disk": typing.NotRequired[str | None],
+    "bounding_box": typing.NotRequired[float | None],
+    "homogeneous_coordinates": bool,
+    "remove_command_line": bool,
+    "time_seed": bool,
+    "integer_coordinates": bool,
+    "offset": typing.NotRequired[float | None],
+    "user_seed": typing.NotRequired[float | None],
+    "mesh_lattice": typing.NotRequired[list[str] | None],
+})
+RboxParametersTagged = typing.TypedDict('RboxParametersTagged', {
+    "@type": typing.Literal["afni/rbox"],
     "number_points": str,
     "dimension": typing.NotRequired[str | None],
     "unit_cube": bool,
@@ -39,40 +63,9 @@ RboxParameters = typing.TypedDict('RboxParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "afni.rbox": rbox_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-    }.get(t)
-
-
 class RboxOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `rbox(...)`.
+    Output object returned when calling `RboxParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -100,7 +93,7 @@ def rbox_params(
     offset: float | None = None,
     user_seed: float | None = None,
     mesh_lattice: list[str] | None = None,
-) -> RboxParameters:
+) -> RboxParametersTagged:
     """
     Build parameters.
     
@@ -136,7 +129,7 @@ def rbox_params(
         Parameter dictionary
     """
     params = {
-        "@type": "afni.rbox",
+        "@type": "afni/rbox",
         "number_points": number_points,
         "unit_cube": unit_cube,
         "unit_diamond": unit_diamond,
@@ -185,67 +178,67 @@ def rbox_cargs(
     """
     cargs = []
     cargs.append("rbox")
-    cargs.append(params.get("number_points"))
-    if params.get("dimension") is not None:
-        cargs.append(params.get("dimension"))
-    if params.get("unit_cube"):
+    cargs.append(params.get("number_points", None))
+    if params.get("dimension", None) is not None:
+        cargs.append(params.get("dimension", None))
+    if params.get("unit_cube", False):
         cargs.append("c")
-    if params.get("unit_diamond"):
+    if params.get("unit_diamond", False):
         cargs.append("d")
-    if params.get("spiral"):
+    if params.get("spiral", False):
         cargs.append("l")
-    if params.get("regular_polygon"):
+    if params.get("regular_polygon", False):
         cargs.append("r")
-    if params.get("cospherical_points"):
+    if params.get("cospherical_points", False):
         cargs.append("s")
-    if params.get("simplex_points"):
+    if params.get("simplex_points", False):
         cargs.append("x")
-    if params.get("simplex_plus_points"):
+    if params.get("simplex_plus_points", False):
         cargs.append("y")
-    if params.get("add_point") is not None:
+    if params.get("add_point", None) is not None:
         cargs.extend([
             "P",
-            *params.get("add_point")
+            *params.get("add_point", None)
         ])
-    if params.get("lens_distribution") is not None:
+    if params.get("lens_distribution", None) is not None:
         cargs.extend([
             "L",
-            params.get("lens_distribution")
+            params.get("lens_distribution", None)
         ])
-    if params.get("random_within"):
+    if params.get("random_within", False):
         cargs.append("W")
-    if params.get("random_disk") is not None:
+    if params.get("random_disk", None) is not None:
         cargs.extend([
             "Z",
-            params.get("random_disk")
+            params.get("random_disk", None)
         ])
-    if params.get("bounding_box") is not None:
+    if params.get("bounding_box", None) is not None:
         cargs.extend([
             "B",
-            str(params.get("bounding_box"))
+            str(params.get("bounding_box", None))
         ])
-    if params.get("homogeneous_coordinates"):
+    if params.get("homogeneous_coordinates", False):
         cargs.append("h")
-    if params.get("remove_command_line"):
+    if params.get("remove_command_line", False):
         cargs.append("n")
-    if params.get("time_seed"):
+    if params.get("time_seed", False):
         cargs.append("t")
-    if params.get("integer_coordinates"):
+    if params.get("integer_coordinates", False):
         cargs.append("z")
-    if params.get("offset") is not None:
+    if params.get("offset", None) is not None:
         cargs.extend([
             "O",
-            str(params.get("offset"))
+            str(params.get("offset", None))
         ])
-    if params.get("user_seed") is not None:
+    if params.get("user_seed", None) is not None:
         cargs.extend([
             "t",
-            str(params.get("user_seed"))
+            str(params.get("user_seed", None))
         ])
-    if params.get("mesh_lattice") is not None:
+    if params.get("mesh_lattice", None) is not None:
         cargs.extend([
             "M",
-            *params.get("mesh_lattice")
+            *params.get("mesh_lattice", None)
         ])
     return cargs
 
@@ -391,7 +384,6 @@ def rbox(
 __all__ = [
     "RBOX_METADATA",
     "RboxOutputs",
-    "RboxParameters",
     "rbox",
     "rbox_execute",
     "rbox_params",

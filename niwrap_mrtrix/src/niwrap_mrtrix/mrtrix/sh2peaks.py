@@ -14,21 +14,51 @@ SH2PEAKS_METADATA = Metadata(
 
 
 Sh2peaksDirectionParameters = typing.TypedDict('Sh2peaksDirectionParameters', {
-    "@type": typing.Literal["mrtrix.sh2peaks.direction"],
+    "@type": typing.NotRequired[typing.Literal["direction"]],
+    "phi": float,
+    "theta": float,
+})
+Sh2peaksDirectionParametersTagged = typing.TypedDict('Sh2peaksDirectionParametersTagged', {
+    "@type": typing.Literal["direction"],
     "phi": float,
     "theta": float,
 })
 
 
 Sh2peaksConfigParameters = typing.TypedDict('Sh2peaksConfigParameters', {
-    "@type": typing.Literal["mrtrix.sh2peaks.config"],
+    "@type": typing.NotRequired[typing.Literal["config"]],
+    "key": str,
+    "value": str,
+})
+Sh2peaksConfigParametersTagged = typing.TypedDict('Sh2peaksConfigParametersTagged', {
+    "@type": typing.Literal["config"],
     "key": str,
     "value": str,
 })
 
 
 Sh2peaksParameters = typing.TypedDict('Sh2peaksParameters', {
-    "@type": typing.Literal["mrtrix.sh2peaks"],
+    "@type": typing.NotRequired[typing.Literal["mrtrix/sh2peaks"]],
+    "num": typing.NotRequired[int | None],
+    "direction": typing.NotRequired[list[Sh2peaksDirectionParameters] | None],
+    "peaks": typing.NotRequired[InputPathType | None],
+    "threshold": typing.NotRequired[float | None],
+    "seeds": typing.NotRequired[InputPathType | None],
+    "mask": typing.NotRequired[InputPathType | None],
+    "fast": bool,
+    "info": bool,
+    "quiet": bool,
+    "debug": bool,
+    "force": bool,
+    "nthreads": typing.NotRequired[int | None],
+    "config": typing.NotRequired[list[Sh2peaksConfigParameters] | None],
+    "help": bool,
+    "version": bool,
+    "SH": InputPathType,
+    "output": str,
+})
+Sh2peaksParametersTagged = typing.TypedDict('Sh2peaksParametersTagged', {
+    "@type": typing.Literal["mrtrix/sh2peaks"],
     "num": typing.NotRequired[int | None],
     "direction": typing.NotRequired[list[Sh2peaksDirectionParameters] | None],
     "peaks": typing.NotRequired[InputPathType | None],
@@ -49,44 +79,10 @@ Sh2peaksParameters = typing.TypedDict('Sh2peaksParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "mrtrix.sh2peaks": sh2peaks_cargs,
-        "mrtrix.sh2peaks.direction": sh2peaks_direction_cargs,
-        "mrtrix.sh2peaks.config": sh2peaks_config_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "mrtrix.sh2peaks": sh2peaks_outputs,
-    }.get(t)
-
-
 def sh2peaks_direction_params(
     phi: float,
     theta: float,
-) -> Sh2peaksDirectionParameters:
+) -> Sh2peaksDirectionParametersTagged:
     """
     Build parameters.
     
@@ -100,7 +96,7 @@ def sh2peaks_direction_params(
         Parameter dictionary
     """
     params = {
-        "@type": "mrtrix.sh2peaks.direction",
+        "@type": "direction",
         "phi": phi,
         "theta": theta,
     }
@@ -122,15 +118,15 @@ def sh2peaks_direction_cargs(
     """
     cargs = []
     cargs.append("-direction")
-    cargs.append(str(params.get("phi")))
-    cargs.append(str(params.get("theta")))
+    cargs.append(str(params.get("phi", None)))
+    cargs.append(str(params.get("theta", None)))
     return cargs
 
 
 def sh2peaks_config_params(
     key: str,
     value: str,
-) -> Sh2peaksConfigParameters:
+) -> Sh2peaksConfigParametersTagged:
     """
     Build parameters.
     
@@ -141,7 +137,7 @@ def sh2peaks_config_params(
         Parameter dictionary
     """
     params = {
-        "@type": "mrtrix.sh2peaks.config",
+        "@type": "config",
         "key": key,
         "value": value,
     }
@@ -163,14 +159,14 @@ def sh2peaks_config_cargs(
     """
     cargs = []
     cargs.append("-config")
-    cargs.append(params.get("key"))
-    cargs.append(params.get("value"))
+    cargs.append(params.get("key", None))
+    cargs.append(params.get("value", None))
     return cargs
 
 
 class Sh2peaksOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `sh2peaks(...)`.
+    Output object returned when calling `Sh2peaksParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -197,7 +193,7 @@ def sh2peaks_params(
     config: list[Sh2peaksConfigParameters] | None = None,
     help_: bool = False,
     version: bool = False,
-) -> Sh2peaksParameters:
+) -> Sh2peaksParametersTagged:
     """
     Build parameters.
     
@@ -236,7 +232,7 @@ def sh2peaks_params(
         Parameter dictionary
     """
     params = {
-        "@type": "mrtrix.sh2peaks",
+        "@type": "mrtrix/sh2peaks",
         "fast": fast,
         "info": info,
         "quiet": quiet,
@@ -281,56 +277,56 @@ def sh2peaks_cargs(
     """
     cargs = []
     cargs.append("sh2peaks")
-    if params.get("num") is not None:
+    if params.get("num", None) is not None:
         cargs.extend([
             "-num",
-            str(params.get("num"))
+            str(params.get("num", None))
         ])
-    if params.get("direction") is not None:
-        cargs.extend([a for c in [dyn_cargs(s["@type"])(s, execution) for s in params.get("direction")] for a in c])
-    if params.get("peaks") is not None:
+    if params.get("direction", None) is not None:
+        cargs.extend([a for c in [sh2peaks_direction_cargs(s, execution) for s in params.get("direction", None)] for a in c])
+    if params.get("peaks", None) is not None:
         cargs.extend([
             "-peaks",
-            execution.input_file(params.get("peaks"))
+            execution.input_file(params.get("peaks", None))
         ])
-    if params.get("threshold") is not None:
+    if params.get("threshold", None) is not None:
         cargs.extend([
             "-threshold",
-            str(params.get("threshold"))
+            str(params.get("threshold", None))
         ])
-    if params.get("seeds") is not None:
+    if params.get("seeds", None) is not None:
         cargs.extend([
             "-seeds",
-            execution.input_file(params.get("seeds"))
+            execution.input_file(params.get("seeds", None))
         ])
-    if params.get("mask") is not None:
+    if params.get("mask", None) is not None:
         cargs.extend([
             "-mask",
-            execution.input_file(params.get("mask"))
+            execution.input_file(params.get("mask", None))
         ])
-    if params.get("fast"):
+    if params.get("fast", False):
         cargs.append("-fast")
-    if params.get("info"):
+    if params.get("info", False):
         cargs.append("-info")
-    if params.get("quiet"):
+    if params.get("quiet", False):
         cargs.append("-quiet")
-    if params.get("debug"):
+    if params.get("debug", False):
         cargs.append("-debug")
-    if params.get("force"):
+    if params.get("force", False):
         cargs.append("-force")
-    if params.get("nthreads") is not None:
+    if params.get("nthreads", None) is not None:
         cargs.extend([
             "-nthreads",
-            str(params.get("nthreads"))
+            str(params.get("nthreads", None))
         ])
-    if params.get("config") is not None:
-        cargs.extend([a for c in [dyn_cargs(s["@type"])(s, execution) for s in params.get("config")] for a in c])
-    if params.get("help"):
+    if params.get("config", None) is not None:
+        cargs.extend([a for c in [sh2peaks_config_cargs(s, execution) for s in params.get("config", None)] for a in c])
+    if params.get("help", False):
         cargs.append("-help")
-    if params.get("version"):
+    if params.get("version", False):
         cargs.append("-version")
-    cargs.append(execution.input_file(params.get("SH")))
-    cargs.append(params.get("output"))
+    cargs.append(execution.input_file(params.get("SH", None)))
+    cargs.append(params.get("output", None))
     return cargs
 
 
@@ -349,7 +345,7 @@ def sh2peaks_outputs(
     """
     ret = Sh2peaksOutputs(
         root=execution.output_file("."),
-        output=execution.output_file(params.get("output")),
+        output=execution.output_file(params.get("output", None)),
     )
     return ret
 
@@ -498,10 +494,7 @@ def sh2peaks(
 
 __all__ = [
     "SH2PEAKS_METADATA",
-    "Sh2peaksConfigParameters",
-    "Sh2peaksDirectionParameters",
     "Sh2peaksOutputs",
-    "Sh2peaksParameters",
     "sh2peaks",
     "sh2peaks_config_params",
     "sh2peaks_direction_params",

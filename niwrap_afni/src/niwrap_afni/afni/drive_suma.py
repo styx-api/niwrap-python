@@ -14,7 +14,41 @@ DRIVE_SUMA_METADATA = Metadata(
 
 
 DriveSumaParameters = typing.TypedDict('DriveSumaParameters', {
-    "@type": typing.Literal["afni.DriveSuma"],
+    "@type": typing.NotRequired[typing.Literal["afni/DriveSuma"]],
+    "command": str,
+    "surf_label": typing.NotRequired[str | None],
+    "surface_file": typing.NotRequired[InputPathType | None],
+    "surf_state": typing.NotRequired[str | None],
+    "surf_winding": typing.NotRequired[str | None],
+    "coordinates": typing.NotRequired[InputPathType | None],
+    "autorecord": typing.NotRequired[str | None],
+    "background_color": typing.NotRequired[str | None],
+    "view_file": typing.NotRequired[InputPathType | None],
+    "do_file": typing.NotRequired[InputPathType | None],
+    "do_draw_mask": typing.NotRequired[str | None],
+    "fixed_do": typing.NotRequired[str | None],
+    "mobile_do": typing.NotRequired[str | None],
+    "key_press": typing.NotRequired[str | None],
+    "viewer": typing.NotRequired[str | None],
+    "anim_dup": typing.NotRequired[float | None],
+    "save_as": typing.NotRequired[str | None],
+    "save_index": typing.NotRequired[float | None],
+    "save_range": typing.NotRequired[str | None],
+    "save_last": bool,
+    "save_last_n": typing.NotRequired[float | None],
+    "save_all": bool,
+    "echo_edu": bool,
+    "echo_nel_stdout": bool,
+    "echo_nel_stderr": bool,
+    "examples": bool,
+    "help": bool,
+    "h": bool,
+    "help_nido": bool,
+    "c_demo": bool,
+    "viewer_cont": bool,
+})
+DriveSumaParametersTagged = typing.TypedDict('DriveSumaParametersTagged', {
+    "@type": typing.Literal["afni/DriveSuma"],
     "command": str,
     "surf_label": typing.NotRequired[str | None],
     "surface_file": typing.NotRequired[InputPathType | None],
@@ -49,40 +83,9 @@ DriveSumaParameters = typing.TypedDict('DriveSumaParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "afni.DriveSuma": drive_suma_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-    }.get(t)
-
-
 class DriveSumaOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `drive_suma(...)`.
+    Output object returned when calling `DriveSumaParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -120,7 +123,7 @@ def drive_suma_params(
     help_nido: bool = False,
     c_demo: bool = False,
     viewer_cont: bool = False,
-) -> DriveSumaParameters:
+) -> DriveSumaParametersTagged:
     """
     Build parameters.
     
@@ -161,7 +164,7 @@ def drive_suma_params(
         Parameter dictionary
     """
     params = {
-        "@type": "afni.DriveSuma",
+        "@type": "afni/DriveSuma",
         "command": command,
         "save_last": save_last,
         "save_all": save_all,
@@ -231,123 +234,123 @@ def drive_suma_cargs(
     """
     cargs = []
     cargs.append("DriveSuma")
-    cargs.append(params.get("command"))
-    if params.get("surf_label") is not None:
+    cargs.append(params.get("command", None))
+    if params.get("surf_label", None) is not None:
         cargs.extend([
             "-surf_label",
-            params.get("surf_label")
+            params.get("surf_label", None)
         ])
-    if params.get("surface_file") is not None:
+    if params.get("surface_file", None) is not None:
         cargs.extend([
             "-i_TYPE",
-            execution.input_file(params.get("surface_file"))
+            execution.input_file(params.get("surface_file", None))
         ])
-    if params.get("surf_state") is not None:
+    if params.get("surf_state", None) is not None:
         cargs.extend([
             "-surf_state",
-            params.get("surf_state")
+            params.get("surf_state", None)
         ])
-    if params.get("surf_winding") is not None:
+    if params.get("surf_winding", None) is not None:
         cargs.extend([
             "-surf_winding",
-            params.get("surf_winding")
+            params.get("surf_winding", None)
         ])
-    if params.get("coordinates") is not None:
+    if params.get("coordinates", None) is not None:
         cargs.extend([
             "-xyz_1D",
-            execution.input_file(params.get("coordinates"))
+            execution.input_file(params.get("coordinates", None))
         ])
-    if params.get("autorecord") is not None:
+    if params.get("autorecord", None) is not None:
         cargs.extend([
             "-autorecord",
-            params.get("autorecord")
+            params.get("autorecord", None)
         ])
-    if params.get("background_color") is not None:
+    if params.get("background_color", None) is not None:
         cargs.extend([
             "-bkg_col",
-            params.get("background_color")
+            params.get("background_color", None)
         ])
-    if params.get("view_file") is not None:
+    if params.get("view_file", None) is not None:
         cargs.extend([
             "-load_view",
-            execution.input_file(params.get("view_file"))
+            execution.input_file(params.get("view_file", None))
         ])
-    if params.get("do_file") is not None:
+    if params.get("do_file", None) is not None:
         cargs.extend([
             "-load_do",
-            execution.input_file(params.get("do_file"))
+            execution.input_file(params.get("do_file", None))
         ])
-    if params.get("do_draw_mask") is not None:
+    if params.get("do_draw_mask", None) is not None:
         cargs.extend([
             "-do_draw_mask",
-            params.get("do_draw_mask")
+            params.get("do_draw_mask", None)
         ])
-    if params.get("fixed_do") is not None:
+    if params.get("fixed_do", None) is not None:
         cargs.extend([
             "-fixed_do",
-            params.get("fixed_do")
+            params.get("fixed_do", None)
         ])
-    if params.get("mobile_do") is not None:
+    if params.get("mobile_do", None) is not None:
         cargs.extend([
             "-mobile_do",
-            params.get("mobile_do")
+            params.get("mobile_do", None)
         ])
-    if params.get("key_press") is not None:
+    if params.get("key_press", None) is not None:
         cargs.extend([
             "-key",
-            params.get("key_press")
+            params.get("key_press", None)
         ])
-    if params.get("viewer") is not None:
+    if params.get("viewer", None) is not None:
         cargs.extend([
             "-viewer",
-            params.get("viewer")
+            params.get("viewer", None)
         ])
-    if params.get("anim_dup") is not None:
+    if params.get("anim_dup", None) is not None:
         cargs.extend([
             "-anim_dup",
-            str(params.get("anim_dup"))
+            str(params.get("anim_dup", None))
         ])
-    if params.get("save_as") is not None:
+    if params.get("save_as", None) is not None:
         cargs.extend([
             "-save_as",
-            params.get("save_as")
+            params.get("save_as", None)
         ])
-    if params.get("save_index") is not None:
+    if params.get("save_index", None) is not None:
         cargs.extend([
             "-save_index",
-            str(params.get("save_index"))
+            str(params.get("save_index", None))
         ])
-    if params.get("save_range") is not None:
+    if params.get("save_range", None) is not None:
         cargs.extend([
             "-save_range",
-            params.get("save_range")
+            params.get("save_range", None)
         ])
-    if params.get("save_last"):
+    if params.get("save_last", False):
         cargs.append("-save_last")
-    if params.get("save_last_n") is not None:
+    if params.get("save_last_n", None) is not None:
         cargs.extend([
             "-save_last_n",
-            str(params.get("save_last_n"))
+            str(params.get("save_last_n", None))
         ])
-    if params.get("save_all"):
+    if params.get("save_all", False):
         cargs.append("-save_all")
-    if params.get("echo_edu"):
+    if params.get("echo_edu", False):
         cargs.append("-echo_edu")
-    if params.get("echo_nel_stdout"):
+    if params.get("echo_nel_stdout", False):
         cargs.append("-echo_nel_stdout")
-    if params.get("echo_nel_stderr"):
+    if params.get("echo_nel_stderr", False):
         cargs.append("-echo_nel_stderr")
-    if params.get("examples"):
+    if params.get("examples", False):
         cargs.append("-examples")
-    if params.get("help"):
+    if params.get("help", False):
         cargs.append("-help")
-    if params.get("h"):
+    if params.get("h", False):
         cargs.append("-h")
-    if params.get("help_nido"):
+    if params.get("help_nido", False):
         cargs.append("-help_nido")
-    if params.get("c_demo"):
+    if params.get("c_demo", False):
         cargs.append("-C_demo")
-    if params.get("viewer_cont"):
+    if params.get("viewer_cont", False):
         cargs.append("-com viewer_cont")
     return cargs
 
@@ -518,7 +521,6 @@ def drive_suma(
 __all__ = [
     "DRIVE_SUMA_METADATA",
     "DriveSumaOutputs",
-    "DriveSumaParameters",
     "drive_suma",
     "drive_suma_execute",
     "drive_suma_params",

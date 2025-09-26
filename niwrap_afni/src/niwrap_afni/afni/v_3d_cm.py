@@ -14,7 +14,19 @@ V_3D_CM_METADATA = Metadata(
 
 
 V3dCmParameters = typing.TypedDict('V3dCmParameters', {
-    "@type": typing.Literal["afni.3dCM"],
+    "@type": typing.NotRequired[typing.Literal["afni/3dCM"]],
+    "dset": InputPathType,
+    "mask": typing.NotRequired[InputPathType | None],
+    "automask": bool,
+    "set_origin": typing.NotRequired[list[float] | None],
+    "local_ijk": bool,
+    "roi_vals": typing.NotRequired[list[float] | None],
+    "all_rois": bool,
+    "icent": bool,
+    "dcent": bool,
+})
+V3dCmParametersTagged = typing.TypedDict('V3dCmParametersTagged', {
+    "@type": typing.Literal["afni/3dCM"],
     "dset": InputPathType,
     "mask": typing.NotRequired[InputPathType | None],
     "automask": bool,
@@ -27,40 +39,9 @@ V3dCmParameters = typing.TypedDict('V3dCmParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "afni.3dCM": v_3d_cm_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-    }.get(t)
-
-
 class V3dCmOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `v_3d_cm(...)`.
+    Output object returned when calling `V3dCmParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -78,7 +59,7 @@ def v_3d_cm_params(
     all_rois: bool = False,
     icent: bool = False,
     dcent: bool = False,
-) -> V3dCmParameters:
+) -> V3dCmParametersTagged:
     """
     Build parameters.
     
@@ -105,7 +86,7 @@ def v_3d_cm_params(
         Parameter dictionary
     """
     params = {
-        "@type": "afni.3dCM",
+        "@type": "afni/3dCM",
         "dset": dset,
         "automask": automask,
         "local_ijk": local_ijk,
@@ -137,31 +118,31 @@ def v_3d_cm_cargs(
     """
     cargs = []
     cargs.append("3dCM")
-    cargs.append(execution.input_file(params.get("dset")))
-    if params.get("mask") is not None:
+    cargs.append(execution.input_file(params.get("dset", None)))
+    if params.get("mask", None) is not None:
         cargs.extend([
             "-mask",
-            execution.input_file(params.get("mask"))
+            execution.input_file(params.get("mask", None))
         ])
-    if params.get("automask"):
+    if params.get("automask", False):
         cargs.append("-automask")
-    if params.get("set_origin") is not None:
+    if params.get("set_origin", None) is not None:
         cargs.extend([
             "-set",
-            *map(str, params.get("set_origin"))
+            *map(str, params.get("set_origin", None))
         ])
-    if params.get("local_ijk"):
+    if params.get("local_ijk", False):
         cargs.append("-local_ijk")
-    if params.get("roi_vals") is not None:
+    if params.get("roi_vals", None) is not None:
         cargs.extend([
             "-roi_vals",
-            *map(str, params.get("roi_vals"))
+            *map(str, params.get("roi_vals", None))
         ])
-    if params.get("all_rois"):
+    if params.get("all_rois", False):
         cargs.append("-all_rois")
-    if params.get("icent"):
+    if params.get("icent", False):
         cargs.append("-Icent")
-    if params.get("dcent"):
+    if params.get("dcent", False):
         cargs.append("-Dcent")
     return cargs
 
@@ -274,7 +255,6 @@ def v_3d_cm(
 
 __all__ = [
     "V3dCmOutputs",
-    "V3dCmParameters",
     "V_3D_CM_METADATA",
     "v_3d_cm",
     "v_3d_cm_execute",

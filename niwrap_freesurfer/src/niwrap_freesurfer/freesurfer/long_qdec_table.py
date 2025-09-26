@@ -14,7 +14,15 @@ LONG_QDEC_TABLE_METADATA = Metadata(
 
 
 LongQdecTableParameters = typing.TypedDict('LongQdecTableParameters', {
-    "@type": typing.Literal["freesurfer.long_qdec_table"],
+    "@type": typing.NotRequired[typing.Literal["freesurfer/long_qdec_table"]],
+    "qdec_table": InputPathType,
+    "split": typing.NotRequired[str | None],
+    "cross_flag": bool,
+    "sort": typing.NotRequired[str | None],
+    "out": typing.NotRequired[str | None],
+})
+LongQdecTableParametersTagged = typing.TypedDict('LongQdecTableParametersTagged', {
+    "@type": typing.Literal["freesurfer/long_qdec_table"],
     "qdec_table": InputPathType,
     "split": typing.NotRequired[str | None],
     "cross_flag": bool,
@@ -23,41 +31,9 @@ LongQdecTableParameters = typing.TypedDict('LongQdecTableParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "freesurfer.long_qdec_table": long_qdec_table_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "freesurfer.long_qdec_table": long_qdec_table_outputs,
-    }.get(t)
-
-
 class LongQdecTableOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `long_qdec_table(...)`.
+    Output object returned when calling `LongQdecTableParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -71,7 +47,7 @@ def long_qdec_table_params(
     cross_flag: bool = False,
     sort: str | None = None,
     out: str | None = None,
-) -> LongQdecTableParameters:
+) -> LongQdecTableParametersTagged:
     """
     Build parameters.
     
@@ -86,7 +62,7 @@ def long_qdec_table_params(
         Parameter dictionary
     """
     params = {
-        "@type": "freesurfer.long_qdec_table",
+        "@type": "freesurfer/long_qdec_table",
         "qdec_table": qdec_table,
         "cross_flag": cross_flag,
     }
@@ -116,24 +92,24 @@ def long_qdec_table_cargs(
     cargs.append("long_qdec_table")
     cargs.extend([
         "--qdec",
-        execution.input_file(params.get("qdec_table"))
+        execution.input_file(params.get("qdec_table", None))
     ])
-    if params.get("split") is not None:
+    if params.get("split", None) is not None:
         cargs.extend([
             "--split",
-            params.get("split")
+            params.get("split", None)
         ])
-    if params.get("cross_flag"):
+    if params.get("cross_flag", False):
         cargs.append("--cross")
-    if params.get("sort") is not None:
+    if params.get("sort", None) is not None:
         cargs.extend([
             "--sort",
-            params.get("sort")
+            params.get("sort", None)
         ])
-    if params.get("out") is not None:
+    if params.get("out", None) is not None:
         cargs.extend([
             "--out",
-            params.get("out")
+            params.get("out", None)
         ])
     return cargs
 
@@ -153,7 +129,7 @@ def long_qdec_table_outputs(
     """
     ret = LongQdecTableOutputs(
         root=execution.output_file("."),
-        output_table=execution.output_file(params.get("out")) if (params.get("out") is not None) else None,
+        output_table=execution.output_file(params.get("out", None)) if (params.get("out") is not None) else None,
     )
     return ret
 
@@ -227,7 +203,6 @@ def long_qdec_table(
 __all__ = [
     "LONG_QDEC_TABLE_METADATA",
     "LongQdecTableOutputs",
-    "LongQdecTableParameters",
     "long_qdec_table",
     "long_qdec_table_execute",
     "long_qdec_table_params",

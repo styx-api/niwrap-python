@@ -14,7 +14,15 @@ MRI_CAL_RENORMALIZE_GCA_METADATA = Metadata(
 
 
 MriCalRenormalizeGcaParameters = typing.TypedDict('MriCalRenormalizeGcaParameters', {
-    "@type": typing.Literal["freesurfer.mri_cal_renormalize_gca"],
+    "@type": typing.NotRequired[typing.Literal["freesurfer/mri_cal_renormalize_gca"]],
+    "timepoint_file": InputPathType,
+    "in_vol": InputPathType,
+    "input_atlas": InputPathType,
+    "transform_file": InputPathType,
+    "output_atlas": str,
+})
+MriCalRenormalizeGcaParametersTagged = typing.TypedDict('MriCalRenormalizeGcaParametersTagged', {
+    "@type": typing.Literal["freesurfer/mri_cal_renormalize_gca"],
     "timepoint_file": InputPathType,
     "in_vol": InputPathType,
     "input_atlas": InputPathType,
@@ -23,41 +31,9 @@ MriCalRenormalizeGcaParameters = typing.TypedDict('MriCalRenormalizeGcaParameter
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "freesurfer.mri_cal_renormalize_gca": mri_cal_renormalize_gca_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "freesurfer.mri_cal_renormalize_gca": mri_cal_renormalize_gca_outputs,
-    }.get(t)
-
-
 class MriCalRenormalizeGcaOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `mri_cal_renormalize_gca(...)`.
+    Output object returned when calling `MriCalRenormalizeGcaParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -71,7 +47,7 @@ def mri_cal_renormalize_gca_params(
     input_atlas: InputPathType,
     transform_file: InputPathType,
     output_atlas: str,
-) -> MriCalRenormalizeGcaParameters:
+) -> MriCalRenormalizeGcaParametersTagged:
     """
     Build parameters.
     
@@ -85,7 +61,7 @@ def mri_cal_renormalize_gca_params(
         Parameter dictionary
     """
     params = {
-        "@type": "freesurfer.mri_cal_renormalize_gca",
+        "@type": "freesurfer/mri_cal_renormalize_gca",
         "timepoint_file": timepoint_file,
         "in_vol": in_vol,
         "input_atlas": input_atlas,
@@ -110,11 +86,11 @@ def mri_cal_renormalize_gca_cargs(
     """
     cargs = []
     cargs.append("mri_cal_renormalize_gca")
-    cargs.append(execution.input_file(params.get("timepoint_file")))
-    cargs.append(execution.input_file(params.get("in_vol")))
-    cargs.append(execution.input_file(params.get("input_atlas")))
-    cargs.append(execution.input_file(params.get("transform_file")))
-    cargs.append(params.get("output_atlas"))
+    cargs.append(execution.input_file(params.get("timepoint_file", None)))
+    cargs.append(execution.input_file(params.get("in_vol", None)))
+    cargs.append(execution.input_file(params.get("input_atlas", None)))
+    cargs.append(execution.input_file(params.get("transform_file", None)))
+    cargs.append(params.get("output_atlas", None))
     return cargs
 
 
@@ -133,7 +109,7 @@ def mri_cal_renormalize_gca_outputs(
     """
     ret = MriCalRenormalizeGcaOutputs(
         root=execution.output_file("."),
-        output_atlas_file=execution.output_file(params.get("output_atlas")),
+        output_atlas_file=execution.output_file(params.get("output_atlas", None)),
     )
     return ret
 
@@ -206,7 +182,6 @@ def mri_cal_renormalize_gca(
 __all__ = [
     "MRI_CAL_RENORMALIZE_GCA_METADATA",
     "MriCalRenormalizeGcaOutputs",
-    "MriCalRenormalizeGcaParameters",
     "mri_cal_renormalize_gca",
     "mri_cal_renormalize_gca_execute",
     "mri_cal_renormalize_gca_params",

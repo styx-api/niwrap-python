@@ -14,7 +14,31 @@ V_1D_DW_GRAD_O_MAT___METADATA = Metadata(
 
 
 V1dDwGradOMatParameters = typing.TypedDict('V1dDwGradOMatParameters', {
-    "@type": typing.Literal["afni.1dDW_Grad_o_Mat++"],
+    "@type": typing.NotRequired[typing.Literal["afni/1dDW_Grad_o_Mat++"]],
+    "in_row_vec": InputPathType,
+    "in_col_vec": InputPathType,
+    "in_col_matA": InputPathType,
+    "in_col_matT": InputPathType,
+    "flip_x": bool,
+    "flip_y": bool,
+    "flip_z": bool,
+    "no_flip": bool,
+    "out_row_vec": str,
+    "out_col_vec": str,
+    "out_col_matA": str,
+    "out_col_matT": str,
+    "in_bvals": typing.NotRequired[InputPathType | None],
+    "out_col_bval": bool,
+    "out_row_bval_sep": typing.NotRequired[str | None],
+    "out_col_bval_sep": typing.NotRequired[str | None],
+    "unit_mag_out": bool,
+    "check_abs_min": typing.NotRequired[float | None],
+    "bref_mean_top": bool,
+    "put_zeros_top": bool,
+    "bmax_ref": typing.NotRequired[float | None],
+})
+V1dDwGradOMatParametersTagged = typing.TypedDict('V1dDwGradOMatParametersTagged', {
+    "@type": typing.Literal["afni/1dDW_Grad_o_Mat++"],
     "in_row_vec": InputPathType,
     "in_col_vec": InputPathType,
     "in_col_matA": InputPathType,
@@ -39,41 +63,9 @@ V1dDwGradOMatParameters = typing.TypedDict('V1dDwGradOMatParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "afni.1dDW_Grad_o_Mat++": v_1d_dw_grad_o_mat___cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "afni.1dDW_Grad_o_Mat++": v_1d_dw_grad_o_mat___outputs,
-    }.get(t)
-
-
 class V1dDwGradOMatOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `v_1d_dw_grad_o_mat__(...)`.
+    Output object returned when calling `V1dDwGradOMatParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -107,7 +99,7 @@ def v_1d_dw_grad_o_mat___params(
     bref_mean_top: bool = False,
     put_zeros_top: bool = False,
     bmax_ref: float | None = None,
-) -> V1dDwGradOMatParameters:
+) -> V1dDwGradOMatParametersTagged:
     """
     Build parameters.
     
@@ -151,7 +143,7 @@ def v_1d_dw_grad_o_mat___params(
         Parameter dictionary
     """
     params = {
-        "@type": "afni.1dDW_Grad_o_Mat++",
+        "@type": "afni/1dDW_Grad_o_Mat++",
         "in_row_vec": in_row_vec,
         "in_col_vec": in_col_vec,
         "in_col_matA": in_col_mat_a,
@@ -199,76 +191,76 @@ def v_1d_dw_grad_o_mat___cargs(
     cargs.append("1dDW_Grad_o_Mat++")
     cargs.extend([
         "-in_row_vec",
-        execution.input_file(params.get("in_row_vec"))
+        execution.input_file(params.get("in_row_vec", None))
     ])
     cargs.extend([
         "-in_col_vec",
-        execution.input_file(params.get("in_col_vec"))
+        execution.input_file(params.get("in_col_vec", None))
     ])
     cargs.extend([
         "-in_col_matA",
-        execution.input_file(params.get("in_col_matA"))
+        execution.input_file(params.get("in_col_matA", None))
     ])
     cargs.extend([
         "-in_col_matT",
-        execution.input_file(params.get("in_col_matT"))
+        execution.input_file(params.get("in_col_matT", None))
     ])
-    if params.get("flip_x"):
+    if params.get("flip_x", False):
         cargs.append("-flip_x")
-    if params.get("flip_y"):
+    if params.get("flip_y", False):
         cargs.append("-flip_y")
-    if params.get("flip_z"):
+    if params.get("flip_z", False):
         cargs.append("-flip_z")
-    if params.get("no_flip"):
+    if params.get("no_flip", False):
         cargs.append("-no_flip")
     cargs.extend([
         "-out_row_vec",
-        params.get("out_row_vec")
+        params.get("out_row_vec", None)
     ])
     cargs.extend([
         "-out_col_vec",
-        params.get("out_col_vec")
+        params.get("out_col_vec", None)
     ])
     cargs.extend([
         "-out_col_matA",
-        params.get("out_col_matA")
+        params.get("out_col_matA", None)
     ])
     cargs.extend([
         "-out_col_matT",
-        params.get("out_col_matT")
+        params.get("out_col_matT", None)
     ])
-    if params.get("in_bvals") is not None:
+    if params.get("in_bvals", None) is not None:
         cargs.extend([
             "-in_bvals",
-            execution.input_file(params.get("in_bvals"))
+            execution.input_file(params.get("in_bvals", None))
         ])
-    if params.get("out_col_bval"):
+    if params.get("out_col_bval", False):
         cargs.append("-out_col_bval")
-    if params.get("out_row_bval_sep") is not None:
+    if params.get("out_row_bval_sep", None) is not None:
         cargs.extend([
             "-out_row_bval_sep",
-            params.get("out_row_bval_sep")
+            params.get("out_row_bval_sep", None)
         ])
-    if params.get("out_col_bval_sep") is not None:
+    if params.get("out_col_bval_sep", None) is not None:
         cargs.extend([
             "-out_col_bval_sep",
-            params.get("out_col_bval_sep")
+            params.get("out_col_bval_sep", None)
         ])
-    if params.get("unit_mag_out"):
+    if params.get("unit_mag_out", False):
         cargs.append("-unit_mag_out")
-    if params.get("check_abs_min") is not None:
+    if params.get("check_abs_min", None) is not None:
         cargs.extend([
             "-check_abs_min",
-            str(params.get("check_abs_min"))
+            str(params.get("check_abs_min", None))
         ])
-    if params.get("bref_mean_top"):
+    if params.get("bref_mean_top", False):
         cargs.append("-bref_mean_top")
-    if params.get("put_zeros_top"):
+    if params.get("put_zeros_top", False):
         cargs.append("-put_zeros_top")
-    if params.get("bmax_ref") is not None:
+    if params.get("bmax_ref", None) is not None:
         cargs.extend([
             "-bmax_ref",
-            str(params.get("bmax_ref"))
+            str(params.get("bmax_ref", None))
         ])
     return cargs
 
@@ -288,9 +280,9 @@ def v_1d_dw_grad_o_mat___outputs(
     """
     ret = V1dDwGradOMatOutputs(
         root=execution.output_file("."),
-        outfile=execution.output_file(params.get("out_row_vec")),
-        out_row_bval_file=execution.output_file(params.get("out_row_bval_sep")) if (params.get("out_row_bval_sep") is not None) else None,
-        out_col_bval_file=execution.output_file(params.get("out_row_bval_sep")) if (params.get("out_row_bval_sep") is not None) else None,
+        outfile=execution.output_file(params.get("out_row_vec", None)),
+        out_row_bval_file=execution.output_file(params.get("out_row_bval_sep", None)) if (params.get("out_row_bval_sep") is not None) else None,
+        out_col_bval_file=execution.output_file(params.get("out_row_bval_sep", None)) if (params.get("out_row_bval_sep") is not None) else None,
     )
     return ret
 
@@ -426,7 +418,6 @@ def v_1d_dw_grad_o_mat__(
 
 __all__ = [
     "V1dDwGradOMatOutputs",
-    "V1dDwGradOMatParameters",
     "V_1D_DW_GRAD_O_MAT___METADATA",
     "v_1d_dw_grad_o_mat__",
     "v_1d_dw_grad_o_mat___execute",

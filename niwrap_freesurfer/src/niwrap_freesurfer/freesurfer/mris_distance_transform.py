@@ -14,7 +14,18 @@ MRIS_DISTANCE_TRANSFORM_METADATA = Metadata(
 
 
 MrisDistanceTransformParameters = typing.TypedDict('MrisDistanceTransformParameters', {
-    "@type": typing.Literal["freesurfer.mris_distance_transform"],
+    "@type": typing.NotRequired[typing.Literal["freesurfer/mris_distance_transform"]],
+    "surface": InputPathType,
+    "label": InputPathType,
+    "mode": typing.Literal["signed", "unsigned", "outside"],
+    "output_file": str,
+    "anterior": typing.NotRequired[float | None],
+    "posterior": typing.NotRequired[float | None],
+    "divide": typing.NotRequired[float | None],
+    "olabel": bool,
+})
+MrisDistanceTransformParametersTagged = typing.TypedDict('MrisDistanceTransformParametersTagged', {
+    "@type": typing.Literal["freesurfer/mris_distance_transform"],
     "surface": InputPathType,
     "label": InputPathType,
     "mode": typing.Literal["signed", "unsigned", "outside"],
@@ -26,41 +37,9 @@ MrisDistanceTransformParameters = typing.TypedDict('MrisDistanceTransformParamet
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "freesurfer.mris_distance_transform": mris_distance_transform_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "freesurfer.mris_distance_transform": mris_distance_transform_outputs,
-    }.get(t)
-
-
 class MrisDistanceTransformOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `mris_distance_transform(...)`.
+    Output object returned when calling `MrisDistanceTransformParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -77,7 +56,7 @@ def mris_distance_transform_params(
     posterior: float | None = None,
     divide: float | None = None,
     olabel: bool = False,
-) -> MrisDistanceTransformParameters:
+) -> MrisDistanceTransformParametersTagged:
     """
     Build parameters.
     
@@ -95,7 +74,7 @@ def mris_distance_transform_params(
         Parameter dictionary
     """
     params = {
-        "@type": "freesurfer.mris_distance_transform",
+        "@type": "freesurfer/mris_distance_transform",
         "surface": surface,
         "label": label,
         "mode": mode,
@@ -126,26 +105,26 @@ def mris_distance_transform_cargs(
     """
     cargs = []
     cargs.append("mris_distance_transform")
-    cargs.append(execution.input_file(params.get("surface")))
-    cargs.append(execution.input_file(params.get("label")))
-    cargs.append(params.get("mode"))
-    cargs.append(params.get("output_file"))
-    if params.get("anterior") is not None:
+    cargs.append(execution.input_file(params.get("surface", None)))
+    cargs.append(execution.input_file(params.get("label", None)))
+    cargs.append(params.get("mode", None))
+    cargs.append(params.get("output_file", None))
+    if params.get("anterior", None) is not None:
         cargs.extend([
             "-anterior",
-            str(params.get("anterior"))
+            str(params.get("anterior", None))
         ])
-    if params.get("posterior") is not None:
+    if params.get("posterior", None) is not None:
         cargs.extend([
             "-posterior",
-            str(params.get("posterior"))
+            str(params.get("posterior", None))
         ])
-    if params.get("divide") is not None:
+    if params.get("divide", None) is not None:
         cargs.extend([
             "-divide",
-            str(params.get("divide"))
+            str(params.get("divide", None))
         ])
-    if params.get("olabel"):
+    if params.get("olabel", False):
         cargs.append("-olabel")
     return cargs
 
@@ -165,7 +144,7 @@ def mris_distance_transform_outputs(
     """
     ret = MrisDistanceTransformOutputs(
         root=execution.output_file("."),
-        result_file=execution.output_file(params.get("output_file")),
+        result_file=execution.output_file(params.get("output_file", None)),
     )
     return ret
 
@@ -248,7 +227,6 @@ def mris_distance_transform(
 __all__ = [
     "MRIS_DISTANCE_TRANSFORM_METADATA",
     "MrisDistanceTransformOutputs",
-    "MrisDistanceTransformParameters",
     "mris_distance_transform",
     "mris_distance_transform_execute",
     "mris_distance_transform_params",

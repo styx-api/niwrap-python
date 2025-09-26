@@ -14,7 +14,14 @@ CLUST_EXP_HIST_TABLE_PY_METADATA = Metadata(
 
 
 ClustExpHistTablePyParameters = typing.TypedDict('ClustExpHistTablePyParameters', {
-    "@type": typing.Literal["afni.ClustExp_HistTable.py"],
+    "@type": typing.NotRequired[typing.Literal["afni/ClustExp_HistTable.py"]],
+    "stat_dset": InputPathType,
+    "prefix": typing.NotRequired[str | None],
+    "session": typing.NotRequired[str | None],
+    "overwrite": bool,
+})
+ClustExpHistTablePyParametersTagged = typing.TypedDict('ClustExpHistTablePyParametersTagged', {
+    "@type": typing.Literal["afni/ClustExp_HistTable.py"],
     "stat_dset": InputPathType,
     "prefix": typing.NotRequired[str | None],
     "session": typing.NotRequired[str | None],
@@ -22,41 +29,9 @@ ClustExpHistTablePyParameters = typing.TypedDict('ClustExpHistTablePyParameters'
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "afni.ClustExp_HistTable.py": clust_exp_hist_table_py_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "afni.ClustExp_HistTable.py": clust_exp_hist_table_py_outputs,
-    }.get(t)
-
-
 class ClustExpHistTablePyOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `clust_exp_hist_table_py(...)`.
+    Output object returned when calling `ClustExpHistTablePyParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -69,7 +44,7 @@ def clust_exp_hist_table_py_params(
     prefix: str | None = None,
     session: str | None = None,
     overwrite: bool = False,
-) -> ClustExpHistTablePyParameters:
+) -> ClustExpHistTablePyParametersTagged:
     """
     Build parameters.
     
@@ -83,7 +58,7 @@ def clust_exp_hist_table_py_params(
         Parameter dictionary
     """
     params = {
-        "@type": "afni.ClustExp_HistTable.py",
+        "@type": "afni/ClustExp_HistTable.py",
         "stat_dset": stat_dset,
         "overwrite": overwrite,
     }
@@ -111,19 +86,19 @@ def clust_exp_hist_table_py_cargs(
     cargs.append("ClustExp_HistTable.py")
     cargs.extend([
         "-StatDSET",
-        execution.input_file(params.get("stat_dset"))
+        execution.input_file(params.get("stat_dset", None))
     ])
-    if params.get("prefix") is not None:
+    if params.get("prefix", None) is not None:
         cargs.extend([
             "-prefix",
-            params.get("prefix")
+            params.get("prefix", None)
         ])
-    if params.get("session") is not None:
+    if params.get("session", None) is not None:
         cargs.extend([
             "-session",
-            params.get("session")
+            params.get("session", None)
         ])
-    if params.get("overwrite"):
+    if params.get("overwrite", False):
         cargs.append("-overwrite")
     return cargs
 
@@ -143,7 +118,7 @@ def clust_exp_hist_table_py_outputs(
     """
     ret = ClustExpHistTablePyOutputs(
         root=execution.output_file("."),
-        group_table=execution.output_file(params.get("prefix") + "_GroupTable.csv") if (params.get("prefix") is not None) else None,
+        group_table=execution.output_file(params.get("prefix", None) + "_GroupTable.csv") if (params.get("prefix") is not None) else None,
     )
     return ret
 
@@ -216,7 +191,6 @@ def clust_exp_hist_table_py(
 __all__ = [
     "CLUST_EXP_HIST_TABLE_PY_METADATA",
     "ClustExpHistTablePyOutputs",
-    "ClustExpHistTablePyParameters",
     "clust_exp_hist_table_py",
     "clust_exp_hist_table_py_execute",
     "clust_exp_hist_table_py_params",

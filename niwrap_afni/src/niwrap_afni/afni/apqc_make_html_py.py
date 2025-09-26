@@ -14,45 +14,18 @@ APQC_MAKE_HTML_PY_METADATA = Metadata(
 
 
 ApqcMakeHtmlPyParameters = typing.TypedDict('ApqcMakeHtmlPyParameters', {
-    "@type": typing.Literal["afni.apqc_make_html.py"],
+    "@type": typing.NotRequired[typing.Literal["afni/apqc_make_html.py"]],
+    "qc_dir": str,
+})
+ApqcMakeHtmlPyParametersTagged = typing.TypedDict('ApqcMakeHtmlPyParametersTagged', {
+    "@type": typing.Literal["afni/apqc_make_html.py"],
     "qc_dir": str,
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "afni.apqc_make_html.py": apqc_make_html_py_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-    }.get(t)
-
-
 class ApqcMakeHtmlPyOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `apqc_make_html_py(...)`.
+    Output object returned when calling `ApqcMakeHtmlPyParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -60,7 +33,7 @@ class ApqcMakeHtmlPyOutputs(typing.NamedTuple):
 
 def apqc_make_html_py_params(
     qc_dir: str,
-) -> ApqcMakeHtmlPyParameters:
+) -> ApqcMakeHtmlPyParametersTagged:
     """
     Build parameters.
     
@@ -70,7 +43,7 @@ def apqc_make_html_py_params(
         Parameter dictionary
     """
     params = {
-        "@type": "afni.apqc_make_html.py",
+        "@type": "afni/apqc_make_html.py",
         "qc_dir": qc_dir,
     }
     return params
@@ -93,7 +66,7 @@ def apqc_make_html_py_cargs(
     cargs.append("apqc_make_html.py")
     cargs.extend([
         "-qc_dir",
-        params.get("qc_dir")
+        params.get("qc_dir", None)
     ])
     return cargs
 
@@ -173,7 +146,6 @@ def apqc_make_html_py(
 __all__ = [
     "APQC_MAKE_HTML_PY_METADATA",
     "ApqcMakeHtmlPyOutputs",
-    "ApqcMakeHtmlPyParameters",
     "apqc_make_html_py",
     "apqc_make_html_py_execute",
     "apqc_make_html_py_params",

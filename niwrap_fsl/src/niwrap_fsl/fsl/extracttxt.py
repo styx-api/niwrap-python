@@ -14,7 +14,14 @@ EXTRACTTXT_METADATA = Metadata(
 
 
 ExtracttxtParameters = typing.TypedDict('ExtracttxtParameters', {
-    "@type": typing.Literal["fsl.extracttxt"],
+    "@type": typing.NotRequired[typing.Literal["fsl/extracttxt"]],
+    "search_word": str,
+    "file": InputPathType,
+    "num_trailing_lines": typing.NotRequired[float | None],
+    "relative_start": typing.NotRequired[float | None],
+})
+ExtracttxtParametersTagged = typing.TypedDict('ExtracttxtParametersTagged', {
+    "@type": typing.Literal["fsl/extracttxt"],
     "search_word": str,
     "file": InputPathType,
     "num_trailing_lines": typing.NotRequired[float | None],
@@ -22,41 +29,9 @@ ExtracttxtParameters = typing.TypedDict('ExtracttxtParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "fsl.extracttxt": extracttxt_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "fsl.extracttxt": extracttxt_outputs,
-    }.get(t)
-
-
 class ExtracttxtOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `extracttxt(...)`.
+    Output object returned when calling `ExtracttxtParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -69,7 +44,7 @@ def extracttxt_params(
     file: InputPathType,
     num_trailing_lines: float | None = None,
     relative_start: float | None = None,
-) -> ExtracttxtParameters:
+) -> ExtracttxtParametersTagged:
     """
     Build parameters.
     
@@ -83,7 +58,7 @@ def extracttxt_params(
         Parameter dictionary
     """
     params = {
-        "@type": "fsl.extracttxt",
+        "@type": "fsl/extracttxt",
         "search_word": search_word,
         "file": file,
     }
@@ -109,12 +84,12 @@ def extracttxt_cargs(
     """
     cargs = []
     cargs.append("extracttxt")
-    cargs.append(params.get("search_word"))
-    cargs.append(execution.input_file(params.get("file")))
-    if params.get("num_trailing_lines") is not None:
-        cargs.append(str(params.get("num_trailing_lines")))
-    if params.get("relative_start") is not None:
-        cargs.append(str(params.get("relative_start")))
+    cargs.append(params.get("search_word", None))
+    cargs.append(execution.input_file(params.get("file", None)))
+    if params.get("num_trailing_lines", None) is not None:
+        cargs.append(str(params.get("num_trailing_lines", None)))
+    if params.get("relative_start", None) is not None:
+        cargs.append(str(params.get("relative_start", None)))
     return cargs
 
 
@@ -204,7 +179,6 @@ def extracttxt(
 __all__ = [
     "EXTRACTTXT_METADATA",
     "ExtracttxtOutputs",
-    "ExtracttxtParameters",
     "extracttxt",
     "extracttxt_execute",
     "extracttxt_params",

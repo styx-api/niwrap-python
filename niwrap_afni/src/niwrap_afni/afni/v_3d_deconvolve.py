@@ -14,7 +14,25 @@ V_3D_DECONVOLVE_METADATA = Metadata(
 
 
 V3dDeconvolveParameters = typing.TypedDict('V3dDeconvolveParameters', {
-    "@type": typing.Literal["afni.3dDeconvolve"],
+    "@type": typing.NotRequired[typing.Literal["afni/3dDeconvolve"]],
+    "input_dataset": InputPathType,
+    "mask_dataset": typing.NotRequired[InputPathType | None],
+    "num_stimts": typing.NotRequired[int | None],
+    "stim_file": typing.NotRequired[str | None],
+    "stim_label": typing.NotRequired[str | None],
+    "stim_base": bool,
+    "stim_times": typing.NotRequired[str | None],
+    "iresp": typing.NotRequired[str | None],
+    "fitts": typing.NotRequired[str | None],
+    "fout": bool,
+    "tout": bool,
+    "bucket": typing.NotRequired[str | None],
+    "cbucket": typing.NotRequired[str | None],
+    "x1D": typing.NotRequired[str | None],
+    "jobs": typing.NotRequired[int | None],
+})
+V3dDeconvolveParametersTagged = typing.TypedDict('V3dDeconvolveParametersTagged', {
+    "@type": typing.Literal["afni/3dDeconvolve"],
     "input_dataset": InputPathType,
     "mask_dataset": typing.NotRequired[InputPathType | None],
     "num_stimts": typing.NotRequired[int | None],
@@ -33,41 +51,9 @@ V3dDeconvolveParameters = typing.TypedDict('V3dDeconvolveParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "afni.3dDeconvolve": v_3d_deconvolve_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "afni.3dDeconvolve": v_3d_deconvolve_outputs,
-    }.get(t)
-
-
 class V3dDeconvolveOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `v_3d_deconvolve(...)`.
+    Output object returned when calling `V3dDeconvolveParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -99,7 +85,7 @@ def v_3d_deconvolve_params(
     cbucket: str | None = None,
     x1_d: str | None = None,
     jobs: int | None = None,
-) -> V3dDeconvolveParameters:
+) -> V3dDeconvolveParametersTagged:
     """
     Build parameters.
     
@@ -127,7 +113,7 @@ def v_3d_deconvolve_params(
         Parameter dictionary
     """
     params = {
-        "@type": "afni.3dDeconvolve",
+        "@type": "afni/3dDeconvolve",
         "input_dataset": input_dataset,
         "stim_base": stim_base,
         "fout": fout,
@@ -175,68 +161,68 @@ def v_3d_deconvolve_cargs(
     cargs.append("3dDeconvolve")
     cargs.extend([
         "-input",
-        execution.input_file(params.get("input_dataset"))
+        execution.input_file(params.get("input_dataset", None))
     ])
-    if params.get("mask_dataset") is not None:
+    if params.get("mask_dataset", None) is not None:
         cargs.extend([
             "-mask",
-            execution.input_file(params.get("mask_dataset"))
+            execution.input_file(params.get("mask_dataset", None))
         ])
-    if params.get("num_stimts") is not None:
+    if params.get("num_stimts", None) is not None:
         cargs.extend([
             "-num_stimts",
-            str(params.get("num_stimts"))
+            str(params.get("num_stimts", None))
         ])
-    if params.get("stim_file") is not None:
+    if params.get("stim_file", None) is not None:
         cargs.extend([
             "-stim_file",
-            params.get("stim_file")
+            params.get("stim_file", None)
         ])
-    if params.get("stim_label") is not None:
+    if params.get("stim_label", None) is not None:
         cargs.extend([
             "-stim_label",
-            params.get("stim_label")
+            params.get("stim_label", None)
         ])
-    if params.get("stim_base"):
+    if params.get("stim_base", False):
         cargs.append("-stim_base")
-    if params.get("stim_times") is not None:
+    if params.get("stim_times", None) is not None:
         cargs.extend([
             "-stim_times",
-            params.get("stim_times")
+            params.get("stim_times", None)
         ])
-    if params.get("iresp") is not None:
+    if params.get("iresp", None) is not None:
         cargs.extend([
             "-iresp",
-            params.get("iresp")
+            params.get("iresp", None)
         ])
-    if params.get("fitts") is not None:
+    if params.get("fitts", None) is not None:
         cargs.extend([
             "-fitts",
-            params.get("fitts")
+            params.get("fitts", None)
         ])
-    if params.get("fout"):
+    if params.get("fout", False):
         cargs.append("-fout")
-    if params.get("tout"):
+    if params.get("tout", False):
         cargs.append("-tout")
-    if params.get("bucket") is not None:
+    if params.get("bucket", None) is not None:
         cargs.extend([
             "-bucket",
-            params.get("bucket")
+            params.get("bucket", None)
         ])
-    if params.get("cbucket") is not None:
+    if params.get("cbucket", None) is not None:
         cargs.extend([
             "-cbucket",
-            params.get("cbucket")
+            params.get("cbucket", None)
         ])
-    if params.get("x1D") is not None:
+    if params.get("x1D", None) is not None:
         cargs.extend([
             "-x1D",
-            params.get("x1D")
+            params.get("x1D", None)
         ])
-    if params.get("jobs") is not None:
+    if params.get("jobs", None) is not None:
         cargs.extend([
             "-jobs",
-            str(params.get("jobs"))
+            str(params.get("jobs", None))
         ])
     return cargs
 
@@ -256,11 +242,11 @@ def v_3d_deconvolve_outputs(
     """
     ret = V3dDeconvolveOutputs(
         root=execution.output_file("."),
-        bucket_output=execution.output_file(params.get("bucket") + ".HEAD") if (params.get("bucket") is not None) else None,
-        cbucket_output=execution.output_file(params.get("cbucket") + ".HEAD") if (params.get("cbucket") is not None) else None,
-        iresp_output=execution.output_file(params.get("iresp") + ".HEAD") if (params.get("iresp") is not None) else None,
-        fitts_output=execution.output_file(params.get("fitts") + ".HEAD") if (params.get("fitts") is not None) else None,
-        x1d_file=execution.output_file(params.get("x1D") + ".1D") if (params.get("x1D") is not None) else None,
+        bucket_output=execution.output_file(params.get("bucket", None) + ".HEAD") if (params.get("bucket") is not None) else None,
+        cbucket_output=execution.output_file(params.get("cbucket", None) + ".HEAD") if (params.get("cbucket") is not None) else None,
+        iresp_output=execution.output_file(params.get("iresp", None) + ".HEAD") if (params.get("iresp") is not None) else None,
+        fitts_output=execution.output_file(params.get("fitts", None) + ".HEAD") if (params.get("fitts") is not None) else None,
+        x1d_file=execution.output_file(params.get("x1D", None) + ".1D") if (params.get("x1D") is not None) else None,
     )
     return ret
 
@@ -368,7 +354,6 @@ def v_3d_deconvolve(
 
 __all__ = [
     "V3dDeconvolveOutputs",
-    "V3dDeconvolveParameters",
     "V_3D_DECONVOLVE_METADATA",
     "v_3d_deconvolve",
     "v_3d_deconvolve_execute",

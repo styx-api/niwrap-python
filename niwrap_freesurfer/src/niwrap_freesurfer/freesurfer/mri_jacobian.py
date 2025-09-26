@@ -14,7 +14,24 @@ MRI_JACOBIAN_METADATA = Metadata(
 
 
 MriJacobianParameters = typing.TypedDict('MriJacobianParameters', {
-    "@type": typing.Literal["freesurfer.mri_jacobian"],
+    "@type": typing.NotRequired[typing.Literal["freesurfer/mri_jacobian"]],
+    "morph_file": InputPathType,
+    "template_vol": InputPathType,
+    "output_vol": str,
+    "atlas_coord": bool,
+    "write_area_vols": bool,
+    "log_jacobian": bool,
+    "smooth_sigma": typing.NotRequired[float | None],
+    "zero_mean_log": bool,
+    "tm3d": bool,
+    "help1": bool,
+    "help2": bool,
+    "dt": bool,
+    "debug_voxel": typing.NotRequired[list[float] | None],
+    "remove": bool,
+})
+MriJacobianParametersTagged = typing.TypedDict('MriJacobianParametersTagged', {
+    "@type": typing.Literal["freesurfer/mri_jacobian"],
     "morph_file": InputPathType,
     "template_vol": InputPathType,
     "output_vol": str,
@@ -32,41 +49,9 @@ MriJacobianParameters = typing.TypedDict('MriJacobianParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "freesurfer.mri_jacobian": mri_jacobian_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "freesurfer.mri_jacobian": mri_jacobian_outputs,
-    }.get(t)
-
-
 class MriJacobianOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `mri_jacobian(...)`.
+    Output object returned when calling `MriJacobianParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -89,7 +74,7 @@ def mri_jacobian_params(
     dt: bool = False,
     debug_voxel: list[float] | None = None,
     remove: bool = False,
-) -> MriJacobianParameters:
+) -> MriJacobianParametersTagged:
     """
     Build parameters.
     
@@ -112,7 +97,7 @@ def mri_jacobian_params(
         Parameter dictionary
     """
     params = {
-        "@type": "freesurfer.mri_jacobian",
+        "@type": "freesurfer/mri_jacobian",
         "morph_file": morph_file,
         "template_vol": template_vol,
         "output_vol": output_vol,
@@ -148,36 +133,36 @@ def mri_jacobian_cargs(
     """
     cargs = []
     cargs.append("mri_jacobian")
-    cargs.append(execution.input_file(params.get("morph_file")))
-    cargs.append(execution.input_file(params.get("template_vol")))
-    cargs.append(params.get("output_vol"))
-    if params.get("atlas_coord"):
+    cargs.append(execution.input_file(params.get("morph_file", None)))
+    cargs.append(execution.input_file(params.get("template_vol", None)))
+    cargs.append(params.get("output_vol", None))
+    if params.get("atlas_coord", False):
         cargs.append("-a")
-    if params.get("write_area_vols"):
+    if params.get("write_area_vols", False):
         cargs.append("-w")
-    if params.get("log_jacobian"):
+    if params.get("log_jacobian", False):
         cargs.append("-l")
-    if params.get("smooth_sigma") is not None:
+    if params.get("smooth_sigma", None) is not None:
         cargs.extend([
             "-s",
-            str(params.get("smooth_sigma"))
+            str(params.get("smooth_sigma", None))
         ])
-    if params.get("zero_mean_log"):
+    if params.get("zero_mean_log", False):
         cargs.append("-z")
-    if params.get("tm3d"):
+    if params.get("tm3d", False):
         cargs.append("-tm3d")
-    if params.get("help1"):
+    if params.get("help1", False):
         cargs.append("-?")
-    if params.get("help2"):
+    if params.get("help2", False):
         cargs.append("-u")
-    if params.get("dt"):
+    if params.get("dt", False):
         cargs.append("-dt")
-    if params.get("debug_voxel") is not None:
+    if params.get("debug_voxel", None) is not None:
         cargs.extend([
             "-debug_voxel",
-            *map(str, params.get("debug_voxel"))
+            *map(str, params.get("debug_voxel", None))
         ])
-    if params.get("remove"):
+    if params.get("remove", False):
         cargs.append("-remove")
     return cargs
 
@@ -197,7 +182,7 @@ def mri_jacobian_outputs(
     """
     ret = MriJacobianOutputs(
         root=execution.output_file("."),
-        result_vol=execution.output_file(params.get("output_vol")),
+        result_vol=execution.output_file(params.get("output_vol", None)),
     )
     return ret
 
@@ -297,7 +282,6 @@ def mri_jacobian(
 __all__ = [
     "MRI_JACOBIAN_METADATA",
     "MriJacobianOutputs",
-    "MriJacobianParameters",
     "mri_jacobian",
     "mri_jacobian_execute",
     "mri_jacobian_params",

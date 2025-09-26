@@ -14,7 +14,16 @@ UN_WARP_EPI_PY_METADATA = Metadata(
 
 
 UnWarpEpiPyParameters = typing.TypedDict('UnWarpEpiPyParameters', {
-    "@type": typing.Literal["afni.unWarpEPI.py"],
+    "@type": typing.NotRequired[typing.Literal["afni/unWarpEPI.py"]],
+    "forward": InputPathType,
+    "reverse": InputPathType,
+    "anat4warp": InputPathType,
+    "data": str,
+    "subjID": str,
+    "giant_move": bool,
+})
+UnWarpEpiPyParametersTagged = typing.TypedDict('UnWarpEpiPyParametersTagged', {
+    "@type": typing.Literal["afni/unWarpEPI.py"],
     "forward": InputPathType,
     "reverse": InputPathType,
     "anat4warp": InputPathType,
@@ -24,40 +33,9 @@ UnWarpEpiPyParameters = typing.TypedDict('UnWarpEpiPyParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "afni.unWarpEPI.py": un_warp_epi_py_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-    }.get(t)
-
-
 class UnWarpEpiPyOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `un_warp_epi_py(...)`.
+    Output object returned when calling `UnWarpEpiPyParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -70,7 +48,7 @@ def un_warp_epi_py_params(
     data: str,
     subj_id: str,
     giant_move: bool = False,
-) -> UnWarpEpiPyParameters:
+) -> UnWarpEpiPyParametersTagged:
     """
     Build parameters.
     
@@ -87,7 +65,7 @@ def un_warp_epi_py_params(
         Parameter dictionary
     """
     params = {
-        "@type": "afni.unWarpEPI.py",
+        "@type": "afni/unWarpEPI.py",
         "forward": forward,
         "reverse": reverse,
         "anat4warp": anat4warp,
@@ -115,25 +93,25 @@ def un_warp_epi_py_cargs(
     cargs.append("unWarpEPI.py")
     cargs.extend([
         "-f",
-        execution.input_file(params.get("forward"))
+        execution.input_file(params.get("forward", None))
     ])
     cargs.extend([
         "-r",
-        execution.input_file(params.get("reverse"))
+        execution.input_file(params.get("reverse", None))
     ])
     cargs.extend([
         "-a",
-        execution.input_file(params.get("anat4warp"))
+        execution.input_file(params.get("anat4warp", None))
     ])
     cargs.extend([
         "-d",
-        params.get("data")
+        params.get("data", None)
     ])
     cargs.extend([
         "-s",
-        params.get("subjID")
+        params.get("subjID", None)
     ])
-    if params.get("giant_move"):
+    if params.get("giant_move", False):
         cargs.append("-g")
     return cargs
 
@@ -232,7 +210,6 @@ def un_warp_epi_py(
 __all__ = [
     "UN_WARP_EPI_PY_METADATA",
     "UnWarpEpiPyOutputs",
-    "UnWarpEpiPyParameters",
     "un_warp_epi_py",
     "un_warp_epi_py_execute",
     "un_warp_epi_py_params",

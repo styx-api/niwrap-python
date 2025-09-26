@@ -14,7 +14,21 @@ MRI_SEGMENT_HYPOTHALAMIC_SUBUNITS_METADATA = Metadata(
 
 
 MriSegmentHypothalamicSubunitsParameters = typing.TypedDict('MriSegmentHypothalamicSubunitsParameters', {
-    "@type": typing.Literal["freesurfer.mri_segment_hypothalamic_subunits"],
+    "@type": typing.NotRequired[typing.Literal["freesurfer/mri_segment_hypothalamic_subunits"]],
+    "subjects": typing.NotRequired[list[str] | None],
+    "subjects_dir": typing.NotRequired[str | None],
+    "write_posteriors": bool,
+    "image_input": typing.NotRequired[str | None],
+    "output": typing.NotRequired[str | None],
+    "posteriors": typing.NotRequired[str | None],
+    "resample": typing.NotRequired[str | None],
+    "volume_output": typing.NotRequired[str | None],
+    "crop_size": typing.NotRequired[list[float] | None],
+    "threads": typing.NotRequired[float | None],
+    "cpu": bool,
+})
+MriSegmentHypothalamicSubunitsParametersTagged = typing.TypedDict('MriSegmentHypothalamicSubunitsParametersTagged', {
+    "@type": typing.Literal["freesurfer/mri_segment_hypothalamic_subunits"],
     "subjects": typing.NotRequired[list[str] | None],
     "subjects_dir": typing.NotRequired[str | None],
     "write_posteriors": bool,
@@ -29,41 +43,9 @@ MriSegmentHypothalamicSubunitsParameters = typing.TypedDict('MriSegmentHypothala
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "freesurfer.mri_segment_hypothalamic_subunits": mri_segment_hypothalamic_subunits_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "freesurfer.mri_segment_hypothalamic_subunits": mri_segment_hypothalamic_subunits_outputs,
-    }.get(t)
-
-
 class MriSegmentHypothalamicSubunitsOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `mri_segment_hypothalamic_subunits(...)`.
+    Output object returned when calling `MriSegmentHypothalamicSubunitsParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -89,7 +71,7 @@ def mri_segment_hypothalamic_subunits_params(
     crop_size: list[float] | None = None,
     threads: float | None = None,
     cpu: bool = False,
-) -> MriSegmentHypothalamicSubunitsParameters:
+) -> MriSegmentHypothalamicSubunitsParametersTagged:
     """
     Build parameters.
     
@@ -119,7 +101,7 @@ def mri_segment_hypothalamic_subunits_params(
         Parameter dictionary
     """
     params = {
-        "@type": "freesurfer.mri_segment_hypothalamic_subunits",
+        "@type": "freesurfer/mri_segment_hypothalamic_subunits",
         "write_posteriors": write_posteriors,
         "cpu": cpu,
     }
@@ -159,54 +141,54 @@ def mri_segment_hypothalamic_subunits_cargs(
     """
     cargs = []
     cargs.append("mri_segment_hypothalamic_subunits")
-    if params.get("subjects") is not None:
+    if params.get("subjects", None) is not None:
         cargs.extend([
             "--s",
-            *params.get("subjects")
+            *params.get("subjects", None)
         ])
-    if params.get("subjects_dir") is not None:
+    if params.get("subjects_dir", None) is not None:
         cargs.extend([
             "--sd",
-            params.get("subjects_dir")
+            params.get("subjects_dir", None)
         ])
-    if params.get("write_posteriors"):
+    if params.get("write_posteriors", False):
         cargs.append("--write_posteriors")
-    if params.get("image_input") is not None:
+    if params.get("image_input", None) is not None:
         cargs.extend([
             "--i",
-            params.get("image_input")
+            params.get("image_input", None)
         ])
-    if params.get("output") is not None:
+    if params.get("output", None) is not None:
         cargs.extend([
             "--o",
-            params.get("output")
+            params.get("output", None)
         ])
-    if params.get("posteriors") is not None:
+    if params.get("posteriors", None) is not None:
         cargs.extend([
             "--post",
-            params.get("posteriors")
+            params.get("posteriors", None)
         ])
-    if params.get("resample") is not None:
+    if params.get("resample", None) is not None:
         cargs.extend([
             "--resample",
-            params.get("resample")
+            params.get("resample", None)
         ])
-    if params.get("volume_output") is not None:
+    if params.get("volume_output", None) is not None:
         cargs.extend([
             "--vol",
-            params.get("volume_output")
+            params.get("volume_output", None)
         ])
-    if params.get("crop_size") is not None:
+    if params.get("crop_size", None) is not None:
         cargs.extend([
             "--crop",
-            *map(str, params.get("crop_size"))
+            *map(str, params.get("crop_size", None))
         ])
-    if params.get("threads") is not None:
+    if params.get("threads", None) is not None:
         cargs.extend([
             "--threads",
-            str(params.get("threads"))
+            str(params.get("threads", None))
         ])
-    if params.get("cpu"):
+    if params.get("cpu", False):
         cargs.append("--cpu")
     return cargs
 
@@ -226,10 +208,10 @@ def mri_segment_hypothalamic_subunits_outputs(
     """
     ret = MriSegmentHypothalamicSubunitsOutputs(
         root=execution.output_file("."),
-        segmentation_output_files=execution.output_file(params.get("output")) if (params.get("output") is not None) else None,
-        posteriors_output=execution.output_file(params.get("posteriors")) if (params.get("posteriors") is not None) else None,
-        resampled_output=execution.output_file(params.get("resample")) if (params.get("resample") is not None) else None,
-        volume_output_csv=execution.output_file(params.get("volume_output")) if (params.get("volume_output") is not None) else None,
+        segmentation_output_files=execution.output_file(params.get("output", None)) if (params.get("output") is not None) else None,
+        posteriors_output=execution.output_file(params.get("posteriors", None)) if (params.get("posteriors") is not None) else None,
+        resampled_output=execution.output_file(params.get("resample", None)) if (params.get("resample") is not None) else None,
+        volume_output_csv=execution.output_file(params.get("volume_output", None)) if (params.get("volume_output") is not None) else None,
     )
     return ret
 
@@ -334,7 +316,6 @@ def mri_segment_hypothalamic_subunits(
 __all__ = [
     "MRI_SEGMENT_HYPOTHALAMIC_SUBUNITS_METADATA",
     "MriSegmentHypothalamicSubunitsOutputs",
-    "MriSegmentHypothalamicSubunitsParameters",
     "mri_segment_hypothalamic_subunits",
     "mri_segment_hypothalamic_subunits_execute",
     "mri_segment_hypothalamic_subunits_params",

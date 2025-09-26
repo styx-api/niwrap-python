@@ -14,7 +14,46 @@ AVW2FSL_METADATA = Metadata(
 
 
 Avw2fslParameters = typing.TypedDict('Avw2fslParameters', {
-    "@type": typing.Literal["fsl.avw2fsl"],
+    "@type": typing.NotRequired[typing.Literal["fsl/avw2fsl"]],
+    "source": list[str],
+    "destination": str,
+    "archive": bool,
+    "attributes_only": bool,
+    "backup": typing.NotRequired[str | None],
+    "backup_noarg": bool,
+    "copy_contents": bool,
+    "no_dereference_preserve_links": bool,
+    "force": bool,
+    "interactive": bool,
+    "follow_symlinks_cmdline": bool,
+    "hard_link": bool,
+    "dereference": bool,
+    "no_clobber": bool,
+    "no_dereference": bool,
+    "preserve": bool,
+    "preserve_attr": typing.NotRequired[str | None],
+    "preserve_context": bool,
+    "no_preserve": typing.NotRequired[str | None],
+    "parents": bool,
+    "recursive": bool,
+    "reflink": typing.NotRequired[str | None],
+    "remove_destination": bool,
+    "sparse": typing.NotRequired[str | None],
+    "strip_trailing_slashes": bool,
+    "symbolic_link": bool,
+    "suffix": typing.NotRequired[str | None],
+    "target_directory": typing.NotRequired[str | None],
+    "no_target_directory": bool,
+    "update": bool,
+    "verbose": bool,
+    "one_file_system": bool,
+    "selinux_context": bool,
+    "context": typing.NotRequired[str | None],
+    "help": bool,
+    "version": bool,
+})
+Avw2fslParametersTagged = typing.TypedDict('Avw2fslParametersTagged', {
+    "@type": typing.Literal["fsl/avw2fsl"],
     "source": list[str],
     "destination": str,
     "archive": bool,
@@ -54,41 +93,9 @@ Avw2fslParameters = typing.TypedDict('Avw2fslParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "fsl.avw2fsl": avw2fsl_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "fsl.avw2fsl": avw2fsl_outputs,
-    }.get(t)
-
-
 class Avw2fslOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `avw2fsl(...)`.
+    Output object returned when calling `Avw2fslParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -133,7 +140,7 @@ def avw2fsl_params(
     context: str | None = None,
     help_: bool = False,
     version: bool = False,
-) -> Avw2fslParameters:
+) -> Avw2fslParametersTagged:
     """
     Build parameters.
     
@@ -187,7 +194,7 @@ def avw2fsl_params(
         Parameter dictionary
     """
     params = {
-        "@type": "fsl.avw2fsl",
+        "@type": "fsl/avw2fsl",
         "source": source,
         "destination": destination,
         "archive": archive,
@@ -251,75 +258,75 @@ def avw2fsl_cargs(
     """
     cargs = []
     cargs.append("avw2fsl")
-    cargs.extend(params.get("source"))
-    cargs.append(params.get("destination"))
-    if params.get("archive"):
+    cargs.extend(params.get("source", None))
+    cargs.append(params.get("destination", None))
+    if params.get("archive", False):
         cargs.append("-a")
-    if params.get("attributes_only"):
+    if params.get("attributes_only", False):
         cargs.append("--attributes-only")
-    if params.get("backup") is not None:
-        cargs.append("--backup=" + params.get("backup"))
-    if params.get("backup_noarg"):
+    if params.get("backup", None) is not None:
+        cargs.append("--backup=" + params.get("backup", None))
+    if params.get("backup_noarg", False):
         cargs.append("-b")
-    if params.get("copy_contents"):
+    if params.get("copy_contents", False):
         cargs.append("--copy-contents")
-    if params.get("no_dereference_preserve_links"):
+    if params.get("no_dereference_preserve_links", False):
         cargs.append("-d")
-    if params.get("force"):
+    if params.get("force", False):
         cargs.append("-f")
-    if params.get("interactive"):
+    if params.get("interactive", False):
         cargs.append("-i")
-    if params.get("follow_symlinks_cmdline"):
+    if params.get("follow_symlinks_cmdline", False):
         cargs.append("-H")
-    if params.get("hard_link"):
+    if params.get("hard_link", False):
         cargs.append("-l")
-    if params.get("dereference"):
+    if params.get("dereference", False):
         cargs.append("-L")
-    if params.get("no_clobber"):
+    if params.get("no_clobber", False):
         cargs.append("-n")
-    if params.get("no_dereference"):
+    if params.get("no_dereference", False):
         cargs.append("-P")
-    if params.get("preserve"):
+    if params.get("preserve", False):
         cargs.append("-p")
-    if params.get("preserve_attr") is not None:
-        cargs.append("--preserve=" + params.get("preserve_attr"))
-    if params.get("preserve_context"):
+    if params.get("preserve_attr", None) is not None:
+        cargs.append("--preserve=" + params.get("preserve_attr", None))
+    if params.get("preserve_context", False):
         cargs.append("-c")
-    if params.get("no_preserve") is not None:
-        cargs.append("--no-preserve=" + params.get("no_preserve"))
-    if params.get("parents"):
+    if params.get("no_preserve", None) is not None:
+        cargs.append("--no-preserve=" + params.get("no_preserve", None))
+    if params.get("parents", False):
         cargs.append("--parents")
-    if params.get("recursive"):
+    if params.get("recursive", False):
         cargs.append("-R")
-    if params.get("reflink") is not None:
-        cargs.append("--reflink=" + params.get("reflink"))
-    if params.get("remove_destination"):
+    if params.get("reflink", None) is not None:
+        cargs.append("--reflink=" + params.get("reflink", None))
+    if params.get("remove_destination", False):
         cargs.append("--remove-destination")
-    if params.get("sparse") is not None:
-        cargs.append("--sparse=" + params.get("sparse"))
-    if params.get("strip_trailing_slashes"):
+    if params.get("sparse", None) is not None:
+        cargs.append("--sparse=" + params.get("sparse", None))
+    if params.get("strip_trailing_slashes", False):
         cargs.append("--strip-trailing-slashes")
-    if params.get("symbolic_link"):
+    if params.get("symbolic_link", False):
         cargs.append("-s")
-    if params.get("suffix") is not None:
-        cargs.append("-S=" + params.get("suffix"))
-    if params.get("target_directory") is not None:
-        cargs.append("-t=" + params.get("target_directory"))
-    if params.get("no_target_directory"):
+    if params.get("suffix", None) is not None:
+        cargs.append("-S=" + params.get("suffix", None))
+    if params.get("target_directory", None) is not None:
+        cargs.append("-t=" + params.get("target_directory", None))
+    if params.get("no_target_directory", False):
         cargs.append("-T")
-    if params.get("update"):
+    if params.get("update", False):
         cargs.append("-u")
-    if params.get("verbose"):
+    if params.get("verbose", False):
         cargs.append("-v")
-    if params.get("one_file_system"):
+    if params.get("one_file_system", False):
         cargs.append("-x")
-    if params.get("selinux_context"):
+    if params.get("selinux_context", False):
         cargs.append("-Z")
-    if params.get("context") is not None:
-        cargs.append("--context=" + params.get("context"))
-    if params.get("help"):
+    if params.get("context", None) is not None:
+        cargs.append("--context=" + params.get("context", None))
+    if params.get("help", False):
         cargs.append("--help")
-    if params.get("version"):
+    if params.get("version", False):
         cargs.append("--version")
     return cargs
 
@@ -339,7 +346,7 @@ def avw2fsl_outputs(
     """
     ret = Avw2fslOutputs(
         root=execution.output_file("."),
-        output_dest=execution.output_file(params.get("destination")),
+        output_dest=execution.output_file(params.get("destination", None)),
     )
     return ret
 
@@ -514,7 +521,6 @@ def avw2fsl(
 __all__ = [
     "AVW2FSL_METADATA",
     "Avw2fslOutputs",
-    "Avw2fslParameters",
     "avw2fsl",
     "avw2fsl_execute",
     "avw2fsl_params",

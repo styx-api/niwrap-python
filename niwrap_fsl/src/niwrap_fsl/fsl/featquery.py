@@ -14,7 +14,24 @@ FEATQUERY_METADATA = Metadata(
 
 
 FeatqueryParameters = typing.TypedDict('FeatqueryParameters', {
-    "@type": typing.Literal["fsl.featquery"],
+    "@type": typing.NotRequired[typing.Literal["fsl/featquery"]],
+    "n_featdirs": float,
+    "featdirs": list[str],
+    "n_stats": float,
+    "stats": list[str],
+    "output_rootname": str,
+    "atlas_flag": typing.NotRequired[str | None],
+    "percent_convert_flag": bool,
+    "thresh_flag": bool,
+    "interp_thresh": typing.NotRequired[float | None],
+    "timeseries_flag": bool,
+    "weight_flag": bool,
+    "browser_flag": bool,
+    "mask_file": InputPathType,
+    "coords": typing.NotRequired[list[float] | None],
+})
+FeatqueryParametersTagged = typing.TypedDict('FeatqueryParametersTagged', {
+    "@type": typing.Literal["fsl/featquery"],
     "n_featdirs": float,
     "featdirs": list[str],
     "n_stats": float,
@@ -32,41 +49,9 @@ FeatqueryParameters = typing.TypedDict('FeatqueryParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "fsl.featquery": featquery_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "fsl.featquery": featquery_outputs,
-    }.get(t)
-
-
 class FeatqueryOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `featquery(...)`.
+    Output object returned when calling `FeatqueryParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -89,7 +74,7 @@ def featquery_params(
     weight_flag: bool = False,
     browser_flag: bool = False,
     coords: list[float] | None = None,
-) -> FeatqueryParameters:
+) -> FeatqueryParametersTagged:
     """
     Build parameters.
     
@@ -114,7 +99,7 @@ def featquery_params(
         Parameter dictionary
     """
     params = {
-        "@type": "fsl.featquery",
+        "@type": "fsl/featquery",
         "n_featdirs": n_featdirs,
         "featdirs": featdirs,
         "n_stats": n_stats,
@@ -151,36 +136,36 @@ def featquery_cargs(
     """
     cargs = []
     cargs.append("featquery")
-    cargs.append(str(params.get("n_featdirs")))
-    cargs.extend(params.get("featdirs"))
-    cargs.append(str(params.get("n_stats")))
-    cargs.extend(params.get("stats"))
-    cargs.append(params.get("output_rootname"))
-    if params.get("atlas_flag") is not None:
+    cargs.append(str(params.get("n_featdirs", None)))
+    cargs.extend(params.get("featdirs", None))
+    cargs.append(str(params.get("n_stats", None)))
+    cargs.extend(params.get("stats", None))
+    cargs.append(params.get("output_rootname", None))
+    if params.get("atlas_flag", None) is not None:
         cargs.extend([
             "-a",
-            params.get("atlas_flag")
+            params.get("atlas_flag", None)
         ])
-    if params.get("percent_convert_flag"):
+    if params.get("percent_convert_flag", False):
         cargs.append("-p")
-    if params.get("thresh_flag"):
+    if params.get("thresh_flag", False):
         cargs.append("-t")
-    if params.get("interp_thresh") is not None:
+    if params.get("interp_thresh", None) is not None:
         cargs.extend([
             "-i",
-            str(params.get("interp_thresh"))
+            str(params.get("interp_thresh", None))
         ])
-    if params.get("timeseries_flag"):
+    if params.get("timeseries_flag", False):
         cargs.append("-s")
-    if params.get("weight_flag"):
+    if params.get("weight_flag", False):
         cargs.append("-w")
-    if params.get("browser_flag"):
+    if params.get("browser_flag", False):
         cargs.append("-b")
-    cargs.append(execution.input_file(params.get("mask_file")))
-    if params.get("coords") is not None:
+    cargs.append(execution.input_file(params.get("mask_file", None)))
+    if params.get("coords", None) is not None:
         cargs.extend([
             "-vox",
-            *map(str, params.get("coords"))
+            *map(str, params.get("coords", None))
         ])
     return cargs
 
@@ -200,7 +185,7 @@ def featquery_outputs(
     """
     ret = FeatqueryOutputs(
         root=execution.output_file("."),
-        query_report=execution.output_file(params.get("output_rootname") + "_queryreport.txt"),
+        query_report=execution.output_file(params.get("output_rootname", None) + "_queryreport.txt"),
     )
     return ret
 
@@ -302,7 +287,6 @@ def featquery(
 __all__ = [
     "FEATQUERY_METADATA",
     "FeatqueryOutputs",
-    "FeatqueryParameters",
     "featquery",
     "featquery_execute",
     "featquery_params",

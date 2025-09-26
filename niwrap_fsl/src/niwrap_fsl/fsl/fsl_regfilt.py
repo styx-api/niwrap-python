@@ -14,7 +14,27 @@ FSL_REGFILT_METADATA = Metadata(
 
 
 FslRegfiltParameters = typing.TypedDict('FslRegfiltParameters', {
-    "@type": typing.Literal["fsl.fsl_regfilt"],
+    "@type": typing.NotRequired[typing.Literal["fsl/fsl_regfilt"]],
+    "infile": InputPathType,
+    "designfile": InputPathType,
+    "outfile": str,
+    "maskfile": typing.NotRequired[InputPathType | None],
+    "filter": typing.NotRequired[str | None],
+    "freq_filter_flag": bool,
+    "freq_ic_flag": bool,
+    "freq_ic_smooth": typing.NotRequired[float | None],
+    "fthresh": typing.NotRequired[float | None],
+    "fthresh2": typing.NotRequired[float | None],
+    "vn_flag": bool,
+    "verbose_flag": bool,
+    "aggressive_flag": bool,
+    "help_flag": bool,
+    "out_data": typing.NotRequired[str | None],
+    "out_mix": typing.NotRequired[str | None],
+    "out_vnscales": typing.NotRequired[str | None],
+})
+FslRegfiltParametersTagged = typing.TypedDict('FslRegfiltParametersTagged', {
+    "@type": typing.Literal["fsl/fsl_regfilt"],
     "infile": InputPathType,
     "designfile": InputPathType,
     "outfile": str,
@@ -35,41 +55,9 @@ FslRegfiltParameters = typing.TypedDict('FslRegfiltParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "fsl.fsl_regfilt": fsl_regfilt_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "fsl.fsl_regfilt": fsl_regfilt_outputs,
-    }.get(t)
-
-
 class FslRegfiltOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `fsl_regfilt(...)`.
+    Output object returned when calling `FslRegfiltParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -101,7 +89,7 @@ def fsl_regfilt_params(
     out_data: str | None = None,
     out_mix: str | None = None,
     out_vnscales: str | None = None,
-) -> FslRegfiltParameters:
+) -> FslRegfiltParametersTagged:
     """
     Build parameters.
     
@@ -133,7 +121,7 @@ def fsl_regfilt_params(
         Parameter dictionary
     """
     params = {
-        "@type": "fsl.fsl_regfilt",
+        "@type": "fsl/fsl_regfilt",
         "infile": infile,
         "designfile": designfile,
         "outfile": outfile,
@@ -180,67 +168,67 @@ def fsl_regfilt_cargs(
     cargs.append("fsl_regfilt")
     cargs.extend([
         "-i",
-        execution.input_file(params.get("infile"))
+        execution.input_file(params.get("infile", None))
     ])
     cargs.extend([
         "-d",
-        execution.input_file(params.get("designfile"))
+        execution.input_file(params.get("designfile", None))
     ])
     cargs.extend([
         "-o",
-        params.get("outfile")
+        params.get("outfile", None)
     ])
-    if params.get("maskfile") is not None:
+    if params.get("maskfile", None) is not None:
         cargs.extend([
             "-m",
-            execution.input_file(params.get("maskfile"))
+            execution.input_file(params.get("maskfile", None))
         ])
-    if params.get("filter") is not None:
+    if params.get("filter", None) is not None:
         cargs.extend([
             "-f",
-            params.get("filter")
+            params.get("filter", None)
         ])
-    if params.get("freq_filter_flag"):
+    if params.get("freq_filter_flag", False):
         cargs.append("-F")
-    if params.get("freq_ic_flag"):
+    if params.get("freq_ic_flag", False):
         cargs.append("--freq_ic")
-    if params.get("freq_ic_smooth") is not None:
+    if params.get("freq_ic_smooth", None) is not None:
         cargs.extend([
             "--freq_ic_smooth",
-            str(params.get("freq_ic_smooth"))
+            str(params.get("freq_ic_smooth", None))
         ])
-    if params.get("fthresh") is not None:
+    if params.get("fthresh", None) is not None:
         cargs.extend([
             "--fthresh",
-            str(params.get("fthresh"))
+            str(params.get("fthresh", None))
         ])
-    if params.get("fthresh2") is not None:
+    if params.get("fthresh2", None) is not None:
         cargs.extend([
             "--fthresh2",
-            str(params.get("fthresh2"))
+            str(params.get("fthresh2", None))
         ])
-    if params.get("vn_flag"):
+    if params.get("vn_flag", False):
         cargs.append("--vn")
-    if params.get("verbose_flag"):
+    if params.get("verbose_flag", False):
         cargs.append("-v")
-    if params.get("aggressive_flag"):
+    if params.get("aggressive_flag", False):
         cargs.append("-a")
-    if params.get("help_flag"):
+    if params.get("help_flag", False):
         cargs.append("-h")
-    if params.get("out_data") is not None:
+    if params.get("out_data", None) is not None:
         cargs.extend([
             "--out_data",
-            params.get("out_data")
+            params.get("out_data", None)
         ])
-    if params.get("out_mix") is not None:
+    if params.get("out_mix", None) is not None:
         cargs.extend([
             "--out_mix",
-            params.get("out_mix")
+            params.get("out_mix", None)
         ])
-    if params.get("out_vnscales") is not None:
+    if params.get("out_vnscales", None) is not None:
         cargs.extend([
             "--out_vnscales",
-            params.get("out_vnscales")
+            params.get("out_vnscales", None)
         ])
     return cargs
 
@@ -260,10 +248,10 @@ def fsl_regfilt_outputs(
     """
     ret = FslRegfiltOutputs(
         root=execution.output_file("."),
-        filtered_data=execution.output_file(params.get("outfile") + ".nii.gz"),
-        preprocessed_data=execution.output_file(params.get("out_data") + ".nii.gz") if (params.get("out_data") is not None) else None,
-        mixing_matrix=execution.output_file(params.get("out_mix") + ".nii.gz") if (params.get("out_mix") is not None) else None,
-        vnscales=execution.output_file(params.get("out_vnscales") + ".nii.gz") if (params.get("out_vnscales") is not None) else None,
+        filtered_data=execution.output_file(params.get("outfile", None) + ".nii.gz"),
+        preprocessed_data=execution.output_file(params.get("out_data", None) + ".nii.gz") if (params.get("out_data") is not None) else None,
+        mixing_matrix=execution.output_file(params.get("out_mix", None) + ".nii.gz") if (params.get("out_mix") is not None) else None,
+        vnscales=execution.output_file(params.get("out_vnscales", None) + ".nii.gz") if (params.get("out_vnscales") is not None) else None,
     )
     return ret
 
@@ -380,7 +368,6 @@ def fsl_regfilt(
 __all__ = [
     "FSL_REGFILT_METADATA",
     "FslRegfiltOutputs",
-    "FslRegfiltParameters",
     "fsl_regfilt",
     "fsl_regfilt_execute",
     "fsl_regfilt_params",

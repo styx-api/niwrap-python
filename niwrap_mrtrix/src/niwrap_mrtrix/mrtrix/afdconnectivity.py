@@ -14,14 +14,35 @@ AFDCONNECTIVITY_METADATA = Metadata(
 
 
 AfdconnectivityConfigParameters = typing.TypedDict('AfdconnectivityConfigParameters', {
-    "@type": typing.Literal["mrtrix.afdconnectivity.config"],
+    "@type": typing.NotRequired[typing.Literal["config"]],
+    "key": str,
+    "value": str,
+})
+AfdconnectivityConfigParametersTagged = typing.TypedDict('AfdconnectivityConfigParametersTagged', {
+    "@type": typing.Literal["config"],
     "key": str,
     "value": str,
 })
 
 
 AfdconnectivityParameters = typing.TypedDict('AfdconnectivityParameters', {
-    "@type": typing.Literal["mrtrix.afdconnectivity"],
+    "@type": typing.NotRequired[typing.Literal["mrtrix/afdconnectivity"]],
+    "wbft": typing.NotRequired[InputPathType | None],
+    "afd_map": typing.NotRequired[str | None],
+    "all_fixels": bool,
+    "info": bool,
+    "quiet": bool,
+    "debug": bool,
+    "force": bool,
+    "nthreads": typing.NotRequired[int | None],
+    "config": typing.NotRequired[list[AfdconnectivityConfigParameters] | None],
+    "help": bool,
+    "version": bool,
+    "image": InputPathType,
+    "tracks": InputPathType,
+})
+AfdconnectivityParametersTagged = typing.TypedDict('AfdconnectivityParametersTagged', {
+    "@type": typing.Literal["mrtrix/afdconnectivity"],
     "wbft": typing.NotRequired[InputPathType | None],
     "afd_map": typing.NotRequired[str | None],
     "all_fixels": bool,
@@ -38,43 +59,10 @@ AfdconnectivityParameters = typing.TypedDict('AfdconnectivityParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "mrtrix.afdconnectivity": afdconnectivity_cargs,
-        "mrtrix.afdconnectivity.config": afdconnectivity_config_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "mrtrix.afdconnectivity": afdconnectivity_outputs,
-    }.get(t)
-
-
 def afdconnectivity_config_params(
     key: str,
     value: str,
-) -> AfdconnectivityConfigParameters:
+) -> AfdconnectivityConfigParametersTagged:
     """
     Build parameters.
     
@@ -85,7 +73,7 @@ def afdconnectivity_config_params(
         Parameter dictionary
     """
     params = {
-        "@type": "mrtrix.afdconnectivity.config",
+        "@type": "config",
         "key": key,
         "value": value,
     }
@@ -107,14 +95,14 @@ def afdconnectivity_config_cargs(
     """
     cargs = []
     cargs.append("-config")
-    cargs.append(params.get("key"))
-    cargs.append(params.get("value"))
+    cargs.append(params.get("key", None))
+    cargs.append(params.get("value", None))
     return cargs
 
 
 class AfdconnectivityOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `afdconnectivity(...)`.
+    Output object returned when calling `AfdconnectivityParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -136,7 +124,7 @@ def afdconnectivity_params(
     config: list[AfdconnectivityConfigParameters] | None = None,
     help_: bool = False,
     version: bool = False,
-) -> AfdconnectivityParameters:
+) -> AfdconnectivityParametersTagged:
     """
     Build parameters.
     
@@ -170,7 +158,7 @@ def afdconnectivity_params(
         Parameter dictionary
     """
     params = {
-        "@type": "mrtrix.afdconnectivity",
+        "@type": "mrtrix/afdconnectivity",
         "all_fixels": all_fixels,
         "info": info,
         "quiet": quiet,
@@ -207,39 +195,39 @@ def afdconnectivity_cargs(
     """
     cargs = []
     cargs.append("afdconnectivity")
-    if params.get("wbft") is not None:
+    if params.get("wbft", None) is not None:
         cargs.extend([
             "-wbft",
-            execution.input_file(params.get("wbft"))
+            execution.input_file(params.get("wbft", None))
         ])
-    if params.get("afd_map") is not None:
+    if params.get("afd_map", None) is not None:
         cargs.extend([
             "-afd_map",
-            params.get("afd_map")
+            params.get("afd_map", None)
         ])
-    if params.get("all_fixels"):
+    if params.get("all_fixels", False):
         cargs.append("-all_fixels")
-    if params.get("info"):
+    if params.get("info", False):
         cargs.append("-info")
-    if params.get("quiet"):
+    if params.get("quiet", False):
         cargs.append("-quiet")
-    if params.get("debug"):
+    if params.get("debug", False):
         cargs.append("-debug")
-    if params.get("force"):
+    if params.get("force", False):
         cargs.append("-force")
-    if params.get("nthreads") is not None:
+    if params.get("nthreads", None) is not None:
         cargs.extend([
             "-nthreads",
-            str(params.get("nthreads"))
+            str(params.get("nthreads", None))
         ])
-    if params.get("config") is not None:
-        cargs.extend([a for c in [dyn_cargs(s["@type"])(s, execution) for s in params.get("config")] for a in c])
-    if params.get("help"):
+    if params.get("config", None) is not None:
+        cargs.extend([a for c in [afdconnectivity_config_cargs(s, execution) for s in params.get("config", None)] for a in c])
+    if params.get("help", False):
         cargs.append("-help")
-    if params.get("version"):
+    if params.get("version", False):
         cargs.append("-version")
-    cargs.append(execution.input_file(params.get("image")))
-    cargs.append(execution.input_file(params.get("tracks")))
+    cargs.append(execution.input_file(params.get("image", None)))
+    cargs.append(execution.input_file(params.get("tracks", None)))
     return cargs
 
 
@@ -258,7 +246,7 @@ def afdconnectivity_outputs(
     """
     ret = AfdconnectivityOutputs(
         root=execution.output_file("."),
-        afd_map=execution.output_file(params.get("afd_map")) if (params.get("afd_map") is not None) else None,
+        afd_map=execution.output_file(params.get("afd_map", None)) if (params.get("afd_map") is not None) else None,
     )
     return ret
 
@@ -440,9 +428,7 @@ def afdconnectivity(
 
 __all__ = [
     "AFDCONNECTIVITY_METADATA",
-    "AfdconnectivityConfigParameters",
     "AfdconnectivityOutputs",
-    "AfdconnectivityParameters",
     "afdconnectivity",
     "afdconnectivity_config_params",
     "afdconnectivity_execute",

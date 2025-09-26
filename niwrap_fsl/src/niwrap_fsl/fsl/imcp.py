@@ -14,47 +14,20 @@ IMCP_METADATA = Metadata(
 
 
 ImcpParameters = typing.TypedDict('ImcpParameters', {
-    "@type": typing.Literal["fsl.imcp"],
+    "@type": typing.NotRequired[typing.Literal["fsl/imcp"]],
+    "infiles": list[InputPathType],
+    "output_location": str,
+})
+ImcpParametersTagged = typing.TypedDict('ImcpParametersTagged', {
+    "@type": typing.Literal["fsl/imcp"],
     "infiles": list[InputPathType],
     "output_location": str,
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "fsl.imcp": imcp_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "fsl.imcp": imcp_outputs,
-    }.get(t)
-
-
 class ImcpOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `imcp(...)`.
+    Output object returned when calling `ImcpParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -65,7 +38,7 @@ class ImcpOutputs(typing.NamedTuple):
 def imcp_params(
     infiles: list[InputPathType],
     output_location: str,
-) -> ImcpParameters:
+) -> ImcpParametersTagged:
     """
     Build parameters.
     
@@ -76,7 +49,7 @@ def imcp_params(
         Parameter dictionary
     """
     params = {
-        "@type": "fsl.imcp",
+        "@type": "fsl/imcp",
         "infiles": infiles,
         "output_location": output_location,
     }
@@ -98,8 +71,8 @@ def imcp_cargs(
     """
     cargs = []
     cargs.append("imcp")
-    cargs.extend([execution.input_file(f) for f in params.get("infiles")])
-    cargs.append(params.get("output_location"))
+    cargs.extend([execution.input_file(f) for f in params.get("infiles", None)])
+    cargs.append(params.get("output_location", None))
     return cargs
 
 
@@ -118,7 +91,7 @@ def imcp_outputs(
     """
     ret = ImcpOutputs(
         root=execution.output_file("."),
-        outfiles=execution.output_file(params.get("output_location")),
+        outfiles=execution.output_file(params.get("output_location", None)),
     )
     return ret
 
@@ -182,7 +155,6 @@ def imcp(
 __all__ = [
     "IMCP_METADATA",
     "ImcpOutputs",
-    "ImcpParameters",
     "imcp",
     "imcp_execute",
     "imcp_params",

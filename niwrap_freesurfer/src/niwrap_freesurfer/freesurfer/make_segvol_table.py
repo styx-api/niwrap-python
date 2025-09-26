@@ -14,7 +14,20 @@ MAKE_SEGVOL_TABLE_METADATA = Metadata(
 
 
 MakeSegvolTableParameters = typing.TypedDict('MakeSegvolTableParameters', {
-    "@type": typing.Literal["freesurfer.make-segvol-table"],
+    "@type": typing.NotRequired[typing.Literal["freesurfer/make-segvol-table"]],
+    "subjects": list[str],
+    "subject_file": InputPathType,
+    "outfile": str,
+    "idmap": typing.NotRequired[InputPathType | None],
+    "structure_ids": typing.NotRequired[list[str] | None],
+    "segdir": typing.NotRequired[str | None],
+    "subjects_dir": typing.NotRequired[str | None],
+    "umask": typing.NotRequired[str | None],
+    "version": bool,
+    "help": bool,
+})
+MakeSegvolTableParametersTagged = typing.TypedDict('MakeSegvolTableParametersTagged', {
+    "@type": typing.Literal["freesurfer/make-segvol-table"],
     "subjects": list[str],
     "subject_file": InputPathType,
     "outfile": str,
@@ -28,41 +41,9 @@ MakeSegvolTableParameters = typing.TypedDict('MakeSegvolTableParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "freesurfer.make-segvol-table": make_segvol_table_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "freesurfer.make-segvol-table": make_segvol_table_outputs,
-    }.get(t)
-
-
 class MakeSegvolTableOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `make_segvol_table(...)`.
+    Output object returned when calling `MakeSegvolTableParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -82,7 +63,7 @@ def make_segvol_table_params(
     umask: str | None = None,
     version: bool = False,
     help_: bool = False,
-) -> MakeSegvolTableParameters:
+) -> MakeSegvolTableParametersTagged:
     """
     Build parameters.
     
@@ -105,7 +86,7 @@ def make_segvol_table_params(
         Parameter dictionary
     """
     params = {
-        "@type": "freesurfer.make-segvol-table",
+        "@type": "freesurfer/make-segvol-table",
         "subjects": subjects,
         "subject_file": subject_file,
         "outfile": outfile,
@@ -142,44 +123,44 @@ def make_segvol_table_cargs(
     cargs.append("make-segvol-table")
     cargs.extend([
         "-s",
-        *params.get("subjects")
+        *params.get("subjects", None)
     ])
     cargs.extend([
         "-sf",
-        execution.input_file(params.get("subject_file"))
+        execution.input_file(params.get("subject_file", None))
     ])
     cargs.extend([
         "-o",
-        params.get("outfile")
+        params.get("outfile", None)
     ])
-    if params.get("idmap") is not None:
+    if params.get("idmap", None) is not None:
         cargs.extend([
             "-idmap",
-            execution.input_file(params.get("idmap"))
+            execution.input_file(params.get("idmap", None))
         ])
-    if params.get("structure_ids") is not None:
+    if params.get("structure_ids", None) is not None:
         cargs.extend([
             "-id",
-            *params.get("structure_ids")
+            *params.get("structure_ids", None)
         ])
-    if params.get("segdir") is not None:
+    if params.get("segdir", None) is not None:
         cargs.extend([
             "-segdir",
-            params.get("segdir")
+            params.get("segdir", None)
         ])
-    if params.get("subjects_dir") is not None:
+    if params.get("subjects_dir", None) is not None:
         cargs.extend([
             "-sd",
-            params.get("subjects_dir")
+            params.get("subjects_dir", None)
         ])
-    if params.get("umask") is not None:
+    if params.get("umask", None) is not None:
         cargs.extend([
             "-umask",
-            params.get("umask")
+            params.get("umask", None)
         ])
-    if params.get("version"):
+    if params.get("version", False):
         cargs.append("-version")
-    if params.get("help"):
+    if params.get("help", False):
         cargs.append("-help")
     return cargs
 
@@ -199,7 +180,7 @@ def make_segvol_table_outputs(
     """
     ret = MakeSegvolTableOutputs(
         root=execution.output_file("."),
-        output_table=execution.output_file(params.get("outfile")),
+        output_table=execution.output_file(params.get("outfile", None)),
     )
     return ret
 
@@ -293,7 +274,6 @@ def make_segvol_table(
 __all__ = [
     "MAKE_SEGVOL_TABLE_METADATA",
     "MakeSegvolTableOutputs",
-    "MakeSegvolTableParameters",
     "make_segvol_table",
     "make_segvol_table_execute",
     "make_segvol_table_params",

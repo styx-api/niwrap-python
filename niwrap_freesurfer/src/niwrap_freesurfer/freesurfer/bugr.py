@@ -14,7 +14,14 @@ BUGR_METADATA = Metadata(
 
 
 BugrParameters = typing.TypedDict('BugrParameters', {
-    "@type": typing.Literal["freesurfer.bugr"],
+    "@type": typing.NotRequired[typing.Literal["freesurfer/bugr"]],
+    "subject_name": str,
+    "command_line": str,
+    "error_message": str,
+    "log_file": typing.NotRequired[InputPathType | None],
+})
+BugrParametersTagged = typing.TypedDict('BugrParametersTagged', {
+    "@type": typing.Literal["freesurfer/bugr"],
     "subject_name": str,
     "command_line": str,
     "error_message": str,
@@ -22,40 +29,9 @@ BugrParameters = typing.TypedDict('BugrParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "freesurfer.bugr": bugr_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-    }.get(t)
-
-
 class BugrOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `bugr(...)`.
+    Output object returned when calling `BugrParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -66,7 +42,7 @@ def bugr_params(
     command_line: str,
     error_message: str,
     log_file: InputPathType | None = None,
-) -> BugrParameters:
+) -> BugrParametersTagged:
     """
     Build parameters.
     
@@ -79,7 +55,7 @@ def bugr_params(
         Parameter dictionary
     """
     params = {
-        "@type": "freesurfer.bugr",
+        "@type": "freesurfer/bugr",
         "subject_name": subject_name,
         "command_line": command_line,
         "error_message": error_message,
@@ -106,20 +82,20 @@ def bugr_cargs(
     cargs.append("bugr")
     cargs.extend([
         "-subject",
-        params.get("subject_name")
+        params.get("subject_name", None)
     ])
     cargs.extend([
         "-command",
-        params.get("command_line")
+        params.get("command_line", None)
     ])
     cargs.extend([
         "-error",
-        params.get("error_message")
+        params.get("error_message", None)
     ])
-    if params.get("log_file") is not None:
+    if params.get("log_file", None) is not None:
         cargs.extend([
             "-log",
-            execution.input_file(params.get("log_file"))
+            execution.input_file(params.get("log_file", None))
         ])
     return cargs
 
@@ -208,7 +184,6 @@ def bugr(
 __all__ = [
     "BUGR_METADATA",
     "BugrOutputs",
-    "BugrParameters",
     "bugr",
     "bugr_execute",
     "bugr_params",

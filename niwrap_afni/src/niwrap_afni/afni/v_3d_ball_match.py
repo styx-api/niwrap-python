@@ -14,7 +14,15 @@ V_3D_BALL_MATCH_METADATA = Metadata(
 
 
 V3dBallMatchParameters = typing.TypedDict('V3dBallMatchParameters', {
-    "@type": typing.Literal["afni.3dBallMatch"],
+    "@type": typing.NotRequired[typing.Literal["afni/3dBallMatch"]],
+    "input_dataset": InputPathType,
+    "radius": typing.NotRequired[float | None],
+    "dataset_option": typing.NotRequired[str | None],
+    "ball_radius": typing.NotRequired[float | None],
+    "spheroid_axes": typing.NotRequired[list[float] | None],
+})
+V3dBallMatchParametersTagged = typing.TypedDict('V3dBallMatchParametersTagged', {
+    "@type": typing.Literal["afni/3dBallMatch"],
     "input_dataset": InputPathType,
     "radius": typing.NotRequired[float | None],
     "dataset_option": typing.NotRequired[str | None],
@@ -23,41 +31,9 @@ V3dBallMatchParameters = typing.TypedDict('V3dBallMatchParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "afni.3dBallMatch": v_3d_ball_match_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "afni.3dBallMatch": v_3d_ball_match_outputs,
-    }.get(t)
-
-
 class V3dBallMatchOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `v_3d_ball_match(...)`.
+    Output object returned when calling `V3dBallMatchParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -71,7 +47,7 @@ def v_3d_ball_match_params(
     dataset_option: str | None = None,
     ball_radius: float | None = None,
     spheroid_axes: list[float] | None = None,
-) -> V3dBallMatchParameters:
+) -> V3dBallMatchParametersTagged:
     """
     Build parameters.
     
@@ -86,7 +62,7 @@ def v_3d_ball_match_params(
         Parameter dictionary
     """
     params = {
-        "@type": "afni.3dBallMatch",
+        "@type": "afni/3dBallMatch",
         "input_dataset": input_dataset,
     }
     if radius is not None:
@@ -115,23 +91,23 @@ def v_3d_ball_match_cargs(
     """
     cargs = []
     cargs.append("3dBallMatch")
-    cargs.append(execution.input_file(params.get("input_dataset")))
-    if params.get("radius") is not None:
-        cargs.append(str(params.get("radius")))
-    if params.get("dataset_option") is not None:
+    cargs.append(execution.input_file(params.get("input_dataset", None)))
+    if params.get("radius", None) is not None:
+        cargs.append(str(params.get("radius", None)))
+    if params.get("dataset_option", None) is not None:
         cargs.extend([
             "-input",
-            params.get("dataset_option")
+            params.get("dataset_option", None)
         ])
-    if params.get("ball_radius") is not None:
+    if params.get("ball_radius", None) is not None:
         cargs.extend([
             "-ball",
-            str(params.get("ball_radius"))
+            str(params.get("ball_radius", None))
         ])
-    if params.get("spheroid_axes") is not None:
+    if params.get("spheroid_axes", None) is not None:
         cargs.extend([
             "-spheroid",
-            *map(str, params.get("spheroid_axes"))
+            *map(str, params.get("spheroid_axes", None))
         ])
     return cargs
 
@@ -228,7 +204,6 @@ def v_3d_ball_match(
 
 __all__ = [
     "V3dBallMatchOutputs",
-    "V3dBallMatchParameters",
     "V_3D_BALL_MATCH_METADATA",
     "v_3d_ball_match",
     "v_3d_ball_match_execute",

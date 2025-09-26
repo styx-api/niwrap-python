@@ -14,7 +14,23 @@ V_3D_TSHIFT_METADATA = Metadata(
 
 
 V3dTshiftParameters = typing.TypedDict('V3dTshiftParameters', {
-    "@type": typing.Literal["afni.3dTshift"],
+    "@type": typing.NotRequired[typing.Literal["afni/3dTshift"]],
+    "prefix": typing.NotRequired[str | None],
+    "ignore": typing.NotRequired[int | None],
+    "in_file": InputPathType,
+    "interp": typing.NotRequired[typing.Literal["Fourier", "linear", "cubic", "quintic", "heptic"] | None],
+    "num_threads": typing.NotRequired[int | None],
+    "outputtype": typing.NotRequired[typing.Literal["NIFTI", "AFNI", "NIFTI_GZ"] | None],
+    "rlt": bool,
+    "rltplus": bool,
+    "slice_encoding_direction": typing.NotRequired[typing.Literal["k", "k-"] | None],
+    "tpattern": typing.NotRequired[typing.Literal["alt+z", "altplus", "alt+z2", "alt-z", "altminus", "alt-z2", "seq+z", "seqplus", "seq-z", "seqminus"] | None],
+    "tr": typing.NotRequired[float | None],
+    "tslice": typing.NotRequired[int | None],
+    "tzero": typing.NotRequired[float | None],
+})
+V3dTshiftParametersTagged = typing.TypedDict('V3dTshiftParametersTagged', {
+    "@type": typing.Literal["afni/3dTshift"],
     "prefix": typing.NotRequired[str | None],
     "ignore": typing.NotRequired[int | None],
     "in_file": InputPathType,
@@ -31,41 +47,9 @@ V3dTshiftParameters = typing.TypedDict('V3dTshiftParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "afni.3dTshift": v_3d_tshift_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "afni.3dTshift": v_3d_tshift_outputs,
-    }.get(t)
-
-
 class V3dTshiftOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `v_3d_tshift(...)`.
+    Output object returned when calling `V3dTshiftParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -89,7 +73,7 @@ def v_3d_tshift_params(
     tr: float | None = None,
     tslice: int | None = None,
     tzero: float | None = None,
-) -> V3dTshiftParameters:
+) -> V3dTshiftParametersTagged:
     """
     Build parameters.
     
@@ -122,7 +106,7 @@ def v_3d_tshift_params(
         Parameter dictionary
     """
     params = {
-        "@type": "afni.3dTshift",
+        "@type": "afni/3dTshift",
         "in_file": in_file,
         "rlt": rlt,
         "rltplus": rltplus,
@@ -165,51 +149,51 @@ def v_3d_tshift_cargs(
     """
     cargs = []
     cargs.append("3dTshift")
-    if params.get("prefix") is not None:
+    if params.get("prefix", None) is not None:
         cargs.extend([
             "-prefix",
-            params.get("prefix")
+            params.get("prefix", None)
         ])
-    if params.get("ignore") is not None:
+    if params.get("ignore", None) is not None:
         cargs.extend([
             "-ignore",
-            str(params.get("ignore"))
+            str(params.get("ignore", None))
         ])
-    cargs.append(execution.input_file(params.get("in_file")))
-    if params.get("interp") is not None:
+    cargs.append(execution.input_file(params.get("in_file", None)))
+    if params.get("interp", None) is not None:
         cargs.extend([
             "-",
-            params.get("interp")
+            params.get("interp", None)
         ])
-    if params.get("num_threads") is not None:
-        cargs.append(str(params.get("num_threads")))
-    if params.get("outputtype") is not None:
-        cargs.append(params.get("outputtype"))
-    if params.get("rlt"):
+    if params.get("num_threads", None) is not None:
+        cargs.append(str(params.get("num_threads", None)))
+    if params.get("outputtype", None) is not None:
+        cargs.append(params.get("outputtype", None))
+    if params.get("rlt", False):
         cargs.append("-rlt")
-    if params.get("rltplus"):
+    if params.get("rltplus", False):
         cargs.append("-rlt+")
-    if params.get("slice_encoding_direction") is not None:
-        cargs.append(params.get("slice_encoding_direction"))
-    if params.get("tpattern") is not None:
+    if params.get("slice_encoding_direction", None) is not None:
+        cargs.append(params.get("slice_encoding_direction", None))
+    if params.get("tpattern", None) is not None:
         cargs.extend([
             "-tpattern",
-            params.get("tpattern")
+            params.get("tpattern", None)
         ])
-    if params.get("tr") is not None:
+    if params.get("tr", None) is not None:
         cargs.extend([
             "-TR",
-            str(params.get("tr"))
+            str(params.get("tr", None))
         ])
-    if params.get("tslice") is not None:
+    if params.get("tslice", None) is not None:
         cargs.extend([
             "-slice",
-            str(params.get("tslice"))
+            str(params.get("tslice", None))
         ])
-    if params.get("tzero") is not None:
+    if params.get("tzero", None) is not None:
         cargs.extend([
             "-tzero",
-            str(params.get("tzero"))
+            str(params.get("tzero", None))
         ])
     return cargs
 
@@ -229,7 +213,7 @@ def v_3d_tshift_outputs(
     """
     ret = V3dTshiftOutputs(
         root=execution.output_file("."),
-        out_file=execution.output_file(params.get("prefix")) if (params.get("prefix") is not None) else None,
+        out_file=execution.output_file(params.get("prefix", None)) if (params.get("prefix") is not None) else None,
         timing_file=execution.output_file("timing_file"),
     )
     return ret
@@ -339,7 +323,6 @@ def v_3d_tshift(
 
 __all__ = [
     "V3dTshiftOutputs",
-    "V3dTshiftParameters",
     "V_3D_TSHIFT_METADATA",
     "v_3d_tshift",
     "v_3d_tshift_execute",

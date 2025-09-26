@@ -14,7 +14,19 @@ V_3D_LOCAL_UNIFIZE_METADATA = Metadata(
 
 
 V3dLocalUnifizeParameters = typing.TypedDict('V3dLocalUnifizeParameters', {
-    "@type": typing.Literal["afni.3dLocalUnifize"],
+    "@type": typing.NotRequired[typing.Literal["afni/3dLocalUnifize"]],
+    "input": InputPathType,
+    "output": str,
+    "working_dir": typing.NotRequired[str | None],
+    "echo": bool,
+    "no_clean": bool,
+    "local_rad": typing.NotRequired[float | None],
+    "local_perc": typing.NotRequired[float | None],
+    "local_mask": typing.NotRequired[str | None],
+    "filter_thr": typing.NotRequired[float | None],
+})
+V3dLocalUnifizeParametersTagged = typing.TypedDict('V3dLocalUnifizeParametersTagged', {
+    "@type": typing.Literal["afni/3dLocalUnifize"],
     "input": InputPathType,
     "output": str,
     "working_dir": typing.NotRequired[str | None],
@@ -27,41 +39,9 @@ V3dLocalUnifizeParameters = typing.TypedDict('V3dLocalUnifizeParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "afni.3dLocalUnifize": v_3d_local_unifize_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "afni.3dLocalUnifize": v_3d_local_unifize_outputs,
-    }.get(t)
-
-
 class V3dLocalUnifizeOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `v_3d_local_unifize(...)`.
+    Output object returned when calling `V3dLocalUnifizeParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -79,7 +59,7 @@ def v_3d_local_unifize_params(
     local_perc: float | None = None,
     local_mask: str | None = None,
     filter_thr: float | None = None,
-) -> V3dLocalUnifizeParameters:
+) -> V3dLocalUnifizeParametersTagged:
     """
     Build parameters.
     
@@ -103,7 +83,7 @@ def v_3d_local_unifize_params(
         Parameter dictionary
     """
     params = {
-        "@type": "afni.3dLocalUnifize",
+        "@type": "afni/3dLocalUnifize",
         "input": input_,
         "output": output,
         "echo": echo,
@@ -137,39 +117,39 @@ def v_3d_local_unifize_cargs(
     """
     cargs = []
     cargs.append("3dLocalUnifize")
-    cargs.append(execution.input_file(params.get("input")))
+    cargs.append(execution.input_file(params.get("input", None)))
     cargs.extend([
         "-prefix",
-        params.get("output")
+        params.get("output", None)
     ])
-    if params.get("working_dir") is not None:
+    if params.get("working_dir", None) is not None:
         cargs.extend([
             "-wdir_name",
-            params.get("working_dir")
+            params.get("working_dir", None)
         ])
-    if params.get("echo"):
+    if params.get("echo", False):
         cargs.append("-echo")
-    if params.get("no_clean"):
+    if params.get("no_clean", False):
         cargs.append("-no_clean")
-    if params.get("local_rad") is not None:
+    if params.get("local_rad", None) is not None:
         cargs.extend([
             "-local_rad",
-            str(params.get("local_rad"))
+            str(params.get("local_rad", None))
         ])
-    if params.get("local_perc") is not None:
+    if params.get("local_perc", None) is not None:
         cargs.extend([
             "-local_perc",
-            str(params.get("local_perc"))
+            str(params.get("local_perc", None))
         ])
-    if params.get("local_mask") is not None:
+    if params.get("local_mask", None) is not None:
         cargs.extend([
             "-local_mask",
-            params.get("local_mask")
+            params.get("local_mask", None)
         ])
-    if params.get("filter_thr") is not None:
+    if params.get("filter_thr", None) is not None:
         cargs.extend([
             "-filter_thr",
-            str(params.get("filter_thr"))
+            str(params.get("filter_thr", None))
         ])
     return cargs
 
@@ -189,7 +169,7 @@ def v_3d_local_unifize_outputs(
     """
     ret = V3dLocalUnifizeOutputs(
         root=execution.output_file("."),
-        output_file=execution.output_file(params.get("output")),
+        output_file=execution.output_file(params.get("output", None)),
     )
     return ret
 
@@ -283,7 +263,6 @@ def v_3d_local_unifize(
 
 __all__ = [
     "V3dLocalUnifizeOutputs",
-    "V3dLocalUnifizeParameters",
     "V_3D_LOCAL_UNIFIZE_METADATA",
     "v_3d_local_unifize",
     "v_3d_local_unifize_execute",

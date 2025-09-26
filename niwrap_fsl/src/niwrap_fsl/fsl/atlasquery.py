@@ -14,7 +14,16 @@ ATLASQUERY_METADATA = Metadata(
 
 
 AtlasqueryParameters = typing.TypedDict('AtlasqueryParameters', {
-    "@type": typing.Literal["fsl.atlasquery"],
+    "@type": typing.NotRequired[typing.Literal["fsl/atlasquery"]],
+    "dumpatlases_flag": bool,
+    "atlas": typing.NotRequired[str | None],
+    "coord": typing.NotRequired[str | None],
+    "mask": typing.NotRequired[InputPathType | None],
+    "verbose_flag": bool,
+    "help_flag": bool,
+})
+AtlasqueryParametersTagged = typing.TypedDict('AtlasqueryParametersTagged', {
+    "@type": typing.Literal["fsl/atlasquery"],
     "dumpatlases_flag": bool,
     "atlas": typing.NotRequired[str | None],
     "coord": typing.NotRequired[str | None],
@@ -24,40 +33,9 @@ AtlasqueryParameters = typing.TypedDict('AtlasqueryParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "fsl.atlasquery": atlasquery_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-    }.get(t)
-
-
 class AtlasqueryOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `atlasquery(...)`.
+    Output object returned when calling `AtlasqueryParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -70,7 +48,7 @@ def atlasquery_params(
     mask: InputPathType | None = None,
     verbose_flag: bool = False,
     help_flag: bool = False,
-) -> AtlasqueryParameters:
+) -> AtlasqueryParametersTagged:
     """
     Build parameters.
     
@@ -85,7 +63,7 @@ def atlasquery_params(
         Parameter dictionary
     """
     params = {
-        "@type": "fsl.atlasquery",
+        "@type": "fsl/atlasquery",
         "dumpatlases_flag": dumpatlases_flag,
         "verbose_flag": verbose_flag,
         "help_flag": help_flag,
@@ -114,26 +92,26 @@ def atlasquery_cargs(
     """
     cargs = []
     cargs.append("atlasquery")
-    if params.get("dumpatlases_flag"):
+    if params.get("dumpatlases_flag", False):
         cargs.append("--dumpatlases")
-    if params.get("atlas") is not None:
+    if params.get("atlas", None) is not None:
         cargs.extend([
             "-a",
-            params.get("atlas")
+            params.get("atlas", None)
         ])
-    if params.get("coord") is not None:
+    if params.get("coord", None) is not None:
         cargs.extend([
             "-c",
-            params.get("coord")
+            params.get("coord", None)
         ])
-    if params.get("mask") is not None:
+    if params.get("mask", None) is not None:
         cargs.extend([
             "-m",
-            execution.input_file(params.get("mask"))
+            execution.input_file(params.get("mask", None))
         ])
-    if params.get("verbose_flag"):
+    if params.get("verbose_flag", False):
         cargs.append("-V")
-    if params.get("help_flag"):
+    if params.get("help_flag", False):
         cargs.append("-h")
     return cargs
 
@@ -228,7 +206,6 @@ def atlasquery(
 __all__ = [
     "ATLASQUERY_METADATA",
     "AtlasqueryOutputs",
-    "AtlasqueryParameters",
     "atlasquery",
     "atlasquery_execute",
     "atlasquery_params",

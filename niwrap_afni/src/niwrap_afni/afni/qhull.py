@@ -14,7 +14,31 @@ QHULL_METADATA = Metadata(
 
 
 QhullParameters = typing.TypedDict('QhullParameters', {
-    "@type": typing.Literal["afni.qhull"],
+    "@type": typing.NotRequired[typing.Literal["afni/qhull"]],
+    "input_coords": str,
+    "delaunay": bool,
+    "furthest_delaunay": bool,
+    "voronoi": bool,
+    "furthest_voronoi": bool,
+    "halfspace_intersection": bool,
+    "triangulated_output": bool,
+    "joggled_input": bool,
+    "verify": bool,
+    "summary": bool,
+    "vertices_incident": bool,
+    "normals": bool,
+    "vertex_coordinates": bool,
+    "halfspace_intersections": bool,
+    "extreme_points": bool,
+    "total_area_volume": bool,
+    "off_format": bool,
+    "geomview_output": bool,
+    "mathematica_output": bool,
+    "print_facets": typing.NotRequired[str | None],
+    "output_file": typing.NotRequired[str | None],
+})
+QhullParametersTagged = typing.TypedDict('QhullParametersTagged', {
+    "@type": typing.Literal["afni/qhull"],
     "input_coords": str,
     "delaunay": bool,
     "furthest_delaunay": bool,
@@ -39,41 +63,9 @@ QhullParameters = typing.TypedDict('QhullParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "afni.qhull": qhull_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "afni.qhull": qhull_outputs,
-    }.get(t)
-
-
 class QhullOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `qhull(...)`.
+    Output object returned when calling `QhullParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -103,7 +95,7 @@ def qhull_params(
     mathematica_output: bool = False,
     print_facets: str | None = None,
     output_file: str | None = None,
-) -> QhullParameters:
+) -> QhullParametersTagged:
     """
     Build parameters.
     
@@ -139,7 +131,7 @@ def qhull_params(
         Parameter dictionary
     """
     params = {
-        "@type": "afni.qhull",
+        "@type": "afni/qhull",
         "input_coords": input_coords,
         "delaunay": delaunay,
         "furthest_delaunay": furthest_delaunay,
@@ -182,52 +174,52 @@ def qhull_cargs(
     """
     cargs = []
     cargs.append("qhull")
-    cargs.append(params.get("input_coords"))
-    if params.get("delaunay"):
+    cargs.append(params.get("input_coords", None))
+    if params.get("delaunay", False):
         cargs.append("d")
-    if params.get("furthest_delaunay"):
+    if params.get("furthest_delaunay", False):
         cargs.append("d Qu")
-    if params.get("voronoi"):
+    if params.get("voronoi", False):
         cargs.append("v")
-    if params.get("furthest_voronoi"):
+    if params.get("furthest_voronoi", False):
         cargs.append("v Qu")
-    if params.get("halfspace_intersection"):
+    if params.get("halfspace_intersection", False):
         cargs.append("H1,1")
-    if params.get("triangulated_output"):
+    if params.get("triangulated_output", False):
         cargs.append("Qt")
-    if params.get("joggled_input"):
+    if params.get("joggled_input", False):
         cargs.append("QJ")
-    if params.get("verify"):
+    if params.get("verify", False):
         cargs.append("Tv")
-    if params.get("summary"):
+    if params.get("summary", False):
         cargs.append("s")
-    if params.get("vertices_incident"):
+    if params.get("vertices_incident", False):
         cargs.append("i")
-    if params.get("normals"):
+    if params.get("normals", False):
         cargs.append("n")
-    if params.get("vertex_coordinates"):
+    if params.get("vertex_coordinates", False):
         cargs.append("p")
-    if params.get("halfspace_intersections"):
+    if params.get("halfspace_intersections", False):
         cargs.append("Fp")
-    if params.get("extreme_points"):
+    if params.get("extreme_points", False):
         cargs.append("Fx")
-    if params.get("total_area_volume"):
+    if params.get("total_area_volume", False):
         cargs.append("FA")
-    if params.get("off_format"):
+    if params.get("off_format", False):
         cargs.append("o")
-    if params.get("geomview_output"):
+    if params.get("geomview_output", False):
         cargs.append("G")
-    if params.get("mathematica_output"):
+    if params.get("mathematica_output", False):
         cargs.append("m")
-    if params.get("print_facets") is not None:
+    if params.get("print_facets", None) is not None:
         cargs.extend([
             "QVn",
-            params.get("print_facets")
+            params.get("print_facets", None)
         ])
-    if params.get("output_file") is not None:
+    if params.get("output_file", None) is not None:
         cargs.extend([
             "TO",
-            params.get("output_file")
+            params.get("output_file", None)
         ])
     return cargs
 
@@ -247,7 +239,7 @@ def qhull_outputs(
     """
     ret = QhullOutputs(
         root=execution.output_file("."),
-        output_results=execution.output_file(params.get("output_file") + ".txt") if (params.get("output_file") is not None) else None,
+        output_results=execution.output_file(params.get("output_file", None) + ".txt") if (params.get("output_file") is not None) else None,
     )
     return ret
 
@@ -374,7 +366,6 @@ def qhull(
 __all__ = [
     "QHULL_METADATA",
     "QhullOutputs",
-    "QhullParameters",
     "qhull",
     "qhull_execute",
     "qhull_params",

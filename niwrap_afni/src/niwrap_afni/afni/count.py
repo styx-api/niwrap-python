@@ -14,7 +14,24 @@ COUNT_METADATA = Metadata(
 
 
 CountParameters = typing.TypedDict('CountParameters', {
-    "@type": typing.Literal["afni.count"],
+    "@type": typing.NotRequired[typing.Literal["afni/count"]],
+    "bot": str,
+    "top": str,
+    "step": typing.NotRequired[str | None],
+    "seed": typing.NotRequired[float | None],
+    "sseed": typing.NotRequired[str | None],
+    "column": bool,
+    "digits": typing.NotRequired[float | None],
+    "form": typing.NotRequired[str | None],
+    "root": typing.NotRequired[str | None],
+    "sep": typing.NotRequired[str | None],
+    "suffix": typing.NotRequired[str | None],
+    "scale": typing.NotRequired[float | None],
+    "comma": bool,
+    "skipnmodm": typing.NotRequired[str | None],
+})
+CountParametersTagged = typing.TypedDict('CountParametersTagged', {
+    "@type": typing.Literal["afni/count"],
     "bot": str,
     "top": str,
     "step": typing.NotRequired[str | None],
@@ -32,40 +49,9 @@ CountParameters = typing.TypedDict('CountParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "afni.count": count_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-    }.get(t)
-
-
 class CountOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `count(...)`.
+    Output object returned when calling `CountParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -86,7 +72,7 @@ def count_params(
     scale: float | None = None,
     comma: bool = False,
     skipnmodm: str | None = None,
-) -> CountParameters:
+) -> CountParametersTagged:
     """
     Build parameters.
     
@@ -109,7 +95,7 @@ def count_params(
         Parameter dictionary
     """
     params = {
-        "@type": "afni.count",
+        "@type": "afni/count",
         "bot": bot,
         "top": top,
         "column": column,
@@ -153,58 +139,58 @@ def count_cargs(
     """
     cargs = []
     cargs.append("count")
-    cargs.append(params.get("bot"))
-    cargs.append(params.get("top"))
-    if params.get("step") is not None:
-        cargs.append(params.get("step"))
-    if params.get("seed") is not None:
+    cargs.append(params.get("bot", None))
+    cargs.append(params.get("top", None))
+    if params.get("step", None) is not None:
+        cargs.append(params.get("step", None))
+    if params.get("seed", None) is not None:
         cargs.extend([
             "-seed",
-            str(params.get("seed"))
+            str(params.get("seed", None))
         ])
-    if params.get("sseed") is not None:
+    if params.get("sseed", None) is not None:
         cargs.extend([
             "-sseed",
-            params.get("sseed")
+            params.get("sseed", None)
         ])
-    if params.get("column"):
+    if params.get("column", False):
         cargs.append("-column")
-    if params.get("digits") is not None:
+    if params.get("digits", None) is not None:
         cargs.extend([
             "-digits",
-            str(params.get("digits"))
+            str(params.get("digits", None))
         ])
-    if params.get("form") is not None:
+    if params.get("form", None) is not None:
         cargs.extend([
             "-form",
-            params.get("form")
+            params.get("form", None)
         ])
-    if params.get("root") is not None:
+    if params.get("root", None) is not None:
         cargs.extend([
             "-root",
-            params.get("root")
+            params.get("root", None)
         ])
-    if params.get("sep") is not None:
+    if params.get("sep", None) is not None:
         cargs.extend([
             "-sep",
-            params.get("sep")
+            params.get("sep", None)
         ])
-    if params.get("suffix") is not None:
+    if params.get("suffix", None) is not None:
         cargs.extend([
             "-suffix",
-            params.get("suffix")
+            params.get("suffix", None)
         ])
-    if params.get("scale") is not None:
+    if params.get("scale", None) is not None:
         cargs.extend([
             "-scale",
-            str(params.get("scale"))
+            str(params.get("scale", None))
         ])
-    if params.get("comma"):
+    if params.get("comma", False):
         cargs.append("-comma")
-    if params.get("skipnmodm") is not None:
+    if params.get("skipnmodm", None) is not None:
         cargs.extend([
             "-skipnmodm",
-            params.get("skipnmodm")
+            params.get("skipnmodm", None)
         ])
     return cargs
 
@@ -325,7 +311,6 @@ def count(
 __all__ = [
     "COUNT_METADATA",
     "CountOutputs",
-    "CountParameters",
     "count",
     "count_execute",
     "count_params",

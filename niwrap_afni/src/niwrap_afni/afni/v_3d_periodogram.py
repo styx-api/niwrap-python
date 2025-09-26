@@ -14,7 +14,14 @@ V_3D_PERIODOGRAM_METADATA = Metadata(
 
 
 V3dPeriodogramParameters = typing.TypedDict('V3dPeriodogramParameters', {
-    "@type": typing.Literal["afni.3dPeriodogram"],
+    "@type": typing.NotRequired[typing.Literal["afni/3dPeriodogram"]],
+    "prefix": typing.NotRequired[str | None],
+    "taper": typing.NotRequired[float | None],
+    "nfft": typing.NotRequired[float | None],
+    "dataset": InputPathType,
+})
+V3dPeriodogramParametersTagged = typing.TypedDict('V3dPeriodogramParametersTagged', {
+    "@type": typing.Literal["afni/3dPeriodogram"],
     "prefix": typing.NotRequired[str | None],
     "taper": typing.NotRequired[float | None],
     "nfft": typing.NotRequired[float | None],
@@ -22,41 +29,9 @@ V3dPeriodogramParameters = typing.TypedDict('V3dPeriodogramParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "afni.3dPeriodogram": v_3d_periodogram_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "afni.3dPeriodogram": v_3d_periodogram_outputs,
-    }.get(t)
-
-
 class V3dPeriodogramOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `v_3d_periodogram(...)`.
+    Output object returned when calling `V3dPeriodogramParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -71,7 +46,7 @@ def v_3d_periodogram_params(
     prefix: str | None = None,
     taper: float | None = None,
     nfft: float | None = None,
-) -> V3dPeriodogramParameters:
+) -> V3dPeriodogramParametersTagged:
     """
     Build parameters.
     
@@ -84,7 +59,7 @@ def v_3d_periodogram_params(
         Parameter dictionary
     """
     params = {
-        "@type": "afni.3dPeriodogram",
+        "@type": "afni/3dPeriodogram",
         "dataset": dataset,
     }
     if prefix is not None:
@@ -111,22 +86,22 @@ def v_3d_periodogram_cargs(
     """
     cargs = []
     cargs.append("3dPeriodogram")
-    if params.get("prefix") is not None:
+    if params.get("prefix", None) is not None:
         cargs.extend([
             "-prefix",
-            params.get("prefix")
+            params.get("prefix", None)
         ])
-    if params.get("taper") is not None:
+    if params.get("taper", None) is not None:
         cargs.extend([
             "-taper",
-            str(params.get("taper"))
+            str(params.get("taper", None))
         ])
-    if params.get("nfft") is not None:
+    if params.get("nfft", None) is not None:
         cargs.extend([
             "-nfft",
-            str(params.get("nfft"))
+            str(params.get("nfft", None))
         ])
-    cargs.append(execution.input_file(params.get("dataset")))
+    cargs.append(execution.input_file(params.get("dataset", None)))
     return cargs
 
 
@@ -145,8 +120,8 @@ def v_3d_periodogram_outputs(
     """
     ret = V3dPeriodogramOutputs(
         root=execution.output_file("."),
-        output_header=execution.output_file(params.get("prefix") + ".HEAD") if (params.get("prefix") is not None) else None,
-        output_brick=execution.output_file(params.get("prefix") + ".BRIK") if (params.get("prefix") is not None) else None,
+        output_header=execution.output_file(params.get("prefix", None) + ".HEAD") if (params.get("prefix") is not None) else None,
+        output_brick=execution.output_file(params.get("prefix", None) + ".BRIK") if (params.get("prefix") is not None) else None,
     )
     return ret
 
@@ -217,7 +192,6 @@ def v_3d_periodogram(
 
 __all__ = [
     "V3dPeriodogramOutputs",
-    "V3dPeriodogramParameters",
     "V_3D_PERIODOGRAM_METADATA",
     "v_3d_periodogram",
     "v_3d_periodogram_execute",

@@ -14,7 +14,14 @@ VOLUME_MATH_METADATA = Metadata(
 
 
 VolumeMathVarParameters = typing.TypedDict('VolumeMathVarParameters', {
-    "@type": typing.Literal["workbench.volume-math.var"],
+    "@type": typing.NotRequired[typing.Literal["var"]],
+    "name": str,
+    "volume": InputPathType,
+    "opt_subvolume_subvol": typing.NotRequired[str | None],
+    "opt_repeat": bool,
+})
+VolumeMathVarParametersTagged = typing.TypedDict('VolumeMathVarParametersTagged', {
+    "@type": typing.Literal["var"],
     "name": str,
     "volume": InputPathType,
     "opt_subvolume_subvol": typing.NotRequired[str | None],
@@ -23,7 +30,14 @@ VolumeMathVarParameters = typing.TypedDict('VolumeMathVarParameters', {
 
 
 VolumeMathParameters = typing.TypedDict('VolumeMathParameters', {
-    "@type": typing.Literal["workbench.volume-math"],
+    "@type": typing.NotRequired[typing.Literal["workbench/volume-math"]],
+    "expression": str,
+    "volume_out": str,
+    "opt_fixnan_replace": typing.NotRequired[float | None],
+    "var": typing.NotRequired[list[VolumeMathVarParameters] | None],
+})
+VolumeMathParametersTagged = typing.TypedDict('VolumeMathParametersTagged', {
+    "@type": typing.Literal["workbench/volume-math"],
     "expression": str,
     "volume_out": str,
     "opt_fixnan_replace": typing.NotRequired[float | None],
@@ -31,45 +45,12 @@ VolumeMathParameters = typing.TypedDict('VolumeMathParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "workbench.volume-math": volume_math_cargs,
-        "workbench.volume-math.var": volume_math_var_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "workbench.volume-math": volume_math_outputs,
-    }.get(t)
-
-
 def volume_math_var_params(
     name: str,
     volume: InputPathType,
     opt_subvolume_subvol: str | None = None,
     opt_repeat: bool = False,
-) -> VolumeMathVarParameters:
+) -> VolumeMathVarParametersTagged:
     """
     Build parameters.
     
@@ -83,7 +64,7 @@ def volume_math_var_params(
         Parameter dictionary
     """
     params = {
-        "@type": "workbench.volume-math.var",
+        "@type": "var",
         "name": name,
         "volume": volume,
         "opt_repeat": opt_repeat,
@@ -108,21 +89,21 @@ def volume_math_var_cargs(
     """
     cargs = []
     cargs.append("-var")
-    cargs.append(params.get("name"))
-    cargs.append(execution.input_file(params.get("volume")))
-    if params.get("opt_subvolume_subvol") is not None:
+    cargs.append(params.get("name", None))
+    cargs.append(execution.input_file(params.get("volume", None)))
+    if params.get("opt_subvolume_subvol", None) is not None:
         cargs.extend([
             "-subvolume",
-            params.get("opt_subvolume_subvol")
+            params.get("opt_subvolume_subvol", None)
         ])
-    if params.get("opt_repeat"):
+    if params.get("opt_repeat", False):
         cargs.append("-repeat")
     return cargs
 
 
 class VolumeMathOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `volume_math(...)`.
+    Output object returned when calling `VolumeMathParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -135,7 +116,7 @@ def volume_math_params(
     volume_out: str,
     opt_fixnan_replace: float | None = None,
     var: list[VolumeMathVarParameters] | None = None,
-) -> VolumeMathParameters:
+) -> VolumeMathParametersTagged:
     """
     Build parameters.
     
@@ -149,7 +130,7 @@ def volume_math_params(
         Parameter dictionary
     """
     params = {
-        "@type": "workbench.volume-math",
+        "@type": "workbench/volume-math",
         "expression": expression,
         "volume_out": volume_out,
     }
@@ -176,15 +157,15 @@ def volume_math_cargs(
     cargs = []
     cargs.append("wb_command")
     cargs.append("-volume-math")
-    cargs.append(params.get("expression"))
-    cargs.append(params.get("volume_out"))
-    if params.get("opt_fixnan_replace") is not None:
+    cargs.append(params.get("expression", None))
+    cargs.append(params.get("volume_out", None))
+    if params.get("opt_fixnan_replace", None) is not None:
         cargs.extend([
             "-fixnan",
-            str(params.get("opt_fixnan_replace"))
+            str(params.get("opt_fixnan_replace", None))
         ])
-    if params.get("var") is not None:
-        cargs.extend([a for c in [dyn_cargs(s["@type"])(s, execution) for s in params.get("var")] for a in c])
+    if params.get("var", None) is not None:
+        cargs.extend([a for c in [volume_math_var_cargs(s, execution) for s in params.get("var", None)] for a in c])
     return cargs
 
 
@@ -203,7 +184,7 @@ def volume_math_outputs(
     """
     ret = VolumeMathOutputs(
         root=execution.output_file("."),
-        volume_out=execution.output_file(params.get("volume_out")),
+        volume_out=execution.output_file(params.get("volume_out", None)),
     )
     return ret
 
@@ -412,8 +393,6 @@ def volume_math(
 __all__ = [
     "VOLUME_MATH_METADATA",
     "VolumeMathOutputs",
-    "VolumeMathParameters",
-    "VolumeMathVarParameters",
     "volume_math",
     "volume_math_execute",
     "volume_math_params",

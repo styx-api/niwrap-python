@@ -14,7 +14,16 @@ VERTEXVOL_METADATA = Metadata(
 
 
 VertexvolParameters = typing.TypedDict('VertexvolParameters', {
-    "@type": typing.Literal["freesurfer.vertexvol"],
+    "@type": typing.NotRequired[typing.Literal["freesurfer/vertexvol"]],
+    "subject": str,
+    "left_hemisphere": bool,
+    "right_hemisphere": bool,
+    "output_file": typing.NotRequired[str | None],
+    "use_th3": bool,
+    "no_th3": bool,
+})
+VertexvolParametersTagged = typing.TypedDict('VertexvolParametersTagged', {
+    "@type": typing.Literal["freesurfer/vertexvol"],
     "subject": str,
     "left_hemisphere": bool,
     "right_hemisphere": bool,
@@ -24,41 +33,9 @@ VertexvolParameters = typing.TypedDict('VertexvolParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "freesurfer.vertexvol": vertexvol_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "freesurfer.vertexvol": vertexvol_outputs,
-    }.get(t)
-
-
 class VertexvolOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `vertexvol(...)`.
+    Output object returned when calling `VertexvolParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -73,7 +50,7 @@ def vertexvol_params(
     output_file: str | None = None,
     use_th3: bool = False,
     no_th3: bool = False,
-) -> VertexvolParameters:
+) -> VertexvolParametersTagged:
     """
     Build parameters.
     
@@ -88,7 +65,7 @@ def vertexvol_params(
         Parameter dictionary
     """
     params = {
-        "@type": "freesurfer.vertexvol",
+        "@type": "freesurfer/vertexvol",
         "subject": subject,
         "left_hemisphere": left_hemisphere,
         "right_hemisphere": right_hemisphere,
@@ -117,20 +94,20 @@ def vertexvol_cargs(
     cargs.append("vertexvol")
     cargs.extend([
         "--s",
-        params.get("subject")
+        params.get("subject", None)
     ])
-    if params.get("left_hemisphere"):
+    if params.get("left_hemisphere", False):
         cargs.append("--lh")
-    if params.get("right_hemisphere"):
+    if params.get("right_hemisphere", False):
         cargs.append("--rh")
-    if params.get("output_file") is not None:
+    if params.get("output_file", None) is not None:
         cargs.extend([
             "--o",
-            params.get("output_file")
+            params.get("output_file", None)
         ])
-    if params.get("use_th3"):
+    if params.get("use_th3", False):
         cargs.append("--th3")
-    if params.get("no_th3"):
+    if params.get("no_th3", False):
         cargs.append("--no-th3")
     return cargs
 
@@ -150,7 +127,7 @@ def vertexvol_outputs(
     """
     ret = VertexvolOutputs(
         root=execution.output_file("."),
-        output_volume_file=execution.output_file(params.get("output_file")) if (params.get("output_file") is not None) else None,
+        output_volume_file=execution.output_file(params.get("output_file", None)) if (params.get("output_file") is not None) else None,
     )
     return ret
 
@@ -226,7 +203,6 @@ def vertexvol(
 __all__ = [
     "VERTEXVOL_METADATA",
     "VertexvolOutputs",
-    "VertexvolParameters",
     "vertexvol",
     "vertexvol_execute",
     "vertexvol_params",

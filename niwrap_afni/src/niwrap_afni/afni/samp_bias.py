@@ -14,7 +14,17 @@ SAMP_BIAS_METADATA = Metadata(
 
 
 SampBiasParameters = typing.TypedDict('SampBiasParameters', {
-    "@type": typing.Literal["afni.SampBias"],
+    "@type": typing.NotRequired[typing.Literal["afni/SampBias"]],
+    "specfile": InputPathType,
+    "surfname": str,
+    "plimit": typing.NotRequired[float | None],
+    "dlimit": typing.NotRequired[float | None],
+    "outfile": str,
+    "prefix": typing.NotRequired[str | None],
+    "segdo": typing.NotRequired[str | None],
+})
+SampBiasParametersTagged = typing.TypedDict('SampBiasParametersTagged', {
+    "@type": typing.Literal["afni/SampBias"],
     "specfile": InputPathType,
     "surfname": str,
     "plimit": typing.NotRequired[float | None],
@@ -25,41 +35,9 @@ SampBiasParameters = typing.TypedDict('SampBiasParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "afni.SampBias": samp_bias_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "afni.SampBias": samp_bias_outputs,
-    }.get(t)
-
-
 class SampBiasOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `samp_bias(...)`.
+    Output object returned when calling `SampBiasParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -77,7 +55,7 @@ def samp_bias_params(
     dlimit: float | None = None,
     prefix: str | None = None,
     segdo: str | None = None,
-) -> SampBiasParameters:
+) -> SampBiasParametersTagged:
     """
     Build parameters.
     
@@ -94,7 +72,7 @@ def samp_bias_params(
         Parameter dictionary
     """
     params = {
-        "@type": "afni.SampBias",
+        "@type": "afni/SampBias",
         "specfile": specfile,
         "surfname": surfname,
         "outfile": outfile,
@@ -127,35 +105,35 @@ def samp_bias_cargs(
     cargs.append("SampBias")
     cargs.extend([
         "-spec",
-        execution.input_file(params.get("specfile"))
+        execution.input_file(params.get("specfile", None))
     ])
     cargs.extend([
         "-surf",
-        params.get("surfname")
+        params.get("surfname", None)
     ])
-    if params.get("plimit") is not None:
+    if params.get("plimit", None) is not None:
         cargs.extend([
             "-plimit",
-            str(params.get("plimit"))
+            str(params.get("plimit", None))
         ])
-    if params.get("dlimit") is not None:
+    if params.get("dlimit", None) is not None:
         cargs.extend([
             "-dlimit",
-            str(params.get("dlimit"))
+            str(params.get("dlimit", None))
         ])
     cargs.extend([
         "-out",
-        params.get("outfile")
+        params.get("outfile", None)
     ])
-    if params.get("prefix") is not None:
+    if params.get("prefix", None) is not None:
         cargs.extend([
             "-prefix",
-            params.get("prefix")
+            params.get("prefix", None)
         ])
-    if params.get("segdo") is not None:
+    if params.get("segdo", None) is not None:
         cargs.extend([
             "-segdo",
-            params.get("segdo")
+            params.get("segdo", None)
         ])
     return cargs
 
@@ -175,8 +153,8 @@ def samp_bias_outputs(
     """
     ret = SampBiasOutputs(
         root=execution.output_file("."),
-        out_1_d=execution.output_file(params.get("outfile") + ".1D"),
-        out_prefix=execution.output_file(params.get("prefix")) if (params.get("prefix") is not None) else None,
+        out_1_d=execution.output_file(params.get("outfile", None) + ".1D"),
+        out_prefix=execution.output_file(params.get("prefix", None)) if (params.get("prefix") is not None) else None,
     )
     return ret
 
@@ -258,7 +236,6 @@ def samp_bias(
 __all__ = [
     "SAMP_BIAS_METADATA",
     "SampBiasOutputs",
-    "SampBiasParameters",
     "samp_bias",
     "samp_bias_execute",
     "samp_bias_params",

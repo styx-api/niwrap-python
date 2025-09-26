@@ -14,7 +14,16 @@ PAIRREG_METADATA = Metadata(
 
 
 PairregParameters = typing.TypedDict('PairregParameters', {
-    "@type": typing.Literal["fsl.pairreg"],
+    "@type": typing.NotRequired[typing.Literal["fsl/pairreg"]],
+    "brain1": InputPathType,
+    "brain2": InputPathType,
+    "skull1": InputPathType,
+    "skull2": InputPathType,
+    "outputmatrix": InputPathType,
+    "extra_flirt_args": typing.NotRequired[str | None],
+})
+PairregParametersTagged = typing.TypedDict('PairregParametersTagged', {
+    "@type": typing.Literal["fsl/pairreg"],
     "brain1": InputPathType,
     "brain2": InputPathType,
     "skull1": InputPathType,
@@ -24,41 +33,9 @@ PairregParameters = typing.TypedDict('PairregParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "fsl.pairreg": pairreg_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "fsl.pairreg": pairreg_outputs,
-    }.get(t)
-
-
 class PairregOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `pairreg(...)`.
+    Output object returned when calling `PairregParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -73,7 +50,7 @@ def pairreg_params(
     skull2: InputPathType,
     outputmatrix: InputPathType,
     extra_flirt_args: str | None = None,
-) -> PairregParameters:
+) -> PairregParametersTagged:
     """
     Build parameters.
     
@@ -88,7 +65,7 @@ def pairreg_params(
         Parameter dictionary
     """
     params = {
-        "@type": "fsl.pairreg",
+        "@type": "fsl/pairreg",
         "brain1": brain1,
         "brain2": brain2,
         "skull1": skull1,
@@ -115,13 +92,13 @@ def pairreg_cargs(
     """
     cargs = []
     cargs.append("pairreg")
-    cargs.append(execution.input_file(params.get("brain1")))
-    cargs.append(execution.input_file(params.get("brain2")))
-    cargs.append(execution.input_file(params.get("skull1")))
-    cargs.append(execution.input_file(params.get("skull2")))
-    cargs.append(execution.input_file(params.get("outputmatrix")))
-    if params.get("extra_flirt_args") is not None:
-        cargs.append(params.get("extra_flirt_args"))
+    cargs.append(execution.input_file(params.get("brain1", None)))
+    cargs.append(execution.input_file(params.get("brain2", None)))
+    cargs.append(execution.input_file(params.get("skull1", None)))
+    cargs.append(execution.input_file(params.get("skull2", None)))
+    cargs.append(execution.input_file(params.get("outputmatrix", None)))
+    if params.get("extra_flirt_args", None) is not None:
+        cargs.append(params.get("extra_flirt_args", None))
     return cargs
 
 
@@ -140,7 +117,7 @@ def pairreg_outputs(
     """
     ret = PairregOutputs(
         root=execution.output_file("."),
-        output_matrix=execution.output_file(pathlib.Path(params.get("outputmatrix")).name),
+        output_matrix=execution.output_file(pathlib.Path(params.get("outputmatrix", None)).name),
     )
     return ret
 
@@ -216,7 +193,6 @@ def pairreg(
 __all__ = [
     "PAIRREG_METADATA",
     "PairregOutputs",
-    "PairregParameters",
     "pairreg",
     "pairreg_execute",
     "pairreg_params",

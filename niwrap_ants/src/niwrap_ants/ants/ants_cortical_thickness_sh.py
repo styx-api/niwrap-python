@@ -14,7 +14,35 @@ ANTS_CORTICAL_THICKNESS_SH_METADATA = Metadata(
 
 
 AntsCorticalThicknessShParameters = typing.TypedDict('AntsCorticalThicknessShParameters', {
-    "@type": typing.Literal["ants.antsCorticalThickness.sh"],
+    "@type": typing.NotRequired[typing.Literal["ants/antsCorticalThickness.sh"]],
+    "image_dimension": typing.Literal[2, 3],
+    "anatomical_image": InputPathType,
+    "brain_template": InputPathType,
+    "brain_extraction_probability_mask": InputPathType,
+    "brain_segmentation_priors": str,
+    "output_prefix": str,
+    "image_file_suffix": typing.NotRequired[str | None],
+    "template_for_t1_registration": typing.NotRequired[InputPathType | None],
+    "extraction_registration_mask": typing.NotRequired[InputPathType | None],
+    "keep_temporary_files": typing.NotRequired[typing.Literal[0, 1] | None],
+    "denoise_anatomical_images": typing.NotRequired[typing.Literal[0, 1] | None],
+    "max_iterations_for_registration": typing.NotRequired[str | None],
+    "atropos_prior_segmentation_weight": typing.NotRequired[float | None],
+    "number_of_segmentation_iterations": typing.NotRequired[int | None],
+    "posterior_formulation": typing.NotRequired[str | None],
+    "use_floating_point_precision": typing.NotRequired[typing.Literal[0, 1] | None],
+    "use_random_seeding": typing.NotRequired[typing.Literal[0, 1] | None],
+    "use_b_spline_smoothing": typing.NotRequired[typing.Literal[0, 1] | None],
+    "cortical_thickness_prior_image": typing.NotRequired[InputPathType | None],
+    "label_propagation": typing.NotRequired[str | None],
+    "additional_priors_for_thickness": typing.NotRequired[str | None],
+    "use_quick_registration_parameters": typing.NotRequired[typing.Literal[0, 1] | None],
+    "atropos_iterations": typing.NotRequired[int | None],
+    "script_stage_to_run": typing.NotRequired[int | None],
+    "test_debug_mode": typing.NotRequired[int | None],
+})
+AntsCorticalThicknessShParametersTagged = typing.TypedDict('AntsCorticalThicknessShParametersTagged', {
+    "@type": typing.Literal["ants/antsCorticalThickness.sh"],
     "image_dimension": typing.Literal[2, 3],
     "anatomical_image": InputPathType,
     "brain_template": InputPathType,
@@ -43,41 +71,9 @@ AntsCorticalThicknessShParameters = typing.TypedDict('AntsCorticalThicknessShPar
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "ants.antsCorticalThickness.sh": ants_cortical_thickness_sh_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "ants.antsCorticalThickness.sh": ants_cortical_thickness_sh_outputs,
-    }.get(t)
-
-
 class AntsCorticalThicknessShOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `ants_cortical_thickness_sh(...)`.
+    Output object returned when calling `AntsCorticalThicknessShParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -117,7 +113,7 @@ def ants_cortical_thickness_sh_params(
     atropos_iterations: int | None = None,
     script_stage_to_run: int | None = None,
     test_debug_mode: int | None = None,
-) -> AntsCorticalThicknessShParameters:
+) -> AntsCorticalThicknessShParametersTagged:
     """
     Build parameters.
     
@@ -174,7 +170,7 @@ def ants_cortical_thickness_sh_params(
         Parameter dictionary
     """
     params = {
-        "@type": "ants.antsCorticalThickness.sh",
+        "@type": "ants/antsCorticalThickness.sh",
         "image_dimension": image_dimension,
         "anatomical_image": anatomical_image,
         "brain_template": brain_template,
@@ -240,122 +236,122 @@ def ants_cortical_thickness_sh_cargs(
     cargs.append("antsCorticalThickness.sh")
     cargs.extend([
         "-d",
-        str(params.get("image_dimension"))
+        str(params.get("image_dimension", None))
     ])
     cargs.extend([
         "-a",
-        execution.input_file(params.get("anatomical_image"))
+        execution.input_file(params.get("anatomical_image", None))
     ])
     cargs.extend([
         "-e",
-        execution.input_file(params.get("brain_template"))
+        execution.input_file(params.get("brain_template", None))
     ])
     cargs.extend([
         "-m",
-        execution.input_file(params.get("brain_extraction_probability_mask"))
+        execution.input_file(params.get("brain_extraction_probability_mask", None))
     ])
     cargs.extend([
         "-p",
-        params.get("brain_segmentation_priors")
+        params.get("brain_segmentation_priors", None)
     ])
     cargs.extend([
         "-o",
-        params.get("output_prefix")
+        params.get("output_prefix", None)
     ])
-    if params.get("image_file_suffix") is not None:
+    if params.get("image_file_suffix", None) is not None:
         cargs.extend([
             "-s",
-            params.get("image_file_suffix")
+            params.get("image_file_suffix", None)
         ])
-    if params.get("template_for_t1_registration") is not None:
+    if params.get("template_for_t1_registration", None) is not None:
         cargs.extend([
             "-t",
-            execution.input_file(params.get("template_for_t1_registration"))
+            execution.input_file(params.get("template_for_t1_registration", None))
         ])
-    if params.get("extraction_registration_mask") is not None:
+    if params.get("extraction_registration_mask", None) is not None:
         cargs.extend([
             "-f",
-            execution.input_file(params.get("extraction_registration_mask"))
+            execution.input_file(params.get("extraction_registration_mask", None))
         ])
-    if params.get("keep_temporary_files") is not None:
+    if params.get("keep_temporary_files", None) is not None:
         cargs.extend([
             "-k",
-            str(params.get("keep_temporary_files"))
+            str(params.get("keep_temporary_files", None))
         ])
-    if params.get("denoise_anatomical_images") is not None:
+    if params.get("denoise_anatomical_images", None) is not None:
         cargs.extend([
             "-g",
-            str(params.get("denoise_anatomical_images"))
+            str(params.get("denoise_anatomical_images", None))
         ])
-    if params.get("max_iterations_for_registration") is not None:
+    if params.get("max_iterations_for_registration", None) is not None:
         cargs.extend([
             "-i",
-            params.get("max_iterations_for_registration")
+            params.get("max_iterations_for_registration", None)
         ])
-    if params.get("atropos_prior_segmentation_weight") is not None:
+    if params.get("atropos_prior_segmentation_weight", None) is not None:
         cargs.extend([
             "-w",
-            str(params.get("atropos_prior_segmentation_weight"))
+            str(params.get("atropos_prior_segmentation_weight", None))
         ])
-    if params.get("number_of_segmentation_iterations") is not None:
+    if params.get("number_of_segmentation_iterations", None) is not None:
         cargs.extend([
             "-n",
-            str(params.get("number_of_segmentation_iterations"))
+            str(params.get("number_of_segmentation_iterations", None))
         ])
-    if params.get("posterior_formulation") is not None:
+    if params.get("posterior_formulation", None) is not None:
         cargs.extend([
             "-b",
-            params.get("posterior_formulation")
+            params.get("posterior_formulation", None)
         ])
-    if params.get("use_floating_point_precision") is not None:
+    if params.get("use_floating_point_precision", None) is not None:
         cargs.extend([
             "-j",
-            str(params.get("use_floating_point_precision"))
+            str(params.get("use_floating_point_precision", None))
         ])
-    if params.get("use_random_seeding") is not None:
+    if params.get("use_random_seeding", None) is not None:
         cargs.extend([
             "-u",
-            str(params.get("use_random_seeding"))
+            str(params.get("use_random_seeding", None))
         ])
-    if params.get("use_b_spline_smoothing") is not None:
+    if params.get("use_b_spline_smoothing", None) is not None:
         cargs.extend([
             "-v",
-            str(params.get("use_b_spline_smoothing"))
+            str(params.get("use_b_spline_smoothing", None))
         ])
-    if params.get("cortical_thickness_prior_image") is not None:
+    if params.get("cortical_thickness_prior_image", None) is not None:
         cargs.extend([
             "-r",
-            execution.input_file(params.get("cortical_thickness_prior_image"))
+            execution.input_file(params.get("cortical_thickness_prior_image", None))
         ])
-    if params.get("label_propagation") is not None:
+    if params.get("label_propagation", None) is not None:
         cargs.extend([
             "-l",
-            params.get("label_propagation")
+            params.get("label_propagation", None)
         ])
-    if params.get("additional_priors_for_thickness") is not None:
+    if params.get("additional_priors_for_thickness", None) is not None:
         cargs.extend([
             "-c",
-            params.get("additional_priors_for_thickness")
+            params.get("additional_priors_for_thickness", None)
         ])
-    if params.get("use_quick_registration_parameters") is not None:
+    if params.get("use_quick_registration_parameters", None) is not None:
         cargs.extend([
             "-q",
-            str(params.get("use_quick_registration_parameters"))
+            str(params.get("use_quick_registration_parameters", None))
         ])
-    if params.get("atropos_iterations") is not None:
+    if params.get("atropos_iterations", None) is not None:
         cargs.extend([
             "-x",
-            str(params.get("atropos_iterations"))
+            str(params.get("atropos_iterations", None))
         ])
-    if params.get("script_stage_to_run") is not None:
+    if params.get("script_stage_to_run", None) is not None:
         cargs.extend([
             "-y",
-            str(params.get("script_stage_to_run"))
+            str(params.get("script_stage_to_run", None))
         ])
-    if params.get("test_debug_mode") is not None:
+    if params.get("test_debug_mode", None) is not None:
         cargs.extend([
             "-z",
-            str(params.get("test_debug_mode"))
+            str(params.get("test_debug_mode", None))
         ])
     return cargs
 
@@ -375,10 +371,10 @@ def ants_cortical_thickness_sh_outputs(
     """
     ret = AntsCorticalThicknessShOutputs(
         root=execution.output_file("."),
-        cortical_thickness=execution.output_file(params.get("output_prefix") + "CorticalThickness.nii.gz"),
-        brain_extraction_mask=execution.output_file(params.get("output_prefix") + "BrainExtractionMask.nii.gz"),
-        brain_segmentation=execution.output_file(params.get("output_prefix") + "BrainSegmentation.nii.gz"),
-        segmentation_posteriors=execution.output_file(params.get("output_prefix") + "BrainSegmentationPosteriors.nii.gz"),
+        cortical_thickness=execution.output_file(params.get("output_prefix", None) + "CorticalThickness.nii.gz"),
+        brain_extraction_mask=execution.output_file(params.get("output_prefix", None) + "BrainExtractionMask.nii.gz"),
+        brain_segmentation=execution.output_file(params.get("output_prefix", None) + "BrainSegmentation.nii.gz"),
+        segmentation_posteriors=execution.output_file(params.get("output_prefix", None) + "BrainSegmentationPosteriors.nii.gz"),
     )
     return ret
 
@@ -538,7 +534,6 @@ def ants_cortical_thickness_sh(
 __all__ = [
     "ANTS_CORTICAL_THICKNESS_SH_METADATA",
     "AntsCorticalThicknessShOutputs",
-    "AntsCorticalThicknessShParameters",
     "ants_cortical_thickness_sh",
     "ants_cortical_thickness_sh_execute",
     "ants_cortical_thickness_sh_params",

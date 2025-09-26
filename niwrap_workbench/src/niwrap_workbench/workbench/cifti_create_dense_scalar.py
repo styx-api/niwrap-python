@@ -14,35 +14,64 @@ CIFTI_CREATE_DENSE_SCALAR_METADATA = Metadata(
 
 
 CiftiCreateDenseScalarVolumeParameters = typing.TypedDict('CiftiCreateDenseScalarVolumeParameters', {
-    "@type": typing.Literal["workbench.cifti-create-dense-scalar.volume"],
+    "@type": typing.NotRequired[typing.Literal["volume"]],
+    "volume_data": InputPathType,
+    "structure_label_volume": InputPathType,
+})
+CiftiCreateDenseScalarVolumeParametersTagged = typing.TypedDict('CiftiCreateDenseScalarVolumeParametersTagged', {
+    "@type": typing.Literal["volume"],
     "volume_data": InputPathType,
     "structure_label_volume": InputPathType,
 })
 
 
 CiftiCreateDenseScalarLeftMetricParameters = typing.TypedDict('CiftiCreateDenseScalarLeftMetricParameters', {
-    "@type": typing.Literal["workbench.cifti-create-dense-scalar.left_metric"],
+    "@type": typing.NotRequired[typing.Literal["left_metric"]],
+    "metric": InputPathType,
+    "opt_roi_left_roi_metric": typing.NotRequired[InputPathType | None],
+})
+CiftiCreateDenseScalarLeftMetricParametersTagged = typing.TypedDict('CiftiCreateDenseScalarLeftMetricParametersTagged', {
+    "@type": typing.Literal["left_metric"],
     "metric": InputPathType,
     "opt_roi_left_roi_metric": typing.NotRequired[InputPathType | None],
 })
 
 
 CiftiCreateDenseScalarRightMetricParameters = typing.TypedDict('CiftiCreateDenseScalarRightMetricParameters', {
-    "@type": typing.Literal["workbench.cifti-create-dense-scalar.right_metric"],
+    "@type": typing.NotRequired[typing.Literal["right_metric"]],
+    "metric": InputPathType,
+    "opt_roi_right_roi_metric": typing.NotRequired[InputPathType | None],
+})
+CiftiCreateDenseScalarRightMetricParametersTagged = typing.TypedDict('CiftiCreateDenseScalarRightMetricParametersTagged', {
+    "@type": typing.Literal["right_metric"],
     "metric": InputPathType,
     "opt_roi_right_roi_metric": typing.NotRequired[InputPathType | None],
 })
 
 
 CiftiCreateDenseScalarCerebellumMetricParameters = typing.TypedDict('CiftiCreateDenseScalarCerebellumMetricParameters', {
-    "@type": typing.Literal["workbench.cifti-create-dense-scalar.cerebellum_metric"],
+    "@type": typing.NotRequired[typing.Literal["cerebellum_metric"]],
+    "metric": InputPathType,
+    "opt_roi_cerebellum_roi_metric": typing.NotRequired[InputPathType | None],
+})
+CiftiCreateDenseScalarCerebellumMetricParametersTagged = typing.TypedDict('CiftiCreateDenseScalarCerebellumMetricParametersTagged', {
+    "@type": typing.Literal["cerebellum_metric"],
     "metric": InputPathType,
     "opt_roi_cerebellum_roi_metric": typing.NotRequired[InputPathType | None],
 })
 
 
 CiftiCreateDenseScalarParameters = typing.TypedDict('CiftiCreateDenseScalarParameters', {
-    "@type": typing.Literal["workbench.cifti-create-dense-scalar"],
+    "@type": typing.NotRequired[typing.Literal["workbench/cifti-create-dense-scalar"]],
+    "cifti_out": str,
+    "volume": typing.NotRequired[CiftiCreateDenseScalarVolumeParameters | None],
+    "left_metric": typing.NotRequired[CiftiCreateDenseScalarLeftMetricParameters | None],
+    "right_metric": typing.NotRequired[CiftiCreateDenseScalarRightMetricParameters | None],
+    "cerebellum_metric": typing.NotRequired[CiftiCreateDenseScalarCerebellumMetricParameters | None],
+    "opt_name_file_file": typing.NotRequired[str | None],
+})
+CiftiCreateDenseScalarParametersTagged = typing.TypedDict('CiftiCreateDenseScalarParametersTagged', {
+    "@type": typing.Literal["workbench/cifti-create-dense-scalar"],
     "cifti_out": str,
     "volume": typing.NotRequired[CiftiCreateDenseScalarVolumeParameters | None],
     "left_metric": typing.NotRequired[CiftiCreateDenseScalarLeftMetricParameters | None],
@@ -52,46 +81,10 @@ CiftiCreateDenseScalarParameters = typing.TypedDict('CiftiCreateDenseScalarParam
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "workbench.cifti-create-dense-scalar": cifti_create_dense_scalar_cargs,
-        "workbench.cifti-create-dense-scalar.volume": cifti_create_dense_scalar_volume_cargs,
-        "workbench.cifti-create-dense-scalar.left_metric": cifti_create_dense_scalar_left_metric_cargs,
-        "workbench.cifti-create-dense-scalar.right_metric": cifti_create_dense_scalar_right_metric_cargs,
-        "workbench.cifti-create-dense-scalar.cerebellum_metric": cifti_create_dense_scalar_cerebellum_metric_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "workbench.cifti-create-dense-scalar": cifti_create_dense_scalar_outputs,
-    }.get(t)
-
-
 def cifti_create_dense_scalar_volume_params(
     volume_data: InputPathType,
     structure_label_volume: InputPathType,
-) -> CiftiCreateDenseScalarVolumeParameters:
+) -> CiftiCreateDenseScalarVolumeParametersTagged:
     """
     Build parameters.
     
@@ -104,7 +97,7 @@ def cifti_create_dense_scalar_volume_params(
         Parameter dictionary
     """
     params = {
-        "@type": "workbench.cifti-create-dense-scalar.volume",
+        "@type": "volume",
         "volume_data": volume_data,
         "structure_label_volume": structure_label_volume,
     }
@@ -126,15 +119,15 @@ def cifti_create_dense_scalar_volume_cargs(
     """
     cargs = []
     cargs.append("-volume")
-    cargs.append(execution.input_file(params.get("volume_data")))
-    cargs.append(execution.input_file(params.get("structure_label_volume")))
+    cargs.append(execution.input_file(params.get("volume_data", None)))
+    cargs.append(execution.input_file(params.get("structure_label_volume", None)))
     return cargs
 
 
 def cifti_create_dense_scalar_left_metric_params(
     metric: InputPathType,
     opt_roi_left_roi_metric: InputPathType | None = None,
-) -> CiftiCreateDenseScalarLeftMetricParameters:
+) -> CiftiCreateDenseScalarLeftMetricParametersTagged:
     """
     Build parameters.
     
@@ -146,7 +139,7 @@ def cifti_create_dense_scalar_left_metric_params(
         Parameter dictionary
     """
     params = {
-        "@type": "workbench.cifti-create-dense-scalar.left_metric",
+        "@type": "left_metric",
         "metric": metric,
     }
     if opt_roi_left_roi_metric is not None:
@@ -169,11 +162,11 @@ def cifti_create_dense_scalar_left_metric_cargs(
     """
     cargs = []
     cargs.append("-left-metric")
-    cargs.append(execution.input_file(params.get("metric")))
-    if params.get("opt_roi_left_roi_metric") is not None:
+    cargs.append(execution.input_file(params.get("metric", None)))
+    if params.get("opt_roi_left_roi_metric", None) is not None:
         cargs.extend([
             "-roi-left",
-            execution.input_file(params.get("opt_roi_left_roi_metric"))
+            execution.input_file(params.get("opt_roi_left_roi_metric", None))
         ])
     return cargs
 
@@ -181,7 +174,7 @@ def cifti_create_dense_scalar_left_metric_cargs(
 def cifti_create_dense_scalar_right_metric_params(
     metric: InputPathType,
     opt_roi_right_roi_metric: InputPathType | None = None,
-) -> CiftiCreateDenseScalarRightMetricParameters:
+) -> CiftiCreateDenseScalarRightMetricParametersTagged:
     """
     Build parameters.
     
@@ -193,7 +186,7 @@ def cifti_create_dense_scalar_right_metric_params(
         Parameter dictionary
     """
     params = {
-        "@type": "workbench.cifti-create-dense-scalar.right_metric",
+        "@type": "right_metric",
         "metric": metric,
     }
     if opt_roi_right_roi_metric is not None:
@@ -216,11 +209,11 @@ def cifti_create_dense_scalar_right_metric_cargs(
     """
     cargs = []
     cargs.append("-right-metric")
-    cargs.append(execution.input_file(params.get("metric")))
-    if params.get("opt_roi_right_roi_metric") is not None:
+    cargs.append(execution.input_file(params.get("metric", None)))
+    if params.get("opt_roi_right_roi_metric", None) is not None:
         cargs.extend([
             "-roi-right",
-            execution.input_file(params.get("opt_roi_right_roi_metric"))
+            execution.input_file(params.get("opt_roi_right_roi_metric", None))
         ])
     return cargs
 
@@ -228,7 +221,7 @@ def cifti_create_dense_scalar_right_metric_cargs(
 def cifti_create_dense_scalar_cerebellum_metric_params(
     metric: InputPathType,
     opt_roi_cerebellum_roi_metric: InputPathType | None = None,
-) -> CiftiCreateDenseScalarCerebellumMetricParameters:
+) -> CiftiCreateDenseScalarCerebellumMetricParametersTagged:
     """
     Build parameters.
     
@@ -240,7 +233,7 @@ def cifti_create_dense_scalar_cerebellum_metric_params(
         Parameter dictionary
     """
     params = {
-        "@type": "workbench.cifti-create-dense-scalar.cerebellum_metric",
+        "@type": "cerebellum_metric",
         "metric": metric,
     }
     if opt_roi_cerebellum_roi_metric is not None:
@@ -263,18 +256,18 @@ def cifti_create_dense_scalar_cerebellum_metric_cargs(
     """
     cargs = []
     cargs.append("-cerebellum-metric")
-    cargs.append(execution.input_file(params.get("metric")))
-    if params.get("opt_roi_cerebellum_roi_metric") is not None:
+    cargs.append(execution.input_file(params.get("metric", None)))
+    if params.get("opt_roi_cerebellum_roi_metric", None) is not None:
         cargs.extend([
             "-roi-cerebellum",
-            execution.input_file(params.get("opt_roi_cerebellum_roi_metric"))
+            execution.input_file(params.get("opt_roi_cerebellum_roi_metric", None))
         ])
     return cargs
 
 
 class CiftiCreateDenseScalarOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `cifti_create_dense_scalar(...)`.
+    Output object returned when calling `CiftiCreateDenseScalarParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -289,7 +282,7 @@ def cifti_create_dense_scalar_params(
     right_metric: CiftiCreateDenseScalarRightMetricParameters | None = None,
     cerebellum_metric: CiftiCreateDenseScalarCerebellumMetricParameters | None = None,
     opt_name_file_file: str | None = None,
-) -> CiftiCreateDenseScalarParameters:
+) -> CiftiCreateDenseScalarParametersTagged:
     """
     Build parameters.
     
@@ -305,7 +298,7 @@ def cifti_create_dense_scalar_params(
         Parameter dictionary
     """
     params = {
-        "@type": "workbench.cifti-create-dense-scalar",
+        "@type": "workbench/cifti-create-dense-scalar",
         "cifti_out": cifti_out,
     }
     if volume is not None:
@@ -337,19 +330,19 @@ def cifti_create_dense_scalar_cargs(
     cargs = []
     cargs.append("wb_command")
     cargs.append("-cifti-create-dense-scalar")
-    cargs.append(params.get("cifti_out"))
-    if params.get("volume") is not None:
-        cargs.extend(dyn_cargs(params.get("volume")["@type"])(params.get("volume"), execution))
-    if params.get("left_metric") is not None:
-        cargs.extend(dyn_cargs(params.get("left_metric")["@type"])(params.get("left_metric"), execution))
-    if params.get("right_metric") is not None:
-        cargs.extend(dyn_cargs(params.get("right_metric")["@type"])(params.get("right_metric"), execution))
-    if params.get("cerebellum_metric") is not None:
-        cargs.extend(dyn_cargs(params.get("cerebellum_metric")["@type"])(params.get("cerebellum_metric"), execution))
-    if params.get("opt_name_file_file") is not None:
+    cargs.append(params.get("cifti_out", None))
+    if params.get("volume", None) is not None:
+        cargs.extend(cifti_create_dense_scalar_volume_cargs(params.get("volume", None), execution))
+    if params.get("left_metric", None) is not None:
+        cargs.extend(cifti_create_dense_scalar_left_metric_cargs(params.get("left_metric", None), execution))
+    if params.get("right_metric", None) is not None:
+        cargs.extend(cifti_create_dense_scalar_right_metric_cargs(params.get("right_metric", None), execution))
+    if params.get("cerebellum_metric", None) is not None:
+        cargs.extend(cifti_create_dense_scalar_cerebellum_metric_cargs(params.get("cerebellum_metric", None), execution))
+    if params.get("opt_name_file_file", None) is not None:
         cargs.extend([
             "-name-file",
-            params.get("opt_name_file_file")
+            params.get("opt_name_file_file", None)
         ])
     return cargs
 
@@ -369,7 +362,7 @@ def cifti_create_dense_scalar_outputs(
     """
     ret = CiftiCreateDenseScalarOutputs(
         root=execution.output_file("."),
-        cifti_out=execution.output_file(params.get("cifti_out")),
+        cifti_out=execution.output_file(params.get("cifti_out", None)),
     )
     return ret
 
@@ -529,12 +522,7 @@ def cifti_create_dense_scalar(
 
 __all__ = [
     "CIFTI_CREATE_DENSE_SCALAR_METADATA",
-    "CiftiCreateDenseScalarCerebellumMetricParameters",
-    "CiftiCreateDenseScalarLeftMetricParameters",
     "CiftiCreateDenseScalarOutputs",
-    "CiftiCreateDenseScalarParameters",
-    "CiftiCreateDenseScalarRightMetricParameters",
-    "CiftiCreateDenseScalarVolumeParameters",
     "cifti_create_dense_scalar",
     "cifti_create_dense_scalar_cerebellum_metric_params",
     "cifti_create_dense_scalar_execute",

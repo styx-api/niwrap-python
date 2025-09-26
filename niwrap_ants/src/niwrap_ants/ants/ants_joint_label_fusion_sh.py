@@ -14,7 +14,22 @@ ANTS_JOINT_LABEL_FUSION_SH_METADATA = Metadata(
 
 
 AntsJointLabelFusionShParameters = typing.TypedDict('AntsJointLabelFusionShParameters', {
-    "@type": typing.Literal["ants.antsJointLabelFusion.sh"],
+    "@type": typing.NotRequired[typing.Literal["ants/antsJointLabelFusion.sh"]],
+    "dimensionality": typing.NotRequired[typing.Literal[2, 3] | None],
+    "output": typing.NotRequired[str | None],
+    "atlas_image_mrf": typing.NotRequired[str | None],
+    "atlas_segmentation_mrf": typing.NotRequired[str | None],
+    "rigid_transform": typing.NotRequired[str | None],
+    "similarity_metric": typing.NotRequired[str | None],
+    "other_options": typing.NotRequired[str | None],
+    "verbose": typing.NotRequired[typing.Literal[0, 1] | None],
+    "target_image": str,
+    "mask_image": str,
+    "rigid_transform_additional_options": typing.NotRequired[str | None],
+    "similarity_metric_additional_options": typing.NotRequired[str | None],
+})
+AntsJointLabelFusionShParametersTagged = typing.TypedDict('AntsJointLabelFusionShParametersTagged', {
+    "@type": typing.Literal["ants/antsJointLabelFusion.sh"],
     "dimensionality": typing.NotRequired[typing.Literal[2, 3] | None],
     "output": typing.NotRequired[str | None],
     "atlas_image_mrf": typing.NotRequired[str | None],
@@ -30,41 +45,9 @@ AntsJointLabelFusionShParameters = typing.TypedDict('AntsJointLabelFusionShParam
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "ants.antsJointLabelFusion.sh": ants_joint_label_fusion_sh_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "ants.antsJointLabelFusion.sh": ants_joint_label_fusion_sh_outputs,
-    }.get(t)
-
-
 class AntsJointLabelFusionShOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `ants_joint_label_fusion_sh(...)`.
+    Output object returned when calling `AntsJointLabelFusionShParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -85,7 +68,7 @@ def ants_joint_label_fusion_sh_params(
     verbose: typing.Literal[0, 1] | None = None,
     rigid_transform_additional_options: str | None = None,
     similarity_metric_additional_options: str | None = None,
-) -> AntsJointLabelFusionShParameters:
+) -> AntsJointLabelFusionShParametersTagged:
     """
     Build parameters.
     
@@ -109,7 +92,7 @@ def ants_joint_label_fusion_sh_params(
         Parameter dictionary
     """
     params = {
-        "@type": "ants.antsJointLabelFusion.sh",
+        "@type": "ants/antsJointLabelFusion.sh",
         "target_image": target_image,
         "mask_image": mask_image,
     }
@@ -151,63 +134,63 @@ def ants_joint_label_fusion_sh_cargs(
     """
     cargs = []
     cargs.append("antsJointLabelFusion.sh")
-    if params.get("dimensionality") is not None:
+    if params.get("dimensionality", None) is not None:
         cargs.extend([
             "-d",
-            str(params.get("dimensionality"))
+            str(params.get("dimensionality", None))
         ])
-    if params.get("output") is not None:
+    if params.get("output", None) is not None:
         cargs.extend([
             "-o",
-            params.get("output")
+            params.get("output", None)
         ])
-    if params.get("atlas_image_mrf") is not None:
+    if params.get("atlas_image_mrf", None) is not None:
         cargs.extend([
             "-a",
-            params.get("atlas_image_mrf")
+            params.get("atlas_image_mrf", None)
         ])
-    if params.get("atlas_segmentation_mrf") is not None:
+    if params.get("atlas_segmentation_mrf", None) is not None:
         cargs.extend([
             "-l",
-            params.get("atlas_segmentation_mrf")
+            params.get("atlas_segmentation_mrf", None)
         ])
-    if params.get("rigid_transform") is not None:
+    if params.get("rigid_transform", None) is not None:
         cargs.extend([
             "-g",
-            params.get("rigid_transform")
+            params.get("rigid_transform", None)
         ])
-    if params.get("similarity_metric") is not None:
+    if params.get("similarity_metric", None) is not None:
         cargs.extend([
             "-s",
-            params.get("similarity_metric")
+            params.get("similarity_metric", None)
         ])
-    if params.get("other_options") is not None:
+    if params.get("other_options", None) is not None:
         cargs.extend([
             "-k",
-            params.get("other_options")
+            params.get("other_options", None)
         ])
-    if params.get("verbose") is not None:
+    if params.get("verbose", None) is not None:
         cargs.extend([
             "-v",
-            str(params.get("verbose"))
+            str(params.get("verbose", None))
         ])
     cargs.extend([
         "-i",
-        params.get("target_image")
+        params.get("target_image", None)
     ])
     cargs.extend([
         "-m",
-        params.get("mask_image")
+        params.get("mask_image", None)
     ])
-    if params.get("rigid_transform_additional_options") is not None:
+    if params.get("rigid_transform_additional_options", None) is not None:
         cargs.extend([
             "-g",
-            params.get("rigid_transform_additional_options")
+            params.get("rigid_transform_additional_options", None)
         ])
-    if params.get("similarity_metric_additional_options") is not None:
+    if params.get("similarity_metric_additional_options", None) is not None:
         cargs.extend([
             "-x",
-            params.get("similarity_metric_additional_options")
+            params.get("similarity_metric_additional_options", None)
         ])
     return cargs
 
@@ -227,7 +210,7 @@ def ants_joint_label_fusion_sh_outputs(
     """
     ret = AntsJointLabelFusionShOutputs(
         root=execution.output_file("."),
-        segmentation_output=execution.output_file(params.get("output") + ".nii.gz") if (params.get("output") is not None) else None,
+        segmentation_output=execution.output_file(params.get("output", None) + ".nii.gz") if (params.get("output") is not None) else None,
     )
     return ret
 
@@ -326,7 +309,6 @@ def ants_joint_label_fusion_sh(
 __all__ = [
     "ANTS_JOINT_LABEL_FUSION_SH_METADATA",
     "AntsJointLabelFusionShOutputs",
-    "AntsJointLabelFusionShParameters",
     "ants_joint_label_fusion_sh",
     "ants_joint_label_fusion_sh_execute",
     "ants_joint_label_fusion_sh_params",

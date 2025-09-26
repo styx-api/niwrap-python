@@ -14,7 +14,17 @@ VOLUME_PARCEL_SMOOTHING_METADATA = Metadata(
 
 
 VolumeParcelSmoothingParameters = typing.TypedDict('VolumeParcelSmoothingParameters', {
-    "@type": typing.Literal["workbench.volume-parcel-smoothing"],
+    "@type": typing.NotRequired[typing.Literal["workbench/volume-parcel-smoothing"]],
+    "data_volume": InputPathType,
+    "label_volume": InputPathType,
+    "kernel": float,
+    "volume_out": str,
+    "opt_fwhm": bool,
+    "opt_fix_zeros": bool,
+    "opt_subvolume_subvol": typing.NotRequired[str | None],
+})
+VolumeParcelSmoothingParametersTagged = typing.TypedDict('VolumeParcelSmoothingParametersTagged', {
+    "@type": typing.Literal["workbench/volume-parcel-smoothing"],
     "data_volume": InputPathType,
     "label_volume": InputPathType,
     "kernel": float,
@@ -25,41 +35,9 @@ VolumeParcelSmoothingParameters = typing.TypedDict('VolumeParcelSmoothingParamet
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "workbench.volume-parcel-smoothing": volume_parcel_smoothing_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "workbench.volume-parcel-smoothing": volume_parcel_smoothing_outputs,
-    }.get(t)
-
-
 class VolumeParcelSmoothingOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `volume_parcel_smoothing(...)`.
+    Output object returned when calling `VolumeParcelSmoothingParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -75,7 +53,7 @@ def volume_parcel_smoothing_params(
     opt_fwhm: bool = False,
     opt_fix_zeros: bool = False,
     opt_subvolume_subvol: str | None = None,
-) -> VolumeParcelSmoothingParameters:
+) -> VolumeParcelSmoothingParametersTagged:
     """
     Build parameters.
     
@@ -93,7 +71,7 @@ def volume_parcel_smoothing_params(
         Parameter dictionary
     """
     params = {
-        "@type": "workbench.volume-parcel-smoothing",
+        "@type": "workbench/volume-parcel-smoothing",
         "data_volume": data_volume,
         "label_volume": label_volume,
         "kernel": kernel,
@@ -122,18 +100,18 @@ def volume_parcel_smoothing_cargs(
     cargs = []
     cargs.append("wb_command")
     cargs.append("-volume-parcel-smoothing")
-    cargs.append(execution.input_file(params.get("data_volume")))
-    cargs.append(execution.input_file(params.get("label_volume")))
-    cargs.append(str(params.get("kernel")))
-    cargs.append(params.get("volume_out"))
-    if params.get("opt_fwhm"):
+    cargs.append(execution.input_file(params.get("data_volume", None)))
+    cargs.append(execution.input_file(params.get("label_volume", None)))
+    cargs.append(str(params.get("kernel", None)))
+    cargs.append(params.get("volume_out", None))
+    if params.get("opt_fwhm", False):
         cargs.append("-fwhm")
-    if params.get("opt_fix_zeros"):
+    if params.get("opt_fix_zeros", False):
         cargs.append("-fix-zeros")
-    if params.get("opt_subvolume_subvol") is not None:
+    if params.get("opt_subvolume_subvol", None) is not None:
         cargs.extend([
             "-subvolume",
-            params.get("opt_subvolume_subvol")
+            params.get("opt_subvolume_subvol", None)
         ])
     return cargs
 
@@ -153,7 +131,7 @@ def volume_parcel_smoothing_outputs(
     """
     ret = VolumeParcelSmoothingOutputs(
         root=execution.output_file("."),
-        volume_out=execution.output_file(params.get("volume_out")),
+        volume_out=execution.output_file(params.get("volume_out", None)),
     )
     return ret
 
@@ -244,7 +222,6 @@ def volume_parcel_smoothing(
 __all__ = [
     "VOLUME_PARCEL_SMOOTHING_METADATA",
     "VolumeParcelSmoothingOutputs",
-    "VolumeParcelSmoothingParameters",
     "volume_parcel_smoothing",
     "volume_parcel_smoothing_execute",
     "volume_parcel_smoothing_params",

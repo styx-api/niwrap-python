@@ -14,45 +14,18 @@ AFNI_CHECK_OMP_METADATA = Metadata(
 
 
 AfniCheckOmpParameters = typing.TypedDict('AfniCheckOmpParameters', {
-    "@type": typing.Literal["afni.afni_check_omp"],
+    "@type": typing.NotRequired[typing.Literal["afni/afni_check_omp"]],
+    "iterations": typing.NotRequired[float | None],
+})
+AfniCheckOmpParametersTagged = typing.TypedDict('AfniCheckOmpParametersTagged', {
+    "@type": typing.Literal["afni/afni_check_omp"],
     "iterations": typing.NotRequired[float | None],
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "afni.afni_check_omp": afni_check_omp_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-    }.get(t)
-
-
 class AfniCheckOmpOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `afni_check_omp(...)`.
+    Output object returned when calling `AfniCheckOmpParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -60,7 +33,7 @@ class AfniCheckOmpOutputs(typing.NamedTuple):
 
 def afni_check_omp_params(
     iterations: float | None = None,
-) -> AfniCheckOmpParameters:
+) -> AfniCheckOmpParametersTagged:
     """
     Build parameters.
     
@@ -70,7 +43,7 @@ def afni_check_omp_params(
         Parameter dictionary
     """
     params = {
-        "@type": "afni.afni_check_omp",
+        "@type": "afni/afni_check_omp",
     }
     if iterations is not None:
         params["iterations"] = iterations
@@ -92,8 +65,8 @@ def afni_check_omp_cargs(
     """
     cargs = []
     cargs.append("afni_check_omp")
-    if params.get("iterations") is not None:
-        cargs.append(str(params.get("iterations")))
+    if params.get("iterations", None) is not None:
+        cargs.append(str(params.get("iterations", None)))
     return cargs
 
 
@@ -172,7 +145,6 @@ def afni_check_omp(
 __all__ = [
     "AFNI_CHECK_OMP_METADATA",
     "AfniCheckOmpOutputs",
-    "AfniCheckOmpParameters",
     "afni_check_omp",
     "afni_check_omp_execute",
     "afni_check_omp_params",

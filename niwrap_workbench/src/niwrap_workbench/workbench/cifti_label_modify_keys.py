@@ -14,7 +14,14 @@ CIFTI_LABEL_MODIFY_KEYS_METADATA = Metadata(
 
 
 CiftiLabelModifyKeysParameters = typing.TypedDict('CiftiLabelModifyKeysParameters', {
-    "@type": typing.Literal["workbench.cifti-label-modify-keys"],
+    "@type": typing.NotRequired[typing.Literal["workbench/cifti-label-modify-keys"]],
+    "cifti_in": InputPathType,
+    "remap_file": str,
+    "cifti_out": str,
+    "opt_column_column": typing.NotRequired[str | None],
+})
+CiftiLabelModifyKeysParametersTagged = typing.TypedDict('CiftiLabelModifyKeysParametersTagged', {
+    "@type": typing.Literal["workbench/cifti-label-modify-keys"],
     "cifti_in": InputPathType,
     "remap_file": str,
     "cifti_out": str,
@@ -22,41 +29,9 @@ CiftiLabelModifyKeysParameters = typing.TypedDict('CiftiLabelModifyKeysParameter
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "workbench.cifti-label-modify-keys": cifti_label_modify_keys_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "workbench.cifti-label-modify-keys": cifti_label_modify_keys_outputs,
-    }.get(t)
-
-
 class CiftiLabelModifyKeysOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `cifti_label_modify_keys(...)`.
+    Output object returned when calling `CiftiLabelModifyKeysParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -69,7 +44,7 @@ def cifti_label_modify_keys_params(
     remap_file: str,
     cifti_out: str,
     opt_column_column: str | None = None,
-) -> CiftiLabelModifyKeysParameters:
+) -> CiftiLabelModifyKeysParametersTagged:
     """
     Build parameters.
     
@@ -83,7 +58,7 @@ def cifti_label_modify_keys_params(
         Parameter dictionary
     """
     params = {
-        "@type": "workbench.cifti-label-modify-keys",
+        "@type": "workbench/cifti-label-modify-keys",
         "cifti_in": cifti_in,
         "remap_file": remap_file,
         "cifti_out": cifti_out,
@@ -109,13 +84,13 @@ def cifti_label_modify_keys_cargs(
     cargs = []
     cargs.append("wb_command")
     cargs.append("-cifti-label-modify-keys")
-    cargs.append(execution.input_file(params.get("cifti_in")))
-    cargs.append(params.get("remap_file"))
-    cargs.append(params.get("cifti_out"))
-    if params.get("opt_column_column") is not None:
+    cargs.append(execution.input_file(params.get("cifti_in", None)))
+    cargs.append(params.get("remap_file", None))
+    cargs.append(params.get("cifti_out", None))
+    if params.get("opt_column_column", None) is not None:
         cargs.extend([
             "-column",
-            params.get("opt_column_column")
+            params.get("opt_column_column", None)
         ])
     return cargs
 
@@ -135,7 +110,7 @@ def cifti_label_modify_keys_outputs(
     """
     ret = CiftiLabelModifyKeysOutputs(
         root=execution.output_file("."),
-        cifti_out=execution.output_file(params.get("cifti_out")),
+        cifti_out=execution.output_file(params.get("cifti_out", None)),
     )
     return ret
 
@@ -234,7 +209,6 @@ def cifti_label_modify_keys(
 __all__ = [
     "CIFTI_LABEL_MODIFY_KEYS_METADATA",
     "CiftiLabelModifyKeysOutputs",
-    "CiftiLabelModifyKeysParameters",
     "cifti_label_modify_keys",
     "cifti_label_modify_keys_execute",
     "cifti_label_modify_keys_params",

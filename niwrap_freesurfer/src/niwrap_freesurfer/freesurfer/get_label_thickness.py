@@ -14,45 +14,18 @@ GET_LABEL_THICKNESS_METADATA = Metadata(
 
 
 GetLabelThicknessParameters = typing.TypedDict('GetLabelThicknessParameters', {
-    "@type": typing.Literal["freesurfer.get_label_thickness"],
+    "@type": typing.NotRequired[typing.Literal["freesurfer/get_label_thickness"]],
+    "infile": InputPathType,
+})
+GetLabelThicknessParametersTagged = typing.TypedDict('GetLabelThicknessParametersTagged', {
+    "@type": typing.Literal["freesurfer/get_label_thickness"],
     "infile": InputPathType,
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "freesurfer.get_label_thickness": get_label_thickness_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-    }.get(t)
-
-
 class GetLabelThicknessOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `get_label_thickness(...)`.
+    Output object returned when calling `GetLabelThicknessParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -60,7 +33,7 @@ class GetLabelThicknessOutputs(typing.NamedTuple):
 
 def get_label_thickness_params(
     infile: InputPathType,
-) -> GetLabelThicknessParameters:
+) -> GetLabelThicknessParametersTagged:
     """
     Build parameters.
     
@@ -70,7 +43,7 @@ def get_label_thickness_params(
         Parameter dictionary
     """
     params = {
-        "@type": "freesurfer.get_label_thickness",
+        "@type": "freesurfer/get_label_thickness",
         "infile": infile,
     }
     return params
@@ -91,7 +64,7 @@ def get_label_thickness_cargs(
     """
     cargs = []
     cargs.append("get_label_thickness")
-    cargs.append(execution.input_file(params.get("infile")))
+    cargs.append(execution.input_file(params.get("infile", None)))
     return cargs
 
 
@@ -170,7 +143,6 @@ def get_label_thickness(
 __all__ = [
     "GET_LABEL_THICKNESS_METADATA",
     "GetLabelThicknessOutputs",
-    "GetLabelThicknessParameters",
     "get_label_thickness",
     "get_label_thickness_execute",
     "get_label_thickness_params",

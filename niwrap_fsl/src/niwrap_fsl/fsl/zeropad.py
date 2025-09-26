@@ -14,47 +14,20 @@ ZEROPAD_METADATA = Metadata(
 
 
 ZeropadParameters = typing.TypedDict('ZeropadParameters', {
-    "@type": typing.Literal["fsl.zeropad"],
+    "@type": typing.NotRequired[typing.Literal["fsl/zeropad"]],
+    "input_number": str,
+    "length": float,
+})
+ZeropadParametersTagged = typing.TypedDict('ZeropadParametersTagged', {
+    "@type": typing.Literal["fsl/zeropad"],
     "input_number": str,
     "length": float,
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "fsl.zeropad": zeropad_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "fsl.zeropad": zeropad_outputs,
-    }.get(t)
-
-
 class ZeropadOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `zeropad(...)`.
+    Output object returned when calling `ZeropadParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -65,7 +38,7 @@ class ZeropadOutputs(typing.NamedTuple):
 def zeropad_params(
     input_number: str,
     length: float,
-) -> ZeropadParameters:
+) -> ZeropadParametersTagged:
     """
     Build parameters.
     
@@ -76,7 +49,7 @@ def zeropad_params(
         Parameter dictionary
     """
     params = {
-        "@type": "fsl.zeropad",
+        "@type": "fsl/zeropad",
         "input_number": input_number,
         "length": length,
     }
@@ -98,8 +71,8 @@ def zeropad_cargs(
     """
     cargs = []
     cargs.append("zeropad")
-    cargs.append(params.get("input_number"))
-    cargs.append(str(params.get("length")))
+    cargs.append(params.get("input_number", None))
+    cargs.append(str(params.get("length", None)))
     return cargs
 
 
@@ -182,7 +155,6 @@ def zeropad(
 __all__ = [
     "ZEROPAD_METADATA",
     "ZeropadOutputs",
-    "ZeropadParameters",
     "zeropad",
     "zeropad_execute",
     "zeropad_params",

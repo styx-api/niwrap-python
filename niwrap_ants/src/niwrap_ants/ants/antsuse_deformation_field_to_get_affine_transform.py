@@ -14,7 +14,15 @@ ANTSUSE_DEFORMATION_FIELD_TO_GET_AFFINE_TRANSFORM_METADATA = Metadata(
 
 
 AntsuseDeformationFieldToGetAffineTransformParameters = typing.TypedDict('AntsuseDeformationFieldToGetAffineTransformParameters', {
-    "@type": typing.Literal["ants.ANTSUseDeformationFieldToGetAffineTransform"],
+    "@type": typing.NotRequired[typing.Literal["ants/ANTSUseDeformationFieldToGetAffineTransform"]],
+    "deformation_field": InputPathType,
+    "load_ratio": float,
+    "transform_type": typing.Literal["rigid", "affine"],
+    "output_affine": str,
+    "mask": typing.NotRequired[InputPathType | None],
+})
+AntsuseDeformationFieldToGetAffineTransformParametersTagged = typing.TypedDict('AntsuseDeformationFieldToGetAffineTransformParametersTagged', {
+    "@type": typing.Literal["ants/ANTSUseDeformationFieldToGetAffineTransform"],
     "deformation_field": InputPathType,
     "load_ratio": float,
     "transform_type": typing.Literal["rigid", "affine"],
@@ -23,41 +31,9 @@ AntsuseDeformationFieldToGetAffineTransformParameters = typing.TypedDict('Antsus
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "ants.ANTSUseDeformationFieldToGetAffineTransform": antsuse_deformation_field_to_get_affine_transform_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "ants.ANTSUseDeformationFieldToGetAffineTransform": antsuse_deformation_field_to_get_affine_transform_outputs,
-    }.get(t)
-
-
 class AntsuseDeformationFieldToGetAffineTransformOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `antsuse_deformation_field_to_get_affine_transform(...)`.
+    Output object returned when calling `AntsuseDeformationFieldToGetAffineTransformParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -71,7 +47,7 @@ def antsuse_deformation_field_to_get_affine_transform_params(
     transform_type: typing.Literal["rigid", "affine"],
     output_affine: str,
     mask: InputPathType | None = None,
-) -> AntsuseDeformationFieldToGetAffineTransformParameters:
+) -> AntsuseDeformationFieldToGetAffineTransformParametersTagged:
     """
     Build parameters.
     
@@ -90,7 +66,7 @@ def antsuse_deformation_field_to_get_affine_transform_params(
         Parameter dictionary
     """
     params = {
-        "@type": "ants.ANTSUseDeformationFieldToGetAffineTransform",
+        "@type": "ants/ANTSUseDeformationFieldToGetAffineTransform",
         "deformation_field": deformation_field,
         "load_ratio": load_ratio,
         "transform_type": transform_type,
@@ -116,12 +92,12 @@ def antsuse_deformation_field_to_get_affine_transform_cargs(
     """
     cargs = []
     cargs.append("ANTSUseDeformationFieldToGetAffineTransform")
-    cargs.append(execution.input_file(params.get("deformation_field")))
-    cargs.append(str(params.get("load_ratio")))
-    cargs.append(params.get("transform_type"))
-    cargs.append(params.get("output_affine"))
-    if params.get("mask") is not None:
-        cargs.append(execution.input_file(params.get("mask")))
+    cargs.append(execution.input_file(params.get("deformation_field", None)))
+    cargs.append(str(params.get("load_ratio", None)))
+    cargs.append(params.get("transform_type", None))
+    cargs.append(params.get("output_affine", None))
+    if params.get("mask", None) is not None:
+        cargs.append(execution.input_file(params.get("mask", None)))
     return cargs
 
 
@@ -140,7 +116,7 @@ def antsuse_deformation_field_to_get_affine_transform_outputs(
     """
     ret = AntsuseDeformationFieldToGetAffineTransformOutputs(
         root=execution.output_file("."),
-        out_affine_txt=execution.output_file(params.get("output_affine")),
+        out_affine_txt=execution.output_file(params.get("output_affine", None)),
     )
     return ret
 
@@ -222,7 +198,6 @@ def antsuse_deformation_field_to_get_affine_transform(
 __all__ = [
     "ANTSUSE_DEFORMATION_FIELD_TO_GET_AFFINE_TRANSFORM_METADATA",
     "AntsuseDeformationFieldToGetAffineTransformOutputs",
-    "AntsuseDeformationFieldToGetAffineTransformParameters",
     "antsuse_deformation_field_to_get_affine_transform",
     "antsuse_deformation_field_to_get_affine_transform_execute",
     "antsuse_deformation_field_to_get_affine_transform_params",

@@ -14,13 +14,25 @@ METRIC_ESTIMATE_FWHM_METADATA = Metadata(
 
 
 MetricEstimateFwhmWholeFileParameters = typing.TypedDict('MetricEstimateFwhmWholeFileParameters', {
-    "@type": typing.Literal["workbench.metric-estimate-fwhm.whole_file"],
+    "@type": typing.NotRequired[typing.Literal["whole_file"]],
+    "opt_demean": bool,
+})
+MetricEstimateFwhmWholeFileParametersTagged = typing.TypedDict('MetricEstimateFwhmWholeFileParametersTagged', {
+    "@type": typing.Literal["whole_file"],
     "opt_demean": bool,
 })
 
 
 MetricEstimateFwhmParameters = typing.TypedDict('MetricEstimateFwhmParameters', {
-    "@type": typing.Literal["workbench.metric-estimate-fwhm"],
+    "@type": typing.NotRequired[typing.Literal["workbench/metric-estimate-fwhm"]],
+    "surface": InputPathType,
+    "metric_in": InputPathType,
+    "opt_roi_roi_metric": typing.NotRequired[InputPathType | None],
+    "opt_column_column": typing.NotRequired[str | None],
+    "whole_file": typing.NotRequired[MetricEstimateFwhmWholeFileParameters | None],
+})
+MetricEstimateFwhmParametersTagged = typing.TypedDict('MetricEstimateFwhmParametersTagged', {
+    "@type": typing.Literal["workbench/metric-estimate-fwhm"],
     "surface": InputPathType,
     "metric_in": InputPathType,
     "opt_roi_roi_metric": typing.NotRequired[InputPathType | None],
@@ -29,41 +41,9 @@ MetricEstimateFwhmParameters = typing.TypedDict('MetricEstimateFwhmParameters', 
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "workbench.metric-estimate-fwhm": metric_estimate_fwhm_cargs,
-        "workbench.metric-estimate-fwhm.whole_file": metric_estimate_fwhm_whole_file_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-    }.get(t)
-
-
 def metric_estimate_fwhm_whole_file_params(
     opt_demean: bool = False,
-) -> MetricEstimateFwhmWholeFileParameters:
+) -> MetricEstimateFwhmWholeFileParametersTagged:
     """
     Build parameters.
     
@@ -73,7 +53,7 @@ def metric_estimate_fwhm_whole_file_params(
         Parameter dictionary
     """
     params = {
-        "@type": "workbench.metric-estimate-fwhm.whole_file",
+        "@type": "whole_file",
         "opt_demean": opt_demean,
     }
     return params
@@ -94,14 +74,14 @@ def metric_estimate_fwhm_whole_file_cargs(
     """
     cargs = []
     cargs.append("-whole-file")
-    if params.get("opt_demean"):
+    if params.get("opt_demean", False):
         cargs.append("-demean")
     return cargs
 
 
 class MetricEstimateFwhmOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `metric_estimate_fwhm(...)`.
+    Output object returned when calling `MetricEstimateFwhmParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -113,7 +93,7 @@ def metric_estimate_fwhm_params(
     opt_roi_roi_metric: InputPathType | None = None,
     opt_column_column: str | None = None,
     whole_file: MetricEstimateFwhmWholeFileParameters | None = None,
-) -> MetricEstimateFwhmParameters:
+) -> MetricEstimateFwhmParametersTagged:
     """
     Build parameters.
     
@@ -130,7 +110,7 @@ def metric_estimate_fwhm_params(
         Parameter dictionary
     """
     params = {
-        "@type": "workbench.metric-estimate-fwhm",
+        "@type": "workbench/metric-estimate-fwhm",
         "surface": surface,
         "metric_in": metric_in,
     }
@@ -159,20 +139,20 @@ def metric_estimate_fwhm_cargs(
     cargs = []
     cargs.append("wb_command")
     cargs.append("-metric-estimate-fwhm")
-    cargs.append(execution.input_file(params.get("surface")))
-    cargs.append(execution.input_file(params.get("metric_in")))
-    if params.get("opt_roi_roi_metric") is not None:
+    cargs.append(execution.input_file(params.get("surface", None)))
+    cargs.append(execution.input_file(params.get("metric_in", None)))
+    if params.get("opt_roi_roi_metric", None) is not None:
         cargs.extend([
             "-roi",
-            execution.input_file(params.get("opt_roi_roi_metric"))
+            execution.input_file(params.get("opt_roi_roi_metric", None))
         ])
-    if params.get("opt_column_column") is not None:
+    if params.get("opt_column_column", None) is not None:
         cargs.extend([
             "-column",
-            params.get("opt_column_column")
+            params.get("opt_column_column", None)
         ])
-    if params.get("whole_file") is not None:
-        cargs.extend(dyn_cargs(params.get("whole_file")["@type"])(params.get("whole_file"), execution))
+    if params.get("whole_file", None) is not None:
+        cargs.extend(metric_estimate_fwhm_whole_file_cargs(params.get("whole_file", None), execution))
     return cargs
 
 
@@ -272,8 +252,6 @@ def metric_estimate_fwhm(
 __all__ = [
     "METRIC_ESTIMATE_FWHM_METADATA",
     "MetricEstimateFwhmOutputs",
-    "MetricEstimateFwhmParameters",
-    "MetricEstimateFwhmWholeFileParameters",
     "metric_estimate_fwhm",
     "metric_estimate_fwhm_execute",
     "metric_estimate_fwhm_params",

@@ -14,7 +14,17 @@ V__AFNI_R_PACKAGE_INSTALL_METADATA = Metadata(
 
 
 VAfniRPackageInstallParameters = typing.TypedDict('VAfniRPackageInstallParameters', {
-    "@type": typing.Literal["afni.@afni_R_package_install"],
+    "@type": typing.NotRequired[typing.Literal["afni/@afni_R_package_install"]],
+    "afni": bool,
+    "shiny": bool,
+    "bayes_view": bool,
+    "circos": bool,
+    "custom_packages": typing.NotRequired[str | None],
+    "mirror": typing.NotRequired[str | None],
+    "help": bool,
+})
+VAfniRPackageInstallParametersTagged = typing.TypedDict('VAfniRPackageInstallParametersTagged', {
+    "@type": typing.Literal["afni/@afni_R_package_install"],
     "afni": bool,
     "shiny": bool,
     "bayes_view": bool,
@@ -25,41 +35,9 @@ VAfniRPackageInstallParameters = typing.TypedDict('VAfniRPackageInstallParameter
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "afni.@afni_R_package_install": v__afni_r_package_install_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "afni.@afni_R_package_install": v__afni_r_package_install_outputs,
-    }.get(t)
-
-
 class VAfniRPackageInstallOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `v__afni_r_package_install(...)`.
+    Output object returned when calling `VAfniRPackageInstallParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -75,7 +53,7 @@ def v__afni_r_package_install_params(
     custom_packages: str | None = None,
     mirror: str | None = None,
     help_: bool = False,
-) -> VAfniRPackageInstallParameters:
+) -> VAfniRPackageInstallParametersTagged:
     """
     Build parameters.
     
@@ -92,7 +70,7 @@ def v__afni_r_package_install_params(
         Parameter dictionary
     """
     params = {
-        "@type": "afni.@afni_R_package_install",
+        "@type": "afni/@afni_R_package_install",
         "afni": afni,
         "shiny": shiny,
         "bayes_view": bayes_view,
@@ -121,25 +99,25 @@ def v__afni_r_package_install_cargs(
     """
     cargs = []
     cargs.append("@afni_R_package_install")
-    if params.get("afni"):
+    if params.get("afni", False):
         cargs.append("-afni")
-    if params.get("shiny"):
+    if params.get("shiny", False):
         cargs.append("-shiny")
-    if params.get("bayes_view"):
+    if params.get("bayes_view", False):
         cargs.append("-bayes_view")
-    if params.get("circos"):
+    if params.get("circos", False):
         cargs.append("-circos")
-    if params.get("custom_packages") is not None:
+    if params.get("custom_packages", None) is not None:
         cargs.extend([
             "-custom",
-            params.get("custom_packages")
+            params.get("custom_packages", None)
         ])
-    if params.get("mirror") is not None:
+    if params.get("mirror", None) is not None:
         cargs.extend([
             "-mirror",
-            params.get("mirror")
+            params.get("mirror", None)
         ])
-    if params.get("help"):
+    if params.get("help", False):
         cargs.append("-help")
     return cargs
 
@@ -238,7 +216,6 @@ def v__afni_r_package_install(
 
 __all__ = [
     "VAfniRPackageInstallOutputs",
-    "VAfniRPackageInstallParameters",
     "V__AFNI_R_PACKAGE_INSTALL_METADATA",
     "v__afni_r_package_install",
     "v__afni_r_package_install_execute",

@@ -14,7 +14,43 @@ FUGUE_METADATA = Metadata(
 
 
 FugueParameters = typing.TypedDict('FugueParameters', {
-    "@type": typing.Literal["fsl.fugue"],
+    "@type": typing.NotRequired[typing.Literal["fsl/fugue"]],
+    "asym_se_time": typing.NotRequired[float | None],
+    "despike_2dfilter": bool,
+    "despike_threshold": typing.NotRequired[float | None],
+    "dwell_time": typing.NotRequired[float | None],
+    "dwell_to_asym_ratio": typing.NotRequired[float | None],
+    "fmap_in_file": typing.NotRequired[InputPathType | None],
+    "fmap_out_file": typing.NotRequired[str | None],
+    "forward_warping": bool,
+    "fourier_order": typing.NotRequired[int | None],
+    "icorr": bool,
+    "icorr_only": bool,
+    "in_file": typing.NotRequired[InputPathType | None],
+    "mask_file": typing.NotRequired[InputPathType | None],
+    "median_2dfilter": bool,
+    "no_extend": bool,
+    "no_gap_fill": bool,
+    "nokspace": bool,
+    "output_type": typing.NotRequired[typing.Literal["NIFTI", "NIFTI_PAIR", "NIFTI_GZ", "NIFTI_PAIR_GZ"] | None],
+    "pava": bool,
+    "phase_conjugate": bool,
+    "phasemap_in_file": typing.NotRequired[InputPathType | None],
+    "poly_order": typing.NotRequired[int | None],
+    "save_fmap": bool,
+    "save_shift": bool,
+    "save_unmasked_fmap": bool,
+    "save_unmasked_shift": bool,
+    "shift_in_file": typing.NotRequired[InputPathType | None],
+    "shift_out_file": typing.NotRequired[str | None],
+    "smooth2d": typing.NotRequired[float | None],
+    "smooth3d": typing.NotRequired[float | None],
+    "unwarp_direction": typing.NotRequired[typing.Literal["x", "y", "z", "x-", "y-", "z-"] | None],
+    "unwarped_file": typing.NotRequired[str | None],
+    "warped_file": typing.NotRequired[str | None],
+})
+FugueParametersTagged = typing.TypedDict('FugueParametersTagged', {
+    "@type": typing.Literal["fsl/fugue"],
     "asym_se_time": typing.NotRequired[float | None],
     "despike_2dfilter": bool,
     "despike_threshold": typing.NotRequired[float | None],
@@ -51,41 +87,9 @@ FugueParameters = typing.TypedDict('FugueParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "fsl.fugue": fugue_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "fsl.fugue": fugue_outputs,
-    }.get(t)
-
-
 class FugueOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `fugue(...)`.
+    Output object returned when calling `FugueParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -133,7 +137,7 @@ def fugue_params(
     unwarp_direction: typing.Literal["x", "y", "z", "x-", "y-", "z-"] | None = None,
     unwarped_file: str | None = None,
     warped_file: str | None = None,
-) -> FugueParameters:
+) -> FugueParametersTagged:
     """
     Build parameters.
     
@@ -180,7 +184,7 @@ def fugue_params(
         Parameter dictionary
     """
     params = {
-        "@type": "fsl.fugue",
+        "@type": "fsl/fugue",
         "despike_2dfilter": despike_2dfilter,
         "forward_warping": forward_warping,
         "icorr": icorr,
@@ -252,72 +256,72 @@ def fugue_cargs(
     """
     cargs = []
     cargs.append("fugue")
-    if params.get("asym_se_time") is not None:
-        cargs.append("--asym=" + str(params.get("asym_se_time")))
-    if params.get("despike_2dfilter"):
+    if params.get("asym_se_time", None) is not None:
+        cargs.append("--asym=" + str(params.get("asym_se_time", None)))
+    if params.get("despike_2dfilter", False):
         cargs.append("--despike")
-    if params.get("despike_threshold") is not None:
-        cargs.append("--despikethreshold=" + str(params.get("despike_threshold")))
-    if params.get("dwell_time") is not None:
-        cargs.append("--dwell=" + str(params.get("dwell_time")))
-    if params.get("dwell_to_asym_ratio") is not None:
-        cargs.append("--dwelltoasym=" + str(params.get("dwell_to_asym_ratio")))
-    if params.get("fmap_in_file") is not None:
-        cargs.append("--loadfmap=" + execution.input_file(params.get("fmap_in_file")))
-    if params.get("fmap_out_file") is not None:
-        cargs.append("--savefmap=" + params.get("fmap_out_file"))
-    if params.get("forward_warping"):
+    if params.get("despike_threshold", None) is not None:
+        cargs.append("--despikethreshold=" + str(params.get("despike_threshold", None)))
+    if params.get("dwell_time", None) is not None:
+        cargs.append("--dwell=" + str(params.get("dwell_time", None)))
+    if params.get("dwell_to_asym_ratio", None) is not None:
+        cargs.append("--dwelltoasym=" + str(params.get("dwell_to_asym_ratio", None)))
+    if params.get("fmap_in_file", None) is not None:
+        cargs.append("--loadfmap=" + execution.input_file(params.get("fmap_in_file", None)))
+    if params.get("fmap_out_file", None) is not None:
+        cargs.append("--savefmap=" + params.get("fmap_out_file", None))
+    if params.get("forward_warping", False):
         cargs.append("--forward_warping")
-    if params.get("fourier_order") is not None:
-        cargs.append("--fourier=" + str(params.get("fourier_order")))
-    if params.get("icorr"):
+    if params.get("fourier_order", None) is not None:
+        cargs.append("--fourier=" + str(params.get("fourier_order", None)))
+    if params.get("icorr", False):
         cargs.append("--icorr")
-    if params.get("icorr_only"):
+    if params.get("icorr_only", False):
         cargs.append("--icorronly")
-    if params.get("in_file") is not None:
-        cargs.append("--in=" + execution.input_file(params.get("in_file")))
-    if params.get("mask_file") is not None:
-        cargs.append("--mask=" + execution.input_file(params.get("mask_file")))
-    if params.get("median_2dfilter"):
+    if params.get("in_file", None) is not None:
+        cargs.append("--in=" + execution.input_file(params.get("in_file", None)))
+    if params.get("mask_file", None) is not None:
+        cargs.append("--mask=" + execution.input_file(params.get("mask_file", None)))
+    if params.get("median_2dfilter", False):
         cargs.append("--median")
-    if params.get("no_extend"):
+    if params.get("no_extend", False):
         cargs.append("--noextend")
-    if params.get("no_gap_fill"):
+    if params.get("no_gap_fill", False):
         cargs.append("--nofill")
-    if params.get("nokspace"):
+    if params.get("nokspace", False):
         cargs.append("--nokspace")
-    if params.get("output_type") is not None:
-        cargs.append(params.get("output_type"))
-    if params.get("pava"):
+    if params.get("output_type", None) is not None:
+        cargs.append(params.get("output_type", None))
+    if params.get("pava", False):
         cargs.append("--pava")
-    if params.get("phase_conjugate"):
+    if params.get("phase_conjugate", False):
         cargs.append("--phaseconj")
-    if params.get("phasemap_in_file") is not None:
-        cargs.append("--phasemap=" + execution.input_file(params.get("phasemap_in_file")))
-    if params.get("poly_order") is not None:
-        cargs.append("--poly=" + str(params.get("poly_order")))
-    if params.get("save_fmap"):
+    if params.get("phasemap_in_file", None) is not None:
+        cargs.append("--phasemap=" + execution.input_file(params.get("phasemap_in_file", None)))
+    if params.get("poly_order", None) is not None:
+        cargs.append("--poly=" + str(params.get("poly_order", None)))
+    if params.get("save_fmap", False):
         cargs.append("--save_fmap")
-    if params.get("save_shift"):
+    if params.get("save_shift", False):
         cargs.append("--save_shift")
-    if params.get("save_unmasked_fmap"):
+    if params.get("save_unmasked_fmap", False):
         cargs.append("--unmaskfmap")
-    if params.get("save_unmasked_shift"):
+    if params.get("save_unmasked_shift", False):
         cargs.append("--unmaskshift")
-    if params.get("shift_in_file") is not None:
-        cargs.append("--loadshift=" + execution.input_file(params.get("shift_in_file")))
-    if params.get("shift_out_file") is not None:
-        cargs.append("--saveshift=" + params.get("shift_out_file"))
-    if params.get("smooth2d") is not None:
-        cargs.append("--smooth2=" + str(params.get("smooth2d")))
-    if params.get("smooth3d") is not None:
-        cargs.append("--smooth3=" + str(params.get("smooth3d")))
-    if params.get("unwarp_direction") is not None:
-        cargs.append("--unwarpdir=" + params.get("unwarp_direction"))
-    if params.get("unwarped_file") is not None:
-        cargs.append("--unwarp=" + params.get("unwarped_file"))
-    if params.get("warped_file") is not None:
-        cargs.append("--warp=" + params.get("warped_file"))
+    if params.get("shift_in_file", None) is not None:
+        cargs.append("--loadshift=" + execution.input_file(params.get("shift_in_file", None)))
+    if params.get("shift_out_file", None) is not None:
+        cargs.append("--saveshift=" + params.get("shift_out_file", None))
+    if params.get("smooth2d", None) is not None:
+        cargs.append("--smooth2=" + str(params.get("smooth2d", None)))
+    if params.get("smooth3d", None) is not None:
+        cargs.append("--smooth3=" + str(params.get("smooth3d", None)))
+    if params.get("unwarp_direction", None) is not None:
+        cargs.append("--unwarpdir=" + params.get("unwarp_direction", None))
+    if params.get("unwarped_file", None) is not None:
+        cargs.append("--unwarp=" + params.get("unwarped_file", None))
+    if params.get("warped_file", None) is not None:
+        cargs.append("--warp=" + params.get("warped_file", None))
     return cargs
 
 
@@ -336,10 +340,10 @@ def fugue_outputs(
     """
     ret = FugueOutputs(
         root=execution.output_file("."),
-        fmap_out_file_outfile=execution.output_file(params.get("fmap_out_file")) if (params.get("fmap_out_file") is not None) else None,
-        shift_out_file_outfile=execution.output_file(params.get("shift_out_file")) if (params.get("shift_out_file") is not None) else None,
-        unwarped_file_outfile=execution.output_file(params.get("unwarped_file")) if (params.get("unwarped_file") is not None) else None,
-        warped_file_outfile=execution.output_file(params.get("warped_file")) if (params.get("warped_file") is not None) else None,
+        fmap_out_file_outfile=execution.output_file(params.get("fmap_out_file", None)) if (params.get("fmap_out_file") is not None) else None,
+        shift_out_file_outfile=execution.output_file(params.get("shift_out_file", None)) if (params.get("shift_out_file") is not None) else None,
+        unwarped_file_outfile=execution.output_file(params.get("unwarped_file", None)) if (params.get("unwarped_file") is not None) else None,
+        warped_file_outfile=execution.output_file(params.get("warped_file", None)) if (params.get("warped_file") is not None) else None,
     )
     return ret
 
@@ -501,7 +505,6 @@ def fugue(
 __all__ = [
     "FUGUE_METADATA",
     "FugueOutputs",
-    "FugueParameters",
     "fugue",
     "fugue_execute",
     "fugue_params",

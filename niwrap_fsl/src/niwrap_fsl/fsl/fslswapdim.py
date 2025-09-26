@@ -14,7 +14,15 @@ FSLSWAPDIM_METADATA = Metadata(
 
 
 FslswapdimParameters = typing.TypedDict('FslswapdimParameters', {
-    "@type": typing.Literal["fsl.fslswapdim"],
+    "@type": typing.NotRequired[typing.Literal["fsl/fslswapdim"]],
+    "input_file": InputPathType,
+    "axis_a": str,
+    "axis_b": str,
+    "axis_c": str,
+    "output_file": typing.NotRequired[str | None],
+})
+FslswapdimParametersTagged = typing.TypedDict('FslswapdimParametersTagged', {
+    "@type": typing.Literal["fsl/fslswapdim"],
     "input_file": InputPathType,
     "axis_a": str,
     "axis_b": str,
@@ -23,41 +31,9 @@ FslswapdimParameters = typing.TypedDict('FslswapdimParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "fsl.fslswapdim": fslswapdim_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "fsl.fslswapdim": fslswapdim_outputs,
-    }.get(t)
-
-
 class FslswapdimOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `fslswapdim(...)`.
+    Output object returned when calling `FslswapdimParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -71,7 +47,7 @@ def fslswapdim_params(
     axis_b: str,
     axis_c: str,
     output_file: str | None = None,
-) -> FslswapdimParameters:
+) -> FslswapdimParametersTagged:
     """
     Build parameters.
     
@@ -86,7 +62,7 @@ def fslswapdim_params(
         Parameter dictionary
     """
     params = {
-        "@type": "fsl.fslswapdim",
+        "@type": "fsl/fslswapdim",
         "input_file": input_file,
         "axis_a": axis_a,
         "axis_b": axis_b,
@@ -112,12 +88,12 @@ def fslswapdim_cargs(
     """
     cargs = []
     cargs.append("fslswapdim")
-    cargs.append(execution.input_file(params.get("input_file")))
-    cargs.append(params.get("axis_a"))
-    cargs.append(params.get("axis_b"))
-    cargs.append(params.get("axis_c"))
-    if params.get("output_file") is not None:
-        cargs.append(params.get("output_file"))
+    cargs.append(execution.input_file(params.get("input_file", None)))
+    cargs.append(params.get("axis_a", None))
+    cargs.append(params.get("axis_b", None))
+    cargs.append(params.get("axis_c", None))
+    if params.get("output_file", None) is not None:
+        cargs.append(params.get("output_file", None))
     return cargs
 
 
@@ -136,7 +112,7 @@ def fslswapdim_outputs(
     """
     ret = FslswapdimOutputs(
         root=execution.output_file("."),
-        output_image=execution.output_file(params.get("output_file")) if (params.get("output_file") is not None) else None,
+        output_image=execution.output_file(params.get("output_file", None)) if (params.get("output_file") is not None) else None,
     )
     return ret
 
@@ -210,7 +186,6 @@ def fslswapdim(
 __all__ = [
     "FSLSWAPDIM_METADATA",
     "FslswapdimOutputs",
-    "FslswapdimParameters",
     "fslswapdim",
     "fslswapdim_execute",
     "fslswapdim_params",

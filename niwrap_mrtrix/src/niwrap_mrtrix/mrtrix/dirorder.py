@@ -14,14 +14,33 @@ DIRORDER_METADATA = Metadata(
 
 
 DirorderConfigParameters = typing.TypedDict('DirorderConfigParameters', {
-    "@type": typing.Literal["mrtrix.dirorder.config"],
+    "@type": typing.NotRequired[typing.Literal["config"]],
+    "key": str,
+    "value": str,
+})
+DirorderConfigParametersTagged = typing.TypedDict('DirorderConfigParametersTagged', {
+    "@type": typing.Literal["config"],
     "key": str,
     "value": str,
 })
 
 
 DirorderParameters = typing.TypedDict('DirorderParameters', {
-    "@type": typing.Literal["mrtrix.dirorder"],
+    "@type": typing.NotRequired[typing.Literal["mrtrix/dirorder"]],
+    "cartesian": bool,
+    "info": bool,
+    "quiet": bool,
+    "debug": bool,
+    "force": bool,
+    "nthreads": typing.NotRequired[int | None],
+    "config": typing.NotRequired[list[DirorderConfigParameters] | None],
+    "help": bool,
+    "version": bool,
+    "input": InputPathType,
+    "output": str,
+})
+DirorderParametersTagged = typing.TypedDict('DirorderParametersTagged', {
+    "@type": typing.Literal["mrtrix/dirorder"],
     "cartesian": bool,
     "info": bool,
     "quiet": bool,
@@ -36,43 +55,10 @@ DirorderParameters = typing.TypedDict('DirorderParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "mrtrix.dirorder": dirorder_cargs,
-        "mrtrix.dirorder.config": dirorder_config_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "mrtrix.dirorder": dirorder_outputs,
-    }.get(t)
-
-
 def dirorder_config_params(
     key: str,
     value: str,
-) -> DirorderConfigParameters:
+) -> DirorderConfigParametersTagged:
     """
     Build parameters.
     
@@ -83,7 +69,7 @@ def dirorder_config_params(
         Parameter dictionary
     """
     params = {
-        "@type": "mrtrix.dirorder.config",
+        "@type": "config",
         "key": key,
         "value": value,
     }
@@ -105,14 +91,14 @@ def dirorder_config_cargs(
     """
     cargs = []
     cargs.append("-config")
-    cargs.append(params.get("key"))
-    cargs.append(params.get("value"))
+    cargs.append(params.get("key", None))
+    cargs.append(params.get("value", None))
     return cargs
 
 
 class DirorderOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `dirorder(...)`.
+    Output object returned when calling `DirorderParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -132,7 +118,7 @@ def dirorder_params(
     config: list[DirorderConfigParameters] | None = None,
     help_: bool = False,
     version: bool = False,
-) -> DirorderParameters:
+) -> DirorderParametersTagged:
     """
     Build parameters.
     
@@ -157,7 +143,7 @@ def dirorder_params(
         Parameter dictionary
     """
     params = {
-        "@type": "mrtrix.dirorder",
+        "@type": "mrtrix/dirorder",
         "cartesian": cartesian,
         "info": info,
         "quiet": quiet,
@@ -190,29 +176,29 @@ def dirorder_cargs(
     """
     cargs = []
     cargs.append("dirorder")
-    if params.get("cartesian"):
+    if params.get("cartesian", False):
         cargs.append("-cartesian")
-    if params.get("info"):
+    if params.get("info", False):
         cargs.append("-info")
-    if params.get("quiet"):
+    if params.get("quiet", False):
         cargs.append("-quiet")
-    if params.get("debug"):
+    if params.get("debug", False):
         cargs.append("-debug")
-    if params.get("force"):
+    if params.get("force", False):
         cargs.append("-force")
-    if params.get("nthreads") is not None:
+    if params.get("nthreads", None) is not None:
         cargs.extend([
             "-nthreads",
-            str(params.get("nthreads"))
+            str(params.get("nthreads", None))
         ])
-    if params.get("config") is not None:
-        cargs.extend([a for c in [dyn_cargs(s["@type"])(s, execution) for s in params.get("config")] for a in c])
-    if params.get("help"):
+    if params.get("config", None) is not None:
+        cargs.extend([a for c in [dirorder_config_cargs(s, execution) for s in params.get("config", None)] for a in c])
+    if params.get("help", False):
         cargs.append("-help")
-    if params.get("version"):
+    if params.get("version", False):
         cargs.append("-version")
-    cargs.append(execution.input_file(params.get("input")))
-    cargs.append(params.get("output"))
+    cargs.append(execution.input_file(params.get("input", None)))
+    cargs.append(params.get("output", None))
     return cargs
 
 
@@ -231,7 +217,7 @@ def dirorder_outputs(
     """
     ret = DirorderOutputs(
         root=execution.output_file("."),
-        output=execution.output_file(params.get("output")),
+        output=execution.output_file(params.get("output", None)),
     )
     return ret
 
@@ -342,9 +328,7 @@ def dirorder(
 
 __all__ = [
     "DIRORDER_METADATA",
-    "DirorderConfigParameters",
     "DirorderOutputs",
-    "DirorderParameters",
     "dirorder",
     "dirorder_config_params",
     "dirorder_execute",

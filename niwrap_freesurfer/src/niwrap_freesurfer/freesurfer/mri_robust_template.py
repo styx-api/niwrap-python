@@ -14,7 +14,47 @@ MRI_ROBUST_TEMPLATE_METADATA = Metadata(
 
 
 MriRobustTemplateParameters = typing.TypedDict('MriRobustTemplateParameters', {
-    "@type": typing.Literal["freesurfer.mri_robust_template"],
+    "@type": typing.NotRequired[typing.Literal["freesurfer/mri_robust_template"]],
+    "mov_files": list[InputPathType],
+    "template_file": str,
+    "sat_value": typing.NotRequired[float | None],
+    "satit_flag": bool,
+    "lta_files": typing.NotRequired[list[str] | None],
+    "mapmov_files": typing.NotRequired[list[str] | None],
+    "mapmovhdr_files": typing.NotRequired[list[str] | None],
+    "weights_files": typing.NotRequired[list[str] | None],
+    "oneminusw_flag": bool,
+    "average_type": typing.NotRequired[int | None],
+    "inittp": typing.NotRequired[int | None],
+    "fixtp_flag": bool,
+    "iscale_flag": bool,
+    "iscaleonly_flag": bool,
+    "iscalein_files": typing.NotRequired[list[str] | None],
+    "iscaleout_files": typing.NotRequired[list[str] | None],
+    "transonly_flag": bool,
+    "affine_flag": bool,
+    "ixforms_files": typing.NotRequired[list[str] | None],
+    "masks_files": typing.NotRequired[list[str] | None],
+    "vox2vox_flag": bool,
+    "leastsquares_flag": bool,
+    "noit_flag": bool,
+    "maxit": typing.NotRequired[int | None],
+    "highit": typing.NotRequired[int | None],
+    "epsit": typing.NotRequired[float | None],
+    "pairmaxit": typing.NotRequired[int | None],
+    "pairepsit": typing.NotRequired[float | None],
+    "subsample": typing.NotRequired[int | None],
+    "nomulti_flag": bool,
+    "floattype_flag": bool,
+    "finalnearest_flag": bool,
+    "doubleprec_flag": bool,
+    "cras_flag": bool,
+    "res_thresh": typing.NotRequired[float | None],
+    "frobnorm_thresh": typing.NotRequired[float | None],
+    "debug_flag": bool,
+})
+MriRobustTemplateParametersTagged = typing.TypedDict('MriRobustTemplateParametersTagged', {
+    "@type": typing.Literal["freesurfer/mri_robust_template"],
     "mov_files": list[InputPathType],
     "template_file": str,
     "sat_value": typing.NotRequired[float | None],
@@ -55,41 +95,9 @@ MriRobustTemplateParameters = typing.TypedDict('MriRobustTemplateParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "freesurfer.mri_robust_template": mri_robust_template_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "freesurfer.mri_robust_template": mri_robust_template_outputs,
-    }.get(t)
-
-
 class MriRobustTemplateOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `mri_robust_template(...)`.
+    Output object returned when calling `MriRobustTemplateParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -141,7 +149,7 @@ def mri_robust_template_params(
     res_thresh: float | None = None,
     frobnorm_thresh: float | None = None,
     debug_flag: bool = False,
-) -> MriRobustTemplateParameters:
+) -> MriRobustTemplateParametersTagged:
     """
     Build parameters.
     
@@ -202,7 +210,7 @@ def mri_robust_template_params(
         Parameter dictionary
     """
     params = {
-        "@type": "freesurfer.mri_robust_template",
+        "@type": "freesurfer/mri_robust_template",
         "mov_files": mov_files,
         "template_file": template_file,
         "satit_flag": satit_flag,
@@ -280,138 +288,138 @@ def mri_robust_template_cargs(
     cargs.append("mri_robust_template")
     cargs.extend([
         "-mov",
-        *[execution.input_file(f) for f in params.get("mov_files")]
+        *[execution.input_file(f) for f in params.get("mov_files", None)]
     ])
     cargs.extend([
         "-template",
-        params.get("template_file")
+        params.get("template_file", None)
     ])
-    if params.get("sat_value") is not None:
+    if params.get("sat_value", None) is not None:
         cargs.extend([
             "--sat",
-            str(params.get("sat_value"))
+            str(params.get("sat_value", None))
         ])
-    if params.get("satit_flag"):
+    if params.get("satit_flag", False):
         cargs.append("--satit")
-    if params.get("lta_files") is not None:
+    if params.get("lta_files", None) is not None:
         cargs.extend([
             "--lta",
-            *params.get("lta_files")
+            *params.get("lta_files", None)
         ])
-    if params.get("mapmov_files") is not None:
+    if params.get("mapmov_files", None) is not None:
         cargs.extend([
             "--mapmov",
-            *params.get("mapmov_files")
+            *params.get("mapmov_files", None)
         ])
-    if params.get("mapmovhdr_files") is not None:
+    if params.get("mapmovhdr_files", None) is not None:
         cargs.extend([
             "--mapmovhdr",
-            *params.get("mapmovhdr_files")
+            *params.get("mapmovhdr_files", None)
         ])
-    if params.get("weights_files") is not None:
+    if params.get("weights_files", None) is not None:
         cargs.extend([
             "--weights",
-            *params.get("weights_files")
+            *params.get("weights_files", None)
         ])
-    if params.get("oneminusw_flag"):
+    if params.get("oneminusw_flag", False):
         cargs.append("--oneminusw")
-    if params.get("average_type") is not None:
+    if params.get("average_type", None) is not None:
         cargs.extend([
             "--average",
-            str(params.get("average_type"))
+            str(params.get("average_type", None))
         ])
-    if params.get("inittp") is not None:
+    if params.get("inittp", None) is not None:
         cargs.extend([
             "--inittp",
-            str(params.get("inittp"))
+            str(params.get("inittp", None))
         ])
-    if params.get("fixtp_flag"):
+    if params.get("fixtp_flag", False):
         cargs.append("--fixtp")
-    if params.get("iscale_flag"):
+    if params.get("iscale_flag", False):
         cargs.append("--iscale")
-    if params.get("iscaleonly_flag"):
+    if params.get("iscaleonly_flag", False):
         cargs.append("--iscaleonly")
-    if params.get("iscalein_files") is not None:
+    if params.get("iscalein_files", None) is not None:
         cargs.extend([
             "--iscalein",
-            *params.get("iscalein_files")
+            *params.get("iscalein_files", None)
         ])
-    if params.get("iscaleout_files") is not None:
+    if params.get("iscaleout_files", None) is not None:
         cargs.extend([
             "--iscaleout",
-            *params.get("iscaleout_files")
+            *params.get("iscaleout_files", None)
         ])
-    if params.get("transonly_flag"):
+    if params.get("transonly_flag", False):
         cargs.append("--transonly")
-    if params.get("affine_flag"):
+    if params.get("affine_flag", False):
         cargs.append("--affine")
-    if params.get("ixforms_files") is not None:
+    if params.get("ixforms_files", None) is not None:
         cargs.extend([
             "--ixforms",
-            *params.get("ixforms_files")
+            *params.get("ixforms_files", None)
         ])
-    if params.get("masks_files") is not None:
+    if params.get("masks_files", None) is not None:
         cargs.extend([
             "--masks",
-            *params.get("masks_files")
+            *params.get("masks_files", None)
         ])
-    if params.get("vox2vox_flag"):
+    if params.get("vox2vox_flag", False):
         cargs.append("--vox2vox")
-    if params.get("leastsquares_flag"):
+    if params.get("leastsquares_flag", False):
         cargs.append("--leastsquares")
-    if params.get("noit_flag"):
+    if params.get("noit_flag", False):
         cargs.append("--noit")
-    if params.get("maxit") is not None:
+    if params.get("maxit", None) is not None:
         cargs.extend([
             "--maxit",
-            str(params.get("maxit"))
+            str(params.get("maxit", None))
         ])
-    if params.get("highit") is not None:
+    if params.get("highit", None) is not None:
         cargs.extend([
             "--highit",
-            str(params.get("highit"))
+            str(params.get("highit", None))
         ])
-    if params.get("epsit") is not None:
+    if params.get("epsit", None) is not None:
         cargs.extend([
             "--epsit",
-            str(params.get("epsit"))
+            str(params.get("epsit", None))
         ])
-    if params.get("pairmaxit") is not None:
+    if params.get("pairmaxit", None) is not None:
         cargs.extend([
             "--pairmaxit",
-            str(params.get("pairmaxit"))
+            str(params.get("pairmaxit", None))
         ])
-    if params.get("pairepsit") is not None:
+    if params.get("pairepsit", None) is not None:
         cargs.extend([
             "--pairepsit",
-            str(params.get("pairepsit"))
+            str(params.get("pairepsit", None))
         ])
-    if params.get("subsample") is not None:
+    if params.get("subsample", None) is not None:
         cargs.extend([
             "--subsample",
-            str(params.get("subsample"))
+            str(params.get("subsample", None))
         ])
-    if params.get("nomulti_flag"):
+    if params.get("nomulti_flag", False):
         cargs.append("--nomulti")
-    if params.get("floattype_flag"):
+    if params.get("floattype_flag", False):
         cargs.append("--floattype")
-    if params.get("finalnearest_flag"):
+    if params.get("finalnearest_flag", False):
         cargs.append("--finalnearest")
-    if params.get("doubleprec_flag"):
+    if params.get("doubleprec_flag", False):
         cargs.append("--doubleprec")
-    if params.get("cras_flag"):
+    if params.get("cras_flag", False):
         cargs.append("--cras")
-    if params.get("res_thresh") is not None:
+    if params.get("res_thresh", None) is not None:
         cargs.extend([
             "--res-thresh",
-            str(params.get("res_thresh"))
+            str(params.get("res_thresh", None))
         ])
-    if params.get("frobnorm_thresh") is not None:
+    if params.get("frobnorm_thresh", None) is not None:
         cargs.extend([
             "--frobnorm-thresh",
-            str(params.get("frobnorm_thresh"))
+            str(params.get("frobnorm_thresh", None))
         ])
-    if params.get("debug_flag"):
+    if params.get("debug_flag", False):
         cargs.append("--debug")
     return cargs
 
@@ -431,7 +439,7 @@ def mri_robust_template_outputs(
     """
     ret = MriRobustTemplateOutputs(
         root=execution.output_file("."),
-        output_template=execution.output_file(params.get("template_file")),
+        output_template=execution.output_file(params.get("template_file", None)),
         output_lta_transform=execution.output_file("[TMP_NAME].lta"),
         output_mapped_image=execution.output_file("[TMP_NAME]_to_template.mgz"),
         output_weights_map=execution.output_file("[TMP_NAME]_weights.mgz"),
@@ -620,7 +628,6 @@ def mri_robust_template(
 __all__ = [
     "MRI_ROBUST_TEMPLATE_METADATA",
     "MriRobustTemplateOutputs",
-    "MriRobustTemplateParameters",
     "mri_robust_template",
     "mri_robust_template_execute",
     "mri_robust_template_params",

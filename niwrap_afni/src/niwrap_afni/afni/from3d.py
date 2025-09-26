@@ -14,7 +14,20 @@ FROM3D_METADATA = Metadata(
 
 
 From3dParameters = typing.TypedDict('From3dParameters', {
-    "@type": typing.Literal["afni.from3d"],
+    "@type": typing.NotRequired[typing.Literal["afni/from3d"]],
+    "verbose": bool,
+    "nsize": bool,
+    "raw": bool,
+    "float": bool,
+    "zfirst": typing.NotRequired[float | None],
+    "zlast": typing.NotRequired[float | None],
+    "tfirst": typing.NotRequired[float | None],
+    "tlast": typing.NotRequired[float | None],
+    "input": InputPathType,
+    "prefix": str,
+})
+From3dParametersTagged = typing.TypedDict('From3dParametersTagged', {
+    "@type": typing.Literal["afni/from3d"],
     "verbose": bool,
     "nsize": bool,
     "raw": bool,
@@ -28,40 +41,9 @@ From3dParameters = typing.TypedDict('From3dParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "afni.from3d": from3d_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-    }.get(t)
-
-
 class From3dOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `from3d(...)`.
+    Output object returned when calling `From3dParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -78,7 +60,7 @@ def from3d_params(
     zlast: float | None = None,
     tfirst: float | None = None,
     tlast: float | None = None,
-) -> From3dParameters:
+) -> From3dParametersTagged:
     """
     Build parameters.
     
@@ -104,7 +86,7 @@ def from3d_params(
         Parameter dictionary
     """
     params = {
-        "@type": "afni.from3d",
+        "@type": "afni/from3d",
         "verbose": verbose,
         "nsize": nsize,
         "raw": raw,
@@ -138,41 +120,41 @@ def from3d_cargs(
     """
     cargs = []
     cargs.append("from3d")
-    if params.get("verbose"):
+    if params.get("verbose", False):
         cargs.append("-v")
-    if params.get("nsize"):
+    if params.get("nsize", False):
         cargs.append("-nsize")
-    if params.get("raw"):
+    if params.get("raw", False):
         cargs.append("-raw")
-    if params.get("float"):
+    if params.get("float", False):
         cargs.append("-float")
-    if params.get("zfirst") is not None:
+    if params.get("zfirst", None) is not None:
         cargs.extend([
             "-zfirst",
-            str(params.get("zfirst"))
+            str(params.get("zfirst", None))
         ])
-    if params.get("zlast") is not None:
+    if params.get("zlast", None) is not None:
         cargs.extend([
             "-zlast",
-            str(params.get("zlast"))
+            str(params.get("zlast", None))
         ])
-    if params.get("tfirst") is not None:
+    if params.get("tfirst", None) is not None:
         cargs.extend([
             "-tfirst",
-            str(params.get("tfirst"))
+            str(params.get("tfirst", None))
         ])
-    if params.get("tlast") is not None:
+    if params.get("tlast", None) is not None:
         cargs.extend([
             "-tlast",
-            str(params.get("tlast"))
+            str(params.get("tlast", None))
         ])
     cargs.extend([
         "-input",
-        execution.input_file(params.get("input"))
+        execution.input_file(params.get("input", None))
     ])
     cargs.extend([
         "-prefix",
-        params.get("prefix")
+        params.get("prefix", None)
     ])
     return cargs
 
@@ -286,7 +268,6 @@ def from3d(
 __all__ = [
     "FROM3D_METADATA",
     "From3dOutputs",
-    "From3dParameters",
     "from3d",
     "from3d_execute",
     "from3d_params",

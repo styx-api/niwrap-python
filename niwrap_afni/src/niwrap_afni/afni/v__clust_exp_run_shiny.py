@@ -14,46 +14,20 @@ V__CLUST_EXP_RUN_SHINY_METADATA = Metadata(
 
 
 VClustExpRunShinyParameters = typing.TypedDict('VClustExpRunShinyParameters', {
-    "@type": typing.Literal["afni.@ClustExp_run_shiny"],
+    "@type": typing.NotRequired[typing.Literal["afni/@ClustExp_run_shiny"]],
+    "directory": str,
+    "help": bool,
+})
+VClustExpRunShinyParametersTagged = typing.TypedDict('VClustExpRunShinyParametersTagged', {
+    "@type": typing.Literal["afni/@ClustExp_run_shiny"],
     "directory": str,
     "help": bool,
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "afni.@ClustExp_run_shiny": v__clust_exp_run_shiny_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-    }.get(t)
-
-
 class VClustExpRunShinyOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `v__clust_exp_run_shiny(...)`.
+    Output object returned when calling `VClustExpRunShinyParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -62,7 +36,7 @@ class VClustExpRunShinyOutputs(typing.NamedTuple):
 def v__clust_exp_run_shiny_params(
     directory: str,
     help_: bool = False,
-) -> VClustExpRunShinyParameters:
+) -> VClustExpRunShinyParametersTagged:
     """
     Build parameters.
     
@@ -73,7 +47,7 @@ def v__clust_exp_run_shiny_params(
         Parameter dictionary
     """
     params = {
-        "@type": "afni.@ClustExp_run_shiny",
+        "@type": "afni/@ClustExp_run_shiny",
         "directory": directory,
         "help": help_,
     }
@@ -95,8 +69,8 @@ def v__clust_exp_run_shiny_cargs(
     """
     cargs = []
     cargs.append("@ClustExp_run_shiny")
-    cargs.append(params.get("directory"))
-    if params.get("help"):
+    cargs.append(params.get("directory", None))
+    if params.get("help", False):
         cargs.append("-help")
     return cargs
 
@@ -178,7 +152,6 @@ def v__clust_exp_run_shiny(
 
 __all__ = [
     "VClustExpRunShinyOutputs",
-    "VClustExpRunShinyParameters",
     "V__CLUST_EXP_RUN_SHINY_METADATA",
     "v__clust_exp_run_shiny",
     "v__clust_exp_run_shiny_execute",

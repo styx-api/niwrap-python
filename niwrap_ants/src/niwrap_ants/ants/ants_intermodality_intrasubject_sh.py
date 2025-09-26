@@ -14,7 +14,22 @@ ANTS_INTERMODALITY_INTRASUBJECT_SH_METADATA = Metadata(
 
 
 AntsIntermodalityIntrasubjectShParameters = typing.TypedDict('AntsIntermodalityIntrasubjectShParameters', {
-    "@type": typing.Literal["ants.antsIntermodalityIntrasubject.sh"],
+    "@type": typing.NotRequired[typing.Literal["ants/antsIntermodalityIntrasubject.sh"]],
+    "dimension": int,
+    "anatomical_t1_image": InputPathType,
+    "anatomical_reference_image": typing.NotRequired[InputPathType | None],
+    "scalar_image_to_match": InputPathType,
+    "anatomical_t1brainmask": InputPathType,
+    "transform_type": typing.Literal[0, 1, 2, 3],
+    "t1_to_template_prefix": str,
+    "template_space": typing.NotRequired[str | None],
+    "output_prefix": str,
+    "labels_in_template_space": typing.NotRequired[InputPathType | None],
+    "auxiliary_scalar_images": typing.NotRequired[InputPathType | None],
+    "auxiliary_dt_image": typing.NotRequired[InputPathType | None],
+})
+AntsIntermodalityIntrasubjectShParametersTagged = typing.TypedDict('AntsIntermodalityIntrasubjectShParametersTagged', {
+    "@type": typing.Literal["ants/antsIntermodalityIntrasubject.sh"],
     "dimension": int,
     "anatomical_t1_image": InputPathType,
     "anatomical_reference_image": typing.NotRequired[InputPathType | None],
@@ -30,41 +45,9 @@ AntsIntermodalityIntrasubjectShParameters = typing.TypedDict('AntsIntermodalityI
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "ants.antsIntermodalityIntrasubject.sh": ants_intermodality_intrasubject_sh_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "ants.antsIntermodalityIntrasubject.sh": ants_intermodality_intrasubject_sh_outputs,
-    }.get(t)
-
-
 class AntsIntermodalityIntrasubjectShOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `ants_intermodality_intrasubject_sh(...)`.
+    Output object returned when calling `AntsIntermodalityIntrasubjectShParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -89,7 +72,7 @@ def ants_intermodality_intrasubject_sh_params(
     labels_in_template_space: InputPathType | None = None,
     auxiliary_scalar_images: InputPathType | None = None,
     auxiliary_dt_image: InputPathType | None = None,
-) -> AntsIntermodalityIntrasubjectShParameters:
+) -> AntsIntermodalityIntrasubjectShParametersTagged:
     """
     Build parameters.
     
@@ -116,7 +99,7 @@ def ants_intermodality_intrasubject_sh_params(
         Parameter dictionary
     """
     params = {
-        "@type": "ants.antsIntermodalityIntrasubject.sh",
+        "@type": "ants/antsIntermodalityIntrasubject.sh",
         "dimension": dimension,
         "anatomical_t1_image": anatomical_t1_image,
         "scalar_image_to_match": scalar_image_to_match,
@@ -155,56 +138,56 @@ def ants_intermodality_intrasubject_sh_cargs(
     cargs.append("antsIntermodalityIntrasubject.sh")
     cargs.extend([
         "-d",
-        str(params.get("dimension"))
+        str(params.get("dimension", None))
     ])
     cargs.extend([
         "-r",
-        execution.input_file(params.get("anatomical_t1_image"))
+        execution.input_file(params.get("anatomical_t1_image", None))
     ])
-    if params.get("anatomical_reference_image") is not None:
+    if params.get("anatomical_reference_image", None) is not None:
         cargs.extend([
             "-R",
-            execution.input_file(params.get("anatomical_reference_image"))
+            execution.input_file(params.get("anatomical_reference_image", None))
         ])
     cargs.extend([
         "-i",
-        execution.input_file(params.get("scalar_image_to_match"))
+        execution.input_file(params.get("scalar_image_to_match", None))
     ])
     cargs.extend([
         "-x",
-        execution.input_file(params.get("anatomical_t1brainmask"))
+        execution.input_file(params.get("anatomical_t1brainmask", None))
     ])
     cargs.extend([
         "-t",
-        str(params.get("transform_type"))
+        str(params.get("transform_type", None))
     ])
     cargs.extend([
         "-w",
-        params.get("t1_to_template_prefix")
+        params.get("t1_to_template_prefix", None)
     ])
-    if params.get("template_space") is not None:
+    if params.get("template_space", None) is not None:
         cargs.extend([
             "-T",
-            params.get("template_space")
+            params.get("template_space", None)
         ])
     cargs.extend([
         "-o",
-        params.get("output_prefix")
+        params.get("output_prefix", None)
     ])
-    if params.get("labels_in_template_space") is not None:
+    if params.get("labels_in_template_space", None) is not None:
         cargs.extend([
             "-l",
-            execution.input_file(params.get("labels_in_template_space"))
+            execution.input_file(params.get("labels_in_template_space", None))
         ])
-    if params.get("auxiliary_scalar_images") is not None:
+    if params.get("auxiliary_scalar_images", None) is not None:
         cargs.extend([
             "-a",
-            execution.input_file(params.get("auxiliary_scalar_images"))
+            execution.input_file(params.get("auxiliary_scalar_images", None))
         ])
-    if params.get("auxiliary_dt_image") is not None:
+    if params.get("auxiliary_dt_image", None) is not None:
         cargs.extend([
             "-b",
-            execution.input_file(params.get("auxiliary_dt_image"))
+            execution.input_file(params.get("auxiliary_dt_image", None))
         ])
     return cargs
 
@@ -224,9 +207,9 @@ def ants_intermodality_intrasubject_sh_outputs(
     """
     ret = AntsIntermodalityIntrasubjectShOutputs(
         root=execution.output_file("."),
-        output_transformed_image=execution.output_file(params.get("output_prefix") + "Transformed.nii.gz"),
-        output_transform=execution.output_file(params.get("output_prefix") + "Transform.mat"),
-        output_warped_image=execution.output_file(params.get("output_prefix") + "Warped.nii.gz"),
+        output_transformed_image=execution.output_file(params.get("output_prefix", None) + "Transformed.nii.gz"),
+        output_transform=execution.output_file(params.get("output_prefix", None) + "Transform.mat"),
+        output_warped_image=execution.output_file(params.get("output_prefix", None) + "Warped.nii.gz"),
     )
     return ret
 
@@ -326,7 +309,6 @@ def ants_intermodality_intrasubject_sh(
 __all__ = [
     "ANTS_INTERMODALITY_INTRASUBJECT_SH_METADATA",
     "AntsIntermodalityIntrasubjectShOutputs",
-    "AntsIntermodalityIntrasubjectShParameters",
     "ants_intermodality_intrasubject_sh",
     "ants_intermodality_intrasubject_sh_execute",
     "ants_intermodality_intrasubject_sh_params",

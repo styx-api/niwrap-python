@@ -14,7 +14,20 @@ MRIS_MULTIMODAL_METADATA = Metadata(
 
 
 MrisMultimodalParameters = typing.TypedDict('MrisMultimodalParameters', {
-    "@type": typing.Literal["freesurfer.mris_multimodal"],
+    "@type": typing.NotRequired[typing.Literal["freesurfer/mris_multimodal"]],
+    "input_surface": InputPathType,
+    "target_surface": InputPathType,
+    "output_surface": str,
+    "fill_holes": bool,
+    "curvature": bool,
+    "thickness": bool,
+    "annotation_output": str,
+    "overlay_output": str,
+    "csv_output": str,
+    "vtk_output": bool,
+})
+MrisMultimodalParametersTagged = typing.TypedDict('MrisMultimodalParametersTagged', {
+    "@type": typing.Literal["freesurfer/mris_multimodal"],
     "input_surface": InputPathType,
     "target_surface": InputPathType,
     "output_surface": str,
@@ -28,41 +41,9 @@ MrisMultimodalParameters = typing.TypedDict('MrisMultimodalParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "freesurfer.mris_multimodal": mris_multimodal_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "freesurfer.mris_multimodal": mris_multimodal_outputs,
-    }.get(t)
-
-
 class MrisMultimodalOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `mris_multimodal(...)`.
+    Output object returned when calling `MrisMultimodalParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -87,7 +68,7 @@ def mris_multimodal_params(
     curvature: bool = False,
     thickness: bool = False,
     vtk_output: bool = False,
-) -> MrisMultimodalParameters:
+) -> MrisMultimodalParametersTagged:
     """
     Build parameters.
     
@@ -106,7 +87,7 @@ def mris_multimodal_params(
         Parameter dictionary
     """
     params = {
-        "@type": "freesurfer.mris_multimodal",
+        "@type": "freesurfer/mris_multimodal",
         "input_surface": input_surface,
         "target_surface": target_surface,
         "output_surface": output_surface,
@@ -138,35 +119,35 @@ def mris_multimodal_cargs(
     cargs.append("mris_multimodal")
     cargs.extend([
         "-i",
-        execution.input_file(params.get("input_surface"))
+        execution.input_file(params.get("input_surface", None))
     ])
     cargs.extend([
         "-t",
-        execution.input_file(params.get("target_surface"))
+        execution.input_file(params.get("target_surface", None))
     ])
     cargs.extend([
         "-o",
-        params.get("output_surface")
+        params.get("output_surface", None)
     ])
-    if params.get("fill_holes"):
+    if params.get("fill_holes", False):
         cargs.append("-fillHoles")
-    if params.get("curvature"):
+    if params.get("curvature", False):
         cargs.append("--curvature")
-    if params.get("thickness"):
+    if params.get("thickness", False):
         cargs.append("--thickness")
     cargs.extend([
         "-a",
-        params.get("annotation_output")
+        params.get("annotation_output", None)
     ])
     cargs.extend([
         "-v",
-        params.get("overlay_output")
+        params.get("overlay_output", None)
     ])
     cargs.extend([
         "-c",
-        params.get("csv_output")
+        params.get("csv_output", None)
     ])
-    if params.get("vtk_output"):
+    if params.get("vtk_output", False):
         cargs.append("-vtk")
     return cargs
 
@@ -186,10 +167,10 @@ def mris_multimodal_outputs(
     """
     ret = MrisMultimodalOutputs(
         root=execution.output_file("."),
-        processed_output_surface=execution.output_file(params.get("output_surface")),
-        annotation_output_file=execution.output_file(params.get("annotation_output")),
-        overlay_output_file=execution.output_file(params.get("overlay_output")),
-        csv_output_file=execution.output_file(params.get("csv_output")),
+        processed_output_surface=execution.output_file(params.get("output_surface", None)),
+        annotation_output_file=execution.output_file(params.get("annotation_output", None)),
+        overlay_output_file=execution.output_file(params.get("overlay_output", None)),
+        csv_output_file=execution.output_file(params.get("csv_output", None)),
     )
     return ret
 
@@ -277,7 +258,6 @@ def mris_multimodal(
 __all__ = [
     "MRIS_MULTIMODAL_METADATA",
     "MrisMultimodalOutputs",
-    "MrisMultimodalParameters",
     "mris_multimodal",
     "mris_multimodal_execute",
     "mris_multimodal_params",

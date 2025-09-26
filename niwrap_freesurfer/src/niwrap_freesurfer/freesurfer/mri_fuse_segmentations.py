@@ -14,7 +14,17 @@ MRI_FUSE_SEGMENTATIONS_METADATA = Metadata(
 
 
 MriFuseSegmentationsParameters = typing.TypedDict('MriFuseSegmentationsParameters', {
-    "@type": typing.Literal["freesurfer.mri_fuse_segmentations"],
+    "@type": typing.NotRequired[typing.Literal["freesurfer/mri_fuse_segmentations"]],
+    "asegs": list[InputPathType],
+    "nocc_asegs": list[InputPathType],
+    "norm_volumes": list[InputPathType],
+    "transforms": typing.NotRequired[list[InputPathType] | None],
+    "sigma": typing.NotRequired[float | None],
+    "input_file": InputPathType,
+    "output_file": str,
+})
+MriFuseSegmentationsParametersTagged = typing.TypedDict('MriFuseSegmentationsParametersTagged', {
+    "@type": typing.Literal["freesurfer/mri_fuse_segmentations"],
     "asegs": list[InputPathType],
     "nocc_asegs": list[InputPathType],
     "norm_volumes": list[InputPathType],
@@ -25,41 +35,9 @@ MriFuseSegmentationsParameters = typing.TypedDict('MriFuseSegmentationsParameter
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "freesurfer.mri_fuse_segmentations": mri_fuse_segmentations_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "freesurfer.mri_fuse_segmentations": mri_fuse_segmentations_outputs,
-    }.get(t)
-
-
 class MriFuseSegmentationsOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `mri_fuse_segmentations(...)`.
+    Output object returned when calling `MriFuseSegmentationsParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -75,7 +53,7 @@ def mri_fuse_segmentations_params(
     output_file: str,
     transforms: list[InputPathType] | None = None,
     sigma: float | None = None,
-) -> MriFuseSegmentationsParameters:
+) -> MriFuseSegmentationsParametersTagged:
     """
     Build parameters.
     
@@ -93,7 +71,7 @@ def mri_fuse_segmentations_params(
         Parameter dictionary
     """
     params = {
-        "@type": "freesurfer.mri_fuse_segmentations",
+        "@type": "freesurfer/mri_fuse_segmentations",
         "asegs": asegs,
         "nocc_asegs": nocc_asegs,
         "norm_volumes": norm_volumes,
@@ -124,28 +102,28 @@ def mri_fuse_segmentations_cargs(
     cargs.append("mri_fuse_segmentations")
     cargs.extend([
         "-a",
-        *[execution.input_file(f) for f in params.get("asegs")]
+        *[execution.input_file(f) for f in params.get("asegs", None)]
     ])
     cargs.extend([
         "-c",
-        *[execution.input_file(f) for f in params.get("nocc_asegs")]
+        *[execution.input_file(f) for f in params.get("nocc_asegs", None)]
     ])
     cargs.extend([
         "-n",
-        *[execution.input_file(f) for f in params.get("norm_volumes")]
+        *[execution.input_file(f) for f in params.get("norm_volumes", None)]
     ])
-    if params.get("transforms") is not None:
+    if params.get("transforms", None) is not None:
         cargs.extend([
             "-t",
-            *[execution.input_file(f) for f in params.get("transforms")]
+            *[execution.input_file(f) for f in params.get("transforms", None)]
         ])
-    if params.get("sigma") is not None:
+    if params.get("sigma", None) is not None:
         cargs.extend([
             "-s",
-            str(params.get("sigma"))
+            str(params.get("sigma", None))
         ])
-    cargs.append(execution.input_file(params.get("input_file")))
-    cargs.append(params.get("output_file"))
+    cargs.append(execution.input_file(params.get("input_file", None)))
+    cargs.append(params.get("output_file", None))
     return cargs
 
 
@@ -164,7 +142,7 @@ def mri_fuse_segmentations_outputs(
     """
     ret = MriFuseSegmentationsOutputs(
         root=execution.output_file("."),
-        output_file=execution.output_file(params.get("output_file")),
+        output_file=execution.output_file(params.get("output_file", None)),
     )
     return ret
 
@@ -247,7 +225,6 @@ def mri_fuse_segmentations(
 __all__ = [
     "MRI_FUSE_SEGMENTATIONS_METADATA",
     "MriFuseSegmentationsOutputs",
-    "MriFuseSegmentationsParameters",
     "mri_fuse_segmentations",
     "mri_fuse_segmentations_execute",
     "mri_fuse_segmentations_params",

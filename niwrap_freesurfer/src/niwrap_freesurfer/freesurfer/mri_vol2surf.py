@@ -14,7 +14,19 @@ MRI_VOL2SURF_METADATA = Metadata(
 
 
 MriVol2surfParameters = typing.TypedDict('MriVol2surfParameters', {
-    "@type": typing.Literal["freesurfer.mri_vol2surf"],
+    "@type": typing.NotRequired[typing.Literal["freesurfer/mri_vol2surf"]],
+    "input_volume": InputPathType,
+    "registration_file": InputPathType,
+    "output_path": str,
+    "reference_volume": typing.NotRequired[str | None],
+    "regheader_subject": typing.NotRequired[str | None],
+    "mni152reg_flag": bool,
+    "target_subject": typing.NotRequired[str | None],
+    "hemisphere": typing.NotRequired[typing.Literal["lh", "rh"] | None],
+    "surface": typing.NotRequired[str | None],
+})
+MriVol2surfParametersTagged = typing.TypedDict('MriVol2surfParametersTagged', {
+    "@type": typing.Literal["freesurfer/mri_vol2surf"],
     "input_volume": InputPathType,
     "registration_file": InputPathType,
     "output_path": str,
@@ -27,41 +39,9 @@ MriVol2surfParameters = typing.TypedDict('MriVol2surfParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "freesurfer.mri_vol2surf": mri_vol2surf_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "freesurfer.mri_vol2surf": mri_vol2surf_outputs,
-    }.get(t)
-
-
 class MriVol2surfOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `mri_vol2surf(...)`.
+    Output object returned when calling `MriVol2surfParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -79,7 +59,7 @@ def mri_vol2surf_params(
     target_subject: str | None = None,
     hemisphere: typing.Literal["lh", "rh"] | None = None,
     surface: str | None = None,
-) -> MriVol2surfParameters:
+) -> MriVol2surfParametersTagged:
     """
     Build parameters.
     
@@ -102,7 +82,7 @@ def mri_vol2surf_params(
         Parameter dictionary
     """
     params = {
-        "@type": "freesurfer.mri_vol2surf",
+        "@type": "freesurfer/mri_vol2surf",
         "input_volume": input_volume,
         "registration_file": registration_file,
         "output_path": output_path,
@@ -138,42 +118,42 @@ def mri_vol2surf_cargs(
     cargs.append("mri_vol2surf")
     cargs.extend([
         "--mov",
-        execution.input_file(params.get("input_volume"))
+        execution.input_file(params.get("input_volume", None))
     ])
     cargs.extend([
         "--reg",
-        execution.input_file(params.get("registration_file"))
+        execution.input_file(params.get("registration_file", None))
     ])
     cargs.extend([
         "--o",
-        params.get("output_path")
+        params.get("output_path", None)
     ])
-    if params.get("reference_volume") is not None:
+    if params.get("reference_volume", None) is not None:
         cargs.extend([
             "--ref",
-            params.get("reference_volume")
+            params.get("reference_volume", None)
         ])
-    if params.get("regheader_subject") is not None:
+    if params.get("regheader_subject", None) is not None:
         cargs.extend([
             "--regheader",
-            params.get("regheader_subject")
+            params.get("regheader_subject", None)
         ])
-    if params.get("mni152reg_flag"):
+    if params.get("mni152reg_flag", False):
         cargs.append("--mni152reg")
-    if params.get("target_subject") is not None:
+    if params.get("target_subject", None) is not None:
         cargs.extend([
             "--trgsubject",
-            params.get("target_subject")
+            params.get("target_subject", None)
         ])
-    if params.get("hemisphere") is not None:
+    if params.get("hemisphere", None) is not None:
         cargs.extend([
             "--hemi",
-            params.get("hemisphere")
+            params.get("hemisphere", None)
         ])
-    if params.get("surface") is not None:
+    if params.get("surface", None) is not None:
         cargs.extend([
             "--surf",
-            params.get("surface")
+            params.get("surface", None)
         ])
     return cargs
 
@@ -193,7 +173,7 @@ def mri_vol2surf_outputs(
     """
     ret = MriVol2surfOutputs(
         root=execution.output_file("."),
-        resampled_volume_output=execution.output_file(params.get("output_path")),
+        resampled_volume_output=execution.output_file(params.get("output_path", None)),
     )
     return ret
 
@@ -287,7 +267,6 @@ def mri_vol2surf(
 __all__ = [
     "MRI_VOL2SURF_METADATA",
     "MriVol2surfOutputs",
-    "MriVol2surfParameters",
     "mri_vol2surf",
     "mri_vol2surf_execute",
     "mri_vol2surf_params",

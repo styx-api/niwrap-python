@@ -14,7 +14,15 @@ COMPUTE_INTERRATER_VARIABILITY_CSH_METADATA = Metadata(
 
 
 ComputeInterraterVariabilityCshParameters = typing.TypedDict('ComputeInterraterVariabilityCshParameters', {
-    "@type": typing.Literal["freesurfer.compute_interrater_variability.csh"],
+    "@type": typing.NotRequired[typing.Literal["freesurfer/compute_interrater_variability.csh"]],
+    "label_vol1": InputPathType,
+    "label_vol2": InputPathType,
+    "output_prefix": str,
+    "version": bool,
+    "help": bool,
+})
+ComputeInterraterVariabilityCshParametersTagged = typing.TypedDict('ComputeInterraterVariabilityCshParametersTagged', {
+    "@type": typing.Literal["freesurfer/compute_interrater_variability.csh"],
     "label_vol1": InputPathType,
     "label_vol2": InputPathType,
     "output_prefix": str,
@@ -23,41 +31,9 @@ ComputeInterraterVariabilityCshParameters = typing.TypedDict('ComputeInterraterV
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "freesurfer.compute_interrater_variability.csh": compute_interrater_variability_csh_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "freesurfer.compute_interrater_variability.csh": compute_interrater_variability_csh_outputs,
-    }.get(t)
-
-
 class ComputeInterraterVariabilityCshOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `compute_interrater_variability_csh(...)`.
+    Output object returned when calling `ComputeInterraterVariabilityCshParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -76,7 +52,7 @@ def compute_interrater_variability_csh_params(
     output_prefix: str,
     version: bool = False,
     help_: bool = False,
-) -> ComputeInterraterVariabilityCshParameters:
+) -> ComputeInterraterVariabilityCshParametersTagged:
     """
     Build parameters.
     
@@ -91,7 +67,7 @@ def compute_interrater_variability_csh_params(
         Parameter dictionary
     """
     params = {
-        "@type": "freesurfer.compute_interrater_variability.csh",
+        "@type": "freesurfer/compute_interrater_variability.csh",
         "label_vol1": label_vol1,
         "label_vol2": label_vol2,
         "output_prefix": output_prefix,
@@ -118,19 +94,19 @@ def compute_interrater_variability_csh_cargs(
     cargs.append("compute_interrater_variability.csh")
     cargs.extend([
         "--vol1",
-        execution.input_file(params.get("label_vol1"))
+        execution.input_file(params.get("label_vol1", None))
     ])
     cargs.extend([
         "--vol2",
-        execution.input_file(params.get("label_vol2"))
+        execution.input_file(params.get("label_vol2", None))
     ])
     cargs.extend([
         "--out",
-        params.get("output_prefix")
+        params.get("output_prefix", None)
     ])
-    if params.get("version"):
+    if params.get("version", False):
         cargs.append("--version")
-    if params.get("help"):
+    if params.get("help", False):
         cargs.append("--help")
     return cargs
 
@@ -150,9 +126,9 @@ def compute_interrater_variability_csh_outputs(
     """
     ret = ComputeInterraterVariabilityCshOutputs(
         root=execution.output_file("."),
-        output_file_1=execution.output_file(params.get("output_prefix") + "_file1.txt"),
-        output_file_2=execution.output_file(params.get("output_prefix") + "_file2.txt"),
-        output_file_3=execution.output_file(params.get("output_prefix") + "_file3.txt"),
+        output_file_1=execution.output_file(params.get("output_prefix", None) + "_file1.txt"),
+        output_file_2=execution.output_file(params.get("output_prefix", None) + "_file2.txt"),
+        output_file_3=execution.output_file(params.get("output_prefix", None) + "_file3.txt"),
     )
     return ret
 
@@ -228,7 +204,6 @@ def compute_interrater_variability_csh(
 __all__ = [
     "COMPUTE_INTERRATER_VARIABILITY_CSH_METADATA",
     "ComputeInterraterVariabilityCshOutputs",
-    "ComputeInterraterVariabilityCshParameters",
     "compute_interrater_variability_csh",
     "compute_interrater_variability_csh_execute",
     "compute_interrater_variability_csh_params",

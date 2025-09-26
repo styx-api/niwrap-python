@@ -14,7 +14,31 @@ XMAT_TOOL_PY_METADATA = Metadata(
 
 
 XmatToolPyParameters = typing.TypedDict('XmatToolPyParameters', {
-    "@type": typing.Literal["afni.xmat_tool.py"],
+    "@type": typing.NotRequired[typing.Literal["afni/xmat_tool.py"]],
+    "no_gui": bool,
+    "load_xmat": typing.NotRequired[InputPathType | None],
+    "load_1d": typing.NotRequired[InputPathType | None],
+    "choose_cols": typing.NotRequired[str | None],
+    "choose_nonzero_cols": bool,
+    "chrono": bool,
+    "cormat_cutoff": typing.NotRequired[float | None],
+    "cosmat_cutoff": typing.NotRequired[float | None],
+    "cosmat_motion": bool,
+    "verb": typing.NotRequired[float | None],
+    "show_col_types": bool,
+    "show_conds": bool,
+    "show_cormat": bool,
+    "show_cormat_warnings": bool,
+    "show_cosmat": bool,
+    "show_cosmat_warnings": bool,
+    "show_fit_betas": bool,
+    "show_fit_ts": bool,
+    "show_xmat": bool,
+    "show_1d": bool,
+    "gui_plot_xmat_as_one": bool,
+})
+XmatToolPyParametersTagged = typing.TypedDict('XmatToolPyParametersTagged', {
+    "@type": typing.Literal["afni/xmat_tool.py"],
     "no_gui": bool,
     "load_xmat": typing.NotRequired[InputPathType | None],
     "load_1d": typing.NotRequired[InputPathType | None],
@@ -39,41 +63,9 @@ XmatToolPyParameters = typing.TypedDict('XmatToolPyParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "afni.xmat_tool.py": xmat_tool_py_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "afni.xmat_tool.py": xmat_tool_py_outputs,
-    }.get(t)
-
-
 class XmatToolPyOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `xmat_tool_py(...)`.
+    Output object returned when calling `XmatToolPyParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -103,7 +95,7 @@ def xmat_tool_py_params(
     show_xmat: bool = False,
     show_1d: bool = False,
     gui_plot_xmat_as_one: bool = False,
-) -> XmatToolPyParameters:
+) -> XmatToolPyParametersTagged:
     """
     Build parameters.
     
@@ -133,7 +125,7 @@ def xmat_tool_py_params(
         Parameter dictionary
     """
     params = {
-        "@type": "afni.xmat_tool.py",
+        "@type": "afni/xmat_tool.py",
         "no_gui": no_gui,
         "choose_nonzero_cols": choose_nonzero_cols,
         "chrono": chrono,
@@ -180,65 +172,65 @@ def xmat_tool_py_cargs(
     """
     cargs = []
     cargs.append("xmat_tool.py")
-    if params.get("no_gui"):
+    if params.get("no_gui", False):
         cargs.append("-no_gui")
-    if params.get("load_xmat") is not None:
+    if params.get("load_xmat", None) is not None:
         cargs.extend([
             "-load_xmat",
-            execution.input_file(params.get("load_xmat"))
+            execution.input_file(params.get("load_xmat", None))
         ])
-    if params.get("load_1d") is not None:
+    if params.get("load_1d", None) is not None:
         cargs.extend([
             "-load_1D",
-            execution.input_file(params.get("load_1d"))
+            execution.input_file(params.get("load_1d", None))
         ])
-    if params.get("choose_cols") is not None:
+    if params.get("choose_cols", None) is not None:
         cargs.extend([
             "-choose_cols",
-            params.get("choose_cols")
+            params.get("choose_cols", None)
         ])
-    if params.get("choose_nonzero_cols"):
+    if params.get("choose_nonzero_cols", False):
         cargs.append("-choose_nonzero_cols")
-    if params.get("chrono"):
+    if params.get("chrono", False):
         cargs.append("-chrono")
-    if params.get("cormat_cutoff") is not None:
+    if params.get("cormat_cutoff", None) is not None:
         cargs.extend([
             "-cormat_cutoff",
-            str(params.get("cormat_cutoff"))
+            str(params.get("cormat_cutoff", None))
         ])
-    if params.get("cosmat_cutoff") is not None:
+    if params.get("cosmat_cutoff", None) is not None:
         cargs.extend([
             "-cosmat_cutoff",
-            str(params.get("cosmat_cutoff"))
+            str(params.get("cosmat_cutoff", None))
         ])
-    if params.get("cosmat_motion"):
+    if params.get("cosmat_motion", False):
         cargs.append("-cosmat_motion")
-    if params.get("verb") is not None:
+    if params.get("verb", None) is not None:
         cargs.extend([
             "-verb",
-            str(params.get("verb"))
+            str(params.get("verb", None))
         ])
-    if params.get("show_col_types"):
+    if params.get("show_col_types", False):
         cargs.append("-show_col_types")
-    if params.get("show_conds"):
+    if params.get("show_conds", False):
         cargs.append("-show_conds")
-    if params.get("show_cormat"):
+    if params.get("show_cormat", False):
         cargs.append("-show_cormat")
-    if params.get("show_cormat_warnings"):
+    if params.get("show_cormat_warnings", False):
         cargs.append("-show_cormat_warnings")
-    if params.get("show_cosmat"):
+    if params.get("show_cosmat", False):
         cargs.append("-show_cosmat")
-    if params.get("show_cosmat_warnings"):
+    if params.get("show_cosmat_warnings", False):
         cargs.append("-show_cosmat_warnings")
-    if params.get("show_fit_betas"):
+    if params.get("show_fit_betas", False):
         cargs.append("-show_fit_betas")
-    if params.get("show_fit_ts"):
+    if params.get("show_fit_ts", False):
         cargs.append("-show_fit_ts")
-    if params.get("show_xmat"):
+    if params.get("show_xmat", False):
         cargs.append("-show_xmat")
-    if params.get("show_1d"):
+    if params.get("show_1d", False):
         cargs.append("-show_1D")
-    if params.get("gui_plot_xmat_as_one"):
+    if params.get("gui_plot_xmat_as_one", False):
         cargs.append("-gui_plot_xmat_as_one")
     return cargs
 
@@ -379,7 +371,6 @@ def xmat_tool_py(
 __all__ = [
     "XMAT_TOOL_PY_METADATA",
     "XmatToolPyOutputs",
-    "XmatToolPyParameters",
     "xmat_tool_py",
     "xmat_tool_py_execute",
     "xmat_tool_py_params",

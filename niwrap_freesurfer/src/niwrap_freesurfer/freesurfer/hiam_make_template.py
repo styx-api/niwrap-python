@@ -14,7 +14,14 @@ HIAM_MAKE_TEMPLATE_METADATA = Metadata(
 
 
 HiamMakeTemplateParameters = typing.TypedDict('HiamMakeTemplateParameters', {
-    "@type": typing.Literal["freesurfer.hiam_make_template"],
+    "@type": typing.NotRequired[typing.Literal["freesurfer/hiam_make_template"]],
+    "hemi": str,
+    "surface_name": str,
+    "subjects": list[str],
+    "output_name": str,
+})
+HiamMakeTemplateParametersTagged = typing.TypedDict('HiamMakeTemplateParametersTagged', {
+    "@type": typing.Literal["freesurfer/hiam_make_template"],
     "hemi": str,
     "surface_name": str,
     "subjects": list[str],
@@ -22,40 +29,9 @@ HiamMakeTemplateParameters = typing.TypedDict('HiamMakeTemplateParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "freesurfer.hiam_make_template": hiam_make_template_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-    }.get(t)
-
-
 class HiamMakeTemplateOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `hiam_make_template(...)`.
+    Output object returned when calling `HiamMakeTemplateParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -66,7 +42,7 @@ def hiam_make_template_params(
     surface_name: str,
     subjects: list[str],
     output_name: str,
-) -> HiamMakeTemplateParameters:
+) -> HiamMakeTemplateParametersTagged:
     """
     Build parameters.
     
@@ -79,7 +55,7 @@ def hiam_make_template_params(
         Parameter dictionary
     """
     params = {
-        "@type": "freesurfer.hiam_make_template",
+        "@type": "freesurfer/hiam_make_template",
         "hemi": hemi,
         "surface_name": surface_name,
         "subjects": subjects,
@@ -103,10 +79,10 @@ def hiam_make_template_cargs(
     """
     cargs = []
     cargs.append("hiam_make_template")
-    cargs.append(params.get("hemi"))
-    cargs.append(params.get("surface_name"))
-    cargs.extend(params.get("subjects"))
-    cargs.append(params.get("output_name"))
+    cargs.append(params.get("hemi", None))
+    cargs.append(params.get("surface_name", None))
+    cargs.extend(params.get("subjects", None))
+    cargs.append(params.get("output_name", None))
     return cargs
 
 
@@ -194,7 +170,6 @@ def hiam_make_template(
 __all__ = [
     "HIAM_MAKE_TEMPLATE_METADATA",
     "HiamMakeTemplateOutputs",
-    "HiamMakeTemplateParameters",
     "hiam_make_template",
     "hiam_make_template_execute",
     "hiam_make_template_params",

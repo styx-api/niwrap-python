@@ -14,7 +14,52 @@ FILE_TOOL_METADATA = Metadata(
 
 
 FileToolParameters = typing.TypedDict('FileToolParameters', {
-    "@type": typing.Literal["afni.file_tool"],
+    "@type": typing.NotRequired[typing.Literal["afni/file_tool"]],
+    "help": bool,
+    "version": bool,
+    "hist": bool,
+    "debug": typing.NotRequired[float | None],
+    "infiles": list[InputPathType],
+    "ge_all": bool,
+    "ge_header": bool,
+    "ge_extras": bool,
+    "ge_uv17": bool,
+    "ge_run": bool,
+    "ge_off": bool,
+    "ge4_all": bool,
+    "ge4_image": bool,
+    "ge4_series": bool,
+    "ge4_study": bool,
+    "def_ana_hdr": bool,
+    "diff_ana_hdrs": bool,
+    "disp_ana_hdr": bool,
+    "hex": bool,
+    "mod_ana_hdr": bool,
+    "mod_field": typing.NotRequired[str | None],
+    "prefix": typing.NotRequired[str | None],
+    "overwrite": bool,
+    "show_bad_all": bool,
+    "show_bad_backslash": bool,
+    "show_bad_char": bool,
+    "show_file_type": bool,
+    "fix_rich_quotes": typing.NotRequired[str | None],
+    "test": bool,
+    "length": typing.NotRequired[float | None],
+    "mod_data": typing.NotRequired[str | None],
+    "mod_type": typing.NotRequired[str | None],
+    "offset": typing.NotRequired[float | None],
+    "quiet": bool,
+    "disp_hex": bool,
+    "disp_hex1": bool,
+    "disp_hex2": bool,
+    "disp_hex4": bool,
+    "disp_int2": bool,
+    "disp_int4": bool,
+    "disp_real4": bool,
+    "swap_bytes": bool,
+})
+FileToolParametersTagged = typing.TypedDict('FileToolParametersTagged', {
+    "@type": typing.Literal["afni/file_tool"],
     "help": bool,
     "version": bool,
     "hist": bool,
@@ -60,41 +105,9 @@ FileToolParameters = typing.TypedDict('FileToolParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "afni.file_tool": file_tool_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "afni.file_tool": file_tool_outputs,
-    }.get(t)
-
-
 class FileToolOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `file_tool(...)`.
+    Output object returned when calling `FileToolParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -145,7 +158,7 @@ def file_tool_params(
     disp_int4: bool = False,
     disp_real4: bool = False,
     swap_bytes: bool = False,
-) -> FileToolParameters:
+) -> FileToolParametersTagged:
     """
     Build parameters.
     
@@ -196,7 +209,7 @@ def file_tool_params(
         Parameter dictionary
     """
     params = {
-        "@type": "afni.file_tool",
+        "@type": "afni/file_tool",
         "help": help_,
         "version": version,
         "hist": hist,
@@ -266,115 +279,115 @@ def file_tool_cargs(
     """
     cargs = []
     cargs.append("file_tool")
-    if params.get("help"):
+    if params.get("help", False):
         cargs.append("-help")
-    if params.get("version"):
+    if params.get("version", False):
         cargs.append("-version")
-    if params.get("hist"):
+    if params.get("hist", False):
         cargs.append("-hist")
-    if params.get("debug") is not None:
+    if params.get("debug", None) is not None:
         cargs.extend([
             "-debug",
-            str(params.get("debug"))
+            str(params.get("debug", None))
         ])
     cargs.extend([
         "-infiles",
-        *[execution.input_file(f) for f in params.get("infiles")]
+        *[execution.input_file(f) for f in params.get("infiles", None)]
     ])
-    if params.get("ge_all"):
+    if params.get("ge_all", False):
         cargs.append("-ge_all")
-    if params.get("ge_header"):
+    if params.get("ge_header", False):
         cargs.append("-ge_header")
-    if params.get("ge_extras"):
+    if params.get("ge_extras", False):
         cargs.append("-ge_extras")
-    if params.get("ge_uv17"):
+    if params.get("ge_uv17", False):
         cargs.append("-ge_uv17")
-    if params.get("ge_run"):
+    if params.get("ge_run", False):
         cargs.append("-ge_run")
-    if params.get("ge_off"):
+    if params.get("ge_off", False):
         cargs.append("-ge_off")
-    if params.get("ge4_all"):
+    if params.get("ge4_all", False):
         cargs.append("-ge4_all")
-    if params.get("ge4_image"):
+    if params.get("ge4_image", False):
         cargs.append("-ge4_image")
-    if params.get("ge4_series"):
+    if params.get("ge4_series", False):
         cargs.append("-ge4_series")
-    if params.get("ge4_study"):
+    if params.get("ge4_study", False):
         cargs.append("-ge4_study")
-    if params.get("def_ana_hdr"):
+    if params.get("def_ana_hdr", False):
         cargs.append("-def_ana_hdr")
-    if params.get("diff_ana_hdrs"):
+    if params.get("diff_ana_hdrs", False):
         cargs.append("-diff_ana_hdrs")
-    if params.get("disp_ana_hdr"):
+    if params.get("disp_ana_hdr", False):
         cargs.append("-disp_ana_hdr")
-    if params.get("hex"):
+    if params.get("hex", False):
         cargs.append("-hex")
-    if params.get("mod_ana_hdr"):
+    if params.get("mod_ana_hdr", False):
         cargs.append("-mod_ana_hdr")
-    if params.get("mod_field") is not None:
+    if params.get("mod_field", None) is not None:
         cargs.extend([
             "-mod_field",
-            params.get("mod_field")
+            params.get("mod_field", None)
         ])
-    if params.get("prefix") is not None:
+    if params.get("prefix", None) is not None:
         cargs.extend([
             "-prefix",
-            params.get("prefix")
+            params.get("prefix", None)
         ])
-    if params.get("overwrite"):
+    if params.get("overwrite", False):
         cargs.append("-overwrite")
-    if params.get("show_bad_all"):
+    if params.get("show_bad_all", False):
         cargs.append("-show_bad_all")
-    if params.get("show_bad_backslash"):
+    if params.get("show_bad_backslash", False):
         cargs.append("-show_bad_backslash")
-    if params.get("show_bad_char"):
+    if params.get("show_bad_char", False):
         cargs.append("-show_bad_char")
-    if params.get("show_file_type"):
+    if params.get("show_file_type", False):
         cargs.append("-show_file_type")
-    if params.get("fix_rich_quotes") is not None:
+    if params.get("fix_rich_quotes", None) is not None:
         cargs.extend([
             "-fix_rich_quotes",
-            params.get("fix_rich_quotes")
+            params.get("fix_rich_quotes", None)
         ])
-    if params.get("test"):
+    if params.get("test", False):
         cargs.append("-test")
-    if params.get("length") is not None:
+    if params.get("length", None) is not None:
         cargs.extend([
             "-length",
-            str(params.get("length"))
+            str(params.get("length", None))
         ])
-    if params.get("mod_data") is not None:
+    if params.get("mod_data", None) is not None:
         cargs.extend([
             "-mod_data",
-            params.get("mod_data")
+            params.get("mod_data", None)
         ])
-    if params.get("mod_type") is not None:
+    if params.get("mod_type", None) is not None:
         cargs.extend([
             "-mod_type",
-            params.get("mod_type")
+            params.get("mod_type", None)
         ])
-    if params.get("offset") is not None:
+    if params.get("offset", None) is not None:
         cargs.extend([
             "-offset",
-            str(params.get("offset"))
+            str(params.get("offset", None))
         ])
-    if params.get("quiet"):
+    if params.get("quiet", False):
         cargs.append("-quiet")
-    if params.get("disp_hex"):
+    if params.get("disp_hex", False):
         cargs.append("-disp_hex")
-    if params.get("disp_hex1"):
+    if params.get("disp_hex1", False):
         cargs.append("-disp_hex1")
-    if params.get("disp_hex2"):
+    if params.get("disp_hex2", False):
         cargs.append("-disp_hex2")
-    if params.get("disp_hex4"):
+    if params.get("disp_hex4", False):
         cargs.append("-disp_hex4")
-    if params.get("disp_int2"):
+    if params.get("disp_int2", False):
         cargs.append("-disp_int2")
-    if params.get("disp_int4"):
+    if params.get("disp_int4", False):
         cargs.append("-disp_int4")
-    if params.get("disp_real4"):
+    if params.get("disp_real4", False):
         cargs.append("-disp_real4")
-    if params.get("swap_bytes"):
+    if params.get("swap_bytes", False):
         cargs.append("-swap_bytes")
     return cargs
 
@@ -394,7 +407,7 @@ def file_tool_outputs(
     """
     ret = FileToolOutputs(
         root=execution.output_file("."),
-        modified_file=execution.output_file(params.get("prefix")) if (params.get("prefix") is not None) else None,
+        modified_file=execution.output_file(params.get("prefix", None)) if (params.get("prefix") is not None) else None,
     )
     return ret
 
@@ -578,7 +591,6 @@ def file_tool(
 __all__ = [
     "FILE_TOOL_METADATA",
     "FileToolOutputs",
-    "FileToolParameters",
     "file_tool",
     "file_tool_execute",
     "file_tool_params",

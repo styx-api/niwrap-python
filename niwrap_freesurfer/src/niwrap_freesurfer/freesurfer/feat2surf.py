@@ -14,7 +14,20 @@ FEAT2SURF_METADATA = Metadata(
 
 
 Feat2surfParameters = typing.TypedDict('Feat2surfParameters', {
-    "@type": typing.Literal["freesurfer.feat2surf"],
+    "@type": typing.NotRequired[typing.Literal["freesurfer/feat2surf"]],
+    "feat_dirs": list[str],
+    "feat_dirfile": typing.NotRequired[InputPathType | None],
+    "proj_frac": typing.NotRequired[float | None],
+    "hemi": typing.NotRequired[str | None],
+    "target": typing.NotRequired[str | None],
+    "surf": typing.NotRequired[str | None],
+    "cope_only": bool,
+    "debug_flag": bool,
+    "nolog_flag": bool,
+    "out_dir": typing.NotRequired[str | None],
+})
+Feat2surfParametersTagged = typing.TypedDict('Feat2surfParametersTagged', {
+    "@type": typing.Literal["freesurfer/feat2surf"],
     "feat_dirs": list[str],
     "feat_dirfile": typing.NotRequired[InputPathType | None],
     "proj_frac": typing.NotRequired[float | None],
@@ -28,41 +41,9 @@ Feat2surfParameters = typing.TypedDict('Feat2surfParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "freesurfer.feat2surf": feat2surf_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "freesurfer.feat2surf": feat2surf_outputs,
-    }.get(t)
-
-
 class Feat2surfOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `feat2surf(...)`.
+    Output object returned when calling `Feat2surfParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -87,7 +68,7 @@ def feat2surf_params(
     debug_flag: bool = False,
     nolog_flag: bool = False,
     out_dir: str | None = None,
-) -> Feat2surfParameters:
+) -> Feat2surfParametersTagged:
     """
     Build parameters.
     
@@ -111,7 +92,7 @@ def feat2surf_params(
         Parameter dictionary
     """
     params = {
-        "@type": "freesurfer.feat2surf",
+        "@type": "freesurfer/feat2surf",
         "feat_dirs": feat_dirs,
         "cope_only": cope_only,
         "debug_flag": debug_flag,
@@ -149,43 +130,43 @@ def feat2surf_cargs(
     cargs.append("feat2surf")
     cargs.extend([
         "--feat",
-        *params.get("feat_dirs")
+        *params.get("feat_dirs", None)
     ])
-    if params.get("feat_dirfile") is not None:
+    if params.get("feat_dirfile", None) is not None:
         cargs.extend([
             "--featdirfile",
-            execution.input_file(params.get("feat_dirfile"))
+            execution.input_file(params.get("feat_dirfile", None))
         ])
-    if params.get("proj_frac") is not None:
+    if params.get("proj_frac", None) is not None:
         cargs.extend([
             "--projfrac",
-            str(params.get("proj_frac"))
+            str(params.get("proj_frac", None))
         ])
-    if params.get("hemi") is not None:
+    if params.get("hemi", None) is not None:
         cargs.extend([
             "--hemi",
-            params.get("hemi")
+            params.get("hemi", None)
         ])
-    if params.get("target") is not None:
+    if params.get("target", None) is not None:
         cargs.extend([
             "--target",
-            params.get("target")
+            params.get("target", None)
         ])
-    if params.get("surf") is not None:
+    if params.get("surf", None) is not None:
         cargs.extend([
             "--surf",
-            params.get("surf")
+            params.get("surf", None)
         ])
-    if params.get("cope_only"):
+    if params.get("cope_only", False):
         cargs.append("--cope-only")
-    if params.get("debug_flag"):
+    if params.get("debug_flag", False):
         cargs.append("--debug")
-    if params.get("nolog_flag"):
+    if params.get("nolog_flag", False):
         cargs.append("--nolog")
-    if params.get("out_dir") is not None:
+    if params.get("out_dir", None) is not None:
         cargs.extend([
             "--out",
-            params.get("out_dir")
+            params.get("out_dir", None)
         ])
     return cargs
 
@@ -205,10 +186,10 @@ def feat2surf_outputs(
     """
     ret = Feat2surfOutputs(
         root=execution.output_file("."),
-        lh_output=execution.output_file(params.get("out_dir") + "/reg_surf-lh-Subject/stats") if (params.get("out_dir") is not None) else None,
-        rh_output=execution.output_file(params.get("out_dir") + "/reg_surf-rh-Subject/stats") if (params.get("out_dir") is not None) else None,
-        lh_target_output=execution.output_file(params.get("out_dir") + "/reg_surf-lh-targid/stats") if (params.get("out_dir") is not None) else None,
-        rh_target_output=execution.output_file(params.get("out_dir") + "/reg_surf-rh-targid/stats") if (params.get("out_dir") is not None) else None,
+        lh_output=execution.output_file(params.get("out_dir", None) + "/reg_surf-lh-Subject/stats") if (params.get("out_dir") is not None) else None,
+        rh_output=execution.output_file(params.get("out_dir", None) + "/reg_surf-rh-Subject/stats") if (params.get("out_dir") is not None) else None,
+        lh_target_output=execution.output_file(params.get("out_dir", None) + "/reg_surf-lh-targid/stats") if (params.get("out_dir") is not None) else None,
+        rh_target_output=execution.output_file(params.get("out_dir", None) + "/reg_surf-rh-targid/stats") if (params.get("out_dir") is not None) else None,
     )
     return ret
 
@@ -303,7 +284,6 @@ def feat2surf(
 __all__ = [
     "FEAT2SURF_METADATA",
     "Feat2surfOutputs",
-    "Feat2surfParameters",
     "feat2surf",
     "feat2surf_execute",
     "feat2surf_params",

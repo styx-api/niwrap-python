@@ -14,7 +14,22 @@ BETSURF_METADATA = Metadata(
 
 
 BetsurfParameters = typing.TypedDict('BetsurfParameters', {
-    "@type": typing.Literal["fsl.betsurf"],
+    "@type": typing.NotRequired[typing.Literal["fsl/betsurf"]],
+    "t1_image": InputPathType,
+    "t2_image": typing.NotRequired[InputPathType | None],
+    "bet_mesh": InputPathType,
+    "t1_to_standard_mat": InputPathType,
+    "output_prefix": str,
+    "help_flag": bool,
+    "verbose_flag": bool,
+    "t1only_flag": bool,
+    "outline_flag": bool,
+    "mask_flag": bool,
+    "skull_mask_flag": bool,
+    "increased_precision": typing.NotRequired[int | None],
+})
+BetsurfParametersTagged = typing.TypedDict('BetsurfParametersTagged', {
+    "@type": typing.Literal["fsl/betsurf"],
     "t1_image": InputPathType,
     "t2_image": typing.NotRequired[InputPathType | None],
     "bet_mesh": InputPathType,
@@ -30,41 +45,9 @@ BetsurfParameters = typing.TypedDict('BetsurfParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "fsl.betsurf": betsurf_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "fsl.betsurf": betsurf_outputs,
-    }.get(t)
-
-
 class BetsurfOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `betsurf(...)`.
+    Output object returned when calling `BetsurfParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -89,7 +72,7 @@ def betsurf_params(
     mask_flag: bool = False,
     skull_mask_flag: bool = False,
     increased_precision: int | None = None,
-) -> BetsurfParameters:
+) -> BetsurfParametersTagged:
     """
     Build parameters.
     
@@ -112,7 +95,7 @@ def betsurf_params(
         Parameter dictionary
     """
     params = {
-        "@type": "fsl.betsurf",
+        "@type": "fsl/betsurf",
         "t1_image": t1_image,
         "bet_mesh": bet_mesh,
         "t1_to_standard_mat": t1_to_standard_mat,
@@ -146,28 +129,28 @@ def betsurf_cargs(
     """
     cargs = []
     cargs.append("betsurf")
-    cargs.append(execution.input_file(params.get("t1_image")))
-    if params.get("t2_image") is not None:
-        cargs.append(execution.input_file(params.get("t2_image")))
-    cargs.append(execution.input_file(params.get("bet_mesh")))
-    cargs.append(execution.input_file(params.get("t1_to_standard_mat")))
-    cargs.append(params.get("output_prefix"))
-    if params.get("help_flag"):
+    cargs.append(execution.input_file(params.get("t1_image", None)))
+    if params.get("t2_image", None) is not None:
+        cargs.append(execution.input_file(params.get("t2_image", None)))
+    cargs.append(execution.input_file(params.get("bet_mesh", None)))
+    cargs.append(execution.input_file(params.get("t1_to_standard_mat", None)))
+    cargs.append(params.get("output_prefix", None))
+    if params.get("help_flag", False):
         cargs.append("-h")
-    if params.get("verbose_flag"):
+    if params.get("verbose_flag", False):
         cargs.append("-v")
-    if params.get("t1only_flag"):
+    if params.get("t1only_flag", False):
         cargs.append("-1")
-    if params.get("outline_flag"):
+    if params.get("outline_flag", False):
         cargs.append("-o")
-    if params.get("mask_flag"):
+    if params.get("mask_flag", False):
         cargs.append("-m")
-    if params.get("skull_mask_flag"):
+    if params.get("skull_mask_flag", False):
         cargs.append("-s")
-    if params.get("increased_precision") is not None:
+    if params.get("increased_precision", None) is not None:
         cargs.extend([
             "-p",
-            str(params.get("increased_precision"))
+            str(params.get("increased_precision", None))
         ])
     return cargs
 
@@ -187,9 +170,9 @@ def betsurf_outputs(
     """
     ret = BetsurfOutputs(
         root=execution.output_file("."),
-        output_mask=execution.output_file(params.get("output_prefix") + "_mask.nii.gz"),
-        output_outline=execution.output_file(params.get("output_prefix") + "_outline.nii.gz"),
-        output_skull=execution.output_file(params.get("output_prefix") + "_skull.nii.gz"),
+        output_mask=execution.output_file(params.get("output_prefix", None) + "_mask.nii.gz"),
+        output_outline=execution.output_file(params.get("output_prefix", None) + "_outline.nii.gz"),
+        output_skull=execution.output_file(params.get("output_prefix", None) + "_skull.nii.gz"),
     )
     return ret
 
@@ -285,7 +268,6 @@ def betsurf(
 __all__ = [
     "BETSURF_METADATA",
     "BetsurfOutputs",
-    "BetsurfParameters",
     "betsurf",
     "betsurf_execute",
     "betsurf_params",

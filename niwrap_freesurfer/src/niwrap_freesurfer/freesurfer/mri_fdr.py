@@ -14,7 +14,20 @@ MRI_FDR_METADATA = Metadata(
 
 
 MriFdrParameters = typing.TypedDict('MriFdrParameters', {
-    "@type": typing.Literal["freesurfer.mri_fdr"],
+    "@type": typing.NotRequired[typing.Literal["freesurfer/mri_fdr"]],
+    "input_files": list[str],
+    "fdr_value": float,
+    "default_frame": typing.NotRequired[int | None],
+    "positive_only": bool,
+    "negative_only": bool,
+    "all_voxels": bool,
+    "raw_p_values": bool,
+    "threshold_file": typing.NotRequired[str | None],
+    "debug": bool,
+    "check_options": bool,
+})
+MriFdrParametersTagged = typing.TypedDict('MriFdrParametersTagged', {
+    "@type": typing.Literal["freesurfer/mri_fdr"],
     "input_files": list[str],
     "fdr_value": float,
     "default_frame": typing.NotRequired[int | None],
@@ -28,40 +41,9 @@ MriFdrParameters = typing.TypedDict('MriFdrParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "freesurfer.mri_fdr": mri_fdr_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-    }.get(t)
-
-
 class MriFdrOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `mri_fdr(...)`.
+    Output object returned when calling `MriFdrParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -78,7 +60,7 @@ def mri_fdr_params(
     threshold_file: str | None = None,
     debug: bool = False,
     check_options: bool = False,
-) -> MriFdrParameters:
+) -> MriFdrParametersTagged:
     """
     Build parameters.
     
@@ -98,7 +80,7 @@ def mri_fdr_params(
         Parameter dictionary
     """
     params = {
-        "@type": "freesurfer.mri_fdr",
+        "@type": "freesurfer/mri_fdr",
         "input_files": input_files,
         "fdr_value": fdr_value,
         "positive_only": positive_only,
@@ -132,33 +114,33 @@ def mri_fdr_cargs(
     cargs.append("mri_fdr")
     cargs.extend([
         "--i",
-        *params.get("input_files")
+        *params.get("input_files", None)
     ])
     cargs.extend([
         "--fdr",
-        str(params.get("fdr_value"))
+        str(params.get("fdr_value", None))
     ])
-    if params.get("default_frame") is not None:
+    if params.get("default_frame", None) is not None:
         cargs.extend([
             "--f",
-            str(params.get("default_frame"))
+            str(params.get("default_frame", None))
         ])
-    if params.get("positive_only"):
+    if params.get("positive_only", False):
         cargs.append("--pos")
-    if params.get("negative_only"):
+    if params.get("negative_only", False):
         cargs.append("--neg")
-    if params.get("all_voxels"):
+    if params.get("all_voxels", False):
         cargs.append("--abs")
-    if params.get("raw_p_values"):
+    if params.get("raw_p_values", False):
         cargs.append("--no-log10p")
-    if params.get("threshold_file") is not None:
+    if params.get("threshold_file", None) is not None:
         cargs.extend([
             "--thfile",
-            params.get("threshold_file")
+            params.get("threshold_file", None)
         ])
-    if params.get("debug"):
+    if params.get("debug", False):
         cargs.append("--debug")
-    if params.get("check_options"):
+    if params.get("check_options", False):
         cargs.append("--checkopts")
     return cargs
 
@@ -266,7 +248,6 @@ def mri_fdr(
 __all__ = [
     "MRI_FDR_METADATA",
     "MriFdrOutputs",
-    "MriFdrParameters",
     "mri_fdr",
     "mri_fdr_execute",
     "mri_fdr_params",

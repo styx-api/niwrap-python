@@ -14,7 +14,25 @@ MRI_SEGHEAD_METADATA = Metadata(
 
 
 MriSegheadParameters = typing.TypedDict('MriSegheadParameters', {
-    "@type": typing.Literal["freesurfer.mri_seghead"],
+    "@type": typing.NotRequired[typing.Literal["freesurfer/mri_seghead"]],
+    "input_volume": str,
+    "output_volume": str,
+    "fill_value": typing.NotRequired[float | None],
+    "fhi_value": typing.NotRequired[float | None],
+    "thresh1_value": typing.NotRequired[float | None],
+    "thresh2_value": typing.NotRequired[float | None],
+    "threshold": typing.NotRequired[float | None],
+    "nhitsmin_value": typing.NotRequired[float | None],
+    "hvoldat_file": typing.NotRequired[InputPathType | None],
+    "signal_behind_head": bool,
+    "rescale": bool,
+    "fill_holes_islands": bool,
+    "seed_point": typing.NotRequired[list[float] | None],
+    "or_mask_file": typing.NotRequired[InputPathType | None],
+    "gdiag_option": typing.NotRequired[str | None],
+})
+MriSegheadParametersTagged = typing.TypedDict('MriSegheadParametersTagged', {
+    "@type": typing.Literal["freesurfer/mri_seghead"],
     "input_volume": str,
     "output_volume": str,
     "fill_value": typing.NotRequired[float | None],
@@ -33,40 +51,9 @@ MriSegheadParameters = typing.TypedDict('MriSegheadParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "freesurfer.mri_seghead": mri_seghead_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-    }.get(t)
-
-
 class MriSegheadOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `mri_seghead(...)`.
+    Output object returned when calling `MriSegheadParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -88,7 +75,7 @@ def mri_seghead_params(
     seed_point: list[float] | None = None,
     or_mask_file: InputPathType | None = None,
     gdiag_option: str | None = None,
-) -> MriSegheadParameters:
+) -> MriSegheadParametersTagged:
     """
     Build parameters.
     
@@ -116,7 +103,7 @@ def mri_seghead_params(
         Parameter dictionary
     """
     params = {
-        "@type": "freesurfer.mri_seghead",
+        "@type": "freesurfer/mri_seghead",
         "input_volume": input_volume,
         "output_volume": output_volume,
         "signal_behind_head": signal_behind_head,
@@ -163,67 +150,67 @@ def mri_seghead_cargs(
     cargs.append("mri_seghead")
     cargs.extend([
         "--invol",
-        params.get("input_volume")
+        params.get("input_volume", None)
     ])
     cargs.extend([
         "--outvol",
-        params.get("output_volume")
+        params.get("output_volume", None)
     ])
-    if params.get("fill_value") is not None:
+    if params.get("fill_value", None) is not None:
         cargs.extend([
             "--fill",
-            str(params.get("fill_value"))
+            str(params.get("fill_value", None))
         ])
-    if params.get("fhi_value") is not None:
+    if params.get("fhi_value", None) is not None:
         cargs.extend([
             "--fhi",
-            str(params.get("fhi_value"))
+            str(params.get("fhi_value", None))
         ])
-    if params.get("thresh1_value") is not None:
+    if params.get("thresh1_value", None) is not None:
         cargs.extend([
             "--thresh1",
-            str(params.get("thresh1_value"))
+            str(params.get("thresh1_value", None))
         ])
-    if params.get("thresh2_value") is not None:
+    if params.get("thresh2_value", None) is not None:
         cargs.extend([
             "--thresh2",
-            str(params.get("thresh2_value"))
+            str(params.get("thresh2_value", None))
         ])
-    if params.get("threshold") is not None:
+    if params.get("threshold", None) is not None:
         cargs.extend([
             "--thresh",
-            str(params.get("threshold"))
+            str(params.get("threshold", None))
         ])
-    if params.get("nhitsmin_value") is not None:
+    if params.get("nhitsmin_value", None) is not None:
         cargs.extend([
             "--nhitsmin",
-            str(params.get("nhitsmin_value"))
+            str(params.get("nhitsmin_value", None))
         ])
-    if params.get("hvoldat_file") is not None:
+    if params.get("hvoldat_file", None) is not None:
         cargs.extend([
             "--hvoldat",
-            execution.input_file(params.get("hvoldat_file"))
+            execution.input_file(params.get("hvoldat_file", None))
         ])
-    if params.get("signal_behind_head"):
+    if params.get("signal_behind_head", False):
         cargs.append("--get-signal-behind-head")
-    if params.get("rescale"):
+    if params.get("rescale", False):
         cargs.append("--rescale")
-    if params.get("fill_holes_islands"):
+    if params.get("fill_holes_islands", False):
         cargs.append("--fill-holes-islands")
-    if params.get("seed_point") is not None:
+    if params.get("seed_point", None) is not None:
         cargs.extend([
             "--seed",
-            *map(str, params.get("seed_point"))
+            *map(str, params.get("seed_point", None))
         ])
-    if params.get("or_mask_file") is not None:
+    if params.get("or_mask_file", None) is not None:
         cargs.extend([
             "--or-mask",
-            execution.input_file(params.get("or_mask_file"))
+            execution.input_file(params.get("or_mask_file", None))
         ])
-    if params.get("gdiag_option") is not None:
+    if params.get("gdiag_option", None) is not None:
         cargs.extend([
             "--gdiag",
-            params.get("gdiag_option")
+            params.get("gdiag_option", None)
         ])
     return cargs
 
@@ -349,7 +336,6 @@ def mri_seghead(
 __all__ = [
     "MRI_SEGHEAD_METADATA",
     "MriSegheadOutputs",
-    "MriSegheadParameters",
     "mri_seghead",
     "mri_seghead_execute",
     "mri_seghead_params",

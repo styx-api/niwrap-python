@@ -14,7 +14,25 @@ PVMFIT_METADATA = Metadata(
 
 
 PvmfitParameters = typing.TypedDict('PvmfitParameters', {
-    "@type": typing.Literal["fsl.pvmfit"],
+    "@type": typing.NotRequired[typing.Literal["fsl/pvmfit"]],
+    "data_file": InputPathType,
+    "mask_file": InputPathType,
+    "bvec_file": InputPathType,
+    "bval_file": InputPathType,
+    "output_basename": typing.NotRequired[str | None],
+    "number_of_fibres": typing.NotRequired[float | None],
+    "model_type": typing.NotRequired[int | None],
+    "fit_all_models": bool,
+    "constrained_nonlinear": bool,
+    "constrained_nonlinear_f": bool,
+    "grid_search": bool,
+    "include_noise_floor": bool,
+    "save_bic": bool,
+    "verbose": bool,
+    "help": bool,
+})
+PvmfitParametersTagged = typing.TypedDict('PvmfitParametersTagged', {
+    "@type": typing.Literal["fsl/pvmfit"],
     "data_file": InputPathType,
     "mask_file": InputPathType,
     "bvec_file": InputPathType,
@@ -33,41 +51,9 @@ PvmfitParameters = typing.TypedDict('PvmfitParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "fsl.pvmfit": pvmfit_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "fsl.pvmfit": pvmfit_outputs,
-    }.get(t)
-
-
 class PvmfitOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `pvmfit(...)`.
+    Output object returned when calling `PvmfitParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -94,7 +80,7 @@ def pvmfit_params(
     save_bic: bool = False,
     verbose: bool = False,
     help_: bool = False,
-) -> PvmfitParameters:
+) -> PvmfitParametersTagged:
     """
     Build parameters.
     
@@ -123,7 +109,7 @@ def pvmfit_params(
         Parameter dictionary
     """
     params = {
-        "@type": "fsl.pvmfit",
+        "@type": "fsl/pvmfit",
         "data_file": data_file,
         "mask_file": mask_file,
         "bvec_file": bvec_file,
@@ -163,50 +149,50 @@ def pvmfit_cargs(
     cargs.append("pvmfit")
     cargs.extend([
         "-k",
-        execution.input_file(params.get("data_file"))
+        execution.input_file(params.get("data_file", None))
     ])
     cargs.extend([
         "-m",
-        execution.input_file(params.get("mask_file"))
+        execution.input_file(params.get("mask_file", None))
     ])
     cargs.extend([
         "-r",
-        execution.input_file(params.get("bvec_file"))
+        execution.input_file(params.get("bvec_file", None))
     ])
     cargs.extend([
         "-b",
-        execution.input_file(params.get("bval_file"))
+        execution.input_file(params.get("bval_file", None))
     ])
-    if params.get("output_basename") is not None:
+    if params.get("output_basename", None) is not None:
         cargs.extend([
             "-o",
-            params.get("output_basename")
+            params.get("output_basename", None)
         ])
-    if params.get("number_of_fibres") is not None:
+    if params.get("number_of_fibres", None) is not None:
         cargs.extend([
             "-n",
-            str(params.get("number_of_fibres"))
+            str(params.get("number_of_fibres", None))
         ])
-    if params.get("model_type") is not None:
+    if params.get("model_type", None) is not None:
         cargs.extend([
             "--model",
-            str(params.get("model_type"))
+            str(params.get("model_type", None))
         ])
-    if params.get("fit_all_models"):
+    if params.get("fit_all_models", False):
         cargs.append("--all")
-    if params.get("constrained_nonlinear"):
+    if params.get("constrained_nonlinear", False):
         cargs.append("--cnonlinear")
-    if params.get("constrained_nonlinear_f"):
+    if params.get("constrained_nonlinear_f", False):
         cargs.append("--cnonlinear_F")
-    if params.get("grid_search"):
+    if params.get("grid_search", False):
         cargs.append("--gridsearch")
-    if params.get("include_noise_floor"):
+    if params.get("include_noise_floor", False):
         cargs.append("--f0")
-    if params.get("save_bic"):
+    if params.get("save_bic", False):
         cargs.append("--BIC")
-    if params.get("verbose"):
+    if params.get("verbose", False):
         cargs.append("-V")
-    if params.get("help"):
+    if params.get("help", False):
         cargs.append("-h")
     return cargs
 
@@ -226,8 +212,8 @@ def pvmfit_outputs(
     """
     ret = PvmfitOutputs(
         root=execution.output_file("."),
-        output_file=execution.output_file(params.get("output_basename") + ".nii.gz") if (params.get("output_basename") is not None) else None,
-        bic_file=execution.output_file(params.get("output_basename") + "_BIC.nii.gz") if (params.get("output_basename") is not None) else None,
+        output_file=execution.output_file(params.get("output_basename", None) + ".nii.gz") if (params.get("output_basename") is not None) else None,
+        bic_file=execution.output_file(params.get("output_basename", None) + "_BIC.nii.gz") if (params.get("output_basename") is not None) else None,
     )
     return ret
 
@@ -335,7 +321,6 @@ def pvmfit(
 __all__ = [
     "PVMFIT_METADATA",
     "PvmfitOutputs",
-    "PvmfitParameters",
     "pvmfit",
     "pvmfit_execute",
     "pvmfit_params",

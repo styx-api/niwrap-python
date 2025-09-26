@@ -14,7 +14,21 @@ RTFEEDME_METADATA = Metadata(
 
 
 RtfeedmeParameters = typing.TypedDict('RtfeedmeParameters', {
-    "@type": typing.Literal["afni.rtfeedme"],
+    "@type": typing.NotRequired[typing.Literal["afni/rtfeedme"]],
+    "datasets": list[InputPathType],
+    "host": typing.NotRequired[str | None],
+    "interval_ms": typing.NotRequired[float | None],
+    "send_3d": bool,
+    "buffer_mb": typing.NotRequired[float | None],
+    "verbose": bool,
+    "swap_bytes": bool,
+    "nz_fake": typing.NotRequired[float | None],
+    "drive_cmd": typing.NotRequired[list[str] | None],
+    "note": typing.NotRequired[list[str] | None],
+    "yrange": typing.NotRequired[float | None],
+})
+RtfeedmeParametersTagged = typing.TypedDict('RtfeedmeParametersTagged', {
+    "@type": typing.Literal["afni/rtfeedme"],
     "datasets": list[InputPathType],
     "host": typing.NotRequired[str | None],
     "interval_ms": typing.NotRequired[float | None],
@@ -29,40 +43,9 @@ RtfeedmeParameters = typing.TypedDict('RtfeedmeParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "afni.rtfeedme": rtfeedme_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-    }.get(t)
-
-
 class RtfeedmeOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `rtfeedme(...)`.
+    Output object returned when calling `RtfeedmeParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -80,7 +63,7 @@ def rtfeedme_params(
     drive_cmd: list[str] | None = None,
     note: list[str] | None = None,
     yrange: float | None = None,
-) -> RtfeedmeParameters:
+) -> RtfeedmeParametersTagged:
     """
     Build parameters.
     
@@ -109,7 +92,7 @@ def rtfeedme_params(
         Parameter dictionary
     """
     params = {
-        "@type": "afni.rtfeedme",
+        "@type": "afni/rtfeedme",
         "datasets": datasets,
         "send_3d": send_3d,
         "verbose": verbose,
@@ -147,47 +130,47 @@ def rtfeedme_cargs(
     """
     cargs = []
     cargs.append("rtfeedme")
-    cargs.extend([execution.input_file(f) for f in params.get("datasets")])
-    if params.get("host") is not None:
+    cargs.extend([execution.input_file(f) for f in params.get("datasets", None)])
+    if params.get("host", None) is not None:
         cargs.extend([
             "-host",
-            params.get("host")
+            params.get("host", None)
         ])
-    if params.get("interval_ms") is not None:
+    if params.get("interval_ms", None) is not None:
         cargs.extend([
             "-dt",
-            str(params.get("interval_ms"))
+            str(params.get("interval_ms", None))
         ])
-    if params.get("send_3d"):
+    if params.get("send_3d", False):
         cargs.append("-3D")
-    if params.get("buffer_mb") is not None:
+    if params.get("buffer_mb", None) is not None:
         cargs.extend([
             "-buf",
-            str(params.get("buffer_mb"))
+            str(params.get("buffer_mb", None))
         ])
-    if params.get("verbose"):
+    if params.get("verbose", False):
         cargs.append("-verbose")
-    if params.get("swap_bytes"):
+    if params.get("swap_bytes", False):
         cargs.append("-swap2")
-    if params.get("nz_fake") is not None:
+    if params.get("nz_fake", None) is not None:
         cargs.extend([
             "-nzfake",
-            str(params.get("nz_fake"))
+            str(params.get("nz_fake", None))
         ])
-    if params.get("drive_cmd") is not None:
+    if params.get("drive_cmd", None) is not None:
         cargs.extend([
             "-drive",
-            *params.get("drive_cmd")
+            *params.get("drive_cmd", None)
         ])
-    if params.get("note") is not None:
+    if params.get("note", None) is not None:
         cargs.extend([
             "-note",
-            *params.get("note")
+            *params.get("note", None)
         ])
-    if params.get("yrange") is not None:
+    if params.get("yrange", None) is not None:
         cargs.extend([
             "-gyr",
-            str(params.get("yrange"))
+            str(params.get("yrange", None))
         ])
     return cargs
 
@@ -306,7 +289,6 @@ def rtfeedme(
 __all__ = [
     "RTFEEDME_METADATA",
     "RtfeedmeOutputs",
-    "RtfeedmeParameters",
     "rtfeedme",
     "rtfeedme_execute",
     "rtfeedme_params",

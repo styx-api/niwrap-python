@@ -14,7 +14,18 @@ MKXSUBJREG_METADATA = Metadata(
 
 
 MkxsubjregParameters = typing.TypedDict('MkxsubjregParameters', {
-    "@type": typing.Literal["freesurfer.mkxsubjreg"],
+    "@type": typing.NotRequired[typing.Literal["freesurfer/mkxsubjreg"]],
+    "srcreg": InputPathType,
+    "targreg": InputPathType,
+    "targsubj": typing.NotRequired[str | None],
+    "xfm": typing.NotRequired[str | None],
+    "sd": typing.NotRequired[str | None],
+    "fvol": typing.NotRequired[InputPathType | None],
+    "help": bool,
+    "version": bool,
+})
+MkxsubjregParametersTagged = typing.TypedDict('MkxsubjregParametersTagged', {
+    "@type": typing.Literal["freesurfer/mkxsubjreg"],
     "srcreg": InputPathType,
     "targreg": InputPathType,
     "targsubj": typing.NotRequired[str | None],
@@ -26,40 +37,9 @@ MkxsubjregParameters = typing.TypedDict('MkxsubjregParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "freesurfer.mkxsubjreg": mkxsubjreg_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-    }.get(t)
-
-
 class MkxsubjregOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `mkxsubjreg(...)`.
+    Output object returned when calling `MkxsubjregParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -74,7 +54,7 @@ def mkxsubjreg_params(
     fvol: InputPathType | None = None,
     help_: bool = False,
     version: bool = False,
-) -> MkxsubjregParameters:
+) -> MkxsubjregParametersTagged:
     """
     Build parameters.
     
@@ -91,7 +71,7 @@ def mkxsubjreg_params(
         Parameter dictionary
     """
     params = {
-        "@type": "freesurfer.mkxsubjreg",
+        "@type": "freesurfer/mkxsubjreg",
         "srcreg": srcreg,
         "targreg": targreg,
         "help": help_,
@@ -125,35 +105,35 @@ def mkxsubjreg_cargs(
     cargs.append("mkxsubjreg")
     cargs.extend([
         "--srcreg",
-        execution.input_file(params.get("srcreg"))
+        execution.input_file(params.get("srcreg", None))
     ])
     cargs.extend([
         "--targreg",
-        execution.input_file(params.get("targreg"))
+        execution.input_file(params.get("targreg", None))
     ])
-    if params.get("targsubj") is not None:
+    if params.get("targsubj", None) is not None:
         cargs.extend([
             "--targsubj",
-            params.get("targsubj")
+            params.get("targsubj", None)
         ])
-    if params.get("xfm") is not None:
+    if params.get("xfm", None) is not None:
         cargs.extend([
             "--xfm",
-            params.get("xfm")
+            params.get("xfm", None)
         ])
-    if params.get("sd") is not None:
+    if params.get("sd", None) is not None:
         cargs.extend([
             "--sd",
-            params.get("sd")
+            params.get("sd", None)
         ])
-    if params.get("fvol") is not None:
+    if params.get("fvol", None) is not None:
         cargs.extend([
             "--fvol",
-            execution.input_file(params.get("fvol"))
+            execution.input_file(params.get("fvol", None))
         ])
-    if params.get("help"):
+    if params.get("help", False):
         cargs.append("--help")
-    if params.get("version"):
+    if params.get("version", False):
         cargs.append("--version")
     return cargs
 
@@ -258,7 +238,6 @@ def mkxsubjreg(
 __all__ = [
     "MKXSUBJREG_METADATA",
     "MkxsubjregOutputs",
-    "MkxsubjregParameters",
     "mkxsubjreg",
     "mkxsubjreg_execute",
     "mkxsubjreg_params",

@@ -14,7 +14,28 @@ ANNOT2STD_METADATA = Metadata(
 
 
 Annot2stdParameters = typing.TypedDict('Annot2stdParameters', {
-    "@type": typing.Literal["freesurfer.annot2std"],
+    "@type": typing.NotRequired[typing.Literal["freesurfer/annot2std"]],
+    "output_annot_path": str,
+    "subjects": list[str],
+    "fsgd_file": typing.NotRequired[InputPathType | None],
+    "subject_list_file": typing.NotRequired[InputPathType | None],
+    "target": typing.NotRequired[str | None],
+    "left_hemisphere": bool,
+    "right_hemisphere": bool,
+    "xhemi": bool,
+    "surfreg": typing.NotRequired[str | None],
+    "srcsurfreg": typing.NotRequired[str | None],
+    "trgsurfreg": typing.NotRequired[str | None],
+    "annotname": typing.NotRequired[str | None],
+    "aparc": bool,
+    "a2009s": bool,
+    "segmentation": typing.NotRequired[str | None],
+    "stack": typing.NotRequired[str | None],
+    "help": bool,
+    "version": bool,
+})
+Annot2stdParametersTagged = typing.TypedDict('Annot2stdParametersTagged', {
+    "@type": typing.Literal["freesurfer/annot2std"],
     "output_annot_path": str,
     "subjects": list[str],
     "fsgd_file": typing.NotRequired[InputPathType | None],
@@ -36,41 +57,9 @@ Annot2stdParameters = typing.TypedDict('Annot2stdParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "freesurfer.annot2std": annot2std_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "freesurfer.annot2std": annot2std_outputs,
-    }.get(t)
-
-
 class Annot2stdOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `annot2std(...)`.
+    Output object returned when calling `Annot2stdParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -101,7 +90,7 @@ def annot2std_params(
     stack: str | None = None,
     help_: bool = False,
     version: bool = False,
-) -> Annot2stdParameters:
+) -> Annot2stdParametersTagged:
     """
     Build parameters.
     
@@ -130,7 +119,7 @@ def annot2std_params(
         Parameter dictionary
     """
     params = {
-        "@type": "freesurfer.annot2std",
+        "@type": "freesurfer/annot2std",
         "output_annot_path": output_annot_path,
         "subjects": subjects,
         "left_hemisphere": left_hemisphere,
@@ -179,70 +168,70 @@ def annot2std_cargs(
     cargs.append("annot2std")
     cargs.extend([
         "--o",
-        params.get("output_annot_path")
+        params.get("output_annot_path", None)
     ])
     cargs.extend([
         "--s",
-        *params.get("subjects")
+        *params.get("subjects", None)
     ])
-    if params.get("fsgd_file") is not None:
+    if params.get("fsgd_file", None) is not None:
         cargs.extend([
             "--fsgd",
-            execution.input_file(params.get("fsgd_file"))
+            execution.input_file(params.get("fsgd_file", None))
         ])
-    if params.get("subject_list_file") is not None:
+    if params.get("subject_list_file", None) is not None:
         cargs.extend([
             "--f",
-            execution.input_file(params.get("subject_list_file"))
+            execution.input_file(params.get("subject_list_file", None))
         ])
-    if params.get("target") is not None:
+    if params.get("target", None) is not None:
         cargs.extend([
             "--t",
-            params.get("target")
+            params.get("target", None)
         ])
-    if params.get("left_hemisphere"):
+    if params.get("left_hemisphere", False):
         cargs.append("--lh")
-    if params.get("right_hemisphere"):
+    if params.get("right_hemisphere", False):
         cargs.append("--rh")
-    if params.get("xhemi"):
+    if params.get("xhemi", False):
         cargs.append("--xhemi")
-    if params.get("surfreg") is not None:
+    if params.get("surfreg", None) is not None:
         cargs.extend([
             "--surfreg",
-            params.get("surfreg")
+            params.get("surfreg", None)
         ])
-    if params.get("srcsurfreg") is not None:
+    if params.get("srcsurfreg", None) is not None:
         cargs.extend([
             "--srcsurfreg",
-            params.get("srcsurfreg")
+            params.get("srcsurfreg", None)
         ])
-    if params.get("trgsurfreg") is not None:
+    if params.get("trgsurfreg", None) is not None:
         cargs.extend([
             "--trgsurfreg",
-            params.get("trgsurfreg")
+            params.get("trgsurfreg", None)
         ])
-    if params.get("annotname") is not None:
+    if params.get("annotname", None) is not None:
         cargs.extend([
             "--a",
-            params.get("annotname")
+            params.get("annotname", None)
         ])
-    if params.get("aparc"):
+    if params.get("aparc", False):
         cargs.append("--aparc")
-    if params.get("a2009s"):
+    if params.get("a2009s", False):
         cargs.append("--a2009s")
-    if params.get("segmentation") is not None:
+    if params.get("segmentation", None) is not None:
         cargs.extend([
             "--seg",
-            params.get("segmentation")
+            params.get("segmentation", None)
         ])
-    if params.get("stack") is not None:
+    if params.get("stack", None) is not None:
         cargs.extend([
             "--stack",
-            params.get("stack")
+            params.get("stack", None)
         ])
-    if params.get("help"):
+    if params.get("help", False):
         cargs.append("--help")
-    if params.get("version"):
+    if params.get("version", False):
         cargs.append("--version")
     return cargs
 
@@ -262,9 +251,9 @@ def annot2std_outputs(
     """
     ret = Annot2stdOutputs(
         root=execution.output_file("."),
-        out_annot_file=execution.output_file(params.get("output_annot_path")),
-        out_prob_map_file=execution.output_file(params.get("output_annot_path") + ".p.mgh"),
-        output_surface_segmentation=execution.output_file(params.get("segmentation")) if (params.get("segmentation") is not None) else None,
+        out_annot_file=execution.output_file(params.get("output_annot_path", None)),
+        out_prob_map_file=execution.output_file(params.get("output_annot_path", None) + ".p.mgh"),
+        output_surface_segmentation=execution.output_file(params.get("segmentation", None)) if (params.get("segmentation") is not None) else None,
     )
     return ret
 
@@ -382,7 +371,6 @@ def annot2std(
 __all__ = [
     "ANNOT2STD_METADATA",
     "Annot2stdOutputs",
-    "Annot2stdParameters",
     "annot2std",
     "annot2std_execute",
     "annot2std_params",

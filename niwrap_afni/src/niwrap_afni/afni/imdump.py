@@ -14,46 +14,18 @@ IMDUMP_METADATA = Metadata(
 
 
 ImdumpParameters = typing.TypedDict('ImdumpParameters', {
-    "@type": typing.Literal["afni.imdump"],
+    "@type": typing.NotRequired[typing.Literal["afni/imdump"]],
+    "input_image": InputPathType,
+})
+ImdumpParametersTagged = typing.TypedDict('ImdumpParametersTagged', {
+    "@type": typing.Literal["afni/imdump"],
     "input_image": InputPathType,
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "afni.imdump": imdump_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "afni.imdump": imdump_outputs,
-    }.get(t)
-
-
 class ImdumpOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `imdump(...)`.
+    Output object returned when calling `ImdumpParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -64,7 +36,7 @@ class ImdumpOutputs(typing.NamedTuple):
 
 def imdump_params(
     input_image: InputPathType,
-) -> ImdumpParameters:
+) -> ImdumpParametersTagged:
     """
     Build parameters.
     
@@ -74,7 +46,7 @@ def imdump_params(
         Parameter dictionary
     """
     params = {
-        "@type": "afni.imdump",
+        "@type": "afni/imdump",
         "input_image": input_image,
     }
     return params
@@ -95,7 +67,7 @@ def imdump_cargs(
     """
     cargs = []
     cargs.append("imdump")
-    cargs.append(execution.input_file(params.get("input_image")))
+    cargs.append(execution.input_file(params.get("input_image", None)))
     return cargs
 
 
@@ -175,7 +147,6 @@ def imdump(
 __all__ = [
     "IMDUMP_METADATA",
     "ImdumpOutputs",
-    "ImdumpParameters",
     "imdump",
     "imdump_execute",
     "imdump_params",

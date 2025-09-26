@@ -14,46 +14,20 @@ V__TO_RAI_METADATA = Metadata(
 
 
 VToRaiParameters = typing.TypedDict('VToRaiParameters', {
-    "@type": typing.Literal["afni.@ToRAI"],
+    "@type": typing.NotRequired[typing.Literal["afni/@ToRAI"]],
+    "coordinates": list[float],
+    "orientation": str,
+})
+VToRaiParametersTagged = typing.TypedDict('VToRaiParametersTagged', {
+    "@type": typing.Literal["afni/@ToRAI"],
     "coordinates": list[float],
     "orientation": str,
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "afni.@ToRAI": v__to_rai_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-    }.get(t)
-
-
 class VToRaiOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `v__to_rai(...)`.
+    Output object returned when calling `VToRaiParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -62,7 +36,7 @@ class VToRaiOutputs(typing.NamedTuple):
 def v__to_rai_params(
     coordinates: list[float],
     orientation: str,
-) -> VToRaiParameters:
+) -> VToRaiParametersTagged:
     """
     Build parameters.
     
@@ -73,7 +47,7 @@ def v__to_rai_params(
         Parameter dictionary
     """
     params = {
-        "@type": "afni.@ToRAI",
+        "@type": "afni/@ToRAI",
         "coordinates": coordinates,
         "orientation": orientation,
     }
@@ -97,11 +71,11 @@ def v__to_rai_cargs(
     cargs.append("@ToRAI")
     cargs.extend([
         "-xyz",
-        *map(str, params.get("coordinates"))
+        *map(str, params.get("coordinates", None))
     ])
     cargs.extend([
         "-or",
-        params.get("orientation")
+        params.get("orientation", None)
     ])
     return cargs
 
@@ -183,7 +157,6 @@ def v__to_rai(
 
 __all__ = [
     "VToRaiOutputs",
-    "VToRaiParameters",
     "V__TO_RAI_METADATA",
     "v__to_rai",
     "v__to_rai_execute",

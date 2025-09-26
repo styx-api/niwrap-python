@@ -14,7 +14,23 @@ MRIS_TARGET_POS_METADATA = Metadata(
 
 
 MrisTargetPosParameters = typing.TypedDict('MrisTargetPosParameters', {
-    "@type": typing.Literal["freesurfer.mris_target_pos"],
+    "@type": typing.NotRequired[typing.Literal["freesurfer/mris_target_pos"]],
+    "input_volume": InputPathType,
+    "input_surface": InputPathType,
+    "output_surface": str,
+    "adgws_file": str,
+    "threshold_values": typing.NotRequired[list[float] | None],
+    "label": typing.NotRequired[str | None],
+    "interpolation_method": typing.NotRequired[str | None],
+    "debug_vertex": typing.NotRequired[float | None],
+    "cbv_flag": bool,
+    "debug_flag": bool,
+    "check_options": bool,
+    "help_flag": bool,
+    "version_flag": bool,
+})
+MrisTargetPosParametersTagged = typing.TypedDict('MrisTargetPosParametersTagged', {
+    "@type": typing.Literal["freesurfer/mris_target_pos"],
     "input_volume": InputPathType,
     "input_surface": InputPathType,
     "output_surface": str,
@@ -31,40 +47,9 @@ MrisTargetPosParameters = typing.TypedDict('MrisTargetPosParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "freesurfer.mris_target_pos": mris_target_pos_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-    }.get(t)
-
-
 class MrisTargetPosOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `mris_target_pos(...)`.
+    Output object returned when calling `MrisTargetPosParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -84,7 +69,7 @@ def mris_target_pos_params(
     check_options: bool = False,
     help_flag: bool = False,
     version_flag: bool = False,
-) -> MrisTargetPosParameters:
+) -> MrisTargetPosParametersTagged:
     """
     Build parameters.
     
@@ -107,7 +92,7 @@ def mris_target_pos_params(
         Parameter dictionary
     """
     params = {
-        "@type": "freesurfer.mris_target_pos",
+        "@type": "freesurfer/mris_target_pos",
         "input_volume": input_volume,
         "input_surface": input_surface,
         "output_surface": output_surface,
@@ -146,49 +131,49 @@ def mris_target_pos_cargs(
     cargs.append("mris_target_pos")
     cargs.extend([
         "--v",
-        execution.input_file(params.get("input_volume"))
+        execution.input_file(params.get("input_volume", None))
     ])
     cargs.extend([
         "--i",
-        execution.input_file(params.get("input_surface"))
+        execution.input_file(params.get("input_surface", None))
     ])
     cargs.extend([
         "--o",
-        params.get("output_surface")
+        params.get("output_surface", None)
     ])
     cargs.extend([
         "--adgws",
-        params.get("adgws_file")
+        params.get("adgws_file", None)
     ])
-    if params.get("threshold_values") is not None:
+    if params.get("threshold_values", None) is not None:
         cargs.extend([
             "--thresh",
-            *map(str, params.get("threshold_values"))
+            *map(str, params.get("threshold_values", None))
         ])
-    if params.get("label") is not None:
+    if params.get("label", None) is not None:
         cargs.extend([
             "--l",
-            params.get("label")
+            params.get("label", None)
         ])
-    if params.get("interpolation_method") is not None:
+    if params.get("interpolation_method", None) is not None:
         cargs.extend([
             "--interp",
-            params.get("interpolation_method")
+            params.get("interpolation_method", None)
         ])
-    if params.get("debug_vertex") is not None:
+    if params.get("debug_vertex", None) is not None:
         cargs.extend([
             "--debug-vertex",
-            str(params.get("debug_vertex"))
+            str(params.get("debug_vertex", None))
         ])
-    if params.get("cbv_flag"):
+    if params.get("cbv_flag", False):
         cargs.append("--cbv")
-    if params.get("debug_flag"):
+    if params.get("debug_flag", False):
         cargs.append("--debug")
-    if params.get("check_options"):
+    if params.get("check_options", False):
         cargs.append("--checkopts")
-    if params.get("help_flag"):
+    if params.get("help_flag", False):
         cargs.append("--help")
-    if params.get("version_flag"):
+    if params.get("version_flag", False):
         cargs.append("--version")
     return cargs
 
@@ -307,7 +292,6 @@ def mris_target_pos(
 __all__ = [
     "MRIS_TARGET_POS_METADATA",
     "MrisTargetPosOutputs",
-    "MrisTargetPosParameters",
     "mris_target_pos",
     "mris_target_pos_execute",
     "mris_target_pos_params",

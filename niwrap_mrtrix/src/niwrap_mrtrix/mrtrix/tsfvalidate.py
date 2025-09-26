@@ -14,14 +14,32 @@ TSFVALIDATE_METADATA = Metadata(
 
 
 TsfvalidateConfigParameters = typing.TypedDict('TsfvalidateConfigParameters', {
-    "@type": typing.Literal["mrtrix.tsfvalidate.config"],
+    "@type": typing.NotRequired[typing.Literal["config"]],
+    "key": str,
+    "value": str,
+})
+TsfvalidateConfigParametersTagged = typing.TypedDict('TsfvalidateConfigParametersTagged', {
+    "@type": typing.Literal["config"],
     "key": str,
     "value": str,
 })
 
 
 TsfvalidateParameters = typing.TypedDict('TsfvalidateParameters', {
-    "@type": typing.Literal["mrtrix.tsfvalidate"],
+    "@type": typing.NotRequired[typing.Literal["mrtrix/tsfvalidate"]],
+    "info": bool,
+    "quiet": bool,
+    "debug": bool,
+    "force": bool,
+    "nthreads": typing.NotRequired[int | None],
+    "config": typing.NotRequired[list[TsfvalidateConfigParameters] | None],
+    "help": bool,
+    "version": bool,
+    "tsf": InputPathType,
+    "tracks": InputPathType,
+})
+TsfvalidateParametersTagged = typing.TypedDict('TsfvalidateParametersTagged', {
+    "@type": typing.Literal["mrtrix/tsfvalidate"],
     "info": bool,
     "quiet": bool,
     "debug": bool,
@@ -35,42 +53,10 @@ TsfvalidateParameters = typing.TypedDict('TsfvalidateParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "mrtrix.tsfvalidate": tsfvalidate_cargs,
-        "mrtrix.tsfvalidate.config": tsfvalidate_config_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-    }.get(t)
-
-
 def tsfvalidate_config_params(
     key: str,
     value: str,
-) -> TsfvalidateConfigParameters:
+) -> TsfvalidateConfigParametersTagged:
     """
     Build parameters.
     
@@ -81,7 +67,7 @@ def tsfvalidate_config_params(
         Parameter dictionary
     """
     params = {
-        "@type": "mrtrix.tsfvalidate.config",
+        "@type": "config",
         "key": key,
         "value": value,
     }
@@ -103,14 +89,14 @@ def tsfvalidate_config_cargs(
     """
     cargs = []
     cargs.append("-config")
-    cargs.append(params.get("key"))
-    cargs.append(params.get("value"))
+    cargs.append(params.get("key", None))
+    cargs.append(params.get("value", None))
     return cargs
 
 
 class TsfvalidateOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `tsfvalidate(...)`.
+    Output object returned when calling `TsfvalidateParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -127,7 +113,7 @@ def tsfvalidate_params(
     config: list[TsfvalidateConfigParameters] | None = None,
     help_: bool = False,
     version: bool = False,
-) -> TsfvalidateParameters:
+) -> TsfvalidateParametersTagged:
     """
     Build parameters.
     
@@ -150,7 +136,7 @@ def tsfvalidate_params(
         Parameter dictionary
     """
     params = {
-        "@type": "mrtrix.tsfvalidate",
+        "@type": "mrtrix/tsfvalidate",
         "info": info,
         "quiet": quiet,
         "debug": debug,
@@ -182,27 +168,27 @@ def tsfvalidate_cargs(
     """
     cargs = []
     cargs.append("tsfvalidate")
-    if params.get("info"):
+    if params.get("info", False):
         cargs.append("-info")
-    if params.get("quiet"):
+    if params.get("quiet", False):
         cargs.append("-quiet")
-    if params.get("debug"):
+    if params.get("debug", False):
         cargs.append("-debug")
-    if params.get("force"):
+    if params.get("force", False):
         cargs.append("-force")
-    if params.get("nthreads") is not None:
+    if params.get("nthreads", None) is not None:
         cargs.extend([
             "-nthreads",
-            str(params.get("nthreads"))
+            str(params.get("nthreads", None))
         ])
-    if params.get("config") is not None:
-        cargs.extend([a for c in [dyn_cargs(s["@type"])(s, execution) for s in params.get("config")] for a in c])
-    if params.get("help"):
+    if params.get("config", None) is not None:
+        cargs.extend([a for c in [tsfvalidate_config_cargs(s, execution) for s in params.get("config", None)] for a in c])
+    if params.get("help", False):
         cargs.append("-help")
-    if params.get("version"):
+    if params.get("version", False):
         cargs.append("-version")
-    cargs.append(execution.input_file(params.get("tsf")))
-    cargs.append(execution.input_file(params.get("tracks")))
+    cargs.append(execution.input_file(params.get("tsf", None)))
+    cargs.append(execution.input_file(params.get("tracks", None)))
     return cargs
 
 
@@ -323,9 +309,7 @@ def tsfvalidate(
 
 __all__ = [
     "TSFVALIDATE_METADATA",
-    "TsfvalidateConfigParameters",
     "TsfvalidateOutputs",
-    "TsfvalidateParameters",
     "tsfvalidate",
     "tsfvalidate_config_params",
     "tsfvalidate_execute",

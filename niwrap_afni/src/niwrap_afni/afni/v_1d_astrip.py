@@ -14,46 +14,18 @@ V_1D_ASTRIP_METADATA = Metadata(
 
 
 V1dAstripParameters = typing.TypedDict('V1dAstripParameters', {
-    "@type": typing.Literal["afni.1dAstrip"],
+    "@type": typing.NotRequired[typing.Literal["afni/1dAstrip"]],
+    "infile": InputPathType,
+})
+V1dAstripParametersTagged = typing.TypedDict('V1dAstripParametersTagged', {
+    "@type": typing.Literal["afni/1dAstrip"],
     "infile": InputPathType,
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "afni.1dAstrip": v_1d_astrip_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "afni.1dAstrip": v_1d_astrip_outputs,
-    }.get(t)
-
-
 class V1dAstripOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `v_1d_astrip(...)`.
+    Output object returned when calling `V1dAstripParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -63,7 +35,7 @@ class V1dAstripOutputs(typing.NamedTuple):
 
 def v_1d_astrip_params(
     infile: InputPathType,
-) -> V1dAstripParameters:
+) -> V1dAstripParametersTagged:
     """
     Build parameters.
     
@@ -73,7 +45,7 @@ def v_1d_astrip_params(
         Parameter dictionary
     """
     params = {
-        "@type": "afni.1dAstrip",
+        "@type": "afni/1dAstrip",
         "infile": infile,
     }
     return params
@@ -94,7 +66,7 @@ def v_1d_astrip_cargs(
     """
     cargs = []
     cargs.append("1dAstrip")
-    cargs.append("< " + execution.input_file(params.get("infile")))
+    cargs.append("< " + execution.input_file(params.get("infile", None)))
     return cargs
 
 
@@ -173,7 +145,6 @@ def v_1d_astrip(
 
 __all__ = [
     "V1dAstripOutputs",
-    "V1dAstripParameters",
     "V_1D_ASTRIP_METADATA",
     "v_1d_astrip",
     "v_1d_astrip_execute",

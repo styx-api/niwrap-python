@@ -14,46 +14,20 @@ TOKENS_METADATA = Metadata(
 
 
 TokensParameters = typing.TypedDict('TokensParameters', {
-    "@type": typing.Literal["afni.tokens"],
+    "@type": typing.NotRequired[typing.Literal["afni/tokens"]],
+    "infile": typing.NotRequired[InputPathType | None],
+    "extra_char": typing.NotRequired[list[str] | None],
+})
+TokensParametersTagged = typing.TypedDict('TokensParametersTagged', {
+    "@type": typing.Literal["afni/tokens"],
     "infile": typing.NotRequired[InputPathType | None],
     "extra_char": typing.NotRequired[list[str] | None],
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "afni.tokens": tokens_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-    }.get(t)
-
-
 class TokensOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `tokens(...)`.
+    Output object returned when calling `TokensParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -62,7 +36,7 @@ class TokensOutputs(typing.NamedTuple):
 def tokens_params(
     infile: InputPathType | None = None,
     extra_char: list[str] | None = None,
-) -> TokensParameters:
+) -> TokensParametersTagged:
     """
     Build parameters.
     
@@ -74,7 +48,7 @@ def tokens_params(
         Parameter dictionary
     """
     params = {
-        "@type": "afni.tokens",
+        "@type": "afni/tokens",
     }
     if infile is not None:
         params["infile"] = infile
@@ -98,15 +72,15 @@ def tokens_cargs(
     """
     cargs = []
     cargs.append("tokens")
-    if params.get("infile") is not None:
+    if params.get("infile", None) is not None:
         cargs.extend([
             "-infile",
-            execution.input_file(params.get("infile"))
+            execution.input_file(params.get("infile", None))
         ])
-    if params.get("extra_char") is not None:
+    if params.get("extra_char", None) is not None:
         cargs.extend([
             "-extra",
-            *params.get("extra_char")
+            *params.get("extra_char", None)
         ])
     return cargs
 
@@ -190,7 +164,6 @@ def tokens(
 __all__ = [
     "TOKENS_METADATA",
     "TokensOutputs",
-    "TokensParameters",
     "tokens",
     "tokens_execute",
     "tokens_params",

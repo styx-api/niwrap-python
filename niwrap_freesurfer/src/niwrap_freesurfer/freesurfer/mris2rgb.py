@@ -14,45 +14,18 @@ MRIS2RGB_METADATA = Metadata(
 
 
 Mris2rgbParameters = typing.TypedDict('Mris2rgbParameters', {
-    "@type": typing.Literal["freesurfer.mris2rgb"],
+    "@type": typing.NotRequired[typing.Literal["freesurfer/mris2rgb"]],
+    "library_path": str,
+})
+Mris2rgbParametersTagged = typing.TypedDict('Mris2rgbParametersTagged', {
+    "@type": typing.Literal["freesurfer/mris2rgb"],
     "library_path": str,
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "freesurfer.mris2rgb": mris2rgb_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-    }.get(t)
-
-
 class Mris2rgbOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `mris2rgb(...)`.
+    Output object returned when calling `Mris2rgbParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -60,7 +33,7 @@ class Mris2rgbOutputs(typing.NamedTuple):
 
 def mris2rgb_params(
     library_path: str,
-) -> Mris2rgbParameters:
+) -> Mris2rgbParametersTagged:
     """
     Build parameters.
     
@@ -71,7 +44,7 @@ def mris2rgb_params(
         Parameter dictionary
     """
     params = {
-        "@type": "freesurfer.mris2rgb",
+        "@type": "freesurfer/mris2rgb",
         "library_path": library_path,
     }
     return params
@@ -94,7 +67,7 @@ def mris2rgb_cargs(
     cargs.append("mris2rgb")
     cargs.extend([
         "export LD_LIBRARY_PATH=",
-        params.get("library_path")
+        params.get("library_path", None)
     ])
     return cargs
 
@@ -175,7 +148,6 @@ def mris2rgb(
 __all__ = [
     "MRIS2RGB_METADATA",
     "Mris2rgbOutputs",
-    "Mris2rgbParameters",
     "mris2rgb",
     "mris2rgb_execute",
     "mris2rgb_params",

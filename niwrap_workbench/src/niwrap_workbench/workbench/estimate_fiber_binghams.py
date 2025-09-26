@@ -14,7 +14,21 @@ ESTIMATE_FIBER_BINGHAMS_METADATA = Metadata(
 
 
 EstimateFiberBinghamsParameters = typing.TypedDict('EstimateFiberBinghamsParameters', {
-    "@type": typing.Literal["workbench.estimate-fiber-binghams"],
+    "@type": typing.NotRequired[typing.Literal["workbench/estimate-fiber-binghams"]],
+    "merged_f1samples": InputPathType,
+    "merged_th1samples": InputPathType,
+    "merged_ph1samples": InputPathType,
+    "merged_f2samples": InputPathType,
+    "merged_th2samples": InputPathType,
+    "merged_ph2samples": InputPathType,
+    "merged_f3samples": InputPathType,
+    "merged_th3samples": InputPathType,
+    "merged_ph3samples": InputPathType,
+    "label_volume": InputPathType,
+    "cifti_out": str,
+})
+EstimateFiberBinghamsParametersTagged = typing.TypedDict('EstimateFiberBinghamsParametersTagged', {
+    "@type": typing.Literal["workbench/estimate-fiber-binghams"],
     "merged_f1samples": InputPathType,
     "merged_th1samples": InputPathType,
     "merged_ph1samples": InputPathType,
@@ -29,41 +43,9 @@ EstimateFiberBinghamsParameters = typing.TypedDict('EstimateFiberBinghamsParamet
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "workbench.estimate-fiber-binghams": estimate_fiber_binghams_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "workbench.estimate-fiber-binghams": estimate_fiber_binghams_outputs,
-    }.get(t)
-
-
 class EstimateFiberBinghamsOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `estimate_fiber_binghams(...)`.
+    Output object returned when calling `EstimateFiberBinghamsParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -83,7 +65,7 @@ def estimate_fiber_binghams_params(
     merged_ph3samples: InputPathType,
     label_volume: InputPathType,
     cifti_out: str,
-) -> EstimateFiberBinghamsParameters:
+) -> EstimateFiberBinghamsParametersTagged:
     """
     Build parameters.
     
@@ -103,7 +85,7 @@ def estimate_fiber_binghams_params(
         Parameter dictionary
     """
     params = {
-        "@type": "workbench.estimate-fiber-binghams",
+        "@type": "workbench/estimate-fiber-binghams",
         "merged_f1samples": merged_f1samples,
         "merged_th1samples": merged_th1samples,
         "merged_ph1samples": merged_ph1samples,
@@ -135,17 +117,17 @@ def estimate_fiber_binghams_cargs(
     cargs = []
     cargs.append("wb_command")
     cargs.append("-estimate-fiber-binghams")
-    cargs.append(execution.input_file(params.get("merged_f1samples")))
-    cargs.append(execution.input_file(params.get("merged_th1samples")))
-    cargs.append(execution.input_file(params.get("merged_ph1samples")))
-    cargs.append(execution.input_file(params.get("merged_f2samples")))
-    cargs.append(execution.input_file(params.get("merged_th2samples")))
-    cargs.append(execution.input_file(params.get("merged_ph2samples")))
-    cargs.append(execution.input_file(params.get("merged_f3samples")))
-    cargs.append(execution.input_file(params.get("merged_th3samples")))
-    cargs.append(execution.input_file(params.get("merged_ph3samples")))
-    cargs.append(execution.input_file(params.get("label_volume")))
-    cargs.append(params.get("cifti_out"))
+    cargs.append(execution.input_file(params.get("merged_f1samples", None)))
+    cargs.append(execution.input_file(params.get("merged_th1samples", None)))
+    cargs.append(execution.input_file(params.get("merged_ph1samples", None)))
+    cargs.append(execution.input_file(params.get("merged_f2samples", None)))
+    cargs.append(execution.input_file(params.get("merged_th2samples", None)))
+    cargs.append(execution.input_file(params.get("merged_ph2samples", None)))
+    cargs.append(execution.input_file(params.get("merged_f3samples", None)))
+    cargs.append(execution.input_file(params.get("merged_th3samples", None)))
+    cargs.append(execution.input_file(params.get("merged_ph3samples", None)))
+    cargs.append(execution.input_file(params.get("label_volume", None)))
+    cargs.append(params.get("cifti_out", None))
     return cargs
 
 
@@ -164,7 +146,7 @@ def estimate_fiber_binghams_outputs(
     """
     ret = EstimateFiberBinghamsOutputs(
         root=execution.output_file("."),
-        cifti_out=execution.output_file(params.get("cifti_out")),
+        cifti_out=execution.output_file(params.get("cifti_out", None)),
     )
     return ret
 
@@ -333,7 +315,6 @@ def estimate_fiber_binghams(
 __all__ = [
     "ESTIMATE_FIBER_BINGHAMS_METADATA",
     "EstimateFiberBinghamsOutputs",
-    "EstimateFiberBinghamsParameters",
     "estimate_fiber_binghams",
     "estimate_fiber_binghams_execute",
     "estimate_fiber_binghams_params",

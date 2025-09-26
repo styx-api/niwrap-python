@@ -14,7 +14,28 @@ DT_RECON_METADATA = Metadata(
 
 
 DtReconParameters = typing.TypedDict('DtReconParameters', {
-    "@type": typing.Literal["freesurfer.dt_recon"],
+    "@type": typing.NotRequired[typing.Literal["freesurfer/dt_recon"]],
+    "input_volume": InputPathType,
+    "bvals_bvecs": typing.NotRequired[str | None],
+    "subject_id": str,
+    "output_dir": str,
+    "info_dump": typing.NotRequired[InputPathType | None],
+    "ec_reference": typing.NotRequired[float | None],
+    "no_ec_flag": bool,
+    "no_reg_flag": bool,
+    "register_file": typing.NotRequired[InputPathType | None],
+    "no_tal_flag": bool,
+    "subjects_dir": typing.NotRequired[str | None],
+    "save_ec_residuals_flag": bool,
+    "pca_analysis_flag": bool,
+    "mask_prune_threshold": typing.NotRequired[float | None],
+    "init_spm_flag": bool,
+    "init_fsl_flag": bool,
+    "debug_flag": bool,
+    "version_flag": bool,
+})
+DtReconParametersTagged = typing.TypedDict('DtReconParametersTagged', {
+    "@type": typing.Literal["freesurfer/dt_recon"],
     "input_volume": InputPathType,
     "bvals_bvecs": typing.NotRequired[str | None],
     "subject_id": str,
@@ -36,41 +57,9 @@ DtReconParameters = typing.TypedDict('DtReconParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "freesurfer.dt_recon": dt_recon_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "freesurfer.dt_recon": dt_recon_outputs,
-    }.get(t)
-
-
 class DtReconOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `dt_recon(...)`.
+    Output object returned when calling `DtReconParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -109,7 +98,7 @@ def dt_recon_params(
     init_fsl_flag: bool = False,
     debug_flag: bool = False,
     version_flag: bool = False,
-) -> DtReconParameters:
+) -> DtReconParametersTagged:
     """
     Build parameters.
     
@@ -139,7 +128,7 @@ def dt_recon_params(
         Parameter dictionary
     """
     params = {
-        "@type": "freesurfer.dt_recon",
+        "@type": "freesurfer/dt_recon",
         "input_volume": input_volume,
         "subject_id": subject_id,
         "output_dir": output_dir,
@@ -185,63 +174,63 @@ def dt_recon_cargs(
     cargs.append("dt_recon")
     cargs.extend([
         "--i",
-        execution.input_file(params.get("input_volume"))
+        execution.input_file(params.get("input_volume", None))
     ])
-    if params.get("bvals_bvecs") is not None:
+    if params.get("bvals_bvecs", None) is not None:
         cargs.extend([
             "--b",
-            params.get("bvals_bvecs")
+            params.get("bvals_bvecs", None)
         ])
     cargs.extend([
         "--s",
-        params.get("subject_id")
+        params.get("subject_id", None)
     ])
     cargs.extend([
         "--o",
-        params.get("output_dir")
+        params.get("output_dir", None)
     ])
-    if params.get("info_dump") is not None:
+    if params.get("info_dump", None) is not None:
         cargs.extend([
             "--info-dump",
-            execution.input_file(params.get("info_dump"))
+            execution.input_file(params.get("info_dump", None))
         ])
-    if params.get("ec_reference") is not None:
+    if params.get("ec_reference", None) is not None:
         cargs.extend([
             "--ecref",
-            str(params.get("ec_reference"))
+            str(params.get("ec_reference", None))
         ])
-    if params.get("no_ec_flag"):
+    if params.get("no_ec_flag", False):
         cargs.append("--no-ec")
-    if params.get("no_reg_flag"):
+    if params.get("no_reg_flag", False):
         cargs.append("--no-reg")
-    if params.get("register_file") is not None:
+    if params.get("register_file", None) is not None:
         cargs.extend([
             "--reg",
-            execution.input_file(params.get("register_file"))
+            execution.input_file(params.get("register_file", None))
         ])
-    if params.get("no_tal_flag"):
+    if params.get("no_tal_flag", False):
         cargs.append("--no-tal")
-    if params.get("subjects_dir") is not None:
+    if params.get("subjects_dir", None) is not None:
         cargs.extend([
             "--sd",
-            params.get("subjects_dir")
+            params.get("subjects_dir", None)
         ])
-    if params.get("save_ec_residuals_flag"):
+    if params.get("save_ec_residuals_flag", False):
         cargs.append("--eres-save")
-    if params.get("pca_analysis_flag"):
+    if params.get("pca_analysis_flag", False):
         cargs.append("--pca")
-    if params.get("mask_prune_threshold") is not None:
+    if params.get("mask_prune_threshold", None) is not None:
         cargs.extend([
             "--prune_thr",
-            str(params.get("mask_prune_threshold"))
+            str(params.get("mask_prune_threshold", None))
         ])
-    if params.get("init_spm_flag"):
+    if params.get("init_spm_flag", False):
         cargs.append("--init-spm")
-    if params.get("init_fsl_flag"):
+    if params.get("init_fsl_flag", False):
         cargs.append("--init-fsl")
-    if params.get("debug_flag"):
+    if params.get("debug_flag", False):
         cargs.append("--debug")
-    if params.get("version_flag"):
+    if params.get("version_flag", False):
         cargs.append("--version")
     return cargs
 
@@ -261,13 +250,13 @@ def dt_recon_outputs(
     """
     ret = DtReconOutputs(
         root=execution.output_file("."),
-        dwi_nifti=execution.output_file(params.get("output_dir") + "/dwi.nii.gz"),
-        dwi_eddy_corrected=execution.output_file(params.get("output_dir") + "/dwi-ec.nii.gz"),
-        tensor_map=execution.output_file(params.get("output_dir") + "/tensor.nii.gz"),
-        fa_map=execution.output_file(params.get("output_dir") + "/fa.nii.gz"),
-        fa_tal_map=execution.output_file(params.get("output_dir") + "/fa-tal.nii.gz"),
-        register_file_output=execution.output_file(params.get("output_dir") + "/register.lta"),
-        mask_file=execution.output_file(params.get("output_dir") + "/mask.nii.gz"),
+        dwi_nifti=execution.output_file(params.get("output_dir", None) + "/dwi.nii.gz"),
+        dwi_eddy_corrected=execution.output_file(params.get("output_dir", None) + "/dwi-ec.nii.gz"),
+        tensor_map=execution.output_file(params.get("output_dir", None) + "/tensor.nii.gz"),
+        fa_map=execution.output_file(params.get("output_dir", None) + "/fa.nii.gz"),
+        fa_tal_map=execution.output_file(params.get("output_dir", None) + "/fa-tal.nii.gz"),
+        register_file_output=execution.output_file(params.get("output_dir", None) + "/register.lta"),
+        mask_file=execution.output_file(params.get("output_dir", None) + "/mask.nii.gz"),
     )
     return ret
 
@@ -382,7 +371,6 @@ def dt_recon(
 __all__ = [
     "DT_RECON_METADATA",
     "DtReconOutputs",
-    "DtReconParameters",
     "dt_recon",
     "dt_recon_execute",
     "dt_recon_params",

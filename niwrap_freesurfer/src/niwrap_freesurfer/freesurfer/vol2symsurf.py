@@ -14,7 +14,18 @@ VOL2SYMSURF_METADATA = Metadata(
 
 
 Vol2symsurfParameters = typing.TypedDict('Vol2symsurfParameters', {
-    "@type": typing.Literal["freesurfer.vol2symsurf"],
+    "@type": typing.NotRequired[typing.Literal["freesurfer/vol2symsurf"]],
+    "registration_file": InputPathType,
+    "input_volume": InputPathType,
+    "fwhm": float,
+    "output_stem": typing.NotRequired[str | None],
+    "regheader": typing.NotRequired[str | None],
+    "projection_fraction": typing.NotRequired[float | None],
+    "no_diff": bool,
+    "laterality_index": bool,
+})
+Vol2symsurfParametersTagged = typing.TypedDict('Vol2symsurfParametersTagged', {
+    "@type": typing.Literal["freesurfer/vol2symsurf"],
     "registration_file": InputPathType,
     "input_volume": InputPathType,
     "fwhm": float,
@@ -26,41 +37,9 @@ Vol2symsurfParameters = typing.TypedDict('Vol2symsurfParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "freesurfer.vol2symsurf": vol2symsurf_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "freesurfer.vol2symsurf": vol2symsurf_outputs,
-    }.get(t)
-
-
 class Vol2symsurfOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `vol2symsurf(...)`.
+    Output object returned when calling `Vol2symsurfParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -83,7 +62,7 @@ def vol2symsurf_params(
     projection_fraction: float | None = None,
     no_diff: bool = False,
     laterality_index: bool = False,
-) -> Vol2symsurfParameters:
+) -> Vol2symsurfParametersTagged:
     """
     Build parameters.
     
@@ -100,7 +79,7 @@ def vol2symsurf_params(
         Parameter dictionary
     """
     params = {
-        "@type": "freesurfer.vol2symsurf",
+        "@type": "freesurfer/vol2symsurf",
         "registration_file": registration_file,
         "input_volume": input_volume,
         "fwhm": fwhm,
@@ -133,34 +112,34 @@ def vol2symsurf_cargs(
     cargs.append("vol2symsurf")
     cargs.extend([
         "--reg",
-        execution.input_file(params.get("registration_file"))
+        execution.input_file(params.get("registration_file", None))
     ])
     cargs.extend([
         "--i",
-        execution.input_file(params.get("input_volume"))
+        execution.input_file(params.get("input_volume", None))
     ])
     cargs.extend([
         "--fwhm",
-        str(params.get("fwhm"))
+        str(params.get("fwhm", None))
     ])
-    if params.get("output_stem") is not None:
+    if params.get("output_stem", None) is not None:
         cargs.extend([
             "--o",
-            params.get("output_stem")
+            params.get("output_stem", None)
         ])
-    if params.get("regheader") is not None:
+    if params.get("regheader", None) is not None:
         cargs.extend([
             "--regheader",
-            params.get("regheader")
+            params.get("regheader", None)
         ])
-    if params.get("projection_fraction") is not None:
+    if params.get("projection_fraction", None) is not None:
         cargs.extend([
             "--projfrac",
-            str(params.get("projection_fraction"))
+            str(params.get("projection_fraction", None))
         ])
-    if params.get("no_diff"):
+    if params.get("no_diff", False):
         cargs.append("--no-diff")
-    if params.get("laterality_index"):
+    if params.get("laterality_index", False):
         cargs.append("--li")
     return cargs
 
@@ -180,10 +159,10 @@ def vol2symsurf_outputs(
     """
     ret = Vol2symsurfOutputs(
         root=execution.output_file("."),
-        output_lh=execution.output_file(params.get("output_stem") + ".lh.nii") if (params.get("output_stem") is not None) else None,
-        output_rh=execution.output_file(params.get("output_stem") + ".rh.nii") if (params.get("output_stem") is not None) else None,
-        output_lh_rh_difference=execution.output_file(params.get("output_stem") + ".lh-rh.nii") if (params.get("output_stem") is not None) else None,
-        output_li_difference=execution.output_file(params.get("output_stem") + ".li.lh-rh.nii") if (params.get("output_stem") is not None) else None,
+        output_lh=execution.output_file(params.get("output_stem", None) + ".lh.nii") if (params.get("output_stem") is not None) else None,
+        output_rh=execution.output_file(params.get("output_stem", None) + ".rh.nii") if (params.get("output_stem") is not None) else None,
+        output_lh_rh_difference=execution.output_file(params.get("output_stem", None) + ".lh-rh.nii") if (params.get("output_stem") is not None) else None,
+        output_li_difference=execution.output_file(params.get("output_stem", None) + ".li.lh-rh.nii") if (params.get("output_stem") is not None) else None,
     )
     return ret
 
@@ -267,7 +246,6 @@ def vol2symsurf(
 __all__ = [
     "VOL2SYMSURF_METADATA",
     "Vol2symsurfOutputs",
-    "Vol2symsurfParameters",
     "vol2symsurf",
     "vol2symsurf_execute",
     "vol2symsurf_params",

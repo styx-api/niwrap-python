@@ -14,7 +14,21 @@ SUSAN_METADATA = Metadata(
 
 
 SusanParameters = typing.TypedDict('SusanParameters', {
-    "@type": typing.Literal["fsl.susan"],
+    "@type": typing.NotRequired[typing.Literal["fsl/susan"]],
+    "input_file": InputPathType,
+    "brightness_threshold": float,
+    "spatial_size": float,
+    "dimensionality": float,
+    "use_median_filter": float,
+    "n_usans": float,
+    "usan1": typing.NotRequired[InputPathType | None],
+    "brightness_threshold1": typing.NotRequired[float | None],
+    "usan2": typing.NotRequired[InputPathType | None],
+    "brightness_threshold2": typing.NotRequired[float | None],
+    "output_file": str,
+})
+SusanParametersTagged = typing.TypedDict('SusanParametersTagged', {
+    "@type": typing.Literal["fsl/susan"],
     "input_file": InputPathType,
     "brightness_threshold": float,
     "spatial_size": float,
@@ -29,41 +43,9 @@ SusanParameters = typing.TypedDict('SusanParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "fsl.susan": susan_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "fsl.susan": susan_outputs,
-    }.get(t)
-
-
 class SusanOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `susan(...)`.
+    Output object returned when calling `SusanParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -83,7 +65,7 @@ def susan_params(
     brightness_threshold1: float | None = None,
     usan2: InputPathType | None = None,
     brightness_threshold2: float | None = None,
-) -> SusanParameters:
+) -> SusanParametersTagged:
     """
     Build parameters.
     
@@ -108,7 +90,7 @@ def susan_params(
         Parameter dictionary
     """
     params = {
-        "@type": "fsl.susan",
+        "@type": "fsl/susan",
         "input_file": input_file,
         "brightness_threshold": brightness_threshold,
         "spatial_size": spatial_size,
@@ -143,21 +125,21 @@ def susan_cargs(
     """
     cargs = []
     cargs.append("susan")
-    cargs.append(execution.input_file(params.get("input_file")))
-    cargs.append(str(params.get("brightness_threshold")))
-    cargs.append(str(params.get("spatial_size")))
-    cargs.append(str(params.get("dimensionality")))
-    cargs.append(str(params.get("use_median_filter")))
-    cargs.append(str(params.get("n_usans")))
-    if params.get("usan1") is not None:
-        cargs.append(execution.input_file(params.get("usan1")))
-    if params.get("brightness_threshold1") is not None:
-        cargs.append(str(params.get("brightness_threshold1")))
-    if params.get("usan2") is not None:
-        cargs.append(execution.input_file(params.get("usan2")))
-    if params.get("brightness_threshold2") is not None:
-        cargs.append(str(params.get("brightness_threshold2")))
-    cargs.append(params.get("output_file"))
+    cargs.append(execution.input_file(params.get("input_file", None)))
+    cargs.append(str(params.get("brightness_threshold", None)))
+    cargs.append(str(params.get("spatial_size", None)))
+    cargs.append(str(params.get("dimensionality", None)))
+    cargs.append(str(params.get("use_median_filter", None)))
+    cargs.append(str(params.get("n_usans", None)))
+    if params.get("usan1", None) is not None:
+        cargs.append(execution.input_file(params.get("usan1", None)))
+    if params.get("brightness_threshold1", None) is not None:
+        cargs.append(str(params.get("brightness_threshold1", None)))
+    if params.get("usan2", None) is not None:
+        cargs.append(execution.input_file(params.get("usan2", None)))
+    if params.get("brightness_threshold2", None) is not None:
+        cargs.append(str(params.get("brightness_threshold2", None)))
+    cargs.append(params.get("output_file", None))
     return cargs
 
 
@@ -176,7 +158,7 @@ def susan_outputs(
     """
     ret = SusanOutputs(
         root=execution.output_file("."),
-        filtered_output=execution.output_file(params.get("output_file")),
+        filtered_output=execution.output_file(params.get("output_file", None)),
     )
     return ret
 
@@ -272,7 +254,6 @@ def susan(
 __all__ = [
     "SUSAN_METADATA",
     "SusanOutputs",
-    "SusanParameters",
     "susan",
     "susan_execute",
     "susan_params",

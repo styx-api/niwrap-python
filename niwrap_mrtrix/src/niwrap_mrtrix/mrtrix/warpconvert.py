@@ -14,14 +14,36 @@ WARPCONVERT_METADATA = Metadata(
 
 
 WarpconvertConfigParameters = typing.TypedDict('WarpconvertConfigParameters', {
-    "@type": typing.Literal["mrtrix.warpconvert.config"],
+    "@type": typing.NotRequired[typing.Literal["config"]],
+    "key": str,
+    "value": str,
+})
+WarpconvertConfigParametersTagged = typing.TypedDict('WarpconvertConfigParametersTagged', {
+    "@type": typing.Literal["config"],
     "key": str,
     "value": str,
 })
 
 
 WarpconvertParameters = typing.TypedDict('WarpconvertParameters', {
-    "@type": typing.Literal["mrtrix.warpconvert"],
+    "@type": typing.NotRequired[typing.Literal["mrtrix/warpconvert"]],
+    "template": typing.NotRequired[InputPathType | None],
+    "midway_space": bool,
+    "from": typing.NotRequired[int | None],
+    "info": bool,
+    "quiet": bool,
+    "debug": bool,
+    "force": bool,
+    "nthreads": typing.NotRequired[int | None],
+    "config": typing.NotRequired[list[WarpconvertConfigParameters] | None],
+    "help": bool,
+    "version": bool,
+    "in": InputPathType,
+    "type": str,
+    "out": str,
+})
+WarpconvertParametersTagged = typing.TypedDict('WarpconvertParametersTagged', {
+    "@type": typing.Literal["mrtrix/warpconvert"],
     "template": typing.NotRequired[InputPathType | None],
     "midway_space": bool,
     "from": typing.NotRequired[int | None],
@@ -39,43 +61,10 @@ WarpconvertParameters = typing.TypedDict('WarpconvertParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "mrtrix.warpconvert": warpconvert_cargs,
-        "mrtrix.warpconvert.config": warpconvert_config_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "mrtrix.warpconvert": warpconvert_outputs,
-    }.get(t)
-
-
 def warpconvert_config_params(
     key: str,
     value: str,
-) -> WarpconvertConfigParameters:
+) -> WarpconvertConfigParametersTagged:
     """
     Build parameters.
     
@@ -86,7 +75,7 @@ def warpconvert_config_params(
         Parameter dictionary
     """
     params = {
-        "@type": "mrtrix.warpconvert.config",
+        "@type": "config",
         "key": key,
         "value": value,
     }
@@ -108,14 +97,14 @@ def warpconvert_config_cargs(
     """
     cargs = []
     cargs.append("-config")
-    cargs.append(params.get("key"))
-    cargs.append(params.get("value"))
+    cargs.append(params.get("key", None))
+    cargs.append(params.get("value", None))
     return cargs
 
 
 class WarpconvertOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `warpconvert(...)`.
+    Output object returned when calling `WarpconvertParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -138,7 +127,7 @@ def warpconvert_params(
     config: list[WarpconvertConfigParameters] | None = None,
     help_: bool = False,
     version: bool = False,
-) -> WarpconvertParameters:
+) -> WarpconvertParametersTagged:
     """
     Build parameters.
     
@@ -178,7 +167,7 @@ def warpconvert_params(
         Parameter dictionary
     """
     params = {
-        "@type": "mrtrix.warpconvert",
+        "@type": "mrtrix/warpconvert",
         "midway_space": midway_space,
         "info": info,
         "quiet": quiet,
@@ -216,40 +205,40 @@ def warpconvert_cargs(
     """
     cargs = []
     cargs.append("warpconvert")
-    if params.get("template") is not None:
+    if params.get("template", None) is not None:
         cargs.extend([
             "-template",
-            execution.input_file(params.get("template"))
+            execution.input_file(params.get("template", None))
         ])
-    if params.get("midway_space"):
+    if params.get("midway_space", False):
         cargs.append("-midway_space")
-    if params.get("from") is not None:
+    if params.get("from", None) is not None:
         cargs.extend([
             "-from",
-            str(params.get("from"))
+            str(params.get("from", None))
         ])
-    if params.get("info"):
+    if params.get("info", False):
         cargs.append("-info")
-    if params.get("quiet"):
+    if params.get("quiet", False):
         cargs.append("-quiet")
-    if params.get("debug"):
+    if params.get("debug", False):
         cargs.append("-debug")
-    if params.get("force"):
+    if params.get("force", False):
         cargs.append("-force")
-    if params.get("nthreads") is not None:
+    if params.get("nthreads", None) is not None:
         cargs.extend([
             "-nthreads",
-            str(params.get("nthreads"))
+            str(params.get("nthreads", None))
         ])
-    if params.get("config") is not None:
-        cargs.extend([a for c in [dyn_cargs(s["@type"])(s, execution) for s in params.get("config")] for a in c])
-    if params.get("help"):
+    if params.get("config", None) is not None:
+        cargs.extend([a for c in [warpconvert_config_cargs(s, execution) for s in params.get("config", None)] for a in c])
+    if params.get("help", False):
         cargs.append("-help")
-    if params.get("version"):
+    if params.get("version", False):
         cargs.append("-version")
-    cargs.append(execution.input_file(params.get("in")))
-    cargs.append(params.get("type"))
-    cargs.append(params.get("out"))
+    cargs.append(execution.input_file(params.get("in", None)))
+    cargs.append(params.get("type", None))
+    cargs.append(params.get("out", None))
     return cargs
 
 
@@ -268,7 +257,7 @@ def warpconvert_outputs(
     """
     ret = WarpconvertOutputs(
         root=execution.output_file("."),
-        out=execution.output_file(params.get("out")),
+        out=execution.output_file(params.get("out", None)),
     )
     return ret
 
@@ -406,9 +395,7 @@ def warpconvert(
 
 __all__ = [
     "WARPCONVERT_METADATA",
-    "WarpconvertConfigParameters",
     "WarpconvertOutputs",
-    "WarpconvertParameters",
     "warpconvert",
     "warpconvert_config_params",
     "warpconvert_execute",

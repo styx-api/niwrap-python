@@ -14,14 +14,32 @@ PEAKS2AMP_METADATA = Metadata(
 
 
 Peaks2ampConfigParameters = typing.TypedDict('Peaks2ampConfigParameters', {
-    "@type": typing.Literal["mrtrix.peaks2amp.config"],
+    "@type": typing.NotRequired[typing.Literal["config"]],
+    "key": str,
+    "value": str,
+})
+Peaks2ampConfigParametersTagged = typing.TypedDict('Peaks2ampConfigParametersTagged', {
+    "@type": typing.Literal["config"],
     "key": str,
     "value": str,
 })
 
 
 Peaks2ampParameters = typing.TypedDict('Peaks2ampParameters', {
-    "@type": typing.Literal["mrtrix.peaks2amp"],
+    "@type": typing.NotRequired[typing.Literal["mrtrix/peaks2amp"]],
+    "info": bool,
+    "quiet": bool,
+    "debug": bool,
+    "force": bool,
+    "nthreads": typing.NotRequired[int | None],
+    "config": typing.NotRequired[list[Peaks2ampConfigParameters] | None],
+    "help": bool,
+    "version": bool,
+    "directions": InputPathType,
+    "amplitudes": str,
+})
+Peaks2ampParametersTagged = typing.TypedDict('Peaks2ampParametersTagged', {
+    "@type": typing.Literal["mrtrix/peaks2amp"],
     "info": bool,
     "quiet": bool,
     "debug": bool,
@@ -35,43 +53,10 @@ Peaks2ampParameters = typing.TypedDict('Peaks2ampParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "mrtrix.peaks2amp": peaks2amp_cargs,
-        "mrtrix.peaks2amp.config": peaks2amp_config_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "mrtrix.peaks2amp": peaks2amp_outputs,
-    }.get(t)
-
-
 def peaks2amp_config_params(
     key: str,
     value: str,
-) -> Peaks2ampConfigParameters:
+) -> Peaks2ampConfigParametersTagged:
     """
     Build parameters.
     
@@ -82,7 +67,7 @@ def peaks2amp_config_params(
         Parameter dictionary
     """
     params = {
-        "@type": "mrtrix.peaks2amp.config",
+        "@type": "config",
         "key": key,
         "value": value,
     }
@@ -104,14 +89,14 @@ def peaks2amp_config_cargs(
     """
     cargs = []
     cargs.append("-config")
-    cargs.append(params.get("key"))
-    cargs.append(params.get("value"))
+    cargs.append(params.get("key", None))
+    cargs.append(params.get("value", None))
     return cargs
 
 
 class Peaks2ampOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `peaks2amp(...)`.
+    Output object returned when calling `Peaks2ampParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -130,7 +115,7 @@ def peaks2amp_params(
     config: list[Peaks2ampConfigParameters] | None = None,
     help_: bool = False,
     version: bool = False,
-) -> Peaks2ampParameters:
+) -> Peaks2ampParametersTagged:
     """
     Build parameters.
     
@@ -154,7 +139,7 @@ def peaks2amp_params(
         Parameter dictionary
     """
     params = {
-        "@type": "mrtrix.peaks2amp",
+        "@type": "mrtrix/peaks2amp",
         "info": info,
         "quiet": quiet,
         "debug": debug,
@@ -186,27 +171,27 @@ def peaks2amp_cargs(
     """
     cargs = []
     cargs.append("peaks2amp")
-    if params.get("info"):
+    if params.get("info", False):
         cargs.append("-info")
-    if params.get("quiet"):
+    if params.get("quiet", False):
         cargs.append("-quiet")
-    if params.get("debug"):
+    if params.get("debug", False):
         cargs.append("-debug")
-    if params.get("force"):
+    if params.get("force", False):
         cargs.append("-force")
-    if params.get("nthreads") is not None:
+    if params.get("nthreads", None) is not None:
         cargs.extend([
             "-nthreads",
-            str(params.get("nthreads"))
+            str(params.get("nthreads", None))
         ])
-    if params.get("config") is not None:
-        cargs.extend([a for c in [dyn_cargs(s["@type"])(s, execution) for s in params.get("config")] for a in c])
-    if params.get("help"):
+    if params.get("config", None) is not None:
+        cargs.extend([a for c in [peaks2amp_config_cargs(s, execution) for s in params.get("config", None)] for a in c])
+    if params.get("help", False):
         cargs.append("-help")
-    if params.get("version"):
+    if params.get("version", False):
         cargs.append("-version")
-    cargs.append(execution.input_file(params.get("directions")))
-    cargs.append(params.get("amplitudes"))
+    cargs.append(execution.input_file(params.get("directions", None)))
+    cargs.append(params.get("amplitudes", None))
     return cargs
 
 
@@ -225,7 +210,7 @@ def peaks2amp_outputs(
     """
     ret = Peaks2ampOutputs(
         root=execution.output_file("."),
-        amplitudes=execution.output_file(params.get("amplitudes")),
+        amplitudes=execution.output_file(params.get("amplitudes", None)),
     )
     return ret
 
@@ -329,9 +314,7 @@ def peaks2amp(
 
 __all__ = [
     "PEAKS2AMP_METADATA",
-    "Peaks2ampConfigParameters",
     "Peaks2ampOutputs",
-    "Peaks2ampParameters",
     "peaks2amp",
     "peaks2amp_config_params",
     "peaks2amp_execute",

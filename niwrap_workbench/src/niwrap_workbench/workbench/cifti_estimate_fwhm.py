@@ -14,20 +14,37 @@ CIFTI_ESTIMATE_FWHM_METADATA = Metadata(
 
 
 CiftiEstimateFwhmWholeFileParameters = typing.TypedDict('CiftiEstimateFwhmWholeFileParameters', {
-    "@type": typing.Literal["workbench.cifti-estimate-fwhm.whole_file"],
+    "@type": typing.NotRequired[typing.Literal["whole_file"]],
+    "opt_demean": bool,
+})
+CiftiEstimateFwhmWholeFileParametersTagged = typing.TypedDict('CiftiEstimateFwhmWholeFileParametersTagged', {
+    "@type": typing.Literal["whole_file"],
     "opt_demean": bool,
 })
 
 
 CiftiEstimateFwhmSurfaceParameters = typing.TypedDict('CiftiEstimateFwhmSurfaceParameters', {
-    "@type": typing.Literal["workbench.cifti-estimate-fwhm.surface"],
+    "@type": typing.NotRequired[typing.Literal["surface"]],
+    "structure": str,
+    "surface": InputPathType,
+})
+CiftiEstimateFwhmSurfaceParametersTagged = typing.TypedDict('CiftiEstimateFwhmSurfaceParametersTagged', {
+    "@type": typing.Literal["surface"],
     "structure": str,
     "surface": InputPathType,
 })
 
 
 CiftiEstimateFwhmParameters = typing.TypedDict('CiftiEstimateFwhmParameters', {
-    "@type": typing.Literal["workbench.cifti-estimate-fwhm"],
+    "@type": typing.NotRequired[typing.Literal["workbench/cifti-estimate-fwhm"]],
+    "cifti": InputPathType,
+    "opt_merged_volume": bool,
+    "opt_column_column": typing.NotRequired[int | None],
+    "whole_file": typing.NotRequired[CiftiEstimateFwhmWholeFileParameters | None],
+    "surface": typing.NotRequired[list[CiftiEstimateFwhmSurfaceParameters] | None],
+})
+CiftiEstimateFwhmParametersTagged = typing.TypedDict('CiftiEstimateFwhmParametersTagged', {
+    "@type": typing.Literal["workbench/cifti-estimate-fwhm"],
     "cifti": InputPathType,
     "opt_merged_volume": bool,
     "opt_column_column": typing.NotRequired[int | None],
@@ -36,42 +53,9 @@ CiftiEstimateFwhmParameters = typing.TypedDict('CiftiEstimateFwhmParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "workbench.cifti-estimate-fwhm": cifti_estimate_fwhm_cargs,
-        "workbench.cifti-estimate-fwhm.whole_file": cifti_estimate_fwhm_whole_file_cargs,
-        "workbench.cifti-estimate-fwhm.surface": cifti_estimate_fwhm_surface_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-    }.get(t)
-
-
 def cifti_estimate_fwhm_whole_file_params(
     opt_demean: bool = False,
-) -> CiftiEstimateFwhmWholeFileParameters:
+) -> CiftiEstimateFwhmWholeFileParametersTagged:
     """
     Build parameters.
     
@@ -81,7 +65,7 @@ def cifti_estimate_fwhm_whole_file_params(
         Parameter dictionary
     """
     params = {
-        "@type": "workbench.cifti-estimate-fwhm.whole_file",
+        "@type": "whole_file",
         "opt_demean": opt_demean,
     }
     return params
@@ -102,7 +86,7 @@ def cifti_estimate_fwhm_whole_file_cargs(
     """
     cargs = []
     cargs.append("-whole-file")
-    if params.get("opt_demean"):
+    if params.get("opt_demean", False):
         cargs.append("-demean")
     return cargs
 
@@ -110,7 +94,7 @@ def cifti_estimate_fwhm_whole_file_cargs(
 def cifti_estimate_fwhm_surface_params(
     structure: str,
     surface: InputPathType,
-) -> CiftiEstimateFwhmSurfaceParameters:
+) -> CiftiEstimateFwhmSurfaceParametersTagged:
     """
     Build parameters.
     
@@ -121,7 +105,7 @@ def cifti_estimate_fwhm_surface_params(
         Parameter dictionary
     """
     params = {
-        "@type": "workbench.cifti-estimate-fwhm.surface",
+        "@type": "surface",
         "structure": structure,
         "surface": surface,
     }
@@ -143,14 +127,14 @@ def cifti_estimate_fwhm_surface_cargs(
     """
     cargs = []
     cargs.append("-surface")
-    cargs.append(params.get("structure"))
-    cargs.append(execution.input_file(params.get("surface")))
+    cargs.append(params.get("structure", None))
+    cargs.append(execution.input_file(params.get("surface", None)))
     return cargs
 
 
 class CiftiEstimateFwhmOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `cifti_estimate_fwhm(...)`.
+    Output object returned when calling `CiftiEstimateFwhmParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -162,7 +146,7 @@ def cifti_estimate_fwhm_params(
     opt_column_column: int | None = None,
     whole_file: CiftiEstimateFwhmWholeFileParameters | None = None,
     surface: list[CiftiEstimateFwhmSurfaceParameters] | None = None,
-) -> CiftiEstimateFwhmParameters:
+) -> CiftiEstimateFwhmParametersTagged:
     """
     Build parameters.
     
@@ -179,7 +163,7 @@ def cifti_estimate_fwhm_params(
         Parameter dictionary
     """
     params = {
-        "@type": "workbench.cifti-estimate-fwhm",
+        "@type": "workbench/cifti-estimate-fwhm",
         "cifti": cifti,
         "opt_merged_volume": opt_merged_volume,
     }
@@ -208,18 +192,18 @@ def cifti_estimate_fwhm_cargs(
     cargs = []
     cargs.append("wb_command")
     cargs.append("-cifti-estimate-fwhm")
-    cargs.append(execution.input_file(params.get("cifti")))
-    if params.get("opt_merged_volume"):
+    cargs.append(execution.input_file(params.get("cifti", None)))
+    if params.get("opt_merged_volume", False):
         cargs.append("-merged-volume")
-    if params.get("opt_column_column") is not None:
+    if params.get("opt_column_column", None) is not None:
         cargs.extend([
             "-column",
-            str(params.get("opt_column_column"))
+            str(params.get("opt_column_column", None))
         ])
-    if params.get("whole_file") is not None:
-        cargs.extend(dyn_cargs(params.get("whole_file")["@type"])(params.get("whole_file"), execution))
-    if params.get("surface") is not None:
-        cargs.extend([a for c in [dyn_cargs(s["@type"])(s, execution) for s in params.get("surface")] for a in c])
+    if params.get("whole_file", None) is not None:
+        cargs.extend(cifti_estimate_fwhm_whole_file_cargs(params.get("whole_file", None), execution))
+    if params.get("surface", None) is not None:
+        cargs.extend([a for c in [cifti_estimate_fwhm_surface_cargs(s, execution) for s in params.get("surface", None)] for a in c])
     return cargs
 
 
@@ -393,9 +377,6 @@ def cifti_estimate_fwhm(
 __all__ = [
     "CIFTI_ESTIMATE_FWHM_METADATA",
     "CiftiEstimateFwhmOutputs",
-    "CiftiEstimateFwhmParameters",
-    "CiftiEstimateFwhmSurfaceParameters",
-    "CiftiEstimateFwhmWholeFileParameters",
     "cifti_estimate_fwhm",
     "cifti_estimate_fwhm_execute",
     "cifti_estimate_fwhm_params",

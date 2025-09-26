@@ -14,48 +14,22 @@ MRI_APPLY_BIAS_METADATA = Metadata(
 
 
 MriApplyBiasParameters = typing.TypedDict('MriApplyBiasParameters', {
-    "@type": typing.Literal["freesurfer.mri_apply_bias"],
+    "@type": typing.NotRequired[typing.Literal["freesurfer/mri_apply_bias"]],
+    "input_volume": InputPathType,
+    "bias_volume": InputPathType,
+    "output_volume": str,
+})
+MriApplyBiasParametersTagged = typing.TypedDict('MriApplyBiasParametersTagged', {
+    "@type": typing.Literal["freesurfer/mri_apply_bias"],
     "input_volume": InputPathType,
     "bias_volume": InputPathType,
     "output_volume": str,
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "freesurfer.mri_apply_bias": mri_apply_bias_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "freesurfer.mri_apply_bias": mri_apply_bias_outputs,
-    }.get(t)
-
-
 class MriApplyBiasOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `mri_apply_bias(...)`.
+    Output object returned when calling `MriApplyBiasParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -67,7 +41,7 @@ def mri_apply_bias_params(
     input_volume: InputPathType,
     bias_volume: InputPathType,
     output_volume: str,
-) -> MriApplyBiasParameters:
+) -> MriApplyBiasParametersTagged:
     """
     Build parameters.
     
@@ -79,7 +53,7 @@ def mri_apply_bias_params(
         Parameter dictionary
     """
     params = {
-        "@type": "freesurfer.mri_apply_bias",
+        "@type": "freesurfer/mri_apply_bias",
         "input_volume": input_volume,
         "bias_volume": bias_volume,
         "output_volume": output_volume,
@@ -102,9 +76,9 @@ def mri_apply_bias_cargs(
     """
     cargs = []
     cargs.append("mri_apply_bias")
-    cargs.append(execution.input_file(params.get("input_volume")))
-    cargs.append(execution.input_file(params.get("bias_volume")))
-    cargs.append(params.get("output_volume"))
+    cargs.append(execution.input_file(params.get("input_volume", None)))
+    cargs.append(execution.input_file(params.get("bias_volume", None)))
+    cargs.append(params.get("output_volume", None))
     return cargs
 
 
@@ -123,7 +97,7 @@ def mri_apply_bias_outputs(
     """
     ret = MriApplyBiasOutputs(
         root=execution.output_file("."),
-        output_volume_file=execution.output_file(params.get("output_volume")),
+        output_volume_file=execution.output_file(params.get("output_volume", None)),
     )
     return ret
 
@@ -192,7 +166,6 @@ def mri_apply_bias(
 __all__ = [
     "MRI_APPLY_BIAS_METADATA",
     "MriApplyBiasOutputs",
-    "MriApplyBiasParameters",
     "mri_apply_bias",
     "mri_apply_bias_execute",
     "mri_apply_bias_params",

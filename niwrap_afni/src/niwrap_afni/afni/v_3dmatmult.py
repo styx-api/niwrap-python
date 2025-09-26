@@ -14,7 +14,15 @@ V_3DMATMULT_METADATA = Metadata(
 
 
 V3dmatmultParameters = typing.TypedDict('V3dmatmultParameters', {
-    "@type": typing.Literal["afni.3dmatmult"],
+    "@type": typing.NotRequired[typing.Literal["afni/3dmatmult"]],
+    "inputA": InputPathType,
+    "inputB": InputPathType,
+    "prefix": str,
+    "datum": typing.NotRequired[str | None],
+    "verb": typing.NotRequired[float | None],
+})
+V3dmatmultParametersTagged = typing.TypedDict('V3dmatmultParametersTagged', {
+    "@type": typing.Literal["afni/3dmatmult"],
     "inputA": InputPathType,
     "inputB": InputPathType,
     "prefix": str,
@@ -23,41 +31,9 @@ V3dmatmultParameters = typing.TypedDict('V3dmatmultParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "afni.3dmatmult": v_3dmatmult_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "afni.3dmatmult": v_3dmatmult_outputs,
-    }.get(t)
-
-
 class V3dmatmultOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `v_3dmatmult(...)`.
+    Output object returned when calling `V3dmatmultParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -71,7 +47,7 @@ def v_3dmatmult_params(
     prefix: str,
     datum: str | None = None,
     verb: float | None = None,
-) -> V3dmatmultParameters:
+) -> V3dmatmultParametersTagged:
     """
     Build parameters.
     
@@ -85,7 +61,7 @@ def v_3dmatmult_params(
         Parameter dictionary
     """
     params = {
-        "@type": "afni.3dmatmult",
+        "@type": "afni/3dmatmult",
         "inputA": input_a,
         "inputB": input_b,
         "prefix": prefix,
@@ -114,25 +90,25 @@ def v_3dmatmult_cargs(
     cargs.append("3dmatmult")
     cargs.extend([
         "-inputA",
-        execution.input_file(params.get("inputA"))
+        execution.input_file(params.get("inputA", None))
     ])
     cargs.extend([
         "-inputB",
-        execution.input_file(params.get("inputB"))
+        execution.input_file(params.get("inputB", None))
     ])
     cargs.extend([
         "-prefix",
-        params.get("prefix")
+        params.get("prefix", None)
     ])
-    if params.get("datum") is not None:
+    if params.get("datum", None) is not None:
         cargs.extend([
             "-datum",
-            params.get("datum")
+            params.get("datum", None)
         ])
-    if params.get("verb") is not None:
+    if params.get("verb", None) is not None:
         cargs.extend([
             "-verb",
-            str(params.get("verb"))
+            str(params.get("verb", None))
         ])
     return cargs
 
@@ -152,7 +128,7 @@ def v_3dmatmult_outputs(
     """
     ret = V3dmatmultOutputs(
         root=execution.output_file("."),
-        output_file=execution.output_file(params.get("prefix")),
+        output_file=execution.output_file(params.get("prefix", None)),
     )
     return ret
 
@@ -224,7 +200,6 @@ def v_3dmatmult(
 
 __all__ = [
     "V3dmatmultOutputs",
-    "V3dmatmultParameters",
     "V_3DMATMULT_METADATA",
     "v_3dmatmult",
     "v_3dmatmult_execute",

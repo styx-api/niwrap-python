@@ -14,7 +14,15 @@ MRIS_WATERSHED_METADATA = Metadata(
 
 
 MrisWatershedParameters = typing.TypedDict('MrisWatershedParameters', {
-    "@type": typing.Literal["freesurfer.mris_watershed"],
+    "@type": typing.NotRequired[typing.Literal["freesurfer/mris_watershed"]],
+    "input_surface": InputPathType,
+    "input_gradient_field": InputPathType,
+    "output_annotation": str,
+    "max_clusters": typing.NotRequired[float | None],
+    "mask_label": typing.NotRequired[str | None],
+})
+MrisWatershedParametersTagged = typing.TypedDict('MrisWatershedParametersTagged', {
+    "@type": typing.Literal["freesurfer/mris_watershed"],
     "input_surface": InputPathType,
     "input_gradient_field": InputPathType,
     "output_annotation": str,
@@ -23,41 +31,9 @@ MrisWatershedParameters = typing.TypedDict('MrisWatershedParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "freesurfer.mris_watershed": mris_watershed_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "freesurfer.mris_watershed": mris_watershed_outputs,
-    }.get(t)
-
-
 class MrisWatershedOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `mris_watershed(...)`.
+    Output object returned when calling `MrisWatershedParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -71,7 +47,7 @@ def mris_watershed_params(
     output_annotation: str,
     max_clusters: float | None = None,
     mask_label: str | None = None,
-) -> MrisWatershedParameters:
+) -> MrisWatershedParametersTagged:
     """
     Build parameters.
     
@@ -86,7 +62,7 @@ def mris_watershed_params(
         Parameter dictionary
     """
     params = {
-        "@type": "freesurfer.mris_watershed",
+        "@type": "freesurfer/mris_watershed",
         "input_surface": input_surface,
         "input_gradient_field": input_gradient_field,
         "output_annotation": output_annotation,
@@ -113,18 +89,18 @@ def mris_watershed_cargs(
     """
     cargs = []
     cargs.append("mris_watershed")
-    cargs.append(execution.input_file(params.get("input_surface")))
-    cargs.append(execution.input_file(params.get("input_gradient_field")))
-    cargs.append(params.get("output_annotation"))
-    if params.get("max_clusters") is not None:
+    cargs.append(execution.input_file(params.get("input_surface", None)))
+    cargs.append(execution.input_file(params.get("input_gradient_field", None)))
+    cargs.append(params.get("output_annotation", None))
+    if params.get("max_clusters", None) is not None:
         cargs.extend([
             "-M",
-            str(params.get("max_clusters"))
+            str(params.get("max_clusters", None))
         ])
-    if params.get("mask_label") is not None:
+    if params.get("mask_label", None) is not None:
         cargs.extend([
             "-mask_label",
-            params.get("mask_label")
+            params.get("mask_label", None)
         ])
     return cargs
 
@@ -144,7 +120,7 @@ def mris_watershed_outputs(
     """
     ret = MrisWatershedOutputs(
         root=execution.output_file("."),
-        output_annotation_file=execution.output_file(params.get("output_annotation")),
+        output_annotation_file=execution.output_file(params.get("output_annotation", None)),
     )
     return ret
 
@@ -220,7 +196,6 @@ def mris_watershed(
 __all__ = [
     "MRIS_WATERSHED_METADATA",
     "MrisWatershedOutputs",
-    "MrisWatershedParameters",
     "mris_watershed",
     "mris_watershed_execute",
     "mris_watershed_params",

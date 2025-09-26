@@ -14,7 +14,82 @@ MRI_GLMFIT_METADATA = Metadata(
 
 
 MriGlmfitParameters = typing.TypedDict('MriGlmfitParameters', {
-    "@type": typing.Literal["freesurfer.mri_glmfit"],
+    "@type": typing.NotRequired[typing.Literal["freesurfer/mri_glmfit"]],
+    "glmdir": typing.NotRequired[str | None],
+    "y_input": InputPathType,
+    "table_input": typing.NotRequired[InputPathType | None],
+    "fsgd": typing.NotRequired[InputPathType | None],
+    "design_matrix": typing.NotRequired[InputPathType | None],
+    "contrast_matrix": typing.NotRequired[list[InputPathType] | None],
+    "osgm_flag": bool,
+    "no_contrasts_ok_flag": bool,
+    "dti_params": typing.NotRequired[list[str] | None],
+    "dti_matrix": typing.NotRequired[InputPathType | None],
+    "pvr": typing.NotRequired[list[InputPathType] | None],
+    "selfreg": typing.NotRequired[list[float] | None],
+    "wls": typing.NotRequired[str | None],
+    "yffxvar": typing.NotRequired[InputPathType | None],
+    "ffxdof": typing.NotRequired[float | None],
+    "ffxdofdat": typing.NotRequired[InputPathType | None],
+    "weight": typing.NotRequired[InputPathType | None],
+    "weight_inv_flag": bool,
+    "weight_sqrt_flag": bool,
+    "fwhm": typing.NotRequired[float | None],
+    "var_fwhm": typing.NotRequired[float | None],
+    "no_mask_smooth_flag": bool,
+    "no_est_fwhm_flag": bool,
+    "mask": typing.NotRequired[InputPathType | None],
+    "label": typing.NotRequired[InputPathType | None],
+    "no_mask_flag": bool,
+    "no_cortex_flag": bool,
+    "mask_inv_flag": bool,
+    "prune_flag": bool,
+    "no_prune_flag": bool,
+    "logy_flag": bool,
+    "no_logy_flag": bool,
+    "rm_spatial_mean_flag": bool,
+    "yhat_save_flag": bool,
+    "eres_save_flag": bool,
+    "eres_scm_flag": bool,
+    "save_fwhm_map_flag": bool,
+    "y_out": typing.NotRequired[InputPathType | None],
+    "surface": typing.NotRequired[str | None],
+    "skew_flag": bool,
+    "kurtosis_flag": bool,
+    "sim_params": typing.NotRequired[list[str] | None],
+    "sim_sign": typing.NotRequired[str | None],
+    "uniform_params": typing.NotRequired[list[str] | None],
+    "permute_input_flag": bool,
+    "pca_flag": bool,
+    "tar1_flag": bool,
+    "save_yhat_flag": bool,
+    "save_cond_flag": bool,
+    "voxdump": typing.NotRequired[list[float] | None],
+    "seed": typing.NotRequired[float | None],
+    "synth_flag": bool,
+    "resynthtest_it": typing.NotRequired[float | None],
+    "profile_it": typing.NotRequired[float | None],
+    "mrtm1_params": typing.NotRequired[list[str] | None],
+    "mrtm2_params": typing.NotRequired[list[str] | None],
+    "logan_params": typing.NotRequired[list[str] | None],
+    "bp_clip_neg_flag": bool,
+    "bp_clip_max": typing.NotRequired[float | None],
+    "perm_force_flag": bool,
+    "diag_level": typing.NotRequired[float | None],
+    "diag_cluster_flag": bool,
+    "debug_flag": bool,
+    "checkopts_flag": bool,
+    "help_flag": bool,
+    "version_flag": bool,
+    "no_fix_vertex_area_flag": bool,
+    "allowsubjrep_flag": bool,
+    "allow_zero_dof_flag": bool,
+    "illcond_flag": bool,
+    "sim_done_file": typing.NotRequired[InputPathType | None],
+    "no_sig_double_flag": bool,
+})
+MriGlmfitParametersTagged = typing.TypedDict('MriGlmfitParametersTagged', {
+    "@type": typing.Literal["freesurfer/mri_glmfit"],
     "glmdir": typing.NotRequired[str | None],
     "y_input": InputPathType,
     "table_input": typing.NotRequired[InputPathType | None],
@@ -90,41 +165,9 @@ MriGlmfitParameters = typing.TypedDict('MriGlmfitParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "freesurfer.mri_glmfit": mri_glmfit_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "freesurfer.mri_glmfit": mri_glmfit_outputs,
-    }.get(t)
-
-
 class MriGlmfitOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `mri_glmfit(...)`.
+    Output object returned when calling `MriGlmfitParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -223,7 +266,7 @@ def mri_glmfit_params(
     illcond_flag: bool = False,
     sim_done_file: InputPathType | None = None,
     no_sig_double_flag: bool = False,
-) -> MriGlmfitParameters:
+) -> MriGlmfitParametersTagged:
     """
     Build parameters.
     
@@ -327,7 +370,7 @@ def mri_glmfit_params(
         Parameter dictionary
     """
     params = {
-        "@type": "freesurfer.mri_glmfit",
+        "@type": "freesurfer/mri_glmfit",
         "y_input": y_input,
         "osgm_flag": osgm_flag,
         "no_contrasts_ok_flag": no_contrasts_ok_flag,
@@ -452,250 +495,250 @@ def mri_glmfit_cargs(
     """
     cargs = []
     cargs.append("mri_glmfit")
-    if params.get("glmdir") is not None:
+    if params.get("glmdir", None) is not None:
         cargs.extend([
             "--glmdir",
-            params.get("glmdir")
+            params.get("glmdir", None)
         ])
     cargs.extend([
         "--y",
-        execution.input_file(params.get("y_input"))
+        execution.input_file(params.get("y_input", None))
     ])
-    if params.get("table_input") is not None:
+    if params.get("table_input", None) is not None:
         cargs.extend([
             "--table",
-            execution.input_file(params.get("table_input"))
+            execution.input_file(params.get("table_input", None))
         ])
-    if params.get("fsgd") is not None:
+    if params.get("fsgd", None) is not None:
         cargs.extend([
             "--fsgd",
-            execution.input_file(params.get("fsgd"))
+            execution.input_file(params.get("fsgd", None))
         ])
-    if params.get("design_matrix") is not None:
+    if params.get("design_matrix", None) is not None:
         cargs.extend([
             "--X",
-            execution.input_file(params.get("design_matrix"))
+            execution.input_file(params.get("design_matrix", None))
         ])
-    if params.get("contrast_matrix") is not None:
+    if params.get("contrast_matrix", None) is not None:
         cargs.extend([
             "--C",
-            *[execution.input_file(f) for f in params.get("contrast_matrix")]
+            *[execution.input_file(f) for f in params.get("contrast_matrix", None)]
         ])
-    if params.get("osgm_flag"):
+    if params.get("osgm_flag", False):
         cargs.append("--osgm")
-    if params.get("no_contrasts_ok_flag"):
+    if params.get("no_contrasts_ok_flag", False):
         cargs.append("--no-contrasts-ok")
-    if params.get("dti_params") is not None:
+    if params.get("dti_params", None) is not None:
         cargs.extend([
             "--dti",
-            *params.get("dti_params")
+            *params.get("dti_params", None)
         ])
-    if params.get("dti_matrix") is not None:
+    if params.get("dti_matrix", None) is not None:
         cargs.extend([
             "--dti-X",
-            execution.input_file(params.get("dti_matrix"))
+            execution.input_file(params.get("dti_matrix", None))
         ])
-    if params.get("pvr") is not None:
+    if params.get("pvr", None) is not None:
         cargs.extend([
             "--pvr",
-            *[execution.input_file(f) for f in params.get("pvr")]
+            *[execution.input_file(f) for f in params.get("pvr", None)]
         ])
-    if params.get("selfreg") is not None:
+    if params.get("selfreg", None) is not None:
         cargs.extend([
             "--selfreg",
-            *map(str, params.get("selfreg"))
+            *map(str, params.get("selfreg", None))
         ])
-    if params.get("wls") is not None:
+    if params.get("wls", None) is not None:
         cargs.extend([
             "--wls",
-            params.get("wls")
+            params.get("wls", None)
         ])
-    if params.get("yffxvar") is not None:
+    if params.get("yffxvar", None) is not None:
         cargs.extend([
             "--yffxvar",
-            execution.input_file(params.get("yffxvar"))
+            execution.input_file(params.get("yffxvar", None))
         ])
-    if params.get("ffxdof") is not None:
+    if params.get("ffxdof", None) is not None:
         cargs.extend([
             "--ffxdof",
-            str(params.get("ffxdof"))
+            str(params.get("ffxdof", None))
         ])
-    if params.get("ffxdofdat") is not None:
+    if params.get("ffxdofdat", None) is not None:
         cargs.extend([
             "--ffxdofdat",
-            execution.input_file(params.get("ffxdofdat"))
+            execution.input_file(params.get("ffxdofdat", None))
         ])
-    if params.get("weight") is not None:
+    if params.get("weight", None) is not None:
         cargs.extend([
             "--w",
-            execution.input_file(params.get("weight"))
+            execution.input_file(params.get("weight", None))
         ])
-    if params.get("weight_inv_flag"):
+    if params.get("weight_inv_flag", False):
         cargs.append("--w-inv")
-    if params.get("weight_sqrt_flag"):
+    if params.get("weight_sqrt_flag", False):
         cargs.append("--w-sqrt")
-    if params.get("fwhm") is not None:
+    if params.get("fwhm", None) is not None:
         cargs.extend([
             "--fwhm",
-            str(params.get("fwhm"))
+            str(params.get("fwhm", None))
         ])
-    if params.get("var_fwhm") is not None:
+    if params.get("var_fwhm", None) is not None:
         cargs.extend([
             "--var-fwhm",
-            str(params.get("var_fwhm"))
+            str(params.get("var_fwhm", None))
         ])
-    if params.get("no_mask_smooth_flag"):
+    if params.get("no_mask_smooth_flag", False):
         cargs.append("--no-mask-smooth")
-    if params.get("no_est_fwhm_flag"):
+    if params.get("no_est_fwhm_flag", False):
         cargs.append("--no-est-fwhm")
-    if params.get("mask") is not None:
+    if params.get("mask", None) is not None:
         cargs.extend([
             "--mask",
-            execution.input_file(params.get("mask"))
+            execution.input_file(params.get("mask", None))
         ])
-    if params.get("label") is not None:
+    if params.get("label", None) is not None:
         cargs.extend([
             "--label",
-            execution.input_file(params.get("label"))
+            execution.input_file(params.get("label", None))
         ])
-    if params.get("no_mask_flag"):
+    if params.get("no_mask_flag", False):
         cargs.append("--no-mask")
-    if params.get("no_cortex_flag"):
+    if params.get("no_cortex_flag", False):
         cargs.append("--no-cortex")
-    if params.get("mask_inv_flag"):
+    if params.get("mask_inv_flag", False):
         cargs.append("--mask-inv")
-    if params.get("prune_flag"):
+    if params.get("prune_flag", False):
         cargs.append("--prune")
-    if params.get("no_prune_flag"):
+    if params.get("no_prune_flag", False):
         cargs.append("--no-prune")
-    if params.get("logy_flag"):
+    if params.get("logy_flag", False):
         cargs.append("--logy")
-    if params.get("no_logy_flag"):
+    if params.get("no_logy_flag", False):
         cargs.append("--no-logy")
-    if params.get("rm_spatial_mean_flag"):
+    if params.get("rm_spatial_mean_flag", False):
         cargs.append("--rm-spatial-mean")
-    if params.get("yhat_save_flag"):
+    if params.get("yhat_save_flag", False):
         cargs.append("--yhat-save")
-    if params.get("eres_save_flag"):
+    if params.get("eres_save_flag", False):
         cargs.append("--eres-save")
-    if params.get("eres_scm_flag"):
+    if params.get("eres_scm_flag", False):
         cargs.append("--eres-scm")
-    if params.get("save_fwhm_map_flag"):
+    if params.get("save_fwhm_map_flag", False):
         cargs.append("--save-fwhm-map")
-    if params.get("y_out") is not None:
+    if params.get("y_out", None) is not None:
         cargs.extend([
             "--y-out",
-            execution.input_file(params.get("y_out"))
+            execution.input_file(params.get("y_out", None))
         ])
-    if params.get("surface") is not None:
+    if params.get("surface", None) is not None:
         cargs.extend([
             "--surf",
-            params.get("surface")
+            params.get("surface", None)
         ])
-    if params.get("skew_flag"):
+    if params.get("skew_flag", False):
         cargs.append("--skew")
-    if params.get("kurtosis_flag"):
+    if params.get("kurtosis_flag", False):
         cargs.append("--kurtosis")
-    if params.get("sim_params") is not None:
+    if params.get("sim_params", None) is not None:
         cargs.extend([
             "--sim",
-            *params.get("sim_params")
+            *params.get("sim_params", None)
         ])
-    if params.get("sim_sign") is not None:
+    if params.get("sim_sign", None) is not None:
         cargs.extend([
             "--sim-sign",
-            params.get("sim_sign")
+            params.get("sim_sign", None)
         ])
-    if params.get("uniform_params") is not None:
+    if params.get("uniform_params", None) is not None:
         cargs.extend([
             "--uniform",
-            *params.get("uniform_params")
+            *params.get("uniform_params", None)
         ])
-    if params.get("permute_input_flag"):
+    if params.get("permute_input_flag", False):
         cargs.append("--permute-input")
-    if params.get("pca_flag"):
+    if params.get("pca_flag", False):
         cargs.append("--pca")
-    if params.get("tar1_flag"):
+    if params.get("tar1_flag", False):
         cargs.append("--tar1")
-    if params.get("save_yhat_flag"):
+    if params.get("save_yhat_flag", False):
         cargs.append("--save-yhat")
-    if params.get("save_cond_flag"):
+    if params.get("save_cond_flag", False):
         cargs.append("--save-cond")
-    if params.get("voxdump") is not None:
+    if params.get("voxdump", None) is not None:
         cargs.extend([
             "--voxdump",
-            *map(str, params.get("voxdump"))
+            *map(str, params.get("voxdump", None))
         ])
-    if params.get("seed") is not None:
+    if params.get("seed", None) is not None:
         cargs.extend([
             "--seed",
-            str(params.get("seed"))
+            str(params.get("seed", None))
         ])
-    if params.get("synth_flag"):
+    if params.get("synth_flag", False):
         cargs.append("--synth")
-    if params.get("resynthtest_it") is not None:
+    if params.get("resynthtest_it", None) is not None:
         cargs.extend([
             "--resynthtest",
-            str(params.get("resynthtest_it"))
+            str(params.get("resynthtest_it", None))
         ])
-    if params.get("profile_it") is not None:
+    if params.get("profile_it", None) is not None:
         cargs.extend([
             "--profile",
-            str(params.get("profile_it"))
+            str(params.get("profile_it", None))
         ])
-    if params.get("mrtm1_params") is not None:
+    if params.get("mrtm1_params", None) is not None:
         cargs.extend([
             "--mrtm1",
-            *params.get("mrtm1_params")
+            *params.get("mrtm1_params", None)
         ])
-    if params.get("mrtm2_params") is not None:
+    if params.get("mrtm2_params", None) is not None:
         cargs.extend([
             "--mrtm2",
-            *params.get("mrtm2_params")
+            *params.get("mrtm2_params", None)
         ])
-    if params.get("logan_params") is not None:
+    if params.get("logan_params", None) is not None:
         cargs.extend([
             "--logan",
-            *params.get("logan_params")
+            *params.get("logan_params", None)
         ])
-    if params.get("bp_clip_neg_flag"):
+    if params.get("bp_clip_neg_flag", False):
         cargs.append("--bp-clip-neg")
-    if params.get("bp_clip_max") is not None:
+    if params.get("bp_clip_max", None) is not None:
         cargs.extend([
             "--bp-clip-max",
-            str(params.get("bp_clip_max"))
+            str(params.get("bp_clip_max", None))
         ])
-    if params.get("perm_force_flag"):
+    if params.get("perm_force_flag", False):
         cargs.append("--perm-force")
-    if params.get("diag_level") is not None:
+    if params.get("diag_level", None) is not None:
         cargs.extend([
             "--diag",
-            str(params.get("diag_level"))
+            str(params.get("diag_level", None))
         ])
-    if params.get("diag_cluster_flag"):
+    if params.get("diag_cluster_flag", False):
         cargs.append("--diag-cluster")
-    if params.get("debug_flag"):
+    if params.get("debug_flag", False):
         cargs.append("--debug")
-    if params.get("checkopts_flag"):
+    if params.get("checkopts_flag", False):
         cargs.append("--checkopts")
-    if params.get("help_flag"):
+    if params.get("help_flag", False):
         cargs.append("--help")
-    if params.get("version_flag"):
+    if params.get("version_flag", False):
         cargs.append("--version")
-    if params.get("no_fix_vertex_area_flag"):
+    if params.get("no_fix_vertex_area_flag", False):
         cargs.append("--no-fix-vertex-area")
-    if params.get("allowsubjrep_flag"):
+    if params.get("allowsubjrep_flag", False):
         cargs.append("--allowsubjrep")
-    if params.get("allow_zero_dof_flag"):
+    if params.get("allow_zero_dof_flag", False):
         cargs.append("--allow-zero-dof")
-    if params.get("illcond_flag"):
+    if params.get("illcond_flag", False):
         cargs.append("--illcond")
-    if params.get("sim_done_file") is not None:
+    if params.get("sim_done_file", None) is not None:
         cargs.extend([
             "--sim-done",
-            execution.input_file(params.get("sim_done_file"))
+            execution.input_file(params.get("sim_done_file", None))
         ])
-    if params.get("no_sig_double_flag"):
+    if params.get("no_sig_double_flag", False):
         cargs.append("--no-sig-double")
     return cargs
 
@@ -1021,7 +1064,6 @@ def mri_glmfit(
 __all__ = [
     "MRI_GLMFIT_METADATA",
     "MriGlmfitOutputs",
-    "MriGlmfitParameters",
     "mri_glmfit",
     "mri_glmfit_execute",
     "mri_glmfit_params",

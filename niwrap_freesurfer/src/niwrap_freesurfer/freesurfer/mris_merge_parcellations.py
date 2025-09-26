@@ -14,7 +14,14 @@ MRIS_MERGE_PARCELLATIONS_METADATA = Metadata(
 
 
 MrisMergeParcellationsParameters = typing.TypedDict('MrisMergeParcellationsParameters', {
-    "@type": typing.Literal["freesurfer.mris_merge_parcellations"],
+    "@type": typing.NotRequired[typing.Literal["freesurfer/mris_merge_parcellations"]],
+    "surface": InputPathType,
+    "label1": InputPathType,
+    "label2": InputPathType,
+    "annot_name": typing.NotRequired[str | None],
+})
+MrisMergeParcellationsParametersTagged = typing.TypedDict('MrisMergeParcellationsParametersTagged', {
+    "@type": typing.Literal["freesurfer/mris_merge_parcellations"],
     "surface": InputPathType,
     "label1": InputPathType,
     "label2": InputPathType,
@@ -22,40 +29,9 @@ MrisMergeParcellationsParameters = typing.TypedDict('MrisMergeParcellationsParam
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "freesurfer.mris_merge_parcellations": mris_merge_parcellations_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-    }.get(t)
-
-
 class MrisMergeParcellationsOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `mris_merge_parcellations(...)`.
+    Output object returned when calling `MrisMergeParcellationsParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -66,7 +42,7 @@ def mris_merge_parcellations_params(
     label1: InputPathType,
     label2: InputPathType,
     annot_name: str | None = None,
-) -> MrisMergeParcellationsParameters:
+) -> MrisMergeParcellationsParametersTagged:
     """
     Build parameters.
     
@@ -79,7 +55,7 @@ def mris_merge_parcellations_params(
         Parameter dictionary
     """
     params = {
-        "@type": "freesurfer.mris_merge_parcellations",
+        "@type": "freesurfer/mris_merge_parcellations",
         "surface": surface,
         "label1": label1,
         "label2": label2,
@@ -104,13 +80,13 @@ def mris_merge_parcellations_cargs(
     """
     cargs = []
     cargs.append("mris_merge_parcellations")
-    cargs.append(execution.input_file(params.get("surface")))
-    cargs.append(execution.input_file(params.get("label1")))
-    cargs.append(execution.input_file(params.get("label2")))
-    if params.get("annot_name") is not None:
+    cargs.append(execution.input_file(params.get("surface", None)))
+    cargs.append(execution.input_file(params.get("label1", None)))
+    cargs.append(execution.input_file(params.get("label2", None)))
+    if params.get("annot_name", None) is not None:
         cargs.extend([
             "-a",
-            params.get("annot_name")
+            params.get("annot_name", None)
         ])
     return cargs
 
@@ -201,7 +177,6 @@ def mris_merge_parcellations(
 __all__ = [
     "MRIS_MERGE_PARCELLATIONS_METADATA",
     "MrisMergeParcellationsOutputs",
-    "MrisMergeParcellationsParameters",
     "mris_merge_parcellations",
     "mris_merge_parcellations_execute",
     "mris_merge_parcellations_params",

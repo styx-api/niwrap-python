@@ -14,47 +14,22 @@ FSLVBM_1_BET_METADATA = Metadata(
 
 
 Fslvbm1BetParameters = typing.TypedDict('Fslvbm1BetParameters', {
-    "@type": typing.Literal["fsl.fslvbm_1_bet"],
+    "@type": typing.NotRequired[typing.Literal["fsl/fslvbm_1_bet"]],
+    "default_bet": bool,
+    "increased_robustness": bool,
+    "bet_parameters": typing.NotRequired[str | None],
+})
+Fslvbm1BetParametersTagged = typing.TypedDict('Fslvbm1BetParametersTagged', {
+    "@type": typing.Literal["fsl/fslvbm_1_bet"],
     "default_bet": bool,
     "increased_robustness": bool,
     "bet_parameters": typing.NotRequired[str | None],
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "fsl.fslvbm_1_bet": fslvbm_1_bet_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-    }.get(t)
-
-
 class Fslvbm1BetOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `fslvbm_1_bet(...)`.
+    Output object returned when calling `Fslvbm1BetParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -64,7 +39,7 @@ def fslvbm_1_bet_params(
     default_bet: bool = False,
     increased_robustness: bool = False,
     bet_parameters: str | None = None,
-) -> Fslvbm1BetParameters:
+) -> Fslvbm1BetParametersTagged:
     """
     Build parameters.
     
@@ -77,7 +52,7 @@ def fslvbm_1_bet_params(
         Parameter dictionary
     """
     params = {
-        "@type": "fsl.fslvbm_1_bet",
+        "@type": "fsl/fslvbm_1_bet",
         "default_bet": default_bet,
         "increased_robustness": increased_robustness,
     }
@@ -101,12 +76,12 @@ def fslvbm_1_bet_cargs(
     """
     cargs = []
     cargs.append("fslvbm_1_bet")
-    if params.get("default_bet"):
+    if params.get("default_bet", False):
         cargs.append("-b")
-    if params.get("increased_robustness"):
+    if params.get("increased_robustness", False):
         cargs.append("-N")
-    if params.get("bet_parameters") is not None:
-        cargs.append(params.get("bet_parameters"))
+    if params.get("bet_parameters", None) is not None:
+        cargs.append(params.get("bet_parameters", None))
     return cargs
 
 
@@ -192,7 +167,6 @@ def fslvbm_1_bet(
 __all__ = [
     "FSLVBM_1_BET_METADATA",
     "Fslvbm1BetOutputs",
-    "Fslvbm1BetParameters",
     "fslvbm_1_bet",
     "fslvbm_1_bet_execute",
     "fslvbm_1_bet_params",

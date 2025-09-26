@@ -14,7 +14,38 @@ MRIS_REGISTER_TO_VOLUME_METADATA = Metadata(
 
 
 MrisRegisterToVolumeParameters = typing.TypedDict('MrisRegisterToVolumeParameters', {
-    "@type": typing.Literal["freesurfer.mris_register_to_volume"],
+    "@type": typing.NotRequired[typing.Literal["freesurfer/mris_register_to_volume"]],
+    "surface": str,
+    "pial": str,
+    "pial_only": typing.NotRequired[str | None],
+    "reg": str,
+    "noglobal": bool,
+    "median": bool,
+    "mri_reg": str,
+    "tx_mmd": typing.NotRequired[list[float] | None],
+    "ty_mmd": typing.NotRequired[list[float] | None],
+    "tz_mmd": typing.NotRequired[list[float] | None],
+    "ax_mmd": typing.NotRequired[list[float] | None],
+    "ay_mmd": typing.NotRequired[list[float] | None],
+    "az_mmd": typing.NotRequired[list[float] | None],
+    "cost": typing.NotRequired[str | None],
+    "interp": typing.NotRequired[str | None],
+    "noise": typing.NotRequired[float | None],
+    "seed": typing.NotRequired[float | None],
+    "skip": typing.NotRequired[list[float] | None],
+    "sigma": typing.NotRequired[list[float] | None],
+    "cnr": bool,
+    "max_rot": typing.NotRequired[float | None],
+    "max_trans": typing.NotRequired[float | None],
+    "border": typing.NotRequired[float | None],
+    "subject": typing.NotRequired[str | None],
+    "dilate": typing.NotRequired[float | None],
+    "patch": typing.NotRequired[str | None],
+    "label": typing.NotRequired[str | None],
+    "out_reg": typing.NotRequired[str | None],
+})
+MrisRegisterToVolumeParametersTagged = typing.TypedDict('MrisRegisterToVolumeParametersTagged', {
+    "@type": typing.Literal["freesurfer/mris_register_to_volume"],
     "surface": str,
     "pial": str,
     "pial_only": typing.NotRequired[str | None],
@@ -46,40 +77,9 @@ MrisRegisterToVolumeParameters = typing.TypedDict('MrisRegisterToVolumeParameter
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "freesurfer.mris_register_to_volume": mris_register_to_volume_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-    }.get(t)
-
-
 class MrisRegisterToVolumeOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `mris_register_to_volume(...)`.
+    Output object returned when calling `MrisRegisterToVolumeParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -114,7 +114,7 @@ def mris_register_to_volume_params(
     patch: str | None = None,
     label: str | None = None,
     out_reg: str | None = None,
-) -> MrisRegisterToVolumeParameters:
+) -> MrisRegisterToVolumeParametersTagged:
     """
     Build parameters.
     
@@ -151,7 +151,7 @@ def mris_register_to_volume_params(
         Parameter dictionary
     """
     params = {
-        "@type": "freesurfer.mris_register_to_volume",
+        "@type": "freesurfer/mris_register_to_volume",
         "surface": surface,
         "pial": pial,
         "reg": reg,
@@ -222,130 +222,130 @@ def mris_register_to_volume_cargs(
     cargs.append("mris_register_to_volume")
     cargs.extend([
         "--surf",
-        params.get("surface")
+        params.get("surface", None)
     ])
     cargs.extend([
         "--pial",
-        params.get("pial")
+        params.get("pial", None)
     ])
-    if params.get("pial_only") is not None:
+    if params.get("pial_only", None) is not None:
         cargs.extend([
             "--pial_only",
-            params.get("pial_only")
+            params.get("pial_only", None)
         ])
     cargs.extend([
         "--reg",
-        params.get("reg")
+        params.get("reg", None)
     ])
-    if params.get("noglobal"):
+    if params.get("noglobal", False):
         cargs.append("--noglobal")
-    if params.get("median"):
+    if params.get("median", False):
         cargs.append("--median")
     cargs.extend([
         "--mri_reg",
-        params.get("mri_reg")
+        params.get("mri_reg", None)
     ])
-    if params.get("tx_mmd") is not None:
+    if params.get("tx_mmd", None) is not None:
         cargs.extend([
             "--tx-mmd",
-            *map(str, params.get("tx_mmd"))
+            *map(str, params.get("tx_mmd", None))
         ])
-    if params.get("ty_mmd") is not None:
+    if params.get("ty_mmd", None) is not None:
         cargs.extend([
             "--ty-mmd",
-            *map(str, params.get("ty_mmd"))
+            *map(str, params.get("ty_mmd", None))
         ])
-    if params.get("tz_mmd") is not None:
+    if params.get("tz_mmd", None) is not None:
         cargs.extend([
             "--tz-mmd",
-            *map(str, params.get("tz_mmd"))
+            *map(str, params.get("tz_mmd", None))
         ])
-    if params.get("ax_mmd") is not None:
+    if params.get("ax_mmd", None) is not None:
         cargs.extend([
             "--ax-mmd",
-            *map(str, params.get("ax_mmd"))
+            *map(str, params.get("ax_mmd", None))
         ])
-    if params.get("ay_mmd") is not None:
+    if params.get("ay_mmd", None) is not None:
         cargs.extend([
             "--ay-mmd",
-            *map(str, params.get("ay_mmd"))
+            *map(str, params.get("ay_mmd", None))
         ])
-    if params.get("az_mmd") is not None:
+    if params.get("az_mmd", None) is not None:
         cargs.extend([
             "--az-mmd",
-            *map(str, params.get("az_mmd"))
+            *map(str, params.get("az_mmd", None))
         ])
-    if params.get("cost") is not None:
+    if params.get("cost", None) is not None:
         cargs.extend([
             "--cost",
-            params.get("cost")
+            params.get("cost", None)
         ])
-    if params.get("interp") is not None:
+    if params.get("interp", None) is not None:
         cargs.extend([
             "--interp",
-            params.get("interp")
+            params.get("interp", None)
         ])
-    if params.get("noise") is not None:
+    if params.get("noise", None) is not None:
         cargs.extend([
             "--noise",
-            str(params.get("noise"))
+            str(params.get("noise", None))
         ])
-    if params.get("seed") is not None:
+    if params.get("seed", None) is not None:
         cargs.extend([
             "--seed",
-            str(params.get("seed"))
+            str(params.get("seed", None))
         ])
-    if params.get("skip") is not None:
+    if params.get("skip", None) is not None:
         cargs.extend([
             "--skip",
-            *map(str, params.get("skip"))
+            *map(str, params.get("skip", None))
         ])
-    if params.get("sigma") is not None:
+    if params.get("sigma", None) is not None:
         cargs.extend([
             "--sigma",
-            *map(str, params.get("sigma"))
+            *map(str, params.get("sigma", None))
         ])
-    if params.get("cnr"):
+    if params.get("cnr", False):
         cargs.append("--CNR")
-    if params.get("max_rot") is not None:
+    if params.get("max_rot", None) is not None:
         cargs.extend([
             "--max_rot",
-            str(params.get("max_rot"))
+            str(params.get("max_rot", None))
         ])
-    if params.get("max_trans") is not None:
+    if params.get("max_trans", None) is not None:
         cargs.extend([
             "--max_trans",
-            str(params.get("max_trans"))
+            str(params.get("max_trans", None))
         ])
-    if params.get("border") is not None:
+    if params.get("border", None) is not None:
         cargs.extend([
             "--border",
-            str(params.get("border"))
+            str(params.get("border", None))
         ])
-    if params.get("subject") is not None:
+    if params.get("subject", None) is not None:
         cargs.extend([
             "--s",
-            params.get("subject")
+            params.get("subject", None)
         ])
-    if params.get("dilate") is not None:
+    if params.get("dilate", None) is not None:
         cargs.extend([
             "--dilate",
-            str(params.get("dilate"))
+            str(params.get("dilate", None))
         ])
-    if params.get("patch") is not None:
+    if params.get("patch", None) is not None:
         cargs.extend([
             "--patch",
-            params.get("patch")
+            params.get("patch", None)
         ])
-    if params.get("label") is not None:
+    if params.get("label", None) is not None:
         cargs.extend([
             "--label",
-            params.get("label")
+            params.get("label", None)
         ])
-    if params.get("out_reg") is not None:
+    if params.get("out_reg", None) is not None:
         cargs.extend([
             "--out-reg",
-            params.get("out_reg")
+            params.get("out_reg", None)
         ])
     return cargs
 
@@ -506,7 +506,6 @@ def mris_register_to_volume(
 __all__ = [
     "MRIS_REGISTER_TO_VOLUME_METADATA",
     "MrisRegisterToVolumeOutputs",
-    "MrisRegisterToVolumeParameters",
     "mris_register_to_volume",
     "mris_register_to_volume_execute",
     "mris_register_to_volume_params",

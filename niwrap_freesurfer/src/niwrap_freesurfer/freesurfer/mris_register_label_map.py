@@ -14,7 +14,21 @@ MRIS_REGISTER_LABEL_MAP_METADATA = Metadata(
 
 
 MrisRegisterLabelMapParameters = typing.TypedDict('MrisRegisterLabelMapParameters', {
-    "@type": typing.Literal["freesurfer.mris_register_label_map"],
+    "@type": typing.NotRequired[typing.Literal["freesurfer/mris_register_label_map"]],
+    "subjects_list": str,
+    "target_subject": str,
+    "prior": str,
+    "label": str,
+    "template_volume": InputPathType,
+    "debug": bool,
+    "check_opts": bool,
+    "help": bool,
+    "subjects_dir": typing.NotRequired[str | None],
+    "version": bool,
+    "vno": typing.NotRequired[float | None],
+})
+MrisRegisterLabelMapParametersTagged = typing.TypedDict('MrisRegisterLabelMapParametersTagged', {
+    "@type": typing.Literal["freesurfer/mris_register_label_map"],
     "subjects_list": str,
     "target_subject": str,
     "prior": str,
@@ -29,40 +43,9 @@ MrisRegisterLabelMapParameters = typing.TypedDict('MrisRegisterLabelMapParameter
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "freesurfer.mris_register_label_map": mris_register_label_map_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-    }.get(t)
-
-
 class MrisRegisterLabelMapOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `mris_register_label_map(...)`.
+    Output object returned when calling `MrisRegisterLabelMapParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -80,7 +63,7 @@ def mris_register_label_map_params(
     subjects_dir: str | None = None,
     version: bool = False,
     vno: float | None = None,
-) -> MrisRegisterLabelMapParameters:
+) -> MrisRegisterLabelMapParametersTagged:
     """
     Build parameters.
     
@@ -100,7 +83,7 @@ def mris_register_label_map_params(
         Parameter dictionary
     """
     params = {
-        "@type": "freesurfer.mris_register_label_map",
+        "@type": "freesurfer/mris_register_label_map",
         "subjects_list": subjects_list,
         "target_subject": target_subject,
         "prior": prior,
@@ -135,41 +118,41 @@ def mris_register_label_map_cargs(
     cargs.append("mris_register_label_map")
     cargs.extend([
         "--subjects",
-        params.get("subjects_list")
+        params.get("subjects_list", None)
     ])
     cargs.extend([
         "--trgsubject",
-        params.get("target_subject")
+        params.get("target_subject", None)
     ])
     cargs.extend([
         "--prior",
-        params.get("prior")
+        params.get("prior", None)
     ])
     cargs.extend([
         "--label",
-        params.get("label")
+        params.get("label", None)
     ])
     cargs.extend([
         "--temp-vol",
-        execution.input_file(params.get("template_volume"))
+        execution.input_file(params.get("template_volume", None))
     ])
-    if params.get("debug"):
+    if params.get("debug", False):
         cargs.append("--debug")
-    if params.get("check_opts"):
+    if params.get("check_opts", False):
         cargs.append("--checkopts")
-    if params.get("help"):
+    if params.get("help", False):
         cargs.append("--help")
-    if params.get("subjects_dir") is not None:
+    if params.get("subjects_dir", None) is not None:
         cargs.extend([
             "--sdir",
-            params.get("subjects_dir")
+            params.get("subjects_dir", None)
         ])
-    if params.get("version"):
+    if params.get("version", False):
         cargs.append("--version")
-    if params.get("vno") is not None:
+    if params.get("vno", None) is not None:
         cargs.extend([
             "--v",
-            str(params.get("vno"))
+            str(params.get("vno", None))
         ])
     return cargs
 
@@ -279,7 +262,6 @@ def mris_register_label_map(
 __all__ = [
     "MRIS_REGISTER_LABEL_MAP_METADATA",
     "MrisRegisterLabelMapOutputs",
-    "MrisRegisterLabelMapParameters",
     "mris_register_label_map",
     "mris_register_label_map_execute",
     "mris_register_label_map_params",

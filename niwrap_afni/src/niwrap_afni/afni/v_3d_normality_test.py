@@ -14,7 +14,14 @@ V_3D_NORMALITY_TEST_METADATA = Metadata(
 
 
 V3dNormalityTestParameters = typing.TypedDict('V3dNormalityTestParameters', {
-    "@type": typing.Literal["afni.3dNormalityTest"],
+    "@type": typing.NotRequired[typing.Literal["afni/3dNormalityTest"]],
+    "input": InputPathType,
+    "prefix": str,
+    "noexp": bool,
+    "pval": bool,
+})
+V3dNormalityTestParametersTagged = typing.TypedDict('V3dNormalityTestParametersTagged', {
+    "@type": typing.Literal["afni/3dNormalityTest"],
     "input": InputPathType,
     "prefix": str,
     "noexp": bool,
@@ -22,41 +29,9 @@ V3dNormalityTestParameters = typing.TypedDict('V3dNormalityTestParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "afni.3dNormalityTest": v_3d_normality_test_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "afni.3dNormalityTest": v_3d_normality_test_outputs,
-    }.get(t)
-
-
 class V3dNormalityTestOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `v_3d_normality_test(...)`.
+    Output object returned when calling `V3dNormalityTestParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -69,7 +44,7 @@ def v_3d_normality_test_params(
     prefix: str,
     noexp: bool = False,
     pval: bool = False,
-) -> V3dNormalityTestParameters:
+) -> V3dNormalityTestParametersTagged:
     """
     Build parameters.
     
@@ -83,7 +58,7 @@ def v_3d_normality_test_params(
         Parameter dictionary
     """
     params = {
-        "@type": "afni.3dNormalityTest",
+        "@type": "afni/3dNormalityTest",
         "input": input_,
         "prefix": prefix,
         "noexp": noexp,
@@ -107,14 +82,14 @@ def v_3d_normality_test_cargs(
     """
     cargs = []
     cargs.append("3dNormalityTest")
-    cargs.append(execution.input_file(params.get("input")))
+    cargs.append(execution.input_file(params.get("input", None)))
     cargs.extend([
         "-prefix",
-        params.get("prefix")
+        params.get("prefix", None)
     ])
-    if params.get("noexp"):
+    if params.get("noexp", False):
         cargs.append("-noexp")
-    if params.get("pval"):
+    if params.get("pval", False):
         cargs.append("-pval")
     return cargs
 
@@ -134,7 +109,7 @@ def v_3d_normality_test_outputs(
     """
     ret = V3dNormalityTestOutputs(
         root=execution.output_file("."),
-        output_dataset=execution.output_file(params.get("prefix") + "+orig"),
+        output_dataset=execution.output_file(params.get("prefix", None) + "+orig"),
     )
     return ret
 
@@ -206,7 +181,6 @@ def v_3d_normality_test(
 
 __all__ = [
     "V3dNormalityTestOutputs",
-    "V3dNormalityTestParameters",
     "V_3D_NORMALITY_TEST_METADATA",
     "v_3d_normality_test",
     "v_3d_normality_test_execute",

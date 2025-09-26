@@ -14,46 +14,20 @@ V__TO_MNI_AWARP_METADATA = Metadata(
 
 
 VToMniAwarpParameters = typing.TypedDict('VToMniAwarpParameters', {
-    "@type": typing.Literal["afni.@toMNI_Awarp"],
+    "@type": typing.NotRequired[typing.Literal["afni/@toMNI_Awarp"]],
+    "directory": str,
+    "datasets": list[InputPathType],
+})
+VToMniAwarpParametersTagged = typing.TypedDict('VToMniAwarpParametersTagged', {
+    "@type": typing.Literal["afni/@toMNI_Awarp"],
     "directory": str,
     "datasets": list[InputPathType],
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "afni.@toMNI_Awarp": v__to_mni_awarp_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-    }.get(t)
-
-
 class VToMniAwarpOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `v__to_mni_awarp(...)`.
+    Output object returned when calling `VToMniAwarpParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -62,7 +36,7 @@ class VToMniAwarpOutputs(typing.NamedTuple):
 def v__to_mni_awarp_params(
     directory: str,
     datasets: list[InputPathType],
-) -> VToMniAwarpParameters:
+) -> VToMniAwarpParametersTagged:
     """
     Build parameters.
     
@@ -74,7 +48,7 @@ def v__to_mni_awarp_params(
         Parameter dictionary
     """
     params = {
-        "@type": "afni.@toMNI_Awarp",
+        "@type": "afni/@toMNI_Awarp",
         "directory": directory,
         "datasets": datasets,
     }
@@ -96,8 +70,8 @@ def v__to_mni_awarp_cargs(
     """
     cargs = []
     cargs.append("@toMNI_Awarp")
-    cargs.append(params.get("directory"))
-    cargs.extend([execution.input_file(f) for f in params.get("datasets")])
+    cargs.append(params.get("directory", None))
+    cargs.extend([execution.input_file(f) for f in params.get("datasets", None)])
     return cargs
 
 
@@ -181,7 +155,6 @@ def v__to_mni_awarp(
 
 __all__ = [
     "VToMniAwarpOutputs",
-    "VToMniAwarpParameters",
     "V__TO_MNI_AWARP_METADATA",
     "v__to_mni_awarp",
     "v__to_mni_awarp_execute",

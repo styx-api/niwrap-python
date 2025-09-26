@@ -14,7 +14,19 @@ V_3D_MSE_METADATA = Metadata(
 
 
 V3dMseParameters = typing.TypedDict('V3dMseParameters', {
-    "@type": typing.Literal["afni.3dMSE"],
+    "@type": typing.NotRequired[typing.Literal["afni/3dMSE"]],
+    "polynomial_order": typing.NotRequired[int | None],
+    "autoclip": bool,
+    "automask": bool,
+    "mask": typing.NotRequired[InputPathType | None],
+    "prefix": typing.NotRequired[str | None],
+    "scales": typing.NotRequired[float | None],
+    "entwin": typing.NotRequired[float | None],
+    "rthresh": typing.NotRequired[float | None],
+    "dset": InputPathType,
+})
+V3dMseParametersTagged = typing.TypedDict('V3dMseParametersTagged', {
+    "@type": typing.Literal["afni/3dMSE"],
     "polynomial_order": typing.NotRequired[int | None],
     "autoclip": bool,
     "automask": bool,
@@ -27,41 +39,9 @@ V3dMseParameters = typing.TypedDict('V3dMseParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "afni.3dMSE": v_3d_mse_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "afni.3dMSE": v_3d_mse_outputs,
-    }.get(t)
-
-
 class V3dMseOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `v_3d_mse(...)`.
+    Output object returned when calling `V3dMseParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -81,7 +61,7 @@ def v_3d_mse_params(
     scales: float | None = None,
     entwin: float | None = None,
     rthresh: float | None = None,
-) -> V3dMseParameters:
+) -> V3dMseParametersTagged:
     """
     Build parameters.
     
@@ -103,7 +83,7 @@ def v_3d_mse_params(
         Parameter dictionary
     """
     params = {
-        "@type": "afni.3dMSE",
+        "@type": "afni/3dMSE",
         "autoclip": autoclip,
         "automask": automask,
         "dset": dset,
@@ -138,41 +118,41 @@ def v_3d_mse_cargs(
     """
     cargs = []
     cargs.append("3dMSE")
-    if params.get("polynomial_order") is not None:
+    if params.get("polynomial_order", None) is not None:
         cargs.extend([
             "-polort",
-            str(params.get("polynomial_order"))
+            str(params.get("polynomial_order", None))
         ])
-    if params.get("autoclip"):
+    if params.get("autoclip", False):
         cargs.append("-autoclip")
-    if params.get("automask"):
+    if params.get("automask", False):
         cargs.append("-automask")
-    if params.get("mask") is not None:
+    if params.get("mask", None) is not None:
         cargs.extend([
             "-mask",
-            execution.input_file(params.get("mask"))
+            execution.input_file(params.get("mask", None))
         ])
-    if params.get("prefix") is not None:
+    if params.get("prefix", None) is not None:
         cargs.extend([
             "-prefix",
-            params.get("prefix")
+            params.get("prefix", None)
         ])
-    if params.get("scales") is not None:
+    if params.get("scales", None) is not None:
         cargs.extend([
             "-scales",
-            str(params.get("scales"))
+            str(params.get("scales", None))
         ])
-    if params.get("entwin") is not None:
+    if params.get("entwin", None) is not None:
         cargs.extend([
             "-entwin",
-            str(params.get("entwin"))
+            str(params.get("entwin", None))
         ])
-    if params.get("rthresh") is not None:
+    if params.get("rthresh", None) is not None:
         cargs.extend([
             "-rthresh",
-            str(params.get("rthresh"))
+            str(params.get("rthresh", None))
         ])
-    cargs.append(execution.input_file(params.get("dset")))
+    cargs.append(execution.input_file(params.get("dset", None)))
     return cargs
 
 
@@ -191,8 +171,8 @@ def v_3d_mse_outputs(
     """
     ret = V3dMseOutputs(
         root=execution.output_file("."),
-        out_brik=execution.output_file(params.get("prefix") + "+orig.BRIK") if (params.get("prefix") is not None) else None,
-        out_head=execution.output_file(params.get("prefix") + "+orig.HEAD") if (params.get("prefix") is not None) else None,
+        out_brik=execution.output_file(params.get("prefix", None) + "+orig.BRIK") if (params.get("prefix") is not None) else None,
+        out_head=execution.output_file(params.get("prefix", None) + "+orig.HEAD") if (params.get("prefix") is not None) else None,
     )
     return ret
 
@@ -280,7 +260,6 @@ def v_3d_mse(
 
 __all__ = [
     "V3dMseOutputs",
-    "V3dMseParameters",
     "V_3D_MSE_METADATA",
     "v_3d_mse",
     "v_3d_mse_execute",

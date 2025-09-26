@@ -14,7 +14,20 @@ ANTS_SLICE_REGULARIZED_REGISTRATION_METADATA = Metadata(
 
 
 AntsSliceRegularizedRegistrationParameters = typing.TypedDict('AntsSliceRegularizedRegistrationParameters', {
-    "@type": typing.Literal["ants.antsSliceRegularizedRegistration"],
+    "@type": typing.NotRequired[typing.Literal["ants/antsSliceRegularizedRegistration"]],
+    "polydegree": int,
+    "output": str,
+    "metric": str,
+    "transform": str,
+    "iterations": str,
+    "shrink_factors": str,
+    "smoothing_sigmas": str,
+    "mask": typing.NotRequired[InputPathType | None],
+    "interpolation": typing.NotRequired[typing.Literal["Linear", "NearestNeighbor", "MultiLabel", "Gaussian", "BSpline", "CosineWindowedSinc", "WelchWindowedSinc", "HammingWindowedSinc", "LanczosWindowedSinc", "GenericLabel"] | None],
+    "verbose": typing.NotRequired[typing.Literal[0] | None],
+})
+AntsSliceRegularizedRegistrationParametersTagged = typing.TypedDict('AntsSliceRegularizedRegistrationParametersTagged', {
+    "@type": typing.Literal["ants/antsSliceRegularizedRegistration"],
     "polydegree": int,
     "output": str,
     "metric": str,
@@ -28,41 +41,9 @@ AntsSliceRegularizedRegistrationParameters = typing.TypedDict('AntsSliceRegulari
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "ants.antsSliceRegularizedRegistration": ants_slice_regularized_registration_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "ants.antsSliceRegularizedRegistration": ants_slice_regularized_registration_outputs,
-    }.get(t)
-
-
 class AntsSliceRegularizedRegistrationOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `ants_slice_regularized_registration(...)`.
+    Output object returned when calling `AntsSliceRegularizedRegistrationParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -83,7 +64,7 @@ def ants_slice_regularized_registration_params(
     mask: InputPathType | None = None,
     interpolation: typing.Literal["Linear", "NearestNeighbor", "MultiLabel", "Gaussian", "BSpline", "CosineWindowedSinc", "WelchWindowedSinc", "HammingWindowedSinc", "LanczosWindowedSinc", "GenericLabel"] | None = None,
     verbose: typing.Literal[0] | None = None,
-) -> AntsSliceRegularizedRegistrationParameters:
+) -> AntsSliceRegularizedRegistrationParametersTagged:
     """
     Build parameters.
     
@@ -110,7 +91,7 @@ def ants_slice_regularized_registration_params(
         Parameter dictionary
     """
     params = {
-        "@type": "ants.antsSliceRegularizedRegistration",
+        "@type": "ants/antsSliceRegularizedRegistration",
         "polydegree": polydegree,
         "output": output,
         "metric": metric,
@@ -145,46 +126,46 @@ def ants_slice_regularized_registration_cargs(
     cargs.append("antsSliceRegularizedRegistration")
     cargs.extend([
         "-p",
-        str(params.get("polydegree"))
+        str(params.get("polydegree", None))
     ])
     cargs.extend([
         "-o",
-        params.get("output")
+        params.get("output", None)
     ])
     cargs.extend([
         "-m",
-        params.get("metric")
+        params.get("metric", None)
     ])
     cargs.extend([
         "-t",
-        params.get("transform")
+        params.get("transform", None)
     ])
     cargs.extend([
         "-i",
-        params.get("iterations")
+        params.get("iterations", None)
     ])
     cargs.extend([
         "-f",
-        params.get("shrink_factors")
+        params.get("shrink_factors", None)
     ])
     cargs.extend([
         "-s",
-        params.get("smoothing_sigmas")
+        params.get("smoothing_sigmas", None)
     ])
-    if params.get("mask") is not None:
+    if params.get("mask", None) is not None:
         cargs.extend([
             "-x",
-            execution.input_file(params.get("mask"))
+            execution.input_file(params.get("mask", None))
         ])
-    if params.get("interpolation") is not None:
+    if params.get("interpolation", None) is not None:
         cargs.extend([
             "-n",
-            params.get("interpolation")
+            params.get("interpolation", None)
         ])
-    if params.get("verbose") is not None:
+    if params.get("verbose", None) is not None:
         cargs.extend([
             "-v",
-            str(params.get("verbose"))
+            str(params.get("verbose", None))
         ])
     return cargs
 
@@ -315,7 +296,6 @@ def ants_slice_regularized_registration(
 __all__ = [
     "ANTS_SLICE_REGULARIZED_REGISTRATION_METADATA",
     "AntsSliceRegularizedRegistrationOutputs",
-    "AntsSliceRegularizedRegistrationParameters",
     "ants_slice_regularized_registration",
     "ants_slice_regularized_registration_execute",
     "ants_slice_regularized_registration_params",

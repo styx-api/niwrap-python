@@ -14,7 +14,15 @@ MAKE_DYADIC_VECTORS_METADATA = Metadata(
 
 
 MakeDyadicVectorsParameters = typing.TypedDict('MakeDyadicVectorsParameters', {
-    "@type": typing.Literal["fsl.make_dyadic_vectors"],
+    "@type": typing.NotRequired[typing.Literal["fsl/make_dyadic_vectors"]],
+    "theta_vol": InputPathType,
+    "phi_vol": InputPathType,
+    "mask": typing.NotRequired[InputPathType | None],
+    "output": str,
+    "perc": typing.NotRequired[float | None],
+})
+MakeDyadicVectorsParametersTagged = typing.TypedDict('MakeDyadicVectorsParametersTagged', {
+    "@type": typing.Literal["fsl/make_dyadic_vectors"],
     "theta_vol": InputPathType,
     "phi_vol": InputPathType,
     "mask": typing.NotRequired[InputPathType | None],
@@ -23,41 +31,9 @@ MakeDyadicVectorsParameters = typing.TypedDict('MakeDyadicVectorsParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "fsl.make_dyadic_vectors": make_dyadic_vectors_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "fsl.make_dyadic_vectors": make_dyadic_vectors_outputs,
-    }.get(t)
-
-
 class MakeDyadicVectorsOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `make_dyadic_vectors(...)`.
+    Output object returned when calling `MakeDyadicVectorsParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -71,7 +47,7 @@ def make_dyadic_vectors_params(
     output: str,
     mask: InputPathType | None = None,
     perc: float | None = None,
-) -> MakeDyadicVectorsParameters:
+) -> MakeDyadicVectorsParametersTagged:
     """
     Build parameters.
     
@@ -86,7 +62,7 @@ def make_dyadic_vectors_params(
         Parameter dictionary
     """
     params = {
-        "@type": "fsl.make_dyadic_vectors",
+        "@type": "fsl/make_dyadic_vectors",
         "theta_vol": theta_vol,
         "phi_vol": phi_vol,
         "output": output,
@@ -113,13 +89,13 @@ def make_dyadic_vectors_cargs(
     """
     cargs = []
     cargs.append("make_dyadic_vectors")
-    cargs.append(execution.input_file(params.get("theta_vol")))
-    cargs.append(execution.input_file(params.get("phi_vol")))
-    if params.get("mask") is not None:
-        cargs.append(execution.input_file(params.get("mask")))
-    cargs.append(params.get("output"))
-    if params.get("perc") is not None:
-        cargs.append(str(params.get("perc")))
+    cargs.append(execution.input_file(params.get("theta_vol", None)))
+    cargs.append(execution.input_file(params.get("phi_vol", None)))
+    if params.get("mask", None) is not None:
+        cargs.append(execution.input_file(params.get("mask", None)))
+    cargs.append(params.get("output", None))
+    if params.get("perc", None) is not None:
+        cargs.append(str(params.get("perc", None)))
     return cargs
 
 
@@ -138,7 +114,7 @@ def make_dyadic_vectors_outputs(
     """
     ret = MakeDyadicVectorsOutputs(
         root=execution.output_file("."),
-        output_file=execution.output_file(params.get("output")),
+        output_file=execution.output_file(params.get("output", None)),
     )
     return ret
 
@@ -212,7 +188,6 @@ def make_dyadic_vectors(
 __all__ = [
     "MAKE_DYADIC_VECTORS_METADATA",
     "MakeDyadicVectorsOutputs",
-    "MakeDyadicVectorsParameters",
     "make_dyadic_vectors",
     "make_dyadic_vectors_execute",
     "make_dyadic_vectors_params",

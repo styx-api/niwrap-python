@@ -14,7 +14,22 @@ MRI_CONCATENATE_LTA_METADATA = Metadata(
 
 
 MriConcatenateLtaParameters = typing.TypedDict('MriConcatenateLtaParameters', {
-    "@type": typing.Literal["freesurfer.mri_concatenate_lta"],
+    "@type": typing.NotRequired[typing.Literal["freesurfer/mri_concatenate_lta"]],
+    "lta_1": InputPathType,
+    "lta_2": InputPathType,
+    "lta_final": str,
+    "tal_src": typing.NotRequired[InputPathType | None],
+    "tal_template": typing.NotRequired[InputPathType | None],
+    "invert1": bool,
+    "invert2": bool,
+    "invertout": bool,
+    "out_type": typing.NotRequired[float | None],
+    "subject": typing.NotRequired[str | None],
+    "rmsdiff_radius": typing.NotRequired[float | None],
+    "rmsdiff_outputfile": typing.NotRequired[str | None],
+})
+MriConcatenateLtaParametersTagged = typing.TypedDict('MriConcatenateLtaParametersTagged', {
+    "@type": typing.Literal["freesurfer/mri_concatenate_lta"],
     "lta_1": InputPathType,
     "lta_2": InputPathType,
     "lta_final": str,
@@ -30,40 +45,9 @@ MriConcatenateLtaParameters = typing.TypedDict('MriConcatenateLtaParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "freesurfer.mri_concatenate_lta": mri_concatenate_lta_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-    }.get(t)
-
-
 class MriConcatenateLtaOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `mri_concatenate_lta(...)`.
+    Output object returned when calling `MriConcatenateLtaParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -82,7 +66,7 @@ def mri_concatenate_lta_params(
     subject: str | None = None,
     rmsdiff_radius: float | None = None,
     rmsdiff_outputfile: str | None = None,
-) -> MriConcatenateLtaParameters:
+) -> MriConcatenateLtaParametersTagged:
     """
     Build parameters.
     
@@ -104,7 +88,7 @@ def mri_concatenate_lta_params(
         Parameter dictionary
     """
     params = {
-        "@type": "freesurfer.mri_concatenate_lta",
+        "@type": "freesurfer/mri_concatenate_lta",
         "lta_1": lta_1,
         "lta_2": lta_2,
         "lta_final": lta_final,
@@ -142,39 +126,39 @@ def mri_concatenate_lta_cargs(
     """
     cargs = []
     cargs.append("mri_concatenate_lta")
-    cargs.append(execution.input_file(params.get("lta_1")))
-    cargs.append(execution.input_file(params.get("lta_2")))
-    cargs.append(params.get("lta_final"))
-    if params.get("tal_src") is not None:
+    cargs.append(execution.input_file(params.get("lta_1", None)))
+    cargs.append(execution.input_file(params.get("lta_2", None)))
+    cargs.append(params.get("lta_final", None))
+    if params.get("tal_src", None) is not None:
         cargs.extend([
             "-tal",
-            execution.input_file(params.get("tal_src"))
+            execution.input_file(params.get("tal_src", None))
         ])
-    if params.get("tal_template") is not None:
-        cargs.append(execution.input_file(params.get("tal_template")))
-    if params.get("invert1"):
+    if params.get("tal_template", None) is not None:
+        cargs.append(execution.input_file(params.get("tal_template", None)))
+    if params.get("invert1", False):
         cargs.append("-invert1")
-    if params.get("invert2"):
+    if params.get("invert2", False):
         cargs.append("-invert2")
-    if params.get("invertout"):
+    if params.get("invertout", False):
         cargs.append("-invertout")
-    if params.get("out_type") is not None:
+    if params.get("out_type", None) is not None:
         cargs.extend([
             "-out_type",
-            str(params.get("out_type"))
+            str(params.get("out_type", None))
         ])
-    if params.get("subject") is not None:
+    if params.get("subject", None) is not None:
         cargs.extend([
             "-subject",
-            params.get("subject")
+            params.get("subject", None)
         ])
-    if params.get("rmsdiff_radius") is not None:
+    if params.get("rmsdiff_radius", None) is not None:
         cargs.extend([
             "-rmsdiff",
-            str(params.get("rmsdiff_radius"))
+            str(params.get("rmsdiff_radius", None))
         ])
-    if params.get("rmsdiff_outputfile") is not None:
-        cargs.append(params.get("rmsdiff_outputfile"))
+    if params.get("rmsdiff_outputfile", None) is not None:
+        cargs.append(params.get("rmsdiff_outputfile", None))
     return cargs
 
 
@@ -289,7 +273,6 @@ def mri_concatenate_lta(
 __all__ = [
     "MRI_CONCATENATE_LTA_METADATA",
     "MriConcatenateLtaOutputs",
-    "MriConcatenateLtaParameters",
     "mri_concatenate_lta",
     "mri_concatenate_lta_execute",
     "mri_concatenate_lta_params",

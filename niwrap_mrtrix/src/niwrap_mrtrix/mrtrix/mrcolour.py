@@ -14,14 +14,36 @@ MRCOLOUR_METADATA = Metadata(
 
 
 MrcolourConfigParameters = typing.TypedDict('MrcolourConfigParameters', {
-    "@type": typing.Literal["mrtrix.mrcolour.config"],
+    "@type": typing.NotRequired[typing.Literal["config"]],
+    "key": str,
+    "value": str,
+})
+MrcolourConfigParametersTagged = typing.TypedDict('MrcolourConfigParametersTagged', {
+    "@type": typing.Literal["config"],
     "key": str,
     "value": str,
 })
 
 
 MrcolourParameters = typing.TypedDict('MrcolourParameters', {
-    "@type": typing.Literal["mrtrix.mrcolour"],
+    "@type": typing.NotRequired[typing.Literal["mrtrix/mrcolour"]],
+    "upper": typing.NotRequired[float | None],
+    "lower": typing.NotRequired[float | None],
+    "colour": typing.NotRequired[list[float] | None],
+    "info": bool,
+    "quiet": bool,
+    "debug": bool,
+    "force": bool,
+    "nthreads": typing.NotRequired[int | None],
+    "config": typing.NotRequired[list[MrcolourConfigParameters] | None],
+    "help": bool,
+    "version": bool,
+    "input": InputPathType,
+    "map": str,
+    "output": str,
+})
+MrcolourParametersTagged = typing.TypedDict('MrcolourParametersTagged', {
+    "@type": typing.Literal["mrtrix/mrcolour"],
     "upper": typing.NotRequired[float | None],
     "lower": typing.NotRequired[float | None],
     "colour": typing.NotRequired[list[float] | None],
@@ -39,43 +61,10 @@ MrcolourParameters = typing.TypedDict('MrcolourParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "mrtrix.mrcolour": mrcolour_cargs,
-        "mrtrix.mrcolour.config": mrcolour_config_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "mrtrix.mrcolour": mrcolour_outputs,
-    }.get(t)
-
-
 def mrcolour_config_params(
     key: str,
     value: str,
-) -> MrcolourConfigParameters:
+) -> MrcolourConfigParametersTagged:
     """
     Build parameters.
     
@@ -86,7 +75,7 @@ def mrcolour_config_params(
         Parameter dictionary
     """
     params = {
-        "@type": "mrtrix.mrcolour.config",
+        "@type": "config",
         "key": key,
         "value": value,
     }
@@ -108,14 +97,14 @@ def mrcolour_config_cargs(
     """
     cargs = []
     cargs.append("-config")
-    cargs.append(params.get("key"))
-    cargs.append(params.get("value"))
+    cargs.append(params.get("key", None))
+    cargs.append(params.get("value", None))
     return cargs
 
 
 class MrcolourOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `mrcolour(...)`.
+    Output object returned when calling `MrcolourParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -138,7 +127,7 @@ def mrcolour_params(
     config: list[MrcolourConfigParameters] | None = None,
     help_: bool = False,
     version: bool = False,
-) -> MrcolourParameters:
+) -> MrcolourParametersTagged:
     """
     Build parameters.
     
@@ -167,7 +156,7 @@ def mrcolour_params(
         Parameter dictionary
     """
     params = {
-        "@type": "mrtrix.mrcolour",
+        "@type": "mrtrix/mrcolour",
         "info": info,
         "quiet": quiet,
         "debug": debug,
@@ -206,43 +195,43 @@ def mrcolour_cargs(
     """
     cargs = []
     cargs.append("mrcolour")
-    if params.get("upper") is not None:
+    if params.get("upper", None) is not None:
         cargs.extend([
             "-upper",
-            str(params.get("upper"))
+            str(params.get("upper", None))
         ])
-    if params.get("lower") is not None:
+    if params.get("lower", None) is not None:
         cargs.extend([
             "-lower",
-            str(params.get("lower"))
+            str(params.get("lower", None))
         ])
-    if params.get("colour") is not None:
+    if params.get("colour", None) is not None:
         cargs.extend([
             "-colour",
-            ",".join(map(str, params.get("colour")))
+            ",".join(map(str, params.get("colour", None)))
         ])
-    if params.get("info"):
+    if params.get("info", False):
         cargs.append("-info")
-    if params.get("quiet"):
+    if params.get("quiet", False):
         cargs.append("-quiet")
-    if params.get("debug"):
+    if params.get("debug", False):
         cargs.append("-debug")
-    if params.get("force"):
+    if params.get("force", False):
         cargs.append("-force")
-    if params.get("nthreads") is not None:
+    if params.get("nthreads", None) is not None:
         cargs.extend([
             "-nthreads",
-            str(params.get("nthreads"))
+            str(params.get("nthreads", None))
         ])
-    if params.get("config") is not None:
-        cargs.extend([a for c in [dyn_cargs(s["@type"])(s, execution) for s in params.get("config")] for a in c])
-    if params.get("help"):
+    if params.get("config", None) is not None:
+        cargs.extend([a for c in [mrcolour_config_cargs(s, execution) for s in params.get("config", None)] for a in c])
+    if params.get("help", False):
         cargs.append("-help")
-    if params.get("version"):
+    if params.get("version", False):
         cargs.append("-version")
-    cargs.append(execution.input_file(params.get("input")))
-    cargs.append(params.get("map"))
-    cargs.append(params.get("output"))
+    cargs.append(execution.input_file(params.get("input", None)))
+    cargs.append(params.get("map", None))
+    cargs.append(params.get("output", None))
     return cargs
 
 
@@ -261,7 +250,7 @@ def mrcolour_outputs(
     """
     ret = MrcolourOutputs(
         root=execution.output_file("."),
-        output=execution.output_file(params.get("output")),
+        output=execution.output_file(params.get("output", None)),
     )
     return ret
 
@@ -396,9 +385,7 @@ def mrcolour(
 
 __all__ = [
     "MRCOLOUR_METADATA",
-    "MrcolourConfigParameters",
     "MrcolourOutputs",
-    "MrcolourParameters",
     "mrcolour",
     "mrcolour_config_params",
     "mrcolour_execute",

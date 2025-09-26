@@ -14,7 +14,14 @@ TALAIRACH_METADATA = Metadata(
 
 
 TalairachParameters = typing.TypedDict('TalairachParameters', {
-    "@type": typing.Literal["freesurfer.talairach"],
+    "@type": typing.NotRequired[typing.Literal["freesurfer/talairach"]],
+    "input_volume": InputPathType,
+    "output_transform": str,
+    "log_flag": bool,
+    "debug_flag": bool,
+})
+TalairachParametersTagged = typing.TypedDict('TalairachParametersTagged', {
+    "@type": typing.Literal["freesurfer/talairach"],
     "input_volume": InputPathType,
     "output_transform": str,
     "log_flag": bool,
@@ -22,41 +29,9 @@ TalairachParameters = typing.TypedDict('TalairachParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "freesurfer.talairach": talairach_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "freesurfer.talairach": talairach_outputs,
-    }.get(t)
-
-
 class TalairachOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `talairach(...)`.
+    Output object returned when calling `TalairachParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -69,7 +44,7 @@ def talairach_params(
     output_transform: str,
     log_flag: bool = False,
     debug_flag: bool = False,
-) -> TalairachParameters:
+) -> TalairachParametersTagged:
     """
     Build parameters.
     
@@ -82,7 +57,7 @@ def talairach_params(
         Parameter dictionary
     """
     params = {
-        "@type": "freesurfer.talairach",
+        "@type": "freesurfer/talairach",
         "input_volume": input_volume,
         "output_transform": output_transform,
         "log_flag": log_flag,
@@ -108,15 +83,15 @@ def talairach_cargs(
     cargs.append("talairach")
     cargs.extend([
         "-i",
-        execution.input_file(params.get("input_volume"))
+        execution.input_file(params.get("input_volume", None))
     ])
     cargs.extend([
         "-xfm",
-        params.get("output_transform")
+        params.get("output_transform", None)
     ])
-    if params.get("log_flag"):
+    if params.get("log_flag", False):
         cargs.append("--log")
-    if params.get("debug_flag"):
+    if params.get("debug_flag", False):
         cargs.append("--debug")
     return cargs
 
@@ -136,7 +111,7 @@ def talairach_outputs(
     """
     ret = TalairachOutputs(
         root=execution.output_file("."),
-        xfm_output=execution.output_file(params.get("output_transform")),
+        xfm_output=execution.output_file(params.get("output_transform", None)),
     )
     return ret
 
@@ -208,7 +183,6 @@ def talairach(
 __all__ = [
     "TALAIRACH_METADATA",
     "TalairachOutputs",
-    "TalairachParameters",
     "talairach",
     "talairach_execute",
     "talairach_params",

@@ -14,14 +14,33 @@ CIFTI_ROIS_FROM_EXTREMA_METADATA = Metadata(
 
 
 CiftiRoisFromExtremaGaussianParameters = typing.TypedDict('CiftiRoisFromExtremaGaussianParameters', {
-    "@type": typing.Literal["workbench.cifti-rois-from-extrema.gaussian"],
+    "@type": typing.NotRequired[typing.Literal["gaussian"]],
+    "surf_sigma": float,
+    "vol_sigma": float,
+})
+CiftiRoisFromExtremaGaussianParametersTagged = typing.TypedDict('CiftiRoisFromExtremaGaussianParametersTagged', {
+    "@type": typing.Literal["gaussian"],
     "surf_sigma": float,
     "vol_sigma": float,
 })
 
 
 CiftiRoisFromExtremaParameters = typing.TypedDict('CiftiRoisFromExtremaParameters', {
-    "@type": typing.Literal["workbench.cifti-rois-from-extrema"],
+    "@type": typing.NotRequired[typing.Literal["workbench/cifti-rois-from-extrema"]],
+    "cifti": InputPathType,
+    "surf_limit": float,
+    "vol_limit": float,
+    "direction": str,
+    "cifti_out": str,
+    "opt_left_surface_surface": typing.NotRequired[InputPathType | None],
+    "opt_right_surface_surface": typing.NotRequired[InputPathType | None],
+    "opt_cerebellum_surface_surface": typing.NotRequired[InputPathType | None],
+    "gaussian": typing.NotRequired[CiftiRoisFromExtremaGaussianParameters | None],
+    "opt_overlap_logic_method": typing.NotRequired[str | None],
+    "opt_merged_volume": bool,
+})
+CiftiRoisFromExtremaParametersTagged = typing.TypedDict('CiftiRoisFromExtremaParametersTagged', {
+    "@type": typing.Literal["workbench/cifti-rois-from-extrema"],
     "cifti": InputPathType,
     "surf_limit": float,
     "vol_limit": float,
@@ -36,43 +55,10 @@ CiftiRoisFromExtremaParameters = typing.TypedDict('CiftiRoisFromExtremaParameter
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "workbench.cifti-rois-from-extrema": cifti_rois_from_extrema_cargs,
-        "workbench.cifti-rois-from-extrema.gaussian": cifti_rois_from_extrema_gaussian_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "workbench.cifti-rois-from-extrema": cifti_rois_from_extrema_outputs,
-    }.get(t)
-
-
 def cifti_rois_from_extrema_gaussian_params(
     surf_sigma: float,
     vol_sigma: float,
-) -> CiftiRoisFromExtremaGaussianParameters:
+) -> CiftiRoisFromExtremaGaussianParametersTagged:
     """
     Build parameters.
     
@@ -83,7 +69,7 @@ def cifti_rois_from_extrema_gaussian_params(
         Parameter dictionary
     """
     params = {
-        "@type": "workbench.cifti-rois-from-extrema.gaussian",
+        "@type": "gaussian",
         "surf_sigma": surf_sigma,
         "vol_sigma": vol_sigma,
     }
@@ -105,14 +91,14 @@ def cifti_rois_from_extrema_gaussian_cargs(
     """
     cargs = []
     cargs.append("-gaussian")
-    cargs.append(str(params.get("surf_sigma")))
-    cargs.append(str(params.get("vol_sigma")))
+    cargs.append(str(params.get("surf_sigma", None)))
+    cargs.append(str(params.get("vol_sigma", None)))
     return cargs
 
 
 class CiftiRoisFromExtremaOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `cifti_rois_from_extrema(...)`.
+    Output object returned when calling `CiftiRoisFromExtremaParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -132,7 +118,7 @@ def cifti_rois_from_extrema_params(
     gaussian: CiftiRoisFromExtremaGaussianParameters | None = None,
     opt_overlap_logic_method: str | None = None,
     opt_merged_volume: bool = False,
-) -> CiftiRoisFromExtremaParameters:
+) -> CiftiRoisFromExtremaParametersTagged:
     """
     Build parameters.
     
@@ -157,7 +143,7 @@ def cifti_rois_from_extrema_params(
         Parameter dictionary
     """
     params = {
-        "@type": "workbench.cifti-rois-from-extrema",
+        "@type": "workbench/cifti-rois-from-extrema",
         "cifti": cifti,
         "surf_limit": surf_limit,
         "vol_limit": vol_limit,
@@ -194,34 +180,34 @@ def cifti_rois_from_extrema_cargs(
     cargs = []
     cargs.append("wb_command")
     cargs.append("-cifti-rois-from-extrema")
-    cargs.append(execution.input_file(params.get("cifti")))
-    cargs.append(str(params.get("surf_limit")))
-    cargs.append(str(params.get("vol_limit")))
-    cargs.append(params.get("direction"))
-    cargs.append(params.get("cifti_out"))
-    if params.get("opt_left_surface_surface") is not None:
+    cargs.append(execution.input_file(params.get("cifti", None)))
+    cargs.append(str(params.get("surf_limit", None)))
+    cargs.append(str(params.get("vol_limit", None)))
+    cargs.append(params.get("direction", None))
+    cargs.append(params.get("cifti_out", None))
+    if params.get("opt_left_surface_surface", None) is not None:
         cargs.extend([
             "-left-surface",
-            execution.input_file(params.get("opt_left_surface_surface"))
+            execution.input_file(params.get("opt_left_surface_surface", None))
         ])
-    if params.get("opt_right_surface_surface") is not None:
+    if params.get("opt_right_surface_surface", None) is not None:
         cargs.extend([
             "-right-surface",
-            execution.input_file(params.get("opt_right_surface_surface"))
+            execution.input_file(params.get("opt_right_surface_surface", None))
         ])
-    if params.get("opt_cerebellum_surface_surface") is not None:
+    if params.get("opt_cerebellum_surface_surface", None) is not None:
         cargs.extend([
             "-cerebellum-surface",
-            execution.input_file(params.get("opt_cerebellum_surface_surface"))
+            execution.input_file(params.get("opt_cerebellum_surface_surface", None))
         ])
-    if params.get("gaussian") is not None:
-        cargs.extend(dyn_cargs(params.get("gaussian")["@type"])(params.get("gaussian"), execution))
-    if params.get("opt_overlap_logic_method") is not None:
+    if params.get("gaussian", None) is not None:
+        cargs.extend(cifti_rois_from_extrema_gaussian_cargs(params.get("gaussian", None), execution))
+    if params.get("opt_overlap_logic_method", None) is not None:
         cargs.extend([
             "-overlap-logic",
-            params.get("opt_overlap_logic_method")
+            params.get("opt_overlap_logic_method", None)
         ])
-    if params.get("opt_merged_volume"):
+    if params.get("opt_merged_volume", False):
         cargs.append("-merged-volume")
     return cargs
 
@@ -241,7 +227,7 @@ def cifti_rois_from_extrema_outputs(
     """
     ret = CiftiRoisFromExtremaOutputs(
         root=execution.output_file("."),
-        cifti_out=execution.output_file(params.get("cifti_out")),
+        cifti_out=execution.output_file(params.get("cifti_out", None)),
     )
     return ret
 
@@ -354,9 +340,7 @@ def cifti_rois_from_extrema(
 
 __all__ = [
     "CIFTI_ROIS_FROM_EXTREMA_METADATA",
-    "CiftiRoisFromExtremaGaussianParameters",
     "CiftiRoisFromExtremaOutputs",
-    "CiftiRoisFromExtremaParameters",
     "cifti_rois_from_extrema",
     "cifti_rois_from_extrema_execute",
     "cifti_rois_from_extrema_gaussian_params",

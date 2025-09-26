@@ -14,46 +14,20 @@ BASIL_VAR_METADATA = Metadata(
 
 
 BasilVarParameters = typing.TypedDict('BasilVarParameters', {
-    "@type": typing.Literal["fsl.basil_var"],
+    "@type": typing.NotRequired[typing.Literal["fsl/basil_var"]],
+    "results_dir": str,
+    "mask_image": InputPathType,
+})
+BasilVarParametersTagged = typing.TypedDict('BasilVarParametersTagged', {
+    "@type": typing.Literal["fsl/basil_var"],
     "results_dir": str,
     "mask_image": InputPathType,
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "fsl.basil_var": basil_var_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-    }.get(t)
-
-
 class BasilVarOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `basil_var(...)`.
+    Output object returned when calling `BasilVarParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -62,7 +36,7 @@ class BasilVarOutputs(typing.NamedTuple):
 def basil_var_params(
     results_dir: str,
     mask_image: InputPathType,
-) -> BasilVarParameters:
+) -> BasilVarParametersTagged:
     """
     Build parameters.
     
@@ -73,7 +47,7 @@ def basil_var_params(
         Parameter dictionary
     """
     params = {
-        "@type": "fsl.basil_var",
+        "@type": "fsl/basil_var",
         "results_dir": results_dir,
         "mask_image": mask_image,
     }
@@ -97,11 +71,11 @@ def basil_var_cargs(
     cargs.append("basil_var")
     cargs.extend([
         "-d",
-        params.get("results_dir")
+        params.get("results_dir", None)
     ])
     cargs.extend([
         "-m",
-        execution.input_file(params.get("mask_image"))
+        execution.input_file(params.get("mask_image", None))
     ])
     return cargs
 
@@ -184,7 +158,6 @@ def basil_var(
 __all__ = [
     "BASIL_VAR_METADATA",
     "BasilVarOutputs",
-    "BasilVarParameters",
     "basil_var",
     "basil_var_execute",
     "basil_var_params",

@@ -14,7 +14,13 @@ CIFTI_CREATE_SCALAR_SERIES_METADATA = Metadata(
 
 
 CiftiCreateScalarSeriesSeriesParameters = typing.TypedDict('CiftiCreateScalarSeriesSeriesParameters', {
-    "@type": typing.Literal["workbench.cifti-create-scalar-series.series"],
+    "@type": typing.NotRequired[typing.Literal["series"]],
+    "unit": str,
+    "start": float,
+    "step": float,
+})
+CiftiCreateScalarSeriesSeriesParametersTagged = typing.TypedDict('CiftiCreateScalarSeriesSeriesParametersTagged', {
+    "@type": typing.Literal["series"],
     "unit": str,
     "start": float,
     "step": float,
@@ -22,7 +28,15 @@ CiftiCreateScalarSeriesSeriesParameters = typing.TypedDict('CiftiCreateScalarSer
 
 
 CiftiCreateScalarSeriesParameters = typing.TypedDict('CiftiCreateScalarSeriesParameters', {
-    "@type": typing.Literal["workbench.cifti-create-scalar-series"],
+    "@type": typing.NotRequired[typing.Literal["workbench/cifti-create-scalar-series"]],
+    "input": str,
+    "cifti_out": str,
+    "opt_transpose": bool,
+    "opt_name_file_file": typing.NotRequired[str | None],
+    "series": typing.NotRequired[CiftiCreateScalarSeriesSeriesParameters | None],
+})
+CiftiCreateScalarSeriesParametersTagged = typing.TypedDict('CiftiCreateScalarSeriesParametersTagged', {
+    "@type": typing.Literal["workbench/cifti-create-scalar-series"],
     "input": str,
     "cifti_out": str,
     "opt_transpose": bool,
@@ -31,44 +45,11 @@ CiftiCreateScalarSeriesParameters = typing.TypedDict('CiftiCreateScalarSeriesPar
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "workbench.cifti-create-scalar-series": cifti_create_scalar_series_cargs,
-        "workbench.cifti-create-scalar-series.series": cifti_create_scalar_series_series_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "workbench.cifti-create-scalar-series": cifti_create_scalar_series_outputs,
-    }.get(t)
-
-
 def cifti_create_scalar_series_series_params(
     unit: str,
     start: float,
     step: float,
-) -> CiftiCreateScalarSeriesSeriesParameters:
+) -> CiftiCreateScalarSeriesSeriesParametersTagged:
     """
     Build parameters.
     
@@ -80,7 +61,7 @@ def cifti_create_scalar_series_series_params(
         Parameter dictionary
     """
     params = {
-        "@type": "workbench.cifti-create-scalar-series.series",
+        "@type": "series",
         "unit": unit,
         "start": start,
         "step": step,
@@ -103,15 +84,15 @@ def cifti_create_scalar_series_series_cargs(
     """
     cargs = []
     cargs.append("-series")
-    cargs.append(params.get("unit"))
-    cargs.append(str(params.get("start")))
-    cargs.append(str(params.get("step")))
+    cargs.append(params.get("unit", None))
+    cargs.append(str(params.get("start", None)))
+    cargs.append(str(params.get("step", None)))
     return cargs
 
 
 class CiftiCreateScalarSeriesOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `cifti_create_scalar_series(...)`.
+    Output object returned when calling `CiftiCreateScalarSeriesParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -125,7 +106,7 @@ def cifti_create_scalar_series_params(
     opt_transpose: bool = False,
     opt_name_file_file: str | None = None,
     series: CiftiCreateScalarSeriesSeriesParameters | None = None,
-) -> CiftiCreateScalarSeriesParameters:
+) -> CiftiCreateScalarSeriesParametersTagged:
     """
     Build parameters.
     
@@ -141,7 +122,7 @@ def cifti_create_scalar_series_params(
         Parameter dictionary
     """
     params = {
-        "@type": "workbench.cifti-create-scalar-series",
+        "@type": "workbench/cifti-create-scalar-series",
         "input": input_,
         "cifti_out": cifti_out,
         "opt_transpose": opt_transpose,
@@ -169,17 +150,17 @@ def cifti_create_scalar_series_cargs(
     cargs = []
     cargs.append("wb_command")
     cargs.append("-cifti-create-scalar-series")
-    cargs.append(params.get("input"))
-    cargs.append(params.get("cifti_out"))
-    if params.get("opt_transpose"):
+    cargs.append(params.get("input", None))
+    cargs.append(params.get("cifti_out", None))
+    if params.get("opt_transpose", False):
         cargs.append("-transpose")
-    if params.get("opt_name_file_file") is not None:
+    if params.get("opt_name_file_file", None) is not None:
         cargs.extend([
             "-name-file",
-            params.get("opt_name_file_file")
+            params.get("opt_name_file_file", None)
         ])
-    if params.get("series") is not None:
-        cargs.extend(dyn_cargs(params.get("series")["@type"])(params.get("series"), execution))
+    if params.get("series", None) is not None:
+        cargs.extend(cifti_create_scalar_series_series_cargs(params.get("series", None), execution))
     return cargs
 
 
@@ -198,7 +179,7 @@ def cifti_create_scalar_series_outputs(
     """
     ret = CiftiCreateScalarSeriesOutputs(
         root=execution.output_file("."),
-        cifti_out=execution.output_file(params.get("cifti_out")),
+        cifti_out=execution.output_file(params.get("cifti_out", None)),
     )
     return ret
 
@@ -295,8 +276,6 @@ def cifti_create_scalar_series(
 __all__ = [
     "CIFTI_CREATE_SCALAR_SERIES_METADATA",
     "CiftiCreateScalarSeriesOutputs",
-    "CiftiCreateScalarSeriesParameters",
-    "CiftiCreateScalarSeriesSeriesParameters",
     "cifti_create_scalar_series",
     "cifti_create_scalar_series_execute",
     "cifti_create_scalar_series_params",

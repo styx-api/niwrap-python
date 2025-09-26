@@ -14,7 +14,15 @@ MRIS_RF_LABEL_METADATA = Metadata(
 
 
 MrisRfLabelParameters = typing.TypedDict('MrisRfLabelParameters', {
-    "@type": typing.Literal["freesurfer.mris_rf_label"],
+    "@type": typing.NotRequired[typing.Literal["freesurfer/mris_rf_label"]],
+    "subject": str,
+    "rf_classifier": str,
+    "output_name": str,
+    "hemi": typing.NotRequired[str | None],
+    "surf": typing.NotRequired[str | None],
+})
+MrisRfLabelParametersTagged = typing.TypedDict('MrisRfLabelParametersTagged', {
+    "@type": typing.Literal["freesurfer/mris_rf_label"],
     "subject": str,
     "rf_classifier": str,
     "output_name": str,
@@ -23,40 +31,9 @@ MrisRfLabelParameters = typing.TypedDict('MrisRfLabelParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "freesurfer.mris_rf_label": mris_rf_label_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-    }.get(t)
-
-
 class MrisRfLabelOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `mris_rf_label(...)`.
+    Output object returned when calling `MrisRfLabelParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -68,7 +45,7 @@ def mris_rf_label_params(
     output_name: str,
     hemi: str | None = None,
     surf: str | None = None,
-) -> MrisRfLabelParameters:
+) -> MrisRfLabelParametersTagged:
     """
     Build parameters.
     
@@ -82,7 +59,7 @@ def mris_rf_label_params(
         Parameter dictionary
     """
     params = {
-        "@type": "freesurfer.mris_rf_label",
+        "@type": "freesurfer/mris_rf_label",
         "subject": subject,
         "rf_classifier": rf_classifier,
         "output_name": output_name,
@@ -109,18 +86,18 @@ def mris_rf_label_cargs(
     """
     cargs = []
     cargs.append("mris_rf_label")
-    cargs.append(params.get("subject"))
-    cargs.append(params.get("rf_classifier"))
-    cargs.append(params.get("output_name"))
-    if params.get("hemi") is not None:
+    cargs.append(params.get("subject", None))
+    cargs.append(params.get("rf_classifier", None))
+    cargs.append(params.get("output_name", None))
+    if params.get("hemi", None) is not None:
         cargs.extend([
             "--hemi",
-            params.get("hemi")
+            params.get("hemi", None)
         ])
-    if params.get("surf") is not None:
+    if params.get("surf", None) is not None:
         cargs.extend([
             "--surf",
-            params.get("surf")
+            params.get("surf", None)
         ])
     return cargs
 
@@ -212,7 +189,6 @@ def mris_rf_label(
 __all__ = [
     "MRIS_RF_LABEL_METADATA",
     "MrisRfLabelOutputs",
-    "MrisRfLabelParameters",
     "mris_rf_label",
     "mris_rf_label_execute",
     "mris_rf_label_params",

@@ -14,7 +14,21 @@ ANTS_INTRODUCTION_SH_METADATA = Metadata(
 
 
 AntsIntroductionShParameters = typing.TypedDict('AntsIntroductionShParameters', {
-    "@type": typing.Literal["ants.antsIntroduction.sh"],
+    "@type": typing.NotRequired[typing.Literal["ants/antsIntroduction.sh"]],
+    "image_dimension": typing.Literal[2, 3],
+    "reference_image": InputPathType,
+    "input_image": InputPathType,
+    "force": typing.NotRequired[typing.Literal[0, 1] | None],
+    "labels_in_fixed_image_space": typing.NotRequired[str | None],
+    "max_iterations": typing.NotRequired[int | None],
+    "n4_bias_field_correction": typing.NotRequired[typing.Literal[0, 1] | None],
+    "outprefix": typing.NotRequired[str | None],
+    "quality_check": typing.NotRequired[typing.Literal[0, 1] | None],
+    "similarity_metric": typing.NotRequired[str | None],
+    "transformation_model": typing.NotRequired[str | None],
+})
+AntsIntroductionShParametersTagged = typing.TypedDict('AntsIntroductionShParametersTagged', {
+    "@type": typing.Literal["ants/antsIntroduction.sh"],
     "image_dimension": typing.Literal[2, 3],
     "reference_image": InputPathType,
     "input_image": InputPathType,
@@ -29,40 +43,9 @@ AntsIntroductionShParameters = typing.TypedDict('AntsIntroductionShParameters', 
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "ants.antsIntroduction.sh": ants_introduction_sh_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-    }.get(t)
-
-
 class AntsIntroductionShOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `ants_introduction_sh(...)`.
+    Output object returned when calling `AntsIntroductionShParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -80,7 +63,7 @@ def ants_introduction_sh_params(
     quality_check: typing.Literal[0, 1] | None = None,
     similarity_metric: str | None = None,
     transformation_model: str | None = None,
-) -> AntsIntroductionShParameters:
+) -> AntsIntroductionShParametersTagged:
     """
     Build parameters.
     
@@ -104,7 +87,7 @@ def ants_introduction_sh_params(
         Parameter dictionary
     """
     params = {
-        "@type": "ants.antsIntroduction.sh",
+        "@type": "ants/antsIntroduction.sh",
         "image_dimension": image_dimension,
         "reference_image": reference_image,
         "input_image": input_image,
@@ -145,55 +128,55 @@ def ants_introduction_sh_cargs(
     cargs.append("antsIntroduction.sh")
     cargs.extend([
         "-d",
-        str(params.get("image_dimension"))
+        str(params.get("image_dimension", None))
     ])
     cargs.extend([
         "-r",
-        execution.input_file(params.get("reference_image"))
+        execution.input_file(params.get("reference_image", None))
     ])
     cargs.extend([
         "-i",
-        execution.input_file(params.get("input_image"))
+        execution.input_file(params.get("input_image", None))
     ])
-    if params.get("force") is not None:
+    if params.get("force", None) is not None:
         cargs.extend([
             "-f",
-            str(params.get("force"))
+            str(params.get("force", None))
         ])
-    if params.get("labels_in_fixed_image_space") is not None:
+    if params.get("labels_in_fixed_image_space", None) is not None:
         cargs.extend([
             "-l",
-            params.get("labels_in_fixed_image_space")
+            params.get("labels_in_fixed_image_space", None)
         ])
-    if params.get("max_iterations") is not None:
+    if params.get("max_iterations", None) is not None:
         cargs.extend([
             "-m",
-            str(params.get("max_iterations"))
+            str(params.get("max_iterations", None))
         ])
-    if params.get("n4_bias_field_correction") is not None:
+    if params.get("n4_bias_field_correction", None) is not None:
         cargs.extend([
             "-n",
-            str(params.get("n4_bias_field_correction"))
+            str(params.get("n4_bias_field_correction", None))
         ])
-    if params.get("outprefix") is not None:
+    if params.get("outprefix", None) is not None:
         cargs.extend([
             "-o",
-            params.get("outprefix")
+            params.get("outprefix", None)
         ])
-    if params.get("quality_check") is not None:
+    if params.get("quality_check", None) is not None:
         cargs.extend([
             "-q",
-            str(params.get("quality_check"))
+            str(params.get("quality_check", None))
         ])
-    if params.get("similarity_metric") is not None:
+    if params.get("similarity_metric", None) is not None:
         cargs.extend([
             "-s",
-            params.get("similarity_metric")
+            params.get("similarity_metric", None)
         ])
-    if params.get("transformation_model") is not None:
+    if params.get("transformation_model", None) is not None:
         cargs.extend([
             "-t",
-            params.get("transformation_model")
+            params.get("transformation_model", None)
         ])
     return cargs
 
@@ -307,7 +290,6 @@ def ants_introduction_sh(
 __all__ = [
     "ANTS_INTRODUCTION_SH_METADATA",
     "AntsIntroductionShOutputs",
-    "AntsIntroductionShParameters",
     "ants_introduction_sh",
     "ants_introduction_sh_execute",
     "ants_introduction_sh_params",

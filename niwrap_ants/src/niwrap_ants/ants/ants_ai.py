@@ -14,7 +14,22 @@ ANTS_AI_METADATA = Metadata(
 
 
 AntsAiParameters = typing.TypedDict('AntsAiParameters', {
-    "@type": typing.Literal["ants.antsAI"],
+    "@type": typing.NotRequired[typing.Literal["ants/antsAI"]],
+    "dimensionality": typing.NotRequired[typing.Literal[2, 3] | None],
+    "metric": typing.Literal["Mattes[fixedImage,movingImage]", "GC[fixedImage,movingImage]", "MI[fixedImage,movingImage]"],
+    "transform": typing.Literal["Rigid[gradientStep]", "Affine[gradientStep]", "Similarity[gradientStep]", "AlignGeometricCenters", "AlignCentersOfMass"],
+    "align_principal_axes": typing.NotRequired[typing.Literal[0, 1] | None],
+    "align_blobs": typing.NotRequired[typing.Literal["numberOfBlobsToExtract", "[numberOfBlobsToExtract,numberOfBlobsToMatch]"] | None],
+    "search_factor": typing.NotRequired[typing.Literal["searchFactor", "[searchFactor,arcFraction]"] | None],
+    "translation_search_grid": typing.NotRequired[typing.Literal["[stepSize, AxBxC]"] | None],
+    "convergence": typing.NotRequired[typing.Literal["numberOfIterations", "[numberOfIterations,convergenceThreshold,convergenceWindowSize]"] | None],
+    "masks": typing.NotRequired[typing.Literal["fixedImageMask", "[fixedImageMask,movingImageMask]"] | None],
+    "output": str,
+    "random_seed": typing.NotRequired[int | None],
+    "verbose": typing.NotRequired[typing.Literal[0, 1] | None],
+})
+AntsAiParametersTagged = typing.TypedDict('AntsAiParametersTagged', {
+    "@type": typing.Literal["ants/antsAI"],
     "dimensionality": typing.NotRequired[typing.Literal[2, 3] | None],
     "metric": typing.Literal["Mattes[fixedImage,movingImage]", "GC[fixedImage,movingImage]", "MI[fixedImage,movingImage]"],
     "transform": typing.Literal["Rigid[gradientStep]", "Affine[gradientStep]", "Similarity[gradientStep]", "AlignGeometricCenters", "AlignCentersOfMass"],
@@ -30,41 +45,9 @@ AntsAiParameters = typing.TypedDict('AntsAiParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "ants.antsAI": ants_ai_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "ants.antsAI": ants_ai_outputs,
-    }.get(t)
-
-
 class AntsAiOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `ants_ai(...)`.
+    Output object returned when calling `AntsAiParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -85,7 +68,7 @@ def ants_ai_params(
     masks: typing.Literal["fixedImageMask", "[fixedImageMask,movingImageMask]"] | None = None,
     random_seed: int | None = None,
     verbose: typing.Literal[0, 1] | None = None,
-) -> AntsAiParameters:
+) -> AntsAiParametersTagged:
     """
     Build parameters.
     
@@ -117,7 +100,7 @@ def ants_ai_params(
         Parameter dictionary
     """
     params = {
-        "@type": "ants.antsAI",
+        "@type": "ants/antsAI",
         "metric": metric,
         "transform": transform,
         "output": output,
@@ -158,62 +141,62 @@ def ants_ai_cargs(
     """
     cargs = []
     cargs.append("antsAI")
-    if params.get("dimensionality") is not None:
+    if params.get("dimensionality", None) is not None:
         cargs.extend([
             "--dimensionality",
-            str(params.get("dimensionality"))
+            str(params.get("dimensionality", None))
         ])
     cargs.extend([
         "-m",
-        params.get("metric")
+        params.get("metric", None)
     ])
     cargs.extend([
         "-t",
-        params.get("transform")
+        params.get("transform", None)
     ])
-    if params.get("align_principal_axes") is not None:
+    if params.get("align_principal_axes", None) is not None:
         cargs.extend([
             "-p",
-            str(params.get("align_principal_axes"))
+            str(params.get("align_principal_axes", None))
         ])
-    if params.get("align_blobs") is not None:
+    if params.get("align_blobs", None) is not None:
         cargs.extend([
             "-b",
-            params.get("align_blobs")
+            params.get("align_blobs", None)
         ])
-    if params.get("search_factor") is not None:
+    if params.get("search_factor", None) is not None:
         cargs.extend([
             "-s",
-            params.get("search_factor")
+            params.get("search_factor", None)
         ])
-    if params.get("translation_search_grid") is not None:
+    if params.get("translation_search_grid", None) is not None:
         cargs.extend([
             "-g",
-            params.get("translation_search_grid")
+            params.get("translation_search_grid", None)
         ])
-    if params.get("convergence") is not None:
+    if params.get("convergence", None) is not None:
         cargs.extend([
             "-c",
-            params.get("convergence")
+            params.get("convergence", None)
         ])
-    if params.get("masks") is not None:
+    if params.get("masks", None) is not None:
         cargs.extend([
             "-x",
-            params.get("masks")
+            params.get("masks", None)
         ])
     cargs.extend([
         "-o",
-        params.get("output")
+        params.get("output", None)
     ])
-    if params.get("random_seed") is not None:
+    if params.get("random_seed", None) is not None:
         cargs.extend([
             "--random-seed",
-            str(params.get("random_seed"))
+            str(params.get("random_seed", None))
         ])
-    if params.get("verbose") is not None:
+    if params.get("verbose", None) is not None:
         cargs.extend([
             "-v",
-            str(params.get("verbose"))
+            str(params.get("verbose", None))
         ])
     return cargs
 
@@ -233,7 +216,7 @@ def ants_ai_outputs(
     """
     ret = AntsAiOutputs(
         root=execution.output_file("."),
-        output_transform=execution.output_file(params.get("output") + ".mat"),
+        output_transform=execution.output_file(params.get("output", None) + ".mat"),
     )
     return ret
 
@@ -340,7 +323,6 @@ def ants_ai(
 __all__ = [
     "ANTS_AI_METADATA",
     "AntsAiOutputs",
-    "AntsAiParameters",
     "ants_ai",
     "ants_ai_execute",
     "ants_ai_params",

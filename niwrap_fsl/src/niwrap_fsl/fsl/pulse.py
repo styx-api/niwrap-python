@@ -14,7 +14,35 @@ PULSE_METADATA = Metadata(
 
 
 PulseParameters = typing.TypedDict('PulseParameters', {
-    "@type": typing.Literal["fsl.pulse"],
+    "@type": typing.NotRequired[typing.Literal["fsl/pulse"]],
+    "input_file": InputPathType,
+    "output_base": str,
+    "seq": typing.NotRequired[str | None],
+    "angle": typing.NotRequired[float | None],
+    "te": typing.NotRequired[float | None],
+    "tr": typing.NotRequired[float | None],
+    "trslc": typing.NotRequired[float | None],
+    "nx": typing.NotRequired[float | None],
+    "ny": typing.NotRequired[float | None],
+    "dx": typing.NotRequired[float | None],
+    "dy": typing.NotRequired[float | None],
+    "maxG": typing.NotRequired[float | None],
+    "riset": typing.NotRequired[float | None],
+    "bw": typing.NotRequired[float | None],
+    "numvol": typing.NotRequired[float | None],
+    "numslc": typing.NotRequired[float | None],
+    "slcthk": typing.NotRequired[float | None],
+    "gap": typing.NotRequired[float | None],
+    "zstart": typing.NotRequired[float | None],
+    "slcdir": typing.NotRequired[str | None],
+    "phasedir": typing.NotRequired[str | None],
+    "readdir": typing.NotRequired[str | None],
+    "verbose_flag": bool,
+    "kcoord_flag": bool,
+    "cover": typing.NotRequired[float | None],
+})
+PulseParametersTagged = typing.TypedDict('PulseParametersTagged', {
+    "@type": typing.Literal["fsl/pulse"],
     "input_file": InputPathType,
     "output_base": str,
     "seq": typing.NotRequired[str | None],
@@ -43,41 +71,9 @@ PulseParameters = typing.TypedDict('PulseParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "fsl.pulse": pulse_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "fsl.pulse": pulse_outputs,
-    }.get(t)
-
-
 class PulseOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `pulse(...)`.
+    Output object returned when calling `PulseParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -111,7 +107,7 @@ def pulse_params(
     verbose_flag: bool = False,
     kcoord_flag: bool = False,
     cover: float | None = None,
-) -> PulseParameters:
+) -> PulseParametersTagged:
     """
     Build parameters.
     
@@ -153,7 +149,7 @@ def pulse_params(
         Parameter dictionary
     """
     params = {
-        "@type": "fsl.pulse",
+        "@type": "fsl/pulse",
         "input_file": input_file,
         "output_base": output_base,
         "verbose_flag": verbose_flag,
@@ -221,120 +217,120 @@ def pulse_cargs(
     cargs.append("pulse")
     cargs.extend([
         "-i",
-        execution.input_file(params.get("input_file"))
+        execution.input_file(params.get("input_file", None))
     ])
     cargs.extend([
         "-o",
-        params.get("output_base")
+        params.get("output_base", None)
     ])
-    if params.get("seq") is not None:
+    if params.get("seq", None) is not None:
         cargs.extend([
             "--seq",
-            params.get("seq")
+            params.get("seq", None)
         ])
-    if params.get("angle") is not None:
+    if params.get("angle", None) is not None:
         cargs.extend([
             "--angle",
-            str(params.get("angle"))
+            str(params.get("angle", None))
         ])
-    if params.get("te") is not None:
+    if params.get("te", None) is not None:
         cargs.extend([
             "--te",
-            str(params.get("te"))
+            str(params.get("te", None))
         ])
-    if params.get("tr") is not None:
+    if params.get("tr", None) is not None:
         cargs.extend([
             "--tr",
-            str(params.get("tr"))
+            str(params.get("tr", None))
         ])
-    if params.get("trslc") is not None:
+    if params.get("trslc", None) is not None:
         cargs.extend([
             "--trslc",
-            str(params.get("trslc"))
+            str(params.get("trslc", None))
         ])
-    if params.get("nx") is not None:
+    if params.get("nx", None) is not None:
         cargs.extend([
             "--nx",
-            str(params.get("nx"))
+            str(params.get("nx", None))
         ])
-    if params.get("ny") is not None:
+    if params.get("ny", None) is not None:
         cargs.extend([
             "--ny",
-            str(params.get("ny"))
+            str(params.get("ny", None))
         ])
-    if params.get("dx") is not None:
+    if params.get("dx", None) is not None:
         cargs.extend([
             "--dx",
-            str(params.get("dx"))
+            str(params.get("dx", None))
         ])
-    if params.get("dy") is not None:
+    if params.get("dy", None) is not None:
         cargs.extend([
             "--dy",
-            str(params.get("dy"))
+            str(params.get("dy", None))
         ])
-    if params.get("maxG") is not None:
+    if params.get("maxG", None) is not None:
         cargs.extend([
             "--maxG",
-            str(params.get("maxG"))
+            str(params.get("maxG", None))
         ])
-    if params.get("riset") is not None:
+    if params.get("riset", None) is not None:
         cargs.extend([
             "--riset",
-            str(params.get("riset"))
+            str(params.get("riset", None))
         ])
-    if params.get("bw") is not None:
+    if params.get("bw", None) is not None:
         cargs.extend([
             "--bw",
-            str(params.get("bw"))
+            str(params.get("bw", None))
         ])
-    if params.get("numvol") is not None:
+    if params.get("numvol", None) is not None:
         cargs.extend([
             "--numvol",
-            str(params.get("numvol"))
+            str(params.get("numvol", None))
         ])
-    if params.get("numslc") is not None:
+    if params.get("numslc", None) is not None:
         cargs.extend([
             "--numslc",
-            str(params.get("numslc"))
+            str(params.get("numslc", None))
         ])
-    if params.get("slcthk") is not None:
+    if params.get("slcthk", None) is not None:
         cargs.extend([
             "--slcthk",
-            str(params.get("slcthk"))
+            str(params.get("slcthk", None))
         ])
-    if params.get("gap") is not None:
+    if params.get("gap", None) is not None:
         cargs.extend([
             "--gap",
-            str(params.get("gap"))
+            str(params.get("gap", None))
         ])
-    if params.get("zstart") is not None:
+    if params.get("zstart", None) is not None:
         cargs.extend([
             "--zstart",
-            str(params.get("zstart"))
+            str(params.get("zstart", None))
         ])
-    if params.get("slcdir") is not None:
+    if params.get("slcdir", None) is not None:
         cargs.extend([
             "--slcdir",
-            params.get("slcdir")
+            params.get("slcdir", None)
         ])
-    if params.get("phasedir") is not None:
+    if params.get("phasedir", None) is not None:
         cargs.extend([
             "--phasedir",
-            params.get("phasedir")
+            params.get("phasedir", None)
         ])
-    if params.get("readdir") is not None:
+    if params.get("readdir", None) is not None:
         cargs.extend([
             "--readdir",
-            params.get("readdir")
+            params.get("readdir", None)
         ])
-    if params.get("verbose_flag"):
+    if params.get("verbose_flag", False):
         cargs.append("-v")
-    if params.get("kcoord_flag"):
+    if params.get("kcoord_flag", False):
         cargs.append("-k")
-    if params.get("cover") is not None:
+    if params.get("cover", None) is not None:
         cargs.extend([
             "--cover",
-            str(params.get("cover"))
+            str(params.get("cover", None))
         ])
     return cargs
 
@@ -354,7 +350,7 @@ def pulse_outputs(
     """
     ret = PulseOutputs(
         root=execution.output_file("."),
-        output_pulse_sequence_matrix=execution.output_file(params.get("output_base") + "_pulsesequence_matrix"),
+        output_pulse_sequence_matrix=execution.output_file(params.get("output_base", None) + "_pulsesequence_matrix"),
     )
     return ret
 
@@ -495,7 +491,6 @@ def pulse(
 __all__ = [
     "PULSE_METADATA",
     "PulseOutputs",
-    "PulseParameters",
     "pulse",
     "pulse_execute",
     "pulse_params",

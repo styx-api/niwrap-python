@@ -14,7 +14,15 @@ SLICESDIR_METADATA = Metadata(
 
 
 SlicesdirParameters = typing.TypedDict('SlicesdirParameters', {
-    "@type": typing.Literal["fsl.slicesdir"],
+    "@type": typing.NotRequired[typing.Literal["fsl/slicesdir"]],
+    "flag_filelist": bool,
+    "outline_image": typing.NotRequired[InputPathType | None],
+    "edge_threshold": typing.NotRequired[float | None],
+    "slice_option": bool,
+    "filelist": list[str],
+})
+SlicesdirParametersTagged = typing.TypedDict('SlicesdirParametersTagged', {
+    "@type": typing.Literal["fsl/slicesdir"],
     "flag_filelist": bool,
     "outline_image": typing.NotRequired[InputPathType | None],
     "edge_threshold": typing.NotRequired[float | None],
@@ -23,40 +31,9 @@ SlicesdirParameters = typing.TypedDict('SlicesdirParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "fsl.slicesdir": slicesdir_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-    }.get(t)
-
-
 class SlicesdirOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `slicesdir(...)`.
+    Output object returned when calling `SlicesdirParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -68,7 +45,7 @@ def slicesdir_params(
     outline_image: InputPathType | None = None,
     edge_threshold: float | None = None,
     slice_option: bool = False,
-) -> SlicesdirParameters:
+) -> SlicesdirParametersTagged:
     """
     Build parameters.
     
@@ -85,7 +62,7 @@ def slicesdir_params(
         Parameter dictionary
     """
     params = {
-        "@type": "fsl.slicesdir",
+        "@type": "fsl/slicesdir",
         "flag_filelist": flag_filelist,
         "slice_option": slice_option,
         "filelist": filelist,
@@ -112,21 +89,21 @@ def slicesdir_cargs(
     """
     cargs = []
     cargs.append("slicesdir")
-    if params.get("flag_filelist"):
+    if params.get("flag_filelist", False):
         cargs.append("-o")
-    if params.get("outline_image") is not None:
+    if params.get("outline_image", None) is not None:
         cargs.extend([
             "-p",
-            execution.input_file(params.get("outline_image"))
+            execution.input_file(params.get("outline_image", None))
         ])
-    if params.get("edge_threshold") is not None:
+    if params.get("edge_threshold", None) is not None:
         cargs.extend([
             "-e",
-            str(params.get("edge_threshold"))
+            str(params.get("edge_threshold", None))
         ])
-    if params.get("slice_option"):
+    if params.get("slice_option", False):
         cargs.append("-S")
-    cargs.extend(params.get("filelist"))
+    cargs.extend(params.get("filelist", None))
     return cargs
 
 
@@ -222,7 +199,6 @@ def slicesdir(
 __all__ = [
     "SLICESDIR_METADATA",
     "SlicesdirOutputs",
-    "SlicesdirParameters",
     "slicesdir",
     "slicesdir_execute",
     "slicesdir_params",

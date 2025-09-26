@@ -14,48 +14,22 @@ ADJUNCT_COMBINE_STR_PY_METADATA = Metadata(
 
 
 AdjunctCombineStrPyParameters = typing.TypedDict('AdjunctCombineStrPyParameters', {
-    "@type": typing.Literal["afni.adjunct_combine_str.py"],
+    "@type": typing.NotRequired[typing.Literal["afni/adjunct_combine_str.py"]],
+    "output_file": str,
+    "upper_index": float,
+    "string_selectors": list[str],
+})
+AdjunctCombineStrPyParametersTagged = typing.TypedDict('AdjunctCombineStrPyParametersTagged', {
+    "@type": typing.Literal["afni/adjunct_combine_str.py"],
     "output_file": str,
     "upper_index": float,
     "string_selectors": list[str],
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "afni.adjunct_combine_str.py": adjunct_combine_str_py_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "afni.adjunct_combine_str.py": adjunct_combine_str_py_outputs,
-    }.get(t)
-
-
 class AdjunctCombineStrPyOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `adjunct_combine_str_py(...)`.
+    Output object returned when calling `AdjunctCombineStrPyParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -67,7 +41,7 @@ def adjunct_combine_str_py_params(
     output_file: str,
     upper_index: float,
     string_selectors: list[str],
-) -> AdjunctCombineStrPyParameters:
+) -> AdjunctCombineStrPyParametersTagged:
     """
     Build parameters.
     
@@ -81,7 +55,7 @@ def adjunct_combine_str_py_params(
         Parameter dictionary
     """
     params = {
-        "@type": "afni.adjunct_combine_str.py",
+        "@type": "afni/adjunct_combine_str.py",
         "output_file": output_file,
         "upper_index": upper_index,
         "string_selectors": string_selectors,
@@ -104,9 +78,9 @@ def adjunct_combine_str_py_cargs(
     """
     cargs = []
     cargs.append("adjunct_combine_str.py")
-    cargs.append(params.get("output_file"))
-    cargs.append(str(params.get("upper_index")))
-    cargs.extend(params.get("string_selectors"))
+    cargs.append(params.get("output_file", None))
+    cargs.append(str(params.get("upper_index", None)))
+    cargs.extend(params.get("string_selectors", None))
     return cargs
 
 
@@ -125,7 +99,7 @@ def adjunct_combine_str_py_outputs(
     """
     ret = AdjunctCombineStrPyOutputs(
         root=execution.output_file("."),
-        output_selector_file=execution.output_file(params.get("output_file")),
+        output_selector_file=execution.output_file(params.get("output_file", None)),
     )
     return ret
 
@@ -196,7 +170,6 @@ def adjunct_combine_str_py(
 __all__ = [
     "ADJUNCT_COMBINE_STR_PY_METADATA",
     "AdjunctCombineStrPyOutputs",
-    "AdjunctCombineStrPyParameters",
     "adjunct_combine_str_py",
     "adjunct_combine_str_py_execute",
     "adjunct_combine_str_py_params",

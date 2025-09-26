@@ -14,7 +14,26 @@ FSLORIENT_METADATA = Metadata(
 
 
 FslorientParameters = typing.TypedDict('FslorientParameters', {
-    "@type": typing.Literal["fsl.fslorient"],
+    "@type": typing.NotRequired[typing.Literal["fsl/fslorient"]],
+    "get_orient": bool,
+    "get_sform": bool,
+    "get_qform": bool,
+    "set_sform": typing.NotRequired[str | None],
+    "set_qform": typing.NotRequired[str | None],
+    "set_sform_code": typing.NotRequired[str | None],
+    "set_qform_code": typing.NotRequired[str | None],
+    "get_qform_code": bool,
+    "get_sform_code": bool,
+    "copy_qform_to_sform": bool,
+    "copy_sform_to_qform": bool,
+    "delete_orient": bool,
+    "force_neurological": bool,
+    "force_radiological": bool,
+    "swap_orient": bool,
+    "filename": InputPathType,
+})
+FslorientParametersTagged = typing.TypedDict('FslorientParametersTagged', {
+    "@type": typing.Literal["fsl/fslorient"],
     "get_orient": bool,
     "get_sform": bool,
     "get_qform": bool,
@@ -34,40 +53,9 @@ FslorientParameters = typing.TypedDict('FslorientParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "fsl.fslorient": fslorient_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-    }.get(t)
-
-
 class FslorientOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `fslorient(...)`.
+    Output object returned when calling `FslorientParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -90,7 +78,7 @@ def fslorient_params(
     force_neurological: bool = False,
     force_radiological: bool = False,
     swap_orient: bool = False,
-) -> FslorientParameters:
+) -> FslorientParametersTagged:
     """
     Build parameters.
     
@@ -117,7 +105,7 @@ def fslorient_params(
         Parameter dictionary
     """
     params = {
-        "@type": "fsl.fslorient",
+        "@type": "fsl/fslorient",
         "get_orient": get_orient,
         "get_sform": get_sform,
         "get_qform": get_qform,
@@ -157,47 +145,47 @@ def fslorient_cargs(
     """
     cargs = []
     cargs.append("fslorient")
-    if params.get("get_orient"):
+    if params.get("get_orient", False):
         cargs.append("-getorient")
-    if params.get("get_sform"):
+    if params.get("get_sform", False):
         cargs.append("-getsform")
-    if params.get("get_qform"):
+    if params.get("get_qform", False):
         cargs.append("-getqform")
-    if params.get("set_sform") is not None:
+    if params.get("set_sform", None) is not None:
         cargs.extend([
             "-setsform",
-            params.get("set_sform")
+            params.get("set_sform", None)
         ])
-    if params.get("set_qform") is not None:
+    if params.get("set_qform", None) is not None:
         cargs.extend([
             "-setqform",
-            params.get("set_qform")
+            params.get("set_qform", None)
         ])
-    if params.get("set_sform_code") is not None:
+    if params.get("set_sform_code", None) is not None:
         cargs.extend([
             "-setsformcode",
-            params.get("set_sform_code")
+            params.get("set_sform_code", None)
         ])
-    if params.get("set_qform_code") is not None:
+    if params.get("set_qform_code", None) is not None:
         cargs.extend([
             "-setqformcode",
-            params.get("set_qform_code")
+            params.get("set_qform_code", None)
         ])
-    if params.get("get_qform_code"):
+    if params.get("get_qform_code", False):
         cargs.append("-getqformcode")
-    if params.get("get_sform_code"):
+    if params.get("get_sform_code", False):
         cargs.append("-getsformcode")
-    if params.get("copy_qform_to_sform") or params.get("copy_sform_to_qform"):
-        cargs.append(("-copyqform2sform" if params.get("copy_qform_to_sform") else "") + ("-copysform2qform" if params.get("copy_sform_to_qform") else ""))
-    if params.get("delete_orient"):
+    if params.get("copy_qform_to_sform", False) or params.get("copy_sform_to_qform", False):
+        cargs.append(("-copyqform2sform" if (params.get("copy_qform_to_sform", False)) else "") + ("-copysform2qform" if (params.get("copy_sform_to_qform", False)) else ""))
+    if params.get("delete_orient", False):
         cargs.append("-deleteorient")
-    if params.get("force_neurological"):
+    if params.get("force_neurological", False):
         cargs.append("-forceneurological")
-    if params.get("force_radiological"):
+    if params.get("force_radiological", False):
         cargs.append("-forceradiological")
-    if params.get("swap_orient"):
+    if params.get("swap_orient", False):
         cargs.append("-swaporient")
-    cargs.append(execution.input_file(params.get("filename")))
+    cargs.append(execution.input_file(params.get("filename", None)))
     return cargs
 
 
@@ -323,7 +311,6 @@ def fslorient(
 __all__ = [
     "FSLORIENT_METADATA",
     "FslorientOutputs",
-    "FslorientParameters",
     "fslorient",
     "fslorient_execute",
     "fslorient_params",

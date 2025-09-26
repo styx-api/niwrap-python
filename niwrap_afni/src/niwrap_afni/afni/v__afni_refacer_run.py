@@ -14,7 +14,23 @@ V__AFNI_REFACER_RUN_METADATA = Metadata(
 
 
 VAfniRefacerRunParameters = typing.TypedDict('VAfniRefacerRunParameters', {
-    "@type": typing.Literal["afni.@afni_refacer_run"],
+    "@type": typing.NotRequired[typing.Literal["afni/@afni_refacer_run"]],
+    "input_file": InputPathType,
+    "mode_deface": bool,
+    "mode_reface": bool,
+    "mode_reface_plus": bool,
+    "mode_all": bool,
+    "prefix": str,
+    "anonymize_output": bool,
+    "cost_function": typing.NotRequired[str | None],
+    "shell_option": typing.NotRequired[str | None],
+    "no_clean": bool,
+    "no_images": bool,
+    "overwrite": bool,
+    "verbose": bool,
+})
+VAfniRefacerRunParametersTagged = typing.TypedDict('VAfniRefacerRunParametersTagged', {
+    "@type": typing.Literal["afni/@afni_refacer_run"],
     "input_file": InputPathType,
     "mode_deface": bool,
     "mode_reface": bool,
@@ -31,41 +47,9 @@ VAfniRefacerRunParameters = typing.TypedDict('VAfniRefacerRunParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "afni.@afni_refacer_run": v__afni_refacer_run_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "afni.@afni_refacer_run": v__afni_refacer_run_outputs,
-    }.get(t)
-
-
 class VAfniRefacerRunOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `v__afni_refacer_run(...)`.
+    Output object returned when calling `VAfniRefacerRunParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -95,7 +79,7 @@ def v__afni_refacer_run_params(
     no_images: bool = False,
     overwrite: bool = False,
     verbose: bool = False,
-) -> VAfniRefacerRunParameters:
+) -> VAfniRefacerRunParametersTagged:
     """
     Build parameters.
     
@@ -131,7 +115,7 @@ def v__afni_refacer_run_params(
         Parameter dictionary
     """
     params = {
-        "@type": "afni.@afni_refacer_run",
+        "@type": "afni/@afni_refacer_run",
         "input_file": input_file,
         "mode_deface": mode_deface,
         "mode_reface": mode_reface,
@@ -168,39 +152,39 @@ def v__afni_refacer_run_cargs(
     cargs.append("@afni_refacer_run")
     cargs.extend([
         "-input",
-        execution.input_file(params.get("input_file"))
+        execution.input_file(params.get("input_file", None))
     ])
-    if params.get("mode_deface"):
+    if params.get("mode_deface", False):
         cargs.append("-mode_deface")
-    if params.get("mode_reface"):
+    if params.get("mode_reface", False):
         cargs.append("-mode_reface")
-    if params.get("mode_reface_plus"):
+    if params.get("mode_reface_plus", False):
         cargs.append("-mode_reface_plus")
-    if params.get("mode_all"):
+    if params.get("mode_all", False):
         cargs.append("-mode_all")
     cargs.extend([
         "-prefix",
-        params.get("prefix")
+        params.get("prefix", None)
     ])
-    if params.get("anonymize_output"):
+    if params.get("anonymize_output", False):
         cargs.append("-anonymize_output")
-    if params.get("cost_function") is not None:
+    if params.get("cost_function", None) is not None:
         cargs.extend([
             "-cost",
-            params.get("cost_function")
+            params.get("cost_function", None)
         ])
-    if params.get("shell_option") is not None:
+    if params.get("shell_option", None) is not None:
         cargs.extend([
             "-shell",
-            params.get("shell_option")
+            params.get("shell_option", None)
         ])
-    if params.get("no_clean"):
+    if params.get("no_clean", False):
         cargs.append("-no_clean")
-    if params.get("no_images"):
+    if params.get("no_images", False):
         cargs.append("-no_images")
-    if params.get("overwrite"):
+    if params.get("overwrite", False):
         cargs.append("-overwrite")
-    if params.get("verbose"):
+    if params.get("verbose", False):
         cargs.append("-verb_allin")
     return cargs
 
@@ -220,11 +204,11 @@ def v__afni_refacer_run_outputs(
     """
     ret = VAfniRefacerRunOutputs(
         root=execution.output_file("."),
-        output_deface=execution.output_file(params.get("prefix") + ".deface.nii.gz"),
-        output_reface=execution.output_file(params.get("prefix") + ".reface.nii.gz"),
-        output_reface_plus=execution.output_file(params.get("prefix") + ".reface_plus.nii.gz"),
-        output_face=execution.output_file(params.get("prefix") + ".face.nii.gz"),
-        output_face_plus=execution.output_file(params.get("prefix") + ".face_plus.nii.gz"),
+        output_deface=execution.output_file(params.get("prefix", None) + ".deface.nii.gz"),
+        output_reface=execution.output_file(params.get("prefix", None) + ".reface.nii.gz"),
+        output_reface_plus=execution.output_file(params.get("prefix", None) + ".reface_plus.nii.gz"),
+        output_face=execution.output_file(params.get("prefix", None) + ".face.nii.gz"),
+        output_face_plus=execution.output_file(params.get("prefix", None) + ".face_plus.nii.gz"),
     )
     return ret
 
@@ -336,7 +320,6 @@ def v__afni_refacer_run(
 
 __all__ = [
     "VAfniRefacerRunOutputs",
-    "VAfniRefacerRunParameters",
     "V__AFNI_REFACER_RUN_METADATA",
     "v__afni_refacer_run",
     "v__afni_refacer_run_execute",

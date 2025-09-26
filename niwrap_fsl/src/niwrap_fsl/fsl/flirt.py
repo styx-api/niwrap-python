@@ -14,7 +14,55 @@ FLIRT_METADATA = Metadata(
 
 
 FlirtParameters = typing.TypedDict('FlirtParameters', {
-    "@type": typing.Literal["fsl.flirt"],
+    "@type": typing.NotRequired[typing.Literal["fsl/flirt"]],
+    "in_file": InputPathType,
+    "reference": InputPathType,
+    "out_file": str,
+    "out_matrix_file": str,
+    "angle_rep": typing.NotRequired[typing.Literal["quaternion", "euler"] | None],
+    "apply_isoxfm": typing.NotRequired[float | None],
+    "apply_xfm": bool,
+    "bbrslope": typing.NotRequired[float | None],
+    "bbrtype": typing.NotRequired[typing.Literal["signed", "global_abs", "local_abs"] | None],
+    "bgvalue": typing.NotRequired[float | None],
+    "bins": typing.NotRequired[int | None],
+    "coarse_search": typing.NotRequired[int | None],
+    "cost": typing.NotRequired[typing.Literal["mutualinfo", "corratio", "normcorr", "normmi", "leastsq", "labeldiff", "bbr"] | None],
+    "cost_func": typing.NotRequired[typing.Literal["mutualinfo", "corratio", "normcorr", "normmi", "leastsq", "labeldiff", "bbr"] | None],
+    "datatype": typing.NotRequired[typing.Literal["char", "short", "int", "float", "double"] | None],
+    "display_init": bool,
+    "dof": typing.NotRequired[int | None],
+    "echospacing": typing.NotRequired[float | None],
+    "fieldmap": typing.NotRequired[InputPathType | None],
+    "fieldmapmask": typing.NotRequired[InputPathType | None],
+    "fine_search": typing.NotRequired[int | None],
+    "force_scaling": bool,
+    "in_matrix_file": typing.NotRequired[InputPathType | None],
+    "in_weight": typing.NotRequired[InputPathType | None],
+    "interp": typing.NotRequired[typing.Literal["trilinear", "nearestneighbour", "sinc", "spline"] | None],
+    "min_sampling": typing.NotRequired[float | None],
+    "no_clamp": bool,
+    "no_resample": bool,
+    "no_resample_blur": bool,
+    "no_search": bool,
+    "padding_size": typing.NotRequired[int | None],
+    "pedir": typing.NotRequired[int | None],
+    "ref_weight": typing.NotRequired[InputPathType | None],
+    "rigid2D": bool,
+    "schedule": typing.NotRequired[InputPathType | None],
+    "searchr_x": typing.NotRequired[list[int] | None],
+    "searchr_y": typing.NotRequired[list[int] | None],
+    "searchr_z": typing.NotRequired[list[int] | None],
+    "sinc_width": typing.NotRequired[int | None],
+    "sinc_window": typing.NotRequired[typing.Literal["rectangular", "hanning", "blackman"] | None],
+    "uses_qform": bool,
+    "verbose": typing.NotRequired[int | None],
+    "wm_seg": typing.NotRequired[InputPathType | None],
+    "wmcoords": typing.NotRequired[InputPathType | None],
+    "wmnorms": typing.NotRequired[InputPathType | None],
+})
+FlirtParametersTagged = typing.TypedDict('FlirtParametersTagged', {
+    "@type": typing.Literal["fsl/flirt"],
     "in_file": InputPathType,
     "reference": InputPathType,
     "out_file": str,
@@ -63,41 +111,9 @@ FlirtParameters = typing.TypedDict('FlirtParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "fsl.flirt": flirt_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "fsl.flirt": flirt_outputs,
-    }.get(t)
-
-
 class FlirtOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `flirt(...)`.
+    Output object returned when calling `FlirtParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -153,7 +169,7 @@ def flirt_params(
     wm_seg: InputPathType | None = None,
     wmcoords: InputPathType | None = None,
     wmnorms: InputPathType | None = None,
-) -> FlirtParameters:
+) -> FlirtParametersTagged:
     """
     Build parameters.
     
@@ -214,7 +230,7 @@ def flirt_params(
         Parameter dictionary
     """
     params = {
-        "@type": "fsl.flirt",
+        "@type": "fsl/flirt",
         "in_file": in_file,
         "reference": reference,
         "out_file": out_file,
@@ -313,197 +329,197 @@ def flirt_cargs(
     cargs.append("flirt")
     cargs.extend([
         "-in",
-        execution.input_file(params.get("in_file"))
+        execution.input_file(params.get("in_file", None))
     ])
     cargs.extend([
         "-ref",
-        execution.input_file(params.get("reference"))
+        execution.input_file(params.get("reference", None))
     ])
     cargs.extend([
         "-out",
-        params.get("out_file")
+        params.get("out_file", None)
     ])
     cargs.extend([
         "-omat",
-        params.get("out_matrix_file")
+        params.get("out_matrix_file", None)
     ])
-    if params.get("angle_rep") is not None:
+    if params.get("angle_rep", None) is not None:
         cargs.extend([
             "-anglerep",
-            params.get("angle_rep")
+            params.get("angle_rep", None)
         ])
-    if params.get("apply_isoxfm") is not None:
+    if params.get("apply_isoxfm", None) is not None:
         cargs.extend([
             "-applyisoxfm",
-            str(params.get("apply_isoxfm"))
+            str(params.get("apply_isoxfm", None))
         ])
-    if params.get("apply_xfm"):
+    if params.get("apply_xfm", False):
         cargs.append("-applyxfm")
-    if params.get("bbrslope") is not None:
+    if params.get("bbrslope", None) is not None:
         cargs.extend([
             "-bbrslope",
-            str(params.get("bbrslope"))
+            str(params.get("bbrslope", None))
         ])
-    if params.get("bbrtype") is not None:
+    if params.get("bbrtype", None) is not None:
         cargs.extend([
             "-bbrtype",
-            params.get("bbrtype")
+            params.get("bbrtype", None)
         ])
-    if params.get("bgvalue") is not None:
+    if params.get("bgvalue", None) is not None:
         cargs.extend([
             "-setbackground",
-            str(params.get("bgvalue"))
+            str(params.get("bgvalue", None))
         ])
-    if params.get("bins") is not None:
+    if params.get("bins", None) is not None:
         cargs.extend([
             "-bins",
-            str(params.get("bins"))
+            str(params.get("bins", None))
         ])
-    if params.get("coarse_search") is not None:
+    if params.get("coarse_search", None) is not None:
         cargs.extend([
             "-coarsesearch",
-            str(params.get("coarse_search"))
+            str(params.get("coarse_search", None))
         ])
-    if params.get("cost") is not None:
+    if params.get("cost", None) is not None:
         cargs.extend([
             "-cost",
-            params.get("cost")
+            params.get("cost", None)
         ])
-    if params.get("cost_func") is not None:
+    if params.get("cost_func", None) is not None:
         cargs.extend([
             "-searchcost",
-            params.get("cost_func")
+            params.get("cost_func", None)
         ])
-    if params.get("datatype") is not None:
+    if params.get("datatype", None) is not None:
         cargs.extend([
             "-datatype",
-            params.get("datatype")
+            params.get("datatype", None)
         ])
-    if params.get("display_init"):
+    if params.get("display_init", False):
         cargs.append("-displayinit")
-    if params.get("dof") is not None:
+    if params.get("dof", None) is not None:
         cargs.extend([
             "-dof",
-            str(params.get("dof"))
+            str(params.get("dof", None))
         ])
-    if params.get("echospacing") is not None:
+    if params.get("echospacing", None) is not None:
         cargs.extend([
             "-echospacing",
-            str(params.get("echospacing"))
+            str(params.get("echospacing", None))
         ])
-    if params.get("fieldmap") is not None:
+    if params.get("fieldmap", None) is not None:
         cargs.extend([
             "-fieldmap",
-            execution.input_file(params.get("fieldmap"))
+            execution.input_file(params.get("fieldmap", None))
         ])
-    if params.get("fieldmapmask") is not None:
+    if params.get("fieldmapmask", None) is not None:
         cargs.extend([
             "-fieldmapmask",
-            execution.input_file(params.get("fieldmapmask"))
+            execution.input_file(params.get("fieldmapmask", None))
         ])
-    if params.get("fine_search") is not None:
+    if params.get("fine_search", None) is not None:
         cargs.extend([
             "-finesearch",
-            str(params.get("fine_search"))
+            str(params.get("fine_search", None))
         ])
-    if params.get("force_scaling"):
+    if params.get("force_scaling", False):
         cargs.append("-forcescaling")
-    if params.get("in_matrix_file") is not None:
+    if params.get("in_matrix_file", None) is not None:
         cargs.extend([
             "-init",
-            execution.input_file(params.get("in_matrix_file"))
+            execution.input_file(params.get("in_matrix_file", None))
         ])
-    if params.get("in_weight") is not None:
+    if params.get("in_weight", None) is not None:
         cargs.extend([
             "-inweight",
-            execution.input_file(params.get("in_weight"))
+            execution.input_file(params.get("in_weight", None))
         ])
-    if params.get("interp") is not None:
+    if params.get("interp", None) is not None:
         cargs.extend([
             "-interp",
-            params.get("interp")
+            params.get("interp", None)
         ])
-    if params.get("min_sampling") is not None:
+    if params.get("min_sampling", None) is not None:
         cargs.extend([
             "-minsampling",
-            str(params.get("min_sampling"))
+            str(params.get("min_sampling", None))
         ])
-    if params.get("no_clamp"):
+    if params.get("no_clamp", False):
         cargs.append("-noclamp")
-    if params.get("no_resample"):
+    if params.get("no_resample", False):
         cargs.append("-noresample")
-    if params.get("no_resample_blur"):
+    if params.get("no_resample_blur", False):
         cargs.append("-noresampblur")
-    if params.get("no_search"):
+    if params.get("no_search", False):
         cargs.append("-nosearch")
-    if params.get("padding_size") is not None:
+    if params.get("padding_size", None) is not None:
         cargs.extend([
             "-paddingsize",
-            str(params.get("padding_size"))
+            str(params.get("padding_size", None))
         ])
-    if params.get("pedir") is not None:
+    if params.get("pedir", None) is not None:
         cargs.extend([
             "-pedir",
-            str(params.get("pedir"))
+            str(params.get("pedir", None))
         ])
-    if params.get("ref_weight") is not None:
+    if params.get("ref_weight", None) is not None:
         cargs.extend([
             "-refweight",
-            execution.input_file(params.get("ref_weight"))
+            execution.input_file(params.get("ref_weight", None))
         ])
-    if params.get("rigid2D"):
+    if params.get("rigid2D", False):
         cargs.append("-2D")
-    if params.get("schedule") is not None:
+    if params.get("schedule", None) is not None:
         cargs.extend([
             "-schedule",
-            execution.input_file(params.get("schedule"))
+            execution.input_file(params.get("schedule", None))
         ])
-    if params.get("searchr_x") is not None:
+    if params.get("searchr_x", None) is not None:
         cargs.extend([
             "-searchrx",
-            *map(str, params.get("searchr_x"))
+            *map(str, params.get("searchr_x", None))
         ])
-    if params.get("searchr_y") is not None:
+    if params.get("searchr_y", None) is not None:
         cargs.extend([
             "-searchry",
-            *map(str, params.get("searchr_y"))
+            *map(str, params.get("searchr_y", None))
         ])
-    if params.get("searchr_z") is not None:
+    if params.get("searchr_z", None) is not None:
         cargs.extend([
             "-searchrz",
-            *map(str, params.get("searchr_z"))
+            *map(str, params.get("searchr_z", None))
         ])
-    if params.get("sinc_width") is not None:
+    if params.get("sinc_width", None) is not None:
         cargs.extend([
             "-sincwidth",
-            str(params.get("sinc_width"))
+            str(params.get("sinc_width", None))
         ])
-    if params.get("sinc_window") is not None:
+    if params.get("sinc_window", None) is not None:
         cargs.extend([
             "-sincwindow",
-            params.get("sinc_window")
+            params.get("sinc_window", None)
         ])
-    if params.get("uses_qform"):
+    if params.get("uses_qform", False):
         cargs.append("-usesqform")
-    if params.get("verbose") is not None:
+    if params.get("verbose", None) is not None:
         cargs.extend([
             "-verbose",
-            str(params.get("verbose"))
+            str(params.get("verbose", None))
         ])
-    if params.get("wm_seg") is not None:
+    if params.get("wm_seg", None) is not None:
         cargs.extend([
             "-wmseg",
-            execution.input_file(params.get("wm_seg"))
+            execution.input_file(params.get("wm_seg", None))
         ])
-    if params.get("wmcoords") is not None:
+    if params.get("wmcoords", None) is not None:
         cargs.extend([
             "-wmcoords",
-            execution.input_file(params.get("wmcoords"))
+            execution.input_file(params.get("wmcoords", None))
         ])
-    if params.get("wmnorms") is not None:
+    if params.get("wmnorms", None) is not None:
         cargs.extend([
             "-wmnorms",
-            execution.input_file(params.get("wmnorms"))
+            execution.input_file(params.get("wmnorms", None))
         ])
     return cargs
 
@@ -523,8 +539,8 @@ def flirt_outputs(
     """
     ret = FlirtOutputs(
         root=execution.output_file("."),
-        out_file=execution.output_file(params.get("out_file")),
-        out_matrix_file=execution.output_file(params.get("out_matrix_file")),
+        out_file=execution.output_file(params.get("out_file", None)),
+        out_matrix_file=execution.output_file(params.get("out_matrix_file", None)),
     )
     return ret
 
@@ -728,7 +744,6 @@ def flirt(
 __all__ = [
     "FLIRT_METADATA",
     "FlirtOutputs",
-    "FlirtParameters",
     "flirt",
     "flirt_execute",
     "flirt_params",

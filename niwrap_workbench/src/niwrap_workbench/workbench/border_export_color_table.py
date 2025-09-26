@@ -14,47 +14,22 @@ BORDER_EXPORT_COLOR_TABLE_METADATA = Metadata(
 
 
 BorderExportColorTableParameters = typing.TypedDict('BorderExportColorTableParameters', {
-    "@type": typing.Literal["workbench.border-export-color-table"],
+    "@type": typing.NotRequired[typing.Literal["workbench/border-export-color-table"]],
+    "border_file": InputPathType,
+    "table_out": str,
+    "opt_class_colors": bool,
+})
+BorderExportColorTableParametersTagged = typing.TypedDict('BorderExportColorTableParametersTagged', {
+    "@type": typing.Literal["workbench/border-export-color-table"],
     "border_file": InputPathType,
     "table_out": str,
     "opt_class_colors": bool,
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "workbench.border-export-color-table": border_export_color_table_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-    }.get(t)
-
-
 class BorderExportColorTableOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `border_export_color_table(...)`.
+    Output object returned when calling `BorderExportColorTableParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -64,7 +39,7 @@ def border_export_color_table_params(
     border_file: InputPathType,
     table_out: str,
     opt_class_colors: bool = False,
-) -> BorderExportColorTableParameters:
+) -> BorderExportColorTableParametersTagged:
     """
     Build parameters.
     
@@ -76,7 +51,7 @@ def border_export_color_table_params(
         Parameter dictionary
     """
     params = {
-        "@type": "workbench.border-export-color-table",
+        "@type": "workbench/border-export-color-table",
         "border_file": border_file,
         "table_out": table_out,
         "opt_class_colors": opt_class_colors,
@@ -100,9 +75,9 @@ def border_export_color_table_cargs(
     cargs = []
     cargs.append("wb_command")
     cargs.append("-border-export-color-table")
-    cargs.append(execution.input_file(params.get("border_file")))
-    cargs.append(params.get("table_out"))
-    if params.get("opt_class_colors"):
+    cargs.append(execution.input_file(params.get("border_file", None)))
+    cargs.append(params.get("table_out", None))
+    if params.get("opt_class_colors", False):
         cargs.append("-class-colors")
     return cargs
 
@@ -198,7 +173,6 @@ def border_export_color_table(
 __all__ = [
     "BORDER_EXPORT_COLOR_TABLE_METADATA",
     "BorderExportColorTableOutputs",
-    "BorderExportColorTableParameters",
     "border_export_color_table",
     "border_export_color_table_execute",
     "border_export_color_table_params",

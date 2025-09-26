@@ -14,7 +14,41 @@ MRIS_FWHM_METADATA = Metadata(
 
 
 MrisFwhmParameters = typing.TypedDict('MrisFwhmParameters', {
-    "@type": typing.Literal["freesurfer.mris_fwhm"],
+    "@type": typing.NotRequired[typing.Literal["freesurfer/mris_fwhm"]],
+    "input_file": InputPathType,
+    "subject": str,
+    "hemi": str,
+    "surf": typing.NotRequired[str | None],
+    "label_file": typing.NotRequired[InputPathType | None],
+    "cortex_flag": bool,
+    "mask_file": typing.NotRequired[InputPathType | None],
+    "x_matrix": typing.NotRequired[InputPathType | None],
+    "detrend_order": typing.NotRequired[float | None],
+    "smooth_only_flag": bool,
+    "no_detrend_flag": bool,
+    "sqr_flag": bool,
+    "sum_file": typing.NotRequired[str | None],
+    "dat_file": typing.NotRequired[str | None],
+    "ar1dat_file": typing.NotRequired[str | None],
+    "ar1vol": typing.NotRequired[str | None],
+    "fwhmmap": typing.NotRequired[str | None],
+    "prune_flag": bool,
+    "no_prune_flag": bool,
+    "out_mask": typing.NotRequired[str | None],
+    "varnorm_flag": bool,
+    "fwhm": typing.NotRequired[float | None],
+    "niters_only": typing.NotRequired[str | None],
+    "output_file": str,
+    "sd": typing.NotRequired[str | None],
+    "synth_flag": bool,
+    "synth_frames": typing.NotRequired[float | None],
+    "threads": typing.NotRequired[float | None],
+    "debug_flag": bool,
+    "checkopts_flag": bool,
+    "version_flag": bool,
+})
+MrisFwhmParametersTagged = typing.TypedDict('MrisFwhmParametersTagged', {
+    "@type": typing.Literal["freesurfer/mris_fwhm"],
     "input_file": InputPathType,
     "subject": str,
     "hemi": str,
@@ -49,40 +83,9 @@ MrisFwhmParameters = typing.TypedDict('MrisFwhmParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "freesurfer.mris_fwhm": mris_fwhm_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-    }.get(t)
-
-
 class MrisFwhmOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `mris_fwhm(...)`.
+    Output object returned when calling `MrisFwhmParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -120,7 +123,7 @@ def mris_fwhm_params(
     debug_flag: bool = False,
     checkopts_flag: bool = False,
     version_flag: bool = False,
-) -> MrisFwhmParameters:
+) -> MrisFwhmParametersTagged:
     """
     Build parameters.
     
@@ -163,7 +166,7 @@ def mris_fwhm_params(
         Parameter dictionary
     """
     params = {
-        "@type": "freesurfer.mris_fwhm",
+        "@type": "freesurfer/mris_fwhm",
         "input_file": input_file,
         "subject": subject,
         "hemi": hemi,
@@ -232,121 +235,121 @@ def mris_fwhm_cargs(
     cargs.append("mris_fwhm")
     cargs.extend([
         "--i",
-        execution.input_file(params.get("input_file"))
+        execution.input_file(params.get("input_file", None))
     ])
     cargs.extend([
         "--subject",
-        params.get("subject")
+        params.get("subject", None)
     ])
     cargs.extend([
         "--hemi",
-        params.get("hemi")
+        params.get("hemi", None)
     ])
-    if params.get("surf") is not None:
+    if params.get("surf", None) is not None:
         cargs.extend([
             "--surf",
-            params.get("surf")
+            params.get("surf", None)
         ])
-    if params.get("label_file") is not None:
+    if params.get("label_file", None) is not None:
         cargs.extend([
             "--label",
-            execution.input_file(params.get("label_file"))
+            execution.input_file(params.get("label_file", None))
         ])
-    if params.get("cortex_flag"):
+    if params.get("cortex_flag", False):
         cargs.append("--cortex")
-    if params.get("mask_file") is not None:
+    if params.get("mask_file", None) is not None:
         cargs.extend([
             "--mask",
-            execution.input_file(params.get("mask_file"))
+            execution.input_file(params.get("mask_file", None))
         ])
-    if params.get("x_matrix") is not None:
+    if params.get("x_matrix", None) is not None:
         cargs.extend([
             "--X",
-            execution.input_file(params.get("x_matrix"))
+            execution.input_file(params.get("x_matrix", None))
         ])
-    if params.get("detrend_order") is not None:
+    if params.get("detrend_order", None) is not None:
         cargs.extend([
             "--detrend",
-            str(params.get("detrend_order"))
+            str(params.get("detrend_order", None))
         ])
-    if params.get("smooth_only_flag"):
+    if params.get("smooth_only_flag", False):
         cargs.append("--smooth-only")
-    if params.get("no_detrend_flag"):
+    if params.get("no_detrend_flag", False):
         cargs.append("--no-detrend")
-    if params.get("sqr_flag"):
+    if params.get("sqr_flag", False):
         cargs.append("--sqr")
-    if params.get("sum_file") is not None:
+    if params.get("sum_file", None) is not None:
         cargs.extend([
             "--sum",
-            params.get("sum_file")
+            params.get("sum_file", None)
         ])
-    if params.get("dat_file") is not None:
+    if params.get("dat_file", None) is not None:
         cargs.extend([
             "--dat",
-            params.get("dat_file")
+            params.get("dat_file", None)
         ])
-    if params.get("ar1dat_file") is not None:
+    if params.get("ar1dat_file", None) is not None:
         cargs.extend([
             "--ar1dat",
-            params.get("ar1dat_file")
+            params.get("ar1dat_file", None)
         ])
-    if params.get("ar1vol") is not None:
+    if params.get("ar1vol", None) is not None:
         cargs.extend([
             "--ar1",
-            params.get("ar1vol")
+            params.get("ar1vol", None)
         ])
-    if params.get("fwhmmap") is not None:
+    if params.get("fwhmmap", None) is not None:
         cargs.extend([
             "--fwhm-map",
-            params.get("fwhmmap")
+            params.get("fwhmmap", None)
         ])
-    if params.get("prune_flag"):
+    if params.get("prune_flag", False):
         cargs.append("--prune")
-    if params.get("no_prune_flag"):
+    if params.get("no_prune_flag", False):
         cargs.append("--no-prune")
-    if params.get("out_mask") is not None:
+    if params.get("out_mask", None) is not None:
         cargs.extend([
             "--out-mask",
-            params.get("out_mask")
+            params.get("out_mask", None)
         ])
-    if params.get("varnorm_flag"):
+    if params.get("varnorm_flag", False):
         cargs.append("--varnorm")
-    if params.get("fwhm") is not None:
+    if params.get("fwhm", None) is not None:
         cargs.extend([
             "--fwhm",
-            str(params.get("fwhm"))
+            str(params.get("fwhm", None))
         ])
-    if params.get("niters_only") is not None:
+    if params.get("niters_only", None) is not None:
         cargs.extend([
             "--niters-only",
-            params.get("niters_only")
+            params.get("niters_only", None)
         ])
     cargs.extend([
         "--o",
-        params.get("output_file")
+        params.get("output_file", None)
     ])
-    if params.get("sd") is not None:
+    if params.get("sd", None) is not None:
         cargs.extend([
             "--sd",
-            params.get("sd")
+            params.get("sd", None)
         ])
-    if params.get("synth_flag"):
+    if params.get("synth_flag", False):
         cargs.append("--synth")
-    if params.get("synth_frames") is not None:
+    if params.get("synth_frames", None) is not None:
         cargs.extend([
             "--synth-frames",
-            str(params.get("synth_frames"))
+            str(params.get("synth_frames", None))
         ])
-    if params.get("threads") is not None:
+    if params.get("threads", None) is not None:
         cargs.extend([
             "--threads",
-            str(params.get("threads"))
+            str(params.get("threads", None))
         ])
-    if params.get("debug_flag"):
+    if params.get("debug_flag", False):
         cargs.append("--debug")
-    if params.get("checkopts_flag"):
+    if params.get("checkopts_flag", False):
         cargs.append("--checkopts")
-    if params.get("version_flag"):
+    if params.get("version_flag", False):
         cargs.append("--version")
     return cargs
 
@@ -519,7 +522,6 @@ def mris_fwhm(
 __all__ = [
     "MRIS_FWHM_METADATA",
     "MrisFwhmOutputs",
-    "MrisFwhmParameters",
     "mris_fwhm",
     "mris_fwhm_execute",
     "mris_fwhm_params",

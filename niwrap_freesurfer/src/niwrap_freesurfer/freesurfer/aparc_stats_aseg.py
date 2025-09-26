@@ -14,7 +14,32 @@ APARC_STATS_ASEG_METADATA = Metadata(
 
 
 AparcStatsAsegParameters = typing.TypedDict('AparcStatsAsegParameters', {
-    "@type": typing.Literal["freesurfer.aparc_stats_aseg"],
+    "@type": typing.NotRequired[typing.Literal["freesurfer/aparc_stats_aseg"]],
+    "subject_name": str,
+    "gcs_name": str,
+    "subject_dir": typing.NotRequired[str | None],
+    "gcs_dir": typing.NotRequired[str | None],
+    "parc_name": typing.NotRequired[str | None],
+    "output_dir": typing.NotRequired[str | None],
+    "log_file": typing.NotRequired[str | None],
+    "lh_flag": bool,
+    "rh_flag": bool,
+    "a2009s_flag": bool,
+    "no_aseg_flag": bool,
+    "no_cortparc_flag": bool,
+    "no_parcstats_flag": bool,
+    "no_aparc2aseg_flag": bool,
+    "random_seed": typing.NotRequired[float | None],
+    "th3_flag": bool,
+    "no_th3_flag": bool,
+    "longitudinal": typing.NotRequired[list[str] | None],
+    "expert_file": typing.NotRequired[str | None],
+    "expert_use_flag": bool,
+    "expert_clean_flag": bool,
+    "expert_overwrite_flag": bool,
+})
+AparcStatsAsegParametersTagged = typing.TypedDict('AparcStatsAsegParametersTagged', {
+    "@type": typing.Literal["freesurfer/aparc_stats_aseg"],
     "subject_name": str,
     "gcs_name": str,
     "subject_dir": typing.NotRequired[str | None],
@@ -40,40 +65,9 @@ AparcStatsAsegParameters = typing.TypedDict('AparcStatsAsegParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "freesurfer.aparc_stats_aseg": aparc_stats_aseg_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-    }.get(t)
-
-
 class AparcStatsAsegOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `aparc_stats_aseg(...)`.
+    Output object returned when calling `AparcStatsAsegParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -102,7 +96,7 @@ def aparc_stats_aseg_params(
     expert_use_flag: bool = False,
     expert_clean_flag: bool = False,
     expert_overwrite_flag: bool = False,
-) -> AparcStatsAsegParameters:
+) -> AparcStatsAsegParametersTagged:
     """
     Build parameters.
     
@@ -135,7 +129,7 @@ def aparc_stats_aseg_params(
         Parameter dictionary
     """
     params = {
-        "@type": "freesurfer.aparc_stats_aseg",
+        "@type": "freesurfer/aparc_stats_aseg",
         "subject_name": subject_name,
         "gcs_name": gcs_name,
         "lh_flag": lh_flag,
@@ -187,75 +181,75 @@ def aparc_stats_aseg_cargs(
     cargs.append("aparc_stats_aseg")
     cargs.extend([
         "-s",
-        params.get("subject_name")
+        params.get("subject_name", None)
     ])
     cargs.extend([
         "-gcs",
-        params.get("gcs_name")
+        params.get("gcs_name", None)
     ])
-    if params.get("subject_dir") is not None:
+    if params.get("subject_dir", None) is not None:
         cargs.extend([
             "-sd",
-            params.get("subject_dir")
+            params.get("subject_dir", None)
         ])
-    if params.get("gcs_dir") is not None:
+    if params.get("gcs_dir", None) is not None:
         cargs.extend([
             "-gcsd",
-            params.get("gcs_dir")
+            params.get("gcs_dir", None)
         ])
-    if params.get("parc_name") is not None:
+    if params.get("parc_name", None) is not None:
         cargs.extend([
             "-name",
-            params.get("parc_name")
+            params.get("parc_name", None)
         ])
-    if params.get("output_dir") is not None:
+    if params.get("output_dir", None) is not None:
         cargs.extend([
             "-o",
-            params.get("output_dir")
+            params.get("output_dir", None)
         ])
-    if params.get("log_file") is not None:
+    if params.get("log_file", None) is not None:
         cargs.extend([
             "-log",
-            params.get("log_file")
+            params.get("log_file", None)
         ])
-    if params.get("lh_flag"):
+    if params.get("lh_flag", False):
         cargs.append("-lh")
-    if params.get("rh_flag"):
+    if params.get("rh_flag", False):
         cargs.append("-rh")
-    if params.get("a2009s_flag"):
+    if params.get("a2009s_flag", False):
         cargs.append("-a2009s")
-    if params.get("no_aseg_flag"):
+    if params.get("no_aseg_flag", False):
         cargs.append("-noaseg")
-    if params.get("no_cortparc_flag"):
+    if params.get("no_cortparc_flag", False):
         cargs.append("-nocortparc")
-    if params.get("no_parcstats_flag"):
+    if params.get("no_parcstats_flag", False):
         cargs.append("-noparcstats")
-    if params.get("no_aparc2aseg_flag"):
+    if params.get("no_aparc2aseg_flag", False):
         cargs.append("-noaparc2aseg")
-    if params.get("random_seed") is not None:
+    if params.get("random_seed", None) is not None:
         cargs.extend([
             "-seed",
-            str(params.get("random_seed"))
+            str(params.get("random_seed", None))
         ])
-    if params.get("th3_flag"):
+    if params.get("th3_flag", False):
         cargs.append("-th3")
-    if params.get("no_th3_flag"):
+    if params.get("no_th3_flag", False):
         cargs.append("-no-th3")
-    if params.get("longitudinal") is not None:
+    if params.get("longitudinal", None) is not None:
         cargs.extend([
             "-long",
-            *params.get("longitudinal")
+            *params.get("longitudinal", None)
         ])
-    if params.get("expert_file") is not None:
+    if params.get("expert_file", None) is not None:
         cargs.extend([
             "-expert",
-            params.get("expert_file")
+            params.get("expert_file", None)
         ])
-    if params.get("expert_use_flag"):
+    if params.get("expert_use_flag", False):
         cargs.append("-xopts-use")
-    if params.get("expert_clean_flag"):
+    if params.get("expert_clean_flag", False):
         cargs.append("-xopts-clean")
-    if params.get("expert_overwrite_flag"):
+    if params.get("expert_overwrite_flag", False):
         cargs.append("-xopts-overwrite")
     return cargs
 
@@ -400,7 +394,6 @@ def aparc_stats_aseg(
 __all__ = [
     "APARC_STATS_ASEG_METADATA",
     "AparcStatsAsegOutputs",
-    "AparcStatsAsegParameters",
     "aparc_stats_aseg",
     "aparc_stats_aseg_execute",
     "aparc_stats_aseg_params",

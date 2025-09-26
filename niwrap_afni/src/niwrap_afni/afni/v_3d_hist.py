@@ -14,7 +14,30 @@ V_3D_HIST_METADATA = Metadata(
 
 
 V3dHistParameters = typing.TypedDict('V3dHistParameters', {
-    "@type": typing.Literal["afni.3dHist"],
+    "@type": typing.NotRequired[typing.Literal["afni/3dHist"]],
+    "input": InputPathType,
+    "dind_subbrick": typing.NotRequired[float | None],
+    "mask_dset": typing.NotRequired[InputPathType | None],
+    "mask_range": typing.NotRequired[list[float] | None],
+    "cmask": typing.NotRequired[str | None],
+    "hist_file": typing.NotRequired[InputPathType | None],
+    "prefix": typing.NotRequired[str | None],
+    "equalized": typing.NotRequired[str | None],
+    "nbin": typing.NotRequired[float | None],
+    "min": typing.NotRequired[float | None],
+    "max": typing.NotRequired[float | None],
+    "binwidth": typing.NotRequired[float | None],
+    "ignore_out": bool,
+    "range_hist": typing.NotRequired[InputPathType | None],
+    "showhist": bool,
+    "at_val": typing.NotRequired[float | None],
+    "get_params": typing.NotRequired[str | None],
+    "voxvol": typing.NotRequired[float | None],
+    "val_at": typing.NotRequired[str | None],
+    "quiet": bool,
+})
+V3dHistParametersTagged = typing.TypedDict('V3dHistParametersTagged', {
+    "@type": typing.Literal["afni/3dHist"],
     "input": InputPathType,
     "dind_subbrick": typing.NotRequired[float | None],
     "mask_dset": typing.NotRequired[InputPathType | None],
@@ -38,40 +61,9 @@ V3dHistParameters = typing.TypedDict('V3dHistParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "afni.3dHist": v_3d_hist_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-    }.get(t)
-
-
 class V3dHistOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `v_3d_hist(...)`.
+    Output object returned when calling `V3dHistParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -98,7 +90,7 @@ def v_3d_hist_params(
     voxvol: float | None = None,
     val_at: str | None = None,
     quiet: bool = False,
-) -> V3dHistParameters:
+) -> V3dHistParametersTagged:
     """
     Build parameters.
     
@@ -133,7 +125,7 @@ def v_3d_hist_params(
         Parameter dictionary
     """
     params = {
-        "@type": "afni.3dHist",
+        "@type": "afni/3dHist",
         "input": input_,
         "ignore_out": ignore_out,
         "showhist": showhist,
@@ -189,92 +181,92 @@ def v_3d_hist_cargs(
     """
     cargs = []
     cargs.append("3dHist")
-    cargs.append(execution.input_file(params.get("input")))
-    if params.get("dind_subbrick") is not None:
+    cargs.append(execution.input_file(params.get("input", None)))
+    if params.get("dind_subbrick", None) is not None:
         cargs.extend([
             "-dind",
-            str(params.get("dind_subbrick"))
+            str(params.get("dind_subbrick", None))
         ])
-    if params.get("mask_dset") is not None:
+    if params.get("mask_dset", None) is not None:
         cargs.extend([
             "-mask",
-            execution.input_file(params.get("mask_dset"))
+            execution.input_file(params.get("mask_dset", None))
         ])
-    if params.get("mask_range") is not None:
+    if params.get("mask_range", None) is not None:
         cargs.extend([
             "-mask_range",
-            *map(str, params.get("mask_range"))
+            *map(str, params.get("mask_range", None))
         ])
-    if params.get("cmask") is not None:
+    if params.get("cmask", None) is not None:
         cargs.extend([
             "-cmask",
-            params.get("cmask")
+            params.get("cmask", None)
         ])
-    if params.get("hist_file") is not None:
+    if params.get("hist_file", None) is not None:
         cargs.extend([
             "-thishist",
-            execution.input_file(params.get("hist_file"))
+            execution.input_file(params.get("hist_file", None))
         ])
-    if params.get("prefix") is not None:
+    if params.get("prefix", None) is not None:
         cargs.extend([
             "-prefix",
-            params.get("prefix")
+            params.get("prefix", None)
         ])
-    if params.get("equalized") is not None:
+    if params.get("equalized", None) is not None:
         cargs.extend([
             "-equalized",
-            params.get("equalized")
+            params.get("equalized", None)
         ])
-    if params.get("nbin") is not None:
+    if params.get("nbin", None) is not None:
         cargs.extend([
             "-nbin",
-            str(params.get("nbin"))
+            str(params.get("nbin", None))
         ])
-    if params.get("min") is not None:
+    if params.get("min", None) is not None:
         cargs.extend([
             "-min",
-            str(params.get("min"))
+            str(params.get("min", None))
         ])
-    if params.get("max") is not None:
+    if params.get("max", None) is not None:
         cargs.extend([
             "-max",
-            str(params.get("max"))
+            str(params.get("max", None))
         ])
-    if params.get("binwidth") is not None:
+    if params.get("binwidth", None) is not None:
         cargs.extend([
             "-binwidth",
-            str(params.get("binwidth"))
+            str(params.get("binwidth", None))
         ])
-    if params.get("ignore_out"):
+    if params.get("ignore_out", False):
         cargs.append("-ignore_out")
-    if params.get("range_hist") is not None:
+    if params.get("range_hist", None) is not None:
         cargs.extend([
             "-rhist",
-            execution.input_file(params.get("range_hist"))
+            execution.input_file(params.get("range_hist", None))
         ])
-    if params.get("showhist"):
+    if params.get("showhist", False):
         cargs.append("-showhist")
-    if params.get("at_val") is not None:
+    if params.get("at_val", None) is not None:
         cargs.extend([
             "-at",
-            str(params.get("at_val"))
+            str(params.get("at_val", None))
         ])
-    if params.get("get_params") is not None:
+    if params.get("get_params", None) is not None:
         cargs.extend([
             "-get",
-            params.get("get_params")
+            params.get("get_params", None)
         ])
-    if params.get("voxvol") is not None:
+    if params.get("voxvol", None) is not None:
         cargs.extend([
             "-voxvol",
-            str(params.get("voxvol"))
+            str(params.get("voxvol", None))
         ])
-    if params.get("val_at") is not None:
+    if params.get("val_at", None) is not None:
         cargs.extend([
             "-val_at",
-            params.get("val_at")
+            params.get("val_at", None)
         ])
-    if params.get("quiet"):
+    if params.get("quiet", False):
         cargs.append("-quiet")
     return cargs
 
@@ -416,7 +408,6 @@ def v_3d_hist(
 
 __all__ = [
     "V3dHistOutputs",
-    "V3dHistParameters",
     "V_3D_HIST_METADATA",
     "v_3d_hist",
     "v_3d_hist_execute",

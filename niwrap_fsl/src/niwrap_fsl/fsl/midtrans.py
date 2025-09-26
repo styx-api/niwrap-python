@@ -14,7 +14,16 @@ MIDTRANS_METADATA = Metadata(
 
 
 MidtransParameters = typing.TypedDict('MidtransParameters', {
-    "@type": typing.Literal["fsl.midtrans"],
+    "@type": typing.NotRequired[typing.Literal["fsl/midtrans"]],
+    "transforms": list[InputPathType],
+    "output_matrix": typing.NotRequired[str | None],
+    "template_image": typing.NotRequired[InputPathType | None],
+    "separate_basename": typing.NotRequired[str | None],
+    "debug_flag": bool,
+    "verbose_flag": bool,
+})
+MidtransParametersTagged = typing.TypedDict('MidtransParametersTagged', {
+    "@type": typing.Literal["fsl/midtrans"],
     "transforms": list[InputPathType],
     "output_matrix": typing.NotRequired[str | None],
     "template_image": typing.NotRequired[InputPathType | None],
@@ -24,40 +33,9 @@ MidtransParameters = typing.TypedDict('MidtransParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "fsl.midtrans": midtrans_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-    }.get(t)
-
-
 class MidtransOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `midtrans(...)`.
+    Output object returned when calling `MidtransParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -70,7 +48,7 @@ def midtrans_params(
     separate_basename: str | None = None,
     debug_flag: bool = False,
     verbose_flag: bool = False,
-) -> MidtransParameters:
+) -> MidtransParametersTagged:
     """
     Build parameters.
     
@@ -88,7 +66,7 @@ def midtrans_params(
         Parameter dictionary
     """
     params = {
-        "@type": "fsl.midtrans",
+        "@type": "fsl/midtrans",
         "transforms": transforms,
         "debug_flag": debug_flag,
         "verbose_flag": verbose_flag,
@@ -117,25 +95,25 @@ def midtrans_cargs(
     """
     cargs = []
     cargs.append("midtrans")
-    cargs.extend([execution.input_file(f) for f in params.get("transforms")])
-    if params.get("output_matrix") is not None:
+    cargs.extend([execution.input_file(f) for f in params.get("transforms", None)])
+    if params.get("output_matrix", None) is not None:
         cargs.extend([
             "-o",
-            params.get("output_matrix")
+            params.get("output_matrix", None)
         ])
-    if params.get("template_image") is not None:
+    if params.get("template_image", None) is not None:
         cargs.extend([
             "--template",
-            execution.input_file(params.get("template_image"))
+            execution.input_file(params.get("template_image", None))
         ])
-    if params.get("separate_basename") is not None:
+    if params.get("separate_basename", None) is not None:
         cargs.extend([
             "--separate",
-            params.get("separate_basename")
+            params.get("separate_basename", None)
         ])
-    if params.get("debug_flag"):
+    if params.get("debug_flag", False):
         cargs.append("--debug")
-    if params.get("verbose_flag"):
+    if params.get("verbose_flag", False):
         cargs.append("-v, --verbose")
     return cargs
 
@@ -233,7 +211,6 @@ def midtrans(
 __all__ = [
     "MIDTRANS_METADATA",
     "MidtransOutputs",
-    "MidtransParameters",
     "midtrans",
     "midtrans_execute",
     "midtrans_params",

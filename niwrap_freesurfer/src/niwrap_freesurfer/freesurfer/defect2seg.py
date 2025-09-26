@@ -14,7 +14,19 @@ DEFECT2SEG_METADATA = Metadata(
 
 
 Defect2segParameters = typing.TypedDict('Defect2segParameters', {
-    "@type": typing.Literal["freesurfer.defect2seg"],
+    "@type": typing.NotRequired[typing.Literal["freesurfer/defect2seg"]],
+    "output_seg": str,
+    "template": InputPathType,
+    "left_hemisphere": typing.NotRequired[list[str] | None],
+    "right_hemisphere": typing.NotRequired[list[str] | None],
+    "subject": typing.NotRequired[str | None],
+    "lh_only": bool,
+    "rh_only": bool,
+    "cortex": bool,
+    "no_cortex": bool,
+})
+Defect2segParametersTagged = typing.TypedDict('Defect2segParametersTagged', {
+    "@type": typing.Literal["freesurfer/defect2seg"],
     "output_seg": str,
     "template": InputPathType,
     "left_hemisphere": typing.NotRequired[list[str] | None],
@@ -27,41 +39,9 @@ Defect2segParameters = typing.TypedDict('Defect2segParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "freesurfer.defect2seg": defect2seg_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "freesurfer.defect2seg": defect2seg_outputs,
-    }.get(t)
-
-
 class Defect2segOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `defect2seg(...)`.
+    Output object returned when calling `Defect2segParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -79,7 +59,7 @@ def defect2seg_params(
     rh_only: bool = False,
     cortex: bool = False,
     no_cortex: bool = False,
-) -> Defect2segParameters:
+) -> Defect2segParametersTagged:
     """
     Build parameters.
     
@@ -99,7 +79,7 @@ def defect2seg_params(
         Parameter dictionary
     """
     params = {
-        "@type": "freesurfer.defect2seg",
+        "@type": "freesurfer/defect2seg",
         "output_seg": output_seg,
         "template": template,
         "lh_only": lh_only,
@@ -133,34 +113,34 @@ def defect2seg_cargs(
     cargs.append("defect2seg")
     cargs.extend([
         "--o",
-        params.get("output_seg")
+        params.get("output_seg", None)
     ])
     cargs.extend([
         "--t",
-        execution.input_file(params.get("template"))
+        execution.input_file(params.get("template", None))
     ])
-    if params.get("left_hemisphere") is not None:
+    if params.get("left_hemisphere", None) is not None:
         cargs.extend([
             "--lh",
-            *params.get("left_hemisphere")
+            *params.get("left_hemisphere", None)
         ])
-    if params.get("right_hemisphere") is not None:
+    if params.get("right_hemisphere", None) is not None:
         cargs.extend([
             "--rh",
-            *params.get("right_hemisphere")
+            *params.get("right_hemisphere", None)
         ])
-    if params.get("subject") is not None:
+    if params.get("subject", None) is not None:
         cargs.extend([
             "--s",
-            params.get("subject")
+            params.get("subject", None)
         ])
-    if params.get("lh_only"):
+    if params.get("lh_only", False):
         cargs.append("--lh-only")
-    if params.get("rh_only"):
+    if params.get("rh_only", False):
         cargs.append("--rh-only")
-    if params.get("cortex"):
+    if params.get("cortex", False):
         cargs.append("--cortex")
-    if params.get("no_cortex"):
+    if params.get("no_cortex", False):
         cargs.append("--no-cortex")
     return cargs
 
@@ -180,7 +160,7 @@ def defect2seg_outputs(
     """
     ret = Defect2segOutputs(
         root=execution.output_file("."),
-        output_segmentation=execution.output_file(params.get("output_seg")),
+        output_segmentation=execution.output_file(params.get("output_seg", None)),
     )
     return ret
 
@@ -267,7 +247,6 @@ def defect2seg(
 __all__ = [
     "DEFECT2SEG_METADATA",
     "Defect2segOutputs",
-    "Defect2segParameters",
     "defect2seg",
     "defect2seg_execute",
     "defect2seg_params",

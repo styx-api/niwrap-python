@@ -14,7 +14,14 @@ METRIC_FILL_HOLES_METADATA = Metadata(
 
 
 MetricFillHolesParameters = typing.TypedDict('MetricFillHolesParameters', {
-    "@type": typing.Literal["workbench.metric-fill-holes"],
+    "@type": typing.NotRequired[typing.Literal["workbench/metric-fill-holes"]],
+    "surface": InputPathType,
+    "metric_in": InputPathType,
+    "metric_out": str,
+    "opt_corrected_areas_area_metric": typing.NotRequired[InputPathType | None],
+})
+MetricFillHolesParametersTagged = typing.TypedDict('MetricFillHolesParametersTagged', {
+    "@type": typing.Literal["workbench/metric-fill-holes"],
     "surface": InputPathType,
     "metric_in": InputPathType,
     "metric_out": str,
@@ -22,41 +29,9 @@ MetricFillHolesParameters = typing.TypedDict('MetricFillHolesParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "workbench.metric-fill-holes": metric_fill_holes_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "workbench.metric-fill-holes": metric_fill_holes_outputs,
-    }.get(t)
-
-
 class MetricFillHolesOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `metric_fill_holes(...)`.
+    Output object returned when calling `MetricFillHolesParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -69,7 +44,7 @@ def metric_fill_holes_params(
     metric_in: InputPathType,
     metric_out: str,
     opt_corrected_areas_area_metric: InputPathType | None = None,
-) -> MetricFillHolesParameters:
+) -> MetricFillHolesParametersTagged:
     """
     Build parameters.
     
@@ -84,7 +59,7 @@ def metric_fill_holes_params(
         Parameter dictionary
     """
     params = {
-        "@type": "workbench.metric-fill-holes",
+        "@type": "workbench/metric-fill-holes",
         "surface": surface,
         "metric_in": metric_in,
         "metric_out": metric_out,
@@ -110,13 +85,13 @@ def metric_fill_holes_cargs(
     cargs = []
     cargs.append("wb_command")
     cargs.append("-metric-fill-holes")
-    cargs.append(execution.input_file(params.get("surface")))
-    cargs.append(execution.input_file(params.get("metric_in")))
-    cargs.append(params.get("metric_out"))
-    if params.get("opt_corrected_areas_area_metric") is not None:
+    cargs.append(execution.input_file(params.get("surface", None)))
+    cargs.append(execution.input_file(params.get("metric_in", None)))
+    cargs.append(params.get("metric_out", None))
+    if params.get("opt_corrected_areas_area_metric", None) is not None:
         cargs.extend([
             "-corrected-areas",
-            execution.input_file(params.get("opt_corrected_areas_area_metric"))
+            execution.input_file(params.get("opt_corrected_areas_area_metric", None))
         ])
     return cargs
 
@@ -136,7 +111,7 @@ def metric_fill_holes_outputs(
     """
     ret = MetricFillHolesOutputs(
         root=execution.output_file("."),
-        metric_out=execution.output_file(params.get("metric_out")),
+        metric_out=execution.output_file(params.get("metric_out", None)),
     )
     return ret
 
@@ -214,7 +189,6 @@ def metric_fill_holes(
 __all__ = [
     "METRIC_FILL_HOLES_METADATA",
     "MetricFillHolesOutputs",
-    "MetricFillHolesParameters",
     "metric_fill_holes",
     "metric_fill_holes_execute",
     "metric_fill_holes_params",

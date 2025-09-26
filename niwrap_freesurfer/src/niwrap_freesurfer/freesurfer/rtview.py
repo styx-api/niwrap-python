@@ -14,7 +14,24 @@ RTVIEW_METADATA = Metadata(
 
 
 RtviewParameters = typing.TypedDict('RtviewParameters', {
-    "@type": typing.Literal["freesurfer.rtview"],
+    "@type": typing.NotRequired[typing.Literal["freesurfer/rtview"]],
+    "subject": typing.NotRequired[str | None],
+    "hemi": typing.NotRequired[str | None],
+    "left_hemi": bool,
+    "right_hemi": bool,
+    "eccen": bool,
+    "polar": bool,
+    "real_file": typing.NotRequired[InputPathType | None],
+    "imag_file": typing.NotRequired[InputPathType | None],
+    "fsig_file": typing.NotRequired[InputPathType | None],
+    "reg_file": typing.NotRequired[InputPathType | None],
+    "flat_display": bool,
+    "patch": typing.NotRequired[str | None],
+    "tcl_file": typing.NotRequired[InputPathType | None],
+    "no_cleanup": bool,
+})
+RtviewParametersTagged = typing.TypedDict('RtviewParametersTagged', {
+    "@type": typing.Literal["freesurfer/rtview"],
     "subject": typing.NotRequired[str | None],
     "hemi": typing.NotRequired[str | None],
     "left_hemi": bool,
@@ -32,40 +49,9 @@ RtviewParameters = typing.TypedDict('RtviewParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "freesurfer.rtview": rtview_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-    }.get(t)
-
-
 class RtviewOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `rtview(...)`.
+    Output object returned when calling `RtviewParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -86,7 +72,7 @@ def rtview_params(
     patch: str | None = None,
     tcl_file: InputPathType | None = None,
     no_cleanup: bool = False,
-) -> RtviewParameters:
+) -> RtviewParametersTagged:
     """
     Build parameters.
     
@@ -110,7 +96,7 @@ def rtview_params(
         Parameter dictionary
     """
     params = {
-        "@type": "freesurfer.rtview",
+        "@type": "freesurfer/rtview",
         "left_hemi": left_hemi,
         "right_hemi": right_hemi,
         "eccen": eccen,
@@ -152,57 +138,57 @@ def rtview_cargs(
     """
     cargs = []
     cargs.append("rtview")
-    if params.get("subject") is not None:
+    if params.get("subject", None) is not None:
         cargs.extend([
             "--s",
-            params.get("subject")
+            params.get("subject", None)
         ])
-    if params.get("hemi") is not None:
+    if params.get("hemi", None) is not None:
         cargs.extend([
             "--hemi",
-            params.get("hemi")
+            params.get("hemi", None)
         ])
-    if params.get("left_hemi"):
+    if params.get("left_hemi", False):
         cargs.append("--lh")
-    if params.get("right_hemi"):
+    if params.get("right_hemi", False):
         cargs.append("--rh")
-    if params.get("eccen"):
+    if params.get("eccen", False):
         cargs.append("--eccen")
-    if params.get("polar"):
+    if params.get("polar", False):
         cargs.append("--polar")
-    if params.get("real_file") is not None:
+    if params.get("real_file", None) is not None:
         cargs.extend([
             "--real",
-            execution.input_file(params.get("real_file"))
+            execution.input_file(params.get("real_file", None))
         ])
-    if params.get("imag_file") is not None:
+    if params.get("imag_file", None) is not None:
         cargs.extend([
             "--imag",
-            execution.input_file(params.get("imag_file"))
+            execution.input_file(params.get("imag_file", None))
         ])
-    if params.get("fsig_file") is not None:
+    if params.get("fsig_file", None) is not None:
         cargs.extend([
             "--fsig",
-            execution.input_file(params.get("fsig_file"))
+            execution.input_file(params.get("fsig_file", None))
         ])
-    if params.get("reg_file") is not None:
+    if params.get("reg_file", None) is not None:
         cargs.extend([
             "--reg",
-            execution.input_file(params.get("reg_file"))
+            execution.input_file(params.get("reg_file", None))
         ])
-    if params.get("flat_display"):
+    if params.get("flat_display", False):
         cargs.append("--flat")
-    if params.get("patch") is not None:
+    if params.get("patch", None) is not None:
         cargs.extend([
             "--patch",
-            params.get("patch")
+            params.get("patch", None)
         ])
-    if params.get("tcl_file") is not None:
+    if params.get("tcl_file", None) is not None:
         cargs.extend([
             "--tcl",
-            execution.input_file(params.get("tcl_file"))
+            execution.input_file(params.get("tcl_file", None))
         ])
-    if params.get("no_cleanup"):
+    if params.get("no_cleanup", False):
         cargs.append("--no-cleanup")
     return cargs
 
@@ -326,7 +312,6 @@ def rtview(
 __all__ = [
     "RTVIEW_METADATA",
     "RtviewOutputs",
-    "RtviewParameters",
     "rtview",
     "rtview_execute",
     "rtview_params",

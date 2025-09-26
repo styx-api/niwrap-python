@@ -14,46 +14,18 @@ V__DJUNCT_4D_SLICES_TO_3D_VOL_METADATA = Metadata(
 
 
 VDjunct4dSlicesTo3dVolParameters = typing.TypedDict('VDjunct4dSlicesTo3dVolParameters', {
-    "@type": typing.Literal["afni.@djunct_4d_slices_to_3d_vol"],
+    "@type": typing.NotRequired[typing.Literal["afni/@djunct_4d_slices_to_3d_vol"]],
+    "do_something": bool,
+})
+VDjunct4dSlicesTo3dVolParametersTagged = typing.TypedDict('VDjunct4dSlicesTo3dVolParametersTagged', {
+    "@type": typing.Literal["afni/@djunct_4d_slices_to_3d_vol"],
     "do_something": bool,
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "afni.@djunct_4d_slices_to_3d_vol": v__djunct_4d_slices_to_3d_vol_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "afni.@djunct_4d_slices_to_3d_vol": v__djunct_4d_slices_to_3d_vol_outputs,
-    }.get(t)
-
-
 class VDjunct4dSlicesTo3dVolOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `v__djunct_4d_slices_to_3d_vol(...)`.
+    Output object returned when calling `VDjunct4dSlicesTo3dVolParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -63,7 +35,7 @@ class VDjunct4dSlicesTo3dVolOutputs(typing.NamedTuple):
 
 def v__djunct_4d_slices_to_3d_vol_params(
     do_something: bool = False,
-) -> VDjunct4dSlicesTo3dVolParameters:
+) -> VDjunct4dSlicesTo3dVolParametersTagged:
     """
     Build parameters.
     
@@ -73,7 +45,7 @@ def v__djunct_4d_slices_to_3d_vol_params(
         Parameter dictionary
     """
     params = {
-        "@type": "afni.@djunct_4d_slices_to_3d_vol",
+        "@type": "afni/@djunct_4d_slices_to_3d_vol",
         "do_something": do_something,
     }
     return params
@@ -94,7 +66,7 @@ def v__djunct_4d_slices_to_3d_vol_cargs(
     """
     cargs = []
     cargs.append("@djunct_4d_slices_to_3d_vol")
-    if params.get("do_something"):
+    if params.get("do_something", False):
         cargs.append("-do-something")
     return cargs
 
@@ -174,7 +146,6 @@ def v__djunct_4d_slices_to_3d_vol(
 
 __all__ = [
     "VDjunct4dSlicesTo3dVolOutputs",
-    "VDjunct4dSlicesTo3dVolParameters",
     "V__DJUNCT_4D_SLICES_TO_3D_VOL_METADATA",
     "v__djunct_4d_slices_to_3d_vol",
     "v__djunct_4d_slices_to_3d_vol_execute",

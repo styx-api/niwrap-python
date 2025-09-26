@@ -14,46 +14,18 @@ INFLATE_SUBJECT_NEW_LH_METADATA = Metadata(
 
 
 InflateSubjectNewLhParameters = typing.TypedDict('InflateSubjectNewLhParameters', {
-    "@type": typing.Literal["freesurfer.inflate_subject_new-lh"],
+    "@type": typing.NotRequired[typing.Literal["freesurfer/inflate_subject_new-lh"]],
+    "subject_dir": str,
+})
+InflateSubjectNewLhParametersTagged = typing.TypedDict('InflateSubjectNewLhParametersTagged', {
+    "@type": typing.Literal["freesurfer/inflate_subject_new-lh"],
     "subject_dir": str,
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "freesurfer.inflate_subject_new-lh": inflate_subject_new_lh_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "freesurfer.inflate_subject_new-lh": inflate_subject_new_lh_outputs,
-    }.get(t)
-
-
 class InflateSubjectNewLhOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `inflate_subject_new_lh(...)`.
+    Output object returned when calling `InflateSubjectNewLhParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -63,7 +35,7 @@ class InflateSubjectNewLhOutputs(typing.NamedTuple):
 
 def inflate_subject_new_lh_params(
     subject_dir: str,
-) -> InflateSubjectNewLhParameters:
+) -> InflateSubjectNewLhParametersTagged:
     """
     Build parameters.
     
@@ -73,7 +45,7 @@ def inflate_subject_new_lh_params(
         Parameter dictionary
     """
     params = {
-        "@type": "freesurfer.inflate_subject_new-lh",
+        "@type": "freesurfer/inflate_subject_new-lh",
         "subject_dir": subject_dir,
     }
     return params
@@ -96,7 +68,7 @@ def inflate_subject_new_lh_cargs(
     cargs.append("inflate_subject_new-lh")
     cargs.extend([
         "-lh",
-        params.get("subject_dir")
+        params.get("subject_dir", None)
     ])
     return cargs
 
@@ -116,7 +88,7 @@ def inflate_subject_new_lh_outputs(
     """
     ret = InflateSubjectNewLhOutputs(
         root=execution.output_file("."),
-        inflated_surface=execution.output_file(params.get("subject_dir") + "/surf/lh.inflated"),
+        inflated_surface=execution.output_file(params.get("subject_dir", None) + "/surf/lh.inflated"),
     )
     return ret
 
@@ -177,7 +149,6 @@ def inflate_subject_new_lh(
 __all__ = [
     "INFLATE_SUBJECT_NEW_LH_METADATA",
     "InflateSubjectNewLhOutputs",
-    "InflateSubjectNewLhParameters",
     "inflate_subject_new_lh",
     "inflate_subject_new_lh_execute",
     "inflate_subject_new_lh_params",

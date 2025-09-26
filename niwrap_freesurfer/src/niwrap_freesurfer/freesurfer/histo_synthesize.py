@@ -14,48 +14,22 @@ HISTO_SYNTHESIZE_METADATA = Metadata(
 
 
 HistoSynthesizeParameters = typing.TypedDict('HistoSynthesizeParameters', {
-    "@type": typing.Literal["freesurfer.histo_synthesize"],
+    "@type": typing.NotRequired[typing.Literal["freesurfer/histo_synthesize"]],
+    "mri_volume": InputPathType,
+    "histo_volume": InputPathType,
+    "synthetic_histo": str,
+})
+HistoSynthesizeParametersTagged = typing.TypedDict('HistoSynthesizeParametersTagged', {
+    "@type": typing.Literal["freesurfer/histo_synthesize"],
     "mri_volume": InputPathType,
     "histo_volume": InputPathType,
     "synthetic_histo": str,
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "freesurfer.histo_synthesize": histo_synthesize_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "freesurfer.histo_synthesize": histo_synthesize_outputs,
-    }.get(t)
-
-
 class HistoSynthesizeOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `histo_synthesize(...)`.
+    Output object returned when calling `HistoSynthesizeParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -67,7 +41,7 @@ def histo_synthesize_params(
     mri_volume: InputPathType,
     histo_volume: InputPathType,
     synthetic_histo: str,
-) -> HistoSynthesizeParameters:
+) -> HistoSynthesizeParametersTagged:
     """
     Build parameters.
     
@@ -79,7 +53,7 @@ def histo_synthesize_params(
         Parameter dictionary
     """
     params = {
-        "@type": "freesurfer.histo_synthesize",
+        "@type": "freesurfer/histo_synthesize",
         "mri_volume": mri_volume,
         "histo_volume": histo_volume,
         "synthetic_histo": synthetic_histo,
@@ -102,9 +76,9 @@ def histo_synthesize_cargs(
     """
     cargs = []
     cargs.append("histo_synthesize")
-    cargs.append(execution.input_file(params.get("mri_volume")))
-    cargs.append(execution.input_file(params.get("histo_volume")))
-    cargs.append(params.get("synthetic_histo"))
+    cargs.append(execution.input_file(params.get("mri_volume", None)))
+    cargs.append(execution.input_file(params.get("histo_volume", None)))
+    cargs.append(params.get("synthetic_histo", None))
     return cargs
 
 
@@ -123,7 +97,7 @@ def histo_synthesize_outputs(
     """
     ret = HistoSynthesizeOutputs(
         root=execution.output_file("."),
-        output_synthetic_histo=execution.output_file(params.get("synthetic_histo")),
+        output_synthetic_histo=execution.output_file(params.get("synthetic_histo", None)),
     )
     return ret
 
@@ -190,7 +164,6 @@ def histo_synthesize(
 __all__ = [
     "HISTO_SYNTHESIZE_METADATA",
     "HistoSynthesizeOutputs",
-    "HistoSynthesizeParameters",
     "histo_synthesize",
     "histo_synthesize_execute",
     "histo_synthesize_params",

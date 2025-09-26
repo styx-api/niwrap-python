@@ -14,20 +14,35 @@ ANTS_REGISTRATION_METADATA = Metadata(
 
 
 AntsRegistrationInitialMovingTransformParameters = typing.TypedDict('AntsRegistrationInitialMovingTransformParameters', {
-    "@type": typing.Literal["ants.antsRegistration.initial_moving_transform"],
+    "@type": typing.NotRequired[typing.Literal["initial_moving_transform"]],
+    "initial_moving_transform": InputPathType,
+})
+AntsRegistrationInitialMovingTransformParametersTagged = typing.TypedDict('AntsRegistrationInitialMovingTransformParametersTagged', {
+    "@type": typing.Literal["initial_moving_transform"],
     "initial_moving_transform": InputPathType,
 })
 
 
 AntsRegistrationInitialMovingTransformUseInverseParameters = typing.TypedDict('AntsRegistrationInitialMovingTransformUseInverseParameters', {
-    "@type": typing.Literal["ants.antsRegistration.initial_moving_transform_use_inverse"],
+    "@type": typing.NotRequired[typing.Literal["initial_moving_transform_use_inverse"]],
+    "initial_moving_transform": InputPathType,
+    "use_inverse": typing.NotRequired[typing.Literal[0, 1] | None],
+})
+AntsRegistrationInitialMovingTransformUseInverseParametersTagged = typing.TypedDict('AntsRegistrationInitialMovingTransformUseInverseParametersTagged', {
+    "@type": typing.Literal["initial_moving_transform_use_inverse"],
     "initial_moving_transform": InputPathType,
     "use_inverse": typing.NotRequired[typing.Literal[0, 1] | None],
 })
 
 
 AntsRegistrationInitialMovingTransformInitializationFeatureParameters = typing.TypedDict('AntsRegistrationInitialMovingTransformInitializationFeatureParameters', {
-    "@type": typing.Literal["ants.antsRegistration.initial_moving_transform_initialization_feature"],
+    "@type": typing.NotRequired[typing.Literal["initial_moving_transform_initialization_feature"]],
+    "fixed_image": InputPathType,
+    "moving_image": InputPathType,
+    "initialization_feature": typing.Literal[0, 1, 2],
+})
+AntsRegistrationInitialMovingTransformInitializationFeatureParametersTagged = typing.TypedDict('AntsRegistrationInitialMovingTransformInitializationFeatureParametersTagged', {
+    "@type": typing.Literal["initial_moving_transform_initialization_feature"],
     "fixed_image": InputPathType,
     "moving_image": InputPathType,
     "initialization_feature": typing.Literal[0, 1, 2],
@@ -35,44 +50,75 @@ AntsRegistrationInitialMovingTransformInitializationFeatureParameters = typing.T
 
 
 AntsRegistrationTransformRigidParameters = typing.TypedDict('AntsRegistrationTransformRigidParameters', {
-    "@type": typing.Literal["ants.antsRegistration.stages.transform_rigid"],
+    "@type": typing.NotRequired[typing.Literal["transform_rigid"]],
+    "gradient_step": float,
+})
+AntsRegistrationTransformRigidParametersTagged = typing.TypedDict('AntsRegistrationTransformRigidParametersTagged', {
+    "@type": typing.Literal["transform_rigid"],
     "gradient_step": float,
 })
 
 
 AntsRegistrationTransformAffineParameters = typing.TypedDict('AntsRegistrationTransformAffineParameters', {
-    "@type": typing.Literal["ants.antsRegistration.stages.transform_affine"],
+    "@type": typing.NotRequired[typing.Literal["transform_affine"]],
+    "gradient_step": float,
+})
+AntsRegistrationTransformAffineParametersTagged = typing.TypedDict('AntsRegistrationTransformAffineParametersTagged', {
+    "@type": typing.Literal["transform_affine"],
     "gradient_step": float,
 })
 
 
 AntsRegistrationTransformCompositeAffineParameters = typing.TypedDict('AntsRegistrationTransformCompositeAffineParameters', {
-    "@type": typing.Literal["ants.antsRegistration.stages.transform_composite_affine"],
+    "@type": typing.NotRequired[typing.Literal["transform_composite_affine"]],
+    "gradient_step": float,
+})
+AntsRegistrationTransformCompositeAffineParametersTagged = typing.TypedDict('AntsRegistrationTransformCompositeAffineParametersTagged', {
+    "@type": typing.Literal["transform_composite_affine"],
     "gradient_step": float,
 })
 
 
 AntsRegistrationTransformSimilarityParameters = typing.TypedDict('AntsRegistrationTransformSimilarityParameters', {
-    "@type": typing.Literal["ants.antsRegistration.stages.transform_similarity"],
+    "@type": typing.NotRequired[typing.Literal["transform_similarity"]],
+    "gradient_step": float,
+})
+AntsRegistrationTransformSimilarityParametersTagged = typing.TypedDict('AntsRegistrationTransformSimilarityParametersTagged', {
+    "@type": typing.Literal["transform_similarity"],
     "gradient_step": float,
 })
 
 
 AntsRegistrationTransformTranslationParameters = typing.TypedDict('AntsRegistrationTransformTranslationParameters', {
-    "@type": typing.Literal["ants.antsRegistration.stages.transform_translation"],
+    "@type": typing.NotRequired[typing.Literal["transform_translation"]],
+    "gradient_step": float,
+})
+AntsRegistrationTransformTranslationParametersTagged = typing.TypedDict('AntsRegistrationTransformTranslationParametersTagged', {
+    "@type": typing.Literal["transform_translation"],
     "gradient_step": float,
 })
 
 
 AntsRegistrationTransformBsplineParameters = typing.TypedDict('AntsRegistrationTransformBsplineParameters', {
-    "@type": typing.Literal["ants.antsRegistration.stages.transform_bspline"],
+    "@type": typing.NotRequired[typing.Literal["transform_bspline"]],
+    "gradient_step": float,
+    "mesh_size_at_base_level": float,
+})
+AntsRegistrationTransformBsplineParametersTagged = typing.TypedDict('AntsRegistrationTransformBsplineParametersTagged', {
+    "@type": typing.Literal["transform_bspline"],
     "gradient_step": float,
     "mesh_size_at_base_level": float,
 })
 
 
 AntsRegistrationTransformGaussianDisplacementFieldParameters = typing.TypedDict('AntsRegistrationTransformGaussianDisplacementFieldParameters', {
-    "@type": typing.Literal["ants.antsRegistration.stages.transform_gaussian_displacement_field"],
+    "@type": typing.NotRequired[typing.Literal["transform_gaussian_displacement_field"]],
+    "gradient_step": float,
+    "update_field_variance_in_voxel_space": float,
+    "total_field_variance_in_voxel_space": float,
+})
+AntsRegistrationTransformGaussianDisplacementFieldParametersTagged = typing.TypedDict('AntsRegistrationTransformGaussianDisplacementFieldParametersTagged', {
+    "@type": typing.Literal["transform_gaussian_displacement_field"],
     "gradient_step": float,
     "update_field_variance_in_voxel_space": float,
     "total_field_variance_in_voxel_space": float,
@@ -80,7 +126,14 @@ AntsRegistrationTransformGaussianDisplacementFieldParameters = typing.TypedDict(
 
 
 AntsRegistrationTransformBsplineDisplacementFieldParameters = typing.TypedDict('AntsRegistrationTransformBsplineDisplacementFieldParameters', {
-    "@type": typing.Literal["ants.antsRegistration.stages.transform_bspline_displacement_field"],
+    "@type": typing.NotRequired[typing.Literal["transform_bspline_displacement_field"]],
+    "gradient_step": float,
+    "update_field_mesh_size_at_base_level": float,
+    "total_field_mesh_size_at_base_level": typing.NotRequired[float | None],
+    "spline_order": typing.NotRequired[float | None],
+})
+AntsRegistrationTransformBsplineDisplacementFieldParametersTagged = typing.TypedDict('AntsRegistrationTransformBsplineDisplacementFieldParametersTagged', {
+    "@type": typing.Literal["transform_bspline_displacement_field"],
     "gradient_step": float,
     "update_field_mesh_size_at_base_level": float,
     "total_field_mesh_size_at_base_level": typing.NotRequired[float | None],
@@ -89,7 +142,16 @@ AntsRegistrationTransformBsplineDisplacementFieldParameters = typing.TypedDict('
 
 
 AntsRegistrationTransformTimeVaryingVelocityFieldParameters = typing.TypedDict('AntsRegistrationTransformTimeVaryingVelocityFieldParameters', {
-    "@type": typing.Literal["ants.antsRegistration.stages.transform_time_varying_velocity_field"],
+    "@type": typing.NotRequired[typing.Literal["transform_time_varying_velocity_field"]],
+    "gradient_step": float,
+    "number_of_time_indices": float,
+    "update_field_variance_in_voxel_space": float,
+    "update_field_time_variance": float,
+    "total_field_variance_in_voxel_space": float,
+    "total_field_time_variance": float,
+})
+AntsRegistrationTransformTimeVaryingVelocityFieldParametersTagged = typing.TypedDict('AntsRegistrationTransformTimeVaryingVelocityFieldParametersTagged', {
+    "@type": typing.Literal["transform_time_varying_velocity_field"],
     "gradient_step": float,
     "number_of_time_indices": float,
     "update_field_variance_in_voxel_space": float,
@@ -100,7 +162,14 @@ AntsRegistrationTransformTimeVaryingVelocityFieldParameters = typing.TypedDict('
 
 
 AntsRegistrationTransformTimeVaryingBsplineVelocityFieldParameters = typing.TypedDict('AntsRegistrationTransformTimeVaryingBsplineVelocityFieldParameters', {
-    "@type": typing.Literal["ants.antsRegistration.stages.transform_time_varying_bspline_velocity_field"],
+    "@type": typing.NotRequired[typing.Literal["transform_time_varying_bspline_velocity_field"]],
+    "gradient_step": float,
+    "velocity_field_mesh_size": float,
+    "number_of_time_point_samples": typing.NotRequired[float | None],
+    "spline_order": typing.NotRequired[float | None],
+})
+AntsRegistrationTransformTimeVaryingBsplineVelocityFieldParametersTagged = typing.TypedDict('AntsRegistrationTransformTimeVaryingBsplineVelocityFieldParametersTagged', {
+    "@type": typing.Literal["transform_time_varying_bspline_velocity_field"],
     "gradient_step": float,
     "velocity_field_mesh_size": float,
     "number_of_time_point_samples": typing.NotRequired[float | None],
@@ -109,7 +178,13 @@ AntsRegistrationTransformTimeVaryingBsplineVelocityFieldParameters = typing.Type
 
 
 AntsRegistrationTransformSynParameters = typing.TypedDict('AntsRegistrationTransformSynParameters', {
-    "@type": typing.Literal["ants.antsRegistration.stages.transform_syn"],
+    "@type": typing.NotRequired[typing.Literal["transform_syn"]],
+    "gradient_step": float,
+    "update_field_variance_in_voxel_space": float,
+    "total_field_variance_in_voxel_space": float,
+})
+AntsRegistrationTransformSynParametersTagged = typing.TypedDict('AntsRegistrationTransformSynParametersTagged', {
+    "@type": typing.Literal["transform_syn"],
     "gradient_step": float,
     "update_field_variance_in_voxel_space": float,
     "total_field_variance_in_voxel_space": float,
@@ -117,7 +192,14 @@ AntsRegistrationTransformSynParameters = typing.TypedDict('AntsRegistrationTrans
 
 
 AntsRegistrationTransformBsplineSynParameters = typing.TypedDict('AntsRegistrationTransformBsplineSynParameters', {
-    "@type": typing.Literal["ants.antsRegistration.stages.transform_bspline_syn"],
+    "@type": typing.NotRequired[typing.Literal["transform_bspline_syn"]],
+    "gradient_step": float,
+    "update_field_mesh_size_at_base_level": float,
+    "total_field_mesh_size_at_base_level": typing.NotRequired[float | None],
+    "spline_order": typing.NotRequired[float | None],
+})
+AntsRegistrationTransformBsplineSynParametersTagged = typing.TypedDict('AntsRegistrationTransformBsplineSynParametersTagged', {
+    "@type": typing.Literal["transform_bspline_syn"],
     "gradient_step": float,
     "update_field_mesh_size_at_base_level": float,
     "total_field_mesh_size_at_base_level": typing.NotRequired[float | None],
@@ -126,7 +208,14 @@ AntsRegistrationTransformBsplineSynParameters = typing.TypedDict('AntsRegistrati
 
 
 AntsRegistrationTransformExponentialParameters = typing.TypedDict('AntsRegistrationTransformExponentialParameters', {
-    "@type": typing.Literal["ants.antsRegistration.stages.transform_exponential"],
+    "@type": typing.NotRequired[typing.Literal["transform_exponential"]],
+    "gradient_step": float,
+    "update_field_variance_in_voxel_space": float,
+    "velocity_field_variance_in_voxel_space": float,
+    "number_of_integration_steps": float,
+})
+AntsRegistrationTransformExponentialParametersTagged = typing.TypedDict('AntsRegistrationTransformExponentialParametersTagged', {
+    "@type": typing.Literal["transform_exponential"],
     "gradient_step": float,
     "update_field_variance_in_voxel_space": float,
     "velocity_field_variance_in_voxel_space": float,
@@ -135,7 +224,15 @@ AntsRegistrationTransformExponentialParameters = typing.TypedDict('AntsRegistrat
 
 
 AntsRegistrationTransformBsplineExponentialParameters = typing.TypedDict('AntsRegistrationTransformBsplineExponentialParameters', {
-    "@type": typing.Literal["ants.antsRegistration.stages.transform_bspline_exponential"],
+    "@type": typing.NotRequired[typing.Literal["transform_bspline_exponential"]],
+    "gradient_step": float,
+    "update_field_mesh_size_at_base_level": float,
+    "velocity_field_mesh_size_at_base_level": typing.NotRequired[float | None],
+    "number_of_integration_steps": typing.NotRequired[float | None],
+    "spline_order": typing.NotRequired[float | None],
+})
+AntsRegistrationTransformBsplineExponentialParametersTagged = typing.TypedDict('AntsRegistrationTransformBsplineExponentialParametersTagged', {
+    "@type": typing.Literal["transform_bspline_exponential"],
     "gradient_step": float,
     "update_field_mesh_size_at_base_level": float,
     "velocity_field_mesh_size_at_base_level": typing.NotRequired[float | None],
@@ -145,7 +242,17 @@ AntsRegistrationTransformBsplineExponentialParameters = typing.TypedDict('AntsRe
 
 
 AntsRegistrationMetricAntsNeighbourhoodCrossCorrelationParameters = typing.TypedDict('AntsRegistrationMetricAntsNeighbourhoodCrossCorrelationParameters', {
-    "@type": typing.Literal["ants.antsRegistration.stages.metric_ants_neighbourhood_cross_correlation"],
+    "@type": typing.NotRequired[typing.Literal["metric_ants_neighbourhood_cross_correlation"]],
+    "fixed_image": str,
+    "moving_image": str,
+    "metric_weight": float,
+    "radius": typing.NotRequired[float | None],
+    "sampling_strategy": typing.NotRequired[typing.Literal["None", "Regular", "Random"] | None],
+    "sampling_percentage": typing.NotRequired[float | None],
+    "use_gradient_filter": typing.NotRequired[typing.Literal["true", "false"] | None],
+})
+AntsRegistrationMetricAntsNeighbourhoodCrossCorrelationParametersTagged = typing.TypedDict('AntsRegistrationMetricAntsNeighbourhoodCrossCorrelationParametersTagged', {
+    "@type": typing.Literal["metric_ants_neighbourhood_cross_correlation"],
     "fixed_image": str,
     "moving_image": str,
     "metric_weight": float,
@@ -157,7 +264,17 @@ AntsRegistrationMetricAntsNeighbourhoodCrossCorrelationParameters = typing.Typed
 
 
 AntsRegistrationMetricMutualInformationParameters = typing.TypedDict('AntsRegistrationMetricMutualInformationParameters', {
-    "@type": typing.Literal["ants.antsRegistration.stages.metric_mutual_information"],
+    "@type": typing.NotRequired[typing.Literal["metric_mutual_information"]],
+    "fixed_image": str,
+    "moving_image": str,
+    "metric_weight": float,
+    "number_of_bins": typing.NotRequired[float | None],
+    "sampling_strategy": typing.NotRequired[typing.Literal["None", "Regular", "Random"] | None],
+    "sampling_percentage": typing.NotRequired[float | None],
+    "use_gradient_filter": typing.NotRequired[typing.Literal["true", "false"] | None],
+})
+AntsRegistrationMetricMutualInformationParametersTagged = typing.TypedDict('AntsRegistrationMetricMutualInformationParametersTagged', {
+    "@type": typing.Literal["metric_mutual_information"],
     "fixed_image": str,
     "moving_image": str,
     "metric_weight": float,
@@ -169,7 +286,17 @@ AntsRegistrationMetricMutualInformationParameters = typing.TypedDict('AntsRegist
 
 
 AntsRegistrationMetricMattesParameters = typing.TypedDict('AntsRegistrationMetricMattesParameters', {
-    "@type": typing.Literal["ants.antsRegistration.stages.metric_mattes"],
+    "@type": typing.NotRequired[typing.Literal["metric_mattes"]],
+    "fixed_image": str,
+    "moving_image": str,
+    "metric_weight": float,
+    "number_of_bins": typing.NotRequired[float | None],
+    "sampling_strategy": typing.NotRequired[typing.Literal["None", "Regular", "Random"] | None],
+    "sampling_percentage": typing.NotRequired[float | None],
+    "use_gradient_filter": typing.NotRequired[typing.Literal["true", "false"] | None],
+})
+AntsRegistrationMetricMattesParametersTagged = typing.TypedDict('AntsRegistrationMetricMattesParametersTagged', {
+    "@type": typing.Literal["metric_mattes"],
     "fixed_image": str,
     "moving_image": str,
     "metric_weight": float,
@@ -181,7 +308,17 @@ AntsRegistrationMetricMattesParameters = typing.TypedDict('AntsRegistrationMetri
 
 
 AntsRegistrationMetricMeanSquaresParameters = typing.TypedDict('AntsRegistrationMetricMeanSquaresParameters', {
-    "@type": typing.Literal["ants.antsRegistration.stages.metric_mean_squares"],
+    "@type": typing.NotRequired[typing.Literal["metric_mean_squares"]],
+    "fixed_image": str,
+    "moving_image": str,
+    "metric_weight": float,
+    "radius": typing.NotRequired[float | None],
+    "sampling_strategy": typing.NotRequired[typing.Literal["None", "Regular", "Random"] | None],
+    "sampling_percentage": typing.NotRequired[float | None],
+    "use_gradient_filter": typing.NotRequired[typing.Literal["true", "false"] | None],
+})
+AntsRegistrationMetricMeanSquaresParametersTagged = typing.TypedDict('AntsRegistrationMetricMeanSquaresParametersTagged', {
+    "@type": typing.Literal["metric_mean_squares"],
     "fixed_image": str,
     "moving_image": str,
     "metric_weight": float,
@@ -193,7 +330,17 @@ AntsRegistrationMetricMeanSquaresParameters = typing.TypedDict('AntsRegistration
 
 
 AntsRegistrationMetricDemonsParameters = typing.TypedDict('AntsRegistrationMetricDemonsParameters', {
-    "@type": typing.Literal["ants.antsRegistration.stages.metric_demons"],
+    "@type": typing.NotRequired[typing.Literal["metric_demons"]],
+    "fixed_image": str,
+    "moving_image": str,
+    "metric_weight": float,
+    "number_of_bins": typing.NotRequired[float | None],
+    "sampling_strategy": typing.NotRequired[typing.Literal["None", "Regular", "Random"] | None],
+    "sampling_percentage": typing.NotRequired[float | None],
+    "use_gradient_filter": typing.NotRequired[typing.Literal["true", "false"] | None],
+})
+AntsRegistrationMetricDemonsParametersTagged = typing.TypedDict('AntsRegistrationMetricDemonsParametersTagged', {
+    "@type": typing.Literal["metric_demons"],
     "fixed_image": str,
     "moving_image": str,
     "metric_weight": float,
@@ -205,7 +352,17 @@ AntsRegistrationMetricDemonsParameters = typing.TypedDict('AntsRegistrationMetri
 
 
 AntsRegistrationMetricGlobalCorrelationParameters = typing.TypedDict('AntsRegistrationMetricGlobalCorrelationParameters', {
-    "@type": typing.Literal["ants.antsRegistration.stages.metric_global_correlation"],
+    "@type": typing.NotRequired[typing.Literal["metric_global_correlation"]],
+    "fixed_image": str,
+    "moving_image": str,
+    "metric_weight": float,
+    "radius": typing.NotRequired[float | None],
+    "sampling_strategy": typing.NotRequired[typing.Literal["None", "Regular", "Random"] | None],
+    "sampling_percentage": typing.NotRequired[float | None],
+    "use_gradient_filter": typing.NotRequired[typing.Literal["true", "false"] | None],
+})
+AntsRegistrationMetricGlobalCorrelationParametersTagged = typing.TypedDict('AntsRegistrationMetricGlobalCorrelationParametersTagged', {
+    "@type": typing.Literal["metric_global_correlation"],
     "fixed_image": str,
     "moving_image": str,
     "metric_weight": float,
@@ -217,7 +374,15 @@ AntsRegistrationMetricGlobalCorrelationParameters = typing.TypedDict('AntsRegist
 
 
 AntsRegistrationMetricEuclideanIcpParameters = typing.TypedDict('AntsRegistrationMetricEuclideanIcpParameters', {
-    "@type": typing.Literal["ants.antsRegistration.stages.metric_euclidean_icp"],
+    "@type": typing.NotRequired[typing.Literal["metric_euclidean_icp"]],
+    "fixed_point_set": str,
+    "moving_point_set": str,
+    "metric_weight": float,
+    "sampling_percentage": typing.NotRequired[float | None],
+    "boundary_points_only": typing.NotRequired[typing.Literal["0"] | None],
+})
+AntsRegistrationMetricEuclideanIcpParametersTagged = typing.TypedDict('AntsRegistrationMetricEuclideanIcpParametersTagged', {
+    "@type": typing.Literal["metric_euclidean_icp"],
     "fixed_point_set": str,
     "moving_point_set": str,
     "metric_weight": float,
@@ -227,7 +392,13 @@ AntsRegistrationMetricEuclideanIcpParameters = typing.TypedDict('AntsRegistratio
 
 
 AntsRegistrationMetricPointSetExpectationParameters = typing.TypedDict('AntsRegistrationMetricPointSetExpectationParameters', {
-    "@type": typing.Literal["ants.antsRegistration.stages.metric_point_set_expectation"],
+    "@type": typing.NotRequired[typing.Literal["metric_point_set_expectation"]],
+    "metric_weight": float,
+    "point_set_sigma": typing.NotRequired[float | None],
+    "sampling_percentage": typing.NotRequired[float | None],
+})
+AntsRegistrationMetricPointSetExpectationParametersTagged = typing.TypedDict('AntsRegistrationMetricPointSetExpectationParametersTagged', {
+    "@type": typing.Literal["metric_point_set_expectation"],
     "metric_weight": float,
     "point_set_sigma": typing.NotRequired[float | None],
     "sampling_percentage": typing.NotRequired[float | None],
@@ -235,7 +406,17 @@ AntsRegistrationMetricPointSetExpectationParameters = typing.TypedDict('AntsRegi
 
 
 AntsRegistrationMetricJensenHavrdaCharvetTsallisParameters = typing.TypedDict('AntsRegistrationMetricJensenHavrdaCharvetTsallisParameters', {
-    "@type": typing.Literal["ants.antsRegistration.stages.metric_jensen_havrda_charvet_tsallis"],
+    "@type": typing.NotRequired[typing.Literal["metric_jensen_havrda_charvet_tsallis"]],
+    "fixed_point_set": str,
+    "moving_point_set": str,
+    "metric_weight": float,
+    "sampling_percentage": typing.NotRequired[float | None],
+    "boundary_points_only": typing.NotRequired[typing.Literal["0"] | None],
+    "point_set_sigma": typing.NotRequired[float | None],
+    "k_neighborhood": typing.NotRequired[float | None],
+})
+AntsRegistrationMetricJensenHavrdaCharvetTsallisParametersTagged = typing.TypedDict('AntsRegistrationMetricJensenHavrdaCharvetTsallisParametersTagged', {
+    "@type": typing.Literal["metric_jensen_havrda_charvet_tsallis"],
     "fixed_point_set": str,
     "moving_point_set": str,
     "metric_weight": float,
@@ -247,12 +428,21 @@ AntsRegistrationMetricJensenHavrdaCharvetTsallisParameters = typing.TypedDict('A
 
 
 AntsRegistrationMetricIgdmParameters = typing.TypedDict('AntsRegistrationMetricIgdmParameters', {
-    "@type": typing.Literal["ants.antsRegistration.stages.metric_igdm"],
+    "@type": typing.NotRequired[typing.Literal["metric_igdm"]],
+})
+AntsRegistrationMetricIgdmParametersTagged = typing.TypedDict('AntsRegistrationMetricIgdmParametersTagged', {
+    "@type": typing.Literal["metric_igdm"],
 })
 
 
 AntsRegistrationConvergenceParameters = typing.TypedDict('AntsRegistrationConvergenceParameters', {
-    "@type": typing.Literal["ants.antsRegistration.stages.convergence"],
+    "@type": typing.NotRequired[typing.Literal["convergence"]],
+    "convergence": str,
+    "convergence_threshold": float,
+    "convergence_window_size": int,
+})
+AntsRegistrationConvergenceParametersTagged = typing.TypedDict('AntsRegistrationConvergenceParametersTagged', {
+    "@type": typing.Literal["convergence"],
     "convergence": str,
     "convergence_threshold": float,
     "convergence_window_size": int,
@@ -260,9 +450,18 @@ AntsRegistrationConvergenceParameters = typing.TypedDict('AntsRegistrationConver
 
 
 AntsRegistrationStageParameters = typing.TypedDict('AntsRegistrationStageParameters', {
-    "@type": typing.Literal["ants.antsRegistration.stages"],
-    "transform": typing.Union[AntsRegistrationTransformRigidParameters, AntsRegistrationTransformAffineParameters, AntsRegistrationTransformCompositeAffineParameters, AntsRegistrationTransformSimilarityParameters, AntsRegistrationTransformTranslationParameters, AntsRegistrationTransformBsplineParameters, AntsRegistrationTransformGaussianDisplacementFieldParameters, AntsRegistrationTransformBsplineDisplacementFieldParameters, AntsRegistrationTransformTimeVaryingVelocityFieldParameters, AntsRegistrationTransformTimeVaryingBsplineVelocityFieldParameters, AntsRegistrationTransformSynParameters, AntsRegistrationTransformBsplineSynParameters, AntsRegistrationTransformExponentialParameters, AntsRegistrationTransformBsplineExponentialParameters],
-    "metric": typing.Union[AntsRegistrationMetricAntsNeighbourhoodCrossCorrelationParameters, AntsRegistrationMetricMutualInformationParameters, AntsRegistrationMetricMattesParameters, AntsRegistrationMetricMeanSquaresParameters, AntsRegistrationMetricDemonsParameters, AntsRegistrationMetricGlobalCorrelationParameters, AntsRegistrationMetricEuclideanIcpParameters, AntsRegistrationMetricPointSetExpectationParameters, AntsRegistrationMetricJensenHavrdaCharvetTsallisParameters, AntsRegistrationMetricIgdmParameters],
+    "@type": typing.NotRequired[typing.Literal["stage"]],
+    "transform": typing.Union[AntsRegistrationTransformRigidParametersTagged, AntsRegistrationTransformAffineParametersTagged, AntsRegistrationTransformCompositeAffineParametersTagged, AntsRegistrationTransformSimilarityParametersTagged, AntsRegistrationTransformTranslationParametersTagged, AntsRegistrationTransformBsplineParametersTagged, AntsRegistrationTransformGaussianDisplacementFieldParametersTagged, AntsRegistrationTransformBsplineDisplacementFieldParametersTagged, AntsRegistrationTransformTimeVaryingVelocityFieldParametersTagged, AntsRegistrationTransformTimeVaryingBsplineVelocityFieldParametersTagged, AntsRegistrationTransformSynParametersTagged, AntsRegistrationTransformBsplineSynParametersTagged, AntsRegistrationTransformExponentialParametersTagged, AntsRegistrationTransformBsplineExponentialParametersTagged],
+    "metric": typing.Union[AntsRegistrationMetricAntsNeighbourhoodCrossCorrelationParametersTagged, AntsRegistrationMetricMutualInformationParametersTagged, AntsRegistrationMetricMattesParametersTagged, AntsRegistrationMetricMeanSquaresParametersTagged, AntsRegistrationMetricDemonsParametersTagged, AntsRegistrationMetricGlobalCorrelationParametersTagged, AntsRegistrationMetricEuclideanIcpParametersTagged, AntsRegistrationMetricPointSetExpectationParametersTagged, AntsRegistrationMetricJensenHavrdaCharvetTsallisParametersTagged, AntsRegistrationMetricIgdmParametersTagged],
+    "convergence": AntsRegistrationConvergenceParameters,
+    "smoothing_sigmas": str,
+    "shrink_factors": str,
+    "use_histogram_matching": typing.NotRequired[typing.Literal[0, 1] | None],
+})
+AntsRegistrationStageParametersTagged = typing.TypedDict('AntsRegistrationStageParametersTagged', {
+    "@type": typing.Literal["stage"],
+    "transform": typing.Union[AntsRegistrationTransformRigidParametersTagged, AntsRegistrationTransformAffineParametersTagged, AntsRegistrationTransformCompositeAffineParametersTagged, AntsRegistrationTransformSimilarityParametersTagged, AntsRegistrationTransformTranslationParametersTagged, AntsRegistrationTransformBsplineParametersTagged, AntsRegistrationTransformGaussianDisplacementFieldParametersTagged, AntsRegistrationTransformBsplineDisplacementFieldParametersTagged, AntsRegistrationTransformTimeVaryingVelocityFieldParametersTagged, AntsRegistrationTransformTimeVaryingBsplineVelocityFieldParametersTagged, AntsRegistrationTransformSynParametersTagged, AntsRegistrationTransformBsplineSynParametersTagged, AntsRegistrationTransformExponentialParametersTagged, AntsRegistrationTransformBsplineExponentialParametersTagged],
+    "metric": typing.Union[AntsRegistrationMetricAntsNeighbourhoodCrossCorrelationParametersTagged, AntsRegistrationMetricMutualInformationParametersTagged, AntsRegistrationMetricMattesParametersTagged, AntsRegistrationMetricMeanSquaresParametersTagged, AntsRegistrationMetricDemonsParametersTagged, AntsRegistrationMetricGlobalCorrelationParametersTagged, AntsRegistrationMetricEuclideanIcpParametersTagged, AntsRegistrationMetricPointSetExpectationParametersTagged, AntsRegistrationMetricJensenHavrdaCharvetTsallisParametersTagged, AntsRegistrationMetricIgdmParametersTagged],
     "convergence": AntsRegistrationConvergenceParameters,
     "smoothing_sigmas": str,
     "shrink_factors": str,
@@ -271,21 +470,31 @@ AntsRegistrationStageParameters = typing.TypedDict('AntsRegistrationStageParamet
 
 
 AntsRegistrationWinsorizeImageIntensitiesParameters = typing.TypedDict('AntsRegistrationWinsorizeImageIntensitiesParameters', {
-    "@type": typing.Literal["ants.antsRegistration.winsorize_image_intensities"],
+    "@type": typing.NotRequired[typing.Literal["winsorize_image_intensities"]],
+    "lower_quantile": float,
+    "upper_quantile": float,
+})
+AntsRegistrationWinsorizeImageIntensitiesParametersTagged = typing.TypedDict('AntsRegistrationWinsorizeImageIntensitiesParametersTagged', {
+    "@type": typing.Literal["winsorize_image_intensities"],
     "lower_quantile": float,
     "upper_quantile": float,
 })
 
 
 AntsRegistrationMasksParameters = typing.TypedDict('AntsRegistrationMasksParameters', {
-    "@type": typing.Literal["ants.antsRegistration.masks"],
+    "@type": typing.NotRequired[typing.Literal["masks"]],
+    "fixed_mask": typing.NotRequired[str | None],
+    "moving_mask": typing.NotRequired[str | None],
+})
+AntsRegistrationMasksParametersTagged = typing.TypedDict('AntsRegistrationMasksParametersTagged', {
+    "@type": typing.Literal["masks"],
     "fixed_mask": typing.NotRequired[str | None],
     "moving_mask": typing.NotRequired[str | None],
 })
 
 
 AntsRegistrationParameters = typing.TypedDict('AntsRegistrationParameters', {
-    "@type": typing.Literal["ants.antsRegistration"],
+    "@type": typing.NotRequired[typing.Literal["ants/antsRegistration"]],
     "dimensionality": typing.NotRequired[typing.Literal[2, 3, 4] | None],
     "output": typing.NotRequired[str | None],
     "save_state": typing.NotRequired[str | None],
@@ -298,7 +507,30 @@ AntsRegistrationParameters = typing.TypedDict('AntsRegistrationParameters', {
     "interpolation": typing.NotRequired[typing.Literal["Linear", "NearestNeighbor", "MultiLabel", "Gaussian", "BSpline", "CosineWindowedSinc", "WelchWindowedSinc", "HammingWindowedSinc", "LanczosWindowedSinc", "GenericLabel"] | None],
     "restrict_deformation": typing.NotRequired[list[typing.Literal[0, 1]] | None],
     "initial_fixed_transform": typing.NotRequired[str | None],
-    "initial_moving_transform": typing.NotRequired[typing.Union[AntsRegistrationInitialMovingTransformParameters, AntsRegistrationInitialMovingTransformUseInverseParameters, AntsRegistrationInitialMovingTransformInitializationFeatureParameters] | None],
+    "initial_moving_transform": typing.NotRequired[typing.Union[AntsRegistrationInitialMovingTransformParametersTagged, AntsRegistrationInitialMovingTransformUseInverseParametersTagged, AntsRegistrationInitialMovingTransformInitializationFeatureParametersTagged] | None],
+    "stages": list[AntsRegistrationStageParameters],
+    "winsorize_image_intensities": typing.NotRequired[AntsRegistrationWinsorizeImageIntensitiesParameters | None],
+    "masks": typing.NotRequired[AntsRegistrationMasksParameters | None],
+    "minc": typing.NotRequired[typing.Literal[0, 1] | None],
+    "random_seed": typing.NotRequired[int | None],
+    "verbose": typing.NotRequired[typing.Literal[0, 1] | None],
+    "float": typing.NotRequired[typing.Literal[0, 1] | None],
+})
+AntsRegistrationParametersTagged = typing.TypedDict('AntsRegistrationParametersTagged', {
+    "@type": typing.Literal["ants/antsRegistration"],
+    "dimensionality": typing.NotRequired[typing.Literal[2, 3, 4] | None],
+    "output": typing.NotRequired[str | None],
+    "save_state": typing.NotRequired[str | None],
+    "restore_state": typing.NotRequired[str | None],
+    "write_composite_transform": typing.NotRequired[typing.Literal[0, 1] | None],
+    "print_similarity_measure_interval": typing.NotRequired[int | None],
+    "write_interval_volumes": typing.NotRequired[int | None],
+    "collapse_output_transforms": typing.NotRequired[typing.Literal[1, 0] | None],
+    "initialize_transforms_per_stage": typing.NotRequired[typing.Literal[1, 0] | None],
+    "interpolation": typing.NotRequired[typing.Literal["Linear", "NearestNeighbor", "MultiLabel", "Gaussian", "BSpline", "CosineWindowedSinc", "WelchWindowedSinc", "HammingWindowedSinc", "LanczosWindowedSinc", "GenericLabel"] | None],
+    "restrict_deformation": typing.NotRequired[list[typing.Literal[0, 1]] | None],
+    "initial_fixed_transform": typing.NotRequired[str | None],
+    "initial_moving_transform": typing.NotRequired[typing.Union[AntsRegistrationInitialMovingTransformParametersTagged, AntsRegistrationInitialMovingTransformUseInverseParametersTagged, AntsRegistrationInitialMovingTransformInitializationFeatureParametersTagged] | None],
     "stages": list[AntsRegistrationStageParameters],
     "winsorize_image_intensities": typing.NotRequired[AntsRegistrationWinsorizeImageIntensitiesParameters | None],
     "masks": typing.NotRequired[AntsRegistrationMasksParameters | None],
@@ -309,7 +541,7 @@ AntsRegistrationParameters = typing.TypedDict('AntsRegistrationParameters', {
 })
 
 
-def dyn_cargs(
+def ants_registration_initial_moving_transform_cargs_dyn_fn(
     t: str,
 ) -> typing.Any:
     """
@@ -321,42 +553,13 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "ants.antsRegistration": ants_registration_cargs,
-        "ants.antsRegistration.initial_moving_transform": ants_registration_initial_moving_transform_cargs,
-        "ants.antsRegistration.initial_moving_transform_use_inverse": ants_registration_initial_moving_transform_use_inverse_cargs,
-        "ants.antsRegistration.initial_moving_transform_initialization_feature": ants_registration_initial_moving_transform_initialization_feature_cargs,
-        "ants.antsRegistration.stages": ants_registration_stage_cargs,
-        "ants.antsRegistration.stages.transform_rigid": ants_registration_transform_rigid_cargs,
-        "ants.antsRegistration.stages.transform_affine": ants_registration_transform_affine_cargs,
-        "ants.antsRegistration.stages.transform_composite_affine": ants_registration_transform_composite_affine_cargs,
-        "ants.antsRegistration.stages.transform_similarity": ants_registration_transform_similarity_cargs,
-        "ants.antsRegistration.stages.transform_translation": ants_registration_transform_translation_cargs,
-        "ants.antsRegistration.stages.transform_bspline": ants_registration_transform_bspline_cargs,
-        "ants.antsRegistration.stages.transform_gaussian_displacement_field": ants_registration_transform_gaussian_displacement_field_cargs,
-        "ants.antsRegistration.stages.transform_bspline_displacement_field": ants_registration_transform_bspline_displacement_field_cargs,
-        "ants.antsRegistration.stages.transform_time_varying_velocity_field": ants_registration_transform_time_varying_velocity_field_cargs,
-        "ants.antsRegistration.stages.transform_time_varying_bspline_velocity_field": ants_registration_transform_time_varying_bspline_velocity_field_cargs,
-        "ants.antsRegistration.stages.transform_syn": ants_registration_transform_syn_cargs,
-        "ants.antsRegistration.stages.transform_bspline_syn": ants_registration_transform_bspline_syn_cargs,
-        "ants.antsRegistration.stages.transform_exponential": ants_registration_transform_exponential_cargs,
-        "ants.antsRegistration.stages.transform_bspline_exponential": ants_registration_transform_bspline_exponential_cargs,
-        "ants.antsRegistration.stages.metric_ants_neighbourhood_cross_correlation": ants_registration_metric_ants_neighbourhood_cross_correlation_cargs,
-        "ants.antsRegistration.stages.metric_mutual_information": ants_registration_metric_mutual_information_cargs,
-        "ants.antsRegistration.stages.metric_mattes": ants_registration_metric_mattes_cargs,
-        "ants.antsRegistration.stages.metric_mean_squares": ants_registration_metric_mean_squares_cargs,
-        "ants.antsRegistration.stages.metric_demons": ants_registration_metric_demons_cargs,
-        "ants.antsRegistration.stages.metric_global_correlation": ants_registration_metric_global_correlation_cargs,
-        "ants.antsRegistration.stages.metric_euclidean_icp": ants_registration_metric_euclidean_icp_cargs,
-        "ants.antsRegistration.stages.metric_point_set_expectation": ants_registration_metric_point_set_expectation_cargs,
-        "ants.antsRegistration.stages.metric_jensen_havrda_charvet_tsallis": ants_registration_metric_jensen_havrda_charvet_tsallis_cargs,
-        "ants.antsRegistration.stages.metric_igdm": ants_registration_metric_igdm_cargs,
-        "ants.antsRegistration.stages.convergence": ants_registration_convergence_cargs,
-        "ants.antsRegistration.winsorize_image_intensities": ants_registration_winsorize_image_intensities_cargs,
-        "ants.antsRegistration.masks": ants_registration_masks_cargs,
+        "initial_moving_transform": ants_registration_initial_moving_transform_cargs,
+        "initial_moving_transform_use_inverse": ants_registration_initial_moving_transform_use_inverse_cargs,
+        "initial_moving_transform_initialization_feature": ants_registration_initial_moving_transform_initialization_feature_cargs,
     }.get(t)
 
 
-def dyn_outputs(
+def ants_registration_initial_moving_transform_outputs_dyn_fn(
     t: str,
 ) -> typing.Any:
     """
@@ -368,13 +571,96 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "ants.antsRegistration": ants_registration_outputs,
+    }.get(t)
+
+
+def ants_registration_transform_cargs_dyn_fn(
+    t: str,
+) -> typing.Any:
+    """
+    Get build cargs function by command type.
+    
+    Args:
+        t: Command type.
+    Returns:
+        Build cargs function.
+    """
+    return {
+        "transform_rigid": ants_registration_transform_rigid_cargs,
+        "transform_affine": ants_registration_transform_affine_cargs,
+        "transform_composite_affine": ants_registration_transform_composite_affine_cargs,
+        "transform_similarity": ants_registration_transform_similarity_cargs,
+        "transform_translation": ants_registration_transform_translation_cargs,
+        "transform_bspline": ants_registration_transform_bspline_cargs,
+        "transform_gaussian_displacement_field": ants_registration_transform_gaussian_displacement_field_cargs,
+        "transform_bspline_displacement_field": ants_registration_transform_bspline_displacement_field_cargs,
+        "transform_time_varying_velocity_field": ants_registration_transform_time_varying_velocity_field_cargs,
+        "transform_time_varying_bspline_velocity_field": ants_registration_transform_time_varying_bspline_velocity_field_cargs,
+        "transform_syn": ants_registration_transform_syn_cargs,
+        "transform_bspline_syn": ants_registration_transform_bspline_syn_cargs,
+        "transform_exponential": ants_registration_transform_exponential_cargs,
+        "transform_bspline_exponential": ants_registration_transform_bspline_exponential_cargs,
+    }.get(t)
+
+
+def ants_registration_transform_outputs_dyn_fn(
+    t: str,
+) -> typing.Any:
+    """
+    Get build outputs function by command type.
+    
+    Args:
+        t: Command type.
+    Returns:
+        Build outputs function.
+    """
+    return {
+    }.get(t)
+
+
+def ants_registration_metric_cargs_dyn_fn(
+    t: str,
+) -> typing.Any:
+    """
+    Get build cargs function by command type.
+    
+    Args:
+        t: Command type.
+    Returns:
+        Build cargs function.
+    """
+    return {
+        "metric_ants_neighbourhood_cross_correlation": ants_registration_metric_ants_neighbourhood_cross_correlation_cargs,
+        "metric_mutual_information": ants_registration_metric_mutual_information_cargs,
+        "metric_mattes": ants_registration_metric_mattes_cargs,
+        "metric_mean_squares": ants_registration_metric_mean_squares_cargs,
+        "metric_demons": ants_registration_metric_demons_cargs,
+        "metric_global_correlation": ants_registration_metric_global_correlation_cargs,
+        "metric_euclidean_icp": ants_registration_metric_euclidean_icp_cargs,
+        "metric_point_set_expectation": ants_registration_metric_point_set_expectation_cargs,
+        "metric_jensen_havrda_charvet_tsallis": ants_registration_metric_jensen_havrda_charvet_tsallis_cargs,
+        "metric_igdm": ants_registration_metric_igdm_cargs,
+    }.get(t)
+
+
+def ants_registration_metric_outputs_dyn_fn(
+    t: str,
+) -> typing.Any:
+    """
+    Get build outputs function by command type.
+    
+    Args:
+        t: Command type.
+    Returns:
+        Build outputs function.
+    """
+    return {
     }.get(t)
 
 
 def ants_registration_initial_moving_transform_params(
     initial_moving_transform: InputPathType,
-) -> AntsRegistrationInitialMovingTransformParameters:
+) -> AntsRegistrationInitialMovingTransformParametersTagged:
     """
     Build parameters.
     
@@ -384,7 +670,7 @@ def ants_registration_initial_moving_transform_params(
         Parameter dictionary
     """
     params = {
-        "@type": "ants.antsRegistration.initial_moving_transform",
+        "@type": "initial_moving_transform",
         "initial_moving_transform": initial_moving_transform,
     }
     return params
@@ -404,14 +690,14 @@ def ants_registration_initial_moving_transform_cargs(
         Command-line arguments.
     """
     cargs = []
-    cargs.append(execution.input_file(params.get("initial_moving_transform")))
+    cargs.append(execution.input_file(params.get("initial_moving_transform", None)))
     return cargs
 
 
 def ants_registration_initial_moving_transform_use_inverse_params(
     initial_moving_transform: InputPathType,
     use_inverse: typing.Literal[0, 1] | None = None,
-) -> AntsRegistrationInitialMovingTransformUseInverseParameters:
+) -> AntsRegistrationInitialMovingTransformUseInverseParametersTagged:
     """
     Build parameters.
     
@@ -422,7 +708,7 @@ def ants_registration_initial_moving_transform_use_inverse_params(
         Parameter dictionary
     """
     params = {
-        "@type": "ants.antsRegistration.initial_moving_transform_use_inverse",
+        "@type": "initial_moving_transform_use_inverse",
         "initial_moving_transform": initial_moving_transform,
     }
     if use_inverse is not None:
@@ -444,8 +730,8 @@ def ants_registration_initial_moving_transform_use_inverse_cargs(
         Command-line arguments.
     """
     cargs = []
-    if params.get("use_inverse") is not None:
-        cargs.append("[" + execution.input_file(params.get("initial_moving_transform")) + "," + str(params.get("use_inverse")) + "]")
+    if params.get("use_inverse", None) is not None:
+        cargs.append("[" + execution.input_file(params.get("initial_moving_transform", None)) + "," + str(params.get("use_inverse", None)) + "]")
     return cargs
 
 
@@ -453,7 +739,7 @@ def ants_registration_initial_moving_transform_initialization_feature_params(
     fixed_image: InputPathType,
     moving_image: InputPathType,
     initialization_feature: typing.Literal[0, 1, 2],
-) -> AntsRegistrationInitialMovingTransformInitializationFeatureParameters:
+) -> AntsRegistrationInitialMovingTransformInitializationFeatureParametersTagged:
     """
     Build parameters.
     
@@ -466,7 +752,7 @@ def ants_registration_initial_moving_transform_initialization_feature_params(
         Parameter dictionary
     """
     params = {
-        "@type": "ants.antsRegistration.initial_moving_transform_initialization_feature",
+        "@type": "initial_moving_transform_initialization_feature",
         "fixed_image": fixed_image,
         "moving_image": moving_image,
         "initialization_feature": initialization_feature,
@@ -488,13 +774,13 @@ def ants_registration_initial_moving_transform_initialization_feature_cargs(
         Command-line arguments.
     """
     cargs = []
-    cargs.append("[" + execution.input_file(params.get("fixed_image")) + "," + execution.input_file(params.get("moving_image")) + "," + str(params.get("initialization_feature")) + "]")
+    cargs.append("[" + execution.input_file(params.get("fixed_image", None)) + "," + execution.input_file(params.get("moving_image", None)) + "," + str(params.get("initialization_feature", None)) + "]")
     return cargs
 
 
 def ants_registration_transform_rigid_params(
     gradient_step: float,
-) -> AntsRegistrationTransformRigidParameters:
+) -> AntsRegistrationTransformRigidParametersTagged:
     """
     Build parameters.
     
@@ -504,7 +790,7 @@ def ants_registration_transform_rigid_params(
         Parameter dictionary
     """
     params = {
-        "@type": "ants.antsRegistration.stages.transform_rigid",
+        "@type": "transform_rigid",
         "gradient_step": gradient_step,
     }
     return params
@@ -524,13 +810,13 @@ def ants_registration_transform_rigid_cargs(
         Command-line arguments.
     """
     cargs = []
-    cargs.append("Rigid[" + str(params.get("gradient_step")) + "]")
+    cargs.append("Rigid[" + str(params.get("gradient_step", None)) + "]")
     return cargs
 
 
 def ants_registration_transform_affine_params(
     gradient_step: float,
-) -> AntsRegistrationTransformAffineParameters:
+) -> AntsRegistrationTransformAffineParametersTagged:
     """
     Build parameters.
     
@@ -540,7 +826,7 @@ def ants_registration_transform_affine_params(
         Parameter dictionary
     """
     params = {
-        "@type": "ants.antsRegistration.stages.transform_affine",
+        "@type": "transform_affine",
         "gradient_step": gradient_step,
     }
     return params
@@ -560,13 +846,13 @@ def ants_registration_transform_affine_cargs(
         Command-line arguments.
     """
     cargs = []
-    cargs.append("Affine[" + str(params.get("gradient_step")) + "]")
+    cargs.append("Affine[" + str(params.get("gradient_step", None)) + "]")
     return cargs
 
 
 def ants_registration_transform_composite_affine_params(
     gradient_step: float,
-) -> AntsRegistrationTransformCompositeAffineParameters:
+) -> AntsRegistrationTransformCompositeAffineParametersTagged:
     """
     Build parameters.
     
@@ -576,7 +862,7 @@ def ants_registration_transform_composite_affine_params(
         Parameter dictionary
     """
     params = {
-        "@type": "ants.antsRegistration.stages.transform_composite_affine",
+        "@type": "transform_composite_affine",
         "gradient_step": gradient_step,
     }
     return params
@@ -596,13 +882,13 @@ def ants_registration_transform_composite_affine_cargs(
         Command-line arguments.
     """
     cargs = []
-    cargs.append("CompositeAffine[" + str(params.get("gradient_step")) + "]")
+    cargs.append("CompositeAffine[" + str(params.get("gradient_step", None)) + "]")
     return cargs
 
 
 def ants_registration_transform_similarity_params(
     gradient_step: float,
-) -> AntsRegistrationTransformSimilarityParameters:
+) -> AntsRegistrationTransformSimilarityParametersTagged:
     """
     Build parameters.
     
@@ -612,7 +898,7 @@ def ants_registration_transform_similarity_params(
         Parameter dictionary
     """
     params = {
-        "@type": "ants.antsRegistration.stages.transform_similarity",
+        "@type": "transform_similarity",
         "gradient_step": gradient_step,
     }
     return params
@@ -632,13 +918,13 @@ def ants_registration_transform_similarity_cargs(
         Command-line arguments.
     """
     cargs = []
-    cargs.append("Similarity[" + str(params.get("gradient_step")) + "]")
+    cargs.append("Similarity[" + str(params.get("gradient_step", None)) + "]")
     return cargs
 
 
 def ants_registration_transform_translation_params(
     gradient_step: float,
-) -> AntsRegistrationTransformTranslationParameters:
+) -> AntsRegistrationTransformTranslationParametersTagged:
     """
     Build parameters.
     
@@ -648,7 +934,7 @@ def ants_registration_transform_translation_params(
         Parameter dictionary
     """
     params = {
-        "@type": "ants.antsRegistration.stages.transform_translation",
+        "@type": "transform_translation",
         "gradient_step": gradient_step,
     }
     return params
@@ -668,14 +954,14 @@ def ants_registration_transform_translation_cargs(
         Command-line arguments.
     """
     cargs = []
-    cargs.append("Translation[" + str(params.get("gradient_step")) + "]")
+    cargs.append("Translation[" + str(params.get("gradient_step", None)) + "]")
     return cargs
 
 
 def ants_registration_transform_bspline_params(
     gradient_step: float,
     mesh_size_at_base_level: float,
-) -> AntsRegistrationTransformBsplineParameters:
+) -> AntsRegistrationTransformBsplineParametersTagged:
     """
     Build parameters.
     
@@ -686,7 +972,7 @@ def ants_registration_transform_bspline_params(
         Parameter dictionary
     """
     params = {
-        "@type": "ants.antsRegistration.stages.transform_bspline",
+        "@type": "transform_bspline",
         "gradient_step": gradient_step,
         "mesh_size_at_base_level": mesh_size_at_base_level,
     }
@@ -707,7 +993,7 @@ def ants_registration_transform_bspline_cargs(
         Command-line arguments.
     """
     cargs = []
-    cargs.append("BSpline[" + str(params.get("gradient_step")) + "," + str(params.get("mesh_size_at_base_level")) + "]")
+    cargs.append("BSpline[" + str(params.get("gradient_step", None)) + "," + str(params.get("mesh_size_at_base_level", None)) + "]")
     return cargs
 
 
@@ -715,7 +1001,7 @@ def ants_registration_transform_gaussian_displacement_field_params(
     gradient_step: float,
     update_field_variance_in_voxel_space: float,
     total_field_variance_in_voxel_space: float,
-) -> AntsRegistrationTransformGaussianDisplacementFieldParameters:
+) -> AntsRegistrationTransformGaussianDisplacementFieldParametersTagged:
     """
     Build parameters.
     
@@ -727,7 +1013,7 @@ def ants_registration_transform_gaussian_displacement_field_params(
         Parameter dictionary
     """
     params = {
-        "@type": "ants.antsRegistration.stages.transform_gaussian_displacement_field",
+        "@type": "transform_gaussian_displacement_field",
         "gradient_step": gradient_step,
         "update_field_variance_in_voxel_space": update_field_variance_in_voxel_space,
         "total_field_variance_in_voxel_space": total_field_variance_in_voxel_space,
@@ -749,7 +1035,7 @@ def ants_registration_transform_gaussian_displacement_field_cargs(
         Command-line arguments.
     """
     cargs = []
-    cargs.append("GaussianDisplacementField[" + str(params.get("gradient_step")) + "," + str(params.get("update_field_variance_in_voxel_space")) + "," + str(params.get("total_field_variance_in_voxel_space")) + "]")
+    cargs.append("GaussianDisplacementField[" + str(params.get("gradient_step", None)) + "," + str(params.get("update_field_variance_in_voxel_space", None)) + "," + str(params.get("total_field_variance_in_voxel_space", None)) + "]")
     return cargs
 
 
@@ -758,7 +1044,7 @@ def ants_registration_transform_bspline_displacement_field_params(
     update_field_mesh_size_at_base_level: float,
     total_field_mesh_size_at_base_level: float | None = None,
     spline_order: float | None = None,
-) -> AntsRegistrationTransformBsplineDisplacementFieldParameters:
+) -> AntsRegistrationTransformBsplineDisplacementFieldParametersTagged:
     """
     Build parameters.
     
@@ -771,7 +1057,7 @@ def ants_registration_transform_bspline_displacement_field_params(
         Parameter dictionary
     """
     params = {
-        "@type": "ants.antsRegistration.stages.transform_bspline_displacement_field",
+        "@type": "transform_bspline_displacement_field",
         "gradient_step": gradient_step,
         "update_field_mesh_size_at_base_level": update_field_mesh_size_at_base_level,
     }
@@ -796,8 +1082,8 @@ def ants_registration_transform_bspline_displacement_field_cargs(
         Command-line arguments.
     """
     cargs = []
-    if params.get("total_field_mesh_size_at_base_level") is not None or params.get("spline_order") is not None:
-        cargs.append("BSplineDisplacementField[" + str(params.get("gradient_step")) + "," + str(params.get("update_field_mesh_size_at_base_level")) + "," + (str(params.get("total_field_mesh_size_at_base_level")) if (params.get("total_field_mesh_size_at_base_level") is not None) else "") + (str(params.get("spline_order")) if (params.get("spline_order") is not None) else "") + "]")
+    if params.get("total_field_mesh_size_at_base_level", None) is not None or params.get("spline_order", None) is not None:
+        cargs.append("BSplineDisplacementField[" + str(params.get("gradient_step", None)) + "," + str(params.get("update_field_mesh_size_at_base_level", None)) + "," + (str(params.get("total_field_mesh_size_at_base_level", None)) if (params.get("total_field_mesh_size_at_base_level", None) is not None) else "") + (str(params.get("spline_order", None)) if (params.get("spline_order", None) is not None) else "") + "]")
     return cargs
 
 
@@ -808,7 +1094,7 @@ def ants_registration_transform_time_varying_velocity_field_params(
     update_field_time_variance: float,
     total_field_variance_in_voxel_space: float,
     total_field_time_variance: float,
-) -> AntsRegistrationTransformTimeVaryingVelocityFieldParameters:
+) -> AntsRegistrationTransformTimeVaryingVelocityFieldParametersTagged:
     """
     Build parameters.
     
@@ -823,7 +1109,7 @@ def ants_registration_transform_time_varying_velocity_field_params(
         Parameter dictionary
     """
     params = {
-        "@type": "ants.antsRegistration.stages.transform_time_varying_velocity_field",
+        "@type": "transform_time_varying_velocity_field",
         "gradient_step": gradient_step,
         "number_of_time_indices": number_of_time_indices,
         "update_field_variance_in_voxel_space": update_field_variance_in_voxel_space,
@@ -848,7 +1134,7 @@ def ants_registration_transform_time_varying_velocity_field_cargs(
         Command-line arguments.
     """
     cargs = []
-    cargs.append("TimeVaryingVelocityField[" + str(params.get("gradient_step")) + "," + str(params.get("number_of_time_indices")) + "," + str(params.get("update_field_variance_in_voxel_space")) + "," + str(params.get("update_field_time_variance")) + "," + str(params.get("total_field_variance_in_voxel_space")) + "," + str(params.get("total_field_time_variance")) + "]")
+    cargs.append("TimeVaryingVelocityField[" + str(params.get("gradient_step", None)) + "," + str(params.get("number_of_time_indices", None)) + "," + str(params.get("update_field_variance_in_voxel_space", None)) + "," + str(params.get("update_field_time_variance", None)) + "," + str(params.get("total_field_variance_in_voxel_space", None)) + "," + str(params.get("total_field_time_variance", None)) + "]")
     return cargs
 
 
@@ -857,7 +1143,7 @@ def ants_registration_transform_time_varying_bspline_velocity_field_params(
     velocity_field_mesh_size: float,
     number_of_time_point_samples: float | None = None,
     spline_order: float | None = None,
-) -> AntsRegistrationTransformTimeVaryingBsplineVelocityFieldParameters:
+) -> AntsRegistrationTransformTimeVaryingBsplineVelocityFieldParametersTagged:
     """
     Build parameters.
     
@@ -870,7 +1156,7 @@ def ants_registration_transform_time_varying_bspline_velocity_field_params(
         Parameter dictionary
     """
     params = {
-        "@type": "ants.antsRegistration.stages.transform_time_varying_bspline_velocity_field",
+        "@type": "transform_time_varying_bspline_velocity_field",
         "gradient_step": gradient_step,
         "velocity_field_mesh_size": velocity_field_mesh_size,
     }
@@ -895,8 +1181,8 @@ def ants_registration_transform_time_varying_bspline_velocity_field_cargs(
         Command-line arguments.
     """
     cargs = []
-    if params.get("number_of_time_point_samples") is not None or params.get("spline_order") is not None:
-        cargs.append("TimeVaryingBSplineVelocityField[" + str(params.get("gradient_step")) + "," + str(params.get("velocity_field_mesh_size")) + "," + (str(params.get("number_of_time_point_samples")) if (params.get("number_of_time_point_samples") is not None) else "") + "," + (str(params.get("spline_order")) if (params.get("spline_order") is not None) else "") + "]")
+    if params.get("number_of_time_point_samples", None) is not None or params.get("spline_order", None) is not None:
+        cargs.append("TimeVaryingBSplineVelocityField[" + str(params.get("gradient_step", None)) + "," + str(params.get("velocity_field_mesh_size", None)) + "," + (str(params.get("number_of_time_point_samples", None)) if (params.get("number_of_time_point_samples", None) is not None) else "") + "," + (str(params.get("spline_order", None)) if (params.get("spline_order", None) is not None) else "") + "]")
     return cargs
 
 
@@ -904,7 +1190,7 @@ def ants_registration_transform_syn_params(
     gradient_step: float,
     update_field_variance_in_voxel_space: float,
     total_field_variance_in_voxel_space: float,
-) -> AntsRegistrationTransformSynParameters:
+) -> AntsRegistrationTransformSynParametersTagged:
     """
     Build parameters.
     
@@ -916,7 +1202,7 @@ def ants_registration_transform_syn_params(
         Parameter dictionary
     """
     params = {
-        "@type": "ants.antsRegistration.stages.transform_syn",
+        "@type": "transform_syn",
         "gradient_step": gradient_step,
         "update_field_variance_in_voxel_space": update_field_variance_in_voxel_space,
         "total_field_variance_in_voxel_space": total_field_variance_in_voxel_space,
@@ -938,7 +1224,7 @@ def ants_registration_transform_syn_cargs(
         Command-line arguments.
     """
     cargs = []
-    cargs.append("SyN[" + str(params.get("gradient_step")) + "," + str(params.get("update_field_variance_in_voxel_space")) + "," + str(params.get("total_field_variance_in_voxel_space")) + "]")
+    cargs.append("SyN[" + str(params.get("gradient_step", None)) + "," + str(params.get("update_field_variance_in_voxel_space", None)) + "," + str(params.get("total_field_variance_in_voxel_space", None)) + "]")
     return cargs
 
 
@@ -947,7 +1233,7 @@ def ants_registration_transform_bspline_syn_params(
     update_field_mesh_size_at_base_level: float,
     total_field_mesh_size_at_base_level: float | None = None,
     spline_order: float | None = None,
-) -> AntsRegistrationTransformBsplineSynParameters:
+) -> AntsRegistrationTransformBsplineSynParametersTagged:
     """
     Build parameters.
     
@@ -960,7 +1246,7 @@ def ants_registration_transform_bspline_syn_params(
         Parameter dictionary
     """
     params = {
-        "@type": "ants.antsRegistration.stages.transform_bspline_syn",
+        "@type": "transform_bspline_syn",
         "gradient_step": gradient_step,
         "update_field_mesh_size_at_base_level": update_field_mesh_size_at_base_level,
     }
@@ -985,8 +1271,8 @@ def ants_registration_transform_bspline_syn_cargs(
         Command-line arguments.
     """
     cargs = []
-    if params.get("total_field_mesh_size_at_base_level") is not None or params.get("spline_order") is not None:
-        cargs.append("BSplineSyN[" + str(params.get("gradient_step")) + "," + str(params.get("update_field_mesh_size_at_base_level")) + "," + (str(params.get("total_field_mesh_size_at_base_level")) if (params.get("total_field_mesh_size_at_base_level") is not None) else "") + "," + (str(params.get("spline_order")) if (params.get("spline_order") is not None) else "") + "]")
+    if params.get("total_field_mesh_size_at_base_level", None) is not None or params.get("spline_order", None) is not None:
+        cargs.append("BSplineSyN[" + str(params.get("gradient_step", None)) + "," + str(params.get("update_field_mesh_size_at_base_level", None)) + "," + (str(params.get("total_field_mesh_size_at_base_level", None)) if (params.get("total_field_mesh_size_at_base_level", None) is not None) else "") + "," + (str(params.get("spline_order", None)) if (params.get("spline_order", None) is not None) else "") + "]")
     return cargs
 
 
@@ -995,7 +1281,7 @@ def ants_registration_transform_exponential_params(
     update_field_variance_in_voxel_space: float,
     velocity_field_variance_in_voxel_space: float,
     number_of_integration_steps: float,
-) -> AntsRegistrationTransformExponentialParameters:
+) -> AntsRegistrationTransformExponentialParametersTagged:
     """
     Build parameters.
     
@@ -1008,7 +1294,7 @@ def ants_registration_transform_exponential_params(
         Parameter dictionary
     """
     params = {
-        "@type": "ants.antsRegistration.stages.transform_exponential",
+        "@type": "transform_exponential",
         "gradient_step": gradient_step,
         "update_field_variance_in_voxel_space": update_field_variance_in_voxel_space,
         "velocity_field_variance_in_voxel_space": velocity_field_variance_in_voxel_space,
@@ -1031,7 +1317,7 @@ def ants_registration_transform_exponential_cargs(
         Command-line arguments.
     """
     cargs = []
-    cargs.append("Exponential[" + str(params.get("gradient_step")) + "," + str(params.get("update_field_variance_in_voxel_space")) + "," + str(params.get("velocity_field_variance_in_voxel_space")) + "," + str(params.get("number_of_integration_steps")) + "]")
+    cargs.append("Exponential[" + str(params.get("gradient_step", None)) + "," + str(params.get("update_field_variance_in_voxel_space", None)) + "," + str(params.get("velocity_field_variance_in_voxel_space", None)) + "," + str(params.get("number_of_integration_steps", None)) + "]")
     return cargs
 
 
@@ -1041,7 +1327,7 @@ def ants_registration_transform_bspline_exponential_params(
     velocity_field_mesh_size_at_base_level: float | None = None,
     number_of_integration_steps: float | None = None,
     spline_order: float | None = None,
-) -> AntsRegistrationTransformBsplineExponentialParameters:
+) -> AntsRegistrationTransformBsplineExponentialParametersTagged:
     """
     Build parameters.
     
@@ -1055,7 +1341,7 @@ def ants_registration_transform_bspline_exponential_params(
         Parameter dictionary
     """
     params = {
-        "@type": "ants.antsRegistration.stages.transform_bspline_exponential",
+        "@type": "transform_bspline_exponential",
         "gradient_step": gradient_step,
         "update_field_mesh_size_at_base_level": update_field_mesh_size_at_base_level,
     }
@@ -1082,8 +1368,8 @@ def ants_registration_transform_bspline_exponential_cargs(
         Command-line arguments.
     """
     cargs = []
-    if params.get("velocity_field_mesh_size_at_base_level") is not None or params.get("number_of_integration_steps") is not None or params.get("spline_order") is not None:
-        cargs.append("BSplineExponential[" + str(params.get("gradient_step")) + "," + str(params.get("update_field_mesh_size_at_base_level")) + "," + (str(params.get("velocity_field_mesh_size_at_base_level")) if (params.get("velocity_field_mesh_size_at_base_level") is not None) else "") + "," + (str(params.get("number_of_integration_steps")) if (params.get("number_of_integration_steps") is not None) else "") + "," + (str(params.get("spline_order")) if (params.get("spline_order") is not None) else "") + "]")
+    if params.get("velocity_field_mesh_size_at_base_level", None) is not None or params.get("number_of_integration_steps", None) is not None or params.get("spline_order", None) is not None:
+        cargs.append("BSplineExponential[" + str(params.get("gradient_step", None)) + "," + str(params.get("update_field_mesh_size_at_base_level", None)) + "," + (str(params.get("velocity_field_mesh_size_at_base_level", None)) if (params.get("velocity_field_mesh_size_at_base_level", None) is not None) else "") + "," + (str(params.get("number_of_integration_steps", None)) if (params.get("number_of_integration_steps", None) is not None) else "") + "," + (str(params.get("spline_order", None)) if (params.get("spline_order", None) is not None) else "") + "]")
     return cargs
 
 
@@ -1095,7 +1381,7 @@ def ants_registration_metric_ants_neighbourhood_cross_correlation_params(
     sampling_strategy: typing.Literal["None", "Regular", "Random"] | None = None,
     sampling_percentage: float | None = None,
     use_gradient_filter: typing.Literal["true", "false"] | None = None,
-) -> AntsRegistrationMetricAntsNeighbourhoodCrossCorrelationParameters:
+) -> AntsRegistrationMetricAntsNeighbourhoodCrossCorrelationParametersTagged:
     """
     Build parameters.
     
@@ -1111,7 +1397,7 @@ def ants_registration_metric_ants_neighbourhood_cross_correlation_params(
         Parameter dictionary
     """
     params = {
-        "@type": "ants.antsRegistration.stages.metric_ants_neighbourhood_cross_correlation",
+        "@type": "metric_ants_neighbourhood_cross_correlation",
         "fixed_image": fixed_image,
         "moving_image": moving_image,
         "metric_weight": metric_weight,
@@ -1141,8 +1427,8 @@ def ants_registration_metric_ants_neighbourhood_cross_correlation_cargs(
         Command-line arguments.
     """
     cargs = []
-    if params.get("radius") is not None or params.get("sampling_strategy") is not None or params.get("sampling_percentage") is not None or params.get("use_gradient_filter") is not None:
-        cargs.append("CC[" + params.get("fixed_image") + "," + params.get("moving_image") + "," + str(params.get("metric_weight")) + "," + (str(params.get("radius")) if (params.get("radius") is not None) else "") + "," + (params.get("sampling_strategy") if (params.get("sampling_strategy") is not None) else "") + "," + (str(params.get("sampling_percentage")) if (params.get("sampling_percentage") is not None) else "") + "," + (params.get("use_gradient_filter") if (params.get("use_gradient_filter") is not None) else "") + "]")
+    if params.get("radius", None) is not None or params.get("sampling_strategy", None) is not None or params.get("sampling_percentage", None) is not None or params.get("use_gradient_filter", None) is not None:
+        cargs.append("CC[" + params.get("fixed_image", None) + "," + params.get("moving_image", None) + "," + str(params.get("metric_weight", None)) + "," + (str(params.get("radius", None)) if (params.get("radius", None) is not None) else "") + "," + (params.get("sampling_strategy", None) if (params.get("sampling_strategy", None) is not None) else "") + "," + (str(params.get("sampling_percentage", None)) if (params.get("sampling_percentage", None) is not None) else "") + "," + (params.get("use_gradient_filter", None) if (params.get("use_gradient_filter", None) is not None) else "") + "]")
     return cargs
 
 
@@ -1154,7 +1440,7 @@ def ants_registration_metric_mutual_information_params(
     sampling_strategy: typing.Literal["None", "Regular", "Random"] | None = None,
     sampling_percentage: float | None = None,
     use_gradient_filter: typing.Literal["true", "false"] | None = None,
-) -> AntsRegistrationMetricMutualInformationParameters:
+) -> AntsRegistrationMetricMutualInformationParametersTagged:
     """
     Build parameters.
     
@@ -1170,7 +1456,7 @@ def ants_registration_metric_mutual_information_params(
         Parameter dictionary
     """
     params = {
-        "@type": "ants.antsRegistration.stages.metric_mutual_information",
+        "@type": "metric_mutual_information",
         "fixed_image": fixed_image,
         "moving_image": moving_image,
         "metric_weight": metric_weight,
@@ -1200,8 +1486,8 @@ def ants_registration_metric_mutual_information_cargs(
         Command-line arguments.
     """
     cargs = []
-    if params.get("number_of_bins") is not None or params.get("sampling_strategy") is not None or params.get("sampling_percentage") is not None or params.get("use_gradient_filter") is not None:
-        cargs.append("MI[" + params.get("fixed_image") + "," + params.get("moving_image") + "," + str(params.get("metric_weight")) + "," + (str(params.get("number_of_bins")) if (params.get("number_of_bins") is not None) else "") + "," + (params.get("sampling_strategy") if (params.get("sampling_strategy") is not None) else "") + "," + (str(params.get("sampling_percentage")) if (params.get("sampling_percentage") is not None) else "") + "," + (params.get("use_gradient_filter") if (params.get("use_gradient_filter") is not None) else "") + "]")
+    if params.get("number_of_bins", None) is not None or params.get("sampling_strategy", None) is not None or params.get("sampling_percentage", None) is not None or params.get("use_gradient_filter", None) is not None:
+        cargs.append("MI[" + params.get("fixed_image", None) + "," + params.get("moving_image", None) + "," + str(params.get("metric_weight", None)) + "," + (str(params.get("number_of_bins", None)) if (params.get("number_of_bins", None) is not None) else "") + "," + (params.get("sampling_strategy", None) if (params.get("sampling_strategy", None) is not None) else "") + "," + (str(params.get("sampling_percentage", None)) if (params.get("sampling_percentage", None) is not None) else "") + "," + (params.get("use_gradient_filter", None) if (params.get("use_gradient_filter", None) is not None) else "") + "]")
     return cargs
 
 
@@ -1213,7 +1499,7 @@ def ants_registration_metric_mattes_params(
     sampling_strategy: typing.Literal["None", "Regular", "Random"] | None = None,
     sampling_percentage: float | None = None,
     use_gradient_filter: typing.Literal["true", "false"] | None = None,
-) -> AntsRegistrationMetricMattesParameters:
+) -> AntsRegistrationMetricMattesParametersTagged:
     """
     Build parameters.
     
@@ -1229,7 +1515,7 @@ def ants_registration_metric_mattes_params(
         Parameter dictionary
     """
     params = {
-        "@type": "ants.antsRegistration.stages.metric_mattes",
+        "@type": "metric_mattes",
         "fixed_image": fixed_image,
         "moving_image": moving_image,
         "metric_weight": metric_weight,
@@ -1259,8 +1545,8 @@ def ants_registration_metric_mattes_cargs(
         Command-line arguments.
     """
     cargs = []
-    if params.get("number_of_bins") is not None or params.get("sampling_strategy") is not None or params.get("sampling_percentage") is not None or params.get("use_gradient_filter") is not None:
-        cargs.append("Mattes[" + params.get("fixed_image") + "," + params.get("moving_image") + "," + str(params.get("metric_weight")) + "," + (str(params.get("number_of_bins")) if (params.get("number_of_bins") is not None) else "") + "," + (params.get("sampling_strategy") if (params.get("sampling_strategy") is not None) else "") + "," + (str(params.get("sampling_percentage")) if (params.get("sampling_percentage") is not None) else "") + "," + (params.get("use_gradient_filter") if (params.get("use_gradient_filter") is not None) else "") + "]")
+    if params.get("number_of_bins", None) is not None or params.get("sampling_strategy", None) is not None or params.get("sampling_percentage", None) is not None or params.get("use_gradient_filter", None) is not None:
+        cargs.append("Mattes[" + params.get("fixed_image", None) + "," + params.get("moving_image", None) + "," + str(params.get("metric_weight", None)) + "," + (str(params.get("number_of_bins", None)) if (params.get("number_of_bins", None) is not None) else "") + "," + (params.get("sampling_strategy", None) if (params.get("sampling_strategy", None) is not None) else "") + "," + (str(params.get("sampling_percentage", None)) if (params.get("sampling_percentage", None) is not None) else "") + "," + (params.get("use_gradient_filter", None) if (params.get("use_gradient_filter", None) is not None) else "") + "]")
     return cargs
 
 
@@ -1272,7 +1558,7 @@ def ants_registration_metric_mean_squares_params(
     sampling_strategy: typing.Literal["None", "Regular", "Random"] | None = None,
     sampling_percentage: float | None = None,
     use_gradient_filter: typing.Literal["true", "false"] | None = None,
-) -> AntsRegistrationMetricMeanSquaresParameters:
+) -> AntsRegistrationMetricMeanSquaresParametersTagged:
     """
     Build parameters.
     
@@ -1288,7 +1574,7 @@ def ants_registration_metric_mean_squares_params(
         Parameter dictionary
     """
     params = {
-        "@type": "ants.antsRegistration.stages.metric_mean_squares",
+        "@type": "metric_mean_squares",
         "fixed_image": fixed_image,
         "moving_image": moving_image,
         "metric_weight": metric_weight,
@@ -1318,8 +1604,8 @@ def ants_registration_metric_mean_squares_cargs(
         Command-line arguments.
     """
     cargs = []
-    if params.get("radius") is not None or params.get("sampling_strategy") is not None or params.get("sampling_percentage") is not None or params.get("use_gradient_filter") is not None:
-        cargs.append("MeanSquares[" + params.get("fixed_image") + "," + params.get("moving_image") + "," + str(params.get("metric_weight")) + "," + (str(params.get("radius")) if (params.get("radius") is not None) else "") + "," + (params.get("sampling_strategy") if (params.get("sampling_strategy") is not None) else "") + "," + (str(params.get("sampling_percentage")) if (params.get("sampling_percentage") is not None) else "") + "," + (params.get("use_gradient_filter") if (params.get("use_gradient_filter") is not None) else "") + "]")
+    if params.get("radius", None) is not None or params.get("sampling_strategy", None) is not None or params.get("sampling_percentage", None) is not None or params.get("use_gradient_filter", None) is not None:
+        cargs.append("MeanSquares[" + params.get("fixed_image", None) + "," + params.get("moving_image", None) + "," + str(params.get("metric_weight", None)) + "," + (str(params.get("radius", None)) if (params.get("radius", None) is not None) else "") + "," + (params.get("sampling_strategy", None) if (params.get("sampling_strategy", None) is not None) else "") + "," + (str(params.get("sampling_percentage", None)) if (params.get("sampling_percentage", None) is not None) else "") + "," + (params.get("use_gradient_filter", None) if (params.get("use_gradient_filter", None) is not None) else "") + "]")
     return cargs
 
 
@@ -1331,7 +1617,7 @@ def ants_registration_metric_demons_params(
     sampling_strategy: typing.Literal["None", "Regular", "Random"] | None = None,
     sampling_percentage: float | None = None,
     use_gradient_filter: typing.Literal["true", "false"] | None = None,
-) -> AntsRegistrationMetricDemonsParameters:
+) -> AntsRegistrationMetricDemonsParametersTagged:
     """
     Build parameters.
     
@@ -1347,7 +1633,7 @@ def ants_registration_metric_demons_params(
         Parameter dictionary
     """
     params = {
-        "@type": "ants.antsRegistration.stages.metric_demons",
+        "@type": "metric_demons",
         "fixed_image": fixed_image,
         "moving_image": moving_image,
         "metric_weight": metric_weight,
@@ -1377,8 +1663,8 @@ def ants_registration_metric_demons_cargs(
         Command-line arguments.
     """
     cargs = []
-    if params.get("number_of_bins") is not None or params.get("sampling_strategy") is not None or params.get("sampling_percentage") is not None or params.get("use_gradient_filter") is not None:
-        cargs.append("Demons[" + params.get("fixed_image") + "," + params.get("moving_image") + "," + str(params.get("metric_weight")) + "," + (str(params.get("number_of_bins")) if (params.get("number_of_bins") is not None) else "") + "," + (params.get("sampling_strategy") if (params.get("sampling_strategy") is not None) else "") + "," + (str(params.get("sampling_percentage")) if (params.get("sampling_percentage") is not None) else "") + "," + (params.get("use_gradient_filter") if (params.get("use_gradient_filter") is not None) else "") + "]")
+    if params.get("number_of_bins", None) is not None or params.get("sampling_strategy", None) is not None or params.get("sampling_percentage", None) is not None or params.get("use_gradient_filter", None) is not None:
+        cargs.append("Demons[" + params.get("fixed_image", None) + "," + params.get("moving_image", None) + "," + str(params.get("metric_weight", None)) + "," + (str(params.get("number_of_bins", None)) if (params.get("number_of_bins", None) is not None) else "") + "," + (params.get("sampling_strategy", None) if (params.get("sampling_strategy", None) is not None) else "") + "," + (str(params.get("sampling_percentage", None)) if (params.get("sampling_percentage", None) is not None) else "") + "," + (params.get("use_gradient_filter", None) if (params.get("use_gradient_filter", None) is not None) else "") + "]")
     return cargs
 
 
@@ -1390,7 +1676,7 @@ def ants_registration_metric_global_correlation_params(
     sampling_strategy: typing.Literal["None", "Regular", "Random"] | None = None,
     sampling_percentage: float | None = None,
     use_gradient_filter: typing.Literal["true", "false"] | None = None,
-) -> AntsRegistrationMetricGlobalCorrelationParameters:
+) -> AntsRegistrationMetricGlobalCorrelationParametersTagged:
     """
     Build parameters.
     
@@ -1406,7 +1692,7 @@ def ants_registration_metric_global_correlation_params(
         Parameter dictionary
     """
     params = {
-        "@type": "ants.antsRegistration.stages.metric_global_correlation",
+        "@type": "metric_global_correlation",
         "fixed_image": fixed_image,
         "moving_image": moving_image,
         "metric_weight": metric_weight,
@@ -1436,8 +1722,8 @@ def ants_registration_metric_global_correlation_cargs(
         Command-line arguments.
     """
     cargs = []
-    if params.get("radius") is not None or params.get("sampling_strategy") is not None or params.get("sampling_percentage") is not None or params.get("use_gradient_filter") is not None:
-        cargs.append("GC[" + params.get("fixed_image") + "," + params.get("moving_image") + "," + str(params.get("metric_weight")) + "," + (str(params.get("radius")) if (params.get("radius") is not None) else "") + "," + (params.get("sampling_strategy") if (params.get("sampling_strategy") is not None) else "") + "," + (str(params.get("sampling_percentage")) if (params.get("sampling_percentage") is not None) else "") + "," + (params.get("use_gradient_filter") if (params.get("use_gradient_filter") is not None) else "") + "]")
+    if params.get("radius", None) is not None or params.get("sampling_strategy", None) is not None or params.get("sampling_percentage", None) is not None or params.get("use_gradient_filter", None) is not None:
+        cargs.append("GC[" + params.get("fixed_image", None) + "," + params.get("moving_image", None) + "," + str(params.get("metric_weight", None)) + "," + (str(params.get("radius", None)) if (params.get("radius", None) is not None) else "") + "," + (params.get("sampling_strategy", None) if (params.get("sampling_strategy", None) is not None) else "") + "," + (str(params.get("sampling_percentage", None)) if (params.get("sampling_percentage", None) is not None) else "") + "," + (params.get("use_gradient_filter", None) if (params.get("use_gradient_filter", None) is not None) else "") + "]")
     return cargs
 
 
@@ -1447,7 +1733,7 @@ def ants_registration_metric_euclidean_icp_params(
     metric_weight: float,
     sampling_percentage: float | None = None,
     boundary_points_only: typing.Literal["0"] | None = None,
-) -> AntsRegistrationMetricEuclideanIcpParameters:
+) -> AntsRegistrationMetricEuclideanIcpParametersTagged:
     """
     Build parameters.
     
@@ -1461,7 +1747,7 @@ def ants_registration_metric_euclidean_icp_params(
         Parameter dictionary
     """
     params = {
-        "@type": "ants.antsRegistration.stages.metric_euclidean_icp",
+        "@type": "metric_euclidean_icp",
         "fixed_point_set": fixed_point_set,
         "moving_point_set": moving_point_set,
         "metric_weight": metric_weight,
@@ -1487,8 +1773,8 @@ def ants_registration_metric_euclidean_icp_cargs(
         Command-line arguments.
     """
     cargs = []
-    if params.get("sampling_percentage") is not None or params.get("boundary_points_only") is not None:
-        cargs.append("ICP[" + params.get("fixed_point_set") + "," + params.get("moving_point_set") + "," + str(params.get("metric_weight")) + "," + (str(params.get("sampling_percentage")) if (params.get("sampling_percentage") is not None) else "") + "," + (params.get("boundary_points_only") if (params.get("boundary_points_only") is not None) else "") + "]")
+    if params.get("sampling_percentage", None) is not None or params.get("boundary_points_only", None) is not None:
+        cargs.append("ICP[" + params.get("fixed_point_set", None) + "," + params.get("moving_point_set", None) + "," + str(params.get("metric_weight", None)) + "," + (str(params.get("sampling_percentage", None)) if (params.get("sampling_percentage", None) is not None) else "") + "," + (params.get("boundary_points_only", None) if (params.get("boundary_points_only", None) is not None) else "") + "]")
     return cargs
 
 
@@ -1496,7 +1782,7 @@ def ants_registration_metric_point_set_expectation_params(
     metric_weight: float,
     point_set_sigma: float | None = None,
     sampling_percentage: float | None = None,
-) -> AntsRegistrationMetricPointSetExpectationParameters:
+) -> AntsRegistrationMetricPointSetExpectationParametersTagged:
     """
     Build parameters.
     
@@ -1508,7 +1794,7 @@ def ants_registration_metric_point_set_expectation_params(
         Parameter dictionary
     """
     params = {
-        "@type": "ants.antsRegistration.stages.metric_point_set_expectation",
+        "@type": "metric_point_set_expectation",
         "metric_weight": metric_weight,
     }
     if point_set_sigma is not None:
@@ -1532,8 +1818,8 @@ def ants_registration_metric_point_set_expectation_cargs(
         Command-line arguments.
     """
     cargs = []
-    if params.get("point_set_sigma") is not None or params.get("sampling_percentage") is not None:
-        cargs.append("PSE[[FIXED_IMAGE],[MOVING_IMAGE]," + str(params.get("metric_weight")) + ",," + (str(params.get("point_set_sigma")) if (params.get("point_set_sigma") is not None) else "") + "[SAMPLING_STRATEGY]," + (str(params.get("sampling_percentage")) if (params.get("sampling_percentage") is not None) else "") + "[USE_GRADIENT_FILTER]]")
+    if params.get("point_set_sigma", None) is not None or params.get("sampling_percentage", None) is not None:
+        cargs.append("PSE[[FIXED_IMAGE],[MOVING_IMAGE]," + str(params.get("metric_weight", None)) + ",," + (str(params.get("point_set_sigma", None)) if (params.get("point_set_sigma", None) is not None) else "") + "[SAMPLING_STRATEGY]," + (str(params.get("sampling_percentage", None)) if (params.get("sampling_percentage", None) is not None) else "") + "[USE_GRADIENT_FILTER]]")
     return cargs
 
 
@@ -1545,7 +1831,7 @@ def ants_registration_metric_jensen_havrda_charvet_tsallis_params(
     boundary_points_only: typing.Literal["0"] | None = None,
     point_set_sigma: float | None = None,
     k_neighborhood: float | None = None,
-) -> AntsRegistrationMetricJensenHavrdaCharvetTsallisParameters:
+) -> AntsRegistrationMetricJensenHavrdaCharvetTsallisParametersTagged:
     """
     Build parameters.
     
@@ -1561,7 +1847,7 @@ def ants_registration_metric_jensen_havrda_charvet_tsallis_params(
         Parameter dictionary
     """
     params = {
-        "@type": "ants.antsRegistration.stages.metric_jensen_havrda_charvet_tsallis",
+        "@type": "metric_jensen_havrda_charvet_tsallis",
         "fixed_point_set": fixed_point_set,
         "moving_point_set": moving_point_set,
         "metric_weight": metric_weight,
@@ -1591,13 +1877,13 @@ def ants_registration_metric_jensen_havrda_charvet_tsallis_cargs(
         Command-line arguments.
     """
     cargs = []
-    if params.get("sampling_percentage") is not None or params.get("boundary_points_only") is not None or params.get("point_set_sigma") is not None or params.get("k_neighborhood") is not None:
-        cargs.append("JHCT[" + params.get("fixed_point_set") + "," + params.get("moving_point_set") + "," + str(params.get("metric_weight")) + "," + (str(params.get("sampling_percentage")) if (params.get("sampling_percentage") is not None) else "") + "," + (params.get("boundary_points_only") if (params.get("boundary_points_only") is not None) else "") + "," + (str(params.get("point_set_sigma")) if (params.get("point_set_sigma") is not None) else "") + "," + (str(params.get("k_neighborhood")) if (params.get("k_neighborhood") is not None) else "") + "]")
+    if params.get("sampling_percentage", None) is not None or params.get("boundary_points_only", None) is not None or params.get("point_set_sigma", None) is not None or params.get("k_neighborhood", None) is not None:
+        cargs.append("JHCT[" + params.get("fixed_point_set", None) + "," + params.get("moving_point_set", None) + "," + str(params.get("metric_weight", None)) + "," + (str(params.get("sampling_percentage", None)) if (params.get("sampling_percentage", None) is not None) else "") + "," + (params.get("boundary_points_only", None) if (params.get("boundary_points_only", None) is not None) else "") + "," + (str(params.get("point_set_sigma", None)) if (params.get("point_set_sigma", None) is not None) else "") + "," + (str(params.get("k_neighborhood", None)) if (params.get("k_neighborhood", None) is not None) else "") + "]")
     return cargs
 
 
 def ants_registration_metric_igdm_params(
-) -> AntsRegistrationMetricIgdmParameters:
+) -> AntsRegistrationMetricIgdmParametersTagged:
     """
     Build parameters.
     
@@ -1606,7 +1892,7 @@ def ants_registration_metric_igdm_params(
         Parameter dictionary
     """
     params = {
-        "@type": "ants.antsRegistration.stages.metric_igdm",
+        "@type": "metric_igdm",
     }
     return params
 
@@ -1633,7 +1919,7 @@ def ants_registration_convergence_params(
     convergence: str,
     convergence_threshold: float,
     convergence_window_size: int,
-) -> AntsRegistrationConvergenceParameters:
+) -> AntsRegistrationConvergenceParametersTagged:
     """
     Build parameters.
     
@@ -1645,7 +1931,7 @@ def ants_registration_convergence_params(
         Parameter dictionary
     """
     params = {
-        "@type": "ants.antsRegistration.stages.convergence",
+        "@type": "convergence",
         "convergence": convergence,
         "convergence_threshold": convergence_threshold,
         "convergence_window_size": convergence_window_size,
@@ -1667,18 +1953,18 @@ def ants_registration_convergence_cargs(
         Command-line arguments.
     """
     cargs = []
-    cargs.append("[" + params.get("convergence") + "," + str(params.get("convergence_threshold")) + "," + str(params.get("convergence_window_size")) + "]")
+    cargs.append("[" + params.get("convergence", None) + "," + str(params.get("convergence_threshold", None)) + "," + str(params.get("convergence_window_size", None)) + "]")
     return cargs
 
 
 def ants_registration_stage_params(
-    transform: typing.Union[AntsRegistrationTransformRigidParameters, AntsRegistrationTransformAffineParameters, AntsRegistrationTransformCompositeAffineParameters, AntsRegistrationTransformSimilarityParameters, AntsRegistrationTransformTranslationParameters, AntsRegistrationTransformBsplineParameters, AntsRegistrationTransformGaussianDisplacementFieldParameters, AntsRegistrationTransformBsplineDisplacementFieldParameters, AntsRegistrationTransformTimeVaryingVelocityFieldParameters, AntsRegistrationTransformTimeVaryingBsplineVelocityFieldParameters, AntsRegistrationTransformSynParameters, AntsRegistrationTransformBsplineSynParameters, AntsRegistrationTransformExponentialParameters, AntsRegistrationTransformBsplineExponentialParameters],
-    metric: typing.Union[AntsRegistrationMetricAntsNeighbourhoodCrossCorrelationParameters, AntsRegistrationMetricMutualInformationParameters, AntsRegistrationMetricMattesParameters, AntsRegistrationMetricMeanSquaresParameters, AntsRegistrationMetricDemonsParameters, AntsRegistrationMetricGlobalCorrelationParameters, AntsRegistrationMetricEuclideanIcpParameters, AntsRegistrationMetricPointSetExpectationParameters, AntsRegistrationMetricJensenHavrdaCharvetTsallisParameters, AntsRegistrationMetricIgdmParameters],
+    transform: typing.Union[AntsRegistrationTransformRigidParametersTagged, AntsRegistrationTransformAffineParametersTagged, AntsRegistrationTransformCompositeAffineParametersTagged, AntsRegistrationTransformSimilarityParametersTagged, AntsRegistrationTransformTranslationParametersTagged, AntsRegistrationTransformBsplineParametersTagged, AntsRegistrationTransformGaussianDisplacementFieldParametersTagged, AntsRegistrationTransformBsplineDisplacementFieldParametersTagged, AntsRegistrationTransformTimeVaryingVelocityFieldParametersTagged, AntsRegistrationTransformTimeVaryingBsplineVelocityFieldParametersTagged, AntsRegistrationTransformSynParametersTagged, AntsRegistrationTransformBsplineSynParametersTagged, AntsRegistrationTransformExponentialParametersTagged, AntsRegistrationTransformBsplineExponentialParametersTagged],
+    metric: typing.Union[AntsRegistrationMetricAntsNeighbourhoodCrossCorrelationParametersTagged, AntsRegistrationMetricMutualInformationParametersTagged, AntsRegistrationMetricMattesParametersTagged, AntsRegistrationMetricMeanSquaresParametersTagged, AntsRegistrationMetricDemonsParametersTagged, AntsRegistrationMetricGlobalCorrelationParametersTagged, AntsRegistrationMetricEuclideanIcpParametersTagged, AntsRegistrationMetricPointSetExpectationParametersTagged, AntsRegistrationMetricJensenHavrdaCharvetTsallisParametersTagged, AntsRegistrationMetricIgdmParametersTagged],
     convergence: AntsRegistrationConvergenceParameters,
     smoothing_sigmas: str,
     shrink_factors: str,
     use_histogram_matching: typing.Literal[0, 1] | None = None,
-) -> AntsRegistrationStageParameters:
+) -> AntsRegistrationStageParametersTagged:
     """
     Build parameters.
     
@@ -1719,7 +2005,7 @@ def ants_registration_stage_params(
         Parameter dictionary
     """
     params = {
-        "@type": "ants.antsRegistration.stages",
+        "@type": "stage",
         "transform": transform,
         "metric": metric,
         "convergence": convergence,
@@ -1747,28 +2033,28 @@ def ants_registration_stage_cargs(
     cargs = []
     cargs.extend([
         "--transform",
-        *dyn_cargs(params.get("transform")["@type"])(params.get("transform"), execution)
+        *ants_registration_transform_cargs_dyn_fn(params.get("transform", None)["@type"])(params.get("transform", None), execution)
     ])
     cargs.extend([
         "--metric",
-        *dyn_cargs(params.get("metric")["@type"])(params.get("metric"), execution)
+        *ants_registration_metric_cargs_dyn_fn(params.get("metric", None)["@type"])(params.get("metric", None), execution)
     ])
     cargs.extend([
         "--convergence",
-        *dyn_cargs(params.get("convergence")["@type"])(params.get("convergence"), execution)
+        *ants_registration_convergence_cargs(params.get("convergence", None), execution)
     ])
     cargs.extend([
         "--smoothing-sigmas",
-        params.get("smoothing_sigmas")
+        params.get("smoothing_sigmas", None)
     ])
     cargs.extend([
         "--shrink-factors",
-        params.get("shrink_factors")
+        params.get("shrink_factors", None)
     ])
-    if params.get("use_histogram_matching") is not None:
+    if params.get("use_histogram_matching", None) is not None:
         cargs.extend([
             "--use-histogram-matching",
-            str(params.get("use_histogram_matching"))
+            str(params.get("use_histogram_matching", None))
         ])
     return cargs
 
@@ -1776,7 +2062,7 @@ def ants_registration_stage_cargs(
 def ants_registration_winsorize_image_intensities_params(
     lower_quantile: float,
     upper_quantile: float,
-) -> AntsRegistrationWinsorizeImageIntensitiesParameters:
+) -> AntsRegistrationWinsorizeImageIntensitiesParametersTagged:
     """
     Build parameters.
     
@@ -1787,7 +2073,7 @@ def ants_registration_winsorize_image_intensities_params(
         Parameter dictionary
     """
     params = {
-        "@type": "ants.antsRegistration.winsorize_image_intensities",
+        "@type": "winsorize_image_intensities",
         "lower_quantile": lower_quantile,
         "upper_quantile": upper_quantile,
     }
@@ -1808,14 +2094,14 @@ def ants_registration_winsorize_image_intensities_cargs(
         Command-line arguments.
     """
     cargs = []
-    cargs.append("[" + str(params.get("lower_quantile")) + str(params.get("upper_quantile")) + "]")
+    cargs.append("[" + str(params.get("lower_quantile", None)) + str(params.get("upper_quantile", None)) + "]")
     return cargs
 
 
 def ants_registration_masks_params(
     fixed_mask: str | None = None,
     moving_mask: str | None = None,
-) -> AntsRegistrationMasksParameters:
+) -> AntsRegistrationMasksParametersTagged:
     """
     Build parameters.
     
@@ -1826,7 +2112,7 @@ def ants_registration_masks_params(
         Parameter dictionary
     """
     params = {
-        "@type": "ants.antsRegistration.masks",
+        "@type": "masks",
     }
     if fixed_mask is not None:
         params["fixed_mask"] = fixed_mask
@@ -1849,14 +2135,14 @@ def ants_registration_masks_cargs(
         Command-line arguments.
     """
     cargs = []
-    if params.get("fixed_mask") is not None or params.get("moving_mask") is not None:
-        cargs.append("[" + (params.get("fixed_mask") if (params.get("fixed_mask") is not None) else "") + (params.get("moving_mask") if (params.get("moving_mask") is not None) else "") + "]")
+    if params.get("fixed_mask", None) is not None or params.get("moving_mask", None) is not None:
+        cargs.append("[" + (params.get("fixed_mask", None) if (params.get("fixed_mask", None) is not None) else "") + (params.get("moving_mask", None) if (params.get("moving_mask", None) is not None) else "") + "]")
     return cargs
 
 
 class AntsRegistrationOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `ants_registration(...)`.
+    Output object returned when calling `AntsRegistrationParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -1886,14 +2172,14 @@ def ants_registration_params(
     interpolation: typing.Literal["Linear", "NearestNeighbor", "MultiLabel", "Gaussian", "BSpline", "CosineWindowedSinc", "WelchWindowedSinc", "HammingWindowedSinc", "LanczosWindowedSinc", "GenericLabel"] | None = None,
     restrict_deformation: list[typing.Literal[0, 1]] | None = None,
     initial_fixed_transform: str | None = None,
-    initial_moving_transform: typing.Union[AntsRegistrationInitialMovingTransformParameters, AntsRegistrationInitialMovingTransformUseInverseParameters, AntsRegistrationInitialMovingTransformInitializationFeatureParameters] | None = None,
+    initial_moving_transform: typing.Union[AntsRegistrationInitialMovingTransformParametersTagged, AntsRegistrationInitialMovingTransformUseInverseParametersTagged, AntsRegistrationInitialMovingTransformInitializationFeatureParametersTagged] | None = None,
     winsorize_image_intensities: AntsRegistrationWinsorizeImageIntensitiesParameters | None = None,
     masks: AntsRegistrationMasksParameters | None = None,
     minc: typing.Literal[0, 1] | None = None,
     random_seed: int | None = None,
     verbose: typing.Literal[0, 1] | None = None,
     float_: typing.Literal[0, 1] | None = None,
-) -> AntsRegistrationParameters:
+) -> AntsRegistrationParametersTagged:
     """
     Build parameters.
     
@@ -2009,7 +2295,7 @@ def ants_registration_params(
         Parameter dictionary
     """
     params = {
-        "@type": "ants.antsRegistration",
+        "@type": "ants/antsRegistration",
         "stages": stages,
     }
     if dimensionality is not None:
@@ -2068,101 +2354,101 @@ def ants_registration_cargs(
     """
     cargs = []
     cargs.append("antsRegistration")
-    if params.get("dimensionality") is not None:
+    if params.get("dimensionality", None) is not None:
         cargs.extend([
             "--dimensionality",
-            str(params.get("dimensionality"))
+            str(params.get("dimensionality", None))
         ])
-    if params.get("output") is not None:
+    if params.get("output", None) is not None:
         cargs.extend([
             "-o",
-            params.get("output")
+            params.get("output", None)
         ])
-    if params.get("save_state") is not None:
+    if params.get("save_state", None) is not None:
         cargs.extend([
             "-j",
-            params.get("save_state")
+            params.get("save_state", None)
         ])
-    if params.get("restore_state") is not None:
+    if params.get("restore_state", None) is not None:
         cargs.extend([
             "-k",
-            params.get("restore_state")
+            params.get("restore_state", None)
         ])
-    if params.get("write_composite_transform") is not None:
+    if params.get("write_composite_transform", None) is not None:
         cargs.extend([
             "-a",
-            str(params.get("write_composite_transform"))
+            str(params.get("write_composite_transform", None))
         ])
-    if params.get("print_similarity_measure_interval") is not None:
+    if params.get("print_similarity_measure_interval", None) is not None:
         cargs.extend([
             "-p",
-            str(params.get("print_similarity_measure_interval"))
+            str(params.get("print_similarity_measure_interval", None))
         ])
-    if params.get("write_interval_volumes") is not None:
+    if params.get("write_interval_volumes", None) is not None:
         cargs.extend([
             "--write-interval-volumes",
-            str(params.get("write_interval_volumes"))
+            str(params.get("write_interval_volumes", None))
         ])
-    if params.get("collapse_output_transforms") is not None:
+    if params.get("collapse_output_transforms", None) is not None:
         cargs.extend([
             "--collapse-output-transforms",
-            str(params.get("collapse_output_transforms"))
+            str(params.get("collapse_output_transforms", None))
         ])
-    if params.get("initialize_transforms_per_stage") is not None:
+    if params.get("initialize_transforms_per_stage", None) is not None:
         cargs.extend([
             "-i",
-            str(params.get("initialize_transforms_per_stage"))
+            str(params.get("initialize_transforms_per_stage", None))
         ])
-    if params.get("interpolation") is not None:
+    if params.get("interpolation", None) is not None:
         cargs.extend([
             "--interpolation",
-            params.get("interpolation")
+            params.get("interpolation", None)
         ])
-    if params.get("restrict_deformation") is not None:
+    if params.get("restrict_deformation", None) is not None:
         cargs.extend([
             "-g",
-            "x".join(map(str, params.get("restrict_deformation")))
+            "x".join(map(str, params.get("restrict_deformation", None)))
         ])
-    if params.get("initial_fixed_transform") is not None:
+    if params.get("initial_fixed_transform", None) is not None:
         cargs.extend([
             "-q",
-            params.get("initial_fixed_transform")
+            params.get("initial_fixed_transform", None)
         ])
-    if params.get("initial_moving_transform") is not None:
+    if params.get("initial_moving_transform", None) is not None:
         cargs.extend([
             "--initial-moving-transform",
-            *dyn_cargs(params.get("initial_moving_transform")["@type"])(params.get("initial_moving_transform"), execution)
+            *ants_registration_initial_moving_transform_cargs_dyn_fn(params.get("initial_moving_transform", None)["@type"])(params.get("initial_moving_transform", None), execution)
         ])
-    cargs.extend([a for c in [dyn_cargs(s["@type"])(s, execution) for s in params.get("stages")] for a in c])
-    if params.get("winsorize_image_intensities") is not None:
+    cargs.extend([a for c in [ants_registration_stage_cargs(s, execution) for s in params.get("stages", None)] for a in c])
+    if params.get("winsorize_image_intensities", None) is not None:
         cargs.extend([
             "--winsorize-image-intensities",
-            *dyn_cargs(params.get("winsorize_image_intensities")["@type"])(params.get("winsorize_image_intensities"), execution)
+            *ants_registration_winsorize_image_intensities_cargs(params.get("winsorize_image_intensities", None), execution)
         ])
-    if params.get("masks") is not None:
+    if params.get("masks", None) is not None:
         cargs.extend([
             "--masks",
-            *dyn_cargs(params.get("masks")["@type"])(params.get("masks"), execution)
+            *ants_registration_masks_cargs(params.get("masks", None), execution)
         ])
-    if params.get("minc") is not None:
+    if params.get("minc", None) is not None:
         cargs.extend([
             "--minc",
-            str(params.get("minc"))
+            str(params.get("minc", None))
         ])
-    if params.get("random_seed") is not None:
+    if params.get("random_seed", None) is not None:
         cargs.extend([
             "--random-seed",
-            str(params.get("random_seed"))
+            str(params.get("random_seed", None))
         ])
-    if params.get("verbose") is not None:
+    if params.get("verbose", None) is not None:
         cargs.extend([
             "-v",
-            str(params.get("verbose"))
+            str(params.get("verbose", None))
         ])
-    if params.get("float") is not None:
+    if params.get("float", None) is not None:
         cargs.extend([
             "--float",
-            str(params.get("float"))
+            str(params.get("float", None))
         ])
     return cargs
 
@@ -2182,11 +2468,11 @@ def ants_registration_outputs(
     """
     ret = AntsRegistrationOutputs(
         root=execution.output_file("."),
-        generic_affine=execution.output_file(params.get("output") + "0GenericAffine.mat") if (params.get("output") is not None) else None,
-        inverse_warped=execution.output_file(params.get("output") + "InverseWarped.nii.gz") if (params.get("output") is not None) else None,
-        inverse_warp=execution.output_file(params.get("output") + "1InverseWarp.nii.gz") if (params.get("output") is not None) else None,
-        warped=execution.output_file(params.get("output") + "Warped.nii.gz") if (params.get("output") is not None) else None,
-        warp=execution.output_file(params.get("output") + "1Warp.nii.gz") if (params.get("output") is not None) else None,
+        generic_affine=execution.output_file(params.get("output", None) + "0GenericAffine.mat") if (params.get("output") is not None) else None,
+        inverse_warped=execution.output_file(params.get("output", None) + "InverseWarped.nii.gz") if (params.get("output") is not None) else None,
+        inverse_warp=execution.output_file(params.get("output", None) + "1InverseWarp.nii.gz") if (params.get("output") is not None) else None,
+        warped=execution.output_file(params.get("output", None) + "Warped.nii.gz") if (params.get("output") is not None) else None,
+        warp=execution.output_file(params.get("output", None) + "1Warp.nii.gz") if (params.get("output") is not None) else None,
     )
     return ret
 
@@ -2238,7 +2524,7 @@ def ants_registration(
     interpolation: typing.Literal["Linear", "NearestNeighbor", "MultiLabel", "Gaussian", "BSpline", "CosineWindowedSinc", "WelchWindowedSinc", "HammingWindowedSinc", "LanczosWindowedSinc", "GenericLabel"] | None = None,
     restrict_deformation: list[typing.Literal[0, 1]] | None = None,
     initial_fixed_transform: str | None = None,
-    initial_moving_transform: typing.Union[AntsRegistrationInitialMovingTransformParameters, AntsRegistrationInitialMovingTransformUseInverseParameters, AntsRegistrationInitialMovingTransformInitializationFeatureParameters] | None = None,
+    initial_moving_transform: typing.Union[AntsRegistrationInitialMovingTransformParametersTagged, AntsRegistrationInitialMovingTransformUseInverseParametersTagged, AntsRegistrationInitialMovingTransformInitializationFeatureParametersTagged] | None = None,
     winsorize_image_intensities: AntsRegistrationWinsorizeImageIntensitiesParameters | None = None,
     masks: AntsRegistrationMasksParameters | None = None,
     minc: typing.Literal[0, 1] | None = None,
@@ -2400,39 +2686,7 @@ def ants_registration(
 
 __all__ = [
     "ANTS_REGISTRATION_METADATA",
-    "AntsRegistrationConvergenceParameters",
-    "AntsRegistrationInitialMovingTransformInitializationFeatureParameters",
-    "AntsRegistrationInitialMovingTransformParameters",
-    "AntsRegistrationInitialMovingTransformUseInverseParameters",
-    "AntsRegistrationMasksParameters",
-    "AntsRegistrationMetricAntsNeighbourhoodCrossCorrelationParameters",
-    "AntsRegistrationMetricDemonsParameters",
-    "AntsRegistrationMetricEuclideanIcpParameters",
-    "AntsRegistrationMetricGlobalCorrelationParameters",
-    "AntsRegistrationMetricIgdmParameters",
-    "AntsRegistrationMetricJensenHavrdaCharvetTsallisParameters",
-    "AntsRegistrationMetricMattesParameters",
-    "AntsRegistrationMetricMeanSquaresParameters",
-    "AntsRegistrationMetricMutualInformationParameters",
-    "AntsRegistrationMetricPointSetExpectationParameters",
     "AntsRegistrationOutputs",
-    "AntsRegistrationParameters",
-    "AntsRegistrationStageParameters",
-    "AntsRegistrationTransformAffineParameters",
-    "AntsRegistrationTransformBsplineDisplacementFieldParameters",
-    "AntsRegistrationTransformBsplineExponentialParameters",
-    "AntsRegistrationTransformBsplineParameters",
-    "AntsRegistrationTransformBsplineSynParameters",
-    "AntsRegistrationTransformCompositeAffineParameters",
-    "AntsRegistrationTransformExponentialParameters",
-    "AntsRegistrationTransformGaussianDisplacementFieldParameters",
-    "AntsRegistrationTransformRigidParameters",
-    "AntsRegistrationTransformSimilarityParameters",
-    "AntsRegistrationTransformSynParameters",
-    "AntsRegistrationTransformTimeVaryingBsplineVelocityFieldParameters",
-    "AntsRegistrationTransformTimeVaryingVelocityFieldParameters",
-    "AntsRegistrationTransformTranslationParameters",
-    "AntsRegistrationWinsorizeImageIntensitiesParameters",
     "ants_registration",
     "ants_registration_convergence_params",
     "ants_registration_execute",

@@ -14,7 +14,16 @@ FSR_COREG_METADATA = Metadata(
 
 
 FsrCoregParameters = typing.TypedDict('FsrCoregParameters', {
-    "@type": typing.Literal["freesurfer.fsr-coreg"],
+    "@type": typing.NotRequired[typing.Literal["freesurfer/fsr-coreg"]],
+    "import_dir": str,
+    "reference_mode": str,
+    "num_threads": typing.NotRequired[float | None],
+    "force_update": bool,
+    "output_dir": typing.NotRequired[str | None],
+    "expert_options": typing.NotRequired[InputPathType | None],
+})
+FsrCoregParametersTagged = typing.TypedDict('FsrCoregParametersTagged', {
+    "@type": typing.Literal["freesurfer/fsr-coreg"],
     "import_dir": str,
     "reference_mode": str,
     "num_threads": typing.NotRequired[float | None],
@@ -24,41 +33,9 @@ FsrCoregParameters = typing.TypedDict('FsrCoregParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "freesurfer.fsr-coreg": fsr_coreg_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "freesurfer.fsr-coreg": fsr_coreg_outputs,
-    }.get(t)
-
-
 class FsrCoregOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `fsr_coreg(...)`.
+    Output object returned when calling `FsrCoregParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -75,7 +52,7 @@ def fsr_coreg_params(
     force_update: bool = False,
     output_dir: str | None = None,
     expert_options: InputPathType | None = None,
-) -> FsrCoregParameters:
+) -> FsrCoregParametersTagged:
     """
     Build parameters.
     
@@ -91,7 +68,7 @@ def fsr_coreg_params(
         Parameter dictionary
     """
     params = {
-        "@type": "freesurfer.fsr-coreg",
+        "@type": "freesurfer/fsr-coreg",
         "import_dir": import_dir,
         "reference_mode": reference_mode,
         "force_update": force_update,
@@ -122,28 +99,28 @@ def fsr_coreg_cargs(
     cargs.append("fsr-coreg")
     cargs.extend([
         "--i",
-        params.get("import_dir")
+        params.get("import_dir", None)
     ])
     cargs.extend([
         "--ref",
-        params.get("reference_mode")
+        params.get("reference_mode", None)
     ])
-    if params.get("num_threads") is not None:
+    if params.get("num_threads", None) is not None:
         cargs.extend([
             "--threads",
-            str(params.get("num_threads"))
+            str(params.get("num_threads", None))
         ])
-    if params.get("force_update"):
+    if params.get("force_update", False):
         cargs.append("--force-update")
-    if params.get("output_dir") is not None:
+    if params.get("output_dir", None) is not None:
         cargs.extend([
             "--o",
-            params.get("output_dir")
+            params.get("output_dir", None)
         ])
-    if params.get("expert_options") is not None:
+    if params.get("expert_options", None) is not None:
         cargs.extend([
             "--expert",
-            execution.input_file(params.get("expert_options"))
+            execution.input_file(params.get("expert_options", None))
         ])
     return cargs
 
@@ -163,8 +140,8 @@ def fsr_coreg_outputs(
     """
     ret = FsrCoregOutputs(
         root=execution.output_file("."),
-        aligned_volume=execution.output_file(params.get("output_dir") + "/mode.mgz") if (params.get("output_dir") is not None) else None,
-        registration_transform=execution.output_file(params.get("output_dir") + "/mode.reg-to-ref.lta") if (params.get("output_dir") is not None) else None,
+        aligned_volume=execution.output_file(params.get("output_dir", None) + "/mode.mgz") if (params.get("output_dir") is not None) else None,
+        registration_transform=execution.output_file(params.get("output_dir", None) + "/mode.reg-to-ref.lta") if (params.get("output_dir") is not None) else None,
     )
     return ret
 
@@ -241,7 +218,6 @@ def fsr_coreg(
 __all__ = [
     "FSR_COREG_METADATA",
     "FsrCoregOutputs",
-    "FsrCoregParameters",
     "fsr_coreg",
     "fsr_coreg_execute",
     "fsr_coreg_params",

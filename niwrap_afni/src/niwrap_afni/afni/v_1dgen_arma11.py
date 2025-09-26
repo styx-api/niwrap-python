@@ -14,7 +14,22 @@ V_1DGEN_ARMA11_METADATA = Metadata(
 
 
 V1dgenArma11Parameters = typing.TypedDict('V1dgenArma11Parameters', {
-    "@type": typing.Literal["afni.1dgenARMA11"],
+    "@type": typing.NotRequired[typing.Literal["afni/1dgenARMA11"]],
+    "length": typing.NotRequired[float | None],
+    "length_alt": typing.NotRequired[float | None],
+    "num_series": typing.NotRequired[float | None],
+    "param_a": typing.NotRequired[float | None],
+    "param_b": typing.NotRequired[float | None],
+    "param_lam": typing.NotRequired[float | None],
+    "std_dev": typing.NotRequired[float | None],
+    "normalize": bool,
+    "seed": typing.NotRequired[float | None],
+    "corcut": typing.NotRequired[float | None],
+    "arma31": typing.NotRequired[str | None],
+    "arma51": typing.NotRequired[str | None],
+})
+V1dgenArma11ParametersTagged = typing.TypedDict('V1dgenArma11ParametersTagged', {
+    "@type": typing.Literal["afni/1dgenARMA11"],
     "length": typing.NotRequired[float | None],
     "length_alt": typing.NotRequired[float | None],
     "num_series": typing.NotRequired[float | None],
@@ -30,41 +45,9 @@ V1dgenArma11Parameters = typing.TypedDict('V1dgenArma11Parameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "afni.1dgenARMA11": v_1dgen_arma11_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "afni.1dgenARMA11": v_1dgen_arma11_outputs,
-    }.get(t)
-
-
 class V1dgenArma11Outputs(typing.NamedTuple):
     """
-    Output object returned when calling `v_1dgen_arma11(...)`.
+    Output object returned when calling `V1dgenArma11Parameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -85,7 +68,7 @@ def v_1dgen_arma11_params(
     corcut: float | None = None,
     arma31: str | None = None,
     arma51: str | None = None,
-) -> V1dgenArma11Parameters:
+) -> V1dgenArma11ParametersTagged:
     """
     Build parameters.
     
@@ -112,7 +95,7 @@ def v_1dgen_arma11_params(
         Parameter dictionary
     """
     params = {
-        "@type": "afni.1dgenARMA11",
+        "@type": "afni/1dgenARMA11",
         "normalize": normalize,
     }
     if length is not None:
@@ -155,62 +138,62 @@ def v_1dgen_arma11_cargs(
     """
     cargs = []
     cargs.append("1dgenARMA11")
-    if params.get("length") is not None:
+    if params.get("length", None) is not None:
         cargs.extend([
             "-num",
-            str(params.get("length"))
+            str(params.get("length", None))
         ])
-    if params.get("length_alt") is not None:
+    if params.get("length_alt", None) is not None:
         cargs.extend([
             "-len",
-            str(params.get("length_alt"))
+            str(params.get("length_alt", None))
         ])
-    if params.get("num_series") is not None:
+    if params.get("num_series", None) is not None:
         cargs.extend([
             "-nvec",
-            str(params.get("num_series"))
+            str(params.get("num_series", None))
         ])
-    if params.get("param_a") is not None:
+    if params.get("param_a", None) is not None:
         cargs.extend([
             "-a",
-            str(params.get("param_a"))
+            str(params.get("param_a", None))
         ])
-    if params.get("param_b") is not None:
+    if params.get("param_b", None) is not None:
         cargs.extend([
             "-b",
-            str(params.get("param_b"))
+            str(params.get("param_b", None))
         ])
-    if params.get("param_lam") is not None:
+    if params.get("param_lam", None) is not None:
         cargs.extend([
             "-lam",
-            str(params.get("param_lam"))
+            str(params.get("param_lam", None))
         ])
-    if params.get("std_dev") is not None:
+    if params.get("std_dev", None) is not None:
         cargs.extend([
             "-sig",
-            str(params.get("std_dev"))
+            str(params.get("std_dev", None))
         ])
-    if params.get("normalize"):
+    if params.get("normalize", False):
         cargs.append("-norm")
-    if params.get("seed") is not None:
+    if params.get("seed", None) is not None:
         cargs.extend([
             "-seed",
-            str(params.get("seed"))
+            str(params.get("seed", None))
         ])
-    if params.get("corcut") is not None:
+    if params.get("corcut", None) is not None:
         cargs.extend([
             "-CORcut",
-            str(params.get("corcut"))
+            str(params.get("corcut", None))
         ])
-    if params.get("arma31") is not None:
+    if params.get("arma31", None) is not None:
         cargs.extend([
             "-arma31",
-            params.get("arma31")
+            params.get("arma31", None)
         ])
-    if params.get("arma51") is not None:
+    if params.get("arma51", None) is not None:
         cargs.extend([
             "-arma51",
-            params.get("arma51")
+            params.get("arma51", None)
         ])
     return cargs
 
@@ -331,7 +314,6 @@ def v_1dgen_arma11(
 
 __all__ = [
     "V1dgenArma11Outputs",
-    "V1dgenArma11Parameters",
     "V_1DGEN_ARMA11_METADATA",
     "v_1dgen_arma11",
     "v_1dgen_arma11_execute",

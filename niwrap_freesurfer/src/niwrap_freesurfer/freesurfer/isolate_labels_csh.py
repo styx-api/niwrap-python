@@ -14,7 +14,17 @@ ISOLATE_LABELS_CSH_METADATA = Metadata(
 
 
 IsolateLabelsCshParameters = typing.TypedDict('IsolateLabelsCshParameters', {
-    "@type": typing.Literal["freesurfer.isolate_labels.csh"],
+    "@type": typing.NotRequired[typing.Literal["freesurfer/isolate_labels.csh"]],
+    "label_volume": InputPathType,
+    "output_prefix": str,
+    "label_option": typing.NotRequired[str | None],
+    "lowercase_label_option": typing.NotRequired[str | None],
+    "version": bool,
+    "keepval": bool,
+    "help": bool,
+})
+IsolateLabelsCshParametersTagged = typing.TypedDict('IsolateLabelsCshParametersTagged', {
+    "@type": typing.Literal["freesurfer/isolate_labels.csh"],
     "label_volume": InputPathType,
     "output_prefix": str,
     "label_option": typing.NotRequired[str | None],
@@ -25,40 +35,9 @@ IsolateLabelsCshParameters = typing.TypedDict('IsolateLabelsCshParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "freesurfer.isolate_labels.csh": isolate_labels_csh_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-    }.get(t)
-
-
 class IsolateLabelsCshOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `isolate_labels_csh(...)`.
+    Output object returned when calling `IsolateLabelsCshParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -72,7 +51,7 @@ def isolate_labels_csh_params(
     version: bool = False,
     keepval: bool = False,
     help_: bool = False,
-) -> IsolateLabelsCshParameters:
+) -> IsolateLabelsCshParametersTagged:
     """
     Build parameters.
     
@@ -90,7 +69,7 @@ def isolate_labels_csh_params(
         Parameter dictionary
     """
     params = {
-        "@type": "freesurfer.isolate_labels.csh",
+        "@type": "freesurfer/isolate_labels.csh",
         "label_volume": label_volume,
         "output_prefix": output_prefix,
         "version": version,
@@ -121,27 +100,27 @@ def isolate_labels_csh_cargs(
     cargs.append("isolate_labels.csh")
     cargs.extend([
         "--vol",
-        execution.input_file(params.get("label_volume"))
+        execution.input_file(params.get("label_volume", None))
     ])
     cargs.extend([
         "--outprefix",
-        params.get("output_prefix")
+        params.get("output_prefix", None)
     ])
-    if params.get("label_option") is not None:
+    if params.get("label_option", None) is not None:
         cargs.extend([
             "--L",
-            params.get("label_option")
+            params.get("label_option", None)
         ])
-    if params.get("lowercase_label_option") is not None:
+    if params.get("lowercase_label_option", None) is not None:
         cargs.extend([
             "--l",
-            params.get("lowercase_label_option")
+            params.get("lowercase_label_option", None)
         ])
-    if params.get("version"):
+    if params.get("version", False):
         cargs.append("--version")
-    if params.get("keepval"):
+    if params.get("keepval", False):
         cargs.append("--keepval")
-    if params.get("help"):
+    if params.get("help", False):
         cargs.append("--help")
     return cargs
 
@@ -243,7 +222,6 @@ def isolate_labels_csh(
 __all__ = [
     "ISOLATE_LABELS_CSH_METADATA",
     "IsolateLabelsCshOutputs",
-    "IsolateLabelsCshParameters",
     "isolate_labels_csh",
     "isolate_labels_csh_execute",
     "isolate_labels_csh_params",

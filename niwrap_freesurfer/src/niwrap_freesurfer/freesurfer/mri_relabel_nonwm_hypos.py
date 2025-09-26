@@ -14,7 +14,16 @@ MRI_RELABEL_NONWM_HYPOS_METADATA = Metadata(
 
 
 MriRelabelNonwmHyposParameters = typing.TypedDict('MriRelabelNonwmHyposParameters', {
-    "@type": typing.Literal["freesurfer.mri_relabel_nonwm_hypos"],
+    "@type": typing.NotRequired[typing.Literal["freesurfer/mri_relabel_nonwm_hypos"]],
+    "inputseg": InputPathType,
+    "outputseg": str,
+    "segments": typing.NotRequired[list[str] | None],
+    "seg_default": bool,
+    "debug": bool,
+    "checkopts": bool,
+})
+MriRelabelNonwmHyposParametersTagged = typing.TypedDict('MriRelabelNonwmHyposParametersTagged', {
+    "@type": typing.Literal["freesurfer/mri_relabel_nonwm_hypos"],
     "inputseg": InputPathType,
     "outputseg": str,
     "segments": typing.NotRequired[list[str] | None],
@@ -24,41 +33,9 @@ MriRelabelNonwmHyposParameters = typing.TypedDict('MriRelabelNonwmHyposParameter
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "freesurfer.mri_relabel_nonwm_hypos": mri_relabel_nonwm_hypos_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "freesurfer.mri_relabel_nonwm_hypos": mri_relabel_nonwm_hypos_outputs,
-    }.get(t)
-
-
 class MriRelabelNonwmHyposOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `mri_relabel_nonwm_hypos(...)`.
+    Output object returned when calling `MriRelabelNonwmHyposParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -73,7 +50,7 @@ def mri_relabel_nonwm_hypos_params(
     seg_default: bool = False,
     debug: bool = False,
     checkopts: bool = False,
-) -> MriRelabelNonwmHyposParameters:
+) -> MriRelabelNonwmHyposParametersTagged:
     """
     Build parameters.
     
@@ -90,7 +67,7 @@ def mri_relabel_nonwm_hypos_params(
         Parameter dictionary
     """
     params = {
-        "@type": "freesurfer.mri_relabel_nonwm_hypos",
+        "@type": "freesurfer/mri_relabel_nonwm_hypos",
         "inputseg": inputseg,
         "outputseg": outputseg,
         "seg_default": seg_default,
@@ -119,22 +96,22 @@ def mri_relabel_nonwm_hypos_cargs(
     cargs.append("mri_relabel_nonwm_hypos")
     cargs.extend([
         "-i",
-        execution.input_file(params.get("inputseg"))
+        execution.input_file(params.get("inputseg", None))
     ])
     cargs.extend([
         "-o",
-        params.get("outputseg")
+        params.get("outputseg", None)
     ])
-    if params.get("segments") is not None:
+    if params.get("segments", None) is not None:
         cargs.extend([
             "--seg",
-            *params.get("segments")
+            *params.get("segments", None)
         ])
-    if params.get("seg_default"):
+    if params.get("seg_default", False):
         cargs.append("--seg-default")
-    if params.get("debug"):
+    if params.get("debug", False):
         cargs.append("--debug")
-    if params.get("checkopts"):
+    if params.get("checkopts", False):
         cargs.append("--checkopts")
     return cargs
 
@@ -154,7 +131,7 @@ def mri_relabel_nonwm_hypos_outputs(
     """
     ret = MriRelabelNonwmHyposOutputs(
         root=execution.output_file("."),
-        out_segmentation=execution.output_file(params.get("outputseg")),
+        out_segmentation=execution.output_file(params.get("outputseg", None)),
     )
     return ret
 
@@ -232,7 +209,6 @@ def mri_relabel_nonwm_hypos(
 __all__ = [
     "MRI_RELABEL_NONWM_HYPOS_METADATA",
     "MriRelabelNonwmHyposOutputs",
-    "MriRelabelNonwmHyposParameters",
     "mri_relabel_nonwm_hypos",
     "mri_relabel_nonwm_hypos_execute",
     "mri_relabel_nonwm_hypos_params",

@@ -14,7 +14,43 @@ FILMBABE_METADATA = Metadata(
 
 
 FilmbabeParameters = typing.TypedDict('FilmbabeParameters', {
-    "@type": typing.Literal["fsl.filmbabe"],
+    "@type": typing.NotRequired[typing.Literal["fsl/filmbabe"]],
+    "datafile": InputPathType,
+    "datafile_alias": InputPathType,
+    "mask": InputPathType,
+    "mask_alias": InputPathType,
+    "designfile": InputPathType,
+    "designfile_alias_1": InputPathType,
+    "designfile_alias_2": InputPathType,
+    "frf": InputPathType,
+    "verbose_flag": bool,
+    "verbose_flag_alias": bool,
+    "debug_level": typing.NotRequired[str | None],
+    "debug_level_alias_1": typing.NotRequired[str | None],
+    "debug_level_alias_2": typing.NotRequired[str | None],
+    "timing_on_flag": bool,
+    "help_flag": bool,
+    "help_flag_alias": bool,
+    "flobs_prior_off_flag": bool,
+    "flobs_prior_off_alias": bool,
+    "flobs_dir": typing.NotRequired[str | None],
+    "prior_covar_file": typing.NotRequired[InputPathType | None],
+    "prior_covar_file_alias": typing.NotRequired[InputPathType | None],
+    "prior_mean_file": typing.NotRequired[InputPathType | None],
+    "prior_mean_file_alias": typing.NotRequired[InputPathType | None],
+    "log_dir": typing.NotRequired[str | None],
+    "log_dir_alias_1": typing.NotRequired[str | None],
+    "log_dir_alias_2": typing.NotRequired[str | None],
+    "num_iterations": typing.NotRequired[int | None],
+    "temporal_ar_mrf_prec": typing.NotRequired[float | None],
+    "temporal_ar_mrf_prec_alias": typing.NotRequired[float | None],
+    "temporal_ar_flag": bool,
+    "num_trace_samples": typing.NotRequired[int | None],
+    "num_trace_samples_alias": typing.NotRequired[int | None],
+    "temporal_ar_order": typing.NotRequired[int | None],
+})
+FilmbabeParametersTagged = typing.TypedDict('FilmbabeParametersTagged', {
+    "@type": typing.Literal["fsl/filmbabe"],
     "datafile": InputPathType,
     "datafile_alias": InputPathType,
     "mask": InputPathType,
@@ -51,40 +87,9 @@ FilmbabeParameters = typing.TypedDict('FilmbabeParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "fsl.filmbabe": filmbabe_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-    }.get(t)
-
-
 class FilmbabeOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `filmbabe(...)`.
+    Output object returned when calling `FilmbabeParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -124,7 +129,7 @@ def filmbabe_params(
     num_trace_samples: int | None = None,
     num_trace_samples_alias: int | None = None,
     temporal_ar_order: int | None = None,
-) -> FilmbabeParameters:
+) -> FilmbabeParametersTagged:
     """
     Build parameters.
     
@@ -173,7 +178,7 @@ def filmbabe_params(
         Parameter dictionary
     """
     params = {
-        "@type": "fsl.filmbabe",
+        "@type": "fsl/filmbabe",
         "datafile": datafile,
         "datafile_alias": datafile_alias,
         "mask": mask,
@@ -245,136 +250,136 @@ def filmbabe_cargs(
     cargs.append("filmbabe")
     cargs.extend([
         "--df",
-        execution.input_file(params.get("datafile"))
+        execution.input_file(params.get("datafile", None))
     ])
     cargs.extend([
         "--datafile",
-        execution.input_file(params.get("datafile_alias"))
+        execution.input_file(params.get("datafile_alias", None))
     ])
     cargs.extend([
         "-m",
-        execution.input_file(params.get("mask"))
+        execution.input_file(params.get("mask", None))
     ])
     cargs.extend([
         "--mask",
-        execution.input_file(params.get("mask_alias"))
+        execution.input_file(params.get("mask_alias", None))
     ])
     cargs.extend([
         "-d",
-        execution.input_file(params.get("designfile"))
+        execution.input_file(params.get("designfile", None))
     ])
     cargs.extend([
         "--dm",
-        execution.input_file(params.get("designfile_alias_1"))
+        execution.input_file(params.get("designfile_alias_1", None))
     ])
     cargs.extend([
         "--designfile",
-        execution.input_file(params.get("designfile_alias_2"))
+        execution.input_file(params.get("designfile_alias_2", None))
     ])
     cargs.extend([
         "--frf",
-        execution.input_file(params.get("frf"))
+        execution.input_file(params.get("frf", None))
     ])
-    if params.get("verbose_flag"):
+    if params.get("verbose_flag", False):
         cargs.append("-V")
-    if params.get("verbose_flag_alias"):
+    if params.get("verbose_flag_alias", False):
         cargs.append("--verbose")
-    if params.get("debug_level") is not None:
+    if params.get("debug_level", None) is not None:
         cargs.extend([
             "--db",
-            params.get("debug_level")
+            params.get("debug_level", None)
         ])
-    if params.get("debug_level_alias_1") is not None:
+    if params.get("debug_level_alias_1", None) is not None:
         cargs.extend([
             "--debug",
-            params.get("debug_level_alias_1")
+            params.get("debug_level_alias_1", None)
         ])
-    if params.get("debug_level_alias_2") is not None:
+    if params.get("debug_level_alias_2", None) is not None:
         cargs.extend([
             "--debuglevel",
-            params.get("debug_level_alias_2")
+            params.get("debug_level_alias_2", None)
         ])
-    if params.get("timing_on_flag"):
+    if params.get("timing_on_flag", False):
         cargs.append("--to")
-    if params.get("help_flag"):
+    if params.get("help_flag", False):
         cargs.append("-h")
-    if params.get("help_flag_alias"):
+    if params.get("help_flag_alias", False):
         cargs.append("--help")
-    if params.get("flobs_prior_off_flag"):
+    if params.get("flobs_prior_off_flag", False):
         cargs.append("--fpo")
-    if params.get("flobs_prior_off_alias"):
+    if params.get("flobs_prior_off_alias", False):
         cargs.append("--flobsprioroff")
-    if params.get("flobs_dir") is not None:
+    if params.get("flobs_dir", None) is not None:
         cargs.extend([
             "--fd",
-            params.get("flobs_dir")
+            params.get("flobs_dir", None)
         ])
-    if params.get("prior_covar_file") is not None:
+    if params.get("prior_covar_file", None) is not None:
         cargs.extend([
             "--pcf",
-            execution.input_file(params.get("prior_covar_file"))
+            execution.input_file(params.get("prior_covar_file", None))
         ])
-    if params.get("prior_covar_file_alias") is not None:
+    if params.get("prior_covar_file_alias", None) is not None:
         cargs.extend([
             "--priorcovarfile",
-            execution.input_file(params.get("prior_covar_file_alias"))
+            execution.input_file(params.get("prior_covar_file_alias", None))
         ])
-    if params.get("prior_mean_file") is not None:
+    if params.get("prior_mean_file", None) is not None:
         cargs.extend([
             "--pmf",
-            execution.input_file(params.get("prior_mean_file"))
+            execution.input_file(params.get("prior_mean_file", None))
         ])
-    if params.get("prior_mean_file_alias") is not None:
+    if params.get("prior_mean_file_alias", None) is not None:
         cargs.extend([
             "--priormeanfile",
-            execution.input_file(params.get("prior_mean_file_alias"))
+            execution.input_file(params.get("prior_mean_file_alias", None))
         ])
-    if params.get("log_dir") is not None:
+    if params.get("log_dir", None) is not None:
         cargs.extend([
             "-l",
-            params.get("log_dir")
+            params.get("log_dir", None)
         ])
-    if params.get("log_dir_alias_1") is not None:
+    if params.get("log_dir_alias_1", None) is not None:
         cargs.extend([
             "--ld",
-            params.get("log_dir_alias_1")
+            params.get("log_dir_alias_1", None)
         ])
-    if params.get("log_dir_alias_2") is not None:
+    if params.get("log_dir_alias_2", None) is not None:
         cargs.extend([
             "--logdir",
-            params.get("log_dir_alias_2")
+            params.get("log_dir_alias_2", None)
         ])
-    if params.get("num_iterations") is not None:
+    if params.get("num_iterations", None) is not None:
         cargs.extend([
             "--ni",
-            str(params.get("num_iterations"))
+            str(params.get("num_iterations", None))
         ])
-    if params.get("temporal_ar_mrf_prec") is not None:
+    if params.get("temporal_ar_mrf_prec", None) is not None:
         cargs.extend([
             "--tmp",
-            str(params.get("temporal_ar_mrf_prec"))
+            str(params.get("temporal_ar_mrf_prec", None))
         ])
-    if params.get("temporal_ar_mrf_prec_alias") is not None:
+    if params.get("temporal_ar_mrf_prec_alias", None) is not None:
         cargs.extend([
             "--tarmrfprec",
-            str(params.get("temporal_ar_mrf_prec_alias"))
+            str(params.get("temporal_ar_mrf_prec_alias", None))
         ])
-    if params.get("temporal_ar_flag"):
+    if params.get("temporal_ar_flag", False):
         cargs.append("--tarard")
-    if params.get("num_trace_samples") is not None:
+    if params.get("num_trace_samples", None) is not None:
         cargs.extend([
             "--nts",
-            str(params.get("num_trace_samples"))
+            str(params.get("num_trace_samples", None))
         ])
-    if params.get("num_trace_samples_alias") is not None:
+    if params.get("num_trace_samples_alias", None) is not None:
         cargs.extend([
             "--ntracesamps",
-            str(params.get("num_trace_samples_alias"))
+            str(params.get("num_trace_samples_alias", None))
         ])
-    if params.get("temporal_ar_order") is not None:
+    if params.get("temporal_ar_order", None) is not None:
         cargs.extend([
             "--ntar",
-            str(params.get("temporal_ar_order"))
+            str(params.get("temporal_ar_order", None))
         ])
     return cargs
 
@@ -557,7 +562,6 @@ def filmbabe(
 __all__ = [
     "FILMBABE_METADATA",
     "FilmbabeOutputs",
-    "FilmbabeParameters",
     "filmbabe",
     "filmbabe_execute",
     "filmbabe_params",

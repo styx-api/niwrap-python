@@ -14,46 +14,20 @@ INFLATE_SUBJECT3_METADATA = Metadata(
 
 
 InflateSubject3Parameters = typing.TypedDict('InflateSubject3Parameters', {
-    "@type": typing.Literal["freesurfer.inflate_subject3"],
+    "@type": typing.NotRequired[typing.Literal["freesurfer/inflate_subject3"]],
+    "subjects_dir": str,
+    "script_name": str,
+})
+InflateSubject3ParametersTagged = typing.TypedDict('InflateSubject3ParametersTagged', {
+    "@type": typing.Literal["freesurfer/inflate_subject3"],
     "subjects_dir": str,
     "script_name": str,
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "freesurfer.inflate_subject3": inflate_subject3_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-    }.get(t)
-
-
 class InflateSubject3Outputs(typing.NamedTuple):
     """
-    Output object returned when calling `inflate_subject3(...)`.
+    Output object returned when calling `InflateSubject3Parameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -62,7 +36,7 @@ class InflateSubject3Outputs(typing.NamedTuple):
 def inflate_subject3_params(
     subjects_dir: str,
     script_name: str,
-) -> InflateSubject3Parameters:
+) -> InflateSubject3ParametersTagged:
     """
     Build parameters.
     
@@ -73,7 +47,7 @@ def inflate_subject3_params(
         Parameter dictionary
     """
     params = {
-        "@type": "freesurfer.inflate_subject3",
+        "@type": "freesurfer/inflate_subject3",
         "subjects_dir": subjects_dir,
         "script_name": script_name,
     }
@@ -95,8 +69,8 @@ def inflate_subject3_cargs(
     """
     cargs = []
     cargs.append("inflate_subject3")
-    cargs.append(params.get("subjects_dir"))
-    cargs.append(params.get("script_name"))
+    cargs.append(params.get("subjects_dir", None))
+    cargs.append(params.get("script_name", None))
     return cargs
 
 
@@ -178,7 +152,6 @@ def inflate_subject3(
 __all__ = [
     "INFLATE_SUBJECT3_METADATA",
     "InflateSubject3Outputs",
-    "InflateSubject3Parameters",
     "inflate_subject3",
     "inflate_subject3_execute",
     "inflate_subject3_params",

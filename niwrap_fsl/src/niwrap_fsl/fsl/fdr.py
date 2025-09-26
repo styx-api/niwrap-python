@@ -14,7 +14,22 @@ FDR_METADATA = Metadata(
 
 
 FdrParameters = typing.TypedDict('FdrParameters', {
-    "@type": typing.Literal["fsl.fdr"],
+    "@type": typing.NotRequired[typing.Literal["fsl/fdr"]],
+    "infile": InputPathType,
+    "maskfile": typing.NotRequired[InputPathType | None],
+    "qvalue": typing.NotRequired[float | None],
+    "adjustedimage": typing.NotRequired[str | None],
+    "othresh_flag": bool,
+    "order_flag": bool,
+    "oneminusp_flag": bool,
+    "positive_corr_flag": bool,
+    "independent_flag": bool,
+    "conservative_flag": bool,
+    "debug_flag": bool,
+    "verbose_flag": bool,
+})
+FdrParametersTagged = typing.TypedDict('FdrParametersTagged', {
+    "@type": typing.Literal["fsl/fdr"],
     "infile": InputPathType,
     "maskfile": typing.NotRequired[InputPathType | None],
     "qvalue": typing.NotRequired[float | None],
@@ -30,41 +45,9 @@ FdrParameters = typing.TypedDict('FdrParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "fsl.fdr": fdr_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "fsl.fdr": fdr_outputs,
-    }.get(t)
-
-
 class FdrOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `fdr(...)`.
+    Output object returned when calling `FdrParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -89,7 +72,7 @@ def fdr_params(
     conservative_flag: bool = False,
     debug_flag: bool = False,
     verbose_flag: bool = False,
-) -> FdrParameters:
+) -> FdrParametersTagged:
     """
     Build parameters.
     
@@ -112,7 +95,7 @@ def fdr_params(
         Parameter dictionary
     """
     params = {
-        "@type": "fsl.fdr",
+        "@type": "fsl/fdr",
         "infile": infile,
         "othresh_flag": othresh_flag,
         "order_flag": order_flag,
@@ -149,38 +132,38 @@ def fdr_cargs(
     cargs.append("fdr")
     cargs.extend([
         "-i",
-        execution.input_file(params.get("infile"))
+        execution.input_file(params.get("infile", None))
     ])
-    if params.get("maskfile") is not None:
+    if params.get("maskfile", None) is not None:
         cargs.extend([
             "-m",
-            execution.input_file(params.get("maskfile"))
+            execution.input_file(params.get("maskfile", None))
         ])
-    if params.get("qvalue") is not None:
+    if params.get("qvalue", None) is not None:
         cargs.extend([
             "-q",
-            str(params.get("qvalue"))
+            str(params.get("qvalue", None))
         ])
-    if params.get("adjustedimage") is not None:
+    if params.get("adjustedimage", None) is not None:
         cargs.extend([
             "-a",
-            params.get("adjustedimage")
+            params.get("adjustedimage", None)
         ])
-    if params.get("othresh_flag"):
+    if params.get("othresh_flag", False):
         cargs.append("--othresh")
-    if params.get("order_flag"):
+    if params.get("order_flag", False):
         cargs.append("--order")
-    if params.get("oneminusp_flag"):
+    if params.get("oneminusp_flag", False):
         cargs.append("--oneminusp")
-    if params.get("positive_corr_flag"):
+    if params.get("positive_corr_flag", False):
         cargs.append("--positivecorr")
-    if params.get("independent_flag"):
+    if params.get("independent_flag", False):
         cargs.append("--independent")
-    if params.get("conservative_flag"):
+    if params.get("conservative_flag", False):
         cargs.append("--conservative")
-    if params.get("debug_flag"):
+    if params.get("debug_flag", False):
         cargs.append("--debug")
-    if params.get("verbose_flag"):
+    if params.get("verbose_flag", False):
         cargs.append("-v")
     return cargs
 
@@ -200,9 +183,9 @@ def fdr_outputs(
     """
     ret = FdrOutputs(
         root=execution.output_file("."),
-        output_adjusted=execution.output_file(params.get("adjustedimage") + ".nii.gz") if (params.get("adjustedimage") is not None) else None,
-        output_thresholded=execution.output_file(pathlib.Path(params.get("infile")).name + "_thr.nii.gz"),
-        output_order=execution.output_file(pathlib.Path(params.get("infile")).name + "_order.nii.gz"),
+        output_adjusted=execution.output_file(params.get("adjustedimage", None) + ".nii.gz") if (params.get("adjustedimage") is not None) else None,
+        output_thresholded=execution.output_file(pathlib.Path(params.get("infile", None)).name + "_thr.nii.gz"),
+        output_order=execution.output_file(pathlib.Path(params.get("infile", None)).name + "_order.nii.gz"),
     )
     return ret
 
@@ -298,7 +281,6 @@ def fdr(
 __all__ = [
     "FDR_METADATA",
     "FdrOutputs",
-    "FdrParameters",
     "fdr",
     "fdr_execute",
     "fdr_params",

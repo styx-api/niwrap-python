@@ -14,47 +14,20 @@ CONCAT_BVARS_METADATA = Metadata(
 
 
 ConcatBvarsParameters = typing.TypedDict('ConcatBvarsParameters', {
-    "@type": typing.Literal["fsl.concat_bvars"],
+    "@type": typing.NotRequired[typing.Literal["fsl/concat_bvars"]],
+    "output_bvars": str,
+    "input_bvars": list[InputPathType],
+})
+ConcatBvarsParametersTagged = typing.TypedDict('ConcatBvarsParametersTagged', {
+    "@type": typing.Literal["fsl/concat_bvars"],
     "output_bvars": str,
     "input_bvars": list[InputPathType],
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "fsl.concat_bvars": concat_bvars_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "fsl.concat_bvars": concat_bvars_outputs,
-    }.get(t)
-
-
 class ConcatBvarsOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `concat_bvars(...)`.
+    Output object returned when calling `ConcatBvarsParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -65,7 +38,7 @@ class ConcatBvarsOutputs(typing.NamedTuple):
 def concat_bvars_params(
     output_bvars: str,
     input_bvars: list[InputPathType],
-) -> ConcatBvarsParameters:
+) -> ConcatBvarsParametersTagged:
     """
     Build parameters.
     
@@ -76,7 +49,7 @@ def concat_bvars_params(
         Parameter dictionary
     """
     params = {
-        "@type": "fsl.concat_bvars",
+        "@type": "fsl/concat_bvars",
         "output_bvars": output_bvars,
         "input_bvars": input_bvars,
     }
@@ -98,8 +71,8 @@ def concat_bvars_cargs(
     """
     cargs = []
     cargs.append("concat_bvars")
-    cargs.append(params.get("output_bvars"))
-    cargs.extend([execution.input_file(f) for f in params.get("input_bvars")])
+    cargs.append(params.get("output_bvars", None))
+    cargs.extend([execution.input_file(f) for f in params.get("input_bvars", None)])
     return cargs
 
 
@@ -118,7 +91,7 @@ def concat_bvars_outputs(
     """
     ret = ConcatBvarsOutputs(
         root=execution.output_file("."),
-        output_file=execution.output_file(params.get("output_bvars")),
+        output_file=execution.output_file(params.get("output_bvars", None)),
     )
     return ret
 
@@ -182,7 +155,6 @@ def concat_bvars(
 __all__ = [
     "CONCAT_BVARS_METADATA",
     "ConcatBvarsOutputs",
-    "ConcatBvarsParameters",
     "concat_bvars",
     "concat_bvars_execute",
     "concat_bvars_params",

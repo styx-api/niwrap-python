@@ -14,47 +14,22 @@ GIFTI_CONVERT_METADATA = Metadata(
 
 
 GiftiConvertParameters = typing.TypedDict('GiftiConvertParameters', {
-    "@type": typing.Literal["workbench.gifti-convert"],
+    "@type": typing.NotRequired[typing.Literal["workbench/gifti-convert"]],
+    "gifti_encoding": str,
+    "input_gifti_file": str,
+    "output_gifti_file": str,
+})
+GiftiConvertParametersTagged = typing.TypedDict('GiftiConvertParametersTagged', {
+    "@type": typing.Literal["workbench/gifti-convert"],
     "gifti_encoding": str,
     "input_gifti_file": str,
     "output_gifti_file": str,
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "workbench.gifti-convert": gifti_convert_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-    }.get(t)
-
-
 class GiftiConvertOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `gifti_convert(...)`.
+    Output object returned when calling `GiftiConvertParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -64,7 +39,7 @@ def gifti_convert_params(
     gifti_encoding: str,
     input_gifti_file: str,
     output_gifti_file: str,
-) -> GiftiConvertParameters:
+) -> GiftiConvertParametersTagged:
     """
     Build parameters.
     
@@ -76,7 +51,7 @@ def gifti_convert_params(
         Parameter dictionary
     """
     params = {
-        "@type": "workbench.gifti-convert",
+        "@type": "workbench/gifti-convert",
         "gifti_encoding": gifti_encoding,
         "input_gifti_file": input_gifti_file,
         "output_gifti_file": output_gifti_file,
@@ -100,9 +75,9 @@ def gifti_convert_cargs(
     cargs = []
     cargs.append("wb_command")
     cargs.append("-gifti-convert")
-    cargs.append(params.get("gifti_encoding"))
-    cargs.append(params.get("input_gifti_file"))
-    cargs.append(params.get("output_gifti_file"))
+    cargs.append(params.get("gifti_encoding", None))
+    cargs.append(params.get("input_gifti_file", None))
+    cargs.append(params.get("output_gifti_file", None))
     return cargs
 
 
@@ -201,7 +176,6 @@ def gifti_convert(
 __all__ = [
     "GIFTI_CONVERT_METADATA",
     "GiftiConvertOutputs",
-    "GiftiConvertParameters",
     "gifti_convert",
     "gifti_convert_execute",
     "gifti_convert_params",

@@ -14,7 +14,23 @@ V_3D_TSGEN_METADATA = Metadata(
 
 
 V3dTsgenParameters = typing.TypedDict('V3dTsgenParameters', {
-    "@type": typing.Literal["afni.3dTSgen"],
+    "@type": typing.NotRequired[typing.Literal["afni/3dTSgen"]],
+    "input_file": InputPathType,
+    "in_tr_flag": bool,
+    "signal_label": str,
+    "noise_label": str,
+    "signal_constr": typing.NotRequired[str | None],
+    "noise_constr": typing.NotRequired[str | None],
+    "sigma_value": float,
+    "voxel_number": typing.NotRequired[float | None],
+    "output_file": str,
+    "signal_coef": typing.NotRequired[str | None],
+    "noise_coef": typing.NotRequired[str | None],
+    "bucket_config": typing.NotRequired[str | None],
+    "brick_config": typing.NotRequired[str | None],
+})
+V3dTsgenParametersTagged = typing.TypedDict('V3dTsgenParametersTagged', {
+    "@type": typing.Literal["afni/3dTSgen"],
     "input_file": InputPathType,
     "in_tr_flag": bool,
     "signal_label": str,
@@ -31,40 +47,9 @@ V3dTsgenParameters = typing.TypedDict('V3dTsgenParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "afni.3dTSgen": v_3d_tsgen_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-    }.get(t)
-
-
 class V3dTsgenOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `v_3d_tsgen(...)`.
+    Output object returned when calling `V3dTsgenParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -84,7 +69,7 @@ def v_3d_tsgen_params(
     noise_coef: str | None = None,
     bucket_config: str | None = None,
     brick_config: str | None = None,
-) -> V3dTsgenParameters:
+) -> V3dTsgenParametersTagged:
     """
     Build parameters.
     
@@ -115,7 +100,7 @@ def v_3d_tsgen_params(
         Parameter dictionary
     """
     params = {
-        "@type": "afni.3dTSgen",
+        "@type": "afni/3dTSgen",
         "input_file": input_file,
         "in_tr_flag": in_tr_flag,
         "signal_label": signal_label,
@@ -155,59 +140,59 @@ def v_3d_tsgen_cargs(
     """
     cargs = []
     cargs.append("3dTSgen")
-    cargs.append(execution.input_file(params.get("input_file")))
-    if params.get("in_tr_flag"):
+    cargs.append(execution.input_file(params.get("input_file", None)))
+    if params.get("in_tr_flag", False):
         cargs.append("-inTR")
     cargs.extend([
         "-signal",
-        params.get("signal_label")
+        params.get("signal_label", None)
     ])
     cargs.extend([
         "-noise",
-        params.get("noise_label")
+        params.get("noise_label", None)
     ])
-    if params.get("signal_constr") is not None:
+    if params.get("signal_constr", None) is not None:
         cargs.extend([
             "-sconstr",
-            params.get("signal_constr")
+            params.get("signal_constr", None)
         ])
-    if params.get("noise_constr") is not None:
+    if params.get("noise_constr", None) is not None:
         cargs.extend([
             "-nconstr",
-            params.get("noise_constr")
+            params.get("noise_constr", None)
         ])
     cargs.extend([
         "-sigma",
-        str(params.get("sigma_value"))
+        str(params.get("sigma_value", None))
     ])
-    if params.get("voxel_number") is not None:
+    if params.get("voxel_number", None) is not None:
         cargs.extend([
             "-voxel",
-            str(params.get("voxel_number"))
+            str(params.get("voxel_number", None))
         ])
     cargs.extend([
         "-output",
-        params.get("output_file")
+        params.get("output_file", None)
     ])
-    if params.get("signal_coef") is not None:
+    if params.get("signal_coef", None) is not None:
         cargs.extend([
             "-scoef",
-            params.get("signal_coef")
+            params.get("signal_coef", None)
         ])
-    if params.get("noise_coef") is not None:
+    if params.get("noise_coef", None) is not None:
         cargs.extend([
             "-ncoef",
-            params.get("noise_coef")
+            params.get("noise_coef", None)
         ])
-    if params.get("bucket_config") is not None:
+    if params.get("bucket_config", None) is not None:
         cargs.extend([
             "-bucket",
-            params.get("bucket_config")
+            params.get("bucket_config", None)
         ])
-    if params.get("brick_config") is not None:
+    if params.get("brick_config", None) is not None:
         cargs.extend([
             "-brick",
-            params.get("brick_config")
+            params.get("brick_config", None)
         ])
     return cargs
 
@@ -333,7 +318,6 @@ def v_3d_tsgen(
 
 __all__ = [
     "V3dTsgenOutputs",
-    "V3dTsgenParameters",
     "V_3D_TSGEN_METADATA",
     "v_3d_tsgen",
     "v_3d_tsgen_execute",

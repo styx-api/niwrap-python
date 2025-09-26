@@ -14,7 +14,14 @@ ESTNOISE_METADATA = Metadata(
 
 
 EstnoiseParameters = typing.TypedDict('EstnoiseParameters', {
-    "@type": typing.Literal["fsl.estnoise"],
+    "@type": typing.NotRequired[typing.Literal["fsl/estnoise"]],
+    "input_4d_data": InputPathType,
+    "spatial_sigma": typing.NotRequired[float | None],
+    "temp_hp_sigma": typing.NotRequired[float | None],
+    "temp_lp_sigma": typing.NotRequired[float | None],
+})
+EstnoiseParametersTagged = typing.TypedDict('EstnoiseParametersTagged', {
+    "@type": typing.Literal["fsl/estnoise"],
     "input_4d_data": InputPathType,
     "spatial_sigma": typing.NotRequired[float | None],
     "temp_hp_sigma": typing.NotRequired[float | None],
@@ -22,41 +29,9 @@ EstnoiseParameters = typing.TypedDict('EstnoiseParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "fsl.estnoise": estnoise_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "fsl.estnoise": estnoise_outputs,
-    }.get(t)
-
-
 class EstnoiseOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `estnoise(...)`.
+    Output object returned when calling `EstnoiseParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -69,7 +44,7 @@ def estnoise_params(
     spatial_sigma: float | None = None,
     temp_hp_sigma: float | None = None,
     temp_lp_sigma: float | None = None,
-) -> EstnoiseParameters:
+) -> EstnoiseParametersTagged:
     """
     Build parameters.
     
@@ -82,7 +57,7 @@ def estnoise_params(
         Parameter dictionary
     """
     params = {
-        "@type": "fsl.estnoise",
+        "@type": "fsl/estnoise",
         "input_4d_data": input_4d_data,
     }
     if spatial_sigma is not None:
@@ -109,13 +84,13 @@ def estnoise_cargs(
     """
     cargs = []
     cargs.append("estnoise")
-    cargs.append(execution.input_file(params.get("input_4d_data")))
-    if params.get("spatial_sigma") is not None:
-        cargs.append(str(params.get("spatial_sigma")))
-    if params.get("temp_hp_sigma") is not None:
-        cargs.append(str(params.get("temp_hp_sigma")))
-    if params.get("temp_lp_sigma") is not None:
-        cargs.append(str(params.get("temp_lp_sigma")))
+    cargs.append(execution.input_file(params.get("input_4d_data", None)))
+    if params.get("spatial_sigma", None) is not None:
+        cargs.append(str(params.get("spatial_sigma", None)))
+    if params.get("temp_hp_sigma", None) is not None:
+        cargs.append(str(params.get("temp_hp_sigma", None)))
+    if params.get("temp_lp_sigma", None) is not None:
+        cargs.append(str(params.get("temp_lp_sigma", None)))
     return cargs
 
 
@@ -204,7 +179,6 @@ def estnoise(
 __all__ = [
     "ESTNOISE_METADATA",
     "EstnoiseOutputs",
-    "EstnoiseParameters",
     "estnoise",
     "estnoise_execute",
     "estnoise_params",

@@ -14,7 +14,31 @@ CONVERT_DSET_METADATA = Metadata(
 
 
 ConvertDsetParameters = typing.TypedDict('ConvertDsetParameters', {
-    "@type": typing.Literal["afni.ConvertDset"],
+    "@type": typing.NotRequired[typing.Literal["afni/ConvertDset"]],
+    "output_type": list[typing.Literal["niml_asc", "niml_bi", "1D", "1Dp", "1Dpt", "gii", "gii_asc", "gii_b64", "gii_b64gz", "1D_stderr", "1D_stdout", "niml_stderr", "niml_stdout", "1Dp_stdout", "1Dp_stderr", "1Dpt_stdout", "1Dpt_stderr"]],
+    "input_dataset": InputPathType,
+    "input_type": typing.NotRequired[typing.Literal["niml", "1D", "dx"] | None],
+    "output_prefix": typing.NotRequired[str | None],
+    "dset_labels": typing.NotRequired[str | None],
+    "add_node_index": bool,
+    "node_index_file": typing.NotRequired[InputPathType | None],
+    "node_select_file": typing.NotRequired[InputPathType | None],
+    "prepend_node_index": bool,
+    "pad_to_node": typing.NotRequired[str | None],
+    "labelize": typing.NotRequired[InputPathType | None],
+    "graphize": bool,
+    "graph_nodelist": typing.NotRequired[str | None],
+    "graph_full_nodelist": typing.NotRequired[InputPathType | None],
+    "graph_named_nodelist": typing.NotRequired[str | None],
+    "graph_xyz_lpi": bool,
+    "graph_edgelist": typing.NotRequired[InputPathType | None],
+    "onegraph": bool,
+    "multigraph": bool,
+    "split": typing.NotRequired[int | None],
+    "no_history": bool,
+})
+ConvertDsetParametersTagged = typing.TypedDict('ConvertDsetParametersTagged', {
+    "@type": typing.Literal["afni/ConvertDset"],
     "output_type": list[typing.Literal["niml_asc", "niml_bi", "1D", "1Dp", "1Dpt", "gii", "gii_asc", "gii_b64", "gii_b64gz", "1D_stderr", "1D_stdout", "niml_stderr", "niml_stdout", "1Dp_stdout", "1Dp_stderr", "1Dpt_stdout", "1Dpt_stderr"]],
     "input_dataset": InputPathType,
     "input_type": typing.NotRequired[typing.Literal["niml", "1D", "dx"] | None],
@@ -39,41 +63,9 @@ ConvertDsetParameters = typing.TypedDict('ConvertDsetParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "afni.ConvertDset": convert_dset_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "afni.ConvertDset": convert_dset_outputs,
-    }.get(t)
-
-
 class ConvertDsetOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `convert_dset(...)`.
+    Output object returned when calling `ConvertDsetParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -103,7 +95,7 @@ def convert_dset_params(
     multigraph: bool = False,
     split: int | None = None,
     no_history: bool = False,
-) -> ConvertDsetParameters:
+) -> ConvertDsetParametersTagged:
     """
     Build parameters.
     
@@ -139,7 +131,7 @@ def convert_dset_params(
         Parameter dictionary
     """
     params = {
-        "@type": "afni.ConvertDset",
+        "@type": "afni/ConvertDset",
         "output_type": output_type,
         "input_dataset": input_dataset,
         "add_node_index": add_node_index,
@@ -194,85 +186,85 @@ def convert_dset_cargs(
     cargs.append("ConvertDset")
     cargs.extend([
         "-o_",
-        *params.get("output_type")
+        *params.get("output_type", None)
     ])
     cargs.extend([
         "-input",
-        execution.input_file(params.get("input_dataset"))
+        execution.input_file(params.get("input_dataset", None))
     ])
-    if params.get("input_type") is not None:
+    if params.get("input_type", None) is not None:
         cargs.extend([
             "-i_",
-            params.get("input_type")
+            params.get("input_type", None)
         ])
-    if params.get("output_prefix") is not None:
+    if params.get("output_prefix", None) is not None:
         cargs.extend([
             "-prefix",
-            params.get("output_prefix")
+            params.get("output_prefix", None)
         ])
-    if params.get("dset_labels") is not None:
+    if params.get("dset_labels", None) is not None:
         cargs.extend([
             "-dset_labels",
-            params.get("dset_labels")
+            params.get("dset_labels", None)
         ])
-    if params.get("add_node_index"):
+    if params.get("add_node_index", False):
         cargs.append("-add_node_index")
-    if params.get("node_index_file") is not None:
+    if params.get("node_index_file", None) is not None:
         cargs.extend([
             "-node_index_1D",
-            execution.input_file(params.get("node_index_file"))
+            execution.input_file(params.get("node_index_file", None))
         ])
-    if params.get("node_select_file") is not None:
+    if params.get("node_select_file", None) is not None:
         cargs.extend([
             "-node_select_1D",
-            execution.input_file(params.get("node_select_file"))
+            execution.input_file(params.get("node_select_file", None))
         ])
-    if params.get("prepend_node_index"):
+    if params.get("prepend_node_index", False):
         cargs.append("-prepend_node_index_1D")
-    if params.get("pad_to_node") is not None:
+    if params.get("pad_to_node", None) is not None:
         cargs.extend([
             "-pad_to_node",
-            params.get("pad_to_node")
+            params.get("pad_to_node", None)
         ])
-    if params.get("labelize") is not None:
+    if params.get("labelize", None) is not None:
         cargs.extend([
             "-labelize",
-            execution.input_file(params.get("labelize"))
+            execution.input_file(params.get("labelize", None))
         ])
-    if params.get("graphize"):
+    if params.get("graphize", False):
         cargs.append("-graphize")
-    if params.get("graph_nodelist") is not None:
+    if params.get("graph_nodelist", None) is not None:
         cargs.extend([
             "-graph_nodelist_1D",
-            params.get("graph_nodelist")
+            params.get("graph_nodelist", None)
         ])
-    if params.get("graph_full_nodelist") is not None:
+    if params.get("graph_full_nodelist", None) is not None:
         cargs.extend([
             "-graph_full_nodelist_1D",
-            execution.input_file(params.get("graph_full_nodelist"))
+            execution.input_file(params.get("graph_full_nodelist", None))
         ])
-    if params.get("graph_named_nodelist") is not None:
+    if params.get("graph_named_nodelist", None) is not None:
         cargs.extend([
             "-graph_named_nodelist_txt",
-            params.get("graph_named_nodelist")
+            params.get("graph_named_nodelist", None)
         ])
-    if params.get("graph_xyz_lpi"):
+    if params.get("graph_xyz_lpi", False):
         cargs.append("-graph_XYZ_LPI")
-    if params.get("graph_edgelist") is not None:
+    if params.get("graph_edgelist", None) is not None:
         cargs.extend([
             "-graph_edgelist_1D",
-            execution.input_file(params.get("graph_edgelist"))
+            execution.input_file(params.get("graph_edgelist", None))
         ])
-    if params.get("onegraph"):
+    if params.get("onegraph", False):
         cargs.append("-onegraph")
-    if params.get("multigraph"):
+    if params.get("multigraph", False):
         cargs.append("-multigraph")
-    if params.get("split") is not None:
+    if params.get("split", None) is not None:
         cargs.extend([
             "-split",
-            str(params.get("split"))
+            str(params.get("split", None))
         ])
-    if params.get("no_history"):
+    if params.get("no_history", False):
         cargs.append("-no_history")
     return cargs
 
@@ -292,7 +284,7 @@ def convert_dset_outputs(
     """
     ret = ConvertDsetOutputs(
         root=execution.output_file("."),
-        converted_dataset=execution.output_file(params.get("output_prefix")) if (params.get("output_prefix") is not None) else None,
+        converted_dataset=execution.output_file(params.get("output_prefix", None)) if (params.get("output_prefix") is not None) else None,
     )
     return ret
 
@@ -419,7 +411,6 @@ def convert_dset(
 __all__ = [
     "CONVERT_DSET_METADATA",
     "ConvertDsetOutputs",
-    "ConvertDsetParameters",
     "convert_dset",
     "convert_dset_execute",
     "convert_dset_params",

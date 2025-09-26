@@ -14,7 +14,18 @@ V_3D_LRFLIP_METADATA = Metadata(
 
 
 V3dLrflipParameters = typing.TypedDict('V3dLrflipParameters', {
-    "@type": typing.Literal["afni.3dLRflip"],
+    "@type": typing.NotRequired[typing.Literal["afni/3dLRflip"]],
+    "flip_lr": bool,
+    "flip_ap": bool,
+    "flip_is": bool,
+    "flip_x": bool,
+    "flip_y": bool,
+    "flip_z": bool,
+    "output_prefix": typing.NotRequired[str | None],
+    "datasets": list[InputPathType],
+})
+V3dLrflipParametersTagged = typing.TypedDict('V3dLrflipParametersTagged', {
+    "@type": typing.Literal["afni/3dLRflip"],
     "flip_lr": bool,
     "flip_ap": bool,
     "flip_is": bool,
@@ -26,40 +37,9 @@ V3dLrflipParameters = typing.TypedDict('V3dLrflipParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "afni.3dLRflip": v_3d_lrflip_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-    }.get(t)
-
-
 class V3dLrflipOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `v_3d_lrflip(...)`.
+    Output object returned when calling `V3dLrflipParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -74,7 +54,7 @@ def v_3d_lrflip_params(
     flip_y: bool = False,
     flip_z: bool = False,
     output_prefix: str | None = None,
-) -> V3dLrflipParameters:
+) -> V3dLrflipParametersTagged:
     """
     Build parameters.
     
@@ -92,7 +72,7 @@ def v_3d_lrflip_params(
         Parameter dictionary
     """
     params = {
-        "@type": "afni.3dLRflip",
+        "@type": "afni/3dLRflip",
         "flip_lr": flip_lr,
         "flip_ap": flip_ap,
         "flip_is": flip_is,
@@ -121,24 +101,24 @@ def v_3d_lrflip_cargs(
     """
     cargs = []
     cargs.append("3dLRflip")
-    if params.get("flip_lr"):
+    if params.get("flip_lr", False):
         cargs.append("-LR")
-    if params.get("flip_ap"):
+    if params.get("flip_ap", False):
         cargs.append("-AP")
-    if params.get("flip_is"):
+    if params.get("flip_is", False):
         cargs.append("-IS")
-    if params.get("flip_x"):
+    if params.get("flip_x", False):
         cargs.append("-X")
-    if params.get("flip_y"):
+    if params.get("flip_y", False):
         cargs.append("-Y")
-    if params.get("flip_z"):
+    if params.get("flip_z", False):
         cargs.append("-Z")
-    if params.get("output_prefix") is not None:
+    if params.get("output_prefix", None) is not None:
         cargs.extend([
             "-prefix",
-            params.get("output_prefix")
+            params.get("output_prefix", None)
         ])
-    cargs.extend([execution.input_file(f) for f in params.get("datasets")])
+    cargs.extend([execution.input_file(f) for f in params.get("datasets", None)])
     return cargs
 
 
@@ -240,7 +220,6 @@ def v_3d_lrflip(
 
 __all__ = [
     "V3dLrflipOutputs",
-    "V3dLrflipParameters",
     "V_3D_LRFLIP_METADATA",
     "v_3d_lrflip",
     "v_3d_lrflip_execute",

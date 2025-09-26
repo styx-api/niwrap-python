@@ -14,7 +14,37 @@ ASL_FILE_METADATA = Metadata(
 
 
 AslFileParameters = typing.TypedDict('AslFileParameters', {
-    "@type": typing.Literal["fsl.asl_file"],
+    "@type": typing.NotRequired[typing.Literal["fsl/asl_file"]],
+    "datafile": InputPathType,
+    "ntis": float,
+    "mask": typing.NotRequired[InputPathType | None],
+    "inblockform": typing.NotRequired[typing.Literal["rpt", "tis"] | None],
+    "inaslform": typing.NotRequired[typing.Literal["diff", "tc", "ct", "tcb", "ctb"] | None],
+    "rpts": typing.NotRequired[str | None],
+    "pairs": bool,
+    "spairs": bool,
+    "diff": bool,
+    "surrdiff": bool,
+    "extrapolate": bool,
+    "neighbour": typing.NotRequired[float | None],
+    "pvgm": typing.NotRequired[InputPathType | None],
+    "pvwm": typing.NotRequired[InputPathType | None],
+    "kernel": typing.NotRequired[float | None],
+    "outfile": str,
+    "outblockform": typing.NotRequired[typing.Literal["rpt", "tis"] | None],
+    "mean": bool,
+    "split": typing.NotRequired[str | None],
+    "epoch": bool,
+    "epoch_length": typing.NotRequired[float | None],
+    "epoch_overlap": typing.NotRequired[float | None],
+    "epoch_unit": typing.NotRequired[typing.Literal["rpt", "tis"] | None],
+    "deconv": bool,
+    "aif": typing.NotRequired[InputPathType | None],
+    "help": bool,
+    "version": bool,
+})
+AslFileParametersTagged = typing.TypedDict('AslFileParametersTagged', {
+    "@type": typing.Literal["fsl/asl_file"],
     "datafile": InputPathType,
     "ntis": float,
     "mask": typing.NotRequired[InputPathType | None],
@@ -45,41 +75,9 @@ AslFileParameters = typing.TypedDict('AslFileParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "fsl.asl_file": asl_file_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "fsl.asl_file": asl_file_outputs,
-    }.get(t)
-
-
 class AslFileOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `asl_file(...)`.
+    Output object returned when calling `AslFileParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -117,7 +115,7 @@ def asl_file_params(
     aif: InputPathType | None = None,
     help_: bool = False,
     version: bool = False,
-) -> AslFileParameters:
+) -> AslFileParametersTagged:
     """
     Build parameters.
     
@@ -164,7 +162,7 @@ def asl_file_params(
         Parameter dictionary
     """
     params = {
-        "@type": "fsl.asl_file",
+        "@type": "fsl/asl_file",
         "datafile": datafile,
         "ntis": ntis,
         "pairs": pairs,
@@ -227,105 +225,105 @@ def asl_file_cargs(
     cargs.append("asl_file")
     cargs.extend([
         "--data",
-        execution.input_file(params.get("datafile"))
+        execution.input_file(params.get("datafile", None))
     ])
     cargs.extend([
         "--ntis",
-        str(params.get("ntis"))
+        str(params.get("ntis", None))
     ])
-    if params.get("mask") is not None:
+    if params.get("mask", None) is not None:
         cargs.extend([
             "--mask",
-            execution.input_file(params.get("mask"))
+            execution.input_file(params.get("mask", None))
         ])
-    if params.get("inblockform") is not None:
+    if params.get("inblockform", None) is not None:
         cargs.extend([
             "--ibf",
-            params.get("inblockform")
+            params.get("inblockform", None)
         ])
-    if params.get("inaslform") is not None:
+    if params.get("inaslform", None) is not None:
         cargs.extend([
             "--iaf",
-            params.get("inaslform")
+            params.get("inaslform", None)
         ])
-    if params.get("rpts") is not None:
+    if params.get("rpts", None) is not None:
         cargs.extend([
             "--rpts",
-            params.get("rpts")
+            params.get("rpts", None)
         ])
-    if params.get("pairs"):
+    if params.get("pairs", False):
         cargs.append("--pairs")
-    if params.get("spairs"):
+    if params.get("spairs", False):
         cargs.append("--spairs")
-    if params.get("diff"):
+    if params.get("diff", False):
         cargs.append("--diff")
-    if params.get("surrdiff"):
+    if params.get("surrdiff", False):
         cargs.append("--surrdiff")
-    if params.get("extrapolate"):
+    if params.get("extrapolate", False):
         cargs.append("--extrapolate")
-    if params.get("neighbour") is not None:
+    if params.get("neighbour", None) is not None:
         cargs.extend([
             "--neighbour",
-            str(params.get("neighbour"))
+            str(params.get("neighbour", None))
         ])
-    if params.get("pvgm") is not None:
+    if params.get("pvgm", None) is not None:
         cargs.extend([
             "--pvgm",
-            execution.input_file(params.get("pvgm"))
+            execution.input_file(params.get("pvgm", None))
         ])
-    if params.get("pvwm") is not None:
+    if params.get("pvwm", None) is not None:
         cargs.extend([
             "--pvwm",
-            execution.input_file(params.get("pvwm"))
+            execution.input_file(params.get("pvwm", None))
         ])
-    if params.get("kernel") is not None:
+    if params.get("kernel", None) is not None:
         cargs.extend([
             "--kernel",
-            str(params.get("kernel"))
+            str(params.get("kernel", None))
         ])
     cargs.extend([
         "--out",
-        params.get("outfile")
+        params.get("outfile", None)
     ])
-    if params.get("outblockform") is not None:
+    if params.get("outblockform", None) is not None:
         cargs.extend([
             "--obf",
-            params.get("outblockform")
+            params.get("outblockform", None)
         ])
-    if params.get("mean"):
+    if params.get("mean", False):
         cargs.append("--mean")
-    if params.get("split") is not None:
+    if params.get("split", None) is not None:
         cargs.extend([
             "--split",
-            params.get("split")
+            params.get("split", None)
         ])
-    if params.get("epoch"):
+    if params.get("epoch", False):
         cargs.append("--epoch")
-    if params.get("epoch_length") is not None:
+    if params.get("epoch_length", None) is not None:
         cargs.extend([
             "--elen",
-            str(params.get("epoch_length"))
+            str(params.get("epoch_length", None))
         ])
-    if params.get("epoch_overlap") is not None:
+    if params.get("epoch_overlap", None) is not None:
         cargs.extend([
             "--eol",
-            str(params.get("epoch_overlap"))
+            str(params.get("epoch_overlap", None))
         ])
-    if params.get("epoch_unit") is not None:
+    if params.get("epoch_unit", None) is not None:
         cargs.extend([
             "--eunit",
-            params.get("epoch_unit")
+            params.get("epoch_unit", None)
         ])
-    if params.get("deconv"):
+    if params.get("deconv", False):
         cargs.append("--deconv")
-    if params.get("aif") is not None:
+    if params.get("aif", None) is not None:
         cargs.extend([
             "--aif",
-            execution.input_file(params.get("aif"))
+            execution.input_file(params.get("aif", None))
         ])
-    if params.get("help"):
+    if params.get("help", False):
         cargs.append("-h")
-    if params.get("version"):
+    if params.get("version", False):
         cargs.append("-v")
     return cargs
 
@@ -345,8 +343,8 @@ def asl_file_outputs(
     """
     ret = AslFileOutputs(
         root=execution.output_file("."),
-        output_data=execution.output_file(params.get("outfile") + ".nii.gz"),
-        output_mean=execution.output_file(params.get("outfile") + "_mean.nii.gz"),
+        output_data=execution.output_file(params.get("outfile", None) + ".nii.gz"),
+        output_mean=execution.output_file(params.get("outfile", None) + "_mean.nii.gz"),
     )
     return ret
 
@@ -496,7 +494,6 @@ def asl_file(
 __all__ = [
     "ASL_FILE_METADATA",
     "AslFileOutputs",
-    "AslFileParameters",
     "asl_file",
     "asl_file_execute",
     "asl_file_params",

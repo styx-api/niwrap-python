@@ -14,47 +14,20 @@ MRIS_RESCALE_METADATA = Metadata(
 
 
 MrisRescaleParameters = typing.TypedDict('MrisRescaleParameters', {
-    "@type": typing.Literal["freesurfer.mris_rescale"],
+    "@type": typing.NotRequired[typing.Literal["freesurfer/mris_rescale"]],
+    "input_surface": InputPathType,
+    "output_surface": str,
+})
+MrisRescaleParametersTagged = typing.TypedDict('MrisRescaleParametersTagged', {
+    "@type": typing.Literal["freesurfer/mris_rescale"],
     "input_surface": InputPathType,
     "output_surface": str,
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "freesurfer.mris_rescale": mris_rescale_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "freesurfer.mris_rescale": mris_rescale_outputs,
-    }.get(t)
-
-
 class MrisRescaleOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `mris_rescale(...)`.
+    Output object returned when calling `MrisRescaleParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -65,7 +38,7 @@ class MrisRescaleOutputs(typing.NamedTuple):
 def mris_rescale_params(
     input_surface: InputPathType,
     output_surface: str,
-) -> MrisRescaleParameters:
+) -> MrisRescaleParametersTagged:
     """
     Build parameters.
     
@@ -76,7 +49,7 @@ def mris_rescale_params(
         Parameter dictionary
     """
     params = {
-        "@type": "freesurfer.mris_rescale",
+        "@type": "freesurfer/mris_rescale",
         "input_surface": input_surface,
         "output_surface": output_surface,
     }
@@ -98,8 +71,8 @@ def mris_rescale_cargs(
     """
     cargs = []
     cargs.append("mris_rescale")
-    cargs.append(execution.input_file(params.get("input_surface")))
-    cargs.append(params.get("output_surface"))
+    cargs.append(execution.input_file(params.get("input_surface", None)))
+    cargs.append(params.get("output_surface", None))
     return cargs
 
 
@@ -118,7 +91,7 @@ def mris_rescale_outputs(
     """
     ret = MrisRescaleOutputs(
         root=execution.output_file("."),
-        rescaled_output_surface=execution.output_file(params.get("output_surface")),
+        rescaled_output_surface=execution.output_file(params.get("output_surface", None)),
     )
     return ret
 
@@ -182,7 +155,6 @@ def mris_rescale(
 __all__ = [
     "MRIS_RESCALE_METADATA",
     "MrisRescaleOutputs",
-    "MrisRescaleParameters",
     "mris_rescale",
     "mris_rescale_execute",
     "mris_rescale_params",

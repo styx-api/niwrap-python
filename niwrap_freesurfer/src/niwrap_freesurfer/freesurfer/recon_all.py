@@ -14,7 +14,79 @@ RECON_ALL_METADATA = Metadata(
 
 
 ReconAllParameters = typing.TypedDict('ReconAllParameters', {
-    "@type": typing.Literal["freesurfer.recon-all"],
+    "@type": typing.NotRequired[typing.Literal["freesurfer/recon-all"]],
+    "subjid": str,
+    "all_flag": bool,
+    "autorecon_all_flag": bool,
+    "autorecon1_flag": bool,
+    "autorecon2_flag": bool,
+    "autorecon2_cp_flag": bool,
+    "autorecon2_wm_flag": bool,
+    "autorecon2_inflate1_flag": bool,
+    "autorecon2_perhemi_flag": bool,
+    "autorecon3_flag": bool,
+    "hemi": typing.NotRequired[str | None],
+    "pons_crs": typing.NotRequired[list[float] | None],
+    "cc_crs": typing.NotRequired[list[float] | None],
+    "lh_crs": typing.NotRequired[list[float] | None],
+    "rh_crs": typing.NotRequired[list[float] | None],
+    "nofill": bool,
+    "watershed": typing.NotRequired[str | None],
+    "external_brain_mask": typing.NotRequired[InputPathType | None],
+    "wsless": bool,
+    "wsmore": bool,
+    "wsatlas": bool,
+    "no_wsatlas": bool,
+    "no_wsgcaatlas": bool,
+    "wsthresh": typing.NotRequired[float | None],
+    "wsseed": typing.NotRequired[list[float] | None],
+    "norm_3d_iters": typing.NotRequired[float | None],
+    "norm_max_grad": typing.NotRequired[float | None],
+    "norm1_b": typing.NotRequired[float | None],
+    "norm2_b": typing.NotRequired[float | None],
+    "norm1_n": typing.NotRequired[float | None],
+    "norm2_n": typing.NotRequired[float | None],
+    "cm": bool,
+    "no_fix_with_ga": bool,
+    "fix_diag_only": bool,
+    "seg_wlo": typing.NotRequired[float | None],
+    "seg_ghi": typing.NotRequired[float | None],
+    "nothicken": bool,
+    "no_ca_align_after": bool,
+    "no_ca_align": bool,
+    "deface": bool,
+    "expert_file": typing.NotRequired[InputPathType | None],
+    "xopts_use": bool,
+    "xopts_clean": bool,
+    "xopts_overwrite": bool,
+    "termscript_file": typing.NotRequired[InputPathType | None],
+    "mprage": bool,
+    "washu_mprage": bool,
+    "schwartzya3t_atlas": bool,
+    "threads": typing.NotRequired[float | None],
+    "waitfor_file": typing.NotRequired[InputPathType | None],
+    "notify_file": typing.NotRequired[InputPathType | None],
+    "log_file": typing.NotRequired[InputPathType | None],
+    "status_file": typing.NotRequired[InputPathType | None],
+    "noappend": bool,
+    "no_isrunning": bool,
+    "hippocampal_subfields_t1": bool,
+    "hippocampal_subfields_t2": typing.NotRequired[str | None],
+    "hippocampal_subfields_t1t2": typing.NotRequired[str | None],
+    "brainstem_structures": bool,
+    "subjects_dir": typing.NotRequired[str | None],
+    "mail_user": typing.NotRequired[str | None],
+    "umask": typing.NotRequired[str | None],
+    "group_id": typing.NotRequired[str | None],
+    "only_versions": bool,
+    "debug": bool,
+    "allow_coredump": bool,
+    "dontrun": bool,
+    "version": bool,
+    "help": bool,
+})
+ReconAllParametersTagged = typing.TypedDict('ReconAllParametersTagged', {
+    "@type": typing.Literal["freesurfer/recon-all"],
     "subjid": str,
     "all_flag": bool,
     "autorecon_all_flag": bool,
@@ -87,41 +159,9 @@ ReconAllParameters = typing.TypedDict('ReconAllParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "freesurfer.recon-all": recon_all_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "freesurfer.recon-all": recon_all_outputs,
-    }.get(t)
-
-
 class ReconAllOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `recon_all(...)`.
+    Output object returned when calling `ReconAllParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -201,7 +241,7 @@ def recon_all_params(
     dontrun: bool = False,
     version: bool = False,
     help_: bool = False,
-) -> ReconAllParameters:
+) -> ReconAllParametersTagged:
     """
     Build parameters.
     
@@ -287,7 +327,7 @@ def recon_all_params(
         Parameter dictionary
     """
     params = {
-        "@type": "freesurfer.recon-all",
+        "@type": "freesurfer/recon-all",
         "subjid": subjid,
         "all_flag": all_flag,
         "autorecon_all_flag": autorecon_all_flag,
@@ -408,233 +448,233 @@ def recon_all_cargs(
     cargs.append("recon-all")
     cargs.extend([
         "-subjid",
-        params.get("subjid")
+        params.get("subjid", None)
     ])
-    if params.get("all_flag"):
+    if params.get("all_flag", False):
         cargs.append("-all")
-    if params.get("autorecon_all_flag"):
+    if params.get("autorecon_all_flag", False):
         cargs.append("-autorecon-all")
-    if params.get("autorecon1_flag"):
+    if params.get("autorecon1_flag", False):
         cargs.append("-autorecon1")
-    if params.get("autorecon2_flag"):
+    if params.get("autorecon2_flag", False):
         cargs.append("-autorecon2")
-    if params.get("autorecon2_cp_flag"):
+    if params.get("autorecon2_cp_flag", False):
         cargs.append("-autorecon2-cp")
-    if params.get("autorecon2_wm_flag"):
+    if params.get("autorecon2_wm_flag", False):
         cargs.append("-autorecon2-wm")
-    if params.get("autorecon2_inflate1_flag"):
+    if params.get("autorecon2_inflate1_flag", False):
         cargs.append("-autorecon2-inflate1")
-    if params.get("autorecon2_perhemi_flag"):
+    if params.get("autorecon2_perhemi_flag", False):
         cargs.append("-autorecon2-perhemi")
-    if params.get("autorecon3_flag"):
+    if params.get("autorecon3_flag", False):
         cargs.append("-autorecon3")
-    if params.get("hemi") is not None:
+    if params.get("hemi", None) is not None:
         cargs.extend([
             "-hemi",
-            params.get("hemi")
+            params.get("hemi", None)
         ])
-    if params.get("pons_crs") is not None:
+    if params.get("pons_crs", None) is not None:
         cargs.extend([
             "-pons-crs",
-            *map(str, params.get("pons_crs"))
+            *map(str, params.get("pons_crs", None))
         ])
-    if params.get("cc_crs") is not None:
+    if params.get("cc_crs", None) is not None:
         cargs.extend([
             "-cc-crs",
-            *map(str, params.get("cc_crs"))
+            *map(str, params.get("cc_crs", None))
         ])
-    if params.get("lh_crs") is not None:
+    if params.get("lh_crs", None) is not None:
         cargs.extend([
             "-lh-crs",
-            *map(str, params.get("lh_crs"))
+            *map(str, params.get("lh_crs", None))
         ])
-    if params.get("rh_crs") is not None:
+    if params.get("rh_crs", None) is not None:
         cargs.extend([
             "-rh-crs",
-            *map(str, params.get("rh_crs"))
+            *map(str, params.get("rh_crs", None))
         ])
-    if params.get("nofill"):
+    if params.get("nofill", False):
         cargs.append("-nofill")
-    if params.get("watershed") is not None:
+    if params.get("watershed", None) is not None:
         cargs.extend([
             "-watershed",
-            params.get("watershed")
+            params.get("watershed", None)
         ])
-    if params.get("external_brain_mask") is not None:
+    if params.get("external_brain_mask", None) is not None:
         cargs.extend([
             "-xmask",
-            execution.input_file(params.get("external_brain_mask"))
+            execution.input_file(params.get("external_brain_mask", None))
         ])
-    if params.get("wsless"):
+    if params.get("wsless", False):
         cargs.append("-wsless")
-    if params.get("wsmore"):
+    if params.get("wsmore", False):
         cargs.append("-wsmore")
-    if params.get("wsatlas"):
+    if params.get("wsatlas", False):
         cargs.append("-wsatlas")
-    if params.get("no_wsatlas"):
+    if params.get("no_wsatlas", False):
         cargs.append("-no-wsatlas")
-    if params.get("no_wsgcaatlas"):
+    if params.get("no_wsgcaatlas", False):
         cargs.append("-no-wsgcaatlas")
-    if params.get("wsthresh") is not None:
+    if params.get("wsthresh", None) is not None:
         cargs.extend([
             "-wsthresh",
-            str(params.get("wsthresh"))
+            str(params.get("wsthresh", None))
         ])
-    if params.get("wsseed") is not None:
+    if params.get("wsseed", None) is not None:
         cargs.extend([
             "-wsseed",
-            *map(str, params.get("wsseed"))
+            *map(str, params.get("wsseed", None))
         ])
-    if params.get("norm_3d_iters") is not None:
+    if params.get("norm_3d_iters", None) is not None:
         cargs.extend([
             "-norm3diters",
-            str(params.get("norm_3d_iters"))
+            str(params.get("norm_3d_iters", None))
         ])
-    if params.get("norm_max_grad") is not None:
+    if params.get("norm_max_grad", None) is not None:
         cargs.extend([
             "-normmaxgrad",
-            str(params.get("norm_max_grad"))
+            str(params.get("norm_max_grad", None))
         ])
-    if params.get("norm1_b") is not None:
+    if params.get("norm1_b", None) is not None:
         cargs.extend([
             "-norm1-b",
-            str(params.get("norm1_b"))
+            str(params.get("norm1_b", None))
         ])
-    if params.get("norm2_b") is not None:
+    if params.get("norm2_b", None) is not None:
         cargs.extend([
             "-norm2-b",
-            str(params.get("norm2_b"))
+            str(params.get("norm2_b", None))
         ])
-    if params.get("norm1_n") is not None:
+    if params.get("norm1_n", None) is not None:
         cargs.extend([
             "-norm1-n",
-            str(params.get("norm1_n"))
+            str(params.get("norm1_n", None))
         ])
-    if params.get("norm2_n") is not None:
+    if params.get("norm2_n", None) is not None:
         cargs.extend([
             "-norm2-n",
-            str(params.get("norm2_n"))
+            str(params.get("norm2_n", None))
         ])
-    if params.get("cm"):
+    if params.get("cm", False):
         cargs.append("-cm")
-    if params.get("no_fix_with_ga"):
+    if params.get("no_fix_with_ga", False):
         cargs.append("-no-fix-with-ga")
-    if params.get("fix_diag_only"):
+    if params.get("fix_diag_only", False):
         cargs.append("-fix-diag-only")
-    if params.get("seg_wlo") is not None:
+    if params.get("seg_wlo", None) is not None:
         cargs.extend([
             "-seg-wlo",
-            str(params.get("seg_wlo"))
+            str(params.get("seg_wlo", None))
         ])
-    if params.get("seg_ghi") is not None:
+    if params.get("seg_ghi", None) is not None:
         cargs.extend([
             "-seg-ghi",
-            str(params.get("seg_ghi"))
+            str(params.get("seg_ghi", None))
         ])
-    if params.get("nothicken"):
+    if params.get("nothicken", False):
         cargs.append("-nothicken")
-    if params.get("no_ca_align_after"):
+    if params.get("no_ca_align_after", False):
         cargs.append("-no-ca-align-after")
-    if params.get("no_ca_align"):
+    if params.get("no_ca_align", False):
         cargs.append("-no-ca-align")
-    if params.get("deface"):
+    if params.get("deface", False):
         cargs.append("-deface")
-    if params.get("expert_file") is not None:
+    if params.get("expert_file", None) is not None:
         cargs.extend([
             "-expert",
-            execution.input_file(params.get("expert_file"))
+            execution.input_file(params.get("expert_file", None))
         ])
-    if params.get("xopts_use"):
+    if params.get("xopts_use", False):
         cargs.append("-xopts-use")
-    if params.get("xopts_clean"):
+    if params.get("xopts_clean", False):
         cargs.append("-xopts-clean")
-    if params.get("xopts_overwrite"):
+    if params.get("xopts_overwrite", False):
         cargs.append("-xopts-overwrite")
-    if params.get("termscript_file") is not None:
+    if params.get("termscript_file", None) is not None:
         cargs.extend([
             "-termscript",
-            execution.input_file(params.get("termscript_file"))
+            execution.input_file(params.get("termscript_file", None))
         ])
-    if params.get("mprage"):
+    if params.get("mprage", False):
         cargs.append("-mprage")
-    if params.get("washu_mprage"):
+    if params.get("washu_mprage", False):
         cargs.append("-washu_mprage")
-    if params.get("schwartzya3t_atlas"):
+    if params.get("schwartzya3t_atlas", False):
         cargs.append("-schwartzya3t-atlas")
-    if params.get("threads") is not None:
+    if params.get("threads", None) is not None:
         cargs.extend([
             "-threads",
-            str(params.get("threads"))
+            str(params.get("threads", None))
         ])
-    if params.get("waitfor_file") is not None:
+    if params.get("waitfor_file", None) is not None:
         cargs.extend([
             "-waitfor",
-            execution.input_file(params.get("waitfor_file"))
+            execution.input_file(params.get("waitfor_file", None))
         ])
-    if params.get("notify_file") is not None:
+    if params.get("notify_file", None) is not None:
         cargs.extend([
             "-notify",
-            execution.input_file(params.get("notify_file"))
+            execution.input_file(params.get("notify_file", None))
         ])
-    if params.get("log_file") is not None:
+    if params.get("log_file", None) is not None:
         cargs.extend([
             "-log",
-            execution.input_file(params.get("log_file"))
+            execution.input_file(params.get("log_file", None))
         ])
-    if params.get("status_file") is not None:
+    if params.get("status_file", None) is not None:
         cargs.extend([
             "-status",
-            execution.input_file(params.get("status_file"))
+            execution.input_file(params.get("status_file", None))
         ])
-    if params.get("noappend"):
+    if params.get("noappend", False):
         cargs.append("-noappend")
-    if params.get("no_isrunning"):
+    if params.get("no_isrunning", False):
         cargs.append("-no-isrunning")
-    if params.get("hippocampal_subfields_t1"):
+    if params.get("hippocampal_subfields_t1", False):
         cargs.append("-hippocampal-subfields-T1")
-    if params.get("hippocampal_subfields_t2") is not None:
+    if params.get("hippocampal_subfields_t2", None) is not None:
         cargs.extend([
             "-hippocampal-subfields-T2",
-            params.get("hippocampal_subfields_t2")
+            params.get("hippocampal_subfields_t2", None)
         ])
-    if params.get("hippocampal_subfields_t1t2") is not None:
+    if params.get("hippocampal_subfields_t1t2", None) is not None:
         cargs.extend([
             "-hippocampal-subfields-T1T2",
-            params.get("hippocampal_subfields_t1t2")
+            params.get("hippocampal_subfields_t1t2", None)
         ])
-    if params.get("brainstem_structures"):
+    if params.get("brainstem_structures", False):
         cargs.append("-brainstem-structures")
-    if params.get("subjects_dir") is not None:
+    if params.get("subjects_dir", None) is not None:
         cargs.extend([
             "-sd",
-            params.get("subjects_dir")
+            params.get("subjects_dir", None)
         ])
-    if params.get("mail_user") is not None:
+    if params.get("mail_user", None) is not None:
         cargs.extend([
             "-mail",
-            params.get("mail_user")
+            params.get("mail_user", None)
         ])
-    if params.get("umask") is not None:
+    if params.get("umask", None) is not None:
         cargs.extend([
             "-umask",
-            params.get("umask")
+            params.get("umask", None)
         ])
-    if params.get("group_id") is not None:
+    if params.get("group_id", None) is not None:
         cargs.extend([
             "-grp",
-            params.get("group_id")
+            params.get("group_id", None)
         ])
-    if params.get("only_versions"):
+    if params.get("only_versions", False):
         cargs.append("-onlyversions")
-    if params.get("debug"):
+    if params.get("debug", False):
         cargs.append("-debug")
-    if params.get("allow_coredump"):
+    if params.get("allow_coredump", False):
         cargs.append("-allowcoredump")
-    if params.get("dontrun"):
+    if params.get("dontrun", False):
         cargs.append("-dontrun")
-    if params.get("version"):
+    if params.get("version", False):
         cargs.append("-version")
-    if params.get("help"):
+    if params.get("help", False):
         cargs.append("-help")
     return cargs
 
@@ -654,8 +694,8 @@ def recon_all_outputs(
     """
     ret = ReconAllOutputs(
         root=execution.output_file("."),
-        logfile=execution.output_file(params.get("subjid") + "/scripts/recon-all.log"),
-        statusfile=execution.output_file(params.get("subjid") + "/scripts/recon-all-status.log"),
+        logfile=execution.output_file(params.get("subjid", None) + "/scripts/recon-all.log"),
+        statusfile=execution.output_file(params.get("subjid", None) + "/scripts/recon-all-status.log"),
     )
     return ret
 
@@ -930,7 +970,6 @@ def recon_all(
 __all__ = [
     "RECON_ALL_METADATA",
     "ReconAllOutputs",
-    "ReconAllParameters",
     "recon_all",
     "recon_all_execute",
     "recon_all_params",

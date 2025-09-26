@@ -14,7 +14,15 @@ V_3D_KRUSKAL_WALLIS_METADATA = Metadata(
 
 
 V3dKruskalWallisParameters = typing.TypedDict('V3dKruskalWallisParameters', {
-    "@type": typing.Literal["afni.3dKruskalWallis"],
+    "@type": typing.NotRequired[typing.Literal["afni/3dKruskalWallis"]],
+    "levels": int,
+    "datasets": list[str],
+    "workmem": typing.NotRequired[int | None],
+    "voxel": typing.NotRequired[int | None],
+    "output": str,
+})
+V3dKruskalWallisParametersTagged = typing.TypedDict('V3dKruskalWallisParametersTagged', {
+    "@type": typing.Literal["afni/3dKruskalWallis"],
     "levels": int,
     "datasets": list[str],
     "workmem": typing.NotRequired[int | None],
@@ -23,41 +31,9 @@ V3dKruskalWallisParameters = typing.TypedDict('V3dKruskalWallisParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "afni.3dKruskalWallis": v_3d_kruskal_wallis_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "afni.3dKruskalWallis": v_3d_kruskal_wallis_outputs,
-    }.get(t)
-
-
 class V3dKruskalWallisOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `v_3d_kruskal_wallis(...)`.
+    Output object returned when calling `V3dKruskalWallisParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -71,7 +47,7 @@ def v_3d_kruskal_wallis_params(
     output: str,
     workmem: int | None = None,
     voxel: int | None = None,
-) -> V3dKruskalWallisParameters:
+) -> V3dKruskalWallisParametersTagged:
     """
     Build parameters.
     
@@ -86,7 +62,7 @@ def v_3d_kruskal_wallis_params(
         Parameter dictionary
     """
     params = {
-        "@type": "afni.3dKruskalWallis",
+        "@type": "afni/3dKruskalWallis",
         "levels": levels,
         "datasets": datasets,
         "output": output,
@@ -115,25 +91,25 @@ def v_3d_kruskal_wallis_cargs(
     cargs.append("3dKruskalWallis")
     cargs.extend([
         "-levels",
-        str(params.get("levels"))
+        str(params.get("levels", None))
     ])
     cargs.extend([
         "-dset",
-        *params.get("datasets")
+        *params.get("datasets", None)
     ])
-    if params.get("workmem") is not None:
+    if params.get("workmem", None) is not None:
         cargs.extend([
             "-workmem",
-            str(params.get("workmem"))
+            str(params.get("workmem", None))
         ])
-    if params.get("voxel") is not None:
+    if params.get("voxel", None) is not None:
         cargs.extend([
             "-voxel",
-            str(params.get("voxel"))
+            str(params.get("voxel", None))
         ])
     cargs.extend([
         "-out",
-        params.get("output")
+        params.get("output", None)
     ])
     return cargs
 
@@ -153,7 +129,7 @@ def v_3d_kruskal_wallis_outputs(
     """
     ret = V3dKruskalWallisOutputs(
         root=execution.output_file("."),
-        outfile_prefix=execution.output_file(params.get("output") + "+tlrc"),
+        outfile_prefix=execution.output_file(params.get("output", None) + "+tlrc"),
     )
     return ret
 
@@ -228,7 +204,6 @@ def v_3d_kruskal_wallis(
 
 __all__ = [
     "V3dKruskalWallisOutputs",
-    "V3dKruskalWallisParameters",
     "V_3D_KRUSKAL_WALLIS_METADATA",
     "v_3d_kruskal_wallis",
     "v_3d_kruskal_wallis_execute",

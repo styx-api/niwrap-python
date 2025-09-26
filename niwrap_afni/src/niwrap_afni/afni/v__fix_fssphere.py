@@ -14,7 +14,16 @@ V__FIX_FSSPHERE_METADATA = Metadata(
 
 
 VFixFssphereParameters = typing.TypedDict('VFixFssphereParameters', {
-    "@type": typing.Literal["afni.@fix_FSsphere"],
+    "@type": typing.NotRequired[typing.Literal["afni/@fix_FSsphere"]],
+    "spec_file": InputPathType,
+    "sphere_file": InputPathType,
+    "num_iterations": typing.NotRequired[int | None],
+    "extent_lim": typing.NotRequired[float | None],
+    "project_first": bool,
+    "keep_temp": bool,
+})
+VFixFssphereParametersTagged = typing.TypedDict('VFixFssphereParametersTagged', {
+    "@type": typing.Literal["afni/@fix_FSsphere"],
     "spec_file": InputPathType,
     "sphere_file": InputPathType,
     "num_iterations": typing.NotRequired[int | None],
@@ -24,41 +33,9 @@ VFixFssphereParameters = typing.TypedDict('VFixFssphereParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "afni.@fix_FSsphere": v__fix_fssphere_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "afni.@fix_FSsphere": v__fix_fssphere_outputs,
-    }.get(t)
-
-
 class VFixFssphereOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `v__fix_fssphere(...)`.
+    Output object returned when calling `VFixFssphereParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -73,7 +50,7 @@ def v__fix_fssphere_params(
     extent_lim: float | None = None,
     project_first: bool = False,
     keep_temp: bool = False,
-) -> VFixFssphereParameters:
+) -> VFixFssphereParametersTagged:
     """
     Build parameters.
     
@@ -89,7 +66,7 @@ def v__fix_fssphere_params(
         Parameter dictionary
     """
     params = {
-        "@type": "afni.@fix_FSsphere",
+        "@type": "afni/@fix_FSsphere",
         "spec_file": spec_file,
         "sphere_file": sphere_file,
         "project_first": project_first,
@@ -119,25 +96,25 @@ def v__fix_fssphere_cargs(
     cargs.append("@fix_FSsphere")
     cargs.extend([
         "-spec",
-        execution.input_file(params.get("spec_file"))
+        execution.input_file(params.get("spec_file", None))
     ])
     cargs.extend([
         "-sphere",
-        execution.input_file(params.get("sphere_file"))
+        execution.input_file(params.get("sphere_file", None))
     ])
-    if params.get("num_iterations") is not None:
+    if params.get("num_iterations", None) is not None:
         cargs.extend([
             "-niter",
-            str(params.get("num_iterations"))
+            str(params.get("num_iterations", None))
         ])
-    if params.get("extent_lim") is not None:
+    if params.get("extent_lim", None) is not None:
         cargs.extend([
             "-lim",
-            str(params.get("extent_lim"))
+            str(params.get("extent_lim", None))
         ])
-    if params.get("project_first"):
+    if params.get("project_first", False):
         cargs.append("-project_first")
-    if params.get("keep_temp"):
+    if params.get("keep_temp", False):
         cargs.append("-keep_temp")
     return cargs
 
@@ -233,7 +210,6 @@ def v__fix_fssphere(
 
 __all__ = [
     "VFixFssphereOutputs",
-    "VFixFssphereParameters",
     "V__FIX_FSSPHERE_METADATA",
     "v__fix_fssphere",
     "v__fix_fssphere_execute",

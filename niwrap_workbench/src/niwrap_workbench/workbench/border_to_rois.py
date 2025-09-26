@@ -14,7 +14,16 @@ BORDER_TO_ROIS_METADATA = Metadata(
 
 
 BorderToRoisParameters = typing.TypedDict('BorderToRoisParameters', {
-    "@type": typing.Literal["workbench.border-to-rois"],
+    "@type": typing.NotRequired[typing.Literal["workbench/border-to-rois"]],
+    "surface": InputPathType,
+    "border_file": InputPathType,
+    "metric_out": str,
+    "opt_border_name": typing.NotRequired[str | None],
+    "opt_inverse": bool,
+    "opt_include_border": bool,
+})
+BorderToRoisParametersTagged = typing.TypedDict('BorderToRoisParametersTagged', {
+    "@type": typing.Literal["workbench/border-to-rois"],
     "surface": InputPathType,
     "border_file": InputPathType,
     "metric_out": str,
@@ -24,41 +33,9 @@ BorderToRoisParameters = typing.TypedDict('BorderToRoisParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "workbench.border-to-rois": border_to_rois_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "workbench.border-to-rois": border_to_rois_outputs,
-    }.get(t)
-
-
 class BorderToRoisOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `border_to_rois(...)`.
+    Output object returned when calling `BorderToRoisParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -73,7 +50,7 @@ def border_to_rois_params(
     opt_border_name: str | None = None,
     opt_inverse: bool = False,
     opt_include_border: bool = False,
-) -> BorderToRoisParameters:
+) -> BorderToRoisParametersTagged:
     """
     Build parameters.
     
@@ -88,7 +65,7 @@ def border_to_rois_params(
         Parameter dictionary
     """
     params = {
-        "@type": "workbench.border-to-rois",
+        "@type": "workbench/border-to-rois",
         "surface": surface,
         "border_file": border_file,
         "metric_out": metric_out,
@@ -116,17 +93,17 @@ def border_to_rois_cargs(
     cargs = []
     cargs.append("wb_command")
     cargs.append("-border-to-rois")
-    cargs.append(execution.input_file(params.get("surface")))
-    cargs.append(execution.input_file(params.get("border_file")))
-    cargs.append(params.get("metric_out"))
-    if params.get("opt_border_name") is not None:
+    cargs.append(execution.input_file(params.get("surface", None)))
+    cargs.append(execution.input_file(params.get("border_file", None)))
+    cargs.append(params.get("metric_out", None))
+    if params.get("opt_border_name", None) is not None:
         cargs.extend([
             "-border",
-            params.get("opt_border_name")
+            params.get("opt_border_name", None)
         ])
-    if params.get("opt_inverse"):
+    if params.get("opt_inverse", False):
         cargs.append("-inverse")
-    if params.get("opt_include_border"):
+    if params.get("opt_include_border", False):
         cargs.append("-include-border")
     return cargs
 
@@ -146,7 +123,7 @@ def border_to_rois_outputs(
     """
     ret = BorderToRoisOutputs(
         root=execution.output_file("."),
-        metric_out=execution.output_file(params.get("metric_out")),
+        metric_out=execution.output_file(params.get("metric_out", None)),
     )
     return ret
 
@@ -228,7 +205,6 @@ def border_to_rois(
 __all__ = [
     "BORDER_TO_ROIS_METADATA",
     "BorderToRoisOutputs",
-    "BorderToRoisParameters",
     "border_to_rois",
     "border_to_rois_execute",
     "border_to_rois_params",

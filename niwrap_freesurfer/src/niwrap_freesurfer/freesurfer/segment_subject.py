@@ -14,7 +14,16 @@ SEGMENT_SUBJECT_METADATA = Metadata(
 
 
 SegmentSubjectParameters = typing.TypedDict('SegmentSubjectParameters', {
-    "@type": typing.Literal["freesurfer.segment_subject"],
+    "@type": typing.NotRequired[typing.Literal["freesurfer/segment_subject"]],
+    "input_volume": InputPathType,
+    "output_xfm": str,
+    "log_file": typing.NotRequired[str | None],
+    "help_flag": bool,
+    "debug_flag": bool,
+    "version_flag": bool,
+})
+SegmentSubjectParametersTagged = typing.TypedDict('SegmentSubjectParametersTagged', {
+    "@type": typing.Literal["freesurfer/segment_subject"],
     "input_volume": InputPathType,
     "output_xfm": str,
     "log_file": typing.NotRequired[str | None],
@@ -24,41 +33,9 @@ SegmentSubjectParameters = typing.TypedDict('SegmentSubjectParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "freesurfer.segment_subject": segment_subject_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "freesurfer.segment_subject": segment_subject_outputs,
-    }.get(t)
-
-
 class SegmentSubjectOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `segment_subject(...)`.
+    Output object returned when calling `SegmentSubjectParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -73,7 +50,7 @@ def segment_subject_params(
     help_flag: bool = False,
     debug_flag: bool = False,
     version_flag: bool = False,
-) -> SegmentSubjectParameters:
+) -> SegmentSubjectParametersTagged:
     """
     Build parameters.
     
@@ -88,7 +65,7 @@ def segment_subject_params(
         Parameter dictionary
     """
     params = {
-        "@type": "freesurfer.segment_subject",
+        "@type": "freesurfer/segment_subject",
         "input_volume": input_volume,
         "output_xfm": output_xfm,
         "help_flag": help_flag,
@@ -117,22 +94,22 @@ def segment_subject_cargs(
     cargs.append("segment_subject")
     cargs.extend([
         "--i",
-        execution.input_file(params.get("input_volume"))
+        execution.input_file(params.get("input_volume", None))
     ])
     cargs.extend([
         "--xfm",
-        params.get("output_xfm")
+        params.get("output_xfm", None)
     ])
-    if params.get("log_file") is not None:
+    if params.get("log_file", None) is not None:
         cargs.extend([
             "--log",
-            params.get("log_file")
+            params.get("log_file", None)
         ])
-    if params.get("help_flag"):
+    if params.get("help_flag", False):
         cargs.append("--help")
-    if params.get("debug_flag"):
+    if params.get("debug_flag", False):
         cargs.append("--debug")
-    if params.get("version_flag"):
+    if params.get("version_flag", False):
         cargs.append("--version")
     return cargs
 
@@ -152,7 +129,7 @@ def segment_subject_outputs(
     """
     ret = SegmentSubjectOutputs(
         root=execution.output_file("."),
-        output_xfm_file=execution.output_file(params.get("output_xfm")),
+        output_xfm_file=execution.output_file(params.get("output_xfm", None)),
     )
     return ret
 
@@ -230,7 +207,6 @@ def segment_subject(
 __all__ = [
     "SEGMENT_SUBJECT_METADATA",
     "SegmentSubjectOutputs",
-    "SegmentSubjectParameters",
     "segment_subject",
     "segment_subject_execute",
     "segment_subject_params",

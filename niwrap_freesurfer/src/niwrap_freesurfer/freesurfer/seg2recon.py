@@ -14,7 +14,24 @@ SEG2RECON_METADATA = Metadata(
 
 
 Seg2reconParameters = typing.TypedDict('Seg2reconParameters', {
-    "@type": typing.Literal["freesurfer.seg2recon"],
+    "@type": typing.NotRequired[typing.Literal["freesurfer/seg2recon"]],
+    "subject": str,
+    "segvol": InputPathType,
+    "inputvol": InputPathType,
+    "ctab": typing.NotRequired[InputPathType | None],
+    "ndilate": typing.NotRequired[float | None],
+    "threads": typing.NotRequired[float | None],
+    "force_update": bool,
+    "no_cc": bool,
+    "mask": typing.NotRequired[InputPathType | None],
+    "headmask": typing.NotRequired[InputPathType | None],
+    "thresh": typing.NotRequired[float | None],
+    "expert": typing.NotRequired[InputPathType | None],
+    "rca": bool,
+    "no_bias_field_cor": bool,
+})
+Seg2reconParametersTagged = typing.TypedDict('Seg2reconParametersTagged', {
+    "@type": typing.Literal["freesurfer/seg2recon"],
     "subject": str,
     "segvol": InputPathType,
     "inputvol": InputPathType,
@@ -32,41 +49,9 @@ Seg2reconParameters = typing.TypedDict('Seg2reconParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "freesurfer.seg2recon": seg2recon_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "freesurfer.seg2recon": seg2recon_outputs,
-    }.get(t)
-
-
 class Seg2reconOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `seg2recon(...)`.
+    Output object returned when calling `Seg2reconParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -93,7 +78,7 @@ def seg2recon_params(
     expert: InputPathType | None = None,
     rca: bool = False,
     no_bias_field_cor: bool = False,
-) -> Seg2reconParameters:
+) -> Seg2reconParametersTagged:
     """
     Build parameters.
     
@@ -120,7 +105,7 @@ def seg2recon_params(
         Parameter dictionary
     """
     params = {
-        "@type": "freesurfer.seg2recon",
+        "@type": "freesurfer/seg2recon",
         "subject": subject,
         "segvol": segvol,
         "inputvol": inputvol,
@@ -163,58 +148,58 @@ def seg2recon_cargs(
     cargs.append("seg2recon")
     cargs.extend([
         "-s",
-        params.get("subject")
+        params.get("subject", None)
     ])
     cargs.extend([
         "-seg",
-        execution.input_file(params.get("segvol"))
+        execution.input_file(params.get("segvol", None))
     ])
     cargs.extend([
         "-i",
-        execution.input_file(params.get("inputvol"))
+        execution.input_file(params.get("inputvol", None))
     ])
-    if params.get("ctab") is not None:
+    if params.get("ctab", None) is not None:
         cargs.extend([
             "-ctab",
-            execution.input_file(params.get("ctab"))
+            execution.input_file(params.get("ctab", None))
         ])
-    if params.get("ndilate") is not None:
+    if params.get("ndilate", None) is not None:
         cargs.extend([
             "--ndilate",
-            str(params.get("ndilate"))
+            str(params.get("ndilate", None))
         ])
-    if params.get("threads") is not None:
+    if params.get("threads", None) is not None:
         cargs.extend([
             "--threads",
-            str(params.get("threads"))
+            str(params.get("threads", None))
         ])
-    if params.get("force_update"):
+    if params.get("force_update", False):
         cargs.append("--force-update")
-    if params.get("no_cc"):
+    if params.get("no_cc", False):
         cargs.append("--no-cc")
-    if params.get("mask") is not None:
+    if params.get("mask", None) is not None:
         cargs.extend([
             "--m",
-            execution.input_file(params.get("mask"))
+            execution.input_file(params.get("mask", None))
         ])
-    if params.get("headmask") is not None:
+    if params.get("headmask", None) is not None:
         cargs.extend([
             "--h",
-            execution.input_file(params.get("headmask"))
+            execution.input_file(params.get("headmask", None))
         ])
-    if params.get("thresh") is not None:
+    if params.get("thresh", None) is not None:
         cargs.extend([
             "--thresh",
-            str(params.get("thresh"))
+            str(params.get("thresh", None))
         ])
-    if params.get("expert") is not None:
+    if params.get("expert", None) is not None:
         cargs.extend([
             "--expert",
-            execution.input_file(params.get("expert"))
+            execution.input_file(params.get("expert", None))
         ])
-    if params.get("rca"):
+    if params.get("rca", False):
         cargs.append("--rca")
-    if params.get("no_bias_field_cor"):
+    if params.get("no_bias_field_cor", False):
         cargs.append("--no-bias-field-cor")
     return cargs
 
@@ -234,9 +219,9 @@ def seg2recon_outputs(
     """
     ret = Seg2reconOutputs(
         root=execution.output_file("."),
-        aseg_auto_mgz=execution.output_file(params.get("subject") + "/aseg.auto.mgz"),
-        nu_mgz=execution.output_file(params.get("subject") + "/nu.mgz"),
-        brainmask_mgz=execution.output_file(params.get("subject") + "/brainmask.mgz"),
+        aseg_auto_mgz=execution.output_file(params.get("subject", None) + "/aseg.auto.mgz"),
+        nu_mgz=execution.output_file(params.get("subject", None) + "/nu.mgz"),
+        brainmask_mgz=execution.output_file(params.get("subject", None) + "/brainmask.mgz"),
     )
     return ret
 
@@ -342,7 +327,6 @@ def seg2recon(
 __all__ = [
     "SEG2RECON_METADATA",
     "Seg2reconOutputs",
-    "Seg2reconParameters",
     "seg2recon",
     "seg2recon_execute",
     "seg2recon_params",

@@ -14,40 +14,63 @@ MRTRANSFORM_METADATA = Metadata(
 
 
 MrtransformFslgradParameters = typing.TypedDict('MrtransformFslgradParameters', {
-    "@type": typing.Literal["mrtrix.mrtransform.fslgrad"],
+    "@type": typing.NotRequired[typing.Literal["fslgrad"]],
+    "bvecs": InputPathType,
+    "bvals": InputPathType,
+})
+MrtransformFslgradParametersTagged = typing.TypedDict('MrtransformFslgradParametersTagged', {
+    "@type": typing.Literal["fslgrad"],
     "bvecs": InputPathType,
     "bvals": InputPathType,
 })
 
 
 MrtransformExportGradFslParameters = typing.TypedDict('MrtransformExportGradFslParameters', {
-    "@type": typing.Literal["mrtrix.mrtransform.export_grad_fsl"],
+    "@type": typing.NotRequired[typing.Literal["export_grad_fsl"]],
+    "bvecs_path": str,
+    "bvals_path": str,
+})
+MrtransformExportGradFslParametersTagged = typing.TypedDict('MrtransformExportGradFslParametersTagged', {
+    "@type": typing.Literal["export_grad_fsl"],
     "bvecs_path": str,
     "bvals_path": str,
 })
 
 
 MrtransformVariousStringParameters = typing.TypedDict('MrtransformVariousStringParameters', {
-    "@type": typing.Literal["mrtrix.mrtransform.VariousString"],
+    "@type": typing.NotRequired[typing.Literal["VariousString"]],
+    "obj": str,
+})
+MrtransformVariousStringParametersTagged = typing.TypedDict('MrtransformVariousStringParametersTagged', {
+    "@type": typing.Literal["VariousString"],
     "obj": str,
 })
 
 
 MrtransformVariousFileParameters = typing.TypedDict('MrtransformVariousFileParameters', {
-    "@type": typing.Literal["mrtrix.mrtransform.VariousFile"],
+    "@type": typing.NotRequired[typing.Literal["VariousFile"]],
+    "obj": InputPathType,
+})
+MrtransformVariousFileParametersTagged = typing.TypedDict('MrtransformVariousFileParametersTagged', {
+    "@type": typing.Literal["VariousFile"],
     "obj": InputPathType,
 })
 
 
 MrtransformConfigParameters = typing.TypedDict('MrtransformConfigParameters', {
-    "@type": typing.Literal["mrtrix.mrtransform.config"],
+    "@type": typing.NotRequired[typing.Literal["config"]],
+    "key": str,
+    "value": str,
+})
+MrtransformConfigParametersTagged = typing.TypedDict('MrtransformConfigParametersTagged', {
+    "@type": typing.Literal["config"],
     "key": str,
     "value": str,
 })
 
 
 MrtransformParameters = typing.TypedDict('MrtransformParameters', {
-    "@type": typing.Literal["mrtrix.mrtransform"],
+    "@type": typing.NotRequired[typing.Literal["mrtrix/mrtransform"]],
     "linear": typing.NotRequired[InputPathType | None],
     "flip": typing.NotRequired[list[int] | None],
     "inverse": bool,
@@ -69,7 +92,44 @@ MrtransformParameters = typing.TypedDict('MrtransformParameters', {
     "export_grad_mrtrix": typing.NotRequired[str | None],
     "export_grad_fsl": typing.NotRequired[MrtransformExportGradFslParameters | None],
     "datatype": typing.NotRequired[str | None],
-    "strides": typing.NotRequired[typing.Union[MrtransformVariousStringParameters, MrtransformVariousFileParameters] | None],
+    "strides": typing.NotRequired[typing.Union[MrtransformVariousStringParametersTagged, MrtransformVariousFileParametersTagged] | None],
+    "nan": bool,
+    "no_reorientation": bool,
+    "info": bool,
+    "quiet": bool,
+    "debug": bool,
+    "force": bool,
+    "nthreads": typing.NotRequired[int | None],
+    "config": typing.NotRequired[list[MrtransformConfigParameters] | None],
+    "help": bool,
+    "version": bool,
+    "input": InputPathType,
+    "output": str,
+})
+MrtransformParametersTagged = typing.TypedDict('MrtransformParametersTagged', {
+    "@type": typing.Literal["mrtrix/mrtransform"],
+    "linear": typing.NotRequired[InputPathType | None],
+    "flip": typing.NotRequired[list[int] | None],
+    "inverse": bool,
+    "half": bool,
+    "replace": typing.NotRequired[InputPathType | None],
+    "identity": bool,
+    "template": typing.NotRequired[InputPathType | None],
+    "midway_space": bool,
+    "interp": typing.NotRequired[str | None],
+    "oversample": typing.NotRequired[list[int] | None],
+    "warp": typing.NotRequired[InputPathType | None],
+    "warp_full": typing.NotRequired[InputPathType | None],
+    "from": typing.NotRequired[int | None],
+    "modulate": typing.NotRequired[str | None],
+    "directions": typing.NotRequired[InputPathType | None],
+    "reorient_fod": typing.NotRequired[str | None],
+    "grad": typing.NotRequired[InputPathType | None],
+    "fslgrad": typing.NotRequired[MrtransformFslgradParameters | None],
+    "export_grad_mrtrix": typing.NotRequired[str | None],
+    "export_grad_fsl": typing.NotRequired[MrtransformExportGradFslParameters | None],
+    "datatype": typing.NotRequired[str | None],
+    "strides": typing.NotRequired[typing.Union[MrtransformVariousStringParametersTagged, MrtransformVariousFileParametersTagged] | None],
     "nan": bool,
     "no_reorientation": bool,
     "info": bool,
@@ -85,7 +145,7 @@ MrtransformParameters = typing.TypedDict('MrtransformParameters', {
 })
 
 
-def dyn_cargs(
+def mrtransform_strides_cargs_dyn_fn(
     t: str,
 ) -> typing.Any:
     """
@@ -97,16 +157,12 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "mrtrix.mrtransform": mrtransform_cargs,
-        "mrtrix.mrtransform.fslgrad": mrtransform_fslgrad_cargs,
-        "mrtrix.mrtransform.export_grad_fsl": mrtransform_export_grad_fsl_cargs,
-        "mrtrix.mrtransform.VariousString": mrtransform_various_string_cargs,
-        "mrtrix.mrtransform.VariousFile": mrtransform_various_file_cargs,
-        "mrtrix.mrtransform.config": mrtransform_config_cargs,
+        "VariousString": mrtransform_various_string_cargs,
+        "VariousFile": mrtransform_various_file_cargs,
     }.get(t)
 
 
-def dyn_outputs(
+def mrtransform_strides_outputs_dyn_fn(
     t: str,
 ) -> typing.Any:
     """
@@ -118,15 +174,13 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "mrtrix.mrtransform": mrtransform_outputs,
-        "mrtrix.mrtransform.export_grad_fsl": mrtransform_export_grad_fsl_outputs,
     }.get(t)
 
 
 def mrtransform_fslgrad_params(
     bvecs: InputPathType,
     bvals: InputPathType,
-) -> MrtransformFslgradParameters:
+) -> MrtransformFslgradParametersTagged:
     """
     Build parameters.
     
@@ -143,7 +197,7 @@ def mrtransform_fslgrad_params(
         Parameter dictionary
     """
     params = {
-        "@type": "mrtrix.mrtransform.fslgrad",
+        "@type": "fslgrad",
         "bvecs": bvecs,
         "bvals": bvals,
     }
@@ -165,8 +219,8 @@ def mrtransform_fslgrad_cargs(
     """
     cargs = []
     cargs.append("-fslgrad")
-    cargs.append(execution.input_file(params.get("bvecs")))
-    cargs.append(execution.input_file(params.get("bvals")))
+    cargs.append(execution.input_file(params.get("bvecs", None)))
+    cargs.append(execution.input_file(params.get("bvals", None)))
     return cargs
 
 
@@ -187,7 +241,7 @@ class MrtransformExportGradFslOutputs(typing.NamedTuple):
 def mrtransform_export_grad_fsl_params(
     bvecs_path: str,
     bvals_path: str,
-) -> MrtransformExportGradFslParameters:
+) -> MrtransformExportGradFslParametersTagged:
     """
     Build parameters.
     
@@ -200,7 +254,7 @@ def mrtransform_export_grad_fsl_params(
         Parameter dictionary
     """
     params = {
-        "@type": "mrtrix.mrtransform.export_grad_fsl",
+        "@type": "export_grad_fsl",
         "bvecs_path": bvecs_path,
         "bvals_path": bvals_path,
     }
@@ -222,8 +276,8 @@ def mrtransform_export_grad_fsl_cargs(
     """
     cargs = []
     cargs.append("-export_grad_fsl")
-    cargs.append(params.get("bvecs_path"))
-    cargs.append(params.get("bvals_path"))
+    cargs.append(params.get("bvecs_path", None))
+    cargs.append(params.get("bvals_path", None))
     return cargs
 
 
@@ -242,15 +296,15 @@ def mrtransform_export_grad_fsl_outputs(
     """
     ret = MrtransformExportGradFslOutputs(
         root=execution.output_file("."),
-        bvecs_path=execution.output_file(params.get("bvecs_path")),
-        bvals_path=execution.output_file(params.get("bvals_path")),
+        bvecs_path=execution.output_file(params.get("bvecs_path", None)),
+        bvals_path=execution.output_file(params.get("bvals_path", None)),
     )
     return ret
 
 
 def mrtransform_various_string_params(
     obj: str,
-) -> MrtransformVariousStringParameters:
+) -> MrtransformVariousStringParametersTagged:
     """
     Build parameters.
     
@@ -260,7 +314,7 @@ def mrtransform_various_string_params(
         Parameter dictionary
     """
     params = {
-        "@type": "mrtrix.mrtransform.VariousString",
+        "@type": "VariousString",
         "obj": obj,
     }
     return params
@@ -280,13 +334,13 @@ def mrtransform_various_string_cargs(
         Command-line arguments.
     """
     cargs = []
-    cargs.append(params.get("obj"))
+    cargs.append(params.get("obj", None))
     return cargs
 
 
 def mrtransform_various_file_params(
     obj: InputPathType,
-) -> MrtransformVariousFileParameters:
+) -> MrtransformVariousFileParametersTagged:
     """
     Build parameters.
     
@@ -296,7 +350,7 @@ def mrtransform_various_file_params(
         Parameter dictionary
     """
     params = {
-        "@type": "mrtrix.mrtransform.VariousFile",
+        "@type": "VariousFile",
         "obj": obj,
     }
     return params
@@ -316,14 +370,14 @@ def mrtransform_various_file_cargs(
         Command-line arguments.
     """
     cargs = []
-    cargs.append(execution.input_file(params.get("obj")))
+    cargs.append(execution.input_file(params.get("obj", None)))
     return cargs
 
 
 def mrtransform_config_params(
     key: str,
     value: str,
-) -> MrtransformConfigParameters:
+) -> MrtransformConfigParametersTagged:
     """
     Build parameters.
     
@@ -334,7 +388,7 @@ def mrtransform_config_params(
         Parameter dictionary
     """
     params = {
-        "@type": "mrtrix.mrtransform.config",
+        "@type": "config",
         "key": key,
         "value": value,
     }
@@ -356,14 +410,14 @@ def mrtransform_config_cargs(
     """
     cargs = []
     cargs.append("-config")
-    cargs.append(params.get("key"))
-    cargs.append(params.get("value"))
+    cargs.append(params.get("key", None))
+    cargs.append(params.get("value", None))
     return cargs
 
 
 class MrtransformOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `mrtransform(...)`.
+    Output object returned when calling `MrtransformParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -399,7 +453,7 @@ def mrtransform_params(
     export_grad_mrtrix: str | None = None,
     export_grad_fsl: MrtransformExportGradFslParameters | None = None,
     datatype: str | None = None,
-    strides: typing.Union[MrtransformVariousStringParameters, MrtransformVariousFileParameters] | None = None,
+    strides: typing.Union[MrtransformVariousStringParametersTagged, MrtransformVariousFileParametersTagged] | None = None,
     nan: bool = False,
     no_reorientation: bool = False,
     info: bool = False,
@@ -410,7 +464,7 @@ def mrtransform_params(
     config: list[MrtransformConfigParameters] | None = None,
     help_: bool = False,
     version: bool = False,
-) -> MrtransformParameters:
+) -> MrtransformParametersTagged:
     """
     Build parameters.
     
@@ -526,7 +580,7 @@ def mrtransform_params(
         Parameter dictionary
     """
     params = {
-        "@type": "mrtrix.mrtransform",
+        "@type": "mrtrix/mrtransform",
         "inverse": inverse,
         "half": half,
         "identity": identity,
@@ -600,123 +654,123 @@ def mrtransform_cargs(
     """
     cargs = []
     cargs.append("mrtransform")
-    if params.get("linear") is not None:
+    if params.get("linear", None) is not None:
         cargs.extend([
             "-linear",
-            execution.input_file(params.get("linear"))
+            execution.input_file(params.get("linear", None))
         ])
-    if params.get("flip") is not None:
+    if params.get("flip", None) is not None:
         cargs.extend([
             "-flip",
-            ",".join(map(str, params.get("flip")))
+            ",".join(map(str, params.get("flip", None)))
         ])
-    if params.get("inverse"):
+    if params.get("inverse", False):
         cargs.append("-inverse")
-    if params.get("half"):
+    if params.get("half", False):
         cargs.append("-half")
-    if params.get("replace") is not None:
+    if params.get("replace", None) is not None:
         cargs.extend([
             "-replace",
-            execution.input_file(params.get("replace"))
+            execution.input_file(params.get("replace", None))
         ])
-    if params.get("identity"):
+    if params.get("identity", False):
         cargs.append("-identity")
-    if params.get("template") is not None:
+    if params.get("template", None) is not None:
         cargs.extend([
             "-template",
-            execution.input_file(params.get("template"))
+            execution.input_file(params.get("template", None))
         ])
-    if params.get("midway_space"):
+    if params.get("midway_space", False):
         cargs.append("-midway_space")
-    if params.get("interp") is not None:
+    if params.get("interp", None) is not None:
         cargs.extend([
             "-interp",
-            params.get("interp")
+            params.get("interp", None)
         ])
-    if params.get("oversample") is not None:
+    if params.get("oversample", None) is not None:
         cargs.extend([
             "-oversample",
-            ",".join(map(str, params.get("oversample")))
+            ",".join(map(str, params.get("oversample", None)))
         ])
-    if params.get("warp") is not None:
+    if params.get("warp", None) is not None:
         cargs.extend([
             "-warp",
-            execution.input_file(params.get("warp"))
+            execution.input_file(params.get("warp", None))
         ])
-    if params.get("warp_full") is not None:
+    if params.get("warp_full", None) is not None:
         cargs.extend([
             "-warp_full",
-            execution.input_file(params.get("warp_full"))
+            execution.input_file(params.get("warp_full", None))
         ])
-    if params.get("from") is not None:
+    if params.get("from", None) is not None:
         cargs.extend([
             "-from",
-            str(params.get("from"))
+            str(params.get("from", None))
         ])
-    if params.get("modulate") is not None:
+    if params.get("modulate", None) is not None:
         cargs.extend([
             "-modulate",
-            params.get("modulate")
+            params.get("modulate", None)
         ])
-    if params.get("directions") is not None:
+    if params.get("directions", None) is not None:
         cargs.extend([
             "-directions",
-            execution.input_file(params.get("directions"))
+            execution.input_file(params.get("directions", None))
         ])
-    if params.get("reorient_fod") is not None:
+    if params.get("reorient_fod", None) is not None:
         cargs.extend([
             "-reorient_fod",
-            params.get("reorient_fod")
+            params.get("reorient_fod", None)
         ])
-    if params.get("grad") is not None:
+    if params.get("grad", None) is not None:
         cargs.extend([
             "-grad",
-            execution.input_file(params.get("grad"))
+            execution.input_file(params.get("grad", None))
         ])
-    if params.get("fslgrad") is not None:
-        cargs.extend(dyn_cargs(params.get("fslgrad")["@type"])(params.get("fslgrad"), execution))
-    if params.get("export_grad_mrtrix") is not None:
+    if params.get("fslgrad", None) is not None:
+        cargs.extend(mrtransform_fslgrad_cargs(params.get("fslgrad", None), execution))
+    if params.get("export_grad_mrtrix", None) is not None:
         cargs.extend([
             "-export_grad_mrtrix",
-            params.get("export_grad_mrtrix")
+            params.get("export_grad_mrtrix", None)
         ])
-    if params.get("export_grad_fsl") is not None:
-        cargs.extend(dyn_cargs(params.get("export_grad_fsl")["@type"])(params.get("export_grad_fsl"), execution))
-    if params.get("datatype") is not None:
+    if params.get("export_grad_fsl", None) is not None:
+        cargs.extend(mrtransform_export_grad_fsl_cargs(params.get("export_grad_fsl", None), execution))
+    if params.get("datatype", None) is not None:
         cargs.extend([
             "-datatype",
-            params.get("datatype")
+            params.get("datatype", None)
         ])
-    if params.get("strides") is not None:
+    if params.get("strides", None) is not None:
         cargs.extend([
             "-strides",
-            *dyn_cargs(params.get("strides")["@type"])(params.get("strides"), execution)
+            *mrtransform_strides_cargs_dyn_fn(params.get("strides", None)["@type"])(params.get("strides", None), execution)
         ])
-    if params.get("nan"):
+    if params.get("nan", False):
         cargs.append("-nan")
-    if params.get("no_reorientation"):
+    if params.get("no_reorientation", False):
         cargs.append("-no_reorientation")
-    if params.get("info"):
+    if params.get("info", False):
         cargs.append("-info")
-    if params.get("quiet"):
+    if params.get("quiet", False):
         cargs.append("-quiet")
-    if params.get("debug"):
+    if params.get("debug", False):
         cargs.append("-debug")
-    if params.get("force"):
+    if params.get("force", False):
         cargs.append("-force")
-    if params.get("nthreads") is not None:
+    if params.get("nthreads", None) is not None:
         cargs.extend([
             "-nthreads",
-            str(params.get("nthreads"))
+            str(params.get("nthreads", None))
         ])
-    if params.get("config") is not None:
-        cargs.extend([a for c in [dyn_cargs(s["@type"])(s, execution) for s in params.get("config")] for a in c])
-    if params.get("help"):
+    if params.get("config", None) is not None:
+        cargs.extend([a for c in [mrtransform_config_cargs(s, execution) for s in params.get("config", None)] for a in c])
+    if params.get("help", False):
         cargs.append("-help")
-    if params.get("version"):
+    if params.get("version", False):
         cargs.append("-version")
-    cargs.append(execution.input_file(params.get("input")))
-    cargs.append(params.get("output"))
+    cargs.append(execution.input_file(params.get("input", None)))
+    cargs.append(params.get("output", None))
     return cargs
 
 
@@ -735,9 +789,9 @@ def mrtransform_outputs(
     """
     ret = MrtransformOutputs(
         root=execution.output_file("."),
-        output=execution.output_file(params.get("output")),
-        export_grad_mrtrix=execution.output_file(params.get("export_grad_mrtrix")) if (params.get("export_grad_mrtrix") is not None) else None,
-        export_grad_fsl=dyn_outputs(params.get("export_grad_fsl")["@type"])(params.get("export_grad_fsl"), execution) if params.get("export_grad_fsl") else None,
+        output=execution.output_file(params.get("output", None)),
+        export_grad_mrtrix=execution.output_file(params.get("export_grad_mrtrix", None)) if (params.get("export_grad_mrtrix") is not None) else None,
+        export_grad_fsl=mrtransform_export_grad_fsl_outputs(params.get("export_grad_fsl"), execution) if params.get("export_grad_fsl") else None,
     )
     return ret
 
@@ -833,7 +887,7 @@ def mrtransform(
     export_grad_mrtrix: str | None = None,
     export_grad_fsl: MrtransformExportGradFslParameters | None = None,
     datatype: str | None = None,
-    strides: typing.Union[MrtransformVariousStringParameters, MrtransformVariousFileParameters] | None = None,
+    strides: typing.Union[MrtransformVariousStringParametersTagged, MrtransformVariousFileParametersTagged] | None = None,
     nan: bool = False,
     no_reorientation: bool = False,
     info: bool = False,
@@ -1047,14 +1101,8 @@ def mrtransform(
 
 __all__ = [
     "MRTRANSFORM_METADATA",
-    "MrtransformConfigParameters",
     "MrtransformExportGradFslOutputs",
-    "MrtransformExportGradFslParameters",
-    "MrtransformFslgradParameters",
     "MrtransformOutputs",
-    "MrtransformParameters",
-    "MrtransformVariousFileParameters",
-    "MrtransformVariousStringParameters",
     "mrtransform",
     "mrtransform_config_params",
     "mrtransform_execute",

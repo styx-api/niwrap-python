@@ -14,7 +14,18 @@ ROIGROW_METADATA = Metadata(
 
 
 RoigrowParameters = typing.TypedDict('RoigrowParameters', {
-    "@type": typing.Literal["afni.ROIgrow"],
+    "@type": typing.NotRequired[typing.Literal["afni/ROIgrow"]],
+    "input_surface": str,
+    "roi_labels": str,
+    "lim_distance": float,
+    "output_prefix": typing.NotRequired[str | None],
+    "full_list": bool,
+    "grow_from_edge": bool,
+    "insphere_diameter": typing.NotRequired[float | None],
+    "inbox_edges": typing.NotRequired[list[float] | None],
+})
+RoigrowParametersTagged = typing.TypedDict('RoigrowParametersTagged', {
+    "@type": typing.Literal["afni/ROIgrow"],
     "input_surface": str,
     "roi_labels": str,
     "lim_distance": float,
@@ -26,41 +37,9 @@ RoigrowParameters = typing.TypedDict('RoigrowParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "afni.ROIgrow": roigrow_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "afni.ROIgrow": roigrow_outputs,
-    }.get(t)
-
-
 class RoigrowOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `roigrow(...)`.
+    Output object returned when calling `RoigrowParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -77,7 +56,7 @@ def roigrow_params(
     grow_from_edge: bool = False,
     insphere_diameter: float | None = None,
     inbox_edges: list[float] | None = None,
-) -> RoigrowParameters:
+) -> RoigrowParametersTagged:
     """
     Build parameters.
     
@@ -103,7 +82,7 @@ def roigrow_params(
         Parameter dictionary
     """
     params = {
-        "@type": "afni.ROIgrow",
+        "@type": "afni/ROIgrow",
         "input_surface": input_surface,
         "roi_labels": roi_labels,
         "lim_distance": lim_distance,
@@ -136,34 +115,34 @@ def roigrow_cargs(
     cargs.append("ROIgrow")
     cargs.extend([
         "-i_TYPE",
-        params.get("input_surface")
+        params.get("input_surface", None)
     ])
     cargs.extend([
         "-roi_labels",
-        params.get("roi_labels")
+        params.get("roi_labels", None)
     ])
     cargs.extend([
         "-lim",
-        str(params.get("lim_distance"))
+        str(params.get("lim_distance", None))
     ])
-    if params.get("output_prefix") is not None:
+    if params.get("output_prefix", None) is not None:
         cargs.extend([
             "-prefix",
-            params.get("output_prefix")
+            params.get("output_prefix", None)
         ])
-    if params.get("full_list"):
+    if params.get("full_list", False):
         cargs.append("-full_list")
-    if params.get("grow_from_edge"):
+    if params.get("grow_from_edge", False):
         cargs.append("-grow_from_edge")
-    if params.get("insphere_diameter") is not None:
+    if params.get("insphere_diameter", None) is not None:
         cargs.extend([
             "-insphere",
-            str(params.get("insphere_diameter"))
+            str(params.get("insphere_diameter", None))
         ])
-    if params.get("inbox_edges") is not None:
+    if params.get("inbox_edges", None) is not None:
         cargs.extend([
             "-inbox",
-            *map(str, params.get("inbox_edges"))
+            *map(str, params.get("inbox_edges", None))
         ])
     return cargs
 
@@ -183,7 +162,7 @@ def roigrow_outputs(
     """
     ret = RoigrowOutputs(
         root=execution.output_file("."),
-        output_file=execution.output_file(params.get("output_prefix") + ".1D") if (params.get("output_prefix") is not None) else None,
+        output_file=execution.output_file(params.get("output_prefix", None) + ".1D") if (params.get("output_prefix") is not None) else None,
     )
     return ret
 
@@ -274,7 +253,6 @@ def roigrow(
 __all__ = [
     "ROIGROW_METADATA",
     "RoigrowOutputs",
-    "RoigrowParameters",
     "roigrow",
     "roigrow_execute",
     "roigrow_params",

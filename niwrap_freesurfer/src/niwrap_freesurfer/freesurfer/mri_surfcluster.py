@@ -14,7 +14,51 @@ MRI_SURFCLUSTER_METADATA = Metadata(
 
 
 MriSurfclusterParameters = typing.TypedDict('MriSurfclusterParameters', {
-    "@type": typing.Literal["freesurfer.mri_surfcluster"],
+    "@type": typing.NotRequired[typing.Literal["freesurfer/mri_surfcluster"]],
+    "infile": InputPathType,
+    "thmin": typing.NotRequired[float | None],
+    "sign": typing.NotRequired[str | None],
+    "no_adjust_flag": bool,
+    "fdr": typing.NotRequired[float | None],
+    "subject": typing.NotRequired[str | None],
+    "hemi": typing.NotRequired[str | None],
+    "surf": typing.NotRequired[str | None],
+    "surfpath": typing.NotRequired[str | None],
+    "annot": typing.NotRequired[str | None],
+    "frame": typing.NotRequired[float | None],
+    "csd": typing.NotRequired[list[InputPathType] | None],
+    "vwsig": typing.NotRequired[str | None],
+    "cwsig": typing.NotRequired[str | None],
+    "maxcwpval": typing.NotRequired[str | None],
+    "bonferroni": typing.NotRequired[float | None],
+    "sig2p_max_flag": bool,
+    "bonferroni_max": typing.NotRequired[float | None],
+    "csdpdf": typing.NotRequired[str | None],
+    "csdpdf_only_flag": bool,
+    "csd_out": typing.NotRequired[InputPathType | None],
+    "cwpvalthresh": typing.NotRequired[float | None],
+    "fwhm": typing.NotRequired[float | None],
+    "fwhmdat": typing.NotRequired[str | None],
+    "clabel": typing.NotRequired[InputPathType | None],
+    "cortex_flag": bool,
+    "mask": typing.NotRequired[InputPathType | None],
+    "mask_inv_flag": bool,
+    "centroid_flag": bool,
+    "sum": typing.NotRequired[InputPathType | None],
+    "pointset": typing.NotRequired[InputPathType | None],
+    "maxareafile": typing.NotRequired[str | None],
+    "o": typing.NotRequired[str | None],
+    "ocn": typing.NotRequired[str | None],
+    "olab": typing.NotRequired[str | None],
+    "oannot": typing.NotRequired[str | None],
+    "minarea": typing.NotRequired[float | None],
+    "xfm": typing.NotRequired[InputPathType | None],
+    "no_fixmni_flag": bool,
+    "sd": typing.NotRequired[str | None],
+    "thmax": typing.NotRequired[float | None],
+})
+MriSurfclusterParametersTagged = typing.TypedDict('MriSurfclusterParametersTagged', {
+    "@type": typing.Literal["freesurfer/mri_surfcluster"],
     "infile": InputPathType,
     "thmin": typing.NotRequired[float | None],
     "sign": typing.NotRequired[str | None],
@@ -59,41 +103,9 @@ MriSurfclusterParameters = typing.TypedDict('MriSurfclusterParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "freesurfer.mri_surfcluster": mri_surfcluster_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "freesurfer.mri_surfcluster": mri_surfcluster_outputs,
-    }.get(t)
-
-
 class MriSurfclusterOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `mri_surfcluster(...)`.
+    Output object returned when calling `MriSurfclusterParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -153,7 +165,7 @@ def mri_surfcluster_params(
     no_fixmni_flag: bool = False,
     sd: str | None = None,
     thmax: float | None = None,
-) -> MriSurfclusterParameters:
+) -> MriSurfclusterParametersTagged:
     """
     Build parameters.
     
@@ -203,7 +215,7 @@ def mri_surfcluster_params(
         Parameter dictionary
     """
     params = {
-        "@type": "freesurfer.mri_surfcluster",
+        "@type": "freesurfer/mri_surfcluster",
         "infile": infile,
         "no_adjust_flag": no_adjust_flag,
         "sig2p_max_flag": sig2p_max_flag,
@@ -299,186 +311,186 @@ def mri_surfcluster_cargs(
     cargs.append("mri_surfcluster")
     cargs.extend([
         "--in",
-        execution.input_file(params.get("infile"))
+        execution.input_file(params.get("infile", None))
     ])
-    if params.get("thmin") is not None:
+    if params.get("thmin", None) is not None:
         cargs.extend([
             "--thmin",
-            str(params.get("thmin"))
+            str(params.get("thmin", None))
         ])
-    if params.get("sign") is not None:
+    if params.get("sign", None) is not None:
         cargs.extend([
             "--sign",
-            params.get("sign")
+            params.get("sign", None)
         ])
-    if params.get("no_adjust_flag"):
+    if params.get("no_adjust_flag", False):
         cargs.append("--no-adjust")
-    if params.get("fdr") is not None:
+    if params.get("fdr", None) is not None:
         cargs.extend([
             "--fdr",
-            str(params.get("fdr"))
+            str(params.get("fdr", None))
         ])
-    if params.get("subject") is not None:
+    if params.get("subject", None) is not None:
         cargs.extend([
             "--subject",
-            params.get("subject")
+            params.get("subject", None)
         ])
-    if params.get("hemi") is not None:
+    if params.get("hemi", None) is not None:
         cargs.extend([
             "--hemi",
-            params.get("hemi")
+            params.get("hemi", None)
         ])
-    if params.get("surf") is not None:
+    if params.get("surf", None) is not None:
         cargs.extend([
             "--surf",
-            params.get("surf")
+            params.get("surf", None)
         ])
-    if params.get("surfpath") is not None:
+    if params.get("surfpath", None) is not None:
         cargs.extend([
             "--surfpath",
-            params.get("surfpath")
+            params.get("surfpath", None)
         ])
-    if params.get("annot") is not None:
+    if params.get("annot", None) is not None:
         cargs.extend([
             "--annot",
-            params.get("annot")
+            params.get("annot", None)
         ])
-    if params.get("frame") is not None:
+    if params.get("frame", None) is not None:
         cargs.extend([
             "--frame",
-            str(params.get("frame"))
+            str(params.get("frame", None))
         ])
-    if params.get("csd") is not None:
+    if params.get("csd", None) is not None:
         cargs.extend([
             "--csd",
-            *[execution.input_file(f) for f in params.get("csd")]
+            *[execution.input_file(f) for f in params.get("csd", None)]
         ])
-    if params.get("vwsig") is not None:
+    if params.get("vwsig", None) is not None:
         cargs.extend([
             "--vwsig",
-            params.get("vwsig")
+            params.get("vwsig", None)
         ])
-    if params.get("cwsig") is not None:
+    if params.get("cwsig", None) is not None:
         cargs.extend([
             "--cwsig",
-            params.get("cwsig")
+            params.get("cwsig", None)
         ])
-    if params.get("maxcwpval") is not None:
+    if params.get("maxcwpval", None) is not None:
         cargs.extend([
             "--maxcwpval",
-            params.get("maxcwpval")
+            params.get("maxcwpval", None)
         ])
-    if params.get("bonferroni") is not None:
+    if params.get("bonferroni", None) is not None:
         cargs.extend([
             "--bonferroni",
-            str(params.get("bonferroni"))
+            str(params.get("bonferroni", None))
         ])
-    if params.get("sig2p_max_flag"):
+    if params.get("sig2p_max_flag", False):
         cargs.append("--sig2p-max")
-    if params.get("bonferroni_max") is not None:
+    if params.get("bonferroni_max", None) is not None:
         cargs.extend([
             "--bonferroni-max",
-            str(params.get("bonferroni_max"))
+            str(params.get("bonferroni_max", None))
         ])
-    if params.get("csdpdf") is not None:
+    if params.get("csdpdf", None) is not None:
         cargs.extend([
             "--csdpdf",
-            params.get("csdpdf")
+            params.get("csdpdf", None)
         ])
-    if params.get("csdpdf_only_flag"):
+    if params.get("csdpdf_only_flag", False):
         cargs.append("--csdpdf-only")
-    if params.get("csd_out") is not None:
+    if params.get("csd_out", None) is not None:
         cargs.extend([
             "--csd-out",
-            execution.input_file(params.get("csd_out"))
+            execution.input_file(params.get("csd_out", None))
         ])
-    if params.get("cwpvalthresh") is not None:
+    if params.get("cwpvalthresh", None) is not None:
         cargs.extend([
             "--cwpvalthresh",
-            str(params.get("cwpvalthresh"))
+            str(params.get("cwpvalthresh", None))
         ])
-    if params.get("fwhm") is not None:
+    if params.get("fwhm", None) is not None:
         cargs.extend([
             "--fwhm",
-            str(params.get("fwhm"))
+            str(params.get("fwhm", None))
         ])
-    if params.get("fwhmdat") is not None:
+    if params.get("fwhmdat", None) is not None:
         cargs.extend([
             "--fwhmdat",
-            params.get("fwhmdat")
+            params.get("fwhmdat", None)
         ])
-    if params.get("clabel") is not None:
+    if params.get("clabel", None) is not None:
         cargs.extend([
             "--clabel",
-            execution.input_file(params.get("clabel"))
+            execution.input_file(params.get("clabel", None))
         ])
-    if params.get("cortex_flag"):
+    if params.get("cortex_flag", False):
         cargs.append("--cortex")
-    if params.get("mask") is not None:
+    if params.get("mask", None) is not None:
         cargs.extend([
             "--mask",
-            execution.input_file(params.get("mask"))
+            execution.input_file(params.get("mask", None))
         ])
-    if params.get("mask_inv_flag"):
+    if params.get("mask_inv_flag", False):
         cargs.append("--mask-inv")
-    if params.get("centroid_flag"):
+    if params.get("centroid_flag", False):
         cargs.append("--centroid")
-    if params.get("sum") is not None:
+    if params.get("sum", None) is not None:
         cargs.extend([
             "--sum",
-            execution.input_file(params.get("sum"))
+            execution.input_file(params.get("sum", None))
         ])
-    if params.get("pointset") is not None:
+    if params.get("pointset", None) is not None:
         cargs.extend([
             "--pointset",
-            execution.input_file(params.get("pointset"))
+            execution.input_file(params.get("pointset", None))
         ])
-    if params.get("maxareafile") is not None:
+    if params.get("maxareafile", None) is not None:
         cargs.extend([
             "--maxareafile",
-            params.get("maxareafile")
+            params.get("maxareafile", None)
         ])
-    if params.get("o") is not None:
+    if params.get("o", None) is not None:
         cargs.extend([
             "--o",
-            params.get("o")
+            params.get("o", None)
         ])
-    if params.get("ocn") is not None:
+    if params.get("ocn", None) is not None:
         cargs.extend([
             "--ocn",
-            params.get("ocn")
+            params.get("ocn", None)
         ])
-    if params.get("olab") is not None:
+    if params.get("olab", None) is not None:
         cargs.extend([
             "--olab",
-            params.get("olab")
+            params.get("olab", None)
         ])
-    if params.get("oannot") is not None:
+    if params.get("oannot", None) is not None:
         cargs.extend([
             "--oannot",
-            params.get("oannot")
+            params.get("oannot", None)
         ])
-    if params.get("minarea") is not None:
+    if params.get("minarea", None) is not None:
         cargs.extend([
             "--minarea",
-            str(params.get("minarea"))
+            str(params.get("minarea", None))
         ])
-    if params.get("xfm") is not None:
+    if params.get("xfm", None) is not None:
         cargs.extend([
             "--xfm",
-            execution.input_file(params.get("xfm"))
+            execution.input_file(params.get("xfm", None))
         ])
-    if params.get("no_fixmni_flag"):
+    if params.get("no_fixmni_flag", False):
         cargs.append("--nofixmni")
-    if params.get("sd") is not None:
+    if params.get("sd", None) is not None:
         cargs.extend([
             "--sd",
-            params.get("sd")
+            params.get("sd", None)
         ])
-    if params.get("thmax") is not None:
+    if params.get("thmax", None) is not None:
         cargs.extend([
             "--thmax",
-            str(params.get("thmax"))
+            str(params.get("thmax", None))
         ])
     return cargs
 
@@ -498,12 +510,12 @@ def mri_surfcluster_outputs(
     """
     ret = MriSurfclusterOutputs(
         root=execution.output_file("."),
-        output_surface_file=execution.output_file(params.get("o")) if (params.get("o") is not None) else None,
-        output_cluster_number_file=execution.output_file(params.get("ocn")) if (params.get("ocn") is not None) else None,
-        output_labels=execution.output_file(params.get("olab") + "-" + params.get("ocn") + ".label") if (params.get("olab") is not None and params.get("ocn") is not None) else None,
-        output_summary_file=execution.output_file(pathlib.Path(params.get("sum")).name) if (params.get("sum") is not None) else None,
-        output_pointset_file=execution.output_file(pathlib.Path(params.get("pointset")).name) if (params.get("pointset") is not None) else None,
-        output_max_area_file=execution.output_file(params.get("maxareafile")) if (params.get("maxareafile") is not None) else None,
+        output_surface_file=execution.output_file(params.get("o", None)) if (params.get("o") is not None) else None,
+        output_cluster_number_file=execution.output_file(params.get("ocn", None)) if (params.get("ocn") is not None) else None,
+        output_labels=execution.output_file(params.get("olab", None) + "-" + params.get("ocn", None) + ".label") if (params.get("olab") is not None and params.get("ocn") is not None) else None,
+        output_summary_file=execution.output_file(pathlib.Path(params.get("sum", None)).name) if (params.get("sum") is not None) else None,
+        output_pointset_file=execution.output_file(pathlib.Path(params.get("pointset", None)).name) if (params.get("pointset") is not None) else None,
+        output_max_area_file=execution.output_file(params.get("maxareafile", None)) if (params.get("maxareafile") is not None) else None,
     )
     return ret
 
@@ -686,7 +698,6 @@ def mri_surfcluster(
 __all__ = [
     "MRI_SURFCLUSTER_METADATA",
     "MriSurfclusterOutputs",
-    "MriSurfclusterParameters",
     "mri_surfcluster",
     "mri_surfcluster_execute",
     "mri_surfcluster_params",

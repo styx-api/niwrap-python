@@ -14,14 +14,39 @@ AMP2RESPONSE_METADATA = Metadata(
 
 
 Amp2responseConfigParameters = typing.TypedDict('Amp2responseConfigParameters', {
-    "@type": typing.Literal["mrtrix.amp2response.config"],
+    "@type": typing.NotRequired[typing.Literal["config"]],
+    "key": str,
+    "value": str,
+})
+Amp2responseConfigParametersTagged = typing.TypedDict('Amp2responseConfigParametersTagged', {
+    "@type": typing.Literal["config"],
     "key": str,
     "value": str,
 })
 
 
 Amp2responseParameters = typing.TypedDict('Amp2responseParameters', {
-    "@type": typing.Literal["mrtrix.amp2response"],
+    "@type": typing.NotRequired[typing.Literal["mrtrix/amp2response"]],
+    "isotropic": bool,
+    "noconstraint": bool,
+    "directions": typing.NotRequired[InputPathType | None],
+    "shells": typing.NotRequired[list[float] | None],
+    "lmax": typing.NotRequired[list[int] | None],
+    "info": bool,
+    "quiet": bool,
+    "debug": bool,
+    "force": bool,
+    "nthreads": typing.NotRequired[int | None],
+    "config": typing.NotRequired[list[Amp2responseConfigParameters] | None],
+    "help": bool,
+    "version": bool,
+    "amps": InputPathType,
+    "mask": InputPathType,
+    "directions_1": InputPathType,
+    "response": str,
+})
+Amp2responseParametersTagged = typing.TypedDict('Amp2responseParametersTagged', {
+    "@type": typing.Literal["mrtrix/amp2response"],
     "isotropic": bool,
     "noconstraint": bool,
     "directions": typing.NotRequired[InputPathType | None],
@@ -42,43 +67,10 @@ Amp2responseParameters = typing.TypedDict('Amp2responseParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "mrtrix.amp2response": amp2response_cargs,
-        "mrtrix.amp2response.config": amp2response_config_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "mrtrix.amp2response": amp2response_outputs,
-    }.get(t)
-
-
 def amp2response_config_params(
     key: str,
     value: str,
-) -> Amp2responseConfigParameters:
+) -> Amp2responseConfigParametersTagged:
     """
     Build parameters.
     
@@ -89,7 +81,7 @@ def amp2response_config_params(
         Parameter dictionary
     """
     params = {
-        "@type": "mrtrix.amp2response.config",
+        "@type": "config",
         "key": key,
         "value": value,
     }
@@ -111,14 +103,14 @@ def amp2response_config_cargs(
     """
     cargs = []
     cargs.append("-config")
-    cargs.append(params.get("key"))
-    cargs.append(params.get("value"))
+    cargs.append(params.get("key", None))
+    cargs.append(params.get("value", None))
     return cargs
 
 
 class Amp2responseOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `amp2response(...)`.
+    Output object returned when calling `Amp2responseParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -144,7 +136,7 @@ def amp2response_params(
     config: list[Amp2responseConfigParameters] | None = None,
     help_: bool = False,
     version: bool = False,
-) -> Amp2responseParameters:
+) -> Amp2responseParametersTagged:
     """
     Build parameters.
     
@@ -187,7 +179,7 @@ def amp2response_params(
         Parameter dictionary
     """
     params = {
-        "@type": "mrtrix.amp2response",
+        "@type": "mrtrix/amp2response",
         "isotropic": isotropic,
         "noconstraint": noconstraint,
         "info": info,
@@ -229,48 +221,48 @@ def amp2response_cargs(
     """
     cargs = []
     cargs.append("amp2response")
-    if params.get("isotropic"):
+    if params.get("isotropic", False):
         cargs.append("-isotropic")
-    if params.get("noconstraint"):
+    if params.get("noconstraint", False):
         cargs.append("-noconstraint")
-    if params.get("directions") is not None:
+    if params.get("directions", None) is not None:
         cargs.extend([
             "-directions",
-            execution.input_file(params.get("directions"))
+            execution.input_file(params.get("directions", None))
         ])
-    if params.get("shells") is not None:
+    if params.get("shells", None) is not None:
         cargs.extend([
             "-shells",
-            ",".join(map(str, params.get("shells")))
+            ",".join(map(str, params.get("shells", None)))
         ])
-    if params.get("lmax") is not None:
+    if params.get("lmax", None) is not None:
         cargs.extend([
             "-lmax",
-            ",".join(map(str, params.get("lmax")))
+            ",".join(map(str, params.get("lmax", None)))
         ])
-    if params.get("info"):
+    if params.get("info", False):
         cargs.append("-info")
-    if params.get("quiet"):
+    if params.get("quiet", False):
         cargs.append("-quiet")
-    if params.get("debug"):
+    if params.get("debug", False):
         cargs.append("-debug")
-    if params.get("force"):
+    if params.get("force", False):
         cargs.append("-force")
-    if params.get("nthreads") is not None:
+    if params.get("nthreads", None) is not None:
         cargs.extend([
             "-nthreads",
-            str(params.get("nthreads"))
+            str(params.get("nthreads", None))
         ])
-    if params.get("config") is not None:
-        cargs.extend([a for c in [dyn_cargs(s["@type"])(s, execution) for s in params.get("config")] for a in c])
-    if params.get("help"):
+    if params.get("config", None) is not None:
+        cargs.extend([a for c in [amp2response_config_cargs(s, execution) for s in params.get("config", None)] for a in c])
+    if params.get("help", False):
         cargs.append("-help")
-    if params.get("version"):
+    if params.get("version", False):
         cargs.append("-version")
-    cargs.append(execution.input_file(params.get("amps")))
-    cargs.append(execution.input_file(params.get("mask")))
-    cargs.append(execution.input_file(params.get("directions_1")))
-    cargs.append(params.get("response"))
+    cargs.append(execution.input_file(params.get("amps", None)))
+    cargs.append(execution.input_file(params.get("mask", None)))
+    cargs.append(execution.input_file(params.get("directions_1", None)))
+    cargs.append(params.get("response", None))
     return cargs
 
 
@@ -289,7 +281,7 @@ def amp2response_outputs(
     """
     ret = Amp2responseOutputs(
         root=execution.output_file("."),
-        response=execution.output_file(params.get("response")),
+        response=execution.output_file(params.get("response", None)),
     )
     return ret
 
@@ -448,9 +440,7 @@ def amp2response(
 
 __all__ = [
     "AMP2RESPONSE_METADATA",
-    "Amp2responseConfigParameters",
     "Amp2responseOutputs",
-    "Amp2responseParameters",
     "amp2response",
     "amp2response_config_params",
     "amp2response_execute",

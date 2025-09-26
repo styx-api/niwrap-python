@@ -14,7 +14,21 @@ PLUGOUT_IJK_METADATA = Metadata(
 
 
 PlugoutIjkParameters = typing.TypedDict('PlugoutIjkParameters', {
-    "@type": typing.Literal["afni.plugout_ijk"],
+    "@type": typing.NotRequired[typing.Literal["afni/plugout_ijk"]],
+    "host": typing.NotRequired[str | None],
+    "verbose": bool,
+    "port": typing.NotRequired[float | None],
+    "name": typing.NotRequired[str | None],
+    "port_offset": typing.NotRequired[float | None],
+    "port_quiet": typing.NotRequired[float | None],
+    "port_bloc_offset": typing.NotRequired[float | None],
+    "max_bloc": bool,
+    "max_bloc_quiet": bool,
+    "num_assigned_ports": bool,
+    "num_assigned_ports_quiet": bool,
+})
+PlugoutIjkParametersTagged = typing.TypedDict('PlugoutIjkParametersTagged', {
+    "@type": typing.Literal["afni/plugout_ijk"],
     "host": typing.NotRequired[str | None],
     "verbose": bool,
     "port": typing.NotRequired[float | None],
@@ -29,40 +43,9 @@ PlugoutIjkParameters = typing.TypedDict('PlugoutIjkParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "afni.plugout_ijk": plugout_ijk_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-    }.get(t)
-
-
 class PlugoutIjkOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `plugout_ijk(...)`.
+    Output object returned when calling `PlugoutIjkParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -80,7 +63,7 @@ def plugout_ijk_params(
     max_bloc_quiet: bool = False,
     num_assigned_ports: bool = False,
     num_assigned_ports_quiet: bool = False,
-) -> PlugoutIjkParameters:
+) -> PlugoutIjkParametersTagged:
     """
     Build parameters.
     
@@ -105,7 +88,7 @@ def plugout_ijk_params(
         Parameter dictionary
     """
     params = {
-        "@type": "afni.plugout_ijk",
+        "@type": "afni/plugout_ijk",
         "verbose": verbose,
         "max_bloc": max_bloc,
         "max_bloc_quiet": max_bloc_quiet,
@@ -142,45 +125,45 @@ def plugout_ijk_cargs(
     """
     cargs = []
     cargs.append("plugout_ijk")
-    if params.get("host") is not None:
+    if params.get("host", None) is not None:
         cargs.extend([
             "-host",
-            params.get("host")
+            params.get("host", None)
         ])
-    if params.get("verbose"):
+    if params.get("verbose", False):
         cargs.append("-v")
-    if params.get("port") is not None:
+    if params.get("port", None) is not None:
         cargs.extend([
             "-port",
-            str(params.get("port"))
+            str(params.get("port", None))
         ])
-    if params.get("name") is not None:
+    if params.get("name", None) is not None:
         cargs.extend([
             "-name",
-            params.get("name")
+            params.get("name", None)
         ])
-    if params.get("port_offset") is not None:
+    if params.get("port_offset", None) is not None:
         cargs.extend([
             "-np",
-            str(params.get("port_offset"))
+            str(params.get("port_offset", None))
         ])
-    if params.get("port_quiet") is not None:
+    if params.get("port_quiet", None) is not None:
         cargs.extend([
             "-npq",
-            str(params.get("port_quiet"))
+            str(params.get("port_quiet", None))
         ])
-    if params.get("port_bloc_offset") is not None:
+    if params.get("port_bloc_offset", None) is not None:
         cargs.extend([
             "-npb",
-            str(params.get("port_bloc_offset"))
+            str(params.get("port_bloc_offset", None))
         ])
-    if params.get("max_bloc"):
+    if params.get("max_bloc", False):
         cargs.append("-max_port_bloc")
-    if params.get("max_bloc_quiet"):
+    if params.get("max_bloc_quiet", False):
         cargs.append("-max_port_bloc_quiet")
-    if params.get("num_assigned_ports"):
+    if params.get("num_assigned_ports", False):
         cargs.append("-num_assigned_ports")
-    if params.get("num_assigned_ports_quiet"):
+    if params.get("num_assigned_ports_quiet", False):
         cargs.append("-num_assigned_ports_quiet")
     return cargs
 
@@ -295,7 +278,6 @@ def plugout_ijk(
 __all__ = [
     "PLUGOUT_IJK_METADATA",
     "PlugoutIjkOutputs",
-    "PlugoutIjkParameters",
     "plugout_ijk",
     "plugout_ijk_execute",
     "plugout_ijk_params",

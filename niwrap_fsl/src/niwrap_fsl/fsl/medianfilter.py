@@ -14,47 +14,20 @@ MEDIANFILTER_METADATA = Metadata(
 
 
 MedianfilterParameters = typing.TypedDict('MedianfilterParameters', {
-    "@type": typing.Literal["fsl.medianfilter"],
+    "@type": typing.NotRequired[typing.Literal["fsl/medianfilter"]],
+    "infile": InputPathType,
+    "outfile": InputPathType,
+})
+MedianfilterParametersTagged = typing.TypedDict('MedianfilterParametersTagged', {
+    "@type": typing.Literal["fsl/medianfilter"],
     "infile": InputPathType,
     "outfile": InputPathType,
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "fsl.medianfilter": medianfilter_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "fsl.medianfilter": medianfilter_outputs,
-    }.get(t)
-
-
 class MedianfilterOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `medianfilter(...)`.
+    Output object returned when calling `MedianfilterParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -65,7 +38,7 @@ class MedianfilterOutputs(typing.NamedTuple):
 def medianfilter_params(
     infile: InputPathType,
     outfile: InputPathType,
-) -> MedianfilterParameters:
+) -> MedianfilterParametersTagged:
     """
     Build parameters.
     
@@ -77,7 +50,7 @@ def medianfilter_params(
         Parameter dictionary
     """
     params = {
-        "@type": "fsl.medianfilter",
+        "@type": "fsl/medianfilter",
         "infile": infile,
         "outfile": outfile,
     }
@@ -99,8 +72,8 @@ def medianfilter_cargs(
     """
     cargs = []
     cargs.append("medianfilter")
-    cargs.append(execution.input_file(params.get("infile")))
-    cargs.append(execution.input_file(params.get("outfile")))
+    cargs.append(execution.input_file(params.get("infile", None)))
+    cargs.append(execution.input_file(params.get("outfile", None)))
     return cargs
 
 
@@ -119,7 +92,7 @@ def medianfilter_outputs(
     """
     ret = MedianfilterOutputs(
         root=execution.output_file("."),
-        filtered_file=execution.output_file(pathlib.Path(params.get("outfile")).name),
+        filtered_file=execution.output_file(pathlib.Path(params.get("outfile", None)).name),
     )
     return ret
 
@@ -184,7 +157,6 @@ def medianfilter(
 __all__ = [
     "MEDIANFILTER_METADATA",
     "MedianfilterOutputs",
-    "MedianfilterParameters",
     "medianfilter",
     "medianfilter_execute",
     "medianfilter_params",

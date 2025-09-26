@@ -14,48 +14,22 @@ V_1D_MARRY_METADATA = Metadata(
 
 
 V1dMarryParameters = typing.TypedDict('V1dMarryParameters', {
-    "@type": typing.Literal["afni.1dMarry"],
+    "@type": typing.NotRequired[typing.Literal["afni/1dMarry"]],
+    "sep": typing.NotRequired[str | None],
+    "divorce": bool,
+    "files": list[InputPathType],
+})
+V1dMarryParametersTagged = typing.TypedDict('V1dMarryParametersTagged', {
+    "@type": typing.Literal["afni/1dMarry"],
     "sep": typing.NotRequired[str | None],
     "divorce": bool,
     "files": list[InputPathType],
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "afni.1dMarry": v_1d_marry_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "afni.1dMarry": v_1d_marry_outputs,
-    }.get(t)
-
-
 class V1dMarryOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `v_1d_marry(...)`.
+    Output object returned when calling `V1dMarryParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -72,7 +46,7 @@ def v_1d_marry_params(
     files: list[InputPathType],
     sep: str | None = None,
     divorce: bool = False,
-) -> V1dMarryParameters:
+) -> V1dMarryParametersTagged:
     """
     Build parameters.
     
@@ -86,7 +60,7 @@ def v_1d_marry_params(
         Parameter dictionary
     """
     params = {
-        "@type": "afni.1dMarry",
+        "@type": "afni/1dMarry",
         "divorce": divorce,
         "files": files,
     }
@@ -110,14 +84,14 @@ def v_1d_marry_cargs(
     """
     cargs = []
     cargs.append("1dMarry")
-    if params.get("sep") is not None:
+    if params.get("sep", None) is not None:
         cargs.extend([
             "-sep",
-            params.get("sep")
+            params.get("sep", None)
         ])
-    if params.get("divorce"):
+    if params.get("divorce", False):
         cargs.append("-divorce")
-    cargs.extend([execution.input_file(f) for f in params.get("files")])
+    cargs.extend([execution.input_file(f) for f in params.get("files", None)])
     return cargs
 
 
@@ -210,7 +184,6 @@ def v_1d_marry(
 
 __all__ = [
     "V1dMarryOutputs",
-    "V1dMarryParameters",
     "V_1D_MARRY_METADATA",
     "v_1d_marry",
     "v_1d_marry_execute",

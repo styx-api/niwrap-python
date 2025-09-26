@@ -14,7 +14,53 @@ MRI_VOLSYNTH_METADATA = Metadata(
 
 
 MriVolsynthParameters = typing.TypedDict('MriVolsynthParameters', {
-    "@type": typing.Literal["freesurfer.mri_volsynth"],
+    "@type": typing.NotRequired[typing.Literal["freesurfer/mri_volsynth"]],
+    "output_volid": str,
+    "template": typing.NotRequired[str | None],
+    "nframes": typing.NotRequired[float | None],
+    "offset_flag": bool,
+    "offset_mid_flag": bool,
+    "curv": typing.NotRequired[str | None],
+    "dim": typing.NotRequired[list[float] | None],
+    "res": typing.NotRequired[list[float] | None],
+    "vox_size": typing.NotRequired[list[float] | None],
+    "tr": typing.NotRequired[float | None],
+    "cdircos": typing.NotRequired[list[float] | None],
+    "rdircos": typing.NotRequired[list[float] | None],
+    "sdircos": typing.NotRequired[list[float] | None],
+    "c_ras": typing.NotRequired[list[float] | None],
+    "p0": typing.NotRequired[list[float] | None],
+    "precision": typing.NotRequired[str | None],
+    "seed": typing.NotRequired[float | None],
+    "seedfile": typing.NotRequired[InputPathType | None],
+    "pdf": typing.NotRequired[str | None],
+    "bb": typing.NotRequired[list[float] | None],
+    "gmean": typing.NotRequired[float | None],
+    "gstd": typing.NotRequired[float | None],
+    "delta_crsf": typing.NotRequired[list[float] | None],
+    "delta_val": typing.NotRequired[float | None],
+    "delta_val_off": typing.NotRequired[float | None],
+    "grid": typing.NotRequired[list[float] | None],
+    "dof": typing.NotRequired[float | None],
+    "dof_num": typing.NotRequired[float | None],
+    "dof_den": typing.NotRequired[float | None],
+    "rescale_flag": bool,
+    "val_a": typing.NotRequired[float | None],
+    "val_b": typing.NotRequired[float | None],
+    "vox_radius": typing.NotRequired[float | None],
+    "mm_radius": typing.NotRequired[float | None],
+    "sphere_center": typing.NotRequired[list[float] | None],
+    "hsc": typing.NotRequired[list[float] | None],
+    "abs_flag": bool,
+    "cp": typing.NotRequired[InputPathType | None],
+    "spike": typing.NotRequired[float | None],
+    "fwhm": typing.NotRequired[float | None],
+    "sum2": typing.NotRequired[InputPathType | None],
+    "dim_surf_flag": bool,
+    "ctab": typing.NotRequired[InputPathType | None],
+})
+MriVolsynthParametersTagged = typing.TypedDict('MriVolsynthParametersTagged', {
+    "@type": typing.Literal["freesurfer/mri_volsynth"],
     "output_volid": str,
     "template": typing.NotRequired[str | None],
     "nframes": typing.NotRequired[float | None],
@@ -61,40 +107,9 @@ MriVolsynthParameters = typing.TypedDict('MriVolsynthParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "freesurfer.mri_volsynth": mri_volsynth_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-    }.get(t)
-
-
 class MriVolsynthOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `mri_volsynth(...)`.
+    Output object returned when calling `MriVolsynthParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -144,7 +159,7 @@ def mri_volsynth_params(
     sum2: InputPathType | None = None,
     dim_surf_flag: bool = False,
     ctab: InputPathType | None = None,
-) -> MriVolsynthParameters:
+) -> MriVolsynthParametersTagged:
     """
     Build parameters.
     
@@ -197,7 +212,7 @@ def mri_volsynth_params(
         Parameter dictionary
     """
     params = {
-        "@type": "freesurfer.mri_volsynth",
+        "@type": "freesurfer/mri_volsynth",
         "output_volid": output_volid,
         "offset_flag": offset_flag,
         "offset_mid_flag": offset_mid_flag,
@@ -299,202 +314,202 @@ def mri_volsynth_cargs(
     cargs.append("mri_volsynth")
     cargs.extend([
         "--o",
-        params.get("output_volid")
+        params.get("output_volid", None)
     ])
-    if params.get("template") is not None:
+    if params.get("template", None) is not None:
         cargs.extend([
             "--template",
-            params.get("template")
+            params.get("template", None)
         ])
-    if params.get("nframes") is not None:
+    if params.get("nframes", None) is not None:
         cargs.extend([
             "--nframes",
-            str(params.get("nframes"))
+            str(params.get("nframes", None))
         ])
-    if params.get("offset_flag"):
+    if params.get("offset_flag", False):
         cargs.append("--offset")
-    if params.get("offset_mid_flag"):
+    if params.get("offset_mid_flag", False):
         cargs.append("--offset-mid")
-    if params.get("curv") is not None:
+    if params.get("curv", None) is not None:
         cargs.extend([
             "--curv",
-            params.get("curv")
+            params.get("curv", None)
         ])
-    if params.get("dim") is not None:
+    if params.get("dim", None) is not None:
         cargs.extend([
             "--dim",
-            *map(str, params.get("dim"))
+            *map(str, params.get("dim", None))
         ])
-    if params.get("res") is not None:
+    if params.get("res", None) is not None:
         cargs.extend([
             "--res",
-            *map(str, params.get("res"))
+            *map(str, params.get("res", None))
         ])
-    if params.get("vox_size") is not None:
+    if params.get("vox_size", None) is not None:
         cargs.extend([
             "--vox-size",
-            *map(str, params.get("vox_size"))
+            *map(str, params.get("vox_size", None))
         ])
-    if params.get("tr") is not None:
+    if params.get("tr", None) is not None:
         cargs.extend([
             "--tr",
-            str(params.get("tr"))
+            str(params.get("tr", None))
         ])
-    if params.get("cdircos") is not None:
+    if params.get("cdircos", None) is not None:
         cargs.extend([
             "--cdircos",
-            *map(str, params.get("cdircos"))
+            *map(str, params.get("cdircos", None))
         ])
-    if params.get("rdircos") is not None:
+    if params.get("rdircos", None) is not None:
         cargs.extend([
             "--rdircos",
-            *map(str, params.get("rdircos"))
+            *map(str, params.get("rdircos", None))
         ])
-    if params.get("sdircos") is not None:
+    if params.get("sdircos", None) is not None:
         cargs.extend([
             "--sdircos",
-            *map(str, params.get("sdircos"))
+            *map(str, params.get("sdircos", None))
         ])
-    if params.get("c_ras") is not None:
+    if params.get("c_ras", None) is not None:
         cargs.extend([
             "--c_ras",
-            *map(str, params.get("c_ras"))
+            *map(str, params.get("c_ras", None))
         ])
-    if params.get("p0") is not None:
+    if params.get("p0", None) is not None:
         cargs.extend([
             "--p0",
-            *map(str, params.get("p0"))
+            *map(str, params.get("p0", None))
         ])
-    if params.get("precision") is not None:
+    if params.get("precision", None) is not None:
         cargs.extend([
             "--precision",
-            params.get("precision")
+            params.get("precision", None)
         ])
-    if params.get("seed") is not None:
+    if params.get("seed", None) is not None:
         cargs.extend([
             "--seed",
-            str(params.get("seed"))
+            str(params.get("seed", None))
         ])
-    if params.get("seedfile") is not None:
+    if params.get("seedfile", None) is not None:
         cargs.extend([
             "--seedfile",
-            execution.input_file(params.get("seedfile"))
+            execution.input_file(params.get("seedfile", None))
         ])
-    if params.get("pdf") is not None:
+    if params.get("pdf", None) is not None:
         cargs.extend([
             "--pdf",
-            params.get("pdf")
+            params.get("pdf", None)
         ])
-    if params.get("bb") is not None:
+    if params.get("bb", None) is not None:
         cargs.extend([
             "--bb",
-            *map(str, params.get("bb"))
+            *map(str, params.get("bb", None))
         ])
-    if params.get("gmean") is not None:
+    if params.get("gmean", None) is not None:
         cargs.extend([
             "--gmean",
-            str(params.get("gmean"))
+            str(params.get("gmean", None))
         ])
-    if params.get("gstd") is not None:
+    if params.get("gstd", None) is not None:
         cargs.extend([
             "--gstd",
-            str(params.get("gstd"))
+            str(params.get("gstd", None))
         ])
-    if params.get("delta_crsf") is not None:
+    if params.get("delta_crsf", None) is not None:
         cargs.extend([
             "--delta-crsf",
-            *map(str, params.get("delta_crsf"))
+            *map(str, params.get("delta_crsf", None))
         ])
-    if params.get("delta_val") is not None:
+    if params.get("delta_val", None) is not None:
         cargs.extend([
             "--delta-val",
-            str(params.get("delta_val"))
+            str(params.get("delta_val", None))
         ])
-    if params.get("delta_val_off") is not None:
+    if params.get("delta_val_off", None) is not None:
         cargs.extend([
             "--delta-val-off",
-            str(params.get("delta_val_off"))
+            str(params.get("delta_val_off", None))
         ])
-    if params.get("grid") is not None:
+    if params.get("grid", None) is not None:
         cargs.extend([
             "--grid",
-            *map(str, params.get("grid"))
+            *map(str, params.get("grid", None))
         ])
-    if params.get("dof") is not None:
+    if params.get("dof", None) is not None:
         cargs.extend([
             "--dof",
-            str(params.get("dof"))
+            str(params.get("dof", None))
         ])
-    if params.get("dof_num") is not None:
+    if params.get("dof_num", None) is not None:
         cargs.extend([
             "--dof-num",
-            str(params.get("dof_num"))
+            str(params.get("dof_num", None))
         ])
-    if params.get("dof_den") is not None:
+    if params.get("dof_den", None) is not None:
         cargs.extend([
             "--dof-den",
-            str(params.get("dof_den"))
+            str(params.get("dof_den", None))
         ])
-    if params.get("rescale_flag"):
+    if params.get("rescale_flag", False):
         cargs.append("--rescale")
-    if params.get("val_a") is not None:
+    if params.get("val_a", None) is not None:
         cargs.extend([
             "--val-a",
-            str(params.get("val_a"))
+            str(params.get("val_a", None))
         ])
-    if params.get("val_b") is not None:
+    if params.get("val_b", None) is not None:
         cargs.extend([
             "--val-b",
-            str(params.get("val_b"))
+            str(params.get("val_b", None))
         ])
-    if params.get("vox_radius") is not None:
+    if params.get("vox_radius", None) is not None:
         cargs.extend([
             "--vox-radius",
-            str(params.get("vox_radius"))
+            str(params.get("vox_radius", None))
         ])
-    if params.get("mm_radius") is not None:
+    if params.get("mm_radius", None) is not None:
         cargs.extend([
             "--mm-radius",
-            str(params.get("mm_radius"))
+            str(params.get("mm_radius", None))
         ])
-    if params.get("sphere_center") is not None:
+    if params.get("sphere_center", None) is not None:
         cargs.extend([
             "--sphere-center",
-            *map(str, params.get("sphere_center"))
+            *map(str, params.get("sphere_center", None))
         ])
-    if params.get("hsc") is not None:
+    if params.get("hsc", None) is not None:
         cargs.extend([
             "--hsc",
-            *map(str, params.get("hsc"))
+            *map(str, params.get("hsc", None))
         ])
-    if params.get("abs_flag"):
+    if params.get("abs_flag", False):
         cargs.append("--abs")
-    if params.get("cp") is not None:
+    if params.get("cp", None) is not None:
         cargs.extend([
             "--cp",
-            execution.input_file(params.get("cp"))
+            execution.input_file(params.get("cp", None))
         ])
-    if params.get("spike") is not None:
+    if params.get("spike", None) is not None:
         cargs.extend([
             "--spike",
-            str(params.get("spike"))
+            str(params.get("spike", None))
         ])
-    if params.get("fwhm") is not None:
+    if params.get("fwhm", None) is not None:
         cargs.extend([
             "--fwhm",
-            str(params.get("fwhm"))
+            str(params.get("fwhm", None))
         ])
-    if params.get("sum2") is not None:
+    if params.get("sum2", None) is not None:
         cargs.extend([
             "--sum2",
-            execution.input_file(params.get("sum2"))
+            execution.input_file(params.get("sum2", None))
         ])
-    if params.get("dim_surf_flag"):
+    if params.get("dim_surf_flag", False):
         cargs.append("--dim-surf")
-    if params.get("ctab") is not None:
+    if params.get("ctab", None) is not None:
         cargs.extend([
             "--ctab",
-            execution.input_file(params.get("ctab"))
+            execution.input_file(params.get("ctab", None))
         ])
     return cargs
 
@@ -703,7 +718,6 @@ def mri_volsynth(
 __all__ = [
     "MRI_VOLSYNTH_METADATA",
     "MriVolsynthOutputs",
-    "MriVolsynthParameters",
     "mri_volsynth",
     "mri_volsynth_execute",
     "mri_volsynth_params",

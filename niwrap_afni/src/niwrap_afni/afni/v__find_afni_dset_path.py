@@ -14,7 +14,14 @@ V__FIND_AFNI_DSET_PATH_METADATA = Metadata(
 
 
 VFindAfniDsetPathParameters = typing.TypedDict('VFindAfniDsetPathParameters', {
-    "@type": typing.Literal["afni.@FindAfniDsetPath"],
+    "@type": typing.NotRequired[typing.Literal["afni/@FindAfniDsetPath"]],
+    "dsetname": str,
+    "append_file": bool,
+    "full_path": bool,
+    "help": bool,
+})
+VFindAfniDsetPathParametersTagged = typing.TypedDict('VFindAfniDsetPathParametersTagged', {
+    "@type": typing.Literal["afni/@FindAfniDsetPath"],
     "dsetname": str,
     "append_file": bool,
     "full_path": bool,
@@ -22,40 +29,9 @@ VFindAfniDsetPathParameters = typing.TypedDict('VFindAfniDsetPathParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "afni.@FindAfniDsetPath": v__find_afni_dset_path_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-    }.get(t)
-
-
 class VFindAfniDsetPathOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `v__find_afni_dset_path(...)`.
+    Output object returned when calling `VFindAfniDsetPathParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -66,7 +42,7 @@ def v__find_afni_dset_path_params(
     append_file: bool = False,
     full_path: bool = False,
     help_: bool = False,
-) -> VFindAfniDsetPathParameters:
+) -> VFindAfniDsetPathParametersTagged:
     """
     Build parameters.
     
@@ -79,7 +55,7 @@ def v__find_afni_dset_path_params(
         Parameter dictionary
     """
     params = {
-        "@type": "afni.@FindAfniDsetPath",
+        "@type": "afni/@FindAfniDsetPath",
         "dsetname": dsetname,
         "append_file": append_file,
         "full_path": full_path,
@@ -103,12 +79,12 @@ def v__find_afni_dset_path_cargs(
     """
     cargs = []
     cargs.append("@FindAfniDsetPath")
-    cargs.append(params.get("dsetname"))
-    if params.get("append_file"):
+    cargs.append(params.get("dsetname", None))
+    if params.get("append_file", False):
         cargs.append("-append_file")
-    if params.get("full_path"):
+    if params.get("full_path", False):
         cargs.append("-full_path")
-    if params.get("help"):
+    if params.get("help", False):
         cargs.append("-help")
     return cargs
 
@@ -198,7 +174,6 @@ def v__find_afni_dset_path(
 
 __all__ = [
     "VFindAfniDsetPathOutputs",
-    "VFindAfniDsetPathParameters",
     "V__FIND_AFNI_DSET_PATH_METADATA",
     "v__find_afni_dset_path",
     "v__find_afni_dset_path_execute",

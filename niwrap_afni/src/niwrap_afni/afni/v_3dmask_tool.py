@@ -14,7 +14,23 @@ V_3DMASK_TOOL_METADATA = Metadata(
 
 
 V3dmaskToolParameters = typing.TypedDict('V3dmaskToolParameters', {
-    "@type": typing.Literal["afni.3dmask_tool"],
+    "@type": typing.NotRequired[typing.Literal["afni/3dmask_tool"]],
+    "count": bool,
+    "datum": typing.NotRequired[typing.Literal["byte", "short", "float"] | None],
+    "dilate_inputs": typing.NotRequired[str | None],
+    "dilate_results": typing.NotRequired[str | None],
+    "fill_dirs": typing.NotRequired[str | None],
+    "fill_holes": bool,
+    "frac": typing.NotRequired[float | None],
+    "in_file": InputPathType,
+    "inter": bool,
+    "num_threads": typing.NotRequired[int | None],
+    "outputtype": typing.NotRequired[typing.Literal["NIFTI", "AFNI", "NIFTI_GZ"] | None],
+    "union": bool,
+    "verbose": typing.NotRequired[int | None],
+})
+V3dmaskToolParametersTagged = typing.TypedDict('V3dmaskToolParametersTagged', {
+    "@type": typing.Literal["afni/3dmask_tool"],
     "count": bool,
     "datum": typing.NotRequired[typing.Literal["byte", "short", "float"] | None],
     "dilate_inputs": typing.NotRequired[str | None],
@@ -31,41 +47,9 @@ V3dmaskToolParameters = typing.TypedDict('V3dmaskToolParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "afni.3dmask_tool": v_3dmask_tool_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "afni.3dmask_tool": v_3dmask_tool_outputs,
-    }.get(t)
-
-
 class V3dmaskToolOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `v_3dmask_tool(...)`.
+    Output object returned when calling `V3dmaskToolParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -89,7 +73,7 @@ def v_3dmask_tool_params(
     outputtype: typing.Literal["NIFTI", "AFNI", "NIFTI_GZ"] | None = None,
     union: bool = False,
     verbose: int | None = None,
-) -> V3dmaskToolParameters:
+) -> V3dmaskToolParametersTagged:
     """
     Build parameters.
     
@@ -120,7 +104,7 @@ def v_3dmask_tool_params(
         Parameter dictionary
     """
     params = {
-        "@type": "afni.3dmask_tool",
+        "@type": "afni/3dmask_tool",
         "count": count,
         "fill_holes": fill_holes,
         "in_file": in_file,
@@ -161,51 +145,51 @@ def v_3dmask_tool_cargs(
     """
     cargs = []
     cargs.append("3dmask_tool")
-    if params.get("count"):
+    if params.get("count", False):
         cargs.append("-count")
-    if params.get("datum") is not None:
+    if params.get("datum", None) is not None:
         cargs.extend([
             "-datum",
-            params.get("datum")
+            params.get("datum", None)
         ])
-    if params.get("dilate_inputs") is not None:
+    if params.get("dilate_inputs", None) is not None:
         cargs.extend([
             "-dilate_inputs",
-            params.get("dilate_inputs")
+            params.get("dilate_inputs", None)
         ])
-    if params.get("dilate_results") is not None:
+    if params.get("dilate_results", None) is not None:
         cargs.extend([
             "-dilate_results",
-            params.get("dilate_results")
+            params.get("dilate_results", None)
         ])
-    if params.get("fill_dirs") is not None:
+    if params.get("fill_dirs", None) is not None:
         cargs.extend([
             "-fill_dirs",
-            params.get("fill_dirs")
+            params.get("fill_dirs", None)
         ])
-    if params.get("fill_holes"):
+    if params.get("fill_holes", False):
         cargs.append("-fill_holes")
-    if params.get("frac") is not None:
+    if params.get("frac", None) is not None:
         cargs.extend([
             "-frac",
-            str(params.get("frac"))
+            str(params.get("frac", None))
         ])
     cargs.extend([
         "-input",
-        execution.input_file(params.get("in_file"))
+        execution.input_file(params.get("in_file", None))
     ])
-    if params.get("inter"):
+    if params.get("inter", False):
         cargs.append("-inter")
-    if params.get("num_threads") is not None:
-        cargs.append(str(params.get("num_threads")))
-    if params.get("outputtype") is not None:
-        cargs.append(params.get("outputtype"))
-    if params.get("union"):
+    if params.get("num_threads", None) is not None:
+        cargs.append(str(params.get("num_threads", None)))
+    if params.get("outputtype", None) is not None:
+        cargs.append(params.get("outputtype", None))
+    if params.get("union", False):
         cargs.append("-union")
-    if params.get("verbose") is not None:
+    if params.get("verbose", None) is not None:
         cargs.extend([
             "-verb",
-            str(params.get("verbose"))
+            str(params.get("verbose", None))
         ])
     return cargs
 
@@ -225,7 +209,7 @@ def v_3dmask_tool_outputs(
     """
     ret = V3dmaskToolOutputs(
         root=execution.output_file("."),
-        out_file=execution.output_file(pathlib.Path(params.get("in_file")).name + "_mask"),
+        out_file=execution.output_file(pathlib.Path(params.get("in_file", None)).name + "_mask"),
         out_file_=execution.output_file("out_file"),
     )
     return ret
@@ -331,7 +315,6 @@ def v_3dmask_tool(
 
 __all__ = [
     "V3dmaskToolOutputs",
-    "V3dmaskToolParameters",
     "V_3DMASK_TOOL_METADATA",
     "v_3dmask_tool",
     "v_3dmask_tool_execute",

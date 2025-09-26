@@ -14,7 +14,19 @@ CREATE_SIGNED_DISTANCE_VOLUME_METADATA = Metadata(
 
 
 CreateSignedDistanceVolumeParameters = typing.TypedDict('CreateSignedDistanceVolumeParameters', {
-    "@type": typing.Literal["workbench.create-signed-distance-volume"],
+    "@type": typing.NotRequired[typing.Literal["workbench/create-signed-distance-volume"]],
+    "surface": InputPathType,
+    "refspace": str,
+    "outvol": str,
+    "opt_roi_out_roi_vol": typing.NotRequired[str | None],
+    "opt_fill_value_value": typing.NotRequired[float | None],
+    "opt_exact_limit_dist": typing.NotRequired[float | None],
+    "opt_approx_limit_dist": typing.NotRequired[float | None],
+    "opt_approx_neighborhood_num": typing.NotRequired[int | None],
+    "opt_winding_method": typing.NotRequired[str | None],
+})
+CreateSignedDistanceVolumeParametersTagged = typing.TypedDict('CreateSignedDistanceVolumeParametersTagged', {
+    "@type": typing.Literal["workbench/create-signed-distance-volume"],
     "surface": InputPathType,
     "refspace": str,
     "outvol": str,
@@ -27,41 +39,9 @@ CreateSignedDistanceVolumeParameters = typing.TypedDict('CreateSignedDistanceVol
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "workbench.create-signed-distance-volume": create_signed_distance_volume_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "workbench.create-signed-distance-volume": create_signed_distance_volume_outputs,
-    }.get(t)
-
-
 class CreateSignedDistanceVolumeOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `create_signed_distance_volume(...)`.
+    Output object returned when calling `CreateSignedDistanceVolumeParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -82,7 +62,7 @@ def create_signed_distance_volume_params(
     opt_approx_limit_dist: float | None = None,
     opt_approx_neighborhood_num: int | None = None,
     opt_winding_method: str | None = None,
-) -> CreateSignedDistanceVolumeParameters:
+) -> CreateSignedDistanceVolumeParametersTagged:
     """
     Build parameters.
     
@@ -107,7 +87,7 @@ def create_signed_distance_volume_params(
         Parameter dictionary
     """
     params = {
-        "@type": "workbench.create-signed-distance-volume",
+        "@type": "workbench/create-signed-distance-volume",
         "surface": surface,
         "refspace": refspace,
         "outvol": outvol,
@@ -143,38 +123,38 @@ def create_signed_distance_volume_cargs(
     cargs = []
     cargs.append("wb_command")
     cargs.append("-create-signed-distance-volume")
-    cargs.append(execution.input_file(params.get("surface")))
-    cargs.append(params.get("refspace"))
-    cargs.append(params.get("outvol"))
-    if params.get("opt_roi_out_roi_vol") is not None:
+    cargs.append(execution.input_file(params.get("surface", None)))
+    cargs.append(params.get("refspace", None))
+    cargs.append(params.get("outvol", None))
+    if params.get("opt_roi_out_roi_vol", None) is not None:
         cargs.extend([
             "-roi-out",
-            params.get("opt_roi_out_roi_vol")
+            params.get("opt_roi_out_roi_vol", None)
         ])
-    if params.get("opt_fill_value_value") is not None:
+    if params.get("opt_fill_value_value", None) is not None:
         cargs.extend([
             "-fill-value",
-            str(params.get("opt_fill_value_value"))
+            str(params.get("opt_fill_value_value", None))
         ])
-    if params.get("opt_exact_limit_dist") is not None:
+    if params.get("opt_exact_limit_dist", None) is not None:
         cargs.extend([
             "-exact-limit",
-            str(params.get("opt_exact_limit_dist"))
+            str(params.get("opt_exact_limit_dist", None))
         ])
-    if params.get("opt_approx_limit_dist") is not None:
+    if params.get("opt_approx_limit_dist", None) is not None:
         cargs.extend([
             "-approx-limit",
-            str(params.get("opt_approx_limit_dist"))
+            str(params.get("opt_approx_limit_dist", None))
         ])
-    if params.get("opt_approx_neighborhood_num") is not None:
+    if params.get("opt_approx_neighborhood_num", None) is not None:
         cargs.extend([
             "-approx-neighborhood",
-            str(params.get("opt_approx_neighborhood_num"))
+            str(params.get("opt_approx_neighborhood_num", None))
         ])
-    if params.get("opt_winding_method") is not None:
+    if params.get("opt_winding_method", None) is not None:
         cargs.extend([
             "-winding",
-            params.get("opt_winding_method")
+            params.get("opt_winding_method", None)
         ])
     return cargs
 
@@ -194,8 +174,8 @@ def create_signed_distance_volume_outputs(
     """
     ret = CreateSignedDistanceVolumeOutputs(
         root=execution.output_file("."),
-        outvol=execution.output_file(params.get("outvol")),
-        opt_roi_out_roi_vol=execution.output_file(params.get("opt_roi_out_roi_vol")) if (params.get("opt_roi_out_roi_vol") is not None) else None,
+        outvol=execution.output_file(params.get("outvol", None)),
+        opt_roi_out_roi_vol=execution.output_file(params.get("opt_roi_out_roi_vol", None)) if (params.get("opt_roi_out_roi_vol") is not None) else None,
     )
     return ret
 
@@ -325,7 +305,6 @@ def create_signed_distance_volume(
 __all__ = [
     "CREATE_SIGNED_DISTANCE_VOLUME_METADATA",
     "CreateSignedDistanceVolumeOutputs",
-    "CreateSignedDistanceVolumeParameters",
     "create_signed_distance_volume",
     "create_signed_distance_volume_execute",
     "create_signed_distance_volume_params",

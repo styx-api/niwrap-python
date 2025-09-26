@@ -14,7 +14,18 @@ V_1DDOT_METADATA = Metadata(
 
 
 V1ddotParameters = typing.TypedDict('V1ddotParameters', {
-    "@type": typing.Literal["afni.1ddot"],
+    "@type": typing.NotRequired[typing.Literal["afni/1ddot"]],
+    "one_flag": bool,
+    "dem_flag": bool,
+    "cov_flag": bool,
+    "inn_flag": bool,
+    "rank_flag": bool,
+    "terse_flag": bool,
+    "okzero_flag": bool,
+    "input_files": list[InputPathType],
+})
+V1ddotParametersTagged = typing.TypedDict('V1ddotParametersTagged', {
+    "@type": typing.Literal["afni/1ddot"],
     "one_flag": bool,
     "dem_flag": bool,
     "cov_flag": bool,
@@ -26,41 +37,9 @@ V1ddotParameters = typing.TypedDict('V1ddotParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "afni.1ddot": v_1ddot_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "afni.1ddot": v_1ddot_outputs,
-    }.get(t)
-
-
 class V1ddotOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `v_1ddot(...)`.
+    Output object returned when calling `V1ddotParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -79,7 +58,7 @@ def v_1ddot_params(
     rank_flag: bool = False,
     terse_flag: bool = False,
     okzero_flag: bool = False,
-) -> V1ddotParameters:
+) -> V1ddotParametersTagged:
     """
     Build parameters.
     
@@ -99,7 +78,7 @@ def v_1ddot_params(
         Parameter dictionary
     """
     params = {
-        "@type": "afni.1ddot",
+        "@type": "afni/1ddot",
         "one_flag": one_flag,
         "dem_flag": dem_flag,
         "cov_flag": cov_flag,
@@ -127,21 +106,21 @@ def v_1ddot_cargs(
     """
     cargs = []
     cargs.append("1ddot")
-    if params.get("one_flag"):
+    if params.get("one_flag", False):
         cargs.append("-one")
-    if params.get("dem_flag"):
+    if params.get("dem_flag", False):
         cargs.append("-dem")
-    if params.get("cov_flag"):
+    if params.get("cov_flag", False):
         cargs.append("-cov")
-    if params.get("inn_flag"):
+    if params.get("inn_flag", False):
         cargs.append("-inn")
-    if params.get("rank_flag"):
+    if params.get("rank_flag", False):
         cargs.append("-rank")
-    if params.get("terse_flag"):
+    if params.get("terse_flag", False):
         cargs.append("-terse")
-    if params.get("okzero_flag"):
+    if params.get("okzero_flag", False):
         cargs.append("-okzero")
-    cargs.extend([execution.input_file(f) for f in params.get("input_files")])
+    cargs.extend([execution.input_file(f) for f in params.get("input_files", None)])
     return cargs
 
 
@@ -247,7 +226,6 @@ def v_1ddot(
 
 __all__ = [
     "V1ddotOutputs",
-    "V1ddotParameters",
     "V_1DDOT_METADATA",
     "v_1ddot",
     "v_1ddot_execute",

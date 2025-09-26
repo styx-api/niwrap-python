@@ -14,7 +14,20 @@ UBER_ALIGN_TEST_PY_METADATA = Metadata(
 
 
 UberAlignTestPyParameters = typing.TypedDict('UberAlignTestPyParameters', {
-    "@type": typing.Literal["afni.uber_align_test.py"],
+    "@type": typing.NotRequired[typing.Literal["afni/uber_align_test.py"]],
+    "no_gui": bool,
+    "print_script": bool,
+    "save_script": typing.NotRequired[str | None],
+    "user_variable": typing.NotRequired[list[str] | None],
+    "qt_opts": typing.NotRequired[str | None],
+    "help": bool,
+    "help_gui": bool,
+    "history": bool,
+    "show_valid_opts": bool,
+    "version": bool,
+})
+UberAlignTestPyParametersTagged = typing.TypedDict('UberAlignTestPyParametersTagged', {
+    "@type": typing.Literal["afni/uber_align_test.py"],
     "no_gui": bool,
     "print_script": bool,
     "save_script": typing.NotRequired[str | None],
@@ -28,40 +41,9 @@ UberAlignTestPyParameters = typing.TypedDict('UberAlignTestPyParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "afni.uber_align_test.py": uber_align_test_py_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-    }.get(t)
-
-
 class UberAlignTestPyOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `uber_align_test_py(...)`.
+    Output object returned when calling `UberAlignTestPyParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -78,7 +60,7 @@ def uber_align_test_py_params(
     history: bool = False,
     show_valid_opts: bool = False,
     version: bool = False,
-) -> UberAlignTestPyParameters:
+) -> UberAlignTestPyParametersTagged:
     """
     Build parameters.
     
@@ -97,7 +79,7 @@ def uber_align_test_py_params(
         Parameter dictionary
     """
     params = {
-        "@type": "afni.uber_align_test.py",
+        "@type": "afni/uber_align_test.py",
         "no_gui": no_gui,
         "print_script": print_script,
         "help": help_,
@@ -130,34 +112,34 @@ def uber_align_test_py_cargs(
     """
     cargs = []
     cargs.append("uber_align_test.py")
-    if params.get("no_gui"):
+    if params.get("no_gui", False):
         cargs.append("-no_gui")
-    if params.get("print_script"):
+    if params.get("print_script", False):
         cargs.append("-print_script")
-    if params.get("save_script") is not None:
+    if params.get("save_script", None) is not None:
         cargs.extend([
             "-save_script",
-            params.get("save_script")
+            params.get("save_script", None)
         ])
-    if params.get("user_variable") is not None:
+    if params.get("user_variable", None) is not None:
         cargs.extend([
             "-uvar",
-            *params.get("user_variable")
+            *params.get("user_variable", None)
         ])
-    if params.get("qt_opts") is not None:
+    if params.get("qt_opts", None) is not None:
         cargs.extend([
             "-qt_opts",
-            params.get("qt_opts")
+            params.get("qt_opts", None)
         ])
-    if params.get("help"):
+    if params.get("help", False):
         cargs.append("-help")
-    if params.get("help_gui"):
+    if params.get("help_gui", False):
         cargs.append("-help_gui")
-    if params.get("history"):
+    if params.get("history", False):
         cargs.append("-hist")
-    if params.get("show_valid_opts"):
+    if params.get("show_valid_opts", False):
         cargs.append("-show_valid_opts")
-    if params.get("version"):
+    if params.get("version", False):
         cargs.append("-ver")
     return cargs
 
@@ -264,7 +246,6 @@ def uber_align_test_py(
 __all__ = [
     "UBER_ALIGN_TEST_PY_METADATA",
     "UberAlignTestPyOutputs",
-    "UberAlignTestPyParameters",
     "uber_align_test_py",
     "uber_align_test_py_execute",
     "uber_align_test_py_params",

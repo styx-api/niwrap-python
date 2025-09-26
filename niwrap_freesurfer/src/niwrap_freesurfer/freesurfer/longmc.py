@@ -14,7 +14,17 @@ LONGMC_METADATA = Metadata(
 
 
 LongmcParameters = typing.TypedDict('LongmcParameters', {
-    "@type": typing.Literal["freesurfer.longmc"],
+    "@type": typing.NotRequired[typing.Literal["freesurfer/longmc"]],
+    "cross_tp_name": str,
+    "base_name": str,
+    "conform_to_hires": bool,
+    "no_conform_to_hires": bool,
+    "subjects_dir": str,
+    "subject_name": typing.NotRequired[str | None],
+    "no_force_update": bool,
+})
+LongmcParametersTagged = typing.TypedDict('LongmcParametersTagged', {
+    "@type": typing.Literal["freesurfer/longmc"],
     "cross_tp_name": str,
     "base_name": str,
     "conform_to_hires": bool,
@@ -25,40 +35,9 @@ LongmcParameters = typing.TypedDict('LongmcParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "freesurfer.longmc": longmc_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-    }.get(t)
-
-
 class LongmcOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `longmc(...)`.
+    Output object returned when calling `LongmcParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -72,7 +51,7 @@ def longmc_params(
     no_conform_to_hires: bool = False,
     subject_name: str | None = None,
     no_force_update: bool = False,
-) -> LongmcParameters:
+) -> LongmcParametersTagged:
     """
     Build parameters.
     
@@ -88,7 +67,7 @@ def longmc_params(
         Parameter dictionary
     """
     params = {
-        "@type": "freesurfer.longmc",
+        "@type": "freesurfer/longmc",
         "cross_tp_name": cross_tp_name,
         "base_name": base_name,
         "conform_to_hires": conform_to_hires,
@@ -118,23 +97,23 @@ def longmc_cargs(
     cargs.append("longmc")
     cargs.extend([
         "-long",
-        params.get("cross_tp_name")
+        params.get("cross_tp_name", None)
     ])
-    cargs.append(params.get("base_name"))
-    if params.get("conform_to_hires"):
+    cargs.append(params.get("base_name", None))
+    if params.get("conform_to_hires", False):
         cargs.append("-conf2hires")
-    if params.get("no_conform_to_hires"):
+    if params.get("no_conform_to_hires", False):
         cargs.append("-no-conf2hires")
     cargs.extend([
         "-sd",
-        params.get("subjects_dir")
+        params.get("subjects_dir", None)
     ])
-    if params.get("subject_name") is not None:
+    if params.get("subject_name", None) is not None:
         cargs.extend([
             "-s",
-            params.get("subject_name")
+            params.get("subject_name", None)
         ])
-    if params.get("no_force_update"):
+    if params.get("no_force_update", False):
         cargs.append("-no-force-update")
     return cargs
 
@@ -234,7 +213,6 @@ def longmc(
 __all__ = [
     "LONGMC_METADATA",
     "LongmcOutputs",
-    "LongmcParameters",
     "longmc",
     "longmc_execute",
     "longmc_params",

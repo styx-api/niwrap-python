@@ -14,7 +14,21 @@ MRISP_WRITE_METADATA = Metadata(
 
 
 MrispWriteParameters = typing.TypedDict('MrispWriteParameters', {
-    "@type": typing.Literal["freesurfer.mrisp_write"],
+    "@type": typing.NotRequired[typing.Literal["freesurfer/mrisp_write"]],
+    "input_surface": InputPathType,
+    "overlay_filename": InputPathType,
+    "output_name": str,
+    "subjects_dir": typing.NotRequired[str | None],
+    "coords": typing.NotRequired[str | None],
+    "average_curvature": typing.NotRequired[float | None],
+    "correlation_matrix": typing.NotRequired[InputPathType | None],
+    "scale_factor": typing.NotRequired[float | None],
+    "normalize_curvature": bool,
+    "verbose_vertex": typing.NotRequired[float | None],
+    "write_diagnostics": bool,
+})
+MrispWriteParametersTagged = typing.TypedDict('MrispWriteParametersTagged', {
+    "@type": typing.Literal["freesurfer/mrisp_write"],
     "input_surface": InputPathType,
     "overlay_filename": InputPathType,
     "output_name": str,
@@ -29,41 +43,9 @@ MrispWriteParameters = typing.TypedDict('MrispWriteParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "freesurfer.mrisp_write": mrisp_write_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "freesurfer.mrisp_write": mrisp_write_outputs,
-    }.get(t)
-
-
 class MrispWriteOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `mrisp_write(...)`.
+    Output object returned when calling `MrispWriteParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -84,7 +66,7 @@ def mrisp_write_params(
     normalize_curvature: bool = False,
     verbose_vertex: float | None = None,
     write_diagnostics: bool = False,
-) -> MrispWriteParameters:
+) -> MrispWriteParametersTagged:
     """
     Build parameters.
     
@@ -106,7 +88,7 @@ def mrisp_write_params(
         Parameter dictionary
     """
     params = {
-        "@type": "freesurfer.mrisp_write",
+        "@type": "freesurfer/mrisp_write",
         "input_surface": input_surface,
         "overlay_filename": overlay_filename,
         "output_name": output_name,
@@ -143,42 +125,42 @@ def mrisp_write_cargs(
     """
     cargs = []
     cargs.append("mrisp_write")
-    cargs.append(execution.input_file(params.get("input_surface")))
-    cargs.append(execution.input_file(params.get("overlay_filename")))
-    cargs.append(params.get("output_name"))
-    if params.get("subjects_dir") is not None:
+    cargs.append(execution.input_file(params.get("input_surface", None)))
+    cargs.append(execution.input_file(params.get("overlay_filename", None)))
+    cargs.append(params.get("output_name", None))
+    if params.get("subjects_dir", None) is not None:
         cargs.extend([
             "-SDIR",
-            params.get("subjects_dir")
+            params.get("subjects_dir", None)
         ])
-    if params.get("coords") is not None:
+    if params.get("coords", None) is not None:
         cargs.extend([
             "-coords",
-            params.get("coords")
+            params.get("coords", None)
         ])
-    if params.get("average_curvature") is not None:
+    if params.get("average_curvature", None) is not None:
         cargs.extend([
             "-A",
-            str(params.get("average_curvature"))
+            str(params.get("average_curvature", None))
         ])
-    if params.get("correlation_matrix") is not None:
+    if params.get("correlation_matrix", None) is not None:
         cargs.extend([
             "-CORR",
-            execution.input_file(params.get("correlation_matrix"))
+            execution.input_file(params.get("correlation_matrix", None))
         ])
-    if params.get("scale_factor") is not None:
+    if params.get("scale_factor", None) is not None:
         cargs.extend([
             "-SCALE",
-            str(params.get("scale_factor"))
+            str(params.get("scale_factor", None))
         ])
-    if params.get("normalize_curvature"):
+    if params.get("normalize_curvature", False):
         cargs.append("-N")
-    if params.get("verbose_vertex") is not None:
+    if params.get("verbose_vertex", None) is not None:
         cargs.extend([
             "-V",
-            str(params.get("verbose_vertex"))
+            str(params.get("verbose_vertex", None))
         ])
-    if params.get("write_diagnostics"):
+    if params.get("write_diagnostics", False):
         cargs.append("-W")
     return cargs
 
@@ -198,7 +180,7 @@ def mrisp_write_outputs(
     """
     ret = MrispWriteOutputs(
         root=execution.output_file("."),
-        output_file=execution.output_file(params.get("output_name")),
+        output_file=execution.output_file(params.get("output_name", None)),
     )
     return ret
 
@@ -291,7 +273,6 @@ def mrisp_write(
 __all__ = [
     "MRISP_WRITE_METADATA",
     "MrispWriteOutputs",
-    "MrispWriteParameters",
     "mrisp_write",
     "mrisp_write_execute",
     "mrisp_write_params",

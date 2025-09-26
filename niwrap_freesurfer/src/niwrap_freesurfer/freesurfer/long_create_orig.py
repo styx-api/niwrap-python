@@ -14,47 +14,20 @@ LONG_CREATE_ORIG_METADATA = Metadata(
 
 
 LongCreateOrigParameters = typing.TypedDict('LongCreateOrigParameters', {
-    "@type": typing.Literal["freesurfer.long_create_orig"],
+    "@type": typing.NotRequired[typing.Literal["freesurfer/long_create_orig"]],
+    "base_id": str,
+    "tp_id": typing.NotRequired[str | None],
+})
+LongCreateOrigParametersTagged = typing.TypedDict('LongCreateOrigParametersTagged', {
+    "@type": typing.Literal["freesurfer/long_create_orig"],
     "base_id": str,
     "tp_id": typing.NotRequired[str | None],
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "freesurfer.long_create_orig": long_create_orig_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "freesurfer.long_create_orig": long_create_orig_outputs,
-    }.get(t)
-
-
 class LongCreateOrigOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `long_create_orig(...)`.
+    Output object returned when calling `LongCreateOrigParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -65,7 +38,7 @@ class LongCreateOrigOutputs(typing.NamedTuple):
 def long_create_orig_params(
     base_id: str,
     tp_id: str | None = None,
-) -> LongCreateOrigParameters:
+) -> LongCreateOrigParametersTagged:
     """
     Build parameters.
     
@@ -76,7 +49,7 @@ def long_create_orig_params(
         Parameter dictionary
     """
     params = {
-        "@type": "freesurfer.long_create_orig",
+        "@type": "freesurfer/long_create_orig",
         "base_id": base_id,
     }
     if tp_id is not None:
@@ -99,9 +72,9 @@ def long_create_orig_cargs(
     """
     cargs = []
     cargs.append("long_create_orig")
-    cargs.append(params.get("base_id"))
-    if params.get("tp_id") is not None:
-        cargs.append(params.get("tp_id"))
+    cargs.append(params.get("base_id", None))
+    if params.get("tp_id", None) is not None:
+        cargs.append(params.get("tp_id", None))
     return cargs
 
 
@@ -120,7 +93,7 @@ def long_create_orig_outputs(
     """
     ret = LongCreateOrigOutputs(
         root=execution.output_file("."),
-        output_directory=execution.output_file(params.get("base_id") + "/longtp/" + params.get("tp_id")) if (params.get("tp_id") is not None) else None,
+        output_directory=execution.output_file(params.get("base_id", None) + "/longtp/" + params.get("tp_id", None)) if (params.get("tp_id") is not None) else None,
     )
     return ret
 
@@ -186,7 +159,6 @@ def long_create_orig(
 __all__ = [
     "LONG_CREATE_ORIG_METADATA",
     "LongCreateOrigOutputs",
-    "LongCreateOrigParameters",
     "long_create_orig",
     "long_create_orig_execute",
     "long_create_orig_params",

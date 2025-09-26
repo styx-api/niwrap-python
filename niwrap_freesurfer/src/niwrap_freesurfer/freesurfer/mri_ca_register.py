@@ -14,7 +14,49 @@ MRI_CA_REGISTER_METADATA = Metadata(
 
 
 MriCaRegisterParameters = typing.TypedDict('MriCaRegisterParameters', {
-    "@type": typing.Literal["freesurfer.mri_ca_register"],
+    "@type": typing.NotRequired[typing.Literal["freesurfer/mri_ca_register"]],
+    "input_volume": InputPathType,
+    "template": InputPathType,
+    "output_volume": str,
+    "tolerance": typing.NotRequired[float | None],
+    "mask": typing.NotRequired[InputPathType | None],
+    "transform_lta": typing.NotRequired[InputPathType | None],
+    "level": typing.NotRequired[float | None],
+    "read_intensity": bool,
+    "align": bool,
+    "invert_save_file": typing.NotRequired[str | None],
+    "distance": typing.NotRequired[float | None],
+    "regularize": typing.NotRequired[float | None],
+    "regularize_mean": typing.NotRequired[float | None],
+    "scale_smoothness": typing.NotRequired[float | None],
+    "nobright": bool,
+    "renormalize_map": bool,
+    "renormalize": typing.NotRequired[InputPathType | None],
+    "read_lta": bool,
+    "smoothness": typing.NotRequired[float | None],
+    "samples": typing.NotRequired[float | None],
+    "nsmall": typing.NotRequired[float | None],
+    "fixed": bool,
+    "optimal": bool,
+    "noneg": bool,
+    "wm": bool,
+    "min_avgs": typing.NotRequired[float | None],
+    "transform_limit": typing.NotRequired[float | None],
+    "relabel": typing.NotRequired[float | None],
+    "relabel_avgs": typing.NotRequired[float | None],
+    "reset_avgs": typing.NotRequired[float | None],
+    "vf_file": typing.NotRequired[str | None],
+    "diag_file": typing.NotRequired[str | None],
+    "tr": typing.NotRequired[float | None],
+    "te": typing.NotRequired[float | None],
+    "example": typing.NotRequired[str | None],
+    "bigventricles": bool,
+    "uncompress": bool,
+    "second_pass_renorm": bool,
+    "threads": typing.NotRequired[float | None],
+})
+MriCaRegisterParametersTagged = typing.TypedDict('MriCaRegisterParametersTagged', {
+    "@type": typing.Literal["freesurfer/mri_ca_register"],
     "input_volume": InputPathType,
     "template": InputPathType,
     "output_volume": str,
@@ -57,41 +99,9 @@ MriCaRegisterParameters = typing.TypedDict('MriCaRegisterParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "freesurfer.mri_ca_register": mri_ca_register_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "freesurfer.mri_ca_register": mri_ca_register_outputs,
-    }.get(t)
-
-
 class MriCaRegisterOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `mri_ca_register(...)`.
+    Output object returned when calling `MriCaRegisterParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -139,7 +149,7 @@ def mri_ca_register_params(
     uncompress: bool = False,
     second_pass_renorm: bool = False,
     threads: float | None = None,
-) -> MriCaRegisterParameters:
+) -> MriCaRegisterParametersTagged:
     """
     Build parameters.
     
@@ -188,7 +198,7 @@ def mri_ca_register_params(
         Parameter dictionary
     """
     params = {
-        "@type": "freesurfer.mri_ca_register",
+        "@type": "freesurfer/mri_ca_register",
         "input_volume": input_volume,
         "template": template,
         "output_volume": output_volume,
@@ -271,152 +281,152 @@ def mri_ca_register_cargs(
     """
     cargs = []
     cargs.append("mri_ca_register")
-    cargs.append(execution.input_file(params.get("input_volume")))
-    cargs.append(execution.input_file(params.get("template")))
-    cargs.append(params.get("output_volume"))
-    if params.get("tolerance") is not None:
+    cargs.append(execution.input_file(params.get("input_volume", None)))
+    cargs.append(execution.input_file(params.get("template", None)))
+    cargs.append(params.get("output_volume", None))
+    if params.get("tolerance", None) is not None:
         cargs.extend([
             "-tol",
-            str(params.get("tolerance"))
+            str(params.get("tolerance", None))
         ])
-    if params.get("mask") is not None:
+    if params.get("mask", None) is not None:
         cargs.extend([
             "-mask",
-            execution.input_file(params.get("mask"))
+            execution.input_file(params.get("mask", None))
         ])
-    if params.get("transform_lta") is not None:
+    if params.get("transform_lta", None) is not None:
         cargs.extend([
             "-T",
-            execution.input_file(params.get("transform_lta"))
+            execution.input_file(params.get("transform_lta", None))
         ])
-    if params.get("level") is not None:
+    if params.get("level", None) is not None:
         cargs.extend([
             "-level",
-            str(params.get("level"))
+            str(params.get("level", None))
         ])
-    if params.get("read_intensity"):
+    if params.get("read_intensity", False):
         cargs.append("-ri")
-    if params.get("align"):
+    if params.get("align", False):
         cargs.append("-align")
-    if params.get("invert_save_file") is not None:
+    if params.get("invert_save_file", None) is not None:
         cargs.extend([
             "-invert-and-save",
-            params.get("invert_save_file")
+            params.get("invert_save_file", None)
         ])
-    if params.get("distance") is not None:
+    if params.get("distance", None) is not None:
         cargs.extend([
             "-dist",
-            str(params.get("distance"))
+            str(params.get("distance", None))
         ])
-    if params.get("regularize") is not None:
+    if params.get("regularize", None) is not None:
         cargs.extend([
             "-regularize",
-            str(params.get("regularize"))
+            str(params.get("regularize", None))
         ])
-    if params.get("regularize_mean") is not None:
+    if params.get("regularize_mean", None) is not None:
         cargs.extend([
             "-regularize-mean",
-            str(params.get("regularize_mean"))
+            str(params.get("regularize_mean", None))
         ])
-    if params.get("scale_smoothness") is not None:
+    if params.get("scale_smoothness", None) is not None:
         cargs.extend([
             "-scale_smoothness",
-            str(params.get("scale_smoothness"))
+            str(params.get("scale_smoothness", None))
         ])
-    if params.get("nobright"):
+    if params.get("nobright", False):
         cargs.append("-nobright")
-    if params.get("renormalize_map"):
+    if params.get("renormalize_map", False):
         cargs.append("-renormalize_map")
-    if params.get("renormalize") is not None:
+    if params.get("renormalize", None) is not None:
         cargs.extend([
             "-renormalize",
-            execution.input_file(params.get("renormalize"))
+            execution.input_file(params.get("renormalize", None))
         ])
-    if params.get("read_lta"):
+    if params.get("read_lta", False):
         cargs.append("-read_lta")
-    if params.get("smoothness") is not None:
+    if params.get("smoothness", None) is not None:
         cargs.extend([
             "-smoothness",
-            str(params.get("smoothness"))
+            str(params.get("smoothness", None))
         ])
-    if params.get("samples") is not None:
+    if params.get("samples", None) is not None:
         cargs.extend([
             "-samples",
-            str(params.get("samples"))
+            str(params.get("samples", None))
         ])
-    if params.get("nsmall") is not None:
+    if params.get("nsmall", None) is not None:
         cargs.extend([
             "-nsmall",
-            str(params.get("nsmall"))
+            str(params.get("nsmall", None))
         ])
-    if params.get("fixed"):
+    if params.get("fixed", False):
         cargs.append("-fixed")
-    if params.get("optimal"):
+    if params.get("optimal", False):
         cargs.append("-optimal")
-    if params.get("noneg"):
+    if params.get("noneg", False):
         cargs.append("-noneg")
-    if params.get("wm"):
+    if params.get("wm", False):
         cargs.append("-wm")
-    if params.get("min_avgs") is not None:
+    if params.get("min_avgs", None) is not None:
         cargs.extend([
             "-min_avgs",
-            str(params.get("min_avgs"))
+            str(params.get("min_avgs", None))
         ])
-    if params.get("transform_limit") is not None:
+    if params.get("transform_limit", None) is not None:
         cargs.extend([
             "-tl",
-            str(params.get("transform_limit"))
+            str(params.get("transform_limit", None))
         ])
-    if params.get("relabel") is not None:
+    if params.get("relabel", None) is not None:
         cargs.extend([
             "-relabel",
-            str(params.get("relabel"))
+            str(params.get("relabel", None))
         ])
-    if params.get("relabel_avgs") is not None:
+    if params.get("relabel_avgs", None) is not None:
         cargs.extend([
             "-relabel_avgs",
-            str(params.get("relabel_avgs"))
+            str(params.get("relabel_avgs", None))
         ])
-    if params.get("reset_avgs") is not None:
+    if params.get("reset_avgs", None) is not None:
         cargs.extend([
             "-reset_avgs",
-            str(params.get("reset_avgs"))
+            str(params.get("reset_avgs", None))
         ])
-    if params.get("vf_file") is not None:
+    if params.get("vf_file", None) is not None:
         cargs.extend([
             "-vf",
-            params.get("vf_file")
+            params.get("vf_file", None)
         ])
-    if params.get("diag_file") is not None:
+    if params.get("diag_file", None) is not None:
         cargs.extend([
             "-diag",
-            params.get("diag_file")
+            params.get("diag_file", None)
         ])
-    if params.get("tr") is not None:
+    if params.get("tr", None) is not None:
         cargs.extend([
             "-tr",
-            str(params.get("tr"))
+            str(params.get("tr", None))
         ])
-    if params.get("te") is not None:
+    if params.get("te", None) is not None:
         cargs.extend([
             "-te",
-            str(params.get("te"))
+            str(params.get("te", None))
         ])
-    if params.get("example") is not None:
+    if params.get("example", None) is not None:
         cargs.extend([
             "-example",
-            params.get("example")
+            params.get("example", None)
         ])
-    if params.get("bigventricles"):
+    if params.get("bigventricles", False):
         cargs.append("-<no>bigventricles")
-    if params.get("uncompress"):
+    if params.get("uncompress", False):
         cargs.append("-uncompress")
-    if params.get("second_pass_renorm"):
+    if params.get("second_pass_renorm", False):
         cargs.append("-secondpassrenorm")
-    if params.get("threads") is not None:
+    if params.get("threads", None) is not None:
         cargs.extend([
             "-threads",
-            str(params.get("threads"))
+            str(params.get("threads", None))
         ])
     return cargs
 
@@ -436,7 +446,7 @@ def mri_ca_register_outputs(
     """
     ret = MriCaRegisterOutputs(
         root=execution.output_file("."),
-        output_file=execution.output_file(params.get("output_volume") + ".m3d"),
+        output_file=execution.output_file(params.get("output_volume", None) + ".m3d"),
     )
     return ret
 
@@ -614,7 +624,6 @@ def mri_ca_register(
 __all__ = [
     "MRI_CA_REGISTER_METADATA",
     "MriCaRegisterOutputs",
-    "MriCaRegisterParameters",
     "mri_ca_register",
     "mri_ca_register_execute",
     "mri_ca_register_params",

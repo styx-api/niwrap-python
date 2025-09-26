@@ -14,7 +14,39 @@ MRI_SURF2VOL_METADATA = Metadata(
 
 
 MriSurf2volParameters = typing.TypedDict('MriSurf2volParameters', {
-    "@type": typing.Literal["freesurfer.mri_surf2vol"],
+    "@type": typing.NotRequired[typing.Literal["freesurfer/mri_surf2vol"]],
+    "surface_overlay": typing.NotRequired[list[str] | None],
+    "ltafile": typing.NotRequired[InputPathType | None],
+    "outfile": str,
+    "subject": typing.NotRequired[str | None],
+    "ribbonfile": typing.NotRequired[InputPathType | None],
+    "merge_volume": typing.NotRequired[InputPathType | None],
+    "surface_values": typing.NotRequired[str | None],
+    "mkmask": bool,
+    "hemi": typing.NotRequired[str | None],
+    "surfname": typing.NotRequired[str | None],
+    "projfrac": typing.NotRequired[float | None],
+    "fill_ribbon": bool,
+    "fill_projfrac": typing.NotRequired[str | None],
+    "reg_volume": typing.NotRequired[InputPathType | None],
+    "identity": typing.NotRequired[str | None],
+    "template_volume": typing.NotRequired[InputPathType | None],
+    "fstal_res": typing.NotRequired[str | None],
+    "vtxvol": typing.NotRequired[InputPathType | None],
+    "flat2mri": typing.NotRequired[str | None],
+    "sphpvf": typing.NotRequired[str | None],
+    "mask_to_cortex": bool,
+    "mask_to_label": typing.NotRequired[InputPathType | None],
+    "surface_mask": typing.NotRequired[InputPathType | None],
+    "add_const": typing.NotRequired[float | None],
+    "copy_ctab": bool,
+    "subjects_dir": typing.NotRequired[str | None],
+    "gdiagno": typing.NotRequired[int | None],
+    "version": bool,
+    "help": bool,
+})
+MriSurf2volParametersTagged = typing.TypedDict('MriSurf2volParametersTagged', {
+    "@type": typing.Literal["freesurfer/mri_surf2vol"],
     "surface_overlay": typing.NotRequired[list[str] | None],
     "ltafile": typing.NotRequired[InputPathType | None],
     "outfile": str,
@@ -47,41 +79,9 @@ MriSurf2volParameters = typing.TypedDict('MriSurf2volParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "freesurfer.mri_surf2vol": mri_surf2vol_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "freesurfer.mri_surf2vol": mri_surf2vol_outputs,
-    }.get(t)
-
-
 class MriSurf2volOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `mri_surf2vol(...)`.
+    Output object returned when calling `MriSurf2volParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -121,7 +121,7 @@ def mri_surf2vol_params(
     gdiagno: int | None = None,
     version: bool = False,
     help_: bool = False,
-) -> MriSurf2volParameters:
+) -> MriSurf2volParametersTagged:
     """
     Build parameters.
     
@@ -160,7 +160,7 @@ def mri_surf2vol_params(
         Parameter dictionary
     """
     params = {
-        "@type": "freesurfer.mri_surf2vol",
+        "@type": "freesurfer/mri_surf2vol",
         "outfile": outfile,
         "mkmask": mkmask,
         "fill_ribbon": fill_ribbon,
@@ -231,131 +231,131 @@ def mri_surf2vol_cargs(
     """
     cargs = []
     cargs.append("mri_surf2vol")
-    if params.get("surface_overlay") is not None:
+    if params.get("surface_overlay", None) is not None:
         cargs.extend([
             "--so",
-            *params.get("surface_overlay")
+            *params.get("surface_overlay", None)
         ])
-    if params.get("ltafile") is not None:
+    if params.get("ltafile", None) is not None:
         cargs.extend([
             "--lta",
-            execution.input_file(params.get("ltafile"))
+            execution.input_file(params.get("ltafile", None))
         ])
     cargs.extend([
         "--o",
-        params.get("outfile")
+        params.get("outfile", None)
     ])
-    if params.get("subject") is not None:
+    if params.get("subject", None) is not None:
         cargs.extend([
             "--subject",
-            params.get("subject")
+            params.get("subject", None)
         ])
-    if params.get("ribbonfile") is not None:
+    if params.get("ribbonfile", None) is not None:
         cargs.extend([
             "--ribbon",
-            execution.input_file(params.get("ribbonfile"))
+            execution.input_file(params.get("ribbonfile", None))
         ])
-    if params.get("merge_volume") is not None:
+    if params.get("merge_volume", None) is not None:
         cargs.extend([
             "--merge",
-            execution.input_file(params.get("merge_volume"))
+            execution.input_file(params.get("merge_volume", None))
         ])
-    if params.get("surface_values") is not None:
+    if params.get("surface_values", None) is not None:
         cargs.extend([
             "--surfval",
-            params.get("surface_values")
+            params.get("surface_values", None)
         ])
-    if params.get("mkmask"):
+    if params.get("mkmask", False):
         cargs.append("--mkmask")
-    if params.get("hemi") is not None:
+    if params.get("hemi", None) is not None:
         cargs.extend([
             "--hemi",
-            params.get("hemi")
+            params.get("hemi", None)
         ])
-    if params.get("surfname") is not None:
+    if params.get("surfname", None) is not None:
         cargs.extend([
             "--surf",
-            params.get("surfname")
+            params.get("surfname", None)
         ])
-    if params.get("projfrac") is not None:
+    if params.get("projfrac", None) is not None:
         cargs.extend([
             "--projfrac",
-            str(params.get("projfrac"))
+            str(params.get("projfrac", None))
         ])
-    if params.get("fill_ribbon"):
+    if params.get("fill_ribbon", False):
         cargs.append("--fillribbon")
-    if params.get("fill_projfrac") is not None:
+    if params.get("fill_projfrac", None) is not None:
         cargs.extend([
             "--fill-projfrac",
-            params.get("fill_projfrac")
+            params.get("fill_projfrac", None)
         ])
-    if params.get("reg_volume") is not None:
+    if params.get("reg_volume", None) is not None:
         cargs.extend([
             "--reg",
-            execution.input_file(params.get("reg_volume"))
+            execution.input_file(params.get("reg_volume", None))
         ])
-    if params.get("identity") is not None:
+    if params.get("identity", None) is not None:
         cargs.extend([
             "--identity",
-            params.get("identity")
+            params.get("identity", None)
         ])
-    if params.get("template_volume") is not None:
+    if params.get("template_volume", None) is not None:
         cargs.extend([
             "--template",
-            execution.input_file(params.get("template_volume"))
+            execution.input_file(params.get("template_volume", None))
         ])
-    if params.get("fstal_res") is not None:
+    if params.get("fstal_res", None) is not None:
         cargs.extend([
             "--fstal",
-            params.get("fstal_res")
+            params.get("fstal_res", None)
         ])
-    if params.get("vtxvol") is not None:
+    if params.get("vtxvol", None) is not None:
         cargs.extend([
             "--vtxvol",
-            execution.input_file(params.get("vtxvol"))
+            execution.input_file(params.get("vtxvol", None))
         ])
-    if params.get("flat2mri") is not None:
+    if params.get("flat2mri", None) is not None:
         cargs.extend([
             "--flat2mri",
-            params.get("flat2mri")
+            params.get("flat2mri", None)
         ])
-    if params.get("sphpvf") is not None:
+    if params.get("sphpvf", None) is not None:
         cargs.extend([
             "--sphpvf",
-            params.get("sphpvf")
+            params.get("sphpvf", None)
         ])
-    if params.get("mask_to_cortex"):
+    if params.get("mask_to_cortex", False):
         cargs.append("--mask-to-cortex")
-    if params.get("mask_to_label") is not None:
+    if params.get("mask_to_label", None) is not None:
         cargs.extend([
             "--mask-to-label",
-            execution.input_file(params.get("mask_to_label"))
+            execution.input_file(params.get("mask_to_label", None))
         ])
-    if params.get("surface_mask") is not None:
+    if params.get("surface_mask", None) is not None:
         cargs.extend([
             "--mask",
-            execution.input_file(params.get("surface_mask"))
+            execution.input_file(params.get("surface_mask", None))
         ])
-    if params.get("add_const") is not None:
+    if params.get("add_const", None) is not None:
         cargs.extend([
             "--add",
-            str(params.get("add_const"))
+            str(params.get("add_const", None))
         ])
-    if params.get("copy_ctab"):
+    if params.get("copy_ctab", False):
         cargs.append("--copy-ctab")
-    if params.get("subjects_dir") is not None:
+    if params.get("subjects_dir", None) is not None:
         cargs.extend([
             "--sd",
-            params.get("subjects_dir")
+            params.get("subjects_dir", None)
         ])
-    if params.get("gdiagno") is not None:
+    if params.get("gdiagno", None) is not None:
         cargs.extend([
             "--gdiagno",
-            str(params.get("gdiagno"))
+            str(params.get("gdiagno", None))
         ])
-    if params.get("version"):
+    if params.get("version", False):
         cargs.append("--version")
-    if params.get("help"):
+    if params.get("help", False):
         cargs.append("--help")
     return cargs
 
@@ -375,8 +375,8 @@ def mri_surf2vol_outputs(
     """
     ret = MriSurf2volOutputs(
         root=execution.output_file("."),
-        output_volume=execution.output_file(params.get("outfile")),
-        vertex_volume=execution.output_file(pathlib.Path(params.get("vtxvol")).name) if (params.get("vtxvol") is not None) else None,
+        output_volume=execution.output_file(params.get("outfile", None)),
+        vertex_volume=execution.output_file(pathlib.Path(params.get("vtxvol", None)).name) if (params.get("vtxvol") is not None) else None,
     )
     return ret
 
@@ -522,7 +522,6 @@ def mri_surf2vol(
 __all__ = [
     "MRI_SURF2VOL_METADATA",
     "MriSurf2volOutputs",
-    "MriSurf2volParameters",
     "mri_surf2vol",
     "mri_surf2vol_execute",
     "mri_surf2vol_params",

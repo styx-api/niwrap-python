@@ -14,7 +14,26 @@ TEST_TUTORIALS_SH_METADATA = Metadata(
 
 
 TestTutorialsShParameters = typing.TypedDict('TestTutorialsShParameters', {
-    "@type": typing.Literal["freesurfer.test_tutorials.sh"],
+    "@type": typing.NotRequired[typing.Literal["freesurfer/test_tutorials.sh"]],
+    "all_tutorials": bool,
+    "quick_test": bool,
+    "auto_quit_freeview": bool,
+    "skip_all_guis": bool,
+    "skip_tk_guis": bool,
+    "skip_qdec_guis": bool,
+    "individual_subject": bool,
+    "troubleshooting": bool,
+    "group_analysis": bool,
+    "qdec": bool,
+    "longitudinal": bool,
+    "roi_analysis": bool,
+    "diffusion": bool,
+    "tracula": bool,
+    "fsfast": bool,
+    "multimodal": bool,
+})
+TestTutorialsShParametersTagged = typing.TypedDict('TestTutorialsShParametersTagged', {
+    "@type": typing.Literal["freesurfer/test_tutorials.sh"],
     "all_tutorials": bool,
     "quick_test": bool,
     "auto_quit_freeview": bool,
@@ -34,40 +53,9 @@ TestTutorialsShParameters = typing.TypedDict('TestTutorialsShParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "freesurfer.test_tutorials.sh": test_tutorials_sh_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-    }.get(t)
-
-
 class TestTutorialsShOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `test_tutorials_sh(...)`.
+    Output object returned when calling `TestTutorialsShParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -90,7 +78,7 @@ def test_tutorials_sh_params(
     tracula: bool = False,
     fsfast: bool = False,
     multimodal: bool = False,
-) -> TestTutorialsShParameters:
+) -> TestTutorialsShParametersTagged:
     """
     Build parameters.
     
@@ -117,7 +105,7 @@ def test_tutorials_sh_params(
         Parameter dictionary
     """
     params = {
-        "@type": "freesurfer.test_tutorials.sh",
+        "@type": "freesurfer/test_tutorials.sh",
         "all_tutorials": all_tutorials,
         "quick_test": quick_test,
         "auto_quit_freeview": auto_quit_freeview,
@@ -153,37 +141,37 @@ def test_tutorials_sh_cargs(
     """
     cargs = []
     cargs.append("test_tutorials.sh")
-    if params.get("all_tutorials"):
+    if params.get("all_tutorials", False):
         cargs.append("-all")
-    if params.get("quick_test"):
+    if params.get("quick_test", False):
         cargs.append("-quick")
-    if params.get("auto_quit_freeview"):
+    if params.get("auto_quit_freeview", False):
         cargs.append("-auto_quit_freeview")
-    if params.get("skip_all_guis"):
+    if params.get("skip_all_guis", False):
         cargs.append("-skip_all_guis")
-    if params.get("skip_tk_guis"):
+    if params.get("skip_tk_guis", False):
         cargs.append("-skip_tk_guis")
-    if params.get("skip_qdec_guis"):
+    if params.get("skip_qdec_guis", False):
         cargs.append("-skip_qdec_guis")
-    if params.get("individual_subject"):
+    if params.get("individual_subject", False):
         cargs.append("-individual_subject")
-    if params.get("troubleshooting"):
+    if params.get("troubleshooting", False):
         cargs.append("-troubleshooting")
-    if params.get("group_analysis"):
+    if params.get("group_analysis", False):
         cargs.append("-group_analysis")
-    if params.get("qdec"):
+    if params.get("qdec", False):
         cargs.append("-qdec")
-    if params.get("longitudinal"):
+    if params.get("longitudinal", False):
         cargs.append("-longitudinal")
-    if params.get("roi_analysis"):
+    if params.get("roi_analysis", False):
         cargs.append("-roi_analysis")
-    if params.get("diffusion"):
+    if params.get("diffusion", False):
         cargs.append("-diffusion")
-    if params.get("tracula"):
+    if params.get("tracula", False):
         cargs.append("-tracula")
-    if params.get("fsfast"):
+    if params.get("fsfast", False):
         cargs.append("-fsfast")
-    if params.get("multimodal"):
+    if params.get("multimodal", False):
         cargs.append("-multimodal")
     return cargs
 
@@ -312,7 +300,6 @@ def test_tutorials_sh(
 __all__ = [
     "TEST_TUTORIALS_SH_METADATA",
     "TestTutorialsShOutputs",
-    "TestTutorialsShParameters",
     "test_tutorials_sh",
     "test_tutorials_sh_execute",
     "test_tutorials_sh_params",

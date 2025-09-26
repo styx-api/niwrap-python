@@ -14,46 +14,20 @@ MRI_HISTO_EQ_METADATA = Metadata(
 
 
 MriHistoEqParameters = typing.TypedDict('MriHistoEqParameters', {
-    "@type": typing.Literal["freesurfer.mri_histo_eq"],
+    "@type": typing.NotRequired[typing.Literal["freesurfer/mri_histo_eq"]],
+    "input_volume_1": InputPathType,
+    "input_volume_2": InputPathType,
+})
+MriHistoEqParametersTagged = typing.TypedDict('MriHistoEqParametersTagged', {
+    "@type": typing.Literal["freesurfer/mri_histo_eq"],
     "input_volume_1": InputPathType,
     "input_volume_2": InputPathType,
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "freesurfer.mri_histo_eq": mri_histo_eq_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-    }.get(t)
-
-
 class MriHistoEqOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `mri_histo_eq(...)`.
+    Output object returned when calling `MriHistoEqParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -62,7 +36,7 @@ class MriHistoEqOutputs(typing.NamedTuple):
 def mri_histo_eq_params(
     input_volume_1: InputPathType,
     input_volume_2: InputPathType,
-) -> MriHistoEqParameters:
+) -> MriHistoEqParametersTagged:
     """
     Build parameters.
     
@@ -73,7 +47,7 @@ def mri_histo_eq_params(
         Parameter dictionary
     """
     params = {
-        "@type": "freesurfer.mri_histo_eq",
+        "@type": "freesurfer/mri_histo_eq",
         "input_volume_1": input_volume_1,
         "input_volume_2": input_volume_2,
     }
@@ -95,8 +69,8 @@ def mri_histo_eq_cargs(
     """
     cargs = []
     cargs.append("mri_histo_eq")
-    cargs.append(execution.input_file(params.get("input_volume_1")))
-    cargs.append(execution.input_file(params.get("input_volume_2")))
+    cargs.append(execution.input_file(params.get("input_volume_1", None)))
+    cargs.append(execution.input_file(params.get("input_volume_2", None)))
     return cargs
 
 
@@ -178,7 +152,6 @@ def mri_histo_eq(
 __all__ = [
     "MRI_HISTO_EQ_METADATA",
     "MriHistoEqOutputs",
-    "MriHistoEqParameters",
     "mri_histo_eq",
     "mri_histo_eq_execute",
     "mri_histo_eq_params",

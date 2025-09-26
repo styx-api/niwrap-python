@@ -14,46 +14,20 @@ V__GET_AFNI_RES_METADATA = Metadata(
 
 
 VGetAfniResParameters = typing.TypedDict('VGetAfniResParameters', {
-    "@type": typing.Literal["afni.@GetAfniRes"],
+    "@type": typing.NotRequired[typing.Literal["afni/@GetAfniRes"]],
+    "output_type": typing.NotRequired[typing.Literal["-min", "-max", "-mean"] | None],
+    "input_dataset": InputPathType,
+})
+VGetAfniResParametersTagged = typing.TypedDict('VGetAfniResParametersTagged', {
+    "@type": typing.Literal["afni/@GetAfniRes"],
     "output_type": typing.NotRequired[typing.Literal["-min", "-max", "-mean"] | None],
     "input_dataset": InputPathType,
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "afni.@GetAfniRes": v__get_afni_res_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-    }.get(t)
-
-
 class VGetAfniResOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `v__get_afni_res(...)`.
+    Output object returned when calling `VGetAfniResParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -62,7 +36,7 @@ class VGetAfniResOutputs(typing.NamedTuple):
 def v__get_afni_res_params(
     input_dataset: InputPathType,
     output_type: typing.Literal["-min", "-max", "-mean"] | None = None,
-) -> VGetAfniResParameters:
+) -> VGetAfniResParametersTagged:
     """
     Build parameters.
     
@@ -74,7 +48,7 @@ def v__get_afni_res_params(
         Parameter dictionary
     """
     params = {
-        "@type": "afni.@GetAfniRes",
+        "@type": "afni/@GetAfniRes",
         "input_dataset": input_dataset,
     }
     if output_type is not None:
@@ -97,9 +71,9 @@ def v__get_afni_res_cargs(
     """
     cargs = []
     cargs.append("@GetAfniRes")
-    if params.get("output_type") is not None:
-        cargs.append(params.get("output_type"))
-    cargs.append(execution.input_file(params.get("input_dataset")))
+    if params.get("output_type", None) is not None:
+        cargs.append(params.get("output_type", None))
+    cargs.append(execution.input_file(params.get("input_dataset", None)))
     return cargs
 
 
@@ -181,7 +155,6 @@ def v__get_afni_res(
 
 __all__ = [
     "VGetAfniResOutputs",
-    "VGetAfniResParameters",
     "V__GET_AFNI_RES_METADATA",
     "v__get_afni_res",
     "v__get_afni_res_execute",

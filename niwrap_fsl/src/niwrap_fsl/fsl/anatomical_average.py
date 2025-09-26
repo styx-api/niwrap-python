@@ -14,7 +14,19 @@ ANATOMICAL_AVERAGE_METADATA = Metadata(
 
 
 AnatomicalAverageParameters = typing.TypedDict('AnatomicalAverageParameters', {
-    "@type": typing.Literal["fsl.AnatomicalAverage"],
+    "@type": typing.NotRequired[typing.Literal["fsl/AnatomicalAverage"]],
+    "output_basename": str,
+    "input_images": list[InputPathType],
+    "standard_image": typing.NotRequired[InputPathType | None],
+    "standard_brain_mask": typing.NotRequired[InputPathType | None],
+    "no_crop_flag": bool,
+    "work_dir": typing.NotRequired[str | None],
+    "brainsize": typing.NotRequired[float | None],
+    "noclean_flag": bool,
+    "verbose_flag": bool,
+})
+AnatomicalAverageParametersTagged = typing.TypedDict('AnatomicalAverageParametersTagged', {
+    "@type": typing.Literal["fsl/AnatomicalAverage"],
     "output_basename": str,
     "input_images": list[InputPathType],
     "standard_image": typing.NotRequired[InputPathType | None],
@@ -27,41 +39,9 @@ AnatomicalAverageParameters = typing.TypedDict('AnatomicalAverageParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "fsl.AnatomicalAverage": anatomical_average_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "fsl.AnatomicalAverage": anatomical_average_outputs,
-    }.get(t)
-
-
 class AnatomicalAverageOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `anatomical_average(...)`.
+    Output object returned when calling `AnatomicalAverageParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -79,7 +59,7 @@ def anatomical_average_params(
     brainsize: float | None = None,
     noclean_flag: bool = False,
     verbose_flag: bool = False,
-) -> AnatomicalAverageParameters:
+) -> AnatomicalAverageParametersTagged:
     """
     Build parameters.
     
@@ -99,7 +79,7 @@ def anatomical_average_params(
         Parameter dictionary
     """
     params = {
-        "@type": "fsl.AnatomicalAverage",
+        "@type": "fsl/AnatomicalAverage",
         "output_basename": output_basename,
         "input_images": input_images,
         "no_crop_flag": no_crop_flag,
@@ -134,34 +114,34 @@ def anatomical_average_cargs(
     cargs.append("AnatomicalAverage")
     cargs.extend([
         "-o",
-        params.get("output_basename")
+        params.get("output_basename", None)
     ])
-    cargs.extend([execution.input_file(f) for f in params.get("input_images")])
-    if params.get("standard_image") is not None:
+    cargs.extend([execution.input_file(f) for f in params.get("input_images", None)])
+    if params.get("standard_image", None) is not None:
         cargs.extend([
             "-s",
-            execution.input_file(params.get("standard_image"))
+            execution.input_file(params.get("standard_image", None))
         ])
-    if params.get("standard_brain_mask") is not None:
+    if params.get("standard_brain_mask", None) is not None:
         cargs.extend([
             "-m",
-            execution.input_file(params.get("standard_brain_mask"))
+            execution.input_file(params.get("standard_brain_mask", None))
         ])
-    if params.get("no_crop_flag"):
+    if params.get("no_crop_flag", False):
         cargs.append("-n")
-    if params.get("work_dir") is not None:
+    if params.get("work_dir", None) is not None:
         cargs.extend([
             "-w",
-            params.get("work_dir")
+            params.get("work_dir", None)
         ])
-    if params.get("brainsize") is not None:
+    if params.get("brainsize", None) is not None:
         cargs.extend([
             "-b",
-            str(params.get("brainsize"))
+            str(params.get("brainsize", None))
         ])
-    if params.get("noclean_flag"):
+    if params.get("noclean_flag", False):
         cargs.append("--noclean")
-    if params.get("verbose_flag"):
+    if params.get("verbose_flag", False):
         cargs.append("-v")
     return cargs
 
@@ -181,7 +161,7 @@ def anatomical_average_outputs(
     """
     ret = AnatomicalAverageOutputs(
         root=execution.output_file("."),
-        avg_output=execution.output_file(params.get("output_basename") + "_avg.nii.gz"),
+        avg_output=execution.output_file(params.get("output_basename", None) + "_avg.nii.gz"),
     )
     return ret
 
@@ -268,7 +248,6 @@ def anatomical_average(
 __all__ = [
     "ANATOMICAL_AVERAGE_METADATA",
     "AnatomicalAverageOutputs",
-    "AnatomicalAverageParameters",
     "anatomical_average",
     "anatomical_average_execute",
     "anatomical_average_params",

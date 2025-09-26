@@ -14,7 +14,17 @@ MAKEROT_METADATA = Metadata(
 
 
 MakerotParameters = typing.TypedDict('MakerotParameters', {
-    "@type": typing.Literal["fsl.makerot"],
+    "@type": typing.NotRequired[typing.Literal["fsl/makerot"]],
+    "axis": typing.NotRequired[str | None],
+    "cov": typing.NotRequired[InputPathType | None],
+    "center": typing.NotRequired[str | None],
+    "output_file": typing.NotRequired[str | None],
+    "verbose_flag": bool,
+    "help_flag": bool,
+    "theta": float,
+})
+MakerotParametersTagged = typing.TypedDict('MakerotParametersTagged', {
+    "@type": typing.Literal["fsl/makerot"],
     "axis": typing.NotRequired[str | None],
     "cov": typing.NotRequired[InputPathType | None],
     "center": typing.NotRequired[str | None],
@@ -25,41 +35,9 @@ MakerotParameters = typing.TypedDict('MakerotParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "fsl.makerot": makerot_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "fsl.makerot": makerot_outputs,
-    }.get(t)
-
-
 class MakerotOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `makerot(...)`.
+    Output object returned when calling `MakerotParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -75,7 +53,7 @@ def makerot_params(
     output_file: str | None = None,
     verbose_flag: bool = False,
     help_flag: bool = False,
-) -> MakerotParameters:
+) -> MakerotParametersTagged:
     """
     Build parameters.
     
@@ -91,7 +69,7 @@ def makerot_params(
         Parameter dictionary
     """
     params = {
-        "@type": "fsl.makerot",
+        "@type": "fsl/makerot",
         "verbose_flag": verbose_flag,
         "help_flag": help_flag,
         "theta": theta,
@@ -122,33 +100,33 @@ def makerot_cargs(
     """
     cargs = []
     cargs.append("makerot")
-    if params.get("axis") is not None:
+    if params.get("axis", None) is not None:
         cargs.extend([
             "--axis",
-            params.get("axis")
+            params.get("axis", None)
         ])
-    if params.get("cov") is not None:
+    if params.get("cov", None) is not None:
         cargs.extend([
             "--cov",
-            execution.input_file(params.get("cov"))
+            execution.input_file(params.get("cov", None))
         ])
-    if params.get("center") is not None:
+    if params.get("center", None) is not None:
         cargs.extend([
             "--centre",
-            params.get("center")
+            params.get("center", None)
         ])
-    if params.get("output_file") is not None:
+    if params.get("output_file", None) is not None:
         cargs.extend([
             "--out",
-            params.get("output_file")
+            params.get("output_file", None)
         ])
-    if params.get("verbose_flag"):
+    if params.get("verbose_flag", False):
         cargs.append("--verbose")
-    if params.get("help_flag"):
+    if params.get("help_flag", False):
         cargs.append("--help")
     cargs.extend([
         "--theta",
-        str(params.get("theta"))
+        str(params.get("theta", None))
     ])
     return cargs
 
@@ -168,7 +146,7 @@ def makerot_outputs(
     """
     ret = MakerotOutputs(
         root=execution.output_file("."),
-        matrix_output=execution.output_file(params.get("output_file")) if (params.get("output_file") is not None) else None,
+        matrix_output=execution.output_file(params.get("output_file", None)) if (params.get("output_file") is not None) else None,
     )
     return ret
 
@@ -247,7 +225,6 @@ def makerot(
 __all__ = [
     "MAKEROT_METADATA",
     "MakerotOutputs",
-    "MakerotParameters",
     "makerot",
     "makerot_execute",
     "makerot_params",

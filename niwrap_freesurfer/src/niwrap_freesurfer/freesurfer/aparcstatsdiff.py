@@ -14,7 +14,16 @@ APARCSTATSDIFF_METADATA = Metadata(
 
 
 AparcstatsdiffParameters = typing.TypedDict('AparcstatsdiffParameters', {
-    "@type": typing.Literal["freesurfer.aparcstatsdiff"],
+    "@type": typing.NotRequired[typing.Literal["freesurfer/aparcstatsdiff"]],
+    "subj1": str,
+    "subj2": str,
+    "hemi": str,
+    "parc": str,
+    "meas": str,
+    "outdir": typing.NotRequired[str | None],
+})
+AparcstatsdiffParametersTagged = typing.TypedDict('AparcstatsdiffParametersTagged', {
+    "@type": typing.Literal["freesurfer/aparcstatsdiff"],
     "subj1": str,
     "subj2": str,
     "hemi": str,
@@ -24,41 +33,9 @@ AparcstatsdiffParameters = typing.TypedDict('AparcstatsdiffParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "freesurfer.aparcstatsdiff": aparcstatsdiff_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "freesurfer.aparcstatsdiff": aparcstatsdiff_outputs,
-    }.get(t)
-
-
 class AparcstatsdiffOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `aparcstatsdiff(...)`.
+    Output object returned when calling `AparcstatsdiffParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -73,7 +50,7 @@ def aparcstatsdiff_params(
     parc: str,
     meas: str,
     outdir: str | None = None,
-) -> AparcstatsdiffParameters:
+) -> AparcstatsdiffParametersTagged:
     """
     Build parameters.
     
@@ -88,7 +65,7 @@ def aparcstatsdiff_params(
         Parameter dictionary
     """
     params = {
-        "@type": "freesurfer.aparcstatsdiff",
+        "@type": "freesurfer/aparcstatsdiff",
         "subj1": subj1,
         "subj2": subj2,
         "hemi": hemi,
@@ -115,13 +92,13 @@ def aparcstatsdiff_cargs(
     """
     cargs = []
     cargs.append("aparcstatsdiff")
-    cargs.append(params.get("subj1"))
-    cargs.append(params.get("subj2"))
-    cargs.append(params.get("hemi"))
-    cargs.append(params.get("parc"))
-    cargs.append(params.get("meas"))
-    if params.get("outdir") is not None:
-        cargs.append(params.get("outdir"))
+    cargs.append(params.get("subj1", None))
+    cargs.append(params.get("subj2", None))
+    cargs.append(params.get("hemi", None))
+    cargs.append(params.get("parc", None))
+    cargs.append(params.get("meas", None))
+    if params.get("outdir", None) is not None:
+        cargs.append(params.get("outdir", None))
     return cargs
 
 
@@ -140,7 +117,7 @@ def aparcstatsdiff_outputs(
     """
     ret = AparcstatsdiffOutputs(
         root=execution.output_file("."),
-        output_file=execution.output_file("aparcstats-" + params.get("hemi") + "." + params.get("parc") + "." + params.get("meas") + ".txt"),
+        output_file=execution.output_file("aparcstats-" + params.get("hemi", None) + "." + params.get("parc", None) + "." + params.get("meas", None) + ".txt"),
     )
     return ret
 
@@ -218,7 +195,6 @@ def aparcstatsdiff(
 __all__ = [
     "APARCSTATSDIFF_METADATA",
     "AparcstatsdiffOutputs",
-    "AparcstatsdiffParameters",
     "aparcstatsdiff",
     "aparcstatsdiff_execute",
     "aparcstatsdiff_params",

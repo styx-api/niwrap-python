@@ -14,7 +14,18 @@ LONG_STATS_TPS_METADATA = Metadata(
 
 
 LongStatsTpsParameters = typing.TypedDict('LongStatsTpsParameters', {
-    "@type": typing.Literal["freesurfer.long_stats_tps"],
+    "@type": typing.NotRequired[typing.Literal["freesurfer/long_stats_tps"]],
+    "qdec_table": InputPathType,
+    "stats_file": str,
+    "measure": str,
+    "subjects_dir": str,
+    "time_point": float,
+    "output_file": str,
+    "qcolumn": typing.NotRequired[str | None],
+    "cross_sectional": bool,
+})
+LongStatsTpsParametersTagged = typing.TypedDict('LongStatsTpsParametersTagged', {
+    "@type": typing.Literal["freesurfer/long_stats_tps"],
     "qdec_table": InputPathType,
     "stats_file": str,
     "measure": str,
@@ -26,41 +37,9 @@ LongStatsTpsParameters = typing.TypedDict('LongStatsTpsParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "freesurfer.long_stats_tps": long_stats_tps_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "freesurfer.long_stats_tps": long_stats_tps_outputs,
-    }.get(t)
-
-
 class LongStatsTpsOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `long_stats_tps(...)`.
+    Output object returned when calling `LongStatsTpsParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -77,7 +56,7 @@ def long_stats_tps_params(
     output_file: str,
     qcolumn: str | None = None,
     cross_sectional: bool = False,
-) -> LongStatsTpsParameters:
+) -> LongStatsTpsParametersTagged:
     """
     Build parameters.
     
@@ -95,7 +74,7 @@ def long_stats_tps_params(
         Parameter dictionary
     """
     params = {
-        "@type": "freesurfer.long_stats_tps",
+        "@type": "freesurfer/long_stats_tps",
         "qdec_table": qdec_table,
         "stats_file": stats_file,
         "measure": measure,
@@ -126,34 +105,34 @@ def long_stats_tps_cargs(
     cargs.append("long_stats_tps")
     cargs.extend([
         "--qdec",
-        execution.input_file(params.get("qdec_table"))
+        execution.input_file(params.get("qdec_table", None))
     ])
     cargs.extend([
         "--stats",
-        params.get("stats_file")
+        params.get("stats_file", None)
     ])
     cargs.extend([
         "--meas",
-        params.get("measure")
+        params.get("measure", None)
     ])
     cargs.extend([
         "--sd",
-        params.get("subjects_dir")
+        params.get("subjects_dir", None)
     ])
     cargs.extend([
         "--tp",
-        str(params.get("time_point"))
+        str(params.get("time_point", None))
     ])
     cargs.extend([
         "--out",
-        params.get("output_file")
+        params.get("output_file", None)
     ])
-    if params.get("qcolumn") is not None:
+    if params.get("qcolumn", None) is not None:
         cargs.extend([
             "--qcol",
-            params.get("qcolumn")
+            params.get("qcolumn", None)
         ])
-    if params.get("cross_sectional"):
+    if params.get("cross_sectional", False):
         cargs.append("--cross")
     return cargs
 
@@ -173,7 +152,7 @@ def long_stats_tps_outputs(
     """
     ret = LongStatsTpsOutputs(
         root=execution.output_file("."),
-        stacked_results=execution.output_file(params.get("output_file")),
+        stacked_results=execution.output_file(params.get("output_file", None)),
     )
     return ret
 
@@ -256,7 +235,6 @@ def long_stats_tps(
 __all__ = [
     "LONG_STATS_TPS_METADATA",
     "LongStatsTpsOutputs",
-    "LongStatsTpsParameters",
     "long_stats_tps",
     "long_stats_tps_execute",
     "long_stats_tps_params",

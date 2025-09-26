@@ -14,7 +14,30 @@ V_3DCLUST_METADATA = Metadata(
 
 
 V3dclustParameters = typing.TypedDict('V3dclustParameters', {
-    "@type": typing.Literal["afni.3dclust"],
+    "@type": typing.NotRequired[typing.Literal["afni/3dclust"]],
+    "rmm": typing.NotRequired[float | None],
+    "vmul": typing.NotRequired[float | None],
+    "datasets": list[InputPathType],
+    "nn1": bool,
+    "nn2": bool,
+    "nn3": bool,
+    "noabs": bool,
+    "summarize": bool,
+    "nosum": bool,
+    "verb": bool,
+    "oned_format": bool,
+    "no_oned_format": bool,
+    "quiet": bool,
+    "mni": bool,
+    "isovalue": bool,
+    "isomerge": bool,
+    "inmask": bool,
+    "prefix": typing.NotRequired[str | None],
+    "savemask": typing.NotRequired[str | None],
+    "binary": bool,
+})
+V3dclustParametersTagged = typing.TypedDict('V3dclustParametersTagged', {
+    "@type": typing.Literal["afni/3dclust"],
     "rmm": typing.NotRequired[float | None],
     "vmul": typing.NotRequired[float | None],
     "datasets": list[InputPathType],
@@ -38,41 +61,9 @@ V3dclustParameters = typing.TypedDict('V3dclustParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "afni.3dclust": v_3dclust_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "afni.3dclust": v_3dclust_outputs,
-    }.get(t)
-
-
 class V3dclustOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `v_3dclust(...)`.
+    Output object returned when calling `V3dclustParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -103,7 +94,7 @@ def v_3dclust_params(
     prefix: str | None = None,
     savemask: str | None = None,
     binary: bool = False,
-) -> V3dclustParameters:
+) -> V3dclustParametersTagged:
     """
     Build parameters.
     
@@ -142,7 +133,7 @@ def v_3dclust_params(
         Parameter dictionary
     """
     params = {
-        "@type": "afni.3dclust",
+        "@type": "afni/3dclust",
         "datasets": datasets,
         "nn1": nn1,
         "nn2": nn2,
@@ -186,50 +177,50 @@ def v_3dclust_cargs(
     """
     cargs = []
     cargs.append("3dclust")
-    if params.get("rmm") is not None:
-        cargs.append(str(params.get("rmm")))
-    if params.get("vmul") is not None:
-        cargs.append(str(params.get("vmul")))
-    cargs.extend([execution.input_file(f) for f in params.get("datasets")])
-    if params.get("nn1"):
+    if params.get("rmm", None) is not None:
+        cargs.append(str(params.get("rmm", None)))
+    if params.get("vmul", None) is not None:
+        cargs.append(str(params.get("vmul", None)))
+    cargs.extend([execution.input_file(f) for f in params.get("datasets", None)])
+    if params.get("nn1", False):
         cargs.append("-NN1")
-    if params.get("nn2"):
+    if params.get("nn2", False):
         cargs.append("-NN2")
-    if params.get("nn3"):
+    if params.get("nn3", False):
         cargs.append("-NN3")
-    if params.get("noabs"):
+    if params.get("noabs", False):
         cargs.append("-noabs")
-    if params.get("summarize"):
+    if params.get("summarize", False):
         cargs.append("-summarize")
-    if params.get("nosum"):
+    if params.get("nosum", False):
         cargs.append("-nosum")
-    if params.get("verb"):
+    if params.get("verb", False):
         cargs.append("-verb")
-    if params.get("oned_format"):
+    if params.get("oned_format", False):
         cargs.append("-1Dformat")
-    if params.get("no_oned_format"):
+    if params.get("no_oned_format", False):
         cargs.append("-no_1Dformat")
-    if params.get("quiet"):
+    if params.get("quiet", False):
         cargs.append("-quiet")
-    if params.get("mni"):
+    if params.get("mni", False):
         cargs.append("-mni")
-    if params.get("isovalue"):
+    if params.get("isovalue", False):
         cargs.append("-isovalue")
-    if params.get("isomerge"):
+    if params.get("isomerge", False):
         cargs.append("-isomerge")
-    if params.get("inmask"):
+    if params.get("inmask", False):
         cargs.append("-inmask")
-    if params.get("prefix") is not None:
+    if params.get("prefix", None) is not None:
         cargs.extend([
             "-prefix",
-            params.get("prefix")
+            params.get("prefix", None)
         ])
-    if params.get("savemask") is not None:
+    if params.get("savemask", None) is not None:
         cargs.extend([
             "-savemask",
-            params.get("savemask")
+            params.get("savemask", None)
         ])
-    if params.get("binary"):
+    if params.get("binary", False):
         cargs.append("-binary")
     return cargs
 
@@ -249,8 +240,8 @@ def v_3dclust_outputs(
     """
     ret = V3dclustOutputs(
         root=execution.output_file("."),
-        prefixed_output=execution.output_file(params.get("prefix") + ".nii.gz") if (params.get("prefix") is not None) else None,
-        ordered_mask_output=execution.output_file(params.get("savemask") + ".nii.gz") if (params.get("savemask") is not None) else None,
+        prefixed_output=execution.output_file(params.get("prefix", None) + ".nii.gz") if (params.get("prefix") is not None) else None,
+        ordered_mask_output=execution.output_file(params.get("savemask", None) + ".nii.gz") if (params.get("savemask") is not None) else None,
     )
     return ret
 
@@ -377,7 +368,6 @@ def v_3dclust(
 
 __all__ = [
     "V3dclustOutputs",
-    "V3dclustParameters",
     "V_3DCLUST_METADATA",
     "v_3dclust",
     "v_3dclust_execute",

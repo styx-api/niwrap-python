@@ -14,20 +14,64 @@ CONNECTOMESTATS_METADATA = Metadata(
 
 
 ConnectomestatsColumnParameters = typing.TypedDict('ConnectomestatsColumnParameters', {
-    "@type": typing.Literal["mrtrix.connectomestats.column"],
+    "@type": typing.NotRequired[typing.Literal["column"]],
+    "path": InputPathType,
+})
+ConnectomestatsColumnParametersTagged = typing.TypedDict('ConnectomestatsColumnParametersTagged', {
+    "@type": typing.Literal["column"],
     "path": InputPathType,
 })
 
 
 ConnectomestatsConfigParameters = typing.TypedDict('ConnectomestatsConfigParameters', {
-    "@type": typing.Literal["mrtrix.connectomestats.config"],
+    "@type": typing.NotRequired[typing.Literal["config"]],
+    "key": str,
+    "value": str,
+})
+ConnectomestatsConfigParametersTagged = typing.TypedDict('ConnectomestatsConfigParametersTagged', {
+    "@type": typing.Literal["config"],
     "key": str,
     "value": str,
 })
 
 
 ConnectomestatsParameters = typing.TypedDict('ConnectomestatsParameters', {
-    "@type": typing.Literal["mrtrix.connectomestats"],
+    "@type": typing.NotRequired[typing.Literal["mrtrix/connectomestats"]],
+    "notest": bool,
+    "errors": typing.NotRequired[str | None],
+    "exchange_within": typing.NotRequired[InputPathType | None],
+    "exchange_whole": typing.NotRequired[InputPathType | None],
+    "strong": bool,
+    "nshuffles": typing.NotRequired[int | None],
+    "permutations": typing.NotRequired[InputPathType | None],
+    "nonstationarity": bool,
+    "skew_nonstationarity": typing.NotRequired[float | None],
+    "nshuffles_nonstationarity": typing.NotRequired[int | None],
+    "permutations_nonstationarity": typing.NotRequired[InputPathType | None],
+    "tfce_dh": typing.NotRequired[float | None],
+    "tfce_e": typing.NotRequired[float | None],
+    "tfce_h": typing.NotRequired[float | None],
+    "variance": typing.NotRequired[InputPathType | None],
+    "ftests": typing.NotRequired[InputPathType | None],
+    "fonly": bool,
+    "column": typing.NotRequired[list[ConnectomestatsColumnParameters] | None],
+    "threshold": typing.NotRequired[float | None],
+    "info": bool,
+    "quiet": bool,
+    "debug": bool,
+    "force": bool,
+    "nthreads": typing.NotRequired[int | None],
+    "config": typing.NotRequired[list[ConnectomestatsConfigParameters] | None],
+    "help": bool,
+    "version": bool,
+    "input": InputPathType,
+    "algorithm": str,
+    "design": InputPathType,
+    "contrast": InputPathType,
+    "output": str,
+})
+ConnectomestatsParametersTagged = typing.TypedDict('ConnectomestatsParametersTagged', {
+    "@type": typing.Literal["mrtrix/connectomestats"],
     "notest": bool,
     "errors": typing.NotRequired[str | None],
     "exchange_within": typing.NotRequired[InputPathType | None],
@@ -63,42 +107,9 @@ ConnectomestatsParameters = typing.TypedDict('ConnectomestatsParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "mrtrix.connectomestats": connectomestats_cargs,
-        "mrtrix.connectomestats.column": connectomestats_column_cargs,
-        "mrtrix.connectomestats.config": connectomestats_config_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-    }.get(t)
-
-
 def connectomestats_column_params(
     path: InputPathType,
-) -> ConnectomestatsColumnParameters:
+) -> ConnectomestatsColumnParametersTagged:
     """
     Build parameters.
     
@@ -111,7 +122,7 @@ def connectomestats_column_params(
         Parameter dictionary
     """
     params = {
-        "@type": "mrtrix.connectomestats.column",
+        "@type": "column",
         "path": path,
     }
     return params
@@ -132,14 +143,14 @@ def connectomestats_column_cargs(
     """
     cargs = []
     cargs.append("-column")
-    cargs.append(execution.input_file(params.get("path")))
+    cargs.append(execution.input_file(params.get("path", None)))
     return cargs
 
 
 def connectomestats_config_params(
     key: str,
     value: str,
-) -> ConnectomestatsConfigParameters:
+) -> ConnectomestatsConfigParametersTagged:
     """
     Build parameters.
     
@@ -150,7 +161,7 @@ def connectomestats_config_params(
         Parameter dictionary
     """
     params = {
-        "@type": "mrtrix.connectomestats.config",
+        "@type": "config",
         "key": key,
         "value": value,
     }
@@ -172,14 +183,14 @@ def connectomestats_config_cargs(
     """
     cargs = []
     cargs.append("-config")
-    cargs.append(params.get("key"))
-    cargs.append(params.get("value"))
+    cargs.append(params.get("key", None))
+    cargs.append(params.get("value", None))
     return cargs
 
 
 class ConnectomestatsOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `connectomestats(...)`.
+    Output object returned when calling `ConnectomestatsParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -218,7 +229,7 @@ def connectomestats_params(
     config: list[ConnectomestatsConfigParameters] | None = None,
     help_: bool = False,
     version: bool = False,
-) -> ConnectomestatsParameters:
+) -> ConnectomestatsParametersTagged:
     """
     Build parameters.
     
@@ -294,7 +305,7 @@ def connectomestats_params(
         Parameter dictionary
     """
     params = {
-        "@type": "mrtrix.connectomestats",
+        "@type": "mrtrix/connectomestats",
         "notest": notest,
         "strong": strong,
         "nonstationarity": nonstationarity,
@@ -363,110 +374,110 @@ def connectomestats_cargs(
     """
     cargs = []
     cargs.append("connectomestats")
-    if params.get("notest"):
+    if params.get("notest", False):
         cargs.append("-notest")
-    if params.get("errors") is not None:
+    if params.get("errors", None) is not None:
         cargs.extend([
             "-errors",
-            params.get("errors")
+            params.get("errors", None)
         ])
-    if params.get("exchange_within") is not None:
+    if params.get("exchange_within", None) is not None:
         cargs.extend([
             "-exchange_within",
-            execution.input_file(params.get("exchange_within"))
+            execution.input_file(params.get("exchange_within", None))
         ])
-    if params.get("exchange_whole") is not None:
+    if params.get("exchange_whole", None) is not None:
         cargs.extend([
             "-exchange_whole",
-            execution.input_file(params.get("exchange_whole"))
+            execution.input_file(params.get("exchange_whole", None))
         ])
-    if params.get("strong"):
+    if params.get("strong", False):
         cargs.append("-strong")
-    if params.get("nshuffles") is not None:
+    if params.get("nshuffles", None) is not None:
         cargs.extend([
             "-nshuffles",
-            str(params.get("nshuffles"))
+            str(params.get("nshuffles", None))
         ])
-    if params.get("permutations") is not None:
+    if params.get("permutations", None) is not None:
         cargs.extend([
             "-permutations",
-            execution.input_file(params.get("permutations"))
+            execution.input_file(params.get("permutations", None))
         ])
-    if params.get("nonstationarity"):
+    if params.get("nonstationarity", False):
         cargs.append("-nonstationarity")
-    if params.get("skew_nonstationarity") is not None:
+    if params.get("skew_nonstationarity", None) is not None:
         cargs.extend([
             "-skew_nonstationarity",
-            str(params.get("skew_nonstationarity"))
+            str(params.get("skew_nonstationarity", None))
         ])
-    if params.get("nshuffles_nonstationarity") is not None:
+    if params.get("nshuffles_nonstationarity", None) is not None:
         cargs.extend([
             "-nshuffles_nonstationarity",
-            str(params.get("nshuffles_nonstationarity"))
+            str(params.get("nshuffles_nonstationarity", None))
         ])
-    if params.get("permutations_nonstationarity") is not None:
+    if params.get("permutations_nonstationarity", None) is not None:
         cargs.extend([
             "-permutations_nonstationarity",
-            execution.input_file(params.get("permutations_nonstationarity"))
+            execution.input_file(params.get("permutations_nonstationarity", None))
         ])
-    if params.get("tfce_dh") is not None:
+    if params.get("tfce_dh", None) is not None:
         cargs.extend([
             "-tfce_dh",
-            str(params.get("tfce_dh"))
+            str(params.get("tfce_dh", None))
         ])
-    if params.get("tfce_e") is not None:
+    if params.get("tfce_e", None) is not None:
         cargs.extend([
             "-tfce_e",
-            str(params.get("tfce_e"))
+            str(params.get("tfce_e", None))
         ])
-    if params.get("tfce_h") is not None:
+    if params.get("tfce_h", None) is not None:
         cargs.extend([
             "-tfce_h",
-            str(params.get("tfce_h"))
+            str(params.get("tfce_h", None))
         ])
-    if params.get("variance") is not None:
+    if params.get("variance", None) is not None:
         cargs.extend([
             "-variance",
-            execution.input_file(params.get("variance"))
+            execution.input_file(params.get("variance", None))
         ])
-    if params.get("ftests") is not None:
+    if params.get("ftests", None) is not None:
         cargs.extend([
             "-ftests",
-            execution.input_file(params.get("ftests"))
+            execution.input_file(params.get("ftests", None))
         ])
-    if params.get("fonly"):
+    if params.get("fonly", False):
         cargs.append("-fonly")
-    if params.get("column") is not None:
-        cargs.extend([a for c in [dyn_cargs(s["@type"])(s, execution) for s in params.get("column")] for a in c])
-    if params.get("threshold") is not None:
+    if params.get("column", None) is not None:
+        cargs.extend([a for c in [connectomestats_column_cargs(s, execution) for s in params.get("column", None)] for a in c])
+    if params.get("threshold", None) is not None:
         cargs.extend([
             "-threshold",
-            str(params.get("threshold"))
+            str(params.get("threshold", None))
         ])
-    if params.get("info"):
+    if params.get("info", False):
         cargs.append("-info")
-    if params.get("quiet"):
+    if params.get("quiet", False):
         cargs.append("-quiet")
-    if params.get("debug"):
+    if params.get("debug", False):
         cargs.append("-debug")
-    if params.get("force"):
+    if params.get("force", False):
         cargs.append("-force")
-    if params.get("nthreads") is not None:
+    if params.get("nthreads", None) is not None:
         cargs.extend([
             "-nthreads",
-            str(params.get("nthreads"))
+            str(params.get("nthreads", None))
         ])
-    if params.get("config") is not None:
-        cargs.extend([a for c in [dyn_cargs(s["@type"])(s, execution) for s in params.get("config")] for a in c])
-    if params.get("help"):
+    if params.get("config", None) is not None:
+        cargs.extend([a for c in [connectomestats_config_cargs(s, execution) for s in params.get("config", None)] for a in c])
+    if params.get("help", False):
         cargs.append("-help")
-    if params.get("version"):
+    if params.get("version", False):
         cargs.append("-version")
-    cargs.append(execution.input_file(params.get("input")))
-    cargs.append(params.get("algorithm"))
-    cargs.append(execution.input_file(params.get("design")))
-    cargs.append(execution.input_file(params.get("contrast")))
-    cargs.append(params.get("output"))
+    cargs.append(execution.input_file(params.get("input", None)))
+    cargs.append(params.get("algorithm", None))
+    cargs.append(execution.input_file(params.get("design", None)))
+    cargs.append(execution.input_file(params.get("contrast", None)))
+    cargs.append(params.get("output", None))
     return cargs
 
 
@@ -760,10 +771,7 @@ def connectomestats(
 
 __all__ = [
     "CONNECTOMESTATS_METADATA",
-    "ConnectomestatsColumnParameters",
-    "ConnectomestatsConfigParameters",
     "ConnectomestatsOutputs",
-    "ConnectomestatsParameters",
     "connectomestats",
     "connectomestats_column_params",
     "connectomestats_config_params",

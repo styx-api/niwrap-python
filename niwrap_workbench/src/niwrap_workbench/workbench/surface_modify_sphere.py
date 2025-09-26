@@ -14,7 +14,14 @@ SURFACE_MODIFY_SPHERE_METADATA = Metadata(
 
 
 SurfaceModifySphereParameters = typing.TypedDict('SurfaceModifySphereParameters', {
-    "@type": typing.Literal["workbench.surface-modify-sphere"],
+    "@type": typing.NotRequired[typing.Literal["workbench/surface-modify-sphere"]],
+    "sphere_in": InputPathType,
+    "radius": float,
+    "sphere_out": str,
+    "opt_recenter": bool,
+})
+SurfaceModifySphereParametersTagged = typing.TypedDict('SurfaceModifySphereParametersTagged', {
+    "@type": typing.Literal["workbench/surface-modify-sphere"],
     "sphere_in": InputPathType,
     "radius": float,
     "sphere_out": str,
@@ -22,41 +29,9 @@ SurfaceModifySphereParameters = typing.TypedDict('SurfaceModifySphereParameters'
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "workbench.surface-modify-sphere": surface_modify_sphere_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "workbench.surface-modify-sphere": surface_modify_sphere_outputs,
-    }.get(t)
-
-
 class SurfaceModifySphereOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `surface_modify_sphere(...)`.
+    Output object returned when calling `SurfaceModifySphereParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -69,7 +44,7 @@ def surface_modify_sphere_params(
     radius: float,
     sphere_out: str,
     opt_recenter: bool = False,
-) -> SurfaceModifySphereParameters:
+) -> SurfaceModifySphereParametersTagged:
     """
     Build parameters.
     
@@ -82,7 +57,7 @@ def surface_modify_sphere_params(
         Parameter dictionary
     """
     params = {
-        "@type": "workbench.surface-modify-sphere",
+        "@type": "workbench/surface-modify-sphere",
         "sphere_in": sphere_in,
         "radius": radius,
         "sphere_out": sphere_out,
@@ -107,10 +82,10 @@ def surface_modify_sphere_cargs(
     cargs = []
     cargs.append("wb_command")
     cargs.append("-surface-modify-sphere")
-    cargs.append(execution.input_file(params.get("sphere_in")))
-    cargs.append(str(params.get("radius")))
-    cargs.append(params.get("sphere_out"))
-    if params.get("opt_recenter"):
+    cargs.append(execution.input_file(params.get("sphere_in", None)))
+    cargs.append(str(params.get("radius", None)))
+    cargs.append(params.get("sphere_out", None))
+    if params.get("opt_recenter", False):
         cargs.append("-recenter")
     return cargs
 
@@ -130,7 +105,7 @@ def surface_modify_sphere_outputs(
     """
     ret = SurfaceModifySphereOutputs(
         root=execution.output_file("."),
-        sphere_out=execution.output_file(params.get("sphere_out")),
+        sphere_out=execution.output_file(params.get("sphere_out", None)),
     )
     return ret
 
@@ -218,7 +193,6 @@ def surface_modify_sphere(
 __all__ = [
     "SURFACE_MODIFY_SPHERE_METADATA",
     "SurfaceModifySphereOutputs",
-    "SurfaceModifySphereParameters",
     "surface_modify_sphere",
     "surface_modify_sphere_execute",
     "surface_modify_sphere_params",

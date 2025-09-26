@@ -14,14 +14,26 @@ SET_MAP_NAMES_METADATA = Metadata(
 
 
 SetMapNamesMapParameters = typing.TypedDict('SetMapNamesMapParameters', {
-    "@type": typing.Literal["workbench.set-map-names.map"],
+    "@type": typing.NotRequired[typing.Literal["map"]],
+    "index": int,
+    "new_name": str,
+})
+SetMapNamesMapParametersTagged = typing.TypedDict('SetMapNamesMapParametersTagged', {
+    "@type": typing.Literal["map"],
     "index": int,
     "new_name": str,
 })
 
 
 SetMapNamesParameters = typing.TypedDict('SetMapNamesParameters', {
-    "@type": typing.Literal["workbench.set-map-names"],
+    "@type": typing.NotRequired[typing.Literal["workbench/set-map-names"]],
+    "data_file": str,
+    "opt_name_file_file": typing.NotRequired[str | None],
+    "opt_from_data_file_file": typing.NotRequired[str | None],
+    "map": typing.NotRequired[list[SetMapNamesMapParameters] | None],
+})
+SetMapNamesParametersTagged = typing.TypedDict('SetMapNamesParametersTagged', {
+    "@type": typing.Literal["workbench/set-map-names"],
     "data_file": str,
     "opt_name_file_file": typing.NotRequired[str | None],
     "opt_from_data_file_file": typing.NotRequired[str | None],
@@ -29,42 +41,10 @@ SetMapNamesParameters = typing.TypedDict('SetMapNamesParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "workbench.set-map-names": set_map_names_cargs,
-        "workbench.set-map-names.map": set_map_names_map_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-    }.get(t)
-
-
 def set_map_names_map_params(
     index: int,
     new_name: str,
-) -> SetMapNamesMapParameters:
+) -> SetMapNamesMapParametersTagged:
     """
     Build parameters.
     
@@ -75,7 +55,7 @@ def set_map_names_map_params(
         Parameter dictionary
     """
     params = {
-        "@type": "workbench.set-map-names.map",
+        "@type": "map",
         "index": index,
         "new_name": new_name,
     }
@@ -97,14 +77,14 @@ def set_map_names_map_cargs(
     """
     cargs = []
     cargs.append("-map")
-    cargs.append(str(params.get("index")))
-    cargs.append(params.get("new_name"))
+    cargs.append(str(params.get("index", None)))
+    cargs.append(params.get("new_name", None))
     return cargs
 
 
 class SetMapNamesOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `set_map_names(...)`.
+    Output object returned when calling `SetMapNamesParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -115,7 +95,7 @@ def set_map_names_params(
     opt_name_file_file: str | None = None,
     opt_from_data_file_file: str | None = None,
     map_: list[SetMapNamesMapParameters] | None = None,
-) -> SetMapNamesParameters:
+) -> SetMapNamesParametersTagged:
     """
     Build parameters.
     
@@ -130,7 +110,7 @@ def set_map_names_params(
         Parameter dictionary
     """
     params = {
-        "@type": "workbench.set-map-names",
+        "@type": "workbench/set-map-names",
         "data_file": data_file,
     }
     if opt_name_file_file is not None:
@@ -158,19 +138,19 @@ def set_map_names_cargs(
     cargs = []
     cargs.append("wb_command")
     cargs.append("-set-map-names")
-    cargs.append(params.get("data_file"))
-    if params.get("opt_name_file_file") is not None:
+    cargs.append(params.get("data_file", None))
+    if params.get("opt_name_file_file", None) is not None:
         cargs.extend([
             "-name-file",
-            params.get("opt_name_file_file")
+            params.get("opt_name_file_file", None)
         ])
-    if params.get("opt_from_data_file_file") is not None:
+    if params.get("opt_from_data_file_file", None) is not None:
         cargs.extend([
             "-from-data-file",
-            params.get("opt_from_data_file_file")
+            params.get("opt_from_data_file_file", None)
         ])
-    if params.get("map") is not None:
-        cargs.extend([a for c in [dyn_cargs(s["@type"])(s, execution) for s in params.get("map")] for a in c])
+    if params.get("map", None) is not None:
+        cargs.extend([a for c in [set_map_names_map_cargs(s, execution) for s in params.get("map", None)] for a in c])
     return cargs
 
 
@@ -269,9 +249,7 @@ def set_map_names(
 
 __all__ = [
     "SET_MAP_NAMES_METADATA",
-    "SetMapNamesMapParameters",
     "SetMapNamesOutputs",
-    "SetMapNamesParameters",
     "set_map_names",
     "set_map_names_execute",
     "set_map_names_map_params",

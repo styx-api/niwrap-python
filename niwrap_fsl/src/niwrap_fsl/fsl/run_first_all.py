@@ -14,7 +14,19 @@ RUN_FIRST_ALL_METADATA = Metadata(
 
 
 RunFirstAllParameters = typing.TypedDict('RunFirstAllParameters', {
-    "@type": typing.Literal["fsl.run_first_all"],
+    "@type": typing.NotRequired[typing.Literal["fsl/run_first_all"]],
+    "method": typing.NotRequired[typing.Literal["auto", "fast", "none"] | None],
+    "brainextract_flag": bool,
+    "structure": typing.NotRequired[str | None],
+    "affine_matrix": typing.NotRequired[InputPathType | None],
+    "threestage_flag": bool,
+    "debug_flag": bool,
+    "verbose_flag": bool,
+    "input_image": InputPathType,
+    "output_image": str,
+})
+RunFirstAllParametersTagged = typing.TypedDict('RunFirstAllParametersTagged', {
+    "@type": typing.Literal["fsl/run_first_all"],
     "method": typing.NotRequired[typing.Literal["auto", "fast", "none"] | None],
     "brainextract_flag": bool,
     "structure": typing.NotRequired[str | None],
@@ -27,41 +39,9 @@ RunFirstAllParameters = typing.TypedDict('RunFirstAllParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "fsl.run_first_all": run_first_all_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "fsl.run_first_all": run_first_all_outputs,
-    }.get(t)
-
-
 class RunFirstAllOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `run_first_all(...)`.
+    Output object returned when calling `RunFirstAllParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -79,7 +59,7 @@ def run_first_all_params(
     threestage_flag: bool = False,
     debug_flag: bool = False,
     verbose_flag: bool = False,
-) -> RunFirstAllParameters:
+) -> RunFirstAllParametersTagged:
     """
     Build parameters.
     
@@ -100,7 +80,7 @@ def run_first_all_params(
         Parameter dictionary
     """
     params = {
-        "@type": "fsl.run_first_all",
+        "@type": "fsl/run_first_all",
         "brainextract_flag": brainextract_flag,
         "threestage_flag": threestage_flag,
         "debug_flag": debug_flag,
@@ -132,36 +112,36 @@ def run_first_all_cargs(
     """
     cargs = []
     cargs.append("run_first_all")
-    if params.get("method") is not None:
+    if params.get("method", None) is not None:
         cargs.extend([
             "-m",
-            params.get("method")
+            params.get("method", None)
         ])
-    if params.get("brainextract_flag"):
+    if params.get("brainextract_flag", False):
         cargs.append("-b")
-    if params.get("structure") is not None:
+    if params.get("structure", None) is not None:
         cargs.extend([
             "-s",
-            params.get("structure")
+            params.get("structure", None)
         ])
-    if params.get("affine_matrix") is not None:
+    if params.get("affine_matrix", None) is not None:
         cargs.extend([
             "-a",
-            execution.input_file(params.get("affine_matrix"))
+            execution.input_file(params.get("affine_matrix", None))
         ])
-    if params.get("threestage_flag"):
+    if params.get("threestage_flag", False):
         cargs.append("-3")
-    if params.get("debug_flag"):
+    if params.get("debug_flag", False):
         cargs.append("-d")
-    if params.get("verbose_flag"):
+    if params.get("verbose_flag", False):
         cargs.append("-v")
     cargs.extend([
         "-i",
-        execution.input_file(params.get("input_image"))
+        execution.input_file(params.get("input_image", None))
     ])
     cargs.extend([
         "-o",
-        params.get("output_image")
+        params.get("output_image", None)
     ])
     return cargs
 
@@ -181,7 +161,7 @@ def run_first_all_outputs(
     """
     ret = RunFirstAllOutputs(
         root=execution.output_file("."),
-        output_image_file=execution.output_file(params.get("output_image")),
+        output_image_file=execution.output_file(params.get("output_image", None)),
     )
     return ret
 
@@ -271,7 +251,6 @@ def run_first_all(
 __all__ = [
     "RUN_FIRST_ALL_METADATA",
     "RunFirstAllOutputs",
-    "RunFirstAllParameters",
     "run_first_all",
     "run_first_all_execute",
     "run_first_all_params",

@@ -14,7 +14,14 @@ MRIS_MESH_SUBDIVIDE_METADATA = Metadata(
 
 
 MrisMeshSubdivideParameters = typing.TypedDict('MrisMeshSubdivideParameters', {
-    "@type": typing.Literal["freesurfer.mris_mesh_subdivide"],
+    "@type": typing.NotRequired[typing.Literal["freesurfer/mris_mesh_subdivide"]],
+    "input_surface": InputPathType,
+    "output_surface": str,
+    "subdivision_method": typing.NotRequired[typing.Literal["butterfly", "loop", "linear"] | None],
+    "iterations": typing.NotRequired[float | None],
+})
+MrisMeshSubdivideParametersTagged = typing.TypedDict('MrisMeshSubdivideParametersTagged', {
+    "@type": typing.Literal["freesurfer/mris_mesh_subdivide"],
     "input_surface": InputPathType,
     "output_surface": str,
     "subdivision_method": typing.NotRequired[typing.Literal["butterfly", "loop", "linear"] | None],
@@ -22,41 +29,9 @@ MrisMeshSubdivideParameters = typing.TypedDict('MrisMeshSubdivideParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "freesurfer.mris_mesh_subdivide": mris_mesh_subdivide_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "freesurfer.mris_mesh_subdivide": mris_mesh_subdivide_outputs,
-    }.get(t)
-
-
 class MrisMeshSubdivideOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `mris_mesh_subdivide(...)`.
+    Output object returned when calling `MrisMeshSubdivideParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -69,7 +44,7 @@ def mris_mesh_subdivide_params(
     output_surface: str,
     subdivision_method: typing.Literal["butterfly", "loop", "linear"] | None = None,
     iterations: float | None = None,
-) -> MrisMeshSubdivideParameters:
+) -> MrisMeshSubdivideParametersTagged:
     """
     Build parameters.
     
@@ -84,7 +59,7 @@ def mris_mesh_subdivide_params(
         Parameter dictionary
     """
     params = {
-        "@type": "freesurfer.mris_mesh_subdivide",
+        "@type": "freesurfer/mris_mesh_subdivide",
         "input_surface": input_surface,
         "output_surface": output_surface,
     }
@@ -112,21 +87,21 @@ def mris_mesh_subdivide_cargs(
     cargs.append("mris_mesh_subdivide")
     cargs.extend([
         "--surf",
-        execution.input_file(params.get("input_surface"))
+        execution.input_file(params.get("input_surface", None))
     ])
     cargs.extend([
         "--out",
-        params.get("output_surface")
+        params.get("output_surface", None)
     ])
-    if params.get("subdivision_method") is not None:
+    if params.get("subdivision_method", None) is not None:
         cargs.extend([
             "--method",
-            params.get("subdivision_method")
+            params.get("subdivision_method", None)
         ])
-    if params.get("iterations") is not None:
+    if params.get("iterations", None) is not None:
         cargs.extend([
             "--iter",
-            str(params.get("iterations"))
+            str(params.get("iterations", None))
         ])
     return cargs
 
@@ -146,7 +121,7 @@ def mris_mesh_subdivide_outputs(
     """
     ret = MrisMeshSubdivideOutputs(
         root=execution.output_file("."),
-        subdivided_surface=execution.output_file(params.get("output_surface")),
+        subdivided_surface=execution.output_file(params.get("output_surface", None)),
     )
     return ret
 
@@ -218,7 +193,6 @@ def mris_mesh_subdivide(
 __all__ = [
     "MRIS_MESH_SUBDIVIDE_METADATA",
     "MrisMeshSubdivideOutputs",
-    "MrisMeshSubdivideParameters",
     "mris_mesh_subdivide",
     "mris_mesh_subdivide_execute",
     "mris_mesh_subdivide_params",

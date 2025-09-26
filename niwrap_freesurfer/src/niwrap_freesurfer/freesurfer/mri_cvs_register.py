@@ -14,7 +14,37 @@ MRI_CVS_REGISTER_METADATA = Metadata(
 
 
 MriCvsRegisterParameters = typing.TypedDict('MriCvsRegisterParameters', {
-    "@type": typing.Literal["freesurfer.mri_cvs_register"],
+    "@type": typing.NotRequired[typing.Literal["freesurfer/mri_cvs_register"]],
+    "mov_subjid": str,
+    "template_subjid": typing.NotRequired[str | None],
+    "templatedir": typing.NotRequired[str | None],
+    "mni_flag": bool,
+    "outdir": typing.NotRequired[str | None],
+    "asegfname": typing.NotRequired[str | None],
+    "voltype": typing.NotRequired[str | None],
+    "step1_flag": bool,
+    "step2_flag": bool,
+    "step3_flag": bool,
+    "noaseg_flag": bool,
+    "nointensity_flag": bool,
+    "hemi_flag": bool,
+    "masktargethemi_flag": bool,
+    "maskmovinghemi_flag": bool,
+    "nocleanup_flag": bool,
+    "keepelreg_flag": bool,
+    "keepallm3z_flag": bool,
+    "cleanall_flag": bool,
+    "cleansurfreg_flag": bool,
+    "cleanelreg_flag": bool,
+    "cleanvolreg_flag": bool,
+    "m3d_flag": bool,
+    "openmp": typing.NotRequired[int | None],
+    "nolog_flag": bool,
+    "version_flag": bool,
+    "help_flag": bool,
+})
+MriCvsRegisterParametersTagged = typing.TypedDict('MriCvsRegisterParametersTagged', {
+    "@type": typing.Literal["freesurfer/mri_cvs_register"],
     "mov_subjid": str,
     "template_subjid": typing.NotRequired[str | None],
     "templatedir": typing.NotRequired[str | None],
@@ -45,41 +75,9 @@ MriCvsRegisterParameters = typing.TypedDict('MriCvsRegisterParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "freesurfer.mri_cvs_register": mri_cvs_register_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "freesurfer.mri_cvs_register": mri_cvs_register_outputs,
-    }.get(t)
-
-
 class MriCvsRegisterOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `mri_cvs_register(...)`.
+    Output object returned when calling `MriCvsRegisterParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -128,7 +126,7 @@ def mri_cvs_register_params(
     nolog_flag: bool = False,
     version_flag: bool = False,
     help_flag: bool = False,
-) -> MriCvsRegisterParameters:
+) -> MriCvsRegisterParametersTagged:
     """
     Build parameters.
     
@@ -177,7 +175,7 @@ def mri_cvs_register_params(
         Parameter dictionary
     """
     params = {
-        "@type": "freesurfer.mri_cvs_register",
+        "@type": "freesurfer/mri_cvs_register",
         "mov_subjid": mov_subjid,
         "mni_flag": mni_flag,
         "step1_flag": step1_flag,
@@ -232,77 +230,77 @@ def mri_cvs_register_cargs(
     cargs.append("mri_cvs_register")
     cargs.extend([
         "--mov",
-        params.get("mov_subjid")
+        params.get("mov_subjid", None)
     ])
-    if params.get("template_subjid") is not None:
+    if params.get("template_subjid", None) is not None:
         cargs.extend([
             "--template",
-            params.get("template_subjid")
+            params.get("template_subjid", None)
         ])
-    if params.get("templatedir") is not None:
+    if params.get("templatedir", None) is not None:
         cargs.extend([
             "--templatedir",
-            params.get("templatedir")
+            params.get("templatedir", None)
         ])
-    if params.get("mni_flag"):
+    if params.get("mni_flag", False):
         cargs.append("--mni")
-    if params.get("outdir") is not None:
+    if params.get("outdir", None) is not None:
         cargs.extend([
             "--outdir",
-            params.get("outdir")
+            params.get("outdir", None)
         ])
-    if params.get("asegfname") is not None:
+    if params.get("asegfname", None) is not None:
         cargs.extend([
             "--asegfname",
-            params.get("asegfname")
+            params.get("asegfname", None)
         ])
-    if params.get("voltype") is not None:
+    if params.get("voltype", None) is not None:
         cargs.extend([
             "--voltype",
-            params.get("voltype")
+            params.get("voltype", None)
         ])
-    if params.get("step1_flag"):
+    if params.get("step1_flag", False):
         cargs.append("--step1")
-    if params.get("step2_flag"):
+    if params.get("step2_flag", False):
         cargs.append("--step2")
-    if params.get("step3_flag"):
+    if params.get("step3_flag", False):
         cargs.append("--step3")
-    if params.get("noaseg_flag"):
+    if params.get("noaseg_flag", False):
         cargs.append("--noaseg")
-    if params.get("nointensity_flag"):
+    if params.get("nointensity_flag", False):
         cargs.append("--nointensity")
-    if params.get("hemi_flag"):
+    if params.get("hemi_flag", False):
         cargs.append("--hemi")
-    if params.get("masktargethemi_flag"):
+    if params.get("masktargethemi_flag", False):
         cargs.append("--masktargethemi")
-    if params.get("maskmovinghemi_flag"):
+    if params.get("maskmovinghemi_flag", False):
         cargs.append("--maskmovinghemi")
-    if params.get("nocleanup_flag"):
+    if params.get("nocleanup_flag", False):
         cargs.append("--nocleanup")
-    if params.get("keepelreg_flag"):
+    if params.get("keepelreg_flag", False):
         cargs.append("--keepelreg")
-    if params.get("keepallm3z_flag"):
+    if params.get("keepallm3z_flag", False):
         cargs.append("--keepallm3z")
-    if params.get("cleanall_flag"):
+    if params.get("cleanall_flag", False):
         cargs.append("--cleanall")
-    if params.get("cleansurfreg_flag"):
+    if params.get("cleansurfreg_flag", False):
         cargs.append("--cleansurfreg")
-    if params.get("cleanelreg_flag"):
+    if params.get("cleanelreg_flag", False):
         cargs.append("--cleanelreg")
-    if params.get("cleanvolreg_flag"):
+    if params.get("cleanvolreg_flag", False):
         cargs.append("--cleanvolreg")
-    if params.get("m3d_flag"):
+    if params.get("m3d_flag", False):
         cargs.append("--m3d")
-    if params.get("openmp") is not None:
+    if params.get("openmp", None) is not None:
         cargs.extend([
             "--openmp",
-            str(params.get("openmp"))
+            str(params.get("openmp", None))
         ])
-    if params.get("nolog_flag"):
+    if params.get("nolog_flag", False):
         cargs.append("--nolog")
-    if params.get("version_flag"):
+    if params.get("version_flag", False):
         cargs.append("--version")
-    if params.get("help_flag"):
+    if params.get("help_flag", False):
         cargs.append("--help")
     return cargs
 
@@ -322,11 +320,11 @@ def mri_cvs_register_outputs(
     """
     ret = MriCvsRegisterOutputs(
         root=execution.output_file("."),
-        final_cvs_morph=execution.output_file(params.get("outdir") + "/final_CVSmorph_toTEMPLATE.m3z") if (params.get("outdir") is not None) else None,
-        final_cvs_morphed_norm=execution.output_file(params.get("outdir") + "/final_CVSmorphed_toTEMPLATE_norm.mgz") if (params.get("outdir") is not None) else None,
-        final_cvs_morphed_aseg=execution.output_file(params.get("outdir") + "/final_CVSmorphed_toTEMPLATE_aseg.mgz") if (params.get("outdir") is not None) else None,
-        step1_morphed_aseg=execution.output_file(params.get("outdir") + "/step1_CVSmorphed_toTEMPLATE_aseg.mgz") if (params.get("outdir") is not None) else None,
-        step1_morphed_norm=execution.output_file(params.get("outdir") + "/step1_CVSmorphed_toTEMPLATE_norm.mgz") if (params.get("outdir") is not None) else None,
+        final_cvs_morph=execution.output_file(params.get("outdir", None) + "/final_CVSmorph_toTEMPLATE.m3z") if (params.get("outdir") is not None) else None,
+        final_cvs_morphed_norm=execution.output_file(params.get("outdir", None) + "/final_CVSmorphed_toTEMPLATE_norm.mgz") if (params.get("outdir") is not None) else None,
+        final_cvs_morphed_aseg=execution.output_file(params.get("outdir", None) + "/final_CVSmorphed_toTEMPLATE_aseg.mgz") if (params.get("outdir") is not None) else None,
+        step1_morphed_aseg=execution.output_file(params.get("outdir", None) + "/step1_CVSmorphed_toTEMPLATE_aseg.mgz") if (params.get("outdir") is not None) else None,
+        step1_morphed_norm=execution.output_file(params.get("outdir", None) + "/step1_CVSmorphed_toTEMPLATE_norm.mgz") if (params.get("outdir") is not None) else None,
     )
     return ret
 
@@ -478,7 +476,6 @@ def mri_cvs_register(
 __all__ = [
     "MRI_CVS_REGISTER_METADATA",
     "MriCvsRegisterOutputs",
-    "MriCvsRegisterParameters",
     "mri_cvs_register",
     "mri_cvs_register_execute",
     "mri_cvs_register_params",

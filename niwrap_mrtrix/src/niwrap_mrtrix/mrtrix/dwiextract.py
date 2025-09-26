@@ -14,47 +14,75 @@ DWIEXTRACT_METADATA = Metadata(
 
 
 DwiextractFslgradParameters = typing.TypedDict('DwiextractFslgradParameters', {
-    "@type": typing.Literal["mrtrix.dwiextract.fslgrad"],
+    "@type": typing.NotRequired[typing.Literal["fslgrad"]],
+    "bvecs": InputPathType,
+    "bvals": InputPathType,
+})
+DwiextractFslgradParametersTagged = typing.TypedDict('DwiextractFslgradParametersTagged', {
+    "@type": typing.Literal["fslgrad"],
     "bvecs": InputPathType,
     "bvals": InputPathType,
 })
 
 
 DwiextractExportGradFslParameters = typing.TypedDict('DwiextractExportGradFslParameters', {
-    "@type": typing.Literal["mrtrix.dwiextract.export_grad_fsl"],
+    "@type": typing.NotRequired[typing.Literal["export_grad_fsl"]],
+    "bvecs_path": str,
+    "bvals_path": str,
+})
+DwiextractExportGradFslParametersTagged = typing.TypedDict('DwiextractExportGradFslParametersTagged', {
+    "@type": typing.Literal["export_grad_fsl"],
     "bvecs_path": str,
     "bvals_path": str,
 })
 
 
 DwiextractImportPeEddyParameters = typing.TypedDict('DwiextractImportPeEddyParameters', {
-    "@type": typing.Literal["mrtrix.dwiextract.import_pe_eddy"],
+    "@type": typing.NotRequired[typing.Literal["import_pe_eddy"]],
+    "config": InputPathType,
+    "indices": InputPathType,
+})
+DwiextractImportPeEddyParametersTagged = typing.TypedDict('DwiextractImportPeEddyParametersTagged', {
+    "@type": typing.Literal["import_pe_eddy"],
     "config": InputPathType,
     "indices": InputPathType,
 })
 
 
 DwiextractVariousStringParameters = typing.TypedDict('DwiextractVariousStringParameters', {
-    "@type": typing.Literal["mrtrix.dwiextract.VariousString"],
+    "@type": typing.NotRequired[typing.Literal["VariousString"]],
+    "obj": str,
+})
+DwiextractVariousStringParametersTagged = typing.TypedDict('DwiextractVariousStringParametersTagged', {
+    "@type": typing.Literal["VariousString"],
     "obj": str,
 })
 
 
 DwiextractVariousFileParameters = typing.TypedDict('DwiextractVariousFileParameters', {
-    "@type": typing.Literal["mrtrix.dwiextract.VariousFile"],
+    "@type": typing.NotRequired[typing.Literal["VariousFile"]],
+    "obj": InputPathType,
+})
+DwiextractVariousFileParametersTagged = typing.TypedDict('DwiextractVariousFileParametersTagged', {
+    "@type": typing.Literal["VariousFile"],
     "obj": InputPathType,
 })
 
 
 DwiextractConfigParameters = typing.TypedDict('DwiextractConfigParameters', {
-    "@type": typing.Literal["mrtrix.dwiextract.config"],
+    "@type": typing.NotRequired[typing.Literal["config"]],
+    "key": str,
+    "value": str,
+})
+DwiextractConfigParametersTagged = typing.TypedDict('DwiextractConfigParametersTagged', {
+    "@type": typing.Literal["config"],
     "key": str,
     "value": str,
 })
 
 
 DwiextractParameters = typing.TypedDict('DwiextractParameters', {
-    "@type": typing.Literal["mrtrix.dwiextract"],
+    "@type": typing.NotRequired[typing.Literal["mrtrix/dwiextract"]],
     "bzero": bool,
     "no_bzero": bool,
     "singleshell": bool,
@@ -66,7 +94,32 @@ DwiextractParameters = typing.TypedDict('DwiextractParameters', {
     "import_pe_table": typing.NotRequired[InputPathType | None],
     "import_pe_eddy": typing.NotRequired[DwiextractImportPeEddyParameters | None],
     "pe": typing.NotRequired[list[float] | None],
-    "strides": typing.NotRequired[typing.Union[DwiextractVariousStringParameters, DwiextractVariousFileParameters] | None],
+    "strides": typing.NotRequired[typing.Union[DwiextractVariousStringParametersTagged, DwiextractVariousFileParametersTagged] | None],
+    "info": bool,
+    "quiet": bool,
+    "debug": bool,
+    "force": bool,
+    "nthreads": typing.NotRequired[int | None],
+    "config": typing.NotRequired[list[DwiextractConfigParameters] | None],
+    "help": bool,
+    "version": bool,
+    "input": InputPathType,
+    "output": str,
+})
+DwiextractParametersTagged = typing.TypedDict('DwiextractParametersTagged', {
+    "@type": typing.Literal["mrtrix/dwiextract"],
+    "bzero": bool,
+    "no_bzero": bool,
+    "singleshell": bool,
+    "grad": typing.NotRequired[InputPathType | None],
+    "fslgrad": typing.NotRequired[DwiextractFslgradParameters | None],
+    "shells": typing.NotRequired[list[float] | None],
+    "export_grad_mrtrix": typing.NotRequired[str | None],
+    "export_grad_fsl": typing.NotRequired[DwiextractExportGradFslParameters | None],
+    "import_pe_table": typing.NotRequired[InputPathType | None],
+    "import_pe_eddy": typing.NotRequired[DwiextractImportPeEddyParameters | None],
+    "pe": typing.NotRequired[list[float] | None],
+    "strides": typing.NotRequired[typing.Union[DwiextractVariousStringParametersTagged, DwiextractVariousFileParametersTagged] | None],
     "info": bool,
     "quiet": bool,
     "debug": bool,
@@ -80,7 +133,7 @@ DwiextractParameters = typing.TypedDict('DwiextractParameters', {
 })
 
 
-def dyn_cargs(
+def dwiextract_strides_cargs_dyn_fn(
     t: str,
 ) -> typing.Any:
     """
@@ -92,17 +145,12 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "mrtrix.dwiextract": dwiextract_cargs,
-        "mrtrix.dwiextract.fslgrad": dwiextract_fslgrad_cargs,
-        "mrtrix.dwiextract.export_grad_fsl": dwiextract_export_grad_fsl_cargs,
-        "mrtrix.dwiextract.import_pe_eddy": dwiextract_import_pe_eddy_cargs,
-        "mrtrix.dwiextract.VariousString": dwiextract_various_string_cargs,
-        "mrtrix.dwiextract.VariousFile": dwiextract_various_file_cargs,
-        "mrtrix.dwiextract.config": dwiextract_config_cargs,
+        "VariousString": dwiextract_various_string_cargs,
+        "VariousFile": dwiextract_various_file_cargs,
     }.get(t)
 
 
-def dyn_outputs(
+def dwiextract_strides_outputs_dyn_fn(
     t: str,
 ) -> typing.Any:
     """
@@ -114,15 +162,13 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "mrtrix.dwiextract": dwiextract_outputs,
-        "mrtrix.dwiextract.export_grad_fsl": dwiextract_export_grad_fsl_outputs,
     }.get(t)
 
 
 def dwiextract_fslgrad_params(
     bvecs: InputPathType,
     bvals: InputPathType,
-) -> DwiextractFslgradParameters:
+) -> DwiextractFslgradParametersTagged:
     """
     Build parameters.
     
@@ -139,7 +185,7 @@ def dwiextract_fslgrad_params(
         Parameter dictionary
     """
     params = {
-        "@type": "mrtrix.dwiextract.fslgrad",
+        "@type": "fslgrad",
         "bvecs": bvecs,
         "bvals": bvals,
     }
@@ -161,8 +207,8 @@ def dwiextract_fslgrad_cargs(
     """
     cargs = []
     cargs.append("-fslgrad")
-    cargs.append(execution.input_file(params.get("bvecs")))
-    cargs.append(execution.input_file(params.get("bvals")))
+    cargs.append(execution.input_file(params.get("bvecs", None)))
+    cargs.append(execution.input_file(params.get("bvals", None)))
     return cargs
 
 
@@ -183,7 +229,7 @@ class DwiextractExportGradFslOutputs(typing.NamedTuple):
 def dwiextract_export_grad_fsl_params(
     bvecs_path: str,
     bvals_path: str,
-) -> DwiextractExportGradFslParameters:
+) -> DwiextractExportGradFslParametersTagged:
     """
     Build parameters.
     
@@ -196,7 +242,7 @@ def dwiextract_export_grad_fsl_params(
         Parameter dictionary
     """
     params = {
-        "@type": "mrtrix.dwiextract.export_grad_fsl",
+        "@type": "export_grad_fsl",
         "bvecs_path": bvecs_path,
         "bvals_path": bvals_path,
     }
@@ -218,8 +264,8 @@ def dwiextract_export_grad_fsl_cargs(
     """
     cargs = []
     cargs.append("-export_grad_fsl")
-    cargs.append(params.get("bvecs_path"))
-    cargs.append(params.get("bvals_path"))
+    cargs.append(params.get("bvecs_path", None))
+    cargs.append(params.get("bvals_path", None))
     return cargs
 
 
@@ -238,8 +284,8 @@ def dwiextract_export_grad_fsl_outputs(
     """
     ret = DwiextractExportGradFslOutputs(
         root=execution.output_file("."),
-        bvecs_path=execution.output_file(params.get("bvecs_path")),
-        bvals_path=execution.output_file(params.get("bvals_path")),
+        bvecs_path=execution.output_file(params.get("bvecs_path", None)),
+        bvals_path=execution.output_file(params.get("bvals_path", None)),
     )
     return ret
 
@@ -247,7 +293,7 @@ def dwiextract_export_grad_fsl_outputs(
 def dwiextract_import_pe_eddy_params(
     config: InputPathType,
     indices: InputPathType,
-) -> DwiextractImportPeEddyParameters:
+) -> DwiextractImportPeEddyParametersTagged:
     """
     Build parameters.
     
@@ -260,7 +306,7 @@ def dwiextract_import_pe_eddy_params(
         Parameter dictionary
     """
     params = {
-        "@type": "mrtrix.dwiextract.import_pe_eddy",
+        "@type": "import_pe_eddy",
         "config": config,
         "indices": indices,
     }
@@ -282,14 +328,14 @@ def dwiextract_import_pe_eddy_cargs(
     """
     cargs = []
     cargs.append("-import_pe_eddy")
-    cargs.append(execution.input_file(params.get("config")))
-    cargs.append(execution.input_file(params.get("indices")))
+    cargs.append(execution.input_file(params.get("config", None)))
+    cargs.append(execution.input_file(params.get("indices", None)))
     return cargs
 
 
 def dwiextract_various_string_params(
     obj: str,
-) -> DwiextractVariousStringParameters:
+) -> DwiextractVariousStringParametersTagged:
     """
     Build parameters.
     
@@ -299,7 +345,7 @@ def dwiextract_various_string_params(
         Parameter dictionary
     """
     params = {
-        "@type": "mrtrix.dwiextract.VariousString",
+        "@type": "VariousString",
         "obj": obj,
     }
     return params
@@ -319,13 +365,13 @@ def dwiextract_various_string_cargs(
         Command-line arguments.
     """
     cargs = []
-    cargs.append(params.get("obj"))
+    cargs.append(params.get("obj", None))
     return cargs
 
 
 def dwiextract_various_file_params(
     obj: InputPathType,
-) -> DwiextractVariousFileParameters:
+) -> DwiextractVariousFileParametersTagged:
     """
     Build parameters.
     
@@ -335,7 +381,7 @@ def dwiextract_various_file_params(
         Parameter dictionary
     """
     params = {
-        "@type": "mrtrix.dwiextract.VariousFile",
+        "@type": "VariousFile",
         "obj": obj,
     }
     return params
@@ -355,14 +401,14 @@ def dwiextract_various_file_cargs(
         Command-line arguments.
     """
     cargs = []
-    cargs.append(execution.input_file(params.get("obj")))
+    cargs.append(execution.input_file(params.get("obj", None)))
     return cargs
 
 
 def dwiextract_config_params(
     key: str,
     value: str,
-) -> DwiextractConfigParameters:
+) -> DwiextractConfigParametersTagged:
     """
     Build parameters.
     
@@ -373,7 +419,7 @@ def dwiextract_config_params(
         Parameter dictionary
     """
     params = {
-        "@type": "mrtrix.dwiextract.config",
+        "@type": "config",
         "key": key,
         "value": value,
     }
@@ -395,14 +441,14 @@ def dwiextract_config_cargs(
     """
     cargs = []
     cargs.append("-config")
-    cargs.append(params.get("key"))
-    cargs.append(params.get("value"))
+    cargs.append(params.get("key", None))
+    cargs.append(params.get("value", None))
     return cargs
 
 
 class DwiextractOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `dwiextract(...)`.
+    Output object returned when calling `DwiextractParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -428,7 +474,7 @@ def dwiextract_params(
     import_pe_table: InputPathType | None = None,
     import_pe_eddy: DwiextractImportPeEddyParameters | None = None,
     pe: list[float] | None = None,
-    strides: typing.Union[DwiextractVariousStringParameters, DwiextractVariousFileParameters] | None = None,
+    strides: typing.Union[DwiextractVariousStringParametersTagged, DwiextractVariousFileParametersTagged] | None = None,
     info: bool = False,
     quiet: bool = False,
     debug: bool = False,
@@ -437,7 +483,7 @@ def dwiextract_params(
     config: list[DwiextractConfigParameters] | None = None,
     help_: bool = False,
     version: bool = False,
-) -> DwiextractParameters:
+) -> DwiextractParametersTagged:
     """
     Build parameters.
     
@@ -502,7 +548,7 @@ def dwiextract_params(
         Parameter dictionary
     """
     params = {
-        "@type": "mrtrix.dwiextract",
+        "@type": "mrtrix/dwiextract",
         "bzero": bzero,
         "no_bzero": no_bzero,
         "singleshell": singleshell,
@@ -555,69 +601,69 @@ def dwiextract_cargs(
     """
     cargs = []
     cargs.append("dwiextract")
-    if params.get("bzero"):
+    if params.get("bzero", False):
         cargs.append("-bzero")
-    if params.get("no_bzero"):
+    if params.get("no_bzero", False):
         cargs.append("-no_bzero")
-    if params.get("singleshell"):
+    if params.get("singleshell", False):
         cargs.append("-singleshell")
-    if params.get("grad") is not None:
+    if params.get("grad", None) is not None:
         cargs.extend([
             "-grad",
-            execution.input_file(params.get("grad"))
+            execution.input_file(params.get("grad", None))
         ])
-    if params.get("fslgrad") is not None:
-        cargs.extend(dyn_cargs(params.get("fslgrad")["@type"])(params.get("fslgrad"), execution))
-    if params.get("shells") is not None:
+    if params.get("fslgrad", None) is not None:
+        cargs.extend(dwiextract_fslgrad_cargs(params.get("fslgrad", None), execution))
+    if params.get("shells", None) is not None:
         cargs.extend([
             "-shells",
-            ",".join(map(str, params.get("shells")))
+            ",".join(map(str, params.get("shells", None)))
         ])
-    if params.get("export_grad_mrtrix") is not None:
+    if params.get("export_grad_mrtrix", None) is not None:
         cargs.extend([
             "-export_grad_mrtrix",
-            params.get("export_grad_mrtrix")
+            params.get("export_grad_mrtrix", None)
         ])
-    if params.get("export_grad_fsl") is not None:
-        cargs.extend(dyn_cargs(params.get("export_grad_fsl")["@type"])(params.get("export_grad_fsl"), execution))
-    if params.get("import_pe_table") is not None:
+    if params.get("export_grad_fsl", None) is not None:
+        cargs.extend(dwiextract_export_grad_fsl_cargs(params.get("export_grad_fsl", None), execution))
+    if params.get("import_pe_table", None) is not None:
         cargs.extend([
             "-import_pe_table",
-            execution.input_file(params.get("import_pe_table"))
+            execution.input_file(params.get("import_pe_table", None))
         ])
-    if params.get("import_pe_eddy") is not None:
-        cargs.extend(dyn_cargs(params.get("import_pe_eddy")["@type"])(params.get("import_pe_eddy"), execution))
-    if params.get("pe") is not None:
+    if params.get("import_pe_eddy", None) is not None:
+        cargs.extend(dwiextract_import_pe_eddy_cargs(params.get("import_pe_eddy", None), execution))
+    if params.get("pe", None) is not None:
         cargs.extend([
             "-pe",
-            ",".join(map(str, params.get("pe")))
+            ",".join(map(str, params.get("pe", None)))
         ])
-    if params.get("strides") is not None:
+    if params.get("strides", None) is not None:
         cargs.extend([
             "-strides",
-            *dyn_cargs(params.get("strides")["@type"])(params.get("strides"), execution)
+            *dwiextract_strides_cargs_dyn_fn(params.get("strides", None)["@type"])(params.get("strides", None), execution)
         ])
-    if params.get("info"):
+    if params.get("info", False):
         cargs.append("-info")
-    if params.get("quiet"):
+    if params.get("quiet", False):
         cargs.append("-quiet")
-    if params.get("debug"):
+    if params.get("debug", False):
         cargs.append("-debug")
-    if params.get("force"):
+    if params.get("force", False):
         cargs.append("-force")
-    if params.get("nthreads") is not None:
+    if params.get("nthreads", None) is not None:
         cargs.extend([
             "-nthreads",
-            str(params.get("nthreads"))
+            str(params.get("nthreads", None))
         ])
-    if params.get("config") is not None:
-        cargs.extend([a for c in [dyn_cargs(s["@type"])(s, execution) for s in params.get("config")] for a in c])
-    if params.get("help"):
+    if params.get("config", None) is not None:
+        cargs.extend([a for c in [dwiextract_config_cargs(s, execution) for s in params.get("config", None)] for a in c])
+    if params.get("help", False):
         cargs.append("-help")
-    if params.get("version"):
+    if params.get("version", False):
         cargs.append("-version")
-    cargs.append(execution.input_file(params.get("input")))
-    cargs.append(params.get("output"))
+    cargs.append(execution.input_file(params.get("input", None)))
+    cargs.append(params.get("output", None))
     return cargs
 
 
@@ -636,9 +682,9 @@ def dwiextract_outputs(
     """
     ret = DwiextractOutputs(
         root=execution.output_file("."),
-        output=execution.output_file(params.get("output")),
-        export_grad_mrtrix=execution.output_file(params.get("export_grad_mrtrix")) if (params.get("export_grad_mrtrix") is not None) else None,
-        export_grad_fsl=dyn_outputs(params.get("export_grad_fsl")["@type"])(params.get("export_grad_fsl"), execution) if params.get("export_grad_fsl") else None,
+        output=execution.output_file(params.get("output", None)),
+        export_grad_mrtrix=execution.output_file(params.get("export_grad_mrtrix", None)) if (params.get("export_grad_mrtrix") is not None) else None,
+        export_grad_fsl=dwiextract_export_grad_fsl_outputs(params.get("export_grad_fsl"), execution) if params.get("export_grad_fsl") else None,
     )
     return ret
 
@@ -692,7 +738,7 @@ def dwiextract(
     import_pe_table: InputPathType | None = None,
     import_pe_eddy: DwiextractImportPeEddyParameters | None = None,
     pe: list[float] | None = None,
-    strides: typing.Union[DwiextractVariousStringParameters, DwiextractVariousFileParameters] | None = None,
+    strides: typing.Union[DwiextractVariousStringParametersTagged, DwiextractVariousFileParametersTagged] | None = None,
     info: bool = False,
     quiet: bool = False,
     debug: bool = False,
@@ -809,15 +855,8 @@ def dwiextract(
 
 __all__ = [
     "DWIEXTRACT_METADATA",
-    "DwiextractConfigParameters",
     "DwiextractExportGradFslOutputs",
-    "DwiextractExportGradFslParameters",
-    "DwiextractFslgradParameters",
-    "DwiextractImportPeEddyParameters",
     "DwiextractOutputs",
-    "DwiextractParameters",
-    "DwiextractVariousFileParameters",
-    "DwiextractVariousStringParameters",
     "dwiextract",
     "dwiextract_config_params",
     "dwiextract_execute",

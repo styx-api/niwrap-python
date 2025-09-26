@@ -14,7 +14,16 @@ FSLSMOOTHFILL_METADATA = Metadata(
 
 
 FslsmoothfillParameters = typing.TypedDict('FslsmoothfillParameters', {
-    "@type": typing.Literal["fsl.fslsmoothfill"],
+    "@type": typing.NotRequired[typing.Literal["fsl/fslsmoothfill"]],
+    "input_image": InputPathType,
+    "mask_image": InputPathType,
+    "output_image": str,
+    "number_of_iterations": typing.NotRequired[int | None],
+    "debug_flag": bool,
+    "verbose_flag": bool,
+})
+FslsmoothfillParametersTagged = typing.TypedDict('FslsmoothfillParametersTagged', {
+    "@type": typing.Literal["fsl/fslsmoothfill"],
     "input_image": InputPathType,
     "mask_image": InputPathType,
     "output_image": str,
@@ -24,40 +33,9 @@ FslsmoothfillParameters = typing.TypedDict('FslsmoothfillParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "fsl.fslsmoothfill": fslsmoothfill_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-    }.get(t)
-
-
 class FslsmoothfillOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `fslsmoothfill(...)`.
+    Output object returned when calling `FslsmoothfillParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -70,7 +48,7 @@ def fslsmoothfill_params(
     number_of_iterations: int | None = None,
     debug_flag: bool = False,
     verbose_flag: bool = False,
-) -> FslsmoothfillParameters:
+) -> FslsmoothfillParametersTagged:
     """
     Build parameters.
     
@@ -85,7 +63,7 @@ def fslsmoothfill_params(
         Parameter dictionary
     """
     params = {
-        "@type": "fsl.fslsmoothfill",
+        "@type": "fsl/fslsmoothfill",
         "input_image": input_image,
         "mask_image": mask_image,
         "output_image": output_image,
@@ -112,17 +90,17 @@ def fslsmoothfill_cargs(
     """
     cargs = []
     cargs.append("fslsmoothfill")
-    cargs.append("--in=" + execution.input_file(params.get("input_image")))
-    cargs.append("--mask=" + execution.input_file(params.get("mask_image")))
-    cargs.append("--out=" + params.get("output_image"))
-    if params.get("number_of_iterations") is not None:
+    cargs.append("--in=" + execution.input_file(params.get("input_image", None)))
+    cargs.append("--mask=" + execution.input_file(params.get("mask_image", None)))
+    cargs.append("--out=" + params.get("output_image", None))
+    if params.get("number_of_iterations", None) is not None:
         cargs.extend([
             "--niter",
-            str(params.get("number_of_iterations"))
+            str(params.get("number_of_iterations", None))
         ])
-    if params.get("debug_flag"):
+    if params.get("debug_flag", False):
         cargs.append("--debug")
-    if params.get("verbose_flag"):
+    if params.get("verbose_flag", False):
         cargs.append("--verbose")
     return cargs
 
@@ -219,7 +197,6 @@ def fslsmoothfill(
 __all__ = [
     "FSLSMOOTHFILL_METADATA",
     "FslsmoothfillOutputs",
-    "FslsmoothfillParameters",
     "fslsmoothfill",
     "fslsmoothfill_execute",
     "fslsmoothfill_params",

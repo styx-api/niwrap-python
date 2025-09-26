@@ -14,46 +14,18 @@ V__PARSE_AFNI_NAME_METADATA = Metadata(
 
 
 VParseAfniNameParameters = typing.TypedDict('VParseAfniNameParameters', {
-    "@type": typing.Literal["afni.@parse_afni_name"],
+    "@type": typing.NotRequired[typing.Literal["afni/@parse_afni_name"]],
+    "afni_name": str,
+})
+VParseAfniNameParametersTagged = typing.TypedDict('VParseAfniNameParametersTagged', {
+    "@type": typing.Literal["afni/@parse_afni_name"],
     "afni_name": str,
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "afni.@parse_afni_name": v__parse_afni_name_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "afni.@parse_afni_name": v__parse_afni_name_outputs,
-    }.get(t)
-
-
 class VParseAfniNameOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `v__parse_afni_name(...)`.
+    Output object returned when calling `VParseAfniNameParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -69,7 +41,7 @@ class VParseAfniNameOutputs(typing.NamedTuple):
 
 def v__parse_afni_name_params(
     afni_name: str,
-) -> VParseAfniNameParameters:
+) -> VParseAfniNameParametersTagged:
     """
     Build parameters.
     
@@ -79,7 +51,7 @@ def v__parse_afni_name_params(
         Parameter dictionary
     """
     params = {
-        "@type": "afni.@parse_afni_name",
+        "@type": "afni/@parse_afni_name",
         "afni_name": afni_name,
     }
     return params
@@ -100,7 +72,7 @@ def v__parse_afni_name_cargs(
     """
     cargs = []
     cargs.append("@parse_afni_name")
-    cargs.append(params.get("afni_name"))
+    cargs.append(params.get("afni_name", None))
     return cargs
 
 
@@ -184,7 +156,6 @@ def v__parse_afni_name(
 
 __all__ = [
     "VParseAfniNameOutputs",
-    "VParseAfniNameParameters",
     "V__PARSE_AFNI_NAME_METADATA",
     "v__parse_afni_name",
     "v__parse_afni_name_execute",

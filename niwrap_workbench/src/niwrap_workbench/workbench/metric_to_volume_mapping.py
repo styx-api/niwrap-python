@@ -14,7 +14,15 @@ METRIC_TO_VOLUME_MAPPING_METADATA = Metadata(
 
 
 MetricToVolumeMappingRibbonConstrainedParameters = typing.TypedDict('MetricToVolumeMappingRibbonConstrainedParameters', {
-    "@type": typing.Literal["workbench.metric-to-volume-mapping.ribbon_constrained"],
+    "@type": typing.NotRequired[typing.Literal["ribbon_constrained"]],
+    "inner_surf": InputPathType,
+    "outer_surf": InputPathType,
+    "opt_voxel_subdiv_subdiv_num": typing.NotRequired[int | None],
+    "opt_greedy": bool,
+    "opt_thick_columns": bool,
+})
+MetricToVolumeMappingRibbonConstrainedParametersTagged = typing.TypedDict('MetricToVolumeMappingRibbonConstrainedParametersTagged', {
+    "@type": typing.Literal["ribbon_constrained"],
     "inner_surf": InputPathType,
     "outer_surf": InputPathType,
     "opt_voxel_subdiv_subdiv_num": typing.NotRequired[int | None],
@@ -24,7 +32,16 @@ MetricToVolumeMappingRibbonConstrainedParameters = typing.TypedDict('MetricToVol
 
 
 MetricToVolumeMappingParameters = typing.TypedDict('MetricToVolumeMappingParameters', {
-    "@type": typing.Literal["workbench.metric-to-volume-mapping"],
+    "@type": typing.NotRequired[typing.Literal["workbench/metric-to-volume-mapping"]],
+    "metric": InputPathType,
+    "surface": InputPathType,
+    "volume_space": InputPathType,
+    "volume_out": str,
+    "opt_nearest_vertex_distance": typing.NotRequired[float | None],
+    "ribbon_constrained": typing.NotRequired[MetricToVolumeMappingRibbonConstrainedParameters | None],
+})
+MetricToVolumeMappingParametersTagged = typing.TypedDict('MetricToVolumeMappingParametersTagged', {
+    "@type": typing.Literal["workbench/metric-to-volume-mapping"],
     "metric": InputPathType,
     "surface": InputPathType,
     "volume_space": InputPathType,
@@ -34,46 +51,13 @@ MetricToVolumeMappingParameters = typing.TypedDict('MetricToVolumeMappingParamet
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "workbench.metric-to-volume-mapping": metric_to_volume_mapping_cargs,
-        "workbench.metric-to-volume-mapping.ribbon_constrained": metric_to_volume_mapping_ribbon_constrained_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "workbench.metric-to-volume-mapping": metric_to_volume_mapping_outputs,
-    }.get(t)
-
-
 def metric_to_volume_mapping_ribbon_constrained_params(
     inner_surf: InputPathType,
     outer_surf: InputPathType,
     opt_voxel_subdiv_subdiv_num: int | None = None,
     opt_greedy: bool = False,
     opt_thick_columns: bool = False,
-) -> MetricToVolumeMappingRibbonConstrainedParameters:
+) -> MetricToVolumeMappingRibbonConstrainedParametersTagged:
     """
     Build parameters.
     
@@ -89,7 +73,7 @@ def metric_to_volume_mapping_ribbon_constrained_params(
         Parameter dictionary
     """
     params = {
-        "@type": "workbench.metric-to-volume-mapping.ribbon_constrained",
+        "@type": "ribbon_constrained",
         "inner_surf": inner_surf,
         "outer_surf": outer_surf,
         "opt_greedy": opt_greedy,
@@ -115,23 +99,23 @@ def metric_to_volume_mapping_ribbon_constrained_cargs(
     """
     cargs = []
     cargs.append("-ribbon-constrained")
-    cargs.append(execution.input_file(params.get("inner_surf")))
-    cargs.append(execution.input_file(params.get("outer_surf")))
-    if params.get("opt_voxel_subdiv_subdiv_num") is not None:
+    cargs.append(execution.input_file(params.get("inner_surf", None)))
+    cargs.append(execution.input_file(params.get("outer_surf", None)))
+    if params.get("opt_voxel_subdiv_subdiv_num", None) is not None:
         cargs.extend([
             "-voxel-subdiv",
-            str(params.get("opt_voxel_subdiv_subdiv_num"))
+            str(params.get("opt_voxel_subdiv_subdiv_num", None))
         ])
-    if params.get("opt_greedy"):
+    if params.get("opt_greedy", False):
         cargs.append("-greedy")
-    if params.get("opt_thick_columns"):
+    if params.get("opt_thick_columns", False):
         cargs.append("-thick-columns")
     return cargs
 
 
 class MetricToVolumeMappingOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `metric_to_volume_mapping(...)`.
+    Output object returned when calling `MetricToVolumeMappingParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -146,7 +130,7 @@ def metric_to_volume_mapping_params(
     volume_out: str,
     opt_nearest_vertex_distance: float | None = None,
     ribbon_constrained: MetricToVolumeMappingRibbonConstrainedParameters | None = None,
-) -> MetricToVolumeMappingParameters:
+) -> MetricToVolumeMappingParametersTagged:
     """
     Build parameters.
     
@@ -163,7 +147,7 @@ def metric_to_volume_mapping_params(
         Parameter dictionary
     """
     params = {
-        "@type": "workbench.metric-to-volume-mapping",
+        "@type": "workbench/metric-to-volume-mapping",
         "metric": metric,
         "surface": surface,
         "volume_space": volume_space,
@@ -192,17 +176,17 @@ def metric_to_volume_mapping_cargs(
     cargs = []
     cargs.append("wb_command")
     cargs.append("-metric-to-volume-mapping")
-    cargs.append(execution.input_file(params.get("metric")))
-    cargs.append(execution.input_file(params.get("surface")))
-    cargs.append(execution.input_file(params.get("volume_space")))
-    cargs.append(params.get("volume_out"))
-    if params.get("opt_nearest_vertex_distance") is not None:
+    cargs.append(execution.input_file(params.get("metric", None)))
+    cargs.append(execution.input_file(params.get("surface", None)))
+    cargs.append(execution.input_file(params.get("volume_space", None)))
+    cargs.append(params.get("volume_out", None))
+    if params.get("opt_nearest_vertex_distance", None) is not None:
         cargs.extend([
             "-nearest-vertex",
-            str(params.get("opt_nearest_vertex_distance"))
+            str(params.get("opt_nearest_vertex_distance", None))
         ])
-    if params.get("ribbon_constrained") is not None:
-        cargs.extend(dyn_cargs(params.get("ribbon_constrained")["@type"])(params.get("ribbon_constrained"), execution))
+    if params.get("ribbon_constrained", None) is not None:
+        cargs.extend(metric_to_volume_mapping_ribbon_constrained_cargs(params.get("ribbon_constrained", None), execution))
     return cargs
 
 
@@ -221,7 +205,7 @@ def metric_to_volume_mapping_outputs(
     """
     ret = MetricToVolumeMappingOutputs(
         root=execution.output_file("."),
-        volume_out=execution.output_file(params.get("volume_out")),
+        volume_out=execution.output_file(params.get("volume_out", None)),
     )
     return ret
 
@@ -315,8 +299,6 @@ def metric_to_volume_mapping(
 __all__ = [
     "METRIC_TO_VOLUME_MAPPING_METADATA",
     "MetricToVolumeMappingOutputs",
-    "MetricToVolumeMappingParameters",
-    "MetricToVolumeMappingRibbonConstrainedParameters",
     "metric_to_volume_mapping",
     "metric_to_volume_mapping_execute",
     "metric_to_volume_mapping_params",

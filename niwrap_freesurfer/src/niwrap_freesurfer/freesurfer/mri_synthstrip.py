@@ -14,7 +14,17 @@ MRI_SYNTHSTRIP_METADATA = Metadata(
 
 
 MriSynthstripParameters = typing.TypedDict('MriSynthstripParameters', {
-    "@type": typing.Literal["freesurfer.mri_synthstrip"],
+    "@type": typing.NotRequired[typing.Literal["freesurfer/mri_synthstrip"]],
+    "image": InputPathType,
+    "output_image": typing.NotRequired[str | None],
+    "mask": typing.NotRequired[InputPathType | None],
+    "gpu": bool,
+    "border": typing.NotRequired[float | None],
+    "exclude_csf": bool,
+    "model_weights": typing.NotRequired[InputPathType | None],
+})
+MriSynthstripParametersTagged = typing.TypedDict('MriSynthstripParametersTagged', {
+    "@type": typing.Literal["freesurfer/mri_synthstrip"],
     "image": InputPathType,
     "output_image": typing.NotRequired[str | None],
     "mask": typing.NotRequired[InputPathType | None],
@@ -25,41 +35,9 @@ MriSynthstripParameters = typing.TypedDict('MriSynthstripParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "freesurfer.mri_synthstrip": mri_synthstrip_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "freesurfer.mri_synthstrip": mri_synthstrip_outputs,
-    }.get(t)
-
-
 class MriSynthstripOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `mri_synthstrip(...)`.
+    Output object returned when calling `MriSynthstripParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -77,7 +55,7 @@ def mri_synthstrip_params(
     border: float | None = None,
     exclude_csf: bool = False,
     model_weights: InputPathType | None = None,
-) -> MriSynthstripParameters:
+) -> MriSynthstripParametersTagged:
     """
     Build parameters.
     
@@ -93,7 +71,7 @@ def mri_synthstrip_params(
         Parameter dictionary
     """
     params = {
-        "@type": "freesurfer.mri_synthstrip",
+        "@type": "freesurfer/mri_synthstrip",
         "image": image,
         "gpu": gpu,
         "exclude_csf": exclude_csf,
@@ -126,31 +104,31 @@ def mri_synthstrip_cargs(
     cargs.append("mri_synthstrip")
     cargs.extend([
         "-i",
-        execution.input_file(params.get("image"))
+        execution.input_file(params.get("image", None))
     ])
-    if params.get("output_image") is not None:
+    if params.get("output_image", None) is not None:
         cargs.extend([
             "-o",
-            "[" + params.get("output_image") + "]"
+            "[" + params.get("output_image", None) + "]"
         ])
-    if params.get("mask") is not None:
+    if params.get("mask", None) is not None:
         cargs.extend([
             "-m",
-            "[" + execution.input_file(params.get("mask")) + "]"
+            "[" + execution.input_file(params.get("mask", None)) + "]"
         ])
-    if params.get("gpu"):
+    if params.get("gpu", False):
         cargs.append("[" + "-g" + "]")
-    if params.get("border") is not None:
+    if params.get("border", None) is not None:
         cargs.extend([
             "-b",
-            "[" + str(params.get("border")) + "]"
+            "[" + str(params.get("border", None)) + "]"
         ])
-    if params.get("exclude_csf"):
+    if params.get("exclude_csf", False):
         cargs.append("[" + "--no-csf" + "]")
-    if params.get("model_weights") is not None:
+    if params.get("model_weights", None) is not None:
         cargs.extend([
             "--model",
-            "[" + execution.input_file(params.get("model_weights")) + "]"
+            "[" + execution.input_file(params.get("model_weights", None)) + "]"
         ])
     return cargs
 
@@ -170,8 +148,8 @@ def mri_synthstrip_outputs(
     """
     ret = MriSynthstripOutputs(
         root=execution.output_file("."),
-        output_image_file=execution.output_file(params.get("output_image")) if (params.get("output_image") is not None) else None,
-        output_mask_file=execution.output_file(pathlib.Path(params.get("mask")).name) if (params.get("mask") is not None) else None,
+        output_image_file=execution.output_file(params.get("output_image", None)) if (params.get("output_image") is not None) else None,
+        output_mask_file=execution.output_file(pathlib.Path(params.get("mask", None)).name) if (params.get("mask") is not None) else None,
     )
     return ret
 
@@ -250,7 +228,6 @@ def mri_synthstrip(
 __all__ = [
     "MRI_SYNTHSTRIP_METADATA",
     "MriSynthstripOutputs",
-    "MriSynthstripParameters",
     "mri_synthstrip",
     "mri_synthstrip_execute",
     "mri_synthstrip_params",

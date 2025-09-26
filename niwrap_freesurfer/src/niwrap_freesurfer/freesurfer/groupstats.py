@@ -14,7 +14,27 @@ GROUPSTATS_METADATA = Metadata(
 
 
 GroupstatsParameters = typing.TypedDict('GroupstatsParameters', {
-    "@type": typing.Literal["freesurfer.groupstats"],
+    "@type": typing.NotRequired[typing.Literal["freesurfer/groupstats"]],
+    "outdir": str,
+    "group_fsgd": typing.NotRequired[InputPathType | None],
+    "subjectfile": typing.NotRequired[InputPathType | None],
+    "fwhm": typing.NotRequired[list[float] | None],
+    "subject_dir": typing.NotRequired[str | None],
+    "mapname": typing.NotRequired[str | None],
+    "srcsurfreg": typing.NotRequired[str | None],
+    "no_maps": bool,
+    "lh_only": bool,
+    "rh_only": bool,
+    "no_aparcstats": bool,
+    "no_asegstats": bool,
+    "no_wparcstats": bool,
+    "no_stats": bool,
+    "new": bool,
+    "base": bool,
+    "keep53": bool,
+})
+GroupstatsParametersTagged = typing.TypedDict('GroupstatsParametersTagged', {
+    "@type": typing.Literal["freesurfer/groupstats"],
     "outdir": str,
     "group_fsgd": typing.NotRequired[InputPathType | None],
     "subjectfile": typing.NotRequired[InputPathType | None],
@@ -35,40 +55,9 @@ GroupstatsParameters = typing.TypedDict('GroupstatsParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "freesurfer.groupstats": groupstats_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-    }.get(t)
-
-
 class GroupstatsOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `groupstats(...)`.
+    Output object returned when calling `GroupstatsParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -92,7 +81,7 @@ def groupstats_params(
     new: bool = False,
     base: bool = False,
     keep53: bool = False,
-) -> GroupstatsParameters:
+) -> GroupstatsParametersTagged:
     """
     Build parameters.
     
@@ -119,7 +108,7 @@ def groupstats_params(
         Parameter dictionary
     """
     params = {
-        "@type": "freesurfer.groupstats",
+        "@type": "freesurfer/groupstats",
         "outdir": outdir,
         "no_maps": no_maps,
         "lh_only": lh_only,
@@ -164,57 +153,57 @@ def groupstats_cargs(
     cargs.append("groupstats")
     cargs.extend([
         "--o",
-        params.get("outdir")
+        params.get("outdir", None)
     ])
-    if params.get("group_fsgd") is not None:
+    if params.get("group_fsgd", None) is not None:
         cargs.extend([
             "--fsgd",
-            execution.input_file(params.get("group_fsgd"))
+            execution.input_file(params.get("group_fsgd", None))
         ])
-    if params.get("subjectfile") is not None:
+    if params.get("subjectfile", None) is not None:
         cargs.extend([
             "--f",
-            execution.input_file(params.get("subjectfile"))
+            execution.input_file(params.get("subjectfile", None))
         ])
-    if params.get("fwhm") is not None:
+    if params.get("fwhm", None) is not None:
         cargs.extend([
             "--fwhm",
-            *map(str, params.get("fwhm"))
+            *map(str, params.get("fwhm", None))
         ])
-    if params.get("subject_dir") is not None:
+    if params.get("subject_dir", None) is not None:
         cargs.extend([
             "--sd",
-            params.get("subject_dir")
+            params.get("subject_dir", None)
         ])
-    if params.get("mapname") is not None:
+    if params.get("mapname", None) is not None:
         cargs.extend([
             "--m",
-            params.get("mapname")
+            params.get("mapname", None)
         ])
-    if params.get("srcsurfreg") is not None:
+    if params.get("srcsurfreg", None) is not None:
         cargs.extend([
             "--srcsurfreg",
-            params.get("srcsurfreg")
+            params.get("srcsurfreg", None)
         ])
-    if params.get("no_maps"):
+    if params.get("no_maps", False):
         cargs.append("--no-maps")
-    if params.get("lh_only"):
+    if params.get("lh_only", False):
         cargs.append("--lh")
-    if params.get("rh_only"):
+    if params.get("rh_only", False):
         cargs.append("--rh")
-    if params.get("no_aparcstats"):
+    if params.get("no_aparcstats", False):
         cargs.append("--no-aparcstats")
-    if params.get("no_asegstats"):
+    if params.get("no_asegstats", False):
         cargs.append("--no-asegstats")
-    if params.get("no_wparcstats"):
+    if params.get("no_wparcstats", False):
         cargs.append("--no-wparcstats")
-    if params.get("no_stats"):
+    if params.get("no_stats", False):
         cargs.append("--no-stats")
-    if params.get("new"):
+    if params.get("new", False):
         cargs.append("--new")
-    if params.get("base"):
+    if params.get("base", False):
         cargs.append("--base")
-    if params.get("keep53"):
+    if params.get("keep53", False):
         cargs.append("--keep53")
     return cargs
 
@@ -345,7 +334,6 @@ def groupstats(
 __all__ = [
     "GROUPSTATS_METADATA",
     "GroupstatsOutputs",
-    "GroupstatsParameters",
     "groupstats",
     "groupstats_execute",
     "groupstats_params",

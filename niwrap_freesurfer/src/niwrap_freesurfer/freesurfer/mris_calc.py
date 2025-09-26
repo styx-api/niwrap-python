@@ -14,7 +14,16 @@ MRIS_CALC_METADATA = Metadata(
 
 
 MrisCalcParameters = typing.TypedDict('MrisCalcParameters', {
-    "@type": typing.Literal["freesurfer.mris_calc"],
+    "@type": typing.NotRequired[typing.Literal["freesurfer/mris_calc"]],
+    "input_file1": InputPathType,
+    "action": str,
+    "input_file2_or_float": typing.NotRequired[InputPathType | None],
+    "output_file": typing.NotRequired[str | None],
+    "label_file": typing.NotRequired[InputPathType | None],
+    "verbosity": typing.NotRequired[str | None],
+})
+MrisCalcParametersTagged = typing.TypedDict('MrisCalcParametersTagged', {
+    "@type": typing.Literal["freesurfer/mris_calc"],
     "input_file1": InputPathType,
     "action": str,
     "input_file2_or_float": typing.NotRequired[InputPathType | None],
@@ -24,41 +33,9 @@ MrisCalcParameters = typing.TypedDict('MrisCalcParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "freesurfer.mris_calc": mris_calc_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "freesurfer.mris_calc": mris_calc_outputs,
-    }.get(t)
-
-
 class MrisCalcOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `mris_calc(...)`.
+    Output object returned when calling `MrisCalcParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -73,7 +50,7 @@ def mris_calc_params(
     output_file: str | None = None,
     label_file: InputPathType | None = None,
     verbosity: str | None = None,
-) -> MrisCalcParameters:
+) -> MrisCalcParametersTagged:
     """
     Build parameters.
     
@@ -93,7 +70,7 @@ def mris_calc_params(
         Parameter dictionary
     """
     params = {
-        "@type": "freesurfer.mris_calc",
+        "@type": "freesurfer/mris_calc",
         "input_file1": input_file1,
         "action": action,
     }
@@ -123,24 +100,24 @@ def mris_calc_cargs(
     """
     cargs = []
     cargs.append("mris_calc")
-    cargs.append(execution.input_file(params.get("input_file1")))
-    cargs.append(params.get("action"))
-    if params.get("input_file2_or_float") is not None:
-        cargs.append(execution.input_file(params.get("input_file2_or_float")))
-    if params.get("output_file") is not None:
+    cargs.append(execution.input_file(params.get("input_file1", None)))
+    cargs.append(params.get("action", None))
+    if params.get("input_file2_or_float", None) is not None:
+        cargs.append(execution.input_file(params.get("input_file2_or_float", None)))
+    if params.get("output_file", None) is not None:
         cargs.extend([
             "--output",
-            params.get("output_file")
+            params.get("output_file", None)
         ])
-    if params.get("label_file") is not None:
+    if params.get("label_file", None) is not None:
         cargs.extend([
             "--label",
-            execution.input_file(params.get("label_file"))
+            execution.input_file(params.get("label_file", None))
         ])
-    if params.get("verbosity") is not None:
+    if params.get("verbosity", None) is not None:
         cargs.extend([
             "--verbosity",
-            params.get("verbosity")
+            params.get("verbosity", None)
         ])
     return cargs
 
@@ -160,7 +137,7 @@ def mris_calc_outputs(
     """
     ret = MrisCalcOutputs(
         root=execution.output_file("."),
-        output_curv_file=execution.output_file(params.get("output_file")) if (params.get("output_file") is not None) else None,
+        output_curv_file=execution.output_file(params.get("output_file", None)) if (params.get("output_file") is not None) else None,
     )
     return ret
 
@@ -241,7 +218,6 @@ def mris_calc(
 __all__ = [
     "MRIS_CALC_METADATA",
     "MrisCalcOutputs",
-    "MrisCalcParameters",
     "mris_calc",
     "mris_calc_execute",
     "mris_calc_params",

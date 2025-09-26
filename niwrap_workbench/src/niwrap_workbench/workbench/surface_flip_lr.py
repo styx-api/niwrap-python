@@ -14,47 +14,20 @@ SURFACE_FLIP_LR_METADATA = Metadata(
 
 
 SurfaceFlipLrParameters = typing.TypedDict('SurfaceFlipLrParameters', {
-    "@type": typing.Literal["workbench.surface-flip-lr"],
+    "@type": typing.NotRequired[typing.Literal["workbench/surface-flip-lr"]],
+    "surface": InputPathType,
+    "surface_out": str,
+})
+SurfaceFlipLrParametersTagged = typing.TypedDict('SurfaceFlipLrParametersTagged', {
+    "@type": typing.Literal["workbench/surface-flip-lr"],
     "surface": InputPathType,
     "surface_out": str,
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "workbench.surface-flip-lr": surface_flip_lr_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "workbench.surface-flip-lr": surface_flip_lr_outputs,
-    }.get(t)
-
-
 class SurfaceFlipLrOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `surface_flip_lr(...)`.
+    Output object returned when calling `SurfaceFlipLrParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -65,7 +38,7 @@ class SurfaceFlipLrOutputs(typing.NamedTuple):
 def surface_flip_lr_params(
     surface: InputPathType,
     surface_out: str,
-) -> SurfaceFlipLrParameters:
+) -> SurfaceFlipLrParametersTagged:
     """
     Build parameters.
     
@@ -76,7 +49,7 @@ def surface_flip_lr_params(
         Parameter dictionary
     """
     params = {
-        "@type": "workbench.surface-flip-lr",
+        "@type": "workbench/surface-flip-lr",
         "surface": surface,
         "surface_out": surface_out,
     }
@@ -99,8 +72,8 @@ def surface_flip_lr_cargs(
     cargs = []
     cargs.append("wb_command")
     cargs.append("-surface-flip-lr")
-    cargs.append(execution.input_file(params.get("surface")))
-    cargs.append(params.get("surface_out"))
+    cargs.append(execution.input_file(params.get("surface", None)))
+    cargs.append(params.get("surface_out", None))
     return cargs
 
 
@@ -119,7 +92,7 @@ def surface_flip_lr_outputs(
     """
     ret = SurfaceFlipLrOutputs(
         root=execution.output_file("."),
-        surface_out=execution.output_file(params.get("surface_out")),
+        surface_out=execution.output_file(params.get("surface_out", None)),
     )
     return ret
 
@@ -195,7 +168,6 @@ def surface_flip_lr(
 __all__ = [
     "SURFACE_FLIP_LR_METADATA",
     "SurfaceFlipLrOutputs",
-    "SurfaceFlipLrParameters",
     "surface_flip_lr",
     "surface_flip_lr_execute",
     "surface_flip_lr_params",

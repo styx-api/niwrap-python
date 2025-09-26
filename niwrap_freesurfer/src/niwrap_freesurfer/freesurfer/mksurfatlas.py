@@ -14,7 +14,19 @@ MKSURFATLAS_METADATA = Metadata(
 
 
 MksurfatlasParameters = typing.TypedDict('MksurfatlasParameters', {
-    "@type": typing.Literal["freesurfer.mksurfatlas"],
+    "@type": typing.NotRequired[typing.Literal["freesurfer/mksurfatlas"]],
+    "atlas": str,
+    "hemi": str,
+    "subjects": list[str],
+    "surfval": str,
+    "surfvaldir": typing.NotRequired[str | None],
+    "regsurf": typing.NotRequired[str | None],
+    "debug": bool,
+    "version": bool,
+    "help": bool,
+})
+MksurfatlasParametersTagged = typing.TypedDict('MksurfatlasParametersTagged', {
+    "@type": typing.Literal["freesurfer/mksurfatlas"],
     "atlas": str,
     "hemi": str,
     "subjects": list[str],
@@ -27,41 +39,9 @@ MksurfatlasParameters = typing.TypedDict('MksurfatlasParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "freesurfer.mksurfatlas": mksurfatlas_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "freesurfer.mksurfatlas": mksurfatlas_outputs,
-    }.get(t)
-
-
 class MksurfatlasOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `mksurfatlas(...)`.
+    Output object returned when calling `MksurfatlasParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -79,7 +59,7 @@ def mksurfatlas_params(
     debug: bool = False,
     version: bool = False,
     help_: bool = False,
-) -> MksurfatlasParameters:
+) -> MksurfatlasParametersTagged:
     """
     Build parameters.
     
@@ -99,7 +79,7 @@ def mksurfatlas_params(
         Parameter dictionary
     """
     params = {
-        "@type": "freesurfer.mksurfatlas",
+        "@type": "freesurfer/mksurfatlas",
         "atlas": atlas,
         "hemi": hemi,
         "subjects": subjects,
@@ -132,35 +112,35 @@ def mksurfatlas_cargs(
     cargs.append("mksurfatlas")
     cargs.extend([
         "--a",
-        params.get("atlas")
+        params.get("atlas", None)
     ])
     cargs.extend([
         "--h",
-        params.get("hemi")
+        params.get("hemi", None)
     ])
     cargs.extend([
         "--s",
-        *params.get("subjects")
+        *params.get("subjects", None)
     ])
     cargs.extend([
         "--v",
-        params.get("surfval")
+        params.get("surfval", None)
     ])
-    if params.get("surfvaldir") is not None:
+    if params.get("surfvaldir", None) is not None:
         cargs.extend([
             "--d",
-            params.get("surfvaldir")
+            params.get("surfvaldir", None)
         ])
-    if params.get("regsurf") is not None:
+    if params.get("regsurf", None) is not None:
         cargs.extend([
             "--r",
-            params.get("regsurf")
+            params.get("regsurf", None)
         ])
-    if params.get("debug"):
+    if params.get("debug", False):
         cargs.append("--debug")
-    if params.get("version"):
+    if params.get("version", False):
         cargs.append("--version")
-    if params.get("help"):
+    if params.get("help", False):
         cargs.append("--help")
     return cargs
 
@@ -180,7 +160,7 @@ def mksurfatlas_outputs(
     """
     ret = MksurfatlasOutputs(
         root=execution.output_file("."),
-        output_atlas=execution.output_file(params.get("atlas")),
+        output_atlas=execution.output_file(params.get("atlas", None)),
     )
     return ret
 
@@ -269,7 +249,6 @@ def mksurfatlas(
 __all__ = [
     "MKSURFATLAS_METADATA",
     "MksurfatlasOutputs",
-    "MksurfatlasParameters",
     "mksurfatlas",
     "mksurfatlas_execute",
     "mksurfatlas_params",

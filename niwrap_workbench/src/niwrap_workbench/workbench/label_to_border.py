@@ -14,7 +14,15 @@ LABEL_TO_BORDER_METADATA = Metadata(
 
 
 LabelToBorderParameters = typing.TypedDict('LabelToBorderParameters', {
-    "@type": typing.Literal["workbench.label-to-border"],
+    "@type": typing.NotRequired[typing.Literal["workbench/label-to-border"]],
+    "surface": InputPathType,
+    "label_in": InputPathType,
+    "border_out": str,
+    "opt_placement_fraction": typing.NotRequired[float | None],
+    "opt_column_column": typing.NotRequired[str | None],
+})
+LabelToBorderParametersTagged = typing.TypedDict('LabelToBorderParametersTagged', {
+    "@type": typing.Literal["workbench/label-to-border"],
     "surface": InputPathType,
     "label_in": InputPathType,
     "border_out": str,
@@ -23,41 +31,9 @@ LabelToBorderParameters = typing.TypedDict('LabelToBorderParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "workbench.label-to-border": label_to_border_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "workbench.label-to-border": label_to_border_outputs,
-    }.get(t)
-
-
 class LabelToBorderOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `label_to_border(...)`.
+    Output object returned when calling `LabelToBorderParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -71,7 +47,7 @@ def label_to_border_params(
     border_out: str,
     opt_placement_fraction: float | None = None,
     opt_column_column: str | None = None,
-) -> LabelToBorderParameters:
+) -> LabelToBorderParametersTagged:
     """
     Build parameters.
     
@@ -86,7 +62,7 @@ def label_to_border_params(
         Parameter dictionary
     """
     params = {
-        "@type": "workbench.label-to-border",
+        "@type": "workbench/label-to-border",
         "surface": surface,
         "label_in": label_in,
         "border_out": border_out,
@@ -114,18 +90,18 @@ def label_to_border_cargs(
     cargs = []
     cargs.append("wb_command")
     cargs.append("-label-to-border")
-    cargs.append(execution.input_file(params.get("surface")))
-    cargs.append(execution.input_file(params.get("label_in")))
-    cargs.append(params.get("border_out"))
-    if params.get("opt_placement_fraction") is not None:
+    cargs.append(execution.input_file(params.get("surface", None)))
+    cargs.append(execution.input_file(params.get("label_in", None)))
+    cargs.append(params.get("border_out", None))
+    if params.get("opt_placement_fraction", None) is not None:
         cargs.extend([
             "-placement",
-            str(params.get("opt_placement_fraction"))
+            str(params.get("opt_placement_fraction", None))
         ])
-    if params.get("opt_column_column") is not None:
+    if params.get("opt_column_column", None) is not None:
         cargs.extend([
             "-column",
-            params.get("opt_column_column")
+            params.get("opt_column_column", None)
         ])
     return cargs
 
@@ -145,7 +121,7 @@ def label_to_border_outputs(
     """
     ret = LabelToBorderOutputs(
         root=execution.output_file("."),
-        border_out=execution.output_file(params.get("border_out")),
+        border_out=execution.output_file(params.get("border_out", None)),
     )
     return ret
 
@@ -229,7 +205,6 @@ def label_to_border(
 __all__ = [
     "LABEL_TO_BORDER_METADATA",
     "LabelToBorderOutputs",
-    "LabelToBorderParameters",
     "label_to_border",
     "label_to_border_execute",
     "label_to_border_params",

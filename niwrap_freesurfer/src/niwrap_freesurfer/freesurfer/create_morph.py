@@ -14,7 +14,15 @@ CREATE_MORPH_METADATA = Metadata(
 
 
 CreateMorphParameters = typing.TypedDict('CreateMorphParameters', {
-    "@type": typing.Literal["freesurfer.createMorph"],
+    "@type": typing.NotRequired[typing.Literal["freesurfer/createMorph"]],
+    "input_transforms": list[str],
+    "output_transform": str,
+    "template": typing.NotRequired[InputPathType | None],
+    "subject": typing.NotRequired[InputPathType | None],
+    "debug_coordinates": typing.NotRequired[list[float] | None],
+})
+CreateMorphParametersTagged = typing.TypedDict('CreateMorphParametersTagged', {
+    "@type": typing.Literal["freesurfer/createMorph"],
     "input_transforms": list[str],
     "output_transform": str,
     "template": typing.NotRequired[InputPathType | None],
@@ -23,41 +31,9 @@ CreateMorphParameters = typing.TypedDict('CreateMorphParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "freesurfer.createMorph": create_morph_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "freesurfer.createMorph": create_morph_outputs,
-    }.get(t)
-
-
 class CreateMorphOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `create_morph(...)`.
+    Output object returned when calling `CreateMorphParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -71,7 +47,7 @@ def create_morph_params(
     template: InputPathType | None = None,
     subject: InputPathType | None = None,
     debug_coordinates: list[float] | None = None,
-) -> CreateMorphParameters:
+) -> CreateMorphParametersTagged:
     """
     Build parameters.
     
@@ -87,7 +63,7 @@ def create_morph_params(
         Parameter dictionary
     """
     params = {
-        "@type": "freesurfer.createMorph",
+        "@type": "freesurfer/createMorph",
         "input_transforms": input_transforms,
         "output_transform": output_transform,
     }
@@ -117,26 +93,26 @@ def create_morph_cargs(
     cargs.append("createMorph")
     cargs.extend([
         "--in",
-        *params.get("input_transforms")
+        *params.get("input_transforms", None)
     ])
     cargs.extend([
         "--out",
-        params.get("output_transform")
+        params.get("output_transform", None)
     ])
-    if params.get("template") is not None:
+    if params.get("template", None) is not None:
         cargs.extend([
             "--template",
-            execution.input_file(params.get("template"))
+            execution.input_file(params.get("template", None))
         ])
-    if params.get("subject") is not None:
+    if params.get("subject", None) is not None:
         cargs.extend([
             "--subject",
-            execution.input_file(params.get("subject"))
+            execution.input_file(params.get("subject", None))
         ])
-    if params.get("debug_coordinates") is not None:
+    if params.get("debug_coordinates", None) is not None:
         cargs.extend([
             "--dbg",
-            *map(str, params.get("debug_coordinates"))
+            *map(str, params.get("debug_coordinates", None))
         ])
     return cargs
 
@@ -156,7 +132,7 @@ def create_morph_outputs(
     """
     ret = CreateMorphOutputs(
         root=execution.output_file("."),
-        output_transform_file=execution.output_file(params.get("output_transform")),
+        output_transform_file=execution.output_file(params.get("output_transform", None)),
     )
     return ret
 
@@ -233,7 +209,6 @@ def create_morph(
 __all__ = [
     "CREATE_MORPH_METADATA",
     "CreateMorphOutputs",
-    "CreateMorphParameters",
     "create_morph",
     "create_morph_execute",
     "create_morph_params",

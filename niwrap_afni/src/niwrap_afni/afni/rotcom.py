@@ -14,47 +14,20 @@ ROTCOM_METADATA = Metadata(
 
 
 RotcomParameters = typing.TypedDict('RotcomParameters', {
-    "@type": typing.Literal["afni.rotcom"],
+    "@type": typing.NotRequired[typing.Literal["afni/rotcom"]],
+    "rotate_ashift": str,
+    "dataset": typing.NotRequired[InputPathType | None],
+})
+RotcomParametersTagged = typing.TypedDict('RotcomParametersTagged', {
+    "@type": typing.Literal["afni/rotcom"],
     "rotate_ashift": str,
     "dataset": typing.NotRequired[InputPathType | None],
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "afni.rotcom": rotcom_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "afni.rotcom": rotcom_outputs,
-    }.get(t)
-
-
 class RotcomOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `rotcom(...)`.
+    Output object returned when calling `RotcomParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -65,7 +38,7 @@ class RotcomOutputs(typing.NamedTuple):
 def rotcom_params(
     rotate_ashift: str,
     dataset: InputPathType | None = None,
-) -> RotcomParameters:
+) -> RotcomParametersTagged:
     """
     Build parameters.
     
@@ -77,7 +50,7 @@ def rotcom_params(
         Parameter dictionary
     """
     params = {
-        "@type": "afni.rotcom",
+        "@type": "afni/rotcom",
         "rotate_ashift": rotate_ashift,
     }
     if dataset is not None:
@@ -100,9 +73,9 @@ def rotcom_cargs(
     """
     cargs = []
     cargs.append("rotcom")
-    cargs.append(params.get("rotate_ashift"))
-    if params.get("dataset") is not None:
-        cargs.append(execution.input_file(params.get("dataset")))
+    cargs.append(params.get("rotate_ashift", None))
+    if params.get("dataset", None) is not None:
+        cargs.append(execution.input_file(params.get("dataset", None)))
     return cargs
 
 
@@ -188,7 +161,6 @@ def rotcom(
 __all__ = [
     "ROTCOM_METADATA",
     "RotcomOutputs",
-    "RotcomParameters",
     "rotcom",
     "rotcom_execute",
     "rotcom_params",

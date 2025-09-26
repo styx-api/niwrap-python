@@ -14,14 +14,33 @@ TSFDIVIDE_METADATA = Metadata(
 
 
 TsfdivideConfigParameters = typing.TypedDict('TsfdivideConfigParameters', {
-    "@type": typing.Literal["mrtrix.tsfdivide.config"],
+    "@type": typing.NotRequired[typing.Literal["config"]],
+    "key": str,
+    "value": str,
+})
+TsfdivideConfigParametersTagged = typing.TypedDict('TsfdivideConfigParametersTagged', {
+    "@type": typing.Literal["config"],
     "key": str,
     "value": str,
 })
 
 
 TsfdivideParameters = typing.TypedDict('TsfdivideParameters', {
-    "@type": typing.Literal["mrtrix.tsfdivide"],
+    "@type": typing.NotRequired[typing.Literal["mrtrix/tsfdivide"]],
+    "info": bool,
+    "quiet": bool,
+    "debug": bool,
+    "force": bool,
+    "nthreads": typing.NotRequired[int | None],
+    "config": typing.NotRequired[list[TsfdivideConfigParameters] | None],
+    "help": bool,
+    "version": bool,
+    "input1": InputPathType,
+    "input2": InputPathType,
+    "output": str,
+})
+TsfdivideParametersTagged = typing.TypedDict('TsfdivideParametersTagged', {
+    "@type": typing.Literal["mrtrix/tsfdivide"],
     "info": bool,
     "quiet": bool,
     "debug": bool,
@@ -36,43 +55,10 @@ TsfdivideParameters = typing.TypedDict('TsfdivideParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "mrtrix.tsfdivide": tsfdivide_cargs,
-        "mrtrix.tsfdivide.config": tsfdivide_config_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "mrtrix.tsfdivide": tsfdivide_outputs,
-    }.get(t)
-
-
 def tsfdivide_config_params(
     key: str,
     value: str,
-) -> TsfdivideConfigParameters:
+) -> TsfdivideConfigParametersTagged:
     """
     Build parameters.
     
@@ -83,7 +69,7 @@ def tsfdivide_config_params(
         Parameter dictionary
     """
     params = {
-        "@type": "mrtrix.tsfdivide.config",
+        "@type": "config",
         "key": key,
         "value": value,
     }
@@ -105,14 +91,14 @@ def tsfdivide_config_cargs(
     """
     cargs = []
     cargs.append("-config")
-    cargs.append(params.get("key"))
-    cargs.append(params.get("value"))
+    cargs.append(params.get("key", None))
+    cargs.append(params.get("value", None))
     return cargs
 
 
 class TsfdivideOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `tsfdivide(...)`.
+    Output object returned when calling `TsfdivideParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -132,7 +118,7 @@ def tsfdivide_params(
     config: list[TsfdivideConfigParameters] | None = None,
     help_: bool = False,
     version: bool = False,
-) -> TsfdivideParameters:
+) -> TsfdivideParametersTagged:
     """
     Build parameters.
     
@@ -156,7 +142,7 @@ def tsfdivide_params(
         Parameter dictionary
     """
     params = {
-        "@type": "mrtrix.tsfdivide",
+        "@type": "mrtrix/tsfdivide",
         "info": info,
         "quiet": quiet,
         "debug": debug,
@@ -189,28 +175,28 @@ def tsfdivide_cargs(
     """
     cargs = []
     cargs.append("tsfdivide")
-    if params.get("info"):
+    if params.get("info", False):
         cargs.append("-info")
-    if params.get("quiet"):
+    if params.get("quiet", False):
         cargs.append("-quiet")
-    if params.get("debug"):
+    if params.get("debug", False):
         cargs.append("-debug")
-    if params.get("force"):
+    if params.get("force", False):
         cargs.append("-force")
-    if params.get("nthreads") is not None:
+    if params.get("nthreads", None) is not None:
         cargs.extend([
             "-nthreads",
-            str(params.get("nthreads"))
+            str(params.get("nthreads", None))
         ])
-    if params.get("config") is not None:
-        cargs.extend([a for c in [dyn_cargs(s["@type"])(s, execution) for s in params.get("config")] for a in c])
-    if params.get("help"):
+    if params.get("config", None) is not None:
+        cargs.extend([a for c in [tsfdivide_config_cargs(s, execution) for s in params.get("config", None)] for a in c])
+    if params.get("help", False):
         cargs.append("-help")
-    if params.get("version"):
+    if params.get("version", False):
         cargs.append("-version")
-    cargs.append(execution.input_file(params.get("input1")))
-    cargs.append(execution.input_file(params.get("input2")))
-    cargs.append(params.get("output"))
+    cargs.append(execution.input_file(params.get("input1", None)))
+    cargs.append(execution.input_file(params.get("input2", None)))
+    cargs.append(params.get("output", None))
     return cargs
 
 
@@ -229,7 +215,7 @@ def tsfdivide_outputs(
     """
     ret = TsfdivideOutputs(
         root=execution.output_file("."),
-        output=execution.output_file(params.get("output")),
+        output=execution.output_file(params.get("output", None)),
     )
     return ret
 
@@ -335,9 +321,7 @@ def tsfdivide(
 
 __all__ = [
     "TSFDIVIDE_METADATA",
-    "TsfdivideConfigParameters",
     "TsfdivideOutputs",
-    "TsfdivideParameters",
     "tsfdivide",
     "tsfdivide_config_params",
     "tsfdivide_execute",

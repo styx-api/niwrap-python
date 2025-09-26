@@ -14,7 +14,50 @@ GDCMCONV_FS_METADATA = Metadata(
 
 
 GdcmconvFsParameters = typing.TypedDict('GdcmconvFsParameters', {
-    "@type": typing.Literal["freesurfer.gdcmconv.fs"],
+    "@type": typing.NotRequired[typing.Literal["freesurfer/gdcmconv.fs"]],
+    "input_file": InputPathType,
+    "output_file": str,
+    "explicit_flag": bool,
+    "implicit_flag": bool,
+    "use_dict_flag": bool,
+    "with_private_dict_flag": bool,
+    "check_meta_flag": bool,
+    "root_uid": typing.NotRequired[str | None],
+    "remove_gl_flag": bool,
+    "remove_private_tags_flag": bool,
+    "remove_retired_flag": bool,
+    "apply_lut_flag": bool,
+    "photometric_interpretation": typing.NotRequired[str | None],
+    "raw_flag": bool,
+    "deflated_flag": bool,
+    "jpeg_flag": bool,
+    "j2k_flag": bool,
+    "jpegls_flag": bool,
+    "rle_flag": bool,
+    "force_flag": bool,
+    "generate_icon_flag": bool,
+    "icon_minmax": typing.NotRequired[list[float] | None],
+    "icon_auto_minmax_flag": bool,
+    "compress_icon_flag": bool,
+    "planar_configuration": typing.NotRequired[str | None],
+    "lossy_flag": bool,
+    "split": typing.NotRequired[float | None],
+    "verbose_flag": bool,
+    "warning_flag": bool,
+    "debug_flag": bool,
+    "error_flag": bool,
+    "quiet_flag": bool,
+    "jpeg_quality": typing.NotRequired[float | None],
+    "lossy_error": typing.NotRequired[int | None],
+    "rate": typing.NotRequired[float | None],
+    "j2k_quality": typing.NotRequired[float | None],
+    "tile": typing.NotRequired[list[float] | None],
+    "number_resolution": typing.NotRequired[float | None],
+    "irreversible_flag": bool,
+    "ignore_errors_flag": bool,
+})
+GdcmconvFsParametersTagged = typing.TypedDict('GdcmconvFsParametersTagged', {
+    "@type": typing.Literal["freesurfer/gdcmconv.fs"],
     "input_file": InputPathType,
     "output_file": str,
     "explicit_flag": bool,
@@ -58,40 +101,9 @@ GdcmconvFsParameters = typing.TypedDict('GdcmconvFsParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "freesurfer.gdcmconv.fs": gdcmconv_fs_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-    }.get(t)
-
-
 class GdcmconvFsOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `gdcmconv_fs(...)`.
+    Output object returned when calling `GdcmconvFsParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -138,7 +150,7 @@ def gdcmconv_fs_params(
     number_resolution: float | None = None,
     irreversible_flag: bool = False,
     ignore_errors_flag: bool = False,
-) -> GdcmconvFsParameters:
+) -> GdcmconvFsParametersTagged:
     """
     Build parameters.
     
@@ -191,7 +203,7 @@ def gdcmconv_fs_params(
         Parameter dictionary
     """
     params = {
-        "@type": "freesurfer.gdcmconv.fs",
+        "@type": "freesurfer/gdcmconv.fs",
         "input_file": input_file,
         "output_file": output_file,
         "explicit_flag": explicit_flag,
@@ -262,116 +274,116 @@ def gdcmconv_fs_cargs(
     """
     cargs = []
     cargs.append("gdcmconv.fs")
-    cargs.append(execution.input_file(params.get("input_file")))
-    cargs.append(params.get("output_file"))
-    if params.get("explicit_flag"):
+    cargs.append(execution.input_file(params.get("input_file", None)))
+    cargs.append(params.get("output_file", None))
+    if params.get("explicit_flag", False):
         cargs.append("-X")
-    if params.get("implicit_flag"):
+    if params.get("implicit_flag", False):
         cargs.append("-M")
-    if params.get("use_dict_flag"):
+    if params.get("use_dict_flag", False):
         cargs.append("-U")
-    if params.get("with_private_dict_flag"):
+    if params.get("with_private_dict_flag", False):
         cargs.append("--with-private-dict")
-    if params.get("check_meta_flag"):
+    if params.get("check_meta_flag", False):
         cargs.append("-C")
-    if params.get("root_uid") is not None:
+    if params.get("root_uid", None) is not None:
         cargs.extend([
             "--root-uid",
-            params.get("root_uid")
+            params.get("root_uid", None)
         ])
-    if params.get("remove_gl_flag"):
+    if params.get("remove_gl_flag", False):
         cargs.append("--remove-gl")
-    if params.get("remove_private_tags_flag"):
+    if params.get("remove_private_tags_flag", False):
         cargs.append("--remove-private-tags")
-    if params.get("remove_retired_flag"):
+    if params.get("remove_retired_flag", False):
         cargs.append("--remove-retired")
-    if params.get("apply_lut_flag"):
+    if params.get("apply_lut_flag", False):
         cargs.append("-l")
-    if params.get("photometric_interpretation") is not None:
+    if params.get("photometric_interpretation", None) is not None:
         cargs.extend([
             "-P",
-            params.get("photometric_interpretation")
+            params.get("photometric_interpretation", None)
         ])
-    if params.get("raw_flag"):
+    if params.get("raw_flag", False):
         cargs.append("-w")
-    if params.get("deflated_flag"):
+    if params.get("deflated_flag", False):
         cargs.append("-d")
-    if params.get("jpeg_flag"):
+    if params.get("jpeg_flag", False):
         cargs.append("-J")
-    if params.get("j2k_flag"):
+    if params.get("j2k_flag", False):
         cargs.append("-K")
-    if params.get("jpegls_flag"):
+    if params.get("jpegls_flag", False):
         cargs.append("-L")
-    if params.get("rle_flag"):
+    if params.get("rle_flag", False):
         cargs.append("-R")
-    if params.get("force_flag"):
+    if params.get("force_flag", False):
         cargs.append("-F")
-    if params.get("generate_icon_flag"):
+    if params.get("generate_icon_flag", False):
         cargs.append("--generate-icon")
-    if params.get("icon_minmax") is not None:
+    if params.get("icon_minmax", None) is not None:
         cargs.extend([
             "--icon-minmax",
-            *map(str, params.get("icon_minmax"))
+            *map(str, params.get("icon_minmax", None))
         ])
-    if params.get("icon_auto_minmax_flag"):
+    if params.get("icon_auto_minmax_flag", False):
         cargs.append("--icon-auto-minmax")
-    if params.get("compress_icon_flag"):
+    if params.get("compress_icon_flag", False):
         cargs.append("--compress-icon")
-    if params.get("planar_configuration") is not None:
+    if params.get("planar_configuration", None) is not None:
         cargs.extend([
             "--planar-configuration",
-            params.get("planar_configuration")
+            params.get("planar_configuration", None)
         ])
-    if params.get("lossy_flag"):
+    if params.get("lossy_flag", False):
         cargs.append("-Y")
-    if params.get("split") is not None:
+    if params.get("split", None) is not None:
         cargs.extend([
             "-S",
-            str(params.get("split"))
+            str(params.get("split", None))
         ])
-    if params.get("verbose_flag"):
+    if params.get("verbose_flag", False):
         cargs.append("-V")
-    if params.get("warning_flag"):
+    if params.get("warning_flag", False):
         cargs.append("-W")
-    if params.get("debug_flag"):
+    if params.get("debug_flag", False):
         cargs.append("-D")
-    if params.get("error_flag"):
+    if params.get("error_flag", False):
         cargs.append("-E")
-    if params.get("quiet_flag"):
+    if params.get("quiet_flag", False):
         cargs.append("--quiet")
-    if params.get("jpeg_quality") is not None:
+    if params.get("jpeg_quality", None) is not None:
         cargs.extend([
             "-q",
-            str(params.get("jpeg_quality"))
+            str(params.get("jpeg_quality", None))
         ])
-    if params.get("lossy_error") is not None:
+    if params.get("lossy_error", None) is not None:
         cargs.extend([
             "-e",
-            str(params.get("lossy_error"))
+            str(params.get("lossy_error", None))
         ])
-    if params.get("rate") is not None:
+    if params.get("rate", None) is not None:
         cargs.extend([
             "-r",
-            str(params.get("rate"))
+            str(params.get("rate", None))
         ])
-    if params.get("j2k_quality") is not None:
+    if params.get("j2k_quality", None) is not None:
         cargs.extend([
             "-q",
-            str(params.get("j2k_quality"))
+            str(params.get("j2k_quality", None))
         ])
-    if params.get("tile") is not None:
+    if params.get("tile", None) is not None:
         cargs.extend([
             "-t",
-            *map(str, params.get("tile"))
+            *map(str, params.get("tile", None))
         ])
-    if params.get("number_resolution") is not None:
+    if params.get("number_resolution", None) is not None:
         cargs.extend([
             "-n",
-            str(params.get("number_resolution"))
+            str(params.get("number_resolution", None))
         ])
-    if params.get("irreversible_flag"):
+    if params.get("irreversible_flag", False):
         cargs.append("--irreversible")
-    if params.get("ignore_errors_flag"):
+    if params.get("ignore_errors_flag", False):
         cargs.append("-I")
     return cargs
 
@@ -572,7 +584,6 @@ def gdcmconv_fs(
 __all__ = [
     "GDCMCONV_FS_METADATA",
     "GdcmconvFsOutputs",
-    "GdcmconvFsParameters",
     "gdcmconv_fs",
     "gdcmconv_fs_execute",
     "gdcmconv_fs_params",

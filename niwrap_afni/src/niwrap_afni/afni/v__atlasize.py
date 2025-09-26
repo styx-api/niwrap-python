@@ -14,7 +14,28 @@ V__ATLASIZE_METADATA = Metadata(
 
 
 VAtlasizeParameters = typing.TypedDict('VAtlasizeParameters', {
-    "@type": typing.Literal["afni.@Atlasize"],
+    "@type": typing.NotRequired[typing.Literal["afni/@Atlasize"]],
+    "dset": typing.NotRequired[InputPathType | None],
+    "space": typing.NotRequired[str | None],
+    "lab_file": typing.NotRequired[list[str] | None],
+    "lab_file_delim": typing.NotRequired[str | None],
+    "longnames": typing.NotRequired[float | None],
+    "last_longname_col": typing.NotRequired[float | None],
+    "atlas_type": typing.NotRequired[str | None],
+    "atlas_description": typing.NotRequired[str | None],
+    "atlas_name": typing.NotRequired[str | None],
+    "auto_backup": bool,
+    "centers": bool,
+    "centertype": typing.NotRequired[str | None],
+    "centermask": typing.NotRequired[InputPathType | None],
+    "skip_novoxels": bool,
+    "h_web": bool,
+    "h_view": bool,
+    "all_opts": bool,
+    "h_find": typing.NotRequired[str | None],
+})
+VAtlasizeParametersTagged = typing.TypedDict('VAtlasizeParametersTagged', {
+    "@type": typing.Literal["afni/@Atlasize"],
     "dset": typing.NotRequired[InputPathType | None],
     "space": typing.NotRequired[str | None],
     "lab_file": typing.NotRequired[list[str] | None],
@@ -36,41 +57,9 @@ VAtlasizeParameters = typing.TypedDict('VAtlasizeParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "afni.@Atlasize": v__atlasize_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "afni.@Atlasize": v__atlasize_outputs,
-    }.get(t)
-
-
 class VAtlasizeOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `v__atlasize(...)`.
+    Output object returned when calling `VAtlasizeParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -97,7 +86,7 @@ def v__atlasize_params(
     h_view: bool = False,
     all_opts: bool = False,
     h_find: str | None = None,
-) -> VAtlasizeParameters:
+) -> VAtlasizeParametersTagged:
     """
     Build parameters.
     
@@ -136,7 +125,7 @@ def v__atlasize_params(
         Parameter dictionary
     """
     params = {
-        "@type": "afni.@Atlasize",
+        "@type": "afni/@Atlasize",
         "auto_backup": auto_backup,
         "centers": centers,
         "skip_novoxels": skip_novoxels,
@@ -186,77 +175,77 @@ def v__atlasize_cargs(
     """
     cargs = []
     cargs.append("@Atlasize")
-    if params.get("dset") is not None:
+    if params.get("dset", None) is not None:
         cargs.extend([
             "-dset",
-            execution.input_file(params.get("dset"))
+            execution.input_file(params.get("dset", None))
         ])
-    if params.get("space") is not None:
+    if params.get("space", None) is not None:
         cargs.extend([
             "-space",
-            params.get("space")
+            params.get("space", None)
         ])
-    if params.get("lab_file") is not None:
+    if params.get("lab_file", None) is not None:
         cargs.extend([
             "-lab_file",
-            *params.get("lab_file")
+            *params.get("lab_file", None)
         ])
-    if params.get("lab_file_delim") is not None:
+    if params.get("lab_file_delim", None) is not None:
         cargs.extend([
             "-lab_file_delim",
-            params.get("lab_file_delim")
+            params.get("lab_file_delim", None)
         ])
-    if params.get("longnames") is not None:
+    if params.get("longnames", None) is not None:
         cargs.extend([
             "-longnames",
-            str(params.get("longnames"))
+            str(params.get("longnames", None))
         ])
-    if params.get("last_longname_col") is not None:
+    if params.get("last_longname_col", None) is not None:
         cargs.extend([
             "-last_longname_col",
-            str(params.get("last_longname_col"))
+            str(params.get("last_longname_col", None))
         ])
-    if params.get("atlas_type") is not None:
+    if params.get("atlas_type", None) is not None:
         cargs.extend([
             "-atlas_type",
-            params.get("atlas_type")
+            params.get("atlas_type", None)
         ])
-    if params.get("atlas_description") is not None:
+    if params.get("atlas_description", None) is not None:
         cargs.extend([
             "-atlas_description",
-            params.get("atlas_description")
+            params.get("atlas_description", None)
         ])
-    if params.get("atlas_name") is not None:
+    if params.get("atlas_name", None) is not None:
         cargs.extend([
             "-atlas_name",
-            params.get("atlas_name")
+            params.get("atlas_name", None)
         ])
-    if params.get("auto_backup"):
+    if params.get("auto_backup", False):
         cargs.append("-auto_backup")
-    if params.get("centers"):
+    if params.get("centers", False):
         cargs.append("-centers")
-    if params.get("centertype") is not None:
+    if params.get("centertype", None) is not None:
         cargs.extend([
             "-centertype",
-            params.get("centertype")
+            params.get("centertype", None)
         ])
-    if params.get("centermask") is not None:
+    if params.get("centermask", None) is not None:
         cargs.extend([
             "-centermask",
-            execution.input_file(params.get("centermask"))
+            execution.input_file(params.get("centermask", None))
         ])
-    if params.get("skip_novoxels"):
+    if params.get("skip_novoxels", False):
         cargs.append("-skip_novoxels")
-    if params.get("h_web"):
+    if params.get("h_web", False):
         cargs.append("-h_web")
-    if params.get("h_view"):
+    if params.get("h_view", False):
         cargs.append("-h_view")
-    if params.get("all_opts"):
+    if params.get("all_opts", False):
         cargs.append("-all_opts")
-    if params.get("h_find") is not None:
+    if params.get("h_find", None) is not None:
         cargs.extend([
             "-h_find",
-            params.get("h_find")
+            params.get("h_find", None)
         ])
     return cargs
 
@@ -276,7 +265,7 @@ def v__atlasize_outputs(
     """
     ret = VAtlasizeOutputs(
         root=execution.output_file("."),
-        niml_file=execution.output_file(pathlib.Path(params.get("dset")).name + ".niml") if (params.get("dset") is not None) else None,
+        niml_file=execution.output_file(pathlib.Path(params.get("dset", None)).name + ".niml") if (params.get("dset") is not None) else None,
     )
     return ret
 
@@ -399,7 +388,6 @@ def v__atlasize(
 
 __all__ = [
     "VAtlasizeOutputs",
-    "VAtlasizeParameters",
     "V__ATLASIZE_METADATA",
     "v__atlasize",
     "v__atlasize_execute",

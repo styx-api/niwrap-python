@@ -14,7 +14,18 @@ MRIS_LABEL_MODE_METADATA = Metadata(
 
 
 MrisLabelModeParameters = typing.TypedDict('MrisLabelModeParameters', {
-    "@type": typing.Literal["freesurfer.mris_label_mode"],
+    "@type": typing.NotRequired[typing.Literal["freesurfer/mris_label_mode"]],
+    "input_curv_file": InputPathType,
+    "hemi": str,
+    "surface": str,
+    "subject": list[str],
+    "output_curv_file": str,
+    "summary_statistics": bool,
+    "statistics_cond": typing.NotRequired[str | None],
+    "output_directory": typing.NotRequired[str | None],
+})
+MrisLabelModeParametersTagged = typing.TypedDict('MrisLabelModeParametersTagged', {
+    "@type": typing.Literal["freesurfer/mris_label_mode"],
     "input_curv_file": InputPathType,
     "hemi": str,
     "surface": str,
@@ -26,40 +37,9 @@ MrisLabelModeParameters = typing.TypedDict('MrisLabelModeParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "freesurfer.mris_label_mode": mris_label_mode_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-    }.get(t)
-
-
 class MrisLabelModeOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `mris_label_mode(...)`.
+    Output object returned when calling `MrisLabelModeParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -74,7 +54,7 @@ def mris_label_mode_params(
     summary_statistics: bool = False,
     statistics_cond: str | None = None,
     output_directory: str | None = None,
-) -> MrisLabelModeParameters:
+) -> MrisLabelModeParametersTagged:
     """
     Build parameters.
     
@@ -91,7 +71,7 @@ def mris_label_mode_params(
         Parameter dictionary
     """
     params = {
-        "@type": "freesurfer.mris_label_mode",
+        "@type": "freesurfer/mris_label_mode",
         "input_curv_file": input_curv_file,
         "hemi": hemi,
         "surface": surface,
@@ -121,19 +101,19 @@ def mris_label_mode_cargs(
     """
     cargs = []
     cargs.append("mris_label_mode")
-    cargs.append(execution.input_file(params.get("input_curv_file")))
-    cargs.append(params.get("hemi"))
-    cargs.append(params.get("surface"))
-    cargs.extend(params.get("subject"))
-    cargs.append(params.get("output_curv_file"))
-    if params.get("summary_statistics"):
+    cargs.append(execution.input_file(params.get("input_curv_file", None)))
+    cargs.append(params.get("hemi", None))
+    cargs.append(params.get("surface", None))
+    cargs.extend(params.get("subject", None))
+    cargs.append(params.get("output_curv_file", None))
+    if params.get("summary_statistics", False):
         cargs.append("-s")
-    if params.get("statistics_cond") is not None:
-        cargs.append(params.get("statistics_cond"))
-    if params.get("output_directory") is not None:
+    if params.get("statistics_cond", None) is not None:
+        cargs.append(params.get("statistics_cond", None))
+    if params.get("output_directory", None) is not None:
         cargs.extend([
             "-o",
-            params.get("output_directory")
+            params.get("output_directory", None)
         ])
     return cargs
 
@@ -234,7 +214,6 @@ def mris_label_mode(
 __all__ = [
     "MRIS_LABEL_MODE_METADATA",
     "MrisLabelModeOutputs",
-    "MrisLabelModeParameters",
     "mris_label_mode",
     "mris_label_mode_execute",
     "mris_label_mode_params",

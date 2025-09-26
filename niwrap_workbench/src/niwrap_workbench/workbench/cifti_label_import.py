@@ -14,7 +14,16 @@ CIFTI_LABEL_IMPORT_METADATA = Metadata(
 
 
 CiftiLabelImportParameters = typing.TypedDict('CiftiLabelImportParameters', {
-    "@type": typing.Literal["workbench.cifti-label-import"],
+    "@type": typing.NotRequired[typing.Literal["workbench/cifti-label-import"]],
+    "input": InputPathType,
+    "label_list_file": str,
+    "output": str,
+    "opt_discard_others": bool,
+    "opt_unlabeled_value_value": typing.NotRequired[int | None],
+    "opt_drop_unused_labels": bool,
+})
+CiftiLabelImportParametersTagged = typing.TypedDict('CiftiLabelImportParametersTagged', {
+    "@type": typing.Literal["workbench/cifti-label-import"],
     "input": InputPathType,
     "label_list_file": str,
     "output": str,
@@ -24,41 +33,9 @@ CiftiLabelImportParameters = typing.TypedDict('CiftiLabelImportParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "workbench.cifti-label-import": cifti_label_import_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "workbench.cifti-label-import": cifti_label_import_outputs,
-    }.get(t)
-
-
 class CiftiLabelImportOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `cifti_label_import(...)`.
+    Output object returned when calling `CiftiLabelImportParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -73,7 +50,7 @@ def cifti_label_import_params(
     opt_discard_others: bool = False,
     opt_unlabeled_value_value: int | None = None,
     opt_drop_unused_labels: bool = False,
-) -> CiftiLabelImportParameters:
+) -> CiftiLabelImportParametersTagged:
     """
     Build parameters.
     
@@ -91,7 +68,7 @@ def cifti_label_import_params(
         Parameter dictionary
     """
     params = {
-        "@type": "workbench.cifti-label-import",
+        "@type": "workbench/cifti-label-import",
         "input": input_,
         "label_list_file": label_list_file,
         "output": output,
@@ -119,17 +96,17 @@ def cifti_label_import_cargs(
     cargs = []
     cargs.append("wb_command")
     cargs.append("-cifti-label-import")
-    cargs.append(execution.input_file(params.get("input")))
-    cargs.append(params.get("label_list_file"))
-    cargs.append(params.get("output"))
-    if params.get("opt_discard_others"):
+    cargs.append(execution.input_file(params.get("input", None)))
+    cargs.append(params.get("label_list_file", None))
+    cargs.append(params.get("output", None))
+    if params.get("opt_discard_others", False):
         cargs.append("-discard-others")
-    if params.get("opt_unlabeled_value_value") is not None:
+    if params.get("opt_unlabeled_value_value", None) is not None:
         cargs.extend([
             "-unlabeled-value",
-            str(params.get("opt_unlabeled_value_value"))
+            str(params.get("opt_unlabeled_value_value", None))
         ])
-    if params.get("opt_drop_unused_labels"):
+    if params.get("opt_drop_unused_labels", False):
         cargs.append("-drop-unused-labels")
     return cargs
 
@@ -149,7 +126,7 @@ def cifti_label_import_outputs(
     """
     ret = CiftiLabelImportOutputs(
         root=execution.output_file("."),
-        output=execution.output_file(params.get("output")),
+        output=execution.output_file(params.get("output", None)),
     )
     return ret
 
@@ -276,7 +253,6 @@ def cifti_label_import(
 __all__ = [
     "CIFTI_LABEL_IMPORT_METADATA",
     "CiftiLabelImportOutputs",
-    "CiftiLabelImportParameters",
     "cifti_label_import",
     "cifti_label_import_execute",
     "cifti_label_import_params",

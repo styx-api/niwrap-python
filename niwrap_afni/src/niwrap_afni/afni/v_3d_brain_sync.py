@@ -14,7 +14,17 @@ V_3D_BRAIN_SYNC_METADATA = Metadata(
 
 
 V3dBrainSyncParameters = typing.TypedDict('V3dBrainSyncParameters', {
-    "@type": typing.Literal["afni.3dBrainSync"],
+    "@type": typing.NotRequired[typing.Literal["afni/3dBrainSync"]],
+    "inset1": InputPathType,
+    "inset2": InputPathType,
+    "qprefix": typing.NotRequired[str | None],
+    "pprefix": typing.NotRequired[str | None],
+    "normalize": bool,
+    "mask": typing.NotRequired[InputPathType | None],
+    "verb": bool,
+})
+V3dBrainSyncParametersTagged = typing.TypedDict('V3dBrainSyncParametersTagged', {
+    "@type": typing.Literal["afni/3dBrainSync"],
     "inset1": InputPathType,
     "inset2": InputPathType,
     "qprefix": typing.NotRequired[str | None],
@@ -25,41 +35,9 @@ V3dBrainSyncParameters = typing.TypedDict('V3dBrainSyncParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "afni.3dBrainSync": v_3d_brain_sync_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "afni.3dBrainSync": v_3d_brain_sync_outputs,
-    }.get(t)
-
-
 class V3dBrainSyncOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `v_3d_brain_sync(...)`.
+    Output object returned when calling `V3dBrainSyncParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -83,7 +61,7 @@ def v_3d_brain_sync_params(
     normalize: bool = False,
     mask: InputPathType | None = None,
     verb: bool = False,
-) -> V3dBrainSyncParameters:
+) -> V3dBrainSyncParametersTagged:
     """
     Build parameters.
     
@@ -102,7 +80,7 @@ def v_3d_brain_sync_params(
         Parameter dictionary
     """
     params = {
-        "@type": "afni.3dBrainSync",
+        "@type": "afni/3dBrainSync",
         "inset1": inset1,
         "inset2": inset2,
         "normalize": normalize,
@@ -134,30 +112,30 @@ def v_3d_brain_sync_cargs(
     cargs.append("3dBrainSync")
     cargs.extend([
         "-inset1",
-        execution.input_file(params.get("inset1"))
+        execution.input_file(params.get("inset1", None))
     ])
     cargs.extend([
         "-inset2",
-        execution.input_file(params.get("inset2"))
+        execution.input_file(params.get("inset2", None))
     ])
-    if params.get("qprefix") is not None:
+    if params.get("qprefix", None) is not None:
         cargs.extend([
             "-Qprefix",
-            params.get("qprefix")
+            params.get("qprefix", None)
         ])
-    if params.get("pprefix") is not None:
+    if params.get("pprefix", None) is not None:
         cargs.extend([
             "-Pprefix",
-            params.get("pprefix")
+            params.get("pprefix", None)
         ])
-    if params.get("normalize"):
+    if params.get("normalize", False):
         cargs.append("-normalize")
-    if params.get("mask") is not None:
+    if params.get("mask", None) is not None:
         cargs.extend([
             "-mask",
-            execution.input_file(params.get("mask"))
+            execution.input_file(params.get("mask", None))
         ])
-    if params.get("verb"):
+    if params.get("verb", False):
         cargs.append("-verb")
     return cargs
 
@@ -177,11 +155,11 @@ def v_3d_brain_sync_outputs(
     """
     ret = V3dBrainSyncOutputs(
         root=execution.output_file("."),
-        qprefix_output=execution.output_file(params.get("qprefix") + ".nii") if (params.get("qprefix") is not None) else None,
-        pprefix_output=execution.output_file(params.get("pprefix") + ".nii") if (params.get("pprefix") is not None) else None,
-        qprefix_sval=execution.output_file(params.get("qprefix") + ".sval.1D") if (params.get("qprefix") is not None) else None,
-        qprefix_qmat=execution.output_file(params.get("qprefix") + ".qmat.1D") if (params.get("qprefix") is not None) else None,
-        pprefix_perm=execution.output_file(params.get("pprefix") + ".perm.1D") if (params.get("pprefix") is not None) else None,
+        qprefix_output=execution.output_file(params.get("qprefix", None) + ".nii") if (params.get("qprefix") is not None) else None,
+        pprefix_output=execution.output_file(params.get("pprefix", None) + ".nii") if (params.get("pprefix") is not None) else None,
+        qprefix_sval=execution.output_file(params.get("qprefix", None) + ".sval.1D") if (params.get("qprefix") is not None) else None,
+        qprefix_qmat=execution.output_file(params.get("qprefix", None) + ".qmat.1D") if (params.get("qprefix") is not None) else None,
+        pprefix_perm=execution.output_file(params.get("pprefix", None) + ".perm.1D") if (params.get("pprefix") is not None) else None,
     )
     return ret
 
@@ -264,7 +242,6 @@ def v_3d_brain_sync(
 
 __all__ = [
     "V3dBrainSyncOutputs",
-    "V3dBrainSyncParameters",
     "V_3D_BRAIN_SYNC_METADATA",
     "v_3d_brain_sync",
     "v_3d_brain_sync_execute",

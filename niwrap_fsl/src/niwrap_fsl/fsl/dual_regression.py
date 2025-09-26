@@ -14,7 +14,18 @@ DUAL_REGRESSION_METADATA = Metadata(
 
 
 DualRegressionParameters = typing.TypedDict('DualRegressionParameters', {
-    "@type": typing.Literal["fsl.dual_regression"],
+    "@type": typing.NotRequired[typing.Literal["fsl/dual_regression"]],
+    "group_ic_maps": InputPathType,
+    "des_norm": float,
+    "design_mat": InputPathType,
+    "design_con": InputPathType,
+    "n_perm": float,
+    "thr_flag": bool,
+    "output_directory": str,
+    "input_files": list[InputPathType],
+})
+DualRegressionParametersTagged = typing.TypedDict('DualRegressionParametersTagged', {
+    "@type": typing.Literal["fsl/dual_regression"],
     "group_ic_maps": InputPathType,
     "des_norm": float,
     "design_mat": InputPathType,
@@ -26,41 +37,9 @@ DualRegressionParameters = typing.TypedDict('DualRegressionParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "fsl.dual_regression": dual_regression_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "fsl.dual_regression": dual_regression_outputs,
-    }.get(t)
-
-
 class DualRegressionOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `dual_regression(...)`.
+    Output object returned when calling `DualRegressionParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -83,7 +62,7 @@ def dual_regression_params(
     output_directory: str,
     input_files: list[InputPathType],
     thr_flag: bool = False,
-) -> DualRegressionParameters:
+) -> DualRegressionParametersTagged:
     """
     Build parameters.
     
@@ -108,7 +87,7 @@ def dual_regression_params(
         Parameter dictionary
     """
     params = {
-        "@type": "fsl.dual_regression",
+        "@type": "fsl/dual_regression",
         "group_ic_maps": group_ic_maps,
         "des_norm": des_norm,
         "design_mat": design_mat,
@@ -136,15 +115,15 @@ def dual_regression_cargs(
     """
     cargs = []
     cargs.append("dual_regression")
-    cargs.append(execution.input_file(params.get("group_ic_maps")))
-    cargs.append(str(params.get("des_norm")))
-    cargs.append(execution.input_file(params.get("design_mat")))
-    cargs.append(execution.input_file(params.get("design_con")))
-    cargs.append(str(params.get("n_perm")))
-    if params.get("thr_flag"):
+    cargs.append(execution.input_file(params.get("group_ic_maps", None)))
+    cargs.append(str(params.get("des_norm", None)))
+    cargs.append(execution.input_file(params.get("design_mat", None)))
+    cargs.append(execution.input_file(params.get("design_con", None)))
+    cargs.append(str(params.get("n_perm", None)))
+    if params.get("thr_flag", False):
         cargs.append("--thr")
-    cargs.append(params.get("output_directory"))
-    cargs.extend([execution.input_file(f) for f in params.get("input_files")])
+    cargs.append(params.get("output_directory", None))
+    cargs.extend([execution.input_file(f) for f in params.get("input_files", None)])
     return cargs
 
 
@@ -163,10 +142,10 @@ def dual_regression_outputs(
     """
     ret = DualRegressionOutputs(
         root=execution.output_file("."),
-        stage1_output=execution.output_file(params.get("output_directory") + "/dr_stage1_subject[SUBJECT_INDEX].nii.gz"),
-        stage2_output=execution.output_file(params.get("output_directory") + "/dr_stage2_subject[SUBJECT_INDEX].nii.gz"),
-        stage3_output=execution.output_file(params.get("output_directory") + "/dr_stage3_subject[SUBJECT_INDEX].nii.gz"),
-        randomise_output=execution.output_file(params.get("output_directory") + "/dr_randomise"),
+        stage1_output=execution.output_file(params.get("output_directory", None) + "/dr_stage1_subject[SUBJECT_INDEX].nii.gz"),
+        stage2_output=execution.output_file(params.get("output_directory", None) + "/dr_stage2_subject[SUBJECT_INDEX].nii.gz"),
+        stage3_output=execution.output_file(params.get("output_directory", None) + "/dr_stage3_subject[SUBJECT_INDEX].nii.gz"),
+        randomise_output=execution.output_file(params.get("output_directory", None) + "/dr_randomise"),
     )
     return ret
 
@@ -256,7 +235,6 @@ def dual_regression(
 __all__ = [
     "DUAL_REGRESSION_METADATA",
     "DualRegressionOutputs",
-    "DualRegressionParameters",
     "dual_regression",
     "dual_regression_execute",
     "dual_regression_params",

@@ -14,7 +14,27 @@ VOLUME_CAPTURE_PLANE_METADATA = Metadata(
 
 
 VolumeCapturePlaneParameters = typing.TypedDict('VolumeCapturePlaneParameters', {
-    "@type": typing.Literal["workbench.volume-capture-plane"],
+    "@type": typing.NotRequired[typing.Literal["workbench/volume-capture-plane"]],
+    "volume": InputPathType,
+    "subvolume": str,
+    "interp": str,
+    "h_dim": int,
+    "v_dim": int,
+    "scale_min": float,
+    "scale_max": float,
+    "bottom_left_x": float,
+    "bottom_left_y": float,
+    "bottom_left_z": float,
+    "bottom_right_x": float,
+    "bottom_right_y": float,
+    "bottom_right_z": float,
+    "top_left_x": float,
+    "top_left_y": float,
+    "top_left_z": float,
+    "image": str,
+})
+VolumeCapturePlaneParametersTagged = typing.TypedDict('VolumeCapturePlaneParametersTagged', {
+    "@type": typing.Literal["workbench/volume-capture-plane"],
     "volume": InputPathType,
     "subvolume": str,
     "interp": str,
@@ -35,40 +55,9 @@ VolumeCapturePlaneParameters = typing.TypedDict('VolumeCapturePlaneParameters', 
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "workbench.volume-capture-plane": volume_capture_plane_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-    }.get(t)
-
-
 class VolumeCapturePlaneOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `volume_capture_plane(...)`.
+    Output object returned when calling `VolumeCapturePlaneParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -92,7 +81,7 @@ def volume_capture_plane_params(
     top_left_y: float,
     top_left_z: float,
     image: str,
-) -> VolumeCapturePlaneParameters:
+) -> VolumeCapturePlaneParametersTagged:
     """
     Build parameters.
     
@@ -118,7 +107,7 @@ def volume_capture_plane_params(
         Parameter dictionary
     """
     params = {
-        "@type": "workbench.volume-capture-plane",
+        "@type": "workbench/volume-capture-plane",
         "volume": volume,
         "subvolume": subvolume,
         "interp": interp,
@@ -156,23 +145,23 @@ def volume_capture_plane_cargs(
     cargs = []
     cargs.append("wb_command")
     cargs.append("-volume-capture-plane")
-    cargs.append(execution.input_file(params.get("volume")))
-    cargs.append(params.get("subvolume"))
-    cargs.append(params.get("interp"))
-    cargs.append(str(params.get("h_dim")))
-    cargs.append(str(params.get("v_dim")))
-    cargs.append(str(params.get("scale_min")))
-    cargs.append(str(params.get("scale_max")))
-    cargs.append(str(params.get("bottom_left_x")))
-    cargs.append(str(params.get("bottom_left_y")))
-    cargs.append(str(params.get("bottom_left_z")))
-    cargs.append(str(params.get("bottom_right_x")))
-    cargs.append(str(params.get("bottom_right_y")))
-    cargs.append(str(params.get("bottom_right_z")))
-    cargs.append(str(params.get("top_left_x")))
-    cargs.append(str(params.get("top_left_y")))
-    cargs.append(str(params.get("top_left_z")))
-    cargs.append(params.get("image"))
+    cargs.append(execution.input_file(params.get("volume", None)))
+    cargs.append(params.get("subvolume", None))
+    cargs.append(params.get("interp", None))
+    cargs.append(str(params.get("h_dim", None)))
+    cargs.append(str(params.get("v_dim", None)))
+    cargs.append(str(params.get("scale_min", None)))
+    cargs.append(str(params.get("scale_max", None)))
+    cargs.append(str(params.get("bottom_left_x", None)))
+    cargs.append(str(params.get("bottom_left_y", None)))
+    cargs.append(str(params.get("bottom_left_z", None)))
+    cargs.append(str(params.get("bottom_right_x", None)))
+    cargs.append(str(params.get("bottom_right_y", None)))
+    cargs.append(str(params.get("bottom_right_z", None)))
+    cargs.append(str(params.get("top_left_x", None)))
+    cargs.append(str(params.get("top_left_y", None)))
+    cargs.append(str(params.get("top_left_z", None)))
+    cargs.append(params.get("image", None))
     return cargs
 
 
@@ -319,7 +308,6 @@ def volume_capture_plane(
 __all__ = [
     "VOLUME_CAPTURE_PLANE_METADATA",
     "VolumeCapturePlaneOutputs",
-    "VolumeCapturePlaneParameters",
     "volume_capture_plane",
     "volume_capture_plane_execute",
     "volume_capture_plane_params",

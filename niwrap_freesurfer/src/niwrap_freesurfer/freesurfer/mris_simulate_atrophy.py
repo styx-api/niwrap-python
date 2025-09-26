@@ -14,7 +14,17 @@ MRIS_SIMULATE_ATROPHY_METADATA = Metadata(
 
 
 MrisSimulateAtrophyParameters = typing.TypedDict('MrisSimulateAtrophyParameters', {
-    "@type": typing.Literal["freesurfer.mris_simulate_atrophy"],
+    "@type": typing.NotRequired[typing.Literal["freesurfer/mris_simulate_atrophy"]],
+    "subject": str,
+    "hemi": str,
+    "label": str,
+    "atrophy_fraction": float,
+    "output_volume": str,
+    "atrophy_percent": typing.NotRequired[float | None],
+    "noise_level": typing.NotRequired[float | None],
+})
+MrisSimulateAtrophyParametersTagged = typing.TypedDict('MrisSimulateAtrophyParametersTagged', {
+    "@type": typing.Literal["freesurfer/mris_simulate_atrophy"],
     "subject": str,
     "hemi": str,
     "label": str,
@@ -25,41 +35,9 @@ MrisSimulateAtrophyParameters = typing.TypedDict('MrisSimulateAtrophyParameters'
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "freesurfer.mris_simulate_atrophy": mris_simulate_atrophy_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "freesurfer.mris_simulate_atrophy": mris_simulate_atrophy_outputs,
-    }.get(t)
-
-
 class MrisSimulateAtrophyOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `mris_simulate_atrophy(...)`.
+    Output object returned when calling `MrisSimulateAtrophyParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -75,7 +53,7 @@ def mris_simulate_atrophy_params(
     output_volume: str,
     atrophy_percent: float | None = None,
     noise_level: float | None = None,
-) -> MrisSimulateAtrophyParameters:
+) -> MrisSimulateAtrophyParametersTagged:
     """
     Build parameters.
     
@@ -91,7 +69,7 @@ def mris_simulate_atrophy_params(
         Parameter dictionary
     """
     params = {
-        "@type": "freesurfer.mris_simulate_atrophy",
+        "@type": "freesurfer/mris_simulate_atrophy",
         "subject": subject,
         "hemi": hemi,
         "label": label,
@@ -120,20 +98,20 @@ def mris_simulate_atrophy_cargs(
     """
     cargs = []
     cargs.append("mris_simulate_atrophy")
-    cargs.append(params.get("subject"))
-    cargs.append(params.get("hemi"))
-    cargs.append(params.get("label"))
-    cargs.append(str(params.get("atrophy_fraction")))
-    cargs.append(params.get("output_volume"))
-    if params.get("atrophy_percent") is not None:
+    cargs.append(params.get("subject", None))
+    cargs.append(params.get("hemi", None))
+    cargs.append(params.get("label", None))
+    cargs.append(str(params.get("atrophy_fraction", None)))
+    cargs.append(params.get("output_volume", None))
+    if params.get("atrophy_percent", None) is not None:
         cargs.extend([
             "-a",
-            str(params.get("atrophy_percent"))
+            str(params.get("atrophy_percent", None))
         ])
-    if params.get("noise_level") is not None:
+    if params.get("noise_level", None) is not None:
         cargs.extend([
             "-n",
-            str(params.get("noise_level"))
+            str(params.get("noise_level", None))
         ])
     return cargs
 
@@ -153,7 +131,7 @@ def mris_simulate_atrophy_outputs(
     """
     ret = MrisSimulateAtrophyOutputs(
         root=execution.output_file("."),
-        output_file=execution.output_file(params.get("output_volume")),
+        output_file=execution.output_file(params.get("output_volume", None)),
     )
     return ret
 
@@ -232,7 +210,6 @@ def mris_simulate_atrophy(
 __all__ = [
     "MRIS_SIMULATE_ATROPHY_METADATA",
     "MrisSimulateAtrophyOutputs",
-    "MrisSimulateAtrophyParameters",
     "mris_simulate_atrophy",
     "mris_simulate_atrophy_execute",
     "mris_simulate_atrophy_params",

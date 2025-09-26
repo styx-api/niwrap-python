@@ -14,46 +14,20 @@ RUN_SEGMENT_SUBFIELDS_T1_LONGITUDINAL_SH_METADATA = Metadata(
 
 
 RunSegmentSubfieldsT1LongitudinalShParameters = typing.TypedDict('RunSegmentSubfieldsT1LongitudinalShParameters', {
-    "@type": typing.Literal["freesurfer.run_SegmentSubfieldsT1Longitudinal.sh"],
+    "@type": typing.NotRequired[typing.Literal["freesurfer/run_SegmentSubfieldsT1Longitudinal.sh"]],
+    "deployed_mcr_root": str,
+    "additional_args": typing.NotRequired[str | None],
+})
+RunSegmentSubfieldsT1LongitudinalShParametersTagged = typing.TypedDict('RunSegmentSubfieldsT1LongitudinalShParametersTagged', {
+    "@type": typing.Literal["freesurfer/run_SegmentSubfieldsT1Longitudinal.sh"],
     "deployed_mcr_root": str,
     "additional_args": typing.NotRequired[str | None],
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "freesurfer.run_SegmentSubfieldsT1Longitudinal.sh": run_segment_subfields_t1_longitudinal_sh_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-    }.get(t)
-
-
 class RunSegmentSubfieldsT1LongitudinalShOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `run_segment_subfields_t1_longitudinal_sh(...)`.
+    Output object returned when calling `RunSegmentSubfieldsT1LongitudinalShParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -62,7 +36,7 @@ class RunSegmentSubfieldsT1LongitudinalShOutputs(typing.NamedTuple):
 def run_segment_subfields_t1_longitudinal_sh_params(
     deployed_mcr_root: str,
     additional_args: str | None = None,
-) -> RunSegmentSubfieldsT1LongitudinalShParameters:
+) -> RunSegmentSubfieldsT1LongitudinalShParametersTagged:
     """
     Build parameters.
     
@@ -74,7 +48,7 @@ def run_segment_subfields_t1_longitudinal_sh_params(
         Parameter dictionary
     """
     params = {
-        "@type": "freesurfer.run_SegmentSubfieldsT1Longitudinal.sh",
+        "@type": "freesurfer/run_SegmentSubfieldsT1Longitudinal.sh",
         "deployed_mcr_root": deployed_mcr_root,
     }
     if additional_args is not None:
@@ -97,9 +71,9 @@ def run_segment_subfields_t1_longitudinal_sh_cargs(
     """
     cargs = []
     cargs.append("run_SegmentSubfieldsT1Longitudinal.sh")
-    cargs.append(params.get("deployed_mcr_root"))
-    if params.get("additional_args") is not None:
-        cargs.append(params.get("additional_args"))
+    cargs.append(params.get("deployed_mcr_root", None))
+    if params.get("additional_args", None) is not None:
+        cargs.append(params.get("additional_args", None))
     return cargs
 
 
@@ -184,7 +158,6 @@ def run_segment_subfields_t1_longitudinal_sh(
 __all__ = [
     "RUN_SEGMENT_SUBFIELDS_T1_LONGITUDINAL_SH_METADATA",
     "RunSegmentSubfieldsT1LongitudinalShOutputs",
-    "RunSegmentSubfieldsT1LongitudinalShParameters",
     "run_segment_subfields_t1_longitudinal_sh",
     "run_segment_subfields_t1_longitudinal_sh_execute",
     "run_segment_subfields_t1_longitudinal_sh_params",

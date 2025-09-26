@@ -14,7 +14,14 @@ VOLUME_COPY_EXTENSIONS_METADATA = Metadata(
 
 
 VolumeCopyExtensionsParameters = typing.TypedDict('VolumeCopyExtensionsParameters', {
-    "@type": typing.Literal["workbench.volume-copy-extensions"],
+    "@type": typing.NotRequired[typing.Literal["workbench/volume-copy-extensions"]],
+    "data_volume": InputPathType,
+    "extension_volume": InputPathType,
+    "volume_out": str,
+    "opt_drop_unknown": bool,
+})
+VolumeCopyExtensionsParametersTagged = typing.TypedDict('VolumeCopyExtensionsParametersTagged', {
+    "@type": typing.Literal["workbench/volume-copy-extensions"],
     "data_volume": InputPathType,
     "extension_volume": InputPathType,
     "volume_out": str,
@@ -22,41 +29,9 @@ VolumeCopyExtensionsParameters = typing.TypedDict('VolumeCopyExtensionsParameter
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "workbench.volume-copy-extensions": volume_copy_extensions_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "workbench.volume-copy-extensions": volume_copy_extensions_outputs,
-    }.get(t)
-
-
 class VolumeCopyExtensionsOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `volume_copy_extensions(...)`.
+    Output object returned when calling `VolumeCopyExtensionsParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -69,7 +44,7 @@ def volume_copy_extensions_params(
     extension_volume: InputPathType,
     volume_out: str,
     opt_drop_unknown: bool = False,
-) -> VolumeCopyExtensionsParameters:
+) -> VolumeCopyExtensionsParametersTagged:
     """
     Build parameters.
     
@@ -83,7 +58,7 @@ def volume_copy_extensions_params(
         Parameter dictionary
     """
     params = {
-        "@type": "workbench.volume-copy-extensions",
+        "@type": "workbench/volume-copy-extensions",
         "data_volume": data_volume,
         "extension_volume": extension_volume,
         "volume_out": volume_out,
@@ -108,10 +83,10 @@ def volume_copy_extensions_cargs(
     cargs = []
     cargs.append("wb_command")
     cargs.append("-volume-copy-extensions")
-    cargs.append(execution.input_file(params.get("data_volume")))
-    cargs.append(execution.input_file(params.get("extension_volume")))
-    cargs.append(params.get("volume_out"))
-    if params.get("opt_drop_unknown"):
+    cargs.append(execution.input_file(params.get("data_volume", None)))
+    cargs.append(execution.input_file(params.get("extension_volume", None)))
+    cargs.append(params.get("volume_out", None))
+    if params.get("opt_drop_unknown", False):
         cargs.append("-drop-unknown")
     return cargs
 
@@ -131,7 +106,7 @@ def volume_copy_extensions_outputs(
     """
     ret = VolumeCopyExtensionsOutputs(
         root=execution.output_file("."),
-        volume_out=execution.output_file(params.get("volume_out")),
+        volume_out=execution.output_file(params.get("volume_out", None)),
     )
     return ret
 
@@ -212,7 +187,6 @@ def volume_copy_extensions(
 __all__ = [
     "VOLUME_COPY_EXTENSIONS_METADATA",
     "VolumeCopyExtensionsOutputs",
-    "VolumeCopyExtensionsParameters",
     "volume_copy_extensions",
     "volume_copy_extensions_execute",
     "volume_copy_extensions_params",

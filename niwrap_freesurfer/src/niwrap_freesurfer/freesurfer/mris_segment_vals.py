@@ -14,7 +14,15 @@ MRIS_SEGMENT_VALS_METADATA = Metadata(
 
 
 MrisSegmentValsParameters = typing.TypedDict('MrisSegmentValsParameters', {
-    "@type": typing.Literal["freesurfer.mris_segment_vals"],
+    "@type": typing.NotRequired[typing.Literal["freesurfer/mris_segment_vals"]],
+    "input_surface": InputPathType,
+    "input_curv_file": InputPathType,
+    "output_curv_file": str,
+    "threshold": typing.NotRequired[float | None],
+    "area_thresh": typing.NotRequired[float | None],
+})
+MrisSegmentValsParametersTagged = typing.TypedDict('MrisSegmentValsParametersTagged', {
+    "@type": typing.Literal["freesurfer/mris_segment_vals"],
     "input_surface": InputPathType,
     "input_curv_file": InputPathType,
     "output_curv_file": str,
@@ -23,41 +31,9 @@ MrisSegmentValsParameters = typing.TypedDict('MrisSegmentValsParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "freesurfer.mris_segment_vals": mris_segment_vals_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "freesurfer.mris_segment_vals": mris_segment_vals_outputs,
-    }.get(t)
-
-
 class MrisSegmentValsOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `mris_segment_vals(...)`.
+    Output object returned when calling `MrisSegmentValsParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -71,7 +47,7 @@ def mris_segment_vals_params(
     output_curv_file: str,
     threshold: float | None = None,
     area_thresh: float | None = None,
-) -> MrisSegmentValsParameters:
+) -> MrisSegmentValsParametersTagged:
     """
     Build parameters.
     
@@ -85,7 +61,7 @@ def mris_segment_vals_params(
         Parameter dictionary
     """
     params = {
-        "@type": "freesurfer.mris_segment_vals",
+        "@type": "freesurfer/mris_segment_vals",
         "input_surface": input_surface,
         "input_curv_file": input_curv_file,
         "output_curv_file": output_curv_file,
@@ -112,18 +88,18 @@ def mris_segment_vals_cargs(
     """
     cargs = []
     cargs.append("mris_segment_vals")
-    cargs.append(execution.input_file(params.get("input_surface")))
-    cargs.append(execution.input_file(params.get("input_curv_file")))
-    cargs.append(params.get("output_curv_file"))
-    if params.get("threshold") is not None:
+    cargs.append(execution.input_file(params.get("input_surface", None)))
+    cargs.append(execution.input_file(params.get("input_curv_file", None)))
+    cargs.append(params.get("output_curv_file", None))
+    if params.get("threshold", None) is not None:
         cargs.extend([
             "-T",
-            str(params.get("threshold"))
+            str(params.get("threshold", None))
         ])
-    if params.get("area_thresh") is not None:
+    if params.get("area_thresh", None) is not None:
         cargs.extend([
             "-A",
-            str(params.get("area_thresh"))
+            str(params.get("area_thresh", None))
         ])
     return cargs
 
@@ -143,7 +119,7 @@ def mris_segment_vals_outputs(
     """
     ret = MrisSegmentValsOutputs(
         root=execution.output_file("."),
-        output_curv=execution.output_file(params.get("output_curv_file")),
+        output_curv=execution.output_file(params.get("output_curv_file", None)),
     )
     return ret
 
@@ -216,7 +192,6 @@ def mris_segment_vals(
 __all__ = [
     "MRIS_SEGMENT_VALS_METADATA",
     "MrisSegmentValsOutputs",
-    "MrisSegmentValsParameters",
     "mris_segment_vals",
     "mris_segment_vals_execute",
     "mris_segment_vals_params",

@@ -14,7 +14,15 @@ FSLCOMPLEX_METADATA = Metadata(
 
 
 FslcomplexParameters = typing.TypedDict('FslcomplexParameters', {
-    "@type": typing.Literal["fsl.fslcomplex"],
+    "@type": typing.NotRequired[typing.Literal["fsl/fslcomplex"]],
+    "input_file": InputPathType,
+    "output_file": str,
+    "output_type": typing.Literal["-realabs", "-realphase", "-realpolar", "-realcartesian", "-complex", "-complexpolar", "-complexsplit", "-complexmerge", "-copyonly"],
+    "start_vol": typing.NotRequired[int | None],
+    "end_vol": typing.NotRequired[int | None],
+})
+FslcomplexParametersTagged = typing.TypedDict('FslcomplexParametersTagged', {
+    "@type": typing.Literal["fsl/fslcomplex"],
     "input_file": InputPathType,
     "output_file": str,
     "output_type": typing.Literal["-realabs", "-realphase", "-realpolar", "-realcartesian", "-complex", "-complexpolar", "-complexsplit", "-complexmerge", "-copyonly"],
@@ -23,41 +31,9 @@ FslcomplexParameters = typing.TypedDict('FslcomplexParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "fsl.fslcomplex": fslcomplex_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "fsl.fslcomplex": fslcomplex_outputs,
-    }.get(t)
-
-
 class FslcomplexOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `fslcomplex(...)`.
+    Output object returned when calling `FslcomplexParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -71,7 +47,7 @@ def fslcomplex_params(
     output_type: typing.Literal["-realabs", "-realphase", "-realpolar", "-realcartesian", "-complex", "-complexpolar", "-complexsplit", "-complexmerge", "-copyonly"],
     start_vol: int | None = None,
     end_vol: int | None = None,
-) -> FslcomplexParameters:
+) -> FslcomplexParametersTagged:
     """
     Build parameters.
     
@@ -85,7 +61,7 @@ def fslcomplex_params(
         Parameter dictionary
     """
     params = {
-        "@type": "fsl.fslcomplex",
+        "@type": "fsl/fslcomplex",
         "input_file": input_file,
         "output_file": output_file,
         "output_type": output_type,
@@ -112,13 +88,13 @@ def fslcomplex_cargs(
     """
     cargs = []
     cargs.append("fslcomplex")
-    cargs.append(execution.input_file(params.get("input_file")))
-    cargs.append(params.get("output_file"))
-    cargs.append(params.get("output_type"))
-    if params.get("start_vol") is not None:
-        cargs.append(str(params.get("start_vol")))
-    if params.get("end_vol") is not None:
-        cargs.append(str(params.get("end_vol")))
+    cargs.append(execution.input_file(params.get("input_file", None)))
+    cargs.append(params.get("output_file", None))
+    cargs.append(params.get("output_type", None))
+    if params.get("start_vol", None) is not None:
+        cargs.append(str(params.get("start_vol", None)))
+    if params.get("end_vol", None) is not None:
+        cargs.append(str(params.get("end_vol", None)))
     return cargs
 
 
@@ -137,7 +113,7 @@ def fslcomplex_outputs(
     """
     ret = FslcomplexOutputs(
         root=execution.output_file("."),
-        result_output_file=execution.output_file(params.get("output_file")),
+        result_output_file=execution.output_file(params.get("output_file", None)),
     )
     return ret
 
@@ -210,7 +186,6 @@ def fslcomplex(
 __all__ = [
     "FSLCOMPLEX_METADATA",
     "FslcomplexOutputs",
-    "FslcomplexParameters",
     "fslcomplex",
     "fslcomplex_execute",
     "fslcomplex_params",

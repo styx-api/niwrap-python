@@ -14,7 +14,22 @@ MRI_FIT_BIAS_METADATA = Metadata(
 
 
 MriFitBiasParameters = typing.TypedDict('MriFitBiasParameters', {
-    "@type": typing.Literal["freesurfer.mri_fit_bias"],
+    "@type": typing.NotRequired[typing.Literal["freesurfer/mri_fit_bias"]],
+    "inputvol": InputPathType,
+    "lpf_cutoff": typing.NotRequired[float | None],
+    "segvol": InputPathType,
+    "maskvol": InputPathType,
+    "outvol": str,
+    "biasfield": str,
+    "dctvol": typing.NotRequired[str | None],
+    "threshold": typing.NotRequired[float | None],
+    "nerode": typing.NotRequired[float | None],
+    "nthreads": typing.NotRequired[float | None],
+    "debug": bool,
+    "checkopts": bool,
+})
+MriFitBiasParametersTagged = typing.TypedDict('MriFitBiasParametersTagged', {
+    "@type": typing.Literal["freesurfer/mri_fit_bias"],
     "inputvol": InputPathType,
     "lpf_cutoff": typing.NotRequired[float | None],
     "segvol": InputPathType,
@@ -30,41 +45,9 @@ MriFitBiasParameters = typing.TypedDict('MriFitBiasParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "freesurfer.mri_fit_bias": mri_fit_bias_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "freesurfer.mri_fit_bias": mri_fit_bias_outputs,
-    }.get(t)
-
-
 class MriFitBiasOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `mri_fit_bias(...)`.
+    Output object returned when calling `MriFitBiasParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -87,7 +70,7 @@ def mri_fit_bias_params(
     nthreads: float | None = None,
     debug: bool = False,
     checkopts: bool = False,
-) -> MriFitBiasParameters:
+) -> MriFitBiasParametersTagged:
     """
     Build parameters.
     
@@ -110,7 +93,7 @@ def mri_fit_bias_params(
         Parameter dictionary
     """
     params = {
-        "@type": "freesurfer.mri_fit_bias",
+        "@type": "freesurfer/mri_fit_bias",
         "inputvol": inputvol,
         "segvol": segvol,
         "maskvol": maskvol,
@@ -149,52 +132,52 @@ def mri_fit_bias_cargs(
     cargs.append("mri_fit_bias")
     cargs.extend([
         "--i",
-        execution.input_file(params.get("inputvol"))
+        execution.input_file(params.get("inputvol", None))
     ])
-    if params.get("lpf_cutoff") is not None:
+    if params.get("lpf_cutoff", None) is not None:
         cargs.extend([
             "--cutoff",
-            str(params.get("lpf_cutoff"))
+            str(params.get("lpf_cutoff", None))
         ])
     cargs.extend([
         "--seg",
-        execution.input_file(params.get("segvol"))
+        execution.input_file(params.get("segvol", None))
     ])
     cargs.extend([
         "--mask",
-        execution.input_file(params.get("maskvol"))
+        execution.input_file(params.get("maskvol", None))
     ])
     cargs.extend([
         "--o",
-        params.get("outvol")
+        params.get("outvol", None)
     ])
     cargs.extend([
         "--bias",
-        params.get("biasfield")
+        params.get("biasfield", None)
     ])
-    if params.get("dctvol") is not None:
+    if params.get("dctvol", None) is not None:
         cargs.extend([
             "--dct",
-            params.get("dctvol")
+            params.get("dctvol", None)
         ])
-    if params.get("threshold") is not None:
+    if params.get("threshold", None) is not None:
         cargs.extend([
             "--thresh",
-            str(params.get("threshold"))
+            str(params.get("threshold", None))
         ])
-    if params.get("nerode") is not None:
+    if params.get("nerode", None) is not None:
         cargs.extend([
             "--erode",
-            str(params.get("nerode"))
+            str(params.get("nerode", None))
         ])
-    if params.get("nthreads") is not None:
+    if params.get("nthreads", None) is not None:
         cargs.extend([
             "--threads",
-            str(params.get("nthreads"))
+            str(params.get("nthreads", None))
         ])
-    if params.get("debug"):
+    if params.get("debug", False):
         cargs.append("--debug")
-    if params.get("checkopts"):
+    if params.get("checkopts", False):
         cargs.append("--checkopts")
     return cargs
 
@@ -214,8 +197,8 @@ def mri_fit_bias_outputs(
     """
     ret = MriFitBiasOutputs(
         root=execution.output_file("."),
-        corrected_output=execution.output_file(params.get("outvol")),
-        generated_bias_field=execution.output_file(params.get("biasfield")),
+        corrected_output=execution.output_file(params.get("outvol", None)),
+        generated_bias_field=execution.output_file(params.get("biasfield", None)),
     )
     return ret
 
@@ -311,7 +294,6 @@ def mri_fit_bias(
 __all__ = [
     "MRI_FIT_BIAS_METADATA",
     "MriFitBiasOutputs",
-    "MriFitBiasParameters",
     "mri_fit_bias",
     "mri_fit_bias_execute",
     "mri_fit_bias_params",

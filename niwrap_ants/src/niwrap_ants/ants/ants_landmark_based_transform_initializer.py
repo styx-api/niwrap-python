@@ -14,7 +14,20 @@ ANTS_LANDMARK_BASED_TRANSFORM_INITIALIZER_METADATA = Metadata(
 
 
 AntsLandmarkBasedTransformInitializerParameters = typing.TypedDict('AntsLandmarkBasedTransformInitializerParameters', {
-    "@type": typing.Literal["ants.antsLandmarkBasedTransformInitializer"],
+    "@type": typing.NotRequired[typing.Literal["ants/antsLandmarkBasedTransformInitializer"]],
+    "dimension": int,
+    "fixed_image": InputPathType,
+    "moving_image": InputPathType,
+    "transform_type": typing.Literal["rigid", "affine", "bspline"],
+    "output_transform": str,
+    "mesh_size": typing.NotRequired[str | None],
+    "number_of_levels": typing.NotRequired[int | None],
+    "order": typing.NotRequired[int | None],
+    "enforce_stationary_boundaries": typing.NotRequired[typing.Literal[0, 1] | None],
+    "landmark_weights": typing.NotRequired[InputPathType | None],
+})
+AntsLandmarkBasedTransformInitializerParametersTagged = typing.TypedDict('AntsLandmarkBasedTransformInitializerParametersTagged', {
+    "@type": typing.Literal["ants/antsLandmarkBasedTransformInitializer"],
     "dimension": int,
     "fixed_image": InputPathType,
     "moving_image": InputPathType,
@@ -28,41 +41,9 @@ AntsLandmarkBasedTransformInitializerParameters = typing.TypedDict('AntsLandmark
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "ants.antsLandmarkBasedTransformInitializer": ants_landmark_based_transform_initializer_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "ants.antsLandmarkBasedTransformInitializer": ants_landmark_based_transform_initializer_outputs,
-    }.get(t)
-
-
 class AntsLandmarkBasedTransformInitializerOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `ants_landmark_based_transform_initializer(...)`.
+    Output object returned when calling `AntsLandmarkBasedTransformInitializerParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -81,7 +62,7 @@ def ants_landmark_based_transform_initializer_params(
     order: int | None = None,
     enforce_stationary_boundaries: typing.Literal[0, 1] | None = None,
     landmark_weights: InputPathType | None = None,
-) -> AntsLandmarkBasedTransformInitializerParameters:
+) -> AntsLandmarkBasedTransformInitializerParametersTagged:
     """
     Build parameters.
     
@@ -106,7 +87,7 @@ def ants_landmark_based_transform_initializer_params(
         Parameter dictionary
     """
     params = {
-        "@type": "ants.antsLandmarkBasedTransformInitializer",
+        "@type": "ants/antsLandmarkBasedTransformInitializer",
         "dimension": dimension,
         "fixed_image": fixed_image,
         "moving_image": moving_image,
@@ -141,21 +122,21 @@ def ants_landmark_based_transform_initializer_cargs(
     """
     cargs = []
     cargs.append("antsLandmarkBasedTransformInitializer")
-    cargs.append(str(params.get("dimension")))
-    cargs.append(execution.input_file(params.get("fixed_image")))
-    cargs.append(execution.input_file(params.get("moving_image")))
-    cargs.append(params.get("transform_type"))
-    cargs.append(params.get("output_transform"))
-    if params.get("mesh_size") is not None:
-        cargs.append(params.get("mesh_size"))
-    if params.get("number_of_levels") is not None:
-        cargs.append(str(params.get("number_of_levels")))
-    if params.get("order") is not None:
-        cargs.append(str(params.get("order")))
-    if params.get("enforce_stationary_boundaries") is not None:
-        cargs.append(str(params.get("enforce_stationary_boundaries")))
-    if params.get("landmark_weights") is not None:
-        cargs.append(execution.input_file(params.get("landmark_weights")))
+    cargs.append(str(params.get("dimension", None)))
+    cargs.append(execution.input_file(params.get("fixed_image", None)))
+    cargs.append(execution.input_file(params.get("moving_image", None)))
+    cargs.append(params.get("transform_type", None))
+    cargs.append(params.get("output_transform", None))
+    if params.get("mesh_size", None) is not None:
+        cargs.append(params.get("mesh_size", None))
+    if params.get("number_of_levels", None) is not None:
+        cargs.append(str(params.get("number_of_levels", None)))
+    if params.get("order", None) is not None:
+        cargs.append(str(params.get("order", None)))
+    if params.get("enforce_stationary_boundaries", None) is not None:
+        cargs.append(str(params.get("enforce_stationary_boundaries", None)))
+    if params.get("landmark_weights", None) is not None:
+        cargs.append(execution.input_file(params.get("landmark_weights", None)))
     return cargs
 
 
@@ -174,7 +155,7 @@ def ants_landmark_based_transform_initializer_outputs(
     """
     ret = AntsLandmarkBasedTransformInitializerOutputs(
         root=execution.output_file("."),
-        output_transform=execution.output_file(params.get("output_transform")),
+        output_transform=execution.output_file(params.get("output_transform", None)),
     )
     return ret
 
@@ -270,7 +251,6 @@ def ants_landmark_based_transform_initializer(
 __all__ = [
     "ANTS_LANDMARK_BASED_TRANSFORM_INITIALIZER_METADATA",
     "AntsLandmarkBasedTransformInitializerOutputs",
-    "AntsLandmarkBasedTransformInitializerParameters",
     "ants_landmark_based_transform_initializer",
     "ants_landmark_based_transform_initializer_execute",
     "ants_landmark_based_transform_initializer_params",

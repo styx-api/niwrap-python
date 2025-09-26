@@ -14,7 +14,23 @@ SIGNAL2IMAGE_METADATA = Metadata(
 
 
 Signal2imageParameters = typing.TypedDict('Signal2imageParameters', {
-    "@type": typing.Literal["fsl.signal2image"],
+    "@type": typing.NotRequired[typing.Literal["fsl/signal2image"]],
+    "pulse_sequence": InputPathType,
+    "input_signal": typing.NotRequired[InputPathType | None],
+    "output_image": typing.NotRequired[str | None],
+    "kspace_coordinates": typing.NotRequired[InputPathType | None],
+    "output_kspace": typing.NotRequired[str | None],
+    "abs_flag": bool,
+    "homodyne_flag": bool,
+    "verbose_flag": bool,
+    "apodize_flag": bool,
+    "cutoff": typing.NotRequired[float | None],
+    "rolloff": typing.NotRequired[float | None],
+    "save_flag": bool,
+    "help_flag": bool,
+})
+Signal2imageParametersTagged = typing.TypedDict('Signal2imageParametersTagged', {
+    "@type": typing.Literal["fsl/signal2image"],
     "pulse_sequence": InputPathType,
     "input_signal": typing.NotRequired[InputPathType | None],
     "output_image": typing.NotRequired[str | None],
@@ -31,41 +47,9 @@ Signal2imageParameters = typing.TypedDict('Signal2imageParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "fsl.signal2image": signal2image_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "fsl.signal2image": signal2image_outputs,
-    }.get(t)
-
-
 class Signal2imageOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `signal2image(...)`.
+    Output object returned when calling `Signal2imageParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -89,7 +73,7 @@ def signal2image_params(
     rolloff: float | None = None,
     save_flag: bool = False,
     help_flag: bool = False,
-) -> Signal2imageParameters:
+) -> Signal2imageParametersTagged:
     """
     Build parameters.
     
@@ -112,7 +96,7 @@ def signal2image_params(
         Parameter dictionary
     """
     params = {
-        "@type": "fsl.signal2image",
+        "@type": "fsl/signal2image",
         "pulse_sequence": pulse_sequence,
         "abs_flag": abs_flag,
         "homodyne_flag": homodyne_flag,
@@ -153,49 +137,49 @@ def signal2image_cargs(
     cargs.append("signal2image")
     cargs.extend([
         "-p",
-        execution.input_file(params.get("pulse_sequence"))
+        execution.input_file(params.get("pulse_sequence", None))
     ])
-    if params.get("input_signal") is not None:
+    if params.get("input_signal", None) is not None:
         cargs.extend([
             "-i",
-            execution.input_file(params.get("input_signal"))
+            execution.input_file(params.get("input_signal", None))
         ])
-    if params.get("output_image") is not None:
+    if params.get("output_image", None) is not None:
         cargs.extend([
             "-o",
-            params.get("output_image")
+            params.get("output_image", None)
         ])
-    if params.get("kspace_coordinates") is not None:
+    if params.get("kspace_coordinates", None) is not None:
         cargs.extend([
             "-c",
-            execution.input_file(params.get("kspace_coordinates"))
+            execution.input_file(params.get("kspace_coordinates", None))
         ])
-    if params.get("output_kspace") is not None:
+    if params.get("output_kspace", None) is not None:
         cargs.extend([
             "-k",
-            params.get("output_kspace")
+            params.get("output_kspace", None)
         ])
-    if params.get("abs_flag"):
+    if params.get("abs_flag", False):
         cargs.append("-a")
-    if params.get("homodyne_flag"):
+    if params.get("homodyne_flag", False):
         cargs.append("--homo")
-    if params.get("verbose_flag"):
+    if params.get("verbose_flag", False):
         cargs.append("-v")
-    if params.get("apodize_flag"):
+    if params.get("apodize_flag", False):
         cargs.append("-z")
-    if params.get("cutoff") is not None:
+    if params.get("cutoff", None) is not None:
         cargs.extend([
             "-l",
-            str(params.get("cutoff"))
+            str(params.get("cutoff", None))
         ])
-    if params.get("rolloff") is not None:
+    if params.get("rolloff", None) is not None:
         cargs.extend([
             "-r",
-            str(params.get("rolloff"))
+            str(params.get("rolloff", None))
         ])
-    if params.get("save_flag"):
+    if params.get("save_flag", False):
         cargs.append("-s")
-    if params.get("help_flag"):
+    if params.get("help_flag", False):
         cargs.append("-h")
     return cargs
 
@@ -215,8 +199,8 @@ def signal2image_outputs(
     """
     ret = Signal2imageOutputs(
         root=execution.output_file("."),
-        outfile=execution.output_file(params.get("output_image")) if (params.get("output_image") is not None) else None,
-        kspace_outfile=execution.output_file(params.get("output_kspace")) if (params.get("output_kspace") is not None) else None,
+        outfile=execution.output_file(params.get("output_image", None)) if (params.get("output_image") is not None) else None,
+        kspace_outfile=execution.output_file(params.get("output_kspace", None)) if (params.get("output_kspace") is not None) else None,
     )
     return ret
 
@@ -316,7 +300,6 @@ def signal2image(
 __all__ = [
     "SIGNAL2IMAGE_METADATA",
     "Signal2imageOutputs",
-    "Signal2imageParameters",
     "signal2image",
     "signal2image_execute",
     "signal2image_params",

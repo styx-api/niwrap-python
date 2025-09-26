@@ -14,7 +14,35 @@ V_3D_SURF2_VOL_METADATA = Metadata(
 
 
 V3dSurf2VolParameters = typing.TypedDict('V3dSurf2VolParameters', {
-    "@type": typing.Literal["afni.3dSurf2Vol"],
+    "@type": typing.NotRequired[typing.Literal["afni/3dSurf2Vol"]],
+    "spec": InputPathType,
+    "surface_volume": InputPathType,
+    "surf_a": str,
+    "surf_b": typing.NotRequired[str | None],
+    "grid_parent": InputPathType,
+    "map_func": str,
+    "prefix": str,
+    "surf_xyz_1d": typing.NotRequired[InputPathType | None],
+    "sdata_1d": typing.NotRequired[InputPathType | None],
+    "sdata": typing.NotRequired[InputPathType | None],
+    "f_steps": typing.NotRequired[float | None],
+    "f_index": typing.NotRequired[str | None],
+    "f_p1_fr": typing.NotRequired[float | None],
+    "f_pn_fr": typing.NotRequired[float | None],
+    "f_p1_mm": typing.NotRequired[float | None],
+    "f_pn_mm": typing.NotRequired[float | None],
+    "stop_gap": bool,
+    "cmask": typing.NotRequired[str | None],
+    "data_expr": typing.NotRequired[str | None],
+    "datum": typing.NotRequired[str | None],
+    "debug": typing.NotRequired[int | None],
+    "dnode": typing.NotRequired[int | None],
+    "dvoxel": typing.NotRequired[int | None],
+    "noscale": bool,
+    "sxyz_orient_as_gpar": bool,
+})
+V3dSurf2VolParametersTagged = typing.TypedDict('V3dSurf2VolParametersTagged', {
+    "@type": typing.Literal["afni/3dSurf2Vol"],
     "spec": InputPathType,
     "surface_volume": InputPathType,
     "surf_a": str,
@@ -43,40 +71,9 @@ V3dSurf2VolParameters = typing.TypedDict('V3dSurf2VolParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "afni.3dSurf2Vol": v_3d_surf2_vol_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-    }.get(t)
-
-
 class V3dSurf2VolOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `v_3d_surf2_vol(...)`.
+    Output object returned when calling `V3dSurf2VolParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -108,7 +105,7 @@ def v_3d_surf2_vol_params(
     dvoxel: int | None = None,
     noscale: bool = False,
     sxyz_orient_as_gpar: bool = False,
-) -> V3dSurf2VolParameters:
+) -> V3dSurf2VolParametersTagged:
     """
     Build parameters.
     
@@ -142,7 +139,7 @@ def v_3d_surf2_vol_params(
         Parameter dictionary
     """
     params = {
-        "@type": "afni.3dSurf2Vol",
+        "@type": "afni/3dSurf2Vol",
         "spec": spec,
         "surface_volume": surface_volume,
         "surf_a": surf_a,
@@ -205,113 +202,113 @@ def v_3d_surf2_vol_cargs(
     cargs.append("3dSurf2Vol")
     cargs.extend([
         "-spec",
-        execution.input_file(params.get("spec"))
+        execution.input_file(params.get("spec", None))
     ])
     cargs.extend([
         "-sv",
-        execution.input_file(params.get("surface_volume"))
+        execution.input_file(params.get("surface_volume", None))
     ])
     cargs.extend([
         "-surf_A",
-        params.get("surf_a")
+        params.get("surf_a", None)
     ])
-    if params.get("surf_b") is not None:
+    if params.get("surf_b", None) is not None:
         cargs.extend([
             "-surf_B",
-            params.get("surf_b")
+            params.get("surf_b", None)
         ])
     cargs.extend([
         "-grid_parent",
-        execution.input_file(params.get("grid_parent"))
+        execution.input_file(params.get("grid_parent", None))
     ])
     cargs.extend([
         "-map_func",
-        params.get("map_func")
+        params.get("map_func", None)
     ])
     cargs.extend([
         "-prefix",
-        params.get("prefix")
+        params.get("prefix", None)
     ])
-    if params.get("surf_xyz_1d") is not None:
+    if params.get("surf_xyz_1d", None) is not None:
         cargs.extend([
             "-surf_xyz_1D",
-            execution.input_file(params.get("surf_xyz_1d"))
+            execution.input_file(params.get("surf_xyz_1d", None))
         ])
-    if params.get("sdata_1d") is not None:
+    if params.get("sdata_1d", None) is not None:
         cargs.extend([
             "-sdata_1D",
-            execution.input_file(params.get("sdata_1d"))
+            execution.input_file(params.get("sdata_1d", None))
         ])
-    if params.get("sdata") is not None:
+    if params.get("sdata", None) is not None:
         cargs.extend([
             "-sdata",
-            execution.input_file(params.get("sdata"))
+            execution.input_file(params.get("sdata", None))
         ])
-    if params.get("f_steps") is not None:
+    if params.get("f_steps", None) is not None:
         cargs.extend([
             "-f_steps",
-            str(params.get("f_steps"))
+            str(params.get("f_steps", None))
         ])
-    if params.get("f_index") is not None:
+    if params.get("f_index", None) is not None:
         cargs.extend([
             "-f_index",
-            params.get("f_index")
+            params.get("f_index", None)
         ])
-    if params.get("f_p1_fr") is not None:
+    if params.get("f_p1_fr", None) is not None:
         cargs.extend([
             "-f_p1_fr",
-            str(params.get("f_p1_fr"))
+            str(params.get("f_p1_fr", None))
         ])
-    if params.get("f_pn_fr") is not None:
+    if params.get("f_pn_fr", None) is not None:
         cargs.extend([
             "-f_pn_fr",
-            str(params.get("f_pn_fr"))
+            str(params.get("f_pn_fr", None))
         ])
-    if params.get("f_p1_mm") is not None:
+    if params.get("f_p1_mm", None) is not None:
         cargs.extend([
             "-f_p1_mm",
-            str(params.get("f_p1_mm"))
+            str(params.get("f_p1_mm", None))
         ])
-    if params.get("f_pn_mm") is not None:
+    if params.get("f_pn_mm", None) is not None:
         cargs.extend([
             "-f_pn_mm",
-            str(params.get("f_pn_mm"))
+            str(params.get("f_pn_mm", None))
         ])
-    if params.get("stop_gap"):
+    if params.get("stop_gap", False):
         cargs.append("-stop_gap")
-    if params.get("cmask") is not None:
+    if params.get("cmask", None) is not None:
         cargs.extend([
             "-cmask",
-            params.get("cmask")
+            params.get("cmask", None)
         ])
-    if params.get("data_expr") is not None:
+    if params.get("data_expr", None) is not None:
         cargs.extend([
             "-data_expr",
-            params.get("data_expr")
+            params.get("data_expr", None)
         ])
-    if params.get("datum") is not None:
+    if params.get("datum", None) is not None:
         cargs.extend([
             "-datum",
-            params.get("datum")
+            params.get("datum", None)
         ])
-    if params.get("debug") is not None:
+    if params.get("debug", None) is not None:
         cargs.extend([
             "-debug",
-            str(params.get("debug"))
+            str(params.get("debug", None))
         ])
-    if params.get("dnode") is not None:
+    if params.get("dnode", None) is not None:
         cargs.extend([
             "-dnode",
-            str(params.get("dnode"))
+            str(params.get("dnode", None))
         ])
-    if params.get("dvoxel") is not None:
+    if params.get("dvoxel", None) is not None:
         cargs.extend([
             "-dvoxel",
-            str(params.get("dvoxel"))
+            str(params.get("dvoxel", None))
         ])
-    if params.get("noscale"):
+    if params.get("noscale", False):
         cargs.append("-noscale")
-    if params.get("sxyz_orient_as_gpar"):
+    if params.get("sxyz_orient_as_gpar", False):
         cargs.append("-sxyz_orient_as_gpar")
     return cargs
 
@@ -462,7 +459,6 @@ def v_3d_surf2_vol(
 
 __all__ = [
     "V3dSurf2VolOutputs",
-    "V3dSurf2VolParameters",
     "V_3D_SURF2_VOL_METADATA",
     "v_3d_surf2_vol",
     "v_3d_surf2_vol_execute",

@@ -14,72 +14,57 @@ LABEL_MERGE_METADATA = Metadata(
 
 
 LabelMergeUpToParameters = typing.TypedDict('LabelMergeUpToParameters', {
-    "@type": typing.Literal["workbench.label-merge.label.column.up_to"],
+    "@type": typing.NotRequired[typing.Literal["up_to"]],
+    "last_column": str,
+    "opt_reverse": bool,
+})
+LabelMergeUpToParametersTagged = typing.TypedDict('LabelMergeUpToParametersTagged', {
+    "@type": typing.Literal["up_to"],
     "last_column": str,
     "opt_reverse": bool,
 })
 
 
 LabelMergeColumnParameters = typing.TypedDict('LabelMergeColumnParameters', {
-    "@type": typing.Literal["workbench.label-merge.label.column"],
+    "@type": typing.NotRequired[typing.Literal["column"]],
+    "column": str,
+    "up_to": typing.NotRequired[LabelMergeUpToParameters | None],
+})
+LabelMergeColumnParametersTagged = typing.TypedDict('LabelMergeColumnParametersTagged', {
+    "@type": typing.Literal["column"],
     "column": str,
     "up_to": typing.NotRequired[LabelMergeUpToParameters | None],
 })
 
 
 LabelMergeLabelParameters = typing.TypedDict('LabelMergeLabelParameters', {
-    "@type": typing.Literal["workbench.label-merge.label"],
+    "@type": typing.NotRequired[typing.Literal["label"]],
+    "label_in": InputPathType,
+    "column": typing.NotRequired[list[LabelMergeColumnParameters] | None],
+})
+LabelMergeLabelParametersTagged = typing.TypedDict('LabelMergeLabelParametersTagged', {
+    "@type": typing.Literal["label"],
     "label_in": InputPathType,
     "column": typing.NotRequired[list[LabelMergeColumnParameters] | None],
 })
 
 
 LabelMergeParameters = typing.TypedDict('LabelMergeParameters', {
-    "@type": typing.Literal["workbench.label-merge"],
+    "@type": typing.NotRequired[typing.Literal["workbench/label-merge"]],
+    "label_out": str,
+    "label": typing.NotRequired[list[LabelMergeLabelParameters] | None],
+})
+LabelMergeParametersTagged = typing.TypedDict('LabelMergeParametersTagged', {
+    "@type": typing.Literal["workbench/label-merge"],
     "label_out": str,
     "label": typing.NotRequired[list[LabelMergeLabelParameters] | None],
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "workbench.label-merge": label_merge_cargs,
-        "workbench.label-merge.label": label_merge_label_cargs,
-        "workbench.label-merge.label.column": label_merge_column_cargs,
-        "workbench.label-merge.label.column.up_to": label_merge_up_to_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "workbench.label-merge": label_merge_outputs,
-    }.get(t)
-
-
 def label_merge_up_to_params(
     last_column: str,
     opt_reverse: bool = False,
-) -> LabelMergeUpToParameters:
+) -> LabelMergeUpToParametersTagged:
     """
     Build parameters.
     
@@ -90,7 +75,7 @@ def label_merge_up_to_params(
         Parameter dictionary
     """
     params = {
-        "@type": "workbench.label-merge.label.column.up_to",
+        "@type": "up_to",
         "last_column": last_column,
         "opt_reverse": opt_reverse,
     }
@@ -112,8 +97,8 @@ def label_merge_up_to_cargs(
     """
     cargs = []
     cargs.append("-up-to")
-    cargs.append(params.get("last_column"))
-    if params.get("opt_reverse"):
+    cargs.append(params.get("last_column", None))
+    if params.get("opt_reverse", False):
         cargs.append("-reverse")
     return cargs
 
@@ -121,7 +106,7 @@ def label_merge_up_to_cargs(
 def label_merge_column_params(
     column: str,
     up_to: LabelMergeUpToParameters | None = None,
-) -> LabelMergeColumnParameters:
+) -> LabelMergeColumnParametersTagged:
     """
     Build parameters.
     
@@ -132,7 +117,7 @@ def label_merge_column_params(
         Parameter dictionary
     """
     params = {
-        "@type": "workbench.label-merge.label.column",
+        "@type": "column",
         "column": column,
     }
     if up_to is not None:
@@ -155,16 +140,16 @@ def label_merge_column_cargs(
     """
     cargs = []
     cargs.append("-column")
-    cargs.append(params.get("column"))
-    if params.get("up_to") is not None:
-        cargs.extend(dyn_cargs(params.get("up_to")["@type"])(params.get("up_to"), execution))
+    cargs.append(params.get("column", None))
+    if params.get("up_to", None) is not None:
+        cargs.extend(label_merge_up_to_cargs(params.get("up_to", None), execution))
     return cargs
 
 
 def label_merge_label_params(
     label_in: InputPathType,
     column: list[LabelMergeColumnParameters] | None = None,
-) -> LabelMergeLabelParameters:
+) -> LabelMergeLabelParametersTagged:
     """
     Build parameters.
     
@@ -175,7 +160,7 @@ def label_merge_label_params(
         Parameter dictionary
     """
     params = {
-        "@type": "workbench.label-merge.label",
+        "@type": "label",
         "label_in": label_in,
     }
     if column is not None:
@@ -198,15 +183,15 @@ def label_merge_label_cargs(
     """
     cargs = []
     cargs.append("-label")
-    cargs.append(execution.input_file(params.get("label_in")))
-    if params.get("column") is not None:
-        cargs.extend([a for c in [dyn_cargs(s["@type"])(s, execution) for s in params.get("column")] for a in c])
+    cargs.append(execution.input_file(params.get("label_in", None)))
+    if params.get("column", None) is not None:
+        cargs.extend([a for c in [label_merge_column_cargs(s, execution) for s in params.get("column", None)] for a in c])
     return cargs
 
 
 class LabelMergeOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `label_merge(...)`.
+    Output object returned when calling `LabelMergeParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -217,7 +202,7 @@ class LabelMergeOutputs(typing.NamedTuple):
 def label_merge_params(
     label_out: str,
     label: list[LabelMergeLabelParameters] | None = None,
-) -> LabelMergeParameters:
+) -> LabelMergeParametersTagged:
     """
     Build parameters.
     
@@ -228,7 +213,7 @@ def label_merge_params(
         Parameter dictionary
     """
     params = {
-        "@type": "workbench.label-merge",
+        "@type": "workbench/label-merge",
         "label_out": label_out,
     }
     if label is not None:
@@ -252,9 +237,9 @@ def label_merge_cargs(
     cargs = []
     cargs.append("wb_command")
     cargs.append("-label-merge")
-    cargs.append(params.get("label_out"))
-    if params.get("label") is not None:
-        cargs.extend([a for c in [dyn_cargs(s["@type"])(s, execution) for s in params.get("label")] for a in c])
+    cargs.append(params.get("label_out", None))
+    if params.get("label", None) is not None:
+        cargs.extend([a for c in [label_merge_label_cargs(s, execution) for s in params.get("label", None)] for a in c])
     return cargs
 
 
@@ -273,7 +258,7 @@ def label_merge_outputs(
     """
     ret = LabelMergeOutputs(
         root=execution.output_file("."),
-        label_out=execution.output_file(params.get("label_out")),
+        label_out=execution.output_file(params.get("label_out", None)),
     )
     return ret
 
@@ -356,11 +341,7 @@ def label_merge(
 
 __all__ = [
     "LABEL_MERGE_METADATA",
-    "LabelMergeColumnParameters",
-    "LabelMergeLabelParameters",
     "LabelMergeOutputs",
-    "LabelMergeParameters",
-    "LabelMergeUpToParameters",
     "label_merge",
     "label_merge_column_params",
     "label_merge_execute",

@@ -14,14 +14,31 @@ V_3D_CRUISETO_AFNI_METADATA = Metadata(
 
 
 V3dCruisetoAfniTraceParameters = typing.TypedDict('V3dCruisetoAfniTraceParameters', {
-    "@type": typing.Literal["afni.3dCRUISEtoAFNI.trace"],
+    "@type": typing.NotRequired[typing.Literal["trace"]],
+    "trace": bool,
+    "TRACE": bool,
+})
+V3dCruisetoAfniTraceParametersTagged = typing.TypedDict('V3dCruisetoAfniTraceParametersTagged', {
+    "@type": typing.Literal["trace"],
     "trace": bool,
     "TRACE": bool,
 })
 
 
 V3dCruisetoAfniParameters = typing.TypedDict('V3dCruisetoAfniParameters', {
-    "@type": typing.Literal["afni.3dCRUISEtoAFNI"],
+    "@type": typing.NotRequired[typing.Literal["afni/3dCRUISEtoAFNI"]],
+    "input": InputPathType,
+    "novolreg": bool,
+    "noxform": bool,
+    "setenv": typing.NotRequired[str | None],
+    "trace": typing.NotRequired[V3dCruisetoAfniTraceParameters | None],
+    "nomall": bool,
+    "yesmall": bool,
+    "help": bool,
+    "h": bool,
+})
+V3dCruisetoAfniParametersTagged = typing.TypedDict('V3dCruisetoAfniParametersTagged', {
+    "@type": typing.Literal["afni/3dCRUISEtoAFNI"],
     "input": InputPathType,
     "novolreg": bool,
     "noxform": bool,
@@ -34,42 +51,10 @@ V3dCruisetoAfniParameters = typing.TypedDict('V3dCruisetoAfniParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "afni.3dCRUISEtoAFNI": v_3d_cruiseto_afni_cargs,
-        "afni.3dCRUISEtoAFNI.trace": v_3d_cruiseto_afni_trace_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-    }.get(t)
-
-
 def v_3d_cruiseto_afni_trace_params(
     trace_: bool = False,
     trace_2: bool = False,
-) -> V3dCruisetoAfniTraceParameters:
+) -> V3dCruisetoAfniTraceParametersTagged:
     """
     Build parameters.
     
@@ -81,7 +66,7 @@ def v_3d_cruiseto_afni_trace_params(
         Parameter dictionary
     """
     params = {
-        "@type": "afni.3dCRUISEtoAFNI.trace",
+        "@type": "trace",
         "trace": trace_,
         "TRACE": trace_2,
     }
@@ -102,16 +87,16 @@ def v_3d_cruiseto_afni_trace_cargs(
         Command-line arguments.
     """
     cargs = []
-    if params.get("trace"):
+    if params.get("trace", False):
         cargs.append("-trace")
-    if params.get("TRACE"):
+    if params.get("TRACE", False):
         cargs.append("-TRACE")
     return cargs
 
 
 class V3dCruisetoAfniOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `v_3d_cruiseto_afni(...)`.
+    Output object returned when calling `V3dCruisetoAfniParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -127,7 +112,7 @@ def v_3d_cruiseto_afni_params(
     yesmall: bool = False,
     help_: bool = False,
     h: bool = False,
-) -> V3dCruisetoAfniParameters:
+) -> V3dCruisetoAfniParametersTagged:
     """
     Build parameters.
     
@@ -148,7 +133,7 @@ def v_3d_cruiseto_afni_params(
         Parameter dictionary
     """
     params = {
-        "@type": "afni.3dCRUISEtoAFNI",
+        "@type": "afni/3dCRUISEtoAFNI",
         "input": input_,
         "novolreg": novolreg,
         "noxform": noxform,
@@ -181,26 +166,26 @@ def v_3d_cruiseto_afni_cargs(
     cargs.append("3dCRUISEtoAFNI")
     cargs.extend([
         "-input",
-        execution.input_file(params.get("input"))
+        execution.input_file(params.get("input", None))
     ])
-    if params.get("novolreg"):
+    if params.get("novolreg", False):
         cargs.append("-novolreg")
-    if params.get("noxform"):
+    if params.get("noxform", False):
         cargs.append("-noxform")
-    if params.get("setenv") is not None:
+    if params.get("setenv", None) is not None:
         cargs.extend([
             "-setenv",
-            params.get("setenv")
+            params.get("setenv", None)
         ])
-    if params.get("trace") is not None:
-        cargs.extend(dyn_cargs(params.get("trace")["@type"])(params.get("trace"), execution))
-    if params.get("nomall"):
+    if params.get("trace", None) is not None:
+        cargs.extend(v_3d_cruiseto_afni_trace_cargs(params.get("trace", None), execution))
+    if params.get("nomall", False):
         cargs.append("-nomall")
-    if params.get("yesmall"):
+    if params.get("yesmall", False):
         cargs.append("-yesmall")
-    if params.get("help"):
+    if params.get("help", False):
         cargs.append("-help")
-    if params.get("h"):
+    if params.get("h", False):
         cargs.append("-h")
     return cargs
 
@@ -306,8 +291,6 @@ def v_3d_cruiseto_afni(
 
 __all__ = [
     "V3dCruisetoAfniOutputs",
-    "V3dCruisetoAfniParameters",
-    "V3dCruisetoAfniTraceParameters",
     "V_3D_CRUISETO_AFNI_METADATA",
     "v_3d_cruiseto_afni",
     "v_3d_cruiseto_afni_execute",

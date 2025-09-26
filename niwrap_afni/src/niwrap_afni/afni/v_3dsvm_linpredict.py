@@ -14,48 +14,22 @@ V_3DSVM_LINPREDICT_METADATA = Metadata(
 
 
 V3dsvmLinpredictParameters = typing.TypedDict('V3dsvmLinpredictParameters', {
-    "@type": typing.Literal["afni.3dsvm_linpredict"],
+    "@type": typing.NotRequired[typing.Literal["afni/3dsvm_linpredict"]],
+    "mask_dataset": typing.NotRequired[InputPathType | None],
+    "weight_vector": InputPathType,
+    "input_dataset": str,
+})
+V3dsvmLinpredictParametersTagged = typing.TypedDict('V3dsvmLinpredictParametersTagged', {
+    "@type": typing.Literal["afni/3dsvm_linpredict"],
     "mask_dataset": typing.NotRequired[InputPathType | None],
     "weight_vector": InputPathType,
     "input_dataset": str,
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "afni.3dsvm_linpredict": v_3dsvm_linpredict_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "afni.3dsvm_linpredict": v_3dsvm_linpredict_outputs,
-    }.get(t)
-
-
 class V3dsvmLinpredictOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `v_3dsvm_linpredict(...)`.
+    Output object returned when calling `V3dsvmLinpredictParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -67,7 +41,7 @@ def v_3dsvm_linpredict_params(
     weight_vector: InputPathType,
     input_dataset: str,
     mask_dataset: InputPathType | None = None,
-) -> V3dsvmLinpredictParameters:
+) -> V3dsvmLinpredictParametersTagged:
     """
     Build parameters.
     
@@ -82,7 +56,7 @@ def v_3dsvm_linpredict_params(
         Parameter dictionary
     """
     params = {
-        "@type": "afni.3dsvm_linpredict",
+        "@type": "afni/3dsvm_linpredict",
         "weight_vector": weight_vector,
         "input_dataset": input_dataset,
     }
@@ -106,13 +80,13 @@ def v_3dsvm_linpredict_cargs(
     """
     cargs = []
     cargs.append("3dsvm_linpredict")
-    if params.get("mask_dataset") is not None:
+    if params.get("mask_dataset", None) is not None:
         cargs.extend([
             "-mask",
-            execution.input_file(params.get("mask_dataset"))
+            execution.input_file(params.get("mask_dataset", None))
         ])
-    cargs.append(execution.input_file(params.get("weight_vector")))
-    cargs.append(params.get("input_dataset"))
+    cargs.append(execution.input_file(params.get("weight_vector", None)))
+    cargs.append(params.get("input_dataset", None))
     return cargs
 
 
@@ -200,7 +174,6 @@ def v_3dsvm_linpredict(
 
 __all__ = [
     "V3dsvmLinpredictOutputs",
-    "V3dsvmLinpredictParameters",
     "V_3DSVM_LINPREDICT_METADATA",
     "v_3dsvm_linpredict",
     "v_3dsvm_linpredict_execute",

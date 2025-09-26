@@ -14,7 +14,30 @@ DTIFIT_METADATA = Metadata(
 
 
 DtifitParameters = typing.TypedDict('DtifitParameters', {
-    "@type": typing.Literal["fsl.dtifit"],
+    "@type": typing.NotRequired[typing.Literal["fsl/dtifit"]],
+    "data_file": InputPathType,
+    "output_basename": str,
+    "mask_file": InputPathType,
+    "bvec_file": InputPathType,
+    "bval_file": InputPathType,
+    "verbose_flag": bool,
+    "sse_flag": bool,
+    "wls_flag": bool,
+    "kurt_flag": bool,
+    "kurtdir_flag": bool,
+    "littlebit_flag": bool,
+    "save_tensor_flag": bool,
+    "zmin": typing.NotRequired[float | None],
+    "zmax": typing.NotRequired[float | None],
+    "ymin": typing.NotRequired[float | None],
+    "ymax": typing.NotRequired[float | None],
+    "xmin": typing.NotRequired[float | None],
+    "xmax": typing.NotRequired[float | None],
+    "gradnonlin_file": typing.NotRequired[InputPathType | None],
+    "confound_regressors": typing.NotRequired[InputPathType | None],
+})
+DtifitParametersTagged = typing.TypedDict('DtifitParametersTagged', {
+    "@type": typing.Literal["fsl/dtifit"],
     "data_file": InputPathType,
     "output_basename": str,
     "mask_file": InputPathType,
@@ -38,41 +61,9 @@ DtifitParameters = typing.TypedDict('DtifitParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "fsl.dtifit": dtifit_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "fsl.dtifit": dtifit_outputs,
-    }.get(t)
-
-
 class DtifitOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `dtifit(...)`.
+    Output object returned when calling `DtifitParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -111,7 +102,7 @@ def dtifit_params(
     xmax: float | None = None,
     gradnonlin_file: InputPathType | None = None,
     confound_regressors: InputPathType | None = None,
-) -> DtifitParameters:
+) -> DtifitParametersTagged:
     """
     Build parameters.
     
@@ -141,7 +132,7 @@ def dtifit_params(
         Parameter dictionary
     """
     params = {
-        "@type": "fsl.dtifit",
+        "@type": "fsl/dtifit",
         "data_file": data_file,
         "output_basename": output_basename,
         "mask_file": mask_file,
@@ -191,77 +182,77 @@ def dtifit_cargs(
     cargs.append("dtifit")
     cargs.extend([
         "-k",
-        execution.input_file(params.get("data_file"))
+        execution.input_file(params.get("data_file", None))
     ])
     cargs.extend([
         "-o",
-        params.get("output_basename")
+        params.get("output_basename", None)
     ])
     cargs.extend([
         "-m",
-        execution.input_file(params.get("mask_file"))
+        execution.input_file(params.get("mask_file", None))
     ])
     cargs.extend([
         "-r",
-        execution.input_file(params.get("bvec_file"))
+        execution.input_file(params.get("bvec_file", None))
     ])
     cargs.extend([
         "-b",
-        execution.input_file(params.get("bval_file"))
+        execution.input_file(params.get("bval_file", None))
     ])
-    if params.get("verbose_flag"):
+    if params.get("verbose_flag", False):
         cargs.append("-V")
-    if params.get("sse_flag"):
+    if params.get("sse_flag", False):
         cargs.append("--sse")
-    if params.get("wls_flag"):
+    if params.get("wls_flag", False):
         cargs.append("-w")
-    if params.get("kurt_flag"):
+    if params.get("kurt_flag", False):
         cargs.append("--kurt")
-    if params.get("kurtdir_flag"):
+    if params.get("kurtdir_flag", False):
         cargs.append("--kurtdir")
-    if params.get("littlebit_flag"):
+    if params.get("littlebit_flag", False):
         cargs.append("--littlebit")
-    if params.get("save_tensor_flag"):
+    if params.get("save_tensor_flag", False):
         cargs.append("--save_tensor")
-    if params.get("zmin") is not None:
+    if params.get("zmin", None) is not None:
         cargs.extend([
             "-z",
-            str(params.get("zmin"))
+            str(params.get("zmin", None))
         ])
-    if params.get("zmax") is not None:
+    if params.get("zmax", None) is not None:
         cargs.extend([
             "-Z",
-            str(params.get("zmax"))
+            str(params.get("zmax", None))
         ])
-    if params.get("ymin") is not None:
+    if params.get("ymin", None) is not None:
         cargs.extend([
             "-y",
-            str(params.get("ymin"))
+            str(params.get("ymin", None))
         ])
-    if params.get("ymax") is not None:
+    if params.get("ymax", None) is not None:
         cargs.extend([
             "-Y",
-            str(params.get("ymax"))
+            str(params.get("ymax", None))
         ])
-    if params.get("xmin") is not None:
+    if params.get("xmin", None) is not None:
         cargs.extend([
             "-x",
-            str(params.get("xmin"))
+            str(params.get("xmin", None))
         ])
-    if params.get("xmax") is not None:
+    if params.get("xmax", None) is not None:
         cargs.extend([
             "-X",
-            str(params.get("xmax"))
+            str(params.get("xmax", None))
         ])
-    if params.get("gradnonlin_file") is not None:
+    if params.get("gradnonlin_file", None) is not None:
         cargs.extend([
             "--gradnonlin",
-            execution.input_file(params.get("gradnonlin_file"))
+            execution.input_file(params.get("gradnonlin_file", None))
         ])
-    if params.get("confound_regressors") is not None:
+    if params.get("confound_regressors", None) is not None:
         cargs.extend([
             "--cni",
-            execution.input_file(params.get("confound_regressors"))
+            execution.input_file(params.get("confound_regressors", None))
         ])
     return cargs
 
@@ -281,12 +272,12 @@ def dtifit_outputs(
     """
     ret = DtifitOutputs(
         root=execution.output_file("."),
-        fa_output=execution.output_file(params.get("output_basename") + "_FA.nii.gz"),
-        md_output=execution.output_file(params.get("output_basename") + "_MD.nii.gz"),
-        mo_output=execution.output_file(params.get("output_basename") + "_MO.nii.gz"),
-        l1_output=execution.output_file(params.get("output_basename") + "_L1.nii.gz"),
-        l2_output=execution.output_file(params.get("output_basename") + "_L2.nii.gz"),
-        l3_output=execution.output_file(params.get("output_basename") + "_L3.nii.gz"),
+        fa_output=execution.output_file(params.get("output_basename", None) + "_FA.nii.gz"),
+        md_output=execution.output_file(params.get("output_basename", None) + "_MD.nii.gz"),
+        mo_output=execution.output_file(params.get("output_basename", None) + "_MO.nii.gz"),
+        l1_output=execution.output_file(params.get("output_basename", None) + "_L1.nii.gz"),
+        l2_output=execution.output_file(params.get("output_basename", None) + "_L2.nii.gz"),
+        l3_output=execution.output_file(params.get("output_basename", None) + "_L3.nii.gz"),
     )
     return ret
 
@@ -405,7 +396,6 @@ def dtifit(
 __all__ = [
     "DTIFIT_METADATA",
     "DtifitOutputs",
-    "DtifitParameters",
     "dtifit",
     "dtifit_execute",
     "dtifit_params",

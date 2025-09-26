@@ -14,7 +14,30 @@ MAKE_COLOR_MAP_METADATA = Metadata(
 
 
 MakeColorMapParameters = typing.TypedDict('MakeColorMapParameters', {
-    "@type": typing.Literal["afni.MakeColorMap"],
+    "@type": typing.NotRequired[typing.Literal["afni/MakeColorMap"]],
+    "fiducials_ncol": typing.NotRequired[InputPathType | None],
+    "fiducials": typing.NotRequired[InputPathType | None],
+    "num_colors": typing.NotRequired[float | None],
+    "std_mapname": typing.NotRequired[str | None],
+    "palette_file": typing.NotRequired[InputPathType | None],
+    "cmap_name": typing.NotRequired[str | None],
+    "fscolut_labels": typing.NotRequired[list[float] | None],
+    "fscolut_file": typing.NotRequired[InputPathType | None],
+    "afni_hex": typing.NotRequired[str | None],
+    "afni_hex_complete": typing.NotRequired[str | None],
+    "suma_colormap": typing.NotRequired[str | None],
+    "user_colut_file": typing.NotRequired[InputPathType | None],
+    "sdset": typing.NotRequired[InputPathType | None],
+    "sdset_prefix": typing.NotRequired[str | None],
+    "flipupdown": bool,
+    "skip_last": bool,
+    "show_fscolut": bool,
+    "help_flag": bool,
+    "help_full_flag": bool,
+    "flip_map_updside_down": bool,
+})
+MakeColorMapParametersTagged = typing.TypedDict('MakeColorMapParametersTagged', {
+    "@type": typing.Literal["afni/MakeColorMap"],
     "fiducials_ncol": typing.NotRequired[InputPathType | None],
     "fiducials": typing.NotRequired[InputPathType | None],
     "num_colors": typing.NotRequired[float | None],
@@ -38,41 +61,9 @@ MakeColorMapParameters = typing.TypedDict('MakeColorMapParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "afni.MakeColorMap": make_color_map_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "afni.MakeColorMap": make_color_map_outputs,
-    }.get(t)
-
-
 class MakeColorMapOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `make_color_map(...)`.
+    Output object returned when calling `MakeColorMapParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -103,7 +94,7 @@ def make_color_map_params(
     help_flag: bool = False,
     help_full_flag: bool = False,
     flip_map_updside_down: bool = False,
-) -> MakeColorMapParameters:
+) -> MakeColorMapParametersTagged:
     """
     Build parameters.
     
@@ -136,7 +127,7 @@ def make_color_map_params(
         Parameter dictionary
     """
     params = {
-        "@type": "afni.MakeColorMap",
+        "@type": "afni/MakeColorMap",
         "flipupdown": flipupdown,
         "skip_last": skip_last,
         "show_fscolut": show_fscolut,
@@ -190,87 +181,87 @@ def make_color_map_cargs(
     """
     cargs = []
     cargs.append("MakeColorMap")
-    if params.get("fiducials_ncol") is not None:
+    if params.get("fiducials_ncol", None) is not None:
         cargs.extend([
             "-fn",
-            execution.input_file(params.get("fiducials_ncol"))
+            execution.input_file(params.get("fiducials_ncol", None))
         ])
-    if params.get("fiducials") is not None:
+    if params.get("fiducials", None) is not None:
         cargs.extend([
             "-f",
-            execution.input_file(params.get("fiducials"))
+            execution.input_file(params.get("fiducials", None))
         ])
-    if params.get("num_colors") is not None:
+    if params.get("num_colors", None) is not None:
         cargs.extend([
             "-nc",
-            str(params.get("num_colors"))
+            str(params.get("num_colors", None))
         ])
-    if params.get("std_mapname") is not None:
+    if params.get("std_mapname", None) is not None:
         cargs.extend([
             "-std",
-            params.get("std_mapname")
+            params.get("std_mapname", None)
         ])
-    if params.get("palette_file") is not None:
+    if params.get("palette_file", None) is not None:
         cargs.extend([
             "-cmapdb",
-            execution.input_file(params.get("palette_file"))
+            execution.input_file(params.get("palette_file", None))
         ])
-    if params.get("cmap_name") is not None:
+    if params.get("cmap_name", None) is not None:
         cargs.extend([
             "-cmap",
-            params.get("cmap_name")
+            params.get("cmap_name", None)
         ])
-    if params.get("fscolut_labels") is not None:
+    if params.get("fscolut_labels", None) is not None:
         cargs.extend([
             "-fscolut",
-            *map(str, params.get("fscolut_labels"))
+            *map(str, params.get("fscolut_labels", None))
         ])
-    if params.get("fscolut_file") is not None:
+    if params.get("fscolut_file", None) is not None:
         cargs.extend([
             "-fscolutfile",
-            execution.input_file(params.get("fscolut_file"))
+            execution.input_file(params.get("fscolut_file", None))
         ])
-    if params.get("afni_hex") is not None:
+    if params.get("afni_hex", None) is not None:
         cargs.extend([
             "-ah",
-            params.get("afni_hex")
+            params.get("afni_hex", None)
         ])
-    if params.get("afni_hex_complete") is not None:
+    if params.get("afni_hex_complete", None) is not None:
         cargs.extend([
             "-ahc",
-            params.get("afni_hex_complete")
+            params.get("afni_hex_complete", None)
         ])
-    if params.get("suma_colormap") is not None:
+    if params.get("suma_colormap", None) is not None:
         cargs.extend([
             "-suma_cmap",
-            params.get("suma_colormap")
+            params.get("suma_colormap", None)
         ])
-    if params.get("user_colut_file") is not None:
+    if params.get("user_colut_file", None) is not None:
         cargs.extend([
             "-usercolutfile",
-            execution.input_file(params.get("user_colut_file"))
+            execution.input_file(params.get("user_colut_file", None))
         ])
-    if params.get("sdset") is not None:
+    if params.get("sdset", None) is not None:
         cargs.extend([
             "-sdset",
-            execution.input_file(params.get("sdset"))
+            execution.input_file(params.get("sdset", None))
         ])
-    if params.get("sdset_prefix") is not None:
+    if params.get("sdset_prefix", None) is not None:
         cargs.extend([
             "-sdset_prefix",
-            params.get("sdset_prefix")
+            params.get("sdset_prefix", None)
         ])
-    if params.get("flipupdown"):
+    if params.get("flipupdown", False):
         cargs.append("-flipud")
-    if params.get("skip_last"):
+    if params.get("skip_last", False):
         cargs.append("-sl")
-    if params.get("show_fscolut"):
+    if params.get("show_fscolut", False):
         cargs.append("-show_fscolut")
-    if params.get("help_flag"):
+    if params.get("help_flag", False):
         cargs.append("-h")
-    if params.get("help_full_flag"):
+    if params.get("help_full_flag", False):
         cargs.append("-help")
-    if params.get("flip_map_updside_down"):
+    if params.get("flip_map_updside_down", False):
         cargs.append("-flipud")
     return cargs
 
@@ -290,7 +281,7 @@ def make_color_map_outputs(
     """
     ret = MakeColorMapOutputs(
         root=execution.output_file("."),
-        afni_hex_output_prefix=execution.output_file(params.get("afni_hex") + "_01") if (params.get("afni_hex") is not None) else None,
+        afni_hex_output_prefix=execution.output_file(params.get("afni_hex", None) + "_01") if (params.get("afni_hex") is not None) else None,
         palette_file_output=execution.output_file("TestPalette.pal"),
     )
     return ret
@@ -415,7 +406,6 @@ def make_color_map(
 __all__ = [
     "MAKE_COLOR_MAP_METADATA",
     "MakeColorMapOutputs",
-    "MakeColorMapParameters",
     "make_color_map",
     "make_color_map_execute",
     "make_color_map_params",

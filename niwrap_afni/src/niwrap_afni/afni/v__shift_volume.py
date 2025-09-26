@@ -14,7 +14,16 @@ V__SHIFT_VOLUME_METADATA = Metadata(
 
 
 VShiftVolumeParameters = typing.TypedDict('VShiftVolumeParameters', {
-    "@type": typing.Literal["afni.@Shift_Volume"],
+    "@type": typing.NotRequired[typing.Literal["afni/@Shift_Volume"]],
+    "rai_shift_vector": typing.NotRequired[list[float] | None],
+    "mni_anat_to_mni": bool,
+    "mni_to_mni_anat": bool,
+    "dset": InputPathType,
+    "no_cp": bool,
+    "prefix": str,
+})
+VShiftVolumeParametersTagged = typing.TypedDict('VShiftVolumeParametersTagged', {
+    "@type": typing.Literal["afni/@Shift_Volume"],
     "rai_shift_vector": typing.NotRequired[list[float] | None],
     "mni_anat_to_mni": bool,
     "mni_to_mni_anat": bool,
@@ -24,41 +33,9 @@ VShiftVolumeParameters = typing.TypedDict('VShiftVolumeParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "afni.@Shift_Volume": v__shift_volume_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "afni.@Shift_Volume": v__shift_volume_outputs,
-    }.get(t)
-
-
 class VShiftVolumeOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `v__shift_volume(...)`.
+    Output object returned when calling `VShiftVolumeParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -73,7 +50,7 @@ def v__shift_volume_params(
     mni_anat_to_mni: bool = False,
     mni_to_mni_anat: bool = False,
     no_cp: bool = False,
-) -> VShiftVolumeParameters:
+) -> VShiftVolumeParametersTagged:
     """
     Build parameters.
     
@@ -92,7 +69,7 @@ def v__shift_volume_params(
         Parameter dictionary
     """
     params = {
-        "@type": "afni.@Shift_Volume",
+        "@type": "afni/@Shift_Volume",
         "mni_anat_to_mni": mni_anat_to_mni,
         "mni_to_mni_anat": mni_to_mni_anat,
         "dset": dset,
@@ -119,24 +96,24 @@ def v__shift_volume_cargs(
     """
     cargs = []
     cargs.append("@Shift_Volume")
-    if params.get("rai_shift_vector") is not None:
+    if params.get("rai_shift_vector", None) is not None:
         cargs.extend([
             "-rai_shift",
-            *map(str, params.get("rai_shift_vector"))
+            *map(str, params.get("rai_shift_vector", None))
         ])
-    if params.get("mni_anat_to_mni"):
+    if params.get("mni_anat_to_mni", False):
         cargs.append("-MNI_Anat_to_MNI")
-    if params.get("mni_to_mni_anat"):
+    if params.get("mni_to_mni_anat", False):
         cargs.append("-MNI_to_MNI_Anat")
     cargs.extend([
         "-dset",
-        execution.input_file(params.get("dset"))
+        execution.input_file(params.get("dset", None))
     ])
-    if params.get("no_cp"):
+    if params.get("no_cp", False):
         cargs.append("-no_cp")
     cargs.extend([
         "-prefix",
-        params.get("prefix")
+        params.get("prefix", None)
     ])
     return cargs
 
@@ -156,7 +133,7 @@ def v__shift_volume_outputs(
     """
     ret = VShiftVolumeOutputs(
         root=execution.output_file("."),
-        output_file=execution.output_file(params.get("prefix") + ".nii.gz"),
+        output_file=execution.output_file(params.get("prefix", None) + ".nii.gz"),
     )
     return ret
 
@@ -237,7 +214,6 @@ def v__shift_volume(
 
 __all__ = [
     "VShiftVolumeOutputs",
-    "VShiftVolumeParameters",
     "V__SHIFT_VOLUME_METADATA",
     "v__shift_volume",
     "v__shift_volume_execute",

@@ -14,7 +14,21 @@ FNIRT_METADATA = Metadata(
 
 
 FnirtParameters = typing.TypedDict('FnirtParameters', {
-    "@type": typing.Literal["fsl.fnirt"],
+    "@type": typing.NotRequired[typing.Literal["fsl/fnirt"]],
+    "affine_file": typing.NotRequired[InputPathType | None],
+    "config_file": typing.NotRequired[typing.Literal["T1_2_MNI152_2mm", "FA_2_FMRIB58_1mm"] | None],
+    "field_file": typing.NotRequired[InputPathType | None],
+    "fieldcoeff_file": typing.NotRequired[InputPathType | None],
+    "in_file": InputPathType,
+    "jacobian_file": typing.NotRequired[InputPathType | None],
+    "log_file": typing.NotRequired[InputPathType | None],
+    "modulatedref_file": typing.NotRequired[str | None],
+    "ref_file": InputPathType,
+    "refmask_file": typing.NotRequired[InputPathType | None],
+    "warped_file": typing.NotRequired[InputPathType | None],
+})
+FnirtParametersTagged = typing.TypedDict('FnirtParametersTagged', {
+    "@type": typing.Literal["fsl/fnirt"],
     "affine_file": typing.NotRequired[InputPathType | None],
     "config_file": typing.NotRequired[typing.Literal["T1_2_MNI152_2mm", "FA_2_FMRIB58_1mm"] | None],
     "field_file": typing.NotRequired[InputPathType | None],
@@ -29,41 +43,9 @@ FnirtParameters = typing.TypedDict('FnirtParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "fsl.fnirt": fnirt_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "fsl.fnirt": fnirt_outputs,
-    }.get(t)
-
-
 class FnirtOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `fnirt(...)`.
+    Output object returned when calling `FnirtParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -93,7 +75,7 @@ def fnirt_params(
     modulatedref_file: str | None = None,
     refmask_file: InputPathType | None = None,
     warped_file: InputPathType | None = None,
-) -> FnirtParameters:
+) -> FnirtParametersTagged:
     """
     Build parameters.
     
@@ -118,7 +100,7 @@ def fnirt_params(
         Parameter dictionary
     """
     params = {
-        "@type": "fsl.fnirt",
+        "@type": "fsl/fnirt",
         "in_file": in_file,
         "ref_file": ref_file,
     }
@@ -158,26 +140,26 @@ def fnirt_cargs(
     """
     cargs = []
     cargs.append("fnirt")
-    if params.get("affine_file") is not None:
-        cargs.append("--aff=" + execution.input_file(params.get("affine_file")))
-    if params.get("config_file") is not None:
-        cargs.append("--config=" + params.get("config_file"))
-    if params.get("field_file") is not None:
-        cargs.append("--fout=" + execution.input_file(params.get("field_file")))
-    if params.get("fieldcoeff_file") is not None:
-        cargs.append("--cout=" + execution.input_file(params.get("fieldcoeff_file")))
-    cargs.append("--in=" + execution.input_file(params.get("in_file")))
-    if params.get("jacobian_file") is not None:
-        cargs.append("--jout=" + execution.input_file(params.get("jacobian_file")))
-    if params.get("log_file") is not None:
-        cargs.append("--logout=" + execution.input_file(params.get("log_file")))
-    if params.get("modulatedref_file") is not None:
-        cargs.append("--refout=" + params.get("modulatedref_file"))
-    cargs.append("--ref=" + execution.input_file(params.get("ref_file")))
-    if params.get("refmask_file") is not None:
-        cargs.append("--refmask=" + execution.input_file(params.get("refmask_file")))
-    if params.get("warped_file") is not None:
-        cargs.append("--iout=" + execution.input_file(params.get("warped_file")))
+    if params.get("affine_file", None) is not None:
+        cargs.append("--aff=" + execution.input_file(params.get("affine_file", None)))
+    if params.get("config_file", None) is not None:
+        cargs.append("--config=" + params.get("config_file", None))
+    if params.get("field_file", None) is not None:
+        cargs.append("--fout=" + execution.input_file(params.get("field_file", None)))
+    if params.get("fieldcoeff_file", None) is not None:
+        cargs.append("--cout=" + execution.input_file(params.get("fieldcoeff_file", None)))
+    cargs.append("--in=" + execution.input_file(params.get("in_file", None)))
+    if params.get("jacobian_file", None) is not None:
+        cargs.append("--jout=" + execution.input_file(params.get("jacobian_file", None)))
+    if params.get("log_file", None) is not None:
+        cargs.append("--logout=" + execution.input_file(params.get("log_file", None)))
+    if params.get("modulatedref_file", None) is not None:
+        cargs.append("--refout=" + params.get("modulatedref_file", None))
+    cargs.append("--ref=" + execution.input_file(params.get("ref_file", None)))
+    if params.get("refmask_file", None) is not None:
+        cargs.append("--refmask=" + execution.input_file(params.get("refmask_file", None)))
+    if params.get("warped_file", None) is not None:
+        cargs.append("--iout=" + execution.input_file(params.get("warped_file", None)))
     return cargs
 
 
@@ -196,12 +178,12 @@ def fnirt_outputs(
     """
     ret = FnirtOutputs(
         root=execution.output_file("."),
-        field_file_outfile=execution.output_file(pathlib.Path(params.get("field_file")).name + ".nii.gz") if (params.get("field_file") is not None) else None,
-        fieldcoeff_file_outfile=execution.output_file(pathlib.Path(params.get("fieldcoeff_file")).name + ".nii.gz") if (params.get("fieldcoeff_file") is not None) else None,
-        jacobian_file_outfile=execution.output_file(pathlib.Path(params.get("jacobian_file")).name + ".mat") if (params.get("jacobian_file") is not None) else None,
-        log_file_outfile=execution.output_file(pathlib.Path(params.get("log_file")).name + ".txt") if (params.get("log_file") is not None) else None,
-        modulatedref_file_outfile=execution.output_file(params.get("modulatedref_file") + ".nii.gz") if (params.get("modulatedref_file") is not None) else None,
-        warped_file_outfile=execution.output_file(pathlib.Path(params.get("warped_file")).name + ".nii.gz") if (params.get("warped_file") is not None) else None,
+        field_file_outfile=execution.output_file(pathlib.Path(params.get("field_file", None)).name + ".nii.gz") if (params.get("field_file") is not None) else None,
+        fieldcoeff_file_outfile=execution.output_file(pathlib.Path(params.get("fieldcoeff_file", None)).name + ".nii.gz") if (params.get("fieldcoeff_file") is not None) else None,
+        jacobian_file_outfile=execution.output_file(pathlib.Path(params.get("jacobian_file", None)).name + ".mat") if (params.get("jacobian_file") is not None) else None,
+        log_file_outfile=execution.output_file(pathlib.Path(params.get("log_file", None)).name + ".txt") if (params.get("log_file") is not None) else None,
+        modulatedref_file_outfile=execution.output_file(params.get("modulatedref_file", None) + ".nii.gz") if (params.get("modulatedref_file") is not None) else None,
+        warped_file_outfile=execution.output_file(pathlib.Path(params.get("warped_file", None)).name + ".nii.gz") if (params.get("warped_file") is not None) else None,
     )
     return ret
 
@@ -297,7 +279,6 @@ def fnirt(
 __all__ = [
     "FNIRT_METADATA",
     "FnirtOutputs",
-    "FnirtParameters",
     "fnirt",
     "fnirt_execute",
     "fnirt_params",

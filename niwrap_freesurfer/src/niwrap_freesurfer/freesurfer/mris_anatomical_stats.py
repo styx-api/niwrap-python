@@ -14,7 +14,24 @@ MRIS_ANATOMICAL_STATS_METADATA = Metadata(
 
 
 MrisAnatomicalStatsParameters = typing.TypedDict('MrisAnatomicalStatsParameters', {
-    "@type": typing.Literal["freesurfer.mris_anatomical_stats"],
+    "@type": typing.NotRequired[typing.Literal["freesurfer/mris_anatomical_stats"]],
+    "subjectname": str,
+    "hemisphere": str,
+    "surfacename": typing.NotRequired[str | None],
+    "thickness_range": typing.NotRequired[list[float] | None],
+    "label_file": typing.NotRequired[InputPathType | None],
+    "thickness_file": typing.NotRequired[InputPathType | None],
+    "annotation_file": typing.NotRequired[InputPathType | None],
+    "tabular_output": bool,
+    "tablefile": typing.NotRequired[str | None],
+    "logfile": typing.NotRequired[str | None],
+    "nsmooth": typing.NotRequired[float | None],
+    "color_table": typing.NotRequired[str | None],
+    "noglobal": bool,
+    "th3_computation": bool,
+})
+MrisAnatomicalStatsParametersTagged = typing.TypedDict('MrisAnatomicalStatsParametersTagged', {
+    "@type": typing.Literal["freesurfer/mris_anatomical_stats"],
     "subjectname": str,
     "hemisphere": str,
     "surfacename": typing.NotRequired[str | None],
@@ -32,41 +49,9 @@ MrisAnatomicalStatsParameters = typing.TypedDict('MrisAnatomicalStatsParameters'
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "freesurfer.mris_anatomical_stats": mris_anatomical_stats_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "freesurfer.mris_anatomical_stats": mris_anatomical_stats_outputs,
-    }.get(t)
-
-
 class MrisAnatomicalStatsOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `mris_anatomical_stats(...)`.
+    Output object returned when calling `MrisAnatomicalStatsParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -93,7 +78,7 @@ def mris_anatomical_stats_params(
     color_table: str | None = None,
     noglobal: bool = False,
     th3_computation: bool = False,
-) -> MrisAnatomicalStatsParameters:
+) -> MrisAnatomicalStatsParametersTagged:
     """
     Build parameters.
     
@@ -119,7 +104,7 @@ def mris_anatomical_stats_params(
         Parameter dictionary
     """
     params = {
-        "@type": "freesurfer.mris_anatomical_stats",
+        "@type": "freesurfer/mris_anatomical_stats",
         "subjectname": subjectname,
         "hemisphere": hemisphere,
         "tabular_output": tabular_output,
@@ -162,55 +147,55 @@ def mris_anatomical_stats_cargs(
     """
     cargs = []
     cargs.append("mris_anatomical_stats")
-    cargs.append(params.get("subjectname"))
-    cargs.append(params.get("hemisphere"))
-    if params.get("surfacename") is not None:
-        cargs.append(params.get("surfacename"))
-    if params.get("thickness_range") is not None:
+    cargs.append(params.get("subjectname", None))
+    cargs.append(params.get("hemisphere", None))
+    if params.get("surfacename", None) is not None:
+        cargs.append(params.get("surfacename", None))
+    if params.get("thickness_range", None) is not None:
         cargs.extend([
             "-i",
-            *map(str, params.get("thickness_range"))
+            *map(str, params.get("thickness_range", None))
         ])
-    if params.get("label_file") is not None:
+    if params.get("label_file", None) is not None:
         cargs.extend([
             "-l",
-            execution.input_file(params.get("label_file"))
+            execution.input_file(params.get("label_file", None))
         ])
-    if params.get("thickness_file") is not None:
+    if params.get("thickness_file", None) is not None:
         cargs.extend([
             "-t",
-            execution.input_file(params.get("thickness_file"))
+            execution.input_file(params.get("thickness_file", None))
         ])
-    if params.get("annotation_file") is not None:
+    if params.get("annotation_file", None) is not None:
         cargs.extend([
             "-a",
-            execution.input_file(params.get("annotation_file"))
+            execution.input_file(params.get("annotation_file", None))
         ])
-    if params.get("tabular_output"):
+    if params.get("tabular_output", False):
         cargs.append("-b")
-    if params.get("tablefile") is not None:
+    if params.get("tablefile", None) is not None:
         cargs.extend([
             "-f",
-            params.get("tablefile")
+            params.get("tablefile", None)
         ])
-    if params.get("logfile") is not None:
+    if params.get("logfile", None) is not None:
         cargs.extend([
             "-log",
-            params.get("logfile")
+            params.get("logfile", None)
         ])
-    if params.get("nsmooth") is not None:
+    if params.get("nsmooth", None) is not None:
         cargs.extend([
             "-nsmooth",
-            str(params.get("nsmooth"))
+            str(params.get("nsmooth", None))
         ])
-    if params.get("color_table") is not None:
+    if params.get("color_table", None) is not None:
         cargs.extend([
             "-c",
-            params.get("color_table")
+            params.get("color_table", None)
         ])
-    if params.get("noglobal"):
+    if params.get("noglobal", False):
         cargs.append("-noglobal")
-    if params.get("th3_computation"):
+    if params.get("th3_computation", False):
         cargs.append("-th3")
     return cargs
 
@@ -230,9 +215,9 @@ def mris_anatomical_stats_outputs(
     """
     ret = MrisAnatomicalStatsOutputs(
         root=execution.output_file("."),
-        output_log_file=execution.output_file(params.get("logfile") + ".txt") if (params.get("logfile") is not None) else None,
-        output_table_file=execution.output_file(params.get("tablefile") + ".txt") if (params.get("tablefile") is not None) else None,
-        output_ctab_file=execution.output_file(params.get("color_table") + ".txt") if (params.get("color_table") is not None) else None,
+        output_log_file=execution.output_file(params.get("logfile", None) + ".txt") if (params.get("logfile") is not None) else None,
+        output_table_file=execution.output_file(params.get("tablefile", None) + ".txt") if (params.get("tablefile") is not None) else None,
+        output_ctab_file=execution.output_file(params.get("color_table", None) + ".txt") if (params.get("color_table") is not None) else None,
     )
     return ret
 
@@ -335,7 +320,6 @@ def mris_anatomical_stats(
 __all__ = [
     "MRIS_ANATOMICAL_STATS_METADATA",
     "MrisAnatomicalStatsOutputs",
-    "MrisAnatomicalStatsParameters",
     "mris_anatomical_stats",
     "mris_anatomical_stats_execute",
     "mris_anatomical_stats_params",

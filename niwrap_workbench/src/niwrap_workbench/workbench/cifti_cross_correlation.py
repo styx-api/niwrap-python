@@ -14,7 +14,16 @@ CIFTI_CROSS_CORRELATION_METADATA = Metadata(
 
 
 CiftiCrossCorrelationParameters = typing.TypedDict('CiftiCrossCorrelationParameters', {
-    "@type": typing.Literal["workbench.cifti-cross-correlation"],
+    "@type": typing.NotRequired[typing.Literal["workbench/cifti-cross-correlation"]],
+    "cifti_a": InputPathType,
+    "cifti_b": InputPathType,
+    "cifti_out": str,
+    "opt_weights_weight_file": typing.NotRequired[str | None],
+    "opt_fisher_z": bool,
+    "opt_mem_limit_limit_gb": typing.NotRequired[float | None],
+})
+CiftiCrossCorrelationParametersTagged = typing.TypedDict('CiftiCrossCorrelationParametersTagged', {
+    "@type": typing.Literal["workbench/cifti-cross-correlation"],
     "cifti_a": InputPathType,
     "cifti_b": InputPathType,
     "cifti_out": str,
@@ -24,41 +33,9 @@ CiftiCrossCorrelationParameters = typing.TypedDict('CiftiCrossCorrelationParamet
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "workbench.cifti-cross-correlation": cifti_cross_correlation_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "workbench.cifti-cross-correlation": cifti_cross_correlation_outputs,
-    }.get(t)
-
-
 class CiftiCrossCorrelationOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `cifti_cross_correlation(...)`.
+    Output object returned when calling `CiftiCrossCorrelationParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -73,7 +50,7 @@ def cifti_cross_correlation_params(
     opt_weights_weight_file: str | None = None,
     opt_fisher_z: bool = False,
     opt_mem_limit_limit_gb: float | None = None,
-) -> CiftiCrossCorrelationParameters:
+) -> CiftiCrossCorrelationParametersTagged:
     """
     Build parameters.
     
@@ -91,7 +68,7 @@ def cifti_cross_correlation_params(
         Parameter dictionary
     """
     params = {
-        "@type": "workbench.cifti-cross-correlation",
+        "@type": "workbench/cifti-cross-correlation",
         "cifti_a": cifti_a,
         "cifti_b": cifti_b,
         "cifti_out": cifti_out,
@@ -120,20 +97,20 @@ def cifti_cross_correlation_cargs(
     cargs = []
     cargs.append("wb_command")
     cargs.append("-cifti-cross-correlation")
-    cargs.append(execution.input_file(params.get("cifti_a")))
-    cargs.append(execution.input_file(params.get("cifti_b")))
-    cargs.append(params.get("cifti_out"))
-    if params.get("opt_weights_weight_file") is not None:
+    cargs.append(execution.input_file(params.get("cifti_a", None)))
+    cargs.append(execution.input_file(params.get("cifti_b", None)))
+    cargs.append(params.get("cifti_out", None))
+    if params.get("opt_weights_weight_file", None) is not None:
         cargs.extend([
             "-weights",
-            params.get("opt_weights_weight_file")
+            params.get("opt_weights_weight_file", None)
         ])
-    if params.get("opt_fisher_z"):
+    if params.get("opt_fisher_z", False):
         cargs.append("-fisher-z")
-    if params.get("opt_mem_limit_limit_gb") is not None:
+    if params.get("opt_mem_limit_limit_gb", None) is not None:
         cargs.extend([
             "-mem-limit",
-            str(params.get("opt_mem_limit_limit_gb"))
+            str(params.get("opt_mem_limit_limit_gb", None))
         ])
     return cargs
 
@@ -153,7 +130,7 @@ def cifti_cross_correlation_outputs(
     """
     ret = CiftiCrossCorrelationOutputs(
         root=execution.output_file("."),
-        cifti_out=execution.output_file(params.get("cifti_out")),
+        cifti_out=execution.output_file(params.get("cifti_out", None)),
     )
     return ret
 
@@ -250,7 +227,6 @@ def cifti_cross_correlation(
 __all__ = [
     "CIFTI_CROSS_CORRELATION_METADATA",
     "CiftiCrossCorrelationOutputs",
-    "CiftiCrossCorrelationParameters",
     "cifti_cross_correlation",
     "cifti_cross_correlation_execute",
     "cifti_cross_correlation_params",

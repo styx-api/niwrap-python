@@ -14,47 +14,22 @@ SPEC_FILE_MERGE_METADATA = Metadata(
 
 
 SpecFileMergeParameters = typing.TypedDict('SpecFileMergeParameters', {
-    "@type": typing.Literal["workbench.spec-file-merge"],
+    "@type": typing.NotRequired[typing.Literal["workbench/spec-file-merge"]],
+    "spec_1": str,
+    "spec_2": str,
+    "out_spec": str,
+})
+SpecFileMergeParametersTagged = typing.TypedDict('SpecFileMergeParametersTagged', {
+    "@type": typing.Literal["workbench/spec-file-merge"],
     "spec_1": str,
     "spec_2": str,
     "out_spec": str,
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "workbench.spec-file-merge": spec_file_merge_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-    }.get(t)
-
-
 class SpecFileMergeOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `spec_file_merge(...)`.
+    Output object returned when calling `SpecFileMergeParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -64,7 +39,7 @@ def spec_file_merge_params(
     spec_1: str,
     spec_2: str,
     out_spec: str,
-) -> SpecFileMergeParameters:
+) -> SpecFileMergeParametersTagged:
     """
     Build parameters.
     
@@ -76,7 +51,7 @@ def spec_file_merge_params(
         Parameter dictionary
     """
     params = {
-        "@type": "workbench.spec-file-merge",
+        "@type": "workbench/spec-file-merge",
         "spec_1": spec_1,
         "spec_2": spec_2,
         "out_spec": out_spec,
@@ -100,9 +75,9 @@ def spec_file_merge_cargs(
     cargs = []
     cargs.append("wb_command")
     cargs.append("-spec-file-merge")
-    cargs.append(params.get("spec_1"))
-    cargs.append(params.get("spec_2"))
-    cargs.append(params.get("out_spec"))
+    cargs.append(params.get("spec_1", None))
+    cargs.append(params.get("spec_2", None))
+    cargs.append(params.get("out_spec", None))
     return cargs
 
 
@@ -193,7 +168,6 @@ def spec_file_merge(
 __all__ = [
     "SPEC_FILE_MERGE_METADATA",
     "SpecFileMergeOutputs",
-    "SpecFileMergeParameters",
     "spec_file_merge",
     "spec_file_merge_execute",
     "spec_file_merge_params",

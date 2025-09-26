@@ -14,46 +14,18 @@ MRI_GDFGLM_METADATA = Metadata(
 
 
 MriGdfglmParameters = typing.TypedDict('MriGdfglmParameters', {
-    "@type": typing.Literal["freesurfer.mri_gdfglm"],
+    "@type": typing.NotRequired[typing.Literal["freesurfer/mri_gdfglm"]],
+    "inputs": typing.NotRequired[str | None],
+})
+MriGdfglmParametersTagged = typing.TypedDict('MriGdfglmParametersTagged', {
+    "@type": typing.Literal["freesurfer/mri_gdfglm"],
     "inputs": typing.NotRequired[str | None],
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "freesurfer.mri_gdfglm": mri_gdfglm_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "freesurfer.mri_gdfglm": mri_gdfglm_outputs,
-    }.get(t)
-
-
 class MriGdfglmOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `mri_gdfglm(...)`.
+    Output object returned when calling `MriGdfglmParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -64,7 +36,7 @@ class MriGdfglmOutputs(typing.NamedTuple):
 
 def mri_gdfglm_params(
     inputs: str | None = None,
-) -> MriGdfglmParameters:
+) -> MriGdfglmParametersTagged:
     """
     Build parameters.
     
@@ -75,7 +47,7 @@ def mri_gdfglm_params(
         Parameter dictionary
     """
     params = {
-        "@type": "freesurfer.mri_gdfglm",
+        "@type": "freesurfer/mri_gdfglm",
     }
     if inputs is not None:
         params["inputs"] = inputs
@@ -97,8 +69,8 @@ def mri_gdfglm_cargs(
     """
     cargs = []
     cargs.append("mri_gdfglm")
-    if params.get("inputs") is not None:
-        cargs.append(params.get("inputs"))
+    if params.get("inputs", None) is not None:
+        cargs.append(params.get("inputs", None))
     return cargs
 
 
@@ -181,7 +153,6 @@ def mri_gdfglm(
 __all__ = [
     "MRI_GDFGLM_METADATA",
     "MriGdfglmOutputs",
-    "MriGdfglmParameters",
     "mri_gdfglm",
     "mri_gdfglm_execute",
     "mri_gdfglm_params",

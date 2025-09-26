@@ -14,7 +14,28 @@ KELLY_KAPOWSKI_METADATA = Metadata(
 
 
 KellyKapowskiParameters = typing.TypedDict('KellyKapowskiParameters', {
-    "@type": typing.Literal["ants.KellyKapowski"],
+    "@type": typing.NotRequired[typing.Literal["ants/KellyKapowski"]],
+    "image_dimensionality": typing.NotRequired[typing.Literal[2, 3] | None],
+    "segmentation_image": typing.NotRequired[InputPathType | None],
+    "gray_matter_probability_image": typing.NotRequired[InputPathType | None],
+    "white_matter_probability_image": typing.NotRequired[InputPathType | None],
+    "convergence": typing.NotRequired[str | None],
+    "thickness_prior_estimate": typing.NotRequired[float | None],
+    "thickness_prior_image": typing.NotRequired[InputPathType | None],
+    "gradient_step": typing.NotRequired[float | None],
+    "smoothing_variance": typing.NotRequired[float | None],
+    "smoothing_velocity_field_parameter": typing.NotRequired[str | None],
+    "use_bspline_smoothing": typing.NotRequired[typing.Literal[0, 1] | None],
+    "use_masked_smoothing": typing.NotRequired[typing.Literal[0, 1] | None],
+    "time_points": typing.NotRequired[str | None],
+    "restrict_deformation": typing.NotRequired[typing.Literal[0, 1] | None],
+    "number_of_integration_points": typing.NotRequired[int | None],
+    "maximum_number_of_invert_displacement_field_iterations": typing.NotRequired[int | None],
+    "output": str,
+    "verbose": typing.NotRequired[typing.Literal[0, 1] | None],
+})
+KellyKapowskiParametersTagged = typing.TypedDict('KellyKapowskiParametersTagged', {
+    "@type": typing.Literal["ants/KellyKapowski"],
     "image_dimensionality": typing.NotRequired[typing.Literal[2, 3] | None],
     "segmentation_image": typing.NotRequired[InputPathType | None],
     "gray_matter_probability_image": typing.NotRequired[InputPathType | None],
@@ -36,41 +57,9 @@ KellyKapowskiParameters = typing.TypedDict('KellyKapowskiParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "ants.KellyKapowski": kelly_kapowski_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "ants.KellyKapowski": kelly_kapowski_outputs,
-    }.get(t)
-
-
 class KellyKapowskiOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `kelly_kapowski(...)`.
+    Output object returned when calling `KellyKapowskiParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -97,7 +86,7 @@ def kelly_kapowski_params(
     number_of_integration_points: int | None = None,
     maximum_number_of_invert_displacement_field_iterations: int | None = None,
     verbose: typing.Literal[0, 1] | None = None,
-) -> KellyKapowskiParameters:
+) -> KellyKapowskiParametersTagged:
     """
     Build parameters.
     
@@ -151,7 +140,7 @@ def kelly_kapowski_params(
         Parameter dictionary
     """
     params = {
-        "@type": "ants.KellyKapowski",
+        "@type": "ants/KellyKapowski",
         "output": output,
     }
     if image_dimensionality is not None:
@@ -206,94 +195,94 @@ def kelly_kapowski_cargs(
     """
     cargs = []
     cargs.append("KellyKapowski")
-    if params.get("image_dimensionality") is not None:
+    if params.get("image_dimensionality", None) is not None:
         cargs.extend([
             "--image-dimensionality",
-            str(params.get("image_dimensionality"))
+            str(params.get("image_dimensionality", None))
         ])
-    if params.get("segmentation_image") is not None:
+    if params.get("segmentation_image", None) is not None:
         cargs.extend([
             "--segmentation-image",
-            execution.input_file(params.get("segmentation_image"))
+            execution.input_file(params.get("segmentation_image", None))
         ])
-    if params.get("gray_matter_probability_image") is not None:
+    if params.get("gray_matter_probability_image", None) is not None:
         cargs.extend([
             "--gray-matter-probability-image",
-            execution.input_file(params.get("gray_matter_probability_image"))
+            execution.input_file(params.get("gray_matter_probability_image", None))
         ])
-    if params.get("white_matter_probability_image") is not None:
+    if params.get("white_matter_probability_image", None) is not None:
         cargs.extend([
             "--white-matter-probability-image",
-            execution.input_file(params.get("white_matter_probability_image"))
+            execution.input_file(params.get("white_matter_probability_image", None))
         ])
-    if params.get("convergence") is not None:
+    if params.get("convergence", None) is not None:
         cargs.extend([
             "--convergence",
-            params.get("convergence")
+            params.get("convergence", None)
         ])
-    if params.get("thickness_prior_estimate") is not None:
+    if params.get("thickness_prior_estimate", None) is not None:
         cargs.extend([
             "--thickness-prior-estimate",
-            str(params.get("thickness_prior_estimate"))
+            str(params.get("thickness_prior_estimate", None))
         ])
-    if params.get("thickness_prior_image") is not None:
+    if params.get("thickness_prior_image", None) is not None:
         cargs.extend([
             "--thickness-prior-image",
-            execution.input_file(params.get("thickness_prior_image"))
+            execution.input_file(params.get("thickness_prior_image", None))
         ])
-    if params.get("gradient_step") is not None:
+    if params.get("gradient_step", None) is not None:
         cargs.extend([
             "--gradient-step",
-            str(params.get("gradient_step"))
+            str(params.get("gradient_step", None))
         ])
-    if params.get("smoothing_variance") is not None:
+    if params.get("smoothing_variance", None) is not None:
         cargs.extend([
             "--smoothing-variance",
-            str(params.get("smoothing_variance"))
+            str(params.get("smoothing_variance", None))
         ])
-    if params.get("smoothing_velocity_field_parameter") is not None:
+    if params.get("smoothing_velocity_field_parameter", None) is not None:
         cargs.extend([
             "--smoothing-velocity-field-parameter",
-            params.get("smoothing_velocity_field_parameter")
+            params.get("smoothing_velocity_field_parameter", None)
         ])
-    if params.get("use_bspline_smoothing") is not None:
+    if params.get("use_bspline_smoothing", None) is not None:
         cargs.extend([
             "--use-bspline-smoothing",
-            str(params.get("use_bspline_smoothing"))
+            str(params.get("use_bspline_smoothing", None))
         ])
-    if params.get("use_masked_smoothing") is not None:
+    if params.get("use_masked_smoothing", None) is not None:
         cargs.extend([
             "--use-masked-smoothing",
-            str(params.get("use_masked_smoothing"))
+            str(params.get("use_masked_smoothing", None))
         ])
-    if params.get("time_points") is not None:
+    if params.get("time_points", None) is not None:
         cargs.extend([
             "--time-points",
-            params.get("time_points")
+            params.get("time_points", None)
         ])
-    if params.get("restrict_deformation") is not None:
+    if params.get("restrict_deformation", None) is not None:
         cargs.extend([
             "--restrict-deformation",
-            str(params.get("restrict_deformation"))
+            str(params.get("restrict_deformation", None))
         ])
-    if params.get("number_of_integration_points") is not None:
+    if params.get("number_of_integration_points", None) is not None:
         cargs.extend([
             "--number-of-integration-points",
-            str(params.get("number_of_integration_points"))
+            str(params.get("number_of_integration_points", None))
         ])
-    if params.get("maximum_number_of_invert_displacement_field_iterations") is not None:
+    if params.get("maximum_number_of_invert_displacement_field_iterations", None) is not None:
         cargs.extend([
             "--maximum-number-of-invert-displacement-field-iterations",
-            str(params.get("maximum_number_of_invert_displacement_field_iterations"))
+            str(params.get("maximum_number_of_invert_displacement_field_iterations", None))
         ])
     cargs.extend([
         "--output",
-        params.get("output")
+        params.get("output", None)
     ])
-    if params.get("verbose") is not None:
+    if params.get("verbose", None) is not None:
         cargs.extend([
             "--verbose",
-            str(params.get("verbose"))
+            str(params.get("verbose", None))
         ])
     return cargs
 
@@ -313,7 +302,7 @@ def kelly_kapowski_outputs(
     """
     ret = KellyKapowskiOutputs(
         root=execution.output_file("."),
-        thickness_map=execution.output_file(params.get("output")),
+        thickness_map=execution.output_file(params.get("output", None)),
     )
     return ret
 
@@ -458,7 +447,6 @@ def kelly_kapowski(
 __all__ = [
     "KELLY_KAPOWSKI_METADATA",
     "KellyKapowskiOutputs",
-    "KellyKapowskiParameters",
     "kelly_kapowski",
     "kelly_kapowski_execute",
     "kelly_kapowski_params",

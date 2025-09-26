@@ -14,14 +14,28 @@ CIFTI_REDUCE_METADATA = Metadata(
 
 
 CiftiReduceExcludeOutliersParameters = typing.TypedDict('CiftiReduceExcludeOutliersParameters', {
-    "@type": typing.Literal["workbench.cifti-reduce.exclude_outliers"],
+    "@type": typing.NotRequired[typing.Literal["exclude_outliers"]],
+    "sigma_below": float,
+    "sigma_above": float,
+})
+CiftiReduceExcludeOutliersParametersTagged = typing.TypedDict('CiftiReduceExcludeOutliersParametersTagged', {
+    "@type": typing.Literal["exclude_outliers"],
     "sigma_below": float,
     "sigma_above": float,
 })
 
 
 CiftiReduceParameters = typing.TypedDict('CiftiReduceParameters', {
-    "@type": typing.Literal["workbench.cifti-reduce"],
+    "@type": typing.NotRequired[typing.Literal["workbench/cifti-reduce"]],
+    "cifti_in": InputPathType,
+    "operation": str,
+    "cifti_out": str,
+    "opt_direction_direction": typing.NotRequired[str | None],
+    "exclude_outliers": typing.NotRequired[CiftiReduceExcludeOutliersParameters | None],
+    "opt_only_numeric": bool,
+})
+CiftiReduceParametersTagged = typing.TypedDict('CiftiReduceParametersTagged', {
+    "@type": typing.Literal["workbench/cifti-reduce"],
     "cifti_in": InputPathType,
     "operation": str,
     "cifti_out": str,
@@ -31,43 +45,10 @@ CiftiReduceParameters = typing.TypedDict('CiftiReduceParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "workbench.cifti-reduce": cifti_reduce_cargs,
-        "workbench.cifti-reduce.exclude_outliers": cifti_reduce_exclude_outliers_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "workbench.cifti-reduce": cifti_reduce_outputs,
-    }.get(t)
-
-
 def cifti_reduce_exclude_outliers_params(
     sigma_below: float,
     sigma_above: float,
-) -> CiftiReduceExcludeOutliersParameters:
+) -> CiftiReduceExcludeOutliersParametersTagged:
     """
     Build parameters.
     
@@ -78,7 +59,7 @@ def cifti_reduce_exclude_outliers_params(
         Parameter dictionary
     """
     params = {
-        "@type": "workbench.cifti-reduce.exclude_outliers",
+        "@type": "exclude_outliers",
         "sigma_below": sigma_below,
         "sigma_above": sigma_above,
     }
@@ -100,14 +81,14 @@ def cifti_reduce_exclude_outliers_cargs(
     """
     cargs = []
     cargs.append("-exclude-outliers")
-    cargs.append(str(params.get("sigma_below")))
-    cargs.append(str(params.get("sigma_above")))
+    cargs.append(str(params.get("sigma_below", None)))
+    cargs.append(str(params.get("sigma_above", None)))
     return cargs
 
 
 class CiftiReduceOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `cifti_reduce(...)`.
+    Output object returned when calling `CiftiReduceParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -122,7 +103,7 @@ def cifti_reduce_params(
     opt_direction_direction: str | None = None,
     exclude_outliers: CiftiReduceExcludeOutliersParameters | None = None,
     opt_only_numeric: bool = False,
-) -> CiftiReduceParameters:
+) -> CiftiReduceParametersTagged:
     """
     Build parameters.
     
@@ -139,7 +120,7 @@ def cifti_reduce_params(
         Parameter dictionary
     """
     params = {
-        "@type": "workbench.cifti-reduce",
+        "@type": "workbench/cifti-reduce",
         "cifti_in": cifti_in,
         "operation": operation,
         "cifti_out": cifti_out,
@@ -168,17 +149,17 @@ def cifti_reduce_cargs(
     cargs = []
     cargs.append("wb_command")
     cargs.append("-cifti-reduce")
-    cargs.append(execution.input_file(params.get("cifti_in")))
-    cargs.append(params.get("operation"))
-    cargs.append(params.get("cifti_out"))
-    if params.get("opt_direction_direction") is not None:
+    cargs.append(execution.input_file(params.get("cifti_in", None)))
+    cargs.append(params.get("operation", None))
+    cargs.append(params.get("cifti_out", None))
+    if params.get("opt_direction_direction", None) is not None:
         cargs.extend([
             "-direction",
-            params.get("opt_direction_direction")
+            params.get("opt_direction_direction", None)
         ])
-    if params.get("exclude_outliers") is not None:
-        cargs.extend(dyn_cargs(params.get("exclude_outliers")["@type"])(params.get("exclude_outliers"), execution))
-    if params.get("opt_only_numeric"):
+    if params.get("exclude_outliers", None) is not None:
+        cargs.extend(cifti_reduce_exclude_outliers_cargs(params.get("exclude_outliers", None), execution))
+    if params.get("opt_only_numeric", False):
         cargs.append("-only-numeric")
     return cargs
 
@@ -198,7 +179,7 @@ def cifti_reduce_outputs(
     """
     ret = CiftiReduceOutputs(
         root=execution.output_file("."),
-        cifti_out=execution.output_file(params.get("cifti_out")),
+        cifti_out=execution.output_file(params.get("cifti_out", None)),
     )
     return ret
 
@@ -319,9 +300,7 @@ def cifti_reduce(
 
 __all__ = [
     "CIFTI_REDUCE_METADATA",
-    "CiftiReduceExcludeOutliersParameters",
     "CiftiReduceOutputs",
-    "CiftiReduceParameters",
     "cifti_reduce",
     "cifti_reduce_exclude_outliers_params",
     "cifti_reduce_execute",

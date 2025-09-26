@@ -14,46 +14,20 @@ POSSUM_PLOT_PY_METADATA = Metadata(
 
 
 PossumPlotPyParameters = typing.TypedDict('PossumPlotPyParameters', {
-    "@type": typing.Literal["fsl.possum_plot.py"],
+    "@type": typing.NotRequired[typing.Literal["fsl/possum_plot.py"]],
+    "input_file": InputPathType,
+    "output_basename": str,
+})
+PossumPlotPyParametersTagged = typing.TypedDict('PossumPlotPyParametersTagged', {
+    "@type": typing.Literal["fsl/possum_plot.py"],
     "input_file": InputPathType,
     "output_basename": str,
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "fsl.possum_plot.py": possum_plot_py_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-    }.get(t)
-
-
 class PossumPlotPyOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `possum_plot_py(...)`.
+    Output object returned when calling `PossumPlotPyParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -62,7 +36,7 @@ class PossumPlotPyOutputs(typing.NamedTuple):
 def possum_plot_py_params(
     input_file: InputPathType,
     output_basename: str,
-) -> PossumPlotPyParameters:
+) -> PossumPlotPyParametersTagged:
     """
     Build parameters.
     
@@ -74,7 +48,7 @@ def possum_plot_py_params(
         Parameter dictionary
     """
     params = {
-        "@type": "fsl.possum_plot.py",
+        "@type": "fsl/possum_plot.py",
         "input_file": input_file,
         "output_basename": output_basename,
     }
@@ -96,8 +70,8 @@ def possum_plot_py_cargs(
     """
     cargs = []
     cargs.append("possum_plot.py")
-    cargs.append(execution.input_file(params.get("input_file")))
-    cargs.append(params.get("output_basename"))
+    cargs.append(execution.input_file(params.get("input_file", None)))
+    cargs.append(params.get("output_basename", None))
     return cargs
 
 
@@ -180,7 +154,6 @@ def possum_plot_py(
 __all__ = [
     "POSSUM_PLOT_PY_METADATA",
     "PossumPlotPyOutputs",
-    "PossumPlotPyParameters",
     "possum_plot_py",
     "possum_plot_py_execute",
     "possum_plot_py_params",

@@ -14,7 +14,15 @@ CIFTI_PAIRWISE_CORRELATION_METADATA = Metadata(
 
 
 CiftiPairwiseCorrelationParameters = typing.TypedDict('CiftiPairwiseCorrelationParameters', {
-    "@type": typing.Literal["workbench.cifti-pairwise-correlation"],
+    "@type": typing.NotRequired[typing.Literal["workbench/cifti-pairwise-correlation"]],
+    "cifti_a": InputPathType,
+    "cifti_b": InputPathType,
+    "cifti_out": str,
+    "opt_fisher_z": bool,
+    "opt_override_mapping_check": bool,
+})
+CiftiPairwiseCorrelationParametersTagged = typing.TypedDict('CiftiPairwiseCorrelationParametersTagged', {
+    "@type": typing.Literal["workbench/cifti-pairwise-correlation"],
     "cifti_a": InputPathType,
     "cifti_b": InputPathType,
     "cifti_out": str,
@@ -23,41 +31,9 @@ CiftiPairwiseCorrelationParameters = typing.TypedDict('CiftiPairwiseCorrelationP
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "workbench.cifti-pairwise-correlation": cifti_pairwise_correlation_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "workbench.cifti-pairwise-correlation": cifti_pairwise_correlation_outputs,
-    }.get(t)
-
-
 class CiftiPairwiseCorrelationOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `cifti_pairwise_correlation(...)`.
+    Output object returned when calling `CiftiPairwiseCorrelationParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -71,7 +47,7 @@ def cifti_pairwise_correlation_params(
     cifti_out: str,
     opt_fisher_z: bool = False,
     opt_override_mapping_check: bool = False,
-) -> CiftiPairwiseCorrelationParameters:
+) -> CiftiPairwiseCorrelationParametersTagged:
     """
     Build parameters.
     
@@ -87,7 +63,7 @@ def cifti_pairwise_correlation_params(
         Parameter dictionary
     """
     params = {
-        "@type": "workbench.cifti-pairwise-correlation",
+        "@type": "workbench/cifti-pairwise-correlation",
         "cifti_a": cifti_a,
         "cifti_b": cifti_b,
         "cifti_out": cifti_out,
@@ -113,12 +89,12 @@ def cifti_pairwise_correlation_cargs(
     cargs = []
     cargs.append("wb_command")
     cargs.append("-cifti-pairwise-correlation")
-    cargs.append(execution.input_file(params.get("cifti_a")))
-    cargs.append(execution.input_file(params.get("cifti_b")))
-    cargs.append(params.get("cifti_out"))
-    if params.get("opt_fisher_z"):
+    cargs.append(execution.input_file(params.get("cifti_a", None)))
+    cargs.append(execution.input_file(params.get("cifti_b", None)))
+    cargs.append(params.get("cifti_out", None))
+    if params.get("opt_fisher_z", False):
         cargs.append("-fisher-z")
-    if params.get("opt_override_mapping_check"):
+    if params.get("opt_override_mapping_check", False):
         cargs.append("-override-mapping-check")
     return cargs
 
@@ -138,7 +114,7 @@ def cifti_pairwise_correlation_outputs(
     """
     ret = CiftiPairwiseCorrelationOutputs(
         root=execution.output_file("."),
-        cifti_out=execution.output_file(params.get("cifti_out")),
+        cifti_out=execution.output_file(params.get("cifti_out", None)),
     )
     return ret
 
@@ -219,7 +195,6 @@ def cifti_pairwise_correlation(
 __all__ = [
     "CIFTI_PAIRWISE_CORRELATION_METADATA",
     "CiftiPairwiseCorrelationOutputs",
-    "CiftiPairwiseCorrelationParameters",
     "cifti_pairwise_correlation",
     "cifti_pairwise_correlation_execute",
     "cifti_pairwise_correlation_params",

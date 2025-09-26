@@ -14,7 +14,15 @@ V_3D_LOCAL_ACF_METADATA = Metadata(
 
 
 V3dLocalAcfParameters = typing.TypedDict('V3dLocalAcfParameters', {
-    "@type": typing.Literal["afni.3dLocalACF"],
+    "@type": typing.NotRequired[typing.Literal["afni/3dLocalACF"]],
+    "prefix": str,
+    "input_file": InputPathType,
+    "neighborhood": typing.NotRequired[str | None],
+    "mask_file": typing.NotRequired[InputPathType | None],
+    "auto_mask": bool,
+})
+V3dLocalAcfParametersTagged = typing.TypedDict('V3dLocalAcfParametersTagged', {
+    "@type": typing.Literal["afni/3dLocalACF"],
     "prefix": str,
     "input_file": InputPathType,
     "neighborhood": typing.NotRequired[str | None],
@@ -23,41 +31,9 @@ V3dLocalAcfParameters = typing.TypedDict('V3dLocalAcfParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "afni.3dLocalACF": v_3d_local_acf_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "afni.3dLocalACF": v_3d_local_acf_outputs,
-    }.get(t)
-
-
 class V3dLocalAcfOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `v_3d_local_acf(...)`.
+    Output object returned when calling `V3dLocalAcfParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -71,7 +47,7 @@ def v_3d_local_acf_params(
     neighborhood: str | None = None,
     mask_file: InputPathType | None = None,
     auto_mask: bool = False,
-) -> V3dLocalAcfParameters:
+) -> V3dLocalAcfParametersTagged:
     """
     Build parameters.
     
@@ -85,7 +61,7 @@ def v_3d_local_acf_params(
         Parameter dictionary
     """
     params = {
-        "@type": "afni.3dLocalACF",
+        "@type": "afni/3dLocalACF",
         "prefix": prefix,
         "input_file": input_file,
         "auto_mask": auto_mask,
@@ -114,20 +90,20 @@ def v_3d_local_acf_cargs(
     cargs.append("3dLocalACF")
     cargs.extend([
         "-prefix",
-        params.get("prefix")
+        params.get("prefix", None)
     ])
-    cargs.append(execution.input_file(params.get("input_file")))
-    if params.get("neighborhood") is not None:
+    cargs.append(execution.input_file(params.get("input_file", None)))
+    if params.get("neighborhood", None) is not None:
         cargs.extend([
             "-nbhd",
-            params.get("neighborhood")
+            params.get("neighborhood", None)
         ])
-    if params.get("mask_file") is not None:
+    if params.get("mask_file", None) is not None:
         cargs.extend([
             "-mask",
-            execution.input_file(params.get("mask_file"))
+            execution.input_file(params.get("mask_file", None))
         ])
-    if params.get("auto_mask"):
+    if params.get("auto_mask", False):
         cargs.append("-automask")
     return cargs
 
@@ -147,7 +123,7 @@ def v_3d_local_acf_outputs(
     """
     ret = V3dLocalAcfOutputs(
         root=execution.output_file("."),
-        output_file=execution.output_file(params.get("prefix") + ".nii.gz"),
+        output_file=execution.output_file(params.get("prefix", None) + ".nii.gz"),
     )
     return ret
 
@@ -221,7 +197,6 @@ def v_3d_local_acf(
 
 __all__ = [
     "V3dLocalAcfOutputs",
-    "V3dLocalAcfParameters",
     "V_3D_LOCAL_ACF_METADATA",
     "v_3d_local_acf",
     "v_3d_local_acf_execute",

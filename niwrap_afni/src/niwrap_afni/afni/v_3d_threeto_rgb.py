@@ -14,7 +14,18 @@ V_3D_THREETO_RGB_METADATA = Metadata(
 
 
 V3dThreetoRgbParameters = typing.TypedDict('V3dThreetoRgbParameters', {
-    "@type": typing.Literal["afni.3dThreetoRGB"],
+    "@type": typing.NotRequired[typing.Literal["afni/3dThreetoRGB"]],
+    "output_prefix": typing.NotRequired[str | None],
+    "scale_factor": typing.NotRequired[float | None],
+    "mask_dataset": typing.NotRequired[InputPathType | None],
+    "fim": bool,
+    "anat": bool,
+    "input_dataset": InputPathType,
+    "input_dataset2": typing.NotRequired[InputPathType | None],
+    "input_dataset3": typing.NotRequired[InputPathType | None],
+})
+V3dThreetoRgbParametersTagged = typing.TypedDict('V3dThreetoRgbParametersTagged', {
+    "@type": typing.Literal["afni/3dThreetoRGB"],
     "output_prefix": typing.NotRequired[str | None],
     "scale_factor": typing.NotRequired[float | None],
     "mask_dataset": typing.NotRequired[InputPathType | None],
@@ -26,41 +37,9 @@ V3dThreetoRgbParameters = typing.TypedDict('V3dThreetoRgbParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "afni.3dThreetoRGB": v_3d_threeto_rgb_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "afni.3dThreetoRGB": v_3d_threeto_rgb_outputs,
-    }.get(t)
-
-
 class V3dThreetoRgbOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `v_3d_threeto_rgb(...)`.
+    Output object returned when calling `V3dThreetoRgbParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -79,7 +58,7 @@ def v_3d_threeto_rgb_params(
     anat: bool = False,
     input_dataset2: InputPathType | None = None,
     input_dataset3: InputPathType | None = None,
-) -> V3dThreetoRgbParameters:
+) -> V3dThreetoRgbParametersTagged:
     """
     Build parameters.
     
@@ -100,7 +79,7 @@ def v_3d_threeto_rgb_params(
         Parameter dictionary
     """
     params = {
-        "@type": "afni.3dThreetoRGB",
+        "@type": "afni/3dThreetoRGB",
         "fim": fim,
         "anat": anat,
         "input_dataset": input_dataset,
@@ -133,30 +112,30 @@ def v_3d_threeto_rgb_cargs(
     """
     cargs = []
     cargs.append("3dThreetoRGB")
-    if params.get("output_prefix") is not None:
+    if params.get("output_prefix", None) is not None:
         cargs.extend([
             "-prefix",
-            params.get("output_prefix")
+            params.get("output_prefix", None)
         ])
-    if params.get("scale_factor") is not None:
+    if params.get("scale_factor", None) is not None:
         cargs.extend([
             "-scale",
-            str(params.get("scale_factor"))
+            str(params.get("scale_factor", None))
         ])
-    if params.get("mask_dataset") is not None:
+    if params.get("mask_dataset", None) is not None:
         cargs.extend([
             "-mask",
-            execution.input_file(params.get("mask_dataset"))
+            execution.input_file(params.get("mask_dataset", None))
         ])
-    if params.get("fim"):
+    if params.get("fim", False):
         cargs.append("-fim")
-    if params.get("anat"):
+    if params.get("anat", False):
         cargs.append("-anat")
-    cargs.append(execution.input_file(params.get("input_dataset")))
-    if params.get("input_dataset2") is not None:
-        cargs.append(execution.input_file(params.get("input_dataset2")))
-    if params.get("input_dataset3") is not None:
-        cargs.append(execution.input_file(params.get("input_dataset3")))
+    cargs.append(execution.input_file(params.get("input_dataset", None)))
+    if params.get("input_dataset2", None) is not None:
+        cargs.append(execution.input_file(params.get("input_dataset2", None)))
+    if params.get("input_dataset3", None) is not None:
+        cargs.append(execution.input_file(params.get("input_dataset3", None)))
     return cargs
 
 
@@ -175,8 +154,8 @@ def v_3d_threeto_rgb_outputs(
     """
     ret = V3dThreetoRgbOutputs(
         root=execution.output_file("."),
-        output_dataset_head=execution.output_file(params.get("output_prefix") + "+rgb.HEAD") if (params.get("output_prefix") is not None) else None,
-        output_dataset_brik=execution.output_file(params.get("output_prefix") + "+rgb.BRIK") if (params.get("output_prefix") is not None) else None,
+        output_dataset_head=execution.output_file(params.get("output_prefix", None) + "+rgb.HEAD") if (params.get("output_prefix") is not None) else None,
+        output_dataset_brik=execution.output_file(params.get("output_prefix", None) + "+rgb.BRIK") if (params.get("output_prefix") is not None) else None,
     )
     return ret
 
@@ -261,7 +240,6 @@ def v_3d_threeto_rgb(
 
 __all__ = [
     "V3dThreetoRgbOutputs",
-    "V3dThreetoRgbParameters",
     "V_3D_THREETO_RGB_METADATA",
     "v_3d_threeto_rgb",
     "v_3d_threeto_rgb_execute",

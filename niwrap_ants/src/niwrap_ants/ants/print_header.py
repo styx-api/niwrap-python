@@ -14,47 +14,20 @@ PRINT_HEADER_METADATA = Metadata(
 
 
 PrintHeaderParameters = typing.TypedDict('PrintHeaderParameters', {
-    "@type": typing.Literal["ants.PrintHeader"],
+    "@type": typing.NotRequired[typing.Literal["ants/PrintHeader"]],
+    "image": InputPathType,
+    "what_information": typing.NotRequired[typing.Literal[0, 1, 2, 3, 4] | None],
+})
+PrintHeaderParametersTagged = typing.TypedDict('PrintHeaderParametersTagged', {
+    "@type": typing.Literal["ants/PrintHeader"],
     "image": InputPathType,
     "what_information": typing.NotRequired[typing.Literal[0, 1, 2, 3, 4] | None],
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "ants.PrintHeader": print_header_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "ants.PrintHeader": print_header_outputs,
-    }.get(t)
-
-
 class PrintHeaderOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `print_header(...)`.
+    Output object returned when calling `PrintHeaderParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -65,7 +38,7 @@ class PrintHeaderOutputs(typing.NamedTuple):
 def print_header_params(
     image: InputPathType,
     what_information: typing.Literal[0, 1, 2, 3, 4] | None = None,
-) -> PrintHeaderParameters:
+) -> PrintHeaderParametersTagged:
     """
     Build parameters.
     
@@ -78,7 +51,7 @@ def print_header_params(
         Parameter dictionary
     """
     params = {
-        "@type": "ants.PrintHeader",
+        "@type": "ants/PrintHeader",
         "image": image,
     }
     if what_information is not None:
@@ -101,9 +74,9 @@ def print_header_cargs(
     """
     cargs = []
     cargs.append("PrintHeader")
-    cargs.append(execution.input_file(params.get("image")))
-    if params.get("what_information") is not None:
-        cargs.append(str(params.get("what_information")))
+    cargs.append(execution.input_file(params.get("image", None)))
+    if params.get("what_information", None) is not None:
+        cargs.append(str(params.get("what_information", None)))
     return cargs
 
 
@@ -188,7 +161,6 @@ def print_header(
 __all__ = [
     "PRINT_HEADER_METADATA",
     "PrintHeaderOutputs",
-    "PrintHeaderParameters",
     "print_header",
     "print_header_execute",
     "print_header_params",

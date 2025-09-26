@@ -14,7 +14,18 @@ GPS_METADATA = Metadata(
 
 
 GpsParameters = typing.TypedDict('GpsParameters', {
-    "@type": typing.Literal["fsl.gps"],
+    "@type": typing.NotRequired[typing.Literal["fsl/gps"]],
+    "ndir": float,
+    "optws": bool,
+    "output": typing.NotRequired[str | None],
+    "ranseed": typing.NotRequired[float | None],
+    "init": typing.NotRequired[InputPathType | None],
+    "report": bool,
+    "verbose": bool,
+    "help": bool,
+})
+GpsParametersTagged = typing.TypedDict('GpsParametersTagged', {
+    "@type": typing.Literal["fsl/gps"],
     "ndir": float,
     "optws": bool,
     "output": typing.NotRequired[str | None],
@@ -26,41 +37,9 @@ GpsParameters = typing.TypedDict('GpsParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "fsl.gps": gps_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "fsl.gps": gps_outputs,
-    }.get(t)
-
-
 class GpsOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `gps(...)`.
+    Output object returned when calling `GpsParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -77,7 +56,7 @@ def gps_params(
     report: bool = False,
     verbose: bool = False,
     help_: bool = False,
-) -> GpsParameters:
+) -> GpsParametersTagged:
     """
     Build parameters.
     
@@ -95,7 +74,7 @@ def gps_params(
         Parameter dictionary
     """
     params = {
-        "@type": "fsl.gps",
+        "@type": "fsl/gps",
         "ndir": ndir,
         "optws": optws,
         "report": report,
@@ -128,30 +107,30 @@ def gps_cargs(
     cargs.append("gps")
     cargs.extend([
         "--ndir",
-        str(params.get("ndir"))
+        str(params.get("ndir", None))
     ])
-    if params.get("optws"):
+    if params.get("optws", False):
         cargs.append("--optws")
-    if params.get("output") is not None:
+    if params.get("output", None) is not None:
         cargs.extend([
             "--out",
-            params.get("output")
+            params.get("output", None)
         ])
-    if params.get("ranseed") is not None:
+    if params.get("ranseed", None) is not None:
         cargs.extend([
             "--ranseed",
-            str(params.get("ranseed"))
+            str(params.get("ranseed", None))
         ])
-    if params.get("init") is not None:
+    if params.get("init", None) is not None:
         cargs.extend([
             "--init",
-            execution.input_file(params.get("init"))
+            execution.input_file(params.get("init", None))
         ])
-    if params.get("report"):
+    if params.get("report", False):
         cargs.append("--report")
-    if params.get("verbose"):
+    if params.get("verbose", False):
         cargs.append("-v,--verbose")
-    if params.get("help"):
+    if params.get("help", False):
         cargs.append("-h,--help")
     return cargs
 
@@ -171,7 +150,7 @@ def gps_outputs(
     """
     ret = GpsOutputs(
         root=execution.output_file("."),
-        output_file=execution.output_file(params.get("output")) if (params.get("output") is not None) else None,
+        output_file=execution.output_file(params.get("output", None)) if (params.get("output") is not None) else None,
     )
     return ret
 
@@ -254,7 +233,6 @@ def gps(
 __all__ = [
     "GPS_METADATA",
     "GpsOutputs",
-    "GpsParameters",
     "gps",
     "gps_execute",
     "gps_params",

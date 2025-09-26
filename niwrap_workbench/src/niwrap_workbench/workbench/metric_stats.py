@@ -14,14 +14,28 @@ METRIC_STATS_METADATA = Metadata(
 
 
 MetricStatsRoiParameters = typing.TypedDict('MetricStatsRoiParameters', {
-    "@type": typing.Literal["workbench.metric-stats.roi"],
+    "@type": typing.NotRequired[typing.Literal["roi"]],
+    "roi_metric": InputPathType,
+    "opt_match_maps": bool,
+})
+MetricStatsRoiParametersTagged = typing.TypedDict('MetricStatsRoiParametersTagged', {
+    "@type": typing.Literal["roi"],
     "roi_metric": InputPathType,
     "opt_match_maps": bool,
 })
 
 
 MetricStatsParameters = typing.TypedDict('MetricStatsParameters', {
-    "@type": typing.Literal["workbench.metric-stats"],
+    "@type": typing.NotRequired[typing.Literal["workbench/metric-stats"]],
+    "metric_in": InputPathType,
+    "opt_reduce_operation": typing.NotRequired[str | None],
+    "opt_percentile_percent": typing.NotRequired[float | None],
+    "opt_column_column": typing.NotRequired[str | None],
+    "roi": typing.NotRequired[MetricStatsRoiParameters | None],
+    "opt_show_map_name": bool,
+})
+MetricStatsParametersTagged = typing.TypedDict('MetricStatsParametersTagged', {
+    "@type": typing.Literal["workbench/metric-stats"],
     "metric_in": InputPathType,
     "opt_reduce_operation": typing.NotRequired[str | None],
     "opt_percentile_percent": typing.NotRequired[float | None],
@@ -31,42 +45,10 @@ MetricStatsParameters = typing.TypedDict('MetricStatsParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "workbench.metric-stats": metric_stats_cargs,
-        "workbench.metric-stats.roi": metric_stats_roi_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-    }.get(t)
-
-
 def metric_stats_roi_params(
     roi_metric: InputPathType,
     opt_match_maps: bool = False,
-) -> MetricStatsRoiParameters:
+) -> MetricStatsRoiParametersTagged:
     """
     Build parameters.
     
@@ -78,7 +60,7 @@ def metric_stats_roi_params(
         Parameter dictionary
     """
     params = {
-        "@type": "workbench.metric-stats.roi",
+        "@type": "roi",
         "roi_metric": roi_metric,
         "opt_match_maps": opt_match_maps,
     }
@@ -100,15 +82,15 @@ def metric_stats_roi_cargs(
     """
     cargs = []
     cargs.append("-roi")
-    cargs.append(execution.input_file(params.get("roi_metric")))
-    if params.get("opt_match_maps"):
+    cargs.append(execution.input_file(params.get("roi_metric", None)))
+    if params.get("opt_match_maps", False):
         cargs.append("-match-maps")
     return cargs
 
 
 class MetricStatsOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `metric_stats(...)`.
+    Output object returned when calling `MetricStatsParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -121,7 +103,7 @@ def metric_stats_params(
     opt_column_column: str | None = None,
     roi: MetricStatsRoiParameters | None = None,
     opt_show_map_name: bool = False,
-) -> MetricStatsParameters:
+) -> MetricStatsParametersTagged:
     """
     Build parameters.
     
@@ -139,7 +121,7 @@ def metric_stats_params(
         Parameter dictionary
     """
     params = {
-        "@type": "workbench.metric-stats",
+        "@type": "workbench/metric-stats",
         "metric_in": metric_in,
         "opt_show_map_name": opt_show_map_name,
     }
@@ -170,25 +152,25 @@ def metric_stats_cargs(
     cargs = []
     cargs.append("wb_command")
     cargs.append("-metric-stats")
-    cargs.append(execution.input_file(params.get("metric_in")))
-    if params.get("opt_reduce_operation") is not None:
+    cargs.append(execution.input_file(params.get("metric_in", None)))
+    if params.get("opt_reduce_operation", None) is not None:
         cargs.extend([
             "-reduce",
-            params.get("opt_reduce_operation")
+            params.get("opt_reduce_operation", None)
         ])
-    if params.get("opt_percentile_percent") is not None:
+    if params.get("opt_percentile_percent", None) is not None:
         cargs.extend([
             "-percentile",
-            str(params.get("opt_percentile_percent"))
+            str(params.get("opt_percentile_percent", None))
         ])
-    if params.get("opt_column_column") is not None:
+    if params.get("opt_column_column", None) is not None:
         cargs.extend([
             "-column",
-            params.get("opt_column_column")
+            params.get("opt_column_column", None)
         ])
-    if params.get("roi") is not None:
-        cargs.extend(dyn_cargs(params.get("roi")["@type"])(params.get("roi"), execution))
-    if params.get("opt_show_map_name"):
+    if params.get("roi", None) is not None:
+        cargs.extend(metric_stats_roi_cargs(params.get("roi", None), execution))
+    if params.get("opt_show_map_name", False):
         cargs.append("-show-map-name")
     return cargs
 
@@ -340,8 +322,6 @@ def metric_stats(
 __all__ = [
     "METRIC_STATS_METADATA",
     "MetricStatsOutputs",
-    "MetricStatsParameters",
-    "MetricStatsRoiParameters",
     "metric_stats",
     "metric_stats_execute",
     "metric_stats_params",

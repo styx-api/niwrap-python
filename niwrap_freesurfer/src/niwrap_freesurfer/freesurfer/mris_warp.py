@@ -14,7 +14,18 @@ MRIS_WARP_METADATA = Metadata(
 
 
 MrisWarpParameters = typing.TypedDict('MrisWarpParameters', {
-    "@type": typing.Literal["freesurfer.mris_warp"],
+    "@type": typing.NotRequired[typing.Literal["freesurfer/mris_warp"]],
+    "deformvol": typing.NotRequired[str | None],
+    "m3z": typing.NotRequired[str | None],
+    "regfile": typing.NotRequired[str | None],
+    "surf": typing.NotRequired[str | None],
+    "out": typing.NotRequired[str | None],
+    "abs": bool,
+    "help": bool,
+    "version": bool,
+})
+MrisWarpParametersTagged = typing.TypedDict('MrisWarpParametersTagged', {
+    "@type": typing.Literal["freesurfer/mris_warp"],
     "deformvol": typing.NotRequired[str | None],
     "m3z": typing.NotRequired[str | None],
     "regfile": typing.NotRequired[str | None],
@@ -26,41 +37,9 @@ MrisWarpParameters = typing.TypedDict('MrisWarpParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "freesurfer.mris_warp": mris_warp_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "freesurfer.mris_warp": mris_warp_outputs,
-    }.get(t)
-
-
 class MrisWarpOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `mris_warp(...)`.
+    Output object returned when calling `MrisWarpParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -77,7 +56,7 @@ def mris_warp_params(
     abs_: bool = False,
     help_: bool = False,
     version: bool = False,
-) -> MrisWarpParameters:
+) -> MrisWarpParametersTagged:
     """
     Build parameters.
     
@@ -95,7 +74,7 @@ def mris_warp_params(
         Parameter dictionary
     """
     params = {
-        "@type": "freesurfer.mris_warp",
+        "@type": "freesurfer/mris_warp",
         "abs": abs_,
         "help": help_,
         "version": version,
@@ -128,36 +107,36 @@ def mris_warp_cargs(
     """
     cargs = []
     cargs.append("mris_warp")
-    if params.get("deformvol") is not None:
+    if params.get("deformvol", None) is not None:
         cargs.extend([
             "--deformvol",
-            params.get("deformvol")
+            params.get("deformvol", None)
         ])
-    if params.get("m3z") is not None:
+    if params.get("m3z", None) is not None:
         cargs.extend([
             "--m3z",
-            params.get("m3z")
+            params.get("m3z", None)
         ])
-    if params.get("regfile") is not None:
+    if params.get("regfile", None) is not None:
         cargs.extend([
             "--reg",
-            params.get("regfile")
+            params.get("regfile", None)
         ])
-    if params.get("surf") is not None:
+    if params.get("surf", None) is not None:
         cargs.extend([
             "--surf",
-            params.get("surf")
+            params.get("surf", None)
         ])
-    if params.get("out") is not None:
+    if params.get("out", None) is not None:
         cargs.extend([
             "--out",
-            params.get("out")
+            params.get("out", None)
         ])
-    if params.get("abs"):
+    if params.get("abs", False):
         cargs.append("--abs")
-    if params.get("help"):
+    if params.get("help", False):
         cargs.append("--help")
-    if params.get("version"):
+    if params.get("version", False):
         cargs.append("--version")
     return cargs
 
@@ -177,7 +156,7 @@ def mris_warp_outputs(
     """
     ret = MrisWarpOutputs(
         root=execution.output_file("."),
-        output_surface=execution.output_file(params.get("out")) if (params.get("out") is not None) else None,
+        output_surface=execution.output_file(params.get("out", None)) if (params.get("out") is not None) else None,
     )
     return ret
 
@@ -260,7 +239,6 @@ def mris_warp(
 __all__ = [
     "MRIS_WARP_METADATA",
     "MrisWarpOutputs",
-    "MrisWarpParameters",
     "mris_warp",
     "mris_warp_execute",
     "mris_warp_params",

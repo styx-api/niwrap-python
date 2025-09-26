@@ -14,7 +14,21 @@ MRIS_SMOOTH_METADATA = Metadata(
 
 
 MrisSmoothParameters = typing.TypedDict('MrisSmoothParameters', {
-    "@type": typing.Literal["freesurfer.mris_smooth"],
+    "@type": typing.NotRequired[typing.Literal["freesurfer/mris_smooth"]],
+    "input_surface": InputPathType,
+    "output_surface": str,
+    "average_iters": typing.NotRequired[float | None],
+    "smoothing_iters": typing.NotRequired[float | None],
+    "no_write": bool,
+    "curvature_name": typing.NotRequired[str | None],
+    "area_name": typing.NotRequired[str | None],
+    "gaussian_params": typing.NotRequired[list[float] | None],
+    "normalize_area": bool,
+    "momentum": typing.NotRequired[float | None],
+    "snapshot_interval": typing.NotRequired[float | None],
+})
+MrisSmoothParametersTagged = typing.TypedDict('MrisSmoothParametersTagged', {
+    "@type": typing.Literal["freesurfer/mris_smooth"],
     "input_surface": InputPathType,
     "output_surface": str,
     "average_iters": typing.NotRequired[float | None],
@@ -29,41 +43,9 @@ MrisSmoothParameters = typing.TypedDict('MrisSmoothParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "freesurfer.mris_smooth": mris_smooth_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "freesurfer.mris_smooth": mris_smooth_outputs,
-    }.get(t)
-
-
 class MrisSmoothOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `mris_smooth(...)`.
+    Output object returned when calling `MrisSmoothParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -87,7 +69,7 @@ def mris_smooth_params(
     normalize_area: bool = False,
     momentum: float | None = None,
     snapshot_interval: float | None = None,
-) -> MrisSmoothParameters:
+) -> MrisSmoothParametersTagged:
     """
     Build parameters.
     
@@ -111,7 +93,7 @@ def mris_smooth_params(
         Parameter dictionary
     """
     params = {
-        "@type": "freesurfer.mris_smooth",
+        "@type": "freesurfer/mris_smooth",
         "input_surface": input_surface,
         "output_surface": output_surface,
         "no_write": no_write,
@@ -149,46 +131,46 @@ def mris_smooth_cargs(
     """
     cargs = []
     cargs.append("mris_smooth")
-    cargs.append(execution.input_file(params.get("input_surface")))
-    cargs.append(params.get("output_surface"))
-    if params.get("average_iters") is not None:
+    cargs.append(execution.input_file(params.get("input_surface", None)))
+    cargs.append(params.get("output_surface", None))
+    if params.get("average_iters", None) is not None:
         cargs.extend([
             "-a",
-            str(params.get("average_iters"))
+            str(params.get("average_iters", None))
         ])
-    if params.get("smoothing_iters") is not None:
+    if params.get("smoothing_iters", None) is not None:
         cargs.extend([
             "-n",
-            str(params.get("smoothing_iters"))
+            str(params.get("smoothing_iters", None))
         ])
-    if params.get("no_write"):
+    if params.get("no_write", False):
         cargs.append("-nw")
-    if params.get("curvature_name") is not None:
+    if params.get("curvature_name", None) is not None:
         cargs.extend([
             "-c",
-            params.get("curvature_name")
+            params.get("curvature_name", None)
         ])
-    if params.get("area_name") is not None:
+    if params.get("area_name", None) is not None:
         cargs.extend([
             "-b",
-            params.get("area_name")
+            params.get("area_name", None)
         ])
-    if params.get("gaussian_params") is not None:
+    if params.get("gaussian_params", None) is not None:
         cargs.extend([
             "-g",
-            *map(str, params.get("gaussian_params"))
+            *map(str, params.get("gaussian_params", None))
         ])
-    if params.get("normalize_area"):
+    if params.get("normalize_area", False):
         cargs.append("-area")
-    if params.get("momentum") is not None:
+    if params.get("momentum", None) is not None:
         cargs.extend([
             "-m",
-            str(params.get("momentum"))
+            str(params.get("momentum", None))
         ])
-    if params.get("snapshot_interval") is not None:
+    if params.get("snapshot_interval", None) is not None:
         cargs.extend([
             "-w",
-            str(params.get("snapshot_interval"))
+            str(params.get("snapshot_interval", None))
         ])
     return cargs
 
@@ -208,7 +190,7 @@ def mris_smooth_outputs(
     """
     ret = MrisSmoothOutputs(
         root=execution.output_file("."),
-        output_surface_file=execution.output_file(params.get("output_surface")),
+        output_surface_file=execution.output_file(params.get("output_surface", None)),
         curvature_file=execution.output_file("${OUTPUT_SURFACE}_curvature"),
         area_file=execution.output_file("${OUTPUT_SURFACE}_area"),
     )
@@ -307,7 +289,6 @@ def mris_smooth(
 __all__ = [
     "MRIS_SMOOTH_METADATA",
     "MrisSmoothOutputs",
-    "MrisSmoothParameters",
     "mris_smooth",
     "mris_smooth_execute",
     "mris_smooth_params",

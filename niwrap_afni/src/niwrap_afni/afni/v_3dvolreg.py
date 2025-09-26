@@ -14,7 +14,25 @@ V_3DVOLREG_METADATA = Metadata(
 
 
 V3dvolregParameters = typing.TypedDict('V3dvolregParameters', {
-    "@type": typing.Literal["afni.3dvolreg"],
+    "@type": typing.NotRequired[typing.Literal["afni/3dvolreg"]],
+    "copyorigin": bool,
+    "twopass": bool,
+    "Fourier": bool,
+    "in_weight_volume": typing.NotRequired[list[str] | None],
+    "in_weight_volume_2": typing.NotRequired[InputPathType | None],
+    "interp": typing.NotRequired[typing.Literal["fourier", "cubic", "heptic", "quintic", "linear"] | None],
+    "num_threads": typing.NotRequired[int | None],
+    "outputtype": typing.NotRequired[typing.Literal["NIFTI", "AFNI", "NIFTI_GZ"] | None],
+    "timeshift": bool,
+    "verbose": bool,
+    "basefile": typing.NotRequired[InputPathType | None],
+    "zpad": typing.NotRequired[int | None],
+    "prefix": str,
+    "Maxdisp1d": typing.NotRequired[str | None],
+    "in_file": InputPathType,
+})
+V3dvolregParametersTagged = typing.TypedDict('V3dvolregParametersTagged', {
+    "@type": typing.Literal["afni/3dvolreg"],
     "copyorigin": bool,
     "twopass": bool,
     "Fourier": bool,
@@ -33,41 +51,9 @@ V3dvolregParameters = typing.TypedDict('V3dvolregParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "afni.3dvolreg": v_3dvolreg_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "afni.3dvolreg": v_3dvolreg_outputs,
-    }.get(t)
-
-
 class V3dvolregOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `v_3dvolreg(...)`.
+    Output object returned when calling `V3dvolregParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -103,7 +89,7 @@ def v_3dvolreg_params(
     basefile: InputPathType | None = None,
     zpad: int | None = None,
     maxdisp1d: str | None = None,
-) -> V3dvolregParameters:
+) -> V3dvolregParametersTagged:
     """
     Build parameters.
     
@@ -133,7 +119,7 @@ def v_3dvolreg_params(
         Parameter dictionary
     """
     params = {
-        "@type": "afni.3dvolreg",
+        "@type": "afni/3dvolreg",
         "copyorigin": copyorigin,
         "twopass": twopass,
         "Fourier": fourier,
@@ -176,55 +162,55 @@ def v_3dvolreg_cargs(
     """
     cargs = []
     cargs.append("3dvolreg")
-    if params.get("copyorigin"):
+    if params.get("copyorigin", False):
         cargs.append("-twodup")
-    if params.get("twopass"):
+    if params.get("twopass", False):
         cargs.append("-twopass")
-    if params.get("Fourier"):
+    if params.get("Fourier", False):
         cargs.append("-Fourier")
-    if params.get("in_weight_volume") is not None:
+    if params.get("in_weight_volume", None) is not None:
         cargs.extend([
             "-weight '",
-            *params.get("in_weight_volume")
+            *params.get("in_weight_volume", None)
         ])
-    if params.get("in_weight_volume_2") is not None:
+    if params.get("in_weight_volume_2", None) is not None:
         cargs.extend([
             "-weight '",
-            execution.input_file(params.get("in_weight_volume_2"))
+            execution.input_file(params.get("in_weight_volume_2", None))
         ])
-    if params.get("interp") is not None:
+    if params.get("interp", None) is not None:
         cargs.extend([
             "-",
-            params.get("interp")
+            params.get("interp", None)
         ])
-    if params.get("num_threads") is not None:
-        cargs.append(str(params.get("num_threads")))
-    if params.get("outputtype") is not None:
-        cargs.append(params.get("outputtype"))
-    if params.get("timeshift"):
+    if params.get("num_threads", None) is not None:
+        cargs.append(str(params.get("num_threads", None)))
+    if params.get("outputtype", None) is not None:
+        cargs.append(params.get("outputtype", None))
+    if params.get("timeshift", False):
         cargs.append("-tshift 0")
-    if params.get("verbose"):
+    if params.get("verbose", False):
         cargs.append("-verbose")
-    if params.get("basefile") is not None:
+    if params.get("basefile", None) is not None:
         cargs.extend([
             "-base",
-            execution.input_file(params.get("basefile"))
+            execution.input_file(params.get("basefile", None))
         ])
-    if params.get("zpad") is not None:
+    if params.get("zpad", None) is not None:
         cargs.extend([
             "-zpad",
-            str(params.get("zpad"))
+            str(params.get("zpad", None))
         ])
     cargs.extend([
         "-prefix",
-        params.get("prefix")
+        params.get("prefix", None)
     ])
-    if params.get("Maxdisp1d") is not None:
+    if params.get("Maxdisp1d", None) is not None:
         cargs.extend([
             "-maxdisp1d",
-            params.get("Maxdisp1d")
+            params.get("Maxdisp1d", None)
         ])
-    cargs.append(execution.input_file(params.get("in_file")))
+    cargs.append(execution.input_file(params.get("in_file", None)))
     return cargs
 
 
@@ -243,13 +229,13 @@ def v_3dvolreg_outputs(
     """
     ret = V3dvolregOutputs(
         root=execution.output_file("."),
-        md1d_file=execution.output_file(params.get("prefix") + "_md.1D"),
-        oned_file=execution.output_file(params.get("prefix") + ".1D"),
-        oned_matrix_save=execution.output_file(params.get("prefix") + ".aff12.1D"),
+        md1d_file=execution.output_file(params.get("prefix", None) + "_md.1D"),
+        oned_file=execution.output_file(params.get("prefix", None) + ".1D"),
+        oned_matrix_save=execution.output_file(params.get("prefix", None) + ".aff12.1D"),
         md1d_file_=execution.output_file("md1d_file"),
         oned_file_=execution.output_file("oned_file"),
         oned_matrix_save_=execution.output_file("oned_matrix_save"),
-        out_file=execution.output_file(params.get("prefix")),
+        out_file=execution.output_file(params.get("prefix", None)),
     )
     return ret
 
@@ -357,7 +343,6 @@ def v_3dvolreg(
 
 __all__ = [
     "V3dvolregOutputs",
-    "V3dvolregParameters",
     "V_3DVOLREG_METADATA",
     "v_3dvolreg",
     "v_3dvolreg_execute",

@@ -14,21 +14,42 @@ SURFACE_RESAMPLE_METADATA = Metadata(
 
 
 SurfaceResampleAreaSurfsParameters = typing.TypedDict('SurfaceResampleAreaSurfsParameters', {
-    "@type": typing.Literal["workbench.surface-resample.area_surfs"],
+    "@type": typing.NotRequired[typing.Literal["area_surfs"]],
+    "current_area": InputPathType,
+    "new_area": InputPathType,
+})
+SurfaceResampleAreaSurfsParametersTagged = typing.TypedDict('SurfaceResampleAreaSurfsParametersTagged', {
+    "@type": typing.Literal["area_surfs"],
     "current_area": InputPathType,
     "new_area": InputPathType,
 })
 
 
 SurfaceResampleAreaMetricsParameters = typing.TypedDict('SurfaceResampleAreaMetricsParameters', {
-    "@type": typing.Literal["workbench.surface-resample.area_metrics"],
+    "@type": typing.NotRequired[typing.Literal["area_metrics"]],
+    "current_area": InputPathType,
+    "new_area": InputPathType,
+})
+SurfaceResampleAreaMetricsParametersTagged = typing.TypedDict('SurfaceResampleAreaMetricsParametersTagged', {
+    "@type": typing.Literal["area_metrics"],
     "current_area": InputPathType,
     "new_area": InputPathType,
 })
 
 
 SurfaceResampleParameters = typing.TypedDict('SurfaceResampleParameters', {
-    "@type": typing.Literal["workbench.surface-resample"],
+    "@type": typing.NotRequired[typing.Literal["workbench/surface-resample"]],
+    "surface_in": InputPathType,
+    "current_sphere": InputPathType,
+    "new_sphere": InputPathType,
+    "method": str,
+    "surface_out": str,
+    "area_surfs": typing.NotRequired[SurfaceResampleAreaSurfsParameters | None],
+    "area_metrics": typing.NotRequired[SurfaceResampleAreaMetricsParameters | None],
+    "opt_bypass_sphere_check": bool,
+})
+SurfaceResampleParametersTagged = typing.TypedDict('SurfaceResampleParametersTagged', {
+    "@type": typing.Literal["workbench/surface-resample"],
     "surface_in": InputPathType,
     "current_sphere": InputPathType,
     "new_sphere": InputPathType,
@@ -40,44 +61,10 @@ SurfaceResampleParameters = typing.TypedDict('SurfaceResampleParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "workbench.surface-resample": surface_resample_cargs,
-        "workbench.surface-resample.area_surfs": surface_resample_area_surfs_cargs,
-        "workbench.surface-resample.area_metrics": surface_resample_area_metrics_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "workbench.surface-resample": surface_resample_outputs,
-    }.get(t)
-
-
 def surface_resample_area_surfs_params(
     current_area: InputPathType,
     new_area: InputPathType,
-) -> SurfaceResampleAreaSurfsParameters:
+) -> SurfaceResampleAreaSurfsParametersTagged:
     """
     Build parameters.
     
@@ -88,7 +75,7 @@ def surface_resample_area_surfs_params(
         Parameter dictionary
     """
     params = {
-        "@type": "workbench.surface-resample.area_surfs",
+        "@type": "area_surfs",
         "current_area": current_area,
         "new_area": new_area,
     }
@@ -110,15 +97,15 @@ def surface_resample_area_surfs_cargs(
     """
     cargs = []
     cargs.append("-area-surfs")
-    cargs.append(execution.input_file(params.get("current_area")))
-    cargs.append(execution.input_file(params.get("new_area")))
+    cargs.append(execution.input_file(params.get("current_area", None)))
+    cargs.append(execution.input_file(params.get("new_area", None)))
     return cargs
 
 
 def surface_resample_area_metrics_params(
     current_area: InputPathType,
     new_area: InputPathType,
-) -> SurfaceResampleAreaMetricsParameters:
+) -> SurfaceResampleAreaMetricsParametersTagged:
     """
     Build parameters.
     
@@ -129,7 +116,7 @@ def surface_resample_area_metrics_params(
         Parameter dictionary
     """
     params = {
-        "@type": "workbench.surface-resample.area_metrics",
+        "@type": "area_metrics",
         "current_area": current_area,
         "new_area": new_area,
     }
@@ -151,14 +138,14 @@ def surface_resample_area_metrics_cargs(
     """
     cargs = []
     cargs.append("-area-metrics")
-    cargs.append(execution.input_file(params.get("current_area")))
-    cargs.append(execution.input_file(params.get("new_area")))
+    cargs.append(execution.input_file(params.get("current_area", None)))
+    cargs.append(execution.input_file(params.get("new_area", None)))
     return cargs
 
 
 class SurfaceResampleOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `surface_resample(...)`.
+    Output object returned when calling `SurfaceResampleParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -175,7 +162,7 @@ def surface_resample_params(
     area_surfs: SurfaceResampleAreaSurfsParameters | None = None,
     area_metrics: SurfaceResampleAreaMetricsParameters | None = None,
     opt_bypass_sphere_check: bool = False,
-) -> SurfaceResampleParameters:
+) -> SurfaceResampleParametersTagged:
     """
     Build parameters.
     
@@ -196,7 +183,7 @@ def surface_resample_params(
         Parameter dictionary
     """
     params = {
-        "@type": "workbench.surface-resample",
+        "@type": "workbench/surface-resample",
         "surface_in": surface_in,
         "current_sphere": current_sphere,
         "new_sphere": new_sphere,
@@ -227,16 +214,16 @@ def surface_resample_cargs(
     cargs = []
     cargs.append("wb_command")
     cargs.append("-surface-resample")
-    cargs.append(execution.input_file(params.get("surface_in")))
-    cargs.append(execution.input_file(params.get("current_sphere")))
-    cargs.append(execution.input_file(params.get("new_sphere")))
-    cargs.append(params.get("method"))
-    cargs.append(params.get("surface_out"))
-    if params.get("area_surfs") is not None:
-        cargs.extend(dyn_cargs(params.get("area_surfs")["@type"])(params.get("area_surfs"), execution))
-    if params.get("area_metrics") is not None:
-        cargs.extend(dyn_cargs(params.get("area_metrics")["@type"])(params.get("area_metrics"), execution))
-    if params.get("opt_bypass_sphere_check"):
+    cargs.append(execution.input_file(params.get("surface_in", None)))
+    cargs.append(execution.input_file(params.get("current_sphere", None)))
+    cargs.append(execution.input_file(params.get("new_sphere", None)))
+    cargs.append(params.get("method", None))
+    cargs.append(params.get("surface_out", None))
+    if params.get("area_surfs", None) is not None:
+        cargs.extend(surface_resample_area_surfs_cargs(params.get("area_surfs", None), execution))
+    if params.get("area_metrics", None) is not None:
+        cargs.extend(surface_resample_area_metrics_cargs(params.get("area_metrics", None), execution))
+    if params.get("opt_bypass_sphere_check", False):
         cargs.append("-bypass-sphere-check")
     return cargs
 
@@ -256,7 +243,7 @@ def surface_resample_outputs(
     """
     ret = SurfaceResampleOutputs(
         root=execution.output_file("."),
-        surface_out=execution.output_file(params.get("surface_out")),
+        surface_out=execution.output_file(params.get("surface_out", None)),
     )
     return ret
 
@@ -379,10 +366,7 @@ def surface_resample(
 
 __all__ = [
     "SURFACE_RESAMPLE_METADATA",
-    "SurfaceResampleAreaMetricsParameters",
-    "SurfaceResampleAreaSurfsParameters",
     "SurfaceResampleOutputs",
-    "SurfaceResampleParameters",
     "surface_resample",
     "surface_resample_area_metrics_params",
     "surface_resample_area_surfs_params",

@@ -14,7 +14,18 @@ MRI_FUNC2SPH_METADATA = Metadata(
 
 
 MriFunc2sphParameters = typing.TypedDict('MriFunc2sphParameters', {
-    "@type": typing.Literal["freesurfer.mri-func2sph"],
+    "@type": typing.NotRequired[typing.Literal["freesurfer/mri-func2sph"]],
+    "instem": str,
+    "outstem": str,
+    "hemisphere": typing.Literal["lh", "rh"],
+    "fvitdir": str,
+    "hole_filling_iters": typing.NotRequired[float | None],
+    "icosahedron_size": typing.NotRequired[float | None],
+    "input_type": typing.NotRequired[str | None],
+    "umask": typing.NotRequired[str | None],
+})
+MriFunc2sphParametersTagged = typing.TypedDict('MriFunc2sphParametersTagged', {
+    "@type": typing.Literal["freesurfer/mri-func2sph"],
     "instem": str,
     "outstem": str,
     "hemisphere": typing.Literal["lh", "rh"],
@@ -26,40 +37,9 @@ MriFunc2sphParameters = typing.TypedDict('MriFunc2sphParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "freesurfer.mri-func2sph": mri_func2sph_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-    }.get(t)
-
-
 class MriFunc2sphOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `mri_func2sph(...)`.
+    Output object returned when calling `MriFunc2sphParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -74,7 +54,7 @@ def mri_func2sph_params(
     icosahedron_size: float | None = None,
     input_type: str | None = None,
     umask: str | None = None,
-) -> MriFunc2sphParameters:
+) -> MriFunc2sphParametersTagged:
     """
     Build parameters.
     
@@ -91,7 +71,7 @@ def mri_func2sph_params(
         Parameter dictionary
     """
     params = {
-        "@type": "freesurfer.mri-func2sph",
+        "@type": "freesurfer/mri-func2sph",
         "instem": instem,
         "outstem": outstem,
         "hemisphere": hemisphere,
@@ -125,39 +105,39 @@ def mri_func2sph_cargs(
     cargs.append("mri-func2sph")
     cargs.extend([
         "-i",
-        params.get("instem")
+        params.get("instem", None)
     ])
     cargs.extend([
         "-o",
-        params.get("outstem")
+        params.get("outstem", None)
     ])
     cargs.extend([
         "-hemi",
-        params.get("hemisphere")
+        params.get("hemisphere", None)
     ])
     cargs.extend([
         "-fvitdir",
-        params.get("fvitdir")
+        params.get("fvitdir", None)
     ])
-    if params.get("hole_filling_iters") is not None:
+    if params.get("hole_filling_iters", None) is not None:
         cargs.extend([
             "-niters",
-            str(params.get("hole_filling_iters"))
+            str(params.get("hole_filling_iters", None))
         ])
-    if params.get("icosahedron_size") is not None:
+    if params.get("icosahedron_size", None) is not None:
         cargs.extend([
             "-icosize",
-            str(params.get("icosahedron_size"))
+            str(params.get("icosahedron_size", None))
         ])
-    if params.get("input_type") is not None:
+    if params.get("input_type", None) is not None:
         cargs.extend([
             "-intype",
-            params.get("input_type")
+            params.get("input_type", None)
         ])
-    if params.get("umask") is not None:
+    if params.get("umask", None) is not None:
         cargs.extend([
             "-umask",
-            params.get("umask")
+            params.get("umask", None)
         ])
     return cargs
 
@@ -258,7 +238,6 @@ def mri_func2sph(
 __all__ = [
     "MRI_FUNC2SPH_METADATA",
     "MriFunc2sphOutputs",
-    "MriFunc2sphParameters",
     "mri_func2sph",
     "mri_func2sph_execute",
     "mri_func2sph_params",

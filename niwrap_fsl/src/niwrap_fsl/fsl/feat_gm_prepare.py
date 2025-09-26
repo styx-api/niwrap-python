@@ -14,46 +14,20 @@ FEAT_GM_PREPARE_METADATA = Metadata(
 
 
 FeatGmPrepareParameters = typing.TypedDict('FeatGmPrepareParameters', {
-    "@type": typing.Literal["fsl.feat_gm_prepare"],
+    "@type": typing.NotRequired[typing.Literal["fsl/feat_gm_prepare"]],
+    "gm_output": str,
+    "feat_dirs_list": list[InputPathType],
+})
+FeatGmPrepareParametersTagged = typing.TypedDict('FeatGmPrepareParametersTagged', {
+    "@type": typing.Literal["fsl/feat_gm_prepare"],
     "gm_output": str,
     "feat_dirs_list": list[InputPathType],
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "fsl.feat_gm_prepare": feat_gm_prepare_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-    }.get(t)
-
-
 class FeatGmPrepareOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `feat_gm_prepare(...)`.
+    Output object returned when calling `FeatGmPrepareParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -62,7 +36,7 @@ class FeatGmPrepareOutputs(typing.NamedTuple):
 def feat_gm_prepare_params(
     gm_output: str,
     feat_dirs_list: list[InputPathType],
-) -> FeatGmPrepareParameters:
+) -> FeatGmPrepareParametersTagged:
     """
     Build parameters.
     
@@ -73,7 +47,7 @@ def feat_gm_prepare_params(
         Parameter dictionary
     """
     params = {
-        "@type": "fsl.feat_gm_prepare",
+        "@type": "fsl/feat_gm_prepare",
         "gm_output": gm_output,
         "feat_dirs_list": feat_dirs_list,
     }
@@ -95,8 +69,8 @@ def feat_gm_prepare_cargs(
     """
     cargs = []
     cargs.append("feat_gm_prepare")
-    cargs.append(params.get("gm_output"))
-    cargs.extend([execution.input_file(f) for f in params.get("feat_dirs_list")])
+    cargs.append(params.get("gm_output", None))
+    cargs.extend([execution.input_file(f) for f in params.get("feat_dirs_list", None)])
     return cargs
 
 
@@ -178,7 +152,6 @@ def feat_gm_prepare(
 __all__ = [
     "FEAT_GM_PREPARE_METADATA",
     "FeatGmPrepareOutputs",
-    "FeatGmPrepareParameters",
     "feat_gm_prepare",
     "feat_gm_prepare_execute",
     "feat_gm_prepare_params",

@@ -14,7 +14,15 @@ MRI_GCUT_METADATA = Metadata(
 
 
 MriGcutParameters = typing.TypedDict('MriGcutParameters', {
-    "@type": typing.Literal["freesurfer.mri_gcut"],
+    "@type": typing.NotRequired[typing.Literal["freesurfer/mri_gcut"]],
+    "wmmask_110": bool,
+    "mult_file": typing.NotRequired[InputPathType | None],
+    "threshold_value": typing.NotRequired[float | None],
+    "infile": InputPathType,
+    "outfile": str,
+})
+MriGcutParametersTagged = typing.TypedDict('MriGcutParametersTagged', {
+    "@type": typing.Literal["freesurfer/mri_gcut"],
     "wmmask_110": bool,
     "mult_file": typing.NotRequired[InputPathType | None],
     "threshold_value": typing.NotRequired[float | None],
@@ -23,41 +31,9 @@ MriGcutParameters = typing.TypedDict('MriGcutParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "freesurfer.mri_gcut": mri_gcut_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "freesurfer.mri_gcut": mri_gcut_outputs,
-    }.get(t)
-
-
 class MriGcutOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `mri_gcut(...)`.
+    Output object returned when calling `MriGcutParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -71,7 +47,7 @@ def mri_gcut_params(
     wmmask_110: bool = False,
     mult_file: InputPathType | None = None,
     threshold_value: float | None = None,
-) -> MriGcutParameters:
+) -> MriGcutParametersTagged:
     """
     Build parameters.
     
@@ -89,7 +65,7 @@ def mri_gcut_params(
         Parameter dictionary
     """
     params = {
-        "@type": "freesurfer.mri_gcut",
+        "@type": "freesurfer/mri_gcut",
         "wmmask_110": wmmask_110,
         "infile": infile,
         "outfile": outfile,
@@ -116,20 +92,20 @@ def mri_gcut_cargs(
     """
     cargs = []
     cargs.append("mri_gcut")
-    if params.get("wmmask_110"):
+    if params.get("wmmask_110", False):
         cargs.append("-110")
-    if params.get("mult_file") is not None:
+    if params.get("mult_file", None) is not None:
         cargs.extend([
             "-mult",
-            execution.input_file(params.get("mult_file"))
+            execution.input_file(params.get("mult_file", None))
         ])
-    if params.get("threshold_value") is not None:
+    if params.get("threshold_value", None) is not None:
         cargs.extend([
             "-T",
-            str(params.get("threshold_value"))
+            str(params.get("threshold_value", None))
         ])
-    cargs.append(execution.input_file(params.get("infile")))
-    cargs.append(params.get("outfile"))
+    cargs.append(execution.input_file(params.get("infile", None)))
+    cargs.append(params.get("outfile", None))
     return cargs
 
 
@@ -148,7 +124,7 @@ def mri_gcut_outputs(
     """
     ret = MriGcutOutputs(
         root=execution.output_file("."),
-        output_mask_file=execution.output_file(params.get("outfile")),
+        output_mask_file=execution.output_file(params.get("outfile", None)),
     )
     return ret
 
@@ -225,7 +201,6 @@ def mri_gcut(
 __all__ = [
     "MRI_GCUT_METADATA",
     "MriGcutOutputs",
-    "MriGcutParameters",
     "mri_gcut",
     "mri_gcut_execute",
     "mri_gcut_params",

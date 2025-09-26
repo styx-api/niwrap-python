@@ -14,46 +14,20 @@ FSLSIZE_METADATA = Metadata(
 
 
 FslsizeParameters = typing.TypedDict('FslsizeParameters', {
-    "@type": typing.Literal["fsl.fslsize"],
+    "@type": typing.NotRequired[typing.Literal["fsl/fslsize"]],
+    "input_file": InputPathType,
+    "short_format_flag": bool,
+})
+FslsizeParametersTagged = typing.TypedDict('FslsizeParametersTagged', {
+    "@type": typing.Literal["fsl/fslsize"],
     "input_file": InputPathType,
     "short_format_flag": bool,
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "fsl.fslsize": fslsize_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-    }.get(t)
-
-
 class FslsizeOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `fslsize(...)`.
+    Output object returned when calling `FslsizeParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -62,7 +36,7 @@ class FslsizeOutputs(typing.NamedTuple):
 def fslsize_params(
     input_file: InputPathType,
     short_format_flag: bool = False,
-) -> FslsizeParameters:
+) -> FslsizeParametersTagged:
     """
     Build parameters.
     
@@ -73,7 +47,7 @@ def fslsize_params(
         Parameter dictionary
     """
     params = {
-        "@type": "fsl.fslsize",
+        "@type": "fsl/fslsize",
         "input_file": input_file,
         "short_format_flag": short_format_flag,
     }
@@ -95,8 +69,8 @@ def fslsize_cargs(
     """
     cargs = []
     cargs.append("fslsize")
-    cargs.append(execution.input_file(params.get("input_file")))
-    if params.get("short_format_flag"):
+    cargs.append(execution.input_file(params.get("input_file", None)))
+    if params.get("short_format_flag", False):
         cargs.append("-s")
     return cargs
 
@@ -179,7 +153,6 @@ def fslsize(
 __all__ = [
     "FSLSIZE_METADATA",
     "FslsizeOutputs",
-    "FslsizeParameters",
     "fslsize",
     "fslsize_execute",
     "fslsize_params",

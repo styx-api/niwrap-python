@@ -14,7 +14,14 @@ MRIS_HAUSDORFF_DIST_METADATA = Metadata(
 
 
 MrisHausdorffDistParameters = typing.TypedDict('MrisHausdorffDistParameters', {
-    "@type": typing.Literal["freesurfer.mris_hausdorff_dist"],
+    "@type": typing.NotRequired[typing.Literal["freesurfer/mris_hausdorff_dist"]],
+    "surface": InputPathType,
+    "label1": InputPathType,
+    "label2": InputPathType,
+    "annot_name": typing.NotRequired[str | None],
+})
+MrisHausdorffDistParametersTagged = typing.TypedDict('MrisHausdorffDistParametersTagged', {
+    "@type": typing.Literal["freesurfer/mris_hausdorff_dist"],
     "surface": InputPathType,
     "label1": InputPathType,
     "label2": InputPathType,
@@ -22,41 +29,9 @@ MrisHausdorffDistParameters = typing.TypedDict('MrisHausdorffDistParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "freesurfer.mris_hausdorff_dist": mris_hausdorff_dist_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "freesurfer.mris_hausdorff_dist": mris_hausdorff_dist_outputs,
-    }.get(t)
-
-
 class MrisHausdorffDistOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `mris_hausdorff_dist(...)`.
+    Output object returned when calling `MrisHausdorffDistParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -69,7 +44,7 @@ def mris_hausdorff_dist_params(
     label1: InputPathType,
     label2: InputPathType,
     annot_name: str | None = None,
-) -> MrisHausdorffDistParameters:
+) -> MrisHausdorffDistParametersTagged:
     """
     Build parameters.
     
@@ -83,7 +58,7 @@ def mris_hausdorff_dist_params(
         Parameter dictionary
     """
     params = {
-        "@type": "freesurfer.mris_hausdorff_dist",
+        "@type": "freesurfer/mris_hausdorff_dist",
         "surface": surface,
         "label1": label1,
         "label2": label2,
@@ -108,13 +83,13 @@ def mris_hausdorff_dist_cargs(
     """
     cargs = []
     cargs.append("mris_hausdorff_dist")
-    cargs.append(execution.input_file(params.get("surface")))
-    cargs.append(execution.input_file(params.get("label1")))
-    cargs.append(execution.input_file(params.get("label2")))
-    if params.get("annot_name") is not None:
+    cargs.append(execution.input_file(params.get("surface", None)))
+    cargs.append(execution.input_file(params.get("label1", None)))
+    cargs.append(execution.input_file(params.get("label2", None)))
+    if params.get("annot_name", None) is not None:
         cargs.extend([
             "-a",
-            params.get("annot_name")
+            params.get("annot_name", None)
         ])
     return cargs
 
@@ -207,7 +182,6 @@ def mris_hausdorff_dist(
 __all__ = [
     "MRIS_HAUSDORFF_DIST_METADATA",
     "MrisHausdorffDistOutputs",
-    "MrisHausdorffDistParameters",
     "mris_hausdorff_dist",
     "mris_hausdorff_dist_execute",
     "mris_hausdorff_dist_params",

@@ -14,7 +14,59 @@ MRIS_PREPROC_METADATA = Metadata(
 
 
 MrisPreprocParameters = typing.TypedDict('MrisPreprocParameters', {
-    "@type": typing.Literal["freesurfer.mris_preproc"],
+    "@type": typing.NotRequired[typing.Literal["freesurfer/mris_preproc"]],
+    "outfile": str,
+    "target_subject": str,
+    "hemi": str,
+    "meas": typing.NotRequired[str | None],
+    "label": typing.NotRequired[str | None],
+    "measdir": typing.NotRequired[str | None],
+    "subjects": typing.NotRequired[list[str] | None],
+    "fsgd": typing.NotRequired[InputPathType | None],
+    "subjectlist": typing.NotRequired[InputPathType | None],
+    "qdec": typing.NotRequired[InputPathType | None],
+    "qdec_long": typing.NotRequired[InputPathType | None],
+    "surfmeasfile": typing.NotRequired[list[InputPathType] | None],
+    "volmeasfile_reg": typing.NotRequired[list[str] | None],
+    "projfrac": typing.NotRequired[float | None],
+    "projfrac_max": typing.NotRequired[list[float] | None],
+    "projfrac_avg": typing.NotRequired[list[float] | None],
+    "no_mask_non_cortex": bool,
+    "session_file": typing.NotRequired[InputPathType | None],
+    "dir_file": typing.NotRequired[InputPathType | None],
+    "analysis": typing.NotRequired[str | None],
+    "contrast": typing.NotRequired[str | None],
+    "cvar_flag": bool,
+    "offset_flag": bool,
+    "map": typing.NotRequired[str | None],
+    "etiv_flag": bool,
+    "fwhm": typing.NotRequired[float | None],
+    "fwhm_src": typing.NotRequired[float | None],
+    "niters": typing.NotRequired[float | None],
+    "niters_src": typing.NotRequired[float | None],
+    "cortex_only": bool,
+    "mgz_flag": bool,
+    "no_jac_flag": bool,
+    "paired_diff_flag": bool,
+    "cache_out": typing.NotRequired[str | None],
+    "cache_in": typing.NotRequired[str | None],
+    "cache_out_only": typing.NotRequired[str | None],
+    "no_prune_flag": bool,
+    "mean_flag": bool,
+    "std_flag": bool,
+    "reshape_flag": bool,
+    "surfreg": typing.NotRequired[str | None],
+    "subjects_dir": typing.NotRequired[str | None],
+    "synth_flag": bool,
+    "tmpdir": typing.NotRequired[str | None],
+    "nocleanup_flag": bool,
+    "cleanup_flag": bool,
+    "log": typing.NotRequired[str | None],
+    "nolog_flag": bool,
+    "debug_flag": bool,
+})
+MrisPreprocParametersTagged = typing.TypedDict('MrisPreprocParametersTagged', {
+    "@type": typing.Literal["freesurfer/mris_preproc"],
     "outfile": str,
     "target_subject": str,
     "hemi": str,
@@ -67,40 +119,9 @@ MrisPreprocParameters = typing.TypedDict('MrisPreprocParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "freesurfer.mris_preproc": mris_preproc_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-    }.get(t)
-
-
 class MrisPreprocOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `mris_preproc(...)`.
+    Output object returned when calling `MrisPreprocParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -156,7 +177,7 @@ def mris_preproc_params(
     log: str | None = None,
     nolog_flag: bool = False,
     debug_flag: bool = False,
-) -> MrisPreprocParameters:
+) -> MrisPreprocParametersTagged:
     """
     Build parameters.
     
@@ -225,7 +246,7 @@ def mris_preproc_params(
         Parameter dictionary
     """
     params = {
-        "@type": "freesurfer.mris_preproc",
+        "@type": "freesurfer/mris_preproc",
         "outfile": outfile,
         "target_subject": target_subject,
         "hemi": hemi,
@@ -325,194 +346,194 @@ def mris_preproc_cargs(
     cargs.append("mris_preproc")
     cargs.extend([
         "--out",
-        params.get("outfile")
+        params.get("outfile", None)
     ])
     cargs.extend([
         "--target",
-        params.get("target_subject")
+        params.get("target_subject", None)
     ])
     cargs.extend([
         "--hemi",
-        params.get("hemi")
+        params.get("hemi", None)
     ])
-    if params.get("meas") is not None:
+    if params.get("meas", None) is not None:
         cargs.extend([
             "--meas",
-            params.get("meas")
+            params.get("meas", None)
         ])
-    if params.get("label") is not None:
+    if params.get("label", None) is not None:
         cargs.extend([
             "--label",
-            params.get("label")
+            params.get("label", None)
         ])
-    if params.get("measdir") is not None:
+    if params.get("measdir", None) is not None:
         cargs.extend([
             "--measdir",
-            params.get("measdir")
+            params.get("measdir", None)
         ])
-    if params.get("subjects") is not None:
+    if params.get("subjects", None) is not None:
         cargs.extend([
             "--s",
-            *params.get("subjects")
+            *params.get("subjects", None)
         ])
-    if params.get("fsgd") is not None:
+    if params.get("fsgd", None) is not None:
         cargs.extend([
             "--fsgd",
-            execution.input_file(params.get("fsgd"))
+            execution.input_file(params.get("fsgd", None))
         ])
-    if params.get("subjectlist") is not None:
+    if params.get("subjectlist", None) is not None:
         cargs.extend([
             "--f",
-            execution.input_file(params.get("subjectlist"))
+            execution.input_file(params.get("subjectlist", None))
         ])
-    if params.get("qdec") is not None:
+    if params.get("qdec", None) is not None:
         cargs.extend([
             "--qdec",
-            execution.input_file(params.get("qdec"))
+            execution.input_file(params.get("qdec", None))
         ])
-    if params.get("qdec_long") is not None:
+    if params.get("qdec_long", None) is not None:
         cargs.extend([
             "--qdec-long",
-            execution.input_file(params.get("qdec_long"))
+            execution.input_file(params.get("qdec_long", None))
         ])
-    if params.get("surfmeasfile") is not None:
+    if params.get("surfmeasfile", None) is not None:
         cargs.extend([
             "--is",
-            *[execution.input_file(f) for f in params.get("surfmeasfile")]
+            *[execution.input_file(f) for f in params.get("surfmeasfile", None)]
         ])
-    if params.get("volmeasfile_reg") is not None:
+    if params.get("volmeasfile_reg", None) is not None:
         cargs.extend([
             "--iv",
-            *params.get("volmeasfile_reg")
+            *params.get("volmeasfile_reg", None)
         ])
-    if params.get("projfrac") is not None:
+    if params.get("projfrac", None) is not None:
         cargs.extend([
             "--projfrac",
-            str(params.get("projfrac"))
+            str(params.get("projfrac", None))
         ])
-    if params.get("projfrac_max") is not None:
+    if params.get("projfrac_max", None) is not None:
         cargs.extend([
             "--projfrac-max",
-            *map(str, params.get("projfrac_max"))
+            *map(str, params.get("projfrac_max", None))
         ])
-    if params.get("projfrac_avg") is not None:
+    if params.get("projfrac_avg", None) is not None:
         cargs.extend([
             "--projfrac-avg",
-            *map(str, params.get("projfrac_avg"))
+            *map(str, params.get("projfrac_avg", None))
         ])
-    if params.get("no_mask_non_cortex"):
+    if params.get("no_mask_non_cortex", False):
         cargs.append("--no-mask-non-cortex")
-    if params.get("session_file") is not None:
+    if params.get("session_file", None) is not None:
         cargs.extend([
             "--sf",
-            execution.input_file(params.get("session_file"))
+            execution.input_file(params.get("session_file", None))
         ])
-    if params.get("dir_file") is not None:
+    if params.get("dir_file", None) is not None:
         cargs.extend([
             "--df",
-            execution.input_file(params.get("dir_file"))
+            execution.input_file(params.get("dir_file", None))
         ])
-    if params.get("analysis") is not None:
+    if params.get("analysis", None) is not None:
         cargs.extend([
             "--analysis",
-            params.get("analysis")
+            params.get("analysis", None)
         ])
-    if params.get("contrast") is not None:
+    if params.get("contrast", None) is not None:
         cargs.extend([
             "--contrast",
-            params.get("contrast")
+            params.get("contrast", None)
         ])
-    if params.get("cvar_flag"):
+    if params.get("cvar_flag", False):
         cargs.append("--cvar")
-    if params.get("offset_flag"):
+    if params.get("offset_flag", False):
         cargs.append("--offset")
-    if params.get("map") is not None:
+    if params.get("map", None) is not None:
         cargs.extend([
             "--map",
-            params.get("map")
+            params.get("map", None)
         ])
-    if params.get("etiv_flag"):
+    if params.get("etiv_flag", False):
         cargs.append("--etiv")
-    if params.get("fwhm") is not None:
+    if params.get("fwhm", None) is not None:
         cargs.extend([
             "--fwhm",
-            str(params.get("fwhm"))
+            str(params.get("fwhm", None))
         ])
-    if params.get("fwhm_src") is not None:
+    if params.get("fwhm_src", None) is not None:
         cargs.extend([
             "--fwhm-src",
-            str(params.get("fwhm_src"))
+            str(params.get("fwhm_src", None))
         ])
-    if params.get("niters") is not None:
+    if params.get("niters", None) is not None:
         cargs.extend([
             "--niters",
-            str(params.get("niters"))
+            str(params.get("niters", None))
         ])
-    if params.get("niters_src") is not None:
+    if params.get("niters_src", None) is not None:
         cargs.extend([
             "--niters-src",
-            str(params.get("niters_src"))
+            str(params.get("niters_src", None))
         ])
-    if params.get("cortex_only"):
+    if params.get("cortex_only", False):
         cargs.append("--cortex-only")
-    if params.get("mgz_flag"):
+    if params.get("mgz_flag", False):
         cargs.append("--mgz")
-    if params.get("no_jac_flag"):
+    if params.get("no_jac_flag", False):
         cargs.append("--no-jac")
-    if params.get("paired_diff_flag"):
+    if params.get("paired_diff_flag", False):
         cargs.append("--paired-diff")
-    if params.get("cache_out") is not None:
+    if params.get("cache_out", None) is not None:
         cargs.extend([
             "--cache-out",
-            params.get("cache_out")
+            params.get("cache_out", None)
         ])
-    if params.get("cache_in") is not None:
+    if params.get("cache_in", None) is not None:
         cargs.extend([
             "--cache-in",
-            params.get("cache_in")
+            params.get("cache_in", None)
         ])
-    if params.get("cache_out_only") is not None:
+    if params.get("cache_out_only", None) is not None:
         cargs.extend([
             "--cache-out-only",
-            params.get("cache_out_only")
+            params.get("cache_out_only", None)
         ])
-    if params.get("no_prune_flag"):
+    if params.get("no_prune_flag", False):
         cargs.append("--no-prune")
-    if params.get("mean_flag"):
+    if params.get("mean_flag", False):
         cargs.append("--mean")
-    if params.get("std_flag"):
+    if params.get("std_flag", False):
         cargs.append("--std")
-    if params.get("reshape_flag"):
+    if params.get("reshape_flag", False):
         cargs.append("--reshape")
-    if params.get("surfreg") is not None:
+    if params.get("surfreg", None) is not None:
         cargs.extend([
             "--surfreg",
-            params.get("surfreg")
+            params.get("surfreg", None)
         ])
-    if params.get("subjects_dir") is not None:
+    if params.get("subjects_dir", None) is not None:
         cargs.extend([
             "--SUBJECTS_DIR",
-            params.get("subjects_dir")
+            params.get("subjects_dir", None)
         ])
-    if params.get("synth_flag"):
+    if params.get("synth_flag", False):
         cargs.append("--synth")
-    if params.get("tmpdir") is not None:
+    if params.get("tmpdir", None) is not None:
         cargs.extend([
             "--tmpdir",
-            params.get("tmpdir")
+            params.get("tmpdir", None)
         ])
-    if params.get("nocleanup_flag"):
+    if params.get("nocleanup_flag", False):
         cargs.append("--nocleanup")
-    if params.get("cleanup_flag"):
+    if params.get("cleanup_flag", False):
         cargs.append("--cleanup")
-    if params.get("log") is not None:
+    if params.get("log", None) is not None:
         cargs.extend([
             "--log",
-            params.get("log")
+            params.get("log", None)
         ])
-    if params.get("nolog_flag"):
+    if params.get("nolog_flag", False):
         cargs.append("--nolog")
-    if params.get("debug_flag"):
+    if params.get("debug_flag", False):
         cargs.append("--debug")
     return cargs
 
@@ -751,7 +772,6 @@ def mris_preproc(
 __all__ = [
     "MRIS_PREPROC_METADATA",
     "MrisPreprocOutputs",
-    "MrisPreprocParameters",
     "mris_preproc",
     "mris_preproc_execute",
     "mris_preproc_params",

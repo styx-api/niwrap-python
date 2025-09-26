@@ -14,7 +14,17 @@ MRIS_EXPAND_METADATA = Metadata(
 
 
 MrisExpandParameters = typing.TypedDict('MrisExpandParameters', {
-    "@type": typing.Literal["freesurfer.mris_expand"],
+    "@type": typing.NotRequired[typing.Literal["freesurfer/mris_expand"]],
+    "input_surface": InputPathType,
+    "expansion_distance": float,
+    "output_surface": str,
+    "thickness": bool,
+    "label": typing.NotRequired[str | None],
+    "tmap": typing.NotRequired[str | None],
+    "tmap_random": typing.NotRequired[str | None],
+})
+MrisExpandParametersTagged = typing.TypedDict('MrisExpandParametersTagged', {
+    "@type": typing.Literal["freesurfer/mris_expand"],
     "input_surface": InputPathType,
     "expansion_distance": float,
     "output_surface": str,
@@ -25,41 +35,9 @@ MrisExpandParameters = typing.TypedDict('MrisExpandParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "freesurfer.mris_expand": mris_expand_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "freesurfer.mris_expand": mris_expand_outputs,
-    }.get(t)
-
-
 class MrisExpandOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `mris_expand(...)`.
+    Output object returned when calling `MrisExpandParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -75,7 +53,7 @@ def mris_expand_params(
     label: str | None = None,
     tmap: str | None = None,
     tmap_random: str | None = None,
-) -> MrisExpandParameters:
+) -> MrisExpandParametersTagged:
     """
     Build parameters.
     
@@ -93,7 +71,7 @@ def mris_expand_params(
         Parameter dictionary
     """
     params = {
-        "@type": "freesurfer.mris_expand",
+        "@type": "freesurfer/mris_expand",
         "input_surface": input_surface,
         "expansion_distance": expansion_distance,
         "output_surface": output_surface,
@@ -123,25 +101,25 @@ def mris_expand_cargs(
     """
     cargs = []
     cargs.append("mris_expand")
-    cargs.append(execution.input_file(params.get("input_surface")))
-    cargs.append(str(params.get("expansion_distance")))
-    cargs.append(params.get("output_surface"))
-    if params.get("thickness"):
+    cargs.append(execution.input_file(params.get("input_surface", None)))
+    cargs.append(str(params.get("expansion_distance", None)))
+    cargs.append(params.get("output_surface", None))
+    if params.get("thickness", False):
         cargs.append("-thickness")
-    if params.get("label") is not None:
+    if params.get("label", None) is not None:
         cargs.extend([
             "-label",
-            params.get("label")
+            params.get("label", None)
         ])
-    if params.get("tmap") is not None:
+    if params.get("tmap", None) is not None:
         cargs.extend([
             "-tmap",
-            params.get("tmap")
+            params.get("tmap", None)
         ])
-    if params.get("tmap_random") is not None:
+    if params.get("tmap_random", None) is not None:
         cargs.extend([
             "-tmap random",
-            params.get("tmap_random")
+            params.get("tmap_random", None)
         ])
     return cargs
 
@@ -161,7 +139,7 @@ def mris_expand_outputs(
     """
     ret = MrisExpandOutputs(
         root=execution.output_file("."),
-        output_surface_file=execution.output_file(params.get("output_surface")),
+        output_surface_file=execution.output_file(params.get("output_surface", None)),
     )
     return ret
 
@@ -242,7 +220,6 @@ def mris_expand(
 __all__ = [
     "MRIS_EXPAND_METADATA",
     "MrisExpandOutputs",
-    "MrisExpandParameters",
     "mris_expand",
     "mris_expand_execute",
     "mris_expand_params",

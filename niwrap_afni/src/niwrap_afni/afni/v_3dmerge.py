@@ -14,7 +14,22 @@ V_3DMERGE_METADATA = Metadata(
 
 
 V3dmergeParameters = typing.TypedDict('V3dmergeParameters', {
-    "@type": typing.Literal["afni.3dmerge"],
+    "@type": typing.NotRequired[typing.Literal["afni/3dmerge"]],
+    "input_files": list[InputPathType],
+    "output_file": str,
+    "blur_fwhm": typing.NotRequired[float | None],
+    "threshold": typing.NotRequired[float | None],
+    "clust": typing.NotRequired[list[float] | None],
+    "dindex": typing.NotRequired[float | None],
+    "tindex": typing.NotRequired[float | None],
+    "absolute": bool,
+    "dxyz": bool,
+    "gmean": bool,
+    "gmax": bool,
+    "quiet": bool,
+})
+V3dmergeParametersTagged = typing.TypedDict('V3dmergeParametersTagged', {
+    "@type": typing.Literal["afni/3dmerge"],
     "input_files": list[InputPathType],
     "output_file": str,
     "blur_fwhm": typing.NotRequired[float | None],
@@ -30,41 +45,9 @@ V3dmergeParameters = typing.TypedDict('V3dmergeParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "afni.3dmerge": v_3dmerge_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "afni.3dmerge": v_3dmerge_outputs,
-    }.get(t)
-
-
 class V3dmergeOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `v_3dmerge(...)`.
+    Output object returned when calling `V3dmergeParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -85,7 +68,7 @@ def v_3dmerge_params(
     gmean: bool = False,
     gmax: bool = False,
     quiet: bool = False,
-) -> V3dmergeParameters:
+) -> V3dmergeParametersTagged:
     """
     Build parameters.
     
@@ -109,7 +92,7 @@ def v_3dmerge_params(
         Parameter dictionary
     """
     params = {
-        "@type": "afni.3dmerge",
+        "@type": "afni/3dmerge",
         "input_files": input_files,
         "output_file": output_file,
         "absolute": absolute,
@@ -146,45 +129,45 @@ def v_3dmerge_cargs(
     """
     cargs = []
     cargs.append("3dmerge")
-    cargs.extend([execution.input_file(f) for f in params.get("input_files")])
+    cargs.extend([execution.input_file(f) for f in params.get("input_files", None)])
     cargs.extend([
         "-prefix",
-        params.get("output_file")
+        params.get("output_file", None)
     ])
-    if params.get("blur_fwhm") is not None:
+    if params.get("blur_fwhm", None) is not None:
         cargs.extend([
             "-1blur_fwhm",
-            str(params.get("blur_fwhm"))
+            str(params.get("blur_fwhm", None))
         ])
-    if params.get("threshold") is not None:
+    if params.get("threshold", None) is not None:
         cargs.extend([
             "-1thresh",
-            str(params.get("threshold"))
+            str(params.get("threshold", None))
         ])
-    if params.get("clust") is not None:
+    if params.get("clust", None) is not None:
         cargs.extend([
             "-1clust",
-            *map(str, params.get("clust"))
+            *map(str, params.get("clust", None))
         ])
-    if params.get("dindex") is not None:
+    if params.get("dindex", None) is not None:
         cargs.extend([
             "-1dindex",
-            str(params.get("dindex"))
+            str(params.get("dindex", None))
         ])
-    if params.get("tindex") is not None:
+    if params.get("tindex", None) is not None:
         cargs.extend([
             "-1tindex",
-            str(params.get("tindex"))
+            str(params.get("tindex", None))
         ])
-    if params.get("absolute"):
+    if params.get("absolute", False):
         cargs.append("-1abs")
-    if params.get("dxyz"):
+    if params.get("dxyz", False):
         cargs.append("-dxyz=1")
-    if params.get("gmean"):
+    if params.get("gmean", False):
         cargs.append("-gmean")
-    if params.get("gmax"):
+    if params.get("gmax", False):
         cargs.append("-gmax")
-    if params.get("quiet"):
+    if params.get("quiet", False):
         cargs.append("-quiet")
     return cargs
 
@@ -204,7 +187,7 @@ def v_3dmerge_outputs(
     """
     ret = V3dmergeOutputs(
         root=execution.output_file("."),
-        output_dataset=execution.output_file(params.get("output_file")),
+        output_dataset=execution.output_file(params.get("output_file", None)),
     )
     return ret
 
@@ -302,7 +285,6 @@ def v_3dmerge(
 
 __all__ = [
     "V3dmergeOutputs",
-    "V3dmergeParameters",
     "V_3DMERGE_METADATA",
     "v_3dmerge",
     "v_3dmerge_execute",

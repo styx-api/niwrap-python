@@ -14,7 +14,14 @@ DESIGN_TTEST2_METADATA = Metadata(
 
 
 DesignTtest2Parameters = typing.TypedDict('DesignTtest2Parameters', {
-    "@type": typing.Literal["fsl.design_ttest2"],
+    "@type": typing.NotRequired[typing.Literal["fsl/design_ttest2"]],
+    "design_files_rootname": str,
+    "ngroupa": float,
+    "ngroupb": float,
+    "include_mean_contrasts": bool,
+})
+DesignTtest2ParametersTagged = typing.TypedDict('DesignTtest2ParametersTagged', {
+    "@type": typing.Literal["fsl/design_ttest2"],
     "design_files_rootname": str,
     "ngroupa": float,
     "ngroupb": float,
@@ -22,40 +29,9 @@ DesignTtest2Parameters = typing.TypedDict('DesignTtest2Parameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "fsl.design_ttest2": design_ttest2_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-    }.get(t)
-
-
 class DesignTtest2Outputs(typing.NamedTuple):
     """
-    Output object returned when calling `design_ttest2(...)`.
+    Output object returned when calling `DesignTtest2Parameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -66,7 +42,7 @@ def design_ttest2_params(
     ngroupa: float,
     ngroupb: float,
     include_mean_contrasts: bool = False,
-) -> DesignTtest2Parameters:
+) -> DesignTtest2ParametersTagged:
     """
     Build parameters.
     
@@ -79,7 +55,7 @@ def design_ttest2_params(
         Parameter dictionary
     """
     params = {
-        "@type": "fsl.design_ttest2",
+        "@type": "fsl/design_ttest2",
         "design_files_rootname": design_files_rootname,
         "ngroupa": ngroupa,
         "ngroupb": ngroupb,
@@ -103,10 +79,10 @@ def design_ttest2_cargs(
     """
     cargs = []
     cargs.append("design_ttest2")
-    cargs.append(params.get("design_files_rootname"))
-    cargs.append(str(params.get("ngroupa")))
-    cargs.append(str(params.get("ngroupb")))
-    if params.get("include_mean_contrasts"):
+    cargs.append(params.get("design_files_rootname", None))
+    cargs.append(str(params.get("ngroupa", None)))
+    cargs.append(str(params.get("ngroupb", None)))
+    if params.get("include_mean_contrasts", False):
         cargs.append("-m")
     return cargs
 
@@ -195,7 +171,6 @@ def design_ttest2(
 __all__ = [
     "DESIGN_TTEST2_METADATA",
     "DesignTtest2Outputs",
-    "DesignTtest2Parameters",
     "design_ttest2",
     "design_ttest2_execute",
     "design_ttest2_params",

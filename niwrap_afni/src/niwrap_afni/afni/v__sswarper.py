@@ -14,7 +14,33 @@ V__SSWARPER_METADATA = Metadata(
 
 
 VSswarperParameters = typing.TypedDict('VSswarperParameters', {
-    "@type": typing.Literal["afni.@SSwarper"],
+    "@type": typing.NotRequired[typing.Literal["afni/@SSwarper"]],
+    "input_file": InputPathType,
+    "base_template": InputPathType,
+    "subject_id": str,
+    "output_dir": typing.NotRequired[str | None],
+    "min_patch_size": typing.NotRequired[float | None],
+    "no_lite": bool,
+    "skip_warp": bool,
+    "unifize_off": bool,
+    "init_skullstr_off": bool,
+    "extra_qc_off": bool,
+    "jump_to_extra_qc": bool,
+    "cost_nl_init": typing.NotRequired[str | None],
+    "cost_nl_final": typing.NotRequired[str | None],
+    "deoblique": bool,
+    "deoblique_refitly": bool,
+    "warp_scale": typing.NotRequired[float | None],
+    "ssopt_flag": typing.NotRequired[str | None],
+    "aniso_off": bool,
+    "ceil_off": bool,
+    "tmp_name_nice": bool,
+    "echo": bool,
+    "verbose": bool,
+    "noclean": bool,
+})
+VSswarperParametersTagged = typing.TypedDict('VSswarperParametersTagged', {
+    "@type": typing.Literal["afni/@SSwarper"],
     "input_file": InputPathType,
     "base_template": InputPathType,
     "subject_id": str,
@@ -41,41 +67,9 @@ VSswarperParameters = typing.TypedDict('VSswarperParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "afni.@SSwarper": v__sswarper_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "afni.@SSwarper": v__sswarper_outputs,
-    }.get(t)
-
-
 class VSswarperOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `v__sswarper(...)`.
+    Output object returned when calling `VSswarperParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -136,7 +130,7 @@ def v__sswarper_params(
     echo: bool = False,
     verbose: bool = False,
     noclean: bool = False,
-) -> VSswarperParameters:
+) -> VSswarperParametersTagged:
     """
     Build parameters.
     
@@ -176,7 +170,7 @@ def v__sswarper_params(
         Parameter dictionary
     """
     params = {
-        "@type": "afni.@SSwarper",
+        "@type": "afni/@SSwarper",
         "input_file": input_file,
         "base_template": base_template,
         "subject_id": subject_id,
@@ -227,73 +221,73 @@ def v__sswarper_cargs(
     cargs.append("@SSwarper")
     cargs.extend([
         "-input",
-        execution.input_file(params.get("input_file"))
+        execution.input_file(params.get("input_file", None))
     ])
     cargs.extend([
         "-base",
-        execution.input_file(params.get("base_template"))
+        execution.input_file(params.get("base_template", None))
     ])
     cargs.extend([
         "-subid",
-        params.get("subject_id")
+        params.get("subject_id", None)
     ])
-    if params.get("output_dir") is not None:
+    if params.get("output_dir", None) is not None:
         cargs.extend([
             "-odir",
-            params.get("output_dir")
+            params.get("output_dir", None)
         ])
-    if params.get("min_patch_size") is not None:
+    if params.get("min_patch_size", None) is not None:
         cargs.extend([
             "-minp",
-            str(params.get("min_patch_size"))
+            str(params.get("min_patch_size", None))
         ])
-    if params.get("no_lite"):
+    if params.get("no_lite", False):
         cargs.append("-nolite")
-    if params.get("skip_warp"):
+    if params.get("skip_warp", False):
         cargs.append("-skipwarp")
-    if params.get("unifize_off"):
+    if params.get("unifize_off", False):
         cargs.append("-unifize_off")
-    if params.get("init_skullstr_off"):
+    if params.get("init_skullstr_off", False):
         cargs.append("-init_skullstr_off")
-    if params.get("extra_qc_off"):
+    if params.get("extra_qc_off", False):
         cargs.append("-extra_qc_off")
-    if params.get("jump_to_extra_qc"):
+    if params.get("jump_to_extra_qc", False):
         cargs.append("-jump_to_extra_qc")
-    if params.get("cost_nl_init") is not None:
+    if params.get("cost_nl_init", None) is not None:
         cargs.extend([
             "-cost_nl_init",
-            params.get("cost_nl_init")
+            params.get("cost_nl_init", None)
         ])
-    if params.get("cost_nl_final") is not None:
+    if params.get("cost_nl_final", None) is not None:
         cargs.extend([
             "-cost_nl_final",
-            params.get("cost_nl_final")
+            params.get("cost_nl_final", None)
         ])
-    if params.get("deoblique"):
+    if params.get("deoblique", False):
         cargs.append("-deoblique")
-    if params.get("deoblique_refitly"):
+    if params.get("deoblique_refitly", False):
         cargs.append("-deoblique_refitly")
-    if params.get("warp_scale") is not None:
+    if params.get("warp_scale", None) is not None:
         cargs.extend([
             "-warpscale",
-            str(params.get("warp_scale"))
+            str(params.get("warp_scale", None))
         ])
-    if params.get("ssopt_flag") is not None:
+    if params.get("ssopt_flag", None) is not None:
         cargs.extend([
             "-SSopt",
-            params.get("ssopt_flag")
+            params.get("ssopt_flag", None)
         ])
-    if params.get("aniso_off"):
+    if params.get("aniso_off", False):
         cargs.append("-aniso_off")
-    if params.get("ceil_off"):
+    if params.get("ceil_off", False):
         cargs.append("-ceil_off")
-    if params.get("tmp_name_nice"):
+    if params.get("tmp_name_nice", False):
         cargs.append("-tmp_name_nice")
-    if params.get("echo"):
+    if params.get("echo", False):
         cargs.append("-echo")
-    if params.get("verbose"):
+    if params.get("verbose", False):
         cargs.append("-verb")
-    if params.get("noclean"):
+    if params.get("noclean", False):
         cargs.append("-noclean")
     return cargs
 
@@ -313,19 +307,19 @@ def v__sswarper_outputs(
     """
     ret = VSswarperOutputs(
         root=execution.output_file("."),
-        anat_do=execution.output_file("anatDO." + params.get("subject_id") + ".nii"),
-        anat_u=execution.output_file("anatU." + params.get("subject_id") + ".nii"),
-        anat_ua=execution.output_file("anatUA." + params.get("subject_id") + ".nii"),
-        anat_uac=execution.output_file("anatUAC." + params.get("subject_id") + ".nii"),
-        anat_s=execution.output_file("anatS." + params.get("subject_id") + ".nii"),
-        anat_ss=execution.output_file("anatSS." + params.get("subject_id") + ".nii"),
-        anat_qq=execution.output_file("anatQQ." + params.get("subject_id") + ".nii"),
-        anat_qq_affine=execution.output_file("anatQQ." + params.get("subject_id") + ".aff12.1D"),
-        anat_qq_warp=execution.output_file("anatQQ." + params.get("subject_id") + "_WARP.nii"),
-        am_snapshot=execution.output_file("AM" + params.get("subject_id") + ".jpg"),
-        ma_snapshot=execution.output_file("MA" + params.get("subject_id") + ".jpg"),
-        qc_anat_qq=execution.output_file("QC_anatQQ." + params.get("subject_id") + ".jpg"),
-        qc_anat_ss=execution.output_file("QC_anatSS." + params.get("subject_id") + ".jpg"),
+        anat_do=execution.output_file("anatDO." + params.get("subject_id", None) + ".nii"),
+        anat_u=execution.output_file("anatU." + params.get("subject_id", None) + ".nii"),
+        anat_ua=execution.output_file("anatUA." + params.get("subject_id", None) + ".nii"),
+        anat_uac=execution.output_file("anatUAC." + params.get("subject_id", None) + ".nii"),
+        anat_s=execution.output_file("anatS." + params.get("subject_id", None) + ".nii"),
+        anat_ss=execution.output_file("anatSS." + params.get("subject_id", None) + ".nii"),
+        anat_qq=execution.output_file("anatQQ." + params.get("subject_id", None) + ".nii"),
+        anat_qq_affine=execution.output_file("anatQQ." + params.get("subject_id", None) + ".aff12.1D"),
+        anat_qq_warp=execution.output_file("anatQQ." + params.get("subject_id", None) + "_WARP.nii"),
+        am_snapshot=execution.output_file("AM" + params.get("subject_id", None) + ".jpg"),
+        ma_snapshot=execution.output_file("MA" + params.get("subject_id", None) + ".jpg"),
+        qc_anat_qq=execution.output_file("QC_anatQQ." + params.get("subject_id", None) + ".jpg"),
+        qc_anat_ss=execution.output_file("QC_anatSS." + params.get("subject_id", None) + ".jpg"),
         init_overlap_qc=execution.output_file("init_qc_00_overlap_uinp_obase.jpg"),
     )
     return ret
@@ -464,7 +458,6 @@ def v__sswarper(
 
 __all__ = [
     "VSswarperOutputs",
-    "VSswarperParameters",
     "V__SSWARPER_METADATA",
     "v__sswarper",
     "v__sswarper_execute",

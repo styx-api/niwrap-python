@@ -14,7 +14,14 @@ V__DJUNCT_4D_IMAGER_METADATA = Metadata(
 
 
 VDjunct4dImagerParameters = typing.TypedDict('VDjunct4dImagerParameters', {
-    "@type": typing.Literal["afni.@djunct_4d_imager"],
+    "@type": typing.NotRequired[typing.Literal["afni/@djunct_4d_imager"]],
+    "inset": InputPathType,
+    "prefix": str,
+    "do_movie": typing.NotRequired[typing.Literal["MPEG", "AGIF"] | None],
+    "no_clean": bool,
+})
+VDjunct4dImagerParametersTagged = typing.TypedDict('VDjunct4dImagerParametersTagged', {
+    "@type": typing.Literal["afni/@djunct_4d_imager"],
     "inset": InputPathType,
     "prefix": str,
     "do_movie": typing.NotRequired[typing.Literal["MPEG", "AGIF"] | None],
@@ -22,41 +29,9 @@ VDjunct4dImagerParameters = typing.TypedDict('VDjunct4dImagerParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "afni.@djunct_4d_imager": v__djunct_4d_imager_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "afni.@djunct_4d_imager": v__djunct_4d_imager_outputs,
-    }.get(t)
-
-
 class VDjunct4dImagerOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `v__djunct_4d_imager(...)`.
+    Output object returned when calling `VDjunct4dImagerParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -81,7 +56,7 @@ def v__djunct_4d_imager_params(
     prefix: str,
     do_movie: typing.Literal["MPEG", "AGIF"] | None = None,
     no_clean: bool = False,
-) -> VDjunct4dImagerParameters:
+) -> VDjunct4dImagerParametersTagged:
     """
     Build parameters.
     
@@ -94,7 +69,7 @@ def v__djunct_4d_imager_params(
         Parameter dictionary
     """
     params = {
-        "@type": "afni.@djunct_4d_imager",
+        "@type": "afni/@djunct_4d_imager",
         "inset": inset,
         "prefix": prefix,
         "no_clean": no_clean,
@@ -119,14 +94,14 @@ def v__djunct_4d_imager_cargs(
     """
     cargs = []
     cargs.append("@djunct_4d_imager")
-    cargs.append(execution.input_file(params.get("inset")))
-    cargs.append(params.get("prefix"))
-    if params.get("do_movie") is not None:
+    cargs.append(execution.input_file(params.get("inset", None)))
+    cargs.append(params.get("prefix", None))
+    if params.get("do_movie", None) is not None:
         cargs.extend([
             "-do_movie",
-            params.get("do_movie")
+            params.get("do_movie", None)
         ])
-    if params.get("no_clean"):
+    if params.get("no_clean", False):
         cargs.append("-no_clean")
     return cargs
 
@@ -146,12 +121,12 @@ def v__djunct_4d_imager_outputs(
     """
     ret = VDjunct4dImagerOutputs(
         root=execution.output_file("."),
-        onescl_png=execution.output_file(params.get("prefix") + "_onescl.png"),
-        sepscl_png=execution.output_file(params.get("prefix") + "_sepscl.png"),
-        onescl_mpeg=execution.output_file(params.get("prefix") + "_onescl.mpg"),
-        sepscl_mpeg=execution.output_file(params.get("prefix") + "_sepscl.mpg"),
-        onescl_gif=execution.output_file(params.get("prefix") + "_onescl.gif"),
-        sepscl_gif=execution.output_file(params.get("prefix") + "_sepscl.gif"),
+        onescl_png=execution.output_file(params.get("prefix", None) + "_onescl.png"),
+        sepscl_png=execution.output_file(params.get("prefix", None) + "_sepscl.png"),
+        onescl_mpeg=execution.output_file(params.get("prefix", None) + "_onescl.mpg"),
+        sepscl_mpeg=execution.output_file(params.get("prefix", None) + "_sepscl.mpg"),
+        onescl_gif=execution.output_file(params.get("prefix", None) + "_onescl.gif"),
+        sepscl_gif=execution.output_file(params.get("prefix", None) + "_sepscl.gif"),
     )
     return ret
 
@@ -222,7 +197,6 @@ def v__djunct_4d_imager(
 
 __all__ = [
     "VDjunct4dImagerOutputs",
-    "VDjunct4dImagerParameters",
     "V__DJUNCT_4D_IMAGER_METADATA",
     "v__djunct_4d_imager",
     "v__djunct_4d_imager_execute",

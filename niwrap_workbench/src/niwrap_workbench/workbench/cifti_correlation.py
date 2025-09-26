@@ -14,7 +14,15 @@ CIFTI_CORRELATION_METADATA = Metadata(
 
 
 CiftiCorrelationRoiOverrideParameters = typing.TypedDict('CiftiCorrelationRoiOverrideParameters', {
-    "@type": typing.Literal["workbench.cifti-correlation.roi_override"],
+    "@type": typing.NotRequired[typing.Literal["roi_override"]],
+    "opt_left_roi_roi_metric": typing.NotRequired[InputPathType | None],
+    "opt_right_roi_roi_metric": typing.NotRequired[InputPathType | None],
+    "opt_cerebellum_roi_roi_metric": typing.NotRequired[InputPathType | None],
+    "opt_vol_roi_roi_vol": typing.NotRequired[InputPathType | None],
+    "opt_cifti_roi_roi_cifti": typing.NotRequired[InputPathType | None],
+})
+CiftiCorrelationRoiOverrideParametersTagged = typing.TypedDict('CiftiCorrelationRoiOverrideParametersTagged', {
+    "@type": typing.Literal["roi_override"],
     "opt_left_roi_roi_metric": typing.NotRequired[InputPathType | None],
     "opt_right_roi_roi_metric": typing.NotRequired[InputPathType | None],
     "opt_cerebellum_roi_roi_metric": typing.NotRequired[InputPathType | None],
@@ -24,7 +32,18 @@ CiftiCorrelationRoiOverrideParameters = typing.TypedDict('CiftiCorrelationRoiOve
 
 
 CiftiCorrelationParameters = typing.TypedDict('CiftiCorrelationParameters', {
-    "@type": typing.Literal["workbench.cifti-correlation"],
+    "@type": typing.NotRequired[typing.Literal["workbench/cifti-correlation"]],
+    "cifti": InputPathType,
+    "cifti_out": str,
+    "roi_override": typing.NotRequired[CiftiCorrelationRoiOverrideParameters | None],
+    "opt_weights_weight_file": typing.NotRequired[str | None],
+    "opt_fisher_z": bool,
+    "opt_no_demean": bool,
+    "opt_covariance": bool,
+    "opt_mem_limit_limit_gb": typing.NotRequired[float | None],
+})
+CiftiCorrelationParametersTagged = typing.TypedDict('CiftiCorrelationParametersTagged', {
+    "@type": typing.Literal["workbench/cifti-correlation"],
     "cifti": InputPathType,
     "cifti_out": str,
     "roi_override": typing.NotRequired[CiftiCorrelationRoiOverrideParameters | None],
@@ -36,46 +55,13 @@ CiftiCorrelationParameters = typing.TypedDict('CiftiCorrelationParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "workbench.cifti-correlation": cifti_correlation_cargs,
-        "workbench.cifti-correlation.roi_override": cifti_correlation_roi_override_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "workbench.cifti-correlation": cifti_correlation_outputs,
-    }.get(t)
-
-
 def cifti_correlation_roi_override_params(
     opt_left_roi_roi_metric: InputPathType | None = None,
     opt_right_roi_roi_metric: InputPathType | None = None,
     opt_cerebellum_roi_roi_metric: InputPathType | None = None,
     opt_vol_roi_roi_vol: InputPathType | None = None,
     opt_cifti_roi_roi_cifti: InputPathType | None = None,
-) -> CiftiCorrelationRoiOverrideParameters:
+) -> CiftiCorrelationRoiOverrideParametersTagged:
     """
     Build parameters.
     
@@ -93,7 +79,7 @@ def cifti_correlation_roi_override_params(
         Parameter dictionary
     """
     params = {
-        "@type": "workbench.cifti-correlation.roi_override",
+        "@type": "roi_override",
     }
     if opt_left_roi_roi_metric is not None:
         params["opt_left_roi_roi_metric"] = opt_left_roi_roi_metric
@@ -123,37 +109,37 @@ def cifti_correlation_roi_override_cargs(
     """
     cargs = []
     cargs.append("-roi-override")
-    if params.get("opt_left_roi_roi_metric") is not None:
+    if params.get("opt_left_roi_roi_metric", None) is not None:
         cargs.extend([
             "-left-roi",
-            execution.input_file(params.get("opt_left_roi_roi_metric"))
+            execution.input_file(params.get("opt_left_roi_roi_metric", None))
         ])
-    if params.get("opt_right_roi_roi_metric") is not None:
+    if params.get("opt_right_roi_roi_metric", None) is not None:
         cargs.extend([
             "-right-roi",
-            execution.input_file(params.get("opt_right_roi_roi_metric"))
+            execution.input_file(params.get("opt_right_roi_roi_metric", None))
         ])
-    if params.get("opt_cerebellum_roi_roi_metric") is not None:
+    if params.get("opt_cerebellum_roi_roi_metric", None) is not None:
         cargs.extend([
             "-cerebellum-roi",
-            execution.input_file(params.get("opt_cerebellum_roi_roi_metric"))
+            execution.input_file(params.get("opt_cerebellum_roi_roi_metric", None))
         ])
-    if params.get("opt_vol_roi_roi_vol") is not None:
+    if params.get("opt_vol_roi_roi_vol", None) is not None:
         cargs.extend([
             "-vol-roi",
-            execution.input_file(params.get("opt_vol_roi_roi_vol"))
+            execution.input_file(params.get("opt_vol_roi_roi_vol", None))
         ])
-    if params.get("opt_cifti_roi_roi_cifti") is not None:
+    if params.get("opt_cifti_roi_roi_cifti", None) is not None:
         cargs.extend([
             "-cifti-roi",
-            execution.input_file(params.get("opt_cifti_roi_roi_cifti"))
+            execution.input_file(params.get("opt_cifti_roi_roi_cifti", None))
         ])
     return cargs
 
 
 class CiftiCorrelationOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `cifti_correlation(...)`.
+    Output object returned when calling `CiftiCorrelationParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -170,7 +156,7 @@ def cifti_correlation_params(
     opt_no_demean: bool = False,
     opt_covariance: bool = False,
     opt_mem_limit_limit_gb: float | None = None,
-) -> CiftiCorrelationParameters:
+) -> CiftiCorrelationParametersTagged:
     """
     Build parameters.
     
@@ -191,7 +177,7 @@ def cifti_correlation_params(
         Parameter dictionary
     """
     params = {
-        "@type": "workbench.cifti-correlation",
+        "@type": "workbench/cifti-correlation",
         "cifti": cifti,
         "cifti_out": cifti_out,
         "opt_fisher_z": opt_fisher_z,
@@ -223,25 +209,25 @@ def cifti_correlation_cargs(
     cargs = []
     cargs.append("wb_command")
     cargs.append("-cifti-correlation")
-    cargs.append(execution.input_file(params.get("cifti")))
-    cargs.append(params.get("cifti_out"))
-    if params.get("roi_override") is not None:
-        cargs.extend(dyn_cargs(params.get("roi_override")["@type"])(params.get("roi_override"), execution))
-    if params.get("opt_weights_weight_file") is not None:
+    cargs.append(execution.input_file(params.get("cifti", None)))
+    cargs.append(params.get("cifti_out", None))
+    if params.get("roi_override", None) is not None:
+        cargs.extend(cifti_correlation_roi_override_cargs(params.get("roi_override", None), execution))
+    if params.get("opt_weights_weight_file", None) is not None:
         cargs.extend([
             "-weights",
-            params.get("opt_weights_weight_file")
+            params.get("opt_weights_weight_file", None)
         ])
-    if params.get("opt_fisher_z"):
+    if params.get("opt_fisher_z", False):
         cargs.append("-fisher-z")
-    if params.get("opt_no_demean"):
+    if params.get("opt_no_demean", False):
         cargs.append("-no-demean")
-    if params.get("opt_covariance"):
+    if params.get("opt_covariance", False):
         cargs.append("-covariance")
-    if params.get("opt_mem_limit_limit_gb") is not None:
+    if params.get("opt_mem_limit_limit_gb", None) is not None:
         cargs.extend([
             "-mem-limit",
-            str(params.get("opt_mem_limit_limit_gb"))
+            str(params.get("opt_mem_limit_limit_gb", None))
         ])
     return cargs
 
@@ -261,7 +247,7 @@ def cifti_correlation_outputs(
     """
     ret = CiftiCorrelationOutputs(
         root=execution.output_file("."),
-        cifti_out=execution.output_file(params.get("cifti_out")),
+        cifti_out=execution.output_file(params.get("cifti_out", None)),
     )
     return ret
 
@@ -377,8 +363,6 @@ def cifti_correlation(
 __all__ = [
     "CIFTI_CORRELATION_METADATA",
     "CiftiCorrelationOutputs",
-    "CiftiCorrelationParameters",
-    "CiftiCorrelationRoiOverrideParameters",
     "cifti_correlation",
     "cifti_correlation_execute",
     "cifti_correlation_params",

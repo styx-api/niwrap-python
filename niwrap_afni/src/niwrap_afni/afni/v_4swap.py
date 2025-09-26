@@ -14,46 +14,20 @@ V_4SWAP_METADATA = Metadata(
 
 
 V4swapParameters = typing.TypedDict('V4swapParameters', {
-    "@type": typing.Literal["afni.4swap"],
+    "@type": typing.NotRequired[typing.Literal["afni/4swap"]],
+    "files": list[InputPathType],
+    "quiet": bool,
+})
+V4swapParametersTagged = typing.TypedDict('V4swapParametersTagged', {
+    "@type": typing.Literal["afni/4swap"],
     "files": list[InputPathType],
     "quiet": bool,
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "afni.4swap": v_4swap_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-    }.get(t)
-
-
 class V4swapOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `v_4swap(...)`.
+    Output object returned when calling `V4swapParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -62,7 +36,7 @@ class V4swapOutputs(typing.NamedTuple):
 def v_4swap_params(
     files: list[InputPathType],
     quiet: bool = False,
-) -> V4swapParameters:
+) -> V4swapParametersTagged:
     """
     Build parameters.
     
@@ -73,7 +47,7 @@ def v_4swap_params(
         Parameter dictionary
     """
     params = {
-        "@type": "afni.4swap",
+        "@type": "afni/4swap",
         "files": files,
         "quiet": quiet,
     }
@@ -95,8 +69,8 @@ def v_4swap_cargs(
     """
     cargs = []
     cargs.append("4swap")
-    cargs.extend([execution.input_file(f) for f in params.get("files")])
-    if params.get("quiet"):
+    cargs.extend([execution.input_file(f) for f in params.get("files", None)])
+    if params.get("quiet", False):
         cargs.append("-q")
     return cargs
 
@@ -178,7 +152,6 @@ def v_4swap(
 
 __all__ = [
     "V4swapOutputs",
-    "V4swapParameters",
     "V_4SWAP_METADATA",
     "v_4swap",
     "v_4swap_execute",

@@ -14,7 +14,14 @@ V_3D_CLIP_LEVEL_METADATA = Metadata(
 
 
 V3dClipLevelParameters = typing.TypedDict('V3dClipLevelParameters', {
-    "@type": typing.Literal["afni.3dClipLevel"],
+    "@type": typing.NotRequired[typing.Literal["afni/3dClipLevel"]],
+    "dataset": InputPathType,
+    "mfrac": typing.NotRequired[float | None],
+    "doall": bool,
+    "grad": typing.NotRequired[str | None],
+})
+V3dClipLevelParametersTagged = typing.TypedDict('V3dClipLevelParametersTagged', {
+    "@type": typing.Literal["afni/3dClipLevel"],
     "dataset": InputPathType,
     "mfrac": typing.NotRequired[float | None],
     "doall": bool,
@@ -22,40 +29,9 @@ V3dClipLevelParameters = typing.TypedDict('V3dClipLevelParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "afni.3dClipLevel": v_3d_clip_level_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-    }.get(t)
-
-
 class V3dClipLevelOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `v_3d_clip_level(...)`.
+    Output object returned when calling `V3dClipLevelParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -66,7 +42,7 @@ def v_3d_clip_level_params(
     mfrac: float | None = None,
     doall: bool = False,
     grad: str | None = None,
-) -> V3dClipLevelParameters:
+) -> V3dClipLevelParametersTagged:
     """
     Build parameters.
     
@@ -80,7 +56,7 @@ def v_3d_clip_level_params(
         Parameter dictionary
     """
     params = {
-        "@type": "afni.3dClipLevel",
+        "@type": "afni/3dClipLevel",
         "dataset": dataset,
         "doall": doall,
     }
@@ -106,18 +82,18 @@ def v_3d_clip_level_cargs(
     """
     cargs = []
     cargs.append("3dClipLevel")
-    cargs.append(execution.input_file(params.get("dataset")))
-    if params.get("mfrac") is not None:
+    cargs.append(execution.input_file(params.get("dataset", None)))
+    if params.get("mfrac", None) is not None:
         cargs.extend([
             "-mfrac",
-            str(params.get("mfrac"))
+            str(params.get("mfrac", None))
         ])
-    if params.get("doall"):
+    if params.get("doall", False):
         cargs.append("-doall")
-    if params.get("grad") is not None:
+    if params.get("grad", None) is not None:
         cargs.extend([
             "-grad",
-            params.get("grad")
+            params.get("grad", None)
         ])
     return cargs
 
@@ -208,7 +184,6 @@ def v_3d_clip_level(
 
 __all__ = [
     "V3dClipLevelOutputs",
-    "V3dClipLevelParameters",
     "V_3D_CLIP_LEVEL_METADATA",
     "v_3d_clip_level",
     "v_3d_clip_level_execute",

@@ -14,7 +14,15 @@ SEGMENT_HA_T1_SH_METADATA = Metadata(
 
 
 SegmentHaT1ShParameters = typing.TypedDict('SegmentHaT1ShParameters', {
-    "@type": typing.Literal["freesurfer.segmentHA_T1.sh"],
+    "@type": typing.NotRequired[typing.Literal["freesurfer/segmentHA_T1.sh"]],
+    "input_image": InputPathType,
+    "output_directory": str,
+    "brain_mask": typing.NotRequired[InputPathType | None],
+    "verbose": bool,
+    "debug": bool,
+})
+SegmentHaT1ShParametersTagged = typing.TypedDict('SegmentHaT1ShParametersTagged', {
+    "@type": typing.Literal["freesurfer/segmentHA_T1.sh"],
     "input_image": InputPathType,
     "output_directory": str,
     "brain_mask": typing.NotRequired[InputPathType | None],
@@ -23,41 +31,9 @@ SegmentHaT1ShParameters = typing.TypedDict('SegmentHaT1ShParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "freesurfer.segmentHA_T1.sh": segment_ha_t1_sh_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "freesurfer.segmentHA_T1.sh": segment_ha_t1_sh_outputs,
-    }.get(t)
-
-
 class SegmentHaT1ShOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `segment_ha_t1_sh(...)`.
+    Output object returned when calling `SegmentHaT1ShParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -73,7 +49,7 @@ def segment_ha_t1_sh_params(
     brain_mask: InputPathType | None = None,
     verbose: bool = False,
     debug: bool = False,
-) -> SegmentHaT1ShParameters:
+) -> SegmentHaT1ShParametersTagged:
     """
     Build parameters.
     
@@ -88,7 +64,7 @@ def segment_ha_t1_sh_params(
         Parameter dictionary
     """
     params = {
-        "@type": "freesurfer.segmentHA_T1.sh",
+        "@type": "freesurfer/segmentHA_T1.sh",
         "input_image": input_image,
         "output_directory": output_directory,
         "verbose": verbose,
@@ -114,16 +90,16 @@ def segment_ha_t1_sh_cargs(
     """
     cargs = []
     cargs.append("segmentHA_T1.sh")
-    cargs.append(execution.input_file(params.get("input_image")))
-    cargs.append(params.get("output_directory"))
-    if params.get("brain_mask") is not None:
+    cargs.append(execution.input_file(params.get("input_image", None)))
+    cargs.append(params.get("output_directory", None))
+    if params.get("brain_mask", None) is not None:
         cargs.extend([
             "--brainmask",
-            execution.input_file(params.get("brain_mask"))
+            execution.input_file(params.get("brain_mask", None))
         ])
-    if params.get("verbose"):
+    if params.get("verbose", False):
         cargs.append("--verbose")
-    if params.get("debug"):
+    if params.get("debug", False):
         cargs.append("--debug")
     return cargs
 
@@ -143,8 +119,8 @@ def segment_ha_t1_sh_outputs(
     """
     ret = SegmentHaT1ShOutputs(
         root=execution.output_file("."),
-        hippocampus_aseg=execution.output_file(params.get("output_directory") + "/hippocampus_aseg.mgz"),
-        amygdala_aseg=execution.output_file(params.get("output_directory") + "/amygdala_aseg.mgz"),
+        hippocampus_aseg=execution.output_file(params.get("output_directory", None) + "/hippocampus_aseg.mgz"),
+        amygdala_aseg=execution.output_file(params.get("output_directory", None) + "/amygdala_aseg.mgz"),
     )
     return ret
 
@@ -218,7 +194,6 @@ def segment_ha_t1_sh(
 __all__ = [
     "SEGMENT_HA_T1_SH_METADATA",
     "SegmentHaT1ShOutputs",
-    "SegmentHaT1ShParameters",
     "segment_ha_t1_sh",
     "segment_ha_t1_sh_execute",
     "segment_ha_t1_sh_params",

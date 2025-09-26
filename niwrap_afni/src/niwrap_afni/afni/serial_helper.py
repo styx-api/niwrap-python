@@ -14,7 +14,22 @@ SERIAL_HELPER_METADATA = Metadata(
 
 
 SerialHelperParameters = typing.TypedDict('SerialHelperParameters', {
-    "@type": typing.Literal["afni.serial_helper"],
+    "@type": typing.NotRequired[typing.Literal["afni/serial_helper"]],
+    "serial_port": str,
+    "sock_num": typing.NotRequired[float | None],
+    "mp_max": typing.NotRequired[float | None],
+    "mp_min": typing.NotRequired[float | None],
+    "num_extra": typing.NotRequired[float | None],
+    "disp_all": typing.NotRequired[float | None],
+    "debug": typing.NotRequired[float | None],
+    "show_times": bool,
+    "help": bool,
+    "hist": bool,
+    "no_serial": bool,
+    "version": bool,
+})
+SerialHelperParametersTagged = typing.TypedDict('SerialHelperParametersTagged', {
+    "@type": typing.Literal["afni/serial_helper"],
     "serial_port": str,
     "sock_num": typing.NotRequired[float | None],
     "mp_max": typing.NotRequired[float | None],
@@ -30,40 +45,9 @@ SerialHelperParameters = typing.TypedDict('SerialHelperParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "afni.serial_helper": serial_helper_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-    }.get(t)
-
-
 class SerialHelperOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `serial_helper(...)`.
+    Output object returned when calling `SerialHelperParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -82,7 +66,7 @@ def serial_helper_params(
     hist: bool = False,
     no_serial: bool = False,
     version: bool = False,
-) -> SerialHelperParameters:
+) -> SerialHelperParametersTagged:
     """
     Build parameters.
     
@@ -103,7 +87,7 @@ def serial_helper_params(
         Parameter dictionary
     """
     params = {
-        "@type": "afni.serial_helper",
+        "@type": "afni/serial_helper",
         "serial_port": serial_port,
         "show_times": show_times,
         "help": help_,
@@ -143,47 +127,47 @@ def serial_helper_cargs(
     cargs.append("serial_helper")
     cargs.extend([
         "-serial_port",
-        params.get("serial_port")
+        params.get("serial_port", None)
     ])
-    if params.get("sock_num") is not None:
+    if params.get("sock_num", None) is not None:
         cargs.extend([
             "-sock_num",
-            str(params.get("sock_num"))
+            str(params.get("sock_num", None))
         ])
-    if params.get("mp_max") is not None:
+    if params.get("mp_max", None) is not None:
         cargs.extend([
             "-mp_max",
-            str(params.get("mp_max"))
+            str(params.get("mp_max", None))
         ])
-    if params.get("mp_min") is not None:
+    if params.get("mp_min", None) is not None:
         cargs.extend([
             "-mp_min",
-            str(params.get("mp_min"))
+            str(params.get("mp_min", None))
         ])
-    if params.get("num_extra") is not None:
+    if params.get("num_extra", None) is not None:
         cargs.extend([
             "-num_extra",
-            str(params.get("num_extra"))
+            str(params.get("num_extra", None))
         ])
-    if params.get("disp_all") is not None:
+    if params.get("disp_all", None) is not None:
         cargs.extend([
             "-disp_all",
-            str(params.get("disp_all"))
+            str(params.get("disp_all", None))
         ])
-    if params.get("debug") is not None:
+    if params.get("debug", None) is not None:
         cargs.extend([
             "-debug",
-            str(params.get("debug"))
+            str(params.get("debug", None))
         ])
-    if params.get("show_times"):
+    if params.get("show_times", False):
         cargs.append("-show_times")
-    if params.get("help"):
+    if params.get("help", False):
         cargs.append("-help")
-    if params.get("hist"):
+    if params.get("hist", False):
         cargs.append("-hist")
-    if params.get("no_serial"):
+    if params.get("no_serial", False):
         cargs.append("-no_serial")
-    if params.get("version"):
+    if params.get("version", False):
         cargs.append("-version")
     return cargs
 
@@ -296,7 +280,6 @@ def serial_helper(
 __all__ = [
     "SERIAL_HELPER_METADATA",
     "SerialHelperOutputs",
-    "SerialHelperParameters",
     "serial_helper",
     "serial_helper_execute",
     "serial_helper_params",

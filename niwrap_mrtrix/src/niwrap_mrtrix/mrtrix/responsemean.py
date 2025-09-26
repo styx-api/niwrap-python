@@ -14,7 +14,24 @@ RESPONSEMEAN_METADATA = Metadata(
 
 
 ResponsemeanParameters = typing.TypedDict('ResponsemeanParameters', {
-    "@type": typing.Literal["mrtrix.responsemean"],
+    "@type": typing.NotRequired[typing.Literal["mrtrix/responsemean"]],
+    "input_response": list[InputPathType],
+    "output_response": str,
+    "legacy": bool,
+    "nocleanup": bool,
+    "scratch_dir": typing.NotRequired[InputPathType | None],
+    "continue_scratch_dir": typing.NotRequired[list[InputPathType] | None],
+    "info": bool,
+    "quiet": bool,
+    "debug": bool,
+    "force": bool,
+    "nthreads": typing.NotRequired[float | None],
+    "config": typing.NotRequired[list[str] | None],
+    "help": bool,
+    "version": bool,
+})
+ResponsemeanParametersTagged = typing.TypedDict('ResponsemeanParametersTagged', {
+    "@type": typing.Literal["mrtrix/responsemean"],
     "input_response": list[InputPathType],
     "output_response": str,
     "legacy": bool,
@@ -32,41 +49,9 @@ ResponsemeanParameters = typing.TypedDict('ResponsemeanParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "mrtrix.responsemean": responsemean_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "mrtrix.responsemean": responsemean_outputs,
-    }.get(t)
-
-
 class ResponsemeanOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `responsemean(...)`.
+    Output object returned when calling `ResponsemeanParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -89,7 +74,7 @@ def responsemean_params(
     config: list[str] | None = None,
     help_: bool = False,
     version: bool = False,
-) -> ResponsemeanParameters:
+) -> ResponsemeanParametersTagged:
     """
     Build parameters.
     
@@ -116,7 +101,7 @@ def responsemean_params(
         Parameter dictionary
     """
     params = {
-        "@type": "mrtrix.responsemean",
+        "@type": "mrtrix/responsemean",
         "input_response": input_response,
         "output_response": output_response,
         "legacy": legacy,
@@ -154,43 +139,43 @@ def responsemean_cargs(
     """
     cargs = []
     cargs.append("responsemean")
-    cargs.extend([execution.input_file(f) for f in params.get("input_response")])
-    cargs.append(params.get("output_response"))
-    if params.get("legacy"):
+    cargs.extend([execution.input_file(f) for f in params.get("input_response", None)])
+    cargs.append(params.get("output_response", None))
+    if params.get("legacy", False):
         cargs.append("-legacy")
-    if params.get("nocleanup"):
+    if params.get("nocleanup", False):
         cargs.append("-nocleanup")
-    if params.get("scratch_dir") is not None:
+    if params.get("scratch_dir", None) is not None:
         cargs.extend([
             "-scratch",
-            execution.input_file(params.get("scratch_dir"))
+            execution.input_file(params.get("scratch_dir", None))
         ])
-    if params.get("continue_scratch_dir") is not None:
+    if params.get("continue_scratch_dir", None) is not None:
         cargs.extend([
             "-continue",
-            *[execution.input_file(f) for f in params.get("continue_scratch_dir")]
+            *[execution.input_file(f) for f in params.get("continue_scratch_dir", None)]
         ])
-    if params.get("info"):
+    if params.get("info", False):
         cargs.append("-info")
-    if params.get("quiet"):
+    if params.get("quiet", False):
         cargs.append("-quiet")
-    if params.get("debug"):
+    if params.get("debug", False):
         cargs.append("-debug")
-    if params.get("force"):
+    if params.get("force", False):
         cargs.append("-force")
-    if params.get("nthreads") is not None:
+    if params.get("nthreads", None) is not None:
         cargs.extend([
             "-nthreads",
-            str(params.get("nthreads"))
+            str(params.get("nthreads", None))
         ])
-    if params.get("config") is not None:
+    if params.get("config", None) is not None:
         cargs.extend([
             "-config",
-            *params.get("config")
+            *params.get("config", None)
         ])
-    if params.get("help"):
+    if params.get("help", False):
         cargs.append("-help")
-    if params.get("version"):
+    if params.get("version", False):
         cargs.append("-version")
     return cargs
 
@@ -210,7 +195,7 @@ def responsemean_outputs(
     """
     ret = ResponsemeanOutputs(
         root=execution.output_file("."),
-        output_response_file=execution.output_file(params.get("output_response")),
+        output_response_file=execution.output_file(params.get("output_response", None)),
     )
     return ret
 
@@ -314,7 +299,6 @@ def responsemean(
 __all__ = [
     "RESPONSEMEAN_METADATA",
     "ResponsemeanOutputs",
-    "ResponsemeanParameters",
     "responsemean",
     "responsemean_execute",
     "responsemean_params",

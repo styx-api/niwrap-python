@@ -14,46 +14,20 @@ METADATA_REMOVE_PROVENANCE_METADATA = Metadata(
 
 
 MetadataRemoveProvenanceParameters = typing.TypedDict('MetadataRemoveProvenanceParameters', {
-    "@type": typing.Literal["workbench.metadata-remove-provenance"],
+    "@type": typing.NotRequired[typing.Literal["workbench/metadata-remove-provenance"]],
+    "input_file": str,
+    "output_file": str,
+})
+MetadataRemoveProvenanceParametersTagged = typing.TypedDict('MetadataRemoveProvenanceParametersTagged', {
+    "@type": typing.Literal["workbench/metadata-remove-provenance"],
     "input_file": str,
     "output_file": str,
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "workbench.metadata-remove-provenance": metadata_remove_provenance_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-    }.get(t)
-
-
 class MetadataRemoveProvenanceOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `metadata_remove_provenance(...)`.
+    Output object returned when calling `MetadataRemoveProvenanceParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -62,7 +36,7 @@ class MetadataRemoveProvenanceOutputs(typing.NamedTuple):
 def metadata_remove_provenance_params(
     input_file: str,
     output_file: str,
-) -> MetadataRemoveProvenanceParameters:
+) -> MetadataRemoveProvenanceParametersTagged:
     """
     Build parameters.
     
@@ -73,7 +47,7 @@ def metadata_remove_provenance_params(
         Parameter dictionary
     """
     params = {
-        "@type": "workbench.metadata-remove-provenance",
+        "@type": "workbench/metadata-remove-provenance",
         "input_file": input_file,
         "output_file": output_file,
     }
@@ -96,8 +70,8 @@ def metadata_remove_provenance_cargs(
     cargs = []
     cargs.append("wb_command")
     cargs.append("-metadata-remove-provenance")
-    cargs.append(params.get("input_file"))
-    cargs.append(params.get("output_file"))
+    cargs.append(params.get("input_file", None))
+    cargs.append(params.get("output_file", None))
     return cargs
 
 
@@ -183,7 +157,6 @@ def metadata_remove_provenance(
 __all__ = [
     "METADATA_REMOVE_PROVENANCE_METADATA",
     "MetadataRemoveProvenanceOutputs",
-    "MetadataRemoveProvenanceParameters",
     "metadata_remove_provenance",
     "metadata_remove_provenance_execute",
     "metadata_remove_provenance_params",

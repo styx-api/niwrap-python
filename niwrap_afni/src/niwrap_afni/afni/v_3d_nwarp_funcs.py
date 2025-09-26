@@ -14,7 +14,16 @@ V_3D_NWARP_FUNCS_METADATA = Metadata(
 
 
 V3dNwarpFuncsParameters = typing.TypedDict('V3dNwarpFuncsParameters', {
-    "@type": typing.Literal["afni.3dNwarpFuncs"],
+    "@type": typing.NotRequired[typing.Literal["afni/3dNwarpFuncs"]],
+    "input_warp": InputPathType,
+    "output_prefix": str,
+    "bulk_flag": bool,
+    "shear_flag": bool,
+    "vorticity_flag": bool,
+    "all_flag": bool,
+})
+V3dNwarpFuncsParametersTagged = typing.TypedDict('V3dNwarpFuncsParametersTagged', {
+    "@type": typing.Literal["afni/3dNwarpFuncs"],
     "input_warp": InputPathType,
     "output_prefix": str,
     "bulk_flag": bool,
@@ -24,41 +33,9 @@ V3dNwarpFuncsParameters = typing.TypedDict('V3dNwarpFuncsParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "afni.3dNwarpFuncs": v_3d_nwarp_funcs_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "afni.3dNwarpFuncs": v_3d_nwarp_funcs_outputs,
-    }.get(t)
-
-
 class V3dNwarpFuncsOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `v_3d_nwarp_funcs(...)`.
+    Output object returned when calling `V3dNwarpFuncsParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -73,7 +50,7 @@ def v_3d_nwarp_funcs_params(
     shear_flag: bool = False,
     vorticity_flag: bool = False,
     all_flag: bool = False,
-) -> V3dNwarpFuncsParameters:
+) -> V3dNwarpFuncsParametersTagged:
     """
     Build parameters.
     
@@ -90,7 +67,7 @@ def v_3d_nwarp_funcs_params(
         Parameter dictionary
     """
     params = {
-        "@type": "afni.3dNwarpFuncs",
+        "@type": "afni/3dNwarpFuncs",
         "input_warp": input_warp,
         "output_prefix": output_prefix,
         "bulk_flag": bulk_flag,
@@ -118,19 +95,19 @@ def v_3d_nwarp_funcs_cargs(
     cargs.append("3dNwarpFuncs")
     cargs.extend([
         "-nwarp",
-        execution.input_file(params.get("input_warp"))
+        execution.input_file(params.get("input_warp", None))
     ])
     cargs.extend([
         "-prefix",
-        params.get("output_prefix")
+        params.get("output_prefix", None)
     ])
-    if params.get("bulk_flag"):
+    if params.get("bulk_flag", False):
         cargs.append("-bulk")
-    if params.get("shear_flag"):
+    if params.get("shear_flag", False):
         cargs.append("-shear")
-    if params.get("vorticity_flag"):
+    if params.get("vorticity_flag", False):
         cargs.append("-vorticity")
-    if params.get("all_flag"):
+    if params.get("all_flag", False):
         cargs.append("-all")
     return cargs
 
@@ -150,7 +127,7 @@ def v_3d_nwarp_funcs_outputs(
     """
     ret = V3dNwarpFuncsOutputs(
         root=execution.output_file("."),
-        output_file=execution.output_file(params.get("output_prefix") + "_output.nii.gz"),
+        output_file=execution.output_file(params.get("output_prefix", None) + "_output.nii.gz"),
     )
     return ret
 
@@ -229,7 +206,6 @@ def v_3d_nwarp_funcs(
 
 __all__ = [
     "V3dNwarpFuncsOutputs",
-    "V3dNwarpFuncsParameters",
     "V_3D_NWARP_FUNCS_METADATA",
     "v_3d_nwarp_funcs",
     "v_3d_nwarp_funcs_execute",

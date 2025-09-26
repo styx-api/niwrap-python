@@ -14,47 +14,22 @@ CLUSTER2HTML_METADATA = Metadata(
 
 
 Cluster2htmlParameters = typing.TypedDict('Cluster2htmlParameters', {
-    "@type": typing.Literal["fsl.cluster2html"],
+    "@type": typing.NotRequired[typing.Literal["fsl/cluster2html"]],
+    "featdir": str,
+    "inroot": str,
+    "std_flag": bool,
+})
+Cluster2htmlParametersTagged = typing.TypedDict('Cluster2htmlParametersTagged', {
+    "@type": typing.Literal["fsl/cluster2html"],
     "featdir": str,
     "inroot": str,
     "std_flag": bool,
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "fsl.cluster2html": cluster2html_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-    }.get(t)
-
-
 class Cluster2htmlOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `cluster2html(...)`.
+    Output object returned when calling `Cluster2htmlParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -64,7 +39,7 @@ def cluster2html_params(
     featdir: str,
     inroot: str,
     std_flag: bool = False,
-) -> Cluster2htmlParameters:
+) -> Cluster2htmlParametersTagged:
     """
     Build parameters.
     
@@ -77,7 +52,7 @@ def cluster2html_params(
         Parameter dictionary
     """
     params = {
-        "@type": "fsl.cluster2html",
+        "@type": "fsl/cluster2html",
         "featdir": featdir,
         "inroot": inroot,
         "std_flag": std_flag,
@@ -100,9 +75,9 @@ def cluster2html_cargs(
     """
     cargs = []
     cargs.append("cluster2html")
-    cargs.append(params.get("featdir"))
-    cargs.append(params.get("inroot"))
-    if params.get("std_flag"):
+    cargs.append(params.get("featdir", None))
+    cargs.append(params.get("inroot", None))
+    if params.get("std_flag", False):
         cargs.append("-std")
     return cargs
 
@@ -189,7 +164,6 @@ def cluster2html(
 __all__ = [
     "CLUSTER2HTML_METADATA",
     "Cluster2htmlOutputs",
-    "Cluster2htmlParameters",
     "cluster2html",
     "cluster2html_execute",
     "cluster2html_params",

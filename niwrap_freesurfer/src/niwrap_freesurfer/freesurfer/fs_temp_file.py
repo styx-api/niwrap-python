@@ -14,7 +14,17 @@ FS_TEMP_FILE_METADATA = Metadata(
 
 
 FsTempFileParameters = typing.TypedDict('FsTempFileParameters', {
-    "@type": typing.Literal["freesurfer.fs_temp_file"],
+    "@type": typing.NotRequired[typing.Literal["freesurfer/fs_temp_file"]],
+    "base_dir": typing.NotRequired[str | None],
+    "base_dir_alt": typing.NotRequired[str | None],
+    "suffix": typing.NotRequired[str | None],
+    "suffix_alt": typing.NotRequired[str | None],
+    "scratch": bool,
+    "help": bool,
+    "help_alt": bool,
+})
+FsTempFileParametersTagged = typing.TypedDict('FsTempFileParametersTagged', {
+    "@type": typing.Literal["freesurfer/fs_temp_file"],
     "base_dir": typing.NotRequired[str | None],
     "base_dir_alt": typing.NotRequired[str | None],
     "suffix": typing.NotRequired[str | None],
@@ -25,40 +35,9 @@ FsTempFileParameters = typing.TypedDict('FsTempFileParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "freesurfer.fs_temp_file": fs_temp_file_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-    }.get(t)
-
-
 class FsTempFileOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `fs_temp_file(...)`.
+    Output object returned when calling `FsTempFileParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -72,7 +51,7 @@ def fs_temp_file_params(
     scratch: bool = False,
     help_: bool = False,
     help_alt: bool = False,
-) -> FsTempFileParameters:
+) -> FsTempFileParametersTagged:
     """
     Build parameters.
     
@@ -89,7 +68,7 @@ def fs_temp_file_params(
         Parameter dictionary
     """
     params = {
-        "@type": "freesurfer.fs_temp_file",
+        "@type": "freesurfer/fs_temp_file",
         "scratch": scratch,
         "help": help_,
         "help_alt": help_alt,
@@ -120,31 +99,31 @@ def fs_temp_file_cargs(
     """
     cargs = []
     cargs.append("fs_temp_file")
-    if params.get("base_dir") is not None:
+    if params.get("base_dir", None) is not None:
         cargs.extend([
             "-b",
-            params.get("base_dir")
+            params.get("base_dir", None)
         ])
-    if params.get("base_dir_alt") is not None:
+    if params.get("base_dir_alt", None) is not None:
         cargs.extend([
             "--base",
-            params.get("base_dir_alt")
+            params.get("base_dir_alt", None)
         ])
-    if params.get("suffix") is not None:
+    if params.get("suffix", None) is not None:
         cargs.extend([
             "-s",
-            params.get("suffix")
+            params.get("suffix", None)
         ])
-    if params.get("suffix_alt") is not None:
+    if params.get("suffix_alt", None) is not None:
         cargs.extend([
             "--suffix",
-            params.get("suffix_alt")
+            params.get("suffix_alt", None)
         ])
-    if params.get("scratch"):
+    if params.get("scratch", False):
         cargs.append("--scratch")
-    if params.get("help"):
+    if params.get("help", False):
         cargs.append("-h")
-    if params.get("help_alt"):
+    if params.get("help_alt", False):
         cargs.append("--help")
     return cargs
 
@@ -245,7 +224,6 @@ def fs_temp_file(
 __all__ = [
     "FS_TEMP_FILE_METADATA",
     "FsTempFileOutputs",
-    "FsTempFileParameters",
     "fs_temp_file",
     "fs_temp_file_execute",
     "fs_temp_file_params",

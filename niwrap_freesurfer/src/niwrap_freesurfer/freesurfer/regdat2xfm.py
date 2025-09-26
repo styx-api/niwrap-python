@@ -14,46 +14,20 @@ REGDAT2XFM_METADATA = Metadata(
 
 
 Regdat2xfmParameters = typing.TypedDict('Regdat2xfmParameters', {
-    "@type": typing.Literal["freesurfer.regdat2xfm"],
+    "@type": typing.NotRequired[typing.Literal["freesurfer/regdat2xfm"]],
+    "input_file": InputPathType,
+    "output_file": str,
+})
+Regdat2xfmParametersTagged = typing.TypedDict('Regdat2xfmParametersTagged', {
+    "@type": typing.Literal["freesurfer/regdat2xfm"],
     "input_file": InputPathType,
     "output_file": str,
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "freesurfer.regdat2xfm": regdat2xfm_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-    }.get(t)
-
-
 class Regdat2xfmOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `regdat2xfm(...)`.
+    Output object returned when calling `Regdat2xfmParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -62,7 +36,7 @@ class Regdat2xfmOutputs(typing.NamedTuple):
 def regdat2xfm_params(
     input_file: InputPathType,
     output_file: str,
-) -> Regdat2xfmParameters:
+) -> Regdat2xfmParametersTagged:
     """
     Build parameters.
     
@@ -73,7 +47,7 @@ def regdat2xfm_params(
         Parameter dictionary
     """
     params = {
-        "@type": "freesurfer.regdat2xfm",
+        "@type": "freesurfer/regdat2xfm",
         "input_file": input_file,
         "output_file": output_file,
     }
@@ -95,8 +69,8 @@ def regdat2xfm_cargs(
     """
     cargs = []
     cargs.append("regdat2xfm")
-    cargs.append(execution.input_file(params.get("input_file")))
-    cargs.append(params.get("output_file"))
+    cargs.append(execution.input_file(params.get("input_file", None)))
+    cargs.append(params.get("output_file", None))
     return cargs
 
 
@@ -178,7 +152,6 @@ def regdat2xfm(
 __all__ = [
     "REGDAT2XFM_METADATA",
     "Regdat2xfmOutputs",
-    "Regdat2xfmParameters",
     "regdat2xfm",
     "regdat2xfm_execute",
     "regdat2xfm_params",

@@ -14,46 +14,18 @@ FNAME2EXT_METADATA = Metadata(
 
 
 Fname2extParameters = typing.TypedDict('Fname2extParameters', {
-    "@type": typing.Literal["freesurfer.fname2ext"],
+    "@type": typing.NotRequired[typing.Literal["freesurfer/fname2ext"]],
+    "filename": str,
+})
+Fname2extParametersTagged = typing.TypedDict('Fname2extParametersTagged', {
+    "@type": typing.Literal["freesurfer/fname2ext"],
     "filename": str,
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "freesurfer.fname2ext": fname2ext_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "freesurfer.fname2ext": fname2ext_outputs,
-    }.get(t)
-
-
 class Fname2extOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `fname2ext(...)`.
+    Output object returned when calling `Fname2extParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -63,7 +35,7 @@ class Fname2extOutputs(typing.NamedTuple):
 
 def fname2ext_params(
     filename: str,
-) -> Fname2extParameters:
+) -> Fname2extParametersTagged:
     """
     Build parameters.
     
@@ -74,7 +46,7 @@ def fname2ext_params(
         Parameter dictionary
     """
     params = {
-        "@type": "freesurfer.fname2ext",
+        "@type": "freesurfer/fname2ext",
         "filename": filename,
     }
     return params
@@ -95,7 +67,7 @@ def fname2ext_cargs(
     """
     cargs = []
     cargs.append("fname2ext")
-    cargs.append(params.get("filename"))
+    cargs.append(params.get("filename", None))
     return cargs
 
 
@@ -176,7 +148,6 @@ def fname2ext(
 __all__ = [
     "FNAME2EXT_METADATA",
     "Fname2extOutputs",
-    "Fname2extParameters",
     "fname2ext",
     "fname2ext_execute",
     "fname2ext_params",

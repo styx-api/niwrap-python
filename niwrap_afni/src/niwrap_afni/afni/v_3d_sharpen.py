@@ -14,48 +14,22 @@ V_3D_SHARPEN_METADATA = Metadata(
 
 
 V3dSharpenParameters = typing.TypedDict('V3dSharpenParameters', {
-    "@type": typing.Literal["afni.3dSharpen"],
+    "@type": typing.NotRequired[typing.Literal["afni/3dSharpen"]],
+    "sharpening_factor": typing.NotRequired[float | None],
+    "input_dataset": InputPathType,
+    "output_prefix": str,
+})
+V3dSharpenParametersTagged = typing.TypedDict('V3dSharpenParametersTagged', {
+    "@type": typing.Literal["afni/3dSharpen"],
     "sharpening_factor": typing.NotRequired[float | None],
     "input_dataset": InputPathType,
     "output_prefix": str,
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "afni.3dSharpen": v_3d_sharpen_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "afni.3dSharpen": v_3d_sharpen_outputs,
-    }.get(t)
-
-
 class V3dSharpenOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `v_3d_sharpen(...)`.
+    Output object returned when calling `V3dSharpenParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -67,7 +41,7 @@ def v_3d_sharpen_params(
     input_dataset: InputPathType,
     output_prefix: str,
     sharpening_factor: float | None = None,
-) -> V3dSharpenParameters:
+) -> V3dSharpenParametersTagged:
     """
     Build parameters.
     
@@ -81,7 +55,7 @@ def v_3d_sharpen_params(
         Parameter dictionary
     """
     params = {
-        "@type": "afni.3dSharpen",
+        "@type": "afni/3dSharpen",
         "input_dataset": input_dataset,
         "output_prefix": output_prefix,
     }
@@ -105,15 +79,15 @@ def v_3d_sharpen_cargs(
     """
     cargs = []
     cargs.append("3dSharpen")
-    if params.get("sharpening_factor") is not None:
+    if params.get("sharpening_factor", None) is not None:
         cargs.extend([
             "-phi",
-            str(params.get("sharpening_factor"))
+            str(params.get("sharpening_factor", None))
         ])
-    cargs.append(execution.input_file(params.get("input_dataset")))
+    cargs.append(execution.input_file(params.get("input_dataset", None)))
     cargs.extend([
         "-prefix",
-        params.get("output_prefix")
+        params.get("output_prefix", None)
     ])
     return cargs
 
@@ -133,7 +107,7 @@ def v_3d_sharpen_outputs(
     """
     ret = V3dSharpenOutputs(
         root=execution.output_file("."),
-        output_dataset=execution.output_file(params.get("output_prefix") + ".nii.gz"),
+        output_dataset=execution.output_file(params.get("output_prefix", None) + ".nii.gz"),
     )
     return ret
 
@@ -203,7 +177,6 @@ def v_3d_sharpen(
 
 __all__ = [
     "V3dSharpenOutputs",
-    "V3dSharpenParameters",
     "V_3D_SHARPEN_METADATA",
     "v_3d_sharpen",
     "v_3d_sharpen_execute",

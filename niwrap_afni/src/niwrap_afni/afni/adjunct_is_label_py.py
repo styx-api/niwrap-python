@@ -14,46 +14,20 @@ ADJUNCT_IS_LABEL_PY_METADATA = Metadata(
 
 
 AdjunctIsLabelPyParameters = typing.TypedDict('AdjunctIsLabelPyParameters', {
-    "@type": typing.Literal["afni.adjunct_is_label.py"],
+    "@type": typing.NotRequired[typing.Literal["afni/adjunct_is_label.py"]],
+    "infile": InputPathType,
+    "label": str,
+})
+AdjunctIsLabelPyParametersTagged = typing.TypedDict('AdjunctIsLabelPyParametersTagged', {
+    "@type": typing.Literal["afni/adjunct_is_label.py"],
     "infile": InputPathType,
     "label": str,
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "afni.adjunct_is_label.py": adjunct_is_label_py_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-    }.get(t)
-
-
 class AdjunctIsLabelPyOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `adjunct_is_label_py(...)`.
+    Output object returned when calling `AdjunctIsLabelPyParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -62,7 +36,7 @@ class AdjunctIsLabelPyOutputs(typing.NamedTuple):
 def adjunct_is_label_py_params(
     infile: InputPathType,
     label: str,
-) -> AdjunctIsLabelPyParameters:
+) -> AdjunctIsLabelPyParametersTagged:
     """
     Build parameters.
     
@@ -73,7 +47,7 @@ def adjunct_is_label_py_params(
         Parameter dictionary
     """
     params = {
-        "@type": "afni.adjunct_is_label.py",
+        "@type": "afni/adjunct_is_label.py",
         "infile": infile,
         "label": label,
     }
@@ -95,8 +69,8 @@ def adjunct_is_label_py_cargs(
     """
     cargs = []
     cargs.append("adjunct_is_label.py")
-    cargs.append(execution.input_file(params.get("infile")))
-    cargs.append(params.get("label"))
+    cargs.append(execution.input_file(params.get("infile", None)))
+    cargs.append(params.get("label", None))
     return cargs
 
 
@@ -178,7 +152,6 @@ def adjunct_is_label_py(
 __all__ = [
     "ADJUNCT_IS_LABEL_PY_METADATA",
     "AdjunctIsLabelPyOutputs",
-    "AdjunctIsLabelPyParameters",
     "adjunct_is_label_py",
     "adjunct_is_label_py_execute",
     "adjunct_is_label_py_params",

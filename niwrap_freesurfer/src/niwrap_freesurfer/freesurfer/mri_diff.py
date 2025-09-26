@@ -14,7 +14,41 @@ MRI_DIFF_METADATA = Metadata(
 
 
 MriDiffParameters = typing.TypedDict('MriDiffParameters', {
-    "@type": typing.Literal["freesurfer.mri_diff"],
+    "@type": typing.NotRequired[typing.Literal["freesurfer/mri_diff"]],
+    "vol1file": InputPathType,
+    "vol2file": InputPathType,
+    "resolution_check": bool,
+    "acquisition_param_check": bool,
+    "geometry_check": bool,
+    "precision_check": bool,
+    "pixel_check": bool,
+    "orientation_check": bool,
+    "file_type_diff_check": bool,
+    "no_exit_on_diff": bool,
+    "quality_assurance": bool,
+    "pixel_only": bool,
+    "abs_difference": bool,
+    "no_abs_difference": bool,
+    "difference_abs": bool,
+    "percentage_difference": bool,
+    "rss_save": bool,
+    "ssd_print": bool,
+    "rms_print": bool,
+    "count_diff_voxels": bool,
+    "pixel_threshold": typing.NotRequired[float | None],
+    "count_thresh_voxels": typing.NotRequired[float | None],
+    "log_file": typing.NotRequired[str | None],
+    "difference_image": typing.NotRequired[InputPathType | None],
+    "suspicious_diff_volume": typing.NotRequired[InputPathType | None],
+    "segmentation_diff": typing.NotRequired[str | None],
+    "merge_edits": typing.NotRequired[str | None],
+    "average_difference": typing.NotRequired[str | None],
+    "debug_mode": bool,
+    "verbose_mode": bool,
+    "check_options": bool,
+})
+MriDiffParametersTagged = typing.TypedDict('MriDiffParametersTagged', {
+    "@type": typing.Literal["freesurfer/mri_diff"],
     "vol1file": InputPathType,
     "vol2file": InputPathType,
     "resolution_check": bool,
@@ -49,41 +83,9 @@ MriDiffParameters = typing.TypedDict('MriDiffParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "freesurfer.mri_diff": mri_diff_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "freesurfer.mri_diff": mri_diff_outputs,
-    }.get(t)
-
-
 class MriDiffOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `mri_diff(...)`.
+    Output object returned when calling `MriDiffParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -127,7 +129,7 @@ def mri_diff_params(
     debug_mode: bool = False,
     verbose_mode: bool = False,
     check_options: bool = False,
-) -> MriDiffParameters:
+) -> MriDiffParametersTagged:
     """
     Build parameters.
     
@@ -174,7 +176,7 @@ def mri_diff_params(
         Parameter dictionary
     """
     params = {
-        "@type": "freesurfer.mri_diff",
+        "@type": "freesurfer/mri_diff",
         "vol1file": vol1file,
         "vol2file": vol2file,
         "resolution_check": resolution_check,
@@ -233,89 +235,89 @@ def mri_diff_cargs(
     """
     cargs = []
     cargs.append("mri_diff")
-    cargs.append(execution.input_file(params.get("vol1file")))
-    cargs.append(execution.input_file(params.get("vol2file")))
-    if params.get("resolution_check"):
+    cargs.append(execution.input_file(params.get("vol1file", None)))
+    cargs.append(execution.input_file(params.get("vol2file", None)))
+    if params.get("resolution_check", False):
         cargs.append("--notallow-res")
-    if params.get("acquisition_param_check"):
+    if params.get("acquisition_param_check", False):
         cargs.append("--notallow-acq")
-    if params.get("geometry_check"):
+    if params.get("geometry_check", False):
         cargs.append("--notallow-geo")
-    if params.get("precision_check"):
+    if params.get("precision_check", False):
         cargs.append("--notallow-prec")
-    if params.get("pixel_check"):
+    if params.get("pixel_check", False):
         cargs.append("--notallow-pix")
-    if params.get("orientation_check"):
+    if params.get("orientation_check", False):
         cargs.append("--notallow-ori")
-    if params.get("file_type_diff_check"):
+    if params.get("file_type_diff_check", False):
         cargs.append("--notallow-type")
-    if params.get("no_exit_on_diff"):
+    if params.get("no_exit_on_diff", False):
         cargs.append("--no-exit-on-diff")
-    if params.get("quality_assurance"):
+    if params.get("quality_assurance", False):
         cargs.append("--qa")
-    if params.get("pixel_only"):
+    if params.get("pixel_only", False):
         cargs.append("--pix-only")
-    if params.get("abs_difference"):
+    if params.get("abs_difference", False):
         cargs.append("--absdiff")
-    if params.get("no_abs_difference"):
+    if params.get("no_abs_difference", False):
         cargs.append("--no-absdiff")
-    if params.get("difference_abs"):
+    if params.get("difference_abs", False):
         cargs.append("--diffabs")
-    if params.get("percentage_difference"):
+    if params.get("percentage_difference", False):
         cargs.append("--diffpct")
-    if params.get("rss_save"):
+    if params.get("rss_save", False):
         cargs.append("--rss")
-    if params.get("ssd_print"):
+    if params.get("ssd_print", False):
         cargs.append("--ssd")
-    if params.get("rms_print"):
+    if params.get("rms_print", False):
         cargs.append("--rms")
-    if params.get("count_diff_voxels"):
+    if params.get("count_diff_voxels", False):
         cargs.append("--count")
-    if params.get("pixel_threshold") is not None:
+    if params.get("pixel_threshold", None) is not None:
         cargs.extend([
             "--thresh",
-            str(params.get("pixel_threshold"))
+            str(params.get("pixel_threshold", None))
         ])
-    if params.get("count_thresh_voxels") is not None:
+    if params.get("count_thresh_voxels", None) is not None:
         cargs.extend([
             "--count-thresh",
-            str(params.get("count_thresh_voxels"))
+            str(params.get("count_thresh_voxels", None))
         ])
-    if params.get("log_file") is not None:
+    if params.get("log_file", None) is not None:
         cargs.extend([
             "--log",
-            params.get("log_file")
+            params.get("log_file", None)
         ])
-    if params.get("difference_image") is not None:
+    if params.get("difference_image", None) is not None:
         cargs.extend([
             "--diff",
-            execution.input_file(params.get("difference_image"))
+            execution.input_file(params.get("difference_image", None))
         ])
-    if params.get("suspicious_diff_volume") is not None:
+    if params.get("suspicious_diff_volume", None) is not None:
         cargs.extend([
             "--diff_label_suspicious",
-            execution.input_file(params.get("suspicious_diff_volume"))
+            execution.input_file(params.get("suspicious_diff_volume", None))
         ])
-    if params.get("segmentation_diff") is not None:
+    if params.get("segmentation_diff", None) is not None:
         cargs.extend([
             "--segdiff",
-            params.get("segmentation_diff")
+            params.get("segmentation_diff", None)
         ])
-    if params.get("merge_edits") is not None:
+    if params.get("merge_edits", None) is not None:
         cargs.extend([
             "--merge-edits",
-            params.get("merge_edits")
+            params.get("merge_edits", None)
         ])
-    if params.get("average_difference") is not None:
+    if params.get("average_difference", None) is not None:
         cargs.extend([
             "--avg-diff",
-            params.get("average_difference")
+            params.get("average_difference", None)
         ])
-    if params.get("debug_mode"):
+    if params.get("debug_mode", False):
         cargs.append("--debug")
-    if params.get("verbose_mode"):
+    if params.get("verbose_mode", False):
         cargs.append("--verbose")
-    if params.get("check_options"):
+    if params.get("check_options", False):
         cargs.append("--checkopts")
     return cargs
 
@@ -335,9 +337,9 @@ def mri_diff_outputs(
     """
     ret = MriDiffOutputs(
         root=execution.output_file("."),
-        log_output=execution.output_file(params.get("log_file")) if (params.get("log_file") is not None) else None,
-        difference_image_output=execution.output_file(pathlib.Path(params.get("difference_image")).name) if (params.get("difference_image") is not None) else None,
-        suspicious_difference_output=execution.output_file(pathlib.Path(params.get("suspicious_diff_volume")).name) if (params.get("suspicious_diff_volume") is not None) else None,
+        log_output=execution.output_file(params.get("log_file", None)) if (params.get("log_file") is not None) else None,
+        difference_image_output=execution.output_file(pathlib.Path(params.get("difference_image", None)).name) if (params.get("difference_image") is not None) else None,
+        suspicious_difference_output=execution.output_file(pathlib.Path(params.get("suspicious_diff_volume", None)).name) if (params.get("suspicious_diff_volume") is not None) else None,
     )
     return ret
 
@@ -497,7 +499,6 @@ def mri_diff(
 __all__ = [
     "MRI_DIFF_METADATA",
     "MriDiffOutputs",
-    "MriDiffParameters",
     "mri_diff",
     "mri_diff_execute",
     "mri_diff_params",

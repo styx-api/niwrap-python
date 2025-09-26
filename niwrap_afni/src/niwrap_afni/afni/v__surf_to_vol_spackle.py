@@ -14,7 +14,24 @@ V__SURF_TO_VOL_SPACKLE_METADATA = Metadata(
 
 
 VSurfToVolSpackleParameters = typing.TypedDict('VSurfToVolSpackleParameters', {
-    "@type": typing.Literal["afni.@surf_to_vol_spackle"],
+    "@type": typing.NotRequired[typing.Literal["afni/@surf_to_vol_spackle"]],
+    "maskset": InputPathType,
+    "spec": InputPathType,
+    "surfA": str,
+    "surfB": typing.NotRequired[str | None],
+    "surfset": InputPathType,
+    "prefix": str,
+    "normal_vector_length": typing.NotRequired[float | None],
+    "search_radius": typing.NotRequired[float | None],
+    "num_steps": typing.NotRequired[float | None],
+    "keep_temp_files": bool,
+    "max_iters": typing.NotRequired[float | None],
+    "use_mode": bool,
+    "datum_type": typing.NotRequired[str | None],
+    "ignore_unknown_options": bool,
+})
+VSurfToVolSpackleParametersTagged = typing.TypedDict('VSurfToVolSpackleParametersTagged', {
+    "@type": typing.Literal["afni/@surf_to_vol_spackle"],
     "maskset": InputPathType,
     "spec": InputPathType,
     "surfA": str,
@@ -32,41 +49,9 @@ VSurfToVolSpackleParameters = typing.TypedDict('VSurfToVolSpackleParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "afni.@surf_to_vol_spackle": v__surf_to_vol_spackle_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "afni.@surf_to_vol_spackle": v__surf_to_vol_spackle_outputs,
-    }.get(t)
-
-
 class VSurfToVolSpackleOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `v__surf_to_vol_spackle(...)`.
+    Output object returned when calling `VSurfToVolSpackleParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -89,7 +74,7 @@ def v__surf_to_vol_spackle_params(
     use_mode: bool = False,
     datum_type: str | None = None,
     ignore_unknown_options: bool = False,
-) -> VSurfToVolSpackleParameters:
+) -> VSurfToVolSpackleParametersTagged:
     """
     Build parameters.
     
@@ -117,7 +102,7 @@ def v__surf_to_vol_spackle_params(
         Parameter dictionary
     """
     params = {
-        "@type": "afni.@surf_to_vol_spackle",
+        "@type": "afni/@surf_to_vol_spackle",
         "maskset": maskset,
         "spec": spec,
         "surfA": surf_a,
@@ -157,43 +142,43 @@ def v__surf_to_vol_spackle_cargs(
     """
     cargs = []
     cargs.append("@surf_to_vol_spackle")
-    cargs.append(execution.input_file(params.get("maskset")))
-    cargs.append(execution.input_file(params.get("spec")))
-    cargs.append(params.get("surfA"))
-    if params.get("surfB") is not None:
-        cargs.append(params.get("surfB"))
-    cargs.append(execution.input_file(params.get("surfset")))
-    cargs.append(params.get("prefix"))
-    if params.get("normal_vector_length") is not None:
+    cargs.append(execution.input_file(params.get("maskset", None)))
+    cargs.append(execution.input_file(params.get("spec", None)))
+    cargs.append(params.get("surfA", None))
+    if params.get("surfB", None) is not None:
+        cargs.append(params.get("surfB", None))
+    cargs.append(execution.input_file(params.get("surfset", None)))
+    cargs.append(params.get("prefix", None))
+    if params.get("normal_vector_length", None) is not None:
         cargs.extend([
             "-f_pn_mm",
-            str(params.get("normal_vector_length"))
+            str(params.get("normal_vector_length", None))
         ])
-    if params.get("search_radius") is not None:
+    if params.get("search_radius", None) is not None:
         cargs.extend([
             "-meanrad",
-            str(params.get("search_radius"))
+            str(params.get("search_radius", None))
         ])
-    if params.get("num_steps") is not None:
+    if params.get("num_steps", None) is not None:
         cargs.extend([
             "-nsteps",
-            str(params.get("num_steps"))
+            str(params.get("num_steps", None))
         ])
-    if params.get("keep_temp_files"):
+    if params.get("keep_temp_files", False):
         cargs.append("-keep_temp_files")
-    if params.get("max_iters") is not None:
+    if params.get("max_iters", None) is not None:
         cargs.extend([
             "-maxiters",
-            str(params.get("max_iters"))
+            str(params.get("max_iters", None))
         ])
-    if params.get("use_mode"):
+    if params.get("use_mode", False):
         cargs.append("-mode")
-    if params.get("datum_type") is not None:
+    if params.get("datum_type", None) is not None:
         cargs.extend([
             "-datum",
-            params.get("datum_type")
+            params.get("datum_type", None)
         ])
-    if params.get("ignore_unknown_options"):
+    if params.get("ignore_unknown_options", False):
         cargs.append("-ignore_unknown_options")
     return cargs
 
@@ -213,7 +198,7 @@ def v__surf_to_vol_spackle_outputs(
     """
     ret = VSurfToVolSpackleOutputs(
         root=execution.output_file("."),
-        output_volume=execution.output_file(params.get("prefix") + ".nii.gz"),
+        output_volume=execution.output_file(params.get("prefix", None) + ".nii.gz"),
     )
     return ret
 
@@ -319,7 +304,6 @@ def v__surf_to_vol_spackle(
 
 __all__ = [
     "VSurfToVolSpackleOutputs",
-    "VSurfToVolSpackleParameters",
     "V__SURF_TO_VOL_SPACKLE_METADATA",
     "v__surf_to_vol_spackle",
     "v__surf_to_vol_spackle_execute",

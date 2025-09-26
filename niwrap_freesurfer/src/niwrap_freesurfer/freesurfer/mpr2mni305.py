@@ -14,45 +14,18 @@ MPR2MNI305_METADATA = Metadata(
 
 
 Mpr2mni305Parameters = typing.TypedDict('Mpr2mni305Parameters', {
-    "@type": typing.Literal["freesurfer.mpr2mni305"],
+    "@type": typing.NotRequired[typing.Literal["freesurfer/mpr2mni305"]],
+    "mpr_anat": str,
+})
+Mpr2mni305ParametersTagged = typing.TypedDict('Mpr2mni305ParametersTagged', {
+    "@type": typing.Literal["freesurfer/mpr2mni305"],
     "mpr_anat": str,
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "freesurfer.mpr2mni305": mpr2mni305_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-    }.get(t)
-
-
 class Mpr2mni305Outputs(typing.NamedTuple):
     """
-    Output object returned when calling `mpr2mni305(...)`.
+    Output object returned when calling `Mpr2mni305Parameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -60,7 +33,7 @@ class Mpr2mni305Outputs(typing.NamedTuple):
 
 def mpr2mni305_params(
     mpr_anat: str,
-) -> Mpr2mni305Parameters:
+) -> Mpr2mni305ParametersTagged:
     """
     Build parameters.
     
@@ -70,7 +43,7 @@ def mpr2mni305_params(
         Parameter dictionary
     """
     params = {
-        "@type": "freesurfer.mpr2mni305",
+        "@type": "freesurfer/mpr2mni305",
         "mpr_anat": mpr_anat,
     }
     return params
@@ -91,7 +64,7 @@ def mpr2mni305_cargs(
     """
     cargs = []
     cargs.append("mpr2mni305")
-    cargs.append(params.get("mpr_anat"))
+    cargs.append(params.get("mpr_anat", None))
     return cargs
 
 
@@ -170,7 +143,6 @@ def mpr2mni305(
 __all__ = [
     "MPR2MNI305_METADATA",
     "Mpr2mni305Outputs",
-    "Mpr2mni305Parameters",
     "mpr2mni305",
     "mpr2mni305_execute",
     "mpr2mni305_params",

@@ -14,21 +14,47 @@ SS3T_CSD_BETA1_METADATA = Metadata(
 
 
 Ss3tCsdBeta1ConfigParameters = typing.TypedDict('Ss3tCsdBeta1ConfigParameters', {
-    "@type": typing.Literal["mrtrix3tissue.ss3t_csd_beta1.config"],
+    "@type": typing.NotRequired[typing.Literal["config"]],
+    "key": str,
+    "value": str,
+})
+Ss3tCsdBeta1ConfigParametersTagged = typing.TypedDict('Ss3tCsdBeta1ConfigParametersTagged', {
+    "@type": typing.Literal["config"],
     "key": str,
     "value": str,
 })
 
 
 Ss3tCsdBeta1ResponseOdfParameters = typing.TypedDict('Ss3tCsdBeta1ResponseOdfParameters', {
-    "@type": typing.Literal["mrtrix3tissue.ss3t_csd_beta1.response_odf"],
+    "@type": typing.NotRequired[typing.Literal["response_odf"]],
+    "response": InputPathType,
+    "odf": str,
+})
+Ss3tCsdBeta1ResponseOdfParametersTagged = typing.TypedDict('Ss3tCsdBeta1ResponseOdfParametersTagged', {
+    "@type": typing.Literal["response_odf"],
     "response": InputPathType,
     "odf": str,
 })
 
 
 Ss3tCsdBeta1Parameters = typing.TypedDict('Ss3tCsdBeta1Parameters', {
-    "@type": typing.Literal["mrtrix3tissue.ss3t_csd_beta1"],
+    "@type": typing.NotRequired[typing.Literal["mrtrix3tissue/ss3t_csd_beta1"]],
+    "mask": typing.NotRequired[InputPathType | None],
+    "bzero_pct": typing.NotRequired[float | None],
+    "niter": typing.NotRequired[int | None],
+    "info": bool,
+    "quiet": bool,
+    "debug": bool,
+    "force": bool,
+    "nthreads": typing.NotRequired[int | None],
+    "config": typing.NotRequired[list[Ss3tCsdBeta1ConfigParameters] | None],
+    "help": bool,
+    "version": bool,
+    "dwi": InputPathType,
+    "response_odf": list[Ss3tCsdBeta1ResponseOdfParameters],
+})
+Ss3tCsdBeta1ParametersTagged = typing.TypedDict('Ss3tCsdBeta1ParametersTagged', {
+    "@type": typing.Literal["mrtrix3tissue/ss3t_csd_beta1"],
     "mask": typing.NotRequired[InputPathType | None],
     "bzero_pct": typing.NotRequired[float | None],
     "niter": typing.NotRequired[int | None],
@@ -45,45 +71,10 @@ Ss3tCsdBeta1Parameters = typing.TypedDict('Ss3tCsdBeta1Parameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "mrtrix3tissue.ss3t_csd_beta1": ss3t_csd_beta1_cargs,
-        "mrtrix3tissue.ss3t_csd_beta1.config": ss3t_csd_beta1_config_cargs,
-        "mrtrix3tissue.ss3t_csd_beta1.response_odf": ss3t_csd_beta1_response_odf_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "mrtrix3tissue.ss3t_csd_beta1": ss3t_csd_beta1_outputs,
-        "mrtrix3tissue.ss3t_csd_beta1.response_odf": ss3t_csd_beta1_response_odf_outputs,
-    }.get(t)
-
-
 def ss3t_csd_beta1_config_params(
     key: str,
     value: str,
-) -> Ss3tCsdBeta1ConfigParameters:
+) -> Ss3tCsdBeta1ConfigParametersTagged:
     """
     Build parameters.
     
@@ -94,7 +85,7 @@ def ss3t_csd_beta1_config_params(
         Parameter dictionary
     """
     params = {
-        "@type": "mrtrix3tissue.ss3t_csd_beta1.config",
+        "@type": "config",
         "key": key,
         "value": value,
     }
@@ -116,8 +107,8 @@ def ss3t_csd_beta1_config_cargs(
     """
     cargs = []
     cargs.append("-config")
-    cargs.append(params.get("key"))
-    cargs.append(params.get("value"))
+    cargs.append(params.get("key", None))
+    cargs.append(params.get("value", None))
     return cargs
 
 
@@ -134,7 +125,7 @@ class Ss3tCsdBeta1ResponseOdfOutputs(typing.NamedTuple):
 def ss3t_csd_beta1_response_odf_params(
     response: InputPathType,
     odf: str,
-) -> Ss3tCsdBeta1ResponseOdfParameters:
+) -> Ss3tCsdBeta1ResponseOdfParametersTagged:
     """
     Build parameters.
     
@@ -145,7 +136,7 @@ def ss3t_csd_beta1_response_odf_params(
         Parameter dictionary
     """
     params = {
-        "@type": "mrtrix3tissue.ss3t_csd_beta1.response_odf",
+        "@type": "response_odf",
         "response": response,
         "odf": odf,
     }
@@ -166,8 +157,8 @@ def ss3t_csd_beta1_response_odf_cargs(
         Command-line arguments.
     """
     cargs = []
-    cargs.append(execution.input_file(params.get("response")))
-    cargs.append(params.get("odf"))
+    cargs.append(execution.input_file(params.get("response", None)))
+    cargs.append(params.get("odf", None))
     return cargs
 
 
@@ -186,14 +177,14 @@ def ss3t_csd_beta1_response_odf_outputs(
     """
     ret = Ss3tCsdBeta1ResponseOdfOutputs(
         root=execution.output_file("."),
-        odf=execution.output_file(params.get("odf")),
+        odf=execution.output_file(params.get("odf", None)),
     )
     return ret
 
 
 class Ss3tCsdBeta1Outputs(typing.NamedTuple):
     """
-    Output object returned when calling `ss3t_csd_beta1(...)`.
+    Output object returned when calling `Ss3tCsdBeta1Parameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -216,7 +207,7 @@ def ss3t_csd_beta1_params(
     config: list[Ss3tCsdBeta1ConfigParameters] | None = None,
     help_: bool = False,
     version: bool = False,
-) -> Ss3tCsdBeta1Parameters:
+) -> Ss3tCsdBeta1ParametersTagged:
     """
     Build parameters.
     
@@ -246,7 +237,7 @@ def ss3t_csd_beta1_params(
         Parameter dictionary
     """
     params = {
-        "@type": "mrtrix3tissue.ss3t_csd_beta1",
+        "@type": "mrtrix3tissue/ss3t_csd_beta1",
         "info": info,
         "quiet": quiet,
         "debug": debug,
@@ -284,42 +275,42 @@ def ss3t_csd_beta1_cargs(
     """
     cargs = []
     cargs.append("ss3t_csd_beta1")
-    if params.get("mask") is not None:
+    if params.get("mask", None) is not None:
         cargs.extend([
             "-mask",
-            execution.input_file(params.get("mask"))
+            execution.input_file(params.get("mask", None))
         ])
-    if params.get("bzero_pct") is not None:
+    if params.get("bzero_pct", None) is not None:
         cargs.extend([
             "-bzero_pct",
-            str(params.get("bzero_pct"))
+            str(params.get("bzero_pct", None))
         ])
-    if params.get("niter") is not None:
+    if params.get("niter", None) is not None:
         cargs.extend([
             "-niter",
-            str(params.get("niter"))
+            str(params.get("niter", None))
         ])
-    if params.get("info"):
+    if params.get("info", False):
         cargs.append("-info")
-    if params.get("quiet"):
+    if params.get("quiet", False):
         cargs.append("-quiet")
-    if params.get("debug"):
+    if params.get("debug", False):
         cargs.append("-debug")
-    if params.get("force"):
+    if params.get("force", False):
         cargs.append("-force")
-    if params.get("nthreads") is not None:
+    if params.get("nthreads", None) is not None:
         cargs.extend([
             "-nthreads",
-            str(params.get("nthreads"))
+            str(params.get("nthreads", None))
         ])
-    if params.get("config") is not None:
-        cargs.extend([a for c in [dyn_cargs(s["@type"])(s, execution) for s in params.get("config")] for a in c])
-    if params.get("help"):
+    if params.get("config", None) is not None:
+        cargs.extend([a for c in [ss3t_csd_beta1_config_cargs(s, execution) for s in params.get("config", None)] for a in c])
+    if params.get("help", False):
         cargs.append("-help")
-    if params.get("version"):
+    if params.get("version", False):
         cargs.append("-version")
-    cargs.append(execution.input_file(params.get("dwi")))
-    cargs.extend([a for c in [dyn_cargs(s["@type"])(s, execution) for s in params.get("response_odf")] for a in c])
+    cargs.append(execution.input_file(params.get("dwi", None)))
+    cargs.extend([a for c in [ss3t_csd_beta1_response_odf_cargs(s, execution) for s in params.get("response_odf", None)] for a in c])
     return cargs
 
 
@@ -338,7 +329,7 @@ def ss3t_csd_beta1_outputs(
     """
     ret = Ss3tCsdBeta1Outputs(
         root=execution.output_file("."),
-        response_odf=[dyn_outputs(i["@type"])(i, execution) if dyn_outputs(i["@type"]) else None for i in params.get("response_odf")],
+        response_odf=[ss3t_csd_beta1_response_odf_outputs(i, execution) if ss3t_csd_beta1_response_odf_outputs else None for i in params.get("response_odf")],
     )
     return ret
 
@@ -450,11 +441,8 @@ def ss3t_csd_beta1(
 
 __all__ = [
     "SS3T_CSD_BETA1_METADATA",
-    "Ss3tCsdBeta1ConfigParameters",
     "Ss3tCsdBeta1Outputs",
-    "Ss3tCsdBeta1Parameters",
     "Ss3tCsdBeta1ResponseOdfOutputs",
-    "Ss3tCsdBeta1ResponseOdfParameters",
     "ss3t_csd_beta1",
     "ss3t_csd_beta1_config_params",
     "ss3t_csd_beta1_execute",

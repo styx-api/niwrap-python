@@ -14,47 +14,20 @@ V__GET_AFNI_ORIENT_METADATA = Metadata(
 
 
 VGetAfniOrientParameters = typing.TypedDict('VGetAfniOrientParameters', {
-    "@type": typing.Literal["afni.@GetAfniOrient"],
+    "@type": typing.NotRequired[typing.Literal["afni/@GetAfniOrient"]],
+    "exploratory": bool,
+    "infile": InputPathType,
+})
+VGetAfniOrientParametersTagged = typing.TypedDict('VGetAfniOrientParametersTagged', {
+    "@type": typing.Literal["afni/@GetAfniOrient"],
     "exploratory": bool,
     "infile": InputPathType,
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "afni.@GetAfniOrient": v__get_afni_orient_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "afni.@GetAfniOrient": v__get_afni_orient_outputs,
-    }.get(t)
-
-
 class VGetAfniOrientOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `v__get_afni_orient(...)`.
+    Output object returned when calling `VGetAfniOrientParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -65,7 +38,7 @@ class VGetAfniOrientOutputs(typing.NamedTuple):
 def v__get_afni_orient_params(
     infile: InputPathType,
     exploratory: bool = False,
-) -> VGetAfniOrientParameters:
+) -> VGetAfniOrientParametersTagged:
     """
     Build parameters.
     
@@ -76,7 +49,7 @@ def v__get_afni_orient_params(
         Parameter dictionary
     """
     params = {
-        "@type": "afni.@GetAfniOrient",
+        "@type": "afni/@GetAfniOrient",
         "exploratory": exploratory,
         "infile": infile,
     }
@@ -98,9 +71,9 @@ def v__get_afni_orient_cargs(
     """
     cargs = []
     cargs.append("@GetAfniOrient")
-    if params.get("exploratory"):
+    if params.get("exploratory", False):
         cargs.append("-exp")
-    cargs.append(execution.input_file(params.get("infile")))
+    cargs.append(execution.input_file(params.get("infile", None)))
     return cargs
 
 
@@ -119,7 +92,7 @@ def v__get_afni_orient_outputs(
     """
     ret = VGetAfniOrientOutputs(
         root=execution.output_file("."),
-        output_orient_code=execution.output_file(pathlib.Path(params.get("infile")).name + "_orient_code.txt"),
+        output_orient_code=execution.output_file(pathlib.Path(params.get("infile", None)).name + "_orient_code.txt"),
     )
     return ret
 
@@ -182,7 +155,6 @@ def v__get_afni_orient(
 
 __all__ = [
     "VGetAfniOrientOutputs",
-    "VGetAfniOrientParameters",
     "V__GET_AFNI_ORIENT_METADATA",
     "v__get_afni_orient",
     "v__get_afni_orient_execute",

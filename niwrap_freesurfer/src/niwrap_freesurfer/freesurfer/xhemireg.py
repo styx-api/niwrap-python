@@ -14,7 +14,23 @@ XHEMIREG_METADATA = Metadata(
 
 
 XhemiregParameters = typing.TypedDict('XhemiregParameters', {
-    "@type": typing.Literal["freesurfer.xhemireg"],
+    "@type": typing.NotRequired[typing.Literal["freesurfer/xhemireg"]],
+    "subject": str,
+    "output_dir": typing.NotRequired[str | None],
+    "map_lh": bool,
+    "map_rh": bool,
+    "perform_reg": bool,
+    "tal_compute": bool,
+    "no_tal_compute": bool,
+    "tal_estimate": bool,
+    "no_tal_estimate": bool,
+    "gcaprep": typing.NotRequired[str | None],
+    "threads": typing.NotRequired[float | None],
+    "version": bool,
+    "help": bool,
+})
+XhemiregParametersTagged = typing.TypedDict('XhemiregParametersTagged', {
+    "@type": typing.Literal["freesurfer/xhemireg"],
     "subject": str,
     "output_dir": typing.NotRequired[str | None],
     "map_lh": bool,
@@ -31,40 +47,9 @@ XhemiregParameters = typing.TypedDict('XhemiregParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "freesurfer.xhemireg": xhemireg_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-    }.get(t)
-
-
 class XhemiregOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `xhemireg(...)`.
+    Output object returned when calling `XhemiregParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -84,7 +69,7 @@ def xhemireg_params(
     threads: float | None = None,
     version: bool = False,
     help_: bool = False,
-) -> XhemiregParameters:
+) -> XhemiregParametersTagged:
     """
     Build parameters.
     
@@ -107,7 +92,7 @@ def xhemireg_params(
         Parameter dictionary
     """
     params = {
-        "@type": "freesurfer.xhemireg",
+        "@type": "freesurfer/xhemireg",
         "subject": subject,
         "map_lh": map_lh,
         "map_rh": map_rh,
@@ -145,40 +130,40 @@ def xhemireg_cargs(
     cargs.append("xhemireg")
     cargs.extend([
         "--s",
-        params.get("subject")
+        params.get("subject", None)
     ])
-    if params.get("output_dir") is not None:
+    if params.get("output_dir", None) is not None:
         cargs.extend([
             "--o",
-            params.get("output_dir")
+            params.get("output_dir", None)
         ])
-    if params.get("map_lh"):
+    if params.get("map_lh", False):
         cargs.append("--lh")
-    if params.get("map_rh"):
+    if params.get("map_rh", False):
         cargs.append("--rh")
-    if params.get("perform_reg"):
+    if params.get("perform_reg", False):
         cargs.append("--reg")
-    if params.get("tal_compute"):
+    if params.get("tal_compute", False):
         cargs.append("--tal-compute")
-    if params.get("no_tal_compute"):
+    if params.get("no_tal_compute", False):
         cargs.append("--no-tal-compute")
-    if params.get("tal_estimate"):
+    if params.get("tal_estimate", False):
         cargs.append("--tal-estimate")
-    if params.get("no_tal_estimate"):
+    if params.get("no_tal_estimate", False):
         cargs.append("--no-tal-estimate")
-    if params.get("gcaprep") is not None:
+    if params.get("gcaprep", None) is not None:
         cargs.extend([
             "--gcaprep",
-            params.get("gcaprep")
+            params.get("gcaprep", None)
         ])
-    if params.get("threads") is not None:
+    if params.get("threads", None) is not None:
         cargs.extend([
             "--threads",
-            str(params.get("threads"))
+            str(params.get("threads", None))
         ])
-    if params.get("version"):
+    if params.get("version", False):
         cargs.append("--version")
-    if params.get("help"):
+    if params.get("help", False):
         cargs.append("--help")
     return cargs
 
@@ -295,7 +280,6 @@ def xhemireg(
 __all__ = [
     "XHEMIREG_METADATA",
     "XhemiregOutputs",
-    "XhemiregParameters",
     "xhemireg",
     "xhemireg_execute",
     "xhemireg_params",

@@ -14,47 +14,20 @@ FSL_FIX_TEXT_METADATA = Metadata(
 
 
 FslFixTextParameters = typing.TypedDict('FslFixTextParameters', {
-    "@type": typing.Literal["fsl.fslFixText"],
+    "@type": typing.NotRequired[typing.Literal["fsl/fslFixText"]],
+    "input_text_file": InputPathType,
+    "output_text_file": str,
+})
+FslFixTextParametersTagged = typing.TypedDict('FslFixTextParametersTagged', {
+    "@type": typing.Literal["fsl/fslFixText"],
     "input_text_file": InputPathType,
     "output_text_file": str,
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "fsl.fslFixText": fsl_fix_text_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "fsl.fslFixText": fsl_fix_text_outputs,
-    }.get(t)
-
-
 class FslFixTextOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `fsl_fix_text(...)`.
+    Output object returned when calling `FslFixTextParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -65,7 +38,7 @@ class FslFixTextOutputs(typing.NamedTuple):
 def fsl_fix_text_params(
     input_text_file: InputPathType,
     output_text_file: str,
-) -> FslFixTextParameters:
+) -> FslFixTextParametersTagged:
     """
     Build parameters.
     
@@ -76,7 +49,7 @@ def fsl_fix_text_params(
         Parameter dictionary
     """
     params = {
-        "@type": "fsl.fslFixText",
+        "@type": "fsl/fslFixText",
         "input_text_file": input_text_file,
         "output_text_file": output_text_file,
     }
@@ -98,8 +71,8 @@ def fsl_fix_text_cargs(
     """
     cargs = []
     cargs.append("fslFixText")
-    cargs.append(execution.input_file(params.get("input_text_file")))
-    cargs.append(params.get("output_text_file"))
+    cargs.append(execution.input_file(params.get("input_text_file", None)))
+    cargs.append(params.get("output_text_file", None))
     return cargs
 
 
@@ -118,7 +91,7 @@ def fsl_fix_text_outputs(
     """
     ret = FslFixTextOutputs(
         root=execution.output_file("."),
-        output_text_file=execution.output_file(params.get("output_text_file")),
+        output_text_file=execution.output_file(params.get("output_text_file", None)),
     )
     return ret
 
@@ -182,7 +155,6 @@ def fsl_fix_text(
 __all__ = [
     "FSL_FIX_TEXT_METADATA",
     "FslFixTextOutputs",
-    "FslFixTextParameters",
     "fsl_fix_text",
     "fsl_fix_text_execute",
     "fsl_fix_text_params",

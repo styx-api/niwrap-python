@@ -14,7 +14,32 @@ V_3D_CLUST_SIM_METADATA = Metadata(
 
 
 V3dClustSimParameters = typing.TypedDict('V3dClustSimParameters', {
-    "@type": typing.Literal["afni.3dClustSim"],
+    "@type": typing.NotRequired[typing.Literal["afni/3dClustSim"]],
+    "nxyz": typing.NotRequired[str | None],
+    "dxyz": typing.NotRequired[str | None],
+    "ball": bool,
+    "mask": typing.NotRequired[InputPathType | None],
+    "oksmallmask": bool,
+    "inset": typing.NotRequired[list[InputPathType] | None],
+    "fwhm": typing.NotRequired[float | None],
+    "acf": typing.NotRequired[str | None],
+    "nopad": bool,
+    "pthr": typing.NotRequired[str | None],
+    "athr": typing.NotRequired[str | None],
+    "lots": bool,
+    "mega": bool,
+    "iter": typing.NotRequired[float | None],
+    "nodec": bool,
+    "seed": typing.NotRequired[float | None],
+    "niml": bool,
+    "both": bool,
+    "prefix": typing.NotRequired[str | None],
+    "cmd": typing.NotRequired[str | None],
+    "quiet": bool,
+    "ssave": typing.NotRequired[str | None],
+})
+V3dClustSimParametersTagged = typing.TypedDict('V3dClustSimParametersTagged', {
+    "@type": typing.Literal["afni/3dClustSim"],
     "nxyz": typing.NotRequired[str | None],
     "dxyz": typing.NotRequired[str | None],
     "ball": bool,
@@ -40,41 +65,9 @@ V3dClustSimParameters = typing.TypedDict('V3dClustSimParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "afni.3dClustSim": v_3d_clust_sim_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "afni.3dClustSim": v_3d_clust_sim_outputs,
-    }.get(t)
-
-
 class V3dClustSimOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `v_3d_clust_sim(...)`.
+    Output object returned when calling `V3dClustSimParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -123,7 +116,7 @@ def v_3d_clust_sim_params(
     cmd_: str | None = None,
     quiet: bool = False,
     ssave: str | None = None,
-) -> V3dClustSimParameters:
+) -> V3dClustSimParametersTagged:
     """
     Build parameters.
     
@@ -156,7 +149,7 @@ def v_3d_clust_sim_params(
         Parameter dictionary
     """
     params = {
-        "@type": "afni.3dClustSim",
+        "@type": "afni/3dClustSim",
         "ball": ball,
         "oksmallmask": oksmallmask,
         "nopad": nopad,
@@ -211,88 +204,88 @@ def v_3d_clust_sim_cargs(
     """
     cargs = []
     cargs.append("3dClustSim")
-    if params.get("nxyz") is not None:
+    if params.get("nxyz", None) is not None:
         cargs.extend([
             "-nxyz",
-            params.get("nxyz")
+            params.get("nxyz", None)
         ])
-    if params.get("dxyz") is not None:
+    if params.get("dxyz", None) is not None:
         cargs.extend([
             "-dxyz",
-            params.get("dxyz")
+            params.get("dxyz", None)
         ])
-    if params.get("ball"):
+    if params.get("ball", False):
         cargs.append("-BALL")
-    if params.get("mask") is not None:
+    if params.get("mask", None) is not None:
         cargs.extend([
             "-mask",
-            execution.input_file(params.get("mask"))
+            execution.input_file(params.get("mask", None))
         ])
-    if params.get("oksmallmask"):
+    if params.get("oksmallmask", False):
         cargs.append("-OKsmallmask")
-    if params.get("inset") is not None:
+    if params.get("inset", None) is not None:
         cargs.extend([
             "-inset",
-            *[execution.input_file(f) for f in params.get("inset")]
+            *[execution.input_file(f) for f in params.get("inset", None)]
         ])
-    if params.get("fwhm") is not None:
+    if params.get("fwhm", None) is not None:
         cargs.extend([
             "-fwhm",
-            str(params.get("fwhm"))
+            str(params.get("fwhm", None))
         ])
-    if params.get("acf") is not None:
+    if params.get("acf", None) is not None:
         cargs.extend([
             "-acf",
-            params.get("acf")
+            params.get("acf", None)
         ])
-    if params.get("nopad"):
+    if params.get("nopad", False):
         cargs.append("-nopad")
-    if params.get("pthr") is not None:
+    if params.get("pthr", None) is not None:
         cargs.extend([
             "-pthr",
-            params.get("pthr")
+            params.get("pthr", None)
         ])
-    if params.get("athr") is not None:
+    if params.get("athr", None) is not None:
         cargs.extend([
             "-athr",
-            params.get("athr")
+            params.get("athr", None)
         ])
-    if params.get("lots"):
+    if params.get("lots", False):
         cargs.append("-LOTS")
-    if params.get("mega"):
+    if params.get("mega", False):
         cargs.append("-MEGA")
-    if params.get("iter") is not None:
+    if params.get("iter", None) is not None:
         cargs.extend([
             "-iter",
-            str(params.get("iter"))
+            str(params.get("iter", None))
         ])
-    if params.get("nodec"):
+    if params.get("nodec", False):
         cargs.append("-nodec")
-    if params.get("seed") is not None:
+    if params.get("seed", None) is not None:
         cargs.extend([
             "-seed",
-            str(params.get("seed"))
+            str(params.get("seed", None))
         ])
-    if params.get("niml"):
+    if params.get("niml", False):
         cargs.append("-niml")
-    if params.get("both"):
+    if params.get("both", False):
         cargs.append("-both")
-    if params.get("prefix") is not None:
+    if params.get("prefix", None) is not None:
         cargs.extend([
             "-prefix",
-            params.get("prefix")
+            params.get("prefix", None)
         ])
-    if params.get("cmd") is not None:
+    if params.get("cmd", None) is not None:
         cargs.extend([
             "-cmd",
-            params.get("cmd")
+            params.get("cmd", None)
         ])
-    if params.get("quiet"):
+    if params.get("quiet", False):
         cargs.append("-quiet")
-    if params.get("ssave") is not None:
+    if params.get("ssave", None) is not None:
         cargs.extend([
             "-ssave",
-            params.get("ssave")
+            params.get("ssave", None)
         ])
     return cargs
 
@@ -312,16 +305,16 @@ def v_3d_clust_sim_outputs(
     """
     ret = V3dClustSimOutputs(
         root=execution.output_file("."),
-        output_nn1_1sided=execution.output_file(params.get("prefix") + ".NN1_1sided.1D") if (params.get("prefix") is not None) else None,
-        output_nn1_2sided=execution.output_file(params.get("prefix") + ".NN1_2sided.1D") if (params.get("prefix") is not None) else None,
-        output_nn1_bisided=execution.output_file(params.get("prefix") + ".NN1_bisided.1D") if (params.get("prefix") is not None) else None,
-        output_nn2_1sided=execution.output_file(params.get("prefix") + ".NN2_1sided.1D") if (params.get("prefix") is not None) else None,
-        output_nn2_2sided=execution.output_file(params.get("prefix") + ".NN2_2sided.1D") if (params.get("prefix") is not None) else None,
-        output_nn2_bisided=execution.output_file(params.get("prefix") + ".NN2_bisided.1D") if (params.get("prefix") is not None) else None,
-        output_nn3_1sided=execution.output_file(params.get("prefix") + ".NN3_1sided.1D") if (params.get("prefix") is not None) else None,
-        output_nn3_2sided=execution.output_file(params.get("prefix") + ".NN3_2sided.1D") if (params.get("prefix") is not None) else None,
-        output_nn3_bisided=execution.output_file(params.get("prefix") + ".NN3_bisided.1D") if (params.get("prefix") is not None) else None,
-        mask_compressed=execution.output_file(params.get("prefix") + ".mask") if (params.get("prefix") is not None) else None,
+        output_nn1_1sided=execution.output_file(params.get("prefix", None) + ".NN1_1sided.1D") if (params.get("prefix") is not None) else None,
+        output_nn1_2sided=execution.output_file(params.get("prefix", None) + ".NN1_2sided.1D") if (params.get("prefix") is not None) else None,
+        output_nn1_bisided=execution.output_file(params.get("prefix", None) + ".NN1_bisided.1D") if (params.get("prefix") is not None) else None,
+        output_nn2_1sided=execution.output_file(params.get("prefix", None) + ".NN2_1sided.1D") if (params.get("prefix") is not None) else None,
+        output_nn2_2sided=execution.output_file(params.get("prefix", None) + ".NN2_2sided.1D") if (params.get("prefix") is not None) else None,
+        output_nn2_bisided=execution.output_file(params.get("prefix", None) + ".NN2_bisided.1D") if (params.get("prefix") is not None) else None,
+        output_nn3_1sided=execution.output_file(params.get("prefix", None) + ".NN3_1sided.1D") if (params.get("prefix") is not None) else None,
+        output_nn3_2sided=execution.output_file(params.get("prefix", None) + ".NN3_2sided.1D") if (params.get("prefix") is not None) else None,
+        output_nn3_bisided=execution.output_file(params.get("prefix", None) + ".NN3_bisided.1D") if (params.get("prefix") is not None) else None,
+        mask_compressed=execution.output_file(params.get("prefix", None) + ".mask") if (params.get("prefix") is not None) else None,
     )
     return ret
 
@@ -446,7 +439,6 @@ def v_3d_clust_sim(
 
 __all__ = [
     "V3dClustSimOutputs",
-    "V3dClustSimParameters",
     "V_3D_CLUST_SIM_METADATA",
     "v_3d_clust_sim",
     "v_3d_clust_sim_execute",

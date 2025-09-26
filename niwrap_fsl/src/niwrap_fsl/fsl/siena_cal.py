@@ -14,7 +14,14 @@ SIENA_CAL_METADATA = Metadata(
 
 
 SienaCalParameters = typing.TypedDict('SienaCalParameters', {
-    "@type": typing.Literal["fsl.siena_cal"],
+    "@type": typing.NotRequired[typing.Literal["fsl/siena_cal"]],
+    "input1_file": InputPathType,
+    "input2_file": InputPathType,
+    "scale": float,
+    "siena_diff_options": typing.NotRequired[str | None],
+})
+SienaCalParametersTagged = typing.TypedDict('SienaCalParametersTagged', {
+    "@type": typing.Literal["fsl/siena_cal"],
     "input1_file": InputPathType,
     "input2_file": InputPathType,
     "scale": float,
@@ -22,41 +29,9 @@ SienaCalParameters = typing.TypedDict('SienaCalParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "fsl.siena_cal": siena_cal_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "fsl.siena_cal": siena_cal_outputs,
-    }.get(t)
-
-
 class SienaCalOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `siena_cal(...)`.
+    Output object returned when calling `SienaCalParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -69,7 +44,7 @@ def siena_cal_params(
     input2_file: InputPathType,
     scale: float,
     siena_diff_options: str | None = None,
-) -> SienaCalParameters:
+) -> SienaCalParametersTagged:
     """
     Build parameters.
     
@@ -82,7 +57,7 @@ def siena_cal_params(
         Parameter dictionary
     """
     params = {
-        "@type": "fsl.siena_cal",
+        "@type": "fsl/siena_cal",
         "input1_file": input1_file,
         "input2_file": input2_file,
         "scale": scale,
@@ -107,11 +82,11 @@ def siena_cal_cargs(
     """
     cargs = []
     cargs.append("siena_cal")
-    cargs.append(execution.input_file(params.get("input1_file")))
-    cargs.append(execution.input_file(params.get("input2_file")))
-    cargs.append(str(params.get("scale")))
-    if params.get("siena_diff_options") is not None:
-        cargs.append(params.get("siena_diff_options"))
+    cargs.append(execution.input_file(params.get("input1_file", None)))
+    cargs.append(execution.input_file(params.get("input2_file", None)))
+    cargs.append(str(params.get("scale", None)))
+    if params.get("siena_diff_options", None) is not None:
+        cargs.append(params.get("siena_diff_options", None))
     return cargs
 
 
@@ -130,7 +105,7 @@ def siena_cal_outputs(
     """
     ret = SienaCalOutputs(
         root=execution.output_file("."),
-        output_dir=execution.output_file(pathlib.Path(params.get("input1_file")).name + "_to_" + pathlib.Path(params.get("input2_file")).name + "_siena"),
+        output_dir=execution.output_file(pathlib.Path(params.get("input1_file", None)).name + "_to_" + pathlib.Path(params.get("input2_file", None)).name + "_siena"),
     )
     return ret
 
@@ -202,7 +177,6 @@ def siena_cal(
 __all__ = [
     "SIENA_CAL_METADATA",
     "SienaCalOutputs",
-    "SienaCalParameters",
     "siena_cal",
     "siena_cal_execute",
     "siena_cal_params",

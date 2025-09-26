@@ -14,7 +14,24 @@ MRI_EDIT_WM_WITH_ASEG_METADATA = Metadata(
 
 
 MriEditWmWithAsegParameters = typing.TypedDict('MriEditWmWithAsegParameters', {
-    "@type": typing.Literal["freesurfer.mri_edit_wm_with_aseg"],
+    "@type": typing.NotRequired[typing.Literal["freesurfer/mri_edit_wm_with_aseg"]],
+    "input_wm": InputPathType,
+    "input_t1_brain": InputPathType,
+    "aseg": InputPathType,
+    "output_wm": str,
+    "fillven": bool,
+    "fix_scm_ha": typing.NotRequired[int | None],
+    "fix_scm_ha_only": typing.NotRequired[str | None],
+    "keep": bool,
+    "keep_in": bool,
+    "lh": bool,
+    "rh": bool,
+    "fix_ento_wm": typing.NotRequired[str | None],
+    "sa_fix_ento_wm": typing.NotRequired[str | None],
+    "debug_voxel": typing.NotRequired[list[float] | None],
+})
+MriEditWmWithAsegParametersTagged = typing.TypedDict('MriEditWmWithAsegParametersTagged', {
+    "@type": typing.Literal["freesurfer/mri_edit_wm_with_aseg"],
     "input_wm": InputPathType,
     "input_t1_brain": InputPathType,
     "aseg": InputPathType,
@@ -32,41 +49,9 @@ MriEditWmWithAsegParameters = typing.TypedDict('MriEditWmWithAsegParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "freesurfer.mri_edit_wm_with_aseg": mri_edit_wm_with_aseg_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "freesurfer.mri_edit_wm_with_aseg": mri_edit_wm_with_aseg_outputs,
-    }.get(t)
-
-
 class MriEditWmWithAsegOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `mri_edit_wm_with_aseg(...)`.
+    Output object returned when calling `MriEditWmWithAsegParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -89,7 +74,7 @@ def mri_edit_wm_with_aseg_params(
     fix_ento_wm: str | None = None,
     sa_fix_ento_wm: str | None = None,
     debug_voxel: list[float] | None = None,
-) -> MriEditWmWithAsegParameters:
+) -> MriEditWmWithAsegParametersTagged:
     """
     Build parameters.
     
@@ -113,7 +98,7 @@ def mri_edit_wm_with_aseg_params(
         Parameter dictionary
     """
     params = {
-        "@type": "freesurfer.mri_edit_wm_with_aseg",
+        "@type": "freesurfer/mri_edit_wm_with_aseg",
         "input_wm": input_wm,
         "input_t1_brain": input_t1_brain,
         "aseg": aseg,
@@ -152,44 +137,44 @@ def mri_edit_wm_with_aseg_cargs(
     """
     cargs = []
     cargs.append("mri_edit_wm_with_aseg")
-    cargs.append(execution.input_file(params.get("input_wm")))
-    cargs.append(execution.input_file(params.get("input_t1_brain")))
-    cargs.append(execution.input_file(params.get("aseg")))
-    cargs.append(params.get("output_wm"))
-    if params.get("fillven"):
+    cargs.append(execution.input_file(params.get("input_wm", None)))
+    cargs.append(execution.input_file(params.get("input_t1_brain", None)))
+    cargs.append(execution.input_file(params.get("aseg", None)))
+    cargs.append(params.get("output_wm", None))
+    if params.get("fillven", False):
         cargs.append("-fillven")
-    if params.get("fix_scm_ha") is not None:
+    if params.get("fix_scm_ha", None) is not None:
         cargs.extend([
             "-fix-scm-ha",
-            str(params.get("fix_scm_ha"))
+            str(params.get("fix_scm_ha", None))
         ])
-    if params.get("fix_scm_ha_only") is not None:
+    if params.get("fix_scm_ha_only", None) is not None:
         cargs.extend([
             "-fix-scm-ha-only",
-            params.get("fix_scm_ha_only")
+            params.get("fix_scm_ha_only", None)
         ])
-    if params.get("keep"):
+    if params.get("keep", False):
         cargs.append("-keep")
-    if params.get("keep_in"):
+    if params.get("keep_in", False):
         cargs.append("-keep-in")
-    if params.get("lh"):
+    if params.get("lh", False):
         cargs.append("-lh")
-    if params.get("rh"):
+    if params.get("rh", False):
         cargs.append("-rh")
-    if params.get("fix_ento_wm") is not None:
+    if params.get("fix_ento_wm", None) is not None:
         cargs.extend([
             "-fix-ento-wm",
-            params.get("fix_ento_wm")
+            params.get("fix_ento_wm", None)
         ])
-    if params.get("sa_fix_ento_wm") is not None:
+    if params.get("sa_fix_ento_wm", None) is not None:
         cargs.extend([
             "-sa-fix-ento-wm",
-            params.get("sa_fix_ento_wm")
+            params.get("sa_fix_ento_wm", None)
         ])
-    if params.get("debug_voxel") is not None:
+    if params.get("debug_voxel", None) is not None:
         cargs.extend([
             "-debug_voxel",
-            *map(str, params.get("debug_voxel"))
+            *map(str, params.get("debug_voxel", None))
         ])
     return cargs
 
@@ -209,7 +194,7 @@ def mri_edit_wm_with_aseg_outputs(
     """
     ret = MriEditWmWithAsegOutputs(
         root=execution.output_file("."),
-        output_wm_file=execution.output_file(params.get("output_wm")),
+        output_wm_file=execution.output_file(params.get("output_wm", None)),
     )
     return ret
 
@@ -310,7 +295,6 @@ def mri_edit_wm_with_aseg(
 __all__ = [
     "MRI_EDIT_WM_WITH_ASEG_METADATA",
     "MriEditWmWithAsegOutputs",
-    "MriEditWmWithAsegParameters",
     "mri_edit_wm_with_aseg",
     "mri_edit_wm_with_aseg_execute",
     "mri_edit_wm_with_aseg_params",

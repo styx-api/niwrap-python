@@ -14,48 +14,22 @@ V_3D_SKULL_STRIP_METADATA = Metadata(
 
 
 V3dSkullStripParameters = typing.TypedDict('V3dSkullStripParameters', {
-    "@type": typing.Literal["afni.3dSkullStrip"],
+    "@type": typing.NotRequired[typing.Literal["afni/3dSkullStrip"]],
+    "in_file": InputPathType,
+    "num_threads": typing.NotRequired[int | None],
+    "outputtype": typing.NotRequired[typing.Literal["NIFTI", "AFNI", "NIFTI_GZ"] | None],
+})
+V3dSkullStripParametersTagged = typing.TypedDict('V3dSkullStripParametersTagged', {
+    "@type": typing.Literal["afni/3dSkullStrip"],
     "in_file": InputPathType,
     "num_threads": typing.NotRequired[int | None],
     "outputtype": typing.NotRequired[typing.Literal["NIFTI", "AFNI", "NIFTI_GZ"] | None],
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "afni.3dSkullStrip": v_3d_skull_strip_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "afni.3dSkullStrip": v_3d_skull_strip_outputs,
-    }.get(t)
-
-
 class V3dSkullStripOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `v_3d_skull_strip(...)`.
+    Output object returned when calling `V3dSkullStripParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -69,7 +43,7 @@ def v_3d_skull_strip_params(
     in_file: InputPathType,
     num_threads: int | None = None,
     outputtype: typing.Literal["NIFTI", "AFNI", "NIFTI_GZ"] | None = None,
-) -> V3dSkullStripParameters:
+) -> V3dSkullStripParametersTagged:
     """
     Build parameters.
     
@@ -81,7 +55,7 @@ def v_3d_skull_strip_params(
         Parameter dictionary
     """
     params = {
-        "@type": "afni.3dSkullStrip",
+        "@type": "afni/3dSkullStrip",
         "in_file": in_file,
     }
     if num_threads is not None:
@@ -108,12 +82,12 @@ def v_3d_skull_strip_cargs(
     cargs.append("3dSkullStrip")
     cargs.extend([
         "-input",
-        execution.input_file(params.get("in_file"))
+        execution.input_file(params.get("in_file", None))
     ])
-    if params.get("num_threads") is not None:
-        cargs.append(str(params.get("num_threads")))
-    if params.get("outputtype") is not None:
-        cargs.append(params.get("outputtype"))
+    if params.get("num_threads", None) is not None:
+        cargs.append(str(params.get("num_threads", None)))
+    if params.get("outputtype", None) is not None:
+        cargs.append(params.get("outputtype", None))
     return cargs
 
 
@@ -132,7 +106,7 @@ def v_3d_skull_strip_outputs(
     """
     ret = V3dSkullStripOutputs(
         root=execution.output_file("."),
-        out_file=execution.output_file(pathlib.Path(params.get("in_file")).name + "_skullstrip"),
+        out_file=execution.output_file(pathlib.Path(params.get("in_file", None)).name + "_skullstrip"),
         out_file_=execution.output_file("out_file"),
     )
     return ret
@@ -201,7 +175,6 @@ def v_3d_skull_strip(
 
 __all__ = [
     "V3dSkullStripOutputs",
-    "V3dSkullStripParameters",
     "V_3D_SKULL_STRIP_METADATA",
     "v_3d_skull_strip",
     "v_3d_skull_strip_execute",

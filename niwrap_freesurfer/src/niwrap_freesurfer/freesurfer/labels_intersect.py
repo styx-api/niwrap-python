@@ -14,48 +14,22 @@ LABELS_INTERSECT_METADATA = Metadata(
 
 
 LabelsIntersectParameters = typing.TypedDict('LabelsIntersectParameters', {
-    "@type": typing.Literal["freesurfer.labels_intersect"],
+    "@type": typing.NotRequired[typing.Literal["freesurfer/labels_intersect"]],
+    "label1": InputPathType,
+    "label2": InputPathType,
+    "outputname": str,
+})
+LabelsIntersectParametersTagged = typing.TypedDict('LabelsIntersectParametersTagged', {
+    "@type": typing.Literal["freesurfer/labels_intersect"],
     "label1": InputPathType,
     "label2": InputPathType,
     "outputname": str,
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "freesurfer.labels_intersect": labels_intersect_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "freesurfer.labels_intersect": labels_intersect_outputs,
-    }.get(t)
-
-
 class LabelsIntersectOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `labels_intersect(...)`.
+    Output object returned when calling `LabelsIntersectParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -67,7 +41,7 @@ def labels_intersect_params(
     label1: InputPathType,
     label2: InputPathType,
     outputname: str,
-) -> LabelsIntersectParameters:
+) -> LabelsIntersectParametersTagged:
     """
     Build parameters.
     
@@ -79,7 +53,7 @@ def labels_intersect_params(
         Parameter dictionary
     """
     params = {
-        "@type": "freesurfer.labels_intersect",
+        "@type": "freesurfer/labels_intersect",
         "label1": label1,
         "label2": label2,
         "outputname": outputname,
@@ -102,9 +76,9 @@ def labels_intersect_cargs(
     """
     cargs = []
     cargs.append("labels_intersect")
-    cargs.append(execution.input_file(params.get("label1")))
-    cargs.append(execution.input_file(params.get("label2")))
-    cargs.append(params.get("outputname"))
+    cargs.append(execution.input_file(params.get("label1", None)))
+    cargs.append(execution.input_file(params.get("label2", None)))
+    cargs.append(params.get("outputname", None))
     return cargs
 
 
@@ -123,7 +97,7 @@ def labels_intersect_outputs(
     """
     ret = LabelsIntersectOutputs(
         root=execution.output_file("."),
-        output_label=execution.output_file(params.get("outputname")),
+        output_label=execution.output_file(params.get("outputname", None)),
     )
     return ret
 
@@ -190,7 +164,6 @@ def labels_intersect(
 __all__ = [
     "LABELS_INTERSECT_METADATA",
     "LabelsIntersectOutputs",
-    "LabelsIntersectParameters",
     "labels_intersect",
     "labels_intersect_execute",
     "labels_intersect_params",

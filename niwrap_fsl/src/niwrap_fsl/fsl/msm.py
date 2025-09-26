@@ -14,7 +14,26 @@ MSM_METADATA = Metadata(
 
 
 MsmParameters = typing.TypedDict('MsmParameters', {
-    "@type": typing.Literal["fsl.msm"],
+    "@type": typing.NotRequired[typing.Literal["fsl/msm"]],
+    "inmesh": InputPathType,
+    "out": str,
+    "refmesh": typing.NotRequired[InputPathType | None],
+    "indata": typing.NotRequired[InputPathType | None],
+    "refdata": typing.NotRequired[InputPathType | None],
+    "trans": typing.NotRequired[InputPathType | None],
+    "in_register": typing.NotRequired[InputPathType | None],
+    "inweight": typing.NotRequired[InputPathType | None],
+    "refweight": typing.NotRequired[InputPathType | None],
+    "format": typing.NotRequired[str | None],
+    "conf": typing.NotRequired[InputPathType | None],
+    "levels": typing.NotRequired[float | None],
+    "smoothout": typing.NotRequired[float | None],
+    "help": bool,
+    "verbose": bool,
+    "printoptions": bool,
+})
+MsmParametersTagged = typing.TypedDict('MsmParametersTagged', {
+    "@type": typing.Literal["fsl/msm"],
     "inmesh": InputPathType,
     "out": str,
     "refmesh": typing.NotRequired[InputPathType | None],
@@ -34,41 +53,9 @@ MsmParameters = typing.TypedDict('MsmParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "fsl.msm": msm_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "fsl.msm": msm_outputs,
-    }.get(t)
-
-
 class MsmOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `msm(...)`.
+    Output object returned when calling `MsmParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -93,7 +80,7 @@ def msm_params(
     help_: bool = False,
     verbose: bool = False,
     printoptions: bool = False,
-) -> MsmParameters:
+) -> MsmParametersTagged:
     """
     Build parameters.
     
@@ -133,7 +120,7 @@ def msm_params(
         Parameter dictionary
     """
     params = {
-        "@type": "fsl.msm",
+        "@type": "fsl/msm",
         "inmesh": inmesh,
         "out": out,
         "help": help_,
@@ -180,68 +167,68 @@ def msm_cargs(
     """
     cargs = []
     cargs.append("msm")
-    cargs.append(execution.input_file(params.get("inmesh")))
-    cargs.append("-out " + params.get("out"))
-    if params.get("refmesh") is not None:
+    cargs.append(execution.input_file(params.get("inmesh", None)))
+    cargs.append("-out " + params.get("out", None))
+    if params.get("refmesh", None) is not None:
         cargs.extend([
             "--refmesh",
-            execution.input_file(params.get("refmesh"))
+            execution.input_file(params.get("refmesh", None))
         ])
-    if params.get("indata") is not None:
+    if params.get("indata", None) is not None:
         cargs.extend([
             "--indata",
-            execution.input_file(params.get("indata"))
+            execution.input_file(params.get("indata", None))
         ])
-    if params.get("refdata") is not None:
+    if params.get("refdata", None) is not None:
         cargs.extend([
             "--refdata",
-            execution.input_file(params.get("refdata"))
+            execution.input_file(params.get("refdata", None))
         ])
-    if params.get("trans") is not None:
+    if params.get("trans", None) is not None:
         cargs.extend([
             "--trans",
-            execution.input_file(params.get("trans"))
+            execution.input_file(params.get("trans", None))
         ])
-    if params.get("in_register") is not None:
+    if params.get("in_register", None) is not None:
         cargs.extend([
             "--in_register",
-            execution.input_file(params.get("in_register"))
+            execution.input_file(params.get("in_register", None))
         ])
-    if params.get("inweight") is not None:
+    if params.get("inweight", None) is not None:
         cargs.extend([
             "--inweight",
-            execution.input_file(params.get("inweight"))
+            execution.input_file(params.get("inweight", None))
         ])
-    if params.get("refweight") is not None:
+    if params.get("refweight", None) is not None:
         cargs.extend([
             "--refweight",
-            execution.input_file(params.get("refweight"))
+            execution.input_file(params.get("refweight", None))
         ])
-    if params.get("format") is not None:
+    if params.get("format", None) is not None:
         cargs.extend([
             "-f",
-            params.get("format")
+            params.get("format", None)
         ])
-    if params.get("conf") is not None:
+    if params.get("conf", None) is not None:
         cargs.extend([
             "--conf",
-            execution.input_file(params.get("conf"))
+            execution.input_file(params.get("conf", None))
         ])
-    if params.get("levels") is not None:
+    if params.get("levels", None) is not None:
         cargs.extend([
             "--levels",
-            str(params.get("levels"))
+            str(params.get("levels", None))
         ])
-    if params.get("smoothout") is not None:
+    if params.get("smoothout", None) is not None:
         cargs.extend([
             "--smoothout",
-            str(params.get("smoothout"))
+            str(params.get("smoothout", None))
         ])
-    if params.get("help"):
+    if params.get("help", False):
         cargs.append("-h")
-    if params.get("verbose"):
+    if params.get("verbose", False):
         cargs.append("-v")
-    if params.get("printoptions"):
+    if params.get("printoptions", False):
         cargs.append("-p")
     return cargs
 
@@ -261,7 +248,7 @@ def msm_outputs(
     """
     ret = MsmOutputs(
         root=execution.output_file("."),
-        output_file=execution.output_file(params.get("out") + "_output.ext"),
+        output_file=execution.output_file(params.get("out", None) + "_output.ext"),
     )
     return ret
 
@@ -384,7 +371,6 @@ def msm(
 __all__ = [
     "MSM_METADATA",
     "MsmOutputs",
-    "MsmParameters",
     "msm",
     "msm_execute",
     "msm_params",

@@ -14,20 +14,42 @@ METRIC_WEIGHTED_STATS_METADATA = Metadata(
 
 
 MetricWeightedStatsRoiParameters = typing.TypedDict('MetricWeightedStatsRoiParameters', {
-    "@type": typing.Literal["workbench.metric-weighted-stats.roi"],
+    "@type": typing.NotRequired[typing.Literal["roi"]],
+    "roi_metric": InputPathType,
+    "opt_match_maps": bool,
+})
+MetricWeightedStatsRoiParametersTagged = typing.TypedDict('MetricWeightedStatsRoiParametersTagged', {
+    "@type": typing.Literal["roi"],
     "roi_metric": InputPathType,
     "opt_match_maps": bool,
 })
 
 
 MetricWeightedStatsStdevParameters = typing.TypedDict('MetricWeightedStatsStdevParameters', {
-    "@type": typing.Literal["workbench.metric-weighted-stats.stdev"],
+    "@type": typing.NotRequired[typing.Literal["stdev"]],
+    "opt_sample": bool,
+})
+MetricWeightedStatsStdevParametersTagged = typing.TypedDict('MetricWeightedStatsStdevParametersTagged', {
+    "@type": typing.Literal["stdev"],
     "opt_sample": bool,
 })
 
 
 MetricWeightedStatsParameters = typing.TypedDict('MetricWeightedStatsParameters', {
-    "@type": typing.Literal["workbench.metric-weighted-stats"],
+    "@type": typing.NotRequired[typing.Literal["workbench/metric-weighted-stats"]],
+    "metric_in": InputPathType,
+    "opt_area_surface_area_surface": typing.NotRequired[InputPathType | None],
+    "opt_weight_metric_weight_metric": typing.NotRequired[InputPathType | None],
+    "opt_column_column": typing.NotRequired[str | None],
+    "roi": typing.NotRequired[MetricWeightedStatsRoiParameters | None],
+    "opt_mean": bool,
+    "stdev": typing.NotRequired[MetricWeightedStatsStdevParameters | None],
+    "opt_percentile_percent": typing.NotRequired[float | None],
+    "opt_sum": bool,
+    "opt_show_map_name": bool,
+})
+MetricWeightedStatsParametersTagged = typing.TypedDict('MetricWeightedStatsParametersTagged', {
+    "@type": typing.Literal["workbench/metric-weighted-stats"],
     "metric_in": InputPathType,
     "opt_area_surface_area_surface": typing.NotRequired[InputPathType | None],
     "opt_weight_metric_weight_metric": typing.NotRequired[InputPathType | None],
@@ -41,43 +63,10 @@ MetricWeightedStatsParameters = typing.TypedDict('MetricWeightedStatsParameters'
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "workbench.metric-weighted-stats": metric_weighted_stats_cargs,
-        "workbench.metric-weighted-stats.roi": metric_weighted_stats_roi_cargs,
-        "workbench.metric-weighted-stats.stdev": metric_weighted_stats_stdev_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-    }.get(t)
-
-
 def metric_weighted_stats_roi_params(
     roi_metric: InputPathType,
     opt_match_maps: bool = False,
-) -> MetricWeightedStatsRoiParameters:
+) -> MetricWeightedStatsRoiParametersTagged:
     """
     Build parameters.
     
@@ -89,7 +78,7 @@ def metric_weighted_stats_roi_params(
         Parameter dictionary
     """
     params = {
-        "@type": "workbench.metric-weighted-stats.roi",
+        "@type": "roi",
         "roi_metric": roi_metric,
         "opt_match_maps": opt_match_maps,
     }
@@ -111,15 +100,15 @@ def metric_weighted_stats_roi_cargs(
     """
     cargs = []
     cargs.append("-roi")
-    cargs.append(execution.input_file(params.get("roi_metric")))
-    if params.get("opt_match_maps"):
+    cargs.append(execution.input_file(params.get("roi_metric", None)))
+    if params.get("opt_match_maps", False):
         cargs.append("-match-maps")
     return cargs
 
 
 def metric_weighted_stats_stdev_params(
     opt_sample: bool = False,
-) -> MetricWeightedStatsStdevParameters:
+) -> MetricWeightedStatsStdevParametersTagged:
     """
     Build parameters.
     
@@ -129,7 +118,7 @@ def metric_weighted_stats_stdev_params(
         Parameter dictionary
     """
     params = {
-        "@type": "workbench.metric-weighted-stats.stdev",
+        "@type": "stdev",
         "opt_sample": opt_sample,
     }
     return params
@@ -150,14 +139,14 @@ def metric_weighted_stats_stdev_cargs(
     """
     cargs = []
     cargs.append("-stdev")
-    if params.get("opt_sample"):
+    if params.get("opt_sample", False):
         cargs.append("-sample")
     return cargs
 
 
 class MetricWeightedStatsOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `metric_weighted_stats(...)`.
+    Output object returned when calling `MetricWeightedStatsParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -174,7 +163,7 @@ def metric_weighted_stats_params(
     opt_percentile_percent: float | None = None,
     opt_sum: bool = False,
     opt_show_map_name: bool = False,
-) -> MetricWeightedStatsParameters:
+) -> MetricWeightedStatsParametersTagged:
     """
     Build parameters.
     
@@ -197,7 +186,7 @@ def metric_weighted_stats_params(
         Parameter dictionary
     """
     params = {
-        "@type": "workbench.metric-weighted-stats",
+        "@type": "workbench/metric-weighted-stats",
         "metric_in": metric_in,
         "opt_mean": opt_mean,
         "opt_sum": opt_sum,
@@ -234,36 +223,36 @@ def metric_weighted_stats_cargs(
     cargs = []
     cargs.append("wb_command")
     cargs.append("-metric-weighted-stats")
-    cargs.append(execution.input_file(params.get("metric_in")))
-    if params.get("opt_area_surface_area_surface") is not None:
+    cargs.append(execution.input_file(params.get("metric_in", None)))
+    if params.get("opt_area_surface_area_surface", None) is not None:
         cargs.extend([
             "-area-surface",
-            execution.input_file(params.get("opt_area_surface_area_surface"))
+            execution.input_file(params.get("opt_area_surface_area_surface", None))
         ])
-    if params.get("opt_weight_metric_weight_metric") is not None:
+    if params.get("opt_weight_metric_weight_metric", None) is not None:
         cargs.extend([
             "-weight-metric",
-            execution.input_file(params.get("opt_weight_metric_weight_metric"))
+            execution.input_file(params.get("opt_weight_metric_weight_metric", None))
         ])
-    if params.get("opt_column_column") is not None:
+    if params.get("opt_column_column", None) is not None:
         cargs.extend([
             "-column",
-            params.get("opt_column_column")
+            params.get("opt_column_column", None)
         ])
-    if params.get("roi") is not None:
-        cargs.extend(dyn_cargs(params.get("roi")["@type"])(params.get("roi"), execution))
-    if params.get("opt_mean"):
+    if params.get("roi", None) is not None:
+        cargs.extend(metric_weighted_stats_roi_cargs(params.get("roi", None), execution))
+    if params.get("opt_mean", False):
         cargs.append("-mean")
-    if params.get("stdev") is not None:
-        cargs.extend(dyn_cargs(params.get("stdev")["@type"])(params.get("stdev"), execution))
-    if params.get("opt_percentile_percent") is not None:
+    if params.get("stdev", None) is not None:
+        cargs.extend(metric_weighted_stats_stdev_cargs(params.get("stdev", None), execution))
+    if params.get("opt_percentile_percent", None) is not None:
         cargs.extend([
             "-percentile",
-            str(params.get("opt_percentile_percent"))
+            str(params.get("opt_percentile_percent", None))
         ])
-    if params.get("opt_sum"):
+    if params.get("opt_sum", False):
         cargs.append("-sum")
-    if params.get("opt_show_map_name"):
+    if params.get("opt_show_map_name", False):
         cargs.append("-show-map-name")
     return cargs
 
@@ -402,9 +391,6 @@ def metric_weighted_stats(
 __all__ = [
     "METRIC_WEIGHTED_STATS_METADATA",
     "MetricWeightedStatsOutputs",
-    "MetricWeightedStatsParameters",
-    "MetricWeightedStatsRoiParameters",
-    "MetricWeightedStatsStdevParameters",
     "metric_weighted_stats",
     "metric_weighted_stats_execute",
     "metric_weighted_stats_params",

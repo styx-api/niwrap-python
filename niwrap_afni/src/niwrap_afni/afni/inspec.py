@@ -14,7 +14,17 @@ INSPEC_METADATA = Metadata(
 
 
 InspecParameters = typing.TypedDict('InspecParameters', {
-    "@type": typing.Literal["afni.inspec"],
+    "@type": typing.NotRequired[typing.Literal["afni/inspec"]],
+    "specfile": InputPathType,
+    "newspecname": typing.NotRequired[str | None],
+    "detail": typing.NotRequired[float | None],
+    "leftspec": typing.NotRequired[InputPathType | None],
+    "rightspec": typing.NotRequired[InputPathType | None],
+    "state_rm": typing.NotRequired[str | None],
+    "help": bool,
+})
+InspecParametersTagged = typing.TypedDict('InspecParametersTagged', {
+    "@type": typing.Literal["afni/inspec"],
     "specfile": InputPathType,
     "newspecname": typing.NotRequired[str | None],
     "detail": typing.NotRequired[float | None],
@@ -25,40 +35,9 @@ InspecParameters = typing.TypedDict('InspecParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "afni.inspec": inspec_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-    }.get(t)
-
-
 class InspecOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `inspec(...)`.
+    Output object returned when calling `InspecParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -72,7 +51,7 @@ def inspec_params(
     rightspec: InputPathType | None = None,
     state_rm: str | None = None,
     help_: bool = False,
-) -> InspecParameters:
+) -> InspecParametersTagged:
     """
     Build parameters.
     
@@ -91,7 +70,7 @@ def inspec_params(
         Parameter dictionary
     """
     params = {
-        "@type": "afni.inspec",
+        "@type": "afni/inspec",
         "specfile": specfile,
         "help": help_,
     }
@@ -125,34 +104,34 @@ def inspec_cargs(
     cargs.append("inspec")
     cargs.extend([
         "-spec",
-        execution.input_file(params.get("specfile"))
+        execution.input_file(params.get("specfile", None))
     ])
-    if params.get("newspecname") is not None:
+    if params.get("newspecname", None) is not None:
         cargs.extend([
             "-prefix",
-            params.get("newspecname")
+            params.get("newspecname", None)
         ])
-    if params.get("detail") is not None:
+    if params.get("detail", None) is not None:
         cargs.extend([
             "-detail",
-            str(params.get("detail"))
+            str(params.get("detail", None))
         ])
-    if params.get("leftspec") is not None:
+    if params.get("leftspec", None) is not None:
         cargs.extend([
             "-LRmerge",
-            execution.input_file(params.get("leftspec"))
+            execution.input_file(params.get("leftspec", None))
         ])
-    if params.get("rightspec") is not None:
+    if params.get("rightspec", None) is not None:
         cargs.extend([
             "-LRmerge",
-            execution.input_file(params.get("rightspec"))
+            execution.input_file(params.get("rightspec", None))
         ])
-    if params.get("state_rm") is not None:
+    if params.get("state_rm", None) is not None:
         cargs.extend([
             "-remove_state",
-            params.get("state_rm")
+            params.get("state_rm", None)
         ])
-    if params.get("help"):
+    if params.get("help", False):
         cargs.append("-help")
     return cargs
 
@@ -253,7 +232,6 @@ def inspec(
 __all__ = [
     "INSPEC_METADATA",
     "InspecOutputs",
-    "InspecParameters",
     "inspec",
     "inspec_execute",
     "inspec_params",

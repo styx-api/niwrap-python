@@ -14,7 +14,31 @@ MCFLIRT_METADATA = Metadata(
 
 
 McflirtParameters = typing.TypedDict('McflirtParameters', {
-    "@type": typing.Literal["fsl.mcflirt"],
+    "@type": typing.NotRequired[typing.Literal["fsl/mcflirt"]],
+    "in_file": InputPathType,
+    "bins": typing.NotRequired[int | None],
+    "cost": typing.NotRequired[typing.Literal["mutualinfo", "woods", "corratio", "normcorr", "normmi", "leastsquares"] | None],
+    "dof": typing.NotRequired[int | None],
+    "init": typing.NotRequired[InputPathType | None],
+    "interpolation": typing.NotRequired[typing.Literal["spline_final", "nn_final", "sinc_final"] | None],
+    "mean_vol": bool,
+    "out_file": typing.NotRequired[str | None],
+    "ref_file": typing.NotRequired[InputPathType | None],
+    "ref_vol": typing.NotRequired[int | None],
+    "rotation": typing.NotRequired[int | None],
+    "save_mats": bool,
+    "save_plots": bool,
+    "save_rmsabs": bool,
+    "save_rmsrel": bool,
+    "scaling": typing.NotRequired[float | None],
+    "smooth": typing.NotRequired[float | None],
+    "stages": typing.NotRequired[int | None],
+    "stats_imgs": bool,
+    "use_contour": bool,
+    "use_gradient": bool,
+})
+McflirtParametersTagged = typing.TypedDict('McflirtParametersTagged', {
+    "@type": typing.Literal["fsl/mcflirt"],
     "in_file": InputPathType,
     "bins": typing.NotRequired[int | None],
     "cost": typing.NotRequired[typing.Literal["mutualinfo", "woods", "corratio", "normcorr", "normmi", "leastsquares"] | None],
@@ -39,41 +63,9 @@ McflirtParameters = typing.TypedDict('McflirtParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "fsl.mcflirt": mcflirt_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "fsl.mcflirt": mcflirt_outputs,
-    }.get(t)
-
-
 class McflirtOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `mcflirt(...)`.
+    Output object returned when calling `McflirtParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -117,7 +109,7 @@ def mcflirt_params(
     stats_imgs: bool = False,
     use_contour: bool = False,
     use_gradient: bool = False,
-) -> McflirtParameters:
+) -> McflirtParametersTagged:
     """
     Build parameters.
     
@@ -149,7 +141,7 @@ def mcflirt_params(
         Parameter dictionary
     """
     params = {
-        "@type": "fsl.mcflirt",
+        "@type": "fsl/mcflirt",
         "in_file": in_file,
         "mean_vol": mean_vol,
         "save_mats": save_mats,
@@ -204,80 +196,80 @@ def mcflirt_cargs(
     cargs.append("mcflirt")
     cargs.extend([
         "-in",
-        execution.input_file(params.get("in_file"))
+        execution.input_file(params.get("in_file", None))
     ])
-    if params.get("bins") is not None:
+    if params.get("bins", None) is not None:
         cargs.extend([
             "-bins",
-            str(params.get("bins"))
+            str(params.get("bins", None))
         ])
-    if params.get("cost") is not None:
+    if params.get("cost", None) is not None:
         cargs.extend([
             "-cost",
-            params.get("cost")
+            params.get("cost", None)
         ])
-    if params.get("dof") is not None:
+    if params.get("dof", None) is not None:
         cargs.extend([
             "-dof",
-            str(params.get("dof"))
+            str(params.get("dof", None))
         ])
-    if params.get("init") is not None:
+    if params.get("init", None) is not None:
         cargs.extend([
             "-init",
-            execution.input_file(params.get("init"))
+            execution.input_file(params.get("init", None))
         ])
-    if params.get("interpolation") is not None:
-        cargs.append("-" + params.get("interpolation"))
-    if params.get("mean_vol"):
+    if params.get("interpolation", None) is not None:
+        cargs.append("-" + params.get("interpolation", None))
+    if params.get("mean_vol", False):
         cargs.append("-meanvol")
-    if params.get("out_file") is not None:
+    if params.get("out_file", None) is not None:
         cargs.extend([
             "-out",
-            params.get("out_file")
+            params.get("out_file", None)
         ])
-    if params.get("ref_file") is not None:
+    if params.get("ref_file", None) is not None:
         cargs.extend([
             "-reffile",
-            execution.input_file(params.get("ref_file"))
+            execution.input_file(params.get("ref_file", None))
         ])
-    if params.get("ref_vol") is not None:
+    if params.get("ref_vol", None) is not None:
         cargs.extend([
             "-refvol",
-            str(params.get("ref_vol"))
+            str(params.get("ref_vol", None))
         ])
-    if params.get("rotation") is not None:
+    if params.get("rotation", None) is not None:
         cargs.extend([
             "-rotation",
-            str(params.get("rotation"))
+            str(params.get("rotation", None))
         ])
-    if params.get("save_mats"):
+    if params.get("save_mats", False):
         cargs.append("-mats")
-    if params.get("save_plots"):
+    if params.get("save_plots", False):
         cargs.append("-plots")
-    if params.get("save_rmsabs"):
+    if params.get("save_rmsabs", False):
         cargs.append("-rmsabs")
-    if params.get("save_rmsrel"):
+    if params.get("save_rmsrel", False):
         cargs.append("-rmsrel")
-    if params.get("scaling") is not None:
+    if params.get("scaling", None) is not None:
         cargs.extend([
             "-scaling",
-            str(params.get("scaling"))
+            str(params.get("scaling", None))
         ])
-    if params.get("smooth") is not None:
+    if params.get("smooth", None) is not None:
         cargs.extend([
             "-smooth",
-            str(params.get("smooth"))
+            str(params.get("smooth", None))
         ])
-    if params.get("stages") is not None:
+    if params.get("stages", None) is not None:
         cargs.extend([
             "-stages",
-            str(params.get("stages"))
+            str(params.get("stages", None))
         ])
-    if params.get("stats_imgs"):
+    if params.get("stats_imgs", False):
         cargs.append("-stats")
-    if params.get("use_contour"):
+    if params.get("use_contour", False):
         cargs.append("-edge")
-    if params.get("use_gradient"):
+    if params.get("use_gradient", False):
         cargs.append("-gdt")
     return cargs
 
@@ -297,13 +289,13 @@ def mcflirt_outputs(
     """
     ret = McflirtOutputs(
         root=execution.output_file("."),
-        mean_img=execution.output_file(params.get("out_file") + "_mean_reg.ext") if (params.get("out_file") is not None) else None,
-        out_file=execution.output_file(params.get("out_file")) if (params.get("out_file") is not None) else None,
-        par_file=execution.output_file(params.get("out_file") + ".par") if (params.get("out_file") is not None) else None,
-        rmsabs_files=execution.output_file(params.get("out_file") + "_abs.rms") if (params.get("out_file") is not None) else None,
-        rmsrel_files=execution.output_file(params.get("out_file") + "_rel.rms") if (params.get("out_file") is not None) else None,
-        std_img=execution.output_file(params.get("out_file") + "_sigma.ext") if (params.get("out_file") is not None) else None,
-        variance_img=execution.output_file(params.get("out_file") + "_variance.ext") if (params.get("out_file") is not None) else None,
+        mean_img=execution.output_file(params.get("out_file", None) + "_mean_reg.ext") if (params.get("out_file") is not None) else None,
+        out_file=execution.output_file(params.get("out_file", None)) if (params.get("out_file") is not None) else None,
+        par_file=execution.output_file(params.get("out_file", None) + ".par") if (params.get("out_file") is not None) else None,
+        rmsabs_files=execution.output_file(params.get("out_file", None) + "_abs.rms") if (params.get("out_file") is not None) else None,
+        rmsrel_files=execution.output_file(params.get("out_file", None) + "_rel.rms") if (params.get("out_file") is not None) else None,
+        std_img=execution.output_file(params.get("out_file", None) + "_sigma.ext") if (params.get("out_file") is not None) else None,
+        variance_img=execution.output_file(params.get("out_file", None) + "_variance.ext") if (params.get("out_file") is not None) else None,
     )
     return ret
 
@@ -432,7 +424,6 @@ def mcflirt(
 __all__ = [
     "MCFLIRT_METADATA",
     "McflirtOutputs",
-    "McflirtParameters",
     "mcflirt",
     "mcflirt_execute",
     "mcflirt_params",

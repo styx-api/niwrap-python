@@ -14,7 +14,16 @@ AIV_METADATA = Metadata(
 
 
 AivParameters = typing.TypedDict('AivParameters', {
-    "@type": typing.Literal["afni.aiv"],
+    "@type": typing.NotRequired[typing.Literal["afni/aiv"]],
+    "verbose": bool,
+    "quiet": bool,
+    "title": typing.NotRequired[str | None],
+    "port": typing.NotRequired[float | None],
+    "pad": typing.NotRequired[str | None],
+    "input_images": list[InputPathType],
+})
+AivParametersTagged = typing.TypedDict('AivParametersTagged', {
+    "@type": typing.Literal["afni/aiv"],
     "verbose": bool,
     "quiet": bool,
     "title": typing.NotRequired[str | None],
@@ -24,40 +33,9 @@ AivParameters = typing.TypedDict('AivParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "afni.aiv": aiv_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-    }.get(t)
-
-
 class AivOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `aiv(...)`.
+    Output object returned when calling `AivParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -70,7 +48,7 @@ def aiv_params(
     title: str | None = None,
     port: float | None = None,
     pad: str | None = None,
-) -> AivParameters:
+) -> AivParametersTagged:
     """
     Build parameters.
     
@@ -85,7 +63,7 @@ def aiv_params(
         Parameter dictionary
     """
     params = {
-        "@type": "afni.aiv",
+        "@type": "afni/aiv",
         "verbose": verbose,
         "quiet": quiet,
         "input_images": input_images,
@@ -114,26 +92,26 @@ def aiv_cargs(
     """
     cargs = []
     cargs.append("aiv")
-    if params.get("verbose"):
+    if params.get("verbose", False):
         cargs.append("-v")
-    if params.get("quiet"):
+    if params.get("quiet", False):
         cargs.append("-q")
-    if params.get("title") is not None:
+    if params.get("title", None) is not None:
         cargs.extend([
             "-title",
-            params.get("title")
+            params.get("title", None)
         ])
-    if params.get("port") is not None:
+    if params.get("port", None) is not None:
         cargs.extend([
             "-p",
-            str(params.get("port"))
+            str(params.get("port", None))
         ])
-    if params.get("pad") is not None:
+    if params.get("pad", None) is not None:
         cargs.extend([
             "-pad",
-            params.get("pad")
+            params.get("pad", None)
         ])
-    cargs.extend([execution.input_file(f) for f in params.get("input_images")])
+    cargs.extend([execution.input_file(f) for f in params.get("input_images", None)])
     return cargs
 
 
@@ -229,7 +207,6 @@ def aiv(
 __all__ = [
     "AIV_METADATA",
     "AivOutputs",
-    "AivParameters",
     "aiv",
     "aiv_execute",
     "aiv_params",

@@ -14,7 +14,18 @@ V_3D_LOCAL_SVD_METADATA = Metadata(
 
 
 V3dLocalSvdParameters = typing.TypedDict('V3dLocalSvdParameters', {
-    "@type": typing.Literal["afni.3dLocalSVD"],
+    "@type": typing.NotRequired[typing.Literal["afni/3dLocalSVD"]],
+    "auto_mask": bool,
+    "input_file": InputPathType,
+    "mask_file": typing.NotRequired[InputPathType | None],
+    "output_file": str,
+    "nbhd": typing.NotRequired[str | None],
+    "polort": typing.NotRequired[str | None],
+    "vnorm": bool,
+    "vproj": typing.NotRequired[float | None],
+})
+V3dLocalSvdParametersTagged = typing.TypedDict('V3dLocalSvdParametersTagged', {
+    "@type": typing.Literal["afni/3dLocalSVD"],
     "auto_mask": bool,
     "input_file": InputPathType,
     "mask_file": typing.NotRequired[InputPathType | None],
@@ -26,40 +37,9 @@ V3dLocalSvdParameters = typing.TypedDict('V3dLocalSvdParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "afni.3dLocalSVD": v_3d_local_svd_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-    }.get(t)
-
-
 class V3dLocalSvdOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `v_3d_local_svd(...)`.
+    Output object returned when calling `V3dLocalSvdParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -74,7 +54,7 @@ def v_3d_local_svd_params(
     polort: str | None = None,
     vnorm: bool = False,
     vproj: float | None = None,
-) -> V3dLocalSvdParameters:
+) -> V3dLocalSvdParametersTagged:
     """
     Build parameters.
     
@@ -92,7 +72,7 @@ def v_3d_local_svd_params(
         Parameter dictionary
     """
     params = {
-        "@type": "afni.3dLocalSVD",
+        "@type": "afni/3dLocalSVD",
         "auto_mask": auto_mask,
         "input_file": input_file,
         "output_file": output_file,
@@ -124,37 +104,37 @@ def v_3d_local_svd_cargs(
     """
     cargs = []
     cargs.append("3dLocalSVD")
-    if params.get("auto_mask"):
+    if params.get("auto_mask", False):
         cargs.append("-automask")
     cargs.extend([
         "-input",
-        execution.input_file(params.get("input_file"))
+        execution.input_file(params.get("input_file", None))
     ])
-    if params.get("mask_file") is not None:
+    if params.get("mask_file", None) is not None:
         cargs.extend([
             "-mask",
-            execution.input_file(params.get("mask_file"))
+            execution.input_file(params.get("mask_file", None))
         ])
     cargs.extend([
         "-prefix",
-        params.get("output_file")
+        params.get("output_file", None)
     ])
-    if params.get("nbhd") is not None:
+    if params.get("nbhd", None) is not None:
         cargs.extend([
             "-nbhd",
-            params.get("nbhd")
+            params.get("nbhd", None)
         ])
-    if params.get("polort") is not None:
+    if params.get("polort", None) is not None:
         cargs.extend([
             "-polort",
-            params.get("polort")
+            params.get("polort", None)
         ])
-    if params.get("vnorm"):
+    if params.get("vnorm", False):
         cargs.append("-vnorm")
-    if params.get("vproj") is not None:
+    if params.get("vproj", None) is not None:
         cargs.extend([
             "-vproj",
-            str(params.get("vproj"))
+            str(params.get("vproj", None))
         ])
     return cargs
 
@@ -255,7 +235,6 @@ def v_3d_local_svd(
 
 __all__ = [
     "V3dLocalSvdOutputs",
-    "V3dLocalSvdParameters",
     "V_3D_LOCAL_SVD_METADATA",
     "v_3d_local_svd",
     "v_3d_local_svd_execute",

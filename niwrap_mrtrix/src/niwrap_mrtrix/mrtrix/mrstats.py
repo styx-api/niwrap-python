@@ -14,20 +14,45 @@ MRSTATS_METADATA = Metadata(
 
 
 MrstatsOutputParameters = typing.TypedDict('MrstatsOutputParameters', {
-    "@type": typing.Literal["mrtrix.mrstats.output"],
+    "@type": typing.NotRequired[typing.Literal["output"]],
+    "field": str,
+})
+MrstatsOutputParametersTagged = typing.TypedDict('MrstatsOutputParametersTagged', {
+    "@type": typing.Literal["output"],
     "field": str,
 })
 
 
 MrstatsConfigParameters = typing.TypedDict('MrstatsConfigParameters', {
-    "@type": typing.Literal["mrtrix.mrstats.config"],
+    "@type": typing.NotRequired[typing.Literal["config"]],
+    "key": str,
+    "value": str,
+})
+MrstatsConfigParametersTagged = typing.TypedDict('MrstatsConfigParametersTagged', {
+    "@type": typing.Literal["config"],
     "key": str,
     "value": str,
 })
 
 
 MrstatsParameters = typing.TypedDict('MrstatsParameters', {
-    "@type": typing.Literal["mrtrix.mrstats"],
+    "@type": typing.NotRequired[typing.Literal["mrtrix/mrstats"]],
+    "output": typing.NotRequired[list[MrstatsOutputParameters] | None],
+    "mask": typing.NotRequired[InputPathType | None],
+    "ignorezero": bool,
+    "allvolumes": bool,
+    "info": bool,
+    "quiet": bool,
+    "debug": bool,
+    "force": bool,
+    "nthreads": typing.NotRequired[int | None],
+    "config": typing.NotRequired[list[MrstatsConfigParameters] | None],
+    "help": bool,
+    "version": bool,
+    "image": InputPathType,
+})
+MrstatsParametersTagged = typing.TypedDict('MrstatsParametersTagged', {
+    "@type": typing.Literal["mrtrix/mrstats"],
     "output": typing.NotRequired[list[MrstatsOutputParameters] | None],
     "mask": typing.NotRequired[InputPathType | None],
     "ignorezero": bool,
@@ -44,42 +69,9 @@ MrstatsParameters = typing.TypedDict('MrstatsParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "mrtrix.mrstats": mrstats_cargs,
-        "mrtrix.mrstats.output": mrstats_output_cargs,
-        "mrtrix.mrstats.config": mrstats_config_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-    }.get(t)
-
-
 def mrstats_output_params(
     field: str,
-) -> MrstatsOutputParameters:
+) -> MrstatsOutputParametersTagged:
     """
     Build parameters.
     
@@ -95,7 +87,7 @@ def mrstats_output_params(
         Parameter dictionary
     """
     params = {
-        "@type": "mrtrix.mrstats.output",
+        "@type": "output",
         "field": field,
     }
     return params
@@ -116,14 +108,14 @@ def mrstats_output_cargs(
     """
     cargs = []
     cargs.append("-output")
-    cargs.append(params.get("field"))
+    cargs.append(params.get("field", None))
     return cargs
 
 
 def mrstats_config_params(
     key: str,
     value: str,
-) -> MrstatsConfigParameters:
+) -> MrstatsConfigParametersTagged:
     """
     Build parameters.
     
@@ -134,7 +126,7 @@ def mrstats_config_params(
         Parameter dictionary
     """
     params = {
-        "@type": "mrtrix.mrstats.config",
+        "@type": "config",
         "key": key,
         "value": value,
     }
@@ -156,14 +148,14 @@ def mrstats_config_cargs(
     """
     cargs = []
     cargs.append("-config")
-    cargs.append(params.get("key"))
-    cargs.append(params.get("value"))
+    cargs.append(params.get("key", None))
+    cargs.append(params.get("value", None))
     return cargs
 
 
 class MrstatsOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `mrstats(...)`.
+    Output object returned when calling `MrstatsParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -183,7 +175,7 @@ def mrstats_params(
     config: list[MrstatsConfigParameters] | None = None,
     help_: bool = False,
     version: bool = False,
-) -> MrstatsParameters:
+) -> MrstatsParametersTagged:
     """
     Build parameters.
     
@@ -216,7 +208,7 @@ def mrstats_params(
         Parameter dictionary
     """
     params = {
-        "@type": "mrtrix.mrstats",
+        "@type": "mrtrix/mrstats",
         "ignorezero": ignorezero,
         "allvolumes": allvolumes,
         "info": info,
@@ -253,37 +245,37 @@ def mrstats_cargs(
     """
     cargs = []
     cargs.append("mrstats")
-    if params.get("output") is not None:
-        cargs.extend([a for c in [dyn_cargs(s["@type"])(s, execution) for s in params.get("output")] for a in c])
-    if params.get("mask") is not None:
+    if params.get("output", None) is not None:
+        cargs.extend([a for c in [mrstats_output_cargs(s, execution) for s in params.get("output", None)] for a in c])
+    if params.get("mask", None) is not None:
         cargs.extend([
             "-mask",
-            execution.input_file(params.get("mask"))
+            execution.input_file(params.get("mask", None))
         ])
-    if params.get("ignorezero"):
+    if params.get("ignorezero", False):
         cargs.append("-ignorezero")
-    if params.get("allvolumes"):
+    if params.get("allvolumes", False):
         cargs.append("-allvolumes")
-    if params.get("info"):
+    if params.get("info", False):
         cargs.append("-info")
-    if params.get("quiet"):
+    if params.get("quiet", False):
         cargs.append("-quiet")
-    if params.get("debug"):
+    if params.get("debug", False):
         cargs.append("-debug")
-    if params.get("force"):
+    if params.get("force", False):
         cargs.append("-force")
-    if params.get("nthreads") is not None:
+    if params.get("nthreads", None) is not None:
         cargs.extend([
             "-nthreads",
-            str(params.get("nthreads"))
+            str(params.get("nthreads", None))
         ])
-    if params.get("config") is not None:
-        cargs.extend([a for c in [dyn_cargs(s["@type"])(s, execution) for s in params.get("config")] for a in c])
-    if params.get("help"):
+    if params.get("config", None) is not None:
+        cargs.extend([a for c in [mrstats_config_cargs(s, execution) for s in params.get("config", None)] for a in c])
+    if params.get("help", False):
         cargs.append("-help")
-    if params.get("version"):
+    if params.get("version", False):
         cargs.append("-version")
-    cargs.append(execution.input_file(params.get("image")))
+    cargs.append(execution.input_file(params.get("image", None)))
     return cargs
 
 
@@ -420,10 +412,7 @@ def mrstats(
 
 __all__ = [
     "MRSTATS_METADATA",
-    "MrstatsConfigParameters",
-    "MrstatsOutputParameters",
     "MrstatsOutputs",
-    "MrstatsParameters",
     "mrstats",
     "mrstats_config_params",
     "mrstats_execute",

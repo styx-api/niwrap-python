@@ -14,7 +14,14 @@ CIFTI_SEPARATE_METADATA = Metadata(
 
 
 CiftiSeparateVolumeAllParameters = typing.TypedDict('CiftiSeparateVolumeAllParameters', {
-    "@type": typing.Literal["workbench.cifti-separate.volume_all"],
+    "@type": typing.NotRequired[typing.Literal["volume_all"]],
+    "volume_out": str,
+    "opt_roi_roi_out": typing.NotRequired[str | None],
+    "opt_label_label_out": typing.NotRequired[str | None],
+    "opt_crop": bool,
+})
+CiftiSeparateVolumeAllParametersTagged = typing.TypedDict('CiftiSeparateVolumeAllParametersTagged', {
+    "@type": typing.Literal["volume_all"],
     "volume_out": str,
     "opt_roi_roi_out": typing.NotRequired[str | None],
     "opt_label_label_out": typing.NotRequired[str | None],
@@ -23,7 +30,13 @@ CiftiSeparateVolumeAllParameters = typing.TypedDict('CiftiSeparateVolumeAllParam
 
 
 CiftiSeparateLabelParameters = typing.TypedDict('CiftiSeparateLabelParameters', {
-    "@type": typing.Literal["workbench.cifti-separate.label"],
+    "@type": typing.NotRequired[typing.Literal["label"]],
+    "structure": str,
+    "label_out": str,
+    "opt_roi_roi_out": typing.NotRequired[str | None],
+})
+CiftiSeparateLabelParametersTagged = typing.TypedDict('CiftiSeparateLabelParametersTagged', {
+    "@type": typing.Literal["label"],
     "structure": str,
     "label_out": str,
     "opt_roi_roi_out": typing.NotRequired[str | None],
@@ -31,7 +44,13 @@ CiftiSeparateLabelParameters = typing.TypedDict('CiftiSeparateLabelParameters', 
 
 
 CiftiSeparateMetricParameters = typing.TypedDict('CiftiSeparateMetricParameters', {
-    "@type": typing.Literal["workbench.cifti-separate.metric"],
+    "@type": typing.NotRequired[typing.Literal["metric"]],
+    "structure": str,
+    "metric_out": str,
+    "opt_roi_roi_out": typing.NotRequired[str | None],
+})
+CiftiSeparateMetricParametersTagged = typing.TypedDict('CiftiSeparateMetricParametersTagged', {
+    "@type": typing.Literal["metric"],
     "structure": str,
     "metric_out": str,
     "opt_roi_roi_out": typing.NotRequired[str | None],
@@ -39,7 +58,14 @@ CiftiSeparateMetricParameters = typing.TypedDict('CiftiSeparateMetricParameters'
 
 
 CiftiSeparateVolumeParameters = typing.TypedDict('CiftiSeparateVolumeParameters', {
-    "@type": typing.Literal["workbench.cifti-separate.volume"],
+    "@type": typing.NotRequired[typing.Literal["volume"]],
+    "structure": str,
+    "volume_out": str,
+    "opt_roi_roi_out": typing.NotRequired[str | None],
+    "opt_crop": bool,
+})
+CiftiSeparateVolumeParametersTagged = typing.TypedDict('CiftiSeparateVolumeParametersTagged', {
+    "@type": typing.Literal["volume"],
     "structure": str,
     "volume_out": str,
     "opt_roi_roi_out": typing.NotRequired[str | None],
@@ -48,7 +74,7 @@ CiftiSeparateVolumeParameters = typing.TypedDict('CiftiSeparateVolumeParameters'
 
 
 CiftiSeparateParameters = typing.TypedDict('CiftiSeparateParameters', {
-    "@type": typing.Literal["workbench.cifti-separate"],
+    "@type": typing.NotRequired[typing.Literal["workbench/cifti-separate"]],
     "cifti_in": InputPathType,
     "direction": str,
     "volume_all": typing.NotRequired[CiftiSeparateVolumeAllParameters | None],
@@ -56,46 +82,15 @@ CiftiSeparateParameters = typing.TypedDict('CiftiSeparateParameters', {
     "metric": typing.NotRequired[list[CiftiSeparateMetricParameters] | None],
     "volume": typing.NotRequired[list[CiftiSeparateVolumeParameters] | None],
 })
-
-
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "workbench.cifti-separate": cifti_separate_cargs,
-        "workbench.cifti-separate.volume_all": cifti_separate_volume_all_cargs,
-        "workbench.cifti-separate.label": cifti_separate_label_cargs,
-        "workbench.cifti-separate.metric": cifti_separate_metric_cargs,
-        "workbench.cifti-separate.volume": cifti_separate_volume_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "workbench.cifti-separate": cifti_separate_outputs,
-        "workbench.cifti-separate.volume_all": cifti_separate_volume_all_outputs,
-        "workbench.cifti-separate.label": cifti_separate_label_outputs,
-        "workbench.cifti-separate.metric": cifti_separate_metric_outputs,
-        "workbench.cifti-separate.volume": cifti_separate_volume_outputs,
-    }.get(t)
+CiftiSeparateParametersTagged = typing.TypedDict('CiftiSeparateParametersTagged', {
+    "@type": typing.Literal["workbench/cifti-separate"],
+    "cifti_in": InputPathType,
+    "direction": str,
+    "volume_all": typing.NotRequired[CiftiSeparateVolumeAllParameters | None],
+    "label": typing.NotRequired[list[CiftiSeparateLabelParameters] | None],
+    "metric": typing.NotRequired[list[CiftiSeparateMetricParameters] | None],
+    "volume": typing.NotRequired[list[CiftiSeparateVolumeParameters] | None],
+})
 
 
 class CiftiSeparateVolumeAllOutputs(typing.NamedTuple):
@@ -118,7 +113,7 @@ def cifti_separate_volume_all_params(
     opt_roi_roi_out: str | None = None,
     opt_label_label_out: str | None = None,
     opt_crop: bool = False,
-) -> CiftiSeparateVolumeAllParameters:
+) -> CiftiSeparateVolumeAllParametersTagged:
     """
     Build parameters.
     
@@ -134,7 +129,7 @@ def cifti_separate_volume_all_params(
         Parameter dictionary
     """
     params = {
-        "@type": "workbench.cifti-separate.volume_all",
+        "@type": "volume_all",
         "volume_out": volume_out,
         "opt_crop": opt_crop,
     }
@@ -160,18 +155,18 @@ def cifti_separate_volume_all_cargs(
     """
     cargs = []
     cargs.append("-volume-all")
-    cargs.append(params.get("volume_out"))
-    if params.get("opt_roi_roi_out") is not None:
+    cargs.append(params.get("volume_out", None))
+    if params.get("opt_roi_roi_out", None) is not None:
         cargs.extend([
             "-roi",
-            params.get("opt_roi_roi_out")
+            params.get("opt_roi_roi_out", None)
         ])
-    if params.get("opt_label_label_out") is not None:
+    if params.get("opt_label_label_out", None) is not None:
         cargs.extend([
             "-label",
-            params.get("opt_label_label_out")
+            params.get("opt_label_label_out", None)
         ])
-    if params.get("opt_crop"):
+    if params.get("opt_crop", False):
         cargs.append("-crop")
     return cargs
 
@@ -191,9 +186,9 @@ def cifti_separate_volume_all_outputs(
     """
     ret = CiftiSeparateVolumeAllOutputs(
         root=execution.output_file("."),
-        volume_out=execution.output_file(params.get("volume_out")),
-        opt_roi_roi_out=execution.output_file(params.get("opt_roi_roi_out")) if (params.get("opt_roi_roi_out") is not None) else None,
-        opt_label_label_out=execution.output_file(params.get("opt_label_label_out")) if (params.get("opt_label_label_out") is not None) else None,
+        volume_out=execution.output_file(params.get("volume_out", None)),
+        opt_roi_roi_out=execution.output_file(params.get("opt_roi_roi_out", None)) if (params.get("opt_roi_roi_out") is not None) else None,
+        opt_label_label_out=execution.output_file(params.get("opt_label_label_out", None)) if (params.get("opt_label_label_out") is not None) else None,
     )
     return ret
 
@@ -214,7 +209,7 @@ def cifti_separate_label_params(
     structure: str,
     label_out: str,
     opt_roi_roi_out: str | None = None,
-) -> CiftiSeparateLabelParameters:
+) -> CiftiSeparateLabelParametersTagged:
     """
     Build parameters.
     
@@ -227,7 +222,7 @@ def cifti_separate_label_params(
         Parameter dictionary
     """
     params = {
-        "@type": "workbench.cifti-separate.label",
+        "@type": "label",
         "structure": structure,
         "label_out": label_out,
     }
@@ -251,12 +246,12 @@ def cifti_separate_label_cargs(
     """
     cargs = []
     cargs.append("-label")
-    cargs.append(params.get("structure"))
-    cargs.append(params.get("label_out"))
-    if params.get("opt_roi_roi_out") is not None:
+    cargs.append(params.get("structure", None))
+    cargs.append(params.get("label_out", None))
+    if params.get("opt_roi_roi_out", None) is not None:
         cargs.extend([
             "-roi",
-            params.get("opt_roi_roi_out")
+            params.get("opt_roi_roi_out", None)
         ])
     return cargs
 
@@ -276,8 +271,8 @@ def cifti_separate_label_outputs(
     """
     ret = CiftiSeparateLabelOutputs(
         root=execution.output_file("."),
-        label_out=execution.output_file(params.get("label_out")),
-        opt_roi_roi_out=execution.output_file(params.get("opt_roi_roi_out")) if (params.get("opt_roi_roi_out") is not None) else None,
+        label_out=execution.output_file(params.get("label_out", None)),
+        opt_roi_roi_out=execution.output_file(params.get("opt_roi_roi_out", None)) if (params.get("opt_roi_roi_out") is not None) else None,
     )
     return ret
 
@@ -298,7 +293,7 @@ def cifti_separate_metric_params(
     structure: str,
     metric_out: str,
     opt_roi_roi_out: str | None = None,
-) -> CiftiSeparateMetricParameters:
+) -> CiftiSeparateMetricParametersTagged:
     """
     Build parameters.
     
@@ -311,7 +306,7 @@ def cifti_separate_metric_params(
         Parameter dictionary
     """
     params = {
-        "@type": "workbench.cifti-separate.metric",
+        "@type": "metric",
         "structure": structure,
         "metric_out": metric_out,
     }
@@ -335,12 +330,12 @@ def cifti_separate_metric_cargs(
     """
     cargs = []
     cargs.append("-metric")
-    cargs.append(params.get("structure"))
-    cargs.append(params.get("metric_out"))
-    if params.get("opt_roi_roi_out") is not None:
+    cargs.append(params.get("structure", None))
+    cargs.append(params.get("metric_out", None))
+    if params.get("opt_roi_roi_out", None) is not None:
         cargs.extend([
             "-roi",
-            params.get("opt_roi_roi_out")
+            params.get("opt_roi_roi_out", None)
         ])
     return cargs
 
@@ -360,8 +355,8 @@ def cifti_separate_metric_outputs(
     """
     ret = CiftiSeparateMetricOutputs(
         root=execution.output_file("."),
-        metric_out=execution.output_file(params.get("metric_out")),
-        opt_roi_roi_out=execution.output_file(params.get("opt_roi_roi_out")) if (params.get("opt_roi_roi_out") is not None) else None,
+        metric_out=execution.output_file(params.get("metric_out", None)),
+        opt_roi_roi_out=execution.output_file(params.get("opt_roi_roi_out", None)) if (params.get("opt_roi_roi_out") is not None) else None,
     )
     return ret
 
@@ -383,7 +378,7 @@ def cifti_separate_volume_params(
     volume_out: str,
     opt_roi_roi_out: str | None = None,
     opt_crop: bool = False,
-) -> CiftiSeparateVolumeParameters:
+) -> CiftiSeparateVolumeParametersTagged:
     """
     Build parameters.
     
@@ -398,7 +393,7 @@ def cifti_separate_volume_params(
         Parameter dictionary
     """
     params = {
-        "@type": "workbench.cifti-separate.volume",
+        "@type": "volume",
         "structure": structure,
         "volume_out": volume_out,
         "opt_crop": opt_crop,
@@ -423,14 +418,14 @@ def cifti_separate_volume_cargs(
     """
     cargs = []
     cargs.append("-volume")
-    cargs.append(params.get("structure"))
-    cargs.append(params.get("volume_out"))
-    if params.get("opt_roi_roi_out") is not None:
+    cargs.append(params.get("structure", None))
+    cargs.append(params.get("volume_out", None))
+    if params.get("opt_roi_roi_out", None) is not None:
         cargs.extend([
             "-roi",
-            params.get("opt_roi_roi_out")
+            params.get("opt_roi_roi_out", None)
         ])
-    if params.get("opt_crop"):
+    if params.get("opt_crop", False):
         cargs.append("-crop")
     return cargs
 
@@ -450,15 +445,15 @@ def cifti_separate_volume_outputs(
     """
     ret = CiftiSeparateVolumeOutputs(
         root=execution.output_file("."),
-        volume_out=execution.output_file(params.get("volume_out")),
-        opt_roi_roi_out=execution.output_file(params.get("opt_roi_roi_out")) if (params.get("opt_roi_roi_out") is not None) else None,
+        volume_out=execution.output_file(params.get("volume_out", None)),
+        opt_roi_roi_out=execution.output_file(params.get("opt_roi_roi_out", None)) if (params.get("opt_roi_roi_out") is not None) else None,
     )
     return ret
 
 
 class CiftiSeparateOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `cifti_separate(...)`.
+    Output object returned when calling `CiftiSeparateParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -482,7 +477,7 @@ def cifti_separate_params(
     label: list[CiftiSeparateLabelParameters] | None = None,
     metric: list[CiftiSeparateMetricParameters] | None = None,
     volume: list[CiftiSeparateVolumeParameters] | None = None,
-) -> CiftiSeparateParameters:
+) -> CiftiSeparateParametersTagged:
     """
     Build parameters.
     
@@ -497,7 +492,7 @@ def cifti_separate_params(
         Parameter dictionary
     """
     params = {
-        "@type": "workbench.cifti-separate",
+        "@type": "workbench/cifti-separate",
         "cifti_in": cifti_in,
         "direction": direction,
     }
@@ -528,16 +523,16 @@ def cifti_separate_cargs(
     cargs = []
     cargs.append("wb_command")
     cargs.append("-cifti-separate")
-    cargs.append(execution.input_file(params.get("cifti_in")))
-    cargs.append(params.get("direction"))
-    if params.get("volume_all") is not None:
-        cargs.extend(dyn_cargs(params.get("volume_all")["@type"])(params.get("volume_all"), execution))
-    if params.get("label") is not None:
-        cargs.extend([a for c in [dyn_cargs(s["@type"])(s, execution) for s in params.get("label")] for a in c])
-    if params.get("metric") is not None:
-        cargs.extend([a for c in [dyn_cargs(s["@type"])(s, execution) for s in params.get("metric")] for a in c])
-    if params.get("volume") is not None:
-        cargs.extend([a for c in [dyn_cargs(s["@type"])(s, execution) for s in params.get("volume")] for a in c])
+    cargs.append(execution.input_file(params.get("cifti_in", None)))
+    cargs.append(params.get("direction", None))
+    if params.get("volume_all", None) is not None:
+        cargs.extend(cifti_separate_volume_all_cargs(params.get("volume_all", None), execution))
+    if params.get("label", None) is not None:
+        cargs.extend([a for c in [cifti_separate_label_cargs(s, execution) for s in params.get("label", None)] for a in c])
+    if params.get("metric", None) is not None:
+        cargs.extend([a for c in [cifti_separate_metric_cargs(s, execution) for s in params.get("metric", None)] for a in c])
+    if params.get("volume", None) is not None:
+        cargs.extend([a for c in [cifti_separate_volume_cargs(s, execution) for s in params.get("volume", None)] for a in c])
     return cargs
 
 
@@ -556,10 +551,10 @@ def cifti_separate_outputs(
     """
     ret = CiftiSeparateOutputs(
         root=execution.output_file("."),
-        volume_all=dyn_outputs(params.get("volume_all")["@type"])(params.get("volume_all"), execution) if params.get("volume_all") else None,
-        label=[dyn_outputs(i["@type"])(i, execution) if dyn_outputs(i["@type"]) else None for i in params.get("label")] if params.get("label") else None,
-        metric=[dyn_outputs(i["@type"])(i, execution) if dyn_outputs(i["@type"]) else None for i in params.get("metric")] if params.get("metric") else None,
-        volume=[dyn_outputs(i["@type"])(i, execution) if dyn_outputs(i["@type"]) else None for i in params.get("volume")] if params.get("volume") else None,
+        volume_all=cifti_separate_volume_all_outputs(params.get("volume_all"), execution) if params.get("volume_all") else None,
+        label=[cifti_separate_label_outputs(i, execution) if cifti_separate_label_outputs else None for i in params.get("label")] if params.get("label") else None,
+        metric=[cifti_separate_metric_outputs(i, execution) if cifti_separate_metric_outputs else None for i in params.get("metric")] if params.get("metric") else None,
+        volume=[cifti_separate_volume_outputs(i, execution) if cifti_separate_volume_outputs else None for i in params.get("volume")] if params.get("volume") else None,
     )
     return ret
 
@@ -725,15 +720,10 @@ def cifti_separate(
 __all__ = [
     "CIFTI_SEPARATE_METADATA",
     "CiftiSeparateLabelOutputs",
-    "CiftiSeparateLabelParameters",
     "CiftiSeparateMetricOutputs",
-    "CiftiSeparateMetricParameters",
     "CiftiSeparateOutputs",
-    "CiftiSeparateParameters",
     "CiftiSeparateVolumeAllOutputs",
-    "CiftiSeparateVolumeAllParameters",
     "CiftiSeparateVolumeOutputs",
-    "CiftiSeparateVolumeParameters",
     "cifti_separate",
     "cifti_separate_execute",
     "cifti_separate_label_params",

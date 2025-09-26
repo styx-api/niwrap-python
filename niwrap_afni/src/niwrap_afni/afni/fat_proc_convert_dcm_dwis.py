@@ -14,7 +14,28 @@ FAT_PROC_CONVERT_DCM_DWIS_METADATA = Metadata(
 
 
 FatProcConvertDcmDwisParameters = typing.TypedDict('FatProcConvertDcmDwisParameters', {
-    "@type": typing.Literal["afni.fat_proc_convert_dcm_dwis"],
+    "@type": typing.NotRequired[typing.Literal["afni/fat_proc_convert_dcm_dwis"]],
+    "dicom_dir": str,
+    "output_prefix": str,
+    "nifti_files": typing.NotRequired[list[InputPathType] | None],
+    "bvec_files": typing.NotRequired[list[InputPathType] | None],
+    "bval_files": typing.NotRequired[list[InputPathType] | None],
+    "work_dir": typing.NotRequired[str | None],
+    "orientation": typing.NotRequired[str | None],
+    "origin_xyz": typing.NotRequired[list[float] | None],
+    "flip_x": bool,
+    "flip_y": bool,
+    "flip_z": bool,
+    "no_flip": bool,
+    "qc_prefix": typing.NotRequired[str | None],
+    "reorient_off": bool,
+    "no_clean": bool,
+    "no_cmd_out": bool,
+    "no_qc_view": bool,
+    "do_movie": typing.NotRequired[str | None],
+})
+FatProcConvertDcmDwisParametersTagged = typing.TypedDict('FatProcConvertDcmDwisParametersTagged', {
+    "@type": typing.Literal["afni/fat_proc_convert_dcm_dwis"],
     "dicom_dir": str,
     "output_prefix": str,
     "nifti_files": typing.NotRequired[list[InputPathType] | None],
@@ -36,41 +57,9 @@ FatProcConvertDcmDwisParameters = typing.TypedDict('FatProcConvertDcmDwisParamet
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "afni.fat_proc_convert_dcm_dwis": fat_proc_convert_dcm_dwis_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "afni.fat_proc_convert_dcm_dwis": fat_proc_convert_dcm_dwis_outputs,
-    }.get(t)
-
-
 class FatProcConvertDcmDwisOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `fat_proc_convert_dcm_dwis(...)`.
+    Output object returned when calling `FatProcConvertDcmDwisParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -111,7 +100,7 @@ def fat_proc_convert_dcm_dwis_params(
     no_cmd_out: bool = False,
     no_qc_view: bool = False,
     do_movie: str | None = None,
-) -> FatProcConvertDcmDwisParameters:
+) -> FatProcConvertDcmDwisParametersTagged:
     """
     Build parameters.
     
@@ -145,7 +134,7 @@ def fat_proc_convert_dcm_dwis_params(
         Parameter dictionary
     """
     params = {
-        "@type": "afni.fat_proc_convert_dcm_dwis",
+        "@type": "afni/fat_proc_convert_dcm_dwis",
         "dicom_dir": dicom_dir,
         "output_prefix": output_prefix,
         "flip_x": flip_x,
@@ -191,42 +180,42 @@ def fat_proc_convert_dcm_dwis_cargs(
     """
     cargs = []
     cargs.append("fat_proc_convert_dcm_dwis")
-    cargs.append(params.get("dicom_dir"))
-    cargs.append(params.get("output_prefix"))
-    if params.get("nifti_files") is not None:
-        cargs.extend([execution.input_file(f) for f in params.get("nifti_files")])
-    if params.get("bvec_files") is not None:
-        cargs.extend([execution.input_file(f) for f in params.get("bvec_files")])
-    if params.get("bval_files") is not None:
-        cargs.extend([execution.input_file(f) for f in params.get("bval_files")])
-    if params.get("work_dir") is not None:
-        cargs.append(params.get("work_dir"))
-    if params.get("orientation") is not None:
-        cargs.append(params.get("orientation"))
-    if params.get("origin_xyz") is not None:
-        cargs.extend(map(str, params.get("origin_xyz")))
-    if params.get("flip_x"):
+    cargs.append(params.get("dicom_dir", None))
+    cargs.append(params.get("output_prefix", None))
+    if params.get("nifti_files", None) is not None:
+        cargs.extend([execution.input_file(f) for f in params.get("nifti_files", None)])
+    if params.get("bvec_files", None) is not None:
+        cargs.extend([execution.input_file(f) for f in params.get("bvec_files", None)])
+    if params.get("bval_files", None) is not None:
+        cargs.extend([execution.input_file(f) for f in params.get("bval_files", None)])
+    if params.get("work_dir", None) is not None:
+        cargs.append(params.get("work_dir", None))
+    if params.get("orientation", None) is not None:
+        cargs.append(params.get("orientation", None))
+    if params.get("origin_xyz", None) is not None:
+        cargs.extend(map(str, params.get("origin_xyz", None)))
+    if params.get("flip_x", False):
         cargs.append("-flip_x")
-    if params.get("flip_y"):
+    if params.get("flip_y", False):
         cargs.append("-flip_y")
-    if params.get("flip_z"):
+    if params.get("flip_z", False):
         cargs.append("-flip_z")
-    if params.get("no_flip"):
+    if params.get("no_flip", False):
         cargs.append("-no_flip")
-    if params.get("qc_prefix") is not None:
-        cargs.append(params.get("qc_prefix"))
-    if params.get("reorient_off"):
+    if params.get("qc_prefix", None) is not None:
+        cargs.append(params.get("qc_prefix", None))
+    if params.get("reorient_off", False):
         cargs.append("-reorig_reorient_off")
-    if params.get("no_clean"):
+    if params.get("no_clean", False):
         cargs.append("-no_clean")
-    if params.get("no_cmd_out"):
+    if params.get("no_cmd_out", False):
         cargs.append("-no_cmd_out")
-    if params.get("no_qc_view"):
+    if params.get("no_qc_view", False):
         cargs.append("-no_qc_view")
-    if params.get("do_movie") is not None:
+    if params.get("do_movie", None) is not None:
         cargs.extend([
             "-do_movie",
-            params.get("do_movie")
+            params.get("do_movie", None)
         ])
     return cargs
 
@@ -246,12 +235,12 @@ def fat_proc_convert_dcm_dwis_outputs(
     """
     ret = FatProcConvertDcmDwisOutputs(
         root=execution.output_file("."),
-        output_nifti=execution.output_file(params.get("output_prefix") + ".nii.gz"),
-        output_rvec=execution.output_file(params.get("output_prefix") + ".rvec"),
-        output_bval=execution.output_file(params.get("output_prefix") + ".bval"),
-        output_mat_a=execution.output_file(params.get("output_prefix") + "_matA.dat"),
-        output_mat_t=execution.output_file(params.get("output_prefix") + "_matT.dat"),
-        output_cvec=execution.output_file(params.get("output_prefix") + "_cvec.dat"),
+        output_nifti=execution.output_file(params.get("output_prefix", None) + ".nii.gz"),
+        output_rvec=execution.output_file(params.get("output_prefix", None) + ".rvec"),
+        output_bval=execution.output_file(params.get("output_prefix", None) + ".bval"),
+        output_mat_a=execution.output_file(params.get("output_prefix", None) + "_matA.dat"),
+        output_mat_t=execution.output_file(params.get("output_prefix", None) + "_matT.dat"),
+        output_cvec=execution.output_file(params.get("output_prefix", None) + "_cvec.dat"),
     )
     return ret
 
@@ -374,7 +363,6 @@ def fat_proc_convert_dcm_dwis(
 __all__ = [
     "FAT_PROC_CONVERT_DCM_DWIS_METADATA",
     "FatProcConvertDcmDwisOutputs",
-    "FatProcConvertDcmDwisParameters",
     "fat_proc_convert_dcm_dwis",
     "fat_proc_convert_dcm_dwis_execute",
     "fat_proc_convert_dcm_dwis_params",

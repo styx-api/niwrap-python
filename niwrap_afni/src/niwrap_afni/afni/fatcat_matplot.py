@@ -14,46 +14,20 @@ FATCAT_MATPLOT_METADATA = Metadata(
 
 
 FatcatMatplotParameters = typing.TypedDict('FatcatMatplotParameters', {
-    "@type": typing.Literal["afni.FATCAT_matplot"],
+    "@type": typing.NotRequired[typing.Literal["afni/FATCAT_matplot"]],
+    "directory": str,
+    "shiny_folder": bool,
+})
+FatcatMatplotParametersTagged = typing.TypedDict('FatcatMatplotParametersTagged', {
+    "@type": typing.Literal["afni/FATCAT_matplot"],
     "directory": str,
     "shiny_folder": bool,
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "afni.FATCAT_matplot": fatcat_matplot_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-    }.get(t)
-
-
 class FatcatMatplotOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `fatcat_matplot(...)`.
+    Output object returned when calling `FatcatMatplotParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -62,7 +36,7 @@ class FatcatMatplotOutputs(typing.NamedTuple):
 def fatcat_matplot_params(
     directory: str,
     shiny_folder: bool = False,
-) -> FatcatMatplotParameters:
+) -> FatcatMatplotParametersTagged:
     """
     Build parameters.
     
@@ -73,7 +47,7 @@ def fatcat_matplot_params(
         Parameter dictionary
     """
     params = {
-        "@type": "afni.FATCAT_matplot",
+        "@type": "afni/FATCAT_matplot",
         "directory": directory,
         "shiny_folder": shiny_folder,
     }
@@ -95,8 +69,8 @@ def fatcat_matplot_cargs(
     """
     cargs = []
     cargs.append("FATCAT_matplot")
-    cargs.append(params.get("directory"))
-    if params.get("shiny_folder"):
+    cargs.append(params.get("directory", None))
+    if params.get("shiny_folder", False):
         cargs.append("-ShinyFolder")
     return cargs
 
@@ -179,7 +153,6 @@ def fatcat_matplot(
 __all__ = [
     "FATCAT_MATPLOT_METADATA",
     "FatcatMatplotOutputs",
-    "FatcatMatplotParameters",
     "fatcat_matplot",
     "fatcat_matplot_execute",
     "fatcat_matplot_params",

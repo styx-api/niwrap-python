@@ -14,47 +14,22 @@ CP_DICOM_METADATA = Metadata(
 
 
 CpDicomParameters = typing.TypedDict('CpDicomParameters', {
-    "@type": typing.Literal["freesurfer.cp-dicom"],
+    "@type": typing.NotRequired[typing.Literal["freesurfer/cp-dicom"]],
+    "dicom_dir": str,
+    "output_dir": str,
+    "debug": bool,
+})
+CpDicomParametersTagged = typing.TypedDict('CpDicomParametersTagged', {
+    "@type": typing.Literal["freesurfer/cp-dicom"],
     "dicom_dir": str,
     "output_dir": str,
     "debug": bool,
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "freesurfer.cp-dicom": cp_dicom_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-    }.get(t)
-
-
 class CpDicomOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `cp_dicom(...)`.
+    Output object returned when calling `CpDicomParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -64,7 +39,7 @@ def cp_dicom_params(
     dicom_dir: str,
     output_dir: str,
     debug: bool = False,
-) -> CpDicomParameters:
+) -> CpDicomParametersTagged:
     """
     Build parameters.
     
@@ -76,7 +51,7 @@ def cp_dicom_params(
         Parameter dictionary
     """
     params = {
-        "@type": "freesurfer.cp-dicom",
+        "@type": "freesurfer/cp-dicom",
         "dicom_dir": dicom_dir,
         "output_dir": output_dir,
         "debug": debug,
@@ -101,13 +76,13 @@ def cp_dicom_cargs(
     cargs.append("cp-dicom")
     cargs.extend([
         "-d",
-        params.get("dicom_dir")
+        params.get("dicom_dir", None)
     ])
     cargs.extend([
         "-o",
-        params.get("output_dir")
+        params.get("output_dir", None)
     ])
-    if params.get("debug"):
+    if params.get("debug", False):
         cargs.append("-debug")
     return cargs
 
@@ -195,7 +170,6 @@ def cp_dicom(
 __all__ = [
     "CP_DICOM_METADATA",
     "CpDicomOutputs",
-    "CpDicomParameters",
     "cp_dicom",
     "cp_dicom_execute",
     "cp_dicom_params",

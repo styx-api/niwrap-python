@@ -14,48 +14,22 @@ BIANCA_OVERLAP_MEASURES_METADATA = Metadata(
 
 
 BiancaOverlapMeasuresParameters = typing.TypedDict('BiancaOverlapMeasuresParameters', {
-    "@type": typing.Literal["fsl.bianca_overlap_measures"],
+    "@type": typing.NotRequired[typing.Literal["fsl/bianca_overlap_measures"]],
+    "lesion_mask": InputPathType,
+    "manual_mask": InputPathType,
+    "output_dir": str,
+})
+BiancaOverlapMeasuresParametersTagged = typing.TypedDict('BiancaOverlapMeasuresParametersTagged', {
+    "@type": typing.Literal["fsl/bianca_overlap_measures"],
     "lesion_mask": InputPathType,
     "manual_mask": InputPathType,
     "output_dir": str,
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "fsl.bianca_overlap_measures": bianca_overlap_measures_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "fsl.bianca_overlap_measures": bianca_overlap_measures_outputs,
-    }.get(t)
-
-
 class BiancaOverlapMeasuresOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `bianca_overlap_measures(...)`.
+    Output object returned when calling `BiancaOverlapMeasuresParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -81,7 +55,7 @@ def bianca_overlap_measures_params(
     lesion_mask: InputPathType,
     manual_mask: InputPathType,
     output_dir: str,
-) -> BiancaOverlapMeasuresParameters:
+) -> BiancaOverlapMeasuresParametersTagged:
     """
     Build parameters.
     
@@ -93,7 +67,7 @@ def bianca_overlap_measures_params(
         Parameter dictionary
     """
     params = {
-        "@type": "fsl.bianca_overlap_measures",
+        "@type": "fsl/bianca_overlap_measures",
         "lesion_mask": lesion_mask,
         "manual_mask": manual_mask,
         "output_dir": output_dir,
@@ -116,9 +90,9 @@ def bianca_overlap_measures_cargs(
     """
     cargs = []
     cargs.append("bianca_overlap_measures")
-    cargs.append(execution.input_file(params.get("lesion_mask")))
-    cargs.append(execution.input_file(params.get("manual_mask")))
-    cargs.append(params.get("output_dir"))
+    cargs.append(execution.input_file(params.get("lesion_mask", None)))
+    cargs.append(execution.input_file(params.get("manual_mask", None)))
+    cargs.append(params.get("output_dir", None))
     return cargs
 
 
@@ -211,7 +185,6 @@ def bianca_overlap_measures(
 __all__ = [
     "BIANCA_OVERLAP_MEASURES_METADATA",
     "BiancaOverlapMeasuresOutputs",
-    "BiancaOverlapMeasuresParameters",
     "bianca_overlap_measures",
     "bianca_overlap_measures_execute",
     "bianca_overlap_measures_params",

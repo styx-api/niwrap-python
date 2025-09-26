@@ -14,7 +14,19 @@ MRIS_MS_REFINE_METADATA = Metadata(
 
 
 MrisMsRefineParameters = typing.TypedDict('MrisMsRefineParameters', {
-    "@type": typing.Literal["freesurfer.mris_ms_refine"],
+    "@type": typing.NotRequired[typing.Literal["freesurfer/mris_ms_refine"]],
+    "subject_name": str,
+    "hemisphere": str,
+    "xform": InputPathType,
+    "flash_files": list[InputPathType],
+    "residuals": InputPathType,
+    "omit_self_intersection": bool,
+    "create_curvature_files": bool,
+    "average_curvature": typing.NotRequired[float | None],
+    "white_only": bool,
+})
+MrisMsRefineParametersTagged = typing.TypedDict('MrisMsRefineParametersTagged', {
+    "@type": typing.Literal["freesurfer/mris_ms_refine"],
     "subject_name": str,
     "hemisphere": str,
     "xform": InputPathType,
@@ -27,41 +39,9 @@ MrisMsRefineParameters = typing.TypedDict('MrisMsRefineParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "freesurfer.mris_ms_refine": mris_ms_refine_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "freesurfer.mris_ms_refine": mris_ms_refine_outputs,
-    }.get(t)
-
-
 class MrisMsRefineOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `mris_ms_refine(...)`.
+    Output object returned when calling `MrisMsRefineParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -85,7 +65,7 @@ def mris_ms_refine_params(
     create_curvature_files: bool = False,
     average_curvature: float | None = None,
     white_only: bool = False,
-) -> MrisMsRefineParameters:
+) -> MrisMsRefineParametersTagged:
     """
     Build parameters.
     
@@ -106,7 +86,7 @@ def mris_ms_refine_params(
         Parameter dictionary
     """
     params = {
-        "@type": "freesurfer.mris_ms_refine",
+        "@type": "freesurfer/mris_ms_refine",
         "subject_name": subject_name,
         "hemisphere": hemisphere,
         "xform": xform,
@@ -136,21 +116,21 @@ def mris_ms_refine_cargs(
     """
     cargs = []
     cargs.append("mris_ms_refine")
-    cargs.append(params.get("subject_name"))
-    cargs.append(params.get("hemisphere"))
-    cargs.append(execution.input_file(params.get("xform")))
-    cargs.extend([execution.input_file(f) for f in params.get("flash_files")])
-    cargs.append(execution.input_file(params.get("residuals")))
-    if params.get("omit_self_intersection"):
+    cargs.append(params.get("subject_name", None))
+    cargs.append(params.get("hemisphere", None))
+    cargs.append(execution.input_file(params.get("xform", None)))
+    cargs.extend([execution.input_file(f) for f in params.get("flash_files", None)])
+    cargs.append(execution.input_file(params.get("residuals", None)))
+    if params.get("omit_self_intersection", False):
         cargs.append("-q")
-    if params.get("create_curvature_files"):
+    if params.get("create_curvature_files", False):
         cargs.append("-c")
-    if params.get("average_curvature") is not None:
+    if params.get("average_curvature", None) is not None:
         cargs.extend([
             "-a",
-            str(params.get("average_curvature"))
+            str(params.get("average_curvature", None))
         ])
-    if params.get("white_only"):
+    if params.get("white_only", False):
         cargs.append("-whiteonly")
     return cargs
 
@@ -170,10 +150,10 @@ def mris_ms_refine_outputs(
     """
     ret = MrisMsRefineOutputs(
         root=execution.output_file("."),
-        white_surface=execution.output_file(params.get("subject_name") + "/" + params.get("hemisphere") + ".white"),
-        pial_surface=execution.output_file(params.get("subject_name") + "/" + params.get("hemisphere") + ".pial"),
-        curvature_file=execution.output_file(params.get("subject_name") + "/" + params.get("hemisphere") + ".curv"),
-        layer_iv_surface=execution.output_file(params.get("subject_name") + "/" + params.get("hemisphere") + ".layerIV"),
+        white_surface=execution.output_file(params.get("subject_name", None) + "/" + params.get("hemisphere", None) + ".white"),
+        pial_surface=execution.output_file(params.get("subject_name", None) + "/" + params.get("hemisphere", None) + ".pial"),
+        curvature_file=execution.output_file(params.get("subject_name", None) + "/" + params.get("hemisphere", None) + ".curv"),
+        layer_iv_surface=execution.output_file(params.get("subject_name", None) + "/" + params.get("hemisphere", None) + ".layerIV"),
     )
     return ret
 
@@ -267,7 +247,6 @@ def mris_ms_refine(
 __all__ = [
     "MRIS_MS_REFINE_METADATA",
     "MrisMsRefineOutputs",
-    "MrisMsRefineParameters",
     "mris_ms_refine",
     "mris_ms_refine_execute",
     "mris_ms_refine_params",

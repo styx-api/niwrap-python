@@ -14,7 +14,26 @@ MRI_Z2P_METADATA = Metadata(
 
 
 MriZ2pParameters = typing.TypedDict('MriZ2pParameters', {
-    "@type": typing.Literal["freesurfer.mri_z2p"],
+    "@type": typing.NotRequired[typing.Literal["freesurfer/mri_z2p"]],
+    "z_volume": InputPathType,
+    "p_volume": str,
+    "sig_volume": str,
+    "mask_volume": typing.NotRequired[InputPathType | None],
+    "two_sided": bool,
+    "one_sided": bool,
+    "signed": bool,
+    "feat": typing.NotRequired[str | None],
+    "feat_format": typing.NotRequired[str | None],
+    "nii_format": bool,
+    "niigz_format": bool,
+    "mgh_format": bool,
+    "mgz_format": bool,
+    "img_format": bool,
+    "debug": bool,
+    "check_opts": bool,
+})
+MriZ2pParametersTagged = typing.TypedDict('MriZ2pParametersTagged', {
+    "@type": typing.Literal["freesurfer/mri_z2p"],
     "z_volume": InputPathType,
     "p_volume": str,
     "sig_volume": str,
@@ -34,41 +53,9 @@ MriZ2pParameters = typing.TypedDict('MriZ2pParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "freesurfer.mri_z2p": mri_z2p_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "freesurfer.mri_z2p": mri_z2p_outputs,
-    }.get(t)
-
-
 class MriZ2pOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `mri_z2p(...)`.
+    Output object returned when calling `MriZ2pParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -95,7 +82,7 @@ def mri_z2p_params(
     img_format: bool = False,
     debug: bool = False,
     check_opts: bool = False,
-) -> MriZ2pParameters:
+) -> MriZ2pParametersTagged:
     """
     Build parameters.
     
@@ -121,7 +108,7 @@ def mri_z2p_params(
         Parameter dictionary
     """
     params = {
-        "@type": "freesurfer.mri_z2p",
+        "@type": "freesurfer/mri_z2p",
         "z_volume": z_volume,
         "p_volume": p_volume,
         "sig_volume": sig_volume,
@@ -162,50 +149,50 @@ def mri_z2p_cargs(
     cargs.append("mri_z2p")
     cargs.extend([
         "--z",
-        execution.input_file(params.get("z_volume"))
+        execution.input_file(params.get("z_volume", None))
     ])
     cargs.extend([
         "--p",
-        params.get("p_volume")
+        params.get("p_volume", None)
     ])
     cargs.extend([
         "--log10p",
-        params.get("sig_volume")
+        params.get("sig_volume", None)
     ])
-    if params.get("mask_volume") is not None:
+    if params.get("mask_volume", None) is not None:
         cargs.extend([
             "--mask",
-            execution.input_file(params.get("mask_volume"))
+            execution.input_file(params.get("mask_volume", None))
         ])
-    if params.get("two_sided"):
+    if params.get("two_sided", False):
         cargs.append("--two-sided")
-    if params.get("one_sided"):
+    if params.get("one_sided", False):
         cargs.append("--one-sided")
-    if params.get("signed"):
+    if params.get("signed", False):
         cargs.append("--signed")
-    if params.get("feat") is not None:
+    if params.get("feat", None) is not None:
         cargs.extend([
             "--feat",
-            params.get("feat")
+            params.get("feat", None)
         ])
-    if params.get("feat_format") is not None:
+    if params.get("feat_format", None) is not None:
         cargs.extend([
             "--featfmt",
-            params.get("feat_format")
+            params.get("feat_format", None)
         ])
-    if params.get("nii_format"):
+    if params.get("nii_format", False):
         cargs.append("--nii")
-    if params.get("niigz_format"):
+    if params.get("niigz_format", False):
         cargs.append("--nii.gz")
-    if params.get("mgh_format"):
+    if params.get("mgh_format", False):
         cargs.append("--mgh")
-    if params.get("mgz_format"):
+    if params.get("mgz_format", False):
         cargs.append("--mgz")
-    if params.get("img_format"):
+    if params.get("img_format", False):
         cargs.append("--img")
-    if params.get("debug"):
+    if params.get("debug", False):
         cargs.append("--debug")
-    if params.get("check_opts"):
+    if params.get("check_opts", False):
         cargs.append("--checkopts")
     return cargs
 
@@ -225,8 +212,8 @@ def mri_z2p_outputs(
     """
     ret = MriZ2pOutputs(
         root=execution.output_file("."),
-        output_p_volume=execution.output_file(params.get("p_volume")),
-        output_sig_volume=execution.output_file(params.get("sig_volume")),
+        output_p_volume=execution.output_file(params.get("p_volume", None)),
+        output_sig_volume=execution.output_file(params.get("sig_volume", None)),
     )
     return ret
 
@@ -333,7 +320,6 @@ def mri_z2p(
 __all__ = [
     "MRI_Z2P_METADATA",
     "MriZ2pOutputs",
-    "MriZ2pParameters",
     "mri_z2p",
     "mri_z2p_execute",
     "mri_z2p_params",

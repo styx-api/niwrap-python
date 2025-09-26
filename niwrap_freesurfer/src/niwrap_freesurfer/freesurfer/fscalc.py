@@ -14,7 +14,19 @@ FSCALC_METADATA = Metadata(
 
 
 FscalcParameters = typing.TypedDict('FscalcParameters', {
-    "@type": typing.Literal["freesurfer.fscalc"],
+    "@type": typing.NotRequired[typing.Literal["freesurfer/fscalc"]],
+    "input1": str,
+    "operation": str,
+    "input2": typing.NotRequired[str | None],
+    "output_file": str,
+    "output_data_type": typing.NotRequired[str | None],
+    "debug": bool,
+    "tmpdir": typing.NotRequired[str | None],
+    "nocleanup": bool,
+    "log_file": typing.NotRequired[str | None],
+})
+FscalcParametersTagged = typing.TypedDict('FscalcParametersTagged', {
+    "@type": typing.Literal["freesurfer/fscalc"],
     "input1": str,
     "operation": str,
     "input2": typing.NotRequired[str | None],
@@ -27,41 +39,9 @@ FscalcParameters = typing.TypedDict('FscalcParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "freesurfer.fscalc": fscalc_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "freesurfer.fscalc": fscalc_outputs,
-    }.get(t)
-
-
 class FscalcOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `fscalc(...)`.
+    Output object returned when calling `FscalcParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -79,7 +59,7 @@ def fscalc_params(
     tmpdir: str | None = None,
     nocleanup: bool = False,
     log_file: str | None = None,
-) -> FscalcParameters:
+) -> FscalcParametersTagged:
     """
     Build parameters.
     
@@ -98,7 +78,7 @@ def fscalc_params(
         Parameter dictionary
     """
     params = {
-        "@type": "freesurfer.fscalc",
+        "@type": "freesurfer/fscalc",
         "input1": input1,
         "operation": operation,
         "output_file": output_file,
@@ -131,32 +111,32 @@ def fscalc_cargs(
     """
     cargs = []
     cargs.append("fscalc")
-    cargs.append(params.get("input1"))
-    cargs.append(params.get("operation"))
-    if params.get("input2") is not None:
-        cargs.append(params.get("input2"))
+    cargs.append(params.get("input1", None))
+    cargs.append(params.get("operation", None))
+    if params.get("input2", None) is not None:
+        cargs.append(params.get("input2", None))
     cargs.extend([
         "--o",
-        params.get("output_file")
+        params.get("output_file", None)
     ])
-    if params.get("output_data_type") is not None:
+    if params.get("output_data_type", None) is not None:
         cargs.extend([
             "--odt",
-            params.get("output_data_type")
+            params.get("output_data_type", None)
         ])
-    if params.get("debug"):
+    if params.get("debug", False):
         cargs.append("--debug")
-    if params.get("tmpdir") is not None:
+    if params.get("tmpdir", None) is not None:
         cargs.extend([
             "--tmpdir",
-            params.get("tmpdir")
+            params.get("tmpdir", None)
         ])
-    if params.get("nocleanup"):
+    if params.get("nocleanup", False):
         cargs.append("--nocleanup")
-    if params.get("log_file") is not None:
+    if params.get("log_file", None) is not None:
         cargs.extend([
             "--log",
-            params.get("log_file")
+            params.get("log_file", None)
         ])
     return cargs
 
@@ -176,7 +156,7 @@ def fscalc_outputs(
     """
     ret = FscalcOutputs(
         root=execution.output_file("."),
-        result_vol=execution.output_file(params.get("output_file")),
+        result_vol=execution.output_file(params.get("output_file", None)),
     )
     return ret
 
@@ -264,7 +244,6 @@ def fscalc(
 __all__ = [
     "FSCALC_METADATA",
     "FscalcOutputs",
-    "FscalcParameters",
     "fscalc",
     "fscalc_execute",
     "fscalc_params",

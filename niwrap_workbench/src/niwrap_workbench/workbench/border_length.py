@@ -14,7 +14,15 @@ BORDER_LENGTH_METADATA = Metadata(
 
 
 BorderLengthParameters = typing.TypedDict('BorderLengthParameters', {
-    "@type": typing.Literal["workbench.border-length"],
+    "@type": typing.NotRequired[typing.Literal["workbench/border-length"]],
+    "border": InputPathType,
+    "surface": InputPathType,
+    "opt_corrected_areas_area_metric": typing.NotRequired[InputPathType | None],
+    "opt_separate_pieces": bool,
+    "opt_hide_border_name": bool,
+})
+BorderLengthParametersTagged = typing.TypedDict('BorderLengthParametersTagged', {
+    "@type": typing.Literal["workbench/border-length"],
     "border": InputPathType,
     "surface": InputPathType,
     "opt_corrected_areas_area_metric": typing.NotRequired[InputPathType | None],
@@ -23,40 +31,9 @@ BorderLengthParameters = typing.TypedDict('BorderLengthParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "workbench.border-length": border_length_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-    }.get(t)
-
-
 class BorderLengthOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `border_length(...)`.
+    Output object returned when calling `BorderLengthParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -68,7 +45,7 @@ def border_length_params(
     opt_corrected_areas_area_metric: InputPathType | None = None,
     opt_separate_pieces: bool = False,
     opt_hide_border_name: bool = False,
-) -> BorderLengthParameters:
+) -> BorderLengthParametersTagged:
     """
     Build parameters.
     
@@ -85,7 +62,7 @@ def border_length_params(
         Parameter dictionary
     """
     params = {
-        "@type": "workbench.border-length",
+        "@type": "workbench/border-length",
         "border": border,
         "surface": surface,
         "opt_separate_pieces": opt_separate_pieces,
@@ -112,16 +89,16 @@ def border_length_cargs(
     cargs = []
     cargs.append("wb_command")
     cargs.append("-border-length")
-    cargs.append(execution.input_file(params.get("border")))
-    cargs.append(execution.input_file(params.get("surface")))
-    if params.get("opt_corrected_areas_area_metric") is not None:
+    cargs.append(execution.input_file(params.get("border", None)))
+    cargs.append(execution.input_file(params.get("surface", None)))
+    if params.get("opt_corrected_areas_area_metric", None) is not None:
         cargs.extend([
             "-corrected-areas",
-            execution.input_file(params.get("opt_corrected_areas_area_metric"))
+            execution.input_file(params.get("opt_corrected_areas_area_metric", None))
         ])
-    if params.get("opt_separate_pieces"):
+    if params.get("opt_separate_pieces", False):
         cargs.append("-separate-pieces")
-    if params.get("opt_hide_border_name"):
+    if params.get("opt_hide_border_name", False):
         cargs.append("-hide-border-name")
     return cargs
 
@@ -232,7 +209,6 @@ def border_length(
 __all__ = [
     "BORDER_LENGTH_METADATA",
     "BorderLengthOutputs",
-    "BorderLengthParameters",
     "border_length",
     "border_length_execute",
     "border_length_params",

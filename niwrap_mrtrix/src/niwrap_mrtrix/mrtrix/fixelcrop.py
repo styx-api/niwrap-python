@@ -14,14 +14,33 @@ FIXELCROP_METADATA = Metadata(
 
 
 FixelcropConfigParameters = typing.TypedDict('FixelcropConfigParameters', {
-    "@type": typing.Literal["mrtrix.fixelcrop.config"],
+    "@type": typing.NotRequired[typing.Literal["config"]],
+    "key": str,
+    "value": str,
+})
+FixelcropConfigParametersTagged = typing.TypedDict('FixelcropConfigParametersTagged', {
+    "@type": typing.Literal["config"],
     "key": str,
     "value": str,
 })
 
 
 FixelcropParameters = typing.TypedDict('FixelcropParameters', {
-    "@type": typing.Literal["mrtrix.fixelcrop"],
+    "@type": typing.NotRequired[typing.Literal["mrtrix/fixelcrop"]],
+    "info": bool,
+    "quiet": bool,
+    "debug": bool,
+    "force": bool,
+    "nthreads": typing.NotRequired[int | None],
+    "config": typing.NotRequired[list[FixelcropConfigParameters] | None],
+    "help": bool,
+    "version": bool,
+    "input_fixel_directory": InputPathType,
+    "input_fixel_mask": InputPathType,
+    "output_fixel_directory": str,
+})
+FixelcropParametersTagged = typing.TypedDict('FixelcropParametersTagged', {
+    "@type": typing.Literal["mrtrix/fixelcrop"],
     "info": bool,
     "quiet": bool,
     "debug": bool,
@@ -36,43 +55,10 @@ FixelcropParameters = typing.TypedDict('FixelcropParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "mrtrix.fixelcrop": fixelcrop_cargs,
-        "mrtrix.fixelcrop.config": fixelcrop_config_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "mrtrix.fixelcrop": fixelcrop_outputs,
-    }.get(t)
-
-
 def fixelcrop_config_params(
     key: str,
     value: str,
-) -> FixelcropConfigParameters:
+) -> FixelcropConfigParametersTagged:
     """
     Build parameters.
     
@@ -83,7 +69,7 @@ def fixelcrop_config_params(
         Parameter dictionary
     """
     params = {
-        "@type": "mrtrix.fixelcrop.config",
+        "@type": "config",
         "key": key,
         "value": value,
     }
@@ -105,14 +91,14 @@ def fixelcrop_config_cargs(
     """
     cargs = []
     cargs.append("-config")
-    cargs.append(params.get("key"))
-    cargs.append(params.get("value"))
+    cargs.append(params.get("key", None))
+    cargs.append(params.get("value", None))
     return cargs
 
 
 class FixelcropOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `fixelcrop(...)`.
+    Output object returned when calling `FixelcropParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -132,7 +118,7 @@ def fixelcrop_params(
     config: list[FixelcropConfigParameters] | None = None,
     help_: bool = False,
     version: bool = False,
-) -> FixelcropParameters:
+) -> FixelcropParametersTagged:
     """
     Build parameters.
     
@@ -159,7 +145,7 @@ def fixelcrop_params(
         Parameter dictionary
     """
     params = {
-        "@type": "mrtrix.fixelcrop",
+        "@type": "mrtrix/fixelcrop",
         "info": info,
         "quiet": quiet,
         "debug": debug,
@@ -192,28 +178,28 @@ def fixelcrop_cargs(
     """
     cargs = []
     cargs.append("fixelcrop")
-    if params.get("info"):
+    if params.get("info", False):
         cargs.append("-info")
-    if params.get("quiet"):
+    if params.get("quiet", False):
         cargs.append("-quiet")
-    if params.get("debug"):
+    if params.get("debug", False):
         cargs.append("-debug")
-    if params.get("force"):
+    if params.get("force", False):
         cargs.append("-force")
-    if params.get("nthreads") is not None:
+    if params.get("nthreads", None) is not None:
         cargs.extend([
             "-nthreads",
-            str(params.get("nthreads"))
+            str(params.get("nthreads", None))
         ])
-    if params.get("config") is not None:
-        cargs.extend([a for c in [dyn_cargs(s["@type"])(s, execution) for s in params.get("config")] for a in c])
-    if params.get("help"):
+    if params.get("config", None) is not None:
+        cargs.extend([a for c in [fixelcrop_config_cargs(s, execution) for s in params.get("config", None)] for a in c])
+    if params.get("help", False):
         cargs.append("-help")
-    if params.get("version"):
+    if params.get("version", False):
         cargs.append("-version")
-    cargs.append(execution.input_file(params.get("input_fixel_directory")))
-    cargs.append(execution.input_file(params.get("input_fixel_mask")))
-    cargs.append(params.get("output_fixel_directory"))
+    cargs.append(execution.input_file(params.get("input_fixel_directory", None)))
+    cargs.append(execution.input_file(params.get("input_fixel_mask", None)))
+    cargs.append(params.get("output_fixel_directory", None))
     return cargs
 
 
@@ -232,7 +218,7 @@ def fixelcrop_outputs(
     """
     ret = FixelcropOutputs(
         root=execution.output_file("."),
-        output_fixel_directory=execution.output_file(params.get("output_fixel_directory")),
+        output_fixel_directory=execution.output_file(params.get("output_fixel_directory", None)),
     )
     return ret
 
@@ -343,9 +329,7 @@ def fixelcrop(
 
 __all__ = [
     "FIXELCROP_METADATA",
-    "FixelcropConfigParameters",
     "FixelcropOutputs",
-    "FixelcropParameters",
     "fixelcrop",
     "fixelcrop_config_params",
     "fixelcrop_execute",

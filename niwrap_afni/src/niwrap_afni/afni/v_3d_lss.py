@@ -14,7 +14,18 @@ V_3D_LSS_METADATA = Metadata(
 
 
 V3dLssParameters = typing.TypedDict('V3dLssParameters', {
-    "@type": typing.Literal["afni.3dLSS"],
+    "@type": typing.NotRequired[typing.Literal["afni/3dLSS"]],
+    "matrix": InputPathType,
+    "input": typing.NotRequired[InputPathType | None],
+    "nodata": bool,
+    "mask": typing.NotRequired[InputPathType | None],
+    "automask": bool,
+    "prefix": typing.NotRequired[str | None],
+    "save1D": typing.NotRequired[str | None],
+    "verbose": bool,
+})
+V3dLssParametersTagged = typing.TypedDict('V3dLssParametersTagged', {
+    "@type": typing.Literal["afni/3dLSS"],
     "matrix": InputPathType,
     "input": typing.NotRequired[InputPathType | None],
     "nodata": bool,
@@ -26,41 +37,9 @@ V3dLssParameters = typing.TypedDict('V3dLssParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "afni.3dLSS": v_3d_lss_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "afni.3dLSS": v_3d_lss_outputs,
-    }.get(t)
-
-
 class V3dLssOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `v_3d_lss(...)`.
+    Output object returned when calling `V3dLssParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -80,7 +59,7 @@ def v_3d_lss_params(
     prefix: str | None = None,
     save1_d: str | None = None,
     verbose: bool = False,
-) -> V3dLssParameters:
+) -> V3dLssParametersTagged:
     """
     Build parameters.
     
@@ -104,7 +83,7 @@ def v_3d_lss_params(
         Parameter dictionary
     """
     params = {
-        "@type": "afni.3dLSS",
+        "@type": "afni/3dLSS",
         "matrix": matrix,
         "nodata": nodata,
         "automask": automask,
@@ -138,33 +117,33 @@ def v_3d_lss_cargs(
     cargs.append("3dLSS")
     cargs.extend([
         "-matrix",
-        execution.input_file(params.get("matrix"))
+        execution.input_file(params.get("matrix", None))
     ])
-    if params.get("input") is not None:
+    if params.get("input", None) is not None:
         cargs.extend([
             "-input",
-            execution.input_file(params.get("input"))
+            execution.input_file(params.get("input", None))
         ])
-    if params.get("nodata"):
+    if params.get("nodata", False):
         cargs.append("-nodata")
-    if params.get("mask") is not None:
+    if params.get("mask", None) is not None:
         cargs.extend([
             "-mask",
-            execution.input_file(params.get("mask"))
+            execution.input_file(params.get("mask", None))
         ])
-    if params.get("automask"):
+    if params.get("automask", False):
         cargs.append("-automask")
-    if params.get("prefix") is not None:
+    if params.get("prefix", None) is not None:
         cargs.extend([
             "-prefix",
-            params.get("prefix")
+            params.get("prefix", None)
         ])
-    if params.get("save1D") is not None:
+    if params.get("save1D", None) is not None:
         cargs.extend([
             "-save1D",
-            params.get("save1D")
+            params.get("save1D", None)
         ])
-    if params.get("verbose"):
+    if params.get("verbose", False):
         cargs.append("-verb")
     return cargs
 
@@ -185,7 +164,7 @@ def v_3d_lss_outputs(
     ret = V3dLssOutputs(
         root=execution.output_file("."),
         output_dataset=execution.output_file("LSSout+orig.HEAD"),
-        save1_d_output=execution.output_file(params.get("save1D")) if (params.get("save1D") is not None) else None,
+        save1_d_output=execution.output_file(params.get("save1D", None)) if (params.get("save1D") is not None) else None,
     )
     return ret
 
@@ -275,7 +254,6 @@ def v_3d_lss(
 
 __all__ = [
     "V3dLssOutputs",
-    "V3dLssParameters",
     "V_3D_LSS_METADATA",
     "v_3d_lss",
     "v_3d_lss_execute",

@@ -14,7 +14,21 @@ ANALYZE_TRACE_METADATA = Metadata(
 
 
 AnalyzeTraceParameters = typing.TypedDict('AnalyzeTraceParameters', {
-    "@type": typing.Literal["afni.AnalyzeTrace"],
+    "@type": typing.NotRequired[typing.Literal["afni/AnalyzeTrace"]],
+    "tracefile": InputPathType,
+    "max_func_lines": typing.NotRequired[int | None],
+    "suma_c": typing.NotRequired[InputPathType | None],
+    "max_err": typing.NotRequired[int | None],
+    "novolreg": bool,
+    "noxform": bool,
+    "setenv": typing.NotRequired[str | None],
+    "trace": bool,
+    "extreme_trace": bool,
+    "nomall": bool,
+    "yesmall": bool,
+})
+AnalyzeTraceParametersTagged = typing.TypedDict('AnalyzeTraceParametersTagged', {
+    "@type": typing.Literal["afni/AnalyzeTrace"],
     "tracefile": InputPathType,
     "max_func_lines": typing.NotRequired[int | None],
     "suma_c": typing.NotRequired[InputPathType | None],
@@ -29,40 +43,9 @@ AnalyzeTraceParameters = typing.TypedDict('AnalyzeTraceParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "afni.AnalyzeTrace": analyze_trace_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-    }.get(t)
-
-
 class AnalyzeTraceOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `analyze_trace(...)`.
+    Output object returned when calling `AnalyzeTraceParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -80,7 +63,7 @@ def analyze_trace_params(
     extreme_trace: bool = False,
     nomall: bool = False,
     yesmall: bool = False,
-) -> AnalyzeTraceParameters:
+) -> AnalyzeTraceParametersTagged:
     """
     Build parameters.
     
@@ -106,7 +89,7 @@ def analyze_trace_params(
         Parameter dictionary
     """
     params = {
-        "@type": "afni.AnalyzeTrace",
+        "@type": "afni/AnalyzeTrace",
         "tracefile": tracefile,
         "novolreg": novolreg,
         "noxform": noxform,
@@ -141,38 +124,38 @@ def analyze_trace_cargs(
     """
     cargs = []
     cargs.append("AnalyzeTrace")
-    cargs.append(execution.input_file(params.get("tracefile")))
-    if params.get("max_func_lines") is not None:
+    cargs.append(execution.input_file(params.get("tracefile", None)))
+    if params.get("max_func_lines", None) is not None:
         cargs.extend([
             "-max_func_lines",
-            str(params.get("max_func_lines"))
+            str(params.get("max_func_lines", None))
         ])
-    if params.get("suma_c") is not None:
+    if params.get("suma_c", None) is not None:
         cargs.extend([
             "-suma_c",
-            execution.input_file(params.get("suma_c"))
+            execution.input_file(params.get("suma_c", None))
         ])
-    if params.get("max_err") is not None:
+    if params.get("max_err", None) is not None:
         cargs.extend([
             "-max_err",
-            str(params.get("max_err"))
+            str(params.get("max_err", None))
         ])
-    if params.get("novolreg"):
+    if params.get("novolreg", False):
         cargs.append("-novolreg")
-    if params.get("noxform"):
+    if params.get("noxform", False):
         cargs.append("-noxform")
-    if params.get("setenv") is not None:
+    if params.get("setenv", None) is not None:
         cargs.extend([
             "-setenv",
-            params.get("setenv")
+            params.get("setenv", None)
         ])
-    if params.get("trace"):
+    if params.get("trace", False):
         cargs.append("-trace")
-    if params.get("extreme_trace"):
+    if params.get("extreme_trace", False):
         cargs.append("-TRACE")
-    if params.get("nomall"):
+    if params.get("nomall", False):
         cargs.append("-nomall")
-    if params.get("yesmall"):
+    if params.get("yesmall", False):
         cargs.append("-yesmall")
     return cargs
 
@@ -290,7 +273,6 @@ def analyze_trace(
 __all__ = [
     "ANALYZE_TRACE_METADATA",
     "AnalyzeTraceOutputs",
-    "AnalyzeTraceParameters",
     "analyze_trace",
     "analyze_trace_execute",
     "analyze_trace_params",

@@ -14,7 +14,25 @@ V_3D_PFM_METADATA = Metadata(
 
 
 V3dPfmParameters = typing.TypedDict('V3dPfmParameters', {
-    "@type": typing.Literal["afni.3dPFM"],
+    "@type": typing.NotRequired[typing.Literal["afni/3dPFM"]],
+    "input": InputPathType,
+    "mask": typing.NotRequired[InputPathType | None],
+    "algorithm": typing.NotRequired[str | None],
+    "criteria": typing.NotRequired[str | None],
+    "nonzeros": typing.NotRequired[float | None],
+    "maxiter": typing.NotRequired[float | None],
+    "maxiterfactor": typing.NotRequired[float | None],
+    "tr": typing.NotRequired[float | None],
+    "hrf": typing.NotRequired[str | None],
+    "hrf_vol": typing.NotRequired[InputPathType | None],
+    "idx_hrf": typing.NotRequired[InputPathType | None],
+    "LHS": typing.NotRequired[list[InputPathType] | None],
+    "jobs": typing.NotRequired[float | None],
+    "nSeg": typing.NotRequired[float | None],
+    "verb": typing.NotRequired[float | None],
+})
+V3dPfmParametersTagged = typing.TypedDict('V3dPfmParametersTagged', {
+    "@type": typing.Literal["afni/3dPFM"],
     "input": InputPathType,
     "mask": typing.NotRequired[InputPathType | None],
     "algorithm": typing.NotRequired[str | None],
@@ -33,41 +51,9 @@ V3dPfmParameters = typing.TypedDict('V3dPfmParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "afni.3dPFM": v_3d_pfm_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "afni.3dPFM": v_3d_pfm_outputs,
-    }.get(t)
-
-
 class V3dPfmOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `v_3d_pfm(...)`.
+    Output object returned when calling `V3dPfmParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -143,7 +129,7 @@ def v_3d_pfm_params(
     jobs: float | None = None,
     n_seg: float | None = None,
     verb: float | None = None,
-) -> V3dPfmParameters:
+) -> V3dPfmParametersTagged:
     """
     Build parameters.
     
@@ -170,7 +156,7 @@ def v_3d_pfm_params(
         Parameter dictionary
     """
     params = {
-        "@type": "afni.3dPFM",
+        "@type": "afni/3dPFM",
         "input": input_,
     }
     if mask is not None:
@@ -221,77 +207,77 @@ def v_3d_pfm_cargs(
     cargs.append("3dPFM")
     cargs.extend([
         "-input",
-        execution.input_file(params.get("input"))
+        execution.input_file(params.get("input", None))
     ])
-    if params.get("mask") is not None:
+    if params.get("mask", None) is not None:
         cargs.extend([
             "-mask",
-            execution.input_file(params.get("mask"))
+            execution.input_file(params.get("mask", None))
         ])
-    if params.get("algorithm") is not None:
+    if params.get("algorithm", None) is not None:
         cargs.extend([
             "-algorithm",
-            params.get("algorithm")
+            params.get("algorithm", None)
         ])
-    if params.get("criteria") is not None:
+    if params.get("criteria", None) is not None:
         cargs.extend([
             "-criteria",
-            params.get("criteria")
+            params.get("criteria", None)
         ])
-    if params.get("nonzeros") is not None:
+    if params.get("nonzeros", None) is not None:
         cargs.extend([
             "-nonzeros",
-            str(params.get("nonzeros"))
+            str(params.get("nonzeros", None))
         ])
-    if params.get("maxiter") is not None:
+    if params.get("maxiter", None) is not None:
         cargs.extend([
             "-maxiter",
-            str(params.get("maxiter"))
+            str(params.get("maxiter", None))
         ])
-    if params.get("maxiterfactor") is not None:
+    if params.get("maxiterfactor", None) is not None:
         cargs.extend([
             "-maxiterfactor",
-            str(params.get("maxiterfactor"))
+            str(params.get("maxiterfactor", None))
         ])
-    if params.get("tr") is not None:
+    if params.get("tr", None) is not None:
         cargs.extend([
             "-TR",
-            str(params.get("tr"))
+            str(params.get("tr", None))
         ])
-    if params.get("hrf") is not None:
+    if params.get("hrf", None) is not None:
         cargs.extend([
             "-hrf",
-            params.get("hrf")
+            params.get("hrf", None)
         ])
-    if params.get("hrf_vol") is not None:
+    if params.get("hrf_vol", None) is not None:
         cargs.extend([
             "-hrf_vol",
-            execution.input_file(params.get("hrf_vol"))
+            execution.input_file(params.get("hrf_vol", None))
         ])
-    if params.get("idx_hrf") is not None:
+    if params.get("idx_hrf", None) is not None:
         cargs.extend([
             "-idx_hrf",
-            execution.input_file(params.get("idx_hrf"))
+            execution.input_file(params.get("idx_hrf", None))
         ])
-    if params.get("LHS") is not None:
+    if params.get("LHS", None) is not None:
         cargs.extend([
             "-LHS",
-            *[execution.input_file(f) for f in params.get("LHS")]
+            *[execution.input_file(f) for f in params.get("LHS", None)]
         ])
-    if params.get("jobs") is not None:
+    if params.get("jobs", None) is not None:
         cargs.extend([
             "-jobs",
-            str(params.get("jobs"))
+            str(params.get("jobs", None))
         ])
-    if params.get("nSeg") is not None:
+    if params.get("nSeg", None) is not None:
         cargs.extend([
             "-nSeg",
-            str(params.get("nSeg"))
+            str(params.get("nSeg", None))
         ])
-    if params.get("verb") is not None:
+    if params.get("verb", None) is not None:
         cargs.extend([
             "-verb",
-            str(params.get("verb"))
+            str(params.get("verb", None))
         ])
     return cargs
 
@@ -443,7 +429,6 @@ def v_3d_pfm(
 
 __all__ = [
     "V3dPfmOutputs",
-    "V3dPfmParameters",
     "V_3D_PFM_METADATA",
     "v_3d_pfm",
     "v_3d_pfm_execute",

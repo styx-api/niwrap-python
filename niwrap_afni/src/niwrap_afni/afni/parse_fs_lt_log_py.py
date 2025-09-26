@@ -14,7 +14,15 @@ PARSE_FS_LT_LOG_PY_METADATA = Metadata(
 
 
 ParseFsLtLogPyParameters = typing.TypedDict('ParseFsLtLogPyParameters', {
-    "@type": typing.Literal["afni.parse_fs_lt_log.py"],
+    "@type": typing.NotRequired[typing.Literal["afni/parse_fs_lt_log.py"]],
+    "logfile": InputPathType,
+    "labels": list[str],
+    "show_orig": bool,
+    "show_all_orig": bool,
+    "verbosity": typing.NotRequired[float | None],
+})
+ParseFsLtLogPyParametersTagged = typing.TypedDict('ParseFsLtLogPyParametersTagged', {
+    "@type": typing.Literal["afni/parse_fs_lt_log.py"],
     "logfile": InputPathType,
     "labels": list[str],
     "show_orig": bool,
@@ -23,40 +31,9 @@ ParseFsLtLogPyParameters = typing.TypedDict('ParseFsLtLogPyParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "afni.parse_fs_lt_log.py": parse_fs_lt_log_py_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-    }.get(t)
-
-
 class ParseFsLtLogPyOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `parse_fs_lt_log_py(...)`.
+    Output object returned when calling `ParseFsLtLogPyParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -68,7 +45,7 @@ def parse_fs_lt_log_py_params(
     show_orig: bool = False,
     show_all_orig: bool = False,
     verbosity: float | None = None,
-) -> ParseFsLtLogPyParameters:
+) -> ParseFsLtLogPyParametersTagged:
     """
     Build parameters.
     
@@ -82,7 +59,7 @@ def parse_fs_lt_log_py_params(
         Parameter dictionary
     """
     params = {
-        "@type": "afni.parse_fs_lt_log.py",
+        "@type": "afni/parse_fs_lt_log.py",
         "logfile": logfile,
         "labels": labels,
         "show_orig": show_orig,
@@ -110,20 +87,20 @@ def parse_fs_lt_log_py_cargs(
     cargs.append("parse_fs_lt_log.py")
     cargs.extend([
         "-logfile",
-        execution.input_file(params.get("logfile"))
+        execution.input_file(params.get("logfile", None))
     ])
     cargs.extend([
         "-labels",
-        *params.get("labels")
+        *params.get("labels", None)
     ])
-    if params.get("show_orig"):
+    if params.get("show_orig", False):
         cargs.append("-show_orig")
-    if params.get("show_all_orig"):
+    if params.get("show_all_orig", False):
         cargs.append("-show_all_orig")
-    if params.get("verbosity") is not None:
+    if params.get("verbosity", None) is not None:
         cargs.extend([
             "-verb",
-            str(params.get("verbosity"))
+            str(params.get("verbosity", None))
         ])
     return cargs
 
@@ -215,7 +192,6 @@ def parse_fs_lt_log_py(
 __all__ = [
     "PARSE_FS_LT_LOG_PY_METADATA",
     "ParseFsLtLogPyOutputs",
-    "ParseFsLtLogPyParameters",
     "parse_fs_lt_log_py",
     "parse_fs_lt_log_py_execute",
     "parse_fs_lt_log_py_params",

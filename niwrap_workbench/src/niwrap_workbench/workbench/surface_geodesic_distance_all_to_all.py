@@ -14,7 +14,16 @@ SURFACE_GEODESIC_DISTANCE_ALL_TO_ALL_METADATA = Metadata(
 
 
 SurfaceGeodesicDistanceAllToAllParameters = typing.TypedDict('SurfaceGeodesicDistanceAllToAllParameters', {
-    "@type": typing.Literal["workbench.surface-geodesic-distance-all-to-all"],
+    "@type": typing.NotRequired[typing.Literal["workbench/surface-geodesic-distance-all-to-all"]],
+    "surface": InputPathType,
+    "cifti_out": str,
+    "opt_roi_roi_metric": typing.NotRequired[InputPathType | None],
+    "opt_limit_limit_mm": typing.NotRequired[float | None],
+    "opt_corrected_areas_area_metric": typing.NotRequired[InputPathType | None],
+    "opt_naive": bool,
+})
+SurfaceGeodesicDistanceAllToAllParametersTagged = typing.TypedDict('SurfaceGeodesicDistanceAllToAllParametersTagged', {
+    "@type": typing.Literal["workbench/surface-geodesic-distance-all-to-all"],
     "surface": InputPathType,
     "cifti_out": str,
     "opt_roi_roi_metric": typing.NotRequired[InputPathType | None],
@@ -24,41 +33,9 @@ SurfaceGeodesicDistanceAllToAllParameters = typing.TypedDict('SurfaceGeodesicDis
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "workbench.surface-geodesic-distance-all-to-all": surface_geodesic_distance_all_to_all_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "workbench.surface-geodesic-distance-all-to-all": surface_geodesic_distance_all_to_all_outputs,
-    }.get(t)
-
-
 class SurfaceGeodesicDistanceAllToAllOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `surface_geodesic_distance_all_to_all(...)`.
+    Output object returned when calling `SurfaceGeodesicDistanceAllToAllParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -73,7 +50,7 @@ def surface_geodesic_distance_all_to_all_params(
     opt_limit_limit_mm: float | None = None,
     opt_corrected_areas_area_metric: InputPathType | None = None,
     opt_naive: bool = False,
-) -> SurfaceGeodesicDistanceAllToAllParameters:
+) -> SurfaceGeodesicDistanceAllToAllParametersTagged:
     """
     Build parameters.
     
@@ -92,7 +69,7 @@ def surface_geodesic_distance_all_to_all_params(
         Parameter dictionary
     """
     params = {
-        "@type": "workbench.surface-geodesic-distance-all-to-all",
+        "@type": "workbench/surface-geodesic-distance-all-to-all",
         "surface": surface,
         "cifti_out": cifti_out,
         "opt_naive": opt_naive,
@@ -122,24 +99,24 @@ def surface_geodesic_distance_all_to_all_cargs(
     cargs = []
     cargs.append("wb_command")
     cargs.append("-surface-geodesic-distance-all-to-all")
-    cargs.append(execution.input_file(params.get("surface")))
-    cargs.append(params.get("cifti_out"))
-    if params.get("opt_roi_roi_metric") is not None:
+    cargs.append(execution.input_file(params.get("surface", None)))
+    cargs.append(params.get("cifti_out", None))
+    if params.get("opt_roi_roi_metric", None) is not None:
         cargs.extend([
             "-roi",
-            execution.input_file(params.get("opt_roi_roi_metric"))
+            execution.input_file(params.get("opt_roi_roi_metric", None))
         ])
-    if params.get("opt_limit_limit_mm") is not None:
+    if params.get("opt_limit_limit_mm", None) is not None:
         cargs.extend([
             "-limit",
-            str(params.get("opt_limit_limit_mm"))
+            str(params.get("opt_limit_limit_mm", None))
         ])
-    if params.get("opt_corrected_areas_area_metric") is not None:
+    if params.get("opt_corrected_areas_area_metric", None) is not None:
         cargs.extend([
             "-corrected-areas",
-            execution.input_file(params.get("opt_corrected_areas_area_metric"))
+            execution.input_file(params.get("opt_corrected_areas_area_metric", None))
         ])
-    if params.get("opt_naive"):
+    if params.get("opt_naive", False):
         cargs.append("-naive")
     return cargs
 
@@ -159,7 +136,7 @@ def surface_geodesic_distance_all_to_all_outputs(
     """
     ret = SurfaceGeodesicDistanceAllToAllOutputs(
         root=execution.output_file("."),
-        cifti_out=execution.output_file(params.get("cifti_out")),
+        cifti_out=execution.output_file(params.get("cifti_out", None)),
     )
     return ret
 
@@ -279,7 +256,6 @@ def surface_geodesic_distance_all_to_all(
 __all__ = [
     "SURFACE_GEODESIC_DISTANCE_ALL_TO_ALL_METADATA",
     "SurfaceGeodesicDistanceAllToAllOutputs",
-    "SurfaceGeodesicDistanceAllToAllParameters",
     "surface_geodesic_distance_all_to_all",
     "surface_geodesic_distance_all_to_all_execute",
     "surface_geodesic_distance_all_to_all_params",

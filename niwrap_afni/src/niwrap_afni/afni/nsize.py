@@ -14,47 +14,20 @@ NSIZE_METADATA = Metadata(
 
 
 NsizeParameters = typing.TypedDict('NsizeParameters', {
-    "@type": typing.Literal["afni.nsize"],
+    "@type": typing.NotRequired[typing.Literal["afni/nsize"]],
+    "image_in": InputPathType,
+    "image_out": str,
+})
+NsizeParametersTagged = typing.TypedDict('NsizeParametersTagged', {
+    "@type": typing.Literal["afni/nsize"],
     "image_in": InputPathType,
     "image_out": str,
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "afni.nsize": nsize_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "afni.nsize": nsize_outputs,
-    }.get(t)
-
-
 class NsizeOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `nsize(...)`.
+    Output object returned when calling `NsizeParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -65,7 +38,7 @@ class NsizeOutputs(typing.NamedTuple):
 def nsize_params(
     image_in: InputPathType,
     image_out: str,
-) -> NsizeParameters:
+) -> NsizeParametersTagged:
     """
     Build parameters.
     
@@ -76,7 +49,7 @@ def nsize_params(
         Parameter dictionary
     """
     params = {
-        "@type": "afni.nsize",
+        "@type": "afni/nsize",
         "image_in": image_in,
         "image_out": image_out,
     }
@@ -98,8 +71,8 @@ def nsize_cargs(
     """
     cargs = []
     cargs.append("nsize")
-    cargs.append(execution.input_file(params.get("image_in")))
-    cargs.append(params.get("image_out"))
+    cargs.append(execution.input_file(params.get("image_in", None)))
+    cargs.append(params.get("image_out", None))
     return cargs
 
 
@@ -118,7 +91,7 @@ def nsize_outputs(
     """
     ret = NsizeOutputs(
         root=execution.output_file("."),
-        image_out_file=execution.output_file(params.get("image_out")),
+        image_out_file=execution.output_file(params.get("image_out", None)),
     )
     return ret
 
@@ -182,7 +155,6 @@ def nsize(
 __all__ = [
     "NSIZE_METADATA",
     "NsizeOutputs",
-    "NsizeParameters",
     "nsize",
     "nsize_execute",
     "nsize_params",

@@ -14,46 +14,20 @@ FIX_SUBJECT_CORRECTED_METADATA = Metadata(
 
 
 FixSubjectCorrectedParameters = typing.TypedDict('FixSubjectCorrectedParameters', {
-    "@type": typing.Literal["freesurfer.fix_subject_corrected"],
+    "@type": typing.NotRequired[typing.Literal["freesurfer/fix_subject_corrected"]],
+    "subject_directory": str,
+    "output_directory": str,
+})
+FixSubjectCorrectedParametersTagged = typing.TypedDict('FixSubjectCorrectedParametersTagged', {
+    "@type": typing.Literal["freesurfer/fix_subject_corrected"],
     "subject_directory": str,
     "output_directory": str,
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "freesurfer.fix_subject_corrected": fix_subject_corrected_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-    }.get(t)
-
-
 class FixSubjectCorrectedOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `fix_subject_corrected(...)`.
+    Output object returned when calling `FixSubjectCorrectedParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -62,7 +36,7 @@ class FixSubjectCorrectedOutputs(typing.NamedTuple):
 def fix_subject_corrected_params(
     subject_directory: str,
     output_directory: str,
-) -> FixSubjectCorrectedParameters:
+) -> FixSubjectCorrectedParametersTagged:
     """
     Build parameters.
     
@@ -73,7 +47,7 @@ def fix_subject_corrected_params(
         Parameter dictionary
     """
     params = {
-        "@type": "freesurfer.fix_subject_corrected",
+        "@type": "freesurfer/fix_subject_corrected",
         "subject_directory": subject_directory,
         "output_directory": output_directory,
     }
@@ -95,8 +69,8 @@ def fix_subject_corrected_cargs(
     """
     cargs = []
     cargs.append("fix_subject_corrected")
-    cargs.append(params.get("subject_directory"))
-    cargs.append(params.get("output_directory"))
+    cargs.append(params.get("subject_directory", None))
+    cargs.append(params.get("output_directory", None))
     return cargs
 
 
@@ -178,7 +152,6 @@ def fix_subject_corrected(
 __all__ = [
     "FIX_SUBJECT_CORRECTED_METADATA",
     "FixSubjectCorrectedOutputs",
-    "FixSubjectCorrectedParameters",
     "fix_subject_corrected",
     "fix_subject_corrected_execute",
     "fix_subject_corrected_params",

@@ -14,7 +14,45 @@ RUN_FASTSURFER_SH_METADATA = Metadata(
 
 
 RunFastsurferShParameters = typing.TypedDict('RunFastsurferShParameters', {
-    "@type": typing.Literal["fastsurfer.run_fastsurfer.sh"],
+    "@type": typing.NotRequired[typing.Literal["fastsurfer/run_fastsurfer.sh"]],
+    "sid": str,
+    "subjects_dir": str,
+    "t1_input": InputPathType,
+    "fs_license": typing.NotRequired[InputPathType | None],
+    "asegdkt_segfile": typing.NotRequired[str | None],
+    "vox_size": typing.NotRequired[str | None],
+    "seg_only": bool,
+    "seg_log": typing.NotRequired[str | None],
+    "conformed_name": typing.NotRequired[str | None],
+    "norm_name": typing.NotRequired[str | None],
+    "t2_input": typing.NotRequired[InputPathType | None],
+    "reg_mode": typing.NotRequired[typing.Literal["none", "coreg", "robust"] | None],
+    "threads": typing.NotRequired[int | None],
+    "device": typing.NotRequired[str | None],
+    "viewagg_device": typing.NotRequired[str | None],
+    "batch_size": typing.NotRequired[int | None],
+    "python_cmd": typing.NotRequired[str | None],
+    "surf_only": bool,
+    "no_biasfield": bool,
+    "tal_reg": bool,
+    "no_asegdkt": bool,
+    "no_cereb": bool,
+    "cereb_segfile": typing.NotRequired[str | None],
+    "no_hypothal": bool,
+    "qc_snap": bool,
+    "three_t": bool,
+    "parallel": bool,
+    "ignore_fs_version": bool,
+    "fstess": bool,
+    "fsqsphere": bool,
+    "fsaparc": bool,
+    "no_fs_t1": bool,
+    "no_surfreg": bool,
+    "allow_root": bool,
+    "version": typing.NotRequired[str | None],
+})
+RunFastsurferShParametersTagged = typing.TypedDict('RunFastsurferShParametersTagged', {
+    "@type": typing.Literal["fastsurfer/run_fastsurfer.sh"],
     "sid": str,
     "subjects_dir": str,
     "t1_input": InputPathType,
@@ -53,41 +91,9 @@ RunFastsurferShParameters = typing.TypedDict('RunFastsurferShParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "fastsurfer.run_fastsurfer.sh": run_fastsurfer_sh_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "fastsurfer.run_fastsurfer.sh": run_fastsurfer_sh_outputs,
-    }.get(t)
-
-
 class RunFastsurferShOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `run_fastsurfer_sh(...)`.
+    Output object returned when calling `RunFastsurferShParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -139,7 +145,7 @@ def run_fastsurfer_sh_params(
     no_surfreg: bool = False,
     allow_root: bool = False,
     version: str | None = None,
-) -> RunFastsurferShParameters:
+) -> RunFastsurferShParametersTagged:
     """
     Build parameters.
     
@@ -186,7 +192,7 @@ def run_fastsurfer_sh_params(
         Parameter dictionary
     """
     params = {
-        "@type": "fastsurfer.run_fastsurfer.sh",
+        "@type": "fastsurfer/run_fastsurfer.sh",
         "sid": sid,
         "subjects_dir": subjects_dir,
         "t1_input": t1_input,
@@ -258,124 +264,124 @@ def run_fastsurfer_sh_cargs(
     cargs.append("run_fastsurfer.sh")
     cargs.extend([
         "--sid",
-        params.get("sid")
+        params.get("sid", None)
     ])
     cargs.extend([
         "--sd",
-        params.get("subjects_dir")
+        params.get("subjects_dir", None)
     ])
     cargs.extend([
         "--t1",
-        execution.input_file(params.get("t1_input"))
+        execution.input_file(params.get("t1_input", None))
     ])
-    if params.get("fs_license") is not None:
+    if params.get("fs_license", None) is not None:
         cargs.extend([
             "--fs_license",
-            execution.input_file(params.get("fs_license"))
+            execution.input_file(params.get("fs_license", None))
         ])
-    if params.get("asegdkt_segfile") is not None:
+    if params.get("asegdkt_segfile", None) is not None:
         cargs.extend([
             "--asegdkt_segfile",
-            params.get("asegdkt_segfile")
+            params.get("asegdkt_segfile", None)
         ])
-    if params.get("vox_size") is not None:
+    if params.get("vox_size", None) is not None:
         cargs.extend([
             "--vox_size",
-            params.get("vox_size")
+            params.get("vox_size", None)
         ])
-    if params.get("seg_only"):
+    if params.get("seg_only", False):
         cargs.append("--seg_only")
-    if params.get("seg_log") is not None:
+    if params.get("seg_log", None) is not None:
         cargs.extend([
             "--seg_log",
-            params.get("seg_log")
+            params.get("seg_log", None)
         ])
-    if params.get("conformed_name") is not None:
+    if params.get("conformed_name", None) is not None:
         cargs.extend([
             "--conformed_name",
-            params.get("conformed_name")
+            params.get("conformed_name", None)
         ])
-    if params.get("norm_name") is not None:
+    if params.get("norm_name", None) is not None:
         cargs.extend([
             "--norm_name",
-            params.get("norm_name")
+            params.get("norm_name", None)
         ])
-    if params.get("t2_input") is not None:
+    if params.get("t2_input", None) is not None:
         cargs.extend([
             "--t2",
-            execution.input_file(params.get("t2_input"))
+            execution.input_file(params.get("t2_input", None))
         ])
-    if params.get("reg_mode") is not None:
+    if params.get("reg_mode", None) is not None:
         cargs.extend([
             "--reg_mode",
-            params.get("reg_mode")
+            params.get("reg_mode", None)
         ])
-    if params.get("threads") is not None:
+    if params.get("threads", None) is not None:
         cargs.extend([
             "--threads",
-            str(params.get("threads"))
+            str(params.get("threads", None))
         ])
-    if params.get("device") is not None:
+    if params.get("device", None) is not None:
         cargs.extend([
             "--device",
-            params.get("device")
+            params.get("device", None)
         ])
-    if params.get("viewagg_device") is not None:
+    if params.get("viewagg_device", None) is not None:
         cargs.extend([
             "--viewagg_device",
-            params.get("viewagg_device")
+            params.get("viewagg_device", None)
         ])
-    if params.get("batch_size") is not None:
+    if params.get("batch_size", None) is not None:
         cargs.extend([
             "--batch",
-            str(params.get("batch_size"))
+            str(params.get("batch_size", None))
         ])
-    if params.get("python_cmd") is not None:
+    if params.get("python_cmd", None) is not None:
         cargs.extend([
             "--py",
-            params.get("python_cmd")
+            params.get("python_cmd", None)
         ])
-    if params.get("surf_only"):
+    if params.get("surf_only", False):
         cargs.append("--surf_only")
-    if params.get("no_biasfield"):
+    if params.get("no_biasfield", False):
         cargs.append("--no_biasfield")
-    if params.get("tal_reg"):
+    if params.get("tal_reg", False):
         cargs.append("--tal_reg")
-    if params.get("no_asegdkt"):
+    if params.get("no_asegdkt", False):
         cargs.append("--no_asegdkt")
-    if params.get("no_cereb"):
+    if params.get("no_cereb", False):
         cargs.append("--no_cereb")
-    if params.get("cereb_segfile") is not None:
+    if params.get("cereb_segfile", None) is not None:
         cargs.extend([
             "--cereb_segfile",
-            params.get("cereb_segfile")
+            params.get("cereb_segfile", None)
         ])
-    if params.get("no_hypothal"):
+    if params.get("no_hypothal", False):
         cargs.append("--no_hypothal")
-    if params.get("qc_snap"):
+    if params.get("qc_snap", False):
         cargs.append("--qc_snap")
-    if params.get("three_t"):
+    if params.get("three_t", False):
         cargs.append("--3T")
-    if params.get("parallel"):
+    if params.get("parallel", False):
         cargs.append("--parallel")
-    if params.get("ignore_fs_version"):
+    if params.get("ignore_fs_version", False):
         cargs.append("--ignore_fs_version")
-    if params.get("fstess"):
+    if params.get("fstess", False):
         cargs.append("--fstess")
-    if params.get("fsqsphere"):
+    if params.get("fsqsphere", False):
         cargs.append("--fsqsphere")
-    if params.get("fsaparc"):
+    if params.get("fsaparc", False):
         cargs.append("--fsaparc")
-    if params.get("no_fs_t1"):
+    if params.get("no_fs_t1", False):
         cargs.append("--no_fs_T1")
-    if params.get("no_surfreg"):
+    if params.get("no_surfreg", False):
         cargs.append("--no_surfreg")
-    if params.get("allow_root"):
+    if params.get("allow_root", False):
         cargs.append("--allow_root")
-    if params.get("version") is not None:
+    if params.get("version", None) is not None:
         cargs.extend([
             "--version",
-            params.get("version")
+            params.get("version", None)
         ])
     return cargs
 
@@ -395,11 +401,11 @@ def run_fastsurfer_sh_outputs(
     """
     ret = RunFastsurferShOutputs(
         root=execution.output_file("."),
-        segmentation=execution.output_file(params.get("subjects_dir") + "/" + params.get("sid") + "/mri/aparc.DKTatlas+aseg.deep.mgz"),
-        surface_files=execution.output_file(params.get("subjects_dir") + "/" + params.get("sid") + "/surf/"),
-        cerebellum_seg=execution.output_file(params.get("subjects_dir") + "/" + params.get("sid") + "/mri/cerebellum.CerebNet.nii.gz"),
-        qc_snapshots=execution.output_file(params.get("subjects_dir") + "/" + params.get("sid") + "/qc_snapshots/"),
-        bias_corrected=execution.output_file(params.get("subjects_dir") + "/" + params.get("sid") + "/mri/orig_nu.mgz"),
+        segmentation=execution.output_file(params.get("subjects_dir", None) + "/" + params.get("sid", None) + "/mri/aparc.DKTatlas+aseg.deep.mgz"),
+        surface_files=execution.output_file(params.get("subjects_dir", None) + "/" + params.get("sid", None) + "/surf/"),
+        cerebellum_seg=execution.output_file(params.get("subjects_dir", None) + "/" + params.get("sid", None) + "/mri/cerebellum.CerebNet.nii.gz"),
+        qc_snapshots=execution.output_file(params.get("subjects_dir", None) + "/" + params.get("sid", None) + "/qc_snapshots/"),
+        bias_corrected=execution.output_file(params.get("subjects_dir", None) + "/" + params.get("sid", None) + "/mri/orig_nu.mgz"),
     )
     return ret
 
@@ -559,7 +565,6 @@ def run_fastsurfer_sh(
 __all__ = [
     "RUN_FASTSURFER_SH_METADATA",
     "RunFastsurferShOutputs",
-    "RunFastsurferShParameters",
     "run_fastsurfer_sh",
     "run_fastsurfer_sh_execute",
     "run_fastsurfer_sh_params",

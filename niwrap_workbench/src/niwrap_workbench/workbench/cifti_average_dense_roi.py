@@ -14,20 +14,42 @@ CIFTI_AVERAGE_DENSE_ROI_METADATA = Metadata(
 
 
 CiftiAverageDenseRoiCiftiRoiParameters = typing.TypedDict('CiftiAverageDenseRoiCiftiRoiParameters', {
-    "@type": typing.Literal["workbench.cifti-average-dense-roi.cifti_roi"],
+    "@type": typing.NotRequired[typing.Literal["cifti_roi"]],
+    "roi_cifti": InputPathType,
+    "opt_in_memory": bool,
+})
+CiftiAverageDenseRoiCiftiRoiParametersTagged = typing.TypedDict('CiftiAverageDenseRoiCiftiRoiParametersTagged', {
+    "@type": typing.Literal["cifti_roi"],
     "roi_cifti": InputPathType,
     "opt_in_memory": bool,
 })
 
 
 CiftiAverageDenseRoiCiftiParameters = typing.TypedDict('CiftiAverageDenseRoiCiftiParameters', {
-    "@type": typing.Literal["workbench.cifti-average-dense-roi.cifti"],
+    "@type": typing.NotRequired[typing.Literal["cifti"]],
+    "cifti_in": InputPathType,
+})
+CiftiAverageDenseRoiCiftiParametersTagged = typing.TypedDict('CiftiAverageDenseRoiCiftiParametersTagged', {
+    "@type": typing.Literal["cifti"],
     "cifti_in": InputPathType,
 })
 
 
 CiftiAverageDenseRoiParameters = typing.TypedDict('CiftiAverageDenseRoiParameters', {
-    "@type": typing.Literal["workbench.cifti-average-dense-roi"],
+    "@type": typing.NotRequired[typing.Literal["workbench/cifti-average-dense-roi"]],
+    "cifti_out": str,
+    "cifti_roi": typing.NotRequired[CiftiAverageDenseRoiCiftiRoiParameters | None],
+    "opt_left_roi_roi_metric": typing.NotRequired[InputPathType | None],
+    "opt_right_roi_roi_metric": typing.NotRequired[InputPathType | None],
+    "opt_cerebellum_roi_roi_metric": typing.NotRequired[InputPathType | None],
+    "opt_vol_roi_roi_vol": typing.NotRequired[InputPathType | None],
+    "opt_left_area_surf_left_surf": typing.NotRequired[InputPathType | None],
+    "opt_right_area_surf_right_surf": typing.NotRequired[InputPathType | None],
+    "opt_cerebellum_area_surf_cerebellum_surf": typing.NotRequired[InputPathType | None],
+    "cifti": typing.NotRequired[list[CiftiAverageDenseRoiCiftiParameters] | None],
+})
+CiftiAverageDenseRoiParametersTagged = typing.TypedDict('CiftiAverageDenseRoiParametersTagged', {
+    "@type": typing.Literal["workbench/cifti-average-dense-roi"],
     "cifti_out": str,
     "cifti_roi": typing.NotRequired[CiftiAverageDenseRoiCiftiRoiParameters | None],
     "opt_left_roi_roi_metric": typing.NotRequired[InputPathType | None],
@@ -41,44 +63,10 @@ CiftiAverageDenseRoiParameters = typing.TypedDict('CiftiAverageDenseRoiParameter
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "workbench.cifti-average-dense-roi": cifti_average_dense_roi_cargs,
-        "workbench.cifti-average-dense-roi.cifti_roi": cifti_average_dense_roi_cifti_roi_cargs,
-        "workbench.cifti-average-dense-roi.cifti": cifti_average_dense_roi_cifti_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "workbench.cifti-average-dense-roi": cifti_average_dense_roi_outputs,
-    }.get(t)
-
-
 def cifti_average_dense_roi_cifti_roi_params(
     roi_cifti: InputPathType,
     opt_in_memory: bool = False,
-) -> CiftiAverageDenseRoiCiftiRoiParameters:
+) -> CiftiAverageDenseRoiCiftiRoiParametersTagged:
     """
     Build parameters.
     
@@ -90,7 +78,7 @@ def cifti_average_dense_roi_cifti_roi_params(
         Parameter dictionary
     """
     params = {
-        "@type": "workbench.cifti-average-dense-roi.cifti_roi",
+        "@type": "cifti_roi",
         "roi_cifti": roi_cifti,
         "opt_in_memory": opt_in_memory,
     }
@@ -112,15 +100,15 @@ def cifti_average_dense_roi_cifti_roi_cargs(
     """
     cargs = []
     cargs.append("-cifti-roi")
-    cargs.append(execution.input_file(params.get("roi_cifti")))
-    if params.get("opt_in_memory"):
+    cargs.append(execution.input_file(params.get("roi_cifti", None)))
+    if params.get("opt_in_memory", False):
         cargs.append("-in-memory")
     return cargs
 
 
 def cifti_average_dense_roi_cifti_params(
     cifti_in: InputPathType,
-) -> CiftiAverageDenseRoiCiftiParameters:
+) -> CiftiAverageDenseRoiCiftiParametersTagged:
     """
     Build parameters.
     
@@ -130,7 +118,7 @@ def cifti_average_dense_roi_cifti_params(
         Parameter dictionary
     """
     params = {
-        "@type": "workbench.cifti-average-dense-roi.cifti",
+        "@type": "cifti",
         "cifti_in": cifti_in,
     }
     return params
@@ -151,13 +139,13 @@ def cifti_average_dense_roi_cifti_cargs(
     """
     cargs = []
     cargs.append("-cifti")
-    cargs.append(execution.input_file(params.get("cifti_in")))
+    cargs.append(execution.input_file(params.get("cifti_in", None)))
     return cargs
 
 
 class CiftiAverageDenseRoiOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `cifti_average_dense_roi(...)`.
+    Output object returned when calling `CiftiAverageDenseRoiParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -176,7 +164,7 @@ def cifti_average_dense_roi_params(
     opt_right_area_surf_right_surf: InputPathType | None = None,
     opt_cerebellum_area_surf_cerebellum_surf: InputPathType | None = None,
     cifti: list[CiftiAverageDenseRoiCiftiParameters] | None = None,
-) -> CiftiAverageDenseRoiParameters:
+) -> CiftiAverageDenseRoiParametersTagged:
     """
     Build parameters.
     
@@ -201,7 +189,7 @@ def cifti_average_dense_roi_params(
         Parameter dictionary
     """
     params = {
-        "@type": "workbench.cifti-average-dense-roi",
+        "@type": "workbench/cifti-average-dense-roi",
         "cifti_out": cifti_out,
     }
     if cifti_roi is not None:
@@ -241,46 +229,46 @@ def cifti_average_dense_roi_cargs(
     cargs = []
     cargs.append("wb_command")
     cargs.append("-cifti-average-dense-roi")
-    cargs.append(params.get("cifti_out"))
-    if params.get("cifti_roi") is not None:
-        cargs.extend(dyn_cargs(params.get("cifti_roi")["@type"])(params.get("cifti_roi"), execution))
-    if params.get("opt_left_roi_roi_metric") is not None:
+    cargs.append(params.get("cifti_out", None))
+    if params.get("cifti_roi", None) is not None:
+        cargs.extend(cifti_average_dense_roi_cifti_roi_cargs(params.get("cifti_roi", None), execution))
+    if params.get("opt_left_roi_roi_metric", None) is not None:
         cargs.extend([
             "-left-roi",
-            execution.input_file(params.get("opt_left_roi_roi_metric"))
+            execution.input_file(params.get("opt_left_roi_roi_metric", None))
         ])
-    if params.get("opt_right_roi_roi_metric") is not None:
+    if params.get("opt_right_roi_roi_metric", None) is not None:
         cargs.extend([
             "-right-roi",
-            execution.input_file(params.get("opt_right_roi_roi_metric"))
+            execution.input_file(params.get("opt_right_roi_roi_metric", None))
         ])
-    if params.get("opt_cerebellum_roi_roi_metric") is not None:
+    if params.get("opt_cerebellum_roi_roi_metric", None) is not None:
         cargs.extend([
             "-cerebellum-roi",
-            execution.input_file(params.get("opt_cerebellum_roi_roi_metric"))
+            execution.input_file(params.get("opt_cerebellum_roi_roi_metric", None))
         ])
-    if params.get("opt_vol_roi_roi_vol") is not None:
+    if params.get("opt_vol_roi_roi_vol", None) is not None:
         cargs.extend([
             "-vol-roi",
-            execution.input_file(params.get("opt_vol_roi_roi_vol"))
+            execution.input_file(params.get("opt_vol_roi_roi_vol", None))
         ])
-    if params.get("opt_left_area_surf_left_surf") is not None:
+    if params.get("opt_left_area_surf_left_surf", None) is not None:
         cargs.extend([
             "-left-area-surf",
-            execution.input_file(params.get("opt_left_area_surf_left_surf"))
+            execution.input_file(params.get("opt_left_area_surf_left_surf", None))
         ])
-    if params.get("opt_right_area_surf_right_surf") is not None:
+    if params.get("opt_right_area_surf_right_surf", None) is not None:
         cargs.extend([
             "-right-area-surf",
-            execution.input_file(params.get("opt_right_area_surf_right_surf"))
+            execution.input_file(params.get("opt_right_area_surf_right_surf", None))
         ])
-    if params.get("opt_cerebellum_area_surf_cerebellum_surf") is not None:
+    if params.get("opt_cerebellum_area_surf_cerebellum_surf", None) is not None:
         cargs.extend([
             "-cerebellum-area-surf",
-            execution.input_file(params.get("opt_cerebellum_area_surf_cerebellum_surf"))
+            execution.input_file(params.get("opt_cerebellum_area_surf_cerebellum_surf", None))
         ])
-    if params.get("cifti") is not None:
-        cargs.extend([a for c in [dyn_cargs(s["@type"])(s, execution) for s in params.get("cifti")] for a in c])
+    if params.get("cifti", None) is not None:
+        cargs.extend([a for c in [cifti_average_dense_roi_cifti_cargs(s, execution) for s in params.get("cifti", None)] for a in c])
     return cargs
 
 
@@ -299,7 +287,7 @@ def cifti_average_dense_roi_outputs(
     """
     ret = CiftiAverageDenseRoiOutputs(
         root=execution.output_file("."),
-        cifti_out=execution.output_file(params.get("cifti_out")),
+        cifti_out=execution.output_file(params.get("cifti_out", None)),
     )
     return ret
 
@@ -406,10 +394,7 @@ def cifti_average_dense_roi(
 
 __all__ = [
     "CIFTI_AVERAGE_DENSE_ROI_METADATA",
-    "CiftiAverageDenseRoiCiftiParameters",
-    "CiftiAverageDenseRoiCiftiRoiParameters",
     "CiftiAverageDenseRoiOutputs",
-    "CiftiAverageDenseRoiParameters",
     "cifti_average_dense_roi",
     "cifti_average_dense_roi_cifti_params",
     "cifti_average_dense_roi_cifti_roi_params",

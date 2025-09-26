@@ -14,7 +14,17 @@ MRI_CONCATENATE_GCAM_METADATA = Metadata(
 
 
 MriConcatenateGcamParameters = typing.TypedDict('MriConcatenateGcamParameters', {
-    "@type": typing.Literal["freesurfer.mri_concatenate_gcam"],
+    "@type": typing.NotRequired[typing.Literal["freesurfer/mri_concatenate_gcam"]],
+    "inputs": list[InputPathType],
+    "output": str,
+    "source_image": typing.NotRequired[InputPathType | None],
+    "target_image": typing.NotRequired[InputPathType | None],
+    "reduce": bool,
+    "invert": bool,
+    "downsample": bool,
+})
+MriConcatenateGcamParametersTagged = typing.TypedDict('MriConcatenateGcamParametersTagged', {
+    "@type": typing.Literal["freesurfer/mri_concatenate_gcam"],
     "inputs": list[InputPathType],
     "output": str,
     "source_image": typing.NotRequired[InputPathType | None],
@@ -25,41 +35,9 @@ MriConcatenateGcamParameters = typing.TypedDict('MriConcatenateGcamParameters', 
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "freesurfer.mri_concatenate_gcam": mri_concatenate_gcam_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "freesurfer.mri_concatenate_gcam": mri_concatenate_gcam_outputs,
-    }.get(t)
-
-
 class MriConcatenateGcamOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `mri_concatenate_gcam(...)`.
+    Output object returned when calling `MriConcatenateGcamParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -75,7 +53,7 @@ def mri_concatenate_gcam_params(
     reduce: bool = False,
     invert: bool = False,
     downsample: bool = False,
-) -> MriConcatenateGcamParameters:
+) -> MriConcatenateGcamParametersTagged:
     """
     Build parameters.
     
@@ -94,7 +72,7 @@ def mri_concatenate_gcam_params(
         Parameter dictionary
     """
     params = {
-        "@type": "freesurfer.mri_concatenate_gcam",
+        "@type": "freesurfer/mri_concatenate_gcam",
         "inputs": inputs,
         "output": output,
         "reduce": reduce,
@@ -123,23 +101,23 @@ def mri_concatenate_gcam_cargs(
     """
     cargs = []
     cargs.append("mri_concatenate_gcam")
-    cargs.extend([execution.input_file(f) for f in params.get("inputs")])
-    cargs.append(params.get("output"))
-    if params.get("source_image") is not None:
+    cargs.extend([execution.input_file(f) for f in params.get("inputs", None)])
+    cargs.append(params.get("output", None))
+    if params.get("source_image", None) is not None:
         cargs.extend([
             "-s",
-            execution.input_file(params.get("source_image"))
+            execution.input_file(params.get("source_image", None))
         ])
-    if params.get("target_image") is not None:
+    if params.get("target_image", None) is not None:
         cargs.extend([
             "-t",
-            execution.input_file(params.get("target_image"))
+            execution.input_file(params.get("target_image", None))
         ])
-    if params.get("reduce"):
+    if params.get("reduce", False):
         cargs.append("-r")
-    if params.get("invert"):
+    if params.get("invert", False):
         cargs.append("-i")
-    if params.get("downsample"):
+    if params.get("downsample", False):
         cargs.append("-d")
     return cargs
 
@@ -159,7 +137,7 @@ def mri_concatenate_gcam_outputs(
     """
     ret = MriConcatenateGcamOutputs(
         root=execution.output_file("."),
-        output_file=execution.output_file(params.get("output")),
+        output_file=execution.output_file(params.get("output", None)),
     )
     return ret
 
@@ -243,7 +221,6 @@ def mri_concatenate_gcam(
 __all__ = [
     "MRI_CONCATENATE_GCAM_METADATA",
     "MriConcatenateGcamOutputs",
-    "MriConcatenateGcamParameters",
     "mri_concatenate_gcam",
     "mri_concatenate_gcam_execute",
     "mri_concatenate_gcam_params",

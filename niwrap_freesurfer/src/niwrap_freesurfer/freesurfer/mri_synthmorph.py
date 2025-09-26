@@ -14,7 +14,23 @@ MRI_SYNTHMORPH_METADATA = Metadata(
 
 
 MriSynthmorphParameters = typing.TypedDict('MriSynthmorphParameters', {
-    "@type": typing.Literal["freesurfer.mri_synthmorph"],
+    "@type": typing.NotRequired[typing.Literal["freesurfer/mri_synthmorph"]],
+    "moving_image": InputPathType,
+    "fixed_image": InputPathType,
+    "moved_output": typing.NotRequired[str | None],
+    "transform_output": typing.NotRequired[InputPathType | None],
+    "header_only": bool,
+    "transformation_model": typing.NotRequired[typing.Literal["deform", "affine", "rigid"] | None],
+    "init_transform": typing.NotRequired[InputPathType | None],
+    "threads": typing.NotRequired[float | None],
+    "gpu_flag": bool,
+    "smooth": typing.NotRequired[float | None],
+    "extent": typing.NotRequired[float | None],
+    "model_weights": typing.NotRequired[InputPathType | None],
+    "inspect_directory": typing.NotRequired[str | None],
+})
+MriSynthmorphParametersTagged = typing.TypedDict('MriSynthmorphParametersTagged', {
+    "@type": typing.Literal["freesurfer/mri_synthmorph"],
     "moving_image": InputPathType,
     "fixed_image": InputPathType,
     "moved_output": typing.NotRequired[str | None],
@@ -31,41 +47,9 @@ MriSynthmorphParameters = typing.TypedDict('MriSynthmorphParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "freesurfer.mri_synthmorph": mri_synthmorph_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "freesurfer.mri_synthmorph": mri_synthmorph_outputs,
-    }.get(t)
-
-
 class MriSynthmorphOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `mri_synthmorph(...)`.
+    Output object returned when calling `MriSynthmorphParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -89,7 +73,7 @@ def mri_synthmorph_params(
     extent: float | None = None,
     model_weights: InputPathType | None = None,
     inspect_directory: str | None = None,
-) -> MriSynthmorphParameters:
+) -> MriSynthmorphParametersTagged:
     """
     Build parameters.
     
@@ -120,7 +104,7 @@ def mri_synthmorph_params(
         Parameter dictionary
     """
     params = {
-        "@type": "freesurfer.mri_synthmorph",
+        "@type": "freesurfer/mri_synthmorph",
         "moving_image": moving_image,
         "fixed_image": fixed_image,
         "header_only": header_only,
@@ -162,56 +146,56 @@ def mri_synthmorph_cargs(
     """
     cargs = []
     cargs.append("mri_synthmorph")
-    cargs.append(execution.input_file(params.get("moving_image")))
-    cargs.append(execution.input_file(params.get("fixed_image")))
-    if params.get("moved_output") is not None:
+    cargs.append(execution.input_file(params.get("moving_image", None)))
+    cargs.append(execution.input_file(params.get("fixed_image", None)))
+    if params.get("moved_output", None) is not None:
         cargs.extend([
             "-o",
-            params.get("moved_output")
+            params.get("moved_output", None)
         ])
-    if params.get("transform_output") is not None:
+    if params.get("transform_output", None) is not None:
         cargs.extend([
             "-t",
-            execution.input_file(params.get("transform_output"))
+            execution.input_file(params.get("transform_output", None))
         ])
-    if params.get("header_only"):
+    if params.get("header_only", False):
         cargs.append("-H")
-    if params.get("transformation_model") is not None:
+    if params.get("transformation_model", None) is not None:
         cargs.extend([
             "-m",
-            params.get("transformation_model")
+            params.get("transformation_model", None)
         ])
-    if params.get("init_transform") is not None:
+    if params.get("init_transform", None) is not None:
         cargs.extend([
             "-i",
-            execution.input_file(params.get("init_transform"))
+            execution.input_file(params.get("init_transform", None))
         ])
-    if params.get("threads") is not None:
+    if params.get("threads", None) is not None:
         cargs.extend([
             "-j",
-            str(params.get("threads"))
+            str(params.get("threads", None))
         ])
-    if params.get("gpu_flag"):
+    if params.get("gpu_flag", False):
         cargs.append("-g")
-    if params.get("smooth") is not None:
+    if params.get("smooth", None) is not None:
         cargs.extend([
             "-s",
-            str(params.get("smooth"))
+            str(params.get("smooth", None))
         ])
-    if params.get("extent") is not None:
+    if params.get("extent", None) is not None:
         cargs.extend([
             "-e",
-            str(params.get("extent"))
+            str(params.get("extent", None))
         ])
-    if params.get("model_weights") is not None:
+    if params.get("model_weights", None) is not None:
         cargs.extend([
             "-w",
-            execution.input_file(params.get("model_weights"))
+            execution.input_file(params.get("model_weights", None))
         ])
-    if params.get("inspect_directory") is not None:
+    if params.get("inspect_directory", None) is not None:
         cargs.extend([
             "--inspect",
-            params.get("inspect_directory")
+            params.get("inspect_directory", None)
         ])
     return cargs
 
@@ -231,7 +215,7 @@ def mri_synthmorph_outputs(
     """
     ret = MriSynthmorphOutputs(
         root=execution.output_file("."),
-        moved_output_file=execution.output_file(params.get("moved_output")) if (params.get("moved_output") is not None) else None,
+        moved_output_file=execution.output_file(params.get("moved_output", None)) if (params.get("moved_output") is not None) else None,
         transform_output_file=execution.output_file("[TRANS_OUTPUT]"),
     )
     return ret
@@ -340,7 +324,6 @@ def mri_synthmorph(
 __all__ = [
     "MRI_SYNTHMORPH_METADATA",
     "MriSynthmorphOutputs",
-    "MriSynthmorphParameters",
     "mri_synthmorph",
     "mri_synthmorph_execute",
     "mri_synthmorph_params",

@@ -14,7 +14,21 @@ SWI_PROCESS_METADATA = Metadata(
 
 
 SwiProcessParameters = typing.TypedDict('SwiProcessParameters', {
-    "@type": typing.Literal["freesurfer.swi_process"],
+    "@type": typing.NotRequired[typing.Literal["freesurfer/swi_process"]],
+    "magnitude_image": InputPathType,
+    "phase_image": InputPathType,
+    "swi_output": str,
+    "stddev": typing.NotRequired[float | None],
+    "phase_mask_cutoff": typing.NotRequired[float | None],
+    "phase_mask_right_cutoff": typing.NotRequired[float | None],
+    "sigmoid_a": typing.NotRequired[float | None],
+    "sigmoid_b": typing.NotRequired[float | None],
+    "phase_multiplications": typing.NotRequired[float | None],
+    "mip_level": typing.NotRequired[float | None],
+    "phase_mask_method": typing.NotRequired[str | None],
+})
+SwiProcessParametersTagged = typing.TypedDict('SwiProcessParametersTagged', {
+    "@type": typing.Literal["freesurfer/swi_process"],
     "magnitude_image": InputPathType,
     "phase_image": InputPathType,
     "swi_output": str,
@@ -29,41 +43,9 @@ SwiProcessParameters = typing.TypedDict('SwiProcessParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "freesurfer.swi_process": swi_process_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "freesurfer.swi_process": swi_process_outputs,
-    }.get(t)
-
-
 class SwiProcessOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `swi_process(...)`.
+    Output object returned when calling `SwiProcessParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -83,7 +65,7 @@ def swi_process_params(
     phase_multiplications: float | None = None,
     mip_level: float | None = None,
     phase_mask_method: str | None = None,
-) -> SwiProcessParameters:
+) -> SwiProcessParametersTagged:
     """
     Build parameters.
     
@@ -114,7 +96,7 @@ def swi_process_params(
         Parameter dictionary
     """
     params = {
-        "@type": "freesurfer.swi_process",
+        "@type": "freesurfer/swi_process",
         "magnitude_image": magnitude_image,
         "phase_image": phase_image,
         "swi_output": swi_output,
@@ -153,48 +135,48 @@ def swi_process_cargs(
     """
     cargs = []
     cargs.append("swi_process")
-    cargs.append(execution.input_file(params.get("magnitude_image")))
-    cargs.append(execution.input_file(params.get("phase_image")))
-    cargs.append(params.get("swi_output"))
-    if params.get("stddev") is not None:
+    cargs.append(execution.input_file(params.get("magnitude_image", None)))
+    cargs.append(execution.input_file(params.get("phase_image", None)))
+    cargs.append(params.get("swi_output", None))
+    if params.get("stddev", None) is not None:
         cargs.extend([
             "--stddev",
-            str(params.get("stddev"))
+            str(params.get("stddev", None))
         ])
-    if params.get("phase_mask_cutoff") is not None:
+    if params.get("phase_mask_cutoff", None) is not None:
         cargs.extend([
             "--phase_mask_cutoff",
-            str(params.get("phase_mask_cutoff"))
+            str(params.get("phase_mask_cutoff", None))
         ])
-    if params.get("phase_mask_right_cutoff") is not None:
+    if params.get("phase_mask_right_cutoff", None) is not None:
         cargs.extend([
             "--phase_mask_right_cutoff",
-            str(params.get("phase_mask_right_cutoff"))
+            str(params.get("phase_mask_right_cutoff", None))
         ])
-    if params.get("sigmoid_a") is not None:
+    if params.get("sigmoid_a", None) is not None:
         cargs.extend([
             "--sigmoid_a",
-            str(params.get("sigmoid_a"))
+            str(params.get("sigmoid_a", None))
         ])
-    if params.get("sigmoid_b") is not None:
+    if params.get("sigmoid_b", None) is not None:
         cargs.extend([
             "--sigmoid_b",
-            str(params.get("sigmoid_b"))
+            str(params.get("sigmoid_b", None))
         ])
-    if params.get("phase_multiplications") is not None:
+    if params.get("phase_multiplications", None) is not None:
         cargs.extend([
             "--phase_multiplications",
-            str(params.get("phase_multiplications"))
+            str(params.get("phase_multiplications", None))
         ])
-    if params.get("mip_level") is not None:
+    if params.get("mip_level", None) is not None:
         cargs.extend([
             "--mip_level",
-            str(params.get("mip_level"))
+            str(params.get("mip_level", None))
         ])
-    if params.get("phase_mask_method") is not None:
+    if params.get("phase_mask_method", None) is not None:
         cargs.extend([
             "--phase_mask_method",
-            params.get("phase_mask_method")
+            params.get("phase_mask_method", None)
         ])
     return cargs
 
@@ -214,7 +196,7 @@ def swi_process_outputs(
     """
     ret = SwiProcessOutputs(
         root=execution.output_file("."),
-        swi_output_file=execution.output_file(params.get("swi_output")),
+        swi_output_file=execution.output_file(params.get("swi_output", None)),
     )
     return ret
 
@@ -318,7 +300,6 @@ def swi_process(
 __all__ = [
     "SWI_PROCESS_METADATA",
     "SwiProcessOutputs",
-    "SwiProcessParameters",
     "swi_process",
     "swi_process_execute",
     "swi_process_params",

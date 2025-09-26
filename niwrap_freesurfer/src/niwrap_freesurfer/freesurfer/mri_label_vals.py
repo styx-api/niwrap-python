@@ -14,7 +14,14 @@ MRI_LABEL_VALS_METADATA = Metadata(
 
 
 MriLabelValsParameters = typing.TypedDict('MriLabelValsParameters', {
-    "@type": typing.Literal["freesurfer.mri_label_vals"],
+    "@type": typing.NotRequired[typing.Literal["freesurfer/mri_label_vals"]],
+    "volume": InputPathType,
+    "label_file": InputPathType,
+    "cras_flag": bool,
+    "help_flag": bool,
+})
+MriLabelValsParametersTagged = typing.TypedDict('MriLabelValsParametersTagged', {
+    "@type": typing.Literal["freesurfer/mri_label_vals"],
     "volume": InputPathType,
     "label_file": InputPathType,
     "cras_flag": bool,
@@ -22,40 +29,9 @@ MriLabelValsParameters = typing.TypedDict('MriLabelValsParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "freesurfer.mri_label_vals": mri_label_vals_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-    }.get(t)
-
-
 class MriLabelValsOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `mri_label_vals(...)`.
+    Output object returned when calling `MriLabelValsParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -66,7 +42,7 @@ def mri_label_vals_params(
     label_file: InputPathType,
     cras_flag: bool = False,
     help_flag: bool = False,
-) -> MriLabelValsParameters:
+) -> MriLabelValsParametersTagged:
     """
     Build parameters.
     
@@ -80,7 +56,7 @@ def mri_label_vals_params(
         Parameter dictionary
     """
     params = {
-        "@type": "freesurfer.mri_label_vals",
+        "@type": "freesurfer/mri_label_vals",
         "volume": volume,
         "label_file": label_file,
         "cras_flag": cras_flag,
@@ -104,11 +80,11 @@ def mri_label_vals_cargs(
     """
     cargs = []
     cargs.append("mri_label_vals")
-    cargs.append(execution.input_file(params.get("volume")))
-    cargs.append(execution.input_file(params.get("label_file")))
-    if params.get("cras_flag"):
+    cargs.append(execution.input_file(params.get("volume", None)))
+    cargs.append(execution.input_file(params.get("label_file", None)))
+    if params.get("cras_flag", False):
         cargs.append("-cras")
-    if params.get("help_flag"):
+    if params.get("help_flag", False):
         cargs.append("-u")
     return cargs
 
@@ -198,7 +174,6 @@ def mri_label_vals(
 __all__ = [
     "MRI_LABEL_VALS_METADATA",
     "MriLabelValsOutputs",
-    "MriLabelValsParameters",
     "mri_label_vals",
     "mri_label_vals_execute",
     "mri_label_vals_params",

@@ -14,7 +14,15 @@ TTOZ_METADATA = Metadata(
 
 
 TtozParameters = typing.TypedDict('TtozParameters', {
-    "@type": typing.Literal["fsl.ttoz"],
+    "@type": typing.NotRequired[typing.Literal["fsl/ttoz"]],
+    "varsfile": InputPathType,
+    "cbsfile": InputPathType,
+    "dof": int,
+    "outputvol": typing.NotRequired[str | None],
+    "help_flag": bool,
+})
+TtozParametersTagged = typing.TypedDict('TtozParametersTagged', {
+    "@type": typing.Literal["fsl/ttoz"],
     "varsfile": InputPathType,
     "cbsfile": InputPathType,
     "dof": int,
@@ -23,41 +31,9 @@ TtozParameters = typing.TypedDict('TtozParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "fsl.ttoz": ttoz_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "fsl.ttoz": ttoz_outputs,
-    }.get(t)
-
-
 class TtozOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `ttoz(...)`.
+    Output object returned when calling `TtozParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -71,7 +47,7 @@ def ttoz_params(
     dof: int,
     outputvol: str | None = None,
     help_flag: bool = False,
-) -> TtozParameters:
+) -> TtozParametersTagged:
     """
     Build parameters.
     
@@ -85,7 +61,7 @@ def ttoz_params(
         Parameter dictionary
     """
     params = {
-        "@type": "fsl.ttoz",
+        "@type": "fsl/ttoz",
         "varsfile": varsfile,
         "cbsfile": cbsfile,
         "dof": dof,
@@ -111,15 +87,15 @@ def ttoz_cargs(
     """
     cargs = []
     cargs.append("ttoz")
-    cargs.append(execution.input_file(params.get("varsfile")))
-    cargs.append(execution.input_file(params.get("cbsfile")))
-    cargs.append(str(params.get("dof")))
-    if params.get("outputvol") is not None:
+    cargs.append(execution.input_file(params.get("varsfile", None)))
+    cargs.append(execution.input_file(params.get("cbsfile", None)))
+    cargs.append(str(params.get("dof", None)))
+    if params.get("outputvol", None) is not None:
         cargs.extend([
             "-zout",
-            params.get("outputvol")
+            params.get("outputvol", None)
         ])
-    if params.get("help_flag"):
+    if params.get("help_flag", False):
         cargs.append("-help")
     return cargs
 
@@ -139,7 +115,7 @@ def ttoz_outputs(
     """
     ret = TtozOutputs(
         root=execution.output_file("."),
-        output_zvol=execution.output_file(params.get("outputvol") + ".nii.gz") if (params.get("outputvol") is not None) else None,
+        output_zvol=execution.output_file(params.get("outputvol", None) + ".nii.gz") if (params.get("outputvol") is not None) else None,
     )
     return ret
 
@@ -212,7 +188,6 @@ def ttoz(
 __all__ = [
     "TTOZ_METADATA",
     "TtozOutputs",
-    "TtozParameters",
     "ttoz",
     "ttoz_execute",
     "ttoz_params",

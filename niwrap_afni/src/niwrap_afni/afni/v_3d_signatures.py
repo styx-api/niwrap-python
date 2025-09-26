@@ -14,7 +14,16 @@ V_3D_SIGNATURES_METADATA = Metadata(
 
 
 V3dSignaturesParameters = typing.TypedDict('V3dSignaturesParameters', {
-    "@type": typing.Literal["afni.3dSignatures"],
+    "@type": typing.NotRequired[typing.Literal["afni/3dSignatures"]],
+    "infile": InputPathType,
+    "outfile": str,
+    "segmentation": bool,
+    "filter": bool,
+    "threshold": typing.NotRequired[float | None],
+    "smoothing": typing.NotRequired[float | None],
+})
+V3dSignaturesParametersTagged = typing.TypedDict('V3dSignaturesParametersTagged', {
+    "@type": typing.Literal["afni/3dSignatures"],
     "infile": InputPathType,
     "outfile": str,
     "segmentation": bool,
@@ -24,41 +33,9 @@ V3dSignaturesParameters = typing.TypedDict('V3dSignaturesParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "afni.3dSignatures": v_3d_signatures_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "afni.3dSignatures": v_3d_signatures_outputs,
-    }.get(t)
-
-
 class V3dSignaturesOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `v_3d_signatures(...)`.
+    Output object returned when calling `V3dSignaturesParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -73,7 +50,7 @@ def v_3d_signatures_params(
     filter_: bool = False,
     threshold: float | None = None,
     smoothing: float | None = None,
-) -> V3dSignaturesParameters:
+) -> V3dSignaturesParametersTagged:
     """
     Build parameters.
     
@@ -89,7 +66,7 @@ def v_3d_signatures_params(
         Parameter dictionary
     """
     params = {
-        "@type": "afni.3dSignatures",
+        "@type": "afni/3dSignatures",
         "infile": infile,
         "outfile": outfile,
         "segmentation": segmentation,
@@ -117,21 +94,21 @@ def v_3d_signatures_cargs(
     """
     cargs = []
     cargs.append("3dSignatures")
-    cargs.append(execution.input_file(params.get("infile")))
-    cargs.append(params.get("outfile"))
-    if params.get("segmentation"):
+    cargs.append(execution.input_file(params.get("infile", None)))
+    cargs.append(params.get("outfile", None))
+    if params.get("segmentation", False):
         cargs.append("--segmentation")
-    if params.get("filter"):
+    if params.get("filter", False):
         cargs.append("--filter")
-    if params.get("threshold") is not None:
+    if params.get("threshold", None) is not None:
         cargs.extend([
             "--threshold",
-            str(params.get("threshold"))
+            str(params.get("threshold", None))
         ])
-    if params.get("smoothing") is not None:
+    if params.get("smoothing", None) is not None:
         cargs.extend([
             "--smoothing",
-            str(params.get("smoothing"))
+            str(params.get("smoothing", None))
         ])
     return cargs
 
@@ -151,7 +128,7 @@ def v_3d_signatures_outputs(
     """
     ret = V3dSignaturesOutputs(
         root=execution.output_file("."),
-        results_file=execution.output_file(params.get("outfile") + ".txt"),
+        results_file=execution.output_file(params.get("outfile", None) + ".txt"),
     )
     return ret
 
@@ -227,7 +204,6 @@ def v_3d_signatures(
 
 __all__ = [
     "V3dSignaturesOutputs",
-    "V3dSignaturesParameters",
     "V_3D_SIGNATURES_METADATA",
     "v_3d_signatures",
     "v_3d_signatures_execute",

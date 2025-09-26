@@ -14,7 +14,19 @@ RUN_FIRST_METADATA = Metadata(
 
 
 RunFirstParameters = typing.TypedDict('RunFirstParameters', {
-    "@type": typing.Literal["fsl.run_first"],
+    "@type": typing.NotRequired[typing.Literal["fsl/run_first"]],
+    "input_image": InputPathType,
+    "transformation_matrix": InputPathType,
+    "n_modes": float,
+    "output_basename": str,
+    "model_name": InputPathType,
+    "verbose_flag": bool,
+    "intref_model_name": typing.NotRequired[str | None],
+    "load_bvars": typing.NotRequired[InputPathType | None],
+    "multiple_images_flag": bool,
+})
+RunFirstParametersTagged = typing.TypedDict('RunFirstParametersTagged', {
+    "@type": typing.Literal["fsl/run_first"],
     "input_image": InputPathType,
     "transformation_matrix": InputPathType,
     "n_modes": float,
@@ -27,40 +39,9 @@ RunFirstParameters = typing.TypedDict('RunFirstParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "fsl.run_first": run_first_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-    }.get(t)
-
-
 class RunFirstOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `run_first(...)`.
+    Output object returned when calling `RunFirstParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -76,7 +57,7 @@ def run_first_params(
     intref_model_name: str | None = None,
     load_bvars: InputPathType | None = None,
     multiple_images_flag: bool = False,
-) -> RunFirstParameters:
+) -> RunFirstParametersTagged:
     """
     Build parameters.
     
@@ -97,7 +78,7 @@ def run_first_params(
         Parameter dictionary
     """
     params = {
-        "@type": "fsl.run_first",
+        "@type": "fsl/run_first",
         "input_image": input_image,
         "transformation_matrix": transformation_matrix,
         "n_modes": n_modes,
@@ -130,37 +111,37 @@ def run_first_cargs(
     cargs.append("run_first")
     cargs.extend([
         "-i",
-        execution.input_file(params.get("input_image"))
+        execution.input_file(params.get("input_image", None))
     ])
     cargs.extend([
         "-t",
-        execution.input_file(params.get("transformation_matrix"))
+        execution.input_file(params.get("transformation_matrix", None))
     ])
     cargs.extend([
         "-n",
-        str(params.get("n_modes"))
+        str(params.get("n_modes", None))
     ])
     cargs.extend([
         "-o",
-        params.get("output_basename")
+        params.get("output_basename", None)
     ])
     cargs.extend([
         "-m",
-        execution.input_file(params.get("model_name"))
+        execution.input_file(params.get("model_name", None))
     ])
-    if params.get("verbose_flag"):
+    if params.get("verbose_flag", False):
         cargs.append("-v")
-    if params.get("intref_model_name") is not None:
+    if params.get("intref_model_name", None) is not None:
         cargs.extend([
             "-intref",
-            params.get("intref_model_name")
+            params.get("intref_model_name", None)
         ])
-    if params.get("load_bvars") is not None:
+    if params.get("load_bvars", None) is not None:
         cargs.extend([
             "-loadBvars",
-            execution.input_file(params.get("load_bvars"))
+            execution.input_file(params.get("load_bvars", None))
         ])
-    if params.get("multiple_images_flag"):
+    if params.get("multiple_images_flag", False):
         cargs.append("-multipleImages")
     return cargs
 
@@ -267,7 +248,6 @@ def run_first(
 __all__ = [
     "RUN_FIRST_METADATA",
     "RunFirstOutputs",
-    "RunFirstParameters",
     "run_first",
     "run_first_execute",
     "run_first_params",

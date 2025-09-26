@@ -14,7 +14,22 @@ TRAC_PREPROC_METADATA = Metadata(
 
 
 TracPreprocParameters = typing.TypedDict('TracPreprocParameters', {
-    "@type": typing.Literal["freesurfer.trac-preproc"],
+    "@type": typing.NotRequired[typing.Literal["freesurfer/trac-preproc"]],
+    "dmrirc_file": InputPathType,
+    "log_file": typing.NotRequired[str | None],
+    "nolog": bool,
+    "cmd_file": typing.NotRequired[str | None],
+    "nocmd": bool,
+    "no_isrunning": bool,
+    "umask": typing.NotRequired[str | None],
+    "group_id": typing.NotRequired[str | None],
+    "allow_core_dump": bool,
+    "debug": bool,
+    "dontrun": bool,
+    "version": bool,
+})
+TracPreprocParametersTagged = typing.TypedDict('TracPreprocParametersTagged', {
+    "@type": typing.Literal["freesurfer/trac-preproc"],
     "dmrirc_file": InputPathType,
     "log_file": typing.NotRequired[str | None],
     "nolog": bool,
@@ -30,40 +45,9 @@ TracPreprocParameters = typing.TypedDict('TracPreprocParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "freesurfer.trac-preproc": trac_preproc_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-    }.get(t)
-
-
 class TracPreprocOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `trac_preproc(...)`.
+    Output object returned when calling `TracPreprocParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -82,7 +66,7 @@ def trac_preproc_params(
     debug: bool = False,
     dontrun: bool = False,
     version: bool = False,
-) -> TracPreprocParameters:
+) -> TracPreprocParametersTagged:
     """
     Build parameters.
     
@@ -104,7 +88,7 @@ def trac_preproc_params(
         Parameter dictionary
     """
     params = {
-        "@type": "freesurfer.trac-preproc",
+        "@type": "freesurfer/trac-preproc",
         "dmrirc_file": dmrirc_file,
         "nolog": nolog,
         "nocmd": nocmd,
@@ -142,41 +126,41 @@ def trac_preproc_cargs(
     cargs.append("trac-preproc")
     cargs.extend([
         "-c",
-        execution.input_file(params.get("dmrirc_file"))
+        execution.input_file(params.get("dmrirc_file", None))
     ])
-    if params.get("log_file") is not None:
+    if params.get("log_file", None) is not None:
         cargs.extend([
             "-log",
-            params.get("log_file")
+            params.get("log_file", None)
         ])
-    if params.get("nolog"):
+    if params.get("nolog", False):
         cargs.append("-nolog")
-    if params.get("cmd_file") is not None:
+    if params.get("cmd_file", None) is not None:
         cargs.extend([
             "-cmd",
-            params.get("cmd_file")
+            params.get("cmd_file", None)
         ])
-    if params.get("nocmd"):
+    if params.get("nocmd", False):
         cargs.append("-nocmd")
-    if params.get("no_isrunning"):
+    if params.get("no_isrunning", False):
         cargs.append("-no-isrunning")
-    if params.get("umask") is not None:
+    if params.get("umask", None) is not None:
         cargs.extend([
             "-umask",
-            params.get("umask")
+            params.get("umask", None)
         ])
-    if params.get("group_id") is not None:
+    if params.get("group_id", None) is not None:
         cargs.extend([
             "-grp",
-            params.get("group_id")
+            params.get("group_id", None)
         ])
-    if params.get("allow_core_dump"):
+    if params.get("allow_core_dump", False):
         cargs.append("-allowcoredump")
-    if params.get("debug"):
+    if params.get("debug", False):
         cargs.append("-debug")
-    if params.get("dontrun"):
+    if params.get("dontrun", False):
         cargs.append("-dontrun")
-    if params.get("version"):
+    if params.get("version", False):
         cargs.append("-version")
     return cargs
 
@@ -290,7 +274,6 @@ def trac_preproc(
 __all__ = [
     "TRAC_PREPROC_METADATA",
     "TracPreprocOutputs",
-    "TracPreprocParameters",
     "trac_preproc",
     "trac_preproc_execute",
     "trac_preproc_params",

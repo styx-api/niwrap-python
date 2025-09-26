@@ -14,7 +14,15 @@ APPLY_MORPH_METADATA = Metadata(
 
 
 ApplyMorphParameters = typing.TypedDict('ApplyMorphParameters', {
-    "@type": typing.Literal["freesurfer.applyMorph"],
+    "@type": typing.NotRequired[typing.Literal["freesurfer/applyMorph"]],
+    "inputs": list[InputPathType],
+    "template": InputPathType,
+    "transform": InputPathType,
+    "zlib_buffer": typing.NotRequired[float | None],
+    "dbg_coords": typing.NotRequired[list[float] | None],
+})
+ApplyMorphParametersTagged = typing.TypedDict('ApplyMorphParametersTagged', {
+    "@type": typing.Literal["freesurfer/applyMorph"],
     "inputs": list[InputPathType],
     "template": InputPathType,
     "transform": InputPathType,
@@ -23,40 +31,9 @@ ApplyMorphParameters = typing.TypedDict('ApplyMorphParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "freesurfer.applyMorph": apply_morph_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-    }.get(t)
-
-
 class ApplyMorphOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `apply_morph(...)`.
+    Output object returned when calling `ApplyMorphParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -68,7 +45,7 @@ def apply_morph_params(
     transform: InputPathType,
     zlib_buffer: float | None = None,
     dbg_coords: list[float] | None = None,
-) -> ApplyMorphParameters:
+) -> ApplyMorphParametersTagged:
     """
     Build parameters.
     
@@ -82,7 +59,7 @@ def apply_morph_params(
         Parameter dictionary
     """
     params = {
-        "@type": "freesurfer.applyMorph",
+        "@type": "freesurfer/applyMorph",
         "inputs": inputs,
         "template": template,
         "transform": transform,
@@ -109,24 +86,24 @@ def apply_morph_cargs(
     """
     cargs = []
     cargs.append("applyMorph")
-    cargs.extend([execution.input_file(f) for f in params.get("inputs")])
+    cargs.extend([execution.input_file(f) for f in params.get("inputs", None)])
     cargs.extend([
         "--template",
-        execution.input_file(params.get("template"))
+        execution.input_file(params.get("template", None))
     ])
     cargs.extend([
         "--transform",
-        execution.input_file(params.get("transform"))
+        execution.input_file(params.get("transform", None))
     ])
-    if params.get("zlib_buffer") is not None:
+    if params.get("zlib_buffer", None) is not None:
         cargs.extend([
             "--zlib_buffer",
-            str(params.get("zlib_buffer"))
+            str(params.get("zlib_buffer", None))
         ])
-    if params.get("dbg_coords") is not None:
+    if params.get("dbg_coords", None) is not None:
         cargs.extend([
             "--dbg_coords",
-            *map(str, params.get("dbg_coords"))
+            *map(str, params.get("dbg_coords", None))
         ])
     return cargs
 
@@ -218,7 +195,6 @@ def apply_morph(
 __all__ = [
     "APPLY_MORPH_METADATA",
     "ApplyMorphOutputs",
-    "ApplyMorphParameters",
     "apply_morph",
     "apply_morph_execute",
     "apply_morph_params",

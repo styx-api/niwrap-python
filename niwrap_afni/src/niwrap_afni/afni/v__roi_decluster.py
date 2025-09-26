@@ -14,7 +14,16 @@ V__ROI_DECLUSTER_METADATA = Metadata(
 
 
 VRoiDeclusterParameters = typing.TypedDict('VRoiDeclusterParameters', {
-    "@type": typing.Literal["afni.@ROI_decluster"],
+    "@type": typing.NotRequired[typing.Literal["afni/@ROI_decluster"]],
+    "input_dset": InputPathType,
+    "output_dir": typing.NotRequired[str | None],
+    "nvox_thresh": typing.NotRequired[float | None],
+    "frac_thresh": typing.NotRequired[float | None],
+    "prefix": typing.NotRequired[str | None],
+    "neighborhood_type": typing.NotRequired[int | None],
+})
+VRoiDeclusterParametersTagged = typing.TypedDict('VRoiDeclusterParametersTagged', {
+    "@type": typing.Literal["afni/@ROI_decluster"],
     "input_dset": InputPathType,
     "output_dir": typing.NotRequired[str | None],
     "nvox_thresh": typing.NotRequired[float | None],
@@ -24,41 +33,9 @@ VRoiDeclusterParameters = typing.TypedDict('VRoiDeclusterParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "afni.@ROI_decluster": v__roi_decluster_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "afni.@ROI_decluster": v__roi_decluster_outputs,
-    }.get(t)
-
-
 class VRoiDeclusterOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `v__roi_decluster(...)`.
+    Output object returned when calling `VRoiDeclusterParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -73,7 +50,7 @@ def v__roi_decluster_params(
     frac_thresh: float | None = None,
     prefix: str | None = None,
     neighborhood_type: int | None = None,
-) -> VRoiDeclusterParameters:
+) -> VRoiDeclusterParametersTagged:
     """
     Build parameters.
     
@@ -92,7 +69,7 @@ def v__roi_decluster_params(
         Parameter dictionary
     """
     params = {
-        "@type": "afni.@ROI_decluster",
+        "@type": "afni/@ROI_decluster",
         "input_dset": input_dset,
     }
     if output_dir is not None:
@@ -125,32 +102,32 @@ def v__roi_decluster_cargs(
     cargs.append("@ROI_decluster")
     cargs.extend([
         "-input",
-        execution.input_file(params.get("input_dset"))
+        execution.input_file(params.get("input_dset", None))
     ])
-    if params.get("output_dir") is not None:
+    if params.get("output_dir", None) is not None:
         cargs.extend([
             "-outdir",
-            params.get("output_dir")
+            params.get("output_dir", None)
         ])
-    if params.get("nvox_thresh") is not None:
+    if params.get("nvox_thresh", None) is not None:
         cargs.extend([
             "-nvox_thresh",
-            str(params.get("nvox_thresh"))
+            str(params.get("nvox_thresh", None))
         ])
-    if params.get("frac_thresh") is not None:
+    if params.get("frac_thresh", None) is not None:
         cargs.extend([
             "-frac_thresh",
-            str(params.get("frac_thresh"))
+            str(params.get("frac_thresh", None))
         ])
-    if params.get("prefix") is not None:
+    if params.get("prefix", None) is not None:
         cargs.extend([
             "-prefix",
-            params.get("prefix")
+            params.get("prefix", None)
         ])
-    if params.get("neighborhood_type") is not None:
+    if params.get("neighborhood_type", None) is not None:
         cargs.extend([
             "-NN",
-            str(params.get("neighborhood_type"))
+            str(params.get("neighborhood_type", None))
         ])
     return cargs
 
@@ -170,7 +147,7 @@ def v__roi_decluster_outputs(
     """
     ret = VRoiDeclusterOutputs(
         root=execution.output_file("."),
-        output_file=execution.output_file(params.get("prefix") + ".nii.gz") if (params.get("prefix") is not None) else None,
+        output_file=execution.output_file(params.get("prefix", None) + ".nii.gz") if (params.get("prefix") is not None) else None,
     )
     return ret
 
@@ -251,7 +228,6 @@ def v__roi_decluster(
 
 __all__ = [
     "VRoiDeclusterOutputs",
-    "VRoiDeclusterParameters",
     "V__ROI_DECLUSTER_METADATA",
     "v__roi_decluster",
     "v__roi_decluster_execute",

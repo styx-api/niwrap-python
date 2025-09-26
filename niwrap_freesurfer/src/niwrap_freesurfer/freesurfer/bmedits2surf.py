@@ -14,7 +14,20 @@ BMEDITS2SURF_METADATA = Metadata(
 
 
 Bmedits2surfParameters = typing.TypedDict('Bmedits2surfParameters', {
-    "@type": typing.Literal["freesurfer.bmedits2surf"],
+    "@type": typing.NotRequired[typing.Literal["freesurfer/bmedits2surf"]],
+    "subject": str,
+    "self": bool,
+    "overwrite": bool,
+    "tmp_dir": typing.NotRequired[str | None],
+    "cleanup": bool,
+    "no_cleanup": bool,
+    "debug": bool,
+    "left_hemisphere": bool,
+    "right_hemisphere": bool,
+    "no_surfs": bool,
+})
+Bmedits2surfParametersTagged = typing.TypedDict('Bmedits2surfParametersTagged', {
+    "@type": typing.Literal["freesurfer/bmedits2surf"],
     "subject": str,
     "self": bool,
     "overwrite": bool,
@@ -28,41 +41,9 @@ Bmedits2surfParameters = typing.TypedDict('Bmedits2surfParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "freesurfer.bmedits2surf": bmedits2surf_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "freesurfer.bmedits2surf": bmedits2surf_outputs,
-    }.get(t)
-
-
 class Bmedits2surfOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `bmedits2surf(...)`.
+    Output object returned when calling `Bmedits2surfParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -95,7 +76,7 @@ def bmedits2surf_params(
     left_hemisphere: bool = False,
     right_hemisphere: bool = False,
     no_surfs: bool = False,
-) -> Bmedits2surfParameters:
+) -> Bmedits2surfParametersTagged:
     """
     Build parameters.
     
@@ -113,7 +94,7 @@ def bmedits2surf_params(
         Parameter dictionary
     """
     params = {
-        "@type": "freesurfer.bmedits2surf",
+        "@type": "freesurfer/bmedits2surf",
         "subject": subject,
         "self": self,
         "overwrite": overwrite,
@@ -146,28 +127,28 @@ def bmedits2surf_cargs(
     cargs.append("bmedits2surf")
     cargs.extend([
         "-s",
-        params.get("subject")
+        params.get("subject", None)
     ])
-    if params.get("self"):
+    if params.get("self", False):
         cargs.append("--self")
-    if params.get("overwrite"):
+    if params.get("overwrite", False):
         cargs.append("--overwrite")
-    if params.get("tmp_dir") is not None:
+    if params.get("tmp_dir", None) is not None:
         cargs.extend([
             "--tmp",
-            params.get("tmp_dir")
+            params.get("tmp_dir", None)
         ])
-    if params.get("cleanup"):
+    if params.get("cleanup", False):
         cargs.append("--cleanup")
-    if params.get("no_cleanup"):
+    if params.get("no_cleanup", False):
         cargs.append("--no-cleanup")
-    if params.get("debug"):
+    if params.get("debug", False):
         cargs.append("--debug")
-    if params.get("left_hemisphere"):
+    if params.get("left_hemisphere", False):
         cargs.append("--lh")
-    if params.get("right_hemisphere"):
+    if params.get("right_hemisphere", False):
         cargs.append("--rh")
-    if params.get("no_surfs"):
+    if params.get("no_surfs", False):
         cargs.append("--no-surfs")
     return cargs
 
@@ -187,12 +168,12 @@ def bmedits2surf_outputs(
     """
     ret = Bmedits2surfOutputs(
         root=execution.output_file("."),
-        lh_bmerase=execution.output_file(params.get("subject") + "/surf/lh.bmerase.fsa.mgh"),
-        rh_bmerase=execution.output_file(params.get("subject") + "/surf/rh.bmerase.fsa.mgh"),
-        lh_bmclone=execution.output_file(params.get("subject") + "/surf/lh.bmclone.fsa.mgh"),
-        rh_bmclone=execution.output_file(params.get("subject") + "/surf/rh.bmclone.fsa.mgh"),
-        bmclone_stats=execution.output_file(params.get("subject") + "/stats/bmclone.dat"),
-        bmerase_stats=execution.output_file(params.get("subject") + "/stats/bmerase.dat"),
+        lh_bmerase=execution.output_file(params.get("subject", None) + "/surf/lh.bmerase.fsa.mgh"),
+        rh_bmerase=execution.output_file(params.get("subject", None) + "/surf/rh.bmerase.fsa.mgh"),
+        lh_bmclone=execution.output_file(params.get("subject", None) + "/surf/lh.bmclone.fsa.mgh"),
+        rh_bmclone=execution.output_file(params.get("subject", None) + "/surf/rh.bmclone.fsa.mgh"),
+        bmclone_stats=execution.output_file(params.get("subject", None) + "/stats/bmclone.dat"),
+        bmerase_stats=execution.output_file(params.get("subject", None) + "/stats/bmerase.dat"),
     )
     return ret
 
@@ -281,7 +262,6 @@ def bmedits2surf(
 __all__ = [
     "BMEDITS2SURF_METADATA",
     "Bmedits2surfOutputs",
-    "Bmedits2surfParameters",
     "bmedits2surf",
     "bmedits2surf_execute",
     "bmedits2surf_params",

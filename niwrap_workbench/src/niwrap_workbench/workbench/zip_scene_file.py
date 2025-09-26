@@ -14,7 +14,16 @@ ZIP_SCENE_FILE_METADATA = Metadata(
 
 
 ZipSceneFileParameters = typing.TypedDict('ZipSceneFileParameters', {
-    "@type": typing.Literal["workbench.zip-scene-file"],
+    "@type": typing.NotRequired[typing.Literal["workbench/zip-scene-file"]],
+    "scene_file": str,
+    "extract_folder": str,
+    "zip_file": str,
+    "opt_base_dir_directory": typing.NotRequired[str | None],
+    "opt_skip_missing": bool,
+    "opt_write_scene_file": bool,
+})
+ZipSceneFileParametersTagged = typing.TypedDict('ZipSceneFileParametersTagged', {
+    "@type": typing.Literal["workbench/zip-scene-file"],
     "scene_file": str,
     "extract_folder": str,
     "zip_file": str,
@@ -24,40 +33,9 @@ ZipSceneFileParameters = typing.TypedDict('ZipSceneFileParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "workbench.zip-scene-file": zip_scene_file_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-    }.get(t)
-
-
 class ZipSceneFileOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `zip_scene_file(...)`.
+    Output object returned when calling `ZipSceneFileParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -70,7 +48,7 @@ def zip_scene_file_params(
     opt_base_dir_directory: str | None = None,
     opt_skip_missing: bool = False,
     opt_write_scene_file: bool = False,
-) -> ZipSceneFileParameters:
+) -> ZipSceneFileParametersTagged:
     """
     Build parameters.
     
@@ -90,7 +68,7 @@ def zip_scene_file_params(
         Parameter dictionary
     """
     params = {
-        "@type": "workbench.zip-scene-file",
+        "@type": "workbench/zip-scene-file",
         "scene_file": scene_file,
         "extract_folder": extract_folder,
         "zip_file": zip_file,
@@ -118,17 +96,17 @@ def zip_scene_file_cargs(
     cargs = []
     cargs.append("wb_command")
     cargs.append("-zip-scene-file")
-    cargs.append(params.get("scene_file"))
-    cargs.append(params.get("extract_folder"))
-    cargs.append(params.get("zip_file"))
-    if params.get("opt_base_dir_directory") is not None:
+    cargs.append(params.get("scene_file", None))
+    cargs.append(params.get("extract_folder", None))
+    cargs.append(params.get("zip_file", None))
+    if params.get("opt_base_dir_directory", None) is not None:
         cargs.extend([
             "-base-dir",
-            params.get("opt_base_dir_directory")
+            params.get("opt_base_dir_directory", None)
         ])
-    if params.get("opt_skip_missing"):
+    if params.get("opt_skip_missing", False):
         cargs.append("-skip-missing")
-    if params.get("opt_write_scene_file"):
+    if params.get("opt_write_scene_file", False):
         cargs.append("-write-scene-file")
     return cargs
 
@@ -238,7 +216,6 @@ def zip_scene_file(
 __all__ = [
     "ZIP_SCENE_FILE_METADATA",
     "ZipSceneFileOutputs",
-    "ZipSceneFileParameters",
     "zip_scene_file",
     "zip_scene_file_execute",
     "zip_scene_file_params",

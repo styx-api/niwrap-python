@@ -14,20 +14,29 @@ SIMULATE_DISPLACEMENT_FIELD_METADATA = Metadata(
 
 
 SimulateDisplacementFieldBsplineOptionsParameters = typing.TypedDict('SimulateDisplacementFieldBsplineOptionsParameters', {
-    "@type": typing.Literal["ants.SimulateDisplacementField.bspline_options"],
+    "@type": typing.NotRequired[typing.Literal["bspline_options"]],
+    "number_of_fitting_levels": typing.NotRequired[int | None],
+    "number_of_control_points": typing.NotRequired[int | None],
+})
+SimulateDisplacementFieldBsplineOptionsParametersTagged = typing.TypedDict('SimulateDisplacementFieldBsplineOptionsParametersTagged', {
+    "@type": typing.Literal["bspline_options"],
     "number_of_fitting_levels": typing.NotRequired[int | None],
     "number_of_control_points": typing.NotRequired[int | None],
 })
 
 
 SimulateDisplacementFieldExponentialOptionsParameters = typing.TypedDict('SimulateDisplacementFieldExponentialOptionsParameters', {
-    "@type": typing.Literal["ants.SimulateDisplacementField.exponential_options"],
+    "@type": typing.NotRequired[typing.Literal["exponential_options"]],
+    "smoothing_standard_deviation": typing.NotRequired[float | None],
+})
+SimulateDisplacementFieldExponentialOptionsParametersTagged = typing.TypedDict('SimulateDisplacementFieldExponentialOptionsParametersTagged', {
+    "@type": typing.Literal["exponential_options"],
     "smoothing_standard_deviation": typing.NotRequired[float | None],
 })
 
 
 SimulateDisplacementFieldParameters = typing.TypedDict('SimulateDisplacementFieldParameters', {
-    "@type": typing.Literal["ants.SimulateDisplacementField"],
+    "@type": typing.NotRequired[typing.Literal["ants/SimulateDisplacementField"]],
     "image_dimension": int,
     "displacement_field_type": typing.Literal["BSpline", "Exponential"],
     "domain_image": InputPathType,
@@ -35,11 +44,22 @@ SimulateDisplacementFieldParameters = typing.TypedDict('SimulateDisplacementFiel
     "number_of_random_points": typing.NotRequired[int | None],
     "standard_deviation_displacement_field": typing.NotRequired[float | None],
     "enforce_stationary_boundary": typing.NotRequired[int | None],
-    "displacement_specific_options": typing.NotRequired[typing.Union[SimulateDisplacementFieldBsplineOptionsParameters, SimulateDisplacementFieldExponentialOptionsParameters] | None],
+    "displacement_specific_options": typing.NotRequired[typing.Union[SimulateDisplacementFieldBsplineOptionsParametersTagged, SimulateDisplacementFieldExponentialOptionsParametersTagged] | None],
+})
+SimulateDisplacementFieldParametersTagged = typing.TypedDict('SimulateDisplacementFieldParametersTagged', {
+    "@type": typing.Literal["ants/SimulateDisplacementField"],
+    "image_dimension": int,
+    "displacement_field_type": typing.Literal["BSpline", "Exponential"],
+    "domain_image": InputPathType,
+    "output_field": str,
+    "number_of_random_points": typing.NotRequired[int | None],
+    "standard_deviation_displacement_field": typing.NotRequired[float | None],
+    "enforce_stationary_boundary": typing.NotRequired[int | None],
+    "displacement_specific_options": typing.NotRequired[typing.Union[SimulateDisplacementFieldBsplineOptionsParametersTagged, SimulateDisplacementFieldExponentialOptionsParametersTagged] | None],
 })
 
 
-def dyn_cargs(
+def simulate_displacement_field_displacement_specific_options_cargs_dyn_fn(
     t: str,
 ) -> typing.Any:
     """
@@ -51,13 +71,12 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "ants.SimulateDisplacementField": simulate_displacement_field_cargs,
-        "ants.SimulateDisplacementField.bspline_options": simulate_displacement_field_bspline_options_cargs,
-        "ants.SimulateDisplacementField.exponential_options": simulate_displacement_field_exponential_options_cargs,
+        "bspline_options": simulate_displacement_field_bspline_options_cargs,
+        "exponential_options": simulate_displacement_field_exponential_options_cargs,
     }.get(t)
 
 
-def dyn_outputs(
+def simulate_displacement_field_displacement_specific_options_outputs_dyn_fn(
     t: str,
 ) -> typing.Any:
     """
@@ -69,14 +88,13 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "ants.SimulateDisplacementField": simulate_displacement_field_outputs,
     }.get(t)
 
 
 def simulate_displacement_field_bspline_options_params(
     number_of_fitting_levels: int | None = None,
     number_of_control_points: int | None = None,
-) -> SimulateDisplacementFieldBsplineOptionsParameters:
+) -> SimulateDisplacementFieldBsplineOptionsParametersTagged:
     """
     Build parameters.
     
@@ -87,7 +105,7 @@ def simulate_displacement_field_bspline_options_params(
         Parameter dictionary
     """
     params = {
-        "@type": "ants.SimulateDisplacementField.bspline_options",
+        "@type": "bspline_options",
     }
     if number_of_fitting_levels is not None:
         params["number_of_fitting_levels"] = number_of_fitting_levels
@@ -110,16 +128,16 @@ def simulate_displacement_field_bspline_options_cargs(
         Command-line arguments.
     """
     cargs = []
-    if params.get("number_of_fitting_levels") is not None:
-        cargs.append(str(params.get("number_of_fitting_levels")))
-    if params.get("number_of_control_points") is not None:
-        cargs.append(str(params.get("number_of_control_points")))
+    if params.get("number_of_fitting_levels", None) is not None:
+        cargs.append(str(params.get("number_of_fitting_levels", None)))
+    if params.get("number_of_control_points", None) is not None:
+        cargs.append(str(params.get("number_of_control_points", None)))
     return cargs
 
 
 def simulate_displacement_field_exponential_options_params(
     smoothing_standard_deviation: float | None = None,
-) -> SimulateDisplacementFieldExponentialOptionsParameters:
+) -> SimulateDisplacementFieldExponentialOptionsParametersTagged:
     """
     Build parameters.
     
@@ -130,7 +148,7 @@ def simulate_displacement_field_exponential_options_params(
         Parameter dictionary
     """
     params = {
-        "@type": "ants.SimulateDisplacementField.exponential_options",
+        "@type": "exponential_options",
     }
     if smoothing_standard_deviation is not None:
         params["smoothing_standard_deviation"] = smoothing_standard_deviation
@@ -151,14 +169,14 @@ def simulate_displacement_field_exponential_options_cargs(
         Command-line arguments.
     """
     cargs = []
-    if params.get("smoothing_standard_deviation") is not None:
-        cargs.append(str(params.get("smoothing_standard_deviation")))
+    if params.get("smoothing_standard_deviation", None) is not None:
+        cargs.append(str(params.get("smoothing_standard_deviation", None)))
     return cargs
 
 
 class SimulateDisplacementFieldOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `simulate_displacement_field(...)`.
+    Output object returned when calling `SimulateDisplacementFieldParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -174,8 +192,8 @@ def simulate_displacement_field_params(
     number_of_random_points: int | None = None,
     standard_deviation_displacement_field: float | None = None,
     enforce_stationary_boundary: int | None = None,
-    displacement_specific_options: typing.Union[SimulateDisplacementFieldBsplineOptionsParameters, SimulateDisplacementFieldExponentialOptionsParameters] | None = None,
-) -> SimulateDisplacementFieldParameters:
+    displacement_specific_options: typing.Union[SimulateDisplacementFieldBsplineOptionsParametersTagged, SimulateDisplacementFieldExponentialOptionsParametersTagged] | None = None,
+) -> SimulateDisplacementFieldParametersTagged:
     """
     Build parameters.
     
@@ -196,7 +214,7 @@ def simulate_displacement_field_params(
         Parameter dictionary
     """
     params = {
-        "@type": "ants.SimulateDisplacementField",
+        "@type": "ants/SimulateDisplacementField",
         "image_dimension": image_dimension,
         "displacement_field_type": displacement_field_type,
         "domain_image": domain_image,
@@ -228,18 +246,18 @@ def simulate_displacement_field_cargs(
     """
     cargs = []
     cargs.append("SimulateDisplacementField")
-    cargs.append(str(params.get("image_dimension")))
-    cargs.append(params.get("displacement_field_type"))
-    cargs.append(execution.input_file(params.get("domain_image")))
-    cargs.append(params.get("output_field"))
-    if params.get("number_of_random_points") is not None:
-        cargs.append(str(params.get("number_of_random_points")))
-    if params.get("standard_deviation_displacement_field") is not None:
-        cargs.append(str(params.get("standard_deviation_displacement_field")))
-    if params.get("enforce_stationary_boundary") is not None:
-        cargs.append(str(params.get("enforce_stationary_boundary")))
-    if params.get("displacement_specific_options") is not None:
-        cargs.extend(dyn_cargs(params.get("displacement_specific_options")["@type"])(params.get("displacement_specific_options"), execution))
+    cargs.append(str(params.get("image_dimension", None)))
+    cargs.append(params.get("displacement_field_type", None))
+    cargs.append(execution.input_file(params.get("domain_image", None)))
+    cargs.append(params.get("output_field", None))
+    if params.get("number_of_random_points", None) is not None:
+        cargs.append(str(params.get("number_of_random_points", None)))
+    if params.get("standard_deviation_displacement_field", None) is not None:
+        cargs.append(str(params.get("standard_deviation_displacement_field", None)))
+    if params.get("enforce_stationary_boundary", None) is not None:
+        cargs.append(str(params.get("enforce_stationary_boundary", None)))
+    if params.get("displacement_specific_options", None) is not None:
+        cargs.extend(simulate_displacement_field_displacement_specific_options_cargs_dyn_fn(params.get("displacement_specific_options", None)["@type"])(params.get("displacement_specific_options", None), execution))
     return cargs
 
 
@@ -258,7 +276,7 @@ def simulate_displacement_field_outputs(
     """
     ret = SimulateDisplacementFieldOutputs(
         root=execution.output_file("."),
-        output_displacement_field=execution.output_file(params.get("output_field")),
+        output_displacement_field=execution.output_file(params.get("output_field", None)),
     )
     return ret
 
@@ -300,7 +318,7 @@ def simulate_displacement_field(
     number_of_random_points: int | None = None,
     standard_deviation_displacement_field: float | None = None,
     enforce_stationary_boundary: int | None = None,
-    displacement_specific_options: typing.Union[SimulateDisplacementFieldBsplineOptionsParameters, SimulateDisplacementFieldExponentialOptionsParameters] | None = None,
+    displacement_specific_options: typing.Union[SimulateDisplacementFieldBsplineOptionsParametersTagged, SimulateDisplacementFieldExponentialOptionsParametersTagged] | None = None,
     runner: Runner | None = None,
 ) -> SimulateDisplacementFieldOutputs:
     """
@@ -345,10 +363,7 @@ def simulate_displacement_field(
 
 __all__ = [
     "SIMULATE_DISPLACEMENT_FIELD_METADATA",
-    "SimulateDisplacementFieldBsplineOptionsParameters",
-    "SimulateDisplacementFieldExponentialOptionsParameters",
     "SimulateDisplacementFieldOutputs",
-    "SimulateDisplacementFieldParameters",
     "simulate_displacement_field",
     "simulate_displacement_field_bspline_options_params",
     "simulate_displacement_field_execute",

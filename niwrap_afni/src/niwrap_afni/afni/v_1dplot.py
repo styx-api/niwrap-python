@@ -14,28 +14,97 @@ V_1DPLOT_METADATA = Metadata(
 
 
 V1dplotNolineParameters = typing.TypedDict('V1dplotNolineParameters', {
-    "@type": typing.Literal["afni.1dplot.noline"],
+    "@type": typing.NotRequired[typing.Literal["noline"]],
+    "noline": bool,
+    "NOLINE": bool,
+})
+V1dplotNolineParametersTagged = typing.TypedDict('V1dplotNolineParametersTagged', {
+    "@type": typing.Literal["noline"],
     "noline": bool,
     "NOLINE": bool,
 })
 
 
 V1dplotThickParameters = typing.TypedDict('V1dplotThickParameters', {
-    "@type": typing.Literal["afni.1dplot.thick"],
+    "@type": typing.NotRequired[typing.Literal["thick"]],
+    "thick": bool,
+    "THICK": bool,
+})
+V1dplotThickParametersTagged = typing.TypedDict('V1dplotThickParametersTagged', {
+    "@type": typing.Literal["thick"],
     "thick": bool,
     "THICK": bool,
 })
 
 
 V1dplotRboxParameters = typing.TypedDict('V1dplotRboxParameters', {
-    "@type": typing.Literal["afni.1dplot.rbox"],
+    "@type": typing.NotRequired[typing.Literal["rbox"]],
+    "rbox": typing.NotRequired[str | None],
+    "Rbox": typing.NotRequired[str | None],
+})
+V1dplotRboxParametersTagged = typing.TypedDict('V1dplotRboxParametersTagged', {
+    "@type": typing.Literal["rbox"],
     "rbox": typing.NotRequired[str | None],
     "Rbox": typing.NotRequired[str | None],
 })
 
 
 V1dplotParameters = typing.TypedDict('V1dplotParameters', {
-    "@type": typing.Literal["afni.1dplot"],
+    "@type": typing.NotRequired[typing.Literal["afni/1dplot"]],
+    "tsfiles": list[InputPathType],
+    "install": bool,
+    "sep": bool,
+    "one": bool,
+    "sepscl": bool,
+    "noline": typing.NotRequired[V1dplotNolineParameters | None],
+    "box": bool,
+    "hist": bool,
+    "norm2": bool,
+    "normx": bool,
+    "norm1": bool,
+    "demean": bool,
+    "x": typing.NotRequired[InputPathType | None],
+    "xl10": typing.NotRequired[InputPathType | None],
+    "dx": typing.NotRequired[float | None],
+    "xzero": typing.NotRequired[float | None],
+    "nopush": bool,
+    "ignore": typing.NotRequired[float | None],
+    "use": typing.NotRequired[float | None],
+    "xlabel": typing.NotRequired[str | None],
+    "ylabel": typing.NotRequired[str | None],
+    "plabel": typing.NotRequired[str | None],
+    "title": typing.NotRequired[str | None],
+    "wintitle": typing.NotRequired[str | None],
+    "naked": bool,
+    "aspect": typing.NotRequired[float | None],
+    "stdin": bool,
+    "ps": bool,
+    "jpg": typing.NotRequired[str | None],
+    "jpeg": typing.NotRequired[str | None],
+    "png": typing.NotRequired[str | None],
+    "pnm": typing.NotRequired[str | None],
+    "pngs": typing.NotRequired[str | None],
+    "jpgs": typing.NotRequired[str | None],
+    "jpegs": typing.NotRequired[str | None],
+    "pnms": typing.NotRequired[str | None],
+    "ytran": typing.NotRequired[str | None],
+    "xtran": typing.NotRequired[str | None],
+    "xaxis": typing.NotRequired[str | None],
+    "yaxis": typing.NotRequired[str | None],
+    "ynames": typing.NotRequired[list[str] | None],
+    "volreg": bool,
+    "thick": typing.NotRequired[V1dplotThickParameters | None],
+    "dashed": typing.NotRequired[str | None],
+    "setenv": typing.NotRequired[str | None],
+    "censor_RGB": typing.NotRequired[str | None],
+    "censor": typing.NotRequired[InputPathType | None],
+    "CENSORTR": typing.NotRequired[list[str] | None],
+    "concat": typing.NotRequired[InputPathType | None],
+    "rbox": typing.NotRequired[V1dplotRboxParameters | None],
+    "line": typing.NotRequired[str | None],
+})
+V1dplotParametersTagged = typing.TypedDict('V1dplotParametersTagged', {
+    "@type": typing.Literal["afni/1dplot"],
     "tsfiles": list[InputPathType],
     "install": bool,
     "sep": bool,
@@ -90,44 +159,10 @@ V1dplotParameters = typing.TypedDict('V1dplotParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "afni.1dplot": v_1dplot_cargs,
-        "afni.1dplot.noline": v_1dplot_noline_cargs,
-        "afni.1dplot.thick": v_1dplot_thick_cargs,
-        "afni.1dplot.rbox": v_1dplot_rbox_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-    }.get(t)
-
-
 def v_1dplot_noline_params(
     noline: bool = False,
     noline_: bool = False,
-) -> V1dplotNolineParameters:
+) -> V1dplotNolineParametersTagged:
     """
     Build parameters.
     
@@ -139,7 +174,7 @@ def v_1dplot_noline_params(
         Parameter dictionary
     """
     params = {
-        "@type": "afni.1dplot.noline",
+        "@type": "noline",
         "noline": noline,
         "NOLINE": noline_,
     }
@@ -160,9 +195,9 @@ def v_1dplot_noline_cargs(
         Command-line arguments.
     """
     cargs = []
-    if params.get("noline"):
+    if params.get("noline", False):
         cargs.append("-noline")
-    if params.get("NOLINE"):
+    if params.get("NOLINE", False):
         cargs.append("-NOLINE")
     return cargs
 
@@ -170,7 +205,7 @@ def v_1dplot_noline_cargs(
 def v_1dplot_thick_params(
     thick: bool = False,
     thick_: bool = False,
-) -> V1dplotThickParameters:
+) -> V1dplotThickParametersTagged:
     """
     Build parameters.
     
@@ -181,7 +216,7 @@ def v_1dplot_thick_params(
         Parameter dictionary
     """
     params = {
-        "@type": "afni.1dplot.thick",
+        "@type": "thick",
         "thick": thick,
         "THICK": thick_,
     }
@@ -202,9 +237,9 @@ def v_1dplot_thick_cargs(
         Command-line arguments.
     """
     cargs = []
-    if params.get("thick"):
+    if params.get("thick", False):
         cargs.append("-thick")
-    if params.get("THICK"):
+    if params.get("THICK", False):
         cargs.append("-THICK")
     return cargs
 
@@ -212,7 +247,7 @@ def v_1dplot_thick_cargs(
 def v_1dplot_rbox_params(
     rbox: str | None = None,
     rbox_: str | None = None,
-) -> V1dplotRboxParameters:
+) -> V1dplotRboxParametersTagged:
     """
     Build parameters.
     
@@ -223,7 +258,7 @@ def v_1dplot_rbox_params(
         Parameter dictionary
     """
     params = {
-        "@type": "afni.1dplot.rbox",
+        "@type": "rbox",
     }
     if rbox is not None:
         params["rbox"] = rbox
@@ -246,22 +281,22 @@ def v_1dplot_rbox_cargs(
         Command-line arguments.
     """
     cargs = []
-    if params.get("rbox") is not None:
+    if params.get("rbox", None) is not None:
         cargs.extend([
             "-rbox",
-            params.get("rbox")
+            params.get("rbox", None)
         ])
-    if params.get("Rbox") is not None:
+    if params.get("Rbox", None) is not None:
         cargs.extend([
             "-Rbox",
-            params.get("Rbox")
+            params.get("Rbox", None)
         ])
     return cargs
 
 
 class V1dplotOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `v_1dplot(...)`.
+    Output object returned when calling `V1dplotParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -319,7 +354,7 @@ def v_1dplot_params(
     concat: InputPathType | None = None,
     rbox: V1dplotRboxParameters | None = None,
     line: str | None = None,
-) -> V1dplotParameters:
+) -> V1dplotParametersTagged:
     """
     Build parameters.
     
@@ -399,7 +434,7 @@ def v_1dplot_params(
         Parameter dictionary
     """
     params = {
-        "@type": "afni.1dplot",
+        "@type": "afni/1dplot",
         "tsfiles": tsfiles,
         "install": install,
         "sep": sep,
@@ -505,202 +540,202 @@ def v_1dplot_cargs(
     """
     cargs = []
     cargs.append("1dplot")
-    cargs.extend([execution.input_file(f) for f in params.get("tsfiles")])
-    if params.get("install"):
+    cargs.extend([execution.input_file(f) for f in params.get("tsfiles", None)])
+    if params.get("install", False):
         cargs.append("-install")
-    if params.get("sep"):
+    if params.get("sep", False):
         cargs.append("-sep")
-    if params.get("one"):
+    if params.get("one", False):
         cargs.append("-one")
-    if params.get("sepscl"):
+    if params.get("sepscl", False):
         cargs.append("-sepscl")
-    if params.get("noline") is not None:
-        cargs.extend(dyn_cargs(params.get("noline")["@type"])(params.get("noline"), execution))
-    if params.get("box"):
+    if params.get("noline", None) is not None:
+        cargs.extend(v_1dplot_noline_cargs(params.get("noline", None), execution))
+    if params.get("box", False):
         cargs.append("-box")
-    if params.get("hist"):
+    if params.get("hist", False):
         cargs.append("-hist")
-    if params.get("norm2"):
+    if params.get("norm2", False):
         cargs.append("-norm2")
-    if params.get("normx"):
+    if params.get("normx", False):
         cargs.append("-normx")
-    if params.get("norm1"):
+    if params.get("norm1", False):
         cargs.append("-norm1")
-    if params.get("demean"):
+    if params.get("demean", False):
         cargs.append("-demean")
-    if params.get("x") is not None:
+    if params.get("x", None) is not None:
         cargs.extend([
             "-x",
-            execution.input_file(params.get("x"))
+            execution.input_file(params.get("x", None))
         ])
-    if params.get("xl10") is not None:
+    if params.get("xl10", None) is not None:
         cargs.extend([
             "-xl10",
-            execution.input_file(params.get("xl10"))
+            execution.input_file(params.get("xl10", None))
         ])
-    if params.get("dx") is not None:
+    if params.get("dx", None) is not None:
         cargs.extend([
             "-dx",
-            str(params.get("dx"))
+            str(params.get("dx", None))
         ])
-    if params.get("xzero") is not None:
+    if params.get("xzero", None) is not None:
         cargs.extend([
             "-xzero",
-            str(params.get("xzero"))
+            str(params.get("xzero", None))
         ])
-    if params.get("nopush"):
+    if params.get("nopush", False):
         cargs.append("-nopush")
-    if params.get("ignore") is not None:
+    if params.get("ignore", None) is not None:
         cargs.extend([
             "-ignore",
-            str(params.get("ignore"))
+            str(params.get("ignore", None))
         ])
-    if params.get("use") is not None:
+    if params.get("use", None) is not None:
         cargs.extend([
             "-use",
-            str(params.get("use"))
+            str(params.get("use", None))
         ])
-    if params.get("xlabel") is not None:
+    if params.get("xlabel", None) is not None:
         cargs.extend([
             "-xlabel",
-            params.get("xlabel")
+            params.get("xlabel", None)
         ])
-    if params.get("ylabel") is not None:
+    if params.get("ylabel", None) is not None:
         cargs.extend([
             "-ylabel",
-            params.get("ylabel")
+            params.get("ylabel", None)
         ])
-    if params.get("plabel") is not None:
+    if params.get("plabel", None) is not None:
         cargs.extend([
             "-plabel",
-            params.get("plabel")
+            params.get("plabel", None)
         ])
-    if params.get("title") is not None:
+    if params.get("title", None) is not None:
         cargs.extend([
             "-title",
-            params.get("title")
+            params.get("title", None)
         ])
-    if params.get("wintitle") is not None:
+    if params.get("wintitle", None) is not None:
         cargs.extend([
             "-wintitle",
-            params.get("wintitle")
+            params.get("wintitle", None)
         ])
-    if params.get("naked"):
+    if params.get("naked", False):
         cargs.append("-naked")
-    if params.get("aspect") is not None:
+    if params.get("aspect", None) is not None:
         cargs.extend([
             "-aspect",
-            str(params.get("aspect"))
+            str(params.get("aspect", None))
         ])
-    if params.get("stdin"):
+    if params.get("stdin", False):
         cargs.append("-stdin")
-    if params.get("ps"):
+    if params.get("ps", False):
         cargs.append("-ps")
-    if params.get("jpg") is not None:
+    if params.get("jpg", None) is not None:
         cargs.extend([
             "-jpg",
-            params.get("jpg")
+            params.get("jpg", None)
         ])
-    if params.get("jpeg") is not None:
+    if params.get("jpeg", None) is not None:
         cargs.extend([
             "-jpeg",
-            params.get("jpeg")
+            params.get("jpeg", None)
         ])
-    if params.get("png") is not None:
+    if params.get("png", None) is not None:
         cargs.extend([
             "-png",
-            params.get("png")
+            params.get("png", None)
         ])
-    if params.get("pnm") is not None:
+    if params.get("pnm", None) is not None:
         cargs.extend([
             "-pnm",
-            params.get("pnm")
+            params.get("pnm", None)
         ])
-    if params.get("pngs") is not None:
+    if params.get("pngs", None) is not None:
         cargs.extend([
             "-pngs",
-            params.get("pngs")
+            params.get("pngs", None)
         ])
-    if params.get("jpgs") is not None:
+    if params.get("jpgs", None) is not None:
         cargs.extend([
             "-jpgs",
-            params.get("jpgs")
+            params.get("jpgs", None)
         ])
-    if params.get("jpegs") is not None:
+    if params.get("jpegs", None) is not None:
         cargs.extend([
             "-jpegs",
-            params.get("jpegs")
+            params.get("jpegs", None)
         ])
-    if params.get("pnms") is not None:
+    if params.get("pnms", None) is not None:
         cargs.extend([
             "-pnms",
-            params.get("pnms")
+            params.get("pnms", None)
         ])
-    if params.get("ytran") is not None:
+    if params.get("ytran", None) is not None:
         cargs.extend([
             "-ytran",
-            params.get("ytran")
+            params.get("ytran", None)
         ])
-    if params.get("xtran") is not None:
+    if params.get("xtran", None) is not None:
         cargs.extend([
             "-xtran",
-            params.get("xtran")
+            params.get("xtran", None)
         ])
-    if params.get("xaxis") is not None:
+    if params.get("xaxis", None) is not None:
         cargs.extend([
             "-xaxis",
-            params.get("xaxis")
+            params.get("xaxis", None)
         ])
-    if params.get("yaxis") is not None:
+    if params.get("yaxis", None) is not None:
         cargs.extend([
             "-yaxis",
-            params.get("yaxis")
+            params.get("yaxis", None)
         ])
-    if params.get("ynames") is not None:
+    if params.get("ynames", None) is not None:
         cargs.extend([
             "-ynames",
-            *params.get("ynames")
+            *params.get("ynames", None)
         ])
-    if params.get("volreg"):
+    if params.get("volreg", False):
         cargs.append("-volreg")
-    if params.get("thick") is not None:
-        cargs.extend(dyn_cargs(params.get("thick")["@type"])(params.get("thick"), execution))
-    if params.get("dashed") is not None:
+    if params.get("thick", None) is not None:
+        cargs.extend(v_1dplot_thick_cargs(params.get("thick", None), execution))
+    if params.get("dashed", None) is not None:
         cargs.extend([
             "-dashed",
-            params.get("dashed")
+            params.get("dashed", None)
         ])
-    if params.get("setenv") is not None:
+    if params.get("setenv", None) is not None:
         cargs.extend([
             "-D",
-            params.get("setenv")
+            params.get("setenv", None)
         ])
-    if params.get("censor_RGB") is not None:
+    if params.get("censor_RGB", None) is not None:
         cargs.extend([
             "-censor_RGB",
-            params.get("censor_RGB")
+            params.get("censor_RGB", None)
         ])
-    if params.get("censor") is not None:
+    if params.get("censor", None) is not None:
         cargs.extend([
             "-censor",
-            execution.input_file(params.get("censor"))
+            execution.input_file(params.get("censor", None))
         ])
-    if params.get("CENSORTR") is not None:
+    if params.get("CENSORTR", None) is not None:
         cargs.extend([
             "-CENSORTR",
-            *params.get("CENSORTR")
+            *params.get("CENSORTR", None)
         ])
-    if params.get("concat") is not None:
+    if params.get("concat", None) is not None:
         cargs.extend([
             "-concat",
-            execution.input_file(params.get("concat"))
+            execution.input_file(params.get("concat", None))
         ])
-    if params.get("rbox") is not None:
-        cargs.extend(dyn_cargs(params.get("rbox")["@type"])(params.get("rbox"), execution))
-    if params.get("line") is not None:
+    if params.get("rbox", None) is not None:
+        cargs.extend(v_1dplot_rbox_cargs(params.get("rbox", None), execution))
+    if params.get("line", None) is not None:
         cargs.extend([
             "-line",
-            params.get("line")
+            params.get("line", None)
         ])
     return cargs
 
@@ -950,11 +985,7 @@ def v_1dplot(
 
 
 __all__ = [
-    "V1dplotNolineParameters",
     "V1dplotOutputs",
-    "V1dplotParameters",
-    "V1dplotRboxParameters",
-    "V1dplotThickParameters",
     "V_1DPLOT_METADATA",
     "v_1dplot",
     "v_1dplot_execute",

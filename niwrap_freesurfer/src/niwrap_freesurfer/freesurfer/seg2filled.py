@@ -14,7 +14,17 @@ SEG2FILLED_METADATA = Metadata(
 
 
 Seg2filledParameters = typing.TypedDict('Seg2filledParameters', {
-    "@type": typing.Literal["freesurfer.seg2filled"],
+    "@type": typing.NotRequired[typing.Literal["freesurfer/seg2filled"]],
+    "seg_file": InputPathType,
+    "norm_file": InputPathType,
+    "output_file": str,
+    "ndil": typing.NotRequired[int | None],
+    "cavity_flag": bool,
+    "surf_name": typing.NotRequired[str | None],
+    "surf_dir": typing.NotRequired[str | None],
+})
+Seg2filledParametersTagged = typing.TypedDict('Seg2filledParametersTagged', {
+    "@type": typing.Literal["freesurfer/seg2filled"],
     "seg_file": InputPathType,
     "norm_file": InputPathType,
     "output_file": str,
@@ -25,41 +35,9 @@ Seg2filledParameters = typing.TypedDict('Seg2filledParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "freesurfer.seg2filled": seg2filled_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "freesurfer.seg2filled": seg2filled_outputs,
-    }.get(t)
-
-
 class Seg2filledOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `seg2filled(...)`.
+    Output object returned when calling `Seg2filledParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -75,7 +53,7 @@ def seg2filled_params(
     cavity_flag: bool = False,
     surf_name: str | None = None,
     surf_dir: str | None = None,
-) -> Seg2filledParameters:
+) -> Seg2filledParametersTagged:
     """
     Build parameters.
     
@@ -91,7 +69,7 @@ def seg2filled_params(
         Parameter dictionary
     """
     params = {
-        "@type": "freesurfer.seg2filled",
+        "@type": "freesurfer/seg2filled",
         "seg_file": seg_file,
         "norm_file": norm_file,
         "output_file": output_file,
@@ -123,32 +101,32 @@ def seg2filled_cargs(
     cargs.append("seg2filled")
     cargs.extend([
         "-seg",
-        execution.input_file(params.get("seg_file"))
+        execution.input_file(params.get("seg_file", None))
     ])
     cargs.extend([
         "-norm",
-        execution.input_file(params.get("norm_file"))
+        execution.input_file(params.get("norm_file", None))
     ])
     cargs.extend([
         "-o",
-        params.get("output_file")
+        params.get("output_file", None)
     ])
-    if params.get("ndil") is not None:
+    if params.get("ndil", None) is not None:
         cargs.extend([
             "--ndil",
-            str(params.get("ndil"))
+            str(params.get("ndil", None))
         ])
-    if params.get("cavity_flag"):
+    if params.get("cavity_flag", False):
         cargs.append("--cavity")
-    if params.get("surf_name") is not None:
+    if params.get("surf_name", None) is not None:
         cargs.extend([
             "--surf",
-            params.get("surf_name")
+            params.get("surf_name", None)
         ])
-    if params.get("surf_dir") is not None:
+    if params.get("surf_dir", None) is not None:
         cargs.extend([
             "--surfdir",
-            params.get("surf_dir")
+            params.get("surf_dir", None)
         ])
     return cargs
 
@@ -168,7 +146,7 @@ def seg2filled_outputs(
     """
     ret = Seg2filledOutputs(
         root=execution.output_file("."),
-        out_filled_mgz=execution.output_file(params.get("output_file")),
+        out_filled_mgz=execution.output_file(params.get("output_file", None)),
     )
     return ret
 
@@ -249,7 +227,6 @@ def seg2filled(
 __all__ = [
     "SEG2FILLED_METADATA",
     "Seg2filledOutputs",
-    "Seg2filledParameters",
     "seg2filled",
     "seg2filled_execute",
     "seg2filled_params",

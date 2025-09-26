@@ -14,7 +14,37 @@ MKHEADSURF_METADATA = Metadata(
 
 
 MkheadsurfParameters = typing.TypedDict('MkheadsurfParameters', {
-    "@type": typing.Literal["freesurfer.mkheadsurf"],
+    "@type": typing.NotRequired[typing.Literal["freesurfer/mkheadsurf"]],
+    "input_vol": InputPathType,
+    "output_vol": str,
+    "output_surf": str,
+    "subject_id": str,
+    "nsmooth": typing.NotRequired[float | None],
+    "noseghead": bool,
+    "thresh1": typing.NotRequired[float | None],
+    "thresh2": typing.NotRequired[float | None],
+    "nhitsmin": typing.NotRequired[float | None],
+    "ndilate": typing.NotRequired[float | None],
+    "nerode": typing.NotRequired[float | None],
+    "fillval": typing.NotRequired[float | None],
+    "fhi": typing.NotRequired[float | None],
+    "no_rescale": bool,
+    "no_fill_holes_islands": bool,
+    "or_mask": typing.NotRequired[InputPathType | None],
+    "tessellation_method": typing.NotRequired[str | None],
+    "inflate": bool,
+    "curv": bool,
+    "srcvol": typing.NotRequired[str | None],
+    "headvol": typing.NotRequired[str | None],
+    "headsurf": typing.NotRequired[str | None],
+    "smheadsurf": typing.NotRequired[str | None],
+    "hemi": typing.NotRequired[str | None],
+    "subjects_dir": typing.NotRequired[str | None],
+    "umask": typing.NotRequired[float | None],
+    "logfile": typing.NotRequired[str | None],
+})
+MkheadsurfParametersTagged = typing.TypedDict('MkheadsurfParametersTagged', {
+    "@type": typing.Literal["freesurfer/mkheadsurf"],
     "input_vol": InputPathType,
     "output_vol": str,
     "output_surf": str,
@@ -45,40 +75,9 @@ MkheadsurfParameters = typing.TypedDict('MkheadsurfParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "freesurfer.mkheadsurf": mkheadsurf_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-    }.get(t)
-
-
 class MkheadsurfOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `mkheadsurf(...)`.
+    Output object returned when calling `MkheadsurfParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -112,7 +111,7 @@ def mkheadsurf_params(
     subjects_dir: str | None = None,
     umask: float | None = None,
     logfile: str | None = None,
-) -> MkheadsurfParameters:
+) -> MkheadsurfParametersTagged:
     """
     Build parameters.
     
@@ -149,7 +148,7 @@ def mkheadsurf_params(
         Parameter dictionary
     """
     params = {
-        "@type": "freesurfer.mkheadsurf",
+        "@type": "freesurfer/mkheadsurf",
         "input_vol": input_vol,
         "output_vol": output_vol,
         "output_surf": output_surf,
@@ -216,119 +215,119 @@ def mkheadsurf_cargs(
     cargs.append("mkheadsurf")
     cargs.extend([
         "-i",
-        execution.input_file(params.get("input_vol"))
+        execution.input_file(params.get("input_vol", None))
     ])
     cargs.extend([
         "-o",
-        params.get("output_vol")
+        params.get("output_vol", None)
     ])
     cargs.extend([
         "-surf",
-        params.get("output_surf")
+        params.get("output_surf", None)
     ])
     cargs.extend([
         "-s",
-        params.get("subject_id")
+        params.get("subject_id", None)
     ])
-    if params.get("nsmooth") is not None:
+    if params.get("nsmooth", None) is not None:
         cargs.extend([
             "-nsmooth",
-            str(params.get("nsmooth"))
+            str(params.get("nsmooth", None))
         ])
-    if params.get("noseghead"):
+    if params.get("noseghead", False):
         cargs.append("-noseghead")
-    if params.get("thresh1") is not None:
+    if params.get("thresh1", None) is not None:
         cargs.extend([
             "-thresh1",
-            str(params.get("thresh1"))
+            str(params.get("thresh1", None))
         ])
-    if params.get("thresh2") is not None:
+    if params.get("thresh2", None) is not None:
         cargs.extend([
             "-thresh2",
-            str(params.get("thresh2"))
+            str(params.get("thresh2", None))
         ])
-    if params.get("nhitsmin") is not None:
+    if params.get("nhitsmin", None) is not None:
         cargs.extend([
             "-nhitsmin",
-            str(params.get("nhitsmin"))
+            str(params.get("nhitsmin", None))
         ])
-    if params.get("ndilate") is not None:
+    if params.get("ndilate", None) is not None:
         cargs.extend([
             "-ndilate",
-            str(params.get("ndilate"))
+            str(params.get("ndilate", None))
         ])
-    if params.get("nerode") is not None:
+    if params.get("nerode", None) is not None:
         cargs.extend([
             "-nerode",
-            str(params.get("nerode"))
+            str(params.get("nerode", None))
         ])
-    if params.get("fillval") is not None:
+    if params.get("fillval", None) is not None:
         cargs.extend([
             "-fillval",
-            str(params.get("fillval"))
+            str(params.get("fillval", None))
         ])
-    if params.get("fhi") is not None:
+    if params.get("fhi", None) is not None:
         cargs.extend([
             "-fhi",
-            str(params.get("fhi"))
+            str(params.get("fhi", None))
         ])
-    if params.get("no_rescale"):
+    if params.get("no_rescale", False):
         cargs.append("-no-rescale")
-    if params.get("no_fill_holes_islands"):
+    if params.get("no_fill_holes_islands", False):
         cargs.append("-no-fill-holes-islands")
-    if params.get("or_mask") is not None:
+    if params.get("or_mask", None) is not None:
         cargs.extend([
             "-or-mask",
-            execution.input_file(params.get("or_mask"))
+            execution.input_file(params.get("or_mask", None))
         ])
-    if params.get("tessellation_method") is not None:
+    if params.get("tessellation_method", None) is not None:
         cargs.extend([
             "-tess",
-            params.get("tessellation_method")
+            params.get("tessellation_method", None)
         ])
-    if params.get("inflate"):
+    if params.get("inflate", False):
         cargs.append("-inflate")
-    if params.get("curv"):
+    if params.get("curv", False):
         cargs.append("-curv")
-    if params.get("srcvol") is not None:
+    if params.get("srcvol", None) is not None:
         cargs.extend([
             "-srcvol",
-            params.get("srcvol")
+            params.get("srcvol", None)
         ])
-    if params.get("headvol") is not None:
+    if params.get("headvol", None) is not None:
         cargs.extend([
             "-headvol",
-            params.get("headvol")
+            params.get("headvol", None)
         ])
-    if params.get("headsurf") is not None:
+    if params.get("headsurf", None) is not None:
         cargs.extend([
             "-headsurf",
-            params.get("headsurf")
+            params.get("headsurf", None)
         ])
-    if params.get("smheadsurf") is not None:
+    if params.get("smheadsurf", None) is not None:
         cargs.extend([
             "-smheadsurf",
-            params.get("smheadsurf")
+            params.get("smheadsurf", None)
         ])
-    if params.get("hemi") is not None:
+    if params.get("hemi", None) is not None:
         cargs.extend([
             "-hemi",
-            params.get("hemi")
+            params.get("hemi", None)
         ])
-    if params.get("subjects_dir") is not None:
+    if params.get("subjects_dir", None) is not None:
         cargs.extend([
             "-sd",
-            params.get("subjects_dir")
+            params.get("subjects_dir", None)
         ])
-    if params.get("umask") is not None:
+    if params.get("umask", None) is not None:
         cargs.extend([
             "-umask",
-            str(params.get("umask"))
+            str(params.get("umask", None))
         ])
-    if params.get("logfile") is not None:
+    if params.get("logfile", None) is not None:
         cargs.extend([
             "-log",
-            params.get("logfile")
+            params.get("logfile", None)
         ])
     return cargs
 
@@ -489,7 +488,6 @@ def mkheadsurf(
 __all__ = [
     "MKHEADSURF_METADATA",
     "MkheadsurfOutputs",
-    "MkheadsurfParameters",
     "mkheadsurf",
     "mkheadsurf_execute",
     "mkheadsurf_params",

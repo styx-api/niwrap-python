@@ -14,48 +14,22 @@ HISTO_COMPUTE_JOINT_DENSITY_METADATA = Metadata(
 
 
 HistoComputeJointDensityParameters = typing.TypedDict('HistoComputeJointDensityParameters', {
-    "@type": typing.Literal["freesurfer.histo_compute_joint_density"],
+    "@type": typing.NotRequired[typing.Literal["freesurfer/histo_compute_joint_density"]],
+    "volume1": InputPathType,
+    "volume2": InputPathType,
+    "joint_density_file": str,
+})
+HistoComputeJointDensityParametersTagged = typing.TypedDict('HistoComputeJointDensityParametersTagged', {
+    "@type": typing.Literal["freesurfer/histo_compute_joint_density"],
     "volume1": InputPathType,
     "volume2": InputPathType,
     "joint_density_file": str,
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "freesurfer.histo_compute_joint_density": histo_compute_joint_density_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "freesurfer.histo_compute_joint_density": histo_compute_joint_density_outputs,
-    }.get(t)
-
-
 class HistoComputeJointDensityOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `histo_compute_joint_density(...)`.
+    Output object returned when calling `HistoComputeJointDensityParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -67,7 +41,7 @@ def histo_compute_joint_density_params(
     volume1: InputPathType,
     volume2: InputPathType,
     joint_density_file: str,
-) -> HistoComputeJointDensityParameters:
+) -> HistoComputeJointDensityParametersTagged:
     """
     Build parameters.
     
@@ -79,7 +53,7 @@ def histo_compute_joint_density_params(
         Parameter dictionary
     """
     params = {
-        "@type": "freesurfer.histo_compute_joint_density",
+        "@type": "freesurfer/histo_compute_joint_density",
         "volume1": volume1,
         "volume2": volume2,
         "joint_density_file": joint_density_file,
@@ -102,9 +76,9 @@ def histo_compute_joint_density_cargs(
     """
     cargs = []
     cargs.append("histo_compute_joint_density")
-    cargs.append(execution.input_file(params.get("volume1")))
-    cargs.append(execution.input_file(params.get("volume2")))
-    cargs.append(params.get("joint_density_file"))
+    cargs.append(execution.input_file(params.get("volume1", None)))
+    cargs.append(execution.input_file(params.get("volume2", None)))
+    cargs.append(params.get("joint_density_file", None))
     return cargs
 
 
@@ -123,7 +97,7 @@ def histo_compute_joint_density_outputs(
     """
     ret = HistoComputeJointDensityOutputs(
         root=execution.output_file("."),
-        output_joint_density=execution.output_file(params.get("joint_density_file")),
+        output_joint_density=execution.output_file(params.get("joint_density_file", None)),
     )
     return ret
 
@@ -190,7 +164,6 @@ def histo_compute_joint_density(
 __all__ = [
     "HISTO_COMPUTE_JOINT_DENSITY_METADATA",
     "HistoComputeJointDensityOutputs",
-    "HistoComputeJointDensityParameters",
     "histo_compute_joint_density",
     "histo_compute_joint_density_execute",
     "histo_compute_joint_density_params",

@@ -14,7 +14,15 @@ FTOZ_METADATA = Metadata(
 
 
 FtozParameters = typing.TypedDict('FtozParameters', {
-    "@type": typing.Literal["fsl.ftoz"],
+    "@type": typing.NotRequired[typing.Literal["fsl/ftoz"]],
+    "input_file": InputPathType,
+    "dof1": float,
+    "dof2": float,
+    "output_file": typing.NotRequired[str | None],
+    "help_flag": bool,
+})
+FtozParametersTagged = typing.TypedDict('FtozParametersTagged', {
+    "@type": typing.Literal["fsl/ftoz"],
     "input_file": InputPathType,
     "dof1": float,
     "dof2": float,
@@ -23,41 +31,9 @@ FtozParameters = typing.TypedDict('FtozParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "fsl.ftoz": ftoz_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "fsl.ftoz": ftoz_outputs,
-    }.get(t)
-
-
 class FtozOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `ftoz(...)`.
+    Output object returned when calling `FtozParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -71,7 +47,7 @@ def ftoz_params(
     dof2: float,
     output_file: str | None = None,
     help_flag: bool = False,
-) -> FtozParameters:
+) -> FtozParametersTagged:
     """
     Build parameters.
     
@@ -85,7 +61,7 @@ def ftoz_params(
         Parameter dictionary
     """
     params = {
-        "@type": "fsl.ftoz",
+        "@type": "fsl/ftoz",
         "input_file": input_file,
         "dof1": dof1,
         "dof2": dof2,
@@ -111,15 +87,15 @@ def ftoz_cargs(
     """
     cargs = []
     cargs.append("ftoz")
-    cargs.append(execution.input_file(params.get("input_file")))
-    cargs.append(str(params.get("dof1")))
-    cargs.append(str(params.get("dof2")))
-    if params.get("output_file") is not None:
+    cargs.append(execution.input_file(params.get("input_file", None)))
+    cargs.append(str(params.get("dof1", None)))
+    cargs.append(str(params.get("dof2", None)))
+    if params.get("output_file", None) is not None:
         cargs.extend([
             "-zout",
-            params.get("output_file")
+            params.get("output_file", None)
         ])
-    if params.get("help_flag"):
+    if params.get("help_flag", False):
         cargs.append("-help")
     return cargs
 
@@ -139,7 +115,7 @@ def ftoz_outputs(
     """
     ret = FtozOutputs(
         root=execution.output_file("."),
-        output_zscores=execution.output_file(params.get("output_file")) if (params.get("output_file") is not None) else None,
+        output_zscores=execution.output_file(params.get("output_file", None)) if (params.get("output_file") is not None) else None,
     )
     return ret
 
@@ -212,7 +188,6 @@ def ftoz(
 __all__ = [
     "FTOZ_METADATA",
     "FtozOutputs",
-    "FtozParameters",
     "ftoz",
     "ftoz_execute",
     "ftoz_params",

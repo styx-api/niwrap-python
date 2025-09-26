@@ -14,7 +14,14 @@ BIANCA_CLUSTER_STATS_METADATA = Metadata(
 
 
 BiancaClusterStatsParameters = typing.TypedDict('BiancaClusterStatsParameters', {
-    "@type": typing.Literal["fsl.bianca_cluster_stats"],
+    "@type": typing.NotRequired[typing.Literal["fsl/bianca_cluster_stats"]],
+    "bianca_output_map": InputPathType,
+    "threshold": float,
+    "min_cluster_size": float,
+    "mask": typing.NotRequired[InputPathType | None],
+})
+BiancaClusterStatsParametersTagged = typing.TypedDict('BiancaClusterStatsParametersTagged', {
+    "@type": typing.Literal["fsl/bianca_cluster_stats"],
     "bianca_output_map": InputPathType,
     "threshold": float,
     "min_cluster_size": float,
@@ -22,40 +29,9 @@ BiancaClusterStatsParameters = typing.TypedDict('BiancaClusterStatsParameters', 
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "fsl.bianca_cluster_stats": bianca_cluster_stats_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-    }.get(t)
-
-
 class BiancaClusterStatsOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `bianca_cluster_stats(...)`.
+    Output object returned when calling `BiancaClusterStatsParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -66,7 +42,7 @@ def bianca_cluster_stats_params(
     threshold: float,
     min_cluster_size: float,
     mask: InputPathType | None = None,
-) -> BiancaClusterStatsParameters:
+) -> BiancaClusterStatsParametersTagged:
     """
     Build parameters.
     
@@ -79,7 +55,7 @@ def bianca_cluster_stats_params(
         Parameter dictionary
     """
     params = {
-        "@type": "fsl.bianca_cluster_stats",
+        "@type": "fsl/bianca_cluster_stats",
         "bianca_output_map": bianca_output_map,
         "threshold": threshold,
         "min_cluster_size": min_cluster_size,
@@ -104,11 +80,11 @@ def bianca_cluster_stats_cargs(
     """
     cargs = []
     cargs.append("bianca_cluster_stats")
-    cargs.append(execution.input_file(params.get("bianca_output_map")))
-    cargs.append(str(params.get("threshold")))
-    cargs.append(str(params.get("min_cluster_size")))
-    if params.get("mask") is not None:
-        cargs.append(execution.input_file(params.get("mask")))
+    cargs.append(execution.input_file(params.get("bianca_output_map", None)))
+    cargs.append(str(params.get("threshold", None)))
+    cargs.append(str(params.get("min_cluster_size", None)))
+    if params.get("mask", None) is not None:
+        cargs.append(execution.input_file(params.get("mask", None)))
     return cargs
 
 
@@ -196,7 +172,6 @@ def bianca_cluster_stats(
 __all__ = [
     "BIANCA_CLUSTER_STATS_METADATA",
     "BiancaClusterStatsOutputs",
-    "BiancaClusterStatsParameters",
     "bianca_cluster_stats",
     "bianca_cluster_stats_execute",
     "bianca_cluster_stats_params",

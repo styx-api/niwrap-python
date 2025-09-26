@@ -14,45 +14,18 @@ MORPH_SUBJECT_LH_METADATA = Metadata(
 
 
 MorphSubjectLhParameters = typing.TypedDict('MorphSubjectLhParameters', {
-    "@type": typing.Literal["freesurfer.morph_subject-lh"],
+    "@type": typing.NotRequired[typing.Literal["freesurfer/morph_subject-lh"]],
+    "subject_id": str,
+})
+MorphSubjectLhParametersTagged = typing.TypedDict('MorphSubjectLhParametersTagged', {
+    "@type": typing.Literal["freesurfer/morph_subject-lh"],
     "subject_id": str,
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "freesurfer.morph_subject-lh": morph_subject_lh_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-    }.get(t)
-
-
 class MorphSubjectLhOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `morph_subject_lh(...)`.
+    Output object returned when calling `MorphSubjectLhParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -60,7 +33,7 @@ class MorphSubjectLhOutputs(typing.NamedTuple):
 
 def morph_subject_lh_params(
     subject_id: str,
-) -> MorphSubjectLhParameters:
+) -> MorphSubjectLhParametersTagged:
     """
     Build parameters.
     
@@ -70,7 +43,7 @@ def morph_subject_lh_params(
         Parameter dictionary
     """
     params = {
-        "@type": "freesurfer.morph_subject-lh",
+        "@type": "freesurfer/morph_subject-lh",
         "subject_id": subject_id,
     }
     return params
@@ -93,7 +66,7 @@ def morph_subject_lh_cargs(
     cargs.append("morph_subject-lh")
     cargs.extend([
         "-lh",
-        params.get("subject_id")
+        params.get("subject_id", None)
     ])
     return cargs
 
@@ -173,7 +146,6 @@ def morph_subject_lh(
 __all__ = [
     "MORPH_SUBJECT_LH_METADATA",
     "MorphSubjectLhOutputs",
-    "MorphSubjectLhParameters",
     "morph_subject_lh",
     "morph_subject_lh_execute",
     "morph_subject_lh_params",

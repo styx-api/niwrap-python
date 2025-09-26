@@ -14,7 +14,16 @@ WPNG_METADATA = Metadata(
 
 
 WpngParameters = typing.TypedDict('WpngParameters', {
-    "@type": typing.Literal["fsl.wpng"],
+    "@type": typing.NotRequired[typing.Literal["fsl/wpng"]],
+    "input_file": typing.NotRequired[InputPathType | None],
+    "gamma": typing.NotRequired[float | None],
+    "bgcolor": typing.NotRequired[str | None],
+    "text_flag": bool,
+    "time_flag": bool,
+    "interlace_flag": bool,
+})
+WpngParametersTagged = typing.TypedDict('WpngParametersTagged', {
+    "@type": typing.Literal["fsl/wpng"],
     "input_file": typing.NotRequired[InputPathType | None],
     "gamma": typing.NotRequired[float | None],
     "bgcolor": typing.NotRequired[str | None],
@@ -24,41 +33,9 @@ WpngParameters = typing.TypedDict('WpngParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "fsl.wpng": wpng_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "fsl.wpng": wpng_outputs,
-    }.get(t)
-
-
 class WpngOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `wpng(...)`.
+    Output object returned when calling `WpngParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -73,7 +50,7 @@ def wpng_params(
     text_flag: bool = False,
     time_flag: bool = False,
     interlace_flag: bool = False,
-) -> WpngParameters:
+) -> WpngParametersTagged:
     """
     Build parameters.
     
@@ -95,7 +72,7 @@ def wpng_params(
         Parameter dictionary
     """
     params = {
-        "@type": "fsl.wpng",
+        "@type": "fsl/wpng",
         "text_flag": text_flag,
         "time_flag": time_flag,
         "interlace_flag": interlace_flag,
@@ -124,23 +101,23 @@ def wpng_cargs(
     """
     cargs = []
     cargs.append("wpng")
-    if params.get("input_file") is not None:
-        cargs.append(execution.input_file(params.get("input_file")))
-    if params.get("gamma") is not None:
+    if params.get("input_file", None) is not None:
+        cargs.append(execution.input_file(params.get("input_file", None)))
+    if params.get("gamma", None) is not None:
         cargs.extend([
             "-gamma",
-            str(params.get("gamma"))
+            str(params.get("gamma", None))
         ])
-    if params.get("bgcolor") is not None:
+    if params.get("bgcolor", None) is not None:
         cargs.extend([
             "-bgcolor",
-            params.get("bgcolor")
+            params.get("bgcolor", None)
         ])
-    if params.get("text_flag"):
+    if params.get("text_flag", False):
         cargs.append("-text")
-    if params.get("time_flag"):
+    if params.get("time_flag", False):
         cargs.append("-time")
-    if params.get("interlace_flag"):
+    if params.get("interlace_flag", False):
         cargs.append("-interlace")
     return cargs
 
@@ -243,7 +220,6 @@ def wpng(
 __all__ = [
     "WPNG_METADATA",
     "WpngOutputs",
-    "WpngParameters",
     "wpng",
     "wpng_execute",
     "wpng_params",

@@ -14,21 +14,51 @@ MTNORMALISE_METADATA = Metadata(
 
 
 MtnormaliseConfigParameters = typing.TypedDict('MtnormaliseConfigParameters', {
-    "@type": typing.Literal["mrtrix.mtnormalise.config"],
+    "@type": typing.NotRequired[typing.Literal["config"]],
+    "key": str,
+    "value": str,
+})
+MtnormaliseConfigParametersTagged = typing.TypedDict('MtnormaliseConfigParametersTagged', {
+    "@type": typing.Literal["config"],
     "key": str,
     "value": str,
 })
 
 
 MtnormaliseInputOutputParameters = typing.TypedDict('MtnormaliseInputOutputParameters', {
-    "@type": typing.Literal["mrtrix.mtnormalise.input_output"],
+    "@type": typing.NotRequired[typing.Literal["input_output"]],
+    "input": InputPathType,
+    "output": str,
+})
+MtnormaliseInputOutputParametersTagged = typing.TypedDict('MtnormaliseInputOutputParametersTagged', {
+    "@type": typing.Literal["input_output"],
     "input": InputPathType,
     "output": str,
 })
 
 
 MtnormaliseParameters = typing.TypedDict('MtnormaliseParameters', {
-    "@type": typing.Literal["mrtrix.mtnormalise"],
+    "@type": typing.NotRequired[typing.Literal["mrtrix/mtnormalise"]],
+    "mask": InputPathType,
+    "order": typing.NotRequired[str | None],
+    "niter": typing.NotRequired[list[int] | None],
+    "reference": typing.NotRequired[float | None],
+    "balanced": bool,
+    "check_norm": typing.NotRequired[str | None],
+    "check_mask": typing.NotRequired[str | None],
+    "check_factors": typing.NotRequired[str | None],
+    "info": bool,
+    "quiet": bool,
+    "debug": bool,
+    "force": bool,
+    "nthreads": typing.NotRequired[int | None],
+    "config": typing.NotRequired[list[MtnormaliseConfigParameters] | None],
+    "help": bool,
+    "version": bool,
+    "input_output": list[MtnormaliseInputOutputParameters],
+})
+MtnormaliseParametersTagged = typing.TypedDict('MtnormaliseParametersTagged', {
+    "@type": typing.Literal["mrtrix/mtnormalise"],
     "mask": InputPathType,
     "order": typing.NotRequired[str | None],
     "niter": typing.NotRequired[list[int] | None],
@@ -49,45 +79,10 @@ MtnormaliseParameters = typing.TypedDict('MtnormaliseParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "mrtrix.mtnormalise": mtnormalise_cargs,
-        "mrtrix.mtnormalise.config": mtnormalise_config_cargs,
-        "mrtrix.mtnormalise.input_output": mtnormalise_input_output_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "mrtrix.mtnormalise": mtnormalise_outputs,
-        "mrtrix.mtnormalise.input_output": mtnormalise_input_output_outputs,
-    }.get(t)
-
-
 def mtnormalise_config_params(
     key: str,
     value: str,
-) -> MtnormaliseConfigParameters:
+) -> MtnormaliseConfigParametersTagged:
     """
     Build parameters.
     
@@ -98,7 +93,7 @@ def mtnormalise_config_params(
         Parameter dictionary
     """
     params = {
-        "@type": "mrtrix.mtnormalise.config",
+        "@type": "config",
         "key": key,
         "value": value,
     }
@@ -120,8 +115,8 @@ def mtnormalise_config_cargs(
     """
     cargs = []
     cargs.append("-config")
-    cargs.append(params.get("key"))
-    cargs.append(params.get("value"))
+    cargs.append(params.get("key", None))
+    cargs.append(params.get("value", None))
     return cargs
 
 
@@ -138,7 +133,7 @@ class MtnormaliseInputOutputOutputs(typing.NamedTuple):
 def mtnormalise_input_output_params(
     input_: InputPathType,
     output: str,
-) -> MtnormaliseInputOutputParameters:
+) -> MtnormaliseInputOutputParametersTagged:
     """
     Build parameters.
     
@@ -149,7 +144,7 @@ def mtnormalise_input_output_params(
         Parameter dictionary
     """
     params = {
-        "@type": "mrtrix.mtnormalise.input_output",
+        "@type": "input_output",
         "input": input_,
         "output": output,
     }
@@ -170,8 +165,8 @@ def mtnormalise_input_output_cargs(
         Command-line arguments.
     """
     cargs = []
-    cargs.append(execution.input_file(params.get("input")))
-    cargs.append(params.get("output"))
+    cargs.append(execution.input_file(params.get("input", None)))
+    cargs.append(params.get("output", None))
     return cargs
 
 
@@ -190,14 +185,14 @@ def mtnormalise_input_output_outputs(
     """
     ret = MtnormaliseInputOutputOutputs(
         root=execution.output_file("."),
-        output=execution.output_file(params.get("output")),
+        output=execution.output_file(params.get("output", None)),
     )
     return ret
 
 
 class MtnormaliseOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `mtnormalise(...)`.
+    Output object returned when calling `MtnormaliseParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -232,7 +227,7 @@ def mtnormalise_params(
     config: list[MtnormaliseConfigParameters] | None = None,
     help_: bool = False,
     version: bool = False,
-) -> MtnormaliseParameters:
+) -> MtnormaliseParametersTagged:
     """
     Build parameters.
     
@@ -279,7 +274,7 @@ def mtnormalise_params(
         Parameter dictionary
     """
     params = {
-        "@type": "mrtrix.mtnormalise",
+        "@type": "mrtrix/mtnormalise",
         "mask": mask,
         "balanced": balanced,
         "info": info,
@@ -326,60 +321,60 @@ def mtnormalise_cargs(
     cargs.append("mtnormalise")
     cargs.extend([
         "-mask",
-        execution.input_file(params.get("mask"))
+        execution.input_file(params.get("mask", None))
     ])
-    if params.get("order") is not None:
+    if params.get("order", None) is not None:
         cargs.extend([
             "-order",
-            params.get("order")
+            params.get("order", None)
         ])
-    if params.get("niter") is not None:
+    if params.get("niter", None) is not None:
         cargs.extend([
             "-niter",
-            ",".join(map(str, params.get("niter")))
+            ",".join(map(str, params.get("niter", None)))
         ])
-    if params.get("reference") is not None:
+    if params.get("reference", None) is not None:
         cargs.extend([
             "-reference",
-            str(params.get("reference"))
+            str(params.get("reference", None))
         ])
-    if params.get("balanced"):
+    if params.get("balanced", False):
         cargs.append("-balanced")
-    if params.get("check_norm") is not None:
+    if params.get("check_norm", None) is not None:
         cargs.extend([
             "-check_norm",
-            params.get("check_norm")
+            params.get("check_norm", None)
         ])
-    if params.get("check_mask") is not None:
+    if params.get("check_mask", None) is not None:
         cargs.extend([
             "-check_mask",
-            params.get("check_mask")
+            params.get("check_mask", None)
         ])
-    if params.get("check_factors") is not None:
+    if params.get("check_factors", None) is not None:
         cargs.extend([
             "-check_factors",
-            params.get("check_factors")
+            params.get("check_factors", None)
         ])
-    if params.get("info"):
+    if params.get("info", False):
         cargs.append("-info")
-    if params.get("quiet"):
+    if params.get("quiet", False):
         cargs.append("-quiet")
-    if params.get("debug"):
+    if params.get("debug", False):
         cargs.append("-debug")
-    if params.get("force"):
+    if params.get("force", False):
         cargs.append("-force")
-    if params.get("nthreads") is not None:
+    if params.get("nthreads", None) is not None:
         cargs.extend([
             "-nthreads",
-            str(params.get("nthreads"))
+            str(params.get("nthreads", None))
         ])
-    if params.get("config") is not None:
-        cargs.extend([a for c in [dyn_cargs(s["@type"])(s, execution) for s in params.get("config")] for a in c])
-    if params.get("help"):
+    if params.get("config", None) is not None:
+        cargs.extend([a for c in [mtnormalise_config_cargs(s, execution) for s in params.get("config", None)] for a in c])
+    if params.get("help", False):
         cargs.append("-help")
-    if params.get("version"):
+    if params.get("version", False):
         cargs.append("-version")
-    cargs.extend([a for c in [dyn_cargs(s["@type"])(s, execution) for s in params.get("input_output")] for a in c])
+    cargs.extend([a for c in [mtnormalise_input_output_cargs(s, execution) for s in params.get("input_output", None)] for a in c])
     return cargs
 
 
@@ -398,10 +393,10 @@ def mtnormalise_outputs(
     """
     ret = MtnormaliseOutputs(
         root=execution.output_file("."),
-        check_norm=execution.output_file(params.get("check_norm")) if (params.get("check_norm") is not None) else None,
-        check_mask=execution.output_file(params.get("check_mask")) if (params.get("check_mask") is not None) else None,
-        check_factors=execution.output_file(params.get("check_factors")) if (params.get("check_factors") is not None) else None,
-        input_output=[dyn_outputs(i["@type"])(i, execution) if dyn_outputs(i["@type"]) else None for i in params.get("input_output")],
+        check_norm=execution.output_file(params.get("check_norm", None)) if (params.get("check_norm") is not None) else None,
+        check_mask=execution.output_file(params.get("check_mask", None)) if (params.get("check_mask") is not None) else None,
+        check_factors=execution.output_file(params.get("check_factors", None)) if (params.get("check_factors") is not None) else None,
+        input_output=[mtnormalise_input_output_outputs(i, execution) if mtnormalise_input_output_outputs else None for i in params.get("input_output")],
     )
     return ret
 
@@ -588,11 +583,8 @@ def mtnormalise(
 
 __all__ = [
     "MTNORMALISE_METADATA",
-    "MtnormaliseConfigParameters",
     "MtnormaliseInputOutputOutputs",
-    "MtnormaliseInputOutputParameters",
     "MtnormaliseOutputs",
-    "MtnormaliseParameters",
     "mtnormalise",
     "mtnormalise_config_params",
     "mtnormalise_execute",

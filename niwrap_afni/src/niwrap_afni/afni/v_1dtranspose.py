@@ -14,47 +14,20 @@ V_1DTRANSPOSE_METADATA = Metadata(
 
 
 V1dtransposeParameters = typing.TypedDict('V1dtransposeParameters', {
-    "@type": typing.Literal["afni.1dtranspose"],
+    "@type": typing.NotRequired[typing.Literal["afni/1dtranspose"]],
+    "infile": InputPathType,
+    "outfile": typing.NotRequired[str | None],
+})
+V1dtransposeParametersTagged = typing.TypedDict('V1dtransposeParametersTagged', {
+    "@type": typing.Literal["afni/1dtranspose"],
     "infile": InputPathType,
     "outfile": typing.NotRequired[str | None],
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "afni.1dtranspose": v_1dtranspose_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "afni.1dtranspose": v_1dtranspose_outputs,
-    }.get(t)
-
-
 class V1dtransposeOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `v_1dtranspose(...)`.
+    Output object returned when calling `V1dtransposeParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -65,7 +38,7 @@ class V1dtransposeOutputs(typing.NamedTuple):
 def v_1dtranspose_params(
     infile: InputPathType,
     outfile: str | None = None,
-) -> V1dtransposeParameters:
+) -> V1dtransposeParametersTagged:
     """
     Build parameters.
     
@@ -77,7 +50,7 @@ def v_1dtranspose_params(
         Parameter dictionary
     """
     params = {
-        "@type": "afni.1dtranspose",
+        "@type": "afni/1dtranspose",
         "infile": infile,
     }
     if outfile is not None:
@@ -100,9 +73,9 @@ def v_1dtranspose_cargs(
     """
     cargs = []
     cargs.append("1dtranspose")
-    cargs.append(execution.input_file(params.get("infile")))
-    if params.get("outfile") is not None:
-        cargs.append(params.get("outfile"))
+    cargs.append(execution.input_file(params.get("infile", None)))
+    if params.get("outfile", None) is not None:
+        cargs.append(params.get("outfile", None))
     return cargs
 
 
@@ -121,7 +94,7 @@ def v_1dtranspose_outputs(
     """
     ret = V1dtransposeOutputs(
         root=execution.output_file("."),
-        outfile=execution.output_file(params.get("outfile")) if (params.get("outfile") is not None) else None,
+        outfile=execution.output_file(params.get("outfile", None)) if (params.get("outfile") is not None) else None,
     )
     return ret
 
@@ -185,7 +158,6 @@ def v_1dtranspose(
 
 __all__ = [
     "V1dtransposeOutputs",
-    "V1dtransposeParameters",
     "V_1DTRANSPOSE_METADATA",
     "v_1dtranspose",
     "v_1dtranspose_execute",

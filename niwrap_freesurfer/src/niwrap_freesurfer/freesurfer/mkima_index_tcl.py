@@ -14,47 +14,20 @@ MKIMA_INDEX_TCL_METADATA = Metadata(
 
 
 MkimaIndexTclParameters = typing.TypedDict('MkimaIndexTclParameters', {
-    "@type": typing.Literal["freesurfer.mkima_index.tcl"],
+    "@type": typing.NotRequired[typing.Literal["freesurfer/mkima_index.tcl"]],
+    "input_file": InputPathType,
+    "output_flag": bool,
+})
+MkimaIndexTclParametersTagged = typing.TypedDict('MkimaIndexTclParametersTagged', {
+    "@type": typing.Literal["freesurfer/mkima_index.tcl"],
     "input_file": InputPathType,
     "output_flag": bool,
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "freesurfer.mkima_index.tcl": mkima_index_tcl_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "freesurfer.mkima_index.tcl": mkima_index_tcl_outputs,
-    }.get(t)
-
-
 class MkimaIndexTclOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `mkima_index_tcl(...)`.
+    Output object returned when calling `MkimaIndexTclParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -65,7 +38,7 @@ class MkimaIndexTclOutputs(typing.NamedTuple):
 def mkima_index_tcl_params(
     input_file: InputPathType,
     output_flag: bool = False,
-) -> MkimaIndexTclParameters:
+) -> MkimaIndexTclParametersTagged:
     """
     Build parameters.
     
@@ -76,7 +49,7 @@ def mkima_index_tcl_params(
         Parameter dictionary
     """
     params = {
-        "@type": "freesurfer.mkima_index.tcl",
+        "@type": "freesurfer/mkima_index.tcl",
         "input_file": input_file,
         "output_flag": output_flag,
     }
@@ -98,8 +71,8 @@ def mkima_index_tcl_cargs(
     """
     cargs = []
     cargs.append("mkima_index.tcl")
-    cargs.append(execution.input_file(params.get("input_file")))
-    if params.get("output_flag"):
+    cargs.append(execution.input_file(params.get("input_file", None)))
+    if params.get("output_flag", False):
         cargs.append("-o")
     return cargs
 
@@ -119,7 +92,7 @@ def mkima_index_tcl_outputs(
     """
     ret = MkimaIndexTclOutputs(
         root=execution.output_file("."),
-        output_file=execution.output_file(pathlib.Path(params.get("input_file")).name + "_index_output"),
+        output_file=execution.output_file(pathlib.Path(params.get("input_file", None)).name + "_index_output"),
     )
     return ret
 
@@ -183,7 +156,6 @@ def mkima_index_tcl(
 __all__ = [
     "MKIMA_INDEX_TCL_METADATA",
     "MkimaIndexTclOutputs",
-    "MkimaIndexTclParameters",
     "mkima_index_tcl",
     "mkima_index_tcl_execute",
     "mkima_index_tcl_params",

@@ -14,7 +14,18 @@ METRIC_FALSE_CORRELATION_METADATA = Metadata(
 
 
 MetricFalseCorrelationParameters = typing.TypedDict('MetricFalseCorrelationParameters', {
-    "@type": typing.Literal["workbench.metric-false-correlation"],
+    "@type": typing.NotRequired[typing.Literal["workbench/metric-false-correlation"]],
+    "surface": InputPathType,
+    "metric_in": InputPathType,
+    "3d_dist": float,
+    "geo_outer": float,
+    "geo_inner": float,
+    "metric_out": str,
+    "opt_roi_roi_metric": typing.NotRequired[InputPathType | None],
+    "opt_dump_text_text_out": typing.NotRequired[str | None],
+})
+MetricFalseCorrelationParametersTagged = typing.TypedDict('MetricFalseCorrelationParametersTagged', {
+    "@type": typing.Literal["workbench/metric-false-correlation"],
     "surface": InputPathType,
     "metric_in": InputPathType,
     "3d_dist": float,
@@ -26,41 +37,9 @@ MetricFalseCorrelationParameters = typing.TypedDict('MetricFalseCorrelationParam
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "workbench.metric-false-correlation": metric_false_correlation_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "workbench.metric-false-correlation": metric_false_correlation_outputs,
-    }.get(t)
-
-
 class MetricFalseCorrelationOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `metric_false_correlation(...)`.
+    Output object returned when calling `MetricFalseCorrelationParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -77,7 +56,7 @@ def metric_false_correlation_params(
     metric_out: str,
     opt_roi_roi_metric: InputPathType | None = None,
     opt_dump_text_text_out: str | None = None,
-) -> MetricFalseCorrelationParameters:
+) -> MetricFalseCorrelationParametersTagged:
     """
     Build parameters.
     
@@ -96,7 +75,7 @@ def metric_false_correlation_params(
         Parameter dictionary
     """
     params = {
-        "@type": "workbench.metric-false-correlation",
+        "@type": "workbench/metric-false-correlation",
         "surface": surface,
         "metric_in": metric_in,
         "3d_dist": v_3d_dist,
@@ -127,21 +106,21 @@ def metric_false_correlation_cargs(
     cargs = []
     cargs.append("wb_command")
     cargs.append("-metric-false-correlation")
-    cargs.append(execution.input_file(params.get("surface")))
-    cargs.append(execution.input_file(params.get("metric_in")))
-    cargs.append(str(params.get("3d_dist")))
-    cargs.append(str(params.get("geo_outer")))
-    cargs.append(str(params.get("geo_inner")))
-    cargs.append(params.get("metric_out"))
-    if params.get("opt_roi_roi_metric") is not None:
+    cargs.append(execution.input_file(params.get("surface", None)))
+    cargs.append(execution.input_file(params.get("metric_in", None)))
+    cargs.append(str(params.get("3d_dist", None)))
+    cargs.append(str(params.get("geo_outer", None)))
+    cargs.append(str(params.get("geo_inner", None)))
+    cargs.append(params.get("metric_out", None))
+    if params.get("opt_roi_roi_metric", None) is not None:
         cargs.extend([
             "-roi",
-            execution.input_file(params.get("opt_roi_roi_metric"))
+            execution.input_file(params.get("opt_roi_roi_metric", None))
         ])
-    if params.get("opt_dump_text_text_out") is not None:
+    if params.get("opt_dump_text_text_out", None) is not None:
         cargs.extend([
             "-dump-text",
-            params.get("opt_dump_text_text_out")
+            params.get("opt_dump_text_text_out", None)
         ])
     return cargs
 
@@ -161,7 +140,7 @@ def metric_false_correlation_outputs(
     """
     ret = MetricFalseCorrelationOutputs(
         root=execution.output_file("."),
-        metric_out=execution.output_file(params.get("metric_out")),
+        metric_out=execution.output_file(params.get("metric_out", None)),
     )
     return ret
 
@@ -259,7 +238,6 @@ def metric_false_correlation(
 __all__ = [
     "METRIC_FALSE_CORRELATION_METADATA",
     "MetricFalseCorrelationOutputs",
-    "MetricFalseCorrelationParameters",
     "metric_false_correlation",
     "metric_false_correlation_execute",
     "metric_false_correlation_params",

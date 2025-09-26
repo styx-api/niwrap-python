@@ -14,7 +14,20 @@ FSLROI_METADATA = Metadata(
 
 
 FslroiParameters = typing.TypedDict('FslroiParameters', {
-    "@type": typing.Literal["fsl.fslroi"],
+    "@type": typing.NotRequired[typing.Literal["fsl/fslroi"]],
+    "infile": InputPathType,
+    "outfile": str,
+    "xmin": typing.NotRequired[float | None],
+    "xsize": typing.NotRequired[float | None],
+    "ymin": typing.NotRequired[float | None],
+    "ysize": typing.NotRequired[float | None],
+    "zmin": typing.NotRequired[float | None],
+    "zsize": typing.NotRequired[float | None],
+    "tmin": typing.NotRequired[float | None],
+    "tsize": typing.NotRequired[float | None],
+})
+FslroiParametersTagged = typing.TypedDict('FslroiParametersTagged', {
+    "@type": typing.Literal["fsl/fslroi"],
     "infile": InputPathType,
     "outfile": str,
     "xmin": typing.NotRequired[float | None],
@@ -28,41 +41,9 @@ FslroiParameters = typing.TypedDict('FslroiParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "fsl.fslroi": fslroi_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "fsl.fslroi": fslroi_outputs,
-    }.get(t)
-
-
 class FslroiOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `fslroi(...)`.
+    Output object returned when calling `FslroiParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -81,7 +62,7 @@ def fslroi_params(
     zsize: float | None = None,
     tmin: float | None = None,
     tsize: float | None = None,
-) -> FslroiParameters:
+) -> FslroiParametersTagged:
     """
     Build parameters.
     
@@ -100,7 +81,7 @@ def fslroi_params(
         Parameter dictionary
     """
     params = {
-        "@type": "fsl.fslroi",
+        "@type": "fsl/fslroi",
         "infile": infile,
         "outfile": outfile,
     }
@@ -138,24 +119,24 @@ def fslroi_cargs(
     """
     cargs = []
     cargs.append("fslroi")
-    cargs.append(execution.input_file(params.get("infile")))
-    cargs.append(params.get("outfile"))
-    if params.get("xmin") is not None:
-        cargs.append(str(params.get("xmin")))
-    if params.get("xsize") is not None:
-        cargs.append(str(params.get("xsize")))
-    if params.get("ymin") is not None:
-        cargs.append(str(params.get("ymin")))
-    if params.get("ysize") is not None:
-        cargs.append(str(params.get("ysize")))
-    if params.get("zmin") is not None:
-        cargs.append(str(params.get("zmin")))
-    if params.get("zsize") is not None:
-        cargs.append(str(params.get("zsize")))
-    if params.get("tmin") is not None:
-        cargs.append(str(params.get("tmin")))
-    if params.get("tsize") is not None:
-        cargs.append(str(params.get("tsize")))
+    cargs.append(execution.input_file(params.get("infile", None)))
+    cargs.append(params.get("outfile", None))
+    if params.get("xmin", None) is not None:
+        cargs.append(str(params.get("xmin", None)))
+    if params.get("xsize", None) is not None:
+        cargs.append(str(params.get("xsize", None)))
+    if params.get("ymin", None) is not None:
+        cargs.append(str(params.get("ymin", None)))
+    if params.get("ysize", None) is not None:
+        cargs.append(str(params.get("ysize", None)))
+    if params.get("zmin", None) is not None:
+        cargs.append(str(params.get("zmin", None)))
+    if params.get("zsize", None) is not None:
+        cargs.append(str(params.get("zsize", None)))
+    if params.get("tmin", None) is not None:
+        cargs.append(str(params.get("tmin", None)))
+    if params.get("tsize", None) is not None:
+        cargs.append(str(params.get("tsize", None)))
     return cargs
 
 
@@ -174,7 +155,7 @@ def fslroi_outputs(
     """
     ret = FslroiOutputs(
         root=execution.output_file("."),
-        outfile=execution.output_file(params.get("outfile")),
+        outfile=execution.output_file(params.get("outfile", None)),
     )
     return ret
 
@@ -262,7 +243,6 @@ def fslroi(
 __all__ = [
     "FSLROI_METADATA",
     "FslroiOutputs",
-    "FslroiParameters",
     "fslroi",
     "fslroi_execute",
     "fslroi_params",

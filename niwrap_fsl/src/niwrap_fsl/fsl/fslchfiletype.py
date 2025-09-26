@@ -14,48 +14,22 @@ FSLCHFILETYPE_METADATA = Metadata(
 
 
 FslchfiletypeParameters = typing.TypedDict('FslchfiletypeParameters', {
-    "@type": typing.Literal["fsl.fslchfiletype"],
+    "@type": typing.NotRequired[typing.Literal["fsl/fslchfiletype"]],
+    "filetype": str,
+    "filename": InputPathType,
+    "filename2": typing.NotRequired[str | None],
+})
+FslchfiletypeParametersTagged = typing.TypedDict('FslchfiletypeParametersTagged', {
+    "@type": typing.Literal["fsl/fslchfiletype"],
     "filetype": str,
     "filename": InputPathType,
     "filename2": typing.NotRequired[str | None],
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "fsl.fslchfiletype": fslchfiletype_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "fsl.fslchfiletype": fslchfiletype_outputs,
-    }.get(t)
-
-
 class FslchfiletypeOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `fslchfiletype(...)`.
+    Output object returned when calling `FslchfiletypeParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -67,7 +41,7 @@ def fslchfiletype_params(
     filetype: str,
     filename: InputPathType,
     filename2: str | None = None,
-) -> FslchfiletypeParameters:
+) -> FslchfiletypeParametersTagged:
     """
     Build parameters.
     
@@ -81,7 +55,7 @@ def fslchfiletype_params(
         Parameter dictionary
     """
     params = {
-        "@type": "fsl.fslchfiletype",
+        "@type": "fsl/fslchfiletype",
         "filetype": filetype,
         "filename": filename,
     }
@@ -105,10 +79,10 @@ def fslchfiletype_cargs(
     """
     cargs = []
     cargs.append("fslchfiletype")
-    cargs.append(params.get("filetype"))
-    cargs.append(execution.input_file(params.get("filename")))
-    if params.get("filename2") is not None:
-        cargs.append(params.get("filename2"))
+    cargs.append(params.get("filetype", None))
+    cargs.append(execution.input_file(params.get("filename", None)))
+    if params.get("filename2", None) is not None:
+        cargs.append(params.get("filename2", None))
     return cargs
 
 
@@ -127,7 +101,7 @@ def fslchfiletype_outputs(
     """
     ret = FslchfiletypeOutputs(
         root=execution.output_file("."),
-        outfile=execution.output_file(params.get("filename2")) if (params.get("filename2") is not None) else None,
+        outfile=execution.output_file(params.get("filename2", None)) if (params.get("filename2") is not None) else None,
     )
     return ret
 
@@ -196,7 +170,6 @@ def fslchfiletype(
 __all__ = [
     "FSLCHFILETYPE_METADATA",
     "FslchfiletypeOutputs",
-    "FslchfiletypeParameters",
     "fslchfiletype",
     "fslchfiletype_execute",
     "fslchfiletype_params",

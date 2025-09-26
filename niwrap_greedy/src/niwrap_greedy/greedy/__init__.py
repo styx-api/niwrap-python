@@ -37,5 +37,5 @@ def execute(
         runner: Command runner.
     """
     return {
-        "greedy.greedy": greedy_execute,
+        "greedy/greedy": greedy_execute,
     }[params["@type"]](params, runner)

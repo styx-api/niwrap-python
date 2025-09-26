@@ -14,7 +14,23 @@ MRIS_PMAKE_METADATA = Metadata(
 
 
 MrisPmakeParameters = typing.TypedDict('MrisPmakeParameters', {
-    "@type": typing.Literal["freesurfer.mris_pmake"],
+    "@type": typing.NotRequired[typing.Literal["freesurfer/mris_pmake"]],
+    "options_file": typing.NotRequired[str | None],
+    "working_dir": typing.NotRequired[str | None],
+    "listen_mode": bool,
+    "listen_on_port": typing.NotRequired[float | None],
+    "subject": str,
+    "hemisphere": str,
+    "surface0": typing.NotRequired[str | None],
+    "surface1": typing.NotRequired[str | None],
+    "curve0": typing.NotRequired[str | None],
+    "curve1": typing.NotRequired[str | None],
+    "use_abs_curvs": bool,
+    "mpm_prog": typing.NotRequired[str | None],
+    "mpm_args": typing.NotRequired[str | None],
+})
+MrisPmakeParametersTagged = typing.TypedDict('MrisPmakeParametersTagged', {
+    "@type": typing.Literal["freesurfer/mris_pmake"],
     "options_file": typing.NotRequired[str | None],
     "working_dir": typing.NotRequired[str | None],
     "listen_mode": bool,
@@ -31,40 +47,9 @@ MrisPmakeParameters = typing.TypedDict('MrisPmakeParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "freesurfer.mris_pmake": mris_pmake_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-    }.get(t)
-
-
 class MrisPmakeOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `mris_pmake(...)`.
+    Output object returned when calling `MrisPmakeParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -84,7 +69,7 @@ def mris_pmake_params(
     use_abs_curvs: bool = False,
     mpm_prog: str | None = None,
     mpm_args: str | None = None,
-) -> MrisPmakeParameters:
+) -> MrisPmakeParametersTagged:
     """
     Build parameters.
     
@@ -108,7 +93,7 @@ def mris_pmake_params(
         Parameter dictionary
     """
     params = {
-        "@type": "freesurfer.mris_pmake",
+        "@type": "freesurfer/mris_pmake",
         "listen_mode": listen_mode,
         "subject": subject,
         "hemisphere": hemisphere,
@@ -150,62 +135,62 @@ def mris_pmake_cargs(
     """
     cargs = []
     cargs.append("mris_pmake")
-    if params.get("options_file") is not None:
+    if params.get("options_file", None) is not None:
         cargs.extend([
             "--optionsFile",
-            params.get("options_file")
+            params.get("options_file", None)
         ])
-    if params.get("working_dir") is not None:
+    if params.get("working_dir", None) is not None:
         cargs.extend([
             "--dir",
-            params.get("working_dir")
+            params.get("working_dir", None)
         ])
-    if params.get("listen_mode"):
+    if params.get("listen_mode", False):
         cargs.append("--listen")
-    if params.get("listen_on_port") is not None:
+    if params.get("listen_on_port", None) is not None:
         cargs.extend([
             "--listenOnPort",
-            str(params.get("listen_on_port"))
+            str(params.get("listen_on_port", None))
         ])
     cargs.extend([
         "--subject",
-        params.get("subject")
+        params.get("subject", None)
     ])
     cargs.extend([
         "--hemi",
-        params.get("hemisphere")
+        params.get("hemisphere", None)
     ])
-    if params.get("surface0") is not None:
+    if params.get("surface0", None) is not None:
         cargs.extend([
             "--surface0",
-            params.get("surface0")
+            params.get("surface0", None)
         ])
-    if params.get("surface1") is not None:
+    if params.get("surface1", None) is not None:
         cargs.extend([
             "--surface1",
-            params.get("surface1")
+            params.get("surface1", None)
         ])
-    if params.get("curve0") is not None:
+    if params.get("curve0", None) is not None:
         cargs.extend([
             "--curve0",
-            params.get("curve0")
+            params.get("curve0", None)
         ])
-    if params.get("curve1") is not None:
+    if params.get("curve1", None) is not None:
         cargs.extend([
             "--curve1",
-            params.get("curve1")
+            params.get("curve1", None)
         ])
-    if params.get("use_abs_curvs"):
+    if params.get("use_abs_curvs", False):
         cargs.append("--useAbsCurvs")
-    if params.get("mpm_prog") is not None:
+    if params.get("mpm_prog", None) is not None:
         cargs.extend([
             "--mpmProg",
-            params.get("mpm_prog")
+            params.get("mpm_prog", None)
         ])
-    if params.get("mpm_args") is not None:
+    if params.get("mpm_args", None) is not None:
         cargs.extend([
             "--mpmArgs",
-            params.get("mpm_args")
+            params.get("mpm_args", None)
         ])
     return cargs
 
@@ -325,7 +310,6 @@ def mris_pmake(
 __all__ = [
     "MRIS_PMAKE_METADATA",
     "MrisPmakeOutputs",
-    "MrisPmakeParameters",
     "mris_pmake",
     "mris_pmake_execute",
     "mris_pmake_params",

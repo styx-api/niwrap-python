@@ -14,7 +14,17 @@ DMRI_MERGEPATHS_METADATA = Metadata(
 
 
 DmriMergepathsParameters = typing.TypedDict('DmriMergepathsParameters', {
-    "@type": typing.Literal["freesurfer.dmri_mergepaths"],
+    "@type": typing.NotRequired[typing.Literal["freesurfer/dmri_mergepaths"]],
+    "input_volumes": list[InputPathType],
+    "input_directory": typing.NotRequired[str | None],
+    "output_volume": str,
+    "color_table": InputPathType,
+    "threshold": float,
+    "debug": bool,
+    "check_opts": bool,
+})
+DmriMergepathsParametersTagged = typing.TypedDict('DmriMergepathsParametersTagged', {
+    "@type": typing.Literal["freesurfer/dmri_mergepaths"],
     "input_volumes": list[InputPathType],
     "input_directory": typing.NotRequired[str | None],
     "output_volume": str,
@@ -25,40 +35,9 @@ DmriMergepathsParameters = typing.TypedDict('DmriMergepathsParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "freesurfer.dmri_mergepaths": dmri_mergepaths_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-    }.get(t)
-
-
 class DmriMergepathsOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `dmri_mergepaths(...)`.
+    Output object returned when calling `DmriMergepathsParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -72,7 +51,7 @@ def dmri_mergepaths_params(
     input_directory: str | None = None,
     debug: bool = False,
     check_opts: bool = False,
-) -> DmriMergepathsParameters:
+) -> DmriMergepathsParametersTagged:
     """
     Build parameters.
     
@@ -89,7 +68,7 @@ def dmri_mergepaths_params(
         Parameter dictionary
     """
     params = {
-        "@type": "freesurfer.dmri_mergepaths",
+        "@type": "freesurfer/dmri_mergepaths",
         "input_volumes": input_volumes,
         "output_volume": output_volume,
         "color_table": color_table,
@@ -117,27 +96,27 @@ def dmri_mergepaths_cargs(
     """
     cargs = []
     cargs.append("dmri_mergepaths")
-    cargs.extend([execution.input_file(f) for f in params.get("input_volumes")])
-    if params.get("input_directory") is not None:
+    cargs.extend([execution.input_file(f) for f in params.get("input_volumes", None)])
+    if params.get("input_directory", None) is not None:
         cargs.extend([
             "--indir",
-            params.get("input_directory")
+            params.get("input_directory", None)
         ])
     cargs.extend([
         "--out",
-        params.get("output_volume")
+        params.get("output_volume", None)
     ])
     cargs.extend([
         "--ctab",
-        execution.input_file(params.get("color_table"))
+        execution.input_file(params.get("color_table", None))
     ])
     cargs.extend([
         "--thresh",
-        str(params.get("threshold"))
+        str(params.get("threshold", None))
     ])
-    if params.get("debug"):
+    if params.get("debug", False):
         cargs.append("--debug")
-    if params.get("check_opts"):
+    if params.get("check_opts", False):
         cargs.append("--checkopts")
     return cargs
 
@@ -236,7 +215,6 @@ def dmri_mergepaths(
 __all__ = [
     "DMRI_MERGEPATHS_METADATA",
     "DmriMergepathsOutputs",
-    "DmriMergepathsParameters",
     "dmri_mergepaths",
     "dmri_mergepaths_execute",
     "dmri_mergepaths_params",

@@ -14,45 +14,18 @@ FS_INSTALL_MCR_METADATA = Metadata(
 
 
 FsInstallMcrParameters = typing.TypedDict('FsInstallMcrParameters', {
-    "@type": typing.Literal["freesurfer.fs_install_mcr"],
+    "@type": typing.NotRequired[typing.Literal["freesurfer/fs_install_mcr"]],
+    "mcr_version": str,
+})
+FsInstallMcrParametersTagged = typing.TypedDict('FsInstallMcrParametersTagged', {
+    "@type": typing.Literal["freesurfer/fs_install_mcr"],
     "mcr_version": str,
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "freesurfer.fs_install_mcr": fs_install_mcr_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-    }.get(t)
-
-
 class FsInstallMcrOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `fs_install_mcr(...)`.
+    Output object returned when calling `FsInstallMcrParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -60,7 +33,7 @@ class FsInstallMcrOutputs(typing.NamedTuple):
 
 def fs_install_mcr_params(
     mcr_version: str,
-) -> FsInstallMcrParameters:
+) -> FsInstallMcrParametersTagged:
     """
     Build parameters.
     
@@ -71,7 +44,7 @@ def fs_install_mcr_params(
         Parameter dictionary
     """
     params = {
-        "@type": "freesurfer.fs_install_mcr",
+        "@type": "freesurfer/fs_install_mcr",
         "mcr_version": mcr_version,
     }
     return params
@@ -92,7 +65,7 @@ def fs_install_mcr_cargs(
     """
     cargs = []
     cargs.append("fs_install_mcr")
-    cargs.append(params.get("mcr_version"))
+    cargs.append(params.get("mcr_version", None))
     return cargs
 
 
@@ -172,7 +145,6 @@ def fs_install_mcr(
 __all__ = [
     "FS_INSTALL_MCR_METADATA",
     "FsInstallMcrOutputs",
-    "FsInstallMcrParameters",
     "fs_install_mcr",
     "fs_install_mcr_execute",
     "fs_install_mcr_params",

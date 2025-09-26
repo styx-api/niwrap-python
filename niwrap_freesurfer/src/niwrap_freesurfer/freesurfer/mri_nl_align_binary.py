@@ -14,48 +14,22 @@ MRI_NL_ALIGN_BINARY_METADATA = Metadata(
 
 
 MriNlAlignBinaryParameters = typing.TypedDict('MriNlAlignBinaryParameters', {
-    "@type": typing.Literal["freesurfer.mri_nl_align_binary"],
+    "@type": typing.NotRequired[typing.Literal["freesurfer/mri_nl_align_binary"]],
+    "source_file": InputPathType,
+    "target_file": InputPathType,
+    "warp_file": str,
+})
+MriNlAlignBinaryParametersTagged = typing.TypedDict('MriNlAlignBinaryParametersTagged', {
+    "@type": typing.Literal["freesurfer/mri_nl_align_binary"],
     "source_file": InputPathType,
     "target_file": InputPathType,
     "warp_file": str,
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "freesurfer.mri_nl_align_binary": mri_nl_align_binary_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "freesurfer.mri_nl_align_binary": mri_nl_align_binary_outputs,
-    }.get(t)
-
-
 class MriNlAlignBinaryOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `mri_nl_align_binary(...)`.
+    Output object returned when calling `MriNlAlignBinaryParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -67,7 +41,7 @@ def mri_nl_align_binary_params(
     source_file: InputPathType,
     target_file: InputPathType,
     warp_file: str,
-) -> MriNlAlignBinaryParameters:
+) -> MriNlAlignBinaryParametersTagged:
     """
     Build parameters.
     
@@ -79,7 +53,7 @@ def mri_nl_align_binary_params(
         Parameter dictionary
     """
     params = {
-        "@type": "freesurfer.mri_nl_align_binary",
+        "@type": "freesurfer/mri_nl_align_binary",
         "source_file": source_file,
         "target_file": target_file,
         "warp_file": warp_file,
@@ -102,9 +76,9 @@ def mri_nl_align_binary_cargs(
     """
     cargs = []
     cargs.append("mri_nl_align_binary")
-    cargs.append(execution.input_file(params.get("source_file")))
-    cargs.append(execution.input_file(params.get("target_file")))
-    cargs.append(params.get("warp_file"))
+    cargs.append(execution.input_file(params.get("source_file", None)))
+    cargs.append(execution.input_file(params.get("target_file", None)))
+    cargs.append(params.get("warp_file", None))
     return cargs
 
 
@@ -123,7 +97,7 @@ def mri_nl_align_binary_outputs(
     """
     ret = MriNlAlignBinaryOutputs(
         root=execution.output_file("."),
-        output_warp=execution.output_file(params.get("warp_file")),
+        output_warp=execution.output_file(params.get("warp_file", None)),
     )
     return ret
 
@@ -190,7 +164,6 @@ def mri_nl_align_binary(
 __all__ = [
     "MRI_NL_ALIGN_BINARY_METADATA",
     "MriNlAlignBinaryOutputs",
-    "MriNlAlignBinaryParameters",
     "mri_nl_align_binary",
     "mri_nl_align_binary_execute",
     "mri_nl_align_binary_params",

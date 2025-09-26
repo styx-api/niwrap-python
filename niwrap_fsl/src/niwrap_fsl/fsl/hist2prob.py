@@ -14,7 +14,14 @@ HIST2PROB_METADATA = Metadata(
 
 
 Hist2probParameters = typing.TypedDict('Hist2probParameters', {
-    "@type": typing.Literal["fsl.hist2prob"],
+    "@type": typing.NotRequired[typing.Literal["fsl/hist2prob"]],
+    "image": InputPathType,
+    "size": int,
+    "low_threshold": float,
+    "high_threshold": float,
+})
+Hist2probParametersTagged = typing.TypedDict('Hist2probParametersTagged', {
+    "@type": typing.Literal["fsl/hist2prob"],
     "image": InputPathType,
     "size": int,
     "low_threshold": float,
@@ -22,41 +29,9 @@ Hist2probParameters = typing.TypedDict('Hist2probParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "fsl.hist2prob": hist2prob_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "fsl.hist2prob": hist2prob_outputs,
-    }.get(t)
-
-
 class Hist2probOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `hist2prob(...)`.
+    Output object returned when calling `Hist2probParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -69,7 +44,7 @@ def hist2prob_params(
     size: int,
     low_threshold: float,
     high_threshold: float,
-) -> Hist2probParameters:
+) -> Hist2probParametersTagged:
     """
     Build parameters.
     
@@ -82,7 +57,7 @@ def hist2prob_params(
         Parameter dictionary
     """
     params = {
-        "@type": "fsl.hist2prob",
+        "@type": "fsl/hist2prob",
         "image": image,
         "size": size,
         "low_threshold": low_threshold,
@@ -106,10 +81,10 @@ def hist2prob_cargs(
     """
     cargs = []
     cargs.append("hist2prob")
-    cargs.append(execution.input_file(params.get("image")))
-    cargs.append(str(params.get("size")))
-    cargs.append(str(params.get("low_threshold")))
-    cargs.append(str(params.get("high_threshold")))
+    cargs.append(execution.input_file(params.get("image", None)))
+    cargs.append(str(params.get("size", None)))
+    cargs.append(str(params.get("low_threshold", None)))
+    cargs.append(str(params.get("high_threshold", None)))
     return cargs
 
 
@@ -128,7 +103,7 @@ def hist2prob_outputs(
     """
     ret = Hist2probOutputs(
         root=execution.output_file("."),
-        output_probability_map=execution.output_file(pathlib.Path(params.get("image")).name + "_probability_map.nii.gz"),
+        output_probability_map=execution.output_file(pathlib.Path(params.get("image", None)).name + "_probability_map.nii.gz"),
     )
     return ret
 
@@ -200,7 +175,6 @@ def hist2prob(
 __all__ = [
     "HIST2PROB_METADATA",
     "Hist2probOutputs",
-    "Hist2probParameters",
     "hist2prob",
     "hist2prob_execute",
     "hist2prob_params",

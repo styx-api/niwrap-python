@@ -14,7 +14,20 @@ STD2IMGCOORD_METADATA = Metadata(
 
 
 Std2imgcoordParameters = typing.TypedDict('Std2imgcoordParameters', {
-    "@type": typing.Literal["fsl.std2imgcoord"],
+    "@type": typing.NotRequired[typing.Literal["fsl/std2imgcoord"]],
+    "filename_coordinates": InputPathType,
+    "standard_image": typing.NotRequired[InputPathType | None],
+    "input_image": InputPathType,
+    "affine_transform": typing.NotRequired[InputPathType | None],
+    "warp_field": typing.NotRequired[InputPathType | None],
+    "prewarp_affine_transform": typing.NotRequired[InputPathType | None],
+    "output_mm": bool,
+    "output_vox": bool,
+    "verbose": bool,
+    "more_verbose": bool,
+})
+Std2imgcoordParametersTagged = typing.TypedDict('Std2imgcoordParametersTagged', {
+    "@type": typing.Literal["fsl/std2imgcoord"],
     "filename_coordinates": InputPathType,
     "standard_image": typing.NotRequired[InputPathType | None],
     "input_image": InputPathType,
@@ -28,40 +41,9 @@ Std2imgcoordParameters = typing.TypedDict('Std2imgcoordParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "fsl.std2imgcoord": std2imgcoord_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-    }.get(t)
-
-
 class Std2imgcoordOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `std2imgcoord(...)`.
+    Output object returned when calling `Std2imgcoordParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -78,7 +60,7 @@ def std2imgcoord_params(
     output_vox: bool = False,
     verbose: bool = False,
     more_verbose: bool = False,
-) -> Std2imgcoordParameters:
+) -> Std2imgcoordParametersTagged:
     """
     Build parameters.
     
@@ -100,7 +82,7 @@ def std2imgcoord_params(
         Parameter dictionary
     """
     params = {
-        "@type": "fsl.std2imgcoord",
+        "@type": "fsl/std2imgcoord",
         "filename_coordinates": filename_coordinates,
         "input_image": input_image,
         "output_mm": output_mm,
@@ -134,38 +116,38 @@ def std2imgcoord_cargs(
     """
     cargs = []
     cargs.append("std2imgcoord")
-    cargs.append(execution.input_file(params.get("filename_coordinates")))
-    if params.get("standard_image") is not None:
+    cargs.append(execution.input_file(params.get("filename_coordinates", None)))
+    if params.get("standard_image", None) is not None:
         cargs.extend([
             "-std",
-            execution.input_file(params.get("standard_image"))
+            execution.input_file(params.get("standard_image", None))
         ])
     cargs.extend([
         "-img",
-        execution.input_file(params.get("input_image"))
+        execution.input_file(params.get("input_image", None))
     ])
-    if params.get("affine_transform") is not None:
+    if params.get("affine_transform", None) is not None:
         cargs.extend([
             "-xfm",
-            execution.input_file(params.get("affine_transform"))
+            execution.input_file(params.get("affine_transform", None))
         ])
-    if params.get("warp_field") is not None:
+    if params.get("warp_field", None) is not None:
         cargs.extend([
             "-warp",
-            execution.input_file(params.get("warp_field"))
+            execution.input_file(params.get("warp_field", None))
         ])
-    if params.get("prewarp_affine_transform") is not None:
+    if params.get("prewarp_affine_transform", None) is not None:
         cargs.extend([
             "-premat",
-            execution.input_file(params.get("prewarp_affine_transform"))
+            execution.input_file(params.get("prewarp_affine_transform", None))
         ])
-    if params.get("output_mm"):
+    if params.get("output_mm", False):
         cargs.append("-mm")
-    if params.get("output_vox"):
+    if params.get("output_vox", False):
         cargs.append("-vox")
-    if params.get("verbose"):
+    if params.get("verbose", False):
         cargs.append("-v")
-    if params.get("more_verbose"):
+    if params.get("more_verbose", False):
         cargs.append("-verbose")
     return cargs
 
@@ -275,7 +257,6 @@ def std2imgcoord(
 __all__ = [
     "STD2IMGCOORD_METADATA",
     "Std2imgcoordOutputs",
-    "Std2imgcoordParameters",
     "std2imgcoord",
     "std2imgcoord_execute",
     "std2imgcoord_params",

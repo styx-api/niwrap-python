@@ -14,7 +14,24 @@ MRI_MODIFY_METADATA = Metadata(
 
 
 MriModifyParameters = typing.TypedDict('MriModifyParameters', {
-    "@type": typing.Literal["freesurfer.mri_modify"],
+    "@type": typing.NotRequired[typing.Literal["freesurfer/mri_modify"]],
+    "x_ras": list[float],
+    "y_ras": list[float],
+    "z_ras": list[float],
+    "cras": list[float],
+    "x_size": float,
+    "y_size": float,
+    "z_size": float,
+    "tr": float,
+    "te": float,
+    "ti": float,
+    "fa": float,
+    "xform": str,
+    "input_volume": InputPathType,
+    "output_volume": str,
+})
+MriModifyParametersTagged = typing.TypedDict('MriModifyParametersTagged', {
+    "@type": typing.Literal["freesurfer/mri_modify"],
     "x_ras": list[float],
     "y_ras": list[float],
     "z_ras": list[float],
@@ -32,40 +49,9 @@ MriModifyParameters = typing.TypedDict('MriModifyParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "freesurfer.mri_modify": mri_modify_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-    }.get(t)
-
-
 class MriModifyOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `mri_modify(...)`.
+    Output object returned when calling `MriModifyParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -86,7 +72,7 @@ def mri_modify_params(
     xform: str,
     input_volume: InputPathType,
     output_volume: str,
-) -> MriModifyParameters:
+) -> MriModifyParametersTagged:
     """
     Build parameters.
     
@@ -109,7 +95,7 @@ def mri_modify_params(
         Parameter dictionary
     """
     params = {
-        "@type": "freesurfer.mri_modify",
+        "@type": "freesurfer/mri_modify",
         "x_ras": x_ras,
         "y_ras": y_ras,
         "z_ras": z_ras,
@@ -145,54 +131,54 @@ def mri_modify_cargs(
     cargs.append("mri_modify")
     cargs.extend([
         "-xras",
-        *map(str, params.get("x_ras"))
+        *map(str, params.get("x_ras", None))
     ])
     cargs.extend([
         "-yras",
-        *map(str, params.get("y_ras"))
+        *map(str, params.get("y_ras", None))
     ])
     cargs.extend([
         "-zras",
-        *map(str, params.get("z_ras"))
+        *map(str, params.get("z_ras", None))
     ])
     cargs.extend([
         "-cras",
-        *map(str, params.get("cras"))
+        *map(str, params.get("cras", None))
     ])
     cargs.extend([
         "-xsize",
-        str(params.get("x_size"))
+        str(params.get("x_size", None))
     ])
     cargs.extend([
         "-ysize",
-        str(params.get("y_size"))
+        str(params.get("y_size", None))
     ])
     cargs.extend([
         "-zsize",
-        str(params.get("z_size"))
+        str(params.get("z_size", None))
     ])
     cargs.extend([
         "-tr",
-        str(params.get("tr"))
+        str(params.get("tr", None))
     ])
     cargs.extend([
         "-te",
-        str(params.get("te"))
+        str(params.get("te", None))
     ])
     cargs.extend([
         "-ti",
-        str(params.get("ti"))
+        str(params.get("ti", None))
     ])
     cargs.extend([
         "-fa",
-        str(params.get("fa"))
+        str(params.get("fa", None))
     ])
     cargs.extend([
         "-xform",
-        params.get("xform")
+        params.get("xform", None)
     ])
-    cargs.append(execution.input_file(params.get("input_volume")))
-    cargs.append(params.get("output_volume"))
+    cargs.append(execution.input_file(params.get("input_volume", None)))
+    cargs.append(params.get("output_volume", None))
     return cargs
 
 
@@ -310,7 +296,6 @@ def mri_modify(
 __all__ = [
     "MRI_MODIFY_METADATA",
     "MriModifyOutputs",
-    "MriModifyParameters",
     "mri_modify",
     "mri_modify_execute",
     "mri_modify_params",

@@ -14,7 +14,21 @@ FAT_PROC_FILTER_DWIS_METADATA = Metadata(
 
 
 FatProcFilterDwisParameters = typing.TypedDict('FatProcFilterDwisParameters', {
-    "@type": typing.Literal["afni.fat_proc_filter_dwis"],
+    "@type": typing.NotRequired[typing.Literal["afni/fat_proc_filter_dwis"]],
+    "input_dwi": InputPathType,
+    "input_gradient": InputPathType,
+    "select_string": str,
+    "select_file": typing.NotRequired[InputPathType | None],
+    "output_prefix": str,
+    "input_bvals": typing.NotRequired[InputPathType | None],
+    "unit_mag_out": bool,
+    "qc_prefix": typing.NotRequired[str | None],
+    "no_qc_view": bool,
+    "no_cmd_out": bool,
+    "do_movie": typing.NotRequired[typing.Literal["AGIF", "MPEG"] | None],
+})
+FatProcFilterDwisParametersTagged = typing.TypedDict('FatProcFilterDwisParametersTagged', {
+    "@type": typing.Literal["afni/fat_proc_filter_dwis"],
     "input_dwi": InputPathType,
     "input_gradient": InputPathType,
     "select_string": str,
@@ -29,41 +43,9 @@ FatProcFilterDwisParameters = typing.TypedDict('FatProcFilterDwisParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "afni.fat_proc_filter_dwis": fat_proc_filter_dwis_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "afni.fat_proc_filter_dwis": fat_proc_filter_dwis_outputs,
-    }.get(t)
-
-
 class FatProcFilterDwisOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `fat_proc_filter_dwis(...)`.
+    Output object returned when calling `FatProcFilterDwisParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -87,7 +69,7 @@ def fat_proc_filter_dwis_params(
     no_qc_view: bool = False,
     no_cmd_out: bool = False,
     do_movie: typing.Literal["AGIF", "MPEG"] | None = None,
-) -> FatProcFilterDwisParameters:
+) -> FatProcFilterDwisParametersTagged:
     """
     Build parameters.
     
@@ -119,7 +101,7 @@ def fat_proc_filter_dwis_params(
         Parameter dictionary
     """
     params = {
-        "@type": "afni.fat_proc_filter_dwis",
+        "@type": "afni/fat_proc_filter_dwis",
         "input_dwi": input_dwi,
         "input_gradient": input_gradient,
         "select_string": select_string,
@@ -156,45 +138,45 @@ def fat_proc_filter_dwis_cargs(
     cargs.append("fat_proc_filter_dwis")
     cargs.extend([
         "-in_dwi",
-        execution.input_file(params.get("input_dwi"))
+        execution.input_file(params.get("input_dwi", None))
     ])
     cargs.extend([
         "-in_col_matA|-in_col_matT|-in_col_vec|-in_row_vec",
-        execution.input_file(params.get("input_gradient"))
+        execution.input_file(params.get("input_gradient", None))
     ])
     cargs.extend([
         "-select",
-        params.get("select_string")
+        params.get("select_string", None)
     ])
-    if params.get("select_file") is not None:
+    if params.get("select_file", None) is not None:
         cargs.extend([
             "-select_file",
-            execution.input_file(params.get("select_file"))
+            execution.input_file(params.get("select_file", None))
         ])
     cargs.extend([
         "-prefix",
-        params.get("output_prefix")
+        params.get("output_prefix", None)
     ])
-    if params.get("input_bvals") is not None:
+    if params.get("input_bvals", None) is not None:
         cargs.extend([
             "-in_bvals",
-            execution.input_file(params.get("input_bvals"))
+            execution.input_file(params.get("input_bvals", None))
         ])
-    if params.get("unit_mag_out"):
+    if params.get("unit_mag_out", False):
         cargs.append("-unit_mag_out")
-    if params.get("qc_prefix") is not None:
+    if params.get("qc_prefix", None) is not None:
         cargs.extend([
             "-qc_prefix",
-            params.get("qc_prefix")
+            params.get("qc_prefix", None)
         ])
-    if params.get("no_qc_view"):
+    if params.get("no_qc_view", False):
         cargs.append("-no_qc_view")
-    if params.get("no_cmd_out"):
+    if params.get("no_cmd_out", False):
         cargs.append("-no_cmd_out")
-    if params.get("do_movie") is not None:
+    if params.get("do_movie", None) is not None:
         cargs.extend([
             "-do_movie",
-            params.get("do_movie")
+            params.get("do_movie", None)
         ])
     return cargs
 
@@ -214,9 +196,9 @@ def fat_proc_filter_dwis_outputs(
     """
     ret = FatProcFilterDwisOutputs(
         root=execution.output_file("."),
-        filtered_dwi=execution.output_file(params.get("output_prefix") + "_filtered.nii.gz"),
-        filtered_bvecs=execution.output_file(params.get("output_prefix") + "_filtered.bvecs"),
-        filtered_bvals=execution.output_file(params.get("output_prefix") + "_filtered.bvals"),
+        filtered_dwi=execution.output_file(params.get("output_prefix", None) + "_filtered.nii.gz"),
+        filtered_bvecs=execution.output_file(params.get("output_prefix", None) + "_filtered.bvecs"),
+        filtered_bvals=execution.output_file(params.get("output_prefix", None) + "_filtered.bvals"),
     )
     return ret
 
@@ -319,7 +301,6 @@ def fat_proc_filter_dwis(
 __all__ = [
     "FAT_PROC_FILTER_DWIS_METADATA",
     "FatProcFilterDwisOutputs",
-    "FatProcFilterDwisParameters",
     "fat_proc_filter_dwis",
     "fat_proc_filter_dwis_execute",
     "fat_proc_filter_dwis_params",

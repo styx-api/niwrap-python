@@ -28,5 +28,5 @@ def execute(
         runner: Command runner.
     """
     return {
-        "mrtrix3tissue.ss3t_csd_beta1": ss3t_csd_beta1_execute,
+        "mrtrix3tissue/ss3t_csd_beta1": ss3t_csd_beta1_execute,
     }[params["@type"]](params, runner)

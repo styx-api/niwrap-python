@@ -14,7 +14,25 @@ PLUGOUT_DRIVE_METADATA = Metadata(
 
 
 PlugoutDriveParameters = typing.TypedDict('PlugoutDriveParameters', {
-    "@type": typing.Literal["afni.plugout_drive"],
+    "@type": typing.NotRequired[typing.Literal["afni/plugout_drive"]],
+    "host": typing.NotRequired[str | None],
+    "shm": bool,
+    "verbose": bool,
+    "port": typing.NotRequired[float | None],
+    "maxwait": typing.NotRequired[float | None],
+    "name": typing.NotRequired[str | None],
+    "command": typing.NotRequired[list[str] | None],
+    "quit": bool,
+    "np": typing.NotRequired[float | None],
+    "npq": typing.NotRequired[float | None],
+    "npb": typing.NotRequired[float | None],
+    "max_port_bloc": bool,
+    "max_port_bloc_quiet": bool,
+    "num_assigned_ports": bool,
+    "num_assigned_ports_quiet": bool,
+})
+PlugoutDriveParametersTagged = typing.TypedDict('PlugoutDriveParametersTagged', {
+    "@type": typing.Literal["afni/plugout_drive"],
     "host": typing.NotRequired[str | None],
     "shm": bool,
     "verbose": bool,
@@ -33,40 +51,9 @@ PlugoutDriveParameters = typing.TypedDict('PlugoutDriveParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "afni.plugout_drive": plugout_drive_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-    }.get(t)
-
-
 class PlugoutDriveOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `plugout_drive(...)`.
+    Output object returned when calling `PlugoutDriveParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -88,7 +75,7 @@ def plugout_drive_params(
     max_port_bloc_quiet: bool = False,
     num_assigned_ports: bool = False,
     num_assigned_ports_quiet: bool = False,
-) -> PlugoutDriveParameters:
+) -> PlugoutDriveParametersTagged:
     """
     Build parameters.
     
@@ -121,7 +108,7 @@ def plugout_drive_params(
         Parameter dictionary
     """
     params = {
-        "@type": "afni.plugout_drive",
+        "@type": "afni/plugout_drive",
         "shm": shm,
         "verbose": verbose,
         "quit": quit_,
@@ -164,59 +151,59 @@ def plugout_drive_cargs(
     """
     cargs = []
     cargs.append("plugout_drive")
-    if params.get("host") is not None:
+    if params.get("host", None) is not None:
         cargs.extend([
             "-host",
-            params.get("host")
+            params.get("host", None)
         ])
-    if params.get("shm"):
+    if params.get("shm", False):
         cargs.append("-shm")
-    if params.get("verbose"):
+    if params.get("verbose", False):
         cargs.append("-v")
-    if params.get("port") is not None:
+    if params.get("port", None) is not None:
         cargs.extend([
             "-port",
-            str(params.get("port"))
+            str(params.get("port", None))
         ])
-    if params.get("maxwait") is not None:
+    if params.get("maxwait", None) is not None:
         cargs.extend([
             "-maxwait",
-            str(params.get("maxwait"))
+            str(params.get("maxwait", None))
         ])
-    if params.get("name") is not None:
+    if params.get("name", None) is not None:
         cargs.extend([
             "-name",
-            params.get("name")
+            params.get("name", None)
         ])
-    if params.get("command") is not None:
+    if params.get("command", None) is not None:
         cargs.extend([
             "-com",
-            *params.get("command")
+            *params.get("command", None)
         ])
-    if params.get("quit"):
+    if params.get("quit", False):
         cargs.append("-quit")
-    if params.get("np") is not None:
+    if params.get("np", None) is not None:
         cargs.extend([
             "-np",
-            str(params.get("np"))
+            str(params.get("np", None))
         ])
-    if params.get("npq") is not None:
+    if params.get("npq", None) is not None:
         cargs.extend([
             "-npq",
-            str(params.get("npq"))
+            str(params.get("npq", None))
         ])
-    if params.get("npb") is not None:
+    if params.get("npb", None) is not None:
         cargs.extend([
             "-npb",
-            str(params.get("npb"))
+            str(params.get("npb", None))
         ])
-    if params.get("max_port_bloc"):
+    if params.get("max_port_bloc", False):
         cargs.append("-max_port_bloc")
-    if params.get("max_port_bloc_quiet"):
+    if params.get("max_port_bloc_quiet", False):
         cargs.append("-max_port_bloc_quiet")
-    if params.get("num_assigned_ports"):
+    if params.get("num_assigned_ports", False):
         cargs.append("-num_assigned_ports")
-    if params.get("num_assigned_ports_quiet"):
+    if params.get("num_assigned_ports_quiet", False):
         cargs.append("-num_assigned_ports_quiet")
     return cargs
 
@@ -349,7 +336,6 @@ def plugout_drive(
 __all__ = [
     "PLUGOUT_DRIVE_METADATA",
     "PlugoutDriveOutputs",
-    "PlugoutDriveParameters",
     "plugout_drive",
     "plugout_drive_execute",
     "plugout_drive_params",

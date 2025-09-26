@@ -14,7 +14,16 @@ MRIS_JACOBIAN_METADATA = Metadata(
 
 
 MrisJacobianParameters = typing.TypedDict('MrisJacobianParameters', {
-    "@type": typing.Literal["freesurfer.mris_jacobian"],
+    "@type": typing.NotRequired[typing.Literal["freesurfer/mris_jacobian"]],
+    "original_surface": InputPathType,
+    "mapped_surface": InputPathType,
+    "jacobian_file": str,
+    "log": bool,
+    "noscale": bool,
+    "invert": bool,
+})
+MrisJacobianParametersTagged = typing.TypedDict('MrisJacobianParametersTagged', {
+    "@type": typing.Literal["freesurfer/mris_jacobian"],
     "original_surface": InputPathType,
     "mapped_surface": InputPathType,
     "jacobian_file": str,
@@ -24,41 +33,9 @@ MrisJacobianParameters = typing.TypedDict('MrisJacobianParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "freesurfer.mris_jacobian": mris_jacobian_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "freesurfer.mris_jacobian": mris_jacobian_outputs,
-    }.get(t)
-
-
 class MrisJacobianOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `mris_jacobian(...)`.
+    Output object returned when calling `MrisJacobianParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -73,7 +50,7 @@ def mris_jacobian_params(
     log: bool = False,
     noscale: bool = False,
     invert: bool = False,
-) -> MrisJacobianParameters:
+) -> MrisJacobianParametersTagged:
     """
     Build parameters.
     
@@ -88,7 +65,7 @@ def mris_jacobian_params(
         Parameter dictionary
     """
     params = {
-        "@type": "freesurfer.mris_jacobian",
+        "@type": "freesurfer/mris_jacobian",
         "original_surface": original_surface,
         "mapped_surface": mapped_surface,
         "jacobian_file": jacobian_file,
@@ -114,14 +91,14 @@ def mris_jacobian_cargs(
     """
     cargs = []
     cargs.append("mris_jacobian")
-    cargs.append(execution.input_file(params.get("original_surface")))
-    cargs.append(execution.input_file(params.get("mapped_surface")))
-    cargs.append(params.get("jacobian_file"))
-    if params.get("log"):
+    cargs.append(execution.input_file(params.get("original_surface", None)))
+    cargs.append(execution.input_file(params.get("mapped_surface", None)))
+    cargs.append(params.get("jacobian_file", None))
+    if params.get("log", False):
         cargs.append("-log")
-    if params.get("noscale"):
+    if params.get("noscale", False):
         cargs.append("-noscale")
-    if params.get("invert"):
+    if params.get("invert", False):
         cargs.append("-invert")
     return cargs
 
@@ -141,7 +118,7 @@ def mris_jacobian_outputs(
     """
     ret = MrisJacobianOutputs(
         root=execution.output_file("."),
-        output_jacobian_file=execution.output_file(params.get("jacobian_file")),
+        output_jacobian_file=execution.output_file(params.get("jacobian_file", None)),
     )
     return ret
 
@@ -217,7 +194,6 @@ def mris_jacobian(
 __all__ = [
     "MRIS_JACOBIAN_METADATA",
     "MrisJacobianOutputs",
-    "MrisJacobianParameters",
     "mris_jacobian",
     "mris_jacobian_execute",
     "mris_jacobian_params",

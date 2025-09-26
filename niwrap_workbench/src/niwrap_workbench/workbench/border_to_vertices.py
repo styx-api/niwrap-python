@@ -14,7 +14,14 @@ BORDER_TO_VERTICES_METADATA = Metadata(
 
 
 BorderToVerticesParameters = typing.TypedDict('BorderToVerticesParameters', {
-    "@type": typing.Literal["workbench.border-to-vertices"],
+    "@type": typing.NotRequired[typing.Literal["workbench/border-to-vertices"]],
+    "surface": InputPathType,
+    "border_file": InputPathType,
+    "metric_out": str,
+    "opt_border_name": typing.NotRequired[str | None],
+})
+BorderToVerticesParametersTagged = typing.TypedDict('BorderToVerticesParametersTagged', {
+    "@type": typing.Literal["workbench/border-to-vertices"],
     "surface": InputPathType,
     "border_file": InputPathType,
     "metric_out": str,
@@ -22,41 +29,9 @@ BorderToVerticesParameters = typing.TypedDict('BorderToVerticesParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "workbench.border-to-vertices": border_to_vertices_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "workbench.border-to-vertices": border_to_vertices_outputs,
-    }.get(t)
-
-
 class BorderToVerticesOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `border_to_vertices(...)`.
+    Output object returned when calling `BorderToVerticesParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -69,7 +44,7 @@ def border_to_vertices_params(
     border_file: InputPathType,
     metric_out: str,
     opt_border_name: str | None = None,
-) -> BorderToVerticesParameters:
+) -> BorderToVerticesParametersTagged:
     """
     Build parameters.
     
@@ -82,7 +57,7 @@ def border_to_vertices_params(
         Parameter dictionary
     """
     params = {
-        "@type": "workbench.border-to-vertices",
+        "@type": "workbench/border-to-vertices",
         "surface": surface,
         "border_file": border_file,
         "metric_out": metric_out,
@@ -108,13 +83,13 @@ def border_to_vertices_cargs(
     cargs = []
     cargs.append("wb_command")
     cargs.append("-border-to-vertices")
-    cargs.append(execution.input_file(params.get("surface")))
-    cargs.append(execution.input_file(params.get("border_file")))
-    cargs.append(params.get("metric_out"))
-    if params.get("opt_border_name") is not None:
+    cargs.append(execution.input_file(params.get("surface", None)))
+    cargs.append(execution.input_file(params.get("border_file", None)))
+    cargs.append(params.get("metric_out", None))
+    if params.get("opt_border_name", None) is not None:
         cargs.extend([
             "-border",
-            params.get("opt_border_name")
+            params.get("opt_border_name", None)
         ])
     return cargs
 
@@ -134,7 +109,7 @@ def border_to_vertices_outputs(
     """
     ret = BorderToVerticesOutputs(
         root=execution.output_file("."),
-        metric_out=execution.output_file(params.get("metric_out")),
+        metric_out=execution.output_file(params.get("metric_out", None)),
     )
     return ret
 
@@ -210,7 +185,6 @@ def border_to_vertices(
 __all__ = [
     "BORDER_TO_VERTICES_METADATA",
     "BorderToVerticesOutputs",
-    "BorderToVerticesParameters",
     "border_to_vertices",
     "border_to_vertices_execute",
     "border_to_vertices_params",

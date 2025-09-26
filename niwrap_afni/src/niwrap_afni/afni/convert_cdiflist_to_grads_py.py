@@ -14,7 +14,17 @@ CONVERT_CDIFLIST_TO_GRADS_PY_METADATA = Metadata(
 
 
 ConvertCdiflistToGradsPyParameters = typing.TypedDict('ConvertCdiflistToGradsPyParameters', {
-    "@type": typing.Literal["afni.convert_cdiflist_to_grads.py"],
+    "@type": typing.NotRequired[typing.Literal["afni/convert_cdiflist_to_grads.py"]],
+    "cdiflist": InputPathType,
+    "bval_max": float,
+    "prefix": str,
+    "ver": bool,
+    "date": bool,
+    "help": bool,
+    "hview": bool,
+})
+ConvertCdiflistToGradsPyParametersTagged = typing.TypedDict('ConvertCdiflistToGradsPyParametersTagged', {
+    "@type": typing.Literal["afni/convert_cdiflist_to_grads.py"],
     "cdiflist": InputPathType,
     "bval_max": float,
     "prefix": str,
@@ -25,41 +35,9 @@ ConvertCdiflistToGradsPyParameters = typing.TypedDict('ConvertCdiflistToGradsPyP
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "afni.convert_cdiflist_to_grads.py": convert_cdiflist_to_grads_py_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "afni.convert_cdiflist_to_grads.py": convert_cdiflist_to_grads_py_outputs,
-    }.get(t)
-
-
 class ConvertCdiflistToGradsPyOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `convert_cdiflist_to_grads_py(...)`.
+    Output object returned when calling `ConvertCdiflistToGradsPyParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -79,7 +57,7 @@ def convert_cdiflist_to_grads_py_params(
     date: bool = False,
     help_: bool = False,
     hview: bool = False,
-) -> ConvertCdiflistToGradsPyParameters:
+) -> ConvertCdiflistToGradsPyParametersTagged:
     """
     Build parameters.
     
@@ -98,7 +76,7 @@ def convert_cdiflist_to_grads_py_params(
         Parameter dictionary
     """
     params = {
-        "@type": "afni.convert_cdiflist_to_grads.py",
+        "@type": "afni/convert_cdiflist_to_grads.py",
         "cdiflist": cdiflist,
         "bval_max": bval_max,
         "prefix": prefix,
@@ -127,23 +105,23 @@ def convert_cdiflist_to_grads_py_cargs(
     cargs.append("convert_cdiflist_to_grads.py")
     cargs.extend([
         "-cdiflist",
-        execution.input_file(params.get("cdiflist"))
+        execution.input_file(params.get("cdiflist", None))
     ])
     cargs.extend([
         "-bval_max",
-        str(params.get("bval_max"))
+        str(params.get("bval_max", None))
     ])
     cargs.extend([
         "-prefix",
-        params.get("prefix")
+        params.get("prefix", None)
     ])
-    if params.get("ver"):
+    if params.get("ver", False):
         cargs.append("-ver")
-    if params.get("date"):
+    if params.get("date", False):
         cargs.append("-date")
-    if params.get("help"):
+    if params.get("help", False):
         cargs.append("-help")
-    if params.get("hview"):
+    if params.get("hview", False):
         cargs.append("-h")
     return cargs
 
@@ -163,9 +141,9 @@ def convert_cdiflist_to_grads_py_outputs(
     """
     ret = ConvertCdiflistToGradsPyOutputs(
         root=execution.output_file("."),
-        output_rvec=execution.output_file(params.get("prefix") + "_rvec.dat"),
-        output_bval=execution.output_file(params.get("prefix") + "_bval.dat"),
-        output_cvec=execution.output_file(params.get("prefix") + "_cvec.dat"),
+        output_rvec=execution.output_file(params.get("prefix", None) + "_rvec.dat"),
+        output_bval=execution.output_file(params.get("prefix", None) + "_bval.dat"),
+        output_cvec=execution.output_file(params.get("prefix", None) + "_cvec.dat"),
     )
     return ret
 
@@ -249,7 +227,6 @@ def convert_cdiflist_to_grads_py(
 __all__ = [
     "CONVERT_CDIFLIST_TO_GRADS_PY_METADATA",
     "ConvertCdiflistToGradsPyOutputs",
-    "ConvertCdiflistToGradsPyParameters",
     "convert_cdiflist_to_grads_py",
     "convert_cdiflist_to_grads_py_execute",
     "convert_cdiflist_to_grads_py_params",

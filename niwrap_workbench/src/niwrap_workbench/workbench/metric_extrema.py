@@ -14,21 +14,46 @@ METRIC_EXTREMA_METADATA = Metadata(
 
 
 MetricExtremaPresmoothParameters = typing.TypedDict('MetricExtremaPresmoothParameters', {
-    "@type": typing.Literal["workbench.metric-extrema.presmooth"],
+    "@type": typing.NotRequired[typing.Literal["presmooth"]],
+    "kernel": float,
+    "opt_fwhm": bool,
+})
+MetricExtremaPresmoothParametersTagged = typing.TypedDict('MetricExtremaPresmoothParametersTagged', {
+    "@type": typing.Literal["presmooth"],
     "kernel": float,
     "opt_fwhm": bool,
 })
 
 
 MetricExtremaThresholdParameters = typing.TypedDict('MetricExtremaThresholdParameters', {
-    "@type": typing.Literal["workbench.metric-extrema.threshold"],
+    "@type": typing.NotRequired[typing.Literal["threshold"]],
+    "low": float,
+    "high": float,
+})
+MetricExtremaThresholdParametersTagged = typing.TypedDict('MetricExtremaThresholdParametersTagged', {
+    "@type": typing.Literal["threshold"],
     "low": float,
     "high": float,
 })
 
 
 MetricExtremaParameters = typing.TypedDict('MetricExtremaParameters', {
-    "@type": typing.Literal["workbench.metric-extrema"],
+    "@type": typing.NotRequired[typing.Literal["workbench/metric-extrema"]],
+    "surface": InputPathType,
+    "metric_in": InputPathType,
+    "distance": float,
+    "metric_out": str,
+    "presmooth": typing.NotRequired[MetricExtremaPresmoothParameters | None],
+    "opt_roi_roi_metric": typing.NotRequired[InputPathType | None],
+    "threshold": typing.NotRequired[MetricExtremaThresholdParameters | None],
+    "opt_sum_columns": bool,
+    "opt_consolidate_mode": bool,
+    "opt_only_maxima": bool,
+    "opt_only_minima": bool,
+    "opt_column_column": typing.NotRequired[str | None],
+})
+MetricExtremaParametersTagged = typing.TypedDict('MetricExtremaParametersTagged', {
+    "@type": typing.Literal["workbench/metric-extrema"],
     "surface": InputPathType,
     "metric_in": InputPathType,
     "distance": float,
@@ -44,44 +69,10 @@ MetricExtremaParameters = typing.TypedDict('MetricExtremaParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "workbench.metric-extrema": metric_extrema_cargs,
-        "workbench.metric-extrema.presmooth": metric_extrema_presmooth_cargs,
-        "workbench.metric-extrema.threshold": metric_extrema_threshold_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "workbench.metric-extrema": metric_extrema_outputs,
-    }.get(t)
-
-
 def metric_extrema_presmooth_params(
     kernel: float,
     opt_fwhm: bool = False,
-) -> MetricExtremaPresmoothParameters:
+) -> MetricExtremaPresmoothParametersTagged:
     """
     Build parameters.
     
@@ -93,7 +84,7 @@ def metric_extrema_presmooth_params(
         Parameter dictionary
     """
     params = {
-        "@type": "workbench.metric-extrema.presmooth",
+        "@type": "presmooth",
         "kernel": kernel,
         "opt_fwhm": opt_fwhm,
     }
@@ -115,8 +106,8 @@ def metric_extrema_presmooth_cargs(
     """
     cargs = []
     cargs.append("-presmooth")
-    cargs.append(str(params.get("kernel")))
-    if params.get("opt_fwhm"):
+    cargs.append(str(params.get("kernel", None)))
+    if params.get("opt_fwhm", False):
         cargs.append("-fwhm")
     return cargs
 
@@ -124,7 +115,7 @@ def metric_extrema_presmooth_cargs(
 def metric_extrema_threshold_params(
     low: float,
     high: float,
-) -> MetricExtremaThresholdParameters:
+) -> MetricExtremaThresholdParametersTagged:
     """
     Build parameters.
     
@@ -135,7 +126,7 @@ def metric_extrema_threshold_params(
         Parameter dictionary
     """
     params = {
-        "@type": "workbench.metric-extrema.threshold",
+        "@type": "threshold",
         "low": low,
         "high": high,
     }
@@ -157,14 +148,14 @@ def metric_extrema_threshold_cargs(
     """
     cargs = []
     cargs.append("-threshold")
-    cargs.append(str(params.get("low")))
-    cargs.append(str(params.get("high")))
+    cargs.append(str(params.get("low", None)))
+    cargs.append(str(params.get("high", None)))
     return cargs
 
 
 class MetricExtremaOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `metric_extrema(...)`.
+    Output object returned when calling `MetricExtremaParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -185,7 +176,7 @@ def metric_extrema_params(
     opt_only_maxima: bool = False,
     opt_only_minima: bool = False,
     opt_column_column: str | None = None,
-) -> MetricExtremaParameters:
+) -> MetricExtremaParametersTagged:
     """
     Build parameters.
     
@@ -211,7 +202,7 @@ def metric_extrema_params(
         Parameter dictionary
     """
     params = {
-        "@type": "workbench.metric-extrema",
+        "@type": "workbench/metric-extrema",
         "surface": surface,
         "metric_in": metric_in,
         "distance": distance,
@@ -248,31 +239,31 @@ def metric_extrema_cargs(
     cargs = []
     cargs.append("wb_command")
     cargs.append("-metric-extrema")
-    cargs.append(execution.input_file(params.get("surface")))
-    cargs.append(execution.input_file(params.get("metric_in")))
-    cargs.append(str(params.get("distance")))
-    cargs.append(params.get("metric_out"))
-    if params.get("presmooth") is not None:
-        cargs.extend(dyn_cargs(params.get("presmooth")["@type"])(params.get("presmooth"), execution))
-    if params.get("opt_roi_roi_metric") is not None:
+    cargs.append(execution.input_file(params.get("surface", None)))
+    cargs.append(execution.input_file(params.get("metric_in", None)))
+    cargs.append(str(params.get("distance", None)))
+    cargs.append(params.get("metric_out", None))
+    if params.get("presmooth", None) is not None:
+        cargs.extend(metric_extrema_presmooth_cargs(params.get("presmooth", None), execution))
+    if params.get("opt_roi_roi_metric", None) is not None:
         cargs.extend([
             "-roi",
-            execution.input_file(params.get("opt_roi_roi_metric"))
+            execution.input_file(params.get("opt_roi_roi_metric", None))
         ])
-    if params.get("threshold") is not None:
-        cargs.extend(dyn_cargs(params.get("threshold")["@type"])(params.get("threshold"), execution))
-    if params.get("opt_sum_columns"):
+    if params.get("threshold", None) is not None:
+        cargs.extend(metric_extrema_threshold_cargs(params.get("threshold", None), execution))
+    if params.get("opt_sum_columns", False):
         cargs.append("-sum-columns")
-    if params.get("opt_consolidate_mode"):
+    if params.get("opt_consolidate_mode", False):
         cargs.append("-consolidate-mode")
-    if params.get("opt_only_maxima"):
+    if params.get("opt_only_maxima", False):
         cargs.append("-only-maxima")
-    if params.get("opt_only_minima"):
+    if params.get("opt_only_minima", False):
         cargs.append("-only-minima")
-    if params.get("opt_column_column") is not None:
+    if params.get("opt_column_column", None) is not None:
         cargs.extend([
             "-column",
-            params.get("opt_column_column")
+            params.get("opt_column_column", None)
         ])
     return cargs
 
@@ -292,7 +283,7 @@ def metric_extrema_outputs(
     """
     ret = MetricExtremaOutputs(
         root=execution.output_file("."),
-        metric_out=execution.output_file(params.get("metric_out")),
+        metric_out=execution.output_file(params.get("metric_out", None)),
     )
     return ret
 
@@ -443,9 +434,6 @@ def metric_extrema(
 __all__ = [
     "METRIC_EXTREMA_METADATA",
     "MetricExtremaOutputs",
-    "MetricExtremaParameters",
-    "MetricExtremaPresmoothParameters",
-    "MetricExtremaThresholdParameters",
     "metric_extrema",
     "metric_extrema_execute",
     "metric_extrema_params",

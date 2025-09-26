@@ -14,7 +14,24 @@ V_3D_TOY_PROG_METADATA = Metadata(
 
 
 V3dToyProgParameters = typing.TypedDict('V3dToyProgParameters', {
-    "@type": typing.Literal["afni.3dToyProg"],
+    "@type": typing.NotRequired[typing.Literal["afni/3dToyProg"]],
+    "input_dataset": InputPathType,
+    "output_prefix": typing.NotRequired[str | None],
+    "mask_dataset": typing.NotRequired[InputPathType | None],
+    "output_datum": typing.NotRequired[typing.Literal["float", "short"] | None],
+    "mini_help": bool,
+    "help": bool,
+    "extreme_help": bool,
+    "help_view": bool,
+    "help_web": bool,
+    "help_find": typing.NotRequired[str | None],
+    "help_raw": bool,
+    "help_spx": bool,
+    "help_aspx": bool,
+    "help_all_opts": bool,
+})
+V3dToyProgParametersTagged = typing.TypedDict('V3dToyProgParametersTagged', {
+    "@type": typing.Literal["afni/3dToyProg"],
     "input_dataset": InputPathType,
     "output_prefix": typing.NotRequired[str | None],
     "mask_dataset": typing.NotRequired[InputPathType | None],
@@ -32,40 +49,9 @@ V3dToyProgParameters = typing.TypedDict('V3dToyProgParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "afni.3dToyProg": v_3d_toy_prog_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-    }.get(t)
-
-
 class V3dToyProgOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `v_3d_toy_prog(...)`.
+    Output object returned when calling `V3dToyProgParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -86,7 +72,7 @@ def v_3d_toy_prog_params(
     help_spx: bool = False,
     help_aspx: bool = False,
     help_all_opts: bool = False,
-) -> V3dToyProgParameters:
+) -> V3dToyProgParametersTagged:
     """
     Build parameters.
     
@@ -118,7 +104,7 @@ def v_3d_toy_prog_params(
         Parameter dictionary
     """
     params = {
-        "@type": "afni.3dToyProg",
+        "@type": "afni/3dToyProg",
         "input_dataset": input_dataset,
         "mini_help": mini_help,
         "help": help_,
@@ -158,45 +144,45 @@ def v_3d_toy_prog_cargs(
     cargs.append("3dToyProg")
     cargs.extend([
         "-input",
-        execution.input_file(params.get("input_dataset"))
+        execution.input_file(params.get("input_dataset", None))
     ])
-    if params.get("output_prefix") is not None:
+    if params.get("output_prefix", None) is not None:
         cargs.extend([
             "-prefix",
-            params.get("output_prefix")
+            params.get("output_prefix", None)
         ])
-    if params.get("mask_dataset") is not None:
+    if params.get("mask_dataset", None) is not None:
         cargs.extend([
             "-mask",
-            execution.input_file(params.get("mask_dataset"))
+            execution.input_file(params.get("mask_dataset", None))
         ])
-    if params.get("output_datum") is not None:
+    if params.get("output_datum", None) is not None:
         cargs.extend([
             "-datum",
-            params.get("output_datum")
+            params.get("output_datum", None)
         ])
-    if params.get("mini_help"):
+    if params.get("mini_help", False):
         cargs.append("-h")
-    if params.get("help"):
+    if params.get("help", False):
         cargs.append("-help")
-    if params.get("extreme_help"):
+    if params.get("extreme_help", False):
         cargs.append("-HELP")
-    if params.get("help_view"):
+    if params.get("help_view", False):
         cargs.append("-h_view")
-    if params.get("help_web"):
+    if params.get("help_web", False):
         cargs.append("-h_web")
-    if params.get("help_find") is not None:
+    if params.get("help_find", None) is not None:
         cargs.extend([
             "-h_find",
-            params.get("help_find")
+            params.get("help_find", None)
         ])
-    if params.get("help_raw"):
+    if params.get("help_raw", False):
         cargs.append("-h_raw")
-    if params.get("help_spx"):
+    if params.get("help_spx", False):
         cargs.append("-h_spx")
-    if params.get("help_aspx"):
+    if params.get("help_aspx", False):
         cargs.append("-h_aspx")
-    if params.get("help_all_opts"):
+    if params.get("help_all_opts", False):
         cargs.append("-all_opts")
     return cargs
 
@@ -325,7 +311,6 @@ def v_3d_toy_prog(
 
 __all__ = [
     "V3dToyProgOutputs",
-    "V3dToyProgParameters",
     "V_3D_TOY_PROG_METADATA",
     "v_3d_toy_prog",
     "v_3d_toy_prog_execute",

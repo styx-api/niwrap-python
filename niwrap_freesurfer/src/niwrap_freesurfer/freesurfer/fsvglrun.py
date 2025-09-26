@@ -14,7 +14,15 @@ FSVGLRUN_METADATA = Metadata(
 
 
 FsvglrunParameters = typing.TypedDict('FsvglrunParameters', {
-    "@type": typing.Literal["freesurfer.fsvglrun"],
+    "@type": typing.NotRequired[typing.Literal["freesurfer/fsvglrun"]],
+    "zeroth_arg_name": typing.NotRequired[str | None],
+    "empty_env": bool,
+    "dashed_arg": bool,
+    "command": str,
+    "command_args": typing.NotRequired[list[str] | None],
+})
+FsvglrunParametersTagged = typing.TypedDict('FsvglrunParametersTagged', {
+    "@type": typing.Literal["freesurfer/fsvglrun"],
     "zeroth_arg_name": typing.NotRequired[str | None],
     "empty_env": bool,
     "dashed_arg": bool,
@@ -23,40 +31,9 @@ FsvglrunParameters = typing.TypedDict('FsvglrunParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "freesurfer.fsvglrun": fsvglrun_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-    }.get(t)
-
-
 class FsvglrunOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `fsvglrun(...)`.
+    Output object returned when calling `FsvglrunParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -68,7 +45,7 @@ def fsvglrun_params(
     empty_env: bool = False,
     dashed_arg: bool = False,
     command_args: list[str] | None = None,
-) -> FsvglrunParameters:
+) -> FsvglrunParametersTagged:
     """
     Build parameters.
     
@@ -83,7 +60,7 @@ def fsvglrun_params(
         Parameter dictionary
     """
     params = {
-        "@type": "freesurfer.fsvglrun",
+        "@type": "freesurfer/fsvglrun",
         "empty_env": empty_env,
         "dashed_arg": dashed_arg,
         "command": command,
@@ -110,18 +87,18 @@ def fsvglrun_cargs(
     """
     cargs = []
     cargs.append("fsvglrun")
-    if params.get("zeroth_arg_name") is not None:
+    if params.get("zeroth_arg_name", None) is not None:
         cargs.extend([
             "-a",
-            params.get("zeroth_arg_name")
+            params.get("zeroth_arg_name", None)
         ])
-    if params.get("empty_env"):
+    if params.get("empty_env", False):
         cargs.append("-c")
-    if params.get("dashed_arg"):
+    if params.get("dashed_arg", False):
         cargs.append("-l")
-    cargs.append(params.get("command"))
-    if params.get("command_args") is not None:
-        cargs.extend(params.get("command_args"))
+    cargs.append(params.get("command", None))
+    if params.get("command_args", None) is not None:
+        cargs.extend(params.get("command_args", None))
     return cargs
 
 
@@ -215,7 +192,6 @@ def fsvglrun(
 __all__ = [
     "FSVGLRUN_METADATA",
     "FsvglrunOutputs",
-    "FsvglrunParameters",
     "fsvglrun",
     "fsvglrun_execute",
     "fsvglrun_params",

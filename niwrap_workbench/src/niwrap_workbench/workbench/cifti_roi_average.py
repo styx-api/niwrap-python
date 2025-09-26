@@ -14,7 +14,17 @@ CIFTI_ROI_AVERAGE_METADATA = Metadata(
 
 
 CiftiRoiAverageParameters = typing.TypedDict('CiftiRoiAverageParameters', {
-    "@type": typing.Literal["workbench.cifti-roi-average"],
+    "@type": typing.NotRequired[typing.Literal["workbench/cifti-roi-average"]],
+    "cifti_in": InputPathType,
+    "text_out": str,
+    "opt_cifti_roi_roi_cifti": typing.NotRequired[InputPathType | None],
+    "opt_left_roi_roi_metric": typing.NotRequired[InputPathType | None],
+    "opt_right_roi_roi_metric": typing.NotRequired[InputPathType | None],
+    "opt_cerebellum_roi_roi_metric": typing.NotRequired[InputPathType | None],
+    "opt_vol_roi_roi_vol": typing.NotRequired[InputPathType | None],
+})
+CiftiRoiAverageParametersTagged = typing.TypedDict('CiftiRoiAverageParametersTagged', {
+    "@type": typing.Literal["workbench/cifti-roi-average"],
     "cifti_in": InputPathType,
     "text_out": str,
     "opt_cifti_roi_roi_cifti": typing.NotRequired[InputPathType | None],
@@ -25,40 +35,9 @@ CiftiRoiAverageParameters = typing.TypedDict('CiftiRoiAverageParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "workbench.cifti-roi-average": cifti_roi_average_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-    }.get(t)
-
-
 class CiftiRoiAverageOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `cifti_roi_average(...)`.
+    Output object returned when calling `CiftiRoiAverageParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -72,7 +51,7 @@ def cifti_roi_average_params(
     opt_right_roi_roi_metric: InputPathType | None = None,
     opt_cerebellum_roi_roi_metric: InputPathType | None = None,
     opt_vol_roi_roi_vol: InputPathType | None = None,
-) -> CiftiRoiAverageParameters:
+) -> CiftiRoiAverageParametersTagged:
     """
     Build parameters.
     
@@ -92,7 +71,7 @@ def cifti_roi_average_params(
         Parameter dictionary
     """
     params = {
-        "@type": "workbench.cifti-roi-average",
+        "@type": "workbench/cifti-roi-average",
         "cifti_in": cifti_in,
         "text_out": text_out,
     }
@@ -125,32 +104,32 @@ def cifti_roi_average_cargs(
     cargs = []
     cargs.append("wb_command")
     cargs.append("-cifti-roi-average")
-    cargs.append(execution.input_file(params.get("cifti_in")))
-    cargs.append(params.get("text_out"))
-    if params.get("opt_cifti_roi_roi_cifti") is not None:
+    cargs.append(execution.input_file(params.get("cifti_in", None)))
+    cargs.append(params.get("text_out", None))
+    if params.get("opt_cifti_roi_roi_cifti", None) is not None:
         cargs.extend([
             "-cifti-roi",
-            execution.input_file(params.get("opt_cifti_roi_roi_cifti"))
+            execution.input_file(params.get("opt_cifti_roi_roi_cifti", None))
         ])
-    if params.get("opt_left_roi_roi_metric") is not None:
+    if params.get("opt_left_roi_roi_metric", None) is not None:
         cargs.extend([
             "-left-roi",
-            execution.input_file(params.get("opt_left_roi_roi_metric"))
+            execution.input_file(params.get("opt_left_roi_roi_metric", None))
         ])
-    if params.get("opt_right_roi_roi_metric") is not None:
+    if params.get("opt_right_roi_roi_metric", None) is not None:
         cargs.extend([
             "-right-roi",
-            execution.input_file(params.get("opt_right_roi_roi_metric"))
+            execution.input_file(params.get("opt_right_roi_roi_metric", None))
         ])
-    if params.get("opt_cerebellum_roi_roi_metric") is not None:
+    if params.get("opt_cerebellum_roi_roi_metric", None) is not None:
         cargs.extend([
             "-cerebellum-roi",
-            execution.input_file(params.get("opt_cerebellum_roi_roi_metric"))
+            execution.input_file(params.get("opt_cerebellum_roi_roi_metric", None))
         ])
-    if params.get("opt_vol_roi_roi_vol") is not None:
+    if params.get("opt_vol_roi_roi_vol", None) is not None:
         cargs.extend([
             "-vol-roi",
-            execution.input_file(params.get("opt_vol_roi_roi_vol"))
+            execution.input_file(params.get("opt_vol_roi_roi_vol", None))
         ])
     return cargs
 
@@ -262,7 +241,6 @@ def cifti_roi_average(
 __all__ = [
     "CIFTI_ROI_AVERAGE_METADATA",
     "CiftiRoiAverageOutputs",
-    "CiftiRoiAverageParameters",
     "cifti_roi_average",
     "cifti_roi_average_execute",
     "cifti_roi_average_params",

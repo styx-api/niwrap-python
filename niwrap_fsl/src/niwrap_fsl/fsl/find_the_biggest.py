@@ -14,47 +14,20 @@ FIND_THE_BIGGEST_METADATA = Metadata(
 
 
 FindTheBiggestParameters = typing.TypedDict('FindTheBiggestParameters', {
-    "@type": typing.Literal["fsl.find_the_biggest"],
+    "@type": typing.NotRequired[typing.Literal["fsl/find_the_biggest"]],
+    "volumes_surfaces": list[InputPathType],
+    "output_index": str,
+})
+FindTheBiggestParametersTagged = typing.TypedDict('FindTheBiggestParametersTagged', {
+    "@type": typing.Literal["fsl/find_the_biggest"],
     "volumes_surfaces": list[InputPathType],
     "output_index": str,
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "fsl.find_the_biggest": find_the_biggest_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "fsl.find_the_biggest": find_the_biggest_outputs,
-    }.get(t)
-
-
 class FindTheBiggestOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `find_the_biggest(...)`.
+    Output object returned when calling `FindTheBiggestParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -65,7 +38,7 @@ class FindTheBiggestOutputs(typing.NamedTuple):
 def find_the_biggest_params(
     volumes_surfaces: list[InputPathType],
     output_index: str,
-) -> FindTheBiggestParameters:
+) -> FindTheBiggestParametersTagged:
     """
     Build parameters.
     
@@ -76,7 +49,7 @@ def find_the_biggest_params(
         Parameter dictionary
     """
     params = {
-        "@type": "fsl.find_the_biggest",
+        "@type": "fsl/find_the_biggest",
         "volumes_surfaces": volumes_surfaces,
         "output_index": output_index,
     }
@@ -98,8 +71,8 @@ def find_the_biggest_cargs(
     """
     cargs = []
     cargs.append("find_the_biggest")
-    cargs.extend([execution.input_file(f) for f in params.get("volumes_surfaces")])
-    cargs.append(params.get("output_index"))
+    cargs.extend([execution.input_file(f) for f in params.get("volumes_surfaces", None)])
+    cargs.append(params.get("output_index", None))
     return cargs
 
 
@@ -118,7 +91,7 @@ def find_the_biggest_outputs(
     """
     ret = FindTheBiggestOutputs(
         root=execution.output_file("."),
-        output_file=execution.output_file(params.get("output_index")),
+        output_file=execution.output_file(params.get("output_index", None)),
     )
     return ret
 
@@ -182,7 +155,6 @@ def find_the_biggest(
 __all__ = [
     "FIND_THE_BIGGEST_METADATA",
     "FindTheBiggestOutputs",
-    "FindTheBiggestParameters",
     "find_the_biggest",
     "find_the_biggest_execute",
     "find_the_biggest_params",

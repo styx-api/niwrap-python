@@ -14,7 +14,23 @@ DMRI_EXTRACT_SURFACE_MEASUREMENTS_METADATA = Metadata(
 
 
 DmriExtractSurfaceMeasurementsParameters = typing.TypedDict('DmriExtractSurfaceMeasurementsParameters', {
-    "@type": typing.Literal["freesurfer.dmri_extractSurfaceMeasurements"],
+    "@type": typing.NotRequired[typing.Literal["freesurfer/dmri_extractSurfaceMeasurements"]],
+    "streamline_file": InputPathType,
+    "lh_surface_file": InputPathType,
+    "lh_thickness_overlay": InputPathType,
+    "lh_curvature_overlay": InputPathType,
+    "rh_surface_file": InputPathType,
+    "rh_thickness_overlay": InputPathType,
+    "rh_curvature_overlay": InputPathType,
+    "output_directory": str,
+    "reference_image": typing.NotRequired[InputPathType | None],
+    "reference_image_anatomical": typing.NotRequired[InputPathType | None],
+    "transformation": typing.NotRequired[InputPathType | None],
+    "annotation_file": typing.NotRequired[InputPathType | None],
+    "fa_options": typing.NotRequired[list[str] | None],
+})
+DmriExtractSurfaceMeasurementsParametersTagged = typing.TypedDict('DmriExtractSurfaceMeasurementsParametersTagged', {
+    "@type": typing.Literal["freesurfer/dmri_extractSurfaceMeasurements"],
     "streamline_file": InputPathType,
     "lh_surface_file": InputPathType,
     "lh_thickness_overlay": InputPathType,
@@ -31,40 +47,9 @@ DmriExtractSurfaceMeasurementsParameters = typing.TypedDict('DmriExtractSurfaceM
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "freesurfer.dmri_extractSurfaceMeasurements": dmri_extract_surface_measurements_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-    }.get(t)
-
-
 class DmriExtractSurfaceMeasurementsOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `dmri_extract_surface_measurements(...)`.
+    Output object returned when calling `DmriExtractSurfaceMeasurementsParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -84,7 +69,7 @@ def dmri_extract_surface_measurements_params(
     transformation: InputPathType | None = None,
     annotation_file: InputPathType | None = None,
     fa_options: list[str] | None = None,
-) -> DmriExtractSurfaceMeasurementsParameters:
+) -> DmriExtractSurfaceMeasurementsParametersTagged:
     """
     Build parameters.
     
@@ -108,7 +93,7 @@ def dmri_extract_surface_measurements_params(
         Parameter dictionary
     """
     params = {
-        "@type": "freesurfer.dmri_extractSurfaceMeasurements",
+        "@type": "freesurfer/dmri_extractSurfaceMeasurements",
         "streamline_file": streamline_file,
         "lh_surface_file": lh_surface_file,
         "lh_thickness_overlay": lh_thickness_overlay,
@@ -148,60 +133,60 @@ def dmri_extract_surface_measurements_cargs(
     cargs.append("dmri_extractSurfaceMeasurements")
     cargs.extend([
         "-i",
-        execution.input_file(params.get("streamline_file"))
+        execution.input_file(params.get("streamline_file", None))
     ])
     cargs.extend([
         "-sl",
-        execution.input_file(params.get("lh_surface_file"))
+        execution.input_file(params.get("lh_surface_file", None))
     ])
     cargs.extend([
         "-tl",
-        execution.input_file(params.get("lh_thickness_overlay"))
+        execution.input_file(params.get("lh_thickness_overlay", None))
     ])
     cargs.extend([
         "-cl",
-        execution.input_file(params.get("lh_curvature_overlay"))
+        execution.input_file(params.get("lh_curvature_overlay", None))
     ])
     cargs.extend([
         "-sr",
-        execution.input_file(params.get("rh_surface_file"))
+        execution.input_file(params.get("rh_surface_file", None))
     ])
     cargs.extend([
         "-tr",
-        execution.input_file(params.get("rh_thickness_overlay"))
+        execution.input_file(params.get("rh_thickness_overlay", None))
     ])
     cargs.extend([
         "-cr",
-        execution.input_file(params.get("rh_curvature_overlay"))
+        execution.input_file(params.get("rh_curvature_overlay", None))
     ])
     cargs.extend([
         "-o",
-        params.get("output_directory")
+        params.get("output_directory", None)
     ])
-    if params.get("reference_image") is not None:
+    if params.get("reference_image", None) is not None:
         cargs.extend([
             "-rid",
-            execution.input_file(params.get("reference_image"))
+            execution.input_file(params.get("reference_image", None))
         ])
-    if params.get("reference_image_anatomical") is not None:
+    if params.get("reference_image_anatomical", None) is not None:
         cargs.extend([
             "-ria",
-            execution.input_file(params.get("reference_image_anatomical"))
+            execution.input_file(params.get("reference_image_anatomical", None))
         ])
-    if params.get("transformation") is not None:
+    if params.get("transformation", None) is not None:
         cargs.extend([
             "-t",
-            execution.input_file(params.get("transformation"))
+            execution.input_file(params.get("transformation", None))
         ])
-    if params.get("annotation_file") is not None:
+    if params.get("annotation_file", None) is not None:
         cargs.extend([
             "-a",
-            execution.input_file(params.get("annotation_file"))
+            execution.input_file(params.get("annotation_file", None))
         ])
-    if params.get("fa_options") is not None:
+    if params.get("fa_options", None) is not None:
         cargs.extend([
             "-fa",
-            *params.get("fa_options")
+            *params.get("fa_options", None)
         ])
     return cargs
 
@@ -319,7 +304,6 @@ def dmri_extract_surface_measurements(
 __all__ = [
     "DMRI_EXTRACT_SURFACE_MEASUREMENTS_METADATA",
     "DmriExtractSurfaceMeasurementsOutputs",
-    "DmriExtractSurfaceMeasurementsParameters",
     "dmri_extract_surface_measurements",
     "dmri_extract_surface_measurements_execute",
     "dmri_extract_surface_measurements_params",

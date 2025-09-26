@@ -14,7 +14,62 @@ MRI_CA_LABEL_METADATA = Metadata(
 
 
 MriCaLabelParameters = typing.TypedDict('MriCaLabelParameters', {
-    "@type": typing.Literal["freesurfer.mri_ca_label"],
+    "@type": typing.NotRequired[typing.Literal["freesurfer/mri_ca_label"]],
+    "input_volumes": list[InputPathType],
+    "transform_file": InputPathType,
+    "gca_file": InputPathType,
+    "output_volume": str,
+    "cross_sequence": bool,
+    "no_gibbs": bool,
+    "wm_segmentation": typing.NotRequired[str | None],
+    "conform": bool,
+    "topo_dist_thresh": typing.NotRequired[float | None],
+    "topo_volume_thresh1": typing.NotRequired[float | None],
+    "topo_volume_thresh2": typing.NotRequired[float | None],
+    "norm_pd": bool,
+    "thin_temporal_lobe": typing.NotRequired[str | None],
+    "debug_voxel": typing.NotRequired[list[float] | None],
+    "debug_node": typing.NotRequired[list[float] | None],
+    "debug_label": typing.NotRequired[float | None],
+    "tr": typing.NotRequired[float | None],
+    "te": typing.NotRequired[float | None],
+    "alpha": typing.NotRequired[float | None],
+    "example": typing.NotRequired[list[InputPathType] | None],
+    "pthresh": typing.NotRequired[float | None],
+    "niter": typing.NotRequired[float | None],
+    "write_probs": typing.NotRequired[str | None],
+    "novar": bool,
+    "regularize": typing.NotRequired[float | None],
+    "nohippo": bool,
+    "fixed_white_matter": typing.NotRequired[str | None],
+    "mri": typing.NotRequired[InputPathType | None],
+    "histogram_equalization": typing.NotRequired[InputPathType | None],
+    "renorm": typing.NotRequired[InputPathType | None],
+    "flash": bool,
+    "flash_params": typing.NotRequired[InputPathType | None],
+    "renormalize": typing.NotRequired[str | None],
+    "set_input_volume": typing.NotRequired[InputPathType | None],
+    "histogram_normalize": bool,
+    "mean_filter": typing.NotRequired[float | None],
+    "write_snapshots": typing.NotRequired[str | None],
+    "mask_final_labeling": typing.NotRequired[InputPathType | None],
+    "expand": typing.NotRequired[float | None],
+    "max_iterations": typing.NotRequired[float | None],
+    "filter_labeled_volume": typing.NotRequired[str | None],
+    "longitudinal_processing": typing.NotRequired[str | None],
+    "relabel_unlikely": typing.NotRequired[str | None],
+    "disables_wmsa": bool,
+    "fix_ventricle": typing.NotRequired[str | None],
+    "insert_wm_bet_putctx": typing.NotRequired[str | None],
+    "sa_insert_wm_bet_putctx": typing.NotRequired[str | None],
+    "insert_from_seg": typing.NotRequired[str | None],
+    "sa_insert_from_seg": typing.NotRequired[str | None],
+    "cblum_from_seg": typing.NotRequired[str | None],
+    "sa_cblum_from_seg": typing.NotRequired[str | None],
+    "threads": typing.NotRequired[int | None],
+})
+MriCaLabelParametersTagged = typing.TypedDict('MriCaLabelParametersTagged', {
+    "@type": typing.Literal["freesurfer/mri_ca_label"],
     "input_volumes": list[InputPathType],
     "transform_file": InputPathType,
     "gca_file": InputPathType,
@@ -70,41 +125,9 @@ MriCaLabelParameters = typing.TypedDict('MriCaLabelParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "freesurfer.mri_ca_label": mri_ca_label_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "freesurfer.mri_ca_label": mri_ca_label_outputs,
-    }.get(t)
-
-
 class MriCaLabelOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `mri_ca_label(...)`.
+    Output object returned when calling `MriCaLabelParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -165,7 +188,7 @@ def mri_ca_label_params(
     cblum_from_seg: str | None = None,
     sa_cblum_from_seg: str | None = None,
     threads: int | None = None,
-) -> MriCaLabelParameters:
+) -> MriCaLabelParametersTagged:
     """
     Build parameters.
     
@@ -233,7 +256,7 @@ def mri_ca_label_params(
         Parameter dictionary
     """
     params = {
-        "@type": "freesurfer.mri_ca_label",
+        "@type": "freesurfer/mri_ca_label",
         "input_volumes": input_volumes,
         "transform_file": transform_file,
         "gca_file": gca_file,
@@ -344,222 +367,222 @@ def mri_ca_label_cargs(
     """
     cargs = []
     cargs.append("mri_ca_label")
-    cargs.extend([execution.input_file(f) for f in params.get("input_volumes")])
-    cargs.append(execution.input_file(params.get("transform_file")))
-    cargs.append(execution.input_file(params.get("gca_file")))
-    cargs.append(params.get("output_volume"))
-    if params.get("cross_sequence"):
+    cargs.extend([execution.input_file(f) for f in params.get("input_volumes", None)])
+    cargs.append(execution.input_file(params.get("transform_file", None)))
+    cargs.append(execution.input_file(params.get("gca_file", None)))
+    cargs.append(params.get("output_volume", None))
+    if params.get("cross_sequence", False):
         cargs.append("-cross-sequence")
-    if params.get("no_gibbs"):
+    if params.get("no_gibbs", False):
         cargs.append("-nogibbs")
-    if params.get("wm_segmentation") is not None:
+    if params.get("wm_segmentation", None) is not None:
         cargs.extend([
             "-wm",
-            params.get("wm_segmentation")
+            params.get("wm_segmentation", None)
         ])
-    if params.get("conform"):
+    if params.get("conform", False):
         cargs.append("-conform")
-    if params.get("topo_dist_thresh") is not None:
+    if params.get("topo_dist_thresh", None) is not None:
         cargs.extend([
             "-topo_dist_thresh",
-            str(params.get("topo_dist_thresh"))
+            str(params.get("topo_dist_thresh", None))
         ])
-    if params.get("topo_volume_thresh1") is not None:
+    if params.get("topo_volume_thresh1", None) is not None:
         cargs.extend([
             "-topo_volume_thresh1",
-            str(params.get("topo_volume_thresh1"))
+            str(params.get("topo_volume_thresh1", None))
         ])
-    if params.get("topo_volume_thresh2") is not None:
+    if params.get("topo_volume_thresh2", None) is not None:
         cargs.extend([
             "-topo_volume_thresh2",
-            str(params.get("topo_volume_thresh2"))
+            str(params.get("topo_volume_thresh2", None))
         ])
-    if params.get("norm_pd"):
+    if params.get("norm_pd", False):
         cargs.append("-normpd")
-    if params.get("thin_temporal_lobe") is not None:
+    if params.get("thin_temporal_lobe", None) is not None:
         cargs.extend([
             "-tl",
-            params.get("thin_temporal_lobe")
+            params.get("thin_temporal_lobe", None)
         ])
-    if params.get("debug_voxel") is not None:
+    if params.get("debug_voxel", None) is not None:
         cargs.extend([
             "-debug_voxel",
-            *map(str, params.get("debug_voxel"))
+            *map(str, params.get("debug_voxel", None))
         ])
-    if params.get("debug_node") is not None:
+    if params.get("debug_node", None) is not None:
         cargs.extend([
             "-debug_node",
-            *map(str, params.get("debug_node"))
+            *map(str, params.get("debug_node", None))
         ])
-    if params.get("debug_label") is not None:
+    if params.get("debug_label", None) is not None:
         cargs.extend([
             "-debug_label",
-            str(params.get("debug_label"))
+            str(params.get("debug_label", None))
         ])
-    if params.get("tr") is not None:
+    if params.get("tr", None) is not None:
         cargs.extend([
             "-tr",
-            str(params.get("tr"))
+            str(params.get("tr", None))
         ])
-    if params.get("te") is not None:
+    if params.get("te", None) is not None:
         cargs.extend([
             "-te",
-            str(params.get("te"))
+            str(params.get("te", None))
         ])
-    if params.get("alpha") is not None:
+    if params.get("alpha", None) is not None:
         cargs.extend([
             "-alpha",
-            str(params.get("alpha"))
+            str(params.get("alpha", None))
         ])
-    if params.get("example") is not None:
+    if params.get("example", None) is not None:
         cargs.extend([
             "-example",
-            *[execution.input_file(f) for f in params.get("example")]
+            *[execution.input_file(f) for f in params.get("example", None)]
         ])
-    if params.get("pthresh") is not None:
+    if params.get("pthresh", None) is not None:
         cargs.extend([
             "-pthresh",
-            str(params.get("pthresh"))
+            str(params.get("pthresh", None))
         ])
-    if params.get("niter") is not None:
+    if params.get("niter", None) is not None:
         cargs.extend([
             "-niter",
-            str(params.get("niter"))
+            str(params.get("niter", None))
         ])
-    if params.get("write_probs") is not None:
+    if params.get("write_probs", None) is not None:
         cargs.extend([
             "-write_probs",
-            params.get("write_probs")
+            params.get("write_probs", None)
         ])
-    if params.get("novar"):
+    if params.get("novar", False):
         cargs.append("-novar")
-    if params.get("regularize") is not None:
+    if params.get("regularize", None) is not None:
         cargs.extend([
             "-regularize",
-            str(params.get("regularize"))
+            str(params.get("regularize", None))
         ])
-    if params.get("nohippo"):
+    if params.get("nohippo", False):
         cargs.append("-nohippo")
-    if params.get("fixed_white_matter") is not None:
+    if params.get("fixed_white_matter", None) is not None:
         cargs.extend([
             "-fwm",
-            params.get("fixed_white_matter")
+            params.get("fixed_white_matter", None)
         ])
-    if params.get("mri") is not None:
+    if params.get("mri", None) is not None:
         cargs.extend([
             "-mri",
-            execution.input_file(params.get("mri"))
+            execution.input_file(params.get("mri", None))
         ])
-    if params.get("histogram_equalization") is not None:
+    if params.get("histogram_equalization", None) is not None:
         cargs.extend([
             "-heq",
-            execution.input_file(params.get("histogram_equalization"))
+            execution.input_file(params.get("histogram_equalization", None))
         ])
-    if params.get("renorm") is not None:
+    if params.get("renorm", None) is not None:
         cargs.extend([
             "-renorm",
-            execution.input_file(params.get("renorm"))
+            execution.input_file(params.get("renorm", None))
         ])
-    if params.get("flash"):
+    if params.get("flash", False):
         cargs.append("-flash")
-    if params.get("flash_params") is not None:
+    if params.get("flash_params", None) is not None:
         cargs.extend([
             "-flash_params",
-            execution.input_file(params.get("flash_params"))
+            execution.input_file(params.get("flash_params", None))
         ])
-    if params.get("renormalize") is not None:
+    if params.get("renormalize", None) is not None:
         cargs.extend([
             "-renormalize",
-            params.get("renormalize")
+            params.get("renormalize", None)
         ])
-    if params.get("set_input_volume") is not None:
+    if params.get("set_input_volume", None) is not None:
         cargs.extend([
             "-r",
-            execution.input_file(params.get("set_input_volume"))
+            execution.input_file(params.get("set_input_volume", None))
         ])
-    if params.get("histogram_normalize"):
+    if params.get("histogram_normalize", False):
         cargs.append("-h")
-    if params.get("mean_filter") is not None:
+    if params.get("mean_filter", None) is not None:
         cargs.extend([
             "-a",
-            str(params.get("mean_filter"))
+            str(params.get("mean_filter", None))
         ])
-    if params.get("write_snapshots") is not None:
+    if params.get("write_snapshots", None) is not None:
         cargs.extend([
             "-w",
-            params.get("write_snapshots")
+            params.get("write_snapshots", None)
         ])
-    if params.get("mask_final_labeling") is not None:
+    if params.get("mask_final_labeling", None) is not None:
         cargs.extend([
             "-m",
-            execution.input_file(params.get("mask_final_labeling"))
+            execution.input_file(params.get("mask_final_labeling", None))
         ])
-    if params.get("expand") is not None:
+    if params.get("expand", None) is not None:
         cargs.extend([
             "-e",
-            str(params.get("expand"))
+            str(params.get("expand", None))
         ])
-    if params.get("max_iterations") is not None:
+    if params.get("max_iterations", None) is not None:
         cargs.extend([
             "-n",
-            str(params.get("max_iterations"))
+            str(params.get("max_iterations", None))
         ])
-    if params.get("filter_labeled_volume") is not None:
+    if params.get("filter_labeled_volume", None) is not None:
         cargs.extend([
             "-f",
-            params.get("filter_labeled_volume")
+            params.get("filter_labeled_volume", None)
         ])
-    if params.get("longitudinal_processing") is not None:
+    if params.get("longitudinal_processing", None) is not None:
         cargs.extend([
             "-L",
-            params.get("longitudinal_processing")
+            params.get("longitudinal_processing", None)
         ])
-    if params.get("relabel_unlikely") is not None:
+    if params.get("relabel_unlikely", None) is not None:
         cargs.extend([
             "-RELABEL_UNLIKELY",
-            params.get("relabel_unlikely")
+            params.get("relabel_unlikely", None)
         ])
-    if params.get("disables_wmsa"):
+    if params.get("disables_wmsa", False):
         cargs.append("-nowmsa")
-    if params.get("fix_ventricle") is not None:
+    if params.get("fix_ventricle", None) is not None:
         cargs.extend([
             "-vent-fix",
-            params.get("fix_ventricle")
+            params.get("fix_ventricle", None)
         ])
-    if params.get("insert_wm_bet_putctx") is not None:
+    if params.get("insert_wm_bet_putctx", None) is not None:
         cargs.extend([
             "-insert-wm-bet-putctx",
-            params.get("insert_wm_bet_putctx")
+            params.get("insert_wm_bet_putctx", None)
         ])
-    if params.get("sa_insert_wm_bet_putctx") is not None:
+    if params.get("sa_insert_wm_bet_putctx", None) is not None:
         cargs.extend([
             "-sa-insert-wm-bet-putctx",
-            params.get("sa_insert_wm_bet_putctx")
+            params.get("sa_insert_wm_bet_putctx", None)
         ])
-    if params.get("insert_from_seg") is not None:
+    if params.get("insert_from_seg", None) is not None:
         cargs.extend([
             "-insert-from-seg",
-            params.get("insert_from_seg")
+            params.get("insert_from_seg", None)
         ])
-    if params.get("sa_insert_from_seg") is not None:
+    if params.get("sa_insert_from_seg", None) is not None:
         cargs.extend([
             "-sa-insert-from-seg",
-            params.get("sa_insert_from_seg")
+            params.get("sa_insert_from_seg", None)
         ])
-    if params.get("cblum_from_seg") is not None:
+    if params.get("cblum_from_seg", None) is not None:
         cargs.extend([
             "-cblum-from-seg",
-            params.get("cblum_from_seg")
+            params.get("cblum_from_seg", None)
         ])
-    if params.get("sa_cblum_from_seg") is not None:
+    if params.get("sa_cblum_from_seg", None) is not None:
         cargs.extend([
             "-sa-cblum-from-seg",
-            params.get("sa_cblum_from_seg")
+            params.get("sa_cblum_from_seg", None)
         ])
-    if params.get("threads") is not None:
+    if params.get("threads", None) is not None:
         cargs.extend([
             "-threads",
-            str(params.get("threads"))
+            str(params.get("threads", None))
         ])
     return cargs
 
@@ -579,7 +602,7 @@ def mri_ca_label_outputs(
     """
     ret = MriCaLabelOutputs(
         root=execution.output_file("."),
-        output_vol=execution.output_file(params.get("output_volume")),
+        output_vol=execution.output_file(params.get("output_volume", None)),
     )
     return ret
 
@@ -800,7 +823,6 @@ def mri_ca_label(
 __all__ = [
     "MRI_CA_LABEL_METADATA",
     "MriCaLabelOutputs",
-    "MriCaLabelParameters",
     "mri_ca_label",
     "mri_ca_label_execute",
     "mri_ca_label_params",

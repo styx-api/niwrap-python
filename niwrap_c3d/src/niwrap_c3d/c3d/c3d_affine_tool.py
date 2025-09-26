@@ -14,7 +14,27 @@ C3D_AFFINE_TOOL_METADATA = Metadata(
 
 
 C3dAffineToolParameters = typing.TypedDict('C3dAffineToolParameters', {
-    "@type": typing.Literal["c3d.c3d_affine_tool"],
+    "@type": typing.NotRequired[typing.Literal["c3d/c3d_affine_tool"]],
+    "transform_file": typing.NotRequired[InputPathType | None],
+    "reference_file": typing.NotRequired[InputPathType | None],
+    "source_file": typing.NotRequired[InputPathType | None],
+    "sform_file": typing.NotRequired[InputPathType | None],
+    "invert": bool,
+    "determinant": bool,
+    "multiply": bool,
+    "sqrt": bool,
+    "itk_transform": typing.NotRequired[InputPathType | None],
+    "irtk_transform": typing.NotRequired[InputPathType | None],
+    "fsl2ras": bool,
+    "ras2fsl": bool,
+    "out_itk_transform": typing.NotRequired[str | None],
+    "out_irtk_transform": typing.NotRequired[str | None],
+    "out_matfile": typing.NotRequired[str | None],
+    "info": bool,
+    "info_full": bool,
+})
+C3dAffineToolParametersTagged = typing.TypedDict('C3dAffineToolParametersTagged', {
+    "@type": typing.Literal["c3d/c3d_affine_tool"],
     "transform_file": typing.NotRequired[InputPathType | None],
     "reference_file": typing.NotRequired[InputPathType | None],
     "source_file": typing.NotRequired[InputPathType | None],
@@ -35,41 +55,9 @@ C3dAffineToolParameters = typing.TypedDict('C3dAffineToolParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "c3d.c3d_affine_tool": c3d_affine_tool_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "c3d.c3d_affine_tool": c3d_affine_tool_outputs,
-    }.get(t)
-
-
 class C3dAffineToolOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `c3d_affine_tool(...)`.
+    Output object returned when calling `C3dAffineToolParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -99,7 +87,7 @@ def c3d_affine_tool_params(
     out_matfile: str | None = None,
     info: bool = False,
     info_full: bool = False,
-) -> C3dAffineToolParameters:
+) -> C3dAffineToolParametersTagged:
     """
     Build parameters.
     
@@ -127,7 +115,7 @@ def c3d_affine_tool_params(
         Parameter dictionary
     """
     params = {
-        "@type": "c3d.c3d_affine_tool",
+        "@type": "c3d/c3d_affine_tool",
         "invert": invert,
         "determinant": determinant,
         "multiply": multiply,
@@ -173,63 +161,63 @@ def c3d_affine_tool_cargs(
     """
     cargs = []
     cargs.append("c3d_affine_tool")
-    if params.get("transform_file") is not None:
-        cargs.append(execution.input_file(params.get("transform_file")))
-    if params.get("reference_file") is not None:
+    if params.get("transform_file", None) is not None:
+        cargs.append(execution.input_file(params.get("transform_file", None)))
+    if params.get("reference_file", None) is not None:
         cargs.extend([
             "-ref",
-            execution.input_file(params.get("reference_file"))
+            execution.input_file(params.get("reference_file", None))
         ])
-    if params.get("source_file") is not None:
+    if params.get("source_file", None) is not None:
         cargs.extend([
             "-src",
-            execution.input_file(params.get("source_file"))
+            execution.input_file(params.get("source_file", None))
         ])
-    if params.get("sform_file") is not None:
+    if params.get("sform_file", None) is not None:
         cargs.extend([
             "-sform",
-            execution.input_file(params.get("sform_file"))
+            execution.input_file(params.get("sform_file", None))
         ])
-    if params.get("invert"):
+    if params.get("invert", False):
         cargs.append("-inv")
-    if params.get("determinant"):
+    if params.get("determinant", False):
         cargs.append("-det")
-    if params.get("multiply"):
+    if params.get("multiply", False):
         cargs.append("-mult")
-    if params.get("sqrt"):
+    if params.get("sqrt", False):
         cargs.append("-sqrt")
-    if params.get("itk_transform") is not None:
+    if params.get("itk_transform", None) is not None:
         cargs.extend([
             "-itk",
-            execution.input_file(params.get("itk_transform"))
+            execution.input_file(params.get("itk_transform", None))
         ])
-    if params.get("irtk_transform") is not None:
+    if params.get("irtk_transform", None) is not None:
         cargs.extend([
             "-irtk",
-            execution.input_file(params.get("irtk_transform"))
+            execution.input_file(params.get("irtk_transform", None))
         ])
-    if params.get("fsl2ras"):
+    if params.get("fsl2ras", False):
         cargs.append("-fsl2ras")
-    if params.get("ras2fsl"):
+    if params.get("ras2fsl", False):
         cargs.append("-ras2fsl")
-    if params.get("out_itk_transform") is not None:
+    if params.get("out_itk_transform", None) is not None:
         cargs.extend([
             "-oitk",
-            params.get("out_itk_transform")
+            params.get("out_itk_transform", None)
         ])
-    if params.get("out_irtk_transform") is not None:
+    if params.get("out_irtk_transform", None) is not None:
         cargs.extend([
             "-oirtk",
-            params.get("out_irtk_transform")
+            params.get("out_irtk_transform", None)
         ])
-    if params.get("out_matfile") is not None:
+    if params.get("out_matfile", None) is not None:
         cargs.extend([
             "-o",
-            params.get("out_matfile")
+            params.get("out_matfile", None)
         ])
-    if params.get("info"):
+    if params.get("info", False):
         cargs.append("-info")
-    if params.get("info_full"):
+    if params.get("info_full", False):
         cargs.append("-info-full")
     return cargs
 
@@ -249,9 +237,9 @@ def c3d_affine_tool_outputs(
     """
     ret = C3dAffineToolOutputs(
         root=execution.output_file("."),
-        itk_transform_outfile=execution.output_file(params.get("out_itk_transform")) if (params.get("out_itk_transform") is not None) else None,
-        irtk_transform_outfile=execution.output_file(params.get("out_irtk_transform")) if (params.get("out_irtk_transform") is not None) else None,
-        matrix_transform_outfile=execution.output_file(params.get("out_matfile")) if (params.get("out_matfile") is not None) else None,
+        itk_transform_outfile=execution.output_file(params.get("out_itk_transform", None)) if (params.get("out_itk_transform") is not None) else None,
+        irtk_transform_outfile=execution.output_file(params.get("out_irtk_transform", None)) if (params.get("out_irtk_transform") is not None) else None,
+        matrix_transform_outfile=execution.output_file(params.get("out_matfile", None)) if (params.get("out_matfile") is not None) else None,
     )
     return ret
 
@@ -362,7 +350,6 @@ def c3d_affine_tool(
 __all__ = [
     "C3D_AFFINE_TOOL_METADATA",
     "C3dAffineToolOutputs",
-    "C3dAffineToolParameters",
     "c3d_affine_tool",
     "c3d_affine_tool_execute",
     "c3d_affine_tool_params",

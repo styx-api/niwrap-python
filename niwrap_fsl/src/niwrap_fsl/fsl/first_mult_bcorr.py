@@ -14,7 +14,16 @@ FIRST_MULT_BCORR_METADATA = Metadata(
 
 
 FirstMultBcorrParameters = typing.TypedDict('FirstMultBcorrParameters', {
-    "@type": typing.Literal["fsl.first_mult_bcorr"],
+    "@type": typing.NotRequired[typing.Literal["fsl/first_mult_bcorr"]],
+    "input_image": InputPathType,
+    "corrected_4d_labels": InputPathType,
+    "uncorrected_4d_labels": InputPathType,
+    "output_image": str,
+    "verbose_flag": bool,
+    "help_flag": bool,
+})
+FirstMultBcorrParametersTagged = typing.TypedDict('FirstMultBcorrParametersTagged', {
+    "@type": typing.Literal["fsl/first_mult_bcorr"],
     "input_image": InputPathType,
     "corrected_4d_labels": InputPathType,
     "uncorrected_4d_labels": InputPathType,
@@ -24,41 +33,9 @@ FirstMultBcorrParameters = typing.TypedDict('FirstMultBcorrParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "fsl.first_mult_bcorr": first_mult_bcorr_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "fsl.first_mult_bcorr": first_mult_bcorr_outputs,
-    }.get(t)
-
-
 class FirstMultBcorrOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `first_mult_bcorr(...)`.
+    Output object returned when calling `FirstMultBcorrParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -73,7 +50,7 @@ def first_mult_bcorr_params(
     output_image: str,
     verbose_flag: bool = False,
     help_flag: bool = False,
-) -> FirstMultBcorrParameters:
+) -> FirstMultBcorrParametersTagged:
     """
     Build parameters.
     
@@ -90,7 +67,7 @@ def first_mult_bcorr_params(
         Parameter dictionary
     """
     params = {
-        "@type": "fsl.first_mult_bcorr",
+        "@type": "fsl/first_mult_bcorr",
         "input_image": input_image,
         "corrected_4d_labels": corrected_4d_labels,
         "uncorrected_4d_labels": uncorrected_4d_labels,
@@ -118,23 +95,23 @@ def first_mult_bcorr_cargs(
     cargs.append("first_mult_bcorr")
     cargs.extend([
         "-i",
-        execution.input_file(params.get("input_image"))
+        execution.input_file(params.get("input_image", None))
     ])
     cargs.extend([
         "-c",
-        execution.input_file(params.get("corrected_4d_labels"))
+        execution.input_file(params.get("corrected_4d_labels", None))
     ])
     cargs.extend([
         "-u",
-        execution.input_file(params.get("uncorrected_4d_labels"))
+        execution.input_file(params.get("uncorrected_4d_labels", None))
     ])
     cargs.extend([
         "-o",
-        params.get("output_image")
+        params.get("output_image", None)
     ])
-    if params.get("verbose_flag"):
+    if params.get("verbose_flag", False):
         cargs.append("-v")
-    if params.get("help_flag"):
+    if params.get("help_flag", False):
         cargs.append("-h")
     return cargs
 
@@ -154,7 +131,7 @@ def first_mult_bcorr_outputs(
     """
     ret = FirstMultBcorrOutputs(
         root=execution.output_file("."),
-        output_file=execution.output_file(params.get("output_image")),
+        output_file=execution.output_file(params.get("output_image", None)),
     )
     return ret
 
@@ -234,7 +211,6 @@ def first_mult_bcorr(
 __all__ = [
     "FIRST_MULT_BCORR_METADATA",
     "FirstMultBcorrOutputs",
-    "FirstMultBcorrParameters",
     "first_mult_bcorr",
     "first_mult_bcorr_execute",
     "first_mult_bcorr_params",

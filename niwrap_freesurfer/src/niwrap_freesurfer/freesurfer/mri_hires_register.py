@@ -14,7 +14,14 @@ MRI_HIRES_REGISTER_METADATA = Metadata(
 
 
 MriHiresRegisterParameters = typing.TypedDict('MriHiresRegisterParameters', {
-    "@type": typing.Literal["freesurfer.mri_hires_register"],
+    "@type": typing.NotRequired[typing.Literal["freesurfer/mri_hires_register"]],
+    "hires_labeling": InputPathType,
+    "input_intensity": InputPathType,
+    "input_aseg": InputPathType,
+    "output_xform": str,
+})
+MriHiresRegisterParametersTagged = typing.TypedDict('MriHiresRegisterParametersTagged', {
+    "@type": typing.Literal["freesurfer/mri_hires_register"],
     "hires_labeling": InputPathType,
     "input_intensity": InputPathType,
     "input_aseg": InputPathType,
@@ -22,41 +29,9 @@ MriHiresRegisterParameters = typing.TypedDict('MriHiresRegisterParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "freesurfer.mri_hires_register": mri_hires_register_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "freesurfer.mri_hires_register": mri_hires_register_outputs,
-    }.get(t)
-
-
 class MriHiresRegisterOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `mri_hires_register(...)`.
+    Output object returned when calling `MriHiresRegisterParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -69,7 +44,7 @@ def mri_hires_register_params(
     input_intensity: InputPathType,
     input_aseg: InputPathType,
     output_xform: str,
-) -> MriHiresRegisterParameters:
+) -> MriHiresRegisterParametersTagged:
     """
     Build parameters.
     
@@ -82,7 +57,7 @@ def mri_hires_register_params(
         Parameter dictionary
     """
     params = {
-        "@type": "freesurfer.mri_hires_register",
+        "@type": "freesurfer/mri_hires_register",
         "hires_labeling": hires_labeling,
         "input_intensity": input_intensity,
         "input_aseg": input_aseg,
@@ -106,10 +81,10 @@ def mri_hires_register_cargs(
     """
     cargs = []
     cargs.append("mri_hires_register")
-    cargs.append(execution.input_file(params.get("hires_labeling")))
-    cargs.append(execution.input_file(params.get("input_intensity")))
-    cargs.append(execution.input_file(params.get("input_aseg")))
-    cargs.append(params.get("output_xform"))
+    cargs.append(execution.input_file(params.get("hires_labeling", None)))
+    cargs.append(execution.input_file(params.get("input_intensity", None)))
+    cargs.append(execution.input_file(params.get("input_aseg", None)))
+    cargs.append(params.get("output_xform", None))
     return cargs
 
 
@@ -128,7 +103,7 @@ def mri_hires_register_outputs(
     """
     ret = MriHiresRegisterOutputs(
         root=execution.output_file("."),
-        output_file=execution.output_file(params.get("output_xform")),
+        output_file=execution.output_file(params.get("output_xform", None)),
     )
     return ret
 
@@ -198,7 +173,6 @@ def mri_hires_register(
 __all__ = [
     "MRI_HIRES_REGISTER_METADATA",
     "MriHiresRegisterOutputs",
-    "MriHiresRegisterParameters",
     "mri_hires_register",
     "mri_hires_register_execute",
     "mri_hires_register_params",

@@ -14,7 +14,17 @@ SWAP_SUBJECTWISE_METADATA = Metadata(
 
 
 SwapSubjectwiseParameters = typing.TypedDict('SwapSubjectwiseParameters', {
-    "@type": typing.Literal["fsl.swap_subjectwise"],
+    "@type": typing.NotRequired[typing.Literal["fsl/swap_subjectwise"]],
+    "dyads": InputPathType,
+    "fmean": InputPathType,
+    "mask": typing.NotRequired[InputPathType | None],
+    "obasename": typing.NotRequired[str | None],
+    "xthresh": typing.NotRequired[float | None],
+    "averageonly_flag": bool,
+    "verbose_flag": bool,
+})
+SwapSubjectwiseParametersTagged = typing.TypedDict('SwapSubjectwiseParametersTagged', {
+    "@type": typing.Literal["fsl/swap_subjectwise"],
     "dyads": InputPathType,
     "fmean": InputPathType,
     "mask": typing.NotRequired[InputPathType | None],
@@ -25,40 +35,9 @@ SwapSubjectwiseParameters = typing.TypedDict('SwapSubjectwiseParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "fsl.swap_subjectwise": swap_subjectwise_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-    }.get(t)
-
-
 class SwapSubjectwiseOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `swap_subjectwise(...)`.
+    Output object returned when calling `SwapSubjectwiseParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -72,7 +51,7 @@ def swap_subjectwise_params(
     xthresh: float | None = None,
     averageonly_flag: bool = False,
     verbose_flag: bool = False,
-) -> SwapSubjectwiseParameters:
+) -> SwapSubjectwiseParametersTagged:
     """
     Build parameters.
     
@@ -88,7 +67,7 @@ def swap_subjectwise_params(
         Parameter dictionary
     """
     params = {
-        "@type": "fsl.swap_subjectwise",
+        "@type": "fsl/swap_subjectwise",
         "dyads": dyads,
         "fmean": fmean,
         "averageonly_flag": averageonly_flag,
@@ -120,30 +99,30 @@ def swap_subjectwise_cargs(
     cargs.append("swap_subjectwise")
     cargs.extend([
         "-r",
-        execution.input_file(params.get("dyads"))
+        execution.input_file(params.get("dyads", None))
     ])
     cargs.extend([
         "-f",
-        execution.input_file(params.get("fmean"))
+        execution.input_file(params.get("fmean", None))
     ])
-    if params.get("mask") is not None:
+    if params.get("mask", None) is not None:
         cargs.extend([
             "-m",
-            execution.input_file(params.get("mask"))
+            execution.input_file(params.get("mask", None))
         ])
-    if params.get("obasename") is not None:
+    if params.get("obasename", None) is not None:
         cargs.extend([
             "-b",
-            params.get("obasename")
+            params.get("obasename", None)
         ])
-    if params.get("xthresh") is not None:
+    if params.get("xthresh", None) is not None:
         cargs.extend([
             "--xthresh",
-            str(params.get("xthresh"))
+            str(params.get("xthresh", None))
         ])
-    if params.get("averageonly_flag"):
+    if params.get("averageonly_flag", False):
         cargs.append("--averageonly")
-    if params.get("verbose_flag"):
+    if params.get("verbose_flag", False):
         cargs.append("--verbose")
     return cargs
 
@@ -243,7 +222,6 @@ def swap_subjectwise(
 __all__ = [
     "SWAP_SUBJECTWISE_METADATA",
     "SwapSubjectwiseOutputs",
-    "SwapSubjectwiseParameters",
     "swap_subjectwise",
     "swap_subjectwise_execute",
     "swap_subjectwise_params",

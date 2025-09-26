@@ -14,7 +14,25 @@ AFNI_OPEN_METADATA = Metadata(
 
 
 AfniOpenParameters = typing.TypedDict('AfniOpenParameters', {
-    "@type": typing.Literal["afni.afni_open"],
+    "@type": typing.NotRequired[typing.Literal["afni/afni_open"]],
+    "files": list[InputPathType],
+    "method": typing.NotRequired[str | None],
+    "editor": bool,
+    "downloader": bool,
+    "examinexmat": bool,
+    "browser": bool,
+    "readme": bool,
+    "afniweb": bool,
+    "global_help": bool,
+    "gopts_help": bool,
+    "help": bool,
+    "mini_help": bool,
+    "extreme_help": bool,
+    "h_view": bool,
+    "h_web": bool,
+})
+AfniOpenParametersTagged = typing.TypedDict('AfniOpenParametersTagged', {
+    "@type": typing.Literal["afni/afni_open"],
     "files": list[InputPathType],
     "method": typing.NotRequired[str | None],
     "editor": bool,
@@ -33,40 +51,9 @@ AfniOpenParameters = typing.TypedDict('AfniOpenParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "afni.afni_open": afni_open_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-    }.get(t)
-
-
 class AfniOpenOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `afni_open(...)`.
+    Output object returned when calling `AfniOpenParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -88,7 +75,7 @@ def afni_open_params(
     extreme_help: bool = False,
     h_view: bool = False,
     h_web: bool = False,
-) -> AfniOpenParameters:
+) -> AfniOpenParametersTagged:
     """
     Build parameters.
     
@@ -113,7 +100,7 @@ def afni_open_params(
         Parameter dictionary
     """
     params = {
-        "@type": "afni.afni_open",
+        "@type": "afni/afni_open",
         "files": files,
         "editor": editor,
         "downloader": downloader,
@@ -149,37 +136,37 @@ def afni_open_cargs(
     """
     cargs = []
     cargs.append("afni_open")
-    cargs.extend([execution.input_file(f) for f in params.get("files")])
-    if params.get("method") is not None:
+    cargs.extend([execution.input_file(f) for f in params.get("files", None)])
+    if params.get("method", None) is not None:
         cargs.extend([
             "-w",
-            params.get("method")
+            params.get("method", None)
         ])
-    if params.get("editor"):
+    if params.get("editor", False):
         cargs.append("-e")
-    if params.get("downloader"):
+    if params.get("downloader", False):
         cargs.append("-d")
-    if params.get("examinexmat"):
+    if params.get("examinexmat", False):
         cargs.append("-x")
-    if params.get("browser"):
+    if params.get("browser", False):
         cargs.append("-b")
-    if params.get("readme"):
+    if params.get("readme", False):
         cargs.append("-r")
-    if params.get("afniweb"):
+    if params.get("afniweb", False):
         cargs.append("-aw")
-    if params.get("global_help"):
+    if params.get("global_help", False):
         cargs.append("-global_help")
-    if params.get("gopts_help"):
+    if params.get("gopts_help", False):
         cargs.append("-gopts_help")
-    if params.get("help"):
+    if params.get("help", False):
         cargs.append("-help")
-    if params.get("mini_help"):
+    if params.get("mini_help", False):
         cargs.append("-h")
-    if params.get("extreme_help"):
+    if params.get("extreme_help", False):
         cargs.append("-HELP")
-    if params.get("h_view"):
+    if params.get("h_view", False):
         cargs.append("-h_view")
-    if params.get("h_web"):
+    if params.get("h_web", False):
         cargs.append("-h_web")
     return cargs
 
@@ -302,7 +289,6 @@ def afni_open(
 __all__ = [
     "AFNI_OPEN_METADATA",
     "AfniOpenOutputs",
-    "AfniOpenParameters",
     "afni_open",
     "afni_open_execute",
     "afni_open_params",

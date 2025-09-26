@@ -14,7 +14,13 @@ DCMEDIT_METADATA = Metadata(
 
 
 DcmeditTagParameters = typing.TypedDict('DcmeditTagParameters', {
-    "@type": typing.Literal["mrtrix.dcmedit.tag"],
+    "@type": typing.NotRequired[typing.Literal["tag"]],
+    "group": str,
+    "element": str,
+    "newvalue": str,
+})
+DcmeditTagParametersTagged = typing.TypedDict('DcmeditTagParametersTagged', {
+    "@type": typing.Literal["tag"],
     "group": str,
     "element": str,
     "newvalue": str,
@@ -22,14 +28,34 @@ DcmeditTagParameters = typing.TypedDict('DcmeditTagParameters', {
 
 
 DcmeditConfigParameters = typing.TypedDict('DcmeditConfigParameters', {
-    "@type": typing.Literal["mrtrix.dcmedit.config"],
+    "@type": typing.NotRequired[typing.Literal["config"]],
+    "key": str,
+    "value": str,
+})
+DcmeditConfigParametersTagged = typing.TypedDict('DcmeditConfigParametersTagged', {
+    "@type": typing.Literal["config"],
     "key": str,
     "value": str,
 })
 
 
 DcmeditParameters = typing.TypedDict('DcmeditParameters', {
-    "@type": typing.Literal["mrtrix.dcmedit"],
+    "@type": typing.NotRequired[typing.Literal["mrtrix/dcmedit"]],
+    "anonymise": bool,
+    "id": typing.NotRequired[str | None],
+    "tag": typing.NotRequired[list[DcmeditTagParameters] | None],
+    "info": bool,
+    "quiet": bool,
+    "debug": bool,
+    "force": bool,
+    "nthreads": typing.NotRequired[int | None],
+    "config": typing.NotRequired[list[DcmeditConfigParameters] | None],
+    "help": bool,
+    "version": bool,
+    "file": InputPathType,
+})
+DcmeditParametersTagged = typing.TypedDict('DcmeditParametersTagged', {
+    "@type": typing.Literal["mrtrix/dcmedit"],
     "anonymise": bool,
     "id": typing.NotRequired[str | None],
     "tag": typing.NotRequired[list[DcmeditTagParameters] | None],
@@ -45,44 +71,11 @@ DcmeditParameters = typing.TypedDict('DcmeditParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "mrtrix.dcmedit": dcmedit_cargs,
-        "mrtrix.dcmedit.tag": dcmedit_tag_cargs,
-        "mrtrix.dcmedit.config": dcmedit_config_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-    }.get(t)
-
-
 def dcmedit_tag_params(
     group: str,
     element: str,
     newvalue: str,
-) -> DcmeditTagParameters:
+) -> DcmeditTagParametersTagged:
     """
     Build parameters.
     
@@ -94,7 +87,7 @@ def dcmedit_tag_params(
         Parameter dictionary
     """
     params = {
-        "@type": "mrtrix.dcmedit.tag",
+        "@type": "tag",
         "group": group,
         "element": element,
         "newvalue": newvalue,
@@ -117,16 +110,16 @@ def dcmedit_tag_cargs(
     """
     cargs = []
     cargs.append("-tag")
-    cargs.append(params.get("group"))
-    cargs.append(params.get("element"))
-    cargs.append(params.get("newvalue"))
+    cargs.append(params.get("group", None))
+    cargs.append(params.get("element", None))
+    cargs.append(params.get("newvalue", None))
     return cargs
 
 
 def dcmedit_config_params(
     key: str,
     value: str,
-) -> DcmeditConfigParameters:
+) -> DcmeditConfigParametersTagged:
     """
     Build parameters.
     
@@ -137,7 +130,7 @@ def dcmedit_config_params(
         Parameter dictionary
     """
     params = {
-        "@type": "mrtrix.dcmedit.config",
+        "@type": "config",
         "key": key,
         "value": value,
     }
@@ -159,14 +152,14 @@ def dcmedit_config_cargs(
     """
     cargs = []
     cargs.append("-config")
-    cargs.append(params.get("key"))
-    cargs.append(params.get("value"))
+    cargs.append(params.get("key", None))
+    cargs.append(params.get("value", None))
     return cargs
 
 
 class DcmeditOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `dcmedit(...)`.
+    Output object returned when calling `DcmeditParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -185,7 +178,7 @@ def dcmedit_params(
     config: list[DcmeditConfigParameters] | None = None,
     help_: bool = False,
     version: bool = False,
-) -> DcmeditParameters:
+) -> DcmeditParametersTagged:
     """
     Build parameters.
     
@@ -221,7 +214,7 @@ def dcmedit_params(
         Parameter dictionary
     """
     params = {
-        "@type": "mrtrix.dcmedit",
+        "@type": "mrtrix/dcmedit",
         "anonymise": anonymise,
         "info": info,
         "quiet": quiet,
@@ -257,35 +250,35 @@ def dcmedit_cargs(
     """
     cargs = []
     cargs.append("dcmedit")
-    if params.get("anonymise"):
+    if params.get("anonymise", False):
         cargs.append("-anonymise")
-    if params.get("id") is not None:
+    if params.get("id", None) is not None:
         cargs.extend([
             "-id",
-            params.get("id")
+            params.get("id", None)
         ])
-    if params.get("tag") is not None:
-        cargs.extend([a for c in [dyn_cargs(s["@type"])(s, execution) for s in params.get("tag")] for a in c])
-    if params.get("info"):
+    if params.get("tag", None) is not None:
+        cargs.extend([a for c in [dcmedit_tag_cargs(s, execution) for s in params.get("tag", None)] for a in c])
+    if params.get("info", False):
         cargs.append("-info")
-    if params.get("quiet"):
+    if params.get("quiet", False):
         cargs.append("-quiet")
-    if params.get("debug"):
+    if params.get("debug", False):
         cargs.append("-debug")
-    if params.get("force"):
+    if params.get("force", False):
         cargs.append("-force")
-    if params.get("nthreads") is not None:
+    if params.get("nthreads", None) is not None:
         cargs.extend([
             "-nthreads",
-            str(params.get("nthreads"))
+            str(params.get("nthreads", None))
         ])
-    if params.get("config") is not None:
-        cargs.extend([a for c in [dyn_cargs(s["@type"])(s, execution) for s in params.get("config")] for a in c])
-    if params.get("help"):
+    if params.get("config", None) is not None:
+        cargs.extend([a for c in [dcmedit_config_cargs(s, execution) for s in params.get("config", None)] for a in c])
+    if params.get("help", False):
         cargs.append("-help")
-    if params.get("version"):
+    if params.get("version", False):
         cargs.append("-version")
-    cargs.append(execution.input_file(params.get("file")))
+    cargs.append(execution.input_file(params.get("file", None)))
     return cargs
 
 
@@ -433,10 +426,7 @@ def dcmedit(
 
 __all__ = [
     "DCMEDIT_METADATA",
-    "DcmeditConfigParameters",
     "DcmeditOutputs",
-    "DcmeditParameters",
-    "DcmeditTagParameters",
     "dcmedit",
     "dcmedit_config_params",
     "dcmedit_execute",

@@ -14,7 +14,18 @@ V_3D_EIGS_TO_DT_METADATA = Metadata(
 
 
 V3dEigsToDtParameters = typing.TypedDict('V3dEigsToDtParameters', {
-    "@type": typing.Literal["afni.3dEigsToDT"],
+    "@type": typing.NotRequired[typing.Literal["afni/3dEigsToDT"]],
+    "eig_vals": str,
+    "eig_vecs": str,
+    "prefix": str,
+    "mask": typing.NotRequired[InputPathType | None],
+    "flip_x": bool,
+    "flip_y": bool,
+    "flip_z": bool,
+    "scale_eigs": typing.NotRequired[float | None],
+})
+V3dEigsToDtParametersTagged = typing.TypedDict('V3dEigsToDtParametersTagged', {
+    "@type": typing.Literal["afni/3dEigsToDT"],
     "eig_vals": str,
     "eig_vecs": str,
     "prefix": str,
@@ -26,41 +37,9 @@ V3dEigsToDtParameters = typing.TypedDict('V3dEigsToDtParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "afni.3dEigsToDT": v_3d_eigs_to_dt_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "afni.3dEigsToDT": v_3d_eigs_to_dt_outputs,
-    }.get(t)
-
-
 class V3dEigsToDtOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `v_3d_eigs_to_dt(...)`.
+    Output object returned when calling `V3dEigsToDtParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -79,7 +58,7 @@ def v_3d_eigs_to_dt_params(
     flip_y: bool = False,
     flip_z: bool = False,
     scale_eigs: float | None = None,
-) -> V3dEigsToDtParameters:
+) -> V3dEigsToDtParametersTagged:
     """
     Build parameters.
     
@@ -102,7 +81,7 @@ def v_3d_eigs_to_dt_params(
         Parameter dictionary
     """
     params = {
-        "@type": "afni.3dEigsToDT",
+        "@type": "afni/3dEigsToDT",
         "eig_vals": eig_vals,
         "eig_vecs": eig_vecs,
         "prefix": prefix,
@@ -134,31 +113,31 @@ def v_3d_eigs_to_dt_cargs(
     cargs.append("3dEigsToDT")
     cargs.extend([
         "-eig_vals",
-        params.get("eig_vals")
+        params.get("eig_vals", None)
     ])
     cargs.extend([
         "-eig_vecs",
-        params.get("eig_vecs")
+        params.get("eig_vecs", None)
     ])
     cargs.extend([
         "-prefix",
-        params.get("prefix")
+        params.get("prefix", None)
     ])
-    if params.get("mask") is not None:
+    if params.get("mask", None) is not None:
         cargs.extend([
             "-mask",
-            execution.input_file(params.get("mask"))
+            execution.input_file(params.get("mask", None))
         ])
-    if params.get("flip_x"):
+    if params.get("flip_x", False):
         cargs.append("-flip_x")
-    if params.get("flip_y"):
+    if params.get("flip_y", False):
         cargs.append("-flip_y")
-    if params.get("flip_z"):
+    if params.get("flip_z", False):
         cargs.append("-flip_z")
-    if params.get("scale_eigs") is not None:
+    if params.get("scale_eigs", None) is not None:
         cargs.extend([
             "-scale_eigs",
-            str(params.get("scale_eigs"))
+            str(params.get("scale_eigs", None))
         ])
     return cargs
 
@@ -178,8 +157,8 @@ def v_3d_eigs_to_dt_outputs(
     """
     ret = V3dEigsToDtOutputs(
         root=execution.output_file("."),
-        dt_brik_output=execution.output_file(params.get("prefix") + "_DT+orig.BRIK"),
-        dt_head_output=execution.output_file(params.get("prefix") + "_DT+orig.HEAD"),
+        dt_brik_output=execution.output_file(params.get("prefix", None) + "_DT+orig.BRIK"),
+        dt_head_output=execution.output_file(params.get("prefix", None) + "_DT+orig.HEAD"),
     )
     return ret
 
@@ -268,7 +247,6 @@ def v_3d_eigs_to_dt(
 
 __all__ = [
     "V3dEigsToDtOutputs",
-    "V3dEigsToDtParameters",
     "V_3D_EIGS_TO_DT_METADATA",
     "v_3d_eigs_to_dt",
     "v_3d_eigs_to_dt_execute",

@@ -14,7 +14,14 @@ MRI_LINEAR_ALIGN_BINARY_METADATA = Metadata(
 
 
 MriLinearAlignBinaryParameters = typing.TypedDict('MriLinearAlignBinaryParameters', {
-    "@type": typing.Literal["freesurfer.mri_linear_align_binary"],
+    "@type": typing.NotRequired[typing.Literal["freesurfer/mri_linear_align_binary"]],
+    "source": InputPathType,
+    "target": InputPathType,
+    "output_xform": str,
+    "target_label": typing.NotRequired[str | None],
+})
+MriLinearAlignBinaryParametersTagged = typing.TypedDict('MriLinearAlignBinaryParametersTagged', {
+    "@type": typing.Literal["freesurfer/mri_linear_align_binary"],
     "source": InputPathType,
     "target": InputPathType,
     "output_xform": str,
@@ -22,41 +29,9 @@ MriLinearAlignBinaryParameters = typing.TypedDict('MriLinearAlignBinaryParameter
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "freesurfer.mri_linear_align_binary": mri_linear_align_binary_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "freesurfer.mri_linear_align_binary": mri_linear_align_binary_outputs,
-    }.get(t)
-
-
 class MriLinearAlignBinaryOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `mri_linear_align_binary(...)`.
+    Output object returned when calling `MriLinearAlignBinaryParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -69,7 +44,7 @@ def mri_linear_align_binary_params(
     target: InputPathType,
     output_xform: str,
     target_label: str | None = None,
-) -> MriLinearAlignBinaryParameters:
+) -> MriLinearAlignBinaryParametersTagged:
     """
     Build parameters.
     
@@ -83,7 +58,7 @@ def mri_linear_align_binary_params(
         Parameter dictionary
     """
     params = {
-        "@type": "freesurfer.mri_linear_align_binary",
+        "@type": "freesurfer/mri_linear_align_binary",
         "source": source,
         "target": target,
         "output_xform": output_xform,
@@ -108,13 +83,13 @@ def mri_linear_align_binary_cargs(
     """
     cargs = []
     cargs.append("mri_linear_align_binary")
-    cargs.append(execution.input_file(params.get("source")))
-    cargs.append(execution.input_file(params.get("target")))
-    cargs.append(params.get("output_xform"))
-    if params.get("target_label") is not None:
+    cargs.append(execution.input_file(params.get("source", None)))
+    cargs.append(execution.input_file(params.get("target", None)))
+    cargs.append(params.get("output_xform", None))
+    if params.get("target_label", None) is not None:
         cargs.extend([
             "-h",
-            params.get("target_label")
+            params.get("target_label", None)
         ])
     return cargs
 
@@ -134,7 +109,7 @@ def mri_linear_align_binary_outputs(
     """
     ret = MriLinearAlignBinaryOutputs(
         root=execution.output_file("."),
-        output_xform_file=execution.output_file(params.get("output_xform")),
+        output_xform_file=execution.output_file(params.get("output_xform", None)),
     )
     return ret
 
@@ -205,7 +180,6 @@ def mri_linear_align_binary(
 __all__ = [
     "MRI_LINEAR_ALIGN_BINARY_METADATA",
     "MriLinearAlignBinaryOutputs",
-    "MriLinearAlignBinaryParameters",
     "mri_linear_align_binary",
     "mri_linear_align_binary_execute",
     "mri_linear_align_binary_params",

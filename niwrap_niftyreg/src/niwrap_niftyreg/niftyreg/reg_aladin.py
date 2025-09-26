@@ -14,7 +14,23 @@ REG_ALADIN_METADATA = Metadata(
 
 
 RegAladinParameters = typing.TypedDict('RegAladinParameters', {
-    "@type": typing.Literal["niftyreg.reg_aladin"],
+    "@type": typing.NotRequired[typing.Literal["niftyreg/reg_aladin"]],
+    "reference_image": InputPathType,
+    "floating_image": InputPathType,
+    "symmetric": bool,
+    "output_affine": typing.NotRequired[str | None],
+    "rigid_only": bool,
+    "direct_affine": bool,
+    "smooth_ref": typing.NotRequired[float | None],
+    "smooth_float": typing.NotRequired[float | None],
+    "num_levels": typing.NotRequired[float | None],
+    "first_levels": typing.NotRequired[float | None],
+    "use_nifti_origin": bool,
+    "percent_block": typing.NotRequired[float | None],
+    "percent_inlier": typing.NotRequired[float | None],
+})
+RegAladinParametersTagged = typing.TypedDict('RegAladinParametersTagged', {
+    "@type": typing.Literal["niftyreg/reg_aladin"],
     "reference_image": InputPathType,
     "floating_image": InputPathType,
     "symmetric": bool,
@@ -31,41 +47,9 @@ RegAladinParameters = typing.TypedDict('RegAladinParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "niftyreg.reg_aladin": reg_aladin_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "niftyreg.reg_aladin": reg_aladin_outputs,
-    }.get(t)
-
-
 class RegAladinOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `reg_aladin(...)`.
+    Output object returned when calling `RegAladinParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -87,7 +71,7 @@ def reg_aladin_params(
     use_nifti_origin: bool = False,
     percent_block: float | None = None,
     percent_inlier: float | None = None,
-) -> RegAladinParameters:
+) -> RegAladinParametersTagged:
     """
     Build parameters.
     
@@ -110,7 +94,7 @@ def reg_aladin_params(
         Parameter dictionary
     """
     params = {
-        "@type": "niftyreg.reg_aladin",
+        "@type": "niftyreg/reg_aladin",
         "reference_image": reference_image,
         "floating_image": floating_image,
         "symmetric": symmetric,
@@ -152,54 +136,54 @@ def reg_aladin_cargs(
     cargs.append("reg_aladin")
     cargs.extend([
         "-ref",
-        execution.input_file(params.get("reference_image"))
+        execution.input_file(params.get("reference_image", None))
     ])
     cargs.extend([
         "-flo",
-        execution.input_file(params.get("floating_image"))
+        execution.input_file(params.get("floating_image", None))
     ])
-    if params.get("symmetric"):
+    if params.get("symmetric", False):
         cargs.append("-sym")
-    if params.get("output_affine") is not None:
+    if params.get("output_affine", None) is not None:
         cargs.extend([
             "-aff",
-            params.get("output_affine")
+            params.get("output_affine", None)
         ])
-    if params.get("rigid_only"):
+    if params.get("rigid_only", False):
         cargs.append("-rigOnly")
-    if params.get("direct_affine"):
+    if params.get("direct_affine", False):
         cargs.append("-affDirect")
-    if params.get("smooth_ref") is not None:
+    if params.get("smooth_ref", None) is not None:
         cargs.extend([
             "-smooR",
-            str(params.get("smooth_ref"))
+            str(params.get("smooth_ref", None))
         ])
-    if params.get("smooth_float") is not None:
+    if params.get("smooth_float", None) is not None:
         cargs.extend([
             "-smooF",
-            str(params.get("smooth_float"))
+            str(params.get("smooth_float", None))
         ])
-    if params.get("num_levels") is not None:
+    if params.get("num_levels", None) is not None:
         cargs.extend([
             "-ln",
-            str(params.get("num_levels"))
+            str(params.get("num_levels", None))
         ])
-    if params.get("first_levels") is not None:
+    if params.get("first_levels", None) is not None:
         cargs.extend([
             "-lp",
-            str(params.get("first_levels"))
+            str(params.get("first_levels", None))
         ])
-    if params.get("use_nifti_origin"):
+    if params.get("use_nifti_origin", False):
         cargs.append("-nac")
-    if params.get("percent_block") is not None:
+    if params.get("percent_block", None) is not None:
         cargs.extend([
             "-%v",
-            str(params.get("percent_block"))
+            str(params.get("percent_block", None))
         ])
-    if params.get("percent_inlier") is not None:
+    if params.get("percent_inlier", None) is not None:
         cargs.extend([
             "-%i",
-            str(params.get("percent_inlier"))
+            str(params.get("percent_inlier", None))
         ])
     return cargs
 
@@ -321,7 +305,6 @@ def reg_aladin(
 __all__ = [
     "REG_ALADIN_METADATA",
     "RegAladinOutputs",
-    "RegAladinParameters",
     "reg_aladin",
     "reg_aladin_execute",
     "reg_aladin_params",

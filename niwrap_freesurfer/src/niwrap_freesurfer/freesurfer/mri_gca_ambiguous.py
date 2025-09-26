@@ -14,47 +14,20 @@ MRI_GCA_AMBIGUOUS_METADATA = Metadata(
 
 
 MriGcaAmbiguousParameters = typing.TypedDict('MriGcaAmbiguousParameters', {
-    "@type": typing.Literal["freesurfer.mri_gca_ambiguous"],
+    "@type": typing.NotRequired[typing.Literal["freesurfer/mri_gca_ambiguous"]],
+    "gca_file": InputPathType,
+    "output_volume": str,
+})
+MriGcaAmbiguousParametersTagged = typing.TypedDict('MriGcaAmbiguousParametersTagged', {
+    "@type": typing.Literal["freesurfer/mri_gca_ambiguous"],
     "gca_file": InputPathType,
     "output_volume": str,
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "freesurfer.mri_gca_ambiguous": mri_gca_ambiguous_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "freesurfer.mri_gca_ambiguous": mri_gca_ambiguous_outputs,
-    }.get(t)
-
-
 class MriGcaAmbiguousOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `mri_gca_ambiguous(...)`.
+    Output object returned when calling `MriGcaAmbiguousParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -65,7 +38,7 @@ class MriGcaAmbiguousOutputs(typing.NamedTuple):
 def mri_gca_ambiguous_params(
     gca_file: InputPathType,
     output_volume: str,
-) -> MriGcaAmbiguousParameters:
+) -> MriGcaAmbiguousParametersTagged:
     """
     Build parameters.
     
@@ -76,7 +49,7 @@ def mri_gca_ambiguous_params(
         Parameter dictionary
     """
     params = {
-        "@type": "freesurfer.mri_gca_ambiguous",
+        "@type": "freesurfer/mri_gca_ambiguous",
         "gca_file": gca_file,
         "output_volume": output_volume,
     }
@@ -98,8 +71,8 @@ def mri_gca_ambiguous_cargs(
     """
     cargs = []
     cargs.append("mri_gca_ambiguous")
-    cargs.append(execution.input_file(params.get("gca_file")))
-    cargs.append(params.get("output_volume"))
+    cargs.append(execution.input_file(params.get("gca_file", None)))
+    cargs.append(params.get("output_volume", None))
     return cargs
 
 
@@ -118,7 +91,7 @@ def mri_gca_ambiguous_outputs(
     """
     ret = MriGcaAmbiguousOutputs(
         root=execution.output_file("."),
-        output_image=execution.output_file(params.get("output_volume")),
+        output_image=execution.output_file(params.get("output_volume", None)),
     )
     return ret
 
@@ -184,7 +157,6 @@ def mri_gca_ambiguous(
 __all__ = [
     "MRI_GCA_AMBIGUOUS_METADATA",
     "MriGcaAmbiguousOutputs",
-    "MriGcaAmbiguousParameters",
     "mri_gca_ambiguous",
     "mri_gca_ambiguous_execute",
     "mri_gca_ambiguous_params",

@@ -14,7 +14,14 @@ FS_RUN_FROM_MCR_METADATA = Metadata(
 
 
 FsRunFromMcrParameters = typing.TypedDict('FsRunFromMcrParameters', {
-    "@type": typing.Literal["freesurfer.fs_run_from_mcr"],
+    "@type": typing.NotRequired[typing.Literal["freesurfer/fs_run_from_mcr"]],
+    "name": typing.NotRequired[str | None],
+    "command": typing.NotRequired[str | None],
+    "zeroth_flag": bool,
+    "empty_env_flag": bool,
+})
+FsRunFromMcrParametersTagged = typing.TypedDict('FsRunFromMcrParametersTagged', {
+    "@type": typing.Literal["freesurfer/fs_run_from_mcr"],
     "name": typing.NotRequired[str | None],
     "command": typing.NotRequired[str | None],
     "zeroth_flag": bool,
@@ -22,40 +29,9 @@ FsRunFromMcrParameters = typing.TypedDict('FsRunFromMcrParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "freesurfer.fs_run_from_mcr": fs_run_from_mcr_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-    }.get(t)
-
-
 class FsRunFromMcrOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `fs_run_from_mcr(...)`.
+    Output object returned when calling `FsRunFromMcrParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -66,7 +42,7 @@ def fs_run_from_mcr_params(
     command: str | None = None,
     zeroth_flag: bool = False,
     empty_env_flag: bool = False,
-) -> FsRunFromMcrParameters:
+) -> FsRunFromMcrParametersTagged:
     """
     Build parameters.
     
@@ -79,7 +55,7 @@ def fs_run_from_mcr_params(
         Parameter dictionary
     """
     params = {
-        "@type": "freesurfer.fs_run_from_mcr",
+        "@type": "freesurfer/fs_run_from_mcr",
         "zeroth_flag": zeroth_flag,
         "empty_env_flag": empty_env_flag,
     }
@@ -105,16 +81,16 @@ def fs_run_from_mcr_cargs(
     """
     cargs = []
     cargs.append("fs_run_from_mcr")
-    if params.get("name") is not None:
+    if params.get("name", None) is not None:
         cargs.extend([
             "-a",
-            params.get("name")
+            params.get("name", None)
         ])
-    if params.get("command") is not None:
-        cargs.append(params.get("command"))
-    if params.get("zeroth_flag"):
+    if params.get("command", None) is not None:
+        cargs.append(params.get("command", None))
+    if params.get("zeroth_flag", False):
         cargs.append("-l")
-    if params.get("empty_env_flag"):
+    if params.get("empty_env_flag", False):
         cargs.append("-c")
     return cargs
 
@@ -203,7 +179,6 @@ def fs_run_from_mcr(
 __all__ = [
     "FS_RUN_FROM_MCR_METADATA",
     "FsRunFromMcrOutputs",
-    "FsRunFromMcrParameters",
     "fs_run_from_mcr",
     "fs_run_from_mcr_execute",
     "fs_run_from_mcr_params",

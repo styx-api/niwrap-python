@@ -14,7 +14,14 @@ IMUPSAM_METADATA = Metadata(
 
 
 ImupsamParameters = typing.TypedDict('ImupsamParameters', {
-    "@type": typing.Literal["afni.imupsam"],
+    "@type": typing.NotRequired[typing.Literal["afni/imupsam"]],
+    "ascii_flag": bool,
+    "factor": int,
+    "input_image": InputPathType,
+    "output_image": str,
+})
+ImupsamParametersTagged = typing.TypedDict('ImupsamParametersTagged', {
+    "@type": typing.Literal["afni/imupsam"],
     "ascii_flag": bool,
     "factor": int,
     "input_image": InputPathType,
@@ -22,41 +29,9 @@ ImupsamParameters = typing.TypedDict('ImupsamParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "afni.imupsam": imupsam_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "afni.imupsam": imupsam_outputs,
-    }.get(t)
-
-
 class ImupsamOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `imupsam(...)`.
+    Output object returned when calling `ImupsamParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -69,7 +44,7 @@ def imupsam_params(
     input_image: InputPathType,
     output_image: str,
     ascii_flag: bool = False,
-) -> ImupsamParameters:
+) -> ImupsamParametersTagged:
     """
     Build parameters.
     
@@ -84,7 +59,7 @@ def imupsam_params(
         Parameter dictionary
     """
     params = {
-        "@type": "afni.imupsam",
+        "@type": "afni/imupsam",
         "ascii_flag": ascii_flag,
         "factor": factor,
         "input_image": input_image,
@@ -108,11 +83,11 @@ def imupsam_cargs(
     """
     cargs = []
     cargs.append("imupsam")
-    if params.get("ascii_flag"):
+    if params.get("ascii_flag", False):
         cargs.append("-A")
-    cargs.append(str(params.get("factor")))
-    cargs.append(execution.input_file(params.get("input_image")))
-    cargs.append(params.get("output_image"))
+    cargs.append(str(params.get("factor", None)))
+    cargs.append(execution.input_file(params.get("input_image", None)))
+    cargs.append(params.get("output_image", None))
     return cargs
 
 
@@ -131,7 +106,7 @@ def imupsam_outputs(
     """
     ret = ImupsamOutputs(
         root=execution.output_file("."),
-        output_image_file=execution.output_file(params.get("output_image")),
+        output_image_file=execution.output_file(params.get("output_image", None)),
     )
     return ret
 
@@ -203,7 +178,6 @@ def imupsam(
 __all__ = [
     "IMUPSAM_METADATA",
     "ImupsamOutputs",
-    "ImupsamParameters",
     "imupsam",
     "imupsam_execute",
     "imupsam_params",

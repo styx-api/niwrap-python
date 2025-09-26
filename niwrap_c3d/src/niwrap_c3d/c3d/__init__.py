@@ -40,8 +40,8 @@ def execute(
         runner: Command runner.
     """
     return {
-        "c3d.c2d": c2d_execute,
-        "c3d.c3d": c3d_execute,
-        "c3d.c3d_affine_tool": c3d_affine_tool_execute,
-        "c3d.c4d": c4d_execute,
+        "c3d/c2d": c2d_execute,
+        "c3d/c3d": c3d_execute,
+        "c3d/c3d_affine_tool": c3d_affine_tool_execute,
+        "c3d/c4d": c4d_execute,
     }[params["@type"]](params, runner)

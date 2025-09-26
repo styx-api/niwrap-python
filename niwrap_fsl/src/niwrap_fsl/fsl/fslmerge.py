@@ -14,7 +14,20 @@ FSLMERGE_METADATA = Metadata(
 
 
 FslmergeParameters = typing.TypedDict('FslmergeParameters', {
-    "@type": typing.Literal["fsl.fslmerge"],
+    "@type": typing.NotRequired[typing.Literal["fsl/fslmerge"]],
+    "merge_time": bool,
+    "merge_x": bool,
+    "merge_y": bool,
+    "merge_z": bool,
+    "auto_choose": bool,
+    "merge_set_tr": bool,
+    "output_file": str,
+    "input_files": list[InputPathType],
+    "volume_number": typing.NotRequired[float | None],
+    "tr_value": typing.NotRequired[float | None],
+})
+FslmergeParametersTagged = typing.TypedDict('FslmergeParametersTagged', {
+    "@type": typing.Literal["fsl/fslmerge"],
     "merge_time": bool,
     "merge_x": bool,
     "merge_y": bool,
@@ -28,41 +41,9 @@ FslmergeParameters = typing.TypedDict('FslmergeParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "fsl.fslmerge": fslmerge_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "fsl.fslmerge": fslmerge_outputs,
-    }.get(t)
-
-
 class FslmergeOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `fslmerge(...)`.
+    Output object returned when calling `FslmergeParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -81,7 +62,7 @@ def fslmerge_params(
     merge_set_tr: bool = False,
     volume_number: float | None = None,
     tr_value: float | None = None,
-) -> FslmergeParameters:
+) -> FslmergeParametersTagged:
     """
     Build parameters.
     
@@ -103,7 +84,7 @@ def fslmerge_params(
         Parameter dictionary
     """
     params = {
-        "@type": "fsl.fslmerge",
+        "@type": "fsl/fslmerge",
         "merge_time": merge_time,
         "merge_x": merge_x,
         "merge_y": merge_y,
@@ -135,27 +116,27 @@ def fslmerge_cargs(
     """
     cargs = []
     cargs.append("fslmerge")
-    if params.get("merge_time"):
+    if params.get("merge_time", False):
         cargs.append("-t")
-    if params.get("merge_x"):
+    if params.get("merge_x", False):
         cargs.append("-x")
-    if params.get("merge_y"):
+    if params.get("merge_y", False):
         cargs.append("-y")
-    if params.get("merge_z"):
+    if params.get("merge_z", False):
         cargs.append("-z")
-    if params.get("auto_choose"):
+    if params.get("auto_choose", False):
         cargs.append("-a")
-    if params.get("merge_set_tr"):
+    if params.get("merge_set_tr", False):
         cargs.append("-tr")
-    cargs.append(params.get("output_file"))
-    cargs.extend([execution.input_file(f) for f in params.get("input_files")])
-    if params.get("volume_number") is not None:
+    cargs.append(params.get("output_file", None))
+    cargs.extend([execution.input_file(f) for f in params.get("input_files", None)])
+    if params.get("volume_number", None) is not None:
         cargs.extend([
             "-n",
-            str(params.get("volume_number"))
+            str(params.get("volume_number", None))
         ])
-    if params.get("tr_value") is not None:
-        cargs.append(str(params.get("tr_value")))
+    if params.get("tr_value", None) is not None:
+        cargs.append(str(params.get("tr_value", None)))
     return cargs
 
 
@@ -174,7 +155,7 @@ def fslmerge_outputs(
     """
     ret = FslmergeOutputs(
         root=execution.output_file("."),
-        out_file=execution.output_file(params.get("output_file")),
+        out_file=execution.output_file(params.get("output_file", None)),
     )
     return ret
 
@@ -265,7 +246,6 @@ def fslmerge(
 __all__ = [
     "FSLMERGE_METADATA",
     "FslmergeOutputs",
-    "FslmergeParameters",
     "fslmerge",
     "fslmerge_execute",
     "fslmerge_params",

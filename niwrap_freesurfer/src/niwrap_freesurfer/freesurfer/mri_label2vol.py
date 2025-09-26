@@ -14,7 +14,28 @@ MRI_LABEL2VOL_METADATA = Metadata(
 
 
 MriLabel2volParameters = typing.TypedDict('MriLabel2volParameters', {
-    "@type": typing.Literal["freesurfer.mri_label2vol"],
+    "@type": typing.NotRequired[typing.Literal["freesurfer/mri_label2vol"]],
+    "labels": typing.NotRequired[list[str] | None],
+    "annotation": typing.NotRequired[InputPathType | None],
+    "segmentation": typing.NotRequired[InputPathType | None],
+    "template": InputPathType,
+    "registration": typing.NotRequired[InputPathType | None],
+    "identity_flag": bool,
+    "fill_threshold": typing.NotRequired[float | None],
+    "label_vox_vol": typing.NotRequired[float | None],
+    "projection": typing.NotRequired[str | None],
+    "subject": typing.NotRequired[str | None],
+    "hemisphere": typing.NotRequired[str | None],
+    "output_volume": str,
+    "hits_volume": typing.NotRequired[str | None],
+    "label_stat_volume": typing.NotRequired[str | None],
+    "stat_threshold": typing.NotRequired[float | None],
+    "offset": typing.NotRequired[float | None],
+    "defects": typing.NotRequired[str | None],
+    "native_vox2ras_flag": bool,
+})
+MriLabel2volParametersTagged = typing.TypedDict('MriLabel2volParametersTagged', {
+    "@type": typing.Literal["freesurfer/mri_label2vol"],
     "labels": typing.NotRequired[list[str] | None],
     "annotation": typing.NotRequired[InputPathType | None],
     "segmentation": typing.NotRequired[InputPathType | None],
@@ -36,41 +57,9 @@ MriLabel2volParameters = typing.TypedDict('MriLabel2volParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "freesurfer.mri_label2vol": mri_label2vol_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "freesurfer.mri_label2vol": mri_label2vol_outputs,
-    }.get(t)
-
-
 class MriLabel2volOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `mri_label2vol(...)`.
+    Output object returned when calling `MriLabel2volParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -101,7 +90,7 @@ def mri_label2vol_params(
     offset: float | None = None,
     defects: str | None = None,
     native_vox2ras_flag: bool = False,
-) -> MriLabel2volParameters:
+) -> MriLabel2volParametersTagged:
     """
     Build parameters.
     
@@ -137,7 +126,7 @@ def mri_label2vol_params(
         Parameter dictionary
     """
     params = {
-        "@type": "freesurfer.mri_label2vol",
+        "@type": "freesurfer/mri_label2vol",
         "template": template,
         "identity_flag": identity_flag,
         "output_volume": output_volume,
@@ -189,87 +178,87 @@ def mri_label2vol_cargs(
     """
     cargs = []
     cargs.append("mri_label2vol")
-    if params.get("labels") is not None:
+    if params.get("labels", None) is not None:
         cargs.extend([
             "--label",
-            *params.get("labels")
+            *params.get("labels", None)
         ])
-    if params.get("annotation") is not None:
+    if params.get("annotation", None) is not None:
         cargs.extend([
             "--annot",
-            execution.input_file(params.get("annotation"))
+            execution.input_file(params.get("annotation", None))
         ])
-    if params.get("segmentation") is not None:
+    if params.get("segmentation", None) is not None:
         cargs.extend([
             "--seg",
-            execution.input_file(params.get("segmentation"))
+            execution.input_file(params.get("segmentation", None))
         ])
     cargs.extend([
         "--temp",
-        execution.input_file(params.get("template"))
+        execution.input_file(params.get("template", None))
     ])
-    if params.get("registration") is not None:
+    if params.get("registration", None) is not None:
         cargs.extend([
             "--reg",
-            execution.input_file(params.get("registration"))
+            execution.input_file(params.get("registration", None))
         ])
-    if params.get("identity_flag"):
+    if params.get("identity_flag", False):
         cargs.append("--identity")
-    if params.get("fill_threshold") is not None:
+    if params.get("fill_threshold", None) is not None:
         cargs.extend([
             "--fillthresh",
-            str(params.get("fill_threshold"))
+            str(params.get("fill_threshold", None))
         ])
-    if params.get("label_vox_vol") is not None:
+    if params.get("label_vox_vol", None) is not None:
         cargs.extend([
             "--labvoxvol",
-            str(params.get("label_vox_vol"))
+            str(params.get("label_vox_vol", None))
         ])
-    if params.get("projection") is not None:
+    if params.get("projection", None) is not None:
         cargs.extend([
             "--proj",
-            params.get("projection")
+            params.get("projection", None)
         ])
-    if params.get("subject") is not None:
+    if params.get("subject", None) is not None:
         cargs.extend([
             "--subject",
-            params.get("subject")
+            params.get("subject", None)
         ])
-    if params.get("hemisphere") is not None:
+    if params.get("hemisphere", None) is not None:
         cargs.extend([
             "--hemi",
-            params.get("hemisphere")
+            params.get("hemisphere", None)
         ])
     cargs.extend([
         "--o",
-        params.get("output_volume")
+        params.get("output_volume", None)
     ])
-    if params.get("hits_volume") is not None:
+    if params.get("hits_volume", None) is not None:
         cargs.extend([
             "--hits",
-            params.get("hits_volume")
+            params.get("hits_volume", None)
         ])
-    if params.get("label_stat_volume") is not None:
+    if params.get("label_stat_volume", None) is not None:
         cargs.extend([
             "--label-stat",
-            params.get("label_stat_volume")
+            params.get("label_stat_volume", None)
         ])
-    if params.get("stat_threshold") is not None:
+    if params.get("stat_threshold", None) is not None:
         cargs.extend([
             "--stat-thresh",
-            str(params.get("stat_threshold"))
+            str(params.get("stat_threshold", None))
         ])
-    if params.get("offset") is not None:
+    if params.get("offset", None) is not None:
         cargs.extend([
             "--offset",
-            str(params.get("offset"))
+            str(params.get("offset", None))
         ])
-    if params.get("defects") is not None:
+    if params.get("defects", None) is not None:
         cargs.extend([
             "--defects",
-            params.get("defects")
+            params.get("defects", None)
         ])
-    if params.get("native_vox2ras_flag"):
+    if params.get("native_vox2ras_flag", False):
         cargs.append("--native-vox2ras")
     return cargs
 
@@ -289,9 +278,9 @@ def mri_label2vol_outputs(
     """
     ret = MriLabel2volOutputs(
         root=execution.output_file("."),
-        output_vol=execution.output_file(params.get("output_volume")),
-        hits_vol=execution.output_file(params.get("hits_volume")) if (params.get("hits_volume") is not None) else None,
-        label_stat_vol=execution.output_file(params.get("label_stat_volume")) if (params.get("label_stat_volume") is not None) else None,
+        output_vol=execution.output_file(params.get("output_volume", None)),
+        hits_vol=execution.output_file(params.get("hits_volume", None)) if (params.get("hits_volume") is not None) else None,
+        label_stat_vol=execution.output_file(params.get("label_stat_volume", None)) if (params.get("label_stat_volume") is not None) else None,
     )
     return ret
 
@@ -412,7 +401,6 @@ def mri_label2vol(
 __all__ = [
     "MRI_LABEL2VOL_METADATA",
     "MriLabel2volOutputs",
-    "MriLabel2volParameters",
     "mri_label2vol",
     "mri_label2vol_execute",
     "mri_label2vol_params",

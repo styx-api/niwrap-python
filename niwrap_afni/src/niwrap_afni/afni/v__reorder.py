@@ -14,7 +14,17 @@ V__REORDER_METADATA = Metadata(
 
 
 VReorderParameters = typing.TypedDict('VReorderParameters', {
-    "@type": typing.Literal["afni.@Reorder"],
+    "@type": typing.NotRequired[typing.Literal["afni/@Reorder"]],
+    "input_dataset": InputPathType,
+    "mapfile": InputPathType,
+    "prefix": str,
+    "offset": typing.NotRequired[float | None],
+    "save_work": bool,
+    "test": bool,
+    "help": bool,
+})
+VReorderParametersTagged = typing.TypedDict('VReorderParametersTagged', {
+    "@type": typing.Literal["afni/@Reorder"],
     "input_dataset": InputPathType,
     "mapfile": InputPathType,
     "prefix": str,
@@ -25,41 +35,9 @@ VReorderParameters = typing.TypedDict('VReorderParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "afni.@Reorder": v__reorder_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "afni.@Reorder": v__reorder_outputs,
-    }.get(t)
-
-
 class VReorderOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `v__reorder(...)`.
+    Output object returned when calling `VReorderParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -75,7 +53,7 @@ def v__reorder_params(
     save_work: bool = False,
     test: bool = False,
     help_: bool = False,
-) -> VReorderParameters:
+) -> VReorderParametersTagged:
     """
     Build parameters.
     
@@ -91,7 +69,7 @@ def v__reorder_params(
         Parameter dictionary
     """
     params = {
-        "@type": "afni.@Reorder",
+        "@type": "afni/@Reorder",
         "input_dataset": input_dataset,
         "mapfile": mapfile,
         "prefix": prefix,
@@ -119,19 +97,19 @@ def v__reorder_cargs(
     """
     cargs = []
     cargs.append("@Reorder")
-    cargs.append(execution.input_file(params.get("input_dataset")))
-    cargs.append(execution.input_file(params.get("mapfile")))
-    cargs.append(params.get("prefix"))
-    if params.get("offset") is not None:
+    cargs.append(execution.input_file(params.get("input_dataset", None)))
+    cargs.append(execution.input_file(params.get("mapfile", None)))
+    cargs.append(params.get("prefix", None))
+    if params.get("offset", None) is not None:
         cargs.extend([
             "-offset",
-            str(params.get("offset"))
+            str(params.get("offset", None))
         ])
-    if params.get("save_work"):
+    if params.get("save_work", False):
         cargs.append("-save_work")
-    if params.get("test"):
+    if params.get("test", False):
         cargs.append("-test")
-    if params.get("help"):
+    if params.get("help", False):
         cargs.append("-help")
     return cargs
 
@@ -151,7 +129,7 @@ def v__reorder_outputs(
     """
     ret = VReorderOutputs(
         root=execution.output_file("."),
-        output_dataset=execution.output_file(params.get("prefix") + "+tlrc"),
+        output_dataset=execution.output_file(params.get("prefix", None) + "+tlrc"),
     )
     return ret
 
@@ -231,7 +209,6 @@ def v__reorder(
 
 __all__ = [
     "VReorderOutputs",
-    "VReorderParameters",
     "V__REORDER_METADATA",
     "v__reorder",
     "v__reorder_execute",

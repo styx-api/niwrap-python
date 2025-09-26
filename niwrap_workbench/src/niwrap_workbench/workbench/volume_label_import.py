@@ -14,7 +14,17 @@ VOLUME_LABEL_IMPORT_METADATA = Metadata(
 
 
 VolumeLabelImportParameters = typing.TypedDict('VolumeLabelImportParameters', {
-    "@type": typing.Literal["workbench.volume-label-import"],
+    "@type": typing.NotRequired[typing.Literal["workbench/volume-label-import"]],
+    "input": InputPathType,
+    "label_list_file": str,
+    "output": str,
+    "opt_discard_others": bool,
+    "opt_unlabeled_value_value": typing.NotRequired[int | None],
+    "opt_subvolume_subvol": typing.NotRequired[str | None],
+    "opt_drop_unused_labels": bool,
+})
+VolumeLabelImportParametersTagged = typing.TypedDict('VolumeLabelImportParametersTagged', {
+    "@type": typing.Literal["workbench/volume-label-import"],
     "input": InputPathType,
     "label_list_file": str,
     "output": str,
@@ -25,41 +35,9 @@ VolumeLabelImportParameters = typing.TypedDict('VolumeLabelImportParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "workbench.volume-label-import": volume_label_import_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "workbench.volume-label-import": volume_label_import_outputs,
-    }.get(t)
-
-
 class VolumeLabelImportOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `volume_label_import(...)`.
+    Output object returned when calling `VolumeLabelImportParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -75,7 +53,7 @@ def volume_label_import_params(
     opt_unlabeled_value_value: int | None = None,
     opt_subvolume_subvol: str | None = None,
     opt_drop_unused_labels: bool = False,
-) -> VolumeLabelImportParameters:
+) -> VolumeLabelImportParametersTagged:
     """
     Build parameters.
     
@@ -95,7 +73,7 @@ def volume_label_import_params(
         Parameter dictionary
     """
     params = {
-        "@type": "workbench.volume-label-import",
+        "@type": "workbench/volume-label-import",
         "input": input_,
         "label_list_file": label_list_file,
         "output": output,
@@ -125,22 +103,22 @@ def volume_label_import_cargs(
     cargs = []
     cargs.append("wb_command")
     cargs.append("-volume-label-import")
-    cargs.append(execution.input_file(params.get("input")))
-    cargs.append(params.get("label_list_file"))
-    cargs.append(params.get("output"))
-    if params.get("opt_discard_others"):
+    cargs.append(execution.input_file(params.get("input", None)))
+    cargs.append(params.get("label_list_file", None))
+    cargs.append(params.get("output", None))
+    if params.get("opt_discard_others", False):
         cargs.append("-discard-others")
-    if params.get("opt_unlabeled_value_value") is not None:
+    if params.get("opt_unlabeled_value_value", None) is not None:
         cargs.extend([
             "-unlabeled-value",
-            str(params.get("opt_unlabeled_value_value"))
+            str(params.get("opt_unlabeled_value_value", None))
         ])
-    if params.get("opt_subvolume_subvol") is not None:
+    if params.get("opt_subvolume_subvol", None) is not None:
         cargs.extend([
             "-subvolume",
-            params.get("opt_subvolume_subvol")
+            params.get("opt_subvolume_subvol", None)
         ])
-    if params.get("opt_drop_unused_labels"):
+    if params.get("opt_drop_unused_labels", False):
         cargs.append("-drop-unused-labels")
     return cargs
 
@@ -160,7 +138,7 @@ def volume_label_import_outputs(
     """
     ret = VolumeLabelImportOutputs(
         root=execution.output_file("."),
-        output=execution.output_file(params.get("output")),
+        output=execution.output_file(params.get("output", None)),
     )
     return ret
 
@@ -295,7 +273,6 @@ def volume_label_import(
 __all__ = [
     "VOLUME_LABEL_IMPORT_METADATA",
     "VolumeLabelImportOutputs",
-    "VolumeLabelImportParameters",
     "volume_label_import",
     "volume_label_import_execute",
     "volume_label_import_params",

@@ -14,47 +14,20 @@ TALAIRACH_MGH_METADATA = Metadata(
 
 
 TalairachMghParameters = typing.TypedDict('TalairachMghParameters', {
-    "@type": typing.Literal["freesurfer.talairach_mgh"],
+    "@type": typing.NotRequired[typing.Literal["freesurfer/talairach_mgh"]],
+    "input_volume": InputPathType,
+    "output_volume": str,
+})
+TalairachMghParametersTagged = typing.TypedDict('TalairachMghParametersTagged', {
+    "@type": typing.Literal["freesurfer/talairach_mgh"],
     "input_volume": InputPathType,
     "output_volume": str,
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "freesurfer.talairach_mgh": talairach_mgh_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "freesurfer.talairach_mgh": talairach_mgh_outputs,
-    }.get(t)
-
-
 class TalairachMghOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `talairach_mgh(...)`.
+    Output object returned when calling `TalairachMghParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -65,7 +38,7 @@ class TalairachMghOutputs(typing.NamedTuple):
 def talairach_mgh_params(
     input_volume: InputPathType,
     output_volume: str,
-) -> TalairachMghParameters:
+) -> TalairachMghParametersTagged:
     """
     Build parameters.
     
@@ -76,7 +49,7 @@ def talairach_mgh_params(
         Parameter dictionary
     """
     params = {
-        "@type": "freesurfer.talairach_mgh",
+        "@type": "freesurfer/talairach_mgh",
         "input_volume": input_volume,
         "output_volume": output_volume,
     }
@@ -98,8 +71,8 @@ def talairach_mgh_cargs(
     """
     cargs = []
     cargs.append("talairach_mgh")
-    cargs.append(execution.input_file(params.get("input_volume")))
-    cargs.append(params.get("output_volume"))
+    cargs.append(execution.input_file(params.get("input_volume", None)))
+    cargs.append(params.get("output_volume", None))
     return cargs
 
 
@@ -118,7 +91,7 @@ def talairach_mgh_outputs(
     """
     ret = TalairachMghOutputs(
         root=execution.output_file("."),
-        transformed_output=execution.output_file(params.get("output_volume")),
+        transformed_output=execution.output_file(params.get("output_volume", None)),
     )
     return ret
 
@@ -182,7 +155,6 @@ def talairach_mgh(
 __all__ = [
     "TALAIRACH_MGH_METADATA",
     "TalairachMghOutputs",
-    "TalairachMghParameters",
     "talairach_mgh",
     "talairach_mgh_execute",
     "talairach_mgh_params",

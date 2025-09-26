@@ -14,7 +14,16 @@ FSLSELECTVOLS_METADATA = Metadata(
 
 
 FslselectvolsParameters = typing.TypedDict('FslselectvolsParameters', {
-    "@type": typing.Literal["fsl.fslselectvols"],
+    "@type": typing.NotRequired[typing.Literal["fsl/fslselectvols"]],
+    "input_file": InputPathType,
+    "output_file": str,
+    "vols_list": str,
+    "output_mean_flag": bool,
+    "output_variance_flag": bool,
+    "help_flag": bool,
+})
+FslselectvolsParametersTagged = typing.TypedDict('FslselectvolsParametersTagged', {
+    "@type": typing.Literal["fsl/fslselectvols"],
     "input_file": InputPathType,
     "output_file": str,
     "vols_list": str,
@@ -24,41 +33,9 @@ FslselectvolsParameters = typing.TypedDict('FslselectvolsParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "fsl.fslselectvols": fslselectvols_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "fsl.fslselectvols": fslselectvols_outputs,
-    }.get(t)
-
-
 class FslselectvolsOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `fslselectvols(...)`.
+    Output object returned when calling `FslselectvolsParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -73,7 +50,7 @@ def fslselectvols_params(
     output_mean_flag: bool = False,
     output_variance_flag: bool = False,
     help_flag: bool = False,
-) -> FslselectvolsParameters:
+) -> FslselectvolsParametersTagged:
     """
     Build parameters.
     
@@ -89,7 +66,7 @@ def fslselectvols_params(
         Parameter dictionary
     """
     params = {
-        "@type": "fsl.fslselectvols",
+        "@type": "fsl/fslselectvols",
         "input_file": input_file,
         "output_file": output_file,
         "vols_list": vols_list,
@@ -117,21 +94,21 @@ def fslselectvols_cargs(
     cargs.append("fslselectvols")
     cargs.extend([
         "-i",
-        execution.input_file(params.get("input_file"))
+        execution.input_file(params.get("input_file", None))
     ])
     cargs.extend([
         "-o",
-        params.get("output_file")
+        params.get("output_file", None)
     ])
     cargs.extend([
         "--vols",
-        params.get("vols_list")
+        params.get("vols_list", None)
     ])
-    if params.get("output_mean_flag"):
+    if params.get("output_mean_flag", False):
         cargs.append("-m")
-    if params.get("output_variance_flag"):
+    if params.get("output_variance_flag", False):
         cargs.append("-v")
-    if params.get("help_flag"):
+    if params.get("help_flag", False):
         cargs.append("-h")
     return cargs
 
@@ -151,7 +128,7 @@ def fslselectvols_outputs(
     """
     ret = FslselectvolsOutputs(
         root=execution.output_file("."),
-        output_4d_image=execution.output_file(params.get("output_file")),
+        output_4d_image=execution.output_file(params.get("output_file", None)),
     )
     return ret
 
@@ -228,7 +205,6 @@ def fslselectvols(
 __all__ = [
     "FSLSELECTVOLS_METADATA",
     "FslselectvolsOutputs",
-    "FslselectvolsParameters",
     "fslselectvols",
     "fslselectvols_execute",
     "fslselectvols_params",

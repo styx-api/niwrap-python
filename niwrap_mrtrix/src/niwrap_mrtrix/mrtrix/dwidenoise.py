@@ -14,14 +14,37 @@ DWIDENOISE_METADATA = Metadata(
 
 
 DwidenoiseConfigParameters = typing.TypedDict('DwidenoiseConfigParameters', {
-    "@type": typing.Literal["mrtrix.dwidenoise.config"],
+    "@type": typing.NotRequired[typing.Literal["config"]],
+    "key": str,
+    "value": str,
+})
+DwidenoiseConfigParametersTagged = typing.TypedDict('DwidenoiseConfigParametersTagged', {
+    "@type": typing.Literal["config"],
     "key": str,
     "value": str,
 })
 
 
 DwidenoiseParameters = typing.TypedDict('DwidenoiseParameters', {
-    "@type": typing.Literal["mrtrix.dwidenoise"],
+    "@type": typing.NotRequired[typing.Literal["mrtrix/dwidenoise"]],
+    "mask": typing.NotRequired[InputPathType | None],
+    "extent": typing.NotRequired[list[int] | None],
+    "noise": typing.NotRequired[str | None],
+    "datatype": typing.NotRequired[str | None],
+    "estimator": typing.NotRequired[str | None],
+    "info": bool,
+    "quiet": bool,
+    "debug": bool,
+    "force": bool,
+    "nthreads": typing.NotRequired[int | None],
+    "config": typing.NotRequired[list[DwidenoiseConfigParameters] | None],
+    "help": bool,
+    "version": bool,
+    "dwi": InputPathType,
+    "out": str,
+})
+DwidenoiseParametersTagged = typing.TypedDict('DwidenoiseParametersTagged', {
+    "@type": typing.Literal["mrtrix/dwidenoise"],
     "mask": typing.NotRequired[InputPathType | None],
     "extent": typing.NotRequired[list[int] | None],
     "noise": typing.NotRequired[str | None],
@@ -40,43 +63,10 @@ DwidenoiseParameters = typing.TypedDict('DwidenoiseParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "mrtrix.dwidenoise": dwidenoise_cargs,
-        "mrtrix.dwidenoise.config": dwidenoise_config_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "mrtrix.dwidenoise": dwidenoise_outputs,
-    }.get(t)
-
-
 def dwidenoise_config_params(
     key: str,
     value: str,
-) -> DwidenoiseConfigParameters:
+) -> DwidenoiseConfigParametersTagged:
     """
     Build parameters.
     
@@ -87,7 +77,7 @@ def dwidenoise_config_params(
         Parameter dictionary
     """
     params = {
-        "@type": "mrtrix.dwidenoise.config",
+        "@type": "config",
         "key": key,
         "value": value,
     }
@@ -109,14 +99,14 @@ def dwidenoise_config_cargs(
     """
     cargs = []
     cargs.append("-config")
-    cargs.append(params.get("key"))
-    cargs.append(params.get("value"))
+    cargs.append(params.get("key", None))
+    cargs.append(params.get("value", None))
     return cargs
 
 
 class DwidenoiseOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `dwidenoise(...)`.
+    Output object returned when calling `DwidenoiseParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -144,7 +134,7 @@ def dwidenoise_params(
     config: list[DwidenoiseConfigParameters] | None = None,
     help_: bool = False,
     version: bool = False,
-) -> DwidenoiseParameters:
+) -> DwidenoiseParametersTagged:
     """
     Build parameters.
     
@@ -183,7 +173,7 @@ def dwidenoise_params(
         Parameter dictionary
     """
     params = {
-        "@type": "mrtrix.dwidenoise",
+        "@type": "mrtrix/dwidenoise",
         "info": info,
         "quiet": quiet,
         "debug": debug,
@@ -225,52 +215,52 @@ def dwidenoise_cargs(
     """
     cargs = []
     cargs.append("dwidenoise")
-    if params.get("mask") is not None:
+    if params.get("mask", None) is not None:
         cargs.extend([
             "-mask",
-            execution.input_file(params.get("mask"))
+            execution.input_file(params.get("mask", None))
         ])
-    if params.get("extent") is not None:
+    if params.get("extent", None) is not None:
         cargs.extend([
             "-extent",
-            *map(str, params.get("extent"))
+            *map(str, params.get("extent", None))
         ])
-    if params.get("noise") is not None:
+    if params.get("noise", None) is not None:
         cargs.extend([
             "-noise",
-            params.get("noise")
+            params.get("noise", None)
         ])
-    if params.get("datatype") is not None:
+    if params.get("datatype", None) is not None:
         cargs.extend([
             "-datatype",
-            params.get("datatype")
+            params.get("datatype", None)
         ])
-    if params.get("estimator") is not None:
+    if params.get("estimator", None) is not None:
         cargs.extend([
             "-estimator",
-            params.get("estimator")
+            params.get("estimator", None)
         ])
-    if params.get("info"):
+    if params.get("info", False):
         cargs.append("-info")
-    if params.get("quiet"):
+    if params.get("quiet", False):
         cargs.append("-quiet")
-    if params.get("debug"):
+    if params.get("debug", False):
         cargs.append("-debug")
-    if params.get("force"):
+    if params.get("force", False):
         cargs.append("-force")
-    if params.get("nthreads") is not None:
+    if params.get("nthreads", None) is not None:
         cargs.extend([
             "-nthreads",
-            str(params.get("nthreads"))
+            str(params.get("nthreads", None))
         ])
-    if params.get("config") is not None:
-        cargs.extend([a for c in [dyn_cargs(s["@type"])(s, execution) for s in params.get("config")] for a in c])
-    if params.get("help"):
+    if params.get("config", None) is not None:
+        cargs.extend([a for c in [dwidenoise_config_cargs(s, execution) for s in params.get("config", None)] for a in c])
+    if params.get("help", False):
         cargs.append("-help")
-    if params.get("version"):
+    if params.get("version", False):
         cargs.append("-version")
-    cargs.append(execution.input_file(params.get("dwi")))
-    cargs.append(params.get("out"))
+    cargs.append(execution.input_file(params.get("dwi", None)))
+    cargs.append(params.get("out", None))
     return cargs
 
 
@@ -289,8 +279,8 @@ def dwidenoise_outputs(
     """
     ret = DwidenoiseOutputs(
         root=execution.output_file("."),
-        out=execution.output_file(params.get("out")),
-        noise=execution.output_file(params.get("noise")) if (params.get("noise") is not None) else None,
+        out=execution.output_file(params.get("out", None)),
+        noise=execution.output_file(params.get("noise", None)) if (params.get("noise") is not None) else None,
     )
     return ret
 
@@ -473,9 +463,7 @@ def dwidenoise(
 
 __all__ = [
     "DWIDENOISE_METADATA",
-    "DwidenoiseConfigParameters",
     "DwidenoiseOutputs",
-    "DwidenoiseParameters",
     "dwidenoise",
     "dwidenoise_config_params",
     "dwidenoise_execute",

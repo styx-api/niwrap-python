@@ -14,7 +14,14 @@ TAL_COMPARE_METADATA = Metadata(
 
 
 TalCompareParameters = typing.TypedDict('TalCompareParameters', {
-    "@type": typing.Literal["freesurfer.tal_compare"],
+    "@type": typing.NotRequired[typing.Literal["freesurfer/tal_compare"]],
+    "ref_file": InputPathType,
+    "moving_file": InputPathType,
+    "output_file": str,
+    "verbose": bool,
+})
+TalCompareParametersTagged = typing.TypedDict('TalCompareParametersTagged', {
+    "@type": typing.Literal["freesurfer/tal_compare"],
     "ref_file": InputPathType,
     "moving_file": InputPathType,
     "output_file": str,
@@ -22,41 +29,9 @@ TalCompareParameters = typing.TypedDict('TalCompareParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "freesurfer.tal_compare": tal_compare_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "freesurfer.tal_compare": tal_compare_outputs,
-    }.get(t)
-
-
 class TalCompareOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `tal_compare(...)`.
+    Output object returned when calling `TalCompareParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -69,7 +44,7 @@ def tal_compare_params(
     moving_file: InputPathType,
     output_file: str,
     verbose: bool = False,
-) -> TalCompareParameters:
+) -> TalCompareParametersTagged:
     """
     Build parameters.
     
@@ -82,7 +57,7 @@ def tal_compare_params(
         Parameter dictionary
     """
     params = {
-        "@type": "freesurfer.tal_compare",
+        "@type": "freesurfer/tal_compare",
         "ref_file": ref_file,
         "moving_file": moving_file,
         "output_file": output_file,
@@ -106,10 +81,10 @@ def tal_compare_cargs(
     """
     cargs = []
     cargs.append("tal_compare")
-    cargs.append(execution.input_file(params.get("ref_file")))
-    cargs.append(execution.input_file(params.get("moving_file")))
-    cargs.append(params.get("output_file"))
-    if params.get("verbose"):
+    cargs.append(execution.input_file(params.get("ref_file", None)))
+    cargs.append(execution.input_file(params.get("moving_file", None)))
+    cargs.append(params.get("output_file", None))
+    if params.get("verbose", False):
         cargs.append("-v")
     return cargs
 
@@ -129,7 +104,7 @@ def tal_compare_outputs(
     """
     ret = TalCompareOutputs(
         root=execution.output_file("."),
-        comparison_results=execution.output_file(params.get("output_file")),
+        comparison_results=execution.output_file(params.get("output_file", None)),
     )
     return ret
 
@@ -199,7 +174,6 @@ def tal_compare(
 __all__ = [
     "TAL_COMPARE_METADATA",
     "TalCompareOutputs",
-    "TalCompareParameters",
     "tal_compare",
     "tal_compare_execute",
     "tal_compare_params",

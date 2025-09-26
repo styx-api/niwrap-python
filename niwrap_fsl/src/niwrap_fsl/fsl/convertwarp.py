@@ -14,7 +14,26 @@ CONVERTWARP_METADATA = Metadata(
 
 
 ConvertwarpParameters = typing.TypedDict('ConvertwarpParameters', {
-    "@type": typing.Literal["fsl.convertwarp"],
+    "@type": typing.NotRequired[typing.Literal["fsl/convertwarp"]],
+    "abswarp": bool,
+    "cons_jacobian": bool,
+    "jacobian_max": typing.NotRequired[float | None],
+    "jacobian_min": typing.NotRequired[float | None],
+    "midmat": typing.NotRequired[InputPathType | None],
+    "out_abswarp": bool,
+    "out_relwarp": bool,
+    "output_type": typing.NotRequired[typing.Literal["NIFTI", "NIFTI_PAIR", "NIFTI_GZ", "NIFTI_PAIR_GZ"] | None],
+    "postmat": typing.NotRequired[InputPathType | None],
+    "premat": typing.NotRequired[InputPathType | None],
+    "reference": InputPathType,
+    "relwarp": bool,
+    "shift_direction": typing.NotRequired[typing.Literal["y-", "y", "x", "x-", "z", "z-"] | None],
+    "shift_in_file": typing.NotRequired[InputPathType | None],
+    "warp1": typing.NotRequired[InputPathType | None],
+    "warp2": typing.NotRequired[InputPathType | None],
+})
+ConvertwarpParametersTagged = typing.TypedDict('ConvertwarpParametersTagged', {
+    "@type": typing.Literal["fsl/convertwarp"],
     "abswarp": bool,
     "cons_jacobian": bool,
     "jacobian_max": typing.NotRequired[float | None],
@@ -34,41 +53,9 @@ ConvertwarpParameters = typing.TypedDict('ConvertwarpParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "fsl.convertwarp": convertwarp_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "fsl.convertwarp": convertwarp_outputs,
-    }.get(t)
-
-
 class ConvertwarpOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `convertwarp(...)`.
+    Output object returned when calling `ConvertwarpParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -97,7 +84,7 @@ def convertwarp_params(
     shift_in_file: InputPathType | None = None,
     warp1: InputPathType | None = None,
     warp2: InputPathType | None = None,
-) -> ConvertwarpParameters:
+) -> ConvertwarpParametersTagged:
     """
     Build parameters.
     
@@ -150,7 +137,7 @@ def convertwarp_params(
         Parameter dictionary
     """
     params = {
-        "@type": "fsl.convertwarp",
+        "@type": "fsl/convertwarp",
         "abswarp": abswarp,
         "cons_jacobian": cons_jacobian,
         "out_abswarp": out_abswarp,
@@ -196,37 +183,37 @@ def convertwarp_cargs(
     """
     cargs = []
     cargs.append("convertwarp")
-    if params.get("abswarp"):
+    if params.get("abswarp", False):
         cargs.append("--abs")
-    if params.get("cons_jacobian"):
+    if params.get("cons_jacobian", False):
         cargs.append("--constrainj")
-    if params.get("jacobian_max") is not None:
-        cargs.append("--jmax=" + str(params.get("jacobian_max")))
-    if params.get("jacobian_min") is not None:
-        cargs.append("--jmin=" + str(params.get("jacobian_min")))
-    if params.get("midmat") is not None:
-        cargs.append("--midmat=" + execution.input_file(params.get("midmat")))
-    if params.get("out_abswarp"):
+    if params.get("jacobian_max", None) is not None:
+        cargs.append("--jmax=" + str(params.get("jacobian_max", None)))
+    if params.get("jacobian_min", None) is not None:
+        cargs.append("--jmin=" + str(params.get("jacobian_min", None)))
+    if params.get("midmat", None) is not None:
+        cargs.append("--midmat=" + execution.input_file(params.get("midmat", None)))
+    if params.get("out_abswarp", False):
         cargs.append("--absout")
-    if params.get("out_relwarp"):
+    if params.get("out_relwarp", False):
         cargs.append("--relout")
-    if params.get("output_type") is not None:
-        cargs.append(params.get("output_type"))
-    if params.get("postmat") is not None:
-        cargs.append("--postmat=" + execution.input_file(params.get("postmat")))
-    if params.get("premat") is not None:
-        cargs.append("--premat=" + execution.input_file(params.get("premat")))
-    cargs.append("--ref=" + execution.input_file(params.get("reference")))
-    if params.get("relwarp"):
+    if params.get("output_type", None) is not None:
+        cargs.append(params.get("output_type", None))
+    if params.get("postmat", None) is not None:
+        cargs.append("--postmat=" + execution.input_file(params.get("postmat", None)))
+    if params.get("premat", None) is not None:
+        cargs.append("--premat=" + execution.input_file(params.get("premat", None)))
+    cargs.append("--ref=" + execution.input_file(params.get("reference", None)))
+    if params.get("relwarp", False):
         cargs.append("--rel")
-    if params.get("shift_direction") is not None:
-        cargs.append("--shiftdir=" + params.get("shift_direction"))
-    if params.get("shift_in_file") is not None:
-        cargs.append("--shiftmap=" + execution.input_file(params.get("shift_in_file")))
-    if params.get("warp1") is not None:
-        cargs.append("--warp1=" + execution.input_file(params.get("warp1")))
-    if params.get("warp2") is not None:
-        cargs.append("--warp2=" + execution.input_file(params.get("warp2")))
+    if params.get("shift_direction", None) is not None:
+        cargs.append("--shiftdir=" + params.get("shift_direction", None))
+    if params.get("shift_in_file", None) is not None:
+        cargs.append("--shiftmap=" + execution.input_file(params.get("shift_in_file", None)))
+    if params.get("warp1", None) is not None:
+        cargs.append("--warp1=" + execution.input_file(params.get("warp1", None)))
+    if params.get("warp2", None) is not None:
+        cargs.append("--warp2=" + execution.input_file(params.get("warp2", None)))
     return cargs
 
 
@@ -245,7 +232,7 @@ def convertwarp_outputs(
     """
     ret = ConvertwarpOutputs(
         root=execution.output_file("."),
-        out_file=execution.output_file(pathlib.Path(params.get("reference")).name + "_concatwarp"),
+        out_file=execution.output_file(pathlib.Path(params.get("reference", None)).name + "_concatwarp"),
         out_file_=execution.output_file("out_file"),
     )
     return ret
@@ -380,7 +367,6 @@ def convertwarp(
 __all__ = [
     "CONVERTWARP_METADATA",
     "ConvertwarpOutputs",
-    "ConvertwarpParameters",
     "convertwarp",
     "convertwarp_execute",
     "convertwarp_params",

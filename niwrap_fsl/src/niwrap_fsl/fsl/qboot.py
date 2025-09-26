@@ -14,7 +14,31 @@ QBOOT_METADATA = Metadata(
 
 
 QbootParameters = typing.TypedDict('QbootParameters', {
-    "@type": typing.Literal["fsl.qboot"],
+    "@type": typing.NotRequired[typing.Literal["fsl/qboot"]],
+    "data_file": InputPathType,
+    "mask_file": InputPathType,
+    "bvecs_file": InputPathType,
+    "bvals_file": InputPathType,
+    "log_dir": typing.NotRequired[str | None],
+    "forcedir_flag": bool,
+    "q_file": typing.NotRequired[InputPathType | None],
+    "model_type": typing.NotRequired[int | None],
+    "lmax_order": typing.NotRequired[int | None],
+    "npeaks": typing.NotRequired[int | None],
+    "threshold": typing.NotRequired[float | None],
+    "num_samples": typing.NotRequired[int | None],
+    "lambda_param": typing.NotRequired[float | None],
+    "delta_param": typing.NotRequired[float | None],
+    "alpha_param": typing.NotRequired[float | None],
+    "seed_param": typing.NotRequired[int | None],
+    "gfa_flag": bool,
+    "savecoeff_flag": bool,
+    "savemeancoeff_flag": bool,
+    "verbose_flag": bool,
+    "help_flag": bool,
+})
+QbootParametersTagged = typing.TypedDict('QbootParametersTagged', {
+    "@type": typing.Literal["fsl/qboot"],
     "data_file": InputPathType,
     "mask_file": InputPathType,
     "bvecs_file": InputPathType,
@@ -39,41 +63,9 @@ QbootParameters = typing.TypedDict('QbootParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "fsl.qboot": qboot_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "fsl.qboot": qboot_outputs,
-    }.get(t)
-
-
 class QbootOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `qboot(...)`.
+    Output object returned when calling `QbootParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -103,7 +95,7 @@ def qboot_params(
     savemeancoeff_flag: bool = False,
     verbose_flag: bool = False,
     help_flag: bool = False,
-) -> QbootParameters:
+) -> QbootParametersTagged:
     """
     Build parameters.
     
@@ -142,7 +134,7 @@ def qboot_params(
         Parameter dictionary
     """
     params = {
-        "@type": "fsl.qboot",
+        "@type": "fsl/qboot",
         "data_file": data_file,
         "mask_file": mask_file,
         "bvecs_file": bvecs_file,
@@ -196,86 +188,86 @@ def qboot_cargs(
     cargs.append("qboot")
     cargs.extend([
         "-k",
-        execution.input_file(params.get("data_file"))
+        execution.input_file(params.get("data_file", None))
     ])
     cargs.extend([
         "-m",
-        execution.input_file(params.get("mask_file"))
+        execution.input_file(params.get("mask_file", None))
     ])
     cargs.extend([
         "-r",
-        execution.input_file(params.get("bvecs_file"))
+        execution.input_file(params.get("bvecs_file", None))
     ])
     cargs.extend([
         "-b",
-        execution.input_file(params.get("bvals_file"))
+        execution.input_file(params.get("bvals_file", None))
     ])
-    if params.get("log_dir") is not None:
+    if params.get("log_dir", None) is not None:
         cargs.extend([
             "--ld",
-            params.get("log_dir")
+            params.get("log_dir", None)
         ])
-    if params.get("forcedir_flag"):
+    if params.get("forcedir_flag", False):
         cargs.append("--forcedir")
-    if params.get("q_file") is not None:
+    if params.get("q_file", None) is not None:
         cargs.extend([
             "--q",
-            execution.input_file(params.get("q_file"))
+            execution.input_file(params.get("q_file", None))
         ])
-    if params.get("model_type") is not None:
+    if params.get("model_type", None) is not None:
         cargs.extend([
             "--model",
-            str(params.get("model_type"))
+            str(params.get("model_type", None))
         ])
-    if params.get("lmax_order") is not None:
+    if params.get("lmax_order", None) is not None:
         cargs.extend([
             "--lmax",
-            str(params.get("lmax_order"))
+            str(params.get("lmax_order", None))
         ])
-    if params.get("npeaks") is not None:
+    if params.get("npeaks", None) is not None:
         cargs.extend([
             "--npeaks",
-            str(params.get("npeaks"))
+            str(params.get("npeaks", None))
         ])
-    if params.get("threshold") is not None:
+    if params.get("threshold", None) is not None:
         cargs.extend([
             "--thr",
-            str(params.get("threshold"))
+            str(params.get("threshold", None))
         ])
-    if params.get("num_samples") is not None:
+    if params.get("num_samples", None) is not None:
         cargs.extend([
             "--ns",
-            str(params.get("num_samples"))
+            str(params.get("num_samples", None))
         ])
-    if params.get("lambda_param") is not None:
+    if params.get("lambda_param", None) is not None:
         cargs.extend([
             "--lambda",
-            str(params.get("lambda_param"))
+            str(params.get("lambda_param", None))
         ])
-    if params.get("delta_param") is not None:
+    if params.get("delta_param", None) is not None:
         cargs.extend([
             "--delta",
-            str(params.get("delta_param"))
+            str(params.get("delta_param", None))
         ])
-    if params.get("alpha_param") is not None:
+    if params.get("alpha_param", None) is not None:
         cargs.extend([
             "--alpha",
-            str(params.get("alpha_param"))
+            str(params.get("alpha_param", None))
         ])
-    if params.get("seed_param") is not None:
+    if params.get("seed_param", None) is not None:
         cargs.extend([
             "--seed",
-            str(params.get("seed_param"))
+            str(params.get("seed_param", None))
         ])
-    if params.get("gfa_flag"):
+    if params.get("gfa_flag", False):
         cargs.append("--gfa")
-    if params.get("savecoeff_flag"):
+    if params.get("savecoeff_flag", False):
         cargs.append("--savecoeff")
-    if params.get("savemeancoeff_flag"):
+    if params.get("savemeancoeff_flag", False):
         cargs.append("--savemeancoeff")
-    if params.get("verbose_flag"):
+    if params.get("verbose_flag", False):
         cargs.append("-V")
-    if params.get("help_flag"):
+    if params.get("help_flag", False):
         cargs.append("-h")
     return cargs
 
@@ -425,7 +417,6 @@ def qboot(
 __all__ = [
     "QBOOT_METADATA",
     "QbootOutputs",
-    "QbootParameters",
     "qboot",
     "qboot_execute",
     "qboot_params",

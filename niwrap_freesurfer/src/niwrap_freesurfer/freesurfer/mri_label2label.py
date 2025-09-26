@@ -14,7 +14,56 @@ MRI_LABEL2LABEL_METADATA = Metadata(
 
 
 MriLabel2labelParameters = typing.TypedDict('MriLabel2labelParameters', {
-    "@type": typing.Literal["freesurfer.mri_label2label"],
+    "@type": typing.NotRequired[typing.Literal["freesurfer/mri_label2label"]],
+    "src_label": InputPathType,
+    "trg_label": str,
+    "erode": typing.NotRequired[float | None],
+    "open": typing.NotRequired[float | None],
+    "close": typing.NotRequired[float | None],
+    "dilate": typing.NotRequired[float | None],
+    "ring": typing.NotRequired[float | None],
+    "src_subject": typing.NotRequired[str | None],
+    "trg_subject": typing.NotRequired[str | None],
+    "subject": typing.NotRequired[str | None],
+    "outmask": typing.NotRequired[str | None],
+    "outstat": typing.NotRequired[str | None],
+    "sample": typing.NotRequired[str | None],
+    "regmethod": typing.NotRequired[str | None],
+    "usepathfiles": bool,
+    "hemi": typing.NotRequired[str | None],
+    "src_hemi": typing.NotRequired[str | None],
+    "trg_hemi": typing.NotRequired[str | None],
+    "src_ico_order": typing.NotRequired[float | None],
+    "trg_ico_order": typing.NotRequired[float | None],
+    "direct": typing.NotRequired[str | None],
+    "trgsurf": typing.NotRequired[str | None],
+    "surfreg": typing.NotRequired[str | None],
+    "srcsurfreg": typing.NotRequired[str | None],
+    "trgsurfreg": typing.NotRequired[str | None],
+    "srcsurfreg_file": typing.NotRequired[str | None],
+    "trgsurfreg_file": typing.NotRequired[str | None],
+    "paint": typing.NotRequired[str | None],
+    "dmindmin": typing.NotRequired[str | None],
+    "baryfill": typing.NotRequired[str | None],
+    "label_cortex": typing.NotRequired[str | None],
+    "surf_label2mask": typing.NotRequired[str | None],
+    "srcmask": typing.NotRequired[str | None],
+    "srcmasksign": typing.NotRequired[str | None],
+    "srcmaskframe": typing.NotRequired[float | None],
+    "xfm": typing.NotRequired[str | None],
+    "reg": typing.NotRequired[str | None],
+    "xfm_invert": bool,
+    "projabs": typing.NotRequired[str | None],
+    "projfrac": typing.NotRequired[str | None],
+    "sd": typing.NotRequired[str | None],
+    "nohash": bool,
+    "norevmap": bool,
+    "to_scanner": typing.NotRequired[str | None],
+    "to_tkr": typing.NotRequired[str | None],
+    "scanner": bool,
+})
+MriLabel2labelParametersTagged = typing.TypedDict('MriLabel2labelParametersTagged', {
+    "@type": typing.Literal["freesurfer/mri_label2label"],
     "src_label": InputPathType,
     "trg_label": str,
     "erode": typing.NotRequired[float | None],
@@ -64,40 +113,9 @@ MriLabel2labelParameters = typing.TypedDict('MriLabel2labelParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "freesurfer.mri_label2label": mri_label2label_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-    }.get(t)
-
-
 class MriLabel2labelOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `mri_label2label(...)`.
+    Output object returned when calling `MriLabel2labelParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -150,7 +168,7 @@ def mri_label2label_params(
     to_scanner: str | None = None,
     to_tkr: str | None = None,
     scanner: bool = False,
-) -> MriLabel2labelParameters:
+) -> MriLabel2labelParametersTagged:
     """
     Build parameters.
     
@@ -206,7 +224,7 @@ def mri_label2label_params(
         Parameter dictionary
     """
     params = {
-        "@type": "freesurfer.mri_label2label",
+        "@type": "freesurfer/mri_label2label",
         "src_label": src_label,
         "trg_label": trg_label,
         "usepathfiles": usepathfiles,
@@ -313,216 +331,216 @@ def mri_label2label_cargs(
     cargs.append("mri_label2label")
     cargs.extend([
         "--srclabel",
-        execution.input_file(params.get("src_label"))
+        execution.input_file(params.get("src_label", None))
     ])
     cargs.extend([
         "--trglabel",
-        params.get("trg_label")
+        params.get("trg_label", None)
     ])
-    if params.get("erode") is not None:
+    if params.get("erode", None) is not None:
         cargs.extend([
             "--erode",
-            str(params.get("erode"))
+            str(params.get("erode", None))
         ])
-    if params.get("open") is not None:
+    if params.get("open", None) is not None:
         cargs.extend([
             "--open",
-            str(params.get("open"))
+            str(params.get("open", None))
         ])
-    if params.get("close") is not None:
+    if params.get("close", None) is not None:
         cargs.extend([
             "--close",
-            str(params.get("close"))
+            str(params.get("close", None))
         ])
-    if params.get("dilate") is not None:
+    if params.get("dilate", None) is not None:
         cargs.extend([
             "--dilate",
-            str(params.get("dilate"))
+            str(params.get("dilate", None))
         ])
-    if params.get("ring") is not None:
+    if params.get("ring", None) is not None:
         cargs.extend([
             "--ring",
-            str(params.get("ring"))
+            str(params.get("ring", None))
         ])
-    if params.get("src_subject") is not None:
+    if params.get("src_subject", None) is not None:
         cargs.extend([
             "--srcsubject",
-            params.get("src_subject")
+            params.get("src_subject", None)
         ])
-    if params.get("trg_subject") is not None:
+    if params.get("trg_subject", None) is not None:
         cargs.extend([
             "--trgsubject",
-            params.get("trg_subject")
+            params.get("trg_subject", None)
         ])
-    if params.get("subject") is not None:
+    if params.get("subject", None) is not None:
         cargs.extend([
             "--s",
-            params.get("subject")
+            params.get("subject", None)
         ])
-    if params.get("outmask") is not None:
+    if params.get("outmask", None) is not None:
         cargs.extend([
             "--outmask",
-            params.get("outmask")
+            params.get("outmask", None)
         ])
-    if params.get("outstat") is not None:
+    if params.get("outstat", None) is not None:
         cargs.extend([
             "--outstat",
-            params.get("outstat")
+            params.get("outstat", None)
         ])
-    if params.get("sample") is not None:
+    if params.get("sample", None) is not None:
         cargs.extend([
             "--sample",
-            params.get("sample")
+            params.get("sample", None)
         ])
-    if params.get("regmethod") is not None:
+    if params.get("regmethod", None) is not None:
         cargs.extend([
             "--regmethod",
-            params.get("regmethod")
+            params.get("regmethod", None)
         ])
-    if params.get("usepathfiles"):
+    if params.get("usepathfiles", False):
         cargs.append("--usepathfiles")
-    if params.get("hemi") is not None:
+    if params.get("hemi", None) is not None:
         cargs.extend([
             "--hemi",
-            params.get("hemi")
+            params.get("hemi", None)
         ])
-    if params.get("src_hemi") is not None:
+    if params.get("src_hemi", None) is not None:
         cargs.extend([
             "--srchemi",
-            params.get("src_hemi")
+            params.get("src_hemi", None)
         ])
-    if params.get("trg_hemi") is not None:
+    if params.get("trg_hemi", None) is not None:
         cargs.extend([
             "--trghemi",
-            params.get("trg_hemi")
+            params.get("trg_hemi", None)
         ])
-    if params.get("src_ico_order") is not None:
+    if params.get("src_ico_order", None) is not None:
         cargs.extend([
             "--srcicoorder",
-            str(params.get("src_ico_order"))
+            str(params.get("src_ico_order", None))
         ])
-    if params.get("trg_ico_order") is not None:
+    if params.get("trg_ico_order", None) is not None:
         cargs.extend([
             "--trgicoorder",
-            str(params.get("trg_ico_order"))
+            str(params.get("trg_ico_order", None))
         ])
-    if params.get("direct") is not None:
+    if params.get("direct", None) is not None:
         cargs.extend([
             "--direct",
-            params.get("direct")
+            params.get("direct", None)
         ])
-    if params.get("trgsurf") is not None:
+    if params.get("trgsurf", None) is not None:
         cargs.extend([
             "--trgsurf",
-            params.get("trgsurf")
+            params.get("trgsurf", None)
         ])
-    if params.get("surfreg") is not None:
+    if params.get("surfreg", None) is not None:
         cargs.extend([
             "--surfreg",
-            params.get("surfreg")
+            params.get("surfreg", None)
         ])
-    if params.get("srcsurfreg") is not None:
+    if params.get("srcsurfreg", None) is not None:
         cargs.extend([
             "--srcsurfreg",
-            params.get("srcsurfreg")
+            params.get("srcsurfreg", None)
         ])
-    if params.get("trgsurfreg") is not None:
+    if params.get("trgsurfreg", None) is not None:
         cargs.extend([
             "--trgsurfreg",
-            params.get("trgsurfreg")
+            params.get("trgsurfreg", None)
         ])
-    if params.get("srcsurfreg_file") is not None:
+    if params.get("srcsurfreg_file", None) is not None:
         cargs.extend([
             "--srcsurfreg-file",
-            params.get("srcsurfreg_file")
+            params.get("srcsurfreg_file", None)
         ])
-    if params.get("trgsurfreg_file") is not None:
+    if params.get("trgsurfreg_file", None) is not None:
         cargs.extend([
             "--trgsurfreg-file",
-            params.get("trgsurfreg_file")
+            params.get("trgsurfreg_file", None)
         ])
-    if params.get("paint") is not None:
+    if params.get("paint", None) is not None:
         cargs.extend([
             "--paint",
-            params.get("paint")
+            params.get("paint", None)
         ])
-    if params.get("dmindmin") is not None:
+    if params.get("dmindmin", None) is not None:
         cargs.extend([
             "--dmindmin",
-            params.get("dmindmin")
+            params.get("dmindmin", None)
         ])
-    if params.get("baryfill") is not None:
+    if params.get("baryfill", None) is not None:
         cargs.extend([
             "--baryfill",
-            params.get("baryfill")
+            params.get("baryfill", None)
         ])
-    if params.get("label_cortex") is not None:
+    if params.get("label_cortex", None) is not None:
         cargs.extend([
             "--label-cortex",
-            params.get("label_cortex")
+            params.get("label_cortex", None)
         ])
-    if params.get("surf_label2mask") is not None:
+    if params.get("surf_label2mask", None) is not None:
         cargs.extend([
             "--surf-label2mask",
-            params.get("surf_label2mask")
+            params.get("surf_label2mask", None)
         ])
-    if params.get("srcmask") is not None:
+    if params.get("srcmask", None) is not None:
         cargs.extend([
             "--srcmask",
-            params.get("srcmask")
+            params.get("srcmask", None)
         ])
-    if params.get("srcmasksign") is not None:
+    if params.get("srcmasksign", None) is not None:
         cargs.extend([
             "--srcmasksign",
-            params.get("srcmasksign")
+            params.get("srcmasksign", None)
         ])
-    if params.get("srcmaskframe") is not None:
+    if params.get("srcmaskframe", None) is not None:
         cargs.extend([
             "--srcmaskframe",
-            str(params.get("srcmaskframe"))
+            str(params.get("srcmaskframe", None))
         ])
-    if params.get("xfm") is not None:
+    if params.get("xfm", None) is not None:
         cargs.extend([
             "--xfm",
-            params.get("xfm")
+            params.get("xfm", None)
         ])
-    if params.get("reg") is not None:
+    if params.get("reg", None) is not None:
         cargs.extend([
             "--reg",
-            params.get("reg")
+            params.get("reg", None)
         ])
-    if params.get("xfm_invert"):
+    if params.get("xfm_invert", False):
         cargs.append("--xfm-invert")
-    if params.get("projabs") is not None:
+    if params.get("projabs", None) is not None:
         cargs.extend([
             "--projabs",
-            params.get("projabs")
+            params.get("projabs", None)
         ])
-    if params.get("projfrac") is not None:
+    if params.get("projfrac", None) is not None:
         cargs.extend([
             "--projfrac",
-            params.get("projfrac")
+            params.get("projfrac", None)
         ])
-    if params.get("sd") is not None:
+    if params.get("sd", None) is not None:
         cargs.extend([
             "--sd",
-            params.get("sd")
+            params.get("sd", None)
         ])
-    if params.get("nohash"):
+    if params.get("nohash", False):
         cargs.append("--nohash")
-    if params.get("norevmap"):
+    if params.get("norevmap", False):
         cargs.append("--norevmap")
-    if params.get("to_scanner") is not None:
+    if params.get("to_scanner", None) is not None:
         cargs.extend([
             "--to-scanner",
-            params.get("to_scanner")
+            params.get("to_scanner", None)
         ])
-    if params.get("to_tkr") is not None:
+    if params.get("to_tkr", None) is not None:
         cargs.extend([
             "--to-tkr",
-            params.get("to_tkr")
+            params.get("to_tkr", None)
         ])
-    if params.get("scanner"):
+    if params.get("scanner", False):
         cargs.append("--scanner")
     return cargs
 
@@ -738,7 +756,6 @@ def mri_label2label(
 __all__ = [
     "MRI_LABEL2LABEL_METADATA",
     "MriLabel2labelOutputs",
-    "MriLabel2labelParameters",
     "mri_label2label",
     "mri_label2label_execute",
     "mri_label2label_params",

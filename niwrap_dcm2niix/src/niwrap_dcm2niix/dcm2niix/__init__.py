@@ -27,5 +27,5 @@ def execute(
         runner: Command runner.
     """
     return {
-        "dcm2niix.dcm2niix": dcm2niix_execute,
+        "dcm2niix/dcm2niix": dcm2niix_execute,
     }[params["@type"]](params, runner)

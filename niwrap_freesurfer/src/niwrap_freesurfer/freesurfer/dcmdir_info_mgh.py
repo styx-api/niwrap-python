@@ -14,7 +14,15 @@ DCMDIR_INFO_MGH_METADATA = Metadata(
 
 
 DcmdirInfoMghParameters = typing.TypedDict('DcmdirInfoMghParameters', {
-    "@type": typing.Literal["freesurfer.dcmdir-info-mgh"],
+    "@type": typing.NotRequired[typing.Literal["freesurfer/dcmdir-info-mgh"]],
+    "dicomdir": str,
+    "unpackdir": typing.NotRequired[str | None],
+    "version": bool,
+    "help": bool,
+    "nopre": bool,
+})
+DcmdirInfoMghParametersTagged = typing.TypedDict('DcmdirInfoMghParametersTagged', {
+    "@type": typing.Literal["freesurfer/dcmdir-info-mgh"],
     "dicomdir": str,
     "unpackdir": typing.NotRequired[str | None],
     "version": bool,
@@ -23,40 +31,9 @@ DcmdirInfoMghParameters = typing.TypedDict('DcmdirInfoMghParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "freesurfer.dcmdir-info-mgh": dcmdir_info_mgh_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-    }.get(t)
-
-
 class DcmdirInfoMghOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `dcmdir_info_mgh(...)`.
+    Output object returned when calling `DcmdirInfoMghParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -68,7 +45,7 @@ def dcmdir_info_mgh_params(
     version: bool = False,
     help_: bool = False,
     nopre: bool = False,
-) -> DcmdirInfoMghParameters:
+) -> DcmdirInfoMghParametersTagged:
     """
     Build parameters.
     
@@ -83,7 +60,7 @@ def dcmdir_info_mgh_params(
         Parameter dictionary
     """
     params = {
-        "@type": "freesurfer.dcmdir-info-mgh",
+        "@type": "freesurfer/dcmdir-info-mgh",
         "dicomdir": dicomdir,
         "version": version,
         "help": help_,
@@ -111,15 +88,15 @@ def dcmdir_info_mgh_cargs(
     cargs.append("dcmdir-info-mgh")
     cargs.extend([
         "-mgh",
-        params.get("dicomdir")
+        params.get("dicomdir", None)
     ])
-    if params.get("unpackdir") is not None:
-        cargs.append(params.get("unpackdir"))
-    if params.get("version"):
+    if params.get("unpackdir", None) is not None:
+        cargs.append(params.get("unpackdir", None))
+    if params.get("version", False):
         cargs.append("--version")
-    if params.get("help"):
+    if params.get("help", False):
         cargs.append("--help")
-    if params.get("nopre"):
+    if params.get("nopre", False):
         cargs.append("--nopre")
     return cargs
 
@@ -212,7 +189,6 @@ def dcmdir_info_mgh(
 __all__ = [
     "DCMDIR_INFO_MGH_METADATA",
     "DcmdirInfoMghOutputs",
-    "DcmdirInfoMghParameters",
     "dcmdir_info_mgh",
     "dcmdir_info_mgh_execute",
     "dcmdir_info_mgh_params",

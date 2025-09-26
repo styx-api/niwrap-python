@@ -14,7 +14,15 @@ LABEL_SUBJECT_MIXED_METADATA = Metadata(
 
 
 LabelSubjectMixedParameters = typing.TypedDict('LabelSubjectMixedParameters', {
-    "@type": typing.Literal["freesurfer.label_subject_mixed"],
+    "@type": typing.NotRequired[typing.Literal["freesurfer/label_subject_mixed"]],
+    "brain_mask": InputPathType,
+    "norm_volume": InputPathType,
+    "transform": InputPathType,
+    "gca_file": InputPathType,
+    "aseg_output": str,
+})
+LabelSubjectMixedParametersTagged = typing.TypedDict('LabelSubjectMixedParametersTagged', {
+    "@type": typing.Literal["freesurfer/label_subject_mixed"],
     "brain_mask": InputPathType,
     "norm_volume": InputPathType,
     "transform": InputPathType,
@@ -23,41 +31,9 @@ LabelSubjectMixedParameters = typing.TypedDict('LabelSubjectMixedParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "freesurfer.label_subject_mixed": label_subject_mixed_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "freesurfer.label_subject_mixed": label_subject_mixed_outputs,
-    }.get(t)
-
-
 class LabelSubjectMixedOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `label_subject_mixed(...)`.
+    Output object returned when calling `LabelSubjectMixedParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -71,7 +47,7 @@ def label_subject_mixed_params(
     transform: InputPathType,
     gca_file: InputPathType,
     aseg_output: str,
-) -> LabelSubjectMixedParameters:
+) -> LabelSubjectMixedParametersTagged:
     """
     Build parameters.
     
@@ -85,7 +61,7 @@ def label_subject_mixed_params(
         Parameter dictionary
     """
     params = {
-        "@type": "freesurfer.label_subject_mixed",
+        "@type": "freesurfer/label_subject_mixed",
         "brain_mask": brain_mask,
         "norm_volume": norm_volume,
         "transform": transform,
@@ -112,12 +88,12 @@ def label_subject_mixed_cargs(
     cargs.append("label_subject_mixed")
     cargs.extend([
         "-mask",
-        execution.input_file(params.get("brain_mask"))
+        execution.input_file(params.get("brain_mask", None))
     ])
-    cargs.append(execution.input_file(params.get("norm_volume")))
-    cargs.append(execution.input_file(params.get("transform")))
-    cargs.append(execution.input_file(params.get("gca_file")))
-    cargs.append(params.get("aseg_output"))
+    cargs.append(execution.input_file(params.get("norm_volume", None)))
+    cargs.append(execution.input_file(params.get("transform", None)))
+    cargs.append(execution.input_file(params.get("gca_file", None)))
+    cargs.append(params.get("aseg_output", None))
     return cargs
 
 
@@ -136,7 +112,7 @@ def label_subject_mixed_outputs(
     """
     ret = LabelSubjectMixedOutputs(
         root=execution.output_file("."),
-        output_aseg=execution.output_file(params.get("aseg_output")),
+        output_aseg=execution.output_file(params.get("aseg_output", None)),
     )
     return ret
 
@@ -209,7 +185,6 @@ def label_subject_mixed(
 __all__ = [
     "LABEL_SUBJECT_MIXED_METADATA",
     "LabelSubjectMixedOutputs",
-    "LabelSubjectMixedParameters",
     "label_subject_mixed",
     "label_subject_mixed_execute",
     "label_subject_mixed_params",

@@ -14,14 +14,26 @@ SURFACE_APPLY_AFFINE_METADATA = Metadata(
 
 
 SurfaceApplyAffineFlirtParameters = typing.TypedDict('SurfaceApplyAffineFlirtParameters', {
-    "@type": typing.Literal["workbench.surface-apply-affine.flirt"],
+    "@type": typing.NotRequired[typing.Literal["flirt"]],
+    "source_volume": str,
+    "target_volume": str,
+})
+SurfaceApplyAffineFlirtParametersTagged = typing.TypedDict('SurfaceApplyAffineFlirtParametersTagged', {
+    "@type": typing.Literal["flirt"],
     "source_volume": str,
     "target_volume": str,
 })
 
 
 SurfaceApplyAffineParameters = typing.TypedDict('SurfaceApplyAffineParameters', {
-    "@type": typing.Literal["workbench.surface-apply-affine"],
+    "@type": typing.NotRequired[typing.Literal["workbench/surface-apply-affine"]],
+    "in_surf": InputPathType,
+    "affine": str,
+    "out_surf": str,
+    "flirt": typing.NotRequired[SurfaceApplyAffineFlirtParameters | None],
+})
+SurfaceApplyAffineParametersTagged = typing.TypedDict('SurfaceApplyAffineParametersTagged', {
+    "@type": typing.Literal["workbench/surface-apply-affine"],
     "in_surf": InputPathType,
     "affine": str,
     "out_surf": str,
@@ -29,43 +41,10 @@ SurfaceApplyAffineParameters = typing.TypedDict('SurfaceApplyAffineParameters', 
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "workbench.surface-apply-affine": surface_apply_affine_cargs,
-        "workbench.surface-apply-affine.flirt": surface_apply_affine_flirt_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "workbench.surface-apply-affine": surface_apply_affine_outputs,
-    }.get(t)
-
-
 def surface_apply_affine_flirt_params(
     source_volume: str,
     target_volume: str,
-) -> SurfaceApplyAffineFlirtParameters:
+) -> SurfaceApplyAffineFlirtParametersTagged:
     """
     Build parameters.
     
@@ -76,7 +55,7 @@ def surface_apply_affine_flirt_params(
         Parameter dictionary
     """
     params = {
-        "@type": "workbench.surface-apply-affine.flirt",
+        "@type": "flirt",
         "source_volume": source_volume,
         "target_volume": target_volume,
     }
@@ -98,14 +77,14 @@ def surface_apply_affine_flirt_cargs(
     """
     cargs = []
     cargs.append("-flirt")
-    cargs.append(params.get("source_volume"))
-    cargs.append(params.get("target_volume"))
+    cargs.append(params.get("source_volume", None))
+    cargs.append(params.get("target_volume", None))
     return cargs
 
 
 class SurfaceApplyAffineOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `surface_apply_affine(...)`.
+    Output object returned when calling `SurfaceApplyAffineParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -118,7 +97,7 @@ def surface_apply_affine_params(
     affine: str,
     out_surf: str,
     flirt: SurfaceApplyAffineFlirtParameters | None = None,
-) -> SurfaceApplyAffineParameters:
+) -> SurfaceApplyAffineParametersTagged:
     """
     Build parameters.
     
@@ -131,7 +110,7 @@ def surface_apply_affine_params(
         Parameter dictionary
     """
     params = {
-        "@type": "workbench.surface-apply-affine",
+        "@type": "workbench/surface-apply-affine",
         "in_surf": in_surf,
         "affine": affine,
         "out_surf": out_surf,
@@ -157,11 +136,11 @@ def surface_apply_affine_cargs(
     cargs = []
     cargs.append("wb_command")
     cargs.append("-surface-apply-affine")
-    cargs.append(execution.input_file(params.get("in_surf")))
-    cargs.append(params.get("affine"))
-    cargs.append(params.get("out_surf"))
-    if params.get("flirt") is not None:
-        cargs.extend(dyn_cargs(params.get("flirt")["@type"])(params.get("flirt"), execution))
+    cargs.append(execution.input_file(params.get("in_surf", None)))
+    cargs.append(params.get("affine", None))
+    cargs.append(params.get("out_surf", None))
+    if params.get("flirt", None) is not None:
+        cargs.extend(surface_apply_affine_flirt_cargs(params.get("flirt", None), execution))
     return cargs
 
 
@@ -180,7 +159,7 @@ def surface_apply_affine_outputs(
     """
     ret = SurfaceApplyAffineOutputs(
         root=execution.output_file("."),
-        out_surf=execution.output_file(params.get("out_surf")),
+        out_surf=execution.output_file(params.get("out_surf", None)),
     )
     return ret
 
@@ -261,9 +240,7 @@ def surface_apply_affine(
 
 __all__ = [
     "SURFACE_APPLY_AFFINE_METADATA",
-    "SurfaceApplyAffineFlirtParameters",
     "SurfaceApplyAffineOutputs",
-    "SurfaceApplyAffineParameters",
     "surface_apply_affine",
     "surface_apply_affine_execute",
     "surface_apply_affine_flirt_params",

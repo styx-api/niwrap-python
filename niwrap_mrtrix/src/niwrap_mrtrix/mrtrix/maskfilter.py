@@ -14,33 +14,67 @@ MASKFILTER_METADATA = Metadata(
 
 
 MaskfilterVariousStringParameters = typing.TypedDict('MaskfilterVariousStringParameters', {
-    "@type": typing.Literal["mrtrix.maskfilter.VariousString"],
+    "@type": typing.NotRequired[typing.Literal["VariousString"]],
+    "obj": str,
+})
+MaskfilterVariousStringParametersTagged = typing.TypedDict('MaskfilterVariousStringParametersTagged', {
+    "@type": typing.Literal["VariousString"],
     "obj": str,
 })
 
 
 MaskfilterVariousFileParameters = typing.TypedDict('MaskfilterVariousFileParameters', {
-    "@type": typing.Literal["mrtrix.maskfilter.VariousFile"],
+    "@type": typing.NotRequired[typing.Literal["VariousFile"]],
+    "obj": InputPathType,
+})
+MaskfilterVariousFileParametersTagged = typing.TypedDict('MaskfilterVariousFileParametersTagged', {
+    "@type": typing.Literal["VariousFile"],
     "obj": InputPathType,
 })
 
 
 MaskfilterConfigParameters = typing.TypedDict('MaskfilterConfigParameters', {
-    "@type": typing.Literal["mrtrix.maskfilter.config"],
+    "@type": typing.NotRequired[typing.Literal["config"]],
+    "key": str,
+    "value": str,
+})
+MaskfilterConfigParametersTagged = typing.TypedDict('MaskfilterConfigParametersTagged', {
+    "@type": typing.Literal["config"],
     "key": str,
     "value": str,
 })
 
 
 MaskfilterParameters = typing.TypedDict('MaskfilterParameters', {
-    "@type": typing.Literal["mrtrix.maskfilter"],
+    "@type": typing.NotRequired[typing.Literal["mrtrix/maskfilter"]],
     "scale": typing.NotRequired[int | None],
     "axes": typing.NotRequired[list[int] | None],
     "largest": bool,
     "connectivity": bool,
     "npass": typing.NotRequired[int | None],
     "extent": typing.NotRequired[list[int] | None],
-    "strides": typing.NotRequired[typing.Union[MaskfilterVariousStringParameters, MaskfilterVariousFileParameters] | None],
+    "strides": typing.NotRequired[typing.Union[MaskfilterVariousStringParametersTagged, MaskfilterVariousFileParametersTagged] | None],
+    "info": bool,
+    "quiet": bool,
+    "debug": bool,
+    "force": bool,
+    "nthreads": typing.NotRequired[int | None],
+    "config": typing.NotRequired[list[MaskfilterConfigParameters] | None],
+    "help": bool,
+    "version": bool,
+    "input": InputPathType,
+    "filter": str,
+    "output": str,
+})
+MaskfilterParametersTagged = typing.TypedDict('MaskfilterParametersTagged', {
+    "@type": typing.Literal["mrtrix/maskfilter"],
+    "scale": typing.NotRequired[int | None],
+    "axes": typing.NotRequired[list[int] | None],
+    "largest": bool,
+    "connectivity": bool,
+    "npass": typing.NotRequired[int | None],
+    "extent": typing.NotRequired[list[int] | None],
+    "strides": typing.NotRequired[typing.Union[MaskfilterVariousStringParametersTagged, MaskfilterVariousFileParametersTagged] | None],
     "info": bool,
     "quiet": bool,
     "debug": bool,
@@ -55,7 +89,7 @@ MaskfilterParameters = typing.TypedDict('MaskfilterParameters', {
 })
 
 
-def dyn_cargs(
+def maskfilter_strides_cargs_dyn_fn(
     t: str,
 ) -> typing.Any:
     """
@@ -67,14 +101,12 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "mrtrix.maskfilter": maskfilter_cargs,
-        "mrtrix.maskfilter.VariousString": maskfilter_various_string_cargs,
-        "mrtrix.maskfilter.VariousFile": maskfilter_various_file_cargs,
-        "mrtrix.maskfilter.config": maskfilter_config_cargs,
+        "VariousString": maskfilter_various_string_cargs,
+        "VariousFile": maskfilter_various_file_cargs,
     }.get(t)
 
 
-def dyn_outputs(
+def maskfilter_strides_outputs_dyn_fn(
     t: str,
 ) -> typing.Any:
     """
@@ -86,13 +118,12 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "mrtrix.maskfilter": maskfilter_outputs,
     }.get(t)
 
 
 def maskfilter_various_string_params(
     obj: str,
-) -> MaskfilterVariousStringParameters:
+) -> MaskfilterVariousStringParametersTagged:
     """
     Build parameters.
     
@@ -102,7 +133,7 @@ def maskfilter_various_string_params(
         Parameter dictionary
     """
     params = {
-        "@type": "mrtrix.maskfilter.VariousString",
+        "@type": "VariousString",
         "obj": obj,
     }
     return params
@@ -122,13 +153,13 @@ def maskfilter_various_string_cargs(
         Command-line arguments.
     """
     cargs = []
-    cargs.append(params.get("obj"))
+    cargs.append(params.get("obj", None))
     return cargs
 
 
 def maskfilter_various_file_params(
     obj: InputPathType,
-) -> MaskfilterVariousFileParameters:
+) -> MaskfilterVariousFileParametersTagged:
     """
     Build parameters.
     
@@ -138,7 +169,7 @@ def maskfilter_various_file_params(
         Parameter dictionary
     """
     params = {
-        "@type": "mrtrix.maskfilter.VariousFile",
+        "@type": "VariousFile",
         "obj": obj,
     }
     return params
@@ -158,14 +189,14 @@ def maskfilter_various_file_cargs(
         Command-line arguments.
     """
     cargs = []
-    cargs.append(execution.input_file(params.get("obj")))
+    cargs.append(execution.input_file(params.get("obj", None)))
     return cargs
 
 
 def maskfilter_config_params(
     key: str,
     value: str,
-) -> MaskfilterConfigParameters:
+) -> MaskfilterConfigParametersTagged:
     """
     Build parameters.
     
@@ -176,7 +207,7 @@ def maskfilter_config_params(
         Parameter dictionary
     """
     params = {
-        "@type": "mrtrix.maskfilter.config",
+        "@type": "config",
         "key": key,
         "value": value,
     }
@@ -198,14 +229,14 @@ def maskfilter_config_cargs(
     """
     cargs = []
     cargs.append("-config")
-    cargs.append(params.get("key"))
-    cargs.append(params.get("value"))
+    cargs.append(params.get("key", None))
+    cargs.append(params.get("value", None))
     return cargs
 
 
 class MaskfilterOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `maskfilter(...)`.
+    Output object returned when calling `MaskfilterParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -223,7 +254,7 @@ def maskfilter_params(
     connectivity: bool = False,
     npass: int | None = None,
     extent: list[int] | None = None,
-    strides: typing.Union[MaskfilterVariousStringParameters, MaskfilterVariousFileParameters] | None = None,
+    strides: typing.Union[MaskfilterVariousStringParametersTagged, MaskfilterVariousFileParametersTagged] | None = None,
     info: bool = False,
     quiet: bool = False,
     debug: bool = False,
@@ -232,7 +263,7 @@ def maskfilter_params(
     config: list[MaskfilterConfigParameters] | None = None,
     help_: bool = False,
     version: bool = False,
-) -> MaskfilterParameters:
+) -> MaskfilterParametersTagged:
     """
     Build parameters.
     
@@ -273,7 +304,7 @@ def maskfilter_params(
         Parameter dictionary
     """
     params = {
-        "@type": "mrtrix.maskfilter",
+        "@type": "mrtrix/maskfilter",
         "largest": largest,
         "connectivity": connectivity,
         "info": info,
@@ -318,57 +349,57 @@ def maskfilter_cargs(
     """
     cargs = []
     cargs.append("maskfilter")
-    if params.get("scale") is not None:
+    if params.get("scale", None) is not None:
         cargs.extend([
             "-scale",
-            str(params.get("scale"))
+            str(params.get("scale", None))
         ])
-    if params.get("axes") is not None:
+    if params.get("axes", None) is not None:
         cargs.extend([
             "-axes",
-            ",".join(map(str, params.get("axes")))
+            ",".join(map(str, params.get("axes", None)))
         ])
-    if params.get("largest"):
+    if params.get("largest", False):
         cargs.append("-largest")
-    if params.get("connectivity"):
+    if params.get("connectivity", False):
         cargs.append("-connectivity")
-    if params.get("npass") is not None:
+    if params.get("npass", None) is not None:
         cargs.extend([
             "-npass",
-            str(params.get("npass"))
+            str(params.get("npass", None))
         ])
-    if params.get("extent") is not None:
+    if params.get("extent", None) is not None:
         cargs.extend([
             "-extent",
-            ",".join(map(str, params.get("extent")))
+            ",".join(map(str, params.get("extent", None)))
         ])
-    if params.get("strides") is not None:
+    if params.get("strides", None) is not None:
         cargs.extend([
             "-strides",
-            *dyn_cargs(params.get("strides")["@type"])(params.get("strides"), execution)
+            *maskfilter_strides_cargs_dyn_fn(params.get("strides", None)["@type"])(params.get("strides", None), execution)
         ])
-    if params.get("info"):
+    if params.get("info", False):
         cargs.append("-info")
-    if params.get("quiet"):
+    if params.get("quiet", False):
         cargs.append("-quiet")
-    if params.get("debug"):
+    if params.get("debug", False):
         cargs.append("-debug")
-    if params.get("force"):
+    if params.get("force", False):
         cargs.append("-force")
-    if params.get("nthreads") is not None:
+    if params.get("nthreads", None) is not None:
         cargs.extend([
             "-nthreads",
-            str(params.get("nthreads"))
+            str(params.get("nthreads", None))
         ])
-    if params.get("config") is not None:
-        cargs.extend([a for c in [dyn_cargs(s["@type"])(s, execution) for s in params.get("config")] for a in c])
-    if params.get("help"):
+    if params.get("config", None) is not None:
+        cargs.extend([a for c in [maskfilter_config_cargs(s, execution) for s in params.get("config", None)] for a in c])
+    if params.get("help", False):
         cargs.append("-help")
-    if params.get("version"):
+    if params.get("version", False):
         cargs.append("-version")
-    cargs.append(execution.input_file(params.get("input")))
-    cargs.append(params.get("filter"))
-    cargs.append(params.get("output"))
+    cargs.append(execution.input_file(params.get("input", None)))
+    cargs.append(params.get("filter", None))
+    cargs.append(params.get("output", None))
     return cargs
 
 
@@ -387,7 +418,7 @@ def maskfilter_outputs(
     """
     ret = MaskfilterOutputs(
         root=execution.output_file("."),
-        output=execution.output_file(params.get("output")),
+        output=execution.output_file(params.get("output", None)),
     )
     return ret
 
@@ -438,7 +469,7 @@ def maskfilter(
     connectivity: bool = False,
     npass: int | None = None,
     extent: list[int] | None = None,
-    strides: typing.Union[MaskfilterVariousStringParameters, MaskfilterVariousFileParameters] | None = None,
+    strides: typing.Union[MaskfilterVariousStringParametersTagged, MaskfilterVariousFileParametersTagged] | None = None,
     info: bool = False,
     quiet: bool = False,
     debug: bool = False,
@@ -528,11 +559,7 @@ def maskfilter(
 
 __all__ = [
     "MASKFILTER_METADATA",
-    "MaskfilterConfigParameters",
     "MaskfilterOutputs",
-    "MaskfilterParameters",
-    "MaskfilterVariousFileParameters",
-    "MaskfilterVariousStringParameters",
     "maskfilter",
     "maskfilter_config_params",
     "maskfilter_execute",

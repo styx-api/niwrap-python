@@ -14,7 +14,20 @@ BBLABEL_METADATA = Metadata(
 
 
 BblabelParameters = typing.TypedDict('BblabelParameters', {
-    "@type": typing.Literal["freesurfer.bblabel"],
+    "@type": typing.NotRequired[typing.Literal["freesurfer/bblabel"]],
+    "labelfile": InputPathType,
+    "xmin": typing.NotRequired[float | None],
+    "xmax": typing.NotRequired[float | None],
+    "ymin": typing.NotRequired[float | None],
+    "ymax": typing.NotRequired[float | None],
+    "zmin": typing.NotRequired[float | None],
+    "zmax": typing.NotRequired[float | None],
+    "outlabelfile": str,
+    "debug": bool,
+    "umask": typing.NotRequired[str | None],
+})
+BblabelParametersTagged = typing.TypedDict('BblabelParametersTagged', {
+    "@type": typing.Literal["freesurfer/bblabel"],
     "labelfile": InputPathType,
     "xmin": typing.NotRequired[float | None],
     "xmax": typing.NotRequired[float | None],
@@ -28,41 +41,9 @@ BblabelParameters = typing.TypedDict('BblabelParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "freesurfer.bblabel": bblabel_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "freesurfer.bblabel": bblabel_outputs,
-    }.get(t)
-
-
 class BblabelOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `bblabel(...)`.
+    Output object returned when calling `BblabelParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -81,7 +62,7 @@ def bblabel_params(
     zmax: float | None = None,
     debug: bool = False,
     umask: str | None = None,
-) -> BblabelParameters:
+) -> BblabelParametersTagged:
     """
     Build parameters.
     
@@ -100,7 +81,7 @@ def bblabel_params(
         Parameter dictionary
     """
     params = {
-        "@type": "freesurfer.bblabel",
+        "@type": "freesurfer/bblabel",
         "labelfile": labelfile,
         "outlabelfile": outlabelfile,
         "debug": debug,
@@ -139,48 +120,48 @@ def bblabel_cargs(
     cargs.append("bblabel")
     cargs.extend([
         "--l",
-        execution.input_file(params.get("labelfile"))
+        execution.input_file(params.get("labelfile", None))
     ])
-    if params.get("xmin") is not None:
+    if params.get("xmin", None) is not None:
         cargs.extend([
             "--xmin",
-            str(params.get("xmin"))
+            str(params.get("xmin", None))
         ])
-    if params.get("xmax") is not None:
+    if params.get("xmax", None) is not None:
         cargs.extend([
             "--xmax",
-            str(params.get("xmax"))
+            str(params.get("xmax", None))
         ])
-    if params.get("ymin") is not None:
+    if params.get("ymin", None) is not None:
         cargs.extend([
             "--ymin",
-            str(params.get("ymin"))
+            str(params.get("ymin", None))
         ])
-    if params.get("ymax") is not None:
+    if params.get("ymax", None) is not None:
         cargs.extend([
             "--ymax",
-            str(params.get("ymax"))
+            str(params.get("ymax", None))
         ])
-    if params.get("zmin") is not None:
+    if params.get("zmin", None) is not None:
         cargs.extend([
             "--zmin",
-            str(params.get("zmin"))
+            str(params.get("zmin", None))
         ])
-    if params.get("zmax") is not None:
+    if params.get("zmax", None) is not None:
         cargs.extend([
             "--zmax",
-            str(params.get("zmax"))
+            str(params.get("zmax", None))
         ])
     cargs.extend([
         "--o",
-        params.get("outlabelfile")
+        params.get("outlabelfile", None)
     ])
-    if params.get("debug"):
+    if params.get("debug", False):
         cargs.append("--debug")
-    if params.get("umask") is not None:
+    if params.get("umask", None) is not None:
         cargs.extend([
             "--umask",
-            params.get("umask")
+            params.get("umask", None)
         ])
     return cargs
 
@@ -200,7 +181,7 @@ def bblabel_outputs(
     """
     ret = BblabelOutputs(
         root=execution.output_file("."),
-        output_file=execution.output_file(params.get("outlabelfile")),
+        output_file=execution.output_file(params.get("outlabelfile", None)),
     )
     return ret
 
@@ -290,7 +271,6 @@ def bblabel(
 __all__ = [
     "BBLABEL_METADATA",
     "BblabelOutputs",
-    "BblabelParameters",
     "bblabel",
     "bblabel_execute",
     "bblabel_params",

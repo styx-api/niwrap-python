@@ -14,7 +14,20 @@ THRESHOLD_IMAGE_METADATA = Metadata(
 
 
 ThresholdImageParameters = typing.TypedDict('ThresholdImageParameters', {
-    "@type": typing.Literal["ants.ThresholdImage"],
+    "@type": typing.NotRequired[typing.Literal["ants/ThresholdImage"]],
+    "image_dimension": int,
+    "image_in": InputPathType,
+    "out_image": str,
+    "threshlo": typing.NotRequired[float | None],
+    "threshhi": typing.NotRequired[float | None],
+    "inside_value": typing.NotRequired[float | None],
+    "outside_value": typing.NotRequired[float | None],
+    "otsu_number_of_thresholds": typing.NotRequired[float | None],
+    "kmeans_number_of_thresholds": typing.NotRequired[float | None],
+    "mask_image": typing.NotRequired[InputPathType | None],
+})
+ThresholdImageParametersTagged = typing.TypedDict('ThresholdImageParametersTagged', {
+    "@type": typing.Literal["ants/ThresholdImage"],
     "image_dimension": int,
     "image_in": InputPathType,
     "out_image": str,
@@ -28,41 +41,9 @@ ThresholdImageParameters = typing.TypedDict('ThresholdImageParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "ants.ThresholdImage": threshold_image_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "ants.ThresholdImage": threshold_image_outputs,
-    }.get(t)
-
-
 class ThresholdImageOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `threshold_image(...)`.
+    Output object returned when calling `ThresholdImageParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -81,7 +62,7 @@ def threshold_image_params(
     otsu_number_of_thresholds: float | None = None,
     kmeans_number_of_thresholds: float | None = None,
     mask_image: InputPathType | None = None,
-) -> ThresholdImageParameters:
+) -> ThresholdImageParametersTagged:
     """
     Build parameters.
     
@@ -102,7 +83,7 @@ def threshold_image_params(
         Parameter dictionary
     """
     params = {
-        "@type": "ants.ThresholdImage",
+        "@type": "ants/ThresholdImage",
         "image_dimension": image_dimension,
         "image_in": image_in,
         "out_image": out_image,
@@ -139,23 +120,23 @@ def threshold_image_cargs(
     """
     cargs = []
     cargs.append("ThresholdImage")
-    cargs.append(str(params.get("image_dimension")))
-    cargs.append(execution.input_file(params.get("image_in")))
-    cargs.append(params.get("out_image"))
-    if params.get("threshlo") is not None:
-        cargs.append(str(params.get("threshlo")))
-    if params.get("threshhi") is not None:
-        cargs.append(str(params.get("threshhi")))
-    if params.get("inside_value") is not None:
-        cargs.append(str(params.get("inside_value")))
-    if params.get("outside_value") is not None:
-        cargs.append(str(params.get("outside_value")))
-    if params.get("otsu_number_of_thresholds") is not None:
-        cargs.append(str(params.get("otsu_number_of_thresholds")))
-    if params.get("kmeans_number_of_thresholds") is not None:
-        cargs.append(str(params.get("kmeans_number_of_thresholds")))
-    if params.get("mask_image") is not None:
-        cargs.append(execution.input_file(params.get("mask_image")))
+    cargs.append(str(params.get("image_dimension", None)))
+    cargs.append(execution.input_file(params.get("image_in", None)))
+    cargs.append(params.get("out_image", None))
+    if params.get("threshlo", None) is not None:
+        cargs.append(str(params.get("threshlo", None)))
+    if params.get("threshhi", None) is not None:
+        cargs.append(str(params.get("threshhi", None)))
+    if params.get("inside_value", None) is not None:
+        cargs.append(str(params.get("inside_value", None)))
+    if params.get("outside_value", None) is not None:
+        cargs.append(str(params.get("outside_value", None)))
+    if params.get("otsu_number_of_thresholds", None) is not None:
+        cargs.append(str(params.get("otsu_number_of_thresholds", None)))
+    if params.get("kmeans_number_of_thresholds", None) is not None:
+        cargs.append(str(params.get("kmeans_number_of_thresholds", None)))
+    if params.get("mask_image", None) is not None:
+        cargs.append(execution.input_file(params.get("mask_image", None)))
     return cargs
 
 
@@ -174,7 +155,7 @@ def threshold_image_outputs(
     """
     ret = ThresholdImageOutputs(
         root=execution.output_file("."),
-        output_image=execution.output_file(params.get("out_image")),
+        output_image=execution.output_file(params.get("out_image", None)),
     )
     return ret
 
@@ -268,7 +249,6 @@ def threshold_image(
 __all__ = [
     "THRESHOLD_IMAGE_METADATA",
     "ThresholdImageOutputs",
-    "ThresholdImageParameters",
     "threshold_image",
     "threshold_image_execute",
     "threshold_image_params",

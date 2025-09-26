@@ -14,7 +14,14 @@ METRIC_REMOVE_ISLANDS_METADATA = Metadata(
 
 
 MetricRemoveIslandsParameters = typing.TypedDict('MetricRemoveIslandsParameters', {
-    "@type": typing.Literal["workbench.metric-remove-islands"],
+    "@type": typing.NotRequired[typing.Literal["workbench/metric-remove-islands"]],
+    "surface": InputPathType,
+    "metric_in": InputPathType,
+    "metric_out": str,
+    "opt_corrected_areas_area_metric": typing.NotRequired[InputPathType | None],
+})
+MetricRemoveIslandsParametersTagged = typing.TypedDict('MetricRemoveIslandsParametersTagged', {
+    "@type": typing.Literal["workbench/metric-remove-islands"],
     "surface": InputPathType,
     "metric_in": InputPathType,
     "metric_out": str,
@@ -22,41 +29,9 @@ MetricRemoveIslandsParameters = typing.TypedDict('MetricRemoveIslandsParameters'
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "workbench.metric-remove-islands": metric_remove_islands_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "workbench.metric-remove-islands": metric_remove_islands_outputs,
-    }.get(t)
-
-
 class MetricRemoveIslandsOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `metric_remove_islands(...)`.
+    Output object returned when calling `MetricRemoveIslandsParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -69,7 +44,7 @@ def metric_remove_islands_params(
     metric_in: InputPathType,
     metric_out: str,
     opt_corrected_areas_area_metric: InputPathType | None = None,
-) -> MetricRemoveIslandsParameters:
+) -> MetricRemoveIslandsParametersTagged:
     """
     Build parameters.
     
@@ -84,7 +59,7 @@ def metric_remove_islands_params(
         Parameter dictionary
     """
     params = {
-        "@type": "workbench.metric-remove-islands",
+        "@type": "workbench/metric-remove-islands",
         "surface": surface,
         "metric_in": metric_in,
         "metric_out": metric_out,
@@ -110,13 +85,13 @@ def metric_remove_islands_cargs(
     cargs = []
     cargs.append("wb_command")
     cargs.append("-metric-remove-islands")
-    cargs.append(execution.input_file(params.get("surface")))
-    cargs.append(execution.input_file(params.get("metric_in")))
-    cargs.append(params.get("metric_out"))
-    if params.get("opt_corrected_areas_area_metric") is not None:
+    cargs.append(execution.input_file(params.get("surface", None)))
+    cargs.append(execution.input_file(params.get("metric_in", None)))
+    cargs.append(params.get("metric_out", None))
+    if params.get("opt_corrected_areas_area_metric", None) is not None:
         cargs.extend([
             "-corrected-areas",
-            execution.input_file(params.get("opt_corrected_areas_area_metric"))
+            execution.input_file(params.get("opt_corrected_areas_area_metric", None))
         ])
     return cargs
 
@@ -136,7 +111,7 @@ def metric_remove_islands_outputs(
     """
     ret = MetricRemoveIslandsOutputs(
         root=execution.output_file("."),
-        metric_out=execution.output_file(params.get("metric_out")),
+        metric_out=execution.output_file(params.get("metric_out", None)),
     )
     return ret
 
@@ -214,7 +189,6 @@ def metric_remove_islands(
 __all__ = [
     "METRIC_REMOVE_ISLANDS_METADATA",
     "MetricRemoveIslandsOutputs",
-    "MetricRemoveIslandsParameters",
     "metric_remove_islands",
     "metric_remove_islands_execute",
     "metric_remove_islands_params",

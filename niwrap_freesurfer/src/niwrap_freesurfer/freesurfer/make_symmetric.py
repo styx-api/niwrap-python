@@ -14,7 +14,14 @@ MAKE_SYMMETRIC_METADATA = Metadata(
 
 
 MakeSymmetricParameters = typing.TypedDict('MakeSymmetricParameters', {
-    "@type": typing.Literal["freesurfer.make_symmetric"],
+    "@type": typing.NotRequired[typing.Literal["freesurfer/make_symmetric"]],
+    "hemi": str,
+    "input_file": InputPathType,
+    "output_file": str,
+    "transform_map": str,
+})
+MakeSymmetricParametersTagged = typing.TypedDict('MakeSymmetricParametersTagged', {
+    "@type": typing.Literal["freesurfer/make_symmetric"],
     "hemi": str,
     "input_file": InputPathType,
     "output_file": str,
@@ -22,41 +29,9 @@ MakeSymmetricParameters = typing.TypedDict('MakeSymmetricParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "freesurfer.make_symmetric": make_symmetric_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "freesurfer.make_symmetric": make_symmetric_outputs,
-    }.get(t)
-
-
 class MakeSymmetricOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `make_symmetric(...)`.
+    Output object returned when calling `MakeSymmetricParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -71,7 +46,7 @@ def make_symmetric_params(
     input_file: InputPathType,
     output_file: str,
     transform_map: str,
-) -> MakeSymmetricParameters:
+) -> MakeSymmetricParametersTagged:
     """
     Build parameters.
     
@@ -87,7 +62,7 @@ def make_symmetric_params(
         Parameter dictionary
     """
     params = {
-        "@type": "freesurfer.make_symmetric",
+        "@type": "freesurfer/make_symmetric",
         "hemi": hemi,
         "input_file": input_file,
         "output_file": output_file,
@@ -111,10 +86,10 @@ def make_symmetric_cargs(
     """
     cargs = []
     cargs.append("make_symmetric")
-    cargs.append(params.get("hemi"))
-    cargs.append(execution.input_file(params.get("input_file")))
-    cargs.append(params.get("output_file"))
-    cargs.append(params.get("transform_map"))
+    cargs.append(params.get("hemi", None))
+    cargs.append(execution.input_file(params.get("input_file", None)))
+    cargs.append(params.get("output_file", None))
+    cargs.append(params.get("transform_map", None))
     return cargs
 
 
@@ -133,8 +108,8 @@ def make_symmetric_outputs(
     """
     ret = MakeSymmetricOutputs(
         root=execution.output_file("."),
-        processed_output=execution.output_file(params.get("output_file")),
-        map_output=execution.output_file(params.get("transform_map")),
+        processed_output=execution.output_file(params.get("output_file", None)),
+        map_output=execution.output_file(params.get("transform_map", None)),
     )
     return ret
 
@@ -209,7 +184,6 @@ def make_symmetric(
 __all__ = [
     "MAKE_SYMMETRIC_METADATA",
     "MakeSymmetricOutputs",
-    "MakeSymmetricParameters",
     "make_symmetric",
     "make_symmetric_execute",
     "make_symmetric_params",

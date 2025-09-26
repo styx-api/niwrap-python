@@ -14,7 +14,27 @@ V_3D_TCORR_MAP_METADATA = Metadata(
 
 
 V3dTcorrMapParameters = typing.TypedDict('V3dTcorrMapParameters', {
-    "@type": typing.Literal["afni.3dTcorrMap"],
+    "@type": typing.NotRequired[typing.Literal["afni/3dTcorrMap"]],
+    "input": InputPathType,
+    "seed": typing.NotRequired[InputPathType | None],
+    "mask": typing.NotRequired[InputPathType | None],
+    "automask": bool,
+    "mean": typing.NotRequired[str | None],
+    "zmean": typing.NotRequired[str | None],
+    "qmean": typing.NotRequired[str | None],
+    "pmean": typing.NotRequired[str | None],
+    "thresh": typing.NotRequired[str | None],
+    "varthresh": typing.NotRequired[str | None],
+    "norm_varthresh": typing.NotRequired[str | None],
+    "corrmap": typing.NotRequired[str | None],
+    "corrmask": bool,
+    "aexpr": typing.NotRequired[str | None],
+    "cexpr": typing.NotRequired[str | None],
+    "sexpr": typing.NotRequired[str | None],
+    "hist": typing.NotRequired[str | None],
+})
+V3dTcorrMapParametersTagged = typing.TypedDict('V3dTcorrMapParametersTagged', {
+    "@type": typing.Literal["afni/3dTcorrMap"],
     "input": InputPathType,
     "seed": typing.NotRequired[InputPathType | None],
     "mask": typing.NotRequired[InputPathType | None],
@@ -35,40 +55,9 @@ V3dTcorrMapParameters = typing.TypedDict('V3dTcorrMapParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "afni.3dTcorrMap": v_3d_tcorr_map_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-    }.get(t)
-
-
 class V3dTcorrMapOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `v_3d_tcorr_map(...)`.
+    Output object returned when calling `V3dTcorrMapParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -92,7 +81,7 @@ def v_3d_tcorr_map_params(
     cexpr: str | None = None,
     sexpr: str | None = None,
     hist: str | None = None,
-) -> V3dTcorrMapParameters:
+) -> V3dTcorrMapParametersTagged:
     """
     Build parameters.
     
@@ -130,7 +119,7 @@ def v_3d_tcorr_map_params(
         Parameter dictionary
     """
     params = {
-        "@type": "afni.3dTcorrMap",
+        "@type": "afni/3dTcorrMap",
         "input": input_,
         "automask": automask,
         "corrmask": corrmask,
@@ -181,80 +170,80 @@ def v_3d_tcorr_map_cargs(
     """
     cargs = []
     cargs.append("3dTcorrMap")
-    cargs.append(execution.input_file(params.get("input")))
-    if params.get("seed") is not None:
+    cargs.append(execution.input_file(params.get("input", None)))
+    if params.get("seed", None) is not None:
         cargs.extend([
             "-seed",
-            execution.input_file(params.get("seed"))
+            execution.input_file(params.get("seed", None))
         ])
-    if params.get("mask") is not None:
+    if params.get("mask", None) is not None:
         cargs.extend([
             "-mask",
-            execution.input_file(params.get("mask"))
+            execution.input_file(params.get("mask", None))
         ])
-    if params.get("automask"):
+    if params.get("automask", False):
         cargs.append("-automask")
-    if params.get("mean") is not None:
+    if params.get("mean", None) is not None:
         cargs.extend([
             "-Mean",
-            params.get("mean")
+            params.get("mean", None)
         ])
-    if params.get("zmean") is not None:
+    if params.get("zmean", None) is not None:
         cargs.extend([
             "-Zmean",
-            params.get("zmean")
+            params.get("zmean", None)
         ])
-    if params.get("qmean") is not None:
+    if params.get("qmean", None) is not None:
         cargs.extend([
             "-Qmean",
-            params.get("qmean")
+            params.get("qmean", None)
         ])
-    if params.get("pmean") is not None:
+    if params.get("pmean", None) is not None:
         cargs.extend([
             "-Pmean",
-            params.get("pmean")
+            params.get("pmean", None)
         ])
-    if params.get("thresh") is not None:
+    if params.get("thresh", None) is not None:
         cargs.extend([
             "-Thresh",
-            params.get("thresh")
+            params.get("thresh", None)
         ])
-    if params.get("varthresh") is not None:
+    if params.get("varthresh", None) is not None:
         cargs.extend([
             "-VarThresh",
-            params.get("varthresh")
+            params.get("varthresh", None)
         ])
-    if params.get("norm_varthresh") is not None:
+    if params.get("norm_varthresh", None) is not None:
         cargs.extend([
             "-VarThreshN",
-            params.get("norm_varthresh")
+            params.get("norm_varthresh", None)
         ])
-    if params.get("corrmap") is not None:
+    if params.get("corrmap", None) is not None:
         cargs.extend([
             "-CorrMap",
-            params.get("corrmap")
+            params.get("corrmap", None)
         ])
-    if params.get("corrmask"):
+    if params.get("corrmask", False):
         cargs.append("-CorrMask")
-    if params.get("aexpr") is not None:
+    if params.get("aexpr", None) is not None:
         cargs.extend([
             "-Aexpr",
-            params.get("aexpr")
+            params.get("aexpr", None)
         ])
-    if params.get("cexpr") is not None:
+    if params.get("cexpr", None) is not None:
         cargs.extend([
             "-Cexpr",
-            params.get("cexpr")
+            params.get("cexpr", None)
         ])
-    if params.get("sexpr") is not None:
+    if params.get("sexpr", None) is not None:
         cargs.extend([
             "-Sexpr",
-            params.get("sexpr")
+            params.get("sexpr", None)
         ])
-    if params.get("hist") is not None:
+    if params.get("hist", None) is not None:
         cargs.extend([
             "-Hist",
-            params.get("hist")
+            params.get("hist", None)
         ])
     return cargs
 
@@ -393,7 +382,6 @@ def v_3d_tcorr_map(
 
 __all__ = [
     "V3dTcorrMapOutputs",
-    "V3dTcorrMapParameters",
     "V_3D_TCORR_MAP_METADATA",
     "v_3d_tcorr_map",
     "v_3d_tcorr_map_execute",

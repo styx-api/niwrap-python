@@ -14,45 +14,18 @@ UNPACK_IMA_TCL_METADATA = Metadata(
 
 
 UnpackImaTclParameters = typing.TypedDict('UnpackImaTclParameters', {
-    "@type": typing.Literal["freesurfer.unpack_ima.tcl"],
+    "@type": typing.NotRequired[typing.Literal["freesurfer/unpack_ima.tcl"]],
+    "target_dir": str,
+})
+UnpackImaTclParametersTagged = typing.TypedDict('UnpackImaTclParametersTagged', {
+    "@type": typing.Literal["freesurfer/unpack_ima.tcl"],
     "target_dir": str,
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "freesurfer.unpack_ima.tcl": unpack_ima_tcl_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-    }.get(t)
-
-
 class UnpackImaTclOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `unpack_ima_tcl(...)`.
+    Output object returned when calling `UnpackImaTclParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -60,7 +33,7 @@ class UnpackImaTclOutputs(typing.NamedTuple):
 
 def unpack_ima_tcl_params(
     target_dir: str = "~",
-) -> UnpackImaTclParameters:
+) -> UnpackImaTclParametersTagged:
     """
     Build parameters.
     
@@ -70,7 +43,7 @@ def unpack_ima_tcl_params(
         Parameter dictionary
     """
     params = {
-        "@type": "freesurfer.unpack_ima.tcl",
+        "@type": "freesurfer/unpack_ima.tcl",
         "target_dir": target_dir,
     }
     return params
@@ -91,7 +64,7 @@ def unpack_ima_tcl_cargs(
     """
     cargs = []
     cargs.append("unpack_ima.tcl")
-    cargs.append(params.get("target_dir"))
+    cargs.append(params.get("target_dir", "~"))
     return cargs
 
 
@@ -170,7 +143,6 @@ def unpack_ima_tcl(
 __all__ = [
     "UNPACK_IMA_TCL_METADATA",
     "UnpackImaTclOutputs",
-    "UnpackImaTclParameters",
     "unpack_ima_tcl",
     "unpack_ima_tcl_execute",
     "unpack_ima_tcl_params",

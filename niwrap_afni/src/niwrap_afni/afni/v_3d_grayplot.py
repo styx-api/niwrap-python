@@ -14,7 +14,24 @@ V_3D_GRAYPLOT_METADATA = Metadata(
 
 
 V3dGrayplotParameters = typing.TypedDict('V3dGrayplotParameters', {
-    "@type": typing.Literal["afni.3dGrayplot"],
+    "@type": typing.NotRequired[typing.Literal["afni/3dGrayplot"]],
+    "input": InputPathType,
+    "mask": typing.NotRequired[InputPathType | None],
+    "prefix": typing.NotRequired[str | None],
+    "dimensions": typing.NotRequired[list[float] | None],
+    "resample_old": bool,
+    "polort": typing.NotRequired[float | None],
+    "fwhm": typing.NotRequired[float | None],
+    "pvorder": bool,
+    "LJorder": bool,
+    "peelorder": bool,
+    "ijkorder": bool,
+    "range": typing.NotRequired[float | None],
+    "percent": bool,
+    "raw_with_bounds": typing.NotRequired[list[float] | None],
+})
+V3dGrayplotParametersTagged = typing.TypedDict('V3dGrayplotParametersTagged', {
+    "@type": typing.Literal["afni/3dGrayplot"],
     "input": InputPathType,
     "mask": typing.NotRequired[InputPathType | None],
     "prefix": typing.NotRequired[str | None],
@@ -32,41 +49,9 @@ V3dGrayplotParameters = typing.TypedDict('V3dGrayplotParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "afni.3dGrayplot": v_3d_grayplot_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "afni.3dGrayplot": v_3d_grayplot_outputs,
-    }.get(t)
-
-
 class V3dGrayplotOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `v_3d_grayplot(...)`.
+    Output object returned when calling `V3dGrayplotParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -89,7 +74,7 @@ def v_3d_grayplot_params(
     range_: float | None = None,
     percent: bool = False,
     raw_with_bounds: list[float] | None = None,
-) -> V3dGrayplotParameters:
+) -> V3dGrayplotParametersTagged:
     """
     Build parameters.
     
@@ -122,7 +107,7 @@ def v_3d_grayplot_params(
         Parameter dictionary
     """
     params = {
-        "@type": "afni.3dGrayplot",
+        "@type": "afni/3dGrayplot",
         "input": input_,
         "resample_old": resample_old,
         "pvorder": pvorder,
@@ -163,53 +148,53 @@ def v_3d_grayplot_cargs(
     """
     cargs = []
     cargs.append("3dGrayplot")
-    cargs.append(execution.input_file(params.get("input")))
-    if params.get("mask") is not None:
+    cargs.append(execution.input_file(params.get("input", None)))
+    if params.get("mask", None) is not None:
         cargs.extend([
             "-mask",
-            execution.input_file(params.get("mask"))
+            execution.input_file(params.get("mask", None))
         ])
-    if params.get("prefix") is not None:
+    if params.get("prefix", None) is not None:
         cargs.extend([
             "-prefix",
-            params.get("prefix")
+            params.get("prefix", None)
         ])
-    if params.get("dimensions") is not None:
+    if params.get("dimensions", None) is not None:
         cargs.extend([
             "-dimen",
-            *map(str, params.get("dimensions"))
+            *map(str, params.get("dimensions", None))
         ])
-    if params.get("resample_old"):
+    if params.get("resample_old", False):
         cargs.append("-oldresam")
-    if params.get("polort") is not None:
+    if params.get("polort", None) is not None:
         cargs.extend([
             "-polort",
-            str(params.get("polort"))
+            str(params.get("polort", None))
         ])
-    if params.get("fwhm") is not None:
+    if params.get("fwhm", None) is not None:
         cargs.extend([
             "-fwhm",
-            str(params.get("fwhm"))
+            str(params.get("fwhm", None))
         ])
-    if params.get("pvorder"):
+    if params.get("pvorder", False):
         cargs.append("-pvorder")
-    if params.get("LJorder"):
+    if params.get("LJorder", False):
         cargs.append("-LJorder")
-    if params.get("peelorder"):
+    if params.get("peelorder", False):
         cargs.append("-peelorder")
-    if params.get("ijkorder"):
+    if params.get("ijkorder", False):
         cargs.append("-ijkorder")
-    if params.get("range") is not None:
+    if params.get("range", None) is not None:
         cargs.extend([
             "-range",
-            str(params.get("range"))
+            str(params.get("range", None))
         ])
-    if params.get("percent"):
+    if params.get("percent", False):
         cargs.append("-percent")
-    if params.get("raw_with_bounds") is not None:
+    if params.get("raw_with_bounds", None) is not None:
         cargs.extend([
             "-raw_with_bounds",
-            *map(str, params.get("raw_with_bounds"))
+            *map(str, params.get("raw_with_bounds", None))
         ])
     return cargs
 
@@ -229,7 +214,7 @@ def v_3d_grayplot_outputs(
     """
     ret = V3dGrayplotOutputs(
         root=execution.output_file("."),
-        grayplot_img=execution.output_file(params.get("prefix")) if (params.get("prefix") is not None) else None,
+        grayplot_img=execution.output_file(params.get("prefix", None)) if (params.get("prefix") is not None) else None,
     )
     return ret
 
@@ -340,7 +325,6 @@ def v_3d_grayplot(
 
 __all__ = [
     "V3dGrayplotOutputs",
-    "V3dGrayplotParameters",
     "V_3D_GRAYPLOT_METADATA",
     "v_3d_grayplot",
     "v_3d_grayplot_execute",

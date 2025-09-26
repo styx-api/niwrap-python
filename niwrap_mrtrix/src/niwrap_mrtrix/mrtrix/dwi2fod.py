@@ -14,40 +14,63 @@ DWI2FOD_METADATA = Metadata(
 
 
 Dwi2fodFslgradParameters = typing.TypedDict('Dwi2fodFslgradParameters', {
-    "@type": typing.Literal["mrtrix.dwi2fod.fslgrad"],
+    "@type": typing.NotRequired[typing.Literal["fslgrad"]],
+    "bvecs": InputPathType,
+    "bvals": InputPathType,
+})
+Dwi2fodFslgradParametersTagged = typing.TypedDict('Dwi2fodFslgradParametersTagged', {
+    "@type": typing.Literal["fslgrad"],
     "bvecs": InputPathType,
     "bvals": InputPathType,
 })
 
 
 Dwi2fodVariousStringParameters = typing.TypedDict('Dwi2fodVariousStringParameters', {
-    "@type": typing.Literal["mrtrix.dwi2fod.VariousString"],
+    "@type": typing.NotRequired[typing.Literal["VariousString"]],
+    "obj": str,
+})
+Dwi2fodVariousStringParametersTagged = typing.TypedDict('Dwi2fodVariousStringParametersTagged', {
+    "@type": typing.Literal["VariousString"],
     "obj": str,
 })
 
 
 Dwi2fodVariousFileParameters = typing.TypedDict('Dwi2fodVariousFileParameters', {
-    "@type": typing.Literal["mrtrix.dwi2fod.VariousFile"],
+    "@type": typing.NotRequired[typing.Literal["VariousFile"]],
+    "obj": InputPathType,
+})
+Dwi2fodVariousFileParametersTagged = typing.TypedDict('Dwi2fodVariousFileParametersTagged', {
+    "@type": typing.Literal["VariousFile"],
     "obj": InputPathType,
 })
 
 
 Dwi2fodConfigParameters = typing.TypedDict('Dwi2fodConfigParameters', {
-    "@type": typing.Literal["mrtrix.dwi2fod.config"],
+    "@type": typing.NotRequired[typing.Literal["config"]],
+    "key": str,
+    "value": str,
+})
+Dwi2fodConfigParametersTagged = typing.TypedDict('Dwi2fodConfigParametersTagged', {
+    "@type": typing.Literal["config"],
     "key": str,
     "value": str,
 })
 
 
 Dwi2fodResponseOdfParameters = typing.TypedDict('Dwi2fodResponseOdfParameters', {
-    "@type": typing.Literal["mrtrix.dwi2fod.response_odf"],
+    "@type": typing.NotRequired[typing.Literal["response_odf"]],
+    "response": InputPathType,
+    "odf": str,
+})
+Dwi2fodResponseOdfParametersTagged = typing.TypedDict('Dwi2fodResponseOdfParametersTagged', {
+    "@type": typing.Literal["response_odf"],
     "response": InputPathType,
     "odf": str,
 })
 
 
 Dwi2fodParameters = typing.TypedDict('Dwi2fodParameters', {
-    "@type": typing.Literal["mrtrix.dwi2fod"],
+    "@type": typing.NotRequired[typing.Literal["mrtrix/dwi2fod"]],
     "grad": typing.NotRequired[InputPathType | None],
     "fslgrad": typing.NotRequired[Dwi2fodFslgradParameters | None],
     "shells": typing.NotRequired[list[float] | None],
@@ -62,7 +85,36 @@ Dwi2fodParameters = typing.TypedDict('Dwi2fodParameters', {
     "norm_lambda_1": typing.NotRequired[float | None],
     "neg_lambda_1": typing.NotRequired[float | None],
     "predicted_signal": typing.NotRequired[str | None],
-    "strides": typing.NotRequired[typing.Union[Dwi2fodVariousStringParameters, Dwi2fodVariousFileParameters] | None],
+    "strides": typing.NotRequired[typing.Union[Dwi2fodVariousStringParametersTagged, Dwi2fodVariousFileParametersTagged] | None],
+    "info": bool,
+    "quiet": bool,
+    "debug": bool,
+    "force": bool,
+    "nthreads": typing.NotRequired[int | None],
+    "config": typing.NotRequired[list[Dwi2fodConfigParameters] | None],
+    "help": bool,
+    "version": bool,
+    "algorithm": str,
+    "dwi": InputPathType,
+    "response_odf": list[Dwi2fodResponseOdfParameters],
+})
+Dwi2fodParametersTagged = typing.TypedDict('Dwi2fodParametersTagged', {
+    "@type": typing.Literal["mrtrix/dwi2fod"],
+    "grad": typing.NotRequired[InputPathType | None],
+    "fslgrad": typing.NotRequired[Dwi2fodFslgradParameters | None],
+    "shells": typing.NotRequired[list[float] | None],
+    "directions": typing.NotRequired[InputPathType | None],
+    "lmax": typing.NotRequired[list[int] | None],
+    "mask": typing.NotRequired[InputPathType | None],
+    "filter": typing.NotRequired[InputPathType | None],
+    "neg_lambda": typing.NotRequired[float | None],
+    "norm_lambda": typing.NotRequired[float | None],
+    "threshold": typing.NotRequired[float | None],
+    "niter": typing.NotRequired[int | None],
+    "norm_lambda_1": typing.NotRequired[float | None],
+    "neg_lambda_1": typing.NotRequired[float | None],
+    "predicted_signal": typing.NotRequired[str | None],
+    "strides": typing.NotRequired[typing.Union[Dwi2fodVariousStringParametersTagged, Dwi2fodVariousFileParametersTagged] | None],
     "info": bool,
     "quiet": bool,
     "debug": bool,
@@ -77,7 +129,7 @@ Dwi2fodParameters = typing.TypedDict('Dwi2fodParameters', {
 })
 
 
-def dyn_cargs(
+def dwi2fod_strides_cargs_dyn_fn(
     t: str,
 ) -> typing.Any:
     """
@@ -89,16 +141,12 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "mrtrix.dwi2fod": dwi2fod_cargs,
-        "mrtrix.dwi2fod.fslgrad": dwi2fod_fslgrad_cargs,
-        "mrtrix.dwi2fod.VariousString": dwi2fod_various_string_cargs,
-        "mrtrix.dwi2fod.VariousFile": dwi2fod_various_file_cargs,
-        "mrtrix.dwi2fod.config": dwi2fod_config_cargs,
-        "mrtrix.dwi2fod.response_odf": dwi2fod_response_odf_cargs,
+        "VariousString": dwi2fod_various_string_cargs,
+        "VariousFile": dwi2fod_various_file_cargs,
     }.get(t)
 
 
-def dyn_outputs(
+def dwi2fod_strides_outputs_dyn_fn(
     t: str,
 ) -> typing.Any:
     """
@@ -110,15 +158,13 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "mrtrix.dwi2fod": dwi2fod_outputs,
-        "mrtrix.dwi2fod.response_odf": dwi2fod_response_odf_outputs,
     }.get(t)
 
 
 def dwi2fod_fslgrad_params(
     bvecs: InputPathType,
     bvals: InputPathType,
-) -> Dwi2fodFslgradParameters:
+) -> Dwi2fodFslgradParametersTagged:
     """
     Build parameters.
     
@@ -135,7 +181,7 @@ def dwi2fod_fslgrad_params(
         Parameter dictionary
     """
     params = {
-        "@type": "mrtrix.dwi2fod.fslgrad",
+        "@type": "fslgrad",
         "bvecs": bvecs,
         "bvals": bvals,
     }
@@ -157,14 +203,14 @@ def dwi2fod_fslgrad_cargs(
     """
     cargs = []
     cargs.append("-fslgrad")
-    cargs.append(execution.input_file(params.get("bvecs")))
-    cargs.append(execution.input_file(params.get("bvals")))
+    cargs.append(execution.input_file(params.get("bvecs", None)))
+    cargs.append(execution.input_file(params.get("bvals", None)))
     return cargs
 
 
 def dwi2fod_various_string_params(
     obj: str,
-) -> Dwi2fodVariousStringParameters:
+) -> Dwi2fodVariousStringParametersTagged:
     """
     Build parameters.
     
@@ -174,7 +220,7 @@ def dwi2fod_various_string_params(
         Parameter dictionary
     """
     params = {
-        "@type": "mrtrix.dwi2fod.VariousString",
+        "@type": "VariousString",
         "obj": obj,
     }
     return params
@@ -194,13 +240,13 @@ def dwi2fod_various_string_cargs(
         Command-line arguments.
     """
     cargs = []
-    cargs.append(params.get("obj"))
+    cargs.append(params.get("obj", None))
     return cargs
 
 
 def dwi2fod_various_file_params(
     obj: InputPathType,
-) -> Dwi2fodVariousFileParameters:
+) -> Dwi2fodVariousFileParametersTagged:
     """
     Build parameters.
     
@@ -210,7 +256,7 @@ def dwi2fod_various_file_params(
         Parameter dictionary
     """
     params = {
-        "@type": "mrtrix.dwi2fod.VariousFile",
+        "@type": "VariousFile",
         "obj": obj,
     }
     return params
@@ -230,14 +276,14 @@ def dwi2fod_various_file_cargs(
         Command-line arguments.
     """
     cargs = []
-    cargs.append(execution.input_file(params.get("obj")))
+    cargs.append(execution.input_file(params.get("obj", None)))
     return cargs
 
 
 def dwi2fod_config_params(
     key: str,
     value: str,
-) -> Dwi2fodConfigParameters:
+) -> Dwi2fodConfigParametersTagged:
     """
     Build parameters.
     
@@ -248,7 +294,7 @@ def dwi2fod_config_params(
         Parameter dictionary
     """
     params = {
-        "@type": "mrtrix.dwi2fod.config",
+        "@type": "config",
         "key": key,
         "value": value,
     }
@@ -270,8 +316,8 @@ def dwi2fod_config_cargs(
     """
     cargs = []
     cargs.append("-config")
-    cargs.append(params.get("key"))
-    cargs.append(params.get("value"))
+    cargs.append(params.get("key", None))
+    cargs.append(params.get("value", None))
     return cargs
 
 
@@ -288,7 +334,7 @@ class Dwi2fodResponseOdfOutputs(typing.NamedTuple):
 def dwi2fod_response_odf_params(
     response: InputPathType,
     odf: str,
-) -> Dwi2fodResponseOdfParameters:
+) -> Dwi2fodResponseOdfParametersTagged:
     """
     Build parameters.
     
@@ -299,7 +345,7 @@ def dwi2fod_response_odf_params(
         Parameter dictionary
     """
     params = {
-        "@type": "mrtrix.dwi2fod.response_odf",
+        "@type": "response_odf",
         "response": response,
         "odf": odf,
     }
@@ -320,8 +366,8 @@ def dwi2fod_response_odf_cargs(
         Command-line arguments.
     """
     cargs = []
-    cargs.append(execution.input_file(params.get("response")))
-    cargs.append(params.get("odf"))
+    cargs.append(execution.input_file(params.get("response", None)))
+    cargs.append(params.get("odf", None))
     return cargs
 
 
@@ -340,14 +386,14 @@ def dwi2fod_response_odf_outputs(
     """
     ret = Dwi2fodResponseOdfOutputs(
         root=execution.output_file("."),
-        odf=execution.output_file(params.get("odf")),
+        odf=execution.output_file(params.get("odf", None)),
     )
     return ret
 
 
 class Dwi2fodOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `dwi2fod(...)`.
+    Output object returned when calling `Dwi2fodParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -376,7 +422,7 @@ def dwi2fod_params(
     norm_lambda_1: float | None = None,
     neg_lambda_1: float | None = None,
     predicted_signal: str | None = None,
-    strides: typing.Union[Dwi2fodVariousStringParameters, Dwi2fodVariousFileParameters] | None = None,
+    strides: typing.Union[Dwi2fodVariousStringParametersTagged, Dwi2fodVariousFileParametersTagged] | None = None,
     info: bool = False,
     quiet: bool = False,
     debug: bool = False,
@@ -385,7 +431,7 @@ def dwi2fod_params(
     config: list[Dwi2fodConfigParameters] | None = None,
     help_: bool = False,
     version: bool = False,
-) -> Dwi2fodParameters:
+) -> Dwi2fodParametersTagged:
     """
     Build parameters.
     
@@ -466,7 +512,7 @@ def dwi2fod_params(
         Parameter dictionary
     """
     params = {
-        "@type": "mrtrix.dwi2fod",
+        "@type": "mrtrix/dwi2fod",
         "info": info,
         "quiet": quiet,
         "debug": debug,
@@ -529,100 +575,100 @@ def dwi2fod_cargs(
     """
     cargs = []
     cargs.append("dwi2fod")
-    if params.get("grad") is not None:
+    if params.get("grad", None) is not None:
         cargs.extend([
             "-grad",
-            execution.input_file(params.get("grad"))
+            execution.input_file(params.get("grad", None))
         ])
-    if params.get("fslgrad") is not None:
-        cargs.extend(dyn_cargs(params.get("fslgrad")["@type"])(params.get("fslgrad"), execution))
-    if params.get("shells") is not None:
+    if params.get("fslgrad", None) is not None:
+        cargs.extend(dwi2fod_fslgrad_cargs(params.get("fslgrad", None), execution))
+    if params.get("shells", None) is not None:
         cargs.extend([
             "-shells",
-            ",".join(map(str, params.get("shells")))
+            ",".join(map(str, params.get("shells", None)))
         ])
-    if params.get("directions") is not None:
+    if params.get("directions", None) is not None:
         cargs.extend([
             "-directions",
-            execution.input_file(params.get("directions"))
+            execution.input_file(params.get("directions", None))
         ])
-    if params.get("lmax") is not None:
+    if params.get("lmax", None) is not None:
         cargs.extend([
             "-lmax",
-            ",".join(map(str, params.get("lmax")))
+            ",".join(map(str, params.get("lmax", None)))
         ])
-    if params.get("mask") is not None:
+    if params.get("mask", None) is not None:
         cargs.extend([
             "-mask",
-            execution.input_file(params.get("mask"))
+            execution.input_file(params.get("mask", None))
         ])
-    if params.get("filter") is not None:
+    if params.get("filter", None) is not None:
         cargs.extend([
             "-filter",
-            execution.input_file(params.get("filter"))
+            execution.input_file(params.get("filter", None))
         ])
-    if params.get("neg_lambda") is not None:
+    if params.get("neg_lambda", None) is not None:
         cargs.extend([
             "-neg_lambda",
-            str(params.get("neg_lambda"))
+            str(params.get("neg_lambda", None))
         ])
-    if params.get("norm_lambda") is not None:
+    if params.get("norm_lambda", None) is not None:
         cargs.extend([
             "-norm_lambda",
-            str(params.get("norm_lambda"))
+            str(params.get("norm_lambda", None))
         ])
-    if params.get("threshold") is not None:
+    if params.get("threshold", None) is not None:
         cargs.extend([
             "-threshold",
-            str(params.get("threshold"))
+            str(params.get("threshold", None))
         ])
-    if params.get("niter") is not None:
+    if params.get("niter", None) is not None:
         cargs.extend([
             "-niter",
-            str(params.get("niter"))
+            str(params.get("niter", None))
         ])
-    if params.get("norm_lambda_1") is not None:
+    if params.get("norm_lambda_1", None) is not None:
         cargs.extend([
             "-norm_lambda",
-            str(params.get("norm_lambda_1"))
+            str(params.get("norm_lambda_1", None))
         ])
-    if params.get("neg_lambda_1") is not None:
+    if params.get("neg_lambda_1", None) is not None:
         cargs.extend([
             "-neg_lambda",
-            str(params.get("neg_lambda_1"))
+            str(params.get("neg_lambda_1", None))
         ])
-    if params.get("predicted_signal") is not None:
+    if params.get("predicted_signal", None) is not None:
         cargs.extend([
             "-predicted_signal",
-            params.get("predicted_signal")
+            params.get("predicted_signal", None)
         ])
-    if params.get("strides") is not None:
+    if params.get("strides", None) is not None:
         cargs.extend([
             "-strides",
-            *dyn_cargs(params.get("strides")["@type"])(params.get("strides"), execution)
+            *dwi2fod_strides_cargs_dyn_fn(params.get("strides", None)["@type"])(params.get("strides", None), execution)
         ])
-    if params.get("info"):
+    if params.get("info", False):
         cargs.append("-info")
-    if params.get("quiet"):
+    if params.get("quiet", False):
         cargs.append("-quiet")
-    if params.get("debug"):
+    if params.get("debug", False):
         cargs.append("-debug")
-    if params.get("force"):
+    if params.get("force", False):
         cargs.append("-force")
-    if params.get("nthreads") is not None:
+    if params.get("nthreads", None) is not None:
         cargs.extend([
             "-nthreads",
-            str(params.get("nthreads"))
+            str(params.get("nthreads", None))
         ])
-    if params.get("config") is not None:
-        cargs.extend([a for c in [dyn_cargs(s["@type"])(s, execution) for s in params.get("config")] for a in c])
-    if params.get("help"):
+    if params.get("config", None) is not None:
+        cargs.extend([a for c in [dwi2fod_config_cargs(s, execution) for s in params.get("config", None)] for a in c])
+    if params.get("help", False):
         cargs.append("-help")
-    if params.get("version"):
+    if params.get("version", False):
         cargs.append("-version")
-    cargs.append(params.get("algorithm"))
-    cargs.append(execution.input_file(params.get("dwi")))
-    cargs.extend([a for c in [dyn_cargs(s["@type"])(s, execution) for s in params.get("response_odf")] for a in c])
+    cargs.append(params.get("algorithm", None))
+    cargs.append(execution.input_file(params.get("dwi", None)))
+    cargs.extend([a for c in [dwi2fod_response_odf_cargs(s, execution) for s in params.get("response_odf", None)] for a in c])
     return cargs
 
 
@@ -641,8 +687,8 @@ def dwi2fod_outputs(
     """
     ret = Dwi2fodOutputs(
         root=execution.output_file("."),
-        predicted_signal=execution.output_file(params.get("predicted_signal")) if (params.get("predicted_signal") is not None) else None,
-        response_odf=[dyn_outputs(i["@type"])(i, execution) if dyn_outputs(i["@type"]) else None for i in params.get("response_odf")],
+        predicted_signal=execution.output_file(params.get("predicted_signal", None)) if (params.get("predicted_signal") is not None) else None,
+        response_odf=[dwi2fod_response_odf_outputs(i, execution) if dwi2fod_response_odf_outputs else None for i in params.get("response_odf")],
     )
     return ret
 
@@ -714,7 +760,7 @@ def dwi2fod(
     norm_lambda_1: float | None = None,
     neg_lambda_1: float | None = None,
     predicted_signal: str | None = None,
-    strides: typing.Union[Dwi2fodVariousStringParameters, Dwi2fodVariousFileParameters] | None = None,
+    strides: typing.Union[Dwi2fodVariousStringParametersTagged, Dwi2fodVariousFileParametersTagged] | None = None,
     info: bool = False,
     quiet: bool = False,
     debug: bool = False,
@@ -865,14 +911,8 @@ def dwi2fod(
 
 __all__ = [
     "DWI2FOD_METADATA",
-    "Dwi2fodConfigParameters",
-    "Dwi2fodFslgradParameters",
     "Dwi2fodOutputs",
-    "Dwi2fodParameters",
     "Dwi2fodResponseOdfOutputs",
-    "Dwi2fodResponseOdfParameters",
-    "Dwi2fodVariousFileParameters",
-    "Dwi2fodVariousStringParameters",
     "dwi2fod",
     "dwi2fod_config_params",
     "dwi2fod_execute",

@@ -14,7 +14,17 @@ MRIS_THICKNESS_METADATA = Metadata(
 
 
 MrisThicknessParameters = typing.TypedDict('MrisThicknessParameters', {
-    "@type": typing.Literal["freesurfer.mris_thickness"],
+    "@type": typing.NotRequired[typing.Literal["freesurfer/mris_thickness"]],
+    "subject_name": str,
+    "hemi": str,
+    "thickness_file": str,
+    "max_threshold": typing.NotRequired[float | None],
+    "fill_holes": typing.NotRequired[list[str] | None],
+    "thickness_from_seg": typing.NotRequired[list[str] | None],
+    "vector": bool,
+})
+MrisThicknessParametersTagged = typing.TypedDict('MrisThicknessParametersTagged', {
+    "@type": typing.Literal["freesurfer/mris_thickness"],
     "subject_name": str,
     "hemi": str,
     "thickness_file": str,
@@ -25,41 +35,9 @@ MrisThicknessParameters = typing.TypedDict('MrisThicknessParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "freesurfer.mris_thickness": mris_thickness_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "freesurfer.mris_thickness": mris_thickness_outputs,
-    }.get(t)
-
-
 class MrisThicknessOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `mris_thickness(...)`.
+    Output object returned when calling `MrisThicknessParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -75,7 +53,7 @@ def mris_thickness_params(
     fill_holes: list[str] | None = None,
     thickness_from_seg: list[str] | None = None,
     vector: bool = False,
-) -> MrisThicknessParameters:
+) -> MrisThicknessParametersTagged:
     """
     Build parameters.
     
@@ -95,7 +73,7 @@ def mris_thickness_params(
         Parameter dictionary
     """
     params = {
-        "@type": "freesurfer.mris_thickness",
+        "@type": "freesurfer/mris_thickness",
         "subject_name": subject_name,
         "hemi": hemi,
         "thickness_file": thickness_file,
@@ -125,25 +103,25 @@ def mris_thickness_cargs(
     """
     cargs = []
     cargs.append("mris_thickness")
-    cargs.append(params.get("subject_name"))
-    cargs.append(params.get("hemi"))
-    cargs.append(params.get("thickness_file"))
-    if params.get("max_threshold") is not None:
+    cargs.append(params.get("subject_name", None))
+    cargs.append(params.get("hemi", None))
+    cargs.append(params.get("thickness_file", None))
+    if params.get("max_threshold", None) is not None:
         cargs.extend([
             "-max",
-            str(params.get("max_threshold"))
+            str(params.get("max_threshold", None))
         ])
-    if params.get("fill_holes") is not None:
+    if params.get("fill_holes", None) is not None:
         cargs.extend([
             "-fill_holes",
-            *params.get("fill_holes")
+            *params.get("fill_holes", None)
         ])
-    if params.get("thickness_from_seg") is not None:
+    if params.get("thickness_from_seg", None) is not None:
         cargs.extend([
             "-thickness-from-seg",
-            *params.get("thickness_from_seg")
+            *params.get("thickness_from_seg", None)
         ])
-    if params.get("vector"):
+    if params.get("vector", False):
         cargs.append("-vector")
     return cargs
 
@@ -163,7 +141,7 @@ def mris_thickness_outputs(
     """
     ret = MrisThicknessOutputs(
         root=execution.output_file("."),
-        output_thickness_file=execution.output_file(params.get("thickness_file")),
+        output_thickness_file=execution.output_file(params.get("thickness_file", None)),
     )
     return ret
 
@@ -246,7 +224,6 @@ def mris_thickness(
 __all__ = [
     "MRIS_THICKNESS_METADATA",
     "MrisThicknessOutputs",
-    "MrisThicknessParameters",
     "mris_thickness",
     "mris_thickness_execute",
     "mris_thickness_params",

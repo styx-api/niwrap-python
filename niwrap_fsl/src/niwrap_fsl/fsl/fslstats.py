@@ -14,7 +14,38 @@ FSLSTATS_METADATA = Metadata(
 
 
 FslstatsParameters = typing.TypedDict('FslstatsParameters', {
-    "@type": typing.Literal["fsl.fslstats"],
+    "@type": typing.NotRequired[typing.Literal["fsl/fslstats"]],
+    "input_file": InputPathType,
+    "index_mask": typing.NotRequired[InputPathType | None],
+    "lower_threshold": typing.NotRequired[float | None],
+    "upper_threshold": typing.NotRequired[float | None],
+    "robust_intensity_flag": bool,
+    "minmax_intensity_flag": bool,
+    "voxels_volume_flag": bool,
+    "nonzero_voxels_volume_flag": bool,
+    "mean_flag": bool,
+    "nonzero_mean_flag": bool,
+    "std_dev_flag": bool,
+    "nonzero_std_dev_flag": bool,
+    "smallest_roi_flag": bool,
+    "max_coords_flag": bool,
+    "min_coords_flag": bool,
+    "cog_mm_flag": bool,
+    "cog_voxel_flag": bool,
+    "percentile": typing.NotRequired[float | None],
+    "nonzero_percentile": typing.NotRequired[float | None],
+    "absolute_values_flag": bool,
+    "nan_as_zero_flag": bool,
+    "mask_image": typing.NotRequired[InputPathType | None],
+    "difference_image": typing.NotRequired[InputPathType | None],
+    "hist_bins": typing.NotRequired[float | None],
+    "hist_bins_min_max": typing.NotRequired[str | None],
+    "timeseries_flag": bool,
+    "mean_entropy_flag": bool,
+    "nonzero_mean_entropy_flag": bool,
+})
+FslstatsParametersTagged = typing.TypedDict('FslstatsParametersTagged', {
+    "@type": typing.Literal["fsl/fslstats"],
     "input_file": InputPathType,
     "index_mask": typing.NotRequired[InputPathType | None],
     "lower_threshold": typing.NotRequired[float | None],
@@ -46,41 +77,9 @@ FslstatsParameters = typing.TypedDict('FslstatsParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "fsl.fslstats": fslstats_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "fsl.fslstats": fslstats_outputs,
-    }.get(t)
-
-
 class FslstatsOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `fslstats(...)`.
+    Output object returned when calling `FslstatsParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -117,7 +116,7 @@ def fslstats_params(
     timeseries_flag: bool = False,
     mean_entropy_flag: bool = False,
     nonzero_mean_entropy_flag: bool = False,
-) -> FslstatsParameters:
+) -> FslstatsParametersTagged:
     """
     Build parameters.
     
@@ -162,7 +161,7 @@ def fslstats_params(
         Parameter dictionary
     """
     params = {
-        "@type": "fsl.fslstats",
+        "@type": "fsl/fslstats",
         "input_file": input_file,
         "robust_intensity_flag": robust_intensity_flag,
         "minmax_intensity_flag": minmax_intensity_flag,
@@ -219,87 +218,87 @@ def fslstats_cargs(
     """
     cargs = []
     cargs.append("fslstats")
-    cargs.append(execution.input_file(params.get("input_file")))
-    if params.get("index_mask") is not None:
+    cargs.append(execution.input_file(params.get("input_file", None)))
+    if params.get("index_mask", None) is not None:
         cargs.extend([
             "-k",
-            execution.input_file(params.get("index_mask"))
+            execution.input_file(params.get("index_mask", None))
         ])
-    if params.get("lower_threshold") is not None:
+    if params.get("lower_threshold", None) is not None:
         cargs.extend([
             "-l",
-            str(params.get("lower_threshold"))
+            str(params.get("lower_threshold", None))
         ])
-    if params.get("upper_threshold") is not None:
+    if params.get("upper_threshold", None) is not None:
         cargs.extend([
             "-u",
-            str(params.get("upper_threshold"))
+            str(params.get("upper_threshold", None))
         ])
-    if params.get("robust_intensity_flag"):
+    if params.get("robust_intensity_flag", False):
         cargs.append("-r")
-    if params.get("minmax_intensity_flag"):
+    if params.get("minmax_intensity_flag", False):
         cargs.append("-R")
-    if params.get("voxels_volume_flag"):
+    if params.get("voxels_volume_flag", False):
         cargs.append("-v")
-    if params.get("nonzero_voxels_volume_flag"):
+    if params.get("nonzero_voxels_volume_flag", False):
         cargs.append("-V")
-    if params.get("mean_flag"):
+    if params.get("mean_flag", False):
         cargs.append("-m")
-    if params.get("nonzero_mean_flag"):
+    if params.get("nonzero_mean_flag", False):
         cargs.append("-M")
-    if params.get("std_dev_flag"):
+    if params.get("std_dev_flag", False):
         cargs.append("-s")
-    if params.get("nonzero_std_dev_flag"):
+    if params.get("nonzero_std_dev_flag", False):
         cargs.append("-S")
-    if params.get("smallest_roi_flag"):
+    if params.get("smallest_roi_flag", False):
         cargs.append("-w")
-    if params.get("max_coords_flag"):
+    if params.get("max_coords_flag", False):
         cargs.append("-x")
-    if params.get("min_coords_flag"):
+    if params.get("min_coords_flag", False):
         cargs.append("-X")
-    if params.get("cog_mm_flag"):
+    if params.get("cog_mm_flag", False):
         cargs.append("-c")
-    if params.get("cog_voxel_flag"):
+    if params.get("cog_voxel_flag", False):
         cargs.append("-C")
-    if params.get("percentile") is not None:
+    if params.get("percentile", None) is not None:
         cargs.extend([
             "-p",
-            str(params.get("percentile"))
+            str(params.get("percentile", None))
         ])
-    if params.get("nonzero_percentile") is not None:
+    if params.get("nonzero_percentile", None) is not None:
         cargs.extend([
             "-P",
-            str(params.get("nonzero_percentile"))
+            str(params.get("nonzero_percentile", None))
         ])
-    if params.get("absolute_values_flag"):
+    if params.get("absolute_values_flag", False):
         cargs.append("-a")
-    if params.get("nan_as_zero_flag"):
+    if params.get("nan_as_zero_flag", False):
         cargs.append("-n")
-    if params.get("mask_image") is not None:
+    if params.get("mask_image", None) is not None:
         cargs.extend([
             "-k",
-            execution.input_file(params.get("mask_image"))
+            execution.input_file(params.get("mask_image", None))
         ])
-    if params.get("difference_image") is not None:
+    if params.get("difference_image", None) is not None:
         cargs.extend([
             "-d",
-            execution.input_file(params.get("difference_image"))
+            execution.input_file(params.get("difference_image", None))
         ])
-    if params.get("hist_bins") is not None:
+    if params.get("hist_bins", None) is not None:
         cargs.extend([
             "-h",
-            str(params.get("hist_bins"))
+            str(params.get("hist_bins", None))
         ])
-    if params.get("hist_bins_min_max") is not None:
+    if params.get("hist_bins_min_max", None) is not None:
         cargs.extend([
             "-H",
-            params.get("hist_bins_min_max")
+            params.get("hist_bins_min_max", None)
         ])
-    if params.get("timeseries_flag"):
+    if params.get("timeseries_flag", False):
         cargs.append("-t")
-    if params.get("mean_entropy_flag"):
+    if params.get("mean_entropy_flag", False):
         cargs.append("-e")
-    if params.get("nonzero_mean_entropy_flag"):
+    if params.get("nonzero_mean_entropy_flag", False):
         cargs.append("-E")
     return cargs
 
@@ -319,7 +318,7 @@ def fslstats_outputs(
     """
     ret = FslstatsOutputs(
         root=execution.output_file("."),
-        output_stats=execution.output_file(pathlib.Path(params.get("input_file")).name + "_stats.txt"),
+        output_stats=execution.output_file(pathlib.Path(params.get("input_file", None)).name + "_stats.txt"),
     )
     return ret
 
@@ -469,7 +468,6 @@ def fslstats(
 __all__ = [
     "FSLSTATS_METADATA",
     "FslstatsOutputs",
-    "FslstatsParameters",
     "fslstats",
     "fslstats_execute",
     "fslstats_params",

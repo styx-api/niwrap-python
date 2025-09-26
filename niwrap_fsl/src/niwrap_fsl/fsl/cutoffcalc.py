@@ -14,7 +14,17 @@ CUTOFFCALC_METADATA = Metadata(
 
 
 CutoffcalcParameters = typing.TypedDict('CutoffcalcParameters', {
-    "@type": typing.Literal["fsl.cutoffcalc"],
+    "@type": typing.NotRequired[typing.Literal["fsl/cutoffcalc"]],
+    "input_design": InputPathType,
+    "threshold": typing.NotRequired[float | None],
+    "tr": typing.NotRequired[float | None],
+    "lower_limit": typing.NotRequired[float | None],
+    "example_sigma": typing.NotRequired[float | None],
+    "verbose_flag": bool,
+    "debug_flag": bool,
+})
+CutoffcalcParametersTagged = typing.TypedDict('CutoffcalcParametersTagged', {
+    "@type": typing.Literal["fsl/cutoffcalc"],
     "input_design": InputPathType,
     "threshold": typing.NotRequired[float | None],
     "tr": typing.NotRequired[float | None],
@@ -25,41 +35,9 @@ CutoffcalcParameters = typing.TypedDict('CutoffcalcParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "fsl.cutoffcalc": cutoffcalc_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "fsl.cutoffcalc": cutoffcalc_outputs,
-    }.get(t)
-
-
 class CutoffcalcOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `cutoffcalc(...)`.
+    Output object returned when calling `CutoffcalcParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -75,7 +53,7 @@ def cutoffcalc_params(
     example_sigma: float | None = None,
     verbose_flag: bool = False,
     debug_flag: bool = False,
-) -> CutoffcalcParameters:
+) -> CutoffcalcParametersTagged:
     """
     Build parameters.
     
@@ -93,7 +71,7 @@ def cutoffcalc_params(
         Parameter dictionary
     """
     params = {
-        "@type": "fsl.cutoffcalc",
+        "@type": "fsl/cutoffcalc",
         "input_design": input_design,
         "verbose_flag": verbose_flag,
         "debug_flag": debug_flag,
@@ -124,18 +102,18 @@ def cutoffcalc_cargs(
     """
     cargs = []
     cargs.append("cutoffcalc")
-    cargs.append("-i " + execution.input_file(params.get("input_design")))
-    if params.get("threshold") is not None:
-        cargs.append("-t " + str(params.get("threshold")))
-    if params.get("tr") is not None:
-        cargs.append("--tr " + str(params.get("tr")))
-    if params.get("lower_limit") is not None:
-        cargs.append("--limit " + str(params.get("lower_limit")))
-    if params.get("example_sigma") is not None:
-        cargs.append("--example_sig " + str(params.get("example_sigma")))
-    if params.get("verbose_flag"):
+    cargs.append("-i " + execution.input_file(params.get("input_design", None)))
+    if params.get("threshold", None) is not None:
+        cargs.append("-t " + str(params.get("threshold", None)))
+    if params.get("tr", None) is not None:
+        cargs.append("--tr " + str(params.get("tr", None)))
+    if params.get("lower_limit", None) is not None:
+        cargs.append("--limit " + str(params.get("lower_limit", None)))
+    if params.get("example_sigma", None) is not None:
+        cargs.append("--example_sig " + str(params.get("example_sigma", None)))
+    if params.get("verbose_flag", False):
         cargs.append("-v")
-    if params.get("debug_flag"):
+    if params.get("debug_flag", False):
         cargs.append("--debug")
     return cargs
 
@@ -238,7 +216,6 @@ def cutoffcalc(
 __all__ = [
     "CUTOFFCALC_METADATA",
     "CutoffcalcOutputs",
-    "CutoffcalcParameters",
     "cutoffcalc",
     "cutoffcalc_execute",
     "cutoffcalc_params",

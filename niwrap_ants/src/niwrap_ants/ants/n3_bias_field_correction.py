@@ -14,7 +14,21 @@ N3_BIAS_FIELD_CORRECTION_METADATA = Metadata(
 
 
 N3BiasFieldCorrectionParameters = typing.TypedDict('N3BiasFieldCorrectionParameters', {
-    "@type": typing.Literal["ants.N3BiasFieldCorrection"],
+    "@type": typing.NotRequired[typing.Literal["ants/N3BiasFieldCorrection"]],
+    "image_dimensionality": typing.NotRequired[typing.Literal[2, 3, 4] | None],
+    "input_image": InputPathType,
+    "mask_image": typing.NotRequired[InputPathType | None],
+    "rescale_intensities": typing.NotRequired[typing.Literal[0, 1] | None],
+    "weight_image": typing.NotRequired[InputPathType | None],
+    "shrink_factor": typing.NotRequired[int | None],
+    "convergence": typing.NotRequired[str | None],
+    "bspline_fitting": typing.NotRequired[str | None],
+    "histogram_sharpening": typing.NotRequired[str | None],
+    "output": str,
+    "verbose": typing.NotRequired[typing.Literal[0, 1] | None],
+})
+N3BiasFieldCorrectionParametersTagged = typing.TypedDict('N3BiasFieldCorrectionParametersTagged', {
+    "@type": typing.Literal["ants/N3BiasFieldCorrection"],
     "image_dimensionality": typing.NotRequired[typing.Literal[2, 3, 4] | None],
     "input_image": InputPathType,
     "mask_image": typing.NotRequired[InputPathType | None],
@@ -29,41 +43,9 @@ N3BiasFieldCorrectionParameters = typing.TypedDict('N3BiasFieldCorrectionParamet
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "ants.N3BiasFieldCorrection": n3_bias_field_correction_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "ants.N3BiasFieldCorrection": n3_bias_field_correction_outputs,
-    }.get(t)
-
-
 class N3BiasFieldCorrectionOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `n3_bias_field_correction(...)`.
+    Output object returned when calling `N3BiasFieldCorrectionParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -85,7 +67,7 @@ def n3_bias_field_correction_params(
     bspline_fitting: str | None = None,
     histogram_sharpening: str | None = None,
     verbose: typing.Literal[0, 1] | None = None,
-) -> N3BiasFieldCorrectionParameters:
+) -> N3BiasFieldCorrectionParametersTagged:
     """
     Build parameters.
     
@@ -119,7 +101,7 @@ def n3_bias_field_correction_params(
         Parameter dictionary
     """
     params = {
-        "@type": "ants.N3BiasFieldCorrection",
+        "@type": "ants/N3BiasFieldCorrection",
         "input_image": input_image,
         "output": output,
     }
@@ -159,58 +141,58 @@ def n3_bias_field_correction_cargs(
     """
     cargs = []
     cargs.append("N3BiasFieldCorrection")
-    if params.get("image_dimensionality") is not None:
+    if params.get("image_dimensionality", None) is not None:
         cargs.extend([
             "--image-dimensionality",
-            str(params.get("image_dimensionality"))
+            str(params.get("image_dimensionality", None))
         ])
     cargs.extend([
         "--input-image",
-        execution.input_file(params.get("input_image"))
+        execution.input_file(params.get("input_image", None))
     ])
-    if params.get("mask_image") is not None:
+    if params.get("mask_image", None) is not None:
         cargs.extend([
             "--mask-image",
-            execution.input_file(params.get("mask_image"))
+            execution.input_file(params.get("mask_image", None))
         ])
-    if params.get("rescale_intensities") is not None:
+    if params.get("rescale_intensities", None) is not None:
         cargs.extend([
             "--rescale-intensities",
-            str(params.get("rescale_intensities"))
+            str(params.get("rescale_intensities", None))
         ])
-    if params.get("weight_image") is not None:
+    if params.get("weight_image", None) is not None:
         cargs.extend([
             "--weight-image",
-            execution.input_file(params.get("weight_image"))
+            execution.input_file(params.get("weight_image", None))
         ])
-    if params.get("shrink_factor") is not None:
+    if params.get("shrink_factor", None) is not None:
         cargs.extend([
             "--shrink-factor",
-            str(params.get("shrink_factor"))
+            str(params.get("shrink_factor", None))
         ])
-    if params.get("convergence") is not None:
+    if params.get("convergence", None) is not None:
         cargs.extend([
             "--convergence",
-            params.get("convergence")
+            params.get("convergence", None)
         ])
-    if params.get("bspline_fitting") is not None:
+    if params.get("bspline_fitting", None) is not None:
         cargs.extend([
             "--bspline-fitting",
-            params.get("bspline_fitting")
+            params.get("bspline_fitting", None)
         ])
-    if params.get("histogram_sharpening") is not None:
+    if params.get("histogram_sharpening", None) is not None:
         cargs.extend([
             "--histogram-sharpening",
-            params.get("histogram_sharpening")
+            params.get("histogram_sharpening", None)
         ])
     cargs.extend([
         "--output",
-        params.get("output")
+        params.get("output", None)
     ])
-    if params.get("verbose") is not None:
+    if params.get("verbose", None) is not None:
         cargs.extend([
             "--verbose",
-            str(params.get("verbose"))
+            str(params.get("verbose", None))
         ])
     return cargs
 
@@ -230,7 +212,7 @@ def n3_bias_field_correction_outputs(
     """
     ret = N3BiasFieldCorrectionOutputs(
         root=execution.output_file("."),
-        corrected_image=execution.output_file(params.get("output")),
+        corrected_image=execution.output_file(params.get("output", None)),
         bias_field=execution.output_file("[BIS_FIELD]"),
     )
     return ret
@@ -347,7 +329,6 @@ def n3_bias_field_correction(
 
 __all__ = [
     "N3BiasFieldCorrectionOutputs",
-    "N3BiasFieldCorrectionParameters",
     "N3_BIAS_FIELD_CORRECTION_METADATA",
     "n3_bias_field_correction",
     "n3_bias_field_correction_execute",

@@ -14,7 +14,16 @@ IMGREG_4DFP_METADATA = Metadata(
 
 
 Imgreg4dfpParameters = typing.TypedDict('Imgreg4dfpParameters', {
-    "@type": typing.Literal["freesurfer.imgreg_4dfp"],
+    "@type": typing.NotRequired[typing.Literal["freesurfer/imgreg_4dfp"]],
+    "target_image": InputPathType,
+    "target_mask": str,
+    "source_image": InputPathType,
+    "source_mask": str,
+    "t4file": str,
+    "mode": str,
+})
+Imgreg4dfpParametersTagged = typing.TypedDict('Imgreg4dfpParametersTagged', {
+    "@type": typing.Literal["freesurfer/imgreg_4dfp"],
     "target_image": InputPathType,
     "target_mask": str,
     "source_image": InputPathType,
@@ -24,40 +33,9 @@ Imgreg4dfpParameters = typing.TypedDict('Imgreg4dfpParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "freesurfer.imgreg_4dfp": imgreg_4dfp_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-    }.get(t)
-
-
 class Imgreg4dfpOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `imgreg_4dfp(...)`.
+    Output object returned when calling `Imgreg4dfpParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -70,7 +48,7 @@ def imgreg_4dfp_params(
     mode: str,
     target_mask: str = "none",
     source_mask: str = "none",
-) -> Imgreg4dfpParameters:
+) -> Imgreg4dfpParametersTagged:
     """
     Build parameters.
     
@@ -85,7 +63,7 @@ def imgreg_4dfp_params(
         Parameter dictionary
     """
     params = {
-        "@type": "freesurfer.imgreg_4dfp",
+        "@type": "freesurfer/imgreg_4dfp",
         "target_image": target_image,
         "target_mask": target_mask,
         "source_image": source_image,
@@ -111,12 +89,12 @@ def imgreg_4dfp_cargs(
     """
     cargs = []
     cargs.append("imgreg_4dfp")
-    cargs.append(execution.input_file(params.get("target_image")))
-    cargs.append(params.get("target_mask"))
-    cargs.append(execution.input_file(params.get("source_image")))
-    cargs.append(params.get("source_mask"))
-    cargs.append(params.get("t4file"))
-    cargs.append(params.get("mode"))
+    cargs.append(execution.input_file(params.get("target_image", None)))
+    cargs.append(params.get("target_mask", "none"))
+    cargs.append(execution.input_file(params.get("source_image", None)))
+    cargs.append(params.get("source_mask", "none"))
+    cargs.append(params.get("t4file", None))
+    cargs.append(params.get("mode", None))
     return cargs
 
 
@@ -210,7 +188,6 @@ def imgreg_4dfp(
 __all__ = [
     "IMGREG_4DFP_METADATA",
     "Imgreg4dfpOutputs",
-    "Imgreg4dfpParameters",
     "imgreg_4dfp",
     "imgreg_4dfp_execute",
     "imgreg_4dfp_params",

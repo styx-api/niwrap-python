@@ -14,7 +14,14 @@ NICAT_METADATA = Metadata(
 
 
 NicatParameters = typing.TypedDict('NicatParameters', {
-    "@type": typing.Literal["afni.nicat"],
+    "@type": typing.NotRequired[typing.Literal["afni/nicat"]],
+    "stream_spec": str,
+    "reopen": typing.NotRequired[str | None],
+    "copy_stream": bool,
+    "read_only": bool,
+})
+NicatParametersTagged = typing.TypedDict('NicatParametersTagged', {
+    "@type": typing.Literal["afni/nicat"],
     "stream_spec": str,
     "reopen": typing.NotRequired[str | None],
     "copy_stream": bool,
@@ -22,40 +29,9 @@ NicatParameters = typing.TypedDict('NicatParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "afni.nicat": nicat_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-    }.get(t)
-
-
 class NicatOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `nicat(...)`.
+    Output object returned when calling `NicatParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -66,7 +42,7 @@ def nicat_params(
     reopen: str | None = None,
     copy_stream: bool = False,
     read_only: bool = False,
-) -> NicatParameters:
+) -> NicatParametersTagged:
     """
     Build parameters.
     
@@ -81,7 +57,7 @@ def nicat_params(
         Parameter dictionary
     """
     params = {
-        "@type": "afni.nicat",
+        "@type": "afni/nicat",
         "stream_spec": stream_spec,
         "copy_stream": copy_stream,
         "read_only": read_only,
@@ -106,15 +82,15 @@ def nicat_cargs(
     """
     cargs = []
     cargs.append("nicat")
-    cargs.append(params.get("stream_spec"))
-    if params.get("reopen") is not None:
+    cargs.append(params.get("stream_spec", None))
+    if params.get("reopen", None) is not None:
         cargs.extend([
             "-reopen",
-            params.get("reopen")
+            params.get("reopen", None)
         ])
-    if params.get("copy_stream"):
+    if params.get("copy_stream", False):
         cargs.append("-r")
-    if params.get("read_only"):
+    if params.get("read_only", False):
         cargs.append("-R")
     return cargs
 
@@ -205,7 +181,6 @@ def nicat(
 __all__ = [
     "NICAT_METADATA",
     "NicatOutputs",
-    "NicatParameters",
     "nicat",
     "nicat_execute",
     "nicat_params",

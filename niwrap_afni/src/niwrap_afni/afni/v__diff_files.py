@@ -14,7 +14,21 @@ V__DIFF_FILES_METADATA = Metadata(
 
 
 VDiffFilesParameters = typing.TypedDict('VDiffFilesParameters', {
-    "@type": typing.Literal["afni.@diff.files"],
+    "@type": typing.NotRequired[typing.Literal["afni/@diff.files"]],
+    "files": list[str],
+    "old_dir": str,
+    "diff_opts": typing.NotRequired[str | None],
+    "diff_prog": typing.NotRequired[str | None],
+    "ignore_missing": bool,
+    "longlist": bool,
+    "save": bool,
+    "show": bool,
+    "xxdiff": bool,
+    "X_flag": bool,
+    "verbosity": typing.NotRequired[float | None],
+})
+VDiffFilesParametersTagged = typing.TypedDict('VDiffFilesParametersTagged', {
+    "@type": typing.Literal["afni/@diff.files"],
     "files": list[str],
     "old_dir": str,
     "diff_opts": typing.NotRequired[str | None],
@@ -29,40 +43,9 @@ VDiffFilesParameters = typing.TypedDict('VDiffFilesParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "afni.@diff.files": v__diff_files_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-    }.get(t)
-
-
 class VDiffFilesOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `v__diff_files(...)`.
+    Output object returned when calling `VDiffFilesParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -80,7 +63,7 @@ def v__diff_files_params(
     xxdiff: bool = False,
     x_flag: bool = False,
     verbosity: float | None = None,
-) -> VDiffFilesParameters:
+) -> VDiffFilesParametersTagged:
     """
     Build parameters.
     
@@ -100,7 +83,7 @@ def v__diff_files_params(
         Parameter dictionary
     """
     params = {
-        "@type": "afni.@diff.files",
+        "@type": "afni/@diff.files",
         "files": files,
         "old_dir": old_dir,
         "ignore_missing": ignore_missing,
@@ -134,34 +117,34 @@ def v__diff_files_cargs(
     """
     cargs = []
     cargs.append("@diff.files")
-    cargs.extend(params.get("files"))
-    cargs.append(params.get("old_dir"))
-    if params.get("diff_opts") is not None:
+    cargs.extend(params.get("files", None))
+    cargs.append(params.get("old_dir", None))
+    if params.get("diff_opts", None) is not None:
         cargs.extend([
             "-diff_opts",
-            params.get("diff_opts")
+            params.get("diff_opts", None)
         ])
-    if params.get("diff_prog") is not None:
+    if params.get("diff_prog", None) is not None:
         cargs.extend([
             "-diff_prog",
-            params.get("diff_prog")
+            params.get("diff_prog", None)
         ])
-    if params.get("ignore_missing"):
+    if params.get("ignore_missing", False):
         cargs.append("-ignore_missing")
-    if params.get("longlist"):
+    if params.get("longlist", False):
         cargs.append("-longlist")
-    if params.get("save"):
+    if params.get("save", False):
         cargs.append("-save")
-    if params.get("show"):
+    if params.get("show", False):
         cargs.append("-show")
-    if params.get("xxdiff"):
+    if params.get("xxdiff", False):
         cargs.append("-xxdiff")
-    if params.get("X_flag"):
+    if params.get("X_flag", False):
         cargs.append("-X")
-    if params.get("verbosity") is not None:
+    if params.get("verbosity", None) is not None:
         cargs.extend([
             "-verb",
-            str(params.get("verbosity"))
+            str(params.get("verbosity", None))
         ])
     return cargs
 
@@ -272,7 +255,6 @@ def v__diff_files(
 
 __all__ = [
     "VDiffFilesOutputs",
-    "VDiffFilesParameters",
     "V__DIFF_FILES_METADATA",
     "v__diff_files",
     "v__diff_files_execute",

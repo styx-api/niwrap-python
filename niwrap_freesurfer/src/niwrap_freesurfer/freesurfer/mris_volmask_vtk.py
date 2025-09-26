@@ -14,7 +14,28 @@ MRIS_VOLMASK_VTK_METADATA = Metadata(
 
 
 MrisVolmaskVtkParameters = typing.TypedDict('MrisVolmaskVtkParameters', {
-    "@type": typing.Literal["freesurfer.mris_volmask_vtk"],
+    "@type": typing.NotRequired[typing.Literal["freesurfer/mris_volmask_vtk"]],
+    "cap_distance": typing.NotRequired[float | None],
+    "label_background": typing.NotRequired[float | None],
+    "label_left_white": typing.NotRequired[float | None],
+    "label_left_ribbon": typing.NotRequired[float | None],
+    "label_right_white": typing.NotRequired[float | None],
+    "label_right_ribbon": typing.NotRequired[float | None],
+    "surf_white": typing.NotRequired[str | None],
+    "surf_pial": typing.NotRequired[str | None],
+    "aseg_name": typing.NotRequired[str | None],
+    "out_root": typing.NotRequired[str | None],
+    "subjects_dir": typing.NotRequired[str | None],
+    "save_distance": bool,
+    "lh_only": bool,
+    "rh_only": bool,
+    "parallel": bool,
+    "edit_aseg": bool,
+    "save_ribbon": bool,
+    "io_param": str,
+})
+MrisVolmaskVtkParametersTagged = typing.TypedDict('MrisVolmaskVtkParametersTagged', {
+    "@type": typing.Literal["freesurfer/mris_volmask_vtk"],
     "cap_distance": typing.NotRequired[float | None],
     "label_background": typing.NotRequired[float | None],
     "label_left_white": typing.NotRequired[float | None],
@@ -36,41 +57,9 @@ MrisVolmaskVtkParameters = typing.TypedDict('MrisVolmaskVtkParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "freesurfer.mris_volmask_vtk": mris_volmask_vtk_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "freesurfer.mris_volmask_vtk": mris_volmask_vtk_outputs,
-    }.get(t)
-
-
 class MrisVolmaskVtkOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `mris_volmask_vtk(...)`.
+    Output object returned when calling `MrisVolmaskVtkParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -111,7 +100,7 @@ def mris_volmask_vtk_params(
     parallel: bool = False,
     edit_aseg: bool = False,
     save_ribbon: bool = False,
-) -> MrisVolmaskVtkParameters:
+) -> MrisVolmaskVtkParametersTagged:
     """
     Build parameters.
     
@@ -143,7 +132,7 @@ def mris_volmask_vtk_params(
         Parameter dictionary
     """
     params = {
-        "@type": "freesurfer.mris_volmask_vtk",
+        "@type": "freesurfer/mris_volmask_vtk",
         "save_distance": save_distance,
         "lh_only": lh_only,
         "rh_only": rh_only,
@@ -192,74 +181,74 @@ def mris_volmask_vtk_cargs(
     """
     cargs = []
     cargs.append("mris_volmask_vtk")
-    if params.get("cap_distance") is not None:
+    if params.get("cap_distance", None) is not None:
         cargs.extend([
             "--cap_distance",
-            str(params.get("cap_distance"))
+            str(params.get("cap_distance", None))
         ])
-    if params.get("label_background") is not None:
+    if params.get("label_background", None) is not None:
         cargs.extend([
             "--label_background",
-            str(params.get("label_background"))
+            str(params.get("label_background", None))
         ])
-    if params.get("label_left_white") is not None:
+    if params.get("label_left_white", None) is not None:
         cargs.extend([
             "--label_left_white",
-            str(params.get("label_left_white"))
+            str(params.get("label_left_white", None))
         ])
-    if params.get("label_left_ribbon") is not None:
+    if params.get("label_left_ribbon", None) is not None:
         cargs.extend([
             "--label_left_ribbon",
-            str(params.get("label_left_ribbon"))
+            str(params.get("label_left_ribbon", None))
         ])
-    if params.get("label_right_white") is not None:
+    if params.get("label_right_white", None) is not None:
         cargs.extend([
             "--label_right_white",
-            str(params.get("label_right_white"))
+            str(params.get("label_right_white", None))
         ])
-    if params.get("label_right_ribbon") is not None:
+    if params.get("label_right_ribbon", None) is not None:
         cargs.extend([
             "--label_right_ribbon",
-            str(params.get("label_right_ribbon"))
+            str(params.get("label_right_ribbon", None))
         ])
-    if params.get("surf_white") is not None:
+    if params.get("surf_white", None) is not None:
         cargs.extend([
             "--surf_white",
-            params.get("surf_white")
+            params.get("surf_white", None)
         ])
-    if params.get("surf_pial") is not None:
+    if params.get("surf_pial", None) is not None:
         cargs.extend([
             "--surf_pial",
-            params.get("surf_pial")
+            params.get("surf_pial", None)
         ])
-    if params.get("aseg_name") is not None:
+    if params.get("aseg_name", None) is not None:
         cargs.extend([
             "--aseg_name",
-            params.get("aseg_name")
+            params.get("aseg_name", None)
         ])
-    if params.get("out_root") is not None:
+    if params.get("out_root", None) is not None:
         cargs.extend([
             "--out_root",
-            params.get("out_root")
+            params.get("out_root", None)
         ])
-    if params.get("subjects_dir") is not None:
+    if params.get("subjects_dir", None) is not None:
         cargs.extend([
             "--sd",
-            params.get("subjects_dir")
+            params.get("subjects_dir", None)
         ])
-    if params.get("save_distance"):
+    if params.get("save_distance", False):
         cargs.append("--save_distance")
-    if params.get("lh_only"):
+    if params.get("lh_only", False):
         cargs.append("--lh-only")
-    if params.get("rh_only"):
+    if params.get("rh_only", False):
         cargs.append("--rh-only")
-    if params.get("parallel"):
+    if params.get("parallel", False):
         cargs.append("--parallel")
-    if params.get("edit_aseg"):
+    if params.get("edit_aseg", False):
         cargs.append("--edit_aseg")
-    if params.get("save_ribbon"):
+    if params.get("save_ribbon", False):
         cargs.append("--save_ribbon")
-    cargs.append(params.get("io_param"))
+    cargs.append(params.get("io_param", None))
     return cargs
 
 
@@ -278,9 +267,9 @@ def mris_volmask_vtk_outputs(
     """
     ret = MrisVolmaskVtkOutputs(
         root=execution.output_file("."),
-        output_volume_mask=execution.output_file("mri/" + params.get("out_root") + ".mgz") if (params.get("out_root") is not None) else None,
-        left_ribbon_output=execution.output_file("mri/lh." + params.get("out_root") + ".mgz") if (params.get("out_root") is not None) else None,
-        right_ribbon_output=execution.output_file("mri/rh." + params.get("out_root") + ".mgz") if (params.get("out_root") is not None) else None,
+        output_volume_mask=execution.output_file("mri/" + params.get("out_root", None) + ".mgz") if (params.get("out_root") is not None) else None,
+        left_ribbon_output=execution.output_file("mri/lh." + params.get("out_root", None) + ".mgz") if (params.get("out_root") is not None) else None,
+        right_ribbon_output=execution.output_file("mri/rh." + params.get("out_root", None) + ".mgz") if (params.get("out_root") is not None) else None,
         edited_aseg_output=execution.output_file("mri/aseg.ribbon.mgz"),
         lh_dwhite_output=execution.output_file("mri/lh.dwhite.mgz"),
         lh_dpial_output=execution.output_file("mri/lh.dpial.mgz"),
@@ -404,7 +393,6 @@ def mris_volmask_vtk(
 __all__ = [
     "MRIS_VOLMASK_VTK_METADATA",
     "MrisVolmaskVtkOutputs",
-    "MrisVolmaskVtkParameters",
     "mris_volmask_vtk",
     "mris_volmask_vtk_execute",
     "mris_volmask_vtk_params",

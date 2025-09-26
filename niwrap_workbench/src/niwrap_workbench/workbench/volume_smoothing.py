@@ -14,7 +14,17 @@ VOLUME_SMOOTHING_METADATA = Metadata(
 
 
 VolumeSmoothingParameters = typing.TypedDict('VolumeSmoothingParameters', {
-    "@type": typing.Literal["workbench.volume-smoothing"],
+    "@type": typing.NotRequired[typing.Literal["workbench/volume-smoothing"]],
+    "volume_in": InputPathType,
+    "kernel": float,
+    "volume_out": str,
+    "opt_fwhm": bool,
+    "opt_roi_roivol": typing.NotRequired[InputPathType | None],
+    "opt_fix_zeros": bool,
+    "opt_subvolume_subvol": typing.NotRequired[str | None],
+})
+VolumeSmoothingParametersTagged = typing.TypedDict('VolumeSmoothingParametersTagged', {
+    "@type": typing.Literal["workbench/volume-smoothing"],
     "volume_in": InputPathType,
     "kernel": float,
     "volume_out": str,
@@ -25,41 +35,9 @@ VolumeSmoothingParameters = typing.TypedDict('VolumeSmoothingParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "workbench.volume-smoothing": volume_smoothing_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "workbench.volume-smoothing": volume_smoothing_outputs,
-    }.get(t)
-
-
 class VolumeSmoothingOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `volume_smoothing(...)`.
+    Output object returned when calling `VolumeSmoothingParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -75,7 +53,7 @@ def volume_smoothing_params(
     opt_roi_roivol: InputPathType | None = None,
     opt_fix_zeros: bool = False,
     opt_subvolume_subvol: str | None = None,
-) -> VolumeSmoothingParameters:
+) -> VolumeSmoothingParametersTagged:
     """
     Build parameters.
     
@@ -94,7 +72,7 @@ def volume_smoothing_params(
         Parameter dictionary
     """
     params = {
-        "@type": "workbench.volume-smoothing",
+        "@type": "workbench/volume-smoothing",
         "volume_in": volume_in,
         "kernel": kernel,
         "volume_out": volume_out,
@@ -124,22 +102,22 @@ def volume_smoothing_cargs(
     cargs = []
     cargs.append("wb_command")
     cargs.append("-volume-smoothing")
-    cargs.append(execution.input_file(params.get("volume_in")))
-    cargs.append(str(params.get("kernel")))
-    cargs.append(params.get("volume_out"))
-    if params.get("opt_fwhm"):
+    cargs.append(execution.input_file(params.get("volume_in", None)))
+    cargs.append(str(params.get("kernel", None)))
+    cargs.append(params.get("volume_out", None))
+    if params.get("opt_fwhm", False):
         cargs.append("-fwhm")
-    if params.get("opt_roi_roivol") is not None:
+    if params.get("opt_roi_roivol", None) is not None:
         cargs.extend([
             "-roi",
-            execution.input_file(params.get("opt_roi_roivol"))
+            execution.input_file(params.get("opt_roi_roivol", None))
         ])
-    if params.get("opt_fix_zeros"):
+    if params.get("opt_fix_zeros", False):
         cargs.append("-fix-zeros")
-    if params.get("opt_subvolume_subvol") is not None:
+    if params.get("opt_subvolume_subvol", None) is not None:
         cargs.extend([
             "-subvolume",
-            params.get("opt_subvolume_subvol")
+            params.get("opt_subvolume_subvol", None)
         ])
     return cargs
 
@@ -159,7 +137,7 @@ def volume_smoothing_outputs(
     """
     ret = VolumeSmoothingOutputs(
         root=execution.output_file("."),
-        volume_out=execution.output_file(params.get("volume_out")),
+        volume_out=execution.output_file(params.get("volume_out", None)),
     )
     return ret
 
@@ -265,7 +243,6 @@ def volume_smoothing(
 __all__ = [
     "VOLUME_SMOOTHING_METADATA",
     "VolumeSmoothingOutputs",
-    "VolumeSmoothingParameters",
     "volume_smoothing",
     "volume_smoothing_execute",
     "volume_smoothing_params",

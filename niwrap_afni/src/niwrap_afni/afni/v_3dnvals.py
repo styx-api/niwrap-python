@@ -14,47 +14,22 @@ V_3DNVALS_METADATA = Metadata(
 
 
 V3dnvalsParameters = typing.TypedDict('V3dnvalsParameters', {
-    "@type": typing.Literal["afni.3dnvals"],
+    "@type": typing.NotRequired[typing.Literal["afni/3dnvals"]],
+    "datasets": list[InputPathType],
+    "all_flag": bool,
+    "verbose_flag": bool,
+})
+V3dnvalsParametersTagged = typing.TypedDict('V3dnvalsParametersTagged', {
+    "@type": typing.Literal["afni/3dnvals"],
     "datasets": list[InputPathType],
     "all_flag": bool,
     "verbose_flag": bool,
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "afni.3dnvals": v_3dnvals_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-    }.get(t)
-
-
 class V3dnvalsOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `v_3dnvals(...)`.
+    Output object returned when calling `V3dnvalsParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -64,7 +39,7 @@ def v_3dnvals_params(
     datasets: list[InputPathType],
     all_flag: bool = False,
     verbose_flag: bool = False,
-) -> V3dnvalsParameters:
+) -> V3dnvalsParametersTagged:
     """
     Build parameters.
     
@@ -76,7 +51,7 @@ def v_3dnvals_params(
         Parameter dictionary
     """
     params = {
-        "@type": "afni.3dnvals",
+        "@type": "afni/3dnvals",
         "datasets": datasets,
         "all_flag": all_flag,
         "verbose_flag": verbose_flag,
@@ -99,10 +74,10 @@ def v_3dnvals_cargs(
     """
     cargs = []
     cargs.append("3dnvals")
-    cargs.extend([execution.input_file(f) for f in params.get("datasets")])
-    if params.get("all_flag"):
+    cargs.extend([execution.input_file(f) for f in params.get("datasets", None)])
+    if params.get("all_flag", False):
         cargs.append("-all")
-    if params.get("verbose_flag"):
+    if params.get("verbose_flag", False):
         cargs.append("-verbose")
     return cargs
 
@@ -187,7 +162,6 @@ def v_3dnvals(
 
 __all__ = [
     "V3dnvalsOutputs",
-    "V3dnvalsParameters",
     "V_3DNVALS_METADATA",
     "v_3dnvals",
     "v_3dnvals_execute",

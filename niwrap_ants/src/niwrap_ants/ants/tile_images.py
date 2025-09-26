@@ -14,7 +14,14 @@ TILE_IMAGES_METADATA = Metadata(
 
 
 TileImagesParameters = typing.TypedDict('TileImagesParameters', {
-    "@type": typing.Literal["ants.TileImages"],
+    "@type": typing.NotRequired[typing.Literal["ants/TileImages"]],
+    "image_dimension": int,
+    "output_image": str,
+    "layout": str,
+    "input_images": list[InputPathType],
+})
+TileImagesParametersTagged = typing.TypedDict('TileImagesParametersTagged', {
+    "@type": typing.Literal["ants/TileImages"],
     "image_dimension": int,
     "output_image": str,
     "layout": str,
@@ -22,41 +29,9 @@ TileImagesParameters = typing.TypedDict('TileImagesParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "ants.TileImages": tile_images_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "ants.TileImages": tile_images_outputs,
-    }.get(t)
-
-
 class TileImagesOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `tile_images(...)`.
+    Output object returned when calling `TileImagesParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -69,7 +44,7 @@ def tile_images_params(
     output_image: str,
     layout: str,
     input_images: list[InputPathType],
-) -> TileImagesParameters:
+) -> TileImagesParametersTagged:
     """
     Build parameters.
     
@@ -85,7 +60,7 @@ def tile_images_params(
         Parameter dictionary
     """
     params = {
-        "@type": "ants.TileImages",
+        "@type": "ants/TileImages",
         "image_dimension": image_dimension,
         "output_image": output_image,
         "layout": layout,
@@ -109,10 +84,10 @@ def tile_images_cargs(
     """
     cargs = []
     cargs.append("TileImages")
-    cargs.append(str(params.get("image_dimension")))
-    cargs.append(params.get("output_image"))
-    cargs.append(params.get("layout"))
-    cargs.extend([execution.input_file(f) for f in params.get("input_images")])
+    cargs.append(str(params.get("image_dimension", None)))
+    cargs.append(params.get("output_image", None))
+    cargs.append(params.get("layout", None))
+    cargs.extend([execution.input_file(f) for f in params.get("input_images", None)])
     return cargs
 
 
@@ -131,7 +106,7 @@ def tile_images_outputs(
     """
     ret = TileImagesOutputs(
         root=execution.output_file("."),
-        tiled_image=execution.output_file(params.get("output_image")),
+        tiled_image=execution.output_file(params.get("output_image", None)),
     )
     return ret
 
@@ -208,7 +183,6 @@ def tile_images(
 __all__ = [
     "TILE_IMAGES_METADATA",
     "TileImagesOutputs",
-    "TileImagesParameters",
     "tile_images",
     "tile_images_execute",
     "tile_images_params",

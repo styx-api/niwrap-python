@@ -14,7 +14,21 @@ V_1DSVD_METADATA = Metadata(
 
 
 V1dsvdParameters = typing.TypedDict('V1dsvdParameters', {
-    "@type": typing.Literal["afni.1dsvd"],
+    "@type": typing.NotRequired[typing.Literal["afni/1dsvd"]],
+    "one": bool,
+    "vmean": bool,
+    "vnorm": bool,
+    "cond": bool,
+    "sing": bool,
+    "sort": bool,
+    "nosort": bool,
+    "asort": bool,
+    "left_eigenvectors": bool,
+    "num_eigenvectors": typing.NotRequired[str | None],
+    "input_files": list[InputPathType],
+})
+V1dsvdParametersTagged = typing.TypedDict('V1dsvdParametersTagged', {
+    "@type": typing.Literal["afni/1dsvd"],
     "one": bool,
     "vmean": bool,
     "vnorm": bool,
@@ -29,41 +43,9 @@ V1dsvdParameters = typing.TypedDict('V1dsvdParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "afni.1dsvd": v_1dsvd_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "afni.1dsvd": v_1dsvd_outputs,
-    }.get(t)
-
-
 class V1dsvdOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `v_1dsvd(...)`.
+    Output object returned when calling `V1dsvdParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -83,7 +65,7 @@ def v_1dsvd_params(
     asort: bool = False,
     left_eigenvectors: bool = False,
     num_eigenvectors: str | None = None,
-) -> V1dsvdParameters:
+) -> V1dsvdParametersTagged:
     """
     Build parameters.
     
@@ -103,7 +85,7 @@ def v_1dsvd_params(
         Parameter dictionary
     """
     params = {
-        "@type": "afni.1dsvd",
+        "@type": "afni/1dsvd",
         "one": one,
         "vmean": vmean,
         "vnorm": vnorm,
@@ -135,30 +117,30 @@ def v_1dsvd_cargs(
     """
     cargs = []
     cargs.append("1dsvd")
-    if params.get("one"):
+    if params.get("one", False):
         cargs.append("-one")
-    if params.get("vmean"):
+    if params.get("vmean", False):
         cargs.append("-vmean")
-    if params.get("vnorm"):
+    if params.get("vnorm", False):
         cargs.append("-vnorm")
-    if params.get("cond"):
+    if params.get("cond", False):
         cargs.append("-cond")
-    if params.get("sing"):
+    if params.get("sing", False):
         cargs.append("-sing")
-    if params.get("sort"):
+    if params.get("sort", False):
         cargs.append("-sort")
-    if params.get("nosort"):
+    if params.get("nosort", False):
         cargs.append("-nosort")
-    if params.get("asort"):
+    if params.get("asort", False):
         cargs.append("-asort")
-    if params.get("left_eigenvectors"):
+    if params.get("left_eigenvectors", False):
         cargs.append("-1Dleft")
-    if params.get("num_eigenvectors") is not None:
+    if params.get("num_eigenvectors", None) is not None:
         cargs.extend([
             "-nev",
-            params.get("num_eigenvectors")
+            params.get("num_eigenvectors", None)
         ])
-    cargs.extend([execution.input_file(f) for f in params.get("input_files")])
+    cargs.extend([execution.input_file(f) for f in params.get("input_files", None)])
     return cargs
 
 
@@ -269,7 +251,6 @@ def v_1dsvd(
 
 __all__ = [
     "V1dsvdOutputs",
-    "V1dsvdParameters",
     "V_1DSVD_METADATA",
     "v_1dsvd",
     "v_1dsvd_execute",

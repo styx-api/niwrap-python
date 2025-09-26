@@ -14,13 +14,24 @@ VOLUME_ESTIMATE_FWHM_METADATA = Metadata(
 
 
 VolumeEstimateFwhmWholeFileParameters = typing.TypedDict('VolumeEstimateFwhmWholeFileParameters', {
-    "@type": typing.Literal["workbench.volume-estimate-fwhm.whole_file"],
+    "@type": typing.NotRequired[typing.Literal["whole_file"]],
+    "opt_demean": bool,
+})
+VolumeEstimateFwhmWholeFileParametersTagged = typing.TypedDict('VolumeEstimateFwhmWholeFileParametersTagged', {
+    "@type": typing.Literal["whole_file"],
     "opt_demean": bool,
 })
 
 
 VolumeEstimateFwhmParameters = typing.TypedDict('VolumeEstimateFwhmParameters', {
-    "@type": typing.Literal["workbench.volume-estimate-fwhm"],
+    "@type": typing.NotRequired[typing.Literal["workbench/volume-estimate-fwhm"]],
+    "volume": InputPathType,
+    "opt_roi_roivol": typing.NotRequired[InputPathType | None],
+    "opt_subvolume_subvol": typing.NotRequired[str | None],
+    "whole_file": typing.NotRequired[VolumeEstimateFwhmWholeFileParameters | None],
+})
+VolumeEstimateFwhmParametersTagged = typing.TypedDict('VolumeEstimateFwhmParametersTagged', {
+    "@type": typing.Literal["workbench/volume-estimate-fwhm"],
     "volume": InputPathType,
     "opt_roi_roivol": typing.NotRequired[InputPathType | None],
     "opt_subvolume_subvol": typing.NotRequired[str | None],
@@ -28,41 +39,9 @@ VolumeEstimateFwhmParameters = typing.TypedDict('VolumeEstimateFwhmParameters', 
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "workbench.volume-estimate-fwhm": volume_estimate_fwhm_cargs,
-        "workbench.volume-estimate-fwhm.whole_file": volume_estimate_fwhm_whole_file_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-    }.get(t)
-
-
 def volume_estimate_fwhm_whole_file_params(
     opt_demean: bool = False,
-) -> VolumeEstimateFwhmWholeFileParameters:
+) -> VolumeEstimateFwhmWholeFileParametersTagged:
     """
     Build parameters.
     
@@ -72,7 +51,7 @@ def volume_estimate_fwhm_whole_file_params(
         Parameter dictionary
     """
     params = {
-        "@type": "workbench.volume-estimate-fwhm.whole_file",
+        "@type": "whole_file",
         "opt_demean": opt_demean,
     }
     return params
@@ -93,14 +72,14 @@ def volume_estimate_fwhm_whole_file_cargs(
     """
     cargs = []
     cargs.append("-whole-file")
-    if params.get("opt_demean"):
+    if params.get("opt_demean", False):
         cargs.append("-demean")
     return cargs
 
 
 class VolumeEstimateFwhmOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `volume_estimate_fwhm(...)`.
+    Output object returned when calling `VolumeEstimateFwhmParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -111,7 +90,7 @@ def volume_estimate_fwhm_params(
     opt_roi_roivol: InputPathType | None = None,
     opt_subvolume_subvol: str | None = None,
     whole_file: VolumeEstimateFwhmWholeFileParameters | None = None,
-) -> VolumeEstimateFwhmParameters:
+) -> VolumeEstimateFwhmParametersTagged:
     """
     Build parameters.
     
@@ -127,7 +106,7 @@ def volume_estimate_fwhm_params(
         Parameter dictionary
     """
     params = {
-        "@type": "workbench.volume-estimate-fwhm",
+        "@type": "workbench/volume-estimate-fwhm",
         "volume": volume,
     }
     if opt_roi_roivol is not None:
@@ -155,19 +134,19 @@ def volume_estimate_fwhm_cargs(
     cargs = []
     cargs.append("wb_command")
     cargs.append("-volume-estimate-fwhm")
-    cargs.append(execution.input_file(params.get("volume")))
-    if params.get("opt_roi_roivol") is not None:
+    cargs.append(execution.input_file(params.get("volume", None)))
+    if params.get("opt_roi_roivol", None) is not None:
         cargs.extend([
             "-roi",
-            execution.input_file(params.get("opt_roi_roivol"))
+            execution.input_file(params.get("opt_roi_roivol", None))
         ])
-    if params.get("opt_subvolume_subvol") is not None:
+    if params.get("opt_subvolume_subvol", None) is not None:
         cargs.extend([
             "-subvolume",
-            params.get("opt_subvolume_subvol")
+            params.get("opt_subvolume_subvol", None)
         ])
-    if params.get("whole_file") is not None:
-        cargs.extend(dyn_cargs(params.get("whole_file")["@type"])(params.get("whole_file"), execution))
+    if params.get("whole_file", None) is not None:
+        cargs.extend(volume_estimate_fwhm_whole_file_cargs(params.get("whole_file", None), execution))
     return cargs
 
 
@@ -268,8 +247,6 @@ def volume_estimate_fwhm(
 __all__ = [
     "VOLUME_ESTIMATE_FWHM_METADATA",
     "VolumeEstimateFwhmOutputs",
-    "VolumeEstimateFwhmParameters",
-    "VolumeEstimateFwhmWholeFileParameters",
     "volume_estimate_fwhm",
     "volume_estimate_fwhm_execute",
     "volume_estimate_fwhm_params",

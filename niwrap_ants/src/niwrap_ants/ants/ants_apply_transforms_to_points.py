@@ -14,28 +14,44 @@ ANTS_APPLY_TRANSFORMS_TO_POINTS_METADATA = Metadata(
 
 
 AntsApplyTransformsToPointsSingleTransformParameters = typing.TypedDict('AntsApplyTransformsToPointsSingleTransformParameters', {
-    "@type": typing.Literal["ants.antsApplyTransformsToPoints.single_transform"],
+    "@type": typing.NotRequired[typing.Literal["single_transform"]],
+})
+AntsApplyTransformsToPointsSingleTransformParametersTagged = typing.TypedDict('AntsApplyTransformsToPointsSingleTransformParametersTagged', {
+    "@type": typing.Literal["single_transform"],
 })
 
 
 AntsApplyTransformsToPointsInverseTransformParameters = typing.TypedDict('AntsApplyTransformsToPointsInverseTransformParameters', {
-    "@type": typing.Literal["ants.antsApplyTransformsToPoints.inverse_transform"],
+    "@type": typing.NotRequired[typing.Literal["inverse_transform"]],
+    "transform_file": InputPathType,
+})
+AntsApplyTransformsToPointsInverseTransformParametersTagged = typing.TypedDict('AntsApplyTransformsToPointsInverseTransformParametersTagged', {
+    "@type": typing.Literal["inverse_transform"],
     "transform_file": InputPathType,
 })
 
 
 AntsApplyTransformsToPointsParameters = typing.TypedDict('AntsApplyTransformsToPointsParameters', {
-    "@type": typing.Literal["ants.antsApplyTransformsToPoints"],
+    "@type": typing.NotRequired[typing.Literal["ants/antsApplyTransformsToPoints"]],
     "dimensionality": typing.NotRequired[typing.Literal[2, 3] | None],
     "precision": typing.NotRequired[typing.Literal[0, 1] | None],
     "forantsr": typing.NotRequired[typing.Literal[0, 1] | None],
     "input": InputPathType,
     "output": str,
-    "transform": typing.NotRequired[typing.Union[AntsApplyTransformsToPointsSingleTransformParameters, AntsApplyTransformsToPointsInverseTransformParameters] | None],
+    "transform": typing.NotRequired[typing.Union[AntsApplyTransformsToPointsSingleTransformParametersTagged, AntsApplyTransformsToPointsInverseTransformParametersTagged] | None],
+})
+AntsApplyTransformsToPointsParametersTagged = typing.TypedDict('AntsApplyTransformsToPointsParametersTagged', {
+    "@type": typing.Literal["ants/antsApplyTransformsToPoints"],
+    "dimensionality": typing.NotRequired[typing.Literal[2, 3] | None],
+    "precision": typing.NotRequired[typing.Literal[0, 1] | None],
+    "forantsr": typing.NotRequired[typing.Literal[0, 1] | None],
+    "input": InputPathType,
+    "output": str,
+    "transform": typing.NotRequired[typing.Union[AntsApplyTransformsToPointsSingleTransformParametersTagged, AntsApplyTransformsToPointsInverseTransformParametersTagged] | None],
 })
 
 
-def dyn_cargs(
+def ants_apply_transforms_to_points_transform_cargs_dyn_fn(
     t: str,
 ) -> typing.Any:
     """
@@ -47,13 +63,12 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "ants.antsApplyTransformsToPoints": ants_apply_transforms_to_points_cargs,
-        "ants.antsApplyTransformsToPoints.single_transform": ants_apply_transforms_to_points_single_transform_cargs,
-        "ants.antsApplyTransformsToPoints.inverse_transform": ants_apply_transforms_to_points_inverse_transform_cargs,
+        "single_transform": ants_apply_transforms_to_points_single_transform_cargs,
+        "inverse_transform": ants_apply_transforms_to_points_inverse_transform_cargs,
     }.get(t)
 
 
-def dyn_outputs(
+def ants_apply_transforms_to_points_transform_outputs_dyn_fn(
     t: str,
 ) -> typing.Any:
     """
@@ -65,12 +80,11 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "ants.antsApplyTransformsToPoints": ants_apply_transforms_to_points_outputs,
     }.get(t)
 
 
 def ants_apply_transforms_to_points_single_transform_params(
-) -> AntsApplyTransformsToPointsSingleTransformParameters:
+) -> AntsApplyTransformsToPointsSingleTransformParametersTagged:
     """
     Build parameters.
     
@@ -79,7 +93,7 @@ def ants_apply_transforms_to_points_single_transform_params(
         Parameter dictionary
     """
     params = {
-        "@type": "ants.antsApplyTransformsToPoints.single_transform",
+        "@type": "single_transform",
     }
     return params
 
@@ -104,7 +118,7 @@ def ants_apply_transforms_to_points_single_transform_cargs(
 
 def ants_apply_transforms_to_points_inverse_transform_params(
     transform_file: InputPathType,
-) -> AntsApplyTransformsToPointsInverseTransformParameters:
+) -> AntsApplyTransformsToPointsInverseTransformParametersTagged:
     """
     Build parameters.
     
@@ -114,7 +128,7 @@ def ants_apply_transforms_to_points_inverse_transform_params(
         Parameter dictionary
     """
     params = {
-        "@type": "ants.antsApplyTransformsToPoints.inverse_transform",
+        "@type": "inverse_transform",
         "transform_file": transform_file,
     }
     return params
@@ -134,13 +148,13 @@ def ants_apply_transforms_to_points_inverse_transform_cargs(
         Command-line arguments.
     """
     cargs = []
-    cargs.append(execution.input_file(params.get("transform_file")) + ",1")
+    cargs.append(execution.input_file(params.get("transform_file", None)) + ",1")
     return cargs
 
 
 class AntsApplyTransformsToPointsOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `ants_apply_transforms_to_points(...)`.
+    Output object returned when calling `AntsApplyTransformsToPointsParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -154,8 +168,8 @@ def ants_apply_transforms_to_points_params(
     dimensionality: typing.Literal[2, 3] | None = None,
     precision: typing.Literal[0, 1] | None = None,
     forantsr: typing.Literal[0, 1] | None = None,
-    transform: typing.Union[AntsApplyTransformsToPointsSingleTransformParameters, AntsApplyTransformsToPointsInverseTransformParameters] | None = None,
-) -> AntsApplyTransformsToPointsParameters:
+    transform: typing.Union[AntsApplyTransformsToPointsSingleTransformParametersTagged, AntsApplyTransformsToPointsInverseTransformParametersTagged] | None = None,
+) -> AntsApplyTransformsToPointsParametersTagged:
     """
     Build parameters.
     
@@ -173,7 +187,7 @@ def ants_apply_transforms_to_points_params(
         Parameter dictionary
     """
     params = {
-        "@type": "ants.antsApplyTransformsToPoints",
+        "@type": "ants/antsApplyTransformsToPoints",
         "input": input_,
         "output": output,
     }
@@ -203,33 +217,33 @@ def ants_apply_transforms_to_points_cargs(
     """
     cargs = []
     cargs.append("antsApplyTransformsToPoints")
-    if params.get("dimensionality") is not None:
+    if params.get("dimensionality", None) is not None:
         cargs.extend([
             "--dimensionality",
-            str(params.get("dimensionality"))
+            str(params.get("dimensionality", None))
         ])
-    if params.get("precision") is not None:
+    if params.get("precision", None) is not None:
         cargs.extend([
             "--precision",
-            str(params.get("precision"))
+            str(params.get("precision", None))
         ])
-    if params.get("forantsr") is not None:
+    if params.get("forantsr", None) is not None:
         cargs.extend([
             "--forantsr",
-            str(params.get("forantsr"))
+            str(params.get("forantsr", None))
         ])
     cargs.extend([
         "-i",
-        execution.input_file(params.get("input"))
+        execution.input_file(params.get("input", None))
     ])
     cargs.extend([
         "-o",
-        params.get("output")
+        params.get("output", None)
     ])
-    if params.get("transform") is not None:
+    if params.get("transform", None) is not None:
         cargs.extend([
             "-t",
-            *dyn_cargs(params.get("transform")["@type"])(params.get("transform"), execution)
+            *ants_apply_transforms_to_points_transform_cargs_dyn_fn(params.get("transform", None)["@type"])(params.get("transform", None), execution)
         ])
     return cargs
 
@@ -249,7 +263,7 @@ def ants_apply_transforms_to_points_outputs(
     """
     ret = AntsApplyTransformsToPointsOutputs(
         root=execution.output_file("."),
-        warped_points=execution.output_file(params.get("output")),
+        warped_points=execution.output_file(params.get("output", None)),
     )
     return ret
 
@@ -292,7 +306,7 @@ def ants_apply_transforms_to_points(
     dimensionality: typing.Literal[2, 3] | None = None,
     precision: typing.Literal[0, 1] | None = None,
     forantsr: typing.Literal[0, 1] | None = None,
-    transform: typing.Union[AntsApplyTransformsToPointsSingleTransformParameters, AntsApplyTransformsToPointsInverseTransformParameters] | None = None,
+    transform: typing.Union[AntsApplyTransformsToPointsSingleTransformParametersTagged, AntsApplyTransformsToPointsInverseTransformParametersTagged] | None = None,
     runner: Runner | None = None,
 ) -> AntsApplyTransformsToPointsOutputs:
     """
@@ -335,10 +349,7 @@ def ants_apply_transforms_to_points(
 
 __all__ = [
     "ANTS_APPLY_TRANSFORMS_TO_POINTS_METADATA",
-    "AntsApplyTransformsToPointsInverseTransformParameters",
     "AntsApplyTransformsToPointsOutputs",
-    "AntsApplyTransformsToPointsParameters",
-    "AntsApplyTransformsToPointsSingleTransformParameters",
     "ants_apply_transforms_to_points",
     "ants_apply_transforms_to_points_execute",
     "ants_apply_transforms_to_points_inverse_transform_params",

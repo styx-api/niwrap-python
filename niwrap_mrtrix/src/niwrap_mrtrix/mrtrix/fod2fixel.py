@@ -14,14 +14,43 @@ FOD2FIXEL_METADATA = Metadata(
 
 
 Fod2fixelConfigParameters = typing.TypedDict('Fod2fixelConfigParameters', {
-    "@type": typing.Literal["mrtrix.fod2fixel.config"],
+    "@type": typing.NotRequired[typing.Literal["config"]],
+    "key": str,
+    "value": str,
+})
+Fod2fixelConfigParametersTagged = typing.TypedDict('Fod2fixelConfigParametersTagged', {
+    "@type": typing.Literal["config"],
     "key": str,
     "value": str,
 })
 
 
 Fod2fixelParameters = typing.TypedDict('Fod2fixelParameters', {
-    "@type": typing.Literal["mrtrix.fod2fixel"],
+    "@type": typing.NotRequired[typing.Literal["mrtrix/fod2fixel"]],
+    "afd": typing.NotRequired[str | None],
+    "peak_amp": typing.NotRequired[str | None],
+    "disp": typing.NotRequired[str | None],
+    "fmls_integral": typing.NotRequired[float | None],
+    "fmls_peak_value": typing.NotRequired[float | None],
+    "fmls_no_thresholds": bool,
+    "fmls_lobe_merge_ratio": typing.NotRequired[float | None],
+    "mask": typing.NotRequired[InputPathType | None],
+    "maxnum": typing.NotRequired[int | None],
+    "nii": bool,
+    "dirpeak": bool,
+    "info": bool,
+    "quiet": bool,
+    "debug": bool,
+    "force": bool,
+    "nthreads": typing.NotRequired[int | None],
+    "config": typing.NotRequired[list[Fod2fixelConfigParameters] | None],
+    "help": bool,
+    "version": bool,
+    "fod": InputPathType,
+    "fixel_directory": str,
+})
+Fod2fixelParametersTagged = typing.TypedDict('Fod2fixelParametersTagged', {
+    "@type": typing.Literal["mrtrix/fod2fixel"],
     "afd": typing.NotRequired[str | None],
     "peak_amp": typing.NotRequired[str | None],
     "disp": typing.NotRequired[str | None],
@@ -46,43 +75,10 @@ Fod2fixelParameters = typing.TypedDict('Fod2fixelParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "mrtrix.fod2fixel": fod2fixel_cargs,
-        "mrtrix.fod2fixel.config": fod2fixel_config_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "mrtrix.fod2fixel": fod2fixel_outputs,
-    }.get(t)
-
-
 def fod2fixel_config_params(
     key: str,
     value: str,
-) -> Fod2fixelConfigParameters:
+) -> Fod2fixelConfigParametersTagged:
     """
     Build parameters.
     
@@ -93,7 +89,7 @@ def fod2fixel_config_params(
         Parameter dictionary
     """
     params = {
-        "@type": "mrtrix.fod2fixel.config",
+        "@type": "config",
         "key": key,
         "value": value,
     }
@@ -115,14 +111,14 @@ def fod2fixel_config_cargs(
     """
     cargs = []
     cargs.append("-config")
-    cargs.append(params.get("key"))
-    cargs.append(params.get("value"))
+    cargs.append(params.get("key", None))
+    cargs.append(params.get("value", None))
     return cargs
 
 
 class Fod2fixelOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `fod2fixel(...)`.
+    Output object returned when calling `Fod2fixelParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -160,7 +156,7 @@ def fod2fixel_params(
     config: list[Fod2fixelConfigParameters] | None = None,
     help_: bool = False,
     version: bool = False,
-) -> Fod2fixelParameters:
+) -> Fod2fixelParametersTagged:
     """
     Build parameters.
     
@@ -212,7 +208,7 @@ def fod2fixel_params(
         Parameter dictionary
     """
     params = {
-        "@type": "mrtrix.fod2fixel",
+        "@type": "mrtrix/fod2fixel",
         "fmls_no_thresholds": fmls_no_thresholds,
         "nii": nii,
         "dirpeak": dirpeak,
@@ -263,73 +259,73 @@ def fod2fixel_cargs(
     """
     cargs = []
     cargs.append("fod2fixel")
-    if params.get("afd") is not None:
+    if params.get("afd", None) is not None:
         cargs.extend([
             "-afd",
-            params.get("afd")
+            params.get("afd", None)
         ])
-    if params.get("peak_amp") is not None:
+    if params.get("peak_amp", None) is not None:
         cargs.extend([
             "-peak_amp",
-            params.get("peak_amp")
+            params.get("peak_amp", None)
         ])
-    if params.get("disp") is not None:
+    if params.get("disp", None) is not None:
         cargs.extend([
             "-disp",
-            params.get("disp")
+            params.get("disp", None)
         ])
-    if params.get("fmls_integral") is not None:
+    if params.get("fmls_integral", None) is not None:
         cargs.extend([
             "-fmls_integral",
-            str(params.get("fmls_integral"))
+            str(params.get("fmls_integral", None))
         ])
-    if params.get("fmls_peak_value") is not None:
+    if params.get("fmls_peak_value", None) is not None:
         cargs.extend([
             "-fmls_peak_value",
-            str(params.get("fmls_peak_value"))
+            str(params.get("fmls_peak_value", None))
         ])
-    if params.get("fmls_no_thresholds"):
+    if params.get("fmls_no_thresholds", False):
         cargs.append("-fmls_no_thresholds")
-    if params.get("fmls_lobe_merge_ratio") is not None:
+    if params.get("fmls_lobe_merge_ratio", None) is not None:
         cargs.extend([
             "-fmls_lobe_merge_ratio",
-            str(params.get("fmls_lobe_merge_ratio"))
+            str(params.get("fmls_lobe_merge_ratio", None))
         ])
-    if params.get("mask") is not None:
+    if params.get("mask", None) is not None:
         cargs.extend([
             "-mask",
-            execution.input_file(params.get("mask"))
+            execution.input_file(params.get("mask", None))
         ])
-    if params.get("maxnum") is not None:
+    if params.get("maxnum", None) is not None:
         cargs.extend([
             "-maxnum",
-            str(params.get("maxnum"))
+            str(params.get("maxnum", None))
         ])
-    if params.get("nii"):
+    if params.get("nii", False):
         cargs.append("-nii")
-    if params.get("dirpeak"):
+    if params.get("dirpeak", False):
         cargs.append("-dirpeak")
-    if params.get("info"):
+    if params.get("info", False):
         cargs.append("-info")
-    if params.get("quiet"):
+    if params.get("quiet", False):
         cargs.append("-quiet")
-    if params.get("debug"):
+    if params.get("debug", False):
         cargs.append("-debug")
-    if params.get("force"):
+    if params.get("force", False):
         cargs.append("-force")
-    if params.get("nthreads") is not None:
+    if params.get("nthreads", None) is not None:
         cargs.extend([
             "-nthreads",
-            str(params.get("nthreads"))
+            str(params.get("nthreads", None))
         ])
-    if params.get("config") is not None:
-        cargs.extend([a for c in [dyn_cargs(s["@type"])(s, execution) for s in params.get("config")] for a in c])
-    if params.get("help"):
+    if params.get("config", None) is not None:
+        cargs.extend([a for c in [fod2fixel_config_cargs(s, execution) for s in params.get("config", None)] for a in c])
+    if params.get("help", False):
         cargs.append("-help")
-    if params.get("version"):
+    if params.get("version", False):
         cargs.append("-version")
-    cargs.append(execution.input_file(params.get("fod")))
-    cargs.append(params.get("fixel_directory"))
+    cargs.append(execution.input_file(params.get("fod", None)))
+    cargs.append(params.get("fixel_directory", None))
     return cargs
 
 
@@ -348,10 +344,10 @@ def fod2fixel_outputs(
     """
     ret = Fod2fixelOutputs(
         root=execution.output_file("."),
-        fixel_directory=execution.output_file(params.get("fixel_directory")),
-        afd=execution.output_file(params.get("afd")) if (params.get("afd") is not None) else None,
-        peak_amp=execution.output_file(params.get("peak_amp")) if (params.get("peak_amp") is not None) else None,
-        disp=execution.output_file(params.get("disp")) if (params.get("disp") is not None) else None,
+        fixel_directory=execution.output_file(params.get("fixel_directory", None)),
+        afd=execution.output_file(params.get("afd", None)) if (params.get("afd") is not None) else None,
+        peak_amp=execution.output_file(params.get("peak_amp", None)) if (params.get("peak_amp") is not None) else None,
+        disp=execution.output_file(params.get("disp", None)) if (params.get("disp") is not None) else None,
     )
     return ret
 
@@ -525,9 +521,7 @@ def fod2fixel(
 
 __all__ = [
     "FOD2FIXEL_METADATA",
-    "Fod2fixelConfigParameters",
     "Fod2fixelOutputs",
-    "Fod2fixelParameters",
     "fod2fixel",
     "fod2fixel_config_params",
     "fod2fixel_execute",

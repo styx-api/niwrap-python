@@ -14,14 +14,33 @@ LABEL2MESH_METADATA = Metadata(
 
 
 Label2meshConfigParameters = typing.TypedDict('Label2meshConfigParameters', {
-    "@type": typing.Literal["mrtrix.label2mesh.config"],
+    "@type": typing.NotRequired[typing.Literal["config"]],
+    "key": str,
+    "value": str,
+})
+Label2meshConfigParametersTagged = typing.TypedDict('Label2meshConfigParametersTagged', {
+    "@type": typing.Literal["config"],
     "key": str,
     "value": str,
 })
 
 
 Label2meshParameters = typing.TypedDict('Label2meshParameters', {
-    "@type": typing.Literal["mrtrix.label2mesh"],
+    "@type": typing.NotRequired[typing.Literal["mrtrix/label2mesh"]],
+    "blocky": bool,
+    "info": bool,
+    "quiet": bool,
+    "debug": bool,
+    "force": bool,
+    "nthreads": typing.NotRequired[int | None],
+    "config": typing.NotRequired[list[Label2meshConfigParameters] | None],
+    "help": bool,
+    "version": bool,
+    "nodes_in": InputPathType,
+    "mesh_out": str,
+})
+Label2meshParametersTagged = typing.TypedDict('Label2meshParametersTagged', {
+    "@type": typing.Literal["mrtrix/label2mesh"],
     "blocky": bool,
     "info": bool,
     "quiet": bool,
@@ -36,43 +55,10 @@ Label2meshParameters = typing.TypedDict('Label2meshParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "mrtrix.label2mesh": label2mesh_cargs,
-        "mrtrix.label2mesh.config": label2mesh_config_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "mrtrix.label2mesh": label2mesh_outputs,
-    }.get(t)
-
-
 def label2mesh_config_params(
     key: str,
     value: str,
-) -> Label2meshConfigParameters:
+) -> Label2meshConfigParametersTagged:
     """
     Build parameters.
     
@@ -83,7 +69,7 @@ def label2mesh_config_params(
         Parameter dictionary
     """
     params = {
-        "@type": "mrtrix.label2mesh.config",
+        "@type": "config",
         "key": key,
         "value": value,
     }
@@ -105,14 +91,14 @@ def label2mesh_config_cargs(
     """
     cargs = []
     cargs.append("-config")
-    cargs.append(params.get("key"))
-    cargs.append(params.get("value"))
+    cargs.append(params.get("key", None))
+    cargs.append(params.get("value", None))
     return cargs
 
 
 class Label2meshOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `label2mesh(...)`.
+    Output object returned when calling `Label2meshParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -132,7 +118,7 @@ def label2mesh_params(
     config: list[Label2meshConfigParameters] | None = None,
     help_: bool = False,
     version: bool = False,
-) -> Label2meshParameters:
+) -> Label2meshParametersTagged:
     """
     Build parameters.
     
@@ -157,7 +143,7 @@ def label2mesh_params(
         Parameter dictionary
     """
     params = {
-        "@type": "mrtrix.label2mesh",
+        "@type": "mrtrix/label2mesh",
         "blocky": blocky,
         "info": info,
         "quiet": quiet,
@@ -190,29 +176,29 @@ def label2mesh_cargs(
     """
     cargs = []
     cargs.append("label2mesh")
-    if params.get("blocky"):
+    if params.get("blocky", False):
         cargs.append("-blocky")
-    if params.get("info"):
+    if params.get("info", False):
         cargs.append("-info")
-    if params.get("quiet"):
+    if params.get("quiet", False):
         cargs.append("-quiet")
-    if params.get("debug"):
+    if params.get("debug", False):
         cargs.append("-debug")
-    if params.get("force"):
+    if params.get("force", False):
         cargs.append("-force")
-    if params.get("nthreads") is not None:
+    if params.get("nthreads", None) is not None:
         cargs.extend([
             "-nthreads",
-            str(params.get("nthreads"))
+            str(params.get("nthreads", None))
         ])
-    if params.get("config") is not None:
-        cargs.extend([a for c in [dyn_cargs(s["@type"])(s, execution) for s in params.get("config")] for a in c])
-    if params.get("help"):
+    if params.get("config", None) is not None:
+        cargs.extend([a for c in [label2mesh_config_cargs(s, execution) for s in params.get("config", None)] for a in c])
+    if params.get("help", False):
         cargs.append("-help")
-    if params.get("version"):
+    if params.get("version", False):
         cargs.append("-version")
-    cargs.append(execution.input_file(params.get("nodes_in")))
-    cargs.append(params.get("mesh_out"))
+    cargs.append(execution.input_file(params.get("nodes_in", None)))
+    cargs.append(params.get("mesh_out", None))
     return cargs
 
 
@@ -231,7 +217,7 @@ def label2mesh_outputs(
     """
     ret = Label2meshOutputs(
         root=execution.output_file("."),
-        mesh_out=execution.output_file(params.get("mesh_out")),
+        mesh_out=execution.output_file(params.get("mesh_out", None)),
     )
     return ret
 
@@ -338,9 +324,7 @@ def label2mesh(
 
 __all__ = [
     "LABEL2MESH_METADATA",
-    "Label2meshConfigParameters",
     "Label2meshOutputs",
-    "Label2meshParameters",
     "label2mesh",
     "label2mesh_config_params",
     "label2mesh_execute",

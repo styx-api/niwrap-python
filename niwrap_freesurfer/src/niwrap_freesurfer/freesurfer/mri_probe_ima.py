@@ -14,7 +14,19 @@ MRI_PROBE_IMA_METADATA = Metadata(
 
 
 MriProbeImaParameters = typing.TypedDict('MriProbeImaParameters', {
-    "@type": typing.Literal["freesurfer.mri_probe_ima"],
+    "@type": typing.NotRequired[typing.Literal["freesurfer/mri_probe_ima"]],
+    "ima_file": InputPathType,
+    "key_string": typing.NotRequired[str | None],
+    "offset_type_len": typing.NotRequired[str | None],
+    "attribute_name": typing.NotRequired[str | None],
+    "fileinfo": bool,
+    "dictionary": bool,
+    "ob_stem": typing.NotRequired[str | None],
+    "help": bool,
+    "version": bool,
+})
+MriProbeImaParametersTagged = typing.TypedDict('MriProbeImaParametersTagged', {
+    "@type": typing.Literal["freesurfer/mri_probe_ima"],
     "ima_file": InputPathType,
     "key_string": typing.NotRequired[str | None],
     "offset_type_len": typing.NotRequired[str | None],
@@ -27,40 +39,9 @@ MriProbeImaParameters = typing.TypedDict('MriProbeImaParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "freesurfer.mri_probe_ima": mri_probe_ima_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-    }.get(t)
-
-
 class MriProbeImaOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `mri_probe_ima(...)`.
+    Output object returned when calling `MriProbeImaParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -76,7 +57,7 @@ def mri_probe_ima_params(
     ob_stem: str | None = None,
     help_: bool = False,
     version: bool = False,
-) -> MriProbeImaParameters:
+) -> MriProbeImaParametersTagged:
     """
     Build parameters.
     
@@ -95,7 +76,7 @@ def mri_probe_ima_params(
         Parameter dictionary
     """
     params = {
-        "@type": "freesurfer.mri_probe_ima",
+        "@type": "freesurfer/mri_probe_ima",
         "ima_file": ima_file,
         "fileinfo": fileinfo,
         "dictionary": dictionary,
@@ -130,35 +111,35 @@ def mri_probe_ima_cargs(
     cargs.append("mri_probe_ima")
     cargs.extend([
         "--i",
-        execution.input_file(params.get("ima_file"))
+        execution.input_file(params.get("ima_file", None))
     ])
-    if params.get("key_string") is not None:
+    if params.get("key_string", None) is not None:
         cargs.extend([
             "--key",
-            params.get("key_string")
+            params.get("key_string", None)
         ])
-    if params.get("offset_type_len") is not None:
+    if params.get("offset_type_len", None) is not None:
         cargs.extend([
             "--o",
-            params.get("offset_type_len")
+            params.get("offset_type_len", None)
         ])
-    if params.get("attribute_name") is not None:
+    if params.get("attribute_name", None) is not None:
         cargs.extend([
             "--attr",
-            params.get("attribute_name")
+            params.get("attribute_name", None)
         ])
-    if params.get("fileinfo"):
+    if params.get("fileinfo", False):
         cargs.append("--fileinfo")
-    if params.get("dictionary"):
+    if params.get("dictionary", False):
         cargs.append("--dictionary")
-    if params.get("ob_stem") is not None:
+    if params.get("ob_stem", None) is not None:
         cargs.extend([
             "--ob",
-            params.get("ob_stem")
+            params.get("ob_stem", None)
         ])
-    if params.get("help"):
+    if params.get("help", False):
         cargs.append("--help")
-    if params.get("version"):
+    if params.get("version", False):
         cargs.append("--version")
     return cargs
 
@@ -263,7 +244,6 @@ def mri_probe_ima(
 __all__ = [
     "MRI_PROBE_IMA_METADATA",
     "MriProbeImaOutputs",
-    "MriProbeImaParameters",
     "mri_probe_ima",
     "mri_probe_ima_execute",
     "mri_probe_ima_params",

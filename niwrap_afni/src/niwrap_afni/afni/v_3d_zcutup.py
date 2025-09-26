@@ -14,48 +14,22 @@ V_3D_ZCUTUP_METADATA = Metadata(
 
 
 V3dZcutupParameters = typing.TypedDict('V3dZcutupParameters', {
-    "@type": typing.Literal["afni.3dZcutup"],
+    "@type": typing.NotRequired[typing.Literal["afni/3dZcutup"]],
+    "keep_slices": str,
+    "prefix": typing.NotRequired[str | None],
+    "dataset": InputPathType,
+})
+V3dZcutupParametersTagged = typing.TypedDict('V3dZcutupParametersTagged', {
+    "@type": typing.Literal["afni/3dZcutup"],
     "keep_slices": str,
     "prefix": typing.NotRequired[str | None],
     "dataset": InputPathType,
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "afni.3dZcutup": v_3d_zcutup_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "afni.3dZcutup": v_3d_zcutup_outputs,
-    }.get(t)
-
-
 class V3dZcutupOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `v_3d_zcutup(...)`.
+    Output object returned when calling `V3dZcutupParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -69,7 +43,7 @@ def v_3d_zcutup_params(
     keep_slices: str,
     dataset: InputPathType,
     prefix: str | None = None,
-) -> V3dZcutupParameters:
+) -> V3dZcutupParametersTagged:
     """
     Build parameters.
     
@@ -84,7 +58,7 @@ def v_3d_zcutup_params(
         Parameter dictionary
     """
     params = {
-        "@type": "afni.3dZcutup",
+        "@type": "afni/3dZcutup",
         "keep_slices": keep_slices,
         "dataset": dataset,
     }
@@ -110,14 +84,14 @@ def v_3d_zcutup_cargs(
     cargs.append("3dZcutup")
     cargs.extend([
         "-keep",
-        params.get("keep_slices")
+        params.get("keep_slices", None)
     ])
-    if params.get("prefix") is not None:
+    if params.get("prefix", None) is not None:
         cargs.extend([
             "-prefix",
-            params.get("prefix")
+            params.get("prefix", None)
         ])
-    cargs.append(execution.input_file(params.get("dataset")))
+    cargs.append(execution.input_file(params.get("dataset", None)))
     return cargs
 
 
@@ -136,8 +110,8 @@ def v_3d_zcutup_outputs(
     """
     ret = V3dZcutupOutputs(
         root=execution.output_file("."),
-        output_head=execution.output_file(params.get("prefix") + "+orig.HEAD") if (params.get("prefix") is not None) else None,
-        output_brik=execution.output_file(params.get("prefix") + "+orig.BRIK") if (params.get("prefix") is not None) else None,
+        output_head=execution.output_file(params.get("prefix", None) + "+orig.HEAD") if (params.get("prefix") is not None) else None,
+        output_brik=execution.output_file(params.get("prefix", None) + "+orig.BRIK") if (params.get("prefix") is not None) else None,
     )
     return ret
 
@@ -206,7 +180,6 @@ def v_3d_zcutup(
 
 __all__ = [
     "V3dZcutupOutputs",
-    "V3dZcutupParameters",
     "V_3D_ZCUTUP_METADATA",
     "v_3d_zcutup",
     "v_3d_zcutup_execute",

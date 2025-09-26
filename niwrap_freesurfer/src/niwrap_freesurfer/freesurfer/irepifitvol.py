@@ -14,47 +14,20 @@ IREPIFITVOL_METADATA = Metadata(
 
 
 IrepifitvolParameters = typing.TypedDict('IrepifitvolParameters', {
-    "@type": typing.Literal["freesurfer.irepifitvol"],
+    "@type": typing.NotRequired[typing.Literal["freesurfer/irepifitvol"]],
+    "input_file": InputPathType,
+    "output_file": str,
+})
+IrepifitvolParametersTagged = typing.TypedDict('IrepifitvolParametersTagged', {
+    "@type": typing.Literal["freesurfer/irepifitvol"],
     "input_file": InputPathType,
     "output_file": str,
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "freesurfer.irepifitvol": irepifitvol_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "freesurfer.irepifitvol": irepifitvol_outputs,
-    }.get(t)
-
-
 class IrepifitvolOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `irepifitvol(...)`.
+    Output object returned when calling `IrepifitvolParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -65,7 +38,7 @@ class IrepifitvolOutputs(typing.NamedTuple):
 def irepifitvol_params(
     input_file: InputPathType,
     output_file: str = "fitted_output",
-) -> IrepifitvolParameters:
+) -> IrepifitvolParametersTagged:
     """
     Build parameters.
     
@@ -76,7 +49,7 @@ def irepifitvol_params(
         Parameter dictionary
     """
     params = {
-        "@type": "freesurfer.irepifitvol",
+        "@type": "freesurfer/irepifitvol",
         "input_file": input_file,
         "output_file": output_file,
     }
@@ -98,8 +71,8 @@ def irepifitvol_cargs(
     """
     cargs = []
     cargs.append("irepifitvol")
-    cargs.append(execution.input_file(params.get("input_file")))
-    cargs.append(params.get("output_file"))
+    cargs.append(execution.input_file(params.get("input_file", None)))
+    cargs.append(params.get("output_file", "fitted_output"))
     return cargs
 
 
@@ -118,7 +91,7 @@ def irepifitvol_outputs(
     """
     ret = IrepifitvolOutputs(
         root=execution.output_file("."),
-        fitted_output=execution.output_file(params.get("output_file") + ".ext"),
+        fitted_output=execution.output_file(params.get("output_file", "fitted_output") + ".ext"),
     )
     return ret
 
@@ -182,7 +155,6 @@ def irepifitvol(
 __all__ = [
     "IREPIFITVOL_METADATA",
     "IrepifitvolOutputs",
-    "IrepifitvolParameters",
     "irepifitvol",
     "irepifitvol_execute",
     "irepifitvol_params",

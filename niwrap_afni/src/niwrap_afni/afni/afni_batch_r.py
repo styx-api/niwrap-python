@@ -14,7 +14,15 @@ AFNI_BATCH_R_METADATA = Metadata(
 
 
 AfniBatchRParameters = typing.TypedDict('AfniBatchRParameters', {
-    "@type": typing.Literal["afni.AFNI_Batch_R"],
+    "@type": typing.NotRequired[typing.Literal["afni/AFNI_Batch_R"]],
+    "no_restore": bool,
+    "save_workspace": bool,
+    "no_readline": bool,
+    "vanilla_mode": bool,
+    "help": bool,
+})
+AfniBatchRParametersTagged = typing.TypedDict('AfniBatchRParametersTagged', {
+    "@type": typing.Literal["afni/AFNI_Batch_R"],
     "no_restore": bool,
     "save_workspace": bool,
     "no_readline": bool,
@@ -23,40 +31,9 @@ AfniBatchRParameters = typing.TypedDict('AfniBatchRParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "afni.AFNI_Batch_R": afni_batch_r_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-    }.get(t)
-
-
 class AfniBatchROutputs(typing.NamedTuple):
     """
-    Output object returned when calling `afni_batch_r(...)`.
+    Output object returned when calling `AfniBatchRParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -68,7 +45,7 @@ def afni_batch_r_params(
     no_readline: bool = False,
     vanilla_mode: bool = False,
     help_: bool = False,
-) -> AfniBatchRParameters:
+) -> AfniBatchRParametersTagged:
     """
     Build parameters.
     
@@ -83,7 +60,7 @@ def afni_batch_r_params(
         Parameter dictionary
     """
     params = {
-        "@type": "afni.AFNI_Batch_R",
+        "@type": "afni/AFNI_Batch_R",
         "no_restore": no_restore,
         "save_workspace": save_workspace,
         "no_readline": no_readline,
@@ -111,15 +88,15 @@ def afni_batch_r_cargs(
     cargs.append("R")
     cargs.append("CMD")
     cargs.append("BATCH")
-    if params.get("no_restore"):
+    if params.get("no_restore", False):
         cargs.append("--no-restore")
-    if params.get("save_workspace"):
+    if params.get("save_workspace", False):
         cargs.append("--save")
-    if params.get("no_readline"):
+    if params.get("no_readline", False):
         cargs.append("--no-readline")
-    if params.get("vanilla_mode"):
+    if params.get("vanilla_mode", False):
         cargs.append("--vanilla")
-    if params.get("help"):
+    if params.get("help", False):
         cargs.append("-help")
     return cargs
 
@@ -212,7 +189,6 @@ def afni_batch_r(
 __all__ = [
     "AFNI_BATCH_R_METADATA",
     "AfniBatchROutputs",
-    "AfniBatchRParameters",
     "afni_batch_r",
     "afni_batch_r_execute",
     "afni_batch_r_params",

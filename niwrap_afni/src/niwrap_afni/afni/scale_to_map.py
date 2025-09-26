@@ -14,14 +14,51 @@ SCALE_TO_MAP_METADATA = Metadata(
 
 
 ScaleToMapTraceParameters = typing.TypedDict('ScaleToMapTraceParameters', {
-    "@type": typing.Literal["afni.ScaleToMap.trace"],
+    "@type": typing.NotRequired[typing.Literal["trace"]],
+    "trace": bool,
+    "TRACE": bool,
+})
+ScaleToMapTraceParametersTagged = typing.TypedDict('ScaleToMapTraceParametersTagged', {
+    "@type": typing.Literal["trace"],
     "trace": bool,
     "TRACE": bool,
 })
 
 
 ScaleToMapParameters = typing.TypedDict('ScaleToMapParameters', {
-    "@type": typing.Literal["afni.ScaleToMap"],
+    "@type": typing.NotRequired[typing.Literal["afni/ScaleToMap"]],
+    "input_file": InputPathType,
+    "icol": float,
+    "vcol": float,
+    "cmap": typing.NotRequired[str | None],
+    "cmapfile": typing.NotRequired[InputPathType | None],
+    "cmapdb": typing.NotRequired[InputPathType | None],
+    "frf": bool,
+    "clp": typing.NotRequired[list[float] | None],
+    "perc_clp": typing.NotRequired[list[float] | None],
+    "apr": typing.NotRequired[float | None],
+    "anr": typing.NotRequired[float | None],
+    "interp": bool,
+    "nointerp": bool,
+    "direct": bool,
+    "msk_zero": bool,
+    "msk": typing.NotRequired[list[float] | None],
+    "msk_col": typing.NotRequired[list[float] | None],
+    "nomsk_col": bool,
+    "br": typing.NotRequired[float | None],
+    "help": bool,
+    "verbose": bool,
+    "showmap": bool,
+    "showdb": bool,
+    "novolreg": bool,
+    "noxform": bool,
+    "setenv": typing.NotRequired[str | None],
+    "trace": typing.NotRequired[ScaleToMapTraceParameters | None],
+    "nomall": bool,
+    "yesmall": bool,
+})
+ScaleToMapParametersTagged = typing.TypedDict('ScaleToMapParametersTagged', {
+    "@type": typing.Literal["afni/ScaleToMap"],
     "input_file": InputPathType,
     "icol": float,
     "vcol": float,
@@ -54,42 +91,10 @@ ScaleToMapParameters = typing.TypedDict('ScaleToMapParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "afni.ScaleToMap": scale_to_map_cargs,
-        "afni.ScaleToMap.trace": scale_to_map_trace_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-    }.get(t)
-
-
 def scale_to_map_trace_params(
     trace_: bool = False,
     trace_2: bool = False,
-) -> ScaleToMapTraceParameters:
+) -> ScaleToMapTraceParametersTagged:
     """
     Build parameters.
     
@@ -101,7 +106,7 @@ def scale_to_map_trace_params(
         Parameter dictionary
     """
     params = {
-        "@type": "afni.ScaleToMap.trace",
+        "@type": "trace",
         "trace": trace_,
         "TRACE": trace_2,
     }
@@ -122,16 +127,16 @@ def scale_to_map_trace_cargs(
         Command-line arguments.
     """
     cargs = []
-    if params.get("trace"):
+    if params.get("trace", False):
         cargs.append("-trace")
-    if params.get("TRACE"):
+    if params.get("TRACE", False):
         cargs.append("-TRACE")
     return cargs
 
 
 class ScaleToMapOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `scale_to_map(...)`.
+    Output object returned when calling `ScaleToMapParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -167,7 +172,7 @@ def scale_to_map_params(
     trace_: ScaleToMapTraceParameters | None = None,
     nomall: bool = False,
     yesmall: bool = False,
-) -> ScaleToMapParameters:
+) -> ScaleToMapParametersTagged:
     """
     Build parameters.
     
@@ -209,7 +214,7 @@ def scale_to_map_params(
         Parameter dictionary
     """
     params = {
-        "@type": "afni.ScaleToMap",
+        "@type": "afni/ScaleToMap",
         "input_file": input_file,
         "icol": icol,
         "vcol": vcol,
@@ -270,93 +275,93 @@ def scale_to_map_cargs(
     """
     cargs = []
     cargs.append("ScaleToMap")
-    cargs.append(execution.input_file(params.get("input_file")))
-    cargs.append(str(params.get("icol")))
-    cargs.append(str(params.get("vcol")))
-    if params.get("cmap") is not None:
+    cargs.append(execution.input_file(params.get("input_file", None)))
+    cargs.append(str(params.get("icol", None)))
+    cargs.append(str(params.get("vcol", None)))
+    if params.get("cmap", None) is not None:
         cargs.extend([
             "-cmap",
-            params.get("cmap")
+            params.get("cmap", None)
         ])
-    if params.get("cmapfile") is not None:
+    if params.get("cmapfile", None) is not None:
         cargs.extend([
             "-cmapfile",
-            execution.input_file(params.get("cmapfile"))
+            execution.input_file(params.get("cmapfile", None))
         ])
-    if params.get("cmapdb") is not None:
+    if params.get("cmapdb", None) is not None:
         cargs.extend([
             "-cmapdb",
-            execution.input_file(params.get("cmapdb"))
+            execution.input_file(params.get("cmapdb", None))
         ])
-    if params.get("frf"):
+    if params.get("frf", False):
         cargs.append("-frf")
-    if params.get("clp") is not None:
+    if params.get("clp", None) is not None:
         cargs.extend([
             "-clp",
-            *map(str, params.get("clp"))
+            *map(str, params.get("clp", None))
         ])
-    if params.get("perc_clp") is not None:
+    if params.get("perc_clp", None) is not None:
         cargs.extend([
             "-perc_clp",
-            *map(str, params.get("perc_clp"))
+            *map(str, params.get("perc_clp", None))
         ])
-    if params.get("apr") is not None:
+    if params.get("apr", None) is not None:
         cargs.extend([
             "-apr",
-            str(params.get("apr"))
+            str(params.get("apr", None))
         ])
-    if params.get("anr") is not None:
+    if params.get("anr", None) is not None:
         cargs.extend([
             "-anr",
-            str(params.get("anr"))
+            str(params.get("anr", None))
         ])
-    if params.get("interp"):
+    if params.get("interp", False):
         cargs.append("-interp")
-    if params.get("nointerp"):
+    if params.get("nointerp", False):
         cargs.append("-nointerp")
-    if params.get("direct"):
+    if params.get("direct", False):
         cargs.append("-direct")
-    if params.get("msk_zero"):
+    if params.get("msk_zero", False):
         cargs.append("-msk_zero")
-    if params.get("msk") is not None:
+    if params.get("msk", None) is not None:
         cargs.extend([
             "-msk",
-            *map(str, params.get("msk"))
+            *map(str, params.get("msk", None))
         ])
-    if params.get("msk_col") is not None:
+    if params.get("msk_col", None) is not None:
         cargs.extend([
             "-msk_col",
-            *map(str, params.get("msk_col"))
+            *map(str, params.get("msk_col", None))
         ])
-    if params.get("nomsk_col"):
+    if params.get("nomsk_col", False):
         cargs.append("-nomsk_col")
-    if params.get("br") is not None:
+    if params.get("br", None) is not None:
         cargs.extend([
             "-br",
-            str(params.get("br"))
+            str(params.get("br", None))
         ])
-    if params.get("help"):
+    if params.get("help", False):
         cargs.append("-h")
-    if params.get("verbose"):
+    if params.get("verbose", False):
         cargs.append("-verb")
-    if params.get("showmap"):
+    if params.get("showmap", False):
         cargs.append("-showmap")
-    if params.get("showdb"):
+    if params.get("showdb", False):
         cargs.append("-showdb")
-    if params.get("novolreg"):
+    if params.get("novolreg", False):
         cargs.append("-novolreg")
-    if params.get("noxform"):
+    if params.get("noxform", False):
         cargs.append("-noxform")
-    if params.get("setenv") is not None:
+    if params.get("setenv", None) is not None:
         cargs.extend([
             "-setenv",
-            params.get("setenv")
+            params.get("setenv", None)
         ])
-    if params.get("trace") is not None:
-        cargs.extend(dyn_cargs(params.get("trace")["@type"])(params.get("trace"), execution))
-    if params.get("nomall"):
+    if params.get("trace", None) is not None:
+        cargs.extend(scale_to_map_trace_cargs(params.get("trace", None), execution))
+    if params.get("nomall", False):
         cargs.append("-nomall")
-    if params.get("yesmall"):
+    if params.get("yesmall", False):
         cargs.append("-yesmall")
     return cargs
 
@@ -524,8 +529,6 @@ def scale_to_map(
 __all__ = [
     "SCALE_TO_MAP_METADATA",
     "ScaleToMapOutputs",
-    "ScaleToMapParameters",
-    "ScaleToMapTraceParameters",
     "scale_to_map",
     "scale_to_map_execute",
     "scale_to_map_params",

@@ -14,7 +14,16 @@ MRI_THRESHOLD_METADATA = Metadata(
 
 
 MriThresholdParameters = typing.TypedDict('MriThresholdParameters', {
-    "@type": typing.Literal["freesurfer.mri_threshold"],
+    "@type": typing.NotRequired[typing.Literal["freesurfer/mri_threshold"]],
+    "input_vol": InputPathType,
+    "threshold": float,
+    "output_vol": str,
+    "binarize": typing.NotRequired[float | None],
+    "upper_threshold": bool,
+    "frame_number": typing.NotRequired[float | None],
+})
+MriThresholdParametersTagged = typing.TypedDict('MriThresholdParametersTagged', {
+    "@type": typing.Literal["freesurfer/mri_threshold"],
     "input_vol": InputPathType,
     "threshold": float,
     "output_vol": str,
@@ -24,41 +33,9 @@ MriThresholdParameters = typing.TypedDict('MriThresholdParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "freesurfer.mri_threshold": mri_threshold_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "freesurfer.mri_threshold": mri_threshold_outputs,
-    }.get(t)
-
-
 class MriThresholdOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `mri_threshold(...)`.
+    Output object returned when calling `MriThresholdParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -73,7 +50,7 @@ def mri_threshold_params(
     binarize: float | None = None,
     upper_threshold: bool = False,
     frame_number: float | None = None,
-) -> MriThresholdParameters:
+) -> MriThresholdParametersTagged:
     """
     Build parameters.
     
@@ -89,7 +66,7 @@ def mri_threshold_params(
         Parameter dictionary
     """
     params = {
-        "@type": "freesurfer.mri_threshold",
+        "@type": "freesurfer/mri_threshold",
         "input_vol": input_vol,
         "threshold": threshold,
         "output_vol": output_vol,
@@ -117,20 +94,20 @@ def mri_threshold_cargs(
     """
     cargs = []
     cargs.append("mri_threshold")
-    cargs.append(execution.input_file(params.get("input_vol")))
-    cargs.append(str(params.get("threshold")))
-    cargs.append(params.get("output_vol"))
-    if params.get("binarize") is not None:
+    cargs.append(execution.input_file(params.get("input_vol", None)))
+    cargs.append(str(params.get("threshold", None)))
+    cargs.append(params.get("output_vol", None))
+    if params.get("binarize", None) is not None:
         cargs.extend([
             "-B",
-            str(params.get("binarize"))
+            str(params.get("binarize", None))
         ])
-    if params.get("upper_threshold"):
+    if params.get("upper_threshold", False):
         cargs.append("-U")
-    if params.get("frame_number") is not None:
+    if params.get("frame_number", None) is not None:
         cargs.extend([
             "-F",
-            str(params.get("frame_number"))
+            str(params.get("frame_number", None))
         ])
     return cargs
 
@@ -150,7 +127,7 @@ def mri_threshold_outputs(
     """
     ret = MriThresholdOutputs(
         root=execution.output_file("."),
-        output_vol_file=execution.output_file(params.get("output_vol")),
+        output_vol_file=execution.output_file(params.get("output_vol", None)),
     )
     return ret
 
@@ -227,7 +204,6 @@ def mri_threshold(
 __all__ = [
     "MRI_THRESHOLD_METADATA",
     "MriThresholdOutputs",
-    "MriThresholdParameters",
     "mri_threshold",
     "mri_threshold_execute",
     "mri_threshold_params",

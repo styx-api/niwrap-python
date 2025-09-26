@@ -14,21 +14,52 @@ TCKDFC_METADATA = Metadata(
 
 
 TckdfcDynamicParameters = typing.TypedDict('TckdfcDynamicParameters', {
-    "@type": typing.Literal["mrtrix.tckdfc.dynamic"],
+    "@type": typing.NotRequired[typing.Literal["dynamic"]],
+    "shape": str,
+    "width": int,
+})
+TckdfcDynamicParametersTagged = typing.TypedDict('TckdfcDynamicParametersTagged', {
+    "@type": typing.Literal["dynamic"],
     "shape": str,
     "width": int,
 })
 
 
 TckdfcConfigParameters = typing.TypedDict('TckdfcConfigParameters', {
-    "@type": typing.Literal["mrtrix.tckdfc.config"],
+    "@type": typing.NotRequired[typing.Literal["config"]],
+    "key": str,
+    "value": str,
+})
+TckdfcConfigParametersTagged = typing.TypedDict('TckdfcConfigParametersTagged', {
+    "@type": typing.Literal["config"],
     "key": str,
     "value": str,
 })
 
 
 TckdfcParameters = typing.TypedDict('TckdfcParameters', {
-    "@type": typing.Literal["mrtrix.tckdfc"],
+    "@type": typing.NotRequired[typing.Literal["mrtrix/tckdfc"]],
+    "static": bool,
+    "dynamic": typing.NotRequired[TckdfcDynamicParameters | None],
+    "template": typing.NotRequired[InputPathType | None],
+    "vox": typing.NotRequired[list[float] | None],
+    "stat_vox": typing.NotRequired[str | None],
+    "backtrack": bool,
+    "upsample": typing.NotRequired[int | None],
+    "info": bool,
+    "quiet": bool,
+    "debug": bool,
+    "force": bool,
+    "nthreads": typing.NotRequired[int | None],
+    "config": typing.NotRequired[list[TckdfcConfigParameters] | None],
+    "help": bool,
+    "version": bool,
+    "tracks": InputPathType,
+    "fmri": InputPathType,
+    "output": str,
+})
+TckdfcParametersTagged = typing.TypedDict('TckdfcParametersTagged', {
+    "@type": typing.Literal["mrtrix/tckdfc"],
     "static": bool,
     "dynamic": typing.NotRequired[TckdfcDynamicParameters | None],
     "template": typing.NotRequired[InputPathType | None],
@@ -50,44 +81,10 @@ TckdfcParameters = typing.TypedDict('TckdfcParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "mrtrix.tckdfc": tckdfc_cargs,
-        "mrtrix.tckdfc.dynamic": tckdfc_dynamic_cargs,
-        "mrtrix.tckdfc.config": tckdfc_config_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "mrtrix.tckdfc": tckdfc_outputs,
-    }.get(t)
-
-
 def tckdfc_dynamic_params(
     shape: str,
     width: int,
-) -> TckdfcDynamicParameters:
+) -> TckdfcDynamicParametersTagged:
     """
     Build parameters.
     
@@ -100,7 +97,7 @@ def tckdfc_dynamic_params(
         Parameter dictionary
     """
     params = {
-        "@type": "mrtrix.tckdfc.dynamic",
+        "@type": "dynamic",
         "shape": shape,
         "width": width,
     }
@@ -122,15 +119,15 @@ def tckdfc_dynamic_cargs(
     """
     cargs = []
     cargs.append("-dynamic")
-    cargs.append(params.get("shape"))
-    cargs.append(str(params.get("width")))
+    cargs.append(params.get("shape", None))
+    cargs.append(str(params.get("width", None)))
     return cargs
 
 
 def tckdfc_config_params(
     key: str,
     value: str,
-) -> TckdfcConfigParameters:
+) -> TckdfcConfigParametersTagged:
     """
     Build parameters.
     
@@ -141,7 +138,7 @@ def tckdfc_config_params(
         Parameter dictionary
     """
     params = {
-        "@type": "mrtrix.tckdfc.config",
+        "@type": "config",
         "key": key,
         "value": value,
     }
@@ -163,14 +160,14 @@ def tckdfc_config_cargs(
     """
     cargs = []
     cargs.append("-config")
-    cargs.append(params.get("key"))
-    cargs.append(params.get("value"))
+    cargs.append(params.get("key", None))
+    cargs.append(params.get("value", None))
     return cargs
 
 
 class TckdfcOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `tckdfc(...)`.
+    Output object returned when calling `TckdfcParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -197,7 +194,7 @@ def tckdfc_params(
     config: list[TckdfcConfigParameters] | None = None,
     help_: bool = False,
     version: bool = False,
-) -> TckdfcParameters:
+) -> TckdfcParametersTagged:
     """
     Build parameters.
     
@@ -238,7 +235,7 @@ def tckdfc_params(
         Parameter dictionary
     """
     params = {
-        "@type": "mrtrix.tckdfc",
+        "@type": "mrtrix/tckdfc",
         "static": static,
         "backtrack": backtrack,
         "info": info,
@@ -283,54 +280,54 @@ def tckdfc_cargs(
     """
     cargs = []
     cargs.append("tckdfc")
-    if params.get("static"):
+    if params.get("static", False):
         cargs.append("-static")
-    if params.get("dynamic") is not None:
-        cargs.extend(dyn_cargs(params.get("dynamic")["@type"])(params.get("dynamic"), execution))
-    if params.get("template") is not None:
+    if params.get("dynamic", None) is not None:
+        cargs.extend(tckdfc_dynamic_cargs(params.get("dynamic", None), execution))
+    if params.get("template", None) is not None:
         cargs.extend([
             "-template",
-            execution.input_file(params.get("template"))
+            execution.input_file(params.get("template", None))
         ])
-    if params.get("vox") is not None:
+    if params.get("vox", None) is not None:
         cargs.extend([
             "-vox",
-            ",".join(map(str, params.get("vox")))
+            ",".join(map(str, params.get("vox", None)))
         ])
-    if params.get("stat_vox") is not None:
+    if params.get("stat_vox", None) is not None:
         cargs.extend([
             "-stat_vox",
-            params.get("stat_vox")
+            params.get("stat_vox", None)
         ])
-    if params.get("backtrack"):
+    if params.get("backtrack", False):
         cargs.append("-backtrack")
-    if params.get("upsample") is not None:
+    if params.get("upsample", None) is not None:
         cargs.extend([
             "-upsample",
-            str(params.get("upsample"))
+            str(params.get("upsample", None))
         ])
-    if params.get("info"):
+    if params.get("info", False):
         cargs.append("-info")
-    if params.get("quiet"):
+    if params.get("quiet", False):
         cargs.append("-quiet")
-    if params.get("debug"):
+    if params.get("debug", False):
         cargs.append("-debug")
-    if params.get("force"):
+    if params.get("force", False):
         cargs.append("-force")
-    if params.get("nthreads") is not None:
+    if params.get("nthreads", None) is not None:
         cargs.extend([
             "-nthreads",
-            str(params.get("nthreads"))
+            str(params.get("nthreads", None))
         ])
-    if params.get("config") is not None:
-        cargs.extend([a for c in [dyn_cargs(s["@type"])(s, execution) for s in params.get("config")] for a in c])
-    if params.get("help"):
+    if params.get("config", None) is not None:
+        cargs.extend([a for c in [tckdfc_config_cargs(s, execution) for s in params.get("config", None)] for a in c])
+    if params.get("help", False):
         cargs.append("-help")
-    if params.get("version"):
+    if params.get("version", False):
         cargs.append("-version")
-    cargs.append(execution.input_file(params.get("tracks")))
-    cargs.append(execution.input_file(params.get("fmri")))
-    cargs.append(params.get("output"))
+    cargs.append(execution.input_file(params.get("tracks", None)))
+    cargs.append(execution.input_file(params.get("fmri", None)))
+    cargs.append(params.get("output", None))
     return cargs
 
 
@@ -349,7 +346,7 @@ def tckdfc_outputs(
     """
     ret = TckdfcOutputs(
         root=execution.output_file("."),
-        output=execution.output_file(params.get("output")),
+        output=execution.output_file(params.get("output", None)),
     )
     return ret
 
@@ -544,10 +541,7 @@ def tckdfc(
 
 __all__ = [
     "TCKDFC_METADATA",
-    "TckdfcConfigParameters",
-    "TckdfcDynamicParameters",
     "TckdfcOutputs",
-    "TckdfcParameters",
     "tckdfc",
     "tckdfc_config_params",
     "tckdfc_dynamic_params",

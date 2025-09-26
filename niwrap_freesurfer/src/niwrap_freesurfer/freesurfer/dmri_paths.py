@@ -14,7 +14,46 @@ DMRI_PATHS_METADATA = Metadata(
 
 
 DmriPathsParameters = typing.TypedDict('DmriPathsParameters', {
-    "@type": typing.Literal["freesurfer.dmri_paths"],
+    "@type": typing.NotRequired[typing.Literal["freesurfer/dmri_paths"]],
+    "indir": typing.NotRequired[str | None],
+    "outdir": typing.NotRequired[str | None],
+    "dwi": typing.NotRequired[InputPathType | None],
+    "grad": typing.NotRequired[InputPathType | None],
+    "bval": typing.NotRequired[InputPathType | None],
+    "mask": typing.NotRequired[InputPathType | None],
+    "bpdir": typing.NotRequired[str | None],
+    "ntr": typing.NotRequired[float | None],
+    "fmin": typing.NotRequired[float | None],
+    "basereg": typing.NotRequired[InputPathType | None],
+    "basemask": typing.NotRequired[InputPathType | None],
+    "roi1": typing.NotRequired[InputPathType | None],
+    "roi2": typing.NotRequired[InputPathType | None],
+    "roimesh1": typing.NotRequired[InputPathType | None],
+    "roimesh2": typing.NotRequired[InputPathType | None],
+    "roiref1": typing.NotRequired[InputPathType | None],
+    "roiref2": typing.NotRequired[InputPathType | None],
+    "prior": typing.NotRequired[InputPathType | None],
+    "nprior": typing.NotRequired[InputPathType | None],
+    "nset": typing.NotRequired[float | None],
+    "lprior": typing.NotRequired[InputPathType | None],
+    "lset": typing.NotRequired[float | None],
+    "seg": typing.NotRequired[InputPathType | None],
+    "tprior": typing.NotRequired[InputPathType | None],
+    "cprior": typing.NotRequired[InputPathType | None],
+    "reg": typing.NotRequired[InputPathType | None],
+    "regnl": typing.NotRequired[InputPathType | None],
+    "init": typing.NotRequired[InputPathType | None],
+    "nb": typing.NotRequired[float | None],
+    "ns": typing.NotRequired[float | None],
+    "nk": typing.NotRequired[float | None],
+    "nu": typing.NotRequired[float | None],
+    "sdp": typing.NotRequired[InputPathType | None],
+    "debug": bool,
+    "checkopts": bool,
+    "version": bool,
+})
+DmriPathsParametersTagged = typing.TypedDict('DmriPathsParametersTagged', {
+    "@type": typing.Literal["freesurfer/dmri_paths"],
     "indir": typing.NotRequired[str | None],
     "outdir": typing.NotRequired[str | None],
     "dwi": typing.NotRequired[InputPathType | None],
@@ -54,40 +93,9 @@ DmriPathsParameters = typing.TypedDict('DmriPathsParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "freesurfer.dmri_paths": dmri_paths_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-    }.get(t)
-
-
 class DmriPathsOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `dmri_paths(...)`.
+    Output object returned when calling `DmriPathsParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -130,7 +138,7 @@ def dmri_paths_params(
     debug: bool = False,
     checkopts: bool = False,
     version: bool = False,
-) -> DmriPathsParameters:
+) -> DmriPathsParametersTagged:
     """
     Build parameters.
     
@@ -183,7 +191,7 @@ def dmri_paths_params(
         Parameter dictionary
     """
     params = {
-        "@type": "freesurfer.dmri_paths",
+        "@type": "freesurfer/dmri_paths",
         "debug": debug,
         "checkopts": checkopts,
         "version": version,
@@ -272,176 +280,176 @@ def dmri_paths_cargs(
     """
     cargs = []
     cargs.append("dmri_paths")
-    if params.get("indir") is not None:
+    if params.get("indir", None) is not None:
         cargs.extend([
             "--indir",
-            params.get("indir")
+            params.get("indir", None)
         ])
-    if params.get("outdir") is not None:
+    if params.get("outdir", None) is not None:
         cargs.extend([
             "--outdir",
-            params.get("outdir")
+            params.get("outdir", None)
         ])
-    if params.get("dwi") is not None:
+    if params.get("dwi", None) is not None:
         cargs.extend([
             "--dwi",
-            execution.input_file(params.get("dwi"))
+            execution.input_file(params.get("dwi", None))
         ])
-    if params.get("grad") is not None:
+    if params.get("grad", None) is not None:
         cargs.extend([
             "--grad",
-            execution.input_file(params.get("grad"))
+            execution.input_file(params.get("grad", None))
         ])
-    if params.get("bval") is not None:
+    if params.get("bval", None) is not None:
         cargs.extend([
             "--bval",
-            execution.input_file(params.get("bval"))
+            execution.input_file(params.get("bval", None))
         ])
-    if params.get("mask") is not None:
+    if params.get("mask", None) is not None:
         cargs.extend([
             "--mask",
-            execution.input_file(params.get("mask"))
+            execution.input_file(params.get("mask", None))
         ])
-    if params.get("bpdir") is not None:
+    if params.get("bpdir", None) is not None:
         cargs.extend([
             "--bpdir",
-            params.get("bpdir")
+            params.get("bpdir", None)
         ])
-    if params.get("ntr") is not None:
+    if params.get("ntr", None) is not None:
         cargs.extend([
             "--ntr",
-            str(params.get("ntr"))
+            str(params.get("ntr", None))
         ])
-    if params.get("fmin") is not None:
+    if params.get("fmin", None) is not None:
         cargs.extend([
             "--fmin",
-            str(params.get("fmin"))
+            str(params.get("fmin", None))
         ])
-    if params.get("basereg") is not None:
+    if params.get("basereg", None) is not None:
         cargs.extend([
             "--basereg",
-            execution.input_file(params.get("basereg"))
+            execution.input_file(params.get("basereg", None))
         ])
-    if params.get("basemask") is not None:
+    if params.get("basemask", None) is not None:
         cargs.extend([
             "--basemask",
-            execution.input_file(params.get("basemask"))
+            execution.input_file(params.get("basemask", None))
         ])
-    if params.get("roi1") is not None:
+    if params.get("roi1", None) is not None:
         cargs.extend([
             "--roi1",
-            execution.input_file(params.get("roi1"))
+            execution.input_file(params.get("roi1", None))
         ])
-    if params.get("roi2") is not None:
+    if params.get("roi2", None) is not None:
         cargs.extend([
             "--roi2",
-            execution.input_file(params.get("roi2"))
+            execution.input_file(params.get("roi2", None))
         ])
-    if params.get("roimesh1") is not None:
+    if params.get("roimesh1", None) is not None:
         cargs.extend([
             "--roimesh1",
-            execution.input_file(params.get("roimesh1"))
+            execution.input_file(params.get("roimesh1", None))
         ])
-    if params.get("roimesh2") is not None:
+    if params.get("roimesh2", None) is not None:
         cargs.extend([
             "--roimesh2",
-            execution.input_file(params.get("roimesh2"))
+            execution.input_file(params.get("roimesh2", None))
         ])
-    if params.get("roiref1") is not None:
+    if params.get("roiref1", None) is not None:
         cargs.extend([
             "--roiref1",
-            execution.input_file(params.get("roiref1"))
+            execution.input_file(params.get("roiref1", None))
         ])
-    if params.get("roiref2") is not None:
+    if params.get("roiref2", None) is not None:
         cargs.extend([
             "--roiref2",
-            execution.input_file(params.get("roiref2"))
+            execution.input_file(params.get("roiref2", None))
         ])
-    if params.get("prior") is not None:
+    if params.get("prior", None) is not None:
         cargs.extend([
             "--prior",
-            execution.input_file(params.get("prior"))
+            execution.input_file(params.get("prior", None))
         ])
-    if params.get("nprior") is not None:
+    if params.get("nprior", None) is not None:
         cargs.extend([
             "--nprior",
-            execution.input_file(params.get("nprior"))
+            execution.input_file(params.get("nprior", None))
         ])
-    if params.get("nset") is not None:
+    if params.get("nset", None) is not None:
         cargs.extend([
             "--nset",
-            str(params.get("nset"))
+            str(params.get("nset", None))
         ])
-    if params.get("lprior") is not None:
+    if params.get("lprior", None) is not None:
         cargs.extend([
             "--lprior",
-            execution.input_file(params.get("lprior"))
+            execution.input_file(params.get("lprior", None))
         ])
-    if params.get("lset") is not None:
+    if params.get("lset", None) is not None:
         cargs.extend([
             "--lset",
-            str(params.get("lset"))
+            str(params.get("lset", None))
         ])
-    if params.get("seg") is not None:
+    if params.get("seg", None) is not None:
         cargs.extend([
             "--seg",
-            execution.input_file(params.get("seg"))
+            execution.input_file(params.get("seg", None))
         ])
-    if params.get("tprior") is not None:
+    if params.get("tprior", None) is not None:
         cargs.extend([
             "--tprior",
-            execution.input_file(params.get("tprior"))
+            execution.input_file(params.get("tprior", None))
         ])
-    if params.get("cprior") is not None:
+    if params.get("cprior", None) is not None:
         cargs.extend([
             "--cprior",
-            execution.input_file(params.get("cprior"))
+            execution.input_file(params.get("cprior", None))
         ])
-    if params.get("reg") is not None:
+    if params.get("reg", None) is not None:
         cargs.extend([
             "--reg",
-            execution.input_file(params.get("reg"))
+            execution.input_file(params.get("reg", None))
         ])
-    if params.get("regnl") is not None:
+    if params.get("regnl", None) is not None:
         cargs.extend([
             "--regnl",
-            execution.input_file(params.get("regnl"))
+            execution.input_file(params.get("regnl", None))
         ])
-    if params.get("init") is not None:
+    if params.get("init", None) is not None:
         cargs.extend([
             "--init",
-            execution.input_file(params.get("init"))
+            execution.input_file(params.get("init", None))
         ])
-    if params.get("nb") is not None:
+    if params.get("nb", None) is not None:
         cargs.extend([
             "--nb",
-            str(params.get("nb"))
+            str(params.get("nb", None))
         ])
-    if params.get("ns") is not None:
+    if params.get("ns", None) is not None:
         cargs.extend([
             "--ns",
-            str(params.get("ns"))
+            str(params.get("ns", None))
         ])
-    if params.get("nk") is not None:
+    if params.get("nk", None) is not None:
         cargs.extend([
             "--nk",
-            str(params.get("nk"))
+            str(params.get("nk", None))
         ])
-    if params.get("nu") is not None:
+    if params.get("nu", None) is not None:
         cargs.extend([
             "--nu",
-            str(params.get("nu"))
+            str(params.get("nu", None))
         ])
-    if params.get("sdp") is not None:
+    if params.get("sdp", None) is not None:
         cargs.extend([
             "--sdp",
-            execution.input_file(params.get("sdp"))
+            execution.input_file(params.get("sdp", None))
         ])
-    if params.get("debug"):
+    if params.get("debug", False):
         cargs.append("--debug")
-    if params.get("checkopts"):
+    if params.get("checkopts", False):
         cargs.append("--checkopts")
-    if params.get("version"):
+    if params.get("version", False):
         cargs.append("--version")
     return cargs
 
@@ -634,7 +642,6 @@ def dmri_paths(
 __all__ = [
     "DMRI_PATHS_METADATA",
     "DmriPathsOutputs",
-    "DmriPathsParameters",
     "dmri_paths",
     "dmri_paths_execute",
     "dmri_paths_params",

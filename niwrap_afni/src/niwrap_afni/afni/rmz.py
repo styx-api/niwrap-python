@@ -14,7 +14,14 @@ RMZ_METADATA = Metadata(
 
 
 RmzParameters = typing.TypedDict('RmzParameters', {
-    "@type": typing.Literal["afni.rmz"],
+    "@type": typing.NotRequired[typing.Literal["afni/rmz"]],
+    "quiet": bool,
+    "hash_flag": typing.NotRequired[float | None],
+    "keep_flag": bool,
+    "filenames": list[InputPathType],
+})
+RmzParametersTagged = typing.TypedDict('RmzParametersTagged', {
+    "@type": typing.Literal["afni/rmz"],
     "quiet": bool,
     "hash_flag": typing.NotRequired[float | None],
     "keep_flag": bool,
@@ -22,40 +29,9 @@ RmzParameters = typing.TypedDict('RmzParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "afni.rmz": rmz_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-    }.get(t)
-
-
 class RmzOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `rmz(...)`.
+    Output object returned when calling `RmzParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -66,7 +42,7 @@ def rmz_params(
     quiet: bool = False,
     hash_flag: float | None = None,
     keep_flag: bool = False,
-) -> RmzParameters:
+) -> RmzParametersTagged:
     """
     Build parameters.
     
@@ -79,7 +55,7 @@ def rmz_params(
         Parameter dictionary
     """
     params = {
-        "@type": "afni.rmz",
+        "@type": "afni/rmz",
         "quiet": quiet,
         "keep_flag": keep_flag,
         "filenames": filenames,
@@ -104,16 +80,16 @@ def rmz_cargs(
     """
     cargs = []
     cargs.append("rmz")
-    if params.get("quiet"):
+    if params.get("quiet", False):
         cargs.append("-q")
-    if params.get("hash_flag") is not None:
+    if params.get("hash_flag", None) is not None:
         cargs.extend([
             "-#",
-            str(params.get("hash_flag"))
+            str(params.get("hash_flag", None))
         ])
-    if params.get("keep_flag"):
+    if params.get("keep_flag", False):
         cargs.append("-k")
-    cargs.extend([execution.input_file(f) for f in params.get("filenames")])
+    cargs.extend([execution.input_file(f) for f in params.get("filenames", None)])
     return cargs
 
 
@@ -201,7 +177,6 @@ def rmz(
 __all__ = [
     "RMZ_METADATA",
     "RmzOutputs",
-    "RmzParameters",
     "rmz",
     "rmz_execute",
     "rmz_params",

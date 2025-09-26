@@ -14,7 +14,15 @@ MRI_RIBBON_METADATA = Metadata(
 
 
 MriRibbonParameters = typing.TypedDict('MriRibbonParameters', {
-    "@type": typing.Literal["freesurfer.mri_ribbon"],
+    "@type": typing.NotRequired[typing.Literal["freesurfer/mri_ribbon"]],
+    "label_file": typing.NotRequired[InputPathType | None],
+    "inner_surface": InputPathType,
+    "outer_surface": InputPathType,
+    "input_volume": str,
+    "output_volume": str,
+})
+MriRibbonParametersTagged = typing.TypedDict('MriRibbonParametersTagged', {
+    "@type": typing.Literal["freesurfer/mri_ribbon"],
     "label_file": typing.NotRequired[InputPathType | None],
     "inner_surface": InputPathType,
     "outer_surface": InputPathType,
@@ -23,41 +31,9 @@ MriRibbonParameters = typing.TypedDict('MriRibbonParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "freesurfer.mri_ribbon": mri_ribbon_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "freesurfer.mri_ribbon": mri_ribbon_outputs,
-    }.get(t)
-
-
 class MriRibbonOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `mri_ribbon(...)`.
+    Output object returned when calling `MriRibbonParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -71,7 +47,7 @@ def mri_ribbon_params(
     input_volume: str,
     output_volume: str,
     label_file: InputPathType | None = None,
-) -> MriRibbonParameters:
+) -> MriRibbonParametersTagged:
     """
     Build parameters.
     
@@ -85,7 +61,7 @@ def mri_ribbon_params(
         Parameter dictionary
     """
     params = {
-        "@type": "freesurfer.mri_ribbon",
+        "@type": "freesurfer/mri_ribbon",
         "inner_surface": inner_surface,
         "outer_surface": outer_surface,
         "input_volume": input_volume,
@@ -111,15 +87,15 @@ def mri_ribbon_cargs(
     """
     cargs = []
     cargs.append("mri_ribbon")
-    if params.get("label_file") is not None:
+    if params.get("label_file", None) is not None:
         cargs.extend([
             "-l",
-            execution.input_file(params.get("label_file"))
+            execution.input_file(params.get("label_file", None))
         ])
-    cargs.append(execution.input_file(params.get("inner_surface")))
-    cargs.append(execution.input_file(params.get("outer_surface")))
-    cargs.append(params.get("input_volume"))
-    cargs.append(params.get("output_volume"))
+    cargs.append(execution.input_file(params.get("inner_surface", None)))
+    cargs.append(execution.input_file(params.get("outer_surface", None)))
+    cargs.append(params.get("input_volume", None))
+    cargs.append(params.get("output_volume", None))
     return cargs
 
 
@@ -138,7 +114,7 @@ def mri_ribbon_outputs(
     """
     ret = MriRibbonOutputs(
         root=execution.output_file("."),
-        ribbon_output=execution.output_file(params.get("output_volume") + "_ribbon.nii.gz"),
+        ribbon_output=execution.output_file(params.get("output_volume", None) + "_ribbon.nii.gz"),
     )
     return ret
 
@@ -211,7 +187,6 @@ def mri_ribbon(
 __all__ = [
     "MRI_RIBBON_METADATA",
     "MriRibbonOutputs",
-    "MriRibbonParameters",
     "mri_ribbon",
     "mri_ribbon_execute",
     "mri_ribbon_params",

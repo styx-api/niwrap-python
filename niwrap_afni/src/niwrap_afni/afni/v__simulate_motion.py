@@ -14,7 +14,26 @@ V__SIMULATE_MOTION_METADATA = Metadata(
 
 
 VSimulateMotionParameters = typing.TypedDict('VSimulateMotionParameters', {
-    "@type": typing.Literal["afni.@simulate_motion"],
+    "@type": typing.NotRequired[typing.Literal["afni/@simulate_motion"]],
+    "epi": InputPathType,
+    "motion_file": InputPathType,
+    "epi_timing": typing.NotRequired[InputPathType | None],
+    "prefix": typing.NotRequired[str | None],
+    "save_workdir": bool,
+    "test": bool,
+    "verb_level": typing.NotRequired[float | None],
+    "vr_base": typing.NotRequired[float | None],
+    "warp_method": typing.NotRequired[str | None],
+    "warp_1D": typing.NotRequired[InputPathType | None],
+    "warp_master": typing.NotRequired[InputPathType | None],
+    "wsinc5": bool,
+    "help": bool,
+    "hist": bool,
+    "todo": bool,
+    "ver": bool,
+})
+VSimulateMotionParametersTagged = typing.TypedDict('VSimulateMotionParametersTagged', {
+    "@type": typing.Literal["afni/@simulate_motion"],
     "epi": InputPathType,
     "motion_file": InputPathType,
     "epi_timing": typing.NotRequired[InputPathType | None],
@@ -34,41 +53,9 @@ VSimulateMotionParameters = typing.TypedDict('VSimulateMotionParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "afni.@simulate_motion": v__simulate_motion_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "afni.@simulate_motion": v__simulate_motion_outputs,
-    }.get(t)
-
-
 class VSimulateMotionOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `v__simulate_motion(...)`.
+    Output object returned when calling `VSimulateMotionParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -93,7 +80,7 @@ def v__simulate_motion_params(
     hist: bool = False,
     todo: bool = False,
     ver: bool = False,
-) -> VSimulateMotionParameters:
+) -> VSimulateMotionParametersTagged:
     """
     Build parameters.
     
@@ -120,7 +107,7 @@ def v__simulate_motion_params(
         Parameter dictionary
     """
     params = {
-        "@type": "afni.@simulate_motion",
+        "@type": "afni/@simulate_motion",
         "epi": epi,
         "motion_file": motion_file,
         "save_workdir": save_workdir,
@@ -165,60 +152,60 @@ def v__simulate_motion_cargs(
     cargs.append("@simulate_motion")
     cargs.extend([
         "-epi",
-        execution.input_file(params.get("epi"))
+        execution.input_file(params.get("epi", None))
     ])
     cargs.extend([
         "-motion_file",
-        execution.input_file(params.get("motion_file"))
+        execution.input_file(params.get("motion_file", None))
     ])
-    if params.get("epi_timing") is not None:
+    if params.get("epi_timing", None) is not None:
         cargs.extend([
             "-epi_timing",
-            execution.input_file(params.get("epi_timing"))
+            execution.input_file(params.get("epi_timing", None))
         ])
-    if params.get("prefix") is not None:
+    if params.get("prefix", None) is not None:
         cargs.extend([
             "-prefix",
-            params.get("prefix")
+            params.get("prefix", None)
         ])
-    if params.get("save_workdir"):
+    if params.get("save_workdir", False):
         cargs.append("-save_workdir")
-    if params.get("test"):
+    if params.get("test", False):
         cargs.append("-test")
-    if params.get("verb_level") is not None:
+    if params.get("verb_level", None) is not None:
         cargs.extend([
             "-verb",
-            str(params.get("verb_level"))
+            str(params.get("verb_level", None))
         ])
-    if params.get("vr_base") is not None:
+    if params.get("vr_base", None) is not None:
         cargs.extend([
             "-vr_base",
-            str(params.get("vr_base"))
+            str(params.get("vr_base", None))
         ])
-    if params.get("warp_method") is not None:
+    if params.get("warp_method", None) is not None:
         cargs.extend([
             "-warp_method",
-            params.get("warp_method")
+            params.get("warp_method", None)
         ])
-    if params.get("warp_1D") is not None:
+    if params.get("warp_1D", None) is not None:
         cargs.extend([
             "-warp_1D",
-            execution.input_file(params.get("warp_1D"))
+            execution.input_file(params.get("warp_1D", None))
         ])
-    if params.get("warp_master") is not None:
+    if params.get("warp_master", None) is not None:
         cargs.extend([
             "-warp_master",
-            execution.input_file(params.get("warp_master"))
+            execution.input_file(params.get("warp_master", None))
         ])
-    if params.get("wsinc5"):
+    if params.get("wsinc5", False):
         cargs.append("-wsinc5")
-    if params.get("help"):
+    if params.get("help", False):
         cargs.append("-help")
-    if params.get("hist"):
+    if params.get("hist", False):
         cargs.append("-hist")
-    if params.get("todo"):
+    if params.get("todo", False):
         cargs.append("-todo")
-    if params.get("ver"):
+    if params.get("ver", False):
         cargs.append("-ver")
     return cargs
 
@@ -238,7 +225,7 @@ def v__simulate_motion_outputs(
     """
     ret = VSimulateMotionOutputs(
         root=execution.output_file("."),
-        simulated_motion_output=execution.output_file(params.get("prefix") + "_simulated_motion.nii.gz") if (params.get("prefix") is not None) else None,
+        simulated_motion_output=execution.output_file(params.get("prefix", None) + "_simulated_motion.nii.gz") if (params.get("prefix") is not None) else None,
     )
     return ret
 
@@ -347,7 +334,6 @@ def v__simulate_motion(
 
 __all__ = [
     "VSimulateMotionOutputs",
-    "VSimulateMotionParameters",
     "V__SIMULATE_MOTION_METADATA",
     "v__simulate_motion",
     "v__simulate_motion_execute",

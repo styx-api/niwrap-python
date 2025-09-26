@@ -14,7 +14,42 @@ DCMDRLE_FS_METADATA = Metadata(
 
 
 DcmdrleFsParameters = typing.TypedDict('DcmdrleFsParameters', {
-    "@type": typing.Literal["freesurfer.dcmdrle.fs"],
+    "@type": typing.NotRequired[typing.Literal["freesurfer/dcmdrle.fs"]],
+    "input_file": InputPathType,
+    "output_file": str,
+    "help": bool,
+    "version": bool,
+    "arguments": bool,
+    "quiet": bool,
+    "verbose": bool,
+    "debug": bool,
+    "log_level": typing.NotRequired[str | None],
+    "log_config": typing.NotRequired[InputPathType | None],
+    "read_file": bool,
+    "read_file_only": bool,
+    "read_dataset": bool,
+    "uid_default": bool,
+    "uid_always": bool,
+    "byte_order_default": bool,
+    "byte_order_reverse": bool,
+    "write_file": bool,
+    "write_dataset": bool,
+    "write_xfer_little": bool,
+    "write_xfer_big": bool,
+    "write_xfer_implicit": bool,
+    "enable_new_vr": bool,
+    "disable_new_vr": bool,
+    "group_length_recalc": bool,
+    "group_length_create": bool,
+    "group_length_remove": bool,
+    "length_explicit": bool,
+    "length_undefined": bool,
+    "padding_retain": bool,
+    "padding_off": bool,
+    "padding_create": typing.NotRequired[str | None],
+})
+DcmdrleFsParametersTagged = typing.TypedDict('DcmdrleFsParametersTagged', {
+    "@type": typing.Literal["freesurfer/dcmdrle.fs"],
     "input_file": InputPathType,
     "output_file": str,
     "help": bool,
@@ -50,41 +85,9 @@ DcmdrleFsParameters = typing.TypedDict('DcmdrleFsParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "freesurfer.dcmdrle.fs": dcmdrle_fs_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "freesurfer.dcmdrle.fs": dcmdrle_fs_outputs,
-    }.get(t)
-
-
 class DcmdrleFsOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `dcmdrle_fs(...)`.
+    Output object returned when calling `DcmdrleFsParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -125,7 +128,7 @@ def dcmdrle_fs_params(
     padding_retain: bool = False,
     padding_off: bool = False,
     padding_create: str | None = None,
-) -> DcmdrleFsParameters:
+) -> DcmdrleFsParametersTagged:
     """
     Build parameters.
     
@@ -167,7 +170,7 @@ def dcmdrle_fs_params(
         Parameter dictionary
     """
     params = {
-        "@type": "freesurfer.dcmdrle.fs",
+        "@type": "freesurfer/dcmdrle.fs",
         "input_file": input_file,
         "output_file": output_file,
         "help": help_,
@@ -222,76 +225,76 @@ def dcmdrle_fs_cargs(
     """
     cargs = []
     cargs.append("dcmdrle.fs")
-    cargs.append(execution.input_file(params.get("input_file")))
-    cargs.append(params.get("output_file"))
-    if params.get("help"):
+    cargs.append(execution.input_file(params.get("input_file", None)))
+    cargs.append(params.get("output_file", None))
+    if params.get("help", False):
         cargs.append("-h")
-    if params.get("version"):
+    if params.get("version", False):
         cargs.append("--version")
-    if params.get("arguments"):
+    if params.get("arguments", False):
         cargs.append("--arguments")
-    if params.get("quiet"):
+    if params.get("quiet", False):
         cargs.append("-q")
-    if params.get("verbose"):
+    if params.get("verbose", False):
         cargs.append("-v")
-    if params.get("debug"):
+    if params.get("debug", False):
         cargs.append("-d")
-    if params.get("log_level") is not None:
+    if params.get("log_level", None) is not None:
         cargs.extend([
             "-ll",
-            params.get("log_level")
+            params.get("log_level", None)
         ])
-    if params.get("log_config") is not None:
+    if params.get("log_config", None) is not None:
         cargs.extend([
             "-lc",
-            execution.input_file(params.get("log_config"))
+            execution.input_file(params.get("log_config", None))
         ])
-    if params.get("read_file"):
+    if params.get("read_file", False):
         cargs.append("+f")
-    if params.get("read_file_only"):
+    if params.get("read_file_only", False):
         cargs.append("+fo")
-    if params.get("read_dataset"):
+    if params.get("read_dataset", False):
         cargs.append("-f")
-    if params.get("uid_default"):
+    if params.get("uid_default", False):
         cargs.append("+ud")
-    if params.get("uid_always"):
+    if params.get("uid_always", False):
         cargs.append("+ua")
-    if params.get("byte_order_default"):
+    if params.get("byte_order_default", False):
         cargs.append("+bd")
-    if params.get("byte_order_reverse"):
+    if params.get("byte_order_reverse", False):
         cargs.append("+br")
-    if params.get("write_file"):
+    if params.get("write_file", False):
         cargs.append("+F")
-    if params.get("write_dataset"):
+    if params.get("write_dataset", False):
         cargs.append("-F")
-    if params.get("write_xfer_little"):
+    if params.get("write_xfer_little", False):
         cargs.append("+te")
-    if params.get("write_xfer_big"):
+    if params.get("write_xfer_big", False):
         cargs.append("+tb")
-    if params.get("write_xfer_implicit"):
+    if params.get("write_xfer_implicit", False):
         cargs.append("+ti")
-    if params.get("enable_new_vr"):
+    if params.get("enable_new_vr", False):
         cargs.append("+u")
-    if params.get("disable_new_vr"):
+    if params.get("disable_new_vr", False):
         cargs.append("-u")
-    if params.get("group_length_recalc"):
+    if params.get("group_length_recalc", False):
         cargs.append("+g=")
-    if params.get("group_length_create"):
+    if params.get("group_length_create", False):
         cargs.append("+g")
-    if params.get("group_length_remove"):
+    if params.get("group_length_remove", False):
         cargs.append("-g")
-    if params.get("length_explicit"):
+    if params.get("length_explicit", False):
         cargs.append("+e")
-    if params.get("length_undefined"):
+    if params.get("length_undefined", False):
         cargs.append("-e")
-    if params.get("padding_retain"):
+    if params.get("padding_retain", False):
         cargs.append("-p=")
-    if params.get("padding_off"):
+    if params.get("padding_off", False):
         cargs.append("-p")
-    if params.get("padding_create") is not None:
+    if params.get("padding_create", None) is not None:
         cargs.extend([
             "+p",
-            params.get("padding_create")
+            params.get("padding_create", None)
         ])
     return cargs
 
@@ -311,7 +314,7 @@ def dcmdrle_fs_outputs(
     """
     ret = DcmdrleFsOutputs(
         root=execution.output_file("."),
-        output_file=execution.output_file(params.get("output_file")),
+        output_file=execution.output_file(params.get("output_file", None)),
     )
     return ret
 
@@ -466,7 +469,6 @@ def dcmdrle_fs(
 __all__ = [
     "DCMDRLE_FS_METADATA",
     "DcmdrleFsOutputs",
-    "DcmdrleFsParameters",
     "dcmdrle_fs",
     "dcmdrle_fs_execute",
     "dcmdrle_fs_params",

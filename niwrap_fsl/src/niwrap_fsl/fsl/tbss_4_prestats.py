@@ -14,45 +14,18 @@ TBSS_4_PRESTATS_METADATA = Metadata(
 
 
 Tbss4PrestatsParameters = typing.TypedDict('Tbss4PrestatsParameters', {
-    "@type": typing.Literal["fsl.tbss_4_prestats"],
+    "@type": typing.NotRequired[typing.Literal["fsl/tbss_4_prestats"]],
+    "threshold": float,
+})
+Tbss4PrestatsParametersTagged = typing.TypedDict('Tbss4PrestatsParametersTagged', {
+    "@type": typing.Literal["fsl/tbss_4_prestats"],
     "threshold": float,
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "fsl.tbss_4_prestats": tbss_4_prestats_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-    }.get(t)
-
-
 class Tbss4PrestatsOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `tbss_4_prestats(...)`.
+    Output object returned when calling `Tbss4PrestatsParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -60,7 +33,7 @@ class Tbss4PrestatsOutputs(typing.NamedTuple):
 
 def tbss_4_prestats_params(
     threshold: float = 0.2,
-) -> Tbss4PrestatsParameters:
+) -> Tbss4PrestatsParametersTagged:
     """
     Build parameters.
     
@@ -71,7 +44,7 @@ def tbss_4_prestats_params(
         Parameter dictionary
     """
     params = {
-        "@type": "fsl.tbss_4_prestats",
+        "@type": "fsl/tbss_4_prestats",
         "threshold": threshold,
     }
     return params
@@ -92,7 +65,7 @@ def tbss_4_prestats_cargs(
     """
     cargs = []
     cargs.append("tbss_4_prestats")
-    cargs.append(str(params.get("threshold")))
+    cargs.append(str(params.get("threshold", 0.2)))
     return cargs
 
 
@@ -172,7 +145,6 @@ def tbss_4_prestats(
 __all__ = [
     "TBSS_4_PRESTATS_METADATA",
     "Tbss4PrestatsOutputs",
-    "Tbss4PrestatsParameters",
     "tbss_4_prestats",
     "tbss_4_prestats_execute",
     "tbss_4_prestats_params",

@@ -14,14 +14,35 @@ MRCAT_METADATA = Metadata(
 
 
 MrcatConfigParameters = typing.TypedDict('MrcatConfigParameters', {
-    "@type": typing.Literal["mrtrix.mrcat.config"],
+    "@type": typing.NotRequired[typing.Literal["config"]],
+    "key": str,
+    "value": str,
+})
+MrcatConfigParametersTagged = typing.TypedDict('MrcatConfigParametersTagged', {
+    "@type": typing.Literal["config"],
     "key": str,
     "value": str,
 })
 
 
 MrcatParameters = typing.TypedDict('MrcatParameters', {
-    "@type": typing.Literal["mrtrix.mrcat"],
+    "@type": typing.NotRequired[typing.Literal["mrtrix/mrcat"]],
+    "axis": typing.NotRequired[int | None],
+    "datatype": typing.NotRequired[str | None],
+    "info": bool,
+    "quiet": bool,
+    "debug": bool,
+    "force": bool,
+    "nthreads": typing.NotRequired[int | None],
+    "config": typing.NotRequired[list[MrcatConfigParameters] | None],
+    "help": bool,
+    "version": bool,
+    "image1": InputPathType,
+    "image2": list[InputPathType],
+    "output": str,
+})
+MrcatParametersTagged = typing.TypedDict('MrcatParametersTagged', {
+    "@type": typing.Literal["mrtrix/mrcat"],
     "axis": typing.NotRequired[int | None],
     "datatype": typing.NotRequired[str | None],
     "info": bool,
@@ -38,43 +59,10 @@ MrcatParameters = typing.TypedDict('MrcatParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "mrtrix.mrcat": mrcat_cargs,
-        "mrtrix.mrcat.config": mrcat_config_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "mrtrix.mrcat": mrcat_outputs,
-    }.get(t)
-
-
 def mrcat_config_params(
     key: str,
     value: str,
-) -> MrcatConfigParameters:
+) -> MrcatConfigParametersTagged:
     """
     Build parameters.
     
@@ -85,7 +73,7 @@ def mrcat_config_params(
         Parameter dictionary
     """
     params = {
-        "@type": "mrtrix.mrcat.config",
+        "@type": "config",
         "key": key,
         "value": value,
     }
@@ -107,14 +95,14 @@ def mrcat_config_cargs(
     """
     cargs = []
     cargs.append("-config")
-    cargs.append(params.get("key"))
-    cargs.append(params.get("value"))
+    cargs.append(params.get("key", None))
+    cargs.append(params.get("value", None))
     return cargs
 
 
 class MrcatOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `mrcat(...)`.
+    Output object returned when calling `MrcatParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -136,7 +124,7 @@ def mrcat_params(
     config: list[MrcatConfigParameters] | None = None,
     help_: bool = False,
     version: bool = False,
-) -> MrcatParameters:
+) -> MrcatParametersTagged:
     """
     Build parameters.
     
@@ -170,7 +158,7 @@ def mrcat_params(
         Parameter dictionary
     """
     params = {
-        "@type": "mrtrix.mrcat",
+        "@type": "mrtrix/mrcat",
         "info": info,
         "quiet": quiet,
         "debug": debug,
@@ -207,38 +195,38 @@ def mrcat_cargs(
     """
     cargs = []
     cargs.append("mrcat")
-    if params.get("axis") is not None:
+    if params.get("axis", None) is not None:
         cargs.extend([
             "-axis",
-            str(params.get("axis"))
+            str(params.get("axis", None))
         ])
-    if params.get("datatype") is not None:
+    if params.get("datatype", None) is not None:
         cargs.extend([
             "-datatype",
-            params.get("datatype")
+            params.get("datatype", None)
         ])
-    if params.get("info"):
+    if params.get("info", False):
         cargs.append("-info")
-    if params.get("quiet"):
+    if params.get("quiet", False):
         cargs.append("-quiet")
-    if params.get("debug"):
+    if params.get("debug", False):
         cargs.append("-debug")
-    if params.get("force"):
+    if params.get("force", False):
         cargs.append("-force")
-    if params.get("nthreads") is not None:
+    if params.get("nthreads", None) is not None:
         cargs.extend([
             "-nthreads",
-            str(params.get("nthreads"))
+            str(params.get("nthreads", None))
         ])
-    if params.get("config") is not None:
-        cargs.extend([a for c in [dyn_cargs(s["@type"])(s, execution) for s in params.get("config")] for a in c])
-    if params.get("help"):
+    if params.get("config", None) is not None:
+        cargs.extend([a for c in [mrcat_config_cargs(s, execution) for s in params.get("config", None)] for a in c])
+    if params.get("help", False):
         cargs.append("-help")
-    if params.get("version"):
+    if params.get("version", False):
         cargs.append("-version")
-    cargs.append(execution.input_file(params.get("image1")))
-    cargs.extend([execution.input_file(f) for f in params.get("image2")])
-    cargs.append(params.get("output"))
+    cargs.append(execution.input_file(params.get("image1", None)))
+    cargs.extend([execution.input_file(f) for f in params.get("image2", None)])
+    cargs.append(params.get("output", None))
     return cargs
 
 
@@ -257,7 +245,7 @@ def mrcat_outputs(
     """
     ret = MrcatOutputs(
         root=execution.output_file("."),
-        output=execution.output_file(params.get("output")),
+        output=execution.output_file(params.get("output", None)),
     )
     return ret
 
@@ -377,9 +365,7 @@ def mrcat(
 
 __all__ = [
     "MRCAT_METADATA",
-    "MrcatConfigParameters",
     "MrcatOutputs",
-    "MrcatParameters",
     "mrcat",
     "mrcat_config_params",
     "mrcat_execute",

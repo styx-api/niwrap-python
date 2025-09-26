@@ -14,14 +14,33 @@ TRANSFORMCALC_METADATA = Metadata(
 
 
 TransformcalcConfigParameters = typing.TypedDict('TransformcalcConfigParameters', {
-    "@type": typing.Literal["mrtrix.transformcalc.config"],
+    "@type": typing.NotRequired[typing.Literal["config"]],
+    "key": str,
+    "value": str,
+})
+TransformcalcConfigParametersTagged = typing.TypedDict('TransformcalcConfigParametersTagged', {
+    "@type": typing.Literal["config"],
     "key": str,
     "value": str,
 })
 
 
 TransformcalcParameters = typing.TypedDict('TransformcalcParameters', {
-    "@type": typing.Literal["mrtrix.transformcalc"],
+    "@type": typing.NotRequired[typing.Literal["mrtrix/transformcalc"]],
+    "info": bool,
+    "quiet": bool,
+    "debug": bool,
+    "force": bool,
+    "nthreads": typing.NotRequired[int | None],
+    "config": typing.NotRequired[list[TransformcalcConfigParameters] | None],
+    "help": bool,
+    "version": bool,
+    "inputs": list[str],
+    "operation": str,
+    "output": str,
+})
+TransformcalcParametersTagged = typing.TypedDict('TransformcalcParametersTagged', {
+    "@type": typing.Literal["mrtrix/transformcalc"],
     "info": bool,
     "quiet": bool,
     "debug": bool,
@@ -36,43 +55,10 @@ TransformcalcParameters = typing.TypedDict('TransformcalcParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "mrtrix.transformcalc": transformcalc_cargs,
-        "mrtrix.transformcalc.config": transformcalc_config_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "mrtrix.transformcalc": transformcalc_outputs,
-    }.get(t)
-
-
 def transformcalc_config_params(
     key: str,
     value: str,
-) -> TransformcalcConfigParameters:
+) -> TransformcalcConfigParametersTagged:
     """
     Build parameters.
     
@@ -83,7 +69,7 @@ def transformcalc_config_params(
         Parameter dictionary
     """
     params = {
-        "@type": "mrtrix.transformcalc.config",
+        "@type": "config",
         "key": key,
         "value": value,
     }
@@ -105,14 +91,14 @@ def transformcalc_config_cargs(
     """
     cargs = []
     cargs.append("-config")
-    cargs.append(params.get("key"))
-    cargs.append(params.get("value"))
+    cargs.append(params.get("key", None))
+    cargs.append(params.get("value", None))
     return cargs
 
 
 class TransformcalcOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `transformcalc(...)`.
+    Output object returned when calling `TransformcalcParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -132,7 +118,7 @@ def transformcalc_params(
     config: list[TransformcalcConfigParameters] | None = None,
     help_: bool = False,
     version: bool = False,
-) -> TransformcalcParameters:
+) -> TransformcalcParametersTagged:
     """
     Build parameters.
     
@@ -158,7 +144,7 @@ def transformcalc_params(
         Parameter dictionary
     """
     params = {
-        "@type": "mrtrix.transformcalc",
+        "@type": "mrtrix/transformcalc",
         "info": info,
         "quiet": quiet,
         "debug": debug,
@@ -191,28 +177,28 @@ def transformcalc_cargs(
     """
     cargs = []
     cargs.append("transformcalc")
-    if params.get("info"):
+    if params.get("info", False):
         cargs.append("-info")
-    if params.get("quiet"):
+    if params.get("quiet", False):
         cargs.append("-quiet")
-    if params.get("debug"):
+    if params.get("debug", False):
         cargs.append("-debug")
-    if params.get("force"):
+    if params.get("force", False):
         cargs.append("-force")
-    if params.get("nthreads") is not None:
+    if params.get("nthreads", None) is not None:
         cargs.extend([
             "-nthreads",
-            str(params.get("nthreads"))
+            str(params.get("nthreads", None))
         ])
-    if params.get("config") is not None:
-        cargs.extend([a for c in [dyn_cargs(s["@type"])(s, execution) for s in params.get("config")] for a in c])
-    if params.get("help"):
+    if params.get("config", None) is not None:
+        cargs.extend([a for c in [transformcalc_config_cargs(s, execution) for s in params.get("config", None)] for a in c])
+    if params.get("help", False):
         cargs.append("-help")
-    if params.get("version"):
+    if params.get("version", False):
         cargs.append("-version")
-    cargs.extend(params.get("inputs"))
-    cargs.append(params.get("operation"))
-    cargs.append(params.get("output"))
+    cargs.extend(params.get("inputs", None))
+    cargs.append(params.get("operation", None))
+    cargs.append(params.get("output", None))
     return cargs
 
 
@@ -231,7 +217,7 @@ def transformcalc_outputs(
     """
     ret = TransformcalcOutputs(
         root=execution.output_file("."),
-        output=execution.output_file(params.get("output")),
+        output=execution.output_file(params.get("output", None)),
     )
     return ret
 
@@ -339,9 +325,7 @@ def transformcalc(
 
 __all__ = [
     "TRANSFORMCALC_METADATA",
-    "TransformcalcConfigParameters",
     "TransformcalcOutputs",
-    "TransformcalcParameters",
     "transformcalc",
     "transformcalc_config_params",
     "transformcalc_execute",

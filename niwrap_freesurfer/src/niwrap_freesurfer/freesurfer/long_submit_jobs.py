@@ -14,7 +14,35 @@ LONG_SUBMIT_JOBS_METADATA = Metadata(
 
 
 LongSubmitJobsParameters = typing.TypedDict('LongSubmitJobsParameters', {
-    "@type": typing.Literal["freesurfer.long_submit_jobs"],
+    "@type": typing.NotRequired[typing.Literal["freesurfer/long_submit_jobs"]],
+    "qdec": InputPathType,
+    "cdir": str,
+    "bdir": typing.NotRequired[str | None],
+    "ldir": typing.NotRequired[str | None],
+    "scriptsdir": typing.NotRequired[str | None],
+    "cross": bool,
+    "base": bool,
+    "long": bool,
+    "cflags": typing.NotRequired[str | None],
+    "bflags": typing.NotRequired[str | None],
+    "lflags": typing.NotRequired[str | None],
+    "affine": bool,
+    "force": bool,
+    "simulate": bool,
+    "simfiles": bool,
+    "check": bool,
+    "pause": typing.NotRequired[float | None],
+    "max": typing.NotRequired[float | None],
+    "queue": typing.NotRequired[str | None],
+    "cmem": typing.NotRequired[float | None],
+    "bmem": typing.NotRequired[float | None],
+    "lmem": typing.NotRequired[float | None],
+    "cnodes": typing.NotRequired[float | None],
+    "bnodes": typing.NotRequired[float | None],
+    "lnodes": typing.NotRequired[float | None],
+})
+LongSubmitJobsParametersTagged = typing.TypedDict('LongSubmitJobsParametersTagged', {
+    "@type": typing.Literal["freesurfer/long_submit_jobs"],
     "qdec": InputPathType,
     "cdir": str,
     "bdir": typing.NotRequired[str | None],
@@ -43,40 +71,9 @@ LongSubmitJobsParameters = typing.TypedDict('LongSubmitJobsParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "freesurfer.long_submit_jobs": long_submit_jobs_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-    }.get(t)
-
-
 class LongSubmitJobsOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `long_submit_jobs(...)`.
+    Output object returned when calling `LongSubmitJobsParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -108,7 +105,7 @@ def long_submit_jobs_params(
     cnodes: float | None = None,
     bnodes: float | None = None,
     lnodes: float | None = None,
-) -> LongSubmitJobsParameters:
+) -> LongSubmitJobsParametersTagged:
     """
     Build parameters.
     
@@ -144,7 +141,7 @@ def long_submit_jobs_params(
         Parameter dictionary
     """
     params = {
-        "@type": "freesurfer.long_submit_jobs",
+        "@type": "freesurfer/long_submit_jobs",
         "qdec": qdec,
         "cdir": cdir,
         "cross": cross,
@@ -206,102 +203,102 @@ def long_submit_jobs_cargs(
     cargs.append("long_submit_jobs")
     cargs.extend([
         "--qdec",
-        execution.input_file(params.get("qdec"))
+        execution.input_file(params.get("qdec", None))
     ])
     cargs.extend([
         "--cdir",
-        params.get("cdir")
+        params.get("cdir", None)
     ])
-    if params.get("bdir") is not None:
+    if params.get("bdir", None) is not None:
         cargs.extend([
             "--bdir",
-            params.get("bdir")
+            params.get("bdir", None)
         ])
-    if params.get("ldir") is not None:
+    if params.get("ldir", None) is not None:
         cargs.extend([
             "--ldir",
-            params.get("ldir")
+            params.get("ldir", None)
         ])
-    if params.get("scriptsdir") is not None:
+    if params.get("scriptsdir", None) is not None:
         cargs.extend([
             "--scriptsdir",
-            params.get("scriptsdir")
+            params.get("scriptsdir", None)
         ])
-    if params.get("cross"):
+    if params.get("cross", False):
         cargs.append("--cross")
-    if params.get("base"):
+    if params.get("base", False):
         cargs.append("--base")
-    if params.get("long"):
+    if params.get("long", False):
         cargs.append("--long")
-    if params.get("cflags") is not None:
+    if params.get("cflags", None) is not None:
         cargs.extend([
             "--cflags",
-            params.get("cflags")
+            params.get("cflags", None)
         ])
-    if params.get("bflags") is not None:
+    if params.get("bflags", None) is not None:
         cargs.extend([
             "--bflags",
-            params.get("bflags")
+            params.get("bflags", None)
         ])
-    if params.get("lflags") is not None:
+    if params.get("lflags", None) is not None:
         cargs.extend([
             "--lflags",
-            params.get("lflags")
+            params.get("lflags", None)
         ])
-    if params.get("affine"):
+    if params.get("affine", False):
         cargs.append("--affine")
-    if params.get("force"):
+    if params.get("force", False):
         cargs.append("--force")
-    if params.get("simulate"):
+    if params.get("simulate", False):
         cargs.append("--simulate")
-    if params.get("simfiles"):
+    if params.get("simfiles", False):
         cargs.append("--simfiles")
-    if params.get("check"):
+    if params.get("check", False):
         cargs.append("--check")
-    if params.get("pause") is not None:
+    if params.get("pause", None) is not None:
         cargs.extend([
             "--pause",
-            str(params.get("pause"))
+            str(params.get("pause", None))
         ])
-    if params.get("max") is not None:
+    if params.get("max", None) is not None:
         cargs.extend([
             "--max",
-            str(params.get("max"))
+            str(params.get("max", None))
         ])
-    if params.get("queue") is not None:
+    if params.get("queue", None) is not None:
         cargs.extend([
             "--queue",
-            params.get("queue")
+            params.get("queue", None)
         ])
-    if params.get("cmem") is not None:
+    if params.get("cmem", None) is not None:
         cargs.extend([
             "--cmem",
-            str(params.get("cmem"))
+            str(params.get("cmem", None))
         ])
-    if params.get("bmem") is not None:
+    if params.get("bmem", None) is not None:
         cargs.extend([
             "--bmem",
-            str(params.get("bmem"))
+            str(params.get("bmem", None))
         ])
-    if params.get("lmem") is not None:
+    if params.get("lmem", None) is not None:
         cargs.extend([
             "--lmem",
-            str(params.get("lmem"))
+            str(params.get("lmem", None))
         ])
-    if params.get("cnodes") is not None:
+    if params.get("cnodes", None) is not None:
         cargs.extend([
             "--cnodes",
-            str(params.get("cnodes"))
+            str(params.get("cnodes", None))
         ])
-    if params.get("bnodes") is not None:
+    if params.get("bnodes", None) is not None:
         cargs.extend([
             "--bnodes",
-            str(params.get("bnodes"))
+            str(params.get("bnodes", None))
         ])
-    if params.get("lnodes") is not None:
+    if params.get("lnodes", None) is not None:
         cargs.extend([
             "--lnodes",
-            str(params.get("lnodes"))
+            str(params.get("lnodes", None))
         ])
     return cargs
 
@@ -457,7 +454,6 @@ def long_submit_jobs(
 __all__ = [
     "LONG_SUBMIT_JOBS_METADATA",
     "LongSubmitJobsOutputs",
-    "LongSubmitJobsParameters",
     "long_submit_jobs",
     "long_submit_jobs_execute",
     "long_submit_jobs_params",

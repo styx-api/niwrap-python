@@ -14,7 +14,18 @@ MRIS_FLATTEN_METADATA = Metadata(
 
 
 MrisFlattenParameters = typing.TypedDict('MrisFlattenParameters', {
-    "@type": typing.Literal["freesurfer.mris_flatten"],
+    "@type": typing.NotRequired[typing.Literal["freesurfer/mris_flatten"]],
+    "input_patch": InputPathType,
+    "output_patch": str,
+    "iterations": typing.NotRequired[float | None],
+    "distances": typing.NotRequired[list[float] | None],
+    "dilations": typing.NotRequired[float | None],
+    "random_seed": typing.NotRequired[float | None],
+    "copy_coords": typing.NotRequired[str | None],
+    "norand": bool,
+})
+MrisFlattenParametersTagged = typing.TypedDict('MrisFlattenParametersTagged', {
+    "@type": typing.Literal["freesurfer/mris_flatten"],
     "input_patch": InputPathType,
     "output_patch": str,
     "iterations": typing.NotRequired[float | None],
@@ -26,41 +37,9 @@ MrisFlattenParameters = typing.TypedDict('MrisFlattenParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "freesurfer.mris_flatten": mris_flatten_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "freesurfer.mris_flatten": mris_flatten_outputs,
-    }.get(t)
-
-
 class MrisFlattenOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `mris_flatten(...)`.
+    Output object returned when calling `MrisFlattenParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -77,7 +56,7 @@ def mris_flatten_params(
     random_seed: float | None = None,
     copy_coords: str | None = None,
     norand: bool = False,
-) -> MrisFlattenParameters:
+) -> MrisFlattenParametersTagged:
     """
     Build parameters.
     
@@ -97,7 +76,7 @@ def mris_flatten_params(
         Parameter dictionary
     """
     params = {
-        "@type": "freesurfer.mris_flatten",
+        "@type": "freesurfer/mris_flatten",
         "input_patch": input_patch,
         "output_patch": output_patch,
         "norand": norand,
@@ -130,34 +109,34 @@ def mris_flatten_cargs(
     """
     cargs = []
     cargs.append("mris_flatten")
-    cargs.append(execution.input_file(params.get("input_patch")))
-    cargs.append(params.get("output_patch"))
-    if params.get("iterations") is not None:
+    cargs.append(execution.input_file(params.get("input_patch", None)))
+    cargs.append(params.get("output_patch", None))
+    if params.get("iterations", None) is not None:
         cargs.extend([
             "-w",
-            str(params.get("iterations"))
+            str(params.get("iterations", None))
         ])
-    if params.get("distances") is not None:
+    if params.get("distances", None) is not None:
         cargs.extend([
             "-distances",
-            *map(str, params.get("distances"))
+            *map(str, params.get("distances", None))
         ])
-    if params.get("dilations") is not None:
+    if params.get("dilations", None) is not None:
         cargs.extend([
             "-dilate",
-            str(params.get("dilations"))
+            str(params.get("dilations", None))
         ])
-    if params.get("random_seed") is not None:
+    if params.get("random_seed", None) is not None:
         cargs.extend([
             "-seed",
-            str(params.get("random_seed"))
+            str(params.get("random_seed", None))
         ])
-    if params.get("copy_coords") is not None:
+    if params.get("copy_coords", None) is not None:
         cargs.extend([
             "-copy-coords",
-            params.get("copy_coords")
+            params.get("copy_coords", None)
         ])
-    if params.get("norand"):
+    if params.get("norand", False):
         cargs.append("-norand")
     return cargs
 
@@ -177,7 +156,7 @@ def mris_flatten_outputs(
     """
     ret = MrisFlattenOutputs(
         root=execution.output_file("."),
-        output_patch_file=execution.output_file(params.get("output_patch")),
+        output_patch_file=execution.output_file(params.get("output_patch", None)),
     )
     return ret
 
@@ -262,7 +241,6 @@ def mris_flatten(
 __all__ = [
     "MRIS_FLATTEN_METADATA",
     "MrisFlattenOutputs",
-    "MrisFlattenParameters",
     "mris_flatten",
     "mris_flatten_execute",
     "mris_flatten_params",

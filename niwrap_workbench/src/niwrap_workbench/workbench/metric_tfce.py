@@ -14,21 +14,42 @@ METRIC_TFCE_METADATA = Metadata(
 
 
 MetricTfcePresmoothParameters = typing.TypedDict('MetricTfcePresmoothParameters', {
-    "@type": typing.Literal["workbench.metric-tfce.presmooth"],
+    "@type": typing.NotRequired[typing.Literal["presmooth"]],
+    "kernel": float,
+    "opt_fwhm": bool,
+})
+MetricTfcePresmoothParametersTagged = typing.TypedDict('MetricTfcePresmoothParametersTagged', {
+    "@type": typing.Literal["presmooth"],
     "kernel": float,
     "opt_fwhm": bool,
 })
 
 
 MetricTfceParametersParameters = typing.TypedDict('MetricTfceParametersParameters', {
-    "@type": typing.Literal["workbench.metric-tfce.parameters"],
+    "@type": typing.NotRequired[typing.Literal["parameters"]],
+    "e": float,
+    "h": float,
+})
+MetricTfceParametersParametersTagged = typing.TypedDict('MetricTfceParametersParametersTagged', {
+    "@type": typing.Literal["parameters"],
     "e": float,
     "h": float,
 })
 
 
 MetricTfceParameters = typing.TypedDict('MetricTfceParameters', {
-    "@type": typing.Literal["workbench.metric-tfce"],
+    "@type": typing.NotRequired[typing.Literal["workbench/metric-tfce"]],
+    "surface": InputPathType,
+    "metric_in": InputPathType,
+    "metric_out": str,
+    "presmooth": typing.NotRequired[MetricTfcePresmoothParameters | None],
+    "opt_roi_roi_metric": typing.NotRequired[InputPathType | None],
+    "parameters": typing.NotRequired[MetricTfceParametersParameters | None],
+    "opt_column_column": typing.NotRequired[str | None],
+    "opt_corrected_areas_area_metric": typing.NotRequired[InputPathType | None],
+})
+MetricTfceParametersTagged = typing.TypedDict('MetricTfceParametersTagged', {
+    "@type": typing.Literal["workbench/metric-tfce"],
     "surface": InputPathType,
     "metric_in": InputPathType,
     "metric_out": str,
@@ -40,44 +61,10 @@ MetricTfceParameters = typing.TypedDict('MetricTfceParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "workbench.metric-tfce": metric_tfce_cargs,
-        "workbench.metric-tfce.presmooth": metric_tfce_presmooth_cargs,
-        "workbench.metric-tfce.parameters": metric_tfce_parameters_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "workbench.metric-tfce": metric_tfce_outputs,
-    }.get(t)
-
-
 def metric_tfce_presmooth_params(
     kernel: float,
     opt_fwhm: bool = False,
-) -> MetricTfcePresmoothParameters:
+) -> MetricTfcePresmoothParametersTagged:
     """
     Build parameters.
     
@@ -89,7 +76,7 @@ def metric_tfce_presmooth_params(
         Parameter dictionary
     """
     params = {
-        "@type": "workbench.metric-tfce.presmooth",
+        "@type": "presmooth",
         "kernel": kernel,
         "opt_fwhm": opt_fwhm,
     }
@@ -111,8 +98,8 @@ def metric_tfce_presmooth_cargs(
     """
     cargs = []
     cargs.append("-presmooth")
-    cargs.append(str(params.get("kernel")))
-    if params.get("opt_fwhm"):
+    cargs.append(str(params.get("kernel", None)))
+    if params.get("opt_fwhm", False):
         cargs.append("-fwhm")
     return cargs
 
@@ -120,7 +107,7 @@ def metric_tfce_presmooth_cargs(
 def metric_tfce_parameters_params(
     e: float,
     h: float,
-) -> MetricTfceParametersParameters:
+) -> MetricTfceParametersParametersTagged:
     """
     Build parameters.
     
@@ -131,7 +118,7 @@ def metric_tfce_parameters_params(
         Parameter dictionary
     """
     params = {
-        "@type": "workbench.metric-tfce.parameters",
+        "@type": "parameters",
         "e": e,
         "h": h,
     }
@@ -153,14 +140,14 @@ def metric_tfce_parameters_cargs(
     """
     cargs = []
     cargs.append("-parameters")
-    cargs.append(str(params.get("e")))
-    cargs.append(str(params.get("h")))
+    cargs.append(str(params.get("e", None)))
+    cargs.append(str(params.get("h", None)))
     return cargs
 
 
 class MetricTfceOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `metric_tfce(...)`.
+    Output object returned when calling `MetricTfceParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -177,7 +164,7 @@ def metric_tfce_params(
     parameters: MetricTfceParametersParameters | None = None,
     opt_column_column: str | None = None,
     opt_corrected_areas_area_metric: InputPathType | None = None,
-) -> MetricTfceParameters:
+) -> MetricTfceParametersTagged:
     """
     Build parameters.
     
@@ -197,7 +184,7 @@ def metric_tfce_params(
         Parameter dictionary
     """
     params = {
-        "@type": "workbench.metric-tfce",
+        "@type": "workbench/metric-tfce",
         "surface": surface,
         "metric_in": metric_in,
         "metric_out": metric_out,
@@ -231,27 +218,27 @@ def metric_tfce_cargs(
     cargs = []
     cargs.append("wb_command")
     cargs.append("-metric-tfce")
-    cargs.append(execution.input_file(params.get("surface")))
-    cargs.append(execution.input_file(params.get("metric_in")))
-    cargs.append(params.get("metric_out"))
-    if params.get("presmooth") is not None:
-        cargs.extend(dyn_cargs(params.get("presmooth")["@type"])(params.get("presmooth"), execution))
-    if params.get("opt_roi_roi_metric") is not None:
+    cargs.append(execution.input_file(params.get("surface", None)))
+    cargs.append(execution.input_file(params.get("metric_in", None)))
+    cargs.append(params.get("metric_out", None))
+    if params.get("presmooth", None) is not None:
+        cargs.extend(metric_tfce_presmooth_cargs(params.get("presmooth", None), execution))
+    if params.get("opt_roi_roi_metric", None) is not None:
         cargs.extend([
             "-roi",
-            execution.input_file(params.get("opt_roi_roi_metric"))
+            execution.input_file(params.get("opt_roi_roi_metric", None))
         ])
-    if params.get("parameters") is not None:
-        cargs.extend(dyn_cargs(params.get("parameters")["@type"])(params.get("parameters"), execution))
-    if params.get("opt_column_column") is not None:
+    if params.get("parameters", None) is not None:
+        cargs.extend(metric_tfce_parameters_cargs(params.get("parameters", None), execution))
+    if params.get("opt_column_column", None) is not None:
         cargs.extend([
             "-column",
-            params.get("opt_column_column")
+            params.get("opt_column_column", None)
         ])
-    if params.get("opt_corrected_areas_area_metric") is not None:
+    if params.get("opt_corrected_areas_area_metric", None) is not None:
         cargs.extend([
             "-corrected-areas",
-            execution.input_file(params.get("opt_corrected_areas_area_metric"))
+            execution.input_file(params.get("opt_corrected_areas_area_metric", None))
         ])
     return cargs
 
@@ -271,7 +258,7 @@ def metric_tfce_outputs(
     """
     ret = MetricTfceOutputs(
         root=execution.output_file("."),
-        metric_out=execution.output_file(params.get("metric_out")),
+        metric_out=execution.output_file(params.get("metric_out", None)),
     )
     return ret
 
@@ -406,9 +393,6 @@ def metric_tfce(
 __all__ = [
     "METRIC_TFCE_METADATA",
     "MetricTfceOutputs",
-    "MetricTfceParameters",
-    "MetricTfceParametersParameters",
-    "MetricTfcePresmoothParameters",
     "metric_tfce",
     "metric_tfce_execute",
     "metric_tfce_parameters_params",

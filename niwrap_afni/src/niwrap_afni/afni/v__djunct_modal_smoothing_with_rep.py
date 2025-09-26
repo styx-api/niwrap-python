@@ -14,7 +14,18 @@ V__DJUNCT_MODAL_SMOOTHING_WITH_REP_METADATA = Metadata(
 
 
 VDjunctModalSmoothingWithRepParameters = typing.TypedDict('VDjunctModalSmoothingWithRepParameters', {
-    "@type": typing.Literal["afni.@djunct_modal_smoothing_with_rep"],
+    "@type": typing.NotRequired[typing.Literal["afni/@djunct_modal_smoothing_with_rep"]],
+    "input_file": InputPathType,
+    "output_prefix": str,
+    "modesmooth": typing.NotRequired[float | None],
+    "help_view": bool,
+    "help": bool,
+    "version": bool,
+    "overwrite": bool,
+    "no_clean": bool,
+})
+VDjunctModalSmoothingWithRepParametersTagged = typing.TypedDict('VDjunctModalSmoothingWithRepParametersTagged', {
+    "@type": typing.Literal["afni/@djunct_modal_smoothing_with_rep"],
     "input_file": InputPathType,
     "output_prefix": str,
     "modesmooth": typing.NotRequired[float | None],
@@ -26,41 +37,9 @@ VDjunctModalSmoothingWithRepParameters = typing.TypedDict('VDjunctModalSmoothing
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "afni.@djunct_modal_smoothing_with_rep": v__djunct_modal_smoothing_with_rep_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "afni.@djunct_modal_smoothing_with_rep": v__djunct_modal_smoothing_with_rep_outputs,
-    }.get(t)
-
-
 class VDjunctModalSmoothingWithRepOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `v__djunct_modal_smoothing_with_rep(...)`.
+    Output object returned when calling `VDjunctModalSmoothingWithRepParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -79,7 +58,7 @@ def v__djunct_modal_smoothing_with_rep_params(
     version: bool = False,
     overwrite: bool = False,
     no_clean: bool = False,
-) -> VDjunctModalSmoothingWithRepParameters:
+) -> VDjunctModalSmoothingWithRepParametersTagged:
     """
     Build parameters.
     
@@ -96,7 +75,7 @@ def v__djunct_modal_smoothing_with_rep_params(
         Parameter dictionary
     """
     params = {
-        "@type": "afni.@djunct_modal_smoothing_with_rep",
+        "@type": "afni/@djunct_modal_smoothing_with_rep",
         "input_file": input_file,
         "output_prefix": output_prefix,
         "help_view": help_view,
@@ -125,22 +104,22 @@ def v__djunct_modal_smoothing_with_rep_cargs(
     """
     cargs = []
     cargs.append("@djunct_modal_smoothing_with_rep")
-    cargs.append(execution.input_file(params.get("input_file")))
-    cargs.append(params.get("output_prefix"))
-    if params.get("modesmooth") is not None:
+    cargs.append(execution.input_file(params.get("input_file", None)))
+    cargs.append(params.get("output_prefix", None))
+    if params.get("modesmooth", None) is not None:
         cargs.extend([
             "-modesmooth",
-            str(params.get("modesmooth"))
+            str(params.get("modesmooth", None))
         ])
-    if params.get("help_view"):
+    if params.get("help_view", False):
         cargs.append("-hview")
-    if params.get("help"):
+    if params.get("help", False):
         cargs.append("-help")
-    if params.get("version"):
+    if params.get("version", False):
         cargs.append("-ver")
-    if params.get("overwrite"):
+    if params.get("overwrite", False):
         cargs.append("-overwrite")
-    if params.get("no_clean"):
+    if params.get("no_clean", False):
         cargs.append("-no_clean")
     return cargs
 
@@ -160,8 +139,8 @@ def v__djunct_modal_smoothing_with_rep_outputs(
     """
     ret = VDjunctModalSmoothingWithRepOutputs(
         root=execution.output_file("."),
-        output_file_head=execution.output_file(params.get("output_prefix") + "+tlrc.HEAD"),
-        output_file_brik=execution.output_file(params.get("output_prefix") + "+tlrc.BRIK"),
+        output_file_head=execution.output_file(params.get("output_prefix", None) + "+tlrc.HEAD"),
+        output_file_brik=execution.output_file(params.get("output_prefix", None) + "+tlrc.BRIK"),
     )
     return ret
 
@@ -246,7 +225,6 @@ def v__djunct_modal_smoothing_with_rep(
 
 __all__ = [
     "VDjunctModalSmoothingWithRepOutputs",
-    "VDjunctModalSmoothingWithRepParameters",
     "V__DJUNCT_MODAL_SMOOTHING_WITH_REP_METADATA",
     "v__djunct_modal_smoothing_with_rep",
     "v__djunct_modal_smoothing_with_rep_execute",

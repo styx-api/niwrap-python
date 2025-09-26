@@ -14,47 +14,20 @@ SEGMENT_SUBJECT_T1_AUTO_ESTIMATE_ALVEUS_ML_METADATA = Metadata(
 
 
 SegmentSubjectT1AutoEstimateAlveusMlParameters = typing.TypedDict('SegmentSubjectT1AutoEstimateAlveusMlParameters', {
-    "@type": typing.Literal["freesurfer.segmentSubjectT1_autoEstimateAlveusML"],
+    "@type": typing.NotRequired[typing.Literal["freesurfer/segmentSubjectT1_autoEstimateAlveusML"]],
+    "t1_file": InputPathType,
+    "output_folder": str,
+})
+SegmentSubjectT1AutoEstimateAlveusMlParametersTagged = typing.TypedDict('SegmentSubjectT1AutoEstimateAlveusMlParametersTagged', {
+    "@type": typing.Literal["freesurfer/segmentSubjectT1_autoEstimateAlveusML"],
     "t1_file": InputPathType,
     "output_folder": str,
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "freesurfer.segmentSubjectT1_autoEstimateAlveusML": segment_subject_t1_auto_estimate_alveus_ml_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "freesurfer.segmentSubjectT1_autoEstimateAlveusML": segment_subject_t1_auto_estimate_alveus_ml_outputs,
-    }.get(t)
-
-
 class SegmentSubjectT1AutoEstimateAlveusMlOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `segment_subject_t1_auto_estimate_alveus_ml(...)`.
+    Output object returned when calling `SegmentSubjectT1AutoEstimateAlveusMlParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -65,7 +38,7 @@ class SegmentSubjectT1AutoEstimateAlveusMlOutputs(typing.NamedTuple):
 def segment_subject_t1_auto_estimate_alveus_ml_params(
     t1_file: InputPathType,
     output_folder: str,
-) -> SegmentSubjectT1AutoEstimateAlveusMlParameters:
+) -> SegmentSubjectT1AutoEstimateAlveusMlParametersTagged:
     """
     Build parameters.
     
@@ -76,7 +49,7 @@ def segment_subject_t1_auto_estimate_alveus_ml_params(
         Parameter dictionary
     """
     params = {
-        "@type": "freesurfer.segmentSubjectT1_autoEstimateAlveusML",
+        "@type": "freesurfer/segmentSubjectT1_autoEstimateAlveusML",
         "t1_file": t1_file,
         "output_folder": output_folder,
     }
@@ -98,8 +71,8 @@ def segment_subject_t1_auto_estimate_alveus_ml_cargs(
     """
     cargs = []
     cargs.append("segmentSubjectT1_autoEstimateAlveusML")
-    cargs.append(execution.input_file(params.get("t1_file")))
-    cargs.append(params.get("output_folder"))
+    cargs.append(execution.input_file(params.get("t1_file", None)))
+    cargs.append(params.get("output_folder", None))
     return cargs
 
 
@@ -118,7 +91,7 @@ def segment_subject_t1_auto_estimate_alveus_ml_outputs(
     """
     ret = SegmentSubjectT1AutoEstimateAlveusMlOutputs(
         root=execution.output_file("."),
-        segmentation_output=execution.output_file(params.get("output_folder") + "/segmented_output.nii.gz"),
+        segmentation_output=execution.output_file(params.get("output_folder", None) + "/segmented_output.nii.gz"),
     )
     return ret
 
@@ -184,7 +157,6 @@ def segment_subject_t1_auto_estimate_alveus_ml(
 __all__ = [
     "SEGMENT_SUBJECT_T1_AUTO_ESTIMATE_ALVEUS_ML_METADATA",
     "SegmentSubjectT1AutoEstimateAlveusMlOutputs",
-    "SegmentSubjectT1AutoEstimateAlveusMlParameters",
     "segment_subject_t1_auto_estimate_alveus_ml",
     "segment_subject_t1_auto_estimate_alveus_ml_execute",
     "segment_subject_t1_auto_estimate_alveus_ml_params",

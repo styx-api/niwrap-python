@@ -14,46 +14,20 @@ HIAM_MAKE_SURFACES_METADATA = Metadata(
 
 
 HiamMakeSurfacesParameters = typing.TypedDict('HiamMakeSurfacesParameters', {
-    "@type": typing.Literal["freesurfer.hiam_make_surfaces"],
+    "@type": typing.NotRequired[typing.Literal["freesurfer/hiam_make_surfaces"]],
+    "subject_name": str,
+    "structure": typing.Literal["RA", "LA", "RH", "LH"],
+})
+HiamMakeSurfacesParametersTagged = typing.TypedDict('HiamMakeSurfacesParametersTagged', {
+    "@type": typing.Literal["freesurfer/hiam_make_surfaces"],
     "subject_name": str,
     "structure": typing.Literal["RA", "LA", "RH", "LH"],
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "freesurfer.hiam_make_surfaces": hiam_make_surfaces_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-    }.get(t)
-
-
 class HiamMakeSurfacesOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `hiam_make_surfaces(...)`.
+    Output object returned when calling `HiamMakeSurfacesParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -62,7 +36,7 @@ class HiamMakeSurfacesOutputs(typing.NamedTuple):
 def hiam_make_surfaces_params(
     subject_name: str,
     structure: typing.Literal["RA", "LA", "RH", "LH"],
-) -> HiamMakeSurfacesParameters:
+) -> HiamMakeSurfacesParametersTagged:
     """
     Build parameters.
     
@@ -74,7 +48,7 @@ def hiam_make_surfaces_params(
         Parameter dictionary
     """
     params = {
-        "@type": "freesurfer.hiam_make_surfaces",
+        "@type": "freesurfer/hiam_make_surfaces",
         "subject_name": subject_name,
         "structure": structure,
     }
@@ -96,8 +70,8 @@ def hiam_make_surfaces_cargs(
     """
     cargs = []
     cargs.append("hiam_make_surfaces")
-    cargs.append(params.get("subject_name"))
-    cargs.append(params.get("structure"))
+    cargs.append(params.get("subject_name", None))
+    cargs.append(params.get("structure", None))
     return cargs
 
 
@@ -180,7 +154,6 @@ def hiam_make_surfaces(
 __all__ = [
     "HIAM_MAKE_SURFACES_METADATA",
     "HiamMakeSurfacesOutputs",
-    "HiamMakeSurfacesParameters",
     "hiam_make_surfaces",
     "hiam_make_surfaces_execute",
     "hiam_make_surfaces_params",

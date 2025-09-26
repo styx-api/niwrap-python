@@ -14,47 +14,22 @@ MASKDYADS_METADATA = Metadata(
 
 
 MaskdyadsParameters = typing.TypedDict('MaskdyadsParameters', {
-    "@type": typing.Literal["fsl.maskdyads"],
+    "@type": typing.NotRequired[typing.Literal["fsl/maskdyads"]],
+    "dyads": InputPathType,
+    "fsamples": InputPathType,
+    "threshold": typing.NotRequired[float | None],
+})
+MaskdyadsParametersTagged = typing.TypedDict('MaskdyadsParametersTagged', {
+    "@type": typing.Literal["fsl/maskdyads"],
     "dyads": InputPathType,
     "fsamples": InputPathType,
     "threshold": typing.NotRequired[float | None],
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "fsl.maskdyads": maskdyads_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-    }.get(t)
-
-
 class MaskdyadsOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `maskdyads(...)`.
+    Output object returned when calling `MaskdyadsParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -64,7 +39,7 @@ def maskdyads_params(
     dyads: InputPathType,
     fsamples: InputPathType,
     threshold: float | None = None,
-) -> MaskdyadsParameters:
+) -> MaskdyadsParametersTagged:
     """
     Build parameters.
     
@@ -76,7 +51,7 @@ def maskdyads_params(
         Parameter dictionary
     """
     params = {
-        "@type": "fsl.maskdyads",
+        "@type": "fsl/maskdyads",
         "dyads": dyads,
         "fsamples": fsamples,
     }
@@ -100,12 +75,12 @@ def maskdyads_cargs(
     """
     cargs = []
     cargs.append("maskdyads")
-    cargs.append(execution.input_file(params.get("dyads")))
-    cargs.append(execution.input_file(params.get("fsamples")))
-    if params.get("threshold") is not None:
+    cargs.append(execution.input_file(params.get("dyads", None)))
+    cargs.append(execution.input_file(params.get("fsamples", None)))
+    if params.get("threshold", None) is not None:
         cargs.extend([
             "[THR]",
-            str(params.get("threshold"))
+            str(params.get("threshold", None))
         ])
     return cargs
 
@@ -191,7 +166,6 @@ def maskdyads(
 __all__ = [
     "MASKDYADS_METADATA",
     "MaskdyadsOutputs",
-    "MaskdyadsParameters",
     "maskdyads",
     "maskdyads_execute",
     "maskdyads_params",

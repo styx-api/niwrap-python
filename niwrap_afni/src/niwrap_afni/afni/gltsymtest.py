@@ -14,47 +14,22 @@ GLTSYMTEST_METADATA = Metadata(
 
 
 GltsymtestParameters = typing.TypedDict('GltsymtestParameters', {
-    "@type": typing.Literal["afni.GLTsymtest"],
+    "@type": typing.NotRequired[typing.Literal["afni/GLTsymtest"]],
+    "badonly": bool,
+    "varlist": str,
+    "expr": list[str],
+})
+GltsymtestParametersTagged = typing.TypedDict('GltsymtestParametersTagged', {
+    "@type": typing.Literal["afni/GLTsymtest"],
     "badonly": bool,
     "varlist": str,
     "expr": list[str],
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "afni.GLTsymtest": gltsymtest_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-    }.get(t)
-
-
 class GltsymtestOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `gltsymtest(...)`.
+    Output object returned when calling `GltsymtestParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -64,7 +39,7 @@ def gltsymtest_params(
     varlist: str,
     expr: list[str],
     badonly: bool = False,
-) -> GltsymtestParameters:
+) -> GltsymtestParametersTagged:
     """
     Build parameters.
     
@@ -77,7 +52,7 @@ def gltsymtest_params(
         Parameter dictionary
     """
     params = {
-        "@type": "afni.GLTsymtest",
+        "@type": "afni/GLTsymtest",
         "badonly": badonly,
         "varlist": varlist,
         "expr": expr,
@@ -100,10 +75,10 @@ def gltsymtest_cargs(
     """
     cargs = []
     cargs.append("GLTsymtest")
-    if params.get("badonly"):
+    if params.get("badonly", False):
         cargs.append("-badonly")
-    cargs.append(params.get("varlist"))
-    cargs.extend(params.get("expr"))
+    cargs.append(params.get("varlist", None))
+    cargs.extend(params.get("expr", None))
     return cargs
 
 
@@ -191,7 +166,6 @@ def gltsymtest(
 __all__ = [
     "GLTSYMTEST_METADATA",
     "GltsymtestOutputs",
-    "GltsymtestParameters",
     "gltsymtest",
     "gltsymtest_execute",
     "gltsymtest_params",

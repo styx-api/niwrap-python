@@ -14,7 +14,14 @@ MIST_FA_REG_METADATA = Metadata(
 
 
 MistFaRegParameters = typing.TypedDict('MistFaRegParameters', {
-    "@type": typing.Literal["fsl.mist_FA_reg"],
+    "@type": typing.NotRequired[typing.Literal["fsl/mist_FA_reg"]],
+    "fa_volume": InputPathType,
+    "s0_volume": InputPathType,
+    "reference_t1_volume": InputPathType,
+    "output_filename": str,
+})
+MistFaRegParametersTagged = typing.TypedDict('MistFaRegParametersTagged', {
+    "@type": typing.Literal["fsl/mist_FA_reg"],
     "fa_volume": InputPathType,
     "s0_volume": InputPathType,
     "reference_t1_volume": InputPathType,
@@ -22,41 +29,9 @@ MistFaRegParameters = typing.TypedDict('MistFaRegParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "fsl.mist_FA_reg": mist_fa_reg_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "fsl.mist_FA_reg": mist_fa_reg_outputs,
-    }.get(t)
-
-
 class MistFaRegOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `mist_fa_reg(...)`.
+    Output object returned when calling `MistFaRegParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -69,7 +44,7 @@ def mist_fa_reg_params(
     s0_volume: InputPathType,
     reference_t1_volume: InputPathType,
     output_filename: str,
-) -> MistFaRegParameters:
+) -> MistFaRegParametersTagged:
     """
     Build parameters.
     
@@ -82,7 +57,7 @@ def mist_fa_reg_params(
         Parameter dictionary
     """
     params = {
-        "@type": "fsl.mist_FA_reg",
+        "@type": "fsl/mist_FA_reg",
         "fa_volume": fa_volume,
         "s0_volume": s0_volume,
         "reference_t1_volume": reference_t1_volume,
@@ -106,10 +81,10 @@ def mist_fa_reg_cargs(
     """
     cargs = []
     cargs.append("mist_FA_reg")
-    cargs.append(execution.input_file(params.get("fa_volume")))
-    cargs.append(execution.input_file(params.get("s0_volume")))
-    cargs.append(execution.input_file(params.get("reference_t1_volume")))
-    cargs.append(params.get("output_filename"))
+    cargs.append(execution.input_file(params.get("fa_volume", None)))
+    cargs.append(execution.input_file(params.get("s0_volume", None)))
+    cargs.append(execution.input_file(params.get("reference_t1_volume", None)))
+    cargs.append(params.get("output_filename", None))
     return cargs
 
 
@@ -128,7 +103,7 @@ def mist_fa_reg_outputs(
     """
     ret = MistFaRegOutputs(
         root=execution.output_file("."),
-        output_file=execution.output_file(params.get("output_filename")),
+        output_file=execution.output_file(params.get("output_filename", None)),
     )
     return ret
 
@@ -198,7 +173,6 @@ def mist_fa_reg(
 __all__ = [
     "MIST_FA_REG_METADATA",
     "MistFaRegOutputs",
-    "MistFaRegParameters",
     "mist_fa_reg",
     "mist_fa_reg_execute",
     "mist_fa_reg_params",

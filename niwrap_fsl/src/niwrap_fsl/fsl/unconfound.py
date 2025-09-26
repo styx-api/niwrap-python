@@ -14,48 +14,22 @@ UNCONFOUND_METADATA = Metadata(
 
 
 UnconfoundParameters = typing.TypedDict('UnconfoundParameters', {
-    "@type": typing.Literal["fsl.unconfound"],
+    "@type": typing.NotRequired[typing.Literal["fsl/unconfound"]],
+    "in4d": InputPathType,
+    "out4d": str,
+    "confound_mat": InputPathType,
+})
+UnconfoundParametersTagged = typing.TypedDict('UnconfoundParametersTagged', {
+    "@type": typing.Literal["fsl/unconfound"],
     "in4d": InputPathType,
     "out4d": str,
     "confound_mat": InputPathType,
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "fsl.unconfound": unconfound_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "fsl.unconfound": unconfound_outputs,
-    }.get(t)
-
-
 class UnconfoundOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `unconfound(...)`.
+    Output object returned when calling `UnconfoundParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -67,7 +41,7 @@ def unconfound_params(
     in4d: InputPathType,
     out4d: str,
     confound_mat: InputPathType,
-) -> UnconfoundParameters:
+) -> UnconfoundParametersTagged:
     """
     Build parameters.
     
@@ -80,7 +54,7 @@ def unconfound_params(
         Parameter dictionary
     """
     params = {
-        "@type": "fsl.unconfound",
+        "@type": "fsl/unconfound",
         "in4d": in4d,
         "out4d": out4d,
         "confound_mat": confound_mat,
@@ -103,9 +77,9 @@ def unconfound_cargs(
     """
     cargs = []
     cargs.append("unconfound")
-    cargs.append(execution.input_file(params.get("in4d")))
-    cargs.append(params.get("out4d"))
-    cargs.append(execution.input_file(params.get("confound_mat")))
+    cargs.append(execution.input_file(params.get("in4d", None)))
+    cargs.append(params.get("out4d", None))
+    cargs.append(execution.input_file(params.get("confound_mat", None)))
     return cargs
 
 
@@ -124,7 +98,7 @@ def unconfound_outputs(
     """
     ret = UnconfoundOutputs(
         root=execution.output_file("."),
-        output_4d=execution.output_file(params.get("out4d") + ".nii.gz"),
+        output_4d=execution.output_file(params.get("out4d", None) + ".nii.gz"),
     )
     return ret
 
@@ -192,7 +166,6 @@ def unconfound(
 __all__ = [
     "UNCONFOUND_METADATA",
     "UnconfoundOutputs",
-    "UnconfoundParameters",
     "unconfound",
     "unconfound_execute",
     "unconfound_params",

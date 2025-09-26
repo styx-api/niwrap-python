@@ -14,7 +14,15 @@ ZIP_SPEC_FILE_METADATA = Metadata(
 
 
 ZipSpecFileParameters = typing.TypedDict('ZipSpecFileParameters', {
-    "@type": typing.Literal["workbench.zip-spec-file"],
+    "@type": typing.NotRequired[typing.Literal["workbench/zip-spec-file"]],
+    "spec_file": str,
+    "extract_folder": str,
+    "zip_file": str,
+    "opt_base_dir_directory": typing.NotRequired[str | None],
+    "opt_skip_missing": bool,
+})
+ZipSpecFileParametersTagged = typing.TypedDict('ZipSpecFileParametersTagged', {
+    "@type": typing.Literal["workbench/zip-spec-file"],
     "spec_file": str,
     "extract_folder": str,
     "zip_file": str,
@@ -23,40 +31,9 @@ ZipSpecFileParameters = typing.TypedDict('ZipSpecFileParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "workbench.zip-spec-file": zip_spec_file_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-    }.get(t)
-
-
 class ZipSpecFileOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `zip_spec_file(...)`.
+    Output object returned when calling `ZipSpecFileParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -68,7 +45,7 @@ def zip_spec_file_params(
     zip_file: str,
     opt_base_dir_directory: str | None = None,
     opt_skip_missing: bool = False,
-) -> ZipSpecFileParameters:
+) -> ZipSpecFileParametersTagged:
     """
     Build parameters.
     
@@ -86,7 +63,7 @@ def zip_spec_file_params(
         Parameter dictionary
     """
     params = {
-        "@type": "workbench.zip-spec-file",
+        "@type": "workbench/zip-spec-file",
         "spec_file": spec_file,
         "extract_folder": extract_folder,
         "zip_file": zip_file,
@@ -113,15 +90,15 @@ def zip_spec_file_cargs(
     cargs = []
     cargs.append("wb_command")
     cargs.append("-zip-spec-file")
-    cargs.append(params.get("spec_file"))
-    cargs.append(params.get("extract_folder"))
-    cargs.append(params.get("zip_file"))
-    if params.get("opt_base_dir_directory") is not None:
+    cargs.append(params.get("spec_file", None))
+    cargs.append(params.get("extract_folder", None))
+    cargs.append(params.get("zip_file", None))
+    if params.get("opt_base_dir_directory", None) is not None:
         cargs.extend([
             "-base-dir",
-            params.get("opt_base_dir_directory")
+            params.get("opt_base_dir_directory", None)
         ])
-    if params.get("opt_skip_missing"):
+    if params.get("opt_skip_missing", False):
         cargs.append("-skip-missing")
     return cargs
 
@@ -231,7 +208,6 @@ def zip_spec_file(
 __all__ = [
     "ZIP_SPEC_FILE_METADATA",
     "ZipSpecFileOutputs",
-    "ZipSpecFileParameters",
     "zip_spec_file",
     "zip_spec_file_execute",
     "zip_spec_file_params",

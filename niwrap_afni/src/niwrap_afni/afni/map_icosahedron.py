@@ -14,7 +14,21 @@ MAP_ICOSAHEDRON_METADATA = Metadata(
 
 
 MapIcosahedronParameters = typing.TypedDict('MapIcosahedronParameters', {
-    "@type": typing.Literal["afni.MapIcosahedron"],
+    "@type": typing.NotRequired[typing.Literal["afni/MapIcosahedron"]],
+    "spec_file": InputPathType,
+    "rec_depth": typing.NotRequired[float | None],
+    "lin_depth": typing.NotRequired[float | None],
+    "morph_surf": typing.NotRequired[str | None],
+    "num_it": typing.NotRequired[float | None],
+    "prefix": typing.NotRequired[str | None],
+    "nn_dset": typing.NotRequired[str | None],
+    "dset": typing.NotRequired[str | None],
+    "fix_cut_surfaces": bool,
+    "verbosity": bool,
+    "help": bool,
+})
+MapIcosahedronParametersTagged = typing.TypedDict('MapIcosahedronParametersTagged', {
+    "@type": typing.Literal["afni/MapIcosahedron"],
     "spec_file": InputPathType,
     "rec_depth": typing.NotRequired[float | None],
     "lin_depth": typing.NotRequired[float | None],
@@ -29,40 +43,9 @@ MapIcosahedronParameters = typing.TypedDict('MapIcosahedronParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "afni.MapIcosahedron": map_icosahedron_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-    }.get(t)
-
-
 class MapIcosahedronOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `map_icosahedron(...)`.
+    Output object returned when calling `MapIcosahedronParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -80,7 +63,7 @@ def map_icosahedron_params(
     fix_cut_surfaces: bool = False,
     verbosity: bool = False,
     help_: bool = False,
-) -> MapIcosahedronParameters:
+) -> MapIcosahedronParametersTagged:
     """
     Build parameters.
     
@@ -103,7 +86,7 @@ def map_icosahedron_params(
         Parameter dictionary
     """
     params = {
-        "@type": "afni.MapIcosahedron",
+        "@type": "afni/MapIcosahedron",
         "spec_file": spec_file,
         "fix_cut_surfaces": fix_cut_surfaces,
         "verbosity": verbosity,
@@ -141,47 +124,47 @@ def map_icosahedron_cargs(
     """
     cargs = []
     cargs.append("MapIcosahedron")
-    cargs.append(execution.input_file(params.get("spec_file")))
-    if params.get("rec_depth") is not None:
+    cargs.append(execution.input_file(params.get("spec_file", None)))
+    if params.get("rec_depth", None) is not None:
         cargs.extend([
             "-rd",
-            str(params.get("rec_depth"))
+            str(params.get("rec_depth", None))
         ])
-    if params.get("lin_depth") is not None:
+    if params.get("lin_depth", None) is not None:
         cargs.extend([
             "-ld",
-            str(params.get("lin_depth"))
+            str(params.get("lin_depth", None))
         ])
-    if params.get("morph_surf") is not None:
+    if params.get("morph_surf", None) is not None:
         cargs.extend([
             "-morph",
-            params.get("morph_surf")
+            params.get("morph_surf", None)
         ])
-    if params.get("num_it") is not None:
+    if params.get("num_it", None) is not None:
         cargs.extend([
             "-it",
-            str(params.get("num_it"))
+            str(params.get("num_it", None))
         ])
-    if params.get("prefix") is not None:
+    if params.get("prefix", None) is not None:
         cargs.extend([
             "-prefix",
-            params.get("prefix")
+            params.get("prefix", None)
         ])
-    if params.get("nn_dset") is not None:
+    if params.get("nn_dset", None) is not None:
         cargs.extend([
             "-NN_dset_map",
-            params.get("nn_dset")
+            params.get("nn_dset", None)
         ])
-    if params.get("dset") is not None:
+    if params.get("dset", None) is not None:
         cargs.extend([
             "-dset_map",
-            params.get("dset")
+            params.get("dset", None)
         ])
-    if params.get("fix_cut_surfaces"):
+    if params.get("fix_cut_surfaces", False):
         cargs.append("-fix_cut_surfaces")
-    if params.get("verbosity"):
+    if params.get("verbosity", False):
         cargs.append("-verb")
-    if params.get("help"):
+    if params.get("help", False):
         cargs.append("-help")
     return cargs
 
@@ -296,7 +279,6 @@ def map_icosahedron(
 __all__ = [
     "MAP_ICOSAHEDRON_METADATA",
     "MapIcosahedronOutputs",
-    "MapIcosahedronParameters",
     "map_icosahedron",
     "map_icosahedron_execute",
     "map_icosahedron_params",

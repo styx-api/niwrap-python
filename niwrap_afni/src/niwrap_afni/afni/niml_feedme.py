@@ -14,7 +14,17 @@ NIML_FEEDME_METADATA = Metadata(
 
 
 NimlFeedmeParameters = typing.TypedDict('NimlFeedmeParameters', {
-    "@type": typing.Literal["afni.niml_feedme"],
+    "@type": typing.NotRequired[typing.Literal["afni/niml_feedme"]],
+    "host": typing.NotRequired[str | None],
+    "interval": typing.NotRequired[float | None],
+    "verbose": bool,
+    "accum": bool,
+    "target_dataset": typing.NotRequired[str | None],
+    "drive_cmds": typing.NotRequired[list[str] | None],
+    "dataset": InputPathType,
+})
+NimlFeedmeParametersTagged = typing.TypedDict('NimlFeedmeParametersTagged', {
+    "@type": typing.Literal["afni/niml_feedme"],
     "host": typing.NotRequired[str | None],
     "interval": typing.NotRequired[float | None],
     "verbose": bool,
@@ -25,40 +35,9 @@ NimlFeedmeParameters = typing.TypedDict('NimlFeedmeParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "afni.niml_feedme": niml_feedme_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-    }.get(t)
-
-
 class NimlFeedmeOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `niml_feedme(...)`.
+    Output object returned when calling `NimlFeedmeParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -72,7 +51,7 @@ def niml_feedme_params(
     accum: bool = False,
     target_dataset: str | None = None,
     drive_cmds: list[str] | None = None,
-) -> NimlFeedmeParameters:
+) -> NimlFeedmeParametersTagged:
     """
     Build parameters.
     
@@ -97,7 +76,7 @@ def niml_feedme_params(
         Parameter dictionary
     """
     params = {
-        "@type": "afni.niml_feedme",
+        "@type": "afni/niml_feedme",
         "verbose": verbose,
         "accum": accum,
         "dataset": dataset,
@@ -128,31 +107,31 @@ def niml_feedme_cargs(
     """
     cargs = []
     cargs.append("niml_feedme")
-    if params.get("host") is not None:
+    if params.get("host", None) is not None:
         cargs.extend([
             "-host",
-            params.get("host")
+            params.get("host", None)
         ])
-    if params.get("interval") is not None:
+    if params.get("interval", None) is not None:
         cargs.extend([
             "-dt",
-            str(params.get("interval"))
+            str(params.get("interval", None))
         ])
-    if params.get("verbose"):
+    if params.get("verbose", False):
         cargs.append("-verb")
-    if params.get("accum"):
+    if params.get("accum", False):
         cargs.append("-accum")
-    if params.get("target_dataset") is not None:
+    if params.get("target_dataset", None) is not None:
         cargs.extend([
             "-target",
-            params.get("target_dataset")
+            params.get("target_dataset", None)
         ])
-    if params.get("drive_cmds") is not None:
+    if params.get("drive_cmds", None) is not None:
         cargs.extend([
             "-drive",
-            *params.get("drive_cmds")
+            *params.get("drive_cmds", None)
         ])
-    cargs.append(execution.input_file(params.get("dataset")))
+    cargs.append(execution.input_file(params.get("dataset", None)))
     return cargs
 
 
@@ -258,7 +237,6 @@ def niml_feedme(
 __all__ = [
     "NIML_FEEDME_METADATA",
     "NimlFeedmeOutputs",
-    "NimlFeedmeParameters",
     "niml_feedme",
     "niml_feedme_execute",
     "niml_feedme_params",

@@ -14,21 +14,38 @@ CIFTI_AVERAGE_METADATA = Metadata(
 
 
 CiftiAverageExcludeOutliersParameters = typing.TypedDict('CiftiAverageExcludeOutliersParameters', {
-    "@type": typing.Literal["workbench.cifti-average.exclude_outliers"],
+    "@type": typing.NotRequired[typing.Literal["exclude_outliers"]],
+    "sigma_below": float,
+    "sigma_above": float,
+})
+CiftiAverageExcludeOutliersParametersTagged = typing.TypedDict('CiftiAverageExcludeOutliersParametersTagged', {
+    "@type": typing.Literal["exclude_outliers"],
     "sigma_below": float,
     "sigma_above": float,
 })
 
 
 CiftiAverageCiftiParameters = typing.TypedDict('CiftiAverageCiftiParameters', {
-    "@type": typing.Literal["workbench.cifti-average.cifti"],
+    "@type": typing.NotRequired[typing.Literal["cifti"]],
+    "cifti_in": InputPathType,
+    "opt_weight_weight": typing.NotRequired[float | None],
+})
+CiftiAverageCiftiParametersTagged = typing.TypedDict('CiftiAverageCiftiParametersTagged', {
+    "@type": typing.Literal["cifti"],
     "cifti_in": InputPathType,
     "opt_weight_weight": typing.NotRequired[float | None],
 })
 
 
 CiftiAverageParameters = typing.TypedDict('CiftiAverageParameters', {
-    "@type": typing.Literal["workbench.cifti-average"],
+    "@type": typing.NotRequired[typing.Literal["workbench/cifti-average"]],
+    "cifti_out": str,
+    "exclude_outliers": typing.NotRequired[CiftiAverageExcludeOutliersParameters | None],
+    "opt_mem_limit_limit_gb": typing.NotRequired[float | None],
+    "cifti": typing.NotRequired[list[CiftiAverageCiftiParameters] | None],
+})
+CiftiAverageParametersTagged = typing.TypedDict('CiftiAverageParametersTagged', {
+    "@type": typing.Literal["workbench/cifti-average"],
     "cifti_out": str,
     "exclude_outliers": typing.NotRequired[CiftiAverageExcludeOutliersParameters | None],
     "opt_mem_limit_limit_gb": typing.NotRequired[float | None],
@@ -36,44 +53,10 @@ CiftiAverageParameters = typing.TypedDict('CiftiAverageParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "workbench.cifti-average": cifti_average_cargs,
-        "workbench.cifti-average.exclude_outliers": cifti_average_exclude_outliers_cargs,
-        "workbench.cifti-average.cifti": cifti_average_cifti_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "workbench.cifti-average": cifti_average_outputs,
-    }.get(t)
-
-
 def cifti_average_exclude_outliers_params(
     sigma_below: float,
     sigma_above: float,
-) -> CiftiAverageExcludeOutliersParameters:
+) -> CiftiAverageExcludeOutliersParametersTagged:
     """
     Build parameters.
     
@@ -84,7 +67,7 @@ def cifti_average_exclude_outliers_params(
         Parameter dictionary
     """
     params = {
-        "@type": "workbench.cifti-average.exclude_outliers",
+        "@type": "exclude_outliers",
         "sigma_below": sigma_below,
         "sigma_above": sigma_above,
     }
@@ -106,15 +89,15 @@ def cifti_average_exclude_outliers_cargs(
     """
     cargs = []
     cargs.append("-exclude-outliers")
-    cargs.append(str(params.get("sigma_below")))
-    cargs.append(str(params.get("sigma_above")))
+    cargs.append(str(params.get("sigma_below", None)))
+    cargs.append(str(params.get("sigma_above", None)))
     return cargs
 
 
 def cifti_average_cifti_params(
     cifti_in: InputPathType,
     opt_weight_weight: float | None = None,
-) -> CiftiAverageCiftiParameters:
+) -> CiftiAverageCiftiParametersTagged:
     """
     Build parameters.
     
@@ -125,7 +108,7 @@ def cifti_average_cifti_params(
         Parameter dictionary
     """
     params = {
-        "@type": "workbench.cifti-average.cifti",
+        "@type": "cifti",
         "cifti_in": cifti_in,
     }
     if opt_weight_weight is not None:
@@ -148,18 +131,18 @@ def cifti_average_cifti_cargs(
     """
     cargs = []
     cargs.append("-cifti")
-    cargs.append(execution.input_file(params.get("cifti_in")))
-    if params.get("opt_weight_weight") is not None:
+    cargs.append(execution.input_file(params.get("cifti_in", None)))
+    if params.get("opt_weight_weight", None) is not None:
         cargs.extend([
             "-weight",
-            str(params.get("opt_weight_weight"))
+            str(params.get("opt_weight_weight", None))
         ])
     return cargs
 
 
 class CiftiAverageOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `cifti_average(...)`.
+    Output object returned when calling `CiftiAverageParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -172,7 +155,7 @@ def cifti_average_params(
     exclude_outliers: CiftiAverageExcludeOutliersParameters | None = None,
     opt_mem_limit_limit_gb: float | None = None,
     cifti: list[CiftiAverageCiftiParameters] | None = None,
-) -> CiftiAverageParameters:
+) -> CiftiAverageParametersTagged:
     """
     Build parameters.
     
@@ -187,7 +170,7 @@ def cifti_average_params(
         Parameter dictionary
     """
     params = {
-        "@type": "workbench.cifti-average",
+        "@type": "workbench/cifti-average",
         "cifti_out": cifti_out,
     }
     if exclude_outliers is not None:
@@ -215,16 +198,16 @@ def cifti_average_cargs(
     cargs = []
     cargs.append("wb_command")
     cargs.append("-cifti-average")
-    cargs.append(params.get("cifti_out"))
-    if params.get("exclude_outliers") is not None:
-        cargs.extend(dyn_cargs(params.get("exclude_outliers")["@type"])(params.get("exclude_outliers"), execution))
-    if params.get("opt_mem_limit_limit_gb") is not None:
+    cargs.append(params.get("cifti_out", None))
+    if params.get("exclude_outliers", None) is not None:
+        cargs.extend(cifti_average_exclude_outliers_cargs(params.get("exclude_outliers", None), execution))
+    if params.get("opt_mem_limit_limit_gb", None) is not None:
         cargs.extend([
             "-mem-limit",
-            str(params.get("opt_mem_limit_limit_gb"))
+            str(params.get("opt_mem_limit_limit_gb", None))
         ])
-    if params.get("cifti") is not None:
-        cargs.extend([a for c in [dyn_cargs(s["@type"])(s, execution) for s in params.get("cifti")] for a in c])
+    if params.get("cifti", None) is not None:
+        cargs.extend([a for c in [cifti_average_cifti_cargs(s, execution) for s in params.get("cifti", None)] for a in c])
     return cargs
 
 
@@ -243,7 +226,7 @@ def cifti_average_outputs(
     """
     ret = CiftiAverageOutputs(
         root=execution.output_file("."),
-        cifti_out=execution.output_file(params.get("cifti_out")),
+        cifti_out=execution.output_file(params.get("cifti_out", None)),
     )
     return ret
 
@@ -328,10 +311,7 @@ def cifti_average(
 
 __all__ = [
     "CIFTI_AVERAGE_METADATA",
-    "CiftiAverageCiftiParameters",
-    "CiftiAverageExcludeOutliersParameters",
     "CiftiAverageOutputs",
-    "CiftiAverageParameters",
     "cifti_average",
     "cifti_average_cifti_params",
     "cifti_average_exclude_outliers_params",

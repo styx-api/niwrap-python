@@ -14,48 +14,22 @@ V_1D_FLAG_MOTION_METADATA = Metadata(
 
 
 V1dFlagMotionParameters = typing.TypedDict('V1dFlagMotionParameters', {
-    "@type": typing.Literal["afni.1dFlagMotion"],
+    "@type": typing.NotRequired[typing.Literal["afni/1dFlagMotion"]],
+    "input_motion_file": InputPathType,
+    "max_translation": typing.NotRequired[float | None],
+    "max_rotation": typing.NotRequired[float | None],
+})
+V1dFlagMotionParametersTagged = typing.TypedDict('V1dFlagMotionParametersTagged', {
+    "@type": typing.Literal["afni/1dFlagMotion"],
     "input_motion_file": InputPathType,
     "max_translation": typing.NotRequired[float | None],
     "max_rotation": typing.NotRequired[float | None],
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "afni.1dFlagMotion": v_1d_flag_motion_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "afni.1dFlagMotion": v_1d_flag_motion_outputs,
-    }.get(t)
-
-
 class V1dFlagMotionOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `v_1d_flag_motion(...)`.
+    Output object returned when calling `V1dFlagMotionParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -67,7 +41,7 @@ def v_1d_flag_motion_params(
     input_motion_file: InputPathType,
     max_translation: float | None = None,
     max_rotation: float | None = None,
-) -> V1dFlagMotionParameters:
+) -> V1dFlagMotionParametersTagged:
     """
     Build parameters.
     
@@ -83,7 +57,7 @@ def v_1d_flag_motion_params(
         Parameter dictionary
     """
     params = {
-        "@type": "afni.1dFlagMotion",
+        "@type": "afni/1dFlagMotion",
         "input_motion_file": input_motion_file,
     }
     if max_translation is not None:
@@ -108,16 +82,16 @@ def v_1d_flag_motion_cargs(
     """
     cargs = []
     cargs.append("1dFlagMotion")
-    cargs.append(execution.input_file(params.get("input_motion_file")))
-    if params.get("max_translation") is not None:
+    cargs.append(execution.input_file(params.get("input_motion_file", None)))
+    if params.get("max_translation", None) is not None:
         cargs.extend([
             "-MaxTrans",
-            str(params.get("max_translation"))
+            str(params.get("max_translation", None))
         ])
-    if params.get("max_rotation") is not None:
+    if params.get("max_rotation", None) is not None:
         cargs.extend([
             "-MaxRot",
-            str(params.get("max_rotation"))
+            str(params.get("max_rotation", None))
         ])
     return cargs
 
@@ -209,7 +183,6 @@ def v_1d_flag_motion(
 
 __all__ = [
     "V1dFlagMotionOutputs",
-    "V1dFlagMotionParameters",
     "V_1D_FLAG_MOTION_METADATA",
     "v_1d_flag_motion",
     "v_1d_flag_motion_execute",

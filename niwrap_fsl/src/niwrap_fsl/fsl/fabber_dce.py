@@ -14,7 +14,46 @@ FABBER_DCE_METADATA = Metadata(
 
 
 FabberDceParameters = typing.TypedDict('FabberDceParameters', {
-    "@type": typing.Literal["fsl.fabber_dce"],
+    "@type": typing.NotRequired[typing.Literal["fsl/fabber_dce"]],
+    "output_directory": str,
+    "inference_method": str,
+    "forward_model": str,
+    "input_data": InputPathType,
+    "help_flag": bool,
+    "list_methods": bool,
+    "list_models": bool,
+    "list_params": bool,
+    "describe_params": bool,
+    "list_outputs": bool,
+    "evaluate_model": typing.NotRequired[str | None],
+    "evaluate_params": typing.NotRequired[list[float] | None],
+    "evaluate_nt": typing.NotRequired[float | None],
+    "simple_output": bool,
+    "overwrite": bool,
+    "link_to_latest": bool,
+    "load_models": typing.NotRequired[InputPathType | None],
+    "multiple_data": typing.NotRequired[list[InputPathType] | None],
+    "data_order": typing.NotRequired[str | None],
+    "mask": typing.NotRequired[InputPathType | None],
+    "masked_time_points": typing.NotRequired[list[float] | None],
+    "supplemental_data": typing.NotRequired[InputPathType | None],
+    "dump_param_names": bool,
+    "save_model_fit": bool,
+    "save_residuals": bool,
+    "save_model_extras": bool,
+    "save_mvn": bool,
+    "save_mean": bool,
+    "save_std": bool,
+    "save_variances": bool,
+    "save_zstat": bool,
+    "save_noise_mean": bool,
+    "save_noise_std": bool,
+    "save_free_energy": bool,
+    "option_file": typing.NotRequired[InputPathType | None],
+    "debug": bool,
+})
+FabberDceParametersTagged = typing.TypedDict('FabberDceParametersTagged', {
+    "@type": typing.Literal["fsl/fabber_dce"],
     "output_directory": str,
     "inference_method": str,
     "forward_model": str,
@@ -54,41 +93,9 @@ FabberDceParameters = typing.TypedDict('FabberDceParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "fsl.fabber_dce": fabber_dce_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "fsl.fabber_dce": fabber_dce_outputs,
-    }.get(t)
-
-
 class FabberDceOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `fabber_dce(...)`.
+    Output object returned when calling `FabberDceParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -133,7 +140,7 @@ def fabber_dce_params(
     save_free_energy: bool = False,
     option_file: InputPathType | None = None,
     debug: bool = False,
-) -> FabberDceParameters:
+) -> FabberDceParametersTagged:
     """
     Build parameters.
     
@@ -198,7 +205,7 @@ def fabber_dce_params(
         Parameter dictionary
     """
     params = {
-        "@type": "fsl.fabber_dce",
+        "@type": "fsl/fabber_dce",
         "output_directory": output_directory,
         "inference_method": inference_method,
         "forward_model": forward_model,
@@ -266,113 +273,113 @@ def fabber_dce_cargs(
     cargs.append("fabber_dce")
     cargs.extend([
         "--output",
-        params.get("output_directory")
+        params.get("output_directory", None)
     ])
     cargs.extend([
         "--method",
-        params.get("inference_method")
+        params.get("inference_method", None)
     ])
     cargs.extend([
         "--model",
-        params.get("forward_model")
+        params.get("forward_model", None)
     ])
     cargs.extend([
         "--data",
-        execution.input_file(params.get("input_data"))
+        execution.input_file(params.get("input_data", None))
     ])
-    if params.get("help_flag"):
+    if params.get("help_flag", False):
         cargs.append("--help")
-    if params.get("list_methods"):
+    if params.get("list_methods", False):
         cargs.append("--listmethods")
-    if params.get("list_models"):
+    if params.get("list_models", False):
         cargs.append("--listmodels")
-    if params.get("list_params"):
+    if params.get("list_params", False):
         cargs.append("--listparams")
-    if params.get("describe_params"):
+    if params.get("describe_params", False):
         cargs.append("--descparams")
-    if params.get("list_outputs"):
+    if params.get("list_outputs", False):
         cargs.append("--listoutputs")
-    if params.get("evaluate_model") is not None:
+    if params.get("evaluate_model", None) is not None:
         cargs.extend([
             "--evaluate",
-            params.get("evaluate_model")
+            params.get("evaluate_model", None)
         ])
-    if params.get("evaluate_params") is not None:
+    if params.get("evaluate_params", None) is not None:
         cargs.extend([
             "--evaluate-params",
-            *map(str, params.get("evaluate_params"))
+            *map(str, params.get("evaluate_params", None))
         ])
-    if params.get("evaluate_nt") is not None:
+    if params.get("evaluate_nt", None) is not None:
         cargs.extend([
             "--evaluate-nt",
-            str(params.get("evaluate_nt"))
+            str(params.get("evaluate_nt", None))
         ])
-    if params.get("simple_output"):
+    if params.get("simple_output", False):
         cargs.append("--simple-output")
-    if params.get("overwrite"):
+    if params.get("overwrite", False):
         cargs.append("--overwrite")
-    if params.get("link_to_latest"):
+    if params.get("link_to_latest", False):
         cargs.append("--link-to-latest")
-    if params.get("load_models") is not None:
+    if params.get("load_models", None) is not None:
         cargs.extend([
             "--loadmodels",
-            execution.input_file(params.get("load_models"))
+            execution.input_file(params.get("load_models", None))
         ])
-    if params.get("multiple_data") is not None:
+    if params.get("multiple_data", None) is not None:
         cargs.extend([
             "--data<n>",
-            *[execution.input_file(f) for f in params.get("multiple_data")]
+            *[execution.input_file(f) for f in params.get("multiple_data", None)]
         ])
-    if params.get("data_order") is not None:
+    if params.get("data_order", None) is not None:
         cargs.extend([
             "--data-order",
-            params.get("data_order")
+            params.get("data_order", None)
         ])
-    if params.get("mask") is not None:
+    if params.get("mask", None) is not None:
         cargs.extend([
             "--mask",
-            execution.input_file(params.get("mask"))
+            execution.input_file(params.get("mask", None))
         ])
-    if params.get("masked_time_points") is not None:
+    if params.get("masked_time_points", None) is not None:
         cargs.extend([
             "--mt<n>",
-            *map(str, params.get("masked_time_points"))
+            *map(str, params.get("masked_time_points", None))
         ])
-    if params.get("supplemental_data") is not None:
+    if params.get("supplemental_data", None) is not None:
         cargs.extend([
             "--suppdata",
-            execution.input_file(params.get("supplemental_data"))
+            execution.input_file(params.get("supplemental_data", None))
         ])
-    if params.get("dump_param_names"):
+    if params.get("dump_param_names", False):
         cargs.append("--dump-param-names")
-    if params.get("save_model_fit"):
+    if params.get("save_model_fit", False):
         cargs.append("--save-model-fit")
-    if params.get("save_residuals"):
+    if params.get("save_residuals", False):
         cargs.append("--save-residuals")
-    if params.get("save_model_extras"):
+    if params.get("save_model_extras", False):
         cargs.append("--save-model-extras")
-    if params.get("save_mvn"):
+    if params.get("save_mvn", False):
         cargs.append("--save-mvn")
-    if params.get("save_mean"):
+    if params.get("save_mean", False):
         cargs.append("--save-mean")
-    if params.get("save_std"):
+    if params.get("save_std", False):
         cargs.append("--save-std")
-    if params.get("save_variances"):
+    if params.get("save_variances", False):
         cargs.append("--save-var")
-    if params.get("save_zstat"):
+    if params.get("save_zstat", False):
         cargs.append("--save-zstat")
-    if params.get("save_noise_mean"):
+    if params.get("save_noise_mean", False):
         cargs.append("--save-noise-mean")
-    if params.get("save_noise_std"):
+    if params.get("save_noise_std", False):
         cargs.append("--save-noise-std")
-    if params.get("save_free_energy"):
+    if params.get("save_free_energy", False):
         cargs.append("--save-free-energy")
-    if params.get("option_file") is not None:
+    if params.get("option_file", None) is not None:
         cargs.extend([
             "--optfile",
-            execution.input_file(params.get("option_file"))
+            execution.input_file(params.get("option_file", None))
         ])
-    if params.get("debug"):
+    if params.get("debug", False):
         cargs.append("--debug")
     return cargs
 
@@ -392,7 +399,7 @@ def fabber_dce_outputs(
     """
     ret = FabberDceOutputs(
         root=execution.output_file("."),
-        output_directory=execution.output_file(params.get("output_directory")),
+        output_directory=execution.output_file(params.get("output_directory", None)),
     )
     return ret
 
@@ -580,7 +587,6 @@ def fabber_dce(
 __all__ = [
     "FABBER_DCE_METADATA",
     "FabberDceOutputs",
-    "FabberDceParameters",
     "fabber_dce",
     "fabber_dce_execute",
     "fabber_dce_params",

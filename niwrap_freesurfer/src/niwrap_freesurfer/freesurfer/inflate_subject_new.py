@@ -14,45 +14,18 @@ INFLATE_SUBJECT_NEW_METADATA = Metadata(
 
 
 InflateSubjectNewParameters = typing.TypedDict('InflateSubjectNewParameters', {
-    "@type": typing.Literal["freesurfer.inflate_subject_new"],
+    "@type": typing.NotRequired[typing.Literal["freesurfer/inflate_subject_new"]],
+    "subject_dir": str,
+})
+InflateSubjectNewParametersTagged = typing.TypedDict('InflateSubjectNewParametersTagged', {
+    "@type": typing.Literal["freesurfer/inflate_subject_new"],
     "subject_dir": str,
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "freesurfer.inflate_subject_new": inflate_subject_new_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-    }.get(t)
-
-
 class InflateSubjectNewOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `inflate_subject_new(...)`.
+    Output object returned when calling `InflateSubjectNewParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -60,7 +33,7 @@ class InflateSubjectNewOutputs(typing.NamedTuple):
 
 def inflate_subject_new_params(
     subject_dir: str,
-) -> InflateSubjectNewParameters:
+) -> InflateSubjectNewParametersTagged:
     """
     Build parameters.
     
@@ -70,7 +43,7 @@ def inflate_subject_new_params(
         Parameter dictionary
     """
     params = {
-        "@type": "freesurfer.inflate_subject_new",
+        "@type": "freesurfer/inflate_subject_new",
         "subject_dir": subject_dir,
     }
     return params
@@ -91,7 +64,7 @@ def inflate_subject_new_cargs(
     """
     cargs = []
     cargs.append("inflate_subject_new")
-    cargs.append(params.get("subject_dir"))
+    cargs.append(params.get("subject_dir", None))
     return cargs
 
 
@@ -170,7 +143,6 @@ def inflate_subject_new(
 __all__ = [
     "INFLATE_SUBJECT_NEW_METADATA",
     "InflateSubjectNewOutputs",
-    "InflateSubjectNewParameters",
     "inflate_subject_new",
     "inflate_subject_new_execute",
     "inflate_subject_new_params",

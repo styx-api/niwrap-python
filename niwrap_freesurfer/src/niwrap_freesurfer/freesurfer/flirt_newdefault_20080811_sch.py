@@ -14,47 +14,22 @@ FLIRT_NEWDEFAULT_20080811_SCH_METADATA = Metadata(
 
 
 FlirtNewdefault20080811SchParameters = typing.TypedDict('FlirtNewdefault20080811SchParameters', {
-    "@type": typing.Literal["freesurfer.flirt.newdefault.20080811.sch"],
+    "@type": typing.NotRequired[typing.Literal["freesurfer/flirt.newdefault.20080811.sch"]],
+    "term_option": typing.NotRequired[str | None],
+    "curses_flag": bool,
+    "scrollback_flag": bool,
+})
+FlirtNewdefault20080811SchParametersTagged = typing.TypedDict('FlirtNewdefault20080811SchParametersTagged', {
+    "@type": typing.Literal["freesurfer/flirt.newdefault.20080811.sch"],
     "term_option": typing.NotRequired[str | None],
     "curses_flag": bool,
     "scrollback_flag": bool,
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "freesurfer.flirt.newdefault.20080811.sch": flirt_newdefault_20080811_sch_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-    }.get(t)
-
-
 class FlirtNewdefault20080811SchOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `flirt_newdefault_20080811_sch(...)`.
+    Output object returned when calling `FlirtNewdefault20080811SchParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -64,7 +39,7 @@ def flirt_newdefault_20080811_sch_params(
     term_option: str | None = None,
     curses_flag: bool = False,
     scrollback_flag: bool = False,
-) -> FlirtNewdefault20080811SchParameters:
+) -> FlirtNewdefault20080811SchParametersTagged:
     """
     Build parameters.
     
@@ -76,7 +51,7 @@ def flirt_newdefault_20080811_sch_params(
         Parameter dictionary
     """
     params = {
-        "@type": "freesurfer.flirt.newdefault.20080811.sch",
+        "@type": "freesurfer/flirt.newdefault.20080811.sch",
         "curses_flag": curses_flag,
         "scrollback_flag": scrollback_flag,
     }
@@ -100,14 +75,14 @@ def flirt_newdefault_20080811_sch_cargs(
     """
     cargs = []
     cargs.append("flirt.newdefault.20080811.sch")
-    if params.get("term_option") is not None:
+    if params.get("term_option", None) is not None:
         cargs.extend([
             "-T",
-            params.get("term_option")
+            params.get("term_option", None)
         ])
-    if params.get("curses_flag"):
+    if params.get("curses_flag", False):
         cargs.append("-V")
-    if params.get("scrollback_flag"):
+    if params.get("scrollback_flag", False):
         cargs.append("-x")
     return cargs
 
@@ -195,7 +170,6 @@ def flirt_newdefault_20080811_sch(
 __all__ = [
     "FLIRT_NEWDEFAULT_20080811_SCH_METADATA",
     "FlirtNewdefault20080811SchOutputs",
-    "FlirtNewdefault20080811SchParameters",
     "flirt_newdefault_20080811_sch",
     "flirt_newdefault_20080811_sch_execute",
     "flirt_newdefault_20080811_sch_params",

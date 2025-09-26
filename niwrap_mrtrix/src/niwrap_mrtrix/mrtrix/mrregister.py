@@ -14,34 +14,124 @@ MRREGISTER_METADATA = Metadata(
 
 
 MrregisterTransformedParameters = typing.TypedDict('MrregisterTransformedParameters', {
-    "@type": typing.Literal["mrtrix.mrregister.transformed"],
+    "@type": typing.NotRequired[typing.Literal["transformed"]],
+    "image": str,
+})
+MrregisterTransformedParametersTagged = typing.TypedDict('MrregisterTransformedParametersTagged', {
+    "@type": typing.Literal["transformed"],
     "image": str,
 })
 
 
 MrregisterTransformedMidwayParameters = typing.TypedDict('MrregisterTransformedMidwayParameters', {
-    "@type": typing.Literal["mrtrix.mrregister.transformed_midway"],
+    "@type": typing.NotRequired[typing.Literal["transformed_midway"]],
+    "image1_transformed": str,
+    "image2_transformed": str,
+})
+MrregisterTransformedMidwayParametersTagged = typing.TypedDict('MrregisterTransformedMidwayParametersTagged', {
+    "@type": typing.Literal["transformed_midway"],
     "image1_transformed": str,
     "image2_transformed": str,
 })
 
 
 MrregisterNlWarpParameters = typing.TypedDict('MrregisterNlWarpParameters', {
-    "@type": typing.Literal["mrtrix.mrregister.nl_warp"],
+    "@type": typing.NotRequired[typing.Literal["nl_warp"]],
+    "warp1": str,
+    "warp2": str,
+})
+MrregisterNlWarpParametersTagged = typing.TypedDict('MrregisterNlWarpParametersTagged', {
+    "@type": typing.Literal["nl_warp"],
     "warp1": str,
     "warp2": str,
 })
 
 
 MrregisterConfigParameters = typing.TypedDict('MrregisterConfigParameters', {
-    "@type": typing.Literal["mrtrix.mrregister.config"],
+    "@type": typing.NotRequired[typing.Literal["config"]],
+    "key": str,
+    "value": str,
+})
+MrregisterConfigParametersTagged = typing.TypedDict('MrregisterConfigParametersTagged', {
+    "@type": typing.Literal["config"],
     "key": str,
     "value": str,
 })
 
 
 MrregisterParameters = typing.TypedDict('MrregisterParameters', {
-    "@type": typing.Literal["mrtrix.mrregister"],
+    "@type": typing.NotRequired[typing.Literal["mrtrix/mrregister"]],
+    "type": typing.NotRequired[str | None],
+    "transformed": typing.NotRequired[list[MrregisterTransformedParameters] | None],
+    "transformed_midway": typing.NotRequired[list[MrregisterTransformedMidwayParameters] | None],
+    "mask1": typing.NotRequired[InputPathType | None],
+    "mask2": typing.NotRequired[InputPathType | None],
+    "nan": bool,
+    "rigid": typing.NotRequired[str | None],
+    "rigid_1tomidway": typing.NotRequired[str | None],
+    "rigid_2tomidway": typing.NotRequired[str | None],
+    "rigid_init_translation": typing.NotRequired[str | None],
+    "rigid_init_rotation": typing.NotRequired[str | None],
+    "rigid_init_matrix": typing.NotRequired[InputPathType | None],
+    "rigid_scale": typing.NotRequired[list[float] | None],
+    "rigid_niter": typing.NotRequired[list[int] | None],
+    "rigid_metric": typing.NotRequired[str | None],
+    "rigid_metric_diff_estimator": typing.NotRequired[str | None],
+    "rigid_lmax": typing.NotRequired[list[int] | None],
+    "rigid_log": typing.NotRequired[str | None],
+    "affine": typing.NotRequired[str | None],
+    "affine_1tomidway": typing.NotRequired[str | None],
+    "affine_2tomidway": typing.NotRequired[str | None],
+    "affine_init_translation": typing.NotRequired[str | None],
+    "affine_init_rotation": typing.NotRequired[str | None],
+    "affine_init_matrix": typing.NotRequired[InputPathType | None],
+    "affine_scale": typing.NotRequired[list[float] | None],
+    "affine_niter": typing.NotRequired[list[int] | None],
+    "affine_metric": typing.NotRequired[str | None],
+    "affine_metric_diff_estimator": typing.NotRequired[str | None],
+    "affine_lmax": typing.NotRequired[list[int] | None],
+    "affine_log": typing.NotRequired[str | None],
+    "init_translation_unmasked1": bool,
+    "init_translation_unmasked2": bool,
+    "init_rotation_unmasked1": bool,
+    "init_rotation_unmasked2": bool,
+    "init_rotation_search_angles": typing.NotRequired[list[float] | None],
+    "init_rotation_search_scale": typing.NotRequired[float | None],
+    "init_rotation_search_directions": typing.NotRequired[int | None],
+    "init_rotation_search_run_global": bool,
+    "init_rotation_search_global_iterations": typing.NotRequired[int | None],
+    "linstage_iterations": typing.NotRequired[list[int] | None],
+    "linstage_optimiser_first": typing.NotRequired[str | None],
+    "linstage_optimiser_last": typing.NotRequired[str | None],
+    "linstage_optimiser_default": typing.NotRequired[str | None],
+    "linstage_diagnostics_prefix": typing.NotRequired[str | None],
+    "nl_warp": typing.NotRequired[MrregisterNlWarpParameters | None],
+    "nl_warp_full": typing.NotRequired[str | None],
+    "nl_init": typing.NotRequired[InputPathType | None],
+    "nl_scale": typing.NotRequired[list[float] | None],
+    "nl_niter": typing.NotRequired[list[int] | None],
+    "nl_update_smooth": typing.NotRequired[float | None],
+    "nl_disp_smooth": typing.NotRequired[float | None],
+    "nl_grad_step": typing.NotRequired[float | None],
+    "nl_lmax": typing.NotRequired[list[int] | None],
+    "diagnostics_image": typing.NotRequired[str | None],
+    "directions": typing.NotRequired[InputPathType | None],
+    "noreorientation": bool,
+    "mc_weights": typing.NotRequired[list[float] | None],
+    "datatype": typing.NotRequired[str | None],
+    "info": bool,
+    "quiet": bool,
+    "debug": bool,
+    "force": bool,
+    "nthreads": typing.NotRequired[int | None],
+    "config": typing.NotRequired[list[MrregisterConfigParameters] | None],
+    "help": bool,
+    "version": bool,
+    "image1_image2": InputPathType,
+    "contrast1_contrast2": typing.NotRequired[list[InputPathType] | None],
+})
+MrregisterParametersTagged = typing.TypedDict('MrregisterParametersTagged', {
+    "@type": typing.Literal["mrtrix/mrregister"],
     "type": typing.NotRequired[str | None],
     "transformed": typing.NotRequired[list[MrregisterTransformedParameters] | None],
     "transformed_midway": typing.NotRequired[list[MrregisterTransformedMidwayParameters] | None],
@@ -113,45 +203,6 @@ MrregisterParameters = typing.TypedDict('MrregisterParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "mrtrix.mrregister": mrregister_cargs,
-        "mrtrix.mrregister.transformed": mrregister_transformed_cargs,
-        "mrtrix.mrregister.transformed_midway": mrregister_transformed_midway_cargs,
-        "mrtrix.mrregister.nl_warp": mrregister_nl_warp_cargs,
-        "mrtrix.mrregister.config": mrregister_config_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "mrtrix.mrregister": mrregister_outputs,
-        "mrtrix.mrregister.transformed": mrregister_transformed_outputs,
-        "mrtrix.mrregister.transformed_midway": mrregister_transformed_midway_outputs,
-        "mrtrix.mrregister.nl_warp": mrregister_nl_warp_outputs,
-    }.get(t)
-
-
 class MrregisterTransformedOutputs(typing.NamedTuple):
     """
     Output object returned when calling `list[MrregisterTransformedParameters] | None(...)`.
@@ -166,7 +217,7 @@ class MrregisterTransformedOutputs(typing.NamedTuple):
 
 def mrregister_transformed_params(
     image: str,
-) -> MrregisterTransformedParameters:
+) -> MrregisterTransformedParametersTagged:
     """
     Build parameters.
     
@@ -178,7 +229,7 @@ def mrregister_transformed_params(
         Parameter dictionary
     """
     params = {
-        "@type": "mrtrix.mrregister.transformed",
+        "@type": "transformed",
         "image": image,
     }
     return params
@@ -199,7 +250,7 @@ def mrregister_transformed_cargs(
     """
     cargs = []
     cargs.append("-transformed")
-    cargs.append(params.get("image"))
+    cargs.append(params.get("image", None))
     return cargs
 
 
@@ -218,7 +269,7 @@ def mrregister_transformed_outputs(
     """
     ret = MrregisterTransformedOutputs(
         root=execution.output_file("."),
-        image=execution.output_file(params.get("image")),
+        image=execution.output_file(params.get("image", None)),
     )
     return ret
 
@@ -242,7 +293,7 @@ class MrregisterTransformedMidwayOutputs(typing.NamedTuple):
 def mrregister_transformed_midway_params(
     image1_transformed: str,
     image2_transformed: str,
-) -> MrregisterTransformedMidwayParameters:
+) -> MrregisterTransformedMidwayParametersTagged:
     """
     Build parameters.
     
@@ -259,7 +310,7 @@ def mrregister_transformed_midway_params(
         Parameter dictionary
     """
     params = {
-        "@type": "mrtrix.mrregister.transformed_midway",
+        "@type": "transformed_midway",
         "image1_transformed": image1_transformed,
         "image2_transformed": image2_transformed,
     }
@@ -281,8 +332,8 @@ def mrregister_transformed_midway_cargs(
     """
     cargs = []
     cargs.append("-transformed_midway")
-    cargs.append(params.get("image1_transformed"))
-    cargs.append(params.get("image2_transformed"))
+    cargs.append(params.get("image1_transformed", None))
+    cargs.append(params.get("image2_transformed", None))
     return cargs
 
 
@@ -301,8 +352,8 @@ def mrregister_transformed_midway_outputs(
     """
     ret = MrregisterTransformedMidwayOutputs(
         root=execution.output_file("."),
-        image1_transformed=execution.output_file(params.get("image1_transformed")),
-        image2_transformed=execution.output_file(params.get("image2_transformed")),
+        image1_transformed=execution.output_file(params.get("image1_transformed", None)),
+        image2_transformed=execution.output_file(params.get("image2_transformed", None)),
     )
     return ret
 
@@ -328,7 +379,7 @@ class MrregisterNlWarpOutputs(typing.NamedTuple):
 def mrregister_nl_warp_params(
     warp1: str,
     warp2: str,
-) -> MrregisterNlWarpParameters:
+) -> MrregisterNlWarpParametersTagged:
     """
     Build parameters.
     
@@ -345,7 +396,7 @@ def mrregister_nl_warp_params(
         Parameter dictionary
     """
     params = {
-        "@type": "mrtrix.mrregister.nl_warp",
+        "@type": "nl_warp",
         "warp1": warp1,
         "warp2": warp2,
     }
@@ -367,8 +418,8 @@ def mrregister_nl_warp_cargs(
     """
     cargs = []
     cargs.append("-nl_warp")
-    cargs.append(params.get("warp1"))
-    cargs.append(params.get("warp2"))
+    cargs.append(params.get("warp1", None))
+    cargs.append(params.get("warp2", None))
     return cargs
 
 
@@ -387,8 +438,8 @@ def mrregister_nl_warp_outputs(
     """
     ret = MrregisterNlWarpOutputs(
         root=execution.output_file("."),
-        warp1=execution.output_file(params.get("warp1")),
-        warp2=execution.output_file(params.get("warp2")),
+        warp1=execution.output_file(params.get("warp1", None)),
+        warp2=execution.output_file(params.get("warp2", None)),
     )
     return ret
 
@@ -396,7 +447,7 @@ def mrregister_nl_warp_outputs(
 def mrregister_config_params(
     key: str,
     value: str,
-) -> MrregisterConfigParameters:
+) -> MrregisterConfigParametersTagged:
     """
     Build parameters.
     
@@ -407,7 +458,7 @@ def mrregister_config_params(
         Parameter dictionary
     """
     params = {
-        "@type": "mrtrix.mrregister.config",
+        "@type": "config",
         "key": key,
         "value": value,
     }
@@ -429,14 +480,14 @@ def mrregister_config_cargs(
     """
     cargs = []
     cargs.append("-config")
-    cargs.append(params.get("key"))
-    cargs.append(params.get("value"))
+    cargs.append(params.get("key", None))
+    cargs.append(params.get("value", None))
     return cargs
 
 
 class MrregisterOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `mrregister(...)`.
+    Output object returned when calling `MrregisterParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -553,7 +604,7 @@ def mrregister_params(
     help_: bool = False,
     version: bool = False,
     contrast1_contrast2: list[InputPathType] | None = None,
-) -> MrregisterParameters:
+) -> MrregisterParametersTagged:
     """
     Build parameters.
     
@@ -754,7 +805,7 @@ def mrregister_params(
         Parameter dictionary
     """
     params = {
-        "@type": "mrtrix.mrregister",
+        "@type": "mrtrix/mrregister",
         "nan": nan,
         "init_translation_unmasked1": init_translation_unmasked1,
         "init_translation_unmasked2": init_translation_unmasked2,
@@ -896,288 +947,288 @@ def mrregister_cargs(
     """
     cargs = []
     cargs.append("mrregister")
-    if params.get("type") is not None:
+    if params.get("type", None) is not None:
         cargs.extend([
             "-type",
-            params.get("type")
+            params.get("type", None)
         ])
-    if params.get("transformed") is not None:
-        cargs.extend([a for c in [dyn_cargs(s["@type"])(s, execution) for s in params.get("transformed")] for a in c])
-    if params.get("transformed_midway") is not None:
-        cargs.extend([a for c in [dyn_cargs(s["@type"])(s, execution) for s in params.get("transformed_midway")] for a in c])
-    if params.get("mask1") is not None:
+    if params.get("transformed", None) is not None:
+        cargs.extend([a for c in [mrregister_transformed_cargs(s, execution) for s in params.get("transformed", None)] for a in c])
+    if params.get("transformed_midway", None) is not None:
+        cargs.extend([a for c in [mrregister_transformed_midway_cargs(s, execution) for s in params.get("transformed_midway", None)] for a in c])
+    if params.get("mask1", None) is not None:
         cargs.extend([
             "-mask1",
-            execution.input_file(params.get("mask1"))
+            execution.input_file(params.get("mask1", None))
         ])
-    if params.get("mask2") is not None:
+    if params.get("mask2", None) is not None:
         cargs.extend([
             "-mask2",
-            execution.input_file(params.get("mask2"))
+            execution.input_file(params.get("mask2", None))
         ])
-    if params.get("nan"):
+    if params.get("nan", False):
         cargs.append("-nan")
-    if params.get("rigid") is not None:
+    if params.get("rigid", None) is not None:
         cargs.extend([
             "-rigid",
-            params.get("rigid")
+            params.get("rigid", None)
         ])
-    if params.get("rigid_1tomidway") is not None:
+    if params.get("rigid_1tomidway", None) is not None:
         cargs.extend([
             "-rigid_1tomidway",
-            params.get("rigid_1tomidway")
+            params.get("rigid_1tomidway", None)
         ])
-    if params.get("rigid_2tomidway") is not None:
+    if params.get("rigid_2tomidway", None) is not None:
         cargs.extend([
             "-rigid_2tomidway",
-            params.get("rigid_2tomidway")
+            params.get("rigid_2tomidway", None)
         ])
-    if params.get("rigid_init_translation") is not None:
+    if params.get("rigid_init_translation", None) is not None:
         cargs.extend([
             "-rigid_init_translation",
-            params.get("rigid_init_translation")
+            params.get("rigid_init_translation", None)
         ])
-    if params.get("rigid_init_rotation") is not None:
+    if params.get("rigid_init_rotation", None) is not None:
         cargs.extend([
             "-rigid_init_rotation",
-            params.get("rigid_init_rotation")
+            params.get("rigid_init_rotation", None)
         ])
-    if params.get("rigid_init_matrix") is not None:
+    if params.get("rigid_init_matrix", None) is not None:
         cargs.extend([
             "-rigid_init_matrix",
-            execution.input_file(params.get("rigid_init_matrix"))
+            execution.input_file(params.get("rigid_init_matrix", None))
         ])
-    if params.get("rigid_scale") is not None:
+    if params.get("rigid_scale", None) is not None:
         cargs.extend([
             "-rigid_scale",
-            *map(str, params.get("rigid_scale"))
+            *map(str, params.get("rigid_scale", None))
         ])
-    if params.get("rigid_niter") is not None:
+    if params.get("rigid_niter", None) is not None:
         cargs.extend([
             "-rigid_niter",
-            *map(str, params.get("rigid_niter"))
+            *map(str, params.get("rigid_niter", None))
         ])
-    if params.get("rigid_metric") is not None:
+    if params.get("rigid_metric", None) is not None:
         cargs.extend([
             "-rigid_metric",
-            params.get("rigid_metric")
+            params.get("rigid_metric", None)
         ])
-    if params.get("rigid_metric_diff_estimator") is not None:
+    if params.get("rigid_metric_diff_estimator", None) is not None:
         cargs.extend([
             "-rigid_metric.diff.estimator",
-            params.get("rigid_metric_diff_estimator")
+            params.get("rigid_metric_diff_estimator", None)
         ])
-    if params.get("rigid_lmax") is not None:
+    if params.get("rigid_lmax", None) is not None:
         cargs.extend([
             "-rigid_lmax",
-            *map(str, params.get("rigid_lmax"))
+            *map(str, params.get("rigid_lmax", None))
         ])
-    if params.get("rigid_log") is not None:
+    if params.get("rigid_log", None) is not None:
         cargs.extend([
             "-rigid_log",
-            params.get("rigid_log")
+            params.get("rigid_log", None)
         ])
-    if params.get("affine") is not None:
+    if params.get("affine", None) is not None:
         cargs.extend([
             "-affine",
-            params.get("affine")
+            params.get("affine", None)
         ])
-    if params.get("affine_1tomidway") is not None:
+    if params.get("affine_1tomidway", None) is not None:
         cargs.extend([
             "-affine_1tomidway",
-            params.get("affine_1tomidway")
+            params.get("affine_1tomidway", None)
         ])
-    if params.get("affine_2tomidway") is not None:
+    if params.get("affine_2tomidway", None) is not None:
         cargs.extend([
             "-affine_2tomidway",
-            params.get("affine_2tomidway")
+            params.get("affine_2tomidway", None)
         ])
-    if params.get("affine_init_translation") is not None:
+    if params.get("affine_init_translation", None) is not None:
         cargs.extend([
             "-affine_init_translation",
-            params.get("affine_init_translation")
+            params.get("affine_init_translation", None)
         ])
-    if params.get("affine_init_rotation") is not None:
+    if params.get("affine_init_rotation", None) is not None:
         cargs.extend([
             "-affine_init_rotation",
-            params.get("affine_init_rotation")
+            params.get("affine_init_rotation", None)
         ])
-    if params.get("affine_init_matrix") is not None:
+    if params.get("affine_init_matrix", None) is not None:
         cargs.extend([
             "-affine_init_matrix",
-            execution.input_file(params.get("affine_init_matrix"))
+            execution.input_file(params.get("affine_init_matrix", None))
         ])
-    if params.get("affine_scale") is not None:
+    if params.get("affine_scale", None) is not None:
         cargs.extend([
             "-affine_scale",
-            *map(str, params.get("affine_scale"))
+            *map(str, params.get("affine_scale", None))
         ])
-    if params.get("affine_niter") is not None:
+    if params.get("affine_niter", None) is not None:
         cargs.extend([
             "-affine_niter",
-            *map(str, params.get("affine_niter"))
+            *map(str, params.get("affine_niter", None))
         ])
-    if params.get("affine_metric") is not None:
+    if params.get("affine_metric", None) is not None:
         cargs.extend([
             "-affine_metric",
-            params.get("affine_metric")
+            params.get("affine_metric", None)
         ])
-    if params.get("affine_metric_diff_estimator") is not None:
+    if params.get("affine_metric_diff_estimator", None) is not None:
         cargs.extend([
             "-affine_metric.diff.estimator",
-            params.get("affine_metric_diff_estimator")
+            params.get("affine_metric_diff_estimator", None)
         ])
-    if params.get("affine_lmax") is not None:
+    if params.get("affine_lmax", None) is not None:
         cargs.extend([
             "-affine_lmax",
-            *map(str, params.get("affine_lmax"))
+            *map(str, params.get("affine_lmax", None))
         ])
-    if params.get("affine_log") is not None:
+    if params.get("affine_log", None) is not None:
         cargs.extend([
             "-affine_log",
-            params.get("affine_log")
+            params.get("affine_log", None)
         ])
-    if params.get("init_translation_unmasked1"):
+    if params.get("init_translation_unmasked1", False):
         cargs.append("-init_translation.unmasked1")
-    if params.get("init_translation_unmasked2"):
+    if params.get("init_translation_unmasked2", False):
         cargs.append("-init_translation.unmasked2")
-    if params.get("init_rotation_unmasked1"):
+    if params.get("init_rotation_unmasked1", False):
         cargs.append("-init_rotation.unmasked1")
-    if params.get("init_rotation_unmasked2"):
+    if params.get("init_rotation_unmasked2", False):
         cargs.append("-init_rotation.unmasked2")
-    if params.get("init_rotation_search_angles") is not None:
+    if params.get("init_rotation_search_angles", None) is not None:
         cargs.extend([
             "-init_rotation.search.angles",
-            *map(str, params.get("init_rotation_search_angles"))
+            *map(str, params.get("init_rotation_search_angles", None))
         ])
-    if params.get("init_rotation_search_scale") is not None:
+    if params.get("init_rotation_search_scale", None) is not None:
         cargs.extend([
             "-init_rotation.search.scale",
-            str(params.get("init_rotation_search_scale"))
+            str(params.get("init_rotation_search_scale", None))
         ])
-    if params.get("init_rotation_search_directions") is not None:
+    if params.get("init_rotation_search_directions", None) is not None:
         cargs.extend([
             "-init_rotation.search.directions",
-            str(params.get("init_rotation_search_directions"))
+            str(params.get("init_rotation_search_directions", None))
         ])
-    if params.get("init_rotation_search_run_global"):
+    if params.get("init_rotation_search_run_global", False):
         cargs.append("-init_rotation.search.run_global")
-    if params.get("init_rotation_search_global_iterations") is not None:
+    if params.get("init_rotation_search_global_iterations", None) is not None:
         cargs.extend([
             "-init_rotation.search.global.iterations",
-            str(params.get("init_rotation_search_global_iterations"))
+            str(params.get("init_rotation_search_global_iterations", None))
         ])
-    if params.get("linstage_iterations") is not None:
+    if params.get("linstage_iterations", None) is not None:
         cargs.extend([
             "-linstage.iterations",
-            *map(str, params.get("linstage_iterations"))
+            *map(str, params.get("linstage_iterations", None))
         ])
-    if params.get("linstage_optimiser_first") is not None:
+    if params.get("linstage_optimiser_first", None) is not None:
         cargs.extend([
             "-linstage.optimiser.first",
-            params.get("linstage_optimiser_first")
+            params.get("linstage_optimiser_first", None)
         ])
-    if params.get("linstage_optimiser_last") is not None:
+    if params.get("linstage_optimiser_last", None) is not None:
         cargs.extend([
             "-linstage.optimiser.last",
-            params.get("linstage_optimiser_last")
+            params.get("linstage_optimiser_last", None)
         ])
-    if params.get("linstage_optimiser_default") is not None:
+    if params.get("linstage_optimiser_default", None) is not None:
         cargs.extend([
             "-linstage.optimiser.default",
-            params.get("linstage_optimiser_default")
+            params.get("linstage_optimiser_default", None)
         ])
-    if params.get("linstage_diagnostics_prefix") is not None:
+    if params.get("linstage_diagnostics_prefix", None) is not None:
         cargs.extend([
             "-linstage.diagnostics.prefix",
-            params.get("linstage_diagnostics_prefix")
+            params.get("linstage_diagnostics_prefix", None)
         ])
-    if params.get("nl_warp") is not None:
-        cargs.extend(dyn_cargs(params.get("nl_warp")["@type"])(params.get("nl_warp"), execution))
-    if params.get("nl_warp_full") is not None:
+    if params.get("nl_warp", None) is not None:
+        cargs.extend(mrregister_nl_warp_cargs(params.get("nl_warp", None), execution))
+    if params.get("nl_warp_full", None) is not None:
         cargs.extend([
             "-nl_warp_full",
-            params.get("nl_warp_full")
+            params.get("nl_warp_full", None)
         ])
-    if params.get("nl_init") is not None:
+    if params.get("nl_init", None) is not None:
         cargs.extend([
             "-nl_init",
-            execution.input_file(params.get("nl_init"))
+            execution.input_file(params.get("nl_init", None))
         ])
-    if params.get("nl_scale") is not None:
+    if params.get("nl_scale", None) is not None:
         cargs.extend([
             "-nl_scale",
-            *map(str, params.get("nl_scale"))
+            *map(str, params.get("nl_scale", None))
         ])
-    if params.get("nl_niter") is not None:
+    if params.get("nl_niter", None) is not None:
         cargs.extend([
             "-nl_niter",
-            *map(str, params.get("nl_niter"))
+            *map(str, params.get("nl_niter", None))
         ])
-    if params.get("nl_update_smooth") is not None:
+    if params.get("nl_update_smooth", None) is not None:
         cargs.extend([
             "-nl_update_smooth",
-            str(params.get("nl_update_smooth"))
+            str(params.get("nl_update_smooth", None))
         ])
-    if params.get("nl_disp_smooth") is not None:
+    if params.get("nl_disp_smooth", None) is not None:
         cargs.extend([
             "-nl_disp_smooth",
-            str(params.get("nl_disp_smooth"))
+            str(params.get("nl_disp_smooth", None))
         ])
-    if params.get("nl_grad_step") is not None:
+    if params.get("nl_grad_step", None) is not None:
         cargs.extend([
             "-nl_grad_step",
-            str(params.get("nl_grad_step"))
+            str(params.get("nl_grad_step", None))
         ])
-    if params.get("nl_lmax") is not None:
+    if params.get("nl_lmax", None) is not None:
         cargs.extend([
             "-nl_lmax",
-            *map(str, params.get("nl_lmax"))
+            *map(str, params.get("nl_lmax", None))
         ])
-    if params.get("diagnostics_image") is not None:
+    if params.get("diagnostics_image", None) is not None:
         cargs.extend([
             "-diagnostics_image",
-            params.get("diagnostics_image")
+            params.get("diagnostics_image", None)
         ])
-    if params.get("directions") is not None:
+    if params.get("directions", None) is not None:
         cargs.extend([
             "-directions",
-            execution.input_file(params.get("directions"))
+            execution.input_file(params.get("directions", None))
         ])
-    if params.get("noreorientation"):
+    if params.get("noreorientation", False):
         cargs.append("-noreorientation")
-    if params.get("mc_weights") is not None:
+    if params.get("mc_weights", None) is not None:
         cargs.extend([
             "-mc_weights",
-            *map(str, params.get("mc_weights"))
+            *map(str, params.get("mc_weights", None))
         ])
-    if params.get("datatype") is not None:
+    if params.get("datatype", None) is not None:
         cargs.extend([
             "-datatype",
-            params.get("datatype")
+            params.get("datatype", None)
         ])
-    if params.get("info"):
+    if params.get("info", False):
         cargs.append("-info")
-    if params.get("quiet"):
+    if params.get("quiet", False):
         cargs.append("-quiet")
-    if params.get("debug"):
+    if params.get("debug", False):
         cargs.append("-debug")
-    if params.get("force"):
+    if params.get("force", False):
         cargs.append("-force")
-    if params.get("nthreads") is not None:
+    if params.get("nthreads", None) is not None:
         cargs.extend([
             "-nthreads",
-            str(params.get("nthreads"))
+            str(params.get("nthreads", None))
         ])
-    if params.get("config") is not None:
-        cargs.extend([a for c in [dyn_cargs(s["@type"])(s, execution) for s in params.get("config")] for a in c])
-    if params.get("help"):
+    if params.get("config", None) is not None:
+        cargs.extend([a for c in [mrregister_config_cargs(s, execution) for s in params.get("config", None)] for a in c])
+    if params.get("help", False):
         cargs.append("-help")
-    if params.get("version"):
+    if params.get("version", False):
         cargs.append("-version")
-    cargs.append(execution.input_file(params.get("image1_image2")))
-    if params.get("contrast1_contrast2") is not None:
-        cargs.extend([execution.input_file(f) for f in params.get("contrast1_contrast2")])
+    cargs.append(execution.input_file(params.get("image1_image2", None)))
+    if params.get("contrast1_contrast2", None) is not None:
+        cargs.extend([execution.input_file(f) for f in params.get("contrast1_contrast2", None)])
     return cargs
 
 
@@ -1196,18 +1247,18 @@ def mrregister_outputs(
     """
     ret = MrregisterOutputs(
         root=execution.output_file("."),
-        rigid=execution.output_file(params.get("rigid")) if (params.get("rigid") is not None) else None,
-        rigid_1tomidway=execution.output_file(params.get("rigid_1tomidway")) if (params.get("rigid_1tomidway") is not None) else None,
-        rigid_2tomidway=execution.output_file(params.get("rigid_2tomidway")) if (params.get("rigid_2tomidway") is not None) else None,
-        rigid_log=execution.output_file(params.get("rigid_log")) if (params.get("rigid_log") is not None) else None,
-        affine=execution.output_file(params.get("affine")) if (params.get("affine") is not None) else None,
-        affine_1tomidway=execution.output_file(params.get("affine_1tomidway")) if (params.get("affine_1tomidway") is not None) else None,
-        affine_2tomidway=execution.output_file(params.get("affine_2tomidway")) if (params.get("affine_2tomidway") is not None) else None,
-        affine_log=execution.output_file(params.get("affine_log")) if (params.get("affine_log") is not None) else None,
-        nl_warp_full=execution.output_file(params.get("nl_warp_full")) if (params.get("nl_warp_full") is not None) else None,
-        transformed=[dyn_outputs(i["@type"])(i, execution) if dyn_outputs(i["@type"]) else None for i in params.get("transformed")] if params.get("transformed") else None,
-        transformed_midway=[dyn_outputs(i["@type"])(i, execution) if dyn_outputs(i["@type"]) else None for i in params.get("transformed_midway")] if params.get("transformed_midway") else None,
-        nl_warp=dyn_outputs(params.get("nl_warp")["@type"])(params.get("nl_warp"), execution) if params.get("nl_warp") else None,
+        rigid=execution.output_file(params.get("rigid", None)) if (params.get("rigid") is not None) else None,
+        rigid_1tomidway=execution.output_file(params.get("rigid_1tomidway", None)) if (params.get("rigid_1tomidway") is not None) else None,
+        rigid_2tomidway=execution.output_file(params.get("rigid_2tomidway", None)) if (params.get("rigid_2tomidway") is not None) else None,
+        rigid_log=execution.output_file(params.get("rigid_log", None)) if (params.get("rigid_log") is not None) else None,
+        affine=execution.output_file(params.get("affine", None)) if (params.get("affine") is not None) else None,
+        affine_1tomidway=execution.output_file(params.get("affine_1tomidway", None)) if (params.get("affine_1tomidway") is not None) else None,
+        affine_2tomidway=execution.output_file(params.get("affine_2tomidway", None)) if (params.get("affine_2tomidway") is not None) else None,
+        affine_log=execution.output_file(params.get("affine_log", None)) if (params.get("affine_log") is not None) else None,
+        nl_warp_full=execution.output_file(params.get("nl_warp_full", None)) if (params.get("nl_warp_full") is not None) else None,
+        transformed=[mrregister_transformed_outputs(i, execution) if mrregister_transformed_outputs else None for i in params.get("transformed")] if params.get("transformed") else None,
+        transformed_midway=[mrregister_transformed_midway_outputs(i, execution) if mrregister_transformed_midway_outputs else None for i in params.get("transformed_midway")] if params.get("transformed_midway") else None,
+        nl_warp=mrregister_nl_warp_outputs(params.get("nl_warp"), execution) if params.get("nl_warp") else None,
     )
     return ret
 
@@ -1662,15 +1713,10 @@ def mrregister(
 
 __all__ = [
     "MRREGISTER_METADATA",
-    "MrregisterConfigParameters",
     "MrregisterNlWarpOutputs",
-    "MrregisterNlWarpParameters",
     "MrregisterOutputs",
-    "MrregisterParameters",
     "MrregisterTransformedMidwayOutputs",
-    "MrregisterTransformedMidwayParameters",
     "MrregisterTransformedOutputs",
-    "MrregisterTransformedParameters",
     "mrregister",
     "mrregister_config_params",
     "mrregister_execute",

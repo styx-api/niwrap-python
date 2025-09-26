@@ -14,14 +14,49 @@ TCKSIFT_METADATA = Metadata(
 
 
 TcksiftConfigParameters = typing.TypedDict('TcksiftConfigParameters', {
-    "@type": typing.Literal["mrtrix.tcksift.config"],
+    "@type": typing.NotRequired[typing.Literal["config"]],
+    "key": str,
+    "value": str,
+})
+TcksiftConfigParametersTagged = typing.TypedDict('TcksiftConfigParametersTagged', {
+    "@type": typing.Literal["config"],
     "key": str,
     "value": str,
 })
 
 
 TcksiftParameters = typing.TypedDict('TcksiftParameters', {
-    "@type": typing.Literal["mrtrix.tcksift"],
+    "@type": typing.NotRequired[typing.Literal["mrtrix/tcksift"]],
+    "nofilter": bool,
+    "output_at_counts": typing.NotRequired[list[int] | None],
+    "proc_mask": typing.NotRequired[InputPathType | None],
+    "act": typing.NotRequired[InputPathType | None],
+    "fd_scale_gm": bool,
+    "no_dilate_lut": bool,
+    "make_null_lobes": bool,
+    "remove_untracked": bool,
+    "fd_thresh": typing.NotRequired[float | None],
+    "csv": typing.NotRequired[str | None],
+    "out_mu": typing.NotRequired[str | None],
+    "output_debug": bool,
+    "out_selection": typing.NotRequired[str | None],
+    "term_number": typing.NotRequired[int | None],
+    "term_ratio": typing.NotRequired[float | None],
+    "term_mu": typing.NotRequired[float | None],
+    "info": bool,
+    "quiet": bool,
+    "debug": bool,
+    "force": bool,
+    "nthreads": typing.NotRequired[int | None],
+    "config": typing.NotRequired[list[TcksiftConfigParameters] | None],
+    "help": bool,
+    "version": bool,
+    "in_tracks": InputPathType,
+    "in_fod": InputPathType,
+    "out_tracks": str,
+})
+TcksiftParametersTagged = typing.TypedDict('TcksiftParametersTagged', {
+    "@type": typing.Literal["mrtrix/tcksift"],
     "nofilter": bool,
     "output_at_counts": typing.NotRequired[list[int] | None],
     "proc_mask": typing.NotRequired[InputPathType | None],
@@ -52,43 +87,10 @@ TcksiftParameters = typing.TypedDict('TcksiftParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "mrtrix.tcksift": tcksift_cargs,
-        "mrtrix.tcksift.config": tcksift_config_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "mrtrix.tcksift": tcksift_outputs,
-    }.get(t)
-
-
 def tcksift_config_params(
     key: str,
     value: str,
-) -> TcksiftConfigParameters:
+) -> TcksiftConfigParametersTagged:
     """
     Build parameters.
     
@@ -99,7 +101,7 @@ def tcksift_config_params(
         Parameter dictionary
     """
     params = {
-        "@type": "mrtrix.tcksift.config",
+        "@type": "config",
         "key": key,
         "value": value,
     }
@@ -121,14 +123,14 @@ def tcksift_config_cargs(
     """
     cargs = []
     cargs.append("-config")
-    cargs.append(params.get("key"))
-    cargs.append(params.get("value"))
+    cargs.append(params.get("key", None))
+    cargs.append(params.get("value", None))
     return cargs
 
 
 class TcksiftOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `tcksift(...)`.
+    Output object returned when calling `TcksiftParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -171,7 +173,7 @@ def tcksift_params(
     config: list[TcksiftConfigParameters] | None = None,
     help_: bool = False,
     version: bool = False,
-) -> TcksiftParameters:
+) -> TcksiftParametersTagged:
     """
     Build parameters.
     
@@ -237,7 +239,7 @@ def tcksift_params(
         Parameter dictionary
     """
     params = {
-        "@type": "mrtrix.tcksift",
+        "@type": "mrtrix/tcksift",
         "nofilter": nofilter,
         "fd_scale_gm": fd_scale_gm,
         "no_dilate_lut": no_dilate_lut,
@@ -296,90 +298,90 @@ def tcksift_cargs(
     """
     cargs = []
     cargs.append("tcksift")
-    if params.get("nofilter"):
+    if params.get("nofilter", False):
         cargs.append("-nofilter")
-    if params.get("output_at_counts") is not None:
+    if params.get("output_at_counts", None) is not None:
         cargs.extend([
             "-output_at_counts",
-            ",".join(map(str, params.get("output_at_counts")))
+            ",".join(map(str, params.get("output_at_counts", None)))
         ])
-    if params.get("proc_mask") is not None:
+    if params.get("proc_mask", None) is not None:
         cargs.extend([
             "-proc_mask",
-            execution.input_file(params.get("proc_mask"))
+            execution.input_file(params.get("proc_mask", None))
         ])
-    if params.get("act") is not None:
+    if params.get("act", None) is not None:
         cargs.extend([
             "-act",
-            execution.input_file(params.get("act"))
+            execution.input_file(params.get("act", None))
         ])
-    if params.get("fd_scale_gm"):
+    if params.get("fd_scale_gm", False):
         cargs.append("-fd_scale_gm")
-    if params.get("no_dilate_lut"):
+    if params.get("no_dilate_lut", False):
         cargs.append("-no_dilate_lut")
-    if params.get("make_null_lobes"):
+    if params.get("make_null_lobes", False):
         cargs.append("-make_null_lobes")
-    if params.get("remove_untracked"):
+    if params.get("remove_untracked", False):
         cargs.append("-remove_untracked")
-    if params.get("fd_thresh") is not None:
+    if params.get("fd_thresh", None) is not None:
         cargs.extend([
             "-fd_thresh",
-            str(params.get("fd_thresh"))
+            str(params.get("fd_thresh", None))
         ])
-    if params.get("csv") is not None:
+    if params.get("csv", None) is not None:
         cargs.extend([
             "-csv",
-            params.get("csv")
+            params.get("csv", None)
         ])
-    if params.get("out_mu") is not None:
+    if params.get("out_mu", None) is not None:
         cargs.extend([
             "-out_mu",
-            params.get("out_mu")
+            params.get("out_mu", None)
         ])
-    if params.get("output_debug"):
+    if params.get("output_debug", False):
         cargs.append("-output_debug")
-    if params.get("out_selection") is not None:
+    if params.get("out_selection", None) is not None:
         cargs.extend([
             "-out_selection",
-            params.get("out_selection")
+            params.get("out_selection", None)
         ])
-    if params.get("term_number") is not None:
+    if params.get("term_number", None) is not None:
         cargs.extend([
             "-term_number",
-            str(params.get("term_number"))
+            str(params.get("term_number", None))
         ])
-    if params.get("term_ratio") is not None:
+    if params.get("term_ratio", None) is not None:
         cargs.extend([
             "-term_ratio",
-            str(params.get("term_ratio"))
+            str(params.get("term_ratio", None))
         ])
-    if params.get("term_mu") is not None:
+    if params.get("term_mu", None) is not None:
         cargs.extend([
             "-term_mu",
-            str(params.get("term_mu"))
+            str(params.get("term_mu", None))
         ])
-    if params.get("info"):
+    if params.get("info", False):
         cargs.append("-info")
-    if params.get("quiet"):
+    if params.get("quiet", False):
         cargs.append("-quiet")
-    if params.get("debug"):
+    if params.get("debug", False):
         cargs.append("-debug")
-    if params.get("force"):
+    if params.get("force", False):
         cargs.append("-force")
-    if params.get("nthreads") is not None:
+    if params.get("nthreads", None) is not None:
         cargs.extend([
             "-nthreads",
-            str(params.get("nthreads"))
+            str(params.get("nthreads", None))
         ])
-    if params.get("config") is not None:
-        cargs.extend([a for c in [dyn_cargs(s["@type"])(s, execution) for s in params.get("config")] for a in c])
-    if params.get("help"):
+    if params.get("config", None) is not None:
+        cargs.extend([a for c in [tcksift_config_cargs(s, execution) for s in params.get("config", None)] for a in c])
+    if params.get("help", False):
         cargs.append("-help")
-    if params.get("version"):
+    if params.get("version", False):
         cargs.append("-version")
-    cargs.append(execution.input_file(params.get("in_tracks")))
-    cargs.append(execution.input_file(params.get("in_fod")))
-    cargs.append(params.get("out_tracks"))
+    cargs.append(execution.input_file(params.get("in_tracks", None)))
+    cargs.append(execution.input_file(params.get("in_fod", None)))
+    cargs.append(params.get("out_tracks", None))
     return cargs
 
 
@@ -398,10 +400,10 @@ def tcksift_outputs(
     """
     ret = TcksiftOutputs(
         root=execution.output_file("."),
-        out_tracks=execution.output_file(params.get("out_tracks")),
-        csv_=execution.output_file(params.get("csv")) if (params.get("csv") is not None) else None,
-        out_mu=execution.output_file(params.get("out_mu")) if (params.get("out_mu") is not None) else None,
-        out_selection=execution.output_file(params.get("out_selection")) if (params.get("out_selection") is not None) else None,
+        out_tracks=execution.output_file(params.get("out_tracks", None)),
+        csv_=execution.output_file(params.get("csv", None)) if (params.get("csv") is not None) else None,
+        out_mu=execution.output_file(params.get("out_mu", None)) if (params.get("out_mu") is not None) else None,
+        out_selection=execution.output_file(params.get("out_selection", None)) if (params.get("out_selection") is not None) else None,
     )
     return ret
 
@@ -587,9 +589,7 @@ def tcksift(
 
 __all__ = [
     "TCKSIFT_METADATA",
-    "TcksiftConfigParameters",
     "TcksiftOutputs",
-    "TcksiftParameters",
     "tcksift",
     "tcksift_config_params",
     "tcksift_execute",

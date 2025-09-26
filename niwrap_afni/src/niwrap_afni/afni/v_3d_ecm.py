@@ -14,7 +14,27 @@ V_3D_ECM_METADATA = Metadata(
 
 
 V3dEcmParameters = typing.TypedDict('V3dEcmParameters', {
-    "@type": typing.Literal["afni.3dECM"],
+    "@type": typing.NotRequired[typing.Literal["afni/3dECM"]],
+    "in_file": InputPathType,
+    "autoclip": bool,
+    "automask": bool,
+    "eps": typing.NotRequired[float | None],
+    "fecm": bool,
+    "full": bool,
+    "mask": typing.NotRequired[InputPathType | None],
+    "max_iter": typing.NotRequired[int | None],
+    "memory": typing.NotRequired[float | None],
+    "num_threads": typing.NotRequired[int | None],
+    "outputtype": typing.NotRequired[typing.Literal["NIFTI", "AFNI", "NIFTI_GZ"] | None],
+    "out_file": typing.NotRequired[str | None],
+    "polort": typing.NotRequired[int | None],
+    "scale": typing.NotRequired[float | None],
+    "shift": typing.NotRequired[float | None],
+    "sparsity": typing.NotRequired[float | None],
+    "thresh": typing.NotRequired[float | None],
+})
+V3dEcmParametersTagged = typing.TypedDict('V3dEcmParametersTagged', {
+    "@type": typing.Literal["afni/3dECM"],
     "in_file": InputPathType,
     "autoclip": bool,
     "automask": bool,
@@ -35,41 +55,9 @@ V3dEcmParameters = typing.TypedDict('V3dEcmParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "afni.3dECM": v_3d_ecm_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "afni.3dECM": v_3d_ecm_outputs,
-    }.get(t)
-
-
 class V3dEcmOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `v_3d_ecm(...)`.
+    Output object returned when calling `V3dEcmParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -97,7 +85,7 @@ def v_3d_ecm_params(
     shift: float | None = None,
     sparsity: float | None = None,
     thresh: float | None = None,
-) -> V3dEcmParameters:
+) -> V3dEcmParametersTagged:
     """
     Build parameters.
     
@@ -132,7 +120,7 @@ def v_3d_ecm_params(
         Parameter dictionary
     """
     params = {
-        "@type": "afni.3dECM",
+        "@type": "afni/3dECM",
         "in_file": in_file,
         "autoclip": autoclip,
         "automask": automask,
@@ -181,68 +169,68 @@ def v_3d_ecm_cargs(
     """
     cargs = []
     cargs.append("3dECM")
-    cargs.append(execution.input_file(params.get("in_file")))
-    if params.get("autoclip"):
+    cargs.append(execution.input_file(params.get("in_file", None)))
+    if params.get("autoclip", False):
         cargs.append("-autoclip")
-    if params.get("automask"):
+    if params.get("automask", False):
         cargs.append("-automask")
-    if params.get("eps") is not None:
+    if params.get("eps", None) is not None:
         cargs.extend([
             "-eps",
-            str(params.get("eps"))
+            str(params.get("eps", None))
         ])
-    if params.get("fecm"):
+    if params.get("fecm", False):
         cargs.append("-fecm")
-    if params.get("full"):
+    if params.get("full", False):
         cargs.append("-full")
-    if params.get("mask") is not None:
+    if params.get("mask", None) is not None:
         cargs.extend([
             "-mask",
-            execution.input_file(params.get("mask"))
+            execution.input_file(params.get("mask", None))
         ])
-    if params.get("max_iter") is not None:
+    if params.get("max_iter", None) is not None:
         cargs.extend([
             "-max_iter",
-            str(params.get("max_iter"))
+            str(params.get("max_iter", None))
         ])
-    if params.get("memory") is not None:
+    if params.get("memory", None) is not None:
         cargs.extend([
             "-memory",
-            str(params.get("memory"))
+            str(params.get("memory", None))
         ])
-    if params.get("num_threads") is not None:
-        cargs.append(str(params.get("num_threads")))
-    if params.get("outputtype") is not None:
-        cargs.append(params.get("outputtype"))
-    if params.get("out_file") is not None:
+    if params.get("num_threads", None) is not None:
+        cargs.append(str(params.get("num_threads", None)))
+    if params.get("outputtype", None) is not None:
+        cargs.append(params.get("outputtype", None))
+    if params.get("out_file", None) is not None:
         cargs.extend([
             "-prefix",
-            params.get("out_file")
+            params.get("out_file", None)
         ])
-    if params.get("polort") is not None:
+    if params.get("polort", None) is not None:
         cargs.extend([
             "-polort",
-            str(params.get("polort"))
+            str(params.get("polort", None))
         ])
-    if params.get("scale") is not None:
+    if params.get("scale", None) is not None:
         cargs.extend([
             "-scale",
-            str(params.get("scale"))
+            str(params.get("scale", None))
         ])
-    if params.get("shift") is not None:
+    if params.get("shift", None) is not None:
         cargs.extend([
             "-shift",
-            str(params.get("shift"))
+            str(params.get("shift", None))
         ])
-    if params.get("sparsity") is not None:
+    if params.get("sparsity", None) is not None:
         cargs.extend([
             "-sparsity",
-            str(params.get("sparsity"))
+            str(params.get("sparsity", None))
         ])
-    if params.get("thresh") is not None:
+    if params.get("thresh", None) is not None:
         cargs.extend([
             "-thresh",
-            str(params.get("thresh"))
+            str(params.get("thresh", None))
         ])
     return cargs
 
@@ -262,7 +250,7 @@ def v_3d_ecm_outputs(
     """
     ret = V3dEcmOutputs(
         root=execution.output_file("."),
-        out_file=execution.output_file(pathlib.Path(params.get("in_file")).name + "_afni"),
+        out_file=execution.output_file(pathlib.Path(params.get("in_file", None)).name + "_afni"),
         out_file_=execution.output_file("out_file"),
     )
     return ret
@@ -382,7 +370,6 @@ def v_3d_ecm(
 
 __all__ = [
     "V3dEcmOutputs",
-    "V3dEcmParameters",
     "V_3D_ECM_METADATA",
     "v_3d_ecm",
     "v_3d_ecm_execute",

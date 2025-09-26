@@ -14,7 +14,20 @@ EDDY_QUAD_METADATA = Metadata(
 
 
 EddyQuadParameters = typing.TypedDict('EddyQuadParameters', {
-    "@type": typing.Literal["fsl.eddy_quad"],
+    "@type": typing.NotRequired[typing.Literal["fsl/eddy_quad"]],
+    "eddyBase": str,
+    "eddyIndex": InputPathType,
+    "eddyParams": InputPathType,
+    "mask": InputPathType,
+    "bvals": InputPathType,
+    "bvecs": typing.NotRequired[InputPathType | None],
+    "output_dir": typing.NotRequired[str | None],
+    "field": typing.NotRequired[InputPathType | None],
+    "slspec": typing.NotRequired[InputPathType | None],
+    "verbose": bool,
+})
+EddyQuadParametersTagged = typing.TypedDict('EddyQuadParametersTagged', {
+    "@type": typing.Literal["fsl/eddy_quad"],
     "eddyBase": str,
     "eddyIndex": InputPathType,
     "eddyParams": InputPathType,
@@ -28,41 +41,9 @@ EddyQuadParameters = typing.TypedDict('EddyQuadParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "fsl.eddy_quad": eddy_quad_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "fsl.eddy_quad": eddy_quad_outputs,
-    }.get(t)
-
-
 class EddyQuadOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `eddy_quad(...)`.
+    Output object returned when calling `EddyQuadParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -81,7 +62,7 @@ def eddy_quad_params(
     field: InputPathType | None = None,
     slspec: InputPathType | None = None,
     verbose: bool = False,
-) -> EddyQuadParameters:
+) -> EddyQuadParametersTagged:
     """
     Build parameters.
     
@@ -102,7 +83,7 @@ def eddy_quad_params(
         Parameter dictionary
     """
     params = {
-        "@type": "fsl.eddy_quad",
+        "@type": "fsl/eddy_quad",
         "eddyBase": eddy_base,
         "eddyIndex": eddy_index,
         "eddyParams": eddy_params,
@@ -136,44 +117,44 @@ def eddy_quad_cargs(
     """
     cargs = []
     cargs.append("eddy_quad")
-    cargs.append(params.get("eddyBase"))
+    cargs.append(params.get("eddyBase", None))
     cargs.extend([
         "--eddyIdx",
-        execution.input_file(params.get("eddyIndex"))
+        execution.input_file(params.get("eddyIndex", None))
     ])
     cargs.extend([
         "--eddyParams",
-        execution.input_file(params.get("eddyParams"))
+        execution.input_file(params.get("eddyParams", None))
     ])
     cargs.extend([
         "--mask",
-        execution.input_file(params.get("mask"))
+        execution.input_file(params.get("mask", None))
     ])
     cargs.extend([
         "--bvals",
-        execution.input_file(params.get("bvals"))
+        execution.input_file(params.get("bvals", None))
     ])
-    if params.get("bvecs") is not None:
+    if params.get("bvecs", None) is not None:
         cargs.extend([
             "--bvecs",
-            execution.input_file(params.get("bvecs"))
+            execution.input_file(params.get("bvecs", None))
         ])
-    if params.get("output_dir") is not None:
+    if params.get("output_dir", None) is not None:
         cargs.extend([
             "--output-dir",
-            params.get("output_dir")
+            params.get("output_dir", None)
         ])
-    if params.get("field") is not None:
+    if params.get("field", None) is not None:
         cargs.extend([
             "--field",
-            execution.input_file(params.get("field"))
+            execution.input_file(params.get("field", None))
         ])
-    if params.get("slspec") is not None:
+    if params.get("slspec", None) is not None:
         cargs.extend([
             "--slspec",
-            execution.input_file(params.get("slspec"))
+            execution.input_file(params.get("slspec", None))
         ])
-    if params.get("verbose"):
+    if params.get("verbose", False):
         cargs.append("--verbose")
     return cargs
 
@@ -193,7 +174,7 @@ def eddy_quad_outputs(
     """
     ret = EddyQuadOutputs(
         root=execution.output_file("."),
-        output_dir_qc=execution.output_file(params.get("output_dir")) if (params.get("output_dir") is not None) else None,
+        output_dir_qc=execution.output_file(params.get("output_dir", None)) if (params.get("output_dir") is not None) else None,
     )
     return ret
 
@@ -283,7 +264,6 @@ def eddy_quad(
 __all__ = [
     "EDDY_QUAD_METADATA",
     "EddyQuadOutputs",
-    "EddyQuadParameters",
     "eddy_quad",
     "eddy_quad_execute",
     "eddy_quad_params",

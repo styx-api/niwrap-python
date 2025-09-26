@@ -14,7 +14,14 @@ V_3D_EDU_01_SCALE_METADATA = Metadata(
 
 
 V3dEdu01ScaleParameters = typing.TypedDict('V3dEdu01ScaleParameters', {
-    "@type": typing.Literal["afni.3dEdu_01_scale"],
+    "@type": typing.NotRequired[typing.Literal["afni/3dEdu_01_scale"]],
+    "input": InputPathType,
+    "mask": typing.NotRequired[InputPathType | None],
+    "mult_factors": typing.NotRequired[list[float] | None],
+    "option_flag": bool,
+})
+V3dEdu01ScaleParametersTagged = typing.TypedDict('V3dEdu01ScaleParametersTagged', {
+    "@type": typing.Literal["afni/3dEdu_01_scale"],
     "input": InputPathType,
     "mask": typing.NotRequired[InputPathType | None],
     "mult_factors": typing.NotRequired[list[float] | None],
@@ -22,40 +29,9 @@ V3dEdu01ScaleParameters = typing.TypedDict('V3dEdu01ScaleParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "afni.3dEdu_01_scale": v_3d_edu_01_scale_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-    }.get(t)
-
-
 class V3dEdu01ScaleOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `v_3d_edu_01_scale(...)`.
+    Output object returned when calling `V3dEdu01ScaleParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -66,7 +42,7 @@ def v_3d_edu_01_scale_params(
     mask: InputPathType | None = None,
     mult_factors: list[float] | None = None,
     option_flag: bool = False,
-) -> V3dEdu01ScaleParameters:
+) -> V3dEdu01ScaleParametersTagged:
     """
     Build parameters.
     
@@ -80,7 +56,7 @@ def v_3d_edu_01_scale_params(
         Parameter dictionary
     """
     params = {
-        "@type": "afni.3dEdu_01_scale",
+        "@type": "afni/3dEdu_01_scale",
         "input": input_,
         "option_flag": option_flag,
     }
@@ -106,18 +82,18 @@ def v_3d_edu_01_scale_cargs(
     """
     cargs = []
     cargs.append("3dEdu_01_scale")
-    cargs.append(execution.input_file(params.get("input")))
-    if params.get("mask") is not None:
+    cargs.append(execution.input_file(params.get("input", None)))
+    if params.get("mask", None) is not None:
         cargs.extend([
             "-mask",
-            execution.input_file(params.get("mask"))
+            execution.input_file(params.get("mask", None))
         ])
-    if params.get("mult_factors") is not None:
+    if params.get("mult_factors", None) is not None:
         cargs.extend([
             "-mult_facs",
-            *map(str, params.get("mult_factors"))
+            *map(str, params.get("mult_factors", None))
         ])
-    if params.get("option_flag"):
+    if params.get("option_flag", False):
         cargs.append("-some_opt")
     return cargs
 
@@ -208,7 +184,6 @@ def v_3d_edu_01_scale(
 
 __all__ = [
     "V3dEdu01ScaleOutputs",
-    "V3dEdu01ScaleParameters",
     "V_3D_EDU_01_SCALE_METADATA",
     "v_3d_edu_01_scale",
     "v_3d_edu_01_scale_execute",

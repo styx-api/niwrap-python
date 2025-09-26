@@ -14,7 +14,16 @@ MRIS_ENTROPY_METADATA = Metadata(
 
 
 MrisEntropyParameters = typing.TypedDict('MrisEntropyParameters', {
-    "@type": typing.Literal["freesurfer.mris_entropy"],
+    "@type": typing.NotRequired[typing.Literal["freesurfer/mris_entropy"]],
+    "subject": str,
+    "hemi": str,
+    "wfile": InputPathType,
+    "curvfile": InputPathType,
+    "average_iterations": typing.NotRequired[float | None],
+    "normalize": bool,
+})
+MrisEntropyParametersTagged = typing.TypedDict('MrisEntropyParametersTagged', {
+    "@type": typing.Literal["freesurfer/mris_entropy"],
     "subject": str,
     "hemi": str,
     "wfile": InputPathType,
@@ -24,41 +33,9 @@ MrisEntropyParameters = typing.TypedDict('MrisEntropyParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "freesurfer.mris_entropy": mris_entropy_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "freesurfer.mris_entropy": mris_entropy_outputs,
-    }.get(t)
-
-
 class MrisEntropyOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `mris_entropy(...)`.
+    Output object returned when calling `MrisEntropyParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -73,7 +50,7 @@ def mris_entropy_params(
     curvfile: InputPathType,
     average_iterations: float | None = None,
     normalize: bool = False,
-) -> MrisEntropyParameters:
+) -> MrisEntropyParametersTagged:
     """
     Build parameters.
     
@@ -89,7 +66,7 @@ def mris_entropy_params(
         Parameter dictionary
     """
     params = {
-        "@type": "freesurfer.mris_entropy",
+        "@type": "freesurfer/mris_entropy",
         "subject": subject,
         "hemi": hemi,
         "wfile": wfile,
@@ -116,16 +93,16 @@ def mris_entropy_cargs(
     """
     cargs = []
     cargs.append("mris_entropy")
-    cargs.append(params.get("subject"))
-    cargs.append(params.get("hemi"))
-    cargs.append(execution.input_file(params.get("wfile")))
-    cargs.append(execution.input_file(params.get("curvfile")))
-    if params.get("average_iterations") is not None:
+    cargs.append(params.get("subject", None))
+    cargs.append(params.get("hemi", None))
+    cargs.append(execution.input_file(params.get("wfile", None)))
+    cargs.append(execution.input_file(params.get("curvfile", None)))
+    if params.get("average_iterations", None) is not None:
         cargs.extend([
             "-a",
-            str(params.get("average_iterations"))
+            str(params.get("average_iterations", None))
         ])
-    if params.get("normalize"):
+    if params.get("normalize", False):
         cargs.append("-n")
     return cargs
 
@@ -145,7 +122,7 @@ def mris_entropy_outputs(
     """
     ret = MrisEntropyOutputs(
         root=execution.output_file("."),
-        output_file=execution.output_file(params.get("subject") + "_" + params.get("hemi") + "_output.txt"),
+        output_file=execution.output_file(params.get("subject", None) + "_" + params.get("hemi", None) + "_output.txt"),
     )
     return ret
 
@@ -222,7 +199,6 @@ def mris_entropy(
 __all__ = [
     "MRIS_ENTROPY_METADATA",
     "MrisEntropyOutputs",
-    "MrisEntropyParameters",
     "mris_entropy",
     "mris_entropy_execute",
     "mris_entropy_params",

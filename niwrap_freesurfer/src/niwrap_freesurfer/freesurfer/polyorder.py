@@ -14,47 +14,22 @@ POLYORDER_METADATA = Metadata(
 
 
 PolyorderParameters = typing.TypedDict('PolyorderParameters', {
-    "@type": typing.Literal["freesurfer.polyorder"],
+    "@type": typing.NotRequired[typing.Literal["freesurfer/polyorder"]],
+    "ntp": float,
+    "tr": float,
+    "cutoff": float,
+})
+PolyorderParametersTagged = typing.TypedDict('PolyorderParametersTagged', {
+    "@type": typing.Literal["freesurfer/polyorder"],
     "ntp": float,
     "tr": float,
     "cutoff": float,
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "freesurfer.polyorder": polyorder_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-    }.get(t)
-
-
 class PolyorderOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `polyorder(...)`.
+    Output object returned when calling `PolyorderParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -64,7 +39,7 @@ def polyorder_params(
     ntp: float,
     tr: float,
     cutoff: float,
-) -> PolyorderParameters:
+) -> PolyorderParametersTagged:
     """
     Build parameters.
     
@@ -76,7 +51,7 @@ def polyorder_params(
         Parameter dictionary
     """
     params = {
-        "@type": "freesurfer.polyorder",
+        "@type": "freesurfer/polyorder",
         "ntp": ntp,
         "tr": tr,
         "cutoff": cutoff,
@@ -101,15 +76,15 @@ def polyorder_cargs(
     cargs.append("polyorder")
     cargs.extend([
         "--ntp",
-        str(params.get("ntp"))
+        str(params.get("ntp", None))
     ])
     cargs.extend([
         "--TR",
-        str(params.get("tr"))
+        str(params.get("tr", None))
     ])
     cargs.extend([
         "--cutoff",
-        str(params.get("cutoff"))
+        str(params.get("cutoff", None))
     ])
     return cargs
 
@@ -197,7 +172,6 @@ def polyorder(
 __all__ = [
     "POLYORDER_METADATA",
     "PolyorderOutputs",
-    "PolyorderParameters",
     "polyorder",
     "polyorder_execute",
     "polyorder_params",

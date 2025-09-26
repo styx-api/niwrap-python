@@ -14,7 +14,17 @@ MRI_EXTRACT_LARGEST_CC_METADATA = Metadata(
 
 
 MriExtractLargestCcParameters = typing.TypedDict('MriExtractLargestCcParameters', {
-    "@type": typing.Literal["freesurfer.mri_extract_largest_CC"],
+    "@type": typing.NotRequired[typing.Literal["freesurfer/mri_extract_largest_CC"]],
+    "input_volume": InputPathType,
+    "output_volume": str,
+    "threshold": typing.NotRequired[float | None],
+    "hemisphere": typing.NotRequired[typing.Literal["lh", "rh"] | None],
+    "largest_cc_in_bg": bool,
+    "original_volume": typing.NotRequired[InputPathType | None],
+    "label_value": typing.NotRequired[float | None],
+})
+MriExtractLargestCcParametersTagged = typing.TypedDict('MriExtractLargestCcParametersTagged', {
+    "@type": typing.Literal["freesurfer/mri_extract_largest_CC"],
     "input_volume": InputPathType,
     "output_volume": str,
     "threshold": typing.NotRequired[float | None],
@@ -25,41 +35,9 @@ MriExtractLargestCcParameters = typing.TypedDict('MriExtractLargestCcParameters'
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "freesurfer.mri_extract_largest_CC": mri_extract_largest_cc_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "freesurfer.mri_extract_largest_CC": mri_extract_largest_cc_outputs,
-    }.get(t)
-
-
 class MriExtractLargestCcOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `mri_extract_largest_cc(...)`.
+    Output object returned when calling `MriExtractLargestCcParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -75,7 +53,7 @@ def mri_extract_largest_cc_params(
     largest_cc_in_bg: bool = False,
     original_volume: InputPathType | None = None,
     label_value: float | None = None,
-) -> MriExtractLargestCcParameters:
+) -> MriExtractLargestCcParametersTagged:
     """
     Build parameters.
     
@@ -93,7 +71,7 @@ def mri_extract_largest_cc_params(
         Parameter dictionary
     """
     params = {
-        "@type": "freesurfer.mri_extract_largest_CC",
+        "@type": "freesurfer/mri_extract_largest_CC",
         "input_volume": input_volume,
         "output_volume": output_volume,
         "largest_cc_in_bg": largest_cc_in_bg,
@@ -124,29 +102,29 @@ def mri_extract_largest_cc_cargs(
     """
     cargs = []
     cargs.append("mri_extract_largest_CC")
-    cargs.append(execution.input_file(params.get("input_volume")))
-    cargs.append(params.get("output_volume"))
-    if params.get("threshold") is not None:
+    cargs.append(execution.input_file(params.get("input_volume", None)))
+    cargs.append(params.get("output_volume", None))
+    if params.get("threshold", None) is not None:
         cargs.extend([
             "-T",
-            str(params.get("threshold"))
+            str(params.get("threshold", None))
         ])
-    if params.get("hemisphere") is not None:
+    if params.get("hemisphere", None) is not None:
         cargs.extend([
             "-hemi",
-            params.get("hemisphere")
+            params.get("hemisphere", None)
         ])
-    if params.get("largest_cc_in_bg"):
+    if params.get("largest_cc_in_bg", False):
         cargs.append("-I")
-    if params.get("original_volume") is not None:
+    if params.get("original_volume", None) is not None:
         cargs.extend([
             "-O",
-            execution.input_file(params.get("original_volume"))
+            execution.input_file(params.get("original_volume", None))
         ])
-    if params.get("label_value") is not None:
+    if params.get("label_value", None) is not None:
         cargs.extend([
             "-L",
-            str(params.get("label_value"))
+            str(params.get("label_value", None))
         ])
     return cargs
 
@@ -166,7 +144,7 @@ def mri_extract_largest_cc_outputs(
     """
     ret = MriExtractLargestCcOutputs(
         root=execution.output_file("."),
-        output_volume_file=execution.output_file(params.get("output_volume")),
+        output_volume_file=execution.output_file(params.get("output_volume", None)),
     )
     return ret
 
@@ -247,7 +225,6 @@ def mri_extract_largest_cc(
 __all__ = [
     "MRI_EXTRACT_LARGEST_CC_METADATA",
     "MriExtractLargestCcOutputs",
-    "MriExtractLargestCcParameters",
     "mri_extract_largest_cc",
     "mri_extract_largest_cc_execute",
     "mri_extract_largest_cc_params",

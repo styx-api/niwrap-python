@@ -14,7 +14,21 @@ MRI_COMPUTE_OVERLAP_METADATA = Metadata(
 
 
 MriComputeOverlapParameters = typing.TypedDict('MriComputeOverlapParameters', {
-    "@type": typing.Literal["freesurfer.mri_compute_overlap"],
+    "@type": typing.NotRequired[typing.Literal["freesurfer/mri_compute_overlap"]],
+    "volumes": list[InputPathType],
+    "label_numbers": typing.NotRequired[list[str] | None],
+    "all_labels": bool,
+    "show_label": bool,
+    "total_overlap": bool,
+    "no_summary": bool,
+    "mask": typing.NotRequired[InputPathType | None],
+    "output_file": typing.NotRequired[str | None],
+    "quiet_mode": bool,
+    "translate_label": typing.NotRequired[list[float] | None],
+    "help": bool,
+})
+MriComputeOverlapParametersTagged = typing.TypedDict('MriComputeOverlapParametersTagged', {
+    "@type": typing.Literal["freesurfer/mri_compute_overlap"],
     "volumes": list[InputPathType],
     "label_numbers": typing.NotRequired[list[str] | None],
     "all_labels": bool,
@@ -29,40 +43,9 @@ MriComputeOverlapParameters = typing.TypedDict('MriComputeOverlapParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "freesurfer.mri_compute_overlap": mri_compute_overlap_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-    }.get(t)
-
-
 class MriComputeOverlapOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `mri_compute_overlap(...)`.
+    Output object returned when calling `MriComputeOverlapParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -80,7 +63,7 @@ def mri_compute_overlap_params(
     quiet_mode: bool = False,
     translate_label: list[float] | None = None,
     help_: bool = False,
-) -> MriComputeOverlapParameters:
+) -> MriComputeOverlapParametersTagged:
     """
     Build parameters.
     
@@ -105,7 +88,7 @@ def mri_compute_overlap_params(
         Parameter dictionary
     """
     params = {
-        "@type": "freesurfer.mri_compute_overlap",
+        "@type": "freesurfer/mri_compute_overlap",
         "volumes": volumes,
         "all_labels": all_labels,
         "show_label": show_label,
@@ -140,35 +123,35 @@ def mri_compute_overlap_cargs(
     """
     cargs = []
     cargs.append("mri_compute_overlap")
-    cargs.extend([execution.input_file(f) for f in params.get("volumes")])
-    if params.get("label_numbers") is not None:
-        cargs.extend(params.get("label_numbers"))
-    if params.get("all_labels"):
+    cargs.extend([execution.input_file(f) for f in params.get("volumes", None)])
+    if params.get("label_numbers", None) is not None:
+        cargs.extend(params.get("label_numbers", None))
+    if params.get("all_labels", False):
         cargs.append("-a")
-    if params.get("show_label"):
+    if params.get("show_label", False):
         cargs.append("-s")
-    if params.get("total_overlap"):
+    if params.get("total_overlap", False):
         cargs.append("-total")
-    if params.get("no_summary"):
+    if params.get("no_summary", False):
         cargs.append("-nosummary")
-    if params.get("mask") is not None:
+    if params.get("mask", None) is not None:
         cargs.extend([
             "-mask",
-            execution.input_file(params.get("mask"))
+            execution.input_file(params.get("mask", None))
         ])
-    if params.get("output_file") is not None:
+    if params.get("output_file", None) is not None:
         cargs.extend([
             "-l",
-            params.get("output_file")
+            params.get("output_file", None)
         ])
-    if params.get("quiet_mode"):
+    if params.get("quiet_mode", False):
         cargs.append("-q")
-    if params.get("translate_label") is not None:
+    if params.get("translate_label", None) is not None:
         cargs.extend([
             "-t",
-            *map(str, params.get("translate_label"))
+            *map(str, params.get("translate_label", None))
         ])
-    if params.get("help"):
+    if params.get("help", False):
         cargs.append("-h")
     return cargs
 
@@ -285,7 +268,6 @@ def mri_compute_overlap(
 __all__ = [
     "MRI_COMPUTE_OVERLAP_METADATA",
     "MriComputeOverlapOutputs",
-    "MriComputeOverlapParameters",
     "mri_compute_overlap",
     "mri_compute_overlap_execute",
     "mri_compute_overlap_params",

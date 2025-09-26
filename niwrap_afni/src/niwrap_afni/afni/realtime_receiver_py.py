@@ -14,7 +14,22 @@ REALTIME_RECEIVER_PY_METADATA = Metadata(
 
 
 RealtimeReceiverPyParameters = typing.TypedDict('RealtimeReceiverPyParameters', {
-    "@type": typing.Literal["afni.realtime_receiver.py"],
+    "@type": typing.NotRequired[typing.Literal["afni/realtime_receiver.py"]],
+    "show_data": typing.NotRequired[typing.Literal["yes", "no"] | None],
+    "write_text_data": typing.NotRequired[str | None],
+    "data_choice": typing.NotRequired[typing.Literal["motion", "motion_norm", "all_extras", "diff_ratio"] | None],
+    "serial_port": typing.NotRequired[str | None],
+    "show_demo_gui": typing.NotRequired[typing.Literal["yes", "no"] | None],
+    "dc_params": typing.NotRequired[list[float] | None],
+    "extras_on_one_line": typing.NotRequired[typing.Literal["yes", "no"] | None],
+    "show_comm_times": bool,
+    "show_demo_data": bool,
+    "swap": bool,
+    "tcp_port": typing.NotRequired[float | None],
+    "verbosity": typing.NotRequired[float | None],
+})
+RealtimeReceiverPyParametersTagged = typing.TypedDict('RealtimeReceiverPyParametersTagged', {
+    "@type": typing.Literal["afni/realtime_receiver.py"],
     "show_data": typing.NotRequired[typing.Literal["yes", "no"] | None],
     "write_text_data": typing.NotRequired[str | None],
     "data_choice": typing.NotRequired[typing.Literal["motion", "motion_norm", "all_extras", "diff_ratio"] | None],
@@ -30,40 +45,9 @@ RealtimeReceiverPyParameters = typing.TypedDict('RealtimeReceiverPyParameters', 
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "afni.realtime_receiver.py": realtime_receiver_py_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-    }.get(t)
-
-
 class RealtimeReceiverPyOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `realtime_receiver_py(...)`.
+    Output object returned when calling `RealtimeReceiverPyParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -82,7 +66,7 @@ def realtime_receiver_py_params(
     swap: bool = False,
     tcp_port: float | None = None,
     verbosity: float | None = None,
-) -> RealtimeReceiverPyParameters:
+) -> RealtimeReceiverPyParametersTagged:
     """
     Build parameters.
     
@@ -104,7 +88,7 @@ def realtime_receiver_py_params(
         Parameter dictionary
     """
     params = {
-        "@type": "afni.realtime_receiver.py",
+        "@type": "afni/realtime_receiver.py",
         "show_comm_times": show_comm_times,
         "show_demo_data": show_demo_data,
         "swap": swap,
@@ -145,56 +129,56 @@ def realtime_receiver_py_cargs(
     """
     cargs = []
     cargs.append("realtime_receiver.py")
-    if params.get("show_data") is not None:
+    if params.get("show_data", None) is not None:
         cargs.extend([
             "-show_data",
-            params.get("show_data")
+            params.get("show_data", None)
         ])
-    if params.get("write_text_data") is not None:
+    if params.get("write_text_data", None) is not None:
         cargs.extend([
             "-write_text_data",
-            params.get("write_text_data")
+            params.get("write_text_data", None)
         ])
-    if params.get("data_choice") is not None:
+    if params.get("data_choice", None) is not None:
         cargs.extend([
             "-data_choice",
-            params.get("data_choice")
+            params.get("data_choice", None)
         ])
-    if params.get("serial_port") is not None:
+    if params.get("serial_port", None) is not None:
         cargs.extend([
             "-serial_port",
-            params.get("serial_port")
+            params.get("serial_port", None)
         ])
-    if params.get("show_demo_gui") is not None:
+    if params.get("show_demo_gui", None) is not None:
         cargs.extend([
             "-show_demo_gui",
-            params.get("show_demo_gui")
+            params.get("show_demo_gui", None)
         ])
-    if params.get("dc_params") is not None:
+    if params.get("dc_params", None) is not None:
         cargs.extend([
             "-dc_params",
-            *map(str, params.get("dc_params"))
+            *map(str, params.get("dc_params", None))
         ])
-    if params.get("extras_on_one_line") is not None:
+    if params.get("extras_on_one_line", None) is not None:
         cargs.extend([
             "-extras_on_one_line",
-            params.get("extras_on_one_line")
+            params.get("extras_on_one_line", None)
         ])
-    if params.get("show_comm_times"):
+    if params.get("show_comm_times", False):
         cargs.append("-show_comm_times")
-    if params.get("show_demo_data"):
+    if params.get("show_demo_data", False):
         cargs.append("-show_demo_data")
-    if params.get("swap"):
+    if params.get("swap", False):
         cargs.append("-swap")
-    if params.get("tcp_port") is not None:
+    if params.get("tcp_port", None) is not None:
         cargs.extend([
             "-tcp_port",
-            str(params.get("tcp_port"))
+            str(params.get("tcp_port", None))
         ])
-    if params.get("verbosity") is not None:
+    if params.get("verbosity", None) is not None:
         cargs.extend([
             "-verb",
-            str(params.get("verbosity"))
+            str(params.get("verbosity", None))
         ])
     return cargs
 
@@ -308,7 +292,6 @@ def realtime_receiver_py(
 __all__ = [
     "REALTIME_RECEIVER_PY_METADATA",
     "RealtimeReceiverPyOutputs",
-    "RealtimeReceiverPyParameters",
     "realtime_receiver_py",
     "realtime_receiver_py_execute",
     "realtime_receiver_py_params",

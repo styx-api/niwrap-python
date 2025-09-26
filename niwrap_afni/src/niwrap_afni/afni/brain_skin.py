@@ -14,7 +14,23 @@ BRAIN_SKIN_METADATA = Metadata(
 
 
 BrainSkinParameters = typing.TypedDict('BrainSkinParameters', {
-    "@type": typing.Literal["afni.BrainSkin"],
+    "@type": typing.NotRequired[typing.Literal["afni/BrainSkin"]],
+    "surface": str,
+    "skingrid_volume": InputPathType,
+    "prefix": str,
+    "plimit": typing.NotRequired[float | None],
+    "dlimit": typing.NotRequired[float | None],
+    "segdo": typing.NotRequired[str | None],
+    "voxelize": typing.NotRequired[str | None],
+    "infill": typing.NotRequired[str | None],
+    "out_file": typing.NotRequired[InputPathType | None],
+    "vol_skin": typing.NotRequired[InputPathType | None],
+    "vol_hull": typing.NotRequired[InputPathType | None],
+    "no_zero_attraction": bool,
+    "node_dbg": typing.NotRequired[float | None],
+})
+BrainSkinParametersTagged = typing.TypedDict('BrainSkinParametersTagged', {
+    "@type": typing.Literal["afni/BrainSkin"],
     "surface": str,
     "skingrid_volume": InputPathType,
     "prefix": str,
@@ -31,41 +47,9 @@ BrainSkinParameters = typing.TypedDict('BrainSkinParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "afni.BrainSkin": brain_skin_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "afni.BrainSkin": brain_skin_outputs,
-    }.get(t)
-
-
 class BrainSkinOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `brain_skin(...)`.
+    Output object returned when calling `BrainSkinParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -108,7 +92,7 @@ def brain_skin_params(
     vol_hull: InputPathType | None = None,
     no_zero_attraction: bool = False,
     node_dbg: float | None = None,
-) -> BrainSkinParameters:
+) -> BrainSkinParametersTagged:
     """
     Build parameters.
     
@@ -138,7 +122,7 @@ def brain_skin_params(
         Parameter dictionary
     """
     params = {
-        "@type": "afni.BrainSkin",
+        "@type": "afni/BrainSkin",
         "surface": surface,
         "skingrid_volume": skingrid_volume,
         "prefix": prefix,
@@ -180,61 +164,61 @@ def brain_skin_cargs(
     """
     cargs = []
     cargs.append("BrainSkin")
-    cargs.append(params.get("surface"))
+    cargs.append(params.get("surface", None))
     cargs.extend([
         "-skingrid",
-        execution.input_file(params.get("skingrid_volume"))
+        execution.input_file(params.get("skingrid_volume", None))
     ])
     cargs.extend([
         "-prefix",
-        params.get("prefix")
+        params.get("prefix", None)
     ])
-    if params.get("plimit") is not None:
+    if params.get("plimit", None) is not None:
         cargs.extend([
             "-plimit",
-            str(params.get("plimit"))
+            str(params.get("plimit", None))
         ])
-    if params.get("dlimit") is not None:
+    if params.get("dlimit", None) is not None:
         cargs.extend([
             "-dlimit",
-            str(params.get("dlimit"))
+            str(params.get("dlimit", None))
         ])
-    if params.get("segdo") is not None:
+    if params.get("segdo", None) is not None:
         cargs.extend([
             "-segdo",
-            params.get("segdo")
+            params.get("segdo", None)
         ])
-    if params.get("voxelize") is not None:
+    if params.get("voxelize", None) is not None:
         cargs.extend([
             "-voxelize",
-            params.get("voxelize")
+            params.get("voxelize", None)
         ])
-    if params.get("infill") is not None:
+    if params.get("infill", None) is not None:
         cargs.extend([
             "-infill",
-            params.get("infill")
+            params.get("infill", None)
         ])
-    if params.get("out_file") is not None:
+    if params.get("out_file", None) is not None:
         cargs.extend([
             "-out",
-            execution.input_file(params.get("out_file"))
+            execution.input_file(params.get("out_file", None))
         ])
-    if params.get("vol_skin") is not None:
+    if params.get("vol_skin", None) is not None:
         cargs.extend([
             "-vol_skin",
-            execution.input_file(params.get("vol_skin"))
+            execution.input_file(params.get("vol_skin", None))
         ])
-    if params.get("vol_hull") is not None:
+    if params.get("vol_hull", None) is not None:
         cargs.extend([
             "-vol_hull",
-            execution.input_file(params.get("vol_hull"))
+            execution.input_file(params.get("vol_hull", None))
         ])
-    if params.get("no_zero_attraction"):
+    if params.get("no_zero_attraction", False):
         cargs.append("-no_zero_attraction")
-    if params.get("node_dbg") is not None:
+    if params.get("node_dbg", None) is not None:
         cargs.extend([
             "-node_dbg",
-            str(params.get("node_dbg"))
+            str(params.get("node_dbg", None))
         ])
     return cargs
 
@@ -254,17 +238,17 @@ def brain_skin_outputs(
     """
     ret = BrainSkinOutputs(
         root=execution.output_file("."),
-        stitch_surface=execution.output_file(params.get("prefix") + ".stitch.gii"),
-        initial_skin_surface=execution.output_file(params.get("prefix") + ".skin.gii"),
-        reduced_skin_surface=execution.output_file(params.get("prefix") + ".skin_simp.gii"),
-        inflated_skin_surface=execution.output_file(params.get("prefix") + ".skin.isotopic.gii"),
-        patching_voxels=execution.output_file(params.get("prefix") + ".ptchvox+orig"),
-        surf_voxels=execution.output_file(params.get("prefix") + ".surfvox+orig"),
-        skin_voxels=execution.output_file(params.get("prefix") + ".skinvox+orig"),
-        infilled_voxels=execution.output_file(params.get("prefix") + ".infilled+orig"),
-        node_pairs_results=execution.output_file(params.get("prefix") + ".niml.dset"),
-        inflating_surface_results=execution.output_file(params.get("prefix") + ".areas.niml.dset"),
-        segments_display=execution.output_file(params.get("prefix") + ".1D.do"),
+        stitch_surface=execution.output_file(params.get("prefix", None) + ".stitch.gii"),
+        initial_skin_surface=execution.output_file(params.get("prefix", None) + ".skin.gii"),
+        reduced_skin_surface=execution.output_file(params.get("prefix", None) + ".skin_simp.gii"),
+        inflated_skin_surface=execution.output_file(params.get("prefix", None) + ".skin.isotopic.gii"),
+        patching_voxels=execution.output_file(params.get("prefix", None) + ".ptchvox+orig"),
+        surf_voxels=execution.output_file(params.get("prefix", None) + ".surfvox+orig"),
+        skin_voxels=execution.output_file(params.get("prefix", None) + ".skinvox+orig"),
+        infilled_voxels=execution.output_file(params.get("prefix", None) + ".infilled+orig"),
+        node_pairs_results=execution.output_file(params.get("prefix", None) + ".niml.dset"),
+        inflating_surface_results=execution.output_file(params.get("prefix", None) + ".areas.niml.dset"),
+        segments_display=execution.output_file(params.get("prefix", None) + ".1D.do"),
     )
     return ret
 
@@ -371,7 +355,6 @@ def brain_skin(
 __all__ = [
     "BRAIN_SKIN_METADATA",
     "BrainSkinOutputs",
-    "BrainSkinParameters",
     "brain_skin",
     "brain_skin_execute",
     "brain_skin_params",

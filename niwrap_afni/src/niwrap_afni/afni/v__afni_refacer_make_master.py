@@ -14,46 +14,18 @@ V__AFNI_REFACER_MAKE_MASTER_METADATA = Metadata(
 
 
 VAfniRefacerMakeMasterParameters = typing.TypedDict('VAfniRefacerMakeMasterParameters', {
-    "@type": typing.Literal["afni.@afni_refacer_make_master"],
+    "@type": typing.NotRequired[typing.Literal["afni/@afni_refacer_make_master"]],
+    "input_datasets": list[InputPathType],
+})
+VAfniRefacerMakeMasterParametersTagged = typing.TypedDict('VAfniRefacerMakeMasterParametersTagged', {
+    "@type": typing.Literal["afni/@afni_refacer_make_master"],
     "input_datasets": list[InputPathType],
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "afni.@afni_refacer_make_master": v__afni_refacer_make_master_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "afni.@afni_refacer_make_master": v__afni_refacer_make_master_outputs,
-    }.get(t)
-
-
 class VAfniRefacerMakeMasterOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `v__afni_refacer_make_master(...)`.
+    Output object returned when calling `VAfniRefacerMakeMasterParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -63,7 +35,7 @@ class VAfniRefacerMakeMasterOutputs(typing.NamedTuple):
 
 def v__afni_refacer_make_master_params(
     input_datasets: list[InputPathType],
-) -> VAfniRefacerMakeMasterParameters:
+) -> VAfniRefacerMakeMasterParametersTagged:
     """
     Build parameters.
     
@@ -74,7 +46,7 @@ def v__afni_refacer_make_master_params(
         Parameter dictionary
     """
     params = {
-        "@type": "afni.@afni_refacer_make_master",
+        "@type": "afni/@afni_refacer_make_master",
         "input_datasets": input_datasets,
     }
     return params
@@ -95,7 +67,7 @@ def v__afni_refacer_make_master_cargs(
     """
     cargs = []
     cargs.append("@afni_refacer_make_master")
-    cargs.extend([execution.input_file(f) for f in params.get("input_datasets")])
+    cargs.extend([execution.input_file(f) for f in params.get("input_datasets", None)])
     return cargs
 
 
@@ -177,7 +149,6 @@ def v__afni_refacer_make_master(
 
 __all__ = [
     "VAfniRefacerMakeMasterOutputs",
-    "VAfniRefacerMakeMasterParameters",
     "V__AFNI_REFACER_MAKE_MASTER_METADATA",
     "v__afni_refacer_make_master",
     "v__afni_refacer_make_master_execute",

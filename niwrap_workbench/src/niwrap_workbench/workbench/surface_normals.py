@@ -14,47 +14,20 @@ SURFACE_NORMALS_METADATA = Metadata(
 
 
 SurfaceNormalsParameters = typing.TypedDict('SurfaceNormalsParameters', {
-    "@type": typing.Literal["workbench.surface-normals"],
+    "@type": typing.NotRequired[typing.Literal["workbench/surface-normals"]],
+    "surface": InputPathType,
+    "metric_out": str,
+})
+SurfaceNormalsParametersTagged = typing.TypedDict('SurfaceNormalsParametersTagged', {
+    "@type": typing.Literal["workbench/surface-normals"],
     "surface": InputPathType,
     "metric_out": str,
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "workbench.surface-normals": surface_normals_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "workbench.surface-normals": surface_normals_outputs,
-    }.get(t)
-
-
 class SurfaceNormalsOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `surface_normals(...)`.
+    Output object returned when calling `SurfaceNormalsParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -65,7 +38,7 @@ class SurfaceNormalsOutputs(typing.NamedTuple):
 def surface_normals_params(
     surface: InputPathType,
     metric_out: str,
-) -> SurfaceNormalsParameters:
+) -> SurfaceNormalsParametersTagged:
     """
     Build parameters.
     
@@ -76,7 +49,7 @@ def surface_normals_params(
         Parameter dictionary
     """
     params = {
-        "@type": "workbench.surface-normals",
+        "@type": "workbench/surface-normals",
         "surface": surface,
         "metric_out": metric_out,
     }
@@ -99,8 +72,8 @@ def surface_normals_cargs(
     cargs = []
     cargs.append("wb_command")
     cargs.append("-surface-normals")
-    cargs.append(execution.input_file(params.get("surface")))
-    cargs.append(params.get("metric_out"))
+    cargs.append(execution.input_file(params.get("surface", None)))
+    cargs.append(params.get("metric_out", None))
     return cargs
 
 
@@ -119,7 +92,7 @@ def surface_normals_outputs(
     """
     ret = SurfaceNormalsOutputs(
         root=execution.output_file("."),
-        metric_out=execution.output_file(params.get("metric_out")),
+        metric_out=execution.output_file(params.get("metric_out", None)),
     )
     return ret
 
@@ -189,7 +162,6 @@ def surface_normals(
 __all__ = [
     "SURFACE_NORMALS_METADATA",
     "SurfaceNormalsOutputs",
-    "SurfaceNormalsParameters",
     "surface_normals",
     "surface_normals_execute",
     "surface_normals_params",

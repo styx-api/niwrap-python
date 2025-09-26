@@ -14,46 +14,20 @@ FILMBABESCRIPT_METADATA = Metadata(
 
 
 FilmbabescriptParameters = typing.TypedDict('FilmbabescriptParameters', {
-    "@type": typing.Literal["fsl.filmbabescript"],
+    "@type": typing.NotRequired[typing.Literal["fsl/filmbabescript"]],
+    "feat_dir": str,
+    "flobs_dir": str,
+})
+FilmbabescriptParametersTagged = typing.TypedDict('FilmbabescriptParametersTagged', {
+    "@type": typing.Literal["fsl/filmbabescript"],
     "feat_dir": str,
     "flobs_dir": str,
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "fsl.filmbabescript": filmbabescript_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-    }.get(t)
-
-
 class FilmbabescriptOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `filmbabescript(...)`.
+    Output object returned when calling `FilmbabescriptParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -62,7 +36,7 @@ class FilmbabescriptOutputs(typing.NamedTuple):
 def filmbabescript_params(
     feat_dir: str,
     flobs_dir: str,
-) -> FilmbabescriptParameters:
+) -> FilmbabescriptParametersTagged:
     """
     Build parameters.
     
@@ -73,7 +47,7 @@ def filmbabescript_params(
         Parameter dictionary
     """
     params = {
-        "@type": "fsl.filmbabescript",
+        "@type": "fsl/filmbabescript",
         "feat_dir": feat_dir,
         "flobs_dir": flobs_dir,
     }
@@ -95,8 +69,8 @@ def filmbabescript_cargs(
     """
     cargs = []
     cargs.append("filmbabescript")
-    cargs.append(params.get("feat_dir"))
-    cargs.append(params.get("flobs_dir"))
+    cargs.append(params.get("feat_dir", None))
+    cargs.append(params.get("flobs_dir", None))
     return cargs
 
 
@@ -178,7 +152,6 @@ def filmbabescript(
 __all__ = [
     "FILMBABESCRIPT_METADATA",
     "FilmbabescriptOutputs",
-    "FilmbabescriptParameters",
     "filmbabescript",
     "filmbabescript_execute",
     "filmbabescript_params",

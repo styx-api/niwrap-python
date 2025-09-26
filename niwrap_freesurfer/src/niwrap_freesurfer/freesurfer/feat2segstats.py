@@ -14,7 +14,30 @@ FEAT2SEGSTATS_METADATA = Metadata(
 
 
 Feat2segstatsParameters = typing.TypedDict('Feat2segstatsParameters', {
-    "@type": typing.Literal["freesurfer.feat2segstats"],
+    "@type": typing.NotRequired[typing.Literal["freesurfer/feat2segstats"]],
+    "feat_dir": str,
+    "featdirfile": typing.NotRequired[InputPathType | None],
+    "seg_vol": typing.NotRequired[str | None],
+    "aseg_flag": bool,
+    "aparc_aseg_flag": bool,
+    "ctab": typing.NotRequired[InputPathType | None],
+    "all_segs_flag": bool,
+    "copes_flag": bool,
+    "varcopes_flag": bool,
+    "zstats_flag": bool,
+    "pes_flag": bool,
+    "rvar": typing.NotRequired[str | None],
+    "example_func": typing.NotRequired[str | None],
+    "mask": typing.NotRequired[str | None],
+    "mean_func": typing.NotRequired[str | None],
+    "stat": str,
+    "version_flag": bool,
+    "help_flag": bool,
+    "debug_flag": bool,
+    "nolog_flag": bool,
+})
+Feat2segstatsParametersTagged = typing.TypedDict('Feat2segstatsParametersTagged', {
+    "@type": typing.Literal["freesurfer/feat2segstats"],
     "feat_dir": str,
     "featdirfile": typing.NotRequired[InputPathType | None],
     "seg_vol": typing.NotRequired[str | None],
@@ -38,41 +61,9 @@ Feat2segstatsParameters = typing.TypedDict('Feat2segstatsParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "freesurfer.feat2segstats": feat2segstats_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "freesurfer.feat2segstats": feat2segstats_outputs,
-    }.get(t)
-
-
 class Feat2segstatsOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `feat2segstats(...)`.
+    Output object returned when calling `Feat2segstatsParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -101,7 +92,7 @@ def feat2segstats_params(
     help_flag: bool = False,
     debug_flag: bool = False,
     nolog_flag: bool = False,
-) -> Feat2segstatsParameters:
+) -> Feat2segstatsParametersTagged:
     """
     Build parameters.
     
@@ -131,7 +122,7 @@ def feat2segstats_params(
         Parameter dictionary
     """
     params = {
-        "@type": "freesurfer.feat2segstats",
+        "@type": "freesurfer/feat2segstats",
         "feat_dir": feat_dir,
         "aseg_flag": aseg_flag,
         "aparc_aseg_flag": aparc_aseg_flag,
@@ -180,68 +171,68 @@ def feat2segstats_cargs(
     cargs.append("feat2segstats")
     cargs.extend([
         "--feat",
-        params.get("feat_dir")
+        params.get("feat_dir", None)
     ])
-    if params.get("featdirfile") is not None:
+    if params.get("featdirfile", None) is not None:
         cargs.extend([
             "--featdirfile",
-            execution.input_file(params.get("featdirfile"))
+            execution.input_file(params.get("featdirfile", None))
         ])
-    if params.get("seg_vol") is not None:
+    if params.get("seg_vol", None) is not None:
         cargs.extend([
             "--seg",
-            params.get("seg_vol")
+            params.get("seg_vol", None)
         ])
-    if params.get("aseg_flag"):
+    if params.get("aseg_flag", False):
         cargs.append("--aseg")
-    if params.get("aparc_aseg_flag"):
+    if params.get("aparc_aseg_flag", False):
         cargs.append("--aparc+aseg")
-    if params.get("ctab") is not None:
+    if params.get("ctab", None) is not None:
         cargs.extend([
             "--ctab",
-            execution.input_file(params.get("ctab"))
+            execution.input_file(params.get("ctab", None))
         ])
-    if params.get("all_segs_flag"):
+    if params.get("all_segs_flag", False):
         cargs.append("--all-segs")
-    if params.get("copes_flag"):
+    if params.get("copes_flag", False):
         cargs.append("--copes")
-    if params.get("varcopes_flag"):
+    if params.get("varcopes_flag", False):
         cargs.append("--varcopes")
-    if params.get("zstats_flag"):
+    if params.get("zstats_flag", False):
         cargs.append("--zstats")
-    if params.get("pes_flag"):
+    if params.get("pes_flag", False):
         cargs.append("--pes")
-    if params.get("rvar") is not None:
+    if params.get("rvar", None) is not None:
         cargs.extend([
             "--rvar",
-            params.get("rvar")
+            params.get("rvar", None)
         ])
-    if params.get("example_func") is not None:
+    if params.get("example_func", None) is not None:
         cargs.extend([
             "--exf",
-            params.get("example_func")
+            params.get("example_func", None)
         ])
-    if params.get("mask") is not None:
+    if params.get("mask", None) is not None:
         cargs.extend([
             "--mask",
-            params.get("mask")
+            params.get("mask", None)
         ])
-    if params.get("mean_func") is not None:
+    if params.get("mean_func", None) is not None:
         cargs.extend([
             "--mean_func",
-            params.get("mean_func")
+            params.get("mean_func", None)
         ])
     cargs.extend([
         "--stat",
-        params.get("stat")
+        params.get("stat", None)
     ])
-    if params.get("version_flag"):
+    if params.get("version_flag", False):
         cargs.append("--version")
-    if params.get("help_flag"):
+    if params.get("help_flag", False):
         cargs.append("--help")
-    if params.get("debug_flag"):
+    if params.get("debug_flag", False):
         cargs.append("--debug")
-    if params.get("nolog_flag"):
+    if params.get("nolog_flag", False):
         cargs.append("--nolog")
     return cargs
 
@@ -261,7 +252,7 @@ def feat2segstats_outputs(
     """
     ret = Feat2segstatsOutputs(
         root=execution.output_file("."),
-        segstats_output=execution.output_file(params.get("feat_dir") + "/freesurfer/segstats/" + params.get("seg_vol") + "/" + params.get("stat") + ".dat") if (params.get("seg_vol") is not None) else None,
+        segstats_output=execution.output_file(params.get("feat_dir", None) + "/freesurfer/segstats/" + params.get("seg_vol", None) + "/" + params.get("stat", None) + ".dat") if (params.get("seg_vol") is not None) else None,
     )
     return ret
 
@@ -382,7 +373,6 @@ def feat2segstats(
 __all__ = [
     "FEAT2SEGSTATS_METADATA",
     "Feat2segstatsOutputs",
-    "Feat2segstatsParameters",
     "feat2segstats",
     "feat2segstats_execute",
     "feat2segstats_params",

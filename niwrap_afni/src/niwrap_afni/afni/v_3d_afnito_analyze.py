@@ -14,7 +14,14 @@ V_3D_AFNITO_ANALYZE_METADATA = Metadata(
 
 
 V3dAfnitoAnalyzeParameters = typing.TypedDict('V3dAfnitoAnalyzeParameters', {
-    "@type": typing.Literal["afni.3dAFNItoANALYZE"],
+    "@type": typing.NotRequired[typing.Literal["afni/3dAFNItoANALYZE"]],
+    "4d_option": bool,
+    "orient_option": typing.NotRequired[str | None],
+    "output_name": str,
+    "afni_dataset": InputPathType,
+})
+V3dAfnitoAnalyzeParametersTagged = typing.TypedDict('V3dAfnitoAnalyzeParametersTagged', {
+    "@type": typing.Literal["afni/3dAFNItoANALYZE"],
     "4d_option": bool,
     "orient_option": typing.NotRequired[str | None],
     "output_name": str,
@@ -22,41 +29,9 @@ V3dAfnitoAnalyzeParameters = typing.TypedDict('V3dAfnitoAnalyzeParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "afni.3dAFNItoANALYZE": v_3d_afnito_analyze_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "afni.3dAFNItoANALYZE": v_3d_afnito_analyze_outputs,
-    }.get(t)
-
-
 class V3dAfnitoAnalyzeOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `v_3d_afnito_analyze(...)`.
+    Output object returned when calling `V3dAfnitoAnalyzeParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -75,7 +50,7 @@ def v_3d_afnito_analyze_params(
     afni_dataset: InputPathType,
     v_4d_option: bool = False,
     orient_option: str | None = None,
-) -> V3dAfnitoAnalyzeParameters:
+) -> V3dAfnitoAnalyzeParametersTagged:
     """
     Build parameters.
     
@@ -90,7 +65,7 @@ def v_3d_afnito_analyze_params(
         Parameter dictionary
     """
     params = {
-        "@type": "afni.3dAFNItoANALYZE",
+        "@type": "afni/3dAFNItoANALYZE",
         "4d_option": v_4d_option,
         "output_name": output_name,
         "afni_dataset": afni_dataset,
@@ -115,15 +90,15 @@ def v_3d_afnito_analyze_cargs(
     """
     cargs = []
     cargs.append("3dAFNItoANALYZE")
-    if params.get("4d_option"):
+    if params.get("4d_option", False):
         cargs.append("-4D")
-    if params.get("orient_option") is not None:
+    if params.get("orient_option", None) is not None:
         cargs.extend([
             "-orient",
-            params.get("orient_option")
+            params.get("orient_option", None)
         ])
-    cargs.append(params.get("output_name"))
-    cargs.append(execution.input_file(params.get("afni_dataset")))
+    cargs.append(params.get("output_name", None))
+    cargs.append(execution.input_file(params.get("afni_dataset", None)))
     return cargs
 
 
@@ -142,10 +117,10 @@ def v_3d_afnito_analyze_outputs(
     """
     ret = V3dAfnitoAnalyzeOutputs(
         root=execution.output_file("."),
-        output_hdr_file=execution.output_file(params.get("output_name") + "_[INDEX].hdr"),
-        output_img_file=execution.output_file(params.get("output_name") + "_[INDEX].img"),
-        output_4d_hdr_file=execution.output_file(params.get("output_name") + ".hdr"),
-        output_4d_img_file=execution.output_file(params.get("output_name") + ".img"),
+        output_hdr_file=execution.output_file(params.get("output_name", None) + "_[INDEX].hdr"),
+        output_img_file=execution.output_file(params.get("output_name", None) + "_[INDEX].img"),
+        output_4d_hdr_file=execution.output_file(params.get("output_name", None) + ".hdr"),
+        output_4d_img_file=execution.output_file(params.get("output_name", None) + ".img"),
     )
     return ret
 
@@ -216,7 +191,6 @@ def v_3d_afnito_analyze(
 
 __all__ = [
     "V3dAfnitoAnalyzeOutputs",
-    "V3dAfnitoAnalyzeParameters",
     "V_3D_AFNITO_ANALYZE_METADATA",
     "v_3d_afnito_analyze",
     "v_3d_afnito_analyze_execute",

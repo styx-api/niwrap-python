@@ -14,7 +14,19 @@ ASEG2FEAT_METADATA = Metadata(
 
 
 Aseg2featParameters = typing.TypedDict('Aseg2featParameters', {
-    "@type": typing.Literal["freesurfer.aseg2feat"],
+    "@type": typing.NotRequired[typing.Literal["freesurfer/aseg2feat"]],
+    "feat": str,
+    "featdirfile": typing.NotRequired[InputPathType | None],
+    "seg": typing.NotRequired[str | None],
+    "aparc_aseg": bool,
+    "svstats": bool,
+    "standard": bool,
+    "debug": bool,
+    "help": bool,
+    "version": bool,
+})
+Aseg2featParametersTagged = typing.TypedDict('Aseg2featParametersTagged', {
+    "@type": typing.Literal["freesurfer/aseg2feat"],
     "feat": str,
     "featdirfile": typing.NotRequired[InputPathType | None],
     "seg": typing.NotRequired[str | None],
@@ -27,41 +39,9 @@ Aseg2featParameters = typing.TypedDict('Aseg2featParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "freesurfer.aseg2feat": aseg2feat_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "freesurfer.aseg2feat": aseg2feat_outputs,
-    }.get(t)
-
-
 class Aseg2featOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `aseg2feat(...)`.
+    Output object returned when calling `Aseg2featParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -81,7 +61,7 @@ def aseg2feat_params(
     debug: bool = False,
     help_: bool = False,
     version: bool = False,
-) -> Aseg2featParameters:
+) -> Aseg2featParametersTagged:
     """
     Build parameters.
     
@@ -101,7 +81,7 @@ def aseg2feat_params(
         Parameter dictionary
     """
     params = {
-        "@type": "freesurfer.aseg2feat",
+        "@type": "freesurfer/aseg2feat",
         "feat": feat,
         "aparc_aseg": aparc_aseg,
         "svstats": svstats,
@@ -134,29 +114,29 @@ def aseg2feat_cargs(
     cargs.append("aseg2feat")
     cargs.extend([
         "--feat",
-        params.get("feat")
+        params.get("feat", None)
     ])
-    if params.get("featdirfile") is not None:
+    if params.get("featdirfile", None) is not None:
         cargs.extend([
             "--featdirfile",
-            execution.input_file(params.get("featdirfile"))
+            execution.input_file(params.get("featdirfile", None))
         ])
-    if params.get("seg") is not None:
+    if params.get("seg", None) is not None:
         cargs.extend([
             "--seg",
-            params.get("seg")
+            params.get("seg", None)
         ])
-    if params.get("aparc_aseg"):
+    if params.get("aparc_aseg", False):
         cargs.append("--aparc+aseg")
-    if params.get("svstats"):
+    if params.get("svstats", False):
         cargs.append("--svstats")
-    if params.get("standard"):
+    if params.get("standard", False):
         cargs.append("--standard")
-    if params.get("debug"):
+    if params.get("debug", False):
         cargs.append("--debug")
-    if params.get("help"):
+    if params.get("help", False):
         cargs.append("--help")
-    if params.get("version"):
+    if params.get("version", False):
         cargs.append("--version")
     return cargs
 
@@ -176,8 +156,8 @@ def aseg2feat_outputs(
     """
     ret = Aseg2featOutputs(
         root=execution.output_file("."),
-        segmentation_output=execution.output_file(params.get("feat") + "/reg/freesurfer/aseg.nii.gz"),
-        stats_output=execution.output_file(params.get("feat") + "/stats"),
+        segmentation_output=execution.output_file(params.get("feat", None) + "/reg/freesurfer/aseg.nii.gz"),
+        stats_output=execution.output_file(params.get("feat", None) + "/stats"),
     )
     return ret
 
@@ -266,7 +246,6 @@ def aseg2feat(
 __all__ = [
     "ASEG2FEAT_METADATA",
     "Aseg2featOutputs",
-    "Aseg2featParameters",
     "aseg2feat",
     "aseg2feat_execute",
     "aseg2feat_params",

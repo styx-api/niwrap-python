@@ -14,7 +14,13 @@ WARP2METRIC_METADATA = Metadata(
 
 
 Warp2metricFcParameters = typing.TypedDict('Warp2metricFcParameters', {
-    "@type": typing.Literal["mrtrix.warp2metric.fc"],
+    "@type": typing.NotRequired[typing.Literal["fc"]],
+    "template_fixel_directory": InputPathType,
+    "output_fixel_directory": str,
+    "output_fixel_data": str,
+})
+Warp2metricFcParametersTagged = typing.TypedDict('Warp2metricFcParametersTagged', {
+    "@type": typing.Literal["fc"],
     "template_fixel_directory": InputPathType,
     "output_fixel_directory": str,
     "output_fixel_data": str,
@@ -22,14 +28,34 @@ Warp2metricFcParameters = typing.TypedDict('Warp2metricFcParameters', {
 
 
 Warp2metricConfigParameters = typing.TypedDict('Warp2metricConfigParameters', {
-    "@type": typing.Literal["mrtrix.warp2metric.config"],
+    "@type": typing.NotRequired[typing.Literal["config"]],
+    "key": str,
+    "value": str,
+})
+Warp2metricConfigParametersTagged = typing.TypedDict('Warp2metricConfigParametersTagged', {
+    "@type": typing.Literal["config"],
     "key": str,
     "value": str,
 })
 
 
 Warp2metricParameters = typing.TypedDict('Warp2metricParameters', {
-    "@type": typing.Literal["mrtrix.warp2metric"],
+    "@type": typing.NotRequired[typing.Literal["mrtrix/warp2metric"]],
+    "fc": typing.NotRequired[Warp2metricFcParameters | None],
+    "jmat": typing.NotRequired[str | None],
+    "jdet": typing.NotRequired[str | None],
+    "info": bool,
+    "quiet": bool,
+    "debug": bool,
+    "force": bool,
+    "nthreads": typing.NotRequired[int | None],
+    "config": typing.NotRequired[list[Warp2metricConfigParameters] | None],
+    "help": bool,
+    "version": bool,
+    "in": InputPathType,
+})
+Warp2metricParametersTagged = typing.TypedDict('Warp2metricParametersTagged', {
+    "@type": typing.Literal["mrtrix/warp2metric"],
     "fc": typing.NotRequired[Warp2metricFcParameters | None],
     "jmat": typing.NotRequired[str | None],
     "jdet": typing.NotRequired[str | None],
@@ -45,45 +71,11 @@ Warp2metricParameters = typing.TypedDict('Warp2metricParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "mrtrix.warp2metric": warp2metric_cargs,
-        "mrtrix.warp2metric.fc": warp2metric_fc_cargs,
-        "mrtrix.warp2metric.config": warp2metric_config_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "mrtrix.warp2metric": warp2metric_outputs,
-    }.get(t)
-
-
 def warp2metric_fc_params(
     template_fixel_directory: InputPathType,
     output_fixel_directory: str,
     output_fixel_data: str,
-) -> Warp2metricFcParameters:
+) -> Warp2metricFcParametersTagged:
     """
     Build parameters.
     
@@ -107,7 +99,7 @@ def warp2metric_fc_params(
         Parameter dictionary
     """
     params = {
-        "@type": "mrtrix.warp2metric.fc",
+        "@type": "fc",
         "template_fixel_directory": template_fixel_directory,
         "output_fixel_directory": output_fixel_directory,
         "output_fixel_data": output_fixel_data,
@@ -130,16 +122,16 @@ def warp2metric_fc_cargs(
     """
     cargs = []
     cargs.append("-fc")
-    cargs.append(execution.input_file(params.get("template_fixel_directory")))
-    cargs.append(params.get("output_fixel_directory"))
-    cargs.append(params.get("output_fixel_data"))
+    cargs.append(execution.input_file(params.get("template_fixel_directory", None)))
+    cargs.append(params.get("output_fixel_directory", None))
+    cargs.append(params.get("output_fixel_data", None))
     return cargs
 
 
 def warp2metric_config_params(
     key: str,
     value: str,
-) -> Warp2metricConfigParameters:
+) -> Warp2metricConfigParametersTagged:
     """
     Build parameters.
     
@@ -150,7 +142,7 @@ def warp2metric_config_params(
         Parameter dictionary
     """
     params = {
-        "@type": "mrtrix.warp2metric.config",
+        "@type": "config",
         "key": key,
         "value": value,
     }
@@ -172,14 +164,14 @@ def warp2metric_config_cargs(
     """
     cargs = []
     cargs.append("-config")
-    cargs.append(params.get("key"))
-    cargs.append(params.get("value"))
+    cargs.append(params.get("key", None))
+    cargs.append(params.get("value", None))
     return cargs
 
 
 class Warp2metricOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `warp2metric(...)`.
+    Output object returned when calling `Warp2metricParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -204,7 +196,7 @@ def warp2metric_params(
     config: list[Warp2metricConfigParameters] | None = None,
     help_: bool = False,
     version: bool = False,
-) -> Warp2metricParameters:
+) -> Warp2metricParametersTagged:
     """
     Build parameters.
     
@@ -234,7 +226,7 @@ def warp2metric_params(
         Parameter dictionary
     """
     params = {
-        "@type": "mrtrix.warp2metric",
+        "@type": "mrtrix/warp2metric",
         "info": info,
         "quiet": quiet,
         "debug": debug,
@@ -271,38 +263,38 @@ def warp2metric_cargs(
     """
     cargs = []
     cargs.append("warp2metric")
-    if params.get("fc") is not None:
-        cargs.extend(dyn_cargs(params.get("fc")["@type"])(params.get("fc"), execution))
-    if params.get("jmat") is not None:
+    if params.get("fc", None) is not None:
+        cargs.extend(warp2metric_fc_cargs(params.get("fc", None), execution))
+    if params.get("jmat", None) is not None:
         cargs.extend([
             "-jmat",
-            params.get("jmat")
+            params.get("jmat", None)
         ])
-    if params.get("jdet") is not None:
+    if params.get("jdet", None) is not None:
         cargs.extend([
             "-jdet",
-            params.get("jdet")
+            params.get("jdet", None)
         ])
-    if params.get("info"):
+    if params.get("info", False):
         cargs.append("-info")
-    if params.get("quiet"):
+    if params.get("quiet", False):
         cargs.append("-quiet")
-    if params.get("debug"):
+    if params.get("debug", False):
         cargs.append("-debug")
-    if params.get("force"):
+    if params.get("force", False):
         cargs.append("-force")
-    if params.get("nthreads") is not None:
+    if params.get("nthreads", None) is not None:
         cargs.extend([
             "-nthreads",
-            str(params.get("nthreads"))
+            str(params.get("nthreads", None))
         ])
-    if params.get("config") is not None:
-        cargs.extend([a for c in [dyn_cargs(s["@type"])(s, execution) for s in params.get("config")] for a in c])
-    if params.get("help"):
+    if params.get("config", None) is not None:
+        cargs.extend([a for c in [warp2metric_config_cargs(s, execution) for s in params.get("config", None)] for a in c])
+    if params.get("help", False):
         cargs.append("-help")
-    if params.get("version"):
+    if params.get("version", False):
         cargs.append("-version")
-    cargs.append(execution.input_file(params.get("in")))
+    cargs.append(execution.input_file(params.get("in", None)))
     return cargs
 
 
@@ -321,8 +313,8 @@ def warp2metric_outputs(
     """
     ret = Warp2metricOutputs(
         root=execution.output_file("."),
-        jmat=execution.output_file(params.get("jmat")) if (params.get("jmat") is not None) else None,
-        jdet=execution.output_file(params.get("jdet")) if (params.get("jdet") is not None) else None,
+        jmat=execution.output_file(params.get("jmat", None)) if (params.get("jmat") is not None) else None,
+        jdet=execution.output_file(params.get("jdet", None)) if (params.get("jdet") is not None) else None,
     )
     return ret
 
@@ -442,10 +434,7 @@ def warp2metric(
 
 __all__ = [
     "WARP2METRIC_METADATA",
-    "Warp2metricConfigParameters",
-    "Warp2metricFcParameters",
     "Warp2metricOutputs",
-    "Warp2metricParameters",
     "warp2metric",
     "warp2metric_config_params",
     "warp2metric_execute",

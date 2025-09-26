@@ -14,7 +14,14 @@ LABEL_MASK_METADATA = Metadata(
 
 
 LabelMaskParameters = typing.TypedDict('LabelMaskParameters', {
-    "@type": typing.Literal["workbench.label-mask"],
+    "@type": typing.NotRequired[typing.Literal["workbench/label-mask"]],
+    "label": InputPathType,
+    "mask": InputPathType,
+    "label_out": str,
+    "opt_column_column": typing.NotRequired[str | None],
+})
+LabelMaskParametersTagged = typing.TypedDict('LabelMaskParametersTagged', {
+    "@type": typing.Literal["workbench/label-mask"],
     "label": InputPathType,
     "mask": InputPathType,
     "label_out": str,
@@ -22,41 +29,9 @@ LabelMaskParameters = typing.TypedDict('LabelMaskParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "workbench.label-mask": label_mask_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "workbench.label-mask": label_mask_outputs,
-    }.get(t)
-
-
 class LabelMaskOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `label_mask(...)`.
+    Output object returned when calling `LabelMaskParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -69,7 +44,7 @@ def label_mask_params(
     mask: InputPathType,
     label_out: str,
     opt_column_column: str | None = None,
-) -> LabelMaskParameters:
+) -> LabelMaskParametersTagged:
     """
     Build parameters.
     
@@ -82,7 +57,7 @@ def label_mask_params(
         Parameter dictionary
     """
     params = {
-        "@type": "workbench.label-mask",
+        "@type": "workbench/label-mask",
         "label": label,
         "mask": mask,
         "label_out": label_out,
@@ -108,13 +83,13 @@ def label_mask_cargs(
     cargs = []
     cargs.append("wb_command")
     cargs.append("-label-mask")
-    cargs.append(execution.input_file(params.get("label")))
-    cargs.append(execution.input_file(params.get("mask")))
-    cargs.append(params.get("label_out"))
-    if params.get("opt_column_column") is not None:
+    cargs.append(execution.input_file(params.get("label", None)))
+    cargs.append(execution.input_file(params.get("mask", None)))
+    cargs.append(params.get("label_out", None))
+    if params.get("opt_column_column", None) is not None:
         cargs.extend([
             "-column",
-            params.get("opt_column_column")
+            params.get("opt_column_column", None)
         ])
     return cargs
 
@@ -134,7 +109,7 @@ def label_mask_outputs(
     """
     ret = LabelMaskOutputs(
         root=execution.output_file("."),
-        label_out=execution.output_file(params.get("label_out")),
+        label_out=execution.output_file(params.get("label_out", None)),
     )
     return ret
 
@@ -214,7 +189,6 @@ def label_mask(
 __all__ = [
     "LABEL_MASK_METADATA",
     "LabelMaskOutputs",
-    "LabelMaskParameters",
     "label_mask",
     "label_mask_execute",
     "label_mask_params",

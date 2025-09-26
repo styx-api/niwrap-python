@@ -14,7 +14,16 @@ MRI_COMPUTE_CHANGE_MAP_METADATA = Metadata(
 
 
 MriComputeChangeMapParameters = typing.TypedDict('MriComputeChangeMapParameters', {
-    "@type": typing.Literal["freesurfer.mri_compute_change_map"],
+    "@type": typing.NotRequired[typing.Literal["freesurfer/mri_compute_change_map"]],
+    "mean_filter": bool,
+    "gaussian_sigma": typing.NotRequired[float | None],
+    "volume1": InputPathType,
+    "volume2": InputPathType,
+    "transform": InputPathType,
+    "outvolume": str,
+})
+MriComputeChangeMapParametersTagged = typing.TypedDict('MriComputeChangeMapParametersTagged', {
+    "@type": typing.Literal["freesurfer/mri_compute_change_map"],
     "mean_filter": bool,
     "gaussian_sigma": typing.NotRequired[float | None],
     "volume1": InputPathType,
@@ -24,41 +33,9 @@ MriComputeChangeMapParameters = typing.TypedDict('MriComputeChangeMapParameters'
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "freesurfer.mri_compute_change_map": mri_compute_change_map_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "freesurfer.mri_compute_change_map": mri_compute_change_map_outputs,
-    }.get(t)
-
-
 class MriComputeChangeMapOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `mri_compute_change_map(...)`.
+    Output object returned when calling `MriComputeChangeMapParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -73,7 +50,7 @@ def mri_compute_change_map_params(
     outvolume: str,
     mean_filter: bool = False,
     gaussian_sigma: float | None = None,
-) -> MriComputeChangeMapParameters:
+) -> MriComputeChangeMapParametersTagged:
     """
     Build parameters.
     
@@ -91,7 +68,7 @@ def mri_compute_change_map_params(
         Parameter dictionary
     """
     params = {
-        "@type": "freesurfer.mri_compute_change_map",
+        "@type": "freesurfer/mri_compute_change_map",
         "mean_filter": mean_filter,
         "volume1": volume1,
         "volume2": volume2,
@@ -118,17 +95,17 @@ def mri_compute_change_map_cargs(
     """
     cargs = []
     cargs.append("mri_compute_change_map")
-    if params.get("mean_filter"):
+    if params.get("mean_filter", False):
         cargs.append("-m")
-    if params.get("gaussian_sigma") is not None:
+    if params.get("gaussian_sigma", None) is not None:
         cargs.extend([
             "-s",
-            str(params.get("gaussian_sigma"))
+            str(params.get("gaussian_sigma", None))
         ])
-    cargs.append(execution.input_file(params.get("volume1")))
-    cargs.append(execution.input_file(params.get("volume2")))
-    cargs.append(execution.input_file(params.get("transform")))
-    cargs.append(params.get("outvolume"))
+    cargs.append(execution.input_file(params.get("volume1", None)))
+    cargs.append(execution.input_file(params.get("volume2", None)))
+    cargs.append(execution.input_file(params.get("transform", None)))
+    cargs.append(params.get("outvolume", None))
     return cargs
 
 
@@ -147,7 +124,7 @@ def mri_compute_change_map_outputs(
     """
     ret = MriComputeChangeMapOutputs(
         root=execution.output_file("."),
-        out_change_map=execution.output_file(params.get("outvolume")),
+        out_change_map=execution.output_file(params.get("outvolume", None)),
     )
     return ret
 
@@ -226,7 +203,6 @@ def mri_compute_change_map(
 __all__ = [
     "MRI_COMPUTE_CHANGE_MAP_METADATA",
     "MriComputeChangeMapOutputs",
-    "MriComputeChangeMapParameters",
     "mri_compute_change_map",
     "mri_compute_change_map_execute",
     "mri_compute_change_map_params",

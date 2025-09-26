@@ -14,7 +14,35 @@ V_3DROTATE_METADATA = Metadata(
 
 
 V3drotateParameters = typing.TypedDict('V3drotateParameters', {
-    "@type": typing.Literal["afni.3drotate"],
+    "@type": typing.NotRequired[typing.Literal["afni/3drotate"]],
+    "dataset": InputPathType,
+    "prefix": typing.NotRequired[str | None],
+    "verbose": bool,
+    "ashift": typing.NotRequired[list[float] | None],
+    "bshift": typing.NotRequired[list[float] | None],
+    "rotate": typing.NotRequired[list[str] | None],
+    "rotparent": typing.NotRequired[InputPathType | None],
+    "gridparent": typing.NotRequired[InputPathType | None],
+    "matvec_dicom": typing.NotRequired[InputPathType | None],
+    "matvec_order": typing.NotRequired[InputPathType | None],
+    "matvec_dset": typing.NotRequired[InputPathType | None],
+    "dfile": typing.NotRequired[InputPathType | None],
+    "1Dfile": typing.NotRequired[InputPathType | None],
+    "points": bool,
+    "origin": typing.NotRequired[list[float] | None],
+    "Fourier": bool,
+    "NN": bool,
+    "linear": bool,
+    "cubic": bool,
+    "quintic": bool,
+    "heptic": bool,
+    "Fourier_nopad": bool,
+    "clipit": bool,
+    "noclip": bool,
+    "zpad": typing.NotRequired[float | None],
+})
+V3drotateParametersTagged = typing.TypedDict('V3drotateParametersTagged', {
+    "@type": typing.Literal["afni/3drotate"],
     "dataset": InputPathType,
     "prefix": typing.NotRequired[str | None],
     "verbose": bool,
@@ -43,41 +71,9 @@ V3drotateParameters = typing.TypedDict('V3drotateParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "afni.3drotate": v_3drotate_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "afni.3drotate": v_3drotate_outputs,
-    }.get(t)
-
-
 class V3drotateOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `v_3drotate(...)`.
+    Output object returned when calling `V3drotateParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -113,7 +109,7 @@ def v_3drotate_params(
     clipit: bool = False,
     noclip: bool = False,
     zpad: float | None = None,
-) -> V3drotateParameters:
+) -> V3drotateParametersTagged:
     """
     Build parameters.
     
@@ -162,7 +158,7 @@ def v_3drotate_params(
         Parameter dictionary
     """
     params = {
-        "@type": "afni.3drotate",
+        "@type": "afni/3drotate",
         "dataset": dataset,
         "verbose": verbose,
         "points": points,
@@ -220,93 +216,93 @@ def v_3drotate_cargs(
     """
     cargs = []
     cargs.append("3drotate")
-    cargs.append(execution.input_file(params.get("dataset")))
-    if params.get("prefix") is not None:
+    cargs.append(execution.input_file(params.get("dataset", None)))
+    if params.get("prefix", None) is not None:
         cargs.extend([
             "-prefix",
-            params.get("prefix")
+            params.get("prefix", None)
         ])
-    if params.get("verbose"):
+    if params.get("verbose", False):
         cargs.append("-verbose")
-    if params.get("ashift") is not None:
+    if params.get("ashift", None) is not None:
         cargs.extend([
             "-ashift",
-            *map(str, params.get("ashift"))
+            *map(str, params.get("ashift", None))
         ])
-    if params.get("bshift") is not None:
+    if params.get("bshift", None) is not None:
         cargs.extend([
             "-bshift",
-            *map(str, params.get("bshift"))
+            *map(str, params.get("bshift", None))
         ])
-    if params.get("rotate") is not None:
+    if params.get("rotate", None) is not None:
         cargs.extend([
             "-rotate",
-            *params.get("rotate")
+            *params.get("rotate", None)
         ])
-    if params.get("rotparent") is not None:
+    if params.get("rotparent", None) is not None:
         cargs.extend([
             "-rotparent",
-            execution.input_file(params.get("rotparent"))
+            execution.input_file(params.get("rotparent", None))
         ])
-    if params.get("gridparent") is not None:
+    if params.get("gridparent", None) is not None:
         cargs.extend([
             "-gridparent",
-            execution.input_file(params.get("gridparent"))
+            execution.input_file(params.get("gridparent", None))
         ])
-    if params.get("matvec_dicom") is not None:
+    if params.get("matvec_dicom", None) is not None:
         cargs.extend([
             "-matvec_dicom",
-            execution.input_file(params.get("matvec_dicom"))
+            execution.input_file(params.get("matvec_dicom", None))
         ])
-    if params.get("matvec_order") is not None:
+    if params.get("matvec_order", None) is not None:
         cargs.extend([
             "-matvec_order",
-            execution.input_file(params.get("matvec_order"))
+            execution.input_file(params.get("matvec_order", None))
         ])
-    if params.get("matvec_dset") is not None:
+    if params.get("matvec_dset", None) is not None:
         cargs.extend([
             "-matvec_dset",
-            execution.input_file(params.get("matvec_dset"))
+            execution.input_file(params.get("matvec_dset", None))
         ])
-    if params.get("dfile") is not None:
+    if params.get("dfile", None) is not None:
         cargs.extend([
             "-dfile",
-            execution.input_file(params.get("dfile"))
+            execution.input_file(params.get("dfile", None))
         ])
-    if params.get("1Dfile") is not None:
+    if params.get("1Dfile", None) is not None:
         cargs.extend([
             "-1Dfile",
-            execution.input_file(params.get("1Dfile"))
+            execution.input_file(params.get("1Dfile", None))
         ])
-    if params.get("points"):
+    if params.get("points", False):
         cargs.append("-points")
-    if params.get("origin") is not None:
+    if params.get("origin", None) is not None:
         cargs.extend([
             "-origin",
-            *map(str, params.get("origin"))
+            *map(str, params.get("origin", None))
         ])
-    if params.get("Fourier"):
+    if params.get("Fourier", False):
         cargs.append("-Fourier")
-    if params.get("NN"):
+    if params.get("NN", False):
         cargs.append("-NN")
-    if params.get("linear"):
+    if params.get("linear", False):
         cargs.append("-linear")
-    if params.get("cubic"):
+    if params.get("cubic", False):
         cargs.append("-cubic")
-    if params.get("quintic"):
+    if params.get("quintic", False):
         cargs.append("-quintic")
-    if params.get("heptic"):
+    if params.get("heptic", False):
         cargs.append("-heptic")
-    if params.get("Fourier_nopad"):
+    if params.get("Fourier_nopad", False):
         cargs.append("-Fourier_nopad")
-    if params.get("clipit"):
+    if params.get("clipit", False):
         cargs.append("-clipit")
-    if params.get("noclip"):
+    if params.get("noclip", False):
         cargs.append("-noclip")
-    if params.get("zpad") is not None:
+    if params.get("zpad", None) is not None:
         cargs.extend([
             "-zpad",
-            str(params.get("zpad"))
+            str(params.get("zpad", None))
         ])
     return cargs
 
@@ -326,8 +322,8 @@ def v_3drotate_outputs(
     """
     ret = V3drotateOutputs(
         root=execution.output_file("."),
-        out_head=execution.output_file(params.get("prefix") + "+orig.HEAD") if (params.get("prefix") is not None) else None,
-        out_brick=execution.output_file(params.get("prefix") + "+orig.BRIK") if (params.get("prefix") is not None) else None,
+        out_head=execution.output_file(params.get("prefix", None) + "+orig.HEAD") if (params.get("prefix") is not None) else None,
+        out_brick=execution.output_file(params.get("prefix", None) + "+orig.BRIK") if (params.get("prefix") is not None) else None,
     )
     return ret
 
@@ -474,7 +470,6 @@ def v_3drotate(
 
 __all__ = [
     "V3drotateOutputs",
-    "V3drotateParameters",
     "V_3DROTATE_METADATA",
     "v_3drotate",
     "v_3drotate_execute",

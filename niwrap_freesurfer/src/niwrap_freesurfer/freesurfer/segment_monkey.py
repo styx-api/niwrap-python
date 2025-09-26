@@ -14,45 +14,18 @@ SEGMENT_MONKEY_METADATA = Metadata(
 
 
 SegmentMonkeyParameters = typing.TypedDict('SegmentMonkeyParameters', {
-    "@type": typing.Literal["freesurfer.segment_monkey"],
+    "@type": typing.NotRequired[typing.Literal["freesurfer/segment_monkey"]],
+    "control_points": list[str],
+})
+SegmentMonkeyParametersTagged = typing.TypedDict('SegmentMonkeyParametersTagged', {
+    "@type": typing.Literal["freesurfer/segment_monkey"],
     "control_points": list[str],
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "freesurfer.segment_monkey": segment_monkey_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-    }.get(t)
-
-
 class SegmentMonkeyOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `segment_monkey(...)`.
+    Output object returned when calling `SegmentMonkeyParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -60,7 +33,7 @@ class SegmentMonkeyOutputs(typing.NamedTuple):
 
 def segment_monkey_params(
     control_points: list[str],
-) -> SegmentMonkeyParameters:
+) -> SegmentMonkeyParametersTagged:
     """
     Build parameters.
     
@@ -70,7 +43,7 @@ def segment_monkey_params(
         Parameter dictionary
     """
     params = {
-        "@type": "freesurfer.segment_monkey",
+        "@type": "freesurfer/segment_monkey",
         "control_points": control_points,
     }
     return params
@@ -91,7 +64,7 @@ def segment_monkey_cargs(
     """
     cargs = []
     cargs.append("segment_monkey")
-    cargs.extend(params.get("control_points"))
+    cargs.extend(params.get("control_points", None))
     return cargs
 
 
@@ -170,7 +143,6 @@ def segment_monkey(
 __all__ = [
     "SEGMENT_MONKEY_METADATA",
     "SegmentMonkeyOutputs",
-    "SegmentMonkeyParameters",
     "segment_monkey",
     "segment_monkey_execute",
     "segment_monkey_params",

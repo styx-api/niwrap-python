@@ -14,7 +14,25 @@ V__ADD_EDGE_METADATA = Metadata(
 
 
 VAddEdgeParameters = typing.TypedDict('VAddEdgeParameters', {
-    "@type": typing.Literal["afni.@AddEdge"],
+    "@type": typing.NotRequired[typing.Literal["afni/@AddEdge"]],
+    "input_files": list[InputPathType],
+    "examine_list": typing.NotRequired[str | None],
+    "ax_mont": typing.NotRequired[str | None],
+    "ax_geom": typing.NotRequired[str | None],
+    "sag_geom": typing.NotRequired[str | None],
+    "layout_file": typing.NotRequired[str | None],
+    "no_layout": bool,
+    "edge_percentile": typing.NotRequired[int | None],
+    "single_edge": bool,
+    "opacity": typing.NotRequired[int | None],
+    "keep_temp": bool,
+    "no_deoblique": bool,
+    "auto_record": bool,
+    "auto": bool,
+    "no_auto": bool,
+})
+VAddEdgeParametersTagged = typing.TypedDict('VAddEdgeParametersTagged', {
+    "@type": typing.Literal["afni/@AddEdge"],
     "input_files": list[InputPathType],
     "examine_list": typing.NotRequired[str | None],
     "ax_mont": typing.NotRequired[str | None],
@@ -33,41 +51,9 @@ VAddEdgeParameters = typing.TypedDict('VAddEdgeParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "afni.@AddEdge": v__add_edge_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "afni.@AddEdge": v__add_edge_outputs,
-    }.get(t)
-
-
 class VAddEdgeOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `v__add_edge(...)`.
+    Output object returned when calling `VAddEdgeParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -98,7 +84,7 @@ def v__add_edge_params(
     auto_record: bool = False,
     auto: bool = False,
     no_auto: bool = False,
-) -> VAddEdgeParameters:
+) -> VAddEdgeParametersTagged:
     """
     Build parameters.
     
@@ -123,7 +109,7 @@ def v__add_edge_params(
         Parameter dictionary
     """
     params = {
-        "@type": "afni.@AddEdge",
+        "@type": "afni/@AddEdge",
         "input_files": input_files,
         "no_layout": no_layout,
         "single_edge": single_edge,
@@ -165,55 +151,55 @@ def v__add_edge_cargs(
     """
     cargs = []
     cargs.append("@AddEdge")
-    cargs.extend([execution.input_file(f) for f in params.get("input_files")])
-    if params.get("examine_list") is not None:
+    cargs.extend([execution.input_file(f) for f in params.get("input_files", None)])
+    if params.get("examine_list", None) is not None:
         cargs.extend([
             "-examinelist",
-            params.get("examine_list")
+            params.get("examine_list", None)
         ])
-    if params.get("ax_mont") is not None:
+    if params.get("ax_mont", None) is not None:
         cargs.extend([
             "-ax_mont",
-            params.get("ax_mont")
+            params.get("ax_mont", None)
         ])
-    if params.get("ax_geom") is not None:
+    if params.get("ax_geom", None) is not None:
         cargs.extend([
             "-ax_geom",
-            params.get("ax_geom")
+            params.get("ax_geom", None)
         ])
-    if params.get("sag_geom") is not None:
+    if params.get("sag_geom", None) is not None:
         cargs.extend([
             "-sag_geom",
-            params.get("sag_geom")
+            params.get("sag_geom", None)
         ])
-    if params.get("layout_file") is not None:
+    if params.get("layout_file", None) is not None:
         cargs.extend([
             "-layout",
-            params.get("layout_file")
+            params.get("layout_file", None)
         ])
-    if params.get("no_layout"):
+    if params.get("no_layout", False):
         cargs.append("-no_layout")
-    if params.get("edge_percentile") is not None:
+    if params.get("edge_percentile", None) is not None:
         cargs.extend([
             "-edge_percentile",
-            str(params.get("edge_percentile"))
+            str(params.get("edge_percentile", None))
         ])
-    if params.get("single_edge"):
+    if params.get("single_edge", False):
         cargs.append("-single_edge")
-    if params.get("opacity") is not None:
+    if params.get("opacity", None) is not None:
         cargs.extend([
             "-opa",
-            str(params.get("opacity"))
+            str(params.get("opacity", None))
         ])
-    if params.get("keep_temp"):
+    if params.get("keep_temp", False):
         cargs.append("-keep_temp")
-    if params.get("no_deoblique"):
+    if params.get("no_deoblique", False):
         cargs.append("-no_deoblique")
-    if params.get("auto_record"):
+    if params.get("auto_record", False):
         cargs.append("-auto_record")
-    if params.get("auto"):
+    if params.get("auto", False):
         cargs.append("-auto")
-    if params.get("no_auto"):
+    if params.get("no_auto", False):
         cargs.append("-no_auto")
     return cargs
 
@@ -341,7 +327,6 @@ def v__add_edge(
 
 __all__ = [
     "VAddEdgeOutputs",
-    "VAddEdgeParameters",
     "V__ADD_EDGE_METADATA",
     "v__add_edge",
     "v__add_edge_execute",

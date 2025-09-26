@@ -14,7 +14,63 @@ MRI_COREG_METADATA = Metadata(
 
 
 MriCoregParameters = typing.TypedDict('MriCoregParameters', {
-    "@type": typing.Literal["freesurfer.mri_coreg"],
+    "@type": typing.NotRequired[typing.Literal["freesurfer/mri_coreg"]],
+    "movvol": InputPathType,
+    "refvol": InputPathType,
+    "reg": str,
+    "subject": typing.NotRequired[str | None],
+    "dof": typing.NotRequired[int | None],
+    "zscale": bool,
+    "xztrans_yrot": bool,
+    "xytrans_zrot": bool,
+    "xytrans_zrot_xyscale_xyshear": bool,
+    "ref_maskvol": typing.NotRequired[InputPathType | None],
+    "no_ref_mask": bool,
+    "mov_maskvol": typing.NotRequired[InputPathType | None],
+    "threads": typing.NotRequired[int | None],
+    "subjects_dir": typing.NotRequired[str | None],
+    "regdat": typing.NotRequired[str | None],
+    "no_coord_dither": bool,
+    "no_intensity_dither": bool,
+    "spatial_scales": typing.NotRequired[list[str] | None],
+    "trans": typing.NotRequired[list[float] | None],
+    "rot": typing.NotRequired[list[float] | None],
+    "scale": typing.NotRequired[list[float] | None],
+    "shear": typing.NotRequired[list[float] | None],
+    "init_reg": typing.NotRequired[InputPathType | None],
+    "out_param_file": typing.NotRequired[str | None],
+    "out_cost_file": typing.NotRequired[str | None],
+    "no_cras0": bool,
+    "centroid": bool,
+    "ras2ras": bool,
+    "nitersmax": typing.NotRequired[int | None],
+    "ftol": typing.NotRequired[float | None],
+    "linmintol": typing.NotRequired[float | None],
+    "seed": typing.NotRequired[int | None],
+    "sat": typing.NotRequired[float | None],
+    "conf_ref": bool,
+    "no_bf": bool,
+    "bf_lim": typing.NotRequired[float | None],
+    "bf_nsamp": typing.NotRequired[int | None],
+    "no_smooth": bool,
+    "ref_fwhm": typing.NotRequired[float | None],
+    "mov_oob": bool,
+    "init_reg_save": typing.NotRequired[InputPathType | None],
+    "init_reg_save_only": typing.NotRequired[InputPathType | None],
+    "mat2par": typing.NotRequired[InputPathType | None],
+    "mat2rot": typing.NotRequired[InputPathType | None],
+    "par2mat": typing.NotRequired[str | None],
+    "lrrev": typing.NotRequired[InputPathType | None],
+    "landmarks": typing.NotRequired[list[str] | None],
+    "rms": typing.NotRequired[list[str] | None],
+    "movout": typing.NotRequired[InputPathType | None],
+    "mov_idither": typing.NotRequired[InputPathType | None],
+    "debug": bool,
+    "checkopts": bool,
+    "version": bool,
+})
+MriCoregParametersTagged = typing.TypedDict('MriCoregParametersTagged', {
+    "@type": typing.Literal["freesurfer/mri_coreg"],
     "movvol": InputPathType,
     "refvol": InputPathType,
     "reg": str,
@@ -71,41 +127,9 @@ MriCoregParameters = typing.TypedDict('MriCoregParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "freesurfer.mri_coreg": mri_coreg_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "freesurfer.mri_coreg": mri_coreg_outputs,
-    }.get(t)
-
-
 class MriCoregOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `mri_coreg(...)`.
+    Output object returned when calling `MriCoregParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -179,7 +203,7 @@ def mri_coreg_params(
     debug: bool = False,
     checkopts: bool = False,
     version: bool = False,
-) -> MriCoregParameters:
+) -> MriCoregParametersTagged:
     """
     Build parameters.
     
@@ -246,7 +270,7 @@ def mri_coreg_params(
         Parameter dictionary
     """
     params = {
-        "@type": "freesurfer.mri_coreg",
+        "@type": "freesurfer/mri_coreg",
         "movvol": movvol,
         "refvol": refvol,
         "reg": reg,
@@ -354,214 +378,214 @@ def mri_coreg_cargs(
     cargs.append("mri_coreg")
     cargs.extend([
         "-mov",
-        execution.input_file(params.get("movvol"))
+        execution.input_file(params.get("movvol", None))
     ])
     cargs.extend([
         "-ref",
-        execution.input_file(params.get("refvol"))
+        execution.input_file(params.get("refvol", None))
     ])
     cargs.extend([
         "-reg",
-        params.get("reg")
+        params.get("reg", None)
     ])
-    if params.get("subject") is not None:
+    if params.get("subject", None) is not None:
         cargs.extend([
             "--s",
-            params.get("subject")
+            params.get("subject", None)
         ])
-    if params.get("dof") is not None:
+    if params.get("dof", None) is not None:
         cargs.extend([
             "--dof",
-            str(params.get("dof"))
+            str(params.get("dof", None))
         ])
-    if params.get("zscale"):
+    if params.get("zscale", False):
         cargs.append("--zscale")
-    if params.get("xztrans_yrot"):
+    if params.get("xztrans_yrot", False):
         cargs.append("--xztrans+yrot")
-    if params.get("xytrans_zrot"):
+    if params.get("xytrans_zrot", False):
         cargs.append("--xytrans+zrot")
-    if params.get("xytrans_zrot_xyscale_xyshear"):
+    if params.get("xytrans_zrot_xyscale_xyshear", False):
         cargs.append("--xytrans+zrot+xyscale+xyshear")
-    if params.get("ref_maskvol") is not None:
+    if params.get("ref_maskvol", None) is not None:
         cargs.extend([
             "--ref-mask",
-            execution.input_file(params.get("ref_maskvol"))
+            execution.input_file(params.get("ref_maskvol", None))
         ])
-    if params.get("no_ref_mask"):
+    if params.get("no_ref_mask", False):
         cargs.append("--no-ref-mask")
-    if params.get("mov_maskvol") is not None:
+    if params.get("mov_maskvol", None) is not None:
         cargs.extend([
             "--mov-mask",
-            execution.input_file(params.get("mov_maskvol"))
+            execution.input_file(params.get("mov_maskvol", None))
         ])
-    if params.get("threads") is not None:
+    if params.get("threads", None) is not None:
         cargs.extend([
             "--threads",
-            str(params.get("threads"))
+            str(params.get("threads", None))
         ])
-    if params.get("subjects_dir") is not None:
+    if params.get("subjects_dir", None) is not None:
         cargs.extend([
             "--sd",
-            params.get("subjects_dir")
+            params.get("subjects_dir", None)
         ])
-    if params.get("regdat") is not None:
+    if params.get("regdat", None) is not None:
         cargs.extend([
             "--regdat",
-            params.get("regdat")
+            params.get("regdat", None)
         ])
-    if params.get("no_coord_dither"):
+    if params.get("no_coord_dither", False):
         cargs.append("--no-coord-dither")
-    if params.get("no_intensity_dither"):
+    if params.get("no_intensity_dither", False):
         cargs.append("--no-intensity-dither")
-    if params.get("spatial_scales") is not None:
+    if params.get("spatial_scales", None) is not None:
         cargs.extend([
             "--sep",
-            *params.get("spatial_scales")
+            *params.get("spatial_scales", None)
         ])
-    if params.get("trans") is not None:
+    if params.get("trans", None) is not None:
         cargs.extend([
             "--trans",
-            *map(str, params.get("trans"))
+            *map(str, params.get("trans", None))
         ])
-    if params.get("rot") is not None:
+    if params.get("rot", None) is not None:
         cargs.extend([
             "--rot",
-            *map(str, params.get("rot"))
+            *map(str, params.get("rot", None))
         ])
-    if params.get("scale") is not None:
+    if params.get("scale", None) is not None:
         cargs.extend([
             "--scale",
-            *map(str, params.get("scale"))
+            *map(str, params.get("scale", None))
         ])
-    if params.get("shear") is not None:
+    if params.get("shear", None) is not None:
         cargs.extend([
             "--shear",
-            *map(str, params.get("shear"))
+            *map(str, params.get("shear", None))
         ])
-    if params.get("init_reg") is not None:
+    if params.get("init_reg", None) is not None:
         cargs.extend([
             "--init-reg",
-            execution.input_file(params.get("init_reg"))
+            execution.input_file(params.get("init_reg", None))
         ])
-    if params.get("out_param_file") is not None:
+    if params.get("out_param_file", None) is not None:
         cargs.extend([
             "--params",
-            params.get("out_param_file")
+            params.get("out_param_file", None)
         ])
-    if params.get("out_cost_file") is not None:
+    if params.get("out_cost_file", None) is not None:
         cargs.extend([
             "--final-cost",
-            params.get("out_cost_file")
+            params.get("out_cost_file", None)
         ])
-    if params.get("no_cras0"):
+    if params.get("no_cras0", False):
         cargs.append("--no-cras0")
-    if params.get("centroid"):
+    if params.get("centroid", False):
         cargs.append("--centroid")
-    if params.get("ras2ras"):
+    if params.get("ras2ras", False):
         cargs.append("--ras2ras")
-    if params.get("nitersmax") is not None:
+    if params.get("nitersmax", None) is not None:
         cargs.extend([
             "--nitersmax",
-            str(params.get("nitersmax"))
+            str(params.get("nitersmax", None))
         ])
-    if params.get("ftol") is not None:
+    if params.get("ftol", None) is not None:
         cargs.extend([
             "--ftol",
-            str(params.get("ftol"))
+            str(params.get("ftol", None))
         ])
-    if params.get("linmintol") is not None:
+    if params.get("linmintol", None) is not None:
         cargs.extend([
             "--linmintol",
-            str(params.get("linmintol"))
+            str(params.get("linmintol", None))
         ])
-    if params.get("seed") is not None:
+    if params.get("seed", None) is not None:
         cargs.extend([
             "--seed",
-            str(params.get("seed"))
+            str(params.get("seed", None))
         ])
-    if params.get("sat") is not None:
+    if params.get("sat", None) is not None:
         cargs.extend([
             "--sat",
-            str(params.get("sat"))
+            str(params.get("sat", None))
         ])
-    if params.get("conf_ref"):
+    if params.get("conf_ref", False):
         cargs.append("--conf-ref")
-    if params.get("no_bf"):
+    if params.get("no_bf", False):
         cargs.append("--no-bf")
-    if params.get("bf_lim") is not None:
+    if params.get("bf_lim", None) is not None:
         cargs.extend([
             "--bf-lim",
-            str(params.get("bf_lim"))
+            str(params.get("bf_lim", None))
         ])
-    if params.get("bf_nsamp") is not None:
+    if params.get("bf_nsamp", None) is not None:
         cargs.extend([
             "--bf-nsamp",
-            str(params.get("bf_nsamp"))
+            str(params.get("bf_nsamp", None))
         ])
-    if params.get("no_smooth"):
+    if params.get("no_smooth", False):
         cargs.append("--no-smooth")
-    if params.get("ref_fwhm") is not None:
+    if params.get("ref_fwhm", None) is not None:
         cargs.extend([
             "--ref-fwhm",
-            str(params.get("ref_fwhm"))
+            str(params.get("ref_fwhm", None))
         ])
-    if params.get("mov_oob"):
+    if params.get("mov_oob", False):
         cargs.append("--mov-oob")
-    if params.get("init_reg_save") is not None:
+    if params.get("init_reg_save", None) is not None:
         cargs.extend([
             "--init-reg-save",
-            execution.input_file(params.get("init_reg_save"))
+            execution.input_file(params.get("init_reg_save", None))
         ])
-    if params.get("init_reg_save_only") is not None:
+    if params.get("init_reg_save_only", None) is not None:
         cargs.extend([
             "--init-reg-save-only",
-            execution.input_file(params.get("init_reg_save_only"))
+            execution.input_file(params.get("init_reg_save_only", None))
         ])
-    if params.get("mat2par") is not None:
+    if params.get("mat2par", None) is not None:
         cargs.extend([
             "--mat2par",
-            execution.input_file(params.get("mat2par"))
+            execution.input_file(params.get("mat2par", None))
         ])
-    if params.get("mat2rot") is not None:
+    if params.get("mat2rot", None) is not None:
         cargs.extend([
             "--mat2rot",
-            execution.input_file(params.get("mat2rot"))
+            execution.input_file(params.get("mat2rot", None))
         ])
-    if params.get("par2mat") is not None:
+    if params.get("par2mat", None) is not None:
         cargs.extend([
             "--par2mat",
-            params.get("par2mat")
+            params.get("par2mat", None)
         ])
-    if params.get("lrrev") is not None:
+    if params.get("lrrev", None) is not None:
         cargs.extend([
             "--lrrev",
-            execution.input_file(params.get("lrrev"))
+            execution.input_file(params.get("lrrev", None))
         ])
-    if params.get("landmarks") is not None:
+    if params.get("landmarks", None) is not None:
         cargs.extend([
             "--landmarks",
-            *params.get("landmarks")
+            *params.get("landmarks", None)
         ])
-    if params.get("rms") is not None:
+    if params.get("rms", None) is not None:
         cargs.extend([
             "--rms",
-            *params.get("rms")
+            *params.get("rms", None)
         ])
-    if params.get("movout") is not None:
+    if params.get("movout", None) is not None:
         cargs.extend([
             "--movout",
-            execution.input_file(params.get("movout"))
+            execution.input_file(params.get("movout", None))
         ])
-    if params.get("mov_idither") is not None:
+    if params.get("mov_idither", None) is not None:
         cargs.extend([
             "--mov-idither",
-            execution.input_file(params.get("mov_idither"))
+            execution.input_file(params.get("mov_idither", None))
         ])
-    if params.get("debug"):
+    if params.get("debug", False):
         cargs.append("--debug")
-    if params.get("checkopts"):
+    if params.get("checkopts", False):
         cargs.append("--checkopts")
-    if params.get("version"):
+    if params.get("version", False):
         cargs.append("--version")
     return cargs
 
@@ -581,13 +605,13 @@ def mri_coreg_outputs(
     """
     ret = MriCoregOutputs(
         root=execution.output_file("."),
-        out_registration=execution.output_file(params.get("reg")),
-        out_params=execution.output_file(params.get("out_param_file")) if (params.get("out_param_file") is not None) else None,
-        out_cost=execution.output_file(params.get("out_cost_file")) if (params.get("out_cost_file") is not None) else None,
-        saved_init_reg=execution.output_file(pathlib.Path(params.get("init_reg_save")).name) if (params.get("init_reg_save") is not None) else None,
-        saved_init_reg_only=execution.output_file(pathlib.Path(params.get("init_reg_save_only")).name) if (params.get("init_reg_save_only") is not None) else None,
-        movout_volume=execution.output_file(pathlib.Path(params.get("movout")).name) if (params.get("movout") is not None) else None,
-        mov_idither_volume=execution.output_file(pathlib.Path(params.get("mov_idither")).name) if (params.get("mov_idither") is not None) else None,
+        out_registration=execution.output_file(params.get("reg", None)),
+        out_params=execution.output_file(params.get("out_param_file", None)) if (params.get("out_param_file") is not None) else None,
+        out_cost=execution.output_file(params.get("out_cost_file", None)) if (params.get("out_cost_file") is not None) else None,
+        saved_init_reg=execution.output_file(pathlib.Path(params.get("init_reg_save", None)).name) if (params.get("init_reg_save") is not None) else None,
+        saved_init_reg_only=execution.output_file(pathlib.Path(params.get("init_reg_save_only", None)).name) if (params.get("init_reg_save_only") is not None) else None,
+        movout_volume=execution.output_file(pathlib.Path(params.get("movout", None)).name) if (params.get("movout") is not None) else None,
+        mov_idither_volume=execution.output_file(pathlib.Path(params.get("mov_idither", None)).name) if (params.get("mov_idither") is not None) else None,
     )
     return ret
 
@@ -811,7 +835,6 @@ def mri_coreg(
 __all__ = [
     "MRI_COREG_METADATA",
     "MriCoregOutputs",
-    "MriCoregParameters",
     "mri_coreg",
     "mri_coreg_execute",
     "mri_coreg_params",

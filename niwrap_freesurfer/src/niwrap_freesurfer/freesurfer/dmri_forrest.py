@@ -14,7 +14,19 @@ DMRI_FORREST_METADATA = Metadata(
 
 
 DmriForrestParameters = typing.TypedDict('DmriForrestParameters', {
-    "@type": typing.Literal["freesurfer.dmri_forrest"],
+    "@type": typing.NotRequired[typing.Literal["freesurfer/dmri_forrest"]],
+    "test_dir": str,
+    "train_file": InputPathType,
+    "mask_file": InputPathType,
+    "tract_files": list[InputPathType],
+    "seg_file": typing.NotRequired[InputPathType | None],
+    "diff_file": typing.NotRequired[InputPathType | None],
+    "debug": bool,
+    "checkopts": bool,
+    "help": bool,
+})
+DmriForrestParametersTagged = typing.TypedDict('DmriForrestParametersTagged', {
+    "@type": typing.Literal["freesurfer/dmri_forrest"],
     "test_dir": str,
     "train_file": InputPathType,
     "mask_file": InputPathType,
@@ -27,40 +39,9 @@ DmriForrestParameters = typing.TypedDict('DmriForrestParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "freesurfer.dmri_forrest": dmri_forrest_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-    }.get(t)
-
-
 class DmriForrestOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `dmri_forrest(...)`.
+    Output object returned when calling `DmriForrestParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -76,7 +57,7 @@ def dmri_forrest_params(
     debug: bool = False,
     checkopts: bool = False,
     help_: bool = False,
-) -> DmriForrestParameters:
+) -> DmriForrestParametersTagged:
     """
     Build parameters.
     
@@ -95,7 +76,7 @@ def dmri_forrest_params(
         Parameter dictionary
     """
     params = {
-        "@type": "freesurfer.dmri_forrest",
+        "@type": "freesurfer/dmri_forrest",
         "test_dir": test_dir,
         "train_file": train_file,
         "mask_file": mask_file,
@@ -128,35 +109,35 @@ def dmri_forrest_cargs(
     cargs.append("dmri_forrest")
     cargs.extend([
         "--test",
-        params.get("test_dir")
+        params.get("test_dir", None)
     ])
     cargs.extend([
         "--train",
-        execution.input_file(params.get("train_file"))
+        execution.input_file(params.get("train_file", None))
     ])
     cargs.extend([
         "--mask",
-        execution.input_file(params.get("mask_file"))
+        execution.input_file(params.get("mask_file", None))
     ])
     cargs.extend([
         "--tract",
-        *[execution.input_file(f) for f in params.get("tract_files")]
+        *[execution.input_file(f) for f in params.get("tract_files", None)]
     ])
-    if params.get("seg_file") is not None:
+    if params.get("seg_file", None) is not None:
         cargs.extend([
             "--seg",
-            execution.input_file(params.get("seg_file"))
+            execution.input_file(params.get("seg_file", None))
         ])
-    if params.get("diff_file") is not None:
+    if params.get("diff_file", None) is not None:
         cargs.extend([
             "--diff",
-            execution.input_file(params.get("diff_file"))
+            execution.input_file(params.get("diff_file", None))
         ])
-    if params.get("debug"):
+    if params.get("debug", False):
         cargs.append("--debug")
-    if params.get("checkopts"):
+    if params.get("checkopts", False):
         cargs.append("--checkopts")
-    if params.get("help"):
+    if params.get("help", False):
         cargs.append("--help")
     return cargs
 
@@ -263,7 +244,6 @@ def dmri_forrest(
 __all__ = [
     "DMRI_FORREST_METADATA",
     "DmriForrestOutputs",
-    "DmriForrestParameters",
     "dmri_forrest",
     "dmri_forrest_execute",
     "dmri_forrest_params",

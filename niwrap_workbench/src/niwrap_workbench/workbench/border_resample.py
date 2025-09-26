@@ -14,7 +14,14 @@ BORDER_RESAMPLE_METADATA = Metadata(
 
 
 BorderResampleParameters = typing.TypedDict('BorderResampleParameters', {
-    "@type": typing.Literal["workbench.border-resample"],
+    "@type": typing.NotRequired[typing.Literal["workbench/border-resample"]],
+    "border_in": InputPathType,
+    "current_sphere": InputPathType,
+    "new_sphere": InputPathType,
+    "border_out": str,
+})
+BorderResampleParametersTagged = typing.TypedDict('BorderResampleParametersTagged', {
+    "@type": typing.Literal["workbench/border-resample"],
     "border_in": InputPathType,
     "current_sphere": InputPathType,
     "new_sphere": InputPathType,
@@ -22,41 +29,9 @@ BorderResampleParameters = typing.TypedDict('BorderResampleParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "workbench.border-resample": border_resample_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "workbench.border-resample": border_resample_outputs,
-    }.get(t)
-
-
 class BorderResampleOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `border_resample(...)`.
+    Output object returned when calling `BorderResampleParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -69,7 +44,7 @@ def border_resample_params(
     current_sphere: InputPathType,
     new_sphere: InputPathType,
     border_out: str,
-) -> BorderResampleParameters:
+) -> BorderResampleParametersTagged:
     """
     Build parameters.
     
@@ -84,7 +59,7 @@ def border_resample_params(
         Parameter dictionary
     """
     params = {
-        "@type": "workbench.border-resample",
+        "@type": "workbench/border-resample",
         "border_in": border_in,
         "current_sphere": current_sphere,
         "new_sphere": new_sphere,
@@ -109,10 +84,10 @@ def border_resample_cargs(
     cargs = []
     cargs.append("wb_command")
     cargs.append("-border-resample")
-    cargs.append(execution.input_file(params.get("border_in")))
-    cargs.append(execution.input_file(params.get("current_sphere")))
-    cargs.append(execution.input_file(params.get("new_sphere")))
-    cargs.append(params.get("border_out"))
+    cargs.append(execution.input_file(params.get("border_in", None)))
+    cargs.append(execution.input_file(params.get("current_sphere", None)))
+    cargs.append(execution.input_file(params.get("new_sphere", None)))
+    cargs.append(params.get("border_out", None))
     return cargs
 
 
@@ -131,7 +106,7 @@ def border_resample_outputs(
     """
     ret = BorderResampleOutputs(
         root=execution.output_file("."),
-        border_out=execution.output_file(params.get("border_out")),
+        border_out=execution.output_file(params.get("border_out", None)),
     )
     return ret
 
@@ -211,7 +186,6 @@ def border_resample(
 __all__ = [
     "BORDER_RESAMPLE_METADATA",
     "BorderResampleOutputs",
-    "BorderResampleParameters",
     "border_resample",
     "border_resample_execute",
     "border_resample_params",

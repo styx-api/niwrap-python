@@ -14,7 +14,18 @@ EXTRACT_SEG_WAVEFORM_METADATA = Metadata(
 
 
 ExtractSegWaveformParameters = typing.TypedDict('ExtractSegWaveformParameters', {
-    "@type": typing.Literal["freesurfer.extract_seg_waveform"],
+    "@type": typing.NotRequired[typing.Literal["freesurfer/extract_seg_waveform"]],
+    "seg_file": InputPathType,
+    "seg_indices": list[float],
+    "input_volume": InputPathType,
+    "reg_file": InputPathType,
+    "vsm_file": typing.NotRequired[InputPathType | None],
+    "regheader_flag": bool,
+    "demean_flag": bool,
+    "output_file": str,
+})
+ExtractSegWaveformParametersTagged = typing.TypedDict('ExtractSegWaveformParametersTagged', {
+    "@type": typing.Literal["freesurfer/extract_seg_waveform"],
     "seg_file": InputPathType,
     "seg_indices": list[float],
     "input_volume": InputPathType,
@@ -26,40 +37,9 @@ ExtractSegWaveformParameters = typing.TypedDict('ExtractSegWaveformParameters', 
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "freesurfer.extract_seg_waveform": extract_seg_waveform_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-    }.get(t)
-
-
 class ExtractSegWaveformOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `extract_seg_waveform(...)`.
+    Output object returned when calling `ExtractSegWaveformParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -74,7 +54,7 @@ def extract_seg_waveform_params(
     vsm_file: InputPathType | None = None,
     regheader_flag: bool = False,
     demean_flag: bool = False,
-) -> ExtractSegWaveformParameters:
+) -> ExtractSegWaveformParametersTagged:
     """
     Build parameters.
     
@@ -91,7 +71,7 @@ def extract_seg_waveform_params(
         Parameter dictionary
     """
     params = {
-        "@type": "freesurfer.extract_seg_waveform",
+        "@type": "freesurfer/extract_seg_waveform",
         "seg_file": seg_file,
         "seg_indices": seg_indices,
         "input_volume": input_volume,
@@ -122,32 +102,32 @@ def extract_seg_waveform_cargs(
     cargs.append("extract_seg_waveform")
     cargs.extend([
         "--seg",
-        execution.input_file(params.get("seg_file"))
+        execution.input_file(params.get("seg_file", None))
     ])
     cargs.extend([
         "--id",
-        *map(str, params.get("seg_indices"))
+        *map(str, params.get("seg_indices", None))
     ])
     cargs.extend([
         "--i",
-        execution.input_file(params.get("input_volume"))
+        execution.input_file(params.get("input_volume", None))
     ])
     cargs.extend([
         "--reg",
-        execution.input_file(params.get("reg_file"))
+        execution.input_file(params.get("reg_file", None))
     ])
-    if params.get("vsm_file") is not None:
+    if params.get("vsm_file", None) is not None:
         cargs.extend([
             "--vsm",
-            execution.input_file(params.get("vsm_file"))
+            execution.input_file(params.get("vsm_file", None))
         ])
-    if params.get("regheader_flag"):
+    if params.get("regheader_flag", False):
         cargs.append("--regheader")
-    if params.get("demean_flag"):
+    if params.get("demean_flag", False):
         cargs.append("--demean")
     cargs.extend([
         "--o",
-        params.get("output_file")
+        params.get("output_file", None)
     ])
     return cargs
 
@@ -256,7 +236,6 @@ def extract_seg_waveform(
 __all__ = [
     "EXTRACT_SEG_WAVEFORM_METADATA",
     "ExtractSegWaveformOutputs",
-    "ExtractSegWaveformParameters",
     "extract_seg_waveform",
     "extract_seg_waveform_execute",
     "extract_seg_waveform_params",

@@ -14,48 +14,22 @@ V_3DMAXDISP_METADATA = Metadata(
 
 
 V3dmaxdispParameters = typing.TypedDict('V3dmaxdispParameters', {
-    "@type": typing.Literal["afni.3dmaxdisp"],
+    "@type": typing.NotRequired[typing.Literal["afni/3dmaxdisp"]],
+    "inset": InputPathType,
+    "matrix": InputPathType,
+    "verbose": bool,
+})
+V3dmaxdispParametersTagged = typing.TypedDict('V3dmaxdispParametersTagged', {
+    "@type": typing.Literal["afni/3dmaxdisp"],
     "inset": InputPathType,
     "matrix": InputPathType,
     "verbose": bool,
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "afni.3dmaxdisp": v_3dmaxdisp_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "afni.3dmaxdisp": v_3dmaxdisp_outputs,
-    }.get(t)
-
-
 class V3dmaxdispOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `v_3dmaxdisp(...)`.
+    Output object returned when calling `V3dmaxdispParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -67,7 +41,7 @@ def v_3dmaxdisp_params(
     inset: InputPathType,
     matrix: InputPathType,
     verbose: bool = False,
-) -> V3dmaxdispParameters:
+) -> V3dmaxdispParametersTagged:
     """
     Build parameters.
     
@@ -81,7 +55,7 @@ def v_3dmaxdisp_params(
         Parameter dictionary
     """
     params = {
-        "@type": "afni.3dmaxdisp",
+        "@type": "afni/3dmaxdisp",
         "inset": inset,
         "matrix": matrix,
         "verbose": verbose,
@@ -106,13 +80,13 @@ def v_3dmaxdisp_cargs(
     cargs.append("3dmaxdisp")
     cargs.extend([
         "-inset",
-        execution.input_file(params.get("inset"))
+        execution.input_file(params.get("inset", None))
     ])
     cargs.extend([
         "-matrix",
-        execution.input_file(params.get("matrix"))
+        execution.input_file(params.get("matrix", None))
     ])
-    if params.get("verbose"):
+    if params.get("verbose", False):
         cargs.append("-verb")
     return cargs
 
@@ -204,7 +178,6 @@ def v_3dmaxdisp(
 
 __all__ = [
     "V3dmaxdispOutputs",
-    "V3dmaxdispParameters",
     "V_3DMAXDISP_METADATA",
     "v_3dmaxdisp",
     "v_3dmaxdisp_execute",

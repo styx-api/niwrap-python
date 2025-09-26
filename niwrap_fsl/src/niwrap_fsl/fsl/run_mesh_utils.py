@@ -14,7 +14,27 @@ RUN_MESH_UTILS_METADATA = Metadata(
 
 
 RunMeshUtilsParameters = typing.TypedDict('RunMeshUtilsParameters', {
-    "@type": typing.Literal["fsl.run_mesh_utils"],
+    "@type": typing.NotRequired[typing.Literal["fsl/run_mesh_utils"]],
+    "base_mesh": InputPathType,
+    "output_image": str,
+    "input_image": typing.NotRequired[InputPathType | None],
+    "second_input_image": typing.NotRequired[InputPathType | None],
+    "weighting_image_force": typing.NotRequired[InputPathType | None],
+    "do_uncentre_model": bool,
+    "do_subtract_constant_from_scalars": bool,
+    "do_vertex_scalars_to_image_volume": bool,
+    "base_mesh2": typing.NotRequired[InputPathType | None],
+    "use_sc2": bool,
+    "flirt_matrix": typing.NotRequired[InputPathType | None],
+    "do_mesh_reg": bool,
+    "threshold": typing.NotRequired[float | None],
+    "degrees_of_freedom": typing.NotRequired[float | None],
+    "inverse": bool,
+    "verbose": bool,
+    "help": bool,
+})
+RunMeshUtilsParametersTagged = typing.TypedDict('RunMeshUtilsParametersTagged', {
+    "@type": typing.Literal["fsl/run_mesh_utils"],
     "base_mesh": InputPathType,
     "output_image": str,
     "input_image": typing.NotRequired[InputPathType | None],
@@ -35,41 +55,9 @@ RunMeshUtilsParameters = typing.TypedDict('RunMeshUtilsParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "fsl.run_mesh_utils": run_mesh_utils_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "fsl.run_mesh_utils": run_mesh_utils_outputs,
-    }.get(t)
-
-
 class RunMeshUtilsOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `run_mesh_utils(...)`.
+    Output object returned when calling `RunMeshUtilsParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -95,7 +83,7 @@ def run_mesh_utils_params(
     inverse: bool = False,
     verbose: bool = False,
     help_: bool = False,
-) -> RunMeshUtilsParameters:
+) -> RunMeshUtilsParametersTagged:
     """
     Build parameters.
     
@@ -121,7 +109,7 @@ def run_mesh_utils_params(
         Parameter dictionary
     """
     params = {
-        "@type": "fsl.run_mesh_utils",
+        "@type": "fsl/run_mesh_utils",
         "base_mesh": base_mesh,
         "output_image": output_image,
         "do_uncentre_model": do_uncentre_model,
@@ -165,61 +153,61 @@ def run_mesh_utils_cargs(
     """
     cargs = []
     cargs.append("run_mesh_utils")
-    cargs.append(execution.input_file(params.get("base_mesh")))
+    cargs.append(execution.input_file(params.get("base_mesh", None)))
     cargs.extend([
         "-o",
-        params.get("output_image")
+        params.get("output_image", None)
     ])
-    if params.get("input_image") is not None:
+    if params.get("input_image", None) is not None:
         cargs.extend([
             "-i",
-            execution.input_file(params.get("input_image"))
+            execution.input_file(params.get("input_image", None))
         ])
-    if params.get("second_input_image") is not None:
+    if params.get("second_input_image", None) is not None:
         cargs.extend([
             "-j",
-            execution.input_file(params.get("second_input_image"))
+            execution.input_file(params.get("second_input_image", None))
         ])
-    if params.get("weighting_image_force") is not None:
+    if params.get("weighting_image_force", None) is not None:
         cargs.extend([
             "-p",
-            execution.input_file(params.get("weighting_image_force"))
+            execution.input_file(params.get("weighting_image_force", None))
         ])
-    if params.get("do_uncentre_model"):
+    if params.get("do_uncentre_model", False):
         cargs.append("--doUnCentreModel")
-    if params.get("do_subtract_constant_from_scalars"):
+    if params.get("do_subtract_constant_from_scalars", False):
         cargs.append("--doSubtractConstantFromScalars")
-    if params.get("do_vertex_scalars_to_image_volume"):
+    if params.get("do_vertex_scalars_to_image_volume", False):
         cargs.append("--doVertexScalarsToImageVolume")
-    if params.get("base_mesh2") is not None:
+    if params.get("base_mesh2", None) is not None:
         cargs.extend([
             "-n",
-            execution.input_file(params.get("base_mesh2"))
+            execution.input_file(params.get("base_mesh2", None))
         ])
-    if params.get("use_sc2"):
+    if params.get("use_sc2", False):
         cargs.append("--useSc2")
-    if params.get("flirt_matrix") is not None:
+    if params.get("flirt_matrix", None) is not None:
         cargs.extend([
             "-f",
-            execution.input_file(params.get("flirt_matrix"))
+            execution.input_file(params.get("flirt_matrix", None))
         ])
-    if params.get("do_mesh_reg"):
+    if params.get("do_mesh_reg", False):
         cargs.append("--doMeshReg")
-    if params.get("threshold") is not None:
+    if params.get("threshold", None) is not None:
         cargs.extend([
             "-t",
-            str(params.get("threshold"))
+            str(params.get("threshold", None))
         ])
-    if params.get("degrees_of_freedom") is not None:
+    if params.get("degrees_of_freedom", None) is not None:
         cargs.extend([
             "-a",
-            str(params.get("degrees_of_freedom"))
+            str(params.get("degrees_of_freedom", None))
         ])
-    if params.get("inverse"):
+    if params.get("inverse", False):
         cargs.append("--inverse")
-    if params.get("verbose"):
+    if params.get("verbose", False):
         cargs.append("-v")
-    if params.get("help"):
+    if params.get("help", False):
         cargs.append("-h")
     return cargs
 
@@ -239,7 +227,7 @@ def run_mesh_utils_outputs(
     """
     ret = RunMeshUtilsOutputs(
         root=execution.output_file("."),
-        output_image_file=execution.output_file(params.get("output_image")),
+        output_image_file=execution.output_file(params.get("output_image", None)),
     )
     return ret
 
@@ -348,7 +336,6 @@ def run_mesh_utils(
 __all__ = [
     "RUN_MESH_UTILS_METADATA",
     "RunMeshUtilsOutputs",
-    "RunMeshUtilsParameters",
     "run_mesh_utils",
     "run_mesh_utils_execute",
     "run_mesh_utils_params",

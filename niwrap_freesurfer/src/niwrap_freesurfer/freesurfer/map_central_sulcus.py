@@ -14,7 +14,46 @@ MAP_CENTRAL_SULCUS_METADATA = Metadata(
 
 
 MapCentralSulcusParameters = typing.TypedDict('MapCentralSulcusParameters', {
-    "@type": typing.Literal["freesurfer.map_central_sulcus"],
+    "@type": typing.NotRequired[typing.Literal["freesurfer/map_central_sulcus"]],
+    "subjid": str,
+    "process_directive": str,
+    "hemi_flag": typing.NotRequired[str | None],
+    "expert_prefs_file": typing.NotRequired[InputPathType | None],
+    "xopts_use": bool,
+    "xopts_clean": bool,
+    "xopts_overwrite": bool,
+    "watershed_cmd": typing.NotRequired[str | None],
+    "xmask_file": typing.NotRequired[InputPathType | None],
+    "wsless": bool,
+    "wsmore": bool,
+    "wsatlas": bool,
+    "no_wsatlas": bool,
+    "no_wsgcaatlas": bool,
+    "wsthresh": typing.NotRequired[float | None],
+    "wsseed": typing.NotRequired[str | None],
+    "norm3diters": typing.NotRequired[float | None],
+    "normmaxgrad": typing.NotRequired[float | None],
+    "norm1_b": typing.NotRequired[float | None],
+    "norm2_b": typing.NotRequired[float | None],
+    "norm1_n": typing.NotRequired[float | None],
+    "norm2_n": typing.NotRequired[float | None],
+    "cm_flag": bool,
+    "no_fix_with_ga": bool,
+    "fix_diag_only": bool,
+    "seg_wlo": typing.NotRequired[float | None],
+    "seg_ghi": typing.NotRequired[float | None],
+    "nothicken": bool,
+    "no_ca_align_after": bool,
+    "no_ca_align": bool,
+    "deface": bool,
+    "mprage": bool,
+    "washu_mprage": bool,
+    "schwartzya3t_atlas": bool,
+    "mail_username": typing.NotRequired[str | None],
+    "threads": typing.NotRequired[float | None],
+})
+MapCentralSulcusParametersTagged = typing.TypedDict('MapCentralSulcusParametersTagged', {
+    "@type": typing.Literal["freesurfer/map_central_sulcus"],
     "subjid": str,
     "process_directive": str,
     "hemi_flag": typing.NotRequired[str | None],
@@ -54,41 +93,9 @@ MapCentralSulcusParameters = typing.TypedDict('MapCentralSulcusParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "freesurfer.map_central_sulcus": map_central_sulcus_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "freesurfer.map_central_sulcus": map_central_sulcus_outputs,
-    }.get(t)
-
-
 class MapCentralSulcusOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `map_central_sulcus(...)`.
+    Output object returned when calling `MapCentralSulcusParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -135,7 +142,7 @@ def map_central_sulcus_params(
     schwartzya3t_atlas: bool = False,
     mail_username: str | None = None,
     threads: float | None = None,
-) -> MapCentralSulcusParameters:
+) -> MapCentralSulcusParametersTagged:
     """
     Build parameters.
     
@@ -192,7 +199,7 @@ def map_central_sulcus_params(
         Parameter dictionary
     """
     params = {
-        "@type": "freesurfer.map_central_sulcus",
+        "@type": "freesurfer/map_central_sulcus",
         "subjid": subjid,
         "process_directive": process_directive,
         "xopts_use": xopts_use,
@@ -266,124 +273,124 @@ def map_central_sulcus_cargs(
     cargs.append("map_central_sulcus")
     cargs.extend([
         "-subjid",
-        params.get("subjid")
+        params.get("subjid", None)
     ])
-    cargs.append(params.get("process_directive"))
-    if params.get("hemi_flag") is not None:
+    cargs.append(params.get("process_directive", None))
+    if params.get("hemi_flag", None) is not None:
         cargs.extend([
             "-hemi",
-            params.get("hemi_flag")
+            params.get("hemi_flag", None)
         ])
-    if params.get("expert_prefs_file") is not None:
+    if params.get("expert_prefs_file", None) is not None:
         cargs.extend([
             "-expert",
-            execution.input_file(params.get("expert_prefs_file"))
+            execution.input_file(params.get("expert_prefs_file", None))
         ])
-    if params.get("xopts_use"):
+    if params.get("xopts_use", False):
         cargs.append("-xopts-use")
-    if params.get("xopts_clean"):
+    if params.get("xopts_clean", False):
         cargs.append("-xopts-clean")
-    if params.get("xopts_overwrite"):
+    if params.get("xopts_overwrite", False):
         cargs.append("-xopts-overwrite")
-    if params.get("watershed_cmd") is not None:
+    if params.get("watershed_cmd", None) is not None:
         cargs.extend([
             "-watershed",
-            params.get("watershed_cmd")
+            params.get("watershed_cmd", None)
         ])
-    if params.get("xmask_file") is not None:
+    if params.get("xmask_file", None) is not None:
         cargs.extend([
             "-xmask",
-            execution.input_file(params.get("xmask_file"))
+            execution.input_file(params.get("xmask_file", None))
         ])
-    if params.get("wsless"):
+    if params.get("wsless", False):
         cargs.append("-wsless")
-    if params.get("wsmore"):
+    if params.get("wsmore", False):
         cargs.append("-wsmore")
-    if params.get("wsatlas"):
+    if params.get("wsatlas", False):
         cargs.append("-wsatlas")
-    if params.get("no_wsatlas"):
+    if params.get("no_wsatlas", False):
         cargs.append("-no-wsatlas")
-    if params.get("no_wsgcaatlas"):
+    if params.get("no_wsgcaatlas", False):
         cargs.append("-no-wsgcaatlas")
-    if params.get("wsthresh") is not None:
+    if params.get("wsthresh", None) is not None:
         cargs.extend([
             "-wsthresh",
-            str(params.get("wsthresh"))
+            str(params.get("wsthresh", None))
         ])
-    if params.get("wsseed") is not None:
+    if params.get("wsseed", None) is not None:
         cargs.extend([
             "-wsseed",
-            params.get("wsseed")
+            params.get("wsseed", None)
         ])
-    if params.get("norm3diters") is not None:
+    if params.get("norm3diters", None) is not None:
         cargs.extend([
             "-norm3diters",
-            str(params.get("norm3diters"))
+            str(params.get("norm3diters", None))
         ])
-    if params.get("normmaxgrad") is not None:
+    if params.get("normmaxgrad", None) is not None:
         cargs.extend([
             "-normmaxgrad",
-            str(params.get("normmaxgrad"))
+            str(params.get("normmaxgrad", None))
         ])
-    if params.get("norm1_b") is not None:
+    if params.get("norm1_b", None) is not None:
         cargs.extend([
             "-norm1-b",
-            str(params.get("norm1_b"))
+            str(params.get("norm1_b", None))
         ])
-    if params.get("norm2_b") is not None:
+    if params.get("norm2_b", None) is not None:
         cargs.extend([
             "-norm2-b",
-            str(params.get("norm2_b"))
+            str(params.get("norm2_b", None))
         ])
-    if params.get("norm1_n") is not None:
+    if params.get("norm1_n", None) is not None:
         cargs.extend([
             "-norm1-n",
-            str(params.get("norm1_n"))
+            str(params.get("norm1_n", None))
         ])
-    if params.get("norm2_n") is not None:
+    if params.get("norm2_n", None) is not None:
         cargs.extend([
             "-norm2-n",
-            str(params.get("norm2_n"))
+            str(params.get("norm2_n", None))
         ])
-    if params.get("cm_flag"):
+    if params.get("cm_flag", False):
         cargs.append("-cm")
-    if params.get("no_fix_with_ga"):
+    if params.get("no_fix_with_ga", False):
         cargs.append("-no-fix-with-ga")
-    if params.get("fix_diag_only"):
+    if params.get("fix_diag_only", False):
         cargs.append("-fix-diag-only")
-    if params.get("seg_wlo") is not None:
+    if params.get("seg_wlo", None) is not None:
         cargs.extend([
             "-seg-wlo",
-            str(params.get("seg_wlo"))
+            str(params.get("seg_wlo", None))
         ])
-    if params.get("seg_ghi") is not None:
+    if params.get("seg_ghi", None) is not None:
         cargs.extend([
             "-seg-ghi",
-            str(params.get("seg_ghi"))
+            str(params.get("seg_ghi", None))
         ])
-    if params.get("nothicken"):
+    if params.get("nothicken", False):
         cargs.append("-nothicken")
-    if params.get("no_ca_align_after"):
+    if params.get("no_ca_align_after", False):
         cargs.append("-no-ca-align-after")
-    if params.get("no_ca_align"):
+    if params.get("no_ca_align", False):
         cargs.append("-no-ca-align")
-    if params.get("deface"):
+    if params.get("deface", False):
         cargs.append("-deface")
-    if params.get("mprage"):
+    if params.get("mprage", False):
         cargs.append("-mprage")
-    if params.get("washu_mprage"):
+    if params.get("washu_mprage", False):
         cargs.append("-washu_mprage")
-    if params.get("schwartzya3t_atlas"):
+    if params.get("schwartzya3t_atlas", False):
         cargs.append("-schwartzya3t-atlas")
-    if params.get("mail_username") is not None:
+    if params.get("mail_username", None) is not None:
         cargs.extend([
             "-mail",
-            params.get("mail_username")
+            params.get("mail_username", None)
         ])
-    if params.get("threads") is not None:
+    if params.get("threads", None) is not None:
         cargs.extend([
             "-threads",
-            str(params.get("threads"))
+            str(params.get("threads", None))
         ])
     return cargs
 
@@ -403,8 +410,8 @@ def map_central_sulcus_outputs(
     """
     ret = MapCentralSulcusOutputs(
         root=execution.output_file("."),
-        log_file=execution.output_file(params.get("subjid") + "/scripts/recon-all.log"),
-        status_log_file=execution.output_file(params.get("subjid") + "/scripts/recon-all-status.log"),
+        log_file=execution.output_file(params.get("subjid", None) + "/scripts/recon-all.log"),
+        status_log_file=execution.output_file(params.get("subjid", None) + "/scripts/recon-all-status.log"),
     )
     return ret
 
@@ -584,7 +591,6 @@ def map_central_sulcus(
 __all__ = [
     "MAP_CENTRAL_SULCUS_METADATA",
     "MapCentralSulcusOutputs",
-    "MapCentralSulcusParameters",
     "map_central_sulcus",
     "map_central_sulcus_execute",
     "map_central_sulcus_params",

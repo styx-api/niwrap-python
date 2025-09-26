@@ -14,7 +14,16 @@ FIBER_DOT_PRODUCTS_METADATA = Metadata(
 
 
 FiberDotProductsParameters = typing.TypedDict('FiberDotProductsParameters', {
-    "@type": typing.Literal["workbench.fiber-dot-products"],
+    "@type": typing.NotRequired[typing.Literal["workbench/fiber-dot-products"]],
+    "white_surf": InputPathType,
+    "fiber_file": InputPathType,
+    "max_dist": float,
+    "direction": str,
+    "dot_metric": str,
+    "f_metric": str,
+})
+FiberDotProductsParametersTagged = typing.TypedDict('FiberDotProductsParametersTagged', {
+    "@type": typing.Literal["workbench/fiber-dot-products"],
     "white_surf": InputPathType,
     "fiber_file": InputPathType,
     "max_dist": float,
@@ -24,41 +33,9 @@ FiberDotProductsParameters = typing.TypedDict('FiberDotProductsParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "workbench.fiber-dot-products": fiber_dot_products_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "workbench.fiber-dot-products": fiber_dot_products_outputs,
-    }.get(t)
-
-
 class FiberDotProductsOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `fiber_dot_products(...)`.
+    Output object returned when calling `FiberDotProductsParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -75,7 +52,7 @@ def fiber_dot_products_params(
     direction: str,
     dot_metric: str,
     f_metric: str,
-) -> FiberDotProductsParameters:
+) -> FiberDotProductsParametersTagged:
     """
     Build parameters.
     
@@ -92,7 +69,7 @@ def fiber_dot_products_params(
         Parameter dictionary
     """
     params = {
-        "@type": "workbench.fiber-dot-products",
+        "@type": "workbench/fiber-dot-products",
         "white_surf": white_surf,
         "fiber_file": fiber_file,
         "max_dist": max_dist,
@@ -119,12 +96,12 @@ def fiber_dot_products_cargs(
     cargs = []
     cargs.append("wb_command")
     cargs.append("-fiber-dot-products")
-    cargs.append(execution.input_file(params.get("white_surf")))
-    cargs.append(execution.input_file(params.get("fiber_file")))
-    cargs.append(str(params.get("max_dist")))
-    cargs.append(params.get("direction"))
-    cargs.append(params.get("dot_metric"))
-    cargs.append(params.get("f_metric"))
+    cargs.append(execution.input_file(params.get("white_surf", None)))
+    cargs.append(execution.input_file(params.get("fiber_file", None)))
+    cargs.append(str(params.get("max_dist", None)))
+    cargs.append(params.get("direction", None))
+    cargs.append(params.get("dot_metric", None))
+    cargs.append(params.get("f_metric", None))
     return cargs
 
 
@@ -143,8 +120,8 @@ def fiber_dot_products_outputs(
     """
     ret = FiberDotProductsOutputs(
         root=execution.output_file("."),
-        dot_metric=execution.output_file(params.get("dot_metric")),
-        f_metric=execution.output_file(params.get("f_metric")),
+        dot_metric=execution.output_file(params.get("dot_metric", None)),
+        f_metric=execution.output_file(params.get("f_metric", None)),
     )
     return ret
 
@@ -238,7 +215,6 @@ def fiber_dot_products(
 __all__ = [
     "FIBER_DOT_PRODUCTS_METADATA",
     "FiberDotProductsOutputs",
-    "FiberDotProductsParameters",
     "fiber_dot_products",
     "fiber_dot_products_execute",
     "fiber_dot_products_params",

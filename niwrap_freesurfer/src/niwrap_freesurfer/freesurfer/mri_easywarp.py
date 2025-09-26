@@ -14,7 +14,15 @@ MRI_EASYWARP_METADATA = Metadata(
 
 
 MriEasywarpParameters = typing.TypedDict('MriEasywarpParameters', {
-    "@type": typing.Literal["freesurfer.mri_easywarp"],
+    "@type": typing.NotRequired[typing.Literal["freesurfer/mri_easywarp"]],
+    "input_image": InputPathType,
+    "output_image": str,
+    "deformation_field": typing.NotRequired[InputPathType | None],
+    "nearest_neighbor": bool,
+    "num_threads": typing.NotRequired[float | None],
+})
+MriEasywarpParametersTagged = typing.TypedDict('MriEasywarpParametersTagged', {
+    "@type": typing.Literal["freesurfer/mri_easywarp"],
     "input_image": InputPathType,
     "output_image": str,
     "deformation_field": typing.NotRequired[InputPathType | None],
@@ -23,41 +31,9 @@ MriEasywarpParameters = typing.TypedDict('MriEasywarpParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "freesurfer.mri_easywarp": mri_easywarp_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "freesurfer.mri_easywarp": mri_easywarp_outputs,
-    }.get(t)
-
-
 class MriEasywarpOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `mri_easywarp(...)`.
+    Output object returned when calling `MriEasywarpParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -71,7 +47,7 @@ def mri_easywarp_params(
     deformation_field: InputPathType | None = None,
     nearest_neighbor: bool = False,
     num_threads: float | None = None,
-) -> MriEasywarpParameters:
+) -> MriEasywarpParametersTagged:
     """
     Build parameters.
     
@@ -87,7 +63,7 @@ def mri_easywarp_params(
         Parameter dictionary
     """
     params = {
-        "@type": "freesurfer.mri_easywarp",
+        "@type": "freesurfer/mri_easywarp",
         "input_image": input_image,
         "output_image": output_image,
         "nearest_neighbor": nearest_neighbor,
@@ -116,23 +92,23 @@ def mri_easywarp_cargs(
     cargs.append("mri_easywarp")
     cargs.extend([
         "--i",
-        execution.input_file(params.get("input_image"))
+        execution.input_file(params.get("input_image", None))
     ])
     cargs.extend([
         "--o",
-        params.get("output_image")
+        params.get("output_image", None)
     ])
-    if params.get("deformation_field") is not None:
+    if params.get("deformation_field", None) is not None:
         cargs.extend([
             "--field",
-            execution.input_file(params.get("deformation_field"))
+            execution.input_file(params.get("deformation_field", None))
         ])
-    if params.get("nearest_neighbor"):
+    if params.get("nearest_neighbor", False):
         cargs.append("--nearest")
-    if params.get("num_threads") is not None:
+    if params.get("num_threads", None) is not None:
         cargs.extend([
             "--threads",
-            str(params.get("num_threads"))
+            str(params.get("num_threads", None))
         ])
     return cargs
 
@@ -152,7 +128,7 @@ def mri_easywarp_outputs(
     """
     ret = MriEasywarpOutputs(
         root=execution.output_file("."),
-        output_deformed_image=execution.output_file(params.get("output_image") + ".nii.gz"),
+        output_deformed_image=execution.output_file(params.get("output_image", None) + ".nii.gz"),
     )
     return ret
 
@@ -227,7 +203,6 @@ def mri_easywarp(
 __all__ = [
     "MRI_EASYWARP_METADATA",
     "MriEasywarpOutputs",
-    "MriEasywarpParameters",
     "mri_easywarp",
     "mri_easywarp_execute",
     "mri_easywarp_params",

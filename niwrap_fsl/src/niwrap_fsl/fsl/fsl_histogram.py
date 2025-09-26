@@ -14,7 +14,35 @@ FSL_HISTOGRAM_METADATA = Metadata(
 
 
 FslHistogramParameters = typing.TypedDict('FslHistogramParameters', {
-    "@type": typing.Literal["fsl.fsl_histogram"],
+    "@type": typing.NotRequired[typing.Literal["fsl/fsl_histogram"]],
+    "input_file": InputPathType,
+    "input_file_duplicate": InputPathType,
+    "output_file": str,
+    "output_file_duplicate": str,
+    "mask_file": typing.NotRequired[InputPathType | None],
+    "mask_file_duplicate": typing.NotRequired[InputPathType | None],
+    "gmmfit_file": typing.NotRequired[InputPathType | None],
+    "gmmfit_file_duplicate": typing.NotRequired[InputPathType | None],
+    "plot_title": typing.NotRequired[str | None],
+    "plot_title_duplicate": typing.NotRequired[str | None],
+    "legend_file": typing.NotRequired[InputPathType | None],
+    "legend_file_duplicate": typing.NotRequired[InputPathType | None],
+    "xlabel": typing.NotRequired[str | None],
+    "xlabel_duplicate": typing.NotRequired[str | None],
+    "ylabel": typing.NotRequired[str | None],
+    "ylabel_duplicate": typing.NotRequired[str | None],
+    "plot_height": typing.NotRequired[float | None],
+    "plot_height_duplicate": typing.NotRequired[float | None],
+    "plot_width": typing.NotRequired[float | None],
+    "plot_width_duplicate": typing.NotRequired[float | None],
+    "num_bins": typing.NotRequired[float | None],
+    "num_bins_duplicate": typing.NotRequired[float | None],
+    "zoom_factor": typing.NotRequired[float | None],
+    "zoom_factor_duplicate": typing.NotRequired[float | None],
+    "use_gmm_flag": bool,
+})
+FslHistogramParametersTagged = typing.TypedDict('FslHistogramParametersTagged', {
+    "@type": typing.Literal["fsl/fsl_histogram"],
     "input_file": InputPathType,
     "input_file_duplicate": InputPathType,
     "output_file": str,
@@ -43,41 +71,9 @@ FslHistogramParameters = typing.TypedDict('FslHistogramParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "fsl.fsl_histogram": fsl_histogram_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "fsl.fsl_histogram": fsl_histogram_outputs,
-    }.get(t)
-
-
 class FslHistogramOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `fsl_histogram(...)`.
+    Output object returned when calling `FslHistogramParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -111,7 +107,7 @@ def fsl_histogram_params(
     zoom_factor: float | None = None,
     zoom_factor_duplicate: float | None = None,
     use_gmm_flag: bool = False,
-) -> FslHistogramParameters:
+) -> FslHistogramParametersTagged:
     """
     Build parameters.
     
@@ -149,7 +145,7 @@ def fsl_histogram_params(
         Parameter dictionary
     """
     params = {
-        "@type": "fsl.fsl_histogram",
+        "@type": "fsl/fsl_histogram",
         "input_file": input_file,
         "input_file_duplicate": input_file_duplicate,
         "output_file": output_file,
@@ -216,121 +212,121 @@ def fsl_histogram_cargs(
     cargs.append("fsl_histogram")
     cargs.extend([
         "-i",
-        execution.input_file(params.get("input_file"))
+        execution.input_file(params.get("input_file", None))
     ])
     cargs.extend([
         "--in",
-        execution.input_file(params.get("input_file_duplicate"))
+        execution.input_file(params.get("input_file_duplicate", None))
     ])
     cargs.extend([
         "-o",
-        params.get("output_file")
+        params.get("output_file", None)
     ])
     cargs.extend([
         "--out",
-        params.get("output_file_duplicate")
+        params.get("output_file_duplicate", None)
     ])
-    if params.get("mask_file") is not None:
+    if params.get("mask_file", None) is not None:
         cargs.extend([
             "-m",
-            execution.input_file(params.get("mask_file"))
+            execution.input_file(params.get("mask_file", None))
         ])
-    if params.get("mask_file_duplicate") is not None:
+    if params.get("mask_file_duplicate", None) is not None:
         cargs.extend([
             "--mask",
-            execution.input_file(params.get("mask_file_duplicate"))
+            execution.input_file(params.get("mask_file_duplicate", None))
         ])
-    if params.get("gmmfit_file") is not None:
+    if params.get("gmmfit_file", None) is not None:
         cargs.extend([
             "-f",
-            execution.input_file(params.get("gmmfit_file"))
+            execution.input_file(params.get("gmmfit_file", None))
         ])
-    if params.get("gmmfit_file_duplicate") is not None:
+    if params.get("gmmfit_file_duplicate", None) is not None:
         cargs.extend([
             "--gmmfit",
-            execution.input_file(params.get("gmmfit_file_duplicate"))
+            execution.input_file(params.get("gmmfit_file_duplicate", None))
         ])
-    if params.get("plot_title") is not None:
+    if params.get("plot_title", None) is not None:
         cargs.extend([
             "-t",
-            params.get("plot_title")
+            params.get("plot_title", None)
         ])
-    if params.get("plot_title_duplicate") is not None:
+    if params.get("plot_title_duplicate", None) is not None:
         cargs.extend([
             "--title",
-            params.get("plot_title_duplicate")
+            params.get("plot_title_duplicate", None)
         ])
-    if params.get("legend_file") is not None:
+    if params.get("legend_file", None) is not None:
         cargs.extend([
             "-l",
-            execution.input_file(params.get("legend_file"))
+            execution.input_file(params.get("legend_file", None))
         ])
-    if params.get("legend_file_duplicate") is not None:
+    if params.get("legend_file_duplicate", None) is not None:
         cargs.extend([
             "--legend",
-            execution.input_file(params.get("legend_file_duplicate"))
+            execution.input_file(params.get("legend_file_duplicate", None))
         ])
-    if params.get("xlabel") is not None:
+    if params.get("xlabel", None) is not None:
         cargs.extend([
             "-x",
-            params.get("xlabel")
+            params.get("xlabel", None)
         ])
-    if params.get("xlabel_duplicate") is not None:
+    if params.get("xlabel_duplicate", None) is not None:
         cargs.extend([
             "--xlabel",
-            params.get("xlabel_duplicate")
+            params.get("xlabel_duplicate", None)
         ])
-    if params.get("ylabel") is not None:
+    if params.get("ylabel", None) is not None:
         cargs.extend([
             "-y",
-            params.get("ylabel")
+            params.get("ylabel", None)
         ])
-    if params.get("ylabel_duplicate") is not None:
+    if params.get("ylabel_duplicate", None) is not None:
         cargs.extend([
             "--ylabel",
-            params.get("ylabel_duplicate")
+            params.get("ylabel_duplicate", None)
         ])
-    if params.get("plot_height") is not None:
+    if params.get("plot_height", None) is not None:
         cargs.extend([
             "-h",
-            str(params.get("plot_height"))
+            str(params.get("plot_height", None))
         ])
-    if params.get("plot_height_duplicate") is not None:
+    if params.get("plot_height_duplicate", None) is not None:
         cargs.extend([
             "--height",
-            str(params.get("plot_height_duplicate"))
+            str(params.get("plot_height_duplicate", None))
         ])
-    if params.get("plot_width") is not None:
+    if params.get("plot_width", None) is not None:
         cargs.extend([
             "-w",
-            str(params.get("plot_width"))
+            str(params.get("plot_width", None))
         ])
-    if params.get("plot_width_duplicate") is not None:
+    if params.get("plot_width_duplicate", None) is not None:
         cargs.extend([
             "--width",
-            str(params.get("plot_width_duplicate"))
+            str(params.get("plot_width_duplicate", None))
         ])
-    if params.get("num_bins") is not None:
+    if params.get("num_bins", None) is not None:
         cargs.extend([
             "-b",
-            str(params.get("num_bins"))
+            str(params.get("num_bins", None))
         ])
-    if params.get("num_bins_duplicate") is not None:
+    if params.get("num_bins_duplicate", None) is not None:
         cargs.extend([
             "--bins",
-            str(params.get("num_bins_duplicate"))
+            str(params.get("num_bins_duplicate", None))
         ])
-    if params.get("zoom_factor") is not None:
+    if params.get("zoom_factor", None) is not None:
         cargs.extend([
             "-d",
-            str(params.get("zoom_factor"))
+            str(params.get("zoom_factor", None))
         ])
-    if params.get("zoom_factor_duplicate") is not None:
+    if params.get("zoom_factor_duplicate", None) is not None:
         cargs.extend([
             "--detail",
-            str(params.get("zoom_factor_duplicate"))
+            str(params.get("zoom_factor_duplicate", None))
         ])
-    if params.get("use_gmm_flag"):
+    if params.get("use_gmm_flag", False):
         cargs.append("--gmm")
     return cargs
 
@@ -350,7 +346,7 @@ def fsl_histogram_outputs(
     """
     ret = FslHistogramOutputs(
         root=execution.output_file("."),
-        png_file=execution.output_file(params.get("output_file_duplicate")),
+        png_file=execution.output_file(params.get("output_file_duplicate", None)),
     )
     return ret
 
@@ -487,7 +483,6 @@ def fsl_histogram(
 __all__ = [
     "FSL_HISTOGRAM_METADATA",
     "FslHistogramOutputs",
-    "FslHistogramParameters",
     "fsl_histogram",
     "fsl_histogram_execute",
     "fsl_histogram_params",

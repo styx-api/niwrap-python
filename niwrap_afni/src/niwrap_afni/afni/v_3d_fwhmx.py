@@ -14,7 +14,23 @@ V_3D_FWHMX_METADATA = Metadata(
 
 
 V3dFwhmxParameters = typing.TypedDict('V3dFwhmxParameters', {
-    "@type": typing.Literal["afni.3dFWHMx"],
+    "@type": typing.NotRequired[typing.Literal["afni/3dFWHMx"]],
+    "mask": typing.NotRequired[InputPathType | None],
+    "automask": bool,
+    "demed": bool,
+    "unif": bool,
+    "detrend": typing.NotRequired[float | None],
+    "detprefix": typing.NotRequired[str | None],
+    "geom": bool,
+    "arith": bool,
+    "combine": bool,
+    "out": typing.NotRequired[str | None],
+    "compat": bool,
+    "acf": typing.NotRequired[str | None],
+    "infile": InputPathType,
+})
+V3dFwhmxParametersTagged = typing.TypedDict('V3dFwhmxParametersTagged', {
+    "@type": typing.Literal["afni/3dFWHMx"],
     "mask": typing.NotRequired[InputPathType | None],
     "automask": bool,
     "demed": bool,
@@ -31,41 +47,9 @@ V3dFwhmxParameters = typing.TypedDict('V3dFwhmxParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "afni.3dFWHMx": v_3d_fwhmx_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "afni.3dFWHMx": v_3d_fwhmx_outputs,
-    }.get(t)
-
-
 class V3dFwhmxOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `v_3d_fwhmx(...)`.
+    Output object returned when calling `V3dFwhmxParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -89,7 +73,7 @@ def v_3d_fwhmx_params(
     out: str | None = None,
     compat: bool = False,
     acf: str | None = None,
-) -> V3dFwhmxParameters:
+) -> V3dFwhmxParametersTagged:
     """
     Build parameters.
     
@@ -117,7 +101,7 @@ def v_3d_fwhmx_params(
         Parameter dictionary
     """
     params = {
-        "@type": "afni.3dFWHMx",
+        "@type": "afni/3dFWHMx",
         "automask": automask,
         "demed": demed,
         "unif": unif,
@@ -155,46 +139,46 @@ def v_3d_fwhmx_cargs(
     """
     cargs = []
     cargs.append("3dFWHMx")
-    if params.get("mask") is not None:
+    if params.get("mask", None) is not None:
         cargs.extend([
             "-mask",
-            execution.input_file(params.get("mask"))
+            execution.input_file(params.get("mask", None))
         ])
-    if params.get("automask"):
+    if params.get("automask", False):
         cargs.append("-automask")
-    if params.get("demed"):
+    if params.get("demed", False):
         cargs.append("-demed")
-    if params.get("unif"):
+    if params.get("unif", False):
         cargs.append("-unif")
-    if params.get("detrend") is not None:
+    if params.get("detrend", None) is not None:
         cargs.extend([
             "-detrend",
-            str(params.get("detrend"))
+            str(params.get("detrend", None))
         ])
-    if params.get("detprefix") is not None:
+    if params.get("detprefix", None) is not None:
         cargs.extend([
             "-detprefix",
-            params.get("detprefix")
+            params.get("detprefix", None)
         ])
-    if params.get("geom"):
+    if params.get("geom", False):
         cargs.append("-geom")
-    if params.get("arith"):
+    if params.get("arith", False):
         cargs.append("-arith")
-    if params.get("combine"):
+    if params.get("combine", False):
         cargs.append("-combine")
-    if params.get("out") is not None:
+    if params.get("out", None) is not None:
         cargs.extend([
             "-out",
-            params.get("out")
+            params.get("out", None)
         ])
-    if params.get("compat"):
+    if params.get("compat", False):
         cargs.append("-compat")
-    if params.get("acf") is not None:
+    if params.get("acf", None) is not None:
         cargs.extend([
             "-acf",
-            params.get("acf")
+            params.get("acf", None)
         ])
-    cargs.append(execution.input_file(params.get("infile")))
+    cargs.append(execution.input_file(params.get("infile", None)))
     return cargs
 
 
@@ -213,8 +197,8 @@ def v_3d_fwhmx_outputs(
     """
     ret = V3dFwhmxOutputs(
         root=execution.output_file("."),
-        out_file=execution.output_file(params.get("out") + ".1D") if (params.get("out") is not None) else None,
-        detrended_dataset=execution.output_file(params.get("detprefix") + ".nii.gz") if (params.get("detprefix") is not None) else None,
+        out_file=execution.output_file(params.get("out", None) + ".1D") if (params.get("out") is not None) else None,
+        detrended_dataset=execution.output_file(params.get("detprefix", None) + ".nii.gz") if (params.get("detprefix") is not None) else None,
     )
     return ret
 
@@ -318,7 +302,6 @@ def v_3d_fwhmx(
 
 __all__ = [
     "V3dFwhmxOutputs",
-    "V3dFwhmxParameters",
     "V_3D_FWHMX_METADATA",
     "v_3d_fwhmx",
     "v_3d_fwhmx_execute",

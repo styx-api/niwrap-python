@@ -14,14 +14,37 @@ DIRGEN_METADATA = Metadata(
 
 
 DirgenConfigParameters = typing.TypedDict('DirgenConfigParameters', {
-    "@type": typing.Literal["mrtrix.dirgen.config"],
+    "@type": typing.NotRequired[typing.Literal["config"]],
+    "key": str,
+    "value": str,
+})
+DirgenConfigParametersTagged = typing.TypedDict('DirgenConfigParametersTagged', {
+    "@type": typing.Literal["config"],
     "key": str,
     "value": str,
 })
 
 
 DirgenParameters = typing.TypedDict('DirgenParameters', {
-    "@type": typing.Literal["mrtrix.dirgen"],
+    "@type": typing.NotRequired[typing.Literal["mrtrix/dirgen"]],
+    "power": typing.NotRequired[int | None],
+    "niter": typing.NotRequired[int | None],
+    "restarts": typing.NotRequired[int | None],
+    "unipolar": bool,
+    "cartesian": bool,
+    "info": bool,
+    "quiet": bool,
+    "debug": bool,
+    "force": bool,
+    "nthreads": typing.NotRequired[int | None],
+    "config": typing.NotRequired[list[DirgenConfigParameters] | None],
+    "help": bool,
+    "version": bool,
+    "ndir": int,
+    "dirs": str,
+})
+DirgenParametersTagged = typing.TypedDict('DirgenParametersTagged', {
+    "@type": typing.Literal["mrtrix/dirgen"],
     "power": typing.NotRequired[int | None],
     "niter": typing.NotRequired[int | None],
     "restarts": typing.NotRequired[int | None],
@@ -40,43 +63,10 @@ DirgenParameters = typing.TypedDict('DirgenParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "mrtrix.dirgen": dirgen_cargs,
-        "mrtrix.dirgen.config": dirgen_config_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "mrtrix.dirgen": dirgen_outputs,
-    }.get(t)
-
-
 def dirgen_config_params(
     key: str,
     value: str,
-) -> DirgenConfigParameters:
+) -> DirgenConfigParametersTagged:
     """
     Build parameters.
     
@@ -87,7 +77,7 @@ def dirgen_config_params(
         Parameter dictionary
     """
     params = {
-        "@type": "mrtrix.dirgen.config",
+        "@type": "config",
         "key": key,
         "value": value,
     }
@@ -109,14 +99,14 @@ def dirgen_config_cargs(
     """
     cargs = []
     cargs.append("-config")
-    cargs.append(params.get("key"))
-    cargs.append(params.get("value"))
+    cargs.append(params.get("key", None))
+    cargs.append(params.get("value", None))
     return cargs
 
 
 class DirgenOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `dirgen(...)`.
+    Output object returned when calling `DirgenParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -140,7 +130,7 @@ def dirgen_params(
     config: list[DirgenConfigParameters] | None = None,
     help_: bool = False,
     version: bool = False,
-) -> DirgenParameters:
+) -> DirgenParametersTagged:
     """
     Build parameters.
     
@@ -172,7 +162,7 @@ def dirgen_params(
         Parameter dictionary
     """
     params = {
-        "@type": "mrtrix.dirgen",
+        "@type": "mrtrix/dirgen",
         "unipolar": unipolar,
         "cartesian": cartesian,
         "info": info,
@@ -212,46 +202,46 @@ def dirgen_cargs(
     """
     cargs = []
     cargs.append("dirgen")
-    if params.get("power") is not None:
+    if params.get("power", None) is not None:
         cargs.extend([
             "-power",
-            str(params.get("power"))
+            str(params.get("power", None))
         ])
-    if params.get("niter") is not None:
+    if params.get("niter", None) is not None:
         cargs.extend([
             "-niter",
-            str(params.get("niter"))
+            str(params.get("niter", None))
         ])
-    if params.get("restarts") is not None:
+    if params.get("restarts", None) is not None:
         cargs.extend([
             "-restarts",
-            str(params.get("restarts"))
+            str(params.get("restarts", None))
         ])
-    if params.get("unipolar"):
+    if params.get("unipolar", False):
         cargs.append("-unipolar")
-    if params.get("cartesian"):
+    if params.get("cartesian", False):
         cargs.append("-cartesian")
-    if params.get("info"):
+    if params.get("info", False):
         cargs.append("-info")
-    if params.get("quiet"):
+    if params.get("quiet", False):
         cargs.append("-quiet")
-    if params.get("debug"):
+    if params.get("debug", False):
         cargs.append("-debug")
-    if params.get("force"):
+    if params.get("force", False):
         cargs.append("-force")
-    if params.get("nthreads") is not None:
+    if params.get("nthreads", None) is not None:
         cargs.extend([
             "-nthreads",
-            str(params.get("nthreads"))
+            str(params.get("nthreads", None))
         ])
-    if params.get("config") is not None:
-        cargs.extend([a for c in [dyn_cargs(s["@type"])(s, execution) for s in params.get("config")] for a in c])
-    if params.get("help"):
+    if params.get("config", None) is not None:
+        cargs.extend([a for c in [dirgen_config_cargs(s, execution) for s in params.get("config", None)] for a in c])
+    if params.get("help", False):
         cargs.append("-help")
-    if params.get("version"):
+    if params.get("version", False):
         cargs.append("-version")
-    cargs.append(str(params.get("ndir")))
-    cargs.append(params.get("dirs"))
+    cargs.append(str(params.get("ndir", None)))
+    cargs.append(params.get("dirs", None))
     return cargs
 
 
@@ -270,7 +260,7 @@ def dirgen_outputs(
     """
     ret = DirgenOutputs(
         root=execution.output_file("."),
-        dirs=execution.output_file(params.get("dirs")),
+        dirs=execution.output_file(params.get("dirs", None)),
     )
     return ret
 
@@ -418,9 +408,7 @@ def dirgen(
 
 __all__ = [
     "DIRGEN_METADATA",
-    "DirgenConfigParameters",
     "DirgenOutputs",
-    "DirgenParameters",
     "dirgen",
     "dirgen_config_params",
     "dirgen_execute",

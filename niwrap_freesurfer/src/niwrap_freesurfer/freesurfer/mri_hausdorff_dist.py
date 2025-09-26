@@ -14,7 +14,18 @@ MRI_HAUSDORFF_DIST_METADATA = Metadata(
 
 
 MriHausdorffDistParameters = typing.TypedDict('MriHausdorffDistParameters', {
-    "@type": typing.Literal["freesurfer.mri_hausdorff_dist"],
+    "@type": typing.NotRequired[typing.Literal["freesurfer/mri_hausdorff_dist"]],
+    "vol1": InputPathType,
+    "vol2": InputPathType,
+    "output_text_file": str,
+    "threshold": typing.NotRequired[float | None],
+    "input_file_flag": bool,
+    "blur_sigma": typing.NotRequired[float | None],
+    "max_flag": bool,
+    "label_index": typing.NotRequired[float | None],
+})
+MriHausdorffDistParametersTagged = typing.TypedDict('MriHausdorffDistParametersTagged', {
+    "@type": typing.Literal["freesurfer/mri_hausdorff_dist"],
     "vol1": InputPathType,
     "vol2": InputPathType,
     "output_text_file": str,
@@ -26,41 +37,9 @@ MriHausdorffDistParameters = typing.TypedDict('MriHausdorffDistParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "freesurfer.mri_hausdorff_dist": mri_hausdorff_dist_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "freesurfer.mri_hausdorff_dist": mri_hausdorff_dist_outputs,
-    }.get(t)
-
-
 class MriHausdorffDistOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `mri_hausdorff_dist(...)`.
+    Output object returned when calling `MriHausdorffDistParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -78,7 +57,7 @@ def mri_hausdorff_dist_params(
     blur_sigma: float | None = None,
     max_flag: bool = False,
     label_index: float | None = None,
-) -> MriHausdorffDistParameters:
+) -> MriHausdorffDistParametersTagged:
     """
     Build parameters.
     
@@ -97,7 +76,7 @@ def mri_hausdorff_dist_params(
         Parameter dictionary
     """
     params = {
-        "@type": "freesurfer.mri_hausdorff_dist",
+        "@type": "freesurfer/mri_hausdorff_dist",
         "vol1": vol1,
         "vol2": vol2,
         "output_text_file": output_text_file,
@@ -128,27 +107,27 @@ def mri_hausdorff_dist_cargs(
     """
     cargs = []
     cargs.append("mri_hausdorff_dist")
-    cargs.append(execution.input_file(params.get("vol1")))
-    cargs.append(execution.input_file(params.get("vol2")))
-    cargs.append(params.get("output_text_file"))
-    if params.get("threshold") is not None:
+    cargs.append(execution.input_file(params.get("vol1", None)))
+    cargs.append(execution.input_file(params.get("vol2", None)))
+    cargs.append(params.get("output_text_file", None))
+    if params.get("threshold", None) is not None:
         cargs.extend([
             "-b",
-            str(params.get("threshold"))
+            str(params.get("threshold", None))
         ])
-    if params.get("input_file_flag"):
+    if params.get("input_file_flag", False):
         cargs.append("-F")
-    if params.get("blur_sigma") is not None:
+    if params.get("blur_sigma", None) is not None:
         cargs.extend([
             "-g",
-            str(params.get("blur_sigma"))
+            str(params.get("blur_sigma", None))
         ])
-    if params.get("max_flag"):
+    if params.get("max_flag", False):
         cargs.append("-max")
-    if params.get("label_index") is not None:
+    if params.get("label_index", None) is not None:
         cargs.extend([
             "-l",
-            str(params.get("label_index"))
+            str(params.get("label_index", None))
         ])
     return cargs
 
@@ -168,7 +147,7 @@ def mri_hausdorff_dist_outputs(
     """
     ret = MriHausdorffDistOutputs(
         root=execution.output_file("."),
-        output_text=execution.output_file(params.get("output_text_file")),
+        output_text=execution.output_file(params.get("output_text_file", None)),
     )
     return ret
 
@@ -254,7 +233,6 @@ def mri_hausdorff_dist(
 __all__ = [
     "MRI_HAUSDORFF_DIST_METADATA",
     "MriHausdorffDistOutputs",
-    "MriHausdorffDistParameters",
     "mri_hausdorff_dist",
     "mri_hausdorff_dist_execute",
     "mri_hausdorff_dist_params",

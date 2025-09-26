@@ -14,7 +14,30 @@ V_3D_ROIMAKER_METADATA = Metadata(
 
 
 V3dRoimakerParameters = typing.TypedDict('V3dRoimakerParameters', {
-    "@type": typing.Literal["afni.3dROIMaker"],
+    "@type": typing.NotRequired[typing.Literal["afni/3dROIMaker"]],
+    "inset": InputPathType,
+    "thresh": float,
+    "prefix": str,
+    "refset": typing.NotRequired[InputPathType | None],
+    "volthr": typing.NotRequired[float | None],
+    "only_some_top": typing.NotRequired[float | None],
+    "only_conn_top": typing.NotRequired[float | None],
+    "inflate": typing.NotRequired[float | None],
+    "trim_off_wm": bool,
+    "wm_skel": typing.NotRequired[InputPathType | None],
+    "skel_thr": typing.NotRequired[float | None],
+    "skel_stop": bool,
+    "skel_stop_strict": bool,
+    "csf_skel": typing.NotRequired[InputPathType | None],
+    "mask": typing.NotRequired[InputPathType | None],
+    "neigh_upto_vert": bool,
+    "nifti": bool,
+    "preinfl_inset": typing.NotRequired[InputPathType | None],
+    "preinfl_inflate": typing.NotRequired[float | None],
+    "dump_no_labtab": bool,
+})
+V3dRoimakerParametersTagged = typing.TypedDict('V3dRoimakerParametersTagged', {
+    "@type": typing.Literal["afni/3dROIMaker"],
     "inset": InputPathType,
     "thresh": float,
     "prefix": str,
@@ -38,41 +61,9 @@ V3dRoimakerParameters = typing.TypedDict('V3dRoimakerParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "afni.3dROIMaker": v_3d_roimaker_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "afni.3dROIMaker": v_3d_roimaker_outputs,
-    }.get(t)
-
-
 class V3dRoimakerOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `v_3d_roimaker(...)`.
+    Output object returned when calling `V3dRoimakerParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -105,7 +96,7 @@ def v_3d_roimaker_params(
     preinfl_inset: InputPathType | None = None,
     preinfl_inflate: float | None = None,
     dump_no_labtab: bool = False,
-) -> V3dRoimakerParameters:
+) -> V3dRoimakerParametersTagged:
     """
     Build parameters.
     
@@ -150,7 +141,7 @@ def v_3d_roimaker_params(
         Parameter dictionary
     """
     params = {
-        "@type": "afni.3dROIMaker",
+        "@type": "afni/3dROIMaker",
         "inset": inset,
         "thresh": thresh,
         "prefix": prefix,
@@ -201,81 +192,81 @@ def v_3d_roimaker_cargs(
     """
     cargs = []
     cargs.append("3dROIMaker")
-    cargs.append(execution.input_file(params.get("inset")))
+    cargs.append(execution.input_file(params.get("inset", None)))
     cargs.extend([
         "-thresh",
-        str(params.get("thresh"))
+        str(params.get("thresh", None))
     ])
     cargs.extend([
         "-prefix",
-        params.get("prefix")
+        params.get("prefix", None)
     ])
-    if params.get("refset") is not None:
+    if params.get("refset", None) is not None:
         cargs.extend([
             "-refset",
-            execution.input_file(params.get("refset"))
+            execution.input_file(params.get("refset", None))
         ])
-    if params.get("volthr") is not None:
+    if params.get("volthr", None) is not None:
         cargs.extend([
             "-volthr",
-            str(params.get("volthr"))
+            str(params.get("volthr", None))
         ])
-    if params.get("only_some_top") is not None:
+    if params.get("only_some_top", None) is not None:
         cargs.extend([
             "-only_some_top",
-            str(params.get("only_some_top"))
+            str(params.get("only_some_top", None))
         ])
-    if params.get("only_conn_top") is not None:
+    if params.get("only_conn_top", None) is not None:
         cargs.extend([
             "-only_conn_top",
-            str(params.get("only_conn_top"))
+            str(params.get("only_conn_top", None))
         ])
-    if params.get("inflate") is not None:
+    if params.get("inflate", None) is not None:
         cargs.extend([
             "-inflate",
-            str(params.get("inflate"))
+            str(params.get("inflate", None))
         ])
-    if params.get("trim_off_wm"):
+    if params.get("trim_off_wm", False):
         cargs.append("-trim_off_wm")
-    if params.get("wm_skel") is not None:
+    if params.get("wm_skel", None) is not None:
         cargs.extend([
             "-wm_skel",
-            execution.input_file(params.get("wm_skel"))
+            execution.input_file(params.get("wm_skel", None))
         ])
-    if params.get("skel_thr") is not None:
+    if params.get("skel_thr", None) is not None:
         cargs.extend([
             "-skel_thr",
-            str(params.get("skel_thr"))
+            str(params.get("skel_thr", None))
         ])
-    if params.get("skel_stop"):
+    if params.get("skel_stop", False):
         cargs.append("-skel_stop")
-    if params.get("skel_stop_strict"):
+    if params.get("skel_stop_strict", False):
         cargs.append("-skel_stop_strict")
-    if params.get("csf_skel") is not None:
+    if params.get("csf_skel", None) is not None:
         cargs.extend([
             "-csf_skel",
-            execution.input_file(params.get("csf_skel"))
+            execution.input_file(params.get("csf_skel", None))
         ])
-    if params.get("mask") is not None:
+    if params.get("mask", None) is not None:
         cargs.extend([
             "-mask",
-            execution.input_file(params.get("mask"))
+            execution.input_file(params.get("mask", None))
         ])
-    if params.get("neigh_upto_vert"):
+    if params.get("neigh_upto_vert", False):
         cargs.append("-neigh_upto_vert")
-    if params.get("nifti"):
+    if params.get("nifti", False):
         cargs.append("-nifti")
-    if params.get("preinfl_inset") is not None:
+    if params.get("preinfl_inset", None) is not None:
         cargs.extend([
             "-preinfl_inset",
-            execution.input_file(params.get("preinfl_inset"))
+            execution.input_file(params.get("preinfl_inset", None))
         ])
-    if params.get("preinfl_inflate") is not None:
+    if params.get("preinfl_inflate", None) is not None:
         cargs.extend([
             "-preinfl_inflate",
-            str(params.get("preinfl_inflate"))
+            str(params.get("preinfl_inflate", None))
         ])
-    if params.get("dump_no_labtab"):
+    if params.get("dump_no_labtab", False):
         cargs.append("-dump_no_labtab")
     return cargs
 
@@ -295,8 +286,8 @@ def v_3d_roimaker_outputs(
     """
     ret = V3dRoimakerOutputs(
         root=execution.output_file("."),
-        gm_map=execution.output_file(params.get("prefix") + "_GM+orig.HEAD"),
-        gmi_map=execution.output_file(params.get("prefix") + "_GMI+orig.HEAD"),
+        gm_map=execution.output_file(params.get("prefix", None) + "_GM+orig.HEAD"),
+        gmi_map=execution.output_file(params.get("prefix", None) + "_GMI+orig.HEAD"),
     )
     return ret
 
@@ -431,7 +422,6 @@ def v_3d_roimaker(
 
 __all__ = [
     "V3dRoimakerOutputs",
-    "V3dRoimakerParameters",
     "V_3D_ROIMAKER_METADATA",
     "v_3d_roimaker",
     "v_3d_roimaker_execute",

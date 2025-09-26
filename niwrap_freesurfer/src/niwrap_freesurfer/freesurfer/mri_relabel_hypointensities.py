@@ -14,48 +14,22 @@ MRI_RELABEL_HYPOINTENSITIES_METADATA = Metadata(
 
 
 MriRelabelHypointensitiesParameters = typing.TypedDict('MriRelabelHypointensitiesParameters', {
-    "@type": typing.Literal["freesurfer.mri_relabel_hypointensities"],
+    "@type": typing.NotRequired[typing.Literal["freesurfer/mri_relabel_hypointensities"]],
+    "input_aseg": InputPathType,
+    "surface_directory": str,
+    "output_aseg": str,
+})
+MriRelabelHypointensitiesParametersTagged = typing.TypedDict('MriRelabelHypointensitiesParametersTagged', {
+    "@type": typing.Literal["freesurfer/mri_relabel_hypointensities"],
     "input_aseg": InputPathType,
     "surface_directory": str,
     "output_aseg": str,
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "freesurfer.mri_relabel_hypointensities": mri_relabel_hypointensities_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "freesurfer.mri_relabel_hypointensities": mri_relabel_hypointensities_outputs,
-    }.get(t)
-
-
 class MriRelabelHypointensitiesOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `mri_relabel_hypointensities(...)`.
+    Output object returned when calling `MriRelabelHypointensitiesParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -67,7 +41,7 @@ def mri_relabel_hypointensities_params(
     input_aseg: InputPathType,
     surface_directory: str,
     output_aseg: str,
-) -> MriRelabelHypointensitiesParameters:
+) -> MriRelabelHypointensitiesParametersTagged:
     """
     Build parameters.
     
@@ -79,7 +53,7 @@ def mri_relabel_hypointensities_params(
         Parameter dictionary
     """
     params = {
-        "@type": "freesurfer.mri_relabel_hypointensities",
+        "@type": "freesurfer/mri_relabel_hypointensities",
         "input_aseg": input_aseg,
         "surface_directory": surface_directory,
         "output_aseg": output_aseg,
@@ -102,9 +76,9 @@ def mri_relabel_hypointensities_cargs(
     """
     cargs = []
     cargs.append("mri_relabel_hypointensities")
-    cargs.append(execution.input_file(params.get("input_aseg")))
-    cargs.append(params.get("surface_directory"))
-    cargs.append(params.get("output_aseg"))
+    cargs.append(execution.input_file(params.get("input_aseg", None)))
+    cargs.append(params.get("surface_directory", None))
+    cargs.append(params.get("output_aseg", None))
     return cargs
 
 
@@ -123,7 +97,7 @@ def mri_relabel_hypointensities_outputs(
     """
     ret = MriRelabelHypointensitiesOutputs(
         root=execution.output_file("."),
-        output_aseg_file=execution.output_file(params.get("output_aseg")),
+        output_aseg_file=execution.output_file(params.get("output_aseg", None)),
     )
     return ret
 
@@ -190,7 +164,6 @@ def mri_relabel_hypointensities(
 __all__ = [
     "MRI_RELABEL_HYPOINTENSITIES_METADATA",
     "MriRelabelHypointensitiesOutputs",
-    "MriRelabelHypointensitiesParameters",
     "mri_relabel_hypointensities",
     "mri_relabel_hypointensities_execute",
     "mri_relabel_hypointensities_params",

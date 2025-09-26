@@ -14,7 +14,16 @@ MRIS_MEF_SURFACES_METADATA = Metadata(
 
 
 MrisMefSurfacesParameters = typing.TypedDict('MrisMefSurfacesParameters', {
-    "@type": typing.Literal["freesurfer.mris_mef_surfaces"],
+    "@type": typing.NotRequired[typing.Literal["freesurfer/mris_mef_surfaces"]],
+    "subject_name": str,
+    "hemisphere": str,
+    "omit_self_intersection": bool,
+    "curvature": bool,
+    "average_curvature": typing.NotRequired[float | None],
+    "white_only": bool,
+})
+MrisMefSurfacesParametersTagged = typing.TypedDict('MrisMefSurfacesParametersTagged', {
+    "@type": typing.Literal["freesurfer/mris_mef_surfaces"],
     "subject_name": str,
     "hemisphere": str,
     "omit_self_intersection": bool,
@@ -24,40 +33,9 @@ MrisMefSurfacesParameters = typing.TypedDict('MrisMefSurfacesParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "freesurfer.mris_mef_surfaces": mris_mef_surfaces_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-    }.get(t)
-
-
 class MrisMefSurfacesOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `mris_mef_surfaces(...)`.
+    Output object returned when calling `MrisMefSurfacesParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -70,7 +48,7 @@ def mris_mef_surfaces_params(
     curvature: bool = False,
     average_curvature: float | None = None,
     white_only: bool = False,
-) -> MrisMefSurfacesParameters:
+) -> MrisMefSurfacesParametersTagged:
     """
     Build parameters.
     
@@ -88,7 +66,7 @@ def mris_mef_surfaces_params(
         Parameter dictionary
     """
     params = {
-        "@type": "freesurfer.mris_mef_surfaces",
+        "@type": "freesurfer/mris_mef_surfaces",
         "subject_name": subject_name,
         "hemisphere": hemisphere,
         "omit_self_intersection": omit_self_intersection,
@@ -115,18 +93,18 @@ def mris_mef_surfaces_cargs(
     """
     cargs = []
     cargs.append("mris_mef_surfaces")
-    cargs.append(params.get("subject_name"))
-    cargs.append(params.get("hemisphere"))
-    if params.get("omit_self_intersection"):
+    cargs.append(params.get("subject_name", None))
+    cargs.append(params.get("hemisphere", None))
+    if params.get("omit_self_intersection", False):
         cargs.append("-q")
-    if params.get("curvature"):
+    if params.get("curvature", False):
         cargs.append("-c")
-    if params.get("average_curvature") is not None:
+    if params.get("average_curvature", None) is not None:
         cargs.extend([
             "-a",
-            str(params.get("average_curvature"))
+            str(params.get("average_curvature", None))
         ])
-    if params.get("white_only"):
+    if params.get("white_only", False):
         cargs.append("-whiteonly")
     return cargs
 
@@ -230,7 +208,6 @@ def mris_mef_surfaces(
 __all__ = [
     "MRIS_MEF_SURFACES_METADATA",
     "MrisMefSurfacesOutputs",
-    "MrisMefSurfacesParameters",
     "mris_mef_surfaces",
     "mris_mef_surfaces_execute",
     "mris_mef_surfaces_params",

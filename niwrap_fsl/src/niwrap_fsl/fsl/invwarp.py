@@ -14,7 +14,19 @@ INVWARP_METADATA = Metadata(
 
 
 InvwarpParameters = typing.TypedDict('InvwarpParameters', {
-    "@type": typing.Literal["fsl.invwarp"],
+    "@type": typing.NotRequired[typing.Literal["fsl/invwarp"]],
+    "warp": InputPathType,
+    "out_img": str,
+    "ref_img": InputPathType,
+    "absolute": bool,
+    "relative": bool,
+    "noconstraint": bool,
+    "jacobian_min": typing.NotRequired[float | None],
+    "jacobian_max": typing.NotRequired[float | None],
+    "debug": bool,
+})
+InvwarpParametersTagged = typing.TypedDict('InvwarpParametersTagged', {
+    "@type": typing.Literal["fsl/invwarp"],
     "warp": InputPathType,
     "out_img": str,
     "ref_img": InputPathType,
@@ -27,41 +39,9 @@ InvwarpParameters = typing.TypedDict('InvwarpParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "fsl.invwarp": invwarp_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "fsl.invwarp": invwarp_outputs,
-    }.get(t)
-
-
 class InvwarpOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `invwarp(...)`.
+    Output object returned when calling `InvwarpParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -82,7 +62,7 @@ def invwarp_params(
     jacobian_min: float | None = None,
     jacobian_max: float | None = None,
     debug: bool = False,
-) -> InvwarpParameters:
+) -> InvwarpParametersTagged:
     """
     Build parameters.
     
@@ -102,7 +82,7 @@ def invwarp_params(
         Parameter dictionary
     """
     params = {
-        "@type": "fsl.invwarp",
+        "@type": "fsl/invwarp",
         "warp": warp,
         "out_img": out_img,
         "ref_img": ref_img,
@@ -133,20 +113,20 @@ def invwarp_cargs(
     """
     cargs = []
     cargs.append("invwarp")
-    cargs.append("--warp=" + execution.input_file(params.get("warp")))
-    cargs.append("--out=" + params.get("out_img"))
-    cargs.append("--ref=" + execution.input_file(params.get("ref_img")))
-    if params.get("absolute"):
+    cargs.append("--warp=" + execution.input_file(params.get("warp", None)))
+    cargs.append("--out=" + params.get("out_img", None))
+    cargs.append("--ref=" + execution.input_file(params.get("ref_img", None)))
+    if params.get("absolute", False):
         cargs.append("--abs")
-    if params.get("relative"):
+    if params.get("relative", False):
         cargs.append("--rel")
-    if params.get("noconstraint"):
+    if params.get("noconstraint", False):
         cargs.append("--noconstraint")
-    if params.get("jacobian_min") is not None:
-        cargs.append("--jmin=" + str(params.get("jacobian_min")))
-    if params.get("jacobian_max") is not None:
-        cargs.append("--jmax=" + str(params.get("jacobian_max")))
-    if params.get("debug"):
+    if params.get("jacobian_min", None) is not None:
+        cargs.append("--jmin=" + str(params.get("jacobian_min", None)))
+    if params.get("jacobian_max", None) is not None:
+        cargs.append("--jmax=" + str(params.get("jacobian_max", None)))
+    if params.get("debug", False):
         cargs.append("--debug")
     return cargs
 
@@ -166,7 +146,7 @@ def invwarp_outputs(
     """
     ret = InvwarpOutputs(
         root=execution.output_file("."),
-        inverse_warp=execution.output_file(params.get("out_img")),
+        inverse_warp=execution.output_file(params.get("out_img", None)),
     )
     return ret
 
@@ -255,7 +235,6 @@ def invwarp(
 __all__ = [
     "INVWARP_METADATA",
     "InvwarpOutputs",
-    "InvwarpParameters",
     "invwarp",
     "invwarp_execute",
     "invwarp_params",

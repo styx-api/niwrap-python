@@ -14,7 +14,17 @@ MRIS_DIVIDE_PARCELLATION_METADATA = Metadata(
 
 
 MrisDivideParcellationParameters = typing.TypedDict('MrisDivideParcellationParameters', {
-    "@type": typing.Literal["freesurfer.mris_divide_parcellation"],
+    "@type": typing.NotRequired[typing.Literal["freesurfer/mris_divide_parcellation"]],
+    "subject": str,
+    "hemi": str,
+    "sourceannot": InputPathType,
+    "splitfile_or_areathresh": str,
+    "outannot": str,
+    "scale": typing.NotRequired[float | None],
+    "label_name": typing.NotRequired[str | None],
+})
+MrisDivideParcellationParametersTagged = typing.TypedDict('MrisDivideParcellationParametersTagged', {
+    "@type": typing.Literal["freesurfer/mris_divide_parcellation"],
     "subject": str,
     "hemi": str,
     "sourceannot": InputPathType,
@@ -25,41 +35,9 @@ MrisDivideParcellationParameters = typing.TypedDict('MrisDivideParcellationParam
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "freesurfer.mris_divide_parcellation": mris_divide_parcellation_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "freesurfer.mris_divide_parcellation": mris_divide_parcellation_outputs,
-    }.get(t)
-
-
 class MrisDivideParcellationOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `mris_divide_parcellation(...)`.
+    Output object returned when calling `MrisDivideParcellationParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -75,7 +53,7 @@ def mris_divide_parcellation_params(
     outannot: str,
     scale: float | None = None,
     label_name: str | None = None,
-) -> MrisDivideParcellationParameters:
+) -> MrisDivideParcellationParametersTagged:
     """
     Build parameters.
     
@@ -92,7 +70,7 @@ def mris_divide_parcellation_params(
         Parameter dictionary
     """
     params = {
-        "@type": "freesurfer.mris_divide_parcellation",
+        "@type": "freesurfer/mris_divide_parcellation",
         "subject": subject,
         "hemi": hemi,
         "sourceannot": sourceannot,
@@ -121,20 +99,20 @@ def mris_divide_parcellation_cargs(
     """
     cargs = []
     cargs.append("mris_divide_parcellation")
-    cargs.append(params.get("subject"))
-    cargs.append(params.get("hemi"))
-    cargs.append(execution.input_file(params.get("sourceannot")))
-    cargs.append(params.get("splitfile_or_areathresh"))
-    cargs.append(params.get("outannot"))
-    if params.get("scale") is not None:
+    cargs.append(params.get("subject", None))
+    cargs.append(params.get("hemi", None))
+    cargs.append(execution.input_file(params.get("sourceannot", None)))
+    cargs.append(params.get("splitfile_or_areathresh", None))
+    cargs.append(params.get("outannot", None))
+    if params.get("scale", None) is not None:
         cargs.extend([
             "-scale",
-            str(params.get("scale"))
+            str(params.get("scale", None))
         ])
-    if params.get("label_name") is not None:
+    if params.get("label_name", None) is not None:
         cargs.extend([
             "-l",
-            params.get("label_name")
+            params.get("label_name", None)
         ])
     return cargs
 
@@ -154,7 +132,7 @@ def mris_divide_parcellation_outputs(
     """
     ret = MrisDivideParcellationOutputs(
         root=execution.output_file("."),
-        outannot_file=execution.output_file(params.get("outannot")),
+        outannot_file=execution.output_file(params.get("outannot", None)),
     )
     return ret
 
@@ -236,7 +214,6 @@ def mris_divide_parcellation(
 __all__ = [
     "MRIS_DIVIDE_PARCELLATION_METADATA",
     "MrisDivideParcellationOutputs",
-    "MrisDivideParcellationParameters",
     "mris_divide_parcellation",
     "mris_divide_parcellation_execute",
     "mris_divide_parcellation_params",

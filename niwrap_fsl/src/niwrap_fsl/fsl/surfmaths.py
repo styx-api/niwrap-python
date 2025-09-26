@@ -14,48 +14,22 @@ SURFMATHS_METADATA = Metadata(
 
 
 SurfmathsParameters = typing.TypedDict('SurfmathsParameters', {
-    "@type": typing.Literal["fsl.surfmaths"],
+    "@type": typing.NotRequired[typing.Literal["fsl/surfmaths"]],
+    "first_input": InputPathType,
+    "operations_inputs": typing.NotRequired[list[str] | None],
+    "output": str,
+})
+SurfmathsParametersTagged = typing.TypedDict('SurfmathsParametersTagged', {
+    "@type": typing.Literal["fsl/surfmaths"],
     "first_input": InputPathType,
     "operations_inputs": typing.NotRequired[list[str] | None],
     "output": str,
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "fsl.surfmaths": surfmaths_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "fsl.surfmaths": surfmaths_outputs,
-    }.get(t)
-
-
 class SurfmathsOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `surfmaths(...)`.
+    Output object returned when calling `SurfmathsParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -67,7 +41,7 @@ def surfmaths_params(
     first_input: InputPathType,
     output: str,
     operations_inputs: list[str] | None = None,
-) -> SurfmathsParameters:
+) -> SurfmathsParametersTagged:
     """
     Build parameters.
     
@@ -79,7 +53,7 @@ def surfmaths_params(
         Parameter dictionary
     """
     params = {
-        "@type": "fsl.surfmaths",
+        "@type": "fsl/surfmaths",
         "first_input": first_input,
         "output": output,
     }
@@ -103,10 +77,10 @@ def surfmaths_cargs(
     """
     cargs = []
     cargs.append("surfmaths")
-    cargs.append(execution.input_file(params.get("first_input")))
-    if params.get("operations_inputs") is not None:
-        cargs.extend(params.get("operations_inputs"))
-    cargs.append(params.get("output"))
+    cargs.append(execution.input_file(params.get("first_input", None)))
+    if params.get("operations_inputs", None) is not None:
+        cargs.extend(params.get("operations_inputs", None))
+    cargs.append(params.get("output", None))
     return cargs
 
 
@@ -125,7 +99,7 @@ def surfmaths_outputs(
     """
     ret = SurfmathsOutputs(
         root=execution.output_file("."),
-        output_file=execution.output_file(params.get("output")),
+        output_file=execution.output_file(params.get("output", None)),
     )
     return ret
 
@@ -194,7 +168,6 @@ def surfmaths(
 __all__ = [
     "SURFMATHS_METADATA",
     "SurfmathsOutputs",
-    "SurfmathsParameters",
     "surfmaths",
     "surfmaths_execute",
     "surfmaths_params",

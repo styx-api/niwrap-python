@@ -14,7 +14,17 @@ CONVERT_FIBER_ORIENTATIONS_METADATA = Metadata(
 
 
 ConvertFiberOrientationsFiberParameters = typing.TypedDict('ConvertFiberOrientationsFiberParameters', {
-    "@type": typing.Literal["workbench.convert-fiber-orientations.fiber"],
+    "@type": typing.NotRequired[typing.Literal["fiber"]],
+    "mean_f": InputPathType,
+    "stdev_f": InputPathType,
+    "theta": InputPathType,
+    "phi": InputPathType,
+    "psi": InputPathType,
+    "ka": InputPathType,
+    "kb": InputPathType,
+})
+ConvertFiberOrientationsFiberParametersTagged = typing.TypedDict('ConvertFiberOrientationsFiberParametersTagged', {
+    "@type": typing.Literal["fiber"],
     "mean_f": InputPathType,
     "stdev_f": InputPathType,
     "theta": InputPathType,
@@ -26,44 +36,17 @@ ConvertFiberOrientationsFiberParameters = typing.TypedDict('ConvertFiberOrientat
 
 
 ConvertFiberOrientationsParameters = typing.TypedDict('ConvertFiberOrientationsParameters', {
-    "@type": typing.Literal["workbench.convert-fiber-orientations"],
+    "@type": typing.NotRequired[typing.Literal["workbench/convert-fiber-orientations"]],
     "label_volume": InputPathType,
     "fiber_out": str,
     "fiber": typing.NotRequired[list[ConvertFiberOrientationsFiberParameters] | None],
 })
-
-
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "workbench.convert-fiber-orientations": convert_fiber_orientations_cargs,
-        "workbench.convert-fiber-orientations.fiber": convert_fiber_orientations_fiber_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "workbench.convert-fiber-orientations": convert_fiber_orientations_outputs,
-    }.get(t)
+ConvertFiberOrientationsParametersTagged = typing.TypedDict('ConvertFiberOrientationsParametersTagged', {
+    "@type": typing.Literal["workbench/convert-fiber-orientations"],
+    "label_volume": InputPathType,
+    "fiber_out": str,
+    "fiber": typing.NotRequired[list[ConvertFiberOrientationsFiberParameters] | None],
+})
 
 
 def convert_fiber_orientations_fiber_params(
@@ -74,7 +57,7 @@ def convert_fiber_orientations_fiber_params(
     psi: InputPathType,
     ka: InputPathType,
     kb: InputPathType,
-) -> ConvertFiberOrientationsFiberParameters:
+) -> ConvertFiberOrientationsFiberParametersTagged:
     """
     Build parameters.
     
@@ -90,7 +73,7 @@ def convert_fiber_orientations_fiber_params(
         Parameter dictionary
     """
     params = {
-        "@type": "workbench.convert-fiber-orientations.fiber",
+        "@type": "fiber",
         "mean_f": mean_f,
         "stdev_f": stdev_f,
         "theta": theta,
@@ -117,19 +100,19 @@ def convert_fiber_orientations_fiber_cargs(
     """
     cargs = []
     cargs.append("-fiber")
-    cargs.append(execution.input_file(params.get("mean_f")))
-    cargs.append(execution.input_file(params.get("stdev_f")))
-    cargs.append(execution.input_file(params.get("theta")))
-    cargs.append(execution.input_file(params.get("phi")))
-    cargs.append(execution.input_file(params.get("psi")))
-    cargs.append(execution.input_file(params.get("ka")))
-    cargs.append(execution.input_file(params.get("kb")))
+    cargs.append(execution.input_file(params.get("mean_f", None)))
+    cargs.append(execution.input_file(params.get("stdev_f", None)))
+    cargs.append(execution.input_file(params.get("theta", None)))
+    cargs.append(execution.input_file(params.get("phi", None)))
+    cargs.append(execution.input_file(params.get("psi", None)))
+    cargs.append(execution.input_file(params.get("ka", None)))
+    cargs.append(execution.input_file(params.get("kb", None)))
     return cargs
 
 
 class ConvertFiberOrientationsOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `convert_fiber_orientations(...)`.
+    Output object returned when calling `ConvertFiberOrientationsParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -141,7 +124,7 @@ def convert_fiber_orientations_params(
     label_volume: InputPathType,
     fiber_out: str,
     fiber: list[ConvertFiberOrientationsFiberParameters] | None = None,
-) -> ConvertFiberOrientationsParameters:
+) -> ConvertFiberOrientationsParametersTagged:
     """
     Build parameters.
     
@@ -153,7 +136,7 @@ def convert_fiber_orientations_params(
         Parameter dictionary
     """
     params = {
-        "@type": "workbench.convert-fiber-orientations",
+        "@type": "workbench/convert-fiber-orientations",
         "label_volume": label_volume,
         "fiber_out": fiber_out,
     }
@@ -178,10 +161,10 @@ def convert_fiber_orientations_cargs(
     cargs = []
     cargs.append("wb_command")
     cargs.append("-convert-fiber-orientations")
-    cargs.append(execution.input_file(params.get("label_volume")))
-    cargs.append(params.get("fiber_out"))
-    if params.get("fiber") is not None:
-        cargs.extend([a for c in [dyn_cargs(s["@type"])(s, execution) for s in params.get("fiber")] for a in c])
+    cargs.append(execution.input_file(params.get("label_volume", None)))
+    cargs.append(params.get("fiber_out", None))
+    if params.get("fiber", None) is not None:
+        cargs.extend([a for c in [convert_fiber_orientations_fiber_cargs(s, execution) for s in params.get("fiber", None)] for a in c])
     return cargs
 
 
@@ -200,7 +183,7 @@ def convert_fiber_orientations_outputs(
     """
     ret = ConvertFiberOrientationsOutputs(
         root=execution.output_file("."),
-        fiber_out=execution.output_file(params.get("fiber_out")),
+        fiber_out=execution.output_file(params.get("fiber_out", None)),
     )
     return ret
 
@@ -344,9 +327,7 @@ def convert_fiber_orientations(
 
 __all__ = [
     "CONVERT_FIBER_ORIENTATIONS_METADATA",
-    "ConvertFiberOrientationsFiberParameters",
     "ConvertFiberOrientationsOutputs",
-    "ConvertFiberOrientationsParameters",
     "convert_fiber_orientations",
     "convert_fiber_orientations_execute",
     "convert_fiber_orientations_fiber_params",

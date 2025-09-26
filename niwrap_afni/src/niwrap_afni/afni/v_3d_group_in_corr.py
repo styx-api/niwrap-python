@@ -14,7 +14,38 @@ V_3D_GROUP_IN_CORR_METADATA = Metadata(
 
 
 V3dGroupInCorrParameters = typing.TypedDict('V3dGroupInCorrParameters', {
-    "@type": typing.Literal["afni.3dGroupInCorr"],
+    "@type": typing.NotRequired[typing.Literal["afni/3dGroupInCorr"]],
+    "set_a": InputPathType,
+    "set_b": typing.NotRequired[InputPathType | None],
+    "apair": bool,
+    "label_a": typing.NotRequired[str | None],
+    "label_b": typing.NotRequired[str | None],
+    "pooled": bool,
+    "unpooled": bool,
+    "paired": bool,
+    "nosix": bool,
+    "covariates_file": typing.NotRequired[InputPathType | None],
+    "center": typing.NotRequired[str | None],
+    "seed_radius": typing.NotRequired[float | None],
+    "sendall": bool,
+    "donocov": bool,
+    "dospcov": bool,
+    "cluster": typing.NotRequired[str | None],
+    "read": bool,
+    "ztest": bool,
+    "ah": typing.NotRequired[str | None],
+    "port_offset": typing.NotRequired[float | None],
+    "port_offset_quiet": typing.NotRequired[float | None],
+    "port_bloc": typing.NotRequired[float | None],
+    "suma": bool,
+    "quiet": bool,
+    "verbose": bool,
+    "very_verbose": bool,
+    "debug": bool,
+    "batch": typing.NotRequired[str | None],
+})
+V3dGroupInCorrParametersTagged = typing.TypedDict('V3dGroupInCorrParametersTagged', {
+    "@type": typing.Literal["afni/3dGroupInCorr"],
     "set_a": InputPathType,
     "set_b": typing.NotRequired[InputPathType | None],
     "apair": bool,
@@ -46,41 +77,9 @@ V3dGroupInCorrParameters = typing.TypedDict('V3dGroupInCorrParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "afni.3dGroupInCorr": v_3d_group_in_corr_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "afni.3dGroupInCorr": v_3d_group_in_corr_outputs,
-    }.get(t)
-
-
 class V3dGroupInCorrOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `v_3d_group_in_corr(...)`.
+    Output object returned when calling `V3dGroupInCorrParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -117,7 +116,7 @@ def v_3d_group_in_corr_params(
     very_verbose: bool = False,
     debug: bool = False,
     batch: str | None = None,
-) -> V3dGroupInCorrParameters:
+) -> V3dGroupInCorrParametersTagged:
     """
     Build parameters.
     
@@ -161,7 +160,7 @@ def v_3d_group_in_corr_params(
         Parameter dictionary
     """
     params = {
-        "@type": "afni.3dGroupInCorr",
+        "@type": "afni/3dGroupInCorr",
         "set_a": set_a,
         "apair": apair,
         "pooled": pooled,
@@ -223,97 +222,97 @@ def v_3d_group_in_corr_cargs(
     cargs.append("3dGroupInCorr")
     cargs.extend([
         "-setA",
-        execution.input_file(params.get("set_a"))
+        execution.input_file(params.get("set_a", None))
     ])
-    if params.get("set_b") is not None:
+    if params.get("set_b", None) is not None:
         cargs.extend([
             "-setB",
-            execution.input_file(params.get("set_b"))
+            execution.input_file(params.get("set_b", None))
         ])
-    if params.get("apair"):
+    if params.get("apair", False):
         cargs.append("-Apair")
-    if params.get("label_a") is not None:
+    if params.get("label_a", None) is not None:
         cargs.extend([
             "-labelA",
-            params.get("label_a")
+            params.get("label_a", None)
         ])
-    if params.get("label_b") is not None:
+    if params.get("label_b", None) is not None:
         cargs.extend([
             "-labelB",
-            params.get("label_b")
+            params.get("label_b", None)
         ])
-    if params.get("pooled"):
+    if params.get("pooled", False):
         cargs.append("-pooled")
-    if params.get("unpooled"):
+    if params.get("unpooled", False):
         cargs.append("-unpooled")
-    if params.get("paired"):
+    if params.get("paired", False):
         cargs.append("-paired")
-    if params.get("nosix"):
+    if params.get("nosix", False):
         cargs.append("-nosix")
-    if params.get("covariates_file") is not None:
+    if params.get("covariates_file", None) is not None:
         cargs.extend([
             "-covariates",
-            execution.input_file(params.get("covariates_file"))
+            execution.input_file(params.get("covariates_file", None))
         ])
-    if params.get("center") is not None:
+    if params.get("center", None) is not None:
         cargs.extend([
             "-center",
-            params.get("center")
+            params.get("center", None)
         ])
-    if params.get("seed_radius") is not None:
+    if params.get("seed_radius", None) is not None:
         cargs.extend([
             "-seedrad",
-            str(params.get("seed_radius"))
+            str(params.get("seed_radius", None))
         ])
-    if params.get("sendall"):
+    if params.get("sendall", False):
         cargs.append("-sendall")
-    if params.get("donocov"):
+    if params.get("donocov", False):
         cargs.append("-donocov")
-    if params.get("dospcov"):
+    if params.get("dospcov", False):
         cargs.append("-dospcov")
-    if params.get("cluster") is not None:
+    if params.get("cluster", None) is not None:
         cargs.extend([
             "-clust",
-            params.get("cluster")
+            params.get("cluster", None)
         ])
-    if params.get("read"):
+    if params.get("read", False):
         cargs.append("-read")
-    if params.get("ztest"):
+    if params.get("ztest", False):
         cargs.append("-ztest")
-    if params.get("ah") is not None:
+    if params.get("ah", None) is not None:
         cargs.extend([
             "-ah",
-            params.get("ah")
+            params.get("ah", None)
         ])
-    if params.get("port_offset") is not None:
+    if params.get("port_offset", None) is not None:
         cargs.extend([
             "-np",
-            str(params.get("port_offset"))
+            str(params.get("port_offset", None))
         ])
-    if params.get("port_offset_quiet") is not None:
+    if params.get("port_offset_quiet", None) is not None:
         cargs.extend([
             "-npq",
-            str(params.get("port_offset_quiet"))
+            str(params.get("port_offset_quiet", None))
         ])
-    if params.get("port_bloc") is not None:
+    if params.get("port_bloc", None) is not None:
         cargs.extend([
             "-npb",
-            str(params.get("port_bloc"))
+            str(params.get("port_bloc", None))
         ])
-    if params.get("suma"):
+    if params.get("suma", False):
         cargs.append("-suma")
-    if params.get("quiet"):
+    if params.get("quiet", False):
         cargs.append("-quiet")
-    if params.get("verbose"):
+    if params.get("verbose", False):
         cargs.append("-verb")
-    if params.get("very_verbose"):
+    if params.get("very_verbose", False):
         cargs.append("-VERB")
-    if params.get("debug"):
+    if params.get("debug", False):
         cargs.append("-debug")
-    if params.get("batch") is not None:
+    if params.get("batch", None) is not None:
         cargs.extend([
             "-batch",
-            params.get("batch")
+            params.get("batch", None)
         ])
     return cargs
 
@@ -333,7 +332,7 @@ def v_3d_group_in_corr_outputs(
     """
     ret = V3dGroupInCorrOutputs(
         root=execution.output_file("."),
-        output_file=execution.output_file(pathlib.Path(params.get("set_a")).name + ".results.nii"),
+        output_file=execution.output_file(pathlib.Path(params.get("set_a", None)).name + ".results.nii"),
     )
     return ret
 
@@ -481,7 +480,6 @@ def v_3d_group_in_corr(
 
 __all__ = [
     "V3dGroupInCorrOutputs",
-    "V3dGroupInCorrParameters",
     "V_3D_GROUP_IN_CORR_METADATA",
     "v_3d_group_in_corr",
     "v_3d_group_in_corr_execute",

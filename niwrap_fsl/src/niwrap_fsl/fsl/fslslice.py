@@ -14,46 +14,20 @@ FSLSLICE_METADATA = Metadata(
 
 
 FslsliceParameters = typing.TypedDict('FslsliceParameters', {
-    "@type": typing.Literal["fsl.fslslice"],
+    "@type": typing.NotRequired[typing.Literal["fsl/fslslice"]],
+    "volume": InputPathType,
+    "output_basename": typing.NotRequired[str | None],
+})
+FslsliceParametersTagged = typing.TypedDict('FslsliceParametersTagged', {
+    "@type": typing.Literal["fsl/fslslice"],
     "volume": InputPathType,
     "output_basename": typing.NotRequired[str | None],
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "fsl.fslslice": fslslice_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-    }.get(t)
-
-
 class FslsliceOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `fslslice(...)`.
+    Output object returned when calling `FslsliceParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -62,7 +36,7 @@ class FslsliceOutputs(typing.NamedTuple):
 def fslslice_params(
     volume: InputPathType,
     output_basename: str | None = None,
-) -> FslsliceParameters:
+) -> FslsliceParametersTagged:
     """
     Build parameters.
     
@@ -73,7 +47,7 @@ def fslslice_params(
         Parameter dictionary
     """
     params = {
-        "@type": "fsl.fslslice",
+        "@type": "fsl/fslslice",
         "volume": volume,
     }
     if output_basename is not None:
@@ -96,9 +70,9 @@ def fslslice_cargs(
     """
     cargs = []
     cargs.append("fslslice")
-    cargs.append(execution.input_file(params.get("volume")))
-    if params.get("output_basename") is not None:
-        cargs.append(params.get("output_basename"))
+    cargs.append(execution.input_file(params.get("volume", None)))
+    if params.get("output_basename", None) is not None:
+        cargs.append(params.get("output_basename", None))
     return cargs
 
 
@@ -180,7 +154,6 @@ def fslslice(
 __all__ = [
     "FSLSLICE_METADATA",
     "FslsliceOutputs",
-    "FslsliceParameters",
     "fslslice",
     "fslslice_execute",
     "fslslice_params",

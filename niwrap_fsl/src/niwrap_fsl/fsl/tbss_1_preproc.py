@@ -14,45 +14,18 @@ TBSS_1_PREPROC_METADATA = Metadata(
 
 
 Tbss1PreprocParameters = typing.TypedDict('Tbss1PreprocParameters', {
-    "@type": typing.Literal["fsl.tbss_1_preproc"],
+    "@type": typing.NotRequired[typing.Literal["fsl/tbss_1_preproc"]],
+    "images": list[InputPathType],
+})
+Tbss1PreprocParametersTagged = typing.TypedDict('Tbss1PreprocParametersTagged', {
+    "@type": typing.Literal["fsl/tbss_1_preproc"],
     "images": list[InputPathType],
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "fsl.tbss_1_preproc": tbss_1_preproc_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-    }.get(t)
-
-
 class Tbss1PreprocOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `tbss_1_preproc(...)`.
+    Output object returned when calling `Tbss1PreprocParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -60,7 +33,7 @@ class Tbss1PreprocOutputs(typing.NamedTuple):
 
 def tbss_1_preproc_params(
     images: list[InputPathType],
-) -> Tbss1PreprocParameters:
+) -> Tbss1PreprocParametersTagged:
     """
     Build parameters.
     
@@ -70,7 +43,7 @@ def tbss_1_preproc_params(
         Parameter dictionary
     """
     params = {
-        "@type": "fsl.tbss_1_preproc",
+        "@type": "fsl/tbss_1_preproc",
         "images": images,
     }
     return params
@@ -91,7 +64,7 @@ def tbss_1_preproc_cargs(
     """
     cargs = []
     cargs.append("tbss_1_preproc")
-    cargs.extend([execution.input_file(f) for f in params.get("images")])
+    cargs.extend([execution.input_file(f) for f in params.get("images", None)])
     return cargs
 
 
@@ -170,7 +143,6 @@ def tbss_1_preproc(
 __all__ = [
     "TBSS_1_PREPROC_METADATA",
     "Tbss1PreprocOutputs",
-    "Tbss1PreprocParameters",
     "tbss_1_preproc",
     "tbss_1_preproc_execute",
     "tbss_1_preproc_params",

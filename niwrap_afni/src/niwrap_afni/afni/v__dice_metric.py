@@ -14,7 +14,23 @@ V__DICE_METRIC_METADATA = Metadata(
 
 
 VDiceMetricParameters = typing.TypedDict('VDiceMetricParameters', {
-    "@type": typing.Literal["afni.@DiceMetric"],
+    "@type": typing.NotRequired[typing.Literal["afni/@DiceMetric"]],
+    "base": InputPathType,
+    "dsets": list[InputPathType],
+    "max_roi": typing.NotRequired[float | None],
+    "labeltable": typing.NotRequired[InputPathType | None],
+    "forceoutput": typing.NotRequired[InputPathType | None],
+    "echo": bool,
+    "save_match": bool,
+    "save_diff": bool,
+    "do_not_mask_by_base": bool,
+    "mask_by_base": bool,
+    "prefix": typing.NotRequired[str | None],
+    "ignore_bad": bool,
+    "keep_tmp": bool,
+})
+VDiceMetricParametersTagged = typing.TypedDict('VDiceMetricParametersTagged', {
+    "@type": typing.Literal["afni/@DiceMetric"],
     "base": InputPathType,
     "dsets": list[InputPathType],
     "max_roi": typing.NotRequired[float | None],
@@ -31,40 +47,9 @@ VDiceMetricParameters = typing.TypedDict('VDiceMetricParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "afni.@DiceMetric": v__dice_metric_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-    }.get(t)
-
-
 class VDiceMetricOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `v__dice_metric(...)`.
+    Output object returned when calling `VDiceMetricParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -84,7 +69,7 @@ def v__dice_metric_params(
     prefix: str | None = None,
     ignore_bad: bool = False,
     keep_tmp: bool = False,
-) -> VDiceMetricParameters:
+) -> VDiceMetricParametersTagged:
     """
     Build parameters.
     
@@ -115,7 +100,7 @@ def v__dice_metric_params(
         Parameter dictionary
     """
     params = {
-        "@type": "afni.@DiceMetric",
+        "@type": "afni/@DiceMetric",
         "base": base,
         "dsets": dsets,
         "echo": echo,
@@ -154,45 +139,45 @@ def v__dice_metric_cargs(
     cargs.append("@DiceMetric")
     cargs.extend([
         "-base",
-        execution.input_file(params.get("base"))
+        execution.input_file(params.get("base", None))
     ])
     cargs.extend([
         "-dsets",
-        *[execution.input_file(f) for f in params.get("dsets")]
+        *[execution.input_file(f) for f in params.get("dsets", None)]
     ])
-    if params.get("max_roi") is not None:
+    if params.get("max_roi", None) is not None:
         cargs.extend([
             "-max_N_roi",
-            str(params.get("max_roi"))
+            str(params.get("max_roi", None))
         ])
-    if params.get("labeltable") is not None:
+    if params.get("labeltable", None) is not None:
         cargs.extend([
             "-labeltable",
-            execution.input_file(params.get("labeltable"))
+            execution.input_file(params.get("labeltable", None))
         ])
-    if params.get("forceoutput") is not None:
+    if params.get("forceoutput", None) is not None:
         cargs.extend([
             "-forceoutput",
-            execution.input_file(params.get("forceoutput"))
+            execution.input_file(params.get("forceoutput", None))
         ])
-    if params.get("echo"):
+    if params.get("echo", False):
         cargs.append("-echo")
-    if params.get("save_match"):
+    if params.get("save_match", False):
         cargs.append("-save_match")
-    if params.get("save_diff"):
+    if params.get("save_diff", False):
         cargs.append("-save_diff")
-    if params.get("do_not_mask_by_base"):
+    if params.get("do_not_mask_by_base", False):
         cargs.append("-do_not_mask_by_base")
-    if params.get("mask_by_base"):
+    if params.get("mask_by_base", False):
         cargs.append("-mask_by_base")
-    if params.get("prefix") is not None:
+    if params.get("prefix", None) is not None:
         cargs.extend([
             "-prefix",
-            params.get("prefix")
+            params.get("prefix", None)
         ])
-    if params.get("ignore_bad"):
+    if params.get("ignore_bad", False):
         cargs.append("-ignore_bad")
-    if params.get("keep_tmp"):
+    if params.get("keep_tmp", False):
         cargs.append("-keep_tmp")
     return cargs
 
@@ -316,7 +301,6 @@ def v__dice_metric(
 
 __all__ = [
     "VDiceMetricOutputs",
-    "VDiceMetricParameters",
     "V__DICE_METRIC_METADATA",
     "v__dice_metric",
     "v__dice_metric_execute",

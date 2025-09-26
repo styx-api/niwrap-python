@@ -14,7 +14,19 @@ V_3D_WINSOR_METADATA = Metadata(
 
 
 V3dWinsorParameters = typing.TypedDict('V3dWinsorParameters', {
-    "@type": typing.Literal["afni.3dWinsor"],
+    "@type": typing.NotRequired[typing.Literal["afni/3dWinsor"]],
+    "irad": typing.NotRequired[float | None],
+    "cbot": typing.NotRequired[float | None],
+    "ctop": typing.NotRequired[float | None],
+    "nrep": typing.NotRequired[float | None],
+    "keepzero": bool,
+    "clip": typing.NotRequired[float | None],
+    "prefix": typing.NotRequired[str | None],
+    "mask": typing.NotRequired[InputPathType | None],
+    "dataset": InputPathType,
+})
+V3dWinsorParametersTagged = typing.TypedDict('V3dWinsorParametersTagged', {
+    "@type": typing.Literal["afni/3dWinsor"],
     "irad": typing.NotRequired[float | None],
     "cbot": typing.NotRequired[float | None],
     "ctop": typing.NotRequired[float | None],
@@ -27,41 +39,9 @@ V3dWinsorParameters = typing.TypedDict('V3dWinsorParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "afni.3dWinsor": v_3d_winsor_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "afni.3dWinsor": v_3d_winsor_outputs,
-    }.get(t)
-
-
 class V3dWinsorOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `v_3d_winsor(...)`.
+    Output object returned when calling `V3dWinsorParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -81,7 +61,7 @@ def v_3d_winsor_params(
     clip: float | None = None,
     prefix: str | None = None,
     mask: InputPathType | None = None,
-) -> V3dWinsorParameters:
+) -> V3dWinsorParametersTagged:
     """
     Build parameters.
     
@@ -103,7 +83,7 @@ def v_3d_winsor_params(
         Parameter dictionary
     """
     params = {
-        "@type": "afni.3dWinsor",
+        "@type": "afni/3dWinsor",
         "keepzero": keepzero,
         "dataset": dataset,
     }
@@ -139,44 +119,44 @@ def v_3d_winsor_cargs(
     """
     cargs = []
     cargs.append("3dWinsor")
-    if params.get("irad") is not None:
+    if params.get("irad", None) is not None:
         cargs.extend([
             "-irad",
-            str(params.get("irad"))
+            str(params.get("irad", None))
         ])
-    if params.get("cbot") is not None:
+    if params.get("cbot", None) is not None:
         cargs.extend([
             "-cbot",
-            str(params.get("cbot"))
+            str(params.get("cbot", None))
         ])
-    if params.get("ctop") is not None:
+    if params.get("ctop", None) is not None:
         cargs.extend([
             "-ctop",
-            str(params.get("ctop"))
+            str(params.get("ctop", None))
         ])
-    if params.get("nrep") is not None:
+    if params.get("nrep", None) is not None:
         cargs.extend([
             "-nrep",
-            str(params.get("nrep"))
+            str(params.get("nrep", None))
         ])
-    if params.get("keepzero"):
+    if params.get("keepzero", False):
         cargs.append("-keepzero")
-    if params.get("clip") is not None:
+    if params.get("clip", None) is not None:
         cargs.extend([
             "-clip",
-            str(params.get("clip"))
+            str(params.get("clip", None))
         ])
-    if params.get("prefix") is not None:
+    if params.get("prefix", None) is not None:
         cargs.extend([
             "-prefix",
-            params.get("prefix")
+            params.get("prefix", None)
         ])
-    if params.get("mask") is not None:
+    if params.get("mask", None) is not None:
         cargs.extend([
             "-mask",
-            execution.input_file(params.get("mask"))
+            execution.input_file(params.get("mask", None))
         ])
-    cargs.append(execution.input_file(params.get("dataset")))
+    cargs.append(execution.input_file(params.get("dataset", None)))
     return cargs
 
 
@@ -195,8 +175,8 @@ def v_3d_winsor_outputs(
     """
     ret = V3dWinsorOutputs(
         root=execution.output_file("."),
-        outfile_head=execution.output_file(params.get("prefix") + ".HEAD") if (params.get("prefix") is not None) else None,
-        outfile_brik=execution.output_file(params.get("prefix") + ".BRIK") if (params.get("prefix") is not None) else None,
+        outfile_head=execution.output_file(params.get("prefix", None) + ".HEAD") if (params.get("prefix") is not None) else None,
+        outfile_brik=execution.output_file(params.get("prefix", None) + ".BRIK") if (params.get("prefix") is not None) else None,
     )
     return ret
 
@@ -284,7 +264,6 @@ def v_3d_winsor(
 
 __all__ = [
     "V3dWinsorOutputs",
-    "V3dWinsorParameters",
     "V_3D_WINSOR_METADATA",
     "v_3d_winsor",
     "v_3d_winsor_execute",

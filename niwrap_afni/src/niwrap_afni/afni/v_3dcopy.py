@@ -14,7 +14,15 @@ V_3DCOPY_METADATA = Metadata(
 
 
 V3dcopyParameters = typing.TypedDict('V3dcopyParameters', {
-    "@type": typing.Literal["afni.3dcopy"],
+    "@type": typing.NotRequired[typing.Literal["afni/3dcopy"]],
+    "verbose": bool,
+    "denote": bool,
+    "old_prefix": str,
+    "view": typing.NotRequired[str | None],
+    "new_prefix": str,
+})
+V3dcopyParametersTagged = typing.TypedDict('V3dcopyParametersTagged', {
+    "@type": typing.Literal["afni/3dcopy"],
     "verbose": bool,
     "denote": bool,
     "old_prefix": str,
@@ -23,40 +31,9 @@ V3dcopyParameters = typing.TypedDict('V3dcopyParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "afni.3dcopy": v_3dcopy_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-    }.get(t)
-
-
 class V3dcopyOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `v_3dcopy(...)`.
+    Output object returned when calling `V3dcopyParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -68,7 +45,7 @@ def v_3dcopy_params(
     verbose: bool = False,
     denote: bool = False,
     view: str | None = None,
-) -> V3dcopyParameters:
+) -> V3dcopyParametersTagged:
     """
     Build parameters.
     
@@ -83,7 +60,7 @@ def v_3dcopy_params(
         Parameter dictionary
     """
     params = {
-        "@type": "afni.3dcopy",
+        "@type": "afni/3dcopy",
         "verbose": verbose,
         "denote": denote,
         "old_prefix": old_prefix,
@@ -109,16 +86,16 @@ def v_3dcopy_cargs(
     """
     cargs = []
     cargs.append("3dcopy")
-    if params.get("verbose"):
+    if params.get("verbose", False):
         cargs.append("-verb")
-    if params.get("denote"):
+    if params.get("denote", False):
         cargs.append("-denote")
-    if params.get("view") is not None:
+    if params.get("view", None) is not None:
         cargs.extend([
             "+",
-            params.get("old_prefix") + params.get("view")
+            params.get("old_prefix", None) + params.get("view", None)
         ])
-    cargs.append(params.get("new_prefix"))
+    cargs.append(params.get("new_prefix", None))
     return cargs
 
 
@@ -211,7 +188,6 @@ def v_3dcopy(
 
 __all__ = [
     "V3dcopyOutputs",
-    "V3dcopyParameters",
     "V_3DCOPY_METADATA",
     "v_3dcopy",
     "v_3dcopy_execute",

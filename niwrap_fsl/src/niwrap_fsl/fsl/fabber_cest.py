@@ -14,7 +14,46 @@ FABBER_CEST_METADATA = Metadata(
 
 
 FabberCestParameters = typing.TypedDict('FabberCestParameters', {
-    "@type": typing.Literal["fsl.fabber_cest"],
+    "@type": typing.NotRequired[typing.Literal["fsl/fabber_cest"]],
+    "output": str,
+    "method": str,
+    "model": str,
+    "data": InputPathType,
+    "help": bool,
+    "listmethods": bool,
+    "listmodels": bool,
+    "listparams": bool,
+    "descparams": bool,
+    "listoutputs": bool,
+    "evaluate": typing.NotRequired[str | None],
+    "evaluate_params": typing.NotRequired[str | None],
+    "evaluate_nt": typing.NotRequired[int | None],
+    "simple_output": bool,
+    "overwrite": bool,
+    "link_to_latest": bool,
+    "loadmodels": typing.NotRequired[InputPathType | None],
+    "data_multi": typing.NotRequired[InputPathType | None],
+    "data_order": typing.NotRequired[str | None],
+    "mask": typing.NotRequired[InputPathType | None],
+    "masked_timepoints": typing.NotRequired[int | None],
+    "suppdata": typing.NotRequired[InputPathType | None],
+    "dump_param_names": bool,
+    "save_model_fit": bool,
+    "save_residuals": bool,
+    "save_model_extras": bool,
+    "save_mvn": bool,
+    "save_mean": bool,
+    "save_std": bool,
+    "save_var": bool,
+    "save_zstat": bool,
+    "save_noise_mean": bool,
+    "save_noise_std": bool,
+    "save_free_energy": bool,
+    "optfile": typing.NotRequired[InputPathType | None],
+    "debug": bool,
+})
+FabberCestParametersTagged = typing.TypedDict('FabberCestParametersTagged', {
+    "@type": typing.Literal["fsl/fabber_cest"],
     "output": str,
     "method": str,
     "model": str,
@@ -54,41 +93,9 @@ FabberCestParameters = typing.TypedDict('FabberCestParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "fsl.fabber_cest": fabber_cest_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "fsl.fabber_cest": fabber_cest_outputs,
-    }.get(t)
-
-
 class FabberCestOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `fabber_cest(...)`.
+    Output object returned when calling `FabberCestParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -155,7 +162,7 @@ def fabber_cest_params(
     save_free_energy: bool = False,
     optfile: InputPathType | None = None,
     debug: bool = False,
-) -> FabberCestParameters:
+) -> FabberCestParametersTagged:
     """
     Build parameters.
     
@@ -206,7 +213,7 @@ def fabber_cest_params(
         Parameter dictionary
     """
     params = {
-        "@type": "fsl.fabber_cest",
+        "@type": "fsl/fabber_cest",
         "output": output,
         "method": method,
         "model": model,
@@ -274,113 +281,113 @@ def fabber_cest_cargs(
     cargs.append("fabber_cest")
     cargs.extend([
         "--output",
-        params.get("output")
+        params.get("output", None)
     ])
     cargs.extend([
         "--method",
-        params.get("method")
+        params.get("method", None)
     ])
     cargs.extend([
         "--model",
-        params.get("model")
+        params.get("model", None)
     ])
     cargs.extend([
         "--data",
-        execution.input_file(params.get("data"))
+        execution.input_file(params.get("data", None))
     ])
-    if params.get("help"):
+    if params.get("help", False):
         cargs.append("--help")
-    if params.get("listmethods"):
+    if params.get("listmethods", False):
         cargs.append("--listmethods")
-    if params.get("listmodels"):
+    if params.get("listmodels", False):
         cargs.append("--listmodels")
-    if params.get("listparams"):
+    if params.get("listparams", False):
         cargs.append("--listparams")
-    if params.get("descparams"):
+    if params.get("descparams", False):
         cargs.append("--descparams")
-    if params.get("listoutputs"):
+    if params.get("listoutputs", False):
         cargs.append("--listoutputs")
-    if params.get("evaluate") is not None:
+    if params.get("evaluate", None) is not None:
         cargs.extend([
             "--evaluate",
-            params.get("evaluate")
+            params.get("evaluate", None)
         ])
-    if params.get("evaluate_params") is not None:
+    if params.get("evaluate_params", None) is not None:
         cargs.extend([
             "--evaluate-params",
-            params.get("evaluate_params")
+            params.get("evaluate_params", None)
         ])
-    if params.get("evaluate_nt") is not None:
+    if params.get("evaluate_nt", None) is not None:
         cargs.extend([
             "--evaluate-nt",
-            str(params.get("evaluate_nt"))
+            str(params.get("evaluate_nt", None))
         ])
-    if params.get("simple_output"):
+    if params.get("simple_output", False):
         cargs.append("--simple-output")
-    if params.get("overwrite"):
+    if params.get("overwrite", False):
         cargs.append("--overwrite")
-    if params.get("link_to_latest"):
+    if params.get("link_to_latest", False):
         cargs.append("--link-to-latest")
-    if params.get("loadmodels") is not None:
+    if params.get("loadmodels", None) is not None:
         cargs.extend([
             "--loadmodels",
-            execution.input_file(params.get("loadmodels"))
+            execution.input_file(params.get("loadmodels", None))
         ])
-    if params.get("data_multi") is not None:
+    if params.get("data_multi", None) is not None:
         cargs.extend([
             "--data",
-            execution.input_file(params.get("data_multi"))
+            execution.input_file(params.get("data_multi", None))
         ])
-    if params.get("data_order") is not None:
+    if params.get("data_order", None) is not None:
         cargs.extend([
             "--data-order",
-            params.get("data_order")
+            params.get("data_order", None)
         ])
-    if params.get("mask") is not None:
+    if params.get("mask", None) is not None:
         cargs.extend([
             "--mask",
-            execution.input_file(params.get("mask"))
+            execution.input_file(params.get("mask", None))
         ])
-    if params.get("masked_timepoints") is not None:
+    if params.get("masked_timepoints", None) is not None:
         cargs.extend([
             "--mt",
-            str(params.get("masked_timepoints"))
+            str(params.get("masked_timepoints", None))
         ])
-    if params.get("suppdata") is not None:
+    if params.get("suppdata", None) is not None:
         cargs.extend([
             "--suppdata",
-            execution.input_file(params.get("suppdata"))
+            execution.input_file(params.get("suppdata", None))
         ])
-    if params.get("dump_param_names"):
+    if params.get("dump_param_names", False):
         cargs.append("--dump-param-names")
-    if params.get("save_model_fit"):
+    if params.get("save_model_fit", False):
         cargs.append("--save-model-fit")
-    if params.get("save_residuals"):
+    if params.get("save_residuals", False):
         cargs.append("--save-residuals")
-    if params.get("save_model_extras"):
+    if params.get("save_model_extras", False):
         cargs.append("--save-model-extras")
-    if params.get("save_mvn"):
+    if params.get("save_mvn", False):
         cargs.append("--save-mvn")
-    if params.get("save_mean"):
+    if params.get("save_mean", False):
         cargs.append("--save-mean")
-    if params.get("save_std"):
+    if params.get("save_std", False):
         cargs.append("--save-std")
-    if params.get("save_var"):
+    if params.get("save_var", False):
         cargs.append("--save-var")
-    if params.get("save_zstat"):
+    if params.get("save_zstat", False):
         cargs.append("--save-zstat")
-    if params.get("save_noise_mean"):
+    if params.get("save_noise_mean", False):
         cargs.append("--save-noise-mean")
-    if params.get("save_noise_std"):
+    if params.get("save_noise_std", False):
         cargs.append("--save-noise-std")
-    if params.get("save_free_energy"):
+    if params.get("save_free_energy", False):
         cargs.append("--save-free-energy")
-    if params.get("optfile") is not None:
+    if params.get("optfile", None) is not None:
         cargs.extend([
             "--optfile",
-            execution.input_file(params.get("optfile"))
+            execution.input_file(params.get("optfile", None))
         ])
-    if params.get("debug"):
+    if params.get("debug", False):
         cargs.append("--debug")
     return cargs
 
@@ -400,18 +407,18 @@ def fabber_cest_outputs(
     """
     ret = FabberCestOutputs(
         root=execution.output_file("."),
-        logfile=execution.output_file(params.get("output") + "/logfile.log"),
-        modelfit_out=execution.output_file(params.get("output") + "/model_fit.nii.gz"),
-        residuals_out=execution.output_file(params.get("output") + "/residuals.nii.gz"),
-        modelextras_out=execution.output_file(params.get("output") + "/model_extras.nii.gz"),
-        mvn_out=execution.output_file(params.get("output") + "/mvn.nii.gz"),
-        mean_out=execution.output_file(params.get("output") + "/mean.nii.gz"),
-        std_out=execution.output_file(params.get("output") + "/std.nii.gz"),
-        var_out=execution.output_file(params.get("output") + "/var.nii.gz"),
-        zstat_out=execution.output_file(params.get("output") + "/zstat.nii.gz"),
-        noise_mean_out=execution.output_file(params.get("output") + "/noise_mean.nii.gz"),
-        noise_std_out=execution.output_file(params.get("output") + "/noise_std.nii.gz"),
-        free_energy_out=execution.output_file(params.get("output") + "/free_energy.nii.gz"),
+        logfile=execution.output_file(params.get("output", None) + "/logfile.log"),
+        modelfit_out=execution.output_file(params.get("output", None) + "/model_fit.nii.gz"),
+        residuals_out=execution.output_file(params.get("output", None) + "/residuals.nii.gz"),
+        modelextras_out=execution.output_file(params.get("output", None) + "/model_extras.nii.gz"),
+        mvn_out=execution.output_file(params.get("output", None) + "/mvn.nii.gz"),
+        mean_out=execution.output_file(params.get("output", None) + "/mean.nii.gz"),
+        std_out=execution.output_file(params.get("output", None) + "/std.nii.gz"),
+        var_out=execution.output_file(params.get("output", None) + "/var.nii.gz"),
+        zstat_out=execution.output_file(params.get("output", None) + "/zstat.nii.gz"),
+        noise_mean_out=execution.output_file(params.get("output", None) + "/noise_mean.nii.gz"),
+        noise_std_out=execution.output_file(params.get("output", None) + "/noise_std.nii.gz"),
+        free_energy_out=execution.output_file(params.get("output", None) + "/free_energy.nii.gz"),
     )
     return ret
 
@@ -583,7 +590,6 @@ def fabber_cest(
 __all__ = [
     "FABBER_CEST_METADATA",
     "FabberCestOutputs",
-    "FabberCestParameters",
     "fabber_cest",
     "fabber_cest_execute",
     "fabber_cest_params",

@@ -14,7 +14,42 @@ TKREGISTERFV_METADATA = Metadata(
 
 
 TkregisterfvParameters = typing.TypedDict('TkregisterfvParameters', {
-    "@type": typing.Literal["freesurfer.tkregisterfv"],
+    "@type": typing.NotRequired[typing.Literal["freesurfer/tkregisterfv"]],
+    "mov": typing.NotRequired[InputPathType | None],
+    "targ": typing.NotRequired[InputPathType | None],
+    "reg": InputPathType,
+    "subject": typing.NotRequired[str | None],
+    "fstarg": typing.NotRequired[InputPathType | None],
+    "sd": typing.NotRequired[str | None],
+    "seg": typing.NotRequired[InputPathType | None],
+    "aseg_flag": bool,
+    "aparc_aseg_flag": bool,
+    "opacity": typing.NotRequired[float | None],
+    "surfs_flag": bool,
+    "pial_surfs_flag": bool,
+    "all_surfs_flag": bool,
+    "no_surfs_flag": bool,
+    "lh_only_flag": bool,
+    "rh_only_flag": bool,
+    "surf": typing.NotRequired[InputPathType | None],
+    "aux_s": typing.NotRequired[InputPathType | None],
+    "plane": typing.NotRequired[str | None],
+    "no_config_flag": bool,
+    "mov2": typing.NotRequired[InputPathType | None],
+    "reg2": typing.NotRequired[InputPathType | None],
+    "mov3": typing.NotRequired[InputPathType | None],
+    "reg3": typing.NotRequired[InputPathType | None],
+    "heat_flag": bool,
+    "regheader_flag": bool,
+    "params": typing.NotRequired[list[float] | None],
+    "flip_x_flag": bool,
+    "flip_y_flag": bool,
+    "flip_z_flag": bool,
+    "fstal": bool,
+    "aux": typing.NotRequired[InputPathType | None],
+})
+TkregisterfvParametersTagged = typing.TypedDict('TkregisterfvParametersTagged', {
+    "@type": typing.Literal["freesurfer/tkregisterfv"],
     "mov": typing.NotRequired[InputPathType | None],
     "targ": typing.NotRequired[InputPathType | None],
     "reg": InputPathType,
@@ -50,40 +85,9 @@ TkregisterfvParameters = typing.TypedDict('TkregisterfvParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "freesurfer.tkregisterfv": tkregisterfv_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-    }.get(t)
-
-
 class TkregisterfvOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `tkregisterfv(...)`.
+    Output object returned when calling `TkregisterfvParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -122,7 +126,7 @@ def tkregisterfv_params(
     flip_z_flag: bool = False,
     fstal: bool = False,
     aux: InputPathType | None = None,
-) -> TkregisterfvParameters:
+) -> TkregisterfvParametersTagged:
     """
     Build parameters.
     
@@ -165,7 +169,7 @@ def tkregisterfv_params(
         Parameter dictionary
     """
     params = {
-        "@type": "freesurfer.tkregisterfv",
+        "@type": "freesurfer/tkregisterfv",
         "reg": reg,
         "aseg_flag": aseg_flag,
         "aparc_aseg_flag": aparc_aseg_flag,
@@ -233,119 +237,119 @@ def tkregisterfv_cargs(
     """
     cargs = []
     cargs.append("tkregisterfv")
-    if params.get("mov") is not None:
+    if params.get("mov", None) is not None:
         cargs.extend([
             "--mov",
-            execution.input_file(params.get("mov"))
+            execution.input_file(params.get("mov", None))
         ])
-    if params.get("targ") is not None:
+    if params.get("targ", None) is not None:
         cargs.extend([
             "--targ",
-            execution.input_file(params.get("targ"))
+            execution.input_file(params.get("targ", None))
         ])
     cargs.extend([
         "--reg",
-        execution.input_file(params.get("reg"))
+        execution.input_file(params.get("reg", None))
     ])
-    if params.get("subject") is not None:
+    if params.get("subject", None) is not None:
         cargs.extend([
             "--s",
-            params.get("subject")
+            params.get("subject", None)
         ])
-    if params.get("fstarg") is not None:
+    if params.get("fstarg", None) is not None:
         cargs.extend([
             "--fstarg",
-            execution.input_file(params.get("fstarg"))
+            execution.input_file(params.get("fstarg", None))
         ])
-    if params.get("sd") is not None:
+    if params.get("sd", None) is not None:
         cargs.extend([
             "--sd",
-            params.get("sd")
+            params.get("sd", None)
         ])
-    if params.get("seg") is not None:
+    if params.get("seg", None) is not None:
         cargs.extend([
             "--seg",
-            execution.input_file(params.get("seg"))
+            execution.input_file(params.get("seg", None))
         ])
-    if params.get("aseg_flag"):
+    if params.get("aseg_flag", False):
         cargs.append("--aseg")
-    if params.get("aparc_aseg_flag"):
+    if params.get("aparc_aseg_flag", False):
         cargs.append("--aparc+aseg")
-    if params.get("opacity") is not None:
+    if params.get("opacity", None) is not None:
         cargs.extend([
             "--opacity",
-            str(params.get("opacity"))
+            str(params.get("opacity", None))
         ])
-    if params.get("surfs_flag"):
+    if params.get("surfs_flag", False):
         cargs.append("--surfs")
-    if params.get("pial_surfs_flag"):
+    if params.get("pial_surfs_flag", False):
         cargs.append("--pial-surfs")
-    if params.get("all_surfs_flag"):
+    if params.get("all_surfs_flag", False):
         cargs.append("--all-surfs")
-    if params.get("no_surfs_flag"):
+    if params.get("no_surfs_flag", False):
         cargs.append("--no-surfs")
-    if params.get("lh_only_flag"):
+    if params.get("lh_only_flag", False):
         cargs.append("--lh-only")
-    if params.get("rh_only_flag"):
+    if params.get("rh_only_flag", False):
         cargs.append("--rh-only")
-    if params.get("surf") is not None:
+    if params.get("surf", None) is not None:
         cargs.extend([
             "--surf",
-            execution.input_file(params.get("surf"))
+            execution.input_file(params.get("surf", None))
         ])
-    if params.get("aux_s") is not None:
+    if params.get("aux_s", None) is not None:
         cargs.extend([
             "--aux-surf",
-            execution.input_file(params.get("aux_s"))
+            execution.input_file(params.get("aux_s", None))
         ])
-    if params.get("plane") is not None:
+    if params.get("plane", None) is not None:
         cargs.extend([
             "--plane",
-            params.get("plane")
+            params.get("plane", None)
         ])
-    if params.get("no_config_flag"):
+    if params.get("no_config_flag", False):
         cargs.append("--no-config")
-    if params.get("mov2") is not None:
+    if params.get("mov2", None) is not None:
         cargs.extend([
             "--mov2",
-            execution.input_file(params.get("mov2"))
+            execution.input_file(params.get("mov2", None))
         ])
-    if params.get("reg2") is not None:
+    if params.get("reg2", None) is not None:
         cargs.extend([
             "--reg2",
-            execution.input_file(params.get("reg2"))
+            execution.input_file(params.get("reg2", None))
         ])
-    if params.get("mov3") is not None:
+    if params.get("mov3", None) is not None:
         cargs.extend([
             "--mov3",
-            execution.input_file(params.get("mov3"))
+            execution.input_file(params.get("mov3", None))
         ])
-    if params.get("reg3") is not None:
+    if params.get("reg3", None) is not None:
         cargs.extend([
             "--reg3",
-            execution.input_file(params.get("reg3"))
+            execution.input_file(params.get("reg3", None))
         ])
-    if params.get("heat_flag"):
+    if params.get("heat_flag", False):
         cargs.append("--heat")
-    if params.get("regheader_flag"):
+    if params.get("regheader_flag", False):
         cargs.append("--regheader")
-    if params.get("params") is not None:
+    if params.get("params", None) is not None:
         cargs.extend([
             "--params",
-            *map(str, params.get("params"))
+            *map(str, params.get("params", None))
         ])
-    if params.get("flip_x_flag"):
+    if params.get("flip_x_flag", False):
         cargs.append("--flip-x")
-    if params.get("flip_y_flag"):
+    if params.get("flip_y_flag", False):
         cargs.append("--flip-y")
-    if params.get("flip_z_flag"):
+    if params.get("flip_z_flag", False):
         cargs.append("--flip-z")
-    if params.get("fstal"):
+    if params.get("fstal", False):
         cargs.append("--fstal")
-    if params.get("aux") is not None:
+    if params.get("aux", None) is not None:
         cargs.extend([
             "--aux",
-            execution.input_file(params.get("aux"))
+            execution.input_file(params.get("aux", None))
         ])
     return cargs
 
@@ -522,7 +526,6 @@ def tkregisterfv(
 __all__ = [
     "TKREGISTERFV_METADATA",
     "TkregisterfvOutputs",
-    "TkregisterfvParameters",
     "tkregisterfv",
     "tkregisterfv_execute",
     "tkregisterfv_params",

@@ -14,7 +14,14 @@ FOCI_GET_PROJECTION_VERTEX_METADATA = Metadata(
 
 
 FociGetProjectionVertexParameters = typing.TypedDict('FociGetProjectionVertexParameters', {
-    "@type": typing.Literal["workbench.foci-get-projection-vertex"],
+    "@type": typing.NotRequired[typing.Literal["workbench/foci-get-projection-vertex"]],
+    "foci": InputPathType,
+    "surface": InputPathType,
+    "metric_out": str,
+    "opt_name_name": typing.NotRequired[str | None],
+})
+FociGetProjectionVertexParametersTagged = typing.TypedDict('FociGetProjectionVertexParametersTagged', {
+    "@type": typing.Literal["workbench/foci-get-projection-vertex"],
     "foci": InputPathType,
     "surface": InputPathType,
     "metric_out": str,
@@ -22,41 +29,9 @@ FociGetProjectionVertexParameters = typing.TypedDict('FociGetProjectionVertexPar
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "workbench.foci-get-projection-vertex": foci_get_projection_vertex_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "workbench.foci-get-projection-vertex": foci_get_projection_vertex_outputs,
-    }.get(t)
-
-
 class FociGetProjectionVertexOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `foci_get_projection_vertex(...)`.
+    Output object returned when calling `FociGetProjectionVertexParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -69,7 +44,7 @@ def foci_get_projection_vertex_params(
     surface: InputPathType,
     metric_out: str,
     opt_name_name: str | None = None,
-) -> FociGetProjectionVertexParameters:
+) -> FociGetProjectionVertexParametersTagged:
     """
     Build parameters.
     
@@ -82,7 +57,7 @@ def foci_get_projection_vertex_params(
         Parameter dictionary
     """
     params = {
-        "@type": "workbench.foci-get-projection-vertex",
+        "@type": "workbench/foci-get-projection-vertex",
         "foci": foci,
         "surface": surface,
         "metric_out": metric_out,
@@ -108,13 +83,13 @@ def foci_get_projection_vertex_cargs(
     cargs = []
     cargs.append("wb_command")
     cargs.append("-foci-get-projection-vertex")
-    cargs.append(execution.input_file(params.get("foci")))
-    cargs.append(execution.input_file(params.get("surface")))
-    cargs.append(params.get("metric_out"))
-    if params.get("opt_name_name") is not None:
+    cargs.append(execution.input_file(params.get("foci", None)))
+    cargs.append(execution.input_file(params.get("surface", None)))
+    cargs.append(params.get("metric_out", None))
+    if params.get("opt_name_name", None) is not None:
         cargs.extend([
             "-name",
-            params.get("opt_name_name")
+            params.get("opt_name_name", None)
         ])
     return cargs
 
@@ -134,7 +109,7 @@ def foci_get_projection_vertex_outputs(
     """
     ret = FociGetProjectionVertexOutputs(
         root=execution.output_file("."),
-        metric_out=execution.output_file(params.get("metric_out")),
+        metric_out=execution.output_file(params.get("metric_out", None)),
     )
     return ret
 
@@ -212,7 +187,6 @@ def foci_get_projection_vertex(
 __all__ = [
     "FOCI_GET_PROJECTION_VERTEX_METADATA",
     "FociGetProjectionVertexOutputs",
-    "FociGetProjectionVertexParameters",
     "foci_get_projection_vertex",
     "foci_get_projection_vertex_execute",
     "foci_get_projection_vertex_params",

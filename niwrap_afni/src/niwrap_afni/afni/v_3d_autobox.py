@@ -14,7 +14,24 @@ V_3D_AUTOBOX_METADATA = Metadata(
 
 
 V3dAutoboxParameters = typing.TypedDict('V3dAutoboxParameters', {
-    "@type": typing.Literal["afni.3dAutobox"],
+    "@type": typing.NotRequired[typing.Literal["afni/3dAutobox"]],
+    "input": InputPathType,
+    "prefix": typing.NotRequired[str | None],
+    "alt_input": typing.NotRequired[InputPathType | None],
+    "noclust": bool,
+    "extent": bool,
+    "extent_ijk": bool,
+    "extent_ijk_to_file": typing.NotRequired[str | None],
+    "extent_ijk_midslice": bool,
+    "extent_ijkord": bool,
+    "extent_ijkord_to_file": typing.NotRequired[str | None],
+    "extent_xyz_to_file": typing.NotRequired[str | None],
+    "extent_xyz_midslice": bool,
+    "npad": typing.NotRequired[float | None],
+    "npad_safety_on": bool,
+})
+V3dAutoboxParametersTagged = typing.TypedDict('V3dAutoboxParametersTagged', {
+    "@type": typing.Literal["afni/3dAutobox"],
     "input": InputPathType,
     "prefix": typing.NotRequired[str | None],
     "alt_input": typing.NotRequired[InputPathType | None],
@@ -32,40 +49,9 @@ V3dAutoboxParameters = typing.TypedDict('V3dAutoboxParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "afni.3dAutobox": v_3d_autobox_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-    }.get(t)
-
-
 class V3dAutoboxOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `v_3d_autobox(...)`.
+    Output object returned when calling `V3dAutoboxParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -86,7 +72,7 @@ def v_3d_autobox_params(
     extent_xyz_midslice: bool = False,
     npad: float | None = None,
     npad_safety_on: bool = False,
-) -> V3dAutoboxParameters:
+) -> V3dAutoboxParametersTagged:
     """
     Build parameters.
     
@@ -119,7 +105,7 @@ def v_3d_autobox_params(
         Parameter dictionary
     """
     params = {
-        "@type": "afni.3dAutobox",
+        "@type": "afni/3dAutobox",
         "input": input_,
         "noclust": noclust,
         "extent": extent,
@@ -159,50 +145,50 @@ def v_3d_autobox_cargs(
     """
     cargs = []
     cargs.append("3dAutobox")
-    cargs.append(execution.input_file(params.get("input")))
-    if params.get("prefix") is not None:
+    cargs.append(execution.input_file(params.get("input", None)))
+    if params.get("prefix", None) is not None:
         cargs.extend([
             "-prefix",
-            params.get("prefix")
+            params.get("prefix", None)
         ])
-    if params.get("alt_input") is not None:
+    if params.get("alt_input", None) is not None:
         cargs.extend([
             "-input",
-            execution.input_file(params.get("alt_input"))
+            execution.input_file(params.get("alt_input", None))
         ])
-    if params.get("noclust"):
+    if params.get("noclust", False):
         cargs.append("-noclust")
-    if params.get("extent"):
+    if params.get("extent", False):
         cargs.append("-extent")
-    if params.get("extent_ijk"):
+    if params.get("extent_ijk", False):
         cargs.append("-extent_ijk")
-    if params.get("extent_ijk_to_file") is not None:
+    if params.get("extent_ijk_to_file", None) is not None:
         cargs.extend([
             "-extent_ijk_to_file",
-            params.get("extent_ijk_to_file")
+            params.get("extent_ijk_to_file", None)
         ])
-    if params.get("extent_ijk_midslice"):
+    if params.get("extent_ijk_midslice", False):
         cargs.append("-extent_ijk_midslice")
-    if params.get("extent_ijkord"):
+    if params.get("extent_ijkord", False):
         cargs.append("-extent_ijkord")
-    if params.get("extent_ijkord_to_file") is not None:
+    if params.get("extent_ijkord_to_file", None) is not None:
         cargs.extend([
             "-extent_ijkord_to_file",
-            params.get("extent_ijkord_to_file")
+            params.get("extent_ijkord_to_file", None)
         ])
-    if params.get("extent_xyz_to_file") is not None:
+    if params.get("extent_xyz_to_file", None) is not None:
         cargs.extend([
             "-extent_xyz_to_file",
-            params.get("extent_xyz_to_file")
+            params.get("extent_xyz_to_file", None)
         ])
-    if params.get("extent_xyz_midslice"):
+    if params.get("extent_xyz_midslice", False):
         cargs.append("-extent_xyz_midslice")
-    if params.get("npad") is not None:
+    if params.get("npad", None) is not None:
         cargs.extend([
             "-npad",
-            str(params.get("npad"))
+            str(params.get("npad", None))
         ])
-    if params.get("npad_safety_on"):
+    if params.get("npad_safety_on", False):
         cargs.append("-npad_safety_on")
     return cargs
 
@@ -332,7 +318,6 @@ def v_3d_autobox(
 
 __all__ = [
     "V3dAutoboxOutputs",
-    "V3dAutoboxParameters",
     "V_3D_AUTOBOX_METADATA",
     "v_3d_autobox",
     "v_3d_autobox_execute",

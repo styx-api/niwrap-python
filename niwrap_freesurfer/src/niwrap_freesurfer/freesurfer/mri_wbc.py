@@ -14,7 +14,27 @@ MRI_WBC_METADATA = Metadata(
 
 
 MriWbcParameters = typing.TypedDict('MriWbcParameters', {
-    "@type": typing.Literal["freesurfer.mri_wbc"],
+    "@type": typing.NotRequired[typing.Literal["freesurfer/mri_wbc"]],
+    "functional_volume": InputPathType,
+    "volume_mask": typing.NotRequired[InputPathType | None],
+    "lh_functional_surface": InputPathType,
+    "lh_surface": InputPathType,
+    "lh_inflated": typing.NotRequired[InputPathType | None],
+    "lh_mask": typing.NotRequired[InputPathType | None],
+    "lh_label": typing.NotRequired[InputPathType | None],
+    "rh_functional_surface": InputPathType,
+    "rh_surface": InputPathType,
+    "rh_inflated": typing.NotRequired[InputPathType | None],
+    "rh_mask": typing.NotRequired[InputPathType | None],
+    "rh_label": typing.NotRequired[InputPathType | None],
+    "rho_threshold": typing.NotRequired[float | None],
+    "dist_threshold": typing.NotRequired[float | None],
+    "threads": typing.NotRequired[float | None],
+    "debug": bool,
+    "checkopts": bool,
+})
+MriWbcParametersTagged = typing.TypedDict('MriWbcParametersTagged', {
+    "@type": typing.Literal["freesurfer/mri_wbc"],
     "functional_volume": InputPathType,
     "volume_mask": typing.NotRequired[InputPathType | None],
     "lh_functional_surface": InputPathType,
@@ -35,40 +55,9 @@ MriWbcParameters = typing.TypedDict('MriWbcParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "freesurfer.mri_wbc": mri_wbc_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-    }.get(t)
-
-
 class MriWbcOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `mri_wbc(...)`.
+    Output object returned when calling `MriWbcParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -92,7 +81,7 @@ def mri_wbc_params(
     threads: float | None = None,
     debug: bool = False,
     checkopts: bool = False,
-) -> MriWbcParameters:
+) -> MriWbcParametersTagged:
     """
     Build parameters.
     
@@ -118,7 +107,7 @@ def mri_wbc_params(
         Parameter dictionary
     """
     params = {
-        "@type": "freesurfer.mri_wbc",
+        "@type": "freesurfer/mri_wbc",
         "functional_volume": functional_volume,
         "lh_functional_surface": lh_functional_surface,
         "lh_surface": lh_surface,
@@ -167,77 +156,77 @@ def mri_wbc_cargs(
     cargs.append("mri_wbc")
     cargs.extend([
         "--fvol",
-        execution.input_file(params.get("functional_volume"))
+        execution.input_file(params.get("functional_volume", None))
     ])
-    if params.get("volume_mask") is not None:
+    if params.get("volume_mask", None) is not None:
         cargs.extend([
             "--volmask",
-            execution.input_file(params.get("volume_mask"))
+            execution.input_file(params.get("volume_mask", None))
         ])
     cargs.extend([
         "--lh",
-        execution.input_file(params.get("lh_functional_surface"))
+        execution.input_file(params.get("lh_functional_surface", None))
     ])
     cargs.extend([
         "--lh",
-        execution.input_file(params.get("lh_surface"))
+        execution.input_file(params.get("lh_surface", None))
     ])
-    if params.get("lh_inflated") is not None:
+    if params.get("lh_inflated", None) is not None:
         cargs.extend([
             "--lh",
-            execution.input_file(params.get("lh_inflated"))
+            execution.input_file(params.get("lh_inflated", None))
         ])
-    if params.get("lh_mask") is not None:
+    if params.get("lh_mask", None) is not None:
         cargs.extend([
             "--lhmask",
-            execution.input_file(params.get("lh_mask"))
+            execution.input_file(params.get("lh_mask", None))
         ])
-    if params.get("lh_label") is not None:
+    if params.get("lh_label", None) is not None:
         cargs.extend([
             "--lhlabel",
-            execution.input_file(params.get("lh_label"))
+            execution.input_file(params.get("lh_label", None))
         ])
     cargs.extend([
         "--rh",
-        execution.input_file(params.get("rh_functional_surface"))
+        execution.input_file(params.get("rh_functional_surface", None))
     ])
     cargs.extend([
         "--rh",
-        execution.input_file(params.get("rh_surface"))
+        execution.input_file(params.get("rh_surface", None))
     ])
-    if params.get("rh_inflated") is not None:
+    if params.get("rh_inflated", None) is not None:
         cargs.extend([
             "--rh",
-            execution.input_file(params.get("rh_inflated"))
+            execution.input_file(params.get("rh_inflated", None))
         ])
-    if params.get("rh_mask") is not None:
+    if params.get("rh_mask", None) is not None:
         cargs.extend([
             "--rhmask",
-            execution.input_file(params.get("rh_mask"))
+            execution.input_file(params.get("rh_mask", None))
         ])
-    if params.get("rh_label") is not None:
+    if params.get("rh_label", None) is not None:
         cargs.extend([
             "--rhlabel",
-            execution.input_file(params.get("rh_label"))
+            execution.input_file(params.get("rh_label", None))
         ])
-    if params.get("rho_threshold") is not None:
+    if params.get("rho_threshold", None) is not None:
         cargs.extend([
             "--rho",
-            str(params.get("rho_threshold"))
+            str(params.get("rho_threshold", None))
         ])
-    if params.get("dist_threshold") is not None:
+    if params.get("dist_threshold", None) is not None:
         cargs.extend([
             "--dist",
-            str(params.get("dist_threshold"))
+            str(params.get("dist_threshold", None))
         ])
-    if params.get("threads") is not None:
+    if params.get("threads", None) is not None:
         cargs.extend([
             "--threads",
-            str(params.get("threads"))
+            str(params.get("threads", None))
         ])
-    if params.get("debug"):
+    if params.get("debug", False):
         cargs.append("--debug")
-    if params.get("checkopts"):
+    if params.get("checkopts", False):
         cargs.append("--checkopts")
     return cargs
 
@@ -367,7 +356,6 @@ def mri_wbc(
 __all__ = [
     "MRI_WBC_METADATA",
     "MriWbcOutputs",
-    "MriWbcParameters",
     "mri_wbc",
     "mri_wbc_execute",
     "mri_wbc_params",

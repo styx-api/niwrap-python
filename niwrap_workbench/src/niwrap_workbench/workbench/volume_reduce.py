@@ -14,14 +14,27 @@ VOLUME_REDUCE_METADATA = Metadata(
 
 
 VolumeReduceExcludeOutliersParameters = typing.TypedDict('VolumeReduceExcludeOutliersParameters', {
-    "@type": typing.Literal["workbench.volume-reduce.exclude_outliers"],
+    "@type": typing.NotRequired[typing.Literal["exclude_outliers"]],
+    "sigma_below": float,
+    "sigma_above": float,
+})
+VolumeReduceExcludeOutliersParametersTagged = typing.TypedDict('VolumeReduceExcludeOutliersParametersTagged', {
+    "@type": typing.Literal["exclude_outliers"],
     "sigma_below": float,
     "sigma_above": float,
 })
 
 
 VolumeReduceParameters = typing.TypedDict('VolumeReduceParameters', {
-    "@type": typing.Literal["workbench.volume-reduce"],
+    "@type": typing.NotRequired[typing.Literal["workbench/volume-reduce"]],
+    "volume_in": InputPathType,
+    "operation": str,
+    "volume_out": str,
+    "exclude_outliers": typing.NotRequired[VolumeReduceExcludeOutliersParameters | None],
+    "opt_only_numeric": bool,
+})
+VolumeReduceParametersTagged = typing.TypedDict('VolumeReduceParametersTagged', {
+    "@type": typing.Literal["workbench/volume-reduce"],
     "volume_in": InputPathType,
     "operation": str,
     "volume_out": str,
@@ -30,43 +43,10 @@ VolumeReduceParameters = typing.TypedDict('VolumeReduceParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "workbench.volume-reduce": volume_reduce_cargs,
-        "workbench.volume-reduce.exclude_outliers": volume_reduce_exclude_outliers_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "workbench.volume-reduce": volume_reduce_outputs,
-    }.get(t)
-
-
 def volume_reduce_exclude_outliers_params(
     sigma_below: float,
     sigma_above: float,
-) -> VolumeReduceExcludeOutliersParameters:
+) -> VolumeReduceExcludeOutliersParametersTagged:
     """
     Build parameters.
     
@@ -77,7 +57,7 @@ def volume_reduce_exclude_outliers_params(
         Parameter dictionary
     """
     params = {
-        "@type": "workbench.volume-reduce.exclude_outliers",
+        "@type": "exclude_outliers",
         "sigma_below": sigma_below,
         "sigma_above": sigma_above,
     }
@@ -99,14 +79,14 @@ def volume_reduce_exclude_outliers_cargs(
     """
     cargs = []
     cargs.append("-exclude-outliers")
-    cargs.append(str(params.get("sigma_below")))
-    cargs.append(str(params.get("sigma_above")))
+    cargs.append(str(params.get("sigma_below", None)))
+    cargs.append(str(params.get("sigma_above", None)))
     return cargs
 
 
 class VolumeReduceOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `volume_reduce(...)`.
+    Output object returned when calling `VolumeReduceParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -120,7 +100,7 @@ def volume_reduce_params(
     volume_out: str,
     exclude_outliers: VolumeReduceExcludeOutliersParameters | None = None,
     opt_only_numeric: bool = False,
-) -> VolumeReduceParameters:
+) -> VolumeReduceParametersTagged:
     """
     Build parameters.
     
@@ -135,7 +115,7 @@ def volume_reduce_params(
         Parameter dictionary
     """
     params = {
-        "@type": "workbench.volume-reduce",
+        "@type": "workbench/volume-reduce",
         "volume_in": volume_in,
         "operation": operation,
         "volume_out": volume_out,
@@ -162,12 +142,12 @@ def volume_reduce_cargs(
     cargs = []
     cargs.append("wb_command")
     cargs.append("-volume-reduce")
-    cargs.append(execution.input_file(params.get("volume_in")))
-    cargs.append(params.get("operation"))
-    cargs.append(params.get("volume_out"))
-    if params.get("exclude_outliers") is not None:
-        cargs.extend(dyn_cargs(params.get("exclude_outliers")["@type"])(params.get("exclude_outliers"), execution))
-    if params.get("opt_only_numeric"):
+    cargs.append(execution.input_file(params.get("volume_in", None)))
+    cargs.append(params.get("operation", None))
+    cargs.append(params.get("volume_out", None))
+    if params.get("exclude_outliers", None) is not None:
+        cargs.extend(volume_reduce_exclude_outliers_cargs(params.get("exclude_outliers", None), execution))
+    if params.get("opt_only_numeric", False):
         cargs.append("-only-numeric")
     return cargs
 
@@ -187,7 +167,7 @@ def volume_reduce_outputs(
     """
     ret = VolumeReduceOutputs(
         root=execution.output_file("."),
-        volume_out=execution.output_file(params.get("volume_out")),
+        volume_out=execution.output_file(params.get("volume_out", None)),
     )
     return ret
 
@@ -304,9 +284,7 @@ def volume_reduce(
 
 __all__ = [
     "VOLUME_REDUCE_METADATA",
-    "VolumeReduceExcludeOutliersParameters",
     "VolumeReduceOutputs",
-    "VolumeReduceParameters",
     "volume_reduce",
     "volume_reduce_exclude_outliers_params",
     "volume_reduce_execute",

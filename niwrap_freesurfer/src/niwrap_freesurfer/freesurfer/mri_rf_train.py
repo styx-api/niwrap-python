@@ -14,7 +14,19 @@ MRI_RF_TRAIN_METADATA = Metadata(
 
 
 MriRfTrainParameters = typing.TypedDict('MriRfTrainParameters', {
-    "@type": typing.Literal["freesurfer.mri_rf_train"],
+    "@type": typing.NotRequired[typing.Literal["freesurfer/mri_rf_train"]],
+    "seg_volume": str,
+    "atlas_transform": str,
+    "mask_volume": typing.NotRequired[str | None],
+    "node_spacing": typing.NotRequired[float | None],
+    "prior_spacing": typing.NotRequired[float | None],
+    "input_training_data": typing.NotRequired[list[str] | None],
+    "sanity_check": bool,
+    "subjects": list[str],
+    "output_rfa": str,
+})
+MriRfTrainParametersTagged = typing.TypedDict('MriRfTrainParametersTagged', {
+    "@type": typing.Literal["freesurfer/mri_rf_train"],
     "seg_volume": str,
     "atlas_transform": str,
     "mask_volume": typing.NotRequired[str | None],
@@ -27,40 +39,9 @@ MriRfTrainParameters = typing.TypedDict('MriRfTrainParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "freesurfer.mri_rf_train": mri_rf_train_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-    }.get(t)
-
-
 class MriRfTrainOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `mri_rf_train(...)`.
+    Output object returned when calling `MriRfTrainParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -76,7 +57,7 @@ def mri_rf_train_params(
     prior_spacing: float | None = None,
     input_training_data: list[str] | None = None,
     sanity_check: bool = False,
-) -> MriRfTrainParameters:
+) -> MriRfTrainParametersTagged:
     """
     Build parameters.
     
@@ -97,7 +78,7 @@ def mri_rf_train_params(
         Parameter dictionary
     """
     params = {
-        "@type": "freesurfer.mri_rf_train",
+        "@type": "freesurfer/mri_rf_train",
         "seg_volume": seg_volume,
         "atlas_transform": atlas_transform,
         "sanity_check": sanity_check,
@@ -132,36 +113,36 @@ def mri_rf_train_cargs(
     cargs.append("mri_rf_train")
     cargs.extend([
         "-seg",
-        params.get("seg_volume")
+        params.get("seg_volume", None)
     ])
     cargs.extend([
         "-xform",
-        params.get("atlas_transform")
+        params.get("atlas_transform", None)
     ])
-    if params.get("mask_volume") is not None:
+    if params.get("mask_volume", None) is not None:
         cargs.extend([
             "-mask",
-            params.get("mask_volume")
+            params.get("mask_volume", None)
         ])
-    if params.get("node_spacing") is not None:
+    if params.get("node_spacing", None) is not None:
         cargs.extend([
             "-node_spacing",
-            str(params.get("node_spacing"))
+            str(params.get("node_spacing", None))
         ])
-    if params.get("prior_spacing") is not None:
+    if params.get("prior_spacing", None) is not None:
         cargs.extend([
             "-prior_spacing",
-            str(params.get("prior_spacing"))
+            str(params.get("prior_spacing", None))
         ])
-    if params.get("input_training_data") is not None:
+    if params.get("input_training_data", None) is not None:
         cargs.extend([
             "-input",
-            *params.get("input_training_data")
+            *params.get("input_training_data", None)
         ])
-    if params.get("sanity_check"):
+    if params.get("sanity_check", False):
         cargs.append("-check")
-    cargs.extend(params.get("subjects"))
-    cargs.append(params.get("output_rfa"))
+    cargs.extend(params.get("subjects", None))
+    cargs.append(params.get("output_rfa", None))
     return cargs
 
 
@@ -267,7 +248,6 @@ def mri_rf_train(
 __all__ = [
     "MRI_RF_TRAIN_METADATA",
     "MriRfTrainOutputs",
-    "MriRfTrainParameters",
     "mri_rf_train",
     "mri_rf_train_execute",
     "mri_rf_train_params",

@@ -14,46 +14,20 @@ V__TIME_DIFF_METADATA = Metadata(
 
 
 VTimeDiffParameters = typing.TypedDict('VTimeDiffParameters', {
-    "@type": typing.Literal["afni.@TimeDiff"],
+    "@type": typing.NotRequired[typing.Literal["afni/@TimeDiff"]],
+    "file1": InputPathType,
+    "file2": InputPathType,
+})
+VTimeDiffParametersTagged = typing.TypedDict('VTimeDiffParametersTagged', {
+    "@type": typing.Literal["afni/@TimeDiff"],
     "file1": InputPathType,
     "file2": InputPathType,
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "afni.@TimeDiff": v__time_diff_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-    }.get(t)
-
-
 class VTimeDiffOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `v__time_diff(...)`.
+    Output object returned when calling `VTimeDiffParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -62,7 +36,7 @@ class VTimeDiffOutputs(typing.NamedTuple):
 def v__time_diff_params(
     file1: InputPathType,
     file2: InputPathType,
-) -> VTimeDiffParameters:
+) -> VTimeDiffParametersTagged:
     """
     Build parameters.
     
@@ -73,7 +47,7 @@ def v__time_diff_params(
         Parameter dictionary
     """
     params = {
-        "@type": "afni.@TimeDiff",
+        "@type": "afni/@TimeDiff",
         "file1": file1,
         "file2": file2,
     }
@@ -95,8 +69,8 @@ def v__time_diff_cargs(
     """
     cargs = []
     cargs.append("@TimeDiff")
-    cargs.append(execution.input_file(params.get("file1")))
-    cargs.append(execution.input_file(params.get("file2")))
+    cargs.append(execution.input_file(params.get("file1", None)))
+    cargs.append(execution.input_file(params.get("file2", None)))
     return cargs
 
 
@@ -177,7 +151,6 @@ def v__time_diff(
 
 __all__ = [
     "VTimeDiffOutputs",
-    "VTimeDiffParameters",
     "V__TIME_DIFF_METADATA",
     "v__time_diff",
     "v__time_diff_execute",

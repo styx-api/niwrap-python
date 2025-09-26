@@ -14,7 +14,19 @@ GRAD_UNWARP_METADATA = Metadata(
 
 
 GradUnwarpParameters = typing.TypedDict('GradUnwarpParameters', {
-    "@type": typing.Literal["freesurfer.grad_unwarp"],
+    "@type": typing.NotRequired[typing.Literal["freesurfer/grad_unwarp"]],
+    "infile": InputPathType,
+    "seriesno": typing.NotRequired[str | None],
+    "unwarp_type": typing.NotRequired[str | None],
+    "nojac": bool,
+    "corfov": bool,
+    "cor": bool,
+    "interp": typing.NotRequired[str | None],
+    "outfile": str,
+    "matlab_binary": typing.NotRequired[str | None],
+})
+GradUnwarpParametersTagged = typing.TypedDict('GradUnwarpParametersTagged', {
+    "@type": typing.Literal["freesurfer/grad_unwarp"],
     "infile": InputPathType,
     "seriesno": typing.NotRequired[str | None],
     "unwarp_type": typing.NotRequired[str | None],
@@ -27,41 +39,9 @@ GradUnwarpParameters = typing.TypedDict('GradUnwarpParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "freesurfer.grad_unwarp": grad_unwarp_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "freesurfer.grad_unwarp": grad_unwarp_outputs,
-    }.get(t)
-
-
 class GradUnwarpOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `grad_unwarp(...)`.
+    Output object returned when calling `GradUnwarpParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -81,7 +61,7 @@ def grad_unwarp_params(
     cor: bool = False,
     interp: str | None = None,
     matlab_binary: str | None = None,
-) -> GradUnwarpParameters:
+) -> GradUnwarpParametersTagged:
     """
     Build parameters.
     
@@ -101,7 +81,7 @@ def grad_unwarp_params(
         Parameter dictionary
     """
     params = {
-        "@type": "freesurfer.grad_unwarp",
+        "@type": "freesurfer/grad_unwarp",
         "infile": infile,
         "nojac": nojac,
         "corfov": corfov,
@@ -134,36 +114,36 @@ def grad_unwarp_cargs(
     """
     cargs = []
     cargs.append("grad_unwarp")
-    cargs.append(execution.input_file(params.get("infile")))
-    if params.get("seriesno") is not None:
+    cargs.append(execution.input_file(params.get("infile", None)))
+    if params.get("seriesno", None) is not None:
         cargs.extend([
             "-s",
-            params.get("seriesno")
+            params.get("seriesno", None)
         ])
-    if params.get("unwarp_type") is not None:
+    if params.get("unwarp_type", None) is not None:
         cargs.extend([
             "-unwarp",
-            params.get("unwarp_type")
+            params.get("unwarp_type", None)
         ])
-    if params.get("nojac"):
+    if params.get("nojac", False):
         cargs.append("-nojac")
-    if params.get("corfov"):
+    if params.get("corfov", False):
         cargs.append("-corfov")
-    if params.get("cor"):
+    if params.get("cor", False):
         cargs.append("-cor")
-    if params.get("interp") is not None:
+    if params.get("interp", None) is not None:
         cargs.extend([
             "-interp",
-            params.get("interp")
+            params.get("interp", None)
         ])
     cargs.extend([
         "-o",
-        params.get("outfile")
+        params.get("outfile", None)
     ])
-    if params.get("matlab_binary") is not None:
+    if params.get("matlab_binary", None) is not None:
         cargs.extend([
             "-matlab",
-            params.get("matlab_binary")
+            params.get("matlab_binary", None)
         ])
     return cargs
 
@@ -183,8 +163,8 @@ def grad_unwarp_outputs(
     """
     ret = GradUnwarpOutputs(
         root=execution.output_file("."),
-        mgh_output=execution.output_file(params.get("outfile")),
-        cor_output=execution.output_file(params.get("outfile") + "/"),
+        mgh_output=execution.output_file(params.get("outfile", None)),
+        cor_output=execution.output_file(params.get("outfile", None) + "/"),
     )
     return ret
 
@@ -271,7 +251,6 @@ def grad_unwarp(
 __all__ = [
     "GRAD_UNWARP_METADATA",
     "GradUnwarpOutputs",
-    "GradUnwarpParameters",
     "grad_unwarp",
     "grad_unwarp_execute",
     "grad_unwarp_params",

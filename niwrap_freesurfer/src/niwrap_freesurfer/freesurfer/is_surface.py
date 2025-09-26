@@ -14,45 +14,18 @@ IS_SURFACE_METADATA = Metadata(
 
 
 IsSurfaceParameters = typing.TypedDict('IsSurfaceParameters', {
-    "@type": typing.Literal["freesurfer.is-surface"],
+    "@type": typing.NotRequired[typing.Literal["freesurfer/is-surface"]],
+    "infile": InputPathType,
+})
+IsSurfaceParametersTagged = typing.TypedDict('IsSurfaceParametersTagged', {
+    "@type": typing.Literal["freesurfer/is-surface"],
     "infile": InputPathType,
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "freesurfer.is-surface": is_surface_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-    }.get(t)
-
-
 class IsSurfaceOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `is_surface(...)`.
+    Output object returned when calling `IsSurfaceParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -60,7 +33,7 @@ class IsSurfaceOutputs(typing.NamedTuple):
 
 def is_surface_params(
     infile: InputPathType,
-) -> IsSurfaceParameters:
+) -> IsSurfaceParametersTagged:
     """
     Build parameters.
     
@@ -70,7 +43,7 @@ def is_surface_params(
         Parameter dictionary
     """
     params = {
-        "@type": "freesurfer.is-surface",
+        "@type": "freesurfer/is-surface",
         "infile": infile,
     }
     return params
@@ -93,7 +66,7 @@ def is_surface_cargs(
     cargs.append("is-surface")
     cargs.extend([
         "-surface",
-        execution.input_file(params.get("infile"))
+        execution.input_file(params.get("infile", None))
     ])
     return cargs
 
@@ -175,7 +148,6 @@ def is_surface(
 __all__ = [
     "IS_SURFACE_METADATA",
     "IsSurfaceOutputs",
-    "IsSurfaceParameters",
     "is_surface",
     "is_surface_execute",
     "is_surface_params",

@@ -14,7 +14,22 @@ V_3DEDGEDOG_METADATA = Metadata(
 
 
 V3dedgedogParameters = typing.TypedDict('V3dedgedogParameters', {
-    "@type": typing.Literal["afni.3dedgedog"],
+    "@type": typing.NotRequired[typing.Literal["afni/3dedgedog"]],
+    "input": InputPathType,
+    "prefix": str,
+    "mask": typing.NotRequired[InputPathType | None],
+    "automask": typing.NotRequired[str | None],
+    "sigma_rad": typing.NotRequired[float | None],
+    "sigma_nvox": typing.NotRequired[float | None],
+    "ratio_sigma": typing.NotRequired[float | None],
+    "output_intermed": bool,
+    "edge_bnd_nn": typing.NotRequired[float | None],
+    "edge_bnd_side": typing.NotRequired[str | None],
+    "edge_bnd_scale": bool,
+    "only2d": typing.NotRequired[str | None],
+})
+V3dedgedogParametersTagged = typing.TypedDict('V3dedgedogParametersTagged', {
+    "@type": typing.Literal["afni/3dedgedog"],
     "input": InputPathType,
     "prefix": str,
     "mask": typing.NotRequired[InputPathType | None],
@@ -30,41 +45,9 @@ V3dedgedogParameters = typing.TypedDict('V3dedgedogParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "afni.3dedgedog": v_3dedgedog_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "afni.3dedgedog": v_3dedgedog_outputs,
-    }.get(t)
-
-
 class V3dedgedogOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `v_3dedgedog(...)`.
+    Output object returned when calling `V3dedgedogParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -93,7 +76,7 @@ def v_3dedgedog_params(
     edge_bnd_side: str | None = None,
     edge_bnd_scale: bool = False,
     only2d: str | None = None,
-) -> V3dedgedogParameters:
+) -> V3dedgedogParametersTagged:
     """
     Build parameters.
     
@@ -126,7 +109,7 @@ def v_3dedgedog_params(
         Parameter dictionary
     """
     params = {
-        "@type": "afni.3dedgedog",
+        "@type": "afni/3dedgedog",
         "input": input_,
         "prefix": prefix,
         "output_intermed": output_intermed,
@@ -166,51 +149,51 @@ def v_3dedgedog_cargs(
     """
     cargs = []
     cargs.append("3dedgedog")
-    cargs.append(execution.input_file(params.get("input")))
-    cargs.append(params.get("prefix"))
-    if params.get("mask") is not None:
+    cargs.append(execution.input_file(params.get("input", None)))
+    cargs.append(params.get("prefix", None))
+    if params.get("mask", None) is not None:
         cargs.extend([
             "-mask",
-            execution.input_file(params.get("mask"))
+            execution.input_file(params.get("mask", None))
         ])
-    if params.get("automask") is not None:
+    if params.get("automask", None) is not None:
         cargs.extend([
             "-automask",
-            params.get("automask")
+            params.get("automask", None)
         ])
-    if params.get("sigma_rad") is not None:
+    if params.get("sigma_rad", None) is not None:
         cargs.extend([
             "-sigma_rad",
-            str(params.get("sigma_rad"))
+            str(params.get("sigma_rad", None))
         ])
-    if params.get("sigma_nvox") is not None:
+    if params.get("sigma_nvox", None) is not None:
         cargs.extend([
             "-sigma_nvox",
-            str(params.get("sigma_nvox"))
+            str(params.get("sigma_nvox", None))
         ])
-    if params.get("ratio_sigma") is not None:
+    if params.get("ratio_sigma", None) is not None:
         cargs.extend([
             "-ratio_sigma",
-            str(params.get("ratio_sigma"))
+            str(params.get("ratio_sigma", None))
         ])
-    if params.get("output_intermed"):
+    if params.get("output_intermed", False):
         cargs.append("-output_intermed")
-    if params.get("edge_bnd_nn") is not None:
+    if params.get("edge_bnd_nn", None) is not None:
         cargs.extend([
             "-edge_bnd_NN",
-            str(params.get("edge_bnd_nn"))
+            str(params.get("edge_bnd_nn", None))
         ])
-    if params.get("edge_bnd_side") is not None:
+    if params.get("edge_bnd_side", None) is not None:
         cargs.extend([
             "-edge_bnd_side",
-            params.get("edge_bnd_side")
+            params.get("edge_bnd_side", None)
         ])
-    if params.get("edge_bnd_scale"):
+    if params.get("edge_bnd_scale", False):
         cargs.append("-edge_bnd_scale")
-    if params.get("only2d") is not None:
+    if params.get("only2d", None) is not None:
         cargs.extend([
             "-only2D",
-            params.get("only2d")
+            params.get("only2d", None)
         ])
     return cargs
 
@@ -230,11 +213,11 @@ def v_3dedgedog_outputs(
     """
     ret = V3dedgedogOutputs(
         root=execution.output_file("."),
-        out_edge=execution.output_file(params.get("prefix") + "_edge.nii.gz"),
-        out_dog=execution.output_file(params.get("prefix") + "_dog.nii.gz"),
-        out_edt2=execution.output_file(params.get("prefix") + "_edt2.nii.gz"),
-        out_blur_inner=execution.output_file(params.get("prefix") + "_blur_inner.nii.gz"),
-        out_blur_outer=execution.output_file(params.get("prefix") + "_blur_outer.nii.gz"),
+        out_edge=execution.output_file(params.get("prefix", None) + "_edge.nii.gz"),
+        out_dog=execution.output_file(params.get("prefix", None) + "_dog.nii.gz"),
+        out_edt2=execution.output_file(params.get("prefix", None) + "_edt2.nii.gz"),
+        out_blur_inner=execution.output_file(params.get("prefix", None) + "_blur_inner.nii.gz"),
+        out_blur_outer=execution.output_file(params.get("prefix", None) + "_blur_outer.nii.gz"),
     )
     return ret
 
@@ -341,7 +324,6 @@ def v_3dedgedog(
 
 __all__ = [
     "V3dedgedogOutputs",
-    "V3dedgedogParameters",
     "V_3DEDGEDOG_METADATA",
     "v_3dedgedog",
     "v_3dedgedog_execute",

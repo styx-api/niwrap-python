@@ -14,46 +14,20 @@ CCALC_METADATA = Metadata(
 
 
 CcalcParameters = typing.TypedDict('CcalcParameters', {
-    "@type": typing.Literal["afni.ccalc"],
+    "@type": typing.NotRequired[typing.Literal["afni/ccalc"]],
+    "format": typing.NotRequired[str | None],
+    "expr": str,
+})
+CcalcParametersTagged = typing.TypedDict('CcalcParametersTagged', {
+    "@type": typing.Literal["afni/ccalc"],
     "format": typing.NotRequired[str | None],
     "expr": str,
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "afni.ccalc": ccalc_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-    }.get(t)
-
-
 class CcalcOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `ccalc(...)`.
+    Output object returned when calling `CcalcParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -62,7 +36,7 @@ class CcalcOutputs(typing.NamedTuple):
 def ccalc_params(
     expr: str,
     format_: str | None = None,
-) -> CcalcParameters:
+) -> CcalcParametersTagged:
     """
     Build parameters.
     
@@ -75,7 +49,7 @@ def ccalc_params(
         Parameter dictionary
     """
     params = {
-        "@type": "afni.ccalc",
+        "@type": "afni/ccalc",
         "expr": expr,
     }
     if format_ is not None:
@@ -98,14 +72,14 @@ def ccalc_cargs(
     """
     cargs = []
     cargs.append("ccalc")
-    if params.get("format") is not None:
+    if params.get("format", None) is not None:
         cargs.extend([
             "-form",
-            params.get("format")
+            params.get("format", None)
         ])
     cargs.extend([
         "-eval",
-        params.get("expr")
+        params.get("expr", None)
     ])
     return cargs
 
@@ -190,7 +164,6 @@ def ccalc(
 __all__ = [
     "CCALC_METADATA",
     "CcalcOutputs",
-    "CcalcParameters",
     "ccalc",
     "ccalc_execute",
     "ccalc_params",

@@ -14,7 +14,26 @@ MRIS_MULTIMODAL_SURFACE_PLACEMENT_METADATA = Metadata(
 
 
 MrisMultimodalSurfacePlacementParameters = typing.TypedDict('MrisMultimodalSurfacePlacementParameters', {
-    "@type": typing.Literal["freesurfer.mris_multimodal_surface_placement"],
+    "@type": typing.NotRequired[typing.Literal["freesurfer/mris_multimodal_surface_placement"]],
+    "input_surface": InputPathType,
+    "output_surface": InputPathType,
+    "sphere_surface": InputPathType,
+    "normals": str,
+    "values": str,
+    "debug_vertex": typing.NotRequired[float | None],
+    "step_size": float,
+    "number_of_steps": float,
+    "gradient_sigma": float,
+    "aseg_aparc": InputPathType,
+    "white_surface": InputPathType,
+    "prob_of_csf": float,
+    "t1_image": InputPathType,
+    "t2_image": InputPathType,
+    "flair_image": InputPathType,
+    "min_max": bool,
+})
+MrisMultimodalSurfacePlacementParametersTagged = typing.TypedDict('MrisMultimodalSurfacePlacementParametersTagged', {
+    "@type": typing.Literal["freesurfer/mris_multimodal_surface_placement"],
     "input_surface": InputPathType,
     "output_surface": InputPathType,
     "sphere_surface": InputPathType,
@@ -34,40 +53,9 @@ MrisMultimodalSurfacePlacementParameters = typing.TypedDict('MrisMultimodalSurfa
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "freesurfer.mris_multimodal_surface_placement": mris_multimodal_surface_placement_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-    }.get(t)
-
-
 class MrisMultimodalSurfacePlacementOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `mris_multimodal_surface_placement(...)`.
+    Output object returned when calling `MrisMultimodalSurfacePlacementParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -90,7 +78,7 @@ def mris_multimodal_surface_placement_params(
     flair_image: InputPathType,
     debug_vertex: float | None = None,
     min_max: bool = False,
-) -> MrisMultimodalSurfacePlacementParameters:
+) -> MrisMultimodalSurfacePlacementParametersTagged:
     """
     Build parameters.
     
@@ -115,7 +103,7 @@ def mris_multimodal_surface_placement_params(
         Parameter dictionary
     """
     params = {
-        "@type": "freesurfer.mris_multimodal_surface_placement",
+        "@type": "freesurfer/mris_multimodal_surface_placement",
         "input_surface": input_surface,
         "output_surface": output_surface,
         "sphere_surface": sphere_surface,
@@ -154,66 +142,66 @@ def mris_multimodal_surface_placement_cargs(
     cargs.append("mris_multimodal_surface_placement")
     cargs.extend([
         "-i",
-        execution.input_file(params.get("input_surface"))
+        execution.input_file(params.get("input_surface", None))
     ])
     cargs.extend([
         "-o",
-        execution.input_file(params.get("output_surface"))
+        execution.input_file(params.get("output_surface", None))
     ])
     cargs.extend([
         "-b",
-        execution.input_file(params.get("sphere_surface"))
+        execution.input_file(params.get("sphere_surface", None))
     ])
     cargs.extend([
         "-n",
-        params.get("normals")
+        params.get("normals", None)
     ])
     cargs.extend([
         "-v",
-        params.get("values")
+        params.get("values", None)
     ])
-    if params.get("debug_vertex") is not None:
+    if params.get("debug_vertex", None) is not None:
         cargs.extend([
             "-d",
-            str(params.get("debug_vertex"))
+            str(params.get("debug_vertex", None))
         ])
     cargs.extend([
         "-s",
-        str(params.get("step_size"))
+        str(params.get("step_size", None))
     ])
     cargs.extend([
         "-k",
-        str(params.get("number_of_steps"))
+        str(params.get("number_of_steps", None))
     ])
     cargs.extend([
         "-g",
-        str(params.get("gradient_sigma"))
+        str(params.get("gradient_sigma", None))
     ])
     cargs.extend([
         "-a",
-        execution.input_file(params.get("aseg_aparc"))
+        execution.input_file(params.get("aseg_aparc", None))
     ])
     cargs.extend([
         "-w",
-        execution.input_file(params.get("white_surface"))
+        execution.input_file(params.get("white_surface", None))
     ])
     cargs.extend([
         "-p",
-        str(params.get("prob_of_csf"))
+        str(params.get("prob_of_csf", None))
     ])
     cargs.extend([
         "-t1",
-        execution.input_file(params.get("t1_image"))
+        execution.input_file(params.get("t1_image", None))
     ])
     cargs.extend([
         "-t2",
-        execution.input_file(params.get("t2_image"))
+        execution.input_file(params.get("t2_image", None))
     ])
     cargs.extend([
         "-flair",
-        execution.input_file(params.get("flair_image"))
+        execution.input_file(params.get("flair_image", None))
     ])
-    if params.get("min_max"):
+    if params.get("min_max", False):
         cargs.append("-min/max")
     return cargs
 
@@ -338,7 +326,6 @@ def mris_multimodal_surface_placement(
 __all__ = [
     "MRIS_MULTIMODAL_SURFACE_PLACEMENT_METADATA",
     "MrisMultimodalSurfacePlacementOutputs",
-    "MrisMultimodalSurfacePlacementParameters",
     "mris_multimodal_surface_placement",
     "mris_multimodal_surface_placement_execute",
     "mris_multimodal_surface_placement_params",

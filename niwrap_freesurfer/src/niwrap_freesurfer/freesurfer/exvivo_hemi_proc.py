@@ -14,7 +14,25 @@ EXVIVO_HEMI_PROC_METADATA = Metadata(
 
 
 ExvivoHemiProcParameters = typing.TypedDict('ExvivoHemiProcParameters', {
-    "@type": typing.Literal["freesurfer.exvivo-hemi-proc"],
+    "@type": typing.NotRequired[typing.Literal["freesurfer/exvivo-hemi-proc"]],
+    "flashdir": str,
+    "outdir": str,
+    "subject": str,
+    "left_hemi": bool,
+    "right_hemi": bool,
+    "suptent": bool,
+    "no_rotate": bool,
+    "t1thresh": typing.NotRequired[float | None],
+    "threads": typing.NotRequired[float | None],
+    "check_only": bool,
+    "prep_only": bool,
+    "mask_only": bool,
+    "samseg_only": bool,
+    "stop_mmppsp_after": typing.NotRequired[str | None],
+    "force": bool,
+})
+ExvivoHemiProcParametersTagged = typing.TypedDict('ExvivoHemiProcParametersTagged', {
+    "@type": typing.Literal["freesurfer/exvivo-hemi-proc"],
     "flashdir": str,
     "outdir": str,
     "subject": str,
@@ -33,40 +51,9 @@ ExvivoHemiProcParameters = typing.TypedDict('ExvivoHemiProcParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "freesurfer.exvivo-hemi-proc": exvivo_hemi_proc_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-    }.get(t)
-
-
 class ExvivoHemiProcOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `exvivo_hemi_proc(...)`.
+    Output object returned when calling `ExvivoHemiProcParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -88,7 +75,7 @@ def exvivo_hemi_proc_params(
     samseg_only: bool = False,
     stop_mmppsp_after: str | None = None,
     force: bool = False,
-) -> ExvivoHemiProcParameters:
+) -> ExvivoHemiProcParametersTagged:
     """
     Build parameters.
     
@@ -113,7 +100,7 @@ def exvivo_hemi_proc_params(
         Parameter dictionary
     """
     params = {
-        "@type": "freesurfer.exvivo-hemi-proc",
+        "@type": "freesurfer/exvivo-hemi-proc",
         "flashdir": flashdir,
         "outdir": outdir,
         "subject": subject,
@@ -153,48 +140,48 @@ def exvivo_hemi_proc_cargs(
     cargs.append("exvivo-hemi-proc")
     cargs.extend([
         "--i",
-        params.get("flashdir")
+        params.get("flashdir", None)
     ])
     cargs.extend([
         "--o",
-        params.get("outdir")
+        params.get("outdir", None)
     ])
     cargs.extend([
         "--s",
-        params.get("subject")
+        params.get("subject", None)
     ])
-    if params.get("left_hemi"):
+    if params.get("left_hemi", False):
         cargs.append("--lh")
-    if params.get("right_hemi"):
+    if params.get("right_hemi", False):
         cargs.append("--rh")
-    if params.get("suptent"):
+    if params.get("suptent", False):
         cargs.append("--suptent")
-    if params.get("no_rotate"):
+    if params.get("no_rotate", False):
         cargs.append("--no-rotate")
-    if params.get("t1thresh") is not None:
+    if params.get("t1thresh", None) is not None:
         cargs.extend([
             "--t1thresh",
-            str(params.get("t1thresh"))
+            str(params.get("t1thresh", None))
         ])
-    if params.get("threads") is not None:
+    if params.get("threads", None) is not None:
         cargs.extend([
             "--threads",
-            str(params.get("threads"))
+            str(params.get("threads", None))
         ])
-    if params.get("check_only"):
+    if params.get("check_only", False):
         cargs.append("--check-only")
-    if params.get("prep_only"):
+    if params.get("prep_only", False):
         cargs.append("--prep-only")
-    if params.get("mask_only"):
+    if params.get("mask_only", False):
         cargs.append("--mask-only")
-    if params.get("samseg_only"):
+    if params.get("samseg_only", False):
         cargs.append("--samseg-only")
-    if params.get("stop_mmppsp_after") is not None:
+    if params.get("stop_mmppsp_after", None) is not None:
         cargs.extend([
             "--stop-mmppsp-after",
-            params.get("stop_mmppsp_after")
+            params.get("stop_mmppsp_after", None)
         ])
-    if params.get("force"):
+    if params.get("force", False):
         cargs.append("--force")
     return cargs
 
@@ -319,7 +306,6 @@ def exvivo_hemi_proc(
 __all__ = [
     "EXVIVO_HEMI_PROC_METADATA",
     "ExvivoHemiProcOutputs",
-    "ExvivoHemiProcParameters",
     "exvivo_hemi_proc",
     "exvivo_hemi_proc_execute",
     "exvivo_hemi_proc_params",

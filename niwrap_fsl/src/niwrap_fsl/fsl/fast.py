@@ -14,7 +14,32 @@ FAST_METADATA = Metadata(
 
 
 FastParameters = typing.TypedDict('FastParameters', {
-    "@type": typing.Literal["fsl.fast"],
+    "@type": typing.NotRequired[typing.Literal["fsl/fast"]],
+    "number_classes": typing.NotRequired[int | None],
+    "bias_iters": typing.NotRequired[int | None],
+    "bias_lowpass": typing.NotRequired[float | None],
+    "img_type": typing.NotRequired[typing.Literal[1, 2, 3] | None],
+    "init_seg_smooth": typing.NotRequired[float | None],
+    "segments": bool,
+    "init_transform": typing.NotRequired[InputPathType | None],
+    "other_priors": typing.NotRequired[list[InputPathType] | None],
+    "output_biasfield": bool,
+    "output_biascorrected": bool,
+    "no_bias": bool,
+    "channels": typing.NotRequired[int | None],
+    "out_basename": typing.NotRequired[str | None],
+    "use_priors": bool,
+    "no_pve": bool,
+    "segment_iters": typing.NotRequired[int | None],
+    "mixel_smooth": typing.NotRequired[float | None],
+    "hyper": typing.NotRequired[float | None],
+    "verbose": bool,
+    "manual_seg": typing.NotRequired[InputPathType | None],
+    "iters_afterbias": typing.NotRequired[int | None],
+    "in_files": list[InputPathType],
+})
+FastParametersTagged = typing.TypedDict('FastParametersTagged', {
+    "@type": typing.Literal["fsl/fast"],
     "number_classes": typing.NotRequired[int | None],
     "bias_iters": typing.NotRequired[int | None],
     "bias_lowpass": typing.NotRequired[float | None],
@@ -40,41 +65,9 @@ FastParameters = typing.TypedDict('FastParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "fsl.fast": fast_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "fsl.fast": fast_outputs,
-    }.get(t)
-
-
 class FastOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `fast(...)`.
+    Output object returned when calling `FastParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -113,7 +106,7 @@ def fast_params(
     verbose: bool = False,
     manual_seg: InputPathType | None = None,
     iters_afterbias: int | None = None,
-) -> FastParameters:
+) -> FastParametersTagged:
     """
     Build parameters.
     
@@ -150,7 +143,7 @@ def fast_params(
         Parameter dictionary
     """
     params = {
-        "@type": "fsl.fast",
+        "@type": "fsl/fast",
         "segments": segments,
         "output_biasfield": output_biasfield,
         "output_biascorrected": output_biascorrected,
@@ -206,91 +199,91 @@ def fast_cargs(
     """
     cargs = []
     cargs.append("fast")
-    if params.get("number_classes") is not None:
+    if params.get("number_classes", None) is not None:
         cargs.extend([
             "-n",
-            str(params.get("number_classes"))
+            str(params.get("number_classes", None))
         ])
-    if params.get("bias_iters") is not None:
+    if params.get("bias_iters", None) is not None:
         cargs.extend([
             "-I",
-            str(params.get("bias_iters"))
+            str(params.get("bias_iters", None))
         ])
-    if params.get("bias_lowpass") is not None:
+    if params.get("bias_lowpass", None) is not None:
         cargs.extend([
             "-l",
-            str(params.get("bias_lowpass"))
+            str(params.get("bias_lowpass", None))
         ])
-    if params.get("img_type") is not None:
+    if params.get("img_type", None) is not None:
         cargs.extend([
             "-t",
-            str(params.get("img_type"))
+            str(params.get("img_type", None))
         ])
-    if params.get("init_seg_smooth") is not None:
+    if params.get("init_seg_smooth", None) is not None:
         cargs.extend([
             "-f",
-            str(params.get("init_seg_smooth"))
+            str(params.get("init_seg_smooth", None))
         ])
-    if params.get("segments"):
+    if params.get("segments", False):
         cargs.append("-g")
-    if params.get("init_transform") is not None:
+    if params.get("init_transform", None) is not None:
         cargs.extend([
             "-a",
-            execution.input_file(params.get("init_transform"))
+            execution.input_file(params.get("init_transform", None))
         ])
-    if params.get("other_priors") is not None:
+    if params.get("other_priors", None) is not None:
         cargs.extend([
             "-A",
-            *[execution.input_file(f) for f in params.get("other_priors")]
+            *[execution.input_file(f) for f in params.get("other_priors", None)]
         ])
-    if params.get("output_biasfield"):
+    if params.get("output_biasfield", False):
         cargs.append("-b")
-    if params.get("output_biascorrected"):
+    if params.get("output_biascorrected", False):
         cargs.append("-B")
-    if params.get("no_bias"):
+    if params.get("no_bias", False):
         cargs.append("-N")
-    if params.get("channels") is not None:
+    if params.get("channels", None) is not None:
         cargs.extend([
             "-S",
-            str(params.get("channels"))
+            str(params.get("channels", None))
         ])
-    if params.get("out_basename") is not None:
+    if params.get("out_basename", None) is not None:
         cargs.extend([
             "-o",
-            params.get("out_basename")
+            params.get("out_basename", None)
         ])
-    if params.get("use_priors"):
+    if params.get("use_priors", False):
         cargs.append("-P")
-    if params.get("no_pve"):
+    if params.get("no_pve", False):
         cargs.append("--nopve")
-    if params.get("segment_iters") is not None:
+    if params.get("segment_iters", None) is not None:
         cargs.extend([
             "-W",
-            str(params.get("segment_iters"))
+            str(params.get("segment_iters", None))
         ])
-    if params.get("mixel_smooth") is not None:
+    if params.get("mixel_smooth", None) is not None:
         cargs.extend([
             "-R",
-            str(params.get("mixel_smooth"))
+            str(params.get("mixel_smooth", None))
         ])
-    if params.get("hyper") is not None:
+    if params.get("hyper", None) is not None:
         cargs.extend([
             "-H",
-            str(params.get("hyper"))
+            str(params.get("hyper", None))
         ])
-    if params.get("verbose"):
+    if params.get("verbose", False):
         cargs.append("-v")
-    if params.get("manual_seg") is not None:
+    if params.get("manual_seg", None) is not None:
         cargs.extend([
             "-s",
-            execution.input_file(params.get("manual_seg"))
+            execution.input_file(params.get("manual_seg", None))
         ])
-    if params.get("iters_afterbias") is not None:
+    if params.get("iters_afterbias", None) is not None:
         cargs.extend([
             "-O",
-            str(params.get("iters_afterbias"))
+            str(params.get("iters_afterbias", None))
         ])
-    cargs.extend([execution.input_file(f) for f in params.get("in_files")])
+    cargs.extend([execution.input_file(f) for f in params.get("in_files", None)])
     return cargs
 
 
@@ -309,11 +302,11 @@ def fast_outputs(
     """
     ret = FastOutputs(
         root=execution.output_file("."),
-        mixeltype=execution.output_file(params.get("out_basename") + "_mixeltype.nii.gz") if (params.get("out_basename") is not None) else None,
-        bias_field=execution.output_file(params.get("out_basename") + "_bias.nii.gz") if (params.get("out_basename") is not None) else None,
-        partial_volume_map=execution.output_file(params.get("out_basename") + "_pveseg.nii.gz") if (params.get("out_basename") is not None) else None,
-        restored_image=execution.output_file(params.get("out_basename") + "_restore.nii.gz") if (params.get("out_basename") is not None) else None,
-        tissue_class_map=execution.output_file(params.get("out_basename") + "_seg.nii.gz") if (params.get("out_basename") is not None) else None,
+        mixeltype=execution.output_file(params.get("out_basename", None) + "_mixeltype.nii.gz") if (params.get("out_basename") is not None) else None,
+        bias_field=execution.output_file(params.get("out_basename", None) + "_bias.nii.gz") if (params.get("out_basename") is not None) else None,
+        partial_volume_map=execution.output_file(params.get("out_basename", None) + "_pveseg.nii.gz") if (params.get("out_basename") is not None) else None,
+        restored_image=execution.output_file(params.get("out_basename", None) + "_restore.nii.gz") if (params.get("out_basename") is not None) else None,
+        tissue_class_map=execution.output_file(params.get("out_basename", None) + "_seg.nii.gz") if (params.get("out_basename") is not None) else None,
     )
     return ret
 
@@ -459,7 +452,6 @@ def fast(
 __all__ = [
     "FAST_METADATA",
     "FastOutputs",
-    "FastParameters",
     "fast",
     "fast_execute",
     "fast_params",

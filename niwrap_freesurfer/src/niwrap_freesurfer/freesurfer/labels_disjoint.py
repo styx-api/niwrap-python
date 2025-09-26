@@ -14,48 +14,22 @@ LABELS_DISJOINT_METADATA = Metadata(
 
 
 LabelsDisjointParameters = typing.TypedDict('LabelsDisjointParameters', {
-    "@type": typing.Literal["freesurfer.labels_disjoint"],
+    "@type": typing.NotRequired[typing.Literal["freesurfer/labels_disjoint"]],
+    "label1": InputPathType,
+    "label2": InputPathType,
+    "outputname": str,
+})
+LabelsDisjointParametersTagged = typing.TypedDict('LabelsDisjointParametersTagged', {
+    "@type": typing.Literal["freesurfer/labels_disjoint"],
     "label1": InputPathType,
     "label2": InputPathType,
     "outputname": str,
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "freesurfer.labels_disjoint": labels_disjoint_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "freesurfer.labels_disjoint": labels_disjoint_outputs,
-    }.get(t)
-
-
 class LabelsDisjointOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `labels_disjoint(...)`.
+    Output object returned when calling `LabelsDisjointParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -67,7 +41,7 @@ def labels_disjoint_params(
     label1: InputPathType,
     label2: InputPathType,
     outputname: str,
-) -> LabelsDisjointParameters:
+) -> LabelsDisjointParametersTagged:
     """
     Build parameters.
     
@@ -81,7 +55,7 @@ def labels_disjoint_params(
         Parameter dictionary
     """
     params = {
-        "@type": "freesurfer.labels_disjoint",
+        "@type": "freesurfer/labels_disjoint",
         "label1": label1,
         "label2": label2,
         "outputname": outputname,
@@ -104,9 +78,9 @@ def labels_disjoint_cargs(
     """
     cargs = []
     cargs.append("labels_disjoint")
-    cargs.append(execution.input_file(params.get("label1")))
-    cargs.append(execution.input_file(params.get("label2")))
-    cargs.append(params.get("outputname"))
+    cargs.append(execution.input_file(params.get("label1", None)))
+    cargs.append(execution.input_file(params.get("label2", None)))
+    cargs.append(params.get("outputname", None))
     return cargs
 
 
@@ -125,7 +99,7 @@ def labels_disjoint_outputs(
     """
     ret = LabelsDisjointOutputs(
         root=execution.output_file("."),
-        output_file=execution.output_file(params.get("outputname")),
+        output_file=execution.output_file(params.get("outputname", None)),
     )
     return ret
 
@@ -196,7 +170,6 @@ def labels_disjoint(
 __all__ = [
     "LABELS_DISJOINT_METADATA",
     "LabelsDisjointOutputs",
-    "LabelsDisjointParameters",
     "labels_disjoint",
     "labels_disjoint_execute",
     "labels_disjoint_params",

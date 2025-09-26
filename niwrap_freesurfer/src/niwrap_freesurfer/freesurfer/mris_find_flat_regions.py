@@ -14,48 +14,22 @@ MRIS_FIND_FLAT_REGIONS_METADATA = Metadata(
 
 
 MrisFindFlatRegionsParameters = typing.TypedDict('MrisFindFlatRegionsParameters', {
-    "@type": typing.Literal["freesurfer.mris_find_flat_regions"],
+    "@type": typing.NotRequired[typing.Literal["freesurfer/mris_find_flat_regions"]],
+    "surface": InputPathType,
+    "wfile": str,
+    "threshold": typing.NotRequired[float | None],
+})
+MrisFindFlatRegionsParametersTagged = typing.TypedDict('MrisFindFlatRegionsParametersTagged', {
+    "@type": typing.Literal["freesurfer/mris_find_flat_regions"],
     "surface": InputPathType,
     "wfile": str,
     "threshold": typing.NotRequired[float | None],
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "freesurfer.mris_find_flat_regions": mris_find_flat_regions_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "freesurfer.mris_find_flat_regions": mris_find_flat_regions_outputs,
-    }.get(t)
-
-
 class MrisFindFlatRegionsOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `mris_find_flat_regions(...)`.
+    Output object returned when calling `MrisFindFlatRegionsParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -68,7 +42,7 @@ def mris_find_flat_regions_params(
     surface: InputPathType,
     wfile: str,
     threshold: float | None = None,
-) -> MrisFindFlatRegionsParameters:
+) -> MrisFindFlatRegionsParametersTagged:
     """
     Build parameters.
     
@@ -80,7 +54,7 @@ def mris_find_flat_regions_params(
         Parameter dictionary
     """
     params = {
-        "@type": "freesurfer.mris_find_flat_regions",
+        "@type": "freesurfer/mris_find_flat_regions",
         "surface": surface,
         "wfile": wfile,
     }
@@ -104,12 +78,12 @@ def mris_find_flat_regions_cargs(
     """
     cargs = []
     cargs.append("mris_find_flat_regions")
-    cargs.append(execution.input_file(params.get("surface")))
-    cargs.append(params.get("wfile"))
-    if params.get("threshold") is not None:
+    cargs.append(execution.input_file(params.get("surface", None)))
+    cargs.append(params.get("wfile", None))
+    if params.get("threshold", None) is not None:
         cargs.extend([
             "-t",
-            str(params.get("threshold"))
+            str(params.get("threshold", None))
         ])
     return cargs
 
@@ -129,7 +103,7 @@ def mris_find_flat_regions_outputs(
     """
     ret = MrisFindFlatRegionsOutputs(
         root=execution.output_file("."),
-        output_label_file=execution.output_file(params.get("wfile")),
+        output_label_file=execution.output_file(params.get("wfile", None)),
     )
     return ret
 
@@ -198,7 +172,6 @@ def mris_find_flat_regions(
 __all__ = [
     "MRIS_FIND_FLAT_REGIONS_METADATA",
     "MrisFindFlatRegionsOutputs",
-    "MrisFindFlatRegionsParameters",
     "mris_find_flat_regions",
     "mris_find_flat_regions_execute",
     "mris_find_flat_regions_params",

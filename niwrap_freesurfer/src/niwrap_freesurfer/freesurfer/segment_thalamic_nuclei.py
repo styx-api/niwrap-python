@@ -14,47 +14,20 @@ SEGMENT_THALAMIC_NUCLEI_METADATA = Metadata(
 
 
 SegmentThalamicNucleiParameters = typing.TypedDict('SegmentThalamicNucleiParameters', {
-    "@type": typing.Literal["freesurfer.SegmentThalamicNuclei"],
+    "@type": typing.NotRequired[typing.Literal["freesurfer/SegmentThalamicNuclei"]],
+    "t1_image": InputPathType,
+    "output_dir": str,
+})
+SegmentThalamicNucleiParametersTagged = typing.TypedDict('SegmentThalamicNucleiParametersTagged', {
+    "@type": typing.Literal["freesurfer/SegmentThalamicNuclei"],
     "t1_image": InputPathType,
     "output_dir": str,
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "freesurfer.SegmentThalamicNuclei": segment_thalamic_nuclei_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "freesurfer.SegmentThalamicNuclei": segment_thalamic_nuclei_outputs,
-    }.get(t)
-
-
 class SegmentThalamicNucleiOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `segment_thalamic_nuclei(...)`.
+    Output object returned when calling `SegmentThalamicNucleiParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -65,7 +38,7 @@ class SegmentThalamicNucleiOutputs(typing.NamedTuple):
 def segment_thalamic_nuclei_params(
     t1_image: InputPathType,
     output_dir: str,
-) -> SegmentThalamicNucleiParameters:
+) -> SegmentThalamicNucleiParametersTagged:
     """
     Build parameters.
     
@@ -76,7 +49,7 @@ def segment_thalamic_nuclei_params(
         Parameter dictionary
     """
     params = {
-        "@type": "freesurfer.SegmentThalamicNuclei",
+        "@type": "freesurfer/SegmentThalamicNuclei",
         "t1_image": t1_image,
         "output_dir": output_dir,
     }
@@ -98,8 +71,8 @@ def segment_thalamic_nuclei_cargs(
     """
     cargs = []
     cargs.append("SegmentThalamicNuclei")
-    cargs.append(execution.input_file(params.get("t1_image")))
-    cargs.append(params.get("output_dir"))
+    cargs.append(execution.input_file(params.get("t1_image", None)))
+    cargs.append(params.get("output_dir", None))
     return cargs
 
 
@@ -118,7 +91,7 @@ def segment_thalamic_nuclei_outputs(
     """
     ret = SegmentThalamicNucleiOutputs(
         root=execution.output_file("."),
-        seg_output=execution.output_file(params.get("output_dir") + "/thalamic_nuclei_seg.nii.gz"),
+        seg_output=execution.output_file(params.get("output_dir", None) + "/thalamic_nuclei_seg.nii.gz"),
     )
     return ret
 
@@ -182,7 +155,6 @@ def segment_thalamic_nuclei(
 __all__ = [
     "SEGMENT_THALAMIC_NUCLEI_METADATA",
     "SegmentThalamicNucleiOutputs",
-    "SegmentThalamicNucleiParameters",
     "segment_thalamic_nuclei",
     "segment_thalamic_nuclei_execute",
     "segment_thalamic_nuclei_params",

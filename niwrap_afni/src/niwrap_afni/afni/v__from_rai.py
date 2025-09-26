@@ -14,46 +14,20 @@ V__FROM_RAI_METADATA = Metadata(
 
 
 VFromRaiParameters = typing.TypedDict('VFromRaiParameters', {
-    "@type": typing.Literal["afni.@FromRAI"],
+    "@type": typing.NotRequired[typing.Literal["afni/@FromRAI"]],
+    "rai_coordinates": list[float],
+    "orientation": str,
+})
+VFromRaiParametersTagged = typing.TypedDict('VFromRaiParametersTagged', {
+    "@type": typing.Literal["afni/@FromRAI"],
     "rai_coordinates": list[float],
     "orientation": str,
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "afni.@FromRAI": v__from_rai_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-    }.get(t)
-
-
 class VFromRaiOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `v__from_rai(...)`.
+    Output object returned when calling `VFromRaiParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -62,7 +36,7 @@ class VFromRaiOutputs(typing.NamedTuple):
 def v__from_rai_params(
     rai_coordinates: list[float],
     orientation: str,
-) -> VFromRaiParameters:
+) -> VFromRaiParametersTagged:
     """
     Build parameters.
     
@@ -73,7 +47,7 @@ def v__from_rai_params(
         Parameter dictionary
     """
     params = {
-        "@type": "afni.@FromRAI",
+        "@type": "afni/@FromRAI",
         "rai_coordinates": rai_coordinates,
         "orientation": orientation,
     }
@@ -97,11 +71,11 @@ def v__from_rai_cargs(
     cargs.append("@FromRAI")
     cargs.extend([
         "-xyz",
-        *map(str, params.get("rai_coordinates"))
+        *map(str, params.get("rai_coordinates", None))
     ])
     cargs.extend([
         "-or",
-        params.get("orientation")
+        params.get("orientation", None)
     ])
     return cargs
 
@@ -183,7 +157,6 @@ def v__from_rai(
 
 __all__ = [
     "VFromRaiOutputs",
-    "VFromRaiParameters",
     "V__FROM_RAI_METADATA",
     "v__from_rai",
     "v__from_rai_execute",

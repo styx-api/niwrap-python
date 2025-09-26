@@ -14,7 +14,19 @@ V__ALIGN_PARTIAL_OBLIQUE_METADATA = Metadata(
 
 
 VAlignPartialObliqueParameters = typing.TypedDict('VAlignPartialObliqueParameters', {
-    "@type": typing.Literal["afni.@align_partial_oblique"],
+    "@type": typing.NotRequired[typing.Literal["afni/@align_partial_oblique"]],
+    "base": InputPathType,
+    "input": InputPathType,
+    "suffix": typing.NotRequired[str | None],
+    "keep_tmp": bool,
+    "clean": bool,
+    "dxyz": typing.NotRequired[float | None],
+    "dx": typing.NotRequired[float | None],
+    "dy": typing.NotRequired[float | None],
+    "dz": typing.NotRequired[float | None],
+})
+VAlignPartialObliqueParametersTagged = typing.TypedDict('VAlignPartialObliqueParametersTagged', {
+    "@type": typing.Literal["afni/@align_partial_oblique"],
     "base": InputPathType,
     "input": InputPathType,
     "suffix": typing.NotRequired[str | None],
@@ -27,41 +39,9 @@ VAlignPartialObliqueParameters = typing.TypedDict('VAlignPartialObliqueParameter
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "afni.@align_partial_oblique": v__align_partial_oblique_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "afni.@align_partial_oblique": v__align_partial_oblique_outputs,
-    }.get(t)
-
-
 class VAlignPartialObliqueOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `v__align_partial_oblique(...)`.
+    Output object returned when calling `VAlignPartialObliqueParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -79,7 +59,7 @@ def v__align_partial_oblique_params(
     dx: float | None = None,
     dy: float | None = None,
     dz: float | None = None,
-) -> VAlignPartialObliqueParameters:
+) -> VAlignPartialObliqueParametersTagged:
     """
     Build parameters.
     
@@ -101,7 +81,7 @@ def v__align_partial_oblique_params(
         Parameter dictionary
     """
     params = {
-        "@type": "afni.@align_partial_oblique",
+        "@type": "afni/@align_partial_oblique",
         "base": base,
         "input": input_,
         "keep_tmp": keep_tmp,
@@ -137,40 +117,40 @@ def v__align_partial_oblique_cargs(
     cargs.append("@align_partial_oblique")
     cargs.extend([
         "-base",
-        execution.input_file(params.get("base"))
+        execution.input_file(params.get("base", None))
     ])
     cargs.extend([
         "-input",
-        execution.input_file(params.get("input"))
+        execution.input_file(params.get("input", None))
     ])
-    if params.get("suffix") is not None:
+    if params.get("suffix", None) is not None:
         cargs.extend([
             "-suffix",
-            params.get("suffix")
+            params.get("suffix", None)
         ])
-    if params.get("keep_tmp"):
+    if params.get("keep_tmp", False):
         cargs.append("-keep_tmp")
-    if params.get("clean"):
+    if params.get("clean", False):
         cargs.append("-clean")
-    if params.get("dxyz") is not None:
+    if params.get("dxyz", None) is not None:
         cargs.extend([
             "-dxyz",
-            str(params.get("dxyz"))
+            str(params.get("dxyz", None))
         ])
-    if params.get("dx") is not None:
+    if params.get("dx", None) is not None:
         cargs.extend([
             "-dx",
-            str(params.get("dx"))
+            str(params.get("dx", None))
         ])
-    if params.get("dy") is not None:
+    if params.get("dy", None) is not None:
         cargs.extend([
             "-dy",
-            str(params.get("dy"))
+            str(params.get("dy", None))
         ])
-    if params.get("dz") is not None:
+    if params.get("dz", None) is not None:
         cargs.extend([
             "-dz",
-            str(params.get("dz"))
+            str(params.get("dz", None))
         ])
     return cargs
 
@@ -190,7 +170,7 @@ def v__align_partial_oblique_outputs(
     """
     ret = VAlignPartialObliqueOutputs(
         root=execution.output_file("."),
-        aligned_output=execution.output_file(pathlib.Path(params.get("base")).name + "_alnd_" + pathlib.Path(params.get("input")).name + ".nii.gz"),
+        aligned_output=execution.output_file(pathlib.Path(params.get("base", None)).name + "_alnd_" + pathlib.Path(params.get("input", None)).name + ".nii.gz"),
     )
     return ret
 
@@ -282,7 +262,6 @@ def v__align_partial_oblique(
 
 __all__ = [
     "VAlignPartialObliqueOutputs",
-    "VAlignPartialObliqueParameters",
     "V__ALIGN_PARTIAL_OBLIQUE_METADATA",
     "v__align_partial_oblique",
     "v__align_partial_oblique_execute",

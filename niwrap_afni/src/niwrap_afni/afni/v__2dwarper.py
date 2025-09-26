@@ -14,46 +14,18 @@ V__2DWARPER_METADATA = Metadata(
 
 
 V2dwarperParameters = typing.TypedDict('V2dwarperParameters', {
-    "@type": typing.Literal["afni.@2dwarper"],
+    "@type": typing.NotRequired[typing.Literal["afni/@2dwarper"]],
+    "input_dataset": InputPathType,
+})
+V2dwarperParametersTagged = typing.TypedDict('V2dwarperParametersTagged', {
+    "@type": typing.Literal["afni/@2dwarper"],
     "input_dataset": InputPathType,
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "afni.@2dwarper": v__2dwarper_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "afni.@2dwarper": v__2dwarper_outputs,
-    }.get(t)
-
-
 class V2dwarperOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `v__2dwarper(...)`.
+    Output object returned when calling `V2dwarperParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -63,7 +35,7 @@ class V2dwarperOutputs(typing.NamedTuple):
 
 def v__2dwarper_params(
     input_dataset: InputPathType,
-) -> V2dwarperParameters:
+) -> V2dwarperParametersTagged:
     """
     Build parameters.
     
@@ -73,7 +45,7 @@ def v__2dwarper_params(
         Parameter dictionary
     """
     params = {
-        "@type": "afni.@2dwarper",
+        "@type": "afni/@2dwarper",
         "input_dataset": input_dataset,
     }
     return params
@@ -94,7 +66,7 @@ def v__2dwarper_cargs(
     """
     cargs = []
     cargs.append("@2dwarper")
-    cargs.append(execution.input_file(params.get("input_dataset")))
+    cargs.append(execution.input_file(params.get("input_dataset", None)))
     return cargs
 
 
@@ -173,7 +145,6 @@ def v__2dwarper(
 
 __all__ = [
     "V2dwarperOutputs",
-    "V2dwarperParameters",
     "V__2DWARPER_METADATA",
     "v__2dwarper",
     "v__2dwarper_execute",

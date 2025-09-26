@@ -14,7 +14,53 @@ UBER_SUBJECT_PY_METADATA = Metadata(
 
 
 UberSubjectPyParameters = typing.TypedDict('UberSubjectPyParameters', {
-    "@type": typing.Literal["afni.uber_subject.py"],
+    "@type": typing.NotRequired[typing.Literal["afni/uber_subject.py"]],
+    "qt_opts": typing.NotRequired[str | None],
+    "svar": typing.NotRequired[str | None],
+    "cvar": typing.NotRequired[str | None],
+    "no_gui": bool,
+    "print_ap_command": bool,
+    "save_ap_command": typing.NotRequired[str | None],
+    "exec_ap_command": bool,
+    "exec_proc_script": bool,
+    "align_cost": typing.NotRequired[str | None],
+    "align_giant_move": typing.NotRequired[str | None],
+    "align_opts_aea": typing.NotRequired[str | None],
+    "anal_domain": typing.NotRequired[str | None],
+    "anal_type": typing.NotRequired[str | None],
+    "anat": typing.NotRequired[InputPathType | None],
+    "anat_has_skull": typing.NotRequired[str | None],
+    "blocks": typing.NotRequired[str | None],
+    "blur_size": typing.NotRequired[float | None],
+    "epi": typing.NotRequired[str | None],
+    "epi_wildcard": typing.NotRequired[str | None],
+    "gid": typing.NotRequired[str | None],
+    "gltsym": typing.NotRequired[str | None],
+    "gltsym_label": typing.NotRequired[str | None],
+    "motion_limit": typing.NotRequired[float | None],
+    "outlier_limit": typing.NotRequired[float | None],
+    "regress_GOFORIT": typing.NotRequired[float | None],
+    "regress_bandpass": typing.NotRequired[str | None],
+    "regress_jobs": typing.NotRequired[float | None],
+    "regress_mot_deriv": typing.NotRequired[str | None],
+    "regress_opts_3dD": typing.NotRequired[str | None],
+    "reml_exec": typing.NotRequired[str | None],
+    "run_clustsim": typing.NotRequired[str | None],
+    "sid": typing.NotRequired[str | None],
+    "stim": typing.NotRequired[InputPathType | None],
+    "stim_basis": typing.NotRequired[str | None],
+    "stim_label": typing.NotRequired[str | None],
+    "stim_type": typing.NotRequired[str | None],
+    "stim_wildcard": typing.NotRequired[str | None],
+    "tcat_nfirst": typing.NotRequired[float | None],
+    "tlrc_base": typing.NotRequired[str | None],
+    "tlrc_ok_maxite": typing.NotRequired[str | None],
+    "tlrc_opts_at": typing.NotRequired[str | None],
+    "volreg_base": typing.NotRequired[str | None],
+    "verb": typing.NotRequired[str | None],
+})
+UberSubjectPyParametersTagged = typing.TypedDict('UberSubjectPyParametersTagged', {
+    "@type": typing.Literal["afni/uber_subject.py"],
     "qt_opts": typing.NotRequired[str | None],
     "svar": typing.NotRequired[str | None],
     "cvar": typing.NotRequired[str | None],
@@ -61,40 +107,9 @@ UberSubjectPyParameters = typing.TypedDict('UberSubjectPyParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "afni.uber_subject.py": uber_subject_py_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-    }.get(t)
-
-
 class UberSubjectPyOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `uber_subject_py(...)`.
+    Output object returned when calling `UberSubjectPyParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -144,7 +159,7 @@ def uber_subject_py_params(
     tlrc_opts_at: str | None = None,
     volreg_base: str | None = None,
     verb: str | None = None,
-) -> UberSubjectPyParameters:
+) -> UberSubjectPyParametersTagged:
     """
     Build parameters.
     
@@ -196,7 +211,7 @@ def uber_subject_py_params(
         Parameter dictionary
     """
     params = {
-        "@type": "afni.uber_subject.py",
+        "@type": "afni/uber_subject.py",
         "no_gui": no_gui,
         "print_ap_command": print_ap_command,
         "exec_ap_command": exec_ap_command,
@@ -298,208 +313,208 @@ def uber_subject_py_cargs(
     """
     cargs = []
     cargs.append("uber_subject.py")
-    if params.get("qt_opts") is not None:
+    if params.get("qt_opts", None) is not None:
         cargs.extend([
             "-qt_opts",
-            params.get("qt_opts")
+            params.get("qt_opts", None)
         ])
-    if params.get("svar") is not None:
+    if params.get("svar", None) is not None:
         cargs.extend([
             "-svar",
-            params.get("svar")
+            params.get("svar", None)
         ])
-    if params.get("cvar") is not None:
+    if params.get("cvar", None) is not None:
         cargs.extend([
             "-cvar",
-            params.get("cvar")
+            params.get("cvar", None)
         ])
-    if params.get("no_gui"):
+    if params.get("no_gui", False):
         cargs.append("-no_gui")
-    if params.get("print_ap_command"):
+    if params.get("print_ap_command", False):
         cargs.append("-print_ap_command")
-    if params.get("save_ap_command") is not None:
+    if params.get("save_ap_command", None) is not None:
         cargs.extend([
             "-save_ap_command",
-            params.get("save_ap_command")
+            params.get("save_ap_command", None)
         ])
-    if params.get("exec_ap_command"):
+    if params.get("exec_ap_command", False):
         cargs.append("-exec_ap_command")
-    if params.get("exec_proc_script"):
+    if params.get("exec_proc_script", False):
         cargs.append("-exec_proc_script")
-    if params.get("align_cost") is not None:
+    if params.get("align_cost", None) is not None:
         cargs.extend([
             "-align_cost",
-            params.get("align_cost")
+            params.get("align_cost", None)
         ])
-    if params.get("align_giant_move") is not None:
+    if params.get("align_giant_move", None) is not None:
         cargs.extend([
             "-align_giant_move",
-            params.get("align_giant_move")
+            params.get("align_giant_move", None)
         ])
-    if params.get("align_opts_aea") is not None:
+    if params.get("align_opts_aea", None) is not None:
         cargs.extend([
             "-align_opts_aea",
-            params.get("align_opts_aea")
+            params.get("align_opts_aea", None)
         ])
-    if params.get("anal_domain") is not None:
+    if params.get("anal_domain", None) is not None:
         cargs.extend([
             "-anal_domain",
-            params.get("anal_domain")
+            params.get("anal_domain", None)
         ])
-    if params.get("anal_type") is not None:
+    if params.get("anal_type", None) is not None:
         cargs.extend([
             "-anal_type",
-            params.get("anal_type")
+            params.get("anal_type", None)
         ])
-    if params.get("anat") is not None:
+    if params.get("anat", None) is not None:
         cargs.extend([
             "-anat",
-            execution.input_file(params.get("anat"))
+            execution.input_file(params.get("anat", None))
         ])
-    if params.get("anat_has_skull") is not None:
+    if params.get("anat_has_skull", None) is not None:
         cargs.extend([
             "-anat_has_skull",
-            params.get("anat_has_skull")
+            params.get("anat_has_skull", None)
         ])
-    if params.get("blocks") is not None:
+    if params.get("blocks", None) is not None:
         cargs.extend([
             "-blocks",
-            params.get("blocks")
+            params.get("blocks", None)
         ])
-    if params.get("blur_size") is not None:
+    if params.get("blur_size", None) is not None:
         cargs.extend([
             "-blur_size",
-            str(params.get("blur_size"))
+            str(params.get("blur_size", None))
         ])
-    if params.get("epi") is not None:
+    if params.get("epi", None) is not None:
         cargs.extend([
             "-epi",
-            params.get("epi")
+            params.get("epi", None)
         ])
-    if params.get("epi_wildcard") is not None:
+    if params.get("epi_wildcard", None) is not None:
         cargs.extend([
             "-epi_wildcard",
-            params.get("epi_wildcard")
+            params.get("epi_wildcard", None)
         ])
-    if params.get("gid") is not None:
+    if params.get("gid", None) is not None:
         cargs.extend([
             "-gid",
-            params.get("gid")
+            params.get("gid", None)
         ])
-    if params.get("gltsym") is not None:
+    if params.get("gltsym", None) is not None:
         cargs.extend([
             "-gltsym",
-            params.get("gltsym")
+            params.get("gltsym", None)
         ])
-    if params.get("gltsym_label") is not None:
+    if params.get("gltsym_label", None) is not None:
         cargs.extend([
             "-gltsym_label",
-            params.get("gltsym_label")
+            params.get("gltsym_label", None)
         ])
-    if params.get("motion_limit") is not None:
+    if params.get("motion_limit", None) is not None:
         cargs.extend([
             "-motion_limit",
-            str(params.get("motion_limit"))
+            str(params.get("motion_limit", None))
         ])
-    if params.get("outlier_limit") is not None:
+    if params.get("outlier_limit", None) is not None:
         cargs.extend([
             "-outlier_limit",
-            str(params.get("outlier_limit"))
+            str(params.get("outlier_limit", None))
         ])
-    if params.get("regress_GOFORIT") is not None:
+    if params.get("regress_GOFORIT", None) is not None:
         cargs.extend([
             "-regress_GOFORIT",
-            str(params.get("regress_GOFORIT"))
+            str(params.get("regress_GOFORIT", None))
         ])
-    if params.get("regress_bandpass") is not None:
+    if params.get("regress_bandpass", None) is not None:
         cargs.extend([
             "-regress_bandpass",
-            params.get("regress_bandpass")
+            params.get("regress_bandpass", None)
         ])
-    if params.get("regress_jobs") is not None:
+    if params.get("regress_jobs", None) is not None:
         cargs.extend([
             "-regress_jobs",
-            str(params.get("regress_jobs"))
+            str(params.get("regress_jobs", None))
         ])
-    if params.get("regress_mot_deriv") is not None:
+    if params.get("regress_mot_deriv", None) is not None:
         cargs.extend([
             "-regress_mot_deriv",
-            params.get("regress_mot_deriv")
+            params.get("regress_mot_deriv", None)
         ])
-    if params.get("regress_opts_3dD") is not None:
+    if params.get("regress_opts_3dD", None) is not None:
         cargs.extend([
             "-regress_opts_3dD",
-            params.get("regress_opts_3dD")
+            params.get("regress_opts_3dD", None)
         ])
-    if params.get("reml_exec") is not None:
+    if params.get("reml_exec", None) is not None:
         cargs.extend([
             "-reml_exec",
-            params.get("reml_exec")
+            params.get("reml_exec", None)
         ])
-    if params.get("run_clustsim") is not None:
+    if params.get("run_clustsim", None) is not None:
         cargs.extend([
             "-run_clustsim",
-            params.get("run_clustsim")
+            params.get("run_clustsim", None)
         ])
-    if params.get("sid") is not None:
+    if params.get("sid", None) is not None:
         cargs.extend([
             "-sid",
-            params.get("sid")
+            params.get("sid", None)
         ])
-    if params.get("stim") is not None:
+    if params.get("stim", None) is not None:
         cargs.extend([
             "-stim",
-            execution.input_file(params.get("stim"))
+            execution.input_file(params.get("stim", None))
         ])
-    if params.get("stim_basis") is not None:
+    if params.get("stim_basis", None) is not None:
         cargs.extend([
             "-stim_basis",
-            params.get("stim_basis")
+            params.get("stim_basis", None)
         ])
-    if params.get("stim_label") is not None:
+    if params.get("stim_label", None) is not None:
         cargs.extend([
             "-stim_label",
-            params.get("stim_label")
+            params.get("stim_label", None)
         ])
-    if params.get("stim_type") is not None:
+    if params.get("stim_type", None) is not None:
         cargs.extend([
             "-stim_type",
-            params.get("stim_type")
+            params.get("stim_type", None)
         ])
-    if params.get("stim_wildcard") is not None:
+    if params.get("stim_wildcard", None) is not None:
         cargs.extend([
             "-stim_wildcard",
-            params.get("stim_wildcard")
+            params.get("stim_wildcard", None)
         ])
-    if params.get("tcat_nfirst") is not None:
+    if params.get("tcat_nfirst", None) is not None:
         cargs.extend([
             "-tcat_nfirst",
-            str(params.get("tcat_nfirst"))
+            str(params.get("tcat_nfirst", None))
         ])
-    if params.get("tlrc_base") is not None:
+    if params.get("tlrc_base", None) is not None:
         cargs.extend([
             "-tlrc_base",
-            params.get("tlrc_base")
+            params.get("tlrc_base", None)
         ])
-    if params.get("tlrc_ok_maxite") is not None:
+    if params.get("tlrc_ok_maxite", None) is not None:
         cargs.extend([
             "-tlrc_ok_maxite",
-            params.get("tlrc_ok_maxite")
+            params.get("tlrc_ok_maxite", None)
         ])
-    if params.get("tlrc_opts_at") is not None:
+    if params.get("tlrc_opts_at", None) is not None:
         cargs.extend([
             "-tlrc_opts_at",
-            params.get("tlrc_opts_at")
+            params.get("tlrc_opts_at", None)
         ])
-    if params.get("volreg_base") is not None:
+    if params.get("volreg_base", None) is not None:
         cargs.extend([
             "-volreg_base",
-            params.get("volreg_base")
+            params.get("volreg_base", None)
         ])
-    if params.get("verb") is not None:
+    if params.get("verb", None) is not None:
         cargs.extend([
             "-verb",
-            params.get("verb")
+            params.get("verb", None)
         ])
     return cargs
 
@@ -705,7 +720,6 @@ def uber_subject_py(
 __all__ = [
     "UBER_SUBJECT_PY_METADATA",
     "UberSubjectPyOutputs",
-    "UberSubjectPyParameters",
     "uber_subject_py",
     "uber_subject_py_execute",
     "uber_subject_py_params",

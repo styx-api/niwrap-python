@@ -14,7 +14,28 @@ V__DIFF_TREE_METADATA = Metadata(
 
 
 VDiffTreeParameters = typing.TypedDict('VDiffTreeParameters', {
-    "@type": typing.Literal["afni.@diff.tree"],
+    "@type": typing.NotRequired[typing.Literal["afni/@diff.tree"]],
+    "new_dir": str,
+    "old_dir": str,
+    "diff_opts": typing.NotRequired[str | None],
+    "ignore_append": typing.NotRequired[str | None],
+    "ia": typing.NotRequired[str | None],
+    "ignore_list": typing.NotRequired[str | None],
+    "il": typing.NotRequired[str | None],
+    "ignore_missing": bool,
+    "no_diffs": bool,
+    "quiet": bool,
+    "save": bool,
+    "show": bool,
+    "show_list_comp": bool,
+    "skip_data": bool,
+    "verb": typing.NotRequired[str | None],
+    "diff_prog": typing.NotRequired[str | None],
+    "xxdiff": bool,
+    "X_option": bool,
+})
+VDiffTreeParametersTagged = typing.TypedDict('VDiffTreeParametersTagged', {
+    "@type": typing.Literal["afni/@diff.tree"],
     "new_dir": str,
     "old_dir": str,
     "diff_opts": typing.NotRequired[str | None],
@@ -36,40 +57,9 @@ VDiffTreeParameters = typing.TypedDict('VDiffTreeParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "afni.@diff.tree": v__diff_tree_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-    }.get(t)
-
-
 class VDiffTreeOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `v__diff_tree(...)`.
+    Output object returned when calling `VDiffTreeParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -94,7 +84,7 @@ def v__diff_tree_params(
     diff_prog: str | None = None,
     xxdiff: bool = False,
     x_option: bool = False,
-) -> VDiffTreeParameters:
+) -> VDiffTreeParametersTagged:
     """
     Build parameters.
     
@@ -124,7 +114,7 @@ def v__diff_tree_params(
         Parameter dictionary
     """
     params = {
-        "@type": "afni.@diff.tree",
+        "@type": "afni/@diff.tree",
         "new_dir": new_dir,
         "old_dir": old_dir,
         "ignore_missing": ignore_missing,
@@ -169,60 +159,60 @@ def v__diff_tree_cargs(
     """
     cargs = []
     cargs.append("@diff.tree")
-    cargs.append(params.get("new_dir"))
-    cargs.append(params.get("old_dir"))
-    if params.get("diff_opts") is not None:
+    cargs.append(params.get("new_dir", None))
+    cargs.append(params.get("old_dir", None))
+    if params.get("diff_opts", None) is not None:
         cargs.extend([
             "-diff_opts",
-            params.get("diff_opts")
+            params.get("diff_opts", None)
         ])
-    if params.get("ignore_append") is not None:
+    if params.get("ignore_append", None) is not None:
         cargs.extend([
             "-ignore_append",
-            params.get("ignore_append")
+            params.get("ignore_append", None)
         ])
-    if params.get("ia") is not None:
+    if params.get("ia", None) is not None:
         cargs.extend([
             "-ia",
-            params.get("ia")
+            params.get("ia", None)
         ])
-    if params.get("ignore_list") is not None:
+    if params.get("ignore_list", None) is not None:
         cargs.extend([
             "-ignore_list",
-            params.get("ignore_list")
+            params.get("ignore_list", None)
         ])
-    if params.get("il") is not None:
+    if params.get("il", None) is not None:
         cargs.extend([
             "-il",
-            params.get("il")
+            params.get("il", None)
         ])
-    if params.get("ignore_missing"):
+    if params.get("ignore_missing", False):
         cargs.append("-ignore_missing")
-    if params.get("no_diffs"):
+    if params.get("no_diffs", False):
         cargs.append("-no_diffs")
-    if params.get("quiet"):
+    if params.get("quiet", False):
         cargs.append("-quiet")
-    if params.get("save"):
+    if params.get("save", False):
         cargs.append("-save")
-    if params.get("show"):
+    if params.get("show", False):
         cargs.append("-show")
-    if params.get("show_list_comp"):
+    if params.get("show_list_comp", False):
         cargs.append("-show_list_comp")
-    if params.get("skip_data"):
+    if params.get("skip_data", False):
         cargs.append("-skip_data")
-    if params.get("verb") is not None:
+    if params.get("verb", None) is not None:
         cargs.extend([
             "-verb",
-            params.get("verb")
+            params.get("verb", None)
         ])
-    if params.get("diff_prog") is not None:
+    if params.get("diff_prog", None) is not None:
         cargs.extend([
             "-diff_prog",
-            params.get("diff_prog")
+            params.get("diff_prog", None)
         ])
-    if params.get("xxdiff"):
+    if params.get("xxdiff", False):
         cargs.append("-xxdiff")
-    if params.get("X_option"):
+    if params.get("X_option", False):
         cargs.append("-X")
     return cargs
 
@@ -355,7 +345,6 @@ def v__diff_tree(
 
 __all__ = [
     "VDiffTreeOutputs",
-    "VDiffTreeParameters",
     "V__DIFF_TREE_METADATA",
     "v__diff_tree",
     "v__diff_tree_execute",

@@ -14,7 +14,24 @@ V_3D_POLYFIT_METADATA = Metadata(
 
 
 V3dPolyfitParameters = typing.TypedDict('V3dPolyfitParameters', {
-    "@type": typing.Literal["afni.3dPolyfit"],
+    "@type": typing.NotRequired[typing.Literal["afni/3dPolyfit"]],
+    "input_dataset": InputPathType,
+    "poly_order": typing.NotRequired[int | None],
+    "blur": typing.NotRequired[float | None],
+    "median_radius": typing.NotRequired[float | None],
+    "output_prefix": typing.NotRequired[str | None],
+    "resid_prefix": typing.NotRequired[str | None],
+    "coeff_output": typing.NotRequired[str | None],
+    "automask": bool,
+    "mask_dataset": typing.NotRequired[InputPathType | None],
+    "mean_scale": bool,
+    "clip_box": bool,
+    "fit_method": typing.NotRequired[int | None],
+    "base_dataset": typing.NotRequired[InputPathType | None],
+    "verbose": bool,
+})
+V3dPolyfitParametersTagged = typing.TypedDict('V3dPolyfitParametersTagged', {
+    "@type": typing.Literal["afni/3dPolyfit"],
     "input_dataset": InputPathType,
     "poly_order": typing.NotRequired[int | None],
     "blur": typing.NotRequired[float | None],
@@ -32,41 +49,9 @@ V3dPolyfitParameters = typing.TypedDict('V3dPolyfitParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "afni.3dPolyfit": v_3d_polyfit_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "afni.3dPolyfit": v_3d_polyfit_outputs,
-    }.get(t)
-
-
 class V3dPolyfitOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `v_3d_polyfit(...)`.
+    Output object returned when calling `V3dPolyfitParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -93,7 +78,7 @@ def v_3d_polyfit_params(
     fit_method: int | None = None,
     base_dataset: InputPathType | None = None,
     verbose: bool = False,
-) -> V3dPolyfitParameters:
+) -> V3dPolyfitParametersTagged:
     """
     Build parameters.
     
@@ -126,7 +111,7 @@ def v_3d_polyfit_params(
         Parameter dictionary
     """
     params = {
-        "@type": "afni.3dPolyfit",
+        "@type": "afni/3dPolyfit",
         "input_dataset": input_dataset,
         "automask": automask,
         "mean_scale": mean_scale,
@@ -169,59 +154,59 @@ def v_3d_polyfit_cargs(
     """
     cargs = []
     cargs.append("3dPolyfit")
-    cargs.append(execution.input_file(params.get("input_dataset")))
-    if params.get("poly_order") is not None:
+    cargs.append(execution.input_file(params.get("input_dataset", None)))
+    if params.get("poly_order", None) is not None:
         cargs.extend([
             "-nord",
-            str(params.get("poly_order"))
+            str(params.get("poly_order", None))
         ])
-    if params.get("blur") is not None:
+    if params.get("blur", None) is not None:
         cargs.extend([
             "-blur",
-            str(params.get("blur"))
+            str(params.get("blur", None))
         ])
-    if params.get("median_radius") is not None:
+    if params.get("median_radius", None) is not None:
         cargs.extend([
             "-mrad",
-            str(params.get("median_radius"))
+            str(params.get("median_radius", None))
         ])
-    if params.get("output_prefix") is not None:
+    if params.get("output_prefix", None) is not None:
         cargs.extend([
             "-prefix",
-            params.get("output_prefix")
+            params.get("output_prefix", None)
         ])
-    if params.get("resid_prefix") is not None:
+    if params.get("resid_prefix", None) is not None:
         cargs.extend([
             "-resid",
-            params.get("resid_prefix")
+            params.get("resid_prefix", None)
         ])
-    if params.get("coeff_output") is not None:
+    if params.get("coeff_output", None) is not None:
         cargs.extend([
             "-1Dcoef",
-            params.get("coeff_output")
+            params.get("coeff_output", None)
         ])
-    if params.get("automask"):
+    if params.get("automask", False):
         cargs.append("-automask")
-    if params.get("mask_dataset") is not None:
+    if params.get("mask_dataset", None) is not None:
         cargs.extend([
             "-mask",
-            execution.input_file(params.get("mask_dataset"))
+            execution.input_file(params.get("mask_dataset", None))
         ])
-    if params.get("mean_scale"):
+    if params.get("mean_scale", False):
         cargs.append("-mone")
-    if params.get("clip_box"):
+    if params.get("clip_box", False):
         cargs.append("-mclip")
-    if params.get("fit_method") is not None:
+    if params.get("fit_method", None) is not None:
         cargs.extend([
             "-meth",
-            str(params.get("fit_method"))
+            str(params.get("fit_method", None))
         ])
-    if params.get("base_dataset") is not None:
+    if params.get("base_dataset", None) is not None:
         cargs.extend([
             "-base",
-            execution.input_file(params.get("base_dataset"))
+            execution.input_file(params.get("base_dataset", None))
         ])
-    if params.get("verbose"):
+    if params.get("verbose", False):
         cargs.append("-verb")
     return cargs
 
@@ -241,9 +226,9 @@ def v_3d_polyfit_outputs(
     """
     ret = V3dPolyfitOutputs(
         root=execution.output_file("."),
-        output_file=execution.output_file(params.get("output_prefix") + ".nii.gz") if (params.get("output_prefix") is not None) else None,
-        resid_file=execution.output_file(params.get("resid_prefix") + ".nii.gz") if (params.get("resid_prefix") is not None) else None,
-        coeff_file=execution.output_file(params.get("coeff_output") + ".1D") if (params.get("coeff_output") is not None) else None,
+        output_file=execution.output_file(params.get("output_prefix", None) + ".nii.gz") if (params.get("output_prefix") is not None) else None,
+        resid_file=execution.output_file(params.get("resid_prefix", None) + ".nii.gz") if (params.get("resid_prefix") is not None) else None,
+        coeff_file=execution.output_file(params.get("coeff_output", None) + ".1D") if (params.get("coeff_output") is not None) else None,
     )
     return ret
 
@@ -354,7 +339,6 @@ def v_3d_polyfit(
 
 __all__ = [
     "V3dPolyfitOutputs",
-    "V3dPolyfitParameters",
     "V_3D_POLYFIT_METADATA",
     "v_3d_polyfit",
     "v_3d_polyfit_execute",

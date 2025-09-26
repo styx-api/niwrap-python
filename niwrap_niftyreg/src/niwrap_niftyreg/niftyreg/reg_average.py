@@ -14,47 +14,20 @@ REG_AVERAGE_METADATA = Metadata(
 
 
 RegAverageParameters = typing.TypedDict('RegAverageParameters', {
-    "@type": typing.Literal["niftyreg.reg_average"],
+    "@type": typing.NotRequired[typing.Literal["niftyreg/reg_average"]],
+    "output_file": str,
+    "input_files": list[InputPathType],
+})
+RegAverageParametersTagged = typing.TypedDict('RegAverageParametersTagged', {
+    "@type": typing.Literal["niftyreg/reg_average"],
     "output_file": str,
     "input_files": list[InputPathType],
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "niftyreg.reg_average": reg_average_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "niftyreg.reg_average": reg_average_outputs,
-    }.get(t)
-
-
 class RegAverageOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `reg_average(...)`.
+    Output object returned when calling `RegAverageParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -65,7 +38,7 @@ class RegAverageOutputs(typing.NamedTuple):
 def reg_average_params(
     output_file: str,
     input_files: list[InputPathType],
-) -> RegAverageParameters:
+) -> RegAverageParametersTagged:
     """
     Build parameters.
     
@@ -77,7 +50,7 @@ def reg_average_params(
         Parameter dictionary
     """
     params = {
-        "@type": "niftyreg.reg_average",
+        "@type": "niftyreg/reg_average",
         "output_file": output_file,
         "input_files": input_files,
     }
@@ -99,8 +72,8 @@ def reg_average_cargs(
     """
     cargs = []
     cargs.append("reg_average")
-    cargs.append(params.get("output_file"))
-    cargs.extend([execution.input_file(f) for f in params.get("input_files")])
+    cargs.append(params.get("output_file", None))
+    cargs.extend([execution.input_file(f) for f in params.get("input_files", None)])
     return cargs
 
 
@@ -119,7 +92,7 @@ def reg_average_outputs(
     """
     ret = RegAverageOutputs(
         root=execution.output_file("."),
-        output_file_location=execution.output_file(params.get("output_file")),
+        output_file_location=execution.output_file(params.get("output_file", None)),
     )
     return ret
 
@@ -184,7 +157,6 @@ def reg_average(
 __all__ = [
     "REG_AVERAGE_METADATA",
     "RegAverageOutputs",
-    "RegAverageParameters",
     "reg_average",
     "reg_average_execute",
     "reg_average_params",

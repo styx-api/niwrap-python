@@ -14,45 +14,18 @@ SEGMENT_SUBJECT_T2_AUTO_ESTIMATE_ALVEUS_ML_METADATA = Metadata(
 
 
 SegmentSubjectT2AutoEstimateAlveusMlParameters = typing.TypedDict('SegmentSubjectT2AutoEstimateAlveusMlParameters', {
-    "@type": typing.Literal["freesurfer.segmentSubjectT2_autoEstimateAlveusML"],
+    "@type": typing.NotRequired[typing.Literal["freesurfer/segmentSubjectT2_autoEstimateAlveusML"]],
+    "missing_library": str,
+})
+SegmentSubjectT2AutoEstimateAlveusMlParametersTagged = typing.TypedDict('SegmentSubjectT2AutoEstimateAlveusMlParametersTagged', {
+    "@type": typing.Literal["freesurfer/segmentSubjectT2_autoEstimateAlveusML"],
     "missing_library": str,
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "freesurfer.segmentSubjectT2_autoEstimateAlveusML": segment_subject_t2_auto_estimate_alveus_ml_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-    }.get(t)
-
-
 class SegmentSubjectT2AutoEstimateAlveusMlOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `segment_subject_t2_auto_estimate_alveus_ml(...)`.
+    Output object returned when calling `SegmentSubjectT2AutoEstimateAlveusMlParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -60,7 +33,7 @@ class SegmentSubjectT2AutoEstimateAlveusMlOutputs(typing.NamedTuple):
 
 def segment_subject_t2_auto_estimate_alveus_ml_params(
     missing_library: str = "libmwlaunchermain.so: cannot open shared object file",
-) -> SegmentSubjectT2AutoEstimateAlveusMlParameters:
+) -> SegmentSubjectT2AutoEstimateAlveusMlParametersTagged:
     """
     Build parameters.
     
@@ -71,7 +44,7 @@ def segment_subject_t2_auto_estimate_alveus_ml_params(
         Parameter dictionary
     """
     params = {
-        "@type": "freesurfer.segmentSubjectT2_autoEstimateAlveusML",
+        "@type": "freesurfer/segmentSubjectT2_autoEstimateAlveusML",
         "missing_library": missing_library,
     }
     return params
@@ -92,7 +65,7 @@ def segment_subject_t2_auto_estimate_alveus_ml_cargs(
     """
     cargs = []
     cargs.append("segmentSubjectT2_autoEstimateAlveusML")
-    cargs.append(params.get("missing_library"))
+    cargs.append(params.get("missing_library", "libmwlaunchermain.so: cannot open shared object file"))
     return cargs
 
 
@@ -174,7 +147,6 @@ def segment_subject_t2_auto_estimate_alveus_ml(
 __all__ = [
     "SEGMENT_SUBJECT_T2_AUTO_ESTIMATE_ALVEUS_ML_METADATA",
     "SegmentSubjectT2AutoEstimateAlveusMlOutputs",
-    "SegmentSubjectT2AutoEstimateAlveusMlParameters",
     "segment_subject_t2_auto_estimate_alveus_ml",
     "segment_subject_t2_auto_estimate_alveus_ml_execute",
     "segment_subject_t2_auto_estimate_alveus_ml_params",

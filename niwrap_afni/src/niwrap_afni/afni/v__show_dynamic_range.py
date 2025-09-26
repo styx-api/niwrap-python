@@ -14,46 +14,18 @@ V__SHOW_DYNAMIC_RANGE_METADATA = Metadata(
 
 
 VShowDynamicRangeParameters = typing.TypedDict('VShowDynamicRangeParameters', {
-    "@type": typing.Literal["afni.@ShowDynamicRange"],
+    "@type": typing.NotRequired[typing.Literal["afni/@ShowDynamicRange"]],
+    "infile": InputPathType,
+})
+VShowDynamicRangeParametersTagged = typing.TypedDict('VShowDynamicRangeParametersTagged', {
+    "@type": typing.Literal["afni/@ShowDynamicRange"],
     "infile": InputPathType,
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "afni.@ShowDynamicRange": v__show_dynamic_range_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "afni.@ShowDynamicRange": v__show_dynamic_range_outputs,
-    }.get(t)
-
-
 class VShowDynamicRangeOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `v__show_dynamic_range(...)`.
+    Output object returned when calling `VShowDynamicRangeParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -67,7 +39,7 @@ class VShowDynamicRangeOutputs(typing.NamedTuple):
 
 def v__show_dynamic_range_params(
     infile: InputPathType,
-) -> VShowDynamicRangeParameters:
+) -> VShowDynamicRangeParametersTagged:
     """
     Build parameters.
     
@@ -77,7 +49,7 @@ def v__show_dynamic_range_params(
         Parameter dictionary
     """
     params = {
-        "@type": "afni.@ShowDynamicRange",
+        "@type": "afni/@ShowDynamicRange",
         "infile": infile,
     }
     return params
@@ -98,7 +70,7 @@ def v__show_dynamic_range_cargs(
     """
     cargs = []
     cargs.append("@ShowDynamicRange")
-    cargs.append(execution.input_file(params.get("infile")))
+    cargs.append(execution.input_file(params.get("infile", None)))
     return cargs
 
 
@@ -117,8 +89,8 @@ def v__show_dynamic_range_outputs(
     """
     ret = VShowDynamicRangeOutputs(
         root=execution.output_file("."),
-        minpercchange_file=execution.output_file(pathlib.Path(params.get("infile")).name + "_minpercchange.nii.gz"),
-        range_file=execution.output_file(pathlib.Path(params.get("infile")).name + ".range.nii.gz"),
+        minpercchange_file=execution.output_file(pathlib.Path(params.get("infile", None)).name + "_minpercchange.nii.gz"),
+        range_file=execution.output_file(pathlib.Path(params.get("infile", None)).name + ".range.nii.gz"),
     )
     return ret
 
@@ -180,7 +152,6 @@ def v__show_dynamic_range(
 
 __all__ = [
     "VShowDynamicRangeOutputs",
-    "VShowDynamicRangeParameters",
     "V__SHOW_DYNAMIC_RANGE_METADATA",
     "v__show_dynamic_range",
     "v__show_dynamic_range_execute",

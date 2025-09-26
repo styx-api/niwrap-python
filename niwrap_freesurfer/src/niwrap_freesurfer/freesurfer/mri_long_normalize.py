@@ -14,7 +14,21 @@ MRI_LONG_NORMALIZE_METADATA = Metadata(
 
 
 MriLongNormalizeParameters = typing.TypedDict('MriLongNormalizeParameters', {
-    "@type": typing.Literal["freesurfer.mri_long_normalize"],
+    "@type": typing.NotRequired[typing.Literal["freesurfer/mri_long_normalize"]],
+    "input_vol": InputPathType,
+    "base_tp_file": InputPathType,
+    "output_vol": str,
+    "normalization_iters": typing.NotRequired[int | None],
+    "disable_1d": bool,
+    "smooth_bias": typing.NotRequired[float | None],
+    "aseg": typing.NotRequired[InputPathType | None],
+    "debug_gvx": typing.NotRequired[list[float] | None],
+    "debug_gx": typing.NotRequired[list[float] | None],
+    "reading": typing.NotRequired[list[str] | None],
+    "print_usage": bool,
+})
+MriLongNormalizeParametersTagged = typing.TypedDict('MriLongNormalizeParametersTagged', {
+    "@type": typing.Literal["freesurfer/mri_long_normalize"],
     "input_vol": InputPathType,
     "base_tp_file": InputPathType,
     "output_vol": str,
@@ -29,41 +43,9 @@ MriLongNormalizeParameters = typing.TypedDict('MriLongNormalizeParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "freesurfer.mri_long_normalize": mri_long_normalize_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "freesurfer.mri_long_normalize": mri_long_normalize_outputs,
-    }.get(t)
-
-
 class MriLongNormalizeOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `mri_long_normalize(...)`.
+    Output object returned when calling `MriLongNormalizeParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -83,7 +65,7 @@ def mri_long_normalize_params(
     debug_gx: list[float] | None = None,
     reading: list[str] | None = None,
     print_usage: bool = False,
-) -> MriLongNormalizeParameters:
+) -> MriLongNormalizeParametersTagged:
     """
     Build parameters.
     
@@ -103,7 +85,7 @@ def mri_long_normalize_params(
         Parameter dictionary
     """
     params = {
-        "@type": "freesurfer.mri_long_normalize",
+        "@type": "freesurfer/mri_long_normalize",
         "input_vol": input_vol,
         "base_tp_file": base_tp_file,
         "output_vol": output_vol,
@@ -140,42 +122,42 @@ def mri_long_normalize_cargs(
     """
     cargs = []
     cargs.append("mri_long_normalize")
-    cargs.append(execution.input_file(params.get("input_vol")))
-    cargs.append(execution.input_file(params.get("base_tp_file")))
-    cargs.append(params.get("output_vol"))
-    if params.get("normalization_iters") is not None:
+    cargs.append(execution.input_file(params.get("input_vol", None)))
+    cargs.append(execution.input_file(params.get("base_tp_file", None)))
+    cargs.append(params.get("output_vol", None))
+    if params.get("normalization_iters", None) is not None:
         cargs.extend([
             "-n",
-            str(params.get("normalization_iters"))
+            str(params.get("normalization_iters", None))
         ])
-    if params.get("disable_1d"):
+    if params.get("disable_1d", False):
         cargs.append("-no1d")
-    if params.get("smooth_bias") is not None:
+    if params.get("smooth_bias", None) is not None:
         cargs.extend([
             "-sigma",
-            str(params.get("smooth_bias"))
+            str(params.get("smooth_bias", None))
         ])
-    if params.get("aseg") is not None:
+    if params.get("aseg", None) is not None:
         cargs.extend([
             "-a",
-            execution.input_file(params.get("aseg"))
+            execution.input_file(params.get("aseg", None))
         ])
-    if params.get("debug_gvx") is not None:
+    if params.get("debug_gvx", None) is not None:
         cargs.extend([
             "-v",
-            *map(str, params.get("debug_gvx"))
+            *map(str, params.get("debug_gvx", None))
         ])
-    if params.get("debug_gx") is not None:
+    if params.get("debug_gx", None) is not None:
         cargs.extend([
             "-d",
-            *map(str, params.get("debug_gx"))
+            *map(str, params.get("debug_gx", None))
         ])
-    if params.get("reading") is not None:
+    if params.get("reading", None) is not None:
         cargs.extend([
             "-r",
-            *params.get("reading")
+            *params.get("reading", None)
         ])
-    if params.get("print_usage"):
+    if params.get("print_usage", False):
         cargs.append("-u")
     return cargs
 
@@ -195,7 +177,7 @@ def mri_long_normalize_outputs(
     """
     ret = MriLongNormalizeOutputs(
         root=execution.output_file("."),
-        output_file=execution.output_file(params.get("output_vol")),
+        output_file=execution.output_file(params.get("output_vol", None)),
     )
     return ret
 
@@ -288,7 +270,6 @@ def mri_long_normalize(
 __all__ = [
     "MRI_LONG_NORMALIZE_METADATA",
     "MriLongNormalizeOutputs",
-    "MriLongNormalizeParameters",
     "mri_long_normalize",
     "mri_long_normalize_execute",
     "mri_long_normalize_params",

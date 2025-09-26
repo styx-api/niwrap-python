@@ -14,7 +14,30 @@ V_3DMAXIMA_METADATA = Metadata(
 
 
 V3dmaximaParameters = typing.TypedDict('V3dmaximaParameters', {
-    "@type": typing.Literal["afni.3dmaxima"],
+    "@type": typing.NotRequired[typing.Literal["afni/3dmaxima"]],
+    "input_dataset": InputPathType,
+    "output_prefix": typing.NotRequired[str | None],
+    "threshold": typing.NotRequired[float | None],
+    "min_dist": typing.NotRequired[float | None],
+    "out_rad": typing.NotRequired[float | None],
+    "input_flag": bool,
+    "spheres_1_flag": bool,
+    "spheres_1toN_flag": bool,
+    "spheres_Nto1_flag": bool,
+    "neg_ext_flag": bool,
+    "true_max_flag": bool,
+    "dset_coords_flag": bool,
+    "no_text_flag": bool,
+    "coords_only_flag": bool,
+    "n_style_sort_flag": bool,
+    "n_style_weight_ave_flag": bool,
+    "debug_level": typing.NotRequired[float | None],
+    "help_flag": bool,
+    "hist_flag": bool,
+    "ver_flag": bool,
+})
+V3dmaximaParametersTagged = typing.TypedDict('V3dmaximaParametersTagged', {
+    "@type": typing.Literal["afni/3dmaxima"],
     "input_dataset": InputPathType,
     "output_prefix": typing.NotRequired[str | None],
     "threshold": typing.NotRequired[float | None],
@@ -38,41 +61,9 @@ V3dmaximaParameters = typing.TypedDict('V3dmaximaParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "afni.3dmaxima": v_3dmaxima_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "afni.3dmaxima": v_3dmaxima_outputs,
-    }.get(t)
-
-
 class V3dmaximaOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `v_3dmaxima(...)`.
+    Output object returned when calling `V3dmaximaParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -103,7 +94,7 @@ def v_3dmaxima_params(
     help_flag: bool = False,
     hist_flag: bool = False,
     ver_flag: bool = False,
-) -> V3dmaximaParameters:
+) -> V3dmaximaParametersTagged:
     """
     Build parameters.
     
@@ -135,7 +126,7 @@ def v_3dmaxima_params(
         Parameter dictionary
     """
     params = {
-        "@type": "afni.3dmaxima",
+        "@type": "afni/3dmaxima",
         "input_dataset": input_dataset,
         "input_flag": input_flag,
         "spheres_1_flag": spheres_1_flag,
@@ -180,59 +171,59 @@ def v_3dmaxima_cargs(
     """
     cargs = []
     cargs.append("3dmaxima")
-    cargs.append(execution.input_file(params.get("input_dataset")))
-    if params.get("output_prefix") is not None:
+    cargs.append(execution.input_file(params.get("input_dataset", None)))
+    if params.get("output_prefix", None) is not None:
         cargs.extend([
             "-prefix",
-            params.get("output_prefix")
+            params.get("output_prefix", None)
         ])
-    if params.get("threshold") is not None:
+    if params.get("threshold", None) is not None:
         cargs.extend([
             "-thresh",
-            str(params.get("threshold"))
+            str(params.get("threshold", None))
         ])
-    if params.get("min_dist") is not None:
+    if params.get("min_dist", None) is not None:
         cargs.extend([
             "-min_dist",
-            str(params.get("min_dist"))
+            str(params.get("min_dist", None))
         ])
-    if params.get("out_rad") is not None:
+    if params.get("out_rad", None) is not None:
         cargs.extend([
             "-out_rad",
-            str(params.get("out_rad"))
+            str(params.get("out_rad", None))
         ])
-    if params.get("input_flag"):
+    if params.get("input_flag", False):
         cargs.append("-input")
-    if params.get("spheres_1_flag"):
+    if params.get("spheres_1_flag", False):
         cargs.append("-spheres_1")
-    if params.get("spheres_1toN_flag"):
+    if params.get("spheres_1toN_flag", False):
         cargs.append("-spheres_1toN")
-    if params.get("spheres_Nto1_flag"):
+    if params.get("spheres_Nto1_flag", False):
         cargs.append("-spheres_Nto1")
-    if params.get("neg_ext_flag"):
+    if params.get("neg_ext_flag", False):
         cargs.append("-neg_ext")
-    if params.get("true_max_flag"):
+    if params.get("true_max_flag", False):
         cargs.append("-true_max")
-    if params.get("dset_coords_flag"):
+    if params.get("dset_coords_flag", False):
         cargs.append("-dset_coords")
-    if params.get("no_text_flag"):
+    if params.get("no_text_flag", False):
         cargs.append("-no_text")
-    if params.get("coords_only_flag"):
+    if params.get("coords_only_flag", False):
         cargs.append("-coords_only")
-    if params.get("n_style_sort_flag"):
+    if params.get("n_style_sort_flag", False):
         cargs.append("-n_style_sort")
-    if params.get("n_style_weight_ave_flag"):
+    if params.get("n_style_weight_ave_flag", False):
         cargs.append("-n_style_weight_ave")
-    if params.get("debug_level") is not None:
+    if params.get("debug_level", None) is not None:
         cargs.extend([
             "-debug",
-            str(params.get("debug_level"))
+            str(params.get("debug_level", None))
         ])
-    if params.get("help_flag"):
+    if params.get("help_flag", False):
         cargs.append("-help")
-    if params.get("hist_flag"):
+    if params.get("hist_flag", False):
         cargs.append("-hist")
-    if params.get("ver_flag"):
+    if params.get("ver_flag", False):
         cargs.append("-ver")
     return cargs
 
@@ -252,8 +243,8 @@ def v_3dmaxima_outputs(
     """
     ret = V3dmaximaOutputs(
         root=execution.output_file("."),
-        output_mask_head=execution.output_file(params.get("output_prefix") + "_mask+orig.HEAD") if (params.get("output_prefix") is not None) else None,
-        output_mask_brik=execution.output_file(params.get("output_prefix") + "_mask+orig.BRIK") if (params.get("output_prefix") is not None) else None,
+        output_mask_head=execution.output_file(params.get("output_prefix", None) + "_mask+orig.HEAD") if (params.get("output_prefix") is not None) else None,
+        output_mask_brik=execution.output_file(params.get("output_prefix", None) + "_mask+orig.BRIK") if (params.get("output_prefix") is not None) else None,
     )
     return ret
 
@@ -373,7 +364,6 @@ def v_3dmaxima(
 
 __all__ = [
     "V3dmaximaOutputs",
-    "V3dmaximaParameters",
     "V_3DMAXIMA_METADATA",
     "v_3dmaxima",
     "v_3dmaxima_execute",

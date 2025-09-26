@@ -14,45 +14,18 @@ ANATOMI_CUTS_UTILS_METADATA = Metadata(
 
 
 AnatomiCutsUtilsParameters = typing.TypedDict('AnatomiCutsUtilsParameters', {
-    "@type": typing.Literal["freesurfer.anatomiCutsUtils"],
+    "@type": typing.NotRequired[typing.Literal["freesurfer/anatomiCutsUtils"]],
+    "modules": typing.NotRequired[list[str] | None],
+})
+AnatomiCutsUtilsParametersTagged = typing.TypedDict('AnatomiCutsUtilsParametersTagged', {
+    "@type": typing.Literal["freesurfer/anatomiCutsUtils"],
     "modules": typing.NotRequired[list[str] | None],
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "freesurfer.anatomiCutsUtils": anatomi_cuts_utils_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-    }.get(t)
-
-
 class AnatomiCutsUtilsOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `anatomi_cuts_utils(...)`.
+    Output object returned when calling `AnatomiCutsUtilsParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -60,7 +33,7 @@ class AnatomiCutsUtilsOutputs(typing.NamedTuple):
 
 def anatomi_cuts_utils_params(
     modules: list[str] | None = None,
-) -> AnatomiCutsUtilsParameters:
+) -> AnatomiCutsUtilsParametersTagged:
     """
     Build parameters.
     
@@ -71,7 +44,7 @@ def anatomi_cuts_utils_params(
         Parameter dictionary
     """
     params = {
-        "@type": "freesurfer.anatomiCutsUtils",
+        "@type": "freesurfer/anatomiCutsUtils",
     }
     if modules is not None:
         params["modules"] = modules
@@ -93,8 +66,8 @@ def anatomi_cuts_utils_cargs(
     """
     cargs = []
     cargs.append("anatomiCutsUtils")
-    if params.get("modules") is not None:
-        cargs.extend(params.get("modules"))
+    if params.get("modules", None) is not None:
+        cargs.extend(params.get("modules", None))
     return cargs
 
 
@@ -174,7 +147,6 @@ def anatomi_cuts_utils(
 __all__ = [
     "ANATOMI_CUTS_UTILS_METADATA",
     "AnatomiCutsUtilsOutputs",
-    "AnatomiCutsUtilsParameters",
     "anatomi_cuts_utils",
     "anatomi_cuts_utils_execute",
     "anatomi_cuts_utils_params",

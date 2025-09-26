@@ -14,7 +14,16 @@ MRI_HEAD_METADATA = Metadata(
 
 
 MriHeadParameters = typing.TypedDict('MriHeadParameters', {
-    "@type": typing.Literal["freesurfer.mri_head"],
+    "@type": typing.NotRequired[typing.Literal["freesurfer/mri_head"]],
+    "identify": bool,
+    "read": bool,
+    "filename": typing.NotRequired[str | None],
+    "help": bool,
+    "usage": bool,
+    "question_mark_help": bool,
+})
+MriHeadParametersTagged = typing.TypedDict('MriHeadParametersTagged', {
+    "@type": typing.Literal["freesurfer/mri_head"],
     "identify": bool,
     "read": bool,
     "filename": typing.NotRequired[str | None],
@@ -24,40 +33,9 @@ MriHeadParameters = typing.TypedDict('MriHeadParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "freesurfer.mri_head": mri_head_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-    }.get(t)
-
-
 class MriHeadOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `mri_head(...)`.
+    Output object returned when calling `MriHeadParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -70,7 +48,7 @@ def mri_head_params(
     help_: bool = False,
     usage: bool = False,
     question_mark_help: bool = False,
-) -> MriHeadParameters:
+) -> MriHeadParametersTagged:
     """
     Build parameters.
     
@@ -85,7 +63,7 @@ def mri_head_params(
         Parameter dictionary
     """
     params = {
-        "@type": "freesurfer.mri_head",
+        "@type": "freesurfer/mri_head",
         "identify": identify,
         "read": read,
         "help": help_,
@@ -112,17 +90,17 @@ def mri_head_cargs(
     """
     cargs = []
     cargs.append("mri_head")
-    if params.get("identify"):
+    if params.get("identify", False):
         cargs.append("-identify")
-    if params.get("read"):
+    if params.get("read", False):
         cargs.append("-read")
-    if params.get("filename") is not None:
-        cargs.append(params.get("filename"))
-    if params.get("help"):
+    if params.get("filename", None) is not None:
+        cargs.append(params.get("filename", None))
+    if params.get("help", False):
         cargs.append("-h")
-    if params.get("usage"):
+    if params.get("usage", False):
         cargs.append("-u")
-    if params.get("question_mark_help"):
+    if params.get("question_mark_help", False):
         cargs.append("-?")
     return cargs
 
@@ -217,7 +195,6 @@ def mri_head(
 __all__ = [
     "MRI_HEAD_METADATA",
     "MriHeadOutputs",
-    "MriHeadParameters",
     "mri_head",
     "mri_head_execute",
     "mri_head_params",

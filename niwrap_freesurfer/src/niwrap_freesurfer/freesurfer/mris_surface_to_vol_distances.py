@@ -14,7 +14,14 @@ MRIS_SURFACE_TO_VOL_DISTANCES_METADATA = Metadata(
 
 
 MrisSurfaceToVolDistancesParameters = typing.TypedDict('MrisSurfaceToVolDistancesParameters', {
-    "@type": typing.Literal["freesurfer.mris_surface_to_vol_distances"],
+    "@type": typing.NotRequired[typing.Literal["freesurfer/mris_surface_to_vol_distances"]],
+    "average_subject": str,
+    "hemisphere": str,
+    "subjects": list[str],
+    "output_prefix": str,
+})
+MrisSurfaceToVolDistancesParametersTagged = typing.TypedDict('MrisSurfaceToVolDistancesParametersTagged', {
+    "@type": typing.Literal["freesurfer/mris_surface_to_vol_distances"],
     "average_subject": str,
     "hemisphere": str,
     "subjects": list[str],
@@ -22,41 +29,9 @@ MrisSurfaceToVolDistancesParameters = typing.TypedDict('MrisSurfaceToVolDistance
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "freesurfer.mris_surface_to_vol_distances": mris_surface_to_vol_distances_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "freesurfer.mris_surface_to_vol_distances": mris_surface_to_vol_distances_outputs,
-    }.get(t)
-
-
 class MrisSurfaceToVolDistancesOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `mris_surface_to_vol_distances(...)`.
+    Output object returned when calling `MrisSurfaceToVolDistancesParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -69,7 +44,7 @@ def mris_surface_to_vol_distances_params(
     hemisphere: str,
     subjects: list[str],
     output_prefix: str,
-) -> MrisSurfaceToVolDistancesParameters:
+) -> MrisSurfaceToVolDistancesParametersTagged:
     """
     Build parameters.
     
@@ -82,7 +57,7 @@ def mris_surface_to_vol_distances_params(
         Parameter dictionary
     """
     params = {
-        "@type": "freesurfer.mris_surface_to_vol_distances",
+        "@type": "freesurfer/mris_surface_to_vol_distances",
         "average_subject": average_subject,
         "hemisphere": hemisphere,
         "subjects": subjects,
@@ -106,10 +81,10 @@ def mris_surface_to_vol_distances_cargs(
     """
     cargs = []
     cargs.append("mris_surface_to_vol_distances")
-    cargs.append(params.get("average_subject"))
-    cargs.append(params.get("hemisphere"))
-    cargs.extend(params.get("subjects"))
-    cargs.append(params.get("output_prefix"))
+    cargs.append(params.get("average_subject", None))
+    cargs.append(params.get("hemisphere", None))
+    cargs.extend(params.get("subjects", None))
+    cargs.append(params.get("output_prefix", None))
     return cargs
 
 
@@ -128,7 +103,7 @@ def mris_surface_to_vol_distances_outputs(
     """
     ret = MrisSurfaceToVolDistancesOutputs(
         root=execution.output_file("."),
-        output_distances=execution.output_file(params.get("output_prefix") + "_distances.txt"),
+        output_distances=execution.output_file(params.get("output_prefix", None) + "_distances.txt"),
     )
     return ret
 
@@ -198,7 +173,6 @@ def mris_surface_to_vol_distances(
 __all__ = [
     "MRIS_SURFACE_TO_VOL_DISTANCES_METADATA",
     "MrisSurfaceToVolDistancesOutputs",
-    "MrisSurfaceToVolDistancesParameters",
     "mris_surface_to_vol_distances",
     "mris_surface_to_vol_distances_execute",
     "mris_surface_to_vol_distances_params",

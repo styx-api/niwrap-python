@@ -14,7 +14,16 @@ V__SUMA_MAKE_SPEC_CARET_METADATA = Metadata(
 
 
 VSumaMakeSpecCaretParameters = typing.TypedDict('VSumaMakeSpecCaretParameters', {
-    "@type": typing.Literal["afni.@SUMA_Make_Spec_Caret"],
+    "@type": typing.NotRequired[typing.Literal["afni/@SUMA_Make_Spec_Caret"]],
+    "subject_id": str,
+    "help": bool,
+    "debug": typing.NotRequired[int | None],
+    "echo": bool,
+    "surface_path": typing.NotRequired[str | None],
+    "side_labels_style": typing.NotRequired[int | None],
+})
+VSumaMakeSpecCaretParametersTagged = typing.TypedDict('VSumaMakeSpecCaretParametersTagged', {
+    "@type": typing.Literal["afni/@SUMA_Make_Spec_Caret"],
     "subject_id": str,
     "help": bool,
     "debug": typing.NotRequired[int | None],
@@ -24,41 +33,9 @@ VSumaMakeSpecCaretParameters = typing.TypedDict('VSumaMakeSpecCaretParameters', 
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "afni.@SUMA_Make_Spec_Caret": v__suma_make_spec_caret_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "afni.@SUMA_Make_Spec_Caret": v__suma_make_spec_caret_outputs,
-    }.get(t)
-
-
 class VSumaMakeSpecCaretOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `v__suma_make_spec_caret(...)`.
+    Output object returned when calling `VSumaMakeSpecCaretParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -75,7 +52,7 @@ def v__suma_make_spec_caret_params(
     echo: bool = False,
     surface_path: str | None = None,
     side_labels_style: int | None = None,
-) -> VSumaMakeSpecCaretParameters:
+) -> VSumaMakeSpecCaretParametersTagged:
     """
     Build parameters.
     
@@ -92,7 +69,7 @@ def v__suma_make_spec_caret_params(
         Parameter dictionary
     """
     params = {
-        "@type": "afni.@SUMA_Make_Spec_Caret",
+        "@type": "afni/@SUMA_Make_Spec_Caret",
         "subject_id": subject_id,
         "help": help_,
         "echo": echo,
@@ -123,26 +100,26 @@ def v__suma_make_spec_caret_cargs(
     cargs.append("@SUMA_Make_Spec_Caret")
     cargs.extend([
         "-sid",
-        params.get("subject_id")
+        params.get("subject_id", None)
     ])
-    if params.get("help"):
+    if params.get("help", False):
         cargs.append("-help")
-    if params.get("debug") is not None:
+    if params.get("debug", None) is not None:
         cargs.extend([
             "-debug",
-            str(params.get("debug"))
+            str(params.get("debug", None))
         ])
-    if params.get("echo"):
+    if params.get("echo", False):
         cargs.append("-echo")
-    if params.get("surface_path") is not None:
+    if params.get("surface_path", None) is not None:
         cargs.extend([
             "-sfpath",
-            params.get("surface_path")
+            params.get("surface_path", None)
         ])
-    if params.get("side_labels_style") is not None:
+    if params.get("side_labels_style", None) is not None:
         cargs.extend([
             "-side_labels_style",
-            str(params.get("side_labels_style"))
+            str(params.get("side_labels_style", None))
         ])
     return cargs
 
@@ -162,8 +139,8 @@ def v__suma_make_spec_caret_outputs(
     """
     ret = VSumaMakeSpecCaretOutputs(
         root=execution.output_file("."),
-        left_hemisphere_spec=execution.output_file(params.get("subject_id") + "_lh.spec"),
-        right_hemisphere_spec=execution.output_file(params.get("subject_id") + "_rh.spec"),
+        left_hemisphere_spec=execution.output_file(params.get("subject_id", None) + "_lh.spec"),
+        right_hemisphere_spec=execution.output_file(params.get("subject_id", None) + "_rh.spec"),
     )
     return ret
 
@@ -240,7 +217,6 @@ def v__suma_make_spec_caret(
 
 __all__ = [
     "VSumaMakeSpecCaretOutputs",
-    "VSumaMakeSpecCaretParameters",
     "V__SUMA_MAKE_SPEC_CARET_METADATA",
     "v__suma_make_spec_caret",
     "v__suma_make_spec_caret_execute",

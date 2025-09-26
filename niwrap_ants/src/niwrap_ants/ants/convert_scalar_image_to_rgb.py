@@ -14,7 +14,21 @@ CONVERT_SCALAR_IMAGE_TO_RGB_METADATA = Metadata(
 
 
 ConvertScalarImageToRgbParameters = typing.TypedDict('ConvertScalarImageToRgbParameters', {
-    "@type": typing.Literal["ants.ConvertScalarImageToRGB"],
+    "@type": typing.NotRequired[typing.Literal["ants/ConvertScalarImageToRGB"]],
+    "image_dimension": int,
+    "input_image": InputPathType,
+    "output_image": str,
+    "mask": InputPathType,
+    "colormap": typing.Literal["grey", "red", "green", "blue", "copper", "jet", "hsv", "spring", "summer", "autumn", "winter", "hot", "cool", "overunder", "custom"],
+    "custom_colormap_file": typing.NotRequired[InputPathType | None],
+    "minimum_input": typing.NotRequired[float | None],
+    "maximum_input": typing.NotRequired[float | None],
+    "minimum_rgb_output": typing.NotRequired[int | None],
+    "maximum_rgb_output": typing.NotRequired[int | None],
+    "vtk_lookup_table": typing.NotRequired[str | None],
+})
+ConvertScalarImageToRgbParametersTagged = typing.TypedDict('ConvertScalarImageToRgbParametersTagged', {
+    "@type": typing.Literal["ants/ConvertScalarImageToRGB"],
     "image_dimension": int,
     "input_image": InputPathType,
     "output_image": str,
@@ -29,41 +43,9 @@ ConvertScalarImageToRgbParameters = typing.TypedDict('ConvertScalarImageToRgbPar
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "ants.ConvertScalarImageToRGB": convert_scalar_image_to_rgb_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "ants.ConvertScalarImageToRGB": convert_scalar_image_to_rgb_outputs,
-    }.get(t)
-
-
 class ConvertScalarImageToRgbOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `convert_scalar_image_to_rgb(...)`.
+    Output object returned when calling `ConvertScalarImageToRgbParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -83,7 +65,7 @@ def convert_scalar_image_to_rgb_params(
     minimum_rgb_output: int | None = None,
     maximum_rgb_output: int | None = None,
     vtk_lookup_table: str | None = None,
-) -> ConvertScalarImageToRgbParameters:
+) -> ConvertScalarImageToRgbParametersTagged:
     """
     Build parameters.
     
@@ -107,7 +89,7 @@ def convert_scalar_image_to_rgb_params(
         Parameter dictionary
     """
     params = {
-        "@type": "ants.ConvertScalarImageToRGB",
+        "@type": "ants/ConvertScalarImageToRGB",
         "image_dimension": image_dimension,
         "input_image": input_image,
         "output_image": output_image,
@@ -144,23 +126,23 @@ def convert_scalar_image_to_rgb_cargs(
     """
     cargs = []
     cargs.append("ConvertScalarImageToRGB")
-    cargs.append(str(params.get("image_dimension")))
-    cargs.append(execution.input_file(params.get("input_image")))
-    cargs.append(params.get("output_image"))
-    cargs.append(execution.input_file(params.get("mask")))
-    cargs.append(params.get("colormap"))
-    if params.get("custom_colormap_file") is not None:
-        cargs.append(execution.input_file(params.get("custom_colormap_file")))
-    if params.get("minimum_input") is not None:
-        cargs.append(str(params.get("minimum_input")))
-    if params.get("maximum_input") is not None:
-        cargs.append(str(params.get("maximum_input")))
-    if params.get("minimum_rgb_output") is not None:
-        cargs.append(str(params.get("minimum_rgb_output")))
-    if params.get("maximum_rgb_output") is not None:
-        cargs.append(str(params.get("maximum_rgb_output")))
-    if params.get("vtk_lookup_table") is not None:
-        cargs.append(params.get("vtk_lookup_table"))
+    cargs.append(str(params.get("image_dimension", None)))
+    cargs.append(execution.input_file(params.get("input_image", None)))
+    cargs.append(params.get("output_image", None))
+    cargs.append(execution.input_file(params.get("mask", None)))
+    cargs.append(params.get("colormap", None))
+    if params.get("custom_colormap_file", None) is not None:
+        cargs.append(execution.input_file(params.get("custom_colormap_file", None)))
+    if params.get("minimum_input", None) is not None:
+        cargs.append(str(params.get("minimum_input", None)))
+    if params.get("maximum_input", None) is not None:
+        cargs.append(str(params.get("maximum_input", None)))
+    if params.get("minimum_rgb_output", None) is not None:
+        cargs.append(str(params.get("minimum_rgb_output", None)))
+    if params.get("maximum_rgb_output", None) is not None:
+        cargs.append(str(params.get("maximum_rgb_output", None)))
+    if params.get("vtk_lookup_table", None) is not None:
+        cargs.append(params.get("vtk_lookup_table", None))
     return cargs
 
 
@@ -179,7 +161,7 @@ def convert_scalar_image_to_rgb_outputs(
     """
     ret = ConvertScalarImageToRgbOutputs(
         root=execution.output_file("."),
-        output_rgb_image=execution.output_file(params.get("output_image")),
+        output_rgb_image=execution.output_file(params.get("output_image", None)),
     )
     return ret
 
@@ -276,7 +258,6 @@ def convert_scalar_image_to_rgb(
 __all__ = [
     "CONVERT_SCALAR_IMAGE_TO_RGB_METADATA",
     "ConvertScalarImageToRgbOutputs",
-    "ConvertScalarImageToRgbParameters",
     "convert_scalar_image_to_rgb",
     "convert_scalar_image_to_rgb_execute",
     "convert_scalar_image_to_rgb_params",

@@ -14,7 +14,19 @@ V_3DEDGE3_METADATA = Metadata(
 
 
 V3dedge3Parameters = typing.TypedDict('V3dedge3Parameters', {
-    "@type": typing.Literal["afni.3dedge3"],
+    "@type": typing.NotRequired[typing.Literal["afni/3dedge3"]],
+    "input_file": InputPathType,
+    "verbose": bool,
+    "prefix": typing.NotRequired[str | None],
+    "datum": typing.NotRequired[str | None],
+    "fscale": bool,
+    "gscale": bool,
+    "nscale": bool,
+    "scale_floats": typing.NotRequired[float | None],
+    "automask": bool,
+})
+V3dedge3ParametersTagged = typing.TypedDict('V3dedge3ParametersTagged', {
+    "@type": typing.Literal["afni/3dedge3"],
     "input_file": InputPathType,
     "verbose": bool,
     "prefix": typing.NotRequired[str | None],
@@ -27,41 +39,9 @@ V3dedge3Parameters = typing.TypedDict('V3dedge3Parameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "afni.3dedge3": v_3dedge3_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "afni.3dedge3": v_3dedge3_outputs,
-    }.get(t)
-
-
 class V3dedge3Outputs(typing.NamedTuple):
     """
-    Output object returned when calling `v_3dedge3(...)`.
+    Output object returned when calling `V3dedge3Parameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -79,7 +59,7 @@ def v_3dedge3_params(
     nscale: bool = False,
     scale_floats: float | None = None,
     automask: bool = False,
-) -> V3dedge3Parameters:
+) -> V3dedge3ParametersTagged:
     """
     Build parameters.
     
@@ -100,7 +80,7 @@ def v_3dedge3_params(
         Parameter dictionary
     """
     params = {
-        "@type": "afni.3dedge3",
+        "@type": "afni/3dedge3",
         "input_file": input_file,
         "verbose": verbose,
         "fscale": fscale,
@@ -134,32 +114,32 @@ def v_3dedge3_cargs(
     cargs.append("3dedge3")
     cargs.extend([
         "-input",
-        execution.input_file(params.get("input_file"))
+        execution.input_file(params.get("input_file", None))
     ])
-    if params.get("verbose"):
+    if params.get("verbose", False):
         cargs.append("-verbose")
-    if params.get("prefix") is not None:
+    if params.get("prefix", None) is not None:
         cargs.extend([
             "-prefix",
-            params.get("prefix")
+            params.get("prefix", None)
         ])
-    if params.get("datum") is not None:
+    if params.get("datum", None) is not None:
         cargs.extend([
             "-datum",
-            params.get("datum")
+            params.get("datum", None)
         ])
-    if params.get("fscale"):
+    if params.get("fscale", False):
         cargs.append("-fscale")
-    if params.get("gscale"):
+    if params.get("gscale", False):
         cargs.append("-gscale")
-    if params.get("nscale"):
+    if params.get("nscale", False):
         cargs.append("-nscale")
-    if params.get("scale_floats") is not None:
+    if params.get("scale_floats", None) is not None:
         cargs.extend([
             "-scale_floats",
-            str(params.get("scale_floats"))
+            str(params.get("scale_floats", None))
         ])
-    if params.get("automask"):
+    if params.get("automask", False):
         cargs.append("-automask")
     return cargs
 
@@ -179,7 +159,7 @@ def v_3dedge3_outputs(
     """
     ret = V3dedge3Outputs(
         root=execution.output_file("."),
-        output_file=execution.output_file(params.get("prefix") + ".nii.gz") if (params.get("prefix") is not None) else None,
+        output_file=execution.output_file(params.get("prefix", None) + ".nii.gz") if (params.get("prefix") is not None) else None,
     )
     return ret
 
@@ -266,7 +246,6 @@ def v_3dedge3(
 
 __all__ = [
     "V3dedge3Outputs",
-    "V3dedge3Parameters",
     "V_3DEDGE3_METADATA",
     "v_3dedge3",
     "v_3dedge3_execute",

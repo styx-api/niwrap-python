@@ -14,7 +14,21 @@ DMRI_MOTION_METADATA = Metadata(
 
 
 DmriMotionParameters = typing.TypedDict('DmriMotionParameters', {
-    "@type": typing.Literal["freesurfer.dmri_motion"],
+    "@type": typing.NotRequired[typing.Literal["freesurfer/dmri_motion"]],
+    "outfile": InputPathType,
+    "outf": typing.NotRequired[InputPathType | None],
+    "mat": typing.NotRequired[InputPathType | None],
+    "dwi": typing.NotRequired[list[InputPathType] | None],
+    "bval": typing.NotRequired[list[InputPathType] | None],
+    "threshold": typing.NotRequired[float | None],
+    "diffusivity": typing.NotRequired[float | None],
+    "debug": bool,
+    "checkopts": bool,
+    "help": bool,
+    "version": bool,
+})
+DmriMotionParametersTagged = typing.TypedDict('DmriMotionParametersTagged', {
+    "@type": typing.Literal["freesurfer/dmri_motion"],
     "outfile": InputPathType,
     "outf": typing.NotRequired[InputPathType | None],
     "mat": typing.NotRequired[InputPathType | None],
@@ -29,41 +43,9 @@ DmriMotionParameters = typing.TypedDict('DmriMotionParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "freesurfer.dmri_motion": dmri_motion_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "freesurfer.dmri_motion": dmri_motion_outputs,
-    }.get(t)
-
-
 class DmriMotionOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `dmri_motion(...)`.
+    Output object returned when calling `DmriMotionParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -85,7 +67,7 @@ def dmri_motion_params(
     checkopts: bool = False,
     help_: bool = False,
     version: bool = False,
-) -> DmriMotionParameters:
+) -> DmriMotionParametersTagged:
     """
     Build parameters.
     
@@ -105,7 +87,7 @@ def dmri_motion_params(
         Parameter dictionary
     """
     params = {
-        "@type": "freesurfer.dmri_motion",
+        "@type": "freesurfer/dmri_motion",
         "outfile": outfile,
         "debug": debug,
         "checkopts": checkopts,
@@ -144,45 +126,45 @@ def dmri_motion_cargs(
     cargs.append("dmri_motion")
     cargs.extend([
         "--out",
-        execution.input_file(params.get("outfile"))
+        execution.input_file(params.get("outfile", None))
     ])
-    if params.get("outf") is not None:
+    if params.get("outf", None) is not None:
         cargs.extend([
             "--outf",
-            execution.input_file(params.get("outf"))
+            execution.input_file(params.get("outf", None))
         ])
-    if params.get("mat") is not None:
+    if params.get("mat", None) is not None:
         cargs.extend([
             "--mat",
-            execution.input_file(params.get("mat"))
+            execution.input_file(params.get("mat", None))
         ])
-    if params.get("dwi") is not None:
+    if params.get("dwi", None) is not None:
         cargs.extend([
             "--dwi",
-            *[execution.input_file(f) for f in params.get("dwi")]
+            *[execution.input_file(f) for f in params.get("dwi", None)]
         ])
-    if params.get("bval") is not None:
+    if params.get("bval", None) is not None:
         cargs.extend([
             "--bval",
-            *[execution.input_file(f) for f in params.get("bval")]
+            *[execution.input_file(f) for f in params.get("bval", None)]
         ])
-    if params.get("threshold") is not None:
+    if params.get("threshold", None) is not None:
         cargs.extend([
             "--T",
-            str(params.get("threshold"))
+            str(params.get("threshold", None))
         ])
-    if params.get("diffusivity") is not None:
+    if params.get("diffusivity", None) is not None:
         cargs.extend([
             "--D",
-            str(params.get("diffusivity"))
+            str(params.get("diffusivity", None))
         ])
-    if params.get("debug"):
+    if params.get("debug", False):
         cargs.append("--debug")
-    if params.get("checkopts"):
+    if params.get("checkopts", False):
         cargs.append("--checkopts")
-    if params.get("help"):
+    if params.get("help", False):
         cargs.append("--help")
-    if params.get("version"):
+    if params.get("version", False):
         cargs.append("--version")
     return cargs
 
@@ -202,8 +184,8 @@ def dmri_motion_outputs(
     """
     ret = DmriMotionOutputs(
         root=execution.output_file("."),
-        motion_measures_out=execution.output_file(pathlib.Path(params.get("outfile")).name),
-        frame_by_frame_out=execution.output_file(pathlib.Path(params.get("outf")).name) if (params.get("outf") is not None) else None,
+        motion_measures_out=execution.output_file(pathlib.Path(params.get("outfile", None)).name),
+        frame_by_frame_out=execution.output_file(pathlib.Path(params.get("outf", None)).name) if (params.get("outf") is not None) else None,
     )
     return ret
 
@@ -294,7 +276,6 @@ def dmri_motion(
 __all__ = [
     "DMRI_MOTION_METADATA",
     "DmriMotionOutputs",
-    "DmriMotionParameters",
     "dmri_motion",
     "dmri_motion_execute",
     "dmri_motion_params",

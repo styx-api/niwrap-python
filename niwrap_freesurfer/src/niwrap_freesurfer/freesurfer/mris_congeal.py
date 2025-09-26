@@ -14,7 +14,25 @@ MRIS_CONGEAL_METADATA = Metadata(
 
 
 MrisCongealParameters = typing.TypedDict('MrisCongealParameters', {
-    "@type": typing.Literal["freesurfer.mris_congeal"],
+    "@type": typing.NotRequired[typing.Literal["freesurfer/mris_congeal"]],
+    "input_surface_name": str,
+    "hemi": str,
+    "subjects": list[str],
+    "output_surface_name": str,
+    "subjects_dir": typing.NotRequired[str | None],
+    "disable_rigid_alignment": bool,
+    "disable_sulc_alignment": bool,
+    "smoothwm_curv": bool,
+    "jacobian_output": typing.NotRequired[str | None],
+    "distance_term": typing.NotRequired[float | None],
+    "manual_label": typing.NotRequired[list[str] | None],
+    "addframe": typing.NotRequired[list[str] | None],
+    "overlay": typing.NotRequired[list[str] | None],
+    "overlay_dir": typing.NotRequired[str | None],
+    "target_subject": bool,
+})
+MrisCongealParametersTagged = typing.TypedDict('MrisCongealParametersTagged', {
+    "@type": typing.Literal["freesurfer/mris_congeal"],
     "input_surface_name": str,
     "hemi": str,
     "subjects": list[str],
@@ -33,41 +51,9 @@ MrisCongealParameters = typing.TypedDict('MrisCongealParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "freesurfer.mris_congeal": mris_congeal_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "freesurfer.mris_congeal": mris_congeal_outputs,
-    }.get(t)
-
-
 class MrisCongealOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `mris_congeal(...)`.
+    Output object returned when calling `MrisCongealParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -91,7 +77,7 @@ def mris_congeal_params(
     overlay: list[str] | None = None,
     overlay_dir: str | None = None,
     target_subject: bool = False,
-) -> MrisCongealParameters:
+) -> MrisCongealParametersTagged:
     """
     Build parameters.
     
@@ -116,7 +102,7 @@ def mris_congeal_params(
         Parameter dictionary
     """
     params = {
-        "@type": "freesurfer.mris_congeal",
+        "@type": "freesurfer/mris_congeal",
         "input_surface_name": input_surface_name,
         "hemi": hemi,
         "subjects": subjects,
@@ -158,52 +144,52 @@ def mris_congeal_cargs(
     """
     cargs = []
     cargs.append("mris_congeal")
-    cargs.append(params.get("input_surface_name"))
-    cargs.append(params.get("hemi"))
-    cargs.extend(params.get("subjects"))
-    cargs.append(params.get("output_surface_name"))
-    if params.get("subjects_dir") is not None:
+    cargs.append(params.get("input_surface_name", None))
+    cargs.append(params.get("hemi", None))
+    cargs.extend(params.get("subjects", None))
+    cargs.append(params.get("output_surface_name", None))
+    if params.get("subjects_dir", None) is not None:
         cargs.extend([
             "-SDIR",
-            params.get("subjects_dir")
+            params.get("subjects_dir", None)
         ])
-    if params.get("disable_rigid_alignment"):
+    if params.get("disable_rigid_alignment", False):
         cargs.append("-norot")
-    if params.get("disable_sulc_alignment"):
+    if params.get("disable_sulc_alignment", False):
         cargs.append("-nosulc")
-    if params.get("smoothwm_curv"):
+    if params.get("smoothwm_curv", False):
         cargs.append("-curv")
-    if params.get("jacobian_output") is not None:
+    if params.get("jacobian_output", None) is not None:
         cargs.extend([
             "-jacobian",
-            params.get("jacobian_output")
+            params.get("jacobian_output", None)
         ])
-    if params.get("distance_term") is not None:
+    if params.get("distance_term", None) is not None:
         cargs.extend([
             "-dist",
-            str(params.get("distance_term"))
+            str(params.get("distance_term", None))
         ])
-    if params.get("manual_label") is not None:
+    if params.get("manual_label", None) is not None:
         cargs.extend([
             "-l",
-            *params.get("manual_label")
+            *params.get("manual_label", None)
         ])
-    if params.get("addframe") is not None:
+    if params.get("addframe", None) is not None:
         cargs.extend([
             "-addframe",
-            *params.get("addframe")
+            *params.get("addframe", None)
         ])
-    if params.get("overlay") is not None:
+    if params.get("overlay", None) is not None:
         cargs.extend([
             "-overlay",
-            *params.get("overlay")
+            *params.get("overlay", None)
         ])
-    if params.get("overlay_dir") is not None:
+    if params.get("overlay_dir", None) is not None:
         cargs.extend([
             "-overlay-dir",
-            params.get("overlay_dir")
+            params.get("overlay_dir", None)
         ])
-    if params.get("target_subject"):
+    if params.get("target_subject", False):
         cargs.append("-1")
     return cargs
 
@@ -223,7 +209,7 @@ def mris_congeal_outputs(
     """
     ret = MrisCongealOutputs(
         root=execution.output_file("."),
-        output_surface=execution.output_file(params.get("output_surface_name")),
+        output_surface=execution.output_file(params.get("output_surface_name", None)),
     )
     return ret
 
@@ -329,7 +315,6 @@ def mris_congeal(
 __all__ = [
     "MRIS_CONGEAL_METADATA",
     "MrisCongealOutputs",
-    "MrisCongealParameters",
     "mris_congeal",
     "mris_congeal_execute",
     "mris_congeal_params",

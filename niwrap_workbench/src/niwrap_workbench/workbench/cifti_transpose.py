@@ -14,48 +14,22 @@ CIFTI_TRANSPOSE_METADATA = Metadata(
 
 
 CiftiTransposeParameters = typing.TypedDict('CiftiTransposeParameters', {
-    "@type": typing.Literal["workbench.cifti-transpose"],
+    "@type": typing.NotRequired[typing.Literal["workbench/cifti-transpose"]],
+    "cifti_in": InputPathType,
+    "cifti_out": str,
+    "opt_mem_limit_limit_gb": typing.NotRequired[float | None],
+})
+CiftiTransposeParametersTagged = typing.TypedDict('CiftiTransposeParametersTagged', {
+    "@type": typing.Literal["workbench/cifti-transpose"],
     "cifti_in": InputPathType,
     "cifti_out": str,
     "opt_mem_limit_limit_gb": typing.NotRequired[float | None],
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "workbench.cifti-transpose": cifti_transpose_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "workbench.cifti-transpose": cifti_transpose_outputs,
-    }.get(t)
-
-
 class CiftiTransposeOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `cifti_transpose(...)`.
+    Output object returned when calling `CiftiTransposeParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -67,7 +41,7 @@ def cifti_transpose_params(
     cifti_in: InputPathType,
     cifti_out: str,
     opt_mem_limit_limit_gb: float | None = None,
-) -> CiftiTransposeParameters:
+) -> CiftiTransposeParametersTagged:
     """
     Build parameters.
     
@@ -80,7 +54,7 @@ def cifti_transpose_params(
         Parameter dictionary
     """
     params = {
-        "@type": "workbench.cifti-transpose",
+        "@type": "workbench/cifti-transpose",
         "cifti_in": cifti_in,
         "cifti_out": cifti_out,
     }
@@ -105,12 +79,12 @@ def cifti_transpose_cargs(
     cargs = []
     cargs.append("wb_command")
     cargs.append("-cifti-transpose")
-    cargs.append(execution.input_file(params.get("cifti_in")))
-    cargs.append(params.get("cifti_out"))
-    if params.get("opt_mem_limit_limit_gb") is not None:
+    cargs.append(execution.input_file(params.get("cifti_in", None)))
+    cargs.append(params.get("cifti_out", None))
+    if params.get("opt_mem_limit_limit_gb", None) is not None:
         cargs.extend([
             "-mem-limit",
-            str(params.get("opt_mem_limit_limit_gb"))
+            str(params.get("opt_mem_limit_limit_gb", None))
         ])
     return cargs
 
@@ -130,7 +104,7 @@ def cifti_transpose_outputs(
     """
     ret = CiftiTransposeOutputs(
         root=execution.output_file("."),
-        cifti_out=execution.output_file(params.get("cifti_out")),
+        cifti_out=execution.output_file(params.get("cifti_out", None)),
     )
     return ret
 
@@ -204,7 +178,6 @@ def cifti_transpose(
 __all__ = [
     "CIFTI_TRANSPOSE_METADATA",
     "CiftiTransposeOutputs",
-    "CiftiTransposeParameters",
     "cifti_transpose",
     "cifti_transpose_execute",
     "cifti_transpose_params",

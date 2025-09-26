@@ -14,7 +14,28 @@ V_3D_MSS_METADATA = Metadata(
 
 
 V3dMssParameters = typing.TypedDict('V3dMssParameters', {
-    "@type": typing.Literal["afni.3dMSS"],
+    "@type": typing.NotRequired[typing.Literal["afni/3dMSS"]],
+    "prefix": str,
+    "jobs": typing.NotRequired[float | None],
+    "mrr_formula": typing.NotRequired[str | None],
+    "lme_formula": typing.NotRequired[str | None],
+    "random_effect": typing.NotRequired[str | None],
+    "qvars": typing.NotRequired[str | None],
+    "mask": typing.NotRequired[InputPathType | None],
+    "bounds": typing.NotRequired[list[float] | None],
+    "prediction_table": typing.NotRequired[InputPathType | None],
+    "data_table": InputPathType,
+    "cio_flag": bool,
+    "rio_flag": bool,
+    "help_flag": bool,
+    "dbg_args_flag": bool,
+    "if_name": typing.NotRequired[str | None],
+    "show_allowed_options_flag": bool,
+    "sdiff_vars": typing.NotRequired[str | None],
+    "vt_formula": typing.NotRequired[str | None],
+})
+V3dMssParametersTagged = typing.TypedDict('V3dMssParametersTagged', {
+    "@type": typing.Literal["afni/3dMSS"],
     "prefix": str,
     "jobs": typing.NotRequired[float | None],
     "mrr_formula": typing.NotRequired[str | None],
@@ -36,41 +57,9 @@ V3dMssParameters = typing.TypedDict('V3dMssParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "afni.3dMSS": v_3d_mss_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "afni.3dMSS": v_3d_mss_outputs,
-    }.get(t)
-
-
 class V3dMssOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `v_3d_mss(...)`.
+    Output object returned when calling `V3dMssParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -97,7 +86,7 @@ def v_3d_mss_params(
     show_allowed_options_flag: bool = False,
     sdiff_vars: str | None = None,
     vt_formula: str | None = None,
-) -> V3dMssParameters:
+) -> V3dMssParametersTagged:
     """
     Build parameters.
     
@@ -135,7 +124,7 @@ def v_3d_mss_params(
         Parameter dictionary
     """
     params = {
-        "@type": "afni.3dMSS",
+        "@type": "afni/3dMSS",
         "prefix": prefix,
         "data_table": data_table,
         "cio_flag": cio_flag,
@@ -184,75 +173,75 @@ def v_3d_mss_cargs(
     """
     cargs = []
     cargs.append("3dMSS")
-    cargs.append(params.get("prefix"))
-    if params.get("jobs") is not None:
+    cargs.append(params.get("prefix", None))
+    if params.get("jobs", None) is not None:
         cargs.extend([
             "-jobs",
-            str(params.get("jobs"))
+            str(params.get("jobs", None))
         ])
-    if params.get("mrr_formula") is not None:
+    if params.get("mrr_formula", None) is not None:
         cargs.extend([
             "-mrr",
-            params.get("mrr_formula")
+            params.get("mrr_formula", None)
         ])
-    if params.get("lme_formula") is not None:
+    if params.get("lme_formula", None) is not None:
         cargs.extend([
             "-lme",
-            params.get("lme_formula")
+            params.get("lme_formula", None)
         ])
-    if params.get("random_effect") is not None:
+    if params.get("random_effect", None) is not None:
         cargs.extend([
             "-ranEff",
-            params.get("random_effect")
+            params.get("random_effect", None)
         ])
-    if params.get("qvars") is not None:
+    if params.get("qvars", None) is not None:
         cargs.extend([
             "-qVars",
-            params.get("qvars")
+            params.get("qvars", None)
         ])
-    if params.get("mask") is not None:
+    if params.get("mask", None) is not None:
         cargs.extend([
             "-mask",
-            execution.input_file(params.get("mask"))
+            execution.input_file(params.get("mask", None))
         ])
-    if params.get("bounds") is not None:
+    if params.get("bounds", None) is not None:
         cargs.extend([
             "-bounds",
-            *map(str, params.get("bounds"))
+            *map(str, params.get("bounds", None))
         ])
-    if params.get("prediction_table") is not None:
+    if params.get("prediction_table", None) is not None:
         cargs.extend([
             "-prediction",
-            execution.input_file(params.get("prediction_table"))
+            execution.input_file(params.get("prediction_table", None))
         ])
     cargs.extend([
         "-dataTable",
-        execution.input_file(params.get("data_table"))
+        execution.input_file(params.get("data_table", None))
     ])
-    if params.get("cio_flag"):
+    if params.get("cio_flag", False):
         cargs.append("-cio")
-    if params.get("rio_flag"):
+    if params.get("rio_flag", False):
         cargs.append("-Rio")
-    if params.get("help_flag"):
+    if params.get("help_flag", False):
         cargs.append("-help")
-    if params.get("dbg_args_flag"):
+    if params.get("dbg_args_flag", False):
         cargs.append("-dbgArgs")
-    if params.get("if_name") is not None:
+    if params.get("if_name", None) is not None:
         cargs.extend([
             "-IF",
-            params.get("if_name")
+            params.get("if_name", None)
         ])
-    if params.get("show_allowed_options_flag"):
+    if params.get("show_allowed_options_flag", False):
         cargs.append("-show_allowed_options")
-    if params.get("sdiff_vars") is not None:
+    if params.get("sdiff_vars", None) is not None:
         cargs.extend([
             "-sdiff",
-            params.get("sdiff_vars")
+            params.get("sdiff_vars", None)
         ])
-    if params.get("vt_formula") is not None:
+    if params.get("vt_formula", None) is not None:
         cargs.extend([
             "-vt",
-            params.get("vt_formula")
+            params.get("vt_formula", None)
         ])
     return cargs
 
@@ -272,7 +261,7 @@ def v_3d_mss_outputs(
     """
     ret = V3dMssOutputs(
         root=execution.output_file("."),
-        output_file=execution.output_file(params.get("prefix") + ".nii"),
+        output_file=execution.output_file(params.get("prefix", None) + ".nii"),
     )
     return ret
 
@@ -394,7 +383,6 @@ def v_3d_mss(
 
 __all__ = [
     "V3dMssOutputs",
-    "V3dMssParameters",
     "V_3D_MSS_METADATA",
     "v_3d_mss",
     "v_3d_mss_execute",

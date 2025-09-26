@@ -14,46 +14,20 @@ MRI_STRIP_SUBJECT_INFO_METADATA = Metadata(
 
 
 MriStripSubjectInfoParameters = typing.TypedDict('MriStripSubjectInfoParameters', {
-    "@type": typing.Literal["freesurfer.mri_strip_subject_info"],
+    "@type": typing.NotRequired[typing.Literal["freesurfer/mri_strip_subject_info"]],
+    "input_files": list[InputPathType],
+    "output_directory": str,
+})
+MriStripSubjectInfoParametersTagged = typing.TypedDict('MriStripSubjectInfoParametersTagged', {
+    "@type": typing.Literal["freesurfer/mri_strip_subject_info"],
     "input_files": list[InputPathType],
     "output_directory": str,
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "freesurfer.mri_strip_subject_info": mri_strip_subject_info_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-    }.get(t)
-
-
 class MriStripSubjectInfoOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `mri_strip_subject_info(...)`.
+    Output object returned when calling `MriStripSubjectInfoParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -62,7 +36,7 @@ class MriStripSubjectInfoOutputs(typing.NamedTuple):
 def mri_strip_subject_info_params(
     input_files: list[InputPathType],
     output_directory: str,
-) -> MriStripSubjectInfoParameters:
+) -> MriStripSubjectInfoParametersTagged:
     """
     Build parameters.
     
@@ -73,7 +47,7 @@ def mri_strip_subject_info_params(
         Parameter dictionary
     """
     params = {
-        "@type": "freesurfer.mri_strip_subject_info",
+        "@type": "freesurfer/mri_strip_subject_info",
         "input_files": input_files,
         "output_directory": output_directory,
     }
@@ -95,8 +69,8 @@ def mri_strip_subject_info_cargs(
     """
     cargs = []
     cargs.append("mri_strip_subject_info")
-    cargs.extend([execution.input_file(f) for f in params.get("input_files")])
-    cargs.append(params.get("output_directory"))
+    cargs.extend([execution.input_file(f) for f in params.get("input_files", None)])
+    cargs.append(params.get("output_directory", None))
     return cargs
 
 
@@ -178,7 +152,6 @@ def mri_strip_subject_info(
 __all__ = [
     "MRI_STRIP_SUBJECT_INFO_METADATA",
     "MriStripSubjectInfoOutputs",
-    "MriStripSubjectInfoParameters",
     "mri_strip_subject_info",
     "mri_strip_subject_info_execute",
     "mri_strip_subject_info_params",

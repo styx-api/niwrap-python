@@ -14,47 +14,20 @@ PREWHITEN_METADATA = Metadata(
 
 
 PrewhitenParameters = typing.TypedDict('PrewhitenParameters', {
-    "@type": typing.Literal["fsl.prewhiten"],
+    "@type": typing.NotRequired[typing.Literal["fsl/prewhiten"]],
+    "feat_directory": str,
+    "output_directory": typing.NotRequired[str | None],
+})
+PrewhitenParametersTagged = typing.TypedDict('PrewhitenParametersTagged', {
+    "@type": typing.Literal["fsl/prewhiten"],
     "feat_directory": str,
     "output_directory": typing.NotRequired[str | None],
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "fsl.prewhiten": prewhiten_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "fsl.prewhiten": prewhiten_outputs,
-    }.get(t)
-
-
 class PrewhitenOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `prewhiten(...)`.
+    Output object returned when calling `PrewhitenParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -65,7 +38,7 @@ class PrewhitenOutputs(typing.NamedTuple):
 def prewhiten_params(
     feat_directory: str,
     output_directory: str | None = None,
-) -> PrewhitenParameters:
+) -> PrewhitenParametersTagged:
     """
     Build parameters.
     
@@ -77,7 +50,7 @@ def prewhiten_params(
         Parameter dictionary
     """
     params = {
-        "@type": "fsl.prewhiten",
+        "@type": "fsl/prewhiten",
         "feat_directory": feat_directory,
     }
     if output_directory is not None:
@@ -100,11 +73,11 @@ def prewhiten_cargs(
     """
     cargs = []
     cargs.append("prewhiten")
-    cargs.append(params.get("feat_directory"))
-    if params.get("output_directory") is not None:
+    cargs.append(params.get("feat_directory", None))
+    if params.get("output_directory", None) is not None:
         cargs.extend([
             "-o",
-            params.get("output_directory")
+            params.get("output_directory", None)
         ])
     return cargs
 
@@ -124,7 +97,7 @@ def prewhiten_outputs(
     """
     ret = PrewhitenOutputs(
         root=execution.output_file("."),
-        output_directory=execution.output_file(params.get("output_directory")) if (params.get("output_directory") is not None) else None,
+        output_directory=execution.output_file(params.get("output_directory", None)) if (params.get("output_directory") is not None) else None,
     )
     return ret
 
@@ -189,7 +162,6 @@ def prewhiten(
 __all__ = [
     "PREWHITEN_METADATA",
     "PrewhitenOutputs",
-    "PrewhitenParameters",
     "prewhiten",
     "prewhiten_execute",
     "prewhiten_params",

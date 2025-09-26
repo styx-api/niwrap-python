@@ -14,46 +14,20 @@ V_2SWAP_METADATA = Metadata(
 
 
 V2swapParameters = typing.TypedDict('V2swapParameters', {
-    "@type": typing.Literal["afni.2swap"],
+    "@type": typing.NotRequired[typing.Literal["afni/2swap"]],
+    "quiet": bool,
+    "input_files": list[InputPathType],
+})
+V2swapParametersTagged = typing.TypedDict('V2swapParametersTagged', {
+    "@type": typing.Literal["afni/2swap"],
     "quiet": bool,
     "input_files": list[InputPathType],
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "afni.2swap": v_2swap_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-    }.get(t)
-
-
 class V2swapOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `v_2swap(...)`.
+    Output object returned when calling `V2swapParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -62,7 +36,7 @@ class V2swapOutputs(typing.NamedTuple):
 def v_2swap_params(
     input_files: list[InputPathType],
     quiet: bool = False,
-) -> V2swapParameters:
+) -> V2swapParametersTagged:
     """
     Build parameters.
     
@@ -73,7 +47,7 @@ def v_2swap_params(
         Parameter dictionary
     """
     params = {
-        "@type": "afni.2swap",
+        "@type": "afni/2swap",
         "quiet": quiet,
         "input_files": input_files,
     }
@@ -95,9 +69,9 @@ def v_2swap_cargs(
     """
     cargs = []
     cargs.append("2swap")
-    if params.get("quiet"):
+    if params.get("quiet", False):
         cargs.append("-q")
-    cargs.extend([execution.input_file(f) for f in params.get("input_files")])
+    cargs.extend([execution.input_file(f) for f in params.get("input_files", None)])
     return cargs
 
 
@@ -178,7 +152,6 @@ def v_2swap(
 
 __all__ = [
     "V2swapOutputs",
-    "V2swapParameters",
     "V_2SWAP_METADATA",
     "v_2swap",
     "v_2swap_execute",

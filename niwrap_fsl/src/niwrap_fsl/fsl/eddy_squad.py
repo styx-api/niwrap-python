@@ -14,7 +14,15 @@ EDDY_SQUAD_METADATA = Metadata(
 
 
 EddySquadParameters = typing.TypedDict('EddySquadParameters', {
-    "@type": typing.Literal["fsl.eddy_squad"],
+    "@type": typing.NotRequired[typing.Literal["fsl/eddy_squad"]],
+    "grouping": typing.NotRequired[str | None],
+    "group_db": typing.NotRequired[InputPathType | None],
+    "update": bool,
+    "output_dir": typing.NotRequired[str | None],
+    "subject_list": str,
+})
+EddySquadParametersTagged = typing.TypedDict('EddySquadParametersTagged', {
+    "@type": typing.Literal["fsl/eddy_squad"],
     "grouping": typing.NotRequired[str | None],
     "group_db": typing.NotRequired[InputPathType | None],
     "update": bool,
@@ -23,41 +31,9 @@ EddySquadParameters = typing.TypedDict('EddySquadParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "fsl.eddy_squad": eddy_squad_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "fsl.eddy_squad": eddy_squad_outputs,
-    }.get(t)
-
-
 class EddySquadOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `eddy_squad(...)`.
+    Output object returned when calling `EddySquadParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -71,7 +47,7 @@ def eddy_squad_params(
     group_db: InputPathType | None = None,
     update_: bool = False,
     output_dir: str | None = None,
-) -> EddySquadParameters:
+) -> EddySquadParametersTagged:
     """
     Build parameters.
     
@@ -85,7 +61,7 @@ def eddy_squad_params(
         Parameter dictionary
     """
     params = {
-        "@type": "fsl.eddy_squad",
+        "@type": "fsl/eddy_squad",
         "update": update_,
         "subject_list": subject_list,
     }
@@ -113,24 +89,24 @@ def eddy_squad_cargs(
     """
     cargs = []
     cargs.append("eddy_squad")
-    if params.get("grouping") is not None:
+    if params.get("grouping", None) is not None:
         cargs.extend([
             "-g",
-            params.get("grouping")
+            params.get("grouping", None)
         ])
-    if params.get("group_db") is not None:
+    if params.get("group_db", None) is not None:
         cargs.extend([
             "-gdb",
-            execution.input_file(params.get("group_db"))
+            execution.input_file(params.get("group_db", None))
         ])
-    if params.get("update"):
+    if params.get("update", False):
         cargs.append("-u")
-    if params.get("output_dir") is not None:
+    if params.get("output_dir", None) is not None:
         cargs.extend([
             "-o",
-            params.get("output_dir")
+            params.get("output_dir", None)
         ])
-    cargs.append(params.get("subject_list"))
+    cargs.append(params.get("subject_list", None))
     return cargs
 
 
@@ -149,7 +125,7 @@ def eddy_squad_outputs(
     """
     ret = EddySquadOutputs(
         root=execution.output_file("."),
-        qc_results=execution.output_file(params.get("output_dir") + "/qc_results.json") if (params.get("output_dir") is not None) else None,
+        qc_results=execution.output_file(params.get("output_dir", None) + "/qc_results.json") if (params.get("output_dir") is not None) else None,
     )
     return ret
 
@@ -222,7 +198,6 @@ def eddy_squad(
 __all__ = [
     "EDDY_SQUAD_METADATA",
     "EddySquadOutputs",
-    "EddySquadParameters",
     "eddy_squad",
     "eddy_squad_execute",
     "eddy_squad_params",

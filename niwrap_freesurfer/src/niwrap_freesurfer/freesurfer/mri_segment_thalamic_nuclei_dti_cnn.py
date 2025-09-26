@@ -14,7 +14,20 @@ MRI_SEGMENT_THALAMIC_NUCLEI_DTI_CNN_METADATA = Metadata(
 
 
 MriSegmentThalamicNucleiDtiCnnParameters = typing.TypedDict('MriSegmentThalamicNucleiDtiCnnParameters', {
-    "@type": typing.Literal["freesurfer.mri_segment_thalamic_nuclei_dti_cnn"],
+    "@type": typing.NotRequired[typing.Literal["freesurfer/mri_segment_thalamic_nuclei_dti_cnn"]],
+    "t1_images": InputPathType,
+    "aseg": typing.NotRequired[InputPathType | None],
+    "fa": InputPathType,
+    "v1": InputPathType,
+    "output": str,
+    "volume_output": typing.NotRequired[str | None],
+    "posteriors_output": typing.NotRequired[str | None],
+    "threads": typing.NotRequired[float | None],
+    "force_cpu": bool,
+    "model": typing.NotRequired[InputPathType | None],
+})
+MriSegmentThalamicNucleiDtiCnnParametersTagged = typing.TypedDict('MriSegmentThalamicNucleiDtiCnnParametersTagged', {
+    "@type": typing.Literal["freesurfer/mri_segment_thalamic_nuclei_dti_cnn"],
     "t1_images": InputPathType,
     "aseg": typing.NotRequired[InputPathType | None],
     "fa": InputPathType,
@@ -28,41 +41,9 @@ MriSegmentThalamicNucleiDtiCnnParameters = typing.TypedDict('MriSegmentThalamicN
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "freesurfer.mri_segment_thalamic_nuclei_dti_cnn": mri_segment_thalamic_nuclei_dti_cnn_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "freesurfer.mri_segment_thalamic_nuclei_dti_cnn": mri_segment_thalamic_nuclei_dti_cnn_outputs,
-    }.get(t)
-
-
 class MriSegmentThalamicNucleiDtiCnnOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `mri_segment_thalamic_nuclei_dti_cnn(...)`.
+    Output object returned when calling `MriSegmentThalamicNucleiDtiCnnParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -85,7 +66,7 @@ def mri_segment_thalamic_nuclei_dti_cnn_params(
     threads: float | None = None,
     force_cpu: bool = False,
     model: InputPathType | None = None,
-) -> MriSegmentThalamicNucleiDtiCnnParameters:
+) -> MriSegmentThalamicNucleiDtiCnnParametersTagged:
     """
     Build parameters.
     
@@ -106,7 +87,7 @@ def mri_segment_thalamic_nuclei_dti_cnn_params(
         Parameter dictionary
     """
     params = {
-        "@type": "freesurfer.mri_segment_thalamic_nuclei_dti_cnn",
+        "@type": "freesurfer/mri_segment_thalamic_nuclei_dti_cnn",
         "t1_images": t1_images,
         "fa": fa,
         "v1": v1,
@@ -143,46 +124,46 @@ def mri_segment_thalamic_nuclei_dti_cnn_cargs(
     cargs.append("mri_segment_thalamic_nuclei_dti_cnn")
     cargs.extend([
         "--t1",
-        execution.input_file(params.get("t1_images"))
+        execution.input_file(params.get("t1_images", None))
     ])
-    if params.get("aseg") is not None:
+    if params.get("aseg", None) is not None:
         cargs.extend([
             "--aseg",
-            execution.input_file(params.get("aseg"))
+            execution.input_file(params.get("aseg", None))
         ])
     cargs.extend([
         "--fa",
-        execution.input_file(params.get("fa"))
+        execution.input_file(params.get("fa", None))
     ])
     cargs.extend([
         "--v1",
-        execution.input_file(params.get("v1"))
+        execution.input_file(params.get("v1", None))
     ])
     cargs.extend([
         "--o",
-        params.get("output")
+        params.get("output", None)
     ])
-    if params.get("volume_output") is not None:
+    if params.get("volume_output", None) is not None:
         cargs.extend([
             "--vol",
-            params.get("volume_output")
+            params.get("volume_output", None)
         ])
-    if params.get("posteriors_output") is not None:
+    if params.get("posteriors_output", None) is not None:
         cargs.extend([
             "--post",
-            params.get("posteriors_output")
+            params.get("posteriors_output", None)
         ])
-    if params.get("threads") is not None:
+    if params.get("threads", None) is not None:
         cargs.extend([
             "--threads",
-            str(params.get("threads"))
+            str(params.get("threads", None))
         ])
-    if params.get("force_cpu"):
+    if params.get("force_cpu", False):
         cargs.append("--cpu")
-    if params.get("model") is not None:
+    if params.get("model", None) is not None:
         cargs.extend([
             "--model",
-            execution.input_file(params.get("model"))
+            execution.input_file(params.get("model", None))
         ])
     return cargs
 
@@ -202,9 +183,9 @@ def mri_segment_thalamic_nuclei_dti_cnn_outputs(
     """
     ret = MriSegmentThalamicNucleiDtiCnnOutputs(
         root=execution.output_file("."),
-        segmentation_output=execution.output_file(params.get("output")),
-        volume_csv=execution.output_file(params.get("volume_output")) if (params.get("volume_output") is not None) else None,
-        posteriors=execution.output_file(params.get("posteriors_output")) if (params.get("posteriors_output") is not None) else None,
+        segmentation_output=execution.output_file(params.get("output", None)),
+        volume_csv=execution.output_file(params.get("volume_output", None)) if (params.get("volume_output") is not None) else None,
+        posteriors=execution.output_file(params.get("posteriors_output", None)) if (params.get("posteriors_output") is not None) else None,
     )
     return ret
 
@@ -296,7 +277,6 @@ def mri_segment_thalamic_nuclei_dti_cnn(
 __all__ = [
     "MRI_SEGMENT_THALAMIC_NUCLEI_DTI_CNN_METADATA",
     "MriSegmentThalamicNucleiDtiCnnOutputs",
-    "MriSegmentThalamicNucleiDtiCnnParameters",
     "mri_segment_thalamic_nuclei_dti_cnn",
     "mri_segment_thalamic_nuclei_dti_cnn_execute",
     "mri_segment_thalamic_nuclei_dti_cnn_params",

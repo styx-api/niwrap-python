@@ -14,7 +14,31 @@ AFNI_HISTORY_METADATA = Metadata(
 
 
 AfniHistoryParameters = typing.TypedDict('AfniHistoryParameters', {
-    "@type": typing.Literal["afni.afni_history"],
+    "@type": typing.NotRequired[typing.Literal["afni/afni_history"]],
+    "verb_level": typing.NotRequired[int | None],
+    "check_date": typing.NotRequired[str | None],
+    "help": bool,
+    "history": bool,
+    "list_authors": bool,
+    "list_types": bool,
+    "version": bool,
+    "author": typing.NotRequired[str | None],
+    "level": typing.NotRequired[int | None],
+    "min_level": typing.NotRequired[int | None],
+    "program": typing.NotRequired[str | None],
+    "past_entries": typing.NotRequired[int | None],
+    "past_days": typing.NotRequired[int | None],
+    "past_months": typing.NotRequired[int | None],
+    "past_years": typing.NotRequired[int | None],
+    "type": typing.NotRequired[str | None],
+    "html": bool,
+    "dline": bool,
+    "reverse": bool,
+    "show_field": typing.NotRequired[str | None],
+    "show_field_names": bool,
+})
+AfniHistoryParametersTagged = typing.TypedDict('AfniHistoryParametersTagged', {
+    "@type": typing.Literal["afni/afni_history"],
     "verb_level": typing.NotRequired[int | None],
     "check_date": typing.NotRequired[str | None],
     "help": bool,
@@ -39,40 +63,9 @@ AfniHistoryParameters = typing.TypedDict('AfniHistoryParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "afni.afni_history": afni_history_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-    }.get(t)
-
-
 class AfniHistoryOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `afni_history(...)`.
+    Output object returned when calling `AfniHistoryParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -100,7 +93,7 @@ def afni_history_params(
     reverse: bool = False,
     show_field: str | None = None,
     show_field_names: bool = False,
-) -> AfniHistoryParameters:
+) -> AfniHistoryParametersTagged:
     """
     Build parameters.
     
@@ -136,7 +129,7 @@ def afni_history_params(
         Parameter dictionary
     """
     params = {
-        "@type": "afni.afni_history",
+        "@type": "afni/afni_history",
         "help": help_,
         "history": history,
         "list_authors": list_authors,
@@ -189,83 +182,83 @@ def afni_history_cargs(
     """
     cargs = []
     cargs.append("afni_history")
-    if params.get("verb_level") is not None:
+    if params.get("verb_level", None) is not None:
         cargs.extend([
             "-verb",
-            str(params.get("verb_level"))
+            str(params.get("verb_level", None))
         ])
-    if params.get("check_date") is not None:
+    if params.get("check_date", None) is not None:
         cargs.extend([
             "-check_date",
-            params.get("check_date")
+            params.get("check_date", None)
         ])
-    if params.get("help"):
+    if params.get("help", False):
         cargs.append("-help")
-    if params.get("history"):
+    if params.get("history", False):
         cargs.append("-hist")
-    if params.get("list_authors"):
+    if params.get("list_authors", False):
         cargs.append("-list_authors")
-    if params.get("list_types"):
+    if params.get("list_types", False):
         cargs.append("-list_types")
-    if params.get("version"):
+    if params.get("version", False):
         cargs.append("-ver")
-    if params.get("author") is not None:
+    if params.get("author", None) is not None:
         cargs.extend([
             "-author",
-            params.get("author")
+            params.get("author", None)
         ])
-    if params.get("level") is not None:
+    if params.get("level", None) is not None:
         cargs.extend([
             "-level",
-            str(params.get("level"))
+            str(params.get("level", None))
         ])
-    if params.get("min_level") is not None:
+    if params.get("min_level", None) is not None:
         cargs.extend([
             "-min_level",
-            str(params.get("min_level"))
+            str(params.get("min_level", None))
         ])
-    if params.get("program") is not None:
+    if params.get("program", None) is not None:
         cargs.extend([
             "-program",
-            params.get("program")
+            params.get("program", None)
         ])
-    if params.get("past_entries") is not None:
+    if params.get("past_entries", None) is not None:
         cargs.extend([
             "-past_entries",
-            str(params.get("past_entries"))
+            str(params.get("past_entries", None))
         ])
-    if params.get("past_days") is not None:
+    if params.get("past_days", None) is not None:
         cargs.extend([
             "-past_days",
-            str(params.get("past_days"))
+            str(params.get("past_days", None))
         ])
-    if params.get("past_months") is not None:
+    if params.get("past_months", None) is not None:
         cargs.extend([
             "-past_months",
-            str(params.get("past_months"))
+            str(params.get("past_months", None))
         ])
-    if params.get("past_years") is not None:
+    if params.get("past_years", None) is not None:
         cargs.extend([
             "-past_years",
-            str(params.get("past_years"))
+            str(params.get("past_years", None))
         ])
-    if params.get("type") is not None:
+    if params.get("type", None) is not None:
         cargs.extend([
             "-type",
-            params.get("type")
+            params.get("type", None)
         ])
-    if params.get("html"):
+    if params.get("html", False):
         cargs.append("-html")
-    if params.get("dline"):
+    if params.get("dline", False):
         cargs.append("-dline")
-    if params.get("reverse"):
+    if params.get("reverse", False):
         cargs.append("-reverse")
-    if params.get("show_field") is not None:
+    if params.get("show_field", None) is not None:
         cargs.extend([
             "-show_field",
-            params.get("show_field")
+            params.get("show_field", None)
         ])
-    if params.get("show_field_names"):
+    if params.get("show_field_names", False):
         cargs.append("-show_field_names")
     return cargs
 
@@ -411,7 +404,6 @@ def afni_history(
 __all__ = [
     "AFNI_HISTORY_METADATA",
     "AfniHistoryOutputs",
-    "AfniHistoryParameters",
     "afni_history",
     "afni_history_execute",
     "afni_history_params",

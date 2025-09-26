@@ -14,45 +14,18 @@ FSR_GETXOPTS_METADATA = Metadata(
 
 
 FsrGetxoptsParameters = typing.TypedDict('FsrGetxoptsParameters', {
-    "@type": typing.Literal["freesurfer.fsr-getxopts"],
+    "@type": typing.NotRequired[typing.Literal["freesurfer/fsr-getxopts"]],
+    "help": bool,
+})
+FsrGetxoptsParametersTagged = typing.TypedDict('FsrGetxoptsParametersTagged', {
+    "@type": typing.Literal["freesurfer/fsr-getxopts"],
     "help": bool,
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "freesurfer.fsr-getxopts": fsr_getxopts_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-    }.get(t)
-
-
 class FsrGetxoptsOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `fsr_getxopts(...)`.
+    Output object returned when calling `FsrGetxoptsParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -60,7 +33,7 @@ class FsrGetxoptsOutputs(typing.NamedTuple):
 
 def fsr_getxopts_params(
     help_: bool = False,
-) -> FsrGetxoptsParameters:
+) -> FsrGetxoptsParametersTagged:
     """
     Build parameters.
     
@@ -70,7 +43,7 @@ def fsr_getxopts_params(
         Parameter dictionary
     """
     params = {
-        "@type": "freesurfer.fsr-getxopts",
+        "@type": "freesurfer/fsr-getxopts",
         "help": help_,
     }
     return params
@@ -91,7 +64,7 @@ def fsr_getxopts_cargs(
     """
     cargs = []
     cargs.append("fsr-getxopts")
-    if params.get("help"):
+    if params.get("help", False):
         cargs.append("--help")
     return cargs
 
@@ -171,7 +144,6 @@ def fsr_getxopts(
 __all__ = [
     "FSR_GETXOPTS_METADATA",
     "FsrGetxoptsOutputs",
-    "FsrGetxoptsParameters",
     "fsr_getxopts",
     "fsr_getxopts_execute",
     "fsr_getxopts_params",

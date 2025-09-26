@@ -14,7 +14,21 @@ FNIRTFILEUTILS_METADATA = Metadata(
 
 
 FnirtfileutilsParameters = typing.TypedDict('FnirtfileutilsParameters', {
-    "@type": typing.Literal["fsl.fnirtfileutils"],
+    "@type": typing.NotRequired[typing.Literal["fsl/fnirtfileutils"]],
+    "input_coefs": InputPathType,
+    "ref_volume": typing.NotRequired[InputPathType | None],
+    "out_field": typing.NotRequired[str | None],
+    "output_format": typing.NotRequired[str | None],
+    "warp_res": typing.NotRequired[float | None],
+    "knot_space": typing.NotRequired[float | None],
+    "jacobian_output": typing.NotRequired[str | None],
+    "jacobian_matrix_output": typing.NotRequired[str | None],
+    "with_aff": bool,
+    "verbose_flag": bool,
+    "help_flag": bool,
+})
+FnirtfileutilsParametersTagged = typing.TypedDict('FnirtfileutilsParametersTagged', {
+    "@type": typing.Literal["fsl/fnirtfileutils"],
     "input_coefs": InputPathType,
     "ref_volume": typing.NotRequired[InputPathType | None],
     "out_field": typing.NotRequired[str | None],
@@ -29,41 +43,9 @@ FnirtfileutilsParameters = typing.TypedDict('FnirtfileutilsParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "fsl.fnirtfileutils": fnirtfileutils_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "fsl.fnirtfileutils": fnirtfileutils_outputs,
-    }.get(t)
-
-
 class FnirtfileutilsOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `fnirtfileutils(...)`.
+    Output object returned when calling `FnirtfileutilsParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -87,7 +69,7 @@ def fnirtfileutils_params(
     with_aff: bool = False,
     verbose_flag: bool = False,
     help_flag: bool = False,
-) -> FnirtfileutilsParameters:
+) -> FnirtfileutilsParametersTagged:
     """
     Build parameters.
     
@@ -111,7 +93,7 @@ def fnirtfileutils_params(
         Parameter dictionary
     """
     params = {
-        "@type": "fsl.fnirtfileutils",
+        "@type": "fsl/fnirtfileutils",
         "input_coefs": input_coefs,
         "with_aff": with_aff,
         "verbose_flag": verbose_flag,
@@ -151,48 +133,48 @@ def fnirtfileutils_cargs(
     cargs.append("fnirtfileutils")
     cargs.extend([
         "--in",
-        execution.input_file(params.get("input_coefs"))
+        execution.input_file(params.get("input_coefs", None))
     ])
-    if params.get("ref_volume") is not None:
+    if params.get("ref_volume", None) is not None:
         cargs.extend([
             "--ref",
-            execution.input_file(params.get("ref_volume"))
+            execution.input_file(params.get("ref_volume", None))
         ])
-    if params.get("out_field") is not None:
+    if params.get("out_field", None) is not None:
         cargs.extend([
             "--out",
-            params.get("out_field")
+            params.get("out_field", None)
         ])
-    if params.get("output_format") is not None:
+    if params.get("output_format", None) is not None:
         cargs.extend([
             "--outformat",
-            params.get("output_format")
+            params.get("output_format", None)
         ])
-    if params.get("warp_res") is not None:
+    if params.get("warp_res", None) is not None:
         cargs.extend([
             "--warpres",
-            str(params.get("warp_res"))
+            str(params.get("warp_res", None))
         ])
-    if params.get("knot_space") is not None:
+    if params.get("knot_space", None) is not None:
         cargs.extend([
             "--knotspace",
-            str(params.get("knot_space"))
+            str(params.get("knot_space", None))
         ])
-    if params.get("jacobian_output") is not None:
+    if params.get("jacobian_output", None) is not None:
         cargs.extend([
             "--jac",
-            params.get("jacobian_output")
+            params.get("jacobian_output", None)
         ])
-    if params.get("jacobian_matrix_output") is not None:
+    if params.get("jacobian_matrix_output", None) is not None:
         cargs.extend([
             "--matjac",
-            params.get("jacobian_matrix_output")
+            params.get("jacobian_matrix_output", None)
         ])
-    if params.get("with_aff"):
+    if params.get("with_aff", False):
         cargs.append("--withaff")
-    if params.get("verbose_flag"):
+    if params.get("verbose_flag", False):
         cargs.append("--verbose")
-    if params.get("help_flag"):
+    if params.get("help_flag", False):
         cargs.append("--help")
     return cargs
 
@@ -212,9 +194,9 @@ def fnirtfileutils_outputs(
     """
     ret = FnirtfileutilsOutputs(
         root=execution.output_file("."),
-        output_field_file=execution.output_file(params.get("out_field") + ".nii.gz") if (params.get("out_field") is not None) else None,
-        jacobian_output_file=execution.output_file(params.get("jacobian_output") + ".nii.gz") if (params.get("jacobian_output") is not None) else None,
-        jacobian_matrix_file=execution.output_file(params.get("jacobian_matrix_output") + ".nii.gz") if (params.get("jacobian_matrix_output") is not None) else None,
+        output_field_file=execution.output_file(params.get("out_field", None) + ".nii.gz") if (params.get("out_field") is not None) else None,
+        jacobian_output_file=execution.output_file(params.get("jacobian_output", None) + ".nii.gz") if (params.get("jacobian_output") is not None) else None,
+        jacobian_matrix_file=execution.output_file(params.get("jacobian_matrix_output", None) + ".nii.gz") if (params.get("jacobian_matrix_output") is not None) else None,
     )
     return ret
 
@@ -311,7 +293,6 @@ def fnirtfileutils(
 __all__ = [
     "FNIRTFILEUTILS_METADATA",
     "FnirtfileutilsOutputs",
-    "FnirtfileutilsParameters",
     "fnirtfileutils",
     "fnirtfileutils_execute",
     "fnirtfileutils_params",

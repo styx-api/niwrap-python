@@ -14,7 +14,18 @@ FSR_IMPORT_METADATA = Metadata(
 
 
 FsrImportParameters = typing.TypedDict('FsrImportParameters', {
-    "@type": typing.Literal["freesurfer.fsr-import"],
+    "@type": typing.NotRequired[typing.Literal["freesurfer/fsr-import"]],
+    "outdir": str,
+    "t1w_input": typing.NotRequired[list[InputPathType] | None],
+    "t2w_input": typing.NotRequired[list[InputPathType] | None],
+    "flair_input": typing.NotRequired[list[InputPathType] | None],
+    "custom_mode_input": typing.NotRequired[list[str] | None],
+    "force_update": bool,
+    "no_conform": bool,
+    "hires": bool,
+})
+FsrImportParametersTagged = typing.TypedDict('FsrImportParametersTagged', {
+    "@type": typing.Literal["freesurfer/fsr-import"],
     "outdir": str,
     "t1w_input": typing.NotRequired[list[InputPathType] | None],
     "t2w_input": typing.NotRequired[list[InputPathType] | None],
@@ -26,41 +37,9 @@ FsrImportParameters = typing.TypedDict('FsrImportParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "freesurfer.fsr-import": fsr_import_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "freesurfer.fsr-import": fsr_import_outputs,
-    }.get(t)
-
-
 class FsrImportOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `fsr_import(...)`.
+    Output object returned when calling `FsrImportParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -81,7 +60,7 @@ def fsr_import_params(
     force_update: bool = False,
     no_conform: bool = False,
     hires: bool = False,
-) -> FsrImportParameters:
+) -> FsrImportParametersTagged:
     """
     Build parameters.
     
@@ -99,7 +78,7 @@ def fsr_import_params(
         Parameter dictionary
     """
     params = {
-        "@type": "freesurfer.fsr-import",
+        "@type": "freesurfer/fsr-import",
         "outdir": outdir,
         "force_update": force_update,
         "no_conform": no_conform,
@@ -133,33 +112,33 @@ def fsr_import_cargs(
     cargs.append("fsr-import")
     cargs.extend([
         "--o",
-        params.get("outdir")
+        params.get("outdir", None)
     ])
-    if params.get("t1w_input") is not None:
+    if params.get("t1w_input", None) is not None:
         cargs.extend([
             "--t1w",
-            *[execution.input_file(f) for f in params.get("t1w_input")]
+            *[execution.input_file(f) for f in params.get("t1w_input", None)]
         ])
-    if params.get("t2w_input") is not None:
+    if params.get("t2w_input", None) is not None:
         cargs.extend([
             "--t2w",
-            *[execution.input_file(f) for f in params.get("t2w_input")]
+            *[execution.input_file(f) for f in params.get("t2w_input", None)]
         ])
-    if params.get("flair_input") is not None:
+    if params.get("flair_input", None) is not None:
         cargs.extend([
             "--flair",
-            *[execution.input_file(f) for f in params.get("flair_input")]
+            *[execution.input_file(f) for f in params.get("flair_input", None)]
         ])
-    if params.get("custom_mode_input") is not None:
+    if params.get("custom_mode_input", None) is not None:
         cargs.extend([
             "--mode",
-            *params.get("custom_mode_input")
+            *params.get("custom_mode_input", None)
         ])
-    if params.get("force_update"):
+    if params.get("force_update", False):
         cargs.append("--force-update")
-    if params.get("no_conform"):
+    if params.get("no_conform", False):
         cargs.append("--no-conform")
-    if params.get("hires"):
+    if params.get("hires", False):
         cargs.append("--hires")
     return cargs
 
@@ -179,9 +158,9 @@ def fsr_import_outputs(
     """
     ret = FsrImportOutputs(
         root=execution.output_file("."),
-        out_t1w=execution.output_file(params.get("outdir") + "/t1w"),
-        out_t2w=execution.output_file(params.get("outdir") + "/t2w"),
-        out_flair=execution.output_file(params.get("outdir") + "/flair_input"),
+        out_t1w=execution.output_file(params.get("outdir", None) + "/t1w"),
+        out_t2w=execution.output_file(params.get("outdir", None) + "/t2w"),
+        out_flair=execution.output_file(params.get("outdir", None) + "/flair_input"),
     )
     return ret
 
@@ -264,7 +243,6 @@ def fsr_import(
 __all__ = [
     "FSR_IMPORT_METADATA",
     "FsrImportOutputs",
-    "FsrImportParameters",
     "fsr_import",
     "fsr_import_execute",
     "fsr_import_params",

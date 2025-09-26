@@ -14,7 +14,16 @@ V__EXTRACT_MEICA_ORTVEC_METADATA = Metadata(
 
 
 VExtractMeicaOrtvecParameters = typing.TypedDict('VExtractMeicaOrtvecParameters', {
-    "@type": typing.Literal["afni.@extract_meica_ortvec"],
+    "@type": typing.NotRequired[typing.Literal["afni/@extract_meica_ortvec"]],
+    "prefix": str,
+    "meica_dir": typing.NotRequired[str | None],
+    "reject_ignored": typing.NotRequired[int | None],
+    "reject_midk": typing.NotRequired[int | None],
+    "work_dir": typing.NotRequired[str | None],
+    "verbosity": typing.NotRequired[str | None],
+})
+VExtractMeicaOrtvecParametersTagged = typing.TypedDict('VExtractMeicaOrtvecParametersTagged', {
+    "@type": typing.Literal["afni/@extract_meica_ortvec"],
     "prefix": str,
     "meica_dir": typing.NotRequired[str | None],
     "reject_ignored": typing.NotRequired[int | None],
@@ -24,41 +33,9 @@ VExtractMeicaOrtvecParameters = typing.TypedDict('VExtractMeicaOrtvecParameters'
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "afni.@extract_meica_ortvec": v__extract_meica_ortvec_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "afni.@extract_meica_ortvec": v__extract_meica_ortvec_outputs,
-    }.get(t)
-
-
 class VExtractMeicaOrtvecOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `v__extract_meica_ortvec(...)`.
+    Output object returned when calling `VExtractMeicaOrtvecParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -73,7 +50,7 @@ def v__extract_meica_ortvec_params(
     reject_midk: int | None = None,
     work_dir: str | None = None,
     verbosity: str | None = None,
-) -> VExtractMeicaOrtvecParameters:
+) -> VExtractMeicaOrtvecParametersTagged:
     """
     Build parameters.
     
@@ -90,7 +67,7 @@ def v__extract_meica_ortvec_params(
         Parameter dictionary
     """
     params = {
-        "@type": "afni.@extract_meica_ortvec",
+        "@type": "afni/@extract_meica_ortvec",
         "prefix": prefix,
     }
     if meica_dir is not None:
@@ -123,32 +100,32 @@ def v__extract_meica_ortvec_cargs(
     cargs.append("@extract_meica_ortvec")
     cargs.extend([
         "-prefix",
-        params.get("prefix")
+        params.get("prefix", None)
     ])
-    if params.get("meica_dir") is not None:
+    if params.get("meica_dir", None) is not None:
         cargs.extend([
             "-meica_dir",
-            params.get("meica_dir")
+            params.get("meica_dir", None)
         ])
-    if params.get("reject_ignored") is not None:
+    if params.get("reject_ignored", None) is not None:
         cargs.extend([
             "-reject_ignored",
-            str(params.get("reject_ignored"))
+            str(params.get("reject_ignored", None))
         ])
-    if params.get("reject_midk") is not None:
+    if params.get("reject_midk", None) is not None:
         cargs.extend([
             "-reject_midk",
-            str(params.get("reject_midk"))
+            str(params.get("reject_midk", None))
         ])
-    if params.get("work_dir") is not None:
+    if params.get("work_dir", None) is not None:
         cargs.extend([
             "-work_dir",
-            params.get("work_dir")
+            params.get("work_dir", None)
         ])
-    if params.get("verbosity") is not None:
+    if params.get("verbosity", None) is not None:
         cargs.extend([
             "-verb",
-            params.get("verbosity")
+            params.get("verbosity", None)
         ])
     return cargs
 
@@ -168,7 +145,7 @@ def v__extract_meica_ortvec_outputs(
     """
     ret = VExtractMeicaOrtvecOutputs(
         root=execution.output_file("."),
-        outfile=execution.output_file(params.get("prefix") + ".1D"),
+        outfile=execution.output_file(params.get("prefix", None) + ".1D"),
     )
     return ret
 
@@ -245,7 +222,6 @@ def v__extract_meica_ortvec(
 
 __all__ = [
     "VExtractMeicaOrtvecOutputs",
-    "VExtractMeicaOrtvecParameters",
     "V__EXTRACT_MEICA_ORTVEC_METADATA",
     "v__extract_meica_ortvec",
     "v__extract_meica_ortvec_execute",

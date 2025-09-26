@@ -14,46 +14,18 @@ V__NP_METADATA = Metadata(
 
 
 VNpParameters = typing.TypedDict('VNpParameters', {
-    "@type": typing.Literal["afni.@np"],
+    "@type": typing.NotRequired[typing.Literal["afni/@np"]],
+    "prefix": str,
+})
+VNpParametersTagged = typing.TypedDict('VNpParametersTagged', {
+    "@type": typing.Literal["afni/@np"],
     "prefix": str,
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "afni.@np": v__np_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "afni.@np": v__np_outputs,
-    }.get(t)
-
-
 class VNpOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `v__np(...)`.
+    Output object returned when calling `VNpParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -63,7 +35,7 @@ class VNpOutputs(typing.NamedTuple):
 
 def v__np_params(
     prefix: str,
-) -> VNpParameters:
+) -> VNpParametersTagged:
     """
     Build parameters.
     
@@ -73,7 +45,7 @@ def v__np_params(
         Parameter dictionary
     """
     params = {
-        "@type": "afni.@np",
+        "@type": "afni/@np",
         "prefix": prefix,
     }
     return params
@@ -94,7 +66,7 @@ def v__np_cargs(
     """
     cargs = []
     cargs.append("@np")
-    cargs.append(params.get("prefix"))
+    cargs.append(params.get("prefix", None))
     return cargs
 
 
@@ -179,7 +151,6 @@ def v__np(
 
 __all__ = [
     "VNpOutputs",
-    "VNpParameters",
     "V__NP_METADATA",
     "v__np",
     "v__np_execute",

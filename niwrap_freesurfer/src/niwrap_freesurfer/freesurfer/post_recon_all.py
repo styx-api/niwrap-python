@@ -14,7 +14,30 @@ POST_RECON_ALL_METADATA = Metadata(
 
 
 PostReconAllParameters = typing.TypedDict('PostReconAllParameters', {
-    "@type": typing.Literal["freesurfer.post-recon-all"],
+    "@type": typing.NotRequired[typing.Literal["freesurfer/post-recon-all"]],
+    "subject": str,
+    "subfields": bool,
+    "no_subfields": bool,
+    "subregions": bool,
+    "no_subregions": bool,
+    "cvs": bool,
+    "no_cvs": bool,
+    "qcache": bool,
+    "no_qcache": bool,
+    "no_sclimbic": bool,
+    "no_hthsu": bool,
+    "no_synthstrip": bool,
+    "no_synthseg": bool,
+    "no_qastats": bool,
+    "no_samseg": bool,
+    "no_xhemi": bool,
+    "no_cos7": bool,
+    "threads": typing.NotRequired[float | None],
+    "force": bool,
+    "exit_on_error": bool,
+})
+PostReconAllParametersTagged = typing.TypedDict('PostReconAllParametersTagged', {
+    "@type": typing.Literal["freesurfer/post-recon-all"],
     "subject": str,
     "subfields": bool,
     "no_subfields": bool,
@@ -38,40 +61,9 @@ PostReconAllParameters = typing.TypedDict('PostReconAllParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "freesurfer.post-recon-all": post_recon_all_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-    }.get(t)
-
-
 class PostReconAllOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `post_recon_all(...)`.
+    Output object returned when calling `PostReconAllParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -98,7 +90,7 @@ def post_recon_all_params(
     threads: float | None = None,
     force: bool = False,
     exit_on_error: bool = False,
-) -> PostReconAllParameters:
+) -> PostReconAllParametersTagged:
     """
     Build parameters.
     
@@ -127,7 +119,7 @@ def post_recon_all_params(
         Parameter dictionary
     """
     params = {
-        "@type": "freesurfer.post-recon-all",
+        "@type": "freesurfer/post-recon-all",
         "subject": subject,
         "subfields": subfields,
         "no_subfields": no_subfields,
@@ -170,48 +162,48 @@ def post_recon_all_cargs(
     cargs.append("post-recon-all")
     cargs.extend([
         "-all",
-        params.get("subject")
+        params.get("subject", None)
     ])
-    if params.get("subfields"):
+    if params.get("subfields", False):
         cargs.append("--subfields")
-    if params.get("no_subfields"):
+    if params.get("no_subfields", False):
         cargs.append("--no-subfields")
-    if params.get("subregions"):
+    if params.get("subregions", False):
         cargs.append("--subregions")
-    if params.get("no_subregions"):
+    if params.get("no_subregions", False):
         cargs.append("--no-subregions")
-    if params.get("cvs"):
+    if params.get("cvs", False):
         cargs.append("--cvs")
-    if params.get("no_cvs"):
+    if params.get("no_cvs", False):
         cargs.append("--no-cvs")
-    if params.get("qcache"):
+    if params.get("qcache", False):
         cargs.append("--qcache")
-    if params.get("no_qcache"):
+    if params.get("no_qcache", False):
         cargs.append("--no-qcache")
-    if params.get("no_sclimbic"):
+    if params.get("no_sclimbic", False):
         cargs.append("--no-sclimbic")
-    if params.get("no_hthsu"):
+    if params.get("no_hthsu", False):
         cargs.append("--no-hthsu")
-    if params.get("no_synthstrip"):
+    if params.get("no_synthstrip", False):
         cargs.append("--no-synthstrip")
-    if params.get("no_synthseg"):
+    if params.get("no_synthseg", False):
         cargs.append("--no-synthseg")
-    if params.get("no_qastats"):
+    if params.get("no_qastats", False):
         cargs.append("--no-qastats")
-    if params.get("no_samseg"):
+    if params.get("no_samseg", False):
         cargs.append("--no-samseg")
-    if params.get("no_xhemi"):
+    if params.get("no_xhemi", False):
         cargs.append("--no-xhemi")
-    if params.get("no_cos7"):
+    if params.get("no_cos7", False):
         cargs.append("--no-cos7")
-    if params.get("threads") is not None:
+    if params.get("threads", None) is not None:
         cargs.extend([
             "--threads",
-            str(params.get("threads"))
+            str(params.get("threads", None))
         ])
-    if params.get("force"):
+    if params.get("force", False):
         cargs.append("--force")
-    if params.get("exit_on_error"):
+    if params.get("exit_on_error", False):
         cargs.append("--exit-on-error")
     return cargs
 
@@ -348,7 +340,6 @@ def post_recon_all(
 __all__ = [
     "POST_RECON_ALL_METADATA",
     "PostReconAllOutputs",
-    "PostReconAllParameters",
     "post_recon_all",
     "post_recon_all_execute",
     "post_recon_all_params",

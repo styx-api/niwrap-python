@@ -14,47 +14,20 @@ FSLPSPEC_METADATA = Metadata(
 
 
 FslpspecParameters = typing.TypedDict('FslpspecParameters', {
-    "@type": typing.Literal["fsl.fslpspec"],
+    "@type": typing.NotRequired[typing.Literal["fsl/fslpspec"]],
+    "infile": InputPathType,
+    "outfile": typing.NotRequired[str | None],
+})
+FslpspecParametersTagged = typing.TypedDict('FslpspecParametersTagged', {
+    "@type": typing.Literal["fsl/fslpspec"],
     "infile": InputPathType,
     "outfile": typing.NotRequired[str | None],
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "fsl.fslpspec": fslpspec_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "fsl.fslpspec": fslpspec_outputs,
-    }.get(t)
-
-
 class FslpspecOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `fslpspec(...)`.
+    Output object returned when calling `FslpspecParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -65,7 +38,7 @@ class FslpspecOutputs(typing.NamedTuple):
 def fslpspec_params(
     infile: InputPathType,
     outfile: str | None = None,
-) -> FslpspecParameters:
+) -> FslpspecParametersTagged:
     """
     Build parameters.
     
@@ -76,7 +49,7 @@ def fslpspec_params(
         Parameter dictionary
     """
     params = {
-        "@type": "fsl.fslpspec",
+        "@type": "fsl/fslpspec",
         "infile": infile,
     }
     if outfile is not None:
@@ -99,9 +72,9 @@ def fslpspec_cargs(
     """
     cargs = []
     cargs.append("fslpspec")
-    cargs.append(execution.input_file(params.get("infile")))
-    if params.get("outfile") is not None:
-        cargs.append(params.get("outfile"))
+    cargs.append(execution.input_file(params.get("infile", None)))
+    if params.get("outfile", None) is not None:
+        cargs.append(params.get("outfile", None))
     return cargs
 
 
@@ -120,7 +93,7 @@ def fslpspec_outputs(
     """
     ret = FslpspecOutputs(
         root=execution.output_file("."),
-        output_pspec=execution.output_file(params.get("outfile")) if (params.get("outfile") is not None) else None,
+        output_pspec=execution.output_file(params.get("outfile", None)) if (params.get("outfile") is not None) else None,
     )
     return ret
 
@@ -184,7 +157,6 @@ def fslpspec(
 __all__ = [
     "FSLPSPEC_METADATA",
     "FslpspecOutputs",
-    "FslpspecParameters",
     "fslpspec",
     "fslpspec_execute",
     "fslpspec_params",

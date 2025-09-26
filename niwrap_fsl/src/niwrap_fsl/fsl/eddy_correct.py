@@ -14,7 +14,14 @@ EDDY_CORRECT_METADATA = Metadata(
 
 
 EddyCorrectParameters = typing.TypedDict('EddyCorrectParameters', {
-    "@type": typing.Literal["fsl.eddy_correct"],
+    "@type": typing.NotRequired[typing.Literal["fsl/eddy_correct"]],
+    "4d_input": InputPathType,
+    "4d_output": str,
+    "reference_no": int,
+    "interp_method": typing.NotRequired[typing.Literal["trilinear", "spline"] | None],
+})
+EddyCorrectParametersTagged = typing.TypedDict('EddyCorrectParametersTagged', {
+    "@type": typing.Literal["fsl/eddy_correct"],
     "4d_input": InputPathType,
     "4d_output": str,
     "reference_no": int,
@@ -22,41 +29,9 @@ EddyCorrectParameters = typing.TypedDict('EddyCorrectParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "fsl.eddy_correct": eddy_correct_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "fsl.eddy_correct": eddy_correct_outputs,
-    }.get(t)
-
-
 class EddyCorrectOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `eddy_correct(...)`.
+    Output object returned when calling `EddyCorrectParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -69,7 +44,7 @@ def eddy_correct_params(
     v_4d_output: str,
     reference_no: int,
     interp_method: typing.Literal["trilinear", "spline"] | None = None,
-) -> EddyCorrectParameters:
+) -> EddyCorrectParametersTagged:
     """
     Build parameters.
     
@@ -82,7 +57,7 @@ def eddy_correct_params(
         Parameter dictionary
     """
     params = {
-        "@type": "fsl.eddy_correct",
+        "@type": "fsl/eddy_correct",
         "4d_input": v_4d_input,
         "4d_output": v_4d_output,
         "reference_no": reference_no,
@@ -107,10 +82,10 @@ def eddy_correct_cargs(
     """
     cargs = []
     cargs.append("eddy_correct")
-    cargs.append(execution.input_file(params.get("4d_input")))
-    cargs.append(params.get("4d_output"))
-    if params.get("interp_method") is not None:
-        cargs.append(str(params.get("reference_no")) + params.get("interp_method"))
+    cargs.append(execution.input_file(params.get("4d_input", None)))
+    cargs.append(params.get("4d_output", None))
+    if params.get("interp_method", None) is not None:
+        cargs.append(str(params.get("reference_no", None)) + params.get("interp_method", None))
     return cargs
 
 
@@ -129,7 +104,7 @@ def eddy_correct_outputs(
     """
     ret = EddyCorrectOutputs(
         root=execution.output_file("."),
-        corrected_4d_output=execution.output_file(params.get("4d_output") + ".nii.gz"),
+        corrected_4d_output=execution.output_file(params.get("4d_output", None) + ".nii.gz"),
     )
     return ret
 
@@ -199,7 +174,6 @@ def eddy_correct(
 __all__ = [
     "EDDY_CORRECT_METADATA",
     "EddyCorrectOutputs",
-    "EddyCorrectParameters",
     "eddy_correct",
     "eddy_correct_execute",
     "eddy_correct_params",

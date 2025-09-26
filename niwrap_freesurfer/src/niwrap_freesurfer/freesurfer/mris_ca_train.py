@@ -14,7 +14,36 @@ MRIS_CA_TRAIN_METADATA = Metadata(
 
 
 MrisCaTrainParameters = typing.TypedDict('MrisCaTrainParameters', {
-    "@type": typing.Literal["freesurfer.mris_ca_train"],
+    "@type": typing.NotRequired[typing.Literal["freesurfer/mris_ca_train"]],
+    "hemi": str,
+    "canonsurf": InputPathType,
+    "annot_file": InputPathType,
+    "subjects": list[str],
+    "output_file": str,
+    "sdir": typing.NotRequired[str | None],
+    "nbrs": typing.NotRequired[float | None],
+    "orig": typing.NotRequired[InputPathType | None],
+    "norm1": bool,
+    "norm2": bool,
+    "norm3": bool,
+    "ic": typing.NotRequired[str | None],
+    "sulc": bool,
+    "sulconly": bool,
+    "a": typing.NotRequired[float | None],
+    "parcellation_table": typing.NotRequired[InputPathType | None],
+    "n": typing.NotRequired[float | None],
+    "verbose": typing.NotRequired[float | None],
+    "debug_vertex": typing.NotRequired[float | None],
+    "gcs_means": typing.NotRequired[str | None],
+    "gcs_priors": typing.NotRequired[str | None],
+    "gcs_diff": typing.NotRequired[str | None],
+    "nfill": typing.NotRequired[float | None],
+    "no_fill": bool,
+    "help": bool,
+    "version": bool,
+})
+MrisCaTrainParametersTagged = typing.TypedDict('MrisCaTrainParametersTagged', {
+    "@type": typing.Literal["freesurfer/mris_ca_train"],
     "hemi": str,
     "canonsurf": InputPathType,
     "annot_file": InputPathType,
@@ -44,41 +73,9 @@ MrisCaTrainParameters = typing.TypedDict('MrisCaTrainParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "freesurfer.mris_ca_train": mris_ca_train_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "freesurfer.mris_ca_train": mris_ca_train_outputs,
-    }.get(t)
-
-
 class MrisCaTrainOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `mris_ca_train(...)`.
+    Output object returned when calling `MrisCaTrainParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -113,7 +110,7 @@ def mris_ca_train_params(
     no_fill: bool = False,
     help_: bool = False,
     version: bool = False,
-) -> MrisCaTrainParameters:
+) -> MrisCaTrainParametersTagged:
     """
     Build parameters.
     
@@ -149,7 +146,7 @@ def mris_ca_train_params(
         Parameter dictionary
     """
     params = {
-        "@type": "freesurfer.mris_ca_train",
+        "@type": "freesurfer/mris_ca_train",
         "hemi": hemi,
         "canonsurf": canonsurf,
         "annot_file": annot_file,
@@ -208,91 +205,91 @@ def mris_ca_train_cargs(
     """
     cargs = []
     cargs.append("mris_ca_train")
-    cargs.append(params.get("hemi"))
-    cargs.append(execution.input_file(params.get("canonsurf")))
-    cargs.append(execution.input_file(params.get("annot_file")))
-    cargs.extend(params.get("subjects"))
-    cargs.append(params.get("output_file"))
-    if params.get("sdir") is not None:
+    cargs.append(params.get("hemi", None))
+    cargs.append(execution.input_file(params.get("canonsurf", None)))
+    cargs.append(execution.input_file(params.get("annot_file", None)))
+    cargs.extend(params.get("subjects", None))
+    cargs.append(params.get("output_file", None))
+    if params.get("sdir", None) is not None:
         cargs.extend([
             "-sdir",
-            params.get("sdir")
+            params.get("sdir", None)
         ])
-    if params.get("nbrs") is not None:
+    if params.get("nbrs", None) is not None:
         cargs.extend([
             "-nbrs",
-            str(params.get("nbrs"))
+            str(params.get("nbrs", None))
         ])
-    if params.get("orig") is not None:
+    if params.get("orig", None) is not None:
         cargs.extend([
             "-orig",
-            execution.input_file(params.get("orig"))
+            execution.input_file(params.get("orig", None))
         ])
-    if params.get("norm1"):
+    if params.get("norm1", False):
         cargs.append("-norm1")
-    if params.get("norm2"):
+    if params.get("norm2", False):
         cargs.append("-norm2")
-    if params.get("norm3"):
+    if params.get("norm3", False):
         cargs.append("-norm3")
-    if params.get("ic") is not None:
+    if params.get("ic", None) is not None:
         cargs.extend([
             "-ic",
-            params.get("ic")
+            params.get("ic", None)
         ])
-    if params.get("sulc"):
+    if params.get("sulc", False):
         cargs.append("-sulc")
-    if params.get("sulconly"):
+    if params.get("sulconly", False):
         cargs.append("-sulconly")
-    if params.get("a") is not None:
+    if params.get("a", None) is not None:
         cargs.extend([
             "-a",
-            str(params.get("a"))
+            str(params.get("a", None))
         ])
-    if params.get("parcellation_table") is not None:
+    if params.get("parcellation_table", None) is not None:
         cargs.extend([
             "-t",
-            execution.input_file(params.get("parcellation_table"))
+            execution.input_file(params.get("parcellation_table", None))
         ])
-    if params.get("n") is not None:
+    if params.get("n", None) is not None:
         cargs.extend([
             "-n",
-            str(params.get("n"))
+            str(params.get("n", None))
         ])
-    if params.get("verbose") is not None:
+    if params.get("verbose", None) is not None:
         cargs.extend([
             "-v",
-            str(params.get("verbose"))
+            str(params.get("verbose", None))
         ])
-    if params.get("debug_vertex") is not None:
+    if params.get("debug_vertex", None) is not None:
         cargs.extend([
             "-debug-vertex",
-            str(params.get("debug_vertex"))
+            str(params.get("debug_vertex", None))
         ])
-    if params.get("gcs_means") is not None:
+    if params.get("gcs_means", None) is not None:
         cargs.extend([
             "-gcs-means",
-            params.get("gcs_means")
+            params.get("gcs_means", None)
         ])
-    if params.get("gcs_priors") is not None:
+    if params.get("gcs_priors", None) is not None:
         cargs.extend([
             "-gcs-priors",
-            params.get("gcs_priors")
+            params.get("gcs_priors", None)
         ])
-    if params.get("gcs_diff") is not None:
+    if params.get("gcs_diff", None) is not None:
         cargs.extend([
             "-gcs-diff",
-            params.get("gcs_diff")
+            params.get("gcs_diff", None)
         ])
-    if params.get("nfill") is not None:
+    if params.get("nfill", None) is not None:
         cargs.extend([
             "-nfill",
-            str(params.get("nfill"))
+            str(params.get("nfill", None))
         ])
-    if params.get("no_fill"):
+    if params.get("no_fill", False):
         cargs.append("-no-fill")
-    if params.get("help"):
+    if params.get("help", False):
         cargs.append("--help")
-    if params.get("version"):
+    if params.get("version", False):
         cargs.append("--version")
     return cargs
 
@@ -312,7 +309,7 @@ def mris_ca_train_outputs(
     """
     ret = MrisCaTrainOutputs(
         root=execution.output_file("."),
-        output_file=execution.output_file(params.get("output_file")),
+        output_file=execution.output_file(params.get("output_file", None)),
     )
     return ret
 
@@ -451,7 +448,6 @@ def mris_ca_train(
 __all__ = [
     "MRIS_CA_TRAIN_METADATA",
     "MrisCaTrainOutputs",
-    "MrisCaTrainParameters",
     "mris_ca_train",
     "mris_ca_train_execute",
     "mris_ca_train_params",

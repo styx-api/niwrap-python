@@ -14,7 +14,51 @@ DCMDJPEG_FS_METADATA = Metadata(
 
 
 DcmdjpegFsParameters = typing.TypedDict('DcmdjpegFsParameters', {
-    "@type": typing.Literal["freesurfer.dcmdjpeg.fs"],
+    "@type": typing.NotRequired[typing.Literal["freesurfer/dcmdjpeg.fs"]],
+    "input_file": InputPathType,
+    "output_file": str,
+    "help": bool,
+    "version": bool,
+    "arguments": bool,
+    "quiet": bool,
+    "verbose": bool,
+    "debug": bool,
+    "log_level": typing.NotRequired[str | None],
+    "log_config": typing.NotRequired[InputPathType | None],
+    "read_file": bool,
+    "read_file_only": bool,
+    "read_dataset": bool,
+    "conv_photometric": bool,
+    "conv_lossy": bool,
+    "conv_guess": bool,
+    "conv_guess_lossy": bool,
+    "conv_always": bool,
+    "conv_never": bool,
+    "planar_auto": bool,
+    "color_by_pixel": bool,
+    "color_by_plane": bool,
+    "uid_default": bool,
+    "uid_always": bool,
+    "workaround_pred6": bool,
+    "workaround_incpl": bool,
+    "write_file": bool,
+    "write_dataset": bool,
+    "write_xfer_little": bool,
+    "write_xfer_big": bool,
+    "write_xfer_implicit": bool,
+    "enable_new_vr": bool,
+    "disable_new_vr": bool,
+    "group_length_recalc": bool,
+    "group_length_create": bool,
+    "group_length_remove": bool,
+    "length_explicit": bool,
+    "length_undefined": bool,
+    "padding_retain": bool,
+    "padding_off": bool,
+    "padding_create": typing.NotRequired[list[float] | None],
+})
+DcmdjpegFsParametersTagged = typing.TypedDict('DcmdjpegFsParametersTagged', {
+    "@type": typing.Literal["freesurfer/dcmdjpeg.fs"],
     "input_file": InputPathType,
     "output_file": str,
     "help": bool,
@@ -59,41 +103,9 @@ DcmdjpegFsParameters = typing.TypedDict('DcmdjpegFsParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "freesurfer.dcmdjpeg.fs": dcmdjpeg_fs_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "freesurfer.dcmdjpeg.fs": dcmdjpeg_fs_outputs,
-    }.get(t)
-
-
 class DcmdjpegFsOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `dcmdjpeg_fs(...)`.
+    Output object returned when calling `DcmdjpegFsParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -143,7 +155,7 @@ def dcmdjpeg_fs_params(
     padding_retain: bool = False,
     padding_off: bool = False,
     padding_create: list[float] | None = None,
-) -> DcmdjpegFsParameters:
+) -> DcmdjpegFsParametersTagged:
     """
     Build parameters.
     
@@ -197,7 +209,7 @@ def dcmdjpeg_fs_params(
         Parameter dictionary
     """
     params = {
-        "@type": "freesurfer.dcmdjpeg.fs",
+        "@type": "freesurfer/dcmdjpeg.fs",
         "input_file": input_file,
         "output_file": output_file,
         "help": help_,
@@ -261,94 +273,94 @@ def dcmdjpeg_fs_cargs(
     """
     cargs = []
     cargs.append("dcmdjpeg.fs")
-    cargs.append(execution.input_file(params.get("input_file")))
-    cargs.append(params.get("output_file"))
-    if params.get("help"):
+    cargs.append(execution.input_file(params.get("input_file", None)))
+    cargs.append(params.get("output_file", None))
+    if params.get("help", False):
         cargs.append("-h")
-    if params.get("version"):
+    if params.get("version", False):
         cargs.append("--version")
-    if params.get("arguments"):
+    if params.get("arguments", False):
         cargs.append("--arguments")
-    if params.get("quiet"):
+    if params.get("quiet", False):
         cargs.append("-q")
-    if params.get("verbose"):
+    if params.get("verbose", False):
         cargs.append("-v")
-    if params.get("debug"):
+    if params.get("debug", False):
         cargs.append("-d")
-    if params.get("log_level") is not None:
+    if params.get("log_level", None) is not None:
         cargs.extend([
             "-ll",
-            params.get("log_level")
+            params.get("log_level", None)
         ])
-    if params.get("log_config") is not None:
+    if params.get("log_config", None) is not None:
         cargs.extend([
             "-lc",
-            execution.input_file(params.get("log_config"))
+            execution.input_file(params.get("log_config", None))
         ])
-    if params.get("read_file"):
+    if params.get("read_file", False):
         cargs.append("+f")
-    if params.get("read_file_only"):
+    if params.get("read_file_only", False):
         cargs.append("+fo")
-    if params.get("read_dataset"):
+    if params.get("read_dataset", False):
         cargs.append("-f")
-    if params.get("conv_photometric"):
+    if params.get("conv_photometric", False):
         cargs.append("+cp")
-    if params.get("conv_lossy"):
+    if params.get("conv_lossy", False):
         cargs.append("+cl")
-    if params.get("conv_guess"):
+    if params.get("conv_guess", False):
         cargs.append("+cg")
-    if params.get("conv_guess_lossy"):
+    if params.get("conv_guess_lossy", False):
         cargs.append("+cgl")
-    if params.get("conv_always"):
+    if params.get("conv_always", False):
         cargs.append("+ca")
-    if params.get("conv_never"):
+    if params.get("conv_never", False):
         cargs.append("+cn")
-    if params.get("planar_auto"):
+    if params.get("planar_auto", False):
         cargs.append("+pa")
-    if params.get("color_by_pixel"):
+    if params.get("color_by_pixel", False):
         cargs.append("+px")
-    if params.get("color_by_plane"):
+    if params.get("color_by_plane", False):
         cargs.append("+pl")
-    if params.get("uid_default"):
+    if params.get("uid_default", False):
         cargs.append("+ud")
-    if params.get("uid_always"):
+    if params.get("uid_always", False):
         cargs.append("+ua")
-    if params.get("workaround_pred6"):
+    if params.get("workaround_pred6", False):
         cargs.append("+w6")
-    if params.get("workaround_incpl"):
+    if params.get("workaround_incpl", False):
         cargs.append("+wi")
-    if params.get("write_file"):
+    if params.get("write_file", False):
         cargs.append("+F")
-    if params.get("write_dataset"):
+    if params.get("write_dataset", False):
         cargs.append("-F")
-    if params.get("write_xfer_little"):
+    if params.get("write_xfer_little", False):
         cargs.append("+te")
-    if params.get("write_xfer_big"):
+    if params.get("write_xfer_big", False):
         cargs.append("+tb")
-    if params.get("write_xfer_implicit"):
+    if params.get("write_xfer_implicit", False):
         cargs.append("+ti")
-    if params.get("enable_new_vr"):
+    if params.get("enable_new_vr", False):
         cargs.append("+u")
-    if params.get("disable_new_vr"):
+    if params.get("disable_new_vr", False):
         cargs.append("-u")
-    if params.get("group_length_recalc"):
+    if params.get("group_length_recalc", False):
         cargs.append("+g=")
-    if params.get("group_length_create"):
+    if params.get("group_length_create", False):
         cargs.append("+g")
-    if params.get("group_length_remove"):
+    if params.get("group_length_remove", False):
         cargs.append("-g")
-    if params.get("length_explicit"):
+    if params.get("length_explicit", False):
         cargs.append("+e")
-    if params.get("length_undefined"):
+    if params.get("length_undefined", False):
         cargs.append("-e")
-    if params.get("padding_retain"):
+    if params.get("padding_retain", False):
         cargs.append("-p=")
-    if params.get("padding_off"):
+    if params.get("padding_off", False):
         cargs.append("-p")
-    if params.get("padding_create") is not None:
+    if params.get("padding_create", None) is not None:
         cargs.extend([
             "+p",
-            *map(str, params.get("padding_create"))
+            *map(str, params.get("padding_create", None))
         ])
     return cargs
 
@@ -368,7 +380,7 @@ def dcmdjpeg_fs_outputs(
     """
     ret = DcmdjpegFsOutputs(
         root=execution.output_file("."),
-        output_file=execution.output_file(params.get("output_file")),
+        output_file=execution.output_file(params.get("output_file", None)),
     )
     return ret
 
@@ -553,7 +565,6 @@ def dcmdjpeg_fs(
 __all__ = [
     "DCMDJPEG_FS_METADATA",
     "DcmdjpegFsOutputs",
-    "DcmdjpegFsParameters",
     "dcmdjpeg_fs",
     "dcmdjpeg_fs_execute",
     "dcmdjpeg_fs_params",

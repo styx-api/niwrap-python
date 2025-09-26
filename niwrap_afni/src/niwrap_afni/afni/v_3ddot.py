@@ -14,7 +14,25 @@ V_3DDOT_METADATA = Metadata(
 
 
 V3ddotParameters = typing.TypedDict('V3ddotParameters', {
-    "@type": typing.Literal["afni.3ddot"],
+    "@type": typing.NotRequired[typing.Literal["afni/3ddot"]],
+    "input_datasets": list[InputPathType],
+    "mask": typing.NotRequired[InputPathType | None],
+    "mrange": typing.NotRequired[list[float] | None],
+    "demean": bool,
+    "docor": bool,
+    "dodot": bool,
+    "docoef": bool,
+    "dosums": bool,
+    "doeta2": bool,
+    "dodice": bool,
+    "show_labels": bool,
+    "upper": bool,
+    "full": bool,
+    "1D": bool,
+    "NIML": bool,
+})
+V3ddotParametersTagged = typing.TypedDict('V3ddotParametersTagged', {
+    "@type": typing.Literal["afni/3ddot"],
     "input_datasets": list[InputPathType],
     "mask": typing.NotRequired[InputPathType | None],
     "mrange": typing.NotRequired[list[float] | None],
@@ -33,41 +51,9 @@ V3ddotParameters = typing.TypedDict('V3ddotParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "afni.3ddot": v_3ddot_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "afni.3ddot": v_3ddot_outputs,
-    }.get(t)
-
-
 class V3ddotOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `v_3ddot(...)`.
+    Output object returned when calling `V3ddotParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -91,7 +77,7 @@ def v_3ddot_params(
     full: bool = False,
     v_1_d: bool = False,
     niml: bool = False,
-) -> V3ddotParameters:
+) -> V3ddotParametersTagged:
     """
     Build parameters.
     
@@ -121,7 +107,7 @@ def v_3ddot_params(
         Parameter dictionary
     """
     params = {
-        "@type": "afni.3ddot",
+        "@type": "afni/3ddot",
         "input_datasets": input_datasets,
         "demean": demean,
         "docor": docor,
@@ -158,40 +144,40 @@ def v_3ddot_cargs(
     """
     cargs = []
     cargs.append("3ddot")
-    cargs.extend([execution.input_file(f) for f in params.get("input_datasets")])
-    if params.get("mask") is not None:
+    cargs.extend([execution.input_file(f) for f in params.get("input_datasets", None)])
+    if params.get("mask", None) is not None:
         cargs.extend([
             "-mask",
-            execution.input_file(params.get("mask"))
+            execution.input_file(params.get("mask", None))
         ])
-    if params.get("mrange") is not None:
+    if params.get("mrange", None) is not None:
         cargs.extend([
             "-mrange",
-            *map(str, params.get("mrange"))
+            *map(str, params.get("mrange", None))
         ])
-    if params.get("demean"):
+    if params.get("demean", False):
         cargs.append("-demean")
-    if params.get("docor"):
+    if params.get("docor", False):
         cargs.append("-docor")
-    if params.get("dodot"):
+    if params.get("dodot", False):
         cargs.append("-dodot")
-    if params.get("docoef"):
+    if params.get("docoef", False):
         cargs.append("-docoef")
-    if params.get("dosums"):
+    if params.get("dosums", False):
         cargs.append("-dosums")
-    if params.get("doeta2"):
+    if params.get("doeta2", False):
         cargs.append("-doeta2")
-    if params.get("dodice"):
+    if params.get("dodice", False):
         cargs.append("-dodice")
-    if params.get("show_labels"):
+    if params.get("show_labels", False):
         cargs.append("-show_labels")
-    if params.get("upper"):
+    if params.get("upper", False):
         cargs.append("-upper")
-    if params.get("full"):
+    if params.get("full", False):
         cargs.append("-full")
-    if params.get("1D"):
+    if params.get("1D", False):
         cargs.append("-1D")
-    if params.get("NIML"):
+    if params.get("NIML", False):
         cargs.append("-NIML")
     return cargs
 
@@ -319,7 +305,6 @@ def v_3ddot(
 
 __all__ = [
     "V3ddotOutputs",
-    "V3ddotParameters",
     "V_3DDOT_METADATA",
     "v_3ddot",
     "v_3ddot_execute",

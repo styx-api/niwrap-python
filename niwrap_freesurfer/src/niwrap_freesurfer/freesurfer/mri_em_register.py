@@ -14,7 +14,66 @@ MRI_EM_REGISTER_METADATA = Metadata(
 
 
 MriEmRegisterParameters = typing.TypedDict('MriEmRegisterParameters', {
-    "@type": typing.Literal["freesurfer.mri_em_register"],
+    "@type": typing.NotRequired[typing.Literal["freesurfer/mri_em_register"]],
+    "input_volume": InputPathType,
+    "template_gca": InputPathType,
+    "output_transform": str,
+    "distance": typing.NotRequired[float | None],
+    "nomap": bool,
+    "flash": bool,
+    "mask": typing.NotRequired[InputPathType | None],
+    "skull": bool,
+    "uns": typing.NotRequired[float | None],
+    "diag": typing.NotRequired[str | None],
+    "debug_voxel": typing.NotRequired[list[float] | None],
+    "debug_label": typing.NotRequired[float | None],
+    "tr": typing.NotRequired[float | None],
+    "te": typing.NotRequired[float | None],
+    "alpha": typing.NotRequired[float | None],
+    "example": typing.NotRequired[list[InputPathType] | None],
+    "samples": typing.NotRequired[str | None],
+    "fsamples": typing.NotRequired[str | None],
+    "nsamples": typing.NotRequired[str | None],
+    "contrast": bool,
+    "flash_parms": typing.NotRequired[InputPathType | None],
+    "transonly": bool,
+    "write_mean": typing.NotRequired[str | None],
+    "prior": typing.NotRequired[float | None],
+    "spacing": typing.NotRequired[float | None],
+    "scales": typing.NotRequired[float | None],
+    "novar": bool,
+    "dt": typing.NotRequired[float | None],
+    "tol": typing.NotRequired[float | None],
+    "center": bool,
+    "noscale": bool,
+    "noiscale": bool,
+    "num_transforms": typing.NotRequired[float | None],
+    "area": typing.NotRequired[float | None],
+    "nlarea": typing.NotRequired[float | None],
+    "levels": typing.NotRequired[float | None],
+    "intensity": typing.NotRequired[float | None],
+    "reduce": typing.NotRequired[float | None],
+    "n_samples": typing.NotRequired[float | None],
+    "norm": typing.NotRequired[str | None],
+    "trans": typing.NotRequired[float | None],
+    "steps": typing.NotRequired[float | None],
+    "long_reg": typing.NotRequired[str | None],
+    "cpfile": typing.NotRequired[InputPathType | None],
+    "translation_vector": typing.NotRequired[list[float] | None],
+    "rotation_vector": typing.NotRequired[list[float] | None],
+    "xform": typing.NotRequired[str | None],
+    "blur": typing.NotRequired[float | None],
+    "diagno": bool,
+    "s": typing.NotRequired[float | None],
+    "max_angle": typing.NotRequired[float | None],
+    "niters": typing.NotRequired[float | None],
+    "write_iters": typing.NotRequired[float | None],
+    "ctl_point_pct": typing.NotRequired[float | None],
+    "momentum": typing.NotRequired[float | None],
+    "threads": typing.NotRequired[float | None],
+})
+MriEmRegisterParametersTagged = typing.TypedDict('MriEmRegisterParametersTagged', {
+    "@type": typing.Literal["freesurfer/mri_em_register"],
     "input_volume": InputPathType,
     "template_gca": InputPathType,
     "output_transform": str,
@@ -74,41 +133,9 @@ MriEmRegisterParameters = typing.TypedDict('MriEmRegisterParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "freesurfer.mri_em_register": mri_em_register_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "freesurfer.mri_em_register": mri_em_register_outputs,
-    }.get(t)
-
-
 class MriEmRegisterOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `mri_em_register(...)`.
+    Output object returned when calling `MriEmRegisterParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -173,7 +200,7 @@ def mri_em_register_params(
     ctl_point_pct: float | None = None,
     momentum: float | None = None,
     threads: float | None = None,
-) -> MriEmRegisterParameters:
+) -> MriEmRegisterParametersTagged:
     """
     Build parameters.
     
@@ -241,7 +268,7 @@ def mri_em_register_params(
         Parameter dictionary
     """
     params = {
-        "@type": "freesurfer.mri_em_register",
+        "@type": "freesurfer/mri_em_register",
         "input_volume": input_volume,
         "template_gca": template_gca,
         "output_transform": output_transform,
@@ -360,243 +387,243 @@ def mri_em_register_cargs(
     """
     cargs = []
     cargs.append("mri_em_register")
-    cargs.append(execution.input_file(params.get("input_volume")))
-    cargs.append(execution.input_file(params.get("template_gca")))
-    cargs.append(params.get("output_transform"))
-    if params.get("distance") is not None:
+    cargs.append(execution.input_file(params.get("input_volume", None)))
+    cargs.append(execution.input_file(params.get("template_gca", None)))
+    cargs.append(params.get("output_transform", None))
+    if params.get("distance", None) is not None:
         cargs.extend([
             "-dist",
-            str(params.get("distance"))
+            str(params.get("distance", None))
         ])
-    if params.get("nomap"):
+    if params.get("nomap", False):
         cargs.append("-nomap")
-    if params.get("flash"):
+    if params.get("flash", False):
         cargs.append("-flash")
-    if params.get("mask") is not None:
+    if params.get("mask", None) is not None:
         cargs.extend([
             "-mask",
-            execution.input_file(params.get("mask"))
+            execution.input_file(params.get("mask", None))
         ])
-    if params.get("skull"):
+    if params.get("skull", False):
         cargs.append("-skull")
-    if params.get("uns") is not None:
+    if params.get("uns", None) is not None:
         cargs.extend([
             "-uns",
-            str(params.get("uns"))
+            str(params.get("uns", None))
         ])
-    if params.get("diag") is not None:
+    if params.get("diag", None) is not None:
         cargs.extend([
             "-diag",
-            params.get("diag")
+            params.get("diag", None)
         ])
-    if params.get("debug_voxel") is not None:
+    if params.get("debug_voxel", None) is not None:
         cargs.extend([
             "-debug_voxel",
-            *map(str, params.get("debug_voxel"))
+            *map(str, params.get("debug_voxel", None))
         ])
-    if params.get("debug_label") is not None:
+    if params.get("debug_label", None) is not None:
         cargs.extend([
             "-debug_label",
-            str(params.get("debug_label"))
+            str(params.get("debug_label", None))
         ])
-    if params.get("tr") is not None:
+    if params.get("tr", None) is not None:
         cargs.extend([
             "-tr",
-            str(params.get("tr"))
+            str(params.get("tr", None))
         ])
-    if params.get("te") is not None:
+    if params.get("te", None) is not None:
         cargs.extend([
             "-te",
-            str(params.get("te"))
+            str(params.get("te", None))
         ])
-    if params.get("alpha") is not None:
+    if params.get("alpha", None) is not None:
         cargs.extend([
             "-alpha",
-            str(params.get("alpha"))
+            str(params.get("alpha", None))
         ])
-    if params.get("example") is not None:
+    if params.get("example", None) is not None:
         cargs.extend([
             "-example",
-            *[execution.input_file(f) for f in params.get("example")]
+            *[execution.input_file(f) for f in params.get("example", None)]
         ])
-    if params.get("samples") is not None:
+    if params.get("samples", None) is not None:
         cargs.extend([
             "-samples",
-            params.get("samples")
+            params.get("samples", None)
         ])
-    if params.get("fsamples") is not None:
+    if params.get("fsamples", None) is not None:
         cargs.extend([
             "-fsamples",
-            params.get("fsamples")
+            params.get("fsamples", None)
         ])
-    if params.get("nsamples") is not None:
+    if params.get("nsamples", None) is not None:
         cargs.extend([
             "-nsamples",
-            params.get("nsamples")
+            params.get("nsamples", None)
         ])
-    if params.get("contrast"):
+    if params.get("contrast", False):
         cargs.append("-contrast")
-    if params.get("flash_parms") is not None:
+    if params.get("flash_parms", None) is not None:
         cargs.extend([
             "-flash_parms",
-            execution.input_file(params.get("flash_parms"))
+            execution.input_file(params.get("flash_parms", None))
         ])
-    if params.get("transonly"):
+    if params.get("transonly", False):
         cargs.append("-transonly")
-    if params.get("write_mean") is not None:
+    if params.get("write_mean", None) is not None:
         cargs.extend([
             "-write_mean",
-            params.get("write_mean")
+            params.get("write_mean", None)
         ])
-    if params.get("prior") is not None:
+    if params.get("prior", None) is not None:
         cargs.extend([
             "-prior",
-            str(params.get("prior"))
+            str(params.get("prior", None))
         ])
-    if params.get("spacing") is not None:
+    if params.get("spacing", None) is not None:
         cargs.extend([
             "-spacing",
-            str(params.get("spacing"))
+            str(params.get("spacing", None))
         ])
-    if params.get("scales") is not None:
+    if params.get("scales", None) is not None:
         cargs.extend([
             "-scales",
-            str(params.get("scales"))
+            str(params.get("scales", None))
         ])
-    if params.get("novar"):
+    if params.get("novar", False):
         cargs.append("-novar")
-    if params.get("dt") is not None:
+    if params.get("dt", None) is not None:
         cargs.extend([
             "-dt",
-            str(params.get("dt"))
+            str(params.get("dt", None))
         ])
-    if params.get("tol") is not None:
+    if params.get("tol", None) is not None:
         cargs.extend([
             "-tol",
-            str(params.get("tol"))
+            str(params.get("tol", None))
         ])
-    if params.get("center"):
+    if params.get("center", False):
         cargs.append("-center")
-    if params.get("noscale"):
+    if params.get("noscale", False):
         cargs.append("-noscale")
-    if params.get("noiscale"):
+    if params.get("noiscale", False):
         cargs.append("-noiscale")
-    if params.get("num_transforms") is not None:
+    if params.get("num_transforms", None) is not None:
         cargs.extend([
             "-num",
-            str(params.get("num_transforms"))
+            str(params.get("num_transforms", None))
         ])
-    if params.get("area") is not None:
+    if params.get("area", None) is not None:
         cargs.extend([
             "-area",
-            str(params.get("area"))
+            str(params.get("area", None))
         ])
-    if params.get("nlarea") is not None:
+    if params.get("nlarea", None) is not None:
         cargs.extend([
             "-nlarea",
-            str(params.get("nlarea"))
+            str(params.get("nlarea", None))
         ])
-    if params.get("levels") is not None:
+    if params.get("levels", None) is not None:
         cargs.extend([
             "-levels",
-            str(params.get("levels"))
+            str(params.get("levels", None))
         ])
-    if params.get("intensity") is not None:
+    if params.get("intensity", None) is not None:
         cargs.extend([
             "-intensity",
-            str(params.get("intensity"))
+            str(params.get("intensity", None))
         ])
-    if params.get("reduce") is not None:
+    if params.get("reduce", None) is not None:
         cargs.extend([
             "-reduce",
-            str(params.get("reduce"))
+            str(params.get("reduce", None))
         ])
-    if params.get("n_samples") is not None:
+    if params.get("n_samples", None) is not None:
         cargs.extend([
             "-nsamples",
-            str(params.get("n_samples"))
+            str(params.get("n_samples", None))
         ])
-    if params.get("norm") is not None:
+    if params.get("norm", None) is not None:
         cargs.extend([
             "-norm",
-            params.get("norm")
+            params.get("norm", None)
         ])
-    if params.get("trans") is not None:
+    if params.get("trans", None) is not None:
         cargs.extend([
             "-trans",
-            str(params.get("trans"))
+            str(params.get("trans", None))
         ])
-    if params.get("steps") is not None:
+    if params.get("steps", None) is not None:
         cargs.extend([
             "-steps",
-            str(params.get("steps"))
+            str(params.get("steps", None))
         ])
-    if params.get("long_reg") is not None:
+    if params.get("long_reg", None) is not None:
         cargs.extend([
             "-l",
-            params.get("long_reg")
+            params.get("long_reg", None)
         ])
-    if params.get("cpfile") is not None:
+    if params.get("cpfile", None) is not None:
         cargs.extend([
             "-f",
-            execution.input_file(params.get("cpfile"))
+            execution.input_file(params.get("cpfile", None))
         ])
-    if params.get("translation_vector") is not None:
+    if params.get("translation_vector", None) is not None:
         cargs.extend([
             "-d",
-            *map(str, params.get("translation_vector"))
+            *map(str, params.get("translation_vector", None))
         ])
-    if params.get("rotation_vector") is not None:
+    if params.get("rotation_vector", None) is not None:
         cargs.extend([
             "-r",
-            *map(str, params.get("rotation_vector"))
+            *map(str, params.get("rotation_vector", None))
         ])
-    if params.get("xform") is not None:
+    if params.get("xform", None) is not None:
         cargs.extend([
             "-t",
-            params.get("xform")
+            params.get("xform", None)
         ])
-    if params.get("blur") is not None:
+    if params.get("blur", None) is not None:
         cargs.extend([
             "-b",
-            str(params.get("blur"))
+            str(params.get("blur", None))
         ])
-    if params.get("diagno"):
+    if params.get("diagno", False):
         cargs.append("-v")
-    if params.get("s") is not None:
+    if params.get("s", None) is not None:
         cargs.extend([
             "-s",
-            str(params.get("s"))
+            str(params.get("s", None))
         ])
-    if params.get("max_angle") is not None:
+    if params.get("max_angle", None) is not None:
         cargs.extend([
             "-max_angle",
-            str(params.get("max_angle"))
+            str(params.get("max_angle", None))
         ])
-    if params.get("niters") is not None:
+    if params.get("niters", None) is not None:
         cargs.extend([
             "-n",
-            str(params.get("niters"))
+            str(params.get("niters", None))
         ])
-    if params.get("write_iters") is not None:
+    if params.get("write_iters", None) is not None:
         cargs.extend([
             "-w",
-            str(params.get("write_iters"))
+            str(params.get("write_iters", None))
         ])
-    if params.get("ctl_point_pct") is not None:
+    if params.get("ctl_point_pct", None) is not None:
         cargs.extend([
             "-p",
-            str(params.get("ctl_point_pct"))
+            str(params.get("ctl_point_pct", None))
         ])
-    if params.get("momentum") is not None:
+    if params.get("momentum", None) is not None:
         cargs.extend([
             "-m",
-            str(params.get("momentum"))
+            str(params.get("momentum", None))
         ])
-    if params.get("threads") is not None:
+    if params.get("threads", None) is not None:
         cargs.extend([
             "-threads",
-            str(params.get("threads"))
+            str(params.get("threads", None))
         ])
     return cargs
 
@@ -616,7 +643,7 @@ def mri_em_register_outputs(
     """
     ret = MriEmRegisterOutputs(
         root=execution.output_file("."),
-        output_transform_file=execution.output_file(params.get("output_transform") + ".lta"),
+        output_transform_file=execution.output_file(params.get("output_transform", None) + ".lta"),
     )
     return ret
 
@@ -845,7 +872,6 @@ def mri_em_register(
 __all__ = [
     "MRI_EM_REGISTER_METADATA",
     "MriEmRegisterOutputs",
-    "MriEmRegisterParameters",
     "mri_em_register",
     "mri_em_register_execute",
     "mri_em_register_params",

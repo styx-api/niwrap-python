@@ -14,7 +14,17 @@ ANTS_N4_BIAS_FIELD_CORRECTION_FS_METADATA = Metadata(
 
 
 AntsN4BiasFieldCorrectionFsParameters = typing.TypedDict('AntsN4BiasFieldCorrectionFsParameters', {
-    "@type": typing.Literal["freesurfer.AntsN4BiasFieldCorrectionFs"],
+    "@type": typing.NotRequired[typing.Literal["freesurfer/AntsN4BiasFieldCorrectionFs"]],
+    "input_file": InputPathType,
+    "output_file": str,
+    "mask_file": typing.NotRequired[InputPathType | None],
+    "shrink_factor": typing.NotRequired[int | None],
+    "iterations": typing.NotRequired[list[float] | None],
+    "output_dtype": typing.NotRequired[str | None],
+    "replace_zeros": typing.NotRequired[str | None],
+})
+AntsN4BiasFieldCorrectionFsParametersTagged = typing.TypedDict('AntsN4BiasFieldCorrectionFsParametersTagged', {
+    "@type": typing.Literal["freesurfer/AntsN4BiasFieldCorrectionFs"],
     "input_file": InputPathType,
     "output_file": str,
     "mask_file": typing.NotRequired[InputPathType | None],
@@ -25,41 +35,9 @@ AntsN4BiasFieldCorrectionFsParameters = typing.TypedDict('AntsN4BiasFieldCorrect
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "freesurfer.AntsN4BiasFieldCorrectionFs": ants_n4_bias_field_correction_fs_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "freesurfer.AntsN4BiasFieldCorrectionFs": ants_n4_bias_field_correction_fs_outputs,
-    }.get(t)
-
-
 class AntsN4BiasFieldCorrectionFsOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `ants_n4_bias_field_correction_fs(...)`.
+    Output object returned when calling `AntsN4BiasFieldCorrectionFsParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -75,7 +53,7 @@ def ants_n4_bias_field_correction_fs_params(
     iterations: list[float] | None = None,
     output_dtype: str | None = None,
     replace_zeros: str | None = None,
-) -> AntsN4BiasFieldCorrectionFsParameters:
+) -> AntsN4BiasFieldCorrectionFsParametersTagged:
     """
     Build parameters.
     
@@ -96,7 +74,7 @@ def ants_n4_bias_field_correction_fs_params(
         Parameter dictionary
     """
     params = {
-        "@type": "freesurfer.AntsN4BiasFieldCorrectionFs",
+        "@type": "freesurfer/AntsN4BiasFieldCorrectionFs",
         "input_file": input_file,
         "output_file": output_file,
     }
@@ -130,36 +108,36 @@ def ants_n4_bias_field_correction_fs_cargs(
     cargs.append("AntsN4BiasFieldCorrectionFs")
     cargs.extend([
         "-i",
-        execution.input_file(params.get("input_file"))
+        execution.input_file(params.get("input_file", None))
     ])
     cargs.extend([
         "-o",
-        params.get("output_file")
+        params.get("output_file", None)
     ])
-    if params.get("mask_file") is not None:
+    if params.get("mask_file", None) is not None:
         cargs.extend([
             "-m",
-            execution.input_file(params.get("mask_file"))
+            execution.input_file(params.get("mask_file", None))
         ])
-    if params.get("shrink_factor") is not None:
+    if params.get("shrink_factor", None) is not None:
         cargs.extend([
             "-s",
-            str(params.get("shrink_factor"))
+            str(params.get("shrink_factor", None))
         ])
-    if params.get("iterations") is not None:
+    if params.get("iterations", None) is not None:
         cargs.extend([
             "-t",
-            *map(str, params.get("iterations"))
+            *map(str, params.get("iterations", None))
         ])
-    if params.get("output_dtype") is not None:
+    if params.get("output_dtype", None) is not None:
         cargs.extend([
             "-d",
-            params.get("output_dtype")
+            params.get("output_dtype", None)
         ])
-    if params.get("replace_zeros") is not None:
+    if params.get("replace_zeros", None) is not None:
         cargs.extend([
             "-r",
-            params.get("replace_zeros")
+            params.get("replace_zeros", None)
         ])
     return cargs
 
@@ -179,7 +157,7 @@ def ants_n4_bias_field_correction_fs_outputs(
     """
     ret = AntsN4BiasFieldCorrectionFsOutputs(
         root=execution.output_file("."),
-        corrected_output_file=execution.output_file(params.get("output_file")),
+        corrected_output_file=execution.output_file(params.get("output_file", None)),
     )
     return ret
 
@@ -267,7 +245,6 @@ def ants_n4_bias_field_correction_fs(
 __all__ = [
     "ANTS_N4_BIAS_FIELD_CORRECTION_FS_METADATA",
     "AntsN4BiasFieldCorrectionFsOutputs",
-    "AntsN4BiasFieldCorrectionFsParameters",
     "ants_n4_bias_field_correction_fs",
     "ants_n4_bias_field_correction_fs_execute",
     "ants_n4_bias_field_correction_fs_params",

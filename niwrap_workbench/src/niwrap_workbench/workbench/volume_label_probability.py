@@ -14,48 +14,22 @@ VOLUME_LABEL_PROBABILITY_METADATA = Metadata(
 
 
 VolumeLabelProbabilityParameters = typing.TypedDict('VolumeLabelProbabilityParameters', {
-    "@type": typing.Literal["workbench.volume-label-probability"],
+    "@type": typing.NotRequired[typing.Literal["workbench/volume-label-probability"]],
+    "label_maps": InputPathType,
+    "probability_out": str,
+    "opt_exclude_unlabeled": bool,
+})
+VolumeLabelProbabilityParametersTagged = typing.TypedDict('VolumeLabelProbabilityParametersTagged', {
+    "@type": typing.Literal["workbench/volume-label-probability"],
     "label_maps": InputPathType,
     "probability_out": str,
     "opt_exclude_unlabeled": bool,
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "workbench.volume-label-probability": volume_label_probability_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "workbench.volume-label-probability": volume_label_probability_outputs,
-    }.get(t)
-
-
 class VolumeLabelProbabilityOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `volume_label_probability(...)`.
+    Output object returned when calling `VolumeLabelProbabilityParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -67,7 +41,7 @@ def volume_label_probability_params(
     label_maps: InputPathType,
     probability_out: str,
     opt_exclude_unlabeled: bool = False,
-) -> VolumeLabelProbabilityParameters:
+) -> VolumeLabelProbabilityParametersTagged:
     """
     Build parameters.
     
@@ -81,7 +55,7 @@ def volume_label_probability_params(
         Parameter dictionary
     """
     params = {
-        "@type": "workbench.volume-label-probability",
+        "@type": "workbench/volume-label-probability",
         "label_maps": label_maps,
         "probability_out": probability_out,
         "opt_exclude_unlabeled": opt_exclude_unlabeled,
@@ -105,9 +79,9 @@ def volume_label_probability_cargs(
     cargs = []
     cargs.append("wb_command")
     cargs.append("-volume-label-probability")
-    cargs.append(execution.input_file(params.get("label_maps")))
-    cargs.append(params.get("probability_out"))
-    if params.get("opt_exclude_unlabeled"):
+    cargs.append(execution.input_file(params.get("label_maps", None)))
+    cargs.append(params.get("probability_out", None))
+    if params.get("opt_exclude_unlabeled", False):
         cargs.append("-exclude-unlabeled")
     return cargs
 
@@ -127,7 +101,7 @@ def volume_label_probability_outputs(
     """
     ret = VolumeLabelProbabilityOutputs(
         root=execution.output_file("."),
-        probability_out=execution.output_file(params.get("probability_out")),
+        probability_out=execution.output_file(params.get("probability_out", None)),
     )
     return ret
 
@@ -204,7 +178,6 @@ def volume_label_probability(
 __all__ = [
     "VOLUME_LABEL_PROBABILITY_METADATA",
     "VolumeLabelProbabilityOutputs",
-    "VolumeLabelProbabilityParameters",
     "volume_label_probability",
     "volume_label_probability_execute",
     "volume_label_probability_params",

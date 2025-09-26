@@ -14,7 +14,18 @@ MRIS_COMPUTE_OVERLAP_METADATA = Metadata(
 
 
 MrisComputeOverlapParameters = typing.TypedDict('MrisComputeOverlapParameters', {
-    "@type": typing.Literal["freesurfer.mris_compute_overlap"],
+    "@type": typing.NotRequired[typing.Literal["freesurfer/mris_compute_overlap"]],
+    "subject": str,
+    "hemi": str,
+    "surface": str,
+    "annotation": str,
+    "labels": list[str],
+    "percentage": bool,
+    "log_file": typing.NotRequired[str | None],
+    "brain_volume": typing.NotRequired[InputPathType | None],
+})
+MrisComputeOverlapParametersTagged = typing.TypedDict('MrisComputeOverlapParametersTagged', {
+    "@type": typing.Literal["freesurfer/mris_compute_overlap"],
     "subject": str,
     "hemi": str,
     "surface": str,
@@ -26,40 +37,9 @@ MrisComputeOverlapParameters = typing.TypedDict('MrisComputeOverlapParameters', 
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "freesurfer.mris_compute_overlap": mris_compute_overlap_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-    }.get(t)
-
-
 class MrisComputeOverlapOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `mris_compute_overlap(...)`.
+    Output object returned when calling `MrisComputeOverlapParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -74,7 +54,7 @@ def mris_compute_overlap_params(
     percentage: bool = False,
     log_file: str | None = None,
     brain_volume: InputPathType | None = None,
-) -> MrisComputeOverlapParameters:
+) -> MrisComputeOverlapParametersTagged:
     """
     Build parameters.
     
@@ -91,7 +71,7 @@ def mris_compute_overlap_params(
         Parameter dictionary
     """
     params = {
-        "@type": "freesurfer.mris_compute_overlap",
+        "@type": "freesurfer/mris_compute_overlap",
         "subject": subject,
         "hemi": hemi,
         "surface": surface,
@@ -121,22 +101,22 @@ def mris_compute_overlap_cargs(
     """
     cargs = []
     cargs.append("mris_compute_overlap")
-    cargs.append(params.get("subject"))
-    cargs.append(params.get("hemi"))
-    cargs.append(params.get("surface"))
-    cargs.append(params.get("annotation"))
-    cargs.extend(params.get("labels"))
-    if params.get("percentage"):
+    cargs.append(params.get("subject", None))
+    cargs.append(params.get("hemi", None))
+    cargs.append(params.get("surface", None))
+    cargs.append(params.get("annotation", None))
+    cargs.extend(params.get("labels", None))
+    if params.get("percentage", False):
         cargs.append("-p")
-    if params.get("log_file") is not None:
+    if params.get("log_file", None) is not None:
         cargs.extend([
             "-l",
-            params.get("log_file")
+            params.get("log_file", None)
         ])
-    if params.get("brain_volume") is not None:
+    if params.get("brain_volume", None) is not None:
         cargs.extend([
             "-b",
-            execution.input_file(params.get("brain_volume"))
+            execution.input_file(params.get("brain_volume", None))
         ])
     return cargs
 
@@ -239,7 +219,6 @@ def mris_compute_overlap(
 __all__ = [
     "MRIS_COMPUTE_OVERLAP_METADATA",
     "MrisComputeOverlapOutputs",
-    "MrisComputeOverlapParameters",
     "mris_compute_overlap",
     "mris_compute_overlap_execute",
     "mris_compute_overlap_params",

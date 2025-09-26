@@ -14,7 +14,16 @@ RESAMPLE_IMAGE_METADATA = Metadata(
 
 
 ResampleImageParameters = typing.TypedDict('ResampleImageParameters', {
-    "@type": typing.Literal["ants.ResampleImage"],
+    "@type": typing.NotRequired[typing.Literal["ants/ResampleImage"]],
+    "image_dimension": int,
+    "input_image": InputPathType,
+    "output_image": str,
+    "size_spacing": str,
+    "interpolate_type": typing.NotRequired[typing.Literal["0", "1", "2", "3", "4"] | None],
+    "pixeltype": typing.NotRequired[typing.Literal["0", "1", "2", "3", "4", "5", "6", "7"] | None],
+})
+ResampleImageParametersTagged = typing.TypedDict('ResampleImageParametersTagged', {
+    "@type": typing.Literal["ants/ResampleImage"],
     "image_dimension": int,
     "input_image": InputPathType,
     "output_image": str,
@@ -24,41 +33,9 @@ ResampleImageParameters = typing.TypedDict('ResampleImageParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "ants.ResampleImage": resample_image_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "ants.ResampleImage": resample_image_outputs,
-    }.get(t)
-
-
 class ResampleImageOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `resample_image(...)`.
+    Output object returned when calling `ResampleImageParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -73,7 +50,7 @@ def resample_image_params(
     size_spacing: str,
     interpolate_type: typing.Literal["0", "1", "2", "3", "4"] | None = None,
     pixeltype: typing.Literal["0", "1", "2", "3", "4", "5", "6", "7"] | None = None,
-) -> ResampleImageParameters:
+) -> ResampleImageParametersTagged:
     """
     Build parameters.
     
@@ -92,7 +69,7 @@ def resample_image_params(
         Parameter dictionary
     """
     params = {
-        "@type": "ants.ResampleImage",
+        "@type": "ants/ResampleImage",
         "image_dimension": image_dimension,
         "input_image": input_image,
         "output_image": output_image,
@@ -120,14 +97,14 @@ def resample_image_cargs(
     """
     cargs = []
     cargs.append("ResampleImage")
-    cargs.append(str(params.get("image_dimension")))
-    cargs.append(execution.input_file(params.get("input_image")))
-    cargs.append(params.get("output_image"))
-    cargs.append(params.get("size_spacing"))
-    if params.get("interpolate_type") is not None:
-        cargs.append(params.get("interpolate_type"))
-    if params.get("pixeltype") is not None:
-        cargs.append(params.get("pixeltype"))
+    cargs.append(str(params.get("image_dimension", None)))
+    cargs.append(execution.input_file(params.get("input_image", None)))
+    cargs.append(params.get("output_image", None))
+    cargs.append(params.get("size_spacing", None))
+    if params.get("interpolate_type", None) is not None:
+        cargs.append(params.get("interpolate_type", None))
+    if params.get("pixeltype", None) is not None:
+        cargs.append(params.get("pixeltype", None))
     return cargs
 
 
@@ -146,7 +123,7 @@ def resample_image_outputs(
     """
     ret = ResampleImageOutputs(
         root=execution.output_file("."),
-        resampled_output_image=execution.output_file(params.get("output_image")),
+        resampled_output_image=execution.output_file(params.get("output_image", None)),
     )
     return ret
 
@@ -228,7 +205,6 @@ def resample_image(
 __all__ = [
     "RESAMPLE_IMAGE_METADATA",
     "ResampleImageOutputs",
-    "ResampleImageParameters",
     "resample_image",
     "resample_image_execute",
     "resample_image_params",

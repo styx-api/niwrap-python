@@ -14,7 +14,16 @@ WARP_TIME_SERIES_IMAGE_MULTI_TRANSFORM_METADATA = Metadata(
 
 
 WarpTimeSeriesImageMultiTransformParameters = typing.TypedDict('WarpTimeSeriesImageMultiTransformParameters', {
-    "@type": typing.Literal["ants.WarpTimeSeriesImageMultiTransform"],
+    "@type": typing.NotRequired[typing.Literal["ants/WarpTimeSeriesImageMultiTransform"]],
+    "image_dimension": typing.Literal[3, 4],
+    "moving_image": InputPathType,
+    "output_image": str,
+    "reference_image": InputPathType,
+    "transforms": list[str],
+    "interpolation": typing.NotRequired[typing.Literal["NearestNeighbor", "BSpline"] | None],
+})
+WarpTimeSeriesImageMultiTransformParametersTagged = typing.TypedDict('WarpTimeSeriesImageMultiTransformParametersTagged', {
+    "@type": typing.Literal["ants/WarpTimeSeriesImageMultiTransform"],
     "image_dimension": typing.Literal[3, 4],
     "moving_image": InputPathType,
     "output_image": str,
@@ -24,41 +33,9 @@ WarpTimeSeriesImageMultiTransformParameters = typing.TypedDict('WarpTimeSeriesIm
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "ants.WarpTimeSeriesImageMultiTransform": warp_time_series_image_multi_transform_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "ants.WarpTimeSeriesImageMultiTransform": warp_time_series_image_multi_transform_outputs,
-    }.get(t)
-
-
 class WarpTimeSeriesImageMultiTransformOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `warp_time_series_image_multi_transform(...)`.
+    Output object returned when calling `WarpTimeSeriesImageMultiTransformParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -73,7 +50,7 @@ def warp_time_series_image_multi_transform_params(
     reference_image: InputPathType,
     transforms: list[str],
     interpolation: typing.Literal["NearestNeighbor", "BSpline"] | None = None,
-) -> WarpTimeSeriesImageMultiTransformParameters:
+) -> WarpTimeSeriesImageMultiTransformParametersTagged:
     """
     Build parameters.
     
@@ -93,7 +70,7 @@ def warp_time_series_image_multi_transform_params(
         Parameter dictionary
     """
     params = {
-        "@type": "ants.WarpTimeSeriesImageMultiTransform",
+        "@type": "ants/WarpTimeSeriesImageMultiTransform",
         "image_dimension": image_dimension,
         "moving_image": moving_image,
         "output_image": output_image,
@@ -120,16 +97,16 @@ def warp_time_series_image_multi_transform_cargs(
     """
     cargs = []
     cargs.append("WarpTimeSeriesImageMultiTransform")
-    cargs.append(str(params.get("image_dimension")))
-    cargs.append(execution.input_file(params.get("moving_image")))
-    cargs.append(params.get("output_image"))
+    cargs.append(str(params.get("image_dimension", None)))
+    cargs.append(execution.input_file(params.get("moving_image", None)))
+    cargs.append(params.get("output_image", None))
     cargs.extend([
         "-R",
-        execution.input_file(params.get("reference_image"))
+        execution.input_file(params.get("reference_image", None))
     ])
-    cargs.extend(params.get("transforms"))
-    if params.get("interpolation") is not None:
-        cargs.append(params.get("interpolation"))
+    cargs.extend(params.get("transforms", None))
+    if params.get("interpolation", None) is not None:
+        cargs.append(params.get("interpolation", None))
     return cargs
 
 
@@ -148,7 +125,7 @@ def warp_time_series_image_multi_transform_outputs(
     """
     ret = WarpTimeSeriesImageMultiTransformOutputs(
         root=execution.output_file("."),
-        output_image_result=execution.output_file(params.get("output_image")),
+        output_image_result=execution.output_file(params.get("output_image", None)),
     )
     return ret
 
@@ -233,7 +210,6 @@ def warp_time_series_image_multi_transform(
 __all__ = [
     "WARP_TIME_SERIES_IMAGE_MULTI_TRANSFORM_METADATA",
     "WarpTimeSeriesImageMultiTransformOutputs",
-    "WarpTimeSeriesImageMultiTransformParameters",
     "warp_time_series_image_multi_transform",
     "warp_time_series_image_multi_transform_execute",
     "warp_time_series_image_multi_transform_params",

@@ -14,45 +14,18 @@ BUILD_DESIKAN_KILLIANY_GCS_CSH_METADATA = Metadata(
 
 
 BuildDesikanKillianyGcsCshParameters = typing.TypedDict('BuildDesikanKillianyGcsCshParameters', {
-    "@type": typing.Literal["freesurfer.build_desikan_killiany_gcs.csh"],
+    "@type": typing.NotRequired[typing.Literal["freesurfer/build_desikan_killiany_gcs.csh"]],
+    "hemi": str,
+})
+BuildDesikanKillianyGcsCshParametersTagged = typing.TypedDict('BuildDesikanKillianyGcsCshParametersTagged', {
+    "@type": typing.Literal["freesurfer/build_desikan_killiany_gcs.csh"],
     "hemi": str,
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "freesurfer.build_desikan_killiany_gcs.csh": build_desikan_killiany_gcs_csh_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-    }.get(t)
-
-
 class BuildDesikanKillianyGcsCshOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `build_desikan_killiany_gcs_csh(...)`.
+    Output object returned when calling `BuildDesikanKillianyGcsCshParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -60,7 +33,7 @@ class BuildDesikanKillianyGcsCshOutputs(typing.NamedTuple):
 
 def build_desikan_killiany_gcs_csh_params(
     hemi: str,
-) -> BuildDesikanKillianyGcsCshParameters:
+) -> BuildDesikanKillianyGcsCshParametersTagged:
     """
     Build parameters.
     
@@ -71,7 +44,7 @@ def build_desikan_killiany_gcs_csh_params(
         Parameter dictionary
     """
     params = {
-        "@type": "freesurfer.build_desikan_killiany_gcs.csh",
+        "@type": "freesurfer/build_desikan_killiany_gcs.csh",
         "hemi": hemi,
     }
     return params
@@ -92,7 +65,7 @@ def build_desikan_killiany_gcs_csh_cargs(
     """
     cargs = []
     cargs.append("build_desikan_killiany_gcs.csh")
-    cargs.append(params.get("hemi"))
+    cargs.append(params.get("hemi", None))
     return cargs
 
 
@@ -172,7 +145,6 @@ def build_desikan_killiany_gcs_csh(
 __all__ = [
     "BUILD_DESIKAN_KILLIANY_GCS_CSH_METADATA",
     "BuildDesikanKillianyGcsCshOutputs",
-    "BuildDesikanKillianyGcsCshParameters",
     "build_desikan_killiany_gcs_csh",
     "build_desikan_killiany_gcs_csh_execute",
     "build_desikan_killiany_gcs_csh_params",

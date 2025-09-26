@@ -14,7 +14,33 @@ MRIS_APPLY_REG_METADATA = Metadata(
 
 
 MrisApplyRegParameters = typing.TypedDict('MrisApplyRegParameters', {
-    "@type": typing.Literal["freesurfer.mris_apply_reg"],
+    "@type": typing.NotRequired[typing.Literal["freesurfer/mris_apply_reg"]],
+    "src_input": InputPathType,
+    "trg_output": str,
+    "streg_pair": str,
+    "src_label": typing.NotRequired[InputPathType | None],
+    "src_annotation": typing.NotRequired[InputPathType | None],
+    "src_xyz": typing.NotRequired[InputPathType | None],
+    "jacobian": bool,
+    "no_reverse": bool,
+    "rand_noise": bool,
+    "replace_ones": bool,
+    "center_output": bool,
+    "curv_format": bool,
+    "lta_transform": typing.NotRequired[str | None],
+    "lta_patch_transform": typing.NotRequired[str | None],
+    "reverse_surface": typing.NotRequired[str | None],
+    "patch_apply": typing.NotRequired[str | None],
+    "save_vertex_pair": typing.NotRequired[InputPathType | None],
+    "m3z_transform": typing.NotRequired[str | None],
+    "inv_m3z_transform": typing.NotRequired[str | None],
+    "src_reg_scale": typing.NotRequired[float | None],
+    "trg_reg_scale": typing.NotRequired[float | None],
+    "debug_mode": bool,
+    "check_options": bool,
+})
+MrisApplyRegParametersTagged = typing.TypedDict('MrisApplyRegParametersTagged', {
+    "@type": typing.Literal["freesurfer/mris_apply_reg"],
     "src_input": InputPathType,
     "trg_output": str,
     "streg_pair": str,
@@ -41,41 +67,9 @@ MrisApplyRegParameters = typing.TypedDict('MrisApplyRegParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "freesurfer.mris_apply_reg": mris_apply_reg_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "freesurfer.mris_apply_reg": mris_apply_reg_outputs,
-    }.get(t)
-
-
 class MrisApplyRegOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `mris_apply_reg(...)`.
+    Output object returned when calling `MrisApplyRegParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -107,7 +101,7 @@ def mris_apply_reg_params(
     trg_reg_scale: float | None = None,
     debug_mode: bool = False,
     check_options: bool = False,
-) -> MrisApplyRegParameters:
+) -> MrisApplyRegParametersTagged:
     """
     Build parameters.
     
@@ -139,7 +133,7 @@ def mris_apply_reg_params(
         Parameter dictionary
     """
     params = {
-        "@type": "freesurfer.mris_apply_reg",
+        "@type": "freesurfer/mris_apply_reg",
         "src_input": src_input,
         "trg_output": trg_output,
         "streg_pair": streg_pair,
@@ -196,91 +190,91 @@ def mris_apply_reg_cargs(
     cargs.append("mris_apply_reg")
     cargs.extend([
         "--src",
-        execution.input_file(params.get("src_input"))
+        execution.input_file(params.get("src_input", None))
     ])
     cargs.extend([
         "--trg",
-        params.get("trg_output")
+        params.get("trg_output", None)
     ])
     cargs.extend([
         "--streg",
-        params.get("streg_pair")
+        params.get("streg_pair", None)
     ])
-    if params.get("src_label") is not None:
+    if params.get("src_label", None) is not None:
         cargs.extend([
             "--src-label",
-            execution.input_file(params.get("src_label"))
+            execution.input_file(params.get("src_label", None))
         ])
-    if params.get("src_annotation") is not None:
+    if params.get("src_annotation", None) is not None:
         cargs.extend([
             "--src-annot",
-            execution.input_file(params.get("src_annotation"))
+            execution.input_file(params.get("src_annotation", None))
         ])
-    if params.get("src_xyz") is not None:
+    if params.get("src_xyz", None) is not None:
         cargs.extend([
             "--src-xyz",
-            execution.input_file(params.get("src_xyz"))
+            execution.input_file(params.get("src_xyz", None))
         ])
-    if params.get("jacobian"):
+    if params.get("jacobian", False):
         cargs.append("--jac")
-    if params.get("no_reverse"):
+    if params.get("no_reverse", False):
         cargs.append("--no-rev")
-    if params.get("rand_noise"):
+    if params.get("rand_noise", False):
         cargs.append("--randn")
-    if params.get("replace_ones"):
+    if params.get("replace_ones", False):
         cargs.append("--ones")
-    if params.get("center_output"):
+    if params.get("center_output", False):
         cargs.append("--center")
-    if params.get("curv_format"):
+    if params.get("curv_format", False):
         cargs.append("--curv")
-    if params.get("lta_transform") is not None:
+    if params.get("lta_transform", None) is not None:
         cargs.extend([
             "--lta",
-            params.get("lta_transform")
+            params.get("lta_transform", None)
         ])
-    if params.get("lta_patch_transform") is not None:
+    if params.get("lta_patch_transform", None) is not None:
         cargs.extend([
             "--lta-patch",
-            params.get("lta_patch_transform")
+            params.get("lta_patch_transform", None)
         ])
-    if params.get("reverse_surface") is not None:
+    if params.get("reverse_surface", None) is not None:
         cargs.extend([
             "--reverse",
-            params.get("reverse_surface")
+            params.get("reverse_surface", None)
         ])
-    if params.get("patch_apply") is not None:
+    if params.get("patch_apply", None) is not None:
         cargs.extend([
             "--patch",
-            params.get("patch_apply")
+            params.get("patch_apply", None)
         ])
-    if params.get("save_vertex_pair") is not None:
+    if params.get("save_vertex_pair", None) is not None:
         cargs.extend([
             "--stvpair",
-            execution.input_file(params.get("save_vertex_pair"))
+            execution.input_file(params.get("save_vertex_pair", None))
         ])
-    if params.get("m3z_transform") is not None:
+    if params.get("m3z_transform", None) is not None:
         cargs.extend([
             "--m3z",
-            params.get("m3z_transform")
+            params.get("m3z_transform", None)
         ])
-    if params.get("inv_m3z_transform") is not None:
+    if params.get("inv_m3z_transform", None) is not None:
         cargs.extend([
             "--inv-m3z",
-            params.get("inv_m3z_transform")
+            params.get("inv_m3z_transform", None)
         ])
-    if params.get("src_reg_scale") is not None:
+    if params.get("src_reg_scale", None) is not None:
         cargs.extend([
             "--src-reg-scale",
-            str(params.get("src_reg_scale"))
+            str(params.get("src_reg_scale", None))
         ])
-    if params.get("trg_reg_scale") is not None:
+    if params.get("trg_reg_scale", None) is not None:
         cargs.extend([
             "--trg-reg-scale",
-            str(params.get("trg_reg_scale"))
+            str(params.get("trg_reg_scale", None))
         ])
-    if params.get("debug_mode"):
+    if params.get("debug_mode", False):
         cargs.append("--debug")
-    if params.get("check_options"):
+    if params.get("check_options", False):
         cargs.append("--checkopts")
     return cargs
 
@@ -300,7 +294,7 @@ def mris_apply_reg_outputs(
     """
     ret = MrisApplyRegOutputs(
         root=execution.output_file("."),
-        output_result=execution.output_file(params.get("trg_output")),
+        output_result=execution.output_file(params.get("trg_output", None)),
     )
     return ret
 
@@ -427,7 +421,6 @@ def mris_apply_reg(
 __all__ = [
     "MRIS_APPLY_REG_METADATA",
     "MrisApplyRegOutputs",
-    "MrisApplyRegParameters",
     "mris_apply_reg",
     "mris_apply_reg_execute",
     "mris_apply_reg_params",

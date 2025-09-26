@@ -14,7 +14,20 @@ REG_RESAMPLE_METADATA = Metadata(
 
 
 RegResampleParameters = typing.TypedDict('RegResampleParameters', {
-    "@type": typing.Literal["niftyreg.reg_resample"],
+    "@type": typing.NotRequired[typing.Literal["niftyreg/reg_resample"]],
+    "reference_image": InputPathType,
+    "floating_image": InputPathType,
+    "affine_transform": typing.NotRequired[InputPathType | None],
+    "flirt_affine_transform": typing.NotRequired[InputPathType | None],
+    "control_point_grid": typing.NotRequired[InputPathType | None],
+    "deformation_field": typing.NotRequired[InputPathType | None],
+    "resampled_image": typing.NotRequired[str | None],
+    "resampled_blank": typing.NotRequired[str | None],
+    "nearest_neighbor": bool,
+    "linear_interpolation": bool,
+})
+RegResampleParametersTagged = typing.TypedDict('RegResampleParametersTagged', {
+    "@type": typing.Literal["niftyreg/reg_resample"],
     "reference_image": InputPathType,
     "floating_image": InputPathType,
     "affine_transform": typing.NotRequired[InputPathType | None],
@@ -28,41 +41,9 @@ RegResampleParameters = typing.TypedDict('RegResampleParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "niftyreg.reg_resample": reg_resample_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "niftyreg.reg_resample": reg_resample_outputs,
-    }.get(t)
-
-
 class RegResampleOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `reg_resample(...)`.
+    Output object returned when calling `RegResampleParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -83,7 +64,7 @@ def reg_resample_params(
     resampled_blank: str | None = None,
     nearest_neighbor: bool = False,
     linear_interpolation: bool = False,
-) -> RegResampleParameters:
+) -> RegResampleParametersTagged:
     """
     Build parameters.
     
@@ -108,7 +89,7 @@ def reg_resample_params(
         Parameter dictionary
     """
     params = {
-        "@type": "niftyreg.reg_resample",
+        "@type": "niftyreg/reg_resample",
         "reference_image": reference_image,
         "floating_image": floating_image,
         "nearest_neighbor": nearest_neighbor,
@@ -146,45 +127,45 @@ def reg_resample_cargs(
     cargs.append("reg_resample")
     cargs.extend([
         "-ref",
-        execution.input_file(params.get("reference_image"))
+        execution.input_file(params.get("reference_image", None))
     ])
     cargs.extend([
         "-flo",
-        execution.input_file(params.get("floating_image"))
+        execution.input_file(params.get("floating_image", None))
     ])
-    if params.get("affine_transform") is not None:
+    if params.get("affine_transform", None) is not None:
         cargs.extend([
             "-aff",
-            execution.input_file(params.get("affine_transform"))
+            execution.input_file(params.get("affine_transform", None))
         ])
-    if params.get("flirt_affine_transform") is not None:
+    if params.get("flirt_affine_transform", None) is not None:
         cargs.extend([
             "-affFlirt",
-            execution.input_file(params.get("flirt_affine_transform"))
+            execution.input_file(params.get("flirt_affine_transform", None))
         ])
-    if params.get("control_point_grid") is not None:
+    if params.get("control_point_grid", None) is not None:
         cargs.extend([
             "-cpp",
-            execution.input_file(params.get("control_point_grid"))
+            execution.input_file(params.get("control_point_grid", None))
         ])
-    if params.get("deformation_field") is not None:
+    if params.get("deformation_field", None) is not None:
         cargs.extend([
             "-def",
-            execution.input_file(params.get("deformation_field"))
+            execution.input_file(params.get("deformation_field", None))
         ])
-    if params.get("resampled_image") is not None:
+    if params.get("resampled_image", None) is not None:
         cargs.extend([
             "-res",
-            params.get("resampled_image")
+            params.get("resampled_image", None)
         ])
-    if params.get("resampled_blank") is not None:
+    if params.get("resampled_blank", None) is not None:
         cargs.extend([
             "-blank",
-            params.get("resampled_blank")
+            params.get("resampled_blank", None)
         ])
-    if params.get("nearest_neighbor"):
+    if params.get("nearest_neighbor", False):
         cargs.append("-NN")
-    if params.get("linear_interpolation"):
+    if params.get("linear_interpolation", False):
         cargs.append("-LIN")
     return cargs
 
@@ -204,8 +185,8 @@ def reg_resample_outputs(
     """
     ret = RegResampleOutputs(
         root=execution.output_file("."),
-        output_resampled_image=execution.output_file(params.get("resampled_image")) if (params.get("resampled_image") is not None) else None,
-        output_resampled_blank=execution.output_file(params.get("resampled_blank")) if (params.get("resampled_blank") is not None) else None,
+        output_resampled_image=execution.output_file(params.get("resampled_image", None)) if (params.get("resampled_image") is not None) else None,
+        output_resampled_blank=execution.output_file(params.get("resampled_blank", None)) if (params.get("resampled_blank") is not None) else None,
     )
     return ret
 
@@ -301,7 +282,6 @@ def reg_resample(
 __all__ = [
     "REG_RESAMPLE_METADATA",
     "RegResampleOutputs",
-    "RegResampleParameters",
     "reg_resample",
     "reg_resample_execute",
     "reg_resample_params",

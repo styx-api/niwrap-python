@@ -14,7 +14,39 @@ MRI_GLMFIT_SIM_METADATA = Metadata(
 
 
 MriGlmfitSimParameters = typing.TypedDict('MriGlmfitSimParameters', {
-    "@type": typing.Literal["freesurfer.mri_glmfit-sim"],
+    "@type": typing.NotRequired[typing.Literal["freesurfer/mri_glmfit-sim"]],
+    "glmdir": str,
+    "cwp": typing.NotRequired[float | None],
+    "mczsim": typing.NotRequired[str | None],
+    "mczsim_dir": typing.NotRequired[str | None],
+    "mczsim_label": typing.NotRequired[str | None],
+    "perm": typing.NotRequired[str | None],
+    "perm_resid": bool,
+    "perm_signflip": bool,
+    "grf": typing.NotRequired[str | None],
+    "spaces_2": bool,
+    "spaces_3": bool,
+    "overwrite": bool,
+    "bg": typing.NotRequired[float | None],
+    "sleep": typing.NotRequired[float | None],
+    "a2009s": bool,
+    "annot": typing.NotRequired[str | None],
+    "log": typing.NotRequired[str | None],
+    "base": typing.NotRequired[str | None],
+    "no_sim": typing.NotRequired[str | None],
+    "seed": typing.NotRequired[float | None],
+    "fwhm_override": typing.NotRequired[float | None],
+    "fwhm_add": typing.NotRequired[float | None],
+    "uniform": typing.NotRequired[list[float] | None],
+    "no_out_annot": bool,
+    "no_cluster_mean": bool,
+    "y_file": typing.NotRequired[InputPathType | None],
+    "centroid": bool,
+    "spatial_sum": bool,
+    "help": bool,
+})
+MriGlmfitSimParametersTagged = typing.TypedDict('MriGlmfitSimParametersTagged', {
+    "@type": typing.Literal["freesurfer/mri_glmfit-sim"],
     "glmdir": str,
     "cwp": typing.NotRequired[float | None],
     "mczsim": typing.NotRequired[str | None],
@@ -47,41 +79,9 @@ MriGlmfitSimParameters = typing.TypedDict('MriGlmfitSimParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "freesurfer.mri_glmfit-sim": mri_glmfit_sim_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "freesurfer.mri_glmfit-sim": mri_glmfit_sim_outputs,
-    }.get(t)
-
-
 class MriGlmfitSimOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `mri_glmfit_sim(...)`.
+    Output object returned when calling `MriGlmfitSimParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -131,7 +131,7 @@ def mri_glmfit_sim_params(
     centroid: bool = False,
     spatial_sum: bool = False,
     help_: bool = False,
-) -> MriGlmfitSimParameters:
+) -> MriGlmfitSimParametersTagged:
     """
     Build parameters.
     
@@ -177,7 +177,7 @@ def mri_glmfit_sim_params(
         Parameter dictionary
     """
     params = {
-        "@type": "freesurfer.mri_glmfit-sim",
+        "@type": "freesurfer/mri_glmfit-sim",
         "glmdir": glmdir,
         "perm_resid": perm_resid,
         "perm_signflip": perm_signflip,
@@ -245,114 +245,114 @@ def mri_glmfit_sim_cargs(
     cargs.append("mri_glmfit-sim")
     cargs.extend([
         "--glmdir",
-        params.get("glmdir")
+        params.get("glmdir", None)
     ])
-    if params.get("cwp") is not None:
+    if params.get("cwp", None) is not None:
         cargs.extend([
             "--cwp",
-            str(params.get("cwp"))
+            str(params.get("cwp", None))
         ])
-    if params.get("mczsim") is not None:
+    if params.get("mczsim", None) is not None:
         cargs.extend([
             "--mczsim",
-            params.get("mczsim")
+            params.get("mczsim", None)
         ])
-    if params.get("mczsim_dir") is not None:
+    if params.get("mczsim_dir", None) is not None:
         cargs.extend([
             "--mczsim-dir",
-            params.get("mczsim_dir")
+            params.get("mczsim_dir", None)
         ])
-    if params.get("mczsim_label") is not None:
+    if params.get("mczsim_label", None) is not None:
         cargs.extend([
             "--mczsim-label",
-            params.get("mczsim_label")
+            params.get("mczsim_label", None)
         ])
-    if params.get("perm") is not None:
+    if params.get("perm", None) is not None:
         cargs.extend([
             "--perm",
-            params.get("perm")
+            params.get("perm", None)
         ])
-    if params.get("perm_resid"):
+    if params.get("perm_resid", False):
         cargs.append("--perm-resid")
-    if params.get("perm_signflip"):
+    if params.get("perm_signflip", False):
         cargs.append("--perm-signflip")
-    if params.get("grf") is not None:
+    if params.get("grf", None) is not None:
         cargs.extend([
             "--grf",
-            params.get("grf")
+            params.get("grf", None)
         ])
-    if params.get("spaces_2"):
+    if params.get("spaces_2", False):
         cargs.append("--2spaces")
-    if params.get("spaces_3"):
+    if params.get("spaces_3", False):
         cargs.append("--3spaces")
-    if params.get("overwrite"):
+    if params.get("overwrite", False):
         cargs.append("--overwrite")
-    if params.get("bg") is not None:
+    if params.get("bg", None) is not None:
         cargs.extend([
             "--bg",
-            str(params.get("bg"))
+            str(params.get("bg", None))
         ])
-    if params.get("sleep") is not None:
+    if params.get("sleep", None) is not None:
         cargs.extend([
             "--sleep",
-            str(params.get("sleep"))
+            str(params.get("sleep", None))
         ])
-    if params.get("a2009s"):
+    if params.get("a2009s", False):
         cargs.append("--a2009s")
-    if params.get("annot") is not None:
+    if params.get("annot", None) is not None:
         cargs.extend([
             "--annot",
-            params.get("annot")
+            params.get("annot", None)
         ])
-    if params.get("log") is not None:
+    if params.get("log", None) is not None:
         cargs.extend([
             "--log",
-            params.get("log")
+            params.get("log", None)
         ])
-    if params.get("base") is not None:
+    if params.get("base", None) is not None:
         cargs.extend([
             "--base",
-            params.get("base")
+            params.get("base", None)
         ])
-    if params.get("no_sim") is not None:
+    if params.get("no_sim", None) is not None:
         cargs.extend([
             "--no-sim",
-            params.get("no_sim")
+            params.get("no_sim", None)
         ])
-    if params.get("seed") is not None:
+    if params.get("seed", None) is not None:
         cargs.extend([
             "--seed",
-            str(params.get("seed"))
+            str(params.get("seed", None))
         ])
-    if params.get("fwhm_override") is not None:
+    if params.get("fwhm_override", None) is not None:
         cargs.extend([
             "--fwhm-override",
-            str(params.get("fwhm_override"))
+            str(params.get("fwhm_override", None))
         ])
-    if params.get("fwhm_add") is not None:
+    if params.get("fwhm_add", None) is not None:
         cargs.extend([
             "--fwhm-add",
-            str(params.get("fwhm_add"))
+            str(params.get("fwhm_add", None))
         ])
-    if params.get("uniform") is not None:
+    if params.get("uniform", None) is not None:
         cargs.extend([
             "--uniform",
-            *map(str, params.get("uniform"))
+            *map(str, params.get("uniform", None))
         ])
-    if params.get("no_out_annot"):
+    if params.get("no_out_annot", False):
         cargs.append("--no-out-annot")
-    if params.get("no_cluster_mean"):
+    if params.get("no_cluster_mean", False):
         cargs.append("--no-cluster-mean")
-    if params.get("y_file") is not None:
+    if params.get("y_file", None) is not None:
         cargs.extend([
             "--y",
-            execution.input_file(params.get("y_file"))
+            execution.input_file(params.get("y_file", None))
         ])
-    if params.get("centroid"):
+    if params.get("centroid", False):
         cargs.append("--centroid")
-    if params.get("spatial_sum"):
+    if params.get("spatial_sum", False):
         cargs.append("--spatial-sum")
-    if params.get("help"):
+    if params.get("help", False):
         cargs.append("--help")
     return cargs
 
@@ -372,13 +372,13 @@ def mri_glmfit_sim_outputs(
     """
     ret = MriGlmfitSimOutputs(
         root=execution.output_file("."),
-        sig_voxel_mgh=execution.output_file(params.get("base") + ".sig.voxel.mgh") if (params.get("base") is not None) else None,
-        sig_cluster_mgh=execution.output_file(params.get("base") + ".sig.cluster.mgh") if (params.get("base") is not None) else None,
-        sig_cluster_summary=execution.output_file(params.get("base") + ".sig.cluster.summary") if (params.get("base") is not None) else None,
-        y_ocn_dat=execution.output_file(params.get("base") + ".y.ocn.dat") if (params.get("base") is not None) else None,
-        sig_ocn_mgh=execution.output_file(params.get("base") + ".sig.ocn.mgh") if (params.get("base") is not None) else None,
-        sig_ocn_annot=execution.output_file(params.get("base") + ".sig.ocn.annot") if (params.get("base") is not None) else None,
-        sig_masked_mgh=execution.output_file(params.get("base") + ".sig.masked.mgh") if (params.get("base") is not None) else None,
+        sig_voxel_mgh=execution.output_file(params.get("base", None) + ".sig.voxel.mgh") if (params.get("base") is not None) else None,
+        sig_cluster_mgh=execution.output_file(params.get("base", None) + ".sig.cluster.mgh") if (params.get("base") is not None) else None,
+        sig_cluster_summary=execution.output_file(params.get("base", None) + ".sig.cluster.summary") if (params.get("base") is not None) else None,
+        y_ocn_dat=execution.output_file(params.get("base", None) + ".y.ocn.dat") if (params.get("base") is not None) else None,
+        sig_ocn_mgh=execution.output_file(params.get("base", None) + ".sig.ocn.mgh") if (params.get("base") is not None) else None,
+        sig_ocn_annot=execution.output_file(params.get("base", None) + ".sig.ocn.annot") if (params.get("base") is not None) else None,
+        sig_masked_mgh=execution.output_file(params.get("base", None) + ".sig.masked.mgh") if (params.get("base") is not None) else None,
     )
     return ret
 
@@ -535,7 +535,6 @@ def mri_glmfit_sim(
 __all__ = [
     "MRI_GLMFIT_SIM_METADATA",
     "MriGlmfitSimOutputs",
-    "MriGlmfitSimParameters",
     "mri_glmfit_sim",
     "mri_glmfit_sim_execute",
     "mri_glmfit_sim_params",

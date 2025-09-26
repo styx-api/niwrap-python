@@ -14,47 +14,22 @@ VOLUME_LABEL_EXPORT_TABLE_METADATA = Metadata(
 
 
 VolumeLabelExportTableParameters = typing.TypedDict('VolumeLabelExportTableParameters', {
-    "@type": typing.Literal["workbench.volume-label-export-table"],
+    "@type": typing.NotRequired[typing.Literal["workbench/volume-label-export-table"]],
+    "label_in": InputPathType,
+    "map": str,
+    "table_out": str,
+})
+VolumeLabelExportTableParametersTagged = typing.TypedDict('VolumeLabelExportTableParametersTagged', {
+    "@type": typing.Literal["workbench/volume-label-export-table"],
     "label_in": InputPathType,
     "map": str,
     "table_out": str,
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "workbench.volume-label-export-table": volume_label_export_table_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-    }.get(t)
-
-
 class VolumeLabelExportTableOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `volume_label_export_table(...)`.
+    Output object returned when calling `VolumeLabelExportTableParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -64,7 +39,7 @@ def volume_label_export_table_params(
     label_in: InputPathType,
     map_: str,
     table_out: str,
-) -> VolumeLabelExportTableParameters:
+) -> VolumeLabelExportTableParametersTagged:
     """
     Build parameters.
     
@@ -76,7 +51,7 @@ def volume_label_export_table_params(
         Parameter dictionary
     """
     params = {
-        "@type": "workbench.volume-label-export-table",
+        "@type": "workbench/volume-label-export-table",
         "label_in": label_in,
         "map": map_,
         "table_out": table_out,
@@ -100,9 +75,9 @@ def volume_label_export_table_cargs(
     cargs = []
     cargs.append("wb_command")
     cargs.append("-volume-label-export-table")
-    cargs.append(execution.input_file(params.get("label_in")))
-    cargs.append(params.get("map"))
-    cargs.append(params.get("table_out"))
+    cargs.append(execution.input_file(params.get("label_in", None)))
+    cargs.append(params.get("map", None))
+    cargs.append(params.get("table_out", None))
     return cargs
 
 
@@ -193,7 +168,6 @@ def volume_label_export_table(
 __all__ = [
     "VOLUME_LABEL_EXPORT_TABLE_METADATA",
     "VolumeLabelExportTableOutputs",
-    "VolumeLabelExportTableParameters",
     "volume_label_export_table",
     "volume_label_export_table_execute",
     "volume_label_export_table_params",

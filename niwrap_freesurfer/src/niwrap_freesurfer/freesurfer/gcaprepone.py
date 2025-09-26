@@ -14,7 +14,16 @@ GCAPREPONE_METADATA = Metadata(
 
 
 GcapreponeParameters = typing.TypedDict('GcapreponeParameters', {
-    "@type": typing.Literal["freesurfer.gcaprepone"],
+    "@type": typing.NotRequired[typing.Literal["freesurfer/gcaprepone"]],
+    "gcadir": str,
+    "subject": str,
+    "init_subject": bool,
+    "source_subjects_dir": str,
+    "done_file": str,
+    "no_emreg": bool,
+})
+GcapreponeParametersTagged = typing.TypedDict('GcapreponeParametersTagged', {
+    "@type": typing.Literal["freesurfer/gcaprepone"],
     "gcadir": str,
     "subject": str,
     "init_subject": bool,
@@ -24,40 +33,9 @@ GcapreponeParameters = typing.TypedDict('GcapreponeParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "freesurfer.gcaprepone": gcaprepone_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-    }.get(t)
-
-
 class GcapreponeOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `gcaprepone(...)`.
+    Output object returned when calling `GcapreponeParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -70,7 +48,7 @@ def gcaprepone_params(
     done_file: str,
     init_subject: bool = False,
     no_emreg: bool = False,
-) -> GcapreponeParameters:
+) -> GcapreponeParametersTagged:
     """
     Build parameters.
     
@@ -85,7 +63,7 @@ def gcaprepone_params(
         Parameter dictionary
     """
     params = {
-        "@type": "freesurfer.gcaprepone",
+        "@type": "freesurfer/gcaprepone",
         "gcadir": gcadir,
         "subject": subject,
         "init_subject": init_subject,
@@ -113,23 +91,23 @@ def gcaprepone_cargs(
     cargs.append("gcaprepone")
     cargs.extend([
         "--o",
-        params.get("gcadir")
+        params.get("gcadir", None)
     ])
     cargs.extend([
         "--s",
-        params.get("subject")
+        params.get("subject", None)
     ])
-    if params.get("init_subject"):
+    if params.get("init_subject", False):
         cargs.append("--init-subject")
     cargs.extend([
         "--sd",
-        params.get("source_subjects_dir")
+        params.get("source_subjects_dir", None)
     ])
     cargs.extend([
         "--done",
-        params.get("done_file")
+        params.get("done_file", None)
     ])
-    if params.get("no_emreg"):
+    if params.get("no_emreg", False):
         cargs.append("--no-emreg")
     return cargs
 
@@ -226,7 +204,6 @@ def gcaprepone(
 __all__ = [
     "GCAPREPONE_METADATA",
     "GcapreponeOutputs",
-    "GcapreponeParameters",
     "gcaprepone",
     "gcaprepone_execute",
     "gcaprepone_params",

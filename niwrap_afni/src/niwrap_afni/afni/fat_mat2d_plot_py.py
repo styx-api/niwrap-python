@@ -14,7 +14,35 @@ FAT_MAT2D_PLOT_PY_METADATA = Metadata(
 
 
 FatMat2dPlotPyParameters = typing.TypedDict('FatMat2dPlotPyParameters', {
-    "@type": typing.Literal["afni.fat_mat2d_plot.py"],
+    "@type": typing.NotRequired[typing.Literal["afni/fat_mat2d_plot.py"]],
+    "input_file": InputPathType,
+    "matrices": typing.NotRequired[list[str] | None],
+    "prefix": typing.NotRequired[str | None],
+    "file_type": typing.NotRequired[str | None],
+    "dpi": typing.NotRequired[float | None],
+    "min_colorbar": typing.NotRequired[float | None],
+    "max_colorbar": typing.NotRequired[float | None],
+    "fs_xticks": typing.NotRequired[float | None],
+    "fs_yticks": typing.NotRequired[float | None],
+    "fs_title": typing.NotRequired[float | None],
+    "fs_cbar": typing.NotRequired[float | None],
+    "cbar_n_intervals": typing.NotRequired[float | None],
+    "cbar": typing.NotRequired[str | None],
+    "cbar_width_perc": typing.NotRequired[float | None],
+    "no_colorbar": bool,
+    "figsize_x": typing.NotRequired[float | None],
+    "figsize_y": typing.NotRequired[float | None],
+    "hold_image": bool,
+    "tight_layout": bool,
+    "xticks_off": bool,
+    "yticks_off": bool,
+    "version": bool,
+    "date": bool,
+    "help": bool,
+    "help_view": bool,
+})
+FatMat2dPlotPyParametersTagged = typing.TypedDict('FatMat2dPlotPyParametersTagged', {
+    "@type": typing.Literal["afni/fat_mat2d_plot.py"],
     "input_file": InputPathType,
     "matrices": typing.NotRequired[list[str] | None],
     "prefix": typing.NotRequired[str | None],
@@ -43,41 +71,9 @@ FatMat2dPlotPyParameters = typing.TypedDict('FatMat2dPlotPyParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "afni.fat_mat2d_plot.py": fat_mat2d_plot_py_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "afni.fat_mat2d_plot.py": fat_mat2d_plot_py_outputs,
-    }.get(t)
-
-
 class FatMat2dPlotPyOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `fat_mat2d_plot_py(...)`.
+    Output object returned when calling `FatMat2dPlotPyParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -112,7 +108,7 @@ def fat_mat2d_plot_py_params(
     date: bool = False,
     help_: bool = False,
     help_view: bool = False,
-) -> FatMat2dPlotPyParameters:
+) -> FatMat2dPlotPyParametersTagged:
     """
     Build parameters.
     
@@ -156,7 +152,7 @@ def fat_mat2d_plot_py_params(
         Parameter dictionary
     """
     params = {
-        "@type": "afni.fat_mat2d_plot.py",
+        "@type": "afni/fat_mat2d_plot.py",
         "input_file": input_file,
         "no_colorbar": no_colorbar,
         "hold_image": hold_image,
@@ -216,54 +212,54 @@ def fat_mat2d_plot_py_cargs(
     """
     cargs = []
     cargs.append("fat_mat2d_plot.py")
-    cargs.append(execution.input_file(params.get("input_file")))
-    if params.get("matrices") is not None:
-        cargs.extend(params.get("matrices"))
-    if params.get("prefix") is not None:
-        cargs.append(params.get("prefix"))
-    if params.get("file_type") is not None:
-        cargs.append(params.get("file_type"))
-    if params.get("dpi") is not None:
-        cargs.append(str(params.get("dpi")))
-    if params.get("min_colorbar") is not None:
-        cargs.append(str(params.get("min_colorbar")))
-    if params.get("max_colorbar") is not None:
-        cargs.append(str(params.get("max_colorbar")))
-    if params.get("fs_xticks") is not None:
-        cargs.append(str(params.get("fs_xticks")))
-    if params.get("fs_yticks") is not None:
-        cargs.append(str(params.get("fs_yticks")))
-    if params.get("fs_title") is not None:
-        cargs.append(str(params.get("fs_title")))
-    if params.get("fs_cbar") is not None:
-        cargs.append(str(params.get("fs_cbar")))
-    if params.get("cbar_n_intervals") is not None:
-        cargs.append(str(params.get("cbar_n_intervals")))
-    if params.get("cbar") is not None:
-        cargs.append(params.get("cbar"))
-    if params.get("cbar_width_perc") is not None:
-        cargs.append(str(params.get("cbar_width_perc")))
-    if params.get("no_colorbar"):
+    cargs.append(execution.input_file(params.get("input_file", None)))
+    if params.get("matrices", None) is not None:
+        cargs.extend(params.get("matrices", None))
+    if params.get("prefix", None) is not None:
+        cargs.append(params.get("prefix", None))
+    if params.get("file_type", None) is not None:
+        cargs.append(params.get("file_type", None))
+    if params.get("dpi", None) is not None:
+        cargs.append(str(params.get("dpi", None)))
+    if params.get("min_colorbar", None) is not None:
+        cargs.append(str(params.get("min_colorbar", None)))
+    if params.get("max_colorbar", None) is not None:
+        cargs.append(str(params.get("max_colorbar", None)))
+    if params.get("fs_xticks", None) is not None:
+        cargs.append(str(params.get("fs_xticks", None)))
+    if params.get("fs_yticks", None) is not None:
+        cargs.append(str(params.get("fs_yticks", None)))
+    if params.get("fs_title", None) is not None:
+        cargs.append(str(params.get("fs_title", None)))
+    if params.get("fs_cbar", None) is not None:
+        cargs.append(str(params.get("fs_cbar", None)))
+    if params.get("cbar_n_intervals", None) is not None:
+        cargs.append(str(params.get("cbar_n_intervals", None)))
+    if params.get("cbar", None) is not None:
+        cargs.append(params.get("cbar", None))
+    if params.get("cbar_width_perc", None) is not None:
+        cargs.append(str(params.get("cbar_width_perc", None)))
+    if params.get("no_colorbar", False):
         cargs.append("-cbar_off")
-    if params.get("figsize_x") is not None:
-        cargs.append(str(params.get("figsize_x")))
-    if params.get("figsize_y") is not None:
-        cargs.append(str(params.get("figsize_y")))
-    if params.get("hold_image"):
+    if params.get("figsize_x", None) is not None:
+        cargs.append(str(params.get("figsize_x", None)))
+    if params.get("figsize_y", None) is not None:
+        cargs.append(str(params.get("figsize_y", None)))
+    if params.get("hold_image", False):
         cargs.append("-hold_image")
-    if params.get("tight_layout"):
+    if params.get("tight_layout", False):
         cargs.append("-tight_layout")
-    if params.get("xticks_off"):
+    if params.get("xticks_off", False):
         cargs.append("-xticks_off")
-    if params.get("yticks_off"):
+    if params.get("yticks_off", False):
         cargs.append("-yticks_off")
-    if params.get("version"):
+    if params.get("version", False):
         cargs.append("-ver")
-    if params.get("date"):
+    if params.get("date", False):
         cargs.append("-date")
-    if params.get("help"):
+    if params.get("help", False):
         cargs.append("-help")
-    if params.get("help_view"):
+    if params.get("help_view", False):
         cargs.append("-hview")
     return cargs
 
@@ -283,7 +279,7 @@ def fat_mat2d_plot_py_outputs(
     """
     ret = FatMat2dPlotPyOutputs(
         root=execution.output_file("."),
-        output_files=execution.output_file(params.get("prefix") + "_[MATRIX_NAME]." + params.get("file_type")) if (params.get("prefix") is not None and params.get("file_type") is not None) else None,
+        output_files=execution.output_file(params.get("prefix", None) + "_[MATRIX_NAME]." + params.get("file_type", None)) if (params.get("prefix") is not None and params.get("file_type") is not None) else None,
     )
     return ret
 
@@ -428,7 +424,6 @@ def fat_mat2d_plot_py(
 __all__ = [
     "FAT_MAT2D_PLOT_PY_METADATA",
     "FatMat2dPlotPyOutputs",
-    "FatMat2dPlotPyParameters",
     "fat_mat2d_plot_py",
     "fat_mat2d_plot_py_execute",
     "fat_mat2d_plot_py_params",

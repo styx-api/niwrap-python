@@ -14,7 +14,16 @@ SURF_QUAL_METADATA = Metadata(
 
 
 SurfQualParameters = typing.TypedDict('SurfQualParameters', {
-    "@type": typing.Literal["afni.SurfQual"],
+    "@type": typing.NotRequired[typing.Literal["afni/SurfQual"]],
+    "spec_file": InputPathType,
+    "surface_a": list[InputPathType],
+    "sphere_flag": bool,
+    "summary_flag": bool,
+    "self_intersect_flag": bool,
+    "output_prefix": typing.NotRequired[str | None],
+})
+SurfQualParametersTagged = typing.TypedDict('SurfQualParametersTagged', {
+    "@type": typing.Literal["afni/SurfQual"],
     "spec_file": InputPathType,
     "surface_a": list[InputPathType],
     "sphere_flag": bool,
@@ -24,41 +33,9 @@ SurfQualParameters = typing.TypedDict('SurfQualParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "afni.SurfQual": surf_qual_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "afni.SurfQual": surf_qual_outputs,
-    }.get(t)
-
-
 class SurfQualOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `surf_qual(...)`.
+    Output object returned when calling `SurfQualParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -87,7 +64,7 @@ def surf_qual_params(
     summary_flag: bool = False,
     self_intersect_flag: bool = False,
     output_prefix: str | None = None,
-) -> SurfQualParameters:
+) -> SurfQualParametersTagged:
     """
     Build parameters.
     
@@ -102,7 +79,7 @@ def surf_qual_params(
         Parameter dictionary
     """
     params = {
-        "@type": "afni.SurfQual",
+        "@type": "afni/SurfQual",
         "spec_file": spec_file,
         "surface_a": surface_a,
         "sphere_flag": sphere_flag,
@@ -131,22 +108,22 @@ def surf_qual_cargs(
     cargs.append("SurfQual")
     cargs.extend([
         "-spec",
-        execution.input_file(params.get("spec_file"))
+        execution.input_file(params.get("spec_file", None))
     ])
     cargs.extend([
         "-surf_A",
-        *[execution.input_file(f) for f in params.get("surface_a")]
+        *[execution.input_file(f) for f in params.get("surface_a", None)]
     ])
-    if params.get("sphere_flag"):
+    if params.get("sphere_flag", False):
         cargs.append("-sphere")
-    if params.get("summary_flag"):
+    if params.get("summary_flag", False):
         cargs.append("-summary")
-    if params.get("self_intersect_flag"):
+    if params.get("self_intersect_flag", False):
         cargs.append("-self_intersect")
-    if params.get("output_prefix") is not None:
+    if params.get("output_prefix", None) is not None:
         cargs.extend([
             "-prefix",
-            params.get("output_prefix")
+            params.get("output_prefix", None)
         ])
     return cargs
 
@@ -166,13 +143,13 @@ def surf_qual_outputs(
     """
     ret = SurfQualOutputs(
         root=execution.output_file("."),
-        dist_output=execution.output_file(params.get("output_prefix") + "_Dist.1D.dset") if (params.get("output_prefix") is not None) else None,
-        dist_color_output=execution.output_file(params.get("output_prefix") + "_Dist.1D.col") if (params.get("output_prefix") is not None) else None,
-        bad_nodes_output=execution.output_file(params.get("output_prefix") + "_BadNodes.1D.dset") if (params.get("output_prefix") is not None) else None,
-        bad_nodes_color_output=execution.output_file(params.get("output_prefix") + "_BadNodes.1D.col") if (params.get("output_prefix") is not None) else None,
-        dotprod_output=execution.output_file(params.get("output_prefix") + "_dotprod.1D.dset") if (params.get("output_prefix") is not None) else None,
-        dotprod_color_output=execution.output_file(params.get("output_prefix") + "_dotprod.1D.col") if (params.get("output_prefix") is not None) else None,
-        intersect_nodes_output=execution.output_file(params.get("output_prefix") + "_IntersNodes.1D.dset") if (params.get("output_prefix") is not None) else None,
+        dist_output=execution.output_file(params.get("output_prefix", None) + "_Dist.1D.dset") if (params.get("output_prefix") is not None) else None,
+        dist_color_output=execution.output_file(params.get("output_prefix", None) + "_Dist.1D.col") if (params.get("output_prefix") is not None) else None,
+        bad_nodes_output=execution.output_file(params.get("output_prefix", None) + "_BadNodes.1D.dset") if (params.get("output_prefix") is not None) else None,
+        bad_nodes_color_output=execution.output_file(params.get("output_prefix", None) + "_BadNodes.1D.col") if (params.get("output_prefix") is not None) else None,
+        dotprod_output=execution.output_file(params.get("output_prefix", None) + "_dotprod.1D.dset") if (params.get("output_prefix") is not None) else None,
+        dotprod_color_output=execution.output_file(params.get("output_prefix", None) + "_dotprod.1D.col") if (params.get("output_prefix") is not None) else None,
+        intersect_nodes_output=execution.output_file(params.get("output_prefix", None) + "_IntersNodes.1D.dset") if (params.get("output_prefix") is not None) else None,
     )
     return ret
 
@@ -248,7 +225,6 @@ def surf_qual(
 __all__ = [
     "SURF_QUAL_METADATA",
     "SurfQualOutputs",
-    "SurfQualParameters",
     "surf_qual",
     "surf_qual_execute",
     "surf_qual_params",

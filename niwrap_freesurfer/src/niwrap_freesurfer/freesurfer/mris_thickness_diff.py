@@ -14,7 +14,23 @@ MRIS_THICKNESS_DIFF_METADATA = Metadata(
 
 
 MrisThicknessDiffParameters = typing.TypedDict('MrisThicknessDiffParameters', {
-    "@type": typing.Literal["freesurfer.mris_thickness_diff"],
+    "@type": typing.NotRequired[typing.Literal["freesurfer/mris_thickness_diff"]],
+    "src_type": typing.NotRequired[str | None],
+    "trg_type": typing.NotRequired[str | None],
+    "out_file": str,
+    "out_resampled": typing.NotRequired[str | None],
+    "nsmooth": typing.NotRequired[float | None],
+    "register": bool,
+    "xform": typing.NotRequired[InputPathType | None],
+    "invert": bool,
+    "src_volume": typing.NotRequired[InputPathType | None],
+    "dst_volume": typing.NotRequired[InputPathType | None],
+    "abs": bool,
+    "log_file": typing.NotRequired[InputPathType | None],
+    "subject_name": typing.NotRequired[str | None],
+})
+MrisThicknessDiffParametersTagged = typing.TypedDict('MrisThicknessDiffParametersTagged', {
+    "@type": typing.Literal["freesurfer/mris_thickness_diff"],
     "src_type": typing.NotRequired[str | None],
     "trg_type": typing.NotRequired[str | None],
     "out_file": str,
@@ -31,41 +47,9 @@ MrisThicknessDiffParameters = typing.TypedDict('MrisThicknessDiffParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "freesurfer.mris_thickness_diff": mris_thickness_diff_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "freesurfer.mris_thickness_diff": mris_thickness_diff_outputs,
-    }.get(t)
-
-
 class MrisThicknessDiffOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `mris_thickness_diff(...)`.
+    Output object returned when calling `MrisThicknessDiffParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -89,7 +73,7 @@ def mris_thickness_diff_params(
     abs_: bool = False,
     log_file: InputPathType | None = None,
     subject_name: str | None = None,
-) -> MrisThicknessDiffParameters:
+) -> MrisThicknessDiffParametersTagged:
     """
     Build parameters.
     
@@ -111,7 +95,7 @@ def mris_thickness_diff_params(
         Parameter dictionary
     """
     params = {
-        "@type": "freesurfer.mris_thickness_diff",
+        "@type": "freesurfer/mris_thickness_diff",
         "out_file": out_file,
         "register": register,
         "invert": invert,
@@ -153,60 +137,60 @@ def mris_thickness_diff_cargs(
     """
     cargs = []
     cargs.append("mris_thickness_diff")
-    if params.get("src_type") is not None:
+    if params.get("src_type", None) is not None:
         cargs.extend([
             "-src_type",
-            params.get("src_type")
+            params.get("src_type", None)
         ])
-    if params.get("trg_type") is not None:
+    if params.get("trg_type", None) is not None:
         cargs.extend([
             "-trg_type",
-            params.get("trg_type")
+            params.get("trg_type", None)
         ])
     cargs.extend([
         "-out",
-        params.get("out_file")
+        params.get("out_file", None)
     ])
-    if params.get("out_resampled") is not None:
+    if params.get("out_resampled", None) is not None:
         cargs.extend([
             "-out_resampled",
-            params.get("out_resampled")
+            params.get("out_resampled", None)
         ])
-    if params.get("nsmooth") is not None:
+    if params.get("nsmooth", None) is not None:
         cargs.extend([
             "-nsmooth",
-            str(params.get("nsmooth"))
+            str(params.get("nsmooth", None))
         ])
-    if params.get("register"):
+    if params.get("register", False):
         cargs.append("-register")
-    if params.get("xform") is not None:
+    if params.get("xform", None) is not None:
         cargs.extend([
             "-xform",
-            execution.input_file(params.get("xform"))
+            execution.input_file(params.get("xform", None))
         ])
-    if params.get("invert"):
+    if params.get("invert", False):
         cargs.append("-invert")
-    if params.get("src_volume") is not None:
+    if params.get("src_volume", None) is not None:
         cargs.extend([
             "-src",
-            execution.input_file(params.get("src_volume"))
+            execution.input_file(params.get("src_volume", None))
         ])
-    if params.get("dst_volume") is not None:
+    if params.get("dst_volume", None) is not None:
         cargs.extend([
             "-dst",
-            execution.input_file(params.get("dst_volume"))
+            execution.input_file(params.get("dst_volume", None))
         ])
-    if params.get("abs"):
+    if params.get("abs", False):
         cargs.append("-abs")
-    if params.get("log_file") is not None:
+    if params.get("log_file", None) is not None:
         cargs.extend([
             "-L",
-            execution.input_file(params.get("log_file"))
+            execution.input_file(params.get("log_file", None))
         ])
-    if params.get("subject_name") is not None:
+    if params.get("subject_name", None) is not None:
         cargs.extend([
             "-S",
-            params.get("subject_name")
+            params.get("subject_name", None)
         ])
     return cargs
 
@@ -226,8 +210,8 @@ def mris_thickness_diff_outputs(
     """
     ret = MrisThicknessDiffOutputs(
         root=execution.output_file("."),
-        output_difference=execution.output_file(params.get("out_file")),
-        output_resampled=execution.output_file(params.get("out_resampled")) if (params.get("out_resampled") is not None) else None,
+        output_difference=execution.output_file(params.get("out_file", None)),
+        output_resampled=execution.output_file(params.get("out_resampled", None)) if (params.get("out_resampled") is not None) else None,
     )
     return ret
 
@@ -326,7 +310,6 @@ def mris_thickness_diff(
 __all__ = [
     "MRIS_THICKNESS_DIFF_METADATA",
     "MrisThicknessDiffOutputs",
-    "MrisThicknessDiffParameters",
     "mris_thickness_diff",
     "mris_thickness_diff_execute",
     "mris_thickness_diff_params",

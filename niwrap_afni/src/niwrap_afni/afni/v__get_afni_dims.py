@@ -14,46 +14,18 @@ V__GET_AFNI_DIMS_METADATA = Metadata(
 
 
 VGetAfniDimsParameters = typing.TypedDict('VGetAfniDimsParameters', {
-    "@type": typing.Literal["afni.@GetAfniDims"],
+    "@type": typing.NotRequired[typing.Literal["afni/@GetAfniDims"]],
+    "input_dset": InputPathType,
+})
+VGetAfniDimsParametersTagged = typing.TypedDict('VGetAfniDimsParametersTagged', {
+    "@type": typing.Literal["afni/@GetAfniDims"],
     "input_dset": InputPathType,
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "afni.@GetAfniDims": v__get_afni_dims_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "afni.@GetAfniDims": v__get_afni_dims_outputs,
-    }.get(t)
-
-
 class VGetAfniDimsOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `v__get_afni_dims(...)`.
+    Output object returned when calling `VGetAfniDimsParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -63,7 +35,7 @@ class VGetAfniDimsOutputs(typing.NamedTuple):
 
 def v__get_afni_dims_params(
     input_dset: InputPathType,
-) -> VGetAfniDimsParameters:
+) -> VGetAfniDimsParametersTagged:
     """
     Build parameters.
     
@@ -73,7 +45,7 @@ def v__get_afni_dims_params(
         Parameter dictionary
     """
     params = {
-        "@type": "afni.@GetAfniDims",
+        "@type": "afni/@GetAfniDims",
         "input_dset": input_dset,
     }
     return params
@@ -94,7 +66,7 @@ def v__get_afni_dims_cargs(
     """
     cargs = []
     cargs.append("@GetAfniDims")
-    cargs.append(execution.input_file(params.get("input_dset")))
+    cargs.append(execution.input_file(params.get("input_dset", None)))
     return cargs
 
 
@@ -173,7 +145,6 @@ def v__get_afni_dims(
 
 __all__ = [
     "VGetAfniDimsOutputs",
-    "VGetAfniDimsParameters",
     "V__GET_AFNI_DIMS_METADATA",
     "v__get_afni_dims",
     "v__get_afni_dims_execute",

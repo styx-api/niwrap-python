@@ -14,7 +14,18 @@ MAP_TRACK_ID_METADATA = Metadata(
 
 
 MapTrackIdParameters = typing.TypedDict('MapTrackIdParameters', {
-    "@type": typing.Literal["afni.map_TrackID"],
+    "@type": typing.NotRequired[typing.Literal["afni/map_TrackID"]],
+    "prefix": str,
+    "in_trk": InputPathType,
+    "in_map": InputPathType,
+    "reference": InputPathType,
+    "verbose": bool,
+    "orig_zero": bool,
+    "line_only_num": bool,
+    "already_inv": bool,
+})
+MapTrackIdParametersTagged = typing.TypedDict('MapTrackIdParametersTagged', {
+    "@type": typing.Literal["afni/map_TrackID"],
     "prefix": str,
     "in_trk": InputPathType,
     "in_map": InputPathType,
@@ -26,41 +37,9 @@ MapTrackIdParameters = typing.TypedDict('MapTrackIdParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "afni.map_TrackID": map_track_id_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "afni.map_TrackID": map_track_id_outputs,
-    }.get(t)
-
-
 class MapTrackIdOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `map_track_id(...)`.
+    Output object returned when calling `MapTrackIdParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -77,7 +56,7 @@ def map_track_id_params(
     orig_zero: bool = False,
     line_only_num: bool = False,
     already_inv: bool = False,
-) -> MapTrackIdParameters:
+) -> MapTrackIdParametersTagged:
     """
     Build parameters.
     
@@ -96,7 +75,7 @@ def map_track_id_params(
         Parameter dictionary
     """
     params = {
-        "@type": "afni.map_TrackID",
+        "@type": "afni/map_TrackID",
         "prefix": prefix,
         "in_trk": in_trk,
         "in_map": in_map,
@@ -126,27 +105,27 @@ def map_track_id_cargs(
     cargs.append("map_TrackID")
     cargs.extend([
         "-prefix",
-        params.get("prefix")
+        params.get("prefix", None)
     ])
     cargs.extend([
         "-in_trk",
-        execution.input_file(params.get("in_trk"))
+        execution.input_file(params.get("in_trk", None))
     ])
     cargs.extend([
         "-in_map",
-        execution.input_file(params.get("in_map"))
+        execution.input_file(params.get("in_map", None))
     ])
     cargs.extend([
         "-ref",
-        execution.input_file(params.get("reference"))
+        execution.input_file(params.get("reference", None))
     ])
-    if params.get("verbose"):
+    if params.get("verbose", False):
         cargs.append("-verb")
-    if params.get("orig_zero"):
+    if params.get("orig_zero", False):
         cargs.append("-orig_zero")
-    if params.get("line_only_num"):
+    if params.get("line_only_num", False):
         cargs.append("-line_only_num")
-    if params.get("already_inv"):
+    if params.get("already_inv", False):
         cargs.append("-already_inv")
     return cargs
 
@@ -166,7 +145,7 @@ def map_track_id_outputs(
     """
     ret = MapTrackIdOutputs(
         root=execution.output_file("."),
-        output_trk_file=execution.output_file(params.get("prefix") + ".trk"),
+        output_trk_file=execution.output_file(params.get("prefix", None) + ".trk"),
     )
     return ret
 
@@ -252,7 +231,6 @@ def map_track_id(
 __all__ = [
     "MAP_TRACK_ID_METADATA",
     "MapTrackIdOutputs",
-    "MapTrackIdParameters",
     "map_track_id",
     "map_track_id_execute",
     "map_track_id_params",

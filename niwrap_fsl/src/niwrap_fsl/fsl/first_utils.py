@@ -14,7 +14,42 @@ FIRST_UTILS_METADATA = Metadata(
 
 
 FirstUtilsParameters = typing.TypedDict('FirstUtilsParameters', {
-    "@type": typing.Literal["fsl.first_utils"],
+    "@type": typing.NotRequired[typing.Literal["fsl/first_utils"]],
+    "input_file": InputPathType,
+    "output_name": str,
+    "norm_factors": typing.NotRequired[InputPathType | None],
+    "reference_image": typing.NotRequired[InputPathType | None],
+    "extra_path": typing.NotRequired[InputPathType | None],
+    "flirt_matrices": typing.NotRequired[InputPathType | None],
+    "use_scale": bool,
+    "dice_overlap": bool,
+    "input_mesh": typing.NotRequired[InputPathType | None],
+    "use_norm": bool,
+    "surface_out": bool,
+    "threshold": typing.NotRequired[float | None],
+    "mesh_label": typing.NotRequired[str | None],
+    "use_bvars": bool,
+    "use_recon_mni": bool,
+    "vertex_analysis": bool,
+    "use_recon_native": bool,
+    "use_rigid_align": bool,
+    "design_matrix": typing.NotRequired[InputPathType | None],
+    "recon_mesh_from_bvars": bool,
+    "read_bvars": bool,
+    "mesh_to_vol": bool,
+    "centre_origin": bool,
+    "save_vertices": typing.NotRequired[InputPathType | None],
+    "verbose": bool,
+    "use_pca_filter": bool,
+    "num_modes": typing.NotRequired[float | None],
+    "single_boundary_corr": bool,
+    "do_mvglm": bool,
+    "concat_bvars": bool,
+    "debug_mode": bool,
+    "help": bool,
+})
+FirstUtilsParametersTagged = typing.TypedDict('FirstUtilsParametersTagged', {
+    "@type": typing.Literal["fsl/first_utils"],
     "input_file": InputPathType,
     "output_name": str,
     "norm_factors": typing.NotRequired[InputPathType | None],
@@ -50,40 +85,9 @@ FirstUtilsParameters = typing.TypedDict('FirstUtilsParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "fsl.first_utils": first_utils_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-    }.get(t)
-
-
 class FirstUtilsOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `first_utils(...)`.
+    Output object returned when calling `FirstUtilsParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -122,7 +126,7 @@ def first_utils_params(
     concat_bvars: bool = False,
     debug_mode: bool = False,
     help_: bool = False,
-) -> FirstUtilsParameters:
+) -> FirstUtilsParametersTagged:
     """
     Build parameters.
     
@@ -165,7 +169,7 @@ def first_utils_params(
         Parameter dictionary
     """
     params = {
-        "@type": "fsl.first_utils",
+        "@type": "fsl/first_utils",
         "input_file": input_file,
         "output_name": output_name,
         "use_scale": use_scale,
@@ -229,101 +233,101 @@ def first_utils_cargs(
     cargs.append("first_utils")
     cargs.extend([
         "-i",
-        execution.input_file(params.get("input_file"))
+        execution.input_file(params.get("input_file", None))
     ])
     cargs.extend([
         "-o",
-        params.get("output_name")
+        params.get("output_name", None)
     ])
-    if params.get("norm_factors") is not None:
+    if params.get("norm_factors", None) is not None:
         cargs.extend([
             "-g",
-            execution.input_file(params.get("norm_factors"))
+            execution.input_file(params.get("norm_factors", None))
         ])
-    if params.get("reference_image") is not None:
+    if params.get("reference_image", None) is not None:
         cargs.extend([
             "-r",
-            execution.input_file(params.get("reference_image"))
+            execution.input_file(params.get("reference_image", None))
         ])
-    if params.get("extra_path") is not None:
+    if params.get("extra_path", None) is not None:
         cargs.extend([
             "-a",
-            execution.input_file(params.get("extra_path"))
+            execution.input_file(params.get("extra_path", None))
         ])
-    if params.get("flirt_matrices") is not None:
+    if params.get("flirt_matrices", None) is not None:
         cargs.extend([
             "-f",
-            execution.input_file(params.get("flirt_matrices"))
+            execution.input_file(params.get("flirt_matrices", None))
         ])
-    if params.get("use_scale"):
+    if params.get("use_scale", False):
         cargs.append("--useScale")
-    if params.get("dice_overlap"):
+    if params.get("dice_overlap", False):
         cargs.append("--overlap")
-    if params.get("input_mesh") is not None:
+    if params.get("input_mesh", None) is not None:
         cargs.extend([
             "-m",
-            execution.input_file(params.get("input_mesh"))
+            execution.input_file(params.get("input_mesh", None))
         ])
-    if params.get("use_norm"):
+    if params.get("use_norm", False):
         cargs.append("--useNorm")
-    if params.get("surface_out"):
+    if params.get("surface_out", False):
         cargs.append("--surfaceout")
-    if params.get("threshold") is not None:
+    if params.get("threshold", None) is not None:
         cargs.extend([
             "-p",
-            str(params.get("threshold"))
+            str(params.get("threshold", None))
         ])
-    if params.get("mesh_label") is not None:
+    if params.get("mesh_label", None) is not None:
         cargs.extend([
             "-l",
-            params.get("mesh_label")
+            params.get("mesh_label", None)
         ])
-    if params.get("use_bvars"):
+    if params.get("use_bvars", False):
         cargs.append("--usebvars")
-    if params.get("use_recon_mni"):
+    if params.get("use_recon_mni", False):
         cargs.append("--useReconMNI")
-    if params.get("vertex_analysis"):
+    if params.get("vertex_analysis", False):
         cargs.append("--vertexAnalysis")
-    if params.get("use_recon_native"):
+    if params.get("use_recon_native", False):
         cargs.append("--useReconNative")
-    if params.get("use_rigid_align"):
+    if params.get("use_rigid_align", False):
         cargs.append("--useRigidAlign")
-    if params.get("design_matrix") is not None:
+    if params.get("design_matrix", None) is not None:
         cargs.extend([
             "-d",
-            execution.input_file(params.get("design_matrix"))
+            execution.input_file(params.get("design_matrix", None))
         ])
-    if params.get("recon_mesh_from_bvars"):
+    if params.get("recon_mesh_from_bvars", False):
         cargs.append("--reconMeshFromBvars")
-    if params.get("read_bvars"):
+    if params.get("read_bvars", False):
         cargs.append("--readBvars")
-    if params.get("mesh_to_vol"):
+    if params.get("mesh_to_vol", False):
         cargs.append("--meshToVol")
-    if params.get("centre_origin"):
+    if params.get("centre_origin", False):
         cargs.append("--centreOrigin")
-    if params.get("save_vertices") is not None:
+    if params.get("save_vertices", None) is not None:
         cargs.extend([
             "--saveVertices",
-            execution.input_file(params.get("save_vertices"))
+            execution.input_file(params.get("save_vertices", None))
         ])
-    if params.get("verbose"):
+    if params.get("verbose", False):
         cargs.append("-v")
-    if params.get("use_pca_filter"):
+    if params.get("use_pca_filter", False):
         cargs.append("--usePCAfilter")
-    if params.get("num_modes") is not None:
+    if params.get("num_modes", None) is not None:
         cargs.extend([
             "-n",
-            str(params.get("num_modes"))
+            str(params.get("num_modes", None))
         ])
-    if params.get("single_boundary_corr"):
+    if params.get("single_boundary_corr", False):
         cargs.append("--singleBoundaryCorr")
-    if params.get("do_mvglm"):
+    if params.get("do_mvglm", False):
         cargs.append("--doMVGLM")
-    if params.get("concat_bvars"):
+    if params.get("concat_bvars", False):
         cargs.append("--concatBvars")
-    if params.get("debug_mode"):
+    if params.get("debug_mode", False):
         cargs.append("--debug")
-    if params.get("help"):
+    if params.get("help", False):
         cargs.append("-h")
     return cargs
 
@@ -498,7 +502,6 @@ def first_utils(
 __all__ = [
     "FIRST_UTILS_METADATA",
     "FirstUtilsOutputs",
-    "FirstUtilsParameters",
     "first_utils",
     "first_utils_execute",
     "first_utils_params",

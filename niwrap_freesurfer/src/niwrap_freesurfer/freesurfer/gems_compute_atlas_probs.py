@@ -14,7 +14,26 @@ GEMS_COMPUTE_ATLAS_PROBS_METADATA = Metadata(
 
 
 GemsComputeAtlasProbsParameters = typing.TypedDict('GemsComputeAtlasProbsParameters', {
-    "@type": typing.Literal["freesurfer.gems_compute_atlas_probs"],
+    "@type": typing.NotRequired[typing.Literal["freesurfer/gems_compute_atlas_probs"]],
+    "subjects_dir": str,
+    "mesh_collections": list[str],
+    "out_dir": str,
+    "segmentations_dir": typing.NotRequired[str | None],
+    "gt_from_fs": bool,
+    "segmentation_name": typing.NotRequired[str | None],
+    "multi_structure": bool,
+    "labels": typing.NotRequired[list[str] | None],
+    "from_samseg": bool,
+    "em_iterations": typing.NotRequired[float | None],
+    "show_figs": bool,
+    "save_figs": bool,
+    "save_average_figs": bool,
+    "subjects_file": typing.NotRequired[str | None],
+    "labels_file": typing.NotRequired[str | None],
+    "samseg_subdir": typing.NotRequired[str | None],
+})
+GemsComputeAtlasProbsParametersTagged = typing.TypedDict('GemsComputeAtlasProbsParametersTagged', {
+    "@type": typing.Literal["freesurfer/gems_compute_atlas_probs"],
     "subjects_dir": str,
     "mesh_collections": list[str],
     "out_dir": str,
@@ -34,40 +53,9 @@ GemsComputeAtlasProbsParameters = typing.TypedDict('GemsComputeAtlasProbsParamet
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "freesurfer.gems_compute_atlas_probs": gems_compute_atlas_probs_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-    }.get(t)
-
-
 class GemsComputeAtlasProbsOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `gems_compute_atlas_probs(...)`.
+    Output object returned when calling `GemsComputeAtlasProbsParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -90,7 +78,7 @@ def gems_compute_atlas_probs_params(
     subjects_file: str | None = None,
     labels_file: str | None = None,
     samseg_subdir: str | None = None,
-) -> GemsComputeAtlasProbsParameters:
+) -> GemsComputeAtlasProbsParametersTagged:
     """
     Build parameters.
     
@@ -117,7 +105,7 @@ def gems_compute_atlas_probs_params(
         Parameter dictionary
     """
     params = {
-        "@type": "freesurfer.gems_compute_atlas_probs",
+        "@type": "freesurfer/gems_compute_atlas_probs",
         "subjects_dir": subjects_dir,
         "mesh_collections": mesh_collections,
         "out_dir": out_dir,
@@ -162,62 +150,62 @@ def gems_compute_atlas_probs_cargs(
     cargs.append("gems_compute_atlas_probs")
     cargs.extend([
         "--subjects-dir",
-        params.get("subjects_dir")
+        params.get("subjects_dir", None)
     ])
     cargs.extend([
         "--mesh-collections",
-        *params.get("mesh_collections")
+        *params.get("mesh_collections", None)
     ])
     cargs.extend([
         "--out-dir",
-        params.get("out_dir")
+        params.get("out_dir", None)
     ])
-    if params.get("segmentations_dir") is not None:
+    if params.get("segmentations_dir", None) is not None:
         cargs.extend([
             "--segmentations-dir",
-            params.get("segmentations_dir")
+            params.get("segmentations_dir", None)
         ])
-    if params.get("gt_from_fs"):
+    if params.get("gt_from_fs", False):
         cargs.append("--gt-from-FS")
-    if params.get("segmentation_name") is not None:
+    if params.get("segmentation_name", None) is not None:
         cargs.extend([
             "--segmentation-name",
-            params.get("segmentation_name")
+            params.get("segmentation_name", None)
         ])
-    if params.get("multi_structure"):
+    if params.get("multi_structure", False):
         cargs.append("--multi-structure")
-    if params.get("labels") is not None:
+    if params.get("labels", None) is not None:
         cargs.extend([
             "--labels",
-            *params.get("labels")
+            *params.get("labels", None)
         ])
-    if params.get("from_samseg"):
+    if params.get("from_samseg", False):
         cargs.append("--from-samseg")
-    if params.get("em_iterations") is not None:
+    if params.get("em_iterations", None) is not None:
         cargs.extend([
             "--EM-iterations",
-            str(params.get("em_iterations"))
+            str(params.get("em_iterations", None))
         ])
-    if params.get("show_figs"):
+    if params.get("show_figs", False):
         cargs.append("--show-figs")
-    if params.get("save_figs"):
+    if params.get("save_figs", False):
         cargs.append("--save-figs")
-    if params.get("save_average_figs"):
+    if params.get("save_average_figs", False):
         cargs.append("--save-average-figs")
-    if params.get("subjects_file") is not None:
+    if params.get("subjects_file", None) is not None:
         cargs.extend([
             "--subjects_file",
-            params.get("subjects_file")
+            params.get("subjects_file", None)
         ])
-    if params.get("labels_file") is not None:
+    if params.get("labels_file", None) is not None:
         cargs.extend([
             "--labels_file",
-            params.get("labels_file")
+            params.get("labels_file", None)
         ])
-    if params.get("samseg_subdir") is not None:
+    if params.get("samseg_subdir", None) is not None:
         cargs.extend([
             "--samseg-subdir",
-            params.get("samseg_subdir")
+            params.get("samseg_subdir", None)
         ])
     return cargs
 
@@ -344,7 +332,6 @@ def gems_compute_atlas_probs(
 __all__ = [
     "GEMS_COMPUTE_ATLAS_PROBS_METADATA",
     "GemsComputeAtlasProbsOutputs",
-    "GemsComputeAtlasProbsParameters",
     "gems_compute_atlas_probs",
     "gems_compute_atlas_probs_execute",
     "gems_compute_atlas_probs_params",

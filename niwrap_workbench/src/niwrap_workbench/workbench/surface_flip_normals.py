@@ -14,47 +14,20 @@ SURFACE_FLIP_NORMALS_METADATA = Metadata(
 
 
 SurfaceFlipNormalsParameters = typing.TypedDict('SurfaceFlipNormalsParameters', {
-    "@type": typing.Literal["workbench.surface-flip-normals"],
+    "@type": typing.NotRequired[typing.Literal["workbench/surface-flip-normals"]],
+    "surface": InputPathType,
+    "surface_out": str,
+})
+SurfaceFlipNormalsParametersTagged = typing.TypedDict('SurfaceFlipNormalsParametersTagged', {
+    "@type": typing.Literal["workbench/surface-flip-normals"],
     "surface": InputPathType,
     "surface_out": str,
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "workbench.surface-flip-normals": surface_flip_normals_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "workbench.surface-flip-normals": surface_flip_normals_outputs,
-    }.get(t)
-
-
 class SurfaceFlipNormalsOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `surface_flip_normals(...)`.
+    Output object returned when calling `SurfaceFlipNormalsParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -65,7 +38,7 @@ class SurfaceFlipNormalsOutputs(typing.NamedTuple):
 def surface_flip_normals_params(
     surface: InputPathType,
     surface_out: str,
-) -> SurfaceFlipNormalsParameters:
+) -> SurfaceFlipNormalsParametersTagged:
     """
     Build parameters.
     
@@ -76,7 +49,7 @@ def surface_flip_normals_params(
         Parameter dictionary
     """
     params = {
-        "@type": "workbench.surface-flip-normals",
+        "@type": "workbench/surface-flip-normals",
         "surface": surface,
         "surface_out": surface_out,
     }
@@ -99,8 +72,8 @@ def surface_flip_normals_cargs(
     cargs = []
     cargs.append("wb_command")
     cargs.append("-surface-flip-normals")
-    cargs.append(execution.input_file(params.get("surface")))
-    cargs.append(params.get("surface_out"))
+    cargs.append(execution.input_file(params.get("surface", None)))
+    cargs.append(params.get("surface_out", None))
     return cargs
 
 
@@ -119,7 +92,7 @@ def surface_flip_normals_outputs(
     """
     ret = SurfaceFlipNormalsOutputs(
         root=execution.output_file("."),
-        surface_out=execution.output_file(params.get("surface_out")),
+        surface_out=execution.output_file(params.get("surface_out", None)),
     )
     return ret
 
@@ -197,7 +170,6 @@ def surface_flip_normals(
 __all__ = [
     "SURFACE_FLIP_NORMALS_METADATA",
     "SurfaceFlipNormalsOutputs",
-    "SurfaceFlipNormalsParameters",
     "surface_flip_normals",
     "surface_flip_normals_execute",
     "surface_flip_normals_params",

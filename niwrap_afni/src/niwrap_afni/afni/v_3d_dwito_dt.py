@@ -14,7 +14,36 @@ V_3D_DWITO_DT_METADATA = Metadata(
 
 
 V3dDwitoDtParameters = typing.TypedDict('V3dDwitoDtParameters', {
-    "@type": typing.Literal["afni.3dDWItoDT"],
+    "@type": typing.NotRequired[typing.Literal["afni/3dDWItoDT"]],
+    "gradient_file": InputPathType,
+    "dataset": InputPathType,
+    "prefix": typing.NotRequired[str | None],
+    "automask": bool,
+    "mask": typing.NotRequired[InputPathType | None],
+    "bmatrix_NZ": typing.NotRequired[InputPathType | None],
+    "bmatrix_Z": typing.NotRequired[InputPathType | None],
+    "bmatrix_FULL": typing.NotRequired[InputPathType | None],
+    "scale_out_1000": bool,
+    "bmax_ref": typing.NotRequired[float | None],
+    "nonlinear": bool,
+    "linear": bool,
+    "reweight": bool,
+    "max_iter": typing.NotRequired[int | None],
+    "max_iter_rw": typing.NotRequired[int | None],
+    "eigs": bool,
+    "debug_briks": bool,
+    "cumulative_wts": bool,
+    "verbose": typing.NotRequired[int | None],
+    "drive_afni": typing.NotRequired[int | None],
+    "sep_dsets": bool,
+    "csf_val": typing.NotRequired[float | None],
+    "min_bad_md": typing.NotRequired[int | None],
+    "csf_fa": typing.NotRequired[float | None],
+    "opt": typing.NotRequired[str | None],
+    "mean_b0": bool,
+})
+V3dDwitoDtParametersTagged = typing.TypedDict('V3dDwitoDtParametersTagged', {
+    "@type": typing.Literal["afni/3dDWItoDT"],
     "gradient_file": InputPathType,
     "dataset": InputPathType,
     "prefix": typing.NotRequired[str | None],
@@ -44,40 +73,9 @@ V3dDwitoDtParameters = typing.TypedDict('V3dDwitoDtParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "afni.3dDWItoDT": v_3d_dwito_dt_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-    }.get(t)
-
-
 class V3dDwitoDtOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `v_3d_dwito_dt(...)`.
+    Output object returned when calling `V3dDwitoDtParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -110,7 +108,7 @@ def v_3d_dwito_dt_params(
     csf_fa: float | None = None,
     opt: str | None = None,
     mean_b0: bool = False,
-) -> V3dDwitoDtParameters:
+) -> V3dDwitoDtParametersTagged:
     """
     Build parameters.
     
@@ -160,7 +158,7 @@ def v_3d_dwito_dt_params(
         Parameter dictionary
     """
     params = {
-        "@type": "afni.3dDWItoDT",
+        "@type": "afni/3dDWItoDT",
         "gradient_file": gradient_file,
         "dataset": dataset,
         "automask": automask,
@@ -220,97 +218,97 @@ def v_3d_dwito_dt_cargs(
     """
     cargs = []
     cargs.append("3dDWItoDT")
-    cargs.append(execution.input_file(params.get("gradient_file")))
-    cargs.append(execution.input_file(params.get("dataset")))
-    if params.get("prefix") is not None:
+    cargs.append(execution.input_file(params.get("gradient_file", None)))
+    cargs.append(execution.input_file(params.get("dataset", None)))
+    if params.get("prefix", None) is not None:
         cargs.extend([
             "-prefix",
-            params.get("prefix")
+            params.get("prefix", None)
         ])
-    if params.get("automask"):
+    if params.get("automask", False):
         cargs.append("-automask")
-    if params.get("mask") is not None:
+    if params.get("mask", None) is not None:
         cargs.extend([
             "-mask",
-            execution.input_file(params.get("mask"))
+            execution.input_file(params.get("mask", None))
         ])
-    if params.get("bmatrix_NZ") is not None:
+    if params.get("bmatrix_NZ", None) is not None:
         cargs.extend([
             "-bmatrix_NZ",
-            execution.input_file(params.get("bmatrix_NZ"))
+            execution.input_file(params.get("bmatrix_NZ", None))
         ])
-    if params.get("bmatrix_Z") is not None:
+    if params.get("bmatrix_Z", None) is not None:
         cargs.extend([
             "-bmatrix_Z",
-            execution.input_file(params.get("bmatrix_Z"))
+            execution.input_file(params.get("bmatrix_Z", None))
         ])
-    if params.get("bmatrix_FULL") is not None:
+    if params.get("bmatrix_FULL", None) is not None:
         cargs.extend([
             "-bmatrix_FULL",
-            execution.input_file(params.get("bmatrix_FULL"))
+            execution.input_file(params.get("bmatrix_FULL", None))
         ])
-    if params.get("scale_out_1000"):
+    if params.get("scale_out_1000", False):
         cargs.append("-scale_out_1000")
-    if params.get("bmax_ref") is not None:
+    if params.get("bmax_ref", None) is not None:
         cargs.extend([
             "-bmax_ref",
-            str(params.get("bmax_ref"))
+            str(params.get("bmax_ref", None))
         ])
-    if params.get("nonlinear"):
+    if params.get("nonlinear", False):
         cargs.append("-nonlinear")
-    if params.get("linear"):
+    if params.get("linear", False):
         cargs.append("-linear")
-    if params.get("reweight"):
+    if params.get("reweight", False):
         cargs.append("-reweight")
-    if params.get("max_iter") is not None:
+    if params.get("max_iter", None) is not None:
         cargs.extend([
             "-max_iter",
-            str(params.get("max_iter"))
+            str(params.get("max_iter", None))
         ])
-    if params.get("max_iter_rw") is not None:
+    if params.get("max_iter_rw", None) is not None:
         cargs.extend([
             "-max_iter_rw",
-            str(params.get("max_iter_rw"))
+            str(params.get("max_iter_rw", None))
         ])
-    if params.get("eigs"):
+    if params.get("eigs", False):
         cargs.append("-eigs")
-    if params.get("debug_briks"):
+    if params.get("debug_briks", False):
         cargs.append("-debug_briks")
-    if params.get("cumulative_wts"):
+    if params.get("cumulative_wts", False):
         cargs.append("-cumulative_wts")
-    if params.get("verbose") is not None:
+    if params.get("verbose", None) is not None:
         cargs.extend([
             "-verbose",
-            str(params.get("verbose"))
+            str(params.get("verbose", None))
         ])
-    if params.get("drive_afni") is not None:
+    if params.get("drive_afni", None) is not None:
         cargs.extend([
             "-drive_afni",
-            str(params.get("drive_afni"))
+            str(params.get("drive_afni", None))
         ])
-    if params.get("sep_dsets"):
+    if params.get("sep_dsets", False):
         cargs.append("-sep_dsets")
-    if params.get("csf_val") is not None:
+    if params.get("csf_val", None) is not None:
         cargs.extend([
             "-csf_val",
-            str(params.get("csf_val"))
+            str(params.get("csf_val", None))
         ])
-    if params.get("min_bad_md") is not None:
+    if params.get("min_bad_md", None) is not None:
         cargs.extend([
             "-min_bad_md",
-            str(params.get("min_bad_md"))
+            str(params.get("min_bad_md", None))
         ])
-    if params.get("csf_fa") is not None:
+    if params.get("csf_fa", None) is not None:
         cargs.extend([
             "-csf_fa",
-            str(params.get("csf_fa"))
+            str(params.get("csf_fa", None))
         ])
-    if params.get("opt") is not None:
+    if params.get("opt", None) is not None:
         cargs.extend([
             "-opt",
-            params.get("opt")
+            params.get("opt", None)
         ])
-    if params.get("mean_b0"):
+    if params.get("mean_b0", False):
         cargs.append("-mean_b0")
     return cargs
 
@@ -481,7 +479,6 @@ def v_3d_dwito_dt(
 
 __all__ = [
     "V3dDwitoDtOutputs",
-    "V3dDwitoDtParameters",
     "V_3D_DWITO_DT_METADATA",
     "v_3d_dwito_dt",
     "v_3d_dwito_dt_execute",

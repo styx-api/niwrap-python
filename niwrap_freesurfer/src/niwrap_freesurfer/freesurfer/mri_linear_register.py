@@ -14,48 +14,22 @@ MRI_LINEAR_REGISTER_METADATA = Metadata(
 
 
 MriLinearRegisterParameters = typing.TypedDict('MriLinearRegisterParameters', {
-    "@type": typing.Literal["freesurfer.mri_linear_register"],
+    "@type": typing.NotRequired[typing.Literal["freesurfer/mri_linear_register"]],
+    "input_brain": InputPathType,
+    "template": InputPathType,
+    "output_file": str,
+})
+MriLinearRegisterParametersTagged = typing.TypedDict('MriLinearRegisterParametersTagged', {
+    "@type": typing.Literal["freesurfer/mri_linear_register"],
     "input_brain": InputPathType,
     "template": InputPathType,
     "output_file": str,
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "freesurfer.mri_linear_register": mri_linear_register_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "freesurfer.mri_linear_register": mri_linear_register_outputs,
-    }.get(t)
-
-
 class MriLinearRegisterOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `mri_linear_register(...)`.
+    Output object returned when calling `MriLinearRegisterParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -67,7 +41,7 @@ def mri_linear_register_params(
     input_brain: InputPathType,
     template: InputPathType,
     output_file: str,
-) -> MriLinearRegisterParameters:
+) -> MriLinearRegisterParametersTagged:
     """
     Build parameters.
     
@@ -79,7 +53,7 @@ def mri_linear_register_params(
         Parameter dictionary
     """
     params = {
-        "@type": "freesurfer.mri_linear_register",
+        "@type": "freesurfer/mri_linear_register",
         "input_brain": input_brain,
         "template": template,
         "output_file": output_file,
@@ -102,9 +76,9 @@ def mri_linear_register_cargs(
     """
     cargs = []
     cargs.append("mri_linear_register")
-    cargs.append(execution.input_file(params.get("input_brain")))
-    cargs.append(execution.input_file(params.get("template")))
-    cargs.append(params.get("output_file"))
+    cargs.append(execution.input_file(params.get("input_brain", None)))
+    cargs.append(execution.input_file(params.get("template", None)))
+    cargs.append(params.get("output_file", None))
     return cargs
 
 
@@ -123,7 +97,7 @@ def mri_linear_register_outputs(
     """
     ret = MriLinearRegisterOutputs(
         root=execution.output_file("."),
-        output_registered_image=execution.output_file(params.get("output_file")),
+        output_registered_image=execution.output_file(params.get("output_file", None)),
     )
     return ret
 
@@ -190,7 +164,6 @@ def mri_linear_register(
 __all__ = [
     "MRI_LINEAR_REGISTER_METADATA",
     "MriLinearRegisterOutputs",
-    "MriLinearRegisterParameters",
     "mri_linear_register",
     "mri_linear_register_execute",
     "mri_linear_register_params",

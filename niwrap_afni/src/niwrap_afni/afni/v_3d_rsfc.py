@@ -14,7 +14,34 @@ V_3D_RSFC_METADATA = Metadata(
 
 
 V3dRsfcParameters = typing.TypedDict('V3dRsfcParameters', {
-    "@type": typing.Literal["afni.3dRSFC"],
+    "@type": typing.NotRequired[typing.Literal["afni/3dRSFC"]],
+    "fbot": float,
+    "ftop": float,
+    "input_dataset": InputPathType,
+    "despike": bool,
+    "ort_file": typing.NotRequired[InputPathType | None],
+    "dsort_file": typing.NotRequired[InputPathType | None],
+    "nodetrend": bool,
+    "time_step": typing.NotRequired[float | None],
+    "nfft": typing.NotRequired[int | None],
+    "norm": bool,
+    "mask": typing.NotRequired[InputPathType | None],
+    "automask": bool,
+    "blur": typing.NotRequired[float | None],
+    "localpv": typing.NotRequired[float | None],
+    "input_alt": typing.NotRequired[InputPathType | None],
+    "band": typing.NotRequired[list[float] | None],
+    "prefix": typing.NotRequired[str | None],
+    "quiet": bool,
+    "no_rs_out": bool,
+    "un_bandpass_out": bool,
+    "no_rsfa": bool,
+    "bp_at_end": bool,
+    "notrans": bool,
+    "nosat": bool,
+})
+V3dRsfcParametersTagged = typing.TypedDict('V3dRsfcParametersTagged', {
+    "@type": typing.Literal["afni/3dRSFC"],
     "fbot": float,
     "ftop": float,
     "input_dataset": InputPathType,
@@ -42,41 +69,9 @@ V3dRsfcParameters = typing.TypedDict('V3dRsfcParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "afni.3dRSFC": v_3d_rsfc_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "afni.3dRSFC": v_3d_rsfc_outputs,
-    }.get(t)
-
-
 class V3dRsfcOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `v_3d_rsfc(...)`.
+    Output object returned when calling `V3dRsfcParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -111,7 +106,7 @@ def v_3d_rsfc_params(
     bp_at_end: bool = False,
     notrans: bool = False,
     nosat: bool = False,
-) -> V3dRsfcParameters:
+) -> V3dRsfcParametersTagged:
     """
     Build parameters.
     
@@ -147,7 +142,7 @@ def v_3d_rsfc_params(
         Parameter dictionary
     """
     params = {
-        "@type": "afni.3dRSFC",
+        "@type": "afni/3dRSFC",
         "fbot": fbot,
         "ftop": ftop,
         "input_dataset": input_dataset,
@@ -201,80 +196,80 @@ def v_3d_rsfc_cargs(
     """
     cargs = []
     cargs.append("3dRSFC")
-    cargs.append(str(params.get("fbot")))
-    cargs.append(str(params.get("ftop")))
-    cargs.append(execution.input_file(params.get("input_dataset")))
-    if params.get("despike"):
+    cargs.append(str(params.get("fbot", None)))
+    cargs.append(str(params.get("ftop", None)))
+    cargs.append(execution.input_file(params.get("input_dataset", None)))
+    if params.get("despike", False):
         cargs.append("-despike")
-    if params.get("ort_file") is not None:
+    if params.get("ort_file", None) is not None:
         cargs.extend([
             "-ort",
-            execution.input_file(params.get("ort_file"))
+            execution.input_file(params.get("ort_file", None))
         ])
-    if params.get("dsort_file") is not None:
+    if params.get("dsort_file", None) is not None:
         cargs.extend([
             "-dsort",
-            execution.input_file(params.get("dsort_file"))
+            execution.input_file(params.get("dsort_file", None))
         ])
-    if params.get("nodetrend"):
+    if params.get("nodetrend", False):
         cargs.append("-nodetrend")
-    if params.get("time_step") is not None:
+    if params.get("time_step", None) is not None:
         cargs.extend([
             "-dt",
-            str(params.get("time_step"))
+            str(params.get("time_step", None))
         ])
-    if params.get("nfft") is not None:
+    if params.get("nfft", None) is not None:
         cargs.extend([
             "-nfft",
-            str(params.get("nfft"))
+            str(params.get("nfft", None))
         ])
-    if params.get("norm"):
+    if params.get("norm", False):
         cargs.append("-norm")
-    if params.get("mask") is not None:
+    if params.get("mask", None) is not None:
         cargs.extend([
             "-mask",
-            execution.input_file(params.get("mask"))
+            execution.input_file(params.get("mask", None))
         ])
-    if params.get("automask"):
+    if params.get("automask", False):
         cargs.append("-automask")
-    if params.get("blur") is not None:
+    if params.get("blur", None) is not None:
         cargs.extend([
             "-blur",
-            str(params.get("blur"))
+            str(params.get("blur", None))
         ])
-    if params.get("localpv") is not None:
+    if params.get("localpv", None) is not None:
         cargs.extend([
             "-localPV",
-            str(params.get("localpv"))
+            str(params.get("localpv", None))
         ])
-    if params.get("input_alt") is not None:
+    if params.get("input_alt", None) is not None:
         cargs.extend([
             "-input",
-            execution.input_file(params.get("input_alt"))
+            execution.input_file(params.get("input_alt", None))
         ])
-    if params.get("band") is not None:
+    if params.get("band", None) is not None:
         cargs.extend([
             "-band",
-            *map(str, params.get("band"))
+            *map(str, params.get("band", None))
         ])
-    if params.get("prefix") is not None:
+    if params.get("prefix", None) is not None:
         cargs.extend([
             "-prefix",
-            params.get("prefix")
+            params.get("prefix", None)
         ])
-    if params.get("quiet"):
+    if params.get("quiet", False):
         cargs.append("-quiet")
-    if params.get("no_rs_out"):
+    if params.get("no_rs_out", False):
         cargs.append("-no_rs_out")
-    if params.get("un_bandpass_out"):
+    if params.get("un_bandpass_out", False):
         cargs.append("-un_bp_out")
-    if params.get("no_rsfa"):
+    if params.get("no_rsfa", False):
         cargs.append("-no_rsfa")
-    if params.get("bp_at_end"):
+    if params.get("bp_at_end", False):
         cargs.append("-bp_at_end")
-    if params.get("notrans"):
+    if params.get("notrans", False):
         cargs.append("-notrans")
-    if params.get("nosat"):
+    if params.get("nosat", False):
         cargs.append("-nosat")
     return cargs
 
@@ -294,8 +289,8 @@ def v_3d_rsfc_outputs(
     """
     ret = V3dRsfcOutputs(
         root=execution.output_file("."),
-        filtered_time_series=execution.output_file(params.get("prefix") + "_LFF+orig") if (params.get("prefix") is not None) else None,
-        un_bandpassed_series=execution.output_file(params.get("prefix") + "_unBP+orig") if (params.get("prefix") is not None) else None,
+        filtered_time_series=execution.output_file(params.get("prefix", None) + "_LFF+orig") if (params.get("prefix") is not None) else None,
+        un_bandpassed_series=execution.output_file(params.get("prefix", None) + "_unBP+orig") if (params.get("prefix") is not None) else None,
     )
     return ret
 
@@ -429,7 +424,6 @@ def v_3d_rsfc(
 
 __all__ = [
     "V3dRsfcOutputs",
-    "V3dRsfcParameters",
     "V_3D_RSFC_METADATA",
     "v_3d_rsfc",
     "v_3d_rsfc_execute",

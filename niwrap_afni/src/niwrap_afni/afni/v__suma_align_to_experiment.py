@@ -14,7 +14,30 @@ V__SUMA_ALIGN_TO_EXPERIMENT_METADATA = Metadata(
 
 
 VSumaAlignToExperimentParameters = typing.TypedDict('VSumaAlignToExperimentParameters', {
-    "@type": typing.Literal["afni.@SUMA_AlignToExperiment"],
+    "@type": typing.NotRequired[typing.Literal["afni/@SUMA_AlignToExperiment"]],
+    "exp_anat": InputPathType,
+    "surf_anat": InputPathType,
+    "dxyz": typing.NotRequired[float | None],
+    "out_dxyz": typing.NotRequired[float | None],
+    "wd": bool,
+    "al": bool,
+    "al_opt": typing.NotRequired[str | None],
+    "ok_change_view": bool,
+    "strip_skull": typing.NotRequired[str | None],
+    "skull_strip_opt": typing.NotRequired[str | None],
+    "align_centers": bool,
+    "init_xform": typing.NotRequired[InputPathType | None],
+    "EA_clip_below": typing.NotRequired[float | None],
+    "prefix": typing.NotRequired[str | None],
+    "surf_anat_followers": typing.NotRequired[str | None],
+    "followers_interp": typing.NotRequired[str | None],
+    "atlas_followers": bool,
+    "echo": bool,
+    "keep_tmp": bool,
+    "overwrite_resp": typing.NotRequired[str | None],
+})
+VSumaAlignToExperimentParametersTagged = typing.TypedDict('VSumaAlignToExperimentParametersTagged', {
+    "@type": typing.Literal["afni/@SUMA_AlignToExperiment"],
     "exp_anat": InputPathType,
     "surf_anat": InputPathType,
     "dxyz": typing.NotRequired[float | None],
@@ -38,41 +61,9 @@ VSumaAlignToExperimentParameters = typing.TypedDict('VSumaAlignToExperimentParam
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "afni.@SUMA_AlignToExperiment": v__suma_align_to_experiment_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "afni.@SUMA_AlignToExperiment": v__suma_align_to_experiment_outputs,
-    }.get(t)
-
-
 class VSumaAlignToExperimentOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `v__suma_align_to_experiment(...)`.
+    Output object returned when calling `VSumaAlignToExperimentParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -103,7 +94,7 @@ def v__suma_align_to_experiment_params(
     echo: bool = False,
     keep_tmp: bool = False,
     overwrite_resp: str | None = None,
-) -> VSumaAlignToExperimentParameters:
+) -> VSumaAlignToExperimentParametersTagged:
     """
     Build parameters.
     
@@ -143,7 +134,7 @@ def v__suma_align_to_experiment_params(
         Parameter dictionary
     """
     params = {
-        "@type": "afni.@SUMA_AlignToExperiment",
+        "@type": "afni/@SUMA_AlignToExperiment",
         "exp_anat": exp_anat,
         "surf_anat": surf_anat,
         "wd": wd,
@@ -196,80 +187,80 @@ def v__suma_align_to_experiment_cargs(
     cargs.append("@SUMA_AlignToExperiment")
     cargs.extend([
         "-exp_anat",
-        execution.input_file(params.get("exp_anat"))
+        execution.input_file(params.get("exp_anat", None))
     ])
     cargs.extend([
         "-surf_anat",
-        execution.input_file(params.get("surf_anat"))
+        execution.input_file(params.get("surf_anat", None))
     ])
-    if params.get("dxyz") is not None:
+    if params.get("dxyz", None) is not None:
         cargs.extend([
             "-dxyz",
-            str(params.get("dxyz"))
+            str(params.get("dxyz", None))
         ])
-    if params.get("out_dxyz") is not None:
+    if params.get("out_dxyz", None) is not None:
         cargs.extend([
             "-out_dxyz",
-            str(params.get("out_dxyz"))
+            str(params.get("out_dxyz", None))
         ])
-    if params.get("wd"):
+    if params.get("wd", False):
         cargs.append("-wd")
-    if params.get("al"):
+    if params.get("al", False):
         cargs.append("-al")
-    if params.get("al_opt") is not None:
+    if params.get("al_opt", None) is not None:
         cargs.extend([
             "-al_opt",
-            params.get("al_opt")
+            params.get("al_opt", None)
         ])
-    if params.get("ok_change_view"):
+    if params.get("ok_change_view", False):
         cargs.append("-ok_change_view")
-    if params.get("strip_skull") is not None:
+    if params.get("strip_skull", None) is not None:
         cargs.extend([
             "-strip_skull",
-            params.get("strip_skull")
+            params.get("strip_skull", None)
         ])
-    if params.get("skull_strip_opt") is not None:
+    if params.get("skull_strip_opt", None) is not None:
         cargs.extend([
             "-skull_strip_opt",
-            params.get("skull_strip_opt")
+            params.get("skull_strip_opt", None)
         ])
-    if params.get("align_centers"):
+    if params.get("align_centers", False):
         cargs.append("-align_centers")
-    if params.get("init_xform") is not None:
+    if params.get("init_xform", None) is not None:
         cargs.extend([
             "-init_xform",
-            execution.input_file(params.get("init_xform"))
+            execution.input_file(params.get("init_xform", None))
         ])
-    if params.get("EA_clip_below") is not None:
+    if params.get("EA_clip_below", None) is not None:
         cargs.extend([
             "-EA_clip_below",
-            str(params.get("EA_clip_below"))
+            str(params.get("EA_clip_below", None))
         ])
-    if params.get("prefix") is not None:
+    if params.get("prefix", None) is not None:
         cargs.extend([
             "-prefix",
-            params.get("prefix")
+            params.get("prefix", None)
         ])
-    if params.get("surf_anat_followers") is not None:
+    if params.get("surf_anat_followers", None) is not None:
         cargs.extend([
             "-surf_anat_followers",
-            params.get("surf_anat_followers")
+            params.get("surf_anat_followers", None)
         ])
-    if params.get("followers_interp") is not None:
+    if params.get("followers_interp", None) is not None:
         cargs.extend([
             "-followers_interp",
-            params.get("followers_interp")
+            params.get("followers_interp", None)
         ])
-    if params.get("atlas_followers"):
+    if params.get("atlas_followers", False):
         cargs.append("-atlas_followers")
-    if params.get("echo"):
+    if params.get("echo", False):
         cargs.append("-echo")
-    if params.get("keep_tmp"):
+    if params.get("keep_tmp", False):
         cargs.append("-keep_tmp")
-    if params.get("overwrite_resp") is not None:
+    if params.get("overwrite_resp", None) is not None:
         cargs.extend([
             "-overwrite_resp",
-            params.get("overwrite_resp")
+            params.get("overwrite_resp", None)
         ])
     return cargs
 
@@ -289,8 +280,8 @@ def v__suma_align_to_experiment_outputs(
     """
     ret = VSumaAlignToExperimentOutputs(
         root=execution.output_file("."),
-        aligned_volume=execution.output_file(params.get("prefix") + "_Alnd_Exp.nii.gz") if (params.get("prefix") is not None) else None,
-        additional_followers=execution.output_file(params.get("prefix") + "_Alnd_Exp_Fdset.nii.gz") if (params.get("prefix") is not None) else None,
+        aligned_volume=execution.output_file(params.get("prefix", None) + "_Alnd_Exp.nii.gz") if (params.get("prefix") is not None) else None,
+        additional_followers=execution.output_file(params.get("prefix", None) + "_Alnd_Exp_Fdset.nii.gz") if (params.get("prefix") is not None) else None,
     )
     return ret
 
@@ -420,7 +411,6 @@ def v__suma_align_to_experiment(
 
 __all__ = [
     "VSumaAlignToExperimentOutputs",
-    "VSumaAlignToExperimentParameters",
     "V__SUMA_ALIGN_TO_EXPERIMENT_METADATA",
     "v__suma_align_to_experiment",
     "v__suma_align_to_experiment_execute",

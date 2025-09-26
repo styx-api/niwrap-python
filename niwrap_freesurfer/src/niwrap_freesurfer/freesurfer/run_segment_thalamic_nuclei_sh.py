@@ -14,46 +14,20 @@ RUN_SEGMENT_THALAMIC_NUCLEI_SH_METADATA = Metadata(
 
 
 RunSegmentThalamicNucleiShParameters = typing.TypedDict('RunSegmentThalamicNucleiShParameters', {
-    "@type": typing.Literal["freesurfer.run_SegmentThalamicNuclei.sh"],
+    "@type": typing.NotRequired[typing.Literal["freesurfer/run_SegmentThalamicNuclei.sh"]],
+    "mcr_root": str,
+    "args": typing.NotRequired[list[str] | None],
+})
+RunSegmentThalamicNucleiShParametersTagged = typing.TypedDict('RunSegmentThalamicNucleiShParametersTagged', {
+    "@type": typing.Literal["freesurfer/run_SegmentThalamicNuclei.sh"],
     "mcr_root": str,
     "args": typing.NotRequired[list[str] | None],
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "freesurfer.run_SegmentThalamicNuclei.sh": run_segment_thalamic_nuclei_sh_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-    }.get(t)
-
-
 class RunSegmentThalamicNucleiShOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `run_segment_thalamic_nuclei_sh(...)`.
+    Output object returned when calling `RunSegmentThalamicNucleiShParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -62,7 +36,7 @@ class RunSegmentThalamicNucleiShOutputs(typing.NamedTuple):
 def run_segment_thalamic_nuclei_sh_params(
     mcr_root: str,
     args: list[str] | None = None,
-) -> RunSegmentThalamicNucleiShParameters:
+) -> RunSegmentThalamicNucleiShParametersTagged:
     """
     Build parameters.
     
@@ -74,7 +48,7 @@ def run_segment_thalamic_nuclei_sh_params(
         Parameter dictionary
     """
     params = {
-        "@type": "freesurfer.run_SegmentThalamicNuclei.sh",
+        "@type": "freesurfer/run_SegmentThalamicNuclei.sh",
         "mcr_root": mcr_root,
     }
     if args is not None:
@@ -97,9 +71,9 @@ def run_segment_thalamic_nuclei_sh_cargs(
     """
     cargs = []
     cargs.append("run_SegmentThalamicNuclei.sh")
-    cargs.append(params.get("mcr_root"))
-    if params.get("args") is not None:
-        cargs.extend(params.get("args"))
+    cargs.append(params.get("mcr_root", None))
+    if params.get("args", None) is not None:
+        cargs.extend(params.get("args", None))
     return cargs
 
 
@@ -182,7 +156,6 @@ def run_segment_thalamic_nuclei_sh(
 __all__ = [
     "RUN_SEGMENT_THALAMIC_NUCLEI_SH_METADATA",
     "RunSegmentThalamicNucleiShOutputs",
-    "RunSegmentThalamicNucleiShParameters",
     "run_segment_thalamic_nuclei_sh",
     "run_segment_thalamic_nuclei_sh_execute",
     "run_segment_thalamic_nuclei_sh_params",

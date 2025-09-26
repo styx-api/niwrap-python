@@ -14,48 +14,22 @@ V_1D_UPSAMPLE_METADATA = Metadata(
 
 
 V1dUpsampleParameters = typing.TypedDict('V1dUpsampleParameters', {
-    "@type": typing.Literal["afni.1dUpsample"],
+    "@type": typing.NotRequired[typing.Literal["afni/1dUpsample"]],
+    "upsample_factor": float,
+    "input_file": InputPathType,
+    "linear_interpolation": bool,
+})
+V1dUpsampleParametersTagged = typing.TypedDict('V1dUpsampleParametersTagged', {
+    "@type": typing.Literal["afni/1dUpsample"],
     "upsample_factor": float,
     "input_file": InputPathType,
     "linear_interpolation": bool,
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "afni.1dUpsample": v_1d_upsample_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "afni.1dUpsample": v_1d_upsample_outputs,
-    }.get(t)
-
-
 class V1dUpsampleOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `v_1d_upsample(...)`.
+    Output object returned when calling `V1dUpsampleParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -67,7 +41,7 @@ def v_1d_upsample_params(
     upsample_factor: float,
     input_file: InputPathType,
     linear_interpolation: bool = False,
-) -> V1dUpsampleParameters:
+) -> V1dUpsampleParametersTagged:
     """
     Build parameters.
     
@@ -80,7 +54,7 @@ def v_1d_upsample_params(
         Parameter dictionary
     """
     params = {
-        "@type": "afni.1dUpsample",
+        "@type": "afni/1dUpsample",
         "upsample_factor": upsample_factor,
         "input_file": input_file,
         "linear_interpolation": linear_interpolation,
@@ -103,9 +77,9 @@ def v_1d_upsample_cargs(
     """
     cargs = []
     cargs.append("1dUpsample")
-    cargs.append(str(params.get("upsample_factor")))
-    cargs.append(execution.input_file(params.get("input_file")))
-    if params.get("linear_interpolation"):
+    cargs.append(str(params.get("upsample_factor", None)))
+    cargs.append(execution.input_file(params.get("input_file", None)))
+    if params.get("linear_interpolation", False):
         cargs.append("-one")
     return cargs
 
@@ -192,7 +166,6 @@ def v_1d_upsample(
 
 __all__ = [
     "V1dUpsampleOutputs",
-    "V1dUpsampleParameters",
     "V_1D_UPSAMPLE_METADATA",
     "v_1d_upsample",
     "v_1d_upsample_execute",

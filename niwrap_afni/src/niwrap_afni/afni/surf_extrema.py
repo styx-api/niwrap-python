@@ -14,7 +14,18 @@ SURF_EXTREMA_METADATA = Metadata(
 
 
 SurfExtremaParameters = typing.TypedDict('SurfExtremaParameters', {
-    "@type": typing.Literal["afni.SurfExtrema"],
+    "@type": typing.NotRequired[typing.Literal["afni/SurfExtrema"]],
+    "input": typing.NotRequired[InputPathType | None],
+    "hood": typing.NotRequired[float | None],
+    "thresh": typing.NotRequired[float | None],
+    "gthresh": typing.NotRequired[float | None],
+    "gscale": typing.NotRequired[typing.Literal["NONE", "LMEAN", "GMEAN"] | None],
+    "extype": typing.NotRequired[typing.Literal["MAX", "MIN", "ABS"] | None],
+    "prefix": str,
+    "table": typing.NotRequired[str | None],
+})
+SurfExtremaParametersTagged = typing.TypedDict('SurfExtremaParametersTagged', {
+    "@type": typing.Literal["afni/SurfExtrema"],
     "input": typing.NotRequired[InputPathType | None],
     "hood": typing.NotRequired[float | None],
     "thresh": typing.NotRequired[float | None],
@@ -26,41 +37,9 @@ SurfExtremaParameters = typing.TypedDict('SurfExtremaParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "afni.SurfExtrema": surf_extrema_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "afni.SurfExtrema": surf_extrema_outputs,
-    }.get(t)
-
-
 class SurfExtremaOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `surf_extrema(...)`.
+    Output object returned when calling `SurfExtremaParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -79,7 +58,7 @@ def surf_extrema_params(
     gscale: typing.Literal["NONE", "LMEAN", "GMEAN"] | None = None,
     extype: typing.Literal["MAX", "MIN", "ABS"] | None = None,
     table: str | None = None,
-) -> SurfExtremaParameters:
+) -> SurfExtremaParametersTagged:
     """
     Build parameters.
     
@@ -99,7 +78,7 @@ def surf_extrema_params(
         Parameter dictionary
     """
     params = {
-        "@type": "afni.SurfExtrema",
+        "@type": "afni/SurfExtrema",
         "prefix": prefix,
     }
     if input_ is not None:
@@ -134,44 +113,44 @@ def surf_extrema_cargs(
     """
     cargs = []
     cargs.append("SurfExtrema")
-    if params.get("input") is not None:
+    if params.get("input", None) is not None:
         cargs.extend([
             "-input",
-            execution.input_file(params.get("input"))
+            execution.input_file(params.get("input", None))
         ])
-    if params.get("hood") is not None:
+    if params.get("hood", None) is not None:
         cargs.extend([
             "-nbhd_rad",
-            str(params.get("hood"))
+            str(params.get("hood", None))
         ])
-    if params.get("thresh") is not None:
+    if params.get("thresh", None) is not None:
         cargs.extend([
             "-thresh",
-            str(params.get("thresh"))
+            str(params.get("thresh", None))
         ])
-    if params.get("gthresh") is not None:
+    if params.get("gthresh", None) is not None:
         cargs.extend([
             "-gthresh",
-            str(params.get("gthresh"))
+            str(params.get("gthresh", None))
         ])
-    if params.get("gscale") is not None:
+    if params.get("gscale", None) is not None:
         cargs.extend([
             "-gscale",
-            params.get("gscale")
+            params.get("gscale", None)
         ])
-    if params.get("extype") is not None:
+    if params.get("extype", None) is not None:
         cargs.extend([
             "-extype",
-            params.get("extype")
+            params.get("extype", None)
         ])
     cargs.extend([
         "-prefix",
-        params.get("prefix")
+        params.get("prefix", None)
     ])
-    if params.get("table") is not None:
+    if params.get("table", None) is not None:
         cargs.extend([
             "-table",
-            params.get("table")
+            params.get("table", None)
         ])
     return cargs
 
@@ -191,8 +170,8 @@ def surf_extrema_outputs(
     """
     ret = SurfExtremaOutputs(
         root=execution.output_file("."),
-        output_grd=execution.output_file(params.get("prefix") + ".grd"),
-        output_ext=execution.output_file(params.get("prefix") + ".ext"),
+        output_grd=execution.output_file(params.get("prefix", None) + ".grd"),
+        output_ext=execution.output_file(params.get("prefix", None) + ".ext"),
     )
     return ret
 
@@ -277,7 +256,6 @@ def surf_extrema(
 __all__ = [
     "SURF_EXTREMA_METADATA",
     "SurfExtremaOutputs",
-    "SurfExtremaParameters",
     "surf_extrema",
     "surf_extrema_execute",
     "surf_extrema_params",

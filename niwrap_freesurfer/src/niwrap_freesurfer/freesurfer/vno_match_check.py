@@ -14,7 +14,14 @@ VNO_MATCH_CHECK_METADATA = Metadata(
 
 
 VnoMatchCheckParameters = typing.TypedDict('VnoMatchCheckParameters', {
-    "@type": typing.Literal["freesurfer.vno_match_check"],
+    "@type": typing.NotRequired[typing.Literal["freesurfer/vno_match_check"]],
+    "subjid": str,
+    "debug": bool,
+    "right_hemi": bool,
+    "left_hemi": bool,
+})
+VnoMatchCheckParametersTagged = typing.TypedDict('VnoMatchCheckParametersTagged', {
+    "@type": typing.Literal["freesurfer/vno_match_check"],
     "subjid": str,
     "debug": bool,
     "right_hemi": bool,
@@ -22,40 +29,9 @@ VnoMatchCheckParameters = typing.TypedDict('VnoMatchCheckParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "freesurfer.vno_match_check": vno_match_check_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-    }.get(t)
-
-
 class VnoMatchCheckOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `vno_match_check(...)`.
+    Output object returned when calling `VnoMatchCheckParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -66,7 +42,7 @@ def vno_match_check_params(
     debug: bool = False,
     right_hemi: bool = False,
     left_hemi: bool = False,
-) -> VnoMatchCheckParameters:
+) -> VnoMatchCheckParametersTagged:
     """
     Build parameters.
     
@@ -79,7 +55,7 @@ def vno_match_check_params(
         Parameter dictionary
     """
     params = {
-        "@type": "freesurfer.vno_match_check",
+        "@type": "freesurfer/vno_match_check",
         "subjid": subjid,
         "debug": debug,
         "right_hemi": right_hemi,
@@ -103,12 +79,12 @@ def vno_match_check_cargs(
     """
     cargs = []
     cargs.append("vno_match_check")
-    cargs.append(params.get("subjid"))
-    if params.get("debug"):
+    cargs.append(params.get("subjid", None))
+    if params.get("debug", False):
         cargs.append("debug")
-    if params.get("right_hemi"):
+    if params.get("right_hemi", False):
         cargs.append("rh")
-    if params.get("left_hemi"):
+    if params.get("left_hemi", False):
         cargs.append("lh")
     return cargs
 
@@ -199,7 +175,6 @@ def vno_match_check(
 __all__ = [
     "VNO_MATCH_CHECK_METADATA",
     "VnoMatchCheckOutputs",
-    "VnoMatchCheckParameters",
     "vno_match_check",
     "vno_match_check_execute",
     "vno_match_check_params",

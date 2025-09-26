@@ -14,7 +14,16 @@ GET_AFNI_MODEL_PRF_6_BAD_METADATA = Metadata(
 
 
 GetAfniModelPrf6BadParameters = typing.TypedDict('GetAfniModelPrf6BadParameters', {
-    "@type": typing.Literal["afni.get_afni_model_PRF_6_BAD"],
+    "@type": typing.NotRequired[typing.Literal["afni/get_afni_model_PRF_6_BAD"]],
+    "amplitude": float,
+    "x_coord": float,
+    "y_coord": float,
+    "sigma": float,
+    "sigrat": float,
+    "theta": float,
+})
+GetAfniModelPrf6BadParametersTagged = typing.TypedDict('GetAfniModelPrf6BadParametersTagged', {
+    "@type": typing.Literal["afni/get_afni_model_PRF_6_BAD"],
     "amplitude": float,
     "x_coord": float,
     "y_coord": float,
@@ -24,40 +33,9 @@ GetAfniModelPrf6BadParameters = typing.TypedDict('GetAfniModelPrf6BadParameters'
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "afni.get_afni_model_PRF_6_BAD": get_afni_model_prf_6_bad_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-    }.get(t)
-
-
 class GetAfniModelPrf6BadOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `get_afni_model_prf_6_bad(...)`.
+    Output object returned when calling `GetAfniModelPrf6BadParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -70,7 +48,7 @@ def get_afni_model_prf_6_bad_params(
     sigma: float,
     sigrat: float,
     theta: float,
-) -> GetAfniModelPrf6BadParameters:
+) -> GetAfniModelPrf6BadParametersTagged:
     """
     Build parameters.
     
@@ -85,7 +63,7 @@ def get_afni_model_prf_6_bad_params(
         Parameter dictionary
     """
     params = {
-        "@type": "afni.get_afni_model_PRF_6_BAD",
+        "@type": "afni/get_afni_model_PRF_6_BAD",
         "amplitude": amplitude,
         "x_coord": x_coord,
         "y_coord": y_coord,
@@ -111,12 +89,12 @@ def get_afni_model_prf_6_bad_cargs(
     """
     cargs = []
     cargs.append("get_afni_model_PRF_6_BAD")
-    cargs.append(str(params.get("amplitude")))
-    cargs.append(str(params.get("x_coord")))
-    cargs.append(str(params.get("y_coord")))
-    cargs.append(str(params.get("sigma")))
-    cargs.append(str(params.get("sigrat")))
-    cargs.append(str(params.get("theta")))
+    cargs.append(str(params.get("amplitude", None)))
+    cargs.append(str(params.get("x_coord", None)))
+    cargs.append(str(params.get("y_coord", None)))
+    cargs.append(str(params.get("sigma", None)))
+    cargs.append(str(params.get("sigrat", None)))
+    cargs.append(str(params.get("theta", None)))
     return cargs
 
 
@@ -210,7 +188,6 @@ def get_afni_model_prf_6_bad(
 __all__ = [
     "GET_AFNI_MODEL_PRF_6_BAD_METADATA",
     "GetAfniModelPrf6BadOutputs",
-    "GetAfniModelPrf6BadParameters",
     "get_afni_model_prf_6_bad",
     "get_afni_model_prf_6_bad_execute",
     "get_afni_model_prf_6_bad_params",

@@ -14,7 +14,18 @@ IMCUTUP_METADATA = Metadata(
 
 
 ImcutupParameters = typing.TypedDict('ImcutupParameters', {
-    "@type": typing.Literal["afni.imcutup"],
+    "@type": typing.NotRequired[typing.Literal["afni/imcutup"]],
+    "prefix": typing.NotRequired[str | None],
+    "xynum": bool,
+    "yxnum": bool,
+    "xynum_format": bool,
+    "yxnum_format": bool,
+    "nx": int,
+    "ny": int,
+    "input_file": InputPathType,
+})
+ImcutupParametersTagged = typing.TypedDict('ImcutupParametersTagged', {
+    "@type": typing.Literal["afni/imcutup"],
     "prefix": typing.NotRequired[str | None],
     "xynum": bool,
     "yxnum": bool,
@@ -26,40 +37,9 @@ ImcutupParameters = typing.TypedDict('ImcutupParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "afni.imcutup": imcutup_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-    }.get(t)
-
-
 class ImcutupOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `imcutup(...)`.
+    Output object returned when calling `ImcutupParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -74,7 +54,7 @@ def imcutup_params(
     yxnum: bool = False,
     xynum_format: bool = False,
     yxnum_format: bool = False,
-) -> ImcutupParameters:
+) -> ImcutupParametersTagged:
     """
     Build parameters.
     
@@ -91,7 +71,7 @@ def imcutup_params(
         Parameter dictionary
     """
     params = {
-        "@type": "afni.imcutup",
+        "@type": "afni/imcutup",
         "xynum": xynum,
         "yxnum": yxnum,
         "xynum_format": xynum_format,
@@ -120,22 +100,22 @@ def imcutup_cargs(
     """
     cargs = []
     cargs.append("imcutup")
-    if params.get("prefix") is not None:
+    if params.get("prefix", None) is not None:
         cargs.extend([
             "-prefix",
-            params.get("prefix")
+            params.get("prefix", None)
         ])
-    if params.get("xynum"):
+    if params.get("xynum", False):
         cargs.append("-xynum")
-    if params.get("yxnum"):
+    if params.get("yxnum", False):
         cargs.append("-yxnum")
-    if params.get("xynum_format"):
+    if params.get("xynum_format", False):
         cargs.append("-x.ynum")
-    if params.get("yxnum_format"):
+    if params.get("yxnum_format", False):
         cargs.append("-y.xnum")
-    cargs.append(str(params.get("nx")))
-    cargs.append(str(params.get("ny")))
-    cargs.append(execution.input_file(params.get("input_file")))
+    cargs.append(str(params.get("nx", None)))
+    cargs.append(str(params.get("ny", None)))
+    cargs.append(execution.input_file(params.get("input_file", None)))
     return cargs
 
 
@@ -235,7 +215,6 @@ def imcutup(
 __all__ = [
     "IMCUTUP_METADATA",
     "ImcutupOutputs",
-    "ImcutupParameters",
     "imcutup",
     "imcutup_execute",
     "imcutup_params",

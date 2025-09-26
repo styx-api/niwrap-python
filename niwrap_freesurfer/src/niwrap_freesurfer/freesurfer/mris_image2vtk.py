@@ -14,7 +14,17 @@ MRIS_IMAGE2VTK_METADATA = Metadata(
 
 
 MrisImage2vtkParameters = typing.TypedDict('MrisImage2vtkParameters', {
-    "@type": typing.Literal["freesurfer.mris_image2vtk"],
+    "@type": typing.NotRequired[typing.Literal["freesurfer/mris_image2vtk"]],
+    "input_filename": InputPathType,
+    "output_filename": str,
+    "lower_threshold": float,
+    "upper_threshold": float,
+    "vtk_smoothing_iters": float,
+    "image_smoothing_size": float,
+    "reduction_percent": float,
+})
+MrisImage2vtkParametersTagged = typing.TypedDict('MrisImage2vtkParametersTagged', {
+    "@type": typing.Literal["freesurfer/mris_image2vtk"],
     "input_filename": InputPathType,
     "output_filename": str,
     "lower_threshold": float,
@@ -25,41 +35,9 @@ MrisImage2vtkParameters = typing.TypedDict('MrisImage2vtkParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "freesurfer.mris_image2vtk": mris_image2vtk_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "freesurfer.mris_image2vtk": mris_image2vtk_outputs,
-    }.get(t)
-
-
 class MrisImage2vtkOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `mris_image2vtk(...)`.
+    Output object returned when calling `MrisImage2vtkParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -75,7 +53,7 @@ def mris_image2vtk_params(
     vtk_smoothing_iters: float,
     image_smoothing_size: float,
     reduction_percent: float,
-) -> MrisImage2vtkParameters:
+) -> MrisImage2vtkParametersTagged:
     """
     Build parameters.
     
@@ -91,7 +69,7 @@ def mris_image2vtk_params(
         Parameter dictionary
     """
     params = {
-        "@type": "freesurfer.mris_image2vtk",
+        "@type": "freesurfer/mris_image2vtk",
         "input_filename": input_filename,
         "output_filename": output_filename,
         "lower_threshold": lower_threshold,
@@ -118,13 +96,13 @@ def mris_image2vtk_cargs(
     """
     cargs = []
     cargs.append("mris_image2vtk")
-    cargs.append(execution.input_file(params.get("input_filename")))
-    cargs.append(params.get("output_filename"))
-    cargs.append(str(params.get("lower_threshold")))
-    cargs.append(str(params.get("upper_threshold")))
-    cargs.append(str(params.get("vtk_smoothing_iters")))
-    cargs.append(str(params.get("image_smoothing_size")))
-    cargs.append(str(params.get("reduction_percent")))
+    cargs.append(execution.input_file(params.get("input_filename", None)))
+    cargs.append(params.get("output_filename", None))
+    cargs.append(str(params.get("lower_threshold", None)))
+    cargs.append(str(params.get("upper_threshold", None)))
+    cargs.append(str(params.get("vtk_smoothing_iters", None)))
+    cargs.append(str(params.get("image_smoothing_size", None)))
+    cargs.append(str(params.get("reduction_percent", None)))
     return cargs
 
 
@@ -143,7 +121,7 @@ def mris_image2vtk_outputs(
     """
     ret = MrisImage2vtkOutputs(
         root=execution.output_file("."),
-        output_vtk_file=execution.output_file(params.get("output_filename")),
+        output_vtk_file=execution.output_file(params.get("output_filename", None)),
     )
     return ret
 
@@ -224,7 +202,6 @@ def mris_image2vtk(
 __all__ = [
     "MRIS_IMAGE2VTK_METADATA",
     "MrisImage2vtkOutputs",
-    "MrisImage2vtkParameters",
     "mris_image2vtk",
     "mris_image2vtk_execute",
     "mris_image2vtk_params",

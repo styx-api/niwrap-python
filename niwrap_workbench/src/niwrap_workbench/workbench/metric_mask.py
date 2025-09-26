@@ -14,7 +14,14 @@ METRIC_MASK_METADATA = Metadata(
 
 
 MetricMaskParameters = typing.TypedDict('MetricMaskParameters', {
-    "@type": typing.Literal["workbench.metric-mask"],
+    "@type": typing.NotRequired[typing.Literal["workbench/metric-mask"]],
+    "metric": InputPathType,
+    "mask": InputPathType,
+    "metric_out": str,
+    "opt_column_column": typing.NotRequired[str | None],
+})
+MetricMaskParametersTagged = typing.TypedDict('MetricMaskParametersTagged', {
+    "@type": typing.Literal["workbench/metric-mask"],
     "metric": InputPathType,
     "mask": InputPathType,
     "metric_out": str,
@@ -22,41 +29,9 @@ MetricMaskParameters = typing.TypedDict('MetricMaskParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "workbench.metric-mask": metric_mask_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "workbench.metric-mask": metric_mask_outputs,
-    }.get(t)
-
-
 class MetricMaskOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `metric_mask(...)`.
+    Output object returned when calling `MetricMaskParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -69,7 +44,7 @@ def metric_mask_params(
     mask: InputPathType,
     metric_out: str,
     opt_column_column: str | None = None,
-) -> MetricMaskParameters:
+) -> MetricMaskParametersTagged:
     """
     Build parameters.
     
@@ -82,7 +57,7 @@ def metric_mask_params(
         Parameter dictionary
     """
     params = {
-        "@type": "workbench.metric-mask",
+        "@type": "workbench/metric-mask",
         "metric": metric,
         "mask": mask,
         "metric_out": metric_out,
@@ -108,13 +83,13 @@ def metric_mask_cargs(
     cargs = []
     cargs.append("wb_command")
     cargs.append("-metric-mask")
-    cargs.append(execution.input_file(params.get("metric")))
-    cargs.append(execution.input_file(params.get("mask")))
-    cargs.append(params.get("metric_out"))
-    if params.get("opt_column_column") is not None:
+    cargs.append(execution.input_file(params.get("metric", None)))
+    cargs.append(execution.input_file(params.get("mask", None)))
+    cargs.append(params.get("metric_out", None))
+    if params.get("opt_column_column", None) is not None:
         cargs.extend([
             "-column",
-            params.get("opt_column_column")
+            params.get("opt_column_column", None)
         ])
     return cargs
 
@@ -134,7 +109,7 @@ def metric_mask_outputs(
     """
     ret = MetricMaskOutputs(
         root=execution.output_file("."),
-        metric_out=execution.output_file(params.get("metric_out")),
+        metric_out=execution.output_file(params.get("metric_out", None)),
     )
     return ret
 
@@ -214,7 +189,6 @@ def metric_mask(
 __all__ = [
     "METRIC_MASK_METADATA",
     "MetricMaskOutputs",
-    "MetricMaskParameters",
     "metric_mask",
     "metric_mask_execute",
     "metric_mask_params",

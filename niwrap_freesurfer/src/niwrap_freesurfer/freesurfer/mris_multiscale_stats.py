@@ -14,7 +14,16 @@ MRIS_MULTISCALE_STATS_METADATA = Metadata(
 
 
 MrisMultiscaleStatsParameters = typing.TypedDict('MrisMultiscaleStatsParameters', {
-    "@type": typing.Literal["freesurfer.mris_multiscale_stats"],
+    "@type": typing.NotRequired[typing.Literal["freesurfer/mris_multiscale_stats"]],
+    "output_subject": str,
+    "hemi": str,
+    "surf": InputPathType,
+    "curv": InputPathType,
+    "class1_subjects": list[str],
+    "class2_subjects": list[str],
+})
+MrisMultiscaleStatsParametersTagged = typing.TypedDict('MrisMultiscaleStatsParametersTagged', {
+    "@type": typing.Literal["freesurfer/mris_multiscale_stats"],
     "output_subject": str,
     "hemi": str,
     "surf": InputPathType,
@@ -24,40 +33,9 @@ MrisMultiscaleStatsParameters = typing.TypedDict('MrisMultiscaleStatsParameters'
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "freesurfer.mris_multiscale_stats": mris_multiscale_stats_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-    }.get(t)
-
-
 class MrisMultiscaleStatsOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `mris_multiscale_stats(...)`.
+    Output object returned when calling `MrisMultiscaleStatsParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -70,7 +48,7 @@ def mris_multiscale_stats_params(
     curv: InputPathType,
     class1_subjects: list[str],
     class2_subjects: list[str],
-) -> MrisMultiscaleStatsParameters:
+) -> MrisMultiscaleStatsParametersTagged:
     """
     Build parameters.
     
@@ -85,7 +63,7 @@ def mris_multiscale_stats_params(
         Parameter dictionary
     """
     params = {
-        "@type": "freesurfer.mris_multiscale_stats",
+        "@type": "freesurfer/mris_multiscale_stats",
         "output_subject": output_subject,
         "hemi": hemi,
         "surf": surf,
@@ -113,13 +91,13 @@ def mris_multiscale_stats_cargs(
     cargs.append("mris_multiscale_stats")
     cargs.extend([
         "-o",
-        params.get("output_subject")
+        params.get("output_subject", None)
     ])
-    cargs.append(params.get("hemi"))
-    cargs.append(execution.input_file(params.get("surf")))
-    cargs.append(execution.input_file(params.get("curv")))
-    cargs.extend(params.get("class1_subjects"))
-    cargs.extend(params.get("class2_subjects"))
+    cargs.append(params.get("hemi", None))
+    cargs.append(execution.input_file(params.get("surf", None)))
+    cargs.append(execution.input_file(params.get("curv", None)))
+    cargs.extend(params.get("class1_subjects", None))
+    cargs.extend(params.get("class2_subjects", None))
     return cargs
 
 
@@ -215,7 +193,6 @@ def mris_multiscale_stats(
 __all__ = [
     "MRIS_MULTISCALE_STATS_METADATA",
     "MrisMultiscaleStatsOutputs",
-    "MrisMultiscaleStatsParameters",
     "mris_multiscale_stats",
     "mris_multiscale_stats_execute",
     "mris_multiscale_stats_params",

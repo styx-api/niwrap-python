@@ -14,7 +14,28 @@ V__CHAUFFEUR_AFNI_METADATA = Metadata(
 
 
 VChauffeurAfniParameters = typing.TypedDict('VChauffeurAfniParameters', {
-    "@type": typing.Literal["afni.@chauffeur_afni"],
+    "@type": typing.NotRequired[typing.Literal["afni/@chauffeur_afni"]],
+    "ulay": InputPathType,
+    "olay": typing.NotRequired[InputPathType | None],
+    "prefix": str,
+    "mode_4D": bool,
+    "func_range": typing.NotRequired[float | None],
+    "opacity": typing.NotRequired[float | None],
+    "set_subbricks": typing.NotRequired[str | None],
+    "montx": typing.NotRequired[float | None],
+    "monty": typing.NotRequired[float | None],
+    "montgap": typing.NotRequired[float | None],
+    "label_mode": typing.NotRequired[float | None],
+    "label_size": typing.NotRequired[float | None],
+    "label_color": typing.NotRequired[str | None],
+    "label_setback": typing.NotRequired[float | None],
+    "no_clean": bool,
+    "do_clean": bool,
+    "help": bool,
+    "version": bool,
+})
+VChauffeurAfniParametersTagged = typing.TypedDict('VChauffeurAfniParametersTagged', {
+    "@type": typing.Literal["afni/@chauffeur_afni"],
     "ulay": InputPathType,
     "olay": typing.NotRequired[InputPathType | None],
     "prefix": str,
@@ -36,41 +57,9 @@ VChauffeurAfniParameters = typing.TypedDict('VChauffeurAfniParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "afni.@chauffeur_afni": v__chauffeur_afni_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "afni.@chauffeur_afni": v__chauffeur_afni_outputs,
-    }.get(t)
-
-
 class VChauffeurAfniOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `v__chauffeur_afni(...)`.
+    Output object returned when calling `VChauffeurAfniParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -101,7 +90,7 @@ def v__chauffeur_afni_params(
     do_clean: bool = False,
     help_: bool = False,
     version: bool = False,
-) -> VChauffeurAfniParameters:
+) -> VChauffeurAfniParametersTagged:
     """
     Build parameters.
     
@@ -132,7 +121,7 @@ def v__chauffeur_afni_params(
         Parameter dictionary
     """
     params = {
-        "@type": "afni.@chauffeur_afni",
+        "@type": "afni/@chauffeur_afni",
         "ulay": ulay,
         "prefix": prefix,
         "mode_4D": mode_4_d,
@@ -181,72 +170,72 @@ def v__chauffeur_afni_cargs(
     """
     cargs = []
     cargs.append("@chauffeur_afni")
-    cargs.append(execution.input_file(params.get("ulay")))
-    if params.get("olay") is not None:
-        cargs.append(execution.input_file(params.get("olay")))
+    cargs.append(execution.input_file(params.get("ulay", None)))
+    if params.get("olay", None) is not None:
+        cargs.append(execution.input_file(params.get("olay", None)))
     cargs.extend([
         "-prefix",
-        params.get("prefix")
+        params.get("prefix", None)
     ])
-    if params.get("mode_4D"):
+    if params.get("mode_4D", False):
         cargs.append("-mode_4D")
-    if params.get("func_range") is not None:
+    if params.get("func_range", None) is not None:
         cargs.extend([
             "-func_range",
-            str(params.get("func_range"))
+            str(params.get("func_range", None))
         ])
-    if params.get("opacity") is not None:
+    if params.get("opacity", None) is not None:
         cargs.extend([
             "-opacity",
-            str(params.get("opacity"))
+            str(params.get("opacity", None))
         ])
-    if params.get("set_subbricks") is not None:
+    if params.get("set_subbricks", None) is not None:
         cargs.extend([
             "-set_subbricks",
-            params.get("set_subbricks")
+            params.get("set_subbricks", None)
         ])
-    if params.get("montx") is not None:
+    if params.get("montx", None) is not None:
         cargs.extend([
             "-montx",
-            str(params.get("montx"))
+            str(params.get("montx", None))
         ])
-    if params.get("monty") is not None:
+    if params.get("monty", None) is not None:
         cargs.extend([
             "-monty",
-            str(params.get("monty"))
+            str(params.get("monty", None))
         ])
-    if params.get("montgap") is not None:
+    if params.get("montgap", None) is not None:
         cargs.extend([
             "-montgap",
-            str(params.get("montgap"))
+            str(params.get("montgap", None))
         ])
-    if params.get("label_mode") is not None:
+    if params.get("label_mode", None) is not None:
         cargs.extend([
             "-label_mode",
-            str(params.get("label_mode"))
+            str(params.get("label_mode", None))
         ])
-    if params.get("label_size") is not None:
+    if params.get("label_size", None) is not None:
         cargs.extend([
             "-label_size",
-            str(params.get("label_size"))
+            str(params.get("label_size", None))
         ])
-    if params.get("label_color") is not None:
+    if params.get("label_color", None) is not None:
         cargs.extend([
             "-label_color",
-            params.get("label_color")
+            params.get("label_color", None)
         ])
-    if params.get("label_setback") is not None:
+    if params.get("label_setback", None) is not None:
         cargs.extend([
             "-label_setback",
-            str(params.get("label_setback"))
+            str(params.get("label_setback", None))
         ])
-    if params.get("no_clean"):
+    if params.get("no_clean", False):
         cargs.append("-no_clean")
-    if params.get("do_clean"):
+    if params.get("do_clean", False):
         cargs.append("-do_clean")
-    if params.get("help"):
+    if params.get("help", False):
         cargs.append("-help")
-    if params.get("version"):
+    if params.get("version", False):
         cargs.append("-ver")
     return cargs
 
@@ -266,9 +255,9 @@ def v__chauffeur_afni_outputs(
     """
     ret = VChauffeurAfniOutputs(
         root=execution.output_file("."),
-        output_image=execution.output_file(params.get("prefix") + ".png"),
-        cluster_report=execution.output_file(params.get("prefix") + "_clust_rep.txt"),
-        whereami_report=execution.output_file(params.get("prefix") + "_clust_whereami.txt"),
+        output_image=execution.output_file(params.get("prefix", None) + ".png"),
+        cluster_report=execution.output_file(params.get("prefix", None) + "_clust_rep.txt"),
+        whereami_report=execution.output_file(params.get("prefix", None) + "_clust_whereami.txt"),
     )
     return ret
 
@@ -383,7 +372,6 @@ def v__chauffeur_afni(
 
 __all__ = [
     "VChauffeurAfniOutputs",
-    "VChauffeurAfniParameters",
     "V__CHAUFFEUR_AFNI_METADATA",
     "v__chauffeur_afni",
     "v__chauffeur_afni_execute",

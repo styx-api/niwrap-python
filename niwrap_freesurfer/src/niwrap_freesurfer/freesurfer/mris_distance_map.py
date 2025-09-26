@@ -14,47 +14,20 @@ MRIS_DISTANCE_MAP_METADATA = Metadata(
 
 
 MrisDistanceMapParameters = typing.TypedDict('MrisDistanceMapParameters', {
-    "@type": typing.Literal["freesurfer.mris_distance_map"],
+    "@type": typing.NotRequired[typing.Literal["freesurfer/mris_distance_map"]],
+    "input_surface_file": InputPathType,
+    "output_scalar_field": str,
+})
+MrisDistanceMapParametersTagged = typing.TypedDict('MrisDistanceMapParametersTagged', {
+    "@type": typing.Literal["freesurfer/mris_distance_map"],
     "input_surface_file": InputPathType,
     "output_scalar_field": str,
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "freesurfer.mris_distance_map": mris_distance_map_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "freesurfer.mris_distance_map": mris_distance_map_outputs,
-    }.get(t)
-
-
 class MrisDistanceMapOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `mris_distance_map(...)`.
+    Output object returned when calling `MrisDistanceMapParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -65,7 +38,7 @@ class MrisDistanceMapOutputs(typing.NamedTuple):
 def mris_distance_map_params(
     input_surface_file: InputPathType,
     output_scalar_field: str,
-) -> MrisDistanceMapParameters:
+) -> MrisDistanceMapParametersTagged:
     """
     Build parameters.
     
@@ -76,7 +49,7 @@ def mris_distance_map_params(
         Parameter dictionary
     """
     params = {
-        "@type": "freesurfer.mris_distance_map",
+        "@type": "freesurfer/mris_distance_map",
         "input_surface_file": input_surface_file,
         "output_scalar_field": output_scalar_field,
     }
@@ -98,8 +71,8 @@ def mris_distance_map_cargs(
     """
     cargs = []
     cargs.append("mris_distance_map")
-    cargs.append(execution.input_file(params.get("input_surface_file")))
-    cargs.append(params.get("output_scalar_field"))
+    cargs.append(execution.input_file(params.get("input_surface_file", None)))
+    cargs.append(params.get("output_scalar_field", None))
     return cargs
 
 
@@ -118,7 +91,7 @@ def mris_distance_map_outputs(
     """
     ret = MrisDistanceMapOutputs(
         root=execution.output_file("."),
-        output_file=execution.output_file(params.get("output_scalar_field") + ".mgz"),
+        output_file=execution.output_file(params.get("output_scalar_field", None) + ".mgz"),
     )
     return ret
 
@@ -184,7 +157,6 @@ def mris_distance_map(
 __all__ = [
     "MRIS_DISTANCE_MAP_METADATA",
     "MrisDistanceMapOutputs",
-    "MrisDistanceMapParameters",
     "mris_distance_map",
     "mris_distance_map_execute",
     "mris_distance_map_params",

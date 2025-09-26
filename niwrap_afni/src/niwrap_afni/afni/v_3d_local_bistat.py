@@ -14,7 +14,22 @@ V_3D_LOCAL_BISTAT_METADATA = Metadata(
 
 
 V3dLocalBistatParameters = typing.TypedDict('V3dLocalBistatParameters', {
-    "@type": typing.Literal["afni.3dLocalBistat"],
+    "@type": typing.NotRequired[typing.Literal["afni/3dLocalBistat"]],
+    "nbhd": str,
+    "stats": list[str],
+    "mask": typing.NotRequired[InputPathType | None],
+    "automask": bool,
+    "weight": typing.NotRequired[InputPathType | None],
+    "prefix": str,
+    "histpow": typing.NotRequired[float | None],
+    "histbin": typing.NotRequired[float | None],
+    "hclip1": typing.NotRequired[list[str] | None],
+    "hclip2": typing.NotRequired[list[str] | None],
+    "dataset1": InputPathType,
+    "dataset2": InputPathType,
+})
+V3dLocalBistatParametersTagged = typing.TypedDict('V3dLocalBistatParametersTagged', {
+    "@type": typing.Literal["afni/3dLocalBistat"],
     "nbhd": str,
     "stats": list[str],
     "mask": typing.NotRequired[InputPathType | None],
@@ -30,41 +45,9 @@ V3dLocalBistatParameters = typing.TypedDict('V3dLocalBistatParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "afni.3dLocalBistat": v_3d_local_bistat_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "afni.3dLocalBistat": v_3d_local_bistat_outputs,
-    }.get(t)
-
-
 class V3dLocalBistatOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `v_3d_local_bistat(...)`.
+    Output object returned when calling `V3dLocalBistatParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -87,7 +70,7 @@ def v_3d_local_bistat_params(
     histbin: float | None = None,
     hclip1: list[str] | None = None,
     hclip2: list[str] | None = None,
-) -> V3dLocalBistatParameters:
+) -> V3dLocalBistatParametersTagged:
     """
     Build parameters.
     
@@ -116,7 +99,7 @@ def v_3d_local_bistat_params(
         Parameter dictionary
     """
     params = {
-        "@type": "afni.3dLocalBistat",
+        "@type": "afni/3dLocalBistat",
         "nbhd": nbhd,
         "stats": stats,
         "automask": automask,
@@ -156,50 +139,50 @@ def v_3d_local_bistat_cargs(
     cargs.append("3dLocalBistat")
     cargs.extend([
         "-nbhd",
-        params.get("nbhd")
+        params.get("nbhd", None)
     ])
     cargs.extend([
         "-stat",
-        *params.get("stats")
+        *params.get("stats", None)
     ])
-    if params.get("mask") is not None:
+    if params.get("mask", None) is not None:
         cargs.extend([
             "-mask",
-            execution.input_file(params.get("mask"))
+            execution.input_file(params.get("mask", None))
         ])
-    if params.get("automask"):
+    if params.get("automask", False):
         cargs.append("-automask")
-    if params.get("weight") is not None:
+    if params.get("weight", None) is not None:
         cargs.extend([
             "-weight",
-            execution.input_file(params.get("weight"))
+            execution.input_file(params.get("weight", None))
         ])
     cargs.extend([
         "-prefix",
-        params.get("prefix")
+        params.get("prefix", None)
     ])
-    if params.get("histpow") is not None:
+    if params.get("histpow", None) is not None:
         cargs.extend([
             "-histpow",
-            str(params.get("histpow"))
+            str(params.get("histpow", None))
         ])
-    if params.get("histbin") is not None:
+    if params.get("histbin", None) is not None:
         cargs.extend([
             "-histbin",
-            str(params.get("histbin"))
+            str(params.get("histbin", None))
         ])
-    if params.get("hclip1") is not None:
+    if params.get("hclip1", None) is not None:
         cargs.extend([
             "-hclip1",
-            *params.get("hclip1")
+            *params.get("hclip1", None)
         ])
-    if params.get("hclip2") is not None:
+    if params.get("hclip2", None) is not None:
         cargs.extend([
             "-hclip2",
-            *params.get("hclip2")
+            *params.get("hclip2", None)
         ])
-    cargs.append(execution.input_file(params.get("dataset1")))
-    cargs.append(execution.input_file(params.get("dataset2")))
+    cargs.append(execution.input_file(params.get("dataset1", None)))
+    cargs.append(execution.input_file(params.get("dataset2", None)))
     return cargs
 
 
@@ -218,8 +201,8 @@ def v_3d_local_bistat_outputs(
     """
     ret = V3dLocalBistatOutputs(
         root=execution.output_file("."),
-        output_head=execution.output_file(params.get("prefix") + "+orig.HEAD"),
-        output_brik=execution.output_file(params.get("prefix") + "+orig.BRIK"),
+        output_head=execution.output_file(params.get("prefix", None) + "+orig.HEAD"),
+        output_brik=execution.output_file(params.get("prefix", None) + "+orig.BRIK"),
     )
     return ret
 
@@ -322,7 +305,6 @@ def v_3d_local_bistat(
 
 __all__ = [
     "V3dLocalBistatOutputs",
-    "V3dLocalBistatParameters",
     "V_3D_LOCAL_BISTAT_METADATA",
     "v_3d_local_bistat",
     "v_3d_local_bistat_execute",

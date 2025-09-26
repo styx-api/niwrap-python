@@ -14,7 +14,35 @@ FVCOMPARE_METADATA = Metadata(
 
 
 FvcompareParameters = typing.TypedDict('FvcompareParameters', {
-    "@type": typing.Literal["freesurfer.fvcompare"],
+    "@type": typing.NotRequired[typing.Literal["freesurfer/fvcompare"]],
+    "subject1": str,
+    "subject2": str,
+    "subject_dir1": typing.NotRequired[str | None],
+    "subject_dir2": typing.NotRequired[str | None],
+    "name1": typing.NotRequired[str | None],
+    "name2": typing.NotRequired[str | None],
+    "color1": typing.NotRequired[str | None],
+    "volume": typing.NotRequired[str | None],
+    "segmentation": typing.NotRequired[str | None],
+    "aseg": bool,
+    "no_seg": bool,
+    "left_hemi": bool,
+    "right_hemi": bool,
+    "no_surf": bool,
+    "gray_levels": typing.NotRequired[list[float] | None],
+    "cursor_position": typing.NotRequired[list[float] | None],
+    "zoom_level": typing.NotRequired[float | None],
+    "annotation": typing.NotRequired[str | None],
+    "aparc": bool,
+    "inflated": bool,
+    "white": bool,
+    "orig": bool,
+    "surf_name": typing.NotRequired[str | None],
+    "pointset": typing.NotRequired[InputPathType | None],
+    "wot2": bool,
+})
+FvcompareParametersTagged = typing.TypedDict('FvcompareParametersTagged', {
+    "@type": typing.Literal["freesurfer/fvcompare"],
     "subject1": str,
     "subject2": str,
     "subject_dir1": typing.NotRequired[str | None],
@@ -43,40 +71,9 @@ FvcompareParameters = typing.TypedDict('FvcompareParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "freesurfer.fvcompare": fvcompare_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-    }.get(t)
-
-
 class FvcompareOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `fvcompare(...)`.
+    Output object returned when calling `FvcompareParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -108,7 +105,7 @@ def fvcompare_params(
     surf_name: str | None = None,
     pointset: InputPathType | None = None,
     wot2: bool = False,
-) -> FvcompareParameters:
+) -> FvcompareParametersTagged:
     """
     Build parameters.
     
@@ -145,7 +142,7 @@ def fvcompare_params(
         Parameter dictionary
     """
     params = {
-        "@type": "freesurfer.fvcompare",
+        "@type": "freesurfer/fvcompare",
         "subject1": subject1,
         "subject2": subject2,
         "aseg": aseg,
@@ -205,96 +202,96 @@ def fvcompare_cargs(
     cargs.append("fvcompare")
     cargs.extend([
         "--s1",
-        params.get("subject1")
+        params.get("subject1", None)
     ])
     cargs.extend([
         "--s2",
-        params.get("subject2")
+        params.get("subject2", None)
     ])
-    if params.get("subject_dir1") is not None:
+    if params.get("subject_dir1", None) is not None:
         cargs.extend([
             "--sd1",
-            params.get("subject_dir1")
+            params.get("subject_dir1", None)
         ])
-    if params.get("subject_dir2") is not None:
+    if params.get("subject_dir2", None) is not None:
         cargs.extend([
             "--sd2",
-            params.get("subject_dir2")
+            params.get("subject_dir2", None)
         ])
-    if params.get("name1") is not None:
+    if params.get("name1", None) is not None:
         cargs.extend([
             "--n1",
-            params.get("name1")
+            params.get("name1", None)
         ])
-    if params.get("name2") is not None:
+    if params.get("name2", None) is not None:
         cargs.extend([
             "--n2",
-            params.get("name2")
+            params.get("name2", None)
         ])
-    if params.get("color1") is not None:
+    if params.get("color1", None) is not None:
         cargs.extend([
             "--c1",
-            params.get("color1")
+            params.get("color1", None)
         ])
-    if params.get("volume") is not None:
+    if params.get("volume", None) is not None:
         cargs.extend([
             "--vol",
-            params.get("volume")
+            params.get("volume", None)
         ])
-    if params.get("segmentation") is not None:
+    if params.get("segmentation", None) is not None:
         cargs.extend([
             "--seg",
-            params.get("segmentation")
+            params.get("segmentation", None)
         ])
-    if params.get("aseg"):
+    if params.get("aseg", False):
         cargs.append("--aseg")
-    if params.get("no_seg"):
+    if params.get("no_seg", False):
         cargs.append("--no-seg")
-    if params.get("left_hemi"):
+    if params.get("left_hemi", False):
         cargs.append("--lh")
-    if params.get("right_hemi"):
+    if params.get("right_hemi", False):
         cargs.append("--rh")
-    if params.get("no_surf"):
+    if params.get("no_surf", False):
         cargs.append("--no-surf")
-    if params.get("gray_levels") is not None:
+    if params.get("gray_levels", None) is not None:
         cargs.extend([
             "--gray",
-            *map(str, params.get("gray_levels"))
+            *map(str, params.get("gray_levels", None))
         ])
-    if params.get("cursor_position") is not None:
+    if params.get("cursor_position", None) is not None:
         cargs.extend([
             "--crs",
-            *map(str, params.get("cursor_position"))
+            *map(str, params.get("cursor_position", None))
         ])
-    if params.get("zoom_level") is not None:
+    if params.get("zoom_level", None) is not None:
         cargs.extend([
             "--zoom",
-            str(params.get("zoom_level"))
+            str(params.get("zoom_level", None))
         ])
-    if params.get("annotation") is not None:
+    if params.get("annotation", None) is not None:
         cargs.extend([
             "--annot",
-            params.get("annotation")
+            params.get("annotation", None)
         ])
-    if params.get("aparc"):
+    if params.get("aparc", False):
         cargs.append("--aparc")
-    if params.get("inflated"):
+    if params.get("inflated", False):
         cargs.append("--inflated")
-    if params.get("white"):
+    if params.get("white", False):
         cargs.append("--white")
-    if params.get("orig"):
+    if params.get("orig", False):
         cargs.append("--orig")
-    if params.get("surf_name") is not None:
+    if params.get("surf_name", None) is not None:
         cargs.extend([
             "--surf",
-            params.get("surf_name")
+            params.get("surf_name", None)
         ])
-    if params.get("pointset") is not None:
+    if params.get("pointset", None) is not None:
         cargs.extend([
             "--p",
-            execution.input_file(params.get("pointset"))
+            execution.input_file(params.get("pointset", None))
         ])
-    if params.get("wot2"):
+    if params.get("wot2", False):
         cargs.append("--wot2")
     return cargs
 
@@ -453,7 +450,6 @@ def fvcompare(
 __all__ = [
     "FVCOMPARE_METADATA",
     "FvcompareOutputs",
-    "FvcompareParameters",
     "fvcompare",
     "fvcompare_execute",
     "fvcompare_params",

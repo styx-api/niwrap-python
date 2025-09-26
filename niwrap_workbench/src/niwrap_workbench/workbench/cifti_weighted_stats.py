@@ -14,7 +14,16 @@ CIFTI_WEIGHTED_STATS_METADATA = Metadata(
 
 
 CiftiWeightedStatsSpatialWeightsParameters = typing.TypedDict('CiftiWeightedStatsSpatialWeightsParameters', {
-    "@type": typing.Literal["workbench.cifti-weighted-stats.spatial_weights"],
+    "@type": typing.NotRequired[typing.Literal["spatial_weights"]],
+    "opt_left_area_surf_left_surf": typing.NotRequired[InputPathType | None],
+    "opt_right_area_surf_right_surf": typing.NotRequired[InputPathType | None],
+    "opt_cerebellum_area_surf_cerebellum_surf": typing.NotRequired[InputPathType | None],
+    "opt_left_area_metric_left_metric": typing.NotRequired[InputPathType | None],
+    "opt_right_area_metric_right_metric": typing.NotRequired[InputPathType | None],
+    "opt_cerebellum_area_metric_cerebellum_metric": typing.NotRequired[InputPathType | None],
+})
+CiftiWeightedStatsSpatialWeightsParametersTagged = typing.TypedDict('CiftiWeightedStatsSpatialWeightsParametersTagged', {
+    "@type": typing.Literal["spatial_weights"],
     "opt_left_area_surf_left_surf": typing.NotRequired[InputPathType | None],
     "opt_right_area_surf_right_surf": typing.NotRequired[InputPathType | None],
     "opt_cerebellum_area_surf_cerebellum_surf": typing.NotRequired[InputPathType | None],
@@ -25,20 +34,42 @@ CiftiWeightedStatsSpatialWeightsParameters = typing.TypedDict('CiftiWeightedStat
 
 
 CiftiWeightedStatsRoiParameters = typing.TypedDict('CiftiWeightedStatsRoiParameters', {
-    "@type": typing.Literal["workbench.cifti-weighted-stats.roi"],
+    "@type": typing.NotRequired[typing.Literal["roi"]],
+    "roi_cifti": InputPathType,
+    "opt_match_maps": bool,
+})
+CiftiWeightedStatsRoiParametersTagged = typing.TypedDict('CiftiWeightedStatsRoiParametersTagged', {
+    "@type": typing.Literal["roi"],
     "roi_cifti": InputPathType,
     "opt_match_maps": bool,
 })
 
 
 CiftiWeightedStatsStdevParameters = typing.TypedDict('CiftiWeightedStatsStdevParameters', {
-    "@type": typing.Literal["workbench.cifti-weighted-stats.stdev"],
+    "@type": typing.NotRequired[typing.Literal["stdev"]],
+    "opt_sample": bool,
+})
+CiftiWeightedStatsStdevParametersTagged = typing.TypedDict('CiftiWeightedStatsStdevParametersTagged', {
+    "@type": typing.Literal["stdev"],
     "opt_sample": bool,
 })
 
 
 CiftiWeightedStatsParameters = typing.TypedDict('CiftiWeightedStatsParameters', {
-    "@type": typing.Literal["workbench.cifti-weighted-stats"],
+    "@type": typing.NotRequired[typing.Literal["workbench/cifti-weighted-stats"]],
+    "cifti_in": InputPathType,
+    "spatial_weights": typing.NotRequired[CiftiWeightedStatsSpatialWeightsParameters | None],
+    "opt_cifti_weights_weight_cifti": typing.NotRequired[InputPathType | None],
+    "opt_column_column": typing.NotRequired[int | None],
+    "roi": typing.NotRequired[CiftiWeightedStatsRoiParameters | None],
+    "opt_mean": bool,
+    "stdev": typing.NotRequired[CiftiWeightedStatsStdevParameters | None],
+    "opt_percentile_percent": typing.NotRequired[float | None],
+    "opt_sum": bool,
+    "opt_show_map_name": bool,
+})
+CiftiWeightedStatsParametersTagged = typing.TypedDict('CiftiWeightedStatsParametersTagged', {
+    "@type": typing.Literal["workbench/cifti-weighted-stats"],
     "cifti_in": InputPathType,
     "spatial_weights": typing.NotRequired[CiftiWeightedStatsSpatialWeightsParameters | None],
     "opt_cifti_weights_weight_cifti": typing.NotRequired[InputPathType | None],
@@ -52,40 +83,6 @@ CiftiWeightedStatsParameters = typing.TypedDict('CiftiWeightedStatsParameters', 
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "workbench.cifti-weighted-stats": cifti_weighted_stats_cargs,
-        "workbench.cifti-weighted-stats.spatial_weights": cifti_weighted_stats_spatial_weights_cargs,
-        "workbench.cifti-weighted-stats.roi": cifti_weighted_stats_roi_cargs,
-        "workbench.cifti-weighted-stats.stdev": cifti_weighted_stats_stdev_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-    }.get(t)
-
-
 def cifti_weighted_stats_spatial_weights_params(
     opt_left_area_surf_left_surf: InputPathType | None = None,
     opt_right_area_surf_right_surf: InputPathType | None = None,
@@ -93,7 +90,7 @@ def cifti_weighted_stats_spatial_weights_params(
     opt_left_area_metric_left_metric: InputPathType | None = None,
     opt_right_area_metric_right_metric: InputPathType | None = None,
     opt_cerebellum_area_metric_cerebellum_metric: InputPathType | None = None,
-) -> CiftiWeightedStatsSpatialWeightsParameters:
+) -> CiftiWeightedStatsSpatialWeightsParametersTagged:
     """
     Build parameters.
     
@@ -114,7 +111,7 @@ def cifti_weighted_stats_spatial_weights_params(
         Parameter dictionary
     """
     params = {
-        "@type": "workbench.cifti-weighted-stats.spatial_weights",
+        "@type": "spatial_weights",
     }
     if opt_left_area_surf_left_surf is not None:
         params["opt_left_area_surf_left_surf"] = opt_left_area_surf_left_surf
@@ -146,35 +143,35 @@ def cifti_weighted_stats_spatial_weights_cargs(
     """
     cargs = []
     cargs.append("-spatial-weights")
-    if params.get("opt_left_area_surf_left_surf") is not None:
+    if params.get("opt_left_area_surf_left_surf", None) is not None:
         cargs.extend([
             "-left-area-surf",
-            execution.input_file(params.get("opt_left_area_surf_left_surf"))
+            execution.input_file(params.get("opt_left_area_surf_left_surf", None))
         ])
-    if params.get("opt_right_area_surf_right_surf") is not None:
+    if params.get("opt_right_area_surf_right_surf", None) is not None:
         cargs.extend([
             "-right-area-surf",
-            execution.input_file(params.get("opt_right_area_surf_right_surf"))
+            execution.input_file(params.get("opt_right_area_surf_right_surf", None))
         ])
-    if params.get("opt_cerebellum_area_surf_cerebellum_surf") is not None:
+    if params.get("opt_cerebellum_area_surf_cerebellum_surf", None) is not None:
         cargs.extend([
             "-cerebellum-area-surf",
-            execution.input_file(params.get("opt_cerebellum_area_surf_cerebellum_surf"))
+            execution.input_file(params.get("opt_cerebellum_area_surf_cerebellum_surf", None))
         ])
-    if params.get("opt_left_area_metric_left_metric") is not None:
+    if params.get("opt_left_area_metric_left_metric", None) is not None:
         cargs.extend([
             "-left-area-metric",
-            execution.input_file(params.get("opt_left_area_metric_left_metric"))
+            execution.input_file(params.get("opt_left_area_metric_left_metric", None))
         ])
-    if params.get("opt_right_area_metric_right_metric") is not None:
+    if params.get("opt_right_area_metric_right_metric", None) is not None:
         cargs.extend([
             "-right-area-metric",
-            execution.input_file(params.get("opt_right_area_metric_right_metric"))
+            execution.input_file(params.get("opt_right_area_metric_right_metric", None))
         ])
-    if params.get("opt_cerebellum_area_metric_cerebellum_metric") is not None:
+    if params.get("opt_cerebellum_area_metric_cerebellum_metric", None) is not None:
         cargs.extend([
             "-cerebellum-area-metric",
-            execution.input_file(params.get("opt_cerebellum_area_metric_cerebellum_metric"))
+            execution.input_file(params.get("opt_cerebellum_area_metric_cerebellum_metric", None))
         ])
     return cargs
 
@@ -182,7 +179,7 @@ def cifti_weighted_stats_spatial_weights_cargs(
 def cifti_weighted_stats_roi_params(
     roi_cifti: InputPathType,
     opt_match_maps: bool = False,
-) -> CiftiWeightedStatsRoiParameters:
+) -> CiftiWeightedStatsRoiParametersTagged:
     """
     Build parameters.
     
@@ -194,7 +191,7 @@ def cifti_weighted_stats_roi_params(
         Parameter dictionary
     """
     params = {
-        "@type": "workbench.cifti-weighted-stats.roi",
+        "@type": "roi",
         "roi_cifti": roi_cifti,
         "opt_match_maps": opt_match_maps,
     }
@@ -216,15 +213,15 @@ def cifti_weighted_stats_roi_cargs(
     """
     cargs = []
     cargs.append("-roi")
-    cargs.append(execution.input_file(params.get("roi_cifti")))
-    if params.get("opt_match_maps"):
+    cargs.append(execution.input_file(params.get("roi_cifti", None)))
+    if params.get("opt_match_maps", False):
         cargs.append("-match-maps")
     return cargs
 
 
 def cifti_weighted_stats_stdev_params(
     opt_sample: bool = False,
-) -> CiftiWeightedStatsStdevParameters:
+) -> CiftiWeightedStatsStdevParametersTagged:
     """
     Build parameters.
     
@@ -234,7 +231,7 @@ def cifti_weighted_stats_stdev_params(
         Parameter dictionary
     """
     params = {
-        "@type": "workbench.cifti-weighted-stats.stdev",
+        "@type": "stdev",
         "opt_sample": opt_sample,
     }
     return params
@@ -255,14 +252,14 @@ def cifti_weighted_stats_stdev_cargs(
     """
     cargs = []
     cargs.append("-stdev")
-    if params.get("opt_sample"):
+    if params.get("opt_sample", False):
         cargs.append("-sample")
     return cargs
 
 
 class CiftiWeightedStatsOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `cifti_weighted_stats(...)`.
+    Output object returned when calling `CiftiWeightedStatsParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -279,7 +276,7 @@ def cifti_weighted_stats_params(
     opt_percentile_percent: float | None = None,
     opt_sum: bool = False,
     opt_show_map_name: bool = False,
-) -> CiftiWeightedStatsParameters:
+) -> CiftiWeightedStatsParametersTagged:
     """
     Build parameters.
     
@@ -301,7 +298,7 @@ def cifti_weighted_stats_params(
         Parameter dictionary
     """
     params = {
-        "@type": "workbench.cifti-weighted-stats",
+        "@type": "workbench/cifti-weighted-stats",
         "cifti_in": cifti_in,
         "opt_mean": opt_mean,
         "opt_sum": opt_sum,
@@ -338,33 +335,33 @@ def cifti_weighted_stats_cargs(
     cargs = []
     cargs.append("wb_command")
     cargs.append("-cifti-weighted-stats")
-    cargs.append(execution.input_file(params.get("cifti_in")))
-    if params.get("spatial_weights") is not None:
-        cargs.extend(dyn_cargs(params.get("spatial_weights")["@type"])(params.get("spatial_weights"), execution))
-    if params.get("opt_cifti_weights_weight_cifti") is not None:
+    cargs.append(execution.input_file(params.get("cifti_in", None)))
+    if params.get("spatial_weights", None) is not None:
+        cargs.extend(cifti_weighted_stats_spatial_weights_cargs(params.get("spatial_weights", None), execution))
+    if params.get("opt_cifti_weights_weight_cifti", None) is not None:
         cargs.extend([
             "-cifti-weights",
-            execution.input_file(params.get("opt_cifti_weights_weight_cifti"))
+            execution.input_file(params.get("opt_cifti_weights_weight_cifti", None))
         ])
-    if params.get("opt_column_column") is not None:
+    if params.get("opt_column_column", None) is not None:
         cargs.extend([
             "-column",
-            str(params.get("opt_column_column"))
+            str(params.get("opt_column_column", None))
         ])
-    if params.get("roi") is not None:
-        cargs.extend(dyn_cargs(params.get("roi")["@type"])(params.get("roi"), execution))
-    if params.get("opt_mean"):
+    if params.get("roi", None) is not None:
+        cargs.extend(cifti_weighted_stats_roi_cargs(params.get("roi", None), execution))
+    if params.get("opt_mean", False):
         cargs.append("-mean")
-    if params.get("stdev") is not None:
-        cargs.extend(dyn_cargs(params.get("stdev")["@type"])(params.get("stdev"), execution))
-    if params.get("opt_percentile_percent") is not None:
+    if params.get("stdev", None) is not None:
+        cargs.extend(cifti_weighted_stats_stdev_cargs(params.get("stdev", None), execution))
+    if params.get("opt_percentile_percent", None) is not None:
         cargs.extend([
             "-percentile",
-            str(params.get("opt_percentile_percent"))
+            str(params.get("opt_percentile_percent", None))
         ])
-    if params.get("opt_sum"):
+    if params.get("opt_sum", False):
         cargs.append("-sum")
-    if params.get("opt_show_map_name"):
+    if params.get("opt_show_map_name", False):
         cargs.append("-show-map-name")
     return cargs
 
@@ -504,10 +501,6 @@ def cifti_weighted_stats(
 __all__ = [
     "CIFTI_WEIGHTED_STATS_METADATA",
     "CiftiWeightedStatsOutputs",
-    "CiftiWeightedStatsParameters",
-    "CiftiWeightedStatsRoiParameters",
-    "CiftiWeightedStatsSpatialWeightsParameters",
-    "CiftiWeightedStatsStdevParameters",
     "cifti_weighted_stats",
     "cifti_weighted_stats_execute",
     "cifti_weighted_stats_params",

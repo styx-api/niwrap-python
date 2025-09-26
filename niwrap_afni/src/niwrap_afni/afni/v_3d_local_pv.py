@@ -14,7 +14,21 @@ V_3D_LOCAL_PV_METADATA = Metadata(
 
 
 V3dLocalPvParameters = typing.TypedDict('V3dLocalPvParameters', {
-    "@type": typing.Literal["afni.3dLocalPV"],
+    "@type": typing.NotRequired[typing.Literal["afni/3dLocalPV"]],
+    "input_dataset": InputPathType,
+    "mask": typing.NotRequired[InputPathType | None],
+    "automask": bool,
+    "prefix": typing.NotRequired[str | None],
+    "prefix2": typing.NotRequired[str | None],
+    "evprefix": typing.NotRequired[str | None],
+    "neighborhood": typing.NotRequired[str | None],
+    "despike": bool,
+    "polort": typing.NotRequired[float | None],
+    "vnorm": bool,
+    "vproj": typing.NotRequired[str | None],
+})
+V3dLocalPvParametersTagged = typing.TypedDict('V3dLocalPvParametersTagged', {
+    "@type": typing.Literal["afni/3dLocalPV"],
     "input_dataset": InputPathType,
     "mask": typing.NotRequired[InputPathType | None],
     "automask": bool,
@@ -29,41 +43,9 @@ V3dLocalPvParameters = typing.TypedDict('V3dLocalPvParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "afni.3dLocalPV": v_3d_local_pv_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "afni.3dLocalPV": v_3d_local_pv_outputs,
-    }.get(t)
-
-
 class V3dLocalPvOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `v_3d_local_pv(...)`.
+    Output object returned when calling `V3dLocalPvParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -87,7 +69,7 @@ def v_3d_local_pv_params(
     polort: float | None = None,
     vnorm: bool = False,
     vproj: str | None = None,
-) -> V3dLocalPvParameters:
+) -> V3dLocalPvParametersTagged:
     """
     Build parameters.
     
@@ -114,7 +96,7 @@ def v_3d_local_pv_params(
         Parameter dictionary
     """
     params = {
-        "@type": "afni.3dLocalPV",
+        "@type": "afni/3dLocalPV",
         "input_dataset": input_dataset,
         "automask": automask,
         "despike": despike,
@@ -152,47 +134,47 @@ def v_3d_local_pv_cargs(
     """
     cargs = []
     cargs.append("3dLocalPV")
-    cargs.append(execution.input_file(params.get("input_dataset")))
-    if params.get("mask") is not None:
+    cargs.append(execution.input_file(params.get("input_dataset", None)))
+    if params.get("mask", None) is not None:
         cargs.extend([
             "-mask",
-            execution.input_file(params.get("mask"))
+            execution.input_file(params.get("mask", None))
         ])
-    if params.get("automask"):
+    if params.get("automask", False):
         cargs.append("-automask")
-    if params.get("prefix") is not None:
+    if params.get("prefix", None) is not None:
         cargs.extend([
             "-prefix",
-            params.get("prefix")
+            params.get("prefix", None)
         ])
-    if params.get("prefix2") is not None:
+    if params.get("prefix2", None) is not None:
         cargs.extend([
             "-prefix2",
-            params.get("prefix2")
+            params.get("prefix2", None)
         ])
-    if params.get("evprefix") is not None:
+    if params.get("evprefix", None) is not None:
         cargs.extend([
             "-evprefix",
-            params.get("evprefix")
+            params.get("evprefix", None)
         ])
-    if params.get("neighborhood") is not None:
+    if params.get("neighborhood", None) is not None:
         cargs.extend([
             "-nbhd",
-            params.get("neighborhood")
+            params.get("neighborhood", None)
         ])
-    if params.get("despike"):
+    if params.get("despike", False):
         cargs.append("-despike")
-    if params.get("polort") is not None:
+    if params.get("polort", None) is not None:
         cargs.extend([
             "-polort",
-            str(params.get("polort"))
+            str(params.get("polort", None))
         ])
-    if params.get("vnorm"):
+    if params.get("vnorm", False):
         cargs.append("-vnorm")
-    if params.get("vproj") is not None:
+    if params.get("vproj", None) is not None:
         cargs.extend([
             "-vproj",
-            params.get("vproj")
+            params.get("vproj", None)
         ])
     return cargs
 
@@ -212,9 +194,9 @@ def v_3d_local_pv_outputs(
     """
     ret = V3dLocalPvOutputs(
         root=execution.output_file("."),
-        svd_vector_result=execution.output_file(params.get("prefix") + ".nii.gz") if (params.get("prefix") is not None) else None,
-        second_principal_vector=execution.output_file(params.get("prefix2") + ".nii.gz") if (params.get("prefix2") is not None) else None,
-        singular_value=execution.output_file(params.get("evprefix") + ".nii.gz") if (params.get("evprefix") is not None) else None,
+        svd_vector_result=execution.output_file(params.get("prefix", None) + ".nii.gz") if (params.get("prefix") is not None) else None,
+        second_principal_vector=execution.output_file(params.get("prefix2", None) + ".nii.gz") if (params.get("prefix2") is not None) else None,
+        singular_value=execution.output_file(params.get("evprefix", None) + ".nii.gz") if (params.get("evprefix") is not None) else None,
     )
     return ret
 
@@ -315,7 +297,6 @@ def v_3d_local_pv(
 
 __all__ = [
     "V3dLocalPvOutputs",
-    "V3dLocalPvParameters",
     "V_3D_LOCAL_PV_METADATA",
     "v_3d_local_pv",
     "v_3d_local_pv_execute",

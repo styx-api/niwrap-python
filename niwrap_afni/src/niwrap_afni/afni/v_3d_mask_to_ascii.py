@@ -14,48 +14,22 @@ V_3D_MASK_TO_ASCII_METADATA = Metadata(
 
 
 V3dMaskToAsciiParameters = typing.TypedDict('V3dMaskToAsciiParameters', {
-    "@type": typing.Literal["afni.3dMaskToASCII"],
+    "@type": typing.NotRequired[typing.Literal["afni/3dMaskToASCII"]],
+    "tobin_flag": bool,
+    "dataset": InputPathType,
+    "outputfile": str,
+})
+V3dMaskToAsciiParametersTagged = typing.TypedDict('V3dMaskToAsciiParametersTagged', {
+    "@type": typing.Literal["afni/3dMaskToASCII"],
     "tobin_flag": bool,
     "dataset": InputPathType,
     "outputfile": str,
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "afni.3dMaskToASCII": v_3d_mask_to_ascii_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "afni.3dMaskToASCII": v_3d_mask_to_ascii_outputs,
-    }.get(t)
-
-
 class V3dMaskToAsciiOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `v_3d_mask_to_ascii(...)`.
+    Output object returned when calling `V3dMaskToAsciiParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -67,7 +41,7 @@ def v_3d_mask_to_ascii_params(
     dataset: InputPathType,
     outputfile: str,
     tobin_flag: bool = False,
-) -> V3dMaskToAsciiParameters:
+) -> V3dMaskToAsciiParametersTagged:
     """
     Build parameters.
     
@@ -81,7 +55,7 @@ def v_3d_mask_to_ascii_params(
         Parameter dictionary
     """
     params = {
-        "@type": "afni.3dMaskToASCII",
+        "@type": "afni/3dMaskToASCII",
         "tobin_flag": tobin_flag,
         "dataset": dataset,
         "outputfile": outputfile,
@@ -104,10 +78,10 @@ def v_3d_mask_to_ascii_cargs(
     """
     cargs = []
     cargs.append("3dMaskToASCII")
-    if params.get("tobin_flag"):
+    if params.get("tobin_flag", False):
         cargs.append("-tobin")
-    cargs.append(execution.input_file(params.get("dataset")))
-    cargs.append("> " + params.get("outputfile"))
+    cargs.append(execution.input_file(params.get("dataset", None)))
+    cargs.append("> " + params.get("outputfile", None))
     return cargs
 
 
@@ -126,7 +100,7 @@ def v_3d_mask_to_ascii_outputs(
     """
     ret = V3dMaskToAsciiOutputs(
         root=execution.output_file("."),
-        outputfile=execution.output_file(params.get("outputfile")),
+        outputfile=execution.output_file(params.get("outputfile", None)),
     )
     return ret
 
@@ -194,7 +168,6 @@ def v_3d_mask_to_ascii(
 
 __all__ = [
     "V3dMaskToAsciiOutputs",
-    "V3dMaskToAsciiParameters",
     "V_3D_MASK_TO_ASCII_METADATA",
     "v_3d_mask_to_ascii",
     "v_3d_mask_to_ascii_execute",

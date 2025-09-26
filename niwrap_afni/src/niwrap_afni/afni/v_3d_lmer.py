@@ -14,7 +14,32 @@ V_3D_LMER_METADATA = Metadata(
 
 
 V3dLmerParameters = typing.TypedDict('V3dLmerParameters', {
-    "@type": typing.Literal["afni.3dLMEr"],
+    "@type": typing.NotRequired[typing.Literal["afni/3dLMEr"]],
+    "bound_lower": typing.NotRequired[float | None],
+    "bound_upper": typing.NotRequired[float | None],
+    "cio": bool,
+    "data_table": InputPathType,
+    "debug_args": bool,
+    "glf_code": typing.NotRequired[str | None],
+    "glt_code": typing.NotRequired[str | None],
+    "help": bool,
+    "input_file_column": typing.NotRequired[str | None],
+    "jobs": typing.NotRequired[float | None],
+    "mask": typing.NotRequired[InputPathType | None],
+    "model": str,
+    "prefix": str,
+    "qvar_centers": typing.NotRequired[str | None],
+    "qvars": typing.NotRequired[str | None],
+    "resid": typing.NotRequired[str | None],
+    "rio": bool,
+    "show_options": bool,
+    "ss_type": typing.NotRequired[float | None],
+    "trr": bool,
+    "vvar_centers": typing.NotRequired[str | None],
+    "vvars": typing.NotRequired[str | None],
+})
+V3dLmerParametersTagged = typing.TypedDict('V3dLmerParametersTagged', {
+    "@type": typing.Literal["afni/3dLMEr"],
     "bound_lower": typing.NotRequired[float | None],
     "bound_upper": typing.NotRequired[float | None],
     "cio": bool,
@@ -40,41 +65,9 @@ V3dLmerParameters = typing.TypedDict('V3dLmerParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "afni.3dLMEr": v_3d_lmer_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "afni.3dLMEr": v_3d_lmer_outputs,
-    }.get(t)
-
-
 class V3dLmerOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `v_3d_lmer(...)`.
+    Output object returned when calling `V3dLmerParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -107,7 +100,7 @@ def v_3d_lmer_params(
     trr: bool = False,
     vvar_centers: str | None = None,
     vvars: str | None = None,
-) -> V3dLmerParameters:
+) -> V3dLmerParametersTagged:
     """
     Build parameters.
     
@@ -140,7 +133,7 @@ def v_3d_lmer_params(
         Parameter dictionary
     """
     params = {
-        "@type": "afni.3dLMEr",
+        "@type": "afni/3dLMEr",
         "cio": cio,
         "data_table": data_table,
         "debug_args": debug_args,
@@ -195,88 +188,88 @@ def v_3d_lmer_cargs(
     """
     cargs = []
     cargs.append("3dLMEr")
-    if params.get("bound_lower") is not None:
-        cargs.append(str(params.get("bound_lower")))
-    if params.get("bound_upper") is not None:
-        cargs.append(str(params.get("bound_upper")))
-    if params.get("cio"):
+    if params.get("bound_lower", None) is not None:
+        cargs.append(str(params.get("bound_lower", None)))
+    if params.get("bound_upper", None) is not None:
+        cargs.append(str(params.get("bound_upper", None)))
+    if params.get("cio", False):
         cargs.append("-cio")
     cargs.extend([
         "-dataTable",
-        execution.input_file(params.get("data_table"))
+        execution.input_file(params.get("data_table", None))
     ])
-    if params.get("debug_args"):
+    if params.get("debug_args", False):
         cargs.append("-dbgArgs")
-    if params.get("glf_code") is not None:
+    if params.get("glf_code", None) is not None:
         cargs.extend([
             "-glfCode",
-            params.get("glf_code")
+            params.get("glf_code", None)
         ])
-    if params.get("glt_code") is not None:
+    if params.get("glt_code", None) is not None:
         cargs.extend([
             "-gltCode",
-            params.get("glt_code")
+            params.get("glt_code", None)
         ])
-    if params.get("help"):
+    if params.get("help", False):
         cargs.append("-help")
-    if params.get("input_file_column") is not None:
+    if params.get("input_file_column", None) is not None:
         cargs.extend([
             "-IF",
-            params.get("input_file_column")
+            params.get("input_file_column", None)
         ])
-    if params.get("jobs") is not None:
+    if params.get("jobs", None) is not None:
         cargs.extend([
             "-jobs",
-            str(params.get("jobs"))
+            str(params.get("jobs", None))
         ])
-    if params.get("mask") is not None:
+    if params.get("mask", None) is not None:
         cargs.extend([
             "-mask",
-            execution.input_file(params.get("mask"))
+            execution.input_file(params.get("mask", None))
         ])
     cargs.extend([
         "-model",
-        params.get("model")
+        params.get("model", None)
     ])
     cargs.extend([
         "-prefix",
-        params.get("prefix")
+        params.get("prefix", None)
     ])
-    if params.get("qvar_centers") is not None:
+    if params.get("qvar_centers", None) is not None:
         cargs.extend([
             "-qVarCenters",
-            params.get("qvar_centers")
+            params.get("qvar_centers", None)
         ])
-    if params.get("qvars") is not None:
+    if params.get("qvars", None) is not None:
         cargs.extend([
             "-qVars",
-            params.get("qvars")
+            params.get("qvars", None)
         ])
-    if params.get("resid") is not None:
+    if params.get("resid", None) is not None:
         cargs.extend([
             "-resid",
-            params.get("resid")
+            params.get("resid", None)
         ])
-    if params.get("rio"):
+    if params.get("rio", False):
         cargs.append("-Rio")
-    if params.get("show_options"):
+    if params.get("show_options", False):
         cargs.append("-show_allowed_options")
-    if params.get("ss_type") is not None:
+    if params.get("ss_type", None) is not None:
         cargs.extend([
             "-SS_type",
-            str(params.get("ss_type"))
+            str(params.get("ss_type", None))
         ])
-    if params.get("trr"):
+    if params.get("trr", False):
         cargs.append("-TRR")
-    if params.get("vvar_centers") is not None:
+    if params.get("vvar_centers", None) is not None:
         cargs.extend([
             "-vVarCenters",
-            params.get("vvar_centers")
+            params.get("vvar_centers", None)
         ])
-    if params.get("vvars") is not None:
+    if params.get("vvars", None) is not None:
         cargs.extend([
             "-vVars",
-            params.get("vvars")
+            params.get("vvars", None)
         ])
     return cargs
 
@@ -296,8 +289,8 @@ def v_3d_lmer_outputs(
     """
     ret = V3dLmerOutputs(
         root=execution.output_file("."),
-        output_file=execution.output_file(params.get("prefix") + ".nii.gz"),
-        residuals_file=execution.output_file(params.get("resid") + ".nii.gz") if (params.get("resid") is not None) else None,
+        output_file=execution.output_file(params.get("prefix", None) + ".nii.gz"),
+        residuals_file=execution.output_file(params.get("resid", None) + ".nii.gz") if (params.get("resid") is not None) else None,
     )
     return ret
 
@@ -422,7 +415,6 @@ def v_3d_lmer(
 
 __all__ = [
     "V3dLmerOutputs",
-    "V3dLmerParameters",
     "V_3D_LMER_METADATA",
     "v_3d_lmer",
     "v_3d_lmer_execute",

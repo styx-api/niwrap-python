@@ -14,7 +14,17 @@ VOLUME_CREATE_METADATA = Metadata(
 
 
 VolumeCreatePlumbParameters = typing.TypedDict('VolumeCreatePlumbParameters', {
-    "@type": typing.Literal["workbench.volume-create.plumb"],
+    "@type": typing.NotRequired[typing.Literal["plumb"]],
+    "axis_order": str,
+    "x_spacing": float,
+    "y_spacing": float,
+    "z_spacing": float,
+    "x_offset": float,
+    "y_offset": float,
+    "z_offset": float,
+})
+VolumeCreatePlumbParametersTagged = typing.TypedDict('VolumeCreatePlumbParametersTagged', {
+    "@type": typing.Literal["plumb"],
     "axis_order": str,
     "x_spacing": float,
     "y_spacing": float,
@@ -26,7 +36,22 @@ VolumeCreatePlumbParameters = typing.TypedDict('VolumeCreatePlumbParameters', {
 
 
 VolumeCreateSformParameters = typing.TypedDict('VolumeCreateSformParameters', {
-    "@type": typing.Literal["workbench.volume-create.sform"],
+    "@type": typing.NotRequired[typing.Literal["sform"]],
+    "xi_spacing": float,
+    "xj_spacing": float,
+    "xk_spacing": float,
+    "x_offset": float,
+    "yi_spacing": float,
+    "yj_spacing": float,
+    "yk_spacing": float,
+    "y_offset": float,
+    "zi_spacing": float,
+    "zj_spacing": float,
+    "zk_spacing": float,
+    "z_offset": float,
+})
+VolumeCreateSformParametersTagged = typing.TypedDict('VolumeCreateSformParametersTagged', {
+    "@type": typing.Literal["sform"],
     "xi_spacing": float,
     "xj_spacing": float,
     "xk_spacing": float,
@@ -43,7 +68,7 @@ VolumeCreateSformParameters = typing.TypedDict('VolumeCreateSformParameters', {
 
 
 VolumeCreateParameters = typing.TypedDict('VolumeCreateParameters', {
-    "@type": typing.Literal["workbench.volume-create"],
+    "@type": typing.NotRequired[typing.Literal["workbench/volume-create"]],
     "i_dim": int,
     "j_dim": int,
     "k_dim": int,
@@ -51,40 +76,15 @@ VolumeCreateParameters = typing.TypedDict('VolumeCreateParameters', {
     "plumb": typing.NotRequired[VolumeCreatePlumbParameters | None],
     "sform": typing.NotRequired[VolumeCreateSformParameters | None],
 })
-
-
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "workbench.volume-create": volume_create_cargs,
-        "workbench.volume-create.plumb": volume_create_plumb_cargs,
-        "workbench.volume-create.sform": volume_create_sform_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "workbench.volume-create": volume_create_outputs,
-    }.get(t)
+VolumeCreateParametersTagged = typing.TypedDict('VolumeCreateParametersTagged', {
+    "@type": typing.Literal["workbench/volume-create"],
+    "i_dim": int,
+    "j_dim": int,
+    "k_dim": int,
+    "volume_out": str,
+    "plumb": typing.NotRequired[VolumeCreatePlumbParameters | None],
+    "sform": typing.NotRequired[VolumeCreateSformParameters | None],
+})
 
 
 def volume_create_plumb_params(
@@ -95,7 +95,7 @@ def volume_create_plumb_params(
     x_offset: float,
     y_offset: float,
     z_offset: float,
-) -> VolumeCreatePlumbParameters:
+) -> VolumeCreatePlumbParametersTagged:
     """
     Build parameters.
     
@@ -112,7 +112,7 @@ def volume_create_plumb_params(
         Parameter dictionary
     """
     params = {
-        "@type": "workbench.volume-create.plumb",
+        "@type": "plumb",
         "axis_order": axis_order,
         "x_spacing": x_spacing,
         "y_spacing": y_spacing,
@@ -139,13 +139,13 @@ def volume_create_plumb_cargs(
     """
     cargs = []
     cargs.append("-plumb")
-    cargs.append(params.get("axis_order"))
-    cargs.append(str(params.get("x_spacing")))
-    cargs.append(str(params.get("y_spacing")))
-    cargs.append(str(params.get("z_spacing")))
-    cargs.append(str(params.get("x_offset")))
-    cargs.append(str(params.get("y_offset")))
-    cargs.append(str(params.get("z_offset")))
+    cargs.append(params.get("axis_order", None))
+    cargs.append(str(params.get("x_spacing", None)))
+    cargs.append(str(params.get("y_spacing", None)))
+    cargs.append(str(params.get("z_spacing", None)))
+    cargs.append(str(params.get("x_offset", None)))
+    cargs.append(str(params.get("y_offset", None)))
+    cargs.append(str(params.get("z_offset", None)))
     return cargs
 
 
@@ -162,7 +162,7 @@ def volume_create_sform_params(
     zj_spacing: float,
     zk_spacing: float,
     z_offset: float,
-) -> VolumeCreateSformParameters:
+) -> VolumeCreateSformParametersTagged:
     """
     Build parameters.
     
@@ -183,7 +183,7 @@ def volume_create_sform_params(
         Parameter dictionary
     """
     params = {
-        "@type": "workbench.volume-create.sform",
+        "@type": "sform",
         "xi_spacing": xi_spacing,
         "xj_spacing": xj_spacing,
         "xk_spacing": xk_spacing,
@@ -215,24 +215,24 @@ def volume_create_sform_cargs(
     """
     cargs = []
     cargs.append("-sform")
-    cargs.append(str(params.get("xi_spacing")))
-    cargs.append(str(params.get("xj_spacing")))
-    cargs.append(str(params.get("xk_spacing")))
-    cargs.append(str(params.get("x_offset")))
-    cargs.append(str(params.get("yi_spacing")))
-    cargs.append(str(params.get("yj_spacing")))
-    cargs.append(str(params.get("yk_spacing")))
-    cargs.append(str(params.get("y_offset")))
-    cargs.append(str(params.get("zi_spacing")))
-    cargs.append(str(params.get("zj_spacing")))
-    cargs.append(str(params.get("zk_spacing")))
-    cargs.append(str(params.get("z_offset")))
+    cargs.append(str(params.get("xi_spacing", None)))
+    cargs.append(str(params.get("xj_spacing", None)))
+    cargs.append(str(params.get("xk_spacing", None)))
+    cargs.append(str(params.get("x_offset", None)))
+    cargs.append(str(params.get("yi_spacing", None)))
+    cargs.append(str(params.get("yj_spacing", None)))
+    cargs.append(str(params.get("yk_spacing", None)))
+    cargs.append(str(params.get("y_offset", None)))
+    cargs.append(str(params.get("zi_spacing", None)))
+    cargs.append(str(params.get("zj_spacing", None)))
+    cargs.append(str(params.get("zk_spacing", None)))
+    cargs.append(str(params.get("z_offset", None)))
     return cargs
 
 
 class VolumeCreateOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `volume_create(...)`.
+    Output object returned when calling `VolumeCreateParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -247,7 +247,7 @@ def volume_create_params(
     volume_out: str,
     plumb: VolumeCreatePlumbParameters | None = None,
     sform: VolumeCreateSformParameters | None = None,
-) -> VolumeCreateParameters:
+) -> VolumeCreateParametersTagged:
     """
     Build parameters.
     
@@ -262,7 +262,7 @@ def volume_create_params(
         Parameter dictionary
     """
     params = {
-        "@type": "workbench.volume-create",
+        "@type": "workbench/volume-create",
         "i_dim": i_dim,
         "j_dim": j_dim,
         "k_dim": k_dim,
@@ -291,14 +291,14 @@ def volume_create_cargs(
     cargs = []
     cargs.append("wb_command")
     cargs.append("-volume-create")
-    cargs.append(str(params.get("i_dim")))
-    cargs.append(str(params.get("j_dim")))
-    cargs.append(str(params.get("k_dim")))
-    cargs.append(params.get("volume_out"))
-    if params.get("plumb") is not None:
-        cargs.extend(dyn_cargs(params.get("plumb")["@type"])(params.get("plumb"), execution))
-    if params.get("sform") is not None:
-        cargs.extend(dyn_cargs(params.get("sform")["@type"])(params.get("sform"), execution))
+    cargs.append(str(params.get("i_dim", None)))
+    cargs.append(str(params.get("j_dim", None)))
+    cargs.append(str(params.get("k_dim", None)))
+    cargs.append(params.get("volume_out", None))
+    if params.get("plumb", None) is not None:
+        cargs.extend(volume_create_plumb_cargs(params.get("plumb", None), execution))
+    if params.get("sform", None) is not None:
+        cargs.extend(volume_create_sform_cargs(params.get("sform", None), execution))
     return cargs
 
 
@@ -317,7 +317,7 @@ def volume_create_outputs(
     """
     ret = VolumeCreateOutputs(
         root=execution.output_file("."),
-        volume_out=execution.output_file(params.get("volume_out")),
+        volume_out=execution.output_file(params.get("volume_out", None)),
     )
     return ret
 
@@ -399,9 +399,6 @@ def volume_create(
 __all__ = [
     "VOLUME_CREATE_METADATA",
     "VolumeCreateOutputs",
-    "VolumeCreateParameters",
-    "VolumeCreatePlumbParameters",
-    "VolumeCreateSformParameters",
     "volume_create",
     "volume_create_execute",
     "volume_create_params",

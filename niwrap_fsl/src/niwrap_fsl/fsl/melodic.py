@@ -14,7 +14,59 @@ MELODIC_METADATA = Metadata(
 
 
 MelodicParameters = typing.TypedDict('MelodicParameters', {
-    "@type": typing.Literal["fsl.melodic"],
+    "@type": typing.NotRequired[typing.Literal["fsl/melodic"]],
+    "input_file": InputPathType,
+    "output_directory": typing.NotRequired[str | None],
+    "mask_file": typing.NotRequired[InputPathType | None],
+    "dimensionality_reduction": typing.NotRequired[float | None],
+    "generate_report": bool,
+    "cifti_io": bool,
+    "variance_normalization": bool,
+    "no_masking": bool,
+    "update_masking": bool,
+    "no_bet": bool,
+    "bg_threshold": typing.NotRequired[float | None],
+    "dimest_technique": typing.NotRequired[str | None],
+    "separate_variance_normalization": bool,
+    "disable_migp": bool,
+    "num_internal_eigenmaps": typing.NotRequired[float | None],
+    "migp_shuffle": bool,
+    "migp_factor": typing.NotRequired[float | None],
+    "num_ics": typing.NotRequired[float | None],
+    "nonlinearity": typing.NotRequired[str | None],
+    "covar_weights": typing.NotRequired[InputPathType | None],
+    "eps_error": typing.NotRequired[float | None],
+    "eps_rank1_error": typing.NotRequired[float | None],
+    "max_iters": typing.NotRequired[float | None],
+    "max_restarts": typing.NotRequired[float | None],
+    "mm_threshold": typing.NotRequired[float | None],
+    "no_mixture_modeling": bool,
+    "ic_components_file": typing.NotRequired[InputPathType | None],
+    "mixing_matrix_file": typing.NotRequired[InputPathType | None],
+    "session_modes_file": typing.NotRequired[InputPathType | None],
+    "component_filter": typing.NotRequired[str | None],
+    "background_image": typing.NotRequired[InputPathType | None],
+    "tr_seconds": typing.NotRequired[float | None],
+    "log_power_calc": bool,
+    "time_domain_design_matrix": typing.NotRequired[InputPathType | None],
+    "time_domain_t_contrast_matrix": typing.NotRequired[InputPathType | None],
+    "subject_domain_design_matrix": typing.NotRequired[InputPathType | None],
+    "subject_domain_t_contrast_matrix": typing.NotRequired[InputPathType | None],
+    "output_unmixing_matrix": bool,
+    "output_stats": bool,
+    "output_pca": bool,
+    "output_whitening": bool,
+    "output_original_ics": bool,
+    "output_mean_volume": bool,
+    "version": bool,
+    "copyright": bool,
+    "help": bool,
+    "debug": bool,
+    "report_maps": typing.NotRequired[str | None],
+    "keep_meanvol": bool,
+})
+MelodicParametersTagged = typing.TypedDict('MelodicParametersTagged', {
+    "@type": typing.Literal["fsl/melodic"],
     "input_file": InputPathType,
     "output_directory": typing.NotRequired[str | None],
     "mask_file": typing.NotRequired[InputPathType | None],
@@ -67,41 +119,9 @@ MelodicParameters = typing.TypedDict('MelodicParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "fsl.melodic": melodic_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "fsl.melodic": melodic_outputs,
-    }.get(t)
-
-
 class MelodicOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `melodic(...)`.
+    Output object returned when calling `MelodicParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -167,7 +187,7 @@ def melodic_params(
     debug: bool = False,
     report_maps: str | None = None,
     keep_meanvol: bool = False,
-) -> MelodicParameters:
+) -> MelodicParametersTagged:
     """
     Build parameters.
     
@@ -238,7 +258,7 @@ def melodic_params(
         Parameter dictionary
     """
     params = {
-        "@type": "fsl.melodic",
+        "@type": "fsl/melodic",
         "input_file": input_file,
         "generate_report": generate_report,
         "cifti_io": cifti_io,
@@ -335,181 +355,181 @@ def melodic_cargs(
     cargs.append("melodic")
     cargs.extend([
         "-i",
-        execution.input_file(params.get("input_file"))
+        execution.input_file(params.get("input_file", None))
     ])
-    if params.get("output_directory") is not None:
+    if params.get("output_directory", None) is not None:
         cargs.extend([
             "-o",
-            params.get("output_directory")
+            params.get("output_directory", None)
         ])
-    if params.get("mask_file") is not None:
+    if params.get("mask_file", None) is not None:
         cargs.extend([
             "-m",
-            execution.input_file(params.get("mask_file"))
+            execution.input_file(params.get("mask_file", None))
         ])
-    if params.get("dimensionality_reduction") is not None:
+    if params.get("dimensionality_reduction", None) is not None:
         cargs.extend([
             "-d",
-            str(params.get("dimensionality_reduction"))
+            str(params.get("dimensionality_reduction", None))
         ])
-    if params.get("generate_report"):
+    if params.get("generate_report", False):
         cargs.append("--report")
-    if params.get("cifti_io"):
+    if params.get("cifti_io", False):
         cargs.append("--CIFTI")
-    if params.get("variance_normalization"):
+    if params.get("variance_normalization", False):
         cargs.append("--vn")
-    if params.get("no_masking"):
+    if params.get("no_masking", False):
         cargs.append("--nomask")
-    if params.get("update_masking"):
+    if params.get("update_masking", False):
         cargs.append("--update_mask")
-    if params.get("no_bet"):
+    if params.get("no_bet", False):
         cargs.append("--nobet")
-    if params.get("bg_threshold") is not None:
+    if params.get("bg_threshold", None) is not None:
         cargs.extend([
             "--bgthreshold",
-            str(params.get("bg_threshold"))
+            str(params.get("bg_threshold", None))
         ])
-    if params.get("dimest_technique") is not None:
+    if params.get("dimest_technique", None) is not None:
         cargs.extend([
             "--dimest",
-            params.get("dimest_technique")
+            params.get("dimest_technique", None)
         ])
-    if params.get("separate_variance_normalization"):
+    if params.get("separate_variance_normalization", False):
         cargs.append("--sep_vn")
-    if params.get("disable_migp"):
+    if params.get("disable_migp", False):
         cargs.append("--disableMigp")
-    if params.get("num_internal_eigenmaps") is not None:
+    if params.get("num_internal_eigenmaps", None) is not None:
         cargs.extend([
             "--migpN",
-            str(params.get("num_internal_eigenmaps"))
+            str(params.get("num_internal_eigenmaps", None))
         ])
-    if params.get("migp_shuffle"):
+    if params.get("migp_shuffle", False):
         cargs.append("--migp_shuffle")
-    if params.get("migp_factor") is not None:
+    if params.get("migp_factor", None) is not None:
         cargs.extend([
             "--migp_factor",
-            str(params.get("migp_factor"))
+            str(params.get("migp_factor", None))
         ])
-    if params.get("num_ics") is not None:
+    if params.get("num_ics", None) is not None:
         cargs.extend([
             "-n",
-            str(params.get("num_ics"))
+            str(params.get("num_ics", None))
         ])
-    if params.get("nonlinearity") is not None:
+    if params.get("nonlinearity", None) is not None:
         cargs.extend([
             "--nl",
-            params.get("nonlinearity")
+            params.get("nonlinearity", None)
         ])
-    if params.get("covar_weights") is not None:
+    if params.get("covar_weights", None) is not None:
         cargs.extend([
             "--covarweight",
-            execution.input_file(params.get("covar_weights"))
+            execution.input_file(params.get("covar_weights", None))
         ])
-    if params.get("eps_error") is not None:
+    if params.get("eps_error", None) is not None:
         cargs.extend([
             "--eps",
-            str(params.get("eps_error"))
+            str(params.get("eps_error", None))
         ])
-    if params.get("eps_rank1_error") is not None:
+    if params.get("eps_rank1_error", None) is not None:
         cargs.extend([
             "--epsS",
-            str(params.get("eps_rank1_error"))
+            str(params.get("eps_rank1_error", None))
         ])
-    if params.get("max_iters") is not None:
+    if params.get("max_iters", None) is not None:
         cargs.extend([
             "--maxit",
-            str(params.get("max_iters"))
+            str(params.get("max_iters", None))
         ])
-    if params.get("max_restarts") is not None:
+    if params.get("max_restarts", None) is not None:
         cargs.extend([
             "--maxrestart",
-            str(params.get("max_restarts"))
+            str(params.get("max_restarts", None))
         ])
-    if params.get("mm_threshold") is not None:
+    if params.get("mm_threshold", None) is not None:
         cargs.extend([
             "--mmthresh",
-            str(params.get("mm_threshold"))
+            str(params.get("mm_threshold", None))
         ])
-    if params.get("no_mixture_modeling"):
+    if params.get("no_mixture_modeling", False):
         cargs.append("--no_mm")
-    if params.get("ic_components_file") is not None:
+    if params.get("ic_components_file", None) is not None:
         cargs.extend([
             "--ICs",
-            execution.input_file(params.get("ic_components_file"))
+            execution.input_file(params.get("ic_components_file", None))
         ])
-    if params.get("mixing_matrix_file") is not None:
+    if params.get("mixing_matrix_file", None) is not None:
         cargs.extend([
             "--mix",
-            execution.input_file(params.get("mixing_matrix_file"))
+            execution.input_file(params.get("mixing_matrix_file", None))
         ])
-    if params.get("session_modes_file") is not None:
+    if params.get("session_modes_file", None) is not None:
         cargs.extend([
             "--smode",
-            execution.input_file(params.get("session_modes_file"))
+            execution.input_file(params.get("session_modes_file", None))
         ])
-    if params.get("component_filter") is not None:
+    if params.get("component_filter", None) is not None:
         cargs.extend([
             "-f",
-            params.get("component_filter")
+            params.get("component_filter", None)
         ])
-    if params.get("background_image") is not None:
+    if params.get("background_image", None) is not None:
         cargs.extend([
             "--bgimage",
-            execution.input_file(params.get("background_image"))
+            execution.input_file(params.get("background_image", None))
         ])
-    if params.get("tr_seconds") is not None:
+    if params.get("tr_seconds", None) is not None:
         cargs.extend([
             "--tr",
-            str(params.get("tr_seconds"))
+            str(params.get("tr_seconds", None))
         ])
-    if params.get("log_power_calc"):
+    if params.get("log_power_calc", False):
         cargs.append("--logPower")
-    if params.get("time_domain_design_matrix") is not None:
+    if params.get("time_domain_design_matrix", None) is not None:
         cargs.extend([
             "--Tdes",
-            execution.input_file(params.get("time_domain_design_matrix"))
+            execution.input_file(params.get("time_domain_design_matrix", None))
         ])
-    if params.get("time_domain_t_contrast_matrix") is not None:
+    if params.get("time_domain_t_contrast_matrix", None) is not None:
         cargs.extend([
             "--Tcon",
-            execution.input_file(params.get("time_domain_t_contrast_matrix"))
+            execution.input_file(params.get("time_domain_t_contrast_matrix", None))
         ])
-    if params.get("subject_domain_design_matrix") is not None:
+    if params.get("subject_domain_design_matrix", None) is not None:
         cargs.extend([
             "--Sdes",
-            execution.input_file(params.get("subject_domain_design_matrix"))
+            execution.input_file(params.get("subject_domain_design_matrix", None))
         ])
-    if params.get("subject_domain_t_contrast_matrix") is not None:
+    if params.get("subject_domain_t_contrast_matrix", None) is not None:
         cargs.extend([
             "--Scon",
-            execution.input_file(params.get("subject_domain_t_contrast_matrix"))
+            execution.input_file(params.get("subject_domain_t_contrast_matrix", None))
         ])
-    if params.get("output_unmixing_matrix"):
+    if params.get("output_unmixing_matrix", False):
         cargs.append("--Ounmix")
-    if params.get("output_stats"):
+    if params.get("output_stats", False):
         cargs.append("--Ostats")
-    if params.get("output_pca"):
+    if params.get("output_pca", False):
         cargs.append("--Opca")
-    if params.get("output_whitening"):
+    if params.get("output_whitening", False):
         cargs.append("--Owhite")
-    if params.get("output_original_ics"):
+    if params.get("output_original_ics", False):
         cargs.append("--Oorig")
-    if params.get("output_mean_volume"):
+    if params.get("output_mean_volume", False):
         cargs.append("--Omean")
-    if params.get("version"):
+    if params.get("version", False):
         cargs.append("-V")
-    if params.get("copyright"):
+    if params.get("copyright", False):
         cargs.append("--copyright")
-    if params.get("help"):
+    if params.get("help", False):
         cargs.append("-h")
-    if params.get("debug"):
+    if params.get("debug", False):
         cargs.append("--debug")
-    if params.get("report_maps") is not None:
+    if params.get("report_maps", None) is not None:
         cargs.extend([
             "--report_maps",
-            params.get("report_maps")
+            params.get("report_maps", None)
         ])
-    if params.get("keep_meanvol"):
+    if params.get("keep_meanvol", False):
         cargs.append("--keep_meanvol")
     return cargs
 
@@ -529,11 +549,11 @@ def melodic_outputs(
     """
     ret = MelodicOutputs(
         root=execution.output_file("."),
-        report_file=execution.output_file(params.get("output_directory") + "/report.html") if (params.get("output_directory") is not None) else None,
-        ics_output_file=execution.output_file(params.get("output_directory") + "/melodic_IC.nii.gz") if (params.get("output_directory") is not None) else None,
-        mix_output_file=execution.output_file(params.get("output_directory") + "/melodic_mix") if (params.get("output_directory") is not None) else None,
-        temporal_mode_file=execution.output_file(params.get("output_directory") + "/melodic_Tmodes") if (params.get("output_directory") is not None) else None,
-        melodic_report_directory=execution.output_file(params.get("output_directory") + "/melodic_report") if (params.get("output_directory") is not None) else None,
+        report_file=execution.output_file(params.get("output_directory", None) + "/report.html") if (params.get("output_directory") is not None) else None,
+        ics_output_file=execution.output_file(params.get("output_directory", None) + "/melodic_IC.nii.gz") if (params.get("output_directory") is not None) else None,
+        mix_output_file=execution.output_file(params.get("output_directory", None) + "/melodic_mix") if (params.get("output_directory") is not None) else None,
+        temporal_mode_file=execution.output_file(params.get("output_directory", None) + "/melodic_Tmodes") if (params.get("output_directory") is not None) else None,
+        melodic_report_directory=execution.output_file(params.get("output_directory", None) + "/melodic_report") if (params.get("output_directory") is not None) else None,
     )
     return ret
 
@@ -753,7 +773,6 @@ def melodic(
 __all__ = [
     "MELODIC_METADATA",
     "MelodicOutputs",
-    "MelodicParameters",
     "melodic",
     "melodic_execute",
     "melodic_params",

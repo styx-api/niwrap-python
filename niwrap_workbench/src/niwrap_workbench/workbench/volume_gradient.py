@@ -14,14 +14,28 @@ VOLUME_GRADIENT_METADATA = Metadata(
 
 
 VolumeGradientPresmoothParameters = typing.TypedDict('VolumeGradientPresmoothParameters', {
-    "@type": typing.Literal["workbench.volume-gradient.presmooth"],
+    "@type": typing.NotRequired[typing.Literal["presmooth"]],
+    "kernel": float,
+    "opt_fwhm": bool,
+})
+VolumeGradientPresmoothParametersTagged = typing.TypedDict('VolumeGradientPresmoothParametersTagged', {
+    "@type": typing.Literal["presmooth"],
     "kernel": float,
     "opt_fwhm": bool,
 })
 
 
 VolumeGradientParameters = typing.TypedDict('VolumeGradientParameters', {
-    "@type": typing.Literal["workbench.volume-gradient"],
+    "@type": typing.NotRequired[typing.Literal["workbench/volume-gradient"]],
+    "volume_in": InputPathType,
+    "volume_out": str,
+    "presmooth": typing.NotRequired[VolumeGradientPresmoothParameters | None],
+    "opt_roi_roi_volume": typing.NotRequired[InputPathType | None],
+    "opt_vectors_vector_volume_out": typing.NotRequired[str | None],
+    "opt_subvolume_subvol": typing.NotRequired[str | None],
+})
+VolumeGradientParametersTagged = typing.TypedDict('VolumeGradientParametersTagged', {
+    "@type": typing.Literal["workbench/volume-gradient"],
     "volume_in": InputPathType,
     "volume_out": str,
     "presmooth": typing.NotRequired[VolumeGradientPresmoothParameters | None],
@@ -31,43 +45,10 @@ VolumeGradientParameters = typing.TypedDict('VolumeGradientParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "workbench.volume-gradient": volume_gradient_cargs,
-        "workbench.volume-gradient.presmooth": volume_gradient_presmooth_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "workbench.volume-gradient": volume_gradient_outputs,
-    }.get(t)
-
-
 def volume_gradient_presmooth_params(
     kernel: float,
     opt_fwhm: bool = False,
-) -> VolumeGradientPresmoothParameters:
+) -> VolumeGradientPresmoothParametersTagged:
     """
     Build parameters.
     
@@ -79,7 +60,7 @@ def volume_gradient_presmooth_params(
         Parameter dictionary
     """
     params = {
-        "@type": "workbench.volume-gradient.presmooth",
+        "@type": "presmooth",
         "kernel": kernel,
         "opt_fwhm": opt_fwhm,
     }
@@ -101,15 +82,15 @@ def volume_gradient_presmooth_cargs(
     """
     cargs = []
     cargs.append("-presmooth")
-    cargs.append(str(params.get("kernel")))
-    if params.get("opt_fwhm"):
+    cargs.append(str(params.get("kernel", None)))
+    if params.get("opt_fwhm", False):
         cargs.append("-fwhm")
     return cargs
 
 
 class VolumeGradientOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `volume_gradient(...)`.
+    Output object returned when calling `VolumeGradientParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -126,7 +107,7 @@ def volume_gradient_params(
     opt_roi_roi_volume: InputPathType | None = None,
     opt_vectors_vector_volume_out: str | None = None,
     opt_subvolume_subvol: str | None = None,
-) -> VolumeGradientParameters:
+) -> VolumeGradientParametersTagged:
     """
     Build parameters.
     
@@ -144,7 +125,7 @@ def volume_gradient_params(
         Parameter dictionary
     """
     params = {
-        "@type": "workbench.volume-gradient",
+        "@type": "workbench/volume-gradient",
         "volume_in": volume_in,
         "volume_out": volume_out,
     }
@@ -175,24 +156,24 @@ def volume_gradient_cargs(
     cargs = []
     cargs.append("wb_command")
     cargs.append("-volume-gradient")
-    cargs.append(execution.input_file(params.get("volume_in")))
-    cargs.append(params.get("volume_out"))
-    if params.get("presmooth") is not None:
-        cargs.extend(dyn_cargs(params.get("presmooth")["@type"])(params.get("presmooth"), execution))
-    if params.get("opt_roi_roi_volume") is not None:
+    cargs.append(execution.input_file(params.get("volume_in", None)))
+    cargs.append(params.get("volume_out", None))
+    if params.get("presmooth", None) is not None:
+        cargs.extend(volume_gradient_presmooth_cargs(params.get("presmooth", None), execution))
+    if params.get("opt_roi_roi_volume", None) is not None:
         cargs.extend([
             "-roi",
-            execution.input_file(params.get("opt_roi_roi_volume"))
+            execution.input_file(params.get("opt_roi_roi_volume", None))
         ])
-    if params.get("opt_vectors_vector_volume_out") is not None:
+    if params.get("opt_vectors_vector_volume_out", None) is not None:
         cargs.extend([
             "-vectors",
-            params.get("opt_vectors_vector_volume_out")
+            params.get("opt_vectors_vector_volume_out", None)
         ])
-    if params.get("opt_subvolume_subvol") is not None:
+    if params.get("opt_subvolume_subvol", None) is not None:
         cargs.extend([
             "-subvolume",
-            params.get("opt_subvolume_subvol")
+            params.get("opt_subvolume_subvol", None)
         ])
     return cargs
 
@@ -212,8 +193,8 @@ def volume_gradient_outputs(
     """
     ret = VolumeGradientOutputs(
         root=execution.output_file("."),
-        volume_out=execution.output_file(params.get("volume_out")),
-        opt_vectors_vector_volume_out=execution.output_file(params.get("opt_vectors_vector_volume_out")) if (params.get("opt_vectors_vector_volume_out") is not None) else None,
+        volume_out=execution.output_file(params.get("volume_out", None)),
+        opt_vectors_vector_volume_out=execution.output_file(params.get("opt_vectors_vector_volume_out", None)) if (params.get("opt_vectors_vector_volume_out") is not None) else None,
     )
     return ret
 
@@ -306,8 +287,6 @@ def volume_gradient(
 __all__ = [
     "VOLUME_GRADIENT_METADATA",
     "VolumeGradientOutputs",
-    "VolumeGradientParameters",
-    "VolumeGradientPresmoothParameters",
     "volume_gradient",
     "volume_gradient_execute",
     "volume_gradient_params",

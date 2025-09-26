@@ -14,7 +14,19 @@ ADWARP_METADATA = Metadata(
 
 
 AdwarpParameters = typing.TypedDict('AdwarpParameters', {
-    "@type": typing.Literal["afni.adwarp"],
+    "@type": typing.NotRequired[typing.Literal["afni/adwarp"]],
+    "apar": InputPathType,
+    "dpar": str,
+    "prefix": typing.NotRequired[str | None],
+    "dxyz": typing.NotRequired[float | None],
+    "verbose": bool,
+    "force": bool,
+    "resam": typing.NotRequired[str | None],
+    "thr": typing.NotRequired[str | None],
+    "func": typing.NotRequired[str | None],
+})
+AdwarpParametersTagged = typing.TypedDict('AdwarpParametersTagged', {
+    "@type": typing.Literal["afni/adwarp"],
     "apar": InputPathType,
     "dpar": str,
     "prefix": typing.NotRequired[str | None],
@@ -27,41 +39,9 @@ AdwarpParameters = typing.TypedDict('AdwarpParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "afni.adwarp": adwarp_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "afni.adwarp": adwarp_outputs,
-    }.get(t)
-
-
 class AdwarpOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `adwarp(...)`.
+    Output object returned when calling `AdwarpParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -81,7 +61,7 @@ def adwarp_params(
     resam: str | None = None,
     thr: str | None = None,
     func: str | None = None,
-) -> AdwarpParameters:
+) -> AdwarpParametersTagged:
     """
     Build parameters.
     
@@ -108,7 +88,7 @@ def adwarp_params(
         Parameter dictionary
     """
     params = {
-        "@type": "afni.adwarp",
+        "@type": "afni/adwarp",
         "apar": apar,
         "dpar": dpar,
         "verbose": verbose,
@@ -144,40 +124,40 @@ def adwarp_cargs(
     cargs.append("adwarp")
     cargs.extend([
         "-apar",
-        execution.input_file(params.get("apar"))
+        execution.input_file(params.get("apar", None))
     ])
     cargs.extend([
         "-dpar",
-        params.get("dpar")
+        params.get("dpar", None)
     ])
-    if params.get("prefix") is not None:
+    if params.get("prefix", None) is not None:
         cargs.extend([
             "-prefix",
-            params.get("prefix")
+            params.get("prefix", None)
         ])
-    if params.get("dxyz") is not None:
+    if params.get("dxyz", None) is not None:
         cargs.extend([
             "-dxyz",
-            str(params.get("dxyz"))
+            str(params.get("dxyz", None))
         ])
-    if params.get("verbose"):
+    if params.get("verbose", False):
         cargs.append("-verbose")
-    if params.get("force"):
+    if params.get("force", False):
         cargs.append("-force")
-    if params.get("resam") is not None:
+    if params.get("resam", None) is not None:
         cargs.extend([
             "-resam",
-            params.get("resam")
+            params.get("resam", None)
         ])
-    if params.get("thr") is not None:
+    if params.get("thr", None) is not None:
         cargs.extend([
             "-thr",
-            params.get("thr")
+            params.get("thr", None)
         ])
-    if params.get("func") is not None:
+    if params.get("func", None) is not None:
         cargs.extend([
             "-func",
-            params.get("func")
+            params.get("func", None)
         ])
     return cargs
 
@@ -197,8 +177,8 @@ def adwarp_outputs(
     """
     ret = AdwarpOutputs(
         root=execution.output_file("."),
-        header_output=execution.output_file(params.get("prefix") + ".HEAD") if (params.get("prefix") is not None) else None,
-        brick_output=execution.output_file(params.get("prefix") + ".BRIK") if (params.get("prefix") is not None) else None,
+        header_output=execution.output_file(params.get("prefix", None) + ".HEAD") if (params.get("prefix") is not None) else None,
+        brick_output=execution.output_file(params.get("prefix", None) + ".BRIK") if (params.get("prefix") is not None) else None,
     )
     return ret
 
@@ -294,7 +274,6 @@ def adwarp(
 __all__ = [
     "ADWARP_METADATA",
     "AdwarpOutputs",
-    "AdwarpParameters",
     "adwarp",
     "adwarp_execute",
     "adwarp_params",

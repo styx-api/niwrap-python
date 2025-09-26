@@ -14,7 +14,14 @@ MAKE_PQ_SCRIPT_PY_METADATA = Metadata(
 
 
 MakePqScriptPyParameters = typing.TypedDict('MakePqScriptPyParameters', {
-    "@type": typing.Literal["afni.make_pq_script.py"],
+    "@type": typing.NotRequired[typing.Literal["afni/make_pq_script.py"]],
+    "dataset": InputPathType,
+    "brick_index": float,
+    "mask": InputPathType,
+    "out_script": str,
+})
+MakePqScriptPyParametersTagged = typing.TypedDict('MakePqScriptPyParametersTagged', {
+    "@type": typing.Literal["afni/make_pq_script.py"],
     "dataset": InputPathType,
     "brick_index": float,
     "mask": InputPathType,
@@ -22,41 +29,9 @@ MakePqScriptPyParameters = typing.TypedDict('MakePqScriptPyParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "afni.make_pq_script.py": make_pq_script_py_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "afni.make_pq_script.py": make_pq_script_py_outputs,
-    }.get(t)
-
-
 class MakePqScriptPyOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `make_pq_script_py(...)`.
+    Output object returned when calling `MakePqScriptPyParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -69,7 +44,7 @@ def make_pq_script_py_params(
     brick_index: float,
     mask: InputPathType,
     out_script: str,
-) -> MakePqScriptPyParameters:
+) -> MakePqScriptPyParametersTagged:
     """
     Build parameters.
     
@@ -82,7 +57,7 @@ def make_pq_script_py_params(
         Parameter dictionary
     """
     params = {
-        "@type": "afni.make_pq_script.py",
+        "@type": "afni/make_pq_script.py",
         "dataset": dataset,
         "brick_index": brick_index,
         "mask": mask,
@@ -106,10 +81,10 @@ def make_pq_script_py_cargs(
     """
     cargs = []
     cargs.append("make_pq_script.py")
-    cargs.append(execution.input_file(params.get("dataset")))
-    cargs.append(str(params.get("brick_index")))
-    cargs.append(execution.input_file(params.get("mask")))
-    cargs.append(params.get("out_script"))
+    cargs.append(execution.input_file(params.get("dataset", None)))
+    cargs.append(str(params.get("brick_index", None)))
+    cargs.append(execution.input_file(params.get("mask", None)))
+    cargs.append(params.get("out_script", None))
     return cargs
 
 
@@ -128,7 +103,7 @@ def make_pq_script_py_outputs(
     """
     ret = MakePqScriptPyOutputs(
         root=execution.output_file("."),
-        script=execution.output_file(params.get("out_script")),
+        script=execution.output_file(params.get("out_script", None)),
     )
     return ret
 
@@ -198,7 +173,6 @@ def make_pq_script_py(
 __all__ = [
     "MAKE_PQ_SCRIPT_PY_METADATA",
     "MakePqScriptPyOutputs",
-    "MakePqScriptPyParameters",
     "make_pq_script_py",
     "make_pq_script_py_execute",
     "make_pq_script_py_params",

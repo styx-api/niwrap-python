@@ -14,13 +14,24 @@ CIFTI_MERGE_DENSE_METADATA = Metadata(
 
 
 CiftiMergeDenseCiftiParameters = typing.TypedDict('CiftiMergeDenseCiftiParameters', {
-    "@type": typing.Literal["workbench.cifti-merge-dense.cifti"],
+    "@type": typing.NotRequired[typing.Literal["cifti"]],
+    "cifti_in": InputPathType,
+})
+CiftiMergeDenseCiftiParametersTagged = typing.TypedDict('CiftiMergeDenseCiftiParametersTagged', {
+    "@type": typing.Literal["cifti"],
     "cifti_in": InputPathType,
 })
 
 
 CiftiMergeDenseParameters = typing.TypedDict('CiftiMergeDenseParameters', {
-    "@type": typing.Literal["workbench.cifti-merge-dense"],
+    "@type": typing.NotRequired[typing.Literal["workbench/cifti-merge-dense"]],
+    "direction": str,
+    "cifti_out": str,
+    "opt_label_collision_action": typing.NotRequired[str | None],
+    "cifti": typing.NotRequired[list[CiftiMergeDenseCiftiParameters] | None],
+})
+CiftiMergeDenseParametersTagged = typing.TypedDict('CiftiMergeDenseParametersTagged', {
+    "@type": typing.Literal["workbench/cifti-merge-dense"],
     "direction": str,
     "cifti_out": str,
     "opt_label_collision_action": typing.NotRequired[str | None],
@@ -28,42 +39,9 @@ CiftiMergeDenseParameters = typing.TypedDict('CiftiMergeDenseParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "workbench.cifti-merge-dense": cifti_merge_dense_cargs,
-        "workbench.cifti-merge-dense.cifti": cifti_merge_dense_cifti_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "workbench.cifti-merge-dense": cifti_merge_dense_outputs,
-    }.get(t)
-
-
 def cifti_merge_dense_cifti_params(
     cifti_in: InputPathType,
-) -> CiftiMergeDenseCiftiParameters:
+) -> CiftiMergeDenseCiftiParametersTagged:
     """
     Build parameters.
     
@@ -73,7 +51,7 @@ def cifti_merge_dense_cifti_params(
         Parameter dictionary
     """
     params = {
-        "@type": "workbench.cifti-merge-dense.cifti",
+        "@type": "cifti",
         "cifti_in": cifti_in,
     }
     return params
@@ -94,13 +72,13 @@ def cifti_merge_dense_cifti_cargs(
     """
     cargs = []
     cargs.append("-cifti")
-    cargs.append(execution.input_file(params.get("cifti_in")))
+    cargs.append(execution.input_file(params.get("cifti_in", None)))
     return cargs
 
 
 class CiftiMergeDenseOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `cifti_merge_dense(...)`.
+    Output object returned when calling `CiftiMergeDenseParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -113,7 +91,7 @@ def cifti_merge_dense_params(
     cifti_out: str,
     opt_label_collision_action: str | None = None,
     cifti: list[CiftiMergeDenseCiftiParameters] | None = None,
-) -> CiftiMergeDenseParameters:
+) -> CiftiMergeDenseParametersTagged:
     """
     Build parameters.
     
@@ -128,7 +106,7 @@ def cifti_merge_dense_params(
         Parameter dictionary
     """
     params = {
-        "@type": "workbench.cifti-merge-dense",
+        "@type": "workbench/cifti-merge-dense",
         "direction": direction,
         "cifti_out": cifti_out,
     }
@@ -155,15 +133,15 @@ def cifti_merge_dense_cargs(
     cargs = []
     cargs.append("wb_command")
     cargs.append("-cifti-merge-dense")
-    cargs.append(params.get("direction"))
-    cargs.append(params.get("cifti_out"))
-    if params.get("opt_label_collision_action") is not None:
+    cargs.append(params.get("direction", None))
+    cargs.append(params.get("cifti_out", None))
+    if params.get("opt_label_collision_action", None) is not None:
         cargs.extend([
             "-label-collision",
-            params.get("opt_label_collision_action")
+            params.get("opt_label_collision_action", None)
         ])
-    if params.get("cifti") is not None:
-        cargs.extend([a for c in [dyn_cargs(s["@type"])(s, execution) for s in params.get("cifti")] for a in c])
+    if params.get("cifti", None) is not None:
+        cargs.extend([a for c in [cifti_merge_dense_cifti_cargs(s, execution) for s in params.get("cifti", None)] for a in c])
     return cargs
 
 
@@ -182,7 +160,7 @@ def cifti_merge_dense_outputs(
     """
     ret = CiftiMergeDenseOutputs(
         root=execution.output_file("."),
-        cifti_out=execution.output_file(params.get("cifti_out")),
+        cifti_out=execution.output_file(params.get("cifti_out", None)),
     )
     return ret
 
@@ -261,9 +239,7 @@ def cifti_merge_dense(
 
 __all__ = [
     "CIFTI_MERGE_DENSE_METADATA",
-    "CiftiMergeDenseCiftiParameters",
     "CiftiMergeDenseOutputs",
-    "CiftiMergeDenseParameters",
     "cifti_merge_dense",
     "cifti_merge_dense_cifti_params",
     "cifti_merge_dense_execute",

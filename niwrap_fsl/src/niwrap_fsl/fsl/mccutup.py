@@ -14,7 +14,14 @@ MCCUTUP_METADATA = Metadata(
 
 
 MccutupParameters = typing.TypedDict('MccutupParameters', {
-    "@type": typing.Literal["fsl.mccutup"],
+    "@type": typing.NotRequired[typing.Literal["fsl/mccutup"]],
+    "input": InputPathType,
+    "output_file": typing.NotRequired[str | None],
+    "param1": typing.NotRequired[str | None],
+    "param2": typing.NotRequired[str | None],
+})
+MccutupParametersTagged = typing.TypedDict('MccutupParametersTagged', {
+    "@type": typing.Literal["fsl/mccutup"],
     "input": InputPathType,
     "output_file": typing.NotRequired[str | None],
     "param1": typing.NotRequired[str | None],
@@ -22,41 +29,9 @@ MccutupParameters = typing.TypedDict('MccutupParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "fsl.mccutup": mccutup_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "fsl.mccutup": mccutup_outputs,
-    }.get(t)
-
-
 class MccutupOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `mccutup(...)`.
+    Output object returned when calling `MccutupParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -69,7 +44,7 @@ def mccutup_params(
     output_file: str | None = None,
     param1: str | None = None,
     param2: str | None = None,
-) -> MccutupParameters:
+) -> MccutupParametersTagged:
     """
     Build parameters.
     
@@ -82,7 +57,7 @@ def mccutup_params(
         Parameter dictionary
     """
     params = {
-        "@type": "fsl.mccutup",
+        "@type": "fsl/mccutup",
         "input": input_,
     }
     if output_file is not None:
@@ -109,21 +84,21 @@ def mccutup_cargs(
     """
     cargs = []
     cargs.append("mccutup")
-    cargs.append(execution.input_file(params.get("input")))
-    if params.get("output_file") is not None:
+    cargs.append(execution.input_file(params.get("input", None)))
+    if params.get("output_file", None) is not None:
         cargs.extend([
             "--output",
-            params.get("output_file")
+            params.get("output_file", None)
         ])
-    if params.get("param1") is not None:
+    if params.get("param1", None) is not None:
         cargs.extend([
             "--param1",
-            params.get("param1")
+            params.get("param1", None)
         ])
-    if params.get("param2") is not None:
+    if params.get("param2", None) is not None:
         cargs.extend([
             "--param2",
-            params.get("param2")
+            params.get("param2", None)
         ])
     return cargs
 
@@ -143,7 +118,7 @@ def mccutup_outputs(
     """
     ret = MccutupOutputs(
         root=execution.output_file("."),
-        output=execution.output_file(params.get("output_file")) if (params.get("output_file") is not None) else None,
+        output=execution.output_file(params.get("output_file", None)) if (params.get("output_file") is not None) else None,
     )
     return ret
 
@@ -213,7 +188,6 @@ def mccutup(
 __all__ = [
     "MCCUTUP_METADATA",
     "MccutupOutputs",
-    "MccutupParameters",
     "mccutup",
     "mccutup_execute",
     "mccutup_params",

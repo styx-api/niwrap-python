@@ -14,7 +14,17 @@ FLIRT_AVERAGE_METADATA = Metadata(
 
 
 FlirtAverageParameters = typing.TypedDict('FlirtAverageParameters', {
-    "@type": typing.Literal["fsl.flirt_average"],
+    "@type": typing.NotRequired[typing.Literal["fsl/flirt_average"]],
+    "ninputs": int,
+    "input1": InputPathType,
+    "input2": InputPathType,
+    "input3": typing.NotRequired[InputPathType | None],
+    "output_file": str,
+    "reference_image": typing.NotRequired[InputPathType | None],
+    "flirt_options": typing.NotRequired[str | None],
+})
+FlirtAverageParametersTagged = typing.TypedDict('FlirtAverageParametersTagged', {
+    "@type": typing.Literal["fsl/flirt_average"],
     "ninputs": int,
     "input1": InputPathType,
     "input2": InputPathType,
@@ -25,41 +35,9 @@ FlirtAverageParameters = typing.TypedDict('FlirtAverageParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "fsl.flirt_average": flirt_average_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "fsl.flirt_average": flirt_average_outputs,
-    }.get(t)
-
-
 class FlirtAverageOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `flirt_average(...)`.
+    Output object returned when calling `FlirtAverageParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -75,7 +53,7 @@ def flirt_average_params(
     input3: InputPathType | None = None,
     reference_image: InputPathType | None = None,
     flirt_options: str | None = None,
-) -> FlirtAverageParameters:
+) -> FlirtAverageParametersTagged:
     """
     Build parameters.
     
@@ -91,7 +69,7 @@ def flirt_average_params(
         Parameter dictionary
     """
     params = {
-        "@type": "fsl.flirt_average",
+        "@type": "fsl/flirt_average",
         "ninputs": ninputs,
         "input1": input1,
         "input2": input2,
@@ -121,19 +99,19 @@ def flirt_average_cargs(
     """
     cargs = []
     cargs.append("flirt_average")
-    cargs.append(str(params.get("ninputs")))
-    cargs.append(execution.input_file(params.get("input1")))
-    cargs.append(execution.input_file(params.get("input2")))
-    if params.get("input3") is not None:
-        cargs.append(execution.input_file(params.get("input3")))
-    cargs.append(params.get("output_file"))
-    if params.get("reference_image") is not None:
+    cargs.append(str(params.get("ninputs", None)))
+    cargs.append(execution.input_file(params.get("input1", None)))
+    cargs.append(execution.input_file(params.get("input2", None)))
+    if params.get("input3", None) is not None:
+        cargs.append(execution.input_file(params.get("input3", None)))
+    cargs.append(params.get("output_file", None))
+    if params.get("reference_image", None) is not None:
         cargs.extend([
             "-FAref",
-            execution.input_file(params.get("reference_image"))
+            execution.input_file(params.get("reference_image", None))
         ])
-    if params.get("flirt_options") is not None:
-        cargs.append(params.get("flirt_options"))
+    if params.get("flirt_options", None) is not None:
+        cargs.append(params.get("flirt_options", None))
     return cargs
 
 
@@ -152,7 +130,7 @@ def flirt_average_outputs(
     """
     ret = FlirtAverageOutputs(
         root=execution.output_file("."),
-        outfile=execution.output_file(params.get("output_file") + ".nii.gz"),
+        outfile=execution.output_file(params.get("output_file", None) + ".nii.gz"),
     )
     return ret
 
@@ -231,7 +209,6 @@ def flirt_average(
 __all__ = [
     "FLIRT_AVERAGE_METADATA",
     "FlirtAverageOutputs",
-    "FlirtAverageParameters",
     "flirt_average",
     "flirt_average_execute",
     "flirt_average_params",

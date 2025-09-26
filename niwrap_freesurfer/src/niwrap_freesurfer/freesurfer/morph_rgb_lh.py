@@ -14,45 +14,18 @@ MORPH_RGB_LH_METADATA = Metadata(
 
 
 MorphRgbLhParameters = typing.TypedDict('MorphRgbLhParameters', {
-    "@type": typing.Literal["freesurfer.morph_rgb-lh"],
+    "@type": typing.NotRequired[typing.Literal["freesurfer/morph_rgb-lh"]],
+    "subject_id": str,
+})
+MorphRgbLhParametersTagged = typing.TypedDict('MorphRgbLhParametersTagged', {
+    "@type": typing.Literal["freesurfer/morph_rgb-lh"],
     "subject_id": str,
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "freesurfer.morph_rgb-lh": morph_rgb_lh_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-    }.get(t)
-
-
 class MorphRgbLhOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `morph_rgb_lh(...)`.
+    Output object returned when calling `MorphRgbLhParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -60,7 +33,7 @@ class MorphRgbLhOutputs(typing.NamedTuple):
 
 def morph_rgb_lh_params(
     subject_id: str,
-) -> MorphRgbLhParameters:
+) -> MorphRgbLhParametersTagged:
     """
     Build parameters.
     
@@ -72,7 +45,7 @@ def morph_rgb_lh_params(
         Parameter dictionary
     """
     params = {
-        "@type": "freesurfer.morph_rgb-lh",
+        "@type": "freesurfer/morph_rgb-lh",
         "subject_id": subject_id,
     }
     return params
@@ -95,7 +68,7 @@ def morph_rgb_lh_cargs(
     cargs.append("morph_rgb-lh")
     cargs.extend([
         "-lh",
-        params.get("subject_id")
+        params.get("subject_id", None)
     ])
     return cargs
 
@@ -179,7 +152,6 @@ def morph_rgb_lh(
 __all__ = [
     "MORPH_RGB_LH_METADATA",
     "MorphRgbLhOutputs",
-    "MorphRgbLhParameters",
     "morph_rgb_lh",
     "morph_rgb_lh_execute",
     "morph_rgb_lh_params",

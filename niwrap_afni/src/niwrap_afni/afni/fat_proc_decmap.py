@@ -14,7 +14,21 @@ FAT_PROC_DECMAP_METADATA = Metadata(
 
 
 FatProcDecmapParameters = typing.TypedDict('FatProcDecmapParameters', {
-    "@type": typing.Literal["afni.fat_proc_decmap"],
+    "@type": typing.NotRequired[typing.Literal["afni/fat_proc_decmap"]],
+    "in_fa": InputPathType,
+    "in_v1": InputPathType,
+    "prefix": str,
+    "mask": typing.NotRequired[InputPathType | None],
+    "fa_thr": typing.NotRequired[float | None],
+    "fa_sca": typing.NotRequired[float | None],
+    "workdir": typing.NotRequired[str | None],
+    "no_clean": bool,
+    "qc_prefix": typing.NotRequired[str | None],
+    "no_cmd_out": bool,
+    "no_qc_view": bool,
+})
+FatProcDecmapParametersTagged = typing.TypedDict('FatProcDecmapParametersTagged', {
+    "@type": typing.Literal["afni/fat_proc_decmap"],
     "in_fa": InputPathType,
     "in_v1": InputPathType,
     "prefix": str,
@@ -29,41 +43,9 @@ FatProcDecmapParameters = typing.TypedDict('FatProcDecmapParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "afni.fat_proc_decmap": fat_proc_decmap_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "afni.fat_proc_decmap": fat_proc_decmap_outputs,
-    }.get(t)
-
-
 class FatProcDecmapOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `fat_proc_decmap(...)`.
+    Output object returned when calling `FatProcDecmapParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -96,7 +78,7 @@ def fat_proc_decmap_params(
     qc_prefix: str | None = None,
     no_cmd_out: bool = False,
     no_qc_view: bool = False,
-) -> FatProcDecmapParameters:
+) -> FatProcDecmapParametersTagged:
     """
     Build parameters.
     
@@ -121,7 +103,7 @@ def fat_proc_decmap_params(
         Parameter dictionary
     """
     params = {
-        "@type": "afni.fat_proc_decmap",
+        "@type": "afni/fat_proc_decmap",
         "in_fa": in_fa,
         "in_v1": in_v1,
         "prefix": prefix,
@@ -159,46 +141,46 @@ def fat_proc_decmap_cargs(
     cargs.append("fat_proc_decmap")
     cargs.extend([
         "-in_fa",
-        execution.input_file(params.get("in_fa"))
+        execution.input_file(params.get("in_fa", None))
     ])
     cargs.extend([
         "-in_v1",
-        execution.input_file(params.get("in_v1"))
+        execution.input_file(params.get("in_v1", None))
     ])
     cargs.extend([
         "-prefix",
-        params.get("prefix")
+        params.get("prefix", None)
     ])
-    if params.get("mask") is not None:
+    if params.get("mask", None) is not None:
         cargs.extend([
             "-mask",
-            execution.input_file(params.get("mask"))
+            execution.input_file(params.get("mask", None))
         ])
-    if params.get("fa_thr") is not None:
+    if params.get("fa_thr", None) is not None:
         cargs.extend([
             "-fa_thr",
-            str(params.get("fa_thr"))
+            str(params.get("fa_thr", None))
         ])
-    if params.get("fa_sca") is not None:
+    if params.get("fa_sca", None) is not None:
         cargs.extend([
             "-fa_sca",
-            str(params.get("fa_sca"))
+            str(params.get("fa_sca", None))
         ])
-    if params.get("workdir") is not None:
+    if params.get("workdir", None) is not None:
         cargs.extend([
             "-workdir",
-            params.get("workdir")
+            params.get("workdir", None)
         ])
-    if params.get("no_clean"):
+    if params.get("no_clean", False):
         cargs.append("-no_clean")
-    if params.get("qc_prefix") is not None:
+    if params.get("qc_prefix", None) is not None:
         cargs.extend([
             "-qc_prefix",
-            params.get("qc_prefix")
+            params.get("qc_prefix", None)
         ])
-    if params.get("no_cmd_out"):
+    if params.get("no_cmd_out", False):
         cargs.append("-no_cmd_out")
-    if params.get("no_qc_view"):
+    if params.get("no_qc_view", False):
         cargs.append("-no_qc_view")
     return cargs
 
@@ -218,12 +200,12 @@ def fat_proc_decmap_outputs(
     """
     ret = FatProcDecmapOutputs(
         root=execution.output_file("."),
-        outfile_dec_rgb=execution.output_file(params.get("prefix") + "_dec.nii.gz"),
-        outfile_dec_unwt_thr=execution.output_file(params.get("prefix") + "_dec_unwt_thr.nii.gz"),
-        outfile_dec_sca=execution.output_file(params.get("prefix") + "_dec_sca.nii.gz"),
-        qc_dec_images=execution.output_file(params.get("prefix") + "_qc_dec.png"),
-        qc_dec_unwt_thrx_images=execution.output_file(params.get("prefix") + "_qc_dec_unwt_thrx.png"),
-        qc_dec_sca_images=execution.output_file(params.get("prefix") + "_qc_dec_sca.png"),
+        outfile_dec_rgb=execution.output_file(params.get("prefix", None) + "_dec.nii.gz"),
+        outfile_dec_unwt_thr=execution.output_file(params.get("prefix", None) + "_dec_unwt_thr.nii.gz"),
+        outfile_dec_sca=execution.output_file(params.get("prefix", None) + "_dec_sca.nii.gz"),
+        qc_dec_images=execution.output_file(params.get("prefix", None) + "_qc_dec.png"),
+        qc_dec_unwt_thrx_images=execution.output_file(params.get("prefix", None) + "_qc_dec_unwt_thrx.png"),
+        qc_dec_sca_images=execution.output_file(params.get("prefix", None) + "_qc_dec_sca.png"),
     )
     return ret
 
@@ -319,7 +301,6 @@ def fat_proc_decmap(
 __all__ = [
     "FAT_PROC_DECMAP_METADATA",
     "FatProcDecmapOutputs",
-    "FatProcDecmapParameters",
     "fat_proc_decmap",
     "fat_proc_decmap_execute",
     "fat_proc_decmap_params",

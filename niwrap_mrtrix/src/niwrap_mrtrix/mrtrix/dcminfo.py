@@ -14,21 +14,47 @@ DCMINFO_METADATA = Metadata(
 
 
 DcminfoTagParameters = typing.TypedDict('DcminfoTagParameters', {
-    "@type": typing.Literal["mrtrix.dcminfo.tag"],
+    "@type": typing.NotRequired[typing.Literal["tag"]],
+    "group": str,
+    "element": str,
+})
+DcminfoTagParametersTagged = typing.TypedDict('DcminfoTagParametersTagged', {
+    "@type": typing.Literal["tag"],
     "group": str,
     "element": str,
 })
 
 
 DcminfoConfigParameters = typing.TypedDict('DcminfoConfigParameters', {
-    "@type": typing.Literal["mrtrix.dcminfo.config"],
+    "@type": typing.NotRequired[typing.Literal["config"]],
+    "key": str,
+    "value": str,
+})
+DcminfoConfigParametersTagged = typing.TypedDict('DcminfoConfigParametersTagged', {
+    "@type": typing.Literal["config"],
     "key": str,
     "value": str,
 })
 
 
 DcminfoParameters = typing.TypedDict('DcminfoParameters', {
-    "@type": typing.Literal["mrtrix.dcminfo"],
+    "@type": typing.NotRequired[typing.Literal["mrtrix/dcminfo"]],
+    "all": bool,
+    "csa": bool,
+    "phoenix": bool,
+    "tag": typing.NotRequired[list[DcminfoTagParameters] | None],
+    "info": bool,
+    "quiet": bool,
+    "debug": bool,
+    "force": bool,
+    "nthreads": typing.NotRequired[int | None],
+    "config": typing.NotRequired[list[DcminfoConfigParameters] | None],
+    "help": bool,
+    "version": bool,
+    "file": InputPathType,
+})
+DcminfoParametersTagged = typing.TypedDict('DcminfoParametersTagged', {
+    "@type": typing.Literal["mrtrix/dcminfo"],
     "all": bool,
     "csa": bool,
     "phoenix": bool,
@@ -45,43 +71,10 @@ DcminfoParameters = typing.TypedDict('DcminfoParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "mrtrix.dcminfo": dcminfo_cargs,
-        "mrtrix.dcminfo.tag": dcminfo_tag_cargs,
-        "mrtrix.dcminfo.config": dcminfo_config_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-    }.get(t)
-
-
 def dcminfo_tag_params(
     group: str,
     element: str,
-) -> DcminfoTagParameters:
+) -> DcminfoTagParametersTagged:
     """
     Build parameters.
     
@@ -96,7 +89,7 @@ def dcminfo_tag_params(
         Parameter dictionary
     """
     params = {
-        "@type": "mrtrix.dcminfo.tag",
+        "@type": "tag",
         "group": group,
         "element": element,
     }
@@ -118,15 +111,15 @@ def dcminfo_tag_cargs(
     """
     cargs = []
     cargs.append("-tag")
-    cargs.append(params.get("group"))
-    cargs.append(params.get("element"))
+    cargs.append(params.get("group", None))
+    cargs.append(params.get("element", None))
     return cargs
 
 
 def dcminfo_config_params(
     key: str,
     value: str,
-) -> DcminfoConfigParameters:
+) -> DcminfoConfigParametersTagged:
     """
     Build parameters.
     
@@ -137,7 +130,7 @@ def dcminfo_config_params(
         Parameter dictionary
     """
     params = {
-        "@type": "mrtrix.dcminfo.config",
+        "@type": "config",
         "key": key,
         "value": value,
     }
@@ -159,14 +152,14 @@ def dcminfo_config_cargs(
     """
     cargs = []
     cargs.append("-config")
-    cargs.append(params.get("key"))
-    cargs.append(params.get("value"))
+    cargs.append(params.get("key", None))
+    cargs.append(params.get("value", None))
     return cargs
 
 
 class DcminfoOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `dcminfo(...)`.
+    Output object returned when calling `DcminfoParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -186,7 +179,7 @@ def dcminfo_params(
     config: list[DcminfoConfigParameters] | None = None,
     help_: bool = False,
     version: bool = False,
-) -> DcminfoParameters:
+) -> DcminfoParametersTagged:
     """
     Build parameters.
     
@@ -214,7 +207,7 @@ def dcminfo_params(
         Parameter dictionary
     """
     params = {
-        "@type": "mrtrix.dcminfo",
+        "@type": "mrtrix/dcminfo",
         "all": all_,
         "csa": csa,
         "phoenix": phoenix,
@@ -250,34 +243,34 @@ def dcminfo_cargs(
     """
     cargs = []
     cargs.append("dcminfo")
-    if params.get("all"):
+    if params.get("all", False):
         cargs.append("-all")
-    if params.get("csa"):
+    if params.get("csa", False):
         cargs.append("-csa")
-    if params.get("phoenix"):
+    if params.get("phoenix", False):
         cargs.append("-phoenix")
-    if params.get("tag") is not None:
-        cargs.extend([a for c in [dyn_cargs(s["@type"])(s, execution) for s in params.get("tag")] for a in c])
-    if params.get("info"):
+    if params.get("tag", None) is not None:
+        cargs.extend([a for c in [dcminfo_tag_cargs(s, execution) for s in params.get("tag", None)] for a in c])
+    if params.get("info", False):
         cargs.append("-info")
-    if params.get("quiet"):
+    if params.get("quiet", False):
         cargs.append("-quiet")
-    if params.get("debug"):
+    if params.get("debug", False):
         cargs.append("-debug")
-    if params.get("force"):
+    if params.get("force", False):
         cargs.append("-force")
-    if params.get("nthreads") is not None:
+    if params.get("nthreads", None) is not None:
         cargs.extend([
             "-nthreads",
-            str(params.get("nthreads"))
+            str(params.get("nthreads", None))
         ])
-    if params.get("config") is not None:
-        cargs.extend([a for c in [dyn_cargs(s["@type"])(s, execution) for s in params.get("config")] for a in c])
-    if params.get("help"):
+    if params.get("config", None) is not None:
+        cargs.extend([a for c in [dcminfo_config_cargs(s, execution) for s in params.get("config", None)] for a in c])
+    if params.get("help", False):
         cargs.append("-help")
-    if params.get("version"):
+    if params.get("version", False):
         cargs.append("-version")
-    cargs.append(execution.input_file(params.get("file")))
+    cargs.append(execution.input_file(params.get("file", None)))
     return cargs
 
 
@@ -409,10 +402,7 @@ def dcminfo(
 
 __all__ = [
     "DCMINFO_METADATA",
-    "DcminfoConfigParameters",
     "DcminfoOutputs",
-    "DcminfoParameters",
-    "DcminfoTagParameters",
     "dcminfo",
     "dcminfo_config_params",
     "dcminfo_execute",

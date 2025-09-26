@@ -14,7 +14,14 @@ SEGMENT_SUBJECT_SC_METADATA = Metadata(
 
 
 SegmentSubjectScParameters = typing.TypedDict('SegmentSubjectScParameters', {
-    "@type": typing.Literal["freesurfer.segment_subject_sc"],
+    "@type": typing.NotRequired[typing.Literal["freesurfer/segment_subject_sc"]],
+    "invol": InputPathType,
+    "outxfm": InputPathType,
+    "log": typing.NotRequired[str | None],
+    "debug": bool,
+})
+SegmentSubjectScParametersTagged = typing.TypedDict('SegmentSubjectScParametersTagged', {
+    "@type": typing.Literal["freesurfer/segment_subject_sc"],
     "invol": InputPathType,
     "outxfm": InputPathType,
     "log": typing.NotRequired[str | None],
@@ -22,41 +29,9 @@ SegmentSubjectScParameters = typing.TypedDict('SegmentSubjectScParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "freesurfer.segment_subject_sc": segment_subject_sc_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "freesurfer.segment_subject_sc": segment_subject_sc_outputs,
-    }.get(t)
-
-
 class SegmentSubjectScOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `segment_subject_sc(...)`.
+    Output object returned when calling `SegmentSubjectScParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -69,7 +44,7 @@ def segment_subject_sc_params(
     outxfm: InputPathType,
     log: str | None = None,
     debug: bool = False,
-) -> SegmentSubjectScParameters:
+) -> SegmentSubjectScParametersTagged:
     """
     Build parameters.
     
@@ -82,7 +57,7 @@ def segment_subject_sc_params(
         Parameter dictionary
     """
     params = {
-        "@type": "freesurfer.segment_subject_sc",
+        "@type": "freesurfer/segment_subject_sc",
         "invol": invol,
         "outxfm": outxfm,
         "debug": debug,
@@ -109,18 +84,18 @@ def segment_subject_sc_cargs(
     cargs.append("segment_subject_sc")
     cargs.extend([
         "-i",
-        execution.input_file(params.get("invol"))
+        execution.input_file(params.get("invol", None))
     ])
     cargs.extend([
         "-xfm",
-        execution.input_file(params.get("outxfm"))
+        execution.input_file(params.get("outxfm", None))
     ])
-    if params.get("log") is not None:
+    if params.get("log", None) is not None:
         cargs.extend([
             "--log",
-            params.get("log")
+            params.get("log", None)
         ])
-    if params.get("debug"):
+    if params.get("debug", False):
         cargs.append("--debug")
     return cargs
 
@@ -140,7 +115,7 @@ def segment_subject_sc_outputs(
     """
     ret = SegmentSubjectScOutputs(
         root=execution.output_file("."),
-        output_xfm_file=execution.output_file(pathlib.Path(params.get("outxfm")).name),
+        output_xfm_file=execution.output_file(pathlib.Path(params.get("outxfm", None)).name),
     )
     return ret
 
@@ -212,7 +187,6 @@ def segment_subject_sc(
 __all__ = [
     "SEGMENT_SUBJECT_SC_METADATA",
     "SegmentSubjectScOutputs",
-    "SegmentSubjectScParameters",
     "segment_subject_sc",
     "segment_subject_sc_execute",
     "segment_subject_sc_params",

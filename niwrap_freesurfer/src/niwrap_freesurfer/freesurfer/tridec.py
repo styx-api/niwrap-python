@@ -14,7 +14,14 @@ TRIDEC_METADATA = Metadata(
 
 
 TridecParameters = typing.TypedDict('TridecParameters', {
-    "@type": typing.Literal["freesurfer.tridec"],
+    "@type": typing.NotRequired[typing.Literal["freesurfer/tridec"]],
+    "subject_name": str,
+    "fine_file": InputPathType,
+    "ico_file": InputPathType,
+    "out_file": str,
+})
+TridecParametersTagged = typing.TypedDict('TridecParametersTagged', {
+    "@type": typing.Literal["freesurfer/tridec"],
     "subject_name": str,
     "fine_file": InputPathType,
     "ico_file": InputPathType,
@@ -22,41 +29,9 @@ TridecParameters = typing.TypedDict('TridecParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "freesurfer.tridec": tridec_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "freesurfer.tridec": tridec_outputs,
-    }.get(t)
-
-
 class TridecOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `tridec(...)`.
+    Output object returned when calling `TridecParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -69,7 +44,7 @@ def tridec_params(
     fine_file: InputPathType,
     ico_file: InputPathType,
     out_file: str,
-) -> TridecParameters:
+) -> TridecParametersTagged:
     """
     Build parameters.
     
@@ -82,7 +57,7 @@ def tridec_params(
         Parameter dictionary
     """
     params = {
-        "@type": "freesurfer.tridec",
+        "@type": "freesurfer/tridec",
         "subject_name": subject_name,
         "fine_file": fine_file,
         "ico_file": ico_file,
@@ -106,10 +81,10 @@ def tridec_cargs(
     """
     cargs = []
     cargs.append("tridec")
-    cargs.append(params.get("subject_name"))
-    cargs.append(execution.input_file(params.get("fine_file")))
-    cargs.append(execution.input_file(params.get("ico_file")))
-    cargs.append(params.get("out_file"))
+    cargs.append(params.get("subject_name", None))
+    cargs.append(execution.input_file(params.get("fine_file", None)))
+    cargs.append(execution.input_file(params.get("ico_file", None)))
+    cargs.append(params.get("out_file", None))
     return cargs
 
 
@@ -128,7 +103,7 @@ def tridec_outputs(
     """
     ret = TridecOutputs(
         root=execution.output_file("."),
-        output_file=execution.output_file(params.get("out_file")),
+        output_file=execution.output_file(params.get("out_file", None)),
     )
     return ret
 
@@ -198,7 +173,6 @@ def tridec(
 __all__ = [
     "TRIDEC_METADATA",
     "TridecOutputs",
-    "TridecParameters",
     "tridec",
     "tridec_execute",
     "tridec_params",

@@ -14,7 +14,16 @@ MRIS_EXTRACT_VALUES_METADATA = Metadata(
 
 
 MrisExtractValuesParameters = typing.TypedDict('MrisExtractValuesParameters', {
-    "@type": typing.Literal["freesurfer.mris_extract_values"],
+    "@type": typing.NotRequired[typing.Literal["freesurfer/mris_extract_values"]],
+    "surface": InputPathType,
+    "overlay": InputPathType,
+    "annotation": InputPathType,
+    "csvfile": str,
+    "num_images": float,
+    "image_files": list[InputPathType],
+})
+MrisExtractValuesParametersTagged = typing.TypedDict('MrisExtractValuesParametersTagged', {
+    "@type": typing.Literal["freesurfer/mris_extract_values"],
     "surface": InputPathType,
     "overlay": InputPathType,
     "annotation": InputPathType,
@@ -24,41 +33,9 @@ MrisExtractValuesParameters = typing.TypedDict('MrisExtractValuesParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "freesurfer.mris_extract_values": mris_extract_values_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "freesurfer.mris_extract_values": mris_extract_values_outputs,
-    }.get(t)
-
-
 class MrisExtractValuesOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `mris_extract_values(...)`.
+    Output object returned when calling `MrisExtractValuesParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -73,7 +50,7 @@ def mris_extract_values_params(
     csvfile: str,
     num_images: float,
     image_files: list[InputPathType],
-) -> MrisExtractValuesParameters:
+) -> MrisExtractValuesParametersTagged:
     """
     Build parameters.
     
@@ -88,7 +65,7 @@ def mris_extract_values_params(
         Parameter dictionary
     """
     params = {
-        "@type": "freesurfer.mris_extract_values",
+        "@type": "freesurfer/mris_extract_values",
         "surface": surface,
         "overlay": overlay,
         "annotation": annotation,
@@ -116,27 +93,27 @@ def mris_extract_values_cargs(
     cargs.append("mris_extract_values")
     cargs.extend([
         "-i",
-        execution.input_file(params.get("surface"))
+        execution.input_file(params.get("surface", None))
     ])
     cargs.extend([
         "-v",
-        execution.input_file(params.get("overlay"))
+        execution.input_file(params.get("overlay", None))
     ])
     cargs.extend([
         "-a",
-        execution.input_file(params.get("annotation"))
+        execution.input_file(params.get("annotation", None))
     ])
     cargs.extend([
         "-o",
-        params.get("csvfile")
+        params.get("csvfile", None)
     ])
     cargs.extend([
         "-m",
-        str(params.get("num_images"))
+        str(params.get("num_images", None))
     ])
     cargs.extend([
         "--images",
-        *[execution.input_file(f) for f in params.get("image_files")]
+        *[execution.input_file(f) for f in params.get("image_files", None)]
     ])
     return cargs
 
@@ -156,7 +133,7 @@ def mris_extract_values_outputs(
     """
     ret = MrisExtractValuesOutputs(
         root=execution.output_file("."),
-        output_csv=execution.output_file(params.get("csvfile")),
+        output_csv=execution.output_file(params.get("csvfile", None)),
     )
     return ret
 
@@ -234,7 +211,6 @@ def mris_extract_values(
 __all__ = [
     "MRIS_EXTRACT_VALUES_METADATA",
     "MrisExtractValuesOutputs",
-    "MrisExtractValuesParameters",
     "mris_extract_values",
     "mris_extract_values_execute",
     "mris_extract_values_params",

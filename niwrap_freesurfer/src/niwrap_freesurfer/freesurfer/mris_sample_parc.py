@@ -14,7 +14,33 @@ MRIS_SAMPLE_PARC_METADATA = Metadata(
 
 
 MrisSampleParcParameters = typing.TypedDict('MrisSampleParcParameters', {
-    "@type": typing.Literal["freesurfer.mris_sample_parc"],
+    "@type": typing.NotRequired[typing.Literal["freesurfer/mris_sample_parc"]],
+    "subject_name": str,
+    "hemisphere": str,
+    "parc_name": str,
+    "output_annot": str,
+    "sdir": typing.NotRequired[str | None],
+    "surf": typing.NotRequired[str | None],
+    "fix": typing.NotRequired[float | None],
+    "replace": typing.NotRequired[float | None],
+    "trans": typing.NotRequired[list[float] | None],
+    "cortex": typing.NotRequired[str | None],
+    "projmm": typing.NotRequired[float | None],
+    "proj": typing.NotRequired[float | None],
+    "projfrac": typing.NotRequired[float | None],
+    "file": typing.NotRequired[str | None],
+    "ct": typing.NotRequired[str | None],
+    "v_level": typing.NotRequired[float | None],
+    "filter": typing.NotRequired[float | None],
+    "smooth": typing.NotRequired[float | None],
+    "w_size": typing.NotRequired[float | None],
+    "thickness": typing.NotRequired[str | None],
+    "change_unknown": typing.NotRequired[float | None],
+    "help": bool,
+    "version": bool,
+})
+MrisSampleParcParametersTagged = typing.TypedDict('MrisSampleParcParametersTagged', {
+    "@type": typing.Literal["freesurfer/mris_sample_parc"],
     "subject_name": str,
     "hemisphere": str,
     "parc_name": str,
@@ -41,41 +67,9 @@ MrisSampleParcParameters = typing.TypedDict('MrisSampleParcParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "freesurfer.mris_sample_parc": mris_sample_parc_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "freesurfer.mris_sample_parc": mris_sample_parc_outputs,
-    }.get(t)
-
-
 class MrisSampleParcOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `mris_sample_parc(...)`.
+    Output object returned when calling `MrisSampleParcParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -107,7 +101,7 @@ def mris_sample_parc_params(
     change_unknown: float | None = None,
     help_: bool = False,
     version: bool = False,
-) -> MrisSampleParcParameters:
+) -> MrisSampleParcParametersTagged:
     """
     Build parameters.
     
@@ -144,7 +138,7 @@ def mris_sample_parc_params(
         Parameter dictionary
     """
     params = {
-        "@type": "freesurfer.mris_sample_parc",
+        "@type": "freesurfer/mris_sample_parc",
         "subject_name": subject_name,
         "hemisphere": hemisphere,
         "parc_name": parc_name,
@@ -204,98 +198,98 @@ def mris_sample_parc_cargs(
     """
     cargs = []
     cargs.append("mris_sample_parc")
-    cargs.append(params.get("subject_name"))
-    cargs.append(params.get("hemisphere"))
-    cargs.append(params.get("parc_name"))
-    cargs.append(params.get("output_annot"))
-    if params.get("sdir") is not None:
+    cargs.append(params.get("subject_name", None))
+    cargs.append(params.get("hemisphere", None))
+    cargs.append(params.get("parc_name", None))
+    cargs.append(params.get("output_annot", None))
+    if params.get("sdir", None) is not None:
         cargs.extend([
             "-sdir",
-            params.get("sdir")
+            params.get("sdir", None)
         ])
-    if params.get("surf") is not None:
+    if params.get("surf", None) is not None:
         cargs.extend([
             "-surf",
-            params.get("surf")
+            params.get("surf", None)
         ])
-    if params.get("fix") is not None:
+    if params.get("fix", None) is not None:
         cargs.extend([
             "-fix",
-            str(params.get("fix"))
+            str(params.get("fix", None))
         ])
-    if params.get("replace") is not None:
+    if params.get("replace", None) is not None:
         cargs.extend([
             "-replace",
-            str(params.get("replace"))
+            str(params.get("replace", None))
         ])
-    if params.get("trans") is not None:
+    if params.get("trans", None) is not None:
         cargs.extend([
             "-trans",
-            *map(str, params.get("trans"))
+            *map(str, params.get("trans", None))
         ])
-    if params.get("cortex") is not None:
+    if params.get("cortex", None) is not None:
         cargs.extend([
             "-cortex",
-            params.get("cortex")
+            params.get("cortex", None)
         ])
-    if params.get("projmm") is not None:
+    if params.get("projmm", None) is not None:
         cargs.extend([
             "-projmm",
-            str(params.get("projmm"))
+            str(params.get("projmm", None))
         ])
-    if params.get("proj") is not None:
+    if params.get("proj", None) is not None:
         cargs.extend([
             "-proj",
-            str(params.get("proj"))
+            str(params.get("proj", None))
         ])
-    if params.get("projfrac") is not None:
+    if params.get("projfrac", None) is not None:
         cargs.extend([
             "-projfrac",
-            str(params.get("projfrac"))
+            str(params.get("projfrac", None))
         ])
-    if params.get("file") is not None:
+    if params.get("file", None) is not None:
         cargs.extend([
             "-file",
-            params.get("file")
+            params.get("file", None)
         ])
-    if params.get("ct") is not None:
+    if params.get("ct", None) is not None:
         cargs.extend([
             "-ct",
-            params.get("ct")
+            params.get("ct", None)
         ])
-    if params.get("v_level") is not None:
+    if params.get("v_level", None) is not None:
         cargs.extend([
             "-v",
-            str(params.get("v_level"))
+            str(params.get("v_level", None))
         ])
-    if params.get("filter") is not None:
+    if params.get("filter", None) is not None:
         cargs.extend([
             "-f",
-            str(params.get("filter"))
+            str(params.get("filter", None))
         ])
-    if params.get("smooth") is not None:
+    if params.get("smooth", None) is not None:
         cargs.extend([
             "-a",
-            str(params.get("smooth"))
+            str(params.get("smooth", None))
         ])
-    if params.get("w_size") is not None:
+    if params.get("w_size", None) is not None:
         cargs.extend([
             "-w",
-            str(params.get("w_size"))
+            str(params.get("w_size", None))
         ])
-    if params.get("thickness") is not None:
+    if params.get("thickness", None) is not None:
         cargs.extend([
             "-t",
-            params.get("thickness")
+            params.get("thickness", None)
         ])
-    if params.get("change_unknown") is not None:
+    if params.get("change_unknown", None) is not None:
         cargs.extend([
             "-u",
-            str(params.get("change_unknown"))
+            str(params.get("change_unknown", None))
         ])
-    if params.get("help"):
+    if params.get("help", False):
         cargs.append("--help")
-    if params.get("version"):
+    if params.get("version", False):
         cargs.append("--version")
     return cargs
 
@@ -315,7 +309,7 @@ def mris_sample_parc_outputs(
     """
     ret = MrisSampleParcOutputs(
         root=execution.output_file("."),
-        outfile=execution.output_file(params.get("output_annot")),
+        outfile=execution.output_file(params.get("output_annot", None)),
     )
     return ret
 
@@ -447,7 +441,6 @@ def mris_sample_parc(
 __all__ = [
     "MRIS_SAMPLE_PARC_METADATA",
     "MrisSampleParcOutputs",
-    "MrisSampleParcParameters",
     "mris_sample_parc",
     "mris_sample_parc_execute",
     "mris_sample_parc_params",

@@ -14,7 +14,26 @@ BBREGISTER_METADATA = Metadata(
 
 
 BbregisterParameters = typing.TypedDict('BbregisterParameters', {
-    "@type": typing.Literal["freesurfer.bbregister"],
+    "@type": typing.NotRequired[typing.Literal["freesurfer/bbregister"]],
+    "subject": str,
+    "moveable_volume": InputPathType,
+    "reg_file": str,
+    "contrast_type_t1": bool,
+    "contrast_type_t2": bool,
+    "vsm": typing.NotRequired[InputPathType | None],
+    "init_coreg": bool,
+    "no_coreg_ref_mask": bool,
+    "init_header": bool,
+    "init_reg": typing.NotRequired[InputPathType | None],
+    "intvol": typing.NotRequired[InputPathType | None],
+    "mid_frame": bool,
+    "frame_no": typing.NotRequired[float | None],
+    "template_out": typing.NotRequired[str | None],
+    "o_outvol": typing.NotRequired[str | None],
+    "s_from_reg": bool,
+})
+BbregisterParametersTagged = typing.TypedDict('BbregisterParametersTagged', {
+    "@type": typing.Literal["freesurfer/bbregister"],
     "subject": str,
     "moveable_volume": InputPathType,
     "reg_file": str,
@@ -34,41 +53,9 @@ BbregisterParameters = typing.TypedDict('BbregisterParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "freesurfer.bbregister": bbregister_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "freesurfer.bbregister": bbregister_outputs,
-    }.get(t)
-
-
 class BbregisterOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `bbregister(...)`.
+    Output object returned when calling `BbregisterParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -95,7 +82,7 @@ def bbregister_params(
     template_out: str | None = None,
     o_outvol: str | None = None,
     s_from_reg: bool = False,
-) -> BbregisterParameters:
+) -> BbregisterParametersTagged:
     """
     Build parameters.
     
@@ -127,7 +114,7 @@ def bbregister_params(
         Parameter dictionary
     """
     params = {
-        "@type": "freesurfer.bbregister",
+        "@type": "freesurfer/bbregister",
         "subject": subject,
         "moveable_volume": moveable_volume,
         "reg_file": reg_file,
@@ -171,59 +158,59 @@ def bbregister_cargs(
     cargs.append("bbregister")
     cargs.extend([
         "--s",
-        params.get("subject")
+        params.get("subject", None)
     ])
     cargs.extend([
         "--mov",
-        execution.input_file(params.get("moveable_volume"))
+        execution.input_file(params.get("moveable_volume", None))
     ])
     cargs.extend([
         "--reg",
-        params.get("reg_file")
+        params.get("reg_file", None)
     ])
-    if params.get("contrast_type_t1"):
+    if params.get("contrast_type_t1", False):
         cargs.append("--t1")
-    if params.get("contrast_type_t2"):
+    if params.get("contrast_type_t2", False):
         cargs.append("--t2")
-    if params.get("vsm") is not None:
+    if params.get("vsm", None) is not None:
         cargs.extend([
             "--vsm",
-            execution.input_file(params.get("vsm"))
+            execution.input_file(params.get("vsm", None))
         ])
-    if params.get("init_coreg"):
+    if params.get("init_coreg", False):
         cargs.append("--init-coreg")
-    if params.get("no_coreg_ref_mask"):
+    if params.get("no_coreg_ref_mask", False):
         cargs.append("--no-coreg-ref-mask")
-    if params.get("init_header"):
+    if params.get("init_header", False):
         cargs.append("--init-header")
-    if params.get("init_reg") is not None:
+    if params.get("init_reg", None) is not None:
         cargs.extend([
             "--init-reg",
-            execution.input_file(params.get("init_reg"))
+            execution.input_file(params.get("init_reg", None))
         ])
-    if params.get("intvol") is not None:
+    if params.get("intvol", None) is not None:
         cargs.extend([
             "--int",
-            execution.input_file(params.get("intvol"))
+            execution.input_file(params.get("intvol", None))
         ])
-    if params.get("mid_frame"):
+    if params.get("mid_frame", False):
         cargs.append("--mid-frame")
-    if params.get("frame_no") is not None:
+    if params.get("frame_no", None) is not None:
         cargs.extend([
             "--frame",
-            str(params.get("frame_no"))
+            str(params.get("frame_no", None))
         ])
-    if params.get("template_out") is not None:
+    if params.get("template_out", None) is not None:
         cargs.extend([
             "--template-out",
-            params.get("template_out")
+            params.get("template_out", None)
         ])
-    if params.get("o_outvol") is not None:
+    if params.get("o_outvol", None) is not None:
         cargs.extend([
             "--o",
-            params.get("o_outvol")
+            params.get("o_outvol", None)
         ])
-    if params.get("s_from_reg"):
+    if params.get("s_from_reg", False):
         cargs.append("--s-from-reg")
     return cargs
 
@@ -243,8 +230,8 @@ def bbregister_outputs(
     """
     ret = BbregisterOutputs(
         root=execution.output_file("."),
-        reg_output=execution.output_file(params.get("reg_file")),
-        out_volume=execution.output_file(params.get("o_outvol")) if (params.get("o_outvol") is not None) else None,
+        reg_output=execution.output_file(params.get("reg_file", None)),
+        out_volume=execution.output_file(params.get("o_outvol", None)) if (params.get("o_outvol") is not None) else None,
     )
     return ret
 
@@ -359,7 +346,6 @@ def bbregister(
 __all__ = [
     "BBREGISTER_METADATA",
     "BbregisterOutputs",
-    "BbregisterParameters",
     "bbregister",
     "bbregister_execute",
     "bbregister_params",

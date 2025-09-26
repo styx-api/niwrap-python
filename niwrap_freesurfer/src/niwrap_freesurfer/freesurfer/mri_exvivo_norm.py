@@ -14,7 +14,25 @@ MRI_EXVIVO_NORM_METADATA = Metadata(
 
 
 MriExvivoNormParameters = typing.TypedDict('MriExvivoNormParameters', {
-    "@type": typing.Literal["freesurfer.mri_exvivo_norm"],
+    "@type": typing.NotRequired[typing.Literal["freesurfer/mri_exvivo_norm"]],
+    "input_volume": InputPathType,
+    "output_volume": str,
+    "hemi": str,
+    "prediction_volume": typing.NotRequired[str | None],
+    "normalized_volume": typing.NotRequired[str | None],
+    "freeview": bool,
+    "normalize_output_mean": bool,
+    "write_normalization_rounds": bool,
+    "upper_threshold": typing.NotRequired[float | None],
+    "bias_field_sigma": typing.NotRequired[float | None],
+    "normalization_rounds": typing.NotRequired[float | None],
+    "multichannel": bool,
+    "model_file": typing.NotRequired[InputPathType | None],
+    "weights_file": typing.NotRequired[InputPathType | None],
+    "gpu_number": typing.NotRequired[float | None],
+})
+MriExvivoNormParametersTagged = typing.TypedDict('MriExvivoNormParametersTagged', {
+    "@type": typing.Literal["freesurfer/mri_exvivo_norm"],
     "input_volume": InputPathType,
     "output_volume": str,
     "hemi": str,
@@ -33,41 +51,9 @@ MriExvivoNormParameters = typing.TypedDict('MriExvivoNormParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "freesurfer.mri_exvivo_norm": mri_exvivo_norm_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "freesurfer.mri_exvivo_norm": mri_exvivo_norm_outputs,
-    }.get(t)
-
-
 class MriExvivoNormOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `mri_exvivo_norm(...)`.
+    Output object returned when calling `MriExvivoNormParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -91,7 +77,7 @@ def mri_exvivo_norm_params(
     model_file: InputPathType | None = None,
     weights_file: InputPathType | None = None,
     gpu_number: float | None = None,
-) -> MriExvivoNormParameters:
+) -> MriExvivoNormParametersTagged:
     """
     Build parameters.
     
@@ -117,7 +103,7 @@ def mri_exvivo_norm_params(
         Parameter dictionary
     """
     params = {
-        "@type": "freesurfer.mri_exvivo_norm",
+        "@type": "freesurfer/mri_exvivo_norm",
         "input_volume": input_volume,
         "output_volume": output_volume,
         "hemi": hemi,
@@ -162,63 +148,63 @@ def mri_exvivo_norm_cargs(
     cargs.append("mri_exvivo_norm")
     cargs.extend([
         "-i",
-        execution.input_file(params.get("input_volume"))
+        execution.input_file(params.get("input_volume", None))
     ])
     cargs.extend([
         "-o",
-        params.get("output_volume")
+        params.get("output_volume", None)
     ])
     cargs.extend([
         "--hemi",
-        params.get("hemi")
+        params.get("hemi", None)
     ])
-    if params.get("prediction_volume") is not None:
+    if params.get("prediction_volume", None) is not None:
         cargs.extend([
             "--pred",
-            params.get("prediction_volume")
+            params.get("prediction_volume", None)
         ])
-    if params.get("normalized_volume") is not None:
+    if params.get("normalized_volume", None) is not None:
         cargs.extend([
             "--norm",
-            params.get("normalized_volume")
+            params.get("normalized_volume", None)
         ])
-    if params.get("freeview"):
+    if params.get("freeview", False):
         cargs.append("--fv")
-    if params.get("normalize_output_mean"):
+    if params.get("normalize_output_mean", False):
         cargs.append("--norm_mean")
-    if params.get("write_normalization_rounds"):
+    if params.get("write_normalization_rounds", False):
         cargs.append("--write_rounds")
-    if params.get("upper_threshold") is not None:
+    if params.get("upper_threshold", None) is not None:
         cargs.extend([
             "--uthresh",
-            str(params.get("upper_threshold"))
+            str(params.get("upper_threshold", None))
         ])
-    if params.get("bias_field_sigma") is not None:
+    if params.get("bias_field_sigma", None) is not None:
         cargs.extend([
             "--sigma",
-            str(params.get("bias_field_sigma"))
+            str(params.get("bias_field_sigma", None))
         ])
-    if params.get("normalization_rounds") is not None:
+    if params.get("normalization_rounds", None) is not None:
         cargs.extend([
             "--nrounds",
-            str(params.get("normalization_rounds"))
+            str(params.get("normalization_rounds", None))
         ])
-    if params.get("multichannel"):
+    if params.get("multichannel", False):
         cargs.append("--multichannel")
-    if params.get("model_file") is not None:
+    if params.get("model_file", None) is not None:
         cargs.extend([
             "--model",
-            execution.input_file(params.get("model_file"))
+            execution.input_file(params.get("model_file", None))
         ])
-    if params.get("weights_file") is not None:
+    if params.get("weights_file", None) is not None:
         cargs.extend([
             "--wts",
-            execution.input_file(params.get("weights_file"))
+            execution.input_file(params.get("weights_file", None))
         ])
-    if params.get("gpu_number") is not None:
+    if params.get("gpu_number", None) is not None:
         cargs.extend([
             "--gpu",
-            str(params.get("gpu_number"))
+            str(params.get("gpu_number", None))
         ])
     return cargs
 
@@ -238,7 +224,7 @@ def mri_exvivo_norm_outputs(
     """
     ret = MriExvivoNormOutputs(
         root=execution.output_file("."),
-        output_volume=execution.output_file(params.get("output_volume")),
+        output_volume=execution.output_file(params.get("output_volume", None)),
     )
     return ret
 
@@ -343,7 +329,6 @@ def mri_exvivo_norm(
 __all__ = [
     "MRI_EXVIVO_NORM_METADATA",
     "MriExvivoNormOutputs",
-    "MriExvivoNormParameters",
     "mri_exvivo_norm",
     "mri_exvivo_norm_execute",
     "mri_exvivo_norm_params",

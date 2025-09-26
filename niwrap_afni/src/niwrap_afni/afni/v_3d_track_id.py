@@ -14,7 +14,54 @@ V_3D_TRACK_ID_METADATA = Metadata(
 
 
 V3dTrackIdParameters = typing.TypedDict('V3dTrackIdParameters', {
-    "@type": typing.Literal["afni.3dTrackID"],
+    "@type": typing.NotRequired[typing.Literal["afni/3dTrackID"]],
+    "mode": typing.Literal["DET", "MINIP", "PROB"],
+    "netrois": InputPathType,
+    "prefix": str,
+    "dti_in": typing.NotRequired[str | None],
+    "dti_list": typing.NotRequired[InputPathType | None],
+    "dti_extra": typing.NotRequired[str | None],
+    "dti_search_no": bool,
+    "hardi_gfa": typing.NotRequired[InputPathType | None],
+    "hardi_dirs": typing.NotRequired[InputPathType | None],
+    "hardi_pars": typing.NotRequired[str | None],
+    "mask": typing.NotRequired[InputPathType | None],
+    "thru_mask": typing.NotRequired[InputPathType | None],
+    "targ_surf_stop": bool,
+    "targ_surf_twixt": bool,
+    "logic": typing.Literal["OR", "AND"],
+    "mini_num": typing.NotRequired[float | None],
+    "uncert": typing.NotRequired[InputPathType | None],
+    "unc_min_fa": typing.NotRequired[float | None],
+    "unc_min_v": typing.NotRequired[float | None],
+    "algopt": typing.NotRequired[InputPathType | None],
+    "alg_thresh_fa": typing.NotRequired[float | None],
+    "alg_thresh_ang": typing.NotRequired[float | None],
+    "alg_thresh_len": typing.NotRequired[float | None],
+    "alg_nseed_x": typing.NotRequired[float | None],
+    "alg_nseed_y": typing.NotRequired[float | None],
+    "alg_nseed_z": typing.NotRequired[float | None],
+    "alg_thresh_frac": typing.NotRequired[float | None],
+    "alg_nseed_vox": typing.NotRequired[float | None],
+    "alg_nmonte": typing.NotRequired[float | None],
+    "extra_tr_par": bool,
+    "uncut_at_rois": bool,
+    "dump_rois": typing.NotRequired[typing.Literal["DUMP", "AFNI", "BOTH", "AFNI_MAP"] | None],
+    "dump_no_labtab": bool,
+    "dump_lab_consec": bool,
+    "posteriori": bool,
+    "rec_orig": bool,
+    "do_trk_out": bool,
+    "trk_opp_orient": bool,
+    "nifti": bool,
+    "no_indipair_out": bool,
+    "write_rois": bool,
+    "write_opts": bool,
+    "pair_out_power": bool,
+    "verb": typing.NotRequired[float | None],
+})
+V3dTrackIdParametersTagged = typing.TypedDict('V3dTrackIdParametersTagged', {
+    "@type": typing.Literal["afni/3dTrackID"],
     "mode": typing.Literal["DET", "MINIP", "PROB"],
     "netrois": InputPathType,
     "prefix": str,
@@ -62,41 +109,9 @@ V3dTrackIdParameters = typing.TypedDict('V3dTrackIdParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "afni.3dTrackID": v_3d_track_id_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "afni.3dTrackID": v_3d_track_id_outputs,
-    }.get(t)
-
-
 class V3dTrackIdOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `v_3d_track_id(...)`.
+    Output object returned when calling `V3dTrackIdParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -165,7 +180,7 @@ def v_3d_track_id_params(
     write_opts: bool = False,
     pair_out_power: bool = False,
     verb: float | None = None,
-) -> V3dTrackIdParameters:
+) -> V3dTrackIdParametersTagged:
     """
     Build parameters.
     
@@ -228,7 +243,7 @@ def v_3d_track_id_params(
         Parameter dictionary
     """
     params = {
-        "@type": "afni.3dTrackID",
+        "@type": "afni/3dTrackID",
         "mode": mode,
         "netrois": netrois,
         "prefix": prefix,
@@ -316,90 +331,90 @@ def v_3d_track_id_cargs(
     """
     cargs = []
     cargs.append("3dTrackID")
-    cargs.append(params.get("mode"))
-    cargs.append(execution.input_file(params.get("netrois")))
-    cargs.append(params.get("prefix"))
-    if params.get("dti_in") is not None:
-        cargs.append(params.get("dti_in"))
-    if params.get("dti_list") is not None:
-        cargs.append(execution.input_file(params.get("dti_list")))
-    if params.get("dti_extra") is not None:
-        cargs.append(params.get("dti_extra"))
-    if params.get("dti_search_no"):
+    cargs.append(params.get("mode", None))
+    cargs.append(execution.input_file(params.get("netrois", None)))
+    cargs.append(params.get("prefix", None))
+    if params.get("dti_in", None) is not None:
+        cargs.append(params.get("dti_in", None))
+    if params.get("dti_list", None) is not None:
+        cargs.append(execution.input_file(params.get("dti_list", None)))
+    if params.get("dti_extra", None) is not None:
+        cargs.append(params.get("dti_extra", None))
+    if params.get("dti_search_no", False):
         cargs.append("-dti_search_NO")
-    if params.get("hardi_gfa") is not None:
-        cargs.append(execution.input_file(params.get("hardi_gfa")))
-    if params.get("hardi_dirs") is not None:
-        cargs.append(execution.input_file(params.get("hardi_dirs")))
-    if params.get("hardi_pars") is not None:
-        cargs.append(params.get("hardi_pars"))
-    if params.get("mask") is not None:
-        cargs.append(execution.input_file(params.get("mask")))
-    if params.get("thru_mask") is not None:
-        cargs.append(execution.input_file(params.get("thru_mask")))
-    if params.get("targ_surf_stop"):
+    if params.get("hardi_gfa", None) is not None:
+        cargs.append(execution.input_file(params.get("hardi_gfa", None)))
+    if params.get("hardi_dirs", None) is not None:
+        cargs.append(execution.input_file(params.get("hardi_dirs", None)))
+    if params.get("hardi_pars", None) is not None:
+        cargs.append(params.get("hardi_pars", None))
+    if params.get("mask", None) is not None:
+        cargs.append(execution.input_file(params.get("mask", None)))
+    if params.get("thru_mask", None) is not None:
+        cargs.append(execution.input_file(params.get("thru_mask", None)))
+    if params.get("targ_surf_stop", False):
         cargs.append("-targ_surf_stop")
-    if params.get("targ_surf_twixt"):
+    if params.get("targ_surf_twixt", False):
         cargs.append("-targ_surf_twixt")
-    cargs.append(params.get("logic"))
-    if params.get("mini_num") is not None:
-        cargs.append(str(params.get("mini_num")))
-    if params.get("uncert") is not None:
-        cargs.append(execution.input_file(params.get("uncert")))
-    if params.get("unc_min_fa") is not None:
-        cargs.append(str(params.get("unc_min_fa")))
-    if params.get("unc_min_v") is not None:
-        cargs.append(str(params.get("unc_min_v")))
-    if params.get("algopt") is not None:
-        cargs.append(execution.input_file(params.get("algopt")))
-    if params.get("alg_thresh_fa") is not None:
-        cargs.append(str(params.get("alg_thresh_fa")))
-    if params.get("alg_thresh_ang") is not None:
-        cargs.append(str(params.get("alg_thresh_ang")))
-    if params.get("alg_thresh_len") is not None:
-        cargs.append(str(params.get("alg_thresh_len")))
-    if params.get("alg_nseed_x") is not None:
-        cargs.append(str(params.get("alg_nseed_x")))
-    if params.get("alg_nseed_y") is not None:
-        cargs.append(str(params.get("alg_nseed_y")))
-    if params.get("alg_nseed_z") is not None:
-        cargs.append(str(params.get("alg_nseed_z")))
-    if params.get("alg_thresh_frac") is not None:
-        cargs.append(str(params.get("alg_thresh_frac")))
-    if params.get("alg_nseed_vox") is not None:
-        cargs.append(str(params.get("alg_nseed_vox")))
-    if params.get("alg_nmonte") is not None:
-        cargs.append(str(params.get("alg_nmonte")))
-    if params.get("extra_tr_par"):
+    cargs.append(params.get("logic", None))
+    if params.get("mini_num", None) is not None:
+        cargs.append(str(params.get("mini_num", None)))
+    if params.get("uncert", None) is not None:
+        cargs.append(execution.input_file(params.get("uncert", None)))
+    if params.get("unc_min_fa", None) is not None:
+        cargs.append(str(params.get("unc_min_fa", None)))
+    if params.get("unc_min_v", None) is not None:
+        cargs.append(str(params.get("unc_min_v", None)))
+    if params.get("algopt", None) is not None:
+        cargs.append(execution.input_file(params.get("algopt", None)))
+    if params.get("alg_thresh_fa", None) is not None:
+        cargs.append(str(params.get("alg_thresh_fa", None)))
+    if params.get("alg_thresh_ang", None) is not None:
+        cargs.append(str(params.get("alg_thresh_ang", None)))
+    if params.get("alg_thresh_len", None) is not None:
+        cargs.append(str(params.get("alg_thresh_len", None)))
+    if params.get("alg_nseed_x", None) is not None:
+        cargs.append(str(params.get("alg_nseed_x", None)))
+    if params.get("alg_nseed_y", None) is not None:
+        cargs.append(str(params.get("alg_nseed_y", None)))
+    if params.get("alg_nseed_z", None) is not None:
+        cargs.append(str(params.get("alg_nseed_z", None)))
+    if params.get("alg_thresh_frac", None) is not None:
+        cargs.append(str(params.get("alg_thresh_frac", None)))
+    if params.get("alg_nseed_vox", None) is not None:
+        cargs.append(str(params.get("alg_nseed_vox", None)))
+    if params.get("alg_nmonte", None) is not None:
+        cargs.append(str(params.get("alg_nmonte", None)))
+    if params.get("extra_tr_par", False):
         cargs.append("-extra_tr_par")
-    if params.get("uncut_at_rois"):
+    if params.get("uncut_at_rois", False):
         cargs.append("-uncut_at_rois")
-    if params.get("dump_rois") is not None:
-        cargs.append(params.get("dump_rois"))
-    if params.get("dump_no_labtab"):
+    if params.get("dump_rois", None) is not None:
+        cargs.append(params.get("dump_rois", None))
+    if params.get("dump_no_labtab", False):
         cargs.append("-dump_no_labtab")
-    if params.get("dump_lab_consec"):
+    if params.get("dump_lab_consec", False):
         cargs.append("-dump_lab_consec")
-    if params.get("posteriori"):
+    if params.get("posteriori", False):
         cargs.append("-posteriori")
-    if params.get("rec_orig"):
+    if params.get("rec_orig", False):
         cargs.append("-rec_orig")
-    if params.get("do_trk_out"):
+    if params.get("do_trk_out", False):
         cargs.append("-do_trk_out")
-    if params.get("trk_opp_orient"):
+    if params.get("trk_opp_orient", False):
         cargs.append("-trk_opp_orient")
-    if params.get("nifti"):
+    if params.get("nifti", False):
         cargs.append("-nifti")
-    if params.get("no_indipair_out"):
+    if params.get("no_indipair_out", False):
         cargs.append("-no_indipair_out")
-    if params.get("write_rois"):
+    if params.get("write_rois", False):
         cargs.append("-write_rois")
-    if params.get("write_opts"):
+    if params.get("write_opts", False):
         cargs.append("-write_opts")
-    if params.get("pair_out_power"):
+    if params.get("pair_out_power", False):
         cargs.append("-pair_out_power")
-    if params.get("verb") is not None:
-        cargs.append(str(params.get("verb")))
+    if params.get("verb", None) is not None:
+        cargs.append(str(params.get("verb", None)))
     return cargs
 
 
@@ -418,15 +433,15 @@ def v_3d_track_id_outputs(
     """
     ret = V3dTrackIdOutputs(
         root=execution.output_file("."),
-        indimap=execution.output_file(params.get("prefix") + "_INDIMAP.nii.gz"),
-        pairmap=execution.output_file(params.get("prefix") + "_PAIRMAP.nii.gz"),
-        grid=execution.output_file(params.get("prefix") + ".grid"),
-        niml_tract=execution.output_file(params.get("prefix") + ".niml.tract"),
-        niml_dset=execution.output_file(params.get("prefix") + ".niml.dset"),
-        trk=execution.output_file(params.get("prefix") + ".trk"),
-        pairmap_labeltable=execution.output_file(params.get("prefix") + "_PAIRS.niml.lt"),
-        roi_labels=execution.output_file(params.get("prefix") + "_roi.labs"),
-        option_values=execution.output_file(params.get("prefix") + ".niml.opts"),
+        indimap=execution.output_file(params.get("prefix", None) + "_INDIMAP.nii.gz"),
+        pairmap=execution.output_file(params.get("prefix", None) + "_PAIRMAP.nii.gz"),
+        grid=execution.output_file(params.get("prefix", None) + ".grid"),
+        niml_tract=execution.output_file(params.get("prefix", None) + ".niml.tract"),
+        niml_dset=execution.output_file(params.get("prefix", None) + ".niml.dset"),
+        trk=execution.output_file(params.get("prefix", None) + ".trk"),
+        pairmap_labeltable=execution.output_file(params.get("prefix", None) + "_PAIRS.niml.lt"),
+        roi_labels=execution.output_file(params.get("prefix", None) + "_roi.labs"),
+        option_values=execution.output_file(params.get("prefix", None) + ".niml.opts"),
     )
     return ret
 
@@ -625,7 +640,6 @@ def v_3d_track_id(
 
 __all__ = [
     "V3dTrackIdOutputs",
-    "V3dTrackIdParameters",
     "V_3D_TRACK_ID_METADATA",
     "v_3d_track_id",
     "v_3d_track_id_execute",

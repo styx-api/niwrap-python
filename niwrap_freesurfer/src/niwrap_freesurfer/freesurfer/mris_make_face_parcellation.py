@@ -14,7 +14,14 @@ MRIS_MAKE_FACE_PARCELLATION_METADATA = Metadata(
 
 
 MrisMakeFaceParcellationParameters = typing.TypedDict('MrisMakeFaceParcellationParameters', {
-    "@type": typing.Literal["freesurfer.mris_make_face_parcellation"],
+    "@type": typing.NotRequired[typing.Literal["freesurfer/mris_make_face_parcellation"]],
+    "input_surface": InputPathType,
+    "ico_file": InputPathType,
+    "output_annot": str,
+    "colortable": typing.NotRequired[InputPathType | None],
+})
+MrisMakeFaceParcellationParametersTagged = typing.TypedDict('MrisMakeFaceParcellationParametersTagged', {
+    "@type": typing.Literal["freesurfer/mris_make_face_parcellation"],
     "input_surface": InputPathType,
     "ico_file": InputPathType,
     "output_annot": str,
@@ -22,41 +29,9 @@ MrisMakeFaceParcellationParameters = typing.TypedDict('MrisMakeFaceParcellationP
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "freesurfer.mris_make_face_parcellation": mris_make_face_parcellation_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "freesurfer.mris_make_face_parcellation": mris_make_face_parcellation_outputs,
-    }.get(t)
-
-
 class MrisMakeFaceParcellationOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `mris_make_face_parcellation(...)`.
+    Output object returned when calling `MrisMakeFaceParcellationParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -69,7 +44,7 @@ def mris_make_face_parcellation_params(
     ico_file: InputPathType,
     output_annot: str,
     colortable: InputPathType | None = None,
-) -> MrisMakeFaceParcellationParameters:
+) -> MrisMakeFaceParcellationParametersTagged:
     """
     Build parameters.
     
@@ -82,7 +57,7 @@ def mris_make_face_parcellation_params(
         Parameter dictionary
     """
     params = {
-        "@type": "freesurfer.mris_make_face_parcellation",
+        "@type": "freesurfer/mris_make_face_parcellation",
         "input_surface": input_surface,
         "ico_file": ico_file,
         "output_annot": output_annot,
@@ -107,13 +82,13 @@ def mris_make_face_parcellation_cargs(
     """
     cargs = []
     cargs.append("mris_make_face_parcellation")
-    cargs.append(execution.input_file(params.get("input_surface")))
-    cargs.append(execution.input_file(params.get("ico_file")))
-    cargs.append(params.get("output_annot"))
-    if params.get("colortable") is not None:
+    cargs.append(execution.input_file(params.get("input_surface", None)))
+    cargs.append(execution.input_file(params.get("ico_file", None)))
+    cargs.append(params.get("output_annot", None))
+    if params.get("colortable", None) is not None:
         cargs.extend([
             "-ctab",
-            execution.input_file(params.get("colortable"))
+            execution.input_file(params.get("colortable", None))
         ])
     return cargs
 
@@ -133,7 +108,7 @@ def mris_make_face_parcellation_outputs(
     """
     ret = MrisMakeFaceParcellationOutputs(
         root=execution.output_file("."),
-        annot_file=execution.output_file(params.get("output_annot")),
+        annot_file=execution.output_file(params.get("output_annot", None)),
     )
     return ret
 
@@ -205,7 +180,6 @@ def mris_make_face_parcellation(
 __all__ = [
     "MRIS_MAKE_FACE_PARCELLATION_METADATA",
     "MrisMakeFaceParcellationOutputs",
-    "MrisMakeFaceParcellationParameters",
     "mris_make_face_parcellation",
     "mris_make_face_parcellation_execute",
     "mris_make_face_parcellation_params",

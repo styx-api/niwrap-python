@@ -14,7 +14,70 @@ MRI_SEGSTATS_METADATA = Metadata(
 
 
 MriSegstatsParameters = typing.TypedDict('MriSegstatsParameters', {
-    "@type": typing.Literal["freesurfer.mri_segstats"],
+    "@type": typing.NotRequired[typing.Literal["freesurfer/mri_segstats"]],
+    "segvol": InputPathType,
+    "annot_subject": typing.NotRequired[str | None],
+    "annot_hemisphere": typing.NotRequired[str | None],
+    "annot_parcellation": typing.NotRequired[str | None],
+    "slabel_subject": typing.NotRequired[str | None],
+    "slabel_hemisphere": typing.NotRequired[str | None],
+    "slabel_label": typing.NotRequired[InputPathType | None],
+    "output_file": str,
+    "partial_vol_comp": typing.NotRequired[InputPathType | None],
+    "input_volume": typing.NotRequired[InputPathType | None],
+    "seg_erode": typing.NotRequired[float | None],
+    "frame": typing.NotRequired[float | None],
+    "robust": typing.NotRequired[float | None],
+    "square_input": bool,
+    "sqrt_input": bool,
+    "multiply_input": typing.NotRequired[float | None],
+    "divide_input": typing.NotRequired[float | None],
+    "snr_column": bool,
+    "absolute_value": bool,
+    "accumulate_mean": bool,
+    "color_table": typing.NotRequired[InputPathType | None],
+    "default_color_table": bool,
+    "gca_color_table": typing.NotRequired[InputPathType | None],
+    "ids": typing.NotRequired[str | None],
+    "exclude_ids": typing.NotRequired[str | None],
+    "exclude_gm_wm": bool,
+    "surf_wm_vol": bool,
+    "surf_ctx_vol": bool,
+    "no_global_stats": bool,
+    "empty_segments": bool,
+    "ctab_output": typing.NotRequired[str | None],
+    "mask_volume": typing.NotRequired[InputPathType | None],
+    "mask_threshold": typing.NotRequired[float | None],
+    "mask_sign": typing.NotRequired[str | None],
+    "mask_frame": typing.NotRequired[float | None],
+    "invert_mask": bool,
+    "mask_erode": typing.NotRequired[float | None],
+    "brain_vol_seg": bool,
+    "brain_mask_vol": typing.NotRequired[InputPathType | None],
+    "subcortical_gray": bool,
+    "total_gray": bool,
+    "intracranial_volume": bool,
+    "intracranial_volume_only": bool,
+    "old_intracranial_volume_only": bool,
+    "talairach_transform": typing.NotRequired[InputPathType | None],
+    "xfm_to_etiv": typing.NotRequired[str | None],
+    "euler_hole_count": bool,
+    "avg_waveform": typing.NotRequired[str | None],
+    "sum_waveform": typing.NotRequired[str | None],
+    "avg_waveform_vol": typing.NotRequired[str | None],
+    "remove_avgwf_mean": bool,
+    "spatial_frame_avg": typing.NotRequired[str | None],
+    "voxel_crs": typing.NotRequired[str | None],
+    "replace_ids": typing.NotRequired[str | None],
+    "replace_ids_file": typing.NotRequired[InputPathType | None],
+    "gtm_default_seg_merge": bool,
+    "gtm_default_seg_merge_choroid": bool,
+    "qa_stats_file": typing.NotRequired[str | None],
+    "subjects_dir": typing.NotRequired[str | None],
+    "random_seed": typing.NotRequired[float | None],
+})
+MriSegstatsParametersTagged = typing.TypedDict('MriSegstatsParametersTagged', {
+    "@type": typing.Literal["freesurfer/mri_segstats"],
     "segvol": InputPathType,
     "annot_subject": typing.NotRequired[str | None],
     "annot_hemisphere": typing.NotRequired[str | None],
@@ -78,41 +141,9 @@ MriSegstatsParameters = typing.TypedDict('MriSegstatsParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "freesurfer.mri_segstats": mri_segstats_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "freesurfer.mri_segstats": mri_segstats_outputs,
-    }.get(t)
-
-
 class MriSegstatsOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `mri_segstats(...)`.
+    Output object returned when calling `MriSegstatsParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -191,7 +222,7 @@ def mri_segstats_params(
     qa_stats_file: str | None = None,
     subjects_dir: str | None = None,
     random_seed: float | None = None,
-) -> MriSegstatsParameters:
+) -> MriSegstatsParametersTagged:
     """
     Build parameters.
     
@@ -282,7 +313,7 @@ def mri_segstats_params(
         Parameter dictionary
     """
     params = {
-        "@type": "freesurfer.mri_segstats",
+        "@type": "freesurfer/mri_segstats",
         "segvol": segvol,
         "output_file": output_file,
         "square_input": square_input,
@@ -400,223 +431,223 @@ def mri_segstats_cargs(
     cargs.append("mri_segstats")
     cargs.extend([
         "--seg",
-        execution.input_file(params.get("segvol"))
+        execution.input_file(params.get("segvol", None))
     ])
-    if params.get("annot_subject") is not None:
+    if params.get("annot_subject", None) is not None:
         cargs.extend([
             "--annot",
-            params.get("annot_subject")
+            params.get("annot_subject", None)
         ])
-    if params.get("annot_hemisphere") is not None:
-        cargs.append(params.get("annot_hemisphere"))
-    if params.get("annot_parcellation") is not None:
-        cargs.append(params.get("annot_parcellation"))
-    if params.get("slabel_subject") is not None:
+    if params.get("annot_hemisphere", None) is not None:
+        cargs.append(params.get("annot_hemisphere", None))
+    if params.get("annot_parcellation", None) is not None:
+        cargs.append(params.get("annot_parcellation", None))
+    if params.get("slabel_subject", None) is not None:
         cargs.extend([
             "--slabel",
-            params.get("slabel_subject")
+            params.get("slabel_subject", None)
         ])
-    if params.get("slabel_hemisphere") is not None:
-        cargs.append(params.get("slabel_hemisphere"))
-    if params.get("slabel_label") is not None:
-        cargs.append(execution.input_file(params.get("slabel_label")))
+    if params.get("slabel_hemisphere", None) is not None:
+        cargs.append(params.get("slabel_hemisphere", None))
+    if params.get("slabel_label", None) is not None:
+        cargs.append(execution.input_file(params.get("slabel_label", None)))
     cargs.extend([
         "--o",
-        params.get("output_file")
+        params.get("output_file", None)
     ])
-    if params.get("partial_vol_comp") is not None:
+    if params.get("partial_vol_comp", None) is not None:
         cargs.extend([
             "--pv",
-            execution.input_file(params.get("partial_vol_comp"))
+            execution.input_file(params.get("partial_vol_comp", None))
         ])
-    if params.get("input_volume") is not None:
+    if params.get("input_volume", None) is not None:
         cargs.extend([
             "--i",
-            execution.input_file(params.get("input_volume"))
+            execution.input_file(params.get("input_volume", None))
         ])
-    if params.get("seg_erode") is not None:
+    if params.get("seg_erode", None) is not None:
         cargs.extend([
             "--seg-erode",
-            str(params.get("seg_erode"))
+            str(params.get("seg_erode", None))
         ])
-    if params.get("frame") is not None:
+    if params.get("frame", None) is not None:
         cargs.extend([
             "--frame",
-            str(params.get("frame"))
+            str(params.get("frame", None))
         ])
-    if params.get("robust") is not None:
+    if params.get("robust", None) is not None:
         cargs.extend([
             "--robust",
-            str(params.get("robust"))
+            str(params.get("robust", None))
         ])
-    if params.get("square_input"):
+    if params.get("square_input", False):
         cargs.append("--sqr")
-    if params.get("sqrt_input"):
+    if params.get("sqrt_input", False):
         cargs.append("--sqrt")
-    if params.get("multiply_input") is not None:
+    if params.get("multiply_input", None) is not None:
         cargs.extend([
             "--mul",
-            str(params.get("multiply_input"))
+            str(params.get("multiply_input", None))
         ])
-    if params.get("divide_input") is not None:
+    if params.get("divide_input", None) is not None:
         cargs.extend([
             "--div",
-            str(params.get("divide_input"))
+            str(params.get("divide_input", None))
         ])
-    if params.get("snr_column"):
+    if params.get("snr_column", False):
         cargs.append("--snr")
-    if params.get("absolute_value"):
+    if params.get("absolute_value", False):
         cargs.append("--abs")
-    if params.get("accumulate_mean"):
+    if params.get("accumulate_mean", False):
         cargs.append("--accumulate")
-    if params.get("color_table") is not None:
+    if params.get("color_table", None) is not None:
         cargs.extend([
             "--ctab",
-            execution.input_file(params.get("color_table"))
+            execution.input_file(params.get("color_table", None))
         ])
-    if params.get("default_color_table"):
+    if params.get("default_color_table", False):
         cargs.append("--ctab-default")
-    if params.get("gca_color_table") is not None:
+    if params.get("gca_color_table", None) is not None:
         cargs.extend([
             "--ctab-gca",
-            execution.input_file(params.get("gca_color_table"))
+            execution.input_file(params.get("gca_color_table", None))
         ])
-    if params.get("ids") is not None:
+    if params.get("ids", None) is not None:
         cargs.extend([
             "--id",
-            params.get("ids")
+            params.get("ids", None)
         ])
-    if params.get("exclude_ids") is not None:
+    if params.get("exclude_ids", None) is not None:
         cargs.extend([
             "--excludeid",
-            params.get("exclude_ids")
+            params.get("exclude_ids", None)
         ])
-    if params.get("exclude_gm_wm"):
+    if params.get("exclude_gm_wm", False):
         cargs.append("--excl-ctxgmwm")
-    if params.get("surf_wm_vol"):
+    if params.get("surf_wm_vol", False):
         cargs.append("--surf-wm-vol")
-    if params.get("surf_ctx_vol"):
+    if params.get("surf_ctx_vol", False):
         cargs.append("--surf-ctx-vol")
-    if params.get("no_global_stats"):
+    if params.get("no_global_stats", False):
         cargs.append("--no-global-stats")
-    if params.get("empty_segments"):
+    if params.get("empty_segments", False):
         cargs.append("--empty")
-    if params.get("ctab_output") is not None:
+    if params.get("ctab_output", None) is not None:
         cargs.extend([
             "--ctab-out",
-            params.get("ctab_output")
+            params.get("ctab_output", None)
         ])
-    if params.get("mask_volume") is not None:
+    if params.get("mask_volume", None) is not None:
         cargs.extend([
             "--mask",
-            execution.input_file(params.get("mask_volume"))
+            execution.input_file(params.get("mask_volume", None))
         ])
-    if params.get("mask_threshold") is not None:
+    if params.get("mask_threshold", None) is not None:
         cargs.extend([
             "--maskthresh",
-            str(params.get("mask_threshold"))
+            str(params.get("mask_threshold", None))
         ])
-    if params.get("mask_sign") is not None:
+    if params.get("mask_sign", None) is not None:
         cargs.extend([
             "--masksign",
-            params.get("mask_sign")
+            params.get("mask_sign", None)
         ])
-    if params.get("mask_frame") is not None:
+    if params.get("mask_frame", None) is not None:
         cargs.extend([
             "--maskframe",
-            str(params.get("mask_frame"))
+            str(params.get("mask_frame", None))
         ])
-    if params.get("invert_mask"):
+    if params.get("invert_mask", False):
         cargs.append("--maskinvert")
-    if params.get("mask_erode") is not None:
+    if params.get("mask_erode", None) is not None:
         cargs.extend([
             "--maskerode",
-            str(params.get("mask_erode"))
+            str(params.get("mask_erode", None))
         ])
-    if params.get("brain_vol_seg"):
+    if params.get("brain_vol_seg", False):
         cargs.append("--brain-vol-from-seg")
-    if params.get("brain_mask_vol") is not None:
+    if params.get("brain_mask_vol", None) is not None:
         cargs.extend([
             "--brainmask",
-            execution.input_file(params.get("brain_mask_vol"))
+            execution.input_file(params.get("brain_mask_vol", None))
         ])
-    if params.get("subcortical_gray"):
+    if params.get("subcortical_gray", False):
         cargs.append("--subcortgray")
-    if params.get("total_gray"):
+    if params.get("total_gray", False):
         cargs.append("--totalgray")
-    if params.get("intracranial_volume"):
+    if params.get("intracranial_volume", False):
         cargs.append("--etiv")
-    if params.get("intracranial_volume_only"):
+    if params.get("intracranial_volume_only", False):
         cargs.append("--etiv-only")
-    if params.get("old_intracranial_volume_only"):
+    if params.get("old_intracranial_volume_only", False):
         cargs.append("--old-etiv-only")
-    if params.get("talairach_transform") is not None:
+    if params.get("talairach_transform", None) is not None:
         cargs.extend([
             "--talxfm",
-            execution.input_file(params.get("talairach_transform"))
+            execution.input_file(params.get("talairach_transform", None))
         ])
-    if params.get("xfm_to_etiv") is not None:
+    if params.get("xfm_to_etiv", None) is not None:
         cargs.extend([
             "--xfm2etiv",
-            params.get("xfm_to_etiv")
+            params.get("xfm_to_etiv", None)
         ])
-    if params.get("euler_hole_count"):
+    if params.get("euler_hole_count", False):
         cargs.append("--euler")
-    if params.get("avg_waveform") is not None:
+    if params.get("avg_waveform", None) is not None:
         cargs.extend([
             "--avgwf",
-            params.get("avg_waveform")
+            params.get("avg_waveform", None)
         ])
-    if params.get("sum_waveform") is not None:
+    if params.get("sum_waveform", None) is not None:
         cargs.extend([
             "--sumwf",
-            params.get("sum_waveform")
+            params.get("sum_waveform", None)
         ])
-    if params.get("avg_waveform_vol") is not None:
+    if params.get("avg_waveform_vol", None) is not None:
         cargs.extend([
             "--avgwfvol",
-            params.get("avg_waveform_vol")
+            params.get("avg_waveform_vol", None)
         ])
-    if params.get("remove_avgwf_mean"):
+    if params.get("remove_avgwf_mean", False):
         cargs.append("--avgwf-remove-mean")
-    if params.get("spatial_frame_avg") is not None:
+    if params.get("spatial_frame_avg", None) is not None:
         cargs.extend([
             "--sfavg",
-            params.get("spatial_frame_avg")
+            params.get("spatial_frame_avg", None)
         ])
-    if params.get("voxel_crs") is not None:
+    if params.get("voxel_crs", None) is not None:
         cargs.extend([
             "--vox",
-            params.get("voxel_crs")
+            params.get("voxel_crs", None)
         ])
-    if params.get("replace_ids") is not None:
+    if params.get("replace_ids", None) is not None:
         cargs.extend([
             "--replace",
-            params.get("replace_ids")
+            params.get("replace_ids", None)
         ])
-    if params.get("replace_ids_file") is not None:
+    if params.get("replace_ids_file", None) is not None:
         cargs.extend([
             "--replace-file",
-            execution.input_file(params.get("replace_ids_file"))
+            execution.input_file(params.get("replace_ids_file", None))
         ])
-    if params.get("gtm_default_seg_merge"):
+    if params.get("gtm_default_seg_merge", False):
         cargs.append("--gtm-default-seg-merge")
-    if params.get("gtm_default_seg_merge_choroid"):
+    if params.get("gtm_default_seg_merge_choroid", False):
         cargs.append("--gtm-default-seg-merge-choroid")
-    if params.get("qa_stats_file") is not None:
+    if params.get("qa_stats_file", None) is not None:
         cargs.extend([
             "--qa-stats",
-            params.get("qa_stats_file")
+            params.get("qa_stats_file", None)
         ])
-    if params.get("subjects_dir") is not None:
+    if params.get("subjects_dir", None) is not None:
         cargs.extend([
             "--sd",
-            params.get("subjects_dir")
+            params.get("subjects_dir", None)
         ])
-    if params.get("random_seed") is not None:
+    if params.get("random_seed", None) is not None:
         cargs.extend([
             "--seed",
-            str(params.get("random_seed"))
+            str(params.get("random_seed", None))
         ])
     return cargs
 
@@ -636,12 +667,12 @@ def mri_segstats_outputs(
     """
     ret = MriSegstatsOutputs(
         root=execution.output_file("."),
-        summary_output_file=execution.output_file(params.get("output_file")),
-        avg_waveform_output=execution.output_file(params.get("avg_waveform")) if (params.get("avg_waveform") is not None) else None,
-        sum_waveform_output=execution.output_file(params.get("sum_waveform")) if (params.get("sum_waveform") is not None) else None,
-        avg_waveform_vol_output=execution.output_file(params.get("avg_waveform_vol")) if (params.get("avg_waveform_vol") is not None) else None,
-        spatial_frame_avg_output=execution.output_file(params.get("spatial_frame_avg")) if (params.get("spatial_frame_avg") is not None) else None,
-        ctab_output_file=execution.output_file(params.get("ctab_output")) if (params.get("ctab_output") is not None) else None,
+        summary_output_file=execution.output_file(params.get("output_file", None)),
+        avg_waveform_output=execution.output_file(params.get("avg_waveform", None)) if (params.get("avg_waveform") is not None) else None,
+        sum_waveform_output=execution.output_file(params.get("sum_waveform", None)) if (params.get("sum_waveform") is not None) else None,
+        avg_waveform_vol_output=execution.output_file(params.get("avg_waveform_vol", None)) if (params.get("avg_waveform_vol") is not None) else None,
+        spatial_frame_avg_output=execution.output_file(params.get("spatial_frame_avg", None)) if (params.get("spatial_frame_avg") is not None) else None,
+        ctab_output_file=execution.output_file(params.get("ctab_output", None)) if (params.get("ctab_output") is not None) else None,
     )
     return ret
 
@@ -901,7 +932,6 @@ def mri_segstats(
 __all__ = [
     "MRI_SEGSTATS_METADATA",
     "MriSegstatsOutputs",
-    "MriSegstatsParameters",
     "mri_segstats",
     "mri_segstats_execute",
     "mri_segstats_params",

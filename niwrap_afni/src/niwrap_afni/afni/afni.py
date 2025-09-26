@@ -14,7 +14,35 @@ AFNI_METADATA = Metadata(
 
 
 AfniParameters = typing.TypedDict('AfniParameters', {
-    "@type": typing.Literal["afni.afni"],
+    "@type": typing.NotRequired[typing.Literal["afni/afni"]],
+    "session_directories": typing.NotRequired[str | None],
+    "bysub": typing.NotRequired[list[str] | None],
+    "all_dsets": bool,
+    "purge": bool,
+    "posfunc": bool,
+    "recursive": bool,
+    "no1D": bool,
+    "nocsv": bool,
+    "notsv": bool,
+    "unique": bool,
+    "orient": typing.NotRequired[str | None],
+    "noplugins": bool,
+    "seehidden": bool,
+    "allow_all_plugins": bool,
+    "yesplugouts": bool,
+    "debug_plugouts": bool,
+    "noplugouts": bool,
+    "skip_afnirc": bool,
+    "layout": typing.NotRequired[InputPathType | None],
+    "niml": bool,
+    "np": typing.NotRequired[int | None],
+    "npq": typing.NotRequired[int | None],
+    "npb": typing.NotRequired[int | None],
+    "com": typing.NotRequired[str | None],
+    "comsep": typing.NotRequired[str | None],
+})
+AfniParametersTagged = typing.TypedDict('AfniParametersTagged', {
+    "@type": typing.Literal["afni/afni"],
     "session_directories": typing.NotRequired[str | None],
     "bysub": typing.NotRequired[list[str] | None],
     "all_dsets": bool,
@@ -43,41 +71,9 @@ AfniParameters = typing.TypedDict('AfniParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "afni.afni": afni_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "afni.afni": afni_outputs,
-    }.get(t)
-
-
 class AfniOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `afni_(...)`.
+    Output object returned when calling `AfniParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -111,7 +107,7 @@ def afni_params(
     npb: int | None = None,
     com: str | None = None,
     comsep: str | None = None,
-) -> AfniParameters:
+) -> AfniParametersTagged:
     """
     Build parameters.
     
@@ -146,7 +142,7 @@ def afni_params(
         Parameter dictionary
     """
     params = {
-        "@type": "afni.afni",
+        "@type": "afni/afni",
         "all_dsets": all_dsets,
         "purge": purge,
         "posfunc": posfunc,
@@ -200,79 +196,79 @@ def afni_cargs(
     """
     cargs = []
     cargs.append("afni")
-    if params.get("session_directories") is not None:
-        cargs.append(params.get("session_directories"))
-    if params.get("bysub") is not None:
+    if params.get("session_directories", None) is not None:
+        cargs.append(params.get("session_directories", None))
+    if params.get("bysub", None) is not None:
         cargs.extend([
             "-bysub",
-            *params.get("bysub")
+            *params.get("bysub", None)
         ])
-    if params.get("all_dsets"):
+    if params.get("all_dsets", False):
         cargs.append("-all_dsets")
-    if params.get("purge"):
+    if params.get("purge", False):
         cargs.append("-purge")
-    if params.get("posfunc"):
+    if params.get("posfunc", False):
         cargs.append("-posfunc")
-    if params.get("recursive"):
+    if params.get("recursive", False):
         cargs.append("-R")
-    if params.get("no1D"):
+    if params.get("no1D", False):
         cargs.append("-no1D")
-    if params.get("nocsv"):
+    if params.get("nocsv", False):
         cargs.append("-nocsv")
-    if params.get("notsv"):
+    if params.get("notsv", False):
         cargs.append("-notsv")
-    if params.get("unique"):
+    if params.get("unique", False):
         cargs.append("-unique")
-    if params.get("orient") is not None:
+    if params.get("orient", None) is not None:
         cargs.extend([
             "-orient",
-            params.get("orient")
+            params.get("orient", None)
         ])
-    if params.get("noplugins"):
+    if params.get("noplugins", False):
         cargs.append("-noplugins")
-    if params.get("seehidden"):
+    if params.get("seehidden", False):
         cargs.append("-seehidden")
-    if params.get("allow_all_plugins"):
+    if params.get("allow_all_plugins", False):
         cargs.append("-DAFNI_ALLOW_ALL_PLUGINS=YES")
-    if params.get("yesplugouts"):
+    if params.get("yesplugouts", False):
         cargs.append("-yesplugouts")
-    if params.get("debug_plugouts"):
+    if params.get("debug_plugouts", False):
         cargs.append("-YESplugouts")
-    if params.get("noplugouts"):
+    if params.get("noplugouts", False):
         cargs.append("-noplugouts")
-    if params.get("skip_afnirc"):
+    if params.get("skip_afnirc", False):
         cargs.append("-skip_afnirc")
-    if params.get("layout") is not None:
+    if params.get("layout", None) is not None:
         cargs.extend([
             "-layout",
-            execution.input_file(params.get("layout"))
+            execution.input_file(params.get("layout", None))
         ])
-    if params.get("niml"):
+    if params.get("niml", False):
         cargs.append("-niml")
-    if params.get("np") is not None:
+    if params.get("np", None) is not None:
         cargs.extend([
             "-np",
-            str(params.get("np"))
+            str(params.get("np", None))
         ])
-    if params.get("npq") is not None:
+    if params.get("npq", None) is not None:
         cargs.extend([
             "-npq",
-            str(params.get("npq"))
+            str(params.get("npq", None))
         ])
-    if params.get("npb") is not None:
+    if params.get("npb", None) is not None:
         cargs.extend([
             "-npb",
-            str(params.get("npb"))
+            str(params.get("npb", None))
         ])
-    if params.get("com") is not None:
+    if params.get("com", None) is not None:
         cargs.extend([
             "-com",
-            params.get("com")
+            params.get("com", None)
         ])
-    if params.get("comsep") is not None:
+    if params.get("comsep", None) is not None:
         cargs.extend([
             "-comsep",
-            params.get("comsep")
+            params.get("comsep", None)
         ])
     return cargs
 
@@ -426,7 +422,6 @@ def afni_(
 __all__ = [
     "AFNI_METADATA",
     "AfniOutputs",
-    "AfniParameters",
     "afni_",
     "afni_execute",
     "afni_params",

@@ -14,7 +14,14 @@ MRIS_FILL_METADATA = Metadata(
 
 
 MrisFillParameters = typing.TypedDict('MrisFillParameters', {
-    "@type": typing.Literal["freesurfer.mris_fill"],
+    "@type": typing.NotRequired[typing.Literal["freesurfer/mris_fill"]],
+    "resolution": typing.NotRequired[float | None],
+    "conform": bool,
+    "input_surface": InputPathType,
+    "output_volume": str,
+})
+MrisFillParametersTagged = typing.TypedDict('MrisFillParametersTagged', {
+    "@type": typing.Literal["freesurfer/mris_fill"],
     "resolution": typing.NotRequired[float | None],
     "conform": bool,
     "input_surface": InputPathType,
@@ -22,41 +29,9 @@ MrisFillParameters = typing.TypedDict('MrisFillParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "freesurfer.mris_fill": mris_fill_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "freesurfer.mris_fill": mris_fill_outputs,
-    }.get(t)
-
-
 class MrisFillOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `mris_fill(...)`.
+    Output object returned when calling `MrisFillParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -69,7 +44,7 @@ def mris_fill_params(
     output_volume: str,
     resolution: float | None = None,
     conform: bool = False,
-) -> MrisFillParameters:
+) -> MrisFillParametersTagged:
     """
     Build parameters.
     
@@ -83,7 +58,7 @@ def mris_fill_params(
         Parameter dictionary
     """
     params = {
-        "@type": "freesurfer.mris_fill",
+        "@type": "freesurfer/mris_fill",
         "conform": conform,
         "input_surface": input_surface,
         "output_volume": output_volume,
@@ -108,15 +83,15 @@ def mris_fill_cargs(
     """
     cargs = []
     cargs.append("mris_fill")
-    if params.get("resolution") is not None:
+    if params.get("resolution", None) is not None:
         cargs.extend([
             "-r",
-            str(params.get("resolution"))
+            str(params.get("resolution", None))
         ])
-    if params.get("conform"):
+    if params.get("conform", False):
         cargs.append("-c")
-    cargs.append(execution.input_file(params.get("input_surface")))
-    cargs.append(params.get("output_volume"))
+    cargs.append(execution.input_file(params.get("input_surface", None)))
+    cargs.append(params.get("output_volume", None))
     return cargs
 
 
@@ -135,7 +110,7 @@ def mris_fill_outputs(
     """
     ret = MrisFillOutputs(
         root=execution.output_file("."),
-        filled_volume=execution.output_file(params.get("output_volume")),
+        filled_volume=execution.output_file(params.get("output_volume", None)),
     )
     return ret
 
@@ -208,7 +183,6 @@ def mris_fill(
 __all__ = [
     "MRIS_FILL_METADATA",
     "MrisFillOutputs",
-    "MrisFillParameters",
     "mris_fill",
     "mris_fill_execute",
     "mris_fill_params",

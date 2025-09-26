@@ -14,7 +14,16 @@ PROMPT_POPUP_METADATA = Metadata(
 
 
 PromptPopupParameters = typing.TypedDict('PromptPopupParameters', {
-    "@type": typing.Literal["afni.prompt_popup"],
+    "@type": typing.NotRequired[typing.Literal["afni/prompt_popup"]],
+    "message": str,
+    "message_pause": typing.NotRequired[str | None],
+    "buttons": typing.NotRequired[list[str] | None],
+    "buttons_b": typing.NotRequired[list[str] | None],
+    "timeout": typing.NotRequired[float | None],
+    "timeout_to": typing.NotRequired[float | None],
+})
+PromptPopupParametersTagged = typing.TypedDict('PromptPopupParametersTagged', {
+    "@type": typing.Literal["afni/prompt_popup"],
     "message": str,
     "message_pause": typing.NotRequired[str | None],
     "buttons": typing.NotRequired[list[str] | None],
@@ -24,40 +33,9 @@ PromptPopupParameters = typing.TypedDict('PromptPopupParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "afni.prompt_popup": prompt_popup_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-    }.get(t)
-
-
 class PromptPopupOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `prompt_popup(...)`.
+    Output object returned when calling `PromptPopupParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -70,7 +48,7 @@ def prompt_popup_params(
     buttons_b: list[str] | None = None,
     timeout: float | None = None,
     timeout_to: float | None = None,
-) -> PromptPopupParameters:
+) -> PromptPopupParametersTagged:
     """
     Build parameters.
     
@@ -89,7 +67,7 @@ def prompt_popup_params(
         Parameter dictionary
     """
     params = {
-        "@type": "afni.prompt_popup",
+        "@type": "afni/prompt_popup",
         "message": message,
     }
     if message_pause is not None:
@@ -122,32 +100,32 @@ def prompt_popup_cargs(
     cargs.append("prompt_popup")
     cargs.extend([
         "-message",
-        params.get("message")
+        params.get("message", None)
     ])
-    if params.get("message_pause") is not None:
+    if params.get("message_pause", None) is not None:
         cargs.extend([
             "-pause",
-            params.get("message_pause")
+            params.get("message_pause", None)
         ])
-    if params.get("buttons") is not None:
+    if params.get("buttons", None) is not None:
         cargs.extend([
             "-button",
-            *params.get("buttons")
+            *params.get("buttons", None)
         ])
-    if params.get("buttons_b") is not None:
+    if params.get("buttons_b", None) is not None:
         cargs.extend([
             "-b",
-            *params.get("buttons_b")
+            *params.get("buttons_b", None)
         ])
-    if params.get("timeout") is not None:
+    if params.get("timeout", None) is not None:
         cargs.extend([
             "-timeout",
-            str(params.get("timeout"))
+            str(params.get("timeout", None))
         ])
-    if params.get("timeout_to") is not None:
+    if params.get("timeout_to", None) is not None:
         cargs.extend([
             "-to",
-            str(params.get("timeout_to"))
+            str(params.get("timeout_to", None))
         ])
     return cargs
 
@@ -248,7 +226,6 @@ def prompt_popup(
 __all__ = [
     "PROMPT_POPUP_METADATA",
     "PromptPopupOutputs",
-    "PromptPopupParameters",
     "prompt_popup",
     "prompt_popup_execute",
     "prompt_popup_params",

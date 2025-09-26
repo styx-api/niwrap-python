@@ -14,7 +14,14 @@ RMSDIFF_METADATA = Metadata(
 
 
 RmsdiffParameters = typing.TypedDict('RmsdiffParameters', {
-    "@type": typing.Literal["fsl.rmsdiff"],
+    "@type": typing.NotRequired[typing.Literal["fsl/rmsdiff"]],
+    "matrixfile1": InputPathType,
+    "matrixfile2": InputPathType,
+    "refvol": InputPathType,
+    "mask": typing.NotRequired[InputPathType | None],
+})
+RmsdiffParametersTagged = typing.TypedDict('RmsdiffParametersTagged', {
+    "@type": typing.Literal["fsl/rmsdiff"],
     "matrixfile1": InputPathType,
     "matrixfile2": InputPathType,
     "refvol": InputPathType,
@@ -22,40 +29,9 @@ RmsdiffParameters = typing.TypedDict('RmsdiffParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "fsl.rmsdiff": rmsdiff_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-    }.get(t)
-
-
 class RmsdiffOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `rmsdiff(...)`.
+    Output object returned when calling `RmsdiffParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -66,7 +42,7 @@ def rmsdiff_params(
     matrixfile2: InputPathType,
     refvol: InputPathType,
     mask: InputPathType | None = None,
-) -> RmsdiffParameters:
+) -> RmsdiffParametersTagged:
     """
     Build parameters.
     
@@ -79,7 +55,7 @@ def rmsdiff_params(
         Parameter dictionary
     """
     params = {
-        "@type": "fsl.rmsdiff",
+        "@type": "fsl/rmsdiff",
         "matrixfile1": matrixfile1,
         "matrixfile2": matrixfile2,
         "refvol": refvol,
@@ -104,11 +80,11 @@ def rmsdiff_cargs(
     """
     cargs = []
     cargs.append("rmsdiff")
-    cargs.append(execution.input_file(params.get("matrixfile1")))
-    cargs.append(execution.input_file(params.get("matrixfile2")))
-    cargs.append(execution.input_file(params.get("refvol")))
-    if params.get("mask") is not None:
-        cargs.append(execution.input_file(params.get("mask")))
+    cargs.append(execution.input_file(params.get("matrixfile1", None)))
+    cargs.append(execution.input_file(params.get("matrixfile2", None)))
+    cargs.append(execution.input_file(params.get("refvol", None)))
+    if params.get("mask", None) is not None:
+        cargs.append(execution.input_file(params.get("mask", None)))
     return cargs
 
 
@@ -196,7 +172,6 @@ def rmsdiff(
 __all__ = [
     "RMSDIFF_METADATA",
     "RmsdiffOutputs",
-    "RmsdiffParameters",
     "rmsdiff",
     "rmsdiff_execute",
     "rmsdiff_params",

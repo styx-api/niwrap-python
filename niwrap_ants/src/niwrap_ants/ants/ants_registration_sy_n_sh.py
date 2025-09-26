@@ -14,7 +14,26 @@ ANTS_REGISTRATION_SY_N_SH_METADATA = Metadata(
 
 
 AntsRegistrationSyNShParameters = typing.TypedDict('AntsRegistrationSyNShParameters', {
-    "@type": typing.Literal["ants.antsRegistrationSyN.sh"],
+    "@type": typing.NotRequired[typing.Literal["ants/antsRegistrationSyN.sh"]],
+    "image_dimension": typing.Literal[2, 3],
+    "fixed_image": InputPathType,
+    "moving_image": InputPathType,
+    "output_prefix": str,
+    "threads": typing.NotRequired[int | None],
+    "initial_transform": typing.NotRequired[list[str] | None],
+    "transform_type": typing.NotRequired[typing.Literal["t", "r", "a", "s", "sr", "so", "b", "br", "bo"] | None],
+    "radius": typing.NotRequired[int | None],
+    "spline_distance": typing.NotRequired[int | None],
+    "gradient_step": typing.NotRequired[float | None],
+    "masks": typing.NotRequired[str | None],
+    "precision_type": typing.NotRequired[typing.Literal["f", "d"] | None],
+    "use_histogram_matching": typing.NotRequired[typing.Literal[0, 1] | None],
+    "use_repro_mode": typing.NotRequired[typing.Literal[0, 1] | None],
+    "collapse_output_transforms": typing.NotRequired[typing.Literal[0, 1] | None],
+    "random_seed": typing.NotRequired[int | None],
+})
+AntsRegistrationSyNShParametersTagged = typing.TypedDict('AntsRegistrationSyNShParametersTagged', {
+    "@type": typing.Literal["ants/antsRegistrationSyN.sh"],
     "image_dimension": typing.Literal[2, 3],
     "fixed_image": InputPathType,
     "moving_image": InputPathType,
@@ -34,41 +53,9 @@ AntsRegistrationSyNShParameters = typing.TypedDict('AntsRegistrationSyNShParamet
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "ants.antsRegistrationSyN.sh": ants_registration_sy_n_sh_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "ants.antsRegistrationSyN.sh": ants_registration_sy_n_sh_outputs,
-    }.get(t)
-
-
 class AntsRegistrationSyNShOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `ants_registration_sy_n_sh(...)`.
+    Output object returned when calling `AntsRegistrationSyNShParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -97,7 +84,7 @@ def ants_registration_sy_n_sh_params(
     use_repro_mode: typing.Literal[0, 1] | None = None,
     collapse_output_transforms: typing.Literal[0, 1] | None = None,
     random_seed: int | None = None,
-) -> AntsRegistrationSyNShParameters:
+) -> AntsRegistrationSyNShParametersTagged:
     """
     Build parameters.
     
@@ -152,7 +139,7 @@ def ants_registration_sy_n_sh_params(
         Parameter dictionary
     """
     params = {
-        "@type": "ants.antsRegistrationSyN.sh",
+        "@type": "ants/antsRegistrationSyN.sh",
         "image_dimension": image_dimension,
         "fixed_image": fixed_image,
         "moving_image": moving_image,
@@ -202,79 +189,79 @@ def ants_registration_sy_n_sh_cargs(
     cargs.append("antsRegistrationSyN.sh")
     cargs.extend([
         "-d",
-        str(params.get("image_dimension"))
+        str(params.get("image_dimension", None))
     ])
     cargs.extend([
         "-f",
-        execution.input_file(params.get("fixed_image"))
+        execution.input_file(params.get("fixed_image", None))
     ])
     cargs.extend([
         "-m",
-        execution.input_file(params.get("moving_image"))
+        execution.input_file(params.get("moving_image", None))
     ])
     cargs.extend([
         "-o",
-        params.get("output_prefix")
+        params.get("output_prefix", None)
     ])
-    if params.get("threads") is not None:
+    if params.get("threads", None) is not None:
         cargs.extend([
             "-n",
-            str(params.get("threads"))
+            str(params.get("threads", None))
         ])
-    if params.get("initial_transform") is not None:
+    if params.get("initial_transform", None) is not None:
         cargs.extend([
             "-i",
-            "[" + ",".join(params.get("initial_transform")) + "]"
+            "[" + ",".join(params.get("initial_transform", None)) + "]"
         ])
-    if params.get("transform_type") is not None:
+    if params.get("transform_type", None) is not None:
         cargs.extend([
             "-t",
-            params.get("transform_type")
+            params.get("transform_type", None)
         ])
-    if params.get("radius") is not None:
+    if params.get("radius", None) is not None:
         cargs.extend([
             "-r",
-            str(params.get("radius"))
+            str(params.get("radius", None))
         ])
-    if params.get("spline_distance") is not None:
+    if params.get("spline_distance", None) is not None:
         cargs.extend([
             "-s",
-            str(params.get("spline_distance"))
+            str(params.get("spline_distance", None))
         ])
-    if params.get("gradient_step") is not None:
+    if params.get("gradient_step", None) is not None:
         cargs.extend([
             "-g",
-            str(params.get("gradient_step"))
+            str(params.get("gradient_step", None))
         ])
-    if params.get("masks") is not None:
+    if params.get("masks", None) is not None:
         cargs.extend([
             "-x",
-            params.get("masks")
+            params.get("masks", None)
         ])
-    if params.get("precision_type") is not None:
+    if params.get("precision_type", None) is not None:
         cargs.extend([
             "-p",
-            params.get("precision_type")
+            params.get("precision_type", None)
         ])
-    if params.get("use_histogram_matching") is not None:
+    if params.get("use_histogram_matching", None) is not None:
         cargs.extend([
             "-j",
-            str(params.get("use_histogram_matching"))
+            str(params.get("use_histogram_matching", None))
         ])
-    if params.get("use_repro_mode") is not None:
+    if params.get("use_repro_mode", None) is not None:
         cargs.extend([
             "-y",
-            str(params.get("use_repro_mode"))
+            str(params.get("use_repro_mode", None))
         ])
-    if params.get("collapse_output_transforms") is not None:
+    if params.get("collapse_output_transforms", None) is not None:
         cargs.extend([
             "-z",
-            str(params.get("collapse_output_transforms"))
+            str(params.get("collapse_output_transforms", None))
         ])
-    if params.get("random_seed") is not None:
+    if params.get("random_seed", None) is not None:
         cargs.extend([
             "-e",
-            str(params.get("random_seed"))
+            str(params.get("random_seed", None))
         ])
     return cargs
 
@@ -294,9 +281,9 @@ def ants_registration_sy_n_sh_outputs(
     """
     ret = AntsRegistrationSyNShOutputs(
         root=execution.output_file("."),
-        affine_transform=execution.output_file(params.get("output_prefix") + "0GenericAffine.mat"),
-        inverse_warp=execution.output_file(params.get("output_prefix") + "1InverseWarp.nii.gz"),
-        forward_warp=execution.output_file(params.get("output_prefix") + "1Warp.nii.gz"),
+        affine_transform=execution.output_file(params.get("output_prefix", None) + "0GenericAffine.mat"),
+        inverse_warp=execution.output_file(params.get("output_prefix", None) + "1InverseWarp.nii.gz"),
+        forward_warp=execution.output_file(params.get("output_prefix", None) + "1Warp.nii.gz"),
     )
     return ret
 
@@ -432,7 +419,6 @@ def ants_registration_sy_n_sh(
 __all__ = [
     "ANTS_REGISTRATION_SY_N_SH_METADATA",
     "AntsRegistrationSyNShOutputs",
-    "AntsRegistrationSyNShParameters",
     "ants_registration_sy_n_sh",
     "ants_registration_sy_n_sh_execute",
     "ants_registration_sy_n_sh_params",

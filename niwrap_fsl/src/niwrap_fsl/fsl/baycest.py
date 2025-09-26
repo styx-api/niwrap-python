@@ -14,7 +14,18 @@ BAYCEST_METADATA = Metadata(
 
 
 BaycestParameters = typing.TypedDict('BaycestParameters', {
-    "@type": typing.Literal["fsl.baycest"],
+    "@type": typing.NotRequired[typing.Literal["fsl/baycest"]],
+    "data_file": InputPathType,
+    "mask_file": InputPathType,
+    "output_dir": str,
+    "pools_file": InputPathType,
+    "spec_file": InputPathType,
+    "ptrain_file": InputPathType,
+    "spatial_flag": bool,
+    "t12prior_flag": bool,
+})
+BaycestParametersTagged = typing.TypedDict('BaycestParametersTagged', {
+    "@type": typing.Literal["fsl/baycest"],
     "data_file": InputPathType,
     "mask_file": InputPathType,
     "output_dir": str,
@@ -26,41 +37,9 @@ BaycestParameters = typing.TypedDict('BaycestParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "fsl.baycest": baycest_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "fsl.baycest": baycest_outputs,
-    }.get(t)
-
-
 class BaycestOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `baycest(...)`.
+    Output object returned when calling `BaycestParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -77,7 +56,7 @@ def baycest_params(
     ptrain_file: InputPathType,
     spatial_flag: bool = False,
     t12prior_flag: bool = False,
-) -> BaycestParameters:
+) -> BaycestParametersTagged:
     """
     Build parameters.
     
@@ -94,7 +73,7 @@ def baycest_params(
         Parameter dictionary
     """
     params = {
-        "@type": "fsl.baycest",
+        "@type": "fsl/baycest",
         "data_file": data_file,
         "mask_file": mask_file,
         "output_dir": output_dir,
@@ -122,15 +101,15 @@ def baycest_cargs(
     """
     cargs = []
     cargs.append("baycest")
-    cargs.append("--data=" + execution.input_file(params.get("data_file")))
-    cargs.append("--mask=" + execution.input_file(params.get("mask_file")))
-    cargs.append("--output=" + params.get("output_dir"))
-    cargs.append("--pools=" + execution.input_file(params.get("pools_file")))
-    cargs.append("--spec=" + execution.input_file(params.get("spec_file")))
-    cargs.append("--ptrain=" + execution.input_file(params.get("ptrain_file")))
-    if params.get("spatial_flag"):
+    cargs.append("--data=" + execution.input_file(params.get("data_file", None)))
+    cargs.append("--mask=" + execution.input_file(params.get("mask_file", None)))
+    cargs.append("--output=" + params.get("output_dir", None))
+    cargs.append("--pools=" + execution.input_file(params.get("pools_file", None)))
+    cargs.append("--spec=" + execution.input_file(params.get("spec_file", None)))
+    cargs.append("--ptrain=" + execution.input_file(params.get("ptrain_file", None)))
+    if params.get("spatial_flag", False):
         cargs.append("--spatial")
-    if params.get("t12prior_flag"):
+    if params.get("t12prior_flag", False):
         cargs.append("--t12prior")
     return cargs
 
@@ -150,7 +129,7 @@ def baycest_outputs(
     """
     ret = BaycestOutputs(
         root=execution.output_file("."),
-        output_file=execution.output_file(params.get("output_dir") + "/output_file.nii.gz"),
+        output_file=execution.output_file(params.get("output_dir", None) + "/output_file.nii.gz"),
     )
     return ret
 
@@ -232,7 +211,6 @@ def baycest(
 __all__ = [
     "BAYCEST_METADATA",
     "BaycestOutputs",
-    "BaycestParameters",
     "baycest",
     "baycest_execute",
     "baycest_params",

@@ -14,7 +14,22 @@ MRI_FUNCVITS_METADATA = Metadata(
 
 
 MriFuncvitsParameters = typing.TypedDict('MriFuncvitsParameters', {
-    "@type": typing.Literal["freesurfer.mri-funcvits"],
+    "@type": typing.NotRequired[typing.Literal["freesurfer/mri-funcvits"]],
+    "stem": str,
+    "outdir": str,
+    "reg": typing.NotRequired[str | None],
+    "paintsurf": typing.NotRequired[str | None],
+    "sphere": typing.NotRequired[str | None],
+    "icosize": typing.NotRequired[int | None],
+    "hemi": typing.NotRequired[list[str] | None],
+    "svitdir": typing.NotRequired[str | None],
+    "icodir": typing.NotRequired[str | None],
+    "umask": typing.NotRequired[str | None],
+    "mail": typing.NotRequired[str | None],
+    "noforce": bool,
+})
+MriFuncvitsParametersTagged = typing.TypedDict('MriFuncvitsParametersTagged', {
+    "@type": typing.Literal["freesurfer/mri-funcvits"],
     "stem": str,
     "outdir": str,
     "reg": typing.NotRequired[str | None],
@@ -30,40 +45,9 @@ MriFuncvitsParameters = typing.TypedDict('MriFuncvitsParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "freesurfer.mri-funcvits": mri_funcvits_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-    }.get(t)
-
-
 class MriFuncvitsOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `mri_funcvits(...)`.
+    Output object returned when calling `MriFuncvitsParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -82,7 +66,7 @@ def mri_funcvits_params(
     umask: str | None = None,
     mail: str | None = None,
     noforce: bool = False,
-) -> MriFuncvitsParameters:
+) -> MriFuncvitsParametersTagged:
     """
     Build parameters.
     
@@ -103,7 +87,7 @@ def mri_funcvits_params(
         Parameter dictionary
     """
     params = {
-        "@type": "freesurfer.mri-funcvits",
+        "@type": "freesurfer/mri-funcvits",
         "stem": stem,
         "outdir": outdir,
         "noforce": noforce,
@@ -146,58 +130,58 @@ def mri_funcvits_cargs(
     cargs.append("mri-funcvits")
     cargs.extend([
         "--stem",
-        params.get("stem")
+        params.get("stem", None)
     ])
     cargs.extend([
         "--outdir",
-        params.get("outdir")
+        params.get("outdir", None)
     ])
-    if params.get("reg") is not None:
+    if params.get("reg", None) is not None:
         cargs.extend([
             "--reg",
-            params.get("reg")
+            params.get("reg", None)
         ])
-    if params.get("paintsurf") is not None:
+    if params.get("paintsurf", None) is not None:
         cargs.extend([
             "--paintsurf",
-            params.get("paintsurf")
+            params.get("paintsurf", None)
         ])
-    if params.get("sphere") is not None:
+    if params.get("sphere", None) is not None:
         cargs.extend([
             "--sphere",
-            params.get("sphere")
+            params.get("sphere", None)
         ])
-    if params.get("icosize") is not None:
+    if params.get("icosize", None) is not None:
         cargs.extend([
             "--icosize",
-            str(params.get("icosize"))
+            str(params.get("icosize", None))
         ])
-    if params.get("hemi") is not None:
+    if params.get("hemi", None) is not None:
         cargs.extend([
             "--hemi",
-            *params.get("hemi")
+            *params.get("hemi", None)
         ])
-    if params.get("svitdir") is not None:
+    if params.get("svitdir", None) is not None:
         cargs.extend([
             "--svitdir",
-            params.get("svitdir")
+            params.get("svitdir", None)
         ])
-    if params.get("icodir") is not None:
+    if params.get("icodir", None) is not None:
         cargs.extend([
             "--icodir",
-            params.get("icodir")
+            params.get("icodir", None)
         ])
-    if params.get("umask") is not None:
+    if params.get("umask", None) is not None:
         cargs.extend([
             "--umask",
-            params.get("umask")
+            params.get("umask", None)
         ])
-    if params.get("mail") is not None:
+    if params.get("mail", None) is not None:
         cargs.extend([
             "--mail",
-            params.get("mail")
+            params.get("mail", None)
         ])
-    if params.get("noforce"):
+    if params.get("noforce", False):
         cargs.append("--noforce")
     return cargs
 
@@ -310,7 +294,6 @@ def mri_funcvits(
 __all__ = [
     "MRI_FUNCVITS_METADATA",
     "MriFuncvitsOutputs",
-    "MriFuncvitsParameters",
     "mri_funcvits",
     "mri_funcvits_execute",
     "mri_funcvits_params",

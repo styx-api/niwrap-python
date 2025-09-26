@@ -14,7 +14,14 @@ QUANTIFY_HASUBREGIONS_SH_METADATA = Metadata(
 
 
 QuantifyHasubregionsShParameters = typing.TypedDict('QuantifyHasubregionsShParameters', {
-    "@type": typing.Literal["freesurfer.quantifyHAsubregions.sh"],
+    "@type": typing.NotRequired[typing.Literal["freesurfer/quantifyHAsubregions.sh"]],
+    "prefix": str,
+    "suffix": str,
+    "output_file": str,
+    "subjects_directory": typing.NotRequired[str | None],
+})
+QuantifyHasubregionsShParametersTagged = typing.TypedDict('QuantifyHasubregionsShParametersTagged', {
+    "@type": typing.Literal["freesurfer/quantifyHAsubregions.sh"],
     "prefix": str,
     "suffix": str,
     "output_file": str,
@@ -22,41 +29,9 @@ QuantifyHasubregionsShParameters = typing.TypedDict('QuantifyHasubregionsShParam
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "freesurfer.quantifyHAsubregions.sh": quantify_hasubregions_sh_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "freesurfer.quantifyHAsubregions.sh": quantify_hasubregions_sh_outputs,
-    }.get(t)
-
-
 class QuantifyHasubregionsShOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `quantify_hasubregions_sh(...)`.
+    Output object returned when calling `QuantifyHasubregionsShParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -69,7 +44,7 @@ def quantify_hasubregions_sh_params(
     suffix: str,
     output_file: str,
     subjects_directory: str | None = None,
-) -> QuantifyHasubregionsShParameters:
+) -> QuantifyHasubregionsShParametersTagged:
     """
     Build parameters.
     
@@ -83,7 +58,7 @@ def quantify_hasubregions_sh_params(
         Parameter dictionary
     """
     params = {
-        "@type": "freesurfer.quantifyHAsubregions.sh",
+        "@type": "freesurfer/quantifyHAsubregions.sh",
         "prefix": prefix,
         "suffix": suffix,
         "output_file": output_file,
@@ -108,11 +83,11 @@ def quantify_hasubregions_sh_cargs(
     """
     cargs = []
     cargs.append("quantifyHAsubregions.sh")
-    cargs.append(params.get("prefix"))
-    cargs.append(params.get("suffix"))
-    cargs.append(params.get("output_file"))
-    if params.get("subjects_directory") is not None:
-        cargs.append(params.get("subjects_directory"))
+    cargs.append(params.get("prefix", None))
+    cargs.append(params.get("suffix", None))
+    cargs.append(params.get("output_file", None))
+    if params.get("subjects_directory", None) is not None:
+        cargs.append(params.get("subjects_directory", None))
     return cargs
 
 
@@ -131,7 +106,7 @@ def quantify_hasubregions_sh_outputs(
     """
     ret = QuantifyHasubregionsShOutputs(
         root=execution.output_file("."),
-        output_file=execution.output_file(params.get("output_file")),
+        output_file=execution.output_file(params.get("output_file", None)),
     )
     return ret
 
@@ -202,7 +177,6 @@ def quantify_hasubregions_sh(
 __all__ = [
     "QUANTIFY_HASUBREGIONS_SH_METADATA",
     "QuantifyHasubregionsShOutputs",
-    "QuantifyHasubregionsShParameters",
     "quantify_hasubregions_sh",
     "quantify_hasubregions_sh_execute",
     "quantify_hasubregions_sh_params",

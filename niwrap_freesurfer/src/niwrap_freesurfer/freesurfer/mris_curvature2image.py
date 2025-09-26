@@ -14,7 +14,18 @@ MRIS_CURVATURE2IMAGE_METADATA = Metadata(
 
 
 MrisCurvature2imageParameters = typing.TypedDict('MrisCurvature2imageParameters', {
-    "@type": typing.Literal["freesurfer.mris_curvature2image"],
+    "@type": typing.NotRequired[typing.Literal["freesurfer/mris_curvature2image"]],
+    "surface": InputPathType,
+    "mask": InputPathType,
+    "output_overlay": str,
+    "output_distance": str,
+    "overlay": InputPathType,
+    "label": InputPathType,
+    "invert_flag": bool,
+    "radius": float,
+})
+MrisCurvature2imageParametersTagged = typing.TypedDict('MrisCurvature2imageParametersTagged', {
+    "@type": typing.Literal["freesurfer/mris_curvature2image"],
     "surface": InputPathType,
     "mask": InputPathType,
     "output_overlay": str,
@@ -26,41 +37,9 @@ MrisCurvature2imageParameters = typing.TypedDict('MrisCurvature2imageParameters'
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "freesurfer.mris_curvature2image": mris_curvature2image_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "freesurfer.mris_curvature2image": mris_curvature2image_outputs,
-    }.get(t)
-
-
 class MrisCurvature2imageOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `mris_curvature2image(...)`.
+    Output object returned when calling `MrisCurvature2imageParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -79,7 +58,7 @@ def mris_curvature2image_params(
     label: InputPathType,
     radius: float,
     invert_flag: bool = False,
-) -> MrisCurvature2imageParameters:
+) -> MrisCurvature2imageParametersTagged:
     """
     Build parameters.
     
@@ -96,7 +75,7 @@ def mris_curvature2image_params(
         Parameter dictionary
     """
     params = {
-        "@type": "freesurfer.mris_curvature2image",
+        "@type": "freesurfer/mris_curvature2image",
         "surface": surface,
         "mask": mask,
         "output_overlay": output_overlay,
@@ -126,33 +105,33 @@ def mris_curvature2image_cargs(
     cargs.append("mris_curvature2image")
     cargs.extend([
         "-s",
-        execution.input_file(params.get("surface"))
+        execution.input_file(params.get("surface", None))
     ])
     cargs.extend([
         "-m",
-        execution.input_file(params.get("mask"))
+        execution.input_file(params.get("mask", None))
     ])
     cargs.extend([
         "-o",
-        params.get("output_overlay")
+        params.get("output_overlay", None)
     ])
     cargs.extend([
         "-d",
-        params.get("output_distance")
+        params.get("output_distance", None)
     ])
     cargs.extend([
         "-c",
-        execution.input_file(params.get("overlay"))
+        execution.input_file(params.get("overlay", None))
     ])
     cargs.extend([
         "-l",
-        execution.input_file(params.get("label"))
+        execution.input_file(params.get("label", None))
     ])
-    if params.get("invert_flag"):
+    if params.get("invert_flag", False):
         cargs.append("-inv")
     cargs.extend([
         "-r",
-        str(params.get("radius"))
+        str(params.get("radius", None))
     ])
     return cargs
 
@@ -172,8 +151,8 @@ def mris_curvature2image_outputs(
     """
     ret = MrisCurvature2imageOutputs(
         root=execution.output_file("."),
-        output_overlay_img=execution.output_file(params.get("output_overlay")),
-        output_distance_img=execution.output_file(params.get("output_distance")),
+        output_overlay_img=execution.output_file(params.get("output_overlay", None)),
+        output_distance_img=execution.output_file(params.get("output_distance", None)),
     )
     return ret
 
@@ -255,7 +234,6 @@ def mris_curvature2image(
 __all__ = [
     "MRIS_CURVATURE2IMAGE_METADATA",
     "MrisCurvature2imageOutputs",
-    "MrisCurvature2imageParameters",
     "mris_curvature2image",
     "mris_curvature2image_execute",
     "mris_curvature2image_params",

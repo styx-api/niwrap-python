@@ -14,48 +14,22 @@ GIFTI_ALL_LABELS_TO_ROIS_METADATA = Metadata(
 
 
 GiftiAllLabelsToRoisParameters = typing.TypedDict('GiftiAllLabelsToRoisParameters', {
-    "@type": typing.Literal["workbench.gifti-all-labels-to-rois"],
+    "@type": typing.NotRequired[typing.Literal["workbench/gifti-all-labels-to-rois"]],
+    "label_in": InputPathType,
+    "map": str,
+    "metric_out": str,
+})
+GiftiAllLabelsToRoisParametersTagged = typing.TypedDict('GiftiAllLabelsToRoisParametersTagged', {
+    "@type": typing.Literal["workbench/gifti-all-labels-to-rois"],
     "label_in": InputPathType,
     "map": str,
     "metric_out": str,
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "workbench.gifti-all-labels-to-rois": gifti_all_labels_to_rois_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "workbench.gifti-all-labels-to-rois": gifti_all_labels_to_rois_outputs,
-    }.get(t)
-
-
 class GiftiAllLabelsToRoisOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `gifti_all_labels_to_rois(...)`.
+    Output object returned when calling `GiftiAllLabelsToRoisParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -67,7 +41,7 @@ def gifti_all_labels_to_rois_params(
     label_in: InputPathType,
     map_: str,
     metric_out: str,
-) -> GiftiAllLabelsToRoisParameters:
+) -> GiftiAllLabelsToRoisParametersTagged:
     """
     Build parameters.
     
@@ -79,7 +53,7 @@ def gifti_all_labels_to_rois_params(
         Parameter dictionary
     """
     params = {
-        "@type": "workbench.gifti-all-labels-to-rois",
+        "@type": "workbench/gifti-all-labels-to-rois",
         "label_in": label_in,
         "map": map_,
         "metric_out": metric_out,
@@ -103,9 +77,9 @@ def gifti_all_labels_to_rois_cargs(
     cargs = []
     cargs.append("wb_command")
     cargs.append("-gifti-all-labels-to-rois")
-    cargs.append(execution.input_file(params.get("label_in")))
-    cargs.append(params.get("map"))
-    cargs.append(params.get("metric_out"))
+    cargs.append(execution.input_file(params.get("label_in", None)))
+    cargs.append(params.get("map", None))
+    cargs.append(params.get("metric_out", None))
     return cargs
 
 
@@ -124,7 +98,7 @@ def gifti_all_labels_to_rois_outputs(
     """
     ret = GiftiAllLabelsToRoisOutputs(
         root=execution.output_file("."),
-        metric_out=execution.output_file(params.get("metric_out")),
+        metric_out=execution.output_file(params.get("metric_out", None)),
     )
     return ret
 
@@ -199,7 +173,6 @@ def gifti_all_labels_to_rois(
 __all__ = [
     "GIFTI_ALL_LABELS_TO_ROIS_METADATA",
     "GiftiAllLabelsToRoisOutputs",
-    "GiftiAllLabelsToRoisParameters",
     "gifti_all_labels_to_rois",
     "gifti_all_labels_to_rois_execute",
     "gifti_all_labels_to_rois_params",

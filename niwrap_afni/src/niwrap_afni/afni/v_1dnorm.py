@@ -14,7 +14,16 @@ V_1DNORM_METADATA = Metadata(
 
 
 V1dnormParameters = typing.TypedDict('V1dnormParameters', {
-    "@type": typing.Literal["afni.1dnorm"],
+    "@type": typing.NotRequired[typing.Literal["afni/1dnorm"]],
+    "infile": InputPathType,
+    "outfile": str,
+    "norm1": bool,
+    "normx": bool,
+    "demean": bool,
+    "demed": bool,
+})
+V1dnormParametersTagged = typing.TypedDict('V1dnormParametersTagged', {
+    "@type": typing.Literal["afni/1dnorm"],
     "infile": InputPathType,
     "outfile": str,
     "norm1": bool,
@@ -24,41 +33,9 @@ V1dnormParameters = typing.TypedDict('V1dnormParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "afni.1dnorm": v_1dnorm_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "afni.1dnorm": v_1dnorm_outputs,
-    }.get(t)
-
-
 class V1dnormOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `v_1dnorm(...)`.
+    Output object returned when calling `V1dnormParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -73,7 +50,7 @@ def v_1dnorm_params(
     normx: bool = False,
     demean: bool = False,
     demed: bool = False,
-) -> V1dnormParameters:
+) -> V1dnormParametersTagged:
     """
     Build parameters.
     
@@ -90,7 +67,7 @@ def v_1dnorm_params(
         Parameter dictionary
     """
     params = {
-        "@type": "afni.1dnorm",
+        "@type": "afni/1dnorm",
         "infile": infile,
         "outfile": outfile,
         "norm1": norm1,
@@ -116,15 +93,15 @@ def v_1dnorm_cargs(
     """
     cargs = []
     cargs.append("1dnorm")
-    cargs.append(execution.input_file(params.get("infile")))
-    cargs.append(params.get("outfile"))
-    if params.get("norm1"):
+    cargs.append(execution.input_file(params.get("infile", None)))
+    cargs.append(params.get("outfile", None))
+    if params.get("norm1", False):
         cargs.append("-norm1")
-    if params.get("normx"):
+    if params.get("normx", False):
         cargs.append("-normx")
-    if params.get("demean"):
+    if params.get("demean", False):
         cargs.append("-demean")
-    if params.get("demed"):
+    if params.get("demed", False):
         cargs.append("-demed")
     return cargs
 
@@ -144,7 +121,7 @@ def v_1dnorm_outputs(
     """
     ret = V1dnormOutputs(
         root=execution.output_file("."),
-        normalized_output=execution.output_file(params.get("outfile")),
+        normalized_output=execution.output_file(params.get("outfile", None)),
     )
     return ret
 
@@ -221,7 +198,6 @@ def v_1dnorm(
 
 __all__ = [
     "V1dnormOutputs",
-    "V1dnormParameters",
     "V_1DNORM_METADATA",
     "v_1dnorm",
     "v_1dnorm_execute",

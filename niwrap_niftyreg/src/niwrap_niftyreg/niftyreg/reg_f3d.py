@@ -14,7 +14,50 @@ REG_F3D_METADATA = Metadata(
 
 
 RegF3dParameters = typing.TypedDict('RegF3dParameters', {
-    "@type": typing.Literal["niftyreg.reg_f3d"],
+    "@type": typing.NotRequired[typing.Literal["niftyreg/reg_f3d"]],
+    "reference_image": InputPathType,
+    "floating_image": InputPathType,
+    "affine_transform": typing.NotRequired[InputPathType | None],
+    "flirt_affine_transform": typing.NotRequired[InputPathType | None],
+    "control_point_grid_input": typing.NotRequired[InputPathType | None],
+    "output_cpp": typing.NotRequired[str | None],
+    "output_resampled_image": typing.NotRequired[str | None],
+    "reference_mask": typing.NotRequired[InputPathType | None],
+    "smooth_reference": typing.NotRequired[float | None],
+    "smooth_floating": typing.NotRequired[float | None],
+    "num_bins_joint_histogram": typing.NotRequired[float | None],
+    "num_bins_floating_joint_histogram": typing.NotRequired[float | None],
+    "lower_threshold_reference": typing.NotRequired[float | None],
+    "upper_threshold_reference": typing.NotRequired[float | None],
+    "lower_threshold_floating": typing.NotRequired[float | None],
+    "upper_threshold_floating": typing.NotRequired[float | None],
+    "spacing_x": typing.NotRequired[float | None],
+    "spacing_y": typing.NotRequired[float | None],
+    "spacing_z": typing.NotRequired[float | None],
+    "bending_energy": typing.NotRequired[float | None],
+    "linear_elasticity": typing.NotRequired[list[float] | None],
+    "l2_norm_displacement": typing.NotRequired[float | None],
+    "jacobian_determinant": typing.NotRequired[float | None],
+    "no_approx_jl": bool,
+    "no_conj": bool,
+    "ssd": bool,
+    "kld": bool,
+    "amc": bool,
+    "max_iterations": typing.NotRequired[float | None],
+    "num_levels": typing.NotRequired[float | None],
+    "first_levels": typing.NotRequired[float | None],
+    "no_pyramid": bool,
+    "symmetric": bool,
+    "floating_mask": typing.NotRequired[InputPathType | None],
+    "inverse_consistency": typing.NotRequired[float | None],
+    "velocity_field": bool,
+    "composition_steps": typing.NotRequired[float | None],
+    "smooth_gradient": typing.NotRequired[float | None],
+    "padding_value": typing.NotRequired[float | None],
+    "verbose_off": bool,
+})
+RegF3dParametersTagged = typing.TypedDict('RegF3dParametersTagged', {
+    "@type": typing.Literal["niftyreg/reg_f3d"],
     "reference_image": InputPathType,
     "floating_image": InputPathType,
     "affine_transform": typing.NotRequired[InputPathType | None],
@@ -58,41 +101,9 @@ RegF3dParameters = typing.TypedDict('RegF3dParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "niftyreg.reg_f3d": reg_f3d_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "niftyreg.reg_f3d": reg_f3d_outputs,
-    }.get(t)
-
-
 class RegF3dOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `reg_f3d(...)`.
+    Output object returned when calling `RegF3dParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -143,7 +154,7 @@ def reg_f3d_params(
     smooth_gradient: float | None = None,
     padding_value: float | None = None,
     verbose_off: bool = False,
-) -> RegF3dParameters:
+) -> RegF3dParametersTagged:
     """
     Build parameters.
     
@@ -208,7 +219,7 @@ def reg_f3d_params(
         Parameter dictionary
     """
     params = {
-        "@type": "niftyreg.reg_f3d",
+        "@type": "niftyreg/reg_f3d",
         "reference_image": reference_image,
         "floating_image": floating_image,
         "no_approx_jl": no_approx_jl,
@@ -299,174 +310,174 @@ def reg_f3d_cargs(
     cargs.append("reg_f3d")
     cargs.extend([
         "-ref",
-        execution.input_file(params.get("reference_image"))
+        execution.input_file(params.get("reference_image", None))
     ])
     cargs.extend([
         "-flo",
-        execution.input_file(params.get("floating_image"))
+        execution.input_file(params.get("floating_image", None))
     ])
-    if params.get("affine_transform") is not None:
+    if params.get("affine_transform", None) is not None:
         cargs.extend([
             "-aff",
-            execution.input_file(params.get("affine_transform"))
+            execution.input_file(params.get("affine_transform", None))
         ])
-    if params.get("flirt_affine_transform") is not None:
+    if params.get("flirt_affine_transform", None) is not None:
         cargs.extend([
             "-affFlirt",
-            execution.input_file(params.get("flirt_affine_transform"))
+            execution.input_file(params.get("flirt_affine_transform", None))
         ])
-    if params.get("control_point_grid_input") is not None:
+    if params.get("control_point_grid_input", None) is not None:
         cargs.extend([
             "-incpp",
-            execution.input_file(params.get("control_point_grid_input"))
+            execution.input_file(params.get("control_point_grid_input", None))
         ])
-    if params.get("output_cpp") is not None:
+    if params.get("output_cpp", None) is not None:
         cargs.extend([
             "-cpp",
-            params.get("output_cpp")
+            params.get("output_cpp", None)
         ])
-    if params.get("output_resampled_image") is not None:
+    if params.get("output_resampled_image", None) is not None:
         cargs.extend([
             "-res",
-            params.get("output_resampled_image")
+            params.get("output_resampled_image", None)
         ])
-    if params.get("reference_mask") is not None:
+    if params.get("reference_mask", None) is not None:
         cargs.extend([
             "-rmask",
-            execution.input_file(params.get("reference_mask"))
+            execution.input_file(params.get("reference_mask", None))
         ])
-    if params.get("smooth_reference") is not None:
+    if params.get("smooth_reference", None) is not None:
         cargs.extend([
             "-smooR",
-            str(params.get("smooth_reference"))
+            str(params.get("smooth_reference", None))
         ])
-    if params.get("smooth_floating") is not None:
+    if params.get("smooth_floating", None) is not None:
         cargs.extend([
             "-smooF",
-            str(params.get("smooth_floating"))
+            str(params.get("smooth_floating", None))
         ])
-    if params.get("num_bins_joint_histogram") is not None:
+    if params.get("num_bins_joint_histogram", None) is not None:
         cargs.extend([
             "--rbn",
-            str(params.get("num_bins_joint_histogram"))
+            str(params.get("num_bins_joint_histogram", None))
         ])
-    if params.get("num_bins_floating_joint_histogram") is not None:
+    if params.get("num_bins_floating_joint_histogram", None) is not None:
         cargs.extend([
             "--fbn",
-            str(params.get("num_bins_floating_joint_histogram"))
+            str(params.get("num_bins_floating_joint_histogram", None))
         ])
-    if params.get("lower_threshold_reference") is not None:
+    if params.get("lower_threshold_reference", None) is not None:
         cargs.extend([
             "--rLwTh",
-            str(params.get("lower_threshold_reference"))
+            str(params.get("lower_threshold_reference", None))
         ])
-    if params.get("upper_threshold_reference") is not None:
+    if params.get("upper_threshold_reference", None) is not None:
         cargs.extend([
             "--rUpTh",
-            str(params.get("upper_threshold_reference"))
+            str(params.get("upper_threshold_reference", None))
         ])
-    if params.get("lower_threshold_floating") is not None:
+    if params.get("lower_threshold_floating", None) is not None:
         cargs.extend([
             "--fLwTh",
-            str(params.get("lower_threshold_floating"))
+            str(params.get("lower_threshold_floating", None))
         ])
-    if params.get("upper_threshold_floating") is not None:
+    if params.get("upper_threshold_floating", None) is not None:
         cargs.extend([
             "--fUpTh",
-            str(params.get("upper_threshold_floating"))
+            str(params.get("upper_threshold_floating", None))
         ])
-    if params.get("spacing_x") is not None:
+    if params.get("spacing_x", None) is not None:
         cargs.extend([
             "-sx",
-            str(params.get("spacing_x"))
+            str(params.get("spacing_x", None))
         ])
-    if params.get("spacing_y") is not None:
+    if params.get("spacing_y", None) is not None:
         cargs.extend([
             "-sy",
-            str(params.get("spacing_y"))
+            str(params.get("spacing_y", None))
         ])
-    if params.get("spacing_z") is not None:
+    if params.get("spacing_z", None) is not None:
         cargs.extend([
             "-sz",
-            str(params.get("spacing_z"))
+            str(params.get("spacing_z", None))
         ])
-    if params.get("bending_energy") is not None:
+    if params.get("bending_energy", None) is not None:
         cargs.extend([
             "-be",
-            str(params.get("bending_energy"))
+            str(params.get("bending_energy", None))
         ])
-    if params.get("linear_elasticity") is not None:
+    if params.get("linear_elasticity", None) is not None:
         cargs.extend([
             "-le",
-            *map(str, params.get("linear_elasticity"))
+            *map(str, params.get("linear_elasticity", None))
         ])
-    if params.get("l2_norm_displacement") is not None:
+    if params.get("l2_norm_displacement", None) is not None:
         cargs.extend([
             "-l2",
-            str(params.get("l2_norm_displacement"))
+            str(params.get("l2_norm_displacement", None))
         ])
-    if params.get("jacobian_determinant") is not None:
+    if params.get("jacobian_determinant", None) is not None:
         cargs.extend([
             "-jl",
-            str(params.get("jacobian_determinant"))
+            str(params.get("jacobian_determinant", None))
         ])
-    if params.get("no_approx_jl"):
+    if params.get("no_approx_jl", False):
         cargs.append("-noAppJL")
-    if params.get("no_conj"):
+    if params.get("no_conj", False):
         cargs.append("-noConj")
-    if params.get("ssd"):
+    if params.get("ssd", False):
         cargs.append("-ssd")
-    if params.get("kld"):
+    if params.get("kld", False):
         cargs.append("-kld")
-    if params.get("amc"):
+    if params.get("amc", False):
         cargs.append("-amc")
-    if params.get("max_iterations") is not None:
+    if params.get("max_iterations", None) is not None:
         cargs.extend([
             "-maxit",
-            str(params.get("max_iterations"))
+            str(params.get("max_iterations", None))
         ])
-    if params.get("num_levels") is not None:
+    if params.get("num_levels", None) is not None:
         cargs.extend([
             "-ln",
-            str(params.get("num_levels"))
+            str(params.get("num_levels", None))
         ])
-    if params.get("first_levels") is not None:
+    if params.get("first_levels", None) is not None:
         cargs.extend([
             "-lp",
-            str(params.get("first_levels"))
+            str(params.get("first_levels", None))
         ])
-    if params.get("no_pyramid"):
+    if params.get("no_pyramid", False):
         cargs.append("-nopy")
-    if params.get("symmetric"):
+    if params.get("symmetric", False):
         cargs.append("-sym")
-    if params.get("floating_mask") is not None:
+    if params.get("floating_mask", None) is not None:
         cargs.extend([
             "-fmask",
-            execution.input_file(params.get("floating_mask"))
+            execution.input_file(params.get("floating_mask", None))
         ])
-    if params.get("inverse_consistency") is not None:
+    if params.get("inverse_consistency", None) is not None:
         cargs.extend([
             "-ic",
-            str(params.get("inverse_consistency"))
+            str(params.get("inverse_consistency", None))
         ])
-    if params.get("velocity_field"):
+    if params.get("velocity_field", False):
         cargs.append("-vel")
-    if params.get("composition_steps") is not None:
+    if params.get("composition_steps", None) is not None:
         cargs.extend([
             "-step",
-            str(params.get("composition_steps"))
+            str(params.get("composition_steps", None))
         ])
-    if params.get("smooth_gradient") is not None:
+    if params.get("smooth_gradient", None) is not None:
         cargs.extend([
             "-smoothGrad",
-            str(params.get("smooth_gradient"))
+            str(params.get("smooth_gradient", None))
         ])
-    if params.get("padding_value") is not None:
+    if params.get("padding_value", None) is not None:
         cargs.extend([
             "-pad",
-            str(params.get("padding_value"))
+            str(params.get("padding_value", None))
         ])
-    if params.get("verbose_off"):
+    if params.get("verbose_off", False):
         cargs.append("-voff")
     return cargs
 
@@ -486,8 +497,8 @@ def reg_f3d_outputs(
     """
     ret = RegF3dOutputs(
         root=execution.output_file("."),
-        output_cpp_file=execution.output_file(params.get("output_cpp")) if (params.get("output_cpp") is not None) else None,
-        output_resampled_image_file=execution.output_file(params.get("output_resampled_image")) if (params.get("output_resampled_image") is not None) else None,
+        output_cpp_file=execution.output_file(params.get("output_cpp", None)) if (params.get("output_cpp") is not None) else None,
+        output_resampled_image_file=execution.output_file(params.get("output_resampled_image", None)) if (params.get("output_resampled_image") is not None) else None,
     )
     return ret
 
@@ -683,7 +694,6 @@ def reg_f3d(
 __all__ = [
     "REG_F3D_METADATA",
     "RegF3dOutputs",
-    "RegF3dParameters",
     "reg_f3d",
     "reg_f3d_execute",
     "reg_f3d_params",

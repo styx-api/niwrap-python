@@ -14,45 +14,18 @@ V__AFNI_ORIENT2_RAIMAP_METADATA = Metadata(
 
 
 VAfniOrient2RaimapParameters = typing.TypedDict('VAfniOrient2RaimapParameters', {
-    "@type": typing.Literal["afni.@AfniOrient2RAImap"],
+    "@type": typing.NotRequired[typing.Literal["afni/@AfniOrient2RAImap"]],
+    "orientation_code": str,
+})
+VAfniOrient2RaimapParametersTagged = typing.TypedDict('VAfniOrient2RaimapParametersTagged', {
+    "@type": typing.Literal["afni/@AfniOrient2RAImap"],
     "orientation_code": str,
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "afni.@AfniOrient2RAImap": v__afni_orient2_raimap_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-    }.get(t)
-
-
 class VAfniOrient2RaimapOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `v__afni_orient2_raimap(...)`.
+    Output object returned when calling `VAfniOrient2RaimapParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -60,7 +33,7 @@ class VAfniOrient2RaimapOutputs(typing.NamedTuple):
 
 def v__afni_orient2_raimap_params(
     orientation_code: str,
-) -> VAfniOrient2RaimapParameters:
+) -> VAfniOrient2RaimapParametersTagged:
     """
     Build parameters.
     
@@ -70,7 +43,7 @@ def v__afni_orient2_raimap_params(
         Parameter dictionary
     """
     params = {
-        "@type": "afni.@AfniOrient2RAImap",
+        "@type": "afni/@AfniOrient2RAImap",
         "orientation_code": orientation_code,
     }
     return params
@@ -91,7 +64,7 @@ def v__afni_orient2_raimap_cargs(
     """
     cargs = []
     cargs.append("@AfniOrient2RAImap")
-    cargs.append(params.get("orientation_code"))
+    cargs.append(params.get("orientation_code", None))
     return cargs
 
 
@@ -169,7 +142,6 @@ def v__afni_orient2_raimap(
 
 __all__ = [
     "VAfniOrient2RaimapOutputs",
-    "VAfniOrient2RaimapParameters",
     "V__AFNI_ORIENT2_RAIMAP_METADATA",
     "v__afni_orient2_raimap",
     "v__afni_orient2_raimap_execute",

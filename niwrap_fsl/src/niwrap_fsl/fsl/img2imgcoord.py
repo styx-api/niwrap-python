@@ -14,7 +14,20 @@ IMG2IMGCOORD_METADATA = Metadata(
 
 
 Img2imgcoordParameters = typing.TypedDict('Img2imgcoordParameters', {
-    "@type": typing.Literal["fsl.img2imgcoord"],
+    "@type": typing.NotRequired[typing.Literal["fsl/img2imgcoord"]],
+    "coordinates_file": str,
+    "source_image": InputPathType,
+    "dest_image": InputPathType,
+    "affine_transform": InputPathType,
+    "warp_field": typing.NotRequired[InputPathType | None],
+    "pre_warp_affine": typing.NotRequired[InputPathType | None],
+    "coords_in_voxels": bool,
+    "coords_in_mm": bool,
+    "verbose": bool,
+    "help": bool,
+})
+Img2imgcoordParametersTagged = typing.TypedDict('Img2imgcoordParametersTagged', {
+    "@type": typing.Literal["fsl/img2imgcoord"],
     "coordinates_file": str,
     "source_image": InputPathType,
     "dest_image": InputPathType,
@@ -28,40 +41,9 @@ Img2imgcoordParameters = typing.TypedDict('Img2imgcoordParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "fsl.img2imgcoord": img2imgcoord_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-    }.get(t)
-
-
 class Img2imgcoordOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `img2imgcoord(...)`.
+    Output object returned when calling `Img2imgcoordParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -78,7 +60,7 @@ def img2imgcoord_params(
     coords_in_mm: bool = False,
     verbose: bool = False,
     help_: bool = False,
-) -> Img2imgcoordParameters:
+) -> Img2imgcoordParametersTagged:
     """
     Build parameters.
     
@@ -98,7 +80,7 @@ def img2imgcoord_params(
         Parameter dictionary
     """
     params = {
-        "@type": "fsl.img2imgcoord",
+        "@type": "fsl/img2imgcoord",
         "coordinates_file": coordinates_file,
         "source_image": source_image,
         "dest_image": dest_image,
@@ -130,36 +112,36 @@ def img2imgcoord_cargs(
     """
     cargs = []
     cargs.append("img2imgcoord")
-    cargs.append(params.get("coordinates_file"))
+    cargs.append(params.get("coordinates_file", None))
     cargs.extend([
         "-src",
-        execution.input_file(params.get("source_image"))
+        execution.input_file(params.get("source_image", None))
     ])
     cargs.extend([
         "-dest",
-        execution.input_file(params.get("dest_image"))
+        execution.input_file(params.get("dest_image", None))
     ])
     cargs.extend([
         "-xfm",
-        execution.input_file(params.get("affine_transform"))
+        execution.input_file(params.get("affine_transform", None))
     ])
-    if params.get("warp_field") is not None:
+    if params.get("warp_field", None) is not None:
         cargs.extend([
             "-warp",
-            execution.input_file(params.get("warp_field"))
+            execution.input_file(params.get("warp_field", None))
         ])
-    if params.get("pre_warp_affine") is not None:
+    if params.get("pre_warp_affine", None) is not None:
         cargs.extend([
             "-premat",
-            execution.input_file(params.get("pre_warp_affine"))
+            execution.input_file(params.get("pre_warp_affine", None))
         ])
-    if params.get("coords_in_voxels"):
+    if params.get("coords_in_voxels", False):
         cargs.append("-vox")
-    if params.get("coords_in_mm"):
+    if params.get("coords_in_mm", False):
         cargs.append("-mm")
-    if params.get("verbose"):
+    if params.get("verbose", False):
         cargs.append("-v")
-    if params.get("help"):
+    if params.get("help", False):
         cargs.append("-help")
     return cargs
 
@@ -267,7 +249,6 @@ def img2imgcoord(
 __all__ = [
     "IMG2IMGCOORD_METADATA",
     "Img2imgcoordOutputs",
-    "Img2imgcoordParameters",
     "img2imgcoord",
     "img2imgcoord_execute",
     "img2imgcoord_params",

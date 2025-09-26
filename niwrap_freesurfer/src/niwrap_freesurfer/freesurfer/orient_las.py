@@ -14,48 +14,22 @@ ORIENT_LAS_METADATA = Metadata(
 
 
 OrientLasParameters = typing.TypedDict('OrientLasParameters', {
-    "@type": typing.Literal["freesurfer.orientLAS"],
+    "@type": typing.NotRequired[typing.Literal["freesurfer/orientLAS"]],
+    "input_image": InputPathType,
+    "output_image": str,
+    "check": bool,
+})
+OrientLasParametersTagged = typing.TypedDict('OrientLasParametersTagged', {
+    "@type": typing.Literal["freesurfer/orientLAS"],
     "input_image": InputPathType,
     "output_image": str,
     "check": bool,
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "freesurfer.orientLAS": orient_las_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "freesurfer.orientLAS": orient_las_outputs,
-    }.get(t)
-
-
 class OrientLasOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `orient_las(...)`.
+    Output object returned when calling `OrientLasParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -67,7 +41,7 @@ def orient_las_params(
     input_image: InputPathType,
     output_image: str,
     check: bool = False,
-) -> OrientLasParameters:
+) -> OrientLasParametersTagged:
     """
     Build parameters.
     
@@ -80,7 +54,7 @@ def orient_las_params(
         Parameter dictionary
     """
     params = {
-        "@type": "freesurfer.orientLAS",
+        "@type": "freesurfer/orientLAS",
         "input_image": input_image,
         "output_image": output_image,
         "check": check,
@@ -103,9 +77,9 @@ def orient_las_cargs(
     """
     cargs = []
     cargs.append("orientLAS")
-    cargs.append(execution.input_file(params.get("input_image")))
-    cargs.append(params.get("output_image"))
-    if params.get("check"):
+    cargs.append(execution.input_file(params.get("input_image", None)))
+    cargs.append(params.get("output_image", None))
+    if params.get("check", False):
         cargs.append("--check")
     return cargs
 
@@ -125,7 +99,7 @@ def orient_las_outputs(
     """
     ret = OrientLasOutputs(
         root=execution.output_file("."),
-        output_las_image=execution.output_file(params.get("output_image")),
+        output_las_image=execution.output_file(params.get("output_image", None)),
     )
     return ret
 
@@ -193,7 +167,6 @@ def orient_las(
 __all__ = [
     "ORIENT_LAS_METADATA",
     "OrientLasOutputs",
-    "OrientLasParameters",
     "orient_las",
     "orient_las_execute",
     "orient_las_params",

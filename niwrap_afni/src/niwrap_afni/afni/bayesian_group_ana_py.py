@@ -14,7 +14,24 @@ BAYESIAN_GROUP_ANA_PY_METADATA = Metadata(
 
 
 BayesianGroupAnaPyParameters = typing.TypedDict('BayesianGroupAnaPyParameters', {
-    "@type": typing.Literal["afni.BayesianGroupAna.py"],
+    "@type": typing.NotRequired[typing.Literal["afni/BayesianGroupAna.py"]],
+    "dataTable": InputPathType,
+    "y_variable": str,
+    "prefix": typing.NotRequired[str | None],
+    "x_variables": typing.NotRequired[list[str] | None],
+    "no_center": bool,
+    "iterations": typing.NotRequired[float | None],
+    "chains": typing.NotRequired[float | None],
+    "control_list": typing.NotRequired[str | None],
+    "plot": bool,
+    "more_plots": typing.NotRequired[list[str] | None],
+    "RData": bool,
+    "seed": typing.NotRequired[float | None],
+    "overwrite": bool,
+    "help": bool,
+})
+BayesianGroupAnaPyParametersTagged = typing.TypedDict('BayesianGroupAnaPyParametersTagged', {
+    "@type": typing.Literal["afni/BayesianGroupAna.py"],
     "dataTable": InputPathType,
     "y_variable": str,
     "prefix": typing.NotRequired[str | None],
@@ -32,41 +49,9 @@ BayesianGroupAnaPyParameters = typing.TypedDict('BayesianGroupAnaPyParameters', 
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "afni.BayesianGroupAna.py": bayesian_group_ana_py_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "afni.BayesianGroupAna.py": bayesian_group_ana_py_outputs,
-    }.get(t)
-
-
 class BayesianGroupAnaPyOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `bayesian_group_ana_py(...)`.
+    Output object returned when calling `BayesianGroupAnaPyParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -96,7 +81,7 @@ def bayesian_group_ana_py_params(
     seed: float | None = None,
     overwrite: bool = False,
     help_: bool = False,
-) -> BayesianGroupAnaPyParameters:
+) -> BayesianGroupAnaPyParametersTagged:
     """
     Build parameters.
     
@@ -123,7 +108,7 @@ def bayesian_group_ana_py_params(
         Parameter dictionary
     """
     params = {
-        "@type": "afni.BayesianGroupAna.py",
+        "@type": "afni/BayesianGroupAna.py",
         "dataTable": data_table,
         "y_variable": y_variable,
         "no_center": no_center,
@@ -164,52 +149,52 @@ def bayesian_group_ana_py_cargs(
     """
     cargs = []
     cargs.append("BayesianGroupAna.py")
-    cargs.append(execution.input_file(params.get("dataTable")))
-    cargs.append(params.get("y_variable"))
-    if params.get("prefix") is not None:
+    cargs.append(execution.input_file(params.get("dataTable", None)))
+    cargs.append(params.get("y_variable", None))
+    if params.get("prefix", None) is not None:
         cargs.extend([
             "-prefix",
-            params.get("prefix")
+            params.get("prefix", None)
         ])
-    if params.get("x_variables") is not None:
+    if params.get("x_variables", None) is not None:
         cargs.extend([
             "-x",
-            *params.get("x_variables")
+            *params.get("x_variables", None)
         ])
-    if params.get("no_center"):
+    if params.get("no_center", False):
         cargs.append("-no_center")
-    if params.get("iterations") is not None:
+    if params.get("iterations", None) is not None:
         cargs.extend([
             "-iterations",
-            str(params.get("iterations"))
+            str(params.get("iterations", None))
         ])
-    if params.get("chains") is not None:
+    if params.get("chains", None) is not None:
         cargs.extend([
             "-chains",
-            str(params.get("chains"))
+            str(params.get("chains", None))
         ])
-    if params.get("control_list") is not None:
+    if params.get("control_list", None) is not None:
         cargs.extend([
             "-control_list",
-            params.get("control_list")
+            params.get("control_list", None)
         ])
-    if params.get("plot"):
+    if params.get("plot", False):
         cargs.append("-plot")
-    if params.get("more_plots") is not None:
+    if params.get("more_plots", None) is not None:
         cargs.extend([
             "-more_plots",
-            *params.get("more_plots")
+            *params.get("more_plots", None)
         ])
-    if params.get("RData"):
+    if params.get("RData", False):
         cargs.append("-RData")
-    if params.get("seed") is not None:
+    if params.get("seed", None) is not None:
         cargs.extend([
             "-seed",
-            str(params.get("seed"))
+            str(params.get("seed", None))
         ])
-    if params.get("overwrite"):
+    if params.get("overwrite", False):
         cargs.append("-overwrite")
-    if params.get("help"):
+    if params.get("help", False):
         cargs.append("-help")
     return cargs
 
@@ -229,10 +214,10 @@ def bayesian_group_ana_py_outputs(
     """
     ret = BayesianGroupAnaPyOutputs(
         root=execution.output_file("."),
-        summary=execution.output_file(params.get("prefix") + "_summary.txt") if (params.get("prefix") is not None) else None,
-        rhats=execution.output_file(params.get("prefix") + "_rhats.csv") if (params.get("prefix") is not None) else None,
-        intercept_table=execution.output_file(params.get("prefix") + "_Intercept_table.csv") if (params.get("prefix") is not None) else None,
-        x_var_table=execution.output_file(params.get("prefix") + "_table.csv") if (params.get("prefix") is not None) else None,
+        summary=execution.output_file(params.get("prefix", None) + "_summary.txt") if (params.get("prefix") is not None) else None,
+        rhats=execution.output_file(params.get("prefix", None) + "_rhats.csv") if (params.get("prefix") is not None) else None,
+        intercept_table=execution.output_file(params.get("prefix", None) + "_Intercept_table.csv") if (params.get("prefix") is not None) else None,
+        x_var_table=execution.output_file(params.get("prefix", None) + "_table.csv") if (params.get("prefix") is not None) else None,
     )
     return ret
 
@@ -340,7 +325,6 @@ def bayesian_group_ana_py(
 __all__ = [
     "BAYESIAN_GROUP_ANA_PY_METADATA",
     "BayesianGroupAnaPyOutputs",
-    "BayesianGroupAnaPyParameters",
     "bayesian_group_ana_py",
     "bayesian_group_ana_py_execute",
     "bayesian_group_ana_py_params",

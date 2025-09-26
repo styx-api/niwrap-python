@@ -14,46 +14,20 @@ V__ISO_MASKS_METADATA = Metadata(
 
 
 VIsoMasksParameters = typing.TypedDict('VIsoMasksParameters', {
-    "@type": typing.Literal["afni.@IsoMasks"],
+    "@type": typing.NotRequired[typing.Literal["afni/@IsoMasks"]],
+    "input_dataset": InputPathType,
+    "isovals": typing.NotRequired[list[float] | None],
+})
+VIsoMasksParametersTagged = typing.TypedDict('VIsoMasksParametersTagged', {
+    "@type": typing.Literal["afni/@IsoMasks"],
     "input_dataset": InputPathType,
     "isovals": typing.NotRequired[list[float] | None],
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "afni.@IsoMasks": v__iso_masks_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-    }.get(t)
-
-
 class VIsoMasksOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `v__iso_masks(...)`.
+    Output object returned when calling `VIsoMasksParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -62,7 +36,7 @@ class VIsoMasksOutputs(typing.NamedTuple):
 def v__iso_masks_params(
     input_dataset: InputPathType,
     isovals: list[float] | None = None,
-) -> VIsoMasksParameters:
+) -> VIsoMasksParametersTagged:
     """
     Build parameters.
     
@@ -73,7 +47,7 @@ def v__iso_masks_params(
         Parameter dictionary
     """
     params = {
-        "@type": "afni.@IsoMasks",
+        "@type": "afni/@IsoMasks",
         "input_dataset": input_dataset,
     }
     if isovals is not None:
@@ -98,10 +72,10 @@ def v__iso_masks_cargs(
     cargs.append("@IsoMasks")
     cargs.extend([
         "-mask",
-        execution.input_file(params.get("input_dataset"))
+        execution.input_file(params.get("input_dataset", None))
     ])
-    if params.get("isovals") is not None:
-        cargs.extend(map(str, params.get("isovals")))
+    if params.get("isovals", None) is not None:
+        cargs.extend(map(str, params.get("isovals", None)))
     return cargs
 
 
@@ -182,7 +156,6 @@ def v__iso_masks(
 
 __all__ = [
     "VIsoMasksOutputs",
-    "VIsoMasksParameters",
     "V__ISO_MASKS_METADATA",
     "v__iso_masks",
     "v__iso_masks_execute",

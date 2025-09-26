@@ -14,47 +14,20 @@ MRI_SEGREG_METADATA = Metadata(
 
 
 MriSegregParameters = typing.TypedDict('MriSegregParameters', {
-    "@type": typing.Literal["freesurfer.mri_segreg"],
+    "@type": typing.NotRequired[typing.Literal["freesurfer/mri_segreg"]],
+    "input_file": InputPathType,
+    "output_file": str,
+})
+MriSegregParametersTagged = typing.TypedDict('MriSegregParametersTagged', {
+    "@type": typing.Literal["freesurfer/mri_segreg"],
     "input_file": InputPathType,
     "output_file": str,
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "freesurfer.mri_segreg": mri_segreg_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "freesurfer.mri_segreg": mri_segreg_outputs,
-    }.get(t)
-
-
 class MriSegregOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `mri_segreg(...)`.
+    Output object returned when calling `MriSegregParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -65,7 +38,7 @@ class MriSegregOutputs(typing.NamedTuple):
 def mri_segreg_params(
     input_file: InputPathType,
     output_file: str = "output.mgz",
-) -> MriSegregParameters:
+) -> MriSegregParametersTagged:
     """
     Build parameters.
     
@@ -77,7 +50,7 @@ def mri_segreg_params(
         Parameter dictionary
     """
     params = {
-        "@type": "freesurfer.mri_segreg",
+        "@type": "freesurfer/mri_segreg",
         "input_file": input_file,
         "output_file": output_file,
     }
@@ -99,8 +72,8 @@ def mri_segreg_cargs(
     """
     cargs = []
     cargs.append("mri_segreg")
-    cargs.append(execution.input_file(params.get("input_file")))
-    cargs.append(params.get("output_file"))
+    cargs.append(execution.input_file(params.get("input_file", None)))
+    cargs.append(params.get("output_file", "output.mgz"))
     return cargs
 
 
@@ -119,7 +92,7 @@ def mri_segreg_outputs(
     """
     ret = MriSegregOutputs(
         root=execution.output_file("."),
-        outfile=execution.output_file(params.get("output_file")),
+        outfile=execution.output_file(params.get("output_file", "output.mgz")),
     )
     return ret
 
@@ -184,7 +157,6 @@ def mri_segreg(
 __all__ = [
     "MRI_SEGREG_METADATA",
     "MriSegregOutputs",
-    "MriSegregParameters",
     "mri_segreg",
     "mri_segreg_execute",
     "mri_segreg_params",

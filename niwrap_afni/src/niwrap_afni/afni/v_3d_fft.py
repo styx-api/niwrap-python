@@ -14,7 +14,22 @@ V_3D_FFT_METADATA = Metadata(
 
 
 V3dFftParameters = typing.TypedDict('V3dFftParameters', {
-    "@type": typing.Literal["afni.3dFFT"],
+    "@type": typing.NotRequired[typing.Literal["afni/3dFFT"]],
+    "dataset": InputPathType,
+    "abs": bool,
+    "phase": bool,
+    "complex": bool,
+    "inverse": bool,
+    "Lx": typing.NotRequired[float | None],
+    "Ly": typing.NotRequired[float | None],
+    "Lz": typing.NotRequired[float | None],
+    "altIN": bool,
+    "altOUT": bool,
+    "input": typing.NotRequired[InputPathType | None],
+    "prefix": typing.NotRequired[str | None],
+})
+V3dFftParametersTagged = typing.TypedDict('V3dFftParametersTagged', {
+    "@type": typing.Literal["afni/3dFFT"],
     "dataset": InputPathType,
     "abs": bool,
     "phase": bool,
@@ -30,41 +45,9 @@ V3dFftParameters = typing.TypedDict('V3dFftParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "afni.3dFFT": v_3d_fft_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "afni.3dFFT": v_3d_fft_outputs,
-    }.get(t)
-
-
 class V3dFftOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `v_3d_fft(...)`.
+    Output object returned when calling `V3dFftParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -85,7 +68,7 @@ def v_3d_fft_params(
     alt_out: bool = False,
     input_: InputPathType | None = None,
     prefix: str | None = None,
-) -> V3dFftParameters:
+) -> V3dFftParametersTagged:
     """
     Build parameters.
     
@@ -111,7 +94,7 @@ def v_3d_fft_params(
         Parameter dictionary
     """
     params = {
-        "@type": "afni.3dFFT",
+        "@type": "afni/3dFFT",
         "dataset": dataset,
         "abs": abs_,
         "phase": phase,
@@ -148,43 +131,43 @@ def v_3d_fft_cargs(
     """
     cargs = []
     cargs.append("3dFFT")
-    cargs.append(execution.input_file(params.get("dataset")))
-    if params.get("abs"):
+    cargs.append(execution.input_file(params.get("dataset", None)))
+    if params.get("abs", False):
         cargs.append("--abs")
-    if params.get("phase"):
+    if params.get("phase", False):
         cargs.append("--phase")
-    if params.get("complex"):
+    if params.get("complex", False):
         cargs.append("--complex")
-    if params.get("inverse"):
+    if params.get("inverse", False):
         cargs.append("--inverse")
-    if params.get("Lx") is not None:
+    if params.get("Lx", None) is not None:
         cargs.extend([
             "--Lx",
-            str(params.get("Lx"))
+            str(params.get("Lx", None))
         ])
-    if params.get("Ly") is not None:
+    if params.get("Ly", None) is not None:
         cargs.extend([
             "--Ly",
-            str(params.get("Ly"))
+            str(params.get("Ly", None))
         ])
-    if params.get("Lz") is not None:
+    if params.get("Lz", None) is not None:
         cargs.extend([
             "--Lz",
-            str(params.get("Lz"))
+            str(params.get("Lz", None))
         ])
-    if params.get("altIN"):
+    if params.get("altIN", False):
         cargs.append("--altIN")
-    if params.get("altOUT"):
+    if params.get("altOUT", False):
         cargs.append("--altOUT")
-    if params.get("input") is not None:
+    if params.get("input", None) is not None:
         cargs.extend([
             "--input",
-            execution.input_file(params.get("input"))
+            execution.input_file(params.get("input", None))
         ])
-    if params.get("prefix") is not None:
+    if params.get("prefix", None) is not None:
         cargs.extend([
             "--prefix",
-            params.get("prefix")
+            params.get("prefix", None)
         ])
     return cargs
 
@@ -204,7 +187,7 @@ def v_3d_fft_outputs(
     """
     ret = V3dFftOutputs(
         root=execution.output_file("."),
-        output_dataset=execution.output_file(params.get("prefix") + ".nii.gz") if (params.get("prefix") is not None) else None,
+        output_dataset=execution.output_file(params.get("prefix", None) + ".nii.gz") if (params.get("prefix") is not None) else None,
     )
     return ret
 
@@ -304,7 +287,6 @@ def v_3d_fft(
 
 __all__ = [
     "V3dFftOutputs",
-    "V3dFftParameters",
     "V_3D_FFT_METADATA",
     "v_3d_fft",
     "v_3d_fft_execute",

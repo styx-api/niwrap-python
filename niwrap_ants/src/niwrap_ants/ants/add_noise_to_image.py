@@ -14,7 +14,15 @@ ADD_NOISE_TO_IMAGE_METADATA = Metadata(
 
 
 AddNoiseToImageParameters = typing.TypedDict('AddNoiseToImageParameters', {
-    "@type": typing.Literal["ants.AddNoiseToImage"],
+    "@type": typing.NotRequired[typing.Literal["ants/AddNoiseToImage"]],
+    "image_dimensionality": typing.NotRequired[typing.Literal[2, 3, 4] | None],
+    "input_image": InputPathType,
+    "noise_model": typing.Literal["AdditiveGaussian", "SaltAndPepper", "Shot", "Speckle"],
+    "output": str,
+    "verbose": typing.NotRequired[typing.Literal[0, 1] | None],
+})
+AddNoiseToImageParametersTagged = typing.TypedDict('AddNoiseToImageParametersTagged', {
+    "@type": typing.Literal["ants/AddNoiseToImage"],
     "image_dimensionality": typing.NotRequired[typing.Literal[2, 3, 4] | None],
     "input_image": InputPathType,
     "noise_model": typing.Literal["AdditiveGaussian", "SaltAndPepper", "Shot", "Speckle"],
@@ -23,41 +31,9 @@ AddNoiseToImageParameters = typing.TypedDict('AddNoiseToImageParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "ants.AddNoiseToImage": add_noise_to_image_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "ants.AddNoiseToImage": add_noise_to_image_outputs,
-    }.get(t)
-
-
 class AddNoiseToImageOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `add_noise_to_image(...)`.
+    Output object returned when calling `AddNoiseToImageParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -71,7 +47,7 @@ def add_noise_to_image_params(
     output: str,
     image_dimensionality: typing.Literal[2, 3, 4] | None = None,
     verbose: typing.Literal[0, 1] | None = None,
-) -> AddNoiseToImageParameters:
+) -> AddNoiseToImageParametersTagged:
     """
     Build parameters.
     
@@ -89,7 +65,7 @@ def add_noise_to_image_params(
         Parameter dictionary
     """
     params = {
-        "@type": "ants.AddNoiseToImage",
+        "@type": "ants/AddNoiseToImage",
         "input_image": input_image,
         "noise_model": noise_model,
         "output": output,
@@ -116,27 +92,27 @@ def add_noise_to_image_cargs(
     """
     cargs = []
     cargs.append("AddNoiseToImage")
-    if params.get("image_dimensionality") is not None:
+    if params.get("image_dimensionality", None) is not None:
         cargs.extend([
             "--image-dimensionality",
-            str(params.get("image_dimensionality"))
+            str(params.get("image_dimensionality", None))
         ])
     cargs.extend([
         "--input-image",
-        execution.input_file(params.get("input_image"))
+        execution.input_file(params.get("input_image", None))
     ])
     cargs.extend([
         "--noise-model",
-        params.get("noise_model")
+        params.get("noise_model", None)
     ])
     cargs.extend([
         "--output",
-        params.get("output")
+        params.get("output", None)
     ])
-    if params.get("verbose") is not None:
+    if params.get("verbose", None) is not None:
         cargs.extend([
             "--verbose",
-            str(params.get("verbose"))
+            str(params.get("verbose", None))
         ])
     return cargs
 
@@ -156,7 +132,7 @@ def add_noise_to_image_outputs(
     """
     ret = AddNoiseToImageOutputs(
         root=execution.output_file("."),
-        noise_corrupted_image=execution.output_file(params.get("output")),
+        noise_corrupted_image=execution.output_file(params.get("output", None)),
     )
     return ret
 
@@ -233,7 +209,6 @@ def add_noise_to_image(
 __all__ = [
     "ADD_NOISE_TO_IMAGE_METADATA",
     "AddNoiseToImageOutputs",
-    "AddNoiseToImageParameters",
     "add_noise_to_image",
     "add_noise_to_image_execute",
     "add_noise_to_image_params",

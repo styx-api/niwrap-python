@@ -14,7 +14,44 @@ PROBTRACKX_METADATA = Metadata(
 
 
 ProbtrackxParameters = typing.TypedDict('ProbtrackxParameters', {
-    "@type": typing.Literal["fsl.probtrackx"],
+    "@type": typing.NotRequired[typing.Literal["fsl/probtrackx"]],
+    "samples": InputPathType,
+    "mask": InputPathType,
+    "seed": InputPathType,
+    "out": str,
+    "verbose": typing.NotRequired[int | None],
+    "targetmasks": typing.NotRequired[InputPathType | None],
+    "mask2": typing.NotRequired[InputPathType | None],
+    "waypoints": typing.NotRequired[InputPathType | None],
+    "network": bool,
+    "mesh": typing.NotRequired[InputPathType | None],
+    "seedref": typing.NotRequired[InputPathType | None],
+    "dir": typing.NotRequired[str | None],
+    "forcedir": bool,
+    "opd": bool,
+    "pd": bool,
+    "os2t": bool,
+    "avoid": typing.NotRequired[InputPathType | None],
+    "stop": typing.NotRequired[InputPathType | None],
+    "xfm": typing.NotRequired[InputPathType | None],
+    "invxfm": typing.NotRequired[InputPathType | None],
+    "nsamples": typing.NotRequired[int | None],
+    "nsteps": typing.NotRequired[int | None],
+    "distthresh": typing.NotRequired[float | None],
+    "cthr": typing.NotRequired[float | None],
+    "fibthresh": typing.NotRequired[float | None],
+    "sampvox": bool,
+    "steplength": typing.NotRequired[float | None],
+    "loopcheck": bool,
+    "usef": bool,
+    "randfib": typing.NotRequired[int | None],
+    "fibst": typing.NotRequired[int | None],
+    "modeuler": bool,
+    "rseed": typing.NotRequired[int | None],
+    "s2tastext": bool,
+})
+ProbtrackxParametersTagged = typing.TypedDict('ProbtrackxParametersTagged', {
+    "@type": typing.Literal["fsl/probtrackx"],
     "samples": InputPathType,
     "mask": InputPathType,
     "seed": InputPathType,
@@ -52,40 +89,9 @@ ProbtrackxParameters = typing.TypedDict('ProbtrackxParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "fsl.probtrackx": probtrackx_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-    }.get(t)
-
-
 class ProbtrackxOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `probtrackx(...)`.
+    Output object returned when calling `ProbtrackxParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -126,7 +132,7 @@ def probtrackx_params(
     modeuler: bool = False,
     rseed: int | None = None,
     s2tastext: bool = False,
-) -> ProbtrackxParameters:
+) -> ProbtrackxParametersTagged:
     """
     Build parameters.
     
@@ -186,7 +192,7 @@ def probtrackx_params(
         Parameter dictionary
     """
     params = {
-        "@type": "fsl.probtrackx",
+        "@type": "fsl/probtrackx",
         "samples": samples,
         "mask": mask,
         "seed": seed,
@@ -262,139 +268,139 @@ def probtrackx_cargs(
     cargs.append("probtrackx")
     cargs.extend([
         "-s",
-        execution.input_file(params.get("samples"))
+        execution.input_file(params.get("samples", None))
     ])
     cargs.extend([
         "-m",
-        execution.input_file(params.get("mask"))
+        execution.input_file(params.get("mask", None))
     ])
     cargs.extend([
         "-x",
-        execution.input_file(params.get("seed"))
+        execution.input_file(params.get("seed", None))
     ])
     cargs.extend([
         "-o",
-        params.get("out")
+        params.get("out", "fdt_paths")
     ])
-    if params.get("verbose") is not None:
+    if params.get("verbose", None) is not None:
         cargs.extend([
             "--verbose",
-            str(params.get("verbose"))
+            str(params.get("verbose", None))
         ])
-    if params.get("targetmasks") is not None:
+    if params.get("targetmasks", None) is not None:
         cargs.extend([
             "--targetmasks",
-            execution.input_file(params.get("targetmasks"))
+            execution.input_file(params.get("targetmasks", None))
         ])
-    if params.get("mask2") is not None:
+    if params.get("mask2", None) is not None:
         cargs.extend([
             "--mask2",
-            execution.input_file(params.get("mask2"))
+            execution.input_file(params.get("mask2", None))
         ])
-    if params.get("waypoints") is not None:
+    if params.get("waypoints", None) is not None:
         cargs.extend([
             "--waypoints",
-            execution.input_file(params.get("waypoints"))
+            execution.input_file(params.get("waypoints", None))
         ])
-    if params.get("network"):
+    if params.get("network", False):
         cargs.append("--network")
-    if params.get("mesh") is not None:
+    if params.get("mesh", None) is not None:
         cargs.extend([
             "--mesh",
-            execution.input_file(params.get("mesh"))
+            execution.input_file(params.get("mesh", None))
         ])
-    if params.get("seedref") is not None:
+    if params.get("seedref", None) is not None:
         cargs.extend([
             "--seedref",
-            execution.input_file(params.get("seedref"))
+            execution.input_file(params.get("seedref", None))
         ])
-    if params.get("dir") is not None:
+    if params.get("dir", None) is not None:
         cargs.extend([
             "--dir",
-            params.get("dir")
+            params.get("dir", None)
         ])
-    if params.get("forcedir"):
+    if params.get("forcedir", False):
         cargs.append("--forcedir")
-    if params.get("opd"):
+    if params.get("opd", False):
         cargs.append("--opd")
-    if params.get("pd"):
+    if params.get("pd", False):
         cargs.append("--pd")
-    if params.get("os2t"):
+    if params.get("os2t", False):
         cargs.append("--os2t")
-    if params.get("avoid") is not None:
+    if params.get("avoid", None) is not None:
         cargs.extend([
             "--avoid",
-            execution.input_file(params.get("avoid"))
+            execution.input_file(params.get("avoid", None))
         ])
-    if params.get("stop") is not None:
+    if params.get("stop", None) is not None:
         cargs.extend([
             "--stop",
-            execution.input_file(params.get("stop"))
+            execution.input_file(params.get("stop", None))
         ])
-    if params.get("xfm") is not None:
+    if params.get("xfm", None) is not None:
         cargs.extend([
             "--xfm",
-            execution.input_file(params.get("xfm"))
+            execution.input_file(params.get("xfm", None))
         ])
-    if params.get("invxfm") is not None:
+    if params.get("invxfm", None) is not None:
         cargs.extend([
             "--invxfm",
-            execution.input_file(params.get("invxfm"))
+            execution.input_file(params.get("invxfm", None))
         ])
-    if params.get("nsamples") is not None:
+    if params.get("nsamples", None) is not None:
         cargs.extend([
             "-P",
-            str(params.get("nsamples"))
+            str(params.get("nsamples", None))
         ])
-    if params.get("nsteps") is not None:
+    if params.get("nsteps", None) is not None:
         cargs.extend([
             "-S",
-            str(params.get("nsteps"))
+            str(params.get("nsteps", None))
         ])
-    if params.get("distthresh") is not None:
+    if params.get("distthresh", None) is not None:
         cargs.extend([
             "--distthresh",
-            str(params.get("distthresh"))
+            str(params.get("distthresh", None))
         ])
-    if params.get("cthr") is not None:
+    if params.get("cthr", None) is not None:
         cargs.extend([
             "-c",
-            str(params.get("cthr"))
+            str(params.get("cthr", None))
         ])
-    if params.get("fibthresh") is not None:
+    if params.get("fibthresh", None) is not None:
         cargs.extend([
             "--fibthresh",
-            str(params.get("fibthresh"))
+            str(params.get("fibthresh", None))
         ])
-    if params.get("sampvox"):
+    if params.get("sampvox", False):
         cargs.append("--sampvox")
-    if params.get("steplength") is not None:
+    if params.get("steplength", None) is not None:
         cargs.extend([
             "--steplength",
-            str(params.get("steplength"))
+            str(params.get("steplength", None))
         ])
-    if params.get("loopcheck"):
+    if params.get("loopcheck", False):
         cargs.append("-l")
-    if params.get("usef"):
+    if params.get("usef", False):
         cargs.append("-f")
-    if params.get("randfib") is not None:
+    if params.get("randfib", None) is not None:
         cargs.extend([
             "--randfib",
-            str(params.get("randfib"))
+            str(params.get("randfib", None))
         ])
-    if params.get("fibst") is not None:
+    if params.get("fibst", None) is not None:
         cargs.extend([
             "--fibst",
-            str(params.get("fibst"))
+            str(params.get("fibst", None))
         ])
-    if params.get("modeuler"):
+    if params.get("modeuler", False):
         cargs.append("--modeuler")
-    if params.get("rseed") is not None:
+    if params.get("rseed", None) is not None:
         cargs.extend([
             "--rseed",
-            str(params.get("rseed"))
+            str(params.get("rseed", None))
         ])
-    if params.get("s2tastext"):
+    if params.get("s2tastext", False):
         cargs.append("--s2tastext")
     return cargs
 
@@ -590,7 +596,6 @@ def probtrackx(
 __all__ = [
     "PROBTRACKX_METADATA",
     "ProbtrackxOutputs",
-    "ProbtrackxParameters",
     "probtrackx",
     "probtrackx_execute",
     "probtrackx_params",

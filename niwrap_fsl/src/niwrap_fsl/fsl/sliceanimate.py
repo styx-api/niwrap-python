@@ -14,47 +14,20 @@ SLICEANIMATE_METADATA = Metadata(
 
 
 SliceanimateParameters = typing.TypedDict('SliceanimateParameters', {
-    "@type": typing.Literal["fsl.sliceanimate"],
+    "@type": typing.NotRequired[typing.Literal["fsl/sliceanimate"]],
+    "output_file": str,
+    "input_files": list[InputPathType],
+})
+SliceanimateParametersTagged = typing.TypedDict('SliceanimateParametersTagged', {
+    "@type": typing.Literal["fsl/sliceanimate"],
     "output_file": str,
     "input_files": list[InputPathType],
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "fsl.sliceanimate": sliceanimate_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "fsl.sliceanimate": sliceanimate_outputs,
-    }.get(t)
-
-
 class SliceanimateOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `sliceanimate(...)`.
+    Output object returned when calling `SliceanimateParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -65,7 +38,7 @@ class SliceanimateOutputs(typing.NamedTuple):
 def sliceanimate_params(
     output_file: str,
     input_files: list[InputPathType],
-) -> SliceanimateParameters:
+) -> SliceanimateParametersTagged:
     """
     Build parameters.
     
@@ -76,7 +49,7 @@ def sliceanimate_params(
         Parameter dictionary
     """
     params = {
-        "@type": "fsl.sliceanimate",
+        "@type": "fsl/sliceanimate",
         "output_file": output_file,
         "input_files": input_files,
     }
@@ -98,8 +71,8 @@ def sliceanimate_cargs(
     """
     cargs = []
     cargs.append("sliceanimate")
-    cargs.append(params.get("output_file"))
-    cargs.extend([execution.input_file(f) for f in params.get("input_files")])
+    cargs.append(params.get("output_file", None))
+    cargs.extend([execution.input_file(f) for f in params.get("input_files", None)])
     return cargs
 
 
@@ -118,7 +91,7 @@ def sliceanimate_outputs(
     """
     ret = SliceanimateOutputs(
         root=execution.output_file("."),
-        animated_gif=execution.output_file(params.get("output_file")),
+        animated_gif=execution.output_file(params.get("output_file", None)),
     )
     return ret
 
@@ -182,7 +155,6 @@ def sliceanimate(
 __all__ = [
     "SLICEANIMATE_METADATA",
     "SliceanimateOutputs",
-    "SliceanimateParameters",
     "sliceanimate",
     "sliceanimate_execute",
     "sliceanimate_params",

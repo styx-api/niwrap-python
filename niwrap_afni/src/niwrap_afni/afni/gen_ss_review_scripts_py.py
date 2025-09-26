@@ -14,7 +14,29 @@ GEN_SS_REVIEW_SCRIPTS_PY_METADATA = Metadata(
 
 
 GenSsReviewScriptsPyParameters = typing.TypedDict('GenSsReviewScriptsPyParameters', {
-    "@type": typing.Literal["afni.gen_ss_review_scripts.py"],
+    "@type": typing.NotRequired[typing.Literal["afni/gen_ss_review_scripts.py"]],
+    "subject_id": typing.NotRequired[str | None],
+    "rm_trs": typing.NotRequired[float | None],
+    "num_stim": typing.NotRequired[float | None],
+    "mb_level": typing.NotRequired[float | None],
+    "slice_pattern": typing.NotRequired[str | None],
+    "motion_dset": typing.NotRequired[InputPathType | None],
+    "outlier_dset": typing.NotRequired[InputPathType | None],
+    "enorm_dset": typing.NotRequired[InputPathType | None],
+    "mot_limit": typing.NotRequired[float | None],
+    "out_limit": typing.NotRequired[float | None],
+    "xmat_regress": typing.NotRequired[InputPathType | None],
+    "xmat_uncensored": typing.NotRequired[InputPathType | None],
+    "stats_dset": typing.NotRequired[InputPathType | None],
+    "final_anat": typing.NotRequired[InputPathType | None],
+    "final_view": typing.NotRequired[str | None],
+    "prefix": typing.NotRequired[str | None],
+    "verbosity": typing.NotRequired[float | None],
+    "uvars_json": typing.NotRequired[InputPathType | None],
+    "init_uvars_json": typing.NotRequired[InputPathType | None],
+})
+GenSsReviewScriptsPyParametersTagged = typing.TypedDict('GenSsReviewScriptsPyParametersTagged', {
+    "@type": typing.Literal["afni/gen_ss_review_scripts.py"],
     "subject_id": typing.NotRequired[str | None],
     "rm_trs": typing.NotRequired[float | None],
     "num_stim": typing.NotRequired[float | None],
@@ -37,41 +59,9 @@ GenSsReviewScriptsPyParameters = typing.TypedDict('GenSsReviewScriptsPyParameter
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "afni.gen_ss_review_scripts.py": gen_ss_review_scripts_py_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "afni.gen_ss_review_scripts.py": gen_ss_review_scripts_py_outputs,
-    }.get(t)
-
-
 class GenSsReviewScriptsPyOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `gen_ss_review_scripts_py(...)`.
+    Output object returned when calling `GenSsReviewScriptsPyParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -103,7 +93,7 @@ def gen_ss_review_scripts_py_params(
     verbosity: float | None = None,
     uvars_json: InputPathType | None = None,
     init_uvars_json: InputPathType | None = None,
-) -> GenSsReviewScriptsPyParameters:
+) -> GenSsReviewScriptsPyParametersTagged:
     """
     Build parameters.
     
@@ -131,7 +121,7 @@ def gen_ss_review_scripts_py_params(
         Parameter dictionary
     """
     params = {
-        "@type": "afni.gen_ss_review_scripts.py",
+        "@type": "afni/gen_ss_review_scripts.py",
     }
     if subject_id is not None:
         params["subject_id"] = subject_id
@@ -189,100 +179,100 @@ def gen_ss_review_scripts_py_cargs(
     """
     cargs = []
     cargs.append("gen_ss_review_scripts.py")
-    if params.get("subject_id") is not None:
+    if params.get("subject_id", None) is not None:
         cargs.extend([
             "-subj",
-            params.get("subject_id")
+            params.get("subject_id", None)
         ])
-    if params.get("rm_trs") is not None:
+    if params.get("rm_trs", None) is not None:
         cargs.extend([
             "-rm_trs",
-            str(params.get("rm_trs"))
+            str(params.get("rm_trs", None))
         ])
-    if params.get("num_stim") is not None:
+    if params.get("num_stim", None) is not None:
         cargs.extend([
             "-num_stim",
-            str(params.get("num_stim"))
+            str(params.get("num_stim", None))
         ])
-    if params.get("mb_level") is not None:
+    if params.get("mb_level", None) is not None:
         cargs.extend([
             "-mb_level",
-            str(params.get("mb_level"))
+            str(params.get("mb_level", None))
         ])
-    if params.get("slice_pattern") is not None:
+    if params.get("slice_pattern", None) is not None:
         cargs.extend([
             "-slice_pattern",
-            params.get("slice_pattern")
+            params.get("slice_pattern", None)
         ])
-    if params.get("motion_dset") is not None:
+    if params.get("motion_dset", None) is not None:
         cargs.extend([
             "-motion_dset",
-            execution.input_file(params.get("motion_dset"))
+            execution.input_file(params.get("motion_dset", None))
         ])
-    if params.get("outlier_dset") is not None:
+    if params.get("outlier_dset", None) is not None:
         cargs.extend([
             "-outlier_dset",
-            execution.input_file(params.get("outlier_dset"))
+            execution.input_file(params.get("outlier_dset", None))
         ])
-    if params.get("enorm_dset") is not None:
+    if params.get("enorm_dset", None) is not None:
         cargs.extend([
             "-enorm_dset",
-            execution.input_file(params.get("enorm_dset"))
+            execution.input_file(params.get("enorm_dset", None))
         ])
-    if params.get("mot_limit") is not None:
+    if params.get("mot_limit", None) is not None:
         cargs.extend([
             "-mot_limit",
-            str(params.get("mot_limit"))
+            str(params.get("mot_limit", None))
         ])
-    if params.get("out_limit") is not None:
+    if params.get("out_limit", None) is not None:
         cargs.extend([
             "-out_limit",
-            str(params.get("out_limit"))
+            str(params.get("out_limit", None))
         ])
-    if params.get("xmat_regress") is not None:
+    if params.get("xmat_regress", None) is not None:
         cargs.extend([
             "-xmat_regress",
-            execution.input_file(params.get("xmat_regress"))
+            execution.input_file(params.get("xmat_regress", None))
         ])
-    if params.get("xmat_uncensored") is not None:
+    if params.get("xmat_uncensored", None) is not None:
         cargs.extend([
             "-xmat_uncensored",
-            execution.input_file(params.get("xmat_uncensored"))
+            execution.input_file(params.get("xmat_uncensored", None))
         ])
-    if params.get("stats_dset") is not None:
+    if params.get("stats_dset", None) is not None:
         cargs.extend([
             "-stats_dset",
-            execution.input_file(params.get("stats_dset"))
+            execution.input_file(params.get("stats_dset", None))
         ])
-    if params.get("final_anat") is not None:
+    if params.get("final_anat", None) is not None:
         cargs.extend([
             "-final_anat",
-            execution.input_file(params.get("final_anat"))
+            execution.input_file(params.get("final_anat", None))
         ])
-    if params.get("final_view") is not None:
+    if params.get("final_view", None) is not None:
         cargs.extend([
             "-final_view",
-            params.get("final_view")
+            params.get("final_view", None)
         ])
-    if params.get("prefix") is not None:
+    if params.get("prefix", None) is not None:
         cargs.extend([
             "-prefix",
-            params.get("prefix")
+            params.get("prefix", None)
         ])
-    if params.get("verbosity") is not None:
+    if params.get("verbosity", None) is not None:
         cargs.extend([
             "-verb",
-            str(params.get("verbosity"))
+            str(params.get("verbosity", None))
         ])
-    if params.get("uvars_json") is not None:
+    if params.get("uvars_json", None) is not None:
         cargs.extend([
             "-write_uvars_json",
-            execution.input_file(params.get("uvars_json"))
+            execution.input_file(params.get("uvars_json", None))
         ])
-    if params.get("init_uvars_json") is not None:
+    if params.get("init_uvars_json", None) is not None:
         cargs.extend([
             "-init_uvars_json",
-            execution.input_file(params.get("init_uvars_json"))
+            execution.input_file(params.get("init_uvars_json", None))
         ])
     return cargs
 
@@ -419,7 +409,6 @@ def gen_ss_review_scripts_py(
 __all__ = [
     "GEN_SS_REVIEW_SCRIPTS_PY_METADATA",
     "GenSsReviewScriptsPyOutputs",
-    "GenSsReviewScriptsPyParameters",
     "gen_ss_review_scripts_py",
     "gen_ss_review_scripts_py_execute",
     "gen_ss_review_scripts_py_params",

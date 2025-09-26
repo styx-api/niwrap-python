@@ -14,47 +14,20 @@ V_3D_EXTRACT_GROUP_IN_CORR_METADATA = Metadata(
 
 
 V3dExtractGroupInCorrParameters = typing.TypedDict('V3dExtractGroupInCorrParameters', {
-    "@type": typing.Literal["afni.3dExtractGroupInCorr"],
+    "@type": typing.NotRequired[typing.Literal["afni/3dExtractGroupInCorr"]],
+    "group_in_corr_file": InputPathType,
+    "prefix": typing.NotRequired[str | None],
+})
+V3dExtractGroupInCorrParametersTagged = typing.TypedDict('V3dExtractGroupInCorrParametersTagged', {
+    "@type": typing.Literal["afni/3dExtractGroupInCorr"],
     "group_in_corr_file": InputPathType,
     "prefix": typing.NotRequired[str | None],
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "afni.3dExtractGroupInCorr": v_3d_extract_group_in_corr_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "afni.3dExtractGroupInCorr": v_3d_extract_group_in_corr_outputs,
-    }.get(t)
-
-
 class V3dExtractGroupInCorrOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `v_3d_extract_group_in_corr(...)`.
+    Output object returned when calling `V3dExtractGroupInCorrParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -65,7 +38,7 @@ class V3dExtractGroupInCorrOutputs(typing.NamedTuple):
 def v_3d_extract_group_in_corr_params(
     group_in_corr_file: InputPathType,
     prefix: str | None = None,
-) -> V3dExtractGroupInCorrParameters:
+) -> V3dExtractGroupInCorrParametersTagged:
     """
     Build parameters.
     
@@ -78,7 +51,7 @@ def v_3d_extract_group_in_corr_params(
         Parameter dictionary
     """
     params = {
-        "@type": "afni.3dExtractGroupInCorr",
+        "@type": "afni/3dExtractGroupInCorr",
         "group_in_corr_file": group_in_corr_file,
     }
     if prefix is not None:
@@ -101,11 +74,11 @@ def v_3d_extract_group_in_corr_cargs(
     """
     cargs = []
     cargs.append("3dExtractGroupInCorr")
-    cargs.append(execution.input_file(params.get("group_in_corr_file")))
-    if params.get("prefix") is not None:
+    cargs.append(execution.input_file(params.get("group_in_corr_file", None)))
+    if params.get("prefix", None) is not None:
         cargs.extend([
             "-prefix",
-            params.get("prefix")
+            params.get("prefix", None)
         ])
     return cargs
 
@@ -125,7 +98,7 @@ def v_3d_extract_group_in_corr_outputs(
     """
     ret = V3dExtractGroupInCorrOutputs(
         root=execution.output_file("."),
-        output_dataset=execution.output_file(params.get("prefix") + "_[DATASET_LABEL].nii") if (params.get("prefix") is not None) else None,
+        output_dataset=execution.output_file(params.get("prefix", None) + "_[DATASET_LABEL].nii") if (params.get("prefix") is not None) else None,
     )
     return ret
 
@@ -192,7 +165,6 @@ def v_3d_extract_group_in_corr(
 
 __all__ = [
     "V3dExtractGroupInCorrOutputs",
-    "V3dExtractGroupInCorrParameters",
     "V_3D_EXTRACT_GROUP_IN_CORR_METADATA",
     "v_3d_extract_group_in_corr",
     "v_3d_extract_group_in_corr_execute",

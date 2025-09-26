@@ -14,46 +14,18 @@ REINFLATE_SUBJECT_LH_METADATA = Metadata(
 
 
 ReinflateSubjectLhParameters = typing.TypedDict('ReinflateSubjectLhParameters', {
-    "@type": typing.Literal["freesurfer.reinflate_subject-lh"],
+    "@type": typing.NotRequired[typing.Literal["freesurfer/reinflate_subject-lh"]],
+    "subject_id": str,
+})
+ReinflateSubjectLhParametersTagged = typing.TypedDict('ReinflateSubjectLhParametersTagged', {
+    "@type": typing.Literal["freesurfer/reinflate_subject-lh"],
     "subject_id": str,
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "freesurfer.reinflate_subject-lh": reinflate_subject_lh_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "freesurfer.reinflate_subject-lh": reinflate_subject_lh_outputs,
-    }.get(t)
-
-
 class ReinflateSubjectLhOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `reinflate_subject_lh(...)`.
+    Output object returned when calling `ReinflateSubjectLhParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -63,7 +35,7 @@ class ReinflateSubjectLhOutputs(typing.NamedTuple):
 
 def reinflate_subject_lh_params(
     subject_id: str,
-) -> ReinflateSubjectLhParameters:
+) -> ReinflateSubjectLhParametersTagged:
     """
     Build parameters.
     
@@ -73,7 +45,7 @@ def reinflate_subject_lh_params(
         Parameter dictionary
     """
     params = {
-        "@type": "freesurfer.reinflate_subject-lh",
+        "@type": "freesurfer/reinflate_subject-lh",
         "subject_id": subject_id,
     }
     return params
@@ -96,7 +68,7 @@ def reinflate_subject_lh_cargs(
     cargs.append("reinflate_subject-lh")
     cargs.extend([
         "-lh",
-        params.get("subject_id")
+        params.get("subject_id", None)
     ])
     return cargs
 
@@ -116,7 +88,7 @@ def reinflate_subject_lh_outputs(
     """
     ret = ReinflateSubjectLhOutputs(
         root=execution.output_file("."),
-        inflated_surface=execution.output_file(params.get("subject_id") + "/surf/lh.inflated"),
+        inflated_surface=execution.output_file(params.get("subject_id", None) + "/surf/lh.inflated"),
     )
     return ret
 
@@ -177,7 +149,6 @@ def reinflate_subject_lh(
 __all__ = [
     "REINFLATE_SUBJECT_LH_METADATA",
     "ReinflateSubjectLhOutputs",
-    "ReinflateSubjectLhParameters",
     "reinflate_subject_lh",
     "reinflate_subject_lh_execute",
     "reinflate_subject_lh_params",

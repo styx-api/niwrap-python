@@ -14,7 +14,24 @@ MRIS_CURVATURE_METADATA = Metadata(
 
 
 MrisCurvatureParameters = typing.TypedDict('MrisCurvatureParameters', {
-    "@type": typing.Literal["freesurfer.mris_curvature"],
+    "@type": typing.NotRequired[typing.Literal["freesurfer/mris_curvature"]],
+    "save_curvature_files": bool,
+    "max_principal_curvature": bool,
+    "mgh_output_format": bool,
+    "min_principal_curvature": bool,
+    "iterative_averages": typing.NotRequired[float | None],
+    "neighborhood_size": typing.NotRequired[float | None],
+    "random_seed": typing.NotRequired[float | None],
+    "curvatures": typing.NotRequired[str | None],
+    "H_curvature": typing.NotRequired[str | None],
+    "K_curvature": typing.NotRequired[str | None],
+    "k1_curvature": typing.NotRequired[str | None],
+    "k2_curvature": typing.NotRequired[str | None],
+    "k1k2_curvature": typing.NotRequired[str | None],
+    "input_surface": InputPathType,
+})
+MrisCurvatureParametersTagged = typing.TypedDict('MrisCurvatureParametersTagged', {
+    "@type": typing.Literal["freesurfer/mris_curvature"],
     "save_curvature_files": bool,
     "max_principal_curvature": bool,
     "mgh_output_format": bool,
@@ -32,40 +49,9 @@ MrisCurvatureParameters = typing.TypedDict('MrisCurvatureParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "freesurfer.mris_curvature": mris_curvature_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-    }.get(t)
-
-
 class MrisCurvatureOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `mris_curvature(...)`.
+    Output object returned when calling `MrisCurvatureParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -86,7 +72,7 @@ def mris_curvature_params(
     k1_curvature: str | None = None,
     k2_curvature: str | None = None,
     k1k2_curvature: str | None = None,
-) -> MrisCurvatureParameters:
+) -> MrisCurvatureParametersTagged:
     """
     Build parameters.
     
@@ -118,7 +104,7 @@ def mris_curvature_params(
         Parameter dictionary
     """
     params = {
-        "@type": "freesurfer.mris_curvature",
+        "@type": "freesurfer/mris_curvature",
         "save_curvature_files": save_curvature_files,
         "max_principal_curvature": max_principal_curvature,
         "mgh_output_format": mgh_output_format,
@@ -161,60 +147,60 @@ def mris_curvature_cargs(
     """
     cargs = []
     cargs.append("mris_curvature")
-    if params.get("save_curvature_files"):
+    if params.get("save_curvature_files", False):
         cargs.append("-w")
-    if params.get("max_principal_curvature"):
+    if params.get("max_principal_curvature", False):
         cargs.append("-max")
-    if params.get("mgh_output_format"):
+    if params.get("mgh_output_format", False):
         cargs.append("-mgh")
-    if params.get("min_principal_curvature"):
+    if params.get("min_principal_curvature", False):
         cargs.append("-min")
-    if params.get("iterative_averages") is not None:
+    if params.get("iterative_averages", None) is not None:
         cargs.extend([
             "-a",
-            str(params.get("iterative_averages"))
+            str(params.get("iterative_averages", None))
         ])
-    if params.get("neighborhood_size") is not None:
+    if params.get("neighborhood_size", None) is not None:
         cargs.extend([
             "-nbrs",
-            str(params.get("neighborhood_size"))
+            str(params.get("neighborhood_size", None))
         ])
-    if params.get("random_seed") is not None:
+    if params.get("random_seed", None) is not None:
         cargs.extend([
             "-seed",
-            str(params.get("random_seed"))
+            str(params.get("random_seed", None))
         ])
-    if params.get("curvatures") is not None:
+    if params.get("curvatures", None) is not None:
         cargs.extend([
             "-curvs",
-            params.get("curvatures")
+            params.get("curvatures", None)
         ])
-    if params.get("H_curvature") is not None:
+    if params.get("H_curvature", None) is not None:
         cargs.extend([
             "-H",
-            params.get("H_curvature")
+            params.get("H_curvature", None)
         ])
-    if params.get("K_curvature") is not None:
+    if params.get("K_curvature", None) is not None:
         cargs.extend([
             "-K",
-            params.get("K_curvature")
+            params.get("K_curvature", None)
         ])
-    if params.get("k1_curvature") is not None:
+    if params.get("k1_curvature", None) is not None:
         cargs.extend([
             "-k1",
-            params.get("k1_curvature")
+            params.get("k1_curvature", None)
         ])
-    if params.get("k2_curvature") is not None:
+    if params.get("k2_curvature", None) is not None:
         cargs.extend([
             "-k2",
-            params.get("k2_curvature")
+            params.get("k2_curvature", None)
         ])
-    if params.get("k1k2_curvature") is not None:
+    if params.get("k1k2_curvature", None) is not None:
         cargs.extend([
             "-k1k2",
-            params.get("k1k2_curvature")
+            params.get("k1k2_curvature", None)
         ])
-    cargs.append(execution.input_file(params.get("input_surface")))
+    cargs.append(execution.input_file(params.get("input_surface", None)))
     return cargs
 
 
@@ -343,7 +329,6 @@ def mris_curvature(
 __all__ = [
     "MRIS_CURVATURE_METADATA",
     "MrisCurvatureOutputs",
-    "MrisCurvatureParameters",
     "mris_curvature",
     "mris_curvature_execute",
     "mris_curvature_params",

@@ -14,45 +14,18 @@ DIFFUSION_UTILS_METADATA = Metadata(
 
 
 DiffusionUtilsParameters = typing.TypedDict('DiffusionUtilsParameters', {
-    "@type": typing.Literal["freesurfer.diffusionUtils"],
+    "@type": typing.NotRequired[typing.Literal["freesurfer/diffusionUtils"]],
+    "dummy_flag": bool,
+})
+DiffusionUtilsParametersTagged = typing.TypedDict('DiffusionUtilsParametersTagged', {
+    "@type": typing.Literal["freesurfer/diffusionUtils"],
     "dummy_flag": bool,
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "freesurfer.diffusionUtils": diffusion_utils_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-    }.get(t)
-
-
 class DiffusionUtilsOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `diffusion_utils(...)`.
+    Output object returned when calling `DiffusionUtilsParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -60,7 +33,7 @@ class DiffusionUtilsOutputs(typing.NamedTuple):
 
 def diffusion_utils_params(
     dummy_flag: bool = False,
-) -> DiffusionUtilsParameters:
+) -> DiffusionUtilsParametersTagged:
     """
     Build parameters.
     
@@ -71,7 +44,7 @@ def diffusion_utils_params(
         Parameter dictionary
     """
     params = {
-        "@type": "freesurfer.diffusionUtils",
+        "@type": "freesurfer/diffusionUtils",
         "dummy_flag": dummy_flag,
     }
     return params
@@ -92,7 +65,7 @@ def diffusion_utils_cargs(
     """
     cargs = []
     cargs.append("diffusionUtils")
-    if params.get("dummy_flag"):
+    if params.get("dummy_flag", False):
         cargs.append("--dummy")
     return cargs
 
@@ -173,7 +146,6 @@ def diffusion_utils(
 __all__ = [
     "DIFFUSION_UTILS_METADATA",
     "DiffusionUtilsOutputs",
-    "DiffusionUtilsParameters",
     "diffusion_utils",
     "diffusion_utils_execute",
     "diffusion_utils_params",

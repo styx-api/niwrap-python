@@ -14,7 +14,16 @@ V__DEBLANK_FILE_NAMES_METADATA = Metadata(
 
 
 VDeblankFileNamesParameters = typing.TypedDict('VDeblankFileNamesParameters', {
-    "@type": typing.Literal["afni.@DeblankFileNames"],
+    "@type": typing.NotRequired[typing.Literal["afni/@DeblankFileNames"]],
+    "move": bool,
+    "nobrac": bool,
+    "demo_set": bool,
+    "echo": bool,
+    "help": bool,
+    "files": typing.NotRequired[list[InputPathType] | None],
+})
+VDeblankFileNamesParametersTagged = typing.TypedDict('VDeblankFileNamesParametersTagged', {
+    "@type": typing.Literal["afni/@DeblankFileNames"],
     "move": bool,
     "nobrac": bool,
     "demo_set": bool,
@@ -24,40 +33,9 @@ VDeblankFileNamesParameters = typing.TypedDict('VDeblankFileNamesParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "afni.@DeblankFileNames": v__deblank_file_names_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-    }.get(t)
-
-
 class VDeblankFileNamesOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `v__deblank_file_names(...)`.
+    Output object returned when calling `VDeblankFileNamesParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -70,7 +48,7 @@ def v__deblank_file_names_params(
     echo: bool = False,
     help_: bool = False,
     files: list[InputPathType] | None = None,
-) -> VDeblankFileNamesParameters:
+) -> VDeblankFileNamesParametersTagged:
     """
     Build parameters.
     
@@ -86,7 +64,7 @@ def v__deblank_file_names_params(
         Parameter dictionary
     """
     params = {
-        "@type": "afni.@DeblankFileNames",
+        "@type": "afni/@DeblankFileNames",
         "move": move,
         "nobrac": nobrac,
         "demo_set": demo_set,
@@ -113,18 +91,18 @@ def v__deblank_file_names_cargs(
     """
     cargs = []
     cargs.append("@DeblankFileNames")
-    if params.get("move"):
+    if params.get("move", False):
         cargs.append("-move")
-    if params.get("nobrac"):
+    if params.get("nobrac", False):
         cargs.append("-nobrac")
-    if params.get("demo_set"):
+    if params.get("demo_set", False):
         cargs.append("-demo_set")
-    if params.get("echo"):
+    if params.get("echo", False):
         cargs.append("-echo")
-    if params.get("help"):
+    if params.get("help", False):
         cargs.append("-help")
-    if params.get("files") is not None:
-        cargs.extend([execution.input_file(f) for f in params.get("files")])
+    if params.get("files", None) is not None:
+        cargs.extend([execution.input_file(f) for f in params.get("files", None)])
     return cargs
 
 
@@ -220,7 +198,6 @@ def v__deblank_file_names(
 
 __all__ = [
     "VDeblankFileNamesOutputs",
-    "VDeblankFileNamesParameters",
     "V__DEBLANK_FILE_NAMES_METADATA",
     "v__deblank_file_names",
     "v__deblank_file_names_execute",

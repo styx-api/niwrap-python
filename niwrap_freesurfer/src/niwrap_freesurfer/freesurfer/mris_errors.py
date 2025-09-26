@@ -14,45 +14,18 @@ MRIS_ERRORS_METADATA = Metadata(
 
 
 MrisErrorsParameters = typing.TypedDict('MrisErrorsParameters', {
-    "@type": typing.Literal["freesurfer.mris_errors"],
+    "@type": typing.NotRequired[typing.Literal["freesurfer/mris_errors"]],
+    "input_image_file": InputPathType,
+})
+MrisErrorsParametersTagged = typing.TypedDict('MrisErrorsParametersTagged', {
+    "@type": typing.Literal["freesurfer/mris_errors"],
     "input_image_file": InputPathType,
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "freesurfer.mris_errors": mris_errors_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-    }.get(t)
-
-
 class MrisErrorsOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `mris_errors(...)`.
+    Output object returned when calling `MrisErrorsParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -60,7 +33,7 @@ class MrisErrorsOutputs(typing.NamedTuple):
 
 def mris_errors_params(
     input_image_file: InputPathType,
-) -> MrisErrorsParameters:
+) -> MrisErrorsParametersTagged:
     """
     Build parameters.
     
@@ -70,7 +43,7 @@ def mris_errors_params(
         Parameter dictionary
     """
     params = {
-        "@type": "freesurfer.mris_errors",
+        "@type": "freesurfer/mris_errors",
         "input_image_file": input_image_file,
     }
     return params
@@ -91,7 +64,7 @@ def mris_errors_cargs(
     """
     cargs = []
     cargs.append("mris_errors")
-    cargs.append(execution.input_file(params.get("input_image_file")))
+    cargs.append(execution.input_file(params.get("input_image_file", None)))
     return cargs
 
 
@@ -170,7 +143,6 @@ def mris_errors(
 __all__ = [
     "MRIS_ERRORS_METADATA",
     "MrisErrorsOutputs",
-    "MrisErrorsParameters",
     "mris_errors",
     "mris_errors_execute",
     "mris_errors_params",

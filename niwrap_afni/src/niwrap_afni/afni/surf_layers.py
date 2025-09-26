@@ -14,7 +14,20 @@ SURF_LAYERS_METADATA = Metadata(
 
 
 SurfLayersParameters = typing.TypedDict('SurfLayersParameters', {
-    "@type": typing.Literal["afni.SurfLayers"],
+    "@type": typing.NotRequired[typing.Literal["afni/SurfLayers"]],
+    "spec_dset": typing.NotRequired[InputPathType | None],
+    "outdir": typing.NotRequired[str | None],
+    "states": typing.NotRequired[str | None],
+    "hemi": typing.NotRequired[str | None],
+    "n_intermed_surfs": typing.NotRequired[float | None],
+    "surf_a": typing.NotRequired[InputPathType | None],
+    "surf_b": typing.NotRequired[InputPathType | None],
+    "surf_intermed_pref": typing.NotRequired[str | None],
+    "echo": bool,
+    "no_clean": bool,
+})
+SurfLayersParametersTagged = typing.TypedDict('SurfLayersParametersTagged', {
+    "@type": typing.Literal["afni/SurfLayers"],
     "spec_dset": typing.NotRequired[InputPathType | None],
     "outdir": typing.NotRequired[str | None],
     "states": typing.NotRequired[str | None],
@@ -28,41 +41,9 @@ SurfLayersParameters = typing.TypedDict('SurfLayersParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "afni.SurfLayers": surf_layers_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "afni.SurfLayers": surf_layers_outputs,
-    }.get(t)
-
-
 class SurfLayersOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `surf_layers(...)`.
+    Output object returned when calling `SurfLayersParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -81,7 +62,7 @@ def surf_layers_params(
     surf_intermed_pref: str | None = None,
     echo: bool = False,
     no_clean: bool = False,
-) -> SurfLayersParameters:
+) -> SurfLayersParametersTagged:
     """
     Build parameters.
     
@@ -102,7 +83,7 @@ def surf_layers_params(
         Parameter dictionary
     """
     params = {
-        "@type": "afni.SurfLayers",
+        "@type": "afni/SurfLayers",
         "echo": echo,
         "no_clean": no_clean,
     }
@@ -140,49 +121,49 @@ def surf_layers_cargs(
     """
     cargs = []
     cargs.append("SurfLayers")
-    if params.get("spec_dset") is not None:
+    if params.get("spec_dset", None) is not None:
         cargs.extend([
             "-spec",
-            execution.input_file(params.get("spec_dset"))
+            execution.input_file(params.get("spec_dset", None))
         ])
-    if params.get("outdir") is not None:
+    if params.get("outdir", None) is not None:
         cargs.extend([
             "-outdir",
-            params.get("outdir")
+            params.get("outdir", None)
         ])
-    if params.get("states") is not None:
+    if params.get("states", None) is not None:
         cargs.extend([
             "-states",
-            params.get("states")
+            params.get("states", None)
         ])
-    if params.get("hemi") is not None:
+    if params.get("hemi", None) is not None:
         cargs.extend([
             "-hemi",
-            params.get("hemi")
+            params.get("hemi", None)
         ])
-    if params.get("n_intermed_surfs") is not None:
+    if params.get("n_intermed_surfs", None) is not None:
         cargs.extend([
             "-n_intermed_surfs",
-            str(params.get("n_intermed_surfs"))
+            str(params.get("n_intermed_surfs", None))
         ])
-    if params.get("surf_a") is not None:
+    if params.get("surf_a", None) is not None:
         cargs.extend([
             "-surf_A",
-            execution.input_file(params.get("surf_a"))
+            execution.input_file(params.get("surf_a", None))
         ])
-    if params.get("surf_b") is not None:
+    if params.get("surf_b", None) is not None:
         cargs.extend([
             "-surf_B",
-            execution.input_file(params.get("surf_b"))
+            execution.input_file(params.get("surf_b", None))
         ])
-    if params.get("surf_intermed_pref") is not None:
+    if params.get("surf_intermed_pref", None) is not None:
         cargs.extend([
             "-surf_intermed_pref",
-            params.get("surf_intermed_pref")
+            params.get("surf_intermed_pref", None)
         ])
-    if params.get("echo"):
+    if params.get("echo", False):
         cargs.append("-echo")
-    if params.get("no_clean"):
+    if params.get("no_clean", False):
         cargs.append("-no_clean")
     return cargs
 
@@ -202,7 +183,7 @@ def surf_layers_outputs(
     """
     ret = SurfLayersOutputs(
         root=execution.output_file("."),
-        output_dir=execution.output_file(params.get("outdir")) if (params.get("outdir") is not None) else None,
+        output_dir=execution.output_file(params.get("outdir", None)) if (params.get("outdir") is not None) else None,
     )
     return ret
 
@@ -292,7 +273,6 @@ def surf_layers(
 __all__ = [
     "SURF_LAYERS_METADATA",
     "SurfLayersOutputs",
-    "SurfLayersParameters",
     "surf_layers",
     "surf_layers_execute",
     "surf_layers_params",

@@ -14,7 +14,16 @@ FIRDESIGN_METADATA = Metadata(
 
 
 FirdesignParameters = typing.TypedDict('FirdesignParameters', {
-    "@type": typing.Literal["afni.FIRdesign"],
+    "@type": typing.NotRequired[typing.Literal["afni/FIRdesign"]],
+    "fbot": float,
+    "ftop": float,
+    "ntap": float,
+    "tr": typing.NotRequired[float | None],
+    "alternative_band": typing.NotRequired[list[float] | None],
+    "alternative_ntap": typing.NotRequired[float | None],
+})
+FirdesignParametersTagged = typing.TypedDict('FirdesignParametersTagged', {
+    "@type": typing.Literal["afni/FIRdesign"],
     "fbot": float,
     "ftop": float,
     "ntap": float,
@@ -24,40 +33,9 @@ FirdesignParameters = typing.TypedDict('FirdesignParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "afni.FIRdesign": firdesign_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-    }.get(t)
-
-
 class FirdesignOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `firdesign(...)`.
+    Output object returned when calling `FirdesignParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -70,7 +48,7 @@ def firdesign_params(
     tr: float | None = None,
     alternative_band: list[float] | None = None,
     alternative_ntap: float | None = None,
-) -> FirdesignParameters:
+) -> FirdesignParametersTagged:
     """
     Build parameters.
     
@@ -87,7 +65,7 @@ def firdesign_params(
         Parameter dictionary
     """
     params = {
-        "@type": "afni.FIRdesign",
+        "@type": "afni/FIRdesign",
         "fbot": fbot,
         "ftop": ftop,
         "ntap": ntap,
@@ -116,23 +94,23 @@ def firdesign_cargs(
     """
     cargs = []
     cargs.append("FIRdesign")
-    cargs.append(str(params.get("fbot")))
-    cargs.append(str(params.get("ftop")))
-    cargs.append(str(params.get("ntap")))
-    if params.get("tr") is not None:
+    cargs.append(str(params.get("fbot", None)))
+    cargs.append(str(params.get("ftop", None)))
+    cargs.append(str(params.get("ntap", None)))
+    if params.get("tr", None) is not None:
         cargs.extend([
             "-TR",
-            str(params.get("tr"))
+            str(params.get("tr", None))
         ])
-    if params.get("alternative_band") is not None:
+    if params.get("alternative_band", None) is not None:
         cargs.extend([
             "-band",
-            *map(str, params.get("alternative_band"))
+            *map(str, params.get("alternative_band", None))
         ])
-    if params.get("alternative_ntap") is not None:
+    if params.get("alternative_ntap", None) is not None:
         cargs.extend([
             "-ntap",
-            str(params.get("alternative_ntap"))
+            str(params.get("alternative_ntap", None))
         ])
     return cargs
 
@@ -233,7 +211,6 @@ def firdesign(
 __all__ = [
     "FIRDESIGN_METADATA",
     "FirdesignOutputs",
-    "FirdesignParameters",
     "firdesign",
     "firdesign_execute",
     "firdesign_params",

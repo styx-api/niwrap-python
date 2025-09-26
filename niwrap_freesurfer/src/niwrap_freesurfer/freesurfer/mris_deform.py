@@ -14,7 +14,14 @@ MRIS_DEFORM_METADATA = Metadata(
 
 
 MrisDeformParameters = typing.TypedDict('MrisDeformParameters', {
-    "@type": typing.Literal["freesurfer.mris_deform"],
+    "@type": typing.NotRequired[typing.Literal["freesurfer/mris_deform"]],
+    "input_surface": InputPathType,
+    "input_volume": InputPathType,
+    "xform": InputPathType,
+    "output_surface": str,
+})
+MrisDeformParametersTagged = typing.TypedDict('MrisDeformParametersTagged', {
+    "@type": typing.Literal["freesurfer/mris_deform"],
     "input_surface": InputPathType,
     "input_volume": InputPathType,
     "xform": InputPathType,
@@ -22,41 +29,9 @@ MrisDeformParameters = typing.TypedDict('MrisDeformParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "freesurfer.mris_deform": mris_deform_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "freesurfer.mris_deform": mris_deform_outputs,
-    }.get(t)
-
-
 class MrisDeformOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `mris_deform(...)`.
+    Output object returned when calling `MrisDeformParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -69,7 +44,7 @@ def mris_deform_params(
     input_volume: InputPathType,
     xform: InputPathType,
     output_surface: str,
-) -> MrisDeformParameters:
+) -> MrisDeformParametersTagged:
     """
     Build parameters.
     
@@ -82,7 +57,7 @@ def mris_deform_params(
         Parameter dictionary
     """
     params = {
-        "@type": "freesurfer.mris_deform",
+        "@type": "freesurfer/mris_deform",
         "input_surface": input_surface,
         "input_volume": input_volume,
         "xform": xform,
@@ -106,10 +81,10 @@ def mris_deform_cargs(
     """
     cargs = []
     cargs.append("mris_deform")
-    cargs.append(execution.input_file(params.get("input_surface")))
-    cargs.append(execution.input_file(params.get("input_volume")))
-    cargs.append(execution.input_file(params.get("xform")))
-    cargs.append(params.get("output_surface"))
+    cargs.append(execution.input_file(params.get("input_surface", None)))
+    cargs.append(execution.input_file(params.get("input_volume", None)))
+    cargs.append(execution.input_file(params.get("xform", None)))
+    cargs.append(params.get("output_surface", None))
     return cargs
 
 
@@ -128,7 +103,7 @@ def mris_deform_outputs(
     """
     ret = MrisDeformOutputs(
         root=execution.output_file("."),
-        deformed_surface=execution.output_file(params.get("output_surface")),
+        deformed_surface=execution.output_file(params.get("output_surface", None)),
     )
     return ret
 
@@ -200,7 +175,6 @@ def mris_deform(
 __all__ = [
     "MRIS_DEFORM_METADATA",
     "MrisDeformOutputs",
-    "MrisDeformParameters",
     "mris_deform",
     "mris_deform_execute",
     "mris_deform_params",

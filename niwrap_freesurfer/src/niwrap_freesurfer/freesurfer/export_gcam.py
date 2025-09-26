@@ -14,7 +14,18 @@ EXPORT_GCAM_METADATA = Metadata(
 
 
 ExportGcamParameters = typing.TypedDict('ExportGcamParameters', {
-    "@type": typing.Literal["freesurfer.exportGcam"],
+    "@type": typing.NotRequired[typing.Literal["freesurfer/exportGcam"]],
+    "fixed": InputPathType,
+    "moving": InputPathType,
+    "morph": InputPathType,
+    "out_gcam": str,
+    "zlib_buffer": typing.NotRequired[float | None],
+    "bbox_threshold": typing.NotRequired[float | None],
+    "interp_method": typing.NotRequired[typing.Literal["linear", "nearest"] | None],
+    "test": bool,
+})
+ExportGcamParametersTagged = typing.TypedDict('ExportGcamParametersTagged', {
+    "@type": typing.Literal["freesurfer/exportGcam"],
     "fixed": InputPathType,
     "moving": InputPathType,
     "morph": InputPathType,
@@ -26,41 +37,9 @@ ExportGcamParameters = typing.TypedDict('ExportGcamParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "freesurfer.exportGcam": export_gcam_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "freesurfer.exportGcam": export_gcam_outputs,
-    }.get(t)
-
-
 class ExportGcamOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `export_gcam(...)`.
+    Output object returned when calling `ExportGcamParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -77,7 +56,7 @@ def export_gcam_params(
     bbox_threshold: float | None = None,
     interp_method: typing.Literal["linear", "nearest"] | None = None,
     test: bool = False,
-) -> ExportGcamParameters:
+) -> ExportGcamParametersTagged:
     """
     Build parameters.
     
@@ -97,7 +76,7 @@ def export_gcam_params(
         Parameter dictionary
     """
     params = {
-        "@type": "freesurfer.exportGcam",
+        "@type": "freesurfer/exportGcam",
         "fixed": fixed,
         "moving": moving,
         "morph": morph,
@@ -130,36 +109,36 @@ def export_gcam_cargs(
     cargs.append("exportGcam")
     cargs.extend([
         "--fixed",
-        execution.input_file(params.get("fixed"))
+        execution.input_file(params.get("fixed", None))
     ])
     cargs.extend([
         "--moving",
-        execution.input_file(params.get("moving"))
+        execution.input_file(params.get("moving", None))
     ])
     cargs.extend([
         "--morph",
-        execution.input_file(params.get("morph"))
+        execution.input_file(params.get("morph", None))
     ])
     cargs.extend([
         "--out_gcam",
-        params.get("out_gcam")
+        params.get("out_gcam", None)
     ])
-    if params.get("zlib_buffer") is not None:
+    if params.get("zlib_buffer", None) is not None:
         cargs.extend([
             "--zlib_buffer",
-            str(params.get("zlib_buffer"))
+            str(params.get("zlib_buffer", None))
         ])
-    if params.get("bbox_threshold") is not None:
+    if params.get("bbox_threshold", None) is not None:
         cargs.extend([
             "--bbox_threshold",
-            str(params.get("bbox_threshold"))
+            str(params.get("bbox_threshold", None))
         ])
-    if params.get("interp_method") is not None:
+    if params.get("interp_method", None) is not None:
         cargs.extend([
             "--interp",
-            params.get("interp_method")
+            params.get("interp_method", None)
         ])
-    if params.get("test"):
+    if params.get("test", False):
         cargs.append("--test")
     return cargs
 
@@ -179,7 +158,7 @@ def export_gcam_outputs(
     """
     ret = ExportGcamOutputs(
         root=execution.output_file("."),
-        output_gcam_file=execution.output_file(params.get("out_gcam")),
+        output_gcam_file=execution.output_file(params.get("out_gcam", None)),
     )
     return ret
 
@@ -266,7 +245,6 @@ def export_gcam(
 __all__ = [
     "EXPORT_GCAM_METADATA",
     "ExportGcamOutputs",
-    "ExportGcamParameters",
     "export_gcam",
     "export_gcam_execute",
     "export_gcam_params",

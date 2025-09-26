@@ -14,14 +14,34 @@ VOXEL2FIXEL_METADATA = Metadata(
 
 
 Voxel2fixelConfigParameters = typing.TypedDict('Voxel2fixelConfigParameters', {
-    "@type": typing.Literal["mrtrix.voxel2fixel.config"],
+    "@type": typing.NotRequired[typing.Literal["config"]],
+    "key": str,
+    "value": str,
+})
+Voxel2fixelConfigParametersTagged = typing.TypedDict('Voxel2fixelConfigParametersTagged', {
+    "@type": typing.Literal["config"],
     "key": str,
     "value": str,
 })
 
 
 Voxel2fixelParameters = typing.TypedDict('Voxel2fixelParameters', {
-    "@type": typing.Literal["mrtrix.voxel2fixel"],
+    "@type": typing.NotRequired[typing.Literal["mrtrix/voxel2fixel"]],
+    "info": bool,
+    "quiet": bool,
+    "debug": bool,
+    "force": bool,
+    "nthreads": typing.NotRequired[int | None],
+    "config": typing.NotRequired[list[Voxel2fixelConfigParameters] | None],
+    "help": bool,
+    "version": bool,
+    "image_in": InputPathType,
+    "fixel_directory_in": InputPathType,
+    "fixel_directory_out": str,
+    "fixel_data_out": str,
+})
+Voxel2fixelParametersTagged = typing.TypedDict('Voxel2fixelParametersTagged', {
+    "@type": typing.Literal["mrtrix/voxel2fixel"],
     "info": bool,
     "quiet": bool,
     "debug": bool,
@@ -37,42 +57,10 @@ Voxel2fixelParameters = typing.TypedDict('Voxel2fixelParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "mrtrix.voxel2fixel": voxel2fixel_cargs,
-        "mrtrix.voxel2fixel.config": voxel2fixel_config_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-    }.get(t)
-
-
 def voxel2fixel_config_params(
     key: str,
     value: str,
-) -> Voxel2fixelConfigParameters:
+) -> Voxel2fixelConfigParametersTagged:
     """
     Build parameters.
     
@@ -83,7 +71,7 @@ def voxel2fixel_config_params(
         Parameter dictionary
     """
     params = {
-        "@type": "mrtrix.voxel2fixel.config",
+        "@type": "config",
         "key": key,
         "value": value,
     }
@@ -105,14 +93,14 @@ def voxel2fixel_config_cargs(
     """
     cargs = []
     cargs.append("-config")
-    cargs.append(params.get("key"))
-    cargs.append(params.get("value"))
+    cargs.append(params.get("key", None))
+    cargs.append(params.get("value", None))
     return cargs
 
 
 class Voxel2fixelOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `voxel2fixel(...)`.
+    Output object returned when calling `Voxel2fixelParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -131,7 +119,7 @@ def voxel2fixel_params(
     config: list[Voxel2fixelConfigParameters] | None = None,
     help_: bool = False,
     version: bool = False,
-) -> Voxel2fixelParameters:
+) -> Voxel2fixelParametersTagged:
     """
     Build parameters.
     
@@ -158,7 +146,7 @@ def voxel2fixel_params(
         Parameter dictionary
     """
     params = {
-        "@type": "mrtrix.voxel2fixel",
+        "@type": "mrtrix/voxel2fixel",
         "info": info,
         "quiet": quiet,
         "debug": debug,
@@ -192,29 +180,29 @@ def voxel2fixel_cargs(
     """
     cargs = []
     cargs.append("voxel2fixel")
-    if params.get("info"):
+    if params.get("info", False):
         cargs.append("-info")
-    if params.get("quiet"):
+    if params.get("quiet", False):
         cargs.append("-quiet")
-    if params.get("debug"):
+    if params.get("debug", False):
         cargs.append("-debug")
-    if params.get("force"):
+    if params.get("force", False):
         cargs.append("-force")
-    if params.get("nthreads") is not None:
+    if params.get("nthreads", None) is not None:
         cargs.extend([
             "-nthreads",
-            str(params.get("nthreads"))
+            str(params.get("nthreads", None))
         ])
-    if params.get("config") is not None:
-        cargs.extend([a for c in [dyn_cargs(s["@type"])(s, execution) for s in params.get("config")] for a in c])
-    if params.get("help"):
+    if params.get("config", None) is not None:
+        cargs.extend([a for c in [voxel2fixel_config_cargs(s, execution) for s in params.get("config", None)] for a in c])
+    if params.get("help", False):
         cargs.append("-help")
-    if params.get("version"):
+    if params.get("version", False):
         cargs.append("-version")
-    cargs.append(execution.input_file(params.get("image_in")))
-    cargs.append(execution.input_file(params.get("fixel_directory_in")))
-    cargs.append(params.get("fixel_directory_out"))
-    cargs.append(params.get("fixel_data_out"))
+    cargs.append(execution.input_file(params.get("image_in", None)))
+    cargs.append(execution.input_file(params.get("fixel_directory_in", None)))
+    cargs.append(params.get("fixel_directory_out", None))
+    cargs.append(params.get("fixel_data_out", None))
     return cargs
 
 
@@ -345,9 +333,7 @@ def voxel2fixel(
 
 __all__ = [
     "VOXEL2FIXEL_METADATA",
-    "Voxel2fixelConfigParameters",
     "Voxel2fixelOutputs",
-    "Voxel2fixelParameters",
     "voxel2fixel",
     "voxel2fixel_config_params",
     "voxel2fixel_execute",

@@ -14,7 +14,20 @@ V__ROI_CORR_MAT_METADATA = Metadata(
 
 
 VRoiCorrMatParameters = typing.TypedDict('VRoiCorrMatParameters', {
-    "@type": typing.Literal["afni.@ROI_Corr_Mat"],
+    "@type": typing.NotRequired[typing.Literal["afni/@ROI_Corr_Mat"]],
+    "ts_vol": InputPathType,
+    "roi_vol": InputPathType,
+    "prefix": str,
+    "roisel": typing.NotRequired[InputPathType | None],
+    "zval": bool,
+    "mat_opt": typing.NotRequired[str | None],
+    "dirty": bool,
+    "keep_tmp": bool,
+    "echo": bool,
+    "verb": bool,
+})
+VRoiCorrMatParametersTagged = typing.TypedDict('VRoiCorrMatParametersTagged', {
+    "@type": typing.Literal["afni/@ROI_Corr_Mat"],
     "ts_vol": InputPathType,
     "roi_vol": InputPathType,
     "prefix": str,
@@ -28,41 +41,9 @@ VRoiCorrMatParameters = typing.TypedDict('VRoiCorrMatParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "afni.@ROI_Corr_Mat": v__roi_corr_mat_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "afni.@ROI_Corr_Mat": v__roi_corr_mat_outputs,
-    }.get(t)
-
-
 class VRoiCorrMatOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `v__roi_corr_mat(...)`.
+    Output object returned when calling `VRoiCorrMatParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -83,7 +64,7 @@ def v__roi_corr_mat_params(
     keep_tmp: bool = False,
     echo: bool = False,
     verb: bool = False,
-) -> VRoiCorrMatParameters:
+) -> VRoiCorrMatParametersTagged:
     """
     Build parameters.
     
@@ -103,7 +84,7 @@ def v__roi_corr_mat_params(
         Parameter dictionary
     """
     params = {
-        "@type": "afni.@ROI_Corr_Mat",
+        "@type": "afni/@ROI_Corr_Mat",
         "ts_vol": ts_vol,
         "roi_vol": roi_vol,
         "prefix": prefix,
@@ -137,35 +118,35 @@ def v__roi_corr_mat_cargs(
     cargs.append("@ROI_Corr_Mat")
     cargs.extend([
         "-ts",
-        execution.input_file(params.get("ts_vol"))
+        execution.input_file(params.get("ts_vol", None))
     ])
     cargs.extend([
         "-roi",
-        execution.input_file(params.get("roi_vol"))
+        execution.input_file(params.get("roi_vol", None))
     ])
     cargs.extend([
         "-prefix",
-        params.get("prefix")
+        params.get("prefix", None)
     ])
-    if params.get("roisel") is not None:
+    if params.get("roisel", None) is not None:
         cargs.extend([
             "-roisel",
-            execution.input_file(params.get("roisel"))
+            execution.input_file(params.get("roisel", None))
         ])
-    if params.get("zval"):
+    if params.get("zval", False):
         cargs.append("-zval")
-    if params.get("mat_opt") is not None:
+    if params.get("mat_opt", None) is not None:
         cargs.extend([
             "-mat",
-            params.get("mat_opt")
+            params.get("mat_opt", None)
         ])
-    if params.get("dirty"):
+    if params.get("dirty", False):
         cargs.append("-dirty")
-    if params.get("keep_tmp"):
+    if params.get("keep_tmp", False):
         cargs.append("-keep_tmp")
-    if params.get("echo"):
+    if params.get("echo", False):
         cargs.append("-echo")
-    if params.get("verb"):
+    if params.get("verb", False):
         cargs.append("-verb")
     return cargs
 
@@ -185,8 +166,8 @@ def v__roi_corr_mat_outputs(
     """
     ret = VRoiCorrMatOutputs(
         root=execution.output_file("."),
-        matrix_1d=execution.output_file(params.get("prefix") + "_matrix.1D"),
-        matrix_brick=execution.output_file(params.get("prefix") + "_matrix.BRIK"),
+        matrix_1d=execution.output_file(params.get("prefix", None) + "_matrix.1D"),
+        matrix_brick=execution.output_file(params.get("prefix", None) + "_matrix.BRIK"),
     )
     return ret
 
@@ -274,7 +255,6 @@ def v__roi_corr_mat(
 
 __all__ = [
     "VRoiCorrMatOutputs",
-    "VRoiCorrMatParameters",
     "V__ROI_CORR_MAT_METADATA",
     "v__roi_corr_mat",
     "v__roi_corr_mat_execute",

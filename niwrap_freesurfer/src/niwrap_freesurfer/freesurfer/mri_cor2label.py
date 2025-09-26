@@ -14,7 +14,22 @@ MRI_COR2LABEL_METADATA = Metadata(
 
 
 MriCor2labelParameters = typing.TypedDict('MriCor2labelParameters', {
-    "@type": typing.Literal["freesurfer.mri_cor2label"],
+    "@type": typing.NotRequired[typing.Literal["freesurfer/mri_cor2label"]],
+    "input_file": InputPathType,
+    "label_id": float,
+    "label_file": str,
+    "threshold": typing.NotRequired[float | None],
+    "volume_file": typing.NotRequired[str | None],
+    "surface_overlay": typing.NotRequired[list[str] | None],
+    "surface_path": typing.NotRequired[str | None],
+    "optimize": typing.NotRequired[list[str] | None],
+    "remove_holes_islands": bool,
+    "dilate": typing.NotRequired[float | None],
+    "erode": typing.NotRequired[float | None],
+    "help": bool,
+})
+MriCor2labelParametersTagged = typing.TypedDict('MriCor2labelParametersTagged', {
+    "@type": typing.Literal["freesurfer/mri_cor2label"],
     "input_file": InputPathType,
     "label_id": float,
     "label_file": str,
@@ -30,41 +45,9 @@ MriCor2labelParameters = typing.TypedDict('MriCor2labelParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "freesurfer.mri_cor2label": mri_cor2label_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "freesurfer.mri_cor2label": mri_cor2label_outputs,
-    }.get(t)
-
-
 class MriCor2labelOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `mri_cor2label(...)`.
+    Output object returned when calling `MriCor2labelParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -87,7 +70,7 @@ def mri_cor2label_params(
     dilate: float | None = None,
     erode: float | None = None,
     help_: bool = False,
-) -> MriCor2labelParameters:
+) -> MriCor2labelParametersTagged:
     """
     Build parameters.
     
@@ -113,7 +96,7 @@ def mri_cor2label_params(
         Parameter dictionary
     """
     params = {
-        "@type": "freesurfer.mri_cor2label",
+        "@type": "freesurfer/mri_cor2label",
         "input_file": input_file,
         "label_id": label_id,
         "label_file": label_file,
@@ -154,54 +137,54 @@ def mri_cor2label_cargs(
     cargs.append("mri_cor2label")
     cargs.extend([
         "-i",
-        execution.input_file(params.get("input_file"))
+        execution.input_file(params.get("input_file", None))
     ])
     cargs.extend([
         "-id",
-        str(params.get("label_id"))
+        str(params.get("label_id", None))
     ])
     cargs.extend([
         "-l",
-        params.get("label_file")
+        params.get("label_file", None)
     ])
-    if params.get("threshold") is not None:
+    if params.get("threshold", None) is not None:
         cargs.extend([
             "--thresh",
-            str(params.get("threshold"))
+            str(params.get("threshold", None))
         ])
-    if params.get("volume_file") is not None:
+    if params.get("volume_file", None) is not None:
         cargs.extend([
             "--v",
-            params.get("volume_file")
+            params.get("volume_file", None)
         ])
-    if params.get("surface_overlay") is not None:
+    if params.get("surface_overlay", None) is not None:
         cargs.extend([
             "--surf",
-            *params.get("surface_overlay")
+            *params.get("surface_overlay", None)
         ])
-    if params.get("surface_path") is not None:
+    if params.get("surface_path", None) is not None:
         cargs.extend([
             "--surf-path",
-            params.get("surface_path")
+            params.get("surface_path", None)
         ])
-    if params.get("optimize") is not None:
+    if params.get("optimize", None) is not None:
         cargs.extend([
             "--opt",
-            *params.get("optimize")
+            *params.get("optimize", None)
         ])
-    if params.get("remove_holes_islands"):
+    if params.get("remove_holes_islands", False):
         cargs.append("--remove-holes-islands")
-    if params.get("dilate") is not None:
+    if params.get("dilate", None) is not None:
         cargs.extend([
             "--dilate",
-            str(params.get("dilate"))
+            str(params.get("dilate", None))
         ])
-    if params.get("erode") is not None:
+    if params.get("erode", None) is not None:
         cargs.extend([
             "--erode",
-            str(params.get("erode"))
+            str(params.get("erode", None))
         ])
-    if params.get("help"):
+    if params.get("help", False):
         cargs.append("--help")
     return cargs
 
@@ -221,8 +204,8 @@ def mri_cor2label_outputs(
     """
     ret = MriCor2labelOutputs(
         root=execution.output_file("."),
-        output_label_file=execution.output_file(params.get("label_file")),
-        output_volume_file=execution.output_file(params.get("volume_file")) if (params.get("volume_file") is not None) else None,
+        output_label_file=execution.output_file(params.get("label_file", None)),
+        output_volume_file=execution.output_file(params.get("volume_file", None)) if (params.get("volume_file") is not None) else None,
     )
     return ret
 
@@ -323,7 +306,6 @@ def mri_cor2label(
 __all__ = [
     "MRI_COR2LABEL_METADATA",
     "MriCor2labelOutputs",
-    "MriCor2labelParameters",
     "mri_cor2label",
     "mri_cor2label_execute",
     "mri_cor2label_params",

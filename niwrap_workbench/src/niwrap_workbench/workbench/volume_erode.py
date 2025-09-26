@@ -14,7 +14,15 @@ VOLUME_ERODE_METADATA = Metadata(
 
 
 VolumeErodeParameters = typing.TypedDict('VolumeErodeParameters', {
-    "@type": typing.Literal["workbench.volume-erode"],
+    "@type": typing.NotRequired[typing.Literal["workbench/volume-erode"]],
+    "volume": InputPathType,
+    "distance": float,
+    "volume_out": str,
+    "opt_roi_roi_volume": typing.NotRequired[InputPathType | None],
+    "opt_subvolume_subvol": typing.NotRequired[str | None],
+})
+VolumeErodeParametersTagged = typing.TypedDict('VolumeErodeParametersTagged', {
+    "@type": typing.Literal["workbench/volume-erode"],
     "volume": InputPathType,
     "distance": float,
     "volume_out": str,
@@ -23,41 +31,9 @@ VolumeErodeParameters = typing.TypedDict('VolumeErodeParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "workbench.volume-erode": volume_erode_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "workbench.volume-erode": volume_erode_outputs,
-    }.get(t)
-
-
 class VolumeErodeOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `volume_erode(...)`.
+    Output object returned when calling `VolumeErodeParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -71,7 +47,7 @@ def volume_erode_params(
     volume_out: str,
     opt_roi_roi_volume: InputPathType | None = None,
     opt_subvolume_subvol: str | None = None,
-) -> VolumeErodeParameters:
+) -> VolumeErodeParametersTagged:
     """
     Build parameters.
     
@@ -87,7 +63,7 @@ def volume_erode_params(
         Parameter dictionary
     """
     params = {
-        "@type": "workbench.volume-erode",
+        "@type": "workbench/volume-erode",
         "volume": volume,
         "distance": distance,
         "volume_out": volume_out,
@@ -115,18 +91,18 @@ def volume_erode_cargs(
     cargs = []
     cargs.append("wb_command")
     cargs.append("-volume-erode")
-    cargs.append(execution.input_file(params.get("volume")))
-    cargs.append(str(params.get("distance")))
-    cargs.append(params.get("volume_out"))
-    if params.get("opt_roi_roi_volume") is not None:
+    cargs.append(execution.input_file(params.get("volume", None)))
+    cargs.append(str(params.get("distance", None)))
+    cargs.append(params.get("volume_out", None))
+    if params.get("opt_roi_roi_volume", None) is not None:
         cargs.extend([
             "-roi",
-            execution.input_file(params.get("opt_roi_roi_volume"))
+            execution.input_file(params.get("opt_roi_roi_volume", None))
         ])
-    if params.get("opt_subvolume_subvol") is not None:
+    if params.get("opt_subvolume_subvol", None) is not None:
         cargs.extend([
             "-subvolume",
-            params.get("opt_subvolume_subvol")
+            params.get("opt_subvolume_subvol", None)
         ])
     return cargs
 
@@ -146,7 +122,7 @@ def volume_erode_outputs(
     """
     ret = VolumeErodeOutputs(
         root=execution.output_file("."),
-        volume_out=execution.output_file(params.get("volume_out")),
+        volume_out=execution.output_file(params.get("volume_out", None)),
     )
     return ret
 
@@ -229,7 +205,6 @@ def volume_erode(
 __all__ = [
     "VOLUME_ERODE_METADATA",
     "VolumeErodeOutputs",
-    "VolumeErodeParameters",
     "volume_erode",
     "volume_erode_execute",
     "volume_erode_params",

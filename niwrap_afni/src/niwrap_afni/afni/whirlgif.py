@@ -14,7 +14,17 @@ WHIRLGIF_METADATA = Metadata(
 
 
 WhirlgifParameters = typing.TypedDict('WhirlgifParameters', {
-    "@type": typing.Literal["afni.whirlgif"],
+    "@type": typing.NotRequired[typing.Literal["afni/whirlgif"]],
+    "verbose": bool,
+    "loop": typing.NotRequired[str | None],
+    "transparency_index": typing.NotRequired[float | None],
+    "inter_frame_delay": typing.NotRequired[float | None],
+    "outfile": typing.NotRequired[str | None],
+    "infile": typing.NotRequired[InputPathType | None],
+    "gif_files": list[InputPathType],
+})
+WhirlgifParametersTagged = typing.TypedDict('WhirlgifParametersTagged', {
+    "@type": typing.Literal["afni/whirlgif"],
     "verbose": bool,
     "loop": typing.NotRequired[str | None],
     "transparency_index": typing.NotRequired[float | None],
@@ -25,41 +35,9 @@ WhirlgifParameters = typing.TypedDict('WhirlgifParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "afni.whirlgif": whirlgif_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "afni.whirlgif": whirlgif_outputs,
-    }.get(t)
-
-
 class WhirlgifOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `whirlgif(...)`.
+    Output object returned when calling `WhirlgifParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -75,7 +53,7 @@ def whirlgif_params(
     inter_frame_delay: float | None = None,
     outfile: str | None = None,
     infile: InputPathType | None = None,
-) -> WhirlgifParameters:
+) -> WhirlgifParametersTagged:
     """
     Build parameters.
     
@@ -92,7 +70,7 @@ def whirlgif_params(
         Parameter dictionary
     """
     params = {
-        "@type": "afni.whirlgif",
+        "@type": "afni/whirlgif",
         "verbose": verbose,
         "gif_files": gif_files,
     }
@@ -124,34 +102,34 @@ def whirlgif_cargs(
     """
     cargs = []
     cargs.append("whirlgif")
-    if params.get("verbose"):
+    if params.get("verbose", False):
         cargs.append("-v")
-    if params.get("loop") is not None:
+    if params.get("loop", None) is not None:
         cargs.extend([
             "-loop",
-            params.get("loop")
+            params.get("loop", None)
         ])
-    if params.get("transparency_index") is not None:
+    if params.get("transparency_index", None) is not None:
         cargs.extend([
             "-trans",
-            str(params.get("transparency_index"))
+            str(params.get("transparency_index", None))
         ])
-    if params.get("inter_frame_delay") is not None:
+    if params.get("inter_frame_delay", None) is not None:
         cargs.extend([
             "-time",
-            str(params.get("inter_frame_delay"))
+            str(params.get("inter_frame_delay", None))
         ])
-    if params.get("outfile") is not None:
+    if params.get("outfile", None) is not None:
         cargs.extend([
             "-o",
-            params.get("outfile")
+            params.get("outfile", None)
         ])
-    if params.get("infile") is not None:
+    if params.get("infile", None) is not None:
         cargs.extend([
             "-i",
-            execution.input_file(params.get("infile"))
+            execution.input_file(params.get("infile", None))
         ])
-    cargs.extend([execution.input_file(f) for f in params.get("gif_files")])
+    cargs.extend([execution.input_file(f) for f in params.get("gif_files", None)])
     return cargs
 
 
@@ -170,7 +148,7 @@ def whirlgif_outputs(
     """
     ret = WhirlgifOutputs(
         root=execution.output_file("."),
-        output_gif=execution.output_file(params.get("outfile")) if (params.get("outfile") is not None) else None,
+        output_gif=execution.output_file(params.get("outfile", None)) if (params.get("outfile") is not None) else None,
     )
     return ret
 
@@ -252,7 +230,6 @@ def whirlgif(
 __all__ = [
     "WHIRLGIF_METADATA",
     "WhirlgifOutputs",
-    "WhirlgifParameters",
     "whirlgif",
     "whirlgif_execute",
     "whirlgif_params",

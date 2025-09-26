@@ -14,7 +14,18 @@ VOLUME_VECTOR_OPERATION_METADATA = Metadata(
 
 
 VolumeVectorOperationParameters = typing.TypedDict('VolumeVectorOperationParameters', {
-    "@type": typing.Literal["workbench.volume-vector-operation"],
+    "@type": typing.NotRequired[typing.Literal["workbench/volume-vector-operation"]],
+    "vectors_a": InputPathType,
+    "vectors_b": InputPathType,
+    "operation": str,
+    "volume_out": str,
+    "opt_normalize_a": bool,
+    "opt_normalize_b": bool,
+    "opt_normalize_output": bool,
+    "opt_magnitude": bool,
+})
+VolumeVectorOperationParametersTagged = typing.TypedDict('VolumeVectorOperationParametersTagged', {
+    "@type": typing.Literal["workbench/volume-vector-operation"],
     "vectors_a": InputPathType,
     "vectors_b": InputPathType,
     "operation": str,
@@ -26,41 +37,9 @@ VolumeVectorOperationParameters = typing.TypedDict('VolumeVectorOperationParamet
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "workbench.volume-vector-operation": volume_vector_operation_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "workbench.volume-vector-operation": volume_vector_operation_outputs,
-    }.get(t)
-
-
 class VolumeVectorOperationOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `volume_vector_operation(...)`.
+    Output object returned when calling `VolumeVectorOperationParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -77,7 +56,7 @@ def volume_vector_operation_params(
     opt_normalize_b: bool = False,
     opt_normalize_output: bool = False,
     opt_magnitude: bool = False,
-) -> VolumeVectorOperationParameters:
+) -> VolumeVectorOperationParametersTagged:
     """
     Build parameters.
     
@@ -96,7 +75,7 @@ def volume_vector_operation_params(
         Parameter dictionary
     """
     params = {
-        "@type": "workbench.volume-vector-operation",
+        "@type": "workbench/volume-vector-operation",
         "vectors_a": vectors_a,
         "vectors_b": vectors_b,
         "operation": operation,
@@ -125,17 +104,17 @@ def volume_vector_operation_cargs(
     cargs = []
     cargs.append("wb_command")
     cargs.append("-volume-vector-operation")
-    cargs.append(execution.input_file(params.get("vectors_a")))
-    cargs.append(execution.input_file(params.get("vectors_b")))
-    cargs.append(params.get("operation"))
-    cargs.append(params.get("volume_out"))
-    if params.get("opt_normalize_a"):
+    cargs.append(execution.input_file(params.get("vectors_a", None)))
+    cargs.append(execution.input_file(params.get("vectors_b", None)))
+    cargs.append(params.get("operation", None))
+    cargs.append(params.get("volume_out", None))
+    if params.get("opt_normalize_a", False):
         cargs.append("-normalize-a")
-    if params.get("opt_normalize_b"):
+    if params.get("opt_normalize_b", False):
         cargs.append("-normalize-b")
-    if params.get("opt_normalize_output"):
+    if params.get("opt_normalize_output", False):
         cargs.append("-normalize-output")
-    if params.get("opt_magnitude"):
+    if params.get("opt_magnitude", False):
         cargs.append("-magnitude")
     return cargs
 
@@ -155,7 +134,7 @@ def volume_vector_operation_outputs(
     """
     ret = VolumeVectorOperationOutputs(
         root=execution.output_file("."),
-        volume_out=execution.output_file(params.get("volume_out")),
+        volume_out=execution.output_file(params.get("volume_out", None)),
     )
     return ret
 
@@ -263,7 +242,6 @@ def volume_vector_operation(
 __all__ = [
     "VOLUME_VECTOR_OPERATION_METADATA",
     "VolumeVectorOperationOutputs",
-    "VolumeVectorOperationParameters",
     "volume_vector_operation",
     "volume_vector_operation_execute",
     "volume_vector_operation_params",

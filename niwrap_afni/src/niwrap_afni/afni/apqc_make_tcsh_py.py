@@ -14,7 +14,15 @@ APQC_MAKE_TCSH_PY_METADATA = Metadata(
 
 
 ApqcMakeTcshPyParameters = typing.TypedDict('ApqcMakeTcshPyParameters', {
-    "@type": typing.Literal["afni.apqc_make_tcsh.py"],
+    "@type": typing.NotRequired[typing.Literal["afni/apqc_make_tcsh.py"]],
+    "uvar_json": InputPathType,
+    "subj_dir": str,
+    "review_style": typing.NotRequired[str | None],
+    "mot_grayplot_off": bool,
+    "vstat_list": typing.NotRequired[list[str] | None],
+})
+ApqcMakeTcshPyParametersTagged = typing.TypedDict('ApqcMakeTcshPyParametersTagged', {
+    "@type": typing.Literal["afni/apqc_make_tcsh.py"],
     "uvar_json": InputPathType,
     "subj_dir": str,
     "review_style": typing.NotRequired[str | None],
@@ -23,40 +31,9 @@ ApqcMakeTcshPyParameters = typing.TypedDict('ApqcMakeTcshPyParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "afni.apqc_make_tcsh.py": apqc_make_tcsh_py_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-    }.get(t)
-
-
 class ApqcMakeTcshPyOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `apqc_make_tcsh_py(...)`.
+    Output object returned when calling `ApqcMakeTcshPyParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -68,7 +45,7 @@ def apqc_make_tcsh_py_params(
     review_style: str | None = None,
     mot_grayplot_off: bool = False,
     vstat_list: list[str] | None = None,
-) -> ApqcMakeTcshPyParameters:
+) -> ApqcMakeTcshPyParametersTagged:
     """
     Build parameters.
     
@@ -90,7 +67,7 @@ def apqc_make_tcsh_py_params(
         Parameter dictionary
     """
     params = {
-        "@type": "afni.apqc_make_tcsh.py",
+        "@type": "afni/apqc_make_tcsh.py",
         "uvar_json": uvar_json,
         "subj_dir": subj_dir,
         "mot_grayplot_off": mot_grayplot_off,
@@ -119,23 +96,23 @@ def apqc_make_tcsh_py_cargs(
     cargs.append("apqc_make_tcsh.py")
     cargs.extend([
         "-uvar_json",
-        execution.input_file(params.get("uvar_json"))
+        execution.input_file(params.get("uvar_json", None))
     ])
     cargs.extend([
         "-subj_dir",
-        params.get("subj_dir")
+        params.get("subj_dir", None)
     ])
-    if params.get("review_style") is not None:
+    if params.get("review_style", None) is not None:
         cargs.extend([
             "-review_style",
-            params.get("review_style")
+            params.get("review_style", None)
         ])
-    if params.get("mot_grayplot_off"):
+    if params.get("mot_grayplot_off", False):
         cargs.append("-mot_grayplot_off")
-    if params.get("vstat_list") is not None:
+    if params.get("vstat_list", None) is not None:
         cargs.extend([
             "-vstat_list",
-            *params.get("vstat_list")
+            *params.get("vstat_list", None)
         ])
     return cargs
 
@@ -239,7 +216,6 @@ def apqc_make_tcsh_py(
 __all__ = [
     "APQC_MAKE_TCSH_PY_METADATA",
     "ApqcMakeTcshPyOutputs",
-    "ApqcMakeTcshPyParameters",
     "apqc_make_tcsh_py",
     "apqc_make_tcsh_py_execute",
     "apqc_make_tcsh_py_params",

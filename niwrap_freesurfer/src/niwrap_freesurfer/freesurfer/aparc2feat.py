@@ -14,7 +14,19 @@ APARC2FEAT_METADATA = Metadata(
 
 
 Aparc2featParameters = typing.TypedDict('Aparc2featParameters', {
-    "@type": typing.Literal["freesurfer.aparc2feat"],
+    "@type": typing.NotRequired[typing.Literal["freesurfer/aparc2feat"]],
+    "feat_directories": str,
+    "featdirfile": typing.NotRequired[InputPathType | None],
+    "hemi": typing.NotRequired[str | None],
+    "annot": typing.NotRequired[str | None],
+    "annot_a2005s_flag": bool,
+    "annot_a2009s_flag": bool,
+    "debug_flag": bool,
+    "help_flag": bool,
+    "version_flag": bool,
+})
+Aparc2featParametersTagged = typing.TypedDict('Aparc2featParametersTagged', {
+    "@type": typing.Literal["freesurfer/aparc2feat"],
     "feat_directories": str,
     "featdirfile": typing.NotRequired[InputPathType | None],
     "hemi": typing.NotRequired[str | None],
@@ -27,41 +39,9 @@ Aparc2featParameters = typing.TypedDict('Aparc2featParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "freesurfer.aparc2feat": aparc2feat_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "freesurfer.aparc2feat": aparc2feat_outputs,
-    }.get(t)
-
-
 class Aparc2featOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `aparc2feat(...)`.
+    Output object returned when calling `Aparc2featParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -81,7 +61,7 @@ def aparc2feat_params(
     debug_flag: bool = False,
     help_flag: bool = False,
     version_flag: bool = False,
-) -> Aparc2featParameters:
+) -> Aparc2featParametersTagged:
     """
     Build parameters.
     
@@ -101,7 +81,7 @@ def aparc2feat_params(
         Parameter dictionary
     """
     params = {
-        "@type": "freesurfer.aparc2feat",
+        "@type": "freesurfer/aparc2feat",
         "feat_directories": feat_directories,
         "annot_a2005s_flag": annot_a2005s_flag,
         "annot_a2009s_flag": annot_a2009s_flag,
@@ -135,32 +115,32 @@ def aparc2feat_cargs(
     cargs.append("aparc2feat")
     cargs.extend([
         "--feat",
-        params.get("feat_directories")
+        params.get("feat_directories", None)
     ])
-    if params.get("featdirfile") is not None:
+    if params.get("featdirfile", None) is not None:
         cargs.extend([
             "--featdirfile",
-            execution.input_file(params.get("featdirfile"))
+            execution.input_file(params.get("featdirfile", None))
         ])
-    if params.get("hemi") is not None:
+    if params.get("hemi", None) is not None:
         cargs.extend([
             "--hemi",
-            params.get("hemi")
+            params.get("hemi", None)
         ])
-    if params.get("annot") is not None:
+    if params.get("annot", None) is not None:
         cargs.extend([
             "--annot",
-            params.get("annot")
+            params.get("annot", None)
         ])
-    if params.get("annot_a2005s_flag"):
+    if params.get("annot_a2005s_flag", False):
         cargs.append("--a2005s")
-    if params.get("annot_a2009s_flag"):
+    if params.get("annot_a2009s_flag", False):
         cargs.append("--a2009s")
-    if params.get("debug_flag"):
+    if params.get("debug_flag", False):
         cargs.append("--debug")
-    if params.get("help_flag"):
+    if params.get("help_flag", False):
         cargs.append("--help")
-    if params.get("version_flag"):
+    if params.get("version_flag", False):
         cargs.append("--version")
     return cargs
 
@@ -180,8 +160,8 @@ def aparc2feat_outputs(
     """
     ret = Aparc2featOutputs(
         root=execution.output_file("."),
-        lh_aparc_output=execution.output_file(params.get("feat_directories") + "/reg/freesurfer/lh.aparc.nii.gz"),
-        rh_aparc_output=execution.output_file(params.get("feat_directories") + "/reg/freesurfer/rh.aparc.nii.gz"),
+        lh_aparc_output=execution.output_file(params.get("feat_directories", None) + "/reg/freesurfer/lh.aparc.nii.gz"),
+        rh_aparc_output=execution.output_file(params.get("feat_directories", None) + "/reg/freesurfer/rh.aparc.nii.gz"),
     )
     return ret
 
@@ -270,7 +250,6 @@ def aparc2feat(
 __all__ = [
     "APARC2FEAT_METADATA",
     "Aparc2featOutputs",
-    "Aparc2featParameters",
     "aparc2feat",
     "aparc2feat_execute",
     "aparc2feat_params",

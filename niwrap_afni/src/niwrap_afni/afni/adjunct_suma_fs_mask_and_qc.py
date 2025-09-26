@@ -14,7 +14,16 @@ ADJUNCT_SUMA_FS_MASK_AND_QC_METADATA = Metadata(
 
 
 AdjunctSumaFsMaskAndQcParameters = typing.TypedDict('AdjunctSumaFsMaskAndQcParameters', {
-    "@type": typing.Literal["afni.adjunct_suma_fs_mask_and_qc"],
+    "@type": typing.NotRequired[typing.Literal["afni/adjunct_suma_fs_mask_and_qc"]],
+    "subj_id": str,
+    "suma_dir": str,
+    "no_clean": bool,
+    "help": bool,
+    "hview": bool,
+    "version": bool,
+})
+AdjunctSumaFsMaskAndQcParametersTagged = typing.TypedDict('AdjunctSumaFsMaskAndQcParametersTagged', {
+    "@type": typing.Literal["afni/adjunct_suma_fs_mask_and_qc"],
     "subj_id": str,
     "suma_dir": str,
     "no_clean": bool,
@@ -24,41 +33,9 @@ AdjunctSumaFsMaskAndQcParameters = typing.TypedDict('AdjunctSumaFsMaskAndQcParam
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "afni.adjunct_suma_fs_mask_and_qc": adjunct_suma_fs_mask_and_qc_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "afni.adjunct_suma_fs_mask_and_qc": adjunct_suma_fs_mask_and_qc_outputs,
-    }.get(t)
-
-
 class AdjunctSumaFsMaskAndQcOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `adjunct_suma_fs_mask_and_qc(...)`.
+    Output object returned when calling `AdjunctSumaFsMaskAndQcParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -86,7 +63,7 @@ def adjunct_suma_fs_mask_and_qc_params(
     help_: bool = False,
     hview: bool = False,
     version: bool = False,
-) -> AdjunctSumaFsMaskAndQcParameters:
+) -> AdjunctSumaFsMaskAndQcParametersTagged:
     """
     Build parameters.
     
@@ -102,7 +79,7 @@ def adjunct_suma_fs_mask_and_qc_params(
         Parameter dictionary
     """
     params = {
-        "@type": "afni.adjunct_suma_fs_mask_and_qc",
+        "@type": "afni/adjunct_suma_fs_mask_and_qc",
         "subj_id": subj_id,
         "suma_dir": suma_dir,
         "no_clean": no_clean,
@@ -130,19 +107,19 @@ def adjunct_suma_fs_mask_and_qc_cargs(
     cargs.append("adjunct_suma_fs_mask_and_qc")
     cargs.extend([
         "-sid",
-        params.get("subj_id")
+        params.get("subj_id", None)
     ])
     cargs.extend([
         "-suma_dir",
-        params.get("suma_dir")
+        params.get("suma_dir", None)
     ])
-    if params.get("no_clean"):
+    if params.get("no_clean", False):
         cargs.append("-no_clean")
-    if params.get("help"):
+    if params.get("help", False):
         cargs.append("-help")
-    if params.get("hview"):
+    if params.get("hview", False):
         cargs.append("-hview")
-    if params.get("version"):
+    if params.get("version", False):
         cargs.append("-ver")
     return cargs
 
@@ -247,7 +224,6 @@ def adjunct_suma_fs_mask_and_qc(
 __all__ = [
     "ADJUNCT_SUMA_FS_MASK_AND_QC_METADATA",
     "AdjunctSumaFsMaskAndQcOutputs",
-    "AdjunctSumaFsMaskAndQcParameters",
     "adjunct_suma_fs_mask_and_qc",
     "adjunct_suma_fs_mask_and_qc_execute",
     "adjunct_suma_fs_mask_and_qc_params",

@@ -14,46 +14,18 @@ V__GET_AFNI_ID_METADATA = Metadata(
 
 
 VGetAfniIdParameters = typing.TypedDict('VGetAfniIdParameters', {
-    "@type": typing.Literal["afni.@GetAfniID"],
+    "@type": typing.NotRequired[typing.Literal["afni/@GetAfniID"]],
+    "dset": InputPathType,
+})
+VGetAfniIdParametersTagged = typing.TypedDict('VGetAfniIdParametersTagged', {
+    "@type": typing.Literal["afni/@GetAfniID"],
     "dset": InputPathType,
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "afni.@GetAfniID": v__get_afni_id_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "afni.@GetAfniID": v__get_afni_id_outputs,
-    }.get(t)
-
-
 class VGetAfniIdOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `v__get_afni_id(...)`.
+    Output object returned when calling `VGetAfniIdParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -63,7 +35,7 @@ class VGetAfniIdOutputs(typing.NamedTuple):
 
 def v__get_afni_id_params(
     dset: InputPathType,
-) -> VGetAfniIdParameters:
+) -> VGetAfniIdParametersTagged:
     """
     Build parameters.
     
@@ -73,7 +45,7 @@ def v__get_afni_id_params(
         Parameter dictionary
     """
     params = {
-        "@type": "afni.@GetAfniID",
+        "@type": "afni/@GetAfniID",
         "dset": dset,
     }
     return params
@@ -94,7 +66,7 @@ def v__get_afni_id_cargs(
     """
     cargs = []
     cargs.append("@GetAfniID")
-    cargs.append(execution.input_file(params.get("dset")))
+    cargs.append(execution.input_file(params.get("dset", None)))
     return cargs
 
 
@@ -173,7 +145,6 @@ def v__get_afni_id(
 
 __all__ = [
     "VGetAfniIdOutputs",
-    "VGetAfniIdParameters",
     "V__GET_AFNI_ID_METADATA",
     "v__get_afni_id",
     "v__get_afni_id_execute",

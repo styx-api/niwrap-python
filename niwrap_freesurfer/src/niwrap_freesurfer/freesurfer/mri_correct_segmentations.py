@@ -14,46 +14,20 @@ MRI_CORRECT_SEGMENTATIONS_METADATA = Metadata(
 
 
 MriCorrectSegmentationsParameters = typing.TypedDict('MriCorrectSegmentationsParameters', {
-    "@type": typing.Literal["freesurfer.mri_correct_segmentations"],
+    "@type": typing.NotRequired[typing.Literal["freesurfer/mri_correct_segmentations"]],
+    "input_file_1": InputPathType,
+    "input_file_2": InputPathType,
+})
+MriCorrectSegmentationsParametersTagged = typing.TypedDict('MriCorrectSegmentationsParametersTagged', {
+    "@type": typing.Literal["freesurfer/mri_correct_segmentations"],
     "input_file_1": InputPathType,
     "input_file_2": InputPathType,
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "freesurfer.mri_correct_segmentations": mri_correct_segmentations_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-    }.get(t)
-
-
 class MriCorrectSegmentationsOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `mri_correct_segmentations(...)`.
+    Output object returned when calling `MriCorrectSegmentationsParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -62,7 +36,7 @@ class MriCorrectSegmentationsOutputs(typing.NamedTuple):
 def mri_correct_segmentations_params(
     input_file_1: InputPathType,
     input_file_2: InputPathType,
-) -> MriCorrectSegmentationsParameters:
+) -> MriCorrectSegmentationsParametersTagged:
     """
     Build parameters.
     
@@ -73,7 +47,7 @@ def mri_correct_segmentations_params(
         Parameter dictionary
     """
     params = {
-        "@type": "freesurfer.mri_correct_segmentations",
+        "@type": "freesurfer/mri_correct_segmentations",
         "input_file_1": input_file_1,
         "input_file_2": input_file_2,
     }
@@ -95,8 +69,8 @@ def mri_correct_segmentations_cargs(
     """
     cargs = []
     cargs.append("mri_correct_segmentations")
-    cargs.append(execution.input_file(params.get("input_file_1")))
-    cargs.append(execution.input_file(params.get("input_file_2")))
+    cargs.append(execution.input_file(params.get("input_file_1", None)))
+    cargs.append(execution.input_file(params.get("input_file_2", None)))
     return cargs
 
 
@@ -178,7 +152,6 @@ def mri_correct_segmentations(
 __all__ = [
     "MRI_CORRECT_SEGMENTATIONS_METADATA",
     "MriCorrectSegmentationsOutputs",
-    "MriCorrectSegmentationsParameters",
     "mri_correct_segmentations",
     "mri_correct_segmentations_execute",
     "mri_correct_segmentations_params",

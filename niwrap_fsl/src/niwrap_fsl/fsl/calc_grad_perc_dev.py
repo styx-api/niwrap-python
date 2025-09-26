@@ -14,7 +14,14 @@ CALC_GRAD_PERC_DEV_METADATA = Metadata(
 
 
 CalcGradPercDevParameters = typing.TypedDict('CalcGradPercDevParameters', {
-    "@type": typing.Literal["fsl.calc_grad_perc_dev"],
+    "@type": typing.NotRequired[typing.Literal["fsl/calc_grad_perc_dev"]],
+    "fullwarp_image": InputPathType,
+    "out_basename": str,
+    "verbose_flag": bool,
+    "help_flag": bool,
+})
+CalcGradPercDevParametersTagged = typing.TypedDict('CalcGradPercDevParametersTagged', {
+    "@type": typing.Literal["fsl/calc_grad_perc_dev"],
     "fullwarp_image": InputPathType,
     "out_basename": str,
     "verbose_flag": bool,
@@ -22,40 +29,9 @@ CalcGradPercDevParameters = typing.TypedDict('CalcGradPercDevParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "fsl.calc_grad_perc_dev": calc_grad_perc_dev_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-    }.get(t)
-
-
 class CalcGradPercDevOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `calc_grad_perc_dev(...)`.
+    Output object returned when calling `CalcGradPercDevParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -66,7 +42,7 @@ def calc_grad_perc_dev_params(
     out_basename: str,
     verbose_flag: bool = False,
     help_flag: bool = False,
-) -> CalcGradPercDevParameters:
+) -> CalcGradPercDevParametersTagged:
     """
     Build parameters.
     
@@ -79,7 +55,7 @@ def calc_grad_perc_dev_params(
         Parameter dictionary
     """
     params = {
-        "@type": "fsl.calc_grad_perc_dev",
+        "@type": "fsl/calc_grad_perc_dev",
         "fullwarp_image": fullwarp_image,
         "out_basename": out_basename,
         "verbose_flag": verbose_flag,
@@ -105,15 +81,15 @@ def calc_grad_perc_dev_cargs(
     cargs.append("calc_grad_perc_dev")
     cargs.extend([
         "--fullwarp",
-        execution.input_file(params.get("fullwarp_image"))
+        execution.input_file(params.get("fullwarp_image", None))
     ])
     cargs.extend([
         "-o,--out",
-        params.get("out_basename")
+        params.get("out_basename", None)
     ])
-    if params.get("verbose_flag"):
+    if params.get("verbose_flag", False):
         cargs.append("-v,--verbose")
-    if params.get("help_flag"):
+    if params.get("help_flag", False):
         cargs.append("-h,--help")
     return cargs
 
@@ -204,7 +180,6 @@ def calc_grad_perc_dev(
 __all__ = [
     "CALC_GRAD_PERC_DEV_METADATA",
     "CalcGradPercDevOutputs",
-    "CalcGradPercDevParameters",
     "calc_grad_perc_dev",
     "calc_grad_perc_dev_execute",
     "calc_grad_perc_dev_params",

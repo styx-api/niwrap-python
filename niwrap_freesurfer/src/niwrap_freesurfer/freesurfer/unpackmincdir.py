@@ -14,7 +14,18 @@ UNPACKMINCDIR_METADATA = Metadata(
 
 
 UnpackmincdirParameters = typing.TypedDict('UnpackmincdirParameters', {
-    "@type": typing.Literal["freesurfer.unpackmincdir"],
+    "@type": typing.NotRequired[typing.Literal["freesurfer/unpackmincdir"]],
+    "source_directory": str,
+    "target_directory": str,
+    "scan_sequence_info": typing.NotRequired[str | None],
+    "functional_sequence": typing.NotRequired[str | None],
+    "functional_subdirectory": typing.NotRequired[str | None],
+    "minc_only": bool,
+    "no_copy": bool,
+    "umask": typing.NotRequired[str | None],
+})
+UnpackmincdirParametersTagged = typing.TypedDict('UnpackmincdirParametersTagged', {
+    "@type": typing.Literal["freesurfer/unpackmincdir"],
     "source_directory": str,
     "target_directory": str,
     "scan_sequence_info": typing.NotRequired[str | None],
@@ -26,40 +37,9 @@ UnpackmincdirParameters = typing.TypedDict('UnpackmincdirParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "freesurfer.unpackmincdir": unpackmincdir_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-    }.get(t)
-
-
 class UnpackmincdirOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `unpackmincdir(...)`.
+    Output object returned when calling `UnpackmincdirParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -74,7 +54,7 @@ def unpackmincdir_params(
     minc_only: bool = False,
     no_copy: bool = False,
     umask: str | None = None,
-) -> UnpackmincdirParameters:
+) -> UnpackmincdirParametersTagged:
     """
     Build parameters.
     
@@ -93,7 +73,7 @@ def unpackmincdir_params(
         Parameter dictionary
     """
     params = {
-        "@type": "freesurfer.unpackmincdir",
+        "@type": "freesurfer/unpackmincdir",
         "source_directory": source_directory,
         "target_directory": target_directory,
         "minc_only": minc_only,
@@ -127,35 +107,35 @@ def unpackmincdir_cargs(
     cargs.append("unpackmincdir")
     cargs.extend([
         "-src",
-        params.get("source_directory")
+        params.get("source_directory", None)
     ])
     cargs.extend([
         "-targ",
-        params.get("target_directory")
+        params.get("target_directory", None)
     ])
-    if params.get("scan_sequence_info") is not None:
+    if params.get("scan_sequence_info", None) is not None:
         cargs.extend([
             "-scanseqinfo",
-            params.get("scan_sequence_info")
+            params.get("scan_sequence_info", None)
         ])
-    if params.get("functional_sequence") is not None:
+    if params.get("functional_sequence", None) is not None:
         cargs.extend([
             "-funcseq",
-            params.get("functional_sequence")
+            params.get("functional_sequence", None)
         ])
-    if params.get("functional_subdirectory") is not None:
+    if params.get("functional_subdirectory", None) is not None:
         cargs.extend([
             "-fsd",
-            params.get("functional_subdirectory")
+            params.get("functional_subdirectory", None)
         ])
-    if params.get("minc_only"):
+    if params.get("minc_only", False):
         cargs.append("-minconly")
-    if params.get("no_copy"):
+    if params.get("no_copy", False):
         cargs.append("-nocopy")
-    if params.get("umask") is not None:
+    if params.get("umask", None) is not None:
         cargs.extend([
             "-umask",
-            params.get("umask")
+            params.get("umask", None)
         ])
     return cargs
 
@@ -258,7 +238,6 @@ def unpackmincdir(
 __all__ = [
     "UNPACKMINCDIR_METADATA",
     "UnpackmincdirOutputs",
-    "UnpackmincdirParameters",
     "unpackmincdir",
     "unpackmincdir_execute",
     "unpackmincdir_params",

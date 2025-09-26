@@ -14,7 +14,20 @@ V_1D_BPORT_METADATA = Metadata(
 
 
 V1dBportParameters = typing.TypedDict('V1dBportParameters', {
-    "@type": typing.Literal["afni.1dBport"],
+    "@type": typing.NotRequired[typing.Literal["afni/1dBport"]],
+    "band": list[float],
+    "invert": bool,
+    "nozero": bool,
+    "noconst": bool,
+    "quad": bool,
+    "input_dataset": typing.NotRequired[InputPathType | None],
+    "input_1d_file": typing.NotRequired[InputPathType | None],
+    "nodata": typing.NotRequired[list[float] | None],
+    "tr": typing.NotRequired[float | None],
+    "concat": typing.NotRequired[InputPathType | None],
+})
+V1dBportParametersTagged = typing.TypedDict('V1dBportParametersTagged', {
+    "@type": typing.Literal["afni/1dBport"],
     "band": list[float],
     "invert": bool,
     "nozero": bool,
@@ -28,41 +41,9 @@ V1dBportParameters = typing.TypedDict('V1dBportParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "afni.1dBport": v_1d_bport_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "afni.1dBport": v_1d_bport_outputs,
-    }.get(t)
-
-
 class V1dBportOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `v_1d_bport(...)`.
+    Output object returned when calling `V1dBportParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -81,7 +62,7 @@ def v_1d_bport_params(
     nodata: list[float] | None = None,
     tr: float | None = None,
     concat: InputPathType | None = None,
-) -> V1dBportParameters:
+) -> V1dBportParametersTagged:
     """
     Build parameters.
     
@@ -104,7 +85,7 @@ def v_1d_bport_params(
         Parameter dictionary
     """
     params = {
-        "@type": "afni.1dBport",
+        "@type": "afni/1dBport",
         "band": band,
         "invert": invert,
         "nozero": nozero,
@@ -141,40 +122,40 @@ def v_1d_bport_cargs(
     cargs.append("1dBport")
     cargs.extend([
         "-band",
-        *map(str, params.get("band"))
+        *map(str, params.get("band", None))
     ])
-    if params.get("invert"):
+    if params.get("invert", False):
         cargs.append("-invert")
-    if params.get("nozero"):
+    if params.get("nozero", False):
         cargs.append("-nozero")
-    if params.get("noconst"):
+    if params.get("noconst", False):
         cargs.append("-noconst")
-    if params.get("quad"):
+    if params.get("quad", False):
         cargs.append("-quad")
-    if params.get("input_dataset") is not None:
+    if params.get("input_dataset", None) is not None:
         cargs.extend([
             "-input",
-            execution.input_file(params.get("input_dataset"))
+            execution.input_file(params.get("input_dataset", None))
         ])
-    if params.get("input_1d_file") is not None:
+    if params.get("input_1d_file", None) is not None:
         cargs.extend([
             "-input1D",
-            execution.input_file(params.get("input_1d_file"))
+            execution.input_file(params.get("input_1d_file", None))
         ])
-    if params.get("nodata") is not None:
+    if params.get("nodata", None) is not None:
         cargs.extend([
             "-nodata",
-            *map(str, params.get("nodata"))
+            *map(str, params.get("nodata", None))
         ])
-    if params.get("tr") is not None:
+    if params.get("tr", None) is not None:
         cargs.extend([
             "-TR",
-            str(params.get("tr"))
+            str(params.get("tr", None))
         ])
-    if params.get("concat") is not None:
+    if params.get("concat", None) is not None:
         cargs.extend([
             "-concat",
-            execution.input_file(params.get("concat"))
+            execution.input_file(params.get("concat", None))
         ])
     return cargs
 
@@ -287,7 +268,6 @@ def v_1d_bport(
 
 __all__ = [
     "V1dBportOutputs",
-    "V1dBportParameters",
     "V_1D_BPORT_METADATA",
     "v_1d_bport",
     "v_1d_bport_execute",

@@ -14,7 +14,25 @@ MBA_METADATA = Metadata(
 
 
 MbaParameters = typing.TypedDict('MbaParameters', {
-    "@type": typing.Literal["afni.MBA"],
+    "@type": typing.NotRequired[typing.Literal["afni/MBA"]],
+    "prefix": str,
+    "chains": typing.NotRequired[int | None],
+    "iterations": typing.NotRequired[int | None],
+    "model": typing.NotRequired[str | None],
+    "eoi": typing.NotRequired[str | None],
+    "data_table": InputPathType,
+    "cvars": typing.NotRequired[str | None],
+    "qvars": typing.NotRequired[str | None],
+    "qcvar": typing.NotRequired[str | None],
+    "stdz": typing.NotRequired[str | None],
+    "wcp": typing.NotRequired[int | None],
+    "disty": typing.NotRequired[str | None],
+    "se": typing.NotRequired[str | None],
+    "dbgArgs": bool,
+    "help": bool,
+})
+MbaParametersTagged = typing.TypedDict('MbaParametersTagged', {
+    "@type": typing.Literal["afni/MBA"],
     "prefix": str,
     "chains": typing.NotRequired[int | None],
     "iterations": typing.NotRequired[int | None],
@@ -33,41 +51,9 @@ MbaParameters = typing.TypedDict('MbaParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "afni.MBA": mba_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "afni.MBA": mba_outputs,
-    }.get(t)
-
-
 class MbaOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `mba(...)`.
+    Output object returned when calling `MbaParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -95,7 +81,7 @@ def mba_params(
     se: str | None = None,
     dbg_args: bool = False,
     help_: bool = False,
-) -> MbaParameters:
+) -> MbaParametersTagged:
     """
     Build parameters.
     
@@ -122,7 +108,7 @@ def mba_params(
         Parameter dictionary
     """
     params = {
-        "@type": "afni.MBA",
+        "@type": "afni/MBA",
         "prefix": prefix,
         "data_table": data_table,
         "dbgArgs": dbg_args,
@@ -168,69 +154,69 @@ def mba_cargs(
     """
     cargs = []
     cargs.append("MBA")
-    cargs.append(params.get("prefix"))
-    if params.get("chains") is not None:
+    cargs.append(params.get("prefix", None))
+    if params.get("chains", None) is not None:
         cargs.extend([
             "-chains",
-            str(params.get("chains"))
+            str(params.get("chains", None))
         ])
-    if params.get("iterations") is not None:
+    if params.get("iterations", None) is not None:
         cargs.extend([
             "-iterations",
-            str(params.get("iterations"))
+            str(params.get("iterations", None))
         ])
-    if params.get("model") is not None:
+    if params.get("model", None) is not None:
         cargs.extend([
             "-model",
-            params.get("model")
+            params.get("model", None)
         ])
-    if params.get("eoi") is not None:
+    if params.get("eoi", None) is not None:
         cargs.extend([
             "-EOI",
-            params.get("eoi")
+            params.get("eoi", None)
         ])
     cargs.extend([
         "-dataTable",
-        execution.input_file(params.get("data_table"))
+        execution.input_file(params.get("data_table", None))
     ])
-    if params.get("cvars") is not None:
+    if params.get("cvars", None) is not None:
         cargs.extend([
             "-cVars",
-            params.get("cvars")
+            params.get("cvars", None)
         ])
-    if params.get("qvars") is not None:
+    if params.get("qvars", None) is not None:
         cargs.extend([
             "-qVars",
-            params.get("qvars")
+            params.get("qvars", None)
         ])
-    if params.get("qcvar") is not None:
+    if params.get("qcvar", None) is not None:
         cargs.extend([
             "-qContr",
-            params.get("qcvar")
+            params.get("qcvar", None)
         ])
-    if params.get("stdz") is not None:
+    if params.get("stdz", None) is not None:
         cargs.extend([
             "-stdz",
-            params.get("stdz")
+            params.get("stdz", None)
         ])
-    if params.get("wcp") is not None:
+    if params.get("wcp", None) is not None:
         cargs.extend([
             "-WCP",
-            str(params.get("wcp"))
+            str(params.get("wcp", None))
         ])
-    if params.get("disty") is not None:
+    if params.get("disty", None) is not None:
         cargs.extend([
             "-distY",
-            params.get("disty")
+            params.get("disty", None)
         ])
-    if params.get("se") is not None:
+    if params.get("se", None) is not None:
         cargs.extend([
             "-se",
-            params.get("se")
+            params.get("se", None)
         ])
-    if params.get("dbgArgs"):
+    if params.get("dbgArgs", False):
         cargs.append("-dbgArgs")
-    if params.get("help"):
+    if params.get("help", False):
         cargs.append("-help")
     return cargs
 
@@ -250,9 +236,9 @@ def mba_outputs(
     """
     ret = MbaOutputs(
         root=execution.output_file("."),
-        output_txt=execution.output_file(params.get("prefix") + ".txt"),
-        output_rdata=execution.output_file(params.get("prefix") + ".RData"),
-        matrix_plot=execution.output_file(params.get("prefix") + "_matrixplot.png"),
+        output_txt=execution.output_file(params.get("prefix", None) + ".txt"),
+        output_rdata=execution.output_file(params.get("prefix", None) + ".RData"),
+        matrix_plot=execution.output_file(params.get("prefix", None) + "_matrixplot.png"),
     )
     return ret
 
@@ -358,7 +344,6 @@ def mba(
 __all__ = [
     "MBA_METADATA",
     "MbaOutputs",
-    "MbaParameters",
     "mba",
     "mba_execute",
     "mba_params",

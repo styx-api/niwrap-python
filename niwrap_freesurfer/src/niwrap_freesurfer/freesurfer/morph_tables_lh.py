@@ -14,47 +14,20 @@ MORPH_TABLES_LH_METADATA = Metadata(
 
 
 MorphTablesLhParameters = typing.TypedDict('MorphTablesLhParameters', {
-    "@type": typing.Literal["freesurfer.morph_tables-lh"],
+    "@type": typing.NotRequired[typing.Literal["freesurfer/morph_tables-lh"]],
+    "input_file": InputPathType,
+    "some_flag": bool,
+})
+MorphTablesLhParametersTagged = typing.TypedDict('MorphTablesLhParametersTagged', {
+    "@type": typing.Literal["freesurfer/morph_tables-lh"],
     "input_file": InputPathType,
     "some_flag": bool,
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "freesurfer.morph_tables-lh": morph_tables_lh_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "freesurfer.morph_tables-lh": morph_tables_lh_outputs,
-    }.get(t)
-
-
 class MorphTablesLhOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `morph_tables_lh(...)`.
+    Output object returned when calling `MorphTablesLhParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -65,7 +38,7 @@ class MorphTablesLhOutputs(typing.NamedTuple):
 def morph_tables_lh_params(
     input_file: InputPathType,
     some_flag: bool = False,
-) -> MorphTablesLhParameters:
+) -> MorphTablesLhParametersTagged:
     """
     Build parameters.
     
@@ -77,7 +50,7 @@ def morph_tables_lh_params(
         Parameter dictionary
     """
     params = {
-        "@type": "freesurfer.morph_tables-lh",
+        "@type": "freesurfer/morph_tables-lh",
         "input_file": input_file,
         "some_flag": some_flag,
     }
@@ -101,9 +74,9 @@ def morph_tables_lh_cargs(
     cargs.append("morph_tables-lh")
     cargs.extend([
         "-lh",
-        execution.input_file(params.get("input_file"))
+        execution.input_file(params.get("input_file", None))
     ])
-    if params.get("some_flag"):
+    if params.get("some_flag", False):
         cargs.append("--some-flag")
     return cargs
 
@@ -123,7 +96,7 @@ def morph_tables_lh_outputs(
     """
     ret = MorphTablesLhOutputs(
         root=execution.output_file("."),
-        output_file=execution.output_file(pathlib.Path(params.get("input_file")).name + "_output.txt"),
+        output_file=execution.output_file(pathlib.Path(params.get("input_file", None)).name + "_output.txt"),
     )
     return ret
 
@@ -188,7 +161,6 @@ def morph_tables_lh(
 __all__ = [
     "MORPH_TABLES_LH_METADATA",
     "MorphTablesLhOutputs",
-    "MorphTablesLhParameters",
     "morph_tables_lh",
     "morph_tables_lh_execute",
     "morph_tables_lh_params",

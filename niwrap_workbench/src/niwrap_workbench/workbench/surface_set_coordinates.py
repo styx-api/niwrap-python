@@ -14,48 +14,22 @@ SURFACE_SET_COORDINATES_METADATA = Metadata(
 
 
 SurfaceSetCoordinatesParameters = typing.TypedDict('SurfaceSetCoordinatesParameters', {
-    "@type": typing.Literal["workbench.surface-set-coordinates"],
+    "@type": typing.NotRequired[typing.Literal["workbench/surface-set-coordinates"]],
+    "surface_in": InputPathType,
+    "coord_metric": InputPathType,
+    "surface_out": str,
+})
+SurfaceSetCoordinatesParametersTagged = typing.TypedDict('SurfaceSetCoordinatesParametersTagged', {
+    "@type": typing.Literal["workbench/surface-set-coordinates"],
     "surface_in": InputPathType,
     "coord_metric": InputPathType,
     "surface_out": str,
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "workbench.surface-set-coordinates": surface_set_coordinates_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "workbench.surface-set-coordinates": surface_set_coordinates_outputs,
-    }.get(t)
-
-
 class SurfaceSetCoordinatesOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `surface_set_coordinates(...)`.
+    Output object returned when calling `SurfaceSetCoordinatesParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -67,7 +41,7 @@ def surface_set_coordinates_params(
     surface_in: InputPathType,
     coord_metric: InputPathType,
     surface_out: str,
-) -> SurfaceSetCoordinatesParameters:
+) -> SurfaceSetCoordinatesParametersTagged:
     """
     Build parameters.
     
@@ -79,7 +53,7 @@ def surface_set_coordinates_params(
         Parameter dictionary
     """
     params = {
-        "@type": "workbench.surface-set-coordinates",
+        "@type": "workbench/surface-set-coordinates",
         "surface_in": surface_in,
         "coord_metric": coord_metric,
         "surface_out": surface_out,
@@ -103,9 +77,9 @@ def surface_set_coordinates_cargs(
     cargs = []
     cargs.append("wb_command")
     cargs.append("-surface-set-coordinates")
-    cargs.append(execution.input_file(params.get("surface_in")))
-    cargs.append(execution.input_file(params.get("coord_metric")))
-    cargs.append(params.get("surface_out"))
+    cargs.append(execution.input_file(params.get("surface_in", None)))
+    cargs.append(execution.input_file(params.get("coord_metric", None)))
+    cargs.append(params.get("surface_out", None))
     return cargs
 
 
@@ -124,7 +98,7 @@ def surface_set_coordinates_outputs(
     """
     ret = SurfaceSetCoordinatesOutputs(
         root=execution.output_file("."),
-        surface_out=execution.output_file(params.get("surface_out")),
+        surface_out=execution.output_file(params.get("surface_out", None)),
     )
     return ret
 
@@ -203,7 +177,6 @@ def surface_set_coordinates(
 __all__ = [
     "SURFACE_SET_COORDINATES_METADATA",
     "SurfaceSetCoordinatesOutputs",
-    "SurfaceSetCoordinatesParameters",
     "surface_set_coordinates",
     "surface_set_coordinates_execute",
     "surface_set_coordinates_params",

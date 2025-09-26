@@ -14,14 +14,33 @@ MRDUMP_METADATA = Metadata(
 
 
 MrdumpConfigParameters = typing.TypedDict('MrdumpConfigParameters', {
-    "@type": typing.Literal["mrtrix.mrdump.config"],
+    "@type": typing.NotRequired[typing.Literal["config"]],
+    "key": str,
+    "value": str,
+})
+MrdumpConfigParametersTagged = typing.TypedDict('MrdumpConfigParametersTagged', {
+    "@type": typing.Literal["config"],
     "key": str,
     "value": str,
 })
 
 
 MrdumpParameters = typing.TypedDict('MrdumpParameters', {
-    "@type": typing.Literal["mrtrix.mrdump"],
+    "@type": typing.NotRequired[typing.Literal["mrtrix/mrdump"]],
+    "mask": typing.NotRequired[InputPathType | None],
+    "info": bool,
+    "quiet": bool,
+    "debug": bool,
+    "force": bool,
+    "nthreads": typing.NotRequired[int | None],
+    "config": typing.NotRequired[list[MrdumpConfigParameters] | None],
+    "help": bool,
+    "version": bool,
+    "input": InputPathType,
+    "output": typing.NotRequired[str | None],
+})
+MrdumpParametersTagged = typing.TypedDict('MrdumpParametersTagged', {
+    "@type": typing.Literal["mrtrix/mrdump"],
     "mask": typing.NotRequired[InputPathType | None],
     "info": bool,
     "quiet": bool,
@@ -36,43 +55,10 @@ MrdumpParameters = typing.TypedDict('MrdumpParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "mrtrix.mrdump": mrdump_cargs,
-        "mrtrix.mrdump.config": mrdump_config_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "mrtrix.mrdump": mrdump_outputs,
-    }.get(t)
-
-
 def mrdump_config_params(
     key: str,
     value: str,
-) -> MrdumpConfigParameters:
+) -> MrdumpConfigParametersTagged:
     """
     Build parameters.
     
@@ -83,7 +69,7 @@ def mrdump_config_params(
         Parameter dictionary
     """
     params = {
-        "@type": "mrtrix.mrdump.config",
+        "@type": "config",
         "key": key,
         "value": value,
     }
@@ -105,14 +91,14 @@ def mrdump_config_cargs(
     """
     cargs = []
     cargs.append("-config")
-    cargs.append(params.get("key"))
-    cargs.append(params.get("value"))
+    cargs.append(params.get("key", None))
+    cargs.append(params.get("value", None))
     return cargs
 
 
 class MrdumpOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `mrdump(...)`.
+    Output object returned when calling `MrdumpParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -132,7 +118,7 @@ def mrdump_params(
     help_: bool = False,
     version: bool = False,
     output: str | None = None,
-) -> MrdumpParameters:
+) -> MrdumpParametersTagged:
     """
     Build parameters.
     
@@ -157,7 +143,7 @@ def mrdump_params(
         Parameter dictionary
     """
     params = {
-        "@type": "mrtrix.mrdump",
+        "@type": "mrtrix/mrdump",
         "info": info,
         "quiet": quiet,
         "debug": debug,
@@ -192,33 +178,33 @@ def mrdump_cargs(
     """
     cargs = []
     cargs.append("mrdump")
-    if params.get("mask") is not None:
+    if params.get("mask", None) is not None:
         cargs.extend([
             "-mask",
-            execution.input_file(params.get("mask"))
+            execution.input_file(params.get("mask", None))
         ])
-    if params.get("info"):
+    if params.get("info", False):
         cargs.append("-info")
-    if params.get("quiet"):
+    if params.get("quiet", False):
         cargs.append("-quiet")
-    if params.get("debug"):
+    if params.get("debug", False):
         cargs.append("-debug")
-    if params.get("force"):
+    if params.get("force", False):
         cargs.append("-force")
-    if params.get("nthreads") is not None:
+    if params.get("nthreads", None) is not None:
         cargs.extend([
             "-nthreads",
-            str(params.get("nthreads"))
+            str(params.get("nthreads", None))
         ])
-    if params.get("config") is not None:
-        cargs.extend([a for c in [dyn_cargs(s["@type"])(s, execution) for s in params.get("config")] for a in c])
-    if params.get("help"):
+    if params.get("config", None) is not None:
+        cargs.extend([a for c in [mrdump_config_cargs(s, execution) for s in params.get("config", None)] for a in c])
+    if params.get("help", False):
         cargs.append("-help")
-    if params.get("version"):
+    if params.get("version", False):
         cargs.append("-version")
-    cargs.append(execution.input_file(params.get("input")))
-    if params.get("output") is not None:
-        cargs.append(params.get("output"))
+    cargs.append(execution.input_file(params.get("input", None)))
+    if params.get("output", None) is not None:
+        cargs.append(params.get("output", None))
     return cargs
 
 
@@ -237,7 +223,7 @@ def mrdump_outputs(
     """
     ret = MrdumpOutputs(
         root=execution.output_file("."),
-        output=execution.output_file(params.get("output")) if (params.get("output") is not None) else None,
+        output=execution.output_file(params.get("output", None)) if (params.get("output") is not None) else None,
     )
     return ret
 
@@ -346,9 +332,7 @@ def mrdump(
 
 __all__ = [
     "MRDUMP_METADATA",
-    "MrdumpConfigParameters",
     "MrdumpOutputs",
-    "MrdumpParameters",
     "mrdump",
     "mrdump_config_params",
     "mrdump_execute",

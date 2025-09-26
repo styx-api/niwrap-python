@@ -14,48 +14,22 @@ V__2DWARPER_ALLIN_METADATA = Metadata(
 
 
 V2dwarperAllinParameters = typing.TypedDict('V2dwarperAllinParameters', {
-    "@type": typing.Literal["afni.@2dwarper.Allin"],
+    "@type": typing.NotRequired[typing.Literal["afni/@2dwarper.Allin"]],
+    "input_prefix": str,
+    "mask_prefix": typing.NotRequired[str | None],
+    "output_prefix": typing.NotRequired[str | None],
+})
+V2dwarperAllinParametersTagged = typing.TypedDict('V2dwarperAllinParametersTagged', {
+    "@type": typing.Literal["afni/@2dwarper.Allin"],
     "input_prefix": str,
     "mask_prefix": typing.NotRequired[str | None],
     "output_prefix": typing.NotRequired[str | None],
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "afni.@2dwarper.Allin": v__2dwarper_allin_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "afni.@2dwarper.Allin": v__2dwarper_allin_outputs,
-    }.get(t)
-
-
 class V2dwarperAllinOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `v__2dwarper_allin(...)`.
+    Output object returned when calling `V2dwarperAllinParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -69,7 +43,7 @@ def v__2dwarper_allin_params(
     input_prefix: str,
     mask_prefix: str | None = None,
     output_prefix: str | None = None,
-) -> V2dwarperAllinParameters:
+) -> V2dwarperAllinParametersTagged:
     """
     Build parameters.
     
@@ -81,7 +55,7 @@ def v__2dwarper_allin_params(
         Parameter dictionary
     """
     params = {
-        "@type": "afni.@2dwarper.Allin",
+        "@type": "afni/@2dwarper.Allin",
         "input_prefix": input_prefix,
     }
     if mask_prefix is not None:
@@ -106,16 +80,16 @@ def v__2dwarper_allin_cargs(
     """
     cargs = []
     cargs.append("@2dwarper.Allin")
-    cargs.append(params.get("input_prefix"))
-    if params.get("mask_prefix") is not None:
+    cargs.append(params.get("input_prefix", None))
+    if params.get("mask_prefix", None) is not None:
         cargs.extend([
             "-mask",
-            params.get("mask_prefix")
+            params.get("mask_prefix", None)
         ])
-    if params.get("output_prefix") is not None:
+    if params.get("output_prefix", None) is not None:
         cargs.extend([
             "-prefix",
-            params.get("output_prefix")
+            params.get("output_prefix", None)
         ])
     return cargs
 
@@ -135,8 +109,8 @@ def v__2dwarper_allin_outputs(
     """
     ret = V2dwarperAllinOutputs(
         root=execution.output_file("."),
-        reg_output=execution.output_file(params.get("output_prefix") + "_reg+orig.HEAD") if (params.get("output_prefix") is not None) else None,
-        param_files=execution.output_file(params.get("output_prefix") + "_param.1D") if (params.get("output_prefix") is not None) else None,
+        reg_output=execution.output_file(params.get("output_prefix", None) + "_reg+orig.HEAD") if (params.get("output_prefix") is not None) else None,
+        param_files=execution.output_file(params.get("output_prefix", None) + "_param.1D") if (params.get("output_prefix") is not None) else None,
     )
     return ret
 
@@ -204,7 +178,6 @@ def v__2dwarper_allin(
 
 __all__ = [
     "V2dwarperAllinOutputs",
-    "V2dwarperAllinParameters",
     "V__2DWARPER_ALLIN_METADATA",
     "v__2dwarper_allin",
     "v__2dwarper_allin_execute",

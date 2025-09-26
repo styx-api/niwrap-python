@@ -14,45 +14,18 @@ BROWSE_MINC_HEADER_TCL_METADATA = Metadata(
 
 
 BrowseMincHeaderTclParameters = typing.TypedDict('BrowseMincHeaderTclParameters', {
-    "@type": typing.Literal["freesurfer.browse-minc-header.tcl"],
+    "@type": typing.NotRequired[typing.Literal["freesurfer/browse-minc-header.tcl"]],
+    "infile": InputPathType,
+})
+BrowseMincHeaderTclParametersTagged = typing.TypedDict('BrowseMincHeaderTclParametersTagged', {
+    "@type": typing.Literal["freesurfer/browse-minc-header.tcl"],
     "infile": InputPathType,
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "freesurfer.browse-minc-header.tcl": browse_minc_header_tcl_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-    }.get(t)
-
-
 class BrowseMincHeaderTclOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `browse_minc_header_tcl(...)`.
+    Output object returned when calling `BrowseMincHeaderTclParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -60,7 +33,7 @@ class BrowseMincHeaderTclOutputs(typing.NamedTuple):
 
 def browse_minc_header_tcl_params(
     infile: InputPathType,
-) -> BrowseMincHeaderTclParameters:
+) -> BrowseMincHeaderTclParametersTagged:
     """
     Build parameters.
     
@@ -70,7 +43,7 @@ def browse_minc_header_tcl_params(
         Parameter dictionary
     """
     params = {
-        "@type": "freesurfer.browse-minc-header.tcl",
+        "@type": "freesurfer/browse-minc-header.tcl",
         "infile": infile,
     }
     return params
@@ -91,7 +64,7 @@ def browse_minc_header_tcl_cargs(
     """
     cargs = []
     cargs.append("browse-minc-header.tcl")
-    cargs.append(execution.input_file(params.get("infile")))
+    cargs.append(execution.input_file(params.get("infile", None)))
     return cargs
 
 
@@ -172,7 +145,6 @@ def browse_minc_header_tcl(
 __all__ = [
     "BROWSE_MINC_HEADER_TCL_METADATA",
     "BrowseMincHeaderTclOutputs",
-    "BrowseMincHeaderTclParameters",
     "browse_minc_header_tcl",
     "browse_minc_header_tcl_execute",
     "browse_minc_header_tcl_params",

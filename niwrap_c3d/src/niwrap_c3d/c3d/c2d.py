@@ -14,1088 +14,1810 @@ C2D_METADATA = Metadata(
 
 
 C2dAccumParameters = typing.TypedDict('C2dAccumParameters', {
-    "@type": typing.Literal["c3d.c2d.accum"],
+    "@type": typing.NotRequired[typing.Literal["accum"]],
+    "accum": str,
+})
+C2dAccumParametersTagged = typing.TypedDict('C2dAccumParametersTagged', {
+    "@type": typing.Literal["accum"],
     "accum": str,
 })
 
 
 C2dAcosParameters = typing.TypedDict('C2dAcosParameters', {
-    "@type": typing.Literal["c3d.c2d.acos"],
+    "@type": typing.NotRequired[typing.Literal["acos"]],
+    "acos": str,
+})
+C2dAcosParametersTagged = typing.TypedDict('C2dAcosParametersTagged', {
+    "@type": typing.Literal["acos"],
     "acos": str,
 })
 
 
 C2dAddParameters = typing.TypedDict('C2dAddParameters', {
-    "@type": typing.Literal["c3d.c2d.add"],
+    "@type": typing.NotRequired[typing.Literal["add"]],
+    "add": str,
+})
+C2dAddParametersTagged = typing.TypedDict('C2dAddParametersTagged', {
+    "@type": typing.Literal["add"],
     "add": str,
 })
 
 
 C2dAlignLandmarksParameters = typing.TypedDict('C2dAlignLandmarksParameters', {
-    "@type": typing.Literal["c3d.c2d.align_landmarks"],
+    "@type": typing.NotRequired[typing.Literal["align_landmarks"]],
+    "align_landmarks": str,
+})
+C2dAlignLandmarksParametersTagged = typing.TypedDict('C2dAlignLandmarksParametersTagged', {
+    "@type": typing.Literal["align_landmarks"],
     "align_landmarks": str,
 })
 
 
 C2dAnisotropicDiffusionParameters = typing.TypedDict('C2dAnisotropicDiffusionParameters', {
-    "@type": typing.Literal["c3d.c2d.anisotropic_diffusion"],
+    "@type": typing.NotRequired[typing.Literal["anisotropic_diffusion"]],
+    "anisotropic_diffusion": str,
+})
+C2dAnisotropicDiffusionParametersTagged = typing.TypedDict('C2dAnisotropicDiffusionParametersTagged', {
+    "@type": typing.Literal["anisotropic_diffusion"],
     "anisotropic_diffusion": str,
 })
 
 
 C2dAntialiasParameters = typing.TypedDict('C2dAntialiasParameters', {
-    "@type": typing.Literal["c3d.c2d.antialias"],
+    "@type": typing.NotRequired[typing.Literal["antialias"]],
+    "antialias": str,
+})
+C2dAntialiasParametersTagged = typing.TypedDict('C2dAntialiasParametersTagged', {
+    "@type": typing.Literal["antialias"],
     "antialias": str,
 })
 
 
 C2dSetParameters = typing.TypedDict('C2dSetParameters', {
-    "@type": typing.Literal["c3d.c2d.set"],
+    "@type": typing.NotRequired[typing.Literal["set"]],
+    "set": str,
+})
+C2dSetParametersTagged = typing.TypedDict('C2dSetParametersTagged', {
+    "@type": typing.Literal["set"],
     "set": str,
 })
 
 
 C2dAsinParameters = typing.TypedDict('C2dAsinParameters', {
-    "@type": typing.Literal["c3d.c2d.asin"],
+    "@type": typing.NotRequired[typing.Literal["asin"]],
+    "asin": str,
+})
+C2dAsinParametersTagged = typing.TypedDict('C2dAsinParametersTagged', {
+    "@type": typing.Literal["asin"],
     "asin": str,
 })
 
 
 C2dAtan2Parameters = typing.TypedDict('C2dAtan2Parameters', {
-    "@type": typing.Literal["c3d.c2d.atan2"],
+    "@type": typing.NotRequired[typing.Literal["atan2"]],
+    "atan2": str,
+})
+C2dAtan2ParametersTagged = typing.TypedDict('C2dAtan2ParametersTagged', {
+    "@type": typing.Literal["atan2"],
     "atan2": str,
 })
 
 
 C2dBackgroundParameters = typing.TypedDict('C2dBackgroundParameters', {
-    "@type": typing.Literal["c3d.c2d.background"],
+    "@type": typing.NotRequired[typing.Literal["background"]],
+    "background": str,
+})
+C2dBackgroundParametersTagged = typing.TypedDict('C2dBackgroundParametersTagged', {
+    "@type": typing.Literal["background"],
     "background": str,
 })
 
 
 C2dN4BiasCorrectionParameters = typing.TypedDict('C2dN4BiasCorrectionParameters', {
-    "@type": typing.Literal["c3d.c2d.n4_bias_correction"],
+    "@type": typing.NotRequired[typing.Literal["n4_bias_correction"]],
+    "n4_bias_correction": str,
+})
+C2dN4BiasCorrectionParametersTagged = typing.TypedDict('C2dN4BiasCorrectionParametersTagged', {
+    "@type": typing.Literal["n4_bias_correction"],
     "n4_bias_correction": str,
 })
 
 
 C2dBinarizeParameters = typing.TypedDict('C2dBinarizeParameters', {
-    "@type": typing.Literal["c3d.c2d.binarize"],
+    "@type": typing.NotRequired[typing.Literal["binarize"]],
+    "binarize": str,
+})
+C2dBinarizeParametersTagged = typing.TypedDict('C2dBinarizeParametersTagged', {
+    "@type": typing.Literal["binarize"],
     "binarize": str,
 })
 
 
 C2dCannyParameters = typing.TypedDict('C2dCannyParameters', {
-    "@type": typing.Literal["c3d.c2d.canny"],
+    "@type": typing.NotRequired[typing.Literal["canny"]],
+    "canny": str,
+})
+C2dCannyParametersTagged = typing.TypedDict('C2dCannyParametersTagged', {
+    "@type": typing.Literal["canny"],
     "canny": str,
 })
 
 
 C2dCeilParameters = typing.TypedDict('C2dCeilParameters', {
-    "@type": typing.Literal["c3d.c2d.ceil"],
+    "@type": typing.NotRequired[typing.Literal["ceil"]],
+    "ceil": str,
+})
+C2dCeilParametersTagged = typing.TypedDict('C2dCeilParametersTagged', {
+    "@type": typing.Literal["ceil"],
     "ceil": str,
 })
 
 
 C2dCentroidParameters = typing.TypedDict('C2dCentroidParameters', {
-    "@type": typing.Literal["c3d.c2d.centroid"],
+    "@type": typing.NotRequired[typing.Literal["centroid"]],
+    "centroid": str,
+})
+C2dCentroidParametersTagged = typing.TypedDict('C2dCentroidParametersTagged', {
+    "@type": typing.Literal["centroid"],
     "centroid": str,
 })
 
 
 C2dCentroidMarkParameters = typing.TypedDict('C2dCentroidMarkParameters', {
-    "@type": typing.Literal["c3d.c2d.centroid_mark"],
+    "@type": typing.NotRequired[typing.Literal["centroid_mark"]],
+    "centroid_mark": str,
+})
+C2dCentroidMarkParametersTagged = typing.TypedDict('C2dCentroidMarkParametersTagged', {
+    "@type": typing.Literal["centroid_mark"],
     "centroid_mark": str,
 })
 
 
 C2dConnectedComponentsParameters = typing.TypedDict('C2dConnectedComponentsParameters', {
-    "@type": typing.Literal["c3d.c2d.connected_components"],
+    "@type": typing.NotRequired[typing.Literal["connected_components"]],
+    "connected_components": str,
+})
+C2dConnectedComponentsParametersTagged = typing.TypedDict('C2dConnectedComponentsParametersTagged', {
+    "@type": typing.Literal["connected_components"],
     "connected_components": str,
 })
 
 
 C2dClearParameters = typing.TypedDict('C2dClearParameters', {
-    "@type": typing.Literal["c3d.c2d.clear"],
+    "@type": typing.NotRequired[typing.Literal["clear"]],
+    "clear": str,
+})
+C2dClearParametersTagged = typing.TypedDict('C2dClearParametersTagged', {
+    "@type": typing.Literal["clear"],
     "clear": str,
 })
 
 
 C2dClipParameters = typing.TypedDict('C2dClipParameters', {
-    "@type": typing.Literal["c3d.c2d.clip"],
+    "@type": typing.NotRequired[typing.Literal["clip"]],
+    "clip": str,
+})
+C2dClipParametersTagged = typing.TypedDict('C2dClipParametersTagged', {
+    "@type": typing.Literal["clip"],
     "clip": str,
 })
 
 
 C2dColorMapParameters = typing.TypedDict('C2dColorMapParameters', {
-    "@type": typing.Literal["c3d.c2d.color_map"],
+    "@type": typing.NotRequired[typing.Literal["color_map"]],
+    "color_map": str,
+})
+C2dColorMapParametersTagged = typing.TypedDict('C2dColorMapParametersTagged', {
+    "@type": typing.Literal["color_map"],
     "color_map": str,
 })
 
 
 C2dCompressParameters = typing.TypedDict('C2dCompressParameters', {
-    "@type": typing.Literal["c3d.c2d.compress"],
+    "@type": typing.NotRequired[typing.Literal["compress"]],
+    "compress": str,
+})
+C2dCompressParametersTagged = typing.TypedDict('C2dCompressParametersTagged', {
+    "@type": typing.Literal["compress"],
     "compress": str,
 })
 
 
 C2dNoCompressParameters = typing.TypedDict('C2dNoCompressParameters', {
-    "@type": typing.Literal["c3d.c2d.no_compress"],
+    "@type": typing.NotRequired[typing.Literal["no_compress"]],
+    "no_compress": str,
+})
+C2dNoCompressParametersTagged = typing.TypedDict('C2dNoCompressParametersTagged', {
+    "@type": typing.Literal["no_compress"],
     "no_compress": str,
 })
 
 
 C2dConvParameters = typing.TypedDict('C2dConvParameters', {
-    "@type": typing.Literal["c3d.c2d.conv"],
+    "@type": typing.NotRequired[typing.Literal["conv"]],
+    "conv": str,
+})
+C2dConvParametersTagged = typing.TypedDict('C2dConvParametersTagged', {
+    "@type": typing.Literal["conv"],
     "conv": str,
 })
 
 
 C2dCoordinateMapVoxelParameters = typing.TypedDict('C2dCoordinateMapVoxelParameters', {
-    "@type": typing.Literal["c3d.c2d.coordinate_map_voxel"],
+    "@type": typing.NotRequired[typing.Literal["coordinate_map_voxel"]],
+    "coordinate_map_voxel": str,
+})
+C2dCoordinateMapVoxelParametersTagged = typing.TypedDict('C2dCoordinateMapVoxelParametersTagged', {
+    "@type": typing.Literal["coordinate_map_voxel"],
     "coordinate_map_voxel": str,
 })
 
 
 C2dCoordinateMapPhysicalParameters = typing.TypedDict('C2dCoordinateMapPhysicalParameters', {
-    "@type": typing.Literal["c3d.c2d.coordinate_map_physical"],
+    "@type": typing.NotRequired[typing.Literal["coordinate_map_physical"]],
+    "coordinate_map_physical": str,
+})
+C2dCoordinateMapPhysicalParametersTagged = typing.TypedDict('C2dCoordinateMapPhysicalParametersTagged', {
+    "@type": typing.Literal["coordinate_map_physical"],
     "coordinate_map_physical": str,
 })
 
 
 C2dCopyTransformParameters = typing.TypedDict('C2dCopyTransformParameters', {
-    "@type": typing.Literal["c3d.c2d.copy_transform"],
+    "@type": typing.NotRequired[typing.Literal["copy_transform"]],
+    "copy_transform": str,
+})
+C2dCopyTransformParametersTagged = typing.TypedDict('C2dCopyTransformParametersTagged', {
+    "@type": typing.Literal["copy_transform"],
     "copy_transform": str,
 })
 
 
 C2dCosParameters = typing.TypedDict('C2dCosParameters', {
-    "@type": typing.Literal["c3d.c2d.cos"],
+    "@type": typing.NotRequired[typing.Literal["cos"]],
+    "cos": str,
+})
+C2dCosParametersTagged = typing.TypedDict('C2dCosParametersTagged', {
+    "@type": typing.Literal["cos"],
     "cos": str,
 })
 
 
 C2dCreateParameters = typing.TypedDict('C2dCreateParameters', {
-    "@type": typing.Literal["c3d.c2d.create"],
+    "@type": typing.NotRequired[typing.Literal["create"]],
+    "create": str,
+})
+C2dCreateParametersTagged = typing.TypedDict('C2dCreateParametersTagged', {
+    "@type": typing.Literal["create"],
     "create": str,
 })
 
 
 C2dDicomSeriesListParameters = typing.TypedDict('C2dDicomSeriesListParameters', {
-    "@type": typing.Literal["c3d.c2d.dicom_series_list"],
+    "@type": typing.NotRequired[typing.Literal["dicom_series_list"]],
+    "dicom_series_list": str,
+})
+C2dDicomSeriesListParametersTagged = typing.TypedDict('C2dDicomSeriesListParametersTagged', {
+    "@type": typing.Literal["dicom_series_list"],
     "dicom_series_list": str,
 })
 
 
 C2dDicomSeriesReadParameters = typing.TypedDict('C2dDicomSeriesReadParameters', {
-    "@type": typing.Literal["c3d.c2d.dicom_series_read"],
+    "@type": typing.NotRequired[typing.Literal["dicom_series_read"]],
+    "dicom_series_read": str,
+})
+C2dDicomSeriesReadParametersTagged = typing.TypedDict('C2dDicomSeriesReadParametersTagged', {
+    "@type": typing.Literal["dicom_series_read"],
     "dicom_series_read": str,
 })
 
 
 C2dDilateParameters = typing.TypedDict('C2dDilateParameters', {
-    "@type": typing.Literal["c3d.c2d.dilate"],
+    "@type": typing.NotRequired[typing.Literal["dilate"]],
+    "dilate": str,
+})
+C2dDilateParametersTagged = typing.TypedDict('C2dDilateParametersTagged', {
+    "@type": typing.Literal["dilate"],
     "dilate": str,
 })
 
 
 C2dDivideParameters = typing.TypedDict('C2dDivideParameters', {
-    "@type": typing.Literal["c3d.c2d.divide"],
+    "@type": typing.NotRequired[typing.Literal["divide"]],
+    "divide": str,
+})
+C2dDivideParametersTagged = typing.TypedDict('C2dDivideParametersTagged', {
+    "@type": typing.Literal["divide"],
     "divide": str,
 })
 
 
 C2dDuplicateParameters = typing.TypedDict('C2dDuplicateParameters', {
-    "@type": typing.Literal["c3d.c2d.duplicate"],
+    "@type": typing.NotRequired[typing.Literal["duplicate"]],
+    "duplicate": str,
+})
+C2dDuplicateParametersTagged = typing.TypedDict('C2dDuplicateParametersTagged', {
+    "@type": typing.Literal["duplicate"],
     "duplicate": str,
 })
 
 
 C2dEndaccumParameters = typing.TypedDict('C2dEndaccumParameters', {
-    "@type": typing.Literal["c3d.c2d.endaccum"],
+    "@type": typing.NotRequired[typing.Literal["endaccum"]],
+    "endaccum": str,
+})
+C2dEndaccumParametersTagged = typing.TypedDict('C2dEndaccumParametersTagged', {
+    "@type": typing.Literal["endaccum"],
     "endaccum": str,
 })
 
 
 C2dEndforParameters = typing.TypedDict('C2dEndforParameters', {
-    "@type": typing.Literal["c3d.c2d.endfor"],
+    "@type": typing.NotRequired[typing.Literal["endfor"]],
+    "endfor": str,
+})
+C2dEndforParametersTagged = typing.TypedDict('C2dEndforParametersTagged', {
+    "@type": typing.Literal["endfor"],
     "endfor": str,
 })
 
 
 C2dErodeParameters = typing.TypedDict('C2dErodeParameters', {
-    "@type": typing.Literal["c3d.c2d.erode"],
+    "@type": typing.NotRequired[typing.Literal["erode"]],
+    "erode": str,
+})
+C2dErodeParametersTagged = typing.TypedDict('C2dErodeParametersTagged', {
+    "@type": typing.Literal["erode"],
     "erode": str,
 })
 
 
 C2dErfParameters = typing.TypedDict('C2dErfParameters', {
-    "@type": typing.Literal["c3d.c2d.erf"],
+    "@type": typing.NotRequired[typing.Literal["erf"]],
+    "erf": str,
+})
+C2dErfParametersTagged = typing.TypedDict('C2dErfParametersTagged', {
+    "@type": typing.Literal["erf"],
     "erf": str,
 })
 
 
 C2dExpParameters = typing.TypedDict('C2dExpParameters', {
-    "@type": typing.Literal["c3d.c2d.exp"],
+    "@type": typing.NotRequired[typing.Literal["exp"]],
+    "exp": str,
+})
+C2dExpParametersTagged = typing.TypedDict('C2dExpParametersTagged', {
+    "@type": typing.Literal["exp"],
     "exp": str,
 })
 
 
 C2dExportPatchesParameters = typing.TypedDict('C2dExportPatchesParameters', {
-    "@type": typing.Literal["c3d.c2d.export_patches"],
+    "@type": typing.NotRequired[typing.Literal["export_patches"]],
+    "export_patches": str,
+})
+C2dExportPatchesParametersTagged = typing.TypedDict('C2dExportPatchesParametersTagged', {
+    "@type": typing.Literal["export_patches"],
     "export_patches": str,
 })
 
 
 C2dExportPatchesAugParameters = typing.TypedDict('C2dExportPatchesAugParameters', {
-    "@type": typing.Literal["c3d.c2d.export_patches_aug"],
+    "@type": typing.NotRequired[typing.Literal["export_patches_aug"]],
+    "export_patches_aug": str,
+})
+C2dExportPatchesAugParametersTagged = typing.TypedDict('C2dExportPatchesAugParametersTagged', {
+    "@type": typing.Literal["export_patches_aug"],
     "export_patches_aug": str,
 })
 
 
 C2dExtrudeSegParameters = typing.TypedDict('C2dExtrudeSegParameters', {
-    "@type": typing.Literal["c3d.c2d.extrude_seg"],
+    "@type": typing.NotRequired[typing.Literal["extrude_seg"]],
+    "extrude_seg": str,
+})
+C2dExtrudeSegParametersTagged = typing.TypedDict('C2dExtrudeSegParametersTagged', {
+    "@type": typing.Literal["extrude_seg"],
     "extrude_seg": str,
 })
 
 
 C2dFillBackgroundWithNoiseParameters = typing.TypedDict('C2dFillBackgroundWithNoiseParameters', {
-    "@type": typing.Literal["c3d.c2d.fill_background_with_noise"],
+    "@type": typing.NotRequired[typing.Literal["fill_background_with_noise"]],
+    "fill_background_with_noise": str,
+})
+C2dFillBackgroundWithNoiseParametersTagged = typing.TypedDict('C2dFillBackgroundWithNoiseParametersTagged', {
+    "@type": typing.Literal["fill_background_with_noise"],
     "fill_background_with_noise": str,
 })
 
 
 C2dFftParameters = typing.TypedDict('C2dFftParameters', {
-    "@type": typing.Literal["c3d.c2d.fft"],
+    "@type": typing.NotRequired[typing.Literal["fft"]],
+    "fft": str,
+})
+C2dFftParametersTagged = typing.TypedDict('C2dFftParametersTagged', {
+    "@type": typing.Literal["fft"],
     "fft": str,
 })
 
 
 C2dFlipParameters = typing.TypedDict('C2dFlipParameters', {
-    "@type": typing.Literal["c3d.c2d.flip"],
+    "@type": typing.NotRequired[typing.Literal["flip"]],
+    "flip": str,
+})
+C2dFlipParametersTagged = typing.TypedDict('C2dFlipParametersTagged', {
+    "@type": typing.Literal["flip"],
     "flip": str,
 })
 
 
 C2dFloorParameters = typing.TypedDict('C2dFloorParameters', {
-    "@type": typing.Literal["c3d.c2d.floor"],
+    "@type": typing.NotRequired[typing.Literal["floor"]],
+    "floor": str,
+})
+C2dFloorParametersTagged = typing.TypedDict('C2dFloorParametersTagged', {
+    "@type": typing.Literal["floor"],
     "floor": str,
 })
 
 
 C2dForeachParameters = typing.TypedDict('C2dForeachParameters', {
-    "@type": typing.Literal["c3d.c2d.foreach"],
+    "@type": typing.NotRequired[typing.Literal["foreach"]],
+    "foreach": str,
+})
+C2dForeachParametersTagged = typing.TypedDict('C2dForeachParametersTagged', {
+    "@type": typing.Literal["foreach"],
     "foreach": str,
 })
 
 
 C2dForeachCompParameters = typing.TypedDict('C2dForeachCompParameters', {
-    "@type": typing.Literal["c3d.c2d.foreach_comp"],
+    "@type": typing.NotRequired[typing.Literal["foreach_comp"]],
+    "foreach_comp": str,
+})
+C2dForeachCompParametersTagged = typing.TypedDict('C2dForeachCompParametersTagged', {
+    "@type": typing.Literal["foreach_comp"],
     "foreach_comp": str,
 })
 
 
 C2dGlmParameters = typing.TypedDict('C2dGlmParameters', {
-    "@type": typing.Literal["c3d.c2d.glm"],
+    "@type": typing.NotRequired[typing.Literal["glm"]],
+    "glm": str,
+})
+C2dGlmParametersTagged = typing.TypedDict('C2dGlmParametersTagged', {
+    "@type": typing.Literal["glm"],
     "glm": str,
 })
 
 
 C2dGradientParameters = typing.TypedDict('C2dGradientParameters', {
-    "@type": typing.Literal["c3d.c2d.gradient"],
+    "@type": typing.NotRequired[typing.Literal["gradient"]],
+    "gradient": str,
+})
+C2dGradientParametersTagged = typing.TypedDict('C2dGradientParametersTagged', {
+    "@type": typing.Literal["gradient"],
     "gradient": str,
 })
 
 
 C2dHelpParameters = typing.TypedDict('C2dHelpParameters', {
-    "@type": typing.Literal["c3d.c2d._help"],
+    "@type": typing.NotRequired[typing.Literal["_help"]],
+    "_help": str,
+})
+C2dHelpParametersTagged = typing.TypedDict('C2dHelpParametersTagged', {
+    "@type": typing.Literal["_help"],
     "_help": str,
 })
 
 
 C2dHolefillParameters = typing.TypedDict('C2dHolefillParameters', {
-    "@type": typing.Literal["c3d.c2d.holefill"],
+    "@type": typing.NotRequired[typing.Literal["holefill"]],
+    "holefill": str,
+})
+C2dHolefillParametersTagged = typing.TypedDict('C2dHolefillParametersTagged', {
+    "@type": typing.Literal["holefill"],
     "holefill": str,
 })
 
 
 C2dHessianEigenvaluesParameters = typing.TypedDict('C2dHessianEigenvaluesParameters', {
-    "@type": typing.Literal["c3d.c2d.hessian_eigenvalues"],
+    "@type": typing.NotRequired[typing.Literal["hessian_eigenvalues"]],
+    "hessian_eigenvalues": str,
+})
+C2dHessianEigenvaluesParametersTagged = typing.TypedDict('C2dHessianEigenvaluesParametersTagged', {
+    "@type": typing.Literal["hessian_eigenvalues"],
     "hessian_eigenvalues": str,
 })
 
 
 C2dHessianObjectnessParameters = typing.TypedDict('C2dHessianObjectnessParameters', {
-    "@type": typing.Literal["c3d.c2d.hessian_objectness"],
+    "@type": typing.NotRequired[typing.Literal["hessian_objectness"]],
+    "hessian_objectness": str,
+})
+C2dHessianObjectnessParametersTagged = typing.TypedDict('C2dHessianObjectnessParametersTagged', {
+    "@type": typing.Literal["hessian_objectness"],
     "hessian_objectness": str,
 })
 
 
 C2dHistogramMatchParameters = typing.TypedDict('C2dHistogramMatchParameters', {
-    "@type": typing.Literal["c3d.c2d.histogram_match"],
+    "@type": typing.NotRequired[typing.Literal["histogram_match"]],
+    "histogram_match": str,
+})
+C2dHistogramMatchParametersTagged = typing.TypedDict('C2dHistogramMatchParametersTagged', {
+    "@type": typing.Literal["histogram_match"],
     "histogram_match": str,
 })
 
 
 C2dInfoParameters = typing.TypedDict('C2dInfoParameters', {
-    "@type": typing.Literal["c3d.c2d.info"],
+    "@type": typing.NotRequired[typing.Literal["info"]],
+    "info": str,
+})
+C2dInfoParametersTagged = typing.TypedDict('C2dInfoParametersTagged', {
+    "@type": typing.Literal["info"],
     "info": str,
 })
 
 
 C2dInfoFullParameters = typing.TypedDict('C2dInfoFullParameters', {
-    "@type": typing.Literal["c3d.c2d.info_full"],
+    "@type": typing.NotRequired[typing.Literal["info_full"]],
+    "info_full": str,
+})
+C2dInfoFullParametersTagged = typing.TypedDict('C2dInfoFullParametersTagged', {
+    "@type": typing.Literal["info_full"],
     "info_full": str,
 })
 
 
 C2dInsertParameters = typing.TypedDict('C2dInsertParameters', {
-    "@type": typing.Literal["c3d.c2d.insert"],
+    "@type": typing.NotRequired[typing.Literal["insert"]],
+    "insert": str,
+})
+C2dInsertParametersTagged = typing.TypedDict('C2dInsertParametersTagged', {
+    "@type": typing.Literal["insert"],
     "insert": str,
 })
 
 
 C2dInterpolationParameters = typing.TypedDict('C2dInterpolationParameters', {
-    "@type": typing.Literal["c3d.c2d.interpolation"],
+    "@type": typing.NotRequired[typing.Literal["interpolation"]],
+    "interpolation": str,
+})
+C2dInterpolationParametersTagged = typing.TypedDict('C2dInterpolationParametersTagged', {
+    "@type": typing.Literal["interpolation"],
     "interpolation": str,
 })
 
 
 C2dIterationsParameters = typing.TypedDict('C2dIterationsParameters', {
-    "@type": typing.Literal["c3d.c2d.iterations"],
+    "@type": typing.NotRequired[typing.Literal["iterations"]],
+    "iterations": str,
+})
+C2dIterationsParametersTagged = typing.TypedDict('C2dIterationsParametersTagged', {
+    "@type": typing.Literal["iterations"],
     "iterations": str,
 })
 
 
 C2dLabelOverlapParameters = typing.TypedDict('C2dLabelOverlapParameters', {
-    "@type": typing.Literal["c3d.c2d.label_overlap"],
+    "@type": typing.NotRequired[typing.Literal["label_overlap"]],
+    "label_overlap": str,
+})
+C2dLabelOverlapParametersTagged = typing.TypedDict('C2dLabelOverlapParametersTagged', {
+    "@type": typing.Literal["label_overlap"],
     "label_overlap": str,
 })
 
 
 C2dLabelStatisticsParameters = typing.TypedDict('C2dLabelStatisticsParameters', {
-    "@type": typing.Literal["c3d.c2d.label_statistics"],
+    "@type": typing.NotRequired[typing.Literal["label_statistics"]],
+    "label_statistics": str,
+})
+C2dLabelStatisticsParametersTagged = typing.TypedDict('C2dLabelStatisticsParametersTagged', {
+    "@type": typing.Literal["label_statistics"],
     "label_statistics": str,
 })
 
 
 C2dLandmarksToSpheresParameters = typing.TypedDict('C2dLandmarksToSpheresParameters', {
-    "@type": typing.Literal["c3d.c2d.landmarks_to_spheres"],
+    "@type": typing.NotRequired[typing.Literal["landmarks_to_spheres"]],
+    "landmarks_to_spheres": str,
+})
+C2dLandmarksToSpheresParametersTagged = typing.TypedDict('C2dLandmarksToSpheresParametersTagged', {
+    "@type": typing.Literal["landmarks_to_spheres"],
     "landmarks_to_spheres": str,
 })
 
 
 C2dLaplacianParameters = typing.TypedDict('C2dLaplacianParameters', {
-    "@type": typing.Literal["c3d.c2d.laplacian"],
+    "@type": typing.NotRequired[typing.Literal["laplacian"]],
+    "laplacian": str,
+})
+C2dLaplacianParametersTagged = typing.TypedDict('C2dLaplacianParametersTagged', {
+    "@type": typing.Literal["laplacian"],
     "laplacian": str,
 })
 
 
 C2dLevelsetParameters = typing.TypedDict('C2dLevelsetParameters', {
-    "@type": typing.Literal["c3d.c2d.levelset"],
+    "@type": typing.NotRequired[typing.Literal["levelset"]],
+    "levelset": str,
+})
+C2dLevelsetParametersTagged = typing.TypedDict('C2dLevelsetParametersTagged', {
+    "@type": typing.Literal["levelset"],
     "levelset": str,
 })
 
 
 C2dLevelsetCurvatureParameters = typing.TypedDict('C2dLevelsetCurvatureParameters', {
-    "@type": typing.Literal["c3d.c2d.levelset_curvature"],
+    "@type": typing.NotRequired[typing.Literal["levelset_curvature"]],
+    "levelset_curvature": str,
+})
+C2dLevelsetCurvatureParametersTagged = typing.TypedDict('C2dLevelsetCurvatureParametersTagged', {
+    "@type": typing.Literal["levelset_curvature"],
     "levelset_curvature": str,
 })
 
 
 C2dLevelsetAdvectionParameters = typing.TypedDict('C2dLevelsetAdvectionParameters', {
-    "@type": typing.Literal["c3d.c2d.levelset_advection"],
+    "@type": typing.NotRequired[typing.Literal["levelset_advection"]],
+    "levelset_advection": str,
+})
+C2dLevelsetAdvectionParametersTagged = typing.TypedDict('C2dLevelsetAdvectionParametersTagged', {
+    "@type": typing.Literal["levelset_advection"],
     "levelset_advection": str,
 })
 
 
 C2dLogParameters = typing.TypedDict('C2dLogParameters', {
-    "@type": typing.Literal["c3d.c2d.log"],
+    "@type": typing.NotRequired[typing.Literal["log"]],
+    "log": str,
+})
+C2dLogParametersTagged = typing.TypedDict('C2dLogParametersTagged', {
+    "@type": typing.Literal["log"],
     "log": str,
 })
 
 
 C2dLog10Parameters = typing.TypedDict('C2dLog10Parameters', {
-    "@type": typing.Literal["c3d.c2d.log10"],
+    "@type": typing.NotRequired[typing.Literal["log10"]],
+    "log10": str,
+})
+C2dLog10ParametersTagged = typing.TypedDict('C2dLog10ParametersTagged', {
+    "@type": typing.Literal["log10"],
     "log10": str,
 })
 
 
 C2dManualParameters = typing.TypedDict('C2dManualParameters', {
-    "@type": typing.Literal["c3d.c2d.manual"],
+    "@type": typing.NotRequired[typing.Literal["manual"]],
+    "manual": str,
+})
+C2dManualParametersTagged = typing.TypedDict('C2dManualParametersTagged', {
+    "@type": typing.Literal["manual"],
     "manual": str,
 })
 
 
 C2dMatchBoundingBoxParameters = typing.TypedDict('C2dMatchBoundingBoxParameters', {
-    "@type": typing.Literal["c3d.c2d.match_bounding_box"],
+    "@type": typing.NotRequired[typing.Literal["match_bounding_box"]],
+    "match_bounding_box": str,
+})
+C2dMatchBoundingBoxParametersTagged = typing.TypedDict('C2dMatchBoundingBoxParametersTagged', {
+    "@type": typing.Literal["match_bounding_box"],
     "match_bounding_box": str,
 })
 
 
 C2dMaximumParameters = typing.TypedDict('C2dMaximumParameters', {
-    "@type": typing.Literal["c3d.c2d.maximum"],
+    "@type": typing.NotRequired[typing.Literal["maximum"]],
+    "maximum": str,
+})
+C2dMaximumParametersTagged = typing.TypedDict('C2dMaximumParametersTagged', {
+    "@type": typing.Literal["maximum"],
     "maximum": str,
 })
 
 
 C2dMulticomponentSplitParameters = typing.TypedDict('C2dMulticomponentSplitParameters', {
-    "@type": typing.Literal["c3d.c2d.multicomponent_split"],
+    "@type": typing.NotRequired[typing.Literal["multicomponent_split"]],
+    "multicomponent_split": str,
+})
+C2dMulticomponentSplitParametersTagged = typing.TypedDict('C2dMulticomponentSplitParametersTagged', {
+    "@type": typing.Literal["multicomponent_split"],
     "multicomponent_split": str,
 })
 
 
 C2dMeanParameters = typing.TypedDict('C2dMeanParameters', {
-    "@type": typing.Literal["c3d.c2d.mean"],
+    "@type": typing.NotRequired[typing.Literal["mean"]],
+    "mean": str,
+})
+C2dMeanParametersTagged = typing.TypedDict('C2dMeanParametersTagged', {
+    "@type": typing.Literal["mean"],
     "mean": str,
 })
 
 
 C2dMedianFilterParameters = typing.TypedDict('C2dMedianFilterParameters', {
-    "@type": typing.Literal["c3d.c2d.median_filter"],
+    "@type": typing.NotRequired[typing.Literal["median_filter"]],
+    "median_filter": str,
+})
+C2dMedianFilterParametersTagged = typing.TypedDict('C2dMedianFilterParametersTagged', {
+    "@type": typing.Literal["median_filter"],
     "median_filter": str,
 })
 
 
 C2dMergeParameters = typing.TypedDict('C2dMergeParameters', {
-    "@type": typing.Literal["c3d.c2d.merge"],
+    "@type": typing.NotRequired[typing.Literal["merge"]],
+    "merge": str,
+})
+C2dMergeParametersTagged = typing.TypedDict('C2dMergeParametersTagged', {
+    "@type": typing.Literal["merge"],
     "merge": str,
 })
 
 
 C2dMeanFilterParameters = typing.TypedDict('C2dMeanFilterParameters', {
-    "@type": typing.Literal["c3d.c2d.mean_filter"],
+    "@type": typing.NotRequired[typing.Literal["mean_filter"]],
+    "mean_filter": str,
+})
+C2dMeanFilterParametersTagged = typing.TypedDict('C2dMeanFilterParametersTagged', {
+    "@type": typing.Literal["mean_filter"],
     "mean_filter": str,
 })
 
 
 C2dMutualInfoParameters = typing.TypedDict('C2dMutualInfoParameters', {
-    "@type": typing.Literal["c3d.c2d.mutual_info"],
+    "@type": typing.NotRequired[typing.Literal["mutual_info"]],
+    "mutual_info": str,
+})
+C2dMutualInfoParametersTagged = typing.TypedDict('C2dMutualInfoParametersTagged', {
+    "@type": typing.Literal["mutual_info"],
     "mutual_info": str,
 })
 
 
 C2dMinimumParameters = typing.TypedDict('C2dMinimumParameters', {
-    "@type": typing.Literal["c3d.c2d.minimum"],
+    "@type": typing.NotRequired[typing.Literal["minimum"]],
+    "minimum": str,
+})
+C2dMinimumParametersTagged = typing.TypedDict('C2dMinimumParametersTagged', {
+    "@type": typing.Literal["minimum"],
     "minimum": str,
 })
 
 
 C2dMixtureModelParameters = typing.TypedDict('C2dMixtureModelParameters', {
-    "@type": typing.Literal["c3d.c2d.mixture_model"],
+    "@type": typing.NotRequired[typing.Literal["mixture_model"]],
+    "mixture_model": str,
+})
+C2dMixtureModelParametersTagged = typing.TypedDict('C2dMixtureModelParametersTagged', {
+    "@type": typing.Literal["mixture_model"],
     "mixture_model": str,
 })
 
 
 C2dMomentsParameters = typing.TypedDict('C2dMomentsParameters', {
-    "@type": typing.Literal["c3d.c2d.moments"],
+    "@type": typing.NotRequired[typing.Literal["moments"]],
+    "moments": str,
+})
+C2dMomentsParametersTagged = typing.TypedDict('C2dMomentsParametersTagged', {
+    "@type": typing.Literal["moments"],
     "moments": str,
 })
 
 
 C2dMattesMutualInfoParameters = typing.TypedDict('C2dMattesMutualInfoParameters', {
-    "@type": typing.Literal["c3d.c2d.mattes_mutual_info"],
+    "@type": typing.NotRequired[typing.Literal["mattes_mutual_info"]],
+    "mattes_mutual_info": str,
+})
+C2dMattesMutualInfoParametersTagged = typing.TypedDict('C2dMattesMutualInfoParametersTagged', {
+    "@type": typing.Literal["mattes_mutual_info"],
     "mattes_mutual_info": str,
 })
 
 
 C2dMeanSquareParameters = typing.TypedDict('C2dMeanSquareParameters', {
-    "@type": typing.Literal["c3d.c2d.mean_square"],
+    "@type": typing.NotRequired[typing.Literal["mean_square"]],
+    "mean_square": str,
+})
+C2dMeanSquareParametersTagged = typing.TypedDict('C2dMeanSquareParametersTagged', {
+    "@type": typing.Literal["mean_square"],
     "mean_square": str,
 })
 
 
 C2dMultiplyParameters = typing.TypedDict('C2dMultiplyParameters', {
-    "@type": typing.Literal["c3d.c2d.multiply"],
+    "@type": typing.NotRequired[typing.Literal["multiply"]],
+    "multiply": str,
+})
+C2dMultiplyParametersTagged = typing.TypedDict('C2dMultiplyParametersTagged', {
+    "@type": typing.Literal["multiply"],
     "multiply": str,
 })
 
 
 C2dNormalizedCrossCorrelationParameters = typing.TypedDict('C2dNormalizedCrossCorrelationParameters', {
-    "@type": typing.Literal["c3d.c2d.normalized_cross_correlation"],
+    "@type": typing.NotRequired[typing.Literal["normalized_cross_correlation"]],
+    "normalized_cross_correlation": str,
+})
+C2dNormalizedCrossCorrelationParametersTagged = typing.TypedDict('C2dNormalizedCrossCorrelationParametersTagged', {
+    "@type": typing.Literal["normalized_cross_correlation"],
     "normalized_cross_correlation": str,
 })
 
 
 C2dNormalizedCorrelationParameters = typing.TypedDict('C2dNormalizedCorrelationParameters', {
-    "@type": typing.Literal["c3d.c2d.normalized_correlation"],
+    "@type": typing.NotRequired[typing.Literal["normalized_correlation"]],
+    "normalized_correlation": str,
+})
+C2dNormalizedCorrelationParametersTagged = typing.TypedDict('C2dNormalizedCorrelationParametersTagged', {
+    "@type": typing.Literal["normalized_correlation"],
     "normalized_correlation": str,
 })
 
 
 C2dNormalizedMutualInfoParameters = typing.TypedDict('C2dNormalizedMutualInfoParameters', {
-    "@type": typing.Literal["c3d.c2d.normalized_mutual_info"],
+    "@type": typing.NotRequired[typing.Literal["normalized_mutual_info"]],
+    "normalized_mutual_info": str,
+})
+C2dNormalizedMutualInfoParametersTagged = typing.TypedDict('C2dNormalizedMutualInfoParametersTagged', {
+    "@type": typing.Literal["normalized_mutual_info"],
     "normalized_mutual_info": str,
 })
 
 
 C2dNoiseGaussianParameters = typing.TypedDict('C2dNoiseGaussianParameters', {
-    "@type": typing.Literal["c3d.c2d.noise_gaussian"],
+    "@type": typing.NotRequired[typing.Literal["noise_gaussian"]],
+    "noise_gaussian": str,
+})
+C2dNoiseGaussianParametersTagged = typing.TypedDict('C2dNoiseGaussianParametersTagged', {
+    "@type": typing.Literal["noise_gaussian"],
     "noise_gaussian": str,
 })
 
 
 C2dNoisePoissonParameters = typing.TypedDict('C2dNoisePoissonParameters', {
-    "@type": typing.Literal["c3d.c2d.noise_poisson"],
+    "@type": typing.NotRequired[typing.Literal["noise_poisson"]],
+    "noise_poisson": str,
+})
+C2dNoisePoissonParametersTagged = typing.TypedDict('C2dNoisePoissonParametersTagged', {
+    "@type": typing.Literal["noise_poisson"],
     "noise_poisson": str,
 })
 
 
 C2dNoiseSpeckleParameters = typing.TypedDict('C2dNoiseSpeckleParameters', {
-    "@type": typing.Literal["c3d.c2d.noise_speckle"],
+    "@type": typing.NotRequired[typing.Literal["noise_speckle"]],
+    "noise_speckle": str,
+})
+C2dNoiseSpeckleParametersTagged = typing.TypedDict('C2dNoiseSpeckleParametersTagged', {
+    "@type": typing.Literal["noise_speckle"],
     "noise_speckle": str,
 })
 
 
 C2dNoiseSaltPepperParameters = typing.TypedDict('C2dNoiseSaltPepperParameters', {
-    "@type": typing.Literal["c3d.c2d.noise_salt_pepper"],
+    "@type": typing.NotRequired[typing.Literal["noise_salt_pepper"]],
+    "noise_salt_pepper": str,
+})
+C2dNoiseSaltPepperParametersTagged = typing.TypedDict('C2dNoiseSaltPepperParametersTagged', {
+    "@type": typing.Literal["noise_salt_pepper"],
     "noise_salt_pepper": str,
 })
 
 
 C2dNoMulticomponentSplitParameters = typing.TypedDict('C2dNoMulticomponentSplitParameters', {
-    "@type": typing.Literal["c3d.c2d.no_multicomponent_split"],
+    "@type": typing.NotRequired[typing.Literal["no_multicomponent_split"]],
+    "no_multicomponent_split": str,
+})
+C2dNoMulticomponentSplitParametersTagged = typing.TypedDict('C2dNoMulticomponentSplitParametersTagged', {
+    "@type": typing.Literal["no_multicomponent_split"],
     "no_multicomponent_split": str,
 })
 
 
 C2dNormalizeLocalWindowParameters = typing.TypedDict('C2dNormalizeLocalWindowParameters', {
-    "@type": typing.Literal["c3d.c2d.normalize_local_window"],
+    "@type": typing.NotRequired[typing.Literal["normalize_local_window"]],
+    "normalize_local_window": str,
+})
+C2dNormalizeLocalWindowParametersTagged = typing.TypedDict('C2dNormalizeLocalWindowParametersTagged', {
+    "@type": typing.Literal["normalize_local_window"],
     "normalize_local_window": str,
 })
 
 
 C2dNormpdfParameters = typing.TypedDict('C2dNormpdfParameters', {
-    "@type": typing.Literal["c3d.c2d.normpdf"],
+    "@type": typing.NotRequired[typing.Literal["normpdf"]],
+    "normpdf": str,
+})
+C2dNormpdfParametersTagged = typing.TypedDict('C2dNormpdfParametersTagged', {
+    "@type": typing.Literal["normpdf"],
     "normpdf": str,
 })
 
 
 C2dNoroundParameters = typing.TypedDict('C2dNoroundParameters', {
-    "@type": typing.Literal["c3d.c2d.noround"],
+    "@type": typing.NotRequired[typing.Literal["noround"]],
+    "noround": str,
+})
+C2dNoroundParametersTagged = typing.TypedDict('C2dNoroundParametersTagged', {
+    "@type": typing.Literal["noround"],
     "noround": str,
 })
 
 
 C2dNospmParameters = typing.TypedDict('C2dNospmParameters', {
-    "@type": typing.Literal["c3d.c2d.nospm"],
+    "@type": typing.NotRequired[typing.Literal["nospm"]],
+    "nospm": str,
+})
+C2dNospmParametersTagged = typing.TypedDict('C2dNospmParametersTagged', {
+    "@type": typing.Literal["nospm"],
     "nospm": str,
 })
 
 
 C2dOutputParameters = typing.TypedDict('C2dOutputParameters', {
-    "@type": typing.Literal["c3d.c2d.output"],
+    "@type": typing.NotRequired[typing.Literal["output"]],
+    "output": str,
+})
+C2dOutputParametersTagged = typing.TypedDict('C2dOutputParametersTagged', {
+    "@type": typing.Literal["output"],
     "output": str,
 })
 
 
 C2dOutputMulticomponentParameters = typing.TypedDict('C2dOutputMulticomponentParameters', {
-    "@type": typing.Literal["c3d.c2d.output_multicomponent"],
+    "@type": typing.NotRequired[typing.Literal["output_multicomponent"]],
+    "output_multicomponent": str,
+})
+C2dOutputMulticomponentParametersTagged = typing.TypedDict('C2dOutputMulticomponentParametersTagged', {
+    "@type": typing.Literal["output_multicomponent"],
     "output_multicomponent": str,
 })
 
 
 C2dOutputMultipleMulticomponentParameters = typing.TypedDict('C2dOutputMultipleMulticomponentParameters', {
-    "@type": typing.Literal["c3d.c2d.output_multiple_multicomponent"],
+    "@type": typing.NotRequired[typing.Literal["output_multiple_multicomponent"]],
+    "output_multiple_multicomponent": str,
+})
+C2dOutputMultipleMulticomponentParametersTagged = typing.TypedDict('C2dOutputMultipleMulticomponentParametersTagged', {
+    "@type": typing.Literal["output_multiple_multicomponent"],
     "output_multiple_multicomponent": str,
 })
 
 
 C2dOrientParameters = typing.TypedDict('C2dOrientParameters', {
-    "@type": typing.Literal["c3d.c2d.orient"],
+    "@type": typing.NotRequired[typing.Literal["orient"]],
+    "orient": str,
+})
+C2dOrientParametersTagged = typing.TypedDict('C2dOrientParametersTagged', {
+    "@type": typing.Literal["orient"],
     "orient": str,
 })
 
 
 C2dOutputMultipleParameters = typing.TypedDict('C2dOutputMultipleParameters', {
-    "@type": typing.Literal["c3d.c2d.output_multiple"],
+    "@type": typing.NotRequired[typing.Literal["output_multiple"]],
+    "output_multiple": str,
+})
+C2dOutputMultipleParametersTagged = typing.TypedDict('C2dOutputMultipleParametersTagged', {
+    "@type": typing.Literal["output_multiple"],
     "output_multiple": str,
 })
 
 
 C2dOrient1Parameters = typing.TypedDict('C2dOrient1Parameters', {
-    "@type": typing.Literal["c3d.c2d.orient"],
+    "@type": typing.NotRequired[typing.Literal["orient_1"]],
+    "orient": str,
+})
+C2dOrient1ParametersTagged = typing.TypedDict('C2dOrient1ParametersTagged', {
+    "@type": typing.Literal["orient_1"],
     "orient": str,
 })
 
 
 C2dOriginParameters = typing.TypedDict('C2dOriginParameters', {
-    "@type": typing.Literal["c3d.c2d.origin"],
+    "@type": typing.NotRequired[typing.Literal["origin"]],
+    "origin": str,
+})
+C2dOriginParametersTagged = typing.TypedDict('C2dOriginParametersTagged', {
+    "@type": typing.Literal["origin"],
     "origin": str,
 })
 
 
 C2dOriginVoxelParameters = typing.TypedDict('C2dOriginVoxelParameters', {
-    "@type": typing.Literal["c3d.c2d.origin_voxel"],
+    "@type": typing.NotRequired[typing.Literal["origin_voxel"]],
+    "origin_voxel": str,
+})
+C2dOriginVoxelParametersTagged = typing.TypedDict('C2dOriginVoxelParametersTagged', {
+    "@type": typing.Literal["origin_voxel"],
     "origin_voxel": str,
 })
 
 
 C2dOriginVoxelCoordParameters = typing.TypedDict('C2dOriginVoxelCoordParameters', {
-    "@type": typing.Literal["c3d.c2d.origin_voxel_coord"],
+    "@type": typing.NotRequired[typing.Literal["origin_voxel_coord"]],
+    "origin_voxel_coord": str,
+})
+C2dOriginVoxelCoordParametersTagged = typing.TypedDict('C2dOriginVoxelCoordParametersTagged', {
+    "@type": typing.Literal["origin_voxel_coord"],
     "origin_voxel_coord": str,
 })
 
 
 C2dOverlapParameters = typing.TypedDict('C2dOverlapParameters', {
-    "@type": typing.Literal["c3d.c2d.overlap"],
+    "@type": typing.NotRequired[typing.Literal["overlap"]],
+    "overlap": str,
+})
+C2dOverlapParametersTagged = typing.TypedDict('C2dOverlapParametersTagged', {
+    "@type": typing.Literal["overlap"],
     "overlap": str,
 })
 
 
 C2dOverlayLabelImageParameters = typing.TypedDict('C2dOverlayLabelImageParameters', {
-    "@type": typing.Literal["c3d.c2d.overlay_label_image"],
+    "@type": typing.NotRequired[typing.Literal["overlay_label_image"]],
+    "overlay_label_image": str,
+})
+C2dOverlayLabelImageParametersTagged = typing.TypedDict('C2dOverlayLabelImageParametersTagged', {
+    "@type": typing.Literal["overlay_label_image"],
     "overlay_label_image": str,
 })
 
 
 C2dPadParameters = typing.TypedDict('C2dPadParameters', {
-    "@type": typing.Literal["c3d.c2d.pad"],
+    "@type": typing.NotRequired[typing.Literal["pad"]],
+    "pad": str,
+})
+C2dPadParametersTagged = typing.TypedDict('C2dPadParametersTagged', {
+    "@type": typing.Literal["pad"],
     "pad": str,
 })
 
 
 C2dPadToParameters = typing.TypedDict('C2dPadToParameters', {
-    "@type": typing.Literal["c3d.c2d.pad_to"],
+    "@type": typing.NotRequired[typing.Literal["pad_to"]],
+    "pad_to": str,
+})
+C2dPadToParametersTagged = typing.TypedDict('C2dPadToParametersTagged', {
+    "@type": typing.Literal["pad_to"],
     "pad_to": str,
 })
 
 
 C2dPcaParameters = typing.TypedDict('C2dPcaParameters', {
-    "@type": typing.Literal["c3d.c2d.pca"],
+    "@type": typing.NotRequired[typing.Literal["pca"]],
+    "pca": str,
+})
+C2dPcaParametersTagged = typing.TypedDict('C2dPcaParametersTagged', {
+    "@type": typing.Literal["pca"],
     "pca": str,
 })
 
 
 C2dPercentIntensityModeParameters = typing.TypedDict('C2dPercentIntensityModeParameters', {
-    "@type": typing.Literal["c3d.c2d.percent_intensity_mode"],
+    "@type": typing.NotRequired[typing.Literal["percent_intensity_mode"]],
+    "percent_intensity_mode": str,
+})
+C2dPercentIntensityModeParametersTagged = typing.TypedDict('C2dPercentIntensityModeParametersTagged', {
+    "@type": typing.Literal["percent_intensity_mode"],
     "percent_intensity_mode": str,
 })
 
 
 C2dPixelParameters = typing.TypedDict('C2dPixelParameters', {
-    "@type": typing.Literal["c3d.c2d.pixel"],
+    "@type": typing.NotRequired[typing.Literal["pixel"]],
+    "pixel": str,
+})
+C2dPixelParametersTagged = typing.TypedDict('C2dPixelParametersTagged', {
+    "@type": typing.Literal["pixel"],
     "pixel": str,
 })
 
 
 C2dPopParameters = typing.TypedDict('C2dPopParameters', {
-    "@type": typing.Literal["c3d.c2d.pop"],
+    "@type": typing.NotRequired[typing.Literal["pop"]],
+    "pop": str,
+})
+C2dPopParametersTagged = typing.TypedDict('C2dPopParametersTagged', {
+    "@type": typing.Literal["pop"],
     "pop": str,
 })
 
 
 C2dPopasParameters = typing.TypedDict('C2dPopasParameters', {
-    "@type": typing.Literal["c3d.c2d.popas"],
+    "@type": typing.NotRequired[typing.Literal["popas"]],
+    "popas": str,
+})
+C2dPopasParametersTagged = typing.TypedDict('C2dPopasParametersTagged', {
+    "@type": typing.Literal["popas"],
     "popas": str,
 })
 
 
 C2dProbeParameters = typing.TypedDict('C2dProbeParameters', {
-    "@type": typing.Literal["c3d.c2d.probe"],
+    "@type": typing.NotRequired[typing.Literal["probe"]],
+    "probe": str,
+})
+C2dProbeParametersTagged = typing.TypedDict('C2dProbeParametersTagged', {
+    "@type": typing.Literal["probe"],
     "probe": str,
 })
 
 
 C2dPushParameters = typing.TypedDict('C2dPushParameters', {
-    "@type": typing.Literal["c3d.c2d.push"],
+    "@type": typing.NotRequired[typing.Literal["push"]],
+    "push": str,
+})
+C2dPushParametersTagged = typing.TypedDict('C2dPushParametersTagged', {
+    "@type": typing.Literal["push"],
     "push": str,
 })
 
 
 C2dRankParameters = typing.TypedDict('C2dRankParameters', {
-    "@type": typing.Literal["c3d.c2d.rank"],
+    "@type": typing.NotRequired[typing.Literal["rank"]],
+    "rank": str,
+})
+C2dRankParametersTagged = typing.TypedDict('C2dRankParametersTagged', {
+    "@type": typing.Literal["rank"],
     "rank": str,
 })
 
 
 C2dReciprocalParameters = typing.TypedDict('C2dReciprocalParameters', {
-    "@type": typing.Literal["c3d.c2d.reciprocal"],
+    "@type": typing.NotRequired[typing.Literal["reciprocal"]],
+    "reciprocal": str,
+})
+C2dReciprocalParametersTagged = typing.TypedDict('C2dReciprocalParametersTagged', {
+    "@type": typing.Literal["reciprocal"],
     "reciprocal": str,
 })
 
 
 C2dRegionParameters = typing.TypedDict('C2dRegionParameters', {
-    "@type": typing.Literal["c3d.c2d.region"],
+    "@type": typing.NotRequired[typing.Literal["region"]],
+    "region": str,
+})
+C2dRegionParametersTagged = typing.TypedDict('C2dRegionParametersTagged', {
+    "@type": typing.Literal["region"],
     "region": str,
 })
 
 
 C2dReorderParameters = typing.TypedDict('C2dReorderParameters', {
-    "@type": typing.Literal["c3d.c2d.reorder"],
+    "@type": typing.NotRequired[typing.Literal["reorder"]],
+    "reorder": str,
+})
+C2dReorderParametersTagged = typing.TypedDict('C2dReorderParametersTagged', {
+    "@type": typing.Literal["reorder"],
     "reorder": str,
 })
 
 
 C2dRetainLabelsParameters = typing.TypedDict('C2dRetainLabelsParameters', {
-    "@type": typing.Literal["c3d.c2d.retain_labels"],
+    "@type": typing.NotRequired[typing.Literal["retain_labels"]],
+    "retain_labels": str,
+})
+C2dRetainLabelsParametersTagged = typing.TypedDict('C2dRetainLabelsParametersTagged', {
+    "@type": typing.Literal["retain_labels"],
     "retain_labels": str,
 })
 
 
 C2dRfApplyParameters = typing.TypedDict('C2dRfApplyParameters', {
-    "@type": typing.Literal["c3d.c2d.rf_apply"],
+    "@type": typing.NotRequired[typing.Literal["rf_apply"]],
+    "rf_apply": str,
+})
+C2dRfApplyParametersTagged = typing.TypedDict('C2dRfApplyParametersTagged', {
+    "@type": typing.Literal["rf_apply"],
     "rf_apply": str,
 })
 
 
 C2dRfTrainParameters = typing.TypedDict('C2dRfTrainParameters', {
-    "@type": typing.Literal["c3d.c2d.rf_train"],
+    "@type": typing.NotRequired[typing.Literal["rf_train"]],
+    "rf_train": str,
+})
+C2dRfTrainParametersTagged = typing.TypedDict('C2dRfTrainParametersTagged', {
+    "@type": typing.Literal["rf_train"],
     "rf_train": str,
 })
 
 
 C2dRfParamPatchParameters = typing.TypedDict('C2dRfParamPatchParameters', {
-    "@type": typing.Literal["c3d.c2d.rf_param_patch"],
+    "@type": typing.NotRequired[typing.Literal["rf_param_patch"]],
+    "rf_param_patch": str,
+})
+C2dRfParamPatchParametersTagged = typing.TypedDict('C2dRfParamPatchParametersTagged', {
+    "@type": typing.Literal["rf_param_patch"],
     "rf_param_patch": str,
 })
 
 
 C2dRfParamUsexyzParameters = typing.TypedDict('C2dRfParamUsexyzParameters', {
-    "@type": typing.Literal["c3d.c2d.rf_param_usexyz"],
+    "@type": typing.NotRequired[typing.Literal["rf_param_usexyz"]],
+    "rf_param_usexyz": str,
+})
+C2dRfParamUsexyzParametersTagged = typing.TypedDict('C2dRfParamUsexyzParametersTagged', {
+    "@type": typing.Literal["rf_param_usexyz"],
     "rf_param_usexyz": str,
 })
 
 
 C2dRfParamNousexyzParameters = typing.TypedDict('C2dRfParamNousexyzParameters', {
-    "@type": typing.Literal["c3d.c2d.rf_param_nousexyz"],
+    "@type": typing.NotRequired[typing.Literal["rf_param_nousexyz"]],
+    "rf_param_nousexyz": str,
+})
+C2dRfParamNousexyzParametersTagged = typing.TypedDict('C2dRfParamNousexyzParametersTagged', {
+    "@type": typing.Literal["rf_param_nousexyz"],
     "rf_param_nousexyz": str,
 })
 
 
 C2dRfParamNtreesParameters = typing.TypedDict('C2dRfParamNtreesParameters', {
-    "@type": typing.Literal["c3d.c2d.rf_param_ntrees"],
+    "@type": typing.NotRequired[typing.Literal["rf_param_ntrees"]],
+    "rf_param_ntrees": str,
+})
+C2dRfParamNtreesParametersTagged = typing.TypedDict('C2dRfParamNtreesParametersTagged', {
+    "@type": typing.Literal["rf_param_ntrees"],
     "rf_param_ntrees": str,
 })
 
 
 C2dRfParamTreedepthParameters = typing.TypedDict('C2dRfParamTreedepthParameters', {
-    "@type": typing.Literal["c3d.c2d.rf_param_treedepth"],
+    "@type": typing.NotRequired[typing.Literal["rf_param_treedepth"]],
+    "rf_param_treedepth": str,
+})
+C2dRfParamTreedepthParametersTagged = typing.TypedDict('C2dRfParamTreedepthParametersTagged', {
+    "@type": typing.Literal["rf_param_treedepth"],
     "rf_param_treedepth": str,
 })
 
 
 C2dSetSformParameters = typing.TypedDict('C2dSetSformParameters', {
-    "@type": typing.Literal["c3d.c2d.set_sform"],
+    "@type": typing.NotRequired[typing.Literal["set_sform"]],
+    "set_sform": str,
+})
+C2dSetSformParametersTagged = typing.TypedDict('C2dSetSformParametersTagged', {
+    "@type": typing.Literal["set_sform"],
     "set_sform": str,
 })
 
 
 C2dReplaceParameters = typing.TypedDict('C2dReplaceParameters', {
-    "@type": typing.Literal["c3d.c2d.replace"],
+    "@type": typing.NotRequired[typing.Literal["replace"]],
+    "replace": str,
+})
+C2dReplaceParametersTagged = typing.TypedDict('C2dReplaceParametersTagged', {
+    "@type": typing.Literal["replace"],
     "replace": str,
 })
 
 
 C2dResampleParameters = typing.TypedDict('C2dResampleParameters', {
-    "@type": typing.Literal["c3d.c2d.resample"],
+    "@type": typing.NotRequired[typing.Literal["resample"]],
+    "resample": str,
+})
+C2dResampleParametersTagged = typing.TypedDict('C2dResampleParametersTagged', {
+    "@type": typing.Literal["resample"],
     "resample": str,
 })
 
 
 C2dResampleIsoParameters = typing.TypedDict('C2dResampleIsoParameters', {
-    "@type": typing.Literal["c3d.c2d.resample_iso"],
+    "@type": typing.NotRequired[typing.Literal["resample_iso"]],
+    "resample_iso": str,
+})
+C2dResampleIsoParametersTagged = typing.TypedDict('C2dResampleIsoParametersTagged', {
+    "@type": typing.Literal["resample_iso"],
     "resample_iso": str,
 })
 
 
 C2dResampleMmParameters = typing.TypedDict('C2dResampleMmParameters', {
-    "@type": typing.Literal["c3d.c2d.resample_mm"],
+    "@type": typing.NotRequired[typing.Literal["resample_mm"]],
+    "resample_mm": str,
+})
+C2dResampleMmParametersTagged = typing.TypedDict('C2dResampleMmParametersTagged', {
+    "@type": typing.Literal["resample_mm"],
     "resample_mm": str,
 })
 
 
 C2dResliceItkParameters = typing.TypedDict('C2dResliceItkParameters', {
-    "@type": typing.Literal["c3d.c2d.reslice_itk"],
+    "@type": typing.NotRequired[typing.Literal["reslice_itk"]],
+    "reslice_itk": str,
+})
+C2dResliceItkParametersTagged = typing.TypedDict('C2dResliceItkParametersTagged', {
+    "@type": typing.Literal["reslice_itk"],
     "reslice_itk": str,
 })
 
 
 C2dResliceMatrixParameters = typing.TypedDict('C2dResliceMatrixParameters', {
-    "@type": typing.Literal["c3d.c2d.reslice_matrix"],
+    "@type": typing.NotRequired[typing.Literal["reslice_matrix"]],
+    "reslice_matrix": str,
+})
+C2dResliceMatrixParametersTagged = typing.TypedDict('C2dResliceMatrixParametersTagged', {
+    "@type": typing.Literal["reslice_matrix"],
     "reslice_matrix": str,
 })
 
 
 C2dResliceIdentityParameters = typing.TypedDict('C2dResliceIdentityParameters', {
-    "@type": typing.Literal["c3d.c2d.reslice_identity"],
+    "@type": typing.NotRequired[typing.Literal["reslice_identity"]],
+    "reslice_identity": str,
+})
+C2dResliceIdentityParametersTagged = typing.TypedDict('C2dResliceIdentityParametersTagged', {
+    "@type": typing.Literal["reslice_identity"],
     "reslice_identity": str,
 })
 
 
 C2dRgb2hsvParameters = typing.TypedDict('C2dRgb2hsvParameters', {
-    "@type": typing.Literal["c3d.c2d.rgb2hsv"],
+    "@type": typing.NotRequired[typing.Literal["rgb2hsv"]],
+    "rgb2hsv": str,
+})
+C2dRgb2hsvParametersTagged = typing.TypedDict('C2dRgb2hsvParametersTagged', {
+    "@type": typing.Literal["rgb2hsv"],
     "rgb2hsv": str,
 })
 
 
 C2dRmsParameters = typing.TypedDict('C2dRmsParameters', {
-    "@type": typing.Literal["c3d.c2d.rms"],
+    "@type": typing.NotRequired[typing.Literal["rms"]],
+    "rms": str,
+})
+C2dRmsParametersTagged = typing.TypedDict('C2dRmsParametersTagged', {
+    "@type": typing.Literal["rms"],
     "rms": str,
 })
 
 
 C2dRoundParameters = typing.TypedDict('C2dRoundParameters', {
-    "@type": typing.Literal["c3d.c2d.round"],
+    "@type": typing.NotRequired[typing.Literal["round"]],
+    "round": str,
+})
+C2dRoundParametersTagged = typing.TypedDict('C2dRoundParametersTagged', {
+    "@type": typing.Literal["round"],
     "round": str,
 })
 
 
 C2dScaleParameters = typing.TypedDict('C2dScaleParameters', {
-    "@type": typing.Literal["c3d.c2d.scale"],
+    "@type": typing.NotRequired[typing.Literal["scale"]],
+    "scale": str,
+})
+C2dScaleParametersTagged = typing.TypedDict('C2dScaleParametersTagged', {
+    "@type": typing.Literal["scale"],
     "scale": str,
 })
 
 
 C2dSetSform1Parameters = typing.TypedDict('C2dSetSform1Parameters', {
-    "@type": typing.Literal["c3d.c2d.set_sform"],
+    "@type": typing.NotRequired[typing.Literal["set_sform_1"]],
+    "set_sform": str,
+})
+C2dSetSform1ParametersTagged = typing.TypedDict('C2dSetSform1ParametersTagged', {
+    "@type": typing.Literal["set_sform_1"],
     "set_sform": str,
 })
 
 
 C2dSinParameters = typing.TypedDict('C2dSinParameters', {
-    "@type": typing.Literal["c3d.c2d.sin"],
+    "@type": typing.NotRequired[typing.Literal["sin"]],
+    "sin": str,
+})
+C2dSinParametersTagged = typing.TypedDict('C2dSinParametersTagged', {
+    "@type": typing.Literal["sin"],
     "sin": str,
 })
 
 
 C2dSliceParameters = typing.TypedDict('C2dSliceParameters', {
-    "@type": typing.Literal["c3d.c2d.slice"],
+    "@type": typing.NotRequired[typing.Literal["slice"]],
+    "slice": str,
+})
+C2dSliceParametersTagged = typing.TypedDict('C2dSliceParametersTagged', {
+    "@type": typing.Literal["slice"],
     "slice": str,
 })
 
 
 C2dSliceAllParameters = typing.TypedDict('C2dSliceAllParameters', {
-    "@type": typing.Literal["c3d.c2d.slice_all"],
+    "@type": typing.NotRequired[typing.Literal["slice_all"]],
+    "slice_all": str,
+})
+C2dSliceAllParametersTagged = typing.TypedDict('C2dSliceAllParametersTagged', {
+    "@type": typing.Literal["slice_all"],
     "slice_all": str,
 })
 
 
 C2dSharpenParameters = typing.TypedDict('C2dSharpenParameters', {
-    "@type": typing.Literal["c3d.c2d.sharpen"],
+    "@type": typing.NotRequired[typing.Literal["sharpen"]],
+    "sharpen": str,
+})
+C2dSharpenParametersTagged = typing.TypedDict('C2dSharpenParametersTagged', {
+    "@type": typing.Literal["sharpen"],
     "sharpen": str,
 })
 
 
 C2dShiftParameters = typing.TypedDict('C2dShiftParameters', {
-    "@type": typing.Literal["c3d.c2d.shift"],
+    "@type": typing.NotRequired[typing.Literal["shift"]],
+    "shift": str,
+})
+C2dShiftParametersTagged = typing.TypedDict('C2dShiftParametersTagged', {
+    "@type": typing.Literal["shift"],
     "shift": str,
 })
 
 
 C2dSignedDistanceTransformParameters = typing.TypedDict('C2dSignedDistanceTransformParameters', {
-    "@type": typing.Literal["c3d.c2d.signed_distance_transform"],
+    "@type": typing.NotRequired[typing.Literal["signed_distance_transform"]],
+    "signed_distance_transform": str,
+})
+C2dSignedDistanceTransformParametersTagged = typing.TypedDict('C2dSignedDistanceTransformParametersTagged', {
+    "@type": typing.Literal["signed_distance_transform"],
     "signed_distance_transform": str,
 })
 
 
 C2dSmoothParameters = typing.TypedDict('C2dSmoothParameters', {
-    "@type": typing.Literal["c3d.c2d.smooth"],
+    "@type": typing.NotRequired[typing.Literal["smooth"]],
+    "smooth": str,
+})
+C2dSmoothParametersTagged = typing.TypedDict('C2dSmoothParametersTagged', {
+    "@type": typing.Literal["smooth"],
     "smooth": str,
 })
 
 
 C2dSmoothFastParameters = typing.TypedDict('C2dSmoothFastParameters', {
-    "@type": typing.Literal["c3d.c2d.smooth_fast"],
+    "@type": typing.NotRequired[typing.Literal["smooth_fast"]],
+    "smooth_fast": str,
+})
+C2dSmoothFastParametersTagged = typing.TypedDict('C2dSmoothFastParametersTagged', {
+    "@type": typing.Literal["smooth_fast"],
     "smooth_fast": str,
 })
 
 
 C2dSpacingParameters = typing.TypedDict('C2dSpacingParameters', {
-    "@type": typing.Literal["c3d.c2d.spacing"],
+    "@type": typing.NotRequired[typing.Literal["spacing"]],
+    "spacing": str,
+})
+C2dSpacingParametersTagged = typing.TypedDict('C2dSpacingParametersTagged', {
+    "@type": typing.Literal["spacing"],
     "spacing": str,
 })
 
 
 C2dSplitParameters = typing.TypedDict('C2dSplitParameters', {
-    "@type": typing.Literal["c3d.c2d.split"],
+    "@type": typing.NotRequired[typing.Literal["split"]],
+    "split": str,
+})
+C2dSplitParametersTagged = typing.TypedDict('C2dSplitParametersTagged', {
+    "@type": typing.Literal["split"],
     "split": str,
 })
 
 
 C2dSqrtParameters = typing.TypedDict('C2dSqrtParameters', {
-    "@type": typing.Literal["c3d.c2d.sqrt"],
+    "@type": typing.NotRequired[typing.Literal["sqrt"]],
+    "sqrt": str,
+})
+C2dSqrtParametersTagged = typing.TypedDict('C2dSqrtParametersTagged', {
+    "@type": typing.Literal["sqrt"],
     "sqrt": str,
 })
 
 
 C2dStapleParameters = typing.TypedDict('C2dStapleParameters', {
-    "@type": typing.Literal["c3d.c2d.staple"],
+    "@type": typing.NotRequired[typing.Literal["staple"]],
+    "staple": str,
+})
+C2dStapleParametersTagged = typing.TypedDict('C2dStapleParametersTagged', {
+    "@type": typing.Literal["staple"],
     "staple": str,
 })
 
 
 C2dStructureTensorEigenvaluesParameters = typing.TypedDict('C2dStructureTensorEigenvaluesParameters', {
-    "@type": typing.Literal["c3d.c2d.structure_tensor_eigenvalues"],
+    "@type": typing.NotRequired[typing.Literal["structure_tensor_eigenvalues"]],
+    "structure_tensor_eigenvalues": str,
+})
+C2dStructureTensorEigenvaluesParametersTagged = typing.TypedDict('C2dStructureTensorEigenvaluesParametersTagged', {
+    "@type": typing.Literal["structure_tensor_eigenvalues"],
     "structure_tensor_eigenvalues": str,
 })
 
 
 C2dSpmParameters = typing.TypedDict('C2dSpmParameters', {
-    "@type": typing.Literal["c3d.c2d.spm"],
+    "@type": typing.NotRequired[typing.Literal["spm"]],
+    "spm": str,
+})
+C2dSpmParametersTagged = typing.TypedDict('C2dSpmParametersTagged', {
+    "@type": typing.Literal["spm"],
     "spm": str,
 })
 
 
 C2dSubtractParameters = typing.TypedDict('C2dSubtractParameters', {
-    "@type": typing.Literal["c3d.c2d.subtract"],
+    "@type": typing.NotRequired[typing.Literal["subtract"]],
+    "subtract": str,
+})
+C2dSubtractParametersTagged = typing.TypedDict('C2dSubtractParametersTagged', {
+    "@type": typing.Literal["subtract"],
     "subtract": str,
 })
 
 
 C2dSupervoxelParameters = typing.TypedDict('C2dSupervoxelParameters', {
-    "@type": typing.Literal["c3d.c2d.supervoxel"],
+    "@type": typing.NotRequired[typing.Literal["supervoxel"]],
+    "supervoxel": str,
+})
+C2dSupervoxelParametersTagged = typing.TypedDict('C2dSupervoxelParametersTagged', {
+    "@type": typing.Literal["supervoxel"],
     "supervoxel": str,
 })
 
 
 C2dStretchParameters = typing.TypedDict('C2dStretchParameters', {
-    "@type": typing.Literal["c3d.c2d.stretch"],
+    "@type": typing.NotRequired[typing.Literal["stretch"]],
+    "stretch": str,
+})
+C2dStretchParametersTagged = typing.TypedDict('C2dStretchParametersTagged', {
+    "@type": typing.Literal["stretch"],
     "stretch": str,
 })
 
 
 C2dSwapdimParameters = typing.TypedDict('C2dSwapdimParameters', {
-    "@type": typing.Literal["c3d.c2d.swapdim"],
+    "@type": typing.NotRequired[typing.Literal["swapdim"]],
+    "swapdim": str,
+})
+C2dSwapdimParametersTagged = typing.TypedDict('C2dSwapdimParametersTagged', {
+    "@type": typing.Literal["swapdim"],
     "swapdim": str,
 })
 
 
 C2dTestImageParameters = typing.TypedDict('C2dTestImageParameters', {
-    "@type": typing.Literal["c3d.c2d.test_image"],
+    "@type": typing.NotRequired[typing.Literal["test_image"]],
+    "test_image": str,
+})
+C2dTestImageParametersTagged = typing.TypedDict('C2dTestImageParametersTagged', {
+    "@type": typing.Literal["test_image"],
     "test_image": str,
 })
 
 
 C2dTestProbeParameters = typing.TypedDict('C2dTestProbeParameters', {
-    "@type": typing.Literal["c3d.c2d.test_probe"],
+    "@type": typing.NotRequired[typing.Literal["test_probe"]],
+    "test_probe": str,
+})
+C2dTestProbeParametersTagged = typing.TypedDict('C2dTestProbeParametersTagged', {
+    "@type": typing.Literal["test_probe"],
     "test_probe": str,
 })
 
 
 C2dThresholdParameters = typing.TypedDict('C2dThresholdParameters', {
-    "@type": typing.Literal["c3d.c2d.threshold"],
+    "@type": typing.NotRequired[typing.Literal["threshold"]],
+    "threshold": str,
+})
+C2dThresholdParametersTagged = typing.TypedDict('C2dThresholdParametersTagged', {
+    "@type": typing.Literal["threshold"],
     "threshold": str,
 })
 
 
 C2dTileParameters = typing.TypedDict('C2dTileParameters', {
-    "@type": typing.Literal["c3d.c2d.tile"],
+    "@type": typing.NotRequired[typing.Literal["tile"]],
+    "tile": str,
+})
+C2dTileParametersTagged = typing.TypedDict('C2dTileParametersTagged', {
+    "@type": typing.Literal["tile"],
     "tile": str,
 })
 
 
 C2dTrimParameters = typing.TypedDict('C2dTrimParameters', {
-    "@type": typing.Literal["c3d.c2d.trim"],
+    "@type": typing.NotRequired[typing.Literal["trim"]],
+    "trim": str,
+})
+C2dTrimParametersTagged = typing.TypedDict('C2dTrimParametersTagged', {
+    "@type": typing.Literal["trim"],
     "trim": str,
 })
 
 
 C2dTrimToSizeParameters = typing.TypedDict('C2dTrimToSizeParameters', {
-    "@type": typing.Literal["c3d.c2d.trim_to_size"],
+    "@type": typing.NotRequired[typing.Literal["trim_to_size"]],
+    "trim_to_size": str,
+})
+C2dTrimToSizeParametersTagged = typing.TypedDict('C2dTrimToSizeParametersTagged', {
+    "@type": typing.Literal["trim_to_size"],
     "trim_to_size": str,
 })
 
 
 C2dTypeParameters = typing.TypedDict('C2dTypeParameters', {
-    "@type": typing.Literal["c3d.c2d.type"],
+    "@type": typing.NotRequired[typing.Literal["type"]],
+    "type": str,
+})
+C2dTypeParametersTagged = typing.TypedDict('C2dTypeParametersTagged', {
+    "@type": typing.Literal["type"],
     "type": str,
 })
 
 
 C2dVerboseParameters = typing.TypedDict('C2dVerboseParameters', {
-    "@type": typing.Literal["c3d.c2d.verbose"],
+    "@type": typing.NotRequired[typing.Literal["verbose"]],
+    "verbose": str,
+})
+C2dVerboseParametersTagged = typing.TypedDict('C2dVerboseParametersTagged', {
+    "@type": typing.Literal["verbose"],
     "verbose": str,
 })
 
 
 C2dNoverboseParameters = typing.TypedDict('C2dNoverboseParameters', {
-    "@type": typing.Literal["c3d.c2d.noverbose"],
+    "@type": typing.NotRequired[typing.Literal["noverbose"]],
+    "noverbose": str,
+})
+C2dNoverboseParametersTagged = typing.TypedDict('C2dNoverboseParametersTagged', {
+    "@type": typing.Literal["noverbose"],
     "noverbose": str,
 })
 
 
 C2dVersionParameters = typing.TypedDict('C2dVersionParameters', {
-    "@type": typing.Literal["c3d.c2d.version"],
+    "@type": typing.NotRequired[typing.Literal["version"]],
+    "version": str,
+})
+C2dVersionParametersTagged = typing.TypedDict('C2dVersionParametersTagged', {
+    "@type": typing.Literal["version"],
     "version": str,
 })
 
 
 C2dVoteParameters = typing.TypedDict('C2dVoteParameters', {
-    "@type": typing.Literal["c3d.c2d.vote"],
+    "@type": typing.NotRequired[typing.Literal["vote"]],
+    "vote": str,
+})
+C2dVoteParametersTagged = typing.TypedDict('C2dVoteParametersTagged', {
+    "@type": typing.Literal["vote"],
     "vote": str,
 })
 
 
 C2dVoteMrfParameters = typing.TypedDict('C2dVoteMrfParameters', {
-    "@type": typing.Literal["c3d.c2d.vote_mrf"],
+    "@type": typing.NotRequired[typing.Literal["vote_mrf"]],
+    "vote_mrf": str,
+})
+C2dVoteMrfParametersTagged = typing.TypedDict('C2dVoteMrfParametersTagged', {
+    "@type": typing.Literal["vote_mrf"],
     "vote_mrf": str,
 })
 
 
 C2dVoteLabelParameters = typing.TypedDict('C2dVoteLabelParameters', {
-    "@type": typing.Literal["c3d.c2d.vote_label"],
+    "@type": typing.NotRequired[typing.Literal["vote_label"]],
+    "vote_label": str,
+})
+C2dVoteLabelParametersTagged = typing.TypedDict('C2dVoteLabelParametersTagged', {
+    "@type": typing.Literal["vote_label"],
     "vote_label": str,
 })
 
 
 C2dVoxelSumParameters = typing.TypedDict('C2dVoxelSumParameters', {
-    "@type": typing.Literal["c3d.c2d.voxel_sum"],
+    "@type": typing.NotRequired[typing.Literal["voxel_sum"]],
+    "voxel_sum": str,
+})
+C2dVoxelSumParametersTagged = typing.TypedDict('C2dVoxelSumParametersTagged', {
+    "@type": typing.Literal["voxel_sum"],
     "voxel_sum": str,
 })
 
 
 C2dVoxelIntegralParameters = typing.TypedDict('C2dVoxelIntegralParameters', {
-    "@type": typing.Literal["c3d.c2d.voxel_integral"],
+    "@type": typing.NotRequired[typing.Literal["voxel_integral"]],
+    "voxel_integral": str,
+})
+C2dVoxelIntegralParametersTagged = typing.TypedDict('C2dVoxelIntegralParametersTagged', {
+    "@type": typing.Literal["voxel_integral"],
     "voxel_integral": str,
 })
 
 
 C2dVoxelwiseRegressionParameters = typing.TypedDict('C2dVoxelwiseRegressionParameters', {
-    "@type": typing.Literal["c3d.c2d.voxelwise_regression"],
+    "@type": typing.NotRequired[typing.Literal["voxelwise_regression"]],
+    "voxelwise_regression": str,
+})
+C2dVoxelwiseRegressionParametersTagged = typing.TypedDict('C2dVoxelwiseRegressionParametersTagged', {
+    "@type": typing.Literal["voxelwise_regression"],
     "voxelwise_regression": str,
 })
 
 
 C2dWarpParameters = typing.TypedDict('C2dWarpParameters', {
-    "@type": typing.Literal["c3d.c2d.warp"],
+    "@type": typing.NotRequired[typing.Literal["warp"]],
+    "warp": str,
+})
+C2dWarpParametersTagged = typing.TypedDict('C2dWarpParametersTagged', {
+    "@type": typing.Literal["warp"],
     "warp": str,
 })
 
 
 C2dWarpLabelParameters = typing.TypedDict('C2dWarpLabelParameters', {
-    "@type": typing.Literal["c3d.c2d.warp_label"],
+    "@type": typing.NotRequired[typing.Literal["warp_label"]],
+    "warp_label": str,
+})
+C2dWarpLabelParametersTagged = typing.TypedDict('C2dWarpLabelParametersTagged', {
+    "@type": typing.Literal["warp_label"],
     "warp_label": str,
 })
 
 
 C2dWrapParameters = typing.TypedDict('C2dWrapParameters', {
-    "@type": typing.Literal["c3d.c2d.wrap"],
+    "@type": typing.NotRequired[typing.Literal["wrap"]],
+    "wrap": str,
+})
+C2dWrapParametersTagged = typing.TypedDict('C2dWrapParametersTagged', {
+    "@type": typing.Literal["wrap"],
     "wrap": str,
 })
 
 
 C2dWeightedSumParameters = typing.TypedDict('C2dWeightedSumParameters', {
-    "@type": typing.Literal["c3d.c2d.weighted_sum"],
+    "@type": typing.NotRequired[typing.Literal["weighted_sum"]],
+    "weighted_sum": str,
+})
+C2dWeightedSumParametersTagged = typing.TypedDict('C2dWeightedSumParametersTagged', {
+    "@type": typing.Literal["weighted_sum"],
     "weighted_sum": str,
 })
 
 
 C2dWeightedSumVoxelwiseParameters = typing.TypedDict('C2dWeightedSumVoxelwiseParameters', {
-    "@type": typing.Literal["c3d.c2d.weighted_sum_voxelwise"],
+    "@type": typing.NotRequired[typing.Literal["weighted_sum_voxelwise"]],
+    "weighted_sum_voxelwise": str,
+})
+C2dWeightedSumVoxelwiseParametersTagged = typing.TypedDict('C2dWeightedSumVoxelwiseParametersTagged', {
+    "@type": typing.Literal["weighted_sum_voxelwise"],
     "weighted_sum_voxelwise": str,
 })
 
 
 C2dParameters = typing.TypedDict('C2dParameters', {
-    "@type": typing.Literal["c3d.c2d"],
+    "@type": typing.NotRequired[typing.Literal["c3d/c2d"]],
     "input": list[InputPathType],
-    "operations": list[typing.Union[C2dAccumParameters, C2dAcosParameters, C2dAddParameters, C2dAlignLandmarksParameters, C2dAnisotropicDiffusionParameters, C2dAntialiasParameters, C2dSetParameters, C2dAsinParameters, C2dAtan2Parameters, C2dBackgroundParameters, C2dN4BiasCorrectionParameters, C2dBinarizeParameters, C2dCannyParameters, C2dCeilParameters, C2dCentroidParameters, C2dCentroidMarkParameters, C2dConnectedComponentsParameters, C2dClearParameters, C2dClipParameters, C2dColorMapParameters, C2dCompressParameters, C2dNoCompressParameters, C2dConvParameters, C2dCoordinateMapVoxelParameters, C2dCoordinateMapPhysicalParameters, C2dCopyTransformParameters, C2dCosParameters, C2dCreateParameters, C2dDicomSeriesListParameters, C2dDicomSeriesReadParameters, C2dDilateParameters, C2dDivideParameters, C2dDuplicateParameters, C2dEndaccumParameters, C2dEndforParameters, C2dErodeParameters, C2dErfParameters, C2dExpParameters, C2dExportPatchesParameters, C2dExportPatchesAugParameters, C2dExtrudeSegParameters, C2dFillBackgroundWithNoiseParameters, C2dFftParameters, C2dFlipParameters, C2dFloorParameters, C2dForeachParameters, C2dForeachCompParameters, C2dGlmParameters, C2dGradientParameters, C2dHelpParameters, C2dHolefillParameters, C2dHessianEigenvaluesParameters, C2dHessianObjectnessParameters, C2dHistogramMatchParameters, C2dInfoParameters, C2dInfoFullParameters, C2dInsertParameters, C2dInterpolationParameters, C2dIterationsParameters, C2dLabelOverlapParameters, C2dLabelStatisticsParameters, C2dLandmarksToSpheresParameters, C2dLaplacianParameters, C2dLevelsetParameters, C2dLevelsetCurvatureParameters, C2dLevelsetAdvectionParameters, C2dLogParameters, C2dLog10Parameters, C2dManualParameters, C2dMatchBoundingBoxParameters, C2dMaximumParameters, C2dMulticomponentSplitParameters, C2dMeanParameters, C2dMedianFilterParameters, C2dMergeParameters, C2dMeanFilterParameters, C2dMutualInfoParameters, C2dMinimumParameters, C2dMixtureModelParameters, C2dMomentsParameters, C2dMattesMutualInfoParameters, C2dMeanSquareParameters, C2dMultiplyParameters, C2dNormalizedCrossCorrelationParameters, C2dNormalizedCorrelationParameters, C2dNormalizedMutualInfoParameters, C2dNoiseGaussianParameters, C2dNoisePoissonParameters, C2dNoiseSpeckleParameters, C2dNoiseSaltPepperParameters, C2dNoMulticomponentSplitParameters, C2dNormalizeLocalWindowParameters, C2dNormpdfParameters, C2dNoroundParameters, C2dNospmParameters, C2dOutputParameters, C2dOutputMulticomponentParameters, C2dOutputMultipleMulticomponentParameters, C2dOrientParameters, C2dOutputMultipleParameters, C2dOrient1Parameters, C2dOriginParameters, C2dOriginVoxelParameters, C2dOriginVoxelCoordParameters, C2dOverlapParameters, C2dOverlayLabelImageParameters, C2dPadParameters, C2dPadToParameters, C2dPcaParameters, C2dPercentIntensityModeParameters, C2dPixelParameters, C2dPopParameters, C2dPopasParameters, C2dProbeParameters, C2dPushParameters, C2dRankParameters, C2dReciprocalParameters, C2dRegionParameters, C2dReorderParameters, C2dRetainLabelsParameters, C2dRfApplyParameters, C2dRfTrainParameters, C2dRfParamPatchParameters, C2dRfParamUsexyzParameters, C2dRfParamNousexyzParameters, C2dRfParamNtreesParameters, C2dRfParamTreedepthParameters, C2dSetSformParameters, C2dReplaceParameters, C2dResampleParameters, C2dResampleIsoParameters, C2dResampleMmParameters, C2dResliceItkParameters, C2dResliceMatrixParameters, C2dResliceIdentityParameters, C2dRgb2hsvParameters, C2dRmsParameters, C2dRoundParameters, C2dScaleParameters, C2dSetSform1Parameters, C2dSinParameters, C2dSliceParameters, C2dSliceAllParameters, C2dSharpenParameters, C2dShiftParameters, C2dSignedDistanceTransformParameters, C2dSmoothParameters, C2dSmoothFastParameters, C2dSpacingParameters, C2dSplitParameters, C2dSqrtParameters, C2dStapleParameters, C2dStructureTensorEigenvaluesParameters, C2dSpmParameters, C2dSubtractParameters, C2dSupervoxelParameters, C2dStretchParameters, C2dSwapdimParameters, C2dTestImageParameters, C2dTestProbeParameters, C2dThresholdParameters, C2dTileParameters, C2dTrimParameters, C2dTrimToSizeParameters, C2dTypeParameters, C2dVerboseParameters, C2dNoverboseParameters, C2dVersionParameters, C2dVoteParameters, C2dVoteMrfParameters, C2dVoteLabelParameters, C2dVoxelSumParameters, C2dVoxelIntegralParameters, C2dVoxelwiseRegressionParameters, C2dWarpParameters, C2dWarpLabelParameters, C2dWrapParameters, C2dWeightedSumParameters, C2dWeightedSumVoxelwiseParameters]],
+    "operations": list[typing.Union[C2dAccumParametersTagged, C2dAcosParametersTagged, C2dAddParametersTagged, C2dAlignLandmarksParametersTagged, C2dAnisotropicDiffusionParametersTagged, C2dAntialiasParametersTagged, C2dSetParametersTagged, C2dAsinParametersTagged, C2dAtan2ParametersTagged, C2dBackgroundParametersTagged, C2dN4BiasCorrectionParametersTagged, C2dBinarizeParametersTagged, C2dCannyParametersTagged, C2dCeilParametersTagged, C2dCentroidParametersTagged, C2dCentroidMarkParametersTagged, C2dConnectedComponentsParametersTagged, C2dClearParametersTagged, C2dClipParametersTagged, C2dColorMapParametersTagged, C2dCompressParametersTagged, C2dNoCompressParametersTagged, C2dConvParametersTagged, C2dCoordinateMapVoxelParametersTagged, C2dCoordinateMapPhysicalParametersTagged, C2dCopyTransformParametersTagged, C2dCosParametersTagged, C2dCreateParametersTagged, C2dDicomSeriesListParametersTagged, C2dDicomSeriesReadParametersTagged, C2dDilateParametersTagged, C2dDivideParametersTagged, C2dDuplicateParametersTagged, C2dEndaccumParametersTagged, C2dEndforParametersTagged, C2dErodeParametersTagged, C2dErfParametersTagged, C2dExpParametersTagged, C2dExportPatchesParametersTagged, C2dExportPatchesAugParametersTagged, C2dExtrudeSegParametersTagged, C2dFillBackgroundWithNoiseParametersTagged, C2dFftParametersTagged, C2dFlipParametersTagged, C2dFloorParametersTagged, C2dForeachParametersTagged, C2dForeachCompParametersTagged, C2dGlmParametersTagged, C2dGradientParametersTagged, C2dHelpParametersTagged, C2dHolefillParametersTagged, C2dHessianEigenvaluesParametersTagged, C2dHessianObjectnessParametersTagged, C2dHistogramMatchParametersTagged, C2dInfoParametersTagged, C2dInfoFullParametersTagged, C2dInsertParametersTagged, C2dInterpolationParametersTagged, C2dIterationsParametersTagged, C2dLabelOverlapParametersTagged, C2dLabelStatisticsParametersTagged, C2dLandmarksToSpheresParametersTagged, C2dLaplacianParametersTagged, C2dLevelsetParametersTagged, C2dLevelsetCurvatureParametersTagged, C2dLevelsetAdvectionParametersTagged, C2dLogParametersTagged, C2dLog10ParametersTagged, C2dManualParametersTagged, C2dMatchBoundingBoxParametersTagged, C2dMaximumParametersTagged, C2dMulticomponentSplitParametersTagged, C2dMeanParametersTagged, C2dMedianFilterParametersTagged, C2dMergeParametersTagged, C2dMeanFilterParametersTagged, C2dMutualInfoParametersTagged, C2dMinimumParametersTagged, C2dMixtureModelParametersTagged, C2dMomentsParametersTagged, C2dMattesMutualInfoParametersTagged, C2dMeanSquareParametersTagged, C2dMultiplyParametersTagged, C2dNormalizedCrossCorrelationParametersTagged, C2dNormalizedCorrelationParametersTagged, C2dNormalizedMutualInfoParametersTagged, C2dNoiseGaussianParametersTagged, C2dNoisePoissonParametersTagged, C2dNoiseSpeckleParametersTagged, C2dNoiseSaltPepperParametersTagged, C2dNoMulticomponentSplitParametersTagged, C2dNormalizeLocalWindowParametersTagged, C2dNormpdfParametersTagged, C2dNoroundParametersTagged, C2dNospmParametersTagged, C2dOutputParametersTagged, C2dOutputMulticomponentParametersTagged, C2dOutputMultipleMulticomponentParametersTagged, C2dOrientParametersTagged, C2dOutputMultipleParametersTagged, C2dOrient1ParametersTagged, C2dOriginParametersTagged, C2dOriginVoxelParametersTagged, C2dOriginVoxelCoordParametersTagged, C2dOverlapParametersTagged, C2dOverlayLabelImageParametersTagged, C2dPadParametersTagged, C2dPadToParametersTagged, C2dPcaParametersTagged, C2dPercentIntensityModeParametersTagged, C2dPixelParametersTagged, C2dPopParametersTagged, C2dPopasParametersTagged, C2dProbeParametersTagged, C2dPushParametersTagged, C2dRankParametersTagged, C2dReciprocalParametersTagged, C2dRegionParametersTagged, C2dReorderParametersTagged, C2dRetainLabelsParametersTagged, C2dRfApplyParametersTagged, C2dRfTrainParametersTagged, C2dRfParamPatchParametersTagged, C2dRfParamUsexyzParametersTagged, C2dRfParamNousexyzParametersTagged, C2dRfParamNtreesParametersTagged, C2dRfParamTreedepthParametersTagged, C2dSetSformParametersTagged, C2dReplaceParametersTagged, C2dResampleParametersTagged, C2dResampleIsoParametersTagged, C2dResampleMmParametersTagged, C2dResliceItkParametersTagged, C2dResliceMatrixParametersTagged, C2dResliceIdentityParametersTagged, C2dRgb2hsvParametersTagged, C2dRmsParametersTagged, C2dRoundParametersTagged, C2dScaleParametersTagged, C2dSetSform1ParametersTagged, C2dSinParametersTagged, C2dSliceParametersTagged, C2dSliceAllParametersTagged, C2dSharpenParametersTagged, C2dShiftParametersTagged, C2dSignedDistanceTransformParametersTagged, C2dSmoothParametersTagged, C2dSmoothFastParametersTagged, C2dSpacingParametersTagged, C2dSplitParametersTagged, C2dSqrtParametersTagged, C2dStapleParametersTagged, C2dStructureTensorEigenvaluesParametersTagged, C2dSpmParametersTagged, C2dSubtractParametersTagged, C2dSupervoxelParametersTagged, C2dStretchParametersTagged, C2dSwapdimParametersTagged, C2dTestImageParametersTagged, C2dTestProbeParametersTagged, C2dThresholdParametersTagged, C2dTileParametersTagged, C2dTrimParametersTagged, C2dTrimToSizeParametersTagged, C2dTypeParametersTagged, C2dVerboseParametersTagged, C2dNoverboseParametersTagged, C2dVersionParametersTagged, C2dVoteParametersTagged, C2dVoteMrfParametersTagged, C2dVoteLabelParametersTagged, C2dVoxelSumParametersTagged, C2dVoxelIntegralParametersTagged, C2dVoxelwiseRegressionParametersTagged, C2dWarpParametersTagged, C2dWarpLabelParametersTagged, C2dWrapParametersTagged, C2dWeightedSumParametersTagged, C2dWeightedSumVoxelwiseParametersTagged]],
+    "output": str,
+})
+C2dParametersTagged = typing.TypedDict('C2dParametersTagged', {
+    "@type": typing.Literal["c3d/c2d"],
+    "input": list[InputPathType],
+    "operations": list[typing.Union[C2dAccumParametersTagged, C2dAcosParametersTagged, C2dAddParametersTagged, C2dAlignLandmarksParametersTagged, C2dAnisotropicDiffusionParametersTagged, C2dAntialiasParametersTagged, C2dSetParametersTagged, C2dAsinParametersTagged, C2dAtan2ParametersTagged, C2dBackgroundParametersTagged, C2dN4BiasCorrectionParametersTagged, C2dBinarizeParametersTagged, C2dCannyParametersTagged, C2dCeilParametersTagged, C2dCentroidParametersTagged, C2dCentroidMarkParametersTagged, C2dConnectedComponentsParametersTagged, C2dClearParametersTagged, C2dClipParametersTagged, C2dColorMapParametersTagged, C2dCompressParametersTagged, C2dNoCompressParametersTagged, C2dConvParametersTagged, C2dCoordinateMapVoxelParametersTagged, C2dCoordinateMapPhysicalParametersTagged, C2dCopyTransformParametersTagged, C2dCosParametersTagged, C2dCreateParametersTagged, C2dDicomSeriesListParametersTagged, C2dDicomSeriesReadParametersTagged, C2dDilateParametersTagged, C2dDivideParametersTagged, C2dDuplicateParametersTagged, C2dEndaccumParametersTagged, C2dEndforParametersTagged, C2dErodeParametersTagged, C2dErfParametersTagged, C2dExpParametersTagged, C2dExportPatchesParametersTagged, C2dExportPatchesAugParametersTagged, C2dExtrudeSegParametersTagged, C2dFillBackgroundWithNoiseParametersTagged, C2dFftParametersTagged, C2dFlipParametersTagged, C2dFloorParametersTagged, C2dForeachParametersTagged, C2dForeachCompParametersTagged, C2dGlmParametersTagged, C2dGradientParametersTagged, C2dHelpParametersTagged, C2dHolefillParametersTagged, C2dHessianEigenvaluesParametersTagged, C2dHessianObjectnessParametersTagged, C2dHistogramMatchParametersTagged, C2dInfoParametersTagged, C2dInfoFullParametersTagged, C2dInsertParametersTagged, C2dInterpolationParametersTagged, C2dIterationsParametersTagged, C2dLabelOverlapParametersTagged, C2dLabelStatisticsParametersTagged, C2dLandmarksToSpheresParametersTagged, C2dLaplacianParametersTagged, C2dLevelsetParametersTagged, C2dLevelsetCurvatureParametersTagged, C2dLevelsetAdvectionParametersTagged, C2dLogParametersTagged, C2dLog10ParametersTagged, C2dManualParametersTagged, C2dMatchBoundingBoxParametersTagged, C2dMaximumParametersTagged, C2dMulticomponentSplitParametersTagged, C2dMeanParametersTagged, C2dMedianFilterParametersTagged, C2dMergeParametersTagged, C2dMeanFilterParametersTagged, C2dMutualInfoParametersTagged, C2dMinimumParametersTagged, C2dMixtureModelParametersTagged, C2dMomentsParametersTagged, C2dMattesMutualInfoParametersTagged, C2dMeanSquareParametersTagged, C2dMultiplyParametersTagged, C2dNormalizedCrossCorrelationParametersTagged, C2dNormalizedCorrelationParametersTagged, C2dNormalizedMutualInfoParametersTagged, C2dNoiseGaussianParametersTagged, C2dNoisePoissonParametersTagged, C2dNoiseSpeckleParametersTagged, C2dNoiseSaltPepperParametersTagged, C2dNoMulticomponentSplitParametersTagged, C2dNormalizeLocalWindowParametersTagged, C2dNormpdfParametersTagged, C2dNoroundParametersTagged, C2dNospmParametersTagged, C2dOutputParametersTagged, C2dOutputMulticomponentParametersTagged, C2dOutputMultipleMulticomponentParametersTagged, C2dOrientParametersTagged, C2dOutputMultipleParametersTagged, C2dOrient1ParametersTagged, C2dOriginParametersTagged, C2dOriginVoxelParametersTagged, C2dOriginVoxelCoordParametersTagged, C2dOverlapParametersTagged, C2dOverlayLabelImageParametersTagged, C2dPadParametersTagged, C2dPadToParametersTagged, C2dPcaParametersTagged, C2dPercentIntensityModeParametersTagged, C2dPixelParametersTagged, C2dPopParametersTagged, C2dPopasParametersTagged, C2dProbeParametersTagged, C2dPushParametersTagged, C2dRankParametersTagged, C2dReciprocalParametersTagged, C2dRegionParametersTagged, C2dReorderParametersTagged, C2dRetainLabelsParametersTagged, C2dRfApplyParametersTagged, C2dRfTrainParametersTagged, C2dRfParamPatchParametersTagged, C2dRfParamUsexyzParametersTagged, C2dRfParamNousexyzParametersTagged, C2dRfParamNtreesParametersTagged, C2dRfParamTreedepthParametersTagged, C2dSetSformParametersTagged, C2dReplaceParametersTagged, C2dResampleParametersTagged, C2dResampleIsoParametersTagged, C2dResampleMmParametersTagged, C2dResliceItkParametersTagged, C2dResliceMatrixParametersTagged, C2dResliceIdentityParametersTagged, C2dRgb2hsvParametersTagged, C2dRmsParametersTagged, C2dRoundParametersTagged, C2dScaleParametersTagged, C2dSetSform1ParametersTagged, C2dSinParametersTagged, C2dSliceParametersTagged, C2dSliceAllParametersTagged, C2dSharpenParametersTagged, C2dShiftParametersTagged, C2dSignedDistanceTransformParametersTagged, C2dSmoothParametersTagged, C2dSmoothFastParametersTagged, C2dSpacingParametersTagged, C2dSplitParametersTagged, C2dSqrtParametersTagged, C2dStapleParametersTagged, C2dStructureTensorEigenvaluesParametersTagged, C2dSpmParametersTagged, C2dSubtractParametersTagged, C2dSupervoxelParametersTagged, C2dStretchParametersTagged, C2dSwapdimParametersTagged, C2dTestImageParametersTagged, C2dTestProbeParametersTagged, C2dThresholdParametersTagged, C2dTileParametersTagged, C2dTrimParametersTagged, C2dTrimToSizeParametersTagged, C2dTypeParametersTagged, C2dVerboseParametersTagged, C2dNoverboseParametersTagged, C2dVersionParametersTagged, C2dVoteParametersTagged, C2dVoteMrfParametersTagged, C2dVoteLabelParametersTagged, C2dVoxelSumParametersTagged, C2dVoxelIntegralParametersTagged, C2dVoxelwiseRegressionParametersTagged, C2dWarpParametersTagged, C2dWarpLabelParametersTagged, C2dWrapParametersTagged, C2dWeightedSumParametersTagged, C2dWeightedSumVoxelwiseParametersTagged]],
     "output": str,
 })
 
 
-def dyn_cargs(
+def c2d_operations_cargs_dyn_fn(
     t: str,
 ) -> typing.Any:
     """
@@ -1107,190 +1829,189 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "c3d.c2d": c2d_cargs,
-        "c3d.c2d.accum": c2d_accum_cargs,
-        "c3d.c2d.acos": c2d_acos_cargs,
-        "c3d.c2d.add": c2d_add_cargs,
-        "c3d.c2d.align_landmarks": c2d_align_landmarks_cargs,
-        "c3d.c2d.anisotropic_diffusion": c2d_anisotropic_diffusion_cargs,
-        "c3d.c2d.antialias": c2d_antialias_cargs,
-        "c3d.c2d.set": c2d_set_cargs,
-        "c3d.c2d.asin": c2d_asin_cargs,
-        "c3d.c2d.atan2": c2d_atan2_cargs,
-        "c3d.c2d.background": c2d_background_cargs,
-        "c3d.c2d.n4_bias_correction": c2d_n4_bias_correction_cargs,
-        "c3d.c2d.binarize": c2d_binarize_cargs,
-        "c3d.c2d.canny": c2d_canny_cargs,
-        "c3d.c2d.ceil": c2d_ceil_cargs,
-        "c3d.c2d.centroid": c2d_centroid_cargs,
-        "c3d.c2d.centroid_mark": c2d_centroid_mark_cargs,
-        "c3d.c2d.connected_components": c2d_connected_components_cargs,
-        "c3d.c2d.clear": c2d_clear_cargs,
-        "c3d.c2d.clip": c2d_clip_cargs,
-        "c3d.c2d.color_map": c2d_color_map_cargs,
-        "c3d.c2d.compress": c2d_compress_cargs,
-        "c3d.c2d.no_compress": c2d_no_compress_cargs,
-        "c3d.c2d.conv": c2d_conv_cargs,
-        "c3d.c2d.coordinate_map_voxel": c2d_coordinate_map_voxel_cargs,
-        "c3d.c2d.coordinate_map_physical": c2d_coordinate_map_physical_cargs,
-        "c3d.c2d.copy_transform": c2d_copy_transform_cargs,
-        "c3d.c2d.cos": c2d_cos_cargs,
-        "c3d.c2d.create": c2d_create_cargs,
-        "c3d.c2d.dicom_series_list": c2d_dicom_series_list_cargs,
-        "c3d.c2d.dicom_series_read": c2d_dicom_series_read_cargs,
-        "c3d.c2d.dilate": c2d_dilate_cargs,
-        "c3d.c2d.divide": c2d_divide_cargs,
-        "c3d.c2d.duplicate": c2d_duplicate_cargs,
-        "c3d.c2d.endaccum": c2d_endaccum_cargs,
-        "c3d.c2d.endfor": c2d_endfor_cargs,
-        "c3d.c2d.erode": c2d_erode_cargs,
-        "c3d.c2d.erf": c2d_erf_cargs,
-        "c3d.c2d.exp": c2d_exp_cargs,
-        "c3d.c2d.export_patches": c2d_export_patches_cargs,
-        "c3d.c2d.export_patches_aug": c2d_export_patches_aug_cargs,
-        "c3d.c2d.extrude_seg": c2d_extrude_seg_cargs,
-        "c3d.c2d.fill_background_with_noise": c2d_fill_background_with_noise_cargs,
-        "c3d.c2d.fft": c2d_fft_cargs,
-        "c3d.c2d.flip": c2d_flip_cargs,
-        "c3d.c2d.floor": c2d_floor_cargs,
-        "c3d.c2d.foreach": c2d_foreach_cargs,
-        "c3d.c2d.foreach_comp": c2d_foreach_comp_cargs,
-        "c3d.c2d.glm": c2d_glm_cargs,
-        "c3d.c2d.gradient": c2d_gradient_cargs,
-        "c3d.c2d._help": c2d__help_cargs,
-        "c3d.c2d.holefill": c2d_holefill_cargs,
-        "c3d.c2d.hessian_eigenvalues": c2d_hessian_eigenvalues_cargs,
-        "c3d.c2d.hessian_objectness": c2d_hessian_objectness_cargs,
-        "c3d.c2d.histogram_match": c2d_histogram_match_cargs,
-        "c3d.c2d.info": c2d_info_cargs,
-        "c3d.c2d.info_full": c2d_info_full_cargs,
-        "c3d.c2d.insert": c2d_insert_cargs,
-        "c3d.c2d.interpolation": c2d_interpolation_cargs,
-        "c3d.c2d.iterations": c2d_iterations_cargs,
-        "c3d.c2d.label_overlap": c2d_label_overlap_cargs,
-        "c3d.c2d.label_statistics": c2d_label_statistics_cargs,
-        "c3d.c2d.landmarks_to_spheres": c2d_landmarks_to_spheres_cargs,
-        "c3d.c2d.laplacian": c2d_laplacian_cargs,
-        "c3d.c2d.levelset": c2d_levelset_cargs,
-        "c3d.c2d.levelset_curvature": c2d_levelset_curvature_cargs,
-        "c3d.c2d.levelset_advection": c2d_levelset_advection_cargs,
-        "c3d.c2d.log": c2d_log_cargs,
-        "c3d.c2d.log10": c2d_log10_cargs,
-        "c3d.c2d.manual": c2d_manual_cargs,
-        "c3d.c2d.match_bounding_box": c2d_match_bounding_box_cargs,
-        "c3d.c2d.maximum": c2d_maximum_cargs,
-        "c3d.c2d.multicomponent_split": c2d_multicomponent_split_cargs,
-        "c3d.c2d.mean": c2d_mean_cargs,
-        "c3d.c2d.median_filter": c2d_median_filter_cargs,
-        "c3d.c2d.merge": c2d_merge_cargs,
-        "c3d.c2d.mean_filter": c2d_mean_filter_cargs,
-        "c3d.c2d.mutual_info": c2d_mutual_info_cargs,
-        "c3d.c2d.minimum": c2d_minimum_cargs,
-        "c3d.c2d.mixture_model": c2d_mixture_model_cargs,
-        "c3d.c2d.moments": c2d_moments_cargs,
-        "c3d.c2d.mattes_mutual_info": c2d_mattes_mutual_info_cargs,
-        "c3d.c2d.mean_square": c2d_mean_square_cargs,
-        "c3d.c2d.multiply": c2d_multiply_cargs,
-        "c3d.c2d.normalized_cross_correlation": c2d_normalized_cross_correlation_cargs,
-        "c3d.c2d.normalized_correlation": c2d_normalized_correlation_cargs,
-        "c3d.c2d.normalized_mutual_info": c2d_normalized_mutual_info_cargs,
-        "c3d.c2d.noise_gaussian": c2d_noise_gaussian_cargs,
-        "c3d.c2d.noise_poisson": c2d_noise_poisson_cargs,
-        "c3d.c2d.noise_speckle": c2d_noise_speckle_cargs,
-        "c3d.c2d.noise_salt_pepper": c2d_noise_salt_pepper_cargs,
-        "c3d.c2d.no_multicomponent_split": c2d_no_multicomponent_split_cargs,
-        "c3d.c2d.normalize_local_window": c2d_normalize_local_window_cargs,
-        "c3d.c2d.normpdf": c2d_normpdf_cargs,
-        "c3d.c2d.noround": c2d_noround_cargs,
-        "c3d.c2d.nospm": c2d_nospm_cargs,
-        "c3d.c2d.output": c2d_output_cargs,
-        "c3d.c2d.output_multicomponent": c2d_output_multicomponent_cargs,
-        "c3d.c2d.output_multiple_multicomponent": c2d_output_multiple_multicomponent_cargs,
-        "c3d.c2d.orient": c2d_orient_cargs,
-        "c3d.c2d.output_multiple": c2d_output_multiple_cargs,
-        "c3d.c2d.orient": c2d_orient_1_cargs,
-        "c3d.c2d.origin": c2d_origin_cargs,
-        "c3d.c2d.origin_voxel": c2d_origin_voxel_cargs,
-        "c3d.c2d.origin_voxel_coord": c2d_origin_voxel_coord_cargs,
-        "c3d.c2d.overlap": c2d_overlap_cargs,
-        "c3d.c2d.overlay_label_image": c2d_overlay_label_image_cargs,
-        "c3d.c2d.pad": c2d_pad_cargs,
-        "c3d.c2d.pad_to": c2d_pad_to_cargs,
-        "c3d.c2d.pca": c2d_pca_cargs,
-        "c3d.c2d.percent_intensity_mode": c2d_percent_intensity_mode_cargs,
-        "c3d.c2d.pixel": c2d_pixel_cargs,
-        "c3d.c2d.pop": c2d_pop_cargs,
-        "c3d.c2d.popas": c2d_popas_cargs,
-        "c3d.c2d.probe": c2d_probe_cargs,
-        "c3d.c2d.push": c2d_push_cargs,
-        "c3d.c2d.rank": c2d_rank_cargs,
-        "c3d.c2d.reciprocal": c2d_reciprocal_cargs,
-        "c3d.c2d.region": c2d_region_cargs,
-        "c3d.c2d.reorder": c2d_reorder_cargs,
-        "c3d.c2d.retain_labels": c2d_retain_labels_cargs,
-        "c3d.c2d.rf_apply": c2d_rf_apply_cargs,
-        "c3d.c2d.rf_train": c2d_rf_train_cargs,
-        "c3d.c2d.rf_param_patch": c2d_rf_param_patch_cargs,
-        "c3d.c2d.rf_param_usexyz": c2d_rf_param_usexyz_cargs,
-        "c3d.c2d.rf_param_nousexyz": c2d_rf_param_nousexyz_cargs,
-        "c3d.c2d.rf_param_ntrees": c2d_rf_param_ntrees_cargs,
-        "c3d.c2d.rf_param_treedepth": c2d_rf_param_treedepth_cargs,
-        "c3d.c2d.set_sform": c2d_set_sform_cargs,
-        "c3d.c2d.replace": c2d_replace_cargs,
-        "c3d.c2d.resample": c2d_resample_cargs,
-        "c3d.c2d.resample_iso": c2d_resample_iso_cargs,
-        "c3d.c2d.resample_mm": c2d_resample_mm_cargs,
-        "c3d.c2d.reslice_itk": c2d_reslice_itk_cargs,
-        "c3d.c2d.reslice_matrix": c2d_reslice_matrix_cargs,
-        "c3d.c2d.reslice_identity": c2d_reslice_identity_cargs,
-        "c3d.c2d.rgb2hsv": c2d_rgb2hsv_cargs,
-        "c3d.c2d.rms": c2d_rms_cargs,
-        "c3d.c2d.round": c2d_round_cargs,
-        "c3d.c2d.scale": c2d_scale_cargs,
-        "c3d.c2d.set_sform": c2d_set_sform_1_cargs,
-        "c3d.c2d.sin": c2d_sin_cargs,
-        "c3d.c2d.slice": c2d_slice_cargs,
-        "c3d.c2d.slice_all": c2d_slice_all_cargs,
-        "c3d.c2d.sharpen": c2d_sharpen_cargs,
-        "c3d.c2d.shift": c2d_shift_cargs,
-        "c3d.c2d.signed_distance_transform": c2d_signed_distance_transform_cargs,
-        "c3d.c2d.smooth": c2d_smooth_cargs,
-        "c3d.c2d.smooth_fast": c2d_smooth_fast_cargs,
-        "c3d.c2d.spacing": c2d_spacing_cargs,
-        "c3d.c2d.split": c2d_split_cargs,
-        "c3d.c2d.sqrt": c2d_sqrt_cargs,
-        "c3d.c2d.staple": c2d_staple_cargs,
-        "c3d.c2d.structure_tensor_eigenvalues": c2d_structure_tensor_eigenvalues_cargs,
-        "c3d.c2d.spm": c2d_spm_cargs,
-        "c3d.c2d.subtract": c2d_subtract_cargs,
-        "c3d.c2d.supervoxel": c2d_supervoxel_cargs,
-        "c3d.c2d.stretch": c2d_stretch_cargs,
-        "c3d.c2d.swapdim": c2d_swapdim_cargs,
-        "c3d.c2d.test_image": c2d_test_image_cargs,
-        "c3d.c2d.test_probe": c2d_test_probe_cargs,
-        "c3d.c2d.threshold": c2d_threshold_cargs,
-        "c3d.c2d.tile": c2d_tile_cargs,
-        "c3d.c2d.trim": c2d_trim_cargs,
-        "c3d.c2d.trim_to_size": c2d_trim_to_size_cargs,
-        "c3d.c2d.type": c2d_type_cargs,
-        "c3d.c2d.verbose": c2d_verbose_cargs,
-        "c3d.c2d.noverbose": c2d_noverbose_cargs,
-        "c3d.c2d.version": c2d_version_cargs,
-        "c3d.c2d.vote": c2d_vote_cargs,
-        "c3d.c2d.vote_mrf": c2d_vote_mrf_cargs,
-        "c3d.c2d.vote_label": c2d_vote_label_cargs,
-        "c3d.c2d.voxel_sum": c2d_voxel_sum_cargs,
-        "c3d.c2d.voxel_integral": c2d_voxel_integral_cargs,
-        "c3d.c2d.voxelwise_regression": c2d_voxelwise_regression_cargs,
-        "c3d.c2d.warp": c2d_warp_cargs,
-        "c3d.c2d.warp_label": c2d_warp_label_cargs,
-        "c3d.c2d.wrap": c2d_wrap_cargs,
-        "c3d.c2d.weighted_sum": c2d_weighted_sum_cargs,
-        "c3d.c2d.weighted_sum_voxelwise": c2d_weighted_sum_voxelwise_cargs,
+        "accum": c2d_accum_cargs,
+        "acos": c2d_acos_cargs,
+        "add": c2d_add_cargs,
+        "align_landmarks": c2d_align_landmarks_cargs,
+        "anisotropic_diffusion": c2d_anisotropic_diffusion_cargs,
+        "antialias": c2d_antialias_cargs,
+        "set": c2d_set_cargs,
+        "asin": c2d_asin_cargs,
+        "atan2": c2d_atan2_cargs,
+        "background": c2d_background_cargs,
+        "n4_bias_correction": c2d_n4_bias_correction_cargs,
+        "binarize": c2d_binarize_cargs,
+        "canny": c2d_canny_cargs,
+        "ceil": c2d_ceil_cargs,
+        "centroid": c2d_centroid_cargs,
+        "centroid_mark": c2d_centroid_mark_cargs,
+        "connected_components": c2d_connected_components_cargs,
+        "clear": c2d_clear_cargs,
+        "clip": c2d_clip_cargs,
+        "color_map": c2d_color_map_cargs,
+        "compress": c2d_compress_cargs,
+        "no_compress": c2d_no_compress_cargs,
+        "conv": c2d_conv_cargs,
+        "coordinate_map_voxel": c2d_coordinate_map_voxel_cargs,
+        "coordinate_map_physical": c2d_coordinate_map_physical_cargs,
+        "copy_transform": c2d_copy_transform_cargs,
+        "cos": c2d_cos_cargs,
+        "create": c2d_create_cargs,
+        "dicom_series_list": c2d_dicom_series_list_cargs,
+        "dicom_series_read": c2d_dicom_series_read_cargs,
+        "dilate": c2d_dilate_cargs,
+        "divide": c2d_divide_cargs,
+        "duplicate": c2d_duplicate_cargs,
+        "endaccum": c2d_endaccum_cargs,
+        "endfor": c2d_endfor_cargs,
+        "erode": c2d_erode_cargs,
+        "erf": c2d_erf_cargs,
+        "exp": c2d_exp_cargs,
+        "export_patches": c2d_export_patches_cargs,
+        "export_patches_aug": c2d_export_patches_aug_cargs,
+        "extrude_seg": c2d_extrude_seg_cargs,
+        "fill_background_with_noise": c2d_fill_background_with_noise_cargs,
+        "fft": c2d_fft_cargs,
+        "flip": c2d_flip_cargs,
+        "floor": c2d_floor_cargs,
+        "foreach": c2d_foreach_cargs,
+        "foreach_comp": c2d_foreach_comp_cargs,
+        "glm": c2d_glm_cargs,
+        "gradient": c2d_gradient_cargs,
+        "_help": c2d__help_cargs,
+        "holefill": c2d_holefill_cargs,
+        "hessian_eigenvalues": c2d_hessian_eigenvalues_cargs,
+        "hessian_objectness": c2d_hessian_objectness_cargs,
+        "histogram_match": c2d_histogram_match_cargs,
+        "info": c2d_info_cargs,
+        "info_full": c2d_info_full_cargs,
+        "insert": c2d_insert_cargs,
+        "interpolation": c2d_interpolation_cargs,
+        "iterations": c2d_iterations_cargs,
+        "label_overlap": c2d_label_overlap_cargs,
+        "label_statistics": c2d_label_statistics_cargs,
+        "landmarks_to_spheres": c2d_landmarks_to_spheres_cargs,
+        "laplacian": c2d_laplacian_cargs,
+        "levelset": c2d_levelset_cargs,
+        "levelset_curvature": c2d_levelset_curvature_cargs,
+        "levelset_advection": c2d_levelset_advection_cargs,
+        "log": c2d_log_cargs,
+        "log10": c2d_log10_cargs,
+        "manual": c2d_manual_cargs,
+        "match_bounding_box": c2d_match_bounding_box_cargs,
+        "maximum": c2d_maximum_cargs,
+        "multicomponent_split": c2d_multicomponent_split_cargs,
+        "mean": c2d_mean_cargs,
+        "median_filter": c2d_median_filter_cargs,
+        "merge": c2d_merge_cargs,
+        "mean_filter": c2d_mean_filter_cargs,
+        "mutual_info": c2d_mutual_info_cargs,
+        "minimum": c2d_minimum_cargs,
+        "mixture_model": c2d_mixture_model_cargs,
+        "moments": c2d_moments_cargs,
+        "mattes_mutual_info": c2d_mattes_mutual_info_cargs,
+        "mean_square": c2d_mean_square_cargs,
+        "multiply": c2d_multiply_cargs,
+        "normalized_cross_correlation": c2d_normalized_cross_correlation_cargs,
+        "normalized_correlation": c2d_normalized_correlation_cargs,
+        "normalized_mutual_info": c2d_normalized_mutual_info_cargs,
+        "noise_gaussian": c2d_noise_gaussian_cargs,
+        "noise_poisson": c2d_noise_poisson_cargs,
+        "noise_speckle": c2d_noise_speckle_cargs,
+        "noise_salt_pepper": c2d_noise_salt_pepper_cargs,
+        "no_multicomponent_split": c2d_no_multicomponent_split_cargs,
+        "normalize_local_window": c2d_normalize_local_window_cargs,
+        "normpdf": c2d_normpdf_cargs,
+        "noround": c2d_noround_cargs,
+        "nospm": c2d_nospm_cargs,
+        "output": c2d_output_cargs,
+        "output_multicomponent": c2d_output_multicomponent_cargs,
+        "output_multiple_multicomponent": c2d_output_multiple_multicomponent_cargs,
+        "orient": c2d_orient_cargs,
+        "output_multiple": c2d_output_multiple_cargs,
+        "orient_1": c2d_orient_1_cargs,
+        "origin": c2d_origin_cargs,
+        "origin_voxel": c2d_origin_voxel_cargs,
+        "origin_voxel_coord": c2d_origin_voxel_coord_cargs,
+        "overlap": c2d_overlap_cargs,
+        "overlay_label_image": c2d_overlay_label_image_cargs,
+        "pad": c2d_pad_cargs,
+        "pad_to": c2d_pad_to_cargs,
+        "pca": c2d_pca_cargs,
+        "percent_intensity_mode": c2d_percent_intensity_mode_cargs,
+        "pixel": c2d_pixel_cargs,
+        "pop": c2d_pop_cargs,
+        "popas": c2d_popas_cargs,
+        "probe": c2d_probe_cargs,
+        "push": c2d_push_cargs,
+        "rank": c2d_rank_cargs,
+        "reciprocal": c2d_reciprocal_cargs,
+        "region": c2d_region_cargs,
+        "reorder": c2d_reorder_cargs,
+        "retain_labels": c2d_retain_labels_cargs,
+        "rf_apply": c2d_rf_apply_cargs,
+        "rf_train": c2d_rf_train_cargs,
+        "rf_param_patch": c2d_rf_param_patch_cargs,
+        "rf_param_usexyz": c2d_rf_param_usexyz_cargs,
+        "rf_param_nousexyz": c2d_rf_param_nousexyz_cargs,
+        "rf_param_ntrees": c2d_rf_param_ntrees_cargs,
+        "rf_param_treedepth": c2d_rf_param_treedepth_cargs,
+        "set_sform": c2d_set_sform_cargs,
+        "replace": c2d_replace_cargs,
+        "resample": c2d_resample_cargs,
+        "resample_iso": c2d_resample_iso_cargs,
+        "resample_mm": c2d_resample_mm_cargs,
+        "reslice_itk": c2d_reslice_itk_cargs,
+        "reslice_matrix": c2d_reslice_matrix_cargs,
+        "reslice_identity": c2d_reslice_identity_cargs,
+        "rgb2hsv": c2d_rgb2hsv_cargs,
+        "rms": c2d_rms_cargs,
+        "round": c2d_round_cargs,
+        "scale": c2d_scale_cargs,
+        "set_sform_1": c2d_set_sform_1_cargs,
+        "sin": c2d_sin_cargs,
+        "slice": c2d_slice_cargs,
+        "slice_all": c2d_slice_all_cargs,
+        "sharpen": c2d_sharpen_cargs,
+        "shift": c2d_shift_cargs,
+        "signed_distance_transform": c2d_signed_distance_transform_cargs,
+        "smooth": c2d_smooth_cargs,
+        "smooth_fast": c2d_smooth_fast_cargs,
+        "spacing": c2d_spacing_cargs,
+        "split": c2d_split_cargs,
+        "sqrt": c2d_sqrt_cargs,
+        "staple": c2d_staple_cargs,
+        "structure_tensor_eigenvalues": c2d_structure_tensor_eigenvalues_cargs,
+        "spm": c2d_spm_cargs,
+        "subtract": c2d_subtract_cargs,
+        "supervoxel": c2d_supervoxel_cargs,
+        "stretch": c2d_stretch_cargs,
+        "swapdim": c2d_swapdim_cargs,
+        "test_image": c2d_test_image_cargs,
+        "test_probe": c2d_test_probe_cargs,
+        "threshold": c2d_threshold_cargs,
+        "tile": c2d_tile_cargs,
+        "trim": c2d_trim_cargs,
+        "trim_to_size": c2d_trim_to_size_cargs,
+        "type": c2d_type_cargs,
+        "verbose": c2d_verbose_cargs,
+        "noverbose": c2d_noverbose_cargs,
+        "version": c2d_version_cargs,
+        "vote": c2d_vote_cargs,
+        "vote_mrf": c2d_vote_mrf_cargs,
+        "vote_label": c2d_vote_label_cargs,
+        "voxel_sum": c2d_voxel_sum_cargs,
+        "voxel_integral": c2d_voxel_integral_cargs,
+        "voxelwise_regression": c2d_voxelwise_regression_cargs,
+        "warp": c2d_warp_cargs,
+        "warp_label": c2d_warp_label_cargs,
+        "wrap": c2d_wrap_cargs,
+        "weighted_sum": c2d_weighted_sum_cargs,
+        "weighted_sum_voxelwise": c2d_weighted_sum_voxelwise_cargs,
     }.get(t)
 
 
-def dyn_outputs(
+def c2d_operations_outputs_dyn_fn(
     t: str,
 ) -> typing.Any:
     """
@@ -1302,14 +2023,13 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "c3d.c2d": c2d_outputs,
-        "c3d.c2d.output": c2d_output_outputs,
+        "output": c2d_output_outputs,
     }.get(t)
 
 
 def c2d_accum_params(
     accum: str,
-) -> C2dAccumParameters:
+) -> C2dAccumParametersTagged:
     """
     Build parameters.
     
@@ -1330,7 +2050,7 @@ def c2d_accum_params(
         Parameter dictionary
     """
     params = {
-        "@type": "c3d.c2d.accum",
+        "@type": "accum",
         "accum": accum,
     }
     return params
@@ -1352,14 +2072,14 @@ def c2d_accum_cargs(
     cargs = []
     cargs.extend([
         "-accum",
-        params.get("accum")
+        params.get("accum", None)
     ])
     return cargs
 
 
 def c2d_acos_params(
     acos: str,
-) -> C2dAcosParameters:
+) -> C2dAcosParametersTagged:
     """
     Build parameters.
     
@@ -1369,7 +2089,7 @@ def c2d_acos_params(
         Parameter dictionary
     """
     params = {
-        "@type": "c3d.c2d.acos",
+        "@type": "acos",
         "acos": acos,
     }
     return params
@@ -1391,14 +2111,14 @@ def c2d_acos_cargs(
     cargs = []
     cargs.extend([
         "-acos",
-        params.get("acos")
+        params.get("acos", None)
     ])
     return cargs
 
 
 def c2d_add_params(
     add: str,
-) -> C2dAddParameters:
+) -> C2dAddParametersTagged:
     """
     Build parameters.
     
@@ -1424,7 +2144,7 @@ def c2d_add_params(
         Parameter dictionary
     """
     params = {
-        "@type": "c3d.c2d.add",
+        "@type": "add",
         "add": add,
     }
     return params
@@ -1446,14 +2166,14 @@ def c2d_add_cargs(
     cargs = []
     cargs.extend([
         "-add",
-        params.get("add")
+        params.get("add", None)
     ])
     return cargs
 
 
 def c2d_align_landmarks_params(
     align_landmarks: str,
-) -> C2dAlignLandmarksParameters:
+) -> C2dAlignLandmarksParametersTagged:
     """
     Build parameters.
     
@@ -1482,7 +2202,7 @@ def c2d_align_landmarks_params(
         Parameter dictionary
     """
     params = {
-        "@type": "c3d.c2d.align_landmarks",
+        "@type": "align_landmarks",
         "align_landmarks": align_landmarks,
     }
     return params
@@ -1504,14 +2224,14 @@ def c2d_align_landmarks_cargs(
     cargs = []
     cargs.extend([
         "-align-landmarks",
-        params.get("align_landmarks")
+        params.get("align_landmarks", None)
     ])
     return cargs
 
 
 def c2d_anisotropic_diffusion_params(
     anisotropic_diffusion: str,
-) -> C2dAnisotropicDiffusionParameters:
+) -> C2dAnisotropicDiffusionParametersTagged:
     """
     Build parameters.
     
@@ -1537,7 +2257,7 @@ def c2d_anisotropic_diffusion_params(
         Parameter dictionary
     """
     params = {
-        "@type": "c3d.c2d.anisotropic_diffusion",
+        "@type": "anisotropic_diffusion",
         "anisotropic_diffusion": anisotropic_diffusion,
     }
     return params
@@ -1559,14 +2279,14 @@ def c2d_anisotropic_diffusion_cargs(
     cargs = []
     cargs.extend([
         "-anisotropic-diffusion",
-        params.get("anisotropic_diffusion")
+        params.get("anisotropic_diffusion", None)
     ])
     return cargs
 
 
 def c2d_antialias_params(
     antialias: str,
-) -> C2dAntialiasParameters:
+) -> C2dAntialiasParametersTagged:
     """
     Build parameters.
     
@@ -1576,7 +2296,7 @@ def c2d_antialias_params(
         Parameter dictionary
     """
     params = {
-        "@type": "c3d.c2d.antialias",
+        "@type": "antialias",
         "antialias": antialias,
     }
     return params
@@ -1598,14 +2318,14 @@ def c2d_antialias_cargs(
     cargs = []
     cargs.extend([
         "-antialias",
-        params.get("antialias")
+        params.get("antialias", None)
     ])
     return cargs
 
 
 def c2d_set_params(
     set_: str,
-) -> C2dSetParameters:
+) -> C2dSetParametersTagged:
     """
     Build parameters.
     
@@ -1628,7 +2348,7 @@ def c2d_set_params(
         Parameter dictionary
     """
     params = {
-        "@type": "c3d.c2d.set",
+        "@type": "set",
         "set": set_,
     }
     return params
@@ -1650,14 +2370,14 @@ def c2d_set_cargs(
     cargs = []
     cargs.extend([
         "-as",
-        params.get("set")
+        params.get("set", None)
     ])
     return cargs
 
 
 def c2d_asin_params(
     asin: str,
-) -> C2dAsinParameters:
+) -> C2dAsinParametersTagged:
     """
     Build parameters.
     
@@ -1667,7 +2387,7 @@ def c2d_asin_params(
         Parameter dictionary
     """
     params = {
-        "@type": "c3d.c2d.asin",
+        "@type": "asin",
         "asin": asin,
     }
     return params
@@ -1689,14 +2409,14 @@ def c2d_asin_cargs(
     cargs = []
     cargs.extend([
         "-asin",
-        params.get("asin")
+        params.get("asin", None)
     ])
     return cargs
 
 
 def c2d_atan2_params(
     atan2: str,
-) -> C2dAtan2Parameters:
+) -> C2dAtan2ParametersTagged:
     """
     Build parameters.
     
@@ -1714,7 +2434,7 @@ def c2d_atan2_params(
         Parameter dictionary
     """
     params = {
-        "@type": "c3d.c2d.atan2",
+        "@type": "atan2",
         "atan2": atan2,
     }
     return params
@@ -1736,14 +2456,14 @@ def c2d_atan2_cargs(
     cargs = []
     cargs.extend([
         "-atan2",
-        params.get("atan2")
+        params.get("atan2", None)
     ])
     return cargs
 
 
 def c2d_background_params(
     background: str,
-) -> C2dBackgroundParameters:
+) -> C2dBackgroundParametersTagged:
     """
     Build parameters.
     
@@ -1759,7 +2479,7 @@ def c2d_background_params(
         Parameter dictionary
     """
     params = {
-        "@type": "c3d.c2d.background",
+        "@type": "background",
         "background": background,
     }
     return params
@@ -1781,14 +2501,14 @@ def c2d_background_cargs(
     cargs = []
     cargs.extend([
         "-background",
-        params.get("background")
+        params.get("background", None)
     ])
     return cargs
 
 
 def c2d_n4_bias_correction_params(
     n4_bias_correction: str,
-) -> C2dN4BiasCorrectionParameters:
+) -> C2dN4BiasCorrectionParametersTagged:
     """
     Build parameters.
     
@@ -1806,7 +2526,7 @@ def c2d_n4_bias_correction_params(
         Parameter dictionary
     """
     params = {
-        "@type": "c3d.c2d.n4_bias_correction",
+        "@type": "n4_bias_correction",
         "n4_bias_correction": n4_bias_correction,
     }
     return params
@@ -1828,14 +2548,14 @@ def c2d_n4_bias_correction_cargs(
     cargs = []
     cargs.extend([
         "-biascorr",
-        params.get("n4_bias_correction")
+        params.get("n4_bias_correction", None)
     ])
     return cargs
 
 
 def c2d_binarize_params(
     binarize: str,
-) -> C2dBinarizeParameters:
+) -> C2dBinarizeParametersTagged:
     """
     Build parameters.
     
@@ -1856,7 +2576,7 @@ def c2d_binarize_params(
         Parameter dictionary
     """
     params = {
-        "@type": "c3d.c2d.binarize",
+        "@type": "binarize",
         "binarize": binarize,
     }
     return params
@@ -1878,14 +2598,14 @@ def c2d_binarize_cargs(
     cargs = []
     cargs.extend([
         "-binarize",
-        params.get("binarize")
+        params.get("binarize", None)
     ])
     return cargs
 
 
 def c2d_canny_params(
     canny: str,
-) -> C2dCannyParameters:
+) -> C2dCannyParametersTagged:
     """
     Build parameters.
     
@@ -1903,7 +2623,7 @@ def c2d_canny_params(
         Parameter dictionary
     """
     params = {
-        "@type": "c3d.c2d.canny",
+        "@type": "canny",
         "canny": canny,
     }
     return params
@@ -1925,14 +2645,14 @@ def c2d_canny_cargs(
     cargs = []
     cargs.extend([
         "-canny",
-        params.get("canny")
+        params.get("canny", None)
     ])
     return cargs
 
 
 def c2d_ceil_params(
     ceil: str,
-) -> C2dCeilParameters:
+) -> C2dCeilParametersTagged:
     """
     Build parameters.
     
@@ -1949,7 +2669,7 @@ def c2d_ceil_params(
         Parameter dictionary
     """
     params = {
-        "@type": "c3d.c2d.ceil",
+        "@type": "ceil",
         "ceil": ceil,
     }
     return params
@@ -1971,14 +2691,14 @@ def c2d_ceil_cargs(
     cargs = []
     cargs.extend([
         "-ceil",
-        params.get("ceil")
+        params.get("ceil", None)
     ])
     return cargs
 
 
 def c2d_centroid_params(
     centroid: str,
-) -> C2dCentroidParameters:
+) -> C2dCentroidParametersTagged:
     """
     Build parameters.
     
@@ -2001,7 +2721,7 @@ def c2d_centroid_params(
         Parameter dictionary
     """
     params = {
-        "@type": "c3d.c2d.centroid",
+        "@type": "centroid",
         "centroid": centroid,
     }
     return params
@@ -2023,14 +2743,14 @@ def c2d_centroid_cargs(
     cargs = []
     cargs.extend([
         "-centroid",
-        params.get("centroid")
+        params.get("centroid", None)
     ])
     return cargs
 
 
 def c2d_centroid_mark_params(
     centroid_mark: str,
-) -> C2dCentroidMarkParameters:
+) -> C2dCentroidMarkParametersTagged:
     """
     Build parameters.
     
@@ -2053,7 +2773,7 @@ def c2d_centroid_mark_params(
         Parameter dictionary
     """
     params = {
-        "@type": "c3d.c2d.centroid_mark",
+        "@type": "centroid_mark",
         "centroid_mark": centroid_mark,
     }
     return params
@@ -2075,14 +2795,14 @@ def c2d_centroid_mark_cargs(
     cargs = []
     cargs.extend([
         "-centroid-mark",
-        params.get("centroid_mark")
+        params.get("centroid_mark", None)
     ])
     return cargs
 
 
 def c2d_connected_components_params(
     connected_components: str,
-) -> C2dConnectedComponentsParameters:
+) -> C2dConnectedComponentsParametersTagged:
     """
     Build parameters.
     
@@ -2105,7 +2825,7 @@ def c2d_connected_components_params(
         Parameter dictionary
     """
     params = {
-        "@type": "c3d.c2d.connected_components",
+        "@type": "connected_components",
         "connected_components": connected_components,
     }
     return params
@@ -2127,14 +2847,14 @@ def c2d_connected_components_cargs(
     cargs = []
     cargs.extend([
         "-connected-components",
-        params.get("connected_components")
+        params.get("connected_components", None)
     ])
     return cargs
 
 
 def c2d_clear_params(
     clear_: str,
-) -> C2dClearParameters:
+) -> C2dClearParametersTagged:
     """
     Build parameters.
     
@@ -2149,7 +2869,7 @@ def c2d_clear_params(
         Parameter dictionary
     """
     params = {
-        "@type": "c3d.c2d.clear",
+        "@type": "clear",
         "clear": clear_,
     }
     return params
@@ -2171,14 +2891,14 @@ def c2d_clear_cargs(
     cargs = []
     cargs.extend([
         "-clear",
-        params.get("clear")
+        params.get("clear", None)
     ])
     return cargs
 
 
 def c2d_clip_params(
     clip: str,
-) -> C2dClipParameters:
+) -> C2dClipParametersTagged:
     """
     Build parameters.
     
@@ -2201,7 +2921,7 @@ def c2d_clip_params(
         Parameter dictionary
     """
     params = {
-        "@type": "c3d.c2d.clip",
+        "@type": "clip",
         "clip": clip,
     }
     return params
@@ -2223,14 +2943,14 @@ def c2d_clip_cargs(
     cargs = []
     cargs.extend([
         "-clip",
-        params.get("clip")
+        params.get("clip", None)
     ])
     return cargs
 
 
 def c2d_color_map_params(
     color_map: str,
-) -> C2dColorMapParameters:
+) -> C2dColorMapParametersTagged:
     """
     Build parameters.
     
@@ -2265,7 +2985,7 @@ def c2d_color_map_params(
         Parameter dictionary
     """
     params = {
-        "@type": "c3d.c2d.color_map",
+        "@type": "color_map",
         "color_map": color_map,
     }
     return params
@@ -2287,14 +3007,14 @@ def c2d_color_map_cargs(
     cargs = []
     cargs.extend([
         "-colormap",
-        params.get("color_map")
+        params.get("color_map", None)
     ])
     return cargs
 
 
 def c2d_compress_params(
     compress: str,
-) -> C2dCompressParameters:
+) -> C2dCompressParametersTagged:
     """
     Build parameters.
     
@@ -2317,7 +3037,7 @@ def c2d_compress_params(
         Parameter dictionary
     """
     params = {
-        "@type": "c3d.c2d.compress",
+        "@type": "compress",
         "compress": compress,
     }
     return params
@@ -2339,14 +3059,14 @@ def c2d_compress_cargs(
     cargs = []
     cargs.extend([
         "-compress",
-        params.get("compress")
+        params.get("compress", None)
     ])
     return cargs
 
 
 def c2d_no_compress_params(
     no_compress: str,
-) -> C2dNoCompressParameters:
+) -> C2dNoCompressParametersTagged:
     """
     Build parameters.
     
@@ -2369,7 +3089,7 @@ def c2d_no_compress_params(
         Parameter dictionary
     """
     params = {
-        "@type": "c3d.c2d.no_compress",
+        "@type": "no_compress",
         "no_compress": no_compress,
     }
     return params
@@ -2391,14 +3111,14 @@ def c2d_no_compress_cargs(
     cargs = []
     cargs.extend([
         "-no-compress",
-        params.get("no_compress")
+        params.get("no_compress", None)
     ])
     return cargs
 
 
 def c2d_conv_params(
     conv: str,
-) -> C2dConvParameters:
+) -> C2dConvParametersTagged:
     """
     Build parameters.
     
@@ -2420,7 +3140,7 @@ def c2d_conv_params(
         Parameter dictionary
     """
     params = {
-        "@type": "c3d.c2d.conv",
+        "@type": "conv",
         "conv": conv,
     }
     return params
@@ -2442,14 +3162,14 @@ def c2d_conv_cargs(
     cargs = []
     cargs.extend([
         "-conv",
-        params.get("conv")
+        params.get("conv", None)
     ])
     return cargs
 
 
 def c2d_coordinate_map_voxel_params(
     coordinate_map_voxel: str,
-) -> C2dCoordinateMapVoxelParameters:
+) -> C2dCoordinateMapVoxelParametersTagged:
     """
     Build parameters.
     
@@ -2477,7 +3197,7 @@ def c2d_coordinate_map_voxel_params(
         Parameter dictionary
     """
     params = {
-        "@type": "c3d.c2d.coordinate_map_voxel",
+        "@type": "coordinate_map_voxel",
         "coordinate_map_voxel": coordinate_map_voxel,
     }
     return params
@@ -2499,14 +3219,14 @@ def c2d_coordinate_map_voxel_cargs(
     cargs = []
     cargs.extend([
         "-coordinate-map-voxel",
-        params.get("coordinate_map_voxel")
+        params.get("coordinate_map_voxel", None)
     ])
     return cargs
 
 
 def c2d_coordinate_map_physical_params(
     coordinate_map_physical: str,
-) -> C2dCoordinateMapPhysicalParameters:
+) -> C2dCoordinateMapPhysicalParametersTagged:
     """
     Build parameters.
     
@@ -2523,7 +3243,7 @@ def c2d_coordinate_map_physical_params(
         Parameter dictionary
     """
     params = {
-        "@type": "c3d.c2d.coordinate_map_physical",
+        "@type": "coordinate_map_physical",
         "coordinate_map_physical": coordinate_map_physical,
     }
     return params
@@ -2545,14 +3265,14 @@ def c2d_coordinate_map_physical_cargs(
     cargs = []
     cargs.extend([
         "-coordinate-map-physical",
-        params.get("coordinate_map_physical")
+        params.get("coordinate_map_physical", None)
     ])
     return cargs
 
 
 def c2d_copy_transform_params(
     copy_transform: str,
-) -> C2dCopyTransformParameters:
+) -> C2dCopyTransformParametersTagged:
     """
     Build parameters.
     
@@ -2573,7 +3293,7 @@ def c2d_copy_transform_params(
         Parameter dictionary
     """
     params = {
-        "@type": "c3d.c2d.copy_transform",
+        "@type": "copy_transform",
         "copy_transform": copy_transform,
     }
     return params
@@ -2595,14 +3315,14 @@ def c2d_copy_transform_cargs(
     cargs = []
     cargs.extend([
         "-copy-transform",
-        params.get("copy_transform")
+        params.get("copy_transform", None)
     ])
     return cargs
 
 
 def c2d_cos_params(
     cos: str,
-) -> C2dCosParameters:
+) -> C2dCosParametersTagged:
     """
     Build parameters.
     
@@ -2612,7 +3332,7 @@ def c2d_cos_params(
         Parameter dictionary
     """
     params = {
-        "@type": "c3d.c2d.cos",
+        "@type": "cos",
         "cos": cos,
     }
     return params
@@ -2634,14 +3354,14 @@ def c2d_cos_cargs(
     cargs = []
     cargs.extend([
         "-cos",
-        params.get("cos")
+        params.get("cos", None)
     ])
     return cargs
 
 
 def c2d_create_params(
     create: str,
-) -> C2dCreateParameters:
+) -> C2dCreateParametersTagged:
     """
     Build parameters.
     
@@ -2663,7 +3383,7 @@ def c2d_create_params(
         Parameter dictionary
     """
     params = {
-        "@type": "c3d.c2d.create",
+        "@type": "create",
         "create": create,
     }
     return params
@@ -2685,14 +3405,14 @@ def c2d_create_cargs(
     cargs = []
     cargs.extend([
         "-create",
-        params.get("create")
+        params.get("create", None)
     ])
     return cargs
 
 
 def c2d_dicom_series_list_params(
     dicom_series_list: str,
-) -> C2dDicomSeriesListParameters:
+) -> C2dDicomSeriesListParametersTagged:
     """
     Build parameters.
     
@@ -2708,7 +3428,7 @@ def c2d_dicom_series_list_params(
         Parameter dictionary
     """
     params = {
-        "@type": "c3d.c2d.dicom_series_list",
+        "@type": "dicom_series_list",
         "dicom_series_list": dicom_series_list,
     }
     return params
@@ -2730,14 +3450,14 @@ def c2d_dicom_series_list_cargs(
     cargs = []
     cargs.extend([
         "-dicom-series-list",
-        params.get("dicom_series_list")
+        params.get("dicom_series_list", None)
     ])
     return cargs
 
 
 def c2d_dicom_series_read_params(
     dicom_series_read: str,
-) -> C2dDicomSeriesReadParameters:
+) -> C2dDicomSeriesReadParametersTagged:
     """
     Build parameters.
     
@@ -2755,7 +3475,7 @@ def c2d_dicom_series_read_params(
         Parameter dictionary
     """
     params = {
-        "@type": "c3d.c2d.dicom_series_read",
+        "@type": "dicom_series_read",
         "dicom_series_read": dicom_series_read,
     }
     return params
@@ -2777,14 +3497,14 @@ def c2d_dicom_series_read_cargs(
     cargs = []
     cargs.extend([
         "-dicom-series-read",
-        params.get("dicom_series_read")
+        params.get("dicom_series_read", None)
     ])
     return cargs
 
 
 def c2d_dilate_params(
     dilate: str,
-) -> C2dDilateParameters:
+) -> C2dDilateParametersTagged:
     """
     Build parameters.
     
@@ -2803,7 +3523,7 @@ def c2d_dilate_params(
         Parameter dictionary
     """
     params = {
-        "@type": "c3d.c2d.dilate",
+        "@type": "dilate",
         "dilate": dilate,
     }
     return params
@@ -2825,14 +3545,14 @@ def c2d_dilate_cargs(
     cargs = []
     cargs.extend([
         "-dilate",
-        params.get("dilate")
+        params.get("dilate", None)
     ])
     return cargs
 
 
 def c2d_divide_params(
     divide: str,
-) -> C2dDivideParameters:
+) -> C2dDivideParametersTagged:
     """
     Build parameters.
     
@@ -2855,7 +3575,7 @@ def c2d_divide_params(
         Parameter dictionary
     """
     params = {
-        "@type": "c3d.c2d.divide",
+        "@type": "divide",
         "divide": divide,
     }
     return params
@@ -2877,14 +3597,14 @@ def c2d_divide_cargs(
     cargs = []
     cargs.extend([
         "-divide",
-        params.get("divide")
+        params.get("divide", None)
     ])
     return cargs
 
 
 def c2d_duplicate_params(
     duplicate: str,
-) -> C2dDuplicateParameters:
+) -> C2dDuplicateParametersTagged:
     """
     Build parameters.
     
@@ -2905,7 +3625,7 @@ def c2d_duplicate_params(
         Parameter dictionary
     """
     params = {
-        "@type": "c3d.c2d.duplicate",
+        "@type": "duplicate",
         "duplicate": duplicate,
     }
     return params
@@ -2927,14 +3647,14 @@ def c2d_duplicate_cargs(
     cargs = []
     cargs.extend([
         "-dup",
-        params.get("duplicate")
+        params.get("duplicate", None)
     ])
     return cargs
 
 
 def c2d_endaccum_params(
     endaccum: str,
-) -> C2dEndaccumParameters:
+) -> C2dEndaccumParametersTagged:
     """
     Build parameters.
     
@@ -2955,7 +3675,7 @@ def c2d_endaccum_params(
         Parameter dictionary
     """
     params = {
-        "@type": "c3d.c2d.endaccum",
+        "@type": "endaccum",
         "endaccum": endaccum,
     }
     return params
@@ -2977,14 +3697,14 @@ def c2d_endaccum_cargs(
     cargs = []
     cargs.extend([
         "-endaccum",
-        params.get("endaccum")
+        params.get("endaccum", None)
     ])
     return cargs
 
 
 def c2d_endfor_params(
     endfor: str,
-) -> C2dEndforParameters:
+) -> C2dEndforParametersTagged:
     """
     Build parameters.
     
@@ -3003,7 +3723,7 @@ def c2d_endfor_params(
         Parameter dictionary
     """
     params = {
-        "@type": "c3d.c2d.endfor",
+        "@type": "endfor",
         "endfor": endfor,
     }
     return params
@@ -3025,14 +3745,14 @@ def c2d_endfor_cargs(
     cargs = []
     cargs.extend([
         "-endfor",
-        params.get("endfor")
+        params.get("endfor", None)
     ])
     return cargs
 
 
 def c2d_erode_params(
     erode: str,
-) -> C2dErodeParameters:
+) -> C2dErodeParametersTagged:
     """
     Build parameters.
     
@@ -3051,7 +3771,7 @@ def c2d_erode_params(
         Parameter dictionary
     """
     params = {
-        "@type": "c3d.c2d.erode",
+        "@type": "erode",
         "erode": erode,
     }
     return params
@@ -3073,14 +3793,14 @@ def c2d_erode_cargs(
     cargs = []
     cargs.extend([
         "-erode",
-        params.get("erode")
+        params.get("erode", None)
     ])
     return cargs
 
 
 def c2d_erf_params(
     erf: str,
-) -> C2dErfParameters:
+) -> C2dErfParametersTagged:
     """
     Build parameters.
     
@@ -3097,7 +3817,7 @@ def c2d_erf_params(
         Parameter dictionary
     """
     params = {
-        "@type": "c3d.c2d.erf",
+        "@type": "erf",
         "erf": erf,
     }
     return params
@@ -3119,14 +3839,14 @@ def c2d_erf_cargs(
     cargs = []
     cargs.extend([
         "-erf",
-        params.get("erf")
+        params.get("erf", None)
     ])
     return cargs
 
 
 def c2d_exp_params(
     exp: str,
-) -> C2dExpParameters:
+) -> C2dExpParametersTagged:
     """
     Build parameters.
     
@@ -3142,7 +3862,7 @@ def c2d_exp_params(
         Parameter dictionary
     """
     params = {
-        "@type": "c3d.c2d.exp",
+        "@type": "exp",
         "exp": exp,
     }
     return params
@@ -3164,14 +3884,14 @@ def c2d_exp_cargs(
     cargs = []
     cargs.extend([
         "-exp",
-        params.get("exp")
+        params.get("exp", None)
     ])
     return cargs
 
 
 def c2d_export_patches_params(
     export_patches: str,
-) -> C2dExportPatchesParameters:
+) -> C2dExportPatchesParametersTagged:
     """
     Build parameters.
     
@@ -3228,7 +3948,7 @@ def c2d_export_patches_params(
         Parameter dictionary
     """
     params = {
-        "@type": "c3d.c2d.export_patches",
+        "@type": "export_patches",
         "export_patches": export_patches,
     }
     return params
@@ -3250,14 +3970,14 @@ def c2d_export_patches_cargs(
     cargs = []
     cargs.extend([
         "-export-patches",
-        params.get("export_patches")
+        params.get("export_patches", None)
     ])
     return cargs
 
 
 def c2d_export_patches_aug_params(
     export_patches_aug: str,
-) -> C2dExportPatchesAugParameters:
+) -> C2dExportPatchesAugParametersTagged:
     """
     Build parameters.
     
@@ -3281,7 +4001,7 @@ def c2d_export_patches_aug_params(
         Parameter dictionary
     """
     params = {
-        "@type": "c3d.c2d.export_patches_aug",
+        "@type": "export_patches_aug",
         "export_patches_aug": export_patches_aug,
     }
     return params
@@ -3303,14 +4023,14 @@ def c2d_export_patches_aug_cargs(
     cargs = []
     cargs.extend([
         "-export-patches-aug",
-        params.get("export_patches_aug")
+        params.get("export_patches_aug", None)
     ])
     return cargs
 
 
 def c2d_extrude_seg_params(
     extrude_seg: str,
-) -> C2dExtrudeSegParameters:
+) -> C2dExtrudeSegParametersTagged:
     """
     Build parameters.
     
@@ -3320,7 +4040,7 @@ def c2d_extrude_seg_params(
         Parameter dictionary
     """
     params = {
-        "@type": "c3d.c2d.extrude_seg",
+        "@type": "extrude_seg",
         "extrude_seg": extrude_seg,
     }
     return params
@@ -3342,14 +4062,14 @@ def c2d_extrude_seg_cargs(
     cargs = []
     cargs.extend([
         "-extrude-seg",
-        params.get("extrude_seg")
+        params.get("extrude_seg", None)
     ])
     return cargs
 
 
 def c2d_fill_background_with_noise_params(
     fill_background_with_noise: str,
-) -> C2dFillBackgroundWithNoiseParameters:
+) -> C2dFillBackgroundWithNoiseParametersTagged:
     """
     Build parameters.
     
@@ -3359,7 +4079,7 @@ def c2d_fill_background_with_noise_params(
         Parameter dictionary
     """
     params = {
-        "@type": "c3d.c2d.fill_background_with_noise",
+        "@type": "fill_background_with_noise",
         "fill_background_with_noise": fill_background_with_noise,
     }
     return params
@@ -3381,14 +4101,14 @@ def c2d_fill_background_with_noise_cargs(
     cargs = []
     cargs.extend([
         "-fill-background-with-noise",
-        params.get("fill_background_with_noise")
+        params.get("fill_background_with_noise", None)
     ])
     return cargs
 
 
 def c2d_fft_params(
     fft: str,
-) -> C2dFftParameters:
+) -> C2dFftParametersTagged:
     """
     Build parameters.
     
@@ -3407,7 +4127,7 @@ def c2d_fft_params(
         Parameter dictionary
     """
     params = {
-        "@type": "c3d.c2d.fft",
+        "@type": "fft",
         "fft": fft,
     }
     return params
@@ -3429,14 +4149,14 @@ def c2d_fft_cargs(
     cargs = []
     cargs.extend([
         "-fft",
-        params.get("fft")
+        params.get("fft", None)
     ])
     return cargs
 
 
 def c2d_flip_params(
     flip: str,
-) -> C2dFlipParameters:
+) -> C2dFlipParametersTagged:
     """
     Build parameters.
     
@@ -3454,7 +4174,7 @@ def c2d_flip_params(
         Parameter dictionary
     """
     params = {
-        "@type": "c3d.c2d.flip",
+        "@type": "flip",
         "flip": flip,
     }
     return params
@@ -3476,14 +4196,14 @@ def c2d_flip_cargs(
     cargs = []
     cargs.extend([
         "-flip",
-        params.get("flip")
+        params.get("flip", None)
     ])
     return cargs
 
 
 def c2d_floor_params(
     floor: str,
-) -> C2dFloorParameters:
+) -> C2dFloorParametersTagged:
     """
     Build parameters.
     
@@ -3504,7 +4224,7 @@ def c2d_floor_params(
         Parameter dictionary
     """
     params = {
-        "@type": "c3d.c2d.floor",
+        "@type": "floor",
         "floor": floor,
     }
     return params
@@ -3526,14 +4246,14 @@ def c2d_floor_cargs(
     cargs = []
     cargs.extend([
         "-floor",
-        params.get("floor")
+        params.get("floor", None)
     ])
     return cargs
 
 
 def c2d_foreach_params(
     foreach: str,
-) -> C2dForeachParameters:
+) -> C2dForeachParametersTagged:
     """
     Build parameters.
     
@@ -3552,7 +4272,7 @@ def c2d_foreach_params(
         Parameter dictionary
     """
     params = {
-        "@type": "c3d.c2d.foreach",
+        "@type": "foreach",
         "foreach": foreach,
     }
     return params
@@ -3574,14 +4294,14 @@ def c2d_foreach_cargs(
     cargs = []
     cargs.extend([
         "-foreach",
-        params.get("foreach")
+        params.get("foreach", None)
     ])
     return cargs
 
 
 def c2d_foreach_comp_params(
     foreach_comp: str,
-) -> C2dForeachCompParameters:
+) -> C2dForeachCompParametersTagged:
     """
     Build parameters.
     
@@ -3607,7 +4327,7 @@ def c2d_foreach_comp_params(
         Parameter dictionary
     """
     params = {
-        "@type": "c3d.c2d.foreach_comp",
+        "@type": "foreach_comp",
         "foreach_comp": foreach_comp,
     }
     return params
@@ -3629,14 +4349,14 @@ def c2d_foreach_comp_cargs(
     cargs = []
     cargs.extend([
         "-foreach-comp",
-        params.get("foreach_comp")
+        params.get("foreach_comp", None)
     ])
     return cargs
 
 
 def c2d_glm_params(
     glm: str,
-) -> C2dGlmParameters:
+) -> C2dGlmParametersTagged:
     """
     Build parameters.
     
@@ -3672,7 +4392,7 @@ def c2d_glm_params(
         Parameter dictionary
     """
     params = {
-        "@type": "c3d.c2d.glm",
+        "@type": "glm",
         "glm": glm,
     }
     return params
@@ -3694,14 +4414,14 @@ def c2d_glm_cargs(
     cargs = []
     cargs.extend([
         "-glm",
-        params.get("glm")
+        params.get("glm", None)
     ])
     return cargs
 
 
 def c2d_gradient_params(
     gradient: str,
-) -> C2dGradientParameters:
+) -> C2dGradientParametersTagged:
     """
     Build parameters.
     
@@ -3723,7 +4443,7 @@ def c2d_gradient_params(
         Parameter dictionary
     """
     params = {
-        "@type": "c3d.c2d.gradient",
+        "@type": "gradient",
         "gradient": gradient,
     }
     return params
@@ -3745,14 +4465,14 @@ def c2d_gradient_cargs(
     cargs = []
     cargs.extend([
         "-grad",
-        params.get("gradient")
+        params.get("gradient", None)
     ])
     return cargs
 
 
 def c2d__help_params(
     v__help: str,
-) -> C2dHelpParameters:
+) -> C2dHelpParametersTagged:
     """
     Build parameters.
     
@@ -3774,7 +4494,7 @@ def c2d__help_params(
         Parameter dictionary
     """
     params = {
-        "@type": "c3d.c2d._help",
+        "@type": "_help",
         "_help": v__help,
     }
     return params
@@ -3796,14 +4516,14 @@ def c2d__help_cargs(
     cargs = []
     cargs.extend([
         "-h",
-        params.get("_help")
+        params.get("_help", None)
     ])
     return cargs
 
 
 def c2d_holefill_params(
     holefill: str,
-) -> C2dHolefillParameters:
+) -> C2dHolefillParametersTagged:
     """
     Build parameters.
     
@@ -3829,7 +4549,7 @@ def c2d_holefill_params(
         Parameter dictionary
     """
     params = {
-        "@type": "c3d.c2d.holefill",
+        "@type": "holefill",
         "holefill": holefill,
     }
     return params
@@ -3851,14 +4571,14 @@ def c2d_holefill_cargs(
     cargs = []
     cargs.extend([
         "-hf",
-        params.get("holefill")
+        params.get("holefill", None)
     ])
     return cargs
 
 
 def c2d_hessian_eigenvalues_params(
     hessian_eigenvalues: str,
-) -> C2dHessianEigenvaluesParameters:
+) -> C2dHessianEigenvaluesParametersTagged:
     """
     Build parameters.
     
@@ -3880,7 +4600,7 @@ def c2d_hessian_eigenvalues_params(
         Parameter dictionary
     """
     params = {
-        "@type": "c3d.c2d.hessian_eigenvalues",
+        "@type": "hessian_eigenvalues",
         "hessian_eigenvalues": hessian_eigenvalues,
     }
     return params
@@ -3902,14 +4622,14 @@ def c2d_hessian_eigenvalues_cargs(
     cargs = []
     cargs.extend([
         "-hesseig",
-        params.get("hessian_eigenvalues")
+        params.get("hessian_eigenvalues", None)
     ])
     return cargs
 
 
 def c2d_hessian_objectness_params(
     hessian_objectness: str,
-) -> C2dHessianObjectnessParameters:
+) -> C2dHessianObjectnessParametersTagged:
     """
     Build parameters.
     
@@ -3939,7 +4659,7 @@ def c2d_hessian_objectness_params(
         Parameter dictionary
     """
     params = {
-        "@type": "c3d.c2d.hessian_objectness",
+        "@type": "hessian_objectness",
         "hessian_objectness": hessian_objectness,
     }
     return params
@@ -3961,14 +4681,14 @@ def c2d_hessian_objectness_cargs(
     cargs = []
     cargs.extend([
         "-hessobj",
-        params.get("hessian_objectness")
+        params.get("hessian_objectness", None)
     ])
     return cargs
 
 
 def c2d_histogram_match_params(
     histogram_match: str,
-) -> C2dHistogramMatchParameters:
+) -> C2dHistogramMatchParametersTagged:
     """
     Build parameters.
     
@@ -3978,7 +4698,7 @@ def c2d_histogram_match_params(
         Parameter dictionary
     """
     params = {
-        "@type": "c3d.c2d.histogram_match",
+        "@type": "histogram_match",
         "histogram_match": histogram_match,
     }
     return params
@@ -4000,14 +4720,14 @@ def c2d_histogram_match_cargs(
     cargs = []
     cargs.extend([
         "-histmatch",
-        params.get("histogram_match")
+        params.get("histogram_match", None)
     ])
     return cargs
 
 
 def c2d_info_params(
     info: str,
-) -> C2dInfoParameters:
+) -> C2dInfoParametersTagged:
     """
     Build parameters.
     
@@ -4029,7 +4749,7 @@ def c2d_info_params(
         Parameter dictionary
     """
     params = {
-        "@type": "c3d.c2d.info",
+        "@type": "info",
         "info": info,
     }
     return params
@@ -4051,14 +4771,14 @@ def c2d_info_cargs(
     cargs = []
     cargs.extend([
         "-info",
-        params.get("info")
+        params.get("info", None)
     ])
     return cargs
 
 
 def c2d_info_full_params(
     info_full: str,
-) -> C2dInfoFullParameters:
+) -> C2dInfoFullParametersTagged:
     """
     Build parameters.
     
@@ -4075,7 +4795,7 @@ def c2d_info_full_params(
         Parameter dictionary
     """
     params = {
-        "@type": "c3d.c2d.info_full",
+        "@type": "info_full",
         "info_full": info_full,
     }
     return params
@@ -4097,14 +4817,14 @@ def c2d_info_full_cargs(
     cargs = []
     cargs.extend([
         "-info-full",
-        params.get("info_full")
+        params.get("info_full", None)
     ])
     return cargs
 
 
 def c2d_insert_params(
     insert: str,
-) -> C2dInsertParameters:
+) -> C2dInsertParametersTagged:
     """
     Build parameters.
     
@@ -4122,7 +4842,7 @@ def c2d_insert_params(
         Parameter dictionary
     """
     params = {
-        "@type": "c3d.c2d.insert",
+        "@type": "insert",
         "insert": insert,
     }
     return params
@@ -4144,14 +4864,14 @@ def c2d_insert_cargs(
     cargs = []
     cargs.extend([
         "-insert",
-        params.get("insert")
+        params.get("insert", None)
     ])
     return cargs
 
 
 def c2d_interpolation_params(
     interpolation: str,
-) -> C2dInterpolationParameters:
+) -> C2dInterpolationParametersTagged:
     """
     Build parameters.
     
@@ -4178,7 +4898,7 @@ def c2d_interpolation_params(
         Parameter dictionary
     """
     params = {
-        "@type": "c3d.c2d.interpolation",
+        "@type": "interpolation",
         "interpolation": interpolation,
     }
     return params
@@ -4200,14 +4920,14 @@ def c2d_interpolation_cargs(
     cargs = []
     cargs.extend([
         "-interpolation",
-        params.get("interpolation")
+        params.get("interpolation", None)
     ])
     return cargs
 
 
 def c2d_iterations_params(
     iterations: str,
-) -> C2dIterationsParameters:
+) -> C2dIterationsParametersTagged:
     """
     Build parameters.
     
@@ -4217,7 +4937,7 @@ def c2d_iterations_params(
         Parameter dictionary
     """
     params = {
-        "@type": "c3d.c2d.iterations",
+        "@type": "iterations",
         "iterations": iterations,
     }
     return params
@@ -4239,14 +4959,14 @@ def c2d_iterations_cargs(
     cargs = []
     cargs.extend([
         "-iterations",
-        params.get("iterations")
+        params.get("iterations", None)
     ])
     return cargs
 
 
 def c2d_label_overlap_params(
     label_overlap: str,
-) -> C2dLabelOverlapParameters:
+) -> C2dLabelOverlapParametersTagged:
     """
     Build parameters.
     
@@ -4256,7 +4976,7 @@ def c2d_label_overlap_params(
         Parameter dictionary
     """
     params = {
-        "@type": "c3d.c2d.label_overlap",
+        "@type": "label_overlap",
         "label_overlap": label_overlap,
     }
     return params
@@ -4278,14 +4998,14 @@ def c2d_label_overlap_cargs(
     cargs = []
     cargs.extend([
         "-label-overlap",
-        params.get("label_overlap")
+        params.get("label_overlap", None)
     ])
     return cargs
 
 
 def c2d_label_statistics_params(
     label_statistics: str,
-) -> C2dLabelStatisticsParameters:
+) -> C2dLabelStatisticsParametersTagged:
     """
     Build parameters.
     
@@ -4314,7 +5034,7 @@ def c2d_label_statistics_params(
         Parameter dictionary
     """
     params = {
-        "@type": "c3d.c2d.label_statistics",
+        "@type": "label_statistics",
         "label_statistics": label_statistics,
     }
     return params
@@ -4336,14 +5056,14 @@ def c2d_label_statistics_cargs(
     cargs = []
     cargs.extend([
         "-label-statistics",
-        params.get("label_statistics")
+        params.get("label_statistics", None)
     ])
     return cargs
 
 
 def c2d_landmarks_to_spheres_params(
     landmarks_to_spheres: str,
-) -> C2dLandmarksToSpheresParameters:
+) -> C2dLandmarksToSpheresParametersTagged:
     """
     Build parameters.
     
@@ -4353,7 +5073,7 @@ def c2d_landmarks_to_spheres_params(
         Parameter dictionary
     """
     params = {
-        "@type": "c3d.c2d.landmarks_to_spheres",
+        "@type": "landmarks_to_spheres",
         "landmarks_to_spheres": landmarks_to_spheres,
     }
     return params
@@ -4375,14 +5095,14 @@ def c2d_landmarks_to_spheres_cargs(
     cargs = []
     cargs.extend([
         "-landmarks-to-spheres",
-        params.get("landmarks_to_spheres")
+        params.get("landmarks_to_spheres", None)
     ])
     return cargs
 
 
 def c2d_laplacian_params(
     laplacian: str,
-) -> C2dLaplacianParameters:
+) -> C2dLaplacianParametersTagged:
     """
     Build parameters.
     
@@ -4401,7 +5121,7 @@ def c2d_laplacian_params(
         Parameter dictionary
     """
     params = {
-        "@type": "c3d.c2d.laplacian",
+        "@type": "laplacian",
         "laplacian": laplacian,
     }
     return params
@@ -4423,14 +5143,14 @@ def c2d_laplacian_cargs(
     cargs = []
     cargs.extend([
         "-laplacian",
-        params.get("laplacian")
+        params.get("laplacian", None)
     ])
     return cargs
 
 
 def c2d_levelset_params(
     levelset: str,
-) -> C2dLevelsetParameters:
+) -> C2dLevelsetParametersTagged:
     """
     Build parameters.
     
@@ -4479,7 +5199,7 @@ def c2d_levelset_params(
         Parameter dictionary
     """
     params = {
-        "@type": "c3d.c2d.levelset",
+        "@type": "levelset",
         "levelset": levelset,
     }
     return params
@@ -4501,14 +5221,14 @@ def c2d_levelset_cargs(
     cargs = []
     cargs.extend([
         "-levelset",
-        params.get("levelset")
+        params.get("levelset", None)
     ])
     return cargs
 
 
 def c2d_levelset_curvature_params(
     levelset_curvature: str,
-) -> C2dLevelsetCurvatureParameters:
+) -> C2dLevelsetCurvatureParametersTagged:
     """
     Build parameters.
     
@@ -4518,7 +5238,7 @@ def c2d_levelset_curvature_params(
         Parameter dictionary
     """
     params = {
-        "@type": "c3d.c2d.levelset_curvature",
+        "@type": "levelset_curvature",
         "levelset_curvature": levelset_curvature,
     }
     return params
@@ -4540,14 +5260,14 @@ def c2d_levelset_curvature_cargs(
     cargs = []
     cargs.extend([
         "-levelset-curvature",
-        params.get("levelset_curvature")
+        params.get("levelset_curvature", None)
     ])
     return cargs
 
 
 def c2d_levelset_advection_params(
     levelset_advection: str,
-) -> C2dLevelsetAdvectionParameters:
+) -> C2dLevelsetAdvectionParametersTagged:
     """
     Build parameters.
     
@@ -4557,7 +5277,7 @@ def c2d_levelset_advection_params(
         Parameter dictionary
     """
     params = {
-        "@type": "c3d.c2d.levelset_advection",
+        "@type": "levelset_advection",
         "levelset_advection": levelset_advection,
     }
     return params
@@ -4579,14 +5299,14 @@ def c2d_levelset_advection_cargs(
     cargs = []
     cargs.extend([
         "-levelset-advection",
-        params.get("levelset_advection")
+        params.get("levelset_advection", None)
     ])
     return cargs
 
 
 def c2d_log_params(
     log: str,
-) -> C2dLogParameters:
+) -> C2dLogParametersTagged:
     """
     Build parameters.
     
@@ -4601,7 +5321,7 @@ def c2d_log_params(
         Parameter dictionary
     """
     params = {
-        "@type": "c3d.c2d.log",
+        "@type": "log",
         "log": log,
     }
     return params
@@ -4623,14 +5343,14 @@ def c2d_log_cargs(
     cargs = []
     cargs.extend([
         "-ln",
-        params.get("log")
+        params.get("log", None)
     ])
     return cargs
 
 
 def c2d_log10_params(
     log10: str,
-) -> C2dLog10Parameters:
+) -> C2dLog10ParametersTagged:
     """
     Build parameters.
     
@@ -4645,7 +5365,7 @@ def c2d_log10_params(
         Parameter dictionary
     """
     params = {
-        "@type": "c3d.c2d.log10",
+        "@type": "log10",
         "log10": log10,
     }
     return params
@@ -4667,14 +5387,14 @@ def c2d_log10_cargs(
     cargs = []
     cargs.extend([
         "-log10",
-        params.get("log10")
+        params.get("log10", None)
     ])
     return cargs
 
 
 def c2d_manual_params(
     manual: str,
-) -> C2dManualParameters:
+) -> C2dManualParametersTagged:
     """
     Build parameters.
     
@@ -4684,7 +5404,7 @@ def c2d_manual_params(
         Parameter dictionary
     """
     params = {
-        "@type": "c3d.c2d.manual",
+        "@type": "manual",
         "manual": manual,
     }
     return params
@@ -4706,14 +5426,14 @@ def c2d_manual_cargs(
     cargs = []
     cargs.extend([
         "-manual",
-        params.get("manual")
+        params.get("manual", None)
     ])
     return cargs
 
 
 def c2d_match_bounding_box_params(
     match_bounding_box: str,
-) -> C2dMatchBoundingBoxParameters:
+) -> C2dMatchBoundingBoxParametersTagged:
     """
     Build parameters.
     
@@ -4734,7 +5454,7 @@ def c2d_match_bounding_box_params(
         Parameter dictionary
     """
     params = {
-        "@type": "c3d.c2d.match_bounding_box",
+        "@type": "match_bounding_box",
         "match_bounding_box": match_bounding_box,
     }
     return params
@@ -4756,14 +5476,14 @@ def c2d_match_bounding_box_cargs(
     cargs = []
     cargs.extend([
         "-match-bounding-box",
-        params.get("match_bounding_box")
+        params.get("match_bounding_box", None)
     ])
     return cargs
 
 
 def c2d_maximum_params(
     maximum: str,
-) -> C2dMaximumParameters:
+) -> C2dMaximumParametersTagged:
     """
     Build parameters.
     
@@ -4782,7 +5502,7 @@ def c2d_maximum_params(
         Parameter dictionary
     """
     params = {
-        "@type": "c3d.c2d.maximum",
+        "@type": "maximum",
         "maximum": maximum,
     }
     return params
@@ -4804,14 +5524,14 @@ def c2d_maximum_cargs(
     cargs = []
     cargs.extend([
         "-maximum",
-        params.get("maximum")
+        params.get("maximum", None)
     ])
     return cargs
 
 
 def c2d_multicomponent_split_params(
     multicomponent_split: str,
-) -> C2dMulticomponentSplitParameters:
+) -> C2dMulticomponentSplitParametersTagged:
     """
     Build parameters.
     
@@ -4838,7 +5558,7 @@ def c2d_multicomponent_split_params(
         Parameter dictionary
     """
     params = {
-        "@type": "c3d.c2d.multicomponent_split",
+        "@type": "multicomponent_split",
         "multicomponent_split": multicomponent_split,
     }
     return params
@@ -4860,14 +5580,14 @@ def c2d_multicomponent_split_cargs(
     cargs = []
     cargs.extend([
         "-mcs",
-        params.get("multicomponent_split")
+        params.get("multicomponent_split", None)
     ])
     return cargs
 
 
 def c2d_mean_params(
     mean: str,
-) -> C2dMeanParameters:
+) -> C2dMeanParametersTagged:
     """
     Build parameters.
     
@@ -4884,7 +5604,7 @@ def c2d_mean_params(
         Parameter dictionary
     """
     params = {
-        "@type": "c3d.c2d.mean",
+        "@type": "mean",
         "mean": mean,
     }
     return params
@@ -4906,14 +5626,14 @@ def c2d_mean_cargs(
     cargs = []
     cargs.extend([
         "-mean",
-        params.get("mean")
+        params.get("mean", None)
     ])
     return cargs
 
 
 def c2d_median_filter_params(
     median_filter: str,
-) -> C2dMedianFilterParameters:
+) -> C2dMedianFilterParametersTagged:
     """
     Build parameters.
     
@@ -4932,7 +5652,7 @@ def c2d_median_filter_params(
         Parameter dictionary
     """
     params = {
-        "@type": "c3d.c2d.median_filter",
+        "@type": "median_filter",
         "median_filter": median_filter,
     }
     return params
@@ -4954,14 +5674,14 @@ def c2d_median_filter_cargs(
     cargs = []
     cargs.extend([
         "-median",
-        params.get("median_filter")
+        params.get("median_filter", None)
     ])
     return cargs
 
 
 def c2d_merge_params(
     merge: str,
-) -> C2dMergeParameters:
+) -> C2dMergeParametersTagged:
     """
     Build parameters.
     
@@ -4977,7 +5697,7 @@ def c2d_merge_params(
         Parameter dictionary
     """
     params = {
-        "@type": "c3d.c2d.merge",
+        "@type": "merge",
         "merge": merge,
     }
     return params
@@ -4999,14 +5719,14 @@ def c2d_merge_cargs(
     cargs = []
     cargs.extend([
         "-merge",
-        params.get("merge")
+        params.get("merge", None)
     ])
     return cargs
 
 
 def c2d_mean_filter_params(
     mean_filter: str,
-) -> C2dMeanFilterParameters:
+) -> C2dMeanFilterParametersTagged:
     """
     Build parameters.
     
@@ -5025,7 +5745,7 @@ def c2d_mean_filter_params(
         Parameter dictionary
     """
     params = {
-        "@type": "c3d.c2d.mean_filter",
+        "@type": "mean_filter",
         "mean_filter": mean_filter,
     }
     return params
@@ -5047,14 +5767,14 @@ def c2d_mean_filter_cargs(
     cargs = []
     cargs.extend([
         "-mf",
-        params.get("mean_filter")
+        params.get("mean_filter", None)
     ])
     return cargs
 
 
 def c2d_mutual_info_params(
     mutual_info: str,
-) -> C2dMutualInfoParameters:
+) -> C2dMutualInfoParametersTagged:
     """
     Build parameters.
     
@@ -5073,7 +5793,7 @@ def c2d_mutual_info_params(
         Parameter dictionary
     """
     params = {
-        "@type": "c3d.c2d.mutual_info",
+        "@type": "mutual_info",
         "mutual_info": mutual_info,
     }
     return params
@@ -5095,14 +5815,14 @@ def c2d_mutual_info_cargs(
     cargs = []
     cargs.extend([
         "-mi",
-        params.get("mutual_info")
+        params.get("mutual_info", None)
     ])
     return cargs
 
 
 def c2d_minimum_params(
     minimum: str,
-) -> C2dMinimumParameters:
+) -> C2dMinimumParametersTagged:
     """
     Build parameters.
     
@@ -5121,7 +5841,7 @@ def c2d_minimum_params(
         Parameter dictionary
     """
     params = {
-        "@type": "c3d.c2d.minimum",
+        "@type": "minimum",
         "minimum": minimum,
     }
     return params
@@ -5143,14 +5863,14 @@ def c2d_minimum_cargs(
     cargs = []
     cargs.extend([
         "-minimum",
-        params.get("minimum")
+        params.get("minimum", None)
     ])
     return cargs
 
 
 def c2d_mixture_model_params(
     mixture_model: str,
-) -> C2dMixtureModelParameters:
+) -> C2dMixtureModelParametersTagged:
     """
     Build parameters.
     
@@ -5160,7 +5880,7 @@ def c2d_mixture_model_params(
         Parameter dictionary
     """
     params = {
-        "@type": "c3d.c2d.mixture_model",
+        "@type": "mixture_model",
         "mixture_model": mixture_model,
     }
     return params
@@ -5182,14 +5902,14 @@ def c2d_mixture_model_cargs(
     cargs = []
     cargs.extend([
         "-mixture",
-        params.get("mixture_model")
+        params.get("mixture_model", None)
     ])
     return cargs
 
 
 def c2d_moments_params(
     moments: str,
-) -> C2dMomentsParameters:
+) -> C2dMomentsParametersTagged:
     """
     Build parameters.
     
@@ -5199,7 +5919,7 @@ def c2d_moments_params(
         Parameter dictionary
     """
     params = {
-        "@type": "c3d.c2d.moments",
+        "@type": "moments",
         "moments": moments,
     }
     return params
@@ -5221,14 +5941,14 @@ def c2d_moments_cargs(
     cargs = []
     cargs.extend([
         "-moments",
-        params.get("moments")
+        params.get("moments", None)
     ])
     return cargs
 
 
 def c2d_mattes_mutual_info_params(
     mattes_mutual_info: str,
-) -> C2dMattesMutualInfoParameters:
+) -> C2dMattesMutualInfoParametersTagged:
     """
     Build parameters.
     
@@ -5238,7 +5958,7 @@ def c2d_mattes_mutual_info_params(
         Parameter dictionary
     """
     params = {
-        "@type": "c3d.c2d.mattes_mutual_info",
+        "@type": "mattes_mutual_info",
         "mattes_mutual_info": mattes_mutual_info,
     }
     return params
@@ -5260,14 +5980,14 @@ def c2d_mattes_mutual_info_cargs(
     cargs = []
     cargs.extend([
         "-mmi",
-        params.get("mattes_mutual_info")
+        params.get("mattes_mutual_info", None)
     ])
     return cargs
 
 
 def c2d_mean_square_params(
     mean_square: str,
-) -> C2dMeanSquareParameters:
+) -> C2dMeanSquareParametersTagged:
     """
     Build parameters.
     
@@ -5304,7 +6024,7 @@ def c2d_mean_square_params(
         Parameter dictionary
     """
     params = {
-        "@type": "c3d.c2d.mean_square",
+        "@type": "mean_square",
         "mean_square": mean_square,
     }
     return params
@@ -5326,14 +6046,14 @@ def c2d_mean_square_cargs(
     cargs = []
     cargs.extend([
         "-msq",
-        params.get("mean_square")
+        params.get("mean_square", None)
     ])
     return cargs
 
 
 def c2d_multiply_params(
     multiply: str,
-) -> C2dMultiplyParameters:
+) -> C2dMultiplyParametersTagged:
     """
     Build parameters.
     
@@ -5360,7 +6080,7 @@ def c2d_multiply_params(
         Parameter dictionary
     """
     params = {
-        "@type": "c3d.c2d.multiply",
+        "@type": "multiply",
         "multiply": multiply,
     }
     return params
@@ -5382,14 +6102,14 @@ def c2d_multiply_cargs(
     cargs = []
     cargs.extend([
         "-multiply",
-        params.get("multiply")
+        params.get("multiply", None)
     ])
     return cargs
 
 
 def c2d_normalized_cross_correlation_params(
     normalized_cross_correlation: str,
-) -> C2dNormalizedCrossCorrelationParameters:
+) -> C2dNormalizedCrossCorrelationParametersTagged:
     """
     Build parameters.
     
@@ -5408,7 +6128,7 @@ def c2d_normalized_cross_correlation_params(
         Parameter dictionary
     """
     params = {
-        "@type": "c3d.c2d.normalized_cross_correlation",
+        "@type": "normalized_cross_correlation",
         "normalized_cross_correlation": normalized_cross_correlation,
     }
     return params
@@ -5430,14 +6150,14 @@ def c2d_normalized_cross_correlation_cargs(
     cargs = []
     cargs.extend([
         "-ncc",
-        params.get("normalized_cross_correlation")
+        params.get("normalized_cross_correlation", None)
     ])
     return cargs
 
 
 def c2d_normalized_correlation_params(
     normalized_correlation: str,
-) -> C2dNormalizedCorrelationParameters:
+) -> C2dNormalizedCorrelationParametersTagged:
     """
     Build parameters.
     
@@ -5453,7 +6173,7 @@ def c2d_normalized_correlation_params(
         Parameter dictionary
     """
     params = {
-        "@type": "c3d.c2d.normalized_correlation",
+        "@type": "normalized_correlation",
         "normalized_correlation": normalized_correlation,
     }
     return params
@@ -5475,14 +6195,14 @@ def c2d_normalized_correlation_cargs(
     cargs = []
     cargs.extend([
         "-ncor",
-        params.get("normalized_correlation")
+        params.get("normalized_correlation", None)
     ])
     return cargs
 
 
 def c2d_normalized_mutual_info_params(
     normalized_mutual_info: str,
-) -> C2dNormalizedMutualInfoParameters:
+) -> C2dNormalizedMutualInfoParametersTagged:
     """
     Build parameters.
     
@@ -5498,7 +6218,7 @@ def c2d_normalized_mutual_info_params(
         Parameter dictionary
     """
     params = {
-        "@type": "c3d.c2d.normalized_mutual_info",
+        "@type": "normalized_mutual_info",
         "normalized_mutual_info": normalized_mutual_info,
     }
     return params
@@ -5520,14 +6240,14 @@ def c2d_normalized_mutual_info_cargs(
     cargs = []
     cargs.extend([
         "-nmi",
-        params.get("normalized_mutual_info")
+        params.get("normalized_mutual_info", None)
     ])
     return cargs
 
 
 def c2d_noise_gaussian_params(
     noise_gaussian: str,
-) -> C2dNoiseGaussianParameters:
+) -> C2dNoiseGaussianParametersTagged:
     """
     Build parameters.
     
@@ -5545,7 +6265,7 @@ def c2d_noise_gaussian_params(
         Parameter dictionary
     """
     params = {
-        "@type": "c3d.c2d.noise_gaussian",
+        "@type": "noise_gaussian",
         "noise_gaussian": noise_gaussian,
     }
     return params
@@ -5567,14 +6287,14 @@ def c2d_noise_gaussian_cargs(
     cargs = []
     cargs.extend([
         "-noise-gaussian",
-        params.get("noise_gaussian")
+        params.get("noise_gaussian", None)
     ])
     return cargs
 
 
 def c2d_noise_poisson_params(
     noise_poisson: str,
-) -> C2dNoisePoissonParameters:
+) -> C2dNoisePoissonParametersTagged:
     """
     Build parameters.
     
@@ -5590,7 +6310,7 @@ def c2d_noise_poisson_params(
         Parameter dictionary
     """
     params = {
-        "@type": "c3d.c2d.noise_poisson",
+        "@type": "noise_poisson",
         "noise_poisson": noise_poisson,
     }
     return params
@@ -5612,14 +6332,14 @@ def c2d_noise_poisson_cargs(
     cargs = []
     cargs.extend([
         "-noise-poisson",
-        params.get("noise_poisson")
+        params.get("noise_poisson", None)
     ])
     return cargs
 
 
 def c2d_noise_speckle_params(
     noise_speckle: str,
-) -> C2dNoiseSpeckleParameters:
+) -> C2dNoiseSpeckleParametersTagged:
     """
     Build parameters.
     
@@ -5636,7 +6356,7 @@ def c2d_noise_speckle_params(
         Parameter dictionary
     """
     params = {
-        "@type": "c3d.c2d.noise_speckle",
+        "@type": "noise_speckle",
         "noise_speckle": noise_speckle,
     }
     return params
@@ -5658,14 +6378,14 @@ def c2d_noise_speckle_cargs(
     cargs = []
     cargs.extend([
         "-noise-speckle",
-        params.get("noise_speckle")
+        params.get("noise_speckle", None)
     ])
     return cargs
 
 
 def c2d_noise_salt_pepper_params(
     noise_salt_pepper: str,
-) -> C2dNoiseSaltPepperParameters:
+) -> C2dNoiseSaltPepperParametersTagged:
     """
     Build parameters.
     
@@ -5682,7 +6402,7 @@ def c2d_noise_salt_pepper_params(
         Parameter dictionary
     """
     params = {
-        "@type": "c3d.c2d.noise_salt_pepper",
+        "@type": "noise_salt_pepper",
         "noise_salt_pepper": noise_salt_pepper,
     }
     return params
@@ -5704,14 +6424,14 @@ def c2d_noise_salt_pepper_cargs(
     cargs = []
     cargs.extend([
         "-noise-salt-pepper",
-        params.get("noise_salt_pepper")
+        params.get("noise_salt_pepper", None)
     ])
     return cargs
 
 
 def c2d_no_multicomponent_split_params(
     no_multicomponent_split: str,
-) -> C2dNoMulticomponentSplitParameters:
+) -> C2dNoMulticomponentSplitParametersTagged:
     """
     Build parameters.
     
@@ -5726,7 +6446,7 @@ def c2d_no_multicomponent_split_params(
         Parameter dictionary
     """
     params = {
-        "@type": "c3d.c2d.no_multicomponent_split",
+        "@type": "no_multicomponent_split",
         "no_multicomponent_split": no_multicomponent_split,
     }
     return params
@@ -5748,14 +6468,14 @@ def c2d_no_multicomponent_split_cargs(
     cargs = []
     cargs.extend([
         "-nomcs",
-        params.get("no_multicomponent_split")
+        params.get("no_multicomponent_split", None)
     ])
     return cargs
 
 
 def c2d_normalize_local_window_params(
     normalize_local_window: str,
-) -> C2dNormalizeLocalWindowParameters:
+) -> C2dNormalizeLocalWindowParametersTagged:
     """
     Build parameters.
     
@@ -5776,7 +6496,7 @@ def c2d_normalize_local_window_params(
         Parameter dictionary
     """
     params = {
-        "@type": "c3d.c2d.normalize_local_window",
+        "@type": "normalize_local_window",
         "normalize_local_window": normalize_local_window,
     }
     return params
@@ -5798,14 +6518,14 @@ def c2d_normalize_local_window_cargs(
     cargs = []
     cargs.extend([
         "-nlw",
-        params.get("normalize_local_window")
+        params.get("normalize_local_window", None)
     ])
     return cargs
 
 
 def c2d_normpdf_params(
     normpdf: str,
-) -> C2dNormpdfParameters:
+) -> C2dNormpdfParametersTagged:
     """
     Build parameters.
     
@@ -5815,7 +6535,7 @@ def c2d_normpdf_params(
         Parameter dictionary
     """
     params = {
-        "@type": "c3d.c2d.normpdf",
+        "@type": "normpdf",
         "normpdf": normpdf,
     }
     return params
@@ -5837,14 +6557,14 @@ def c2d_normpdf_cargs(
     cargs = []
     cargs.extend([
         "-normpdf",
-        params.get("normpdf")
+        params.get("normpdf", None)
     ])
     return cargs
 
 
 def c2d_noround_params(
     noround: str,
-) -> C2dNoroundParameters:
+) -> C2dNoroundParametersTagged:
     """
     Build parameters.
     
@@ -5864,7 +6584,7 @@ def c2d_noround_params(
         Parameter dictionary
     """
     params = {
-        "@type": "c3d.c2d.noround",
+        "@type": "noround",
         "noround": noround,
     }
     return params
@@ -5886,14 +6606,14 @@ def c2d_noround_cargs(
     cargs = []
     cargs.extend([
         "-noround",
-        params.get("noround")
+        params.get("noround", None)
     ])
     return cargs
 
 
 def c2d_nospm_params(
     nospm: str,
-) -> C2dNospmParameters:
+) -> C2dNospmParametersTagged:
     """
     Build parameters.
     
@@ -5914,7 +6634,7 @@ def c2d_nospm_params(
         Parameter dictionary
     """
     params = {
-        "@type": "c3d.c2d.nospm",
+        "@type": "nospm",
         "nospm": nospm,
     }
     return params
@@ -5936,7 +6656,7 @@ def c2d_nospm_cargs(
     cargs = []
     cargs.extend([
         "-nospm",
-        params.get("nospm")
+        params.get("nospm", None)
     ])
     return cargs
 
@@ -5953,7 +6673,7 @@ class C2dOutputOutputs(typing.NamedTuple):
 
 def c2d_output_params(
     output: str,
-) -> C2dOutputParameters:
+) -> C2dOutputParametersTagged:
     """
     Build parameters.
     
@@ -5978,7 +6698,7 @@ def c2d_output_params(
         Parameter dictionary
     """
     params = {
-        "@type": "c3d.c2d.output",
+        "@type": "output",
         "output": output,
     }
     return params
@@ -6000,7 +6720,7 @@ def c2d_output_cargs(
     cargs = []
     cargs.extend([
         "-o",
-        params.get("output")
+        params.get("output", None)
     ])
     return cargs
 
@@ -6020,14 +6740,14 @@ def c2d_output_outputs(
     """
     ret = C2dOutputOutputs(
         root=execution.output_file("."),
-        output=execution.output_file(params.get("output")),
+        output=execution.output_file(params.get("output", None)),
     )
     return ret
 
 
 def c2d_output_multicomponent_params(
     output_multicomponent: str,
-) -> C2dOutputMulticomponentParameters:
+) -> C2dOutputMulticomponentParametersTagged:
     """
     Build parameters.
     
@@ -6054,7 +6774,7 @@ def c2d_output_multicomponent_params(
         Parameter dictionary
     """
     params = {
-        "@type": "c3d.c2d.output_multicomponent",
+        "@type": "output_multicomponent",
         "output_multicomponent": output_multicomponent,
     }
     return params
@@ -6076,14 +6796,14 @@ def c2d_output_multicomponent_cargs(
     cargs = []
     cargs.extend([
         "-omc",
-        params.get("output_multicomponent")
+        params.get("output_multicomponent", None)
     ])
     return cargs
 
 
 def c2d_output_multiple_multicomponent_params(
     output_multiple_multicomponent: str,
-) -> C2dOutputMultipleMulticomponentParameters:
+) -> C2dOutputMultipleMulticomponentParametersTagged:
     """
     Build parameters.
     
@@ -6121,7 +6841,7 @@ def c2d_output_multiple_multicomponent_params(
         Parameter dictionary
     """
     params = {
-        "@type": "c3d.c2d.output_multiple_multicomponent",
+        "@type": "output_multiple_multicomponent",
         "output_multiple_multicomponent": output_multiple_multicomponent,
     }
     return params
@@ -6143,14 +6863,14 @@ def c2d_output_multiple_multicomponent_cargs(
     cargs = []
     cargs.extend([
         "-oomc",
-        params.get("output_multiple_multicomponent")
+        params.get("output_multiple_multicomponent", None)
     ])
     return cargs
 
 
 def c2d_orient_params(
     orient: str,
-) -> C2dOrientParameters:
+) -> C2dOrientParametersTagged:
     """
     Build parameters.
     
@@ -6184,7 +6904,7 @@ def c2d_orient_params(
         Parameter dictionary
     """
     params = {
-        "@type": "c3d.c2d.orient",
+        "@type": "orient",
         "orient": orient,
     }
     return params
@@ -6206,14 +6926,14 @@ def c2d_orient_cargs(
     cargs = []
     cargs.extend([
         "-orient",
-        params.get("orient")
+        params.get("orient", None)
     ])
     return cargs
 
 
 def c2d_output_multiple_params(
     output_multiple: str,
-) -> C2dOutputMultipleParameters:
+) -> C2dOutputMultipleParametersTagged:
     """
     Build parameters.
     
@@ -6247,7 +6967,7 @@ def c2d_output_multiple_params(
         Parameter dictionary
     """
     params = {
-        "@type": "c3d.c2d.output_multiple",
+        "@type": "output_multiple",
         "output_multiple": output_multiple,
     }
     return params
@@ -6269,14 +6989,14 @@ def c2d_output_multiple_cargs(
     cargs = []
     cargs.extend([
         "-oo",
-        params.get("output_multiple")
+        params.get("output_multiple", None)
     ])
     return cargs
 
 
 def c2d_orient_1_params(
     orient: str,
-) -> C2dOrient1Parameters:
+) -> C2dOrient1ParametersTagged:
     """
     Build parameters.
     
@@ -6310,7 +7030,7 @@ def c2d_orient_1_params(
         Parameter dictionary
     """
     params = {
-        "@type": "c3d.c2d.orient",
+        "@type": "orient_1",
         "orient": orient,
     }
     return params
@@ -6332,14 +7052,14 @@ def c2d_orient_1_cargs(
     cargs = []
     cargs.extend([
         "-orient",
-        params.get("orient")
+        params.get("orient", None)
     ])
     return cargs
 
 
 def c2d_origin_params(
     origin: str,
-) -> C2dOriginParameters:
+) -> C2dOriginParametersTagged:
     """
     Build parameters.
     
@@ -6357,7 +7077,7 @@ def c2d_origin_params(
         Parameter dictionary
     """
     params = {
-        "@type": "c3d.c2d.origin",
+        "@type": "origin",
         "origin": origin,
     }
     return params
@@ -6379,14 +7099,14 @@ def c2d_origin_cargs(
     cargs = []
     cargs.extend([
         "-origin",
-        params.get("origin")
+        params.get("origin", None)
     ])
     return cargs
 
 
 def c2d_origin_voxel_params(
     origin_voxel: str,
-) -> C2dOriginVoxelParameters:
+) -> C2dOriginVoxelParametersTagged:
     """
     Build parameters.
     
@@ -6406,7 +7126,7 @@ def c2d_origin_voxel_params(
         Parameter dictionary
     """
     params = {
-        "@type": "c3d.c2d.origin_voxel",
+        "@type": "origin_voxel",
         "origin_voxel": origin_voxel,
     }
     return params
@@ -6428,14 +7148,14 @@ def c2d_origin_voxel_cargs(
     cargs = []
     cargs.extend([
         "-origin-voxel",
-        params.get("origin_voxel")
+        params.get("origin_voxel", None)
     ])
     return cargs
 
 
 def c2d_origin_voxel_coord_params(
     origin_voxel_coord: str,
-) -> C2dOriginVoxelCoordParameters:
+) -> C2dOriginVoxelCoordParametersTagged:
     """
     Build parameters.
     
@@ -6455,7 +7175,7 @@ def c2d_origin_voxel_coord_params(
         Parameter dictionary
     """
     params = {
-        "@type": "c3d.c2d.origin_voxel_coord",
+        "@type": "origin_voxel_coord",
         "origin_voxel_coord": origin_voxel_coord,
     }
     return params
@@ -6477,14 +7197,14 @@ def c2d_origin_voxel_coord_cargs(
     cargs = []
     cargs.extend([
         "-origin-voxel-coord",
-        params.get("origin_voxel_coord")
+        params.get("origin_voxel_coord", None)
     ])
     return cargs
 
 
 def c2d_overlap_params(
     overlap: str,
-) -> C2dOverlapParameters:
+) -> C2dOverlapParametersTagged:
     """
     Build parameters.
     
@@ -6524,7 +7244,7 @@ def c2d_overlap_params(
         Parameter dictionary
     """
     params = {
-        "@type": "c3d.c2d.overlap",
+        "@type": "overlap",
         "overlap": overlap,
     }
     return params
@@ -6546,14 +7266,14 @@ def c2d_overlap_cargs(
     cargs = []
     cargs.extend([
         "-overlap",
-        params.get("overlap")
+        params.get("overlap", None)
     ])
     return cargs
 
 
 def c2d_overlay_label_image_params(
     overlay_label_image: str,
-) -> C2dOverlayLabelImageParameters:
+) -> C2dOverlayLabelImageParametersTagged:
     """
     Build parameters.
     
@@ -6603,7 +7323,7 @@ def c2d_overlay_label_image_params(
         Parameter dictionary
     """
     params = {
-        "@type": "c3d.c2d.overlay_label_image",
+        "@type": "overlay_label_image",
         "overlay_label_image": overlay_label_image,
     }
     return params
@@ -6625,14 +7345,14 @@ def c2d_overlay_label_image_cargs(
     cargs = []
     cargs.extend([
         "-overlay-label-image",
-        params.get("overlay_label_image")
+        params.get("overlay_label_image", None)
     ])
     return cargs
 
 
 def c2d_pad_params(
     pad: str,
-) -> C2dPadParameters:
+) -> C2dPadParametersTagged:
     """
     Build parameters.
     
@@ -6669,7 +7389,7 @@ def c2d_pad_params(
         Parameter dictionary
     """
     params = {
-        "@type": "c3d.c2d.pad",
+        "@type": "pad",
         "pad": pad,
     }
     return params
@@ -6691,14 +7411,14 @@ def c2d_pad_cargs(
     cargs = []
     cargs.extend([
         "-pad",
-        params.get("pad")
+        params.get("pad", None)
     ])
     return cargs
 
 
 def c2d_pad_to_params(
     pad_to: str,
-) -> C2dPadToParameters:
+) -> C2dPadToParametersTagged:
     """
     Build parameters.
     
@@ -6708,7 +7428,7 @@ def c2d_pad_to_params(
         Parameter dictionary
     """
     params = {
-        "@type": "c3d.c2d.pad_to",
+        "@type": "pad_to",
         "pad_to": pad_to,
     }
     return params
@@ -6730,14 +7450,14 @@ def c2d_pad_to_cargs(
     cargs = []
     cargs.extend([
         "-padto",
-        params.get("pad_to")
+        params.get("pad_to", None)
     ])
     return cargs
 
 
 def c2d_pca_params(
     pca: str,
-) -> C2dPcaParameters:
+) -> C2dPcaParametersTagged:
     """
     Build parameters.
     
@@ -6761,7 +7481,7 @@ def c2d_pca_params(
         Parameter dictionary
     """
     params = {
-        "@type": "c3d.c2d.pca",
+        "@type": "pca",
         "pca": pca,
     }
     return params
@@ -6783,14 +7503,14 @@ def c2d_pca_cargs(
     cargs = []
     cargs.extend([
         "-pca",
-        params.get("pca")
+        params.get("pca", None)
     ])
     return cargs
 
 
 def c2d_percent_intensity_mode_params(
     percent_intensity_mode: str,
-) -> C2dPercentIntensityModeParameters:
+) -> C2dPercentIntensityModeParametersTagged:
     """
     Build parameters.
     
@@ -6826,7 +7546,7 @@ def c2d_percent_intensity_mode_params(
         Parameter dictionary
     """
     params = {
-        "@type": "c3d.c2d.percent_intensity_mode",
+        "@type": "percent_intensity_mode",
         "percent_intensity_mode": percent_intensity_mode,
     }
     return params
@@ -6848,14 +7568,14 @@ def c2d_percent_intensity_mode_cargs(
     cargs = []
     cargs.extend([
         "-percent-intensity-mode",
-        params.get("percent_intensity_mode")
+        params.get("percent_intensity_mode", None)
     ])
     return cargs
 
 
 def c2d_pixel_params(
     pixel: str,
-) -> C2dPixelParameters:
+) -> C2dPixelParametersTagged:
     """
     Build parameters.
     
@@ -6865,7 +7585,7 @@ def c2d_pixel_params(
         Parameter dictionary
     """
     params = {
-        "@type": "c3d.c2d.pixel",
+        "@type": "pixel",
         "pixel": pixel,
     }
     return params
@@ -6887,14 +7607,14 @@ def c2d_pixel_cargs(
     cargs = []
     cargs.extend([
         "-pixel",
-        params.get("pixel")
+        params.get("pixel", None)
     ])
     return cargs
 
 
 def c2d_pop_params(
     pop_: str,
-) -> C2dPopParameters:
+) -> C2dPopParametersTagged:
     """
     Build parameters.
     
@@ -6909,7 +7629,7 @@ def c2d_pop_params(
         Parameter dictionary
     """
     params = {
-        "@type": "c3d.c2d.pop",
+        "@type": "pop",
         "pop": pop_,
     }
     return params
@@ -6931,14 +7651,14 @@ def c2d_pop_cargs(
     cargs = []
     cargs.extend([
         "-pop",
-        params.get("pop")
+        params.get("pop", None)
     ])
     return cargs
 
 
 def c2d_popas_params(
     popas: str,
-) -> C2dPopasParameters:
+) -> C2dPopasParametersTagged:
     """
     Build parameters.
     
@@ -6954,7 +7674,7 @@ def c2d_popas_params(
         Parameter dictionary
     """
     params = {
-        "@type": "c3d.c2d.popas",
+        "@type": "popas",
         "popas": popas,
     }
     return params
@@ -6976,14 +7696,14 @@ def c2d_popas_cargs(
     cargs = []
     cargs.extend([
         "-popas",
-        params.get("popas")
+        params.get("popas", None)
     ])
     return cargs
 
 
 def c2d_probe_params(
     probe: str,
-) -> C2dProbeParameters:
+) -> C2dProbeParametersTagged:
     """
     Build parameters.
     
@@ -7003,7 +7723,7 @@ def c2d_probe_params(
         Parameter dictionary
     """
     params = {
-        "@type": "c3d.c2d.probe",
+        "@type": "probe",
         "probe": probe,
     }
     return params
@@ -7025,14 +7745,14 @@ def c2d_probe_cargs(
     cargs = []
     cargs.extend([
         "-probe",
-        params.get("probe")
+        params.get("probe", None)
     ])
     return cargs
 
 
 def c2d_push_params(
     push: str,
-) -> C2dPushParameters:
+) -> C2dPushParametersTagged:
     """
     Build parameters.
     
@@ -7054,7 +7774,7 @@ def c2d_push_params(
         Parameter dictionary
     """
     params = {
-        "@type": "c3d.c2d.push",
+        "@type": "push",
         "push": push,
     }
     return params
@@ -7076,14 +7796,14 @@ def c2d_push_cargs(
     cargs = []
     cargs.extend([
         "-push",
-        params.get("push")
+        params.get("push", None)
     ])
     return cargs
 
 
 def c2d_rank_params(
     rank: str,
-) -> C2dRankParameters:
+) -> C2dRankParametersTagged:
     """
     Build parameters.
     
@@ -7103,7 +7823,7 @@ def c2d_rank_params(
         Parameter dictionary
     """
     params = {
-        "@type": "c3d.c2d.rank",
+        "@type": "rank",
         "rank": rank,
     }
     return params
@@ -7125,14 +7845,14 @@ def c2d_rank_cargs(
     cargs = []
     cargs.extend([
         "-rank",
-        params.get("rank")
+        params.get("rank", None)
     ])
     return cargs
 
 
 def c2d_reciprocal_params(
     reciprocal: str,
-) -> C2dReciprocalParameters:
+) -> C2dReciprocalParametersTagged:
     """
     Build parameters.
     
@@ -7149,7 +7869,7 @@ def c2d_reciprocal_params(
         Parameter dictionary
     """
     params = {
-        "@type": "c3d.c2d.reciprocal",
+        "@type": "reciprocal",
         "reciprocal": reciprocal,
     }
     return params
@@ -7171,14 +7891,14 @@ def c2d_reciprocal_cargs(
     cargs = []
     cargs.extend([
         "-reciprocal",
-        params.get("reciprocal")
+        params.get("reciprocal", None)
     ])
     return cargs
 
 
 def c2d_region_params(
     region: str,
-) -> C2dRegionParameters:
+) -> C2dRegionParametersTagged:
     """
     Build parameters.
     
@@ -7197,7 +7917,7 @@ def c2d_region_params(
         Parameter dictionary
     """
     params = {
-        "@type": "c3d.c2d.region",
+        "@type": "region",
         "region": region,
     }
     return params
@@ -7219,14 +7939,14 @@ def c2d_region_cargs(
     cargs = []
     cargs.extend([
         "-region",
-        params.get("region")
+        params.get("region", None)
     ])
     return cargs
 
 
 def c2d_reorder_params(
     reorder: str,
-) -> C2dReorderParameters:
+) -> C2dReorderParametersTagged:
     """
     Build parameters.
     
@@ -7268,7 +7988,7 @@ def c2d_reorder_params(
         Parameter dictionary
     """
     params = {
-        "@type": "c3d.c2d.reorder",
+        "@type": "reorder",
         "reorder": reorder,
     }
     return params
@@ -7290,14 +8010,14 @@ def c2d_reorder_cargs(
     cargs = []
     cargs.extend([
         "-reorder",
-        params.get("reorder")
+        params.get("reorder", None)
     ])
     return cargs
 
 
 def c2d_retain_labels_params(
     retain_labels: str,
-) -> C2dRetainLabelsParameters:
+) -> C2dRetainLabelsParametersTagged:
     """
     Build parameters.
     
@@ -7315,7 +8035,7 @@ def c2d_retain_labels_params(
         Parameter dictionary
     """
     params = {
-        "@type": "c3d.c2d.retain_labels",
+        "@type": "retain_labels",
         "retain_labels": retain_labels,
     }
     return params
@@ -7337,14 +8057,14 @@ def c2d_retain_labels_cargs(
     cargs = []
     cargs.extend([
         "-retain-labels",
-        params.get("retain_labels")
+        params.get("retain_labels", None)
     ])
     return cargs
 
 
 def c2d_rf_apply_params(
     rf_apply: str,
-) -> C2dRfApplyParameters:
+) -> C2dRfApplyParametersTagged:
     """
     Build parameters.
     
@@ -7363,7 +8083,7 @@ def c2d_rf_apply_params(
         Parameter dictionary
     """
     params = {
-        "@type": "c3d.c2d.rf_apply",
+        "@type": "rf_apply",
         "rf_apply": rf_apply,
     }
     return params
@@ -7385,14 +8105,14 @@ def c2d_rf_apply_cargs(
     cargs = []
     cargs.extend([
         "-rf-apply",
-        params.get("rf_apply")
+        params.get("rf_apply", None)
     ])
     return cargs
 
 
 def c2d_rf_train_params(
     rf_train: str,
-) -> C2dRfTrainParameters:
+) -> C2dRfTrainParametersTagged:
     """
     Build parameters.
     
@@ -7451,7 +8171,7 @@ def c2d_rf_train_params(
         Parameter dictionary
     """
     params = {
-        "@type": "c3d.c2d.rf_train",
+        "@type": "rf_train",
         "rf_train": rf_train,
     }
     return params
@@ -7473,14 +8193,14 @@ def c2d_rf_train_cargs(
     cargs = []
     cargs.extend([
         "-rf-train",
-        params.get("rf_train")
+        params.get("rf_train", None)
     ])
     return cargs
 
 
 def c2d_rf_param_patch_params(
     rf_param_patch: str,
-) -> C2dRfParamPatchParameters:
+) -> C2dRfParamPatchParametersTagged:
     """
     Build parameters.
     
@@ -7503,7 +8223,7 @@ def c2d_rf_param_patch_params(
         Parameter dictionary
     """
     params = {
-        "@type": "c3d.c2d.rf_param_patch",
+        "@type": "rf_param_patch",
         "rf_param_patch": rf_param_patch,
     }
     return params
@@ -7525,14 +8245,14 @@ def c2d_rf_param_patch_cargs(
     cargs = []
     cargs.extend([
         "-rf-param-patch",
-        params.get("rf_param_patch")
+        params.get("rf_param_patch", None)
     ])
     return cargs
 
 
 def c2d_rf_param_usexyz_params(
     rf_param_usexyz: str,
-) -> C2dRfParamUsexyzParameters:
+) -> C2dRfParamUsexyzParametersTagged:
     """
     Build parameters.
     
@@ -7548,7 +8268,7 @@ def c2d_rf_param_usexyz_params(
         Parameter dictionary
     """
     params = {
-        "@type": "c3d.c2d.rf_param_usexyz",
+        "@type": "rf_param_usexyz",
         "rf_param_usexyz": rf_param_usexyz,
     }
     return params
@@ -7570,14 +8290,14 @@ def c2d_rf_param_usexyz_cargs(
     cargs = []
     cargs.extend([
         "-rf-param-usexyz",
-        params.get("rf_param_usexyz")
+        params.get("rf_param_usexyz", None)
     ])
     return cargs
 
 
 def c2d_rf_param_nousexyz_params(
     rf_param_nousexyz: str,
-) -> C2dRfParamNousexyzParameters:
+) -> C2dRfParamNousexyzParametersTagged:
     """
     Build parameters.
     
@@ -7587,7 +8307,7 @@ def c2d_rf_param_nousexyz_params(
         Parameter dictionary
     """
     params = {
-        "@type": "c3d.c2d.rf_param_nousexyz",
+        "@type": "rf_param_nousexyz",
         "rf_param_nousexyz": rf_param_nousexyz,
     }
     return params
@@ -7609,14 +8329,14 @@ def c2d_rf_param_nousexyz_cargs(
     cargs = []
     cargs.extend([
         "-rf-param-nousexyz",
-        params.get("rf_param_nousexyz")
+        params.get("rf_param_nousexyz", None)
     ])
     return cargs
 
 
 def c2d_rf_param_ntrees_params(
     rf_param_ntrees: str,
-) -> C2dRfParamNtreesParameters:
+) -> C2dRfParamNtreesParametersTagged:
     """
     Build parameters.
     
@@ -7631,7 +8351,7 @@ def c2d_rf_param_ntrees_params(
         Parameter dictionary
     """
     params = {
-        "@type": "c3d.c2d.rf_param_ntrees",
+        "@type": "rf_param_ntrees",
         "rf_param_ntrees": rf_param_ntrees,
     }
     return params
@@ -7653,14 +8373,14 @@ def c2d_rf_param_ntrees_cargs(
     cargs = []
     cargs.extend([
         "-rf-param-ntrees",
-        params.get("rf_param_ntrees")
+        params.get("rf_param_ntrees", None)
     ])
     return cargs
 
 
 def c2d_rf_param_treedepth_params(
     rf_param_treedepth: str,
-) -> C2dRfParamTreedepthParameters:
+) -> C2dRfParamTreedepthParametersTagged:
     """
     Build parameters.
     
@@ -7675,7 +8395,7 @@ def c2d_rf_param_treedepth_params(
         Parameter dictionary
     """
     params = {
-        "@type": "c3d.c2d.rf_param_treedepth",
+        "@type": "rf_param_treedepth",
         "rf_param_treedepth": rf_param_treedepth,
     }
     return params
@@ -7697,14 +8417,14 @@ def c2d_rf_param_treedepth_cargs(
     cargs = []
     cargs.extend([
         "-rf-param-treedepth",
-        params.get("rf_param_treedepth")
+        params.get("rf_param_treedepth", None)
     ])
     return cargs
 
 
 def c2d_set_sform_params(
     set_sform: str,
-) -> C2dSetSformParameters:
+) -> C2dSetSformParametersTagged:
     """
     Build parameters.
     
@@ -7719,7 +8439,7 @@ def c2d_set_sform_params(
         Parameter dictionary
     """
     params = {
-        "@type": "c3d.c2d.set_sform",
+        "@type": "set_sform",
         "set_sform": set_sform,
     }
     return params
@@ -7741,14 +8461,14 @@ def c2d_set_sform_cargs(
     cargs = []
     cargs.extend([
         "-set-sform",
-        params.get("set_sform")
+        params.get("set_sform", None)
     ])
     return cargs
 
 
 def c2d_replace_params(
     replace: str,
-) -> C2dReplaceParameters:
+) -> C2dReplaceParametersTagged:
     """
     Build parameters.
     
@@ -7765,7 +8485,7 @@ def c2d_replace_params(
         Parameter dictionary
     """
     params = {
-        "@type": "c3d.c2d.replace",
+        "@type": "replace",
         "replace": replace,
     }
     return params
@@ -7787,14 +8507,14 @@ def c2d_replace_cargs(
     cargs = []
     cargs.extend([
         "-replace",
-        params.get("replace")
+        params.get("replace", None)
     ])
     return cargs
 
 
 def c2d_resample_params(
     resample: str,
-) -> C2dResampleParameters:
+) -> C2dResampleParametersTagged:
     """
     Build parameters.
     
@@ -7818,7 +8538,7 @@ def c2d_resample_params(
         Parameter dictionary
     """
     params = {
-        "@type": "c3d.c2d.resample",
+        "@type": "resample",
         "resample": resample,
     }
     return params
@@ -7840,14 +8560,14 @@ def c2d_resample_cargs(
     cargs = []
     cargs.extend([
         "-resample",
-        params.get("resample")
+        params.get("resample", None)
     ])
     return cargs
 
 
 def c2d_resample_iso_params(
     resample_iso: str,
-) -> C2dResampleIsoParameters:
+) -> C2dResampleIsoParametersTagged:
     """
     Build parameters.
     
@@ -7870,7 +8590,7 @@ def c2d_resample_iso_params(
         Parameter dictionary
     """
     params = {
-        "@type": "c3d.c2d.resample_iso",
+        "@type": "resample_iso",
         "resample_iso": resample_iso,
     }
     return params
@@ -7892,14 +8612,14 @@ def c2d_resample_iso_cargs(
     cargs = []
     cargs.extend([
         "-resample-iso",
-        params.get("resample_iso")
+        params.get("resample_iso", None)
     ])
     return cargs
 
 
 def c2d_resample_mm_params(
     resample_mm: str,
-) -> C2dResampleMmParameters:
+) -> C2dResampleMmParametersTagged:
     """
     Build parameters.
     
@@ -7918,7 +8638,7 @@ def c2d_resample_mm_params(
         Parameter dictionary
     """
     params = {
-        "@type": "c3d.c2d.resample_mm",
+        "@type": "resample_mm",
         "resample_mm": resample_mm,
     }
     return params
@@ -7940,14 +8660,14 @@ def c2d_resample_mm_cargs(
     cargs = []
     cargs.extend([
         "-resample-mm",
-        params.get("resample_mm")
+        params.get("resample_mm", None)
     ])
     return cargs
 
 
 def c2d_reslice_itk_params(
     reslice_itk: str,
-) -> C2dResliceItkParameters:
+) -> C2dResliceItkParametersTagged:
     """
     Build parameters.
     
@@ -7962,7 +8682,7 @@ def c2d_reslice_itk_params(
         Parameter dictionary
     """
     params = {
-        "@type": "c3d.c2d.reslice_itk",
+        "@type": "reslice_itk",
         "reslice_itk": reslice_itk,
     }
     return params
@@ -7984,14 +8704,14 @@ def c2d_reslice_itk_cargs(
     cargs = []
     cargs.extend([
         "-reslice-itk",
-        params.get("reslice_itk")
+        params.get("reslice_itk", None)
     ])
     return cargs
 
 
 def c2d_reslice_matrix_params(
     reslice_matrix: str,
-) -> C2dResliceMatrixParameters:
+) -> C2dResliceMatrixParametersTagged:
     """
     Build parameters.
     
@@ -8001,7 +8721,7 @@ def c2d_reslice_matrix_params(
         Parameter dictionary
     """
     params = {
-        "@type": "c3d.c2d.reslice_matrix",
+        "@type": "reslice_matrix",
         "reslice_matrix": reslice_matrix,
     }
     return params
@@ -8023,14 +8743,14 @@ def c2d_reslice_matrix_cargs(
     cargs = []
     cargs.extend([
         "-reslice-matrix",
-        params.get("reslice_matrix")
+        params.get("reslice_matrix", None)
     ])
     return cargs
 
 
 def c2d_reslice_identity_params(
     reslice_identity: str,
-) -> C2dResliceIdentityParameters:
+) -> C2dResliceIdentityParametersTagged:
     """
     Build parameters.
     
@@ -8052,7 +8772,7 @@ def c2d_reslice_identity_params(
         Parameter dictionary
     """
     params = {
-        "@type": "c3d.c2d.reslice_identity",
+        "@type": "reslice_identity",
         "reslice_identity": reslice_identity,
     }
     return params
@@ -8074,14 +8794,14 @@ def c2d_reslice_identity_cargs(
     cargs = []
     cargs.extend([
         "-reslice-identity",
-        params.get("reslice_identity")
+        params.get("reslice_identity", None)
     ])
     return cargs
 
 
 def c2d_rgb2hsv_params(
     rgb2hsv: str,
-) -> C2dRgb2hsvParameters:
+) -> C2dRgb2hsvParametersTagged:
     """
     Build parameters.
     
@@ -8100,7 +8820,7 @@ def c2d_rgb2hsv_params(
         Parameter dictionary
     """
     params = {
-        "@type": "c3d.c2d.rgb2hsv",
+        "@type": "rgb2hsv",
         "rgb2hsv": rgb2hsv,
     }
     return params
@@ -8122,14 +8842,14 @@ def c2d_rgb2hsv_cargs(
     cargs = []
     cargs.extend([
         "-rgb2hsv",
-        params.get("rgb2hsv")
+        params.get("rgb2hsv", None)
     ])
     return cargs
 
 
 def c2d_rms_params(
     rms: str,
-) -> C2dRmsParameters:
+) -> C2dRmsParametersTagged:
     """
     Build parameters.
     
@@ -8155,7 +8875,7 @@ def c2d_rms_params(
         Parameter dictionary
     """
     params = {
-        "@type": "c3d.c2d.rms",
+        "@type": "rms",
         "rms": rms,
     }
     return params
@@ -8177,14 +8897,14 @@ def c2d_rms_cargs(
     cargs = []
     cargs.extend([
         "-rms",
-        params.get("rms")
+        params.get("rms", None)
     ])
     return cargs
 
 
 def c2d_round_params(
     round_: str,
-) -> C2dRoundParameters:
+) -> C2dRoundParametersTagged:
     """
     Build parameters.
     
@@ -8204,7 +8924,7 @@ def c2d_round_params(
         Parameter dictionary
     """
     params = {
-        "@type": "c3d.c2d.round",
+        "@type": "round",
         "round": round_,
     }
     return params
@@ -8226,14 +8946,14 @@ def c2d_round_cargs(
     cargs = []
     cargs.extend([
         "-round",
-        params.get("round")
+        params.get("round", None)
     ])
     return cargs
 
 
 def c2d_scale_params(
     scale: str,
-) -> C2dScaleParameters:
+) -> C2dScaleParametersTagged:
     """
     Build parameters.
     
@@ -8250,7 +8970,7 @@ def c2d_scale_params(
         Parameter dictionary
     """
     params = {
-        "@type": "c3d.c2d.scale",
+        "@type": "scale",
         "scale": scale,
     }
     return params
@@ -8272,14 +8992,14 @@ def c2d_scale_cargs(
     cargs = []
     cargs.extend([
         "-scale",
-        params.get("scale")
+        params.get("scale", None)
     ])
     return cargs
 
 
 def c2d_set_sform_1_params(
     set_sform: str,
-) -> C2dSetSform1Parameters:
+) -> C2dSetSform1ParametersTagged:
     """
     Build parameters.
     
@@ -8294,7 +9014,7 @@ def c2d_set_sform_1_params(
         Parameter dictionary
     """
     params = {
-        "@type": "c3d.c2d.set_sform",
+        "@type": "set_sform_1",
         "set_sform": set_sform,
     }
     return params
@@ -8316,14 +9036,14 @@ def c2d_set_sform_1_cargs(
     cargs = []
     cargs.extend([
         "-set-sform",
-        params.get("set_sform")
+        params.get("set_sform", None)
     ])
     return cargs
 
 
 def c2d_sin_params(
     sin: str,
-) -> C2dSinParameters:
+) -> C2dSinParametersTagged:
     """
     Build parameters.
     
@@ -8338,7 +9058,7 @@ def c2d_sin_params(
         Parameter dictionary
     """
     params = {
-        "@type": "c3d.c2d.sin",
+        "@type": "sin",
         "sin": sin,
     }
     return params
@@ -8360,14 +9080,14 @@ def c2d_sin_cargs(
     cargs = []
     cargs.extend([
         "-sin",
-        params.get("sin")
+        params.get("sin", None)
     ])
     return cargs
 
 
 def c2d_slice_params(
     slice_: str,
-) -> C2dSliceParameters:
+) -> C2dSliceParametersTagged:
     """
     Build parameters.
     
@@ -8402,7 +9122,7 @@ def c2d_slice_params(
         Parameter dictionary
     """
     params = {
-        "@type": "c3d.c2d.slice",
+        "@type": "slice",
         "slice": slice_,
     }
     return params
@@ -8424,14 +9144,14 @@ def c2d_slice_cargs(
     cargs = []
     cargs.extend([
         "-slice",
-        params.get("slice")
+        params.get("slice", None)
     ])
     return cargs
 
 
 def c2d_slice_all_params(
     slice_all: str,
-) -> C2dSliceAllParameters:
+) -> C2dSliceAllParametersTagged:
     """
     Build parameters.
     
@@ -8451,7 +9171,7 @@ def c2d_slice_all_params(
         Parameter dictionary
     """
     params = {
-        "@type": "c3d.c2d.slice_all",
+        "@type": "slice_all",
         "slice_all": slice_all,
     }
     return params
@@ -8473,14 +9193,14 @@ def c2d_slice_all_cargs(
     cargs = []
     cargs.extend([
         "-slice-all",
-        params.get("slice_all")
+        params.get("slice_all", None)
     ])
     return cargs
 
 
 def c2d_sharpen_params(
     sharpen: str,
-) -> C2dSharpenParameters:
+) -> C2dSharpenParametersTagged:
     """
     Build parameters.
     
@@ -8497,7 +9217,7 @@ def c2d_sharpen_params(
         Parameter dictionary
     """
     params = {
-        "@type": "c3d.c2d.sharpen",
+        "@type": "sharpen",
         "sharpen": sharpen,
     }
     return params
@@ -8519,14 +9239,14 @@ def c2d_sharpen_cargs(
     cargs = []
     cargs.extend([
         "-sharpen",
-        params.get("sharpen")
+        params.get("sharpen", None)
     ])
     return cargs
 
 
 def c2d_shift_params(
     shift: str,
-) -> C2dShiftParameters:
+) -> C2dShiftParametersTagged:
     """
     Build parameters.
     
@@ -8542,7 +9262,7 @@ def c2d_shift_params(
         Parameter dictionary
     """
     params = {
-        "@type": "c3d.c2d.shift",
+        "@type": "shift",
         "shift": shift,
     }
     return params
@@ -8564,14 +9284,14 @@ def c2d_shift_cargs(
     cargs = []
     cargs.extend([
         "-shift",
-        params.get("shift")
+        params.get("shift", None)
     ])
     return cargs
 
 
 def c2d_signed_distance_transform_params(
     signed_distance_transform: str,
-) -> C2dSignedDistanceTransformParameters:
+) -> C2dSignedDistanceTransformParametersTagged:
     """
     Build parameters.
     
@@ -8593,7 +9313,7 @@ def c2d_signed_distance_transform_params(
         Parameter dictionary
     """
     params = {
-        "@type": "c3d.c2d.signed_distance_transform",
+        "@type": "signed_distance_transform",
         "signed_distance_transform": signed_distance_transform,
     }
     return params
@@ -8615,14 +9335,14 @@ def c2d_signed_distance_transform_cargs(
     cargs = []
     cargs.extend([
         "-signed-distance-transform",
-        params.get("signed_distance_transform")
+        params.get("signed_distance_transform", None)
     ])
     return cargs
 
 
 def c2d_smooth_params(
     smooth: str,
-) -> C2dSmoothParameters:
+) -> C2dSmoothParametersTagged:
     """
     Build parameters.
     
@@ -8640,7 +9360,7 @@ def c2d_smooth_params(
         Parameter dictionary
     """
     params = {
-        "@type": "c3d.c2d.smooth",
+        "@type": "smooth",
         "smooth": smooth,
     }
     return params
@@ -8662,14 +9382,14 @@ def c2d_smooth_cargs(
     cargs = []
     cargs.extend([
         "-smooth",
-        params.get("smooth")
+        params.get("smooth", None)
     ])
     return cargs
 
 
 def c2d_smooth_fast_params(
     smooth_fast: str,
-) -> C2dSmoothFastParameters:
+) -> C2dSmoothFastParametersTagged:
     """
     Build parameters.
     
@@ -8688,7 +9408,7 @@ def c2d_smooth_fast_params(
         Parameter dictionary
     """
     params = {
-        "@type": "c3d.c2d.smooth_fast",
+        "@type": "smooth_fast",
         "smooth_fast": smooth_fast,
     }
     return params
@@ -8710,14 +9430,14 @@ def c2d_smooth_fast_cargs(
     cargs = []
     cargs.extend([
         "-smooth-fast",
-        params.get("smooth_fast")
+        params.get("smooth_fast", None)
     ])
     return cargs
 
 
 def c2d_spacing_params(
     spacing: str,
-) -> C2dSpacingParameters:
+) -> C2dSpacingParametersTagged:
     """
     Build parameters.
     
@@ -8736,7 +9456,7 @@ def c2d_spacing_params(
         Parameter dictionary
     """
     params = {
-        "@type": "c3d.c2d.spacing",
+        "@type": "spacing",
         "spacing": spacing,
     }
     return params
@@ -8758,14 +9478,14 @@ def c2d_spacing_cargs(
     cargs = []
     cargs.extend([
         "-spacing",
-        params.get("spacing")
+        params.get("spacing", None)
     ])
     return cargs
 
 
 def c2d_split_params(
     split: str,
-) -> C2dSplitParameters:
+) -> C2dSplitParametersTagged:
     """
     Build parameters.
     
@@ -8796,7 +9516,7 @@ def c2d_split_params(
         Parameter dictionary
     """
     params = {
-        "@type": "c3d.c2d.split",
+        "@type": "split",
         "split": split,
     }
     return params
@@ -8818,14 +9538,14 @@ def c2d_split_cargs(
     cargs = []
     cargs.extend([
         "-split",
-        params.get("split")
+        params.get("split", None)
     ])
     return cargs
 
 
 def c2d_sqrt_params(
     sqrt: str,
-) -> C2dSqrtParameters:
+) -> C2dSqrtParametersTagged:
     """
     Build parameters.
     
@@ -8841,7 +9561,7 @@ def c2d_sqrt_params(
         Parameter dictionary
     """
     params = {
-        "@type": "c3d.c2d.sqrt",
+        "@type": "sqrt",
         "sqrt": sqrt,
     }
     return params
@@ -8863,14 +9583,14 @@ def c2d_sqrt_cargs(
     cargs = []
     cargs.extend([
         "-sqrt",
-        params.get("sqrt")
+        params.get("sqrt", None)
     ])
     return cargs
 
 
 def c2d_staple_params(
     staple: str,
-) -> C2dStapleParameters:
+) -> C2dStapleParametersTagged:
     """
     Build parameters.
     
@@ -8905,7 +9625,7 @@ def c2d_staple_params(
         Parameter dictionary
     """
     params = {
-        "@type": "c3d.c2d.staple",
+        "@type": "staple",
         "staple": staple,
     }
     return params
@@ -8927,14 +9647,14 @@ def c2d_staple_cargs(
     cargs = []
     cargs.extend([
         "-staple",
-        params.get("staple")
+        params.get("staple", None)
     ])
     return cargs
 
 
 def c2d_structure_tensor_eigenvalues_params(
     structure_tensor_eigenvalues: str,
-) -> C2dStructureTensorEigenvaluesParameters:
+) -> C2dStructureTensorEigenvaluesParametersTagged:
     """
     Build parameters.
     
@@ -8956,7 +9676,7 @@ def c2d_structure_tensor_eigenvalues_params(
         Parameter dictionary
     """
     params = {
-        "@type": "c3d.c2d.structure_tensor_eigenvalues",
+        "@type": "structure_tensor_eigenvalues",
         "structure_tensor_eigenvalues": structure_tensor_eigenvalues,
     }
     return params
@@ -8978,14 +9698,14 @@ def c2d_structure_tensor_eigenvalues_cargs(
     cargs = []
     cargs.extend([
         "-steig",
-        params.get("structure_tensor_eigenvalues")
+        params.get("structure_tensor_eigenvalues", None)
     ])
     return cargs
 
 
 def c2d_spm_params(
     spm: str,
-) -> C2dSpmParameters:
+) -> C2dSpmParametersTagged:
     """
     Build parameters.
     
@@ -9006,7 +9726,7 @@ def c2d_spm_params(
         Parameter dictionary
     """
     params = {
-        "@type": "c3d.c2d.spm",
+        "@type": "spm",
         "spm": spm,
     }
     return params
@@ -9028,14 +9748,14 @@ def c2d_spm_cargs(
     cargs = []
     cargs.extend([
         "-spm",
-        params.get("spm")
+        params.get("spm", None)
     ])
     return cargs
 
 
 def c2d_subtract_params(
     subtract: str,
-) -> C2dSubtractParameters:
+) -> C2dSubtractParametersTagged:
     """
     Build parameters.
     
@@ -9045,7 +9765,7 @@ def c2d_subtract_params(
         Parameter dictionary
     """
     params = {
-        "@type": "c3d.c2d.subtract",
+        "@type": "subtract",
         "subtract": subtract,
     }
     return params
@@ -9067,14 +9787,14 @@ def c2d_subtract_cargs(
     cargs = []
     cargs.extend([
         "-subtract",
-        params.get("subtract")
+        params.get("subtract", None)
     ])
     return cargs
 
 
 def c2d_supervoxel_params(
     supervoxel: str,
-) -> C2dSupervoxelParameters:
+) -> C2dSupervoxelParametersTagged:
     """
     Build parameters.
     
@@ -9084,7 +9804,7 @@ def c2d_supervoxel_params(
         Parameter dictionary
     """
     params = {
-        "@type": "c3d.c2d.supervoxel",
+        "@type": "supervoxel",
         "supervoxel": supervoxel,
     }
     return params
@@ -9106,14 +9826,14 @@ def c2d_supervoxel_cargs(
     cargs = []
     cargs.extend([
         "-supervoxel",
-        params.get("supervoxel")
+        params.get("supervoxel", None)
     ])
     return cargs
 
 
 def c2d_stretch_params(
     stretch: str,
-) -> C2dStretchParameters:
+) -> C2dStretchParametersTagged:
     """
     Build parameters.
     
@@ -9133,7 +9853,7 @@ def c2d_stretch_params(
         Parameter dictionary
     """
     params = {
-        "@type": "c3d.c2d.stretch",
+        "@type": "stretch",
         "stretch": stretch,
     }
     return params
@@ -9155,14 +9875,14 @@ def c2d_stretch_cargs(
     cargs = []
     cargs.extend([
         "-stretch",
-        params.get("stretch")
+        params.get("stretch", None)
     ])
     return cargs
 
 
 def c2d_swapdim_params(
     swapdim: str,
-) -> C2dSwapdimParameters:
+) -> C2dSwapdimParametersTagged:
     """
     Build parameters.
     
@@ -9191,7 +9911,7 @@ def c2d_swapdim_params(
         Parameter dictionary
     """
     params = {
-        "@type": "c3d.c2d.swapdim",
+        "@type": "swapdim",
         "swapdim": swapdim,
     }
     return params
@@ -9213,14 +9933,14 @@ def c2d_swapdim_cargs(
     cargs = []
     cargs.extend([
         "-swapdim",
-        params.get("swapdim")
+        params.get("swapdim", None)
     ])
     return cargs
 
 
 def c2d_test_image_params(
     test_image: str,
-) -> C2dTestImageParameters:
+) -> C2dTestImageParametersTagged:
     """
     Build parameters.
     
@@ -9254,7 +9974,7 @@ def c2d_test_image_params(
         Parameter dictionary
     """
     params = {
-        "@type": "c3d.c2d.test_image",
+        "@type": "test_image",
         "test_image": test_image,
     }
     return params
@@ -9276,14 +9996,14 @@ def c2d_test_image_cargs(
     cargs = []
     cargs.extend([
         "-test-image",
-        params.get("test_image")
+        params.get("test_image", None)
     ])
     return cargs
 
 
 def c2d_test_probe_params(
     test_probe: str,
-) -> C2dTestProbeParameters:
+) -> C2dTestProbeParametersTagged:
     """
     Build parameters.
     
@@ -9317,7 +10037,7 @@ def c2d_test_probe_params(
         Parameter dictionary
     """
     params = {
-        "@type": "c3d.c2d.test_probe",
+        "@type": "test_probe",
         "test_probe": test_probe,
     }
     return params
@@ -9339,14 +10059,14 @@ def c2d_test_probe_cargs(
     cargs = []
     cargs.extend([
         "-test-probe",
-        params.get("test_probe")
+        params.get("test_probe", None)
     ])
     return cargs
 
 
 def c2d_threshold_params(
     threshold: str,
-) -> C2dThresholdParameters:
+) -> C2dThresholdParametersTagged:
     """
     Build parameters.
     
@@ -9368,7 +10088,7 @@ def c2d_threshold_params(
         Parameter dictionary
     """
     params = {
-        "@type": "c3d.c2d.threshold",
+        "@type": "threshold",
         "threshold": threshold,
     }
     return params
@@ -9390,14 +10110,14 @@ def c2d_threshold_cargs(
     cargs = []
     cargs.extend([
         "-threshold",
-        params.get("threshold")
+        params.get("threshold", None)
     ])
     return cargs
 
 
 def c2d_tile_params(
     tile: str,
-) -> C2dTileParameters:
+) -> C2dTileParametersTagged:
     """
     Build parameters.
     
@@ -9426,7 +10146,7 @@ def c2d_tile_params(
         Parameter dictionary
     """
     params = {
-        "@type": "c3d.c2d.tile",
+        "@type": "tile",
         "tile": tile,
     }
     return params
@@ -9448,14 +10168,14 @@ def c2d_tile_cargs(
     cargs = []
     cargs.extend([
         "-tile",
-        params.get("tile")
+        params.get("tile", None)
     ])
     return cargs
 
 
 def c2d_trim_params(
     trim: str,
-) -> C2dTrimParameters:
+) -> C2dTrimParametersTagged:
     """
     Build parameters.
     
@@ -9477,7 +10197,7 @@ def c2d_trim_params(
         Parameter dictionary
     """
     params = {
-        "@type": "c3d.c2d.trim",
+        "@type": "trim",
         "trim": trim,
     }
     return params
@@ -9499,14 +10219,14 @@ def c2d_trim_cargs(
     cargs = []
     cargs.extend([
         "-trim",
-        params.get("trim")
+        params.get("trim", None)
     ])
     return cargs
 
 
 def c2d_trim_to_size_params(
     trim_to_size: str,
-) -> C2dTrimToSizeParameters:
+) -> C2dTrimToSizeParametersTagged:
     """
     Build parameters.
     
@@ -9527,7 +10247,7 @@ def c2d_trim_to_size_params(
         Parameter dictionary
     """
     params = {
-        "@type": "c3d.c2d.trim_to_size",
+        "@type": "trim_to_size",
         "trim_to_size": trim_to_size,
     }
     return params
@@ -9549,14 +10269,14 @@ def c2d_trim_to_size_cargs(
     cargs = []
     cargs.extend([
         "-trim-to-size",
-        params.get("trim_to_size")
+        params.get("trim_to_size", None)
     ])
     return cargs
 
 
 def c2d_type_params(
     type_: str,
-) -> C2dTypeParameters:
+) -> C2dTypeParametersTagged:
     """
     Build parameters.
     
@@ -9578,7 +10298,7 @@ def c2d_type_params(
         Parameter dictionary
     """
     params = {
-        "@type": "c3d.c2d.type",
+        "@type": "type",
         "type": type_,
     }
     return params
@@ -9600,14 +10320,14 @@ def c2d_type_cargs(
     cargs = []
     cargs.extend([
         "-type",
-        params.get("type")
+        params.get("type", None)
     ])
     return cargs
 
 
 def c2d_verbose_params(
     verbose: str,
-) -> C2dVerboseParameters:
+) -> C2dVerboseParametersTagged:
     """
     Build parameters.
     
@@ -9624,7 +10344,7 @@ def c2d_verbose_params(
         Parameter dictionary
     """
     params = {
-        "@type": "c3d.c2d.verbose",
+        "@type": "verbose",
         "verbose": verbose,
     }
     return params
@@ -9646,14 +10366,14 @@ def c2d_verbose_cargs(
     cargs = []
     cargs.extend([
         "-verbose",
-        params.get("verbose")
+        params.get("verbose", None)
     ])
     return cargs
 
 
 def c2d_noverbose_params(
     noverbose: str,
-) -> C2dNoverboseParameters:
+) -> C2dNoverboseParametersTagged:
     """
     Build parameters.
     
@@ -9663,7 +10383,7 @@ def c2d_noverbose_params(
         Parameter dictionary
     """
     params = {
-        "@type": "c3d.c2d.noverbose",
+        "@type": "noverbose",
         "noverbose": noverbose,
     }
     return params
@@ -9685,14 +10405,14 @@ def c2d_noverbose_cargs(
     cargs = []
     cargs.extend([
         "-noverbose",
-        params.get("noverbose")
+        params.get("noverbose", None)
     ])
     return cargs
 
 
 def c2d_version_params(
     version: str,
-) -> C2dVersionParameters:
+) -> C2dVersionParametersTagged:
     """
     Build parameters.
     
@@ -9702,7 +10422,7 @@ def c2d_version_params(
         Parameter dictionary
     """
     params = {
-        "@type": "c3d.c2d.version",
+        "@type": "version",
         "version": version,
     }
     return params
@@ -9724,14 +10444,14 @@ def c2d_version_cargs(
     cargs = []
     cargs.extend([
         "-version",
-        params.get("version")
+        params.get("version", None)
     ])
     return cargs
 
 
 def c2d_vote_params(
     vote: str,
-) -> C2dVoteParameters:
+) -> C2dVoteParametersTagged:
     """
     Build parameters.
     
@@ -9759,7 +10479,7 @@ def c2d_vote_params(
         Parameter dictionary
     """
     params = {
-        "@type": "c3d.c2d.vote",
+        "@type": "vote",
         "vote": vote,
     }
     return params
@@ -9781,14 +10501,14 @@ def c2d_vote_cargs(
     cargs = []
     cargs.extend([
         "-vote",
-        params.get("vote")
+        params.get("vote", None)
     ])
     return cargs
 
 
 def c2d_vote_mrf_params(
     vote_mrf: str,
-) -> C2dVoteMrfParameters:
+) -> C2dVoteMrfParametersTagged:
     """
     Build parameters.
     
@@ -9872,7 +10592,7 @@ def c2d_vote_mrf_params(
         Parameter dictionary
     """
     params = {
-        "@type": "c3d.c2d.vote_mrf",
+        "@type": "vote_mrf",
         "vote_mrf": vote_mrf,
     }
     return params
@@ -9894,14 +10614,14 @@ def c2d_vote_mrf_cargs(
     cargs = []
     cargs.extend([
         "-vote-mrf",
-        params.get("vote_mrf")
+        params.get("vote_mrf", None)
     ])
     return cargs
 
 
 def c2d_vote_label_params(
     vote_label: str,
-) -> C2dVoteLabelParameters:
+) -> C2dVoteLabelParametersTagged:
     """
     Build parameters.
     
@@ -9911,7 +10631,7 @@ def c2d_vote_label_params(
         Parameter dictionary
     """
     params = {
-        "@type": "c3d.c2d.vote_label",
+        "@type": "vote_label",
         "vote_label": vote_label,
     }
     return params
@@ -9933,14 +10653,14 @@ def c2d_vote_label_cargs(
     cargs = []
     cargs.extend([
         "-vote-label",
-        params.get("vote_label")
+        params.get("vote_label", None)
     ])
     return cargs
 
 
 def c2d_voxel_sum_params(
     voxel_sum: str,
-) -> C2dVoxelSumParameters:
+) -> C2dVoxelSumParametersTagged:
     """
     Build parameters.
     
@@ -9957,7 +10677,7 @@ def c2d_voxel_sum_params(
         Parameter dictionary
     """
     params = {
-        "@type": "c3d.c2d.voxel_sum",
+        "@type": "voxel_sum",
         "voxel_sum": voxel_sum,
     }
     return params
@@ -9979,14 +10699,14 @@ def c2d_voxel_sum_cargs(
     cargs = []
     cargs.extend([
         "-voxel-sum",
-        params.get("voxel_sum")
+        params.get("voxel_sum", None)
     ])
     return cargs
 
 
 def c2d_voxel_integral_params(
     voxel_integral: str,
-) -> C2dVoxelIntegralParameters:
+) -> C2dVoxelIntegralParametersTagged:
     """
     Build parameters.
     
@@ -10006,7 +10726,7 @@ def c2d_voxel_integral_params(
         Parameter dictionary
     """
     params = {
-        "@type": "c3d.c2d.voxel_integral",
+        "@type": "voxel_integral",
         "voxel_integral": voxel_integral,
     }
     return params
@@ -10028,14 +10748,14 @@ def c2d_voxel_integral_cargs(
     cargs = []
     cargs.extend([
         "-voxel-integral",
-        params.get("voxel_integral")
+        params.get("voxel_integral", None)
     ])
     return cargs
 
 
 def c2d_voxelwise_regression_params(
     voxelwise_regression: str,
-) -> C2dVoxelwiseRegressionParameters:
+) -> C2dVoxelwiseRegressionParametersTagged:
     """
     Build parameters.
     
@@ -10062,7 +10782,7 @@ def c2d_voxelwise_regression_params(
         Parameter dictionary
     """
     params = {
-        "@type": "c3d.c2d.voxelwise_regression",
+        "@type": "voxelwise_regression",
         "voxelwise_regression": voxelwise_regression,
     }
     return params
@@ -10084,14 +10804,14 @@ def c2d_voxelwise_regression_cargs(
     cargs = []
     cargs.extend([
         "-voxelwise-regression",
-        params.get("voxelwise_regression")
+        params.get("voxelwise_regression", None)
     ])
     return cargs
 
 
 def c2d_warp_params(
     warp: str,
-) -> C2dWarpParameters:
+) -> C2dWarpParametersTagged:
     """
     Build parameters.
     
@@ -10101,7 +10821,7 @@ def c2d_warp_params(
         Parameter dictionary
     """
     params = {
-        "@type": "c3d.c2d.warp",
+        "@type": "warp",
         "warp": warp,
     }
     return params
@@ -10123,14 +10843,14 @@ def c2d_warp_cargs(
     cargs = []
     cargs.extend([
         "-warp",
-        params.get("warp")
+        params.get("warp", None)
     ])
     return cargs
 
 
 def c2d_warp_label_params(
     warp_label: str,
-) -> C2dWarpLabelParameters:
+) -> C2dWarpLabelParametersTagged:
     """
     Build parameters.
     
@@ -10140,7 +10860,7 @@ def c2d_warp_label_params(
         Parameter dictionary
     """
     params = {
-        "@type": "c3d.c2d.warp_label",
+        "@type": "warp_label",
         "warp_label": warp_label,
     }
     return params
@@ -10162,14 +10882,14 @@ def c2d_warp_label_cargs(
     cargs = []
     cargs.extend([
         "-warp-label",
-        params.get("warp_label")
+        params.get("warp_label", None)
     ])
     return cargs
 
 
 def c2d_wrap_params(
     wrap: str,
-) -> C2dWrapParameters:
+) -> C2dWrapParametersTagged:
     """
     Build parameters.
     
@@ -10197,7 +10917,7 @@ def c2d_wrap_params(
         Parameter dictionary
     """
     params = {
-        "@type": "c3d.c2d.wrap",
+        "@type": "wrap",
         "wrap": wrap,
     }
     return params
@@ -10219,14 +10939,14 @@ def c2d_wrap_cargs(
     cargs = []
     cargs.extend([
         "-wrap",
-        params.get("wrap")
+        params.get("wrap", None)
     ])
     return cargs
 
 
 def c2d_weighted_sum_params(
     weighted_sum: str,
-) -> C2dWeightedSumParameters:
+) -> C2dWeightedSumParametersTagged:
     """
     Build parameters.
     
@@ -10249,7 +10969,7 @@ def c2d_weighted_sum_params(
         Parameter dictionary
     """
     params = {
-        "@type": "c3d.c2d.weighted_sum",
+        "@type": "weighted_sum",
         "weighted_sum": weighted_sum,
     }
     return params
@@ -10271,14 +10991,14 @@ def c2d_weighted_sum_cargs(
     cargs = []
     cargs.extend([
         "-weighted-sum",
-        params.get("weighted_sum")
+        params.get("weighted_sum", None)
     ])
     return cargs
 
 
 def c2d_weighted_sum_voxelwise_params(
     weighted_sum_voxelwise: str,
-) -> C2dWeightedSumVoxelwiseParameters:
+) -> C2dWeightedSumVoxelwiseParametersTagged:
     """
     Build parameters.
     
@@ -10304,7 +11024,7 @@ def c2d_weighted_sum_voxelwise_params(
         Parameter dictionary
     """
     params = {
-        "@type": "c3d.c2d.weighted_sum_voxelwise",
+        "@type": "weighted_sum_voxelwise",
         "weighted_sum_voxelwise": weighted_sum_voxelwise,
     }
     return params
@@ -10326,14 +11046,14 @@ def c2d_weighted_sum_voxelwise_cargs(
     cargs = []
     cargs.extend([
         "-weighted-sum-voxelwise",
-        params.get("weighted_sum_voxelwise")
+        params.get("weighted_sum_voxelwise", None)
     ])
     return cargs
 
 
 class C2dOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `c2d(...)`.
+    Output object returned when calling `C2dParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -10344,9 +11064,9 @@ class C2dOutputs(typing.NamedTuple):
 
 def c2d_params(
     input_: list[InputPathType],
-    operations: list[typing.Union[C2dAccumParameters, C2dAcosParameters, C2dAddParameters, C2dAlignLandmarksParameters, C2dAnisotropicDiffusionParameters, C2dAntialiasParameters, C2dSetParameters, C2dAsinParameters, C2dAtan2Parameters, C2dBackgroundParameters, C2dN4BiasCorrectionParameters, C2dBinarizeParameters, C2dCannyParameters, C2dCeilParameters, C2dCentroidParameters, C2dCentroidMarkParameters, C2dConnectedComponentsParameters, C2dClearParameters, C2dClipParameters, C2dColorMapParameters, C2dCompressParameters, C2dNoCompressParameters, C2dConvParameters, C2dCoordinateMapVoxelParameters, C2dCoordinateMapPhysicalParameters, C2dCopyTransformParameters, C2dCosParameters, C2dCreateParameters, C2dDicomSeriesListParameters, C2dDicomSeriesReadParameters, C2dDilateParameters, C2dDivideParameters, C2dDuplicateParameters, C2dEndaccumParameters, C2dEndforParameters, C2dErodeParameters, C2dErfParameters, C2dExpParameters, C2dExportPatchesParameters, C2dExportPatchesAugParameters, C2dExtrudeSegParameters, C2dFillBackgroundWithNoiseParameters, C2dFftParameters, C2dFlipParameters, C2dFloorParameters, C2dForeachParameters, C2dForeachCompParameters, C2dGlmParameters, C2dGradientParameters, C2dHelpParameters, C2dHolefillParameters, C2dHessianEigenvaluesParameters, C2dHessianObjectnessParameters, C2dHistogramMatchParameters, C2dInfoParameters, C2dInfoFullParameters, C2dInsertParameters, C2dInterpolationParameters, C2dIterationsParameters, C2dLabelOverlapParameters, C2dLabelStatisticsParameters, C2dLandmarksToSpheresParameters, C2dLaplacianParameters, C2dLevelsetParameters, C2dLevelsetCurvatureParameters, C2dLevelsetAdvectionParameters, C2dLogParameters, C2dLog10Parameters, C2dManualParameters, C2dMatchBoundingBoxParameters, C2dMaximumParameters, C2dMulticomponentSplitParameters, C2dMeanParameters, C2dMedianFilterParameters, C2dMergeParameters, C2dMeanFilterParameters, C2dMutualInfoParameters, C2dMinimumParameters, C2dMixtureModelParameters, C2dMomentsParameters, C2dMattesMutualInfoParameters, C2dMeanSquareParameters, C2dMultiplyParameters, C2dNormalizedCrossCorrelationParameters, C2dNormalizedCorrelationParameters, C2dNormalizedMutualInfoParameters, C2dNoiseGaussianParameters, C2dNoisePoissonParameters, C2dNoiseSpeckleParameters, C2dNoiseSaltPepperParameters, C2dNoMulticomponentSplitParameters, C2dNormalizeLocalWindowParameters, C2dNormpdfParameters, C2dNoroundParameters, C2dNospmParameters, C2dOutputParameters, C2dOutputMulticomponentParameters, C2dOutputMultipleMulticomponentParameters, C2dOrientParameters, C2dOutputMultipleParameters, C2dOrient1Parameters, C2dOriginParameters, C2dOriginVoxelParameters, C2dOriginVoxelCoordParameters, C2dOverlapParameters, C2dOverlayLabelImageParameters, C2dPadParameters, C2dPadToParameters, C2dPcaParameters, C2dPercentIntensityModeParameters, C2dPixelParameters, C2dPopParameters, C2dPopasParameters, C2dProbeParameters, C2dPushParameters, C2dRankParameters, C2dReciprocalParameters, C2dRegionParameters, C2dReorderParameters, C2dRetainLabelsParameters, C2dRfApplyParameters, C2dRfTrainParameters, C2dRfParamPatchParameters, C2dRfParamUsexyzParameters, C2dRfParamNousexyzParameters, C2dRfParamNtreesParameters, C2dRfParamTreedepthParameters, C2dSetSformParameters, C2dReplaceParameters, C2dResampleParameters, C2dResampleIsoParameters, C2dResampleMmParameters, C2dResliceItkParameters, C2dResliceMatrixParameters, C2dResliceIdentityParameters, C2dRgb2hsvParameters, C2dRmsParameters, C2dRoundParameters, C2dScaleParameters, C2dSetSform1Parameters, C2dSinParameters, C2dSliceParameters, C2dSliceAllParameters, C2dSharpenParameters, C2dShiftParameters, C2dSignedDistanceTransformParameters, C2dSmoothParameters, C2dSmoothFastParameters, C2dSpacingParameters, C2dSplitParameters, C2dSqrtParameters, C2dStapleParameters, C2dStructureTensorEigenvaluesParameters, C2dSpmParameters, C2dSubtractParameters, C2dSupervoxelParameters, C2dStretchParameters, C2dSwapdimParameters, C2dTestImageParameters, C2dTestProbeParameters, C2dThresholdParameters, C2dTileParameters, C2dTrimParameters, C2dTrimToSizeParameters, C2dTypeParameters, C2dVerboseParameters, C2dNoverboseParameters, C2dVersionParameters, C2dVoteParameters, C2dVoteMrfParameters, C2dVoteLabelParameters, C2dVoxelSumParameters, C2dVoxelIntegralParameters, C2dVoxelwiseRegressionParameters, C2dWarpParameters, C2dWarpLabelParameters, C2dWrapParameters, C2dWeightedSumParameters, C2dWeightedSumVoxelwiseParameters]],
+    operations: list[typing.Union[C2dAccumParametersTagged, C2dAcosParametersTagged, C2dAddParametersTagged, C2dAlignLandmarksParametersTagged, C2dAnisotropicDiffusionParametersTagged, C2dAntialiasParametersTagged, C2dSetParametersTagged, C2dAsinParametersTagged, C2dAtan2ParametersTagged, C2dBackgroundParametersTagged, C2dN4BiasCorrectionParametersTagged, C2dBinarizeParametersTagged, C2dCannyParametersTagged, C2dCeilParametersTagged, C2dCentroidParametersTagged, C2dCentroidMarkParametersTagged, C2dConnectedComponentsParametersTagged, C2dClearParametersTagged, C2dClipParametersTagged, C2dColorMapParametersTagged, C2dCompressParametersTagged, C2dNoCompressParametersTagged, C2dConvParametersTagged, C2dCoordinateMapVoxelParametersTagged, C2dCoordinateMapPhysicalParametersTagged, C2dCopyTransformParametersTagged, C2dCosParametersTagged, C2dCreateParametersTagged, C2dDicomSeriesListParametersTagged, C2dDicomSeriesReadParametersTagged, C2dDilateParametersTagged, C2dDivideParametersTagged, C2dDuplicateParametersTagged, C2dEndaccumParametersTagged, C2dEndforParametersTagged, C2dErodeParametersTagged, C2dErfParametersTagged, C2dExpParametersTagged, C2dExportPatchesParametersTagged, C2dExportPatchesAugParametersTagged, C2dExtrudeSegParametersTagged, C2dFillBackgroundWithNoiseParametersTagged, C2dFftParametersTagged, C2dFlipParametersTagged, C2dFloorParametersTagged, C2dForeachParametersTagged, C2dForeachCompParametersTagged, C2dGlmParametersTagged, C2dGradientParametersTagged, C2dHelpParametersTagged, C2dHolefillParametersTagged, C2dHessianEigenvaluesParametersTagged, C2dHessianObjectnessParametersTagged, C2dHistogramMatchParametersTagged, C2dInfoParametersTagged, C2dInfoFullParametersTagged, C2dInsertParametersTagged, C2dInterpolationParametersTagged, C2dIterationsParametersTagged, C2dLabelOverlapParametersTagged, C2dLabelStatisticsParametersTagged, C2dLandmarksToSpheresParametersTagged, C2dLaplacianParametersTagged, C2dLevelsetParametersTagged, C2dLevelsetCurvatureParametersTagged, C2dLevelsetAdvectionParametersTagged, C2dLogParametersTagged, C2dLog10ParametersTagged, C2dManualParametersTagged, C2dMatchBoundingBoxParametersTagged, C2dMaximumParametersTagged, C2dMulticomponentSplitParametersTagged, C2dMeanParametersTagged, C2dMedianFilterParametersTagged, C2dMergeParametersTagged, C2dMeanFilterParametersTagged, C2dMutualInfoParametersTagged, C2dMinimumParametersTagged, C2dMixtureModelParametersTagged, C2dMomentsParametersTagged, C2dMattesMutualInfoParametersTagged, C2dMeanSquareParametersTagged, C2dMultiplyParametersTagged, C2dNormalizedCrossCorrelationParametersTagged, C2dNormalizedCorrelationParametersTagged, C2dNormalizedMutualInfoParametersTagged, C2dNoiseGaussianParametersTagged, C2dNoisePoissonParametersTagged, C2dNoiseSpeckleParametersTagged, C2dNoiseSaltPepperParametersTagged, C2dNoMulticomponentSplitParametersTagged, C2dNormalizeLocalWindowParametersTagged, C2dNormpdfParametersTagged, C2dNoroundParametersTagged, C2dNospmParametersTagged, C2dOutputParametersTagged, C2dOutputMulticomponentParametersTagged, C2dOutputMultipleMulticomponentParametersTagged, C2dOrientParametersTagged, C2dOutputMultipleParametersTagged, C2dOrient1ParametersTagged, C2dOriginParametersTagged, C2dOriginVoxelParametersTagged, C2dOriginVoxelCoordParametersTagged, C2dOverlapParametersTagged, C2dOverlayLabelImageParametersTagged, C2dPadParametersTagged, C2dPadToParametersTagged, C2dPcaParametersTagged, C2dPercentIntensityModeParametersTagged, C2dPixelParametersTagged, C2dPopParametersTagged, C2dPopasParametersTagged, C2dProbeParametersTagged, C2dPushParametersTagged, C2dRankParametersTagged, C2dReciprocalParametersTagged, C2dRegionParametersTagged, C2dReorderParametersTagged, C2dRetainLabelsParametersTagged, C2dRfApplyParametersTagged, C2dRfTrainParametersTagged, C2dRfParamPatchParametersTagged, C2dRfParamUsexyzParametersTagged, C2dRfParamNousexyzParametersTagged, C2dRfParamNtreesParametersTagged, C2dRfParamTreedepthParametersTagged, C2dSetSformParametersTagged, C2dReplaceParametersTagged, C2dResampleParametersTagged, C2dResampleIsoParametersTagged, C2dResampleMmParametersTagged, C2dResliceItkParametersTagged, C2dResliceMatrixParametersTagged, C2dResliceIdentityParametersTagged, C2dRgb2hsvParametersTagged, C2dRmsParametersTagged, C2dRoundParametersTagged, C2dScaleParametersTagged, C2dSetSform1ParametersTagged, C2dSinParametersTagged, C2dSliceParametersTagged, C2dSliceAllParametersTagged, C2dSharpenParametersTagged, C2dShiftParametersTagged, C2dSignedDistanceTransformParametersTagged, C2dSmoothParametersTagged, C2dSmoothFastParametersTagged, C2dSpacingParametersTagged, C2dSplitParametersTagged, C2dSqrtParametersTagged, C2dStapleParametersTagged, C2dStructureTensorEigenvaluesParametersTagged, C2dSpmParametersTagged, C2dSubtractParametersTagged, C2dSupervoxelParametersTagged, C2dStretchParametersTagged, C2dSwapdimParametersTagged, C2dTestImageParametersTagged, C2dTestProbeParametersTagged, C2dThresholdParametersTagged, C2dTileParametersTagged, C2dTrimParametersTagged, C2dTrimToSizeParametersTagged, C2dTypeParametersTagged, C2dVerboseParametersTagged, C2dNoverboseParametersTagged, C2dVersionParametersTagged, C2dVoteParametersTagged, C2dVoteMrfParametersTagged, C2dVoteLabelParametersTagged, C2dVoxelSumParametersTagged, C2dVoxelIntegralParametersTagged, C2dVoxelwiseRegressionParametersTagged, C2dWarpParametersTagged, C2dWarpLabelParametersTagged, C2dWrapParametersTagged, C2dWeightedSumParametersTagged, C2dWeightedSumVoxelwiseParametersTagged]],
     output: str,
-) -> C2dParameters:
+) -> C2dParametersTagged:
     """
     Build parameters.
     
@@ -10358,7 +11078,7 @@ def c2d_params(
         Parameter dictionary
     """
     params = {
-        "@type": "c3d.c2d",
+        "@type": "c3d/c2d",
         "input": input_,
         "operations": operations,
         "output": output,
@@ -10381,11 +11101,11 @@ def c2d_cargs(
     """
     cargs = []
     cargs.append("c2d")
-    cargs.append(" ".join([execution.input_file(f) for f in params.get("input")]))
-    cargs.extend([a for c in [dyn_cargs(s["@type"])(s, execution) for s in params.get("operations")] for a in c])
+    cargs.append(" ".join([execution.input_file(f) for f in params.get("input", None)]))
+    cargs.extend([a for c in [c2d_operations_cargs_dyn_fn(s["@type"])(s, execution) for s in params.get("operations", None)] for a in c])
     cargs.extend([
         "-o",
-        params.get("output")
+        params.get("output", None)
     ])
     return cargs
 
@@ -10405,7 +11125,7 @@ def c2d_outputs(
     """
     ret = C2dOutputs(
         root=execution.output_file("."),
-        operations=[dyn_outputs(i["@type"])(i, execution) if dyn_outputs(i["@type"]) else None for i in params.get("operations")],
+        operations=[c2d_operations_outputs_dyn_fn(i["@type"])(i, execution) if c2d_operations_outputs_dyn_fn(i["@type"]) else None for i in params.get("operations")],
     )
     return ret
 
@@ -10440,7 +11160,7 @@ def c2d_execute(
 
 def c2d(
     input_: list[InputPathType],
-    operations: list[typing.Union[C2dAccumParameters, C2dAcosParameters, C2dAddParameters, C2dAlignLandmarksParameters, C2dAnisotropicDiffusionParameters, C2dAntialiasParameters, C2dSetParameters, C2dAsinParameters, C2dAtan2Parameters, C2dBackgroundParameters, C2dN4BiasCorrectionParameters, C2dBinarizeParameters, C2dCannyParameters, C2dCeilParameters, C2dCentroidParameters, C2dCentroidMarkParameters, C2dConnectedComponentsParameters, C2dClearParameters, C2dClipParameters, C2dColorMapParameters, C2dCompressParameters, C2dNoCompressParameters, C2dConvParameters, C2dCoordinateMapVoxelParameters, C2dCoordinateMapPhysicalParameters, C2dCopyTransformParameters, C2dCosParameters, C2dCreateParameters, C2dDicomSeriesListParameters, C2dDicomSeriesReadParameters, C2dDilateParameters, C2dDivideParameters, C2dDuplicateParameters, C2dEndaccumParameters, C2dEndforParameters, C2dErodeParameters, C2dErfParameters, C2dExpParameters, C2dExportPatchesParameters, C2dExportPatchesAugParameters, C2dExtrudeSegParameters, C2dFillBackgroundWithNoiseParameters, C2dFftParameters, C2dFlipParameters, C2dFloorParameters, C2dForeachParameters, C2dForeachCompParameters, C2dGlmParameters, C2dGradientParameters, C2dHelpParameters, C2dHolefillParameters, C2dHessianEigenvaluesParameters, C2dHessianObjectnessParameters, C2dHistogramMatchParameters, C2dInfoParameters, C2dInfoFullParameters, C2dInsertParameters, C2dInterpolationParameters, C2dIterationsParameters, C2dLabelOverlapParameters, C2dLabelStatisticsParameters, C2dLandmarksToSpheresParameters, C2dLaplacianParameters, C2dLevelsetParameters, C2dLevelsetCurvatureParameters, C2dLevelsetAdvectionParameters, C2dLogParameters, C2dLog10Parameters, C2dManualParameters, C2dMatchBoundingBoxParameters, C2dMaximumParameters, C2dMulticomponentSplitParameters, C2dMeanParameters, C2dMedianFilterParameters, C2dMergeParameters, C2dMeanFilterParameters, C2dMutualInfoParameters, C2dMinimumParameters, C2dMixtureModelParameters, C2dMomentsParameters, C2dMattesMutualInfoParameters, C2dMeanSquareParameters, C2dMultiplyParameters, C2dNormalizedCrossCorrelationParameters, C2dNormalizedCorrelationParameters, C2dNormalizedMutualInfoParameters, C2dNoiseGaussianParameters, C2dNoisePoissonParameters, C2dNoiseSpeckleParameters, C2dNoiseSaltPepperParameters, C2dNoMulticomponentSplitParameters, C2dNormalizeLocalWindowParameters, C2dNormpdfParameters, C2dNoroundParameters, C2dNospmParameters, C2dOutputParameters, C2dOutputMulticomponentParameters, C2dOutputMultipleMulticomponentParameters, C2dOrientParameters, C2dOutputMultipleParameters, C2dOrient1Parameters, C2dOriginParameters, C2dOriginVoxelParameters, C2dOriginVoxelCoordParameters, C2dOverlapParameters, C2dOverlayLabelImageParameters, C2dPadParameters, C2dPadToParameters, C2dPcaParameters, C2dPercentIntensityModeParameters, C2dPixelParameters, C2dPopParameters, C2dPopasParameters, C2dProbeParameters, C2dPushParameters, C2dRankParameters, C2dReciprocalParameters, C2dRegionParameters, C2dReorderParameters, C2dRetainLabelsParameters, C2dRfApplyParameters, C2dRfTrainParameters, C2dRfParamPatchParameters, C2dRfParamUsexyzParameters, C2dRfParamNousexyzParameters, C2dRfParamNtreesParameters, C2dRfParamTreedepthParameters, C2dSetSformParameters, C2dReplaceParameters, C2dResampleParameters, C2dResampleIsoParameters, C2dResampleMmParameters, C2dResliceItkParameters, C2dResliceMatrixParameters, C2dResliceIdentityParameters, C2dRgb2hsvParameters, C2dRmsParameters, C2dRoundParameters, C2dScaleParameters, C2dSetSform1Parameters, C2dSinParameters, C2dSliceParameters, C2dSliceAllParameters, C2dSharpenParameters, C2dShiftParameters, C2dSignedDistanceTransformParameters, C2dSmoothParameters, C2dSmoothFastParameters, C2dSpacingParameters, C2dSplitParameters, C2dSqrtParameters, C2dStapleParameters, C2dStructureTensorEigenvaluesParameters, C2dSpmParameters, C2dSubtractParameters, C2dSupervoxelParameters, C2dStretchParameters, C2dSwapdimParameters, C2dTestImageParameters, C2dTestProbeParameters, C2dThresholdParameters, C2dTileParameters, C2dTrimParameters, C2dTrimToSizeParameters, C2dTypeParameters, C2dVerboseParameters, C2dNoverboseParameters, C2dVersionParameters, C2dVoteParameters, C2dVoteMrfParameters, C2dVoteLabelParameters, C2dVoxelSumParameters, C2dVoxelIntegralParameters, C2dVoxelwiseRegressionParameters, C2dWarpParameters, C2dWarpLabelParameters, C2dWrapParameters, C2dWeightedSumParameters, C2dWeightedSumVoxelwiseParameters]],
+    operations: list[typing.Union[C2dAccumParametersTagged, C2dAcosParametersTagged, C2dAddParametersTagged, C2dAlignLandmarksParametersTagged, C2dAnisotropicDiffusionParametersTagged, C2dAntialiasParametersTagged, C2dSetParametersTagged, C2dAsinParametersTagged, C2dAtan2ParametersTagged, C2dBackgroundParametersTagged, C2dN4BiasCorrectionParametersTagged, C2dBinarizeParametersTagged, C2dCannyParametersTagged, C2dCeilParametersTagged, C2dCentroidParametersTagged, C2dCentroidMarkParametersTagged, C2dConnectedComponentsParametersTagged, C2dClearParametersTagged, C2dClipParametersTagged, C2dColorMapParametersTagged, C2dCompressParametersTagged, C2dNoCompressParametersTagged, C2dConvParametersTagged, C2dCoordinateMapVoxelParametersTagged, C2dCoordinateMapPhysicalParametersTagged, C2dCopyTransformParametersTagged, C2dCosParametersTagged, C2dCreateParametersTagged, C2dDicomSeriesListParametersTagged, C2dDicomSeriesReadParametersTagged, C2dDilateParametersTagged, C2dDivideParametersTagged, C2dDuplicateParametersTagged, C2dEndaccumParametersTagged, C2dEndforParametersTagged, C2dErodeParametersTagged, C2dErfParametersTagged, C2dExpParametersTagged, C2dExportPatchesParametersTagged, C2dExportPatchesAugParametersTagged, C2dExtrudeSegParametersTagged, C2dFillBackgroundWithNoiseParametersTagged, C2dFftParametersTagged, C2dFlipParametersTagged, C2dFloorParametersTagged, C2dForeachParametersTagged, C2dForeachCompParametersTagged, C2dGlmParametersTagged, C2dGradientParametersTagged, C2dHelpParametersTagged, C2dHolefillParametersTagged, C2dHessianEigenvaluesParametersTagged, C2dHessianObjectnessParametersTagged, C2dHistogramMatchParametersTagged, C2dInfoParametersTagged, C2dInfoFullParametersTagged, C2dInsertParametersTagged, C2dInterpolationParametersTagged, C2dIterationsParametersTagged, C2dLabelOverlapParametersTagged, C2dLabelStatisticsParametersTagged, C2dLandmarksToSpheresParametersTagged, C2dLaplacianParametersTagged, C2dLevelsetParametersTagged, C2dLevelsetCurvatureParametersTagged, C2dLevelsetAdvectionParametersTagged, C2dLogParametersTagged, C2dLog10ParametersTagged, C2dManualParametersTagged, C2dMatchBoundingBoxParametersTagged, C2dMaximumParametersTagged, C2dMulticomponentSplitParametersTagged, C2dMeanParametersTagged, C2dMedianFilterParametersTagged, C2dMergeParametersTagged, C2dMeanFilterParametersTagged, C2dMutualInfoParametersTagged, C2dMinimumParametersTagged, C2dMixtureModelParametersTagged, C2dMomentsParametersTagged, C2dMattesMutualInfoParametersTagged, C2dMeanSquareParametersTagged, C2dMultiplyParametersTagged, C2dNormalizedCrossCorrelationParametersTagged, C2dNormalizedCorrelationParametersTagged, C2dNormalizedMutualInfoParametersTagged, C2dNoiseGaussianParametersTagged, C2dNoisePoissonParametersTagged, C2dNoiseSpeckleParametersTagged, C2dNoiseSaltPepperParametersTagged, C2dNoMulticomponentSplitParametersTagged, C2dNormalizeLocalWindowParametersTagged, C2dNormpdfParametersTagged, C2dNoroundParametersTagged, C2dNospmParametersTagged, C2dOutputParametersTagged, C2dOutputMulticomponentParametersTagged, C2dOutputMultipleMulticomponentParametersTagged, C2dOrientParametersTagged, C2dOutputMultipleParametersTagged, C2dOrient1ParametersTagged, C2dOriginParametersTagged, C2dOriginVoxelParametersTagged, C2dOriginVoxelCoordParametersTagged, C2dOverlapParametersTagged, C2dOverlayLabelImageParametersTagged, C2dPadParametersTagged, C2dPadToParametersTagged, C2dPcaParametersTagged, C2dPercentIntensityModeParametersTagged, C2dPixelParametersTagged, C2dPopParametersTagged, C2dPopasParametersTagged, C2dProbeParametersTagged, C2dPushParametersTagged, C2dRankParametersTagged, C2dReciprocalParametersTagged, C2dRegionParametersTagged, C2dReorderParametersTagged, C2dRetainLabelsParametersTagged, C2dRfApplyParametersTagged, C2dRfTrainParametersTagged, C2dRfParamPatchParametersTagged, C2dRfParamUsexyzParametersTagged, C2dRfParamNousexyzParametersTagged, C2dRfParamNtreesParametersTagged, C2dRfParamTreedepthParametersTagged, C2dSetSformParametersTagged, C2dReplaceParametersTagged, C2dResampleParametersTagged, C2dResampleIsoParametersTagged, C2dResampleMmParametersTagged, C2dResliceItkParametersTagged, C2dResliceMatrixParametersTagged, C2dResliceIdentityParametersTagged, C2dRgb2hsvParametersTagged, C2dRmsParametersTagged, C2dRoundParametersTagged, C2dScaleParametersTagged, C2dSetSform1ParametersTagged, C2dSinParametersTagged, C2dSliceParametersTagged, C2dSliceAllParametersTagged, C2dSharpenParametersTagged, C2dShiftParametersTagged, C2dSignedDistanceTransformParametersTagged, C2dSmoothParametersTagged, C2dSmoothFastParametersTagged, C2dSpacingParametersTagged, C2dSplitParametersTagged, C2dSqrtParametersTagged, C2dStapleParametersTagged, C2dStructureTensorEigenvaluesParametersTagged, C2dSpmParametersTagged, C2dSubtractParametersTagged, C2dSupervoxelParametersTagged, C2dStretchParametersTagged, C2dSwapdimParametersTagged, C2dTestImageParametersTagged, C2dTestProbeParametersTagged, C2dThresholdParametersTagged, C2dTileParametersTagged, C2dTrimParametersTagged, C2dTrimToSizeParametersTagged, C2dTypeParametersTagged, C2dVerboseParametersTagged, C2dNoverboseParametersTagged, C2dVersionParametersTagged, C2dVoteParametersTagged, C2dVoteMrfParametersTagged, C2dVoteLabelParametersTagged, C2dVoxelSumParametersTagged, C2dVoxelIntegralParametersTagged, C2dVoxelwiseRegressionParametersTagged, C2dWarpParametersTagged, C2dWarpLabelParametersTagged, C2dWrapParametersTagged, C2dWeightedSumParametersTagged, C2dWeightedSumVoxelwiseParametersTagged]],
     output: str,
     runner: Runner | None = None,
 ) -> C2dOutputs:
@@ -10471,188 +11191,8 @@ def c2d(
 
 __all__ = [
     "C2D_METADATA",
-    "C2dAccumParameters",
-    "C2dAcosParameters",
-    "C2dAddParameters",
-    "C2dAlignLandmarksParameters",
-    "C2dAnisotropicDiffusionParameters",
-    "C2dAntialiasParameters",
-    "C2dAsinParameters",
-    "C2dAtan2Parameters",
-    "C2dBackgroundParameters",
-    "C2dBinarizeParameters",
-    "C2dCannyParameters",
-    "C2dCeilParameters",
-    "C2dCentroidMarkParameters",
-    "C2dCentroidParameters",
-    "C2dClearParameters",
-    "C2dClipParameters",
-    "C2dColorMapParameters",
-    "C2dCompressParameters",
-    "C2dConnectedComponentsParameters",
-    "C2dConvParameters",
-    "C2dCoordinateMapPhysicalParameters",
-    "C2dCoordinateMapVoxelParameters",
-    "C2dCopyTransformParameters",
-    "C2dCosParameters",
-    "C2dCreateParameters",
-    "C2dDicomSeriesListParameters",
-    "C2dDicomSeriesReadParameters",
-    "C2dDilateParameters",
-    "C2dDivideParameters",
-    "C2dDuplicateParameters",
-    "C2dEndaccumParameters",
-    "C2dEndforParameters",
-    "C2dErfParameters",
-    "C2dErodeParameters",
-    "C2dExpParameters",
-    "C2dExportPatchesAugParameters",
-    "C2dExportPatchesParameters",
-    "C2dExtrudeSegParameters",
-    "C2dFftParameters",
-    "C2dFillBackgroundWithNoiseParameters",
-    "C2dFlipParameters",
-    "C2dFloorParameters",
-    "C2dForeachCompParameters",
-    "C2dForeachParameters",
-    "C2dGlmParameters",
-    "C2dGradientParameters",
-    "C2dHelpParameters",
-    "C2dHessianEigenvaluesParameters",
-    "C2dHessianObjectnessParameters",
-    "C2dHistogramMatchParameters",
-    "C2dHolefillParameters",
-    "C2dInfoFullParameters",
-    "C2dInfoParameters",
-    "C2dInsertParameters",
-    "C2dInterpolationParameters",
-    "C2dIterationsParameters",
-    "C2dLabelOverlapParameters",
-    "C2dLabelStatisticsParameters",
-    "C2dLandmarksToSpheresParameters",
-    "C2dLaplacianParameters",
-    "C2dLevelsetAdvectionParameters",
-    "C2dLevelsetCurvatureParameters",
-    "C2dLevelsetParameters",
-    "C2dLog10Parameters",
-    "C2dLogParameters",
-    "C2dManualParameters",
-    "C2dMatchBoundingBoxParameters",
-    "C2dMattesMutualInfoParameters",
-    "C2dMaximumParameters",
-    "C2dMeanFilterParameters",
-    "C2dMeanParameters",
-    "C2dMeanSquareParameters",
-    "C2dMedianFilterParameters",
-    "C2dMergeParameters",
-    "C2dMinimumParameters",
-    "C2dMixtureModelParameters",
-    "C2dMomentsParameters",
-    "C2dMulticomponentSplitParameters",
-    "C2dMultiplyParameters",
-    "C2dMutualInfoParameters",
-    "C2dN4BiasCorrectionParameters",
-    "C2dNoCompressParameters",
-    "C2dNoMulticomponentSplitParameters",
-    "C2dNoiseGaussianParameters",
-    "C2dNoisePoissonParameters",
-    "C2dNoiseSaltPepperParameters",
-    "C2dNoiseSpeckleParameters",
-    "C2dNormalizeLocalWindowParameters",
-    "C2dNormalizedCorrelationParameters",
-    "C2dNormalizedCrossCorrelationParameters",
-    "C2dNormalizedMutualInfoParameters",
-    "C2dNormpdfParameters",
-    "C2dNoroundParameters",
-    "C2dNospmParameters",
-    "C2dNoverboseParameters",
-    "C2dOrient1Parameters",
-    "C2dOrientParameters",
-    "C2dOriginParameters",
-    "C2dOriginVoxelCoordParameters",
-    "C2dOriginVoxelParameters",
-    "C2dOutputMulticomponentParameters",
-    "C2dOutputMultipleMulticomponentParameters",
-    "C2dOutputMultipleParameters",
     "C2dOutputOutputs",
-    "C2dOutputParameters",
     "C2dOutputs",
-    "C2dOverlapParameters",
-    "C2dOverlayLabelImageParameters",
-    "C2dPadParameters",
-    "C2dPadToParameters",
-    "C2dParameters",
-    "C2dPcaParameters",
-    "C2dPercentIntensityModeParameters",
-    "C2dPixelParameters",
-    "C2dPopParameters",
-    "C2dPopasParameters",
-    "C2dProbeParameters",
-    "C2dPushParameters",
-    "C2dRankParameters",
-    "C2dReciprocalParameters",
-    "C2dRegionParameters",
-    "C2dReorderParameters",
-    "C2dReplaceParameters",
-    "C2dResampleIsoParameters",
-    "C2dResampleMmParameters",
-    "C2dResampleParameters",
-    "C2dResliceIdentityParameters",
-    "C2dResliceItkParameters",
-    "C2dResliceMatrixParameters",
-    "C2dRetainLabelsParameters",
-    "C2dRfApplyParameters",
-    "C2dRfParamNousexyzParameters",
-    "C2dRfParamNtreesParameters",
-    "C2dRfParamPatchParameters",
-    "C2dRfParamTreedepthParameters",
-    "C2dRfParamUsexyzParameters",
-    "C2dRfTrainParameters",
-    "C2dRgb2hsvParameters",
-    "C2dRmsParameters",
-    "C2dRoundParameters",
-    "C2dScaleParameters",
-    "C2dSetParameters",
-    "C2dSetSform1Parameters",
-    "C2dSetSformParameters",
-    "C2dSharpenParameters",
-    "C2dShiftParameters",
-    "C2dSignedDistanceTransformParameters",
-    "C2dSinParameters",
-    "C2dSliceAllParameters",
-    "C2dSliceParameters",
-    "C2dSmoothFastParameters",
-    "C2dSmoothParameters",
-    "C2dSpacingParameters",
-    "C2dSplitParameters",
-    "C2dSpmParameters",
-    "C2dSqrtParameters",
-    "C2dStapleParameters",
-    "C2dStretchParameters",
-    "C2dStructureTensorEigenvaluesParameters",
-    "C2dSubtractParameters",
-    "C2dSupervoxelParameters",
-    "C2dSwapdimParameters",
-    "C2dTestImageParameters",
-    "C2dTestProbeParameters",
-    "C2dThresholdParameters",
-    "C2dTileParameters",
-    "C2dTrimParameters",
-    "C2dTrimToSizeParameters",
-    "C2dTypeParameters",
-    "C2dVerboseParameters",
-    "C2dVersionParameters",
-    "C2dVoteLabelParameters",
-    "C2dVoteMrfParameters",
-    "C2dVoteParameters",
-    "C2dVoxelIntegralParameters",
-    "C2dVoxelSumParameters",
-    "C2dVoxelwiseRegressionParameters",
-    "C2dWarpLabelParameters",
-    "C2dWarpParameters",
-    "C2dWeightedSumParameters",
-    "C2dWeightedSumVoxelwiseParameters",
-    "C2dWrapParameters",
     "c2d",
     "c2d__help_params",
     "c2d_accum_params",

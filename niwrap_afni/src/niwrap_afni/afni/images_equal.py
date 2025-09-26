@@ -14,48 +14,22 @@ IMAGES_EQUAL_METADATA = Metadata(
 
 
 ImagesEqualParameters = typing.TypedDict('ImagesEqualParameters', {
-    "@type": typing.Literal["afni.images_equal"],
+    "@type": typing.NotRequired[typing.Literal["afni/images_equal"]],
+    "file_a": InputPathType,
+    "file_b": InputPathType,
+    "all_flag": bool,
+})
+ImagesEqualParametersTagged = typing.TypedDict('ImagesEqualParametersTagged', {
+    "@type": typing.Literal["afni/images_equal"],
     "file_a": InputPathType,
     "file_b": InputPathType,
     "all_flag": bool,
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "afni.images_equal": images_equal_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "afni.images_equal": images_equal_outputs,
-    }.get(t)
-
-
 class ImagesEqualOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `images_equal(...)`.
+    Output object returned when calling `ImagesEqualParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -67,7 +41,7 @@ def images_equal_params(
     file_a: InputPathType,
     file_b: InputPathType,
     all_flag: bool = False,
-) -> ImagesEqualParameters:
+) -> ImagesEqualParametersTagged:
     """
     Build parameters.
     
@@ -80,7 +54,7 @@ def images_equal_params(
         Parameter dictionary
     """
     params = {
-        "@type": "afni.images_equal",
+        "@type": "afni/images_equal",
         "file_a": file_a,
         "file_b": file_b,
         "all_flag": all_flag,
@@ -103,9 +77,9 @@ def images_equal_cargs(
     """
     cargs = []
     cargs.append("images_equal")
-    cargs.append(execution.input_file(params.get("file_a")))
-    cargs.append(execution.input_file(params.get("file_b")))
-    if params.get("all_flag"):
+    cargs.append(execution.input_file(params.get("file_a", None)))
+    cargs.append(execution.input_file(params.get("file_b", None)))
+    if params.get("all_flag", False):
         cargs.append("-all")
     return cargs
 
@@ -193,7 +167,6 @@ def images_equal(
 __all__ = [
     "IMAGES_EQUAL_METADATA",
     "ImagesEqualOutputs",
-    "ImagesEqualParameters",
     "images_equal",
     "images_equal_execute",
     "images_equal_params",

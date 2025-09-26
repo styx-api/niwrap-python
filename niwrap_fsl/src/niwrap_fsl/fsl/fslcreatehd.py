@@ -14,7 +14,24 @@ FSLCREATEHD_METADATA = Metadata(
 
 
 FslcreatehdParameters = typing.TypedDict('FslcreatehdParameters', {
-    "@type": typing.Literal["fsl.fslcreatehd"],
+    "@type": typing.NotRequired[typing.Literal["fsl/fslcreatehd"]],
+    "xsize": float,
+    "ysize": float,
+    "zsize": float,
+    "tsize": float,
+    "xvoxsize": float,
+    "yvoxsize": float,
+    "zvoxsize": float,
+    "tr": float,
+    "xorigin": float,
+    "yorigin": float,
+    "zorigin": float,
+    "datatype": float,
+    "headername": str,
+    "nifti_xml_file": typing.NotRequired[InputPathType | None],
+})
+FslcreatehdParametersTagged = typing.TypedDict('FslcreatehdParametersTagged', {
+    "@type": typing.Literal["fsl/fslcreatehd"],
     "xsize": float,
     "ysize": float,
     "zsize": float,
@@ -32,41 +49,9 @@ FslcreatehdParameters = typing.TypedDict('FslcreatehdParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "fsl.fslcreatehd": fslcreatehd_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "fsl.fslcreatehd": fslcreatehd_outputs,
-    }.get(t)
-
-
 class FslcreatehdOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `fslcreatehd(...)`.
+    Output object returned when calling `FslcreatehdParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -89,7 +74,7 @@ def fslcreatehd_params(
     datatype: float,
     headername: str,
     nifti_xml_file: InputPathType | None = None,
-) -> FslcreatehdParameters:
+) -> FslcreatehdParametersTagged:
     """
     Build parameters.
     
@@ -114,7 +99,7 @@ def fslcreatehd_params(
         Parameter dictionary
     """
     params = {
-        "@type": "fsl.fslcreatehd",
+        "@type": "fsl/fslcreatehd",
         "xsize": xsize,
         "ysize": ysize,
         "zsize": zsize,
@@ -149,21 +134,21 @@ def fslcreatehd_cargs(
     """
     cargs = []
     cargs.append("fslcreatehd")
-    cargs.append(str(params.get("xsize")))
-    cargs.append(str(params.get("ysize")))
-    cargs.append(str(params.get("zsize")))
-    cargs.append(str(params.get("tsize")))
-    cargs.append(str(params.get("xvoxsize")))
-    cargs.append(str(params.get("yvoxsize")))
-    cargs.append(str(params.get("zvoxsize")))
-    cargs.append(str(params.get("tr")))
-    cargs.append(str(params.get("xorigin")))
-    cargs.append(str(params.get("yorigin")))
-    cargs.append(str(params.get("zorigin")))
-    cargs.append(str(params.get("datatype")))
-    cargs.append(params.get("headername"))
-    if params.get("nifti_xml_file") is not None:
-        cargs.append(execution.input_file(params.get("nifti_xml_file")))
+    cargs.append(str(params.get("xsize", None)))
+    cargs.append(str(params.get("ysize", None)))
+    cargs.append(str(params.get("zsize", None)))
+    cargs.append(str(params.get("tsize", None)))
+    cargs.append(str(params.get("xvoxsize", None)))
+    cargs.append(str(params.get("yvoxsize", None)))
+    cargs.append(str(params.get("zvoxsize", None)))
+    cargs.append(str(params.get("tr", None)))
+    cargs.append(str(params.get("xorigin", None)))
+    cargs.append(str(params.get("yorigin", None)))
+    cargs.append(str(params.get("zorigin", None)))
+    cargs.append(str(params.get("datatype", None)))
+    cargs.append(params.get("headername", None))
+    if params.get("nifti_xml_file", None) is not None:
+        cargs.append(execution.input_file(params.get("nifti_xml_file", None)))
     return cargs
 
 
@@ -182,7 +167,7 @@ def fslcreatehd_outputs(
     """
     ret = FslcreatehdOutputs(
         root=execution.output_file("."),
-        out_headerfile=execution.output_file(params.get("headername") + ".nii.gz"),
+        out_headerfile=execution.output_file(params.get("headername", None) + ".nii.gz"),
     )
     return ret
 
@@ -284,7 +269,6 @@ def fslcreatehd(
 __all__ = [
     "FSLCREATEHD_METADATA",
     "FslcreatehdOutputs",
-    "FslcreatehdParameters",
     "fslcreatehd",
     "fslcreatehd_execute",
     "fslcreatehd_params",

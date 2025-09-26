@@ -14,7 +14,17 @@ V__SUMA_ACKNOWLEDGE_METADATA = Metadata(
 
 
 VSumaAcknowledgeParameters = typing.TypedDict('VSumaAcknowledgeParameters', {
-    "@type": typing.Literal["afni.@suma_acknowledge"],
+    "@type": typing.NotRequired[typing.Literal["afni/@suma_acknowledge"]],
+    "input_file": InputPathType,
+    "surface_file": InputPathType,
+    "output_prefix": str,
+    "center_flag": bool,
+    "subsurface_file": typing.NotRequired[str | None],
+    "scale_factor": typing.NotRequired[float | None],
+    "reduce_factor": typing.NotRequired[float | None],
+})
+VSumaAcknowledgeParametersTagged = typing.TypedDict('VSumaAcknowledgeParametersTagged', {
+    "@type": typing.Literal["afni/@suma_acknowledge"],
     "input_file": InputPathType,
     "surface_file": InputPathType,
     "output_prefix": str,
@@ -25,41 +35,9 @@ VSumaAcknowledgeParameters = typing.TypedDict('VSumaAcknowledgeParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "afni.@suma_acknowledge": v__suma_acknowledge_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "afni.@suma_acknowledge": v__suma_acknowledge_outputs,
-    }.get(t)
-
-
 class VSumaAcknowledgeOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `v__suma_acknowledge(...)`.
+    Output object returned when calling `VSumaAcknowledgeParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -75,7 +53,7 @@ def v__suma_acknowledge_params(
     subsurface_file: str | None = None,
     scale_factor: float | None = None,
     reduce_factor: float | None = None,
-) -> VSumaAcknowledgeParameters:
+) -> VSumaAcknowledgeParametersTagged:
     """
     Build parameters.
     
@@ -95,7 +73,7 @@ def v__suma_acknowledge_params(
         Parameter dictionary
     """
     params = {
-        "@type": "afni.@suma_acknowledge",
+        "@type": "afni/@suma_acknowledge",
         "input_file": input_file,
         "surface_file": surface_file,
         "output_prefix": output_prefix,
@@ -127,32 +105,32 @@ def v__suma_acknowledge_cargs(
     cargs.append("@suma_acknowledge")
     cargs.extend([
         "-input",
-        execution.input_file(params.get("input_file"))
+        execution.input_file(params.get("input_file", None))
     ])
     cargs.extend([
         "-surf",
-        execution.input_file(params.get("surface_file"))
+        execution.input_file(params.get("surface_file", None))
     ])
     cargs.extend([
         "-prefix",
-        params.get("output_prefix")
+        params.get("output_prefix", None)
     ])
-    if params.get("center_flag"):
+    if params.get("center_flag", False):
         cargs.append("-center")
-    if params.get("subsurface_file") is not None:
+    if params.get("subsurface_file", None) is not None:
         cargs.extend([
             "-subsurf",
-            params.get("subsurface_file")
+            params.get("subsurface_file", None)
         ])
-    if params.get("scale_factor") is not None:
+    if params.get("scale_factor", None) is not None:
         cargs.extend([
             "-scalefactor",
-            str(params.get("scale_factor"))
+            str(params.get("scale_factor", None))
         ])
-    if params.get("reduce_factor") is not None:
+    if params.get("reduce_factor", None) is not None:
         cargs.extend([
             "-reducefactor",
-            str(params.get("reduce_factor"))
+            str(params.get("reduce_factor", None))
         ])
     return cargs
 
@@ -172,7 +150,7 @@ def v__suma_acknowledge_outputs(
     """
     ret = VSumaAcknowledgeOutputs(
         root=execution.output_file("."),
-        output_file=execution.output_file(params.get("output_prefix") + "_graph_dataset"),
+        output_file=execution.output_file(params.get("output_prefix", None) + "_graph_dataset"),
     )
     return ret
 
@@ -256,7 +234,6 @@ def v__suma_acknowledge(
 
 __all__ = [
     "VSumaAcknowledgeOutputs",
-    "VSumaAcknowledgeParameters",
     "V__SUMA_ACKNOWLEDGE_METADATA",
     "v__suma_acknowledge",
     "v__suma_acknowledge_execute",

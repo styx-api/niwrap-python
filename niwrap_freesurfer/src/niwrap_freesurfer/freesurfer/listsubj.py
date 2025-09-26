@@ -14,7 +14,20 @@ LISTSUBJ_METADATA = Metadata(
 
 
 ListsubjParameters = typing.TypedDict('ListsubjParameters', {
-    "@type": typing.Literal["freesurfer.listsubj"],
+    "@type": typing.NotRequired[typing.Literal["freesurfer/listsubj"]],
+    "subject_dir": str,
+    "cross": bool,
+    "base": bool,
+    "long": bool,
+    "done": bool,
+    "error": bool,
+    "running": bool,
+    "full_path": bool,
+    "count": bool,
+    "help": bool,
+})
+ListsubjParametersTagged = typing.TypedDict('ListsubjParametersTagged', {
+    "@type": typing.Literal["freesurfer/listsubj"],
     "subject_dir": str,
     "cross": bool,
     "base": bool,
@@ -28,40 +41,9 @@ ListsubjParameters = typing.TypedDict('ListsubjParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "freesurfer.listsubj": listsubj_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-    }.get(t)
-
-
 class ListsubjOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `listsubj(...)`.
+    Output object returned when calling `ListsubjParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -78,7 +60,7 @@ def listsubj_params(
     full_path: bool = False,
     count: bool = False,
     help_: bool = False,
-) -> ListsubjParameters:
+) -> ListsubjParametersTagged:
     """
     Build parameters.
     
@@ -97,7 +79,7 @@ def listsubj_params(
         Parameter dictionary
     """
     params = {
-        "@type": "freesurfer.listsubj",
+        "@type": "freesurfer/listsubj",
         "subject_dir": subject_dir,
         "cross": cross,
         "base": base,
@@ -127,24 +109,24 @@ def listsubj_cargs(
     """
     cargs = []
     cargs.append("listsubj")
-    cargs.append(params.get("subject_dir"))
-    if params.get("cross"):
+    cargs.append(params.get("subject_dir", None))
+    if params.get("cross", False):
         cargs.append("-c")
-    if params.get("base"):
+    if params.get("base", False):
         cargs.append("-b")
-    if params.get("long"):
+    if params.get("long", False):
         cargs.append("-l")
-    if params.get("done"):
+    if params.get("done", False):
         cargs.append("-d")
-    if params.get("error"):
+    if params.get("error", False):
         cargs.append("-e")
-    if params.get("running"):
+    if params.get("running", False):
         cargs.append("-r")
-    if params.get("full_path"):
+    if params.get("full_path", False):
         cargs.append("-f")
-    if params.get("count"):
+    if params.get("count", False):
         cargs.append("-n")
-    if params.get("help"):
+    if params.get("help", False):
         cargs.append("-h")
     return cargs
 
@@ -251,7 +233,6 @@ def listsubj(
 __all__ = [
     "LISTSUBJ_METADATA",
     "ListsubjOutputs",
-    "ListsubjParameters",
     "listsubj",
     "listsubj_execute",
     "listsubj_params",

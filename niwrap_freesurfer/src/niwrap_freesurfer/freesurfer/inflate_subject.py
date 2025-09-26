@@ -14,46 +14,18 @@ INFLATE_SUBJECT_METADATA = Metadata(
 
 
 InflateSubjectParameters = typing.TypedDict('InflateSubjectParameters', {
-    "@type": typing.Literal["freesurfer.inflate_subject"],
+    "@type": typing.NotRequired[typing.Literal["freesurfer/inflate_subject"]],
+    "args": typing.NotRequired[str | None],
+})
+InflateSubjectParametersTagged = typing.TypedDict('InflateSubjectParametersTagged', {
+    "@type": typing.Literal["freesurfer/inflate_subject"],
     "args": typing.NotRequired[str | None],
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "freesurfer.inflate_subject": inflate_subject_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "freesurfer.inflate_subject": inflate_subject_outputs,
-    }.get(t)
-
-
 class InflateSubjectOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `inflate_subject(...)`.
+    Output object returned when calling `InflateSubjectParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -63,7 +35,7 @@ class InflateSubjectOutputs(typing.NamedTuple):
 
 def inflate_subject_params(
     args: str | None = None,
-) -> InflateSubjectParameters:
+) -> InflateSubjectParametersTagged:
     """
     Build parameters.
     
@@ -73,7 +45,7 @@ def inflate_subject_params(
         Parameter dictionary
     """
     params = {
-        "@type": "freesurfer.inflate_subject",
+        "@type": "freesurfer/inflate_subject",
     }
     if args is not None:
         params["args"] = args
@@ -95,8 +67,8 @@ def inflate_subject_cargs(
     """
     cargs = []
     cargs.append("inflate_subject")
-    if params.get("args") is not None:
-        cargs.append(params.get("args"))
+    if params.get("args", None) is not None:
+        cargs.append(params.get("args", None))
     return cargs
 
 
@@ -115,7 +87,7 @@ def inflate_subject_outputs(
     """
     ret = InflateSubjectOutputs(
         root=execution.output_file("."),
-        output_file=execution.output_file(params.get("args") + "_output.txt") if (params.get("args") is not None) else None,
+        output_file=execution.output_file(params.get("args", None) + "_output.txt") if (params.get("args") is not None) else None,
     )
     return ret
 
@@ -176,7 +148,6 @@ def inflate_subject(
 __all__ = [
     "INFLATE_SUBJECT_METADATA",
     "InflateSubjectOutputs",
-    "InflateSubjectParameters",
     "inflate_subject",
     "inflate_subject_execute",
     "inflate_subject_params",

@@ -14,47 +14,20 @@ MRI_COMPUTE_BIAS_METADATA = Metadata(
 
 
 MriComputeBiasParameters = typing.TypedDict('MriComputeBiasParameters', {
-    "@type": typing.Literal["freesurfer.mri_compute_bias"],
+    "@type": typing.NotRequired[typing.Literal["freesurfer/mri_compute_bias"]],
+    "subjects": list[str],
+    "output_volume": str,
+})
+MriComputeBiasParametersTagged = typing.TypedDict('MriComputeBiasParametersTagged', {
+    "@type": typing.Literal["freesurfer/mri_compute_bias"],
     "subjects": list[str],
     "output_volume": str,
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "freesurfer.mri_compute_bias": mri_compute_bias_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "freesurfer.mri_compute_bias": mri_compute_bias_outputs,
-    }.get(t)
-
-
 class MriComputeBiasOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `mri_compute_bias(...)`.
+    Output object returned when calling `MriComputeBiasParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -65,7 +38,7 @@ class MriComputeBiasOutputs(typing.NamedTuple):
 def mri_compute_bias_params(
     subjects: list[str],
     output_volume: str,
-) -> MriComputeBiasParameters:
+) -> MriComputeBiasParametersTagged:
     """
     Build parameters.
     
@@ -76,7 +49,7 @@ def mri_compute_bias_params(
         Parameter dictionary
     """
     params = {
-        "@type": "freesurfer.mri_compute_bias",
+        "@type": "freesurfer/mri_compute_bias",
         "subjects": subjects,
         "output_volume": output_volume,
     }
@@ -98,8 +71,8 @@ def mri_compute_bias_cargs(
     """
     cargs = []
     cargs.append("mri_compute_bias")
-    cargs.extend(params.get("subjects"))
-    cargs.append(params.get("output_volume"))
+    cargs.extend(params.get("subjects", None))
+    cargs.append(params.get("output_volume", None))
     return cargs
 
 
@@ -118,7 +91,7 @@ def mri_compute_bias_outputs(
     """
     ret = MriComputeBiasOutputs(
         root=execution.output_file("."),
-        output_file=execution.output_file(params.get("output_volume")),
+        output_file=execution.output_file(params.get("output_volume", None)),
     )
     return ret
 
@@ -184,7 +157,6 @@ def mri_compute_bias(
 __all__ = [
     "MRI_COMPUTE_BIAS_METADATA",
     "MriComputeBiasOutputs",
-    "MriComputeBiasParameters",
     "mri_compute_bias",
     "mri_compute_bias_execute",
     "mri_compute_bias_params",

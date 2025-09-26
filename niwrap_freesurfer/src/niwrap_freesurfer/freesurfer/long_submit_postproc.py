@@ -14,7 +14,18 @@ LONG_SUBMIT_POSTPROC_METADATA = Metadata(
 
 
 LongSubmitPostprocParameters = typing.TypedDict('LongSubmitPostprocParameters', {
-    "@type": typing.Literal["freesurfer.long_submit_postproc"],
+    "@type": typing.NotRequired[typing.Literal["freesurfer/long_submit_postproc"]],
+    "qdec": InputPathType,
+    "prog": str,
+    "flags": typing.NotRequired[str | None],
+    "dir": typing.NotRequired[str | None],
+    "simulate": bool,
+    "pause": typing.NotRequired[float | None],
+    "max": typing.NotRequired[float | None],
+    "queue": typing.NotRequired[str | None],
+})
+LongSubmitPostprocParametersTagged = typing.TypedDict('LongSubmitPostprocParametersTagged', {
+    "@type": typing.Literal["freesurfer/long_submit_postproc"],
     "qdec": InputPathType,
     "prog": str,
     "flags": typing.NotRequired[str | None],
@@ -26,40 +37,9 @@ LongSubmitPostprocParameters = typing.TypedDict('LongSubmitPostprocParameters', 
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "freesurfer.long_submit_postproc": long_submit_postproc_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-    }.get(t)
-
-
 class LongSubmitPostprocOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `long_submit_postproc(...)`.
+    Output object returned when calling `LongSubmitPostprocParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -74,7 +54,7 @@ def long_submit_postproc_params(
     pause: float | None = None,
     max_: float | None = None,
     queue_: str | None = None,
-) -> LongSubmitPostprocParameters:
+) -> LongSubmitPostprocParametersTagged:
     """
     Build parameters.
     
@@ -91,7 +71,7 @@ def long_submit_postproc_params(
         Parameter dictionary
     """
     params = {
-        "@type": "freesurfer.long_submit_postproc",
+        "@type": "freesurfer/long_submit_postproc",
         "qdec": qdec,
         "prog": prog,
         "simulate": simulate,
@@ -126,38 +106,38 @@ def long_submit_postproc_cargs(
     cargs.append("long_submit_postproc")
     cargs.extend([
         "--qdec",
-        execution.input_file(params.get("qdec"))
+        execution.input_file(params.get("qdec", None))
     ])
     cargs.extend([
         "--prog",
-        params.get("prog")
+        params.get("prog", None)
     ])
-    if params.get("flags") is not None:
+    if params.get("flags", None) is not None:
         cargs.extend([
             "--flags",
-            params.get("flags")
+            params.get("flags", None)
         ])
-    if params.get("dir") is not None:
+    if params.get("dir", None) is not None:
         cargs.extend([
             "--dir",
-            params.get("dir")
+            params.get("dir", None)
         ])
-    if params.get("simulate"):
+    if params.get("simulate", False):
         cargs.append("--simulate")
-    if params.get("pause") is not None:
+    if params.get("pause", None) is not None:
         cargs.extend([
             "--pause",
-            str(params.get("pause"))
+            str(params.get("pause", None))
         ])
-    if params.get("max") is not None:
+    if params.get("max", None) is not None:
         cargs.extend([
             "--max",
-            str(params.get("max"))
+            str(params.get("max", None))
         ])
-    if params.get("queue") is not None:
+    if params.get("queue", None) is not None:
         cargs.extend([
             "--queue",
-            params.get("queue")
+            params.get("queue", None)
         ])
     return cargs
 
@@ -260,7 +240,6 @@ def long_submit_postproc(
 __all__ = [
     "LONG_SUBMIT_POSTPROC_METADATA",
     "LongSubmitPostprocOutputs",
-    "LongSubmitPostprocParameters",
     "long_submit_postproc",
     "long_submit_postproc_execute",
     "long_submit_postproc_params",

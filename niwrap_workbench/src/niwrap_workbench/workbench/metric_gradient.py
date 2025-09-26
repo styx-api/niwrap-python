@@ -14,21 +14,43 @@ METRIC_GRADIENT_METADATA = Metadata(
 
 
 MetricGradientPresmoothParameters = typing.TypedDict('MetricGradientPresmoothParameters', {
-    "@type": typing.Literal["workbench.metric-gradient.presmooth"],
+    "@type": typing.NotRequired[typing.Literal["presmooth"]],
+    "kernel": float,
+    "opt_fwhm": bool,
+})
+MetricGradientPresmoothParametersTagged = typing.TypedDict('MetricGradientPresmoothParametersTagged', {
+    "@type": typing.Literal["presmooth"],
     "kernel": float,
     "opt_fwhm": bool,
 })
 
 
 MetricGradientRoiParameters = typing.TypedDict('MetricGradientRoiParameters', {
-    "@type": typing.Literal["workbench.metric-gradient.roi"],
+    "@type": typing.NotRequired[typing.Literal["roi"]],
+    "roi_metric": InputPathType,
+    "opt_match_columns": bool,
+})
+MetricGradientRoiParametersTagged = typing.TypedDict('MetricGradientRoiParametersTagged', {
+    "@type": typing.Literal["roi"],
     "roi_metric": InputPathType,
     "opt_match_columns": bool,
 })
 
 
 MetricGradientParameters = typing.TypedDict('MetricGradientParameters', {
-    "@type": typing.Literal["workbench.metric-gradient"],
+    "@type": typing.NotRequired[typing.Literal["workbench/metric-gradient"]],
+    "surface": InputPathType,
+    "metric_in": InputPathType,
+    "metric_out": str,
+    "presmooth": typing.NotRequired[MetricGradientPresmoothParameters | None],
+    "roi": typing.NotRequired[MetricGradientRoiParameters | None],
+    "opt_vectors_vector_metric_out": typing.NotRequired[str | None],
+    "opt_column_column": typing.NotRequired[str | None],
+    "opt_corrected_areas_area_metric": typing.NotRequired[InputPathType | None],
+    "opt_average_normals": bool,
+})
+MetricGradientParametersTagged = typing.TypedDict('MetricGradientParametersTagged', {
+    "@type": typing.Literal["workbench/metric-gradient"],
     "surface": InputPathType,
     "metric_in": InputPathType,
     "metric_out": str,
@@ -41,44 +63,10 @@ MetricGradientParameters = typing.TypedDict('MetricGradientParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "workbench.metric-gradient": metric_gradient_cargs,
-        "workbench.metric-gradient.presmooth": metric_gradient_presmooth_cargs,
-        "workbench.metric-gradient.roi": metric_gradient_roi_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "workbench.metric-gradient": metric_gradient_outputs,
-    }.get(t)
-
-
 def metric_gradient_presmooth_params(
     kernel: float,
     opt_fwhm: bool = False,
-) -> MetricGradientPresmoothParameters:
+) -> MetricGradientPresmoothParametersTagged:
     """
     Build parameters.
     
@@ -90,7 +78,7 @@ def metric_gradient_presmooth_params(
         Parameter dictionary
     """
     params = {
-        "@type": "workbench.metric-gradient.presmooth",
+        "@type": "presmooth",
         "kernel": kernel,
         "opt_fwhm": opt_fwhm,
     }
@@ -112,8 +100,8 @@ def metric_gradient_presmooth_cargs(
     """
     cargs = []
     cargs.append("-presmooth")
-    cargs.append(str(params.get("kernel")))
-    if params.get("opt_fwhm"):
+    cargs.append(str(params.get("kernel", None)))
+    if params.get("opt_fwhm", False):
         cargs.append("-fwhm")
     return cargs
 
@@ -121,7 +109,7 @@ def metric_gradient_presmooth_cargs(
 def metric_gradient_roi_params(
     roi_metric: InputPathType,
     opt_match_columns: bool = False,
-) -> MetricGradientRoiParameters:
+) -> MetricGradientRoiParametersTagged:
     """
     Build parameters.
     
@@ -133,7 +121,7 @@ def metric_gradient_roi_params(
         Parameter dictionary
     """
     params = {
-        "@type": "workbench.metric-gradient.roi",
+        "@type": "roi",
         "roi_metric": roi_metric,
         "opt_match_columns": opt_match_columns,
     }
@@ -155,15 +143,15 @@ def metric_gradient_roi_cargs(
     """
     cargs = []
     cargs.append("-roi")
-    cargs.append(execution.input_file(params.get("roi_metric")))
-    if params.get("opt_match_columns"):
+    cargs.append(execution.input_file(params.get("roi_metric", None)))
+    if params.get("opt_match_columns", False):
         cargs.append("-match-columns")
     return cargs
 
 
 class MetricGradientOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `metric_gradient(...)`.
+    Output object returned when calling `MetricGradientParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -183,7 +171,7 @@ def metric_gradient_params(
     opt_column_column: str | None = None,
     opt_corrected_areas_area_metric: InputPathType | None = None,
     opt_average_normals: bool = False,
-) -> MetricGradientParameters:
+) -> MetricGradientParametersTagged:
     """
     Build parameters.
     
@@ -206,7 +194,7 @@ def metric_gradient_params(
         Parameter dictionary
     """
     params = {
-        "@type": "workbench.metric-gradient",
+        "@type": "workbench/metric-gradient",
         "surface": surface,
         "metric_in": metric_in,
         "metric_out": metric_out,
@@ -241,29 +229,29 @@ def metric_gradient_cargs(
     cargs = []
     cargs.append("wb_command")
     cargs.append("-metric-gradient")
-    cargs.append(execution.input_file(params.get("surface")))
-    cargs.append(execution.input_file(params.get("metric_in")))
-    cargs.append(params.get("metric_out"))
-    if params.get("presmooth") is not None:
-        cargs.extend(dyn_cargs(params.get("presmooth")["@type"])(params.get("presmooth"), execution))
-    if params.get("roi") is not None:
-        cargs.extend(dyn_cargs(params.get("roi")["@type"])(params.get("roi"), execution))
-    if params.get("opt_vectors_vector_metric_out") is not None:
+    cargs.append(execution.input_file(params.get("surface", None)))
+    cargs.append(execution.input_file(params.get("metric_in", None)))
+    cargs.append(params.get("metric_out", None))
+    if params.get("presmooth", None) is not None:
+        cargs.extend(metric_gradient_presmooth_cargs(params.get("presmooth", None), execution))
+    if params.get("roi", None) is not None:
+        cargs.extend(metric_gradient_roi_cargs(params.get("roi", None), execution))
+    if params.get("opt_vectors_vector_metric_out", None) is not None:
         cargs.extend([
             "-vectors",
-            params.get("opt_vectors_vector_metric_out")
+            params.get("opt_vectors_vector_metric_out", None)
         ])
-    if params.get("opt_column_column") is not None:
+    if params.get("opt_column_column", None) is not None:
         cargs.extend([
             "-column",
-            params.get("opt_column_column")
+            params.get("opt_column_column", None)
         ])
-    if params.get("opt_corrected_areas_area_metric") is not None:
+    if params.get("opt_corrected_areas_area_metric", None) is not None:
         cargs.extend([
             "-corrected-areas",
-            execution.input_file(params.get("opt_corrected_areas_area_metric"))
+            execution.input_file(params.get("opt_corrected_areas_area_metric", None))
         ])
-    if params.get("opt_average_normals"):
+    if params.get("opt_average_normals", False):
         cargs.append("-average-normals")
     return cargs
 
@@ -283,8 +271,8 @@ def metric_gradient_outputs(
     """
     ret = MetricGradientOutputs(
         root=execution.output_file("."),
-        metric_out=execution.output_file(params.get("metric_out")),
-        opt_vectors_vector_metric_out=execution.output_file(params.get("opt_vectors_vector_metric_out")) if (params.get("opt_vectors_vector_metric_out") is not None) else None,
+        metric_out=execution.output_file(params.get("metric_out", None)),
+        opt_vectors_vector_metric_out=execution.output_file(params.get("opt_vectors_vector_metric_out", None)) if (params.get("opt_vectors_vector_metric_out") is not None) else None,
     )
     return ret
 
@@ -430,9 +418,6 @@ def metric_gradient(
 __all__ = [
     "METRIC_GRADIENT_METADATA",
     "MetricGradientOutputs",
-    "MetricGradientParameters",
-    "MetricGradientPresmoothParameters",
-    "MetricGradientRoiParameters",
     "metric_gradient",
     "metric_gradient_execute",
     "metric_gradient_params",

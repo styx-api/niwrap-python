@@ -14,7 +14,16 @@ SYSTEMNOISE_METADATA = Metadata(
 
 
 SystemnoiseParameters = typing.TypedDict('SystemnoiseParameters', {
-    "@type": typing.Literal["fsl.systemnoise"],
+    "@type": typing.NotRequired[typing.Literal["fsl/systemnoise"]],
+    "input_signal": InputPathType,
+    "output_signal": str,
+    "noise_standard_deviation": float,
+    "seed": typing.NotRequired[float | None],
+    "verbose_flag": bool,
+    "help_flag": bool,
+})
+SystemnoiseParametersTagged = typing.TypedDict('SystemnoiseParametersTagged', {
+    "@type": typing.Literal["fsl/systemnoise"],
     "input_signal": InputPathType,
     "output_signal": str,
     "noise_standard_deviation": float,
@@ -24,41 +33,9 @@ SystemnoiseParameters = typing.TypedDict('SystemnoiseParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "fsl.systemnoise": systemnoise_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "fsl.systemnoise": systemnoise_outputs,
-    }.get(t)
-
-
 class SystemnoiseOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `systemnoise(...)`.
+    Output object returned when calling `SystemnoiseParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -73,7 +50,7 @@ def systemnoise_params(
     seed: float | None = None,
     verbose_flag: bool = False,
     help_flag: bool = False,
-) -> SystemnoiseParameters:
+) -> SystemnoiseParametersTagged:
     """
     Build parameters.
     
@@ -89,7 +66,7 @@ def systemnoise_params(
         Parameter dictionary
     """
     params = {
-        "@type": "fsl.systemnoise",
+        "@type": "fsl/systemnoise",
         "input_signal": input_signal,
         "output_signal": output_signal,
         "noise_standard_deviation": noise_standard_deviation,
@@ -118,24 +95,24 @@ def systemnoise_cargs(
     cargs.append("systemnoise")
     cargs.extend([
         "--in",
-        execution.input_file(params.get("input_signal"))
+        execution.input_file(params.get("input_signal", None))
     ])
     cargs.extend([
         "--out",
-        params.get("output_signal")
+        params.get("output_signal", None)
     ])
     cargs.extend([
         "--sigma",
-        str(params.get("noise_standard_deviation"))
+        str(params.get("noise_standard_deviation", None))
     ])
-    if params.get("seed") is not None:
+    if params.get("seed", None) is not None:
         cargs.extend([
             "--seed",
-            str(params.get("seed"))
+            str(params.get("seed", None))
         ])
-    if params.get("verbose_flag"):
+    if params.get("verbose_flag", False):
         cargs.append("--verbose")
-    if params.get("help_flag"):
+    if params.get("help_flag", False):
         cargs.append("--help")
     return cargs
 
@@ -155,7 +132,7 @@ def systemnoise_outputs(
     """
     ret = SystemnoiseOutputs(
         root=execution.output_file("."),
-        output_signal_file=execution.output_file(params.get("output_signal")),
+        output_signal_file=execution.output_file(params.get("output_signal", None)),
     )
     return ret
 
@@ -232,7 +209,6 @@ def systemnoise(
 __all__ = [
     "SYSTEMNOISE_METADATA",
     "SystemnoiseOutputs",
-    "SystemnoiseParameters",
     "systemnoise",
     "systemnoise_execute",
     "systemnoise_params",

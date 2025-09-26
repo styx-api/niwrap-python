@@ -14,7 +14,14 @@ V__SNAPSHOT_VOLREG_METADATA = Metadata(
 
 
 VSnapshotVolregParameters = typing.TypedDict('VSnapshotVolregParameters', {
-    "@type": typing.Literal["afni.@snapshot_volreg"],
+    "@type": typing.NotRequired[typing.Literal["afni/@snapshot_volreg"]],
+    "anatdataset": InputPathType,
+    "epidataset": InputPathType,
+    "jname": typing.NotRequired[str | None],
+    "xdisplay": typing.NotRequired[str | None],
+})
+VSnapshotVolregParametersTagged = typing.TypedDict('VSnapshotVolregParametersTagged', {
+    "@type": typing.Literal["afni/@snapshot_volreg"],
     "anatdataset": InputPathType,
     "epidataset": InputPathType,
     "jname": typing.NotRequired[str | None],
@@ -22,41 +29,9 @@ VSnapshotVolregParameters = typing.TypedDict('VSnapshotVolregParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "afni.@snapshot_volreg": v__snapshot_volreg_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "afni.@snapshot_volreg": v__snapshot_volreg_outputs,
-    }.get(t)
-
-
 class VSnapshotVolregOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `v__snapshot_volreg(...)`.
+    Output object returned when calling `VSnapshotVolregParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -70,7 +45,7 @@ def v__snapshot_volreg_params(
     epidataset: InputPathType,
     jname: str | None = None,
     xdisplay: str | None = None,
-) -> VSnapshotVolregParameters:
+) -> VSnapshotVolregParametersTagged:
     """
     Build parameters.
     
@@ -83,7 +58,7 @@ def v__snapshot_volreg_params(
         Parameter dictionary
     """
     params = {
-        "@type": "afni.@snapshot_volreg",
+        "@type": "afni/@snapshot_volreg",
         "anatdataset": anatdataset,
         "epidataset": epidataset,
     }
@@ -109,12 +84,12 @@ def v__snapshot_volreg_cargs(
     """
     cargs = []
     cargs.append("@snapshot_volreg")
-    cargs.append(execution.input_file(params.get("anatdataset")))
-    cargs.append(execution.input_file(params.get("epidataset")))
-    if params.get("jname") is not None:
-        cargs.append(params.get("jname"))
-    if params.get("xdisplay") is not None:
-        cargs.append(params.get("xdisplay"))
+    cargs.append(execution.input_file(params.get("anatdataset", None)))
+    cargs.append(execution.input_file(params.get("epidataset", None)))
+    if params.get("jname", None) is not None:
+        cargs.append(params.get("jname", None))
+    if params.get("xdisplay", None) is not None:
+        cargs.append(params.get("xdisplay", None))
     return cargs
 
 
@@ -133,7 +108,7 @@ def v__snapshot_volreg_outputs(
     """
     ret = VSnapshotVolregOutputs(
         root=execution.output_file("."),
-        output_jpeg=execution.output_file(params.get("jname") + ".jpg") if (params.get("jname") is not None) else None,
+        output_jpeg=execution.output_file(params.get("jname", None) + ".jpg") if (params.get("jname") is not None) else None,
     )
     return ret
 
@@ -204,7 +179,6 @@ def v__snapshot_volreg(
 
 __all__ = [
     "VSnapshotVolregOutputs",
-    "VSnapshotVolregParameters",
     "V__SNAPSHOT_VOLREG_METADATA",
     "v__snapshot_volreg",
     "v__snapshot_volreg_execute",

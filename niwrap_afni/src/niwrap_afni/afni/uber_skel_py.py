@@ -14,7 +14,21 @@ UBER_SKEL_PY_METADATA = Metadata(
 
 
 UberSkelPyParameters = typing.TypedDict('UberSkelPyParameters', {
-    "@type": typing.Literal["afni.uber_skel.py"],
+    "@type": typing.NotRequired[typing.Literal["afni/uber_skel.py"]],
+    "qt_options": typing.NotRequired[str | None],
+    "no_gui_flag": bool,
+    "print_script": bool,
+    "save_script": typing.NotRequired[str | None],
+    "user_var": typing.NotRequired[list[str] | None],
+    "help_howto_program": bool,
+    "help": bool,
+    "help_gui": bool,
+    "history": bool,
+    "show_valid_opts": bool,
+    "version": bool,
+})
+UberSkelPyParametersTagged = typing.TypedDict('UberSkelPyParametersTagged', {
+    "@type": typing.Literal["afni/uber_skel.py"],
     "qt_options": typing.NotRequired[str | None],
     "no_gui_flag": bool,
     "print_script": bool,
@@ -29,40 +43,9 @@ UberSkelPyParameters = typing.TypedDict('UberSkelPyParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "afni.uber_skel.py": uber_skel_py_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-    }.get(t)
-
-
 class UberSkelPyOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `uber_skel_py(...)`.
+    Output object returned when calling `UberSkelPyParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -80,7 +63,7 @@ def uber_skel_py_params(
     history: bool = False,
     show_valid_opts: bool = False,
     version: bool = False,
-) -> UberSkelPyParameters:
+) -> UberSkelPyParametersTagged:
     """
     Build parameters.
     
@@ -100,7 +83,7 @@ def uber_skel_py_params(
         Parameter dictionary
     """
     params = {
-        "@type": "afni.uber_skel.py",
+        "@type": "afni/uber_skel.py",
         "no_gui_flag": no_gui_flag,
         "print_script": print_script,
         "help_howto_program": help_howto_program,
@@ -134,36 +117,36 @@ def uber_skel_py_cargs(
     """
     cargs = []
     cargs.append("uber_skel.py")
-    if params.get("qt_options") is not None:
+    if params.get("qt_options", None) is not None:
         cargs.extend([
             "-qt_opts",
-            params.get("qt_options")
+            params.get("qt_options", None)
         ])
-    if params.get("no_gui_flag"):
+    if params.get("no_gui_flag", False):
         cargs.append("-no_gui")
-    if params.get("print_script"):
+    if params.get("print_script", False):
         cargs.append("-print_script")
-    if params.get("save_script") is not None:
+    if params.get("save_script", None) is not None:
         cargs.extend([
             "-save_script",
-            params.get("save_script")
+            params.get("save_script", None)
         ])
-    if params.get("user_var") is not None:
+    if params.get("user_var", None) is not None:
         cargs.extend([
             "-uvar",
-            *params.get("user_var")
+            *params.get("user_var", None)
         ])
-    if params.get("help_howto_program"):
+    if params.get("help_howto_program", False):
         cargs.append("-help_howto_program")
-    if params.get("help"):
+    if params.get("help", False):
         cargs.append("-help")
-    if params.get("help_gui"):
+    if params.get("help_gui", False):
         cargs.append("-help_gui")
-    if params.get("history"):
+    if params.get("history", False):
         cargs.append("-hist")
-    if params.get("show_valid_opts"):
+    if params.get("show_valid_opts", False):
         cargs.append("-show_valid_opts")
-    if params.get("version"):
+    if params.get("version", False):
         cargs.append("-ver")
     return cargs
 
@@ -275,7 +258,6 @@ def uber_skel_py(
 __all__ = [
     "UBER_SKEL_PY_METADATA",
     "UberSkelPyOutputs",
-    "UberSkelPyParameters",
     "uber_skel_py",
     "uber_skel_py_execute",
     "uber_skel_py_params",

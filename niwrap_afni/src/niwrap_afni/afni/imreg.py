@@ -14,7 +14,30 @@ IMREG_METADATA = Metadata(
 
 
 ImregParameters = typing.TypedDict('ImregParameters', {
-    "@type": typing.Literal["afni.imreg"],
+    "@type": typing.NotRequired[typing.Literal["afni/imreg"]],
+    "base_image": str,
+    "image_sequence": list[InputPathType],
+    "nowrite": bool,
+    "prefix": typing.NotRequired[str | None],
+    "suffix": typing.NotRequired[str | None],
+    "start": typing.NotRequired[float | None],
+    "step": typing.NotRequired[float | None],
+    "flim": bool,
+    "keepsize": bool,
+    "quiet": bool,
+    "debug": bool,
+    "dprefix": typing.NotRequired[str | None],
+    "bilinear": bool,
+    "modes": typing.NotRequired[str | None],
+    "mlcf": bool,
+    "wtim": typing.NotRequired[InputPathType | None],
+    "dfspace": bool,
+    "cmass": bool,
+    "fine": typing.NotRequired[list[float] | None],
+    "nofine": bool,
+})
+ImregParametersTagged = typing.TypedDict('ImregParametersTagged', {
+    "@type": typing.Literal["afni/imreg"],
     "base_image": str,
     "image_sequence": list[InputPathType],
     "nowrite": bool,
@@ -38,41 +61,9 @@ ImregParameters = typing.TypedDict('ImregParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "afni.imreg": imreg_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "afni.imreg": imreg_outputs,
-    }.get(t)
-
-
 class ImregOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `imreg(...)`.
+    Output object returned when calling `ImregParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -107,7 +98,7 @@ def imreg_params(
     cmass: bool = False,
     fine: list[float] | None = None,
     nofine: bool = False,
-) -> ImregParameters:
+) -> ImregParametersTagged:
     """
     Build parameters.
     
@@ -137,7 +128,7 @@ def imreg_params(
         Parameter dictionary
     """
     params = {
-        "@type": "afni.imreg",
+        "@type": "afni/imreg",
         "base_image": base_image,
         "image_sequence": image_sequence,
         "nowrite": nowrite,
@@ -185,67 +176,67 @@ def imreg_cargs(
     """
     cargs = []
     cargs.append("imreg")
-    cargs.append(params.get("base_image"))
-    cargs.extend([execution.input_file(f) for f in params.get("image_sequence")])
-    if params.get("nowrite"):
+    cargs.append(params.get("base_image", None))
+    cargs.extend([execution.input_file(f) for f in params.get("image_sequence", None)])
+    if params.get("nowrite", False):
         cargs.append("-nowrite")
-    if params.get("prefix") is not None:
+    if params.get("prefix", None) is not None:
         cargs.extend([
             "-prefix",
-            params.get("prefix")
+            params.get("prefix", None)
         ])
-    if params.get("suffix") is not None:
+    if params.get("suffix", None) is not None:
         cargs.extend([
             "-suffix",
-            params.get("suffix")
+            params.get("suffix", None)
         ])
-    if params.get("start") is not None:
+    if params.get("start", None) is not None:
         cargs.extend([
             "-start",
-            str(params.get("start"))
+            str(params.get("start", None))
         ])
-    if params.get("step") is not None:
+    if params.get("step", None) is not None:
         cargs.extend([
             "-step",
-            str(params.get("step"))
+            str(params.get("step", None))
         ])
-    if params.get("flim"):
+    if params.get("flim", False):
         cargs.append("-flim")
-    if params.get("keepsize"):
+    if params.get("keepsize", False):
         cargs.append("-keepsize")
-    if params.get("quiet"):
+    if params.get("quiet", False):
         cargs.append("-quiet")
-    if params.get("debug"):
+    if params.get("debug", False):
         cargs.append("-debug")
-    if params.get("dprefix") is not None:
+    if params.get("dprefix", None) is not None:
         cargs.extend([
             "-dprefix",
-            params.get("dprefix")
+            params.get("dprefix", None)
         ])
-    if params.get("bilinear"):
+    if params.get("bilinear", False):
         cargs.append("-bilinear")
-    if params.get("modes") is not None:
+    if params.get("modes", None) is not None:
         cargs.extend([
             "-modes",
-            params.get("modes")
+            params.get("modes", None)
         ])
-    if params.get("mlcf"):
+    if params.get("mlcf", False):
         cargs.append("-mlcF")
-    if params.get("wtim") is not None:
+    if params.get("wtim", None) is not None:
         cargs.extend([
             "-wtim",
-            execution.input_file(params.get("wtim"))
+            execution.input_file(params.get("wtim", None))
         ])
-    if params.get("dfspace"):
+    if params.get("dfspace", False):
         cargs.append("-dfspace")
-    if params.get("cmass"):
+    if params.get("cmass", False):
         cargs.append("-cmass")
-    if params.get("fine") is not None:
+    if params.get("fine", None) is not None:
         cargs.extend([
             "-fine",
-            *map(str, params.get("fine"))
+            *map(str, params.get("fine", None))
         ])
-    if params.get("nofine"):
+    if params.get("nofine", False):
         cargs.append("-nofine")
     return cargs
 
@@ -265,10 +256,10 @@ def imreg_outputs(
     """
     ret = ImregOutputs(
         root=execution.output_file("."),
-        registered_images=execution.output_file(params.get("prefix") + ".[INDEX]." + params.get("suffix")) if (params.get("prefix") is not None and params.get("suffix") is not None) else None,
-        dx_file=execution.output_file(params.get("dprefix") + ".dx") if (params.get("dprefix") is not None) else None,
-        dy_file=execution.output_file(params.get("dprefix") + ".dy") if (params.get("dprefix") is not None) else None,
-        phi_file=execution.output_file(params.get("dprefix") + ".phi") if (params.get("dprefix") is not None) else None,
+        registered_images=execution.output_file(params.get("prefix", None) + ".[INDEX]." + params.get("suffix", None)) if (params.get("prefix") is not None and params.get("suffix") is not None) else None,
+        dx_file=execution.output_file(params.get("dprefix", None) + ".dx") if (params.get("dprefix") is not None) else None,
+        dy_file=execution.output_file(params.get("dprefix", None) + ".dy") if (params.get("dprefix") is not None) else None,
+        phi_file=execution.output_file(params.get("dprefix", None) + ".phi") if (params.get("dprefix") is not None) else None,
     )
     return ret
 
@@ -387,7 +378,6 @@ def imreg(
 __all__ = [
     "IMREG_METADATA",
     "ImregOutputs",
-    "ImregParameters",
     "imreg",
     "imreg_execute",
     "imreg_params",

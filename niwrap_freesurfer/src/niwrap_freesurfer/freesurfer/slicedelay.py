@@ -14,7 +14,14 @@ SLICEDELAY_METADATA = Metadata(
 
 
 SlicedelayParameters = typing.TypedDict('SlicedelayParameters', {
-    "@type": typing.Literal["freesurfer.slicedelay"],
+    "@type": typing.NotRequired[typing.Literal["freesurfer/slicedelay"]],
+    "slicedelayfile": str,
+    "nslices": float,
+    "order": typing.Literal["up", "down", "odd", "even", "siemens"],
+    "ngroups": float,
+})
+SlicedelayParametersTagged = typing.TypedDict('SlicedelayParametersTagged', {
+    "@type": typing.Literal["freesurfer/slicedelay"],
     "slicedelayfile": str,
     "nslices": float,
     "order": typing.Literal["up", "down", "odd", "even", "siemens"],
@@ -22,41 +29,9 @@ SlicedelayParameters = typing.TypedDict('SlicedelayParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "freesurfer.slicedelay": slicedelay_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "freesurfer.slicedelay": slicedelay_outputs,
-    }.get(t)
-
-
 class SlicedelayOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `slicedelay(...)`.
+    Output object returned when calling `SlicedelayParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -69,7 +44,7 @@ def slicedelay_params(
     nslices: float,
     order: typing.Literal["up", "down", "odd", "even", "siemens"],
     ngroups: float,
-) -> SlicedelayParameters:
+) -> SlicedelayParametersTagged:
     """
     Build parameters.
     
@@ -82,7 +57,7 @@ def slicedelay_params(
         Parameter dictionary
     """
     params = {
-        "@type": "freesurfer.slicedelay",
+        "@type": "freesurfer/slicedelay",
         "slicedelayfile": slicedelayfile,
         "nslices": nslices,
         "order": order,
@@ -108,19 +83,19 @@ def slicedelay_cargs(
     cargs.append("slicedelay")
     cargs.extend([
         "--o",
-        params.get("slicedelayfile")
+        params.get("slicedelayfile", None)
     ])
     cargs.extend([
         "--nslices",
-        str(params.get("nslices"))
+        str(params.get("nslices", None))
     ])
     cargs.extend([
         "--order",
-        params.get("order")
+        params.get("order", None)
     ])
     cargs.extend([
         "--ngroups",
-        str(params.get("ngroups"))
+        str(params.get("ngroups", None))
     ])
     return cargs
 
@@ -140,7 +115,7 @@ def slicedelay_outputs(
     """
     ret = SlicedelayOutputs(
         root=execution.output_file("."),
-        slicedelayfile=execution.output_file(params.get("slicedelayfile")),
+        slicedelayfile=execution.output_file(params.get("slicedelayfile", None)),
     )
     return ret
 
@@ -212,7 +187,6 @@ def slicedelay(
 __all__ = [
     "SLICEDELAY_METADATA",
     "SlicedelayOutputs",
-    "SlicedelayParameters",
     "slicedelay",
     "slicedelay_execute",
     "slicedelay_params",

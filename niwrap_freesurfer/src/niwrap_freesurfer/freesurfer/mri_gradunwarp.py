@@ -14,7 +14,21 @@ MRI_GRADUNWARP_METADATA = Metadata(
 
 
 MriGradunwarpParameters = typing.TypedDict('MriGradunwarpParameters', {
-    "@type": typing.Literal["freesurfer.mri_gradunwarp"],
+    "@type": typing.NotRequired[typing.Literal["freesurfer/mri_gradunwarp"]],
+    "gradient_coeff": typing.NotRequired[InputPathType | None],
+    "load_transtbl": typing.NotRequired[InputPathType | None],
+    "input_file": InputPathType,
+    "output_file": typing.NotRequired[str | None],
+    "out_transtbl": typing.NotRequired[str | None],
+    "save_transtbl_only": bool,
+    "interpolation_type": typing.NotRequired[str | None],
+    "nthreads": typing.NotRequired[float | None],
+    "checkopts": bool,
+    "version": bool,
+    "help": bool,
+})
+MriGradunwarpParametersTagged = typing.TypedDict('MriGradunwarpParametersTagged', {
+    "@type": typing.Literal["freesurfer/mri_gradunwarp"],
     "gradient_coeff": typing.NotRequired[InputPathType | None],
     "load_transtbl": typing.NotRequired[InputPathType | None],
     "input_file": InputPathType,
@@ -29,41 +43,9 @@ MriGradunwarpParameters = typing.TypedDict('MriGradunwarpParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "freesurfer.mri_gradunwarp": mri_gradunwarp_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "freesurfer.mri_gradunwarp": mri_gradunwarp_outputs,
-    }.get(t)
-
-
 class MriGradunwarpOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `mri_gradunwarp(...)`.
+    Output object returned when calling `MriGradunwarpParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -85,7 +67,7 @@ def mri_gradunwarp_params(
     checkopts: bool = False,
     version: bool = False,
     help_: bool = False,
-) -> MriGradunwarpParameters:
+) -> MriGradunwarpParametersTagged:
     """
     Build parameters.
     
@@ -109,7 +91,7 @@ def mri_gradunwarp_params(
         Parameter dictionary
     """
     params = {
-        "@type": "freesurfer.mri_gradunwarp",
+        "@type": "freesurfer/mri_gradunwarp",
         "input_file": input_file,
         "save_transtbl_only": save_transtbl_only,
         "checkopts": checkopts,
@@ -146,47 +128,47 @@ def mri_gradunwarp_cargs(
     """
     cargs = []
     cargs.append("mri_gradunwarp")
-    if params.get("gradient_coeff") is not None:
+    if params.get("gradient_coeff", None) is not None:
         cargs.extend([
             "--gradcoeff",
-            execution.input_file(params.get("gradient_coeff"))
+            execution.input_file(params.get("gradient_coeff", None))
         ])
-    if params.get("load_transtbl") is not None:
+    if params.get("load_transtbl", None) is not None:
         cargs.extend([
             "--load_transtbl",
-            execution.input_file(params.get("load_transtbl"))
+            execution.input_file(params.get("load_transtbl", None))
         ])
     cargs.extend([
         "--i",
-        execution.input_file(params.get("input_file"))
+        execution.input_file(params.get("input_file", None))
     ])
-    if params.get("output_file") is not None:
+    if params.get("output_file", None) is not None:
         cargs.extend([
             "--o",
-            params.get("output_file")
+            params.get("output_file", None)
         ])
-    if params.get("out_transtbl") is not None:
+    if params.get("out_transtbl", None) is not None:
         cargs.extend([
             "--out_transtbl",
-            params.get("out_transtbl")
+            params.get("out_transtbl", None)
         ])
-    if params.get("save_transtbl_only"):
+    if params.get("save_transtbl_only", False):
         cargs.append("--save_transtbl_only")
-    if params.get("interpolation_type") is not None:
+    if params.get("interpolation_type", None) is not None:
         cargs.extend([
             "--interp",
-            params.get("interpolation_type")
+            params.get("interpolation_type", None)
         ])
-    if params.get("nthreads") is not None:
+    if params.get("nthreads", None) is not None:
         cargs.extend([
             "--nthreads",
-            str(params.get("nthreads"))
+            str(params.get("nthreads", None))
         ])
-    if params.get("checkopts"):
+    if params.get("checkopts", False):
         cargs.append("--checkopts")
-    if params.get("version"):
+    if params.get("version", False):
         cargs.append("--version")
-    if params.get("help"):
+    if params.get("help", False):
         cargs.append("--help")
     return cargs
 
@@ -206,8 +188,8 @@ def mri_gradunwarp_outputs(
     """
     ret = MriGradunwarpOutputs(
         root=execution.output_file("."),
-        unwarped_output=execution.output_file(params.get("output_file")) if (params.get("output_file") is not None) else None,
-        output_transform_table=execution.output_file(params.get("out_transtbl")) if (params.get("out_transtbl") is not None) else None,
+        unwarped_output=execution.output_file(params.get("output_file", None)) if (params.get("output_file") is not None) else None,
+        output_transform_table=execution.output_file(params.get("out_transtbl", None)) if (params.get("out_transtbl") is not None) else None,
     )
     return ret
 
@@ -302,7 +284,6 @@ def mri_gradunwarp(
 __all__ = [
     "MRI_GRADUNWARP_METADATA",
     "MriGradunwarpOutputs",
-    "MriGradunwarpParameters",
     "mri_gradunwarp",
     "mri_gradunwarp_execute",
     "mri_gradunwarp_params",

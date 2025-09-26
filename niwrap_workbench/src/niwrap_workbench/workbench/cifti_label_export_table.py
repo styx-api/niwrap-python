@@ -14,47 +14,22 @@ CIFTI_LABEL_EXPORT_TABLE_METADATA = Metadata(
 
 
 CiftiLabelExportTableParameters = typing.TypedDict('CiftiLabelExportTableParameters', {
-    "@type": typing.Literal["workbench.cifti-label-export-table"],
+    "@type": typing.NotRequired[typing.Literal["workbench/cifti-label-export-table"]],
+    "label_in": InputPathType,
+    "map": str,
+    "table_out": str,
+})
+CiftiLabelExportTableParametersTagged = typing.TypedDict('CiftiLabelExportTableParametersTagged', {
+    "@type": typing.Literal["workbench/cifti-label-export-table"],
     "label_in": InputPathType,
     "map": str,
     "table_out": str,
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "workbench.cifti-label-export-table": cifti_label_export_table_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-    }.get(t)
-
-
 class CiftiLabelExportTableOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `cifti_label_export_table(...)`.
+    Output object returned when calling `CiftiLabelExportTableParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -64,7 +39,7 @@ def cifti_label_export_table_params(
     label_in: InputPathType,
     map_: str,
     table_out: str,
-) -> CiftiLabelExportTableParameters:
+) -> CiftiLabelExportTableParametersTagged:
     """
     Build parameters.
     
@@ -76,7 +51,7 @@ def cifti_label_export_table_params(
         Parameter dictionary
     """
     params = {
-        "@type": "workbench.cifti-label-export-table",
+        "@type": "workbench/cifti-label-export-table",
         "label_in": label_in,
         "map": map_,
         "table_out": table_out,
@@ -100,9 +75,9 @@ def cifti_label_export_table_cargs(
     cargs = []
     cargs.append("wb_command")
     cargs.append("-cifti-label-export-table")
-    cargs.append(execution.input_file(params.get("label_in")))
-    cargs.append(params.get("map"))
-    cargs.append(params.get("table_out"))
+    cargs.append(execution.input_file(params.get("label_in", None)))
+    cargs.append(params.get("map", None))
+    cargs.append(params.get("table_out", None))
     return cargs
 
 
@@ -193,7 +168,6 @@ def cifti_label_export_table(
 __all__ = [
     "CIFTI_LABEL_EXPORT_TABLE_METADATA",
     "CiftiLabelExportTableOutputs",
-    "CiftiLabelExportTableParameters",
     "cifti_label_export_table",
     "cifti_label_export_table_execute",
     "cifti_label_export_table_params",

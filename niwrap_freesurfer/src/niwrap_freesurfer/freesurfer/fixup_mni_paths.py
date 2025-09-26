@@ -14,46 +14,18 @@ FIXUP_MNI_PATHS_METADATA = Metadata(
 
 
 FixupMniPathsParameters = typing.TypedDict('FixupMniPathsParameters', {
-    "@type": typing.Literal["freesurfer.fixup_mni_paths"],
+    "@type": typing.NotRequired[typing.Literal["freesurfer/fixup_mni_paths"]],
+    "verbose": bool,
+})
+FixupMniPathsParametersTagged = typing.TypedDict('FixupMniPathsParametersTagged', {
+    "@type": typing.Literal["freesurfer/fixup_mni_paths"],
     "verbose": bool,
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "freesurfer.fixup_mni_paths": fixup_mni_paths_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "freesurfer.fixup_mni_paths": fixup_mni_paths_outputs,
-    }.get(t)
-
-
 class FixupMniPathsOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `fixup_mni_paths(...)`.
+    Output object returned when calling `FixupMniPathsParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -87,7 +59,7 @@ class FixupMniPathsOutputs(typing.NamedTuple):
 
 def fixup_mni_paths_params(
     verbose: bool = False,
-) -> FixupMniPathsParameters:
+) -> FixupMniPathsParametersTagged:
     """
     Build parameters.
     
@@ -97,7 +69,7 @@ def fixup_mni_paths_params(
         Parameter dictionary
     """
     params = {
-        "@type": "freesurfer.fixup_mni_paths",
+        "@type": "freesurfer/fixup_mni_paths",
         "verbose": verbose,
     }
     return params
@@ -118,7 +90,7 @@ def fixup_mni_paths_cargs(
     """
     cargs = []
     cargs.append("fixup_mni_paths")
-    if params.get("verbose"):
+    if params.get("verbose", False):
         cargs.append("-v")
     return cargs
 
@@ -211,7 +183,6 @@ def fixup_mni_paths(
 __all__ = [
     "FIXUP_MNI_PATHS_METADATA",
     "FixupMniPathsOutputs",
-    "FixupMniPathsParameters",
     "fixup_mni_paths",
     "fixup_mni_paths_execute",
     "fixup_mni_paths_params",

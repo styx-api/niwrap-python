@@ -14,46 +14,18 @@ V__CHECK_FOR_AFNI_DSET_METADATA = Metadata(
 
 
 VCheckForAfniDsetParameters = typing.TypedDict('VCheckForAfniDsetParameters', {
-    "@type": typing.Literal["afni.@CheckForAfniDset"],
+    "@type": typing.NotRequired[typing.Literal["afni/@CheckForAfniDset"]],
+    "dataset_name": str,
+})
+VCheckForAfniDsetParametersTagged = typing.TypedDict('VCheckForAfniDsetParametersTagged', {
+    "@type": typing.Literal["afni/@CheckForAfniDset"],
     "dataset_name": str,
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "afni.@CheckForAfniDset": v__check_for_afni_dset_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "afni.@CheckForAfniDset": v__check_for_afni_dset_outputs,
-    }.get(t)
-
-
 class VCheckForAfniDsetOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `v__check_for_afni_dset(...)`.
+    Output object returned when calling `VCheckForAfniDsetParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -63,7 +35,7 @@ class VCheckForAfniDsetOutputs(typing.NamedTuple):
 
 def v__check_for_afni_dset_params(
     dataset_name: str,
-) -> VCheckForAfniDsetParameters:
+) -> VCheckForAfniDsetParametersTagged:
     """
     Build parameters.
     
@@ -74,7 +46,7 @@ def v__check_for_afni_dset_params(
         Parameter dictionary
     """
     params = {
-        "@type": "afni.@CheckForAfniDset",
+        "@type": "afni/@CheckForAfniDset",
         "dataset_name": dataset_name,
     }
     return params
@@ -95,7 +67,7 @@ def v__check_for_afni_dset_cargs(
     """
     cargs = []
     cargs.append("@CheckForAfniDset")
-    cargs.append(params.get("dataset_name"))
+    cargs.append(params.get("dataset_name", None))
     return cargs
 
 
@@ -114,7 +86,7 @@ def v__check_for_afni_dset_outputs(
     """
     ret = VCheckForAfniDsetOutputs(
         root=execution.output_file("."),
-        output_status=execution.output_file(params.get("dataset_name") + "_status.txt"),
+        output_status=execution.output_file(params.get("dataset_name", None) + "_status.txt"),
     )
     return ret
 
@@ -175,7 +147,6 @@ def v__check_for_afni_dset(
 
 __all__ = [
     "VCheckForAfniDsetOutputs",
-    "VCheckForAfniDsetParameters",
     "V__CHECK_FOR_AFNI_DSET_METADATA",
     "v__check_for_afni_dset",
     "v__check_for_afni_dset_execute",

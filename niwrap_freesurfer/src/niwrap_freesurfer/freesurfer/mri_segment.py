@@ -14,7 +14,44 @@ MRI_SEGMENT_METADATA = Metadata(
 
 
 MriSegmentParameters = typing.TypedDict('MriSegmentParameters', {
-    "@type": typing.Literal["freesurfer.mri_segment"],
+    "@type": typing.NotRequired[typing.Literal["freesurfer/mri_segment"]],
+    "in_vol": InputPathType,
+    "out_vol": str,
+    "no1d_remove": typing.NotRequired[float | None],
+    "slope": typing.NotRequired[float | None],
+    "pslope": typing.NotRequired[float | None],
+    "nslope": typing.NotRequired[float | None],
+    "debug_voxel": typing.NotRequired[list[float] | None],
+    "auto": bool,
+    "noauto": bool,
+    "log": bool,
+    "keep": bool,
+    "gray_hi": typing.NotRequired[float | None],
+    "wm_low": typing.NotRequired[float | None],
+    "wm_low_factor": typing.NotRequired[float | None],
+    "wm_hi": typing.NotRequired[float | None],
+    "nseg": typing.NotRequired[float | None],
+    "thicken": bool,
+    "fillbg": bool,
+    "fillv": bool,
+    "blur_sigma": typing.NotRequired[float | None],
+    "iterations": typing.NotRequired[float | None],
+    "thin_strand_limit": typing.NotRequired[float | None],
+    "verbose": bool,
+    "threshold": typing.NotRequired[float | None],
+    "extract_options": typing.NotRequired[InputPathType | None],
+    "wsize": typing.NotRequired[float | None],
+    "wsizemm": typing.NotRequired[float | None],
+    "polvw_size": typing.NotRequired[float | None],
+    "polv_len": typing.NotRequired[float | None],
+    "datfile": typing.NotRequired[InputPathType | None],
+    "segmentation": typing.NotRequired[str | None],
+    "diagno": typing.NotRequired[float | None],
+    "diag_write": bool,
+    "diag_verbose": bool,
+})
+MriSegmentParametersTagged = typing.TypedDict('MriSegmentParametersTagged', {
+    "@type": typing.Literal["freesurfer/mri_segment"],
     "in_vol": InputPathType,
     "out_vol": str,
     "no1d_remove": typing.NotRequired[float | None],
@@ -52,41 +89,9 @@ MriSegmentParameters = typing.TypedDict('MriSegmentParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "freesurfer.mri_segment": mri_segment_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "freesurfer.mri_segment": mri_segment_outputs,
-    }.get(t)
-
-
 class MriSegmentOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `mri_segment(...)`.
+    Output object returned when calling `MriSegmentParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -131,7 +136,7 @@ def mri_segment_params(
     diagno: float | None = None,
     diag_write: bool = False,
     diag_verbose: bool = False,
-) -> MriSegmentParameters:
+) -> MriSegmentParametersTagged:
     """
     Build parameters.
     
@@ -174,7 +179,7 @@ def mri_segment_params(
         Parameter dictionary
     """
     params = {
-        "@type": "freesurfer.mri_segment",
+        "@type": "freesurfer/mri_segment",
         "in_vol": in_vol,
         "out_vol": out_vol,
         "auto": auto,
@@ -250,137 +255,137 @@ def mri_segment_cargs(
     """
     cargs = []
     cargs.append("mri_segment")
-    cargs.append(execution.input_file(params.get("in_vol")))
-    cargs.append(params.get("out_vol"))
-    if params.get("no1d_remove") is not None:
+    cargs.append(execution.input_file(params.get("in_vol", None)))
+    cargs.append(params.get("out_vol", None))
+    if params.get("no1d_remove", None) is not None:
         cargs.extend([
             "-no1d_remove",
-            str(params.get("no1d_remove"))
+            str(params.get("no1d_remove", None))
         ])
-    if params.get("slope") is not None:
+    if params.get("slope", None) is not None:
         cargs.extend([
             "-slope",
-            str(params.get("slope"))
+            str(params.get("slope", None))
         ])
-    if params.get("pslope") is not None:
+    if params.get("pslope", None) is not None:
         cargs.extend([
             "-pslope",
-            str(params.get("pslope"))
+            str(params.get("pslope", None))
         ])
-    if params.get("nslope") is not None:
+    if params.get("nslope", None) is not None:
         cargs.extend([
             "-nslope",
-            str(params.get("nslope"))
+            str(params.get("nslope", None))
         ])
-    if params.get("debug_voxel") is not None:
+    if params.get("debug_voxel", None) is not None:
         cargs.extend([
             "-debug_voxel",
-            *map(str, params.get("debug_voxel"))
+            *map(str, params.get("debug_voxel", None))
         ])
-    if params.get("auto"):
+    if params.get("auto", False):
         cargs.append("-auto")
-    if params.get("noauto"):
+    if params.get("noauto", False):
         cargs.append("-noauto")
-    if params.get("log"):
+    if params.get("log", False):
         cargs.append("-log")
-    if params.get("keep"):
+    if params.get("keep", False):
         cargs.append("-keep")
-    if params.get("gray_hi") is not None:
+    if params.get("gray_hi", None) is not None:
         cargs.extend([
             "-ghi",
-            str(params.get("gray_hi"))
+            str(params.get("gray_hi", None))
         ])
-    if params.get("wm_low") is not None:
+    if params.get("wm_low", None) is not None:
         cargs.extend([
             "-wlo",
-            str(params.get("wm_low"))
+            str(params.get("wm_low", None))
         ])
-    if params.get("wm_low_factor") is not None:
+    if params.get("wm_low_factor", None) is not None:
         cargs.extend([
             "-wm_low_factor",
-            str(params.get("wm_low_factor"))
+            str(params.get("wm_low_factor", None))
         ])
-    if params.get("wm_hi") is not None:
+    if params.get("wm_hi", None) is not None:
         cargs.extend([
             "-whi",
-            str(params.get("wm_hi"))
+            str(params.get("wm_hi", None))
         ])
-    if params.get("nseg") is not None:
+    if params.get("nseg", None) is not None:
         cargs.extend([
             "-nseg",
-            str(params.get("nseg"))
+            str(params.get("nseg", None))
         ])
-    if params.get("thicken"):
+    if params.get("thicken", False):
         cargs.append("-thicken")
-    if params.get("fillbg"):
+    if params.get("fillbg", False):
         cargs.append("-fillbg")
-    if params.get("fillv"):
+    if params.get("fillv", False):
         cargs.append("-fillv")
-    if params.get("blur_sigma") is not None:
+    if params.get("blur_sigma", None) is not None:
         cargs.extend([
             "-b",
-            str(params.get("blur_sigma"))
+            str(params.get("blur_sigma", None))
         ])
-    if params.get("iterations") is not None:
+    if params.get("iterations", None) is not None:
         cargs.extend([
             "-n",
-            str(params.get("iterations"))
+            str(params.get("iterations", None))
         ])
-    if params.get("thin_strand_limit") is not None:
+    if params.get("thin_strand_limit", None) is not None:
         cargs.extend([
             "-t",
-            str(params.get("thin_strand_limit"))
+            str(params.get("thin_strand_limit", None))
         ])
-    if params.get("verbose"):
+    if params.get("verbose", False):
         cargs.append("-v")
-    if params.get("threshold") is not None:
+    if params.get("threshold", None) is not None:
         cargs.extend([
             "-p",
-            str(params.get("threshold"))
+            str(params.get("threshold", None))
         ])
-    if params.get("extract_options") is not None:
+    if params.get("extract_options", None) is not None:
         cargs.extend([
             "-x",
-            execution.input_file(params.get("extract_options"))
+            execution.input_file(params.get("extract_options", None))
         ])
-    if params.get("wsize") is not None:
+    if params.get("wsize", None) is not None:
         cargs.extend([
             "-w",
-            str(params.get("wsize"))
+            str(params.get("wsize", None))
         ])
-    if params.get("wsizemm") is not None:
+    if params.get("wsizemm", None) is not None:
         cargs.extend([
             "-wsizemm",
-            str(params.get("wsizemm"))
+            str(params.get("wsizemm", None))
         ])
-    if params.get("polvw_size") is not None:
+    if params.get("polvw_size", None) is not None:
         cargs.extend([
             "-polvwsize",
-            str(params.get("polvw_size"))
+            str(params.get("polvw_size", None))
         ])
-    if params.get("polv_len") is not None:
+    if params.get("polv_len", None) is not None:
         cargs.extend([
             "-polvlen",
-            str(params.get("polv_len"))
+            str(params.get("polv_len", None))
         ])
-    if params.get("datfile") is not None:
+    if params.get("datfile", None) is not None:
         cargs.extend([
             "-dat",
-            execution.input_file(params.get("datfile"))
+            execution.input_file(params.get("datfile", None))
         ])
-    if params.get("segmentation") is not None:
+    if params.get("segmentation", None) is not None:
         cargs.extend([
             "-seg",
-            params.get("segmentation")
+            params.get("segmentation", None)
         ])
-    if params.get("diagno") is not None:
+    if params.get("diagno", None) is not None:
         cargs.extend([
             "-diagno",
-            str(params.get("diagno"))
+            str(params.get("diagno", None))
         ])
-    if params.get("diag_write"):
+    if params.get("diag_write", False):
         cargs.append("-diag-write")
-    if params.get("diag_verbose"):
+    if params.get("diag_verbose", False):
         cargs.append("-diag-verbose")
     return cargs
 
@@ -400,7 +405,7 @@ def mri_segment_outputs(
     """
     ret = MriSegmentOutputs(
         root=execution.output_file("."),
-        output_volume=execution.output_file(params.get("out_vol")),
+        output_volume=execution.output_file(params.get("out_vol", None)),
         log_file=execution.output_file("./segment.dat"),
     )
     return ret
@@ -561,7 +566,6 @@ def mri_segment(
 __all__ = [
     "MRI_SEGMENT_METADATA",
     "MriSegmentOutputs",
-    "MriSegmentParameters",
     "mri_segment",
     "mri_segment_execute",
     "mri_segment_params",

@@ -14,7 +14,72 @@ MRI_GTMPVC_METADATA = Metadata(
 
 
 MriGtmpvcParameters = typing.TypedDict('MriGtmpvcParameters', {
-    "@type": typing.Literal["freesurfer.mri_gtmpvc"],
+    "@type": typing.NotRequired[typing.Literal["freesurfer/mri_gtmpvc"]],
+    "input_volume": InputPathType,
+    "frame": typing.NotRequired[float | None],
+    "psf": float,
+    "segmentation": InputPathType,
+    "registration": typing.NotRequired[InputPathType | None],
+    "regheader": bool,
+    "reg_identity": bool,
+    "output_directory": str,
+    "mask": typing.NotRequired[InputPathType | None],
+    "auto_mask": typing.NotRequired[int | None],
+    "no_reduce_fov": bool,
+    "reduce_fov_eqodd": bool,
+    "contrast_matrix": typing.NotRequired[InputPathType | None],
+    "default_seg_merge": bool,
+    "merge_hypos": bool,
+    "merge_cblum_wm_gyri": bool,
+    "tt_reduce": bool,
+    "replace_seg": typing.NotRequired[str | None],
+    "replace_file": typing.NotRequired[InputPathType | None],
+    "rescale": typing.NotRequired[str | None],
+    "no_rescale": bool,
+    "scale_refval": typing.NotRequired[float | None],
+    "ctab": typing.NotRequired[InputPathType | None],
+    "ctab_default": bool,
+    "tt_update": bool,
+    "lateralization": bool,
+    "no_tfe": bool,
+    "no_pvc": bool,
+    "segpvfres": typing.NotRequired[float | None],
+    "rbv": bool,
+    "rbv_res": typing.NotRequired[float | None],
+    "mueller_pvc": typing.NotRequired[str | None],
+    "mg_ref_cerebral_wm": bool,
+    "mg_ref_lobes_wm": bool,
+    "glm_mg_pvc": typing.NotRequired[float | None],
+    "km_ref": typing.NotRequired[str | None],
+    "km_hb": typing.NotRequired[str | None],
+    "steady_state": typing.NotRequired[str | None],
+    "save_x": bool,
+    "save_y": bool,
+    "save_beta": bool,
+    "save_x0": bool,
+    "save_input": bool,
+    "save_eres": bool,
+    "save_yhat": bool,
+    "save_yhat_noise": typing.NotRequired[str | None],
+    "save_yhat_full_fov": bool,
+    "save_yhat0": bool,
+    "synth": typing.NotRequired[str | None],
+    "synth_only": bool,
+    "synth_save": bool,
+    "save_text": bool,
+    "threads": typing.NotRequired[float | None],
+    "max_threads": bool,
+    "max_threads_minus_one": bool,
+    "subjects_dir": typing.NotRequired[str | None],
+    "vg_thresh": typing.NotRequired[float | None],
+    "gdiag": typing.NotRequired[float | None],
+    "debug": bool,
+    "checkopts": bool,
+    "help": bool,
+    "version": bool,
+})
+MriGtmpvcParametersTagged = typing.TypedDict('MriGtmpvcParametersTagged', {
+    "@type": typing.Literal["freesurfer/mri_gtmpvc"],
     "input_volume": InputPathType,
     "frame": typing.NotRequired[float | None],
     "psf": float,
@@ -80,41 +145,9 @@ MriGtmpvcParameters = typing.TypedDict('MriGtmpvcParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "freesurfer.mri_gtmpvc": mri_gtmpvc_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "freesurfer.mri_gtmpvc": mri_gtmpvc_outputs,
-    }.get(t)
-
-
 class MriGtmpvcOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `mri_gtmpvc(...)`.
+    Output object returned when calling `MriGtmpvcParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -207,7 +240,7 @@ def mri_gtmpvc_params(
     checkopts: bool = False,
     help_: bool = False,
     version: bool = False,
-) -> MriGtmpvcParameters:
+) -> MriGtmpvcParametersTagged:
     """
     Build parameters.
     
@@ -287,7 +320,7 @@ def mri_gtmpvc_params(
         Parameter dictionary
     """
     params = {
-        "@type": "freesurfer.mri_gtmpvc",
+        "@type": "freesurfer/mri_gtmpvc",
         "input_volume": input_volume,
         "psf": psf,
         "segmentation": segmentation,
@@ -394,204 +427,204 @@ def mri_gtmpvc_cargs(
     cargs.append("mri_gtmpvc")
     cargs.extend([
         "--i",
-        execution.input_file(params.get("input_volume"))
+        execution.input_file(params.get("input_volume", None))
     ])
-    if params.get("frame") is not None:
+    if params.get("frame", None) is not None:
         cargs.extend([
             "--frame",
-            str(params.get("frame"))
+            str(params.get("frame", None))
         ])
     cargs.extend([
         "--psf",
-        str(params.get("psf"))
+        str(params.get("psf", None))
     ])
     cargs.extend([
         "--seg",
-        execution.input_file(params.get("segmentation"))
+        execution.input_file(params.get("segmentation", None))
     ])
-    if params.get("registration") is not None:
+    if params.get("registration", None) is not None:
         cargs.extend([
             "--reg",
-            execution.input_file(params.get("registration"))
+            execution.input_file(params.get("registration", None))
         ])
-    if params.get("regheader"):
+    if params.get("regheader", False):
         cargs.append("--regheader")
-    if params.get("reg_identity"):
+    if params.get("reg_identity", False):
         cargs.append("--reg-identity")
     cargs.extend([
         "--o",
-        params.get("output_directory")
+        params.get("output_directory", None)
     ])
-    if params.get("mask") is not None:
+    if params.get("mask", None) is not None:
         cargs.extend([
             "--mask",
-            execution.input_file(params.get("mask"))
+            execution.input_file(params.get("mask", None))
         ])
-    if params.get("auto_mask") is not None:
+    if params.get("auto_mask", None) is not None:
         cargs.extend([
             "--auto-mask",
-            str(params.get("auto_mask"))
+            str(params.get("auto_mask", None))
         ])
-    if params.get("no_reduce_fov"):
+    if params.get("no_reduce_fov", False):
         cargs.append("--no-reduce-fov")
-    if params.get("reduce_fov_eqodd"):
+    if params.get("reduce_fov_eqodd", False):
         cargs.append("--reduce-fov-eqodd")
-    if params.get("contrast_matrix") is not None:
+    if params.get("contrast_matrix", None) is not None:
         cargs.extend([
             "--C",
-            execution.input_file(params.get("contrast_matrix"))
+            execution.input_file(params.get("contrast_matrix", None))
         ])
-    if params.get("default_seg_merge"):
+    if params.get("default_seg_merge", False):
         cargs.append("--default-seg-merge")
-    if params.get("merge_hypos"):
+    if params.get("merge_hypos", False):
         cargs.append("--merge-hypos")
-    if params.get("merge_cblum_wm_gyri"):
+    if params.get("merge_cblum_wm_gyri", False):
         cargs.append("--merge-cblum-wm-gyri")
-    if params.get("tt_reduce"):
+    if params.get("tt_reduce", False):
         cargs.append("--tt-reduce")
-    if params.get("replace_seg") is not None:
+    if params.get("replace_seg", None) is not None:
         cargs.extend([
             "--replace",
-            params.get("replace_seg")
+            params.get("replace_seg", None)
         ])
-    if params.get("replace_file") is not None:
+    if params.get("replace_file", None) is not None:
         cargs.extend([
             "--replace-file",
-            execution.input_file(params.get("replace_file"))
+            execution.input_file(params.get("replace_file", None))
         ])
-    if params.get("rescale") is not None:
+    if params.get("rescale", None) is not None:
         cargs.extend([
             "--rescale",
-            params.get("rescale")
+            params.get("rescale", None)
         ])
-    if params.get("no_rescale"):
+    if params.get("no_rescale", False):
         cargs.append("--no-rescale")
-    if params.get("scale_refval") is not None:
+    if params.get("scale_refval", None) is not None:
         cargs.extend([
             "--scale-refval",
-            str(params.get("scale_refval"))
+            str(params.get("scale_refval", None))
         ])
-    if params.get("ctab") is not None:
+    if params.get("ctab", None) is not None:
         cargs.extend([
             "--ctab",
-            execution.input_file(params.get("ctab"))
+            execution.input_file(params.get("ctab", None))
         ])
-    if params.get("ctab_default"):
+    if params.get("ctab_default", False):
         cargs.append("--ctab-default")
-    if params.get("tt_update"):
+    if params.get("tt_update", False):
         cargs.append("--tt-update")
-    if params.get("lateralization"):
+    if params.get("lateralization", False):
         cargs.append("--lat")
-    if params.get("no_tfe"):
+    if params.get("no_tfe", False):
         cargs.append("--no-tfe")
-    if params.get("no_pvc"):
+    if params.get("no_pvc", False):
         cargs.append("--no-pvc")
-    if params.get("segpvfres") is not None:
+    if params.get("segpvfres", None) is not None:
         cargs.extend([
             "--segpvfres",
-            str(params.get("segpvfres"))
+            str(params.get("segpvfres", None))
         ])
-    if params.get("rbv"):
+    if params.get("rbv", False):
         cargs.append("--rbv")
-    if params.get("rbv_res") is not None:
+    if params.get("rbv_res", None) is not None:
         cargs.extend([
             "--rbv-res",
-            str(params.get("rbv_res"))
+            str(params.get("rbv_res", None))
         ])
-    if params.get("mueller_pvc") is not None:
+    if params.get("mueller_pvc", None) is not None:
         cargs.extend([
             "--mg",
-            params.get("mueller_pvc")
+            params.get("mueller_pvc", None)
         ])
-    if params.get("mg_ref_cerebral_wm"):
+    if params.get("mg_ref_cerebral_wm", False):
         cargs.append("--mg-ref-cerebral-wm")
-    if params.get("mg_ref_lobes_wm"):
+    if params.get("mg_ref_lobes_wm", False):
         cargs.append("--mg-ref-lobes-wm")
-    if params.get("glm_mg_pvc") is not None:
+    if params.get("glm_mg_pvc", None) is not None:
         cargs.extend([
             "--mgx",
-            str(params.get("glm_mg_pvc"))
+            str(params.get("glm_mg_pvc", None))
         ])
-    if params.get("km_ref") is not None:
+    if params.get("km_ref", None) is not None:
         cargs.extend([
             "--km-ref",
-            params.get("km_ref")
+            params.get("km_ref", None)
         ])
-    if params.get("km_hb") is not None:
+    if params.get("km_hb", None) is not None:
         cargs.extend([
             "--km-hb",
-            params.get("km_hb")
+            params.get("km_hb", None)
         ])
-    if params.get("steady_state") is not None:
+    if params.get("steady_state", None) is not None:
         cargs.extend([
             "--ss",
-            params.get("steady_state")
+            params.get("steady_state", None)
         ])
-    if params.get("save_x"):
+    if params.get("save_x", False):
         cargs.append("--X")
-    if params.get("save_y"):
+    if params.get("save_y", False):
         cargs.append("--y")
-    if params.get("save_beta"):
+    if params.get("save_beta", False):
         cargs.append("--beta")
-    if params.get("save_x0"):
+    if params.get("save_x0", False):
         cargs.append("--X0")
-    if params.get("save_input"):
+    if params.get("save_input", False):
         cargs.append("--save-input")
-    if params.get("save_eres"):
+    if params.get("save_eres", False):
         cargs.append("--save-eres")
-    if params.get("save_yhat"):
+    if params.get("save_yhat", False):
         cargs.append("--save-yhat")
-    if params.get("save_yhat_noise") is not None:
+    if params.get("save_yhat_noise", None) is not None:
         cargs.extend([
             "--save-yhat-with-noise",
-            params.get("save_yhat_noise")
+            params.get("save_yhat_noise", None)
         ])
-    if params.get("save_yhat_full_fov"):
+    if params.get("save_yhat_full_fov", False):
         cargs.append("--save-yhat-full-fov")
-    if params.get("save_yhat0"):
+    if params.get("save_yhat0", False):
         cargs.append("--save-yhat0")
-    if params.get("synth") is not None:
+    if params.get("synth", None) is not None:
         cargs.extend([
             "--synth",
-            params.get("synth")
+            params.get("synth", None)
         ])
-    if params.get("synth_only"):
+    if params.get("synth_only", False):
         cargs.append("--synth-only")
-    if params.get("synth_save"):
+    if params.get("synth_save", False):
         cargs.append("--synth-save")
-    if params.get("save_text"):
+    if params.get("save_text", False):
         cargs.append("--save-text")
-    if params.get("threads") is not None:
+    if params.get("threads", None) is not None:
         cargs.extend([
             "--threads",
-            str(params.get("threads"))
+            str(params.get("threads", None))
         ])
-    if params.get("max_threads"):
+    if params.get("max_threads", False):
         cargs.append("--max-threads")
-    if params.get("max_threads_minus_one"):
+    if params.get("max_threads_minus_one", False):
         cargs.append("--max-threads-minus-1")
-    if params.get("subjects_dir") is not None:
+    if params.get("subjects_dir", None) is not None:
         cargs.extend([
             "--sd",
-            params.get("subjects_dir")
+            params.get("subjects_dir", None)
         ])
-    if params.get("vg_thresh") is not None:
+    if params.get("vg_thresh", None) is not None:
         cargs.extend([
             "--vg-thresh",
-            str(params.get("vg_thresh"))
+            str(params.get("vg_thresh", None))
         ])
-    if params.get("gdiag") is not None:
+    if params.get("gdiag", None) is not None:
         cargs.extend([
             "--gdiag",
-            str(params.get("gdiag"))
+            str(params.get("gdiag", None))
         ])
-    if params.get("debug"):
+    if params.get("debug", False):
         cargs.append("--debug")
-    if params.get("checkopts"):
+    if params.get("checkopts", False):
         cargs.append("--checkopts")
-    if params.get("help"):
+    if params.get("help", False):
         cargs.append("--help")
-    if params.get("version"):
+    if params.get("version", False):
         cargs.append("--version")
     return cargs
 
@@ -611,18 +644,18 @@ def mri_gtmpvc_outputs(
     """
     ret = MriGtmpvcOutputs(
         root=execution.output_file("."),
-        synthesized_volume=execution.output_file(params.get("output_directory") + "/synth.nii.gz"),
-        rescaled_input=execution.output_file(params.get("output_directory") + "/input.rescaled.nii.gz"),
-        eresiduals=execution.output_file(params.get("output_directory") + "/eresiduals.nii.gz"),
-        yhat=execution.output_file(params.get("output_directory") + "/yhat.nii.gz"),
-        yhat_with_noise=execution.output_file(params.get("output_directory") + "/yhat_with_noise.nii.gz"),
-        yhat_full_fov=execution.output_file(params.get("output_directory") + "/yhat_full_fov.nii.gz"),
-        yhat_prior=execution.output_file(params.get("output_directory") + "/yhat_prior.nii.gz"),
-        x_matrix=execution.output_file(params.get("output_directory") + "/X.mat"),
-        y_matrix=execution.output_file(params.get("output_directory") + "/y.mat"),
-        beta_matrix=execution.output_file(params.get("output_directory") + "/beta.mat"),
-        x0_matrix=execution.output_file(params.get("output_directory") + "/X0.mat"),
-        gtm_values_text=execution.output_file(params.get("output_directory") + "/gtm_values.txt"),
+        synthesized_volume=execution.output_file(params.get("output_directory", None) + "/synth.nii.gz"),
+        rescaled_input=execution.output_file(params.get("output_directory", None) + "/input.rescaled.nii.gz"),
+        eresiduals=execution.output_file(params.get("output_directory", None) + "/eresiduals.nii.gz"),
+        yhat=execution.output_file(params.get("output_directory", None) + "/yhat.nii.gz"),
+        yhat_with_noise=execution.output_file(params.get("output_directory", None) + "/yhat_with_noise.nii.gz"),
+        yhat_full_fov=execution.output_file(params.get("output_directory", None) + "/yhat_full_fov.nii.gz"),
+        yhat_prior=execution.output_file(params.get("output_directory", None) + "/yhat_prior.nii.gz"),
+        x_matrix=execution.output_file(params.get("output_directory", None) + "/X.mat"),
+        y_matrix=execution.output_file(params.get("output_directory", None) + "/y.mat"),
+        beta_matrix=execution.output_file(params.get("output_directory", None) + "/beta.mat"),
+        x0_matrix=execution.output_file(params.get("output_directory", None) + "/X0.mat"),
+        gtm_values_text=execution.output_file(params.get("output_directory", None) + "/gtm_values.txt"),
     )
     return ret
 
@@ -877,7 +910,6 @@ def mri_gtmpvc(
 __all__ = [
     "MRI_GTMPVC_METADATA",
     "MriGtmpvcOutputs",
-    "MriGtmpvcParameters",
     "mri_gtmpvc",
     "mri_gtmpvc_execute",
     "mri_gtmpvc_params",

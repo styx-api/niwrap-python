@@ -14,7 +14,24 @@ MRIS_SPHERICAL_AVERAGE_METADATA = Metadata(
 
 
 MrisSphericalAverageParameters = typing.TypedDict('MrisSphericalAverageParameters', {
-    "@type": typing.Literal["freesurfer.mris_spherical_average"],
+    "@type": typing.NotRequired[typing.Literal["freesurfer/mris_spherical_average"]],
+    "which": typing.Literal["coords", "label", "vals", "curv", "area"],
+    "fname": str,
+    "hemi": typing.Literal["lh", "rh"],
+    "spherical_surf": str,
+    "subjects": list[str],
+    "output": str,
+    "segment": bool,
+    "normalize": bool,
+    "orig": typing.NotRequired[str | None],
+    "output_subject_name": typing.NotRequired[str | None],
+    "output_subject_dir": typing.NotRequired[str | None],
+    "subjects_dir": typing.NotRequired[str | None],
+    "average_area": bool,
+    "summary_statistics": typing.NotRequired[str | None],
+})
+MrisSphericalAverageParametersTagged = typing.TypedDict('MrisSphericalAverageParametersTagged', {
+    "@type": typing.Literal["freesurfer/mris_spherical_average"],
     "which": typing.Literal["coords", "label", "vals", "curv", "area"],
     "fname": str,
     "hemi": typing.Literal["lh", "rh"],
@@ -32,40 +49,9 @@ MrisSphericalAverageParameters = typing.TypedDict('MrisSphericalAverageParameter
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "freesurfer.mris_spherical_average": mris_spherical_average_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-    }.get(t)
-
-
 class MrisSphericalAverageOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `mris_spherical_average(...)`.
+    Output object returned when calling `MrisSphericalAverageParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -86,7 +72,7 @@ def mris_spherical_average_params(
     subjects_dir: str | None = None,
     average_area: bool = False,
     summary_statistics: str | None = None,
-) -> MrisSphericalAverageParameters:
+) -> MrisSphericalAverageParametersTagged:
     """
     Build parameters.
     
@@ -113,7 +99,7 @@ def mris_spherical_average_params(
         Parameter dictionary
     """
     params = {
-        "@type": "freesurfer.mris_spherical_average",
+        "@type": "freesurfer/mris_spherical_average",
         "which": which,
         "fname": fname,
         "hemi": hemi,
@@ -152,42 +138,42 @@ def mris_spherical_average_cargs(
     """
     cargs = []
     cargs.append("mris_spherical_average")
-    cargs.append(params.get("which"))
-    cargs.append(params.get("fname"))
-    cargs.append(params.get("hemi"))
-    cargs.append(params.get("spherical_surf"))
-    cargs.extend(params.get("subjects"))
-    cargs.append(params.get("output"))
-    if params.get("segment"):
+    cargs.append(params.get("which", None))
+    cargs.append(params.get("fname", None))
+    cargs.append(params.get("hemi", None))
+    cargs.append(params.get("spherical_surf", None))
+    cargs.extend(params.get("subjects", None))
+    cargs.append(params.get("output", None))
+    if params.get("segment", False):
         cargs.append("-segment")
-    if params.get("normalize"):
+    if params.get("normalize", False):
         cargs.append("-n")
-    if params.get("orig") is not None:
+    if params.get("orig", None) is not None:
         cargs.extend([
             "-orig",
-            params.get("orig")
+            params.get("orig", None)
         ])
-    if params.get("output_subject_name") is not None:
+    if params.get("output_subject_name", None) is not None:
         cargs.extend([
             "-o",
-            params.get("output_subject_name")
+            params.get("output_subject_name", None)
         ])
-    if params.get("output_subject_dir") is not None:
+    if params.get("output_subject_dir", None) is not None:
         cargs.extend([
             "-osdir",
-            params.get("output_subject_dir")
+            params.get("output_subject_dir", None)
         ])
-    if params.get("subjects_dir") is not None:
+    if params.get("subjects_dir", None) is not None:
         cargs.extend([
             "-sdir",
-            params.get("subjects_dir")
+            params.get("subjects_dir", None)
         ])
-    if params.get("average_area"):
+    if params.get("average_area", False):
         cargs.append("-average_area")
-    if params.get("summary_statistics") is not None:
+    if params.get("summary_statistics", None) is not None:
         cargs.extend([
             "-s",
-            params.get("summary_statistics")
+            params.get("summary_statistics", None)
         ])
     return cargs
 
@@ -310,7 +296,6 @@ def mris_spherical_average(
 __all__ = [
     "MRIS_SPHERICAL_AVERAGE_METADATA",
     "MrisSphericalAverageOutputs",
-    "MrisSphericalAverageParameters",
     "mris_spherical_average",
     "mris_spherical_average_execute",
     "mris_spherical_average_params",

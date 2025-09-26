@@ -14,7 +14,17 @@ V_1D_BANDPASS_METADATA = Metadata(
 
 
 V1dBandpassParameters = typing.TypedDict('V1dBandpassParameters', {
-    "@type": typing.Literal["afni.1dBandpass"],
+    "@type": typing.NotRequired[typing.Literal["afni/1dBandpass"]],
+    "fbot": float,
+    "ftop": float,
+    "infile": InputPathType,
+    "timestep": typing.NotRequired[float | None],
+    "ortfile": typing.NotRequired[InputPathType | None],
+    "nodetrend": bool,
+    "norm": bool,
+})
+V1dBandpassParametersTagged = typing.TypedDict('V1dBandpassParametersTagged', {
+    "@type": typing.Literal["afni/1dBandpass"],
     "fbot": float,
     "ftop": float,
     "infile": InputPathType,
@@ -25,40 +35,9 @@ V1dBandpassParameters = typing.TypedDict('V1dBandpassParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "afni.1dBandpass": v_1d_bandpass_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-    }.get(t)
-
-
 class V1dBandpassOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `v_1d_bandpass(...)`.
+    Output object returned when calling `V1dBandpassParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -72,7 +51,7 @@ def v_1d_bandpass_params(
     ortfile: InputPathType | None = None,
     nodetrend: bool = False,
     norm: bool = False,
-) -> V1dBandpassParameters:
+) -> V1dBandpassParametersTagged:
     """
     Build parameters.
     
@@ -91,7 +70,7 @@ def v_1d_bandpass_params(
         Parameter dictionary
     """
     params = {
-        "@type": "afni.1dBandpass",
+        "@type": "afni/1dBandpass",
         "fbot": fbot,
         "ftop": ftop,
         "infile": infile,
@@ -120,22 +99,22 @@ def v_1d_bandpass_cargs(
     """
     cargs = []
     cargs.append("1dBandpass")
-    cargs.append(str(params.get("fbot")))
-    cargs.append(str(params.get("ftop")))
-    cargs.append(execution.input_file(params.get("infile")))
-    if params.get("timestep") is not None:
+    cargs.append(str(params.get("fbot", None)))
+    cargs.append(str(params.get("ftop", None)))
+    cargs.append(execution.input_file(params.get("infile", None)))
+    if params.get("timestep", None) is not None:
         cargs.extend([
             "-dt",
-            str(params.get("timestep"))
+            str(params.get("timestep", None))
         ])
-    if params.get("ortfile") is not None:
+    if params.get("ortfile", None) is not None:
         cargs.extend([
             "-ort",
-            execution.input_file(params.get("ortfile"))
+            execution.input_file(params.get("ortfile", None))
         ])
-    if params.get("nodetrend"):
+    if params.get("nodetrend", False):
         cargs.append("-nodetrend")
-    if params.get("norm"):
+    if params.get("norm", False):
         cargs.append("-norm")
     return cargs
 
@@ -235,7 +214,6 @@ def v_1d_bandpass(
 
 __all__ = [
     "V1dBandpassOutputs",
-    "V1dBandpassParameters",
     "V_1D_BANDPASS_METADATA",
     "v_1d_bandpass",
     "v_1d_bandpass_execute",

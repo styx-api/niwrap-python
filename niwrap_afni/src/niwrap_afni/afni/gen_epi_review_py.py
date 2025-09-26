@@ -14,7 +14,20 @@ GEN_EPI_REVIEW_PY_METADATA = Metadata(
 
 
 GenEpiReviewPyParameters = typing.TypedDict('GenEpiReviewPyParameters', {
-    "@type": typing.Literal["afni.gen_epi_review.py"],
+    "@type": typing.NotRequired[typing.Literal["afni/gen_epi_review.py"]],
+    "datasets": list[str],
+    "script_name": typing.NotRequired[str | None],
+    "windows": typing.NotRequired[list[str] | None],
+    "verbosity": typing.NotRequired[float | None],
+    "image_size": typing.NotRequired[list[float] | None],
+    "image_xoffset": typing.NotRequired[float | None],
+    "image_yoffset": typing.NotRequired[float | None],
+    "graph_size": typing.NotRequired[list[float] | None],
+    "graph_xoffset": typing.NotRequired[float | None],
+    "graph_yoffset": typing.NotRequired[float | None],
+})
+GenEpiReviewPyParametersTagged = typing.TypedDict('GenEpiReviewPyParametersTagged', {
+    "@type": typing.Literal["afni/gen_epi_review.py"],
     "datasets": list[str],
     "script_name": typing.NotRequired[str | None],
     "windows": typing.NotRequired[list[str] | None],
@@ -28,40 +41,9 @@ GenEpiReviewPyParameters = typing.TypedDict('GenEpiReviewPyParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "afni.gen_epi_review.py": gen_epi_review_py_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-    }.get(t)
-
-
 class GenEpiReviewPyOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `gen_epi_review_py(...)`.
+    Output object returned when calling `GenEpiReviewPyParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -78,7 +60,7 @@ def gen_epi_review_py_params(
     graph_size: list[float] | None = None,
     graph_xoffset: float | None = None,
     graph_yoffset: float | None = None,
-) -> GenEpiReviewPyParameters:
+) -> GenEpiReviewPyParametersTagged:
     """
     Build parameters.
     
@@ -97,7 +79,7 @@ def gen_epi_review_py_params(
         Parameter dictionary
     """
     params = {
-        "@type": "afni.gen_epi_review.py",
+        "@type": "afni/gen_epi_review.py",
         "datasets": datasets,
     }
     if script_name is not None:
@@ -138,52 +120,52 @@ def gen_epi_review_py_cargs(
     cargs.append("gen_epi_review.py")
     cargs.extend([
         "-dsets",
-        *params.get("datasets")
+        *params.get("datasets", None)
     ])
-    if params.get("script_name") is not None:
+    if params.get("script_name", None) is not None:
         cargs.extend([
             "-script",
-            params.get("script_name")
+            params.get("script_name", None)
         ])
-    if params.get("windows") is not None:
+    if params.get("windows", None) is not None:
         cargs.extend([
             "-windows",
-            *params.get("windows")
+            *params.get("windows", None)
         ])
-    if params.get("verbosity") is not None:
+    if params.get("verbosity", None) is not None:
         cargs.extend([
             "-verb",
-            str(params.get("verbosity"))
+            str(params.get("verbosity", None))
         ])
-    if params.get("image_size") is not None:
+    if params.get("image_size", None) is not None:
         cargs.extend([
             "-im_size",
-            *map(str, params.get("image_size"))
+            *map(str, params.get("image_size", None))
         ])
-    if params.get("image_xoffset") is not None:
+    if params.get("image_xoffset", None) is not None:
         cargs.extend([
             "-im_xoff",
-            str(params.get("image_xoffset"))
+            str(params.get("image_xoffset", None))
         ])
-    if params.get("image_yoffset") is not None:
+    if params.get("image_yoffset", None) is not None:
         cargs.extend([
             "-im_yoff",
-            str(params.get("image_yoffset"))
+            str(params.get("image_yoffset", None))
         ])
-    if params.get("graph_size") is not None:
+    if params.get("graph_size", None) is not None:
         cargs.extend([
             "-gr_size",
-            *map(str, params.get("graph_size"))
+            *map(str, params.get("graph_size", None))
         ])
-    if params.get("graph_xoffset") is not None:
+    if params.get("graph_xoffset", None) is not None:
         cargs.extend([
             "-gr_xoff",
-            str(params.get("graph_xoffset"))
+            str(params.get("graph_xoffset", None))
         ])
-    if params.get("graph_yoffset") is not None:
+    if params.get("graph_yoffset", None) is not None:
         cargs.extend([
             "-gr_yoff",
-            str(params.get("graph_yoffset"))
+            str(params.get("graph_yoffset", None))
         ])
     return cargs
 
@@ -290,7 +272,6 @@ def gen_epi_review_py(
 __all__ = [
     "GEN_EPI_REVIEW_PY_METADATA",
     "GenEpiReviewPyOutputs",
-    "GenEpiReviewPyParameters",
     "gen_epi_review_py",
     "gen_epi_review_py_execute",
     "gen_epi_review_py_params",

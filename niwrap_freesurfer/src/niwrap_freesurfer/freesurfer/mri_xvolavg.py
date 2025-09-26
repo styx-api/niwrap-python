@@ -14,7 +14,14 @@ MRI_XVOLAVG_METADATA = Metadata(
 
 
 MriXvolavgParameters = typing.TypedDict('MriXvolavgParameters', {
-    "@type": typing.Literal["freesurfer.mri_xvolavg"],
+    "@type": typing.NotRequired[typing.Literal["freesurfer/mri_xvolavg"]],
+    "input_volumes": list[InputPathType],
+    "vol_type": str,
+    "output_volume": str,
+    "output_type": typing.NotRequired[str | None],
+})
+MriXvolavgParametersTagged = typing.TypedDict('MriXvolavgParametersTagged', {
+    "@type": typing.Literal["freesurfer/mri_xvolavg"],
     "input_volumes": list[InputPathType],
     "vol_type": str,
     "output_volume": str,
@@ -22,41 +29,9 @@ MriXvolavgParameters = typing.TypedDict('MriXvolavgParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "freesurfer.mri_xvolavg": mri_xvolavg_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "freesurfer.mri_xvolavg": mri_xvolavg_outputs,
-    }.get(t)
-
-
 class MriXvolavgOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `mri_xvolavg(...)`.
+    Output object returned when calling `MriXvolavgParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -69,7 +44,7 @@ def mri_xvolavg_params(
     vol_type: str,
     output_volume: str,
     output_type: str | None = None,
-) -> MriXvolavgParameters:
+) -> MriXvolavgParametersTagged:
     """
     Build parameters.
     
@@ -84,7 +59,7 @@ def mri_xvolavg_params(
         Parameter dictionary
     """
     params = {
-        "@type": "freesurfer.mri_xvolavg",
+        "@type": "freesurfer/mri_xvolavg",
         "input_volumes": input_volumes,
         "vol_type": vol_type,
         "output_volume": output_volume,
@@ -111,20 +86,20 @@ def mri_xvolavg_cargs(
     cargs.append("mri_xvolavg")
     cargs.extend([
         "--vol",
-        *[execution.input_file(f) for f in params.get("input_volumes")]
+        *[execution.input_file(f) for f in params.get("input_volumes", None)]
     ])
     cargs.extend([
         "--vol_type",
-        params.get("vol_type")
+        params.get("vol_type", None)
     ])
     cargs.extend([
         "--out",
-        params.get("output_volume")
+        params.get("output_volume", None)
     ])
-    if params.get("output_type") is not None:
+    if params.get("output_type", None) is not None:
         cargs.extend([
             "--out_type",
-            params.get("output_type")
+            params.get("output_type", None)
         ])
     return cargs
 
@@ -144,7 +119,7 @@ def mri_xvolavg_outputs(
     """
     ret = MriXvolavgOutputs(
         root=execution.output_file("."),
-        averaged_output=execution.output_file(params.get("output_volume")),
+        averaged_output=execution.output_file(params.get("output_volume", None)),
     )
     return ret
 
@@ -216,7 +191,6 @@ def mri_xvolavg(
 __all__ = [
     "MRI_XVOLAVG_METADATA",
     "MriXvolavgOutputs",
-    "MriXvolavgParameters",
     "mri_xvolavg",
     "mri_xvolavg_execute",
     "mri_xvolavg_params",

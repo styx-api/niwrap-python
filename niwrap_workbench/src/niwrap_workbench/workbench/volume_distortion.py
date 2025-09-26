@@ -14,7 +14,15 @@ VOLUME_DISTORTION_METADATA = Metadata(
 
 
 VolumeDistortionParameters = typing.TypedDict('VolumeDistortionParameters', {
-    "@type": typing.Literal["workbench.volume-distortion"],
+    "@type": typing.NotRequired[typing.Literal["workbench/volume-distortion"]],
+    "warpfield": str,
+    "volume_out": str,
+    "opt_fnirt_source_volume": typing.NotRequired[str | None],
+    "opt_circular": bool,
+    "opt_log2": bool,
+})
+VolumeDistortionParametersTagged = typing.TypedDict('VolumeDistortionParametersTagged', {
+    "@type": typing.Literal["workbench/volume-distortion"],
     "warpfield": str,
     "volume_out": str,
     "opt_fnirt_source_volume": typing.NotRequired[str | None],
@@ -23,41 +31,9 @@ VolumeDistortionParameters = typing.TypedDict('VolumeDistortionParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "workbench.volume-distortion": volume_distortion_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "workbench.volume-distortion": volume_distortion_outputs,
-    }.get(t)
-
-
 class VolumeDistortionOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `volume_distortion(...)`.
+    Output object returned when calling `VolumeDistortionParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -71,7 +47,7 @@ def volume_distortion_params(
     opt_fnirt_source_volume: str | None = None,
     opt_circular: bool = False,
     opt_log2: bool = False,
-) -> VolumeDistortionParameters:
+) -> VolumeDistortionParametersTagged:
     """
     Build parameters.
     
@@ -86,7 +62,7 @@ def volume_distortion_params(
         Parameter dictionary
     """
     params = {
-        "@type": "workbench.volume-distortion",
+        "@type": "workbench/volume-distortion",
         "warpfield": warpfield,
         "volume_out": volume_out,
         "opt_circular": opt_circular,
@@ -113,16 +89,16 @@ def volume_distortion_cargs(
     cargs = []
     cargs.append("wb_command")
     cargs.append("-volume-distortion")
-    cargs.append(params.get("warpfield"))
-    cargs.append(params.get("volume_out"))
-    if params.get("opt_fnirt_source_volume") is not None:
+    cargs.append(params.get("warpfield", None))
+    cargs.append(params.get("volume_out", None))
+    if params.get("opt_fnirt_source_volume", None) is not None:
         cargs.extend([
             "-fnirt",
-            params.get("opt_fnirt_source_volume")
+            params.get("opt_fnirt_source_volume", None)
         ])
-    if params.get("opt_circular"):
+    if params.get("opt_circular", False):
         cargs.append("-circular")
-    if params.get("opt_log2"):
+    if params.get("opt_log2", False):
         cargs.append("-log2")
     return cargs
 
@@ -142,7 +118,7 @@ def volume_distortion_outputs(
     """
     ret = VolumeDistortionOutputs(
         root=execution.output_file("."),
-        volume_out=execution.output_file(params.get("volume_out")),
+        volume_out=execution.output_file(params.get("volume_out", None)),
     )
     return ret
 
@@ -242,7 +218,6 @@ def volume_distortion(
 __all__ = [
     "VOLUME_DISTORTION_METADATA",
     "VolumeDistortionOutputs",
-    "VolumeDistortionParameters",
     "volume_distortion",
     "volume_distortion_execute",
     "volume_distortion_params",

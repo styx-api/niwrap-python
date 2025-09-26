@@ -14,21 +14,55 @@ DWIBIASCORRECT_METADATA = Metadata(
 
 
 DwibiascorrectFslgradParameters = typing.TypedDict('DwibiascorrectFslgradParameters', {
-    "@type": typing.Literal["mrtrix.dwibiascorrect.fslgrad"],
+    "@type": typing.NotRequired[typing.Literal["fslgrad"]],
+    "bvecs": InputPathType,
+    "bvals": InputPathType,
+})
+DwibiascorrectFslgradParametersTagged = typing.TypedDict('DwibiascorrectFslgradParametersTagged', {
+    "@type": typing.Literal["fslgrad"],
     "bvecs": InputPathType,
     "bvals": InputPathType,
 })
 
 
 DwibiascorrectConfigParameters = typing.TypedDict('DwibiascorrectConfigParameters', {
-    "@type": typing.Literal["mrtrix.dwibiascorrect.config"],
+    "@type": typing.NotRequired[typing.Literal["config"]],
+    "key": str,
+    "value": str,
+})
+DwibiascorrectConfigParametersTagged = typing.TypedDict('DwibiascorrectConfigParametersTagged', {
+    "@type": typing.Literal["config"],
     "key": str,
     "value": str,
 })
 
 
 DwibiascorrectParameters = typing.TypedDict('DwibiascorrectParameters', {
-    "@type": typing.Literal["mrtrix.dwibiascorrect"],
+    "@type": typing.NotRequired[typing.Literal["mrtrix/dwibiascorrect"]],
+    "algorithm": str,
+    "input_image": InputPathType,
+    "output_image": str,
+    "grad": typing.NotRequired[InputPathType | None],
+    "fslgrad": typing.NotRequired[DwibiascorrectFslgradParameters | None],
+    "mask_image": typing.NotRequired[InputPathType | None],
+    "bias_image": typing.NotRequired[InputPathType | None],
+    "nocleanup": bool,
+    "scratch_dir": typing.NotRequired[InputPathType | None],
+    "continue_scratch_dir": typing.NotRequired[list[InputPathType] | None],
+    "info": bool,
+    "quiet": bool,
+    "debug": bool,
+    "force": bool,
+    "nthreads": typing.NotRequired[float | None],
+    "config": typing.NotRequired[list[DwibiascorrectConfigParameters] | None],
+    "help": bool,
+    "version": bool,
+    "ants_b": typing.NotRequired[str | None],
+    "ants_c": typing.NotRequired[str | None],
+    "ants_s": typing.NotRequired[str | None],
+})
+DwibiascorrectParametersTagged = typing.TypedDict('DwibiascorrectParametersTagged', {
+    "@type": typing.Literal["mrtrix/dwibiascorrect"],
     "algorithm": str,
     "input_image": InputPathType,
     "output_image": str,
@@ -53,44 +87,10 @@ DwibiascorrectParameters = typing.TypedDict('DwibiascorrectParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "mrtrix.dwibiascorrect": dwibiascorrect_cargs,
-        "mrtrix.dwibiascorrect.fslgrad": dwibiascorrect_fslgrad_cargs,
-        "mrtrix.dwibiascorrect.config": dwibiascorrect_config_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "mrtrix.dwibiascorrect": dwibiascorrect_outputs,
-    }.get(t)
-
-
 def dwibiascorrect_fslgrad_params(
     bvecs: InputPathType,
     bvals: InputPathType,
-) -> DwibiascorrectFslgradParameters:
+) -> DwibiascorrectFslgradParametersTagged:
     """
     Build parameters.
     
@@ -107,7 +107,7 @@ def dwibiascorrect_fslgrad_params(
         Parameter dictionary
     """
     params = {
-        "@type": "mrtrix.dwibiascorrect.fslgrad",
+        "@type": "fslgrad",
         "bvecs": bvecs,
         "bvals": bvals,
     }
@@ -129,15 +129,15 @@ def dwibiascorrect_fslgrad_cargs(
     """
     cargs = []
     cargs.append("-fslgrad")
-    cargs.append(execution.input_file(params.get("bvecs")))
-    cargs.append(execution.input_file(params.get("bvals")))
+    cargs.append(execution.input_file(params.get("bvecs", None)))
+    cargs.append(execution.input_file(params.get("bvals", None)))
     return cargs
 
 
 def dwibiascorrect_config_params(
     key: str,
     value: str,
-) -> DwibiascorrectConfigParameters:
+) -> DwibiascorrectConfigParametersTagged:
     """
     Build parameters.
     
@@ -148,7 +148,7 @@ def dwibiascorrect_config_params(
         Parameter dictionary
     """
     params = {
-        "@type": "mrtrix.dwibiascorrect.config",
+        "@type": "config",
         "key": key,
         "value": value,
     }
@@ -170,14 +170,14 @@ def dwibiascorrect_config_cargs(
     """
     cargs = []
     cargs.append("-config")
-    cargs.append(params.get("key"))
-    cargs.append(params.get("value"))
+    cargs.append(params.get("key", None))
+    cargs.append(params.get("value", None))
     return cargs
 
 
 class DwibiascorrectOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `dwibiascorrect(...)`.
+    Output object returned when calling `DwibiascorrectParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -209,7 +209,7 @@ def dwibiascorrect_params(
     ants_b: str | None = None,
     ants_c: str | None = None,
     ants_s: str | None = None,
-) -> DwibiascorrectParameters:
+) -> DwibiascorrectParametersTagged:
     """
     Build parameters.
     
@@ -250,7 +250,7 @@ def dwibiascorrect_params(
         Parameter dictionary
     """
     params = {
-        "@type": "mrtrix.dwibiascorrect",
+        "@type": "mrtrix/dwibiascorrect",
         "algorithm": algorithm,
         "input_image": input_image,
         "output_image": output_image,
@@ -302,71 +302,71 @@ def dwibiascorrect_cargs(
     """
     cargs = []
     cargs.append("dwibiascorrect")
-    cargs.append(params.get("algorithm"))
-    cargs.append(execution.input_file(params.get("input_image")))
-    cargs.append(params.get("output_image"))
-    if params.get("grad") is not None:
+    cargs.append(params.get("algorithm", None))
+    cargs.append(execution.input_file(params.get("input_image", None)))
+    cargs.append(params.get("output_image", None))
+    if params.get("grad", None) is not None:
         cargs.extend([
             "-grad",
-            execution.input_file(params.get("grad"))
+            execution.input_file(params.get("grad", None))
         ])
-    if params.get("fslgrad") is not None:
-        cargs.extend(dyn_cargs(params.get("fslgrad")["@type"])(params.get("fslgrad"), execution))
-    if params.get("mask_image") is not None:
+    if params.get("fslgrad", None) is not None:
+        cargs.extend(dwibiascorrect_fslgrad_cargs(params.get("fslgrad", None), execution))
+    if params.get("mask_image", None) is not None:
         cargs.extend([
             "-mask",
-            execution.input_file(params.get("mask_image"))
+            execution.input_file(params.get("mask_image", None))
         ])
-    if params.get("bias_image") is not None:
+    if params.get("bias_image", None) is not None:
         cargs.extend([
             "-bias",
-            execution.input_file(params.get("bias_image"))
+            execution.input_file(params.get("bias_image", None))
         ])
-    if params.get("nocleanup"):
+    if params.get("nocleanup", False):
         cargs.append("-nocleanup")
-    if params.get("scratch_dir") is not None:
+    if params.get("scratch_dir", None) is not None:
         cargs.extend([
             "-scratch",
-            execution.input_file(params.get("scratch_dir"))
+            execution.input_file(params.get("scratch_dir", None))
         ])
-    if params.get("continue_scratch_dir") is not None:
+    if params.get("continue_scratch_dir", None) is not None:
         cargs.extend([
             "-continue",
-            *[execution.input_file(f) for f in params.get("continue_scratch_dir")]
+            *[execution.input_file(f) for f in params.get("continue_scratch_dir", None)]
         ])
-    if params.get("info"):
+    if params.get("info", False):
         cargs.append("-info")
-    if params.get("quiet"):
+    if params.get("quiet", False):
         cargs.append("-quiet")
-    if params.get("debug"):
+    if params.get("debug", False):
         cargs.append("-debug")
-    if params.get("force"):
+    if params.get("force", False):
         cargs.append("-force")
-    if params.get("nthreads") is not None:
+    if params.get("nthreads", None) is not None:
         cargs.extend([
             "-nthreads",
-            str(params.get("nthreads"))
+            str(params.get("nthreads", None))
         ])
-    if params.get("config") is not None:
-        cargs.extend([a for c in [dyn_cargs(s["@type"])(s, execution) for s in params.get("config")] for a in c])
-    if params.get("help"):
+    if params.get("config", None) is not None:
+        cargs.extend([a for c in [dwibiascorrect_config_cargs(s, execution) for s in params.get("config", None)] for a in c])
+    if params.get("help", False):
         cargs.append("-help")
-    if params.get("version"):
+    if params.get("version", False):
         cargs.append("-version")
-    if params.get("ants_b") is not None:
+    if params.get("ants_b", None) is not None:
         cargs.extend([
             "-ants.b",
-            params.get("ants_b")
+            params.get("ants_b", None)
         ])
-    if params.get("ants_c") is not None:
+    if params.get("ants_c", None) is not None:
         cargs.extend([
             "-ants.c",
-            params.get("ants_c")
+            params.get("ants_c", None)
         ])
-    if params.get("ants_s") is not None:
+    if params.get("ants_s", None) is not None:
         cargs.extend([
             "-ants.s",
-            params.get("ants_s")
+            params.get("ants_s", None)
         ])
     return cargs
 
@@ -386,8 +386,8 @@ def dwibiascorrect_outputs(
     """
     ret = DwibiascorrectOutputs(
         root=execution.output_file("."),
-        output_image_file=execution.output_file(params.get("output_image")),
-        bias_image_file=execution.output_file(pathlib.Path(params.get("bias_image")).name) if (params.get("bias_image") is not None) else None,
+        output_image_file=execution.output_file(params.get("output_image", None)),
+        bias_image_file=execution.output_file(pathlib.Path(params.get("bias_image", None)).name) if (params.get("bias_image") is not None) else None,
     )
     return ret
 
@@ -520,10 +520,7 @@ def dwibiascorrect(
 
 __all__ = [
     "DWIBIASCORRECT_METADATA",
-    "DwibiascorrectConfigParameters",
-    "DwibiascorrectFslgradParameters",
     "DwibiascorrectOutputs",
-    "DwibiascorrectParameters",
     "dwibiascorrect",
     "dwibiascorrect_config_params",
     "dwibiascorrect_execute",

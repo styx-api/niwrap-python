@@ -14,7 +14,20 @@ DMRI_BSET_METADATA = Metadata(
 
 
 DmriBsetParameters = typing.TypedDict('DmriBsetParameters', {
-    "@type": typing.Literal["freesurfer.dmri_bset"],
+    "@type": typing.NotRequired[typing.Literal["freesurfer/dmri_bset"]],
+    "input_dwi": InputPathType,
+    "output_dwi": str,
+    "b_values": typing.NotRequired[list[float] | None],
+    "btol": typing.NotRequired[float | None],
+    "bsort": bool,
+    "bmax": typing.NotRequired[float | None],
+    "input_b_table": typing.NotRequired[InputPathType | None],
+    "input_g_table": typing.NotRequired[InputPathType | None],
+    "output_b_table": typing.NotRequired[str | None],
+    "output_g_table": typing.NotRequired[str | None],
+})
+DmriBsetParametersTagged = typing.TypedDict('DmriBsetParametersTagged', {
+    "@type": typing.Literal["freesurfer/dmri_bset"],
     "input_dwi": InputPathType,
     "output_dwi": str,
     "b_values": typing.NotRequired[list[float] | None],
@@ -28,41 +41,9 @@ DmriBsetParameters = typing.TypedDict('DmriBsetParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "freesurfer.dmri_bset": dmri_bset_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "freesurfer.dmri_bset": dmri_bset_outputs,
-    }.get(t)
-
-
 class DmriBsetOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `dmri_bset(...)`.
+    Output object returned when calling `DmriBsetParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -85,7 +66,7 @@ def dmri_bset_params(
     input_g_table: InputPathType | None = None,
     output_b_table: str | None = None,
     output_g_table: str | None = None,
-) -> DmriBsetParameters:
+) -> DmriBsetParametersTagged:
     """
     Build parameters.
     
@@ -109,7 +90,7 @@ def dmri_bset_params(
         Parameter dictionary
     """
     params = {
-        "@type": "freesurfer.dmri_bset",
+        "@type": "freesurfer/dmri_bset",
         "input_dwi": input_dwi,
         "output_dwi": output_dwi,
         "bsort": bsort,
@@ -146,44 +127,44 @@ def dmri_bset_cargs(
     """
     cargs = []
     cargs.append("dmri_bset")
-    cargs.append(execution.input_file(params.get("input_dwi")))
-    cargs.append(params.get("output_dwi"))
-    if params.get("b_values") is not None:
+    cargs.append(execution.input_file(params.get("input_dwi", None)))
+    cargs.append(params.get("output_dwi", None))
+    if params.get("b_values", None) is not None:
         cargs.extend([
             "--b",
-            *map(str, params.get("b_values"))
+            *map(str, params.get("b_values", None))
         ])
-    if params.get("btol") is not None:
+    if params.get("btol", None) is not None:
         cargs.extend([
             "--btol",
-            str(params.get("btol"))
+            str(params.get("btol", None))
         ])
-    if params.get("bsort"):
+    if params.get("bsort", False):
         cargs.append("--bsort")
-    if params.get("bmax") is not None:
+    if params.get("bmax", None) is not None:
         cargs.extend([
             "--bmax",
-            str(params.get("bmax"))
+            str(params.get("bmax", None))
         ])
-    if params.get("input_b_table") is not None:
+    if params.get("input_b_table", None) is not None:
         cargs.extend([
             "--inb",
-            execution.input_file(params.get("input_b_table"))
+            execution.input_file(params.get("input_b_table", None))
         ])
-    if params.get("input_g_table") is not None:
+    if params.get("input_g_table", None) is not None:
         cargs.extend([
             "--ing",
-            execution.input_file(params.get("input_g_table"))
+            execution.input_file(params.get("input_g_table", None))
         ])
-    if params.get("output_b_table") is not None:
+    if params.get("output_b_table", None) is not None:
         cargs.extend([
             "--outb",
-            params.get("output_b_table")
+            params.get("output_b_table", None)
         ])
-    if params.get("output_g_table") is not None:
+    if params.get("output_g_table", None) is not None:
         cargs.extend([
             "--outg",
-            params.get("output_g_table")
+            params.get("output_g_table", None)
         ])
     return cargs
 
@@ -203,9 +184,9 @@ def dmri_bset_outputs(
     """
     ret = DmriBsetOutputs(
         root=execution.output_file("."),
-        output_dwi_file=execution.output_file(params.get("output_dwi")),
-        output_b_table_file=execution.output_file(params.get("output_b_table")) if (params.get("output_b_table") is not None) else None,
-        output_g_table_file=execution.output_file(params.get("output_g_table")) if (params.get("output_g_table") is not None) else None,
+        output_dwi_file=execution.output_file(params.get("output_dwi", None)),
+        output_b_table_file=execution.output_file(params.get("output_b_table", None)) if (params.get("output_b_table") is not None) else None,
+        output_g_table_file=execution.output_file(params.get("output_g_table", None)) if (params.get("output_g_table") is not None) else None,
     )
     return ret
 
@@ -300,7 +281,6 @@ def dmri_bset(
 __all__ = [
     "DMRI_BSET_METADATA",
     "DmriBsetOutputs",
-    "DmriBsetParameters",
     "dmri_bset",
     "dmri_bset_execute",
     "dmri_bset_params",

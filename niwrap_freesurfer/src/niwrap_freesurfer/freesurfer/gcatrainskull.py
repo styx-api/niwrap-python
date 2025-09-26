@@ -14,45 +14,18 @@ GCATRAINSKULL_METADATA = Metadata(
 
 
 GcatrainskullParameters = typing.TypedDict('GcatrainskullParameters', {
-    "@type": typing.Literal["freesurfer.gcatrainskull"],
+    "@type": typing.NotRequired[typing.Literal["freesurfer/gcatrainskull"]],
+    "gcatrain_dir": str,
+})
+GcatrainskullParametersTagged = typing.TypedDict('GcatrainskullParametersTagged', {
+    "@type": typing.Literal["freesurfer/gcatrainskull"],
     "gcatrain_dir": str,
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "freesurfer.gcatrainskull": gcatrainskull_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-    }.get(t)
-
-
 class GcatrainskullOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `gcatrainskull(...)`.
+    Output object returned when calling `GcatrainskullParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -60,7 +33,7 @@ class GcatrainskullOutputs(typing.NamedTuple):
 
 def gcatrainskull_params(
     gcatrain_dir: str,
-) -> GcatrainskullParameters:
+) -> GcatrainskullParametersTagged:
     """
     Build parameters.
     
@@ -70,7 +43,7 @@ def gcatrainskull_params(
         Parameter dictionary
     """
     params = {
-        "@type": "freesurfer.gcatrainskull",
+        "@type": "freesurfer/gcatrainskull",
         "gcatrain_dir": gcatrain_dir,
     }
     return params
@@ -93,7 +66,7 @@ def gcatrainskull_cargs(
     cargs.append("gcatrainskull")
     cargs.extend([
         "--g",
-        params.get("gcatrain_dir")
+        params.get("gcatrain_dir", None)
     ])
     return cargs
 
@@ -173,7 +146,6 @@ def gcatrainskull(
 __all__ = [
     "GCATRAINSKULL_METADATA",
     "GcatrainskullOutputs",
-    "GcatrainskullParameters",
     "gcatrainskull",
     "gcatrainskull_execute",
     "gcatrainskull_params",

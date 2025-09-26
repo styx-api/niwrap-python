@@ -14,7 +14,33 @@ FAT_MAT_SEL_PY_METADATA = Metadata(
 
 
 FatMatSelPyParameters = typing.TypedDict('FatMatSelPyParameters', {
-    "@type": typing.Literal["afni.fat_mat_sel.py"],
+    "@type": typing.NotRequired[typing.Literal["afni/fat_mat_sel.py"]],
+    "parameters": str,
+    "matr_in": typing.NotRequired[str | None],
+    "list_match": typing.NotRequired[InputPathType | None],
+    "out_ind_matr": bool,
+    "out_ind_1ddset": bool,
+    "hold_image": bool,
+    "extern_labs_no": bool,
+    "type_file": typing.NotRequired[str | None],
+    "dpi_file": typing.NotRequired[float | None],
+    "xlen_file": typing.NotRequired[float | None],
+    "ylen_file": typing.NotRequired[float | None],
+    "tight_layout_on": bool,
+    "fig_off": bool,
+    "size_font": typing.NotRequired[float | None],
+    "lab_size_font": typing.NotRequired[float | None],
+    "a_plotmin": typing.NotRequired[float | None],
+    "b_plotmax": typing.NotRequired[float | None],
+    "cbar_off": bool,
+    "map_of_colors": typing.NotRequired[str | None],
+    "cbar_int_num": typing.NotRequired[float | None],
+    "width_cbar_perc": typing.NotRequired[float | None],
+    "specifier": typing.NotRequired[str | None],
+    "xtick_lab_off": bool,
+})
+FatMatSelPyParametersTagged = typing.TypedDict('FatMatSelPyParametersTagged', {
+    "@type": typing.Literal["afni/fat_mat_sel.py"],
     "parameters": str,
     "matr_in": typing.NotRequired[str | None],
     "list_match": typing.NotRequired[InputPathType | None],
@@ -41,41 +67,9 @@ FatMatSelPyParameters = typing.TypedDict('FatMatSelPyParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "afni.fat_mat_sel.py": fat_mat_sel_py_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "afni.fat_mat_sel.py": fat_mat_sel_py_outputs,
-    }.get(t)
-
-
 class FatMatSelPyOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `fat_mat_sel_py(...)`.
+    Output object returned when calling `FatMatSelPyParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -111,7 +105,7 @@ def fat_mat_sel_py_params(
     width_cbar_perc: float | None = None,
     specifier: str | None = None,
     xtick_lab_off: bool = False,
-) -> FatMatSelPyParameters:
+) -> FatMatSelPyParametersTagged:
     """
     Build parameters.
     
@@ -157,7 +151,7 @@ def fat_mat_sel_py_params(
         Parameter dictionary
     """
     params = {
-        "@type": "afni.fat_mat_sel.py",
+        "@type": "afni/fat_mat_sel.py",
         "parameters": parameters,
         "out_ind_matr": out_ind_matr,
         "out_ind_1ddset": out_ind_1ddset,
@@ -216,93 +210,93 @@ def fat_mat_sel_py_cargs(
     cargs.append("fat_mat_sel.py")
     cargs.extend([
         "--Pars",
-        params.get("parameters")
+        params.get("parameters", None)
     ])
-    if params.get("matr_in") is not None:
+    if params.get("matr_in", None) is not None:
         cargs.extend([
             "--matr_in",
-            params.get("matr_in")
+            params.get("matr_in", None)
         ])
-    if params.get("list_match") is not None:
+    if params.get("list_match", None) is not None:
         cargs.extend([
             "--list_match",
-            execution.input_file(params.get("list_match"))
+            execution.input_file(params.get("list_match", None))
         ])
-    if params.get("out_ind_matr"):
+    if params.get("out_ind_matr", False):
         cargs.append("--out_ind_matr")
-    if params.get("out_ind_1ddset"):
+    if params.get("out_ind_1ddset", False):
         cargs.append("--Out_ind_1ddset")
-    if params.get("hold_image"):
+    if params.get("hold_image", False):
         cargs.append("--Hold_image")
-    if params.get("extern_labs_no"):
+    if params.get("extern_labs_no", False):
         cargs.append("--ExternLabsNo")
-    if params.get("type_file") is not None:
+    if params.get("type_file", None) is not None:
         cargs.extend([
             "--type_file",
-            params.get("type_file")
+            params.get("type_file", None)
         ])
-    if params.get("dpi_file") is not None:
+    if params.get("dpi_file", None) is not None:
         cargs.extend([
             "--dpi_file",
-            str(params.get("dpi_file"))
+            str(params.get("dpi_file", None))
         ])
-    if params.get("xlen_file") is not None:
+    if params.get("xlen_file", None) is not None:
         cargs.extend([
             "--xlen_file",
-            str(params.get("xlen_file"))
+            str(params.get("xlen_file", None))
         ])
-    if params.get("ylen_file") is not None:
+    if params.get("ylen_file", None) is not None:
         cargs.extend([
             "--ylen_file",
-            str(params.get("ylen_file"))
+            str(params.get("ylen_file", None))
         ])
-    if params.get("tight_layout_on"):
+    if params.get("tight_layout_on", False):
         cargs.append("--Tight_layout_on")
-    if params.get("fig_off"):
+    if params.get("fig_off", False):
         cargs.append("--Fig_off")
-    if params.get("size_font") is not None:
+    if params.get("size_font", None) is not None:
         cargs.extend([
             "--Size_font",
-            str(params.get("size_font"))
+            str(params.get("size_font", None))
         ])
-    if params.get("lab_size_font") is not None:
+    if params.get("lab_size_font", None) is not None:
         cargs.extend([
             "--Lab_size_font",
-            str(params.get("lab_size_font"))
+            str(params.get("lab_size_font", None))
         ])
-    if params.get("a_plotmin") is not None:
+    if params.get("a_plotmin", None) is not None:
         cargs.extend([
             "--A_plotmin",
-            str(params.get("a_plotmin"))
+            str(params.get("a_plotmin", None))
         ])
-    if params.get("b_plotmax") is not None:
+    if params.get("b_plotmax", None) is not None:
         cargs.extend([
             "--B_plotmax",
-            str(params.get("b_plotmax"))
+            str(params.get("b_plotmax", None))
         ])
-    if params.get("cbar_off"):
+    if params.get("cbar_off", False):
         cargs.append("--Cbar_off")
-    if params.get("map_of_colors") is not None:
+    if params.get("map_of_colors", None) is not None:
         cargs.extend([
             "--Map_of_colors",
-            params.get("map_of_colors")
+            params.get("map_of_colors", None)
         ])
-    if params.get("cbar_int_num") is not None:
+    if params.get("cbar_int_num", None) is not None:
         cargs.extend([
             "--cbar_int_num",
-            str(params.get("cbar_int_num"))
+            str(params.get("cbar_int_num", None))
         ])
-    if params.get("width_cbar_perc") is not None:
+    if params.get("width_cbar_perc", None) is not None:
         cargs.extend([
             "--width_cbar_perc",
-            str(params.get("width_cbar_perc"))
+            str(params.get("width_cbar_perc", None))
         ])
-    if params.get("specifier") is not None:
+    if params.get("specifier", None) is not None:
         cargs.extend([
             "--specifier",
-            params.get("specifier")
+            params.get("specifier", None)
         ])
-    if params.get("xtick_lab_off"):
+    if params.get("xtick_lab_off", False):
         cargs.append("--Xtick_lab_off")
     return cargs
 
@@ -467,7 +461,6 @@ def fat_mat_sel_py(
 __all__ = [
     "FAT_MAT_SEL_PY_METADATA",
     "FatMatSelPyOutputs",
-    "FatMatSelPyParameters",
     "fat_mat_sel_py",
     "fat_mat_sel_py_execute",
     "fat_mat_sel_py_params",

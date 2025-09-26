@@ -14,7 +14,14 @@ SURFACE_CURVATURE_METADATA = Metadata(
 
 
 SurfaceCurvatureParameters = typing.TypedDict('SurfaceCurvatureParameters', {
-    "@type": typing.Literal["ants.SurfaceCurvature"],
+    "@type": typing.NotRequired[typing.Literal["ants/SurfaceCurvature"]],
+    "filename_in": InputPathType,
+    "filename_out": str,
+    "sigma": float,
+    "option": float,
+})
+SurfaceCurvatureParametersTagged = typing.TypedDict('SurfaceCurvatureParametersTagged', {
+    "@type": typing.Literal["ants/SurfaceCurvature"],
     "filename_in": InputPathType,
     "filename_out": str,
     "sigma": float,
@@ -22,41 +29,9 @@ SurfaceCurvatureParameters = typing.TypedDict('SurfaceCurvatureParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "ants.SurfaceCurvature": surface_curvature_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "ants.SurfaceCurvature": surface_curvature_outputs,
-    }.get(t)
-
-
 class SurfaceCurvatureOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `surface_curvature(...)`.
+    Output object returned when calling `SurfaceCurvatureParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -69,7 +44,7 @@ def surface_curvature_params(
     filename_out: str,
     sigma: float,
     option: float,
-) -> SurfaceCurvatureParameters:
+) -> SurfaceCurvatureParametersTagged:
     """
     Build parameters.
     
@@ -83,7 +58,7 @@ def surface_curvature_params(
         Parameter dictionary
     """
     params = {
-        "@type": "ants.SurfaceCurvature",
+        "@type": "ants/SurfaceCurvature",
         "filename_in": filename_in,
         "filename_out": filename_out,
         "sigma": sigma,
@@ -107,10 +82,10 @@ def surface_curvature_cargs(
     """
     cargs = []
     cargs.append("SurfaceCurvature")
-    cargs.append(execution.input_file(params.get("filename_in")))
-    cargs.append(params.get("filename_out"))
-    cargs.append(str(params.get("sigma")))
-    cargs.append(str(params.get("option")))
+    cargs.append(execution.input_file(params.get("filename_in", None)))
+    cargs.append(params.get("filename_out", None))
+    cargs.append(str(params.get("sigma", None)))
+    cargs.append(str(params.get("option", None)))
     return cargs
 
 
@@ -129,7 +104,7 @@ def surface_curvature_outputs(
     """
     ret = SurfaceCurvatureOutputs(
         root=execution.output_file("."),
-        output_image=execution.output_file(params.get("filename_out")),
+        output_image=execution.output_file(params.get("filename_out", None)),
     )
     return ret
 
@@ -202,7 +177,6 @@ def surface_curvature(
 __all__ = [
     "SURFACE_CURVATURE_METADATA",
     "SurfaceCurvatureOutputs",
-    "SurfaceCurvatureParameters",
     "surface_curvature",
     "surface_curvature_execute",
     "surface_curvature_params",

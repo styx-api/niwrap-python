@@ -14,7 +14,31 @@ MRI_AVERAGE_METADATA = Metadata(
 
 
 MriAverageParameters = typing.TypedDict('MriAverageParameters', {
-    "@type": typing.Literal["freesurfer.mri_average"],
+    "@type": typing.NotRequired[typing.Literal["freesurfer/mri_average"]],
+    "input_volumes": list[InputPathType],
+    "output_volume": str,
+    "rigid_alignment": bool,
+    "read_from_file": bool,
+    "dt": typing.NotRequired[float | None],
+    "tol": typing.NotRequired[float | None],
+    "conform": bool,
+    "noconform": bool,
+    "reduce": typing.NotRequired[float | None],
+    "sinc_interpolation": typing.NotRequired[float | None],
+    "trilinear": bool,
+    "window": bool,
+    "snapshots": typing.NotRequired[float | None],
+    "translation": typing.NotRequired[list[float] | None],
+    "rotation": typing.NotRequired[list[float] | None],
+    "momentum": typing.NotRequired[float | None],
+    "rms": bool,
+    "rms_alt": bool,
+    "percent": bool,
+    "binarize": typing.NotRequired[float | None],
+    "absolute": bool,
+})
+MriAverageParametersTagged = typing.TypedDict('MriAverageParametersTagged', {
+    "@type": typing.Literal["freesurfer/mri_average"],
     "input_volumes": list[InputPathType],
     "output_volume": str,
     "rigid_alignment": bool,
@@ -39,41 +63,9 @@ MriAverageParameters = typing.TypedDict('MriAverageParameters', {
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "freesurfer.mri_average": mri_average_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "freesurfer.mri_average": mri_average_outputs,
-    }.get(t)
-
-
 class MriAverageOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `mri_average(...)`.
+    Output object returned when calling `MriAverageParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -103,7 +95,7 @@ def mri_average_params(
     percent: bool = False,
     binarize: float | None = None,
     absolute: bool = False,
-) -> MriAverageParameters:
+) -> MriAverageParametersTagged:
     """
     Build parameters.
     
@@ -135,7 +127,7 @@ def mri_average_params(
         Parameter dictionary
     """
     params = {
-        "@type": "freesurfer.mri_average",
+        "@type": "freesurfer/mri_average",
         "input_volumes": input_volumes,
         "output_volume": output_volume,
         "rigid_alignment": rigid_alignment,
@@ -185,72 +177,72 @@ def mri_average_cargs(
     """
     cargs = []
     cargs.append("mri_average")
-    cargs.extend([execution.input_file(f) for f in params.get("input_volumes")])
-    cargs.append(params.get("output_volume"))
-    if params.get("rigid_alignment"):
+    cargs.extend([execution.input_file(f) for f in params.get("input_volumes", None)])
+    cargs.append(params.get("output_volume", None))
+    if params.get("rigid_alignment", False):
         cargs.append("-a")
-    if params.get("read_from_file"):
+    if params.get("read_from_file", False):
         cargs.append("-F")
-    if params.get("dt") is not None:
+    if params.get("dt", None) is not None:
         cargs.extend([
             "-dt",
-            str(params.get("dt"))
+            str(params.get("dt", None))
         ])
-    if params.get("tol") is not None:
+    if params.get("tol", None) is not None:
         cargs.extend([
             "-tol",
-            str(params.get("tol"))
+            str(params.get("tol", None))
         ])
-    if params.get("conform"):
+    if params.get("conform", False):
         cargs.append("-conform")
-    if params.get("noconform"):
+    if params.get("noconform", False):
         cargs.append("-noconform")
-    if params.get("reduce") is not None:
+    if params.get("reduce", None) is not None:
         cargs.extend([
             "-reduce",
-            str(params.get("reduce"))
+            str(params.get("reduce", None))
         ])
-    if params.get("sinc_interpolation") is not None:
+    if params.get("sinc_interpolation", None) is not None:
         cargs.extend([
             "-sinc",
-            str(params.get("sinc_interpolation"))
+            str(params.get("sinc_interpolation", None))
         ])
-    if params.get("trilinear"):
+    if params.get("trilinear", False):
         cargs.append("-trilinear")
-    if params.get("window"):
+    if params.get("window", False):
         cargs.append("-window")
-    if params.get("snapshots") is not None:
+    if params.get("snapshots", None) is not None:
         cargs.extend([
             "-w",
-            str(params.get("snapshots"))
+            str(params.get("snapshots", None))
         ])
-    if params.get("translation") is not None:
+    if params.get("translation", None) is not None:
         cargs.extend([
             "-t",
-            *map(str, params.get("translation"))
+            *map(str, params.get("translation", None))
         ])
-    if params.get("rotation") is not None:
+    if params.get("rotation", None) is not None:
         cargs.extend([
             "-r",
-            *map(str, params.get("rotation"))
+            *map(str, params.get("rotation", None))
         ])
-    if params.get("momentum") is not None:
+    if params.get("momentum", None) is not None:
         cargs.extend([
             "-m",
-            str(params.get("momentum"))
+            str(params.get("momentum", None))
         ])
-    if params.get("rms"):
+    if params.get("rms", False):
         cargs.append("-sqr")
-    if params.get("rms_alt"):
+    if params.get("rms_alt", False):
         cargs.append("-rms")
-    if params.get("percent"):
+    if params.get("percent", False):
         cargs.append("-p")
-    if params.get("binarize") is not None:
+    if params.get("binarize", None) is not None:
         cargs.extend([
             "-b",
-            str(params.get("binarize"))
+            str(params.get("binarize", None))
         ])
-    if params.get("absolute"):
+    if params.get("absolute", False):
         cargs.append("-abs")
     return cargs
 
@@ -270,7 +262,7 @@ def mri_average_outputs(
     """
     ret = MriAverageOutputs(
         root=execution.output_file("."),
-        output_file=execution.output_file(params.get("output_volume")),
+        output_file=execution.output_file(params.get("output_volume", None)),
     )
     return ret
 
@@ -395,7 +387,6 @@ def mri_average(
 __all__ = [
     "MRI_AVERAGE_METADATA",
     "MriAverageOutputs",
-    "MriAverageParameters",
     "mri_average",
     "mri_average_execute",
     "mri_average_params",

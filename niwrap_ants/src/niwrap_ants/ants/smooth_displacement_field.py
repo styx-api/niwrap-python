@@ -14,7 +14,18 @@ SMOOTH_DISPLACEMENT_FIELD_METADATA = Metadata(
 
 
 SmoothDisplacementFieldParameters = typing.TypedDict('SmoothDisplacementFieldParameters', {
-    "@type": typing.Literal["ants.SmoothDisplacementField"],
+    "@type": typing.NotRequired[typing.Literal["ants/SmoothDisplacementField"]],
+    "image_dimension": int,
+    "input_field": InputPathType,
+    "output_field": str,
+    "variance_or_mesh_size_base_level": float,
+    "number_of_levels": typing.NotRequired[int | None],
+    "spline_order": typing.NotRequired[int | None],
+    "estimate_inverse": typing.NotRequired[typing.Literal[0, 1] | None],
+    "confidence_image": typing.NotRequired[InputPathType | None],
+})
+SmoothDisplacementFieldParametersTagged = typing.TypedDict('SmoothDisplacementFieldParametersTagged', {
+    "@type": typing.Literal["ants/SmoothDisplacementField"],
     "image_dimension": int,
     "input_field": InputPathType,
     "output_field": str,
@@ -26,41 +37,9 @@ SmoothDisplacementFieldParameters = typing.TypedDict('SmoothDisplacementFieldPar
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "ants.SmoothDisplacementField": smooth_displacement_field_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "ants.SmoothDisplacementField": smooth_displacement_field_outputs,
-    }.get(t)
-
-
 class SmoothDisplacementFieldOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `smooth_displacement_field(...)`.
+    Output object returned when calling `SmoothDisplacementFieldParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -80,7 +59,7 @@ def smooth_displacement_field_params(
     spline_order: int | None = None,
     estimate_inverse: typing.Literal[0, 1] | None = None,
     confidence_image: InputPathType | None = None,
-) -> SmoothDisplacementFieldParameters:
+) -> SmoothDisplacementFieldParametersTagged:
     """
     Build parameters.
     
@@ -100,7 +79,7 @@ def smooth_displacement_field_params(
         Parameter dictionary
     """
     params = {
-        "@type": "ants.SmoothDisplacementField",
+        "@type": "ants/SmoothDisplacementField",
         "image_dimension": image_dimension,
         "input_field": input_field,
         "output_field": output_field,
@@ -132,18 +111,18 @@ def smooth_displacement_field_cargs(
     """
     cargs = []
     cargs.append("SmoothDisplacementField")
-    cargs.append(str(params.get("image_dimension")))
-    cargs.append(execution.input_file(params.get("input_field")))
-    cargs.append(params.get("output_field"))
-    cargs.append(str(params.get("variance_or_mesh_size_base_level")))
-    if params.get("number_of_levels") is not None:
-        cargs.append(str(params.get("number_of_levels")))
-    if params.get("spline_order") is not None:
-        cargs.append(str(params.get("spline_order")))
-    if params.get("estimate_inverse") is not None:
-        cargs.append(str(params.get("estimate_inverse")))
-    if params.get("confidence_image") is not None:
-        cargs.append(execution.input_file(params.get("confidence_image")))
+    cargs.append(str(params.get("image_dimension", None)))
+    cargs.append(execution.input_file(params.get("input_field", None)))
+    cargs.append(params.get("output_field", None))
+    cargs.append(str(params.get("variance_or_mesh_size_base_level", None)))
+    if params.get("number_of_levels", None) is not None:
+        cargs.append(str(params.get("number_of_levels", None)))
+    if params.get("spline_order", None) is not None:
+        cargs.append(str(params.get("spline_order", None)))
+    if params.get("estimate_inverse", None) is not None:
+        cargs.append(str(params.get("estimate_inverse", None)))
+    if params.get("confidence_image", None) is not None:
+        cargs.append(execution.input_file(params.get("confidence_image", None)))
     return cargs
 
 
@@ -162,8 +141,8 @@ def smooth_displacement_field_outputs(
     """
     ret = SmoothDisplacementFieldOutputs(
         root=execution.output_file("."),
-        smoothed_field=execution.output_file(params.get("output_field")),
-        confidence_image_out=execution.output_file(pathlib.Path(params.get("confidence_image")).name) if (params.get("confidence_image") is not None) else None,
+        smoothed_field=execution.output_file(params.get("output_field", None)),
+        confidence_image_out=execution.output_file(pathlib.Path(params.get("confidence_image", None)).name) if (params.get("confidence_image") is not None) else None,
     )
     return ret
 
@@ -252,7 +231,6 @@ def smooth_displacement_field(
 __all__ = [
     "SMOOTH_DISPLACEMENT_FIELD_METADATA",
     "SmoothDisplacementFieldOutputs",
-    "SmoothDisplacementFieldParameters",
     "smooth_displacement_field",
     "smooth_displacement_field_execute",
     "smooth_displacement_field_params",

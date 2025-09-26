@@ -14,45 +14,18 @@ RCA_CONFIG2CSH_METADATA = Metadata(
 
 
 RcaConfig2cshParameters = typing.TypedDict('RcaConfig2cshParameters', {
-    "@type": typing.Literal["freesurfer.rca-config2csh"],
+    "@type": typing.NotRequired[typing.Literal["freesurfer/rca-config2csh"]],
+    "configfile": InputPathType,
+})
+RcaConfig2cshParametersTagged = typing.TypedDict('RcaConfig2cshParametersTagged', {
+    "@type": typing.Literal["freesurfer/rca-config2csh"],
     "configfile": InputPathType,
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "freesurfer.rca-config2csh": rca_config2csh_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-    }.get(t)
-
-
 class RcaConfig2cshOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `rca_config2csh(...)`.
+    Output object returned when calling `RcaConfig2cshParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -60,7 +33,7 @@ class RcaConfig2cshOutputs(typing.NamedTuple):
 
 def rca_config2csh_params(
     configfile: InputPathType,
-) -> RcaConfig2cshParameters:
+) -> RcaConfig2cshParametersTagged:
     """
     Build parameters.
     
@@ -70,7 +43,7 @@ def rca_config2csh_params(
         Parameter dictionary
     """
     params = {
-        "@type": "freesurfer.rca-config2csh",
+        "@type": "freesurfer/rca-config2csh",
         "configfile": configfile,
     }
     return params
@@ -93,7 +66,7 @@ def rca_config2csh_cargs(
     cargs.append("rca-config2csh")
     cargs.extend([
         "-config2csh",
-        execution.input_file(params.get("configfile"))
+        execution.input_file(params.get("configfile", None))
     ])
     return cargs
 
@@ -175,7 +148,6 @@ def rca_config2csh(
 __all__ = [
     "RCA_CONFIG2CSH_METADATA",
     "RcaConfig2cshOutputs",
-    "RcaConfig2cshParameters",
     "rca_config2csh",
     "rca_config2csh_execute",
     "rca_config2csh_params",

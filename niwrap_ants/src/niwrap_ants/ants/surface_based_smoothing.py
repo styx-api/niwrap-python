@@ -14,7 +14,15 @@ SURFACE_BASED_SMOOTHING_METADATA = Metadata(
 
 
 SurfaceBasedSmoothingParameters = typing.TypedDict('SurfaceBasedSmoothingParameters', {
-    "@type": typing.Literal["ants.SurfaceBasedSmoothing"],
+    "@type": typing.NotRequired[typing.Literal["ants/SurfaceBasedSmoothing"]],
+    "image_to_smooth": InputPathType,
+    "sigma": float,
+    "surface_image": InputPathType,
+    "outname": str,
+    "num_repeats": typing.NotRequired[int | None],
+})
+SurfaceBasedSmoothingParametersTagged = typing.TypedDict('SurfaceBasedSmoothingParametersTagged', {
+    "@type": typing.Literal["ants/SurfaceBasedSmoothing"],
     "image_to_smooth": InputPathType,
     "sigma": float,
     "surface_image": InputPathType,
@@ -23,41 +31,9 @@ SurfaceBasedSmoothingParameters = typing.TypedDict('SurfaceBasedSmoothingParamet
 })
 
 
-def dyn_cargs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build cargs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build cargs function.
-    """
-    return {
-        "ants.SurfaceBasedSmoothing": surface_based_smoothing_cargs,
-    }.get(t)
-
-
-def dyn_outputs(
-    t: str,
-) -> typing.Any:
-    """
-    Get build outputs function by command type.
-    
-    Args:
-        t: Command type.
-    Returns:
-        Build outputs function.
-    """
-    return {
-        "ants.SurfaceBasedSmoothing": surface_based_smoothing_outputs,
-    }.get(t)
-
-
 class SurfaceBasedSmoothingOutputs(typing.NamedTuple):
     """
-    Output object returned when calling `surface_based_smoothing(...)`.
+    Output object returned when calling `SurfaceBasedSmoothingParameters(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -71,7 +47,7 @@ def surface_based_smoothing_params(
     surface_image: InputPathType,
     outname: str,
     num_repeats: int | None = None,
-) -> SurfaceBasedSmoothingParameters:
+) -> SurfaceBasedSmoothingParametersTagged:
     """
     Build parameters.
     
@@ -86,7 +62,7 @@ def surface_based_smoothing_params(
         Parameter dictionary
     """
     params = {
-        "@type": "ants.SurfaceBasedSmoothing",
+        "@type": "ants/SurfaceBasedSmoothing",
         "image_to_smooth": image_to_smooth,
         "sigma": sigma,
         "surface_image": surface_image,
@@ -112,12 +88,12 @@ def surface_based_smoothing_cargs(
     """
     cargs = []
     cargs.append("SurfaceBasedSmoothing")
-    cargs.append(execution.input_file(params.get("image_to_smooth")))
-    cargs.append(str(params.get("sigma")))
-    cargs.append(execution.input_file(params.get("surface_image")))
-    cargs.append(params.get("outname"))
-    if params.get("num_repeats") is not None:
-        cargs.append(str(params.get("num_repeats")))
+    cargs.append(execution.input_file(params.get("image_to_smooth", None)))
+    cargs.append(str(params.get("sigma", None)))
+    cargs.append(execution.input_file(params.get("surface_image", None)))
+    cargs.append(params.get("outname", None))
+    if params.get("num_repeats", None) is not None:
+        cargs.append(str(params.get("num_repeats", None)))
     return cargs
 
 
@@ -136,7 +112,7 @@ def surface_based_smoothing_outputs(
     """
     ret = SurfaceBasedSmoothingOutputs(
         root=execution.output_file("."),
-        smoothed_output=execution.output_file(params.get("outname")),
+        smoothed_output=execution.output_file(params.get("outname", None)),
     )
     return ret
 
@@ -212,7 +188,6 @@ def surface_based_smoothing(
 __all__ = [
     "SURFACE_BASED_SMOOTHING_METADATA",
     "SurfaceBasedSmoothingOutputs",
-    "SurfaceBasedSmoothingParameters",
     "surface_based_smoothing",
     "surface_based_smoothing_execute",
     "surface_based_smoothing_params",
